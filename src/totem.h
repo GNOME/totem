@@ -116,7 +116,7 @@ void	totem_metadata_updated			(TotemObject *totem,
 						 const char *title,
 						 const char *album);
 
-void	totem_action_exit			(Totem *totem);
+void	totem_action_exit			(Totem *totem) G_GNUC_NORETURN;
 void	totem_action_play			(Totem *totem);
 void	totem_action_stop			(Totem *totem);
 void	totem_action_play_pause			(Totem *totem);

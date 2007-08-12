@@ -1,3 +1,13 @@
+2007-08-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser.c:
+	(totem_pl_parser_can_parse_from_data):
+	Add more debug when a mime-type isn't known
+
+	* src/totem.h: Add patch from Ed Catmur <ed@catmur.co.uk>
+	to avoid hangs with specific versions of GCC and a set of
+	optimisations (Closes: #463730)
+
 2007-08-11  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (on_recent_file_item_activated):

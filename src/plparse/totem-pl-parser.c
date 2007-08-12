@@ -1242,6 +1242,8 @@ totem_pl_parser_can_parse_from_data (const char *data,
 		}
 	}
 
+	D(g_message ("Is unsupported mime-type '%s'", mimetype));
+
 	return FALSE;
 }
 
