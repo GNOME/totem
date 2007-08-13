@@ -54,6 +54,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/mp4", "mp4", NULL },
 	{ "image/x-macpaint", "pntg", NULL },
 	{ "image/x-quicktime", "pict, pict1, pict2", "image/x-pict" },
+	{ "video/x-m4v", "m4v", NULL },
 };
 
 void*
