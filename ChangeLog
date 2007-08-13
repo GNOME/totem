@@ -1,3 +1,14 @@
+2007-08-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/test-parser.c: (test_resolve): Add another pattern
+	to test
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry): Ignore 
+	"showwhilebuffering" entries, as we don't show anything whilst
+	buffering
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_remove_filename),
+	(totem_pl_resolve_url): Remove parameters and fragment IDs from URLs
+	when getting the base
+
 2007-08-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c:

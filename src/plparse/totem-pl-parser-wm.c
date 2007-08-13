@@ -163,6 +163,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			g_free (title);
 			title = g_strdup (node->data);
 		}
+
 		if (g_ascii_strcasecmp (node->name, "duration") == 0) {
 			const char *tmp;
 
@@ -173,6 +174,20 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			duration = g_strdup (tmp);
 		}
 
+		if (g_ascii_strcasecmp (node->name, "param") == 0) {
+			const char *name, *value;
+
+			name = xml_parser_get_property (node, "name");
+			if (name == NULL || g_ascii_strcasecmp (name, "showwhilebuffering") != 0)
+				continue;
+			value = xml_parser_get_property (node, "value");
+			if (value == NULL || g_ascii_strcasecmp (value, "true") != 0)
+				continue;
+
+			/* We ignore items that are the buffering images */
+			retval = TOTEM_PL_PARSER_RESULT_IGNORED;
+			goto bail;
+		}
 	}
 
 	if (url == NULL) {
@@ -193,6 +208,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 					 NULL);
 	}
 
+bail:
 	g_free (duration);
 	g_free (starttime);
 	g_free (fullpath);

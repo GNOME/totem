@@ -97,6 +97,7 @@ test_resolve (void)
 
 	test_resolve_real ("http://localhost:12345/foobar", "/leopard.mov", "http://localhost:12345/leopard.mov");
 	test_resolve_real ("file:///home/hadess/Movies", "Movies/mymovie.mov", "file:///home/hadess/Movies/Movies/mymovie.mov");
+	test_resolve_real ("http://localhost/video.dir/video.mpg?param1=foo&param2=bar", "dir/image.jpg", "http://localhost/video.dir/dir/image.jpg");
 }
 
 static void

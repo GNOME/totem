@@ -841,11 +841,28 @@ totem_pl_parser_add_one_url (TotemPlParser *parser, const char *url, const char 
 				 NULL);
 }
 
+static char *
+totem_pl_parser_remove_filename (const char *url)
+{
+	char *no_frag, *no_file, *no_qmark, *qmark;
+
+	no_frag = gnome_vfs_make_uri_canonical_strip_fragment (url);
+	qmark = strrchr (no_frag, '?');
+	if (qmark == NULL)
+		return no_frag;
+	no_qmark = g_strndup (no_frag, qmark - no_frag);
+	no_file = totem_pl_parser_base_url (no_qmark);
+	g_free (no_qmark);
+	g_free (no_frag);
+
+	return no_file;
+}
+
 char *
 totem_pl_resolve_url (const char *base, const char *url)
 {
 	GnomeVFSURI *base_uri, *new;
-	char *resolved;
+	char *resolved, *base_no_frag;
 
 	g_return_val_if_fail (url != NULL, NULL);
 	g_return_val_if_fail (base != NULL, g_strdup (url));
@@ -854,15 +871,19 @@ totem_pl_resolve_url (const char *base, const char *url)
 	if (strstr (url, "://") != NULL)
 		return g_strdup (url);
 
+	/* Strip fragment and filename */
+	base_no_frag = totem_pl_parser_remove_filename (base);
+
 	/* gnome_vfs_uri_append_path is trying to be clever and
 	 * merges paths that look like they're the same */
 	if (url[0] != '/') {
-		char *newbase = g_strdup_printf ("%s/", base);
+		char *newbase = g_strdup_printf ("%s/", base_no_frag);
 		base_uri = gnome_vfs_uri_new (newbase);
 		g_free (newbase);
 	} else {
-		base_uri = gnome_vfs_uri_new (base);
+		base_uri = gnome_vfs_uri_new (base_no_frag);
 	}
+	g_free (base_no_frag);
 
 	g_return_val_if_fail (base_uri != NULL, g_strdup (url));
 
