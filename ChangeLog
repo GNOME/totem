@@ -1,5 +1,11 @@
 2007-08-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_add_url_valist):
+	Avoid possible crashes in applications by trying to convert non-UTF8
+	text to UTF-8 before passing it on to the application
+
+2007-08-13  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemNarrowSpacePlugin.cpp: Patch from Markus Golser
 	to add video/x-m4v as a supported mime-type for the NarrowSpace plugin
 

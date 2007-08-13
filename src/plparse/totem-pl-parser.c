@@ -795,10 +795,21 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 		/* Ignore empty values */
 		string = g_value_get_string (&value);
 		if (string != NULL && string[0] != '\0') {
+			char *fixed = NULL;
+
+			if (g_utf8_validate (string, -1, NULL) == FALSE) {
+				fixed = g_convert (string, -1, "UTF-8", "ISO8859-1", NULL, NULL, NULL);
+				if (fixed == NULL) {
+					g_value_unset (&value);
+					name = va_arg (var_args, char*);
+					continue;
+				}
+			}
+
 			/* Add other values to the metadata hashtable */
 			g_hash_table_insert (metadata,
 					     g_strdup (name),
-					     g_value_dup_string (&value));
+					     g_strdup (fixed ? fixed : string));
 		}
 
 		g_value_unset (&value);
