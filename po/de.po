@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 15:15+0200\n"
-"PO-Revision-Date: 2007-08-14 15:15+0200\n"
+"POT-Creation-Date: 2007-08-14 15:46+0200\n"
+"PO-Revision-Date: 2007-08-14 15:49+0200\n"
 "Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,17 +50,16 @@ msgstr ""
 "Standardmäßiger Ort des »Öffnen …«-Dialogs, Vorgabe ist der momentane Ort"
 
 #: ../data/totem.schemas.in.h:5
-#, fuzzy
 msgid "Default location for the \"Take Screenshot\" dialogues"
-msgstr "Standardmäßiger Ort des »Öffnen …«-Dialogs"
+msgstr "Standardmäßiger Ort des »Bildschirmfoto aufnehmen …«-Dialogs"
 
 #: ../data/totem.schemas.in.h:6
-#, fuzzy
 msgid ""
 "Default location for the \"Take Screenshot\" dialogues, default is the "
 "Pictures directory"
 msgstr ""
-"Standardmäßiger Ort des »Öffnen …«-Dialogs, Vorgabe ist der momentane Ort"
+"Standardmäßiger Ort des »Bildschirmfoto aufnehmen …«-Dialogs, Vorgabe ist "
+"der Bilder-Ordner"
 
 #: ../data/totem.schemas.in.h:7
 msgid "Enable deinterlacing"
@@ -173,6 +172,8 @@ msgstr "Soll das Hauptfenster oberhalb der anderen angezeigt werden?"
 #: ../data/totem.schemas.in.h:35
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr ""
+"Legt fest, ob die Plugins im persönlichen Ordner des Benutzers deaktiviert "
+"werden."
 
 #: ../data/totem.schemas.in.h:36
 msgid "Whether to enable debug for the playback engine"
@@ -187,9 +188,9 @@ msgid "No File"
 msgstr "Keine Datei"
 
 #: ../src/totem-interface.c:129
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't load the '%s' interface. %s"
-msgstr "Die »%s«-Oberfläche konnte nicht geladen werden."
+msgstr "Die »%s«-Oberfläche konnte nicht geladen werden. %s"
 
 #: ../src/totem-interface.c:131 ../src/totem-interface.c:133
 #: ../src/totem-menu.c:1399
@@ -284,11 +285,11 @@ msgstr ""
 
 #: ../src/totem-menu.c:1088
 msgid "Totem Website"
-msgstr ""
+msgstr "Totem-Website"
 
 #: ../src/totem-menu.c:1123
 msgid "Configure Plugins"
-msgstr ""
+msgstr "Plugins konfigurieren"
 
 #: ../src/totem-menu.c:1217
 msgid "_Movie"
@@ -359,9 +360,8 @@ msgid "Prefere_nces"
 msgstr "_Einstellungen"
 
 #: ../src/totem-menu.c:1229
-#, fuzzy
 msgid "Plugins..."
-msgstr "Plugin"
+msgstr "Plugins …"
 
 #: ../src/totem-menu.c:1231
 msgid "_View"
@@ -586,7 +586,6 @@ msgid "Show controls"
 msgstr "Bedienelemente anzeigen"
 
 #: ../src/totem-menu.c:1281
-#, fuzzy
 msgid "S_idebar"
 msgstr "_Seitenleiste"
 
@@ -710,9 +709,8 @@ msgstr "Ersetzen"
 
 #. translators: this option prints the current movie's title on the command-line
 #: ../src/totem-options.c:53
-#, fuzzy
 msgid "Print playing movie"
-msgstr "Ein Video wird wiedergegeben"
+msgstr "Aktuelles Video ausgeben"
 
 #: ../src/totem-options.c:54
 msgid "Seek"
@@ -814,9 +812,8 @@ msgstr ""
 "gestartet haben."
 
 #: ../src/totem-preferences.c:478
-#, fuzzy
 msgid "Preferences"
-msgstr "_Einstellungen"
+msgstr "Einstellungen"
 
 #: ../src/totem-preferences.c:618
 msgid "Select Subtitle Font"
@@ -1207,12 +1204,11 @@ msgid "Location not found."
 msgstr "Der Ort wurde nicht gefunden."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2419
-#, fuzzy
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Der Ort konnte nicht geöffnet werden; möglicherweise besitzen Sie nicht die "
-"notwendigen Zugriffsrechte."
+"notwendigen Zugriffsrechte um die Datei zu öffnen."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2430
 msgid ""
@@ -1273,18 +1269,16 @@ msgid "Failed to retrieve working directory"
 msgstr "Der Arbeitsordner konnte nicht ermittelt werden"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4188
-#, fuzzy
 msgid "Surround"
-msgstr "A_udio"
+msgstr "Surround"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4190
 msgid "Mono"
-msgstr ""
+msgstr "Mono"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4192
-#, fuzzy
 msgid "Stereo"
-msgstr "Suchen"
+msgstr "Stereo"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4423
 msgid "Too old version of GStreamer installed."
@@ -1627,9 +1621,8 @@ msgid "Plugin"
 msgstr "Plugin"
 
 #: ../src/plugins/totem-plugin-manager.c:52
-#, fuzzy
 msgid "Enabled"
-msgstr "Fehlerdiagnose aktivieren"
+msgstr "Aktiviert"
 
 #: ../src/plugins/totem-plugins-engine.c:574
 #, c-format
@@ -1637,91 +1630,91 @@ msgid ""
 "Unable to activate plugin %s.\n"
 "%s"
 msgstr ""
+"Plugin »%s« konnte nicht aktiviert werden.\n"
+"%s"
 
 #: ../src/plugins/totem-plugins-engine.c:577
 #, c-format
 msgid "Unable to activate plugin %s"
-msgstr ""
+msgstr "Plugin »%s« konnte nicht aktiviert werden"
 
 #: ../src/plugins/totem-plugins-engine.c:579
-#, fuzzy
 msgid "Plugin Error"
-msgstr "Plugin"
+msgstr "Plugin-Fehler"
 
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
-#, fuzzy
 msgid "Bemused"
-msgstr "Pause"
+msgstr "Bemused"
 
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
 msgid "Control Totem through a mobile phone with a Bemused client"
-msgstr ""
+msgstr "Totem per Handy mit Bemused-Software fernsteuern"
 
 #: ../src/plugins/bemused/totem-bemused.c:185
 #, c-format
 msgid "Untitled %d"
-msgstr ""
+msgstr "Namenlos %d"
 
 #: ../src/plugins/bemused/totem-bemused.c:608
 msgid "Totem Bemused Server"
-msgstr ""
+msgstr "Totem-Bemused-Server"
 
 #. FIXME version
 #: ../src/plugins/bemused/totem-bemused.c:610
 msgid "Totem Bemused Server version 1.0"
-msgstr ""
+msgstr "Totem-Bemused-Server Version 1.0"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
-msgstr ""
+msgstr "Instant-Messenger-Status"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
+"Setzt den Instant-Messenger-Status auf »Abwesend« wenn ein Video abgespielt "
+"wird"
 
 #: ../src/plugins/galago/totem-galago.c:163
-#, fuzzy
 msgid "Could not connect to the Galago daemon."
-msgstr "Es konnte nicht mit dem HAL-Daemon verbunden werden"
+msgstr "Es konnte nicht mit dem Galago-Daemon verbunden werden."
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
 msgid "Gromit Annotations"
-msgstr ""
+msgstr "Gromit-Anmerkungen"
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
-msgstr ""
+msgstr "Anmerkungen auf dem Bildschirm erstellen"
 
 #: ../src/plugins/gromit/totem-gromit.c:283
 msgid "The gromit binary was not found."
-msgstr ""
+msgstr "Die Gromit-Binärdatei konnte nicht gefunden werden."
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
 msgid "Infrared Remote Control"
-msgstr ""
+msgstr "Infrarot-Fernbedienung"
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
 msgid "Support infrared remote control"
-msgstr ""
+msgstr "Unterstützung für Infrarot-Fernbedienungen"
 
 #: ../src/plugins/lirc/totem-lirc.c:238
-#, fuzzy
 msgid "Couldn't initialize lirc."
-msgstr "Die Thread-sicheren Bibliotheken konnten nicht initialisiert werden."
+msgstr "»lirc« konnte nicht initialisiert werden."
 
 #: ../src/plugins/lirc/totem-lirc.c:244
 msgid "Couldn't read lirc configuration."
-msgstr ""
+msgstr "»lirc«-Konfiguration konnte nicht gelesen werden."
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
-#, fuzzy
 msgid "Always On Top"
-msgstr "_Immer im Vordergrund"
+msgstr "Immer im Vordergrund"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
-#, fuzzy
 msgid "Keep the main window on top when playing a movie"
-msgstr "Soll das Hauptfenster immer im Vordergrund gehalten werden?"
+msgstr ""
+"Das Hauptfenster wird immer im Vordergrund gehalten, wenn ein Video "
+"abgespielt wird"
 
 #: ../src/plugins/properties/totem-movie-properties.c:169
 msgid "Properties"
@@ -1800,9 +1793,8 @@ msgid "Skip to a specific time"
 msgstr "Zu einer angegebenen Zeit springen"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:227
-#, fuzzy
 msgid "Could not load the \"Skip to\" dialogue interface."
-msgstr "Die »%s«-Oberfläche konnte nicht geladen werden."
+msgstr "Der »Springen zu«-Dialog konnte nicht geladen werden."
 
 #: ../browser-plugin/totem-plugin-viewer.c:417
 msgid "No URI to play"
@@ -1824,9 +1816,9 @@ msgstr "»%s« wird geöffnet"
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
 #: ../browser-plugin/totem-plugin-viewer.c:1071
-#, fuzzy, c-format
+#, c-format
 msgid "_Open with \"%s\""
-msgstr "»%s« wird geöffnet"
+msgstr "Öffnen _mit »%s«"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1122
 #, c-format
@@ -1840,7 +1832,6 @@ msgstr "Totem Browser-Plugin"
 #. FIXME!
 #. FIXME construct and show error message
 #: ../browser-plugin/totem-plugin-viewer.c:1562
-#, fuzzy
 msgid "The Totem plugin could not be started."
 msgstr "Das Totem-Plugin konnte nicht gestartet werden."
 
