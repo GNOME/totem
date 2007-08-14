@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 1.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 11:18+0200\n"
-"PO-Revision-Date: 2007-08-02 16:18+0200\n"
+"POT-Creation-Date: 2007-08-14 10:40+0200\n"
+"PO-Revision-Date: 2007-08-14 10:40+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -182,7 +182,7 @@ msgstr "Ingen fil"
 #: ../src/totem-interface.c:129
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
-msgstr "Kunne ikke laste grensesnitt for «%s»"
+msgstr "Kunne ikke laste grensesnitt for «%s». %s"
 
 #: ../src/totem-interface.c:131 ../src/totem-interface.c:133
 #: ../src/totem-menu.c:1399
@@ -574,8 +574,8 @@ msgid "Show controls"
 msgstr "Vis kontroller"
 
 #: ../src/totem-menu.c:1281
-msgid "_Sidebar"
-msgstr "_Sidelinje"
+msgid "S_idebar"
+msgstr "S_idelinje"
 
 #: ../src/totem-menu.c:1281
 msgid "Show or hide the sidebar"
@@ -693,19 +693,20 @@ msgstr "Legg i kø"
 msgid "Replace"
 msgstr "Erstatt"
 
-#: ../src/totem-options.c:52
+#. translators: this option prints the current movie's title on the command-line
+#: ../src/totem-options.c:53
 msgid "Print playing movie"
 msgstr "Skriv ut film"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:54
 msgid "Seek"
 msgstr "Søk"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Playlist index"
 msgstr "Spillelisteindeks"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Movies to play"
 msgstr "Filmer som skal spilles av"
 
@@ -725,37 +726,37 @@ msgstr "_Kopier lokasjon"
 msgid "Copy the location to the clipboard"
 msgstr "Kopier lokasjonen til utklippstavlen"
 
-#: ../src/totem-playlist.c:313 ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:331 ../src/totem-playlist.c:875
 msgid "Could not save the playlist"
 msgstr "Kunne ikke lagre spillelisten"
 
-#: ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:875
 msgid "Unknown file extension."
 msgstr "Ukjent filtype."
 
-#: ../src/totem-playlist.c:863
+#: ../src/totem-playlist.c:888
 msgid "Select playlist format:"
 msgstr "Velg format på spilleliste:"
 
-#: ../src/totem-playlist.c:868
+#: ../src/totem-playlist.c:893
 msgid "By extension"
 msgstr "Etter filtype"
 
-#: ../src/totem-playlist.c:898
+#: ../src/totem-playlist.c:923
 msgid "Save Playlist"
 msgstr "Lagre spilleliste"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:909 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:934 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Spilleliste"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 msgid "Playlist error"
 msgstr "Feil med spilleliste"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Spilleliste «%s» kunne ikke leses, den kan være ødelagt."
@@ -1020,23 +1021,23 @@ msgstr "Vestlig"
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
 
-#: ../src/totem-uri.c:303
+#: ../src/totem-uri.c:304
 msgid "All files"
 msgstr "Alle filer"
 
-#: ../src/totem-uri.c:308
+#: ../src/totem-uri.c:309
 msgid "Supported files"
 msgstr "Støttede filer"
 
-#: ../src/totem-uri.c:320
+#: ../src/totem-uri.c:321
 msgid "Audio files"
 msgstr "Lydfiler"
 
-#: ../src/totem-uri.c:328
+#: ../src/totem-uri.c:329
 msgid "Video files"
 msgstr "Videofiler"
 
-#: ../src/totem-uri.c:399
+#: ../src/totem-uri.c:400
 msgid "Select Movies or Playlists"
 msgstr "Velg filmer eller spillelister"
 
@@ -1096,7 +1097,7 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunne ikke spille av denne platen."
 
-#: ../src/totem.c:510 ../src/totem.c:2899
+#: ../src/totem.c:510 ../src/totem.c:2904
 #: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "No reason."
 msgstr "Ingen årsak."
@@ -1110,7 +1111,7 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "Dette skal ikke skje. Vennligst rapporter feilen."
 
 #. Title
-#: ../src/totem.c:854 ../src/totem.c:3047 ../src/totem.c:3075
+#: ../src/totem.c:854 ../src/totem.c:3052 ../src/totem.c:3080
 #: ../browser-plugin/totem-plugin-viewer.c:1571
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
@@ -1123,49 +1124,49 @@ msgstr "Ingen feilmelding"
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: ../src/totem.c:1451 ../src/totem.c:1453
+#: ../src/totem.c:1454 ../src/totem.c:1456
 #: ../browser-plugin/totem-plugin-viewer.c:1358
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
-#: ../src/totem.c:2779 ../src/totem.c:2781
+#: ../src/totem.c:2784 ../src/totem.c:2786
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem.c:2788 ../src/totem.c:2790
+#: ../src/totem.c:2793 ../src/totem.c:2795
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem.c:2797 ../src/totem.c:2799
+#: ../src/totem.c:2802 ../src/totem.c:2804
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem.c:2899
+#: ../src/totem.c:2904
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3053
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3053
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
 #. Handle command line arguments
-#: ../src/totem.c:3055
+#: ../src/totem.c:3060
 msgid "- Play movies and songs"
 msgstr "Spill av filmer og sanger"
 
-#: ../src/totem.c:3064
+#: ../src/totem.c:3069
 msgid "Totem could not parse the command-line options"
 msgstr "Totem kunne ikke tolke kommandolinjeflagg"
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3088
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3088
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
@@ -1274,7 +1275,7 @@ msgstr ""
 "installasjon."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4898
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5015
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1686,14 +1687,6 @@ msgstr "Kunne ikke initiere lirc."
 msgid "Couldn't read lirc configuration."
 msgstr "Kunne ikke lese konfigurasjon for lirc."
 
-#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:1
-msgid "Media Player Keys"
-msgstr "Medieavspillertaster"
-
-#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:2
-msgid "Support additional media player keys"
-msgstr "Støtte for flere medieavspillertaster"
-
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
 msgstr "Alltid øverst"
@@ -1766,30 +1759,6 @@ msgstr "%d kbps"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:1
-msgid "Adds movie properties to the sidebar"
-msgstr "Legg til egenskaper for film på sidelinjen"
-
-#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:2
-msgid "Movie Properties"
-msgstr "Egenskaper for film"
-
-#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:1
-msgid "Deactivates the screensaver when a movie is playing"
-msgstr "Deaktiverer skjermspareren når en film spilles av"
-
-#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:2
-msgid "Screensaver"
-msgstr "Skjermsparer"
-
-#: ../src/plugins/skipto/skipto.totem-plugin.in.h:1
-msgid "Provides the \"Skip to\" dialog."
-msgstr "Gir deg «Hopp til»-dialogen."
-
-#: ../src/plugins/skipto/skipto.totem-plugin.in.h:2
-msgid "Skipto"
-msgstr "Hopp til"
-
 #: ../src/plugins/skipto/totem-skipto.c:185
 msgid "Skip to"
 msgstr "Hopp til"
@@ -1844,7 +1813,7 @@ msgstr "Totem nettlesertillegg"
 #. FIXME!
 #. FIXME construct and show error message
 #: ../browser-plugin/totem-plugin-viewer.c:1562
-msgid "The Totem plugin could not startup."
+msgid "The Totem plugin could not be started."
 msgstr "Tillegget for Totem kunne ikke starte opp."
 
 #: ../browser-plugin/totem-plugin-viewer.c:1886
