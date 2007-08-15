@@ -1,5 +1,14 @@
 2007-08-15  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_save_state):
+	* browser-plugin/totemPlugin.cpp: Call SaveState just before
+	killing the plugin, so that it can save some details (such as the
+	volume), does nothing yet though (Helps: #452063)
+
+2007-08-15  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemNarrowSpacePlugin.cpp:
 	* browser-plugin/totemNarrowSpacePlugin.h:
 	* browser-plugin/totemPlugin.cpp: Implement GetPluginStatus so that

@@ -458,6 +458,15 @@ totemPlugin::ViewerSetup ()
 void
 totemPlugin::ViewerCleanup ()
 {
+	/* If the viewer is still running, try to save state */
+	if (mViewerReady) {
+		dbus_g_proxy_call_with_timeout (mViewerProxy,
+						"SaveState",
+						3000,
+						NULL,
+						G_TYPE_INVALID);
+	}
+
 	mViewerReady = PR_FALSE;
 
 	mViewerBusAddress.SetLength (0);

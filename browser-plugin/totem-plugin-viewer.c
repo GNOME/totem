@@ -564,6 +564,14 @@ totem_embedded_set_error_logo (TotemEmbedded *embedded,
 	return TRUE;
 }
 
+static gboolean
+totem_embedded_save_state (TotemEmbedded *embedded,
+			   GError *error)
+{
+	g_message ("totem_embedded_save_state");
+	return TRUE;
+}
+
 /* Copied from nautilus-program-choosing.c */
 
 extern char **environ;
