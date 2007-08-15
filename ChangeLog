@@ -1,5 +1,12 @@
 2007-08-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-lines.c:
+	(totem_pl_parser_append_path), (totem_pl_parser_add_m3u):
+	Escape the relative paths found in m3u files, as they're filenames
+	not URIs (Closes: #461951)
+
+2007-08-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-uri.c: (totem_uri_get_subtitle_uri): Remove
 	the "%.*s" construct, it's completely broken with wide-characters
 	and non-UTF8 ones

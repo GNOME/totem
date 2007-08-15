@@ -336,6 +336,28 @@ totem_pl_parser_get_extinfo_title (gboolean extinfo, char **lines, int i)
 	return sep;
 }
 
+static char *
+totem_pl_parser_append_path (const char *base, const char *path)
+{
+	GnomeVFSURI *new, *baseuri;
+	char *fullpath;
+
+	baseuri = gnome_vfs_uri_new (base);
+	if (baseuri == NULL)
+		goto bail;
+	new = gnome_vfs_uri_append_path (baseuri, path);
+	gnome_vfs_uri_unref (baseuri);
+	if (new == NULL)
+		goto bail;
+	fullpath = gnome_vfs_uri_to_string (new, 0);
+	gnome_vfs_uri_unref (new);
+
+	return fullpath;
+
+bail:
+	return g_strdup_printf ("%s/%s", base, path);
+}
+
 TotemPlParserResult
 totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
 			const char *_base, gpointer data)
@@ -413,7 +435,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
 			sep = (split_char[0] == '\n' ? '/' : '\\');
 			if (sep == '\\')
 				lines[i] = g_strdelimit (lines[i], "\\", '/');
-			fullpath = g_strdup_printf ("%s/%s", base, lines[i]);
+			fullpath = totem_pl_parser_append_path (base, lines[i]);
 			totem_pl_parser_add_one_url (parser, fullpath,
 					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
 			g_free (fullpath);
