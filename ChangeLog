@@ -1,5 +1,13 @@
 2007-08-15  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.h:
+	* browser-plugin/totemPlugin.cpp: Implement GetPluginStatus so that
+	the .Mac galleries work, make sure all parts of the plugin advertise
+	the same version of QuickTime (Closes: #464519)
+
+2007-08-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_callback_connect): Patch from Jan Arne Petersen
 	<jpetersen@jpetersen.org> to fix the fullscreen seekbar not working
 	(Closes: #462286)

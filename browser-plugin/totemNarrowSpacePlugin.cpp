@@ -47,7 +47,8 @@ static const nsCID kClassID =
   { 0x97, 0x64, 0xf5, 0xab, 0x50, 0xa4, 0x0c, 0x06 } };
 
 static const char kClassDescription[] = "totemNarrowSpacePlugin";
-static const char kPluginDescription[] = "QuickTime Plug-in 7.2.0";
+#define QUICKTIME_VERSION "7.2.0"
+static const char kPluginDescription[] = "QuickTime Plug-in "QUICKTIME_VERSION;
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/quicktime", "mov", NULL },
@@ -69,10 +70,10 @@ totemScriptablePlugin::operator new (size_t aSize) CPP_THROW_NEW
 }
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
-  : mPlugin(aPlugin),
+  : mPluginState(eState_Waiting),
+    mPlugin(aPlugin),
     mRate(1.0),
-    mVolume(100),
-    mPluginState(eState_Waiting)
+    mVolume(100)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
@@ -589,8 +590,6 @@ totemScriptablePlugin::SetPlayEveryFrame(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetPluginStatus(nsACString & _retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
-
   static const char *kState[] = {
     "Complete",
     "Error:<%d>",
@@ -612,9 +611,7 @@ totemScriptablePlugin::GetPluginStatus(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetPluginVersion(nsACString & _retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
-
-  _retval.Assign ("7.0"); /* FIXME */
+  _retval.Assign (QUICKTIME_VERSION);
   return NS_OK;
 }
 
@@ -662,9 +659,7 @@ totemScriptablePlugin::GetQuickTimeLanguage(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetQuickTimeVersion(nsACString & _retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
-
-  _retval.Assign ("7.0"); /* FIXME */
+  _retval.Assign (QUICKTIME_VERSION);
   return NS_OK;
 }
 

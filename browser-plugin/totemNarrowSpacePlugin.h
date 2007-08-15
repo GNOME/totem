@@ -46,10 +46,6 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
 
     static char *PluginDescription ();
     static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
-  private:
-    ~totemScriptablePlugin ();
-
-    totemPlugin *mPlugin;
 
     enum PluginState {
       eState_Complete,
@@ -59,6 +55,13 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
       eState_Waiting
     };
 
+    PRUint32 mPluginState : 3; /* enough bits for PluginState enum values */
+
+  private:
+    ~totemScriptablePlugin ();
+
+    totemPlugin *mPlugin;
+
     nsCString mBackgroundColour;
     nsCString mMatrix;
     nsCString mRectangle;
@@ -67,8 +70,6 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
     float mRate;
 
     PRInt32 mVolume;
-
-    PRUint32 mPluginState : 3; /* enough bits for PluginState enum values */
 
     PRUint32 mAutoPlay : 1;
     PRUint32 mControllerVisible : 1;

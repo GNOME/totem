@@ -785,6 +785,12 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 	}
 
 	/* FIXME: start playing in the callbacks ! */
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (mScriptable) {
+		mScriptable->mPluginState = totemScriptablePlugin::eState_Playable;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
 void
@@ -805,6 +811,12 @@ totemPlugin::UnsetStream ()
 	/* Calling DestroyStream should already have set this to NULL */
 	NS_ASSERTION (!mStream, "Should not have a stream anymore");
 	mStream = nsnull; /* just to make sure */
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (mScriptable) {
+		mScriptable->mPluginState = totemScriptablePlugin::eState_Waiting;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
 /* Callbacks */
@@ -928,7 +940,14 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 		plugin->mExpectingStream = PR_FALSE;
 
 		D ("GetURLNotify '%s' failed with error %d", spec.get (), err);
+		return;
 	}
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (plugin->mScriptable) {
+		plugin->mScriptable->mPluginState = totemScriptablePlugin::eState_Playable;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
 /* static */ void PR_CALLBACK
@@ -950,6 +969,12 @@ totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 		g_error_free (error);
 		return;
 	}
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (plugin->mScriptable) {
+		plugin->mScriptable->mPluginState = totemScriptablePlugin::eState_Playable;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 	/* FIXME this isn't the best way... */
 	if (plugin->mAutostart) {
@@ -1916,6 +1941,12 @@ totemPlugin::NewStream (NPMIMEType type,
 		mStreamType = NP_ASFILE;
 	}
 
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (mScriptable) {
+		mScriptable->mPluginState = totemScriptablePlugin::eState_Loading;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+
 	mStream = stream;
 
 	mCheckedForPlaylist = PR_FALSE;
@@ -2113,7 +2144,13 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	if (!retval) {
 		g_warning ("Viewer error: %s", error->message);
 		g_error_free (error);
+		return;
 	}
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+	if (mScriptable) {
+		mScriptable->mPluginState = totemScriptablePlugin::eState_Complete;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
     
 void
@@ -2157,6 +2194,10 @@ totemPlugin::GetScriptable (void *_retval)
 		mScriptable = new totemScriptablePlugin (this);
 		if (!mScriptable)
 			return NPERR_OUT_OF_MEMORY_ERROR;
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+		mScriptable->mPluginState = totemScriptablePlugin::eState_Waiting;
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 		NS_ADDREF (mScriptable);
 	}
