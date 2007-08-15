@@ -1,5 +1,11 @@
 2007-08-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_callback_connect): Patch from Jan Arne Petersen
+	<jpetersen@jpetersen.org> to fix the fullscreen seekbar not working
+	(Closes: #462286)
+
+2007-08-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-lines.c:
 	(totem_pl_parser_append_path), (totem_pl_parser_add_m3u):
 	Escape the relative paths found in m3u files, as they're filenames
