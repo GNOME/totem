@@ -1,5 +1,11 @@
 2007-08-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c: (totem_uri_get_subtitle_uri): Remove
+	the "%.*s" construct, it's completely broken with wide-characters
+	and non-UTF8 ones
+
+2007-08-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (main): Some systems seem to like it when GTypes
 	are initialised early on (Closes: #441803)
 
