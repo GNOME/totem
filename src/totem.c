@@ -3055,6 +3055,7 @@ main (int argc, char **argv)
 #endif
 
 	g_thread_init (NULL);
+	g_type_init ();
 
 	/* Handle command line arguments */
 	context = g_option_context_new (N_("- Play movies and songs"));
