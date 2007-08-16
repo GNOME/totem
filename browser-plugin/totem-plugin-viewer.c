@@ -109,7 +109,6 @@ typedef struct _TotemEmbedded {
 	char *current_uri;
 	char *href_uri;
 	char *target;
-	char *stream_uri;
 	BaconVideoWidget *bvw;
 	TotemStates state;
 	GdkCursor *cursor;
@@ -1010,6 +1009,27 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 }
 
 static gboolean
+totem_embedded_set_local_cache (TotemEmbedded *emb,
+				const char *path,
+				GError **error)
+{
+	char *file_uri;
+
+	/* FIXME Should also handle playlists */
+	if (!emb->is_browser_stream)
+		return TRUE;
+
+	file_uri = g_filename_to_uri (path, NULL, error);
+	if (!file_uri)
+		return FALSE;
+
+	g_free (emb->current_uri);
+	emb->current_uri = file_uri;
+
+	return TRUE;
+}
+
+static gboolean
 totem_embedded_set_playlist (TotemEmbedded *emb,
 			     const char *path,
 			     const char *uri,
@@ -1321,9 +1341,18 @@ on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
 
 	/* No playlist if we have fd://0, right? */
 	if (emb->is_browser_stream) {
-		/* FIXME: totem_embedded_set_state missing? */
-		/* FIXME: should find a way to enable playback of the stream again without re-requesting it */
-		totem_embedded_set_pp_state (emb, FALSE);
+		/* Verify that we had a SetLocalCache */
+		if (g_str_has_prefix (emb->current_uri, "file://") != FALSE) {
+			emb->num_items = 1;
+			emb->is_browser_stream = FALSE;
+			bacon_video_widget_close (emb->bvw);
+			totem_embedded_open_internal (emb, NULL /* FIXME? */);
+			if (emb->repeat != FALSE && emb->autostart)
+				totem_embedded_play (emb, NULL);
+		} else {
+			/* FIXME: should find a way to enable playback of the stream again without re-requesting it */
+			totem_embedded_set_pp_state (emb, FALSE);
+		}
 	/* FIXME? else if (emb->playing_nth_item == emb->playlist_num_items) ? */
 	} else if (emb->num_items == 1) {
 		if (g_str_has_prefix (emb->current_uri, "file://") != FALSE) {
@@ -1666,7 +1695,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
 
-	gtk_widget_set_size_request (emb->window, width, height);
+	if (!emb->hidden)
+		gtk_widget_set_size_request (emb->window, width, height);
 
 #ifdef GNOME_ENABLE_DEBUG
 	child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "controls"));

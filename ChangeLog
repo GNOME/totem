@@ -1,6 +1,34 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	Add SetLocalCache method
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_set_local_cache), (on_eos_event),
+	(totem_embedded_construct):
+	Remove unused stream_uri struct member
+
+	Implement SetLocalCache that replaces the
+	->current_uri with a file in the local cache
+
+	Try to use the file in the local cache when reaching
+	EOS and having played from the browser stream, it's
+	better than doing nothing
+
+	Don't show a warning on startup when the plugin is hidden
+
+	* browser-plugin/totemPlugin.cpp:
+	Remove warning about
+	totem_pl_parser_can_parse_from_filename() reading
+	the whole file in memory, it mmaps it
+
+	Call SetLocalCache when we've been streaming the file
+	from the browser already
+
+	(Closes: #428833)
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_save_volume), (property_notify_cb_volume):
 	* browser-plugin/totemPlugin.cpp: Revert "SaveState" patch

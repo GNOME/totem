@@ -2083,9 +2083,6 @@ totemPlugin::StreamAsFile (NPStream *stream,
 
 	D ("StreamAsFile filename '%s'", fname);
 
-	/* FIXME: this reads the whole file into memory... try to
-	 * find a way to avoid it.
-	 */
 	if (!mCheckedForPlaylist) {
 		mIsPlaylist = totem_pl_parser_can_parse_from_filename
 				(fname, TRUE) != FALSE;
@@ -2137,8 +2134,18 @@ totemPlugin::StreamAsFile (NPStream *stream,
 					    G_TYPE_STRING, baseSpec.get (),
 					    G_TYPE_INVALID,
 					    G_TYPE_INVALID);
-	} else {
+	}
+	/* If the file has finished streaming from the network
+	 * and is on the disk, then we should be able to play
+	 * it back from the cache, rather than just stopping there */
+	else {
 		D ("mBytesStreamed %u", mBytesStreamed);
+		retval = dbus_g_proxy_call (mViewerProxy,
+					    "SetLocalCache",
+					    &error,
+					    G_TYPE_STRING, fname,
+					    G_TYPE_INVALID,
+					    G_TYPE_INVALID);
 	}
 
 	if (!retval) {
