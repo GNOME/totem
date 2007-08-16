@@ -1,5 +1,13 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_uri),
+	(totem_embedded_set_local_cache), (on_got_redirect): re-add the
+	stream_uri, that's what it's there for. When setting a local file
+	cache, remember the original URI, so we can resolve redirects
+	against that, rather than the local file (Closes: #345328)
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: Only go "audioonly" if the
 	controller is shown, even if we're smaller than the minimum
 	size (Closes: #424784)

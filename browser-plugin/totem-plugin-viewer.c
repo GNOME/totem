@@ -115,6 +115,7 @@ typedef struct _TotemEmbedded {
 	char *current_uri;
 	char *href_uri;
 	char *target;
+	char *stream_uri;
 	BaconVideoWidget *bvw;
 	TotemStates state;
 	GdkCursor *cursor;
@@ -912,6 +913,8 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	g_free (old_uri);
 	g_free (old_base);
 	g_free (old_href);
+	g_free (emb->stream_uri);
+	emb->stream_uri = NULL;
 }
 
 static gboolean
@@ -1047,7 +1050,7 @@ totem_embedded_set_local_cache (TotemEmbedded *emb,
 	if (!file_uri)
 		return FALSE;
 
-	g_free (emb->current_uri);
+	emb->stream_uri = emb->current_uri;
 	emb->current_uri = file_uri;
 
 	return TRUE;
@@ -1264,7 +1267,11 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	bacon_video_widget_close (emb->bvw);
 
-	if (emb->current_uri)
+	/* We are using a local cache, so we resolve against the stream_uri */
+	if (emb->stream_uri)
+		new_uri = totem_resolve_relative_link (emb->stream_uri, mrl);
+	/* We don't have a local cache, so resolve against the URI */
+	else if (emb->current_uri)
 		new_uri = totem_resolve_relative_link (emb->current_uri, mrl);
 	/* FIXME: not sure that this is actually correct... */
 	else if (emb->base_uri)
