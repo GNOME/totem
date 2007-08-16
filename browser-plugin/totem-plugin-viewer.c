@@ -97,6 +97,7 @@ typedef GObjectClass TotemEmbeddedClass;
 typedef struct _TotemPlItem {
 	char *uri;
 	int duration;
+	int starttime;
 } TotemPlItem;
 
 typedef struct _TotemEmbedded {
@@ -986,10 +987,22 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			        FALSE);
 
 	bacon_video_widget_close (emb->bvw);
-	if (totem_embedded_open_internal (emb, NULL /* FIXME */) &&
-	    ((eop != FALSE && emb->repeat != FALSE)
-		|| (eop == FALSE))) {
-		totem_embedded_play (emb, NULL);
+	if (totem_embedded_open_internal (emb, NULL /* FIXME */)) {
+		if (plitem->starttime > 0) {
+			gboolean retval;
+
+			g_message ("Seeking to %d seconds for starttime", plitem->starttime);
+			retval = bacon_video_widget_seek_time (emb->bvw,
+							       plitem->starttime * 1000,
+							       NULL /* FIXME */);
+			if (!retval)
+				return TRUE;
+		}
+		
+
+		if ((eop != FALSE && emb->repeat != FALSE) || (eop == FALSE)) {
+		    	    totem_embedded_play (emb, NULL);
+		}
 	}
 
 	return TRUE;
@@ -1911,14 +1924,17 @@ totem_embedded_clear_playlist (TotemEmbedded *embedded)
 static int
 totem_embedded_parse_duration (const char *duration)
 {
-	int hours, minutes, seconds;
+	int hours, minutes, seconds, tenths;
 
 	if (!duration)
 		return -1;
 
-	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) != 3)
-		return -1;
-	return hours * 3600 + minutes * 60 + seconds;
+	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3)
+		return hours * 3600 + minutes * 60 + seconds;
+	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &tenths) == 3)
+		return minutes * 60 + seconds;
+
+	return -1;
 }
 
 static void
@@ -1952,6 +1968,7 @@ entry_parsed (TotemPlParser *parser,
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
 	item->duration = totem_embedded_parse_duration (g_hash_table_lookup (metadata, "duration"));
+	item->starttime = totem_embedded_parse_duration (g_hash_table_lookup (metadata, "starttime"));
 
 	emb->playlist = g_list_prepend (emb->playlist, item);
 }
