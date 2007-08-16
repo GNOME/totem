@@ -1,5 +1,13 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_pad_pixbuf_for_size): Fix an
+	assertion when setting the startup logo when the
+	logo is bigger than the target destination
+	(Closes: #446858)
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/org_gnome_totem_PluginViewer.xml:
 	Add SetLocalCache method
 	* browser-plugin/totem-plugin-viewer.c:

@@ -343,6 +343,7 @@ totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
 	GdkPixbuf *logo;
 	guchar *pixels;
 	int rowstride, i;
+	int dest_x, dest_y;
 
 	logo = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
 			       TRUE, 8, width, height);
@@ -354,13 +355,15 @@ totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
 		memset (pixels + i * rowstride, 0, width * 4);
 	}
 
+	dest_x = (width - gdk_pixbuf_get_width (pixbuf)) / 2;
+	dest_y = (height - gdk_pixbuf_get_height (pixbuf)) / 2;
 	gdk_pixbuf_copy_area (pixbuf,
 			      0, 0,
-			      gdk_pixbuf_get_width (pixbuf),
-			      gdk_pixbuf_get_height (pixbuf),
+			      MIN (dest_x, gdk_pixbuf_get_width (pixbuf)),
+			      MIN (dest_y, gdk_pixbuf_get_height (pixbuf)),
 			      logo,
-			      (width - gdk_pixbuf_get_width (pixbuf)) / 2,
-			      (height - gdk_pixbuf_get_height (pixbuf)) / 2);
+			      dest_x,
+			      dest_y);
 
 	return logo;
 }
