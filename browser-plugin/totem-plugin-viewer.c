@@ -1409,13 +1409,16 @@ on_error_event (BaconVideoWidget *bvw,
 		/* If we have a playlist, and that the current item
 		 * is < 60 seconds long, just go through it
 		 *
+		 * Same thing for all the items in a non-repeat playlist,
+		 * other than the last one
+		 *
 		 * FIXME we should mark streams as not playable though
 		 * so we don't loop through unplayable streams... */
 		if (emb->num_items > 1 && emb->current) {
 			TotemPlItem *item = emb->current->data;
 
 			if ((item->duration > 0 && item->duration < 60)
-			    || !emb->repeat) {
+			    || (!emb->repeat && emb->current->next)) {
 				g_idle_add ((GSourceFunc) skip_unplayable_stream, emb);
 				return;
 			}

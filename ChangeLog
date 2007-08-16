@@ -1,5 +1,12 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (on_error_event):
+	Don't skip past the last unplayable item in a playlist, otherwise
+	we might end up playing all the files in a loop, even though we're
+	not repeating
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (skip_unplayable_stream),
 	(on_error_event), (on_buffering), (totem_embedded_construct):
 	Skip to the next stream if the current one has an error in an
