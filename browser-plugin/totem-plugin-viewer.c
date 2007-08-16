@@ -1385,6 +1385,13 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 	}
 }
 
+static gboolean
+skip_unplayable_stream (TotemEmbedded *emb)
+{
+	on_eos_event (BACON_VIDEO_WIDGET (emb->bvw), emb);
+	return FALSE;
+}
+
 static void
 on_error_event (BaconVideoWidget *bvw,
 		char *message,
@@ -1407,8 +1414,9 @@ on_error_event (BaconVideoWidget *bvw,
 		if (emb->num_items > 1 && emb->current) {
 			TotemPlItem *item = emb->current->data;
 
-			if (item->duration > 0 && item->duration < 60) {
-				on_eos_event (bvw, emb);
+			if ((item->duration > 0 && item->duration < 60)
+			    || !emb->repeat) {
+				g_idle_add ((GSourceFunc) skip_unplayable_stream, emb);
 				return;
 			}
 		}
@@ -1455,6 +1463,12 @@ on_tick (GtkWidget *bvw,
 			(TOTEM_TIME_LABEL (emb->fs->time_label),
 			 current_time, stream_length);
 	}
+}
+
+static void
+on_buffering (BaconVideoWidget *bvw, guint percentage, TotemEmbedded *emb)
+{
+//	g_message ("Buffering: %d %%", percentage);
 }
 
 static void
@@ -1670,6 +1684,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 			G_CALLBACK (on_video_button_press_event), emb);
 	g_signal_connect (G_OBJECT(emb->bvw), "tick",
 			G_CALLBACK (on_tick), emb);
+	g_signal_connect (G_OBJECT (emb->bvw), "buffering",
+			  G_CALLBACK (on_buffering), emb);
 
 	g_signal_connect (G_OBJECT (emb->bvw), "notify::volume",
 			  G_CALLBACK (property_notify_cb_volume), emb);

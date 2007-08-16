@@ -1,5 +1,19 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (skip_unplayable_stream),
+	(on_error_event), (on_buffering), (totem_embedded_construct):
+	Skip to the next stream if the current one has an error in an
+	idle, so that we don't hang for some sources
+
+	Also skip unplayable streams if we don't have repeat on, as we
+	don't have a good way of telling unplayable streams from other
+	ones (Closes: #359048)
+
+	Connect to the buffering signal, but don't print anything, useful
+	for debugging
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_open_playlist_item), (on_eos_event),
 	(on_error_event), (totem_pl_item_free),
