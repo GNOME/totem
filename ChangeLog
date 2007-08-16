@@ -1,6 +1,24 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_open_playlist_item), (on_eos_event),
+	(on_error_event), (totem_pl_item_free),
+	(totem_embedded_clear_playlist), (totem_embedded_parse_duration),
+	(entry_parsed):
+	
+	Store the playlist items in a struct, with associated information
+
+	Parse (naively) duration information from the playlist parser
+
+	When an error occurs during playback, and the file to play was marked
+	as "short" (less than 60 seconds), skip to the next item in the
+	playlist, so that unsupported "header" (adverts) are skipped
+
+	(Closes: #358277)
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_pad_pixbuf_for_size): Fix an
 	assertion when setting the startup logo when the
 	logo is bigger than the target destination

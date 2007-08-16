@@ -94,6 +94,11 @@ typedef enum {
 
 typedef GObjectClass TotemEmbeddedClass;
 
+typedef struct _TotemPlItem {
+	char *uri;
+	int duration;
+} TotemPlItem;
+
 typedef struct _TotemEmbedded {
 	GObject parent;
 
@@ -113,7 +118,7 @@ typedef struct _TotemEmbedded {
 	TotemStates state;
 	GdkCursor *cursor;
 
-	/* Playlist */
+	/* Playlist, a GList of TotemPlItem */
 	GList *playlist, *current;
 	guint parser_id;
 	int num_items;
@@ -957,6 +962,7 @@ static gboolean
 totem_embedded_open_playlist_item (TotemEmbedded *emb,
 				   GList *item)
 {
+	TotemPlItem *plitem;
 	gboolean eop;
 
 	if (!emb->playlist)
@@ -972,8 +978,10 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 	emb->current = item;
 	g_assert (item != NULL);
 
+	plitem = (TotemPlItem *) item->data;
+
 	totem_embedded_set_uri (emb,
-				(const char *) item->data,
+				(const char *) plitem->uri,
 			        emb->base_uri /* FIXME? */,
 			        FALSE);
 
@@ -1335,7 +1343,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 }
 
 static void
-on_eos_event (GtkWidget *bvw, TotemEmbedded *emb)
+on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 {
 	totem_embedded_set_state (emb, STATE_STOPPED);
 	gtk_adjustment_set_value (emb->seekadj, 0);
@@ -1390,6 +1398,20 @@ on_error_event (BaconVideoWidget *bvw,
 			g_signal_emit (emb, signals[STOP_STREAM], 0);
 	
 		totem_embedded_set_state (emb, STATE_STOPPED);
+
+		/* If we have a playlist, and that the current item
+		 * is < 60 seconds long, just go through it
+		 *
+		 * FIXME we should mark streams as not playable though
+		 * so we don't loop through unplayable streams... */
+		if (emb->num_items > 1 && emb->current) {
+			TotemPlItem *item = emb->current->data;
+
+			if (item->duration > 0 && item->duration < 60) {
+				on_eos_event (bvw, emb);
+				return;
+			}
+		}
 	}
 
 	if (fatal) {
@@ -1845,14 +1867,39 @@ totem_embedded_unset_window (TotemEmbedded *embedded,
 }
 
 static void
+totem_pl_item_free (gpointer data, gpointer user_data)
+{
+	TotemPlItem *item = (TotemPlItem *) data;
+
+	if (!item)
+		return;
+	g_free (item->uri);
+	g_free (item);
+}
+
+static void
 totem_embedded_clear_playlist (TotemEmbedded *embedded)
 {
-	g_list_foreach (embedded->playlist, (GFunc) g_free, NULL);
+	g_list_foreach (embedded->playlist, (GFunc) totem_pl_item_free, NULL);
 	g_list_free (embedded->playlist);
 
 	embedded->playlist = NULL;
 	embedded->current = NULL;
 	embedded->num_items = 0;
+}
+
+/* FIXME this should live in the playlist parser */
+static int
+totem_embedded_parse_duration (const char *duration)
+{
+	int hours, minutes, seconds;
+
+	if (!duration)
+		return -1;
+
+	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) != 3)
+		return -1;
+	return hours * 3600 + minutes * 60 + seconds;
 }
 
 static void
@@ -1872,6 +1919,7 @@ entry_parsed (TotemPlParser *parser,
 	     gpointer data)
 {
 	TotemEmbedded *emb = (TotemEmbedded *) data;
+	TotemPlItem *item;
 
 	if (g_str_has_prefix (uri, "file://") != FALSE
 	    && g_str_has_prefix (emb->base_uri, "file://") == FALSE) {
@@ -1882,9 +1930,11 @@ entry_parsed (TotemPlParser *parser,
 	g_print ("added URI '%s'\n", uri);
 	g_hash_table_foreach (metadata, (GHFunc) entry_metadata_foreach, NULL);
 
-	//FIXMEchpe
-	//FIXME need new struct to hold that
-	emb->playlist = g_list_prepend (emb->playlist, g_strdup (uri));
+	item = g_new0 (TotemPlItem, 1);
+	item->uri = g_strdup (uri);
+	item->duration = totem_embedded_parse_duration (g_hash_table_lookup (metadata, "duration"));
+
+	emb->playlist = g_list_prepend (emb->playlist, item);
 }
 
 static gboolean
