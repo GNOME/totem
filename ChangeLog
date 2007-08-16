@@ -1,3 +1,12 @@
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_save_volume), (property_notify_cb_volume):
+	* browser-plugin/totemPlugin.cpp: Revert "SaveState" patch
+	and save the volume in GConf as soon as it's changed in the
+	UI (Closes: #452063)
+
 2007-08-15  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Update the gnome-vfs requirements to get

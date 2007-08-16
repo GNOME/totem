@@ -263,6 +263,16 @@ totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 }
 
 static void
+totem_embedded_save_volume (TotemEmbedded *emb, double volume)
+{
+	GConfClient *gc;
+
+	gc = gconf_client_get_default ();
+	gconf_client_set_int (gc, GCONF_PREFIX"/volume", (int) (volume * 100.0), NULL);
+	g_object_unref (G_OBJECT (gc));
+}
+
+static void
 totem_embedded_set_error (TotemEmbedded *emb,
 			  char *primary,
 			  char *secondary)
@@ -561,14 +571,6 @@ totem_embedded_set_error_logo (TotemEmbedded *embedded,
 {
 	g_message ("totem_embedded_set_error_logo called by browser plugin");
 	totem_embedded_set_logo_by_name (embedded, "image-missing");
-	return TRUE;
-}
-
-static gboolean
-totem_embedded_save_state (TotemEmbedded *embedded,
-			   GError *error)
-{
-	g_message ("totem_embedded_save_state");
 	return TRUE;
 }
 
@@ -1411,6 +1413,7 @@ property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec,
 	
 	g_signal_handlers_block_by_func (emb->volume, cb_vol, emb);
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (emb->volume), volume);
+	totem_embedded_save_volume (emb, volume);
 	g_signal_handlers_unblock_by_func (emb->volume, cb_vol, emb);
 }
 
