@@ -1,5 +1,12 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemGMPPlugin.cpp: Support application/asx
+	for the benefit of [http://www.yle.fi/eurovision/main.php?id=2034]
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry):
+	Push starttime from ASX files to the applications
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (on_error_event):
 	Don't skip past the last unplayable item in a playlist, otherwise
 	we might end up playing all the files in a loop, even though we're

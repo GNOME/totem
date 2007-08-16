@@ -174,6 +174,16 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			duration = g_strdup (tmp);
 		}
 
+		if (g_ascii_strcasecmp (node->name, "starttime") == 0) {
+			const char *tmp;
+
+			tmp = xml_parser_get_property (node, "value");
+			if (tmp == NULL)
+				continue;
+			g_free (duration);
+			starttime = g_strdup (tmp);
+		}
+
 		if (g_ascii_strcasecmp (node->name, "param") == 0) {
 			const char *name, *value;
 
