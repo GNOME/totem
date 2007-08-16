@@ -1,5 +1,11 @@
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: Only go "audioonly" if the
+	controller is shown, even if we're smaller than the minimum
+	size (Closes: #424784)
+
+2007-08-16  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_open_playlist_item),
 	(totem_embedded_parse_duration), (entry_parsed):

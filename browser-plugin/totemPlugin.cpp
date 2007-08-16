@@ -1639,17 +1639,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 	mHidden = g_hash_table_lookup (args, "hidden") != NULL &&
 		  GetBooleanValue (args, "hidden", PR_TRUE);
 
-#ifdef TOTEM_GMP_PLUGIN
-	if (height == 40) {
-		mAudioOnly = PR_TRUE;
-	}
-#endif /* TOTEM_GMP_PLUGIN */
-#if defined(TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
-	if (height <= 16) {
-		mAudioOnly = PR_TRUE;
-	}
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
-
 	/* Most for RealAudio streams, but also used as a replacement for
 	 * HIDDEN=TRUE attribute.
 	 */
@@ -1807,6 +1796,19 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	//FIXME handle starttime and endtime
 	// http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_STARTTIME.html
+
+	/* Minimum heights of the different plugins, note that the
+	 * controllers need to be showing, otherwise it's useless */
+#ifdef TOTEM_GMP_PLUGIN
+	if (height == 40 && !mControllerHidden) {
+		mAudioOnly = PR_TRUE;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
+#if defined(TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
+	if (height <= 16 && !mControllerHidden) {
+		mAudioOnly = PR_TRUE;
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* We need to autostart if we're using an HREF
