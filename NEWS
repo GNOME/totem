@@ -1,5 +1,34 @@
 New features and significant updates in version...
 
+2.19.90
+* Make the default window size bigger on first startup
+* Remove most of the flicker from the waiting cursor on startup
+* Fix hang on startup with some versions of GCC
+* Fix crashes when opening files with non-UTF-8 filenames
+* Fix the fullscreen seekbar not working
+
+* Browser plugin:
+  - Support the .Mac galleries
+  - Support replaying videos when they're in the browser cache
+  - Make the glow button behave better when the mouse pointer is inside it, glow
+    when a new file is ready to play and requires the user to click play
+  - Support the video/x-m4v and application/asx mime-types
+  - Save the volume from video to video
+  - Naively skip unplayable items in playlists
+  - Support ASX playlists with starttime
+  - Fix some really small videos not showing up in the browser
+
+* Playlist parser:
+  - Add PLA playlist write support
+  - Only push UTF-8 strings to the applications
+  - Fix parsing of some complicated relative URLs
+  - Fix parsing of M3U playlists when the files have spaces in their name
+  - Push the starttime and duration properties to applications from ASX playlists
+
+* xine-lib backend:
+  - Fix the seekbar not moving when playing an unseekable source (such as browser
+    streams in the browser plugin)
+
 2.19.6
 * Features:
 - Detect DVD rips even if the VIDEO_TS directory is passed, and not the
