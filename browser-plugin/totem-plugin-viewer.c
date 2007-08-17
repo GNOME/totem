@@ -366,8 +366,8 @@ totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
 	dest_y = (height - gdk_pixbuf_get_height (pixbuf)) / 2;
 	gdk_pixbuf_copy_area (pixbuf,
 			      0, 0,
-			      MIN (dest_x, gdk_pixbuf_get_width (pixbuf)),
-			      MIN (dest_y, gdk_pixbuf_get_height (pixbuf)),
+			      MIN (gdk_pixbuf_get_width (logo), gdk_pixbuf_get_width (pixbuf)),
+			      MIN (gdk_pixbuf_get_height (logo), gdk_pixbuf_get_height (pixbuf)),
 			      logo,
 			      dest_x,
 			      dest_y);
@@ -440,7 +440,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		return FALSE;
 	}
 
-	g_message ("totem_embedded_open_internal '%s' is-browser-stream %d", uri, emb->is_browser_stream);
+	g_message ("totem_embedded_open_internal '%s' is-browser-stream %d start-play %d", uri, emb->is_browser_stream, start_play);
 
 	bacon_video_widget_set_logo_mode (emb->bvw, FALSE);
 
