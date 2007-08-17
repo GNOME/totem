@@ -476,6 +476,8 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		/* FIXME we shouldn't even do that here */
 		if (start_play)
 			totem_embedded_play (emb, NULL);
+		else
+			totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), TRUE);
 	}
 
 	totem_embedded_update_menu (emb);
@@ -991,7 +993,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			        FALSE);
 
 	bacon_video_widget_close (emb->bvw);
-	if (totem_embedded_open_internal (emb, TRUE, NULL /* FIXME */)) {
+	if (totem_embedded_open_internal (emb, FALSE, NULL /* FIXME */)) {
 		if (plitem->starttime > 0) {
 			gboolean retval;
 
@@ -1002,7 +1004,6 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			if (!retval)
 				return TRUE;
 		}
-		
 
 		if ((eop != FALSE && emb->repeat != FALSE) || (eop == FALSE)) {
 		    	    totem_embedded_play (emb, NULL);
@@ -1290,8 +1291,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	totem_embedded_set_state (emb, STATE_STOPPED);
 
-	if (totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */) != FALSE)
-		totem_embedded_play (emb, NULL);
+	totem_embedded_open_internal (emb, TRUE, NULL /* FIXME? */);
 }
 
 static void
@@ -1366,10 +1366,14 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 static void
 on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 {
+	gboolean start_play;
+
 	totem_embedded_set_state (emb, STATE_STOPPED);
 	gtk_adjustment_set_value (emb->seekadj, 0);
 
 	/* FIXME: the plugin needs to handle EOS itself, e.g. for QTNext */
+
+	start_play = (emb->repeat != FALSE && emb->autostart);
 
 	/* No playlist if we have fd://0, right? */
 	if (emb->is_browser_stream) {
@@ -1378,9 +1382,7 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 			emb->num_items = 1;
 			emb->is_browser_stream = FALSE;
 			bacon_video_widget_close (emb->bvw);
-			totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */);
-			if (emb->repeat != FALSE && emb->autostart)
-				totem_embedded_play (emb, NULL);
+			totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);
 		} else {
 			/* FIXME: should find a way to enable playback of the stream again without re-requesting it */
 			totem_embedded_set_pp_state (emb, FALSE);
@@ -1393,14 +1395,12 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 				bacon_video_widget_seek (emb->bvw, 0.0, NULL);
 			} else {
 				bacon_video_widget_close (emb->bvw);
-				totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */);
+				totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);
 			}
 		} else {
 			bacon_video_widget_close (emb->bvw);
-			totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */);
+			totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);
 		}
-		if (emb->repeat != FALSE && emb->autostart)
-			totem_embedded_play (emb, NULL);
 	} else if (emb->current) {
 		totem_embedded_open_playlist_item (emb, emb->current->next);
 	}

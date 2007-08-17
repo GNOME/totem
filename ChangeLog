@@ -1,5 +1,17 @@
 2007-08-17  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_open_internal),
+	(totem_embedded_open_playlist_item), (on_got_redirect),
+	(on_eos_event): Set the glow when we open a new item, but shouldn't
+	start playing, as when autostart is disabled,
+	Replace a few _open_internal followed by _play with _open_internal
+	with start_play set, so we can set the glow if we don't start playing
+	* data/mozilla-viewer.ui: Set the default sensitivity of the seekbar
+	to be FALSE
+
+2007-08-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_tick_send): Another xine-lib crappiness, it
 	doesn't update the current_position when the file isn't seekable,
