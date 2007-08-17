@@ -416,6 +416,7 @@ totem_embedded_set_pp_state (TotemEmbedded *emb, gboolean state)
 
 static gboolean
 totem_embedded_open_internal (TotemEmbedded *emb,
+			      gboolean start_play,
 			      GError **error)
 {
 	GError *err = NULL;
@@ -472,10 +473,9 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 		totem_embedded_set_pp_state (emb, FALSE);
 	} else {
-		if (emb->playlist == NULL && totem_embedded_play (emb, NULL) != FALSE) {
-			totem_embedded_set_state (emb, STATE_PLAYING);
-		}
-		totem_embedded_set_pp_state (emb, TRUE);
+		/* FIXME we shouldn't even do that here */
+		if (start_play)
+			totem_embedded_play (emb, NULL);
 	}
 
 	totem_embedded_update_menu (emb);
@@ -495,6 +495,7 @@ totem_embedded_play (TotemEmbedded *emb,
 
 	if (bacon_video_widget_play (emb->bvw, &err) != FALSE) {
 		totem_embedded_set_state (emb, STATE_PLAYING);
+		totem_embedded_set_pp_state (emb, TRUE);
 	} else {
 		g_warning ("Error in bacon_video_widget_play: %s", err->message);
 		g_error_free (err);
@@ -929,7 +930,7 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 
 	totem_embedded_set_uri (emb, uri, base_uri, FALSE);
 
-	return totem_embedded_open_internal (emb, error);
+	return totem_embedded_open_internal (emb, TRUE, error);
 }
 
 static gboolean
@@ -946,7 +947,7 @@ totem_embedded_open_stream (TotemEmbedded *emb,
 
 	/* FIXME: consume any remaining input from stdin */
 
-	return totem_embedded_open_internal (emb, error);
+	return totem_embedded_open_internal (emb, TRUE, error);
 }
 
 static gboolean
@@ -990,7 +991,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			        FALSE);
 
 	bacon_video_widget_close (emb->bvw);
-	if (totem_embedded_open_internal (emb, NULL /* FIXME */)) {
+	if (totem_embedded_open_internal (emb, TRUE, NULL /* FIXME */)) {
 		if (plitem->starttime > 0) {
 			gboolean retval;
 
@@ -1032,7 +1033,7 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 	totem_embedded_set_uri (emb, file_uri, base_uri, FALSE);
 	g_free (file_uri);
 
-	return totem_embedded_open_internal (emb, error);
+	return totem_embedded_open_internal (emb, TRUE, error);
 }
 
 static gboolean
@@ -1289,7 +1290,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	totem_embedded_set_state (emb, STATE_STOPPED);
 
-	if (totem_embedded_open_internal (emb, NULL /* FIXME? */) != FALSE)
+	if (totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */) != FALSE)
 		totem_embedded_play (emb, NULL);
 }
 
@@ -1377,7 +1378,7 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 			emb->num_items = 1;
 			emb->is_browser_stream = FALSE;
 			bacon_video_widget_close (emb->bvw);
-			totem_embedded_open_internal (emb, NULL /* FIXME? */);
+			totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */);
 			if (emb->repeat != FALSE && emb->autostart)
 				totem_embedded_play (emb, NULL);
 		} else {
@@ -1392,11 +1393,11 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 				bacon_video_widget_seek (emb->bvw, 0.0, NULL);
 			} else {
 				bacon_video_widget_close (emb->bvw);
-				totem_embedded_open_internal (emb, NULL /* FIXME? */);
+				totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */);
 			}
 		} else {
 			bacon_video_widget_close (emb->bvw);
-			totem_embedded_open_internal (emb, NULL /* FIXME? */);
+			totem_embedded_open_internal (emb, FALSE, NULL /* FIXME? */);
 		}
 		if (emb->repeat != FALSE && emb->autostart)
 			totem_embedded_play (emb, NULL);

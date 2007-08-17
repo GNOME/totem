@@ -1,3 +1,15 @@
+2007-08-17  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_open_internal), (totem_embedded_play),
+	(totem_embedded_open_uri), (totem_embedded_open_stream),
+	(totem_embedded_open_playlist_item),
+	(totem_embedded_set_local_file), (on_got_redirect), (on_eos_event):
+	The heuristics for totem_embedded_open_internal actually starting
+	play suck, so we pass that info on from the caller, but we should
+	do better than that (open should play...)
+	Fixes files now cached locally starting to play straight away
+
 2007-08-16  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_uri),
