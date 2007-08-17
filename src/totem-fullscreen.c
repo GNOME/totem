@@ -321,8 +321,7 @@ totem_fullscreen_new (GtkWindow *toplevel_window)
 			  G_CALLBACK (totem_fullscreen_window_realize_cb), fs);
 	g_signal_connect (fs->priv->parent_window, "unrealize",
 			  G_CALLBACK (totem_fullscreen_window_unrealize_cb), fs);
-	g_object_notify (G_OBJECT (fs->priv->parent_window), "is-active");
-	g_signal_connect_swapped (G_OBJECT (fs->priv->parent_window), "notify",
+	g_signal_connect_swapped (G_OBJECT (fs->priv->parent_window), "notify::is-active",
 				  G_CALLBACK (totem_fullscreen_popup_hide), fs);
 
 	/* Volume */
