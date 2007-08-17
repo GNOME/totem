@@ -1,5 +1,12 @@
 2007-08-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_tick_send): Another xine-lib crappiness, it
+	doesn't update the current_position when the file isn't seekable,
+	so we have to fake it from the current_time (Closes: #436092)
+
+2007-08-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-fullscreen.c: (totem_fullscreen_new): Fix is-active
 	property connection, it was completely wrong
 

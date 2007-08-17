@@ -2021,9 +2021,19 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		current_time = bvw->priv->seek_dest * stream_length;
 	} else if (bvw->priv->seeking == 2) {
 		current_time = bvw->priv->seek_dest_time;
+		if (stream_length == 0)
+			stream_length = current_time;
 		current_position_f = (float) current_time / stream_length;
 	} else {
-		current_position_f = (float) current_position / 65535;
+		/* xine-lib doesn't update current_position if the stream
+		 * isn't seekable */
+		if (current_position == 0 && current_time > 0) {
+			if (stream_length == 0)
+				stream_length = current_time;
+			current_position_f = (float) current_time / stream_length;
+		} else {
+			current_position_f = ((float) current_position) / 65535;
+		}
 	}
 
 	if (stream_length > 0)
