@@ -375,38 +375,6 @@ my_gnome_vfs_get_mime_type_with_data (const char *uri, gpointer *data, TotemPlPa
 	return g_strdup (mimetype);
 }
 
-xmlDocPtr
-totem_pl_parser_parse_xml_file (const char *url)
-{
-	xmlDocPtr doc;
-	char *contents;
-	int size;
-
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
-		return NULL;
-
-	/* Try to remove HTML style comments */
-	{
-		char *needle;
-
-		while ((needle = strstr (contents, "<!--")) != NULL) {
-			while (strncmp (needle, "-->", 3) != 0) {
-				*needle = ' ';
-				needle++;
-				if (*needle == '\0')
-					break;
-			}
-		}
-	}
-
-	doc = xmlParseMemory (contents, size);
-	if (doc == NULL)
-		doc = xmlRecoverMemory (contents, size);
-	g_free (contents);
-
-	return doc;
-}
-
 char *
 totem_pl_parser_base_url (const char *url)
 {

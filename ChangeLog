@@ -1,5 +1,20 @@
 2007-08-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget.h: move MEDIA_TYPE_DVB to ...
+	* src/plparse/totem-disc.c: (totem_cd_get_human_readable_name):
+	* src/plparse/totem-disc.h: ... totem-disc. It's not a disc, but
+	it's a media type. Fixes a crash when trying to play "dvb:" with
+	the GStreamer backend
+
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser-xspf.c:
+	(totem_pl_parser_parse_xml_file):
+	* src/plparse/totem-pl-parser.c: Move
+	totem_pl_parser_parse_xml_file to the xspf parser file, it's the
+	only thing using it, Fixes compilation
+
+2007-08-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_tick_send): Another case where xine-lib
 	forces us to calculate the current position ourselves, the

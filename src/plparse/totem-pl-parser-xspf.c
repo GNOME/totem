@@ -42,6 +42,39 @@
 #include "totem-pl-parser-private.h"
 
 #ifndef TOTEM_PL_PARSER_MINI
+
+static xmlDocPtr
+totem_pl_parser_parse_xml_file (const char *url)
+{
+	xmlDocPtr doc;
+	char *contents;
+	int size;
+
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return NULL;
+
+	/* Try to remove HTML style comments */
+	{
+		char *needle;
+
+		while ((needle = strstr (contents, "<!--")) != NULL) {
+			while (strncmp (needle, "-->", 3) != 0) {
+				*needle = ' ';
+				needle++;
+				if (*needle == '\0')
+					break;
+			}
+		}
+	}
+
+	doc = xmlParseMemory (contents, size);
+	if (doc == NULL)
+		doc = xmlRecoverMemory (contents, size);
+	g_free (contents);
+
+	return doc;
+}
+
 gboolean
 totem_pl_parser_write_xspf (TotemPlParser *parser, GtkTreeModel *model,
 			   TotemPlParserIterFunc func, 

@@ -32,6 +32,7 @@ typedef enum {
   MEDIA_TYPE_CDDA,
   MEDIA_TYPE_VCD,
   MEDIA_TYPE_DVD,
+  MEDIA_TYPE_DVB,
   MEDIA_TYPE_NUM_TYPES
 } TotemDiscMediaType;
 

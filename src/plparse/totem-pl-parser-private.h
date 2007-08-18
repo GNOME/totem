@@ -27,8 +27,6 @@
 
 #ifndef TOTEM_PL_PARSER_MINI
 #include "totem-pl-parser.h"
-#include <libxml/tree.h>
-#include <libxml/parser.h>
 #include <glib-object.h>
 #else
 #include "totem-pl-parser-mini.h"
@@ -81,7 +79,6 @@ gboolean totem_pl_parser_write_buffer		(GnomeVFSHandle *handle,
 						 GError **error);
 char * totem_pl_parser_relative			(const char *url,
 						 const char *output);
-xmlDocPtr totem_pl_parser_parse_xml_file	(const char *url);
 TotemPlParserResult totem_pl_parser_parse_internal (TotemPlParser *parser,
 						    const char *url,
 						    const char *base);

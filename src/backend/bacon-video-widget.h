@@ -175,8 +175,6 @@ int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_can_play             (BaconVideoWidget *bvw,
 						  TotemDiscMediaType type);
 
-#define MEDIA_TYPE_DVB MEDIA_TYPE_NUM_TYPES
-
 gchar **bacon_video_widget_get_mrls		 (BaconVideoWidget *bvw,
 						  TotemDiscMediaType type,
 						  const char *device);

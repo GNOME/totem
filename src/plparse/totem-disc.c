@@ -876,6 +876,8 @@ totem_cd_get_human_readable_name (TotemDiscMediaType type)
     return N_("Video CD");
   case MEDIA_TYPE_DVD:
     return N_("DVD");
+  case MEDIA_TYPE_DVB:
+    return N_("Digital Television");
   default:
     g_assert_not_reached ();
   }
