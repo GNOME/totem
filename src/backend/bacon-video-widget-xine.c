@@ -2027,7 +2027,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	} else {
 		/* xine-lib doesn't update current_position if the stream
 		 * isn't seekable */
-		if (current_position == 0 && current_time > 0) {
+		if ((current_position == 0 || current_position == 65535) && current_time > 0) {
 			if (stream_length == 0)
 				stream_length = current_time;
 			current_position_f = (float) current_time / stream_length;
