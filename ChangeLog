@@ -1,5 +1,10 @@
 2007-08-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_open_files_list): Fix the playback
+	not starting when using "totem dvb:"
+
+2007-08-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget.h: move MEDIA_TYPE_DVB to ...
 	* src/plparse/totem-disc.c: (totem_cd_get_human_readable_name):
 	* src/plparse/totem-disc.h: ... totem-disc. It's not a disc, but

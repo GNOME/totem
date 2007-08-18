@@ -1704,7 +1704,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
 			} else if (g_str_equal (filename, "dvb:") != FALSE) {
-				totem_action_load_media (totem, MEDIA_TYPE_DVB, NULL);
+				changed = totem_action_load_media (totem, MEDIA_TYPE_DVB, NULL);
 			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
 				changed = TRUE;
