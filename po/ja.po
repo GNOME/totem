@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-05 00:48+0900\n"
-"PO-Revision-Date: 2007-08-04 23:51+0900\n"
+"POT-Creation-Date: 2007-08-18 13:52+0900\n"
+"PO-Revision-Date: 2007-08-18 13:52+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -181,7 +181,7 @@ msgstr "再生エンジンのデバッグを有効にするかどうか"
 msgid "Playing a movie"
 msgstr "動画を再生する"
 
-#: ../src/totem-fullscreen.c:404
+#: ../src/totem-fullscreen.c:403
 msgid "No File"
 msgstr "ファイルなし"
 
@@ -268,11 +268,11 @@ msgstr "GNOME"
 msgid "Movie Player using %s and %s"
 msgstr "%s と %s を使った動画プレイヤーです。"
 
-#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1132
+#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1191
 msgid "translator-credits"
 msgstr ""
 "草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
@@ -585,8 +585,8 @@ msgid "Show controls"
 msgstr "コントロールを表示します"
 
 #: ../src/totem-menu.c:1281
-msgid "_Sidebar"
-msgstr "サイドバー(_S)"
+msgid "S_idebar"
+msgstr "サイドバー(_I)"
 
 #: ../src/totem-menu.c:1281
 msgid "Show or hide the sidebar"
@@ -704,19 +704,20 @@ msgstr "キューに追加する"
 msgid "Replace"
 msgstr "置き換える"
 
-#: ../src/totem-options.c:52
+#. translators: this option prints the current movie's title on the command-line
+#: ../src/totem-options.c:53
 msgid "Print playing movie"
 msgstr "再生している動画を表示する"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:54
 msgid "Seek"
 msgstr "シークする"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Playlist index"
 msgstr "再生一覧のインデックス"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Movies to play"
 msgstr "再生する動画"
 
@@ -736,37 +737,37 @@ msgstr "場所のコピー(_C)"
 msgid "Copy the location to the clipboard"
 msgstr "場所をクリップボードへコピーします"
 
-#: ../src/totem-playlist.c:313 ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:331 ../src/totem-playlist.c:875
 msgid "Could not save the playlist"
 msgstr "再生一覧を保存できませんでした"
 
-#: ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:875
 msgid "Unknown file extension."
 msgstr "ファイルの拡張子が不明です"
 
-#: ../src/totem-playlist.c:863
+#: ../src/totem-playlist.c:888
 msgid "Select playlist format:"
 msgstr "再生一覧の形式:"
 
-#: ../src/totem-playlist.c:868
+#: ../src/totem-playlist.c:893
 msgid "By extension"
 msgstr "拡張子順"
 
-#: ../src/totem-playlist.c:898
+#: ../src/totem-playlist.c:923
 msgid "Save Playlist"
 msgstr "再生一覧の保存"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:909 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:934 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "再生一覧"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 msgid "Playlist error"
 msgstr "再生一覧のエラー"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "再生一覧 '%s' を解析できませんでした (おそらく壊れています)。"
@@ -845,7 +846,7 @@ msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
 #: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:846
-#: ../browser-plugin/totem-plugin-viewer.c:296
+#: ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Stopped"
 msgstr "停止中"
 
@@ -1029,31 +1030,31 @@ msgstr "西欧"
 msgid "Vietnamese"
 msgstr "ベトナム語"
 
-#: ../src/totem-uri.c:303
+#: ../src/totem-uri.c:306
 msgid "All files"
 msgstr "全てのファイル"
 
-#: ../src/totem-uri.c:308
+#: ../src/totem-uri.c:311
 msgid "Supported files"
 msgstr "サポートしているファイル"
 
-#: ../src/totem-uri.c:320
+#: ../src/totem-uri.c:323
 msgid "Audio files"
 msgstr "楽曲ファイル"
 
-#: ../src/totem-uri.c:328
+#: ../src/totem-uri.c:331
 msgid "Video files"
 msgstr "動画ファイル"
 
-#: ../src/totem-uri.c:399
+#: ../src/totem-uri.c:402
 msgid "Select Movies or Playlists"
 msgstr "動画または再生一覧を選択して下さい"
 
-#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:312
+#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:328
 msgid "Playing"
 msgstr "再生中"
 
-#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:308
+#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:324
 msgid "Paused"
 msgstr "一時停止中"
 
@@ -1105,8 +1106,8 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "このディスクを再生できませんでした。"
 
-#: ../src/totem.c:510 ../src/totem.c:2899
-#: ../browser-plugin/totem-plugin-viewer.c:1562
+#: ../src/totem.c:510 ../src/totem.c:2910
+#: ../browser-plugin/totem-plugin-viewer.c:1665
 msgid "No reason."
 msgstr "原因は不明です。"
 
@@ -1119,8 +1120,8 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "これは発生してはいけない現象です; バグとして報告して下さい。"
 
 #. Title
-#: ../src/totem.c:854 ../src/totem.c:3047 ../src/totem.c:3075
-#: ../browser-plugin/totem-plugin-viewer.c:1571
+#: ../src/totem.c:854 ../src/totem.c:3058 ../src/totem.c:3087
+#: ../browser-plugin/totem-plugin-viewer.c:1674
 msgid "Totem Movie Player"
 msgstr "Totem 動画プレイヤー"
 
@@ -1132,49 +1133,49 @@ msgstr "エラー・メッセージなし"
 msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
-#: ../src/totem.c:1451 ../src/totem.c:1453
-#: ../browser-plugin/totem-plugin-viewer.c:1358
+#: ../src/totem.c:1454 ../src/totem.c:1456
+#: ../browser-plugin/totem-plugin-viewer.c:1454
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: ../src/totem.c:2779 ../src/totem.c:2781
+#: ../src/totem.c:2784 ../src/totem.c:2786
 msgid "Play / Pause"
 msgstr "再生/一時停止します"
 
-#: ../src/totem.c:2788 ../src/totem.c:2790
+#: ../src/totem.c:2793 ../src/totem.c:2795
 msgid "Previous Chapter/Movie"
 msgstr "前のチャプター/動画に移動します"
 
-#: ../src/totem.c:2797 ../src/totem.c:2799
+#: ../src/totem.c:2802 ../src/totem.c:2804
 msgid "Next Chapter/Movie"
 msgstr "次のチャプター/動画に移動します"
 
-#: ../src/totem.c:2899
+#: ../src/totem.c:2910
 msgid "Totem could not startup."
 msgstr "Totem を起動できませんでした。"
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3059
 msgid "Could not initialize the thread-safe libraries."
 msgstr "スレッドセーフなライグラリを初期化できませんでした。"
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3059
 msgid "Verify your system installation. Totem will now exit."
 msgstr "システムのインストールを確認して下さい。Totem を終了します。"
 
 #. Handle command line arguments
-#: ../src/totem.c:3055
+#: ../src/totem.c:3067
 msgid "- Play movies and songs"
 msgstr "- 動画や楽曲を再生/演奏します"
 
-#: ../src/totem.c:3064
+#: ../src/totem.c:3076
 msgid "Totem could not parse the command-line options"
 msgstr "コマンドライン・オプションを解析できませんでした"
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3095
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem は設定エンジンを初期化できませんでした。"
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3095
 msgid "Make sure that GNOME is properly installed."
 msgstr "GNOME が正しくインストールされているか確認して下さい。"
 
@@ -1250,6 +1251,7 @@ msgstr "メディア・ファイルを再生/演奏できませんでした。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2635
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2695
+#, c-format
 msgid "Failed to retrieve working directory"
 msgstr "作業フォルダ名の取得に失敗しました"
 
@@ -1266,14 +1268,17 @@ msgid "Stereo"
 msgstr "ステレオ"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4423
+#, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "ご利用の GStreamer のバージョンが古すぎます。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4430
+#, c-format
 msgid "Media contains no supported video streams."
 msgstr "このメディアには映像ストリームが含まれていません。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4766
+#, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1282,7 +1287,8 @@ msgstr ""
 "ルされているか確認して下さい。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4898
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5015
+#, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1291,6 +1297,7 @@ msgstr ""
 "ルチメディア・システム・セレクタ] から別のデバイスを選択してみて下さい。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4910
+#, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1301,6 +1308,7 @@ msgstr ""
 "択してみて下さい。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4945
+#, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1311,6 +1319,7 @@ msgstr ""
 "テム・セレクタ] から別のデバイスを選択してみて下さい。"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4965
+#, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1331,6 +1340,7 @@ msgstr ""
 
 #: ../src/backend/bacon-video-widget-xine.c:1221
 #: ../src/backend/bacon-video-widget-xine.c:1779
+#, c-format
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
@@ -1403,30 +1413,36 @@ msgid "The file you tried to play is an empty file."
 msgstr "再生/演奏しようとしているファイルは空ファイルです。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1572
+#, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "この動画を場所を扱う入力プラグインはありません。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1576
+#, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "この動画を扱うプラグインはありません。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1580
+#, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "この動画は破損しているので、これ以上は再生できません。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1584
+#, c-format
 msgid "This location is not a valid one."
 msgstr "この場所は適切ではありません。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1588
+#, c-format
 msgid "This movie could not be opened."
 msgstr "この動画を開けませんでした。"
 
 #: ../src/backend/bacon-video-widget-xine.c:1592
+#, c-format
 msgid "Generic Error."
 msgstr "一般的なエラーです。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2384
+#: ../src/backend/bacon-video-widget-xine.c:2394
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1435,7 +1451,7 @@ msgstr ""
 "ビデオ・コーデック '%s' は扱えません。この種類の動画を再生するには、追加でプ"
 "ラグインをインストールする必要があるかも知れません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2388
+#: ../src/backend/bacon-video-widget-xine.c:2398
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1444,26 +1460,30 @@ msgstr ""
 "オーディオ・コーデック '%s' は扱えません。この種類の動画を再生するには、追加"
 "でプラグインをインストールする必要があるかも知れません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:2402
+#: ../src/backend/bacon-video-widget-xine.c:2412
+#, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "これは楽曲ファイルですが、利用可能な音声出力デバイスがありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:3945
-#: ../src/backend/bacon-video-widget-xine.c:3992
-#: ../src/backend/bacon-video-widget-xine.c:4014
+#: ../src/backend/bacon-video-widget-xine.c:3955
+#: ../src/backend/bacon-video-widget-xine.c:4002
+#: ../src/backend/bacon-video-widget-xine.c:4024
 #, c-format
 msgid "Language %d"
 msgstr "言語 %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4103
+#: ../src/backend/bacon-video-widget-xine.c:4113
+#, c-format
 msgid "No video to capture."
 msgstr "キャプチャする映像がありません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:4111
+#: ../src/backend/bacon-video-widget-xine.c:4121
+#, c-format
 msgid "Video codec is not handled."
 msgstr "ビデオ・コーデックは扱いません。"
 
-#: ../src/backend/bacon-video-widget-xine.c:4122
+#: ../src/backend/bacon-video-widget-xine.c:4132
+#, c-format
 msgid "Movie is not playing."
 msgstr "動画を再生していません。"
 
@@ -1543,10 +1563,12 @@ msgid "Failed to find mountpoint for device %s"
 msgstr "デバイス %s のマウント・ポイントが見つかりませんでした"
 
 #: ../src/plparse/totem-disc.c:298
+#, c-format
 msgid "Could not connect to the HAL daemon"
 msgstr "HAL デーモンに接続できませんでした"
 
 #: ../src/plparse/totem-disc.c:397
+#, c-format
 msgid "Please check that a disc is present in the drive."
 msgstr "ドライブの中にディスクがあるか確認して下さい。"
 
@@ -1572,12 +1594,13 @@ msgstr "ビデオ CD"
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:463
+#: ../src/plparse/totem-pl-parser.c:470
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "パーサに書き込めませんでした: %s"
 
 #: ../src/plparse/totem-pl-parser-lines.c:105
+#: ../src/plparse/totem-pl-parser-pla.c:78
 #: ../src/plparse/totem-pl-parser-pls.c:70
 #: ../src/plparse/totem-pl-parser-xspf.c:73
 #, c-format
@@ -1643,6 +1666,7 @@ msgstr ""
 "トします"
 
 #: ../src/plugins/galago/totem-galago.c:163
+#, c-format
 msgid "Could not connect to the Galago daemon."
 msgstr "Galago デーモンに接続できませんでした。"
 
@@ -1655,6 +1679,7 @@ msgid "Presentation helper to make annotations on screen"
 msgstr "スクリーンで注釈を表示するプレゼンテーション・ヘルパーです"
 
 #: ../src/plugins/gromit/totem-gromit.c:283
+#, c-format
 msgid "The gromit binary was not found."
 msgstr "Gromit のバイナリが見つかりませんでした。"
 
@@ -1667,20 +1692,14 @@ msgid "Support infrared remote control"
 msgstr "赤外線のリモコンをサポートします"
 
 #: ../src/plugins/lirc/totem-lirc.c:238
+#, c-format
 msgid "Couldn't initialize lirc."
 msgstr "lirc を初期化できませんでした。"
 
 #: ../src/plugins/lirc/totem-lirc.c:244
+#, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "lirc の設定を読み込めませんでした。"
-
-#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:1
-msgid "Media Player Keys"
-msgstr "メディア・プレイヤーのキー"
-
-#: ../src/plugins/media-player-keys/media-player-keys.totem-plugin.in.h:2
-msgid "Support additional media player keys"
-msgstr "メディア・プレイヤーのキーを追加でサポートします"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
@@ -1754,30 +1773,6 @@ msgstr "%d Kバイト/秒"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:1
-msgid "Adds movie properties to the sidebar"
-msgstr "動画のプロパティをサイドバーに追加します"
-
-#: ../src/plugins/properties/movie-properties.totem-plugin.in.h:2
-msgid "Movie Properties"
-msgstr "動画のプロパティ"
-
-#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:1
-msgid "Deactivates the screensaver when a movie is playing"
-msgstr "動画を再生している時はスクリーンセーバーを無効にします"
-
-#: ../src/plugins/screensaver/screensaver.totem-plugin.in.h:2
-msgid "Screensaver"
-msgstr "スクリーンセーバー"
-
-#: ../src/plugins/skipto/skipto.totem-plugin.in.h:1
-msgid "Provides the \"Skip to\" dialog."
-msgstr "動画の \"スキップ\" を制御するダイアログを提供します"
-
-#: ../src/plugins/skipto/skipto.totem-plugin.in.h:2
-msgid "Skipto"
-msgstr "スキップ"
-
 #: ../src/plugins/skipto/totem-skipto.c:185
 msgid "Skip to"
 msgstr "スキップ"
@@ -1791,21 +1786,23 @@ msgid "Skip to a specific time"
 msgstr "指定した時間までスキップします"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:227
+#, c-format
 msgid "Could not load the \"Skip to\" dialogue interface."
 msgstr "\"スキップ\" 用のインタフェースを読み込めませんでした。"
 
-#: ../browser-plugin/totem-plugin-viewer.c:417
+#: ../browser-plugin/totem-plugin-viewer.c:437
+#, c-format
 msgid "No URI to play"
 msgstr "再生する URI を指定して下さい"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:444
-#: ../browser-plugin/totem-plugin-viewer.c:448
+#: ../browser-plugin/totem-plugin-viewer.c:464
+#: ../browser-plugin/totem-plugin-viewer.c:468
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "'%s' を再生できませんでした"
 
-#: ../browser-plugin/totem-plugin-viewer.c:825
+#: ../browser-plugin/totem-plugin-viewer.c:847
 #, c-format
 msgid "Opening %s"
 msgstr "'%s' を開いています"
@@ -1813,35 +1810,35 @@ msgstr "'%s' を開いています"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1071
+#: ../browser-plugin/totem-plugin-viewer.c:1130
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" で開く(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1122
+#: ../browser-plugin/totem-plugin-viewer.c:1181
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s を使ったブラウザ用プラグイン"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1127
+#: ../browser-plugin/totem-plugin-viewer.c:1186
 msgid "Totem Browser Plugin"
 msgstr "Totem のブラウザ用プラグインです"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1562
-msgid "The Totem plugin could not startup."
+#: ../browser-plugin/totem-plugin-viewer.c:1665
+msgid "The Totem plugin could not be started."
 msgstr "Totem のプラグインを起動できませんでした。"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1886
+#: ../browser-plugin/totem-plugin-viewer.c:2024
 msgid "No playlist or playlist empty"
 msgstr "再生一覧が存在しないか空です"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1990
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Could not initialise the thread-safe libraries."
 msgstr "スレッドセーフなライブラリを初期化できませんでした。"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1990
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "システムのインストールを確認して下さい。Totem のプラグインを終了します。"
