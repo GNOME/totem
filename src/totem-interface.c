@@ -267,6 +267,7 @@ void
 totem_interface_boldify_label (GtkBuilder *builder, const char *name)
 {
 	GtkLabel *widget;
+	gchar *str_final;
 
 	widget = GTK_LABEL (gtk_builder_get_object (builder, name));
 
@@ -291,7 +292,6 @@ totem_interface_boldify_label (GtkBuilder *builder, const char *name)
 	}
 	gtk_label_set_attributes (widget, pattrlist);*/
 
-	gchar *str_final;
 	str_final = g_strdup_printf ("<b>%s</b>", gtk_label_get_label (widget));
 	gtk_label_set_markup_with_mnemonic (widget, str_final);
 	g_free (str_final);
@@ -301,6 +301,7 @@ void
 totem_interface_italicise_label (GtkBuilder *builder, const char *name)
 {
 	GtkLabel *widget;
+	gchar *str_final;
 
 	widget = GTK_LABEL (gtk_builder_get_object (builder, name));
 
@@ -325,7 +326,6 @@ totem_interface_italicise_label (GtkBuilder *builder, const char *name)
 	}
 	gtk_label_set_attributes (widget, pattrlist);*/
 
-	gchar *str_final;
 	str_final = g_strdup_printf ("<i>%s</i>", gtk_label_get_label (widget));
 	gtk_label_set_markup_with_mnemonic (widget, str_final);
 	g_free (str_final);
