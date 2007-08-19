@@ -24,6 +24,7 @@
 #define TOTEM_INTERFACE_H
 
 #include <gtk/gtk.h>
+#include "totem.h"
 
 G_BEGIN_DECLS
 
@@ -43,6 +44,12 @@ void		 totem_interface_error		(const char *title,
 void		 totem_interface_error_blocking	(const char *title,
 						 const char *reason,
 						 GtkWindow *parent);
+void		 totem_interface_error_with_link (const char *title,
+						  const char *reason,
+						  const char *uri,
+						  const char *label,
+						  GtkWindow *parent,
+						  Totem *totem);
 void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
 char *		 totem_interface_get_license	(void);

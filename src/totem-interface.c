@@ -35,8 +35,10 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
+#include <gconf/gconf-client.h>
 
 #include "totem-interface.h"
+#include "totem-private.h"
 
 static GtkWidget *
 totem_interface_error_dialog (const char *title, const char *reason,
@@ -94,6 +96,66 @@ totem_interface_error_blocking (const char *title, const char *reason,
 
 	gtk_dialog_run (GTK_DIALOG (error_dialog));
 	gtk_widget_destroy (error_dialog);
+}
+
+static void
+link_button_clicked_cb (GtkWidget *widget, Totem *totem)
+{
+	const char *uri;
+	char *command, *browser;
+	GError *error = NULL;
+
+	uri = gtk_link_button_get_uri (GTK_LINK_BUTTON (widget));
+	browser = gconf_client_get_string (totem->gc, "/desktop/gnome/url-handlers/http/command", NULL);
+
+	if (browser == NULL || browser[0] == '\0') {
+		char *message;
+
+		message = g_strdup_printf(_("Could not launch URL \"%s\": %s"), uri, _("Default browser not configured"));
+		totem_interface_error (_("Error launching URI"), message, GTK_WINDOW (totem->win));
+		g_free (message);
+	} else {
+		char *message;
+
+		command = g_strdup_printf (browser, uri);
+		if (g_spawn_command_line_async ((const char*) command, &error) == FALSE) {
+			message = g_strdup_printf(_("Could not launch URL \"%s\": %s"), uri, error->message);
+			totem_interface_error (_("Error launching URI"), message, GTK_WINDOW (totem->win));
+			g_free (message);
+			g_error_free (error);
+		}
+		g_free (command);
+	}
+
+	g_free (browser);
+}
+
+void
+totem_interface_error_with_link (const char *title, const char *reason,
+				 const char *uri, const char *label, GtkWindow *parent, Totem *totem)
+{
+	GtkWidget *error_dialog, *link_button, *hbox;
+
+	if (label == NULL)
+		label = uri;
+
+	error_dialog = totem_interface_error_dialog (title, reason, parent);
+	link_button = gtk_link_button_new_with_label (uri, label);
+	g_signal_connect (G_OBJECT (link_button), "clicked", G_CALLBACK (link_button_clicked_cb), totem);
+
+	hbox = gtk_hbox_new (TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), link_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_dialog)->vbox), hbox, TRUE, FALSE, 0); 
+
+	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog), GTK_RESPONSE_OK);
+
+	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
+			(gtk_widget_destroy), error_dialog);
+	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
+
+	gtk_widget_show_all (error_dialog);
 }
 
 GtkBuilder *
