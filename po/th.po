@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-10 15:30+0700\n"
-"PO-Revision-Date: 2007-08-10 15:32+0700\n"
+"POT-Creation-Date: 2007-08-19 14:23+0700\n"
+"PO-Revision-Date: 2007-08-19 14:24+0700\n"
 "Last-Translator: aka.ape <aka.ape@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -174,7 +174,7 @@ msgstr "กำหนดว่าจะเปิดการดีบั๊กเ
 msgid "Playing a movie"
 msgstr "กำลังเล่นภาพยนตร์"
 
-#: ../src/totem-fullscreen.c:404
+#: ../src/totem-fullscreen.c:403
 msgid "No File"
 msgstr "ไม่มีแฟ้ม"
 
@@ -260,11 +260,11 @@ msgstr "GNOME"
 msgid "Movie Player using %s and %s"
 msgstr "โปรแกรมเล่นภาพยนตร์โดยใช้ %s และ %s"
 
-#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1132
+#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1191
 msgid "translator-credits"
 msgstr ""
 "อิสริยะ ไพรีพ่ายฤทธิ์ <markpeak@gmail.com>\n"
@@ -726,37 +726,37 @@ msgstr "_คัดลอกตำแหน่ง"
 msgid "Copy the location to the clipboard"
 msgstr "คัดลอกตำแหน่งเข้าคลิปบอร์ด"
 
-#: ../src/totem-playlist.c:313 ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:331 ../src/totem-playlist.c:875
 msgid "Could not save the playlist"
 msgstr "ไม่สามารถบันทึกรายการการเล่น"
 
-#: ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:875
 msgid "Unknown file extension."
 msgstr "นามสกุลแฟ้มไม่รู้จัก"
 
-#: ../src/totem-playlist.c:863
+#: ../src/totem-playlist.c:888
 msgid "Select playlist format:"
 msgstr "เลือกรูปแบบรายการการเล่น:"
 
-#: ../src/totem-playlist.c:868
+#: ../src/totem-playlist.c:893
 msgid "By extension"
 msgstr "ตามนามสกุล"
 
-#: ../src/totem-playlist.c:898
+#: ../src/totem-playlist.c:923
 msgid "Save Playlist"
 msgstr "บันทึกรายการการเล่น"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:909 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:934 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "รายการการเล่น"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 msgid "Playlist error"
 msgstr "รายการการเล่นมีปัญหา"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "รายการการเล่น '%s' ไม่สามารถแจงได้ ข้อมูลอาจเสียอยู่"
@@ -835,7 +835,7 @@ msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
 #: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:846
-#: ../browser-plugin/totem-plugin-viewer.c:296
+#: ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Stopped"
 msgstr "หยุด"
 
@@ -1019,31 +1019,31 @@ msgstr "ตะวันตก"
 msgid "Vietnamese"
 msgstr "เวียดนาม"
 
-#: ../src/totem-uri.c:303
+#: ../src/totem-uri.c:306
 msgid "All files"
 msgstr "ทุกแฟ้ม"
 
-#: ../src/totem-uri.c:308
+#: ../src/totem-uri.c:311
 msgid "Supported files"
 msgstr "แฟ้มที่สนับสนุน"
 
-#: ../src/totem-uri.c:320
+#: ../src/totem-uri.c:323
 msgid "Audio files"
 msgstr "แฟ้มเสียงทั้งหมด"
 
-#: ../src/totem-uri.c:328
+#: ../src/totem-uri.c:331
 msgid "Video files"
 msgstr "แฟ้มวิดีโอทั้งหมด"
 
-#: ../src/totem-uri.c:399
+#: ../src/totem-uri.c:402
 msgid "Select Movies or Playlists"
 msgstr "เลือกภาพยนตร์หรือรายการเล่น"
 
-#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:312
+#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:328
 msgid "Playing"
 msgstr "กำลังเล่น"
 
-#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:308
+#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:324
 msgid "Paused"
 msgstr "กำลังพัก"
 
@@ -1087,8 +1087,8 @@ msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ
 msgid "Totem was not able to play this disc."
 msgstr "Totem ไม่สามารถเล่นแผ่นนี้ได้"
 
-#: ../src/totem.c:510 ../src/totem.c:2899
-#: ../browser-plugin/totem-plugin-viewer.c:1562
+#: ../src/totem.c:510 ../src/totem.c:2910
+#: ../browser-plugin/totem-plugin-viewer.c:1665
 msgid "No reason."
 msgstr "ไม่ทราบสาเหตุ"
 
@@ -1101,8 +1101,8 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "เหตุการณ์นี้ไม่น่าจะเกิด กรุณารายงานข้อผิดพลาดนี้"
 
 #. Title
-#: ../src/totem.c:854 ../src/totem.c:3047 ../src/totem.c:3075
-#: ../browser-plugin/totem-plugin-viewer.c:1571
+#: ../src/totem.c:854 ../src/totem.c:3058 ../src/totem.c:3087
+#: ../browser-plugin/totem-plugin-viewer.c:1674
 msgid "Totem Movie Player"
 msgstr "Totem: โปรแกรมเล่นภาพยนตร์"
 
@@ -1114,49 +1114,49 @@ msgstr "ไม่มีข้อมูลเกี่ยวกับข้อผ
 msgid "Totem could not display the help contents."
 msgstr "Totem ไม่สามารถแสดงวิธีใช้"
 
-#: ../src/totem.c:1451 ../src/totem.c:1453
-#: ../browser-plugin/totem-plugin-viewer.c:1358
+#: ../src/totem.c:1454 ../src/totem.c:1456
+#: ../browser-plugin/totem-plugin-viewer.c:1454
 msgid "An error occurred"
 msgstr "เกิดปัญหา"
 
-#: ../src/totem.c:2779 ../src/totem.c:2781
+#: ../src/totem.c:2784 ../src/totem.c:2786
 msgid "Play / Pause"
 msgstr "เล่น / พัก"
 
-#: ../src/totem.c:2788 ../src/totem.c:2790
+#: ../src/totem.c:2793 ../src/totem.c:2795
 msgid "Previous Chapter/Movie"
 msgstr "ตอน/เรื่องก่อนหน้า"
 
-#: ../src/totem.c:2797 ../src/totem.c:2799
+#: ../src/totem.c:2802 ../src/totem.c:2804
 msgid "Next Chapter/Movie"
 msgstr "ตอน/เรื่องถัดไป"
 
-#: ../src/totem.c:2899
+#: ../src/totem.c:2910
 msgid "Totem could not startup."
 msgstr "ไม่สามารถเริ่มทำงาน Totem"
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3059
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3059
 msgid "Verify your system installation. Totem will now exit."
 msgstr "กรุณาตรวจสอบการติดตั้งของระบบ Totem จะเลิกทำงาน"
 
 #. Handle command line arguments
-#: ../src/totem.c:3055
+#: ../src/totem.c:3067
 msgid "- Play movies and songs"
 msgstr "- เล่นภาพยนตร์และเพลง"
 
-#: ../src/totem.c:3064
+#: ../src/totem.c:3076
 msgid "Totem could not parse the command-line options"
 msgstr "Totem ไม่สามารถแจงตัวเลือกบรรทัดคำสั่ง"
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3095
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ไม่สามารถเริ่มใช้ระบบจัดการค่าตั้ง"
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3095
 msgid "Make sure that GNOME is properly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง GNOME ถูกต้องหรือไม่"
 
@@ -1258,7 +1258,7 @@ msgstr ""
 "ไม่สามารถสร้างอ็อบเจกต์สำหรับเล่นสื่อของ GStreamer กรุณาตรวจสอบการติดตั้ง GStreamer ของคุณ"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4898
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5015
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1405,43 +1405,43 @@ msgstr "ไม่สามารถเปิดภาพยนตร์ได้
 msgid "Generic Error."
 msgstr "ผิดพลาด"
 
-#: ../src/backend/bacon-video-widget-xine.c:2384
+#: ../src/backend/bacon-video-widget-xine.c:2394
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่สนับสนุนการอ่านรหัส '%s' คุณอาจต้องติดตั้งปลั๊กอินเพิ่มเติม เพื่อจะเล่นภาพยนตร์บางชนิดได้"
 
-#: ../src/backend/bacon-video-widget-xine.c:2388
+#: ../src/backend/bacon-video-widget-xine.c:2398
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr "ไม่มีตัวถอดรหัสเสียง '%s' คุณต้องติดตั้งเองต่างหาก"
 
-#: ../src/backend/bacon-video-widget-xine.c:2402
+#: ../src/backend/bacon-video-widget-xine.c:2412
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "แฟ้มนี้เป็นแฟ้มเสียง และไม่มีเอาต์พุตสำหรับเสียงออก"
 
-#: ../src/backend/bacon-video-widget-xine.c:3945
-#: ../src/backend/bacon-video-widget-xine.c:3992
-#: ../src/backend/bacon-video-widget-xine.c:4014
+#: ../src/backend/bacon-video-widget-xine.c:3955
+#: ../src/backend/bacon-video-widget-xine.c:4002
+#: ../src/backend/bacon-video-widget-xine.c:4024
 #, c-format
 msgid "Language %d"
 msgstr "ภาษา %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4103
+#: ../src/backend/bacon-video-widget-xine.c:4113
 #, c-format
 msgid "No video to capture."
 msgstr "ไม่มีภาพยนตร์สำหรับจับหน้าจอ"
 
-#: ../src/backend/bacon-video-widget-xine.c:4111
+#: ../src/backend/bacon-video-widget-xine.c:4121
 #, c-format
 msgid "Video codec is not handled."
 msgstr "ตัวถอดรหัสภาพยนตร์ไม่ถูกต้อง"
 
-#: ../src/backend/bacon-video-widget-xine.c:4122
+#: ../src/backend/bacon-video-widget-xine.c:4132
 #, c-format
 msgid "Movie is not playing."
 msgstr "ภาพยนตร์ไม่ได้เล่นอยู่"
@@ -1550,7 +1550,11 @@ msgstr "วิดีโอซีดี"
 msgid "DVD"
 msgstr "ดีวีดี"
 
-#: ../src/plparse/totem-pl-parser.c:470
+#: ../src/plparse/totem-disc.c:880
+msgid "Digital Television"
+msgstr "โทรทัศน์ดิจิทัล"
+
+#: ../src/plparse/totem-pl-parser.c:438
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "ไม่สามารถเขียนไปยังตัวแจง: %s"
@@ -1558,7 +1562,7 @@ msgstr "ไม่สามารถเขียนไปยังตัวแจ
 #: ../src/plparse/totem-pl-parser-lines.c:105
 #: ../src/plparse/totem-pl-parser-pla.c:78
 #: ../src/plparse/totem-pl-parser-pls.c:70
-#: ../src/plparse/totem-pl-parser-xspf.c:73
+#: ../src/plparse/totem-pl-parser-xspf.c:106
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "ไม่สามารถเปิดแฟ้ม '%s': %s"
@@ -1744,19 +1748,19 @@ msgstr "ข้ามแบบระบุเวลา"
 msgid "Could not load the \"Skip to\" dialogue interface."
 msgstr "ไม่สามารถโหลดแฟ้มส่วนติดต่อผู้ใช้ของกล่องโต้ตอบ \"ข้ามไปยัง\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:417
+#: ../browser-plugin/totem-plugin-viewer.c:437
 #, c-format
 msgid "No URI to play"
 msgstr "ไม่มี URI ที่จะเล่น"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:444
-#: ../browser-plugin/totem-plugin-viewer.c:448
+#: ../browser-plugin/totem-plugin-viewer.c:464
+#: ../browser-plugin/totem-plugin-viewer.c:468
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem ไม่สามารถเล่น '%s'"
 
-#: ../browser-plugin/totem-plugin-viewer.c:825
+#: ../browser-plugin/totem-plugin-viewer.c:847
 #, c-format
 msgid "Opening %s"
 msgstr "กำลังเปิด %s"
@@ -1764,35 +1768,35 @@ msgstr "กำลังเปิด %s"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1071
+#: ../browser-plugin/totem-plugin-viewer.c:1130
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "เ_ปิดด้วย \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1122
+#: ../browser-plugin/totem-plugin-viewer.c:1181
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "ปลั๊กอินสำหรับเบราว์เซอร์โดยใช้ %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1127
+#: ../browser-plugin/totem-plugin-viewer.c:1186
 msgid "Totem Browser Plugin"
 msgstr "ปลั๊กอิน Totem สำหรับเบราว์เซอร์"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1562
+#: ../browser-plugin/totem-plugin-viewer.c:1665
 msgid "The Totem plugin could not be started."
 msgstr "ไม่สามารถเริ่มปลั๊กอิน Totem"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1886
+#: ../browser-plugin/totem-plugin-viewer.c:2024
 msgid "No playlist or playlist empty"
 msgstr "ไม่มีรายการการเล่น หรือรายการการเล่นว่างเปล่า"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1990
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Could not initialise the thread-safe libraries."
 msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1990
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "กรุณาตรวจสอบการติดตั้งของระบบ ปลั๊กอิน Totem จะเลิกทำงาน"
 
