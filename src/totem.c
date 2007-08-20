@@ -1242,6 +1242,8 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 			continue;
 
 		filename = totem_create_full_path (p->data);
+		if (filename == NULL)
+			filename = g_strdup (p->data);
 		title = NULL;
 
 		if (empty_pl != FALSE && cleared == FALSE)
@@ -1269,7 +1271,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 			}
 		}
 
-		totem_playlist_add_mrl (totem->playlist, filename ? filename : p->data, title);
+		totem_playlist_add_mrl (totem->playlist, filename, title);
 
 		g_free (filename);
 		g_free (p->data);

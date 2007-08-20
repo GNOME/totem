@@ -405,6 +405,8 @@ drop_cb (GtkWidget     *widget,
 			continue;
 
 		filename = totem_create_full_path (p->data);
+		if (filename == NULL)
+			filename = g_strdup (p->data);
 		title = NULL;
 
 		if (info == 1) {
@@ -418,7 +420,7 @@ drop_cb (GtkWidget     *widget,
 			}
 		}
 
-		totem_playlist_add_mrl (playlist, filename ? filename : p->data, title);
+		totem_playlist_add_mrl (playlist, filename, title);
 
 		g_free (filename);
 		g_free (p->data);
@@ -1621,13 +1623,17 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	res = totem_pl_parser_parse (playlist->_priv->parser, mrl, TRUE);
+	res = totem_pl_parser_parse (playlist->_priv->parser, mrl, FALSE);
 
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR)
 	{
-		totem_playlist_error (_("Playlist error"), _("The playlist '%s' could not be parsed, it might be damaged."), playlist);
+		char *msg;
+
+		msg = g_strdup_printf (_("The playlist '%s' could not be parsed, it might be damaged."), display_name ? display_name : mrl);
+		totem_playlist_error (_("Playlist error"), msg, playlist);
+		g_free (msg);
 		return FALSE;
 	}
 	if (res == TOTEM_PL_PARSER_RESULT_IGNORED)

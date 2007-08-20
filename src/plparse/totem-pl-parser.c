@@ -1046,7 +1046,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 	char *mimetype;
 	guint i;
 	gpointer data = NULL;
-	TotemPlParserResult ret = TOTEM_PL_PARSER_RESULT_ERROR;
+	TotemPlParserResult ret = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	gboolean found = FALSE;
 
 	if (parser->priv->recurse_level > RECURSE_LEVEL_MAX)

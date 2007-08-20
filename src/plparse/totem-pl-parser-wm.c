@@ -216,6 +216,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 					 TOTEM_PL_PARSER_FIELD_STARTTIME, starttime,
 					 TOTEM_PL_PARSER_FIELD_DURATION, duration,
 					 NULL);
+		retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
 bail:
@@ -251,6 +252,7 @@ parse_asx_entryref (TotemPlParser *parser, const char *base, xml_node_t *node)
 		totem_pl_parser_add_url (parser,
 					 TOTEM_PL_PARSER_FIELD_URL, fullpath,
 					 NULL);
+		retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
 	g_free (fullpath);

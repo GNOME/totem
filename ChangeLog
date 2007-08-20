@@ -1,5 +1,28 @@
 2007-08-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (drop_cb), (totem_playlist_add_mrl):
+	* src/totem.c: (totem_action_drop_files):
+
+	Fix parsing of drops from web browsers, broken since
+	totem_create_full_path was changed to return NULL if the path passed
+	was already a URI (Closes: #468524)
+
+	Fix the playlist error message not showing the playlist URI or name
+
+	Don't use fallback by default, so we can set the item "display name"
+	when falling back ourselves
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_internal):
+	The default return value is unhandled, as if we don't even set 
+	a retval, then that's because we don't know how to handle the
+	item
+
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry),
+	(parse_asx_entryref): When we push playlist items, we're successful,
+	so return the value that shows this
+
+2007-08-20  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_parse_duration):
 	* src/plparse/totem-pl-parser-lines.c:
