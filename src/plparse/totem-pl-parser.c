@@ -695,6 +695,10 @@ totem_pl_parser_init (TotemPlParser *parser)
 				     "String representing the default UI mode (only compact is supported)", NULL,
 				     G_PARAM_READABLE & G_PARAM_WRITABLE);
 	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("endtime", "endtime",
+				     "String representing the end time of the stream", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 }
 
 static void

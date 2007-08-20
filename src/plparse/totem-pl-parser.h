@@ -64,6 +64,7 @@ struct TotemPlParser {
 #define TOTEM_PL_PARSER_FIELD_AUTOPLAY		"autoplay"
 #define TOTEM_PL_PARSER_FIELD_DURATION		"duration"
 #define TOTEM_PL_PARSER_FIELD_STARTTIME		"starttime"
+#define TOTEM_PL_PARSER_FIELD_ENDTIME		"endtime"
 #define TOTEM_PL_PARSER_FIELD_COPYRIGHT		"copyright"
 #define TOTEM_PL_PARSER_FIELD_ABSTRACT		"abstract"
 #define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"

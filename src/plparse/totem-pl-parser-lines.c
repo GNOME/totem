@@ -179,7 +179,7 @@ totem_pl_parser_parse_ram_url (TotemPlParser *parser, const char *url)
 	char *mark, **params;
 	GString *str;
 	guint i, num_params;
-	char *title, *author, *copyright, *abstract, *screensize, *mode;
+	char *title, *author, *copyright, *abstract, *screensize, *mode, *start, *end;
 
 	if (g_str_has_prefix (url, "rtsp://") == FALSE
 	    && g_str_has_prefix (url, "pnm://") == FALSE) {
@@ -203,7 +203,7 @@ totem_pl_parser_parse_ram_url (TotemPlParser *parser, const char *url)
 		return;
 	}
 
-	title = author = copyright = abstract = screensize = mode = NULL;
+	title = author = copyright = abstract = screensize = mode = end = start = NULL;
 	num_params = 0;
 
 	str = g_string_new_len (url, mark - url);
@@ -221,6 +221,10 @@ totem_pl_parser_parse_ram_url (TotemPlParser *parser, const char *url)
 			screensize = params[i] + strlen ("screensize=");
 		} else if (g_str_has_prefix (params[i], "mode=") != FALSE) {
 			mode = params[i] + strlen ("mode=");
+		} else if (g_str_has_prefix (params[i], "end=") != FALSE) {
+			end = params[i] + strlen ("end=");
+		} else if (g_str_has_prefix (params[i], "start=") != FALSE) {
+			start = params[i] + strlen ("start=");
 		} else {
 			if (num_params == 0)
 				g_string_append_c (str, '?');
@@ -239,6 +243,8 @@ totem_pl_parser_parse_ram_url (TotemPlParser *parser, const char *url)
 				 TOTEM_PL_PARSER_FIELD_ABSTRACT, abstract,
 				 TOTEM_PL_PARSER_FIELD_SCREENSIZE, screensize,
 				 TOTEM_PL_PARSER_FIELD_UI_MODE, mode,
+				 TOTEM_PL_PARSER_FIELD_STARTTIME, start,
+				 TOTEM_PL_PARSER_FIELD_ENDTIME, end,
 				 NULL);
 
 	g_string_free (str, TRUE);

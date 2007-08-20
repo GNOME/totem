@@ -1932,14 +1932,16 @@ totem_embedded_clear_playlist (TotemEmbedded *embedded)
 static int
 totem_embedded_parse_duration (const char *duration)
 {
-	int hours, minutes, seconds, tenths;
+	int hours, minutes, seconds, fractions;
 
 	if (!duration)
 		return -1;
 
+	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4)
+		return hours * 3600 + minutes * 60 + seconds;
 	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3)
 		return hours * 3600 + minutes * 60 + seconds;
-	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &tenths) == 3)
+	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3)
 		return minutes * 60 + seconds;
 
 	return -1;
