@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 08:58+0200\n"
-"PO-Revision-Date: 2007-08-19 08:58+0100\n"
+"POT-Creation-Date: 2007-08-20 08:49+0200\n"
+"PO-Revision-Date: 2007-08-20 08:51+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -165,30 +165,45 @@ msgstr "Spelar upp en film"
 msgid "No File"
 msgstr "Ingen fil"
 
-#: ../src/totem-interface.c:129
+#: ../src/totem-interface.c:114
+#: ../src/totem-interface.c:122
+#, c-format
+msgid "Could not launch URL \"%s\": %s"
+msgstr "Kunde inte starta url:en \"%s\": %s"
+
+#: ../src/totem-interface.c:114
+msgid "Default browser not configured"
+msgstr "Standardwebbläsare har inte konfigurerats"
+
+#: ../src/totem-interface.c:115
+#: ../src/totem-interface.c:123
+msgid "Error launching URI"
+msgstr "Fel vid start av URI"
+
+#: ../src/totem-interface.c:191
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Kunde inte läsa in \"%s\"-gränssnittet. %s"
 
-#: ../src/totem-interface.c:131
-#: ../src/totem-interface.c:133
+#: ../src/totem-interface.c:193
+#: ../src/totem-interface.c:195
 #: ../src/totem-menu.c:1399
 msgid "Make sure that Totem is properly installed."
 msgstr "Försäkra dig om att Totem är korrekt installerat."
 
-#: ../src/totem-interface.c:244
+#: ../src/totem-interface.c:306
 msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
 msgstr "Totem är fri programvara. Du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation, antingen version 2 eller (om du så vill) någon senare version."
 
-#: ../src/totem-interface.c:248
+#: ../src/totem-interface.c:310
 msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
 msgstr "Totem distribueras i hopp om att det ska vara användbart, men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public License för ytterligare information."
 
-#: ../src/totem-interface.c:252
+#: ../src/totem-interface.c:314
 msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 msgstr "Du bör ha fått en kopia av GNU General Public License tillsammans med detta program. Om inte, skriv till Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA"
 
-#: ../src/totem-interface.c:255
+#: ../src/totem-interface.c:317
 msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
 msgstr "Totem innehåller ett undantag för att tillåta användningen av proprietära GStreamer-insticksmoduler."
 
@@ -816,7 +831,7 @@ msgstr "0:00 / 0:00"
 
 #: ../src/totem-statusbar.c:111
 #: ../src/totem.c:303
-#: ../src/totem.c:846
+#: ../src/totem.c:851
 #: ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Stopped"
 msgstr "Stoppad"
@@ -1065,113 +1080,122 @@ msgstr "Totem kunde inte mata ut det optiska mediumet."
 
 #: ../src/totem.c:386
 #: ../src/totem.c:413
-#: ../src/totem.c:944
-#: ../src/totem.c:1054
-#: ../src/totem.c:1081
+#: ../src/totem.c:949
+#: ../src/totem.c:1059
+#: ../src/totem.c:1086
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunde inte spela upp \"%s\"."
 
-#: ../src/totem.c:472
+#: ../src/totem.c:473
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
+msgstr "Totem kan inte spela upp denna typ av media (%s) därför att lämpliga insticksmoduler saknas för att kunna läsa från skivan."
+
+#: ../src/totem.c:475
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom du saknar lämpliga insticksmoduler för att hantera den."
 
-#: ../src/totem.c:473
+#: ../src/totem.c:476
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "Installera de insticksmoduler som krävs och starta om Totem för att kunna spela upp denna typ av media."
 
-#: ../src/totem.c:480
+#: ../src/totem.c:477
+msgid "More information about media plugins"
+msgstr "Mer information om mediainsticksmoduler"
+
+#: ../src/totem.c:485
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "Totem kunde inte spela upp detta media (%s) trots att en insticksmodul som hanterar den är installerad."
 
-#: ../src/totem.c:481
+#: ../src/totem.c:486
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Du bör kontrollera om det finns en skiva i enheten och att den är korrekt konfigurerad."
 
-#: ../src/totem.c:509
+#: ../src/totem.c:514
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunde inte spela upp den här skivan."
 
-#: ../src/totem.c:510
-#: ../src/totem.c:2910
+#: ../src/totem.c:515
+#: ../src/totem.c:2915
 #: ../browser-plugin/totem-plugin-viewer.c:1665
 msgid "No reason."
 msgstr "Ingen orsak."
 
-#: ../src/totem.c:763
-#: ../src/totem.c:771
+#: ../src/totem.c:768
+#: ../src/totem.c:776
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunde inte ta en skärmdump från den filmen."
 
-#: ../src/totem.c:771
+#: ../src/totem.c:776
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Detta ska inte hända; skicka en felrapport."
 
 #. Title
-#: ../src/totem.c:854
-#: ../src/totem.c:3058
-#: ../src/totem.c:3087
+#: ../src/totem.c:859
+#: ../src/totem.c:3063
+#: ../src/totem.c:3092
 #: ../browser-plugin/totem-plugin-viewer.c:1674
 msgid "Totem Movie Player"
 msgstr "Filmuppspelaren Totem"
 
-#: ../src/totem.c:950
+#: ../src/totem.c:955
 msgid "No error message"
 msgstr "Inget felmeddelande"
 
-#: ../src/totem.c:1192
+#: ../src/totem.c:1197
 msgid "Totem could not display the help contents."
 msgstr "Totem kunde inte visa hjälpinnehållet."
 
-#: ../src/totem.c:1454
-#: ../src/totem.c:1456
+#: ../src/totem.c:1459
+#: ../src/totem.c:1461
 #: ../browser-plugin/totem-plugin-viewer.c:1454
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: ../src/totem.c:2784
-#: ../src/totem.c:2786
+#: ../src/totem.c:2789
+#: ../src/totem.c:2791
 msgid "Play / Pause"
 msgstr "Spela upp / Gör paus"
 
-#: ../src/totem.c:2793
-#: ../src/totem.c:2795
+#: ../src/totem.c:2798
+#: ../src/totem.c:2800
 msgid "Previous Chapter/Movie"
 msgstr "Föregående kapitel/film"
 
-#: ../src/totem.c:2802
-#: ../src/totem.c:2804
+#: ../src/totem.c:2807
+#: ../src/totem.c:2809
 msgid "Next Chapter/Movie"
 msgstr "Nästa kapitel/film"
 
-#: ../src/totem.c:2910
+#: ../src/totem.c:2915
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: ../src/totem.c:3059
+#: ../src/totem.c:3064
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
-#: ../src/totem.c:3059
+#: ../src/totem.c:3064
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
 
 #. Handle command line arguments
-#: ../src/totem.c:3067
+#: ../src/totem.c:3072
 msgid "- Play movies and songs"
 msgstr "- Spela upp filmer och låtar"
 
-#: ../src/totem.c:3076
+#: ../src/totem.c:3081
 msgid "Totem could not parse the command-line options"
 msgstr "Totem kunde inte tolka kommandoradsflaggorna"
 
-#: ../src/totem.c:3095
+#: ../src/totem.c:3100
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunde inte initiera konfigurationsmotorn."
 
-#: ../src/totem.c:3095
+#: ../src/totem.c:3100
 msgid "Make sure that GNOME is properly installed."
 msgstr "Försäkra dig om att GNOME är korrekt installerat."
 
