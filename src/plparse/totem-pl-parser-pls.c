@@ -210,27 +210,30 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 	retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
 	for (i = 1; i <= num_entries; i++) {
-		char *file, *title, *genre;
-		char *file_key, *title_key, *genre_key;
+		char *file, *title, *genre, *length;
+		char *file_key, *title_key, *genre_key, *length_key;
 
 		file_key = g_strdup_printf ("file%d", i);
 		title_key = g_strdup_printf ("title%d", i);
+		length_key = g_strdup_printf ("length%d", i);
 		/* Genre is our own little extension */
 		genre_key = g_strdup_printf ("genre%d", i);
 
 		file = totem_pl_parser_read_ini_line_string (lines, (const char*)file_key, dos_mode);
 		title = totem_pl_parser_read_ini_line_string (lines, (const char*)title_key, dos_mode);
 		genre = totem_pl_parser_read_ini_line_string (lines, (const char*)genre_key, dos_mode);
+		length = totem_pl_parser_read_ini_line_string (lines, (const char*)length_key, dos_mode);
 
 		g_free (file_key);
 		g_free (title_key);
 		g_free (genre_key);
+		g_free (length_key);
 
 		if (file == NULL)
 		{
-			g_free (file);
 			g_free (title);
 			g_free (genre);
+			g_free (length);
 			continue;
 		}
 
@@ -244,6 +247,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 							 TOTEM_PL_PARSER_FIELD_URL, file,
 							 TOTEM_PL_PARSER_FIELD_TITLE, title,
 							 TOTEM_PL_PARSER_FIELD_GENRE, genre,
+							 TOTEM_PL_PARSER_FIELD_DURATION, length,
 							 TOTEM_PL_PARSER_FIELD_BASE, base, NULL);
 			}
 		} else {
@@ -262,6 +266,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 							 TOTEM_PL_PARSER_FIELD_URL, uri,
 							 TOTEM_PL_PARSER_FIELD_TITLE, title,
 							 TOTEM_PL_PARSER_FIELD_GENRE, genre,
+							 TOTEM_PL_PARSER_FIELD_DURATION, length,
 							 TOTEM_PL_PARSER_FIELD_BASE, base, NULL);
 				g_free (uri);
 			}
@@ -273,6 +278,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 		g_free (file);
 		g_free (title);
 		g_free (genre);
+		g_free (length);
 	}
 
 	if (playlist_title != NULL)

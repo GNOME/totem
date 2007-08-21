@@ -1,5 +1,11 @@
 2007-08-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-pls.c:
+	(totem_pl_parser_add_pls_with_contents): Add support for the duration
+	metadata being pushed from .pls files
+
+2007-08-21  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_play),
 	(on_play_pause), (totem_embedded_parse_duration): Tweak the 
 	duration parsing so that items < 1 second in length show up
