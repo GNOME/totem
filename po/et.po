@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 17:59+0100\n"
-"PO-Revision-Date: 2007-08-15 12:04+0300\n"
+"POT-Creation-Date: 2007-08-19 03:19+0100\n"
+"PO-Revision-Date: 2007-08-19 10:31+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -184,7 +184,7 @@ msgstr "Kas lubada silumisteabe väljastamist esitusmootori poolt"
 msgid "Playing a movie"
 msgstr "Filmi esitamine"
 
-#: ../src/totem-fullscreen.c:404
+#: ../src/totem-fullscreen.c:403
 msgid "No File"
 msgstr "Fail puudub"
 
@@ -273,11 +273,11 @@ msgstr "GNOME"
 msgid "Movie Player using %s and %s"
 msgstr "Filmiesitaja (%s ja %s)"
 
-#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Autoriõigused © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1132
+#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1191
 msgid "translator-credits"
 msgstr ""
 "Ilmar Kerm <ikerm@hot.ee>, 2002.\n"
@@ -739,37 +739,37 @@ msgstr "_Kopeeri asukoht"
 msgid "Copy the location to the clipboard"
 msgstr "Asukoha kopeerimine lõikelauale"
 
-#: ../src/totem-playlist.c:313 ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:331 ../src/totem-playlist.c:875
 msgid "Could not save the playlist"
 msgstr "Esitusloendit pole võimalik salvestada"
 
-#: ../src/totem-playlist.c:850
+#: ../src/totem-playlist.c:875
 msgid "Unknown file extension."
 msgstr "Tundmatu faililaiend."
 
-#: ../src/totem-playlist.c:863
+#: ../src/totem-playlist.c:888
 msgid "Select playlist format:"
 msgstr "Vali esitusloendi vorming:"
 
-#: ../src/totem-playlist.c:868
+#: ../src/totem-playlist.c:893
 msgid "By extension"
 msgstr "Laiendi järgi"
 
-#: ../src/totem-playlist.c:898
+#: ../src/totem-playlist.c:923
 msgid "Save Playlist"
 msgstr "Salvesta esitusloend"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:909 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:934 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Esitusloend"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 msgid "Playlist error"
 msgstr "Esitusloendi viga"
 
-#: ../src/totem-playlist.c:1596
+#: ../src/totem-playlist.c:1630
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Esitusloendit '%s' pole võimalik parsida, see võib olla rikutud."
@@ -850,7 +850,7 @@ msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
 #: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:846
-#: ../browser-plugin/totem-plugin-viewer.c:296
+#: ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Stopped"
 msgstr "Seisatud"
 
@@ -1034,31 +1034,31 @@ msgstr "Lääne"
 msgid "Vietnamese"
 msgstr "Vietnami"
 
-#: ../src/totem-uri.c:303
+#: ../src/totem-uri.c:306
 msgid "All files"
 msgstr "Kõik failid"
 
-#: ../src/totem-uri.c:308
+#: ../src/totem-uri.c:311
 msgid "Supported files"
 msgstr "Toetatud failitüübid"
 
-#: ../src/totem-uri.c:320
+#: ../src/totem-uri.c:323
 msgid "Audio files"
 msgstr "Audiofailid"
 
-#: ../src/totem-uri.c:328
+#: ../src/totem-uri.c:331
 msgid "Video files"
 msgstr "Videofailid"
 
-#: ../src/totem-uri.c:399
+#: ../src/totem-uri.c:402
 msgid "Select Movies or Playlists"
 msgstr "Filmide või esitusloendite valimine"
 
-#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:312
+#: ../src/totem.c:289 ../browser-plugin/totem-plugin-viewer.c:328
 msgid "Playing"
 msgstr "Esitamine"
 
-#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:308
+#: ../src/totem.c:296 ../browser-plugin/totem-plugin-viewer.c:324
 msgid "Paused"
 msgstr "Pausitud"
 
@@ -1110,8 +1110,8 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem ei suutnud seda plaati mängida."
 
-#: ../src/totem.c:510 ../src/totem.c:2899
-#: ../browser-plugin/totem-plugin-viewer.c:1562
+#: ../src/totem.c:510 ../src/totem.c:2910
+#: ../browser-plugin/totem-plugin-viewer.c:1665
 msgid "No reason."
 msgstr "Põhjendus puudub."
 
@@ -1124,8 +1124,8 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "Seda ei oleks tohtinud juhtuda; palun saada veateade."
 
 #. Title
-#: ../src/totem.c:854 ../src/totem.c:3047 ../src/totem.c:3075
-#: ../browser-plugin/totem-plugin-viewer.c:1571
+#: ../src/totem.c:854 ../src/totem.c:3058 ../src/totem.c:3087
+#: ../browser-plugin/totem-plugin-viewer.c:1674
 msgid "Totem Movie Player"
 msgstr "Totem filmiesitaja"
 
@@ -1137,49 +1137,49 @@ msgstr "Veateadet pole"
 msgid "Totem could not display the help contents."
 msgstr "Totemil pole võimalik abiteabe sisu näidata."
 
-#: ../src/totem.c:1451 ../src/totem.c:1453
-#: ../browser-plugin/totem-plugin-viewer.c:1358
+#: ../src/totem.c:1454 ../src/totem.c:1456
+#: ../browser-plugin/totem-plugin-viewer.c:1454
 msgid "An error occurred"
 msgstr "Tekkis veaolukord"
 
-#: ../src/totem.c:2779 ../src/totem.c:2781
+#: ../src/totem.c:2784 ../src/totem.c:2786
 msgid "Play / Pause"
 msgstr "Esita / pausi"
 
-#: ../src/totem.c:2788 ../src/totem.c:2790
+#: ../src/totem.c:2793 ../src/totem.c:2795
 msgid "Previous Chapter/Movie"
 msgstr "Eelmine lõik/film"
 
-#: ../src/totem.c:2797 ../src/totem.c:2799
+#: ../src/totem.c:2802 ../src/totem.c:2804
 msgid "Next Chapter/Movie"
 msgstr "Järgmine lõik/film"
 
-#: ../src/totem.c:2899
+#: ../src/totem.c:2910
 msgid "Totem could not startup."
 msgstr "Totemil pole võimalik käivituda."
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3059
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Thread-safe teeke pole võimalik lähtestada."
 
-#: ../src/totem.c:3048
+#: ../src/totem.c:3059
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totem lõpetab oma töö."
 
 #. Handle command line arguments
-#: ../src/totem.c:3055
+#: ../src/totem.c:3067
 msgid "- Play movies and songs"
 msgstr "- Filmide ja muusika esitamine"
 
-#: ../src/totem.c:3064
+#: ../src/totem.c:3076
 msgid "Totem could not parse the command-line options"
 msgstr "Totem ei käsureavõtmeid analüüsida"
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3095
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei suuda lähtestada seadistusmootorit."
 
-#: ../src/totem.c:3083
+#: ../src/totem.c:3095
 msgid "Make sure that GNOME is properly installed."
 msgstr "Veendu, et GNOME on õigesti paigaldatud."
 
@@ -1288,7 +1288,7 @@ msgstr ""
 "paigaldust."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4898
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5015
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1430,7 +1430,7 @@ msgstr "Seda filmi pole võimalik avada."
 msgid "Generic Error."
 msgstr "Üldine viga."
 
-#: ../src/backend/bacon-video-widget-xine.c:2384
+#: ../src/backend/bacon-video-widget-xine.c:2394
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1439,7 +1439,7 @@ msgstr ""
 "Videokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
 "filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2388
+#: ../src/backend/bacon-video-widget-xine.c:2398
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1448,26 +1448,26 @@ msgstr ""
 "Audiokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
 "filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2402
+#: ../src/backend/bacon-video-widget-xine.c:2412
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "See on audiofail aga hetkel pole audioväljundit saadaval."
 
-#: ../src/backend/bacon-video-widget-xine.c:3945
-#: ../src/backend/bacon-video-widget-xine.c:3992
-#: ../src/backend/bacon-video-widget-xine.c:4014
+#: ../src/backend/bacon-video-widget-xine.c:3955
+#: ../src/backend/bacon-video-widget-xine.c:4002
+#: ../src/backend/bacon-video-widget-xine.c:4024
 #, c-format
 msgid "Language %d"
 msgstr "Keel %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4103
+#: ../src/backend/bacon-video-widget-xine.c:4113
 msgid "No video to capture."
 msgstr "Pole videot, mida salvestada."
 
-#: ../src/backend/bacon-video-widget-xine.c:4111
+#: ../src/backend/bacon-video-widget-xine.c:4121
 msgid "Video codec is not handled."
 msgstr "Videokoodek pole käsitletud."
 
-#: ../src/backend/bacon-video-widget-xine.c:4122
+#: ../src/backend/bacon-video-widget-xine.c:4132
 msgid "Movie is not playing."
 msgstr "Filmi ei esitata."
 
@@ -1576,7 +1576,11 @@ msgstr "Video VCD"
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:470
+#: ../src/plparse/totem-disc.c:880
+msgid "Digital Television"
+msgstr "Digitaaltelevisioon"
+
+#: ../src/plparse/totem-pl-parser.c:438
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Parserit pole võimalik kirjutada: %s"
@@ -1584,7 +1588,7 @@ msgstr "Parserit pole võimalik kirjutada: %s"
 #: ../src/plparse/totem-pl-parser-lines.c:105
 #: ../src/plparse/totem-pl-parser-pla.c:78
 #: ../src/plparse/totem-pl-parser-pls.c:70
-#: ../src/plparse/totem-pl-parser-xspf.c:73
+#: ../src/plparse/totem-pl-parser-xspf.c:106
 #, c-format
 msgid "Couldn't open file '%s': %s"
 msgstr "Faili '%s' pole võimalik avada: %s"
@@ -1765,18 +1769,18 @@ msgstr "Liikumine määratud ajahetkele"
 msgid "Could not load the \"Skip to\" dialogue interface."
 msgstr "\"Asukoha vahetamise\" dialoogi liidest pole võimalik laadida."
 
-#: ../browser-plugin/totem-plugin-viewer.c:417
+#: ../browser-plugin/totem-plugin-viewer.c:437
 msgid "No URI to play"
 msgstr "Esitamiseks puudub URI"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:444
-#: ../browser-plugin/totem-plugin-viewer.c:448
+#: ../browser-plugin/totem-plugin-viewer.c:464
+#: ../browser-plugin/totem-plugin-viewer.c:468
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem ei saa '%s' esitada"
 
-#: ../browser-plugin/totem-plugin-viewer.c:825
+#: ../browser-plugin/totem-plugin-viewer.c:847
 #, c-format
 msgid "Opening %s"
 msgstr "'%s' avamine"
@@ -1784,112 +1788,34 @@ msgstr "'%s' avamine"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1071
+#: ../browser-plugin/totem-plugin-viewer.c:1130
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Ava programmiga \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1122
+#: ../browser-plugin/totem-plugin-viewer.c:1181
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Veebisirvija plugin, kasutab abiprogrammi %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1127
+#: ../browser-plugin/totem-plugin-viewer.c:1186
 msgid "Totem Browser Plugin"
 msgstr "Totemi plugin veebisirvijale"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1562
+#: ../browser-plugin/totem-plugin-viewer.c:1665
 msgid "The Totem plugin could not be started."
 msgstr "Totemil pole võimalik käivituda."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1886
+#: ../browser-plugin/totem-plugin-viewer.c:2024
 msgid "No playlist or playlist empty"
 msgstr "Esitusloend on puudu või tühi"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1990
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Thread-safe teeke pole võimalik lähtestada."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1990
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
-
-#~ msgid "Support additional media player keys"
-#~ msgstr "Meediaesitaja lisaklahvide tugi"
-
-#~ msgid "Adds movie properties to the sidebar"
-#~ msgstr "Filmi omaduste lisamine külgribale"
-
-#~ msgid "Deactivates the screensaver when a movie is playing"
-#~ msgstr "Ekraanisäästja deaktiveerimine filmi esitamise ajaks"
-
-#~ msgid "Provides the \"Skip to\" dialog."
-#~ msgstr "\"Hüppa asukohale\" dialoogi tagamine."
-
-#~ msgid "Leave Fullscreen"
-#~ msgstr "Välju täisekraanvaatest"
-
-#~ msgid "TV-out in fullscreen by Nvidia (NTSC)"
-#~ msgstr "Täisekraan Nvidia TV-väljund (NTSC)"
-
-#~ msgid "TV-out in fullscreen by Nvidia (PAL)"
-#~ msgstr "Täisekraan Nvidia TV-väljund (PAL)"
-
-#~ msgid "Text Subtitles"
-#~ msgstr "Tekstilised subtiitrid"
-
-#~ msgid "Time seek bar"
-#~ msgstr "Ajaline kerimisriba"
-
-#~ msgid "Totem Preferences"
-#~ msgstr "Totem'i eelistused"
-
-#~ msgid "Visual Effects"
-#~ msgstr "Visuaalefektid"
-
-#~ msgid "Visualisation _size:"
-#~ msgstr "_Visualiseerimise suurus:"
-
-#~ msgid "_Audio output type:"
-#~ msgstr "_Heliväljundi liik:"
-
-#~ msgid "_Brightness:"
-#~ msgstr "_Heledus:"
-
-#~ msgid "_Encoding:"
-#~ msgstr "Koo_ditabel:"
-
-#~ msgid "_Font:"
-#~ msgstr "_Kirjatüüp:"
-
-#~ msgid "_Hue:"
-#~ msgstr "_Toon:"
-
-#~ msgid "_No TV-out"
-#~ msgstr "TV-väljund _puudub"
-
-#~ msgid "_Type of visualisation:"
-#~ msgstr "Visualiseerimise l_iik:"
-
-#~ msgid "Enter the _address of the file you would like to open:"
-#~ msgstr "Sisesta faili _aadress, mida sa soovid avada:"
-
-#~ msgid "fullscreen widgets"
-#~ msgstr "täisekraanividinad"
-
-#~ msgid "playlist"
-#~ msgstr "esitusloend"
-
-#~ msgid "main window"
-#~ msgstr "peaaken"
-
-#~ msgid "Plugins Manager"
-#~ msgstr "Pluginahaldur"
-
-#~ msgid "Properties dialog"
-#~ msgstr "Omaduste dialoog"
-
-#~ msgid "_Skip to:"
-#~ msgstr "_Liikumine asukohale:"
