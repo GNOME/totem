@@ -1,3 +1,11 @@
+2007-08-21  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_play),
+	(on_play_pause), (totem_embedded_parse_duration): Tweak the 
+	duration parsing so that items < 1 second in length show up
+	as 1 second in length. Stop the button glow whenever we click
+	the play button
+
 2007-08-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (drop_cb), (totem_playlist_add_mrl):

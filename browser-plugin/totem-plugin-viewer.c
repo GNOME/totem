@@ -495,6 +495,8 @@ totem_embedded_play (TotemEmbedded *emb,
 {
 	GError *err = NULL;
 
+	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
+
 	if (bacon_video_widget_play (emb->bvw, &err) != FALSE) {
 		totem_embedded_set_state (emb, STATE_PLAYING);
 		totem_embedded_set_pp_state (emb, TRUE);
@@ -1248,9 +1250,8 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 	if (emb->state == STATE_PLAYING) {
 		totem_embedded_pause (emb, NULL);
 	} else {
-		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
-
 		if (emb->current_uri == NULL) {
+			totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 				       GDK_CURRENT_TIME, 0);
 		} else {
@@ -1937,12 +1938,20 @@ totem_embedded_parse_duration (const char *duration)
 	if (!duration)
 		return -1;
 
-	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4)
-		return hours * 3600 + minutes * 60 + seconds;
+	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4) {
+		int ret = hours * 3600 + minutes * 60 + seconds;
+		if (ret == 0 && fractions > 0)
+			ret = 1;
+		return ret;
+	}
 	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3)
 		return hours * 3600 + minutes * 60 + seconds;
-	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3)
-		return minutes * 60 + seconds;
+	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3) {
+		int ret = minutes * 60 + seconds;
+		if (ret == 0 && fractions > 0)
+			ret = 1;
+		return ret;
+	}
 
 	return -1;
 }
