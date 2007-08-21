@@ -1,5 +1,12 @@
 2007-08-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/media-player-keys/media-player-keys.totem-plugin.in:
+	Make the media player keys plugin be builtin, caused by GKeyFile
+	thinking "True" is different from "true", see
+	http://bugzilla.gnome.org/show_bug.cgi?id=468882
+
+2007-08-21  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c:
 	(totem_embedded_parse_duration): Add support for PLS' duration
 	format (just the number of seconds)
