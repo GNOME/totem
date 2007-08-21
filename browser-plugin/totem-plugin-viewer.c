@@ -1938,6 +1938,10 @@ totem_embedded_parse_duration (const char *duration)
 	if (!duration)
 		return -1;
 
+	/* PLS files format */
+	if (sscanf (duration, "%d", &seconds) == 1)
+		return seconds;
+	/* Formats used by both ASX and RAM files */
 	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4) {
 		int ret = hours * 3600 + minutes * 60 + seconds;
 		if (ret == 0 && fractions > 0)
