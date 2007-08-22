@@ -1,3 +1,10 @@
+2007-08-22  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state),
+	(totem_embedded_construct): Inhibit the screensaver when playback is
+	ongoing (Closes: #425469)
+
 2007-08-22  Sebastien Bacher  <seb128@ubuntu.com>
 
 	* src/plugins/screensaver/totem-screensaver.c:

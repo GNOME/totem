@@ -87,6 +87,7 @@ totem_plugin_viewer_CPPFLAGS = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-I$(top_srcdir)					\
+	-I$(top_srcdir)/lib				\
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/plparse			\
 	-I$(top_srcdir)/src/backend			\
@@ -114,6 +115,7 @@ totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/src/plparse/libtotem-plparser.la		\
+	$(top_builddir)/lib/libtotemscrsaver.la				\
 	libtotempluginviewer_helper.la					\
 	$(EXTRA_GNOME_LIBS)	\
 	$(XVIDMODE_LIBS) 	\

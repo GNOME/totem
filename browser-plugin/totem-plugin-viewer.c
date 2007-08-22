@@ -39,6 +39,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <totem-pl-parser.h>
+#include <totem-scrsaver.h>
 
 #include <dbus/dbus-glib.h>
 
@@ -109,6 +110,7 @@ typedef struct _TotemEmbedded {
 	GtkWidget *pp_button;
 	GtkWidget *pp_fs_button;
 	TotemStatusbar *statusbar;
+	TotemScrsaver *scrsaver;
 	int width, height;
 	const char *mimetype;
 	char *base_uri;
@@ -337,6 +339,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		break;
 	}
 
+	totem_scrsaver_set_state (emb->scrsaver, (state == STATE_PLAYING) ? FALSE : TRUE);
 	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
 
@@ -1761,8 +1764,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
 
-	if (!emb->hidden)
+	if (!emb->hidden) {
 		gtk_widget_set_size_request (emb->window, width, height);
+		emb->scrsaver = totem_scrsaver_new ();
+	}
 
 #ifdef GNOME_ENABLE_DEBUG
 	child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "controls"));
