@@ -49,7 +49,6 @@ typedef struct
 	TotemPlugin   parent;
 
 	TotemScrsaver *scr;
-	guint          handler_id_fullscreen;
 	guint          handler_id_playing;
 } TotemScreensaverPlugin;
 
@@ -101,8 +100,7 @@ static void
 totem_screensaver_update_from_state (TotemObject *totem,
 				     TotemScreensaverPlugin *pi)
 {
-	if (totem_is_playing (totem) != FALSE
-	    && totem_is_fullscreen (totem) != FALSE) {
+	if (totem_is_playing (totem) != FALSE) {
 		totem_scrsaver_disable (pi->scr);
 	} else {
 		totem_scrsaver_enable (pi->scr);
@@ -124,10 +122,6 @@ impl_activate (TotemPlugin *plugin,
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 
-	pi->handler_id_fullscreen = g_signal_connect (G_OBJECT (totem),
-				"notify::fullscreen",
-				G_CALLBACK (property_notify_cb),
-				pi);
 	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
 				"notify::playing",
 				G_CALLBACK (property_notify_cb),
@@ -145,7 +139,6 @@ impl_deactivate	(TotemPlugin *plugin,
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_fullscreen);
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
 
 	totem_scrsaver_enable (pi->scr);

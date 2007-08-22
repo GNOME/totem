@@ -1,3 +1,10 @@
+2007-08-22  Sebastien Bacher  <seb128@ubuntu.com>
+
+	* src/plugins/screensaver/totem-screensaver.c:
+	(totem_screensaver_update_from_state), (impl_activate),
+	(impl_deactivate): stop the screensaver when playing, not only when 
+	the fullscreen mode is used (Closes: #425473)
+
 2007-08-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/media-player-keys/media-player-keys.totem-plugin.in:
