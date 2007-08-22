@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 17:04+0300\n"
+"POT-Creation-Date: 2007-08-22 16:10+0300\n"
 "PO-Revision-Date: 2007-02-20 07:45+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -183,17 +183,30 @@ msgstr "Toistetaan elokuvaa"
 msgid "No File"
 msgstr "Ei tiedostoa"
 
-#: ../src/totem-interface.c:129
+#: ../src/totem-interface.c:114 ../src/totem-interface.c:122
+#, c-format
+msgid "Could not launch URL \"%s\": %s"
+msgstr "URLia \"%s\" ei voitu avata: %s"
+
+#: ../src/totem-interface.c:114
+msgid "Default browser not configured"
+msgstr "Oletus-selainta ei ole määritelty"
+
+#: ../src/totem-interface.c:115 ../src/totem-interface.c:123
+msgid "Error launching URI"
+msgstr "Virhe avattaessa URI:a"
+
+#: ../src/totem-interface.c:191
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "\"%s\"-käyttöliittymää ei voi ladata: %s"
 
-#: ../src/totem-interface.c:131 ../src/totem-interface.c:133
+#: ../src/totem-interface.c:193 ../src/totem-interface.c:195
 #: ../src/totem-menu.c:1399
 msgid "Make sure that Totem is properly installed."
 msgstr "Tarkista, että Totem on oikein asennettu."
 
-#: ../src/totem-interface.c:244
+#: ../src/totem-interface.c:306
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -205,7 +218,7 @@ msgstr ""
 "Software Foundation on ne julkaissut; joko lisenssin version 2, tai "
 "(valinnan mukaan) minkä tahansa myöhemmän version mukaisesti."
 
-#: ../src/totem-interface.c:248
+#: ../src/totem-interface.c:310
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -217,7 +230,7 @@ msgstr ""
 "laadusta tai soveltuvuudesta tiettyyn tarkoitukseen. Katso GPL lisenssistä "
 "lisää yksityiskohtia."
 
-#: ../src/totem-interface.c:252
+#: ../src/totem-interface.c:314
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -227,7 +240,7 @@ msgstr ""
 "kirjoita osoitteeseen Free Software Foundation Inc., 59 Temple Place, Suite "
 "330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:255
+#: ../src/totem-interface.c:317
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -268,11 +281,11 @@ msgstr "Gnome"
 msgid "Movie Player using %s and %s"
 msgstr "Elokuvasoitin, joka käyttää %s ja %s"
 
-#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1188
+#: ../src/totem-menu.c:1079 ../browser-plugin/totem-plugin-viewer.c:1190
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Copyright © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1084 ../browser-plugin/totem-plugin-viewer.c:1193
 msgid "translator-credits"
 msgstr ""
 "Ilkka Tuohela, 2002-2007\n"
@@ -735,40 +748,40 @@ msgstr "_Kopioi sijainti"
 msgid "Copy the location to the clipboard"
 msgstr "Kopioi sijainti leikepöydälle"
 
-#: ../src/totem-playlist.c:331 ../src/totem-playlist.c:875
+#: ../src/totem-playlist.c:331 ../src/totem-playlist.c:877
 msgid "Could not save the playlist"
 msgstr "Soittolistaa ei voi tallentaa"
 
-#: ../src/totem-playlist.c:875
+#: ../src/totem-playlist.c:877
 msgid "Unknown file extension."
 msgstr "Tuntematon tiedostopääte"
 
-#: ../src/totem-playlist.c:888
+#: ../src/totem-playlist.c:890
 msgid "Select playlist format:"
 msgstr "Valitse soittolistan muoto:"
 
-#: ../src/totem-playlist.c:893
+#: ../src/totem-playlist.c:895
 msgid "By extension"
 msgstr "Päätteen mukaan"
 
-#: ../src/totem-playlist.c:923
+#: ../src/totem-playlist.c:925
 msgid "Save Playlist"
 msgstr "Tallenna soittolista"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:934 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:936 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Soittolista"
 
-#: ../src/totem-playlist.c:1630
-msgid "Playlist error"
-msgstr "Soittolistan virhe"
-
-#: ../src/totem-playlist.c:1630
+#: ../src/totem-playlist.c:1634
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Soittolistaa '%s' ei voi käsitellä, se voi olla vioittunut."
+
+#: ../src/totem-playlist.c:1635
+msgid "Playlist error"
+msgstr "Soittolistan virhe"
 
 #: ../src/totem-preferences.c:104
 msgid "Enable visual effects?"
@@ -846,7 +859,7 @@ msgstr "Tallenna _kuvakaappaus"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:846
+#: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:851
 #: ../browser-plugin/totem-plugin-viewer.c:312
 msgid "Stopped"
 msgstr "Pysäytetty"
@@ -1063,13 +1076,22 @@ msgstr "Tauko"
 msgid "Totem could not eject the optical media."
 msgstr "Totem ei voi työntää optista mediaa ulos."
 
-#: ../src/totem.c:386 ../src/totem.c:413 ../src/totem.c:944
-#: ../src/totem.c:1054 ../src/totem.c:1081
+#: ../src/totem.c:386 ../src/totem.c:413 ../src/totem.c:949
+#: ../src/totem.c:1059 ../src/totem.c:1086
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ei voinut toistaa sijaintia \"%s\"."
 
-#: ../src/totem.c:472
+#: ../src/totem.c:473
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"Totem ei voi soittaa tämäntyyppisiä tiedostoja (%s), koska sopivaa "
+"liitännäistä levyltä lukua varten ei ole asennettu."
+
+#: ../src/totem.c:475
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1078,7 +1100,7 @@ msgstr ""
 "Totem ei voi soittaa tämäntyyppisiä tiedostoja (%s), koska sopivaa "
 "liitännäistä ei ole asennettu."
 
-#: ../src/totem.c:473
+#: ../src/totem.c:476
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1086,7 +1108,11 @@ msgstr ""
 "Soittaaksesi tiedoston asenna tarvittavat liitännäiset ja käynnistä Totem "
 "uudestaan."
 
-#: ../src/totem.c:480
+#: ../src/totem.c:477
+msgid "More information about media plugins"
+msgstr "Lisätietoja medialiitännäisistä"
+
+#: ../src/totem.c:485
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1095,86 +1121,86 @@ msgstr ""
 "Totem ei voi soittaa mediaa (%s), vaikka sille tarkoitettu liitännäinen on "
 "asennettu."
 
-#: ../src/totem.c:481
+#: ../src/totem.c:486
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "Varmista, että levy on asemassa ja että aseman asetukset ovat oikein."
 
-#: ../src/totem.c:509
+#: ../src/totem.c:514
 msgid "Totem was not able to play this disc."
 msgstr "Totem ei voinut soittaa tätä levyä."
 
-#: ../src/totem.c:510 ../src/totem.c:2910
-#: ../browser-plugin/totem-plugin-viewer.c:1665
+#: ../src/totem.c:515 ../src/totem.c:2917
+#: ../browser-plugin/totem-plugin-viewer.c:1666
 msgid "No reason."
 msgstr "Ei syytä"
 
-#: ../src/totem.c:763 ../src/totem.c:771
+#: ../src/totem.c:768 ../src/totem.c:776
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ei voinut kaapata kuvaa tästä elokuvasta."
 
-#: ../src/totem.c:771
+#: ../src/totem.c:776
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Näin ei pitäisi päästä tapahtumaan. Ole hyvä ja ilmoita viasta."
 
 #. Title
-#: ../src/totem.c:854 ../src/totem.c:3058 ../src/totem.c:3087
-#: ../browser-plugin/totem-plugin-viewer.c:1674
+#: ../src/totem.c:859 ../src/totem.c:3065 ../src/totem.c:3094
+#: ../browser-plugin/totem-plugin-viewer.c:1675
 msgid "Totem Movie Player"
 msgstr "Totem-elokuvasoitin"
 
-#: ../src/totem.c:950
+#: ../src/totem.c:955
 msgid "No error message"
 msgstr "Ei virheviestiä"
 
-#: ../src/totem.c:1192
+#: ../src/totem.c:1197
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: ../src/totem.c:1454 ../src/totem.c:1456
-#: ../browser-plugin/totem-plugin-viewer.c:1454
+#: ../src/totem.c:1461 ../src/totem.c:1463
+#: ../browser-plugin/totem-plugin-viewer.c:1455
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../src/totem.c:2784 ../src/totem.c:2786
+#: ../src/totem.c:2791 ../src/totem.c:2793
 msgid "Play / Pause"
 msgstr "Toista / keskeytä"
 
-#: ../src/totem.c:2793 ../src/totem.c:2795
+#: ../src/totem.c:2800 ../src/totem.c:2802
 msgid "Previous Chapter/Movie"
 msgstr "Edellinen kappale/elokuva"
 
-#: ../src/totem.c:2802 ../src/totem.c:2804
+#: ../src/totem.c:2809 ../src/totem.c:2811
 msgid "Next Chapter/Movie"
 msgstr "Seuraava kappale/elokuva"
 
-#: ../src/totem.c:2910
+#: ../src/totem.c:2917
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: ../src/totem.c:3059
+#: ../src/totem.c:3066
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 
-#: ../src/totem.c:3059
+#: ../src/totem.c:3066
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totem sulkeutuu."
 
 #. Handle command line arguments
-#: ../src/totem.c:3067
+#: ../src/totem.c:3074
 msgid "- Play movies and songs"
 msgstr "- Näytä elokuvia ja soita musiikkia"
 
-#: ../src/totem.c:3076
+#: ../src/totem.c:3083
 msgid "Totem could not parse the command-line options"
 msgstr "Totem ei voinut tulkita komentorivin valitsimia"
 
-#: ../src/totem.c:3095
+#: ../src/totem.c:3102
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei voinut alustaa asetusmoottoria."
 
-#: ../src/totem.c:3095
+#: ../src/totem.c:3102
 msgid "Make sure that GNOME is properly installed."
 msgstr "Varmista, että GNOME on oikein asennettu.."
 
@@ -1802,7 +1828,7 @@ msgstr "Soitettavaa URI:a ei annettu"
 msgid "Totem could not play '%s'"
 msgstr "Totem ei voinut toistaa lähdettä \"%s\"."
 
-#: ../browser-plugin/totem-plugin-viewer.c:847
+#: ../browser-plugin/totem-plugin-viewer.c:849
 #, c-format
 msgid "Opening %s"
 msgstr "Avataan %s"
@@ -1810,35 +1836,35 @@ msgstr "Avataan %s"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1130
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Avaa sovelluksella \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1181
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Selainliitännäinen käyttäen %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1186
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Totemin selainliitännäinen"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1665
+#: ../browser-plugin/totem-plugin-viewer.c:1666
 msgid "The Totem plugin could not be started."
 msgstr "Totemin liitännäistä ei voitu käynnistää."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2024
+#: ../browser-plugin/totem-plugin-viewer.c:2039
 msgid "No playlist or playlist empty"
 msgstr "Soittolistaa ei ole tai se on tyhjä"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2128
+#: ../browser-plugin/totem-plugin-viewer.c:2143
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2128
+#: ../browser-plugin/totem-plugin-viewer.c:2143
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totemin liitännäinen suljetaan."
 
