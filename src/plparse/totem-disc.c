@@ -60,9 +60,6 @@ typedef struct _CdCache {
   char *disc_udi;
 #endif
 
-  /* capabilities of the device */
-  int cap;
-
   /* Whether we have a medium */
   guint has_medium : 1;
   /* if we're checking a media, or a dir */
@@ -549,24 +546,8 @@ cd_cache_open_mountpoint (CdCache *cache,
 }
 
 static void
-cb_umount_done (gboolean success, char * error,
-                char * detail, gboolean * called)
-{
-  *called = TRUE;
-}
-
-static void
 cd_cache_free (CdCache *cache)
 {
-  /* umount if we mounted */
-  if (cache->self_mounted && cache->mounted) {
-    gboolean called = FALSE;
-
-    gnome_vfs_drive_unmount (cache->drive,
-	(GnomeVFSVolumeOpCallback) cb_umount_done, &called);
-    while (!called) g_main_context_iteration (NULL, TRUE);
-  }
-
 #ifdef HAVE_HAL
   if (cache->ctx != NULL) {
     DBusConnection *conn;
