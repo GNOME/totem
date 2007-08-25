@@ -1459,7 +1459,13 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 			     TotemPlaylist *playlist)
 {
 	const char *title;
+	gint64 duration;
 
+	/* We ignore 0-length items in playlists, they're usually just banners */
+	duration = totem_plparser_parse_duration
+		(g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_DURATION), FALSE);
+	if (duration == 0)
+		return;
 	title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
 	totem_playlist_add_one_mrl (playlist, uri, title);
 }
