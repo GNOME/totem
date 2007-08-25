@@ -544,16 +544,6 @@ totem_setup_preferences (Totem *totem)
 
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_type_combobox");
 
-	/* FIXME this is a bug in GtkBuilder, see:
-	 * http://bugzilla.gnome.org/show_bug.cgi?id=470243 */
-	{
-		GtkCellRenderer *cell;
-		cell = gtk_cell_renderer_text_new ();
-		gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (item), cell, TRUE);
-		gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (item), cell,
-						"text", 0, NULL);
-	}
-
 	i = 0;
 	for (l = list; l != NULL; l = l->next)
 	{

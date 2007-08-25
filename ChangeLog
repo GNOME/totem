@@ -1,5 +1,12 @@
 2007-08-25  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.ui:
+	* src/totem-preferences.c: (totem_setup_preferences):
+	Remove work-around for bug 470243 and add the CellRenderer to
+	the .ui file instead
+
+2007-08-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-preferences.c: (totem_setup_preferences): 
 	Block the signal from the "enable viz" toggle to avoid asking
 	twice if the user really wants to enable visualisations, and

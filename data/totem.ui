@@ -811,6 +811,12 @@
 				  <property name="focus_on_click">True</property>
 				  <property name="model">tpw_visuals_type_liststore</property>
 				  <signal name="changed" handler="visual_menu_changed"/>
+				  <child>
+				    <object class="GtkCellRendererText" id="renderer1"/>"
+				    <attributes>
+				      <attribute name="text">0</attribute>
+			      	    </attributes>
+				  </child>
 				</object>
 				<packing>
 				  <property name="left_attach">1</property>
