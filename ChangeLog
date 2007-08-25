@@ -1,5 +1,18 @@
 2007-08-26  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (entry_parsed):
+	* src/plparse/plparser.symbols:
+	* src/plparse/test-parser.c: (test_duration_real), (test_duration),
+	(main):
+	* src/plparse/totem-pl-parser.c: (totem_plparser_parse_duration):
+	* src/plparse/totem-pl-parser.h:
+	Move totem_embedded_parse_duration from the plugin viewer to the
+	playlist parser, add test cases in test-parser, move the PLS
+	parsing to the be last one, as it's the less restrictive and sscanf
+	is dumb (Closes: #467408)
+
+2007-08-26  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* src/plugins/mythtv/*: Add the first pass at a MythTV plugin,
 	only shows recordings, and has hard-coded server

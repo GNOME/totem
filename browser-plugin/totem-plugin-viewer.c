@@ -1935,37 +1935,6 @@ totem_embedded_clear_playlist (TotemEmbedded *embedded)
 	embedded->num_items = 0;
 }
 
-/* FIXME this should live in the playlist parser */
-static int
-totem_embedded_parse_duration (const char *duration)
-{
-	int hours, minutes, seconds, fractions;
-
-	if (!duration)
-		return -1;
-
-	/* PLS files format */
-	if (sscanf (duration, "%d", &seconds) == 1)
-		return seconds;
-	/* Formats used by both ASX and RAM files */
-	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4) {
-		int ret = hours * 3600 + minutes * 60 + seconds;
-		if (ret == 0 && fractions > 0)
-			ret = 1;
-		return ret;
-	}
-	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3)
-		return hours * 3600 + minutes * 60 + seconds;
-	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3) {
-		int ret = minutes * 60 + seconds;
-		if (ret == 0 && fractions > 0)
-			ret = 1;
-		return ret;
-	}
-
-	return -1;
-}
-
 static void
 entry_metadata_foreach (const char *key,
 			const char *value,
@@ -1996,8 +1965,8 @@ entry_parsed (TotemPlParser *parser,
 
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
-	item->duration = totem_embedded_parse_duration (g_hash_table_lookup (metadata, "duration"));
-	item->starttime = totem_embedded_parse_duration (g_hash_table_lookup (metadata, "starttime"));
+	item->duration = totem_plparser_parse_duration (g_hash_table_lookup (metadata, "duration"), FALSE);
+	item->starttime = totem_plparser_parse_duration (g_hash_table_lookup (metadata, "starttime"), FALSE);
 
 	emb->playlist = g_list_prepend (emb->playlist, item);
 }

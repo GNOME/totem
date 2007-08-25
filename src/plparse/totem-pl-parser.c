@@ -60,6 +60,8 @@
 #define TEXT_URI_TYPE "text/uri-list"
 #define AUDIO_MPEG_TYPE "audio/mpeg"
 
+#define D(x) if (debug) x
+
 typedef gboolean (*PlaylistIdenCallback) (const char *data, gsize len);
 
 #ifndef TOTEM_PL_PARSER_MINI
@@ -1204,9 +1206,57 @@ totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
 		(parser->priv->ignore_mimetypes, g_strdup (mimetype));
 }
 
-#endif /* !TOTEM_PL_PARSER_MINI */
+gint64
+totem_plparser_parse_duration (const char *duration, gboolean debug)
+{
+	int hours, minutes, seconds, fractions;
 
-#define D(x) if (debug) x
+	if (duration == NULL) {
+		D(g_print ("No duration passed\n"));
+		return -1;
+	}
+
+	/* Formats used by both ASX and RAM files */
+	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4) {
+		gint64 ret = hours * 3600 + minutes * 60 + seconds;
+		if (ret == 0 && fractions > 0) {
+			D(g_print ("Used 00:00:00.00 format, with fractions rounding\n"));
+			ret = 1;
+		} else {
+			D(g_print ("Used 00:00:00.00 format\n"));
+		}
+		return ret;
+	}
+	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3) {
+		D(g_print ("Used 00:00:00 format\n"));
+		return hours * 3600 + minutes * 60 + seconds;
+	}
+	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3) {
+		gint64 ret = minutes * 60 + seconds;
+		if (ret == 0 && fractions > 0) {
+			D(g_print ("Used 00:00.00 format, with fractions rounding\n"));
+			ret = 1;
+		} else {
+			D(g_print ("Used 00:00.00 format\n"));
+		}
+		return ret;
+	}
+	if (sscanf (duration, "%d:%d", &minutes, &seconds) == 2) {
+		D(g_print ("Used 00:00 format\n"));
+		return minutes * 60 + seconds;
+	}
+	/* PLS files format */
+	if (sscanf (duration, "%d", &seconds) == 1) {
+		D(g_print ("Used PLS format\n"));
+		return seconds;
+	}
+
+	D(g_message ("Couldn't parse duration '%s'\n", duration));
+
+	return -1;
+}
+
+#endif /* !TOTEM_PL_PARSER_MINI */
 
 gboolean
 totem_pl_parser_can_parse_from_data (const char *data,

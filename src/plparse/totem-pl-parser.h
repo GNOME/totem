@@ -106,11 +106,13 @@ typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter,
 
 GType    totem_pl_parser_get_type (void);
 
-gboolean   totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
-				  TotemPlParserIterFunc func,
-				  const char *output, TotemPlParserType type,
-				  gpointer user_data,
-				  GError **error);
+gint64   totem_plparser_parse_duration (const char *duration, gboolean debug);
+
+gboolean totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
+				TotemPlParserIterFunc func,
+				const char *output, TotemPlParserType type,
+				gpointer user_data,
+				GError **error);
 
 gboolean   totem_pl_parser_write_with_title (TotemPlParser *parser,
 					     GtkTreeModel *model,

@@ -20,6 +20,7 @@ static gboolean option_debug = FALSE;
 static gboolean option_data = FALSE;
 static gboolean option_force = FALSE;
 static gboolean option_disable_unsafe = FALSE;
+static gboolean option_duration = FALSE;
 static char *option_base_uri = NULL;
 static char **files = NULL;
 
@@ -98,6 +99,30 @@ test_resolve (void)
 	test_resolve_real ("http://localhost:12345/foobar", "/leopard.mov", "http://localhost:12345/leopard.mov");
 	test_resolve_real ("file:///home/hadess/Movies", "Movies/mymovie.mov", "file:///home/hadess/Movies/Movies/mymovie.mov");
 	test_resolve_real ("http://localhost/video.dir/video.mpg?param1=foo&param2=bar", "dir/image.jpg", "http://localhost/video.dir/dir/image.jpg");
+}
+
+static void
+test_duration_real (const char *duration, gint64 expected)
+{
+	gint64 res;
+
+	res = totem_plparser_parse_duration (duration, option_debug);
+	if (res != expected)
+		error ("Error parsing '%s' to %"G_GINT64_FORMAT" secs, got %"G_GINT64_FORMAT" secs",
+		       duration ? duration : "(null)", expected, res);
+	g_print ("Parsed '%s' to %"G_GINT64_FORMAT" secs\n", duration ? duration : "(null)", res);
+}
+
+static void
+test_duration (void)
+{
+	header ("Duration string parsing");
+
+	test_duration_real ("500", 500);
+	test_duration_real ("01:01", 61);
+	test_duration_real ("00:00:00.01", 1);
+	test_duration_real ("01:00:01.01", 3601);
+	test_duration_real ("01:00.01", 60);
 }
 
 static void
@@ -309,6 +334,7 @@ int main (int argc, char **argv)
 		{ "force", 'f', 0, G_OPTION_ARG_NONE, &option_force, "Force parsing", NULL },
 		{ "disable-unsafe", 'u', 0, G_OPTION_ARG_NONE, &option_disable_unsafe, "Disabling unsafe playlist-types", NULL },
 		{ "base-uri", 'b', 0, G_OPTION_ARG_STRING, &option_base_uri, "Base URI to resolve relative items from", NULL },
+		{ "duration", 0, 0, G_OPTION_ARG_NONE, &option_duration, "Run duration test", NULL },
 		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_STRING_ARRAY, &files, NULL, "[URI...]" },
 		{ NULL }
 	};
@@ -341,7 +367,25 @@ int main (int argc, char **argv)
 		return 1;
 	}
 
+	if (option_duration != FALSE) {
+		if (files == NULL) {
+			test_duration ();
+			return 0;
+		} else {
+			guint i;
+
+			for (i = 0; files[i] != NULL; i++) {
+				g_print ("Parsed '%s' to %"G_GINT64_FORMAT" secs\n",
+					 files[i],
+					 totem_plparser_parse_duration (files[i], option_debug));
+			}
+
+			return 0;
+		}
+	}
+
 	if (files == NULL) {
+		test_duration ();
 		test_resolve ();
 #if 0
 		test_relative ();
