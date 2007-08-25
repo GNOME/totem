@@ -64,7 +64,7 @@ AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="screensaver ontop galago gromit lirc media-player-keys properties sidebar-test skipto sample-python sample-vala bemused"
+allowed_plugins="screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -354,6 +354,14 @@ for plugin in ${used_plugins}; do
 				add_plugin="0"
 			fi
 		;;
+		mythtv)
+			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.3.0,
+					  [HAVE_GMYTH=yes], [HAVE_GMYTH=no])
+			if test "${HAVE_GMYTH}" != "yes"; then
+				plugin_error_or_ignore "you need GMyth >= 0.3.0 installed for the MythTV plugin"
+				add_plugin="0"
+			fi
+			;;
 		bemused)
 			PKG_CHECK_MODULES(BEMUSED, bluez, [HAVE_BLUEZ=yes], [HAVE_BLUEZ=no])
 			if test "${HAVE_BLUEZ}" != "yes" ; then
@@ -1002,6 +1010,7 @@ src/plugins/galago/Makefile
 src/plugins/gromit/Makefile
 src/plugins/lirc/Makefile
 src/plugins/media-player-keys/Makefile
+src/plugins/mythtv/Makefile
 src/plugins/properties/Makefile
 src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
