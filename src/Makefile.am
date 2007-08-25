@@ -18,7 +18,7 @@ common_defines = \
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"	\
 	$(DISABLE_DEPRECATED)
 
-modules_flags = -export_dynamic -avoid-version -module
+modules_flags = -export_dynamic -avoid-version -module -no-undefined
 
 # Bacon message connection ltlibrary
 
