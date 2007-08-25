@@ -1676,6 +1676,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	emb->fs_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_widget_realize (emb->fs_window);
 	gtk_window_set_title (GTK_WINDOW (emb->fs_window), _("Totem Movie Player"));
+	gtk_window_set_default_icon_name ("totem");
 
 	emb->fs = totem_fullscreen_new (GTK_WINDOW (emb->fs_window));
 	totem_fullscreen_set_video_widget (emb->fs, emb->bvw);
