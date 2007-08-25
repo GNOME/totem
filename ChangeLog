@@ -1,5 +1,17 @@
 2007-08-25  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (skip_forward_action_callback),
+	(skip_backwards_action_callback):
+	* src/totem.c: (totem_seek_time_rel), (totem_action_seek_relative),
+	(totem_action_seek_time), (totem_action_remote),
+	(totem_action_handle_key_release), (totem_action_handle_seek),
+	(totem_action_handle_key_press), (totem_action_handle_scroll):
+	* src/totem.h: Clean up the seek to time functions, and don't
+	set the statusbar or the full screen label as seeking when
+	there's no MRL loaded (Closes: #469413)
+
+2007-08-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am: Patch from the Cygwin Ports maintainer to make
 	the nautilus extension compilable under Cygwin (Closes: #470011)
 
