@@ -461,9 +461,6 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/auto_resize",
 			(GConfClientNotifyFunc) auto_resize_changed_cb,
 			totem, NULL, NULL);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",
-			(GConfClientNotifyFunc) show_vfx_changed_cb,
-			totem, NULL, NULL);
 	gconf_client_add_dir (totem->gc, "/desktop/gnome/lockdown",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	gconf_client_notify_add (totem->gc,
@@ -523,9 +520,15 @@ totem_setup_preferences (Totem *totem)
 	if (is_local == FALSE && show_visuals != FALSE)
 		show_visuals = ask_show_visuals (totem);
 
+	g_signal_handlers_disconnect_by_func (item, checkbutton2_toggled_cb, totem);
 	gtk_toggle_button_set_active
 		(GTK_TOGGLE_BUTTON (item), show_visuals);
 	totem_prefs_set_show_visuals (totem, show_visuals, FALSE);
+	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton2_toggled_cb), totem);
+
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",
+			(GConfClientNotifyFunc) show_vfx_changed_cb,
+			totem, NULL, NULL);
 
 	/* Visuals list */
 	list = bacon_video_widget_get_visuals_list (totem->bvw);

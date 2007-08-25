@@ -1,5 +1,12 @@
 2007-08-25  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-preferences.c: (totem_setup_preferences): 
+	Block the signal from the "enable viz" toggle to avoid asking
+	twice if the user really wants to enable visualisations, and
+	answers yes the first time asked (Closes: #469300)
+
+2007-08-25  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-preferences.c: (totem_setup_preferences):
 	Work-around no visuals showing up in the visuals combo box, see
 	http://bugzilla.gnome.org/show_bug.cgi?id=470243 for details
