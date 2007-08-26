@@ -2066,18 +2066,8 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 	if (mrl == NULL)
 		return;
 
-	//FIXME we shouldn't compare the 2 URLs
-	// http://bugzilla.gnome.org/show_bug.cgi?id=364311
-	if (totem->mrl == NULL
-			|| (totem->mrl != NULL && mrl != NULL
-			&& strcmp (totem->mrl, mrl) != 0))
-	{
+	if (totem_playlist_get_playing (totem->playlist) == TOTEM_PLAYLIST_STATUS_NONE)
 		totem_action_set_mrl_and_play (totem, mrl);
-	} else if (totem->mrl != NULL) {
-		//FIXME that's busted
-		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
-	}
-
 	g_free (mrl);
 }
 

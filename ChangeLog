@@ -1,5 +1,14 @@
 2007-08-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c: (treeview_row_changed),
+	(totem_playlist_get_playing):
+	* src/totem-playlist.h:
+	* src/totem.c: (playlist_changed_cb): Fix activation (adding to
+	the playlist, switching opened files, etc.) when 2 of the items in
+	the playlist have the same MRL, see bug for details (Closes: #364311)
+
+2007-08-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-fullscreen.c: (totem_fullscreen_parent_window_notify),
 	(totem_fullscreen_new): Patch from Sunil Mohan Adapa
 	<sunilmohan@gnu.org.in> to show the cursor when an error dialogue

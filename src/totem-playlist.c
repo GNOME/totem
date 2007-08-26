@@ -1197,24 +1197,21 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 		GtkTreeViewColumn *arg2, TotemPlaylist *playlist)
 {
 	if (totem_playlist_gtk_tree_path_equals
-			(arg1, playlist->_priv->current) != FALSE)
-	{
+	    (arg1, playlist->_priv->current) != FALSE) {
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[ITEM_ACTIVATED], 0,
 				NULL);
 		return;
 	}
 
-	if (playlist->_priv->current != NULL)
-	{
+	if (playlist->_priv->current != NULL) {
 		totem_playlist_unset_playing (playlist);
 		gtk_tree_path_free (playlist->_priv->current);
 	}
 
 	playlist->_priv->current = gtk_tree_path_copy (arg1);
 
-	if (playlist->_priv->shuffle != FALSE)
-	{
+	if (playlist->_priv->shuffle != FALSE) {
 		int *indices, indice, i;
 
 		indices = gtk_tree_path_get_indices (playlist->_priv->current);
@@ -2058,6 +2055,25 @@ totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state)
 	gtk_tree_path_free (path);
 	
 	return TRUE;
+}
+
+TotemPlaylistStatus
+totem_playlist_get_playing (TotemPlaylist *playlist)
+{
+	GtkTreeIter iter;
+	TotemPlaylistStatus status;
+
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), TOTEM_PLAYLIST_STATUS_NONE);
+
+	if (gtk_tree_model_get_iter (playlist->_priv->model, &iter, playlist->_priv->current) == FALSE)
+		return TOTEM_PLAYLIST_STATUS_NONE;
+
+	gtk_tree_model_get (playlist->_priv->model,
+			    &iter,
+			    PLAYING_COL, &status,
+			    -1);
+
+	return status;
 }
 
 void
