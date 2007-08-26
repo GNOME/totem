@@ -48,6 +48,12 @@
 #define XINE_ENABLE_EXPERIMENTAL_FEATURES
 #include <xine.h>
 
+#ifndef HAVE_GTK_ONLY
+/* gnome keyring and vfs */
+#include <libgnomevfs/gnome-vfs.h>
+#include <gnome-keyring.h>
+#endif /* !HAVE_GTK_ONLY */
+
 #include "debug.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-common.h"
@@ -1396,6 +1402,15 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		num = BVW_ERROR_AUDIO_BUSY;
 		message = g_strdup (_("The audio device is busy. Is another application using it?"));
 		break;
+#ifdef XINE_MSG_AUTHENTICATION_NEEDED /* xine-lib 1.2 */
+	case XINE_MSG_AUTHENTICATION_NEEDED:
+		num = BVW_ERROR_FILE_PERMISSION;
+		if (g_str_has_prefix (bvw->com->mrl, "file:") != FALSE)
+			message = g_strdup (_("Authentication is required to access this file."));
+		else
+			message = g_strdup (_("Authentication is required to access this file or stream."));
+		break;
+#endif /* XINE_MSG_AUTHENTICATION_NEEDED */
 	case XINE_MSG_PERMISSION_ERROR:
 		num = BVW_ERROR_FILE_PERMISSION;
 		if (g_str_has_prefix (bvw->com->mrl, "file:") != FALSE)
@@ -2308,6 +2323,57 @@ bacon_video_widget_open_async (BaconVideoWidget *bvw, const char *mrl,
 	return TRUE;
 }
 
+#ifndef HAVE_GTK_ONLY
+/* Return a new MRL with a username and password embedded into it from the GNOME keychain.
+ * This function should be called right before sending a URL to xine-lib. */
+static char *
+add_auth_to_uri (const char* mrl)
+{
+	if (g_str_has_prefix (mrl, "http:") != FALSE) {
+		guint port;
+		const char *host, *scheme, *user;
+		GList *items;
+		GnomeKeyringResult result;
+		GnomeVFSURI* uri;
+		
+		uri = gnome_vfs_uri_new (mrl);
+		if (uri == NULL)
+			return NULL;
+
+		host = gnome_vfs_uri_get_host_name (uri);
+		user = gnome_vfs_uri_get_user_name (uri);
+		port = gnome_vfs_uri_get_host_port (uri);
+		scheme = gnome_vfs_uri_get_scheme (uri);
+
+		result = gnome_keyring_find_network_password_sync (user, NULL,
+								   host ,NULL,
+								   scheme, NULL,
+								   port, &items);
+
+		if (result == GNOME_KEYRING_RESULT_OK && items != NULL) {
+			char *parsed_uri;
+			GnomeKeyringNetworkPasswordData *pwd_data;
+
+			pwd_data = items->data;
+
+			gnome_vfs_uri_set_user_name (uri, pwd_data->user);
+			gnome_vfs_uri_set_password (uri, pwd_data->password);
+
+			parsed_uri = gnome_vfs_uri_to_string (uri, GNOME_VFS_URI_HIDE_NONE);
+
+			gnome_keyring_network_password_list_free (items);
+			gnome_vfs_uri_unref (uri);
+
+			return parsed_uri;
+		} else {
+			gnome_vfs_uri_unref (uri);
+		}
+	}
+
+	return NULL;
+}
+#endif /* !HAVE_GTK_ONLY */
+
 gboolean
 bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		const char *subtitle_uri, GError **error)
@@ -2355,14 +2421,35 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		err = xine_open (bvw->priv->stream, bvw->com->mrl);
 	}
 
+#ifndef HAVE_GTK_ONLY
+	/* If xine-lib reported a permission error, try to fetch credentials from the keychain and
+	 * try xine_open again. This only applies to HTTP for now */
+	if (err == 0 && g_str_has_prefix (mrl, "http:") != FALSE) {
+		xine_error (bvw, error);
+		
+		if (error != NULL && *error != NULL && g_error_matches (*error, BVW_ERROR, BVW_ERROR_FILE_PERMISSION)) {
+			char *authed_mrl;
+
+			authed_mrl = add_auth_to_uri (bvw->com->mrl);
+			if (authed_mrl != NULL) {
+				g_clear_error (error);
+				xine_close (bvw->priv->stream);
+				err = xine_open (bvw->priv->stream, authed_mrl);
+				g_free (authed_mrl);
+			}
+		}
+	}
+#endif /* !HAVE_GTK_ONLY */
 	xine_plugins_garbage_collector (bvw->priv->xine);
 
 	if (err == 0) {
 		bacon_video_widget_close (bvw);
-		xine_error (bvw, error);
+		if (error == NULL || *error == NULL)
+			xine_error (bvw, error);
 		return FALSE;
 	} else {
-		xine_try_error (bvw, TRUE, error);
+		if (error == NULL || *error == NULL)
+			xine_try_error (bvw, TRUE, error);
 		if (error != NULL && *error != NULL) {
 			bacon_video_widget_close (bvw);
 			return FALSE;
