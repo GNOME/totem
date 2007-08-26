@@ -1,5 +1,12 @@
 2007-08-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-fullscreen.c: (totem_fullscreen_parent_window_notify),
+	(totem_fullscreen_new): Patch from Sunil Mohan Adapa
+	<sunilmohan@gnu.org.in> to show the cursor when an error dialogue
+	pops up (Closes: #439269)
+
+2007-08-26  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/Makefile.am:
 	* src/backend/bacon-video-widget-xine.c: (xine_event_message),
 	(add_auth_to_uri), (bacon_video_widget_open_with_subtitle):
