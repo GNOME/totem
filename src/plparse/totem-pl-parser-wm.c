@@ -299,8 +299,6 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 		}
 		if (g_ascii_strcasecmp (node->name, "base") == 0) {
 			newbase = xml_parser_get_property (node, "href");
-			if (newbase == NULL)
-				newbase = xml_parser_get_property (node, "HREF");
 			if (newbase != NULL)
 				base = newbase;
 		}

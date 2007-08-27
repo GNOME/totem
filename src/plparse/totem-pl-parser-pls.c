@@ -212,10 +212,12 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 	for (i = 1; i <= num_entries; i++) {
 		char *file, *title, *genre, *length;
 		char *file_key, *title_key, *genre_key, *length_key;
+		gint64 length_num;
 
 		file_key = g_strdup_printf ("file%d", i);
 		title_key = g_strdup_printf ("title%d", i);
 		length_key = g_strdup_printf ("length%d", i);
+		length_num = 0;
 		/* Genre is our own little extension */
 		genre_key = g_strdup_printf ("genre%d", i);
 
@@ -241,8 +243,13 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 		if (parser->priv->recurse)
 			parser->priv->fallback = FALSE;
 
+		/* Get the length, if it's negative, that means that we have a stream
+		 * and should push the entry straight away */
+		if (length != NULL)
+			length_num = totem_plparser_parse_duration (length, parser->priv->debug);
+
 		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
-			if (totem_pl_parser_parse_internal (parser, file, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+			if (length_num < 0 || totem_pl_parser_parse_internal (parser, file, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 				totem_pl_parser_add_url (parser,
 							 TOTEM_PL_PARSER_FIELD_URL, file,
 							 TOTEM_PL_PARSER_FIELD_TITLE, title,
@@ -256,7 +263,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 			/* Try with a base */
 			base = totem_pl_parser_base_url (url);
 
-			if (totem_pl_parser_parse_internal (parser, file, base) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+			if (length_num < 0 || totem_pl_parser_parse_internal (parser, file, base) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 				char *escaped, *uri;
 
 				escaped = gnome_vfs_escape_path_string (file);

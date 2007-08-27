@@ -1,5 +1,14 @@
 2007-08-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-pls.c:
+	(totem_pl_parser_add_pls_with_contents): Don't try to parse
+	entries that have -1 as the length, it means they've been
+	tagged as streams (Closes: #437934)
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entries):
+	Minor cleanup, the new XML parser is case-unsensitive
+
+2007-08-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry):
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_init):
 	* src/plparse/totem-pl-parser.h: Add support for the abstract,
