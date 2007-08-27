@@ -90,7 +90,7 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 	xml_node_t *doc, *node;
 	int size;
 	char *contents;
-	const char *tmp;
+	const char *item_url, *autoplay;
 	gboolean found;
 
 	if (g_str_has_prefix (data, "RTSPtext") != FALSE
@@ -148,13 +148,21 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	tmp = xml_parser_get_property (doc, "src");
-	if (!tmp) {
+	item_url = xml_parser_get_property (doc, "src");
+	if (!item_url) {
 		xml_parser_free_tree (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	totem_pl_parser_add_one_url (parser, tmp, NULL);
+	autoplay = xml_parser_get_property (doc, "autoplay");
+	/* Add a default as per the QuickTime docs */
+	if (autoplay == NULL)
+		autoplay = "true";
+
+	totem_pl_parser_add_url (parser,
+				 TOTEM_PL_PARSER_FIELD_URL, item_url,
+				 TOTEM_PL_PARSER_FIELD_AUTOPLAY, autoplay,
+				 NULL);
 	xml_parser_free_tree (doc);
 
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
