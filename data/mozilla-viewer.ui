@@ -115,6 +115,22 @@
             <property name="fill">False</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkToggleButton" id="popup_button">
+	    <property name="visible">True</property>
+	    <child>
+	      <object class="GtkArrow" id="button_arrow">
+	        <property name="visible">True</property>
+		<property name="arrow-type">GTK_ARROW_UP</property>
+             </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
       </object>
       <packing>
         <property name="padding">0</property>

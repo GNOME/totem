@@ -1256,11 +1256,88 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 		if (emb->current_uri == NULL) {
 			totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
-				       GDK_CURRENT_TIME, 0);
+				       gtk_get_current_event_time (), 0);
 		} else {
 			totem_embedded_play (emb, NULL);
 		}
 	}
+}
+
+static void
+popup_menu_position_func (GtkMenu *menu, gint *x, gint *y, gboolean *push_in, GtkWidget *button) 
+{
+	GtkWidget *widget = GTK_WIDGET (button);
+	GtkRequisition menu_req;
+	GtkTextDirection direction;
+
+	gtk_widget_size_request (GTK_WIDGET (menu), &menu_req);
+
+	direction = gtk_widget_get_direction (widget);
+
+	gdk_window_get_origin (widget->window, x, y);
+	*x += widget->allocation.x;
+	*y += widget->allocation.y;
+
+	if (direction == GTK_TEXT_DIR_LTR)
+		*x += MAX (widget->allocation.width - menu_req.width, 0);
+	else if (menu_req.width > widget->allocation.width)
+		*x -= menu_req.width - widget->allocation.width;
+
+	/* This might not work properly if the popup button is right at the
+	 * top of the screen, but really, what are the chances */
+	*y -= menu_req.height;
+
+	*push_in = FALSE;
+}
+
+static void
+popup_menu_over_arrow (GtkToggleButton *button,
+		       GtkMenu *menu,
+		       GdkEventButton *event)
+{
+	gtk_menu_popup (menu, NULL, NULL,
+			(GtkMenuPositionFunc) popup_menu_position_func,
+			button,
+			event ? event->button : 0,
+			event ? event->time : gtk_get_current_event_time ());
+}
+
+static void
+on_popup_button_toggled (GtkToggleButton *button, TotemEmbedded *emb)
+{
+	GtkMenu *menu;
+
+	menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
+
+	if (gtk_toggle_button_get_active (button) && !GTK_WIDGET_VISIBLE (menu)) {
+		/* we get here only when the menu is activated by a key
+		 * press, so that we can select the first menu item */
+		popup_menu_over_arrow (button, menu, NULL);
+		gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
+	}
+}
+
+static gboolean
+on_popup_button_button_pressed (GtkToggleButton *button,
+				GdkEventButton *event,
+				TotemEmbedded *emb)
+{
+	if (event->button == 1) {
+		GtkMenu *menu;
+
+		menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
+		if (!GTK_WIDGET_VISIBLE (menu)) {
+			popup_menu_over_arrow (button, menu, event);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+		} else {
+			gtk_menu_popdown (menu);
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+		}
+
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 static void
@@ -1339,32 +1416,33 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 			     TotemEmbedded *emb)
 {
 	guint state = event->state & gtk_accelerator_get_default_mod_mask ();
-	gboolean handled = FALSE;
+	GtkMenu *menu;
 
 	//g_print ("button-press type %d button %d state %d play-state %d\n",
 	//	 event->type, event->button, state, emb->state);
 
-	if (event->type == GDK_BUTTON_PRESS &&
-	    event->button == 1 &&
-	    state == 0 &&
-	    emb->state == STATE_STOPPED) {
-		g_message ("emitting signal");
-		g_signal_emit (emb, signals[BUTTON_PRESS], 0,
-			       event->time,
-			       event->button);
-	} else if (event->type == GDK_BUTTON_PRESS &&
-		   event->button == 3 &&
-		   state == 0) {
-		GtkMenu *menu;
+	menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
 
-		menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
+	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && state == 0 && emb->state == STATE_STOPPED) {
+		if (!GTK_WIDGET_VISIBLE (menu)) {
+			g_message ("emitting signal");
+			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
+				       event->time,
+				       event->button);
+		} else {
+			gtk_menu_popdown (menu);
+		}
+	} else if (event->type == GDK_BUTTON_PRESS && event->button == 3 && state == 0) {
+		GtkWidget *popup_button;
+
+		popup_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (popup_button), FALSE);
+
 		gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
 				event->button, event->time);
-
-		handled = TRUE;
 	}
 
-	return handled;
+	return FALSE;
 }
 
 static void
@@ -1622,6 +1700,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  int height)
 {
 	GtkWidget *child, *container, *image;
+	GtkWidget *popup_button;
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
@@ -1747,6 +1826,12 @@ totem_embedded_construct (TotemEmbedded *emb,
 	gtk_button_set_image (GTK_BUTTON (emb->pp_button), image);
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
+
+	popup_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
+	g_signal_connect (G_OBJECT (popup_button), "toggled",
+			  G_CALLBACK (on_popup_button_toggled), emb);
+	g_signal_connect (G_OBJECT (popup_button), "button-press-event",
+			  G_CALLBACK (on_popup_button_button_pressed), emb);
 
 	gc = gconf_client_get_default ();
 	volume = ((double) gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL)) / 100.0;

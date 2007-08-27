@@ -1,3 +1,17 @@
+2007-08-27  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (on_play_pause),
+	(popup_menu_position_func), (popup_menu_over_arrow),
+	(on_popup_button_toggled), (on_popup_button_button_pressed),
+	(on_video_button_press_event), (totem_embedded_construct):
+	* data/mozilla-viewer.ui:
+
+	Add a toggle button to the control bar that shows the right-click
+	menu when toggled (Closes: #439105)
+
+	Fix the button-press-event handler eating events thus preventing
+	the popup menu to popdown
+
 2007-08-26  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c: (treeview_row_changed),
