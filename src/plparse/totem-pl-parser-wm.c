@@ -180,7 +180,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			tmp = xml_parser_get_property (node, "value");
 			if (tmp == NULL)
 				continue;
-			g_free (duration);
+			g_free (starttime);
 			starttime = g_strdup (tmp);
 		}
 

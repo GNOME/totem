@@ -1,3 +1,9 @@
+2007-08-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry):
+	Fix cut'n'paste typo, we don't want to free the duration
+	when we have a starttime
+
 2007-08-26  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:
