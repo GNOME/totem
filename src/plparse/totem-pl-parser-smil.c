@@ -39,28 +39,24 @@
 #include "totem-pl-parser-private.h"
 
 #ifndef TOTEM_PL_PARSER_MINI
-static void
-parse_smil_video_entry (TotemPlParser *parser, char *base,
-		const char *url, const char *title)
-{
-	char *fullpath;
-
-	fullpath = totem_pl_resolve_url (base, url);
-	totem_pl_parser_add_one_url (parser, fullpath, title);
-
-	g_free (fullpath);
-}
-
 static TotemPlParserResult
-parse_smil_entry (TotemPlParser *parser, char *base, xml_node_t *doc,
-		xml_node_t *parent, const char *parent_title)
+parse_smil_entry (TotemPlParser *parser,
+		  char *base,
+		  xml_node_t *doc,
+		  xml_node_t *parent,
+		  const char *parent_title)
 {
 	xml_node_t *node;
-	const char *title, *url;
+	const char *title, *url, *author, *abstract, *dur, *clip_begin, *copyright;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_ERROR;
 
 	title = NULL;
 	url = NULL;
+	author = NULL;
+	abstract = NULL;
+	dur = NULL;
+	clip_begin = NULL;
+	copyright = NULL;
 
 	for (node = parent->child; node != NULL; node = node->next)
 	{
@@ -71,10 +67,26 @@ parse_smil_entry (TotemPlParser *parser, char *base, xml_node_t *doc,
 		if (g_ascii_strcasecmp (node->name, "video") == 0 || g_ascii_strcasecmp (node->name, "audio") == 0) {
 			url = xml_parser_get_property (node, "src");
 			title = xml_parser_get_property (node, "title");
+			author = xml_parser_get_property (node, "author");
+			dur = xml_parser_get_property (node, "dur");
+			clip_begin = xml_parser_get_property (node, "clip-begin");
+			abstract = xml_parser_get_property (node, "abstract");
+			copyright = xml_parser_get_property (node, "copyright");
 
 			if (url != NULL) {
-				parse_smil_video_entry (parser, base, url,
-							title ? title : parent_title);
+				char *fullpath;
+
+				fullpath = totem_pl_resolve_url (base, url);
+				totem_pl_parser_add_url (parser,
+							 TOTEM_PL_PARSER_FIELD_URL, fullpath,
+							 TOTEM_PL_PARSER_FIELD_TITLE, title ? title : parent_title,
+							 TOTEM_PL_PARSER_FIELD_ABSTRACT, abstract,
+							 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
+							 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
+							 TOTEM_PL_PARSER_FIELD_STARTTIME, clip_begin,
+							 TOTEM_PL_PARSER_FIELD_DURATION, dur,
+							 NULL);
+				g_free (fullpath);
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 			}
 		} else {
