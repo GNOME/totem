@@ -131,14 +131,20 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 {
 	xml_node_t *node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
+	char *fullpath;
 	const char *url;
-	char *title, *fullpath, *duration, *starttime;
+	const char *title, *duration, *starttime, *author;
+	const char *moreinfo, *abstract, *copyright;
 
 	fullpath = NULL;
 	title = NULL;
 	url = NULL;
 	duration = NULL;
 	starttime = NULL;
+	moreinfo = NULL;
+	abstract = NULL;
+	copyright = NULL;
+	author = NULL;
 
 	for (node = parent->child; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -159,10 +165,26 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			continue;
 		}
 
-		if (g_ascii_strcasecmp (node->name, "title") == 0) {
-			g_free (title);
-			title = g_strdup (node->data);
+		if (g_ascii_strcasecmp (node->name, "title") == 0)
+			title = node->data;
+
+		if (g_ascii_strcasecmp (node->name, "author") == 0)
+			author = node->data;
+
+		if (g_ascii_strcasecmp (node->name, "moreinfo") == 0) {
+			const char *tmp;
+
+			tmp = xml_parser_get_property (node, "href");
+			if (tmp == NULL)
+				continue;
+			moreinfo = tmp;
 		}
+
+		if (g_ascii_strcasecmp (node->name, "copyright") == 0)
+			copyright = node->data;
+
+		if (g_ascii_strcasecmp (node->name, "abstract") == 0)
+			abstract = node->data;
 
 		if (g_ascii_strcasecmp (node->name, "duration") == 0) {
 			const char *tmp;
@@ -170,8 +192,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			tmp = xml_parser_get_property (node, "value");
 			if (tmp == NULL)
 				continue;
-			g_free (duration);
-			duration = g_strdup (tmp);
+			duration = tmp;
 		}
 
 		if (g_ascii_strcasecmp (node->name, "starttime") == 0) {
@@ -180,8 +201,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 			tmp = xml_parser_get_property (node, "value");
 			if (tmp == NULL)
 				continue;
-			g_free (duration);
-			starttime = g_strdup (tmp);
+			starttime = tmp;
 		}
 
 		if (g_ascii_strcasecmp (node->name, "param") == 0) {
@@ -200,10 +220,8 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 		}
 	}
 
-	if (url == NULL) {
-		g_free (title);
+	if (url == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
-	}
 
 	fullpath = totem_pl_resolve_url (base, url);
 
@@ -213,17 +231,18 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 		totem_pl_parser_add_url (parser,
 					 TOTEM_PL_PARSER_FIELD_URL, fullpath,
 					 TOTEM_PL_PARSER_FIELD_TITLE, title ? title : pl_title,
+					 TOTEM_PL_PARSER_FIELD_ABSTRACT, abstract,
+					 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
+					 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
 					 TOTEM_PL_PARSER_FIELD_STARTTIME, starttime,
 					 TOTEM_PL_PARSER_FIELD_DURATION, duration,
+					 TOTEM_PL_PARSER_FIELD_MOREINFO, moreinfo,
 					 NULL);
 		retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 
 bail:
-	g_free (duration);
-	g_free (starttime);
 	g_free (fullpath);
-	g_free (title);
 
 	return retval;
 }

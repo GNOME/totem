@@ -689,6 +689,10 @@ totem_pl_parser_init (TotemPlParser *parser)
 				     "Abstract of the item to be added", NULL,
 				     G_PARAM_READABLE & G_PARAM_WRITABLE);
 	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("moreinfo", "moreinfo",
+				     "URL to get more information for item to be added", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 	pspec = g_param_spec_string ("screensize", "screensize",
 				     "String representing the default movie size (double, full or original)", NULL,
 				     G_PARAM_READABLE & G_PARAM_WRITABLE);

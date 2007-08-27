@@ -67,6 +67,7 @@ struct TotemPlParser {
 #define TOTEM_PL_PARSER_FIELD_ENDTIME		"endtime"
 #define TOTEM_PL_PARSER_FIELD_COPYRIGHT		"copyright"
 #define TOTEM_PL_PARSER_FIELD_ABSTRACT		"abstract"
+#define TOTEM_PL_PARSER_FIELD_MOREINFO		"moreinfo"
 #define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"
 #define TOTEM_PL_PARSER_FIELD_UI_MODE		"ui-mode"
 

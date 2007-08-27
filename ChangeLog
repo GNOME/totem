@@ -1,5 +1,13 @@
 2007-08-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry):
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_init):
+	* src/plparse/totem-pl-parser.h: Add support for the abstract,
+	copyright, author and moreinfo properties for ASX playlists
+	(Closes: #469576)
+
+2007-08-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-qt.c:
 	(totem_pl_parser_add_quicktime_metalink): Add support
 	for the autoplay property
