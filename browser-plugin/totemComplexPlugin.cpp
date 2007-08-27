@@ -1873,11 +1873,13 @@ totemScriptablePlugin::GetSource(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetSource(const nsACString & source, PRBool *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  nsresult rv = mPlugin->SetSrc (source);
 
   mSource = source;
   *_retval = PR_TRUE;
-  return NS_OK;
+  return rv;
 }
 
 /* AUTF8String GetSourceTransport (in long index); */
@@ -2004,9 +2006,15 @@ totemScriptablePlugin::GetVideoState (PRInt32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetVolume (PRInt32 volume)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid ());
+
+  nsresult rv = mPlugin->SetVolume ((double) volume / 100);
+
+  /* Volume passed in is 0 through to 100 */
   mVolume = volume;
+
   return NS_OK;
 }
 

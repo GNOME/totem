@@ -59,6 +59,7 @@ class totemPlugin {
     /* Interface to scriptable */
 
     nsresult DoCommand (const char *aCommand);
+    nsresult SetVolume (gdouble aVolume);
 
     nsresult SetSrc (const nsACString &aURL);
 

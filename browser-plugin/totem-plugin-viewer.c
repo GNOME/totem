@@ -498,6 +498,8 @@ totem_embedded_play (TotemEmbedded *emb,
 {
 	GError *err = NULL;
 
+	g_return_val_if_fail (emb->current_uri != NULL, FALSE);
+
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
 
 	if (bacon_video_widget_play (emb->bvw, &err) != FALSE) {
@@ -588,6 +590,16 @@ totem_embedded_set_error_logo (TotemEmbedded *embedded,
 {
 	g_message ("totem_embedded_set_error_logo called by browser plugin");
 	totem_embedded_set_logo_by_name (embedded, "image-missing");
+	return TRUE;
+}
+
+static gboolean
+totem_embedded_set_volume (TotemEmbedded *embedded,
+			   gdouble volume,
+			   GError *error)
+{
+	g_message ("totem_embedded_set_volume: %f", volume);
+	bacon_video_widget_set_volume (emb->bvw, volume);
 	return TRUE;
 }
 
@@ -1578,7 +1590,8 @@ on_buffering (BaconVideoWidget *bvw, guint percentage, TotemEmbedded *emb)
 }
 
 static void
-property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec,
+property_notify_cb_volume (BaconVideoWidget *bvw,
+			   GParamSpec *spec,
 			   TotemEmbedded *emb)
 {
 	double volume;

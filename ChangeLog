@@ -1,5 +1,22 @@
 2007-08-27  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	Add SetVolume function
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_play),
+	(totem_embedded_set_volume), (property_notify_cb_volume):
+	Return an error if _play doesn't a URI to chew on,
+	implement _set_volume()
+
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h: Implement SetVolume in the
+	base class and in the Complex plugin, Implement SetSource
+	in the Complex plugin and make SetSrc in the base class
+	request the stream (Helps: #470876)
+
+2007-08-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-pls.c:
 	(totem_pl_parser_add_pls_with_contents): Don't try to parse
 	entries that have -1 as the length, it means they've been

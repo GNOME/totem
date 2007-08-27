@@ -228,6 +228,26 @@ totemPlugin::DoCommand (const char *aCommand)
 	return NS_OK;
 }
 
+nsresult
+totemPlugin::SetVolume (gdouble aVolume)
+{
+	D ("SetVolume '%f'", aVolume);
+
+	/* FIXME: queue the action instead */
+	if (!mViewerReady)
+		return NS_OK;
+
+	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	dbus_g_proxy_call_no_reply (mViewerProxy,
+				    "SetVolume",
+				    G_TYPE_DOUBLE, aVolume,
+				    G_TYPE_INVALID,
+				    G_TYPE_INVALID);
+
+	return NS_OK;
+
+}
+
 /* Viewer interaction */
 
 NPError
@@ -1056,7 +1076,7 @@ totemPlugin::ParseBoolean (const char *key,
         if (endptr != value && errno == 0) {
                 return num > 0;
         }
-        
+
 	D ("Unknown value '%s' for parameter '%s'", value, key);
 
 	return default_val;
@@ -1118,6 +1138,12 @@ totemPlugin::SetSrc (const nsACString& aURL)
 	if (NS_FAILED (rv)) {
 		D ("Failed to create src URI (rv=%x)", rv);
 		mSrcURI = nsnull;
+	} else {
+		if (mAutostart) {
+			RequestStream (PR_FALSE);
+		} else {
+			mWaitingForButtonPress = PR_TRUE;
+		}
 	}
 
 	return rv;
