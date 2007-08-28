@@ -599,7 +599,7 @@ totem_embedded_set_volume (TotemEmbedded *embedded,
 			   GError *error)
 {
 	g_message ("totem_embedded_set_volume: %f", volume);
-	bacon_video_widget_set_volume (emb->bvw, volume);
+	bacon_video_widget_set_volume (embedded->bvw, volume);
 	return TRUE;
 }
 
