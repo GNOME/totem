@@ -1,3 +1,12 @@
+2007-08-28  Bastien Nocera  <hadess@hadess.net>
+
+	* data/mime-type-list.txt: add application/x-netshow-channel as a
+	supported mime-type
+	* src/plparse/totem-pl-parser-wm.c:
+	(totem_pl_parser_add_asf_parser): Make NSC files unhandled by the
+	playlist parsers, as GStreamer is supposed to handle it
+	(Helps: #350595)
+
 2007-08-28  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* browser-plugin/totem-plugin-viewer.c:
