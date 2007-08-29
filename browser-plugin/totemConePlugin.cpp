@@ -50,6 +50,7 @@ static const char kPluginDescription[] = "VLC Multimedia Plugin (compatible Tote
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "application/x-vlc-plugin", "", "application/octet-stream" },
+	{ "application/vlc", "", "application/octet-stream" },
 	{ "video/x-google-vlc-plugin", "", "application/octet-stream" },
 };
 
