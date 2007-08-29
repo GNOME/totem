@@ -22,8 +22,8 @@
  * $Id$
  */
 
-#ifndef __GMP_PLAYER_H__
-#define __GMP_PLAYER_H__
+#ifndef __GMP_PLUGIN_H__
+#define __GMP_PLUGIN_H__
 
 #include <nsIClassInfo.h>
 
@@ -65,4 +65,4 @@ class totemScriptablePlugin : public totemIGMPPlayer,
     PRUint32 mWindowlessVideo;
 };
 
-#endif /* __GMP_PLAYER_H__ */
+#endif /* __GMP_PLUGIN_H__ */

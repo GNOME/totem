@@ -307,6 +307,8 @@ totemPlugin::ViewerFork ()
 	g_ptr_array_add (arr, g_strdup ("narrowspace"));
 #elif defined(TOTEM_MULLY_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("mully"));
+#elif defined(TOTEM_CONE_PLUGIN)
+	g_ptr_array_add (arr, g_strdup ("cone"));
 #else
 #error Unknown plugin type
 #endif

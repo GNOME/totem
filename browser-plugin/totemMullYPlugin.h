@@ -21,8 +21,8 @@
  * $Id$
  */
 
-#ifndef __MULLY_PLAYER_H__
-#define __MULLY_PLAYER_H__
+#ifndef __MULLY_PLUGIN_H__
+#define __MULLY_PLUGIN_H__
 
 #include <nsIClassInfo.h>
 
@@ -51,4 +51,4 @@ class totemScriptablePlugin : public totemIMullYPlayer,
     totemPlugin *mPlugin;
 };
 
-#endif /* __MULLY_PLAYER_H__ */
+#endif /* __MULLY_PLUGIN_H__ */

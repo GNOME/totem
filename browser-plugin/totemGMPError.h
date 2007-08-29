@@ -20,8 +20,8 @@
  * $Id: totemGMPPlugin.h 3717 2006-11-15 17:21:16Z chpe $
  */
 
-#ifndef __GMP_SETTINGS_H__
-#define __GMP_SETTINGS_H__
+#ifndef __GMP_ERROR_H__
+#define __GMP_ERROR_H__
 
 #include <nsIClassInfo.h>
 
@@ -49,4 +49,4 @@ class totemGMPError : public totemIGMPError,
     PRInt32 mCount;
 };
 
-#endif /* __GMP_SETTINGS_H__ */
+#endif /* __GMP_ERROR_H__ */

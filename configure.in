@@ -670,6 +670,12 @@ AC_ARG_ENABLE([mully-plugin],
 	[],[enable_mully_plugin=yes])
 AC_MSG_RESULT([$enable_mully_plugin])
 
+AC_MSG_CHECKING([whether to enable the Cone browser plugin])
+AC_ARG_ENABLE([cone-plugin],
+	AS_HELP_STRING([--enable-cone-plugin],[Whether to enable the Cone browser plugin]),
+	[],[enable_cone_plugin=yes])
+AC_MSG_RESULT([$enable_cone_plugin])
+
 fi
 
 AM_CONDITIONAL([ENABLE_BASIC_PLUGIN],[test "$enable_basic_plugin" = "yes"])
@@ -677,6 +683,7 @@ AM_CONDITIONAL([ENABLE_GMP_PLUGIN],[test "$enable_gmp_plugin" = "yes"])
 AM_CONDITIONAL([ENABLE_COMPLEX_PLUGIN],[test "$enable_complex_plugin" = "yes"])
 AM_CONDITIONAL([ENABLE_NARROWSPACE_PLUGIN],[test "$enable_narrowspace_plugin" = "yes"])
 AM_CONDITIONAL([ENABLE_MULLY_PLUGIN],[test "$enable_mully_plugin" = "yes"])
+AM_CONDITIONAL([ENABLE_CONE_PLUGIN],[test "$enable_cone_plugin" = "yes"])
 
 dnl ********
 dnl Nautilus
@@ -1110,6 +1117,11 @@ if test x$enable_browser_plugins = xyes ; then
 		AC_MSG_NOTICE([** MullY (DivX) plugin enabled])
 	else
 		AC_MSG_NOTICE([   MullY (DivX) plugin disabled])
+	fi
+	if test x$enable_cone_plugin = xyes ; then
+		AC_MSG_NOTICE([** Cone (VLC) plugin enabled])
+	else
+		AC_MSG_NOTICE([   Cone (VLC) plugin enabled])
 	fi
 else
 	AC_MSG_NOTICE([   Browser plugin disabled])

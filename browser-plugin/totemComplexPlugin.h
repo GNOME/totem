@@ -21,8 +21,8 @@
  * $Id$
  */
 
-#ifndef __GMP_PLAYER_H__
-#define __GMP_PLAYER_H__
+#ifndef __COMPLEX_PLUGIN_H__
+#define __COMPLEX_PLUGIN_H__
 
 #include <nsIClassInfo.h>
 
@@ -108,4 +108,4 @@ class totemScriptablePlugin : public totemIComplexPlayer,
     PRUint32 mZoomed : 1;
 };
 
-#endif /* __GMP_PLAYER_H__ */
+#endif /* __COMPLEX_PLUGIN_H__ */

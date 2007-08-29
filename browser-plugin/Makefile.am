@@ -453,3 +453,67 @@ libtotem_mully_plugin_la_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 endif
+
+# Totem Cone Plugin
+
+if ENABLE_CONE_PLUGIN
+
+plugin_LTLIBRARIES += libtotem-cone-plugin.la
+
+libtotem_cone_plugin_la_SOURCES =	\
+	totemDebug.h			\
+	totemPluginGlue.cpp		\
+	totemPluginGlue.h		\
+	totemPlugin.cpp			\
+	totemPlugin.h			\
+	totemStringGlue.h		\
+	totemConePlugin.cpp		\
+	totemConePlugin.h		\
+	totemClassInfo.h		\
+	totem-plugin-viewer-commands.h
+
+libtotem_cone_plugin_la_CPPFLAGS = \
+	-I$(top_srcdir)/src				\
+	-I$(top_srcdir)/src/backend			\
+	-I$(top_srcdir)/src/plparse			\
+	-I$(top_builddir)/src				\
+	-I$(top_builddir)/src/backend			\
+	-I$(top_builddir)/src/plparse			\
+	-Iidl						\
+	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DTOTEM_CONE_PLUGIN				\
+	-DTOTEM_PL_PARSER_MINI				\
+	-D_REENTRANT					\
+	-DDBUS_API_SUBJECT_TO_CHANGE			\
+	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
+	-DGCONF_PREFIX="\"/apps/totem\""		\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
+	-DDATADIR="\"$(pkgdatadir)\""			\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DBINDIR="\"$(bindir)\""			\
+	$(DISABLE_DEPRECATED)				\
+	$(AM_CPPFLAGS)
+
+libtotem_cone_plugin_la_CXXFLAGS = \
+	$(BROWSER_PLUGIN_CFLAGS)	\
+	$(MOZILLA_XPCOM_CFLAGS)		\
+	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
+	$(AM_CXXFLAGS)
+
+libtotem_cone_plugin_la_LIBADD =					\
+	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	libtotempluginviewer_helper.la					\
+	$(DBUS_LIBS)	\
+	$(MOZILLA_LIBS)	\
+	$(LIBXPCOMGLUE_S)
+
+libtotem_cone_plugin_la_LDFLAGS = \
+	-avoid-version	\
+	-export-symbols $(srcdir)/plugin.symbols \
+	-module		\
+	$(AM_LDFLAGS)
+
+endif
+

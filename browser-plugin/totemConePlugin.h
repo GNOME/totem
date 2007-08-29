@@ -1,4 +1,4 @@
-/* Totem NarrowSpace plugin scriptable
+/* Totem Cone Plugin
  *
  * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
@@ -18,26 +18,24 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id$
+ * $Id: totemBasicPlugin.h 3717 2006-11-15 17:21:16Z chpe $
  */
 
-#ifndef __NARROWSPACE_PLUGIN_H__
-#define __NARROWSPACE_PLUGIN_H__
+#ifndef __CONE_PLUGIN_H__
+#define __CONE_PLUGIN_H__
 
 #include <nsIClassInfo.h>
 
-#include "totemINarrowSpacePlayer.h"
+#include "totemICone.h"
 #include "totemPlugin.h"
 
-class totemScriptablePlugin : public totemINarrowSpacePlayer,
+class totemScriptablePlugin : public totemICone,
 			      public nsIClassInfo
 {
   public:
     NS_DECL_ISUPPORTS
-    NS_DECL_TOTEMINARROWSPACEPLAYER
+    NS_DECL_TOTEMICONE
     NS_DECL_NSICLASSINFO
-
-    void* operator new (size_t aSize) CPP_THROW_NEW;
 
     totemScriptablePlugin (totemPlugin *aPlugin);
 
@@ -46,39 +44,10 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
 
     static char *PluginDescription ();
     static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
-
-    enum PluginState {
-      eState_Complete,
-      eState_Error,
-      eState_Loading,
-      eState_Playable,
-      eState_Waiting
-    };
-
-    PRUint32 mPluginState : 3; /* enough bits for PluginState enum values */
-
   private:
     ~totemScriptablePlugin ();
 
     totemPlugin *mPlugin;
-
-    nsCString mBackgroundColour;
-    nsCString mMatrix;
-    nsCString mRectangle;
-    nsCString mMovieName;
-
-    float mRate;
-
-    PRInt32 mVolume;
-
-    PRUint32 mAutoPlay : 1;
-    PRUint32 mControllerVisible : 1;
-    PRUint32 mIsLooping : 1;
-    PRUint32 mKioskMode : 1;
-    PRUint32 mLoopIsPalindrome : 1;
-    PRUint32 mMute : 1;
-    PRUint32 mPlayEveryFrame : 1;
-    PRUint32 mResetPropertiesOnReload : 1;
 };
 
-#endif /* __NARROWSPACE_PLUGIN_H__ */
+#endif /* __CONE_PLUGIN_H__ */

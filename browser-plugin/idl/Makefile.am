@@ -30,6 +30,13 @@ NARROWSPACE_IDLS = \
 MULLY_IDLS = \
 	totemIMullYPlayer.idl
 
+CONE_IDLS = \
+	totemICone.idl			\
+	totemIConeAudio.idl		\
+	totemIConeInput.idl		\
+	totemIConePlaylist.idl		\
+	totemIConeVideo.idl
+
 xptdir = $(MOZILLA_PLUGINDIR)
 xpt_DATA =
 
@@ -60,6 +67,11 @@ ALL_IDLS += $(MULLY_IDLS)
 xpt_DATA += libtotem-mully-plugin.xpt
 endif
 
+if ENABLE_CONE_PLUGIN
+ALL_IDLS += $(CONE_IDLS)
+xpt_DATA += libtotem-cone-plugin.xpt
+endif
+
 noinst_DATA = \
 	$(ALL_IDLS:.idl=.xpt)	\
 	$(ALL_IDLS:.idl=.h)
@@ -78,7 +90,8 @@ EXTRA_DIST = \
 	$(GMP_IDLS)		\
 	$(COMPLEX_IDLS)		\
 	$(NARROWSPACE_IDLS)	\
-	$(MULLY_IDLS)
+	$(MULLY_IDLS)		\
+	$(CONE_IDLS)
 
 %.h: %.idl
 	$(MOZILLA_XPIDL) -w -m header -I $(MOZILLA_IDLDIR) -I $(srcdir) $<
@@ -105,5 +118,8 @@ libtotem-narrowspace-plugin.xpt: $(NARROWSPACE_IDLS:.idl=.xpt)
 	$(MOZILLA_XPT_LINK) $@ $^
 
 libtotem-mully-plugin.xpt: $(MULLY_IDLS:.idl=.xpt)
+	$(MOZILLA_XPT_LINK) $@ $^
+
+libtotem-cone-plugin.xpt: $(CONE_IDLS:.idl=.xpt)
 	$(MOZILLA_XPT_LINK) $@ $^
 

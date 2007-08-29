@@ -21,8 +21,8 @@
  * $Id$
  */
 
-#ifndef __GMP_PLAYER_H__
-#define __GMP_PLAYER_H__
+#ifndef __BASIC_PLUGIN_H__
+#define __BASIC_PLUGIN_H__
 
 #include <nsIClassInfo.h>
 
@@ -50,4 +50,4 @@ class totemScriptablePlugin : public totemIBasicPlayer,
     totemPlugin *mPlugin;
 };
 
-#endif /* __GMP_PLAYER_H__ */
+#endif /* __BASIC_PLUGIN_H__ */

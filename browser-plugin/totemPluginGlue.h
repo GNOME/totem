@@ -33,6 +33,8 @@
 #include "totemNarrowSpacePlugin.h"
 #elif defined(TOTEM_MULLY_PLUGIN)
 #include "totemMullYPlugin.h"
+#elif defined(TOTEM_CONE_PLUGIN)
+#include "totemConePlugin.h"
 #else
 #error Unknown plugin type
 #endif
