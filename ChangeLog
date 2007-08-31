@@ -1,5 +1,11 @@
 2007-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.ui: Make sure the volume widget is disabled on
+	startup so that the volume widget can't be popped up at startup,
+	Fixes a critical warning leaving enter pressed on startup
+
+2007-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (on_movie_menu_select): Don't forget
 	to reset ->drives_changed to avoid rebuilding the devices
 	menu each time we open the menu
