@@ -2613,8 +2613,10 @@ update_media_menu_items (Totem *totem)
 	/* FIXME we should only show that if we have multiple angles */
 	totem_action_set_sensitivity ("next-angle", playing);
 
-	playing = totem_is_media (totem->mrl);
-	totem_action_set_sensitivity ("eject", playing);
+	/* FIXME, this really doesn't work right
+	 * since we remove the mediadev property
+	playing = totem_is_media (totem->mrl); */
+	totem_action_set_sensitivity ("eject", FALSE);
 }
 
 static void
