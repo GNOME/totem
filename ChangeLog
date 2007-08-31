@@ -1,5 +1,61 @@
 2007-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/disc-test.c: (main): Print the URL that we detected from
+	the device, for DVD and VCDs
+
+	* src/backend/bacon-video-widget-xine.c: (bacon_video_widget_init),
+	(setup_config), (bacon_video_widget_can_play),
+	(bacon_video_widget_get_mrls): Remove CDDA playback altogether,
+	don't say we have VCD support if we only have the old VCD plugin,
+	Fake the DVD MRLs in _get_mrls so that we have the device in the
+	MRL
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls):
+	Handle VCD MRLs with a device in the MRL, Remove CDDA support
+
+	* src/plparse/totem-disc.c: (totem_cd_detect_type_with_url):
+	Use the mountpoint in the MRL for the device when we have it
+	available, so that we can look for the volume for that path
+
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_with_base):
+	Return an error when we get invalid input
+
+	* src/totem-menu.c: (add_device_to_menu), (on_movie_menu_select):
+	Don't set the activation_uri data on the menu item, we're not
+	using it
+	Don't forget to reset ->drives_changed to avoid
+	rebuilding the devices menu each time we open the menu•
+
+	* src/totem-playlist.c: (totem_playlist_compare_with_volume):
+	* src/totem-playlist.h: Remove totem_playlist_clear_with_prefix, not
+	using it anymore, use totem_get_volume_for_media in
+	totem_playlist_clear_with_gnome_vfs_volume
+
+	* src/totem-uri.c: (totem_get_volume_for_uri),
+	(totem_get_mountpoint_for_dvd), (totem_get_mountpoint_for_vcd),
+	(totem_get_volume_for_media), (totem_is_special_mrl),
+	(totem_action_on_unmount):
+	* src/totem-uri.h: Remove totem_is_media and add a
+	totem_get_volume_for_uri so that we know what to umount when using
+	the eject menu item
+
+	* src/totem.c: (totem_action_eject),
+	(totem_action_load_media_device), (totem_action_open_files_list),
+	(totem_action_remote), (update_media_menu_items):
+	Use the gnome-vfs volume when ejecting the device, so that we
+	work for more than just the "special" media, and use gnome-vfs'
+	eject functionality
+	Remove CDDA handling
+	Use crafted MRLs to playback DVD and VCD, as they only give us one
+	MRL anyway
+
+	* configure.in: Disable the Cone plugin build for now, as the
+	Javascript stubs aren't written (Closes: #472226)
+
+2007-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.ui: Make sure the volume widget is disabled on
 	startup so that the volume widget can't be popped up at startup,
 	Fixes a critical warning leaving enter pressed on startup

@@ -754,7 +754,7 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 	name = g_strdup_printf (_("device%d"), position);
 	action = gtk_action_new (name, label, NULL, NULL);
 	g_object_set (G_OBJECT (action), "icon-name", icon_name,
-		"sensitive", !disabled, NULL);
+		      "sensitive", !disabled, NULL);
 	gtk_action_group_add_action (totem->devices_action_group, action);
 	g_object_unref (action);
 	gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
@@ -764,13 +764,12 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 	g_free (label);
 	g_free (icon_name);
 
-	g_object_set_data_full (G_OBJECT (action), "device_path",
-			device_path, (GDestroyNotify) g_free);
-	if (GNOME_IS_VFS_VOLUME (device)) {
-		g_object_set_data_full (G_OBJECT (action), "activation_uri",
-				gnome_vfs_volume_get_activation_uri (GNOME_VFS_VOLUME (device)),
+	if (disabled != FALSE)
+		return;
+
+	g_object_set_data_full (G_OBJECT (action),
+				"device_path", device_path,
 				(GDestroyNotify) g_free);
-	}
 
 	g_signal_connect (G_OBJECT (action), "activate",
 			G_CALLBACK (on_play_disc_activate), totem);
@@ -828,8 +827,7 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 	/* Add the devices to the menu */
 	position = 0;
 
-	for (i = devices; i != NULL; i = i->next)
-	{
+	for (i = devices; i != NULL; i = i->next) {
 		position++;
 		add_device_to_menu (i->data, position, totem);
 	}
@@ -837,6 +835,8 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 
 	g_list_foreach (devices, (GFunc) g_object_unref, NULL);
 	g_list_free (devices);
+
+	totem->drives_changed = FALSE;
 }
 
 static void

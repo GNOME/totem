@@ -1773,58 +1773,35 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 }
 
 static int
-totem_playlist_compare_with_prefix (gconstpointer a, gconstpointer b)
-{
-	const char *mrl = (const char *) a;
-	const char *prefix = (const char *) b;
-
-	return g_str_has_prefix (mrl, prefix);
-}
-
-void
-totem_playlist_clear_with_prefix (TotemPlaylist *playlist, const char *prefix)
-{
-	totem_playlist_clear_with_compare (playlist,
-			(GCompareFunc) totem_playlist_compare_with_prefix,
-			(void *)prefix);
-}
-
-static int
 totem_playlist_compare_with_volume (gpointer a, gpointer b)
 {
 	GnomeVFSVolume *clear_volume = (GnomeVFSVolume *) b;
 	const char *mrl = (const char *) a;
 
-	char *filename;
 	GnomeVFSVolume *volume;
 	GnomeVFSVolumeMonitor *monitor;
 	gboolean retval = FALSE;
 
-	if (g_str_has_prefix (mrl, "file:///") == FALSE)
-		return FALSE;
-
 	monitor = gnome_vfs_get_volume_monitor ();
 
-	filename = g_filename_from_uri (mrl, NULL, NULL);
-	volume = gnome_vfs_volume_monitor_get_volume_for_path
-		(monitor, filename);
-	g_free (filename);
+	volume = totem_get_volume_for_media (mrl);
 
 	if (volume == clear_volume)
 		retval = TRUE;
 
-	gnome_vfs_volume_unref (volume);
+	if (volume != NULL)
+		gnome_vfs_volume_unref (volume);
 
 	return retval;
 }
 
 void
 totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
-		GnomeVFSVolume *volume)
+					    GnomeVFSVolume *volume)
 {
 	totem_playlist_clear_with_compare (playlist,
-			(GCompareFunc) totem_playlist_compare_with_volume,
-			volume);
+					   (GCompareFunc) totem_playlist_compare_with_volume,
+					   volume);
 }
 
 char *
@@ -1912,16 +1889,16 @@ totem_playlist_get_current_metadata (TotemPlaylist *playlist,
 		return FALSE;
 
 	gtk_tree_model_get_iter (playlist->_priv->model,
-			&iter,
-			playlist->_priv->current);
+				 &iter,
+				 playlist->_priv->current);
 
 	*artist = NULL;
 	gtk_tree_model_get (playlist->_priv->model,
-			&iter,
-			CACHE_ARTIST_COL, artist,
-			CACHE_TITLE_COL, title,
-			CACHE_ALBUM_COL, album,
-			-1);
+			    &iter,
+			    CACHE_ARTIST_COL, artist,
+			    CACHE_TITLE_COL, title,
+			    CACHE_ALBUM_COL, album,
+			    -1);
 
 	return (*artist != NULL);
 }

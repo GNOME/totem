@@ -193,7 +193,6 @@ struct BaconVideoWidgetPrivate {
 	guint logo_mode : 1;
 	guint can_dvd : 1;
 	guint can_vcd : 1;
-	guint can_cdda : 1;
 	guint can_dvb : 1;
 	guint have_xvidmode : 1;
 	guint auto_resize : 1;
@@ -456,12 +455,8 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 	{
 		if (g_ascii_strcasecmp (autoplug_list[i], "VCD") == 0) {
 			bvw->priv->can_vcd = TRUE;
-		} else if (g_ascii_strcasecmp (autoplug_list[i], "VCDO") == 0) {
-			bvw->priv->can_vcd = TRUE;
 		} else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0) {
 			bvw->priv->can_dvd = TRUE;
-		} else if (g_ascii_strcasecmp (autoplug_list[i], "CD") == 0) {
-			bvw->priv->can_cdda = TRUE;
 		} else if (g_ascii_strcasecmp (autoplug_list[i], "DVB") == 0) {
 			char *path;
 
@@ -817,12 +812,6 @@ setup_config (BaconVideoWidget *bvw)
 
 	if (bvw->priv->gc == NULL)
 		return;
-
-	/* Disable CDDB */
-	bvw_config_helper_num (bvw->priv->xine,
-			"media.audio_cd.use_cddb", 1, &entry);
-	entry.num_value = 0;
-	xine_config_update_entry (bvw->priv->xine, &entry);
 
 	/* Disable the mixer polling for ALSA */
 	bvw_config_helper_num (bvw->priv->xine,
@@ -3425,17 +3414,17 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, TotemDiscMediaType type)
 		return bvw->priv->can_dvd;
 	case MEDIA_TYPE_VCD:
 		return bvw->priv->can_vcd;
-	case MEDIA_TYPE_CDDA:
-		return bvw->priv->can_cdda;
 	case MEDIA_TYPE_DVB:
 		return bvw->priv->can_dvb;
+	case MEDIA_TYPE_CDDA:
 	default:
 		return FALSE;
 	}
 }
 
 char **
-bacon_video_widget_get_mrls (BaconVideoWidget *bvw, TotemDiscMediaType type,
+bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
+			     TotemDiscMediaType type,
 			     const char *device)
 {
 	const char *plugin_id, *entry_name;
@@ -3456,13 +3445,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw, TotemDiscMediaType type,
 	} else if (type == MEDIA_TYPE_VCD) {
 		plugin_id = "VCD";
 		entry_name = "media.vcd.device";
-	} else if (type == MEDIA_TYPE_CDDA) {
-		plugin_id = "CD";
-		entry_name = "media.audio_cd.device";
 	} else if (type == MEDIA_TYPE_DVB) {
 		plugin_id = "DVB";
-	} else {
-		g_assert_not_reached ();
 	}
 
 	if (entry_name != NULL) {
@@ -3478,7 +3462,16 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw, TotemDiscMediaType type,
 	if (mrls == NULL)
 		return NULL;
 
-	if (type == MEDIA_TYPE_DVB) {
+	/* Add the device to the MRL for DVD,
+	 * VCD already does that for us */
+	if (type == MEDIA_TYPE_DVD) {
+		if (strcmp (mrls[0], "dvd:/") == 0) {
+			char *uris[] = { NULL, NULL };
+			uris[0] = g_strdup_printf ("dvd://%s", device);
+			mrls = g_strdupv (uris);
+			return mrls;
+		}
+	} else if (type == MEDIA_TYPE_DVB) {
 		/* No channels.conf, and we couldn't find it */
 		if (g_str_has_prefix (mrls[0], "Sorry") != FALSE)
 			return NULL;

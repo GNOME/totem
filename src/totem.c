@@ -331,29 +331,16 @@ play_pause_set_label (Totem *totem, TotemStates state)
 void
 totem_action_eject (Totem *totem)
 {
-	GError *err = NULL;
-	char *cmd, *prefix;
-	const char *needle;
-	char *device;
+	GnomeVFSVolume *volume;
 
-	needle = strchr (totem->mrl, ':');
-	g_assert (needle != NULL);
-	/* we want the ':' as well */
-	prefix = g_strndup (totem->mrl, needle - totem->mrl + 1);
-	totem_playlist_clear_with_prefix (totem->playlist, prefix);
-	g_free (prefix);
+	volume = totem_get_volume_for_media (totem->mrl);
+	if (volume == NULL)
+		return;
 
-	g_object_get (G_OBJECT (totem->bvw),
-			"mediadev", &device, NULL);
-	cmd = g_strdup_printf ("eject %s", device);
-	g_free (device);
-
-	if (g_spawn_command_line_sync (cmd, NULL, NULL, NULL, &err) == FALSE)
-	{
-		totem_action_error (_("Totem could not eject the optical media."), err->message, totem);
-		g_error_free (err);
-	}
-	g_free (cmd);
+	/* the volume monitoring will take care of removing the items */
+	totem_playlist_clear_with_gnome_vfs_volume (totem->playlist, volume);
+	gnome_vfs_volume_eject (volume, NULL, NULL);
+	gnome_vfs_volume_unref (volume);
 }
 
 void
@@ -523,12 +510,20 @@ totem_action_load_media_device (Totem *totem, const char *device)
 			break;
 		case MEDIA_TYPE_DVD:
 		case MEDIA_TYPE_VCD:
-		case MEDIA_TYPE_CDDA:
-			retval = totem_action_load_media (totem, type, device_path);
-			if (retval == FALSE) {
-				totem_action_set_mrl_and_play (totem, NULL);
+			{
+				const char *filenames[2];
+
+				filenames[0] = url;
+				filenames[1] = NULL;
+
+				retval = totem_action_open_files (totem, (char **) filenames);
 			}
 			break;
+		case MEDIA_TYPE_CDDA:
+			totem_action_error (_("Totem does not support playback of Audio CDs"),
+					    _("Please consider using a music player or a CD extractor to play this CD"),
+					    totem);
+			retval = FALSE;
 		default:
 			g_assert_not_reached ();
 	}
@@ -548,7 +543,7 @@ totem_action_play_media_device (Totem *totem, const char *device)
 		mrl = totem_playlist_get_current_mrl (totem->playlist);
 		totem_action_set_mrl_and_play (totem, mrl);
 		g_free (mrl);
-	} 
+	}
 }
 
 void
@@ -1678,8 +1673,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				|| strstr (filename, "://") != NULL
 				|| g_str_has_prefix (filename, "dvd:") != FALSE
 				|| g_str_has_prefix (filename, "vcd:") != FALSE
-				|| g_str_has_prefix (filename, "cdda:") != FALSE
-				|| g_str_has_prefix (filename, "cd:") != FALSE
 				|| g_str_has_prefix (filename, "dvb:") != FALSE)
 		{
 			if (cleared == FALSE)
@@ -1698,9 +1691,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 
 			if (totem_is_block_device (filename) != FALSE) {
 				totem_action_load_media_device (totem, data);
-				changed = TRUE;
-			} else if (g_str_has_prefix (filename, "cdda:/") != FALSE) {
-				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
 			} else if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
@@ -1909,13 +1899,8 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		} else if (strcmp (url, "vcd:") == 0) {
 			//FIXME b0rked
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
-		} else if (g_str_has_prefix (url, "cd:") != FALSE) {
-			//FIXME b0rked
-			totem_action_play_media (totem, MEDIA_TYPE_CDDA, NULL);
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
 			totem_action_play_media (totem, MEDIA_TYPE_DVB, NULL);
-		} else if (g_str_has_prefix (url, "cdda:/") != FALSE) {
-			totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
 		} else if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
 		}
@@ -2591,7 +2576,8 @@ window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 static void
 update_media_menu_items (Totem *totem)
 {
-        gboolean playing;
+	GnomeVFSVolume *volume;
+	gboolean playing;
 
 	playing = totem_playing_dvd (totem->mrl);
 
@@ -2603,8 +2589,10 @@ update_media_menu_items (Totem *totem)
 	/* FIXME we should only show that if we have multiple angles */
 	totem_action_set_sensitivity ("next-angle", playing);
 
-	playing = totem_is_media (totem->mrl);
-	totem_action_set_sensitivity ("eject", playing);
+	volume = totem_get_volume_for_media (totem->mrl);
+	totem_action_set_sensitivity ("eject", volume != NULL);
+	if (volume != NULL)
+		gnome_vfs_volume_unref (volume);
 }
 
 static void

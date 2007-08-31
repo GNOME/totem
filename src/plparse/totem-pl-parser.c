@@ -1176,7 +1176,7 @@ totem_pl_parser_parse_with_base (TotemPlParser *parser, const char *url,
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
 	g_return_val_if_fail (strstr (url, "://") != NULL,
-			TOTEM_PL_PARSER_RESULT_IGNORED);
+			TOTEM_PL_PARSER_RESULT_ERROR);
 
 	parser->priv->recurse_level = 0;
 	parser->priv->fallback = fallback != FALSE;

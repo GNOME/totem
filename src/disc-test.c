@@ -51,7 +51,7 @@ main (gint   argc,
     type = totem_cd_detect_type_from_dir (argv[1], &url, &error);
     is_dir = TRUE;
   } else {
-    type = totem_cd_detect_type (argv[1], &error);
+    type = totem_cd_detect_type_with_url (argv[1], &url, &error);
   }
 
   switch (type) {
@@ -101,7 +101,7 @@ main (gint   argc,
 
   g_print ("%s contains a %s\n", argv[1], type_s);
 
-  if (is_dir != FALSE && url != NULL) {
+  if (url != NULL) {
     g_print ("URL for directory is %s\n", url);
   }
 

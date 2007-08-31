@@ -1834,13 +1834,13 @@ bacon_video_widget_finalize (GObject * object)
 
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = NULL;
-    
+
   g_free (bvw->com->mrl);
   bvw->com->mrl = NULL;
-  
+
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
- 
+
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
     bvw->priv->vis_plugins_list = NULL;
@@ -2654,6 +2654,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     bvw->com->mrl = g_strdup ("dvd://");
     g_free (bvw->priv->media_device);
     bvw->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
+  } else if (g_str_has_prefix (mrl, "vcd:///")) {
+    /* this allows to play backups of vcds */
+    g_free (bvw->com->mrl);
+    bvw->com->mrl = g_strdup ("vcd://");
+    g_free (bvw->priv->media_device);
+    bvw->priv->media_device = g_strdup (mrl + strlen ("vcd://"));
   }
 
   bvw->priv->got_redirect = FALSE;
@@ -2661,7 +2667,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   bvw->priv->media_has_audio = FALSE;
   bvw->priv->stream_length = 0;
   bvw->priv->ignore_messages_mask = 0;
-  
+
   /* We hide the video window for now. Will show when video of vfx comes up */
   if (bvw->priv->video_window) {
     gdk_window_hide (bvw->priv->video_window);
@@ -2670,7 +2676,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
         GTK_WIDGET (bvw)->allocation.width,
         GTK_WIDGET (bvw)->allocation.height);
   }
-  
+
   /* Visualization settings changed */
   if (bvw->priv->vis_changed) {
     setup_vis (bvw);
@@ -3864,11 +3870,11 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   switch (type) {
-    case MEDIA_TYPE_CDDA:
     case MEDIA_TYPE_VCD:
       res = TRUE;
       break;
     case MEDIA_TYPE_DVD:
+    case MEDIA_TYPE_CDDA:
     default:
       res = FALSE;
       break;
@@ -3895,62 +3901,11 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
   bvw->priv->media_device = g_strdup (device);
 
   switch (type) {
-    case MEDIA_TYPE_CDDA: {
-      GstStateChangeReturn ret;
-      GstElement *cddasrc;
-      GstFormat fmt;
-      GstPad *pad;
-      gint64 num_tracks = 0;
-      gchar *uri[] = { "cdda://", NULL };
-      gint i;
-
-      GST_DEBUG ("Checking for Audio CD sources (cdda://) ...");
-      cddasrc = gst_element_make_from_uri (GST_URI_SRC, "cdda://1", NULL);
-      if (!cddasrc) {
-        GST_DEBUG ("No Audio CD source plugins found");
-        return NULL;
-      }
-
-      fmt = gst_format_get_by_nick ("track");
-      if (!fmt) {
-        gst_object_unref (cddasrc);
-        return NULL;
-      }
-
-      bvw_set_device_on_element (bvw, cddasrc);
-
-      GST_DEBUG ("Opening CD and getting number of tracks ...");
-
-      /* wait for state change to complete or fail */
-      gst_element_set_state (cddasrc, GST_STATE_PAUSED);
-      ret = gst_element_get_state (cddasrc, NULL, NULL, -1);
-      if (ret == GST_STATE_CHANGE_FAILURE) {
-        GST_DEBUG ("Couldn't set cdda source to PAUSED");
-        gst_element_set_state (cddasrc, GST_STATE_NULL);
-        gst_object_unref (cddasrc);
-        return NULL;
-      }
-
-      pad = gst_element_get_pad (cddasrc, "src");
-      if (gst_pad_query_duration (pad, &fmt, &num_tracks) && num_tracks > 0) {
-        GST_DEBUG ("%" G_GINT64_FORMAT " tracks", num_tracks);
-        mrls = g_new0 (gchar *, num_tracks + 1);
-        for (i = 1; i <= num_tracks; ++i) {
-          mrls[i-1] = g_strdup_printf ("cdda://%d", i);
-        }
-      } else {
-        GST_DEBUG ("could not query track number");
-        mrls = g_strdupv (uri);
-      }
-      gst_object_unref (pad);
-
-      gst_element_set_state (cddasrc, GST_STATE_NULL);
-      gst_object_unref (cddasrc);
-      break;
-    }
     case MEDIA_TYPE_VCD: {
-      gchar *uri[] = { "vcd://", NULL };
+      gchar *uri[] = { NULL, NULL };
+      uri[0] = g_strdup_printf ("vcd://%s", device);
       mrls = g_strdupv (uri);
+      g_free (uri[0]);
       break;
     }
 /*

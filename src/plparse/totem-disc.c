@@ -804,10 +804,12 @@ totem_cd_detect_type_with_url (const char *device,
 
   switch (type) {
   case MEDIA_TYPE_DVD:
-    *url = totem_cd_mrl_from_type ("dvd", device);
+    *url = totem_cd_mrl_from_type ("dvd", cache->mountpoint ? 
+				   cache->mountpoint : device);
     break;
   case MEDIA_TYPE_VCD:
-    *url = totem_cd_mrl_from_type ("vcd", device);
+    *url = totem_cd_mrl_from_type ("vcd", cache->mountpoint ?
+				   cache->mountpoint : device);
     break;
   case MEDIA_TYPE_CDDA:
     *url = totem_cd_mrl_from_type ("cdda", device);

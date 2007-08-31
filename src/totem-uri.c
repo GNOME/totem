@@ -88,33 +88,88 @@ totem_pictures_dir (void)
 	return g_strdup (dir);
 }
 
-gboolean
-totem_is_media (const char *uri)
+static GnomeVFSVolume *
+totem_get_volume_for_uri (GnomeVFSVolumeMonitor *monitor, const char *path)
 {
+	GnomeVFSVolume *vol;
+	GnomeVFSDeviceType type;
+
+	vol = gnome_vfs_volume_monitor_get_volume_for_path (monitor, path);
+	if (vol == NULL)
+		return NULL;
+
+	type = gnome_vfs_volume_get_device_type (vol);
+	if (type != GNOME_VFS_DEVICE_TYPE_AUDIO_CD
+	    && type != GNOME_VFS_DEVICE_TYPE_VIDEO_DVD
+	    && type != GNOME_VFS_DEVICE_TYPE_CDROM) {
+	    	gnome_vfs_volume_unref (vol);
+	    	vol = NULL;
+	}
+
+	return vol;
+}
+
+static char *
+totem_get_mountpoint_for_dvd (const char *uri)
+{
+	if (g_str_has_prefix (uri, "dvd://") == FALSE)
+		return NULL;
+	return g_strdup (uri + strlen ("dvd://"));
+}
+
+static char *
+totem_get_mountpoint_for_vcd (const char *uri)
+{
+	return NULL;
+}
+
+GnomeVFSVolume *
+totem_get_volume_for_media (const char *uri)
+{
+	GnomeVFSVolumeMonitor *monitor;
+	GnomeVFSVolume *ret;
+	char *mount;
+
 	if (uri == NULL)
-		return FALSE;
+		return NULL;
 
-	if (g_str_has_prefix (uri, "cdda:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (uri, "dvd:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (uri, "vcd:") != FALSE)
-		return TRUE;
-	if (g_str_has_prefix (uri, "cd:") != FALSE)
-		return TRUE;
+	monitor = gnome_vfs_get_volume_monitor ();
+	mount = NULL;
+	ret = NULL;
 
-	return FALSE;
+	if (g_str_has_prefix (uri, "dvd://") != FALSE)
+		mount = totem_get_mountpoint_for_dvd (uri);
+	else if (g_str_has_prefix (uri, "vcd:") != FALSE)
+		mount = totem_get_mountpoint_for_vcd (uri);
+	else if (g_str_has_prefix (uri, "file:") != FALSE)
+		mount = g_filename_from_uri (uri, NULL, NULL);
+
+	if (mount == NULL)
+		return NULL;
+
+	ret = totem_get_volume_for_uri (monitor, mount);
+	g_free (mount);
+
+	return ret;
 }
 
 gboolean
 totem_is_special_mrl (const char *uri)
 {
+	GnomeVFSVolume *vol;
+	gboolean retval;
+
 	if (uri == NULL)
 		return FALSE;
 	if (g_str_has_prefix (uri, "dvb:") != FALSE)
 		return TRUE;
 
-	return totem_is_media (uri);
+	vol = totem_get_volume_for_media (uri);
+	retval = vol != NULL;
+	if (vol != NULL)
+		gnome_vfs_volume_unref (vol);
+
+	return retval;
 }
 
 gboolean
@@ -178,7 +233,8 @@ totem_create_full_path (const char *path)
 
 static void
 totem_action_on_unmount (GnomeVFSVolumeMonitor *vfsvolumemonitor,
-		GnomeVFSVolume *volume, Totem *totem)
+			 GnomeVFSVolume *volume,
+			 Totem *totem)
 {
 	totem_playlist_clear_with_gnome_vfs_volume (totem->playlist, volume);
 }
@@ -189,9 +245,9 @@ totem_setup_file_monitoring (Totem *totem)
 	totem->monitor = gnome_vfs_get_volume_monitor ();
 
 	g_signal_connect (G_OBJECT (totem->monitor),
-			"volume_pre_unmount",
-			G_CALLBACK (totem_action_on_unmount),
-			totem);
+			  "volume_pre_unmount",
+			  G_CALLBACK (totem_action_on_unmount),
+			  totem);
 }
 
 /* List from xine-lib's demux_sputext.c */

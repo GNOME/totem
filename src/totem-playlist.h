@@ -71,7 +71,6 @@ GtkType    totem_playlist_get_type (void);
 GtkWidget *totem_playlist_new      (void);
 
 /* The application is responsible for checking that the mrl is correct
- * Handles directories, m3u playlists, and shoutcast playlists
  * @display_name is if you have a preferred display string for the mrl,
  * NULL otherwise
  */
@@ -90,8 +89,6 @@ void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
 gboolean   totem_playlist_clear (TotemPlaylist *playlist);
-void       totem_playlist_clear_with_prefix (TotemPlaylist *playlist,
-					     const char *prefix);
 void       totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
 						       GnomeVFSVolume *volume);
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist);

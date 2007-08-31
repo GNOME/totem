@@ -25,24 +25,25 @@
 
 #include "totem.h"
 #include <gtk/gtkwindow.h>
+#include <libgnomevfs/gnome-vfs-volume.h>
 
 G_BEGIN_DECLS
 
-const char *	totem_dot_dir		(void);
-char *		totem_pictures_dir	(void);
-char*		totem_create_full_path	(const char *path);
-gboolean	totem_is_media		(const char *uri);
-gboolean	totem_is_special_mrl	(const char *uri);
-gboolean	totem_playing_dvd	(const char *uri);
-gboolean	totem_is_block_device	(const char *uri);
-void		totem_setup_file_monitoring (Totem *totem);
-void		totem_setup_file_filters (void);
-void		totem_destroy_file_filters (void);
-char*		totem_uri_get_subtitle_uri (const char *uri);
-char*		totem_uri_escape_for_display (const char *uri);
-GSList*		totem_add_files		(GtkWindow *parent,
-					 const char *path);
-void		totem_add_pictures_dir	(GtkWidget *chooser);
+const char *	totem_dot_dir			(void);
+char *		totem_pictures_dir		(void);
+char*		totem_create_full_path		(const char *path);
+GnomeVFSVolume*	totem_get_volume_for_media	(const char *uri);
+gboolean	totem_is_special_mrl		(const char *uri);
+gboolean	totem_playing_dvd		(const char *uri);
+gboolean	totem_is_block_device		(const char *uri);
+void		totem_setup_file_monitoring	(Totem *totem);
+void		totem_setup_file_filters	(void);
+void		totem_destroy_file_filters	(void);
+char*		totem_uri_get_subtitle_uri	(const char *uri);
+char*		totem_uri_escape_for_display	(const char *uri);
+GSList*		totem_add_files			(GtkWindow *parent,
+						 const char *path);
+void		totem_add_pictures_dir		(GtkWidget *chooser);
 
 G_END_DECLS
 
