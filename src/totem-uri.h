@@ -33,7 +33,6 @@ const char *	totem_dot_dir			(void);
 char *		totem_pictures_dir		(void);
 char*		totem_create_full_path		(const char *path);
 GnomeVFSVolume*	totem_get_volume_for_media	(const char *uri);
-gboolean	totem_is_special_mrl		(const char *uri);
 gboolean	totem_playing_dvd		(const char *uri);
 gboolean	totem_is_block_device		(const char *uri);
 void		totem_setup_file_monitoring	(Totem *totem);

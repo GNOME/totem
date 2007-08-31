@@ -337,8 +337,12 @@ totem_action_eject (Totem *totem)
 	if (volume == NULL)
 		return;
 
+	g_free (totem->mrl);
+	totem->mrl = NULL;
+	bacon_video_widget_close (totem->bvw);
+	totem_file_closed (totem);
+
 	/* the volume monitoring will take care of removing the items */
-	totem_playlist_clear_with_gnome_vfs_volume (totem->playlist, volume);
 	gnome_vfs_volume_eject (volume, NULL, NULL);
 	gnome_vfs_volume_unref (volume);
 }
@@ -1890,7 +1894,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		if (url == NULL) {
 			bacon_video_widget_close (totem->bvw);
 			totem_file_closed (totem);
-			totem_action_set_mrl_and_play (totem, NULL);
+			totem_action_set_mrl (totem, NULL);
 			break;
 		}
 		if (strcmp (url, "dvd:") == 0) {

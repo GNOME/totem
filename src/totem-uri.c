@@ -133,7 +133,6 @@ totem_get_volume_for_media (const char *uri)
 	if (uri == NULL)
 		return NULL;
 
-	monitor = gnome_vfs_get_volume_monitor ();
 	mount = NULL;
 	ret = NULL;
 
@@ -147,25 +146,26 @@ totem_get_volume_for_media (const char *uri)
 	if (mount == NULL)
 		return NULL;
 
+	monitor = gnome_vfs_get_volume_monitor ();
 	ret = totem_get_volume_for_uri (monitor, mount);
 	g_free (mount);
 
 	return ret;
 }
 
-gboolean
+static gboolean
 totem_is_special_mrl (const char *uri)
 {
 	GnomeVFSVolume *vol;
 	gboolean retval;
 
-	if (uri == NULL)
+	if (uri == NULL || g_str_has_prefix (uri, "file:") != FALSE)
 		return FALSE;
 	if (g_str_has_prefix (uri, "dvb:") != FALSE)
 		return TRUE;
 
 	vol = totem_get_volume_for_media (uri);
-	retval = vol != NULL;
+	retval = (vol != NULL);
 	if (vol != NULL)
 		gnome_vfs_volume_unref (vol);
 

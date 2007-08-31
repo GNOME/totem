@@ -1,5 +1,22 @@
 2007-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Fix Cone disabled message, it should say disabled...
+
+	* src/totem-uri.c: (totem_get_volume_for_media),
+	(totem_is_special_mrl): Fix totem_is_special_mrl, as a file:/// URI
+	has a volume, but isn't so special, make totem_is_special_mrl static,
+	we're not using it anywhere else, Only get the volume monitor when
+	we really need it
+
+	* src/totem-uri.h: remove totem_is_special_mrl()
+
+	* src/totem.c: (totem_action_eject), (totem_action_remote): Close the
+	currently played item, and free it before we remove items from
+	the playlist (in the eject's callbacks), _set_mrl_and_play with a NULL
+	MRL means nothing
+
+2007-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/disc-test.c: (main): Print the URL that we detected from
 	the device, for DVD and VCDs
 
