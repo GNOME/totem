@@ -1,5 +1,11 @@
 2007-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.ui: Make sure the volume widget is disabled on
+	startup so that the volume widget can't be popped up at startup,
+	Fixes a critical warning leaving enter pressed on startup
+
+2007-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-interface.c: (link_button_clicked_cb): Escape the URI
 	before using it in a shell, otherwise the fragment ends up being
 	a comment, and it's not being used
