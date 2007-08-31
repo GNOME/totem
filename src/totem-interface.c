@@ -102,10 +102,11 @@ static void
 link_button_clicked_cb (GtkWidget *widget, Totem *totem)
 {
 	const char *uri;
-	char *command, *browser;
+	char *command, *browser, *escaped_uri;
 	GError *error = NULL;
 
 	uri = gtk_link_button_get_uri (GTK_LINK_BUTTON (widget));
+	escaped_uri = g_shell_quote (uri);
 	browser = gconf_client_get_string (totem->gc, "/desktop/gnome/url-handlers/http/command", NULL);
 
 	if (browser == NULL || browser[0] == '\0') {
@@ -117,7 +118,7 @@ link_button_clicked_cb (GtkWidget *widget, Totem *totem)
 	} else {
 		char *message;
 
-		command = g_strdup_printf (browser, uri);
+		command = g_strdup_printf (browser, escaped_uri);
 		if (g_spawn_command_line_async ((const char*) command, &error) == FALSE) {
 			message = g_strdup_printf(_("Could not launch URL \"%s\": %s"), uri, error->message);
 			totem_interface_error (_("Error launching URI"), message, GTK_WINDOW (totem->win));
@@ -127,6 +128,7 @@ link_button_clicked_cb (GtkWidget *widget, Totem *totem)
 		g_free (command);
 	}
 
+	g_free (escaped_uri);
 	g_free (browser);
 }
 
