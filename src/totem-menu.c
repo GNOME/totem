@@ -837,6 +837,8 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 
 	g_list_foreach (devices, (GFunc) g_object_unref, NULL);
 	g_list_free (devices);
+
+	totem->drives_changed = FALSE;
 }
 
 static void

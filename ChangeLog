@@ -1,5 +1,11 @@
 2007-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-menu.c: (on_movie_menu_select): Don't forget
+	to reset ->drives_changed to avoid rebuilding the devices
+	menu each time we open the menu
+
+2007-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (update_media_menu_items): Disable the Eject
 	menu item, it's completely broken since we removed the mediadev
 	property, but nobody tested it :/
