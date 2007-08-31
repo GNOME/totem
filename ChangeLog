@@ -1,5 +1,11 @@
 2007-08-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c: (totem_action_eject): Don't crash when eject
+	is called from a remote interface and there's no MRL loaded
+	(Closes: #434380)
+
+2007-08-31  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.ui: Make sure the volume widget is disabled on
 	startup so that the volume widget can't be popped up at startup,
 	Fixes a critical warning leaving enter pressed on startup

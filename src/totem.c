@@ -336,6 +336,9 @@ totem_action_eject (Totem *totem)
 	const char *needle;
 	char *device;
 
+	if (totem->mrl == NULL)
+		return;
+
 	needle = strchr (totem->mrl, ':');
 	g_assert (needle != NULL);
 	/* we want the ':' as well */
