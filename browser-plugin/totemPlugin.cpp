@@ -756,6 +756,10 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 	if (spec.IsEmpty ())
 		return;
 
+	/* If we don't have a proxy yet */
+	if (!mViewerReady)
+		return;
+
 	/* If the URL is supported and the caller isn't asking us to make
 	 * the viewer open the stream, we call OpenStream, and
 	 * otherwise OpenURI. */
