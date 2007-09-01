@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-29 18:52+0300\n"
+"POT-Creation-Date: 2007-09-01 07:36+0300\n"
 "PO-Revision-Date: 2007-02-20 07:45+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -253,8 +253,8 @@ msgid "Text Subtitles"
 msgstr "Tekstitys"
 
 #. Title
-#: ../data/totem.ui.h:18 ../src/totem.c:859 ../src/totem.c:3035
-#: ../src/totem.c:3064 ../browser-plugin/totem-plugin-viewer.c:1770
+#: ../data/totem.ui.h:18 ../src/totem.c:858 ../src/totem.c:3027
+#: ../src/totem.c:3056 ../browser-plugin/totem-plugin-viewer.c:1770
 msgid "Totem Movie Player"
 msgstr "Totem-elokuvasoitin"
 
@@ -459,30 +459,30 @@ msgstr "Toistetaan elokuvaa"
 msgid "No File"
 msgstr "Ei tiedostoa"
 
-#: ../src/totem-interface.c:114 ../src/totem-interface.c:122
+#: ../src/totem-interface.c:115 ../src/totem-interface.c:123
 #, c-format
 msgid "Could not launch URL \"%s\": %s"
 msgstr "URLia \"%s\" ei voitu avata: %s"
 
-#: ../src/totem-interface.c:114
+#: ../src/totem-interface.c:115
 msgid "Default browser not configured"
 msgstr "Oletus-selainta ei ole määritelty"
 
-#: ../src/totem-interface.c:115 ../src/totem-interface.c:123
+#: ../src/totem-interface.c:116 ../src/totem-interface.c:124
 msgid "Error launching URI"
 msgstr "Virhe avattaessa URI:a"
 
-#: ../src/totem-interface.c:191
+#: ../src/totem-interface.c:193
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "\"%s\"-käyttöliittymää ei voi ladata: %s"
 
-#: ../src/totem-interface.c:193 ../src/totem-interface.c:195
+#: ../src/totem-interface.c:195 ../src/totem-interface.c:197
 #: ../src/totem-menu.c:1399
 msgid "Make sure that Totem is properly installed."
 msgstr "Tarkista, että Totem on oikein asennettu."
 
-#: ../src/totem-interface.c:306
+#: ../src/totem-interface.c:308
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -494,7 +494,7 @@ msgstr ""
 "Software Foundation on ne julkaissut; joko lisenssin version 2, tai "
 "(valinnan mukaan) minkä tahansa myöhemmän version mukaisesti."
 
-#: ../src/totem-interface.c:310
+#: ../src/totem-interface.c:312
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -506,7 +506,7 @@ msgstr ""
 "laadusta tai soveltuvuudesta tiettyyn tarkoitukseen. Katso GPL lisenssistä "
 "lisää yksityiskohtia."
 
-#: ../src/totem-interface.c:314
+#: ../src/totem-interface.c:316
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -516,7 +516,7 @@ msgstr ""
 "kirjoita osoitteeseen Free Software Foundation Inc., 59 Temple Place, Suite "
 "330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:317
+#: ../src/totem-interface.c:319
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1127,7 +1127,7 @@ msgstr "Tallenna _kuvakaappaus"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:851
+#: ../src/totem-statusbar.c:111 ../src/totem.c:303 ../src/totem.c:850
 #: ../browser-plugin/totem-plugin-viewer.c:314
 msgid "Stopped"
 msgstr "Pysäytetty"
@@ -1312,23 +1312,23 @@ msgstr "Läntinen"
 msgid "Vietnamese"
 msgstr "Vietnam"
 
-#: ../src/totem-uri.c:306
+#: ../src/totem-uri.c:362
 msgid "All files"
 msgstr "Kaikki tiedostot"
 
-#: ../src/totem-uri.c:311
+#: ../src/totem-uri.c:367
 msgid "Supported files"
 msgstr "Tuetut tiedostot"
 
-#: ../src/totem-uri.c:323
+#: ../src/totem-uri.c:379
 msgid "Audio files"
 msgstr "Äänitiedostot"
 
-#: ../src/totem-uri.c:331
+#: ../src/totem-uri.c:387
 msgid "Video files"
 msgstr "Videotiedostot"
 
-#: ../src/totem-uri.c:402
+#: ../src/totem-uri.c:458
 msgid "Select Movies or Playlists"
 msgstr "Valitse elokuvia tai soittolistoja"
 
@@ -1340,17 +1340,13 @@ msgstr "Toistetaan"
 msgid "Paused"
 msgstr "Tauko"
 
-#: ../src/totem.c:353
-msgid "Totem could not eject the optical media."
-msgstr "Totem ei voi työntää optista mediaa ulos."
-
-#: ../src/totem.c:386 ../src/totem.c:413 ../src/totem.c:949
-#: ../src/totem.c:1069
+#: ../src/totem.c:377 ../src/totem.c:404 ../src/totem.c:948
+#: ../src/totem.c:1068
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ei voinut toistaa sijaintia \"%s\"."
 
-#: ../src/totem.c:473
+#: ../src/totem.c:464
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1359,7 +1355,7 @@ msgstr ""
 "Totem ei voi soittaa tämäntyyppisiä tiedostoja (%s), koska sopivaa "
 "liitännäistä levyltä lukua varten ei ole asennettu."
 
-#: ../src/totem.c:475
+#: ../src/totem.c:466
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1368,7 +1364,7 @@ msgstr ""
 "Totem ei voi soittaa tämäntyyppisiä tiedostoja (%s), koska sopivaa "
 "liitännäistä ei ole asennettu."
 
-#: ../src/totem.c:476
+#: ../src/totem.c:467
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1376,11 +1372,11 @@ msgstr ""
 "Soittaaksesi tiedoston asenna tarvittavat liitännäiset ja käynnistä Totem "
 "uudestaan."
 
-#: ../src/totem.c:477
+#: ../src/totem.c:468
 msgid "More information about media plugins"
 msgstr "Lisätietoja medialiitännäisistä"
 
-#: ../src/totem.c:485
+#: ../src/totem.c:476
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1389,80 +1385,88 @@ msgstr ""
 "Totem ei voi soittaa mediaa (%s), vaikka sille tarkoitettu liitännäinen on "
 "asennettu."
 
-#: ../src/totem.c:486
+#: ../src/totem.c:477
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "Varmista, että levy on asemassa ja että aseman asetukset ovat oikein."
 
-#: ../src/totem.c:514
+#: ../src/totem.c:505
 msgid "Totem was not able to play this disc."
 msgstr "Totem ei voinut soittaa tätä levyä."
 
-#: ../src/totem.c:515 ../src/totem.c:2887
+#: ../src/totem.c:506 ../src/totem.c:2879
 #: ../browser-plugin/totem-plugin-viewer.c:1761
 msgid "No reason."
 msgstr "Ei syytä"
 
-#: ../src/totem.c:768 ../src/totem.c:776
+#: ../src/totem.c:527
+msgid "Totem does not support playback of Audio CDs"
+msgstr "Totem ei osaa soittaa tavallisia CD-levyjä"
+
+#: ../src/totem.c:528
+msgid "Please consider using a music player or a CD extractor to play this CD"
+msgstr "Soita tavalliset CD-levyt musiikkisoittimella tai kopiointiohjelmalla"
+
+#: ../src/totem.c:767 ../src/totem.c:775
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ei voinut kaapata kuvaa tästä elokuvasta."
 
-#: ../src/totem.c:776
+#: ../src/totem.c:775
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Näin ei pitäisi päästä tapahtumaan. Ole hyvä ja ilmoita viasta."
 
-#: ../src/totem.c:955
+#: ../src/totem.c:954
 msgid "No error message"
 msgstr "Ei virheviestiä"
 
-#: ../src/totem.c:1192
+#: ../src/totem.c:1191
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: ../src/totem.c:1456 ../src/totem.c:1458
+#: ../src/totem.c:1455 ../src/totem.c:1457
 #: ../browser-plugin/totem-plugin-viewer.c:1548
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../src/totem.c:2761 ../src/totem.c:2763
+#: ../src/totem.c:2753 ../src/totem.c:2755
 msgid "Play / Pause"
 msgstr "Toista / keskeytä"
 
-#: ../src/totem.c:2770 ../src/totem.c:2772
+#: ../src/totem.c:2762 ../src/totem.c:2764
 msgid "Previous Chapter/Movie"
 msgstr "Edellinen kappale/elokuva"
 
-#: ../src/totem.c:2779 ../src/totem.c:2781
+#: ../src/totem.c:2771 ../src/totem.c:2773
 msgid "Next Chapter/Movie"
 msgstr "Seuraava kappale/elokuva"
 
-#: ../src/totem.c:2887
+#: ../src/totem.c:2879
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: ../src/totem.c:3036
+#: ../src/totem.c:3028
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 
-#: ../src/totem.c:3036
+#: ../src/totem.c:3028
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totem sulkeutuu."
 
 #. Handle command line arguments
-#: ../src/totem.c:3044
+#: ../src/totem.c:3036
 msgid "- Play movies and songs"
 msgstr "- Näytä elokuvia ja soita musiikkia"
 
-#: ../src/totem.c:3053
+#: ../src/totem.c:3045
 msgid "Totem could not parse the command-line options"
 msgstr "Totem ei voinut tulkita komentorivin valitsimia"
 
-#: ../src/totem.c:3072
+#: ../src/totem.c:3064
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei voinut alustaa asetusmoottoria."
 
-#: ../src/totem.c:3072
+#: ../src/totem.c:3064
 msgid "Make sure that GNOME is properly installed."
 msgstr "Varmista, että GNOME on oikein asennettu.."
 
@@ -1536,34 +1540,34 @@ msgid "Media file could not be played."
 msgstr "Tiedostoa ei voi esittää."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2635
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2695
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2701
 #, c-format
 msgid "Failed to retrieve working directory"
 msgstr "Työhakemiston nouto epäonnistui"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4188
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4143
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4190
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4145
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4192
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4147
 msgid "Stereo"
 msgstr "Stereo"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4423
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4378
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "Liian vanha GStreamer-versio asennettuna."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4430
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4385
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Media ei sisällä tuettuja videomuotoja."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4766
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4721
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1572,8 +1576,8 @@ msgstr ""
 "GStreamer-soitto-olion luominen epäonnistui. Tarkista että GStreamer on "
 "asennettu oikein."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4898
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5015
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4853
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1582,7 +1586,7 @@ msgstr ""
 "Videoulostulon avaus epäonnistui. Valitse toinen videoulostulo "
 "Multimediajärjestelmien valitsimesta."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4910
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4865
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1593,7 +1597,7 @@ msgstr ""
 "GStreamerin liitännäisiä tai valita toinen videoulostulo "
 "Multimediajärjestelmien valitsimesta."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4945
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4900
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1604,7 +1608,7 @@ msgstr ""
 "käyttää äänilaitetta tai että äänipalvelin ei ole käytössä. Valitse toinen "
 "äänen ulostulo Multimediavjärjestelmien valitsimesta."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4965
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4920
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -1615,7 +1619,7 @@ msgstr ""
 "jotain uusia GStreamerin liitännäisiä tai valita toinen äänen ulostulo "
 "Multimediajärjestelmien valitsimesta."
 
-#: ../src/backend/bacon-video-widget-xine.c:757
+#: ../src/backend/bacon-video-widget-xine.c:752
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1624,8 +1628,8 @@ msgstr ""
 "Ääniajuria \"%s\" ei voi avata.\n"
 "Tarkista, ettei laite ole käytössä"
 
-#: ../src/backend/bacon-video-widget-xine.c:1227
-#: ../src/backend/bacon-video-widget-xine.c:1794
+#: ../src/backend/bacon-video-widget-xine.c:1216
+#: ../src/backend/bacon-video-widget-xine.c:1783
 #, c-format
 msgid ""
 "No video output is available. Make sure that the program is correctly "
@@ -1634,30 +1638,30 @@ msgstr ""
 "Video-ulostuloa ei ole käytettävissä. Tarkista, että ohjelma on asennettu "
 "oikein."
 
-#: ../src/backend/bacon-video-widget-xine.c:1352
+#: ../src/backend/bacon-video-widget-xine.c:1341
 msgid "The server you are trying to connect to is not known."
 msgstr "Palvelinta, johon yrität ottaa yhteyttä, ei löydy."
 
-#: ../src/backend/bacon-video-widget-xine.c:1356
+#: ../src/backend/bacon-video-widget-xine.c:1345
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Määrittämäsi laitenimi (%s) näyttää kelvottomalta."
 
-#: ../src/backend/bacon-video-widget-xine.c:1360
+#: ../src/backend/bacon-video-widget-xine.c:1349
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Palvelin, johon yrität ottaa yhteyttä (%s), on tavoittamattomissa."
 
-#: ../src/backend/bacon-video-widget-xine.c:1364
+#: ../src/backend/bacon-video-widget-xine.c:1353
 msgid "The connection to this server was refused."
 msgstr "Yhteys palvelimeen torjuttiin."
 
-#: ../src/backend/bacon-video-widget-xine.c:1368
+#: ../src/backend/bacon-video-widget-xine.c:1357
 msgid "The specified movie could not be found."
 msgstr "Annettua elokuvaa ei löytynyt"
 
-#: ../src/backend/bacon-video-widget-xine.c:1374
-#: ../src/backend/bacon-video-widget-xine.c:1390
+#: ../src/backend/bacon-video-widget-xine.c:1363
+#: ../src/backend/bacon-video-widget-xine.c:1379
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1665,78 +1669,78 @@ msgstr ""
 "Lähde on salattu eikä sitä voi lukea. Et kai yritä soittaa salattua DVD:tä "
 "ilman libdvdcss-kirjastoa?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1377
+#: ../src/backend/bacon-video-widget-xine.c:1366
 msgid "The movie could not be read."
 msgstr "Elokuvaa ei voi lukea."
 
-#: ../src/backend/bacon-video-widget-xine.c:1384
+#: ../src/backend/bacon-video-widget-xine.c:1373
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Virhe ladattaessa kirjastoa tai dekooderia (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1393
+#: ../src/backend/bacon-video-widget-xine.c:1382
 msgid "This file is encrypted and cannot be played back."
 msgstr "Tämä elokuva on salattu eikä sitä voi toistaa."
 
-#: ../src/backend/bacon-video-widget-xine.c:1398
+#: ../src/backend/bacon-video-widget-xine.c:1387
 msgid "For security reasons, this movie can not be played back."
 msgstr "Elokuvaa ei voi turvasyistä toistaa."
 
-#: ../src/backend/bacon-video-widget-xine.c:1403
+#: ../src/backend/bacon-video-widget-xine.c:1392
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Äänilaite on varattu. Käyttäkö joku muu ohjelma sitä?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1409
+#: ../src/backend/bacon-video-widget-xine.c:1398
 msgid "Authentication is required to access this file."
 msgstr "Tämän tiedoston avaus vaatii tunnistautumisen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1411
+#: ../src/backend/bacon-video-widget-xine.c:1400
 msgid "Authentication is required to access this file or stream."
 msgstr "Tämän tiedoston tai virran avaus vaatii tunnistautumisen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1417
+#: ../src/backend/bacon-video-widget-xine.c:1406
 msgid "You are not allowed to open this file."
 msgstr "Oikeutesi eivät riitä tämän tiedoston avaamiseen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1419
+#: ../src/backend/bacon-video-widget-xine.c:1408
 msgid "The server refused access to this file or stream."
 msgstr "Palvelin ei anna pääsyä tähän tiedostoon tai virtaan"
 
-#: ../src/backend/bacon-video-widget-xine.c:1423
+#: ../src/backend/bacon-video-widget-xine.c:1412
 msgid "The file you tried to play is an empty file."
 msgstr "Tiedosto, jota yritit soittaa, on tyhjä."
 
-#: ../src/backend/bacon-video-widget-xine.c:1587
+#: ../src/backend/bacon-video-widget-xine.c:1576
 #, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Tämän elokuvan sijannin käsittelyyn ei löydy sopivaa liitännäistä"
 
-#: ../src/backend/bacon-video-widget-xine.c:1591
+#: ../src/backend/bacon-video-widget-xine.c:1580
 #, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "Tämän elokuvan avaamiseen ei löydy sopivaa liitännäistä"
 
-#: ../src/backend/bacon-video-widget-xine.c:1595
+#: ../src/backend/bacon-video-widget-xine.c:1584
 #, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "Tämä elokuva on rikki, eikä sitä voi toistaa pidemmälle"
 
-#: ../src/backend/bacon-video-widget-xine.c:1599
+#: ../src/backend/bacon-video-widget-xine.c:1588
 #, c-format
 msgid "This location is not a valid one."
 msgstr "Sijainti ei ole kelvollinen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1603
+#: ../src/backend/bacon-video-widget-xine.c:1592
 #, c-format
 msgid "This movie could not be opened."
 msgstr "Tämän elokuvan avaaminen ei onnistu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1607
+#: ../src/backend/bacon-video-widget-xine.c:1596
 #, c-format
 msgid "Generic Error."
 msgstr "Yleinen virhe."
 
-#: ../src/backend/bacon-video-widget-xine.c:2481
+#: ../src/backend/bacon-video-widget-xine.c:2470
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1745,7 +1749,7 @@ msgstr ""
 "Videotyyppiä \"%s\" ei tueta. Sinun kenties täytyy asentaa lisäliitännäinen "
 "voidaksesi toistaa joitain elokuvia"
 
-#: ../src/backend/bacon-video-widget-xine.c:2485
+#: ../src/backend/bacon-video-widget-xine.c:2474
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1754,29 +1758,29 @@ msgstr ""
 "Äänikoodekkia \"%s\" ei tueta. Sinun kenties täytyy asentaa lisäliitännäisiä "
 "voidaksesi toistaa joitain elokuvityyppejä"
 
-#: ../src/backend/bacon-video-widget-xine.c:2499
+#: ../src/backend/bacon-video-widget-xine.c:2488
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Tässä tiedostossa on vain ääntä ja ääniulostulo ei ole käytettävissä"
 
-#: ../src/backend/bacon-video-widget-xine.c:4042
-#: ../src/backend/bacon-video-widget-xine.c:4089
-#: ../src/backend/bacon-video-widget-xine.c:4111
+#: ../src/backend/bacon-video-widget-xine.c:4035
+#: ../src/backend/bacon-video-widget-xine.c:4082
+#: ../src/backend/bacon-video-widget-xine.c:4104
 #, c-format
 msgid "Language %d"
 msgstr "Kieli %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4200
+#: ../src/backend/bacon-video-widget-xine.c:4193
 #, c-format
 msgid "No video to capture."
 msgstr "Ei kaapattavaa videota."
 
-#: ../src/backend/bacon-video-widget-xine.c:4208
+#: ../src/backend/bacon-video-widget-xine.c:4201
 #, c-format
 msgid "Video codec is not handled."
 msgstr "Videotyyppiä ei voi käsitellä."
 
-#: ../src/backend/bacon-video-widget-xine.c:4219
+#: ../src/backend/bacon-video-widget-xine.c:4212
 #, c-format
 msgid "Movie is not playing."
 msgstr "Elokuva ei pyöri."
@@ -1871,19 +1875,19 @@ msgstr "Asemaa \"%s\" ei voi liittää"
 msgid "Failed to find mountpoint for %s"
 msgstr "Aseman \"%s\" liitospistettä ei löydy"
 
-#: ../src/plparse/totem-disc.c:855
+#: ../src/plparse/totem-disc.c:857
 msgid "Audio CD"
 msgstr "Ääni-CD"
 
-#: ../src/plparse/totem-disc.c:857
+#: ../src/plparse/totem-disc.c:859
 msgid "Video CD"
 msgstr "Video-CD"
 
-#: ../src/plparse/totem-disc.c:859
+#: ../src/plparse/totem-disc.c:861
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-disc.c:861
+#: ../src/plparse/totem-disc.c:863
 msgid "Digital Television"
 msgstr "Digi-TV"
 
@@ -2106,3 +2110,5 @@ msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totemin liitännäinen suljetaan."
 
+#~ msgid "Totem could not eject the optical media."
+#~ msgstr "Totem ei voi työntää optista mediaa ulos."
