@@ -63,6 +63,7 @@ libtotem_player_la_SOURCES =		\
 libtotem_player_la_CPPFLAGS = \
 	-I$(srcdir)/backend	\
 	-I$(srcdir)/plparse	\
+	-I$(top_builddir)/src/plparse	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
 
