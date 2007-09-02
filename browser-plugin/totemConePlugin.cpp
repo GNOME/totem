@@ -36,6 +36,7 @@
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
+#include "totemDebug.h"
 #include "totemClassInfo.h"
 
 #include "totemConePlugin.h"
@@ -46,6 +47,7 @@ static const nsCID kClassID =
     { 0x80, 0x4e, 0xd5, 0x6e, 0xae, 0x78, 0x86, 0x25 } };
 
 static const char kClassDescription[] = "totemConePlugin";
+#define TOTEM_CONE_VERSION "0.8.6"
 static const char kPluginDescription[] = "VLC Multimedia Plugin (compatible Totem " VERSION ")";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
@@ -96,4 +98,49 @@ TOTEM_CLASSINFO_END
 
 /* totemICone */
 
+#define TOTEM_SCRIPTABLE_INTERFACE "totemICone"
+
+/* readonly attribute AUTF8String VersionInfo; */
+NS_IMETHODIMP
+totemScriptablePlugin::GetVersionInfo(nsACString & aVersionInfo)
+{
+  aVersionInfo.Assign (TOTEM_CONE_VERSION);
+  return NS_OK;
+}
+
+/* attribute totemIConeAudio audio; */
+NS_IMETHODIMP
+totemScriptablePlugin::GetAudio(totemIConeAudio * *aAudio)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute totemIConeInput input; */
+NS_IMETHODIMP
+totemScriptablePlugin::GetInput(totemIConeInput * *aInput)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute totemIConePlaylist playlist; */
+NS_IMETHODIMP
+totemScriptablePlugin::GetPlaylist(totemIConePlaylist * *aPlaylist)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute totemIConeVideo video; */
+NS_IMETHODIMP
+totemScriptablePlugin::GetVideo(totemIConeVideo * *aVideo)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
 

@@ -33,10 +33,10 @@ interface totemICone : nsISupports
   readonly attribute AUTF8String VersionInfo;
   /* AUTF8String versionInfo() ? */
 
-  attribute totemIConeAudio audio;
-  attribute totemIConeInput input;
-  attribute totemIConePlaylist playlist;
-  attribute totemIConeVideo video;
+  readonly attribute totemIConeAudio audio;
+  readonly attribute totemIConeInput input;
+  readonly attribute totemIConePlaylist playlist;
+  readonly attribute totemIConeVideo video;
 
 /* Nobody uses those interfaces
 
