@@ -454,6 +454,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 	GSList *filenames;
 	char *mrl, *new_path;
 	GConfClient *conf;
+	gboolean set_folder;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
 			parent,
@@ -471,18 +472,24 @@ totem_add_files (GtkWindow *parent, const char *path)
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 
 	conf = gconf_client_get_default ();
+	set_folder = TRUE;
 	if (path != NULL) {
-		gtk_file_chooser_set_current_folder_uri
+		set_folder = gtk_file_chooser_set_current_folder_uri
 			(GTK_FILE_CHOOSER (fs), path);
 	} else {
 		new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
 		if (new_path != NULL && new_path != '\0') {
-			gtk_file_chooser_set_current_folder_uri
+			set_folder = gtk_file_chooser_set_current_folder_uri
 				(GTK_FILE_CHOOSER (fs), new_path);
 		}
 		g_free (new_path);
 	}
 
+	/* We didn't manage to change the directory */
+	if (set_folder == FALSE) {
+		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (fs),
+						     g_get_home_dir ());
+	}
 	totem_add_default_dirs (GTK_FILE_CHOOSER (fs));
 
 	response = gtk_dialog_run (GTK_DIALOG (fs));
