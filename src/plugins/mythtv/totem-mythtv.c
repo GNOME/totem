@@ -286,7 +286,7 @@ list_recordings (TotemMythtvPlugin *plugin)
 		    	GtkTreeIter iter;
 		    	char *full_name = NULL;
 
-		    	if (recorded_info->subtitle->str != NULL)
+		    	if (recorded_info->subtitle->str != NULL && recorded_info->subtitle->str[0] != '\0')
 		    		full_name = g_strdup_printf ("%s - %s",
 		    					     recorded_info->title->str,
 		    					     recorded_info->subtitle->str);
@@ -320,7 +320,7 @@ static void
 totem_mythtv_plugin_init (TotemMythtvPlugin *plugin)
 {
 	//FIXME obviously
-	plugin->b_info = gmyth_backend_info_new_full ("192.168.1.105",
+	plugin->b_info = gmyth_backend_info_new_full ("192.168.1.5",
 						      "mythtv",
 						      "mythtv",
 						      "mythconverg",

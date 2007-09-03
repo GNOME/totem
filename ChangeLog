@@ -1,3 +1,10 @@
+2007-09-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/mythtv/totem-mythtv.c: (list_recordings),
+	(totem_mythtv_plugin_init): Also ignore empty descriptions, as
+	opposed to a NULL string, update IP for my new install (I really
+	new to write a config dialog)
+
 2007-09-02  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c: (totem_add_files): Handle the old path not
