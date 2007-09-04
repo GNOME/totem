@@ -67,9 +67,16 @@ struct TotemPlParser {
 #define TOTEM_PL_PARSER_FIELD_ENDTIME		"endtime"
 #define TOTEM_PL_PARSER_FIELD_COPYRIGHT		"copyright"
 #define TOTEM_PL_PARSER_FIELD_ABSTRACT		"abstract"
+#define TOTEM_PL_PARSER_FIELD_SUMMARY		TOTEM_PL_PARSER_FIELD_ABSTRACT
+#define TOTEM_PL_PARSER_FIELD_DESCRIPTION	"description"
 #define TOTEM_PL_PARSER_FIELD_MOREINFO		"moreinfo"
 #define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"
 #define TOTEM_PL_PARSER_FIELD_UI_MODE		"ui-mode"
+#define TOTEM_PL_PARSER_FIELD_PUB_DATE		"publication-date"
+#define TOTEM_PL_PARSER_FIELD_FILESIZE		"filesize"
+#define TOTEM_PL_PARSER_FIELD_LANGUAGE		"language"
+#define TOTEM_PL_PARSER_FIELD_CONTACT		"contact"
+#define TOTEM_PL_PARSER_FIELD_IMAGE_URL		"image-url"
 
 #define TOTEM_PL_PARSER_FIELD_IS_PLAYLIST	"is-playlist"
 

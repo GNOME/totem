@@ -48,6 +48,7 @@
 #include "totem-pl-parser-media.h"
 #include "totem-pl-parser-smil.h"
 #include "totem-pl-parser-pla.h"
+#include "totem-pl-parser-podcast.h"
 #include "totem-pl-parser-lines.h"
 #include "totem-pl-parser-misc.h"
 #include "totem-pl-parser-private.h"
@@ -701,6 +702,30 @@ totem_pl_parser_init (TotemPlParser *parser)
 				      "Boolean saying whether the entry pushed is the top-level of a playlist", FALSE,
 				      G_PARAM_READABLE & G_PARAM_WRITABLE);
 	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("description", "description",
+				     "String representing the description of the stream", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("publication-date", "publication-date",
+				     "String representing the publication date of the stream", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("filesize", "filesize",
+				     "String representing the filesize of a file", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("language", "language",
+				     "String representing the language of a stream", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("contact", "contact",
+				     "String representing the contact for a playlist", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_string ("image-url", "image-url",
+				     "String representing the location of an image for a playlist", NULL,
+				     G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 }
 
 static void
@@ -925,6 +950,8 @@ static PlaylistTypes special_types[] = {
 	PLAYLIST_TYPE ("text/x-google-video-pointer", totem_pl_parser_add_gvp, NULL, FALSE),
 	PLAYLIST_TYPE ("text/google-video-pointer", totem_pl_parser_add_gvp, NULL, FALSE),
 	PLAYLIST_TYPE ("audio/x-iriver-pla", totem_pl_parser_add_pla, NULL, FALSE),
+	PLAYLIST_TYPE ("application/atom+xml", totem_pl_parser_add_atom, NULL, FALSE),
+	PLAYLIST_TYPE ("application/rss+xml", totem_pl_parser_add_rss, NULL, FALSE),
 #ifndef TOTEM_PL_PARSER_MINI
 	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL, TRUE),
 	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL, TRUE),
@@ -1074,6 +1101,12 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 			|| g_str_has_prefix (url, "icy") != FALSE) {
 		DEBUG(g_print ("URL '%s' is MMS, RTSP or ICY, ignoring\n", url));
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+	}
+
+	/* Fix up itpc, see http://www.apple.com/itunes/store/podcaststechspecs.html */
+	if (g_str_has_prefix (url, "itpc") != FALSE) {
+		DEBUG(g_print ("URL '%s' is getting special cased for ITPC parsing\n", url));
+		return totem_pl_parser_add_itpc (parser, url, base, NULL);
 	}
 
 	if (!parser->priv->recurse && parser->priv->recurse_level > 0) {

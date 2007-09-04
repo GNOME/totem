@@ -58,6 +58,8 @@ libtotem_plparser_la_SOURCES =			\
 	totem-pl-parser-pla.h			\
 	totem-pl-parser-pls.c			\
 	totem-pl-parser-pls.h			\
+	totem-pl-parser-podcast.c		\
+	totem-pl-parser-podcast.h		\
 	totem-pl-parser-private.h		\
 	totem-pl-parser-qt.c			\
 	totem-pl-parser-qt.h			\
@@ -103,6 +105,8 @@ libtotem_plparser_mini_la_SOURCES =		\
 	totem-pl-parser-misc.h			\
 	totem-pl-parser-pls.c			\
 	totem-pl-parser-pls.h			\
+	totem-pl-parser-podcast.c		\
+	totem-pl-parser-podcast.h		\
 	totem-pl-parser-private.h		\
 	totem-pl-parser-qt.c			\
 	totem-pl-parser-qt.h			\
