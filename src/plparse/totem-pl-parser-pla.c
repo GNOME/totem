@@ -192,7 +192,11 @@ totem_pl_parser_add_pla (TotemPlParser *parser, const char *url,
 	if (contents[TITLE_OFFSET] != '\0')
 	{
 		title = contents + TITLE_OFFSET;
-		totem_pl_parser_playlist_start (parser, title);
+		totem_pl_parser_add_url (parser,
+					 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
+					 TOTEM_PL_PARSER_FIELD_URL, url,
+					 TOTEM_PL_PARSER_FIELD_TITLE, title,
+					 NULL);
 	}
 
 	offset = RECORD_SIZE;

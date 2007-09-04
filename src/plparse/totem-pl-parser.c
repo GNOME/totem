@@ -101,8 +101,8 @@ enum {
 /* Signals */
 enum {
 	ENTRY_PARSED,
-	PLAYLIST_START,
-	PLAYLIST_END,
+	PLAYLIST_STARTED,
+	PLAYLIST_ENDED,
 	LAST_SIGNAL
 };
 
@@ -166,19 +166,19 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 			      NULL, NULL,
 			      totemplparser_marshal_VOID__STRING_POINTER,
 			      G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_POINTER);
-	totem_pl_parser_table_signals[PLAYLIST_START] =
-		g_signal_new ("playlist-start",
+	totem_pl_parser_table_signals[PLAYLIST_STARTED] =
+		g_signal_new ("playlist-started",
 			      G_TYPE_FROM_CLASS (klass),
 			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (TotemPlParserClass, playlist_start),
+			      G_STRUCT_OFFSET (TotemPlParserClass, playlist_started),
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__STRING,
-			      G_TYPE_NONE, 1, G_TYPE_STRING);
-	totem_pl_parser_table_signals[PLAYLIST_END] =
-		g_signal_new ("playlist-end",
+			      totemplparser_marshal_VOID__STRING_POINTER,
+			      G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_POINTER);
+	totem_pl_parser_table_signals[PLAYLIST_ENDED] =
+		g_signal_new ("playlist-ended",
 			      G_TYPE_FROM_CLASS (klass),
 			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (TotemPlParserClass, playlist_end),
+			      G_STRUCT_OFFSET (TotemPlParserClass, playlist_ended),
 			      NULL, NULL,
 			      g_cclosure_marshal_VOID__STRING,
 			      G_TYPE_NONE, 1, G_TYPE_STRING);
@@ -269,19 +269,11 @@ totem_pl_parser_new (void)
 }
 
 void
-totem_pl_parser_playlist_start (TotemPlParser *parser, const char *playlist_title)
+totem_pl_parser_playlist_end (TotemPlParser *parser, const char *playlist_uri)
 {
 	g_signal_emit (G_OBJECT (parser),
-		       totem_pl_parser_table_signals[PLAYLIST_START],
-		       0, playlist_title);
-}
-
-void
-totem_pl_parser_playlist_end (TotemPlParser *parser, const char *playlist_title)
-{
-	g_signal_emit (G_OBJECT (parser),
-		       totem_pl_parser_table_signals[PLAYLIST_END],
-		       0, playlist_title);
+		       totem_pl_parser_table_signals[PLAYLIST_ENDED],
+		       0, playlist_uri);
 }
 
 static char *
@@ -705,6 +697,10 @@ totem_pl_parser_init (TotemPlParser *parser)
 				     "String representing the end time of the stream", NULL,
 				     G_PARAM_READABLE & G_PARAM_WRITABLE);
 	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
+	pspec = g_param_spec_boolean ("is-playlist", "is-playlist",
+				      "Boolean saying whether the entry pushed is the top-level of a playlist", FALSE,
+				      G_PARAM_READABLE & G_PARAM_WRITABLE);
+	g_param_spec_pool_insert (parser->priv->pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 }
 
 static void
@@ -733,10 +729,12 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 				va_list      var_args)
 {
 	const char *name;
-	char *title, *url, *genre, *base;
+	char *title, *url;
 	GHashTable *metadata;
+	gboolean is_playlist;
 
-	title = url = genre = base = NULL;
+	title = url = NULL;
+	is_playlist = FALSE;
 
 	g_object_ref (G_OBJECT (parser));
 	metadata = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
@@ -767,8 +765,14 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 			break;
 		}
 
-		if (strcmp (name, "url") == 0)
+		if (strcmp (name, TOTEM_PL_PARSER_FIELD_URL) == 0)
 			url = g_value_dup_string (&value);
+		else if (strcmp (name, TOTEM_PL_PARSER_FIELD_IS_PLAYLIST) == 0) {
+			is_playlist = g_value_get_boolean (&value);
+			g_value_unset (&value);
+			name = va_arg (var_args, char*);
+			continue;
+		}
 
 		/* Ignore empty values */
 		string = g_value_get_string (&value);
@@ -799,9 +803,15 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 	}
 
 	if (g_hash_table_size (metadata) > 0 || url != NULL) {
-		g_signal_emit (G_OBJECT (parser),
-			       totem_pl_parser_table_signals[ENTRY_PARSED],
-			       0, url, metadata);
+		if (is_playlist == FALSE) {
+			g_signal_emit (G_OBJECT (parser),
+				       totem_pl_parser_table_signals[ENTRY_PARSED],
+				       0, url, metadata);
+		} else {
+			g_signal_emit (G_OBJECT (parser),
+				       totem_pl_parser_table_signals[PLAYLIST_STARTED],
+				       0, url, metadata);
+		}
 	}
 
 	g_hash_table_destroy (metadata);

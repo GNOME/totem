@@ -1,3 +1,27 @@
+2007-09-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_playlist_end), (totem_pl_parser_init),
+	(totem_pl_parser_add_url_valist):
+	* src/plparse/totem-pl-parser.h: Change the API for the start and
+	end of playlist, so we can pass additional data as part of the
+	playlist start
+
+	* configure.in: up the library version after yet another API breakage
+
+	* src/plparse/totem-pl-parser-pla.c: (totem_pl_parser_add_pla):
+	* src/plparse/totem-pl-parser-pls.c:
+	(totem_pl_parser_add_pls_with_contents): Change to reflect new API
+
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry),
+	(parse_asx_entries), (totem_pl_parser_add_asx): Ditto, Don't pass the
+	playlist title for entries, interested apps can use the
+	playlist-started signal instead
+
+	* src/plparse/test-parser.c: (playlist_started), (playlist_ended),
+	(test_parsing), (main): Ditto, and add --g-fatal-warnings support
+
 2007-09-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/mythtv/totem-mythtv.c: (list_recordings),

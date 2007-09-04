@@ -71,14 +71,19 @@ struct TotemPlParser {
 #define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"
 #define TOTEM_PL_PARSER_FIELD_UI_MODE		"ui-mode"
 
+#define TOTEM_PL_PARSER_FIELD_IS_PLAYLIST	"is-playlist"
+
 struct TotemPlParserClass {
 	GObjectClass parent_class;
 
 	/* signals */
 	void (*entry_parsed) (TotemPlParser *parser, const char *uri,
 			      GHashTable *metadata);
-	void (*playlist_start) (TotemPlParser *parser, const char *title);
-	void (*playlist_end) (TotemPlParser *parser, const char *title);
+	void (*playlist_started) (TotemPlParser *parser,
+				  const char *uri,
+				  GHashTable *metadata);
+	void (*playlist_ended) (TotemPlParser *parser,
+				const char *uri);
 };
 
 typedef enum

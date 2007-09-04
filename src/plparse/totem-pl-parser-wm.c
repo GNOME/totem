@@ -126,7 +126,7 @@ totem_pl_parser_add_asf_parser (TotemPlParser *parser,
 }
 
 static gboolean
-parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, const char *pl_title)
+parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent)
 {
 	xml_node_t *node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -229,7 +229,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent, co
 	if (retval != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 		totem_pl_parser_add_url (parser,
 					 TOTEM_PL_PARSER_FIELD_URL, fullpath,
-					 TOTEM_PL_PARSER_FIELD_TITLE, title ? title : pl_title,
+					 TOTEM_PL_PARSER_FIELD_TITLE, title,
 					 TOTEM_PL_PARSER_FIELD_ABSTRACT, abstract,
 					 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
 					 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
@@ -279,7 +279,7 @@ parse_asx_entryref (TotemPlParser *parser, const char *base, xml_node_t *node)
 }
 
 static gboolean
-parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
+parse_asx_entries (TotemPlParser *parser, const char *url, const char *_base, xml_node_t *parent)
 {
 	char *title = NULL;
 	const char *newbase = NULL, *base = NULL;
@@ -293,8 +293,13 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 			continue;
 
 		if (g_ascii_strcasecmp (node->name, "title") == 0) {
+			g_free (title);
 			title = g_strdup (node->data);
-			totem_pl_parser_playlist_start (parser, title);
+			totem_pl_parser_add_url (parser,
+						 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
+						 TOTEM_PL_PARSER_FIELD_URL, url,
+						 TOTEM_PL_PARSER_FIELD_TITLE, title,
+						 NULL);
 		}
 		if (g_ascii_strcasecmp (node->name, "base") == 0) {
 			newbase = xml_parser_get_property (node, "href");
@@ -303,7 +308,7 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 		}
 		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
 			/* Whee! found an entry here, find the REF and TITLE */
-			if (parse_asx_entry (parser, base, node, title) != FALSE)
+			if (parse_asx_entry (parser, base, node) != FALSE)
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 		if (g_ascii_strcasecmp (node->name, "entryref") == 0) {
@@ -313,21 +318,23 @@ parse_asx_entries (TotemPlParser *parser, const char *_base, xml_node_t *parent)
 		}
 		if (g_ascii_strcasecmp (node->name, "repeat") == 0) {
 			/* Repeat at the top-level */
-			if (parse_asx_entries (parser, base, node) != FALSE)
+			if (parse_asx_entries (parser, url, base, node) != FALSE)
 				retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 		}
 	}
 
 	if (title != NULL)
-		totem_pl_parser_playlist_end (parser, title);
+		totem_pl_parser_playlist_end (parser, url);
 	g_free (title);
 
 	return retval;
 }
 
 TotemPlParserResult
-totem_pl_parser_add_asx (TotemPlParser *parser, const char *url,
-			 const char *base, gpointer data)
+totem_pl_parser_add_asx (TotemPlParser *parser,
+			 const char *url,
+			 const char *base,
+			 gpointer data)
 {
 	xml_node_t* doc;
 	char *_base, *contents;
@@ -360,7 +367,7 @@ totem_pl_parser_add_asx (TotemPlParser *parser, const char *url,
 		_base = g_strdup (base);
 	}
 
-	if (parse_asx_entries (parser, _base, doc) != FALSE)
+	if (parse_asx_entries (parser, url, _base, doc) != FALSE)
 		retval = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
 	g_free (_base);

@@ -186,8 +186,13 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 	playlist_title = totem_pl_parser_read_ini_line_string (lines,
 			"X-GNOME-Title", dos_mode);
 
-	if (playlist_title != NULL)
-		totem_pl_parser_playlist_start (parser, playlist_title);
+	if (playlist_title != NULL) {
+		totem_pl_parser_add_url (parser,
+					 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
+					 TOTEM_PL_PARSER_FIELD_URL, url,
+					 TOTEM_PL_PARSER_FIELD_TITLE, playlist_title,
+					 NULL);
+	}
 
 	/* numberofentries=? */
 	num_entries = totem_pl_parser_read_ini_line_int (lines, "numberofentries");

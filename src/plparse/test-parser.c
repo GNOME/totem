@@ -21,6 +21,7 @@ static gboolean option_data = FALSE;
 static gboolean option_force = FALSE;
 static gboolean option_disable_unsafe = FALSE;
 static gboolean option_duration = FALSE;
+static gboolean g_fatal_warnings = FALSE;
 static char *option_base_uri = NULL;
 static char **files = NULL;
 
@@ -293,15 +294,18 @@ test_data (void)
 }
 
 static void
-playlist_started (TotemPlParser *parser, const char *title)
+playlist_started (TotemPlParser *parser, const char *uri, GHashTable *metadata)
 {
-	g_message ("Playlist with name '%s' started", title);
+	g_print ("Started playlist '%s'\n", uri);
+	g_hash_table_foreach (metadata, (GHFunc) entry_metadata_foreach, NULL);
+	g_print ("\n");
 }
 
 static void
-playlist_ended (TotemPlParser *parser, const char *title)
+playlist_ended (TotemPlParser *parser, const char *uri)
 {
-	g_message ("Playlist with name '%s' ended", title);
+	g_print ("Playlist '%s' ended\n", uri);
+	g_print ("\n");
 }
 
 static void
@@ -315,8 +319,8 @@ test_parsing (void)
 			  "disable-unsafe", option_disable_unsafe,
 			  NULL);
 	g_signal_connect (G_OBJECT (pl), "entry-parsed", G_CALLBACK (entry_parsed), NULL);
-	g_signal_connect (G_OBJECT (pl), "playlist-start", G_CALLBACK (playlist_started), NULL);
-	g_signal_connect (G_OBJECT (pl), "playlist-end", G_CALLBACK (playlist_ended), NULL);
+	g_signal_connect (G_OBJECT (pl), "playlist-started", G_CALLBACK (playlist_started), NULL);
+	g_signal_connect (G_OBJECT (pl), "playlist-ended", G_CALLBACK (playlist_ended), NULL);
 
 	header ("parsing");
 	g_idle_add (push_parser, pl);
@@ -335,6 +339,7 @@ int main (int argc, char **argv)
 		{ "disable-unsafe", 'u', 0, G_OPTION_ARG_NONE, &option_disable_unsafe, "Disabling unsafe playlist-types", NULL },
 		{ "base-uri", 'b', 0, G_OPTION_ARG_STRING, &option_base_uri, "Base URI to resolve relative items from", NULL },
 		{ "duration", 0, 0, G_OPTION_ARG_NONE, &option_duration, "Run duration test", NULL },
+		{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
 		{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_STRING_ARRAY, &files, NULL, "[URI...]" },
 		{ NULL }
 	};
@@ -361,6 +366,14 @@ int main (int argc, char **argv)
 	}
 
 	gnome_vfs_init();
+
+	if (g_fatal_warnings) {
+		GLogLevelFlags fatal_mask;
+
+		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+		g_log_set_always_fatal (fatal_mask);
+	}
 
 	if (option_data != FALSE && files == NULL) {
 		g_message ("Please pass specific files to check by data");

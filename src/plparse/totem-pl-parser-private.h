@@ -59,8 +59,6 @@ char *totem_pl_resolve_url			(const char *base, const char *url);
 char *totem_pl_parser_base_url			(const char *url);
 
 #ifndef TOTEM_PL_PARSER_MINI
-void totem_pl_parser_playlist_start		(TotemPlParser *parser,
-						 const char *playlist_title);
 void totem_pl_parser_playlist_end		(TotemPlParser *parser,
 						 const char *playlist_title);
 int totem_pl_parser_num_entries			(TotemPlParser *parser,
