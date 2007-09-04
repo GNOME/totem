@@ -727,10 +727,10 @@ totem_pl_parser_add_url_valist (TotemPlParser *parser,
 				va_list      var_args)
 {
 	const char *name;
-	char *title, *url, *genre, *base;
+	char *title, *url;
 	GHashTable *metadata;
 
-	title = url = genre = base = NULL;
+	title = url = NULL;
 
 	g_object_ref (G_OBJECT (parser));
 	metadata = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
