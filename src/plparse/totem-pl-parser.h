@@ -120,6 +120,7 @@ typedef void (*TotemPlParserIterFunc) (GtkTreeModel *model, GtkTreeIter *iter,
 GType    totem_pl_parser_get_type (void);
 
 gint64   totem_plparser_parse_duration (const char *duration, gboolean debug);
+guint64 totem_pl_parser_parse_date     (const char *date_str, gboolean debug);
 
 gboolean totem_pl_parser_write (TotemPlParser *parser, GtkTreeModel *model,
 				TotemPlParserIterFunc func,

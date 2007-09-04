@@ -2,6 +2,9 @@
    Copyright (C) 2002, 2003, 2004, 2005, 2006 Bastien Nocera
    Copyright (C) 2003, 2004 Colin Walters <walters@rhythmbox.org>
 
+   Copyright (C) 2005 Renato Araujo Oliveira Filho - INdT <renato.filho@indt.org.br>
+   for totem_pl_parser_parse_date ()
+
    The Gnome Library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License as
    published by the Free Software Foundation; either version 2 of the
@@ -17,12 +20,20 @@
    write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
    Boston, MA 02111-1307, USA.
 
-   Author: Bastien Nocera <hadess@hadess.net>
+   Authors: Bastien Nocera <hadess@hadess.net>
+
+            for totem_pl_parser_parse_date ():
+            James Livingston  <doclivingston@gmail.com>
+            William Jon McCann  <mccann@jhu.edu>
+            Renato Araujo Oliveira Filho - INdT <renato.filho@indt.org.br>
  */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
+
+#define _XOPEN_SOURCE
+#include <time.h>
 
 #include <string.h>
 #include <glib.h>
@@ -35,6 +46,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
+
 #include "totem-pl-parser.h"
 #include "totemplparser-marshal.h"
 #include "totem-disc.h"
@@ -1301,6 +1313,108 @@ totem_plparser_parse_duration (const char *duration, gboolean debug)
 	D(g_message ("Couldn't parse duration '%s'\n", duration));
 
 	return -1;
+}
+
+guint64
+totem_pl_parser_parse_date (const char *date_str, gboolean debug)
+{
+	struct tm tm;
+	char *result;
+
+	/* RFC 2822 date format */
+	result = strptime (date_str, "%a, %d %b %Y %T", &tm);
+
+	/* same as above, but without comma */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%a %d %b %Y %T", &tm);
+	}
+
+	/* close-to-RFC 2822, but with extra 0 */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%a, %d %b %Y 0%T", &tm);
+	}
+
+	/* close-to-RFC 2822, but with no seconds */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%a, %d %b %Y %R", &tm);
+	}
+
+	/* format without weekday */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%d %b %Y %T", &tm);
+	}
+
+	/* reversed day and long month */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%a, %B %d %Y %T", &tm);
+	}
+
+	/* ISO date like */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%Y-%m-%d %T", &tm);
+	}
+
+	/* ISO date like without timezone */
+	if (result == NULL) {
+	memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%Y-%m-%d", &tm);
+	}
+
+	/* Broken weekday short names */
+	if (result == NULL) {
+		char *tmp;
+
+		/* strip off the erroneous weekday */
+		tmp = strstr (date_str, ",");
+		if (tmp != NULL) {
+			tmp++;
+			memset (&tm, 0, sizeof (struct tm));
+			result = strptime (tmp, "%d %b %Y %T", &tm);
+		}
+	}
+
+	/* format with timezone offset from GMT */
+	if (result == NULL) {
+		memset (&tm, 0, sizeof (struct tm));
+		result = strptime (date_str, "%a %b %d %T %z %Y", &tm);
+	}
+
+	/* format with timezone name */
+	if (result == NULL) {
+		char *tmp;
+
+		memset (&tm, 0, sizeof (struct tm));
+
+		/* match first part of time string */
+		result = strptime (date_str, "%a %b %d %T ", &tm);
+
+		/* look for anything with a timezone name-like format
+		   i.e. at least one all caps alphabetical character */
+		if (result != NULL) {
+			size_t n;
+
+			n = strspn(result, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+			tmp = result+n;
+
+			/* make sure there was at least one character that matched */
+			if ((tmp != NULL) && n > 0)
+				/* remaining part must be the year */
+				result = strptime (tmp, "%Y", &tm);
+			else
+				result = NULL;
+		}
+	}
+
+	if (result == NULL)
+		D(g_message ("Couldn't parse date '%s'\n", date_str));
+
+	return (guint64) ((result == NULL) ? 0 : mktime (&tm));
 }
 
 #endif /* !TOTEM_PL_PARSER_MINI */
