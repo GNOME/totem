@@ -255,8 +255,10 @@ totem_pl_parser_add_block (TotemPlParser *parser, const char *url,
 	GError *err = NULL;
 
 	type = totem_cd_detect_type_with_url (url, &media_url, &err);
-	if (err != NULL)
+	if (err != NULL) {
 		DEBUG(g_print ("Couldn't get CD type for URL '%s': %s\n", url, err->message));
+		g_error_free (err);
+	}
 	if (type == MEDIA_TYPE_DATA || media_url == NULL)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	else if (type == MEDIA_TYPE_ERROR)

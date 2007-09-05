@@ -1,3 +1,10 @@
+2007-09-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-disc.c: (totem_cd_detect_type_with_url):
+	Use the canonical device when giving the cdda MRL
+	* src/plparse/totem-pl-parser-media.c: (totem_pl_parser_add_block):
+	Don't leak the error if there's a problem
+
 2007-09-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_date):
