@@ -1459,7 +1459,7 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	gint64 duration;
 
 	/* We ignore 0-length items in playlists, they're usually just banners */
-	duration = totem_plparser_parse_duration
+	duration = totem_pl_parser_parse_duration
 		(g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_DURATION), FALSE);
 	if (duration == 0)
 		return;

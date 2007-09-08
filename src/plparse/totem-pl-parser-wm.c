@@ -222,7 +222,7 @@ parse_asx_entry (TotemPlParser *parser, const char *base, xml_node_t *parent)
 	if (url == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	fullpath = totem_pl_resolve_url (base, url);
+	fullpath = totem_pl_parser_resolve_url (base, url);
 
 	/* .asx files can contain references to other .asx files */
 	retval = totem_pl_parser_parse_internal (parser, fullpath, NULL);
@@ -262,7 +262,7 @@ parse_asx_entryref (TotemPlParser *parser, const char *base, xml_node_t *node)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	fullpath = totem_pl_resolve_url (base, url);
+	fullpath = totem_pl_parser_resolve_url (base, url);
 
 	/* .asx files can contain references to other .asx files */
 	retval = totem_pl_parser_parse_internal (parser, fullpath, NULL);
@@ -278,6 +278,7 @@ parse_asx_entryref (TotemPlParser *parser, const char *base, xml_node_t *node)
 	return retval;
 }
 
+//FIXME the retval is completely wrong
 static gboolean
 parse_asx_entries (TotemPlParser *parser, const char *url, const char *_base, xml_node_t *parent)
 {

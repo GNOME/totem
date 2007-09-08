@@ -76,7 +76,7 @@ parse_smil_entry (TotemPlParser *parser,
 			if (url != NULL) {
 				char *fullpath;
 
-				fullpath = totem_pl_resolve_url (base, url);
+				fullpath = totem_pl_parser_resolve_url (base, url);
 				totem_pl_parser_add_url (parser,
 							 TOTEM_PL_PARSER_FIELD_URL, fullpath,
 							 TOTEM_PL_PARSER_FIELD_TITLE, title ? title : parent_title,

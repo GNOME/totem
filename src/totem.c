@@ -1361,7 +1361,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	gchar *old_mrl, *new_mrl;
 
 	old_mrl = totem_playlist_get_current_mrl (TOTEM_PLAYLIST (totem->playlist));
-	new_mrl = totem_resolve_relative_link (old_mrl, mrl);
+	new_mrl = totem_pl_parser_resolve_url (old_mrl, mrl);
 	g_free (old_mrl);
 
 	bacon_video_widget_close (totem->bvw);

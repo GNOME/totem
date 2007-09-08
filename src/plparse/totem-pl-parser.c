@@ -895,7 +895,7 @@ totem_pl_parser_remove_filename (const char *url)
 }
 
 char *
-totem_pl_resolve_url (const char *base, const char *url)
+totem_pl_parser_resolve_url (const char *base, const char *url)
 {
 	GnomeVFSURI *base_uri, *new;
 	char *resolved, *base_no_frag;
@@ -1266,7 +1266,7 @@ totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
 }
 
 gint64
-totem_plparser_parse_duration (const char *duration, gboolean debug)
+totem_pl_parser_parse_duration (const char *duration, gboolean debug)
 {
 	int hours, minutes, seconds, fractions;
 

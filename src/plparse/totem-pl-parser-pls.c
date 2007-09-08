@@ -251,7 +251,7 @@ totem_pl_parser_add_pls_with_contents (TotemPlParser *parser, const char *url,
 		/* Get the length, if it's negative, that means that we have a stream
 		 * and should push the entry straight away */
 		if (length != NULL)
-			length_num = totem_plparser_parse_duration (length, parser->priv->debug);
+			length_num = totem_pl_parser_parse_duration (length, parser->priv->debug);
 
 		if (strstr (file, "://") != NULL || file[0] == G_DIR_SEPARATOR) {
 			if (length_num < 0 || totem_pl_parser_parse_internal (parser, file, NULL) != TOTEM_PL_PARSER_RESULT_SUCCESS) {

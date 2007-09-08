@@ -1,3 +1,35 @@
+2007-09-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/plparser.symbols:
+	* src/plparse/totem-pl-parser.h:
+	* src/plparse/totem-pl-parser-private.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_resolve_url),
+	(totem_pl_parser_parse_duration): Rename
+	totem_plparser_parse_duration to totem_pl_parser_parse_duration
+	to match the other functions,
+	Make totem_parser_resolve_url public as totem_pl_parser_resolve_url
+
+	* src/backend/video-utils.c:
+	* src/backend/video-utils.h: Remove the broken
+	totem_resolve_relative_link ()
+
+	* browser-plugin/totem-plugin-viewer.c: (on_got_redirect),
+	(entry_parsed):
+	* src/plparse/test-parser.c: (test_resolve_real), (test_resolve),
+	(test_duration_real), (main):
+	* src/plparse/totem-pl-parser-pls.c:
+	(totem_pl_parser_add_pls_with_contents):
+	* src/plparse/totem-pl-parser-smil.c: (parse_smil_entry):
+	* src/plparse/totem-pl-parser-wm.c: (parse_asx_entry),
+	(parse_asx_entryref):
+	* src/plparse/totem-pl-parser-xspf.c: (parse_xspf_track):
+	* src/totem-playlist.c: (totem_playlist_entry_parsed):
+	* src/totem.c: (on_got_redirect):
+	Changes to use new APIs
+	Add test from the Apple site to the test parser
+
+	(Closes: #474842)
+
 2007-09-05  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-disc.c: (totem_cd_detect_type_with_url):

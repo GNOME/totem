@@ -1364,13 +1364,13 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	/* We are using a local cache, so we resolve against the stream_uri */
 	if (emb->stream_uri)
-		new_uri = totem_resolve_relative_link (emb->stream_uri, mrl);
+		new_uri = totem_pl_parser_resolve_url (emb->stream_uri, mrl);
 	/* We don't have a local cache, so resolve against the URI */
 	else if (emb->current_uri)
-		new_uri = totem_resolve_relative_link (emb->current_uri, mrl);
+		new_uri = totem_pl_parser_resolve_url (emb->current_uri, mrl);
 	/* FIXME: not sure that this is actually correct... */
 	else if (emb->base_uri)
-		new_uri = totem_resolve_relative_link (emb->base_uri, mrl);
+		new_uri = totem_pl_parser_resolve_url (emb->base_uri, mrl);
 
 	if (!new_uri)
 		return;
@@ -2063,8 +2063,8 @@ entry_parsed (TotemPlParser *parser,
 
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
-	item->duration = totem_plparser_parse_duration (g_hash_table_lookup (metadata, "duration"), FALSE);
-	item->starttime = totem_plparser_parse_duration (g_hash_table_lookup (metadata, "starttime"), FALSE);
+	item->duration = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "duration"), FALSE);
+	item->starttime = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "starttime"), FALSE);
 
 	emb->playlist = g_list_prepend (emb->playlist, item);
 }

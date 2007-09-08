@@ -82,7 +82,7 @@ test_resolve_real (const char *base, const char *url, const char *expected)
 {
 	char *result;
 
-	result = totem_pl_resolve_url (base, url);
+	result = totem_pl_parser_resolve_url (base, url);
 	if (result == NULL)
 		error ("NULL output resolving '%s' with base '%s'", url, base);
 	if (strcmp (result, expected) != 0)
@@ -100,6 +100,7 @@ test_resolve (void)
 	test_resolve_real ("http://localhost:12345/foobar", "/leopard.mov", "http://localhost:12345/leopard.mov");
 	test_resolve_real ("file:///home/hadess/Movies", "Movies/mymovie.mov", "file:///home/hadess/Movies/Movies/mymovie.mov");
 	test_resolve_real ("http://localhost/video.dir/video.mpg?param1=foo&param2=bar", "dir/image.jpg", "http://localhost/video.dir/dir/image.jpg");
+	test_resolve_real ("http://movies.apple.com/movies/us/apple/ipoditunes/2007/touch/features/apple_ipodtouch_safari_r640-9cie.mov", "/movies/us/apple/ipoditunes/2007/touch/features/apple_ipodtouch_safari_i320x180.m4v", "http://movies.apple.com/movies/us/apple/ipoditunes/2007/touch/features/apple_ipodtouch_safari_i320x180.m4v");
 }
 
 static void
@@ -107,7 +108,7 @@ test_duration_real (const char *duration, gint64 expected)
 {
 	gint64 res;
 
-	res = totem_plparser_parse_duration (duration, option_debug);
+	res = totem_pl_parser_parse_duration (duration, option_debug);
 	if (res != expected)
 		error ("Error parsing '%s' to %"G_GINT64_FORMAT" secs, got %"G_GINT64_FORMAT" secs",
 		       duration ? duration : "(null)", expected, res);
@@ -390,7 +391,7 @@ int main (int argc, char **argv)
 			for (i = 0; files[i] != NULL; i++) {
 				g_print ("Parsed '%s' to %"G_GINT64_FORMAT" secs\n",
 					 files[i],
-					 totem_plparser_parse_duration (files[i], option_debug));
+					 totem_pl_parser_parse_duration (files[i], option_debug));
 			}
 
 			return 0;
