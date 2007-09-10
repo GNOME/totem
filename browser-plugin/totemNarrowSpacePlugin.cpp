@@ -72,7 +72,6 @@ totemScriptablePlugin::operator new (size_t aSize) CPP_THROW_NEW
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
   : mPluginState(eState_Waiting),
     mPlugin(aPlugin),
-    mRate(1.0),
     mVolume(100)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
@@ -196,9 +195,9 @@ totemScriptablePlugin::SetControllerVisible(PRBool enabled)
 NS_IMETHODIMP
 totemScriptablePlugin::GetDuration(PRUint32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = 0;
+  *_retval = mPlugin->mDuration;
   return NS_OK;
 }
 
@@ -418,8 +417,9 @@ totemScriptablePlugin::SetMatrix(const nsACString & matrix)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMaxBytesLoaded(PRUint32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  *_retval = mPlugin->mBytesStreamed;
   return NS_OK;
 }
 
@@ -484,9 +484,9 @@ totemScriptablePlugin::SetMovieName(const nsACString & name)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMovieSize(PRUint32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = 0;
+  *_retval = mPlugin->mBytesLength;
   return NS_OK;
 }
 
@@ -667,9 +667,13 @@ totemScriptablePlugin::GetQuickTimeVersion(nsACString & _retval)
 NS_IMETHODIMP
 totemScriptablePlugin::GetRate(float *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = mRate;
+  if (mPlugin->mState == TOTEM_STATE_PLAYING) {
+    *_retval = 1.0;
+  } else {
+    *_retval = 0.0;
+  }
   return NS_OK;
 }
 
@@ -679,7 +683,7 @@ totemScriptablePlugin::SetRate(float rate)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
 
-  mRate = rate;
+  /* mRate = rate; FIXME */
   return NS_OK;
 }
 
@@ -801,7 +805,7 @@ totemScriptablePlugin::Stop ()
 
   NS_ENSURE_STATE (IsValid ());
 
-  return mPlugin->DoCommand (TOTEM_COMMAND_STOP);
+  return mPlugin->DoCommand (TOTEM_COMMAND_PAUSE);
 }
 
 /* AUTF8String GetTarget (); */
@@ -844,9 +848,9 @@ totemScriptablePlugin::SetTiltAngle(float angle)
 NS_IMETHODIMP
 totemScriptablePlugin::GetTime(PRUint32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = 0;
+  *_retval = mPlugin->mTime;
   return NS_OK;
 }
 
@@ -863,9 +867,9 @@ totemScriptablePlugin::SetTime(PRUint32 time)
 NS_IMETHODIMP
 totemScriptablePlugin::GetTimeScale(PRUint32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = 0;
+  *_retval = 1000;
   return NS_OK;
 }
 

@@ -132,6 +132,7 @@ totemPlugin::totemPlugin (NPP aInstance)
 	mWidth (-1),
 	mHeight (-1),
 	mViewerFD (-1),
+	mState (TOTEM_STATE_STOPPED),
 #ifdef TOTEM_COMPLEX_PLUGIN
 	mAutostart (PR_FALSE),
 #else
@@ -458,6 +459,21 @@ totemPlugin::ViewerSetup ()
 				     reinterpret_cast<void*>(this),
 				     NULL);
 
+	dbus_g_object_register_marshaller
+		(totempluginviewer_marshal_VOID__UINT_UINT_STRING,
+		 G_TYPE_NONE, G_TYPE_UINT, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_INVALID);
+	dbus_g_proxy_add_signal (mViewerProxy,
+				 "Tick",
+				 G_TYPE_UINT,
+				 G_TYPE_UINT,
+				 G_TYPE_STRING,
+				 G_TYPE_INVALID);
+	dbus_g_proxy_connect_signal (mViewerProxy,
+				     "Tick",
+				     G_CALLBACK (TickCallback),
+				     reinterpret_cast<void*>(this),
+				     NULL);
+
 	if (mHidden) {
 		ViewerReady ();
 	} else {
@@ -498,6 +514,10 @@ totemPlugin::ViewerCleanup ()
 		dbus_g_proxy_disconnect_signal (mViewerProxy,
 						"StopStream",
 						G_CALLBACK (StopStreamCallback),
+						reinterpret_cast<void*>(this));
+		dbus_g_proxy_disconnect_signal (mViewerProxy,
+						"Tick",
+						G_CALLBACK (TickCallback),
 						reinterpret_cast<void*>(this));
 
 		g_object_unref (mViewerProxy);
@@ -896,6 +916,32 @@ totemPlugin::StopStreamCallback (DBusGProxy *proxy,
 	D ("StopStream signal received");
 
 	plugin->UnsetStream ();
+}
+
+/* static */ void PR_CALLBACK
+totemPlugin::TickCallback (DBusGProxy *proxy,
+			   guint aTime,
+			   guint aDuration,
+			   char *aState,
+			   void *aData)
+{
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+	TotemStates state;
+	guint i;
+
+	NS_ASSERTION (aState != NULL, "aState is NULL probably garbage");
+
+	DD ("Tick signal received, aState %s, aTime %d, aDuration %d", aState, aTime, aDuration);
+
+	for (i = 0; i < TOTEM_STATE_INVALID; i++) {
+		if (strcmp (aState, totem_states[i]) == 0) {
+			plugin->mState = (TotemStates) i;
+			break;
+		}
+	}
+
+	plugin->mTime = aTime;
+	plugin->mDuration = aDuration;
 }
 
 /* static */ void PR_CALLBACK
@@ -1988,6 +2034,7 @@ totemPlugin::NewStream (NPMIMEType type,
 
 	/* To track how many data we get from ::Write */
 	mBytesStreamed = 0;
+	mBytesLength = stream->end;
 
 	return NPERR_NO_ERROR;
 }
@@ -2002,6 +2049,8 @@ totemPlugin::DestroyStream (NPStream* stream,
 	D ("DestroyStream reason %d", reason);
 
 	mStream = nsnull;
+	mBytesStreamed = 0;
+	mBytesLength = 0;
 
 	int ret = close (mViewerFD);
 	if (ret < 0) {

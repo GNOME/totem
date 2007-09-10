@@ -1,3 +1,30 @@
+2007-09-10  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer-commands.h: Rename this...
+	* browser-plugin/totem-plugin-viewer-constants.h: ...to that
+	and add the states to those constants
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totempluginviewer-marshal.list:
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_class_init), (totem_embedded_set_state),
+	(totem_embedded_set_logo_by_name), (totem_embedded_open_internal),
+	(totem_embedded_play), (totem_embedded_pause),
+	(totem_embedded_stop), (on_play_pause), (on_got_redirect),
+	(on_video_button_press_event), (on_eos_event), (on_error_event),
+	(on_tick), (totem_embedded_construct), (main):
+	Add a Tick signal to the viewer, and catch it in the plugin. It
+	gets the Time, Duration and state of the player
+	Remember the length of a stream
+
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.h: implement
+	GetRate, GetMaxBytesLoaded, GetMovieSize, GetTime and GetDuration
+	(Helps: #474841)
+
 2007-09-08  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/plparser.symbols:

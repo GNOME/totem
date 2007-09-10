@@ -54,7 +54,7 @@
 #include "totem-glow-button.h"
 #include "video-utils.h"
 
-#include "totem-plugin-viewer-commands.h"
+#include "totem-plugin-viewer-constants.h"
 #include "totem-plugin-viewer-options.h"
 #include "totempluginviewer-marshal.h"
 
@@ -69,13 +69,6 @@ GtkWidget *totem_pp_create (void);
 #ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
 #define DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT 0
 #endif
-
-typedef enum {
-	STATE_PLAYING,
-	STATE_PAUSED,
-	STATE_STOPPED,
-	LAST_STATE
-} TotemStates;
 
 typedef enum {
 	TOTEM_PLUGIN_TYPE_BASIC,
@@ -194,8 +187,10 @@ enum {
 	BUTTON_PRESS,
 	START_STREAM,
 	STOP_STREAM,
+	TICK,
 	LAST_SIGNAL
 };
+
 static int signals[LAST_SIGNAL] = { 0 };
 
 static void
@@ -220,12 +215,13 @@ totem_embedded_finalize (GObject *object)
 
 static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 {
-	GType param_types[2];
+	GType param_types[3];
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->finalize = totem_embedded_finalize;
 
 	param_types[0] = param_types[1] = G_TYPE_UINT;
+	param_types[2] = G_TYPE_STRING;
 	signals[BUTTON_PRESS] =
 		g_signal_newv ("button-press",
 				G_TYPE_FROM_CLASS (object_class),
@@ -252,6 +248,14 @@ static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE,
 				0, NULL);
+	signals[TICK] =
+		g_signal_newv ("tick",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				NULL /* class closure */,
+				NULL /* accu */, NULL /* accu data */,
+				totempluginviewer_marshal_VOID__UINT_UINT_STRING,
+				G_TYPE_NONE, 3, param_types);
 }
 
 static void
@@ -294,22 +298,16 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
 	GtkWidget *image;
 	gchar *id;
-	static const char *states[] = {
-		"PLAYING",
-		"PAUSED",
-		"STOPPED",
-		"INVALID"
-	};
 
 	if (state == emb->state)
 		return;
 
-	g_message ("Viewer state: %s", states[state]);
+	g_message ("Viewer state: %s", totem_states[state]);
 
 	image = gtk_button_get_image (GTK_BUTTON (emb->pp_button));
 
 	switch (state) {
-	case STATE_STOPPED:
+	case TOTEM_STATE_STOPPED:
 		id = GTK_STOCK_MEDIA_PLAY;
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
@@ -321,11 +319,11 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 				 emb->cursor);
 		}
 		break;
-	case STATE_PAUSED:
+	case TOTEM_STATE_PAUSED:
 		id = GTK_STOCK_MEDIA_PLAY;
 		totem_statusbar_set_text (emb->statusbar, _("Paused"));
 		break;
-	case STATE_PLAYING:
+	case TOTEM_STATE_PLAYING:
 		id = GTK_STOCK_MEDIA_PAUSE;
 		totem_statusbar_set_text (emb->statusbar, _("Playing"));
 		if (emb->href_uri == NULL && emb->hidden == FALSE) {
@@ -339,7 +337,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		break;
 	}
 
-	totem_scrsaver_set_state (emb->scrsaver, (state == STATE_PLAYING) ? FALSE : TRUE);
+	totem_scrsaver_set_state (emb->scrsaver, (state == TOTEM_STATE_PLAYING) ? FALSE : TRUE);
 	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
 
@@ -386,7 +384,7 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 	GdkPixbuf *logo, *padded;
 	int size, width, height;
 
-	totem_embedded_set_state (embedded, STATE_STOPPED);
+	totem_embedded_set_state (embedded, TOTEM_STATE_STOPPED);
 
 	if (embedded->audioonly != FALSE)
 		return;
@@ -459,7 +457,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		/* FIXME we haven't even started sending yet! */
 		//g_signal_emit (emb, signals[STOP_STREAM], 0);
 
-		totem_embedded_set_state (emb, STATE_STOPPED);
+		totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 		totem_embedded_set_logo_by_name (emb, "image-missing");
 
 		errint = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
@@ -503,7 +501,7 @@ totem_embedded_play (TotemEmbedded *emb,
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
 
 	if (bacon_video_widget_play (emb->bvw, &err) != FALSE) {
-		totem_embedded_set_state (emb, STATE_PLAYING);
+		totem_embedded_set_state (emb, TOTEM_STATE_PLAYING);
 		totem_embedded_set_pp_state (emb, TRUE);
 	} else {
 		g_warning ("Error in bacon_video_widget_play: %s", err->message);
@@ -517,8 +515,8 @@ static gboolean
 totem_embedded_pause (TotemEmbedded *emb,
 		      GError **error)
 {
+	totem_embedded_set_state (emb, TOTEM_STATE_PAUSED);
 	bacon_video_widget_pause (emb->bvw);
-	totem_embedded_set_state (emb, STATE_PAUSED);
 
 	return TRUE;
 }
@@ -527,8 +525,8 @@ static gboolean
 totem_embedded_stop (TotemEmbedded *emb,
 		     GError **error)
 {
+	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 	bacon_video_widget_stop (emb->bvw);
-	totem_embedded_set_state (emb, STATE_STOPPED);
 
 	return TRUE;
 }
@@ -1262,7 +1260,7 @@ on_preferences1_activate (GtkButton *button, TotemEmbedded *emb)
 static void
 on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 {
-	if (emb->state == STATE_PLAYING) {
+	if (emb->state == TOTEM_STATE_PLAYING) {
 		totem_embedded_pause (emb, NULL);
 	} else {
 		if (emb->current_uri == NULL) {
@@ -1382,7 +1380,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	totem_embedded_set_uri (emb, new_uri, emb->base_uri /* FIXME? */, FALSE);
 
-	totem_embedded_set_state (emb, STATE_STOPPED);
+	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
 	totem_embedded_open_internal (emb, TRUE, NULL /* FIXME? */);
 }
@@ -1435,7 +1433,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 
 	menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
 
-	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && state == 0 && emb->state == STATE_STOPPED) {
+	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && state == 0 && emb->state == TOTEM_STATE_STOPPED) {
 		if (!GTK_WIDGET_VISIBLE (menu)) {
 			g_message ("emitting signal");
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
@@ -1462,7 +1460,7 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 {
 	gboolean start_play;
 
-	totem_embedded_set_state (emb, STATE_STOPPED);
+	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 	gtk_adjustment_set_value (emb->seekadj, 0);
 
 	/* FIXME: the plugin needs to handle EOS itself, e.g. for QTNext */
@@ -1519,7 +1517,7 @@ on_error_event (BaconVideoWidget *bvw,
 		if (emb->is_browser_stream)
 			g_signal_emit (emb, signals[STOP_STREAM], 0);
 	
-		totem_embedded_set_state (emb, STATE_STOPPED);
+		totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
 		/* If we have a playlist, and that the current item
 		 * is < 60 seconds long, just go through it
@@ -1562,7 +1560,7 @@ on_tick (GtkWidget *bvw,
 		gboolean seekable,
 		TotemEmbedded *emb)
 {
-	if (emb->state != STATE_STOPPED) {
+	if (emb->state != TOTEM_STATE_STOPPED) {
 		gtk_widget_set_sensitive (emb->seek, seekable);
 		gtk_widget_set_sensitive (emb->fs->seek, seekable);
 		if (emb->seeking == FALSE)
@@ -1581,6 +1579,9 @@ on_tick (GtkWidget *bvw,
 			(TOTEM_TIME_LABEL (emb->fs->time_label),
 			 current_time, stream_length);
 	}
+
+	g_signal_emit (emb, signals[TICK], 0,
+		       (guint32) current_time, (guint32) stream_length, totem_states[emb->state]);
 }
 
 static void
@@ -1899,7 +1900,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		g_object_unref (rcstyle);
 	}
 
-	totem_embedded_set_state (emb, STATE_STOPPED);
+	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
 	if (!emb->hidden) {
 		gtk_widget_show (emb->window);
@@ -2311,7 +2312,7 @@ int main (int argc, char **argv)
 
 	emb = g_object_new (TOTEM_TYPE_EMBEDDED, NULL);
 
-	emb->state = LAST_STATE;
+	emb->state = TOTEM_STATE_INVALID;
 	emb->width = -1;
 	emb->height = -1;
 	emb->controller_hidden = arg_no_controls;

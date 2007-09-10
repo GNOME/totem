@@ -1,6 +1,7 @@
-/* Totem Plugin Viewer commands
+/* Totem Plugin Viewer constants
  *
  * Copyright © 2006 Christian Persch
+ * Copyright © 2007 Bastien Nocera <hadess@hadess.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,11 +19,25 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOTEM_PLUGIN_VIEWER_COMMANDS__
-#define __TOTEM_PLUGIN_VIEWER_COMMANDS__
+#ifndef __TOTEM_PLUGIN_VIEWER_CONSTANTS__
+#define __TOTEM_PLUGIN_VIEWER_CONSTANTS__
 
 #define TOTEM_COMMAND_PLAY		"Play"
 #define TOTEM_COMMAND_PAUSE		"Pause"
 #define TOTEM_COMMAND_STOP		"Stop"
 
-#endif /* !__TOTEM_PLUGIN_VIEWER_COMMANDS__ */
+typedef enum {
+	TOTEM_STATE_PLAYING,
+	TOTEM_STATE_PAUSED,
+	TOTEM_STATE_STOPPED,
+	TOTEM_STATE_INVALID
+} TotemStates;
+
+static const char *totem_states[] = {
+	"PLAYING",
+	"PAUSED",
+	"STOPPED",
+	"INVALID"
+};
+
+#endif /* !__TOTEM_PLUGIN_VIEWER_CONSTANTS__ */

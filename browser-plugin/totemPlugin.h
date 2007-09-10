@@ -37,7 +37,7 @@
 #include <nsTArray.h>
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
-#include "totem-plugin-viewer-commands.h"
+#include "totem-plugin-viewer-constants.h"
 
 class nsIDOMDocument;
 class nsIDOMElement;
@@ -118,6 +118,12 @@ class totemPlugin {
     static void PR_CALLBACK StopStreamCallback (DBusGProxy  *proxy,
 						void *aData);
 
+    static void PR_CALLBACK TickCallback (DBusGProxy  *proxy,
+    					  guint aTime,
+    					  guint aDuration,
+    					  char *aState,
+					  void *aData);
+
     static void PR_CALLBACK ViewerSetWindowCallback (DBusGProxy *aProxy,
 						     DBusGProxyCall *aCall,
 						     void *aData);
@@ -175,8 +181,12 @@ class totemPlugin {
     nsIURI *mRequestBaseURI;
     nsIURI *mRequestURI;
 
+    /* Stream data */
     NPStream *mStream;
+  public:
     PRUint32 mBytesStreamed;
+    PRUint32 mBytesLength;
+  private:
     PRUint8 mStreamType;
 
     nsCString mMimeType;
@@ -196,6 +206,11 @@ class totemPlugin {
     nsCString mViewerServiceName;
     int mViewerPID;
     int mViewerFD;
+
+  public:
+    PRUint32 mTime;
+    PRUint32 mDuration;
+    TotemStates mState;
 
 #ifdef TOTEM_GMP_PLUGIN
   public:
