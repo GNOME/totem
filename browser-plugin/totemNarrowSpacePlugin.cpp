@@ -197,6 +197,7 @@ totemScriptablePlugin::GetDuration(PRUint32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid());
   *_retval = mPlugin->mDuration;
   return NS_OK;
 }
@@ -419,6 +420,7 @@ totemScriptablePlugin::GetMaxBytesLoaded(PRUint32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid());
   *_retval = mPlugin->mBytesStreamed;
   return NS_OK;
 }
@@ -486,6 +488,7 @@ totemScriptablePlugin::GetMovieSize(PRUint32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid());
   *_retval = mPlugin->mBytesLength;
   return NS_OK;
 }
@@ -668,6 +671,8 @@ NS_IMETHODIMP
 totemScriptablePlugin::GetRate(float *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  NS_ENSURE_STATE (IsValid());
 
   if (mPlugin->mState == TOTEM_STATE_PLAYING) {
     *_retval = 1.0;
