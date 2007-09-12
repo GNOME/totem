@@ -1799,12 +1799,14 @@ totemPlugin::Init (NPMIMEType mimetype,
 	}
 
 	mCache = GetBooleanValue (args, "cache", mCache);
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
+#if defined (TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
 	mControllerHidden = !GetBooleanValue (args, "controller", PR_TRUE);
 
 	mAutoPlay = GetBooleanValue (args, "autoplay", PR_TRUE);
 
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
+#endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 	value = (const char *) g_hash_table_lookup (args, "console");
@@ -1886,7 +1888,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	if (height <= 16 && !mControllerHidden) {
 		mAudioOnly = PR_TRUE;
 	}
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
+#endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* We need to autostart if we're using an HREF
