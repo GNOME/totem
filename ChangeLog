@@ -1,3 +1,10 @@
+2007-09-14  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem.c: (on_got_metadata_event): Patch from
+	Diego Escalante Urrelo <diegoe@gnome.org> to make the
+	screenshot button sensitive only when we can get frames from
+	the stream (Closes: #352142)
+
 2007-09-12  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp: Make the basic plugin handle

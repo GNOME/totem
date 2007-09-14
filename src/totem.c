@@ -1430,7 +1430,7 @@ static void
 on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
         char *name = NULL;
-
+	
 	totem_metadata_updated (totem, NULL, NULL, NULL);
 
 	name = totem_get_nice_name_for_stream (totem);
@@ -1440,8 +1440,11 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 			(TOTEM_PLAYLIST (totem->playlist), name, FALSE);
 		g_free (name);
 	}
-	on_playlist_change_name 	 
-		(TOTEM_PLAYLIST (totem->playlist), totem);
+	
+	totem_action_set_sensitivity ("take-screenshot",
+				      bacon_video_widget_can_get_frames (bvw, NULL));
+	
+	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }
 
 static void
