@@ -62,7 +62,7 @@ typedef struct {
 	void (*title_change) (GtkWidget *bvw, const char *title);
 	void (*channels_change) (GtkWidget *bvw);
 	void (*tick) (GtkWidget *bvw, gint64 current_time, gint64 stream_length,
-			float current_position, gboolean seekable);
+			double current_position, gboolean seekable);
 	void (*buffering) (GtkWidget *bvw, guint progress);
 } BaconVideoWidgetClass;
 
@@ -129,13 +129,13 @@ gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
 /* Seeking and length */
 gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
-						  float position,
+						  double position,
 						  GError **error);
 gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
 						  gint64 time,
 						  GError **error);
 gboolean bacon_video_widget_can_direct_seek	 (BaconVideoWidget *bvw);
-float bacon_video_widget_get_position            (BaconVideoWidget *bvw);
+double bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_stream_length      (BaconVideoWidget *bvw);
 

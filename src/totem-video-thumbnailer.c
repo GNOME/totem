@@ -335,7 +335,7 @@ capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output)
 	GdkPixbuf* pixbuf;
 	guint current;
 	GError *err = NULL;
-	const float frame_locations[] = {
+	const double frame_locations[] = {
 		1.0 / 3.0,
 		2.0 / 3.0,
 		0.1,

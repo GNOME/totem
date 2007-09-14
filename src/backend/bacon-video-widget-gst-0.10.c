@@ -132,7 +132,7 @@ struct BaconVideoWidgetPrivate
   gint64                       stream_length;
   gint64                       current_time_nanos;
   gint64                       current_time;
-  gfloat                       current_position;
+  gdouble                      current_position;
 
   GstTagList                  *tagcache;
   GstTagList                  *audiotags;
@@ -957,9 +957,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_POSITION,
-                                   g_param_spec_int ("position", NULL, NULL,
-                                                     0, G_MAXINT, 0,
-                                                     G_PARAM_READABLE));
+                                   g_param_spec_double ("position", NULL, NULL,
+							0, 1.0, 0,
+							G_PARAM_READABLE));
   g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
 	                           g_param_spec_int64 ("stream-length", NULL,
                                                      NULL, 0, G_MAXINT64, 0,
@@ -1040,8 +1040,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
                   NULL, NULL,
-                  baconvideowidget_marshal_VOID__INT64_INT64_FLOAT_BOOLEAN,
-                  G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_FLOAT,
+                  baconvideowidget_marshal_VOID__INT64_INT64_DOUBLE_BOOLEAN,
+                  G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_DOUBLE,
                   G_TYPE_BOOLEAN);
 
   bvw_signals[SIGNAL_BUFFERING] =
@@ -1614,7 +1614,7 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
     bvw->priv->current_position = 0;
   } else {
     bvw->priv->current_position =
-      (gfloat) bvw->priv->current_time / bvw->priv->stream_length;
+      (gdouble) bvw->priv->current_time / bvw->priv->stream_length;
   }
 
   if (bvw->priv->stream_length == 0) {
@@ -1924,7 +1924,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       bacon_video_widget_get_logo_mode (bvw));
       break;
     case PROP_POSITION:
-      g_value_set_int64 (value, bacon_video_widget_get_position (bvw));
+      g_value_set_double (value, bacon_video_widget_get_position (bvw));
       break;
     case PROP_STREAM_LENGTH:
       g_value_set_int64 (value,
@@ -2851,7 +2851,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
 }
 
 gboolean
-bacon_video_widget_seek (BaconVideoWidget *bvw, float position, GError **error)
+bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
 {
   gint64 seek_time, length_nanos;
 
@@ -3762,7 +3762,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   GST_DEBUG ("setting value %d on gconf key %s", value, video_props_str[type]);
 }
 
-float
+double
 bacon_video_widget_get_position (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);

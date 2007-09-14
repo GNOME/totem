@@ -1,5 +1,28 @@
 2007-09-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_class_init), (got_time_tick),
+	(bacon_video_widget_get_property), (bacon_video_widget_seek):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_class_init), (bacon_video_widget_tick_send),
+	(bacon_video_widget_play), (bacon_video_widget_seek),
+	(bacon_video_widget_seek_time), (bacon_video_widget_get_property),
+	(bacon_video_widget_get_position),
+	(bacon_video_widget_get_current_time):
+	* src/backend/bacon-video-widget.h:
+	* src/backend/baconvideowidget-marshal.list:
+	* src/totem-video-thumbnailer.c: (capture_interesting_frame):
+	* src/totem.c: (update_current_time): Update the xine-lib and
+	GStreamer backends to use doubles for the current fraction position,
+	to avoid loss of precision, fix PROP_POSITION being a gint64 when it
+	was a double (or rather float as before), fix _get_position in the
+	xine-lib backend to not return value > 1.0
+
+	In the xine-lib backend, when seeking by fraction, try to seek by time
+	instead, gives better precision for most demuxers (Closes: #304308)
+
+2007-09-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (on_got_metadata_event): Patch from
 	Diego Escalante Urrelo <diegoe@gnome.org> to make the
 	screenshot button sensitive only when we can get frames from

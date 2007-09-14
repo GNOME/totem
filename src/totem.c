@@ -1495,7 +1495,7 @@ static void
 update_current_time (BaconVideoWidget *bvw,
 		gint64 current_time,
 		gint64 stream_length,
-		float current_position,
+		double current_position,
 		gboolean seekable, Totem *totem)
 {
 	if (totem->seek_lock == FALSE)
