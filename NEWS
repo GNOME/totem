@@ -1,5 +1,37 @@
 New features and significant updates in version...
 
+2.20.0
+* Better error when there's no DVD plugins available
+* Fix dropping URLs from Firefox/Mozilla-based browsers
+* Fix the media players key plugin not starting automatically
+* Stop the screensaver when we're playing, not only in fullscreen
+* Fix the visuals plugins list being always empty
+* Don't allow seeking when there's no files loaded
+* Don't ask the user twice whether to disable visualisations when
+  running remotely
+* Disable the Eject menu item, as it's not working properly
+* Don't rebuild the drives list for each click on the Movie menu
+* Add audio/off and audio/x-sbc as supported
+
+* Browser plugin:
+  - Stop the play button glowing when we click play
+  - Don't call out to the viewer if it's not started yet
+  - Stop the screensaver when we're playing
+  - Show an icon in the about dialogue
+
+* Playlist parser:
+  - Add starttime and endtime support for RAM files
+  - When getting a cdda:/// URL, use the canonical device,
+    not the link to the device
+  - Push the duration attribute for PLS files
+  - Don't crash or eject the CD/DVD when trying to play a disc
+    that's not mounted
+
+* Fix some problems when the position (0->1.0) doesn't match
+  time elapsed/duration (xine-lib)
+* Start playback when running "totem dvb:" (xine-lib)
+* Fix a crash when trying to use "totem dvb:" (GStreamer)
+
 2.19.90
 * Make the default window size bigger on first startup
 * Remove most of the flicker from the waiting cursor on startup
