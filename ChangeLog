@@ -1,3 +1,10 @@
+2007-09-18  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
+	Create the cursor before setting the playback state so the cursor can
+	be set properly. Set the logo to be a play button when no autostart
+	is used (Closes: #474059)
+
 2007-09-17  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mozilla-viewer.ui:

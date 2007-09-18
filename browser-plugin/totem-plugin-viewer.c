@@ -1900,6 +1900,12 @@ totem_embedded_construct (TotemEmbedded *emb,
 		g_object_unref (rcstyle);
 	}
 
+	/* Create the cursor before setting the state */
+	if (!emb->hidden) {
+		emb->cursor = gdk_cursor_new_for_display
+			(gtk_widget_get_display (emb->window),
+			 GDK_HAND2);
+	}
 	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
 	if (!emb->hidden) {
@@ -1911,16 +1917,16 @@ totem_embedded_construct (TotemEmbedded *emb,
 					     GTK_WINDOW (emb->window), emb);
 	g_assert (emb->menuxml);
 
-	/* Create cursor and set the logo */
-	if (!emb->hidden) {
-		emb->cursor = gdk_cursor_new_for_display
-			(gtk_widget_get_display (emb->window),
-			 GDK_HAND2);
+	/* Set the logo and the button glow */
+	if (!emb->hidden && emb->autostart == FALSE) {
+		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), TRUE);
+		if (gtk_widget_get_direction (GTK_WIDGET (emb->bvw)) == GTK_TEXT_DIR_LTR)
+			totem_embedded_set_logo_by_name (emb, "gtk-media-play-ltr");
+		else
+			totem_embedded_set_logo_by_name (emb, "gtk-media-play-rtl");
+	} else {
 		totem_embedded_set_logo_by_name (emb, "totem");
 	}
-
-	if (!emb->hidden && emb->autostart == FALSE)
-		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), TRUE);
 
 	return TRUE;
 }
