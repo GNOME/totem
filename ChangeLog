@@ -1,3 +1,14 @@
+2007-09-19  Bastien Nocera  <hadess@hadess.net>
+
+	* data/fullscreen.ui:
+	* src/totem-fullscreen.c: (totem_fullscreen_popup_timeout_add),
+	(totem_fullscreen_is_volume_popup_visible),
+	(totem_fullscreen_force_popup_hide), (totem_fullscreen_popup_hide),
+	(totem_fullscreen_set_fullscreen), (totem_fullscreen_new):
+	Remove the vol_lock, and check whether the popup is visible instead
+	Force the volume scale to popdown when going out of fullscreen
+	(Closes: #477529, #452245)
+
 ============ Version 2.20.0
 
 2007-09-16  Bastien Nocera  <hadess@hadess.net>

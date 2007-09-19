@@ -29,13 +29,14 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "totem-fullscreen.h"
 #include "totem-interface.h"
 #include "totem-time-label.h"
 #include "bacon-video-widget.h"
 
-#define FULLSCREEN_POPUP_TIMEOUT 5 * 1000
+#define FULLSCREEN_POPUP_TIMEOUT 5
 
 static GObjectClass *parent_class = NULL;
 
@@ -60,7 +61,6 @@ struct TotemFullscreenPrivate {
 
 	/* Locks for keeping the popups during adjustments */
 	gboolean          seek_lock;
-	gboolean          vol_lock;
 
 	guint             popup_timeout;
 	gboolean          popup_in_progress;
@@ -162,24 +162,6 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 }
 
 gboolean
-totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget,
-					GdkEventButton *event,
-					TotemFullscreen *fs)
-{
-	fs->priv->vol_lock = TRUE;
-	return FALSE;
-}
-
-gboolean
-totem_fullscreen_vol_slider_released_cb (GtkWidget *widget,
-					 GdkEventButton *event,
-					 TotemFullscreen *fs)
-{
-	fs->priv->vol_lock = FALSE;
-	return FALSE;
-}
-
-gboolean
 totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget,
 					 GdkEventButton *event,
 					 TotemFullscreen *fs)
@@ -200,8 +182,8 @@ totem_fullscreen_seek_slider_released_cb (GtkWidget *widget,
 static void
 totem_fullscreen_popup_timeout_add (TotemFullscreen *fs)
 {
-	fs->priv->popup_timeout = g_timeout_add (FULLSCREEN_POPUP_TIMEOUT,
-						 (GSourceFunc) totem_fullscreen_popup_hide, fs);
+	fs->priv->popup_timeout = g_timeout_add_seconds (FULLSCREEN_POPUP_TIMEOUT,
+							 (GSourceFunc) totem_fullscreen_popup_hide, fs);
 }
 
 static void
@@ -220,13 +202,21 @@ totem_fullscreen_set_cursor (TotemFullscreen *fs, gboolean state)
 }
 
 static gboolean
-totem_fullscreen_popup_hide (TotemFullscreen *fs)
+totem_fullscreen_is_volume_popup_visible (TotemFullscreen *fs)
 {
-	if (fs->priv->bvw == NULL || totem_fullscreen_is_fullscreen (fs) == FALSE)
-		return TRUE;
+	GtkWidget *toplevel;
 
-	if (fs->priv->seek_lock != FALSE || fs->priv->vol_lock != FALSE)
-		return TRUE;
+	/* FIXME we should use the popup-visible property instead */
+	toplevel = gtk_widget_get_toplevel (GTK_SCALE_BUTTON (fs->volume)->plus_button);
+	return GTK_WIDGET_VISIBLE (toplevel);
+}
+
+static void
+totem_fullscreen_force_popup_hide (TotemFullscreen *fs)
+{
+	/* Popdown the volume button if it's visible */
+	if (totem_fullscreen_is_volume_popup_visible (fs))
+		gtk_bindings_activate (GTK_OBJECT (fs->volume), GDK_Escape, 0);
 
 	gtk_widget_hide (fs->priv->exit_popup);
 	gtk_widget_hide (fs->priv->control_popup);
@@ -234,6 +224,18 @@ totem_fullscreen_popup_hide (TotemFullscreen *fs)
 	totem_fullscreen_popup_timeout_remove (fs);
 
 	totem_fullscreen_set_cursor (fs, FALSE);
+}
+
+static gboolean
+totem_fullscreen_popup_hide (TotemFullscreen *fs)
+{
+	if (fs->priv->bvw == NULL || totem_fullscreen_is_fullscreen (fs) == FALSE)
+		return TRUE;
+
+	if (fs->priv->seek_lock != FALSE || totem_fullscreen_is_volume_popup_visible (fs) != FALSE)
+		return TRUE;
+
+	totem_fullscreen_force_popup_hide (fs);
 
 	return FALSE;
 }
@@ -282,7 +284,7 @@ totem_fullscreen_set_fullscreen (TotemFullscreen *fs,
 {
 	g_return_if_fail (TOTEM_IS_FULLSCREEN (fs));
 
-	totem_fullscreen_popup_hide (fs);
+	totem_fullscreen_force_popup_hide (fs);
 
 	bacon_video_widget_set_fullscreen (fs->priv->bvw, fullscreen);
 	totem_fullscreen_set_cursor (fs, !fullscreen);
@@ -300,7 +302,7 @@ totem_fullscreen_new (GtkWindow *toplevel_window)
 
 
 	priv = fs->priv;
-	priv->vol_lock = priv->seek_lock = FALSE;
+	priv->seek_lock = FALSE;
 	priv->xml = totem_interface_load ("fullscreen.ui", TRUE, NULL, fs);
 
 	priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (priv->xml,
