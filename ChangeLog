@@ -1,5 +1,14 @@
 2007-09-19  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-fullscreen.c: (totem_fullscreen_set_cursor),
+	(totem_fullscreen_motion_notify),
+	(totem_fullscreen_parent_window_notify): Only show the popup on
+	motion notifies if the window is active, show the cursor on the
+	video window when it's not active, or when it becomes active
+	(Closes: #471381)
+
+2007-09-19  Bastien Nocera  <hadess@hadess.net>
+
 	* data/fullscreen.ui:
 	* src/totem-fullscreen.c: (totem_fullscreen_popup_timeout_add),
 	(totem_fullscreen_is_volume_popup_visible),
