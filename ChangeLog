@@ -1,3 +1,10 @@
+2007-09-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/totem-python-module.c:
+	(totem_python_module_init_python): Initialise PyGObject threads
+	as soon as possible, or it could cause assertions when using
+	threaded python code (See: #469852)
+
 2007-09-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-fullscreen.c: (totem_fullscreen_set_cursor),
