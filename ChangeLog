@@ -1,3 +1,12 @@
+2007-09-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-fullscreen.c: (totem_fullscreen_parent_window_notify):
+	When an error occurs and we dismiss the error dialogue, don't hide
+	the cursor if we're not in fullscreen
+	* src/totem.c: (totem_action_seek), (seek_slider_released_cb):
+	When a seek error occurs, reset the seeking so that the interface
+	is ready to use again
+
 2007-09-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-fullscreen.c: (totem_fullscreen_set_cursor),
