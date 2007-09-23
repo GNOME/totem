@@ -301,6 +301,9 @@ totem_fullscreen_parent_window_notify (GtkWidget *parent_window,
 				       GParamSpec *property,
 				       TotemFullscreen *fs)
 {
+	if (totem_fullscreen_is_fullscreen (fs) == FALSE)
+		return;
+
 	if (parent_window == fs->priv->parent_window &&
 	    gtk_window_is_active (GTK_WINDOW (parent_window)) == FALSE) {
 		totem_fullscreen_force_popup_hide (fs);

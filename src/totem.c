@@ -404,8 +404,15 @@ totem_action_seek (Totem *totem, double pos)
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 
-		totem_action_error (msg, err->message, totem);
+		/* Release the lock and reset everything so that we
+		 * avoid being "stuck" seeking */
+		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
+		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
+		totem->seek_lock = FALSE;
+		bacon_video_widget_seek (totem->bvw, 0, NULL);
 		totem_action_stop (totem);
+
+		totem_action_error (msg, err->message, totem);
 		g_free (msg);
 		g_error_free (err);
 	}
@@ -1617,9 +1624,7 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 	val = gtk_adjustment_get_value (adj);
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
-	{
 		totem_action_seek (totem, val / 65535.0);
-	}
 
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
 	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label),
