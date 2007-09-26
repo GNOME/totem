@@ -337,7 +337,8 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		break;
 	}
 
-	totem_scrsaver_set_state (emb->scrsaver, (state == TOTEM_STATE_PLAYING) ? FALSE : TRUE);
+	if (emb->scrsaver != NULL)
+		totem_scrsaver_set_state (emb->scrsaver, (state == TOTEM_STATE_PLAYING) ? FALSE : TRUE);
 	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
 

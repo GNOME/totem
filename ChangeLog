@@ -1,3 +1,11 @@
+2007-09-26  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state):
+	* lib/totem-scrsaver.c: (totem_scrsaver_disable),
+	(totem_scrsaver_enable), (totem_scrsaver_set_state):
+	Fix crash when there's no screensaver objects, and add assertion
+	guards in totem-scrsaver.c (Closes: #480558)
+
 2007-09-25  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: Add audio/x-vorbis as used in
