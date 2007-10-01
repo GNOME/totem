@@ -2004,7 +2004,7 @@ static gboolean
 bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 {
 	int current_time, stream_length, current_position;
-	float current_position_f;
+	double current_position_f;
 	gboolean ret = TRUE, seekable;
 
 	g_return_val_if_fail (bvw->priv->stream != NULL, FALSE);
@@ -2033,16 +2033,16 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		current_time = bvw->priv->seek_dest_time;
 		if (stream_length == 0)
 			stream_length = current_time;
-		current_position_f = (float) current_time / stream_length;
+		current_position_f = (double) current_time / stream_length;
 	} else {
 		/* xine-lib doesn't update current_position if the stream
 		 * isn't seekable */
 		if ((current_position == 0 || current_position == 65535) && current_time > 0) {
 			if (stream_length == 0)
 				stream_length = current_time;
-			current_position_f = (float) current_time / stream_length;
+			current_position_f = (double) current_time / stream_length;
 		} else {
-			current_position_f = ((float) current_position) / 65535;
+			current_position_f = ((double) current_position) / 65535;
 		}
 	}
 

@@ -1,5 +1,13 @@
 2007-10-01  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (on_tick):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_tick_send): More float/double problems,
+	especially in the browser viewer, which was causing the seekbar
+	to yo-yo with some streams
+
+2007-10-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-uri.c: (totem_uri_get_subtitle_for_uri),
 	(totem_uri_get_subtitle_in_subdir), (totem_uri_get_subtitle_uri):
 	Look for subtitles in the subtitles/ directory as well

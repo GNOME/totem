@@ -1557,7 +1557,7 @@ static void
 on_tick (GtkWidget *bvw,
 		gint64 current_time,
 		gint64 stream_length,
-		float current_position,
+		double current_position,
 		gboolean seekable,
 		TotemEmbedded *emb)
 {
