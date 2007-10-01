@@ -260,31 +260,16 @@ static const char subtitle_ext[][4] = {
 	"ssa"
 };
 
-char *
-totem_uri_get_subtitle_uri (const char *uri)
+static char *
+totem_uri_get_subtitle_for_uri (const char *uri)
 {
+	GnomeVFSURI *vfsuri;
 	char *subtitle;
 	guint len, i, suffix;
-	GnomeVFSURI *vfsuri;
-
-	if (g_str_has_prefix (uri, "http") != FALSE) {
-		return NULL;
-	}
-
-	/* Does gnome-vfs support that scheme? */
-	vfsuri = gnome_vfs_uri_new (uri);
-	if (vfsuri == NULL)
-		return NULL;
-	gnome_vfs_uri_unref (vfsuri);
-
-	/* Has the user specified a subtitle file manually? */
-	if (strstr (uri, "#subtitle:") != NULL) {
-		return NULL;
-	}
 
         /* Find the filename suffix delimiter */
 	len = strlen (uri);
-	for (suffix = len-1; suffix > 0; suffix--) {
+	for (suffix = len - 1; suffix > 0; suffix--) {
 		if (uri[suffix] == G_DIR_SEPARATOR ||
                     (uri[suffix] == '/')) {
 			/* This filename has no extension, we'll need to 
@@ -323,6 +308,62 @@ totem_uri_get_subtitle_uri (const char *uri)
 	}
 	g_free (subtitle);
 	return NULL;
+}
+
+static char *
+totem_uri_get_subtitle_in_subdir (GnomeVFSURI *vfsuri, const char *subdir)
+{
+	char *filename, *subtitle, *fullpath_str;
+	GnomeVFSURI *parent, *fullpath, *directory;
+
+	parent = gnome_vfs_uri_get_parent (vfsuri);
+	directory = gnome_vfs_uri_append_path (parent, subdir);
+	gnome_vfs_uri_unref (parent);
+
+	filename = g_path_get_basename (gnome_vfs_uri_get_path (vfsuri));
+	fullpath = gnome_vfs_uri_append_string (directory, filename);
+	gnome_vfs_uri_unref (directory);
+	g_free (filename);
+
+	fullpath_str = gnome_vfs_uri_to_string (fullpath, 0);
+	gnome_vfs_uri_unref (fullpath);
+	subtitle = totem_uri_get_subtitle_for_uri (fullpath_str);
+	g_free (fullpath_str);
+
+	return subtitle;
+}
+
+char *
+totem_uri_get_subtitle_uri (const char *uri)
+{
+	GnomeVFSURI *vfsuri;
+	char *subtitle;
+
+	if (g_str_has_prefix (uri, "http") != FALSE) {
+		return NULL;
+	}
+
+	/* Has the user specified a subtitle file manually? */
+	if (strstr (uri, "#subtitle:") != NULL) {
+		return NULL;
+	}
+
+	/* Does gnome-vfs support that scheme? */
+	vfsuri = gnome_vfs_uri_new (uri);
+	if (vfsuri == NULL)
+		return NULL;
+
+	/* Try in the current directory */
+	subtitle = totem_uri_get_subtitle_for_uri (uri);
+	if (subtitle != NULL) {
+		gnome_vfs_uri_unref (vfsuri);
+		return subtitle;
+	}
+
+	subtitle = totem_uri_get_subtitle_in_subdir (vfsuri, "subtitles");
+	gnome_vfs_uri_unref (vfsuri);
+
+	return subtitle;
 }
 
 char*
