@@ -1,5 +1,19 @@
 2007-10-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/test-parser.c: (entry_metadata_foreach): Truncate the
+	description if it's too long, useful for podcasts testing
+
+	* src/plparse/totem-pl-parser-podcast.c: (totem_pl_parser_is_rss),
+	(totem_pl_parser_is_atom), (totem_pl_parser_is_xml_feed),
+	(parse_rss_item), (parse_rss_items), (totem_pl_parser_add_rss),
+	(totem_pl_parser_add_xml_feed): Add _is_xml_feed, _is_rss and _is_atom
+	implement RSS parsing
+	* src/plparse/totem-pl-parser-podcast.h: upd
+	* src/plparse/totem-pl-parser.c: Also check whether XML files are
+	RSS or Atom feeds
+
+2007-10-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-qt.c:
 	(totem_pl_parser_add_quicktime_metalink):
 	* src/plparse/totem-pl-parser-smil.c:

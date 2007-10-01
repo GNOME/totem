@@ -127,13 +127,26 @@ test_duration (void)
 	test_duration_real ("01:00.01", 60);
 }
 
+#define MAX_DESCRIPTION_LEN 128
+
 static void
 entry_metadata_foreach (const char *key,
 			const char *value,
 			gpointer data)
 {
-	if (g_ascii_strcasecmp (key, "url") == 0)
+	if (g_ascii_strcasecmp (key, TOTEM_PL_PARSER_FIELD_URL) == 0)
 		return;
+	if (g_ascii_strcasecmp (key, TOTEM_PL_PARSER_FIELD_DESCRIPTION) == 0
+	    && strlen (value) > MAX_DESCRIPTION_LEN) {
+	    	char *tmp = g_strndup (value, MAX_DESCRIPTION_LEN), *s;
+	    	for (s = tmp; s - tmp < MAX_DESCRIPTION_LEN; s++)
+	    		if (*s == '\n' || *s == '\r') {
+	    			*s = '\0';
+	    			break;
+			}
+	    	g_print ("\t%s = '%s' (truncated)\n", key, tmp);
+	    	return;
+	}
 	g_print ("\t%s = '%s'\n", key, value);
 }
 
