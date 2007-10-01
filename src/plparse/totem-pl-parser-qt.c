@@ -117,7 +117,7 @@ totem_pl_parser_add_quicktime_metalink (TotemPlParser *parser, const char *url,
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	xml_parser_init (contents, size, XML_PARSER_CASE_INSENSITIVE);
-	if (xml_parser_build_tree_relaxed (&doc, TRUE) < 0) {
+	if (xml_parser_build_tree_with_options (&doc, XML_PARSER_RELAXED | XML_PARSER_MULTI_TEXT) < 0) {
 		g_free (contents);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
