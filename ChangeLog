@@ -1,5 +1,14 @@
 2007-10-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/Makefile.am:
+	* src/plparse/xmllexer.c: (lexer_get_token):
+	* src/plparse/xmllexer.h:
+	* src/plparse/xmlparser.c:
+	* src/plparse/xmlparser.h: Update from xine-lib-1.2 branch,
+	with debug removed, and token buffer size increased to 32k
+
+2007-10-01  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (on_tick):
 	* src/backend/bacon-video-widget-xine.c:
 	(bacon_video_widget_tick_send): More float/double problems,

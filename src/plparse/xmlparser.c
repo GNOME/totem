@@ -22,6 +22,10 @@
  *
  */
 
+#ifdef XINE_COMPILE
+# include "config.h"
+#endif
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,15 +42,15 @@
 #ifdef XINE_COMPILE
 #include "xineutils.h"
 #else
-#define lprintf(...)
+#define lprintf
 #define xine_xmalloc malloc
 #endif
 #include "xmllexer.h"
 #include "xmlparser.h"
 
 
-#define TOKEN_SIZE  4 * 1024
-#define DATA_SIZE   4 * 1024
+#define TOKEN_SIZE  32 * 1024
+#define DATA_SIZE   32 * 1024
 #define MAX_RECURSION 10
 
 /* private global variables */
@@ -76,8 +80,11 @@ static xml_node_t * new_xml_node(void) {
   return new_node;
 }
 
+static const char cdata[] = CDATA_MARKER;
+
 static void free_xml_node(xml_node_t * node) {
-  free (node->name);
+  if (node->name != cdata)
+    free (node->name);
   free (node->data);
   free(node);
 }
@@ -173,11 +180,49 @@ typedef enum {
   /* Others */
   STATE_COMMENT,
   STATE_DOCTYPE,
+  STATE_CDATA,
 } parser_state_t;
+
+static xml_node_t *xml_parser_append_text (xml_node_t *node, xml_node_t *subnode, const char *text, int flags)
+{
+  if (!text || !*text)
+    return subnode; /* empty string -> nothing to do */
+
+  if ((flags & XML_PARSER_MULTI_TEXT) && subnode) {
+    /* we have a subtree, so we can't use node->data */
+    if (subnode->name == cdata) {
+      /* most recent node is CDATA - append to it */
+      char *newtext;
+      asprintf (&newtext, "%s%s", subnode->data, text);
+      free (subnode->data);
+      subnode->data = newtext;
+    } else {
+      /* most recent node is not CDATA - add a sibling */
+      subnode->next = new_xml_node ();
+      subnode->next->name = cdata;
+      subnode->next->data = strdup (text);
+      subnode = subnode->next;
+    }
+  } else if (node->data) {
+    /* "no" subtree, but we have existing text - append to it */
+    char *newtext;
+    asprintf (&newtext, "%s%s", node->data, text);
+    free (node->data);
+    node->data = newtext;
+  } else {
+    /* no text, "no" subtree - duplicate & assign */
+    while (isspace (*text))
+      ++text;
+    if (*text)
+      node->data = strdup (text);
+  }
+
+  return subnode;
+}
 
 #define Q_STATE(CURRENT,NEW) (STATE_##NEW + state - STATE_##CURRENT)
 
-static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_names[], int rec, int relaxed)
+static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_names[], int rec, int flags)
 {
   char tok[TOKEN_SIZE];
   char property_name[TOKEN_SIZE];
@@ -223,13 +268,16 @@ static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_na
 	case (T_DOCTYPE_START):
 	  state = STATE_DOCTYPE;
 	  break;
+	case (T_CDATA_START):
+	  state = STATE_CDATA;
+	  break;
 	case (T_DATA):
 	  /* current data */
-	  if (current_node->data) {
-	    /* avoid a memory leak */
-	    free(current_node->data);
+	  {
+	    char *decoded = lexer_decode_entities (tok);
+	    current_subtree = xml_parser_append_text (current_node, current_subtree, decoded, flags);
+	    free (decoded);
 	  }
-	  current_node->data = lexer_decode_entities(tok);
 	  lprintf("info: node data : %s\n", current_node->data);
 	  break;
 	default:
@@ -283,7 +331,7 @@ static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_na
 	  subtree->props = properties;
 	  lprintf("info: rec %d new subtree %s\n", rec, node_name);
 	  root_names[rec + 1] = node_name;
-	  parse_res = xml_parser_get_node_internal(subtree, root_names, rec + 1, relaxed);
+	  parse_res = xml_parser_get_node_internal(subtree, root_names, rec + 1, flags);
 	  if (parse_res == -1 || parse_res > 0) {
 	    return parse_res;
 	  }
@@ -366,7 +414,7 @@ static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_na
 	  }
 	  if (strcmp(tok, root_names[rec]) == 0) {
 	    state = STATE_TAG_TERM;
-	  } else if (relaxed) {
+	  } else if (flags & XML_PARSER_RELAXED) {
 	    int r = rec;
 	    while (--r >= 0)
 	      if (strcmp(tok, root_names[r]) == 0) {
@@ -529,6 +577,21 @@ static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_na
 	}
 	break;
 
+				/* ]]> expected */
+      case STATE_CDATA:
+	switch (res) {
+	case (T_CDATA_STOP):
+	  current_subtree = xml_parser_append_text (current_node, current_subtree, tok, flags);
+	  lprintf("info: node cdata : %s\n", tok);
+	  state = STATE_IDLE;
+	  break;
+        default:
+	  lprintf("error: unexpected token \"%s\", state %d\n", tok, state);
+	  return -1;
+	  break;
+	}
+	break;
+
 				/* > expected (following unmatched "</...") */
       case STATE_TAG_TERM_IGNORE:
 	switch (res) {
@@ -558,22 +621,40 @@ static int xml_parser_get_node_internal (xml_node_t *current_node, char *root_na
   }
 }
 
-static int xml_parser_get_node (xml_node_t *current_node, int relaxed)
+static int xml_parser_get_node (xml_node_t *current_node, int flags)
 {
   char *root_names[MAX_RECURSION + 1];
   root_names[0] = "";
-  return xml_parser_get_node_internal (current_node, root_names, 0, relaxed);
+  return xml_parser_get_node_internal (current_node, root_names, 0, flags);
 }
 
-int xml_parser_build_tree_relaxed(xml_node_t **root_node, int relaxed) {
-  xml_node_t *tmp_node, *pri_node, *q_node = NULL;
+int xml_parser_build_tree_with_options(xml_node_t **root_node, int flags) {
+  xml_node_t *tmp_node, *pri_node, *q_node;
   int res;
 
   tmp_node = new_xml_node();
-  res = xml_parser_get_node(tmp_node, relaxed);
+  res = xml_parser_get_node(tmp_node, flags);
+
+  /* delete any top-level [CDATA] nodes */;
+  pri_node = tmp_node->child;
+  q_node = NULL;
+  while (pri_node) {
+    if (pri_node->name == cdata) {
+      xml_node_t *old = pri_node;
+      if (q_node)
+        q_node->next = pri_node->next;
+      else
+        q_node = pri_node;
+      pri_node = pri_node->next;
+      free_xml_node (old);
+    } else {
+      q_node = pri_node;
+      pri_node = pri_node->next;
+    }
+  }
 
   /* find first non-<?...?> node */;
-  for (pri_node = tmp_node->child;
+  for (pri_node = tmp_node->child, q_node = NULL;
        pri_node && pri_node->name[0] == '?';
        pri_node = pri_node->next)
     q_node = pri_node; /* last <?...?> node (eventually), or NULL */
@@ -596,7 +677,7 @@ int xml_parser_build_tree_relaxed(xml_node_t **root_node, int relaxed) {
 }
 
 int xml_parser_build_tree(xml_node_t **root_node) {
-  return xml_parser_build_tree_relaxed (root_node, 0);
+  return xml_parser_build_tree_with_options (root_node, 0);
 }
 
 const char *xml_parser_get_property (const xml_node_t *node, const char *name) {

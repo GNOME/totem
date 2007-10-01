@@ -37,6 +37,12 @@
 #define XML_PARSER_OK                0
 #define XML_PARSER_ERROR             1
 
+/* xml_parser_build_tree_with_options flag bits */
+#define XML_PARSER_RELAXED		1
+#define XML_PARSER_MULTI_TEXT		2
+
+/* node name for extra text chunks */
+#define CDATA_MARKER "[CDATA]"
 
 /* xml property */
 typedef struct xml_property_s {
@@ -46,6 +52,14 @@ typedef struct xml_property_s {
 } xml_property_t;
 
 /* xml node */
+/* .data contains any text which precedes any subtree elements;
+ * subtree elements may also contain only text; if so, name is "[CDATA]".
+ * e.g. <a>b<c />d</a>
+ *   node1: .name="a"       .data="b"  .child=node2 .next=NULL
+ *   node2: .name="c"       .data=NULL .child=NULL  .next=node3
+ *   node3: .name="[CDATA]" .data="d"  .child=NULL  .next=NULL
+ * Adjacent text items are merged.
+ */
 typedef struct xml_node_s {
 	char *name;
 	char *data;
@@ -57,7 +71,7 @@ typedef struct xml_node_s {
 void xml_parser_init(const char * buf, int size, int mode) XINE_PROTECTED;
 
 int xml_parser_build_tree(xml_node_t **root_node) XINE_PROTECTED;
-int xml_parser_build_tree_relaxed(xml_node_t **root_node, int relaxed) XINE_PROTECTED;
+int xml_parser_build_tree_with_options(xml_node_t **root_node, int flags) XINE_PROTECTED;
 
 void xml_parser_free_tree(xml_node_t *root_node) XINE_PROTECTED;
 

@@ -31,7 +31,7 @@
 #ifdef XINE_COMPILE
 #include "xineutils.h"
 #else
-#define lprintf(...)
+#define lprintf
 #define xine_xmalloc malloc
 #endif
 #include "xmllexer.h"
@@ -41,15 +41,18 @@
 #include <stdlib.h>
 
 /* private constants*/
-#define NORMAL       0  /* normal lex mode */
-#define DATA         1  /* data lex mode */
 
 /* private global variables */
 static const char * lexbuf;
 static int lexbuf_size = 0;
 static int lexbuf_pos  = 0;
-static int lex_mode    = NORMAL;
 static int in_comment  = 0;
+
+static enum {
+  NORMAL,
+  DATA,
+  CDATA,
+} lex_mode = NORMAL;
 
 void lexer_init(const char * buf, int size) {
   lexbuf      = buf;
@@ -87,10 +90,10 @@ int lexer_get_token(char * tok, int tok_size) {
   if (tok) {
     while ((tok_pos < tok_size) && (lexbuf_pos < lexbuf_size)) {
       c = lexbuf[lexbuf_pos];
-      lprintf("c=%c, state=%d, in_comment=%d\n", c, state, in_comment);
+      lprintf("c=%c, state=%d, lex_mode=%d, in_comment=%d\n", c, state, lex_mode, in_comment);
 
-      if (lex_mode == NORMAL) {
-				/* normal mode */
+      switch (lex_mode) {
+      case NORMAL:
 	switch (state) {
 	  /* init state */
 	case STATE_IDLE:
@@ -258,7 +261,7 @@ int lexer_get_token(char * tok, int tok_size) {
 	  tok_pos++;
 	  break;
 
-	  /* T_C_START or T_DOCTYPE_START */
+	  /* T_C_START or T_DOCTYPE_START or T_CDATA_START */
 	case STATE_T_COMMENT:
 	  switch (c) {
 	  case '-':
@@ -280,6 +283,17 @@ int lexer_get_token(char * tok, int tok_size) {
 	      lexbuf_pos += 6;
 	      return T_DOCTYPE_START;
 	    } else {
+	      return T_ERROR;
+	    }
+	    break;
+	  case '[':
+	    lexbuf_pos++;
+	    if (strncmp(lexbuf + lexbuf_pos, "CDATA[", 6) == 0) {
+	      strncpy (tok + tok_pos, "[CDATA[", 7); /* FIXME */
+	      lexbuf_pos += 6;
+	      lex_mode = CDATA;
+	      return T_CDATA_START;
+	    } else{
 	      return T_ERROR;
 	    }
 	    break;
@@ -394,8 +408,9 @@ int lexer_get_token(char * tok, int tok_size) {
 	  lprintf("expected char \'%c\'\n", tok[tok_pos - 1]); /* FIX ME */
 	  return T_ERROR;
 	}
-      } else {
-				/* data mode, stop if char equal '<' */
+	break;
+
+      case DATA:		/* data mode, stop if char equal '<' */
         switch (c)
         {
         case '<':
@@ -407,6 +422,28 @@ int lexer_get_token(char * tok, int tok_size) {
 	  tok_pos++;
 	  lexbuf_pos++;
 	}
+	break;
+
+      case CDATA:		/* cdata mode, stop if next token is "]]>" */
+        switch (c)
+        {
+	case ']':
+	  if (strncmp(lexbuf + lexbuf_pos, "]]>", 3) == 0) {
+	    lexbuf_pos += 3;
+	    lex_mode = DATA;
+	    return T_CDATA_STOP;
+	  } else {
+	    tok[tok_pos] = c;
+	    tok_pos++;
+	    lexbuf_pos++;
+	  }
+	  break;
+	default:
+	  tok[tok_pos] = c;
+	  tok_pos++;
+	  lexbuf_pos++;
+	}
+	break;
       }
     }
     lprintf ("loop done tok_pos = %d, tok_size=%d, lexbuf_pos=%d, lexbuf_size=%d\n", 

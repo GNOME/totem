@@ -84,7 +84,8 @@ libtotem_plparser_la_CFLAGS = \
 	$(HAL_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)			\
+	-D_GNU_SOURCE
 
 libtotem_plparser_la_LIBADD = \
 	$(TOTEM_PLPARSER_LIBS)			\

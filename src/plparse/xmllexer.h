@@ -50,6 +50,8 @@
 #define T_TI_STOP       15   /* ?> */
 #define T_DOCTYPE_START 16   /* <!DOCTYPE */
 #define T_DOCTYPE_STOP  17   /* > */
+#define T_CDATA_START   18   /* <![CDATA[ */
+#define T_CDATA_STOP    19   /* ]]> */
 
 
 /* public functions */
