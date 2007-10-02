@@ -218,6 +218,7 @@ parse_rss_items (TotemPlParser *parser, const char *url, xml_node_t *parent)
 							 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
 							 TOTEM_PL_PARSER_FIELD_PUB_DATE, pub_date,
 							 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
+							 TOTEM_PL_PARSER_FIELD_IMAGE_URL, img,
 							 NULL);
 				started = TRUE;
 			}
@@ -231,7 +232,6 @@ parse_rss_items (TotemPlParser *parser, const char *url, xml_node_t *parent)
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
-
 TotemPlParserResult
 totem_pl_parser_add_rss (TotemPlParser *parser,
 			 const char *url,
@@ -242,21 +242,17 @@ totem_pl_parser_add_rss (TotemPlParser *parser,
 	char *contents;
 	int size;
 
-	g_message ("totem_pl_parser_add_rss");
-
 	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 
 	xml_parser_init (contents, size, XML_PARSER_CASE_INSENSITIVE);
 	if (xml_parser_build_tree_with_options (&doc, XML_PARSER_RELAXED | XML_PARSER_MULTI_TEXT) < 0) {
 		g_free (contents);
-		g_message ("couldn't parse");
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 	/* If the document has no name */
 	if (doc->name == NULL
 	    || g_ascii_strcasecmp (doc->name , "rss") != 0) {
-	    	g_message ("doc name: %s", doc->name);
 		g_free (contents);
 		xml_parser_free_tree (doc);
 		return TOTEM_PL_PARSER_RESULT_ERROR;
@@ -293,13 +289,164 @@ totem_pl_parser_add_itpc (TotemPlParser *parser,
 	return ret;
 }
 
+static TotemPlParserResult
+parse_atom_entry (TotemPlParser *parser, xml_node_t *parent)
+{
+	const char *title, *author, *img, *url, *filesize;
+	const char *copyright, *pub_date, *description;
+	xml_node_t *node;
+
+	title = author = img = url = filesize = NULL;
+	copyright = pub_date = description = NULL;
+
+	for (node = parent->child; node != NULL; node = node->next) {
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp (node->name, "title") == 0) {
+			title = node->data;
+		} else if (g_ascii_strcasecmp (node->name, "author") == 0) {
+			//FIXME
+		} else if (g_ascii_strcasecmp (node->name, "logo") == 0) {
+			img = node->data;
+		} else if (g_ascii_strcasecmp (node->name, "link") == 0) {
+			const char *rel;
+
+			//FIXME how do we choose the default enclosure type?
+			rel = xml_parser_get_property (node, "rel");
+			if (g_ascii_strcasecmp (rel, "enclosure") == 0) {
+				const char *href;
+
+				//FIXME what's the difference between url and href there?
+				href = xml_parser_get_property (node, "href");
+				if (href == NULL)
+					continue;
+				url = href;
+				filesize = xml_parser_get_property (node, "length");
+			} else if (g_ascii_strcasecmp (node->name, "license") == 0) {
+				const char *href;
+
+				href = xml_parser_get_property (node, "href");
+				if (href == NULL)
+					continue;
+				/* This isn't really a copyright, but what the hey */
+				copyright = href;
+			}
+		} else if (g_ascii_strcasecmp (node->name, "updated") == 0
+			   || (g_ascii_strcasecmp (node->name, "modified") == 0 && pub_date == NULL)) {
+			pub_date = node->data;
+		} else if (g_ascii_strcasecmp (node->name, "summary") == 0
+			   || (g_ascii_strcasecmp (node->name, "content") == 0 && description == NULL)) {
+			const char *type;
+
+			type = xml_parser_get_property (node, "content");
+			if (type != NULL && g_ascii_strcasecmp (type, "text/plain") == 0)
+				description = node->data;
+		}
+		//FIXME handle category
+	}
+
+	if (url != NULL) {
+		totem_pl_parser_add_url (parser,
+					 TOTEM_PL_PARSER_FIELD_TITLE, title,
+					 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
+					 TOTEM_PL_PARSER_FIELD_URL, url,
+					 TOTEM_PL_PARSER_FIELD_FILESIZE, filesize,
+					 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
+					 TOTEM_PL_PARSER_FIELD_PUB_DATE, pub_date,
+					 TOTEM_PL_PARSER_FIELD_DESCRIPTION, description,
+					 NULL);
+	}
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
+parse_atom_entries (TotemPlParser *parser, const char *url, xml_node_t *parent)
+{
+	const char *title, *pub_date, *description;
+	const char *author, *img;
+	xml_node_t *node;
+	gboolean started = FALSE;
+
+	title = pub_date = description = NULL;
+	author = img = NULL;
+
+	for (node = parent->child; node != NULL; node = node->next) {
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp (node->name, "title") == 0) {
+			title = node->data;
+		} else if (g_ascii_strcasecmp (node->name, "tagline") == 0) {
+		    	description = node->data;
+		} else if (g_ascii_strcasecmp (node->name, "modified") == 0
+			   || g_ascii_strcasecmp (node->name, "updated") == 0) {
+			pub_date = node->data;
+		} else if (g_ascii_strcasecmp (node->name, "author") == 0
+			 || (g_ascii_strcasecmp (node->name, "generator") == 0 && author == NULL)) {
+		    	author = node->data;
+		} else if ((g_ascii_strcasecmp (node->name, "icon") == 0 && img == NULL)
+			   || g_ascii_strcasecmp (node->name, "logo") == 0) {
+			img = node->data;
+		}
+
+		if (g_ascii_strcasecmp (node->name, "entry") == 0) {
+			if (started == FALSE) {
+				/* Send the info we already have about the feed */
+				totem_pl_parser_add_url (parser,
+							 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
+							 TOTEM_PL_PARSER_FIELD_URL, url,
+							 TOTEM_PL_PARSER_FIELD_TITLE, title,
+							 TOTEM_PL_PARSER_FIELD_DESCRIPTION, description,
+							 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
+							 TOTEM_PL_PARSER_FIELD_PUB_DATE, pub_date,
+							 TOTEM_PL_PARSER_FIELD_IMAGE_URL, img,
+							 NULL);
+				started = TRUE;
+			}
+
+			parse_atom_entry (parser, node);
+		}
+	}
+
+	totem_pl_parser_playlist_end (parser, url);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
 TotemPlParserResult
 totem_pl_parser_add_atom (TotemPlParser *parser,
 			  const char *url,
 			  const char *base,
 			  gpointer data)
 {
-	return TOTEM_PL_PARSER_RESULT_ERROR;
+	xml_node_t* doc;
+	char *contents;
+	int size;
+
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	xml_parser_init (contents, size, XML_PARSER_CASE_INSENSITIVE);
+	if (xml_parser_build_tree_with_options (&doc, XML_PARSER_RELAXED | XML_PARSER_MULTI_TEXT) < 0) {
+		g_free (contents);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+	/* If the document has no name */
+	if (doc->name == NULL
+	    || g_ascii_strcasecmp (doc->name , "feed") != 0) {
+		g_free (contents);
+		xml_parser_free_tree (doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	parse_atom_entries (parser, url, doc);
+
+	g_free (contents);
+	xml_parser_free_tree (doc);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
 TotemPlParserResult
