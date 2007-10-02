@@ -485,8 +485,7 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Initialised libraries, about to create video widget\n");
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
-	if (err != NULL)
-	{
+	if (err != NULL) {
 		g_print ("totem-video-thumbnailer couln't create the video "
 				"widget.\nReason: %s.\n", err->message);
 		g_error_free (err);
@@ -500,8 +499,7 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("About to open video file\n");
 
-	if (bacon_video_widget_open (bvw, input, &err) == FALSE)
-	{
+	if (bacon_video_widget_open (bvw, input, &err) == FALSE) {
 		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
 				"Reason: %s.\n",
 				input, err->message);
@@ -513,8 +511,7 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("About to play file\n");
 
 	bacon_video_widget_play (bvw, &err);
-	if (err != NULL)
-	{
+	if (err != NULL) {
 		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
 				"Reason: %s.\n", input, err->message);
 		g_error_free (err);
@@ -526,19 +523,17 @@ int main (int argc, char *argv[])
 	/* If the user has told us to use a frame at a specific second 
 	 * into the video, just use that frame no matter how boring it
 	 * is */
-	if(-1 != second_index) {
-	  pixbuf = capture_frame_at_time(bvw, input, output, second_index);
-	} else {
-	  pixbuf = capture_interesting_frame(bvw, input, output);
-	}
+	if(second_index != -1)
+		pixbuf = capture_frame_at_time (bvw, input, output, second_index);
+	else
+		pixbuf = capture_interesting_frame (bvw, input, output);
 
 	/* Cleanup */
 	bacon_video_widget_close (bvw);
 	totem_resources_monitor_stop ();
 	gtk_widget_destroy (GTK_WIDGET (bvw));
 
-	if (pixbuf == NULL)
-	{
+	if (pixbuf == NULL) {
 		g_print ("totem-video-thumbnailer couln't get a picture from "
 					"'%s'\n", input);
 		exit (1);
