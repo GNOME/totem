@@ -2471,23 +2471,27 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_KP_Up:
 	case GDK_KP_8:
 		bacon_video_widget_dvd_event (totem->bvw, 
-				BVW_DVD_ROOT_MENU_UP);
+					      BVW_DVD_ROOT_MENU_UP);
 		break;
 	case GDK_KP_Down:
 	case GDK_KP_2:
 		bacon_video_widget_dvd_event (totem->bvw, 
-				BVW_DVD_ROOT_MENU_DOWN);
+					      BVW_DVD_ROOT_MENU_DOWN);
 		break;
 	case GDK_KP_Right:
 	case GDK_KP_6:
 		bacon_video_widget_dvd_event (totem->bvw, 
-				BVW_DVD_ROOT_MENU_RIGHT);
+					      BVW_DVD_ROOT_MENU_RIGHT);
 		break;
 	case GDK_KP_Left:
 	case GDK_KP_4:
 		bacon_video_widget_dvd_event (totem->bvw, 
-				BVW_DVD_ROOT_MENU_LEFT);
+					      BVW_DVD_ROOT_MENU_LEFT);
 		break;
+	case GDK_KP_Begin:
+	case GDK_KP_5:
+		bacon_video_widget_dvd_event (totem->bvw,
+					      BVW_DVD_ROOT_MENU_SELECT);
 	default:
 		retval = FALSE;
 	}
