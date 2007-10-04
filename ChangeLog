@@ -1,5 +1,15 @@
 2007-10-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-fullscreen.c: (totem_fullscreen_get_volume_popup),
+	(totem_fullscreen_is_volume_popup_visible),
+	(totem_fullscreen_parent_window_notify): Only hide the popup if the
+	volume popup isn't visible (Closes: #477529), requires GTK+ patch
+	from bug #478371
+	* src/totem.c: Remove unneeded functions leftover from glade use in
+	the past
+
+2007-10-04  Bastien Nocera  <hadess@hadess.net>
+
 	* data/lirc_example: Add up/down/left/right/select DVD menu
 	items to the list of actions as examples (Closes: #483239)
 	* src/totem.c: (totem_action_handle_key_press): Add

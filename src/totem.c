@@ -3003,18 +3003,6 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 	g_free (url);
 }
 
-GtkWidget *
-totem_volume_create (void)
-{
-	GtkWidget *widget;
-
-	widget = gtk_volume_button_new ();
-	gtk_widget_set_sensitive (widget, FALSE);
-	gtk_widget_show (widget);
-
-	return widget;
-}
-
 int
 main (int argc, char **argv)
 {
