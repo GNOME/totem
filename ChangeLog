@@ -1,3 +1,13 @@
+2007-10-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-fullscreen.c: (totem_fullscreen_get_volume_popup),
+	(totem_fullscreen_is_volume_popup_visible),
+	(totem_fullscreen_parent_window_notify): Only hide the popup if the
+	volume popup isn't visible (Closes: #477529), requires GTK+ patch
+	from bug #478371
+	* src/totem.c: Remove unneeded functions leftover from glade use in
+	the past
+
 2007-09-26  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_state):
