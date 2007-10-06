@@ -36,6 +36,46 @@
 
 #include "debug.h"
 
+/* Callback functions for GtkBuilder */
+void open_action_callback (GtkAction *action, Totem *totem);
+void open_location_action_callback (GtkAction *action, Totem *totem);
+void eject_action_callback (GtkAction *action, Totem *totem);
+void properties_action_callback (GtkAction *action, Totem *totem);
+void play_action_callback (GtkAction *action, Totem *totem);
+void quit_action_callback (GtkAction *action, Totem *totem);
+void take_screenshot_action_callback (GtkAction *action, Totem *totem);
+void preferences_action_callback (GtkAction *action, Totem *totem);
+void fullscreen_action_callback (GtkAction *action, Totem *totem);
+void zoom_1_2_action_callback (GtkAction *action, Totem *totem);
+void zoom_1_1_action_callback (GtkAction *action, Totem *totem);
+void zoom_2_1_action_callback (GtkAction *action, Totem *totem);
+void zoom_in_action_callback (GtkAction *action, Totem *totem);
+void zoom_reset_action_callback (GtkAction *action, Totem *totem);
+void zoom_out_action_callback (GtkAction *action, Totem *totem);
+void next_angle_action_callback (GtkAction *action, Totem *totem);
+void dvd_root_menu_action_callback (GtkAction *action, Totem *totem);
+void dvd_title_menu_action_callback (GtkAction *action, Totem *totem);
+void dvd_audio_menu_action_callback (GtkAction *action, Totem *totem);
+void dvd_angle_menu_action_callback (GtkAction *action, Totem *totem);
+void dvd_chapter_menu_action_callback (GtkAction *action, Totem *totem);
+void next_chapter_action_callback (GtkAction *action, Totem *totem);
+void previous_chapter_action_callback (GtkAction *action, Totem *totem);
+void skip_forward_action_callback (GtkAction *action, Totem *totem);
+void skip_backwards_action_callback (GtkAction *action, Totem *totem);
+void volume_up_action_callback (GtkAction *action, Totem *totem);
+void volume_down_action_callback (GtkAction *action, Totem *totem);
+void contents_action_callback (GtkAction *action, Totem *totem);
+void about_action_callback (GtkAction *action, Totem *totem);
+void plugins_action_callback (GtkAction *action, Totem *totem);
+void repeat_mode_action_callback (GtkToggleAction *action, Totem *totem);
+void shuffle_mode_action_callback (GtkToggleAction *action, Totem *totem);
+void deinterlace_action_callback (GtkToggleAction *action, Totem *totem);
+void show_controls_action_callback (GtkToggleAction *action, Totem *totem);
+void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
+void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
+void clear_playlist_action_callback (GtkAction *action, Totem *totem);
+void totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager, GtkAction *action, GtkWidget *widget, Totem *totem);
+
 /* Helper function to escape underscores in labels
  * before putting them in menu items */
 static char *
@@ -872,175 +912,175 @@ totem_setup_play_disc (Totem *totem)
 	totem->drives_changed = TRUE;
 }
 
-static void
+void
 open_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_open (totem);
 }
 
-static void
+void
 open_location_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_open_location (totem);
 }
 
-static void
+void
 eject_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_eject (totem);
 }
 
-static void
+void
 properties_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_show_properties (totem);
 }
 
-static void
+void
 play_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_play_pause (totem);
 }
 
-static void
+void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_exit (totem);
 }
 
-static void
+void
 take_screenshot_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_take_screenshot (totem);
 }
 
-static void
+void
 preferences_action_callback (GtkAction *action, Totem *totem)
 {
 	gtk_widget_show (totem->prefs);
 }
 
-static void
+void
 fullscreen_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_fullscreen_toggle (totem);
 }
 
-static void
+void
 zoom_1_2_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_set_scale_ratio (totem, 0.5); 
 }
 
-static void
+void
 zoom_1_1_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_set_scale_ratio (totem, 1);
 }
 
-static void
+void
 zoom_2_1_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_set_scale_ratio (totem, 2);
 }
 
-static void
+void
 zoom_in_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
 }
 
-static void
+void
 zoom_reset_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_zoom_reset (totem);
 }
 
-static void
+void
 zoom_out_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 }
 
-static void
+void
 next_angle_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_next_angle (totem);
 }
 
-static void
+void
 dvd_root_menu_action_callback (GtkAction *action, Totem *totem)
 {
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
 }
 
-static void
+void
 dvd_title_menu_action_callback (GtkAction *action, Totem *totem)
 {
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_TITLE_MENU);
 }
 
-static void
+void
 dvd_audio_menu_action_callback (GtkAction *action, Totem *totem)
 {
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_AUDIO_MENU);
 }
 
-static void
+void
 dvd_angle_menu_action_callback (GtkAction *action, Totem *totem)
 {
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ANGLE_MENU);
 }
 
-static void
+void
 dvd_chapter_menu_action_callback (GtkAction *action, Totem *totem)
 {
         bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_CHAPTER_MENU);
 }
 
-static void
+void
 next_chapter_action_callback (GtkAction *action, Totem *totem)
 {
 	TOTEM_PROFILE (totem_action_next (totem));
 }
 
-static void
+void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
 	TOTEM_PROFILE (totem_action_previous (totem));
 }
 
-static void
+void
 skip_forward_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
 }
 
-static void
+void
 skip_backwards_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000);
 }
 
-static void
+void
 volume_up_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 }
 
-static void
+void
 volume_down_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 }
 
-static void
+void
 contents_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_show_help (totem);
 }
 
-static void
+void
 about_action_callback (GtkAction *action, Totem *totem)
 {
 	char *backend_version, *description;
@@ -1114,7 +1154,7 @@ totem_plugins_response_cb (GtkDialog *dialog,
 }
 
 
-static void
+void
 plugins_action_callback (GtkAction *action, Totem *totem)
 {
 	if (totem->plugins == NULL) {
@@ -1148,21 +1188,21 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 	gtk_window_present (GTK_WINDOW (totem->plugins));
 }
 
-static void
+void
 repeat_mode_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	totem_playlist_set_repeat (totem->playlist,
 			gtk_toggle_action_get_active (action));
 }
 
-static void
+void
 shuffle_mode_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	totem_playlist_set_shuffle (totem->playlist,
 			gtk_toggle_action_get_active (action));
 }
 
-static void
+void
 deinterlace_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	gboolean value;
@@ -1173,7 +1213,7 @@ deinterlace_action_callback (GtkToggleAction *action, Totem *totem)
 			value, NULL);
 }
 
-static void
+void
 show_controls_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	gboolean show;
@@ -1191,7 +1231,7 @@ show_controls_action_callback (GtkToggleAction *action, Totem *totem)
 	show_controls (totem, FALSE);
 }
 
-static void
+void
 show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	if (totem_is_fullscreen (totem))
@@ -1200,68 +1240,18 @@ show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 	totem_sidebar_toggle (totem, gtk_toggle_action_get_active (action));
 }
 
-static void
+void
 aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem)
 {
 	totem_action_set_aspect_ratio (totem, gtk_radio_action_get_current_value (current));
 }
 
-static void
+void
 clear_playlist_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_playlist_clear (totem->playlist);
 	totem_action_set_mrl (totem, NULL);
 }
-
-static const GtkActionEntry entries[] = {
-	{ "movie-menu", NULL, N_("_Movie") },
-	{ "open", GTK_STOCK_OPEN, N_("_Open..."), "<control>O", N_("Open a file"), G_CALLBACK (open_action_callback) },
-	{ "open-location", NULL, N_("Open _Location..."), "<control>L", N_("Open a non-local file"), G_CALLBACK (open_location_action_callback) },
-	{ "eject", "media-eject", N_("_Eject"), "<control>E", NULL, G_CALLBACK (eject_action_callback) },
-	{ "properties", GTK_STOCK_PROPERTIES, N_("_Properties"), "<control>P", NULL, G_CALLBACK (properties_action_callback) },
-	{ "play", GTK_STOCK_MEDIA_PLAY, N_("Play / Pa_use"), "P", N_("Play or pause the movie"), G_CALLBACK (play_action_callback) },
-	{ "quit", GTK_STOCK_QUIT, N_("_Quit"), "<control>Q", N_("Quit the program"), G_CALLBACK (quit_action_callback) },
-
-	{ "edit-menu", NULL, N_("_Edit") },
-	{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<control>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_callback) },
-	{ "clear-playlist", NULL, N_("_Clear Playlist"), NULL, N_("Clear playlist"), G_CALLBACK (clear_playlist_action_callback) },
-	{ "preferences", GTK_STOCK_PREFERENCES, N_("Prefere_nces"), NULL, NULL, G_CALLBACK (preferences_action_callback) },
-	{ "plugins", NULL, N_("Plugins..."), NULL, NULL, G_CALLBACK (plugins_action_callback) },
-
-	{ "view-menu", NULL, N_("_View") },
-	{ "fullscreen", "view-fullscreen", N_("_Fullscreen"), "F", N_("Switch to fullscreen"), G_CALLBACK (fullscreen_action_callback) },
-	{ "zoom-window-menu", NULL, N_("Fit Window to Movie") },
-	{ "zoom-1-2", NULL, N_("_Resize 1:2"), "0", N_("Resize to half the video size"), G_CALLBACK (zoom_1_2_action_callback) },
-	{ "zoom-1-1", NULL, N_("Resize _1:1"), "1", N_("Resize to video size"), G_CALLBACK (zoom_1_1_action_callback) },
-	{ "zoom-2-1", NULL, N_("Resize _2:1"), "2", N_("Resize to twice the video size"), G_CALLBACK (zoom_2_1_action_callback) },
-	{ "aspect-ratio-menu", NULL, N_("_Aspect Ratio") },
-	{ "next-angle", NULL, N_("Switch An_gles"), "G", N_("Switch angles"), G_CALLBACK (next_angle_action_callback) },
-/*	{ "subtitles-menu", NULL, N_("S_ubtitles") },*/
-
-	{ "go-menu", NULL, N_("_Go") },
-	{ "dvd-root-menu", GTK_STOCK_INDEX, N_("_DVD Menu"), "m", N_("Go to the DVD menu"), G_CALLBACK (dvd_root_menu_action_callback) },
-	{ "dvd-title-menu", NULL, N_("_Title Menu"), NULL, N_("Go to the title menu"), G_CALLBACK (dvd_title_menu_action_callback) },
-	{ "dvd-audio-menu", NULL, N_("A_udio Menu"), NULL, N_("Go to the audio menu"), G_CALLBACK (dvd_audio_menu_action_callback) },
-	{ "dvd-angle-menu", NULL, N_("_Angle Menu"), NULL, N_("Go to the angle menu"), G_CALLBACK (dvd_angle_menu_action_callback) },
-	{ "dvd-chapter-menu", GTK_STOCK_INDEX, N_("_Chapter Menu"), "c", N_("Go to the chapter menu"), G_CALLBACK (dvd_chapter_menu_action_callback) },
-	{ "next-chapter", GTK_STOCK_MEDIA_NEXT, N_("_Next Chapter/Movie"), "n", N_("Next chapter or movie"), G_CALLBACK (next_chapter_action_callback) },
-	{ "previous-chapter", GTK_STOCK_MEDIA_PREVIOUS, N_("_Previous Chapter/Movie"), "b", N_("Previous chapter or movie"), G_CALLBACK (previous_chapter_action_callback) },
-
-	{ "sound-menu", NULL, N_("_Sound") },
-/*	{ "languages-menu", NULL, N_("_Languages") }, */
-	{ "volume-up", "audio-volume-high", N_("Volume _Up"), "Up", N_("Volume up"), G_CALLBACK (volume_up_action_callback) },
-	{ "volume-down", "audio-volume-low", N_("Volume _Down"), "Down", N_("Volume down"), G_CALLBACK (volume_down_action_callback) },
-
-	{ "help-menu", NULL, N_("_Help") },
-	{ "contents", GTK_STOCK_HELP, N_("_Contents"), "F1", N_("Help contents"), G_CALLBACK (contents_action_callback) },
-	{ "about", GTK_STOCK_ABOUT, N_("_About"), NULL, NULL, G_CALLBACK (about_action_callback) }
-};
-
-static const GtkActionEntry zoom_entries[] = {
-	{ "zoom-in", GTK_STOCK_ZOOM_IN, N_("Zoom In"), "R", N_("Zoom in"), G_CALLBACK (zoom_in_action_callback) },
-	{ "zoom-reset", GTK_STOCK_ZOOM_100, N_("Zoom Reset"), NULL, N_("Zoom reset"), G_CALLBACK (zoom_reset_action_callback) },
-	{ "zoom-out", GTK_STOCK_ZOOM_OUT, N_("Zoom Out"), "T", N_("Zoom out"), G_CALLBACK (zoom_out_action_callback) }
-};
 
 static const GtkActionEntry seek_entries_ltr[] = {
 	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Right", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
@@ -1289,7 +1279,7 @@ static const GtkRadioActionEntry aspect_ratio_entries[] = {
 	{ "aspect-ratio-dvb", NULL, N_("2.11:1 (DVB)"), NULL, N_("Sets 2.11:1 (DVB) aspect ratio"), BVW_RATIO_DVB }
 };
 
-static void
+void
 totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager,
 		GtkAction *action, GtkWidget *widget, Totem *totem)
 {
@@ -1319,91 +1309,35 @@ totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager,
 void
 totem_ui_manager_setup (Totem *totem)
 {
-	char *filename;
-	GtkWidget *menubar;
-	GtkBox *menubar_box;
-	GtkAction *action;
+	totem->main_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "main-action-group"));
+	totem->zoom_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "zoom-action-group"));
 
-	totem->main_action_group = gtk_action_group_new ("main-action-group");
-	gtk_action_group_set_translation_domain (totem->main_action_group,
-			GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (totem->main_action_group, entries,
-		G_N_ELEMENTS (entries), totem);
+	/* FIXME: Moving these to GtkBuilder depends on bug #457631 */
 	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL) {
-		gtk_action_group_add_actions (totem->main_action_group,
+		GList *actions = NULL;
+		GtkActionGroup *action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
+
+		for (actions = gtk_action_group_list_actions (action_group); actions != NULL; actions = actions->next)
+			gtk_action_group_remove_action (action_group, GTK_ACTION (actions->data));
+
+		gtk_action_group_add_actions (action_group,
 				seek_entries_rtl,
 				G_N_ELEMENTS (seek_entries_rtl), totem);
-	} else {
-		gtk_action_group_add_actions (totem->main_action_group,
-				seek_entries_ltr,
-				G_N_ELEMENTS (seek_entries_ltr), totem);
 	}
-	gtk_action_group_add_toggle_actions (totem->main_action_group, 
-		toggle_entries, G_N_ELEMENTS (toggle_entries), totem);
-	gtk_action_group_add_radio_actions (totem->main_action_group,
-		aspect_ratio_entries, G_N_ELEMENTS (aspect_ratio_entries), 0,
-		G_CALLBACK (aspect_ratio_changed_callback), totem);
-
-	action = g_object_new (GTK_TYPE_ACTION,
-			"name", "subtitles-menu",
-			"label", _("S_ubtitles"),
-			"hide-if-empty", FALSE, NULL);
-	gtk_action_group_add_action (totem->main_action_group, action);
-	g_object_unref (action);
-	action = g_object_new (GTK_TYPE_ACTION,
-			"name", "languages-menu",
-			"label", _("_Languages"),
-			"hide-if-empty", FALSE, NULL);
-	gtk_action_group_add_action (totem->main_action_group, action);
-	g_object_unref (action);
 
 	/* Hide help if we're using GTK+ only */
 #ifdef HAVE_GTK_ONLY
-	action = gtk_action_group_get_action
-		(totem->main_action_group, "contents");
+	GtkAction *action = gtk_action_group_get_action (totem->main_action_group, "contents");
 	gtk_action_set_visible (action, FALSE);
 #endif /* HAVE_GTK_ONLY */
 
-	totem->zoom_action_group = gtk_action_group_new ("zoom-action-group");
-	gtk_action_group_set_translation_domain (totem->zoom_action_group,
-			GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (totem->zoom_action_group, zoom_entries,
-		G_N_ELEMENTS (zoom_entries), totem);
-
-	totem->ui_manager = gtk_ui_manager_new ();
-	g_signal_connect (G_OBJECT (totem->ui_manager), "connect-proxy",
-			G_CALLBACK (totem_ui_manager_connect_proxy_callback),
-			totem);
-	gtk_ui_manager_insert_action_group (totem->ui_manager,
-			totem->main_action_group, 0);
-	gtk_ui_manager_insert_action_group (totem->ui_manager,
-			totem->zoom_action_group, -1);
+	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
 
 	totem->devices_action_group = NULL;
 	totem->devices_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 	totem->languages_action_group = NULL;
-	totem->languages_ui_id = gtk_ui_manager_new_merge_id
-		(totem->ui_manager);
+	totem->languages_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 	totem->subtitles_action_group = NULL;
-	totem->subtitles_ui_id = gtk_ui_manager_new_merge_id
-		(totem->ui_manager);
-
-	gtk_window_add_accel_group (GTK_WINDOW (totem->win),
-			gtk_ui_manager_get_accel_group (totem->ui_manager));
-
-	filename = totem_interface_get_full_path ("totem-ui.xml");
-	if (gtk_ui_manager_add_ui_from_file (totem->ui_manager,
-				filename, NULL) == 0) {
-		totem_interface_error_blocking (
-			_("Couldn't load the 'ui description' file"),
-			_("Make sure that Totem is properly installed."),
-			GTK_WINDOW (totem->win));
-		totem_action_exit (NULL);
-	}
-	g_free (filename);
-
-	menubar = gtk_ui_manager_get_widget (totem->ui_manager, "/tmw-menubar");
-	menubar_box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_menubar_box"));
-	gtk_box_pack_start (menubar_box, menubar, FALSE, FALSE, 0);
+	totem->subtitles_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 }
 

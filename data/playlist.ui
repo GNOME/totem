@@ -3,6 +3,35 @@
   SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
 <interface>
 
+<object class="GtkUIManager" id="totem-playlist-ui-manager">
+   <child>
+      <object class="GtkActionGroup" id="playlist-action-group">
+         <child>
+            <object class="GtkAction" id="remove">
+               <property name="label">_Remove</property>
+               <property name="tooltip">Remove file from playlist</property>
+               <property name="stock-id">gtk-remove</property>
+               <signal name="activate" handler="playlist_remove_action_callback"/>
+            </object>
+         </child>
+         <child>
+            <object class="GtkAction" id="copy-location">
+               <property name="label">_Copy Location</property>
+               <property name="tooltip">Copy the location to the clipboard</property>
+               <property name="stock-id">gtk-copy</property>
+               <signal name="activate" handler="playlist_copy_location_action_callback"/>
+            </object>
+         </child>
+      </object>
+   </child>
+   <ui>
+      <popup name="totem-playlist-popup">
+         <menuitem name="remove" action="remove"/>
+         <menuitem name="copy-location" action="copy-location"/>
+      </popup>
+   </ui>
+</object>
+
 <object class="GtkVBox" id="vbox4">
   <property name="border_width">0</property>
   <property name="visible">True</property>

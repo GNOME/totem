@@ -1478,6 +1478,8 @@ on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 static void
 update_seekable (Totem *totem)
 {
+	GtkAction *action;
+	GtkActionGroup *action_group;
 	gboolean seekable;
 
 	seekable = bacon_video_widget_is_seekable (totem->bvw);
@@ -1492,8 +1494,17 @@ update_seekable (Totem *totem)
 
 	totem_fullscreen_set_seekable (totem->fs, seekable);
 
-	totem_action_set_sensitivity ("skip-forward", seekable);
-	totem_action_set_sensitivity ("skip-backwards", seekable);
+	/* FIXME: We can use this code again once bug #457631 is fixed and
+	 * skip-* are back in the main action group. */
+	/*totem_action_set_sensitivity ("skip-forward", seekable);
+	totem_action_set_sensitivity ("skip-backwards", seekable);*/
+	action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
+
+	action = gtk_action_group_get_action (action_group, "skip-forward");
+	gtk_action_set_sensitive (action, seekable);
+
+	action = gtk_action_group_get_action (action_group, "skip-backwards");
+	gtk_action_set_sensitive (action, seekable);
 
 	g_object_notify (G_OBJECT (totem), "seekable");
 }
@@ -2743,6 +2754,7 @@ totem_callback_connect (Totem *totem)
 {
 	GtkWidget *item, *arrow;
 	GtkAction *action;
+	GtkActionGroup *action_group;
 	GtkBox *box;
 
 	/* Menu items */
@@ -2759,14 +2771,6 @@ totem_callback_connect (Totem *totem)
 	/* Controls */
 	box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_buttons_hbox"));
 
-	action = gtk_action_group_get_action (totem->main_action_group, "play");
-	item = gtk_action_create_tool_item (action);
-	atk_object_set_name (gtk_widget_get_accessible (item),
-			_("Play / Pause"));
-	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item),
- 					_("Play / Pause"));
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
-
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"previous-chapter");
 	item = gtk_action_create_tool_item (action);
@@ -2774,6 +2778,14 @@ totem_callback_connect (Totem *totem)
 					_("Previous Chapter/Movie"));
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Previous Chapter/Movie"));
+	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
+
+	action = gtk_action_group_get_action (totem->main_action_group, "play");
+	item = gtk_action_create_tool_item (action);
+	atk_object_set_name (gtk_widget_get_accessible (item),
+			_("Play / Pause"));
+	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item),
+ 					_("Play / Pause"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	action = gtk_action_group_get_action (totem->main_action_group,
@@ -2840,8 +2852,18 @@ totem_callback_connect (Totem *totem)
 	totem_action_set_sensitivity ("play", FALSE);
 	totem_action_set_sensitivity ("next-chapter", FALSE);
 	totem_action_set_sensitivity ("previous-chapter", FALSE);
-	totem_action_set_sensitivity ("skip-forward", FALSE);
-	totem_action_set_sensitivity ("skip-backwards", FALSE);
+	/* FIXME: We can use this code again once bug #457631 is fixed
+	 * and skip-* are back in the main action group. */
+	/*totem_action_set_sensitivity ("skip-forward", FALSE);
+	totem_action_set_sensitivity ("skip-backwards", FALSE);*/
+
+	action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
+
+	action = gtk_action_group_get_action (action_group, "skip-forward");
+	gtk_action_set_sensitive (action, FALSE);
+
+	action = gtk_action_group_get_action (action_group, "skip-backwards");
+	gtk_action_set_sensitive (action, FALSE);
 }
 
 static void

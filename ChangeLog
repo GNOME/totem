@@ -1,3 +1,17 @@
+2007-10-06  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* data/Makefile.am:
+	* data/playlist-ui.xml:
+	* data/playlist.ui:
+	* data/totem-ui.xml:
+	* data/totem.ui:
+	* src/backend/bacon-video-widget.h:
+	* src/totem-menu.c: (totem_ui_manager_setup):
+	* src/totem-playlist.c: (playlist_copy_location_action_callback),
+	(playlist_remove_action_callback), (totem_playlist_init):
+	* src/totem.c: (update_seekable), (totem_callback_connect): Move
+	UIManager stuff to GtkBuilder (Closes: #454242)
+
 2007-10-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-fullscreen.c: (totem_fullscreen_get_volume_popup),

@@ -238,11 +238,11 @@ typedef enum {
 } BaconVideoWidgetVideoProperty;
 
 typedef enum {
-	BVW_RATIO_AUTO,
-	BVW_RATIO_SQUARE,
-	BVW_RATIO_FOURBYTHREE,
-	BVW_RATIO_ANAMORPHIC,
-	BVW_RATIO_DVB
+	BVW_RATIO_AUTO = 0,
+	BVW_RATIO_SQUARE = 1,
+	BVW_RATIO_FOURBYTHREE = 2,
+	BVW_RATIO_ANAMORPHIC = 3,
+	BVW_RATIO_DVB = 4
 } BaconVideoWidgetAspectRatio;
 
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,

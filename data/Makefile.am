@@ -10,12 +10,10 @@ stuff_DATA =				\
 	totem.ui			\
 	fullscreen.ui			\
 	playlist.ui			\
-	playlist-ui.xml			\
 	plugins.ui			\
 	mozilla-viewer.ui		\
 	properties.ui			\
 	uri.ui				\
-	totem-ui.xml			\
 	totem_logo.png
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
