@@ -4425,12 +4425,13 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   }
 
   /* check for video */
-  if (!bvw->priv->media_has_video) {
+  if (!bvw->priv->media_has_video && !bvw->priv->show_vfx) {
     g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
         _("Media contains no supported video streams."));
+    return FALSE;
   }
 
-  return bvw->priv->media_has_video;
+  return TRUE;
 }
 
 static void
@@ -4487,14 +4488,17 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
       /* Note: we don't ask for a specific width/height here, so that
        * videoscale can adjust dimensions from a non-1/1 pixel aspect
        * ratio to a 1/1 pixel-aspect-ratio */
-      "framerate", GST_TYPE_FRACTION, 
-      bvw->priv->video_fps_n, bvw->priv->video_fps_d,
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "endianness", G_TYPE_INT, G_BIG_ENDIAN,
       "red_mask", G_TYPE_INT, 0xff0000,
       "green_mask", G_TYPE_INT, 0x00ff00,
       "blue_mask", G_TYPE_INT, 0x0000ff,
       NULL);
+
+  if (bvw->priv->video_fps_n > 0 && bvw->priv->video_fps_d > 0) {
+    gst_caps_set_simple (to_caps, "framerate", GST_TYPE_FRACTION, 
+      bvw->priv->video_fps_n, bvw->priv->video_fps_d, NULL);
+  }
 
   GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
   GST_DEBUG ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
