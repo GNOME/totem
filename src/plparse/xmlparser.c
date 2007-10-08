@@ -51,7 +51,7 @@
 
 #define TOKEN_SIZE  32 * 1024
 #define DATA_SIZE   32 * 1024
-#define MAX_RECURSION 10
+#define MAX_RECURSION 23
 
 /* private global variables */
 static int xml_parser_mode;

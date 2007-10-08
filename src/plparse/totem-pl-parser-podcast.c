@@ -28,6 +28,7 @@
 #include <libgnomevfs/gnome-vfs-mime-utils.h>
 
 #ifndef TOTEM_PL_PARSER_MINI
+#include <zlib.h>
 #include <gtk/gtk.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
@@ -124,9 +125,11 @@ parse_rss_item (TotemPlParser *parser, xml_node_t *parent)
 			url = node->data;
 		} else if (g_ascii_strcasecmp (node->name, "pubDate") == 0) {
 			pub_date = node->data;
-		} else if (g_ascii_strcasecmp (node->name, "description") == 0) {
+		} else if (g_ascii_strcasecmp (node->name, "description") == 0
+			   || g_ascii_strcasecmp (node->name, "itunes:summary") == 0) {
 			description = node->data;
-		} else if (g_ascii_strcasecmp (node->name, "author") == 0) {
+		} else if (g_ascii_strcasecmp (node->name, "author") == 0
+			   || g_ascii_strcasecmp (node->name, "itunes:author") == 0) {
 			author = node->data;
 		} else if (g_ascii_strcasecmp (node->name, "itunes:duration") == 0) {
 			duration = node->data;
@@ -176,14 +179,12 @@ parse_rss_items (TotemPlParser *parser, const char *url, xml_node_t *parent)
 		if (node->name == NULL)
 			continue;
 
-		//FIXME handle itunes:subtitle?
-
 		if (g_ascii_strcasecmp (node->name, "title") == 0) {
 			title = node->data;
 		} else if (g_ascii_strcasecmp (node->name, "language") == 0) {
 			language = node->data;
 		} else if (g_ascii_strcasecmp (node->name, "description") == 0
-			 || g_ascii_strcasecmp (node->name, "itunes:summary") == 0) {
+			 || g_ascii_strcasecmp (node->name, "itunes:subtitle") == 0) {
 		    	description = node->data;
 		} else if (g_ascii_strcasecmp (node->name, "author") == 0
 			 || g_ascii_strcasecmp (node->name, "itunes:author") == 0
@@ -283,7 +284,7 @@ totem_pl_parser_add_itpc (TotemPlParser *parser,
 
 	new_url = g_strdup (url);
 	memcpy (new_url, "http", 4);
-	ret = totem_pl_parser_add_rss (parser, url, base, data);
+	ret = totem_pl_parser_add_rss (parser, new_url, base, data);
 	g_free (new_url);
 
 	return ret;
@@ -456,6 +457,228 @@ totem_pl_parser_add_xml_feed (TotemPlParser *parser,
 			      gpointer data)
 {
 	return TOTEM_PL_PARSER_RESULT_ERROR;
+}
+
+/* From libgsf's gsf-utils.h */
+#define GSF_LE_GET_GUINT32(p)				\
+	(guint32)((((guint8 const *)(p))[0] << 0)  |	\
+		  (((guint8 const *)(p))[1] << 8)  |	\
+		  (((guint8 const *)(p))[2] << 16) |	\
+		  (((guint8 const *)(p))[3] << 24))
+
+/* From libgsf's gsf-input-gzip.c */
+/* gzip flag byte */
+#define GZIP_IS_ASCII		0x01 /* file contains text ? */
+#define GZIP_HEADER_CRC		0x02 /* there is a CRC in the header */
+#define GZIP_EXTRA_FIELD	0x04 /* there is an 'extra' field */
+#define GZIP_ORIGINAL_NAME	0x08 /* the original is stored */
+#define GZIP_HAS_COMMENT	0x10 /* There is a comment in the header */
+#define GZIP_HEADER_FLAGS (unsigned)(GZIP_IS_ASCII |GZIP_HEADER_CRC |GZIP_EXTRA_FIELD |GZIP_ORIGINAL_NAME |GZIP_HAS_COMMENT)
+
+static guint32
+check_header (char *data, gsize len)
+{
+	static guint8 const signature[2] = {0x1f, 0x8b};
+	unsigned flags;
+
+	if (len < 2 + 1 + 1 + 6)
+		return -1;
+
+	/* Check signature */
+	if (memcmp (data, signature, sizeof (signature)) != 0)
+		return -1;
+
+	/* verify flags and compression type */
+	flags  = data[3];
+	if (data[2] != Z_DEFLATED || (flags & ~GZIP_HEADER_FLAGS) != 0)
+		return -1;
+
+	/* Get the uncompressed size */
+	/* FIXME, but how?  The size read here is modulo 2^32.  */
+	return GSF_LE_GET_GUINT32 (data + len - 4);
+}
+
+static char *
+decompress_gzip (char *data, gsize len)
+{
+	guint32 retlen;
+	char *ret;
+	int zerr;
+	z_stream  stream;
+
+	retlen = check_header (data, len);
+	if (retlen < 0)
+		return NULL;
+
+	stream.zalloc    = (alloc_func)0;
+	stream.zfree     = (free_func)0;
+	stream.opaque    = (voidpf)0;
+	stream.next_in   = Z_NULL;
+	stream.next_out  = Z_NULL;
+	stream.avail_in  = stream.avail_out = 0;
+
+	/* 16 + MAX_WBITS as per http://hewgill.com/journal/entries/349 */
+	if (Z_OK != inflateInit2 (&stream, 16 + MAX_WBITS))
+		return NULL;
+
+	/* +1 so it's NULL-terminated */
+	ret = g_malloc0 (retlen + 1);
+
+	stream.next_in = (unsigned char *) data;
+	stream.avail_in = len;
+
+	stream.next_out = (unsigned char *) ret;
+	stream.avail_out = retlen;
+
+	zerr = inflate (&stream, Z_NO_FLUSH);
+	if (zerr != Z_OK && zerr != Z_STREAM_END) {
+		g_free (ret);
+		return NULL;
+	}
+	zerr = inflateEnd (&stream);
+	if (zerr != Z_OK) {
+		g_free (ret);
+		return NULL;
+	}
+
+	return ret;
+}
+
+static const char *
+totem_pl_parser_parse_itms_doc (xml_node_t *item)
+{
+	for (item = item->child; item != NULL; item = item->next) {
+		/* What we're looking for looks like:
+		 * <key>feedURL</key><string>URL</string> */
+		if (g_ascii_strcasecmp (item->name, "key") == 0
+		    && g_ascii_strcasecmp (item->data, "feedURL") == 0) {
+			item = item->next;
+			if (g_ascii_strcasecmp (item->name, "string") == 0)
+				return item->data;
+		} else {
+			const char *ret;
+
+			ret = totem_pl_parser_parse_itms_doc (item);
+			if (ret != NULL)
+				return ret;
+		}
+	}
+
+	return NULL;
+}
+
+static char *
+totem_pl_parser_get_feed_url (const char *data, gsize len)
+{
+	xml_node_t* doc;
+	const char *url;
+	char *ret;
+
+	url = NULL;
+
+	xml_parser_init (data, len, XML_PARSER_CASE_INSENSITIVE);
+	if (xml_parser_build_tree_with_options (&doc, XML_PARSER_RELAXED | XML_PARSER_MULTI_TEXT) < 0)
+		return NULL;
+
+	/* If the document has no name */
+	if (doc->name == NULL
+	    || g_ascii_strcasecmp (doc->name , "Document") != 0) {
+		xml_parser_free_tree (doc);
+		return NULL;
+	}
+
+	url = totem_pl_parser_parse_itms_doc (doc);
+	if (url == NULL) {
+		xml_parser_free_tree (doc);
+		return NULL;
+	}
+
+	ret = g_strdup (url);
+	xml_parser_free_tree (doc);
+
+	return ret;
+}
+
+static char *
+totem_pl_parser_get_itms_url (const char *data)
+{
+	char *s, *end, *ret;
+#define ITMS_OPEN "<body onload=\"return itmsOpen('"
+
+	/* The bit of text looks like:
+	 * <body onload="return itmsOpen('itms://ax.phobos.apple.com.edgesuite.net/WebObjects/MZStore.woa/wa/viewPodcast?id=207870198&amp;ign-mscache=1','http://www.apple.com/uk/itunes/affiliates/download/?itmsUrl=itms%3A%2F%2Fax.phobos.apple.com.edgesuite.net%2FWebObjects%2FMZStore.woa%2Fwa%2FviewPodcast%3Fid%3D207870198%26ign-mscache%3D1','userOverridePanel',false)"> */
+
+	s = strstr (data, ITMS_OPEN);
+	if (s == NULL)
+		return NULL;
+	s = s + strlen (ITMS_OPEN);
+	end = strchr (s, '\'');
+	if (end == NULL)
+		return NULL;
+
+	ret = g_strndup (s, end - s);
+	memcpy (ret, "http", 4);
+	return ret;
+}
+
+TotemPlParserResult
+totem_pl_parser_add_itms (TotemPlParser *parser,
+			  const char *url,
+			  const char *base,
+			  gpointer data)
+{
+	char *contents, *uncompressed, *itms_url, *feed_url;
+	TotemPlParserResult ret;
+	int size;
+
+	/* Get the webpage */
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	uncompressed = decompress_gzip (contents, size);
+	g_free (contents);
+	if (uncompressed == NULL)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	/* Look for the link to the itms on phobos */
+	itms_url = totem_pl_parser_get_itms_url (uncompressed);
+	g_free (uncompressed);
+
+	/* Get the phobos linked, in some weird iTunes only format */
+	if (gnome_vfs_read_entire_file (itms_url, &size, &contents) != GNOME_VFS_OK) {
+		g_free (itms_url);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+	g_free (itms_url);
+
+	uncompressed = decompress_gzip (contents, size);
+	g_free (contents);
+	if (uncompressed == NULL)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	/* And look in the file for the feedURL */
+	feed_url = totem_pl_parser_get_feed_url (uncompressed, strlen (uncompressed) + 1);
+	if (feed_url == NULL)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	ret = totem_pl_parser_add_rss (parser, feed_url, NULL, NULL);
+	g_free (feed_url);
+
+	return ret;
+}
+
+gboolean
+totem_pl_parser_is_itms_feed (const char *url)
+{
+	g_return_val_if_fail (url != NULL, FALSE);
+
+	if (strstr (url, "phobos.apple.com/") != NULL
+	    && strstr (url, "viewPodcast") != NULL)
+		return TRUE;
+	if (strstr (url, "itunes.com/podcast") != NULL)
+		return TRUE;
+
+	return FALSE;
 }
 
 #endif /* !TOTEM_PL_PARSER_MINI */

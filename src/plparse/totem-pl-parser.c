@@ -1121,6 +1121,11 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 		DEBUG(g_print ("URL '%s' is getting special cased for ITPC parsing\n", url));
 		return totem_pl_parser_add_itpc (parser, url, base, NULL);
 	}
+	/* Try itms Podcast references, see itunes.py in PenguinTV */
+	if (totem_pl_parser_is_itms_feed (url) != FALSE) {
+	    	DEBUG(g_print ("URL '%s' is getting special cased for ITMS parsing\n", url));
+	    	return totem_pl_parser_add_itms (parser, url, NULL, NULL);
+	}
 
 	if (!parser->priv->recurse && parser->priv->recurse_level > 0) {
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;

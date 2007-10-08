@@ -1,3 +1,23 @@
+2007-10-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/totem-pl-parser-podcast.c: (parse_rss_item),
+	(parse_rss_items), (totem_pl_parser_add_itpc), (check_header),
+	(decompress_gzip), (totem_pl_parser_parse_itms_doc),
+	(totem_pl_parser_get_feed_url), (totem_pl_parser_get_itms_url),
+	(totem_pl_parser_add_itms), (totem_pl_parser_is_itms_feed):
+	Add some fixes in iTunes RSS handling, support itunes:subtitle,
+	Fix stupidness in itpc URL handling, add support for itms podcasts
+	* src/plparse/totem-pl-parser-podcast.h:
+	* src/plparse/totem-pl-parser.c: (totem_pl_parser_parse_internal):
+	Special case itms podcast references
+	* src/plparse/xmlparser.c: Increase maxdepth for iTunes' crazy UI
+	definition file
+
+	Note: not adding linking to -lz as gnome-vfs should drag it from
+	libxml2
+
+	(Closes: #469563)
+
 2007-10-06  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* data/totem.ui: Fix the signal for the UIManager (Closes: #484126)
