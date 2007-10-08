@@ -44,22 +44,48 @@ _wrap_totem_object_plugins_shutdown (PyGObject *self)
 {
 	totem_object_plugins_shutdown ();
 
-	Py_INCREF(Py_None);
+	Py_INCREF (Py_None);
 	return Py_None;
 }
 %%
 override totem_action_error kwargs
 static PyObject *
-_wrap_totem_action_error(PyGObject *self, PyObject *args, PyObject *kwargs)
+_wrap_totem_action_error (PyGObject *self, PyObject *args, PyObject *kwargs)
 {
 	static char *kwlist[] = { "title", "reason", NULL };
 	char *title, *reason;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs,"ss:TotemObject.action_error", kwlist, &title, &reason))
+	if (!PyArg_ParseTupleAndKeywords (args, kwargs,"ss:TotemObject.action_error", kwlist, &title, &reason))
 		return NULL;
     
-	totem_action_error(title, reason, TOTEM_OBJECT(self->obj));
+	totem_action_error (title, reason, TOTEM_OBJECT (self->obj));
     
-	Py_INCREF(Py_None);
+	Py_INCREF (Py_None);
 	return Py_None;
+}
+%%
+override totem_plugin_load_interface kwargs
+static PyObject *
+_wrap_totem_plugin_load_interface (PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+	static char *kwlist[] = { "name", "fatal", "parent", "user_data", NULL };
+	char *name;
+	gboolean fatal;
+	GtkWindow *parent;
+	gpointer user_data;
+	GtkBuilder *builder;
+	PyObject *py_parent;
+
+	if (!PyArg_ParseTupleAndKeywords (args, kwargs,"sbOO:TotemPlugin.load_interface", kwlist, &name, &fatal, &py_parent, &user_data))
+		return NULL;
+	if (pygobject_check (py_parent, &PyGtkWindow_Type)) {
+		parent = GTK_WINDOW (pygobject_get (py_parent));
+	} else {
+		PyErr_SetString (PyExc_TypeError, "parent should be a GtkWindow");
+		return NULL;
+	}
+    
+	builder = totem_plugin_load_interface (TOTEM_PLUGIN (self->obj), name, fatal, parent, user_data);
+    
+	return pygobject_new((GObject *)builder);
 }

@@ -130,6 +130,17 @@
   )
 )
 
+(define-method load_interface
+  (of-object "TotemPlugin")
+  (c-name "totem_plugin_load_interface")
+  (return-type "GtkBuilder*")
+  (parameters
+    '("const-char*" "name")
+    '("gboolean" "fatal")
+    '("GtkWindow" "parent")
+    '("gpointer" "user_data")
+  )
+)
 
 
 ;; From totem.h

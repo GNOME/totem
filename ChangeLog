@@ -1,5 +1,20 @@
 2007-10-08  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* bindings/python/totem.defs:
+	* bindings/python/totem.override:
+	* configure.in:
+	* src/plugins/totem-python-module.c:
+	(totem_python_module_init_python), (totem_python_garbage_collect),
+	(totem_python_shutdown):
+	* src/plugins/youtube/Makefile.am:
+	* src/plugins/youtube/youtube.py:
+	* src/plugins/youtube/youtube.totem-plugin.in:
+	* src/plugins/youtube/youtube.ui: Add a plugin to browse YouTube.
+	Additionally, port some Python module changes from Rhythmbox,
+	and extend our Python bindings a little. (Closes: #484438)
+
+2007-10-08  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* README:
 	* data/totem.ui:
 	* src/plugins/gromit/totem-gromit.c: (on_window_key_press_event):

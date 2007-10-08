@@ -184,7 +184,7 @@ totem_python_module_init_python (void)
 
 	mdict = PyModule_GetDict (gtk);
 	pygtk_version = PyDict_GetItemString (mdict, "pygtk_version");
-	pygtk_required_version = Py_BuildValue ("(iii)", 2, 4, 0);
+	pygtk_required_version = Py_BuildValue ("(iii)", 2, 12, 0);
 	if (PyObject_Compare (pygtk_version, pygtk_required_version) == -1) {
 		g_warning("PyGTK %s required, but %s found.",
 				  PyString_AsString (PyObject_Repr (pygtk_required_version)),
@@ -469,6 +469,7 @@ totem_python_module_new (const gchar *path,
 
 /* --- these are not module methods, they are here out of convenience --- */
 
+#if 0
 static gint idle_garbage_collect_id = 0;
 
 static gboolean
@@ -481,15 +482,19 @@ run_gc (gpointer data)
 
 	return ret;
 }
+#endif
 
 void
 totem_python_garbage_collect ()
 {
+#if 0
 	if (Py_IsInitialized() && idle_garbage_collect_id == 0) {
 		idle_garbage_collect_id = g_idle_add (run_gc, NULL);
 	}
+#endif
 }
 
+#if 0
 static gboolean
 finalise_collect_cb (gpointer data)
 {
@@ -502,10 +507,12 @@ finalise_collect_cb (gpointer data)
 
 	return TRUE;
 }
+#endif
 
 void
 totem_python_shutdown ()
 {
+#if 0
 	if (Py_IsInitialized ()) {
 		if (idle_garbage_collect_id != 0) {
 			g_source_remove (idle_garbage_collect_id);
@@ -521,4 +528,5 @@ totem_python_shutdown ()
 		/* Disable for now, due to bug 334188
 		Py_Finalize ();*/
 	}
+#endif
 }
