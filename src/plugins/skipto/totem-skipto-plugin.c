@@ -186,17 +186,12 @@ static gboolean
 on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemSkiptoPlugin *plugin)
 {
 
-	if (event->state != 0
-			&& ((event->state & GDK_CONTROL_MASK)
-				|| (event->state & GDK_MOD1_MASK)
-				|| (event->state & GDK_MOD3_MASK)
-				|| (event->state & GDK_MOD4_MASK)
-				|| (event->state & GDK_MOD5_MASK)))
+	if (event->state == 0 || !(event->state & GDK_CONTROL_MASK))
 		return FALSE;
 
 	switch (event->keyval) {
-		case GDK_s:
-		case GDK_S:
+		case GDK_k:
+		case GDK_K:
 			run_skip_to_dialog (plugin);
 			break;
 		default:
@@ -218,7 +213,7 @@ impl_activate (TotemPlugin *plugin,
 
 	char *builder_path;
 	const GtkActionEntry menu_entries[] = {
-		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "s", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
+		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "<Control>K", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
 	};
 
 	builder_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skipto.ui");

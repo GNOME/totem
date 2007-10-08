@@ -2266,14 +2266,7 @@ totem_action_handle_seek (Totem *totem, GdkEventKey *event, gboolean is_forward)
 static gboolean
 totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 {
-	gboolean retval = TRUE, playlist_focused = FALSE;
-	GtkWidget *focused;
-
-	focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
-	if (focused != NULL && gtk_widget_is_ancestor
-			(focused, GTK_WIDGET (totem->playlist)) != FALSE) {
-		playlist_focused = TRUE;
-	}
+	gboolean retval = TRUE;
 
 	switch (event->keyval) {
 	case GDK_A:
@@ -2404,18 +2397,12 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			totem_action_fullscreen (totem, FALSE);
 		break;
 	case GDK_Left:
-		if (playlist_focused != FALSE)
-			return FALSE;
-
 		if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 			totem_action_handle_seek (totem, event, TRUE);
 		else
 			totem_action_handle_seek (totem, event, FALSE);
 		break;
 	case GDK_Right:
-		if (playlist_focused != FALSE)
-			return FALSE;
-
 		if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 			totem_action_handle_seek (totem, event, FALSE);
 		else
@@ -2428,13 +2415,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			retval = FALSE;
 		break;
 	case GDK_Up:
-		if (playlist_focused != FALSE)
-			return FALSE;
 		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
 	case GDK_Down:
-		if (playlist_focused != FALSE)
-			return FALSE;
 		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case GDK_0:
@@ -2453,13 +2436,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		totem_action_set_scale_ratio (totem, 2);
 		break;
 	case GDK_Menu:
-		if (playlist_focused != FALSE)
-			return FALSE;
 		totem_action_menu_popup (totem, 0);
 		break;
 	case GDK_F10:
-		if (playlist_focused != FALSE)
-			return FALSE;
 		if (!(event->state & GDK_SHIFT_MASK))
 			return FALSE;
 
@@ -2534,6 +2513,14 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 int
 window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
+	GtkWidget *focused;
+
+	focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
+	if (focused != NULL && gtk_widget_is_ancestor
+			(focused, GTK_WIDGET (totem->sidebar)) != FALSE) {
+		return FALSE;
+	}
+
 	/* Special case Eject, Open, Open URI and
 	 * seeking keyboard shortcuts */
 	if (event->state != 0

@@ -246,12 +246,7 @@ totem_gromit_clear (TotemGromitPlugin *plugin, gboolean now)
 static gboolean
 on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemGromitPlugin *plugin)
 {
-	if (event->state != 0
-			&& ((event->state & GDK_CONTROL_MASK)
-				|| (event->state & GDK_MOD1_MASK)
-				|| (event->state & GDK_MOD3_MASK)
-				|| (event->state & GDK_MOD4_MASK)
-				|| (event->state & GDK_MOD5_MASK)))
+	if (event->state == 0 || !(event->state & GDK_CONTROL_MASK))
 		return FALSE;
 
 	switch (event->keyval) {

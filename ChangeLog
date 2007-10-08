@@ -1,3 +1,14 @@
+2007-10-08  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* README:
+	* data/totem.ui:
+	* src/plugins/gromit/totem-gromit.c: (on_window_key_press_event):
+	* src/plugins/skipto/totem-skipto-plugin.c:
+	(on_window_key_press_event), (impl_activate):
+	* src/totem.c: (totem_action_handle_key_press),
+	(window_key_press_event_cb): Rejigger keyboard shortcuts
+	(Closes: #480664)
+
 2007-10-08  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/totem-pl-parser-podcast.c: (parse_rss_item),

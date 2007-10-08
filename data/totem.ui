@@ -52,7 +52,7 @@
                <property name="tooltip">Play or pause the movie</property>
                <signal name="activate" handler="play_action_callback"/>
             </object>
-            <accelerator key="P"/>
+            <accelerator key="space" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="quit">
@@ -76,7 +76,7 @@
                <property name="tooltip">Take a screenshot</property>
                <signal name="activate" handler="take_screenshot_action_callback"/>
             </object>
-            <accelerator key="S" modifiers="GDK_CONTROL_MASK"/>
+            <accelerator key="S" modifiers="GDK_SHIFT_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="clear-playlist">
@@ -111,7 +111,7 @@
                <property name="tooltip">Switch to fullscreen</property>
                <signal name="activate" handler="fullscreen_action_callback"/>
             </object>
-            <accelerator key="F"/>
+            <accelerator key="F11"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-window-menu">
@@ -124,7 +124,7 @@
                <property name="tooltip">Resize to half the original video size</property>
                <signal name="activate" handler="zoom_1_2_action_callback"/>
             </object>
-            <accelerator key="0"/>
+            <accelerator key="0" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-1-1">
@@ -132,7 +132,7 @@
                <property name="tooltip">Resize to the original video size</property>
                <signal name="activate" handler="zoom_1_1_action_callback"/>
             </object>
-            <accelerator key="1"/>
+            <accelerator key="1" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-2-1">
@@ -140,7 +140,7 @@
                <property name="tooltip">Resize to double the original video size</property>
                <signal name="activate" handler="zoom_2_1_action_callback"/>
             </object>
-            <accelerator key="2"/>
+            <accelerator key="2" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="aspect-ratio-menu">
@@ -153,7 +153,7 @@
                <property name="tooltip">Switch camera angles</property>
                <signal name="activate" handler="next_angle_action_callback"/>
             </object>
-            <accelerator key="G"/>
+            <accelerator key="G" modifiers="GDK_CONTROL_MASK"/>
          </child>
 
          <child>
@@ -168,7 +168,7 @@
                <property name="tooltip">Go to the DVD menu</property>
                <signal name="activate" handler="dvd_root_menu_action_callback"/>
             </object>
-            <accelerator key="m"/>
+            <accelerator key="M" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="dvd-title-menu">
@@ -198,7 +198,7 @@
                <property name="tooltip">Go to the chapter menu</property>
                <signal name="activate" handler="dvd_chapter_menu_action_callback"/>
             </object>
-            <accelerator key="c"/>
+            <accelerator key="C" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="next-chapter">
@@ -207,7 +207,7 @@
                <property name="tooltip">Next chapter or movie</property>
                <signal name="activate" handler="next_chapter_action_callback"/>
             </object>
-            <accelerator key="n"/>
+            <accelerator key="Right" modifiers="GDK_MOD1_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="previous-chapter">
@@ -216,7 +216,7 @@
                <property name="tooltip">Previous chapter or movie</property>
                <signal name="activate" handler="previous_chapter_action_callback"/>
             </object>
-            <accelerator key="b"/>
+            <accelerator key="Left" modifiers="GDK_MOD1_MASK"/>
          </child>
 
          <child>
@@ -288,7 +288,7 @@
                <property name="active">False</property>
                <signal name="activate" handler="deinterlace_action_callback"/>
             </object>
-            <accelerator key="I"/>
+            <accelerator key="I" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkToggleAction" id="show-controls">
@@ -297,7 +297,7 @@
                <property name="active">TRUE</property>
                <signal name="activate" handler="show_controls_action_callback"/>
             </object>
-            <accelerator key="H"/>
+            <accelerator key="H" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkToggleAction" id="sidebar">
@@ -374,7 +374,7 @@
                <property name="tooltip">Zoom in</property>
                <signal name="activate" handler="zoom_in_action_callback"/>
             </object>
-            <accelerator key="R"/>
+            <accelerator key="R" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-reset">
@@ -391,7 +391,7 @@
                <property name="tooltip">Zoom out</property>
                <signal name="activate" handler="zoom_out_action_callback"/>
             </object>
-            <accelerator key="T"/>
+            <accelerator key="T" modifiers="GDK_CONTROL_MASK"/>
          </child>
       </object>
    </child>
