@@ -76,6 +76,7 @@ typedef enum {
 	TOTEM_PLUGIN_TYPE_COMPLEX,
 	TOTEM_PLUGIN_TYPE_NARROWSPACE,
 	TOTEM_PLUGIN_TYPE_MULLY,
+	TOTEM_PLUGIN_TYPE_CONE,
 	TOTEM_PLUGIN_TYPE_LAST
 } TotemPluginType;
 
@@ -2160,7 +2161,8 @@ parse_plugin_type (const gchar *option_name,
 		"gmp",
 		"complex",
 		"narrowspace",
-		"mully"
+		"mully",
+		"cone"
 	};
 	TotemPluginType type;
 

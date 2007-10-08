@@ -124,7 +124,7 @@ set_cell_text (GtkTreeViewColumn *column,
 	gtk_tree_path_free (path);
 }
 
-#define BUFFER_SIZE 1024
+#define MAX_THUMB_SIZE 500 * 1024 * 1024
 
 static GdkPixbuf *
 get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
@@ -143,8 +143,14 @@ get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
 	if (gmyth_file_transfer_open(transfer, fname) == FALSE)
 		return NULL;
 
-	loader = gdk_pixbuf_loader_new_with_type ("png", NULL);
 	to_read = gmyth_file_transfer_get_filesize (transfer);
+	/* Leave if the thumbnail is just too big */
+	if (to_read > MAX_THUMB_SIZE) {
+		gmyth_file_transfer_close (transfer);
+		return NULL;
+	}
+
+	loader = gdk_pixbuf_loader_new_with_type ("png", NULL);
 	data = g_byte_array_sized_new (to_read);
 
 	res = gmyth_file_transfer_read(transfer, data, to_read, FALSE);

@@ -147,8 +147,6 @@ totem_python_module_init_python (void)
 
 	PySys_SetArgv (1, argv);
 
-	pyg_enable_threads ();
-
 	/* pygtk.require("2.8") */
 	pygtk = PyImport_ImportModule ("pygtk");
 	if (pygtk == NULL) {
@@ -174,6 +172,8 @@ totem_python_module_init_python (void)
 
 	/* import gtk */
 	init_pygtk ();
+
+	pyg_enable_threads ();
 
 	gtk = PyImport_ImportModule ("gtk");
 	if (gtk == NULL) {

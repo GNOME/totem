@@ -1,3 +1,19 @@
+2007-10-08  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_set_logo_by_name), (totem_embedded_launch_player),
+	(totem_embedded_update_menu), (on_about1_activate),
+	(totem_embedded_on_fullscreen_exit), (parse_plugin_type):
+	Add cone to the list of possible plugins in the viewer
+	* configure.in: enable cone by default
+	* src/plugins/mythtv/totem-mythtv.c: (get_thumbnail):
+	Don't try to load huge thumbnails
+	* src/plugins/totem-python-module.c:
+	(totem_python_module_init_python): Enable threads after having
+	init'ed pygtk, fixes a crash enabling the YouTube plugin
+	* src/totem-resources.c: (totem_resources_monitor_start):
+	Remove unneeded blank line
+
 2007-10-08  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* bindings/python/totem.defs:
