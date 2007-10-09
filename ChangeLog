@@ -1,5 +1,11 @@
 2007-10-09  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c: (xine_event),
+	(bacon_video_widget_stop), (bacon_video_widget_get_current_frame):
+	Guard against bogus progress percentages (Closes: #484888)
+
+2007-10-09  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* src/plugins/Makefile.am:
 	* src/plugins/totem/Makefile.am: Add a dummy totem

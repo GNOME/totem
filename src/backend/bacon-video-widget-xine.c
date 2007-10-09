@@ -1487,7 +1487,12 @@ xine_event (void *user_data, const xine_event_t *event)
 
 		data = g_new0 (signal_data, 1);
 		data->signal = BUFFERING_ASYNC;
-		data->num = prg->percent;
+		if (prg->percent < 0)
+			data->num = 0;
+		else if (prg->percent > 100)
+			data->num = 100;
+		else
+			data->num = prg->percent;
 		g_async_queue_push (bvw->priv->queue, data);
 		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
 		break;
@@ -2691,6 +2696,7 @@ bacon_video_widget_stop (BaconVideoWidget *bvw)
 
 	xine_stop (bvw->priv->stream);
 	bacon_video_widget_reconfigure_tick (bvw, FALSE);
+	g_object_notify (G_OBJECT (bvw), "seekable");
 }
 
 void
@@ -4259,8 +4265,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 			return NULL;
 
 		if (xine_get_current_frame (bvw->priv->stream, &width, &height,
-					&ratio, &format, yuv) == 0)
-		{
+					&ratio, &format, yuv) == 0) {
 			g_free (yuv);
 			return NULL;
 		}
