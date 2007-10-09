@@ -1,5 +1,5 @@
 SUBDIRS = $(PLUGINS)
-DIST_SUBDIRS = $(ALL_PLUGINS)
+DIST_SUBDIRS = $(ALL_PLUGINS) totem
 
 noinst_LTLIBRARIES = libtotemmodule.la
 
@@ -47,6 +47,9 @@ libtotemmodule_la_LDFLAGS = \
 	$(AM_LDFLAGS)			
 
 if ENABLE_PYTHON
+
+SUBDIRS += totem
+
 libtotemmodule_la_LIBADD = \
 	$(EXTRA_GNOME_LIBS)	\
 	$(PYTHON_LIBS)		\
