@@ -1314,6 +1314,7 @@ totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager,
 			image = gtk_image_new_from_pixbuf (icon);
 			gtk_image_menu_item_set_image
 				(GTK_IMAGE_MENU_ITEM (widget), image);
+			g_object_unref (G_OBJECT (icon));
 		}
 	}
 }
