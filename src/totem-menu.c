@@ -74,7 +74,6 @@ void show_controls_action_callback (GtkToggleAction *action, Totem *totem);
 void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
 void clear_playlist_action_callback (GtkAction *action, Totem *totem);
-void totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager, GtkAction *action, GtkWidget *widget, Totem *totem);
 
 /* Helper function to escape underscores in labels
  * before putting them in menu items */
@@ -299,6 +298,7 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		label = escape_label_for_menu (full_lang ? full_lang : lang);
 	}
 
+        /* FIXMEchpe i18n! */
 	name = g_strdup_printf ("%s-%d", prefix, lang_id);
 
 	action = g_object_new (GTK_TYPE_RADIO_ACTION,
@@ -509,6 +509,10 @@ connect_proxy_cb (GtkActionGroup *action_group,
                   gpointer data)
 {
         GtkLabel *label;
+        GtkRecentInfo *recent_info;
+        GdkPixbuf *icon;
+        GtkWidget *image = NULL;
+        gint w, h;
 
         if (!GTK_IS_MENU_ITEM (proxy))
                 return;
@@ -517,6 +521,22 @@ connect_proxy_cb (GtkActionGroup *action_group,
 
         gtk_label_set_ellipsize (label, PANGO_ELLIPSIZE_MIDDLE);
         gtk_label_set_max_width_chars (label,TOTEM_MAX_RECENT_ITEM_LEN);
+
+        if (!GTK_IS_IMAGE_MENU_ITEM (proxy))
+                return;
+
+        recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
+        g_assert (recent_info != NULL);
+
+        gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
+
+        icon = gtk_recent_info_get_icon (recent_info, w);
+        if (icon != NULL) {
+                image = gtk_image_new_from_pixbuf (icon);
+                g_object_unref (icon);
+        }
+
+        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), image);
 }
 
 static void
@@ -1278,33 +1298,6 @@ static const GtkRadioActionEntry aspect_ratio_entries[] = {
 	{ "aspect-ratio-anamorphic", NULL, N_("16:9 (Widescreen)"), NULL, N_("Sets 16:9 (Anamorphic) aspect ratio"), BVW_RATIO_ANAMORPHIC },
 	{ "aspect-ratio-dvb", NULL, N_("2.11:1 (DVB)"), NULL, N_("Sets 2.11:1 (DVB) aspect ratio"), BVW_RATIO_DVB }
 };
-
-void
-totem_ui_manager_connect_proxy_callback (GtkUIManager *ui_manager,
-		GtkAction *action, GtkWidget *widget, Totem *totem)
-{
-	GtkRecentInfo *recent_info;
-	GdkPixbuf *icon;
-	GtkWidget *image;
-	gint w, h;
-
-	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
-
-	if (recent_info == NULL) {
-		return;
-	}
-
-	if (GTK_IS_IMAGE_MENU_ITEM (widget)) {
-		gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
-		icon = gtk_recent_info_get_icon (recent_info, w);
-
-		if (icon != NULL) {
-			image = gtk_image_new_from_pixbuf (icon);
-			gtk_image_menu_item_set_image
-				(GTK_IMAGE_MENU_ITEM (widget), image);
-		}
-	}
-}
 
 void
 totem_ui_manager_setup (Totem *totem)
