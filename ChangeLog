@@ -1,3 +1,11 @@
+2007-10-10  Christian Persch  <chpe@gnome.org>
+
+	* data/totem.ui:
+	* src/totem-menu.c: (add_lang_action), (connect_proxy_cb):
+	Remove redundant connect-proxy callback, and just put the code into
+	the existing callback for the recent actions action group. Bug
+	#484136.
+
 2007-10-09  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c: (xine_event),
