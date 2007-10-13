@@ -156,9 +156,9 @@ class YouTube (totem.Plugin):
 				print "Getting more results for query \"" + self.query + "\" from offset " + str (self.start_index)
 			self.results = 0
 			if self.search_mode:
-				self.get_results ("/feeds/videos?vq=" + urllib.quote (self.query) + "&max-results=" + str (self.max_results) + "&orderby=viewCount&start-index=" + str (self.start_index), _("Search Results:"), False)
+				self.get_results ("/feeds/videos?vq=" + urllib.quote_plus (self.query) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index), _("Search Results:"), False)
 			else:
-				self.get_results ("/feeds/videos/" + urllib.quote (self.query) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index), _("Related Videos:"), False)
+				self.get_results ("/feeds/videos/" + urllib.quote_plus (self.query) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index), _("Related Videos:"), False)
 			self.start_index += self.max_results
 	def convert_url_to_id (self, url):
 		return url.rpartition ("/")[2]
@@ -190,7 +190,7 @@ class YouTube (totem.Plugin):
 		self.query = search_terms
 		self.start_index = 1
 		self.results = 0
-		self.get_results ("/feeds/videos?vq=" + urllib.quote (search_terms) + "&orderby=viewCount&max-results=" + str (self.max_results), _("Search Results:"))
+		self.get_results ("/feeds/videos?vq=" + urllib.quote_plus (search_terms) + "&orderby=relevance&max-results=" + str (self.max_results), _("Search Results:"))
 	def on_search_entry_activated (self, entry):
 		self.search_button.clicked ()
 	def get_results (self, url, status_text, clear = True):
