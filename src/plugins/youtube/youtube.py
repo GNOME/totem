@@ -2,6 +2,7 @@ import totem
 import gobject, gtk
 import gdata.service
 import urllib
+import httplib
 import atom
 import pango
 import threading
@@ -133,10 +134,19 @@ class YouTube (totem.Plugin):
 		youtube_id = model.get_value (iter, 0)
 
 		"""Play the video"""
-		if self.debug:
-			print "Playing: http://www.youtube.com/v/" + youtube_id
+		conn = httplib.HTTPConnection ("www.youtube.com")
+		conn.request ("GET", "/v/" + urllib.quote (youtube_id))
+		response = conn.getresponse ()
+		if response.status == 303:
+			location = response.getheader("location")
+			url = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (location[location.rfind("&t=")+3:])
 		else:
-			self.totem.action_set_mrl_and_play ("http://www.youtube.com/v/" + urllib.quote (youtube_id))
+			url = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
+		print url
+		if self.debug:
+			print "Playing: " + url
+		else:
+			self.totem.action_set_mrl_and_play (url)
 		
 		"""Get related videos"""
 		self.search_mode = False
