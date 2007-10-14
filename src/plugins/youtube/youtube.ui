@@ -24,32 +24,6 @@
 		</packing>
 	</child>
 	<child>
-		<object class="GtkScrolledWindow" id="yt_scrolled_window">
-			<property name="visible">True</property>
-			<property name="can_focus">True</property>
-			<property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-			<property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-			<property name="shadow_type">GTK_SHADOW_IN</property>
-			<property name="window_placement">GTK_CORNER_TOP_LEFT</property>
-			<child>
-				<object class="GtkTreeView" id="yt_treeview">
-					<property name="headers-visible">False</property>
-					<property name="fixed-height-mode">True</property>
-					<child>
-						<!--<object class="GtkTreeViewColumn" id="yt_treeview_column">
-							<property name="title">Videos</property>
-						</object>-->
-					</child>
-				</object>
-			</child>
-		</object>
-		<packing>
-			<property name="padding">0</property>
-			<property name="expand">True</property>
-			<property name="fill">True</property>
-		</packing>
-	</child>
-	<child>
 		<object class="GtkHBox" id="yt_hbox">
 			<child>
 				<object class="GtkEntry" id="yt_search_entry"/>
@@ -85,6 +59,32 @@
 		<packing>
 			<property name="padding">0</property>
 			<property name="expand">False</property>
+			<property name="fill">True</property>
+		</packing>
+	</child>
+	<child>
+		<object class="GtkScrolledWindow" id="yt_scrolled_window">
+			<property name="visible">True</property>
+			<property name="can_focus">True</property>
+			<property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+			<property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+			<property name="shadow_type">GTK_SHADOW_IN</property>
+			<property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+			<child>
+				<object class="GtkTreeView" id="yt_treeview">
+					<property name="headers-visible">False</property>
+					<property name="fixed-height-mode">True</property>
+					<child>
+						<!--<object class="GtkTreeViewColumn" id="yt_treeview_column">
+							<property name="title">Videos</property>
+						</object>-->
+					</child>
+				</object>
+			</child>
+		</object>
+		<packing>
+			<property name="padding">0</property>
+			<property name="expand">True</property>
 			<property name="fill">True</property>
 		</packing>
 	</child>
