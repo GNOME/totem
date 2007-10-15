@@ -963,6 +963,9 @@ totem_embedded_open_stream (TotemEmbedded *emb,
 	bacon_video_widget_close (emb->bvw);
 
 	totem_embedded_set_uri (emb, uri, base_uri, TRUE);
+	/* We can only have one item in the "playlist" when
+	 * we open a browser stream */
+	emb->num_items = 1;
 
 	/* FIXME: consume any remaining input from stdin */
 
