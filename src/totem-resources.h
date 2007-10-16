@@ -28,6 +28,6 @@
 #include <glib.h>
 
 void totem_resources_monitor_start	(const char *input,
-					 guint wall_clock_time);
+					 gint wall_clock_time);
 void totem_resources_monitor_stop	(void);
 

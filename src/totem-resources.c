@@ -53,14 +53,14 @@ set_resource_limits (const char *input)
 	struct stat buf;
 	rlim_t max;
 
-	g_return_if_fail (input != NULL);
-
 	max = MAX_HELPER_MEMORY;
 
 	/* Set the maximum virtual size depending on the size
 	 * of the file to process, as we wouldn't be able to
 	 * mmap it otherwise */
-	if (g_stat (input, &buf) == 0) {
+	if (input == NULL) {
+		max = MAX_HELPER_MEMORY;
+	} else if (g_stat (input, &buf) == 0) {
 		max = MAX_HELPER_MEMORY + buf.st_size;
 	} else if (g_str_has_prefix (input, "file://") != FALSE) {
 		char *file;
@@ -102,11 +102,14 @@ time_monitor (gpointer data)
 }
 
 void
-totem_resources_monitor_start (const char *input, guint wall_clock_time)
+totem_resources_monitor_start (const char *input, gint wall_clock_time)
 {
 	set_resource_limits (input);
 
-	if (wall_clock_time != 0)
+	if (wall_clock_time < 0)
+		return;
+
+	if (wall_clock_time > 0)
 		sleep_time = wall_clock_time;
 
 	finished = FALSE;

@@ -1,3 +1,14 @@
+2007-10-16  Bastien Nocera  <hadess@hadess.net>
+
+	* src/Makefile.am:
+	* src/totem-audio-preview.c: (print_mimetypes), (main):
+	* src/totem-resources.c: (set_resource_limits),
+	(totem_resources_monitor_start):
+	* src/totem-resources.h:
+	Add a totem-audio-preview program that plays audio on the
+	the standard input, for use in nautilus's sound preview
+	(See #486827)
+
 2007-10-15  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:

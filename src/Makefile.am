@@ -1,6 +1,6 @@
 SUBDIRS = plugins backend plparse
 
-bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer
+bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
 libexec_PROGRAMS =
 noinst_PROGRAMS = disc-test
 noinst_LTLIBRARIES =				\
@@ -282,6 +282,37 @@ totem_video_indexer_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 totem_video_indexer_LDADD = \
+	backend/libbaconvideowidget.la	\
+	$(EXTRA_GNOME_LIBS)		\
+	$(GTK_LIBS)			\
+	$(NVTV_LIBS)			\
+	$(XTEST_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(X_LIBS)
+
+# Totem Audio Preview for nautilus
+totem_audio_preview_SOURCES =		\
+	totem-audio-preview.c		\
+	totem-resources.c		\
+	totem-resources.h
+
+totem_audio_preview_CPPFLAGS =	\
+	-I$(srcdir)/plparse	\
+	-I$(srcdir)/backend	\
+	-I$(top_builddir)/data	\
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+totem_audio_preview_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(NVTV_CFLAGS)		\
+	$(AM_CFLAGS)
+
+totem_audio_preview_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+totem_audio_preview_LDADD = \
 	backend/libbaconvideowidget.la	\
 	$(EXTRA_GNOME_LIBS)		\
 	$(GTK_LIBS)			\
