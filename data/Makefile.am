@@ -44,9 +44,12 @@ totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
 	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> $@
 
-nodist_noinst_HEADERS = totem-mime-types.h
+nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h
 totem-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	\
+	> $@
+nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
+	$(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt	\
 	> $@
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
