@@ -1,0 +1,65 @@
+<gconfschemafile>
+    <schemalist>    
+
+      <schema>
+        <key>/schemas/apps/totem/plugins/totem_mythtv/address</key>
+	<applyto>/apps/totem/plugins/totem_mythtv/address</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default></default>
+	<locale name="C">
+	  <short>IP address of the local MythTV server</short>
+	  <long> </long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/plugins/totem_mythtv/user</key>
+	<applyto>/apps/totem/plugins/totem_mythtv/user</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default>mythtv</default>
+	<locale name="C">
+	  <short>Username to access the local MythTV server</short>
+	  <long> </long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/plugins/totem_mythtv/password</key>
+	<applyto>/apps/totem/plugins/totem_mythtv/password</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default>mythtv</default>
+	<locale name="C">
+	  <short>Password to access the local MythTV server</short>
+	  <long> </long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/plugins/totem_mythtv/database</key>
+	<applyto>/apps/totem/plugins/totem_mythtv/database</applyto>
+	<owner>totem</owner>
+	<type>string</type>
+	<default>mythconverg</default>
+	<locale name="C">
+	  <short>Name of the database for the local MythTV server</short>
+	  <long> </long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/plugins/totem_mythtv/port</key>
+	<applyto>/apps/totem/plugins/totem_mythtv/port</applyto>
+	<owner>totem</owner>
+	<type>int</type>
+	<default>6543</default>
+	<locale name="C">
+	  <short>Port to access the local MythTV server</short>
+	  <long> </long>
+	</locale>
+      </schema>
+
+ </schemalist>
+</gconfschemafile>

@@ -1,5 +1,18 @@
 2007-10-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/mythtv/Makefile.am:
+	* src/plugins/mythtv/totem-mythtv.c: (get_thumbnail),
+	(set_thumbnail_icon), (row_activated_cb), (create_treeview),
+	(totem_mythtv_list_recordings), (totem_mythtv_update_binfo),
+	(refresh_cb), (totem_mythtv_plugin_init),
+	(totem_mythtv_plugin_finalize), (impl_activate), (impl_deactivate):
+	* src/plugins/mythtv/totem-mythtv.schemas.in:
+	Add GConf schemas and use those
+	Cache the thumbnail locally, to avoid getting it again constantly
+	Add a refresh button, to reload the list of recordings
+
+2007-10-17  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Work-around problems with python being installed
 	in /usr/lib64 rather than /usr/lib
 
