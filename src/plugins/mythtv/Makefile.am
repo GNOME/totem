@@ -21,7 +21,7 @@ if GCONF_SCHEMAS_INSTALL
 	fi
 endif
 
-noinst_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
 common_defines = \
 	-D_REENTRANT					\
