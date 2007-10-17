@@ -1,5 +1,18 @@
 New features and significant updates in version...
 
+2.20.1
+* Fix problems with the volume and fullscreen popups staying up
+* Avoid the seekbar getting stuck when seeking fails
+* Support http://www.play.cz/radio-7
+
+* GStreamer backend:
+  - Allow taking screenshots of visualisations
+
+* Browser plugin:
+  - Fix replaying the stream when we got a redirection, such
+    as on the Apple trailers pages
+  - Fix crasher when playing audio-only streams
+
 2.20.0
 * Better error when there's no DVD plugins available
 * Fix dropping URLs from Firefox/Mozilla-based browsers
