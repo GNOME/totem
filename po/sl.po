@@ -1,403 +1,306 @@
-# Slovenian translation of Totem.
-# Copyright (C) 2005-2007 Free Software Foundation, Inc.
-# This file is distributed under the same license as the totem package.
-#
+# Copyright (C) 2005 Free Software Foundation, Inc.
 # Matej Urbančič <matej.urban@gmail.com>, 2005.
-# Matic Žgur <mr.zgur@gmail.com>, 2006, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-17 09:12+0000\n"
-"PO-Revision-Date: 2007-02-12 16:27+0100\n"
-"Last-Translator: Matic Žgur <mr.zgur@gmail.com>\n"
-"Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"POT-Creation-Date: 2005-11-02 13:27+0100\n"
+"PO-Revision-Date: 2007-10-18 20:57+0100\n"
+"Last-Translator: Matej Urbančič <matej.urban@gmail.com>\n"
+"Language-Team: Slovenian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../data/playlist.glade.h:1
-msgid "Add..."
-msgstr "Dodaj ..."
+#: ../data/fullscreen.ui.h:1
+msgid "Leave Fullscreen"
+msgstr "Zapusti celozaslonski način"
 
-#: ../data/playlist.glade.h:2
+#: ../data/fullscreen.ui.h:2
+#: ../data/totem.ui.h:17
+msgid "Time:"
+msgstr "Čas:"
+
+#: ../data/playlist.ui.h:1
+msgid "Add..."
+msgstr "Dodaj..."
+
+#: ../data/playlist.ui.h:2
 msgid "Move Down"
 msgstr "Premakni navzdol"
 
-#: ../data/playlist.glade.h:3
+#: ../data/playlist.ui.h:3
 msgid "Move Up"
 msgstr "Premakni navzgor"
 
-#. translators: Playlist is the default saved playlist filename,
-#. * without the suffix
-#: ../data/playlist.glade.h:4
-#: ../src/totem-playlist.c:960
-#: ../src/totem-sidebar.c:105
-msgid "Playlist"
-msgstr "Predvajalni seznam"
-
-#: ../data/playlist.glade.h:5
+#: ../data/playlist.ui.h:4
 msgid "Remove"
 msgstr "Odstrani"
 
-#: ../data/playlist.glade.h:6
+#: ../data/playlist.ui.h:5
 msgid "Save Playlist..."
-msgstr "Shrani predvajalni seznam ..."
+msgstr "Shrani seznam predvajanja ..."
+
+#: ../data/plugins.ui.h:1
+msgid "Author:"
+msgstr "Avtor:"
+
+#: ../data/plugins.ui.h:2
+msgid "C_onfigure..."
+msgstr "_Nastavitve ... "
+
+#: ../data/plugins.ui.h:3
+msgid "Copyright:"
+msgstr "Avtorske pravice:"
+
+#: ../data/plugins.ui.h:4
+msgid "Description:"
+msgstr "Opis:"
+
+#: ../data/plugins.ui.h:5
+msgid "Site:"
+msgstr "Mesto:"
 
 #. Channels
-#: ../data/properties.glade.h:1
-#: ../src/bacon-video-widget-properties.c:170
+#: ../data/properties.ui.h:1
+#: ../src/plugins/properties/bacon-video-widget-properties.c:172
 msgid "0 Channels"
 msgstr "0 kanalov"
 
 #. Sample rate
-#: ../data/properties.glade.h:2
-#: ../src/bacon-video-widget-properties.c:168
+#: ../data/properties.ui.h:2
+#: ../src/plugins/properties/bacon-video-widget-properties.c:170
 msgid "0 Hz"
 msgstr "0 Hz"
 
-#: ../data/properties.glade.h:3
+#: ../data/properties.ui.h:3
 msgid "0 frames per second"
 msgstr "0 sličic na sekundo"
 
-#: ../data/properties.glade.h:4
+#: ../data/properties.ui.h:4
 msgid "0 kbps"
 msgstr "0 kbps"
 
 #. 0 seconds
-#: ../data/properties.glade.h:5
-#: ../data/skip_to.glade.h:1
+#: ../data/properties.ui.h:5
 #: ../src/backend/video-utils.c:270
+#: ../src/plugins/skipto/skipto.ui.h:1
 msgid "0 seconds"
 msgstr "0 sekund"
 
-#: ../data/properties.glade.h:6
+#: ../data/properties.ui.h:6
 msgid "0 x 0"
 msgstr "0 x 0"
 
-#: ../data/properties.glade.h:7
-msgid "<b>Audio</b>"
-msgstr "<b>Avdio</b>"
+#: ../data/properties.ui.h:7
+msgid "Album:"
+msgstr "Album:"
 
-#: ../data/properties.glade.h:8
-msgid "<b>General</b>"
-msgstr "<b>Splošno</b>"
+#: ../data/properties.ui.h:8
+msgid "Artist:"
+msgstr "Izvajalec:"
 
-#: ../data/properties.glade.h:9
-msgid "<b>Video</b>"
-msgstr "<b>Video</b>"
+#: ../data/properties.ui.h:9
+#: ../data/totem.ui.h:1
+#: ../src/totem-properties-view.c:91
+msgid "Audio"
+msgstr "Zvok"
 
-#: ../data/properties.glade.h:10
-msgid "<i>Album:</i>"
-msgstr "<i>Album:</i>"
+#: ../data/properties.ui.h:10
+msgid "Bitrate:"
+msgstr "Bitna hitrost:"
 
-#: ../data/properties.glade.h:11
-msgid "<i>Artist:</i>"
-msgstr "<i>Izvajalec:</i>"
+#: ../data/properties.ui.h:11
+msgid "Channels:"
+msgstr "Kanali:"
 
-#: ../data/properties.glade.h:12
-msgid "<i>Bitrate:</i>"
-msgstr "<i>Bitna hitrost:</i>"
+#: ../data/properties.ui.h:12
+msgid "Codec:"
+msgstr "Kodek:"
 
-#: ../data/properties.glade.h:13
-msgid "<i>Channels:</i>"
-msgstr "<i>Kanali:</i>"
+#: ../data/properties.ui.h:13
+msgid "Comment:"
+msgstr "Opomba:"
 
-#: ../data/properties.glade.h:14
-msgid "<i>Codec:</i>"
-msgstr "<i>Kodek:</i>"
+#: ../data/properties.ui.h:14
+msgid "Dimensions:"
+msgstr "Dimenzije:"
 
-#: ../data/properties.glade.h:15
-msgid "<i>Dimensions:</i>"
-msgstr "<i>Dimenzije:</i>"
+#: ../data/properties.ui.h:15
+msgid "Duration:"
+msgstr "Trajanje:"
 
-#: ../data/properties.glade.h:16
-msgid "<i>Duration:</i>"
-msgstr "<i>Trajanje:</i>"
+#: ../data/properties.ui.h:16
+msgid "Framerate:"
+msgstr "Hitrost sličic:"
 
-#: ../data/properties.glade.h:17
-msgid "<i>Framerate:</i>"
-msgstr "<i>Hitrost sličic:</i>"
-
-#: ../data/properties.glade.h:18
-msgid "<i>Sample rate:</i>"
-msgstr "<i>Vzorčenje:</i>"
-
-#: ../data/properties.glade.h:19
-msgid "<i>Title:</i>"
-msgstr "<i>Naslov:</i>"
-
-#: ../data/properties.glade.h:20
-msgid "<i>Year:</i>"
-msgstr "<i>Leto:</i>"
+#: ../data/properties.ui.h:17
+#: ../data/totem.ui.h:8
+msgid "General"
+msgstr "Splošno"
 
 #. Dimensions
 #. Video Codec
 #. Audio Codec
-#: ../data/properties.glade.h:21
-#: ../src/bacon-video-widget-properties.c:153
-#: ../src/bacon-video-widget-properties.c:155
-#: ../src/bacon-video-widget-properties.c:158
-#: ../src/bacon-video-widget-properties.c:161
-#: ../src/bacon-video-widget-properties.c:164
-#: ../src/bacon-video-widget-properties.c:166
-#: ../src/bacon-video-widget-properties.c:232
-#: ../src/bacon-video-widget-properties.c:234
-#: ../src/bacon-video-widget-properties.c:251
-#: ../src/bacon-video-widget-properties.c:254
+#: ../data/properties.ui.h:18
+#: ../src/plugins/properties/bacon-video-widget-properties.c:155
+#: ../src/plugins/properties/bacon-video-widget-properties.c:157
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#: ../src/plugins/properties/bacon-video-widget-properties.c:163
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:168
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
+#: ../src/plugins/properties/bacon-video-widget-properties.c:239
+#: ../src/plugins/properties/bacon-video-widget-properties.c:256
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
 msgid "N/A"
 msgstr "N/A"
 
-#: ../data/properties.glade.h:22
-#: ../src/totem-sidebar.c:108
-msgid "Properties"
-msgstr "Lastnosti"
+#: ../data/properties.ui.h:19
+msgid "Sample rate:"
+msgstr "Vzorčna hitrost:"
+
+#: ../data/properties.ui.h:20
+msgid "Title:"
+msgstr "Naslov:"
 
 #. Title
 #. Artist
 #. Album
 #. Year
-#: ../data/properties.glade.h:23
-#: ../src/bacon-video-widget-properties.c:142
-#: ../src/bacon-video-widget-properties.c:144
-#: ../src/bacon-video-widget-properties.c:146
-#: ../src/bacon-video-widget-properties.c:148
+#. Comment
+#: ../data/properties.ui.h:21
+#: ../src/plugins/properties/bacon-video-widget-properties.c:142
+#: ../src/plugins/properties/bacon-video-widget-properties.c:144
+#: ../src/plugins/properties/bacon-video-widget-properties.c:146
+#: ../src/plugins/properties/bacon-video-widget-properties.c:148
+#: ../src/plugins/properties/bacon-video-widget-properties.c:152
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../data/screenshot.glade.h:1
-msgid "<b>Preview</b>"
-msgstr "<b>Predogled</b>"
+#: ../data/properties.ui.h:22
+#: ../src/totem-properties-view.c:87
+msgid "Video"
+msgstr "Posnetek"
 
-#: ../data/screenshot.glade.h:2
-#: ../src/totem-screenshot.c:342
-msgid "Save Screenshot"
-msgstr "Shrani zaslonsko sliko"
-
-#: ../data/screenshot.glade.h:3
-msgid "Save screenshot"
-msgstr "Shrani zaslonsko sliko"
-
-#: ../data/screenshot.glade.h:4
-msgid "Save screenshot to _desktop"
-msgstr "Shrani zaslonsko sliko na _namizje"
-
-#: ../data/screenshot.glade.h:5
-msgid "Save screenshot to _file:"
-msgstr "Shrani zaslonsko sliko v _datoteko:"
-
-#: ../data/skip_to.glade.h:2
-#: ../src/totem-skipto.c:163
-msgid "Skip to"
-msgstr "Preskoči na"
-
-#: ../data/skip_to.glade.h:3
-msgid "_Skip to:"
-msgstr "Pre_skoči na:"
-
-#: ../data/skip_to.glade.h:4
-msgid "seconds"
-msgstr "sekund"
+#: ../data/properties.ui.h:23
+msgid "Year:"
+msgstr "Leto:"
 
 #: ../data/totem.desktop.in.in.in.h:1
 msgid "Movie Player"
-msgstr "Predvajalnik filmov"
+msgstr "Predvajalnik posnetkov"
 
 #: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies and songs"
-msgstr "Predvajaj filme in glasbo"
+msgstr "Predvajanje filmov in glasbe"
 
-#: ../data/totem.glade.h:1
-msgid ""
-"14.4 Kbps Modem\n"
-"19.2 Kbps Modem\n"
-"28.8 Kbps Modem\n"
-"33.6 Kbps Modem\n"
-"34.4 Kbps Modem\n"
-"56 Kbps Modem/ISDN\n"
-"112 Kbps Dual ISDN/DSL\n"
-"256 Kbps DSL/Cable\n"
-"384 Kbps DSL/Cable\n"
-"512 Kbps DSL/Cable\n"
-"1.5 Mbps T1/Intranet/LAN\n"
-"Intranet/LAN"
-msgstr ""
-"14.4 Kbps modem\n"
-"19.2 Kbps modem\n"
-"28.8 Kbps modem\n"
-"33.6 Kbps modem\n"
-"34.4 Kbps modem\n"
-"56 Kbps modem/ISDN\n"
-"112 Kbps dvojni ISDN/DSL\n"
-"256 Kbps DSL/Kabel\n"
-"384 Kbps DSL/Kabel\n"
-"512 Kbps DSL/Kabel\n"
-"1.5 Mbps T1/Intranet/LAN\n"
-"Intranet/LAN"
+#: ../data/totem.ui.h:2
+msgid "Audio Output"
+msgstr "Zvočni odvod"
 
-#: ../data/totem.glade.h:13
-msgid "<b>Audio Output</b>"
-msgstr "<b>Avdio izhod</b>"
-
-#: ../data/totem.glade.h:14
-msgid "<b>Color balance</b>"
-msgstr "<b>Barvna prilagoditev</b>"
-
-#: ../data/totem.glade.h:15
-msgid "<b>Display</b>"
-msgstr "<b>Zaslon</b>"
-
-#: ../data/totem.glade.h:16
-msgid "<b>Networking</b>"
-msgstr "<b>Omrežno predvajanje</b>"
-
-#: ../data/totem.glade.h:17
-msgid "<b>TV-Out</b>"
-msgstr "<b>TV-izhod</b>"
-
-#: ../data/totem.glade.h:18
-msgid "<b>Text Subtitles</b>"
-msgstr "<b>Podnapisi</b>"
-
-#: ../data/totem.glade.h:19
-msgid "<b>Visual Effects</b>"
-msgstr "<b>Vizualni efekti</b>"
-
-#: ../data/totem.glade.h:20
-msgid "<span size=\"medium\"><b>No file</b></span>"
-msgstr "<span size=\"medium\"><b>Ni datoteke</b></span>"
-
-#: ../data/totem.glade.h:21
-#: ../src/totem-properties-view.c:90
-msgid "Audio"
-msgstr "Avdio"
-
-#: ../data/totem.glade.h:22
+#: ../data/totem.ui.h:3
 msgid "Automatically _resize the window when a new video is loaded"
-msgstr "Avtomatično sp_remeni velikost okna ob nalaganju novega videa"
+msgstr "Samodejno sp_remeni velikost okna ob nalaganju novega posnetka"
 
-#: ../data/totem.glade.h:23
+#: ../data/totem.ui.h:4
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
-#: ../data/totem.glade.h:24
+#: ../data/totem.ui.h:5
+msgid "Color Balance"
+msgstr "Prilagoditev barv"
+
+#: ../data/totem.ui.h:6
 msgid "Connection _speed:"
 msgstr "Hitro_st povezave:"
 
-#: ../data/totem.glade.h:25
+#: ../data/totem.ui.h:7
 msgid "Display"
 msgstr "Zaslon"
 
-#: ../data/totem.glade.h:26
-msgid "General"
-msgstr "Splošno"
+#: ../data/totem.ui.h:9
+msgid "Networking"
+msgstr "Omrežje"
 
-#: ../data/totem.glade.h:27
-msgid "Leave Fullscreen"
-msgstr "Zapusti celozaslonski način"
-
-#: ../data/totem.glade.h:28
+#: ../data/totem.ui.h:10
 msgid "Reset To _Defaults"
-msgstr "Ponastavi na _privzeto"
+msgstr "_Povrni na privzete vrednosti"
 
-#: ../data/totem.glade.h:29
+#: ../data/totem.ui.h:11
 msgid "Sat_uration:"
 msgstr "Za_sičenost:"
 
-#: ../data/totem.glade.h:30
+#: ../data/totem.ui.h:12
 msgid "Show _visual effects when an audio file is played"
-msgstr "Pokaži _vizualne efekte ob predvajanju avdio medija"
+msgstr "Pokaži _vizualne učinke med predvajanjem zvočnega posnetka"
 
-#: ../data/totem.glade.h:31
-msgid ""
-"Small\n"
-"Normal\n"
-"Large\n"
-"Extra Large"
-msgstr ""
-"Majhno\n"
-"Normalno\n"
-"Veliko\n"
-"Zelo veliko"
+#: ../data/totem.ui.h:13
+msgid "TV-Out"
+msgstr "TV-izhod"
 
-#: ../data/totem.glade.h:35
-msgid ""
-"Stereo\n"
-"4-channel\n"
-"4.1-channel\n"
-"5.0-channel\n"
-"5.1-channel\n"
-"AC3 Passthrough"
-msgstr ""
-"Stereo\n"
-"4-kanali\n"
-"4.1-kanalov\n"
-"5.0-kanalov\n"
-"5.1-kanalov\n"
-"AC3 prehod"
-
-#: ../data/totem.glade.h:41
+#: ../data/totem.ui.h:14
 msgid "TV-out in fullscreen by Nvidia (NTSC)"
-msgstr "TV-izhod na celozaslonskem načinu preko Nvidia (NTSC)"
+msgstr "Celozaslonski TV-izhod Nvidia (NTSC)"
 
-#: ../data/totem.glade.h:42
+#: ../data/totem.ui.h:15
 msgid "TV-out in fullscreen by Nvidia (PAL)"
-msgstr "TV-izhod na celozaslonskem načinu preko Nvidia (PAL)"
+msgstr "Celozaslonski TV-izhod Nvidia (PAL)"
 
-#: ../data/totem.glade.h:43
-msgid "Time seek bar"
-msgstr "Vrstica za iskanje po času"
-
-#: ../data/totem.glade.h:44
-msgid "Time:"
-msgstr "Čas:"
+#: ../data/totem.ui.h:16
+msgid "Text Subtitles"
+msgstr "Besedilni podnapisi"
 
 #. Title
-#: ../data/totem.glade.h:45
-#: ../src/totem.c:974
-#: ../src/totem.c:3403
-#: ../src/totem.c:3430
+#: ../data/totem.ui.h:18
+#: ../src/totem.c:865
+#: ../src/totem.c:3036
+#: ../src/totem.c:3065
+#: ../browser-plugin/totem-plugin-viewer.c:1776
 msgid "Totem Movie Player"
-msgstr "Predvajalnik filmov Totem"
+msgstr "Totem predvajalnik filmov"
 
-#: ../data/totem.glade.h:46
+#: ../data/totem.ui.h:19
 msgid "Totem Preferences"
-msgstr "Nastavitve programa Totem"
+msgstr "Totem Lastnosti"
 
-#: ../data/totem.glade.h:47
+#: ../data/totem.ui.h:20
+msgid "Visual Effects"
+msgstr "Vizualni učinki"
+
+#: ../data/totem.ui.h:21
 msgid "Visualisation _size:"
 msgstr "Veliko_st vizualizacije:"
 
-#: ../data/totem.glade.h:48
+#: ../data/totem.ui.h:22
 msgid "_Audio output type:"
-msgstr "Tip _avdio izhoda:"
+msgstr "Vrsta _zvočnega odvoda:"
 
-#: ../data/totem.glade.h:49
+#: ../data/totem.ui.h:23
 msgid "_Brightness:"
 msgstr "_Svetlost:"
 
-#: ../data/totem.glade.h:50
+#: ../data/totem.ui.h:24
 msgid "_Encoding:"
 msgstr "_Kodiranje:"
 
-#: ../data/totem.glade.h:51
+#: ../data/totem.ui.h:25
 msgid "_Font:"
 msgstr "_Pisava:"
 
-#: ../data/totem.glade.h:52
+#: ../data/totem.ui.h:26
 msgid "_Hue:"
 msgstr "_Odtenek:"
 
-#: ../data/totem.glade.h:53
+#: ../data/totem.ui.h:27
 msgid "_No TV-out"
 msgstr "_Ni TV-izhoda"
 
-#: ../data/totem.glade.h:54
+#: ../data/totem.ui.h:28
 msgid "_Type of visualisation:"
 msgstr "_Tip vizualizacije:"
 
@@ -411,966 +314,609 @@ msgstr "Velikost medpomnilnika"
 
 #: ../data/totem.schemas.in.h:3
 msgid "Default location for the \"Open...\" dialogues"
-msgstr "Privzeto mesto za pogovorna okna \"Odpri ...\""
+msgstr "Privzeto mesto za pogovorno okno \"Odpri ...\""
 
 #: ../data/totem.schemas.in.h:4
 msgid "Default location for the \"Open...\" dialogues, default is the current directory"
-msgstr "Privzeto mesto za pogovorna okna \"Odpri ...\", privzet je trenutni imenik"
+msgstr "Privzeto mesto za pogovorno okno \"Odpri ...\"; privzeto trenutna mapa"
 
 #: ../data/totem.schemas.in.h:5
+msgid "Default location for the \"Take Screenshot\" dialogues"
+msgstr "Privzeto mesto za pogovorno okno \"Zajem zaslonske slike ...\""
+
+#: ../data/totem.schemas.in.h:6
+msgid "Default location for the \"Take Screenshot\" dialogues, default is the Pictures directory"
+msgstr "Privzeto mesto za pogovorno okno \"Zajem zaslonske slike ...\"; privzeto trenutna mapa"
+
+#: ../data/totem.schemas.in.h:7
 msgid "Enable deinterlacing"
 msgstr "Omogoči razpletanje"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/totem.schemas.in.h:8
 msgid "Encoding charset for subtitle"
-msgstr "Kodni nabor podnapisov"
+msgstr "Nabor znakov za podnapise"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:9
 msgid "Maximum amount of data to decode ahead of display (in seconds)"
 msgstr "Maksimalna velikost dekodiranih podatkov pred prikazovanjem (v sekundah)"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:10
 msgid "Name of the visual effects plugins"
-msgstr "Ime vključka za vizualne efekte"
+msgstr "Ime vključka za vizualne učinke"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:11
 msgid "Network buffering threshold"
 msgstr "Mrežni prag medpomnilnika"
 
-#: ../data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:12
 msgid "Pango font description for subtitle rendering"
 msgstr "Pango opis pisave in upodabljanje podnapisov"
 
-#: ../data/totem.schemas.in.h:11
-msgid "Repeat mode"
-msgstr "Ponavljajoče izvajanje"
-
-#: ../data/totem.schemas.in.h:12
-msgid "Resize the canvas automatically on file load"
-msgstr "Avtomatično prilagodi velikost okna ob zagonu datoteke"
-
 #: ../data/totem.schemas.in.h:13
-msgid "Show visual effects when no video is displayed"
-msgstr "Pokaži vizualne efekte ob neaktivnem videu"
+msgid "Repeat mode"
+msgstr "Ponavljajoče predvajanje"
 
 #: ../data/totem.schemas.in.h:14
-msgid "Show visual effects when playing an audio only file."
-msgstr "Pokaži vizualne efekte ob predvajanju avdio datotek."
+msgid "Resize the canvas automatically on file load"
+msgstr "Samodejno prilagodi velikost okna ob zagonu datoteke"
 
 #: ../data/totem.schemas.in.h:15
-msgid "Shuffle mode"
-msgstr "Premešano izvajanje"
+msgid "Show visual effects when no video is displayed"
+msgstr "Pokaži vizualne učinke, kadar posnetek ne vsebuje slike"
 
 #: ../data/totem.schemas.in.h:16
+msgid "Show visual effects when playing an audio only file."
+msgstr "Pokaži vizualne učinke med predvajanjem zvočnih posnetkov."
+
+#: ../data/totem.schemas.in.h:17
+msgid "Shuffle mode"
+msgstr "Premešano predvajanje"
+
+#: ../data/totem.schemas.in.h:18
 msgid "Sound volume"
 msgstr "Glasnost zvoka"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:19
 msgid "Sound volume, in percent, between 0 and 100"
 msgstr "Glasnost zvoka, odstotek med 0 in 100"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:20
 msgid "Subtitle encoding"
-msgstr "Kodiranje podnapisov"
+msgstr "kodiranje podnapisov"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:21
 msgid "Subtitle font"
 msgstr "Pisava podnapisov"
 
-#: ../data/totem.schemas.in.h:20
-msgid "The brightness of the video"
-msgstr "Svetlost videa"
-
-#: ../data/totem.schemas.in.h:21
-msgid "The contrast of the video"
-msgstr "Kontrast videa"
-
 #: ../data/totem.schemas.in.h:22
-msgid "The hue of the video"
-msgstr "Odtenek videa"
+msgid "The brightness of the video"
+msgstr "Svetlost slike"
 
 #: ../data/totem.schemas.in.h:23
-msgid "The saturation of the video"
-msgstr "Zasičenost videa"
+msgid "The contrast of the video"
+msgstr "Kontrast slike"
 
 #: ../data/totem.schemas.in.h:24
-msgid "Type of audio output to use"
-msgstr "Tip uporabljenega avdio izhoda"
+msgid "The hue of the video"
+msgstr "Odtenek slike"
 
 #: ../data/totem.schemas.in.h:25
+msgid "The saturation of the video"
+msgstr "Zasičenost slike"
+
+#: ../data/totem.schemas.in.h:26
+msgid "Type of audio output to use"
+msgstr "Vrsta uporabljenega zvočnega odvoda"
+
+#: ../data/totem.schemas.in.h:27
 msgid "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 Passthrough."
-msgstr "Tip uporabljenega avdio izhoda: \"0\" za stereo izhod, \"1\" za 4-kanalni izhod, \"2\" za 5.0 kanalni izhod, \"3\" za 5.1 kanalni izhod, \"4\" za AC3 prehod."
+msgstr "Vrsta uporabljenega zvočnega odvoda: \"0\" za stereo odvod, \"1\" za 4-kanalni odvod, \"2\" za 5.0 kanalni odvod, \"3\" za 5.1 kanalni odvod, \"4\" za AC3 prehod."
 
 #. Translators: This is default subtitle encoding
 #. character set. You can change this to be the most common
 #. encoding for fansub subtitles in your language. File a bug
 #. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:32
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: ../data/totem.schemas.in.h:31
+#: ../data/totem.schemas.in.h:33
 msgid "Whether the main window should stay on top"
 msgstr "Glavno okno je vedno na vrhu."
 
-#: ../data/totem.schemas.in.h:32
+#: ../data/totem.schemas.in.h:34
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Glavno okno je vedno na vrhu vseh ostalih oken."
 
-#: ../data/totem.schemas.in.h:33
+#: ../data/totem.schemas.in.h:35
+msgid "Whether to disable the plugins in the user's home directory"
+msgstr "Ali naj se onemogočijo vstavki v uporabnikovi domači mapi"
+
+#: ../data/totem.schemas.in.h:36
 msgid "Whether to enable debug for the playback engine"
 msgstr "Omogočeno delovanje razhroščevalnika za predvajalnik"
 
-#: ../data/uri.glade.h:1
+#: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Vnesite n_aslov datoteke, ki jo želite odpreti:"
 
-#: ../data/uri.glade.h:2
-msgid "Open Location"
-msgstr "Odpri mesto"
+#: ../lib/totem-scrsaver.c:117
+msgid "Playing a movie"
+msgstr "Predvajanje filma"
 
-#: ../data/vanity.desktop.in.in.h:1
-msgid "Vanity Webcam utility"
-msgstr "Vanity spletna kamera"
+#: ../src/totem-fullscreen.c:436
+msgid "No File"
+msgstr "Ni datoteke"
 
-#: ../data/vanity.desktop.in.in.h:2
-msgid "View live webcam and upload pictures"
-msgstr "Spletna kamera v živo in prenašanje slik"
-
-#: ../data/vanity.glade.h:1
-msgid "Save File"
-msgstr "Shrani datoteko"
-
-#: ../data/vanity.glade.h:2
-#: ../src/vanity.c:251
-msgid "Vanity"
-msgstr "Vanity"
-
-#: ../data/vanity.glade.h:3
-msgid "Vanity Preferences"
-msgstr "Lastnosti Vanity"
-
-#: ../data/vanity.glade.h:4
-msgid "Zoom 1:1"
-msgstr "Velikost 1:1"
-
-#: ../data/vanity.glade.h:5
-msgid "Zoom 1:2"
-msgstr "Velikost 1:2"
-
-#: ../data/vanity.glade.h:6
-msgid "Zoom 2:1"
-msgstr "Velikost 2:1"
-
-#: ../data/vanity.glade.h:7
-msgid "Zoom _1:1"
-msgstr "Velikost _1:1"
-
-#: ../data/vanity.glade.h:8
-msgid "Zoom _2:1"
-msgstr "Velikost _2:1"
-
-#: ../data/vanity.glade.h:9
-msgid "_Picture"
-msgstr "_Slika"
-
-#: ../data/vanity.glade.h:10
-msgid "_Zoom 1:2"
-msgstr "_Velikost 1:1"
-
-#: ../src/bacon-v4l-selection.c:191
-msgid "Unnamed CDROM"
-msgstr "Neimenovan CD"
-
-#: ../src/bacon-video-widget-properties.c:229
+#: ../src/totem-interface.c:115
+#: ../src/totem-interface.c:123
 #, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+msgid "Could not launch URL \"%s\": %s"
+msgstr "Ni mogoče zagnati naslova URL \"%s\": %s"
 
-#: ../src/bacon-video-widget-properties.c:232
+#: ../src/totem-interface.c:115
+msgid "Default browser not configured"
+msgstr "Privzet brskalnik ni nastavljen"
+
+#: ../src/totem-interface.c:116
+#: ../src/totem-interface.c:124
+msgid "Error launching URI"
+msgstr "Napaka med zaganjanjem URI"
+
+#: ../src/totem-interface.c:193
 #, c-format
-msgid "%d frames per second"
-msgstr "%d slik na sekundo"
+msgid "Couldn't load the '%s' interface. %s"
+msgstr "Ni mogoče naložiti '%s' vmesnika. %s"
 
-#: ../src/bacon-video-widget-properties.c:234
-#: ../src/bacon-video-widget-properties.c:251
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: ../src/bacon-video-widget-properties.c:254
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/bacon-video-widget-properties.c:294
-msgid "Properties dialog"
-msgstr "Pogovorno okno Lastnosti"
-
-#: ../src/bacon-volume.c:193
-msgid "Volume"
-msgstr "Glasnost"
-
-#. +
-#: ../src/bacon-volume.c:221
-msgid "+"
-msgstr "+"
-
-#: ../src/bacon-volume.c:223
-#: ../src/totem-options.c:47
-msgid "Volume Down"
-msgstr "Zmanjšaj glasnost"
-
-#. -
-#: ../src/bacon-volume.c:239
-msgid "-"
-msgstr "-"
-
-#: ../src/bacon-volume.c:241
-#: ../src/totem-options.c:46
-msgid "Volume Up"
-msgstr "Povečaj glasnost"
-
-#: ../src/bacon-volume.c:777
-msgid "Muted"
-msgstr "Utišan"
-
-#: ../src/bacon-volume.c:779
-msgid "Full Volume"
-msgstr "Največja glasnost"
-
-#: ../src/totem-interface.c:117
-#, c-format
-msgid "Couldn't load the '%s' interface."
-msgstr "Ni mogoče naložiti vmesnika '%s'."
-
-#: ../src/totem-interface.c:119
-#: ../src/totem-interface.c:121
-#: ../src/totem-menu.c:1379
+#: ../src/totem-interface.c:195
+#: ../src/totem-interface.c:197
 msgid "Make sure that Totem is properly installed."
-msgstr "Prepričajte se, da je Totem pravilno nameščen."
+msgstr "Prepričajte se, da je totem pravilno nameščen."
 
-#: ../src/totem-interface.c:236
+#: ../src/totem-interface.c:308
 msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
-msgstr "Totem je prosti program. Lahko ga razširjate in/ali spreminjate pod pogoji licence GNU General Public License kot jo je objavila organizacija Free Software Foundation; bodisi pod različico 2 ali (po vašem mnenju) katerokoli kasnejšo različico."
+msgstr "Totem je prosta programska oprema; lahko ga širite in spreminjati pod pogoji GNU splošne javne licence kot jo določa Free Software Foundation; različica 2  ali kasnejše različice."
 
-#: ../src/totem-interface.c:240
+#: ../src/totem-interface.c:312
 msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
-msgstr "Totem se razširja v upanju, da bo koristen, vendar BREZ ZAGOTOVILA KAKRŠNEGAKOLI JAMSTVA; tudi brez posrednega jamstva CENOVNE VREDNOSTI ali PRIMERNOSTI ZA DOLOČENO UPORABO. Za več podrobnosti si oglejte GNU General Public License."
+msgstr "Totem se lahko razširja prosto, vendar brez kakršnekoli garancije. Za več podrobnosti si oglejte GNU splošno javno licenco."
 
-#: ../src/totem-interface.c:244
+#: ../src/totem-interface.c:316
 msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
-msgstr "Skupaj s programom Totem bi morali prejeti kopijo licence GNU General Public License. Če je niste, pišite na Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"
+msgstr "S programom bo morali dobiti tudi kopijo GNU splošne javne licence; če je niste, pišite na Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:247
+#: ../src/totem-interface.c:319
 msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
-msgstr "Totem vsebuje izjemo, ki dovoli uporabo lastniških vstavkov GStreamer."
+msgstr "Program Totem ima dovoljenje za uporabo zaščitenih GStreamer vstavkov."
 
-#: ../src/totem-menu.c:284
+#: ../src/totem-menu.c:336
 msgid "None"
 msgstr "Noben"
 
-#: ../src/totem-menu.c:288
-#: ../src/totem-menu.c:1265
+#: ../src/totem-menu.c:340
+#: ../src/totem-menu.c:1295
 msgid "Auto"
 msgstr "Samodejno"
 
-#: ../src/totem-menu.c:774
+#: ../src/totem-menu.c:811
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Predvajaj disk '%s'"
 
-#: ../src/totem-menu.c:777
+#: ../src/totem-menu.c:814
 #, c-format
 msgid "device%d"
 msgstr "naprava%d"
 
-#: ../src/totem-menu.c:1093
+#: ../src/totem-menu.c:1126
 msgid "GTK+"
 msgstr "GTK+"
 
-#: ../src/totem-menu.c:1095
+#: ../src/totem-menu.c:1128
 msgid "GNOME"
 msgstr "GNOME"
 
 #. This lists the back-end and front-end types and versions, such as
 #. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1101
+#: ../src/totem-menu.c:1134
 #, c-format
 msgid "Movie Player using %s and %s"
-msgstr "Predvajalnik filmov uporablja %s in %s"
+msgstr "Predvajalnik uporablja %s in %s"
 
-#: ../src/totem-menu.c:1106
-#: ../browser-plugin/totem-plugin-viewer.c:1098
+#: ../src/totem-menu.c:1139
+#: ../browser-plugin/totem-plugin-viewer.c:1208
 msgid "Copyright © 2002-2006 Bastien Nocera"
 msgstr "Avtorske pravice © 2002-2006 Bastien Nocera"
 
-#: ../src/totem-menu.c:1111
-#: ../src/vanity.c:258
-#: ../browser-plugin/totem-plugin-viewer.c:1101
+#: ../src/totem-menu.c:1144
+#: ../browser-plugin/totem-plugin-viewer.c:1211
 msgid "translator-credits"
 msgstr ""
-"Matic Žgur <mr.zgur@gmail.com>\n"
-"Matej Urbančič <matej.urban@gmail.com>"
+"Matej Urbančič <matej.urban@gmail.com>\n"
+"Matic Žgur <mr.zgur@gmail.com>"
 
-#: ../src/totem-menu.c:1196
-msgid "_Movie"
-msgstr "_Film"
+#: ../src/totem-menu.c:1148
+msgid "Totem Website"
+msgstr "Spletna stran Totem"
 
-#: ../src/totem-menu.c:1197
-msgid "_Open..."
-msgstr "_Odpri ..."
+#: ../src/totem-menu.c:1183
+msgid "Configure Plugins"
+msgstr "Nastavitve vstavkov"
 
-#: ../src/totem-menu.c:1197
-msgid "Open a file"
-msgstr "Odpri datoteko"
-
-#: ../src/totem-menu.c:1198
-msgid "Open _Location..."
-msgstr "Odpri _mesto ..."
-
-#: ../src/totem-menu.c:1198
-msgid "Open a non-local file"
-msgstr "Odpri oddaljeno datoteko"
-
-#: ../src/totem-menu.c:1199
-msgid "_Eject"
-msgstr "_Izvrzi"
-
-#: ../src/totem-menu.c:1200
-msgid "_Properties"
-msgstr "_Lastnosti"
-
-#: ../src/totem-menu.c:1201
-msgid "Play / Pa_use"
-msgstr "Predvajaj / P_remor"
-
-#: ../src/totem-menu.c:1201
-msgid "Play or pause the movie"
-msgstr "Predvajaj ali zamrzni predvajanje filma"
-
-#: ../src/totem-menu.c:1202
-msgid "_Quit"
-msgstr "_Končaj"
-
-#: ../src/totem-menu.c:1202
-msgid "Quit the program"
-msgstr "Konča program"
-
-#: ../src/totem-menu.c:1204
-msgid "_Edit"
-msgstr "_Uredi"
-
-#: ../src/totem-menu.c:1205
-msgid "Take _Screenshot..."
-msgstr "Zajemi zaslonsko _sliko ..."
-
-#: ../src/totem-menu.c:1205
-msgid "Take a screenshot"
-msgstr "Zajemi zaslonsko sliko"
-
-#: ../src/totem-menu.c:1206
-msgid "_Clear Playlist"
-msgstr "_Počisti predvajalni seznam"
-
-#: ../src/totem-menu.c:1206
-msgid "Clear playlist"
-msgstr "Počisti predvajalni seznam"
-
-#: ../src/totem-menu.c:1207
-msgid "Prefere_nces"
-msgstr "_Nastavitve"
-
-#: ../src/totem-menu.c:1209
-msgid "_View"
-msgstr "P_ogled"
-
-#: ../src/totem-menu.c:1210
-msgid "_Fullscreen"
-msgstr "_Celozaslonski način"
-
-#: ../src/totem-menu.c:1210
-msgid "Switch to fullscreen"
-msgstr "Preklopi na celozaslonski način"
-
-#: ../src/totem-menu.c:1211
-msgid "Fit Window to Movie"
-msgstr "Prilagodi okno filmu"
-
-#: ../src/totem-menu.c:1212
-msgid "_Resize 1:2"
-msgstr "_Pomanjšaj na 1:2"
-
-#: ../src/totem-menu.c:1212
-msgid "Resize to half the video size"
-msgstr "Prilagodi na polovično velikost filma"
-
-#: ../src/totem-menu.c:1213
-msgid "Resize _1:1"
-msgstr "Velikost _1:1"
-
-#: ../src/totem-menu.c:1213
-msgid "Resize to video size"
-msgstr "Prilagodi velikost filmu"
-
-#: ../src/totem-menu.c:1214
-msgid "Resize _2:1"
-msgstr "Velikost _2:1"
-
-#: ../src/totem-menu.c:1214
-msgid "Resize to twice the video size"
-msgstr "Prilagodi na dvojno velikost filma"
-
-#: ../src/totem-menu.c:1215
-msgid "_Aspect Ratio"
-msgstr "R_azmerje velikosti"
-
-#: ../src/totem-menu.c:1216
-msgid "Switch An_gles"
-msgstr "Preklopi gledišče"
-
-#: ../src/totem-menu.c:1216
-msgid "Switch angles"
-msgstr "Preklopi gledišče"
-
-#. { "subtitles-menu", NULL, N_("S_ubtitles") },
-#: ../src/totem-menu.c:1219
-msgid "_Go"
-msgstr "_Pojdi"
-
-#: ../src/totem-menu.c:1220
-msgid "_DVD Menu"
-msgstr "_DVD Meni"
-
-#: ../src/totem-menu.c:1220
-msgid "Go to the DVD menu"
-msgstr "Pojdi na DVD meni"
-
-#: ../src/totem-menu.c:1221
-msgid "_Title Menu"
-msgstr "_Naslovni meni"
-
-#: ../src/totem-menu.c:1221
-msgid "Go to the title menu"
-msgstr "Pojdi na naslovni meni"
-
-#: ../src/totem-menu.c:1222
-msgid "A_udio Menu"
-msgstr "A_vdio meni"
-
-#: ../src/totem-menu.c:1222
-msgid "Go to the audio menu"
-msgstr "Pojdi na avdio meni"
-
-#: ../src/totem-menu.c:1223
-msgid "_Angle Menu"
-msgstr "Meni gledišč_a"
-
-#: ../src/totem-menu.c:1223
-msgid "Go to the angle menu"
-msgstr "Pojdi na meni gledišča"
-
-#: ../src/totem-menu.c:1224
-msgid "_Chapter Menu"
-msgstr "_Meni poglavij"
-
-#: ../src/totem-menu.c:1224
-msgid "Go to the chapter menu"
-msgstr "Pojdi na meni poglavij"
-
-#: ../src/totem-menu.c:1225
-msgid "_Next Chapter/Movie"
-msgstr "Naslednje poglavje/film"
-
-#: ../src/totem-menu.c:1225
-msgid "Next chapter or movie"
-msgstr "Naslednje poglavje ali film"
-
-#: ../src/totem-menu.c:1226
-msgid "_Previous Chapter/Movie"
-msgstr "Prejšnje poglavje/film"
-
-#: ../src/totem-menu.c:1226
-msgid "Previous chapter or movie"
-msgstr "Predhodno poglavje ali film"
-
-#: ../src/totem-menu.c:1227
-msgid "_Skip to..."
-msgstr "Pre_skoči na ..."
-
-#: ../src/totem-menu.c:1227
-msgid "Skip to a specific time"
-msgstr "Preskoči na določen čas"
-
-#: ../src/totem-menu.c:1229
-msgid "_Sound"
-msgstr "_Zvok"
-
-#. { "languages-menu", NULL, N_("_Languages") },
-#: ../src/totem-menu.c:1231
-msgid "Volume _Up"
-msgstr "P_ovečaj glasnost"
-
-#: ../src/totem-menu.c:1231
-msgid "Volume up"
-msgstr "Povečaj glasnost"
-
-#: ../src/totem-menu.c:1232
-msgid "Volume _Down"
-msgstr "Znižaj glasnost"
-
-#: ../src/totem-menu.c:1232
-msgid "Volume down"
-msgstr "Zmanjšaj glasnost"
-
-#: ../src/totem-menu.c:1234
-msgid "_Help"
-msgstr "_Pomoč"
-
-#: ../src/totem-menu.c:1235
-msgid "_Contents"
-msgstr "Vsebina"
-
-#: ../src/totem-menu.c:1235
-msgid "Help contents"
-msgstr "Vsebina pomoči"
-
-#: ../src/totem-menu.c:1236
-msgid "_About"
-msgstr "_O programu"
-
-#: ../src/totem-menu.c:1240
-msgid "Zoom In"
-msgstr "Povečaj"
-
-#: ../src/totem-menu.c:1240
-msgid "Zoom in"
-msgstr "Povečaj"
-
-#: ../src/totem-menu.c:1241
-msgid "Zoom Reset"
-msgstr "Privzeta velikost"
-
-#: ../src/totem-menu.c:1241
-msgid "Zoom reset"
-msgstr "Privzeta velikost"
-
-#: ../src/totem-menu.c:1242
-msgid "Zoom Out"
-msgstr "Pomanjšaj"
-
-#: ../src/totem-menu.c:1242
-msgid "Zoom out"
-msgstr "Pomanjšaj"
-
-#: ../src/totem-menu.c:1246
-#: ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1277
+#: ../src/totem-menu.c:1282
 msgid "Skip _Forward"
 msgstr "Preskoči na_prej"
 
-#: ../src/totem-menu.c:1246
-#: ../src/totem-menu.c:1251
+#: ../src/totem-menu.c:1277
+#: ../src/totem-menu.c:1282
 msgid "Skip forward"
 msgstr "Preskoči naprej"
 
-#: ../src/totem-menu.c:1247
-#: ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1278
+#: ../src/totem-menu.c:1283
 msgid "Skip _Backwards"
 msgstr "Preskoči na_zaj"
 
-#: ../src/totem-menu.c:1247
-#: ../src/totem-menu.c:1252
+#: ../src/totem-menu.c:1278
+#: ../src/totem-menu.c:1283
 msgid "Skip backwards"
 msgstr "Preskoči nazaj"
 
-#: ../src/totem-menu.c:1256
+#: ../src/totem-menu.c:1287
 msgid "_Repeat Mode"
-msgstr "_Ponavljajoče izvajanje"
+msgstr "_Ponavljajoče predvajanje"
 
-#: ../src/totem-menu.c:1256
+#: ../src/totem-menu.c:1287
 msgid "Set the repeat mode"
-msgstr "Nastavi ponavljajoče izvajanje"
+msgstr "Nastavi ponavljajoče predvajanje"
 
-#: ../src/totem-menu.c:1257
+#: ../src/totem-menu.c:1288
 msgid "Shuff_le Mode"
-msgstr "Pre_mešano izvajanje"
+msgstr "Pre_mešano predvajanje"
 
-#: ../src/totem-menu.c:1257
+#: ../src/totem-menu.c:1288
 msgid "Set the shuffle mode"
-msgstr "Nastavi premešano izvajanje"
+msgstr "Nastavi premešano predvajanje"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1289
 msgid "_Deinterlace"
 msgstr "_Razpletanje"
 
-#: ../src/totem-menu.c:1258
+#: ../src/totem-menu.c:1289
 msgid "Deinterlace"
 msgstr "Razpletanje"
 
-#: ../src/totem-menu.c:1259
-msgid "Always on _Top"
-msgstr "Vedno na _vrhu"
-
-#: ../src/totem-menu.c:1259
-msgid "Always on top"
-msgstr "Vedno na vrhu"
-
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1290
 msgid "Show _Controls"
 msgstr "Pokaži _ukazne gumbe"
 
-#: ../src/totem-menu.c:1260
+#: ../src/totem-menu.c:1290
 msgid "Show controls"
 msgstr "Pokaži ukazne gumbe"
 
-#: ../src/totem-menu.c:1261
-msgid "_Sidebar"
-msgstr "_Stranska vrstica"
+#: ../src/totem-menu.c:1291
+msgid "S_idebar"
+msgstr "_Bočno okno"
 
-#: ../src/totem-menu.c:1261
+#: ../src/totem-menu.c:1291
 msgid "Show or hide the sidebar"
-msgstr "Pokaži ali skrij stransko vrstico"
+msgstr "Pokaži ali skrij bočno okno"
 
-#: ../src/totem-menu.c:1265
+#: ../src/totem-menu.c:1295
 msgid "Sets automatic aspect ratio"
-msgstr "Prevzemi razmerje avtomatično"
+msgstr "Določitev samodejnega razmerja velikosti"
 
-#: ../src/totem-menu.c:1266
+#: ../src/totem-menu.c:1296
 msgid "Square"
 msgstr "Kvadrat"
 
-#: ../src/totem-menu.c:1266
+#: ../src/totem-menu.c:1296
 msgid "Sets square aspect ratio"
 msgstr "Prevzemi razmerje kvadrata"
 
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1297
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:1297
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Prevzemi razmerje 4:3 (TV)"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1298
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (Widescreen)"
 
-#: ../src/totem-menu.c:1268
+#: ../src/totem-menu.c:1298
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Prevzemi razmerje 16:9 (anamorfno)"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1299
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1269
+#: ../src/totem-menu.c:1299
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "Prevzemi razmerje 2.11:1 (DVB)"
 
-#: ../src/totem-menu.c:1329
-msgid "S_ubtitles"
-msgstr "_Podnapisi"
+#: ../src/totem-open-location.c:170
+msgid "Open Location..."
+msgstr "Odpri povezavo..."
 
-#: ../src/totem-menu.c:1335
-msgid "_Languages"
-msgstr "_Jeziki"
-
-#: ../src/totem-menu.c:1378
-msgid "Couldn't load the 'ui description' file"
-msgstr "Ni mogoče naložiti datoteke z opisom uporabniškega vmesnika"
-
-#: ../src/totem-options.c:38
+#: ../src/totem-options.c:37
 msgid "Enable debug"
 msgstr "Omogoči razhroščevanje"
 
-#: ../src/totem-options.c:39
+#: ../src/totem-options.c:38
 msgid "Play/Pause"
-msgstr "Predvajanje/Premor"
+msgstr "Predvajanje/Pavza"
 
-#: ../src/totem-options.c:40
-#: ../src/totem.c:294
-#: ../src/totem.c:302
+#: ../src/totem-options.c:39
+#: ../src/totem.c:298
+#: ../src/totem.c:308
 msgid "Play"
 msgstr "Predvajaj"
 
-#: ../src/totem-options.c:41
-#: ../src/totem.c:288
+#: ../src/totem-options.c:40
+#: ../src/totem.c:291
 msgid "Pause"
-msgstr "Premor"
+msgstr "Pavza"
 
-#: ../src/totem-options.c:42
+#: ../src/totem-options.c:41
 msgid "Next"
 msgstr "Naslednji"
 
-#: ../src/totem-options.c:43
+#: ../src/totem-options.c:42
 msgid "Previous"
 msgstr "Predhodni"
 
-#: ../src/totem-options.c:44
+#: ../src/totem-options.c:43
 msgid "Seek Forwards"
 msgstr "Poišči naprej"
 
-#: ../src/totem-options.c:45
+#: ../src/totem-options.c:44
 msgid "Seek Backwards"
 msgstr "Poišči nazaj"
 
-#: ../src/totem-options.c:48
+#: ../src/totem-options.c:45
+msgid "Volume Up"
+msgstr "Povečaj glasnost"
+
+#: ../src/totem-options.c:46
+msgid "Volume Down"
+msgstr "Zmanjšaj glasnost"
+
+#: ../src/totem-options.c:47
 msgid "Toggle Fullscreen"
-msgstr "Preklopi na celozaslonski način"
+msgstr "Preskakovanje zaslona"
+
+#: ../src/totem-options.c:48
+msgid "Show/Hide Controls"
+msgstr "Pokaži/skrij ukazne gumbe"
 
 #: ../src/totem-options.c:49
-msgid "Show/Hide Controls"
-msgstr "Pokaži/skri ukazne gumbe"
-
-#: ../src/totem-options.c:50
 msgid "Quit"
 msgstr "Zaključi"
 
-#: ../src/totem-options.c:51
+#: ../src/totem-options.c:50
 msgid "Enqueue"
 msgstr "Razvrsti"
 
-#: ../src/totem-options.c:52
+#: ../src/totem-options.c:51
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#. FIXME translate
+#. translators: this option prints the current movie's title on the command-line
+#: ../src/totem-options.c:53
+msgid "Print playing movie"
+msgstr "Izpis naslova predvajanega posnetka"
+
 #: ../src/totem-options.c:54
 msgid "Seek"
-msgstr "Išči"
+msgstr "Iskanje"
 
 #: ../src/totem-options.c:55
 msgid "Playlist index"
-msgstr "Kazalo predvajalnega seznama"
+msgstr "Indeks seznama predvajanja"
 
 #: ../src/totem-options.c:56
 msgid "Movies to play"
 msgstr "Filmi za predvajanje"
 
-#: ../src/totem-playlist.c:143
-msgid "_Remove"
-msgstr "_Odstrani"
-
-#: ../src/totem-playlist.c:143
-msgid "Remove file from playlist"
-msgstr "Odstrani iz predvajalnega seznama"
-
-#: ../src/totem-playlist.c:144
-msgid "_Copy Location"
-msgstr "_Kopiraj mesto"
-
-#: ../src/totem-playlist.c:144
-msgid "Copy the location to the clipboard"
-msgstr "Kopira mesto v odložišče"
-
-#: ../src/totem-playlist.c:362
-#: ../src/totem-playlist.c:901
+#: ../src/totem-playlist.c:327
+#: ../src/totem-playlist.c:885
 msgid "Could not save the playlist"
-msgstr "Ni mogoče shraniti predvajalnega seznama"
+msgstr "Ni mogoče shraniti seznama predvajanja"
 
-#: ../src/totem-playlist.c:901
+#: ../src/totem-playlist.c:885
 msgid "Unknown file extension."
-msgstr "Neznana pripona datoteke."
+msgstr "Neznana končnica datoteke."
 
-#: ../src/totem-playlist.c:914
+#: ../src/totem-playlist.c:898
 msgid "Select playlist format:"
-msgstr "Izberite vrsto predvajalnega seznama:"
+msgstr "Izbor zapisa seznama predvajanja:"
 
-#: ../src/totem-playlist.c:919
+#: ../src/totem-playlist.c:903
 msgid "By extension"
-msgstr "Po priponi"
+msgstr "Po končnici"
 
-#: ../src/totem-playlist.c:949
+#: ../src/totem-playlist.c:933
 msgid "Save Playlist"
-msgstr "Shrani predvajalni seznam"
+msgstr "Shrani seznam predvajanja"
 
-#: ../src/totem-playlist.c:1507
-msgid "playlist"
-msgstr "predvajalni seznam"
+#. translators: Playlist is the default saved playlist filename,
+#. * without the suffix
+#: ../src/totem-playlist.c:944
+#: ../src/totem-sidebar.c:105
+msgid "Playlist"
+msgstr "Seznam predvajanja"
 
-#: ../src/totem-playlist.c:1652
-msgid "Playlist error"
-msgstr "Napaka predvajalnega seznama"
-
-#: ../src/totem-playlist.c:1652
+#: ../src/totem-playlist.c:1646
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
-msgstr "Predvajalnega seznama '%s' ni mogoče razčleniti. Morda je poškodovan."
+msgstr "Seznama predvajanja '%s' ni mogoče razčleniti. Morda je poškodovana."
 
-#: ../src/totem-preferences.c:85
+#: ../src/totem-playlist.c:1647
+msgid "Playlist error"
+msgstr "Napaka seznama predvajanja"
+
+#: ../src/totem-preferences.c:104
 msgid "Enable visual effects?"
-msgstr "Omogočim vizualne efekte?"
+msgstr "Omogočim vizualne učinke?"
 
-#: ../src/totem-preferences.c:87
+#: ../src/totem-preferences.c:106
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
 msgstr ""
-"Izgleda, da je Totem zagnan preko omrežja.\n"
-"Ali ste prepričani, da želite naložiti vizualne efekte?"
+"Videti je, da je program Totem zagnan preko omrežja.\n"
+"Ste prepričani, da želite naložiti vizualne učinke?"
 
-#: ../src/totem-preferences.c:140
+#: ../src/totem-preferences.c:159
 msgid "The change of this setting will only take effect for the next movie, or when Totem is restarted."
 msgstr "Sprememba te nastavitve bo vstopila v veljavo šele ob zagonu naslednjega filma ali ob ponovnem zagonu programa."
 
-#: ../src/totem-preferences.c:284
+#: ../src/totem-preferences.c:303
 msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr "Spreminjanje nastavitev vizualnih efektov, zahteva ponoven zagon programa."
+msgstr "Spreminjanje nastavitev vizualnih učinkov, zahteva ponoven zagon programa."
 
-#: ../src/totem-preferences.c:368
+#: ../src/totem-preferences.c:387
 msgid "The change of audio output type will only take effect when Totem is restarted."
-msgstr "Spreminjanje avdio nastavitev zahteva ponovni zagon programa."
+msgstr "Spreminjanje zvočnih nastavitev zahteva ponovni zagon programa."
 
-#: ../src/totem-preferences.c:622
+#: ../src/totem-preferences.c:475
+msgid "Preferences"
+msgstr "Lastnosti"
+
+#: ../src/totem-preferences.c:621
 msgid "Select Subtitle Font"
 msgstr "Izberi pisavo podnapisov"
 
 #. FIXME this should be setting an error?
-#: ../src/totem-properties-main.c:117
-#: ../src/totem-properties-view.c:84
-#: ../src/totem-properties-view.c:92
+#: ../src/totem-properties-main.c:114
+#: ../src/totem-properties-view.c:85
+#: ../src/totem-properties-view.c:93
 msgid "Audio/Video"
-msgstr "Avdio/Video"
+msgstr "Zvok / Slika"
 
-#: ../src/totem-properties-view.c:86
-msgid "Video"
-msgstr "Video"
-
-#: ../src/totem-screenshot.c:149
-#: ../src/totem-screenshot.c:160
+#: ../src/totem-screenshot.c:59
+#: ../src/totem-screenshot.c:69
 #, c-format
 msgid "Screenshot%d.png"
-msgstr "ZaslonskaSlika%d.png"
+msgstr "zaslonskaslika%d.png"
 
-#: ../src/totem-screenshot.c:202
-#, c-format
-msgid "File '%s' already exists."
-msgstr "Datoteka '%s' že obstaja."
+#: ../src/totem-screenshot.c:92
+msgid "Screenshot.png"
+msgstr "zaslonskaslika.png"
 
-#: ../src/totem-screenshot.c:204
-msgid "The screenshot was not saved"
-msgstr "Zaslonska slika ni bila shranjena"
-
-#: ../src/totem-screenshot.c:215
+#: ../src/totem-screenshot.c:168
 msgid "There was an error saving the screenshot."
 msgstr "Prišlo je do napake pri shranjevanju zaslonske slike"
 
-#: ../src/totem-screenshot.c:248
-msgid "Screenshot.png"
-msgstr "ZaslonskaSlika.png"
+#: ../src/totem-screenshot.c:218
+msgid "Save Screenshot"
+msgstr "Shrani zajeto sliko"
 
-#: ../src/totem-scrsaver.c:117
-msgid "Playing a movie"
-msgstr "Predvajanje filma"
-
-#: ../src/totem-statusbar.c:92
-msgid "Shadow type"
-msgstr "Tip sence"
-
-#: ../src/totem-statusbar.c:93
-msgid "Style of bevel around the statusbar text"
-msgstr "Stil nagiba okoli besedila statusne vrstice"
-
-#: ../src/totem-statusbar.c:126
-#: ../src/totem.c:298
-#: ../src/totem.c:960
-#: ../browser-plugin/totem-plugin-viewer.c:279
-msgid "Stopped"
-msgstr "Prekinjen"
-
-#: ../src/totem-statusbar.c:144
+#: ../src/totem-statusbar.c:106
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:187
+#: ../src/totem-statusbar.c:111
+#: ../src/totem.c:303
+#: ../src/totem.c:857
+#: ../browser-plugin/totem-plugin-viewer.c:313
+msgid "Stopped"
+msgstr "Prekinjen"
+
+#: ../src/totem-statusbar.c:128
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Streaming)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:194
-#: ../src/totem-time-label.c:85
+#: ../src/totem-statusbar.c:135
+#: ../src/totem-time-label.c:75
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:197
-#: ../src/totem-time-label.c:88
+#: ../src/totem-statusbar.c:138
+#: ../src/totem-time-label.c:78
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Poišči na  %s / %s"
 
-#: ../src/totem-statusbar.c:271
+#: ../src/totem-statusbar.c:210
 msgid "Buffering"
 msgstr "Polnjenje medpomnilnika"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:274
+#: ../src/totem-statusbar.c:221
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:335
+#: ../src/totem-statusbar.c:291
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:340
+#: ../src/totem-statusbar.c:296
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
 
 #: ../src/totem-subtitle-encoding.c:158
 msgid "Current Locale"
-msgstr "Trenutno jezikovno okolje"
+msgstr "Trenutni locale"
 
 #: ../src/totem-subtitle-encoding.c:161
 #: ../src/totem-subtitle-encoding.c:163
 #: ../src/totem-subtitle-encoding.c:165
 #: ../src/totem-subtitle-encoding.c:167
 msgid "Arabic"
-msgstr "Arabsko"
+msgstr "Arabski"
 
 #: ../src/totem-subtitle-encoding.c:170
 msgid "Armenian"
-msgstr "Armensko"
+msgstr "Armenski"
 
 #: ../src/totem-subtitle-encoding.c:173
 #: ../src/totem-subtitle-encoding.c:175
 #: ../src/totem-subtitle-encoding.c:177
 msgid "Baltic"
-msgstr "Baltsko"
+msgstr "Baltski"
 
 #: ../src/totem-subtitle-encoding.c:180
 msgid "Celtic"
-msgstr "Keltsko"
+msgstr "Keltski"
 
 #: ../src/totem-subtitle-encoding.c:183
 #: ../src/totem-subtitle-encoding.c:185
 #: ../src/totem-subtitle-encoding.c:187
 #: ../src/totem-subtitle-encoding.c:189
 msgid "Central European"
-msgstr "Srednjeevropsko"
+msgstr "Srednjeevropski"
 
 #: ../src/totem-subtitle-encoding.c:192
 #: ../src/totem-subtitle-encoding.c:194
 #: ../src/totem-subtitle-encoding.c:196
 #: ../src/totem-subtitle-encoding.c:198
 msgid "Chinese Simplified"
-msgstr "Poenostavljeno kitajsko"
+msgstr "Kitajski poenostavljen"
 
 #: ../src/totem-subtitle-encoding.c:201
 #: ../src/totem-subtitle-encoding.c:203
 #: ../src/totem-subtitle-encoding.c:205
 msgid "Chinese Traditional"
-msgstr "Tradicionalno kitajsko"
+msgstr "Kitajski tradicionalen"
 
 #: ../src/totem-subtitle-encoding.c:208
 msgid "Croatian"
-msgstr "Hrvaško"
+msgstr "Hrvaški"
 
 #: ../src/totem-subtitle-encoding.c:211
 #: ../src/totem-subtitle-encoding.c:213
@@ -1379,94 +925,94 @@ msgstr "Hrvaško"
 #: ../src/totem-subtitle-encoding.c:219
 #: ../src/totem-subtitle-encoding.c:221
 msgid "Cyrillic"
-msgstr "Cirilsko"
+msgstr "Cirilica"
 
 #: ../src/totem-subtitle-encoding.c:224
 msgid "Cyrillic/Russian"
-msgstr "Cirilica / Rusko"
+msgstr "Cirilica/Ruski"
 
 #: ../src/totem-subtitle-encoding.c:227
 #: ../src/totem-subtitle-encoding.c:229
 msgid "Cyrillic/Ukrainian"
-msgstr "Cirilica / Ukrajinsko"
+msgstr "Cirilica/ukrajinski"
 
 #: ../src/totem-subtitle-encoding.c:232
 msgid "Georgian"
-msgstr "Gruzijsko"
+msgstr "Gruzijski"
 
 #: ../src/totem-subtitle-encoding.c:235
 #: ../src/totem-subtitle-encoding.c:237
 #: ../src/totem-subtitle-encoding.c:239
 msgid "Greek"
-msgstr "Grško"
+msgstr "Grški"
 
 #: ../src/totem-subtitle-encoding.c:242
 msgid "Gujarati"
-msgstr "Gujaratsko"
+msgstr "Gujaratski"
 
 #: ../src/totem-subtitle-encoding.c:245
 msgid "Gurmukhi"
-msgstr "Gurmukijsko"
+msgstr "Gurmukhijski"
 
 #: ../src/totem-subtitle-encoding.c:248
 #: ../src/totem-subtitle-encoding.c:250
 #: ../src/totem-subtitle-encoding.c:252
 #: ../src/totem-subtitle-encoding.c:254
 msgid "Hebrew"
-msgstr "Hebrejsko"
+msgstr "Hebrejski"
 
 #: ../src/totem-subtitle-encoding.c:257
 msgid "Hebrew Visual"
-msgstr "Hebrejsko Visual"
+msgstr "Hebrejski vizualni"
 
 #: ../src/totem-subtitle-encoding.c:260
 msgid "Hindi"
-msgstr "Hindujsko"
+msgstr "Hindujski"
 
 #: ../src/totem-subtitle-encoding.c:263
 msgid "Icelandic"
-msgstr "Islandsko"
+msgstr "Islandski"
 
 #: ../src/totem-subtitle-encoding.c:266
 #: ../src/totem-subtitle-encoding.c:268
 #: ../src/totem-subtitle-encoding.c:270
 msgid "Japanese"
-msgstr "Japonsko"
+msgstr "Japonski"
 
 #: ../src/totem-subtitle-encoding.c:273
 #: ../src/totem-subtitle-encoding.c:275
 #: ../src/totem-subtitle-encoding.c:277
 #: ../src/totem-subtitle-encoding.c:279
 msgid "Korean"
-msgstr "Korejsko"
+msgstr "Korejski"
 
 #: ../src/totem-subtitle-encoding.c:282
 msgid "Nordic"
-msgstr "Nordijsko"
+msgstr "Nordijski"
 
 #: ../src/totem-subtitle-encoding.c:285
 msgid "Persian"
-msgstr "Perzijsko"
+msgstr "Perzijski"
 
 #: ../src/totem-subtitle-encoding.c:288
 #: ../src/totem-subtitle-encoding.c:290
 msgid "Romanian"
-msgstr "Romunsko"
+msgstr "Romunski"
 
 #: ../src/totem-subtitle-encoding.c:293
 msgid "South European"
-msgstr "Južnoevropsko"
+msgstr "Južnoevropski"
 
 #: ../src/totem-subtitle-encoding.c:296
 msgid "Thai"
-msgstr "Tajsko"
+msgstr "Tajski"
 
 #: ../src/totem-subtitle-encoding.c:299
 #: ../src/totem-subtitle-encoding.c:301
 #: ../src/totem-subtitle-encoding.c:303
 #: ../src/totem-subtitle-encoding.c:305
 msgid "Turkish"
-msgstr "Turško"
+msgstr "Turški"
 
 #: ../src/totem-subtitle-encoding.c:308
 #: ../src/totem-subtitle-encoding.c:310
@@ -1482,453 +1028,392 @@ msgstr "Unicode"
 #: ../src/totem-subtitle-encoding.c:325
 #: ../src/totem-subtitle-encoding.c:327
 msgid "Western"
-msgstr "Zahodno"
+msgstr "Zahodnjaški"
 
 #: ../src/totem-subtitle-encoding.c:330
 #: ../src/totem-subtitle-encoding.c:332
 #: ../src/totem-subtitle-encoding.c:334
 msgid "Vietnamese"
-msgstr "Vietnamsko"
+msgstr "Vietnamski"
 
-#: ../src/totem-uri.c:234
+#: ../src/totem-uri.c:403
 msgid "All files"
 msgstr "Vse datoteke"
 
-#: ../src/totem-uri.c:239
+#: ../src/totem-uri.c:408
 msgid "Supported files"
 msgstr "Podprte datoteke"
 
-#: ../src/totem-uri.c:251
+#: ../src/totem-uri.c:420
 msgid "Audio files"
-msgstr "Avdio datoteke"
+msgstr "Zvočne datoteke"
 
-#: ../src/totem-uri.c:259
+#: ../src/totem-uri.c:428
 msgid "Video files"
-msgstr "Video datoteke"
+msgstr "Slikovne datoteke"
 
-#: ../src/totem-uri.c:286
+#: ../src/totem-uri.c:500
 msgid "Select Movies or Playlists"
-msgstr "Izberite filme ali predvajalni seznam"
+msgstr "Izberite filme ali sezname predvajanja"
 
-#: ../src/totem.c:286
-#: ../browser-plugin/totem-plugin-viewer.c:294
+#: ../src/totem.c:289
+#: ../browser-plugin/totem-plugin-viewer.c:329
 msgid "Playing"
 msgstr "Predvajanje"
 
-#: ../src/totem.c:292
-#: ../browser-plugin/totem-plugin-viewer.c:290
+#: ../src/totem.c:296
+#: ../browser-plugin/totem-plugin-viewer.c:325
 msgid "Paused"
-msgstr "Premor"
+msgstr "Pavza"
 
-#: ../src/totem.c:344
-msgid "Totem could not eject the optical media."
-msgstr "Totem ni uspel izvreči optičnega medija."
-
-#: ../src/totem.c:378
-#: ../src/totem.c:407
-#: ../src/totem.c:1074
-#: ../src/totem.c:1184
+#: ../src/totem.c:377
+#: ../src/totem.c:404
+#: ../src/totem.c:955
+#: ../src/totem.c:1075
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ne more predvajati '%s'."
 
-#: ../src/totem.c:468
+#: ../src/totem.c:471
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
+msgstr "Ni mogoče predvajati te vrste posnetka (%s), ker v niso nameščeni primerni vstavki za predvajanje."
+
+#: ../src/totem.c:473
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "Totem ne more predvajati tega tipa medija (%s), ker nimate primernih vključkov za njegovo delovanje."
 
-#: ../src/totem.c:469
+#: ../src/totem.c:474
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
-msgstr "Prosim naložite potrebne vključke in ponovno zaženite program za predvajanje tega medija."
+msgstr "Prosim, naložite potrebne vključke in ponovno zaženite program za predvajanje tega medija."
 
-#: ../src/totem.c:477
+#: ../src/totem.c:475
+msgid "More information about media plugins"
+msgstr "Več podrobnosti o vstavkih zapisov posnetkov"
+
+#: ../src/totem.c:483
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "Totem ne more predvajati medija (%s), čeprav je vključen pravilno naložen."
 
-#: ../src/totem.c:478
+#: ../src/totem.c:484
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Preverite, če je disk v pogonu in če je pravilno nastavljen."
 
-#: ../src/totem.c:506
+#: ../src/totem.c:512
 msgid "Totem was not able to play this disc."
-msgstr "Totem ne more predvajati tega diska."
+msgstr "Ni mogoče predvajati diska."
 
-#: ../src/totem.c:507
-#: ../src/totem.c:3255
-#: ../browser-plugin/totem-plugin-viewer.c:1428
+#: ../src/totem.c:513
+#: ../src/totem.c:2900
+#: ../browser-plugin/totem-plugin-viewer.c:1767
 msgid "No reason."
 msgstr "Brez razloga."
 
-#: ../src/totem.c:765
-msgid "Open Location..."
-msgstr "Odpri mesto ..."
+#: ../src/totem.c:534
+msgid "Totem does not support playback of Audio CDs"
+msgstr "Program Totem ne podpira predvajanja zvočnih CD-jev"
 
-#: ../src/totem.c:859
-#: ../src/totem.c:867
-#: ../src/vanity.c:292
-#: ../src/vanity.c:300
+#: ../src/totem.c:535
+msgid "Please consider using a music player or a CD extractor to play this CD"
+msgstr "Uporabite predvajalnik glasbe ali pa pretvorite zapis na zvočnem CD-ju."
+
+#: ../src/totem.c:774
+#: ../src/totem.c:782
 msgid "Totem could not get a screenshot of that film."
-msgstr "Totem ni uspel zajeti zaslonske slike iz tega filma."
+msgstr "Program Totem ne more zajeti zaslonske slike tega filma."
 
-#: ../src/totem.c:867
-#: ../src/vanity.c:300
+#: ../src/totem.c:782
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Do te napake naj ne bi prišlo; prosim pošljite poročilo o hrošču."
+msgstr "Do te napake naj ne bi prišlo; prosim, pošljite poročilo o hrošču."
 
-#: ../src/totem.c:967
-msgid "No File"
-msgstr "Ni datoteke"
-
-#: ../src/totem.c:1080
+#: ../src/totem.c:961
 msgid "No error message"
-msgstr "Ni sporočil o napaki"
+msgstr "Ni sporočil o napakah"
 
-#: ../src/totem.c:1296
+#: ../src/totem.c:1198
 msgid "Totem could not display the help contents."
-msgstr "Totem ni uspel zagnati vsebine pomoči."
+msgstr "Program Totem ne more zagnati vsebine pomoči."
 
-#: ../src/totem.c:1559
-#: ../src/totem.c:1561
-#: ../browser-plugin/totem-plugin-viewer.c:1284
+#: ../src/totem.c:1465
+#: ../src/totem.c:1467
+#: ../browser-plugin/totem-plugin-viewer.c:1551
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: ../src/totem.c:1889
-#, c-format
-msgid "Totem could not seek in '%s'."
-msgstr "Totem ne more iskati v '%s'."
-
-#: ../src/totem.c:3056
+#: ../src/totem.c:2765
+#: ../src/totem.c:2767
 msgid "Previous Chapter/Movie"
 msgstr "Prejšnje poglavje/film"
 
-#: ../src/totem.c:3062
+#: ../src/totem.c:2773
+#: ../src/totem.c:2775
 msgid "Play / Pause"
 msgstr "Predvajaj / Premor"
 
-#: ../src/totem.c:3069
+#: ../src/totem.c:2782
+#: ../src/totem.c:2784
 msgid "Next Chapter/Movie"
 msgstr "Naslednje poglavje/film"
 
-#: ../src/totem.c:3255
+#: ../src/totem.c:2900
 msgid "Totem could not startup."
 msgstr "Totem se ne more zagnati"
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3037
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ni mogoče naložiti knjižnic varovanja niti."
 
-#: ../src/totem.c:3404
+#: ../src/totem.c:3037
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Preverite sistemske nastavitve. Totem se bo izključil."
 
 #. Handle command line arguments
-#: ../src/totem.c:3411
+#: ../src/totem.c:3045
 msgid "- Play movies and songs"
-msgstr "- Predvajanje filmov in skladb"
+msgstr "- Predvajaj filme in glasbo"
 
-#: ../src/totem.c:3419
+#: ../src/totem.c:3054
 msgid "Totem could not parse the command-line options"
-msgstr "Totem ne more razčleniti možnosti ukazne vrstice"
+msgstr "Predvajalnik Totem ne more razčleniti možnosti ukazne vrstice."
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3073
 msgid "Totem could not initialize the configuration engine."
-msgstr "Totem ni uspel zagnati orodja za nastavljanje."
+msgstr "Program Totem ne more zagnati orodja za nastavljanje."
 
-#: ../src/totem.c:3438
+#: ../src/totem.c:3073
 msgid "Make sure that GNOME is properly installed."
 msgstr "Prepričajte se, da je GNOME pravilno nameščen."
 
-#. Main window
-#: ../src/totem.c:3466
-msgid "main window"
-msgstr "glavno okno"
-
-#: ../src/vanity.c:247
-#, c-format
-msgid "Webcam utility using %s"
-msgstr "Spletna kamera uporablja %s"
-
-#: ../src/vanity.c:253
-msgid "Copyright © 2002-2005 Bastien Nocera"
-msgstr "Avtorske pravice © 2002-2005 Bastien Nocera"
-
-#: ../src/vanity.c:544
-#, c-format
-msgid ""
-"Vanity could not startup:\n"
-"%s"
-msgstr ""
-"Vanity ni pravilno zagnan:\n"
-"%s"
-
-#: ../src/vanity.c:545
-msgid "No reason"
-msgstr "Ni razloga"
-
-#: ../src/vanity.c:585
-#, c-format
-msgid ""
-"Vanity could not contact the webcam.\n"
-"Reason: %s"
-msgstr ""
-"Vanity ne uspe komunicirati s spletno kamero.\n"
-"Razlog: %s"
-
-#: ../src/vanity.c:601
-#, c-format
-msgid ""
-"Vanity could not play video from the webcam.\n"
-"Reason: %s"
-msgstr ""
-"Vaniti ne more predvajati videa preko spletne kamere.\n"
-"Razlog: %s"
-
-#: ../src/vanity.c:625
-msgid "Debug mode on"
-msgstr "Iskanje napak vključeno"
-
-#: ../src/vanity.c:638
-msgid ""
-"Could not initialize the thread-safe libraries.\n"
-"Verify your system installation. Vanity will now exit."
-msgstr ""
-"Ni mogoče naložiti knjižnic varovanja niti.\n"
-"Preverite sistemske nastavitve. Vanity se bo izključil."
-
-#: ../src/vanity.c:675
-msgid "Vanity Webcam Utility"
-msgstr "Vaniti spletna kamera"
-
-#: ../src/vanity.c:681
-#, c-format
-msgid ""
-"Vanity could not initialize the \n"
-"configuration engine:\n"
-"%s"
-msgstr ""
-"Vaniti ni uspel naložiti\n"
-"nastavitvenega orodja:\n"
-"%s"
-
-#: ../src/vanity.c:702
-#: ../src/vanity.c:716
-msgid ""
-"Couldn't load the main interface (vanity.glade).\n"
-"Make sure that Vanity is properly installed."
-msgstr ""
-"Ni mogoče naložiti glavnega vmesnika (glade, vanity).\n"
-"Prepričajte se, da je Vanity pravilno nastavljen."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2452
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2410
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Zahtevan avdio izhod ni najden. Prosimo izberite drugi avdio izhod v Izbirniku večpredstavnih sistemov."
+msgstr "Zahtevanega odvoda zvoka ni mogoče najti. Izberite drug odvod zvoka med sistemskimi nastavitvami."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2415
 msgid "Location not found."
-msgstr "Mesto ni bilo najdeno."
+msgstr "Mesta ni mogoče najti."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2461
-msgid "Could not open location; You may not have permission to open the file."
-msgstr "Ni mogoče odpreti mesta. Možno je, da nimate dovoljenj za odpiranje datoteke."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2419
+msgid "Could not open location; you might not have permission to open the file."
+msgstr "Ni mogoče odpreti želenega mesta; morda nimate primernega dovoljenja."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2472
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2430
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
-msgstr "Video izhod je v uporabi pri drugem programu. Prosim ustavite program, ki zaseda izhod, ali pa izberite drug video izhod v Izbirniku večpredstavnih sistemov."
+msgstr "Odvod slike uporablja drug program. Ustavite program, ki zaseda odvod, ali pa izberite nov odvod med nastavitvami sistema."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2478
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2436
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
-msgstr "Video izhod je v uporabi pri drugem programu. Prosim ustavite program, ki zaseda izhod, ali pa izberite drug video izhod v Izbirniku večpredstavnih sistemov. Razmislite o uporabi zvočnega strežnika."
+msgstr "Odvod zvoka uporablja drug program. Ustavite program, ki zaseda izhod, ali pa izberite nov odvod med nastavitvami sistema. Razmislite o uporabi zvočnega strežnika."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2496
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2502
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2454
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2460
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
-msgstr "Predvajanje tega filma zahteva vstavek %s, ki pa ni nameščen."
+msgstr "Predvajanje tega posnetka zahteva uporabo vstavka %s, ki pa ni nameščen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2503
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2461
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not installed:\n"
 "\n"
 "%s"
 msgstr ""
-"Predvajanje tega filma zahteva naslednje dekodirnike, ki pa niso nameščeni:\n"
+"Predvajanje tega posnetka zahteva uporabo dekoderjev, ki niso nameščen:\n"
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2528
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2486
 msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr "Ni mogoče predvajati datoteke preko omrežja. Poizkusite jo najprej prenesti na disk."
+msgstr "Ni mogoče predvajanje preko omrežja. Poskusite prenesti datoteko na disk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2600
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2558
 msgid "Media file could not be played."
-msgstr "Ni mogoče predvajati medijske datoteke."
+msgstr "Posnetka ni mogoče predvajati."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2677
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2736
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2635
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2701
 msgid "Failed to retrieve working directory"
 msgstr "Napaka pri prebiranju delovne mape."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4143
+msgid "Surround"
+msgstr "Surround sistem zvoka"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4145
+msgid "Mono"
+msgstr "Mono"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4147
+msgid "Stereo"
+msgstr "Stereo"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4378
 msgid "Too old version of GStreamer installed."
-msgstr "Naložena je prestara verzija GStreamerja."
+msgstr "Naložena je prestara različica GStreamerja."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4447
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4385
 msgid "Media contains no supported video streams."
-msgstr "Medij ne vsebuje podprtih video tokov."
+msgstr "Posnetek ne vsebuje podprtih pretokov slike."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4782
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4725
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
-msgstr "Napaka pri ustvarjanju predvajalnega objekta GStreamerja. Prosim preverite nastavitve."
+msgstr "Napaka pri ustvarjanju GStreamer predmeta predvajanja. Prosim, preverite nastavitve."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4912
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5016
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4857
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4974
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
-msgstr "Napaka pri odpiranju video izhoda. Morda ni na voljo. Prosim izberite drug video izhod v Izbirniku večpredstavnih sistemov."
+msgstr "Napaka pri odpiranju odvoda slike. Morda ni na voljo. Izberite drug odvod med nastavitvami sistema."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4869
+msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
+msgstr "Ni mogoče najti odvoda slike. Naložiti morate dodatne GStreamer vstavke ali pa izbrati drug odvod zvoka med sistemskimi nastavitvami"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4904
+msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
+msgstr "Napaka pri odpiranju zvočnega odvoda. Morda nimate dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ne deluje. Prosim, izberite drug zvočni odvod v sistemskih nastavitvah."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4924
-msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
-msgstr "Ni mogoče najti video izhoda. Morda morate namestiti dodatne GStreamer vstavke ali izbrati drugi video izhod v Izbirniku večpredstavnih sistemov."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4955
-msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Napaka pri odpiranju avdio izhoda. Morda nimate dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ne deluje. Prosim izberite drug avdio izhod v Izbirniku večpredstavnih sistemov."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4970
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
-msgstr "Ni mogoče najti avdio izhoda. Morda morate namestiti dodatne GStreamer vstavke ali izbrati drugi avdio izhod v Izbirniku večpredstavnih sistemov."
+msgstr "Ni mogoče najti odvoda zvoka. Naložiti morate dodatne GStreamer vstavke ali pa morate izbrati drug odvod slike med sistemskimi nastavitvami."
 
-#: ../src/backend/bacon-video-widget-xine.c:712
+#: ../src/backend/bacon-video-widget-xine.c:758
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
-"Napaka pri nalaganju  avdio gonilnika '%s'\n"
+"Napaka pri nalaganju zvočnega gonilnika '%s'\n"
 "Preverite, da naprava ni zasedena."
 
-#: ../src/backend/bacon-video-widget-xine.c:1190
-#: ../src/backend/bacon-video-widget-xine.c:1744
+#: ../src/backend/bacon-video-widget-xine.c:1222
+#: ../src/backend/bacon-video-widget-xine.c:1794
 msgid "No video output is available. Make sure that the program is correctly installed."
-msgstr "Na voljo ni podprtih video izhodov. Prepričajte se, da je program pravilno naložen."
+msgstr "Na voljo ni podprtih odvodov slike. Prepričajte se, da je program pravilno nameščen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1312
+#: ../src/backend/bacon-video-widget-xine.c:1347
 msgid "The server you are trying to connect to is not known."
 msgstr "Strežnik, s katerim se skušate povezati, ni poznan."
 
-#: ../src/backend/bacon-video-widget-xine.c:1316
+#: ../src/backend/bacon-video-widget-xine.c:1351
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Ime določene naprave (%s) je neveljavno."
 
-#: ../src/backend/bacon-video-widget-xine.c:1320
+#: ../src/backend/bacon-video-widget-xine.c:1355
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Strežnik (%s) na katerega se skušate povezati, je nedostopen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1324
+#: ../src/backend/bacon-video-widget-xine.c:1359
 msgid "The connection to this server was refused."
 msgstr "Povezava s tem strežnikom je bila zavrnjena."
 
-#: ../src/backend/bacon-video-widget-xine.c:1328
+#: ../src/backend/bacon-video-widget-xine.c:1363
 msgid "The specified movie could not be found."
-msgstr "Izbranega filma ni mogoče najti."
+msgstr "Izbranega filma ne najdem."
 
-#: ../src/backend/bacon-video-widget-xine.c:1334
-#: ../src/backend/bacon-video-widget-xine.c:1352
+#: ../src/backend/bacon-video-widget-xine.c:1369
+#: ../src/backend/bacon-video-widget-xine.c:1385
 msgid "The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"
-msgstr "Izvorni podatki izgledajo šifrirani in jih ni mogoče prebrati. Ali poskušate predvajati zaščiten DVD brez knjižnice libdvdcss?"
+msgstr "Izvorni podatki so videti šifrirani in jih ni mogoče prebrati. Ali poskušate predvajati zaščiten DVD brez knjižnice libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1337
+#: ../src/backend/bacon-video-widget-xine.c:1372
 msgid "The movie could not be read."
 msgstr "Filma ni mogoče prebrati."
 
-#: ../src/backend/bacon-video-widget-xine.c:1346
+#: ../src/backend/bacon-video-widget-xine.c:1379
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Prišlo je do napake pri nalaganju knjižnice ali dekoderja (%s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1355
+#: ../src/backend/bacon-video-widget-xine.c:1388
 msgid "This file is encrypted and cannot be played back."
 msgstr "Datoteka je šifrirana, zato je ni mogoče predvajati."
 
-#: ../src/backend/bacon-video-widget-xine.c:1360
+#: ../src/backend/bacon-video-widget-xine.c:1393
 msgid "For security reasons, this movie can not be played back."
 msgstr "Zaradi varnostnih razlogov ni mogoče predvajati filma."
 
-#: ../src/backend/bacon-video-widget-xine.c:1365
+#: ../src/backend/bacon-video-widget-xine.c:1398
 msgid "The audio device is busy. Is another application using it?"
-msgstr "Avdio naprava je zasedena. Ali jo uporablja drug program?"
+msgstr "Zvočna naprava je zasedena. Ali jo uporablja drug program?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1370
+#: ../src/backend/bacon-video-widget-xine.c:1404
+msgid "Authentication is required to access this file."
+msgstr "Za dostop do datoteke je zahtevana overitev"
+
+#: ../src/backend/bacon-video-widget-xine.c:1406
+msgid "Authentication is required to access this file or stream."
+msgstr "Za dostop do datoteke ali pretoka je zahtevana overitev."
+
+#: ../src/backend/bacon-video-widget-xine.c:1412
 msgid "You are not allowed to open this file."
 msgstr "Nimate dovoljenja za odpiranje te datoteke."
 
-#: ../src/backend/bacon-video-widget-xine.c:1372
+#: ../src/backend/bacon-video-widget-xine.c:1414
 msgid "The server refused access to this file or stream."
 msgstr "Strežnik je zavrnil dostop do datoteke ali pretoka."
 
-#: ../src/backend/bacon-video-widget-xine.c:1381
+#: ../src/backend/bacon-video-widget-xine.c:1418
 msgid "The file you tried to play is an empty file."
 msgstr "Datoteka, ki jo poskušate predvajati je prazna."
 
-#: ../src/backend/bacon-video-widget-xine.c:1545
+#: ../src/backend/bacon-video-widget-xine.c:1587
 msgid "There is no input plugin to handle the location of this movie"
-msgstr "Ni primernega vključka za upravljanje mesta tega filma."
+msgstr "Ni primernega vključka za upravljanje lokacije tega filma."
 
-#: ../src/backend/bacon-video-widget-xine.c:1549
+#: ../src/backend/bacon-video-widget-xine.c:1591
 msgid "There is no plugin to handle this movie."
 msgstr "Ni primernega vključka za rokovanje s tem formatom filma."
 
-#: ../src/backend/bacon-video-widget-xine.c:1553
+#: ../src/backend/bacon-video-widget-xine.c:1595
 msgid "This movie is broken and can not be played further."
 msgstr "Film je poškodovan in ga ni mogoče predvajati naprej."
 
-#: ../src/backend/bacon-video-widget-xine.c:1557
+#: ../src/backend/bacon-video-widget-xine.c:1599
 msgid "This location is not a valid one."
-msgstr "To mesto ni veljavno."
+msgstr "Ta lokacija ni veljavna."
 
-#: ../src/backend/bacon-video-widget-xine.c:1561
+#: ../src/backend/bacon-video-widget-xine.c:1603
 msgid "This movie could not be opened."
-msgstr "Ni mogoče odpreti filma."
+msgstr "Filma ni mogoče odpreti."
 
-#: ../src/backend/bacon-video-widget-xine.c:1565
+#: ../src/backend/bacon-video-widget-xine.c:1607
 msgid "Generic Error."
 msgstr "Splošna napaka"
 
-#: ../src/backend/bacon-video-widget-xine.c:2263
+#: ../src/backend/bacon-video-widget-xine.c:2481
 #, c-format
 msgid "Video codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
-msgstr "Video kodek '%s' ni podprt. Najverjetneje morate naložiti dodatne vključke za predvajanje tega tipa filmov."
+msgstr "Kodek slike '%s' ni podprt. Najverjetneje morate naložiti dodatne vključke za predvajanje te vrste posnetka."
 
-#: ../src/backend/bacon-video-widget-xine.c:2267
+#: ../src/backend/bacon-video-widget-xine.c:2485
 #, c-format
 msgid "Audio codec '%s' is not handled. You might need to install additional plugins to be able to play some types of movies"
-msgstr "Avdio kodek '%s' ni podprt. Najverjetneje morate naložiti dodatne vključke za predvajanje posnetkov tega tipa."
+msgstr "Kodek zvoka '%s' ni podprt. Najverjetneje morate naložiti dodatne vključke za predvajanje posnetkov te vrste."
 
-#: ../src/backend/bacon-video-widget-xine.c:2283
+#: ../src/backend/bacon-video-widget-xine.c:2499
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "To je zvočna datoteka za katero ni na voljo primernega izhoda."
 
-#: ../src/backend/bacon-video-widget-xine.c:3756
-#: ../src/backend/bacon-video-widget-xine.c:3803
-#: ../src/backend/bacon-video-widget-xine.c:3825
+#: ../src/backend/bacon-video-widget-xine.c:4057
+#: ../src/backend/bacon-video-widget-xine.c:4104
+#: ../src/backend/bacon-video-widget-xine.c:4126
 #, c-format
 msgid "Language %d"
 msgstr "Jezik %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:3914
+#: ../src/backend/bacon-video-widget-xine.c:4215
 msgid "No video to capture."
-msgstr "Ni videa za zajemanje."
+msgstr "Ne najdem videa za zajemanje."
 
-#: ../src/backend/bacon-video-widget-xine.c:3922
+#: ../src/backend/bacon-video-widget-xine.c:4223
 msgid "Video codec is not handled."
-msgstr "Video kodek ni podprt."
+msgstr "Kodek slike ni podprt."
 
-#: ../src/backend/bacon-video-widget-xine.c:3933
+#: ../src/backend/bacon-video-widget-xine.c:4234
 msgid "Movie is not playing."
 msgstr "Film se ne predvaja."
 
@@ -2003,102 +1488,289 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plparse/totem-disc.c:364
+#: ../src/plparse/totem-disc.c:286
 #, c-format
 msgid "Failed to find mountpoint for device %s"
-msgstr "Ni mogoče najti priklopne točke za napravo %s"
+msgstr "Ni mogoče najti točke priklopa za napravo %s"
 
-#: ../src/plparse/totem-disc.c:373
+#: ../src/plparse/totem-disc.c:295
 msgid "Could not connect to the HAL daemon"
-msgstr "Ni se mogoče povezati z demonom HAL"
+msgstr "Ni se mogoče povezati s HAL demonom"
 
-#: ../src/plparse/totem-disc.c:472
+#: ../src/plparse/totem-disc.c:394
 msgid "Please check that a disc is present in the drive."
-msgstr "Prosim preverite, če je CD vstavljen v pogon."
+msgstr "Prosim, preverite, če je CD vstavljen v pogon."
 
-#: ../src/plparse/totem-disc.c:519
+#: ../src/plparse/totem-disc.c:441
 #, c-format
 msgid "Failed to mount %s"
-msgstr "Ni mogoče priklopiti %s"
+msgstr "Napaka pri priklapljanju %s"
 
-#: ../src/plparse/totem-disc.c:543
+#: ../src/plparse/totem-disc.c:465
 #, c-format
 msgid "Failed to find mountpoint for %s"
-msgstr "Ni mogoče najti priklopne točke za %s"
+msgstr "Ni mogoče najti točke priklopa za %s"
 
-#: ../src/plparse/totem-disc.c:913
+#: ../src/plparse/totem-disc.c:858
 msgid "Audio CD"
-msgstr "Avdio CD"
+msgstr "Zvočni CD"
 
-#: ../src/plparse/totem-disc.c:915
+#: ../src/plparse/totem-disc.c:860
 msgid "Video CD"
 msgstr "Video CD"
 
-#: ../src/plparse/totem-disc.c:917
+#: ../src/plparse/totem-disc.c:862
 msgid "DVD"
 msgstr "DVD"
 
-#: ../src/plparse/totem-pl-parser.c:464
+#: ../src/plparse/totem-disc.c:864
+msgid "Digital Television"
+msgstr "Digitalna televizija"
+
+#: ../src/plparse/totem-pl-parser.c:445
 #, c-format
 msgid "Couldn't write parser: %s"
 msgstr "Neuspešno zapisovanje razčlenitve: %s"
 
 #: ../src/plparse/totem-pl-parser-lines.c:105
+#: ../src/plparse/totem-pl-parser-pla.c:78
 #: ../src/plparse/totem-pl-parser-pls.c:70
-#: ../src/plparse/totem-pl-parser-xspf.c:73
+#: ../src/plparse/totem-pl-parser-xspf.c:106
 #, c-format
 msgid "Couldn't open file '%s': %s"
-msgstr "Ne mogoče odpreti datoteke '%s': %s"
+msgstr "Ni mogoče odpreti datoteke '%s': %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:398
+#: ../src/plugins/totem-plugin-manager.c:51
+msgid "Plugin"
+msgstr "Vstavek"
+
+#: ../src/plugins/totem-plugin-manager.c:52
+msgid "Enabled"
+msgstr "Omogočeno"
+
+#: ../src/plugins/totem-plugins-engine.c:574
+#, c-format
+msgid ""
+"Unable to activate plugin %s.\n"
+"%s"
+msgstr ""
+"Ni mogoče zagnati vstavka %s.\n"
+"%s"
+
+#: ../src/plugins/totem-plugins-engine.c:577
+#, c-format
+msgid "Unable to activate plugin %s"
+msgstr "Ni mogoče zagnati vstavka %s"
+
+#: ../src/plugins/totem-plugins-engine.c:579
+msgid "Plugin Error"
+msgstr "Napaka vstavka"
+
+#: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
+msgid "Bemused"
+msgstr "Bemused"
+
+#: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
+msgid "Control Totem through a mobile phone with a Bemused client"
+msgstr "Nadzor predvajalnika Totem preko mobilnega telefona z odjemalcem Bemused"
+
+#: ../src/plugins/bemused/totem-bemused.c:185
+#, c-format
+msgid "Untitled %d"
+msgstr "Brez naslova %d"
+
+#: ../src/plugins/bemused/totem-bemused.c:608
+msgid "Totem Bemused Server"
+msgstr "Strežnik Totem Bemused"
+
+#. FIXME version
+#: ../src/plugins/bemused/totem-bemused.c:610
+msgid "Totem Bemused Server version 1.0"
+msgstr "Strežnik Totem Bemused različica 1.0"
+
+#: ../src/plugins/galago/galago.totem-plugin.in.h:1
+msgid "Instant Messenger status"
+msgstr "Stanje trenutnih sporočil"
+
+#: ../src/plugins/galago/galago.totem-plugin.in.h:2
+msgid "Set your Instant Messenger status to away when a movie is playing"
+msgstr "Nastavi stanje trenutnih sporočil na odsoten med predvajanjem posnetka."
+
+#: ../src/plugins/galago/totem-galago.c:163
+msgid "Could not connect to the Galago daemon."
+msgstr "Ni mogoča povezava z Galago demonom."
+
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
+msgid "Gromit Annotations"
+msgstr "Gromit pripombe"
+
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
+msgid "Presentation helper to make annotations on screen"
+msgstr "Pomočnik predstavljanja pripomb na zaslon"
+
+#: ../src/plugins/gromit/totem-gromit.c:278
+msgid "The gromit binary was not found."
+msgstr "Binarne datoteke gromit ni mogoče najti."
+
+#: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
+msgid "Infrared Remote Control"
+msgstr "Infrardeči daljinski upravljalnik"
+
+#: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
+msgid "Support infrared remote control"
+msgstr "Podpora za infrardeči daljinski upravljalnik"
+
+#: ../src/plugins/lirc/totem-lirc.c:238
+msgid "Couldn't initialize lirc."
+msgstr "Ni mogoče zagnati lirc.."
+
+#: ../src/plugins/lirc/totem-lirc.c:244
+msgid "Couldn't read lirc configuration."
+msgstr "Ni mogoče prebrati lirc nastavitev."
+
+#: ../src/plugins/mythtv/totem-mythtv.c:450
+msgid "MythTV Recordings"
+msgstr "MythTV posnetki"
+
+#: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
+msgid "Always On Top"
+msgstr "Vedno na _vrhu"
+
+#: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
+msgid "Keep the main window on top when playing a movie"
+msgstr "Glavno okno je med predvajanjem vedno na vrhu."
+
+#: ../src/plugins/properties/totem-movie-properties.c:169
+msgid "Properties"
+msgstr "Lastnosti"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:234
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d frames per second"
+msgstr "%d slik na sekundo"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:239
+#: ../src/plugins/properties/bacon-video-widget-properties.c:256
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/plugins/skipto/totem-skipto.c:185
+msgid "Skip to"
+msgstr "Preskoči na"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:216
+msgid "_Skip to..."
+msgstr "Pre_skoči na..."
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:216
+msgid "Skip to a specific time"
+msgstr "Preskoči na določen čas"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:222
+msgid "Could not load the \"Skip to\" dialogue interface."
+msgstr "Ni mogoče zagnati pogovornega okna \"Preskoči na\"."
+
+#: ../src/plugins/skipto/skipto.ui.h:2
+msgid "_Skip to:"
+msgstr "Pre_skoči na:"
+
+#: ../src/plugins/skipto/skipto.ui.h:3
+msgid "seconds"
+msgstr "sekund"
+
+#: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
+msgid "A plugin to let you browse YouTube videos."
+msgstr "Vstavek za brskanje med YouTube posnetki."
+
+#: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
+msgid "YouTube browser"
+msgstr "Brskalnik YouTube"
+
+#: ../src/plugins/youtube/youtube.ui.h:1
+msgid "Please enter a search."
+msgstr "Prosim, vnesite iskalni niz."
+
+#: ../src/plugins/youtube/youtube.py:111
+msgid "Videos"
+msgstr "Posnetki"
+
+#: ../src/plugins/youtube/youtube.py:125
+msgid "YouTube"
+msgstr "YouTube"
+
+#: ../src/plugins/youtube/youtube.py:156
+#: ../src/plugins/youtube/youtube.py:171
+msgid "Related Videos:"
+msgstr "Podobni posnetki:"
+
+#: ../src/plugins/youtube/youtube.py:169
+#: ../src/plugins/youtube/youtube.py:203
+msgid "Search Results:"
+msgstr "Rezultati iskanja:"
+
+#: ../src/plugins/youtube/youtube.py:211
+msgid "Loading..."
+msgstr "Nalaganje ..."
+
+#: ../browser-plugin/totem-plugin-viewer.c:440
 msgid "No URI to play"
-msgstr "Ni URI-ja za predvajanje"
+msgstr "Ni naslova za predvajanje"
 
 #. FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-#: ../browser-plugin/totem-plugin-viewer.c:425
-#: ../browser-plugin/totem-plugin-viewer.c:429
+#: ../browser-plugin/totem-plugin-viewer.c:467
+#: ../browser-plugin/totem-plugin-viewer.c:471
 #, c-format
 msgid "Totem could not play '%s'"
-msgstr "Totem ne more predvajati '%s'"
+msgstr "Ni mogoče predvajati '%s'."
 
-#: ../browser-plugin/totem-plugin-viewer.c:802
+#: ../browser-plugin/totem-plugin-viewer.c:864
 #, c-format
 msgid "Opening %s"
 msgstr "Odpiranje %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1091
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1150
+#, c-format
+msgid "_Open with \"%s\""
+msgstr "_Odpri z \"%s\""
+
+#: ../browser-plugin/totem-plugin-viewer.c:1201
 #, c-format
 msgid "Browser Plugin using %s"
-msgstr "Vstavek za brskalnik uporablja %s"
+msgstr "Vstavek brskanja uporablja %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1096
+#: ../browser-plugin/totem-plugin-viewer.c:1206
 msgid "Totem Browser Plugin"
-msgstr "Vstavek za brskalnik Totem"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1393
-#: ../browser-plugin/totem-plugin-viewer.c:1403
-msgid "Plugin"
-msgstr "Vstavek"
+msgstr "Totem vstavek brskanja"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1428
-msgid "The Totem plugin could not startup."
-msgstr "Vstavek Totem se ne more zagnati"
+#: ../browser-plugin/totem-plugin-viewer.c:1767
+msgid "The Totem plugin could not be started."
+msgstr "Vstavka programa Totem ni mogoče zagnati."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1526
-msgid "Menu"
-msgstr "Meni"
-
-#: ../browser-plugin/totem-plugin-viewer.c:1711
+#: ../browser-plugin/totem-plugin-viewer.c:2124
 msgid "No playlist or playlist empty"
-msgstr "Ni predvajalnega seznama ali pa je prazen"
+msgstr "Ni seznama predvajanja ali pa je ta prazen"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1840
+#: ../browser-plugin/totem-plugin-viewer.c:2229
 msgid "Could not initialise the thread-safe libraries."
-msgstr "Ni mogoče naložiti knjižnic varovanja niti."
+msgstr "Ni mogoče zagnati knjižnic varovanja niti."
 
-#: ../browser-plugin/totem-plugin-viewer.c:1840
+#: ../browser-plugin/totem-plugin-viewer.c:2229
 msgid "Verify your system installation. The Totem plugin will now exit."
-msgstr "Preverite namestitev sistema. Vstavek Totem se bo zdaj izključil."
+msgstr "Preverite sistemske nastavitve. Vstavek predvajalnika Totem se bo izključil."
 
