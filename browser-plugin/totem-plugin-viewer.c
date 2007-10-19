@@ -1320,6 +1320,17 @@ totem_embedded_toggle_fullscreen (TotemEmbedded *emb)
 		
 		gtk_action_set_sensitive (fs_action, TRUE);
 	} else {
+		GdkRectangle rect;
+		int monitor;
+
+		/* Move the fullscreen window to the screen where the
+		 * video widget currently is */
+		monitor = gdk_screen_get_monitor_at_window (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
+							    GTK_WIDGET (emb->bvw)->window);
+		gdk_screen_get_monitor_geometry (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
+						 monitor, &rect);
+		gtk_window_move (GTK_WINDOW (emb->fs_window), rect.x, rect.y);
+
 		gtk_widget_reparent (GTK_WIDGET (emb->bvw), emb->fs_window);
 		bacon_video_widget_set_fullscreen (emb->bvw, TRUE);
 		gtk_window_fullscreen (GTK_WINDOW (emb->fs_window));
