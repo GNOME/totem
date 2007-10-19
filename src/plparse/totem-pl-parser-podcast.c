@@ -273,6 +273,7 @@ totem_pl_parser_add_rss (TotemPlParser *parser,
 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
+/* http://www.apple.com/itunes/store/podcaststechspecs.html */
 TotemPlParserResult
 totem_pl_parser_add_itpc (TotemPlParser *parser,
 			  const char *url,
@@ -290,6 +291,10 @@ totem_pl_parser_add_itpc (TotemPlParser *parser,
 	return ret;
 }
 
+/* Atom docs:
+ * http://www.atomenabled.org/developers/syndication/atom-format-spec.php#rfc.section.4.1
+ * http://tools.ietf.org/html/rfc4287
+ * http://tools.ietf.org/html/rfc4946 */
 static TotemPlParserResult
 parse_atom_entry (TotemPlParser *parser, xml_node_t *parent)
 {
