@@ -121,6 +121,7 @@ struct TotemObject {
 	GtkWidget *languages;
 	GList *subtitles_list;
 	GList *language_list;
+	gboolean autoload_subs;
 
 	/* Fullscreen */
 	TotemFullscreen *fs;

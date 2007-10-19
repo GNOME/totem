@@ -841,7 +841,7 @@ update_mrl_label (Totem *totem, const char *name)
 		/* Get the length of the stream */
 		time = bacon_video_widget_get_stream_length (totem->bvw);
 		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
-				(totem->statusbar), 0, time / 1000);
+						     (totem->statusbar), 0, time / 1000);
 
 		g_object_notify (G_OBJECT (totem), "stream-length");
 
@@ -914,12 +914,13 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	} else {
 		gboolean caps;
 		gdouble volume;
-		char *subtitle_uri;
+		char *subtitle_uri = NULL;
 		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
-		subtitle_uri = totem_uri_get_subtitle_uri (mrl);
+		if (totem->autoload_subs != FALSE)
+			subtitle_uri = totem_uri_get_subtitle_uri (mrl);
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
 		retval = bacon_video_widget_open_with_subtitle (totem->bvw,
 				mrl, subtitle_uri, &err);
@@ -1381,14 +1382,14 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	g_free (new_mrl);
 }
 
-/* This is only called when we are playing a DVD */
+/* This is only called when we are playing a DVD or a radio */
 static void
 on_title_change_event (BaconVideoWidget *bvw, const char *string, Totem *totem)
 {
 	update_mrl_label (totem, string);
 	update_buttons (totem);
 	totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist),
-			string, TRUE);
+				  string, TRUE);
 }
 
 static void

@@ -260,5 +260,19 @@
 	</locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/totem/autoload_subtitles</key>
+	<applyto>/apps/totem/autoload_subtitles</applyto>
+	<owner>totem</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short>Whether to autoload text subtitle files when a movie is loaded</short>
+	  <long>
+	    Whether to autoload text subtitle files when a movie is loaded
+	  </long>
+	</locale>
+      </schema>
+
   </schemalist>
 </gconfschemafile>

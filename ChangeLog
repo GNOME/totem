@@ -1,5 +1,21 @@
 2007-10-19  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in:
+	* data/totem.ui:
+	* src/totem-preferences.c: (checkbutton3_toggled_cb),
+	(autoload_subtitles_changed_cb), (totem_setup_preferences):
+	* src/totem-private.h:
+	* src/totem.c: (totem_action_set_mrl_with_warning),
+	(totem_action_drop_files), (totem_action_set_playlist_index),
+	(playlist_changed_cb), (totem_action_handle_key_press),
+	(playlist_widget_setup):
+	Add a preference as to whether or not to load text subtitles
+	automatically when a new file is loaded. It's off by default,
+	as it makes loading videos slower for everyone that doesn't
+	want/need this feature (Closes: #481822)
+
+2007-10-19  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-podcast.c:
 	(totem_pl_parser_add_atom): Add some docs
 

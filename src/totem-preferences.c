@@ -47,6 +47,7 @@
 /* Callback functions for GtkBuilder */
 void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
 void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
@@ -185,6 +186,18 @@ checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 void
+checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+
+	gconf_client_set_bool (totem->gc,
+			       GCONF_PREFIX"/autoload_subtitles", value, NULL);
+	totem->autoload_subs = value;
+}
+
+void
 tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	TvOutType type;
@@ -254,6 +267,24 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 
 	g_signal_connect (item, "toggled",
 			G_CALLBACK (checkbutton2_toggled_cb), totem);
+}
+
+static void
+autoload_subtitles_changed_cb (GConfClient *client, guint cnxn_id,
+			       GConfEntry *entry, Totem *totem)
+{
+	GObject *item;
+
+	item = gtk_builder_get_object (totem->xml, "tpw_auto_subtitles_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+			checkbutton3_toggled_cb, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+			gconf_client_get_bool (totem->gc,
+				GCONF_PREFIX"/autoload_subtitles", NULL));
+
+	g_signal_connect (item, "toggled",
+			G_CALLBACK (checkbutton3_toggled_cb), totem);
 }
 
 static void
@@ -529,6 +560,19 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",
 			(GConfClientNotifyFunc) show_vfx_changed_cb,
 			totem, NULL, NULL);
+
+	/* Auto-load subtitles */
+	item = gtk_builder_get_object (totem->xml, "tpw_auto_subtitles_checkbutton");
+	totem->autoload_subs = gconf_client_get_bool (totem->gc,
+					      GCONF_PREFIX"/autoload_subtitles", NULL);
+
+	g_signal_handlers_disconnect_by_func (item, checkbutton3_toggled_cb, totem);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), totem->autoload_subs);
+	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton3_toggled_cb), totem);
+
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/autoload_subtitles",
+				 (GConfClientNotifyFunc) autoload_subtitles_changed_cb,
+				 totem, NULL, NULL);
 
 	/* Visuals list */
 	list = bacon_video_widget_get_visuals_list (totem->bvw);
