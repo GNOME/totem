@@ -1,5 +1,12 @@
 2007-10-19  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_toggle_fullscreen):
+	Put the fullscreen window on the screen where the video
+	widget is, when using Xinerama (Closes: #487932)
+
+2007-10-19  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt:
 	* data/totem.desktop.in.in.in: Patch from Stephane Loeuillet
 	<leroutier@gmail.com> to fix some warnings in the .desktop
