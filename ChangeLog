@@ -1,5 +1,29 @@
 2007-10-19  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Fix some confusing error message when
+	Python was there but not PyGTK (Closes: #479272)
+
+2007-10-19  Bastien Nocera  <hadess@hadess.net>
+
+	reviewed by: <delete if not using a buddy>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/totem-map.c: (totem_map_ensure_directory),
+	(totem_map_new), (totem_map_get_contents), (totem_map_is_new),
+	(totem_map_free), (totem_map_get_filename):
+	* browser-plugin/totem-map.h:
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_open_internal), (startup_timeout),
+	(totem_embedded_launch_player), (on_got_redirect),
+	(totem_embedded_on_fullscreen_exit), (on_eos_event):
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h:
+	* browser-plugin/totemPluginMd5.cpp:
+	* browser-plugin/totemPluginMd5.h:
+	* configure.in:
+
+2007-10-19  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.schemas.in:
 	* data/totem.ui:
 	* src/totem-preferences.c: (checkbutton3_toggled_cb),
