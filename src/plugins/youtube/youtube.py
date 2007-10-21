@@ -6,6 +6,7 @@ import httplib
 import atom
 import pango
 import threading
+import re
 from os import unlink
 
 class DownloadThread (threading.Thread):
@@ -139,9 +140,11 @@ class YouTube (totem.Plugin):
 		response = conn.getresponse ()
 		if response.status == 303:
 			location = response.getheader("location")
-			url = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (location[location.rfind("&t=")+3:])
+			url = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
 		else:
 			url = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
+		conn.close ()
+
 		print url
 		if self.debug:
 			print "Playing: " + url

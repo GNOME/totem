@@ -1,3 +1,9 @@
+2007-10-21  Jan Arne Petersen  <jpetersen@jpetersen.org>
+
+	* src/plugins/youtube/youtube.py: Use a regular expression to extract
+	the token (allows the extraction also if the token is not the last
+	argument) and close the HTTP connection (Closes #488763)
+
 2007-10-19  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c:
