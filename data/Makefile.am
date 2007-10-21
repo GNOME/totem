@@ -103,6 +103,7 @@ CLEANFILES = \
 	totem-handlers.schemas.in 	\
 	totem-mime-types.h		\
 	totem-video-thumbnail.schemas.in\
+	nautilus-audio-mime-types.h	\
 	update-gconf.sh
 
 DISTCLEANFILES =

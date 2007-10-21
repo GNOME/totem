@@ -1,5 +1,48 @@
 New features and significant updates in version...
 
+2.21.0, Changes from 2.20.1
+* Features
+  - Add a MythTV plugin, and a YouTube plugin
+  - Add the ability to drop files in specific places in the playlist
+  - Add a Cone plugin to mimic VLC's browser plugin
+  - Remove support for audio CDs, there are better options out there
+  - Allow ejecting CDs or removable drives when playing data files
+  - Disable text subtitles loading by default, as it can slow opening new files down
+  - Look for text subtitle files in the subtitles/ sub-directory as well
+  - Make it possible to select a DVD menu item with the 5 key of the numeric pad
+  - Add a totem-audio-preview program that plays audio data passed from the standard
+    input, as can be used by Nautilus' audio preview
+
+* Bugs
+  - Fix behaviour when a file appears twice in the playlist
+  - Disable the volume button on startup, so it doesn't pop on start
+  - Only make the "save screenshot" button sensitive when we can get a
+    screenshot
+
+* Browser plugin
+  - Add a toggle button to popup the right-click menu
+  - Implement SetVolume and SetSource in the Complex plugin
+  - Implement GetRate, GetMaxBytesLoaded, GetMovieSize, GetTime and GetDuration
+    in the QuickTime-compatible plugin
+  - Set the logo to a play button when we have something to play on click
+
+* Playlist parser:
+  - Add RSS and Atom podcasts parsing, including URLs reserved for iTunes
+  - Add metadata to the "playlist-started" signal
+  - Add totem_plparser_parse_duration
+  - Add support for the autoplay metadata in QuickTime metalinks
+  - Add support for the abstract, copyright, author and moreinfo
+    properties for ASX playlists
+  - Add support for the author, "dur", "clip-begin", abstract, and copyright
+    attributes of SMIL
+  - Ignore SDP and NSC files, backends handle them themselves
+  - Use the canonical device when giving the cdda MRL
+
+* xine-lib backend:
+  - Try to get authentication information from the keyring when
+    authentication fails for HTTP locations
+  - Seek by time instead of fraction when possible, gives better precision
+
 2.19.90
 * Make the default window size bigger on first startup
 * Remove most of the flicker from the waiting cursor on startup

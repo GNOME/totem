@@ -51,6 +51,6 @@ libtotem_mythtv_la_CFLAGS =	\
 
 EXTRA_DIST = $(plugin_in_files) $(schema_in_files)
 
-CLEANFILES = $(noinst_DATA) $(BUILT_SOURCES)
+CLEANFILES = $(noinst_DATA) $(BUILT_SOURCES) $(schema_DATA)
 DISTCLEANFILES = $(plugin_DATA)
 
