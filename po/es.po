@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-19 01:37+0100\n"
-"PO-Revision-Date: 2007-10-19 10:45+0200\n"
+"POT-Creation-Date: 2007-10-21 20:30+0100\n"
+"PO-Revision-Date: 2007-10-22 19:17+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -204,7 +204,9 @@ msgstr "Salida de sonido"
 
 #: ../data/totem.ui.h:3
 msgid "Automatically _load subtitle files when movie is loaded"
-msgstr "_Cargar los archivos de subtítulos automáticamente cuando se carga la película"
+msgstr ""
+"_Cargar los archivos de subtítulos automáticamente cuando se carga la "
+"película"
 
 #: ../data/totem.ui.h:4
 msgid "Automatically _resize the window when a new video is loaded"
@@ -260,7 +262,7 @@ msgstr "Subtítulos"
 
 #. Title
 #: ../data/totem.ui.h:19 ../src/totem.c:865 ../src/totem.c:3037
-#: ../src/totem.c:3066 ../browser-plugin/totem-plugin-viewer.c:1776
+#: ../src/totem.c:3066 ../browser-plugin/totem-plugin-viewer.c:1787
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -451,7 +453,9 @@ msgstr ""
 
 #: ../data/totem.schemas.in.h:35
 msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr "Indica si se deben cargar los archivos de texto de subtítulos automáticamente al cargar una película"
+msgstr ""
+"Indica si se deben cargar los archivos de texto de subtítulos "
+"automáticamente al cargar una película"
 
 #: ../data/totem.schemas.in.h:36
 msgid "Whether to disable the plugins in the user's home directory"
@@ -1141,7 +1145,7 @@ msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
 #: ../src/totem.c:513 ../src/totem.c:2901
-#: ../browser-plugin/totem-plugin-viewer.c:1767
+#: ../browser-plugin/totem-plugin-viewer.c:1778
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1172,7 +1176,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
 #: ../src/totem.c:1466 ../src/totem.c:1468
-#: ../browser-plugin/totem-plugin-viewer.c:1551
+#: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
@@ -1729,6 +1733,26 @@ msgstr "No se pudo leer la configuración de lirc."
 msgid "MythTV Recordings"
 msgstr "Grabaciones de MythTV"
 
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:1
+msgid "IP address of the local MythTV server"
+msgstr "Dirección IP del servidor de MythTV local"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:2
+msgid "Name of the database for the local MythTV server"
+msgstr "Nombre de la base de datos para el servidor de MythTV local"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:3
+msgid "Password to access the local MythTV server"
+msgstr "Contraseña para acceder al servidor de MythTV local"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:4
+msgid "Port to access the local MythTV server"
+msgstr "Puerto para acceder al servidor de MythTV local"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:5
+msgid "Username to access the local MythTV server"
+msgstr "Usuario para acceder al servidor de MythTV local"
+
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
 msgstr "Siempre encima"
@@ -1800,23 +1824,23 @@ msgstr "Examinador de YouTube"
 msgid "Please enter a search."
 msgstr "Introduzca una búsqueda."
 
-#: ../src/plugins/youtube/youtube.py:111
+#: ../src/plugins/youtube/youtube.py:112
 msgid "Videos"
 msgstr "Vídeos"
 
-#: ../src/plugins/youtube/youtube.py:125
+#: ../src/plugins/youtube/youtube.py:126
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:156 ../src/plugins/youtube/youtube.py:171
+#: ../src/plugins/youtube/youtube.py:159 ../src/plugins/youtube/youtube.py:174
 msgid "Related Videos:"
 msgstr "Vídeos relacionados:"
 
-#: ../src/plugins/youtube/youtube.py:169 ../src/plugins/youtube/youtube.py:203
+#: ../src/plugins/youtube/youtube.py:172 ../src/plugins/youtube/youtube.py:206
 msgid "Search Results:"
 msgstr "Resultados de la búsqueda:"
 
-#: ../src/plugins/youtube/youtube.py:211
+#: ../src/plugins/youtube/youtube.py:214
 msgid "Loading..."
 msgstr "Cargando…"
 
@@ -1855,19 +1879,19 @@ msgstr "Complemento de visualización para Totem"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1767
+#: ../browser-plugin/totem-plugin-viewer.c:1778
 msgid "The Totem plugin could not be started."
 msgstr "No se ha podido iniciar el complemento de Totem."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2124
+#: ../browser-plugin/totem-plugin-viewer.c:2135
 msgid "No playlist or playlist empty"
 msgstr "Ninguna lista o lista vacía"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2229
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Could not initialise the thread-safe libraries."
 msgstr "No se pudo inicializar las bibliotecas del soporte de hilos seguro."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2229
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Verifique la instalación de su sistema. EL complemento de Totem ahora "
