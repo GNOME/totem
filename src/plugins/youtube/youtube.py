@@ -177,7 +177,7 @@ class YouTube (totem.Plugin):
 		return url.rpartition ("/")[2]
 	def populate_list_from_results (self, status_text):
 		"""Wait until we have some results to display"""
-		if self.entry == None:
+		if self.entry == None or len (self.entry) == 0:
 			return True
 
 		"""Only do one result at a time, as the thumbnail has to be downloaded"""
