@@ -1,5 +1,27 @@
 2007-10-22  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* bindings/python/Makefile.am:
+	* bindings/python/totem.defs:
+	* bindings/python/totem.override:
+	* src/Makefile.am:
+	* src/plugins/youtube/youtube.py:
+	* src/plugins/youtube/youtube.ui:
+	* src/totem-cell-renderer-video.c: (totem_cell_renderer_video_new),
+	(totem_cell_renderer_video_class_init),
+	(totem_cell_renderer_video_init),
+	(totem_cell_renderer_video_dispose),
+	(totem_cell_renderer_video_set_property),
+	(totem_cell_renderer_video_get_property), (get_size),
+	(totem_cell_renderer_video_get_size),
+	(totem_cell_renderer_video_render):
+	* src/totem-cell-renderer-video.h: Move the cell renderer used in
+	the YouTube plugin out to a C-based GObject and clean it up a bit.
+	Add the new object to the Python bindings, and make the YouTube
+	plugin use it. Additional cleanup to the YouTube plugin and the
+	Python bindings.
+
+2007-10-22  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/plugins/youtube/youtube.py: Fix popping from an empty list
 	in some cases (Closes: #486504)
 

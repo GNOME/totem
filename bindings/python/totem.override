@@ -9,6 +9,7 @@ headers
 
 #include "override_common.h"
 #include "totem.h"
+#include "totem-cell-renderer-video.h"
 #include "plparse/totem-disc.h"
 #include "plugins/totem-plugin.h"
 
@@ -33,6 +34,7 @@ import gtk.Widget as PyGtkWidget_Type
 import gtk.Window as PyGtkWindow_Type
 import gtk.gdk.Pixbuf as PyGdkPixbuf_Type
 import gtk.ComboBox as PyGtkComboBox_Type
+import gtk.CellRenderer as PyGtkCellRenderer_Type
 %%
 ignore-glob
   *_get_type

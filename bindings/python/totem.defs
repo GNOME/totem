@@ -15,6 +15,13 @@
   (gtype-id "TOTEM_TYPE_OBJECT")
 )
 
+(define-object CellRendererVideo
+  (in-module "Totem")
+  (parent "GtkCellRenderer")
+  (c-name "TotemCellRendererVideo")
+  (gtype-id "TOTEM_TYPE_CELL_RENDERER_VIDEO")
+)
+
 ;; Enumerations and flags ...
 
 (define-enum DiscMediaType
@@ -85,11 +92,6 @@
   (return-type "GQuark")
 )
 
-(define-function totem_plugin_get_type
-  (c-name "totem_plugin_get_type")
-  (return-type "GType")
-)
-
 (define-method activate
   (of-object "TotemPlugin")
   (c-name "totem_plugin_activate")
@@ -144,11 +146,6 @@
 
 
 ;; From totem.h
-
-(define-function totem_object_get_type
-  (c-name "totem_object_get_type")
-  (return-type "GType")
-)
 
 (define-method plugins_init
   (of-object "TotemObject")
@@ -437,4 +434,16 @@
   )
 )
 
+
+;; From ../../src/totem-cell-renderer-video.h
+
+(define-function totem_cell_renderer_video_new
+  (is-constructor-of "TotemCellRendererVideo")
+  (c-name "totem_cell_renderer_video_new")
+  (return-type "TotemCellRendererVideo*")
+  (properties
+    '("title" (argname "title") (optional))
+    '("thumbnail-url" (argname "thumbnail-url") (optional))
+  )
+)
 

@@ -4,7 +4,6 @@ import gdata.service
 import urllib
 import httplib
 import atom
-import pango
 import threading
 import re
 from os import unlink
@@ -16,73 +15,6 @@ class DownloadThread (threading.Thread):
 		threading.Thread.__init__ (self)
 	def run (self):
 		self.youtube.entry = self.youtube.service.Get (self.url).entry
-
-class CellRendererVideo (gtk.GenericCellRenderer):
-	__gtype_name__ = "CellRendererVideo"
-	__gproperties__ = {
-		"youtube-id": (gobject.TYPE_STRING, "YouTube ID", "The unique YouTube ID of this video.", "", gobject.PARAM_READWRITE),
-		"title": (gobject.TYPE_STRING, "Video title", "The video's title.", "", gobject.PARAM_READWRITE)
-	}
-
-	def __init__ (self, totem):
-		gtk.GenericCellRenderer.__init__ (self)
-		self.renderer = gtk.CellRendererPixbuf ()
-		self.youtube_id = None
-		self.title = None
-		self.cached_pixbufs = {}
-		self.totem = totem
-		self.set_property ("mode", gtk.CELL_RENDERER_MODE_ACTIVATABLE)
-	def do_set_property (self, pspec, value):
-		if pspec.name == "youtube-id":
-			if not self.cached_pixbufs.has_key (value):
-				"""Save the thumbnail to a temporary location"""
-				try:
-					filename, headers = urllib.urlretrieve ("http://img.youtube.com/vi/" + value + "/1.jpg")
-				except IOError:
-					print "Could not load thumbnail for video " + value
-
-				self.cached_pixbufs[value] = gtk.gdk.pixbuf_new_from_file (filename)
-
-				"""Don't leak the temporary file"""
-				unlink (filename)
-
-			if self.youtube_id != value:
-				"""Use the cached pixbuf"""
-				self.renderer.set_property ("pixbuf", self.cached_pixbufs[value])
-				self.youtube_id = value
-		elif pspec.name == "title":
-			self.title = value
-		else:
-			raise AttributeError, "unknown property %s" % pspec.name
-	def do_get_property (self, pspec):
-		if pspec.name == "youtube-id":
-			return self.youtube_id
-		elif pspec.name == "title":
-			return self.title
-		else:
-			raise AttributeError, "unknown property %s" % pspec.name
-	def on_get_size (self, widget, cell_area):
-		return (0, 0, 130, 120)
-	def on_render (self, window, widget, background_area, cell_area, expose_area, flags):
-		layout = widget.create_pango_layout (self.title)
-		desc = pango.FontDescription ("Sans bold 10")
-		layout.set_font_description (desc)
-		layout.set_ellipsize (pango.ELLIPSIZE_END)
-		layout.set_width (cell_area[2] * pango.SCALE)
-		gc = window.new_gc ()
-		window.draw_layout (gc, cell_area[0] + 2, cell_area[1] + 2, layout)
-
-		cell_area[1] += 10
-		
-		return self.renderer.render (window, widget, background_area, cell_area, expose_area, flags)
-	def on_activate (self, event, widget, path, background_area, cell_area, flags):
-		self.renderer.activate (event, widget, path, background_area, cell_area, flags)
-		return False
-	def clear (self):
-		"""Don't leak pixbufs"""
-		self.cached_pixbufs.clear ()
-
-gobject.type_register (CellRendererVideo)
 
 class YouTube (totem.Plugin):
 	def __init__ (self):
@@ -96,8 +28,8 @@ class YouTube (totem.Plugin):
 		self.results = 0
 		self.entry = None
 		self.button_down = False
-	def activate (self, totem):
-		self.builder = self.load_interface ("youtube.ui", True, totem.get_main_window (), self)
+	def activate (self, totem_object):
+		self.builder = self.load_interface ("youtube.ui", True, totem_object.get_main_window (), self)
 
 		self.search_entry = self.builder.get_object ("yt_search_entry")
 		self.search_entry.connect ("activate", self.on_search_entry_activated)
@@ -106,10 +38,10 @@ class YouTube (totem.Plugin):
 		self.status_label = self.builder.get_object ("yt_status_label")
 
 		"""This is created here rather than in the UI file, because UI files parsed in C and GObjects created in Python don't mix."""
-		self.renderer = CellRendererVideo (totem)
+		self.renderer = totem.CellRendererVideo ()
 		self.treeview = self.builder.get_object ("yt_treeview")
 		self.treeview.connect ("row-activated", self.on_row_activated)
-		self.treeview.insert_column_with_attributes (0, _("Videos"), self.renderer, youtube_id=0, title=1)
+		self.treeview.insert_column_with_attributes (0, _("Videos"), self.renderer, thumbnail=0, title=1)
 
 		self.vadjust = self.treeview.get_vadjustment ()
 		self.vadjust.connect ("value-changed", self.on_value_changed)
@@ -117,22 +49,22 @@ class YouTube (totem.Plugin):
 		vscroll.connect ("button-press-event", self.on_button_press_event)
 		vscroll.connect ("button-release-event", self.on_button_release_event)
 
-		self.liststore = gtk.ListStore (gobject.TYPE_STRING, gobject.TYPE_STRING)
+		self.liststore = gtk.ListStore (gobject.TYPE_OBJECT, gobject.TYPE_STRING, gobject.TYPE_STRING)
 
 		self.treeview.set_model (self.liststore)
 
 		vbox = self.builder.get_object ("yt_vbox")
 		vbox.show_all ()
-		totem.add_sidebar_page ("youtube", _("YouTube"), vbox)
+		totem_object.add_sidebar_page ("youtube", _("YouTube"), vbox)
 
 		"""Set up the service"""
 		self.service = gdata.service.GDataService (None, None, "HOSTED_OR_GOOGLE", None, None, "gdata.youtube.com")
-		self.totem = totem
+		self.totem = totem_object
 	def deactivate (self, totem):
 		totem.remove_sidebar_page ("youtube")
 	def on_row_activated (self, treeview, path, column):
 		model, iter = treeview.get_selection ().get_selected ()
-		youtube_id = model.get_value (iter, 0)
+		youtube_id = model.get_value (iter, 2)
 
 		"""Play the video"""
 		conn = httplib.HTTPConnection ("www.youtube.com")
@@ -145,7 +77,6 @@ class YouTube (totem.Plugin):
 			url = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
 		conn.close ()
 
-		print url
 		if self.debug:
 			print "Playing: " + url
 		else:
@@ -172,7 +103,6 @@ class YouTube (totem.Plugin):
 				self.get_results ("/feeds/videos?vq=" + urllib.quote_plus (self.query) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index), _("Search Results:"), False)
 			else:
 				self.get_results ("/feeds/videos/" + urllib.quote_plus (self.query) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index), _("Related Videos:"), False)
-			self.start_index += self.max_results
 	def convert_url_to_id (self, url):
 		return url.rpartition ("/")[2]
 	def populate_list_from_results (self, status_text):
@@ -183,7 +113,31 @@ class YouTube (totem.Plugin):
 		"""Only do one result at a time, as the thumbnail has to be downloaded"""
 		entry = self.entry.pop (0)
 		self.results += 1
-		self.liststore.append ([self.convert_url_to_id (entry.id.text), entry.title.text])
+		self.start_index += 1
+
+		"""Find the thumbnail tag"""
+		for _element in entry.extension_elements:
+			if _element.tag == "group":
+				break
+
+		"""Download the thumbnail and store it in a temporary location so we can get a pixbuf from it"""
+		thumbnail_url = _element.FindChildren ("thumbnail")[0].attributes['url']
+		try:
+			filename, headers = urllib.urlretrieve (thumbnail_url)
+		except IOError:
+			print "Could not load thumbnail " + thumbnail_url + " for video."
+			return True
+
+		try:
+			pixbuf = gtk.gdk.pixbuf_new_from_file (filename)
+		except gobject.GError:
+			print "Could not load thumbnail " + filename + " for video. It has been left in place for investigation."
+			return True
+
+		"""Don't leak the temporary file"""
+		unlink (filename)
+
+		self.liststore.append ([pixbuf, entry.title.text, self.convert_url_to_id (entry.id.text)])
 		self.treeview.window.process_updates (True)
 
 		"""Have we finished?"""
@@ -197,7 +151,7 @@ class YouTube (totem.Plugin):
 		search_terms = self.search_entry.get_text ()
 
 		if self.debug:
-			print "Searching: " + search_terms
+			print "Searching for \"" + search_terms + "\""
 
 		self.search_mode = True
 		self.query = search_terms
@@ -208,7 +162,6 @@ class YouTube (totem.Plugin):
 		self.search_button.clicked ()
 	def get_results (self, url, status_text, clear = True):
 		if clear:
-			self.renderer.clear ()
 			self.liststore.clear ()
 
 		self.status_label.set_text (_("Loading..."))
@@ -216,6 +169,9 @@ class YouTube (totem.Plugin):
 		"""Make sure things are redrawn"""
 		self.status_label.window.process_updates (True)
 		self.treeview.window.process_updates (True)
+
+		if self.debug:
+				print "Getting results from URL \"" + url + "\""
 
 		DownloadThread (self, url).start ()
 		gobject.idle_add (self.populate_list_from_results, status_text)

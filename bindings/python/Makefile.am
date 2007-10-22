@@ -33,6 +33,7 @@ totem.c: totem.defs totem.override
 
 BINDING_HEADERS_SRCDIR_IN = \
 	src/totem.h				\
+	src/totem-cell-renderer-video.h		\
 	src/plugins/totem-plugin.h		\
 	$(NULL)
 

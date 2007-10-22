@@ -104,7 +104,9 @@ totem_SOURCES = 					\
 	totem-uri.c totem-uri.h		\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
-	totem-subtitle-encoding.h
+	totem-subtitle-encoding.h	\
+	totem-cell-renderer-video.c	\
+	totem-cell-renderer-video.h
 
 totem_CPPFLAGS = \
 	-I$(srcdir)/plparse		\
