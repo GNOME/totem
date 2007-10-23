@@ -67,8 +67,8 @@ struct TotemPlParser {
 #define TOTEM_PL_PARSER_FIELD_ENDTIME		"endtime"
 #define TOTEM_PL_PARSER_FIELD_COPYRIGHT		"copyright"
 #define TOTEM_PL_PARSER_FIELD_ABSTRACT		"abstract"
-#define TOTEM_PL_PARSER_FIELD_SUMMARY		TOTEM_PL_PARSER_FIELD_ABSTRACT
 #define TOTEM_PL_PARSER_FIELD_DESCRIPTION	"description"
+#define TOTEM_PL_PARSER_FIELD_SUMMARY		TOTEM_PL_PARSER_FIELD_DESCRIPTION
 #define TOTEM_PL_PARSER_FIELD_MOREINFO		"moreinfo"
 #define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"
 #define TOTEM_PL_PARSER_FIELD_UI_MODE		"ui-mode"
@@ -84,7 +84,8 @@ struct TotemPlParserClass {
 	GObjectClass parent_class;
 
 	/* signals */
-	void (*entry_parsed) (TotemPlParser *parser, const char *uri,
+	void (*entry_parsed) (TotemPlParser *parser,
+			      const char *uri,
 			      GHashTable *metadata);
 	void (*playlist_started) (TotemPlParser *parser,
 				  const char *uri,

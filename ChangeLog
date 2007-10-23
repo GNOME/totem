@@ -1,3 +1,12 @@
+2007-10-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plparse/plparser.symbols: export totem_pl_parser_parse_date
+	as used by Podcasts
+	* src/plparse/totem-pl-parser.h: summary is
+	description in Podcasts
+	* src/plparse/xmlparser.c: (xml_parser_get_node_internal):
+	Fix uninitialised variable warning in valgrind
+
 2007-10-23  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* configure.in: Decrease Python dependency back to 2.3,
