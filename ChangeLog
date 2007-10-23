@@ -1,3 +1,23 @@
+2007-10-23  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/Makefile.am:
+	* src/plugins/youtube/youtube.py:
+	* src/plugins/youtube/youtube.ui:
+	* src/totem-cell-renderer-video.c:
+	(totem_cell_renderer_video_class_init),
+	(totem_cell_renderer_video_init),
+	(totem_cell_renderer_video_set_property),
+	(totem_cell_renderer_video_get_property), (get_size),
+	(totem_cell_renderer_video_render):
+	* src/totem-video-list.c: (totem_video_list_new),
+	(totem_video_list_class_init), (totem_video_list_init),
+	(totem_video_list_set_property), (totem_video_list_get_property),
+	(query_tooltip_cb), (selection_changed_cb), (row_activated_cb):
+	* src/totem-video-list.h: Create a new TotemVideoList object,
+	enabling tooltips on lists of videos (as in the YouTube plugin),
+	and moving other functionality -- such as play-on-cell-activation
+	 -- support out too (Closes: #488826)
+
 2007-10-23  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/plparser.symbols: export totem_pl_parser_parse_date

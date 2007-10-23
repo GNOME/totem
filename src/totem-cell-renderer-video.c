@@ -39,13 +39,15 @@ struct _TotemCellRendererVideoPrivate {
 	gboolean dispose_has_run;
 	gchar *title;
 	GdkPixbuf *thumbnail;
+	PangoAlignment alignment;
 };
 
 #define TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_CELL_RENDERER_VIDEO, TotemCellRendererVideoPrivate))
 
 enum {
 	PROP_THUMBNAIL = 1,
-	PROP_TITLE
+	PROP_TITLE,
+	PROP_ALIGNMENT
 };
 
 static void totem_cell_renderer_video_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec);
@@ -75,7 +77,6 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	object_class->dispose = totem_cell_renderer_video_dispose;
 	renderer_class->get_size = totem_cell_renderer_video_get_size;
 	renderer_class->render = totem_cell_renderer_video_render;
-	/*renderer_class->activate = totem_cell_renderer_video_activate;*/
 
 	g_object_class_install_property (object_class, PROP_THUMBNAIL,
 				g_param_spec_object ("thumbnail", NULL, NULL,
@@ -83,6 +84,11 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	g_object_class_install_property (object_class, PROP_TITLE,
 				g_param_spec_string ("title", NULL, NULL,
 					_("Unknown video"), G_PARAM_READWRITE));
+	g_object_class_install_property (object_class, PROP_ALIGNMENT,
+				g_param_spec_enum ("alignment", NULL, NULL,
+					PANGO_TYPE_ALIGNMENT,
+					PANGO_ALIGN_CENTER,
+					G_PARAM_READWRITE));
 }
 
 static void
@@ -92,6 +98,7 @@ totem_cell_renderer_video_init (TotemCellRendererVideo *self)
 	self->priv->dispose_has_run = FALSE;
 	self->priv->title = NULL;
 	self->priv->thumbnail = NULL;
+	self->priv->alignment = PANGO_ALIGN_CENTER;
 
 	/* Make sure we're in the right mode */
 	g_object_set ((gpointer) self, "mode", GTK_CELL_RENDERER_MODE_ACTIVATABLE, NULL);
@@ -118,18 +125,21 @@ totem_cell_renderer_video_dispose (GObject *object)
 static void
 totem_cell_renderer_video_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec)
 {
-	TotemCellRendererVideo *self = TOTEM_CELL_RENDERER_VIDEO (object);
+	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE (object);
 
 	switch (property_id)
 	{
 		case PROP_THUMBNAIL:
-			if (self->priv->thumbnail != NULL)
-				g_object_unref (self->priv->thumbnail);
-			self->priv->thumbnail = (GdkPixbuf*) g_value_dup_object (value);
+			if (priv->thumbnail != NULL)
+				g_object_unref (priv->thumbnail);
+			priv->thumbnail = (GdkPixbuf*) g_value_dup_object (value);
 			break;
 		case PROP_TITLE:
-			g_free (self->priv->title);
-			self->priv->title = g_strdup (g_value_get_string (value));
+			g_free (priv->title);
+			priv->title = g_strdup (g_value_get_string (value));
+			break;
+		case PROP_ALIGNMENT:
+			priv->alignment = g_value_get_enum (value);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -139,15 +149,18 @@ totem_cell_renderer_video_set_property (GObject *object, guint property_id, cons
 static void
 totem_cell_renderer_video_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)
 {
-	TotemCellRendererVideo *self = TOTEM_CELL_RENDERER_VIDEO (object);
+	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE (object);
 
 	switch (property_id)
 	{
 		case PROP_THUMBNAIL:
-			g_value_set_object (value, G_OBJECT (self->priv->thumbnail));
+			g_value_set_object (value, G_OBJECT (priv->thumbnail));
 			break;
 		case PROP_TITLE:
-			g_value_set_string (value, self->priv->title);
+			g_value_set_string (value, priv->title);
+			break;
+		case PROP_ALIGNMENT:
+			g_value_set_enum (value, priv->alignment);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -165,12 +178,12 @@ get_size (GtkCellRenderer *cell,
 	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE (cell);
 	guint pixbuf_width = 0;
 	guint pixbuf_height = 0;
+	guint title_height;
 	guint calc_width;
 	guint calc_height;
 	PangoContext *context;
 	PangoFontMetrics *metrics;
 	PangoFontDescription *font_desc;
-	guint title_height;
 
 	/* Calculate thumbnail dimensions */
 	if (priv->thumbnail != NULL) {
@@ -185,13 +198,14 @@ get_size (GtkCellRenderer *cell,
 	metrics = pango_context_get_metrics (context,
 				font_desc,
 				pango_context_get_language (context));
+
 	title_height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
 				pango_font_metrics_get_descent (metrics));
 
 	pango_font_metrics_unref (metrics);
 	pango_font_description_free (font_desc);
 
-	/* Calculate the final size */
+	/* Calculate the total final size */
 	calc_width = cell->xpad * 2 + pixbuf_width;
 	calc_height = cell->ypad * 3 + pixbuf_height + title_height;
 
@@ -211,19 +225,37 @@ get_size (GtkCellRenderer *cell,
 		draw_area->width = calc_width;
 		draw_area->height = calc_height;
 
+		/*if (cell_area) {
+			g_message ("Cell area: X: %i, Y: %i, W: %i, H: %i", cell_area->x, cell_area->y, cell_area->width, cell_area->height);
+			g_message ("X-align: %f, Y-align: %f", cell->xalign, cell->yalign);
+		}
+		g_message ("Draw area: X: %i, Y: %i, W: %i, H: %i", draw_area->x, draw_area->y, draw_area->width, draw_area->height);*/
+
 		if (title_area) {
-			title_area->x = draw_area->x;
-			title_area->y = draw_area->y;
-			title_area->width = calc_width;
+			if (cell_area) {
+				title_area->width = cell_area->width;
+				title_area->x = (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ? 1.0 : 0.0;
+			} else {
+				title_area->width = calc_width;
+				title_area->x = draw_area->x;
+			}
+
 			title_area->height = title_height;
+			title_area->y = draw_area->y;
+
+			/*g_message ("Title area: X: %i, Y: %i, W: %i, H: %i", title_area->x, title_area->y, title_area->width, title_area->height);*/
 		}
 
 		if (thumbnail_area) {
 			thumbnail_area->x = draw_area->x;
 			thumbnail_area->y = draw_area->y + title_height + cell->ypad;
-			thumbnail_area->width = calc_width;
+			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
 			thumbnail_area->height = pixbuf_height;
+
+			/*g_message ("Thumbnail area: X: %i, Y: %i, W: %i, H: %i", thumbnail_area->x, thumbnail_area->y, thumbnail_area->width, thumbnail_area->height);*/
 		}
+
+		/*g_message ("---");*/
 	}
 }
 
@@ -313,7 +345,8 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 
 	pango_layout_set_font_description (layout, desc);
 	pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
-	pango_layout_set_width (layout, (cell_area->width - title_area.x - 2 * cell->xpad) * PANGO_SCALE);
+	pango_layout_set_width (layout, title_area.width * PANGO_SCALE);
+	pango_layout_set_alignment (layout, priv->alignment);
 
 	gtk_paint_layout (widget->style,
 				window,

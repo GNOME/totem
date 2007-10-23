@@ -37,9 +37,10 @@ class YouTube (totem.Plugin):
 		self.search_button.connect ("clicked", self.on_search_button_clicked)
 		self.status_label = self.builder.get_object ("yt_status_label")
 
-		"""This is created here rather than in the UI file, because UI files parsed in C and GObjects created in Python don't mix."""
+		"""This is done here rather than in the UI file, because UI files parsed in C and GObjects created in Python apparently don't mix."""
 		self.renderer = totem.CellRendererVideo ()
 		self.treeview = self.builder.get_object ("yt_treeview")
+		self.treeview.set_property ("totem", totem_object)
 		self.treeview.connect ("row-activated", self.on_row_activated)
 		self.treeview.insert_column_with_attributes (0, _("Videos"), self.renderer, thumbnail=0, title=1)
 
@@ -49,8 +50,7 @@ class YouTube (totem.Plugin):
 		vscroll.connect ("button-press-event", self.on_button_press_event)
 		vscroll.connect ("button-release-event", self.on_button_release_event)
 
-		self.liststore = gtk.ListStore (gobject.TYPE_OBJECT, gobject.TYPE_STRING, gobject.TYPE_STRING)
-
+		self.liststore = self.builder.get_object ("yt_liststore")
 		self.treeview.set_model (self.liststore)
 
 		vbox = self.builder.get_object ("yt_vbox")
@@ -64,23 +64,7 @@ class YouTube (totem.Plugin):
 		totem.remove_sidebar_page ("youtube")
 	def on_row_activated (self, treeview, path, column):
 		model, iter = treeview.get_selection ().get_selected ()
-		youtube_id = model.get_value (iter, 2)
-
-		"""Play the video"""
-		conn = httplib.HTTPConnection ("www.youtube.com")
-		conn.request ("GET", "/v/" + urllib.quote (youtube_id))
-		response = conn.getresponse ()
-		if response.status == 303:
-			location = response.getheader("location")
-			url = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
-		else:
-			url = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
-		conn.close ()
-
-		if self.debug:
-			print "Playing: " + url
-		else:
-			self.totem.action_set_mrl_and_play (url)
+		youtube_id = model.get_value (iter, 3)
 		
 		"""Get related videos"""
 		self.search_mode = False
@@ -104,7 +88,8 @@ class YouTube (totem.Plugin):
 			else:
 				self.get_results ("/feeds/videos/" + urllib.quote_plus (self.query) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index), _("Related Videos:"), False)
 	def convert_url_to_id (self, url):
-		return url.rpartition ("/")[2]
+		"""Find the last clause in the URL; after the last /"""
+		return url.split ("/").pop ()
 	def populate_list_from_results (self, status_text):
 		"""Wait until we have some results to display"""
 		if self.entry == None or len (self.entry) == 0:
@@ -114,6 +99,23 @@ class YouTube (totem.Plugin):
 		entry = self.entry.pop (0)
 		self.results += 1
 		self.start_index += 1
+		youtube_id = self.convert_url_to_id (entry.id.text)
+
+		"""Get the video stream MRL"""
+		try:
+			conn = httplib.HTTPConnection ("www.youtube.com")
+			conn.request ("GET", "/v/" + urllib.quote (youtube_id))
+			response = conn.getresponse ()
+		except:
+			print "Could not resolve stream MRL for YouTube video \"" + youtube_id + "\"."
+			return True
+
+		if response.status == 303:
+			location = response.getheader("location")
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
+		else:
+			mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
+		conn.close ()
 
 		"""Find the thumbnail tag"""
 		for _element in entry.extension_elements:
@@ -137,7 +139,7 @@ class YouTube (totem.Plugin):
 		"""Don't leak the temporary file"""
 		unlink (filename)
 
-		self.liststore.append ([pixbuf, entry.title.text, self.convert_url_to_id (entry.id.text)])
+		self.liststore.append ([pixbuf, entry.title.text, mrl, youtube_id])
 		self.treeview.window.process_updates (True)
 
 		"""Have we finished?"""

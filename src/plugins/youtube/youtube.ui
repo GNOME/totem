@@ -2,6 +2,14 @@
 <!--*- mode: xml -*--><!DOCTYPE glade-interface
 	SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
 <interface>
+<object class="GtkListStore" id="yt_liststore">
+	<columns>
+		<column type="GdkPixbuf"/><!--Thumbnail-->
+		<column type="gchararray"/><!--Title-->
+		<column type="gchararray"/><!--MRL-->
+		<column type="gchararray"/><!--YouTube ID-->
+	</columns>
+</object>
 
 <object class="GtkVBox" id="yt_vbox">
 	<property name="border_width">5</property>
@@ -71,14 +79,11 @@
 			<property name="shadow_type">GTK_SHADOW_IN</property>
 			<property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 			<child>
-				<object class="GtkTreeView" id="yt_treeview">
+				<object class="TotemVideoList" id="yt_treeview">
 					<property name="headers-visible">False</property>
 					<property name="fixed-height-mode">False</property>
-					<child>
-						<!--<object class="GtkTreeViewColumn" id="yt_treeview_column">
-							<property name="title">Videos</property>
-						</object>-->
-					</child>
+					<property name="tooltip-column">1</property>
+					<property name="mrl-column">2</property>
 				</object>
 			</child>
 		</object>
