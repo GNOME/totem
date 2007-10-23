@@ -882,7 +882,7 @@ if test "x$have_python" != "xyes"; then
 fi
 
 if test "x$have_python" != "xno"; then
-	AM_PATH_PYTHON([2.5],[],[no])
+	AM_PATH_PYTHON([2.3],[],[no])
 	if test "x$PYTHON" = "x:"; then
 		have_python=no
 	fi
@@ -936,7 +936,7 @@ EOF
 fi
 
 if test "x$have_python" != "xno"; then
-	PYGTK_REQUIRED=2.8.0
+	PYGTK_REQUIRED=2.12.0
 
 	PKG_CHECK_MODULES([PYGTK], [
 		pygtk-2.0 >= $PYGTK_REQUIRED],
