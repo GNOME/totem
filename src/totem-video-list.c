@@ -30,11 +30,13 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <glib/gprintf.h>
 
 #include "totem.h"
 #include "totem-video-list.h"
 #include "totem-private.h"
 #include "totem-playlist.h"
+#include "totemvideolist-marshal.h"
 
 struct _TotemVideoListPrivate {
 	gboolean dispose_has_run;
@@ -51,11 +53,19 @@ enum {
 	PROP_TOTEM
 };
 
+enum {
+	STARTING_VIDEO,
+	LAST_SIGNAL
+};
+
 static void totem_video_list_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec);
 static void totem_video_list_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec);
 static gboolean query_tooltip_cb (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, GtkTooltip *tooltip, gpointer user_data);
 static void selection_changed_cb (GtkTreeSelection *selection, GtkWidget *tree_view);
 static void row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *column, gpointer user_data);
+static gboolean default_starting_video_cb (TotemVideoList *video_list, GtkTreePath *path);
+
+static gint totem_video_list_table_signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (TotemVideoList, totem_video_list, GTK_TYPE_TREE_VIEW)
 
@@ -84,6 +94,16 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	g_object_class_install_property (object_class, PROP_TOTEM,
 				g_param_spec_object ("totem", NULL, NULL,
 					TOTEM_TYPE_OBJECT, G_PARAM_READWRITE));
+
+	klass->starting_video = default_starting_video_cb;
+	totem_video_list_table_signals[STARTING_VIDEO] = g_signal_new ("starting-video",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemVideoListClass, starting_video),
+				NULL, NULL,
+				totemvideolist_marshal_BOOLEAN__OBJECT_OBJECT,
+				G_TYPE_BOOLEAN, 2,
+				TOTEM_TYPE_VIDEO_LIST, GTK_TYPE_TREE_PATH);
 }
 
 static void
@@ -152,6 +172,8 @@ query_tooltip_cb (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, Gtk
 	TotemVideoList *self = TOTEM_VIDEO_LIST (widget);
 	GtkTreeIter iter;
 	gchar *tooltip_text;
+	gchar *mrl_text;
+	gchar *final_text;
 	GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
 	GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
 	GtkTreePath *path = NULL;
@@ -164,12 +186,25 @@ query_tooltip_cb (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, Gtk
 				&model, &path, &iter))
 		return FALSE;
 
-	gtk_tree_model_get (model, &iter, self->priv->tooltip_column, &tooltip_text, -1);
-	gtk_tooltip_set_text (tooltip, tooltip_text);
-	gtk_tree_view_set_tooltip_row (tree_view, tooltip, path);
+	if (self->priv->mrl_column == -1) {
+		gtk_tree_model_get (model, &iter, self->priv->tooltip_column, &tooltip_text, -1);
+		gtk_tooltip_set_text (tooltip, tooltip_text);
+		g_free (tooltip_text);
+	} else {
+		gtk_tree_model_get (model, &iter,
+				self->priv->tooltip_column, &tooltip_text,
+				self->priv->mrl_column, &mrl_text,
+				-1);
+		final_text = g_strdup_printf ("%s\n%s", tooltip_text, mrl_text);
+		gtk_tooltip_set_text (tooltip, final_text);
 
+		g_free (tooltip_text);
+		g_free (mrl_text);
+		g_free (final_text);
+	}
+
+	gtk_tree_view_set_tooltip_row (tree_view, tooltip, path);
 	gtk_tree_path_free (path);
-	g_free (tooltip_text);
 
 	return TRUE;
 }
@@ -185,10 +220,19 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 {
 	GtkTreeIter iter;
 	gchar *mrl;
+	gboolean play_video = TRUE;
 	TotemVideoList *self = TOTEM_VIDEO_LIST (tree_view);
 	GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
 
 	if (self->priv->mrl_column == -1)
+		return;
+
+	g_signal_emit (G_OBJECT (tree_view), totem_video_list_table_signals[STARTING_VIDEO], 0,
+				self,
+				path,
+				&play_video);
+
+	if (play_video == FALSE)
 		return;
 
 	gtk_tree_model_get_iter (model, &iter, path);
@@ -197,3 +241,11 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 
 	g_free (mrl);
 }
+
+static gboolean
+default_starting_video_cb (TotemVideoList *video_list, GtkTreePath *path)
+{
+	/* Play the video by default */
+	return TRUE;
+}
+

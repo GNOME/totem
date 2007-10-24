@@ -50,6 +50,7 @@ typedef struct {
 
 typedef struct {
 	GtkTreeViewClass parent;
+	gboolean (*starting_video) (TotemVideoList *video_list, GtkTreePath *path);
 } TotemVideoListClass;
 
 GType totem_video_list_get_type (void);

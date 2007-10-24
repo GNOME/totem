@@ -77,7 +77,9 @@ libtotem_player_la_LDFLAGS = \
 
 # Totem
 
-TOTEMMARSHALFILES = totemobject-marshal.c totemobject-marshal.h
+TOTEMMARSHALFILES = 						\
+	totemobject-marshal.c totemobject-marshal.h		\
+	totemvideolist-marshal.c totemvideolist-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
 BUILT_SOURCES = $(TOTEMMARSHALFILES)
 
@@ -85,6 +87,10 @@ totemobject-marshal.h: totemobject-marshal.list Makefile
 	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header > totemobject-marshal.h )
 totemobject-marshal.c: totemobject-marshal.h Makefile
 	( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header --body > totemobject-marshal.c )
+totemvideolist-marshal.h: totemvideolist-marshal.list Makefile
+	( $(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header > totemvideolist-marshal.h )
+totemvideolist-marshal.c: totemvideolist-marshal.h Makefile
+	( $(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header --body > totemvideolist-marshal.c )
 
 totem_SOURCES = 					\
 	totem.c totem.h					\
@@ -358,4 +364,7 @@ CLEANFILES =			\
 	$(desktop_DATA)		\
 	$(BUILT_SOURCES)
 
-EXTRA_DIST = totemobject-marshal.list
+EXTRA_DIST = 				\
+	totemobject-marshal.list	\
+	totemvideolist-marshal.list
+		

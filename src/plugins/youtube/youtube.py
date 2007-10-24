@@ -42,6 +42,7 @@ class YouTube (totem.Plugin):
 		self.treeview = self.builder.get_object ("yt_treeview")
 		self.treeview.set_property ("totem", totem_object)
 		self.treeview.connect ("row-activated", self.on_row_activated)
+		self.treeview.connect ("starting-video", self.on_starting_video)
 		self.treeview.insert_column_with_attributes (0, _("Videos"), self.renderer, thumbnail=0, title=1)
 
 		self.vadjust = self.treeview.get_vadjustment ()
@@ -72,6 +73,29 @@ class YouTube (totem.Plugin):
 		self.start_index = 1
 		self.results = 0
 		self.get_results ("/feeds/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), _("Related Videos:"))
+	def on_starting_video (self, treeview, path, user_data):
+		model, iter = treeview.get_selection ().get_selected ()
+		youtube_id = model.get_value (iter, 3)
+
+		"""Get the video stream MRL"""
+		try:
+			conn = httplib.HTTPConnection ("www.youtube.com")
+			conn.request ("GET", "/v/" + urllib.quote (youtube_id))
+			response = conn.getresponse ()
+		except:
+			print "Could not resolve stream MRL for YouTube video \"" + youtube_id + "\"."
+			return True
+
+		if response.status == 303:
+			location = response.getheader("location")
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
+		else:
+			mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
+		conn.close ()
+
+		model.set_value (iter, 2, mrl)
+
+		return True
 	def on_button_press_event (self, widget, event):
 		self.button_down = True
 	def on_button_release_event (self, widget, event):
@@ -95,27 +119,12 @@ class YouTube (totem.Plugin):
 		if self.entry == None or len (self.entry) == 0:
 			return True
 
-		"""Only do one result at a time, as the thumbnail has to be downloaded"""
+		"""Only do one result at a time, as the thumbnail has to be downloaded; give them a temporary MRL until the real one is resolved before playing"""
 		entry = self.entry.pop (0)
 		self.results += 1
 		self.start_index += 1
 		youtube_id = self.convert_url_to_id (entry.id.text)
-
-		"""Get the video stream MRL"""
-		try:
-			conn = httplib.HTTPConnection ("www.youtube.com")
-			conn.request ("GET", "/v/" + urllib.quote (youtube_id))
-			response = conn.getresponse ()
-		except:
-			print "Could not resolve stream MRL for YouTube video \"" + youtube_id + "\"."
-			return True
-
-		if response.status == 303:
-			location = response.getheader("location")
-			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
-		else:
-			mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
-		conn.close ()
+		mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
 
 		"""Find the thumbnail tag"""
 		for _element in entry.extension_elements:
