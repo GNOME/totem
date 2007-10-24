@@ -32,6 +32,7 @@ G_BEGIN_DECLS
 
 gboolean totem_pl_parser_is_rss (const char *data, gsize len);
 gboolean totem_pl_parser_is_atom (const char *data, gsize len);
+gboolean totem_pl_parser_is_opml (const char *data, gsize len);
 gboolean totem_pl_parser_is_xml_feed (const char *data, gsize len);
 
 #ifndef TOTEM_PL_PARSER_MINI
@@ -57,6 +58,11 @@ TotemPlParserResult totem_pl_parser_add_itms (TotemPlParser *parser,
 					      const char *url,
 					      const char *base,
 					      gpointer data);
+TotemPlParserResult totem_pl_parser_add_opml (TotemPlParser *parser,
+					      const char *url,
+					      const char *base,
+					      gpointer data);
+
 #endif /* !TOTEM_PL_PARSER_MINI */
 
 G_END_DECLS

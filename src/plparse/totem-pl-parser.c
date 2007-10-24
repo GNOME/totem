@@ -964,6 +964,7 @@ static PlaylistTypes special_types[] = {
 	PLAYLIST_TYPE ("audio/x-iriver-pla", totem_pl_parser_add_pla, NULL, FALSE),
 	PLAYLIST_TYPE ("application/atom+xml", totem_pl_parser_add_atom, NULL, FALSE),
 	PLAYLIST_TYPE ("application/rss+xml", totem_pl_parser_add_rss, NULL, FALSE),
+	PLAYLIST_TYPE ("text/x-opml+xml", totem_pl_parser_add_opml, NULL, FALSE),
 #ifndef TOTEM_PL_PARSER_MINI
 	PLAYLIST_TYPE ("application/x-desktop", totem_pl_parser_add_desktop, NULL, TRUE),
 	PLAYLIST_TYPE ("application/x-gnome-app-info", totem_pl_parser_add_desktop, NULL, TRUE),

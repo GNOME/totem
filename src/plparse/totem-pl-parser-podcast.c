@@ -94,11 +94,38 @@ totem_pl_parser_is_atom (const char *data, gsize len)
 }
 
 gboolean
+totem_pl_parser_is_opml (const char *data, gsize len)
+{
+	char *buffer;
+
+	if (len == 0)
+		return FALSE;
+	if (len > MIME_READ_CHUNK_SIZE)
+		len = MIME_READ_CHUNK_SIZE;
+
+	/* FIXME would be nicer to have an strnstr */
+	buffer = g_memdup (data, len);
+	if (buffer == NULL) {
+		g_warning ("Couldn't dup data in totem_pl_parser_is_opml");
+		return FALSE;
+	}
+	buffer[len - 1] = '\0';
+	if (strstr (buffer, "<opml ") != NULL) {
+		g_free (buffer);
+		return TRUE;
+	}
+	g_free (buffer);
+	return FALSE;
+}
+
+gboolean
 totem_pl_parser_is_xml_feed (const char *data, gsize len)
 {
 	if (totem_pl_parser_is_rss (data, len) != FALSE)
 		return TRUE;
 	if (totem_pl_parser_is_atom (data, len) != FALSE)
+		return TRUE;
+	if (totem_pl_parser_is_opml (data, len) != FALSE)
 		return TRUE;
 	return FALSE;
 }
@@ -684,6 +711,95 @@ totem_pl_parser_is_itms_feed (const char *url)
 		return TRUE;
 
 	return FALSE;
+}
+
+static TotemPlParserResult
+parse_opml_outline (TotemPlParser *parser, xml_node_t *parent)
+{
+	xml_node_t* node;
+	const char *title, *url;
+
+	title = url = NULL;
+	for (node = parent->child; node != NULL; node = node->next) {
+		if (node->name == NULL || g_ascii_strcasecmp (node->name, "outline") != 0)
+			continue;
+
+		url = xml_parser_get_property (node, "xmlUrl");
+		title = xml_parser_get_property (node, "text");
+
+		if (url == NULL)
+			continue;
+
+		totem_pl_parser_add_url (parser,
+					 TOTEM_PL_PARSER_FIELD_TITLE, title,
+					 TOTEM_PL_PARSER_FIELD_URL, url,
+					 NULL);
+	}
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+static TotemPlParserResult
+parse_opml_head_body (TotemPlParser *parser, const char *url, xml_node_t *parent)
+{
+	xml_node_t* node;
+	gboolean started;
+
+	started = FALSE;
+
+	for (node = parent->child; node != NULL; node = node->next) {
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp (node->name, "body") == 0) {
+			if (started == FALSE) {
+				/* Send the info we already have about the feed */
+				totem_pl_parser_add_url (parser,
+							 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
+							 TOTEM_PL_PARSER_FIELD_URL, url,
+							 NULL);
+				started = TRUE;
+			}
+
+			parse_opml_outline (parser, node);
+		}
+	}
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
+}
+
+TotemPlParserResult
+totem_pl_parser_add_opml (TotemPlParser *parser,
+			  const char *url,
+			  const char *base,
+			  gpointer data)
+{
+	xml_node_t* doc;
+	char *contents;
+	int size;
+
+	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+
+	xml_parser_init (contents, size, XML_PARSER_CASE_INSENSITIVE);
+	if (xml_parser_build_tree_with_options (&doc, XML_PARSER_RELAXED | XML_PARSER_MULTI_TEXT) < 0) {
+		g_free (contents);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+	/* If the document has no name */
+	if (doc->name == NULL
+	    || g_ascii_strcasecmp (doc->name , "opml") != 0) {
+		g_free (contents);
+		xml_parser_free_tree (doc);
+		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
+
+	parse_opml_head_body (parser, url, doc);
+
+	g_free (contents);
+	xml_parser_free_tree (doc);
+
+	return TOTEM_PL_PARSER_RESULT_SUCCESS;
 }
 
 #endif /* !TOTEM_PL_PARSER_MINI */
