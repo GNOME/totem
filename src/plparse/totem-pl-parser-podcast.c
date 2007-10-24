@@ -663,18 +663,23 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
 	TotemPlParserResult ret;
 	int size;
 
-	/* Get the webpage */
-	if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
-		return TOTEM_PL_PARSER_RESULT_ERROR;
+	if (g_str_has_prefix (url, "itms") == FALSE) {
+		/* Get the webpage */
+		if (gnome_vfs_read_entire_file (url, &size, &contents) != GNOME_VFS_OK)
+			return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	uncompressed = decompress_gzip (contents, size);
-	g_free (contents);
-	if (uncompressed == NULL)
-		return TOTEM_PL_PARSER_RESULT_ERROR;
+		uncompressed = decompress_gzip (contents, size);
+		g_free (contents);
+		if (uncompressed == NULL)
+			return TOTEM_PL_PARSER_RESULT_ERROR;
 
-	/* Look for the link to the itms on phobos */
-	itms_url = totem_pl_parser_get_itms_url (uncompressed);
-	g_free (uncompressed);
+		/* Look for the link to the itms on phobos */
+		itms_url = totem_pl_parser_get_itms_url (uncompressed);
+		g_free (uncompressed);
+	} else {
+		itms_url= g_strdup (url);
+		memcpy (itms_url, "http", 4);
+	}
 
 	/* Get the phobos linked, in some weird iTunes only format */
 	if (gnome_vfs_read_entire_file (itms_url, &size, &contents) != GNOME_VFS_OK) {
@@ -704,6 +709,10 @@ totem_pl_parser_is_itms_feed (const char *url)
 {
 	g_return_val_if_fail (url != NULL, FALSE);
 
+	if (g_str_has_prefix (url, "itms:") != FALSE
+	    && strstr (url, "phobos.apple.com") != NULL
+	    && strstr (url, "viewPodcast") != NULL)
+		return TRUE;
 	if (strstr (url, "phobos.apple.com/") != NULL
 	    && strstr (url, "viewPodcast") != NULL)
 		return TRUE;

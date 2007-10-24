@@ -1,5 +1,13 @@
 2007-10-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/totem-pl-parser-podcast.c:
+	(totem_pl_parser_add_itms), (totem_pl_parser_is_itms_feed),
+	(parse_opml_outline): Fix parsing of the URLs as supplied on
+	the "Connecting to the iTunes Store." page, so that a single-click
+	can bring you to rhythmbox
+
+2007-10-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-podcast.c: (totem_pl_parser_is_opml),
 	(totem_pl_parser_is_xml_feed), (parse_rss_items),
 	(totem_pl_parser_add_rss), (parse_opml_outline),
