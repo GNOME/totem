@@ -2,7 +2,15 @@
 <!--*- mode: xml -*--><!DOCTYPE glade-interface
 	SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
 <interface>
-<object class="GtkListStore" id="yt_liststore">
+<object class="GtkListStore" id="yt_liststore_search">
+	<columns>
+		<column type="GdkPixbuf"/><!--Thumbnail-->
+		<column type="gchararray"/><!--Title-->
+		<column type="gchararray"/><!--MRL-->
+		<column type="gchararray"/><!--YouTube ID-->
+	</columns>
+</object>
+<object class="GtkListStore" id="yt_liststore_related">
 	<columns>
 		<column type="GdkPixbuf"/><!--Thumbnail-->
 		<column type="gchararray"/><!--Title-->
@@ -17,13 +25,9 @@
 	<property name="homogeneous">False</property>
 	<property name="spacing">6</property>
 	<child>
-		<object class="GtkLabel" id="yt_status_label">
-			<property name="label" translatable="yes">Please enter a search.</property>
-			<property name="justify">GTK_JUSTIFY_LEFT</property>
-			<property name="xalign">0</property>
-			<property name="yalign">0.5</property>
-			<property name="xpad">0</property>
-			<property name="ypad">0</property>
+		<object class="GtkLabel" id="label0">
+			<property name="label" translatable="yes">Search:</property>
+			<property name="xalign">0.0</property>
 		</object>
 		<packing>
 			<property name="padding">0</property>
@@ -71,20 +75,58 @@
 		</packing>
 	</child>
 	<child>
-		<object class="GtkScrolledWindow" id="yt_scrolled_window">
-			<property name="visible">True</property>
-			<property name="can_focus">True</property>
-			<property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-			<property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-			<property name="shadow_type">GTK_SHADOW_IN</property>
-			<property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+		<object class="GtkNotebook" id="yt_notebook">
 			<child>
-				<object class="TotemVideoList" id="yt_treeview">
-					<property name="headers-visible">False</property>
-					<property name="fixed-height-mode">False</property>
-					<property name="tooltip-column">1</property>
-					<property name="mrl-column">2</property>
+				<object class="GtkScrolledWindow" id="yt_scrolled_window_search">
+					<property name="visible">True</property>
+					<property name="can_focus">True</property>
+					<property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+					<property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+					<property name="shadow_type">GTK_SHADOW_IN</property>
+					<property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+					<child>
+						<object class="TotemVideoList" id="yt_treeview_search">
+							<property name="headers-visible">False</property>
+							<property name="fixed-height-mode">False</property>
+							<property name="tooltip-column">1</property>
+							<property name="mrl-column">2</property>
+						</object>
+					</child>
 				</object>
+			</child>
+			<child type="tab">
+				<object class="GtkLabel" id="label1">
+					<property name="label" translatable="yes">Search Results</property>
+				</object>
+				<packing>
+					<property name="tab-fill">False</property>
+				</packing>
+			</child>
+			<child>
+				<object class="GtkScrolledWindow" id="yt_scrolled_window_related">
+					<property name="visible">True</property>
+					<property name="can_focus">True</property>
+					<property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+					<property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+					<property name="shadow_type">GTK_SHADOW_IN</property>
+					<property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+					<child>
+						<object class="TotemVideoList" id="yt_treeview_related">
+							<property name="headers-visible">False</property>
+							<property name="fixed-height-mode">False</property>
+							<property name="tooltip-column">1</property>
+							<property name="mrl-column">2</property>
+						</object>
+					</child>
+				</object>
+			</child>
+			<child type="tab">
+				<object class="GtkLabel" id="label2">
+					<property name="label" translatable="yes">Related Videos</property>
+				</object>
+				<packing>
+					<property name="tab-fill">False</property>
+				</packing>
 			</child>
 		</object>
 		<packing>
