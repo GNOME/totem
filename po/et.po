@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-19 01:37+0100\n"
-"PO-Revision-Date: 2007-10-21 14:07+0300\n"
+"POT-Creation-Date: 2007-10-25 16:30+0100\n"
+"PO-Revision-Date: 2007-10-26 21:18+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -262,7 +262,7 @@ msgstr "Tekstilised subtiitrid"
 
 #. Title
 #: ../data/totem.ui.h:19 ../src/totem.c:865 ../src/totem.c:3037
-#: ../src/totem.c:3066 ../browser-plugin/totem-plugin-viewer.c:1776
+#: ../src/totem.c:3066 ../browser-plugin/totem-plugin-viewer.c:1787
 msgid "Totem Movie Player"
 msgstr "Totem filmiesitaja"
 
@@ -468,6 +468,10 @@ msgstr "Sisesta faili _aadress, mida sa soovid avada:"
 #: ../lib/totem-scrsaver.c:117
 msgid "Playing a movie"
 msgstr "Filmi esitamine"
+
+#: ../src/totem-cell-renderer-video.c:86
+msgid "Unknown video"
+msgstr "Tundmatu video"
 
 #: ../src/totem-fullscreen.c:436
 msgid "No File"
@@ -1135,7 +1139,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem ei suutnud seda plaati mängida."
 
 #: ../src/totem.c:513 ../src/totem.c:2901
-#: ../browser-plugin/totem-plugin-viewer.c:1767
+#: ../browser-plugin/totem-plugin-viewer.c:1778
 msgid "No reason."
 msgstr "Põhjendus puudub."
 
@@ -1166,7 +1170,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totemil pole võimalik abiteabe sisu näidata."
 
 #: ../src/totem.c:1466 ../src/totem.c:1468
-#: ../browser-plugin/totem-plugin-viewer.c:1551
+#: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "An error occurred"
 msgstr "Tekkis veaolukord"
 
@@ -1716,6 +1720,26 @@ msgstr "Lirc'i sätteid pole võimalik lugeda."
 msgid "MythTV Recordings"
 msgstr "MythTV salvestised"
 
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:1
+msgid "IP address of the local MythTV server"
+msgstr "Kohaliku MythTV serveri IP-aadress"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:2
+msgid "Name of the database for the local MythTV server"
+msgstr "Kohaliku MythTV serveri andmebaasi nimi"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:3
+msgid "Password to access the local MythTV server"
+msgstr "Parool kohalikule MythTV serverile ligipääsuks"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:4
+msgid "Port to access the local MythTV server"
+msgstr "Port kohalikule MythTV serverile ligipääsuks"
+
+#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:5
+msgid "Username to access the local MythTV server"
+msgstr "Kasutajanimi kohalikule MythTV serverile ligipääsuks"
+
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
 msgstr "Alati pealmine"
@@ -1785,23 +1809,23 @@ msgstr "YouTube sirvija"
 msgid "Please enter a search."
 msgstr "Palun sisesta otsingu tekst."
 
-#: ../src/plugins/youtube/youtube.py:111
+#: ../src/plugins/youtube/youtube.py:46
 msgid "Videos"
 msgstr "Videod"
 
-#: ../src/plugins/youtube/youtube.py:125
+#: ../src/plugins/youtube/youtube.py:59
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:156 ../src/plugins/youtube/youtube.py:171
+#: ../src/plugins/youtube/youtube.py:75 ../src/plugins/youtube/youtube.py:113
 msgid "Related Videos:"
 msgstr "Seotud videod:"
 
-#: ../src/plugins/youtube/youtube.py:169 ../src/plugins/youtube/youtube.py:203
+#: ../src/plugins/youtube/youtube.py:111 ../src/plugins/youtube/youtube.py:171
 msgid "Search Results:"
 msgstr "Otsingutulemused:"
 
-#: ../src/plugins/youtube/youtube.py:211
+#: ../src/plugins/youtube/youtube.py:178
 msgid "Loading..."
 msgstr "Laadimine..."
 
@@ -1840,27 +1864,21 @@ msgstr "Totemi plugin veebisirvijale"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1767
+#: ../browser-plugin/totem-plugin-viewer.c:1778
 msgid "The Totem plugin could not be started."
 msgstr "Totemil pole võimalik käivituda."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2124
+#: ../browser-plugin/totem-plugin-viewer.c:2135
 msgid "No playlist or playlist empty"
 msgstr "Esitusnimekiri on puudu või tühi"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2229
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Thread-safe teeke pole võimalik lähtestada."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2229
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
-
-#~ msgid "_Movie"
-#~ msgstr "_Film"
-
-#~ msgid "_Open..."
-#~ msgstr "_Ava..."
 
 #~ msgid "Open a file"
 #~ msgstr "Faili avamine"
@@ -1873,9 +1891,6 @@ msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
 
 #~ msgid "_Eject"
 #~ msgstr "_Väljasta"
-
-#~ msgid "_Properties"
-#~ msgstr "_Omadused"
 
 #~ msgid "Play / Pa_use"
 #~ msgstr "_Esita / paus"
@@ -1921,27 +1936,6 @@ msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
 
 #~ msgid "Fit Window to Movie"
 #~ msgstr "Sobita aken filmi järgi"
-
-#~ msgid "_Resize 1:2"
-#~ msgstr "_Vähendus 1:2"
-
-#~ msgid "Resize to half the video size"
-#~ msgstr "Pildi vähendamine video algsest suurusest kaks korda väiksemaks"
-
-#~ msgid "Resize _1:1"
-#~ msgstr "Algne suhe _1:1"
-
-#~ msgid "Resize to video size"
-#~ msgstr "Pildi näitamine video algse suurusega"
-
-#~ msgid "Resize _2:1"
-#~ msgstr "Suurendus _2:1"
-
-#~ msgid "Resize to twice the video size"
-#~ msgstr "Pildi suurendamine video algsest suurusest kaks korda suuremaks"
-
-#~ msgid "_Aspect Ratio"
-#~ msgstr "_Kuvasuhe"
 
 #~ msgid "Switch An_gles"
 #~ msgstr "_Vaatenurga muutmine"
@@ -2014,12 +2008,6 @@ msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
 
 #~ msgid "_Contents"
 #~ msgstr "_Sisukord"
-
-#~ msgid "Help contents"
-#~ msgstr "Abiteabe sisukord"
-
-#~ msgid "_About"
-#~ msgstr "_Programmist lähemalt"
 
 #~ msgid "Zoom In"
 #~ msgstr "Suurendamine"
