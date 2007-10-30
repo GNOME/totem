@@ -63,7 +63,7 @@ print_mimetypes (void)
 static const GOptionEntry entries[] = {
 	{"mimetype", 'm', 0, G_OPTION_ARG_NONE, &show_mimetype, "List the supported mime-types", NULL},
 	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
-	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL},
+	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Audio files to play back", NULL},
 	{NULL}
 };
 
@@ -82,7 +82,7 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	gdk_threads_init ();
-	context = g_option_context_new ("Plays audio passed on the standard input");
+	context = g_option_context_new ("Plays audio passed on the standard input or the filename passed on the command-line");
 	options = bacon_video_widget_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
@@ -107,6 +107,12 @@ int main (int argc, char **argv)
 		return 0;
 	}
 
+	if (filenames != NULL && g_strv_length (filenames) != 1) {
+		g_print ("Too many URIs passed but only one is required\n");
+		return 1;
+	}
+	path = filenames ? filenames[0] : "fd://0";
+
 	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_AUDIO, &error);
 	if (widget == NULL) {
 		g_print ("error creating the video widget: %s\n", error->message);
@@ -116,7 +122,7 @@ int main (int argc, char **argv)
 	bvw = BACON_VIDEO_WIDGET (widget);
 
 	totem_resources_monitor_start (NULL, -1);
-	if (bacon_video_widget_open (bvw, "fd://0", &error) == FALSE) {
+	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
 	}
