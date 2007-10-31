@@ -1205,7 +1205,7 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
 				   "name", _("Totem Browser Plugin"),
 				   "version", VERSION,
-				   "copyright", _("Copyright \xc2\xa9 2002-2006 Bastien Nocera"),
+				   "copyright", _("Copyright \xc2\xa9 2002-2007 Bastien Nocera"),
 				   "comments", description,
 				   "authors", authors,
 				   "translator-credits", _("translator-credits"),
