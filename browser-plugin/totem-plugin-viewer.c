@@ -188,7 +188,7 @@ enum {
 	BUTTON_PRESS,
 	START_STREAM,
 	STOP_STREAM,
-	TICK,
+	SIGNAL_TICK,
 	LAST_SIGNAL
 };
 
@@ -249,7 +249,7 @@ static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE,
 				0, NULL);
-	signals[TICK] =
+	signals[SIGNAL_TICK] =
 		g_signal_newv ("tick",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
@@ -1596,7 +1596,7 @@ on_tick (GtkWidget *bvw,
 			 current_time, stream_length);
 	}
 
-	g_signal_emit (emb, signals[TICK], 0,
+	g_signal_emit (emb, signals[SIGNAL_TICK], 0,
 		       (guint32) current_time, (guint32) stream_length, totem_states[emb->state]);
 }
 

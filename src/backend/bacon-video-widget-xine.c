@@ -72,7 +72,7 @@ enum {
 	REDIRECT,
 	TITLE_CHANGE,
 	CHANNELS_CHANGE,
-	TICK,
+	SIGNAL_TICK,
 	GOT_METADATA,
 	BUFFERING,
 	LAST_SIGNAL
@@ -406,7 +406,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass *klass)
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);
 
-	bvw_table_signals[TICK] =
+	bvw_table_signals[SIGNAL_TICK] =
 		g_signal_new ("tick",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
@@ -2068,7 +2068,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 	bvw->priv->stream_length = stream_length;
 
 	g_signal_emit (G_OBJECT (bvw),
-			bvw_table_signals[TICK], 0,
+			bvw_table_signals[SIGNAL_TICK], 0,
 			(gint64) (current_time),
 			(gint64) (stream_length),
 			current_position_f,
