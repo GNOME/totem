@@ -394,19 +394,23 @@ totemScriptablePlugin::SetUiMode(const nsACString & aUiMode)
 
 /* attribute AUTF8String URL; */
 NS_IMETHODIMP 
-totemScriptablePlugin::GetURL(nsACString & aURL)
+totemScriptablePlugin::GetURL(nsACString & _retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  _retval.Assign (mSrc);
+  return NS_OK;
 }
 
 NS_IMETHODIMP 
 totemScriptablePlugin::SetURL(const nsACString & aURL)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  nsresult rv = mPlugin->SetSrc (aURL);
+
+  mSrc = aURL;
+  return rv;
 }
 
 /* readonly attribute AUTF8String versionInfo; */

@@ -62,6 +62,7 @@ class totemScriptablePlugin : public totemIGMPPlayer,
     totemPlugin *mPlugin;
     totemGMPSettings *mSettingsTearOff;
 
+    nsCString mSrc;
     PRUint32 mWindowlessVideo;
 };
 

@@ -53,7 +53,8 @@ static const nsCID kClassID =
 static const char kClassDescription[] = "totemGMPSettings";
 
 totemGMPSettings::totemGMPSettings (totemScriptablePlugin *aPlugin)
-  : mPlugin(aPlugin)
+  : mVolume(100),
+    mPlugin(aPlugin)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
@@ -184,19 +185,21 @@ totemGMPSettings::GetMediaAccessRights(nsACString & aMediaAccessRights)
 
 /* attribute boolean mute; */
 NS_IMETHODIMP 
-totemGMPSettings::GetMute(PRBool *aMute)
+totemGMPSettings::GetMute(PRBool *_retval)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  *_retval = mMute;
+  return NS_OK;
 }
 
 NS_IMETHODIMP 
-totemGMPSettings::SetMute(PRBool aMute)
+totemGMPSettings::SetMute(PRBool enabled)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  mMute = enabled != PR_FALSE;
+  return NS_OK;
 }
 
 /* attribute long playCount; */
@@ -249,16 +252,24 @@ totemGMPSettings::SetBalance(PRInt32 aBalance)
 
 /* attribute long volume; */
 NS_IMETHODIMP 
-totemGMPSettings::GetVolume(PRInt32 *aVolume)
+totemGMPSettings::GetVolume(PRInt32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  *_retval = mVolume;
   return NS_OK;
 }
 NS_IMETHODIMP 
-totemGMPSettings::SetVolume(PRInt32 aVolume)
+totemGMPSettings::SetVolume(PRInt32 volume)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  NS_ENSURE_STATE (IsValid ());
+
+  nsresult rv = mPlugin->mPlugin->SetVolume ((double) volume / 100);
+
+  /* Volume passed in is 0 through to 100 */
+  mVolume = volume;
 
   return NS_OK;
 }

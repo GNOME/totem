@@ -39,8 +39,13 @@ class totemGMPSettings : public totemIGMPSettings,
 
     totemGMPSettings (totemScriptablePlugin *aPlugin);
 
+    PRBool IsValid () { return mPlugin != nsnull && mPlugin->mPlugin != nsnull ; }
+
   private:
     ~totemGMPSettings ();
+
+    PRInt32 mVolume;
+    PRUint32 mMute : 1;
 
     totemScriptablePlugin *mPlugin;
 };

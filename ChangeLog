@@ -1,5 +1,17 @@
 2007-11-01  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemGMPPlugin.h:
+	* browser-plugin/totemGMPSettings.cpp:
+	* browser-plugin/totemGMPSettings.h:
+	Implement totemIGMPPlayer::SetURL and ::GetURL,
+	and totemIGMPSettings::SetVolume and ::GetVolume
+	(Helps: #364054)
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	Implement totemINarrowSpace::SetVolume and ::GetVolume
+
+2007-11-01  Bastien Nocera  <hadess@hadess.net>
+
 	* bindings/vala/totem.vala: Fix vala bindings for the latest
 	Vala (Closes: #491346)
 

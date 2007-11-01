@@ -961,6 +961,8 @@ totemScriptablePlugin::GetUserData  (const nsACString & identifier,
 NS_IMETHODIMP
 totemScriptablePlugin::GetVolume(PRUint32 *_retval)
 {
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
   *_retval = mVolume;
   return NS_OK;
 }
@@ -969,8 +971,14 @@ totemScriptablePlugin::GetVolume(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetVolume(PRUint32 volume)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid ());
+
+  nsresult rv = mPlugin->SetVolume ((double) volume / 100);
+
+  /* Volume passed in is 0 through to 100 */
   mVolume = volume;
+
   return NS_OK;
 }
