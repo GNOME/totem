@@ -6,7 +6,7 @@ echo_mime () {
 	echo "\"$i\","
 }
 
-if [ x"$1" == "x--nautilus" ] ; then
+if [ x"$1" = "x--nautilus" ] ; then
 	get_audio_mimetypes $2;
 
 	echo "/* generated with mime-types-include.sh in the totem module, don't edit or "
