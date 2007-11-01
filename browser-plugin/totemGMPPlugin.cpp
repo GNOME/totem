@@ -407,6 +407,8 @@ totemScriptablePlugin::SetURL(const nsACString & aURL)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid ());
+
   nsresult rv = mPlugin->SetSrc (aURL);
 
   mSrc = aURL;
@@ -572,9 +574,11 @@ totemScriptablePlugin::SetCurrentMarker(PRInt32 aCurrentMarker)
 NS_IMETHODIMP 
 totemScriptablePlugin::GetCurrentPosition(double *aCurrentPosition)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *aCurrentPosition = 0.0;
+  NS_ENSURE_STATE (IsValid ());
+
+  *aCurrentPosition = mPlugin->mTime / 1000;
   return NS_OK;
 }
 

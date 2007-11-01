@@ -1712,6 +1712,17 @@ totemPlugin::Init (NPMIMEType mimetype,
 		height = strtol (value, NULL, 0);
 	}
 
+#ifdef TOTEM_GMP_PLUGIN
+	value = (const char *) g_hash_table_lookup (args, "vidwidth");
+	if (value != NULL) {
+		width = strtol (value, NULL, 0);
+	}
+	value = (const char *) g_hash_table_lookup (args, "vidheight");
+	if (value != NULL) {
+		height = strtol (value, NULL, 0);
+	}
+#endif /* TOTEM_GMP_PLUGIN */
+
 	/* Are we hidden? */
 	/* Treat hidden without a value as TRUE */
 	mHidden = g_hash_table_lookup (args, "hidden") != NULL &&
