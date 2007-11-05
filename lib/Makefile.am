@@ -1,5 +1,6 @@
 noinst_LTLIBRARIES =					\
-	libtotemscrsaver.la
+	libtotemscrsaver.la				\
+	libtotem_glibc.la
 
 common_defines = \
 	-D_REENTRANT					\
@@ -15,15 +16,25 @@ common_defines = \
 libtotemscrsaver_la_SOURCES =				\
 	totem-scrsaver.c				\
 	totem-scrsaver.h
+
 libtotemscrsaver_la_CFLAGS =				\
 	$(common_defines)				\
 	$(EXTRA_GNOME_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	$(DBUS_CFLAGS)					\
 	$(AM_CFLAGS)
+
 libtotemscrsaver_la_LDFLAGS =				\
 	$(AM_LDFLAGS)
+
 libtotemscrsaver_la_LIBADD =				\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)
+
+noinst_HEADERS = totem_internal.h
+
+libtotem_glibc_la_SOURCES =»
+libtotem_glibc_la_LIBADD = @LTLIBOBJS@
+
+EXTRA_DIST = asprintf.c
 

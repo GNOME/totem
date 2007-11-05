@@ -1,5 +1,17 @@
 2007-11-05  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* lib/Makefile.am:
+	* lib/asprintf.c: (totem_private_asprintf):
+	* lib/totem_internal.h:
+	* src/plparse/Makefile.am:
+	* src/plparse/xmlparser.c: (xml_parser_get_node_internal):
+	Fix compilation on Solaris, which lacks asprintf,
+	based on patch by Damien Carbery <damien.carbery@sun.com>
+	(Closes: #492074)
+
+2007-11-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/xmllexer.c: (lexer_get_token),
 	(lexer_decode_entities): Fix decoding of decimal entities,
 	useful for Podcasts (see #484768)

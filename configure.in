@@ -11,7 +11,7 @@ AC_INIT([totem],
 AC_CONFIG_SRCDIR([src/totem.c])
 AC_CONFIG_HEADERS([config.h])
 
-AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip check-news])
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip check-news subdir-objects])
 
 dnl Add the languages which your application supports to po/LINGUAS
 GETTEXT_PACKAGE=totem
@@ -26,6 +26,11 @@ AC_PROG_CXX
 AM_PROG_CC_C_O
 AC_PROG_LIBTOOL()
 PKG_PROG_PKG_CONFIG
+
+dnl Use local version of asprintf when not on the current system.
+AC_CHECK_FUNCS(asprintf)
+AC_CONFIG_LIBOBJ_DIR([lib])
+AC_REPLACE_FUNCS([asprintf])
 
 AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])

@@ -74,6 +74,7 @@ libtotem_plparser_la_SOURCES =			\
 
 libtotem_plparser_la_CPPFLAGS = \
 	-I$(top_srcdir)				\
+	-I$(top_srcdir)/lib			\
 	-I$(top_builddir)/src/plparser		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
 	$(DISABLE_DEPRECATED)			\
@@ -85,10 +86,12 @@ libtotem_plparser_la_CFLAGS = \
 	$(DBUS_CFLAGS)			\
 	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)			\
+	-I$(top_srcdir)/lib		\
 	-D_GNU_SOURCE
 
 libtotem_plparser_la_LIBADD = \
 	$(TOTEM_PLPARSER_LIBS)			\
+	$(top_builddir)/lib/libtotem_glibc.la	\
 	$(HAL_LIBS)
 
 libtotem_plparser_la_LDFLAGS =			\

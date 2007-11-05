@@ -39,6 +39,7 @@
 #define LOG
 */
 
+#include <totem_internal.h>
 #ifdef XINE_COMPILE
 #include "xineutils.h"
 #else
