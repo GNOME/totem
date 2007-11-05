@@ -31,7 +31,7 @@
 #ifdef XINE_COMPILE
 #include "xineutils.h"
 #else
-#define lprintf
+#define lprintf(...)
 #define xine_xmalloc malloc
 #endif
 #include "xmllexer.h"
@@ -39,6 +39,9 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef HAVE_ICONV
+#include <iconv.h>
+#endif
 
 /* private constants*/
 
@@ -549,7 +552,57 @@ char *lexer_decode_entities (const char *tok)
       else
 	i = strtol (tp, (char **)&tp, 10);
 
-      if (i < 1 || i > 255 || *tp != ';')
+      /* Handle large entities first */
+      if (i > 255)
+      {
+#ifdef HAVE_ICONV
+      	iconv_t conv;
+      	char *inbuf, *outbuf, *in, *out;
+      	size_t inbytesleft, outbytesleft, res;
+      	int j;
+
+      	conv = iconv_open("UTF-8", "UTF-16LE");
+      	if (conv == (iconv_t)(-1))
+	{
+	  *bp++ = '&';
+	  continue;
+	}
+      	/* Setup the in buffer */
+      	inbuf = in = malloc(sizeof(long) + 1);
+      	memset (inbuf, 0, sizeof(long) + 1);
+      	memcpy (inbuf, &i, sizeof(long));
+      	inbytesleft = strlen(inbuf);
+
+	/* And the out buffer */
+      	outbytesleft = 4 * inbytesleft;
+      	outbuf = out = malloc(outbytesleft+1);
+      	memset (outbuf, 0, outbytesleft+1);
+
+      	res = iconv (conv,
+      		     &inbuf, &inbytesleft,
+      		     &outbuf, &outbytesleft);
+	free(in);
+      	if (res == (size_t) -1)
+	{
+	  *bp++ = '&';
+	  free(out);
+	  continue;
+	}
+      	for (j = 0; j < strlen(out); j++)
+	  *bp++ = out[j];
+	iconv_close (conv);
+
+        tok = tp + 1;
+
+	free(out);
+#else /* HAVE_ICONV */
+	/* out of range, and can't convert */
+	*bp++ = '&';
+	continue;
+#endif /* HAVE_ICONV */
+      }
+
+      if (i < 1 || *tp != ';')
       {
         /* out of range, or format error */
 	*bp++ = '&';

@@ -1,5 +1,11 @@
 2007-11-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/xmllexer.c: (lexer_get_token),
+	(lexer_decode_entities): Fix decoding of decimal entities,
+	useful for Podcasts (see #484768)
+
+2007-11-05  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Add gnome-keyring dep as used in the xine-lib
 	backend
 
