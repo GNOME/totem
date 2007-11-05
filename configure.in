@@ -191,7 +191,7 @@ if test x$ENABLE_XINE = xno && test x$HAVE_GSTREAMER = xno; then
 fi
 
 if test x$HAVE_GSTREAMER = xno; then
-	MM="libxine >= $XINE_REQS gconf-2.0"
+	MM="libxine >= $XINE_REQS gconf-2.0 gnome-keyring-1"
 	PKG_CHECK_MODULES(XINE, $MM, HAVE_XINE=yes,
 		[
 			AC_MSG_RESULT(no)
