@@ -488,7 +488,21 @@ totem_pl_parser_add_xml_feed (TotemPlParser *parser,
 			      const char *base,
 			      gpointer data)
 {
-	return TOTEM_PL_PARSER_RESULT_ERROR;
+	guint len;
+
+	if (data == NULL)
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
+
+	len = strlen (data);
+
+	if (totem_pl_parser_is_rss (data, len) != FALSE)
+		return totem_pl_parser_add_rss (parser, url, base, data);
+	if (totem_pl_parser_is_atom (data, len) != FALSE)
+		return totem_pl_parser_add_atom (parser, url, base, data);
+	if (totem_pl_parser_is_opml (data, len) != FALSE)
+		return totem_pl_parser_add_opml (parser, url, base, data);
+
+	return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 }
 
 /* From libgsf's gsf-utils.h */
