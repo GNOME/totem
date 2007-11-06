@@ -202,6 +202,7 @@ parse_rss_items (TotemPlParser *parser, const char *url, xml_node_t *parent)
 	title = language = description = author = NULL;
 	contact = img = pub_date = copyright = NULL;
 
+	/* We need to parse for the feed metadata first, then for the items */
 	for (node = parent->child; node != NULL; node = node->next) {
 		if (node->name == NULL)
 			continue;
@@ -233,26 +234,27 @@ parse_rss_items (TotemPlParser *parser, const char *url, xml_node_t *parent)
 		} else if (g_ascii_strcasecmp (node->name, "copyright") == 0) {
 			copyright = node->data;
 		}
+	}
 
-		if (g_ascii_strcasecmp (node->name, "item") == 0) {
-			if (started == FALSE) {
-				/* Send the info we already have about the feed */
-				totem_pl_parser_add_url (parser,
-							 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
-							 TOTEM_PL_PARSER_FIELD_URL, url,
-							 TOTEM_PL_PARSER_FIELD_TITLE, title,
-							 TOTEM_PL_PARSER_FIELD_LANGUAGE, language,
-							 TOTEM_PL_PARSER_FIELD_DESCRIPTION, description,
-							 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
-							 TOTEM_PL_PARSER_FIELD_PUB_DATE, pub_date,
-							 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
-							 TOTEM_PL_PARSER_FIELD_IMAGE_URL, img,
-							 NULL);
-				started = TRUE;
-			}
+	/* Send the info we already have about the feed */
+	totem_pl_parser_add_url (parser,
+				 TOTEM_PL_PARSER_FIELD_IS_PLAYLIST, TRUE,
+				 TOTEM_PL_PARSER_FIELD_URL, url,
+				 TOTEM_PL_PARSER_FIELD_TITLE, title,
+				 TOTEM_PL_PARSER_FIELD_LANGUAGE, language,
+				 TOTEM_PL_PARSER_FIELD_DESCRIPTION, description,
+				 TOTEM_PL_PARSER_FIELD_AUTHOR, author,
+				 TOTEM_PL_PARSER_FIELD_PUB_DATE, pub_date,
+				 TOTEM_PL_PARSER_FIELD_COPYRIGHT, copyright,
+				 TOTEM_PL_PARSER_FIELD_IMAGE_URL, img,
+				 NULL);
 
+	for (node = parent->child; node != NULL; node = node->next) {
+		if (node->name == NULL)
+			continue;
+
+		if (g_ascii_strcasecmp (node->name, "item") == 0)
 			parse_rss_item (parser, node);
-		}
 	}
 
 	totem_pl_parser_playlist_end (parser, url);
