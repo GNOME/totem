@@ -1,5 +1,11 @@
 2007-11-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plparse/xmllexer.c: (lexer_decode_entities):
+	Update decoding of decimal entities to match upstream
+	patch by Darren Salt, thanks Darren!
+
+2007-11-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plparse/totem-pl-parser-podcast.c:
 	(totem_pl_parser_add_xml_feed): Implement, fixes parsing
 	of feeds from Feedburner.com (see #484768)

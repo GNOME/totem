@@ -524,7 +524,7 @@ char *lexer_decode_entities (const char *tok)
     {
       /* parse the character entity (on failure, treat it as literal text) */
       const char *tp = tok;
-      long i;
+      signed long i;
 
       for (i = 0; lexer_entities[i].code; ++i)
 	if (!strncmp (lexer_entities[i].name, tok, lexer_entities[i].namelen)
@@ -552,57 +552,7 @@ char *lexer_decode_entities (const char *tok)
       else
 	i = strtol (tp, (char **)&tp, 10);
 
-      /* Handle large entities first */
-      if (i > 255)
-      {
-#ifdef HAVE_ICONV
-      	iconv_t conv;
-      	char *inbuf, *outbuf, *in, *out;
-      	size_t inbytesleft, outbytesleft, res;
-      	int j;
-
-      	conv = iconv_open("UTF-8", "UTF-16LE");
-      	if (conv == (iconv_t)(-1))
-	{
-	  *bp++ = '&';
-	  continue;
-	}
-      	/* Setup the in buffer */
-      	inbuf = in = malloc(sizeof(long) + 1);
-      	memset (inbuf, 0, sizeof(long) + 1);
-      	memcpy (inbuf, &i, sizeof(long));
-      	inbytesleft = strlen(inbuf);
-
-	/* And the out buffer */
-      	outbytesleft = 4 * inbytesleft;
-      	outbuf = out = malloc(outbytesleft+1);
-      	memset (outbuf, 0, outbytesleft+1);
-
-      	res = iconv (conv,
-      		     &inbuf, &inbytesleft,
-      		     &outbuf, &outbytesleft);
-	free(in);
-      	if (res == (size_t) -1)
-	{
-	  *bp++ = '&';
-	  free(out);
-	  continue;
-	}
-      	for (j = 0; j < strlen(out); j++)
-	  *bp++ = out[j];
-	iconv_close (conv);
-
-        tok = tp + 1;
-
-	free(out);
-#else /* HAVE_ICONV */
-	/* out of range, and can't convert */
-	*bp++ = '&';
-	continue;
-#endif /* HAVE_ICONV */
-      }
-
-      if (i < 1 || *tp != ';')
+      if (*tp != ';' || i < 1)
       {
         /* out of range, or format error */
 	*bp++ = '&';
@@ -610,7 +560,23 @@ char *lexer_decode_entities (const char *tok)
       }
 
       tok = tp + 1;
-      *bp++ = i;
+
+      if (i < 128)
+        /* ASCII - store as-is */
+	*bp++ = i;
+      else
+      {
+	/* Non-ASCII, so convert to UTF-8 */
+	int count = (i >= 0x04000000) ? 5 :
+		    (i >= 0x00200000) ? 4 :
+		    (i >= 0x00010000) ? 3 :
+		    (i >= 0x00000800) ? 2 : 1;
+	*bp = (char)(0x1F80 >> count);
+	count *= 6;
+	*bp++ |= i >> count;
+	while ((count -= 6) >= 0)
+	  *bp++ = 128 | ((i >> count) & 0x3F);
+      }
     }
   }
   *bp = 0;
