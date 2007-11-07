@@ -418,6 +418,19 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
 						totem_pl_parser_get_extinfo_title (extinfo, lines, i));
 			}
 			extinfo = FALSE;
+		} else if (g_ascii_isalpha (lines[i][0]) != FALSE
+			   && g_str_has_prefix (lines[i] + 1, ":\\")) {
+			/* Path relative to a drive on Windows, we need to use
+			 * the base that was passed to us */
+			char *fullpath;
+
+			lines[i] = g_strdelimit (lines[i], "\\", '/');
+			/* + 2, skip drive letter */
+			fullpath = totem_pl_parser_append_path (_base, lines[i] + 2);
+			totem_pl_parser_add_one_url (parser, fullpath,
+						     totem_pl_parser_get_extinfo_title (extinfo, lines, i));
+			g_free (fullpath);
+			extinfo = FALSE;
 		} else if (lines[i][0] == '\\' && lines[i][1] == '\\') {
 			/* ... Or it's in the windows smb form
 			 * (\\machine\share\filename), Note drive names
@@ -443,7 +456,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser, const char *url,
 				lines[i] = g_strdelimit (lines[i], "\\", '/');
 			fullpath = totem_pl_parser_append_path (base, lines[i]);
 			totem_pl_parser_add_one_url (parser, fullpath,
-					totem_pl_parser_get_extinfo_title (extinfo, lines, i));
+						     totem_pl_parser_get_extinfo_title (extinfo, lines, i));
 			g_free (fullpath);
 			g_free (base);
 			extinfo = FALSE;
