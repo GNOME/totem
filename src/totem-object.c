@@ -36,6 +36,7 @@
 #include "totem-private.h"
 #include "totem-plugins-engine.h"
 #include "ev-sidebar.h"
+#include "totem-playlist.h"
 
 enum {
 	PROP_0,
@@ -231,6 +232,16 @@ totem_get_current_time (Totem *totem)
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), 0);
 
 	return bacon_video_widget_get_current_time (totem->bvw);
+}
+
+TotemPlaylist *
+totem_get_playlist (Totem *totem)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+
+	g_object_ref (G_OBJECT (totem->playlist));
+
+	return totem->playlist;
 }
 
 guint

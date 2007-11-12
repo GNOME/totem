@@ -31,6 +31,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include "plparse/totem-disc.h"
+#include "totem-playlist.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 
@@ -167,6 +168,7 @@ gint64	totem_get_current_time			(Totem *totem);
 guint	totem_get_playlist_length		(Totem *totem);
 void	totem_action_set_playlist_index		(Totem *totem,
 						 guint index);
+TotemPlaylist *totem_get_playlist		(Totem *totem);
 guint	totem_get_playlist_pos			(Totem *totem);
 char *	totem_get_title_at_playlist_pos		(Totem *totem,
 						 guint index);

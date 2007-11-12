@@ -1,3 +1,15 @@
+2007-11-12  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plparse/totem-pl-parser-podcast.c: (parse_rss_items):
+	* src/plugins/youtube/youtube.py:
+	* src/totem-object.c: (totem_get_playlist):
+	* src/totem-playlist.h:
+	* src/totem-video-list.c: (row_activated_cb):
+	* src/totem.h: Fix some compile warnings, show a busy cursor
+	while downloading results in the YouTube plugin, and convert
+	TotemVideoList to use the playlist instead of directly playing
+	MRLs.
+
 ============ Version 2.21.1
 
 2007-11-12  Bastien Nocera  <hadess@hadess.net>

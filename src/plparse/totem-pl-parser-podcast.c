@@ -197,7 +197,6 @@ parse_rss_items (TotemPlParser *parser, const char *url, xml_node_t *parent)
 	const char *title, *language, *description, *author;
 	const char *contact, *img, *pub_date, *copyright;
 	xml_node_t *node;
-	gboolean started = FALSE;
 
 	title = language = description = author = NULL;
 	contact = img = pub_date = copyright = NULL;

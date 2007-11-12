@@ -54,9 +54,9 @@ class YouTube (totem.Plugin):
 			self.setup_treeview (page)
 		self.current_treeview_name = "search"
 
-		vbox = self.builder.get_object ("yt_vbox")
-		vbox.show_all ()
-		totem_object.add_sidebar_page ("youtube", _("YouTube"), vbox)
+		self.vbox = self.builder.get_object ("yt_vbox")
+		self.vbox.show_all ()
+		totem_object.add_sidebar_page ("youtube", _("YouTube"), self.vbox)
 
 		"""Set up the service"""
 		self.service = gdata.service.GDataService (None, None, "HOSTED_OR_GOOGLE", None, None, "gdata.youtube.com")
@@ -174,6 +174,10 @@ class YouTube (totem.Plugin):
 
 		"""Have we finished?"""
 		if len (self.entry[treeview_name]) == 0:
+			"""Revert the cursor"""
+			window = self.vbox.window
+			window.set_cursor (None)
+
 			self.entry[treeview_name] = None
 			return False
 
@@ -200,5 +204,10 @@ class YouTube (totem.Plugin):
 		if self.debug:
 			print "Getting results from URL \"" + url + "\""
 
+		"""Give us a nice waiting cursor"""
+		window = self.vbox.window
+		window.set_cursor (gtk.gdk.Cursor (gtk.gdk.WATCH))
+
 		DownloadThread (self, url, treeview_name).start ()
 		gobject.idle_add (self.populate_list_from_results, treeview_name)
+
