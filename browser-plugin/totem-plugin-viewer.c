@@ -2074,6 +2074,7 @@ entry_parsed (TotemPlParser *parser,
 {
 	TotemEmbedded *emb = (TotemEmbedded *) data;
 	TotemPlItem *item;
+	int duration;
 
 	if (g_str_has_prefix (uri, "file://") != FALSE
 	    && g_str_has_prefix (emb->base_uri, "file://") == FALSE) {
@@ -2084,9 +2085,14 @@ entry_parsed (TotemPlParser *parser,
 	g_print ("added URI '%s'\n", uri);
 	g_hash_table_foreach (metadata, (GHFunc) entry_metadata_foreach, NULL);
 
+	/* Skip short advert streams */
+	duration = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "duration"), FALSE);
+	if (duration == 0)
+		return;
+
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
-	item->duration = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "duration"), FALSE);
+	item->duration = duration;
 	item->starttime = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "starttime"), FALSE);
 
 	emb->playlist = g_list_prepend (emb->playlist, item);
