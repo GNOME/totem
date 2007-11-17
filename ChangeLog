@@ -1,3 +1,11 @@
+2007-11-17  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (is_error),
+	  (GST_DEBUG_BIN_TO_DOT_FILE), (bvw_error_msg), (bvw_bus_message_cb):
+	  Add support for graphviz output (set GST_DEBUG_DUMP_DOT_DIR to a
+	  directory of your choice to enable output; does nothing for core
+	  versions < 0.10.15). (Closes: #488567)
+
 2007-11-16  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c: (entry_parsed):

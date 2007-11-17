@@ -76,6 +76,11 @@
   (e->domain == GST_##d##_ERROR && \
    e->code == GST_##d##_ERROR_##c)
 
+/* FIXME: remove once we depend on core 0.10.15 */
+#ifndef GST_DEBUG_BIN_TO_DOT_FILE
+#define GST_DEBUG_BIN_TO_DOT_FILE(bin,details,filename) /* nop */
+#endif
+
 /* Signals */
 enum
 {
@@ -304,6 +309,10 @@ bvw_error_msg (BaconVideoWidget * bvw, GstMessage * msg)
 {
   GError *err = NULL;
   gchar *dbg = NULL;
+
+  GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (bvw->priv->play),
+      GST_DEBUG_GRAPH_SHOW_ALL ^ GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS,
+      "totem-error");
 
   gst_message_parse_error (msg, &err, &dbg);
   if (err) {
@@ -1499,6 +1508,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       }
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
+        GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (bvw->priv->play),
+            GST_DEBUG_GRAPH_SHOW_ALL ^ GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS,
+            "totem-prerolled");
         bvw_update_stream_info (bvw);
         if (!bvw_check_missing_plugins_on_preroll (bvw)) {
           /* show a non-fatal warning message if we can't decode the video */
