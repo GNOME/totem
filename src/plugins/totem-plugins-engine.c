@@ -286,6 +286,7 @@ totem_plugins_engine_load_file (const char *plugin_file)
 
 	key_name = g_strdup_printf (GCONF_PREFIX_PLUGIN, info->location);
 	gconf_client_add_dir (client, key_name, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	g_free (key_name);
 
 	key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
 	info->active_notification_id = gconf_client_notify_add (client,
