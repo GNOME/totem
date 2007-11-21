@@ -1,4 +1,4 @@
-noinst_PROGRAMS = test-parser
+noinst_PROGRAMS = test-parser disc-test
 
 test_parser_SOURCES = test-parser.c
 
@@ -19,6 +19,27 @@ test_parser_CFLAGS = \
 test_parser_LDADD = \
 	$(EXTRA_GNOME_LIBS) \
 	libtotem-plparser.la
+
+disc_test_SOURCES = \
+	disc-test.c
+
+disc_test_CPPFLAGS = \
+	$(common_defines)	\
+	$(AM_CPPFLAGS)
+
+disc_test_CFLAGS = \
+	$(WARN_CFLAGS)		\
+	$(GTK_CFLAGS)		\
+	$(EXTRA_GNOME_CFLAGS)	\
+	$(AM_CFLAGS)
+
+disc_test_LDFLAGS = \
+	$(AM_LDFLAGS)
+
+disc_test_LDADD = \
+	libtotem-plparser.la	\
+	$(GTK_LIBS)			\
+	$(EXTRA_GNOME_LIBS)
 
 lib_LTLIBRARIES = libtotem-plparser.la
 noinst_LTLIBRARIES = libtotem-plparser-mini.la

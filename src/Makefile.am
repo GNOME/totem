@@ -1,8 +1,7 @@
-SUBDIRS = plugins backend plparse
+SUBDIRS = plugins backend
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
 libexec_PROGRAMS =
-noinst_PROGRAMS = disc-test
 noinst_LTLIBRARIES =				\
 	libbaconmessageconnection.la		\
 	libtotem_player.la
@@ -62,7 +61,7 @@ libtotem_player_la_SOURCES =		\
 
 libtotem_player_la_CPPFLAGS = \
 	-I$(srcdir)/backend	\
-	-I$(srcdir)/plparse	\
+	-I$(top_srcdir)/plparse	\
 	-I$(top_builddir)/src/plparse	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
@@ -117,7 +116,7 @@ totem_SOURCES = 					\
 	totem-video-list.h
 
 totem_CPPFLAGS = \
-	-I$(srcdir)/plparse		\
+	-I$(top_srcdir)/plparse		\
 	-I$(srcdir)/backend		\
 	-I$(srcdir)/plugins		\
 	-I$(top_builddir)/data		\
@@ -136,18 +135,18 @@ totem_CFLAGS = \
 totem_LDFLAGS = \
 	$(AM_LDFLAGS)
 
-totem_LDADD = \
-	plparse/libtotem-plparser.la	\
-	backend/libbaconvideowidget.la	\
-	plugins/libtotemmodule.la	\
-	libbaconmessageconnection.la	\
-	libtotem_player.la		\
-	$(EXTRA_GNOME_LIBS)		\
-	$(XVIDMODE_LIBS)		\
-	$(NVTV_LIBS)			\
-	$(DBUS_LIBS)			\
-	$(XTEST_LIBS)			\
-	$(X_LIBS)			\
+totem_LDADD =						\
+	$(top_builddir)/plparse/libtotem-plparser.la	\
+	backend/libbaconvideowidget.la			\
+	plugins/libtotemmodule.la			\
+	libbaconmessageconnection.la			\
+	libtotem_player.la				\
+	$(EXTRA_GNOME_LIBS)				\
+	$(XVIDMODE_LIBS)				\
+	$(NVTV_LIBS)					\
+	$(DBUS_LIBS)					\
+	$(XTEST_LIBS)					\
+	$(X_LIBS)					\
 	$(MISSING_PLUGINS_LIBS)
 
 if ENABLE_PYTHON
@@ -164,7 +163,7 @@ totem_video_thumbnailer_SOURCES =	\
 	totem-resources.h
 
 totem_video_thumbnailer_CPPFLAGS = \
-	-I$(srcdir)/plparse	\
+	-I$(top_srcdir)/plparse	\
 	-I$(srcdir)/backend	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
@@ -201,7 +200,7 @@ libtotem_properties_page_la_SOURCES = 	\
 
 libtotem_properties_page_la_CPPFLAGS =		\
 	-I$(srcdir)/backend			\
-	-I$(srcdir)/plparse			\
+	-I$(top_srcdir)/plparse			\
 	-I$(srcdir)/plugins/properties		\
 	-I$(top_builddir)/data			\
 	$(common_defines)			\
@@ -229,7 +228,7 @@ libtotem_properties_page_la_LIBADD =				\
 	$(XVIDMODE_LIBS)					\
 	$(X_LIBS)
 
-noinst_PROGRAMS += test-properties-page
+noinst_PROGRAMS = test-properties-page
 
 test_properties_page_SOURCES =		\
 	totem-properties-main.c		\
@@ -239,7 +238,7 @@ test_properties_page_SOURCES =		\
 
 test_properties_page_CPPFLAGS = 		\
 	-I$(srcdir)/backend			\
-	-I$(srcdir)/plparse			\
+	-I$(top_srcdir)/plparse			\
 	-I$(top_builddir)/data			\
 	-I$(srcdir)/plugins/properties		\
 	$(common_defines)			\
@@ -276,7 +275,7 @@ totem_video_indexer_SOURCES =		\
 	totem-resources.h
 
 totem_video_indexer_CPPFLAGS = \
-	-I$(srcdir)/plparse	\
+	-I$(top_srcdir)/plparse	\
 	-I$(srcdir)/backend	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
@@ -307,7 +306,7 @@ totem_audio_preview_SOURCES =		\
 	totem-resources.h
 
 totem_audio_preview_CPPFLAGS =	\
-	-I$(srcdir)/plparse	\
+	-I$(top_srcdir)/plparse	\
 	-I$(srcdir)/backend	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
@@ -330,31 +329,6 @@ totem_audio_preview_LDADD = \
 	$(XTEST_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(X_LIBS)
-
-# Tests
-
-disc_test_SOURCES = \
-	disc-test.c
-
-disc_test_CPPFLAGS = \
-	-I$(srcdir)/plparse	\
-	$(common_defines)	\
-	$(AM_CPPFLAGS)
-
-disc_test_CFLAGS = \
-	$(WARN_CFLAGS)		\
-	$(GTK_CFLAGS)		\
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(AM_CFLAGS)
-
-disc_test_LDFLAGS = \
-	$(AM_LDFLAGS)
-
-disc_test_LDADD = \
-	plparse/libtotem-plparser.la	\
-	$(GTK_LIBS)			\
-	$(EXTRA_GNOME_LIBS)
-
 
 CLEANFILES =			\
 	*.bak			\

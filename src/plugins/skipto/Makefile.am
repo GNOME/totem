@@ -31,7 +31,7 @@ libskipto_la_LDFLAGS = $(modules_flags)
 libskipto_la_CPPFLAGS = \
 	$(common_defines)		\
 	-I$(top_srcdir)/src/backend	\
-	-I$(top_srcdir)/src/plparse
+	-I$(top_srcdir)/plparse
 
 libskipto_la_CFLAGS = 			\
 	$(EXTRA_GNOME_CFLAGS)		\
