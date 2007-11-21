@@ -13,24 +13,24 @@
          </child>
          <child>
             <object class="GtkAction" id="open">
-               <property name="label">_Open...</property>
+               <property name="label" translatable="yes">_Open...</property>
                <property name="stock-id">gtk-open</property>
-               <property name="tooltip">Open a file</property>
+               <property name="tooltip" translatable="yes">Open a file</property>
                <signal name="activate" handler="open_action_callback"/>
             </object>
             <accelerator key="O" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="open-location">
-               <property name="label">Open _Location...</property>
-               <property name="tooltip">Open a non-local file</property>
+               <property name="label" translatable="yes">Open _Location...</property>
+               <property name="tooltip" translatable="yes">Open a non-local file</property>
                <signal name="activate" handler="open_location_action_callback"/>
             </object>
             <accelerator key="L" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="eject">
-               <property name="label">_Eject</property>
+               <property name="label" translatable="yes">_Eject</property>
                <property name="icon-name">media-eject</property>
                <signal name="activate" handler="eject_action_callback"/>
             </object>
@@ -38,7 +38,7 @@
          </child>
          <child>
             <object class="GtkAction" id="properties">
-               <property name="label">_Properties</property>
+               <property name="label" translatable="yes">_Properties</property>
                <property name="stock-id">gtk-properties</property>
                <signal name="activate" handler="properties_action_callback"/>
             </object>
@@ -46,18 +46,18 @@
          </child>
          <child>
             <object class="GtkAction" id="play">
-               <property name="label">Play / P_ause</property>
+               <property name="label" translatable="yes">Play / P_ause</property>
                <property name="stock-id">gtk-media-play</property>
-               <property name="tooltip">Play or pause the movie</property>
+               <property name="tooltip" translatable="yes">Play or pause the movie</property>
                <signal name="activate" handler="play_action_callback"/>
             </object>
             <accelerator key="space" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="quit">
-               <property name="label">_Quit</property>
+               <property name="label" translatable="yes">_Quit</property>
                <property name="stock-id">gtk-quit</property>
-               <property name="tooltip">Quit the program</property>
+               <property name="tooltip" translatable="yes">Quit the program</property>
                <signal name="activate" handler="quit_action_callback"/>
             </object>
             <accelerator key="Q" modifiers="GDK_CONTROL_MASK"/>
@@ -65,35 +65,35 @@
 
          <child>
             <object class="GtkAction" id="edit-menu">
-               <property name="label">_Edit</property>
+               <property name="label" translatable="yes">_Edit</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="take-screenshot">
-               <property name="label">Take _Screenshot...</property>
+               <property name="label" translatable="yes">Take _Screenshot...</property>
                <property name="icon-name">camera-photo</property>
-               <property name="tooltip">Take a screenshot</property>
+               <property name="tooltip" translatable="yes">Take a screenshot</property>
                <signal name="activate" handler="take_screenshot_action_callback"/>
             </object>
             <accelerator key="S" modifiers="GDK_SHIFT_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="clear-playlist">
-               <property name="label">_Clear Playlist</property>
-               <property name="tooltip">Clear the playlist</property>
+               <property name="label" translatable="yes">_Clear Playlist</property>
+               <property name="tooltip" translatable="yes">Clear the playlist</property>
                <signal name="activate" handler="clear_playlist_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="preferences">
-               <property name="label">Prefere_nces</property>
+               <property name="label" translatable="yes">Prefere_nces</property>
                <property name="stock-id">gtk-preferences</property>
                <signal name="activate" handler="preferences_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="plugins">
-               <property name="label">Plugins...</property>
+               <property name="label" translatable="yes">Plugins...</property>
                <signal name="activate" handler="plugins_action_callback"/>
             </object>
          </child>
@@ -105,7 +105,7 @@
          </child>
          <child>
             <object class="GtkAction" id="fullscreen">
-               <property name="label">_Fullscreen</property>
+               <property name="label" translatable="yes">_Fullscreen</property>
                <property name="stock-id">gtk-fullscreen</property>
                <property name="tooltip">Switch to fullscreen</property>
                <signal name="activate" handler="fullscreen_action_callback"/>
@@ -114,42 +114,42 @@
          </child>
          <child>
             <object class="GtkAction" id="zoom-window-menu">
-               <property name="label">Fit Window to Movie</property>
+               <property name="label" translatable="yes">Fit Window to Movie</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="zoom-1-2">
-               <property name="label">_Resize 1:2</property>
-               <property name="tooltip">Resize to half the original video size</property>
+               <property name="label" translatable="yes">_Resize 1:2</property>
+               <property name="tooltip" translatable="yes">Resize to half the original video size</property>
                <signal name="activate" handler="zoom_1_2_action_callback"/>
             </object>
             <accelerator key="0" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-1-1">
-               <property name="label">Resize _1:1</property>
-               <property name="tooltip">Resize to the original video size</property>
+               <property name="label" translatable="yes">Resize _1:1</property>
+               <property name="tooltip" translatable="yes">Resize to the original video size</property>
                <signal name="activate" handler="zoom_1_1_action_callback"/>
             </object>
             <accelerator key="1" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-2-1">
-               <property name="label">Resize _2:1</property>
-               <property name="tooltip">Resize to double the original video size</property>
+               <property name="label" translatable="yes">Resize _2:1</property>
+               <property name="tooltip" translatable="yes">Resize to double the original video size</property>
                <signal name="activate" handler="zoom_2_1_action_callback"/>
             </object>
             <accelerator key="2" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="aspect-ratio-menu">
-               <property name="label">_Aspect Ratio</property>
+               <property name="label" translatable="yes">_Aspect Ratio</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="next-angle">
-               <property name="label">Switch An_gles</property>
-               <property name="tooltip">Switch camera angles</property>
+               <property name="label" translatable="yes">Switch An_gles</property>
+               <property name="tooltip" translatable="yes">Switch camera angles</property>
                <signal name="activate" handler="next_angle_action_callback"/>
             </object>
             <accelerator key="G" modifiers="GDK_CONTROL_MASK"/>
@@ -157,62 +157,62 @@
 
          <child>
             <object class="GtkAction" id="go-menu">
-               <property name="label">_Go</property>
+               <property name="label" translatable="yes">_Go</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="dvd-root-menu">
-               <property name="label">_DVD Menu</property>
+               <property name="label" translatable="yes">_DVD Menu</property>
                <property name="stock-id">gtk-index</property>
-               <property name="tooltip">Go to the DVD menu</property>
+               <property name="tooltip" translatable="yes">Go to the DVD menu</property>
                <signal name="activate" handler="dvd_root_menu_action_callback"/>
             </object>
             <accelerator key="M" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="dvd-title-menu">
-               <property name="label">_Title Menu</property>
-               <property name="tooltip">Go to the title menu</property>
+               <property name="label" translatable="yes">_Title Menu</property>
+               <property name="tooltip" translatable="yes">Go to the title menu</property>
                <signal name="activate" handler="dvd_title_menu_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="dvd-audio-menu">
-               <property name="label">A_udio Menu</property>
-               <property name="tooltip">Go to the audio menu</property>
+               <property name="label" translatable="yes">A_udio Menu</property>
+               <property name="tooltip" translatable="yes">Go to the audio menu</property>
                <signal name="activate" handler="dvd_audio_menu_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="dvd-angle-menu">
-               <property name="label">_Angle Menu</property>
-               <property name="tooltip">Go to the angle menu</property>
+               <property name="label" translatable="yes">_Angle Menu</property>
+               <property name="tooltip" translatable="yes">Go to the angle menu</property>
                <signal name="activate" handler="dvd_angle_menu_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="dvd-chapter-menu">
-               <property name="label">_Chapter Menu</property>
+               <property name="label" translatable="yes">_Chapter Menu</property>
                <property name="stock-id">gtk-index</property>
-               <property name="tooltip">Go to the chapter menu</property>
+               <property name="tooltip" translatable="yes">Go to the chapter menu</property>
                <signal name="activate" handler="dvd_chapter_menu_action_callback"/>
             </object>
             <accelerator key="C" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="next-chapter">
-               <property name="label">_Next Chapter/Movie</property>
+               <property name="label" translatable="yes">_Next Chapter/Movie</property>
                <property name="stock-id">gtk-media-next</property>
-               <property name="tooltip">Next chapter or movie</property>
+               <property name="tooltip" translatable="yes">Next chapter or movie</property>
                <signal name="activate" handler="next_chapter_action_callback"/>
             </object>
             <accelerator key="Right" modifiers="GDK_MOD1_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="previous-chapter">
-               <property name="label">_Previous Chapter/Movie</property>
+               <property name="label" translatable="yes">_Previous Chapter/Movie</property>
                <property name="stock-id">gtk-media-previous</property>
-               <property name="tooltip">Previous chapter or movie</property>
+               <property name="tooltip" translatable="yes">Previous chapter or movie</property>
                <signal name="activate" handler="previous_chapter_action_callback"/>
             </object>
             <accelerator key="Left" modifiers="GDK_MOD1_MASK"/>
@@ -220,23 +220,23 @@
 
          <child>
             <object class="GtkAction" id="sound-menu">
-               <property name="label">_Sound</property>
+               <property name="label" translatable="yes">_Sound</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="volume-up">
-               <property name="label">Volume _Up</property>
+               <property name="label" translatable="yes">Volume _Up</property>
                <property name="icon-name">audio-volume-high</property>
-               <property name="tooltip">Increase volume</property>
+               <property name="tooltip" translatable="yes">Increase volume</property>
                <signal name="activate" handler="volume_up_action_callback"/>
             </object>
             <accelerator key="Up"/>
          </child>
          <child>
             <object class="GtkAction" id="volume-down">
-               <property name="label">Volume _Down</property>
+               <property name="label" translatable="yes">Volume _Down</property>
                <property name="icon-name">audio-volume-low</property>
-               <property name="tooltip">Decrease volume</property>
+               <property name="tooltip" translatable="yes">Decrease volume</property>
                <signal name="activate" handler="volume_down_action_callback"/>
             </object>
             <accelerator key="Down"/>
@@ -244,21 +244,21 @@
 
          <child>
             <object class="GtkAction" id="help-menu">
-               <property name="label">_Help</property>
+               <property name="label" translatable="yes">_Help</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="contents">
-               <property name="label">_Contents</property>
+               <property name="label" translatable="yes">_Contents</property>
                <property name="stock-id">gtk-help</property>
-               <property name="tooltip">Help contents</property>
+               <property name="tooltip" translatable="yes">Help contents</property>
                <signal name="activate" handler="contents_action_callback"/>
             </object>
             <accelerator key="F1"/>
          </child>
          <child>
             <object class="GtkAction" id="about">
-               <property name="label">_About</property>
+               <property name="label" translatable="yes">_About</property>
                <property name="stock-id">gtk-about</property>
                <signal name="activate" handler="about_action_callback"/>
             </object>
@@ -266,24 +266,24 @@
 
          <child>
             <object class="GtkToggleAction" id="repeat-mode">
-               <property name="label">_Repeat Mode</property>
-               <property name="tooltip">Set the repeat mode</property>
+               <property name="label" translatable="yes">_Repeat Mode</property>
+               <property name="tooltip" translatable="yes">Set the repeat mode</property>
                <property name="active">False</property>
                <signal name="activate" handler="repeat_mode_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkToggleAction" id="shuffle-mode">
-               <property name="label">Shuff_le Mode</property>
-               <property name="tooltip">Set the shuffle mode</property>
+               <property name="label" translatable="yes">Shuff_le Mode</property>
+               <property name="tooltip" translatable="yes">Set the shuffle mode</property>
                <property name="active">False</property>
                <signal name="activate" handler="shuffle_mode_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkToggleAction" id="deinterlace">
-               <property name="label">_Deinterlace</property>
-               <property name="tooltip">Deinterlace</property>
+               <property name="label" translatable="yes">_Deinterlace</property>
+               <property name="tooltip" translatable="yes">Deinterlace</property>
                <property name="active">False</property>
                <signal name="activate" handler="deinterlace_action_callback"/>
             </object>
@@ -291,8 +291,8 @@
          </child>
          <child>
             <object class="GtkToggleAction" id="show-controls">
-               <property name="label">Show _Controls</property>
-               <property name="tooltip">Show controls</property>
+               <property name="label" translatable="yes">Show _Controls</property>
+               <property name="tooltip" translatable="yes">Show controls</property>
                <property name="active">TRUE</property>
                <signal name="activate" handler="show_controls_action_callback"/>
             </object>
@@ -300,8 +300,8 @@
          </child>
          <child>
             <object class="GtkToggleAction" id="sidebar">
-               <property name="label">_Sidebar</property>
-               <property name="tooltip">Show or hide the sidebar</property>
+               <property name="label" translatable="yes">_Sidebar</property>
+               <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
                <property name="active">TRUE</property>
                <signal name="activate" handler="show_sidebar_action_callback"/>
             </object>
@@ -310,8 +310,8 @@
 
          <child>
             <object class="GtkRadioAction" id="aspect-ratio-auto">
-               <property name="label">Auto</property>
-               <property name="tooltip">Sets automatic aspect ratio</property>
+               <property name="label" translatable="yes">Auto</property>
+               <property name="tooltip" translatable="yes">Sets automatic aspect ratio</property>
                <!-- BVW_RATIO_AUTO -->
                <property name="value">0</property>
                <signal name="changed" handler="aspect_ratio_changed_callback"/>
@@ -319,32 +319,32 @@
          </child>
          <child>
             <object class="GtkRadioAction" id="aspect-ratio-square">
-               <property name="label">Square</property>
-               <property name="tooltip">Sets square aspect ratio</property>
+               <property name="label" translatable="yes">Square</property>
+               <property name="tooltip" translatable="yes">Sets square aspect ratio</property>
                <!-- BVW_RATIO_SQUARE -->
                <property name="value">1</property>
             </object>
          </child>
          <child>
             <object class="GtkRadioAction" id="aspect-ratio-fbt">
-               <property name="label">4:3 (TV)</property>
-               <property name="tooltip">Sets 4:3 (TV) aspect ratio</property>
+               <property name="label" translatable="yes">4:3 (TV)</property>
+               <property name="tooltip" translatable="yes">Sets 4:3 (TV) aspect ratio</property>
                <!-- BVW_RATIO_FOURBYTHREE -->
                <property name="value">2</property>
             </object>
          </child>
          <child>
             <object class="GtkRadioAction" id="aspect-ratio-anamorphic">
-               <property name="label">16:9 (Widescreen)</property>
-               <property name="tooltip">Sets 16:9 (widescreen) aspect ratio</property>
+               <property name="label" translatable="yes">16:9 (Widescreen)</property>
+               <property name="tooltip" translatable="yes">Sets 16:9 (widescreen) aspect ratio</property>
                <!-- BVW_RATIO_ANAMORPHIC -->
                <property name="value">3</property>
             </object>
          </child>
          <child>
             <object class="GtkRadioAction" id="aspect-ratio-dvb">
-               <property name="label">2.11:1 (DVB)</property>
-               <property name="tooltip">Sets 2.11:1 (DVB) aspect ratio</property>
+               <property name="label" translatable="yes">2.11:1 (DVB)</property>
+               <property name="tooltip" translatable="yes">Sets 2.11:1 (DVB) aspect ratio</property>
                <!-- BVW_RATIO_DVB -->
                <property name="value">4</property>
             </object>
@@ -352,13 +352,13 @@
 
          <child>
             <object class="GtkAction" id="subtitles-menu">
-               <property name="label">S_ubtitles</property>
+               <property name="label" translatable="yes">S_ubtitles</property>
                <property name="hide-if-empty">False</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="languages-menu">
-               <property name="label">_Languages</property>
+               <property name="label" translatable="yes">_Languages</property>
                <property name="hide-if-empty">False</property>
             </object>
          </child>
@@ -368,26 +368,26 @@
       <object class="GtkActionGroup" id="zoom-action-group">
          <child>
             <object class="GtkAction" id="zoom-in">
-               <property name="label">Zoom In</property>
+               <property name="label" translatable="yes">Zoom In</property>
                <property name="stock-id">gtk-zoom-in</property>
-               <property name="tooltip">Zoom in</property>
+               <property name="tooltip" translatable="yes">Zoom in</property>
                <signal name="activate" handler="zoom_in_action_callback"/>
             </object>
             <accelerator key="R" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-reset">
-               <property name="label">Zoom Reset</property>
+               <property name="label" translatable="yes">Zoom Reset</property>
                <property name="stock-id">gtk-zoom-100</property>
-               <property name="tooltip">Zoom reset</property>
+               <property name="tooltip" translatable="yes">Zoom reset</property>
                <signal name="activate" handler="zoom_reset_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="zoom-out">
-               <property name="label">Zoom Out</property>
+               <property name="label" translatable="yes">Zoom Out</property>
                <property name="stock-id">gtk-zoom-out</property>
-               <property name="tooltip">Zoom out</property>
+               <property name="tooltip" translatable="yes">Zoom out</property>
                <signal name="activate" handler="zoom_out_action_callback"/>
             </object>
             <accelerator key="T" modifiers="GDK_CONTROL_MASK"/>
@@ -398,8 +398,8 @@
       <object class="GtkActionGroup" id="skip-action-group">
          <child>
             <object class="GtkAction" id="skip-forward">
-               <property name="label">Skip _Forward</property>
-               <property name="tooltip">Skip forward</property>
+               <property name="label" translatable="yes">Skip _Forward</property>
+               <property name="tooltip" translatable="yes">Skip forward</property>
                <property name="stock-id">gtk-media-forward</property>
                <signal name="activate" handler="skip_forward_action_callback"/>
             </object>
@@ -407,8 +407,8 @@
          </child>
          <child>
             <object class="GtkAction" id="skip-backwards">
-               <property name="label">Skip _Backwards</property>
-               <property name="tooltip">Skip backwards</property>
+               <property name="label" translatable="yes">Skip _Backwards</property>
+               <property name="tooltip" translatable="yes">Skip backwards</property>
                <property name="stock-id">gtk-media-rewind</property>
                <signal name="activate" handler="skip_backwards_action_callback"/>
             </object>
