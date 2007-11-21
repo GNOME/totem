@@ -519,7 +519,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 			(GTK_FILE_CHOOSER (fs), path);
 	} else {
 		new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
-		if (new_path != NULL && new_path != '\0') {
+		if (new_path != NULL && *new_path != '\0') {
 			set_folder = gtk_file_chooser_set_current_folder_uri
 				(GTK_FILE_CHOOSER (fs), new_path);
 		}

@@ -237,7 +237,7 @@ totem_python_object_get_type (GTypeModule *module,
 		type,		/* class_data */
 		sizeof (TotemPythonObject),
 		0,		/* n_preallocs */
-		(GInstanceInitFunc) totem_python_object_init,
+		(GInstanceInitFunc) totem_python_object_init
 	};
 
 	Py_INCREF (type);

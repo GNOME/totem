@@ -57,7 +57,7 @@ typedef struct {
 enum
 {
 	PROP_0,
-	PROP_NAME,
+	PROP_NAME
 };
 
 GQuark

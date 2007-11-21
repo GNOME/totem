@@ -126,7 +126,7 @@ PyObject *
 _helper_wrap_boxed_gptrarray (GPtrArray *list, GType type, gboolean own_ref, gboolean dealloc)
 {
     PyObject *py_list;
-    int i;
+    unsigned int i;
 
     if ((py_list = PyList_New(0)) == NULL) {
         return NULL;

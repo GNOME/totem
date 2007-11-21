@@ -2063,15 +2063,15 @@ get_stream_info_objects_for_type (BaconVideoWidget * bvw, const gchar * typestr)
     info_obj = g_value_get_object (val);
     if (info_obj) {
       GParamSpec *pspec;
-      GEnumValue *val;
+      GEnumValue *value;
       gint type = -1;
 
       g_object_get (info_obj, "type", &type, NULL);
       pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (info_obj), "type");
-      val = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
-      if (val) {
-        if (g_ascii_strcasecmp (val->value_nick, typestr) == 0 ||
-            g_ascii_strcasecmp (val->value_name, typestr) == 0) {
+      value = g_enum_get_value (G_PARAM_SPEC_ENUM (pspec)->enum_class, type);
+      if (value) {
+        if (g_ascii_strcasecmp (value->value_nick, typestr) == 0 ||
+            g_ascii_strcasecmp (value->value_name, typestr) == 0) {
           ret = g_list_prepend (ret, g_object_ref (info_obj));
         }
       }

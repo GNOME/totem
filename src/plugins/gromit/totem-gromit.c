@@ -127,10 +127,8 @@ totem_gromit_plugin_finalize (GObject *object)
 {
 	TotemGromitPlugin *plugin = TOTEM_GROMIT_PLUGIN (object);
 
-	if (plugin->path != NULL) {
-		g_free (plugin->path);
-		plugin->path = NULL;
-	}
+	g_free (plugin->path);
+	plugin->path = NULL;
 
 	G_OBJECT_CLASS (totem_gromit_plugin_parent_class)->finalize (object);
 }

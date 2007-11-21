@@ -136,14 +136,14 @@ static PlaylistSaveType save_types [] = {
 	{".PLS", ".pls", TOTEM_PL_PARSER_PLS},
 	{".M3U", ".m3u", TOTEM_PL_PARSER_M3U},
 	{".M3U (DOS)", ".m3u", TOTEM_PL_PARSER_M3U_DOS},
-	{".XSPF", ".xspf", TOTEM_PL_PARSER_XSPF},
+	{".XSPF", ".xspf", TOTEM_PL_PARSER_XSPF}
 };
 
 static int totem_playlist_table_signals[LAST_SIGNAL];
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
-	{ "_NETSCAPE_URL", 0, 1 },
+	{ "_NETSCAPE_URL", 0, 1 }
 };
 
 static void totem_playlist_class_init (TotemPlaylistClass *class);
@@ -959,22 +959,22 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	if (response == GTK_RESPONSE_ACCEPT)
 	{
-		char *filename;
+		char *fname;
 		gint active_format;
 
-		filename = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
+		fname = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
 		active_format = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_box));
 
 		gtk_widget_destroy (fs);
 
-		if (filename == NULL)
+		if (fname == NULL)
 			return;
 
 		g_free (playlist->_priv->save_path);
-		playlist->_priv->save_path = g_path_get_dirname (filename);
+		playlist->_priv->save_path = g_path_get_dirname (fname);
 
-		totem_playlist_save_playlist (playlist, filename, active_format);
-		g_free (filename);
+		totem_playlist_save_playlist (playlist, fname, active_format);
+		g_free (fname);
 	} else {
 		gtk_widget_destroy (fs);
 	}
@@ -1045,7 +1045,7 @@ totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 
 	for (l = refs; l != NULL; l = l->next)
 	{
-		GtkTreeIter *position, current;
+		GtkTreeIter *position, cur;
 		GtkTreeRowReference *ref = l->data;
 		GtkTreePath *path;
 
@@ -1066,15 +1066,15 @@ totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 		}
 
 		path = gtk_tree_row_reference_get_path (ref);
-		gtk_tree_model_get_iter (model, &current, path);
+		gtk_tree_model_get_iter (model, &cur, path);
 		gtk_tree_path_free (path);
 
 		if (direction_up == FALSE)
 		{
 			pos--;
-			gtk_list_store_move_before (store, &current, position);
+			gtk_list_store_move_before (store, &cur, position);
 		} else {
-			gtk_list_store_move_after (store, &current, position);
+			gtk_list_store_move_after (store, &cur, position);
 			pos++;
 		}
 	}

@@ -56,10 +56,8 @@
 #include <nsIDOMElement.h>
 #include <nsIDOM3Node.h>
 #include <nsIIOService.h>
-#include <nsIURI.h>
 #include <nsITimer.h>
 #include <nsIComponentManager.h>
-#include <nsIServiceManager.h>
 #include <nsIProtocolHandler.h>
 #include <nsIExternalProtocolHandler.h>
 

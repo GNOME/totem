@@ -57,7 +57,7 @@
 typedef enum
 {
 	TOTEM_PLUGIN_LOADER_C,
-	TOTEM_PLUGIN_LOADER_PY,
+	TOTEM_PLUGIN_LOADER_PY
 } TotemPluginLang;
 
 struct _TotemPluginInfo

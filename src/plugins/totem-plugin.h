@@ -80,7 +80,7 @@ typedef struct
 
 typedef enum
 {
-	TOTEM_PLUGIN_ERROR_ACTIVATION,
+	TOTEM_PLUGIN_ERROR_ACTIVATION
 } TotemPluginError;
 
 GType totem_plugin_error_get_type	(void);
@@ -129,7 +129,7 @@ GList *          totem_get_plugin_paths            (void);
 #define _TOTEM_PLUGIN_REGISTER_EXTENDED_BEGIN(PluginName, plugin_name)		\
 										\
 static GType plugin_name##_type = 0;						\
-static GTypeModule *plugin_module_type = 0;		                	\
+static GTypeModule *plugin_module_type = NULL;					\
 										\
 GType										\
 plugin_name##_get_type (void)							\

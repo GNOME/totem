@@ -370,7 +370,7 @@ totem_remote_command_get_type (void)
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_EJECT, "Eject"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAY_DVD, "Play DVD"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_MUTE, "Mute"),
-			{ 0, 0, 0 }
+			{ 0, NULL, NULL }
 		};
 
 		etype = g_enum_register_static ("TotemRemoteCommand", values);
@@ -401,7 +401,7 @@ totem_disc_media_type_get_type (void)
 			ENUM_ENTRY (MEDIA_TYPE_CDDA, "CDDA disc"),
 			ENUM_ENTRY (MEDIA_TYPE_VCD, "VCD"),
 			ENUM_ENTRY (MEDIA_TYPE_DVD, "DVD"),
-			{ 0, 0, 0 }
+			{ 0, NULL, NULL }
 		};
 
 		etype = g_enum_register_static ("TotemDiscMediaType", values);

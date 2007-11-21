@@ -1,5 +1,29 @@
 2007-11-21  Kjartan Maraas  <kmaraas@gnome.org>
 
+	* bindings/python/override_common.c:
+	(_helper_wrap_boxed_gptrarray):
+	* browser-plugin/totemPlugin.cpp:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(get_stream_info_objects_for_type):
+	* src/plugins/gromit/totem-gromit.c:
+	(totem_gromit_plugin_finalize):
+	* src/plugins/totem-plugin.c:
+	* src/plugins/totem-plugin.h:
+	* src/plugins/totem-plugins-engine.c:
+	* src/plugins/totem-python-plugin.c:
+	(totem_python_object_get_type):
+	* src/totem-fullscreen.c:
+	* src/totem-object.c: (totem_remote_command_get_type),
+	(totem_disc_media_type_get_type):
+	* src/totem-playlist.c: (totem_playlist_save_files),
+	(totem_playlist_move_files):
+	* src/totem-uri.c: (totem_add_files):
+	* src/totem.c: (totem_action_exit), (totem_action_remote),
+	(video_widget_create), (main):
+	A bunch of cleanups of various sorts.
+
+2007-11-21  Kjartan Maraas  <kmaraas@gnome.org>
+
 	* data/playlist.ui:
 	* data/totem.ui:
 	Mark a whole bunch of messages for translation.

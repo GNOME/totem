@@ -92,7 +92,7 @@
 
 static const GtkTargetEntry target_table[] = {
 	{ "text/uri-list", 0, 0 },
-	{ "_NETSCAPE_URL", 0, 1 },
+	{ "_NETSCAPE_URL", 0, 1 }
 };
 
 static gboolean totem_action_open_files (Totem *totem, char **list);
@@ -222,7 +222,7 @@ totem_action_exit (Totem *totem)
 		int vol;
 
 		vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
-		//FIXME move the volume to the static file?
+		/* FIXME move the volume to the static file? */
 		gconf_client_set_int (totem->gc,
 				GCONF_PREFIX"/volume",
 				CLAMP (vol, 0, 100),
@@ -1918,10 +1918,10 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			break;
 		}
 		if (strcmp (url, "dvd:") == 0) {
-			//FIXME b0rked
+			/* FIXME b0rked */
 			totem_action_play_media (totem, MEDIA_TYPE_DVD, NULL);
 		} else if (strcmp (url, "vcd:") == 0) {
-			//FIXME b0rked
+			/* FIXME b0rked */
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
 			totem_action_play_media (totem, MEDIA_TYPE_DVB, NULL);
@@ -2005,7 +2005,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		totem_action_eject (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
-		// TODO - how to see if can, and play the DVD (like the menu item)
+		/* TODO - how to see if can, and play the DVD (like the menu item) */
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
 		totem_action_volume_relative (totem, -1.0);
@@ -2891,7 +2891,7 @@ video_widget_create (Totem *totem)
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
 	const GtkTargetEntry source_table[] = {
-		{ "text/uri-list", 0, 0 },
+		{ "text/uri-list", 0, 0 }
 	};
 
 	totem->bvw = BACON_VIDEO_WIDGET
@@ -3157,8 +3157,9 @@ main (int argc, char **argv)
 
 	/* Initialise all the plugins */
 	totem_object_plugins_init (totem);
-	//FIXME we should set the current page again, in case a plugin was
-	// the default page
+	/* FIXME we should set the current page again, in case a plugin was
+	 * the default page
+	 */
 
 	if (totem->session_restored != FALSE) {
 		totem_session_restore (totem, optionstate.filenames);
