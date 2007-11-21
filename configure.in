@@ -69,7 +69,7 @@ AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
 AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube"
+allowed_plugins="screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -366,11 +366,18 @@ for plugin in ${used_plugins}; do
 				plugin_error_or_ignore "you need GMyth >= 0.3.0 installed for the MythTV plugin"
 				add_plugin="0"
 			fi
-			;;
+		;;
 		bemused)
 			PKG_CHECK_MODULES(BEMUSED, bluez, [HAVE_BLUEZ=yes], [HAVE_BLUEZ=no])
 			if test "${HAVE_BLUEZ}" != "yes" ; then
 				plugin_error_or_ignore "you need the bluez libraries installed for the Bemused plugin"
+				add_plugin="0"
+			fi
+		;;
+		publish)
+			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 >= 0.3.0, [HAVE_LIBEPC=yes], [HAVE_LIBEPC=no])
+			if test "${HAVE_LIBEPC}" != "yes" ; then
+				plugin_error_or_ignore "you need the easy-publish-and-consume library installed for the publish plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -1049,6 +1056,7 @@ src/plugins/sample-python/Makefile
 src/plugins/sample-vala/Makefile
 src/plugins/totem/Makefile
 src/plugins/youtube/Makefile
+src/plugins/publish/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
 browser-plugin/idl/Makefile
