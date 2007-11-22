@@ -1,5 +1,16 @@
 2007-11-22  Mathias Hasselmann  <mathias@openismus.com>
 
+	Implement server side of the publish plugin.
+
+	* src/plugins/publish/Makefile.am: Update include folders.
+	* src/plugins/publish/totem-publish.c: Implement playlist and
+	streaming server on top of libepc. Implement configuration dialog.
+	* data/publish-plugin.glade, data/publish-plugin.ui: Add UI definition
+	of the publish plugin's preferences dialog.
+	* data/Makefile.am: Add publish-plugin.ui.
+
+2007-11-22  Mathias Hasselmann  <mathias@openismus.com>
+
 	Allow monitoring of playlist changes: The "changed" signal is quite
 	fuzzy, and just exporting the tree-model is pointless due the useless
 	nature of its "row-deleted" signal.

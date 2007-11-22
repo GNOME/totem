@@ -14,6 +14,7 @@ stuff_DATA =				\
 	mozilla-viewer.ui		\
 	properties.ui			\
 	uri.ui				\
+	publish-plugin.ui		\
 	totem_logo.png
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
