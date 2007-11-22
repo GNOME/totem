@@ -23,6 +23,7 @@
 
 #include "config.h"
 #include "totem-playlist.h"
+#include "totemplaylist-marshal.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
@@ -53,6 +54,12 @@ void playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist
 
 typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
 		gpointer data);
+
+typedef struct {
+	TotemPlaylist *playlist;
+	TotemPlaylistForeachFunc callback;
+	gpointer user_data;
+} PlaylistForeachContext;
 
 typedef struct {
 	char *mimetype;
@@ -118,6 +125,8 @@ enum {
 	CURRENT_REMOVED,
 	REPEAT_TOGGLED,
 	SHUFFLE_TOGGLED,
+	ITEM_ADDED,
+	ITEM_REMOVED,
 	LAST_SIGNAL
 };
 
@@ -746,6 +755,24 @@ totem_playlist_foreach_selected (GtkTreeModel *model, GtkTreePath *path,
 }
 
 static void
+totem_playlist_emit_item_removed (TotemPlaylist *playlist,
+				  GtkTreeIter   *iter)
+{
+	gchar *filename = NULL;
+	gchar *uri = NULL;
+
+	gtk_tree_model_get (playlist->_priv->model, iter,
+			    URI_COL, &uri, FILENAME_COL, &filename, -1);
+
+	g_signal_emit (playlist,
+		       totem_playlist_table_signals[ITEM_REMOVED],
+		       0, filename, uri);
+
+	g_free (filename);
+	g_free (uri);
+}
+
+static void
 playlist_remove_files (TotemPlaylist *playlist)
 {
 	GtkTreeSelection *selection;
@@ -792,8 +819,9 @@ playlist_remove_files (TotemPlaylist *playlist)
 			((GtkTreeRowReference *)(playlist->_priv->list->data));
 		gtk_tree_model_get_iter (playlist->_priv->model, &iter, path);
 		gtk_tree_path_free (path);
-		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model),
-				&iter);
+
+		totem_playlist_emit_item_removed (playlist, &iter);
+		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model), &iter);
 
 		gtk_tree_row_reference_free
 			((GtkTreeRowReference *)(playlist->_priv->list->data));
@@ -1592,6 +1620,10 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			-1);
 
+	g_signal_emit (playlist,
+		       totem_playlist_table_signals[ITEM_ADDED],
+		       0, filename_for_display, uri ? uri : mrl);
+
 	g_free (filename_for_display);
 	g_free (uri);
 
@@ -1654,6 +1686,16 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
 	return TRUE;
 }
 
+static gboolean
+totem_playlist_clear_cb (GtkTreeModel *model,
+			 GtkTreePath  *path,
+			 GtkTreeIter  *iter,
+			 gpointer      data)
+{
+	totem_playlist_emit_item_removed (data, iter);
+	return FALSE;
+}
+
 gboolean
 totem_playlist_clear (TotemPlaylist *playlist)
 {
@@ -1663,6 +1705,10 @@ totem_playlist_clear (TotemPlaylist *playlist)
 
 	if (PL_LEN == 0)
 		return FALSE;
+
+	gtk_tree_model_foreach (playlist->_priv->model,
+				totem_playlist_clear_cb,
+				playlist);
 
 	store = GTK_LIST_STORE (playlist->_priv->model);
 	gtk_list_store_clear (store);
@@ -1731,8 +1777,9 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 
 		path = gtk_tree_row_reference_get_path (l->data);
 		gtk_tree_model_get_iter (playlist->_priv->model, &iter, path);
-		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model),
-				&iter);
+
+		totem_playlist_emit_item_removed (playlist, &iter);
+		gtk_list_store_remove (GTK_LIST_STORE (playlist->_priv->model), &iter);
 		gtk_tree_path_free (path);
 		gtk_tree_row_reference_free (l->data);
 	}
@@ -2296,5 +2343,56 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__BOOLEAN,
 				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+	totem_playlist_table_signals[ITEM_ADDED] =
+		g_signal_new ("item-added",
+				G_TYPE_FROM_CLASS (klass),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemPlaylistClass,
+					item_added),
+				NULL, NULL,
+				totemplaylist_marshal_VOID__STRING_STRING,
+				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
+	totem_playlist_table_signals[ITEM_REMOVED] =
+		g_signal_new ("item-removed",
+				G_TYPE_FROM_CLASS (klass),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemPlaylistClass,
+					item_removed),
+				NULL, NULL,
+				totemplaylist_marshal_VOID__STRING_STRING,
+				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
 }
 
+static gboolean
+totem_playlist_foreach_cb (GtkTreeModel *model,
+			   GtkTreePath  *path,
+			   GtkTreeIter  *iter,
+			   gpointer      data)
+{
+	PlaylistForeachContext *context = data;
+	gchar *filename = NULL;
+	gchar *uri = NULL;
+
+	gtk_tree_model_get (model, iter, URI_COL, &uri, FILENAME_COL, &filename, -1);
+	context->callback (context->playlist, filename, uri, context->user_data);
+
+	g_free (filename);
+	g_free (uri);
+
+	return FALSE;
+}
+
+void
+totem_playlist_foreach (TotemPlaylist            *playlist,
+			TotemPlaylistForeachFunc  callback,
+			gpointer                  user_data)
+{
+	PlaylistForeachContext context = { playlist, callback, user_data };
+
+	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
+	g_return_if_fail (NULL != callback);
+
+	gtk_tree_model_foreach (playlist->_priv->model,
+				totem_playlist_foreach_cb,
+				&context);
+}

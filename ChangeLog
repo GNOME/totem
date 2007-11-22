@@ -1,3 +1,14 @@
+2007-11-22  Mathias Hasselmann  <mathias@openismus.com>
+
+	Allow monitoring of playlist changes: The "changed" signal is quite
+	fuzzy, and just exporting the tree-model is pointless due the useless
+	nature of its "row-deleted" signal.
+
+	* src/Makefile.am: Add totemplaylist-marshal.list.
+	* src/totemplaylist-marshal.list: Add VOID:STRING,STRING.
+	* src/totem-playlist.c, src/totem-playlist.h: Add "item-added" and
+	"item-removed" signal. Implement totem_playlist_foreach function.
+
 2007-11-21  Mathias Hasselmann  <mathias@openismus.com>
 
 	Prepare infrastructure for libepc based publish plugin.

@@ -51,6 +51,11 @@ typedef struct TotemPlaylist	       TotemPlaylist;
 typedef struct TotemPlaylistClass      TotemPlaylistClass;
 typedef struct TotemPlaylistPrivate    TotemPlaylistPrivate;
 
+typedef void (*TotemPlaylistForeachFunc) (TotemPlaylist *playlist,
+					  const gchar   *filename,
+					  const gchar   *uri,
+					  gpointer       user_data);
+
 struct TotemPlaylist {
 	GtkVBox parent;
 	TotemPlaylistPrivate *_priv;
@@ -65,6 +70,8 @@ struct TotemPlaylistClass {
 	void (*current_removed) (TotemPlaylist *playlist);
 	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);
 	void (*shuffle_toggled) (TotemPlaylist *playlist, gboolean toggled);
+	void (*item_added) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
+	void (*item_removed) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
 };
 
 GtkType    totem_playlist_get_type (void);
@@ -129,6 +136,10 @@ void       totem_playlist_set_at_end (TotemPlaylist *playlist);
 guint      totem_playlist_get_current (TotemPlaylist *playlist);
 guint      totem_playlist_get_last (TotemPlaylist *playlist);
 void       totem_playlist_set_current (TotemPlaylist *playlist, guint index);
+
+void       totem_playlist_foreach (TotemPlaylist *playlist,
+				   TotemPlaylistForeachFunc callback,
+				   gpointer user_data);
 
 G_END_DECLS
 
