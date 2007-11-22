@@ -1,5 +1,18 @@
 2007-11-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-options.c:
+	* src/totem-options.h:
+	* src/totem.c: (totem_action_exit), (totem_action_seek),
+	(totem_action_open_dialog), (totem_action_load_media),
+	(window_state_event_cb), (totem_action_take_screenshot),
+	(totem_seek_time_rel), (totem_action_set_playlist_index),
+	(playlist_changed_cb), (totem_action_handle_key_press),
+	(playlist_widget_setup), (main):
+	Add --no-existing-session to allow launching multiple Totems
+	(Closes: #498826)
+
+2007-11-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-cell-renderer-video.c: (get_size): Don't try to draw
 	anything if the thumbnail is 0 sized
 

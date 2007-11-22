@@ -49,6 +49,7 @@ typedef struct
 	gboolean enqueue;
 	gboolean replace;
 	gboolean printplaying;
+	gboolean notconnectexistingsession;
 	gdouble playlistidx;
 	gint64 seek;
 	gchar **filenames;

@@ -230,7 +230,8 @@ totem_action_exit (Totem *totem)
 		totem_action_save_size (totem);
 	}
 
-	bacon_message_connection_free (totem->conn);
+	if (totem->conn != NULL)
+		bacon_message_connection_free (totem->conn);
 	totem_action_save_state (totem);
 
 	totem_sublang_exit (totem);
@@ -3079,14 +3080,18 @@ main (int argc, char **argv)
 #endif /* !HAVE_GTK_ONLY */
 
 	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
+	totem->gc = gc;
 
 	/* IPC stuff */
-	totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
-	totem->gc = gc;
-	if (bacon_message_connection_get_is_server (totem->conn) == FALSE) {
-		totem_options_process_for_server (totem->conn, &optionstate);
-		gdk_notify_startup_complete ();
-		totem_action_exit (totem);
+	if (optionstate.notconnectexistingsession == FALSE) {
+		totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
+		if (bacon_message_connection_get_is_server (totem->conn) == FALSE) {
+			totem_options_process_for_server (totem->conn, &optionstate);
+			gdk_notify_startup_complete ();
+			totem_action_exit (totem);
+		} else {
+			totem_options_process_early (totem, &optionstate);
+		}
 	} else {
 		totem_options_process_early (totem, &optionstate);
 	}
@@ -3175,7 +3180,7 @@ main (int argc, char **argv)
 	if (optionstate.fullscreen == FALSE)
 		gdk_window_set_cursor (totem->win->window, NULL);
 
-	if (bacon_message_connection_get_is_server (totem->conn) != FALSE)
+	if (totem->conn != NULL && bacon_message_connection_get_is_server (totem->conn) != FALSE)
 	{
 		bacon_message_connection_set_callback (totem->conn,
 				(BaconMessageReceivedFunc)

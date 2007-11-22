@@ -49,6 +49,7 @@ const GOptionEntry options[] = {
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
+	{"no-existing-session", '\0', 0, G_OPTION_ARG_NONE, &optionstate.notconnectexistingsession, N_("Don't connect to an already running instance"), NULL},
 	/* translators: this option prints the current movie's title on the command-line */
 	{"printplaying", '\0', 0, G_OPTION_ARG_NONE, &optionstate.printplaying, N_("Print playing movie"), NULL},
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
