@@ -46,7 +46,7 @@ libbaconvideowidgetproperties_la_CFLAGS =	\
 	$(AM_CFLAGS)				\
 	-I$(top_srcdir)/src			\
 	-I$(top_srcdir)/src/backend		\
-	-I$(top_srcdir)/src/plparse		\
+	-I$(top_srcdir)/plparse			\
 	-I$(top_srcdir)/src/plugins
 
 EXTRA_DIST = $(plugin_in_files)

@@ -1,4 +1,4 @@
-SUBDIRS = bindings po data lib src help
+SUBDIRS = lib plparse bindings po data src help
 
 if ENABLE_BROWSER_PLUGINS
 SUBDIRS += browser-plugin

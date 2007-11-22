@@ -5,7 +5,7 @@ noinst_LTLIBRARIES = libbaconvideowidget.la
 bvw_test_SOURCES = bvw-test.c
 
 bvw_test_CPPFLAGS = \
-	-I$(srcdir)/../plparse		\
+	-I$(top_srcdir)/plparse		\
 	-DDATADIR=\"$(pkgdatadir)\"	\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"
 	$(DISABLE_DEPRECATED)		\
@@ -46,11 +46,11 @@ libbaconvideowidget_la_SOURCES += \
 	bacon-video-widget-xine.c
 endif
 
-libbaconvideowidget_la_CPPFLAGS = \
-	-I$(srcdir)/../plparse	\
-	-D_REENTRANT		\
+libbaconvideowidget_la_CPPFLAGS =		\
+	-I$(top_srcdir)/plparse			\
+	-D_REENTRANT				\
 	-DGCONF_PREFIX=\""/apps/totem"\"	\
-	$(DISABLE_DEPRECATED)	\
+	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
 libbaconvideowidget_la_CFLAGS = \

@@ -89,10 +89,10 @@ totem_plugin_viewer_CPPFLAGS = \
 	-I$(top_srcdir)					\
 	-I$(top_srcdir)/lib				\
 	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-I$(top_builddir)/src/backend			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DGCONF_PREFIX="\"/apps/totem\""		\
@@ -114,7 +114,7 @@ totem_plugin_viewer_CFLAGS = \
 totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
-	$(top_builddir)/src/plparse/libtotem-plparser.la		\
+	$(top_builddir)/plparse/libtotem-plparser.la			\
 	$(top_builddir)/lib/libtotemscrsaver.la				\
 	libtotempluginviewer_helper.la					\
 	$(EXTRA_GNOME_LIBS)	\
@@ -154,10 +154,10 @@ libtotem_basic_plugin_la_SOURCES =	\
 libtotem_basic_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-Iidl						\
 	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DTOTEM_BASIC_PLUGIN				\
@@ -182,7 +182,7 @@ libtotem_basic_plugin_la_CXXFLAGS = \
 	$(AM_CXXFLAGS)
 
 libtotem_basic_plugin_la_LIBADD =					\
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
@@ -223,10 +223,10 @@ libtotem_gmp_plugin_la_SOURCES =	\
 libtotem_gmp_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-Iidl						\
 	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DTOTEM_GMP_PLUGIN				\
@@ -251,7 +251,7 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 	$(AM_CXXFLAGS)
 
 libtotem_gmp_plugin_la_LIBADD =						\
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_helper.la	\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
@@ -286,10 +286,10 @@ libtotem_complex_plugin_la_SOURCES =	\
 libtotem_complex_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-Iidl						\
 	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DTOTEM_COMPLEX_PLUGIN				\
@@ -314,7 +314,7 @@ libtotem_complex_plugin_la_CXXFLAGS = \
 	$(AM_CXXFLAGS)
 
 libtotem_complex_plugin_la_LIBADD =					\
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
@@ -349,10 +349,10 @@ libtotem_narrowspace_plugin_la_SOURCES = \
 libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-Iidl						\
 	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DTOTEM_NARROWSPACE_PLUGIN			\
@@ -377,7 +377,7 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 	$(AM_CXXFLAGS)
 
 libtotem_narrowspace_plugin_la_LIBADD =					\
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
@@ -412,10 +412,10 @@ libtotem_mully_plugin_la_SOURCES =	\
 libtotem_mully_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-Iidl						\
 	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DTOTEM_MULLY_PLUGIN				\
@@ -440,7 +440,7 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 	$(AM_CXXFLAGS)
 
 libtotem_mully_plugin_la_LIBADD =					\
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
@@ -475,10 +475,10 @@ libtotem_cone_plugin_la_SOURCES =	\
 libtotem_cone_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
+	-I$(top_srcdir)/plparse				\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-I$(top_builddir)/src/plparse			\
+	-I$(top_builddir)/plparse			\
 	-Iidl						\
 	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DTOTEM_CONE_PLUGIN				\
@@ -503,7 +503,7 @@ libtotem_cone_plugin_la_CXXFLAGS = \
 	$(AM_CXXFLAGS)
 
 libtotem_cone_plugin_la_LIBADD =					\
-	$(top_builddir)/src/plparse/libtotem-plparser-mini.la		\
+	$(top_builddir)/plparse/libtotem-plparser-mini.la		\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
 	$(MOZILLA_LIBS)	\
