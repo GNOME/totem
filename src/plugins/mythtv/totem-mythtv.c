@@ -34,6 +34,8 @@
 #include <gmodule.h>
 #include <string.h>
 
+#include "totem-video-list.h"
+#include "totem-cell-renderer-video.h"
 #include "video-utils.h"
 #include "totem-plugin.h"
 #include "totem.h"
@@ -62,7 +64,6 @@
 enum {
 	FILENAME_COL,
 	URI_COL,
-	THUMBNAIL_FILENAME_COL,
 	THUMBNAIL_COL,
 	NAME_COL,
 	DESCRIPTION_COL,
@@ -99,6 +100,7 @@ static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 TOTEM_PLUGIN_REGISTER(TotemMythtvPlugin, totem_mythtv_plugin)
 
 #define MAX_THUMB_SIZE 500 * 1024 * 1024
+#define THUMB_HEIGHT 32
 
 static GdkPixbuf *
 get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
@@ -147,72 +149,26 @@ get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
 	}
 
 	pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-	g_object_ref (pixbuf);
+	if (pixbuf != NULL)
+		g_object_ref (pixbuf);
 	g_object_unref (loader);
 
-	return pixbuf;
-}
+	if (pixbuf == NULL)
+		return NULL;
 
-#define THUMB_HEIGHT 32
+	if (gdk_pixbuf_get_height (pixbuf) != THUMB_HEIGHT) {
+		GdkPixbuf *scaled;
+		int height, width;
 
-static void
-set_thumbnail_icon (GtkTreeViewColumn *column,
-		    GtkCellRenderer *renderer,
-		    GtkTreeModel *model,
-		    GtkTreeIter *iter,
-		    TotemMythtvPlugin *plugin)
-{
-	GdkPixbuf *pixbuf, *scaled;
-	int width, height;
-	GtkTreePath *path;
-	char *thumb_fname;
-
-	/* If we already have a pixbuf, use it */
-	gtk_tree_model_get (model, iter,
-			    THUMBNAIL_COL, &pixbuf, -1);
-	if (pixbuf != NULL) {
-		g_object_set (renderer, "pixbuf", pixbuf, NULL);
+		height = THUMB_HEIGHT;
+		width = gdk_pixbuf_get_width (pixbuf) * height / gdk_pixbuf_get_height (pixbuf);
+		scaled = gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
 		g_object_unref (pixbuf);
-		return;
+
+		return scaled;
 	}
 
-	/* If there's no backend info, no point in continuing */
-	if (plugin->b_info == NULL)
-		return;
-
-	/* Filename is zero'ed when we've tried getting the
-	 * thumbnail once already */
-	gtk_tree_model_get (model, iter,
-			    THUMBNAIL_FILENAME_COL, &thumb_fname, -1);
-	if (thumb_fname == NULL)
-		return;
-	pixbuf = get_thumbnail (plugin, thumb_fname);
-	g_free (thumb_fname);
-
-	/* No pixbuf */
-	if (pixbuf == NULL) {
-		gtk_list_store_set (GTK_LIST_STORE (model), iter,
-				    THUMBNAIL_FILENAME_COL, NULL, -1);
-		g_object_set (renderer, "icon-name", "video", NULL);
-		path = gtk_tree_model_get_path (model, iter);
-		gtk_tree_model_row_changed (model, path, iter);
-		gtk_tree_path_free (path);
-		return;
-	}
-
-	height = THUMB_HEIGHT;
-	width = gdk_pixbuf_get_width (pixbuf) * height / gdk_pixbuf_get_height (pixbuf);
-	scaled = gdk_pixbuf_scale_simple (pixbuf, width, height, GDK_INTERP_BILINEAR);
-	g_object_unref (pixbuf);
-
-	gtk_list_store_set (GTK_LIST_STORE (model), iter,
-			    THUMBNAIL_COL, scaled,
-			    THUMBNAIL_FILENAME_COL, NULL, -1);
-	g_object_set (renderer, "pixbuf", scaled, NULL);
-
-	path = gtk_tree_model_get_path (model, iter);
-	gtk_tree_model_row_changed (model, path, iter);
-	gtk_tree_path_free (path);
+	return pixbuf;
 }
 
 static void
@@ -237,40 +193,36 @@ row_activated_cb (GtkTreeView *tree_view,
 static void
 create_treeview (TotemMythtvPlugin *plugin)
 {
-	GtkCellRenderer *renderer;
-	GtkTreeViewColumn *column;
+	TotemCellRendererVideo *renderer;
 
 	/* Treeview and model */
 	plugin->model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
 							    G_TYPE_STRING,
 							    G_TYPE_STRING,
-							    G_TYPE_STRING,
 							    G_TYPE_OBJECT,
 							    G_TYPE_STRING,
 							    G_TYPE_STRING));
-	plugin->treeview = GTK_TREE_VIEW (gtk_tree_view_new_with_model (plugin->model));
-	g_object_unref (G_OBJECT(plugin->model));
+
+	plugin->treeview = g_object_new (TOTEM_TYPE_VIDEO_LIST,
+					 "totem", plugin->totem,
+					 "mrl-column", URI_COL,
+					 "tooltip-column", DESCRIPTION_COL,
+					 NULL);
+
+	gtk_tree_view_set_model (GTK_TREE_VIEW (plugin->treeview),
+				 GTK_TREE_MODEL (plugin->model));
+
+	renderer = totem_cell_renderer_video_new ();
+	gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (plugin->treeview), 0,
+						     _("Recordings"), GTK_CELL_RENDERER (renderer),
+						     "thumbnail", THUMBNAIL_COL,
+						     "title", NAME_COL,
+						     NULL);
+
 	gtk_tree_view_set_headers_visible (plugin->treeview, FALSE);
 
 	g_signal_connect (G_OBJECT (plugin->treeview), "row-activated",
 			  G_CALLBACK (row_activated_cb), plugin);
-
-	/* Playing pix */
-	renderer = gtk_cell_renderer_pixbuf_new ();
-	column = gtk_tree_view_column_new ();
-	gtk_tree_view_column_pack_start (column, renderer, FALSE);
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
-	gtk_tree_view_column_set_cell_data_func (column, renderer,
-						 (GtkTreeCellDataFunc) set_thumbnail_icon,
-						 plugin, NULL);
-	gtk_tree_view_append_column (plugin->treeview, column);
-
-	/* Labels */
-	renderer = gtk_cell_renderer_text_new ();
-	gtk_tree_view_column_pack_start (column, renderer, TRUE);
-	g_object_set (G_OBJECT (renderer), "ellipsize", PANGO_ELLIPSIZE_END, "xalign", 0.0, NULL);
-	gtk_tree_view_column_set_attributes (column, renderer,
-					     "text", NAME_COL, NULL);
 }
 
 static void
@@ -306,6 +258,7 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin)
 		if (gmyth_util_file_exists
 		    (plugin->b_info, recorded_info->basename->str)) {
 		    	GtkTreeIter iter;
+		    	GdkPixbuf *pixbuf;
 		    	char *full_name = NULL;
 		    	char *thumb_fname, *uri;
 
@@ -318,16 +271,17 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin)
 		    			       plugin->b_info->hostname,
 		    			       plugin->b_info->port,
 		    			       recorded_info->basename->str);
+		    	pixbuf = get_thumbnail (plugin, thumb_fname);
+		    	g_free (thumb_fname);
 
 		    	gtk_list_store_insert_with_values (GTK_LIST_STORE (plugin->model), &iter, G_MAXINT32,
 		    					   FILENAME_COL, recorded_info->basename->str,
 		    					   URI_COL, uri,
-		    					   THUMBNAIL_FILENAME_COL, thumb_fname,
+		    					   THUMBNAIL_COL, pixbuf,
 		    					   NAME_COL, full_name ? full_name : recorded_info->title->str,
 		    					   DESCRIPTION_COL, recorded_info->description->str,
 		    					   -1);
 		    	g_free (full_name);
-		    	g_free (thumb_fname);
 		    	g_free (uri);
 		}
 		gmyth_recorded_info_free(recorded_info);
@@ -430,19 +384,22 @@ impl_activate (TotemPlugin *plugin,
 	       TotemObject *totem,
 	       GError **error)
 {
-	GtkWidget *viewport, *box, *button;
+	GtkWidget *scrolled, *box, *button;
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
-
+ 
 	tm->totem = g_object_ref (totem);
 
 	box = gtk_vbox_new (FALSE, 6);
 	button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
 	g_signal_connect (G_OBJECT (button), "clicked",
 			  G_CALLBACK (refresh_cb), plugin);
-	viewport = gtk_viewport_new (NULL, NULL);
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+					GTK_POLICY_NEVER,
+					GTK_POLICY_AUTOMATIC);
 	create_treeview (tm);
-	gtk_container_add (GTK_CONTAINER (viewport), GTK_WIDGET (tm->treeview));
-	gtk_container_add (GTK_CONTAINER (box), viewport);
+	gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tm->treeview));
+	gtk_container_add (GTK_CONTAINER (box), scrolled);
 	gtk_box_pack_end (GTK_BOX (box), button, FALSE, FALSE, 0);
 	gtk_widget_show_all (box);
 	totem_add_sidebar_page (totem,
@@ -455,7 +412,8 @@ impl_activate (TotemPlugin *plugin,
 	totem_mythtv_update_binfo (TOTEM_MYTHTV_PLUGIN(plugin));
 
 	totem_gdk_window_set_waiting_cursor (box->window);
-	totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin));
+	/* FIXME we should only do that if it will be done in the background */
+	/* totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin)); */
 	gdk_window_set_cursor (box->window, NULL);
 
 	return TRUE;

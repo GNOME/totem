@@ -1,3 +1,17 @@
+2007-11-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-cell-renderer-video.c: (get_size): Don't try to draw
+	anything if the thumbnail is 0 sized
+
+	* src/plugins/mythtv/totem-mythtv.c: (get_thumbnail),
+	(create_treeview), (totem_mythtv_list_recordings), (impl_activate):
+	Port to using the TotemVideoList widget for consistency
+
+	* src/totem-video-list.c: (totem_video_list_class_init),
+	(totem_video_list_set_property): Make setting Totem
+	a construct only property, it doesn't change in the lifetime of the
+	program
+
 2007-11-21  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: mozilla-config.h either lives in the

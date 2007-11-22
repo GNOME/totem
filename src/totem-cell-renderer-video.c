@@ -246,7 +246,7 @@ get_size (GtkCellRenderer *cell,
 			/*g_message ("Title area: X: %i, Y: %i, W: %i, H: %i", title_area->x, title_area->y, title_area->width, title_area->height);*/
 		}
 
-		if (thumbnail_area) {
+		if (pixbuf_height > 0 && thumbnail_area) {
 			thumbnail_area->x = draw_area->x;
 			thumbnail_area->y = draw_area->y + title_height + cell->ypad;
 			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
