@@ -101,7 +101,7 @@ impl_activate (TotemPlugin *plugin,
 	gtk_widget_show (widget);
 	totem_add_sidebar_page (totem,
 				"tracker",
-				"Tracker",
+				"Video Search",
 				widget);
 
 	return TRUE;

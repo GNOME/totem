@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <libintl.h>
 #include <tracker.h>
 #include <tracker-client.h>
 #include <glib/gi18n-lib.h>
@@ -174,7 +175,7 @@ static int get_search_count (TrackerClient *client, const char *search)
 	return count;
 }
 
-static gboolean do_search (GtkWidget *button, TotemTrackerWidget *widget)
+static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
 {
 	const char *search_text = NULL;
 	GError *error = NULL;
@@ -194,7 +195,7 @@ static gboolean do_search (GtkWidget *button, TotemTrackerWidget *widget)
 	client = tracker_connect (TRUE);
 	if (!client) {
 		g_warning ("Error trying to get the tracker client");
-		return FALSE;
+		return;
 	}
 
 	/* Search text */
@@ -213,7 +214,8 @@ static gboolean do_search (GtkWidget *button, TotemTrackerWidget *widget)
 		}
 	}
 	else {
-		g_warning (error->message);
+		g_warning ("Error getting the search results for '%s': %s", search_text, error->message ? error->message : "No reason");
+		return;
 	}
 
 	/* Translators:
@@ -221,7 +223,7 @@ static gboolean do_search (GtkWidget *button, TotemTrackerWidget *widget)
 	 * Showing 10-20 of 128 matches
 	 * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 	 * Personalized Results 1 - 10 of about 4,130,000 for foobar */
-	label = g_strdup_printf (_("Showing %i - %i of %i matches"), 
+	label = g_strdup_printf (ngettext("Showing %i - %i of %i match", "Showing %i - %i of %i matches", widget->priv->total_result_count),
 				 widget->priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
 				 (widget->priv->current_result_page + 1) * TOTEM_TRACKER_MAX_RESULTS_SIZE > widget->priv->total_result_count ? 
 				 widget->priv->total_result_count : 
@@ -240,8 +242,6 @@ static gboolean do_search (GtkWidget *button, TotemTrackerWidget *widget)
 
 	if (widget->priv->current_result_page > 0)
 		gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->previous_button), TRUE);	
-
-	return TRUE;
 }
 
 static void go_next (GtkWidget *button, TotemTrackerWidget *widget)

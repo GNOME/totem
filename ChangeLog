@@ -1,5 +1,14 @@
 2007-11-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/tracker/totem-tracker-widget.c: (do_search):
+	Use ngettext to translate the number of matches properly
+	* src/plugins/tracker/totem-tracker.c: (impl_activate):
+	* src/plugins/tracker/tracker.totem-plugin.in:
+	Change the name of the plugin to "Video Search" in the UI
+	(Closes: #499144)
+
+2007-11-23  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/tracker/totem-tracker-widget.c:
 	(totem_tracker_widget_class_init),
 	(totem_tracker_widget_set_property), (populate_result),
