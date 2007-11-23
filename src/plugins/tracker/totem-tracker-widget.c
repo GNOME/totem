@@ -54,8 +54,8 @@ struct TotemTrackerWidgetPrivate {
 	GtkWidget *next_button;
 	GtkWidget *previous_button;
 
-	gint total_result_count;
-	gint current_result_page;
+	int total_result_count;
+	int current_result_page;
 
 	GtkListStore *result_store;
 	TotemVideoList *result_list;
@@ -68,30 +68,65 @@ enum {
 	N_COLUMNS
 };
 
+enum {
+	PROP_0,
+	PROP_TOTEM
+};
+
 static GObjectClass *parent_class = NULL;
 
 static void totem_tracker_widget_class_init	(TotemTrackerWidgetClass *klass);
 static void totem_tracker_widget_init		(TotemTrackerWidget	 *widget);
+static void totem_tracker_widget_set_property	(GObject *object,
+						 guint property_id,
+						 const GValue *value,
+						 GParamSpec *pspec);
 
 static void totem_tracker_widget_class_init (TotemTrackerWidgetClass *klass)
 {
-	GObjectClass *gobject_class;
+	GObjectClass *object_class;
 	GtkWidgetClass *widget_class;
 
 	parent_class = g_type_class_peek_parent (klass);
 	widget_class = GTK_WIDGET_CLASS (klass);
 
-	gobject_class = G_OBJECT_CLASS (klass);
+	object_class = G_OBJECT_CLASS (klass);
+	object_class->set_property = totem_tracker_widget_set_property;
+
+	g_object_class_install_property (object_class, PROP_TOTEM,
+					 g_param_spec_object ("totem", NULL, NULL,
+							      TOTEM_TYPE_OBJECT, G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
-static void populate_result (TotemTrackerWidget *widget, gchar *result)
+static void
+totem_tracker_widget_set_property (GObject *object,
+				   guint property_id,
+				   const GValue *value,
+				   GParamSpec *pspec)
+{
+	TotemTrackerWidget *widget;
+
+	widget = TOTEM_TRACKER_WIDGET (object);
+
+	switch (property_id)
+	{
+	case PROP_TOTEM:
+		widget->totem = g_object_ref (g_value_get_object (value));
+		g_object_set (G_OBJECT (widget->priv->result_list), "totem", widget->totem, NULL);
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+	}
+}
+
+static void populate_result (TotemTrackerWidget *widget, char *result)
 {
 	GtkTreeIter iter;
 	GnomeVFSFileInfo *info;
 	GnomeVFSResult vfs_result;
 	GdkPixbuf *thumbnail = NULL;
-	gchar *thumbnail_path;
-	gchar *file_uri;
+	char *thumbnail_path;
+	char *file_uri;
 
 	info = gnome_vfs_file_info_new ();
 	vfs_result = gnome_vfs_get_file_info (result, info, GNOME_VFS_FILE_INFO_NAME_ONLY);
@@ -121,13 +156,13 @@ static void populate_result (TotemTrackerWidget *widget, gchar *result)
 	g_free (info);
 }
 
-static gint get_search_count (TrackerClient *client, const gchar *search)
+static int get_search_count (TrackerClient *client, const char *search)
 {
 	GError *error = NULL;
-	gint count = 0;
+	int count = 0;
 
 	dbus_g_proxy_call (client->proxy_search, "GetHitCount", &error, G_TYPE_STRING, "Videos", 
-			   G_TYPE_STRING, search,  
+			   G_TYPE_STRING, search,
 			   G_TYPE_INVALID, G_TYPE_INT, &count, G_TYPE_INVALID);
 
 	if (error) {
@@ -141,7 +176,7 @@ static gint get_search_count (TrackerClient *client, const gchar *search)
 
 static gboolean do_search (GtkWidget *button, TotemTrackerWidget *widget)
 {
-	const gchar *search_text = NULL;
+	const char *search_text = NULL;
 	GError *error = NULL;
 	char **result = NULL;
 	char *label;
@@ -235,7 +270,6 @@ static void init_result_list (TotemTrackerWidget *widget)
 
 	/* Create the gtktreewidget to show the results */
 	widget->priv->result_list = g_object_new (TOTEM_TYPE_VIDEO_LIST,
-						  "totem", widget->totem,
 						  "mrl-column", FILE_COLUMN,
 						  "tooltip-column", NAME_COLUMN,
 						  NULL);
@@ -328,8 +362,8 @@ GtkWidget *totem_tracker_widget_new (TotemObject *totem)
 {
 	GtkWidget *widget;
 
-	widget = g_object_new (TOTEM_TYPE_TRACKER_WIDGET, NULL);
-	TOTEM_TRACKER_WIDGET (widget)->totem = totem;
+	widget = g_object_new (TOTEM_TYPE_TRACKER_WIDGET,
+			       "totem", totem, NULL);
 
 	/* Reset the info about the search */
 	TOTEM_TRACKER_WIDGET (widget)->priv->total_result_count = 0;

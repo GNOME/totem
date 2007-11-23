@@ -1,5 +1,16 @@
 2007-11-23  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/tracker/totem-tracker-widget.c:
+	(totem_tracker_widget_class_init),
+	(totem_tracker_widget_set_property), (populate_result),
+	(get_search_count), (do_search), (init_result_list),
+	(totem_tracker_widget_new):
+	* src/totem-video-list.c: (totem_video_list_class_init),
+	(totem_video_list_set_property): Fix crash when activating videos
+	in the Tracker plugin (Closes: #499137)
+
+2007-11-23  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: 
 	* src/plugins/tracker/*: 
 	Add Tracker plugin from Javier Goday <jgoday@gmail.com>

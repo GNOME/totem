@@ -92,7 +92,7 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 					-1, G_MAXINT, -1, G_PARAM_READWRITE));
 	g_object_class_install_property (object_class, PROP_TOTEM,
 				g_param_spec_object ("totem", NULL, NULL,
-					TOTEM_TYPE_OBJECT, G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+					TOTEM_TYPE_OBJECT, G_PARAM_READWRITE));
 
 	klass->starting_video = default_starting_video_cb;
 	totem_video_list_table_signals[STARTING_VIDEO] = g_signal_new ("starting-video",
@@ -136,7 +136,8 @@ totem_video_list_set_property (GObject *object, guint property_id, const GValue 
 			priv->mrl_column = g_value_get_int (value);
 			break;
 		case PROP_TOTEM:
-			g_assert (priv->totem == NULL);
+			if (priv->totem != NULL)
+				g_object_unref (priv->totem);
 			priv->totem = (Totem*) g_value_dup_object (value);
 			break;
 		default:
