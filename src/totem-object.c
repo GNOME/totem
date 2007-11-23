@@ -234,14 +234,33 @@ totem_get_current_time (Totem *totem)
 	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
-TotemPlaylist *
-totem_get_playlist (Totem *totem)
+void
+totem_add_to_playlist_and_play (Totem *totem,
+				const char *uri,
+				const char *display_name,
+				gboolean add_to_recent)
 {
-	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+	gboolean playlist_changed;
+	guint end;
 
-	g_object_ref (G_OBJECT (totem->playlist));
+	totem_signal_block_by_data (totem->playlist, totem);
 
-	return totem->playlist;
+	end = totem_playlist_get_last (totem->playlist);
+	playlist_changed = totem_playlist_add_mrl_with_cursor (totem->playlist, uri, display_name);
+	if (add_to_recent != FALSE)
+		gtk_recent_manager_add_item (totem->recent_manager, uri);
+
+	totem_signal_unblock_by_data (totem->playlist, totem);
+
+	if (playlist_changed)
+	{
+		char *mrl;
+
+		totem_playlist_set_current (totem->playlist, end + 1);
+		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		totem_action_set_mrl_and_play (totem, mrl);
+		g_free (mrl);
+	}
 }
 
 guint

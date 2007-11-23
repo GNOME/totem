@@ -1,3 +1,13 @@
+2007-11-23  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c: (on_recent_file_item_activated),
+	(totem_compare_recent_items), (on_movie_menu_select):
+	* src/totem-object.c: (totem_add_to_playlist_and_play):
+	* src/totem-video-list.c: (row_activated_cb):
+	* src/totem.h: Remove totem_get_playlist() and only export
+	totem_add_to_playlist_and_play() which should fit the bill
+	for some cases, use it in the TotemVideoList
+
 2007-11-22  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-options.c:

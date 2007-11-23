@@ -35,7 +35,6 @@
 #include "totem.h"
 #include "totem-video-list.h"
 #include "totem-private.h"
-#include "totem-playlist.h"
 #include "totemvideolist-marshal.h"
 
 struct _TotemVideoListPrivate {
@@ -219,7 +218,6 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 {
 	GtkTreeIter iter;
 	gchar *mrl, *display_name;
-	TotemPlaylist *playlist;
 	gboolean play_video = TRUE;
 	TotemVideoList *self = TOTEM_VIDEO_LIST (tree_view);
 	GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
@@ -241,12 +239,8 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 				self->priv->tooltip_column, &display_name,
 				-1);
 
-	playlist = totem_get_playlist (self->priv->totem);
-	totem_playlist_add_mrl_with_cursor (playlist, mrl, display_name);
-	totem_playlist_set_current (playlist, totem_playlist_get_last (playlist));
-	totem_action_set_mrl_and_play (self->priv->totem, mrl);
+	totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name, FALSE);
 
-	g_object_unref (playlist);
 	g_free (mrl);
 	g_free (display_name);
 }

@@ -162,17 +162,24 @@ gboolean totem_is_seekable			(Totem *totem);
 GtkWindow *totem_get_main_window		(Totem *totem);
 GtkUIManager *totem_get_ui_manager		(Totem *totem);
 GtkWidget *totem_get_video_widget		(Totem *totem);
-char *	totem_get_short_title			(Totem *totem);
 
+/* Current media information */
+char *	totem_get_short_title			(Totem *totem);
 gint64	totem_get_current_time			(Totem *totem);
+
+/* Playlist handling */
 guint	totem_get_playlist_length		(Totem *totem);
 void	totem_action_set_playlist_index		(Totem *totem,
 						 guint index);
-TotemPlaylist *totem_get_playlist		(Totem *totem);
 guint	totem_get_playlist_pos			(Totem *totem);
 char *	totem_get_title_at_playlist_pos		(Totem *totem,
 						 guint index);
+void totem_add_to_playlist_and_play		(Totem *totem,
+						 const char *uri,
+						 const char *display_name,
+						 gboolean add_to_recent);
 
+/* Sidebar handling */
 void    totem_add_sidebar_page			(Totem *totem,
 						 const char *page_id,
 						 const char *title,
@@ -180,6 +187,7 @@ void    totem_add_sidebar_page			(Totem *totem,
 void    totem_remove_sidebar_page		(Totem *totem,
 						 const char *page_id);
 
+/* Remote actions */
 void    totem_action_remote			(Totem *totem,
 						 TotemRemoteCommand cmd,
 						 const char *url);

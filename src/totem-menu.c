@@ -545,29 +545,11 @@ on_recent_file_item_activated (GtkAction *action,
 {
 	GtkRecentInfo *recent_info;
 	const gchar *uri;
-	gboolean playlist_changed;
-	guint end;
 
 	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
 	uri = gtk_recent_info_get_uri (recent_info);
 
-	totem_signal_block_by_data (totem->playlist, totem);
-
-	end = totem_playlist_get_last (totem->playlist);
-	playlist_changed = totem_playlist_add_mrl_with_cursor (totem->playlist, uri, NULL);
-	gtk_recent_manager_add_item (totem->recent_manager, uri);
-
-	totem_signal_unblock_by_data (totem->playlist, totem);
-
-	if (playlist_changed)
-	{
-		char *mrl;
-
-		totem_playlist_set_current (totem->playlist, end + 1);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
-		g_free (mrl);
-	}
+	totem_add_to_playlist_and_play (totem, uri, NULL, TRUE);
 }
 
 static gint
