@@ -1,5 +1,11 @@
 2007-11-24  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* src/totem-cell-renderer-video.c: (get_size): Render the
+	title below the thumbnail to standardise the appearance
+	of TotemVideoList. (Closes: #499163)
+
+2007-11-24  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/totem-cell-renderer-video.c: (get_size),
 	(totem_cell_renderer_video_render): Fix the cell renderer so
 	that it renders entries without thumbnails correctly.

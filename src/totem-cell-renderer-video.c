@@ -247,7 +247,10 @@ get_size (GtkCellRenderer *cell,
 			}
 
 			title_area->height = title_height;
-			title_area->y = draw_area->y;
+			if (pixbuf_height > 0)
+				title_area->y = draw_area->y + pixbuf_height + cell->ypad;
+			else
+				title_area->y = draw_area->y;
 
 			/*g_message ("Title area: X: %i, Y: %i, W: %i, H: %i", title_area->x, title_area->y, title_area->width, title_area->height);*/
 		}
@@ -257,7 +260,7 @@ get_size (GtkCellRenderer *cell,
 				(1.0 - cell->xalign) : cell->xalign) * 
 				(cell_area->width - pixbuf_width));
 			thumbnail_area->x = MAX (thumbnail_area->x, 0);
-			thumbnail_area->y = draw_area->y + title_height + cell->ypad;
+			thumbnail_area->y = draw_area->y;
 			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
 			thumbnail_area->height = pixbuf_height;
 
