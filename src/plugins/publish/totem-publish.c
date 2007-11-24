@@ -34,6 +34,7 @@
 #include <glib/gi18n-lib.h>
 
 #include <libepc/publisher.h>
+#include <libepc/service-monitor.h>
 
 #include "totem-plugin.h"
 #include "totem-interface.h"
@@ -53,17 +54,19 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	TotemPlugin parent;
 
-	TotemObject  *totem;
-	GtkWidget    *dialog;
+	TotemObject       *totem;
+	EpcPublisher      *publisher;
+	EpcServiceMonitor *monitor;
+	GtkWidget         *dialog;
 
-	EpcPublisher *publisher;
-
-	guint         name_id;
-	guint         protocol_id;
-	guint         item_added_id;
-	guint         item_removed_id;
+	guint name_id;
+	guint protocol_id;
+	guint item_added_id;
+	guint item_removed_id;
+	guint service_found_id;
+	guint service_removed_id;
 } TotemPublishPlugin;
 
 typedef struct
@@ -252,6 +255,28 @@ totem_publish_plugin_item_removed_cb (TotemPlaylist *playlist,
 	g_free (key);
 }
 
+static void
+totem_publish_plugin_service_found_cb (EpcServiceMonitor *monitor,
+				       const gchar       *type,
+				       const gchar       *name,
+				       const gchar       *host,
+				       guint              port,
+				       gpointer           data)
+{
+	TotemPublishPlugin *self G_GNUC_UNUSED = TOTEM_PUBLISH_PLUGIN (data);
+	g_print ("+ %s (%s, %s:%d)\n", name, type, host, port);
+}
+
+static void
+totem_publish_plugin_service_removed_cb (EpcServiceMonitor *monitor,
+					 const gchar       *type,
+					 const gchar       *name,
+					 gpointer           data)
+{
+	TotemPublishPlugin *self G_GNUC_UNUSED = TOTEM_PUBLISH_PLUGIN (data);
+	g_print ("- %s (%s)\n", name, type);
+}
+
 static gboolean
 totem_publish_plugin_activate (TotemPlugin  *plugin,
 			       TotemObject  *totem,
@@ -289,7 +314,14 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	if (protocol_name)
 		protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
 
-	self->publisher = epc_publisher_new (service_name, NULL, NULL);
+	self->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
+
+	self->service_found_id = g_signal_connect (self->monitor, "service-found",
+		G_CALLBACK (totem_publish_plugin_service_found_cb), self);
+	self->service_removed_id = g_signal_connect (self->monitor, "service-removed",
+		G_CALLBACK (totem_publish_plugin_service_removed_cb), self);
+
+	self->publisher = epc_publisher_new (service_name, "totem", NULL);
 	epc_publisher_set_protocol (self->publisher, protocol);
 
 	g_free (protocol_name);
@@ -316,21 +348,33 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 
+	if (self->monitor) {
+		g_object_unref (self->monitor);
+		self->monitor = NULL;
+	}
+
 	if (self->publisher) {
 		epc_publisher_quit (self->publisher);
-		self->publisher = (g_object_unref (self->publisher), NULL);
+		g_object_unref (self->publisher);
+		self->publisher = NULL;
 	}
 
 	if (self->totem) {
+		gconf_client_notify_remove (self->totem->gc, self->name_id);
 		gconf_client_notify_remove (self->totem->gc, self->protocol_id);
 		gconf_client_remove_dir (self->totem->gc, TOTEM_PUBLISH_CONFIG_ROOT, NULL);
-		self->totem = (g_object_unref (self->totem), NULL);
+		g_object_unref (self->totem);
+		self->totem = NULL;
 	}
 
 	if (self->item_added_id)
 		self->item_added_id = (g_source_remove (self->item_added_id), 0);
 	if (self->item_removed_id)
 		self->item_removed_id = (g_source_remove (self->item_removed_id), 0);
+	if (self->service_found_id)
+		self->service_found_id = (g_source_remove (self->service_found_id), 0);
+	if (self->service_removed_id)
+		self->service_removed_id = (g_source_remove (self->service_removed_id), 0);
 }
 
 void
