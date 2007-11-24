@@ -33,9 +33,12 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 
+#include <libepc/consumer.h>
+#include <libepc/enums.h>
 #include <libepc/publisher.h>
 #include <libepc/service-monitor.h>
 
+#include "ev-sidebar.h"
 #include "totem-plugin.h"
 #include "totem-interface.h"
 #include "totem-private.h"
@@ -52,21 +55,36 @@
 #define TOTEM_PUBLISH_CONFIG_NAME		GCONF_PREFIX "/plugins/publish/name"
 #define TOTEM_PUBLISH_CONFIG_PROTOCOL		GCONF_PREFIX "/plugins/publish/protocol"
 
+enum
+{
+	NAME_COLUMN,
+	TYPE_COLUMN,
+	HOST_COLUMN,
+	PORT_COLUMN,
+
+	COLUMN_COUNT
+};
+
 typedef struct
 {
 	TotemPlugin parent;
 
 	TotemObject       *totem;
+	GtkWidget         *settings;
+	GtkWidget         *scanning;
+	GtkBuilder        *ui;
+
 	EpcPublisher      *publisher;
 	EpcServiceMonitor *monitor;
-	GtkWidget         *dialog;
+	GtkListStore      *neighbours;
 
 	guint name_id;
 	guint protocol_id;
-	guint item_added_id;
-	guint item_removed_id;
-	guint service_found_id;
-	guint service_removed_id;
+
+	guint scanning_id;
+
+	gulong item_added_id;
+	gulong item_removed_id;
 } TotemPublishPlugin;
 
 typedef struct
@@ -74,16 +92,20 @@ typedef struct
 	TotemPluginClass parent_class;
 } TotemPublishPluginClass;
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule     *module);
-static GType totem_publish_plugin_get_type		(void);
+G_MODULE_EXPORT GType register_totem_plugin		   (GTypeModule     *module);
+static GType totem_publish_plugin_get_type		   (void);
 
-void totem_publish_plugin_service_name_entry_changed_cb	(GtkEntry        *entry,
-							 gpointer         data);
-void totem_publish_plugin_encryption_button_toggled_cb	(GtkToggleButton *button,
-							 gpointer         data);
-void totem_publish_plugin_dialog_response_cb		(GtkDialog       *dialog,
-							 gint             response,
-							 gpointer         data);
+void totem_publish_plugin_service_name_entry_changed_cb	   (GtkEntry        *entry,
+							    gpointer         data);
+void totem_publish_plugin_encryption_button_toggled_cb	   (GtkToggleButton *button,
+							    gpointer         data);
+void totem_publish_plugin_dialog_response_cb		   (GtkDialog       *dialog,
+							    gint             response,
+							    gpointer         data);
+void totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *view,
+							    GtkTreePath       *path,
+							    GtkTreeViewColumn *column,
+							    gpointer           data);
 
 TOTEM_PLUGIN_REGISTER(TotemPublishPlugin, totem_publish_plugin)
 
@@ -263,8 +285,16 @@ totem_publish_plugin_service_found_cb (EpcServiceMonitor *monitor,
 				       guint              port,
 				       gpointer           data)
 {
-	TotemPublishPlugin *self G_GNUC_UNUSED = TOTEM_PUBLISH_PLUGIN (data);
-	g_print ("+ %s (%s, %s:%d)\n", name, type, host, port);
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+	EpcProtocol protocol = epc_service_type_get_protocol (type);
+	GtkTreeIter iter;
+
+	gtk_list_store_append (self->neighbours, &iter);
+	gtk_list_store_set (self->neighbours, &iter, NAME_COLUMN, name,
+						     TYPE_COLUMN, protocol,
+						     HOST_COLUMN, host,
+						     PORT_COLUMN, port,
+						     -1);
 }
 
 static void
@@ -273,8 +303,180 @@ totem_publish_plugin_service_removed_cb (EpcServiceMonitor *monitor,
 					 const gchar       *name,
 					 gpointer           data)
 {
-	TotemPublishPlugin *self G_GNUC_UNUSED = TOTEM_PUBLISH_PLUGIN (data);
-	g_print ("- %s (%s)\n", name, type);
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+	GtkTreeModel *model = GTK_TREE_MODEL (self->neighbours);
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_get_iter_first (model, &iter)) {
+		GSList *path_list = NULL, *path_iter;
+		GtkTreePath *path;
+		gchar *stored;
+
+		do {
+			gtk_tree_model_get (model, &iter, NAME_COLUMN, &stored, -1);
+
+			if (g_str_equal (stored, name)) {
+				path = gtk_tree_model_get_path (model, &iter);
+				path_list = g_slist_prepend (path_list, path);
+			}
+		} while (gtk_tree_model_iter_next (model, &iter));
+
+		for (path_iter = path_list; path_iter; path_iter = path_iter->next) {
+			path = path_iter->data;
+
+			if (gtk_tree_model_get_iter (model, &iter, path))
+				gtk_list_store_remove (self->neighbours, &iter);
+
+			gtk_tree_path_free (path);
+		}
+
+		g_slist_free (path_list);
+	}
+}
+
+static void
+totem_publish_plugin_scanning_done_cb (EpcServiceMonitor *monitor,
+				       const gchar       *type,
+				       gpointer           data)
+{
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+
+	if (self->scanning_id) {
+		g_source_remove (self->scanning_id);
+		self->scanning_id = 0;
+	}
+
+	if (self->scanning)
+		gtk_widget_hide (self->scanning);
+}
+
+static void
+totem_publish_plugin_load_playlist (TotemPublishPlugin *self,
+				    EpcProtocol         protocol,
+				    const gchar        *host,
+				    guint               port)
+{
+	EpcConsumer *consumer = epc_consumer_new (protocol, host, port);
+	GKeyFile *keyfile = g_key_file_new ();
+	gchar *contents = NULL;
+	GError *error = NULL;
+	gsize length = 0;
+
+	contents = epc_consumer_lookup (consumer, "playlist.pls", &length, &error);
+
+	if (contents && g_key_file_load_from_data (keyfile, contents, length, G_KEY_FILE_NONE, &error)) {
+		TotemPlaylist *playlist = totem_get_playlist (self->totem);
+		gint i, n_entries;
+
+		/* returns zero in case of errors */
+		n_entries = g_key_file_get_integer (keyfile, "playlist", "NumberOfEntries", &error);
+
+		if (error)
+			goto out;
+
+		totem_playlist_clear (playlist);
+
+		for (i = 1; i <= n_entries; ++i) {
+			gchar *key, *mrl, *title;
+
+			key = g_strdup_printf ("File%d", i);
+			mrl = g_key_file_get_string (keyfile, "playlist", key, NULL);
+			g_free (key);
+
+			key = g_strdup_printf ("Title%d", i);
+			title = g_key_file_get_string (keyfile, "playlist", key, NULL);
+			g_free (key);
+
+			if (mrl)
+				totem_playlist_add_mrl (playlist, mrl, title);
+
+			g_free (title);
+			g_free (mrl);
+		}
+
+		ev_sidebar_set_current_page (EV_SIDEBAR (self->totem->sidebar), "playlist");
+	}
+
+out:
+	if (error) {
+		g_warning ("Cannot load playlist: %s", error->message);
+		g_error_free (error);
+	}
+
+	g_key_file_free (keyfile);
+	g_free (contents);
+
+	g_object_unref (consumer);
+}
+
+void
+totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *view,
+						       GtkTreePath       *path,
+						       GtkTreeViewColumn *column,
+						       gpointer           data)
+{
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->neighbours), &iter, path)) {
+		EpcProtocol protocol;
+		gchar *host;
+		guint port;
+
+		gtk_tree_model_get (GTK_TREE_MODEL (self->neighbours), &iter,
+				    TYPE_COLUMN, &protocol, HOST_COLUMN, &host,
+				    PORT_COLUMN, &port, -1);
+
+		totem_publish_plugin_load_playlist (self, protocol, host, port);
+
+		g_free (host);
+	}
+}
+
+static gboolean
+totem_publish_plugin_scanning_cb (gpointer data)
+{
+	gtk_progress_bar_pulse (GTK_PROGRESS_BAR (data));
+	return TRUE;
+}
+
+static GtkWidget*
+totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self)
+{
+	GtkWidget *page, *list;
+
+	page = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-page"));
+	list = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-list"));
+
+	self->scanning = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-scanning"));
+	self->scanning_id = g_timeout_add (100, totem_publish_plugin_scanning_cb, self->scanning);
+
+	g_signal_connect (self->monitor, "service-found",
+			  G_CALLBACK (totem_publish_plugin_service_found_cb),
+			  self);
+	g_signal_connect (self->monitor, "service-removed",
+			  G_CALLBACK (totem_publish_plugin_service_removed_cb),
+			  self);
+	g_signal_connect (self->monitor, "scanning-done",
+			  G_CALLBACK (totem_publish_plugin_scanning_done_cb),
+			  self);
+
+	self->neighbours = gtk_list_store_new (COLUMN_COUNT,
+					       G_TYPE_STRING, EPC_TYPE_PROTOCOL,
+					       G_TYPE_STRING, G_TYPE_UINT);
+
+	gtk_tree_view_set_model (GTK_TREE_VIEW (list),
+				 GTK_TREE_MODEL (self->neighbours));
+
+	gtk_tree_view_append_column (GTK_TREE_VIEW (list),
+		gtk_tree_view_column_new_with_attributes (
+			NULL, gtk_cell_renderer_text_new (),
+			"text", NAME_COLUMN, NULL));
+
+	g_object_ref (page);
+	gtk_widget_unparent (page);
+
+	return page;
 }
 
 static gboolean
@@ -293,6 +495,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	g_return_val_if_fail (NULL == self->totem, FALSE);
 
 	self->totem = g_object_ref (totem);
+	self->ui = totem_interface_load ("publish-plugin.ui", TRUE, NULL, self);
 
 	gconf_client_add_dir (self->totem->gc,
 			      TOTEM_PUBLISH_CONFIG_ROOT,
@@ -316,17 +519,14 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 
 	self->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
 
-	self->service_found_id = g_signal_connect (self->monitor, "service-found",
-		G_CALLBACK (totem_publish_plugin_service_found_cb), self);
-	self->service_removed_id = g_signal_connect (self->monitor, "service-removed",
-		G_CALLBACK (totem_publish_plugin_service_removed_cb), self);
+	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbours"),
+			     totem_publish_plugin_create_neigbours_page (self));
 
 	self->publisher = epc_publisher_new (service_name, "totem", NULL);
 	epc_publisher_set_protocol (self->publisher, protocol);
 
 	g_free (protocol_name);
 	g_free (service_name);
-
 
 	epc_publisher_add_handler (self->publisher, "playlist.pls",
 				   totem_publish_plugin_playlist_cb,
@@ -347,6 +547,25 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 				 TotemObject *totem)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
+	TotemPlaylist *playlist = NULL;
+
+	if (self->totem)
+		playlist = totem_get_playlist (self->totem);
+
+	if (self->scanning_id) {
+		g_source_remove (self->scanning_id);
+		self->scanning_id = 0;
+	}
+
+	if (playlist && self->item_added_id) {
+		g_signal_handler_disconnect (playlist, self->item_added_id);
+		self->item_added_id = 0;
+	}
+
+	if (playlist && self->item_removed_id) {
+		g_signal_handler_disconnect (playlist, self->item_removed_id);
+		self->item_removed_id = 0;
+	}
 
 	if (self->monitor) {
 		g_object_unref (self->monitor);
@@ -363,18 +582,24 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 		gconf_client_notify_remove (self->totem->gc, self->name_id);
 		gconf_client_notify_remove (self->totem->gc, self->protocol_id);
 		gconf_client_remove_dir (self->totem->gc, TOTEM_PUBLISH_CONFIG_ROOT, NULL);
+
+		ev_sidebar_remove_page (EV_SIDEBAR (self->totem->sidebar), "neighbours");
+
 		g_object_unref (self->totem);
 		self->totem = NULL;
 	}
 
-	if (self->item_added_id)
-		self->item_added_id = (g_source_remove (self->item_added_id), 0);
-	if (self->item_removed_id)
-		self->item_removed_id = (g_source_remove (self->item_removed_id), 0);
-	if (self->service_found_id)
-		self->service_found_id = (g_source_remove (self->service_found_id), 0);
-	if (self->service_removed_id)
-		self->service_removed_id = (g_source_remove (self->service_removed_id), 0);
+	if (self->settings) {
+		gtk_widget_destroy (self->settings);
+		self->settings = NULL;
+	}
+
+	if (self->ui) {
+		g_object_unref (self->ui);
+		self->ui = NULL;
+	}
+
+	self->scanning = NULL;
 }
 
 void
@@ -386,7 +611,7 @@ totem_publish_plugin_dialog_response_cb (GtkDialog *dialog,
 
 	if (response) {
 		gtk_widget_destroy (GTK_WIDGET (dialog));
-		self->dialog = NULL;
+		self->settings = NULL;
 	}
 }
 
@@ -394,30 +619,25 @@ static GtkWidget*
 totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
-	GtkBuilder *builder;
 
-	g_return_val_if_fail (NULL == self->dialog, NULL);
+	g_return_val_if_fail (NULL == self->settings, NULL);
 
-	builder = totem_interface_load ("publish-plugin.ui", TRUE, NULL, self);
-
-	if (builder) {
+	if (self->ui) {
 		const gchar *service_name = epc_publisher_get_service_name (self->publisher);
 		EpcProtocol protocol = epc_publisher_get_protocol (self->publisher);
 		GtkWidget *widget;
 
-		self->dialog = g_object_ref (gtk_builder_get_object (builder, "publish-settings-dialog"));
+		self->settings = g_object_ref (gtk_builder_get_object (self->ui, "publish-settings-dialog"));
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "service-name-entry"));
+		widget = GTK_WIDGET (gtk_builder_get_object (self->ui, "service-name-entry"));
 		gtk_entry_set_text (GTK_ENTRY (widget), service_name);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (builder, "encryption-button"));
+		widget = GTK_WIDGET (gtk_builder_get_object (self->ui, "encryption-button"));
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
 					      EPC_PROTOCOL_HTTPS == protocol);
-
-		g_object_unref (builder);
 	}
 
-	return self->dialog;
+	return self->settings;
 }
 
 static void

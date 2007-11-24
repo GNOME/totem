@@ -1,5 +1,14 @@
 2007-11-24  Mathias Hasselmann  <mathias@openismus.com>
 
+	Implement browsing of nearby Totem instances and playlist download.
+
+	* data/publish-plugin.glade, data/publish-plugin.ui: Add
+	"neighbours" sidepane for finding nearby Totem instances.
+	* src/plugins/publish/totem-publish.c: Implement "neighbours"
+	sidepane and playlist download.
+
+2007-11-24  Mathias Hasselmann  <mathias@openismus.com>
+
 	Add service monitor for finding other Totem instances.
 
 	* src/plugins/publish/totem-publish.c: Add service monitor.
