@@ -30,6 +30,7 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <string.h>
 
 #include "totem.h"
 #include "totem-cell-renderer-video.h"
@@ -178,9 +179,8 @@ get_size (GtkCellRenderer *cell,
 	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE (cell);
 	guint pixbuf_width = 0;
 	guint pixbuf_height = 0;
-	guint title_height;
-	guint calc_width;
-	guint calc_height;
+	guint title_width, title_height;
+	guint calc_width, calc_height;
 	PangoContext *context;
 	PangoFontMetrics *metrics;
 	PangoFontDescription *font_desc;
@@ -193,11 +193,17 @@ get_size (GtkCellRenderer *cell,
 
 	/* Calculate title dimensions */
 	font_desc = pango_font_description_copy_static (widget->style->font_desc);
-	pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
+	if (priv->thumbnail != NULL)
+		pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 	context = gtk_widget_get_pango_context (widget);
 	metrics = pango_context_get_metrics (context,
 				font_desc,
 				pango_context_get_language (context));
+
+	if (cell_area)
+		title_width = cell_area->width;
+	else
+		title_width = cell->width;
 
 	title_height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
 				pango_font_metrics_get_descent (metrics));
@@ -206,11 +212,11 @@ get_size (GtkCellRenderer *cell,
 	pango_font_description_free (font_desc);
 
 	/* Calculate the total final size */
-	calc_width = cell->xpad * 2 + pixbuf_width;
+	calc_width = cell->xpad * 2 + MAX (pixbuf_width, title_width);
 	calc_height = cell->ypad * 3 + pixbuf_height + title_height;
 
 	if (draw_area) {
-		if (cell_area && pixbuf_width > 0 && pixbuf_height + title_height + cell->ypad > 0) {
+		if (cell_area && calc_width > 0 && calc_height > 0) {
 			draw_area->x = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
 				(1.0 - cell->xalign) : cell->xalign) * 
 				(cell_area->width - calc_width));
@@ -247,7 +253,10 @@ get_size (GtkCellRenderer *cell,
 		}
 
 		if (pixbuf_height > 0 && thumbnail_area) {
-			thumbnail_area->x = draw_area->x;
+			thumbnail_area->x = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+				(1.0 - cell->xalign) : cell->xalign) * 
+				(cell_area->width - pixbuf_width));
+			thumbnail_area->x = MAX (thumbnail_area->x, 0);
 			thumbnail_area->y = draw_area->y + title_height + cell->ypad;
 			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
 			thumbnail_area->height = pixbuf_height;
@@ -315,7 +324,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	/* Sort out the thumbnail */
 	pixbuf = priv->thumbnail;
 
-	if (cell->is_expander || !pixbuf)
+	if (cell->is_expander)
 		return;
 
 	/* Sort out the title */
@@ -336,12 +345,11 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 			state = GTK_STATE_NORMAL;
 	}
 
-	cr = gdk_cairo_create (window);
-
 	/* Draw the title */
 	layout = gtk_widget_create_pango_layout (widget, priv->title);
 	desc = pango_font_description_copy_static (widget->style->font_desc);
-	pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
+	if (pixbuf != NULL)
+		pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
 
 	pango_layout_set_font_description (layout, desc);
 	pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
@@ -363,9 +371,13 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	g_object_unref (layout);
 
 	/* Draw the thumbnail */
-	gdk_cairo_set_source_pixbuf (cr, pixbuf, cell_area->x + thumbnail_area.x + cell->xpad, cell_area->y + thumbnail_area.y + cell->ypad);
-	gdk_cairo_rectangle (cr, &draw_rect);
-	cairo_fill (cr);
+	if (pixbuf != NULL) {
+		cr = gdk_cairo_create (window);
 
-	cairo_destroy (cr);
+		gdk_cairo_set_source_pixbuf (cr, pixbuf, cell_area->x + thumbnail_area.x + cell->xpad, cell_area->y + thumbnail_area.y + cell->ypad);
+		gdk_cairo_rectangle (cr, &draw_rect);
+		cairo_fill (cr);
+
+		cairo_destroy (cr);
+	}
 }
