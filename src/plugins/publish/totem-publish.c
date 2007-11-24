@@ -1,4 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* * -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /*
  * Copyright (C) 2007 Openismus GmbH
  *
@@ -174,30 +174,40 @@ totem_publish_plugin_playlist_cb (EpcPublisher *publisher,
 
 	g_list_free (files);
 
-	contents = epc_contents_new ("audio/x-scpls", buffer->str, buffer->len);
+	contents = epc_contents_new ("audio/x-scpls",
+				     buffer->str, buffer->len,
+				     g_free);
+
 	g_string_free (buffer, FALSE);
 
 	return contents;
 }
 
-static gpointer
+static gboolean
 totem_publish_plugin_stream_cb (EpcContents *contents,
+				gpointer     buffer,
 				gsize       *length,
 				gpointer     data)
 {
 	GnomeVFSHandle *handle = data;
 	GnomeVFSFileSize size = 65536;
-	gpointer slice = g_malloc (size);
 
-	if (GNOME_VFS_OK != gnome_vfs_read (handle, slice, size, &size)) {
-		slice = (g_free (slice), NULL);
+	g_return_val_if_fail (NULL != contents, FALSE);
+	g_return_val_if_fail (NULL != length, FALSE);
+
+	if (NULL == data || *length < size) {
+		*length = MAX (*length, size);
+		return FALSE;
+	}
+
+	if (GNOME_VFS_OK != gnome_vfs_read (handle, buffer, size, &size)) {
 		gnome_vfs_close (handle);
 		size = 0;
 	}
 
 	*length = size;
 
-	return slice;
+	return size > 0;
 }
 
 static EpcContents*
