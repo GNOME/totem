@@ -1,3 +1,14 @@
+2007-11-25  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* data/Makefile.am:
+	* data/video-list.ui:
+	* src/totem-video-list.c: (totem_video_list_new),
+	(totem_video_list_init), (totem_video_list_dispose),
+	(show_popup_menu), (button_pressed_cb), (popup_menu_cb),
+	(add_to_playlist_action_callback), (copy_location_action_callback):
+	Add a context menu to TotemVideoList with entries to add to playlist
+	and copy the MRL. Also allow multiple-row selection. (Closes: #499159)
+
 2007-11-25  James Livingston  <doclivingston@gmail.com>
 
 	* src/plugins/tracker/totem-tracker-widget.c: (search_results_cb),
