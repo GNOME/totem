@@ -420,9 +420,9 @@ totem_action_seek (Totem *totem, double pos)
 }
 
 void
-totem_action_set_mrl_and_play (Totem *totem, const char *mrl)
+totem_action_set_mrl_and_play (Totem *totem, const char *mrl, const char *subtitle)
 {
-	if (totem_action_set_mrl (totem, mrl) != FALSE)
+	if (totem_action_set_mrl (totem, mrl, subtitle) != FALSE)
 		totem_action_play (totem);
 }
 
@@ -450,11 +450,13 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 	g_slist_free (filenames);
 
 	if (play != FALSE) {
-		char *mrl;
+		char *mrl, *subtitle;
 
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		subtitle = NULL;
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		totem_action_set_mrl_and_play (totem, mrl, subtitle);
 		g_free (mrl);
+		g_free (subtitle);
 	}
 
 	return TRUE;
@@ -552,8 +554,8 @@ totem_action_play_media_device (Totem *totem, const char *device)
 	char *mrl;
 
 	if (totem_action_load_media_device (totem, device) != FALSE) {
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, NULL);
+		totem_action_set_mrl_and_play (totem, mrl, NULL);
 		g_free (mrl);
 	}
 }
@@ -564,8 +566,8 @@ totem_action_play_media (Totem *totem, TotemDiscMediaType type, const char *devi
 	char *mrl;
 
 	if (totem_action_load_media (totem, type, device) != FALSE) {
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, NULL);
+		totem_action_set_mrl_and_play (totem, mrl, NULL);
 		g_free (mrl);
 	}
 }
@@ -582,16 +584,17 @@ totem_action_play_pause (Totem *totem)
 {
 	if (totem->mrl == NULL)
 	{
-		char *mrl;
+		char *mrl, *subtitle;
 
 		/* Try to pull an mrl from the playlist */
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		if (mrl == NULL) {
 			play_pause_set_label (totem, STATE_STOPPED);
 			return;
 		} else {
-			totem_action_set_mrl_and_play (totem, mrl);
+			totem_action_set_mrl_and_play (totem, mrl, subtitle);
 			g_free (mrl);
+			g_free (subtitle);
 			return;
 		}
 	}
@@ -719,16 +722,17 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, Totem *totem)
 
 	if (uri != NULL)
 	{
-		char *mrl;
+		char *mrl, *subtitle;
 		const char *filenames[2];
 
 		filenames[0] = uri;
 		filenames[1] = NULL;
 		totem_action_open_files (totem, (char **) filenames);
 
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		totem_action_set_mrl_and_play (totem, mrl, subtitle);
 		g_free (mrl);
+		g_free (subtitle);
 	}
  	g_free (uri);
 
@@ -868,8 +872,10 @@ update_mrl_label (Totem *totem, const char *name)
 }
 
 gboolean
-totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
-		gboolean warn)
+totem_action_set_mrl_with_warning (Totem *totem,
+				   const char *mrl, 
+				   const char *subtitle,
+				   gboolean warn)
 {
 	gboolean retval = TRUE;
 
@@ -915,16 +921,18 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 	} else {
 		gboolean caps;
 		gdouble volume;
-		char *subtitle_uri = NULL;
+		char *autoload_sub = NULL;
 		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
-		if (totem->autoload_subs != FALSE)
-			subtitle_uri = totem_uri_get_subtitle_uri (mrl);
+		if (subtitle == NULL && totem->autoload_subs != FALSE)
+			autoload_sub = totem_uri_get_subtitle_uri (mrl);
+
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
-		retval = bacon_video_widget_open_with_subtitle (totem->bvw,
-				mrl, subtitle_uri, &err);
+		retval = bacon_video_widget_open_with_subtitle (totem->bvw, mrl,
+								subtitle ? subtitle : autoload_sub, &err);
+		g_free (autoload_sub);
 		gdk_window_set_cursor (totem->win->window, NULL);
 		totem->mrl = g_strdup (mrl);
 
@@ -983,9 +991,9 @@ totem_action_set_mrl_with_warning (Totem *totem, const char *mrl,
 }
 
 gboolean
-totem_action_set_mrl (Totem *totem, const char *mrl)
+totem_action_set_mrl (Totem *totem, const char *mrl, const char *subtitle)
 {
-	return totem_action_set_mrl_with_warning (totem, mrl, TRUE);
+	return totem_action_set_mrl_with_warning (totem, mrl, subtitle, TRUE);
 }
 
 static gboolean
@@ -1019,11 +1027,14 @@ totem_action_direction (Totem *totem, TotemPlaylistDirection dir)
 			|| bacon_video_widget_is_seekable (totem->bvw) == FALSE
 			|| totem_time_within_seconds (totem) != FALSE)
 	{
-		char *mrl;
+		char *mrl, *subtitle;
 
+		subtitle = NULL;
 		totem_playlist_set_direction (totem->playlist, dir);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		totem_action_set_mrl_and_play (totem, mrl, subtitle);
+
+		g_free (subtitle);
 		g_free (mrl);
 	} else {
 		totem_action_seek (totem, 0);
@@ -1286,14 +1297,15 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	/* ... and reconnect because we're nice people */
 	if (cleared != FALSE)
 	{
-		char *mrl;
+		char *mrl, *subtitle;
 
 		g_signal_connect (G_OBJECT (totem->playlist),
 				"changed", G_CALLBACK (playlist_changed_cb),
 				totem);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		totem_action_set_mrl_and_play (totem, mrl, subtitle);
 		g_free (mrl);
+		g_free (subtitle);
 	}
 
 	return TRUE;
@@ -1369,7 +1381,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 {
 	gchar *old_mrl, *new_mrl;
 
-	old_mrl = totem_playlist_get_current_mrl (TOTEM_PLAYLIST (totem->playlist));
+	old_mrl = totem_playlist_get_current_mrl (TOTEM_PLAYLIST (totem->playlist), NULL);
 	new_mrl = totem_pl_parser_resolve_url (old_mrl, mrl);
 	g_free (old_mrl);
 
@@ -1857,12 +1869,14 @@ totem_action_next_angle (Totem *totem)
 void
 totem_action_set_playlist_index (Totem *totem, guint index)
 {
-	char *mrl;
+	char *mrl, *subtitle;
 
+	subtitle = NULL;
 	totem_playlist_set_current (totem->playlist, index);
-	mrl = totem_playlist_get_current_mrl (totem->playlist);
-	totem_action_set_mrl_and_play (totem, mrl);
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+	totem_action_set_mrl_and_play (totem, mrl, subtitle);
 	g_free (mrl);
+	g_free (subtitle);
 }
 
 void
@@ -1915,7 +1929,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		if (url == NULL) {
 			bacon_video_widget_close (totem->bvw);
 			totem_file_closed (totem);
-			totem_action_set_mrl (totem, NULL);
+			totem_action_set_mrl (totem, NULL, NULL);
 			break;
 		}
 		if (strcmp (url, "dvd:") == 0) {
@@ -2068,17 +2082,20 @@ gboolean totem_action_remote_get_setting (Totem *totem,
 static void
 playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 {
-	char *mrl;
+	char *mrl, *subtitle;
 
+	subtitle = NULL;
 	update_buttons (totem);
-	mrl = totem_playlist_get_current_mrl (totem->playlist);
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
 	if (mrl == NULL)
 		return;
 
 	if (totem_playlist_get_playing (totem->playlist) == TOTEM_PLAYLIST_STATUS_NONE)
-		totem_action_set_mrl_and_play (totem, mrl);
+		totem_action_set_mrl_and_play (totem, mrl, subtitle);
+
 	g_free (mrl);
+	g_free (subtitle);
 }
 
 static void
@@ -2090,23 +2107,39 @@ item_activated_cb (GtkWidget *playlist, Totem *totem)
 static void
 current_removed_cb (GtkWidget *playlist, Totem *totem)
 {
-	char *mrl;
+	char *mrl, *subtitle;
 
 	/* Set play button status */
+	subtitle = NULL;
 	play_pause_set_label (totem, STATE_STOPPED);
-	mrl = totem_playlist_get_current_mrl (totem->playlist);
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
-	if (mrl == NULL)
-	{
+	if (mrl == NULL) {
+		g_free (subtitle);
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 	} else {
 		update_buttons (totem);
 	}
 
-	totem_action_set_mrl_and_play (totem, mrl);
+	totem_action_set_mrl_and_play (totem, mrl, subtitle);
 	g_free (mrl);
+	g_free (subtitle);
+}
+
+static void
+subtitle_changed_cb (GtkWidget *playlist, Totem *totem)
+{
+	char *mrl, *subtitle;
+
+	totem_action_stop (totem);
+	subtitle = NULL;
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+	totem_action_set_mrl_and_play (totem, mrl, subtitle);
+
+	g_free (mrl);
+	g_free (subtitle);
 }
 
 static void
@@ -2212,16 +2245,18 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE
 			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
 	{
-		char *mrl;
+		char *mrl, *subtitle;
 
 		/* Set play button status */
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		totem_action_stop (totem);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_with_warning (totem, mrl, FALSE);
+		subtitle = NULL;
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
 		bacon_video_widget_pause (totem->bvw);
 		g_free (mrl);
+		g_free (subtitle);
 	} else {
 		totem_action_next (totem);
 	}
@@ -2866,23 +2901,27 @@ playlist_widget_setup (Totem *totem)
 	gtk_widget_show_all (GTK_WIDGET (totem->playlist));
 
 	g_signal_connect (G_OBJECT (totem->playlist), "active-name-changed",
-			G_CALLBACK (on_playlist_change_name), totem);
+			  G_CALLBACK (on_playlist_change_name), totem);
 	g_signal_connect (G_OBJECT (totem->playlist), "item-activated",
-			G_CALLBACK (item_activated_cb), totem);
+			  G_CALLBACK (item_activated_cb), totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			"changed", G_CALLBACK (playlist_changed_cb),
-			totem);
+			  "changed", G_CALLBACK (playlist_changed_cb),
+			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			"current-removed", G_CALLBACK (current_removed_cb),
-			totem);
+			  "current-removed", G_CALLBACK (current_removed_cb),
+			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			"repeat-toggled",
-			G_CALLBACK (playlist_repeat_toggle_cb),
-			totem);
+			  "repeat-toggled",
+			  G_CALLBACK (playlist_repeat_toggle_cb),
+			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			"shuffle-toggled",
-			G_CALLBACK (playlist_shuffle_toggle_cb),
-			totem);
+			  "shuffle-toggled",
+			  G_CALLBACK (playlist_shuffle_toggle_cb),
+			  totem);
+	g_signal_connect (G_OBJECT (totem->playlist),
+			  "subtitle-changed",
+			  G_CALLBACK (subtitle_changed_cb),
+			  totem);
 }
 
 static void
@@ -3171,7 +3210,7 @@ main (int argc, char **argv)
 	} else if (optionstate.filenames != NULL && totem_action_open_files (totem, optionstate.filenames)) {
 		totem_action_play_pause (totem);
 	} else {
-		totem_action_set_mrl (totem, NULL);
+		totem_action_set_mrl (totem, NULL, NULL);
 	}
 
 	/* Set the logo at the last minute so we won't try to show it before a video */

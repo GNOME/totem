@@ -172,25 +172,6 @@ get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
 }
 
 static void
-row_activated_cb (GtkTreeView *tree_view,
-		  GtkTreePath *path,
-		  GtkTreeViewColumn *column,
-		  TotemMythtvPlugin *plugin)
-{
-	GtkTreeIter iter;
-	char *uri;
-
-	if (gtk_tree_model_get_iter (plugin->model, &iter, path) == FALSE)
-		g_return_if_reached ();
-
-	gtk_tree_model_get (plugin->model, &iter,
-			    URI_COL, &uri, -1);
-	g_return_if_fail (uri != NULL);
-
-	totem_action_set_mrl_and_play (plugin->totem, uri);
-}
-
-static void
 create_treeview (TotemMythtvPlugin *plugin)
 {
 	TotemCellRendererVideo *renderer;
@@ -220,9 +201,6 @@ create_treeview (TotemMythtvPlugin *plugin)
 						     NULL);
 
 	gtk_tree_view_set_headers_visible (plugin->treeview, FALSE);
-
-	g_signal_connect (G_OBJECT (plugin->treeview), "row-activated",
-			  G_CALLBACK (row_activated_cb), plugin);
 }
 
 static void

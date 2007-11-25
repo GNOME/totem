@@ -1252,7 +1252,7 @@ void
 clear_playlist_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_playlist_clear (totem->playlist);
-	totem_action_set_mrl (totem, NULL);
+	totem_action_set_mrl (totem, NULL, NULL);
 }
 
 static const GtkActionEntry seek_entries_ltr[] = {

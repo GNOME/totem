@@ -42,6 +42,8 @@ char*		totem_uri_get_subtitle_uri	(const char *uri);
 char*		totem_uri_escape_for_display	(const char *uri);
 GSList*		totem_add_files			(GtkWindow *parent,
 						 const char *path);
+char*		totem_add_subtitle		(GtkWindow *parent, 
+						 const char *path);
 void		totem_add_pictures_dir		(GtkWidget *chooser);
 
 G_END_DECLS

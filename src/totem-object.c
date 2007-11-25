@@ -254,12 +254,14 @@ totem_add_to_playlist_and_play (Totem *totem,
 
 	if (playlist_changed)
 	{
-		char *mrl;
+		char *mrl, *subtitle;
 
+		subtitle = NULL;
 		totem_playlist_set_current (totem->playlist, end + 1);
-		mrl = totem_playlist_get_current_mrl (totem->playlist);
-		totem_action_set_mrl_and_play (totem, mrl);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		totem_action_set_mrl_and_play (totem, mrl, subtitle);
 		g_free (mrl);
+		g_free (subtitle);
 	}
 }
 

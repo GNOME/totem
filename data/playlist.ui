@@ -22,12 +22,21 @@
                <signal name="activate" handler="playlist_copy_location_action_callback"/>
             </object>
          </child>
+         <child>
+            <object class="GtkAction" id="select-subtitle">
+               <property name="label" translatable="yes">Select text subtitle...</property>
+               <property name="tooltip" translatable="yes">Select a file to use for text subtitles</property>
+               <property name="stock-id">gtk-open</property>
+               <signal name="activate" handler="playlist_select_subtitle_action_callback"/>
+            </object>
+         </child>
       </object>
    </child>
    <ui>
       <popup name="totem-playlist-popup">
          <menuitem name="remove" action="remove"/>
          <menuitem name="copy-location" action="copy-location"/>
+         <menuitem name="select-subtitle" action="select-subtitle"/>
       </popup>
    </ui>
 </object>

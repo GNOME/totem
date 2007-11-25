@@ -122,17 +122,17 @@ totem_session_setup (Totem *totem, char **argv)
 void
 totem_session_restore (Totem *totem, char **filenames)
 {
-	char *mrl, *uri;
+	char *mrl, *uri, *subtitle;
 
 	g_return_if_fail (filenames[0] != NULL);
 	uri = filenames[0];
+	subtitle = NULL;
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
-	if (totem_playlist_add_mrl_with_cursor (totem->playlist, uri, NULL) == FALSE)
-	{
+	if (totem_playlist_add_mrl_with_cursor (totem->playlist, uri, NULL) == FALSE) {
 		totem_signal_unblock_by_data (totem->playlist, totem);
-		totem_action_set_mrl (totem, NULL);
+		totem_action_set_mrl (totem, NULL, NULL);
 		g_free (uri);
 		return;
 	}
@@ -141,18 +141,18 @@ totem_session_restore (Totem *totem, char **filenames)
 
 	if (totem->index != 0)
 		totem_playlist_set_current (totem->playlist, totem->index);
-	mrl = totem_playlist_get_current_mrl (totem->playlist);
+	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
-	totem_action_set_mrl_with_warning (totem, mrl, FALSE);
+	totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
 
-	if (totem->seek_to != 0)
-	{
+	if (totem->seek_to != 0) {
 		bacon_video_widget_seek_time (totem->bvw,
 				totem->seek_to, NULL);
 	}
 	bacon_video_widget_pause (totem->bvw);
 
 	g_free (mrl);
+	g_free (subtitle);
 
 	return;
 }

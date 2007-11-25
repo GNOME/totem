@@ -65,6 +65,7 @@ struct TotemPlaylistClass {
 	void (*current_removed) (TotemPlaylist *playlist);
 	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);
 	void (*shuffle_toggled) (TotemPlaylist *playlist, gboolean toggled);
+	void (*subtitle_changed) (TotemPlaylist *playlist);
 };
 
 GtkType    totem_playlist_get_type (void);
@@ -91,7 +92,8 @@ void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
 gboolean   totem_playlist_clear (TotemPlaylist *playlist);
 void       totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
 						       GnomeVFSVolume *volume);
-char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist);
+char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist,
+					   char **subtitle);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 					     gboolean *custom);
 char      *totem_playlist_get_title (TotemPlaylist *playlist,

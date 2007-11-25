@@ -49,6 +49,7 @@ void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist)
 void totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist);
 void totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist);
 void playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playlist);
+void playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist);
 void playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist);
 
 typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
@@ -118,6 +119,7 @@ enum {
 	CURRENT_REMOVED,
 	REPEAT_TOGGLED,
 	SHUFFLE_TOGGLED,
+	SUBTITLE_CHANGED,
 	LAST_SIGNAL
 };
 
@@ -129,6 +131,7 @@ enum {
 	CACHE_TITLE_COL,
 	CACHE_ARTIST_COL,
 	CACHE_ALBUM_COL,
+	SUBTITLE_URI_COL,
 	NUM_COLS
 };
 
@@ -441,6 +444,39 @@ drop_cb (GtkWidget        *widget,
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
+}
+
+void
+playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist)
+{
+	char *subtitle;
+	GList *l;
+	TotemPlaylistStatus playing;
+	GtkTreeIter iter;
+
+	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), NULL);
+
+	if (subtitle == NULL)
+		return;
+
+	l = gtk_tree_selection_get_selected_rows (playlist->_priv->selection, NULL);
+	gtk_tree_model_get_iter (playlist->_priv->model, &iter, l->data);
+
+	gtk_tree_model_get (playlist->_priv->model, &iter,
+			    PLAYING_COL, &playing,
+			    -1);
+
+	gtk_list_store_set (GTK_LIST_STORE(playlist->_priv->model), &iter, 
+			    SUBTITLE_URI_COL, subtitle,
+			    -1);
+
+	if (playing != TOTEM_PLAYLIST_STATUS_NONE) {
+		g_signal_emit (G_OBJECT (playlist),
+			       totem_playlist_table_signals[SUBTITLE_CHANGED], 0,
+			       NULL);
+	}
+
+	g_free(subtitle);
 }
 
 void
@@ -1251,6 +1287,7 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 				G_TYPE_BOOLEAN,
 				G_TYPE_STRING,
 				G_TYPE_STRING,
+				G_TYPE_STRING,
 				G_TYPE_STRING));
 
 	/* the treeview */
@@ -1783,7 +1820,7 @@ totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
 }
 
 char *
-totem_playlist_get_current_mrl (TotemPlaylist *playlist)
+totem_playlist_get_current_mrl (TotemPlaylist *playlist, char **subtitle)
 {
 	GtkTreeIter iter;
 	char *path;
@@ -1794,13 +1831,19 @@ totem_playlist_get_current_mrl (TotemPlaylist *playlist)
 		return NULL;
 
 	if (gtk_tree_model_get_iter (playlist->_priv->model, &iter,
-			playlist->_priv->current) == FALSE)
+				     playlist->_priv->current) == FALSE)
 		return NULL;
 
-	gtk_tree_model_get (playlist->_priv->model,
-			&iter,
-			URI_COL, &path,
-			-1);
+	if (subtitle != NULL) {
+		gtk_tree_model_get (playlist->_priv->model, &iter,
+				    URI_COL, &path,
+				    SUBTITLE_URI_COL, subtitle,
+				    -1);
+	} else {
+		gtk_tree_model_get (playlist->_priv->model, &iter,
+				    URI_COL, &path,
+				    -1);
+	}
 
 	return path;
 }
@@ -2274,7 +2317,7 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_TYPE_FROM_CLASS (klass),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemPlaylistClass,
-					current_removed),
+						 current_removed),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);
@@ -2283,7 +2326,7 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_TYPE_FROM_CLASS (klass),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemPlaylistClass,
-					repeat_toggled),
+						 repeat_toggled),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__BOOLEAN,
 				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
@@ -2292,9 +2335,18 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_TYPE_FROM_CLASS (klass),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemPlaylistClass,
-					shuffle_toggled),
+						 shuffle_toggled),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__BOOLEAN,
 				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+	totem_playlist_table_signals[SUBTITLE_CHANGED] =
+		g_signal_new ("subtitle-changed",
+			      G_TYPE_FROM_CLASS (klass),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (TotemPlaylistClass,
+					       subtitle_changed),
+			      NULL, NULL,
+			      g_cclosure_marshal_VOID__VOID,
+			      G_TYPE_NONE, 0);
 }
 

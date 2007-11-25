@@ -119,7 +119,7 @@ totem_video_list_init (TotemVideoList *self)
 	g_signal_connect (self, "row-activated", G_CALLBACK (row_activated_cb), NULL);
 	g_signal_connect (self, "query-tooltip", G_CALLBACK (query_tooltip_cb), NULL);
 	g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (self)),
-				"changed", G_CALLBACK (selection_changed_cb), GTK_TREE_VIEW (self));
+			  "changed", G_CALLBACK (selection_changed_cb), GTK_TREE_VIEW (self));
 }
 
 static void

@@ -130,12 +130,15 @@ void	totem_action_seek_time			(Totem *totem, gint64 sec);
 void	totem_action_seek_relative		(Totem *totem, gint64 offset);
 void	totem_action_volume_relative		(Totem *totem, double off_pct);
 gboolean totem_action_set_mrl			(Totem *totem,
-						 const char *mrl);
+						 const char *mrl,
+						 const char *subtitle);
 void	totem_action_set_mrl_and_play		(Totem *totem,
-						 const char *mrl);
+						 const char *mrl, 
+						 const char *subtitle);
 
 gboolean totem_action_set_mrl_with_warning	(Totem *totem,
 						 const char *mrl,
+						 const char *subtitle,
 						 gboolean warn);
 
 void	totem_action_play_media			(Totem *totem,

@@ -35,6 +35,7 @@
 #include "totem-private.h"
 
 static GtkFileFilter *filter_all = NULL;
+static GtkFileFilter *filter_subs = NULL;
 static GtkFileFilter *filter_supported = NULL;
 static GtkFileFilter *filter_audio = NULL;
 static GtkFileFilter *filter_video = NULL;
@@ -432,6 +433,15 @@ totem_setup_file_filters (void)
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cd-image");
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cue");
 	g_object_ref (filter_video);
+
+	/* Subtitles files */
+	filter_subs = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_subs, _("Subtitle files"));
+	gtk_file_filter_add_mime_type (filter_subs, "application/x-subrip"); /* *.srt */
+	gtk_file_filter_add_mime_type (filter_subs, "text/plain"); /* *.asc, *.txt */
+	/* FIXME add missing *.sub, *.smi, and *.ssa */
+	g_object_ref (filter_subs);
+
 }
 
 void
@@ -485,6 +495,57 @@ totem_add_pictures_dir (GtkWidget *chooser)
 	if (dir == NULL)
 		return;
 	gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (chooser), dir, NULL);
+}
+
+char *
+totem_add_subtitle (GtkWindow *parent, const char *path)
+{
+	GtkWidget *fs;
+	GConfClient *conf;
+	char *new_path;
+	char *subtitle = NULL;
+	gboolean set_folder;
+
+	fs = gtk_file_chooser_dialog_new (_("Select text subtitle"), 
+					  parent,
+					  GTK_FILE_CHOOSER_ACTION_OPEN,
+					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					  NULL);
+	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), TRUE);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_subs);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
+
+	conf = gconf_client_get_default ();
+	set_folder = TRUE;
+	if (path != NULL) {
+		set_folder = gtk_file_chooser_set_current_folder_uri
+			(GTK_FILE_CHOOSER (fs), path);
+	} else {
+		new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
+		if (new_path != NULL && *new_path != '\0') {
+			set_folder = gtk_file_chooser_set_current_folder_uri
+				(GTK_FILE_CHOOSER (fs), new_path);
+		}
+		g_free (new_path);
+	}
+	
+	if (set_folder == FALSE) {
+		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (fs),
+						     g_get_home_dir ());
+	}
+	totem_add_default_dirs (GTK_FILE_CHOOSER (fs));
+
+	if (gtk_dialog_run (GTK_DIALOG (fs)) == GTK_RESPONSE_ACCEPT) {
+		char *filename;
+		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fs));
+		subtitle = g_filename_to_uri (filename, NULL, NULL);
+		g_free(filename);		
+	}
+
+	gtk_widget_destroy (fs);
+	return subtitle;
 }
 
 GSList *

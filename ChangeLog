@@ -1,3 +1,43 @@
+2007-11-25  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/mythtv/totem-mythtv.c: (create_treeview):
+	Remove row_activated signal, it's already implemented in
+	the list view
+
+	* bindings/python/totem.defs:
+	* data/playlist.ui:
+	* src/totem-menu.c: (clear_playlist_action_callback):
+	* src/totem-object.c: (totem_add_to_playlist_and_play):
+	* src/totem-playlist.c: (playlist_select_subtitle_action_callback),
+	(playlist_copy_location_action_callback),
+	(playlist_show_popup_menu), (totem_playlist_set_reorderable),
+	(update_current_from_playlist), (totem_playlist_add_files),
+	(playlist_remove_files), (init_treeview),
+	(totem_playlist_add_one_mrl), (totem_playlist_add_mrl),
+	(totem_playlist_clear), (totem_playlist_get_current_mrl),
+	(totem_playlist_get_current_title), (totem_playlist_set_previous),
+	(totem_playlist_class_init):
+	* src/totem-playlist.h:
+	* src/totem-session.c: (totem_session_restore):
+	* src/totem-uri.c: (totem_setup_file_filters),
+	(totem_add_subtitle), (totem_add_files):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_set_mrl_and_play),
+	(totem_action_open_dialog), (totem_action_load_media),
+	(totem_action_play_media_device), (totem_action_play_media),
+	(totem_action_play_pause), (window_state_event_cb),
+	(totem_open_location_response_cb),
+	(totem_action_set_mrl_with_warning), (totem_action_set_mrl),
+	(totem_action_direction), (totem_action_drop_files),
+	(on_got_redirect), (totem_action_set_playlist_index),
+	(totem_action_remote), (playlist_changed_cb), (current_removed_cb),
+	(subtitle_changed_cb), (on_eos_event),
+	(totem_action_handle_key_press), (playlist_widget_setup), (main):
+	* src/totem.h:
+	Add big patch by Kamil Pawlowski <kamilpe@gmail.com>, adds text
+	subtitle selection in the UI via right-clicking on the playlist
+	item (Closes: #165981)
+
 2007-11-24  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/totem-cell-renderer-video.c: (get_size): Render the
