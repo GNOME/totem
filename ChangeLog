@@ -1,3 +1,9 @@
+2007-11-25  James Livingston  <doclivingston@gmail.com>
+
+	* src/plugins/tracker/totem-tracker-widget.c: (search_results_cb),
+	(do_search): use an asynchronous call to Tracker, so it doesn't block
+	the UI. (Closes: #499490)
+
 2007-11-25  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/mythtv/totem-mythtv.c: (create_treeview):

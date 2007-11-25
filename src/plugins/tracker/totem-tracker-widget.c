@@ -175,14 +175,57 @@ static int get_search_count (TrackerClient *client, const char *search)
 	return count;
 }
 
-static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
+struct SearchResultsData {
+	TotemTrackerWidget *widget;
+	char *search_text;
+	TrackerClient *client;
+};
+
+static void search_results_cb (char **result, GError *error, gpointer userdata)
 {
-	const char *search_text = NULL;
-	GError *error = NULL;
-	char **result = NULL;
+	struct SearchResultsData *data = (struct SearchResultsData*) userdata;
 	char *label;
 	int i;
+	int next_page;
+
+	if (!error && result) {
+		for (i = 0; result [i] != NULL; i++) {
+			populate_result (data->widget, result [i]);
+		}
+	
+		next_page = (data->widget->priv->current_result_page + 1) * TOTEM_TRACKER_MAX_RESULTS_SIZE;
+
+		/* Translators:
+		 * This is used to show which items are listed in the list view, for example:
+		 * Showing 10-20 of 128 matches
+		 * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
+		 * Personalized Results 1 - 10 of about 4,130,000 for foobar */
+		label = g_strdup_printf (ngettext("Showing %i - %i of %i match", "Showing %i - %i of %i matches", data->widget->priv->total_result_count),
+					 data->widget->priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
+					 next_page > data->widget->priv->total_result_count ? data->widget->priv->total_result_count : next_page,
+					 data->widget->priv->total_result_count);
+		gtk_label_set_text (GTK_LABEL(data->widget->priv->status_label), label);
+		g_free (label);
+
+		/* Enable or disable the pager buttons */
+		if (data->widget->priv->current_result_page < data->widget->priv->total_result_count / TOTEM_TRACKER_MAX_RESULTS_SIZE)
+			gtk_widget_set_sensitive (GTK_WIDGET (data->widget->priv->next_button), TRUE);
+
+		if (data->widget->priv->current_result_page > 0)
+			gtk_widget_set_sensitive (GTK_WIDGET (data->widget->priv->previous_button), TRUE);	
+	} else {
+		g_warning ("Error getting the search results for '%s': %s", data->search_text, error->message ? error->message : "No reason");
+	}
+
+	g_free (data->search_text);
+	tracker_disconnect (data->client);
+	g_free (data);
+}
+
+static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
+{
 	TrackerClient *client;
+	struct SearchResultsData *data;
 
 	/* Clear the list store */
 	gtk_list_store_clear (GTK_LIST_STORE (widget->priv->result_store));
@@ -198,50 +241,19 @@ static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
 		return;
 	}
 
+	data = g_new0 (struct SearchResultsData, 1);
+	data->widget = widget;
+	data->client = client;
+
 	/* Search text */
-	search_text = gtk_entry_get_text (GTK_ENTRY (widget->priv->search_entry));
+	data->search_text = g_strdup (gtk_entry_get_text (GTK_ENTRY (widget->priv->search_entry)));
 
-	widget->priv->total_result_count = get_search_count (client, search_text);
+	widget->priv->total_result_count = get_search_count (client, data->search_text);
 
-	result = tracker_search_text (client, -1, SERVICE_VIDEOS, search_text, 
-				      widget->priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
-				      TOTEM_TRACKER_MAX_RESULTS_SIZE, 
-				      &error);
-
-	if (!error && result) {
-		for (i = 0; result [i] != NULL; i++) {
-			populate_result (widget, result [i]);
-		}
-	}
-	else {
-		g_warning ("Error getting the search results for '%s': %s", search_text, error->message ? error->message : "No reason");
-		return;
-	}
-
-	/* Translators:
-	 * This is used to show which items are listed in the list view, for example:
-	 * Showing 10-20 of 128 matches
-	 * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
-	 * Personalized Results 1 - 10 of about 4,130,000 for foobar */
-	label = g_strdup_printf (ngettext("Showing %i - %i of %i match", "Showing %i - %i of %i matches", widget->priv->total_result_count),
-				 widget->priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
-				 (widget->priv->current_result_page + 1) * TOTEM_TRACKER_MAX_RESULTS_SIZE > widget->priv->total_result_count ? 
-				 widget->priv->total_result_count : 
-				 (widget->priv->current_result_page + 1) * TOTEM_TRACKER_MAX_RESULTS_SIZE,
-				 widget->priv->total_result_count);
-	gtk_label_set_text (GTK_LABEL(widget->priv->status_label), label);
-	g_free (label);
-
-	g_free (result);
-	g_clear_error (&error);
-	tracker_disconnect(client);
-
-	/* Enable or disable the pager buttons */
-	if (widget->priv->current_result_page < widget->priv->total_result_count / TOTEM_TRACKER_MAX_RESULTS_SIZE)
-		gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->next_button), TRUE);
-
-	if (widget->priv->current_result_page > 0)
-		gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->previous_button), TRUE);	
+	tracker_search_text_async (data->client, -1, SERVICE_VIDEOS, data->search_text, 
+				   widget->priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
+				   TOTEM_TRACKER_MAX_RESULTS_SIZE, 
+				   search_results_cb, data);
 }
 
 static void go_next (GtkWidget *button, TotemTrackerWidget *widget)
