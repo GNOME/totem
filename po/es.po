@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-23 12:01+0000\n"
-"PO-Revision-Date: 2007-11-25 18:00+0100\n"
+"POT-Creation-Date: 2007-11-25 17:01+0000\n"
+"PO-Revision-Date: 2007-11-25 18:43+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "Tiempo:"
 msgid "Add..."
 msgstr "Añadir…"
 
-#: ../data/playlist.ui.h:2
+#: ../data/playlist.ui.h:2 ../data/video-list.ui.h:2
 msgid "Copy the location to the clipboard"
 msgstr "Copiar la dirección en el portapapeles"
 
@@ -57,10 +57,18 @@ msgid "Save Playlist..."
 msgstr "Guardar lista de reproducción…"
 
 #: ../data/playlist.ui.h:8
+msgid "Select a file to use for text subtitles"
+msgstr "Seleccione un archivo que usar como subtítulos"
+
+#: ../data/playlist.ui.h:9
+msgid "Select text subtitle..."
+msgstr "Seleccione el subtítulo..."
+
+#: ../data/playlist.ui.h:10 ../data/video-list.ui.h:4
 msgid "_Copy Location"
 msgstr "_Copiar dirección"
 
-#: ../data/playlist.ui.h:9
+#: ../data/playlist.ui.h:11
 msgid "_Remove"
 msgstr "_Quitar"
 
@@ -205,6 +213,14 @@ msgstr "Vídeo"
 #: ../data/properties.ui.h:23
 msgid "Year:"
 msgstr "Año:"
+
+#: ../data/video-list.ui.h:1
+msgid "Add the video to the playlist"
+msgstr "Añadir el vídeo a la lista de reproducción"
+
+#: ../data/video-list.ui.h:3
+msgid "_Add to Playlist"
+msgstr "_Añadir a la lista de reproducción"
 
 #: ../data/totem.desktop.in.in.in.h:1
 msgid "Movie Player"
@@ -485,8 +501,8 @@ msgid "Text Subtitles"
 msgstr "Subtítulos"
 
 #. Title
-#: ../data/totem.ui.h:71 ../src/totem.c:866 ../src/totem.c:3038
-#: ../src/totem.c:3067 ../browser-plugin/totem-plugin-viewer.c:1787
+#: ../data/totem.ui.h:71 ../src/totem.c:870 ../src/totem.c:3077
+#: ../src/totem.c:3106 ../browser-plugin/totem-plugin-viewer.c:1787
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -829,7 +845,7 @@ msgstr "Introduzca la _dirección del archivo que quiere abrir:"
 msgid "Playing a movie"
 msgstr "Reproduciendo una película"
 
-#: ../src/totem-cell-renderer-video.c:86
+#: ../src/totem-cell-renderer-video.c:91
 msgid "Unknown video"
 msgstr "Vídeo desconocido"
 
@@ -1044,38 +1060,38 @@ msgstr "Índice de lista de reproducción"
 msgid "Movies to play"
 msgstr "Películas que reproducir"
 
-#: ../src/totem-playlist.c:327 ../src/totem-playlist.c:885
+#: ../src/totem-playlist.c:330 ../src/totem-playlist.c:921
 msgid "Could not save the playlist"
 msgstr "No se pudo guardar la lista de reproducción"
 
-#: ../src/totem-playlist.c:885
+#: ../src/totem-playlist.c:921
 msgid "Unknown file extension."
 msgstr "Extensión de archivo desconocida."
 
-#: ../src/totem-playlist.c:898
+#: ../src/totem-playlist.c:934
 msgid "Select playlist format:"
 msgstr "Seleccione el formato de la lista de reproducción:"
 
-#: ../src/totem-playlist.c:903
+#: ../src/totem-playlist.c:939
 msgid "By extension"
 msgstr "Por extensión"
 
-#: ../src/totem-playlist.c:933
+#: ../src/totem-playlist.c:969
 msgid "Save Playlist"
 msgstr "Guardar lista de reproducción"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:944 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:980 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
-#: ../src/totem-playlist.c:1646
+#: ../src/totem-playlist.c:1683
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "La lista de reproducción «%s» no se pudo analizar, quizá esté dañada."
 
-#: ../src/totem-playlist.c:1647
+#: ../src/totem-playlist.c:1684
 msgid "Playlist error"
 msgstr "Error en la lista de reproducción"
 
@@ -1146,7 +1162,7 @@ msgstr "Guardar la captura de pantalla"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:304 ../src/totem.c:858
+#: ../src/totem-statusbar.c:111 ../src/totem.c:304 ../src/totem.c:862
 #: ../browser-plugin/totem-plugin-viewer.c:313
 msgid "Stopped"
 msgstr "Detenido"
@@ -1331,23 +1347,31 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: ../src/totem-uri.c:403
+#: ../src/totem-uri.c:404
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../src/totem-uri.c:408
+#: ../src/totem-uri.c:409
 msgid "Supported files"
 msgstr "Archivos soportados"
 
-#: ../src/totem-uri.c:420
+#: ../src/totem-uri.c:421
 msgid "Audio files"
 msgstr "Archivos de audio"
 
-#: ../src/totem-uri.c:428
+#: ../src/totem-uri.c:429
 msgid "Video files"
 msgstr "Archivos de vídeo"
 
-#: ../src/totem-uri.c:500
+#: ../src/totem-uri.c:439
+msgid "Subtitle files"
+msgstr "Archivos de subtítulos"
+
+#: ../src/totem-uri.c:509
+msgid "Select text subtitle"
+msgstr "Seleccione el subtítulo"
+
+#: ../src/totem-uri.c:561
 msgid "Select Movies or Playlists"
 msgstr "Seleccione películas o listas de reproducción"
 
@@ -1359,13 +1383,13 @@ msgstr "Reproduciendo"
 msgid "Paused"
 msgstr "Pausa"
 
-#: ../src/totem.c:378 ../src/totem.c:405 ../src/totem.c:957
-#: ../src/totem.c:1077
+#: ../src/totem.c:378 ../src/totem.c:405 ../src/totem.c:965
+#: ../src/totem.c:1088
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem.c:472
+#: ../src/totem.c:474
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1374,7 +1398,7 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos apropiados para leer del disco."
 
-#: ../src/totem.c:474
+#: ../src/totem.c:476
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1383,7 +1407,7 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos apropiados para manejarlo."
 
-#: ../src/totem.c:475
+#: ../src/totem.c:477
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1391,11 +1415,11 @@ msgstr ""
 "Por favor, instale los complementos necesarios y reinicie Totem para poder "
 "reproducir este soporte."
 
-#: ../src/totem.c:476
+#: ../src/totem.c:478
 msgid "More information about media plugins"
 msgstr "Más información acerca de los complementos de soportes"
 
-#: ../src/totem.c:484
+#: ../src/totem.c:486
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1404,7 +1428,7 @@ msgstr ""
 "Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
 "instalado que puede manipularlo."
 
-#: ../src/totem.c:485
+#: ../src/totem.c:487
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1412,84 +1436,84 @@ msgstr ""
 "Compruebe que haya un disco en la unidad y que esté correctamente "
 "configurada."
 
-#: ../src/totem.c:513
+#: ../src/totem.c:515
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem.c:514 ../src/totem.c:2902
+#: ../src/totem.c:516 ../src/totem.c:2941
 #: ../browser-plugin/totem-plugin-viewer.c:1778
 msgid "No reason."
 msgstr "No hay razón."
 
-#: ../src/totem.c:535
+#: ../src/totem.c:537
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem no soporta la reproducción de CD de sonido"
 
-#: ../src/totem.c:536
+#: ../src/totem.c:538
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Considereusar un reproductor de música o un extractor de CD para reproducir "
 "este CD"
 
-#: ../src/totem.c:775 ../src/totem.c:783
+#: ../src/totem.c:779 ../src/totem.c:787
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem no puede obtener una captura de pantalla de esa película."
 
-#: ../src/totem.c:783
+#: ../src/totem.c:787
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Esto no se supone que debe ocurrir; rellene un informe de errores."
 
-#: ../src/totem.c:963
+#: ../src/totem.c:971
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem.c:1200
+#: ../src/totem.c:1211
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem.c:1467 ../src/totem.c:1469
+#: ../src/totem.c:1479 ../src/totem.c:1481
 #: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem.c:2767 ../src/totem.c:2769
+#: ../src/totem.c:2802 ../src/totem.c:2804
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/película anterior"
 
-#: ../src/totem.c:2775 ../src/totem.c:2777
+#: ../src/totem.c:2810 ../src/totem.c:2812
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem.c:2784 ../src/totem.c:2786
+#: ../src/totem.c:2819 ../src/totem.c:2821
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/película siguiente"
 
-#: ../src/totem.c:2902
+#: ../src/totem.c:2941
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem.c:3039
+#: ../src/totem.c:3078
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:3039
+#: ../src/totem.c:3078
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
 #. Handle command line arguments
-#: ../src/totem.c:3047
+#: ../src/totem.c:3086
 msgid "- Play movies and songs"
 msgstr "- Reproduzca películas y canciones"
 
-#: ../src/totem.c:3056
+#: ../src/totem.c:3095
 msgid "Totem could not parse the command-line options"
 msgstr "Totem no pudo analizar las opciones de línea de comandos"
 
-#: ../src/totem.c:3075
+#: ../src/totem.c:3114
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3075
+#: ../src/totem.c:3114
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
@@ -1999,11 +2023,11 @@ msgstr "No se pudo inicializar lirc."
 msgid "Couldn't read lirc configuration."
 msgstr "No se pudo leer la configuración de lirc."
 
-#: ../src/plugins/mythtv/totem-mythtv.c:217
+#: ../src/plugins/mythtv/totem-mythtv.c:198
 msgid "Recordings"
 msgstr "Grabaciones"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:407
+#: ../src/plugins/mythtv/totem-mythtv.c:385
 msgid "MythTV Recordings"
 msgstr "Grabaciones de MythTV"
 
@@ -2091,14 +2115,14 @@ msgstr "segundos"
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:226
+#: ../src/plugins/tracker/totem-tracker-widget.c:203
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Mostrando %i - %i de %i coincidencia"
 msgstr[1] "Mostrando %i - %i de %i coincidencias"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:288
+#: ../src/plugins/tracker/totem-tracker-widget.c:300
 msgid "Search results"
 msgstr "Resultados de la búsqueda"
 
