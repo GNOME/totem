@@ -193,7 +193,7 @@ create_treeview (TotemMythtvPlugin *plugin)
 	gtk_tree_view_set_model (GTK_TREE_VIEW (plugin->treeview),
 				 GTK_TREE_MODEL (plugin->model));
 
-	renderer = totem_cell_renderer_video_new ();
+	renderer = totem_cell_renderer_video_new (TRUE);
 	gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (plugin->treeview), 0,
 						     _("Recordings"), GTK_CELL_RENDERER (renderer),
 						     "thumbnail", THUMBNAIL_COL,

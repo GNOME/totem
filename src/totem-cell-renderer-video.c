@@ -41,6 +41,7 @@ struct _TotemCellRendererVideoPrivate {
 	gchar *title;
 	GdkPixbuf *thumbnail;
 	PangoAlignment alignment;
+	gboolean use_placeholder;
 };
 
 #define TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_CELL_RENDERER_VIDEO, TotemCellRendererVideoPrivate))
@@ -48,7 +49,8 @@ struct _TotemCellRendererVideoPrivate {
 enum {
 	PROP_THUMBNAIL = 1,
 	PROP_TITLE,
-	PROP_ALIGNMENT
+	PROP_ALIGNMENT,
+	PROP_USE_PLACEHOLDER
 };
 
 static void totem_cell_renderer_video_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec);
@@ -60,9 +62,11 @@ static void totem_cell_renderer_video_render (GtkCellRenderer *cell, GdkDrawable
 G_DEFINE_TYPE (TotemCellRendererVideo, totem_cell_renderer_video, GTK_TYPE_CELL_RENDERER)
 
 TotemCellRendererVideo *
-totem_cell_renderer_video_new (void)
+totem_cell_renderer_video_new (gboolean use_placeholder)
 {
-	return g_object_new (TOTEM_TYPE_CELL_RENDERER_VIDEO, NULL); 
+	return g_object_new (TOTEM_TYPE_CELL_RENDERER_VIDEO,
+				"use-placeholder", use_placeholder,
+				NULL); 
 }
 
 static void
@@ -90,6 +94,9 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 					PANGO_TYPE_ALIGNMENT,
 					PANGO_ALIGN_CENTER,
 					G_PARAM_READWRITE));
+	g_object_class_install_property (object_class, PROP_USE_PLACEHOLDER,
+				g_param_spec_boolean ("use-placeholder", NULL, NULL,
+					FALSE, G_PARAM_READWRITE));
 }
 
 static void
@@ -100,6 +107,7 @@ totem_cell_renderer_video_init (TotemCellRendererVideo *self)
 	self->priv->title = NULL;
 	self->priv->thumbnail = NULL;
 	self->priv->alignment = PANGO_ALIGN_CENTER;
+	self->priv->use_placeholder = FALSE;
 
 	/* Make sure we're in the right mode */
 	g_object_set ((gpointer) self, "mode", GTK_CELL_RENDERER_MODE_ACTIVATABLE, NULL);
@@ -142,6 +150,9 @@ totem_cell_renderer_video_set_property (GObject *object, guint property_id, cons
 		case PROP_ALIGNMENT:
 			priv->alignment = g_value_get_enum (value);
 			break;
+		case PROP_USE_PLACEHOLDER:
+			priv->use_placeholder = g_value_get_boolean (value);
+			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -162,6 +173,9 @@ totem_cell_renderer_video_get_property (GObject *object, guint property_id, GVal
 			break;
 		case PROP_ALIGNMENT:
 			g_value_set_enum (value, priv->alignment);
+			break;
+		case PROP_USE_PLACEHOLDER:
+			g_value_set_boolean (value, priv->use_placeholder);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -189,6 +203,16 @@ get_size (GtkCellRenderer *cell,
 	if (priv->thumbnail != NULL) {
 		pixbuf_width = gdk_pixbuf_get_width (priv->thumbnail);
 		pixbuf_height = gdk_pixbuf_get_height (priv->thumbnail);
+	} else if (priv->use_placeholder == TRUE) {
+		gint width, height; /* Sort out signedness weirdness (damn GTK+) */
+
+		if (gtk_icon_size_lookup (GTK_ICON_SIZE_DIALOG, &width, &height) == TRUE) {
+			pixbuf_width = width;
+			pixbuf_height = height;
+		} else {
+			pixbuf_width = cell->width;
+			pixbuf_height = cell->width;
+		}
 	}
 
 	/* Calculate title dimensions */
@@ -325,7 +349,15 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 		return;
 
 	/* Sort out the thumbnail */
-	pixbuf = priv->thumbnail;
+	if (priv->thumbnail != NULL)
+		pixbuf = priv->thumbnail;
+	else if (priv->use_placeholder == TRUE)
+		pixbuf = gtk_widget_render_icon (widget,
+					GTK_STOCK_MISSING_IMAGE,
+					GTK_ICON_SIZE_DIALOG,
+					NULL);
+	else
+		pixbuf = NULL;
 
 	if (cell->is_expander)
 		return;

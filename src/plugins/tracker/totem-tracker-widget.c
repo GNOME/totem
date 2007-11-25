@@ -296,7 +296,7 @@ static void initialize_list_store (TotemTrackerWidget *widget)
 	GtkTreeViewColumn *column;
 
 	/* Initialise the columns of the result list */
-	renderer = totem_cell_renderer_video_new ();
+	renderer = totem_cell_renderer_video_new (TRUE);
 	column = gtk_tree_view_column_new_with_attributes (_("Search results"), GTK_CELL_RENDERER (renderer),
 							   "thumbnail", IMAGE_COLUMN, 
 							   "title", NAME_COLUMN, 

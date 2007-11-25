@@ -445,8 +445,10 @@
   (c-name "totem_cell_renderer_video_new")
   (return-type "TotemCellRendererVideo*")
   (properties
+    '("thumbnail" (argname "thumbnail") (optional))
     '("title" (argname "title") (optional))
-    '("thumbnail-url" (argname "thumbnail-url") (optional))
+    '("alignment" (argname "alignment") (optional))
+    '("use-placeholder" (argname "use_placeholder") (optional))
   )
 )
 

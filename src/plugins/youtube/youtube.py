@@ -68,7 +68,7 @@ class YouTube (totem.Plugin):
 		self.entry[treeview_name] = None
 
 		"""This is done here rather than in the UI file, because UI files parsed in C and GObjects created in Python apparently don't mix."""
-		renderer = totem.CellRendererVideo ()
+		renderer = totem.CellRendererVideo (use_placeholder = True)
 		treeview = self.builder.get_object ("yt_treeview_" + treeview_name)
 		treeview.set_property ("totem", self.totem)
 		treeview.connect ("row-activated", self.on_row_activated)

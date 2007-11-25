@@ -215,6 +215,7 @@ totem_video_list_get_property (GObject *object, guint property_id, GValue *value
 			break;
 		case PROP_TOTEM:
 			g_value_set_object (value, G_OBJECT (priv->totem));
+			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -434,3 +435,4 @@ copy_location_action_callback (GtkAction *action, TotemVideoList *self)
 	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
 	g_list_free (l);
 }
+
