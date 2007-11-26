@@ -520,7 +520,8 @@ playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 	GtkTreePath *path;
 	gint count;
 	GtkWidget *menu;
-	GtkAction *action; 
+	GtkAction *copy_location;
+	GtkAction *select_subtitle;
 
 	if (event != NULL) {
 		button = event->button;
@@ -546,8 +547,10 @@ playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 		return FALSE;
 	}
 
-	action = gtk_action_group_get_action (playlist->_priv->action_group, "copy-location");
-	gtk_action_set_sensitive (action, count == 1);
+	copy_location = gtk_action_group_get_action (playlist->_priv->action_group, "copy-location");
+	select_subtitle = gtk_action_group_get_action (playlist->_priv->action_group, "select-subtitle");
+	gtk_action_set_sensitive (copy_location, count == 1);
+	gtk_action_set_sensitive (select_subtitle, count == 1);
 
 	menu = gtk_ui_manager_get_widget (playlist->_priv->ui_manager, "/totem-playlist-popup");
 

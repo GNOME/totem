@@ -1,3 +1,13 @@
+2007-11-26  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (playlist_show_popup_menu),
+	(playlist_remove_files), (totem_playlist_save_files),
+	(totem_playlist_move_files), (treeview_row_changed),
+	(totem_playlist_clear), (totem_playlist_set_previous),
+	(totem_playlist_class_init): Patch from Kamil Pawlowski
+	<kamilpe@gmail.com> to disable the "Select text subtitle" menu entry
+	if multiple files are selected (Closes: #499462)
+
 2007-11-25  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* data/totem.desktop.in.in.in: Add some extra keys, pointing to the
