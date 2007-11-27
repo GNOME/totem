@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "POT-Creation-Date: 2005-11-02 13:27+0100\n"
-"PO-Revision-Date: 2007-11-23 16:34+0100\n"
+"PO-Revision-Date: 2007-11-27 14:58+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,7 @@ msgid "Add..."
 msgstr "Dodaj..."
 
 #: ../data/playlist.ui.h:2
+#: ../data/video-list.ui.h:2
 msgid "Copy the location to the clipboard"
 msgstr "Kopiraj mesto v odložišče"
 
@@ -54,10 +55,19 @@ msgid "Save Playlist..."
 msgstr "Shrani seznam predvajanja ..."
 
 #: ../data/playlist.ui.h:8
+msgid "Select a file to use for text subtitles"
+msgstr "Izbor datoteke za besedilne podnapise"
+
+#: ../data/playlist.ui.h:9
+msgid "Select text subtitle..."
+msgstr "Izbor podnapisov ..."
+
+#: ../data/playlist.ui.h:10
+#: ../data/video-list.ui.h:4
 msgid "_Copy Location"
 msgstr "Kopiraj _mesto"
 
-#: ../data/playlist.ui.h:9
+#: ../data/playlist.ui.h:11
 msgid "_Remove"
 msgstr "Od_strani"
 
@@ -206,6 +216,14 @@ msgstr "Posnetek"
 #: ../data/properties.ui.h:23
 msgid "Year:"
 msgstr "Leto:"
+
+#: ../data/video-list.ui.h:1
+msgid "Add the video to the playlist"
+msgstr "Dodaj posnetek na seznam predvajanja"
+
+#: ../data/video-list.ui.h:3
+msgid "_Add to Playlist"
+msgstr "Dodaj na seznam predvajanja"
 
 #: ../data/totem.desktop.in.in.in.h:1
 msgid "Movie Player"
@@ -510,9 +528,9 @@ msgstr "Besedilni podnapisi"
 
 #. Title
 #: ../data/totem.ui.h:71
-#: ../src/totem.c:866
-#: ../src/totem.c:3038
-#: ../src/totem.c:3067
+#: ../src/totem.c:870
+#: ../src/totem.c:3077
+#: ../src/totem.c:3106
 #: ../browser-plugin/totem-plugin-viewer.c:1787
 msgid "Totem Movie Player"
 msgstr "Totem predvajalnik filmov"
@@ -831,7 +849,7 @@ msgstr "Vnesite n_aslov datoteke, ki jo želite odpreti:"
 msgid "Playing a movie"
 msgstr "Predvajanje filma"
 
-#: ../src/totem-cell-renderer-video.c:86
+#: ../src/totem-cell-renderer-video.c:91
 msgid "Unknown video"
 msgstr "Neznan posnetek"
 
@@ -1025,40 +1043,40 @@ msgstr "Indeks seznama predvajanja"
 msgid "Movies to play"
 msgstr "Filmi za predvajanje"
 
-#: ../src/totem-playlist.c:327
-#: ../src/totem-playlist.c:885
+#: ../src/totem-playlist.c:330
+#: ../src/totem-playlist.c:924
 msgid "Could not save the playlist"
 msgstr "Ni mogoče shraniti seznama predvajanja"
 
-#: ../src/totem-playlist.c:885
+#: ../src/totem-playlist.c:924
 msgid "Unknown file extension."
 msgstr "Neznana končnica datoteke."
 
-#: ../src/totem-playlist.c:898
+#: ../src/totem-playlist.c:937
 msgid "Select playlist format:"
 msgstr "Izbor zapisa seznama predvajanja:"
 
-#: ../src/totem-playlist.c:903
+#: ../src/totem-playlist.c:942
 msgid "By extension"
 msgstr "Po končnici"
 
-#: ../src/totem-playlist.c:933
+#: ../src/totem-playlist.c:972
 msgid "Save Playlist"
 msgstr "Shrani seznam predvajanja"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:944
+#: ../src/totem-playlist.c:983
 #: ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Seznam predvajanja"
 
-#: ../src/totem-playlist.c:1646
+#: ../src/totem-playlist.c:1686
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Seznama predvajanja '%s' ni mogoče razčleniti. Morda je poškodovana."
 
-#: ../src/totem-playlist.c:1647
+#: ../src/totem-playlist.c:1687
 msgid "Playlist error"
 msgstr "Napaka seznama predvajanja"
 
@@ -1125,7 +1143,7 @@ msgstr "0:00 / 0:00"
 
 #: ../src/totem-statusbar.c:111
 #: ../src/totem.c:304
-#: ../src/totem.c:858
+#: ../src/totem.c:862
 #: ../browser-plugin/totem-plugin-viewer.c:313
 msgid "Stopped"
 msgstr "Prekinjen"
@@ -1338,23 +1356,31 @@ msgstr "Zahodnjaški"
 msgid "Vietnamese"
 msgstr "Vietnamski"
 
-#: ../src/totem-uri.c:403
+#: ../src/totem-uri.c:404
 msgid "All files"
 msgstr "Vse datoteke"
 
-#: ../src/totem-uri.c:408
+#: ../src/totem-uri.c:409
 msgid "Supported files"
 msgstr "Podprte datoteke"
 
-#: ../src/totem-uri.c:420
+#: ../src/totem-uri.c:421
 msgid "Audio files"
 msgstr "Zvočne datoteke"
 
-#: ../src/totem-uri.c:428
+#: ../src/totem-uri.c:429
 msgid "Video files"
 msgstr "Slikovne datoteke"
 
-#: ../src/totem-uri.c:500
+#: ../src/totem-uri.c:439
+msgid "Subtitle files"
+msgstr "Datoteke podnapisov"
+
+#: ../src/totem-uri.c:509
+msgid "Select text subtitle"
+msgstr "Izbor podnapisov"
+
+#: ../src/totem-uri.c:561
 msgid "Select Movies or Playlists"
 msgstr "Izberite filme ali sezname predvajanja"
 
@@ -1370,121 +1396,121 @@ msgstr "Pavza"
 
 #: ../src/totem.c:378
 #: ../src/totem.c:405
-#: ../src/totem.c:957
-#: ../src/totem.c:1077
+#: ../src/totem.c:965
+#: ../src/totem.c:1088
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ne more predvajati '%s'."
 
-#: ../src/totem.c:472
+#: ../src/totem.c:474
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
 msgstr "Ni mogoče predvajati te vrste posnetka (%s), ker v niso nameščeni primerni vstavki za predvajanje."
 
-#: ../src/totem.c:474
+#: ../src/totem.c:476
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "Totem ne more predvajati tega tipa medija (%s), ker nimate primernih vključkov za njegovo delovanje."
 
-#: ../src/totem.c:475
+#: ../src/totem.c:477
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "Prosim, naložite potrebne vključke in ponovno zaženite program za predvajanje tega medija."
 
-#: ../src/totem.c:476
+#: ../src/totem.c:478
 msgid "More information about media plugins"
 msgstr "Več podrobnosti o vstavkih zapisov posnetkov"
 
-#: ../src/totem.c:484
+#: ../src/totem.c:486
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "Totem ne more predvajati medija (%s), čeprav je vključen pravilno naložen."
 
-#: ../src/totem.c:485
+#: ../src/totem.c:487
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Preverite, če je disk v pogonu in če je pravilno nastavljen."
 
-#: ../src/totem.c:513
+#: ../src/totem.c:515
 msgid "Totem was not able to play this disc."
 msgstr "Ni mogoče predvajati diska."
 
-#: ../src/totem.c:514
-#: ../src/totem.c:2902
+#: ../src/totem.c:516
+#: ../src/totem.c:2941
 #: ../browser-plugin/totem-plugin-viewer.c:1778
 msgid "No reason."
 msgstr "Brez razloga."
 
-#: ../src/totem.c:535
+#: ../src/totem.c:537
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Program Totem ne podpira predvajanja zvočnih CD-jev"
 
-#: ../src/totem.c:536
+#: ../src/totem.c:538
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "Uporabite predvajalnik glasbe ali pa pretvorite zapis na zvočnem CD-ju."
 
-#: ../src/totem.c:775
-#: ../src/totem.c:783
+#: ../src/totem.c:779
+#: ../src/totem.c:787
 msgid "Totem could not get a screenshot of that film."
 msgstr "Program Totem ne more zajeti zaslonske slike tega filma."
 
-#: ../src/totem.c:783
+#: ../src/totem.c:787
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Prišlo je do nepričakovane napake; prosim, pošljite poročilo o hrošču."
 
-#: ../src/totem.c:963
+#: ../src/totem.c:971
 msgid "No error message"
 msgstr "Ni sporočil o napakah"
 
-#: ../src/totem.c:1200
+#: ../src/totem.c:1211
 msgid "Totem could not display the help contents."
 msgstr "Ni mogoče zagnati vsebine pomoči."
 
-#: ../src/totem.c:1467
-#: ../src/totem.c:1469
+#: ../src/totem.c:1479
+#: ../src/totem.c:1481
 #: ../browser-plugin/totem-plugin-viewer.c:1562
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: ../src/totem.c:2767
-#: ../src/totem.c:2769
+#: ../src/totem.c:2802
+#: ../src/totem.c:2804
 msgid "Previous Chapter/Movie"
 msgstr "Prejšnje poglavje/film"
 
-#: ../src/totem.c:2775
-#: ../src/totem.c:2777
+#: ../src/totem.c:2810
+#: ../src/totem.c:2812
 msgid "Play / Pause"
 msgstr "Predvajaj / Premor"
 
-#: ../src/totem.c:2784
-#: ../src/totem.c:2786
+#: ../src/totem.c:2819
+#: ../src/totem.c:2821
 msgid "Next Chapter/Movie"
 msgstr "Naslednje poglavje/film"
 
-#: ../src/totem.c:2902
+#: ../src/totem.c:2941
 msgid "Totem could not startup."
 msgstr "Totem se ne more zagnati"
 
-#: ../src/totem.c:3039
+#: ../src/totem.c:3078
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ni mogoče naložiti knjižnic varovanja niti."
 
-#: ../src/totem.c:3039
+#: ../src/totem.c:3078
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Preverite sistemske nastavitve. Totem se bo izključil."
 
 #. Handle command line arguments
-#: ../src/totem.c:3047
+#: ../src/totem.c:3086
 msgid "- Play movies and songs"
 msgstr "- Predvajaj filme in glasbo"
 
-#: ../src/totem.c:3056
+#: ../src/totem.c:3095
 msgid "Totem could not parse the command-line options"
 msgstr "Predvajalnik Totem ne more razčleniti možnosti ukazne vrstice."
 
-#: ../src/totem.c:3075
+#: ../src/totem.c:3114
 msgid "Totem could not initialize the configuration engine."
 msgstr "Program Totem ne more zagnati orodja za nastavljanje."
 
-#: ../src/totem.c:3075
+#: ../src/totem.c:3114
 msgid "Make sure that GNOME is properly installed."
 msgstr "Prepričajte se, da je GNOME pravilno nameščen."
 
@@ -1930,11 +1956,11 @@ msgstr "Ni mogoče zagnati lirc.."
 msgid "Couldn't read lirc configuration."
 msgstr "Ni mogoče prebrati lirc nastavitev."
 
-#: ../src/plugins/mythtv/totem-mythtv.c:217
+#: ../src/plugins/mythtv/totem-mythtv.c:198
 msgid "Recordings"
 msgstr "Posnetki"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:407
+#: ../src/plugins/mythtv/totem-mythtv.c:385
 msgid "MythTV Recordings"
 msgstr "MythTV posnetki"
 
@@ -2020,7 +2046,7 @@ msgstr "sekund"
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:226
+#: ../src/plugins/tracker/totem-tracker-widget.c:203
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
@@ -2029,7 +2055,7 @@ msgstr[1] "Prikaz %i - %i od %i zadetka"
 msgstr[2] "Prikaz %i - %i od %i zadetkov"
 msgstr[3] "Prikaz %i - %i od %i zadetkov"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:288
+#: ../src/plugins/tracker/totem-tracker-widget.c:300
 msgid "Search results"
 msgstr "Rezultati iskanja"
 
