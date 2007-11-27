@@ -1,3 +1,12 @@
+2007-11-27  Mathias Hasselmann  <mathias@openismus.com>
+
+	Don't list ourself in the neighbours sidepane. Show progress window
+	when generating server keys. Expand service name.
+
+	* src/plugins/publish/totem-publish.c: Set "skip-our-own" property
+	of the service monitor. Call epc_progress_window_install and
+	epc_shell_expand_name.
+
 2007-11-24  Mathias Hasselmann  <mathias@openismus.com>
 
 	Implement browsing of nearby Totem instances and playlist download.

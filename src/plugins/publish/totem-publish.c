@@ -37,6 +37,9 @@
 #include <libepc/enums.h>
 #include <libepc/publisher.h>
 #include <libepc/service-monitor.h>
+#include <libepc/shell.h>
+
+#include <libepc-ui/progress-window.h>
 
 #include "ev-sidebar.h"
 #include "totem-plugin.h"
@@ -186,7 +189,7 @@ totem_publish_plugin_playlist_cb (EpcPublisher *publisher,
 				g_list_length (files));
 
 	for (iter = files, i = 1; iter; iter = iter->next, ++i) {
-		gchar *url = epc_publisher_get_url (self->publisher, iter->data);
+		gchar *url = epc_publisher_get_url (self->publisher, iter->data, NULL);
 		gchar *filename = iter->data;
 
 		g_string_append_printf (buffer,
@@ -487,8 +490,11 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 	TotemPlaylist *playlist = totem_get_playlist (totem);
 	EpcProtocol protocol = EPC_PROTOCOL_HTTPS;
+	GError *internal_error = NULL;
 
 	gchar *protocol_name;
+
+	gchar *service_pattern;
 	gchar *service_name;
 
 	g_return_val_if_fail (NULL == self->publisher, FALSE);
@@ -496,6 +502,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 
 	self->totem = g_object_ref (totem);
 	self->ui = totem_interface_load ("publish-plugin.ui", TRUE, NULL, self);
+	epc_progress_window_install (GTK_WINDOW (self->totem->win));
 
 	gconf_client_add_dir (self->totem->gc,
 			      TOTEM_PUBLISH_CONFIG_ROOT,
@@ -511,13 +518,22 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 						     totem_publish_plugin_protocol_changed_cb,
 						     self, NULL, NULL);
 
-	service_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
+	service_pattern = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 	protocol_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_PROTOCOL, NULL);
 
 	if (protocol_name)
 		protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
 
+	service_name = epc_shell_expand_name (service_pattern, &internal_error);
+	g_free (service_pattern);
+
+	if (internal_error) {
+		g_warning ("%s: %s", G_STRFUNC, internal_error->message);
+		g_clear_error (&internal_error);
+	}
+
 	self->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
+	epc_service_monitor_set_skip_our_own (self->monitor, TRUE);
 
 	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbours"),
 			     totem_publish_plugin_create_neigbours_page (self));
