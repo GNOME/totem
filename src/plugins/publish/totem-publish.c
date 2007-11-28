@@ -37,7 +37,6 @@
 #include <libepc/enums.h>
 #include <libepc/publisher.h>
 #include <libepc/service-monitor.h>
-#include <libepc/shell.h>
 
 #include <libepc-ui/progress-window.h>
 
@@ -122,7 +121,7 @@ totem_publish_plugin_name_changed_cb (GConfClient *client,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	const gchar *pattern = gconf_value_get_string (entry->value);
-	gchar *name = epc_shell_expand_name (pattern, NULL);
+	gchar *name = epc_publisher_expand_name (pattern, NULL);
 
 	epc_publisher_set_service_name (self->publisher, name);
 
@@ -572,7 +571,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 						     self, NULL, NULL);
 
 	protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
-	service_name = epc_shell_expand_name (service_pattern, &internal_error);
+	service_name = epc_publisher_expand_name (service_pattern, &internal_error);
 	g_free (service_pattern);
 
 	if (internal_error) {
