@@ -1,3 +1,16 @@
+2007-11-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c: (totem_playlist_get_current_mrl):
+	Set the subtitle to NULL if there's such an argument passed
+	* src/totem.c: (totem_action_open_dialog), (window_state_event_cb),
+	(totem_action_direction), (totem_action_drop_files),
+	(totem_action_set_playlist_index), (playlist_changed_cb),
+	(current_removed_cb), (subtitle_changed_cb), (totem_is_playing),
+	(totem_is_seekable), (on_eos_event),
+	(totem_action_handle_key_press), (playlist_widget_setup):
+	Not need to set subtitle to NULL, totem_playlist_get_current_mrl will
+	do it for us (Closes: #499765)
+
 2007-11-28  Andreas Nilsson  <nisses.mail@home.se>
 
 	* data/totem.ui: removed icon in front of Color balance slider

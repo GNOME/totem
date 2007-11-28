@@ -1828,6 +1828,9 @@ totem_playlist_get_current_mrl (TotemPlaylist *playlist, char **subtitle)
 	GtkTreeIter iter;
 	char *path;
 
+	if (subtitle != NULL)
+		*subtitle = NULL;
+
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), NULL);
 
 	if (update_current_from_playlist (playlist) == FALSE)

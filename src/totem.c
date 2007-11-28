@@ -452,7 +452,6 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 	if (play != FALSE) {
 		char *mrl, *subtitle;
 
-		subtitle = NULL;
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		totem_action_set_mrl_and_play (totem, mrl, subtitle);
 		g_free (mrl);
@@ -1029,7 +1028,6 @@ totem_action_direction (Totem *totem, TotemPlaylistDirection dir)
 	{
 		char *mrl, *subtitle;
 
-		subtitle = NULL;
 		totem_playlist_set_direction (totem->playlist, dir);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		totem_action_set_mrl_and_play (totem, mrl, subtitle);
@@ -1871,7 +1869,6 @@ totem_action_set_playlist_index (Totem *totem, guint index)
 {
 	char *mrl, *subtitle;
 
-	subtitle = NULL;
 	totem_playlist_set_current (totem->playlist, index);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 	totem_action_set_mrl_and_play (totem, mrl, subtitle);
@@ -2084,7 +2081,6 @@ playlist_changed_cb (GtkWidget *playlist, Totem *totem)
 {
 	char *mrl, *subtitle;
 
-	subtitle = NULL;
 	update_buttons (totem);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
@@ -2110,12 +2106,12 @@ current_removed_cb (GtkWidget *playlist, Totem *totem)
 	char *mrl, *subtitle;
 
 	/* Set play button status */
-	subtitle = NULL;
 	play_pause_set_label (totem, STATE_STOPPED);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
 	if (mrl == NULL) {
 		g_free (subtitle);
+		subtitle = NULL;
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
@@ -2134,7 +2130,6 @@ subtitle_changed_cb (GtkWidget *playlist, Totem *totem)
 	char *mrl, *subtitle;
 
 	totem_action_stop (totem);
-	subtitle = NULL;
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 	totem_action_set_mrl_and_play (totem, mrl, subtitle);
 
@@ -2251,7 +2246,6 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		totem_playlist_set_at_start (totem->playlist);
 		update_buttons (totem);
 		totem_action_stop (totem);
-		subtitle = NULL;
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
 		bacon_video_widget_pause (totem->bvw);
