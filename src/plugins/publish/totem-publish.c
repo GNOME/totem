@@ -119,10 +119,12 @@ totem_publish_plugin_name_changed_cb (GConfClient *client,
 				      gpointer     data)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
-	const gchar *service_name;
+	const gchar *pattern = gconf_value_get_string (entry->value);
+	gchar *name = epc_shell_expand_name (pattern, NULL);
 
-	service_name = gconf_value_get_string (entry->value);
-	epc_publisher_set_service_name (self->publisher, service_name);
+	epc_publisher_set_service_name (self->publisher, name);
+
+	g_free (name);
 }
 
 void
@@ -509,6 +511,23 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 			      GCONF_CLIENT_PRELOAD_ONELEVEL,
 			      NULL);
 
+	protocol_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_PROTOCOL, NULL);
+	service_pattern = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
+
+	if (!protocol_name) {
+		protocol_name = g_strdup ("https");
+		gconf_client_set_string (self->totem->gc,
+					 TOTEM_PUBLISH_CONFIG_PROTOCOL,
+					 protocol_name, NULL);
+	}
+
+	if (!service_pattern) {
+		service_pattern = g_strdup ("%a of %u on %h");
+		gconf_client_set_string (self->totem->gc,
+					 TOTEM_PUBLISH_CONFIG_NAME,
+					 service_pattern, NULL);
+	}
+
 	self->name_id = gconf_client_notify_add (self->totem->gc,
 						 TOTEM_PUBLISH_CONFIG_NAME,
 						 totem_publish_plugin_name_changed_cb,
@@ -518,12 +537,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 						     totem_publish_plugin_protocol_changed_cb,
 						     self, NULL, NULL);
 
-	service_pattern = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
-	protocol_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_PROTOCOL, NULL);
-
-	if (protocol_name)
-		protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
-
+	protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
 	service_name = epc_shell_expand_name (service_pattern, &internal_error);
 	g_free (service_pattern);
 
@@ -639,7 +653,7 @@ totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
 	g_return_val_if_fail (NULL == self->settings, NULL);
 
 	if (self->ui) {
-		const gchar *service_name = epc_publisher_get_service_name (self->publisher);
+		gchar *service_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 		EpcProtocol protocol = epc_publisher_get_protocol (self->publisher);
 		GtkWidget *widget;
 
@@ -651,6 +665,8 @@ totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
 		widget = GTK_WIDGET (gtk_builder_get_object (self->ui, "encryption-button"));
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
 					      EPC_PROTOCOL_HTTPS == protocol);
+
+		g_free (service_name);
 	}
 
 	return self->settings;
