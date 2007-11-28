@@ -80,6 +80,7 @@ typedef struct
 	EpcPublisher      *publisher;
 	EpcServiceMonitor *monitor;
 	GtkListStore      *neighbours;
+	GSList            *playlist;
 
 	guint name_id;
 	guint protocol_id;
@@ -110,7 +111,8 @@ void totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *v
 							    GtkTreeViewColumn *column,
 							    gpointer           data);
 
-TOTEM_PLUGIN_REGISTER(TotemPublishPlugin, totem_publish_plugin)
+G_LOCK_DEFINE_STATIC(totem_publish_plugin_lock);
+TOTEM_PLUGIN_REGISTER(TotemPublishPlugin, totem_publish_plugin);
 
 static void
 totem_publish_plugin_name_changed_cb (GConfClient *client,
@@ -181,28 +183,25 @@ totem_publish_plugin_playlist_cb (EpcPublisher *publisher,
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	GString *buffer = g_string_new (NULL);
 	EpcContents *contents = NULL;
-	GList *files, *iter;
+	GSList *iter;
 	gint i;
 
-	files = epc_publisher_list (self->publisher, "media/*");
+	G_LOCK (totem_publish_plugin_lock);
 
 	g_string_append_printf (buffer,
 				"[playlist]\nNumberOfEntries=%d\n",
-				g_list_length (files));
+				g_slist_length (self->playlist) / 2);
 
-	for (iter = files, i = 1; iter; iter = iter->next, ++i) {
-		gchar *url = epc_publisher_get_url (self->publisher, iter->data, NULL);
+	for (iter = self->playlist, i = 1; iter; iter = iter->next->next, ++i) {
+		gchar *url = iter->next->data;
 		gchar *filename = iter->data;
 
 		g_string_append_printf (buffer,
 					"File%d=%s\nTitle%d=%s\n",
-					i, url, i, filename + 6);
-
-		g_free (filename);
-		g_free (url);
+					i, url, i, filename);
 	}
 
-	g_list_free (files);
+	G_UNLOCK (totem_publish_plugin_lock);
 
 	contents = epc_contents_new ("audio/x-scpls",
 				     buffer->str, buffer->len,
@@ -255,10 +254,43 @@ totem_publish_plugin_media_cb (EpcPublisher *publisher,
 }
 
 static void
-totem_publish_plugin_item_added_cb (TotemPlaylist *playlist,
-				    const gchar   *filename,
-				    const gchar   *url,
-				    gpointer       data)
+totem_publish_plugin_rebuild_playlist_cb (TotemPlaylist *playlist,
+					  const gchar   *filename,
+					  const gchar   *url,
+					  gpointer       data)
+{
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+
+	self->playlist = g_slist_prepend (self->playlist, g_strdup (filename));
+	self->playlist = g_slist_prepend (self->playlist, g_strdup (url));
+}
+
+static void
+totem_publish_plugin_playlist_changed_cb (TotemPlaylist *playlist,
+					  gpointer       data)
+{
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+
+	G_LOCK (totem_publish_plugin_lock);
+
+	g_slist_foreach (self->playlist, (GFunc) g_free, NULL);
+	g_slist_free (self->playlist);
+	self->playlist = NULL;
+
+	totem_playlist_foreach (playlist,
+				totem_publish_plugin_rebuild_playlist_cb,
+				self);
+
+	self->playlist = g_slist_reverse (self->playlist);
+
+	G_UNLOCK (totem_publish_plugin_lock);
+}
+
+static void
+totem_publish_plugin_playlist_item_added_cb (TotemPlaylist *playlist,
+					     const gchar   *filename,
+					     const gchar   *url,
+					     gpointer       data)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	gchar *key = totem_publish_plugin_build_key (filename);
@@ -271,7 +303,7 @@ totem_publish_plugin_item_added_cb (TotemPlaylist *playlist,
 }
 
 static void
-totem_publish_plugin_item_removed_cb (TotemPlaylist *playlist,
+totem_publish_plugin_playlist_item_removed_cb (TotemPlaylist *playlist,
 				      const gchar   *filename,
 				      const gchar   *url,
 				      gpointer       data)
@@ -502,6 +534,8 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	g_return_val_if_fail (NULL == self->publisher, FALSE);
 	g_return_val_if_fail (NULL == self->totem, FALSE);
 
+	G_LOCK (totem_publish_plugin_lock);
+
 	self->totem = g_object_ref (totem);
 	self->ui = totem_interface_load ("publish-plugin.ui", TRUE, NULL, self);
 	epc_progress_window_install (GTK_WINDOW (self->totem->win));
@@ -562,12 +596,16 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 				   totem_publish_plugin_playlist_cb,
 				   self, NULL);
 
+	self->item_added_id = g_signal_connect (playlist, "changed",
+		G_CALLBACK (totem_publish_plugin_playlist_changed_cb), self);
 	self->item_added_id = g_signal_connect (playlist, "item-added",
-		G_CALLBACK (totem_publish_plugin_item_added_cb), self);
+		G_CALLBACK (totem_publish_plugin_playlist_item_added_cb), self);
 	self->item_removed_id = g_signal_connect (playlist, "item-removed",
-		G_CALLBACK (totem_publish_plugin_item_removed_cb), self);
+		G_CALLBACK (totem_publish_plugin_playlist_item_removed_cb), self);
 
-	totem_playlist_foreach (playlist, totem_publish_plugin_item_added_cb, self);
+	totem_playlist_foreach (playlist, totem_publish_plugin_playlist_item_added_cb, self);
+
+	G_UNLOCK (totem_publish_plugin_lock);
 
 	return epc_publisher_run_async (self->publisher, error);
 }
@@ -578,6 +616,8 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 	TotemPlaylist *playlist = NULL;
+
+	G_LOCK (totem_publish_plugin_lock);
 
 	if (self->totem)
 		playlist = totem_get_playlist (self->totem);
@@ -628,6 +668,14 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 		g_object_unref (self->ui);
 		self->ui = NULL;
 	}
+
+	if (self->playlist) {
+		g_slist_foreach (self->playlist, (GFunc) g_free, NULL);
+		g_slist_free (self->playlist);
+		self->playlist = NULL;
+	}
+
+	G_UNLOCK (totem_publish_plugin_lock);
 
 	self->scanning = NULL;
 }

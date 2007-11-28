@@ -1,5 +1,12 @@
 2007-11-28  Mathias Hasselmann  <mathias@openismus.com>
 
+	Preserve playlist order when publishing them.
+
+	* src/plugins/publish/totem-publish.c: Add playlist field to
+	TotemPublishPlugin and update it on "changed" signals.
+
+2007-11-28  Mathias Hasselmann  <mathias@openismus.com>
+
 	Take care not to vanish service name placeholders.
 
 	* src/plugins/publish/totem-publish.c: Take care about placeholders.
