@@ -594,6 +594,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	epc_publisher_add_handler (self->publisher, "playlist.pls",
 				   totem_publish_plugin_playlist_cb,
 				   self, NULL);
+	epc_publisher_add_bookmark (self->publisher, "playlist.pls", NULL);
 
 	self->item_added_id = g_signal_connect (playlist, "changed",
 		G_CALLBACK (totem_publish_plugin_playlist_changed_cb), self);
