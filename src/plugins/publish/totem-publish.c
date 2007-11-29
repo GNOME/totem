@@ -686,14 +686,10 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 void
 totem_publish_plugin_dialog_response_cb (GtkDialog *dialog,
 					 gint       response,
-					 gpointer   data)
+					 gpointer   data G_GNUC_UNUSED)
 {
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
-
-	if (response) {
-		gtk_widget_destroy (GTK_WIDGET (dialog));
-		self->settings = NULL;
-	}
+	if (response)
+		gtk_widget_hide (GTK_WIDGET (dialog));
 }
 
 static GtkWidget*
@@ -701,9 +697,7 @@ totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 
-	g_return_val_if_fail (NULL == self->settings, NULL);
-
-	if (self->ui) {
+	if (NULL == self->settings && GTK_IS_BUILDER (self->ui)) {
 		gchar *service_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 		EpcProtocol protocol = epc_publisher_get_protocol (self->publisher);
 		GtkWidget *widget;
