@@ -189,15 +189,19 @@ totem_publish_plugin_playlist_cb (EpcPublisher *publisher,
 
 	g_string_append_printf (buffer,
 				"[playlist]\nNumberOfEntries=%d\n",
-				g_slist_length (self->playlist) / 2);
+				g_slist_length (self->playlist));
 
-	for (iter = self->playlist, i = 1; iter; iter = iter->next->next, ++i) {
-		gchar *url = iter->next->data;
-		gchar *filename = iter->data;
+	for (iter = self->playlist, i = 1; iter; iter = iter->next, ++i) {
+		gchar *key = iter->data;
+		gchar *uri;
+
+		uri = epc_publisher_get_uri (publisher, key, NULL);
 
 		g_string_append_printf (buffer,
 					"File%d=%s\nTitle%d=%s\n",
-					i, url, i, filename);
+					i, uri, i, key + 6);
+
+		g_free (uri);
 	}
 
 	G_UNLOCK (totem_publish_plugin_lock);
@@ -259,9 +263,8 @@ totem_publish_plugin_rebuild_playlist_cb (TotemPlaylist *playlist,
 					  gpointer       data)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
-
-	self->playlist = g_slist_prepend (self->playlist, g_strdup (filename));
-	self->playlist = g_slist_prepend (self->playlist, g_strdup (url));
+	gchar *key = totem_publish_plugin_build_key (filename);
+	self->playlist = g_slist_prepend (self->playlist, key);
 }
 
 static void

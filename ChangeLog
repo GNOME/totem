@@ -1,5 +1,12 @@
 2007-11-28  Mathias Hasselmann  <mathias@openismus.com>
 
+	Use Easy-Publish-URI instead of local file URI for the playlist. Seems
+	I wasn't that concentrated when refactoring to preserve playlist order.
+
+	* src/plugins/publish/totem-publish.c: Publish correct URI.
+
+2007-11-28  Mathias Hasselmann  <mathias@openismus.com>
+
 	Publish the playlist as dynamic ZeroConf bookmark.
 
 	* src/plugins/publish/totem-publish.c: Use epc_publisher_add_bookmark.
