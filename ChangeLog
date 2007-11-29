@@ -1,5 +1,15 @@
 2007-11-29  Mathias Hasselmann  <mathias@openismus.com>
 
+	Shutdown the publisher before trying to change the network protocol.
+	Use HTTP instead of HTTPS by default: Neon, as used by GStreamer seems
+	to have problems with self-signed certificates.
+
+	* src/plugins/publish/totem-publish.c: Shutdown the publisher in
+	totem_publish_plugin_protocol_changed_cb. Use other default protocol
+	in totem_publish_plugin_activate.
+
+2007-11-29  Mathias Hasselmann  <mathias@openismus.com>
+
 	Don't destroy the settings dialog on response signal.
 
 	* src/plugins/publish/totem-publish.c: Just hide hide settings dialog.

@@ -162,10 +162,19 @@ totem_publish_plugin_protocol_changed_cb (GConfClient *client,
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	const gchar *protocol_name;
 	EpcProtocol protocol;
+	GError *error = NULL;
 
 	protocol_name = gconf_value_get_string (entry->value);
 	protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
+
+	epc_publisher_quit (self->publisher);
 	epc_publisher_set_protocol (self->publisher, protocol);
+	epc_publisher_run_async (self->publisher, &error);
+
+	if (error) {
+		g_warning ("%s: %s", G_STRFUNC, error->message);
+		g_error_free (error);
+	}
 }
 
 static gchar*
@@ -551,7 +560,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	service_pattern = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 
 	if (!protocol_name) {
-		protocol_name = g_strdup ("https");
+		protocol_name = g_strdup ("http");
 		gconf_client_set_string (self->totem->gc,
 					 TOTEM_PUBLISH_CONFIG_PROTOCOL,
 					 protocol_name, NULL);
