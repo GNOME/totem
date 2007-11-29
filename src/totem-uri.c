@@ -258,7 +258,8 @@ static const char subtitle_ext[][4] = {
 	"sub",
 	"srt",
 	"smi",
-	"ssa"
+	"ssa",
+	"ass"
 };
 
 static char *
@@ -439,7 +440,10 @@ totem_setup_file_filters (void)
 	gtk_file_filter_set_name (filter_subs, _("Subtitle files"));
 	gtk_file_filter_add_mime_type (filter_subs, "application/x-subrip"); /* *.srt */
 	gtk_file_filter_add_mime_type (filter_subs, "text/plain"); /* *.asc, *.txt */
-	/* FIXME add missing *.sub, *.smi, and *.ssa */
+	gtk_file_filter_add_mime_type (filter_subs, "application/x-sami"); /* *.smi, *.sami */
+	gtk_file_filter_add_mime_type (filter_subs, "text/x-microdvd"); /* *.sub */
+	gtk_file_filter_add_mime_type (filter_subs, "text/x-mpsub"); /* *.sub */
+	gtk_file_filter_add_mime_type (filter_subs, "text/x-ssa"); /* *.ssa, *.ass */
 	g_object_ref (filter_subs);
 
 }
