@@ -1,3 +1,14 @@
+2007-11-30  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/tracker/Makefile.am: Fix hardcoded libraries
+
+	* src/totem-sidebar.c: (totem_sidebar_set_current_page):
+	* src/totem.c: (totem_action_save_state), (totem_action_exit),
+	(totem_action_handle_key_press), (totem_setup_window),
+	(main): Save sidebar page ID before shutting down the plugins,
+	and try to restore the page used after having activated the plugins
+	(Closes: #500487)
+
 2007-11-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c: (totem_setup_file_filters): Add missing

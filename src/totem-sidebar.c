@@ -140,6 +140,9 @@ totem_sidebar_get_current_page (Totem *totem)
 void
 totem_sidebar_set_current_page (Totem *totem, const char *name)
 {
+	if (name == NULL)
+		return;
+
 	ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar), name);
 	totem_sidebar_toggle (totem, TRUE);
 }

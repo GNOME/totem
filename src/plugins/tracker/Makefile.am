@@ -22,11 +22,12 @@ common_defines = \
 
 libtracker_la_SOURCES = totem-tracker.c totem-tracker-widget.c
 libtracker_la_LDFLAGS = $(modules_flags)
-libtracker_la_LIBADD = -ltrackerclient
+libtracker_la_LIBADD = $(TRACKER_LIBS)
 libtracker_la_CPPFLAGS = $(common_defines)
 
 libtracker_la_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
+	$(TRACKER_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

@@ -157,11 +157,10 @@ totem_action_save_size (Totem *totem)
 }
 
 static void
-totem_action_save_state (Totem *totem)
+totem_action_save_state (Totem *totem, const char *page_id)
 {
 	GKeyFile *keyfile;
 	char *contents, *filename;
-	const char *page_id;
 
 	if (totem->win == NULL)
 		return;
@@ -181,7 +180,6 @@ totem_action_save_state (Totem *totem)
 	g_key_file_set_integer (keyfile, "State",
 			"sidebar_w", totem->sidebar_w);
 
-	page_id = totem_sidebar_get_current_page (totem);
 	g_key_file_set_string (keyfile, "State",
 			"sidebar_page", page_id);
 
@@ -198,6 +196,7 @@ void
 totem_action_exit (Totem *totem)
 {
 	GdkDisplay *display = NULL;
+	const char *page_id;
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();
@@ -213,6 +212,9 @@ totem_action_exit (Totem *totem)
 	if (totem->prefs != NULL)
 		gtk_widget_hide (totem->prefs);
 
+	/* Save the page ID before we close the plugins, otherwise
+	 * we'll never save it properly */
+	page_id = totem_sidebar_get_current_page (totem);
 	totem_object_plugins_shutdown ();
 
 	if (display != NULL)
@@ -232,7 +234,7 @@ totem_action_exit (Totem *totem)
 
 	if (totem->conn != NULL)
 		bacon_message_connection_free (totem->conn);
-	totem_action_save_state (totem);
+	totem_action_save_state (totem, page_id);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
@@ -2678,7 +2680,7 @@ main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, Totem
 	}
 }
 
-static void
+static char *
 totem_setup_window (Totem *totem)
 {
 	GKeyFile *keyfile;
@@ -2764,7 +2766,7 @@ totem_setup_window (Totem *totem)
 		gtk_widget_modify_bg (vbox, i, &black);
 
 	totem_sidebar_setup (totem, show_sidebar, page_id);
-        g_free (page_id);
+	return page_id;
 }
 
 static void
@@ -3059,6 +3061,7 @@ main (int argc, char **argv)
 #endif
 	GOptionContext *context;
 	GOptionGroup *baconoptiongroup;
+	char *sidebar_pageid;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -3160,7 +3163,7 @@ main (int argc, char **argv)
 	totem_setup_file_filters ();
 	totem_setup_play_disc (totem);
 	totem_callback_connect (totem);
-	totem_setup_window (totem);
+	sidebar_pageid = totem_setup_window (totem);
 
 	/* Show ! gtk_main_iteration trickery to show all the widgets
 	 * we have so far */
@@ -3193,11 +3196,11 @@ main (int argc, char **argv)
 	/* Command-line handling */
 	totem_options_process_late (totem, &optionstate);
 
-	/* Initialise all the plugins */
+	/* Initialise all the plugins, and set the default page, in case
+	 * it comes from a plugin */
 	totem_object_plugins_init (totem);
-	/* FIXME we should set the current page again, in case a plugin was
-	 * the default page
-	 */
+	totem_sidebar_set_current_page (totem, sidebar_pageid);
+	g_free (sidebar_pageid);
 
 	if (totem->session_restored != FALSE) {
 		totem_session_restore (totem, optionstate.filenames);
