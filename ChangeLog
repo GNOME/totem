@@ -1,3 +1,17 @@
+2007-12-01  Mathias Hasselmann  <mathias@openismus.com>
+
+	Merge changes from LIBEPC branch. To gives Totem the ability to
+	share its playlists via HTTP. Theoretically also HTTPS would work,
+	if GStream/GNOME-VFS would setup Neon properly.
+
+	* data/Makefile.am: Add publish-plugin.ui. Move totem_logo.png.
+	* src/Makefile.am: Add totemplaylist-marshal.list.
+	* src/plugins/publish/Makefile.am: Update CFLAGS with include dirs.
+	* src/plugins/publish/totem-publish.c: Implement playlist sharing.
+	* src/totem-playlist.c, src/totem-playlist.h: Add "item-added" and
+	"item-removed" signal for more detailed information about playlist
+	changes. Add totem_playlist_foreach for iterating over the playlist.
+
 2007-11-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/tracker/Makefile.am: Fix hardcoded libraries

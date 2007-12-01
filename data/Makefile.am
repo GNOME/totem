@@ -7,6 +7,7 @@ stuff_DATA =				\
 	filmholes.png			\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
+	totem_logo.png			\
 	totem.ui			\
 	fullscreen.ui			\
 	playlist.ui			\
@@ -14,7 +15,7 @@ stuff_DATA =				\
 	mozilla-viewer.ui		\
 	properties.ui			\
 	uri.ui				\
-	totem_logo.png			\
+	publish-plugin.ui		\
 	video-list.ui
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor

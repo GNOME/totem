@@ -33,7 +33,9 @@ libpublish_la_CFLAGS = \
 	$(AM_CFLAGS)		\
 	-I$(top_srcdir)/lib	\
 	-I$(top_srcdir)/src	\
-	-I$(top_srcdir)/src/plugins
+	-I$(top_srcdir)/src/backend \
+	-I$(top_srcdir)/src/plugins \
+	-I$(top_srcdir)/plparse
 
 EXTRA_DIST = $(plugin_in_files)
 
