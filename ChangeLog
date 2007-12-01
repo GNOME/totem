@@ -1,3 +1,15 @@
+2007-12-01  Bastien Nocera  <hadess@hadess.net>
+
+	* data/Makefile.am:
+	* data/publish-plugin.glade:
+	* data/publish-plugin.ui: move those files to the
+	publish plugin directory
+
+	* src/plugins/publish/Makefile.am:
+	* src/plugins/publish/totem-publish.c:
+	(totem_publish_plugin_activate): Use the plugin convenience
+	functions to load the interface
+
 2007-12-01  Mathias Hasselmann  <mathias@openismus.com>
 
 	Merge changes from LIBEPC branch. To gives Totem the ability to

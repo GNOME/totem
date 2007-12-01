@@ -9,6 +9,9 @@ plugin_in_files = publish.totem-plugin.in
 
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
+uidir = $(PLUGINDIR)/publish
+ui_DATA = publish-plugin.ui
+
 common_defines = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\

@@ -546,7 +546,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	G_LOCK (totem_publish_plugin_lock);
 
 	self->totem = g_object_ref (totem);
-	self->ui = totem_interface_load ("publish-plugin.ui", TRUE, NULL, self);
+	self->ui = totem_plugin_load_interface (plugin, "publish-plugin.ui", TRUE, NULL, self);
 	epc_progress_window_install (GTK_WINDOW (self->totem->win));
 
 	gconf_client_add_dir (self->totem->gc,

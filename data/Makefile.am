@@ -15,7 +15,6 @@ stuff_DATA =				\
 	mozilla-viewer.ui		\
 	properties.ui			\
 	uri.ui				\
-	publish-plugin.ui		\
 	video-list.ui
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
