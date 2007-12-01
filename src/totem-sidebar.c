@@ -131,7 +131,7 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 		gtk_widget_hide (totem->sidebar);
 }
 
-const char *
+char *
 totem_sidebar_get_current_page (Totem *totem)
 {
 	return ev_sidebar_get_current_page (EV_SIDEBAR (totem->sidebar));

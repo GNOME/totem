@@ -754,6 +754,8 @@ totem_pl_parser_finalize (GObject *object)
 	g_list_foreach (parser->priv->ignore_mimetypes, (GFunc) g_free, NULL);
 	g_list_free (parser->priv->ignore_mimetypes);
 
+	g_object_unref (parser->priv->pspec_pool);
+
 	g_free (parser->priv);
 	parser->priv = NULL;
 
@@ -1141,6 +1143,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 
 	DEBUG(g_print ("_get_mime_type_for_name for '%s' returned '%s'\n", url, mimetype));
 	if (mimetype == NULL || strcmp (GNOME_VFS_MIME_TYPE_UNKNOWN, mimetype) == 0) {
+		g_free (mimetype);
 		mimetype = my_gnome_vfs_get_mime_type_with_data (url, &data, parser);
 		DEBUG(g_print ("_get_mime_type_with_data for '%s' returned '%s'\n", url, mimetype ? mimetype : "NULL"));
 	}
@@ -1152,6 +1155,7 @@ totem_pl_parser_parse_internal (TotemPlParser *parser, const char *url,
 
 	if (strcmp (mimetype, EMPTY_FILE_TYPE) == 0) {
 		g_free (data);
+		g_free (mimetype);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
 	}
 

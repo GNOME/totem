@@ -285,6 +285,7 @@ cd_cache_new (const char *dev,
     g_set_error (error, 0, 0,
 	_("Failed to find mountpoint for device %s"),
 	device);
+    g_free (device);
     return NULL;
   }
 
@@ -293,6 +294,7 @@ cd_cache_new (const char *dev,
   if (!ctx) {
     g_set_error (error, 0, 0,
 	_("Could not connect to the HAL daemon"));
+    g_free (device);
     return NULL;
   }
 #endif
@@ -307,6 +309,8 @@ cd_cache_new (const char *dev,
 #ifdef HAVE_HAL
   cache->ctx = ctx;
 #endif
+
+  g_free (device);
 
   return cache;
 }

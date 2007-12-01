@@ -1554,7 +1554,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 {
 	GtkWidget *container;
 
-	playlist->_priv = g_new0 (TotemPlaylistPrivate, 1);
+	playlist->_priv = G_TYPE_INSTANCE_GET_PRIVATE (playlist, TOTEM_TYPE_PLAYLIST, TotemPlaylistPrivate);
 	playlist->_priv->parser = totem_pl_parser_new ();
 
 	totem_pl_parser_add_ignored_scheme (playlist->_priv->parser, "dvd:");
@@ -2337,6 +2337,8 @@ static void
 totem_playlist_class_init (TotemPlaylistClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	g_type_class_add_private (klass, sizeof (TotemPlaylistPrivate));
 
 	object_class->finalize = totem_playlist_finalize;
 

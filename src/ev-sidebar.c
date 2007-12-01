@@ -208,7 +208,8 @@ ev_sidebar_new (void)
 	return ev_sidebar;
 }
 
-const char *
+/* NOTE: Return values from this have to be g_free()d */
+char *
 ev_sidebar_get_current_page (EvSidebar *ev_sidebar)
 {
 	GtkTreeModel *model;

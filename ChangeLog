@@ -1,3 +1,19 @@
+2007-12-01  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* plparse/totem-disc.c: (cd_cache_new):
+	* plparse/totem-pl-parser.c: (totem_pl_parser_finalize),
+	(totem_pl_parser_parse_internal):
+	* src/ev-sidebar.c:
+	* src/ev-sidebar.h:
+	* src/plugins/tracker/totem-tracker-widget.c:
+	(totem_tracker_widget_class_init), (populate_result),
+	(totem_tracker_widget_init):
+	* src/totem-playlist.c: (totem_playlist_init),
+	(totem_playlist_class_init):
+	* src/totem-sidebar.c:
+	* src/totem-sidebar.h:
+	* src/totem.c: (totem_action_exit): Plug some memory leaks.
+
 2007-12-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/Makefile.am:

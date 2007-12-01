@@ -88,6 +88,8 @@ static void totem_tracker_widget_class_init (TotemTrackerWidgetClass *klass)
 	GObjectClass *object_class;
 	GtkWidgetClass *widget_class;
 
+	g_type_class_add_private (klass, sizeof (TotemTrackerWidgetPrivate));
+
 	parent_class = g_type_class_peek_parent (klass);
 	widget_class = GTK_WIDGET_CLASS (klass);
 
@@ -137,13 +139,12 @@ static void populate_result (TotemTrackerWidget *widget, char *result)
 		file_uri = gnome_vfs_get_uri_from_local_path (result);
 		thumbnail_path = gnome_thumbnail_path_for_uri (file_uri, GNOME_THUMBNAIL_SIZE_NORMAL);
 
-		if (thumbnail_path != NULL) {
+		if (thumbnail_path != NULL)
 			thumbnail = gdk_pixbuf_new_from_file (thumbnail_path, NULL);
-		}
 
 		gtk_list_store_set (GTK_LIST_STORE (widget->priv->result_store), &iter,
 				    IMAGE_COLUMN, thumbnail,
-				    FILE_COLUMN, gnome_vfs_get_uri_from_local_path (result),
+				    FILE_COLUMN, file_uri,
 				    NAME_COLUMN, info->name,
 				    -1);
 
@@ -151,7 +152,10 @@ static void populate_result (TotemTrackerWidget *widget, char *result)
 		g_free (file_uri);
 	}
 	else {
-		/* FIXME Display an error */
+		/* Display an error */
+		char *message = g_strdup_printf (_("Could not get metadata for file %s."), result);
+		totem_interface_error_blocking	(_("File Error"), message, NULL);
+		g_free (message);
 	}
 
 	g_free (info);
@@ -312,7 +316,7 @@ static void totem_tracker_widget_init (TotemTrackerWidget *widget)
 	GtkWidget *search_box;		/* the search box contains the search entry and the search button */
 	GtkScrolledWindow *scroll;	/* make the result list scrollable */
 
-	widget->priv = g_new0 (TotemTrackerWidgetPrivate, 1);
+	widget->priv = G_TYPE_INSTANCE_GET_PRIVATE (widget, TOTEM_TYPE_TRACKER_WIDGET, TotemTrackerWidgetPrivate);
 
 	init_result_list (widget);
 

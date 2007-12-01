@@ -235,6 +235,7 @@ totem_action_exit (Totem *totem)
 	if (totem->conn != NULL)
 		bacon_message_connection_free (totem->conn);
 	totem_action_save_state (totem, page_id);
+	g_free (page_id);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
