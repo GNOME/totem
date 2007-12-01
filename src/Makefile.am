@@ -61,8 +61,7 @@ libtotem_player_la_SOURCES =		\
 
 libtotem_player_la_CPPFLAGS = \
 	-I$(srcdir)/backend	\
-	-I$(top_srcdir)/plparse	\
-	-I$(top_builddir)/src/plparse	\
+	-I$(top_srcdir)/	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
 
@@ -121,11 +120,10 @@ totem_SOURCES = 					\
 	totem-video-list.h
 
 totem_CPPFLAGS = \
-	-I$(top_srcdir)/plparse		\
+	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
 	-I$(srcdir)/plugins		\
 	-I$(top_builddir)/data		\
-	-I$(top_builddir)/src/plparse	\
 	$(common_defines)		\
 	$(AM_CPPFLAGS)
 
@@ -168,7 +166,7 @@ totem_video_thumbnailer_SOURCES =	\
 	totem-resources.h
 
 totem_video_thumbnailer_CPPFLAGS = \
-	-I$(top_srcdir)/plparse	\
+	-I$(top_srcdir)/	\
 	-I$(srcdir)/backend	\
 	$(common_defines)	\
 	$(AM_CPPFLAGS)
@@ -205,7 +203,7 @@ libtotem_properties_page_la_SOURCES = 	\
 
 libtotem_properties_page_la_CPPFLAGS =		\
 	-I$(srcdir)/backend			\
-	-I$(top_srcdir)/plparse			\
+	-I$(top_srcdir)/			\
 	-I$(srcdir)/plugins/properties		\
 	-I$(top_builddir)/data			\
 	$(common_defines)			\
@@ -243,7 +241,7 @@ test_properties_page_SOURCES =		\
 
 test_properties_page_CPPFLAGS = 		\
 	-I$(srcdir)/backend			\
-	-I$(top_srcdir)/plparse			\
+	-I$(top_srcdir)/			\
 	-I$(top_builddir)/data			\
 	-I$(srcdir)/plugins/properties		\
 	$(common_defines)			\
@@ -280,7 +278,7 @@ totem_video_indexer_SOURCES =		\
 	totem-resources.h
 
 totem_video_indexer_CPPFLAGS = \
-	-I$(top_srcdir)/plparse	\
+	-I$(top_srcdir)/	\
 	-I$(srcdir)/backend	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
@@ -311,7 +309,7 @@ totem_audio_preview_SOURCES =		\
 	totem-resources.h
 
 totem_audio_preview_CPPFLAGS =	\
-	-I$(top_srcdir)/plparse	\
+	-I$(top_srcdir)/	\
 	-I$(srcdir)/backend	\
 	-I$(top_builddir)/data	\
 	$(common_defines)	\
@@ -345,5 +343,6 @@ CLEANFILES =			\
 
 EXTRA_DIST = 				\
 	totemobject-marshal.list	\
-	totemvideolist-marshal.list
+	totemvideolist-marshal.list	\
+	totemplaylist-marshal.list
 		

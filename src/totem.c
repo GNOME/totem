@@ -65,7 +65,7 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
-#include "totem-disc.h"
+#include "plparse/totem-disc.h"
 
 #include "debug.h"
 

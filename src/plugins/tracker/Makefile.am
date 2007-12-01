@@ -20,7 +20,7 @@ common_defines = \
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
-libtracker_la_SOURCES = totem-tracker.c totem-tracker-widget.c
+libtracker_la_SOURCES = totem-tracker.c totem-tracker-widget.h totem-tracker-widget.c
 libtracker_la_LDFLAGS = $(modules_flags)
 libtracker_la_LIBADD = $(TRACKER_LIBS)
 libtracker_la_CPPFLAGS = $(common_defines)
@@ -31,7 +31,9 @@ libtracker_la_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
+	-I$(top_srcdir)/	\
 	-I$(top_srcdir)/src	\
+	-I$(srcdir)/		\
 	-I$(top_srcdir)/src/plugins
 
 EXTRA_DIST = $(plugin_in_files)

@@ -45,6 +45,7 @@ libtotem_mythtv_la_CFLAGS =	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
+	-I$(top_srcdir)/	\
 	-I$(top_srcdir)/src	\
 	-I$(top_srcdir)/src/backend \
 	-I$(top_srcdir)/src/plugins

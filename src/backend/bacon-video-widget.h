@@ -31,7 +31,7 @@
 #include <gtk/gtkeventbox.h>
 
 /* for optical disc enumeration type */
-#include "totem-disc.h"
+#include "plparse/totem-disc.h"
 
 G_BEGIN_DECLS
 

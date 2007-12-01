@@ -13,7 +13,8 @@ bvw_test_CPPFLAGS = \
 
 bvw_test_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)		\
+	-I$(top_srcdir)/
 
 bvw_test_LDADD = \
 	libbaconvideowidget.la \
@@ -47,7 +48,6 @@ libbaconvideowidget_la_SOURCES += \
 endif
 
 libbaconvideowidget_la_CPPFLAGS =		\
-	-I$(top_srcdir)/plparse			\
 	-D_REENTRANT				\
 	-DGCONF_PREFIX=\""/apps/totem"\"	\
 	$(DISABLE_DEPRECATED)			\
@@ -56,7 +56,9 @@ libbaconvideowidget_la_CPPFLAGS =		\
 libbaconvideowidget_la_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
 	$(NVTV_CFLAGS) 		\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)		\
+	-I$(top_srcdir)/
+
 
 libbaconvideowidget_la_LIBADD = \
 	$(XVIDMODE_LIBS)
