@@ -86,7 +86,8 @@ class YouTube (totem.Plugin):
 	def on_notebook_page_changed (self, notebook, notebook_page, page_num):
 		self.current_treeview_name = self.notebook_pages[page_num]
 	def on_row_activated (self, treeview, path, column):
-		model, iter = treeview.get_selection ().get_selected ()
+		model, rows = treeview.get_selection ().get_selected_rows ()
+		iter = model.get_iter (rows[0])
 		youtube_id = model.get_value (iter, 3)
 		
 		"""Get related videos"""
@@ -95,7 +96,8 @@ class YouTube (totem.Plugin):
 		self.results["related"] = 0
 		self.get_results ("/feeds/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
 	def on_starting_video (self, treeview, path, user_data):
-		model, iter = treeview.get_selection ().get_selected ()
+		model, rows = treeview.get_selection ().get_selected_rows ()
+		iter = model.get_iter (rows[0])
 		youtube_id = model.get_value (iter, 3)
 
 		"""Get the video stream MRL"""
