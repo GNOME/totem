@@ -1,3 +1,50 @@
+2007-12-02  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* plparse/totem-pl-parser.c: (totem_pl_parser_class_init),
+	(totem_pl_parser_init), (totem_pl_parser_finalize):
+	* src/plugins/galago/totem-galago.c:
+	(totem_galago_plugin_class_init), (totem_galago_plugin_dispose),
+	(totem_galago_plugin_finalize):
+	* src/plugins/tracker/totem-tracker-widget.c:
+	(totem_tracker_widget_class_init), (totem_tracker_widget_dispose):
+	* src/plugins/tracker/totem-tracker-widget.h:
+	* src/plugins/tracker/totem-tracker.c:
+	(totem_tracker_plugin_class_init):
+	* src/totem-menu.c: (create_lang_actions):
+	* src/totem-playlist.c: (totem_playlist_update_save_button),
+	(totem_playlist_save_current_playlist_ext), (drop_cb),
+	(playlist_select_subtitle_action_callback),
+	(playlist_copy_location_action_callback),
+	(playlist_show_popup_menu), (totem_playlist_set_reorderable),
+	(button_press_cb), (button_release_cb), (drag_begin_cb),
+	(drag_end_cb), (selection_changed), (update_current_from_playlist),
+	(totem_playlist_foreach_selected),
+	(totem_playlist_emit_item_removed), (playlist_remove_files),
+	(totem_playlist_save_files), (totem_playlist_move_files),
+	(totem_playlist_key_press), (treeview_row_changed),
+	(init_treeview), (update_repeat_cb), (ensure_shuffled),
+	(update_shuffle_cb), (update_lockdown), (init_config),
+	(totem_playlist_dispose), (totem_playlist_finalize),
+	(totem_playlist_init), (totem_playlist_new),
+	(totem_playlist_add_one_mrl), (totem_playlist_add_mrl),
+	(totem_playlist_clear), (totem_playlist_clear_with_compare),
+	(totem_playlist_get_current_mrl),
+	(totem_playlist_get_current_title), (totem_playlist_get_title),
+	(totem_playlist_get_current_metadata),
+	(totem_playlist_has_previous_mrl), (totem_playlist_has_next_mrl),
+	(totem_playlist_set_title), (totem_playlist_set_playing),
+	(totem_playlist_get_playing), (totem_playlist_set_previous),
+	(totem_playlist_set_next), (totem_playlist_get_repeat),
+	(totem_playlist_set_repeat), (totem_playlist_get_shuffle),
+	(totem_playlist_set_shuffle), (totem_playlist_set_at_start),
+	(totem_playlist_set_at_end), (totem_playlist_get_current),
+	(totem_playlist_set_current), (totem_playlist_class_init),
+	(totem_playlist_foreach):
+	* src/totem-playlist.h:
+	* src/totem.c: (totem_action_exit): Clean up a couple of other
+	memory leaks, clean up disposal/finalization on a few classes,
+	and rename TotemPlaylist->_priv to TotemPlaylist->priv.
+
 2007-12-01  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/plugins/youtube/youtube.py: Fix the related videos

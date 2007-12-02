@@ -27,7 +27,6 @@
 #include <gtk/gtk.h>
 #include <tracker.h>
 
-
 #define TOTEM_TYPE_TRACKER_WIDGET               (totem_tracker_widget_get_type ())
 #define TOTEM_TRACKER_WIDGET(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_TRACKER_WIDGET, TotemTrackerWidget))
 #define TOTEM_TRACKER_WIDGET_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_TRACKER_WIDGET, TotemTrackerWidgetClass))
@@ -42,15 +41,11 @@ typedef struct TotemTrackerWidget {
 	
 	TotemObject *totem;
 	TotemTrackerWidgetPrivate *priv;
-	
 } TotemTrackerWidget;
 
 typedef struct {
-    GtkEventBoxClass parent_class;
-	
+	GtkEventBoxClass parent_class;
 } TotemTrackerWidgetClass;
-
-
 
 GType       totem_tracker_widget_get_type   (void);
 GtkWidget*  totem_tracker_widget_new        (TotemObject *totem); 

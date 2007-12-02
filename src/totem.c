@@ -196,7 +196,7 @@ void
 totem_action_exit (Totem *totem)
 {
 	GdkDisplay *display = NULL;
-	const char *page_id;
+	char *page_id;
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();

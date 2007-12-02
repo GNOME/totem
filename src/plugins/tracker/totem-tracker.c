@@ -61,19 +61,16 @@ G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_tracker_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_tracker_plugin_init			(TotemTrackerPlugin *plugin);
-static void totem_tracker_plugin_finalize		(GObject *object);
 static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
-TOTEM_PLUGIN_REGISTER(TotemTrackerPlugin, totem_tracker_plugin)
+TOTEM_PLUGIN_REGISTER (TotemTrackerPlugin, totem_tracker_plugin)
 
 static void
 totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
-	object_class->finalize = totem_tracker_plugin_finalize;
 
 	plugin_class->activate = impl_activate;
 	plugin_class->deactivate = impl_deactivate;
@@ -82,12 +79,6 @@ totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
 static void
 totem_tracker_plugin_init (TotemTrackerPlugin *plugin)
 {
-}
-
-static void
-totem_tracker_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_tracker_plugin_parent_class)->finalize (object);
 }
 
 static gboolean

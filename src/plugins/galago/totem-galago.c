@@ -64,6 +64,7 @@ G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType totem_galago_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_galago_plugin_init		(TotemGalagoPlugin *plugin);
+static void totem_galago_plugin_dispose		(GObject *object);
 static void totem_galago_plugin_finalize	(GObject *object);
 static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
@@ -76,6 +77,7 @@ totem_galago_plugin_class_init (TotemGalagoPluginClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
+	object_class->dispose = totem_galago_plugin_dispose;
 	object_class->finalize = totem_galago_plugin_finalize;
 
 	plugin_class->activate = impl_activate;
@@ -96,7 +98,7 @@ totem_galago_plugin_init (TotemGalagoPlugin *plugin)
 }
 
 static void
-totem_galago_plugin_finalize (GObject *object)
+totem_galago_plugin_dispose (GObject *object)
 {
 	TotemGalagoPlugin *plugin = TOTEM_GALAGO_PLUGIN (object);
 
@@ -104,6 +106,14 @@ totem_galago_plugin_finalize (GObject *object)
 		g_object_unref (plugin->me);
 		plugin->me = NULL;
 	}
+
+	G_OBJECT_CLASS (totem_galago_plugin_parent_class)->dispose (object);
+}
+
+static void
+totem_galago_plugin_finalize (GObject *object)
+{
+	TotemGalagoPlugin *plugin = TOTEM_GALAGO_PLUGIN (object);
 
 	if (galago_is_connected ())
 		galago_uninit ();

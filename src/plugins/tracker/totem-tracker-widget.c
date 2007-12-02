@@ -38,7 +38,7 @@
 #include "totem-cell-renderer-video.h"
 #include "totem-playlist.h"
 #include "totem-video-list.h"
-
+#include "totem-interface.h"
 
 #define TRACKER_SERVICE			"org.freedesktop.Tracker"
 #define TRACKER_OBJECT			"/org/freedesktop/tracker"
@@ -74,10 +74,9 @@ enum {
 	PROP_TOTEM
 };
 
-static GObjectClass *parent_class = NULL;
-
 static void totem_tracker_widget_class_init	(TotemTrackerWidgetClass *klass);
 static void totem_tracker_widget_init		(TotemTrackerWidget	 *widget);
+static void totem_tracker_widget_dispose	(GObject *object);
 static void totem_tracker_widget_set_property	(GObject *object,
 						 guint property_id,
 						 const GValue *value,
@@ -86,19 +85,29 @@ static void totem_tracker_widget_set_property	(GObject *object,
 static void totem_tracker_widget_class_init (TotemTrackerWidgetClass *klass)
 {
 	GObjectClass *object_class;
-	GtkWidgetClass *widget_class;
 
 	g_type_class_add_private (klass, sizeof (TotemTrackerWidgetPrivate));
 
-	parent_class = g_type_class_peek_parent (klass);
-	widget_class = GTK_WIDGET_CLASS (klass);
-
 	object_class = G_OBJECT_CLASS (klass);
+	object_class->dispose = totem_tracker_widget_dispose;
 	object_class->set_property = totem_tracker_widget_set_property;
 
 	g_object_class_install_property (object_class, PROP_TOTEM,
 					 g_param_spec_object ("totem", NULL, NULL,
 							      TOTEM_TYPE_OBJECT, G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+totem_tracker_widget_dispose (GObject *object)
+{
+	TotemTrackerWidget *self = TOTEM_TRACKER_WIDGET (object);
+
+	if (self->priv->result_store != NULL) {
+		g_object_unref (self->priv->result_store);
+		self->priv->result_store = NULL;
+	}
+
+	G_OBJECT_CLASS (totem_tracker_widget_parent_class)->dispose (object);
 }
 
 static void

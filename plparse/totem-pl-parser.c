@@ -133,6 +133,8 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+	g_type_class_add_private (klass, sizeof (TotemPlParserPrivate));
+
 	object_class->finalize = totem_pl_parser_finalize;
 	object_class->set_property = totem_pl_parser_set_property;
 	object_class->get_property = totem_pl_parser_get_property;
@@ -647,7 +649,7 @@ static void
 totem_pl_parser_init (TotemPlParser *parser)
 {
 	GParamSpec *pspec;
-	parser->priv = g_new0 (TotemPlParserPrivate, 1);
+	parser->priv = G_TYPE_INSTANCE_GET_PRIVATE (parser, TOTEM_TYPE_PL_PARSER, TotemPlParserPrivate);
 
 	parser->priv->pspec_pool = g_param_spec_pool_new (FALSE);
 	pspec = g_param_spec_string ("url", "url",
@@ -753,11 +755,6 @@ totem_pl_parser_finalize (GObject *object)
 
 	g_list_foreach (parser->priv->ignore_mimetypes, (GFunc) g_free, NULL);
 	g_list_free (parser->priv->ignore_mimetypes);
-
-	g_object_unref (parser->priv->pspec_pool);
-
-	g_free (parser->priv);
-	parser->priv = NULL;
 
 	G_OBJECT_CLASS (totem_pl_parser_parent_class)->finalize (object);
 }

@@ -359,6 +359,7 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 
 		add_lang_action (totem, action_group, ui_id, path, prefix,
 				 action_data, i, num + 1, &group);
+		g_free (action_data);
  		i++;
 	}
 
