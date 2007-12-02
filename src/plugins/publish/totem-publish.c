@@ -60,11 +60,8 @@
 enum
 {
 	NAME_COLUMN,
-	TYPE_COLUMN,
-	HOST_COLUMN,
-	PORT_COLUMN,
-
-	COLUMN_COUNT
+	INFO_COLUMN,
+	LAST_COLUMN
 };
 
 typedef struct
@@ -326,32 +323,23 @@ totem_publish_plugin_playlist_item_removed_cb (TotemPlaylist *playlist,
 }
 
 static void
-totem_publish_plugin_service_found_cb (EpcServiceMonitor *monitor,
-				       const gchar       *type,
-				       const gchar       *name,
-				       const gchar       *host,
-				       guint              port,
-				       gpointer           data)
+totem_publish_plugin_service_found_cb (TotemPublishPlugin *self,
+				       const gchar        *name,
+				       EpcServiceInfo     *info)
 {
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
-	EpcProtocol protocol = epc_service_type_get_protocol (type);
 	GtkTreeIter iter;
 
 	gtk_list_store_append (self->neighbours, &iter);
 	gtk_list_store_set (self->neighbours, &iter, NAME_COLUMN, name,
-						     TYPE_COLUMN, protocol,
-						     HOST_COLUMN, host,
-						     PORT_COLUMN, port,
+						     INFO_COLUMN, info,
 						     -1);
 }
 
 static void
-totem_publish_plugin_service_removed_cb (EpcServiceMonitor *monitor,
-					 const gchar       *type,
-					 const gchar       *name,
-					 gpointer           data)
+totem_publish_plugin_service_removed_cb (TotemPublishPlugin *self,
+					 const gchar        *name,
+					 const gchar        *type)
 {
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	GtkTreeModel *model = GTK_TREE_MODEL (self->neighbours);
 	GtkTreeIter iter;
 
@@ -383,12 +371,9 @@ totem_publish_plugin_service_removed_cb (EpcServiceMonitor *monitor,
 }
 
 static void
-totem_publish_plugin_scanning_done_cb (EpcServiceMonitor *monitor,
-				       const gchar       *type,
-				       gpointer           data)
+totem_publish_plugin_scanning_done_cb (TotemPublishPlugin *self,
+				       const gchar        *type)
 {
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
-
 	if (self->scanning_id) {
 		g_source_remove (self->scanning_id);
 		self->scanning_id = 0;
@@ -399,12 +384,10 @@ totem_publish_plugin_scanning_done_cb (EpcServiceMonitor *monitor,
 }
 
 static void
-totem_publish_plugin_load_playlist (TotemPublishPlugin *self,
-				    EpcProtocol         protocol,
-				    const gchar        *host,
-				    guint               port)
+totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
+				    const EpcServiceInfo *info)
 {
-	EpcConsumer *consumer = epc_consumer_new (protocol, host, port);
+	EpcConsumer *consumer = epc_consumer_new (info);
 	GKeyFile *keyfile = g_key_file_new ();
 	gchar *contents = NULL;
 	GError *error = NULL;
@@ -463,20 +446,14 @@ totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *view,
 						       gpointer           data)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+	EpcServiceInfo *info = NULL;
 	GtkTreeIter iter;
 
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->neighbours), &iter, path)) {
-		EpcProtocol protocol;
-		gchar *host;
-		guint port;
-
-		gtk_tree_model_get (GTK_TREE_MODEL (self->neighbours), &iter,
-				    TYPE_COLUMN, &protocol, HOST_COLUMN, &host,
-				    PORT_COLUMN, &port, -1);
-
-		totem_publish_plugin_load_playlist (self, protocol, host, port);
-
-		g_free (host);
+		gtk_tree_model_get (GTK_TREE_MODEL (self->neighbours),
+				    &iter, INFO_COLUMN, &info, -1);
+		totem_publish_plugin_load_playlist (self, info);
+		epc_service_info_unref (info);
 	}
 }
 
@@ -498,19 +475,17 @@ totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self)
 	self->scanning = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-scanning"));
 	self->scanning_id = g_timeout_add (100, totem_publish_plugin_scanning_cb, self->scanning);
 
-	g_signal_connect (self->monitor, "service-found",
-			  G_CALLBACK (totem_publish_plugin_service_found_cb),
-			  self);
-	g_signal_connect (self->monitor, "service-removed",
-			  G_CALLBACK (totem_publish_plugin_service_removed_cb),
-			  self);
-	g_signal_connect (self->monitor, "scanning-done",
-			  G_CALLBACK (totem_publish_plugin_scanning_done_cb),
-			  self);
+	g_signal_connect_swapped (self->monitor, "service-found",
+				  G_CALLBACK (totem_publish_plugin_service_found_cb),
+				  self);
+	g_signal_connect_swapped (self->monitor, "service-removed",
+				  G_CALLBACK (totem_publish_plugin_service_removed_cb),
+				  self);
+	g_signal_connect_swapped (self->monitor, "scanning-done",
+				  G_CALLBACK (totem_publish_plugin_scanning_done_cb),
+				  self);
 
-	self->neighbours = gtk_list_store_new (COLUMN_COUNT,
-					       G_TYPE_STRING, EPC_TYPE_PROTOCOL,
-					       G_TYPE_STRING, G_TYPE_UINT);
+	self->neighbours = gtk_list_store_new (LAST_COLUMN, G_TYPE_STRING, EPC_TYPE_SERVICE_INFO);
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (list),
 				 GTK_TREE_MODEL (self->neighbours));
