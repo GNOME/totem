@@ -113,8 +113,6 @@ totem_galago_plugin_dispose (GObject *object)
 static void
 totem_galago_plugin_finalize (GObject *object)
 {
-	TotemGalagoPlugin *plugin = TOTEM_GALAGO_PLUGIN (object);
-
 	if (galago_is_connected ())
 		galago_uninit ();
 

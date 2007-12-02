@@ -58,7 +58,7 @@ typedef struct
 
 
 G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
-GType	totem_tracker_plugin_get_type		(void) G_GNUC_CONST;
+GType	totem_tracker_plugin_get_type			(void) G_GNUC_CONST;
 
 static void totem_tracker_plugin_init			(TotemTrackerPlugin *plugin);
 static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
@@ -69,7 +69,6 @@ TOTEM_PLUGIN_REGISTER (TotemTrackerPlugin, totem_tracker_plugin)
 static void
 totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	plugin_class->activate = impl_activate;
