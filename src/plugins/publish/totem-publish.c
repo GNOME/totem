@@ -308,6 +308,7 @@ totem_publish_plugin_playlist_item_added_cb (TotemPlaylist *playlist,
 				   g_strdup (url), g_free);
 
 	g_free (key);
+
 }
 
 static void
@@ -404,6 +405,7 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 		if (error)
 			goto out;
 
+		ev_sidebar_set_current_page (EV_SIDEBAR (self->totem->sidebar), "playlist");
 		totem_playlist_clear (self->totem->playlist);
 
 		for (i = 1; i <= n_entries; ++i) {
@@ -423,8 +425,6 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 			g_free (title);
 			g_free (mrl);
 		}
-
-		ev_sidebar_set_current_page (EV_SIDEBAR (self->totem->sidebar), "playlist");
 	}
 
 out:
@@ -588,11 +588,12 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	self->item_removed_id = g_signal_connect (self->totem->playlist, "item-removed",
 		G_CALLBACK (totem_publish_plugin_playlist_item_removed_cb), self);
 
-	totem_playlist_foreach (self->totem->playlist,
-				totem_publish_plugin_playlist_item_added_cb,
-				self);
-
 	G_UNLOCK (totem_publish_plugin_lock);
+
+	totem_playlist_foreach (self->totem->playlist,
+				totem_publish_plugin_playlist_item_added_cb, self);
+
+	totem_publish_plugin_playlist_changed_cb (self->totem->playlist, self);
 
 	return epc_publisher_run_async (self->publisher, error);
 }
