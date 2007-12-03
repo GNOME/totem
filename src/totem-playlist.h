@@ -25,8 +25,7 @@
 
 #include <gtk/gtkvbox.h>
 #include <libgnomevfs/gnome-vfs-volume.h>
-
-#include "plparse/totem-pl-parser.h"
+#include <totem-pl-parser.h>
 
 G_BEGIN_DECLS
 

@@ -1,4 +1,4 @@
-SUBDIRS = lib plparse bindings po data src help
+SUBDIRS = lib bindings po data src help
 
 if ENABLE_BROWSER_PLUGINS
 SUBDIRS += browser-plugin
@@ -14,16 +14,12 @@ EXTRA_DIST =			\
 	totem.spec.in		\
 	totem.spec		\
 	omf.make		\
-	totem-plparser.pc.in	\
 	xmldocs.make		\
 	gnome-doc-utils.make
 
-CLEANFILES = totem.spec totem-plparser.pc
+CLEANFILES = totem.spec
 
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
 		 gnome-doc-utils.make
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = totem-plparser.pc
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper

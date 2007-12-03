@@ -1,6 +1,5 @@
 noinst_LTLIBRARIES =					\
-	libtotemscrsaver.la				\
-	libtotem_glibc.la
+	libtotemscrsaver.la
 
 common_defines = \
 	-D_REENTRANT					\
@@ -30,11 +29,4 @@ libtotemscrsaver_la_LDFLAGS =				\
 libtotemscrsaver_la_LIBADD =				\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)
-
-noinst_HEADERS = totem_internal.h
-
-libtotem_glibc_la_SOURCES =
-libtotem_glibc_la_LIBADD = @LTLIBOBJS@
-
-EXTRA_DIST = asprintf.c
 

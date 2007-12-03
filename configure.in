@@ -27,11 +27,6 @@ AM_PROG_CC_C_O
 AC_PROG_LIBTOOL()
 PKG_PROG_PKG_CONFIG
 
-dnl Use local version of asprintf when not on the current system.
-AC_CHECK_FUNCS(asprintf)
-AC_CONFIG_LIBOBJ_DIR([lib])
-AC_REPLACE_FUNCS([asprintf])
-
 AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
@@ -39,21 +34,12 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 GLIB_REQS=2.13.4
 GTK_REQS=2.11.6
 GNOMEVFS_REQS=2.16.0
+TOTEM_PLPARSER_REQS=2.21.3
 GNOMEUI_REQS=2.3.3
 LIBGNOME_REQS=2.14.0
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.61
 VALA_REQS=0.0.8
-
-# Before making a release, the PLPARSER_LT_VERSION string should be modified.
-# The string is of the form C:R:A.
-# - If interfaces have been changed or added, but binary compatibility has
-#   been preserved, change to C+1:0:A+1
-# - If binary compatibility has been broken (eg removed or changed interfaces)
-#   change to C+1:0:0
-# - If the interface is the same as the previous version, change to C:R+1:A
-PLPARSER_LT_VERSION=10:1:0
-AC_SUBST(PLPARSER_LT_VERSION)
 
 TOTEM_VERSION_MAJOR=totem_version_major
 TOTEM_VERSION_MINOR=totem_version_minor
@@ -61,12 +47,6 @@ TOTEM_VERSION_MICRO=totem_version_micro
 AC_SUBST(TOTEM_VERSION_MAJOR)
 AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
-TOTEM_PL_PARSER_VERSION_MAJOR=totem_version_major
-TOTEM_PL_PARSER_VERSION_MINOR=totem_version_minor
-TOTEM_PL_PARSER_VERSION_MICRO=totem_version_micro
-AC_SUBST(TOTEM_PL_PARSER_VERSION_MAJOR)
-AC_SUBST(TOTEM_PL_PARSER_VERSION_MINOR)
-AC_SUBST(TOTEM_PL_PARSER_VERSION_MICRO)
 
 # The full list of plugins
 allowed_plugins="screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker"
@@ -254,11 +234,11 @@ dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 $ISO_CODES $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser > $TOTEM_PLPARSER_REQS $ISO_CODES $MM)
 	HAVE_GNOME=yes
 else
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 $ISO_CODES $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser > $TOTEM_PLPARSER_REQS $ISO_CODES $MM)
 	AC_DEFINE(USE_STABLE_LIBGNOMEUI, 1, [defined if we don't have GNOME])
 	AC_DEFINE(HAVE_GTK_ONLY, 1, [defined if GNOME isn't used])
 	HAVE_GNOME=no
@@ -493,7 +473,8 @@ if test "$enable_browser_plugins" = "yes" ; then
 		[glib-2.0
 		 gnome-vfs-2.0 >= $GNOMEVFS_REQS
 		 gnome-vfs-module-2.0 >= $GNOMEVFS_REQS
-		 gthread-2.0],
+		 gthread-2.0
+		 totem-plparser-mini > $TOTEM_PLPARSER_REQS],
 		[],[enable_browser_plugins=no])
 
 	BROWSER_PLUGIN_CFLAGS="$MOZILLA_NOT_LINKED_CFLAGS $BROWSER_PLUGIN_CFLAGS"
@@ -826,13 +807,6 @@ fi
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
 
-dnl Check for packages for building libtotem-plparser.la
-PKG_CHECK_MODULES(TOTEM_PLPARSER, [gtk+-2.0 libxml-2.0 gnome-vfs-2.0
-                                   gnome-vfs-module-2.0])
-
-PKG_CHECK_MODULES([TOTEM_PLPARSER_MINI],
-	[gnome-vfs-2.0 gnome-vfs-module-2.0])
-
 GNOME_COMMON_INIT
 GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
@@ -958,7 +932,8 @@ if test "x$have_python" != "xno"; then
 	PYGTK_REQUIRED=2.12.0
 
 	PKG_CHECK_MODULES([PYGTK], [
-		pygtk-2.0 >= $PYGTK_REQUIRED],
+		pygtk-2.0 >= $PYGTK_REQUIRED
+		totem-plparser > $TOTEM_PLPARSER_REQS],
 		[],
 		[
 		have_python=no
@@ -1041,11 +1016,7 @@ AM_CONDITIONAL(ENABLE_VALA, test "x$with_vala" = "xyes")
 AC_OUTPUT([
 Makefile
 totem.spec
-totem-plparser.pc
-totem-plparser-uninstalled.pc
 lib/Makefile
-plparse/Makefile
-plparse/totem-pl-parser-features.h
 src/Makefile
 src/plugins/Makefile
 src/plugins/bemused/Makefile

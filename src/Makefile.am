@@ -139,7 +139,6 @@ totem_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 totem_LDADD =						\
-	$(top_builddir)/plparse/libtotem-plparser.la	\
 	backend/libbaconvideowidget.la			\
 	plugins/libtotemmodule.la			\
 	libbaconmessageconnection.la			\

@@ -30,7 +30,7 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-#include "plparse/totem-disc.h"
+#include <totem-disc.h>
 #include "totem-playlist.h"
 
 #define TOTEM_GCONF_PREFIX "/apps/totem"

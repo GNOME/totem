@@ -31,6 +31,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#include <totem-disc.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -65,7 +66,6 @@
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
-#include "plparse/totem-disc.h"
 
 #include "debug.h"
 

@@ -1,3 +1,23 @@
+2007-12-03  Bastien Nocera  <hadess@hadess.net>
+
+	* plparse/*: 
+	* totem-plparser-uninstalled.pc.in:
+	* totem-plparser.pc.in: Move to totem-pl-parser module
+
+	* Makefile.am:
+	* bindings/python/totem.override:
+	* browser-plugin/Makefile.am:
+	* configure.in:
+	* lib/Makefile.am:
+	* src/Makefile.am:
+	* src/backend/bacon-video-widget.h:
+	* src/totem-playlist.h:
+	* src/totem.c:
+	* src/totem.h: Update includes and configure to use the external
+	totem-pl-parser
+
+	(Closes: #462153)
+
 2007-12-03  Mathias Hasselmann  <mathias@openismus.com>
 
 	Small improvements to the publish plugin.
