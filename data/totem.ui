@@ -510,6 +510,147 @@
    </ui>
 </object>
 
+<object class="GtkListStore" id="tpw_speed_liststore">
+  <columns>
+    <column type="gchararray"/>
+  </columns>
+  <data>
+    <row>
+      <col id="0" translatable="yes">14.4 Kbps Modem</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">19.2 Kbps Modem</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">28.8 Kbps Modem</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">33.6 Kbps Modem</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">34.4 Kbps Modem</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">56 Kbps Modem/ISDN</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">112 Kbps Dual ISDN/DSL</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">256 Kbps DSL/Cable</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">384 Kbps DSL/Cable</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">512 Kbps DSL/Cable</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">1.5 Mbps T1/Intranet/LAN</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">Intranet/LAN</col>
+    </row>
+  </data>
+</object>
+
+<object class="GtkListStore" id="tpw_visuals_size_liststore">
+  <columns>
+    <column type="gchararray"/>
+  </columns>
+  <data>
+    <row>
+      <col id="0" translatable="yes">Normal</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">Large</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">Extra Large</col>
+    </row>
+  </data>
+</object>
+
+<object class="GtkListStore" id="tpw_visuals_type_liststore">
+  <columns>
+    <column type="gchararray"/>
+  </columns>
+  <data>
+  </data>
+</object>
+
+<object class="GtkListStore" id="tpw_sound_output_liststore">
+  <columns>
+    <column type="gchararray"/>
+  </columns>
+  <data>
+    <row>
+      <col id="0" translatable="yes">Stereo</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">4-channel</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">4.1-channel</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">5.0-channel</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">5.1-channel</col>
+    </row>
+    <row>
+      <col id="0" translatable="yes">AC3 Passthrough</col>
+    </row>
+  </data>
+</object>
+
+<object class="GtkAdjustment" id="tpw_bright_adjustment">
+  <property name="lower">0</property>
+  <property name="upper">65535</property>
+  <property name="step-increment">1000</property>
+  <property name="page-increment">2000</property>
+  <property name="page-size">250</property>
+  <property name="value">32767</property>
+</object>
+
+<object class="GtkAdjustment" id="tpw_contrast_adjustment">
+  <property name="lower">0</property>
+  <property name="upper">65535</property>
+  <property name="step-increment">1000</property>
+  <property name="page-increment">2000</property>
+  <property name="page-size">250</property>
+  <property name="value">32767</property>
+</object>
+
+<object class="GtkAdjustment" id="tpw_saturation_adjustment">
+  <property name="lower">0</property>
+  <property name="upper">65535</property>
+  <property name="step-increment">1000</property>
+  <property name="page-increment">2000</property>
+  <property name="page-size">250</property>
+  <property name="value">32767</property>
+</object>
+
+<object class="GtkAdjustment" id="tpw_hue_adjustment">
+  <property name="lower">0</property>
+  <property name="upper">65535</property>
+  <property name="step-increment">1000</property>
+  <property name="page-increment">2000</property>
+  <property name="page-size">250</property>
+  <property name="value">32767</property>
+</object>
+
+<object class="GtkAdjustment" id="tmw_seek_adjustment">
+  <property name="lower">0</property>
+  <property name="upper">65535</property>
+  <property name="step-increment">1</property>
+  <property name="page-increment">10</property>
+  <property name="page-size">0</property>
+  <property name="value">0</property>
+  <signal name="value-changed" handler="seek_slider_changed_cb"/>
+</object>
+
 <object class="GtkDialog" id="totem_preferences_window">
   <property name="border_width">5</property>
   <property name="title" translatable="yes">Totem Preferences</property>
@@ -653,49 +794,6 @@
 			  </child>
 
 			  <child>
-			    <object class="GtkListStore" id="tpw_speed_liststore">
-                              <columns>
-                                <column type="gchararray"/>
-                              </columns>
-                              <data>
-                                <row>
-                                  <col id="0" translatable="yes">14.4 Kbps Modem</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">19.2 Kbps Modem</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">28.8 Kbps Modem</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">33.6 Kbps Modem</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">34.4 Kbps Modem</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">56 Kbps Modem/ISDN</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">112 Kbps Dual ISDN/DSL</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">256 Kbps DSL/Cable</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">384 Kbps DSL/Cable</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">512 Kbps DSL/Cable</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">1.5 Mbps T1/Intranet/LAN</col>
-                                </row>
-                                <row>
-                                  <col id="0" translatable="yes">Intranet/LAN</col>
-                                </row>
-                              </data>
-                            </object>
 			    <object class="GtkComboBox" id="tpw_speed_combobox">
 			      <property name="visible">True</property>
 			      <property name="model">tpw_speed_liststore</property>
@@ -1288,22 +1386,6 @@
 			      </child>
 
 			      <child>
-			        <object class="GtkListStore" id="tpw_visuals_size_liststore">
-                                  <columns>
-                                    <column type="gchararray"/>
-                                  </columns>
-                                  <data>
-                                    <row>
-                                      <col id="0" translatable="yes">Normal</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">Large</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">Extra Large</col>
-                                    </row>
-                                  </data>
-                                </object>
 				<object class="GtkComboBox" id="tpw_visuals_size_combobox">
 				  <property name="visible">True</property>
 				  <property name="model">tpw_visuals_size_liststore</property>
@@ -1328,13 +1410,6 @@
 			      </child>
 
 			      <child>
-			        <object class="GtkListStore" id="tpw_visuals_type_liststore">
-                                  <columns>
-                                    <column type="gchararray"/>
-                                  </columns>
-                                  <data>
-                                  </data>
-                                </object>
 				<object class="GtkComboBox" id="tpw_visuals_type_combobox">
 				  <property name="visible">True</property>
 				  <property name="add_tearoffs">False</property>
@@ -1342,7 +1417,7 @@
 				  <property name="model">tpw_visuals_type_liststore</property>
 				  <signal name="changed" handler="visual_menu_changed"/>
 				  <child>
-				    <object class="GtkCellRendererText" id="renderer1"/>"
+				    <object class="GtkCellRendererText" id="renderer1"/>
 				    <attributes>
 				      <attribute name="text">0</attribute>
 			      	    </attributes>
@@ -1504,14 +1579,6 @@
 			  </child>
 
 			  <child>
-			    <object class="GtkAdjustment" id="tpw_bright_adjustment">
-		              <property name="lower">0</property>
-		              <property name="upper">65535</property>
-		              <property name="step-increment">1000</property>
-		              <property name="page-increment">2000</property>
-		              <property name="page-size">250</property>
-		              <property name="value">32767</property>
-		            </object>
 			    <object class="GtkHScale" id="tpw_bright_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
@@ -1533,14 +1600,6 @@
 			  </child>
 
 			  <child>
-			    <object class="GtkAdjustment" id="tpw_contrast_adjustment">
-		              <property name="lower">0</property>
-		              <property name="upper">65535</property>
-		              <property name="step-increment">1000</property>
-		              <property name="page-increment">2000</property>
-		              <property name="page-size">250</property>
-		              <property name="value">32767</property>
-		            </object>
 			    <object class="GtkHScale" id="tpw_contrast_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
@@ -1621,14 +1680,6 @@
 			  </child>
 
 			  <child>
-			    <object class="GtkAdjustment" id="tpw_saturation_adjustment">
-		              <property name="lower">0</property>
-		              <property name="upper">65535</property>
-		              <property name="step-increment">1000</property>
-		              <property name="page-increment">2000</property>
-		              <property name="page-size">250</property>
-		              <property name="value">32767</property>
-		            </object>
 			    <object class="GtkHScale" id="tpw_saturation_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
@@ -1651,14 +1702,6 @@
 			  </child>
 
 			  <child>
-			    <object class="GtkAdjustment" id="tpw_hue_adjustment">
-		              <property name="lower">0</property>
-		              <property name="upper">65535</property>
-		              <property name="step-increment">1000</property>
-		              <property name="page-increment">2000</property>
-		              <property name="page-size">250</property>
-		              <property name="value">32767</property>
-		            </object>
 			    <object class="GtkHScale" id="tpw_hue_scale">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
@@ -1845,31 +1888,6 @@
 			      </child>
 
 			      <child>
-			        <object class="GtkListStore" id="tpw_sound_output_liststore">
-                                  <columns>
-                                    <column type="gchararray"/>
-                                  </columns>
-                                  <data>
-                                    <row>
-                                      <col id="0" translatable="yes">Stereo</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">4-channel</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">4.1-channel</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">5.0-channel</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">5.1-channel</col>
-                                    </row>
-                                    <row>
-                                      <col id="0" translatable="yes">AC3 Passthrough</col>
-                                    </row>
-                                  </data>
-                                </object>
 				<object class="GtkComboBox" id="tpw_sound_output_combobox">
 				  <property name="visible">True</property>
 				  <property name="model">tpw_sound_output_liststore</property>
@@ -1906,9 +1924,7 @@
 		    </packing>
 		  </child>
 
-		  <child>
-		    <placeholder/>
-		  </child>
+		  <!--Placeholder-->
 		</object>
 		<packing>
 		  <property name="padding">0</property>
@@ -2021,9 +2037,7 @@
 		  <property name="visible_window">True</property>
 		  <property name="above_child">False</property>
 
-		  <child>
-		    <placeholder/>
-		  </child>
+		  <!--Placeholder-->
 		</object>
 		<packing>
 		  <property name="padding">0</property>
@@ -2072,15 +2086,6 @@
 		      </child>
 
 		      <child>
-		        <object class="GtkAdjustment" id="tmw_seek_adjustment">
-		          <property name="lower">0</property>
-		          <property name="upper">65535</property>
-		          <property name="step-increment">1</property>
-		          <property name="page-increment">10</property>
-		          <property name="page-size">0</property>
-		          <property name="value">0</property>
-		          <signal name="value-changed" handler="seek_slider_changed_cb"/>
-		        </object>
 			<object class="GtkHScale" id="tmw_seek_hscale">
 			  <property name="visible">True</property>
 			  <property name="sensitive">False</property>
@@ -2164,9 +2169,7 @@
 	    </packing>
 	  </child>
 
-	  <child>
-	    <placeholder/>
-	  </child>
+	  <!--Placeholder-->
 	</object>
 	<packing>
 	  <property name="padding">0</property>
