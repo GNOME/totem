@@ -179,7 +179,7 @@ libtotem_basic_plugin_la_CXXFLAGS = \
 libtotem_basic_plugin_la_LIBADD =					\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
-	$(MOZILLA_LIBS)	\
+	$(BROWSER_PLUGIN_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_basic_plugin_la_LDFLAGS = \
@@ -245,7 +245,7 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 libtotem_gmp_plugin_la_LIBADD =						\
 	libtotempluginviewer_helper.la	\
 	$(DBUS_LIBS)	\
-	$(MOZILLA_LIBS)	\
+	$(BROWSER_PLUGIN_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_gmp_plugin_la_LDFLAGS = \
@@ -305,7 +305,7 @@ libtotem_complex_plugin_la_CXXFLAGS = \
 libtotem_complex_plugin_la_LIBADD =					\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
-	$(MOZILLA_LIBS)	\
+	$(BROWSER_PLUGIN_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_complex_plugin_la_LDFLAGS = \
@@ -365,7 +365,7 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 libtotem_narrowspace_plugin_la_LIBADD =					\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
-	$(MOZILLA_LIBS)	\
+	$(BROWSER_PLUGIN_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_narrowspace_plugin_la_LDFLAGS = \
@@ -425,7 +425,7 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 libtotem_mully_plugin_la_LIBADD =					\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
-	$(MOZILLA_LIBS)	\
+	$(BROWSER_PLUGIN_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_mully_plugin_la_LDFLAGS = \
@@ -485,7 +485,7 @@ libtotem_cone_plugin_la_CXXFLAGS = \
 libtotem_cone_plugin_la_LIBADD =					\
 	libtotempluginviewer_helper.la					\
 	$(DBUS_LIBS)	\
-	$(MOZILLA_LIBS)	\
+	$(BROWSER_PLUGIN_LIBS)	\
 	$(LIBXPCOMGLUE_S)
 
 libtotem_cone_plugin_la_LDFLAGS = \
