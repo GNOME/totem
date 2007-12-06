@@ -8,7 +8,7 @@
       <object class="GtkActionGroup" id="main-action-group">
          <child>
             <object class="GtkAction" id="movie-menu">
-               <property name="label">_Movie</property>
+               <property name="label" translatable="yes">_Movie</property>
             </object>
          </child>
          <child>
@@ -100,14 +100,14 @@
 
          <child>
             <object class="GtkAction" id="view-menu">
-               <property name="label">_View</property>
+               <property name="label" translatable="yes">_View</property>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="fullscreen">
                <property name="label" translatable="yes">_Fullscreen</property>
                <property name="stock-id">gtk-fullscreen</property>
-               <property name="tooltip">Switch to fullscreen</property>
+               <property name="tooltip" translatable="yes">Switch to fullscreen</property>
                <signal name="activate" handler="fullscreen_action_callback"/>
             </object>
             <accelerator key="F11"/>

@@ -244,6 +244,7 @@ impl_activate (TotemPlugin *plugin,
 
 	/* Install the menu */
 	priv->action_group = gtk_action_group_new ("skip-to_group");
+	gtk_action_group_set_translation_domain (priv->action_group, GETTEXT_PACKAGE);
 	gtk_action_group_add_actions (priv->action_group, menu_entries,
 				G_N_ELEMENTS (menu_entries), pi);
 
