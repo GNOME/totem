@@ -376,7 +376,8 @@ impl_activate (TotemPlugin *plugin,
 					GTK_POLICY_NEVER,
 					GTK_POLICY_AUTOMATIC);
 	create_treeview (tm);
-	gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (tm->treeview));
+	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled),
+					       GTK_WIDGET (tm->treeview));
 	gtk_container_add (GTK_CONTAINER (box), scrolled);
 	gtk_box_pack_end (GTK_BOX (box), button, FALSE, FALSE, 0);
 	gtk_widget_show_all (box);
