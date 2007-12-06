@@ -1,17 +1,19 @@
-modules_flags = -export_dynamic -avoid-version -module
+BUILT_SOURCES = totem-sample-vala-plugin.c totem-sample-vala-plugin.h
 
 plugindir = $(PLUGINDIR)/sample-vala
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
+
+plugin_in_files = sample-vala.totem-plugin.in
+%.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+if ENABLE_VALA
+modules_flags = -export_dynamic -avoid-version -module
+
 plugin_LTLIBRARIES = libsample-vala.la
 # override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
 
-plugin_in_files = sample-vala.totem-plugin.in
-
-%.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
-
-plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
-
-%.c %.h: %.vala
+totem-sample-vala-plugin.c totem-sample-vala-plugin.h: totem-sample-vala-plugin.vala
 	$(VALAC) --vapidir=$(top_srcdir)/bindings/vala --pkg=totem $^
 
 common_defines = \
@@ -25,10 +27,7 @@ common_defines = \
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
-libsample_vala_la_SOURCES = \
-	totem-sample-vala-plugin.c		\
-	totem-sample-vala-plugin.h		\
-	totem-sample-vala-plugin.vala
+nodist_libsample_vala_la_SOURCES = $(BUILT_SOURCES)
 libsample_vala_la_LDFLAGS = $(modules_flags)
 libsample_vala_la_CPPFLAGS = $(common_defines)
 
@@ -42,7 +41,9 @@ libsample_vala_la_CFLAGS = \
 	-I$(top_srcdir)/src	\
 	-I$(top_srcdir)/src/plugins
 
+endif
+
 EXTRA_DIST = $(plugin_in_files) totem-sample-vala-plugin.vala
 
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
-DISTCLEANFILES = $(plugin_DATA)
+DISTCLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
