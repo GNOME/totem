@@ -1,5 +1,12 @@
 2007-12-06  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Move the plugins language detection
+	before the movie plugins detection, and remove the 
+	sample-vala plugin from the list if vala isn't installed
+	* src/plugins/sample-vala/Makefile.am: Fix build
+
+2007-12-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/publish/Makefile.am: Add missing publish
 	plugin UI file to the dist
 	* src/plugins/sample-vala/Makefile.am: Add missing

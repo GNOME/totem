@@ -1,13 +1,15 @@
 modules_flags = -export_dynamic -avoid-version -module
 
 plugindir = $(PLUGINDIR)/sample-vala
-#plugin_LTLIBRARIES = libsample-vala.la
+plugin_LTLIBRARIES = libsample-vala.la
+# override to _not_ install the test plugins
+install-pluginLTLIBRARIES:
 
 plugin_in_files = sample-vala.totem-plugin.in
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-#plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
 %.c %.h: %.vala
 	$(VALAC) --vapidir=$(top_srcdir)/bindings/vala --pkg=totem $^
