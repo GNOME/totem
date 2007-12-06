@@ -334,7 +334,7 @@ if test "x$have_python" != "xno"; then
 
 	PKG_CHECK_MODULES([PYGTK], [
 		pygtk-2.0 >= $PYGTK_REQUIRED
-		totem-plparser > $TOTEM_PLPARSER_REQS],
+		totem-plparser >= $TOTEM_PLPARSER_REQS],
 		[],
 		[
 		have_python=no
@@ -639,7 +639,7 @@ if test "$enable_browser_plugins" = "yes" ; then
 		 gnome-vfs-2.0 >= $GNOMEVFS_REQS
 		 gnome-vfs-module-2.0 >= $GNOMEVFS_REQS
 		 gthread-2.0
-		 totem-plparser-mini > $TOTEM_PLPARSER_REQS],
+		 totem-plparser-mini >= $TOTEM_PLPARSER_REQS],
 		[],[enable_browser_plugins=no])
 
 	BROWSER_PLUGIN_CFLAGS="$MOZILLA_NOT_LINKED_CFLAGS $BROWSER_PLUGIN_CFLAGS"
