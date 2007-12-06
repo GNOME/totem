@@ -28,7 +28,6 @@ libsample_vala_la_SOURCES = \
 	totem-sample-vala-plugin.h		\
 	totem-sample-vala-plugin.vala
 libsample_vala_la_LDFLAGS = $(modules_flags)
-libsample_vala_la_LIBADD = $(top_builddir)/lib/libtotemscrsaver.la
 libsample_vala_la_CPPFLAGS = $(common_defines)
 
 libsample_vala_la_CFLAGS = \
@@ -41,7 +40,7 @@ libsample_vala_la_CFLAGS = \
 	-I$(top_srcdir)/src	\
 	-I$(top_srcdir)/src/plugins
 
-EXTRA_DIST = $(plugin_in_files)
+EXTRA_DIST = $(plugin_in_files) totem-sample-vala-plugin.vala
 
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)

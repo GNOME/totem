@@ -40,7 +40,7 @@ libpublish_la_CFLAGS = \
 	-I$(top_srcdir)/src/backend \
 	-I$(top_srcdir)/src/plugins
 
-EXTRA_DIST = $(plugin_in_files)
+EXTRA_DIST = $(plugin_in_files) $(ui_DATA)
 
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)
