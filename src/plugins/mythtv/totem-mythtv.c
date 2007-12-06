@@ -390,11 +390,12 @@ impl_activate (TotemPlugin *plugin,
 
 	totem_mythtv_update_binfo (TOTEM_MYTHTV_PLUGIN(plugin));
 
-	totem_gdk_window_set_waiting_cursor (box->window);
 	/* FIXME we should only do that if it will be done in the background */
-	/* totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin)); */
+#if 0
+	totem_gdk_window_set_waiting_cursor (box->window);
+	totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin));
 	gdk_window_set_cursor (box->window, NULL);
-
+#endif
 	return TRUE;
 }
 

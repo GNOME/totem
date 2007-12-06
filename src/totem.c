@@ -355,7 +355,7 @@ void
 totem_action_show_properties (Totem *totem)
 {
 	if (totem_is_fullscreen (totem) == FALSE)
-		totem_sidebar_set_current_page (totem, "properties");
+		totem_sidebar_set_current_page (totem, "properties", TRUE);
 }
 
 void
@@ -3200,7 +3200,7 @@ main (int argc, char **argv)
 	/* Initialise all the plugins, and set the default page, in case
 	 * it comes from a plugin */
 	totem_object_plugins_init (totem);
-	totem_sidebar_set_current_page (totem, sidebar_pageid);
+	totem_sidebar_set_current_page (totem, sidebar_pageid, FALSE);
 	g_free (sidebar_pageid);
 
 	if (totem->session_restored != FALSE) {

@@ -134,16 +134,21 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 char *
 totem_sidebar_get_current_page (Totem *totem)
 {
+	if (totem->sidebar == NULL)
+		return NULL;
 	return ev_sidebar_get_current_page (EV_SIDEBAR (totem->sidebar));
 }
 
 void
-totem_sidebar_set_current_page (Totem *totem, const char *name)
+totem_sidebar_set_current_page (Totem *totem,
+				const char *name,
+				gboolean force_visible)
 {
 	if (name == NULL)
 		return;
 
 	ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar), name);
-	totem_sidebar_toggle (totem, TRUE);
+	if (force_visible != FALSE)
+		totem_sidebar_toggle (totem, TRUE);
 }
 

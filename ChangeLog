@@ -1,6 +1,18 @@
 2007-12-06  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/mythtv/totem-mythtv.c: (impl_activate):
+	Don't set the cursor for the window, we're not actually
+	doing anything
+	* src/totem-sidebar.c: (totem_sidebar_get_current_page),
+	(totem_sidebar_set_current_page):
+	* src/totem-sidebar.h:
+	* src/totem.c: (totem_action_show_properties), (main):
+	Don't force showing the sidebar when restoring the sidebar
+	page from a previous run (Closes: #501324)
+
+2007-12-06  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/mythtv/totem-mythtv.c: (impl_activate):
 	Add the treeview to a scrolled viewport (Closes: #492741)
 
 2007-12-06  Bastien Nocera  <hadess@hadess.net>
