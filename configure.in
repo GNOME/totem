@@ -276,7 +276,7 @@ if test "x$have_python" != "xyes"; then
 fi
 
 if test "x$have_python" != "xno"; then
-	AM_PATH_PYTHON([2.3],[],[no])
+	AM_PATH_PYTHON([2.3],[],[have_python=no])
 	if test "x$PYTHON" = "x:"; then
 		have_python=no
 	fi
