@@ -521,7 +521,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		tracker)
-			PKG_CHECK_MODULES(TRACKER, tracker, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
+			PKG_CHECK_MODULES(TRACKER, tracker libgnomeui-2.0, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
 			if test "${HAVE_TRACKER}" != "yes" ; then
 				plugin_error_or_ignore "you need the tracker development headers installed for the tracker plugin"
 				add_plugin="0"
