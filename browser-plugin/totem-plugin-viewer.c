@@ -1360,7 +1360,9 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 {
 	char *new_uri = NULL;
 
-	g_message ("url: %s", emb->base_uri);
+	g_message ("stream uri: %s", emb->stream_uri ? emb->stream_uri : "(null)");
+	g_message ("current uri: %s", emb->current_uri ? emb->current_uri : "(null)");
+	g_message ("base uri: %s", emb->base_uri ? emb->base_uri : "(null)");
 	g_message ("redirect: %s", mrl);
 
 	bacon_video_widget_close (emb->bvw);

@@ -1,3 +1,18 @@
+2007-12-10  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (on_got_redirect),
+	(totem_embedded_on_fullscreen_exit): Better debug for
+	redirects
+
+2007-12-07  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: Require vala 0.1.5
+
+	* bindings/vala/Makefile.am:
+	* bindings/vala/totem.vala: Rename totem.vala
+	to totem.vapi, fix build for newer versions of Vala
+	(Closes: #502183)
+
 2007-12-07  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: add missing libgnomeui dependency
