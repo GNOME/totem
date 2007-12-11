@@ -1,5 +1,13 @@
 2007-12-11  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-glow-button.c: (totem_glow_button_glow),
+	(take_screenshot), (copy_pixmap), (totem_glow_button_expose):
+	Backport patch from Ryan Lortie <desrt@desrt.ca> from libwnck,
+	Makes use of Cairo instead of GdkPixbuf for copying the pixmaps,
+	see bug #439417 for details
+
+2007-12-11  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* data/icons/48x48/Makefile.am:
 	* data/icons/Makefile.am: Add 48x48 icon, so the icon

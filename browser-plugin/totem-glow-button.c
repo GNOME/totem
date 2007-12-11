@@ -37,8 +37,8 @@
 struct _TotemGlowButton {
 	GtkButton parent;
 
-	GdkPixbuf *screenshot;
-	GdkPixbuf *screenshot_faded;
+	GdkPixmap *screenshot;
+	GdkPixmap *screenshot_faded;
 
 	gdouble glow_start_time;
 
@@ -60,25 +60,6 @@ static void	totem_glow_button_set_timeout	(TotemGlowButton *button,
 static GtkButtonClass *parent_class;
 
 G_DEFINE_TYPE(TotemGlowButton, totem_glow_button, GTK_TYPE_BUTTON);
-
-static GdkPixbuf *
-glow_pixbuf (TotemGlowButton *button,
-	     gdouble          factor)
-{
-	GdkPixbuf *destination;
-
-	destination = gdk_pixbuf_copy (button->screenshot);
-	if (destination == NULL)
-		return NULL;
-
-	gdk_pixbuf_composite (button->screenshot_faded, destination, 0, 0,
-			      gdk_pixbuf_get_width (button->screenshot),
-			      gdk_pixbuf_get_height (button->screenshot),
-			      0, 0, 1, 1, GDK_INTERP_NEAREST,
-			      ABS((int)(factor * G_MAXUINT8)));
-
-	return destination;
-}
 
 static void
 totem_glow_button_do_expose (TotemGlowButton *button)
@@ -103,11 +84,11 @@ totem_glow_button_do_expose (TotemGlowButton *button)
 static gboolean
 totem_glow_button_glow (TotemGlowButton *button)
 { 
-	GdkPixbuf *glowing_screenshot;
 	GtkWidget *buttonw;
 	GTimeVal tv;
 	gdouble glow_factor, now;
 	gfloat fade_opacity, loop_time;
+	cairo_t *cr;
 
 	buttonw = GTK_WIDGET (button);
 
@@ -157,20 +138,29 @@ totem_glow_button_glow (TotemGlowButton *button)
 		glow_factor = FADE_OPACITY_DEFAULT;
 	}
 
-	glowing_screenshot = glow_pixbuf (button, glow_factor);
-	if (glowing_screenshot == NULL)
-		return TRUE;
+	gdk_window_begin_paint_rect (buttonw->window,
+				     &buttonw->allocation);
 
-	gdk_draw_pixbuf (buttonw->window,
-			 buttonw->style->fg_gc[GTK_WIDGET_STATE (button)],
-			 glowing_screenshot,
-			 0, 0, 
-			 buttonw->allocation.x,
-			 buttonw->allocation.y,
-			 gdk_pixbuf_get_width (glowing_screenshot),
-			 gdk_pixbuf_get_height (glowing_screenshot),
-			 GDK_RGB_DITHER_NORMAL, 0, 0);
-	g_object_unref (glowing_screenshot);
+	cr = gdk_cairo_create (buttonw->window);
+	gdk_cairo_rectangle (cr, &buttonw->allocation);
+	cairo_translate (cr, buttonw->allocation.x, buttonw->allocation.y);
+	cairo_clip (cr);
+
+	cairo_save (cr);
+
+	gdk_cairo_set_source_pixmap (cr, button->screenshot, 0., 0.);
+	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+	cairo_paint (cr);
+
+	cairo_restore (cr);
+
+	gdk_cairo_set_source_pixmap (cr, button->screenshot_faded, 0., 0.);
+	cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+	cairo_paint_with_alpha (cr, glow_factor);
+
+	cairo_destroy (cr);
+
+	gdk_window_end_paint (buttonw->window);
 
 	if (button->pointer_entered != FALSE &&
 	    button->anim_finished != FALSE) {
@@ -228,12 +218,11 @@ fake_expose_widget (GtkWidget *widget,
 	widget->allocation.y -= y;
 }
 
-static GdkPixbuf*
+static GdkPixmap *
 take_screenshot (TotemGlowButton *button)
 {
 	GtkWidget *buttonw;
 	GdkPixmap *pixmap;
-	GdkPixbuf *screenshot;
 	gint width, height;
 
 	buttonw = GTK_WIDGET (button);
@@ -251,12 +240,26 @@ take_screenshot (TotemGlowButton *button)
 	fake_expose_widget (gtk_button_get_image (GTK_BUTTON(button)), pixmap,
 			    -buttonw->allocation.x, -buttonw->allocation.y);
 
-	/* get the screenshot, and return */
-	screenshot = gdk_pixbuf_get_from_drawable (NULL, pixmap, NULL, 0, 0,
-						   0, 0, width, height);
-	g_object_unref (pixmap);
+	return pixmap;
+}
 
-	return screenshot;
+static GdkPixmap *
+copy_pixmap (GtkWidget *widget)
+{
+	GdkPixmap *pixmap;
+
+	pixmap = gdk_pixmap_new (widget->window,
+				 widget->allocation.width,
+				 widget->allocation.height, -1);
+
+	gdk_draw_drawable (pixmap,
+			   widget->style->bg_gc[GTK_STATE_NORMAL],
+			   widget->window,
+			   widget->allocation.x, widget->allocation.y,
+			   0, 0,
+			   widget->allocation.width, widget->allocation.height);
+
+	return pixmap;
 }
 
 static gboolean
@@ -274,16 +277,7 @@ totem_glow_button_expose (GtkWidget        *buttonw,
 	       pointer entered */
 	    (button->pointer_entered != FALSE && 
 	     button->anim_finished != FALSE) == FALSE) {
-		button->screenshot = gdk_pixbuf_get_from_drawable (NULL,
-								   buttonw->window,
-								   NULL,
-								   buttonw->allocation.x,
-								   buttonw->allocation.y,
-								   0, 0,
-								   buttonw->allocation.width,
-								   buttonw->allocation.height);
-
-		/* we also need to take a screenshot for the faded state */
+	     	button->screenshot = copy_pixmap (buttonw);
 		button->screenshot_faded = take_screenshot (button);
 		return FALSE;
 	}
