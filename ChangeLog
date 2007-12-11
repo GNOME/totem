@@ -1,6 +1,14 @@
 2007-12-11  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-glow-button.c: (totem_glow_button_glow),
+	(totem_glow_button_enter), (totem_glow_button_leave):
+	Only glow 4 times, even if we don't get the pointer entering,
+	Fix the glow being slower, not faster when the pointer enters
+	(Closes: #500496)
+
+2007-12-11  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-glow-button.c: (totem_glow_button_glow),
 	(take_screenshot), (copy_pixmap), (totem_glow_button_expose):
 	Backport patch from Ryan Lortie <desrt@desrt.ca> from libwnck,
 	Makes use of Cairo instead of GdkPixbuf for copying the pixmaps,

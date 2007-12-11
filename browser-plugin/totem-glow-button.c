@@ -32,7 +32,8 @@
 #include "totem-glow-button.h"
 
 #define FADE_OPACITY_DEFAULT 0.6
-#define ENTER_SPEEDUP_RATIO 0.3
+#define ENTER_SPEEDUP_RATIO 0.4
+#define FADE_MAX_LOOPS 4
 
 struct _TotemGlowButton {
 	GtkButton parent;
@@ -128,14 +129,16 @@ totem_glow_button_glow (TotemGlowButton *button)
 		*/
 		if (button->pointer_entered != FALSE) {
 			/* pointer entered animation should be twice as fast */
-			loop_time /= ENTER_SPEEDUP_RATIO;
-			if ((now - button->glow_start_time) > loop_time * ENTER_SPEEDUP_RATIO)
-				button->anim_finished = TRUE;
+			loop_time *= ENTER_SPEEDUP_RATIO;
 		}
-
-		glow_factor = fade_opacity * (0.5 - 0.5 * cos ((now - button->glow_start_time) * M_PI * 2.0 / loop_time));
+		if ((now - button->glow_start_time) > loop_time * FADE_MAX_LOOPS) {
+			button->anim_finished = TRUE;
+			glow_factor = FADE_OPACITY_DEFAULT * 0.5;
+		} else {
+			glow_factor = fade_opacity * (0.5 - 0.5 * cos ((now - button->glow_start_time) * M_PI * 2.0 / loop_time));
+		}
 	} else {
-		glow_factor = FADE_OPACITY_DEFAULT;
+		glow_factor = FADE_OPACITY_DEFAULT * 0.5;
 	}
 
 	gdk_window_begin_paint_rect (buttonw->window,
@@ -162,10 +165,8 @@ totem_glow_button_glow (TotemGlowButton *button)
 
 	gdk_window_end_paint (buttonw->window);
 
-	if (button->pointer_entered != FALSE &&
-	    button->anim_finished != FALSE) {
-	       	totem_glow_button_set_timeout (button, FALSE);
-	}
+	if (button->anim_finished != FALSE)
+		totem_glow_button_set_timeout (button, FALSE);
 
 	return button->anim_enabled;
 }
@@ -327,7 +328,7 @@ totem_glow_button_enter (GtkButton *buttonw)
 	
 	button->pointer_entered = TRUE;
 	button->anim_finished = FALSE;
-	button->glow_start_time = 0.0;
+	button->glow_start_time = G_MINDOUBLE;
 }
 
 static void
@@ -340,7 +341,7 @@ totem_glow_button_leave (GtkButton *buttonw)
 	(* GTK_BUTTON_CLASS (parent_class)->leave) (buttonw);
 
 	button->pointer_entered = FALSE;
-	button->glow_start_time = 0.0;
+	button->glow_start_time = G_MINDOUBLE;
 	button->anim_finished = FALSE;
 	if (button->glow != FALSE)
 		totem_glow_button_set_timeout (button, TRUE);
