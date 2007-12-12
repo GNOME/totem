@@ -1436,6 +1436,39 @@ init_config (TotemPlaylist *playlist)
 			GCONF_PREFIX"/shuffle", NULL) != FALSE;
 }
 
+/* FIXME this should live in the playlist parser */
+static int
+totem_embedded_parse_duration (const char *duration)
+{
+	int hours, minutes, seconds, fractions;
+
+	if (!duration)
+		return -1;
+
+	/* Formats used by both ASX and RAM files */
+	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4) {
+		int ret = hours * 3600 + minutes * 60 + seconds;
+		if (ret == 0 && fractions > 0)
+			ret = 1;
+		return ret;
+	}
+	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3)
+		return hours * 3600 + minutes * 60 + seconds;
+	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3) {
+		int ret = minutes * 60 + seconds;
+		if (ret == 0 && fractions > 0)
+			ret = 1;
+		return ret;
+	}
+	if (sscanf (duration, "%d:%d", &minutes, &seconds) == 2)
+		return minutes * 60 + seconds;
+	/* PLS files format */
+	if (sscanf (duration, "%d", &seconds) == 1)
+		return seconds;
+
+	return -1;
+}
+
 static void
 totem_playlist_entry_parsed (TotemPlParser *parser,
 			     const char *uri,
@@ -1443,7 +1476,13 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 			     TotemPlaylist *playlist)
 {
 	const char *title;
+	gint64 duration;
 
+	/* We ignore 0-length items in playlists, they're usually just banners */
+	duration = totem_embedded_parse_duration
+		(g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_DURATION));
+	if (duration == 0)
+		return;
 	title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
 	totem_playlist_add_one_mrl (playlist, uri, title);
 }

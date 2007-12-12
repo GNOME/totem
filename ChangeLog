@@ -1,3 +1,12 @@
+2007-12-12  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c: (entry_parsed):
+	* src/totem-playlist.c: (totem_embedded_parse_duration),
+	(totem_playlist_entry_parsed): Add backported hack from
+	trunk, patch by Hans de Goede <j.w.r.degoede@hhs.nl>,
+	will skip 0-length playlists in both the main player and
+	the browser viewer
+
 2007-10-25  Bastien Nocera  <hadess@hadess.net>
 
 	* data/mime-type-list.txt: add audio/x-xm (XM tracker files)
