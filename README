@@ -94,17 +94,15 @@ Nifty media player icon by Jakub Steiner <jimmac@ximian.com>
 
 UI help by Seth Nickell <snickell@stanford.edu>
 
-Easy GStreamer plugin installation via libgimme-codec (optional)
+Automatic GStreamer codec installation (optional)
 ================================================================
 - requires GStreamer core and gst-plugins-base >= 0.10.12
-- libgimme-codec is a very thing wrapper library to call a predefined external
-  helper script with details of missing GStreamer plugins, it can be obtained
-  from http://desrt.mcmaster.ca/code/libgimme-codec/
-  The library on its own is not very useful, since it does not provide the
-  actual external helper that does the package installation or suggests what
-  to install.
-- for more information, see https://wiki.ubuntu.com/EasyCodecInstallation
-  and the links referenced there.
+- calls (via GStreamer) a predefined external helper script (which is to be
+  installed by the distro and can be defined via gst-plugins-base's configure
+  script when building gst-plugins-base) with details of missing GStreamer
+  plugins. See
+  http://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-libs/html/gst-plugins-base-libs-gstpbutilsinstallplugins.html#id511743
+  for more information on how this all works together.
 
 BUGS
 ====
