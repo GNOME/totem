@@ -666,6 +666,13 @@ if test "$enable_browser_plugins" = "yes" ; then
 	fi
 fi
 
+if test "$enable_browser_plugins" = "yes" ; then
+	PKG_CHECK_MODULES([SN], [ libstartup-notification-1.0 >= 0.8 ], [enable_browser_plugins = yes], [enable_browser_plugins=no])
+	if test "x$enable_browser_plugins" != "xyes" ; then
+		AC_MSG_WARN([libstartup-notification not found, necessary to build the plugin viewer])
+	fi
+fi
+
 # Sets some variables, and check for xpidl
 if test "$enable_browser_plugins" = "yes" ; then
 	MOZILLA_PREFIX="`$PKG_CONFIG $MOZILLA-xpcom --variable=prefix`"
