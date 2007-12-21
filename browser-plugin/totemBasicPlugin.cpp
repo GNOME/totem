@@ -49,6 +49,7 @@ static const char kClassDescription[] = "totemBasicPlugin";
 static const char kPluginDescription[] = "Totem Web Browser Plugin " VERSION;
 
 static const totemPluginMimeEntry kMimeTypes[] = {
+	{ "application/x-ogg","ogg",NULL },
 	{ "application/ogg", "ogg", NULL },
 	{ "audio/ogg", "ogg", NULL },
 	{ "audio/x-ogg", "ogg", NULL },
