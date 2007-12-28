@@ -1573,7 +1573,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "vcd:");
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "cd:");
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "dvb:");
-	totem_pl_parser_add_ignored_mimetype (plyalist->priv->parser, "application/x-trash");
+	totem_pl_parser_add_ignored_mimetype (playlist->priv->parser, "application/x-trash");
 
 	g_signal_connect (G_OBJECT (playlist->priv->parser),
 			"entry-parsed",
