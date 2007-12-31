@@ -1,3 +1,11 @@
+2007-12-31  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plugins/ontop/totem-ontop.c: (totem_ontop_plugin_class_init),
+	(totem_ontop_plugin_init), (update_from_state), (got_metadata_cb),
+	(property_notify_cb), (impl_activate), (impl_deactivate):
+	Only put Totem on top when playing video, not audio.
+	(Closes: #501521)
+
 2007-12-28  Olav Vitters  <olav@bkor.dhs.org>
 
 	* src/totem-playlist.c: (totem_playlist_init): Build fix.

@@ -31,24 +31,31 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
-#include <string.h>
 
 #include "totem-plugin.h"
 #include "totem.h"
+#include "backend/bacon-video-widget.h"
 
 #define TOTEM_TYPE_ONTOP_PLUGIN		(totem_ontop_plugin_get_type ())
 #define TOTEM_ONTOP_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPlugin))
 #define TOTEM_ONTOP_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPluginClass))
-#define TOTEM_IS_ONTOP_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_ONTOP_PLUGIN))
+#define TOTEM_IS_ONTOP_PLUGIN(o)	(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_ONTOP_PLUGIN))
 #define TOTEM_IS_ONTOP_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_ONTOP_PLUGIN))
 #define TOTEM_ONTOP_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPluginClass))
 
 typedef struct
 {
-	TotemPlugin   parent;
+	guint handler_id;
+	guint handler_id_metadata;
+	GtkWindow *window;
+	BaconVideoWidget *bvw;
+	TotemObject *totem;
+} TotemOntopPluginPrivate;
 
-	GtkWindow     *window;
-	guint          handler_id;
+typedef struct
+{
+	TotemPlugin parent;
+	TotemOntopPluginPrivate *priv;
 } TotemOntopPlugin;
 
 typedef struct
@@ -56,24 +63,21 @@ typedef struct
 	TotemPluginClass parent_class;
 } TotemOntopPluginClass;
 
-
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
-GType	totem_ontop_plugin_get_type		(void) G_GNUC_CONST;
+G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
+GType totem_ontop_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_ontop_plugin_init		(TotemOntopPlugin *plugin);
-static void totem_ontop_plugin_finalize		(GObject *object);
 static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
-TOTEM_PLUGIN_REGISTER(TotemOntopPlugin, totem_ontop_plugin)
+TOTEM_PLUGIN_REGISTER (TotemOntopPlugin, totem_ontop_plugin)
 
 static void
 totem_ontop_plugin_class_init (TotemOntopPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
-	object_class->finalize = totem_ontop_plugin_finalize;
+	g_type_class_add_private (klass, sizeof (TotemOntopPluginPrivate));
 
 	plugin_class->activate = impl_activate;
 	plugin_class->deactivate = impl_deactivate;
@@ -82,27 +86,21 @@ totem_ontop_plugin_class_init (TotemOntopPluginClass *klass)
 static void
 totem_ontop_plugin_init (TotemOntopPlugin *plugin)
 {
+	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin, TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPluginPrivate);
 }
 
 static void
-totem_ontop_plugin_finalize (GObject *object)
+update_from_state (TotemOntopPluginPrivate *priv)
 {
-	G_OBJECT_CLASS (totem_ontop_plugin_parent_class)->finalize (object);
+	gtk_window_set_keep_above (priv->window,
+				   (totem_is_playing (priv->totem) != FALSE &&
+				    bacon_video_widget_can_get_frames (priv->bvw, NULL) != FALSE));
 }
 
 static void
-totem_ontop_update_from_state (TotemObject *totem,
-			       TotemOntopPlugin *pi)
+got_metadata_cb (BaconVideoWidget *bvw, TotemOntopPlugin *pi)
 {
-	GtkWindow *window;
-
-	window = totem_get_main_window (totem);
-	if (window == NULL)
-		return;
-
-	gtk_window_set_keep_above (window,
-				   totem_is_playing (totem) != FALSE);
-	g_object_unref (window);
+	update_from_state (pi->priv);
 }
 
 static void
@@ -110,7 +108,7 @@ property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
 		    TotemOntopPlugin *pi)
 {
-	totem_ontop_update_from_state (totem, pi);
+	update_from_state (pi->priv);
 }
 
 static gboolean
@@ -120,12 +118,20 @@ impl_activate (TotemPlugin *plugin,
 {
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
 
-	pi->handler_id = g_signal_connect (G_OBJECT (totem),
+	pi->priv->window = totem_get_main_window (totem);
+	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+	pi->priv->totem = totem;
+
+	pi->priv->handler_id = g_signal_connect (G_OBJECT (totem),
 					   "notify::playing",
 					   G_CALLBACK (property_notify_cb),
 					   pi);
+	pi->priv->handler_id_metadata = g_signal_connect (G_OBJECT (pi->priv->bvw),
+						    "got-metadata",
+						    G_CALLBACK (got_metadata_cb),
+						    pi);
 
-	totem_ontop_update_from_state (totem, pi);
+	update_from_state (pi->priv);
 
 	return TRUE;
 }
@@ -135,17 +141,15 @@ impl_deactivate	(TotemPlugin *plugin,
 		 TotemObject *totem)
 {
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
-	GtkWindow *window;
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id);
+	g_signal_handler_disconnect (G_OBJECT (pi->priv->bvw), pi->priv->handler_id_metadata);
 
-	window = totem_get_main_window (totem);
-	if (window == NULL)
-		return;
+	g_object_unref (pi->priv->bvw);
 
 	/* We can't really "restore" the previous state, as there's
 	 * no way to find the old state */
-	gtk_window_set_keep_above (window, FALSE);
-	g_object_unref (window);
+	gtk_window_set_keep_above (pi->priv->window, FALSE);
+	g_object_unref (pi->priv->window);
 }
 
