@@ -881,6 +881,8 @@ AC_SUBST(NAUTILUS_CFLAGS)
 AC_SUBST(NAUTILUS_LIBS)
 if test x$HAVE_NAUTILUS = "xyes"; then
 	AC_DEFINE(HAVE_NAUTILUS, 1, [defined if you build the nautilus plugin])
+	NAUTILUSDIR=`pkg-config --variable=extensiondir libnautilus-extension`
+	AC_SUBST(NAUTILUSDIR)
 fi
 AM_CONDITIONAL(HAVE_NAUTILUS, test x$HAVE_NAUTILUS = "xyes")
 

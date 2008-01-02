@@ -192,7 +192,7 @@ totem_video_thumbnailer_LDADD =			\
 
 if HAVE_NAUTILUS
 
-nautilusdir = $(libdir)/nautilus/extensions-1.0
+nautilusdir = $(NAUTILUSDIR)
 nautilus_LTLIBRARIES = libtotem-properties-page.la
 
 libtotem_properties_page_la_SOURCES = 	\
