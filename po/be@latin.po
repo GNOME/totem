@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 02:00+0200\n"
-"PO-Revision-Date: 2007-12-08 02:07+0200\n"
+"POT-Creation-Date: 2008-01-06 01:47+0200\n"
+"PO-Revision-Date: 2008-01-06 01:51+0200\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian Latin <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -502,7 +502,7 @@ msgstr "Tekstavyja subtytry"
 
 #. Title
 #: ../data/totem.ui.h:72 ../src/totem.c:872 ../src/totem.c:3075
-#: ../src/totem.c:3104 ../browser-plugin/totem-plugin-viewer.c:1787
+#: ../src/totem.c:3104 ../browser-plugin/totem-plugin-viewer.c:1789
 msgid "Totem Movie Player"
 msgstr "Videaplayer Totem"
 
@@ -1083,12 +1083,12 @@ msgstr "Zapišy śpis"
 msgid "Playlist"
 msgstr "Śpis"
 
-#: ../src/totem-playlist.c:1729
+#: ../src/totem-playlist.c:1730
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Niemahčyma razabrać śpis '%s', jon moža być paškodžanym."
 
-#: ../src/totem-playlist.c:1730
+#: ../src/totem-playlist.c:1731
 msgid "Playlist error"
 msgstr "Pamyłka ŭ śpisie"
 
@@ -1436,7 +1436,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem nia moža hrać taki dysk."
 
 #: ../src/totem.c:518 ../src/totem.c:2938
-#: ../browser-plugin/totem-plugin-viewer.c:1778
+#: ../browser-plugin/totem-plugin-viewer.c:1780
 msgid "No reason."
 msgstr "Biez pryčyny."
 
@@ -1466,7 +1466,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem nia moža pakazać źmiest dapamohi."
 
 #: ../src/totem.c:1480 ../src/totem.c:1482
-#: ../browser-plugin/totem-plugin-viewer.c:1562
+#: ../browser-plugin/totem-plugin-viewer.c:1564
 msgid "An error occurred"
 msgstr "Adbyłasia pamyłka"
 
@@ -2061,6 +2061,9 @@ msgid ""
 "All occurances of the string <b>%u</b> will be replaced by your name,\n"
 "and <b>%h</b> will be replaced by your computer's host name.</small>"
 msgstr ""
+"<small>Nazva pasłuhi śpisu, abvieščanaj u siecivie.\n"
+"Usie radki <b>%u</b> buduć zamienienyja tvajoj nazvaj,\n"
+"a radki <b>%h</b> buduć zamienienyja nazvaj hostu dla tvajho kamputara.</small>"
 
 #: ../src/plugins/publish/publish-plugin.glade.h:5
 msgid "Service _Name:"
@@ -2126,9 +2129,9 @@ msgstr "Pamyłka fajłu"
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Pakazana %i - %i z %i adpaviednika"
+msgstr[1] "Pakazana %i - %i z %i adpaviednikaŭ"
+msgstr[2] "Pakazana %i - %i z %i adpaviednikaŭ"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:313
 msgid "Search results"
@@ -2206,78 +2209,18 @@ msgstr "Plugin hartača na bazie Totema"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1778
+#: ../browser-plugin/totem-plugin-viewer.c:1780
 msgid "The Totem plugin could not be started."
 msgstr "Niemahčyma było ŭruchomić plugin Totema."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2141
+#: ../browser-plugin/totem-plugin-viewer.c:2143
 msgid "No playlist or playlist empty"
 msgstr "Niama śpisu albo śpis pusty"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2246
+#: ../browser-plugin/totem-plugin-viewer.c:2248
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Niemahčyma inicyjavać biblijateki, biaśpiečnyja dla niciaŭ."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2246
+#: ../browser-plugin/totem-plugin-viewer.c:2248
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Pravier instalacyju systemy. Plugin Totema zakančvaje pracu."
-
-#~ msgid "Failed to find mountpoint for device %s"
-#~ msgstr "Niemahčyma znajści punkt mantavańnia dla pryłady %s"
-
-#~ msgid "Could not connect to the HAL daemon"
-#~ msgstr "Niemahčyma źviazacca z demanam HAL"
-
-#~ msgid "Please check that a disc is present in the drive."
-#~ msgstr "Pravier najaŭnaść dysku ŭ pryładzie."
-
-#~ msgid "Failed to mount %s"
-#~ msgstr "Niemahčyma prymantavać %s"
-
-#~ msgid "Failed to find mountpoint for %s"
-#~ msgstr "Niemahčyma znajści punkt mantavańnia dla %s"
-
-#~ msgid "Audio CD"
-#~ msgstr "Aŭdyjo CD"
-
-#~ msgid "Video CD"
-#~ msgstr "Videa CD"
-
-#~ msgid "DVD"
-#~ msgstr "DVD"
-
-#~ msgid "Digital Television"
-#~ msgstr "Ličbavaja televizija"
-
-#~ msgid "Couldn't write parser: %s"
-#~ msgstr "Niemahčyma zapisać analizatara: %s"
-
-#~ msgid "Couldn't open file '%s': %s"
-#~ msgstr "Niemahčyma adčynić fajł '%s': %s"
-
-#~ msgid "Please enter a search."
-#~ msgstr "Uviadzi, što šukać."
-
-#~ msgid "Loading..."
-#~ msgstr "Zahruzka..."
-
-#~ msgid "Play / Pa_use"
-#~ msgstr "Hraj / _Prypyni"
-
-#~ msgid "Resize to video size"
-#~ msgstr "Dapasuj pamiery akna da panieraŭ videa"
-
-#~ msgid "Resize to twice the video size"
-#~ msgstr "Pavialič akno ŭdvaja, adnosna pamieraŭ videa"
-
-#~ msgid "Volume up"
-#~ msgstr "Hučniej"
-
-#~ msgid "Volume down"
-#~ msgstr "Cišej"
-
-#~ msgid "Couldn't load the 'ui description' file"
-#~ msgstr "Niemahčyma adčytać fajł apisańnia interfejsu"
-
-#~ msgid "Totem could not eject the optical media."
-#~ msgstr "Totem nia zmoh vysunuć aptyčny nośbit."
