@@ -45,7 +45,6 @@ bacon_resize_init (void)
 #ifdef HAVE_XVIDMODE
 	int event_basep, error_basep;
 
-	/* FIXME multihead */
 	XLockDisplay (GDK_DISPLAY());
 
 	if (!XF86VidModeQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep))
@@ -54,8 +53,13 @@ bacon_resize_init (void)
 	if (!XRRQueryExtension (GDK_DISPLAY(), &event_basep, &error_basep))
 		goto bail;
 
+	/* We don't use the output here, checking whether XRRGetScreenInfo works */
 	xr_screen_conf = XRRGetScreenInfo (GDK_DISPLAY(), GDK_ROOT_WINDOW());
+	if (xr_screen_conf == NULL)
+		goto bail;
 
+	XRRFreeScreenConfigInfo (xr_screen_conf);
+	xr_screen_conf = NULL;
 	XUnlockDisplay (GDK_DISPLAY());
 
 	return TRUE;
@@ -69,80 +73,104 @@ bail:
 }
 
 void
-bacon_resize (void)
+bacon_resize (GtkWidget *widget)
 {
 #ifdef HAVE_XVIDMODE
 	int width, height, i, xr_nsize, res, dotclock;
 	XF86VidModeModeLine modeline;
 	XRRScreenSize *xr_sizes;
 	gboolean found = FALSE;
+	GdkWindow *root;
+	GdkScreen *screen;
+	Display *Display;
 
-	/* FIXME multihead */
-	XLockDisplay (GDK_DISPLAY());
+	Display = GDK_DRAWABLE_XDISPLAY (widget->window);
+	if (Display == NULL)
+		return;
 
-	res = XF86VidModeGetModeLine (GDK_DISPLAY(), XDefaultScreen (GDK_DISPLAY()), &dotclock, &modeline);
+	XLockDisplay (Display);
+
+	screen = gtk_widget_get_screen (widget);
+	root = gdk_screen_get_root_window (screen);
+	res = XF86VidModeGetModeLine (Display, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
 	if (!res) {
-		XUnlockDisplay (GDK_DISPLAY());
+		XUnlockDisplay (Display);
 		return;
 	}
 
 	/* Check if there's a viewport */
 	width = gdk_screen_width ();
 	height = gdk_screen_height ();
-	if (width > modeline.hdisplay
-			&& height > modeline.vdisplay) {
-		XUnlockDisplay (GDK_DISPLAY());
+	if (width <= modeline.hdisplay && height <= modeline.vdisplay) {
+		XUnlockDisplay (Display);
 		return;
 	}
 
 	gdk_error_trap_push ();
 	/* Find the xrandr mode that corresponds to the real size */
+	xr_screen_conf = XRRGetScreenInfo (Display, GDK_WINDOW_XWINDOW (root));
 	xr_sizes = XRRConfigSizes (xr_screen_conf, &xr_nsize);
 	xr_original_size = XRRConfigCurrentConfiguration
 		(xr_screen_conf, &xr_current_rotation);
-	if (gdk_error_trap_pop ())
+	if (gdk_error_trap_pop ()) {
 		g_warning ("XRRConfigSizes or XRRConfigCurrentConfiguration failed");
+		XUnlockDisplay (Display);
+		return;
+	}
 
 	for (i = 0; i < xr_nsize; i++) {
 		if (modeline.hdisplay == xr_sizes[i].width
-		&& modeline.vdisplay == xr_sizes[i].height) {
+		    && modeline.vdisplay == xr_sizes[i].height) {
 			found = TRUE;
 			break;
 		}
 	}
 
 	if (!found) {
-		XUnlockDisplay (GDK_DISPLAY());
+		XUnlockDisplay (Display);
 		return;
 	}
 	gdk_error_trap_push ();
-	XRRSetScreenConfig (GDK_DISPLAY(),
-			xr_screen_conf,
-			GDK_ROOT_WINDOW(),
-			(SizeID) i,
-			xr_current_rotation,
-			CurrentTime);
+	XRRSetScreenConfig (Display,
+			    xr_screen_conf,
+			    GDK_WINDOW_XWINDOW (root),
+			    (SizeID) i,
+			    xr_current_rotation,
+			    CurrentTime);
 	gdk_flush ();
 	if (gdk_error_trap_pop ())
 		g_warning ("XRRSetScreenConfig failed");
 
-	XUnlockDisplay (GDK_DISPLAY());
+	XUnlockDisplay (Display);
 #endif /* HAVE_XVIDMODE */
 }
 
 void
-bacon_restore (void)
+bacon_restore (GtkWidget *widget)
 {
 #ifdef HAVE_XVIDMODE
 	int width, height, res, dotclock;
 	XF86VidModeModeLine modeline;
+	GdkWindow *root;
+	GdkScreen *screen;
+	Display *Display;
 
-	/* FIXME multihead */
-	XLockDisplay (GDK_DISPLAY());
+	/* We haven't called bacon_resize before, or it exited
+	 * as we didn't need a resize */
+	if (xr_screen_conf == NULL)
+		return;
 
-	res = XF86VidModeGetModeLine (GDK_DISPLAY(), XDefaultScreen (GDK_DISPLAY()), &dotclock, &modeline);
+	Display = GDK_DRAWABLE_XDISPLAY (widget->window);
+	if (Display == NULL)
+		return;
+
+	XLockDisplay (Display);
+
+	screen = gtk_widget_get_screen (widget);
+	root = gdk_screen_get_root_window (screen);
+	res = XF86VidModeGetModeLine (Display, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
 	if (!res) {
-		XUnlockDisplay (GDK_DISPLAY());
+		XUnlockDisplay (Display);
 		return;
 	}
 
@@ -150,21 +178,25 @@ bacon_restore (void)
 	width = gdk_screen_width ();
 	height = gdk_screen_height ();
 	if (width > modeline.hdisplay
-			&& height > modeline.vdisplay) {
-		XUnlockDisplay (GDK_DISPLAY());
+	    && height > modeline.vdisplay) {
+		XUnlockDisplay (Display);
 		return;
 	}
 	gdk_error_trap_push ();
-	XRRSetScreenConfig (GDK_DISPLAY(),
-			xr_screen_conf,
-			GDK_ROOT_WINDOW(),
-			xr_original_size,
-			xr_current_rotation,
-			CurrentTime);
+	XRRSetScreenConfig (Display,
+			    xr_screen_conf,
+			    GDK_WINDOW_XWINDOW (root),
+			    xr_original_size,
+			    xr_current_rotation,
+			    CurrentTime);
 	gdk_flush ();
 	if (gdk_error_trap_pop ())
 		g_warning ("XRRSetScreenConfig failed");
-	XUnlockDisplay (GDK_DISPLAY());
+
+	XRRFreeScreenConfigInfo (xr_screen_conf);
+	xr_screen_conf = NULL;
+
+	XUnlockDisplay (Display);
 #endif
 }
 

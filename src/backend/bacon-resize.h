@@ -17,9 +17,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Cambridge, MA 02139, USA.
  */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 gboolean bacon_resize_init (void);
-void bacon_resize (void);
-void bacon_restore (void);
+void bacon_resize (GtkWidget *widget);
+void bacon_restore (GtkWidget *widget);
 

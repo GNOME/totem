@@ -1,5 +1,20 @@
 2008-01-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-resize.c: (bacon_resize_init), (bacon_resize),
+	(bacon_restore):
+	* src/backend/bacon-resize.h:
+	Pass the GtkWidget of the video widget when resizing for fullscreen,
+	use multi-head aware function to get the Screen, Display and Root
+	Window, only get the XRandR screen configuration when going into
+	fullscreen, not when init is called.
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_set_fullscreen):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_set_fullscreen): Update for changed API
+
+2008-01-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_wait_force_exit), (totem_action_exit):
 	Forcefully exit when we can't finish the shutdown in 10 seconds.
 	From patch by Patrick Hulin <patrick.hulin@gmail.com>
