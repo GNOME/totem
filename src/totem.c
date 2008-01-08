@@ -192,11 +192,22 @@ totem_action_save_state (Totem *totem, const char *page_id)
 	g_free (contents);
 }
 
+static void
+totem_action_wait_force_exit (gpointer user_data)
+{
+	g_usleep (10 * G_USEC_PER_SEC);
+	exit (1);
+}
+
 void
 totem_action_exit (Totem *totem)
 {
 	GdkDisplay *display = NULL;
 	char *page_id;
+
+	/* Exit forcefully if we can't do the shutdown in 10 seconds */
+	g_thread_create ((GThreadFunc) totem_action_wait_force_exit,
+			 NULL, FALSE, NULL);
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();
