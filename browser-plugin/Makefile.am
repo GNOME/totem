@@ -106,6 +106,7 @@ totem_plugin_viewer_CPPFLAGS = \
 
 totem_plugin_viewer_CFLAGS = \
 	$(EXTRA_GNOME_CFLAGS)	\
+	$(SN_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(NVTV_CFLAGS)		\
@@ -118,6 +119,7 @@ totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/lib/libtotemscrsaver.la				\
 	libtotempluginviewer_helper.la					\
 	$(EXTRA_GNOME_LIBS)	\
+	$(SN_LIBS)		\
 	$(XVIDMODE_LIBS) 	\
 	$(DBUS_LIBS)		\
 	$(NVTV_LIBS) 		\

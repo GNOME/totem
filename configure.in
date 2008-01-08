@@ -249,7 +249,7 @@ dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-desktop-2.0 >= 2.1.5 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 $ISO_CODES $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 $ISO_CODES $MM)
 	HAVE_GNOME=yes
 else
 # FIXME: use gmodule-no-export instead!
@@ -490,6 +490,13 @@ if test "$enable_browser_plugins" = "yes" ; then
 	if test "x$DBUS_BIND" = "xno"; then
 		AC_MSG_WARN([dbus-binding-tool not found])
 		enable_browser_plugins=no
+	fi
+fi
+
+if test "$enable_browser_plugins" = "yes" ; then
+	PKG_CHECK_MODULES([SN], [ libstartup-notification-1.0 >= 0.8 ], [enable_browser_plugins = yes], [enable_browser_plugins=no])
+	if test "x$enable_browser_plugins" != "xyes" ; then
+		AC_MSG_WARN([libstartup-notification not found, necessary to build the plugin viewer])
 	fi
 fi
 
