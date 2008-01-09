@@ -1,3 +1,15 @@
+2008-01-09  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (gui_thread),
+	  (bacon_video_widget_finalize),
+	  (bvw_update_brightness_and_contrast_from_gconf),
+	  (bvw_update_colorbalance_from_gconf_delayed),
+	  (bvw_update_interface_implementations), (bacon_video_widget_new):
+	  Make sure we don't do GConf stuff from the streaming thread, since
+	  gconf might apparently iterate the default main context, leading to
+	  all kinds of nasty issues, such as random crashes with NULL pollrecs
+	  in g_main_context_check. (Hopefully closes: #471159)
+
 2008-01-08  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-resize.c: (bacon_resize_init), (bacon_resize),

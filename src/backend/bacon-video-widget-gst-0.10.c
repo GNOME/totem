@@ -2,7 +2,7 @@
  * Copyright (C) 2003-2007 the GStreamer project
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
- *      Tim-Philipp Müller <tim centricular net>
+ * Copyright (C) 2005-2008 Tim-Philipp Müller <tim centricular net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,8 +123,9 @@ struct BaconVideoWidgetPrivate
   BaconVideoWidgetAspectRatio  ratio_type;
 
   GstElement                  *play;
-  GstXOverlay                 *xoverlay; /* protect with lock */
-  GstColorBalance             *balance;  /* protect with lock */
+  GstXOverlay                 *xoverlay;      /* protect with lock */
+  GstColorBalance             *balance;       /* protect with lock */
+  guint                        col_update_id; /* protect with lock */
   GMutex                      *lock;
 
   guint                        update_id;
@@ -230,6 +231,8 @@ static GList * get_stream_info_objects_for_type (BaconVideoWidget * bvw,
 static GtkWidgetClass *parent_class = NULL;
 
 static int bvw_signals[LAST_SIGNAL] = { 0 };
+
+static GThread *gui_thread;
 
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
@@ -1867,6 +1870,11 @@ bacon_video_widget_finalize (GObject * object)
   if (bvw->priv->update_id) {
     g_source_remove (bvw->priv->update_id);
     bvw->priv->update_id = 0;
+  }
+
+  if (bvw->priv->col_update_id) {
+    g_source_remove (bvw->priv->col_update_id);
+    bvw->priv->col_update_id = 0;
   }
 
   if (bvw->priv->tagcache) {
@@ -4584,16 +4592,46 @@ find_colorbalance_element (GstElement *element, GValue * ret, GstElement **cb)
 }
 
 static void
+bvw_update_brightness_and_contrast_from_gconf (BaconVideoWidget * bvw)
+{
+  GConfValue *confvalue;
+  guint i;
+
+  g_return_if_fail (g_thread_self() == gui_thread);
+
+  /* Setup brightness and contrast */
+  GST_LOG ("updating brightness and contrast from GConf settings");
+  for (i = 0; i < G_N_ELEMENTS (video_props_str); i++) {
+    confvalue = gconf_client_get_without_default (bvw->priv->gc,
+        video_props_str[i], NULL);
+    if (confvalue != NULL) {
+      bacon_video_widget_set_video_property (bvw, i,
+        gconf_value_get_int (confvalue));
+      gconf_value_free (confvalue);
+    }
+  }
+}
+
+static gboolean
+bvw_update_colorbalance_from_gconf_delayed (BaconVideoWidget * bvw)
+{
+  GST_LOG ("delayed updating of colorbalance");
+  g_mutex_lock (bvw->priv->lock);
+  bvw_update_interface_implementations (bvw);
+  bvw->priv->col_update_id = 0;
+  g_mutex_unlock (bvw->priv->lock);
+  return FALSE;
+}
+
+static void
 bvw_update_interface_implementations (BaconVideoWidget *bvw)
 {
   GstColorBalance *old_balance = bvw->priv->balance;
   GstXOverlay *old_xoverlay = bvw->priv->xoverlay;
-  GConfValue *confvalue;
   GstElement *video_sink = NULL;
   GstElement *element = NULL;
   GstIteratorResult ires;
   GstIterator *iter;
-  guint i;
 
   g_object_get (bvw->priv->play, "video-sink", &video_sink, NULL);
   g_assert (video_sink != NULL);
@@ -4643,15 +4681,18 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     bvw->priv->balance = NULL;
   }
 
-  /* Setup brightness and contrast */
-  for (i = 0; i < G_N_ELEMENTS (video_props_str); i++) {
-    confvalue = gconf_client_get_without_default (bvw->priv->gc,
-        video_props_str[i], NULL);
-    if (confvalue != NULL) {
-      bacon_video_widget_set_video_property (bvw, i,
-        gconf_value_get_int (confvalue));
-      gconf_value_free (confvalue);
-    }
+  /* Setup brightness and contrast from configured values (do it delayed if
+   * we're within a streaming thread, otherwise gconf/orbit/whatever may
+   * iterate or otherwise mess with the default main context and cause all
+   * kinds of nasty issues) */
+  if (g_thread_self() == gui_thread) {
+    bvw_update_brightness_and_contrast_from_gconf (bvw);
+  } else {
+    /* caller will have acquired bvw->priv->lock already */
+    if (bvw->priv->col_update_id)
+       g_source_remove (bvw->priv->col_update_id);
+    bvw->priv->col_update_id =
+        g_idle_add ((GSourceFunc) bvw_update_colorbalance_from_gconf_delayed, bvw);
   }
 
   if (old_xoverlay)
@@ -5076,6 +5117,9 @@ bacon_video_widget_new (int width, int height,
         (guint64) (GST_SECOND * gconf_value_get_float (confvalue)), NULL);
     gconf_value_free (confvalue);
   }
+
+  /* assume we're always called from the main Gtk+ GUI thread */
+  gui_thread = g_thread_self();
 
   return GTK_WIDGET (bvw);
 
