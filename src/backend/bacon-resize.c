@@ -92,6 +92,13 @@ bacon_resize (GtkWidget *widget)
 
 	screen = gtk_widget_get_screen (widget);
 	root = gdk_screen_get_root_window (screen);
+
+	/* XF86VidModeGetModeLine just doesn't work nicely with multiple monitors */
+	if (gdk_screen_get_n_monitors (screen) > 1) {
+		XUnlockDisplay (Display);
+		return;
+	}
+
 	res = XF86VidModeGetModeLine (Display, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
 	if (!res) {
 		XUnlockDisplay (Display);
@@ -99,8 +106,9 @@ bacon_resize (GtkWidget *widget)
 	}
 
 	/* Check if there's a viewport */
-	width = gdk_screen_width ();
-	height = gdk_screen_height ();
+	width = gdk_screen_get_width (screen);
+	height = gdk_screen_get_height (screen);
+
 	if (width <= modeline.hdisplay && height <= modeline.vdisplay) {
 		XUnlockDisplay (Display);
 		return;
@@ -175,10 +183,10 @@ bacon_restore (GtkWidget *widget)
 	}
 
 	/* Check if there's a viewport */
-	width = gdk_screen_width ();
-	height = gdk_screen_height ();
-	if (width > modeline.hdisplay
-	    && height > modeline.vdisplay) {
+	width = gdk_screen_get_width (screen);
+	height = gdk_screen_get_height (screen);
+
+	if (width > modeline.hdisplay && height > modeline.vdisplay) {
 		XUnlockDisplay (Display);
 		return;
 	}

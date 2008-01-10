@@ -1,3 +1,10 @@
+2008-01-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-resize.c: (bacon_resize), (bacon_restore):
+	Don't try to change the resolution in multi monitor mode,
+	as the VidMode extension doesn't allow for multiple monitors
+	(Closes: #472494)
+
 2008-01-09  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Fix typo
