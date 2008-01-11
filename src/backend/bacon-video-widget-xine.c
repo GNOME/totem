@@ -193,6 +193,9 @@ struct BaconVideoWidgetPrivate {
 	/* fullscreen stuff */
 	int screenid;
 
+	/* Bacon resize */
+	BaconResize *bacon_resize;
+
 	guint ao_driver_none : 1;
 	guint show_vfx : 1;
 	guint using_vfx : 1;
@@ -200,7 +203,6 @@ struct BaconVideoWidgetPrivate {
 	guint can_dvd : 1;
 	guint can_vcd : 1;
 	guint can_dvb : 1;
-	guint have_xvidmode : 1;
 	guint auto_resize : 1;
 	guint is_live : 1;
 	guint got_redirect : 1;
@@ -1241,7 +1243,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 		bvw->priv->vis_name = NULL;
 	}
 
-	bvw->priv->have_xvidmode = bacon_resize_init ();
+	bvw->priv->bacon_resize = bacon_resize_new (widget);
 	bvw->priv->stream = xine_stream_new (bvw->priv->xine,
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
@@ -1656,6 +1658,8 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 	xine_port_send_gui_data (bvw->priv->vo_driver,
 			XINE_GUI_SEND_WILL_DESTROY_DRAWABLE,
 			(void*)widget->window);
+
+	g_object_unref (bvw->priv->bacon_resize);
 
 	/* Hide all windows */
 	if (GTK_WIDGET_MAPPED (widget))
@@ -3024,10 +3028,16 @@ bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 {
+	gboolean have_xvidmode;
+
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-	if (bvw->priv->have_xvidmode == FALSE &&
+	g_object_get (G_OBJECT (bvw->priv->bacon_resize),
+				"have-xvidmode", &have_xvidmode,
+				NULL);
+
+	if (have_xvidmode == FALSE &&
 			bvw->priv->tvout != TV_OUT_NVTV_NTSC &&
 			bvw->priv->tvout != TV_OUT_NVTV_PAL)
 		return;
@@ -3044,7 +3054,7 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 			/* Else if just auto resize is used */
 		} else if (bvw->priv->auto_resize != FALSE) {
 #endif
-			bacon_restore (GTK_WIDGET (bvw));
+			bacon_resize_restore (bvw->priv->bacon_resize);
 #ifdef HAVE_NVTV
 		}
 		/* Turn fullscreen on with NVTV if that option is on */
@@ -3055,8 +3065,8 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 				bvw->priv->video_height);
 #endif
 		/* Turn fullscreen on when we have xvidmode */
-	} else if (bvw->priv->have_xvidmode != FALSE) {
-		bacon_resize (GTK_WIDGET (bvw));
+	} else if (have_xvidmode != FALSE) {
+		bacon_resize_resize (bvw->priv->bacon_resize);
 	}
 }
 

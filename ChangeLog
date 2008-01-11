@@ -1,3 +1,20 @@
+2008-01-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-resize.c: 
+	* src/backend/bacon-resize.h:
+	Patch from Philip Withnall <pwithnall@svn.gnome.org> to turn
+	the bacon-resize code into an object
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_unrealize),
+	(bacon_video_widget_set_fullscreen),
+	(bacon_video_widget_new):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_realize),
+	(bacon_video_widget_unrealize), 
+	(bacon_video_widget_set_fullscreen):
+	Port to the new API (Closes: #370099)
+
 2008-01-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-resize.c: (bacon_resize), (bacon_restore):

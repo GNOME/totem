@@ -17,9 +17,39 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Cambridge, MA 02139, USA.
  */
 
-#include <gtk/gtk.h>
+#ifndef BACON_RESIZE_H
+#define BACON_RESIZE_H
 
-gboolean bacon_resize_init (void);
-void bacon_resize (GtkWidget *widget);
-void bacon_restore (GtkWidget *widget);
+#include <glib.h>
+#include <glib-object.h>
+#include <gtk/gtkwidget.h>
 
+G_BEGIN_DECLS
+
+#define BACON_TYPE_RESIZE		(bacon_resize_get_type ())
+#define BACON_RESIZE(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_RESIZE, BaconResize))
+#define BACON_RESIZE_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), BACON_TYPE_RESIZE, BaconResizeClass))
+#define BACON_IS_RESIZE(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), BACON_TYPE_RESIZE))
+#define BACON_IS_RESIZE_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), BACON_TYPE_RESIZE))
+
+typedef struct BaconResize		BaconResize;
+typedef struct BaconResizeClass		BaconResizeClass;
+typedef struct BaconResizePrivate	BaconResizePrivate;
+
+struct BaconResize {
+	GObject parent;
+	BaconResizePrivate *priv;
+};
+
+struct BaconResizeClass {
+	GObjectClass parent_class;
+};
+
+GType bacon_resize_get_type	(void);
+BaconResize *bacon_resize_new	(GtkWidget *video_widget);
+void bacon_resize_resize	(BaconResize *resize);
+void bacon_resize_restore	(BaconResize *resize);
+
+G_END_DECLS
+
+#endif /* BACON_RESIZE_H */
