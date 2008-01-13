@@ -1465,12 +1465,27 @@ xine_event (void *user_data, const xine_event_t *event)
 		break;
 	case XINE_EVENT_UI_SET_TITLE:
 		ui_data = event->data;
+		data = NULL;
 
-		data = g_new0 (signal_data, 1);
-		data->signal = TITLE_CHANGE_ASYNC;
-		data->msg = g_strdup (ui_data->str);
-		g_async_queue_push (bvw->priv->queue, data);
-		g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		if (g_utf8_validate (ui_data->str, -1, NULL) == FALSE) {
+			char *utf8;
+
+			g_warning ("Metadata for updated title not in UTF-8 for mrl '%s'", type, bvw->com->mrl);
+			utf8 = g_locale_to_utf8 (ui_data->str, -1, NULL, NULL, NULL);
+			if (utf8 != NULL) {
+				data = g_new0 (signal_data, 1);
+				data->msg = utf8;
+			}
+		} else {
+			data = g_new0 (signal_data, 1);
+			data->msg = g_strdup (ui_data->str);
+		}
+
+		if (data != NULL) {
+			data->signal = TITLE_CHANGE_ASYNC;
+			g_async_queue_push (bvw->priv->queue, data);
+			g_idle_add ((GSourceFunc) bacon_video_widget_idle_signal, bvw);
+		}
 		break;
 	case XINE_EVENT_PROGRESS:
 		prg = event->data;
