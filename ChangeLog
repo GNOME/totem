@@ -1,3 +1,9 @@
+2008-01-15  Frederic Crozat  <fcrozat@mandriva.com>
+
+	* src/plugins/media-player-keys/totem-media-player-keys.c:
+	Prevent autostarting gnome-settings-daemon, only enable
+	plugin if it is running already (Closes: #509438)
+
 2008-01-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c: (xine_event):

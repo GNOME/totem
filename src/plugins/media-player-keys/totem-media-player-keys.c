@@ -120,6 +120,13 @@ on_window_focus_in_event (GtkWidget *window, GdkEventFocus *event, TotemMediaPla
 	return FALSE;
 }
 
+static void
+proxy_destroy (DBusGProxy *proxy,
+		  TotemMediaPlayerKeysPlugin* plugin)
+{
+	plugin->media_player_keys_proxy = NULL;
+}
+
 static gboolean
 impl_activate (TotemPlugin *plugin,
 	       TotemObject *totem,
@@ -136,10 +143,22 @@ impl_activate (TotemPlugin *plugin,
 		return FALSE;
 	}
 
-	pi->media_player_keys_proxy = dbus_g_proxy_new_for_name (connection,
+	pi->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
 			"org.gnome.SettingsDaemon", "/org/gnome/SettingsDaemon",
-			"org.gnome.SettingsDaemon");
+			"org.gnome.SettingsDaemon", &err);
 	dbus_g_connection_unref (connection);
+	if (err != NULL) {
+		g_warning ("Failed to create dbus proxy for org.gnome.SettingsDaemon: %s",
+				   err->message);
+		g_error_free (err);
+		return FALSE;
+	} else {
+		g_signal_connect_object (pi->media_player_keys_proxy,
+					 "destroy",
+					 G_CALLBACK (proxy_destroy),
+					 pi, 0);
+	}
+
 
 	org_gnome_SettingsDaemon_grab_media_player_keys (pi->media_player_keys_proxy,
 			"Totem", 0, NULL);
