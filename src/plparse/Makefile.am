@@ -74,6 +74,8 @@ libtotem_plparser_la_CPPFLAGS = \
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/src/plparser		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"\
+	-D_FILE_OFFSET_BITS=64			\
+	-D_LARGEFILE64_SOURCE			\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
