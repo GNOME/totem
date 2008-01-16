@@ -148,10 +148,14 @@ impl_activate (TotemPlugin *plugin,
 			"org.gnome.SettingsDaemon", &err);
 	dbus_g_connection_unref (connection);
 	if (err != NULL) {
+		gboolean daemon_not_running;
 		g_warning ("Failed to create dbus proxy for org.gnome.SettingsDaemon: %s",
-				   err->message);
+			   err->message);
+		daemon_not_running = (err->code == DBUS_GERROR_NAME_HAS_NO_OWNER);
 		g_error_free (err);
-		return FALSE;
+		/* don't popup error if settings-daemon is not running,
+ 		 * ie when starting totem not under GNOME desktop */
+		return daemon_not_running;
 	} else {
 		g_signal_connect_object (pi->media_player_keys_proxy,
 					 "destroy",
