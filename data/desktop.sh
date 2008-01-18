@@ -4,7 +4,7 @@ echo_mime () {
 	printf "$i;";
 }
 
-MIMETYPES=`cat $1`
+MIMETYPES=`grep -v ^# $1`
 printf MimeType=;
 for i in $MIMETYPES ; do
 	echo_mime;
