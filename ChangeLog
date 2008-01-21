@@ -1,3 +1,17 @@
+2008-01-21  Bastien Nocera  <hadess@hadess.net>
+
+	Patch from Patrick Hulin <patrick.hulin@gmail.com>
+
+	* src/totem-object.c: (totem_object_class_init),
+	(totem_object_set_property), (totem_object_get_property):
+	Add current-mrl property which gets/sets the current MRL
+	that Totem is playing
+
+	* configure.in:
+	* src/plugins/thumbnail/*: Add the thumbnail plugin to show
+	the currently playing file's thumbnail as the window icon
+	(Closes: #407513)
+
 2008-01-18  Bastien Nocera  <hadess@hadess.net>
 
 	* data/desktop.sh:

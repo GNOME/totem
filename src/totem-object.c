@@ -45,7 +45,8 @@ enum {
 	PROP_STREAM_LENGTH,
 	PROP_SEEKABLE,
 	PROP_CURRENT_TIME,
-	PROP_ERROR_SHOWN
+	PROP_ERROR_SHOWN,
+	PROP_CURRENT_MRL
 };
 
 enum {
@@ -100,6 +101,9 @@ totem_object_class_init (TotemObjectClass *klass)
 	g_object_class_install_property (object_class, PROP_ERROR_SHOWN,
 					 g_param_spec_boolean ("error-shown", NULL, NULL,
 							       FALSE, G_PARAM_READABLE));
+	g_object_class_install_property (object_class, PROP_CURRENT_MRL,
+					 g_param_spec_string ("current-mrl", NULL, NULL,
+							      NULL, G_PARAM_READABLE));
 
 	totem_table_signals[FILE_OPENED] =
 		g_signal_new ("file-opened",
@@ -180,6 +184,9 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_ERROR_SHOWN:
 		//g_value_set_boolean (value, XXX);
+		break;
+	case PROP_CURRENT_MRL:
+		g_value_set_string (value, totem->mrl);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

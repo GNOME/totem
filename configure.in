@@ -49,7 +49,7 @@ AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker"
+allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -530,6 +530,14 @@ for plugin in ${used_plugins}; do
 		sample-vala)
 			if test "${with_vala}" != "yes" ; then
 				plugin_error_or_ignore "you need vala installed to use the sample-vala plugin"
+				add_plugin="0"
+			fi
+		;;
+		thumbnail)
+			PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.15.0,
+				[HAVE_GLIB_2_15=yes], [HAVE_GLIB_2_15=no])
+			if test "${HAVE_GLIB_2_15}" != "yes" ; then
+				plugin_error_or_ignore "you need glib >= 2.15.0 to use the thumbnail plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -1025,6 +1033,7 @@ src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
 src/plugins/sample-python/Makefile
 src/plugins/sample-vala/Makefile
+src/plugins/thumbnail/Makefile
 src/plugins/totem/Makefile
 src/plugins/tracker/Makefile
 src/plugins/youtube/Makefile
