@@ -30,12 +30,15 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
+#include <gconf/gconf-client.h>
+
 #include <gmodule.h>
 #include <string.h>
 
 #include "totem-plugin.h"
 #include "totem.h"
 #include "totem-scrsaver.h"
+#include "backend/bacon-video-widget.h"
 
 #define TOTEM_TYPE_SCREENSAVER_PLUGIN		(totem_screensaver_plugin_get_type ())
 #define TOTEM_SCREENSAVER_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SCREENSAVER_PLUGIN, TotemScreensaverPlugin))
@@ -47,9 +50,11 @@
 typedef struct
 {
 	TotemPlugin   parent;
+	TotemObject  *totem;
 
 	TotemScrsaver *scr;
 	guint          handler_id_playing;
+	guint          handler_id_gconf;
 } TotemScreensaverPlugin;
 
 typedef struct
@@ -100,11 +105,27 @@ static void
 totem_screensaver_update_from_state (TotemObject *totem,
 				     TotemScreensaverPlugin *pi)
 {
-	if (totem_is_playing (totem) != FALSE) {
+	gboolean lock_screensaver_on_audio, visual_effects, can_get_frames;
+	BaconVideoWidget *bvw;
+	GConfClient *gc;
+
+	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget ((Totem *)(totem)));
+	gc = gconf_client_get_default ();
+
+	visual_effects = gconf_client_get_bool (gc,
+						GCONF_PREFIX"/show_vfx",
+						NULL);
+	lock_screensaver_on_audio = gconf_client_get_bool (gc, 
+							   GCONF_PREFIX"/lock_screensaver_on_audio",
+							   NULL);
+	can_get_frames = bacon_video_widget_can_get_frames (bvw, NULL);
+
+	if (totem_is_playing (totem) != FALSE && (lock_screensaver_on_audio || can_get_frames))
 		totem_scrsaver_disable (pi->scr);
-	} else {
+	else
 		totem_scrsaver_enable (pi->scr);
-	}
+
+	g_object_unref (gc);
 }
 
 static void
@@ -115,17 +136,35 @@ property_notify_cb (TotemObject *totem,
 	totem_screensaver_update_from_state (totem, pi);
 }
 
+static void
+lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
+				      GConfEntry *entry, TotemScreensaverPlugin *pi)
+{
+	totem_screensaver_update_from_state (pi->totem, pi);
+}
+
 static gboolean
 impl_activate (TotemPlugin *plugin,
 	       TotemObject *totem,
 	       GError **error)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
+	GConfClient *gc;
+
+	gc = gconf_client_get_default ();
+	gconf_client_add_dir (gc, GCONF_PREFIX,
+			      GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	pi->handler_id_gconf = gconf_client_notify_add (gc, GCONF_PREFIX"/lock_screensaver_on_audio",
+							(GConfClientNotifyFunc) lock_screensaver_on_audio_changed_cb,
+							plugin, NULL, NULL);
+	g_object_unref (gc);
 
 	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
 				"notify::playing",
 				G_CALLBACK (property_notify_cb),
 				pi);
+
+	pi->totem = g_object_ref (totem);
 
 	/* Force setting the current status */
 	totem_screensaver_update_from_state (totem, pi);
@@ -138,8 +177,15 @@ impl_deactivate	(TotemPlugin *plugin,
 		 TotemObject *totem)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
+	GConfClient *gc;
+
+	gc = gconf_client_get_default ();
+	gconf_client_notify_remove (gc, pi->handler_id_gconf);
+	g_object_unref (gc);
 
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+
+	g_object_unref (pi->totem);
 
 	totem_scrsaver_enable (pi->scr);
 }

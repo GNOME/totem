@@ -41,6 +41,8 @@
 #include "totem-interface.h"
 #include "video-utils.h"
 #include "totem-subtitle-encoding.h"
+#include "totem-plugin.h"
+#include "totem-plugins-engine.h"
 
 #include "debug.h"
 
@@ -48,6 +50,7 @@
 void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
 void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
@@ -198,6 +201,18 @@ checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 void
+checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+
+	gconf_client_set_bool (totem->gc,
+			       GCONF_PREFIX"/lock_screensaver_on_audio", 
+			       value, NULL);
+}
+
+void
 tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	TvOutType type;
@@ -253,7 +268,7 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 
 static void
 show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, Totem *totem)
+		     GConfEntry *entry, Totem *totem)
 {
 	GObject *item;
 
@@ -267,6 +282,24 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 
 	g_signal_connect (item, "toggled",
 			G_CALLBACK (checkbutton2_toggled_cb), totem);
+}
+
+static void
+lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
+				      GConfEntry *entry, Totem *totem)
+{
+	GObject *item;
+
+	item = gtk_builder_get_object (totem->xml, "tpw_screensaver_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+					      checkbutton4_toggled_cb, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+				      gconf_client_get_bool (totem->gc,
+							     GCONF_PREFIX"/lock_screensaver_on_audio", NULL));
+
+	g_signal_connect (item, "toggled",
+			  G_CALLBACK (checkbutton4_toggled_cb), totem);
 }
 
 static void
@@ -475,7 +508,7 @@ totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *menu;
 	GtkAction *action;
-	gboolean show_visuals, auto_resize, is_local, deinterlace;
+	gboolean show_visuals, auto_resize, is_local, deinterlace, lock_screensaver_on_audio;
 	int connection_speed, i;
 	char *visual, *font, *encoding;
 	GList *list, *l;
@@ -538,6 +571,15 @@ totem_setup_preferences (Totem *totem)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_resize);
 	bacon_video_widget_set_auto_resize
 		(BACON_VIDEO_WIDGET (totem->bvw), auto_resize);
+
+	/* Screensaver audio locking */
+	lock_screensaver_on_audio = gconf_client_get_bool (totem->gc,
+							   GCONF_PREFIX"/lock_screensaver_on_audio", NULL);
+	item = gtk_builder_get_object (totem->xml, "tpw_screensaver_checkbutton");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), lock_screensaver_on_audio);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/lock_screensaver_on_audio",
+				 (GConfClientNotifyFunc) lock_screensaver_on_audio_changed_cb,
+				 totem, NULL, NULL);
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);

@@ -1,3 +1,21 @@
+2008-01-25  Bastien Nocera  <hadess@hadess.net>
+
+	* data/totem.schemas.in:
+	* data/totem.ui:
+	* src/plugins/screensaver/totem-screensaver.c:
+	(totem_screensaver_update_from_state),
+	(lock_screensaver_on_audio_changed_cb), (impl_activate),
+	(impl_deactivate):
+	* src/totem-preferences.c: (checkbutton4_toggled_cb),
+	(lock_screensaver_on_audio_changed_cb), (totem_setup_preferences):
+	Lock the screensaver when only audio is playing, but allow the
+	user to override that, to avoid monitor-powered speakers being
+	turned off
+
+	Based on patch by Patrick Hulin <patrick.hulin@gmail.com>
+
+	(Closes: #481080)
+
 2008-01-21  Bastien Nocera  <hadess@hadess.net>
 
 	Patch from Patrick Hulin <patrick.hulin@gmail.com>

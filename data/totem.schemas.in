@@ -1,5 +1,20 @@
 <gconfschemafile>
-    <schemalist>    
+  <schemalist>
+
+      <schema>
+        <key>/schemas/apps/totem/lock_screensaver_on_audio</key>
+	<applyto>/apps/totem/lock_screensaver_on_audio</applyto>
+	<owner>totem</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short>Allow the screensaver to activate even when audio-only is playing</short>
+	  <long>
+	    Allow the screensaver to activate even when audio-only is playing.
+	    This is useful for monitor powered speakers.
+	  </long>
+	</locale>
+      </schema>
 
       <schema>
         <key>/schemas/apps/totem/show_vfx</key>
