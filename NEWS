@@ -1,5 +1,22 @@
 New features and significant updates in version...
 
+2.21.91:
+* Add support for the new x-content/ type, to show in the nautilus'
+  media selection
+* Lock the screensaver when only audio is playing, but allow the users
+  to disable that behaviour, for monitor-powered speakers
+* Add a thumbnail plugin to use the video's thumbnail as the window icon
+* Remove unneeded gnome-desktop and HAL dependency
+* Don't start up gnome-settings-daemon when it's not already running
+* Forcefully exit after 10 seconds when we can't finish the shutdown
+* Don't change the resolution of screens on multi-head setups
+* xine-lib:
+  - Check metadata being in UTF-8 before passing it to the player
+* GStreamer:
+  - Fix a few crashers by not using GConf in the streaming thread
+* Browser plugin:
+  - Fix building the GTK+ version
+
 2.21.90:
 * Fix GTK+-only build wrt. the tracker plugin and the startup-notification
 * Fix building with newer versions of Vala
