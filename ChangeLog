@@ -1,3 +1,15 @@
+2008-01-27  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plugins/tracker/totem-tracker-widget.c:
+	(totem_tracker_widget_class_init), (populate_result),
+	(get_search_count), (search_results_cb), (do_search), (go_next),
+	(go_previous), (page_selector_value_changed_cb), (new_search),
+	(init_result_list), (initialize_list_store),
+	(totem_tracker_widget_init), (totem_tracker_widget_new):
+	* src/plugins/tracker/totem-tracker.c: (impl_activate):
+	* src/plugins/tracker/tracker.totem-plugin.in: HIGify the Tracker
+	plugin, following suggestions made by Kirk Bridger. (Closes: #512268)
+
 2008-01-26  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	Update svn:ignore properties.

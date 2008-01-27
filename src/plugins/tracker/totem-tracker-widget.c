@@ -54,6 +54,7 @@ struct TotemTrackerWidgetPrivate {
 
 	GtkWidget *next_button;
 	GtkWidget *previous_button;
+	GtkWidget *page_selector;
 
 	int total_result_count;
 	int current_result_page;
@@ -81,8 +82,10 @@ static void totem_tracker_widget_set_property	(GObject *object,
 						 guint property_id,
 						 const GValue *value,
 						 GParamSpec *pspec);
+static void page_selector_value_changed_cb (GtkSpinButton *self, TotemTrackerWidget *widget);
 
-static void totem_tracker_widget_class_init (TotemTrackerWidgetClass *klass)
+static void
+totem_tracker_widget_class_init (TotemTrackerWidgetClass *klass)
 {
 	GObjectClass *object_class;
 
@@ -131,14 +134,14 @@ totem_tracker_widget_set_property (GObject *object,
 	}
 }
 
-static void populate_result (TotemTrackerWidget *widget, char *result)
+static void
+populate_result (TotemTrackerWidget *widget, char *result)
 {
 	GtkTreeIter iter;
 	GnomeVFSFileInfo *info;
 	GnomeVFSResult vfs_result;
 	GdkPixbuf *thumbnail = NULL;
-	char *thumbnail_path;
-	char *file_uri;
+	char *thumbnail_path, *file_uri;
 
 	info = gnome_vfs_file_info_new ();
 	vfs_result = gnome_vfs_get_file_info (result, info, GNOME_VFS_FILE_INFO_NAME_ONLY);
@@ -159,8 +162,7 @@ static void populate_result (TotemTrackerWidget *widget, char *result)
 
 		g_free (thumbnail_path);
 		g_free (file_uri);
-	}
-	else {
+	} else {
 		/* Display an error */
 		char *message = g_strdup_printf (_("Could not get metadata for file %s."), result);
 		totem_interface_error_blocking	(_("File Error"), message, NULL);
@@ -170,7 +172,8 @@ static void populate_result (TotemTrackerWidget *widget, char *result)
 	g_free (info);
 }
 
-static int get_search_count (TrackerClient *client, const char *search)
+static int
+get_search_count (TrackerClient *client, const char *search)
 {
 	GError *error = NULL;
 	int count = 0;
@@ -194,38 +197,53 @@ struct SearchResultsData {
 	TrackerClient *client;
 };
 
-static void search_results_cb (char **result, GError *error, gpointer userdata)
+static void
+search_results_cb (char **result, GError *error, gpointer userdata)
 {
 	struct SearchResultsData *data = (struct SearchResultsData*) userdata;
 	char *label;
-	int i;
-	int next_page;
+	int i, next_page;
+	TotemTrackerWidgetPrivate *priv = data->widget->priv;
 
 	if (!error && result) {
-		for (i = 0; result [i] != NULL; i++) {
+		for (i = 0; result [i] != NULL; i++)
 			populate_result (data->widget, result [i]);
-		}
 	
-		next_page = (data->widget->priv->current_result_page + 1) * TOTEM_TRACKER_MAX_RESULTS_SIZE;
+		next_page = (priv->current_result_page + 1) * TOTEM_TRACKER_MAX_RESULTS_SIZE;
 
-		/* Translators:
-		 * This is used to show which items are listed in the list view, for example:
-		 * Showing 10-20 of 128 matches
-		 * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
-		 * Personalized Results 1 - 10 of about 4,130,000 for foobar */
-		label = g_strdup_printf (ngettext("Showing %i - %i of %i match", "Showing %i - %i of %i matches", data->widget->priv->total_result_count),
-					 data->widget->priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
-					 next_page > data->widget->priv->total_result_count ? data->widget->priv->total_result_count : next_page,
-					 data->widget->priv->total_result_count);
-		gtk_label_set_text (GTK_LABEL(data->widget->priv->status_label), label);
-		g_free (label);
+		/* Set the new range on the page selector's adjustment and ensure the current page is correct */
+		gtk_spin_button_set_range (GTK_SPIN_BUTTON (priv->page_selector), 1,
+					   priv->total_result_count / TOTEM_TRACKER_MAX_RESULTS_SIZE + 1);
+		priv->current_result_page = gtk_spin_button_get_value (GTK_SPIN_BUTTON (priv->page_selector)) - 1;
+
+		if (priv->total_result_count == 0) {
+			gtk_label_set_text (GTK_LABEL (priv->status_label), _("No results"));
+		} else {
+			/* Translators:
+			 * This is used to show which items are listed in the list view, for example:
+			 * Showing 10-20 of 128 matches
+			 * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
+			 * Personalized Results 1 - 10 of about 4,130,000 for foobar */
+			label = g_strdup_printf (ngettext ("Showing %i - %i of %i match", "Showing %i - %i of %i matches", priv->total_result_count),
+						 priv->current_result_page * TOTEM_TRACKER_MAX_RESULTS_SIZE, 
+						 next_page > priv->total_result_count ? priv->total_result_count : next_page,
+						 priv->total_result_count);
+			gtk_label_set_text (GTK_LABEL (priv->status_label), label);
+			g_free (label);
+		}
 
 		/* Enable or disable the pager buttons */
-		if (data->widget->priv->current_result_page < data->widget->priv->total_result_count / TOTEM_TRACKER_MAX_RESULTS_SIZE)
-			gtk_widget_set_sensitive (GTK_WIDGET (data->widget->priv->next_button), TRUE);
+		if (priv->current_result_page < priv->total_result_count / TOTEM_TRACKER_MAX_RESULTS_SIZE) {
+			gtk_widget_set_sensitive (GTK_WIDGET (priv->page_selector), TRUE);
+			gtk_widget_set_sensitive (GTK_WIDGET (priv->next_button), TRUE);
+		}
 
-		if (data->widget->priv->current_result_page > 0)
-			gtk_widget_set_sensitive (GTK_WIDGET (data->widget->priv->previous_button), TRUE);	
+		if (priv->current_result_page > 0) {
+			gtk_widget_set_sensitive (GTK_WIDGET (priv->page_selector), TRUE);
+			gtk_widget_set_sensitive (GTK_WIDGET (priv->previous_button), TRUE);
+		}
+
+		g_signal_handlers_unblock_by_func (priv->page_selector, page_selector_value_changed_cb, data->widget);
 	} else {
 		g_warning ("Error getting the search results for '%s': %s", data->search_text, error->message ? error->message : "No reason");
 	}
@@ -235,7 +253,8 @@ static void search_results_cb (char **result, GError *error, gpointer userdata)
 	g_free (data);
 }
 
-static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
+static void
+do_search (TotemTrackerWidget *widget)
 {
 	TrackerClient *client;
 	struct SearchResultsData *data;
@@ -243,14 +262,23 @@ static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
 	/* Clear the list store */
 	gtk_list_store_clear (GTK_LIST_STORE (widget->priv->result_store));
 
+	/* Stop pagination temporarily */
 	gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->previous_button), FALSE);
+	gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->page_selector), FALSE);
 	gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->next_button), FALSE);
 
+	/* Stop after clearing the list store if they're just emptying the search entry box */
+	if (strcmp (gtk_entry_get_text (GTK_ENTRY (widget->priv->search_entry)), "") == 0) {
+		gtk_label_set_text (GTK_LABEL (widget->priv->status_label), _("No results"));
+		return;
+	}
+
+	g_signal_handlers_block_by_func (widget->priv->page_selector, page_selector_value_changed_cb, widget);
 
 	/* Get the tracker client */
 	client = tracker_connect (TRUE);
 	if (!client) {
-		g_warning ("Error trying to get the tracker client");
+		g_warning ("Error trying to get the Tracker client.");
 		return;
 	}
 
@@ -269,23 +297,44 @@ static void do_search (GtkWidget *button, TotemTrackerWidget *widget)
 				   search_results_cb, data);
 }
 
-static void go_next (GtkWidget *button, TotemTrackerWidget *widget)
+static void
+go_next (GtkWidget *button, TotemTrackerWidget *widget)
 {
 	if (widget->priv->current_result_page < widget->priv->total_result_count / TOTEM_TRACKER_MAX_RESULTS_SIZE)
-		widget->priv->current_result_page ++;
+		gtk_spin_button_spin (GTK_SPIN_BUTTON (widget->priv->page_selector), GTK_SPIN_STEP_FORWARD, 1);
 
-	do_search (button, widget);
+	/* do_search is called via page_selector_value_changed_cb */
 }
 
-static void go_previous (GtkWidget *button, TotemTrackerWidget *widget)
+static void
+go_previous (GtkWidget *button, TotemTrackerWidget *widget)
 {
 	if (widget->priv->current_result_page > 0)
-		widget->priv->current_result_page --;
+		gtk_spin_button_spin (GTK_SPIN_BUTTON (widget->priv->page_selector), GTK_SPIN_STEP_BACKWARD, 1);
 
-	do_search (button, widget);
+	/* do_search is called via page_selector_value_changed_cb */
 }
 
-static void init_result_list (TotemTrackerWidget *widget)
+static void
+page_selector_value_changed_cb (GtkSpinButton *self, TotemTrackerWidget *widget)
+{
+	widget->priv->current_result_page = gtk_spin_button_get_value (self) - 1;
+	do_search (widget);
+}
+
+static void
+new_search (GtkButton *button, TotemTrackerWidget *widget)
+{
+	/* Reset from the last search */
+	g_signal_handlers_block_by_func (widget->priv->page_selector, page_selector_value_changed_cb, widget);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (widget->priv->page_selector), 1);
+	g_signal_handlers_unblock_by_func (widget->priv->page_selector, page_selector_value_changed_cb, widget);
+
+	do_search (widget);
+}
+
+static void
+init_result_list (TotemTrackerWidget *widget)
 {
 	/* Initialize the store result list */
 	widget->priv->result_store = gtk_list_store_new (N_COLUMNS, 
@@ -303,14 +352,15 @@ static void init_result_list (TotemTrackerWidget *widget)
 				 GTK_TREE_MODEL (widget->priv->result_store));
 }
 
-static void initialize_list_store (TotemTrackerWidget *widget) 
+static void
+initialize_list_store (TotemTrackerWidget *widget) 
 {
 	TotemCellRendererVideo *renderer;
 	GtkTreeViewColumn *column;
 
 	/* Initialise the columns of the result list */
 	renderer = totem_cell_renderer_video_new (TRUE);
-	column = gtk_tree_view_column_new_with_attributes (_("Search results"), GTK_CELL_RENDERER (renderer),
+	column = gtk_tree_view_column_new_with_attributes (_("Search Results"), GTK_CELL_RENDERER (renderer),
 							   "thumbnail", IMAGE_COLUMN, 
 							   "title", NAME_COLUMN, 
 							   NULL);
@@ -318,12 +368,14 @@ static void initialize_list_store (TotemTrackerWidget *widget)
 	gtk_tree_view_append_column (GTK_TREE_VIEW (widget->priv->result_list), column);
 }
 
-static void totem_tracker_widget_init (TotemTrackerWidget *widget)
+static void
+totem_tracker_widget_init (TotemTrackerWidget *widget)
 {
 	GtkWidget *v_box;		/* the main vertical box of the widget */
-	GtkWidget *pager_box;		/* box that holds the next andd previous buttons */
+	GtkWidget *pager_box;		/* box that holds the next and previous buttons */
 	GtkWidget *search_box;		/* the search box contains the search entry and the search button */
 	GtkScrolledWindow *scroll;	/* make the result list scrollable */
+	GtkAdjustment *adjust;		/* adjustment for the page selector spin button */
 
 	widget->priv = G_TYPE_INSTANCE_GET_PRIVATE (widget, TOTEM_TYPE_TRACKER_WIDGET, TotemTrackerWidgetPrivate);
 
@@ -354,12 +406,16 @@ static void totem_tracker_widget_init (TotemTrackerWidget *widget)
 	pager_box = gtk_hbox_new (FALSE, 2);
 	widget->priv->next_button = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
 	widget->priv->previous_button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
-	gtk_box_pack_start (GTK_BOX (pager_box), gtk_label_new (""), TRUE, TRUE, 2);
+	adjust = GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 1, 1, 5, 0));
+	widget->priv->page_selector = gtk_spin_button_new (adjust, 1, 0);
 	gtk_box_pack_start (GTK_BOX (pager_box), widget->priv->previous_button, FALSE, FALSE, 2);
+	gtk_box_pack_start (GTK_BOX (pager_box), gtk_label_new (_("Page")), FALSE, FALSE, 2);
+	gtk_box_pack_start (GTK_BOX (pager_box), widget->priv->page_selector, TRUE, TRUE, 2);
 	gtk_box_pack_start (GTK_BOX (pager_box), widget->priv->next_button, FALSE, FALSE, 2);
 	gtk_box_pack_start (GTK_BOX (v_box), pager_box, FALSE, FALSE, 2);
 
 	gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->previous_button), FALSE);
+	gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->page_selector), FALSE);
 	gtk_widget_set_sensitive (GTK_WIDGET (widget->priv->next_button), FALSE);
 
 	/* Status label */
@@ -372,18 +428,21 @@ static void totem_tracker_widget_init (TotemTrackerWidget *widget)
 	gtk_widget_show_all (GTK_WIDGET (widget));
 
 	/* Connect the search button clicked signal and the search entry  */
-	g_signal_connect (G_OBJECT (widget->priv->search_button), "clicked",
-			  G_CALLBACK (do_search), (gpointer) widget);
-	g_signal_connect (G_OBJECT (widget->priv->search_entry), "activate",
-			  G_CALLBACK (do_search), (gpointer) widget);
+	g_signal_connect (widget->priv->search_button, "clicked",
+			  G_CALLBACK (new_search), widget);
+	g_signal_connect (widget->priv->search_entry, "activate",
+			  G_CALLBACK (new_search), widget);
 	/* Connect the pager buttons */
-	g_signal_connect (G_OBJECT (widget->priv->next_button), "clicked",
-			  G_CALLBACK (go_next), (gpointer) widget);
-	g_signal_connect (G_OBJECT (widget->priv->previous_button), "clicked",
-			  G_CALLBACK (go_previous), (gpointer) widget);
+	g_signal_connect (widget->priv->next_button, "clicked",
+			  G_CALLBACK (go_next), widget);
+	g_signal_connect (widget->priv->previous_button, "clicked",
+			  G_CALLBACK (go_previous), widget);
+	g_signal_connect (widget->priv->page_selector, "value-changed",
+			  G_CALLBACK (page_selector_value_changed_cb), widget);
 }
 
-GtkWidget *totem_tracker_widget_new (TotemObject *totem)
+GtkWidget *
+totem_tracker_widget_new (TotemObject *totem)
 {
 	GtkWidget *widget;
 

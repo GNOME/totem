@@ -89,10 +89,7 @@ impl_activate (TotemPlugin *plugin,
 
 	widget = totem_tracker_widget_new (totem);
 	gtk_widget_show (widget);
-	totem_add_sidebar_page (totem,
-				"tracker",
-				"Video Search",
-				widget);
+	totem_add_sidebar_page (totem, "tracker", _("Local Search"), widget);
 
 	return TRUE;
 }
