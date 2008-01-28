@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-25 14:55+0000\n"
-"PO-Revision-Date: 2008-01-26 14:20+0100\n"
+"POT-Creation-Date: 2008-01-27 23:29+0000\n"
+"PO-Revision-Date: 2008-01-28 13:41+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -561,7 +561,9 @@ msgstr "_Acerca de"
 
 #: ../data/totem.ui.h:85
 msgid "_Allow the screensaver to activate even when audio-only is playing"
-msgstr "Per_mitir que el salvapantallas se active incluso cuando se está reproduciendo sonido."
+msgstr ""
+"Per_mitir que el salvapantallas se active incluso cuando se está "
+"reproduciendo sonido."
 
 #: ../data/totem.ui.h:86
 msgid "_Angle Menu"
@@ -693,15 +695,17 @@ msgstr "_Ver"
 
 #: ../data/totem.schemas.in.h:1
 msgid "Allow the screensaver to activate even when audio-only is playing"
-msgstr "Permitir que el salvapantallas se active incluso cuando se está reproduciendo sonido."
+msgstr ""
+"Permitir que el salvapantallas se active incluso cuando se está "
+"reproduciendo sonido."
 
 #: ../data/totem.schemas.in.h:2
 msgid ""
 "Allow the screensaver to activate even when audio-only is playing. This is "
 "useful for monitor powered speakers."
 msgstr ""
-"Permitir que el salvapantallas se active incluso cuando se está reproduciendo sonido. Útil "
-"para altavoces alimentados desde la pantalla."
+"Permitir que el salvapantallas se active incluso cuando se está "
+"reproduciendo sonido. Útil para altavoces alimentados desde la pantalla."
 
 #: ../data/totem.schemas.in.h:3
 msgid ""
@@ -2102,38 +2106,48 @@ msgid "seconds"
 msgstr "segundos"
 
 #. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:165
+#: ../src/plugins/tracker/totem-tracker-widget.c:167
 #, c-format
 msgid "Could not get metadata for file %s."
 msgstr "No se pudieron obtener los metadatos del archivo %s."
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:166
+#: ../src/plugins/tracker/totem-tracker-widget.c:168
 msgid "File Error"
 msgstr "Error de archivo"
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:220
+#: ../src/plugins/tracker/totem-tracker-widget.c:272
+msgid "No results"
+msgstr "No hay resultados"
 
 #. Translators:
 #. * This is used to show which items are listed in the list view, for example:
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:216
+#: ../src/plugins/tracker/totem-tracker-widget.c:227
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Mostrando %i - %i de %i coincidencia"
 msgstr[1] "Mostrando %i - %i de %i coincidencias"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:313
-msgid "Search results"
+#: ../src/plugins/tracker/totem-tracker-widget.c:363
+#: ../src/plugins/youtube/youtube.ui.h:2
+msgid "Search Results"
 msgstr "Resultados de la búsqueda"
 
+#: ../src/plugins/tracker/totem-tracker-widget.c:412
+msgid "Page"
+msgstr "Página"
+
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
-msgid "Search for videos using Tracker"
-msgstr "Buscar vídeos usando Tracker"
+msgid "Local Search"
+msgstr "Búsqueda local"
 
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
-msgid "Video Search"
-msgstr "Búsqueda de vídeo"
+msgid "Search for local videos using Tracker"
+msgstr "Buscar vídeos localmente usando Tracker"
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
@@ -2146,10 +2160,6 @@ msgstr "Examinador de YouTube"
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "Vídeos relacionados"
-
-#: ../src/plugins/youtube/youtube.ui.h:2
-msgid "Search Results"
-msgstr "Resultados de la búsqueda"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
 msgid "Search:"
