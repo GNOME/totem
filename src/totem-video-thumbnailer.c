@@ -312,10 +312,10 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 
 		if (err != NULL)
 		{
-			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
+			g_print ("totem-video-thumbnailer couldn't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
 			g_error_free (err);
 		} else {
-			g_print ("totem-video-thumbnailer couln't write the thumbnail '%s' for video '%s'\n", path, video_path);
+			g_print ("totem-video-thumbnailer couldn't write the thumbnail '%s' for video '%s'\n", path, video_path);
 		}
 
 		g_object_unref (with_holes);
@@ -486,7 +486,7 @@ int main (int argc, char *argv[])
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL) {
-		g_print ("totem-video-thumbnailer couln't create the video "
+		g_print ("totem-video-thumbnailer couldn't create the video "
 				"widget.\nReason: %s.\n", err->message);
 		g_error_free (err);
 		exit (1);
@@ -500,7 +500,7 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("About to open video file\n");
 
 	if (bacon_video_widget_open (bvw, input, &err) == FALSE) {
-		g_print ("totem-video-thumbnailer couln't open file '%s'\n"
+		g_print ("totem-video-thumbnailer couldn't open file '%s'\n"
 				"Reason: %s.\n",
 				input, err->message);
 		g_error_free (err);
@@ -512,7 +512,7 @@ int main (int argc, char *argv[])
 
 	bacon_video_widget_play (bvw, &err);
 	if (err != NULL) {
-		g_print ("totem-video-thumbnailer couln't play file: '%s'\n"
+		g_print ("totem-video-thumbnailer couldn't play file: '%s'\n"
 				"Reason: %s.\n", input, err->message);
 		g_error_free (err);
 		exit (1);
@@ -534,7 +534,7 @@ int main (int argc, char *argv[])
 	gtk_widget_destroy (GTK_WIDGET (bvw));
 
 	if (pixbuf == NULL) {
-		g_print ("totem-video-thumbnailer couln't get a picture from "
+		g_print ("totem-video-thumbnailer couldn't get a picture from "
 					"'%s'\n", input);
 		exit (1);
 	}
