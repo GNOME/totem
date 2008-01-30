@@ -10,7 +10,7 @@ namespace Totem {
 	}
 
 	[CCode (cheader_filename = "totem-plugin.h")]
-	public class Plugin :GLib.Object {
+	public abstract class Plugin :GLib.Object {
 		[NoArrayLength]
 		[CCode (cname = "totem_plugin_get_type")]
 		public static GLib.Type get_type ();
