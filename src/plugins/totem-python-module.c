@@ -367,10 +367,13 @@ static void
 totem_python_module_finalize (GObject *object)
 {
 	TotemPythonModulePrivate *priv = TOTEM_PYTHON_MODULE_GET_PRIVATE (object);
-	g_debug ("Finalizing Python module %s", g_type_name (priv->type));
 
-	g_free (priv->module);
-	g_free (priv->path);
+	if (priv && priv->type) {
+		g_debug ("Finalizing Python module %s", g_type_name (priv->type));
+
+		g_free (priv->module);
+		g_free (priv->path);
+	}
 
 	G_OBJECT_CLASS (totem_python_module_parent_class)->finalize (object);
 }

@@ -1,3 +1,9 @@
+2008-01-31  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plugins/totem-python-module.c:
+	(totem_python_module_finalize): Protect finalisation
+	of plugins which haven't loaded properly. (Closes: #513467)
+
 2008-01-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-video-thumbnailer.c: (save_pixbuf),
