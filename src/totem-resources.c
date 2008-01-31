@@ -93,7 +93,7 @@ time_monitor (gpointer data)
 	app_name = g_get_application_name ();
 	if (app_name == NULL)
 		app_name = g_get_prgname ();
-	g_print ("%s couln't process file: '%s'\n"
+	g_print ("%s couldn't process file: '%s'\n"
 		 "Reason: Took too much time to process.\n",
 		 app_name,
 		 (const char *) data);
