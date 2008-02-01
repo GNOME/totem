@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-25 14:55+0000\n"
-"PO-Revision-Date: 2008-01-26 10:23+0200\n"
+"POT-Creation-Date: 2008-01-27 23:29+0000\n"
+"PO-Revision-Date: 2008-01-29 20:09+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -2084,38 +2084,48 @@ msgid "seconds"
 msgstr "sekundit"
 
 #. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:165
+#: ../src/plugins/tracker/totem-tracker-widget.c:167
 #, c-format
 msgid "Could not get metadata for file %s."
 msgstr "Metaandmeid faili %s kohta pole võimalik hankida."
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:166
+#: ../src/plugins/tracker/totem-tracker-widget.c:168
 msgid "File Error"
 msgstr "Faili viga"
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:220
+#: ../src/plugins/tracker/totem-tracker-widget.c:272
+msgid "No results"
+msgstr "Tulemused puuduvad"
 
 #. Translators:
 #. * This is used to show which items are listed in the list view, for example:
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:216
+#: ../src/plugins/tracker/totem-tracker-widget.c:227
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Näidatakse %i - %i %i tulemust"
 msgstr[1] "Näidatakse %i - %i %i tulemuse seast"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:313
-msgid "Search results"
+#: ../src/plugins/tracker/totem-tracker-widget.c:363
+#: ../src/plugins/youtube/youtube.ui.h:2
+msgid "Search Results"
 msgstr "Otsingutulemused"
 
+#: ../src/plugins/tracker/totem-tracker-widget.c:412
+msgid "Page"
+msgstr "Leht"
+
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
-msgid "Search for videos using Tracker"
-msgstr "Videote otsimine Trackeri abil"
+msgid "Local Search"
+msgstr "Kohalik otsing"
 
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
-msgid "Video Search"
-msgstr "Videootsing"
+msgid "Search for local videos using Tracker"
+msgstr "Kohalike videote otsimine Trackeri abil"
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
@@ -2128,10 +2138,6 @@ msgstr "YouTube sirvija"
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "Seotud videod"
-
-#: ../src/plugins/youtube/youtube.ui.h:2
-msgid "Search Results"
-msgstr "Otsingutulemused"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
 msgid "Search:"
