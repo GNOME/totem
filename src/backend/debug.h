@@ -12,8 +12,8 @@
 #define D(x...) g_message (x)
 #endif
 
-#define TE() { g_message ("enter %s", G_GNUC_PRETTY_FUNCTION); gdk_threads_enter (); }
-#define TL() { g_message ("leave %s", G_GNUC_PRETTY_FUNCTION); gdk_threads_leave (); }
+#define TE() { g_message ("enter %s", G_STRFUNC); gdk_threads_enter (); }
+#define TL() { g_message ("leave %s", G_STRFUNC); gdk_threads_leave (); }
 
 #define TOTEM_PROFILE(function)     \
     do{                             \
@@ -25,7 +25,7 @@
       gettimeofday(&current_time, NULL); \
       dtime += current_time.tv_sec + (current_time.tv_usec / 1000000.0); \
       printf("(%s:%d) took %lf seconds\n", \
-	     G_GNUC_PRETTY_FUNCTION, __LINE__, dtime ); \
+	     G_STRFUNC, __LINE__, dtime ); \
     }while(0)
 
 #else /* GNOME_ENABLE_DEBUG */
