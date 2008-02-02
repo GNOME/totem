@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.21.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-27 16:11+0100\n"
-"PO-Revision-Date: 2008-01-27 16:13+0100\n"
-"Last-Translator: Espen Stefansen <espens@svn.gnome.org>\n"
+"POT-Creation-Date: 2008-02-02 21:32+0100\n"
+"PO-Revision-Date: 2008-02-02 21:33+0100\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -692,7 +692,9 @@ msgstr "La skjermspareren aktiveres selv når kun lyd spilles av"
 msgid ""
 "Allow the screensaver to activate even when audio-only is playing. This is "
 "useful for monitor powered speakers."
-msgstr "La skjermspareren aktiveres når kun lyd spilles av. Dette er nyttig for høyttalere som får strøm fra skjermen."
+msgstr ""
+"La skjermspareren aktiveres når kun lyd spilles av. Dette er nyttig for "
+"høyttalere som får strøm fra skjermen."
 
 #: ../data/totem.schemas.in.h:3
 msgid ""
@@ -2089,38 +2091,49 @@ msgid "seconds"
 msgstr "sekunder"
 
 #. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:165
+#: ../src/plugins/tracker/totem-tracker-widget.c:167
 #, c-format
 msgid "Could not get metadata for file %s."
 msgstr "Kunne ikke finne metadata for fil %s."
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:166
+#: ../src/plugins/tracker/totem-tracker-widget.c:168
 msgid "File Error"
 msgstr "Feil med fil"
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:220
+#: ../src/plugins/tracker/totem-tracker-widget.c:272
+msgid "No results"
+msgstr "Ingen resultater"
 
 #. Translators:
 #. * This is used to show which items are listed in the list view, for example:
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:216
+#: ../src/plugins/tracker/totem-tracker-widget.c:227
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Viser %i - %i av %i treff"
 msgstr[1] "Viser %i - %i av %i treff"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:313
-msgid "Search results"
+#: ../src/plugins/tracker/totem-tracker-widget.c:363
+#: ../src/plugins/youtube/youtube.ui.h:2
+msgid "Search Results"
 msgstr "Søkeresultater"
 
+#: ../src/plugins/tracker/totem-tracker-widget.c:412
+msgid "Page"
+msgstr "Side"
+
+#: ../src/plugins/tracker/totem-tracker.c:92
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
-msgid "Search for videos using Tracker"
-msgstr "Søk etter filmer med Tracker"
+msgid "Local Search"
+msgstr "Lokalt søk"
 
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
-msgid "Video Search"
-msgstr "Søk etter film"
+msgid "Search for local videos using Tracker"
+msgstr "Søk etter filmer med Tracker lokalt"
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
@@ -2133,10 +2146,6 @@ msgstr "YouTube-leser"
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "Relaterte videoer"
-
-#: ../src/plugins/youtube/youtube.ui.h:2
-msgid "Search Results"
-msgstr "Søkeresultater"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
 msgid "Search:"
