@@ -1,5 +1,13 @@
 2008-02-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-fullscreen.c: (totem_fullscreen_motion_notify),
+	(totem_fullscreen_set_fullscreen),
+	(totem_fullscreen_set_video_widget), (totem_fullscreen_finalize):
+	Only listen to fullscreen motion_notify events when in fullscreen
+	(Closes: #514091)
+
+2008-02-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c: (totem_recent_manager_changed_callback),
 	(on_movie_menu_select): Trim the list before sorting it, a tiny
 	bit faster (Closes: #514090)
