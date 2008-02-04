@@ -580,7 +580,7 @@ totem_compare_recent_items (GtkRecentInfo *a, GtkRecentInfo *b)
 static void
 totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *totem)
 {
-        GList *items, *l;
+        GList *items, *totem_items, *l;
         guint n_items = 0;
 
         if (totem->recent_ui_id != 0) {
@@ -602,9 +602,25 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 
         totem->recent_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
         items = gtk_recent_manager_get_items (recent_manager);
-        items = g_list_sort (items, (GCompareFunc) totem_compare_recent_items);
 
+	/* Remove the non-Totem items */
+	totem_items = NULL;
         for (l = items; l && l->data; l = l->next) {
+                GtkRecentInfo *info;
+
+                info = (GtkRecentInfo *) l->data;
+
+                if (gtk_recent_info_has_group (info, "Totem")) {
+                	gtk_recent_info_ref (info);
+                	totem_items = g_list_prepend (totem_items, info);
+		}
+	}
+	g_list_foreach (items, (GFunc) gtk_recent_info_unref, NULL);
+        g_list_free (items);
+
+        totem_items = g_list_sort (totem_items, (GCompareFunc) totem_compare_recent_items);
+
+        for (l = totem_items; l && l->data; l = l->next) {
                 GtkRecentInfo *info;
                 GtkAction     *action;
                 char           action_name[32];
@@ -647,8 +663,8 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
                         break;
         }
 
-        g_list_foreach (items, (GFunc) gtk_recent_info_unref, NULL);
-        g_list_free (items);
+        g_list_foreach (totem_items, (GFunc) gtk_recent_info_unref, NULL);
+        g_list_free (totem_items);
 }
 
 void

@@ -1,3 +1,9 @@
+2008-02-04  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c: (totem_recent_manager_changed_callback),
+	(on_movie_menu_select): Trim the list before sorting it, a tiny
+	bit faster (Closes: #514090)
+
 2008-02-01  Christian Persch  <chpe@gnome.org>
 
 	* src/backend/debug.h: Use G_STRFUNC instead of the deprecated
