@@ -31,9 +31,9 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
+#include <dbus/dbus-glib.h>
 #include <string.h>
 
-#include <gnome-settings-daemon/gnome-settings-client.h>
 #include "totem-marshal.h"
 
 #include "totem-plugin.h"
@@ -113,8 +113,10 @@ static gboolean
 on_window_focus_in_event (GtkWidget *window, GdkEventFocus *event, TotemMediaPlayerKeysPlugin *pi)
 {
 	if (pi->media_player_keys_proxy != NULL) {
-		org_gnome_SettingsDaemon_grab_media_player_keys (pi->media_player_keys_proxy,
-				"Totem", 0, NULL);
+		dbus_g_proxy_call (pi->media_player_keys_proxy,
+				   "GrabMediaPlayerKeys", NULL,
+				   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
+				   G_TYPE_INVALID);
 	}
 
 	return FALSE;
@@ -143,9 +145,21 @@ impl_activate (TotemPlugin *plugin,
 		return FALSE;
 	}
 
+	/* Try the gnome-settings-daemon version,
+	 * then the gnome-control-center version of things */
 	pi->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
-			"org.gnome.SettingsDaemon", "/org/gnome/SettingsDaemon",
-			"org.gnome.SettingsDaemon", &err);
+								       "org.gnome.SettingsDaemon.MediaKeys",
+								       "/org/gnome/SettingsDaemon/MediaKeys",
+								       "org.gnome.SettingsDaemon.MediaKeys",
+								       NULL);
+	if (pi->media_player_keys_proxy == NULL) {
+		pi->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
+									       "org.gnome.SettingsDaemon",
+									       "/org/gnome/SettingsDaemon",
+									       "org.gnome.SettingsDaemon",
+									       &err);
+	}
+
 	dbus_g_connection_unref (connection);
 	if (err != NULL) {
 		gboolean daemon_not_running;
@@ -163,9 +177,10 @@ impl_activate (TotemPlugin *plugin,
 					 pi, 0);
 	}
 
-
-	org_gnome_SettingsDaemon_grab_media_player_keys (pi->media_player_keys_proxy,
-			"Totem", 0, NULL);
+	dbus_g_proxy_call (pi->media_player_keys_proxy,
+			   "GrabMediaPlayerKeys", NULL,
+			   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
+			   G_TYPE_INVALID);
 
 	dbus_g_object_register_marshaller (totem_marshal_VOID__STRING_STRING,
 			G_TYPE_NONE, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
@@ -191,7 +206,9 @@ impl_deactivate	(TotemPlugin *plugin,
 	GtkWindow *window;
 
 	if (pi->media_player_keys_proxy != NULL) {
-		org_gnome_SettingsDaemon_release_media_player_keys (pi->media_player_keys_proxy, "Totem", NULL);
+		dbus_g_proxy_call (pi->media_player_keys_proxy,
+				   "ReleaseMediaPlayerKeys", NULL,
+				   G_TYPE_STRING, "Totem", G_TYPE_INVALID, G_TYPE_INVALID);
 		g_object_unref (pi->media_player_keys_proxy);
 		pi->media_player_keys_proxy = NULL;
 	}

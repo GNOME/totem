@@ -1,5 +1,14 @@
 2008-02-04  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* src/plugins/media-player-keys/totem-media-player-keys.c:
+	(on_window_focus_in_event), (impl_activate), (impl_deactivate):
+	Use dbus-glib directly, instead of the C-glue, so that the
+	media keys plugin can work against both the old and the new
+	gnome-settings-daemon media-player keys API (Closes: #514037)
+
+2008-02-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-uri.c: (totem_add_subtitle), (totem_add_files):
 	Set the default response, fixes "Enter" not changing directories
 	when using autocompletion (Closes: #514049), cleanup _add_files()

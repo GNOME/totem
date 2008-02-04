@@ -477,10 +477,10 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		media-player-keys)
-			PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, gnome-settings-daemon >= 2.17.4 dbus-glib-1,
+			PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, dbus-glib-1,
 				[HAVE_MEDIA_PLAYER_KEYS=yes], [HAVE_MEDIA_PLAYER_KEYS=no])
 			if test "${HAVE_MEDIA_PLAYER_KEYS}" != "yes" ; then
-				plugin_error_or_ignore "you need gnome-settings-daemon >= 2.17.4 and dbus-glib-1 installed for the media-player-keys plugin"
+				plugin_error_or_ignore "you need dbus-glib-1 installed for the media-player-keys plugin"
 				add_plugin="0"
 			fi
 		;;
