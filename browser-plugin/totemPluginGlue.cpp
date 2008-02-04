@@ -203,8 +203,8 @@ totem_plugin_print (NPP instance,
 	D ("Print");
 }
 
-static char *
-totem_plugin_get_description (void)
+char *
+totem_plugin_get_long_description (void)
 {
 	return "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
 }
@@ -229,7 +229,7 @@ totem_plugin_get_value (NPP instance,
 		*((char **)value) = totemScriptablePlugin::PluginDescription ();
 		break;
 	case NPPVpluginDescriptionString:
-		*((char **)value) = totem_plugin_get_description();
+		*((char **)value) = totemScriptablePlugin::PluginLongDescription ();
 		break;
 	case NPPVpluginNeedsXEmbed:
 		*((NPBool *)value) = TRUE;

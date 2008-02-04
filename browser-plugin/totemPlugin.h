@@ -297,4 +297,6 @@ typedef struct {
   const char *mime_alias;
 } totemPluginMimeEntry;
 
+char *totem_plugin_get_long_description (void);
+
 #endif /* __TOTEM_PLUGIN_H__ */

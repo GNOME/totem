@@ -49,6 +49,7 @@ static const nsCID kClassID =
 
 static const char kClassDescription[] = "totemMullYPlugin";
 static const char kPluginDescription[] = "DivX\xC2\xAE Web Player";
+static const char kPluginLongDescription[] = "DivX Web Player version 1.4.0.233";
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 	{ "video/divx", "divx", "video/x-msvideo" },
@@ -69,6 +70,12 @@ totemScriptablePlugin::~totemScriptablePlugin ()
 totemScriptablePlugin::PluginDescription ()
 {
   return (char*) kPluginDescription;
+}
+
+/* static */ char *
+totemScriptablePlugin::PluginLongDescription ()
+{
+  return (char*) kPluginLongDescription;
 }
 
 /* static */ void

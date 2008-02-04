@@ -85,6 +85,12 @@ totemScriptablePlugin::PluginDescription ()
   return (char*) kPluginDescription;
 }
 
+/* static */ char *
+totemScriptablePlugin::PluginLongDescription ()
+{
+  return (char*) totem_plugin_get_long_description();
+}
+
 /* static */ void
 totemScriptablePlugin::PluginMimeTypes (const totemPluginMimeEntry **_entries,
 					PRUint32 *_count)

@@ -53,6 +53,7 @@ class totemScriptablePlugin : public totemIGMPPlayer,
     void SetPlugin (totemPlugin *aPlugin) { mPlugin = aPlugin; }
 
     static char *PluginDescription ();
+    static char *PluginLongDescription();
     static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
   private:
     friend class totemGMPSettings;

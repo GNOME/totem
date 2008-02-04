@@ -1,5 +1,25 @@
 2008-02-04  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemBasicPlugin.cpp:
+	* browser-plugin/totemBasicPlugin.h:
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemComplexPlugin.h:
+	* browser-plugin/totemConePlugin.cpp:
+	* browser-plugin/totemConePlugin.h:
+	* browser-plugin/totemGMPPlugin.cpp:
+	* browser-plugin/totemGMPPlugin.h:
+	* browser-plugin/totemMullYPlugin.cpp:
+	* browser-plugin/totemMullYPlugin.h:
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.h:
+	* browser-plugin/totemPlugin.h:
+	* browser-plugin/totemPluginGlue.cpp:
+	Add a PluginLongDescription function to all the plugins,
+	and return a custom description in the DivX plugin, so
+	stage6.com stops complaining that we have an old version
+
+2008-02-04  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-fullscreen.c: (totem_fullscreen_motion_notify),
 	(totem_fullscreen_set_fullscreen),
 	(totem_fullscreen_set_video_widget), (totem_fullscreen_finalize):

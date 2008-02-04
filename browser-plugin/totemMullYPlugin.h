@@ -44,6 +44,7 @@ class totemScriptablePlugin : public totemIMullYPlayer,
     void SetPlugin (totemPlugin *aPlugin) { mPlugin = aPlugin; }
 
     static char *PluginDescription ();
+    static char *PluginLongDescription();
     static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
   private:
     ~totemScriptablePlugin ();
