@@ -1,5 +1,12 @@
 2008-02-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c: (totem_add_subtitle), (totem_add_files):
+	Set the default response, fixes "Enter" not changing directories
+	when using autocompletion (Closes: #514049), cleanup _add_files()
+	to destroy the file chooser earlier
+
+2008-02-04  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemBasicPlugin.cpp:
 	* browser-plugin/totemBasicPlugin.h:
 	* browser-plugin/totemComplexPlugin.cpp:
