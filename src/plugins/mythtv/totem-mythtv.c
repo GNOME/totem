@@ -42,10 +42,10 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include <gmyth_backendinfo.h>
-#include <gmyth_file_transfer.h>
-#include <gmyth_scheduler.h>
-#include <gmyth_util.h>
+#include <gmyth/gmyth_backendinfo.h>
+#include <gmyth/gmyth_file_transfer.h>
+#include <gmyth/gmyth_scheduler.h>
+#include <gmyth/gmyth_util.h>
 
 #define TOTEM_TYPE_MYTHTV_PLUGIN		(totem_mythtv_plugin_get_type ())
 #define TOTEM_MYTHTV_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin))
