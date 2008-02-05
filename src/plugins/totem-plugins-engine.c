@@ -162,6 +162,7 @@ totem_plugins_engine_load (const gchar *file)
 #ifndef ENABLE_PYTHON
 		g_debug ("Cannot load Python extension '%s', Totem was not "
 					"compiled with Python support", file);
+		g_free (str);
 		goto error;
 #endif
 	} else {

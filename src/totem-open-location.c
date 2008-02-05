@@ -40,16 +40,17 @@
 #include "totem-open-location.h"
 #include "totem-interface.h"
 
-static GObjectClass *parent_class = NULL;
 static void totem_open_location_class_init	(TotemOpenLocationClass *class);
 static void totem_open_location_init		(TotemOpenLocation *open_location);
-static void totem_open_location_finalize	(GObject *object);
+static void totem_open_location_dispose		(GObject *object);
 
 struct TotemOpenLocationPrivate
 {
 	GtkBuilder *xml;
 	GtkEntry *uri_entry;
 };
+
+#define TOTEM_OPEN_LOCATION_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocationPrivate))
 
 G_DEFINE_TYPE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
 
@@ -58,24 +59,30 @@ totem_open_location_class_init (TotemOpenLocationClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (TotemOpenLocationPrivate));
-
-	object_class->finalize = totem_open_location_finalize;
+	object_class->dispose = totem_open_location_dispose;
 }
 
 static void
-totem_open_location_init (TotemOpenLocation *open_location)
+totem_open_location_init (TotemOpenLocation *self)
 {
-	open_location->priv = G_TYPE_INSTANCE_GET_PRIVATE (open_location, TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocationPrivate);
+	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocationPrivate);
+
+	self->priv->xml = totem_interface_load ("uri.ui", FALSE, NULL, self);
+	self->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (self->priv->xml, "uri"));
 }
 
 static void
-totem_open_location_finalize (GObject *object)
+totem_open_location_dispose (GObject *object)
 {
-	g_return_if_fail (object != NULL);
+	TotemOpenLocationPrivate *priv = TOTEM_OPEN_LOCATION_GET_PRIVATE (object);
 
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	if (priv->xml != NULL) {
+		g_object_unref (priv->xml);
+		priv->xml = NULL;
+	}
+
+	G_OBJECT_CLASS (totem_open_location_parent_class)->dispose (object);
 }
 
 static gboolean
@@ -158,14 +165,10 @@ totem_open_location_new (Totem *totem)
 
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
 
-	open_location->priv->xml = totem_interface_load ("uri.ui", FALSE, totem_get_main_window (totem),
-				open_location);
-	if (open_location->priv->xml == NULL)
-	{
-		totem_open_location_finalize (G_OBJECT (open_location));
+	if (open_location->priv->xml == NULL) {
+		g_object_unref (open_location);
 		return NULL;
 	}
-	open_location->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (open_location->priv->xml, "uri"));
 
 	gtk_window_set_title (GTK_WINDOW (open_location), _("Open Location..."));
 	gtk_dialog_set_has_separator (GTK_DIALOG (open_location), FALSE);

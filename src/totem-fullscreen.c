@@ -39,12 +39,11 @@
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
 
-static GObjectClass *parent_class = NULL;
-
-static void     totem_fullscreen_class_init (TotemFullscreenClass *class);
-static void     totem_fullscreen_init       (TotemFullscreen      *parser);
-static void     totem_fullscreen_finalize   (GObject              *object);
-static gboolean totem_fullscreen_popup_hide (TotemFullscreen      *fs);
+static void totem_fullscreen_class_init	(TotemFullscreenClass *class);
+static void totem_fullscreen_init (TotemFullscreen *parser);
+static void totem_fullscreen_dispose (GObject *object);
+static void totem_fullscreen_finalize (GObject *object);
+static gboolean totem_fullscreen_popup_hide (TotemFullscreen *fs);
 
 /* Callback functions for GtkBuilder */
 gboolean totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
@@ -52,7 +51,7 @@ gboolean totem_fullscreen_vol_slider_released_cb (GtkWidget *widget, GdkEventBut
 gboolean totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 gboolean totem_fullscreen_seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 
-struct TotemFullscreenPrivate {
+struct _TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;
 	GtkWidget        *parent_window;
 
@@ -70,7 +69,9 @@ struct TotemFullscreenPrivate {
 	GtkBuilder       *xml;
 };
 
-G_DEFINE_TYPE(TotemFullscreen, totem_fullscreen, G_TYPE_OBJECT)
+#define TOTEM_FULLSCREEN_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_FULLSCREEN, TotemFullscreenPrivate))
+
+G_DEFINE_TYPE (TotemFullscreen, totem_fullscreen, G_TYPE_OBJECT)
 
 gboolean
 totem_fullscreen_is_fullscreen (TotemFullscreen *fs)
@@ -90,10 +91,12 @@ totem_fullscreen_move_popups (TotemFullscreen *fs)
 	GdkRectangle            fullscreen_rect;
 	TotemFullscreenPrivate *priv = fs->priv;
 
+	g_return_if_fail (priv->parent_window != NULL);
+
 	/* Obtain the screen rectangle */
-	screen = gtk_window_get_screen (GTK_WINDOW (fs->priv->parent_window));
+	screen = gtk_window_get_screen (GTK_WINDOW (priv->parent_window));
 	gdk_screen_get_monitor_geometry (screen,
-					 gdk_screen_get_monitor_at_window (screen, fs->priv->parent_window->window),
+					 gdk_screen_get_monitor_at_window (screen, priv->parent_window->window),
 					 &fullscreen_rect);
 
 	/* Get the popup window sizes */
@@ -336,46 +339,30 @@ totem_fullscreen_parent_window_notify (GtkWidget *parent_window,
 TotemFullscreen *
 totem_fullscreen_new (GtkWindow *toplevel_window)
 {
-	TotemFullscreenPrivate * priv;
-
         TotemFullscreen *fs = TOTEM_FULLSCREEN (g_object_new 
 						(TOTEM_TYPE_FULLSCREEN, NULL));
 
+	if (fs->priv->xml == NULL) {
+		g_object_unref (fs);
+		return NULL;
+	}
 
-	priv = fs->priv;
-	priv->seek_lock = FALSE;
-	priv->xml = totem_interface_load ("fullscreen.ui", TRUE, NULL, fs);
+	totem_fullscreen_set_parent_window (fs, toplevel_window);
 
-	priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (priv->xml,
-				"totem_exit_fullscreen_window"));
-	priv->control_popup = GTK_WIDGET (gtk_builder_get_object (priv->xml,
-				"totem_controls_window"));
-	fs->time_label = GTK_WIDGET (gtk_builder_get_object (priv->xml,
+	fs->time_label = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml,
 				"tcw_time_display_label"));
 	fs->buttons_box = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml,
 				"tcw_buttons_hbox"));
-	fs->exit_button = GTK_WIDGET (gtk_builder_get_object (priv->xml,
+	fs->exit_button = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml,
 				"tefw_fs_exit_button"));
 
-	fs->priv->parent_window = GTK_WIDGET (toplevel_window);
-
-	/* Screen size and Theme changes */
-	g_signal_connect (fs->priv->parent_window, "realize",
-			  G_CALLBACK (totem_fullscreen_window_realize_cb), fs);
-	g_signal_connect (fs->priv->parent_window, "unrealize",
-			  G_CALLBACK (totem_fullscreen_window_unrealize_cb), fs);
-	g_signal_connect (G_OBJECT (fs->priv->parent_window), "notify::is-active",
-			  G_CALLBACK (totem_fullscreen_parent_window_notify), fs);
-
 	/* Volume */
-	fs->volume = GTK_WIDGET (gtk_builder_get_object (priv->xml, "tcw_volume_button"));
+	fs->volume = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml, "tcw_volume_button"));
 	
 	/* Seek */
-	fs->seek = GTK_WIDGET (gtk_builder_get_object (priv->xml, "tcw_seek_hscale"));
+	fs->seek = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml, "tcw_seek_hscale"));
 
 	/* Motion notify */
-	gtk_widget_add_events (priv->exit_popup, GDK_POINTER_MOTION_MASK);
-	gtk_widget_add_events (priv->control_popup, GDK_POINTER_MOTION_MASK);
 	gtk_widget_add_events (fs->seek, GDK_POINTER_MOTION_MASK);
 	gtk_widget_add_events (fs->exit_button, GDK_POINTER_MOTION_MASK);
 
@@ -388,6 +375,7 @@ totem_fullscreen_set_video_widget (TotemFullscreen *fs,
 {
 	g_return_if_fail (TOTEM_IS_FULLSCREEN (fs));
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (fs->priv->bvw == NULL);
 
 	fs->priv->bvw = bvw;
 
@@ -397,10 +385,58 @@ totem_fullscreen_set_video_widget (TotemFullscreen *fs,
 	}
 }
 
-static void
-totem_fullscreen_init (TotemFullscreen *fs)
+void
+totem_fullscreen_set_parent_window (TotemFullscreen *fs, GtkWindow *parent_window)
 {
-        fs->priv = g_new0 (TotemFullscreenPrivate, 1);
+	g_return_if_fail (TOTEM_IS_FULLSCREEN (fs));
+	g_return_if_fail (GTK_IS_WINDOW (parent_window));
+	g_return_if_fail (fs->priv->parent_window == NULL);
+
+	fs->priv->parent_window = GTK_WIDGET (parent_window);
+
+	/* Screen size and Theme changes */
+	g_signal_connect (fs->priv->parent_window, "realize",
+			  G_CALLBACK (totem_fullscreen_window_realize_cb), fs);
+	g_signal_connect (fs->priv->parent_window, "unrealize",
+			  G_CALLBACK (totem_fullscreen_window_unrealize_cb), fs);
+	g_signal_connect (G_OBJECT (fs->priv->parent_window), "notify::is-active",
+			  G_CALLBACK (totem_fullscreen_parent_window_notify), fs);
+}
+
+static void
+totem_fullscreen_init (TotemFullscreen *self)
+{
+	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_FULLSCREEN, TotemFullscreenPrivate);
+
+        self->priv->seek_lock = FALSE;
+	self->priv->xml = totem_interface_load ("fullscreen.ui", TRUE, NULL, self);
+
+	if (self->priv->xml == NULL)
+		return;
+
+	self->priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
+				"totem_exit_fullscreen_window"));
+	self->priv->control_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
+				"totem_controls_window"));
+
+	/* Motion notify */
+	gtk_widget_add_events (self->priv->exit_popup, GDK_POINTER_MOTION_MASK);
+	gtk_widget_add_events (self->priv->control_popup, GDK_POINTER_MOTION_MASK);
+}
+
+static void
+totem_fullscreen_dispose (GObject *object)
+{
+        TotemFullscreenPrivate *priv = TOTEM_FULLSCREEN_GET_PRIVATE (object);
+
+	if (priv->xml != NULL) {
+		g_object_unref (priv->xml);
+		priv->xml = NULL;
+		gtk_widget_destroy (priv->exit_popup);
+		gtk_widget_destroy (priv->control_popup);
+	}
+
+	G_OBJECT_CLASS (totem_fullscreen_parent_class)->dispose (object);
 }
 
 static void
@@ -415,9 +451,7 @@ totem_fullscreen_finalize (GObject *object)
 		fs->priv->motion_handler_id = 0;
 	}
 
-        g_free (fs->priv);
-
-	(* G_OBJECT_CLASS (parent_class)->finalize) (object);
+	G_OBJECT_CLASS (totem_fullscreen_parent_class)->finalize (object);
 }
 
 static void
@@ -425,8 +459,9 @@ totem_fullscreen_class_init (TotemFullscreenClass *klass)
 {
         GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-        parent_class = g_type_class_peek_parent (klass);
+	g_type_class_add_private (klass, sizeof (TotemFullscreenPrivate));
 
+	object_class->dispose = totem_fullscreen_dispose;
         object_class->finalize = totem_fullscreen_finalize;
 }
 

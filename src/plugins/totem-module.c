@@ -137,6 +137,7 @@ totem_module_finalize (GObject *object)
 	TotemModule *module = TOTEM_MODULE (object);
 
 	g_free (module->path);
+	g_free (module->name);
 
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -823,8 +823,10 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 	g_free (label);
 	g_free (icon_name);
 
-	if (disabled != FALSE)
+	if (disabled != FALSE) {
+		g_free (device_path);
 		return;
+	}
 
 	g_object_set_data_full (G_OBJECT (action),
 				"device_path", device_path,
@@ -1238,8 +1240,6 @@ show_controls_action_callback (GtkToggleAction *action, Totem *totem)
 	gboolean show;
 
 	show = gtk_toggle_action_get_active (action);
-
-	g_message ("show_controls_action_callback %d", show);
 
 	/* Let's update our controls visibility */
 	if (show)

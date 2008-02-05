@@ -404,7 +404,7 @@ totem_setup_file_filters (void)
 	filter_all = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_all, _("All files"));
 	gtk_file_filter_add_pattern (filter_all, "*");
-	g_object_ref (filter_all);
+	g_object_ref_sink (filter_all);
 
 	filter_supported = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_supported, _("Supported files"));
@@ -415,7 +415,7 @@ totem_setup_file_filters (void)
 	/* Add the special Disc-as-files formats */
 	gtk_file_filter_add_mime_type (filter_supported, "application/x-cd-image");
 	gtk_file_filter_add_mime_type (filter_supported, "application/x-cue");
-	g_object_ref (filter_supported);
+	g_object_ref_sink (filter_supported);
 
 	/* Audio files */
 	filter_audio = gtk_file_filter_new ();
@@ -423,7 +423,7 @@ totem_setup_file_filters (void)
 	for (i = 0; i < G_N_ELEMENTS (audio_mime_types); i++) {
 		gtk_file_filter_add_mime_type (filter_audio, audio_mime_types[i]);
 	}
-	g_object_ref (filter_audio);
+	g_object_ref_sink (filter_audio);
 
 	/* Video files */
 	filter_video = gtk_file_filter_new ();
@@ -433,7 +433,7 @@ totem_setup_file_filters (void)
 	}
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cd-image");
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cue");
-	g_object_ref (filter_video);
+	g_object_ref_sink (filter_video);
 
 	/* Subtitles files */
 	filter_subs = gtk_file_filter_new ();
@@ -444,8 +444,7 @@ totem_setup_file_filters (void)
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-microdvd"); /* *.sub */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-mpsub"); /* *.sub */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-ssa"); /* *.ssa, *.ass */
-	g_object_ref (filter_subs);
-
+	g_object_ref_sink (filter_subs);
 }
 
 void
@@ -454,18 +453,10 @@ totem_destroy_file_filters (void)
 	if (filter_all != NULL) {
 		g_object_unref (filter_all);
 		filter_all = NULL;
-	}
-	if (filter_supported != NULL) {
 		g_object_unref (filter_supported);
-		filter_supported = NULL;
-	}
-	if (filter_audio != NULL) {
 		g_object_unref (filter_audio);
-		filter_audio = NULL;
-	}
-	if (filter_video != NULL) {
 		g_object_unref (filter_video);
-		filter_video = NULL;
+		g_object_unref (filter_subs);
 	}
 }
 

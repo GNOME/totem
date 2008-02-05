@@ -62,7 +62,6 @@ G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_movie_properties_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_movie_properties_plugin_init		(TotemMoviePropertiesPlugin *plugin);
-static void totem_movie_properties_plugin_finalize		(GObject *object);
 static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
@@ -71,10 +70,7 @@ TOTEM_PLUGIN_REGISTER(TotemMoviePropertiesPlugin, totem_movie_properties_plugin)
 static void
 totem_movie_properties_plugin_class_init (TotemMoviePropertiesPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
-	object_class->finalize = totem_movie_properties_plugin_finalize;
 
 	plugin_class->activate = impl_activate;
 	plugin_class->deactivate = impl_deactivate;
@@ -83,12 +79,6 @@ totem_movie_properties_plugin_class_init (TotemMoviePropertiesPluginClass *klass
 static void
 totem_movie_properties_plugin_init (TotemMoviePropertiesPlugin *plugin)
 {
-}
-
-static void
-totem_movie_properties_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_movie_properties_plugin_parent_class)->finalize (object);
 }
 
 static void

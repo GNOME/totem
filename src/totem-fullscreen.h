@@ -43,7 +43,7 @@
 
 typedef struct TotemFullscreen TotemFullscreen;
 typedef struct TotemFullscreenClass TotemFullscreenClass;
-typedef struct TotemFullscreenPrivate TotemFullscreenPrivate;
+typedef struct _TotemFullscreenPrivate TotemFullscreenPrivate;
 
 struct TotemFullscreen {
 	GObject                parent;
@@ -70,6 +70,8 @@ GType    totem_fullscreen_get_type           (void);
 TotemFullscreen * totem_fullscreen_new       (GtkWindow *toplevel_window);
 void     totem_fullscreen_set_video_widget   (TotemFullscreen *fs,
 					      BaconVideoWidget *bvw);
+void     totem_fullscreen_set_parent_window  (TotemFullscreen *fs,
+					      GtkWindow *parent_window);
 gboolean totem_fullscreen_motion_notify      (GtkWidget *widget,
 					      GdkEventMotion *event,
 					      TotemFullscreen *fs);

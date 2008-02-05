@@ -39,7 +39,6 @@
 #include "totem-interface.h"
 
 struct _TotemVideoListPrivate {
-	gboolean dispose_has_run;
 	gint tooltip_column;
 	gint mrl_column;
 	Totem *totem;
@@ -87,7 +86,7 @@ totem_video_list_new (void)
 
 	video_list = TOTEM_VIDEO_LIST (g_object_new (TOTEM_TYPE_VIDEO_LIST, NULL));
 	if (video_list->priv->xml == NULL || video_list->priv->ui_manager == NULL) {
-		totem_video_list_dispose (G_OBJECT (video_list));
+		g_object_unref (video_list);
 		return NULL;
 	}
 
@@ -103,6 +102,7 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 
 	object_class->set_property = totem_video_list_set_property;
 	object_class->get_property = totem_video_list_get_property;
+	object_class->dispose = totem_video_list_dispose;
 
 	g_object_class_install_property (object_class, PROP_TOOLTIP_COLUMN,
 				g_param_spec_int ("tooltip-column", NULL, NULL,
@@ -131,7 +131,6 @@ totem_video_list_init (TotemVideoList *self)
 	GtkTreeSelection *selection;
 
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_VIDEO_LIST, TotemVideoListPrivate);
-	self->priv->dispose_has_run = FALSE;
 	self->priv->totem = NULL;
 	self->priv->tooltip_column = -1;
 	self->priv->mrl_column = -1;
@@ -164,15 +163,14 @@ totem_video_list_dispose (GObject *object)
 {
 	TotemVideoListPrivate *priv = TOTEM_VIDEO_LIST_GET_PRIVATE (object);
 
-	/* Make sure we only run once */
-	if (priv->dispose_has_run)
-		return;
-	priv->dispose_has_run = TRUE;
-
-	g_object_unref (priv->totem);
-	g_object_unref (priv->xml);
-	g_object_unref (G_OBJECT (priv->ui_manager));
-	g_object_unref (G_OBJECT (priv->action_group));
+	if (priv->totem != NULL) {
+		g_object_unref (priv->totem);
+		priv->totem = NULL;
+		g_object_unref (priv->xml);
+		/* priv->xml automatically unrefs and destroys its widgets,
+		 * since we haven't reffed them ourselves, and neither has
+		 * gtk_builder_get_object. */
+	}
 
 	G_OBJECT_CLASS (totem_video_list_parent_class)->dispose (object);
 }

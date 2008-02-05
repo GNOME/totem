@@ -43,10 +43,9 @@
 #include "video-utils.h"
 #include "bacon-video-widget.h"
 
-static GObjectClass *parent_class = NULL;
 static void totem_skipto_class_init	(TotemSkiptoClass *class);
 static void totem_skipto_init		(TotemSkipto *ggo);
-static void totem_skipto_finalize	(GObject *object);
+static void totem_skipto_dispose	(GObject *object);
 
 /* Callback functions for GtkBuilder */
 void spin_button_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
@@ -61,16 +60,16 @@ struct TotemSkiptoPrivate {
 };
 
 TOTEM_PLUGIN_DEFINE_TYPE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
+#define TOTEM_SKIPTO_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_SKIPTO, TotemSkiptoPrivate))
 
 static void
 totem_skipto_class_init (TotemSkiptoClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	parent_class = g_type_class_peek_parent (klass);
 	g_type_class_add_private (klass, sizeof (TotemSkiptoPrivate));
 
-	object_class->finalize = totem_skipto_finalize;
+	object_class->dispose = totem_skipto_dispose;
 }
 
 static void
@@ -92,11 +91,16 @@ totem_skipto_init (TotemSkipto *skipto)
 }
 
 static void
-totem_skipto_finalize (GObject *object)
+totem_skipto_dispose (GObject *object)
 {
-	g_return_if_fail (object != NULL);
+	TotemSkiptoPrivate *priv = TOTEM_SKIPTO_GET_PRIVATE (object);
 
-	G_OBJECT_CLASS (parent_class)->finalize (object);
+	if (priv->xml != NULL) {
+		g_object_unref (priv->xml);
+		priv->xml = NULL;
+	}
+
+	G_OBJECT_CLASS (totem_skipto_parent_class)->dispose (object);
 }
 
 void

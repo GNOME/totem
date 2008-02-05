@@ -162,6 +162,8 @@ populate_result (TotemTrackerWidget *widget, char *result)
 
 		g_free (thumbnail_path);
 		g_free (file_uri);
+		if (thumbnail != NULL)
+			g_object_unref (thumbnail);
 	} else {
 		/* Display an error */
 		char *message = g_strdup_printf (_("Could not get metadata for file %s."), result);

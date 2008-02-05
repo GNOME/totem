@@ -1,3 +1,37 @@
+2008-02-05  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plugins/properties/totem-movie-properties.c:
+	(totem_movie_properties_plugin_class_init):
+	* src/plugins/skipto/totem-skipto.c: (totem_skipto_class_init),
+	(totem_skipto_dispose):
+	* src/plugins/totem-module.c: (totem_module_finalize):
+	* src/plugins/totem-plugin.c: (totem_get_plugin_paths):
+	* src/plugins/totem-plugins-engine.c: (totem_plugins_engine_load):
+	* src/plugins/tracker/totem-tracker-widget.c: (populate_result):
+	* src/totem-fullscreen.c: (totem_fullscreen_move_popups),
+	(totem_fullscreen_new), (totem_fullscreen_set_video_widget),
+	(totem_fullscreen_set_parent_window), (totem_fullscreen_init),
+	(totem_fullscreen_dispose), (totem_fullscreen_finalize),
+	(totem_fullscreen_class_init):
+	* src/totem-fullscreen.h:
+	* src/totem-menu.c: (add_device_to_menu),
+	(show_controls_action_callback):
+	* src/totem-open-location.c: (totem_open_location_class_init),
+	(totem_open_location_init), (totem_open_location_dispose),
+	(totem_open_location_new):
+	* src/totem-time-label.c: (totem_time_label_init),
+	(totem_time_label_new), (totem_time_label_class_init),
+	(totem_time_label_set_time):
+	* src/totem-time-label.h:
+	* src/totem-uri.c: (totem_setup_file_filters),
+	(totem_destroy_file_filters):
+	* src/totem-video-list.c: (totem_video_list_new),
+	(totem_video_list_class_init), (totem_video_list_init),
+	(totem_video_list_dispose): Clean up a couple of memory leaks,
+	clean up disposal/finalization on a few classes, and fix some
+	style issues. Also, fix user plugins being disabled when enabled
+	in GConf. (Closes: #513757)
+
 2008-02-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/mythtv/totem-mythtv.c: Fix build
