@@ -1482,7 +1482,7 @@ xine_event (void *user_data, const xine_event_t *event)
 		if (g_utf8_validate (ui_data->str, -1, NULL) == FALSE) {
 			char *utf8;
 
-			g_warning ("Metadata for updated title not in UTF-8 for mrl '%s'", type, bvw->com->mrl);
+			g_warning ("Metadata for updated title not in UTF-8 for mrl '%s'", event->type, bvw->com->mrl);
 			utf8 = g_locale_to_utf8 (ui_data->str, -1, NULL, NULL, NULL);
 			if (utf8 != NULL) {
 				data = g_new0 (signal_data, 1);
