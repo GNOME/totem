@@ -89,6 +89,7 @@ typedef struct
 #define TOTEM_IR_COMMAND_EJECT "eject"
 #define TOTEM_IR_COMMAND_PLAY_DVD "play_dvd"
 #define TOTEM_IR_COMMAND_MUTE "mute"
+#define TOTEM_IR_COMMAND_TOGGLE_ASPECT "toggle_aspect"
 
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
@@ -174,6 +175,8 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_PLAY_DVD;
 	else if (strcmp (str, TOTEM_IR_COMMAND_MUTE) == 0)
 		return TOTEM_REMOTE_COMMAND_MUTE;
+	else if (strcmp (str, TOTEM_IR_COMMAND_TOGGLE_ASPECT) == 0)
+		return TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT;
 	else
 		return TOTEM_REMOTE_COMMAND_UNKNOWN;
 }

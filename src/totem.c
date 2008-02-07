@@ -2036,6 +2036,9 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_MUTE:
 		totem_action_volume_relative (totem, -1.0);
 		break;
+	case TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT:
+		totem_action_toggle_aspect_ratio (totem);
+		break;
 	default:
 		handled = FALSE;
 		break;
