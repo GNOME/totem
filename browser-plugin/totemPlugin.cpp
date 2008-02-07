@@ -1728,8 +1728,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	/* Used as a replacement for HIDDEN=TRUE attribute.
 	 * See http://mxr.mozilla.org/mozilla/source/modules/plugin/base/src/ns4xPluginInstance.cpp#1135
+	 * We don't use:
+	 * width <= 0 || height <= 0
+	 * as -1 is our value for unset/unknown sizes
 	 */
-	if (width <= 0 || height <= 0)
+	if (width == 0 || height == 0)
 		mHidden = PR_TRUE;
 
 	/* Whether to automatically stream and play the content */

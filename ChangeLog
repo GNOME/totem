@@ -1,5 +1,15 @@
 2008-02-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_error),
+	(totem_embedded_open_internal), (on_video_button_press_event),
+	(on_error_event), (totem_embedded_push_parser):
+	Remember the errors, and once we've set the error, allow errors
+	to popup when the main window is clicked (Closes: #457337)
+	* browser-plugin/totemPlugin.cpp: Fix the plugin not appearing
+	when the width or height isn't set
+
+2008-02-07  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
 	Don't try to load the logo if we're hidden
 	* browser-plugin/totemPlugin.cpp: Match the tiny width/height hacks

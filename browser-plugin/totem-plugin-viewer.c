@@ -137,6 +137,7 @@ typedef struct _TotemEmbedded {
 	GtkWidget * fs_window;
 
 	/* Error */
+	GError *error;
 
 	guint type : 3; /* TotemPluginType */
 
@@ -172,6 +173,7 @@ static void totem_embedded_init (TotemEmbedded *emb) { }
 static gboolean totem_embedded_do_command (TotemEmbedded *emb, const char *command, GError **err);
 static gboolean totem_embedded_push_parser (gpointer data);
 static gboolean totem_embedded_play (TotemEmbedded *embedded, GError **error);
+static void totem_embedded_set_logo_by_name (TotemEmbedded *embedded, const char *name);
 
 static void totem_embedded_clear_playlist (TotemEmbedded *embedded);
 
@@ -287,12 +289,24 @@ totem_embedded_save_volume (TotemEmbedded *emb, double volume)
 
 static void
 totem_embedded_set_error (TotemEmbedded *emb,
-			  char *primary,
+			  int code,
 			  char *secondary)
 {
-	/* FIXME */
-	g_message ("totem_embedded_set_error: '%s', '%s'", primary, secondary);
+	emb->error = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
+				  code,
+				  secondary);
+	g_message ("totem_embedded_set_error: '%s'", secondary);
 }
+
+static gboolean
+totem_embedded_set_error_logo (TotemEmbedded *embedded,
+			       GError *error)
+{
+	g_message ("totem_embedded_set_error_logo called by browser plugin");
+	totem_embedded_set_logo_by_name (embedded, "image-missing");
+	return TRUE;
+}
+
 
 static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
@@ -454,23 +468,19 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 	if (retval == FALSE)
 	{
 		GError *errint;
-		char *primary;
 
 		/* FIXME we haven't even started sending yet! */
 		//g_signal_emit (emb, signals[STOP_STREAM], 0);
 
 		totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
-		totem_embedded_set_logo_by_name (emb, "image-missing");
+		totem_embedded_set_error_logo (emb, NULL);
 
 		errint = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
 				      TOTEM_EMBEDDED_OPEN_FAILED,
 				      _("Totem could not play '%s'"),
 				     emb->current_uri);
 
-		//FIXME disp = gnome_vfs_unescape_string_for_display (totem->mrl); ?
-		primary = g_strdup_printf(_("Totem could not play '%s'"), emb->current_uri);
-		totem_embedded_set_error (emb, primary, err->message);;
-		g_free (primary);
+		totem_embedded_set_error (emb, err->code, err->message);;
 
 		g_propagate_error (error, err);
 
@@ -586,15 +596,6 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 		embedded->target = NULL;
 	}
 
-	return TRUE;
-}
-
-static gboolean
-totem_embedded_set_error_logo (TotemEmbedded *embedded,
-			       GError *error)
-{
-	g_message ("totem_embedded_set_error_logo called by browser plugin");
-	totem_embedded_set_logo_by_name (embedded, "image-missing");
 	return TRUE;
 }
 
@@ -1457,7 +1458,11 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 	menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
 
 	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && state == 0 && emb->state == TOTEM_STATE_STOPPED) {
-		if (!GTK_WIDGET_VISIBLE (menu)) {
+		if (emb->error != NULL) {
+			totem_interface_error (_("An error occurred"), emb->error->message, (GtkWindow *) (emb->window));
+			g_error_free (emb->error);
+			emb->error = NULL;
+		} else if (!GTK_WIDGET_VISIBLE (menu)) {
 			g_message ("emitting signal");
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 				       event->time,
@@ -1566,7 +1571,8 @@ on_error_event (BaconVideoWidget *bvw,
 		exit (1);
 	}
 
-	totem_embedded_set_error (emb, _("An error occurred"), message);
+	totem_embedded_set_error (emb, BVW_ERROR_GENERIC, message);
+	totem_embedded_set_error_logo (emb, NULL);
 }
 
 static void
@@ -2145,9 +2151,9 @@ totem_embedded_push_parser (gpointer data)
 	/* Check if we have anything in the playlist now */
 	if (emb->playlist == NULL && res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 		g_message ("Couldn't parse playlist '%s'", emb->current_uri);
-		totem_embedded_set_error (emb, _("No playlist or playlist empty") /* FIXME */,
-					  NULL);
-		totem_embedded_set_logo_by_name (emb, "image-missing");
+		totem_embedded_set_error (emb, BVW_ERROR_EMPTY_FILE,
+					  _("No playlist or playlist empty"));
+		totem_embedded_set_error_logo (emb, NULL);
 		return FALSE;
 	} else if (emb->playlist == NULL) {
 		g_message ("Playlist empty");
