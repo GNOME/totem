@@ -148,7 +148,7 @@ impl_activate (TotemPlugin *plugin,
 	/* Try the gnome-settings-daemon version,
 	 * then the gnome-control-center version of things */
 	pi->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
-								       "org.gnome.SettingsDaemon.MediaKeys",
+								       "org.gnome.SettingsDaemon",
 								       "/org/gnome/SettingsDaemon/MediaKeys",
 								       "org.gnome.SettingsDaemon.MediaKeys",
 								       NULL);
