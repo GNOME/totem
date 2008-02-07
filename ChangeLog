@@ -1,5 +1,12 @@
 2008-02-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/Makefile.am: Add a log domain for easier debugging
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_play):
+	Tell the plugin we had a button press if we don't have a URI to
+	play (Closes: #504795)
+
+2008-02-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/media-player-keys/totem-media-player-keys.c:
 	(impl_activate): Fix the bus name being wrong
 

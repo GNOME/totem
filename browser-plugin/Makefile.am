@@ -99,6 +99,7 @@ totem_plugin_viewer_CPPFLAGS = \
 	-DBINDIR="\"$(bindir)\""			\
 	-DSHAREDIR="\"$(pkgdatadir)\""			\
 	-DLOGO_NAME="\"totem_logo.png\""		\
+	-DG_LOG_DOMAIN=\""TotemEmbedded\""		\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 

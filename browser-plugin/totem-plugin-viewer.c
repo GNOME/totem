@@ -498,7 +498,12 @@ totem_embedded_play (TotemEmbedded *emb,
 {
 	GError *err = NULL;
 
-	g_return_val_if_fail (emb->current_uri != NULL, FALSE);
+	if (emb->current_uri == NULL) {
+		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
+		g_signal_emit (emb, signals[BUTTON_PRESS], 0,
+			       gtk_get_current_event_time (), 0);
+		return TRUE;
+	}
 
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
 
