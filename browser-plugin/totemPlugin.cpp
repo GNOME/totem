@@ -1788,12 +1788,19 @@ totemPlugin::Init (NPMIMEType mimetype,
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 /* FIXME */
+#ifdef TOTEM_MULLY_PLUGIN
+	value = (const char *) g_hash_table_lookup (args, "video");
+	if (value) {
+		SetSrc (nsDependentCString (value));
+	}
+#endif /* TOTEM_MULLY_PLUGIN */
+
 #if 0 //def TOTEM_MULLY_PLUGIN
 	/* Click to play behaviour of the DivX plugin */
 	char *previewimage = (const char *) g_hash_table_lookup (args, "previewimage");
 	if (value != NULL)
 		mHref = g_strdup (mSrc);
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
+#endif /* TOTEM_MULLY_PLUGIN */
 
 	/* If we're set to start automatically, we'll use the src stream */
 	if (mRequestURI &&
@@ -2138,6 +2145,8 @@ totemPlugin::Write (NPStream *stream,
 						    G_TYPE_INVALID);
 
 			return len;
+		} else {
+			D ("Is not playlist: totem_pl_parser_can_parse_from_data failed (len %d)", len);
 		}
 	}
 
