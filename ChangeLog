@@ -1,5 +1,13 @@
 2008-02-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_construct):
+	Don't try to load the logo if we're hidden
+	* browser-plugin/totemPlugin.cpp: Match the tiny width/height hacks
+	to hide a plugin used in Mozilla, fixes the Sirius Radio streams
+	never calling SetWindow() (Closes: #494680)
+
+2008-02-07  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: Fix the DivX plugin not getting
 	any URIs to play on the Stage6 website
 

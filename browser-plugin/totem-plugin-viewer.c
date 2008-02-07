@@ -1947,7 +1947,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			totem_embedded_set_logo_by_name (emb, "gtk-media-play-ltr");
 		else
 			totem_embedded_set_logo_by_name (emb, "gtk-media-play-rtl");
-	} else {
+	} else if (!emb->hidden) {
 		totem_embedded_set_logo_by_name (emb, "totem");
 	}
 

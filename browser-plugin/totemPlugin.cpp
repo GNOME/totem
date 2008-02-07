@@ -1726,10 +1726,10 @@ totemPlugin::Init (NPMIMEType mimetype,
 	mHidden = g_hash_table_lookup (args, "hidden") != NULL &&
 		  GetBooleanValue (args, "hidden", PR_TRUE);
 
-	/* Most for RealAudio streams, but also used as a replacement for
-	 * HIDDEN=TRUE attribute.
+	/* Used as a replacement for HIDDEN=TRUE attribute.
+	 * See http://mxr.mozilla.org/mozilla/source/modules/plugin/base/src/ns4xPluginInstance.cpp#1135
 	 */
-	if (width == 0 && height == 0)
+	if (width <= 0 || height <= 0)
 		mHidden = PR_TRUE;
 
 	/* Whether to automatically stream and play the content */
