@@ -1,5 +1,12 @@
 2008-02-07  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp: Add support for yes/no
+	arguments, Fix the VLC plugin not playing anything on the
+	http://mediathek.zdf.de/ website, uses the "target" parameter
+	instead of src
+
+2008-02-07  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_set_error),
 	(totem_embedded_open_internal), (on_video_button_press_event),
 	(on_error_event), (totem_embedded_push_parser):

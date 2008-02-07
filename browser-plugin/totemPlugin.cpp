@@ -1115,9 +1115,9 @@ totemPlugin::ParseBoolean (const char *key,
 {
 	if (value == NULL || strcmp (value, "") == 0)
 		return default_val;
-	if (g_ascii_strcasecmp (value, "false") == 0)
+	if (g_ascii_strcasecmp (value, "false") == 0 || g_ascii_strcasecmp (value, "no") == 0)
 		return PR_FALSE;
-	if (g_ascii_strcasecmp (value, "true") == 0)
+	if (g_ascii_strcasecmp (value, "true") == 0 || g_ascii_strcasecmp (value, "yes") == 0)
 		return PR_TRUE;
 
         char *endptr = NULL;
@@ -1797,6 +1797,13 @@ totemPlugin::Init (NPMIMEType mimetype,
 		SetSrc (nsDependentCString (value));
 	}
 #endif /* TOTEM_MULLY_PLUGIN */
+
+#ifdef TOTEM_CONE_PLUGIN
+	value = (const char *) g_hash_table_lookup (args, "target");
+	if (value) {
+		SetSrc (nsDependentCString (value));
+	}
+#endif /* TOTEM_CONE_PLUGIN */
 
 #if 0 //def TOTEM_MULLY_PLUGIN
 	/* Click to play behaviour of the DivX plugin */
