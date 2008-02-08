@@ -2535,7 +2535,8 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 {
 	gboolean retval = TRUE;
 
-	totem_fullscreen_motion_notify (NULL, NULL, totem->fs);
+	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
+		totem_fullscreen_motion_notify (NULL, NULL, totem->fs);
 
 	switch (direction) {
 	case GDK_SCROLL_UP:
