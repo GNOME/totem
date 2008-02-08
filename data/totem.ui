@@ -311,9 +311,10 @@
          <child>
             <object class="GtkRadioAction" id="aspect-ratio-auto">
                <property name="label" translatable="yes">Auto</property>
-               <property name="tooltip" translatable="yes">Sets automatic aspect ratio</property>
-               <!-- BVW_RATIO_AUTO -->
-               <property name="value">0</property>
+	       <property name="tooltip" translatable="yes">Sets automatic aspect ratio</property>
+	       <!-- BVW_RATIO_AUTO -->
+	       <property name="value">0</property>
+	       <property name="current-value">0</property>
                <signal name="changed" handler="aspect_ratio_changed_callback"/>
             </object>
          </child>
@@ -321,7 +322,8 @@
             <object class="GtkRadioAction" id="aspect-ratio-square">
                <property name="label" translatable="yes">Square</property>
                <property name="tooltip" translatable="yes">Sets square aspect ratio</property>
-               <!-- BVW_RATIO_SQUARE -->
+	       <!-- BVW_RATIO_SQUARE -->
+	       <property name="group">aspect-ratio-auto</property>
                <property name="value">1</property>
             </object>
          </child>
@@ -329,7 +331,8 @@
             <object class="GtkRadioAction" id="aspect-ratio-fbt">
                <property name="label" translatable="yes">4:3 (TV)</property>
                <property name="tooltip" translatable="yes">Sets 4:3 (TV) aspect ratio</property>
-               <!-- BVW_RATIO_FOURBYTHREE -->
+	       <!-- BVW_RATIO_FOURBYTHREE -->
+	       <property name="group">aspect-ratio-auto</property>
                <property name="value">2</property>
             </object>
          </child>
@@ -337,7 +340,8 @@
             <object class="GtkRadioAction" id="aspect-ratio-anamorphic">
                <property name="label" translatable="yes">16:9 (Widescreen)</property>
                <property name="tooltip" translatable="yes">Sets 16:9 (widescreen) aspect ratio</property>
-               <!-- BVW_RATIO_ANAMORPHIC -->
+	       <!-- BVW_RATIO_ANAMORPHIC -->
+	       <property name="group">aspect-ratio-auto</property>
                <property name="value">3</property>
             </object>
          </child>
@@ -345,7 +349,8 @@
             <object class="GtkRadioAction" id="aspect-ratio-dvb">
                <property name="label" translatable="yes">2.11:1 (DVB)</property>
                <property name="tooltip" translatable="yes">Sets 2.11:1 (DVB) aspect ratio</property>
-               <!-- BVW_RATIO_DVB -->
+	       <!-- BVW_RATIO_DVB -->
+	       <property name="group">aspect-ratio-auto</property>
                <property name="value">4</property>
             </object>
          </child>

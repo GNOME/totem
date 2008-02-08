@@ -1174,14 +1174,15 @@ totem_action_volume_relative (Totem *totem, double off_pct)
 
 void
 totem_action_toggle_aspect_ratio (Totem *totem)
-{		
+{
+	GSList *list;
 	GtkAction *action;
 	int tmp;
 
 	tmp = totem_action_get_aspect_ratio (totem);
 	tmp++;
-	if (tmp > 4)
-		tmp = 0;
+	if (tmp > BVW_RATIO_DVB)
+		tmp = BVW_RATIO_AUTO;
 
 	action = gtk_action_group_get_action (totem->main_action_group, "aspect-ratio-auto");
 	gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action), tmp);
