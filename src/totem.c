@@ -492,7 +492,11 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 		} else if (status == BVW_CAN_PLAY_UNSUPPORTED) {
 			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
 		} else if (status == BVW_CAN_PLAY_MISSING_PLUGINS) {
-			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."), _(totem_cd_get_human_readable_name (type)));
+			if (type == MEDIA_TYPE_DVD || type == MEDIA_TYPE_VCD) {
+				msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."), _(totem_cd_get_human_readable_name (type)));
+			} else {
+				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
+			}
 			totem_interface_error_with_link (msg, _("Please install the necessary plugins and restart Totem to be able to play this media."),
 							 "http://www.gnome.org/projects/totem/#codecs", _("More information about media plugins"),
 							 GTK_WINDOW (totem->win), totem);
