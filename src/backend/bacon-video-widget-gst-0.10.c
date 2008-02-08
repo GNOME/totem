@@ -3889,10 +3889,10 @@ done:
   return res;
 }
 
-gboolean
+BaconVideoWidgetCanPlayStatus
 bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
 {
-  gboolean res;
+  BaconVideoWidgetCanPlayStatus res;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -3900,24 +3900,27 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
 
   switch (type) {
     case MEDIA_TYPE_VCD:
-      res = TRUE;
+      res = BVW_CAN_PLAY_SUCCESS;
       break;
     case MEDIA_TYPE_DVD: {
       GstElement *element;
 
       element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
-      res = (element != NULL);
-      if (element != NULL)
+      if (element == NULL) {
+        res = BVW_CAN_PLAY_MISSING_PLUGINS;
+      } else {
         g_object_unref (element);
+        res = BVW_CAN_PLAY_SUCCESS;
+      }
       break;
     }
     case MEDIA_TYPE_CDDA:
     default:
-      res = FALSE;
+      res = BVW_CAN_PLAY_UNSUPPORTED;
       break;
   }
 
-  GST_DEBUG ("type=%d, can_play=%s", type, (res) ? "TRUE" : "FALSE");
+  GST_DEBUG ("type=%d, can_play=%d", type, res);
   return res;
 }
 
@@ -4005,6 +4008,10 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
       	g_ptr_array_add (array, NULL);
       mrls = (char **) g_ptr_array_free (array, FALSE);
       break;
+    }
+
+    case MEDIA_TYPE_DVB: {
+      //FIXME
     }
 
     default:

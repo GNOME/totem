@@ -171,7 +171,15 @@ void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
 						  int speed);
 int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
 
-gboolean bacon_video_widget_can_play             (BaconVideoWidget *bvw,
+typedef enum {
+	BVW_CAN_PLAY_SUCCESS,
+	BVW_CAN_PLAY_MISSING_CHANNELS,
+	BVW_CAN_PLAY_MISSING_PLUGINS,
+	BVW_CAN_PLAY_UNSUPPORTED
+} BaconVideoWidgetCanPlayStatus;
+
+BaconVideoWidgetCanPlayStatus bacon_video_widget_can_play
+						 (BaconVideoWidget *bvw,
 						  TotemDiscMediaType type);
 
 gchar **bacon_video_widget_get_mrls		 (BaconVideoWidget *bvw,

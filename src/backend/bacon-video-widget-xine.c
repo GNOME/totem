@@ -3452,21 +3452,41 @@ bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 			XINE_STREAM_INFO_SEEKABLE);
 }
 
-gboolean
+BaconVideoWidgetCanPlayStatus
 bacon_video_widget_can_play (BaconVideoWidget *bvw, TotemDiscMediaType type)
 {
 	switch (type)
 	{
 	case MEDIA_TYPE_DVD:
-		return bvw->priv->can_dvd;
+		if (bvw->priv->can_dvd != FALSE)
+			return BVW_CAN_PLAY_SUCCESS;
+		break;
 	case MEDIA_TYPE_VCD:
-		return bvw->priv->can_vcd;
+		if (bvw->priv->can_vcd != FALSE)
+			return BVW_CAN_PLAY_SUCCESS;
+		break;
 	case MEDIA_TYPE_DVB:
-		return bvw->priv->can_dvb;
+		if (bvw->priv->can_dvb != FALSE) {
+			char *path;
+
+			path = g_build_filename (g_get_home_dir (),
+						 ".xine",
+						 "channels.conf",
+						 NULL);
+			if (g_file_test (path, G_FILE_TEST_IS_REGULAR) == FALSE) {
+				g_free (path);
+				return BVW_CAN_PLAY_MISSING_CHANNELS;
+			}
+			g_free (path);
+			return BVW_CAN_PLAY_SUCCESS;
+		}
+		break;
 	case MEDIA_TYPE_CDDA:
 	default:
-		return FALSE;
+		return BVW_CAN_PLAY_UNSUPPORTED;
 	}
+
+	return BVW_CAN_PLAY_MISSING_PLUGINS;
 }
 
 char **

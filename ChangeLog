@@ -1,5 +1,18 @@
 2008-02-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_can_play):
+	* src/backend/bacon-video-widget-xine.c:
+	(bacon_video_widget_can_play):
+	* src/backend/bacon-video-widget.h:
+	Change the API to give a more detailed information as to why it
+	can't play a specific media
+
+	* src/totem.c: (totem_action_load_media):
+	Better error message depending on the retval of _can_play()
+
+2008-02-08  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.ui:
 	* src/totem.c: (totem_action_toggle_aspect_ratio):
 	Fix to make totem_action_toggle_aspect_ratio() work again
