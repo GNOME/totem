@@ -3902,7 +3902,15 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
     case MEDIA_TYPE_VCD:
       res = TRUE;
       break;
-    case MEDIA_TYPE_DVD:
+    case MEDIA_TYPE_DVD: {
+      GstElement *element;
+
+      element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
+      res = (element != NULL);
+      if (element != NULL)
+        g_object_unref (element);
+      break;
+    }
     case MEDIA_TYPE_CDDA:
     default:
       res = FALSE;
@@ -3937,13 +3945,68 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
       g_free (uri[0]);
       break;
     }
-/*
+
     case MEDIA_TYPE_DVD: {
-      gchar *uri[] = { "dvd://", NULL };
-      mrls = g_strdupv (uri);
+      GstFormat fmt;
+      GstElement *element;
+      gint64 num_titles, i;
+      GPtrArray *array;
+
+      element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
+      if (element == NULL)
+        return NULL;
+      /* We need to get the format after instantiating dvdreadsrc, as
+       * the nick is registered in that class init */
+      fmt = gst_format_get_by_nick ("title");
+      g_object_set (element, "device", device, NULL);
+      if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
+        GST_DEBUG ("Couldn't change the state to PAUSED");
+        g_object_unref (element);
+        return NULL;
+      }
+      if (gst_element_query_duration (element, &fmt, &num_titles) == FALSE) {
+        GST_DEBUG ("Couldn't query the \"duration\" (number of titles)");
+	gst_element_set_state (element, GST_STATE_NULL);
+	g_object_unref (element);
+	return NULL;
+      }
+
+      fmt = GST_FORMAT_TIME;
+      array = g_ptr_array_new ();
+      for (i = 1 ; i <= num_titles; i++) {
+        gint64 len;
+
+        /* Reset to NULL, change the title, and go back to PAUSED */
+	if (gst_element_set_state (element, GST_STATE_NULL) != GST_STATE_CHANGE_SUCCESS) {
+	  GST_DEBUG ("Couldn't set state to NULL for title %"G_GINT64_FORMAT, i);
+	  break;
+	}
+        g_object_set (element, "title", i, NULL);
+	if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
+	  GST_DEBUG ("Couldn't set state for title %"G_GINT64_FORMAT, i);
+	  break;
+	}
+
+        if (gst_element_query_duration (element, &fmt, &len) == FALSE) {
+	  GST_DEBUG ("Couldnt' query duration for title %"G_GINT64_FORMAT, i);
+          break;
+	}
+	/* If it's less than 30 seconds long, we kick it out */
+	if (GST_TIME_AS_SECONDS (len) > 30) {
+	  g_ptr_array_add (array, g_strdup_printf ("dvd://%"G_GINT64_FORMAT, i));
+	  GST_DEBUG ("URI: dvd://%"G_GINT64_FORMAT" (time: %"G_GINT64_FORMAT" mins %"G_GINT64_FORMAT" seconds)",
+		     i, GST_TIME_AS_SECONDS (len) / 60, GST_TIME_AS_SECONDS (len) % 60);
+	}
+      }
+
+      gst_element_set_state (element, GST_STATE_NULL);
+      g_object_unref (element);
+      if (array->len >= 1)
+      	g_ptr_array_add (array, NULL);
+      mrls = (char **) g_ptr_array_free (array, FALSE);
       break;
     }
-*/
+
     default:
       mrls = NULL;
       break;

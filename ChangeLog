@@ -1,5 +1,19 @@
 2008-02-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_can_play), (bacon_video_widget_get_mrls):
+	Enumerate the DVD titles using dvdreadsrc, and create a list
+	of MRLs to play this back (Closes: #321709), check for the
+	presence of dvdreadsrc to see whether we support DVD playback
+
+	* src/totem-menu.c: (totem_action_add_recent): Don't add directories
+	to the recent files
+
+	* src/totem.c: (totem_action_load_media_device): Don't use the URL
+	from TotemDisc to get the DVD MRL, use the backend instead
+
+2008-02-07  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: Add support for yes/no
 	arguments, Fix the VLC plugin not playing anything on the
 	http://mediathek.zdf.de/ website, uses the "target" parameter

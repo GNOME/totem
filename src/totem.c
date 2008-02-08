@@ -537,14 +537,7 @@ totem_action_load_media_device (Totem *totem, const char *device)
 			break;
 		case MEDIA_TYPE_DVD:
 		case MEDIA_TYPE_VCD:
-			{
-				const char *filenames[2];
-
-				filenames[0] = url;
-				filenames[1] = NULL;
-
-				retval = totem_action_open_files (totem, (char **) filenames);
-			}
+			retval = totem_action_load_media (totem, type, device_path);
 			break;
 		case MEDIA_TYPE_CDDA:
 			totem_action_error (_("Totem does not support playback of Audio CDs"),

@@ -706,6 +706,10 @@ totem_action_add_recent (Totem *totem, const char *filename)
 		/* Local files with no mime-type probably don't exist */
 		if (data.mime_type == NULL)
 			return;
+		if (strcmp (data.mime_type, "x-directory/normal") == 0) {
+			g_free (data.mime_type);
+			return;
+		}
 
 		/* It's a local file */
 		display = g_filename_from_uri (filename, NULL, NULL);
