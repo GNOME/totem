@@ -402,7 +402,7 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 
 	totem_embedded_set_state (embedded, TOTEM_STATE_STOPPED);
 
-	if (embedded->audioonly != FALSE)
+	if (embedded->audioonly != FALSE || embedded->hidden != FALSE)
 		return;
 
 	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
@@ -1953,7 +1953,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			totem_embedded_set_logo_by_name (emb, "gtk-media-play-ltr");
 		else
 			totem_embedded_set_logo_by_name (emb, "gtk-media-play-rtl");
-	} else if (!emb->hidden) {
+	} else {
 		totem_embedded_set_logo_by_name (emb, "totem");
 	}
 
