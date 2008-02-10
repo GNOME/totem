@@ -743,6 +743,19 @@ on_play_disc_activate (GtkAction *action, Totem *totem)
 	totem_action_play_media_device (totem, device_path);
 }
 
+/* Play DVB menu items */
+
+static void
+on_play_dvb_activate (GtkAction *action, Totem *totem)
+{
+	int adapter;
+	char *str;
+
+	adapter = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (action), "adapter"));
+	str = g_strdup_printf ("%d", adapter);
+	totem_action_play_media (totem, MEDIA_TYPE_DVB, str);
+	g_free (str);
+}
 /* A GnomeVFSDrive and GnomeVFSVolume share many similar methods, but do not
    share a base class other than GObject. */
 static char *
@@ -841,27 +854,10 @@ add_device_to_menu (GObject *device, guint position, Totem *totem)
 }
 
 static void
-on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
+update_drives_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 {
 	GList *devices, *volumes, *drives, *i;
 	guint position;
-
-	if (totem->drives_changed == FALSE)
-		return;
-
-	/* Remove old UI */
-	gtk_ui_manager_remove_ui (totem->ui_manager, totem->devices_ui_id);
-	gtk_ui_manager_ensure_update (totem->ui_manager);
-
-	/* Create new ActionGroup */
-	if (totem->devices_action_group) {
-		gtk_ui_manager_remove_action_group (totem->ui_manager,
-				totem->devices_action_group);
-		g_object_unref (totem->devices_action_group);
-	}
-	totem->devices_action_group = gtk_action_group_new ("devices-action-group");
-	gtk_ui_manager_insert_action_group (totem->ui_manager,
-			totem->devices_action_group, -1);
 
 	/* Create a list of suitable devices */
 	devices = NULL;
@@ -896,12 +892,77 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 		position++;
 		add_device_to_menu (i->data, position, totem);
 	}
-	gtk_ui_manager_ensure_update (totem->ui_manager);
 
 	g_list_foreach (devices, (GFunc) g_object_unref, NULL);
 	g_list_free (devices);
 
 	totem->drives_changed = FALSE;
+}
+
+static void
+update_dvb_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
+{
+	guint i;
+
+	for (i = 0 ; i < 8 ; i++) {
+		char *devicenode;
+
+		devicenode = g_strdup_printf("/dev/dvb/adapter%d/frontend0", i);
+
+		if (g_file_test (devicenode, G_FILE_TEST_EXISTS) != FALSE) {
+			char* label;
+			char *name;
+			GtkAction* action;
+
+			label = g_strdup_printf (_("Play DVB Adapter %d"), i);
+			name = g_strdup_printf (_("dvbdevice%d"), i);
+			action = gtk_action_new (name, label, NULL, NULL);
+
+			g_object_set (G_OBJECT(action), "icon-name", "camera-video", "sensitive", TRUE, NULL);
+			gtk_action_group_add_action (totem->devices_action_group, action);
+			g_object_unref (action);
+			gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
+					       "/tmw-menubar/movie/devices-placeholder", name, name,
+					       GTK_UI_MANAGER_MENUITEM, FALSE);
+			g_object_set_data_full (G_OBJECT (action),
+						"adapter", GINT_TO_POINTER (i), NULL);
+			g_signal_connect (G_OBJECT (action), "activate",
+					  G_CALLBACK (on_play_dvb_activate), totem);
+		}
+		g_free (devicenode);
+	}
+}
+
+static void
+on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
+{
+	//FIXME we should check whether there's new DVB items
+/*	if (totem->drives_changed == FALSE)
+		return;
+*/
+	/* Remove old UI */
+	gtk_ui_manager_remove_ui (totem->ui_manager, totem->devices_ui_id);
+	gtk_ui_manager_ensure_update (totem->ui_manager);
+
+	/* Create new ActionGroup */
+	if (totem->devices_action_group) {
+		gtk_ui_manager_remove_action_group (totem->ui_manager,
+				totem->devices_action_group);
+		g_object_unref (totem->devices_action_group);
+	}
+	totem->devices_action_group = gtk_action_group_new ("devices-action-group");
+	gtk_ui_manager_insert_action_group (totem->ui_manager,
+			totem->devices_action_group, -1);
+
+
+	if (totem->drives_changed == FALSE)
+		update_drives_menu_items (movie_menuitem, totem);
+
+	/* check for DVB */
+	/* FIXME we should only update if we have an updated as per HAL */
+	update_dvb_menu_items (movie_menuitem, totem);
+
+	gtk_ui_manager_ensure_update (totem->ui_manager);
 }
 
 static void

@@ -3889,6 +3889,25 @@ done:
   return res;
 }
 
+static char *
+bacon_video_widget_get_channels_file (void)
+{
+  gchar *filename;
+
+  filename = g_strdup(g_getenv("GST_DVB_CHANNELS_CONF"));
+  if (filename == NULL) {
+    gchar *directory;
+
+    guint major, minor, micro, nano;
+    gst_version(&major, &minor, &micro, &nano);
+    directory = g_strdup_printf (".gstreamer-%d.%d", major, minor);
+    filename = g_build_filename (g_get_home_dir (), directory, "dvb-channels.conf", NULL);
+    g_free (directory);
+  }
+
+  return filename;
+}
+
 BaconVideoWidgetCanPlayStatus
 bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
 {
@@ -3914,6 +3933,25 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
       }
       break;
     }
+    case MEDIA_TYPE_DVB: {
+      GstElement *element;
+      gchar *filename;
+
+      element = gst_element_factory_make ("dvbbasebin", "test_dvb");
+      if (element == NULL)
+        return BVW_CAN_PLAY_MISSING_PLUGINS;
+
+      g_object_unref (element);
+
+      filename = bacon_video_widget_get_channels_file ();
+      if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
+        res = BVW_CAN_PLAY_SUCCESS;
+      } else {
+        res = BVW_CAN_PLAY_MISSING_CHANNELS;
+      }
+      g_free(filename);
+      break;
+    }
     case MEDIA_TYPE_CDDA:
     default:
       res = BVW_CAN_PLAY_UNSUPPORTED;
@@ -3922,6 +3960,62 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
 
   GST_DEBUG ("type=%d, can_play=%d", type, res);
   return res;
+}
+
+static char
+bacon_video_widget_dvb_get_adapter_type (const char *device)
+{
+  GstElement *dvbelement;
+  GstBus *dvbbus;
+  GstPipeline * pipeline;
+  char adapter_type;
+
+  adapter_type = 'U'; /* unknown */
+  /* let gstreamer know what adapter to use */
+  g_setenv("GST_DVB_ADAPTER", device, TRUE);
+
+  /* HACK: find out type of adapter so it filters out the channels
+   * based on the type of adapter. */
+  dvbelement = gst_element_factory_make ("dvbsrc", "test_dvbsrc");
+  g_object_set (G_OBJECT (dvbelement), "adapter", atoi (device), NULL);
+
+  pipeline = GST_PIPELINE (gst_pipeline_new (""));
+  gst_bin_add (GST_BIN (pipeline), dvbelement);
+  gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_READY);
+  gst_element_get_state (GST_ELEMENT (pipeline), NULL, NULL, GST_CLOCK_TIME_NONE);
+  dvbbus = gst_pipeline_get_bus (pipeline);
+
+  while (gst_bus_have_pending (dvbbus)) {
+    GstMessage* msg;
+
+    msg = gst_bus_pop (dvbbus);
+    if (msg->type == GST_MESSAGE_ELEMENT && msg->src == GST_OBJECT(dvbelement)) {
+      GstStructure *structure;
+
+      structure = msg->structure;
+
+      if (g_str_equal (gst_structure_get_name (structure), "dvb-adapter") != FALSE) {
+        const GValue* val;
+
+	val = gst_structure_get_value (structure, "type");
+	if (val) {
+	  if (g_str_equal (g_value_get_string (val), "DVB-T") != FALSE) {
+	    adapter_type = 'T';
+	  } else if (g_str_equal (g_value_get_string (val), "DVB-S") != FALSE) {
+	    adapter_type = 'S';
+	  }
+	}
+	gst_message_unref (msg);
+	break;
+      }
+    }
+    gst_message_unref (msg);
+  }
+  g_object_unref (dvbbus);
+  gst_element_set_state (GST_ELEMENT(pipeline), GST_STATE_NULL);
+  g_object_unref (G_OBJECT(pipeline));
+
+  return adapter_type;
 }
 
 gchar **
@@ -4009,11 +4103,44 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
       mrls = (char **) g_ptr_array_free (array, FALSE);
       break;
     }
-
     case MEDIA_TYPE_DVB: {
-      //FIXME
-    }
+      gchar* filename;
+      gchar* contents;
+      GPtrArray *array;
+      gchar adapter_type;
 
+      adapter_type = bacon_video_widget_dvb_get_adapter_type (device);
+      filename = bacon_video_widget_get_channels_file ();
+
+      if (g_file_get_contents (filename, &contents, NULL, NULL) != FALSE) {
+        gchar **lines, *line;
+        guint i;
+
+	lines = g_strsplit (contents, "\n", 0);
+        array = g_ptr_array_new ();
+
+	for (i = 0; lines[i] != NULL; i++) {
+	  line = lines[i];
+
+          if (line[0] != '#') {
+            gchar** fields = g_strsplit(line, ":", 0);
+            if ((g_strv_length (fields) == 13 && adapter_type == 'T') ||
+                (g_strv_length (fields) == 8 && adapter_type == 'S')) {
+              g_ptr_array_add (array, g_strdup_printf("dvb://%s", fields[0]));
+            }
+            g_strfreev(fields);
+          }
+          line = lines[++i];
+        }
+        g_strfreev(lines);
+      } else {
+        return NULL;
+      }
+      if (array->len >= 1)
+      	g_ptr_array_add (array, NULL);
+      mrls = (char **) g_ptr_array_free (array, FALSE);
+      break;
+    }
     default:
       mrls = NULL;
       break;

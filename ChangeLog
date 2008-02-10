@@ -1,5 +1,21 @@
 2008-02-10  Bastien Nocera  <hadess@hadess.net>
 
+	Patch from Zaheer Abbas Merali <zaheermerali@gmail.com>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_get_channels_file),
+	(bacon_video_widget_can_play),
+	(bacon_video_widget_dvb_get_adapter_type),
+	(bacon_video_widget_get_mrls):
+	Add support for listing DVB channels from the channels.conf
+	file, with DVB type-specific filtering
+
+	* src/totem-menu.c: (on_play_dvb_activate),
+	(update_drives_menu_items), (update_dvb_menu_items),
+	(on_movie_menu_select): Add DVB cards to the Movie menu
+
+2008-02-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c: (xine_event):
 	Really fix compile failure, spotted by Jens Granseuer
 	<jensgr@gmx.net> (Closes: #514391)
