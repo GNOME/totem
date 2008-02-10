@@ -910,17 +910,18 @@ update_dvb_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 		devicenode = g_strdup_printf("/dev/dvb/adapter%d/frontend0", i);
 
 		if (g_file_test (devicenode, G_FILE_TEST_EXISTS) != FALSE) {
-			char* label, *name, adapter_name;
+			char* label, *name, *adapter_name;
 			GtkAction* action;
 
 			/* translators: the index of the adapter
 			 * DVB Adapter 1 */
-			adapter_name = g_strdup_printf (_("DVB Adapter %d"));
+			adapter_name = g_strdup_printf (_("DVB Adapter %u"), i);
 			/* translators:
 			 * Watch TV on 'DVB Adapter 1'
 			 * or
 			 * Watch TV on 'Hauppauge Nova-T Stick' */
 			label = g_strdup_printf (_("Watch TV on \'%s\'"), adapter_name);
+			g_free (adapter_name);
 			name = g_strdup_printf ("dvbdevice%d", i);
 			action = gtk_action_new (name, label, NULL, NULL);
 
