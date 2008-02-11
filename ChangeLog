@@ -1,3 +1,11 @@
+2008-02-11  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c: (on_movie_menu_select): Fix thinko that
+	caused DVD/CD devices not to appear in the movie menu
+	* src/totem.c: (totem_action_load_media):
+	Fix error messages for the unsupported and missing channels.conf
+	error cases
+
 2008-02-10  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c: (update_dvb_menu_items): Fix stupidness

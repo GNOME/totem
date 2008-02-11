@@ -962,7 +962,7 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 			totem->devices_action_group, -1);
 
 
-	if (totem->drives_changed == FALSE)
+	if (totem->drives_changed != FALSE)
 		update_drives_menu_items (movie_menuitem, totem);
 
 	/* check for DVB */

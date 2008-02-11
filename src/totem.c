@@ -486,22 +486,35 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 	status = bacon_video_widget_can_play (totem->bvw, type);
 
 	if (status != BVW_CAN_PLAY_SUCCESS) {
-		if (status == BVW_CAN_PLAY_MISSING_CHANNELS) {
-			//FIXME we need to launch the scanner
-			return FALSE;
-		} else if (status == BVW_CAN_PLAY_MISSING_PLUGINS) {
+		const char *link, *link_text, *secondary;
+
+		switch (status) {
+		case BVW_CAN_PLAY_MISSING_CHANNELS:
+			g_assert (type == MEDIA_TYPE_DVB);
+			link = "http://www.gnome.org/projects/totem/#dvb";
+			link_text = _("More information about watching TV");
+			msg = g_strdup (_("Totem is missing a channels listing to be able to tune the receiver."));
+			secondary = _("Please follow the instructions provided in the link to create a channels listing.");
+			break;
+		case BVW_CAN_PLAY_MISSING_PLUGINS:
+			link = "http://www.gnome.org/projects/totem/#codecs";
+			link_text = _("More information about media plugins");
+			secondary = _("Please install the necessary plugins and restart Totem to be able to play this media.");
 			if (type == MEDIA_TYPE_DVD || type == MEDIA_TYPE_VCD)
 				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."), _(totem_cd_get_human_readable_name (type)));
 			else
 				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
-		} else {
-			// Basically BVW_CAN_PLAY_UNSUPPORTED
+			break;
+		case BVW_CAN_PLAY_UNSUPPORTED:
 			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
+			totem_action_error (msg, _("Please insert another disc to play back."), totem);
+			g_free (msg);
+			return FALSE;
+		default:
+			g_assert_not_reached ();
 		}
 
-		totem_interface_error_with_link (msg, _("Please install the necessary plugins and restart Totem to be able to play this media."),
-							"http://www.gnome.org/projects/totem/#codecs", _("More information about media plugins"),
-							GTK_WINDOW (totem->win), totem);
+		totem_interface_error_with_link (msg, secondary, link, link_text, GTK_WINDOW (totem->win), totem);
 		g_free (msg);
 		return FALSE;
 	}
