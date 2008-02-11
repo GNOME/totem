@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 16:28+0000\n"
-"PO-Revision-Date: 2008-02-10 19:16+0100\n"
+"POT-Creation-Date: 2008-02-11 14:33+0000\n"
+"PO-Revision-Date: 2008-02-11 22:16+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -506,8 +506,8 @@ msgid "Text Subtitles"
 msgstr "Subtítulos"
 
 #. Title
-#: ../data/totem.ui.h:72 ../src/totem.c:888 ../src/totem.c:3095
-#: ../src/totem.c:3124 ../browser-plugin/totem-plugin-viewer.c:1800
+#: ../data/totem.ui.h:72 ../src/totem.c:901 ../src/totem.c:3108
+#: ../src/totem.c:3137 ../browser-plugin/totem-plugin-viewer.c:1800
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -1211,7 +1211,7 @@ msgstr "Guardar la captura"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:880
+#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:893
 #: ../browser-plugin/totem-plugin-viewer.c:327
 msgid "Stopped"
 msgstr "Detenido"
@@ -1432,35 +1432,29 @@ msgstr "Reproduciendo"
 msgid "Paused"
 msgstr "Pausa"
 
-#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:983
-#: ../src/totem.c:1105
+#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:996
+#: ../src/totem.c:1118
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem.c:494
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
-"complementos apropiados para leer del disco."
+#: ../src/totem.c:495
+msgid "More information about watching TV"
+msgstr "Más información acerca de ver televisión"
 
 #: ../src/totem.c:496
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
-"complementos apropiados para manejarlo."
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "Totem no tiene una lista de canales para poder sintonizar el receptor."
 
-#. Basically BVW_CAN_PLAY_UNSUPPORTED
-#: ../src/totem.c:499
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "Totem no puede reproducir este tipo de soporte (%s) porque no está soportado."
+#: ../src/totem.c:497
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr "Siga las instrucciones en el enlace para crear una lista de canales."
+
+#: ../src/totem.c:501
+msgid "More information about media plugins"
+msgstr "Más información acerca de los complementos de soportes"
 
 #: ../src/totem.c:502
 msgid ""
@@ -1470,11 +1464,34 @@ msgstr ""
 "Por favor, instale los complementos necesarios y reinicie Totem para poder "
 "reproducir este soporte."
 
-#: ../src/totem.c:503
-msgid "More information about media plugins"
-msgstr "Más información acerca de los complementos de soportes"
+#: ../src/totem.c:504
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
+"complementos apropiados para leer del disco."
 
-#: ../src/totem.c:511
+#: ../src/totem.c:506
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
+"complementos apropiados para manejarlo."
+
+#: ../src/totem.c:509
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr "Totem no puede reproducir este tipo de soporte (%s) porque no está soportado."
+
+#: ../src/totem.c:510
+msgid "Please insert another disc to play back."
+msgstr "Introduzca otro disco para reproducir."
+
+#: ../src/totem.c:524
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1483,7 +1500,7 @@ msgstr ""
 "Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
 "instalado que puede manipularlo."
 
-#: ../src/totem.c:512
+#: ../src/totem.c:525
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1491,84 +1508,84 @@ msgstr ""
 "Compruebe que haya un disco en la unidad y que esté correctamente "
 "configurada."
 
-#: ../src/totem.c:540
+#: ../src/totem.c:553
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem.c:541 ../src/totem.c:2958
+#: ../src/totem.c:554 ../src/totem.c:2971
 #: ../browser-plugin/totem-plugin-viewer.c:1791
 msgid "No reason."
 msgstr "No hay razón."
 
-#: ../src/totem.c:555
+#: ../src/totem.c:568
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem no soporta la reproducción de CD de sonido"
 
-#: ../src/totem.c:556
+#: ../src/totem.c:569
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Considereusar un reproductor de música o un extractor de CD para reproducir "
 "este CD"
 
-#: ../src/totem.c:797 ../src/totem.c:805
+#: ../src/totem.c:810 ../src/totem.c:818
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem no puede obtener una captura de pantalla de esa película."
 
-#: ../src/totem.c:805
+#: ../src/totem.c:818
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Esto no se supone que debe ocurrir; rellene un informe de errores."
 
-#: ../src/totem.c:989
+#: ../src/totem.c:1002
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem.c:1228
+#: ../src/totem.c:1241
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem.c:1496 ../src/totem.c:1498
+#: ../src/totem.c:1509 ../src/totem.c:1511
 #: ../browser-plugin/totem-plugin-viewer.c:1462
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem.c:2819 ../src/totem.c:2821
+#: ../src/totem.c:2832 ../src/totem.c:2834
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/película anterior"
 
-#: ../src/totem.c:2827 ../src/totem.c:2829
+#: ../src/totem.c:2840 ../src/totem.c:2842
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem.c:2836 ../src/totem.c:2838
+#: ../src/totem.c:2849 ../src/totem.c:2851
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/película siguiente"
 
-#: ../src/totem.c:2958
+#: ../src/totem.c:2971
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem.c:3096
+#: ../src/totem.c:3109
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:3096
+#: ../src/totem.c:3109
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
 #. Handle command line arguments
-#: ../src/totem.c:3104
+#: ../src/totem.c:3117
 msgid "- Play movies and songs"
 msgstr "- Reproduzca películas y canciones"
 
-#: ../src/totem.c:3113
+#: ../src/totem.c:3126
 msgid "Totem could not parse the command-line options"
 msgstr "Totem no pudo analizar las opciones de línea de comandos"
 
-#: ../src/totem.c:3132
+#: ../src/totem.c:3145
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3132
+#: ../src/totem.c:3145
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
