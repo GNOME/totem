@@ -3922,31 +3922,31 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
       res = BVW_CAN_PLAY_SUCCESS;
       break;
     case MEDIA_TYPE_DVD: {
-      GstElement *element;
-
-      element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
-      if (element == NULL) {
+      if (!gst_default_registry_check_feature_version ("dvdreadsrc", 0, 10, 0)) {
+        GST_DEBUG ("Missing dvdreadsrc");
         res = BVW_CAN_PLAY_MISSING_PLUGINS;
       } else {
-        g_object_unref (element);
         res = BVW_CAN_PLAY_SUCCESS;
       }
       break;
     }
     case MEDIA_TYPE_DVB: {
-      GstElement *element;
       gchar *filename;
 
-      element = gst_element_factory_make ("dvbbasebin", "test_dvb");
-      if (element == NULL)
-        return BVW_CAN_PLAY_MISSING_PLUGINS;
-
-      g_object_unref (element);
+      /* FIXME: change to 0,10,6 once gst-plugins-bad 0.10.6 has been released */
+      if (!gst_default_registry_check_feature_version ("dvbbasebin", 0, 10, 0) ||
+          !gst_default_registry_check_feature_version ("mpegtsparse", 0, 10, 0) ||
+          !gst_default_registry_check_feature_version ("dvbsrc", 0, 10, 0)) {
+        GST_DEBUG ("Missing one or all of: dvbsrc, dvbbasebin, mpegtsparse");
+        res = BVW_CAN_PLAY_MISSING_PLUGINS;
+        break;
+      }
 
       filename = bacon_video_widget_get_channels_file ();
       if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
         res = BVW_CAN_PLAY_SUCCESS;
       } else {
+        GST_DEBUG ("no channels file '%s'", filename);
         res = BVW_CAN_PLAY_MISSING_CHANNELS;
       }
       g_free(filename);

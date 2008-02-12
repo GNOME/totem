@@ -1,3 +1,11 @@
+2008-02-12  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  (bacon_video_widget_can_play):
+	  Test for all elements required for DVB, not just dvdbasebin.
+	  Also, no need to load the plugin and create the element if all
+	  we want to know is if it's available.
+
 2008-02-12  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemGMPPlugin.cpp: Add audio/x-ms-wma
