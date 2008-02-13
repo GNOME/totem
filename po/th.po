@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-11 08:45+0700\n"
-"PO-Revision-Date: 2008-02-11 08:46+0700\n"
+"POT-Creation-Date: 2008-02-13 10:00+0700\n"
+"PO-Revision-Date: 2008-02-13 10:12+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -501,8 +501,8 @@ msgid "Text Subtitles"
 msgstr "บทบรรยาย"
 
 #. Title
-#: ../data/totem.ui.h:72 ../src/totem.c:888 ../src/totem.c:3095
-#: ../src/totem.c:3124 ../browser-plugin/totem-plugin-viewer.c:1800
+#: ../data/totem.ui.h:72 ../src/totem.c:901 ../src/totem.c:3108
+#: ../src/totem.c:3137 ../browser-plugin/totem-plugin-viewer.c:1800
 msgid "Totem Movie Player"
 msgstr "Totem: โปรแกรมเล่นภาพยนตร์"
 
@@ -1178,7 +1178,7 @@ msgstr "บันทึกภาพหน้าจอ"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:880
+#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:893
 #: ../browser-plugin/totem-plugin-viewer.c:327
 msgid "Stopped"
 msgstr "หยุด"
@@ -1399,31 +1399,29 @@ msgstr "กำลังเล่น"
 msgid "Paused"
 msgstr "กำลังพัก"
 
-#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:983
-#: ../src/totem.c:1105
+#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:996
+#: ../src/totem.c:1118
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ไม่สามารถเล่น '%s'"
 
-#: ../src/totem.c:494
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่มีปลั๊กอินที่เหมาะสมสำหรับการอ่านจากแผ่น"
+#: ../src/totem.c:495
+msgid "More information about watching TV"
+msgstr "ข้อมูลเพิ่มเติมเกี่ยวกับการดูทีวี"
 
 #: ../src/totem.c:496
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่มีปลั๊กอินที่เหมาะสม"
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "Totem ยังไม่สามารถแสดงรายการช่องทีวี เพื่อให้คุณจูนเครื่องรับได้"
 
-#. Basically BVW_CAN_PLAY_UNSUPPORTED
-#: ../src/totem.c:499
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่รองรับ"
+#: ../src/totem.c:497
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr "กรุณาทำตามขั้นตอนที่แนะนำในลิงก์นี้ หากต้องการสร้างรายการช่องทีวี"
+
+#: ../src/totem.c:501
+msgid "More information about media plugins"
+msgstr "ข้อมูลเพิ่มเติมเกี่ยวกับปลั๊กอินเล่นสื่อ"
 
 #: ../src/totem.c:502
 msgid ""
@@ -1431,99 +1429,118 @@ msgid ""
 "this media."
 msgstr "กรุณาติดตั้งปลั๊กอินที่จำเป็น และเรียกใช้ Totem ใหม่ เพื่อเล่นสื่อนี้"
 
-#: ../src/totem.c:503
-msgid "More information about media plugins"
-msgstr "ข้อมูลเพิ่มเติมเกี่ยวกับปลั๊กอินเล่นสื่อ"
+#: ../src/totem.c:504
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่มีปลั๊กอินที่เหมาะสมสำหรับการอ่านจากแผ่น"
 
-#: ../src/totem.c:511
+#: ../src/totem.c:506
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่มีปลั๊กอินที่เหมาะสม"
+
+#: ../src/totem.c:509
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr "Totem ไม่สามารถเล่นสื่อชนิดนี้ (%s) เพราะไม่รองรับ"
+
+#: ../src/totem.c:510
+msgid "Please insert another disc to play back."
+msgstr "กรุณาใส่แผ่นอื่น"
+
+#: ../src/totem.c:524
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "Totem ไม่สามารถเล่นสื่อนี้ (%s) ถึงแม้จะมีปลั๊กอินสำหรับเล่น"
 
-#: ../src/totem.c:512
+#: ../src/totem.c:525
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "คุณอาจตรวจสอบว่าได้ใส่แผ่นในไดรว์หรือไม่ และได้ตั้งค่าไดรว์ไว้ถูกต้องหรือไม่"
 
-#: ../src/totem.c:540
+#: ../src/totem.c:553
 msgid "Totem was not able to play this disc."
 msgstr "Totem ไม่สามารถเล่นแผ่นนี้ได้"
 
-#: ../src/totem.c:541 ../src/totem.c:2958
+#: ../src/totem.c:554 ../src/totem.c:2971
 #: ../browser-plugin/totem-plugin-viewer.c:1791
 msgid "No reason."
 msgstr "ไม่ทราบสาเหตุ"
 
-#: ../src/totem.c:555
+#: ../src/totem.c:568
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem ไม่รองรับการเล่นซีดีเพลง"
 
-#: ../src/totem.c:556
+#: ../src/totem.c:569
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "กรุณาใช้โปรแกรมเล่นเพลง หรือโปรแกรมคัดลอกเพลงจากซีดี เพื่อเล่นซีดีนี้แทน"
 
-#: ../src/totem.c:797 ../src/totem.c:805
+#: ../src/totem.c:810 ../src/totem.c:818
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem ไม่สามารถจับหน้าจอได้"
 
-#: ../src/totem.c:805
+#: ../src/totem.c:818
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "เหตุการณ์นี้ไม่น่าจะเกิด กรุณารายงานข้อผิดพลาดนี้"
 
-#: ../src/totem.c:989
+#: ../src/totem.c:1002
 msgid "No error message"
 msgstr "ไม่มีข้อมูลเกี่ยวกับข้อผิดพลาดที่เกิดขึ้น"
 
-#: ../src/totem.c:1228
+#: ../src/totem.c:1241
 msgid "Totem could not display the help contents."
 msgstr "Totem ไม่สามารถแสดงวิธีใช้"
 
-#: ../src/totem.c:1496 ../src/totem.c:1498
+#: ../src/totem.c:1509 ../src/totem.c:1511
 #: ../browser-plugin/totem-plugin-viewer.c:1462
 msgid "An error occurred"
 msgstr "เกิดปัญหา"
 
-#: ../src/totem.c:2819 ../src/totem.c:2821
+#: ../src/totem.c:2832 ../src/totem.c:2834
 msgid "Previous Chapter/Movie"
 msgstr "ตอน/เรื่องก่อนหน้า"
 
-#: ../src/totem.c:2827 ../src/totem.c:2829
+#: ../src/totem.c:2840 ../src/totem.c:2842
 msgid "Play / Pause"
 msgstr "เล่น / พัก"
 
-#: ../src/totem.c:2836 ../src/totem.c:2838
+#: ../src/totem.c:2849 ../src/totem.c:2851
 msgid "Next Chapter/Movie"
 msgstr "ตอน/เรื่องถัดไป"
 
-#: ../src/totem.c:2958
+#: ../src/totem.c:2971
 msgid "Totem could not startup."
 msgstr "ไม่สามารถเริ่มทำงาน Totem"
 
-#: ../src/totem.c:3096
+#: ../src/totem.c:3109
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ไม่สามารถเริ่มใช้ไลบรารีสำหรับการใช้งานเธรดอย่างปลอดภัย"
 
-#: ../src/totem.c:3096
+#: ../src/totem.c:3109
 msgid "Verify your system installation. Totem will now exit."
 msgstr "กรุณาตรวจสอบการติดตั้งของระบบ Totem จะเลิกทำงาน"
 
 #. Handle command line arguments
-#: ../src/totem.c:3104
+#: ../src/totem.c:3117
 msgid "- Play movies and songs"
 msgstr "- เล่นภาพยนตร์และเพลง"
 
-#: ../src/totem.c:3113
+#: ../src/totem.c:3126
 msgid "Totem could not parse the command-line options"
 msgstr "Totem ไม่สามารถแจงตัวเลือกบรรทัดคำสั่ง"
 
-#: ../src/totem.c:3132
+#: ../src/totem.c:3145
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ไม่สามารถเริ่มใช้ระบบจัดการค่าตั้ง"
 
-#: ../src/totem.c:3132
+#: ../src/totem.c:3145
 msgid "Make sure that GNOME is properly installed."
 msgstr "กรุณาตรวจสอบว่าติดตั้ง GNOME ถูกต้องหรือไม่"
 
