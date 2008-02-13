@@ -1,5 +1,24 @@
 2008-02-13  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/idl/Makefile.am:
+	* browser-plugin/idl/totemIConeAudio.idl:
+	* browser-plugin/idl/totemIConeInput.idl:
+	* browser-plugin/idl/totemIConePlaylist.idl:
+	* browser-plugin/idl/totemIConePlaylistItems.idl:
+	* browser-plugin/idl/totemIConeVideo.idl:
+	Update the IDL for VLC 0.8.6 and above
+
+	* browser-plugin/totem-plugin-viewer.c: (totem_embedded_open_uri),
+	(totem_embedded_open_stream), (totem_embedded_update_menu):
+	Add more debug for some remote functions, and try to use
+	the stream_uri when it's available
+
+	* browser-plugin/totemConePlugin.cpp:
+	* browser-plugin/totemConePlugin.h: Implement stubs for
+	Playlist and PlaylistItems objects
+
+2008-02-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: (totem_action_remote), (on_mouse_click_fullscreen):
 	Fix crashers when remote buttons are pressed and we're in
 	windowed mode (Closes: #516089)

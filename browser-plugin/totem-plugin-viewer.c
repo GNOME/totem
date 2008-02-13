@@ -949,6 +949,8 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 			 const char *base_uri,
 			 GError **error)
 {
+	g_message ("totem_embedded_open_uri: uri %s base_uri: %s", uri, base_uri);
+
 	totem_embedded_clear_playlist (emb);
 
 	bacon_video_widget_close (emb->bvw);
@@ -964,6 +966,8 @@ totem_embedded_open_stream (TotemEmbedded *emb,
 			    const char *base_uri,
 			    GError **error)
 {
+	g_message ("totem_embedded_open_stream called: uri %s, base_uri: %s", uri, base_uri);
+
 	totem_embedded_clear_playlist (emb);
 
 	bacon_video_widget_close (emb->bvw);
@@ -1129,21 +1133,27 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 		emb->app = NULL;
 	}
 
-	if (emb->mimetype) {
+	if (emb->mimetype && strcmp (emb->mimetype, "application/octet-stream") != 0) {
 		emb->app = gnome_vfs_mime_get_default_application_for_uri
 				(emb->current_uri, emb->mimetype);
 	} else {
+		const char *uri;
+
+		/* If we're reading a local file, that's not a playlist,
+		 * we need to use that to get its proper mime-type */
+		if (emb->stream_uri != NULL)
+			uri = emb->stream_uri;
+		else
+			uri = emb->current_uri;
 		emb->app = gnome_vfs_mime_get_default_application_for_uri
-				(emb->current_uri,
-				 gnome_vfs_get_mime_type_for_name (emb->current_uri));
+				(uri, gnome_vfs_get_mime_type_for_name (uri));
 	}
 
 	if (emb->app == NULL) {
-
 		if (emb->mimetype != NULL) {
-			g_warning ("Mimetype '%s' doesn't have a handler", emb->mimetype);
+			g_message ("Mimetype '%s' doesn't have a handler", emb->mimetype);
 		} else {
-			g_warning ("No handler for URI '%s' (guessed mime-type '%s')",
+			g_message ("No handler for URI '%s' (guessed mime-type '%s')",
 				   emb->current_uri,
 				   gnome_vfs_get_mime_type_for_name (emb->current_uri));
 		}

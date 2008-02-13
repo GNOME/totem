@@ -27,14 +27,23 @@
 #include <nsIClassInfo.h>
 
 #include "totemICone.h"
+#include "totemIConePlaylist.h"
+#include "totemIConePlaylistItems.h"
+#include "totemIConeInput.h"
 #include "totemPlugin.h"
 
 class totemScriptablePlugin : public totemICone,
+			      public totemIConePlaylist,
+			      public totemIConePlaylistItems,
+			      public totemIConeInput,
 			      public nsIClassInfo
 {
   public:
     NS_DECL_ISUPPORTS
     NS_DECL_TOTEMICONE
+    NS_DECL_TOTEMICONEPLAYLIST
+    NS_DECL_TOTEMICONEPLAYLISTITEMS
+    NS_DECL_TOTEMICONEINPUT
     NS_DECL_NSICLASSINFO
 
     totemScriptablePlugin (totemPlugin *aPlugin);

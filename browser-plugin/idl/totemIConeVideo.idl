@@ -1,5 +1,5 @@
 /*
- *  Copyright © 2006-2007, Bastien Nocera <hadess@hadess.net
+ *  Copyright © 2006-2008, Bastien Nocera <hadess@hadess.net
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
 #include "nsISupports.idl"
 
 /* Documentation at
- * http://www.videolan.org/doc/play-howto/en/ch04.html#id294468 */
+ * http://wiki.videolan.org/Documentation:Play_HowTo/Advanced_Use_of_VLC#Building_HTML_pages_for_Mozilla.2FFirefox.2FInternet_Explorere.2FSafari_.28VLC_version_0.8.6_and_above.29 */
 
 [scriptable, uuid(221cc95e-bdc1-4205-9bd9-79ab124b179c)]
 interface totemIConeVideo : nsISupports
@@ -30,7 +30,10 @@ interface totemIConeVideo : nsISupports
 
   attribute boolean fullscreen;
   attribute AUTF8String aspectRatio;
+  attribute long subtitle;
+  attribute long teletext;
 
   void toggleFullscreen ();
+  void toggleTeletext ();
 };
 

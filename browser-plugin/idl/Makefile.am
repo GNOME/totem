@@ -35,6 +35,7 @@ CONE_IDLS = \
 	totemIConeAudio.idl		\
 	totemIConeInput.idl		\
 	totemIConePlaylist.idl		\
+	totemIConePlaylistItems.idl	\
 	totemIConeVideo.idl
 
 xptdir = $(MOZILLA_PLUGINDIR)
