@@ -2062,8 +2062,9 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		break;
 	}
 
-	if (handled != FALSE &&
-			gtk_window_is_active (GTK_WINDOW (totem->win))) {
+	if (handled != FALSE
+			&& gtk_window_is_active (GTK_WINDOW (totem->win))
+			&& totem_fullscreen_is_fullscreen (totem->fs) != FALSE) {
 		totem_fullscreen_motion_notify (NULL, NULL, totem->fs);
 	}
 }
@@ -2245,7 +2246,8 @@ totem_is_seekable (Totem *totem)
 static void
 on_mouse_click_fullscreen (GtkWidget *widget, Totem *totem)
 {
-	totem_fullscreen_motion_notify (NULL, NULL, totem->fs);
+	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
+		totem_fullscreen_motion_notify (NULL, NULL, totem->fs);
 }
 
 static gboolean
