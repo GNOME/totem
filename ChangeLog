@@ -1,3 +1,28 @@
+2008-02-14  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totem-plugin-viewer.c: (totem_pl_item_free),
+	(totem_embedded_clear_playlist), (totem_embedded_add_item),
+	(totem_embedded_open_uri), (totem_embedded_open_stream),
+	(totem_embedded_set_local_file), (totem_embedded_set_playlist),
+	(totem_embedded_push_parser):
+	* browser-plugin/totemPlugin.h:
+	* browser-plugin/totemPlugin.cpp: Implement ClearPlaylist
+	and AddItem, to manipulate the playlist
+
+	* browser-plugin/idl/totemIConePlaylist.idl: Fix prototype
+	for add
+
+	* browser-plugin/totemConePlugin.cpp: Implement ::Add,
+	and ::Clear
+
+	* browser-plugin/totemPluginGlue.cpp: Fix a compilation
+	warning
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_stop): Fix warning when _stop()
+	is called in logo mode
+
 2008-02-13  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/idl/Makefile.am:

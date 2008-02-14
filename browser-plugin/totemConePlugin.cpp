@@ -174,11 +174,16 @@ totemScriptablePlugin::GetIsPlaying(PRBool *aIsPlaying)
 
 /* void add (in AUTF8String MRL) */
 NS_IMETHODIMP
-totemScriptablePlugin::Add(const nsACString & aURL, const nsACString & aName, const nsACString & aOptions)
+totemScriptablePlugin::Add(const nsACString & aURL, const nsACString & aName, const nsACString & aOptions, PRInt32 *aItemNumber)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  NS_ENSURE_STATE (IsValid ());
+
+  /* FIXME */
+  *aItemNumber = 0;
+
+  return mPlugin->AddItem (aURL);
 }
 
 /* void play () */
@@ -264,9 +269,11 @@ totemScriptablePlugin::GetCount (PRInt32 *aCount)
 NS_IMETHODIMP
 totemScriptablePlugin::Clear()
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  NS_ENSURE_STATE (IsValid ());
+
+  return mPlugin->ClearPlaylist ();
 }
 
 /* totemIConeInput */

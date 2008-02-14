@@ -244,7 +244,46 @@ totemPlugin::SetVolume (gdouble aVolume)
 				    G_TYPE_INVALID);
 
 	return NS_OK;
+}
 
+nsresult
+totemPlugin::ClearPlaylist (void)
+{
+	D ("ClearPlaylist");
+
+	/* FIXME: queue the action instead */
+	if (!mViewerReady)
+		return NS_OK;
+
+	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	dbus_g_proxy_call_no_reply (mViewerProxy,
+				    "ClearPlaylist",
+				    G_TYPE_INVALID,
+				    G_TYPE_INVALID);
+
+	return NS_OK;
+}
+
+nsresult
+totemPlugin::AddItem (const nsACString &aURI)
+{
+	const nsCString string (aURI);
+	const char *str = string.get ();
+
+	D ("AddItem '%s'", str);
+
+	/* FIXME: queue the action instead */
+	if (!mViewerReady)
+		return NS_OK;
+
+	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	dbus_g_proxy_call_no_reply (mViewerProxy,
+				    "AddItem",
+				    G_TYPE_STRING, str,
+				    G_TYPE_INVALID,
+				    G_TYPE_INVALID);
+
+	return NS_OK;
 }
 
 /* Viewer interaction */

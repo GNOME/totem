@@ -175,8 +175,6 @@ static gboolean totem_embedded_push_parser (gpointer data);
 static gboolean totem_embedded_play (TotemEmbedded *embedded, GError **error);
 static void totem_embedded_set_logo_by_name (TotemEmbedded *embedded, const char *name);
 
-static void totem_embedded_clear_playlist (TotemEmbedded *embedded);
-
 static void totem_embedded_update_menu (TotemEmbedded *emb);
 static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
 static void totem_embedded_toggle_fullscreen (TotemEmbedded *emb);
@@ -943,6 +941,61 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	emb->stream_uri = NULL;
 }
 
+static void
+totem_pl_item_free (gpointer data, gpointer user_data)
+{
+	TotemPlItem *item = (TotemPlItem *) data;
+
+	if (!item)
+		return;
+	g_free (item->uri);
+	g_free (item);
+}
+
+static gboolean
+totem_embedded_clear_playlist (TotemEmbedded *embedded, GError *error)
+{
+	g_list_foreach (embedded->playlist, (GFunc) totem_pl_item_free, NULL);
+	g_list_free (embedded->playlist);
+
+	embedded->playlist = NULL;
+	embedded->current = NULL;
+	embedded->num_items = 0;
+
+	totem_embedded_set_uri (embedded, NULL, NULL, FALSE);
+
+	bacon_video_widget_close (embedded->bvw);
+
+	return TRUE;
+}
+
+static gboolean
+totem_embedded_add_item (TotemEmbedded *embedded, const char *uri, GError *error)
+{
+	TotemPlItem *item;
+
+	g_message ("totem_embedded_add_item: %s", uri);
+
+	item = g_new0 (TotemPlItem, 1);
+	item->uri = g_strdup (uri);
+	item->duration = -1;
+	item->starttime = -1;
+
+	embedded->playlist = g_list_append (embedded->playlist, item);
+	embedded->num_items++;
+
+	if (embedded->current_uri == NULL) {
+		embedded->current = embedded->playlist;
+		totem_embedded_set_uri (embedded,
+					(const char *) uri,
+					embedded->base_uri /* FIXME? */,
+					FALSE);
+		totem_embedded_open_internal (embedded, FALSE, NULL /* FIXME */);
+	}
+
+	return TRUE;
+}
+
 static gboolean
 totem_embedded_open_uri (TotemEmbedded *emb,
 			 const char *uri,
@@ -951,9 +1004,7 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 {
 	g_message ("totem_embedded_open_uri: uri %s base_uri: %s", uri, base_uri);
 
-	totem_embedded_clear_playlist (emb);
-
-	bacon_video_widget_close (emb->bvw);
+	totem_embedded_clear_playlist (emb, NULL);
 
 	totem_embedded_set_uri (emb, uri, base_uri, FALSE);
 
@@ -968,9 +1019,7 @@ totem_embedded_open_stream (TotemEmbedded *emb,
 {
 	g_message ("totem_embedded_open_stream called: uri %s, base_uri: %s", uri, base_uri);
 
-	totem_embedded_clear_playlist (emb);
-
-	bacon_video_widget_close (emb->bvw);
+	totem_embedded_clear_playlist (emb, NULL);
 
 	totem_embedded_set_uri (emb, uri, base_uri, TRUE);
 	/* We can only have one item in the "playlist" when
@@ -1054,7 +1103,7 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 
 	g_message ("Setting the current path to %s", path);
 
-	totem_embedded_clear_playlist (emb);
+	totem_embedded_clear_playlist (emb, NULL);
 
 	file_uri = g_filename_to_uri (path, NULL, error);
 	if (!file_uri)
@@ -1100,7 +1149,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 	g_message ("Setting the current playlist to %s (base: %s)",
 		   path, base_uri);
 
-	totem_embedded_clear_playlist (emb);
+	totem_embedded_clear_playlist (emb, NULL);
 
 	file_uri = g_filename_to_uri (path, NULL, error);
 	if (!file_uri)
@@ -2058,28 +2107,6 @@ totem_embedded_unset_window (TotemEmbedded *embedded,
 }
 
 static void
-totem_pl_item_free (gpointer data, gpointer user_data)
-{
-	TotemPlItem *item = (TotemPlItem *) data;
-
-	if (!item)
-		return;
-	g_free (item->uri);
-	g_free (item);
-}
-
-static void
-totem_embedded_clear_playlist (TotemEmbedded *embedded)
-{
-	g_list_foreach (embedded->playlist, (GFunc) totem_pl_item_free, NULL);
-	g_list_free (embedded->playlist);
-
-	embedded->playlist = NULL;
-	embedded->current = NULL;
-	embedded->num_items = 0;
-}
-
-static void
 entry_metadata_foreach (const char *key,
 			const char *value,
 			gpointer data)
@@ -2129,7 +2156,6 @@ totem_embedded_push_parser (gpointer data)
 	TotemPlParserResult res;
 
 	emb->parser_id = 0;
-	totem_embedded_clear_playlist (emb);
 
 	parser = totem_pl_parser_new ();
 	g_object_set (parser, "force", TRUE,

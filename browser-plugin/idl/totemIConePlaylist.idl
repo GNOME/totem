@@ -31,7 +31,7 @@ interface totemIConePlaylist : nsISupports
   readonly attribute boolean isPlaying;
   readonly attribute totemIConePlaylistItems items;
 
-  void add (in AUTF8String MRL, in AUTF8String name, in AUTF8String options);
+  long add (in AUTF8String MRL, in AUTF8String name, in AUTF8String options);
 
 /*
  * We don't seem to be able to have 2 functions with the same name 

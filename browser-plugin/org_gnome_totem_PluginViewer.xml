@@ -49,6 +49,10 @@
     <method name="SetVolume">
       <arg type="d" name="Volume" direction="in" />
     </method>
+    <method name="ClearPlaylist" />
+    <method name="AddItem">
+      <arg type="s" name="URI" direction="in" />
+    </method>
 
     <signal name="ButtonPress">
       <arg type="u" name="Time" />

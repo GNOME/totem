@@ -60,6 +60,8 @@ class totemPlugin {
 
     nsresult DoCommand (const char *aCommand);
     nsresult SetVolume (gdouble aVolume);
+    nsresult ClearPlaylist (void);
+    nsresult AddItem (const nsACString &aURI);
 
     nsresult SetSrc (const nsACString &aURL);
 
@@ -297,6 +299,6 @@ typedef struct {
   const char *mime_alias;
 } totemPluginMimeEntry;
 
-char *totem_plugin_get_long_description (void);
+const char *totem_plugin_get_long_description (void);
 
 #endif /* __TOTEM_PLUGIN_H__ */

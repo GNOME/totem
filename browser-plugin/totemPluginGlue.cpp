@@ -203,7 +203,7 @@ totem_plugin_print (NPP instance,
 	D ("Print");
 }
 
-char *
+const char *
 totem_plugin_get_long_description (void)
 {
 	return "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
