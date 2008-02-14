@@ -30,12 +30,16 @@
 #include "totemIConePlaylist.h"
 #include "totemIConePlaylistItems.h"
 #include "totemIConeInput.h"
+#include "totemIConeAudio.h"
+#include "totemIConeVideo.h"
 #include "totemPlugin.h"
 
 class totemScriptablePlugin : public totemICone,
 			      public totemIConePlaylist,
 			      public totemIConePlaylistItems,
 			      public totemIConeInput,
+			      public totemIConeAudio,
+			      public totemIConeVideo,
 			      public nsIClassInfo
 {
   public:
@@ -44,6 +48,8 @@ class totemScriptablePlugin : public totemICone,
     NS_DECL_TOTEMICONEPLAYLIST
     NS_DECL_TOTEMICONEPLAYLISTITEMS
     NS_DECL_TOTEMICONEINPUT
+    NS_DECL_TOTEMICONEAUDIO
+    NS_DECL_TOTEMICONEVIDEO
     NS_DECL_NSICLASSINFO
 
     totemScriptablePlugin (totemPlugin *aPlugin);

@@ -2932,7 +2932,10 @@ bacon_video_widget_stop (BaconVideoWidget * bvw)
 
   GST_LOG ("Stopping");
   bvw_stop_play_pipeline (bvw);
-  
+
+  if (bvw->priv->logo_mode == FALSE)
+    return;
+
   /* Reset position to 0 when stopping */
   got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
 }

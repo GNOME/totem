@@ -1,5 +1,15 @@
 2008-02-14  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemConePlugin.cpp:
+	* browser-plugin/totemConePlugin.h:
+	Implement stubs for the Audio and Video objects
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_stop): Fix warning when _stop()
+	is called in logo mode
+
+2008-02-14  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/org_gnome_totem_PluginViewer.xml:
 	* browser-plugin/totem-plugin-viewer.c: (totem_pl_item_free),
 	(totem_embedded_clear_playlist), (totem_embedded_add_item),
@@ -18,10 +28,6 @@
 
 	* browser-plugin/totemPluginGlue.cpp: Fix a compilation
 	warning
-
-	* src/backend/bacon-video-widget-gst-0.10.c:
-	(bacon_video_widget_stop): Fix warning when _stop()
-	is called in logo mode
 
 2008-02-13  Bastien Nocera  <hadess@hadess.net>
 

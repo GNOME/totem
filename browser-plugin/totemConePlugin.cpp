@@ -89,23 +89,27 @@ totemScriptablePlugin::PluginMimeTypes (const totemPluginMimeEntry **_entries,
 
 /* Interface implementations */
 
-NS_IMPL_ISUPPORTS5 (totemScriptablePlugin,
+NS_IMPL_ISUPPORTS7 (totemScriptablePlugin,
 		    totemICone,
 		    totemIConePlaylist,
 		    totemIConePlaylistItems,
 		    totemIConeInput,
+		    totemIConeAudio,
+		    totemIConeVideo,
 		    nsIClassInfo)
 
 /* nsIClassInfo */
 
 TOTEM_CLASSINFO_BEGIN (totemScriptablePlugin,
-		       4,
+		       6,
 		       kClassID,
 		       kClassDescription)
   TOTEM_CLASSINFO_ENTRY (0, totemICone)
   TOTEM_CLASSINFO_ENTRY (1, totemIConePlaylist)
   TOTEM_CLASSINFO_ENTRY (2, totemIConePlaylistItems)
   TOTEM_CLASSINFO_ENTRY (3, totemIConeInput)
+  TOTEM_CLASSINFO_ENTRY (4, totemIConeAudio)
+  TOTEM_CLASSINFO_ENTRY (5, totemIConeVideo)
 TOTEM_CLASSINFO_END
 
 /* totemICone */
@@ -124,9 +128,7 @@ totemScriptablePlugin::GetVersionInfo(nsACString & aVersionInfo)
 NS_IMETHODIMP
 totemScriptablePlugin::GetAudio(totemIConeAudio * *aAudio)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
+  return CallQueryInterface (this, aAudio);
 }
 
 /* attribute totemIConeInput input; */
@@ -147,9 +149,7 @@ totemScriptablePlugin::GetPlaylist(totemIConePlaylist * *aPlaylist)
 NS_IMETHODIMP
 totemScriptablePlugin::GetVideo(totemIConeVideo * *aVideo)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
+  return CallQueryInterface (this, aVideo);
 }
 
 /* totemIConePlaylist */
@@ -172,7 +172,7 @@ totemScriptablePlugin::GetIsPlaying(PRBool *aIsPlaying)
   return NS_ERROR_NOT_IMPLEMENTED;
 }
 
-/* void add (in AUTF8String MRL) */
+/* long add (in AUTF8String MRL, in AUTF8String name, in AUTF8String options) */
 NS_IMETHODIMP
 totemScriptablePlugin::Add(const nsACString & aURL, const nsACString & aName, const nsACString & aOptions, PRInt32 *aItemNumber)
 {
@@ -321,7 +321,7 @@ totemScriptablePlugin::SetPosition(double aPosition)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_OK;
+  return NS_ERROR_NOT_IMPLEMENTED;
 }
 
 /* attribute long time */
@@ -338,7 +338,7 @@ totemScriptablePlugin::SetTime(PRInt32 aPosition)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_OK;
+  return NS_ERROR_NOT_IMPLEMENTED;
 }
 
 /* attribute long state */
@@ -355,7 +355,7 @@ totemScriptablePlugin::SetState(PRInt32 aState)
 {
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
-  return NS_OK;
+  return NS_ERROR_NOT_IMPLEMENTED;
 }
 
 /* attribute double rate */
@@ -373,5 +373,206 @@ totemScriptablePlugin::SetRate(double aRate)
   TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
 
   return NS_OK;
+}
+
+/* totemIConeAudio */
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIConeAudio"
+
+/* attribute boolean mute */
+NS_IMETHODIMP
+totemScriptablePlugin::GetMute(PRBool *_retval)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+//  *_retval = mMute;
+  return NS_OK;
+}
+
+NS_IMETHODIMP
+totemScriptablePlugin::SetMute(PRBool enabled)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+//  mMute = enabled != PR_FALSE;
+  return NS_OK;
+}
+
+/* attribute long volume */
+NS_IMETHODIMP
+totemScriptablePlugin::GetVolume(PRInt32 *_retval)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+//  *_retval = mVolume;
+  return NS_OK;
+}
+
+NS_IMETHODIMP
+totemScriptablePlugin::SetVolume(PRInt32 aVolume)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+//  mVolume = aVolume;
+  return NS_OK;
+}
+
+/* attribute long track */
+NS_IMETHODIMP
+totemScriptablePlugin::GetTrack(PRInt32 *_retval)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+NS_IMETHODIMP
+totemScriptablePlugin::SetTrack(PRInt32 aTrack)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute long channel */
+NS_IMETHODIMP
+totemScriptablePlugin::GetChannel(PRInt32 *_retval)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+NS_IMETHODIMP
+totemScriptablePlugin::SetChannel(PRInt32 aChannel)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+/* void toggleMute () */
+NS_IMETHODIMP
+totemScriptablePlugin::ToggleMute()
+{
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  NS_ENSURE_STATE (IsValid ());
+
+  return PR_TRUE;
+//  return mPlugin->ClearPlaylist ();
+}
+
+/* totemIConeAudio */
+#undef TOTEM_SCRIPTABLE_INTERFACE
+#define TOTEM_SCRIPTABLE_INTERFACE "totemIConeVideo"
+
+/* readonly attribute long width */
+NS_IMETHODIMP
+totemScriptablePlugin::GetWidth (PRInt32 *aWidth)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* readonly attribute long height */
+NS_IMETHODIMP
+totemScriptablePlugin::GetHeight (PRInt32 *aHeight)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute boolean fullscreen */
+NS_IMETHODIMP
+totemScriptablePlugin::GetFullscreen(PRBool *_retval)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+//  *_retval = mMute;
+  return NS_OK;
+}
+
+NS_IMETHODIMP
+totemScriptablePlugin::SetFullscreen(PRBool enabled)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+//  mMute = enabled != PR_FALSE;
+  return NS_OK;
+}
+
+/* attribute AUTF8String aspectRatio */
+NS_IMETHODIMP
+totemScriptablePlugin::GetAspectRatio(nsACString & aAspectRatio)
+{
+//  aVersionInfo.Assign (TOTEM_CONE_VERSION);
+//  return NS_OK;
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+NS_IMETHODIMP
+totemScriptablePlugin::SetAspectRatio(const nsACString & aAspectRatio)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+/* attribute long subtitle */
+NS_IMETHODIMP 
+totemScriptablePlugin::GetSubtitle(PRInt32 *aSubtitle)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+NS_IMETHODIMP 
+totemScriptablePlugin::SetSubtitle(PRInt32 aSubtitle)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute long teletext */
+NS_IMETHODIMP 
+totemScriptablePlugin::GetTeletext(PRInt32 *aTeletext)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+NS_IMETHODIMP 
+totemScriptablePlugin::SetTeletext(PRInt32 aTeletext)
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* void toggleFullscreen () */
+NS_IMETHODIMP
+totemScriptablePlugin::ToggleFullscreen()
+{
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  NS_ENSURE_STATE (IsValid ());
+
+  return PR_TRUE;
+//  return mPlugin->ClearPlaylist ();
+}
+
+/* void toggleTeletext () */
+NS_IMETHODIMP
+totemScriptablePlugin::ToggleTeletext()
+{
+  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+
+  return NS_ERROR_NOT_IMPLEMENTED;
 }
 
