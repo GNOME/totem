@@ -1,3 +1,9 @@
+2008-02-15  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size):
+	  Fix "gst_value_set_fraction: assertion `denominator != 0' failed"
+	  warning in case we don't have width/height yet (Closes: #516653)
+
 2008-02-15  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/plugins/youtube/youtube.py: Add proper locking to the

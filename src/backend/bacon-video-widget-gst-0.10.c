@@ -432,7 +432,11 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       
       GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
 
-      if (!gst_video_calculate_display_ratio (&num, &den,
+      if (bvw->priv->video_width == 0 || bvw->priv->video_height == 0) {
+        GST_DEBUG ("width and/or height 0, assuming 1/1 ratio");
+        num = 1;
+        den = 1;
+      } else if (!gst_video_calculate_display_ratio (&num, &den,
           bvw->priv->video_width, bvw->priv->video_height,
           movie_par_n, movie_par_d, disp_par_n, disp_par_d)) {
         GST_WARNING ("overflow calculating display aspect ratio!");
