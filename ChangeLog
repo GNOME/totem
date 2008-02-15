@@ -1,5 +1,10 @@
 2008-02-15  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* src/plugins/youtube/youtube.py: Add proper locking to the
+	entry list, hopefully stopping any potential races.
+
+2008-02-15  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/plugins/youtube/youtube.py: Fix YouTube searches which
 	produce no results. (Closes: #516236)
 

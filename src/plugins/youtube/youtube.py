@@ -15,8 +15,9 @@ class DownloadThread (threading.Thread):
 		self.treeview_name = treeview_name
 		threading.Thread.__init__ (self)
 	def run (self):
+		self.youtube.entry_lock.acquire (True)
 		self.youtube.entry[self.treeview_name] = self.youtube.service.Get (self.url).entry
-		self.youtube.results_downloaded = True
+		self.youtube.entry_lock.release ()
 
 class YouTube (totem.Plugin):
 	def __init__ (self):
@@ -25,7 +26,6 @@ class YouTube (totem.Plugin):
 
 		self.max_results = 20
 		self.button_down = False
-		self.results_downloaded = True
 
 		self.search_terms = ""
 		self.youtube_id = ""
@@ -33,6 +33,7 @@ class YouTube (totem.Plugin):
 		self.start_index = {}
 		self.results = {} # This is just the number of results from the last pagination query
 		self.entry = {}
+		self.entry_lock = threading.Lock ()
 
 		self.current_treeview_name = ""
 		self.notebook_pages = []
@@ -142,17 +143,20 @@ class YouTube (totem.Plugin):
 		"""Find the last clause in the URL; after the last /"""
 		return url.split ("/").pop ()
 	def populate_list_from_results (self, treeview_name):
-		"""Wait until we have some results to display, or return if there are none (or we've finished)"""
-		if self.entry[treeview_name] == None or len (self.entry[treeview_name]) == 0:
-			if self.results_downloaded:
-				"""Revert the cursor"""
-				window = self.vbox.window
-				window.set_cursor (None)
+		"""Check and acquire the lock"""
+		if self.entry_lock.acquire (False) == False:
+			return True
 
-				self.entry[treeview_name] = None
-				return False
-			else:
-				return True
+		"""Return if there are no results (or we've finished)"""
+		if self.entry[treeview_name] == None or len (self.entry[treeview_name]) == 0:
+			"""Revert the cursor"""
+			window = self.vbox.window
+			window.set_cursor (None)
+
+			self.entry[treeview_name] = None
+			self.entry_lock.release ()
+
+			return False
 
 		"""Only do one result at a time, as the thumbnail has to be downloaded; give them a temporary MRL until the real one is resolved before playing"""
 		entry = self.entry[treeview_name].pop (0)
@@ -160,6 +164,8 @@ class YouTube (totem.Plugin):
 		self.start_index[treeview_name] += 1
 		youtube_id = self.convert_url_to_id (entry.id.text)
 		mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
+
+		self.entry_lock.release ()
 
 		"""Find the thumbnail tag"""
 		for _element in entry.extension_elements:
