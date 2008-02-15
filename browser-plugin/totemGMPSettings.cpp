@@ -53,8 +53,7 @@ static const nsCID kClassID =
 static const char kClassDescription[] = "totemGMPSettings";
 
 totemGMPSettings::totemGMPSettings (totemScriptablePlugin *aPlugin)
-  : mVolume(100),
-    mPlugin(aPlugin)
+  : mPlugin(aPlugin)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
@@ -256,7 +255,9 @@ totemGMPSettings::GetVolume(PRInt32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = mVolume;
+  NS_ENSURE_STATE (IsValid ());
+
+  *_retval = mPlugin->mPlugin->mVolume;
   return NS_OK;
 }
 NS_IMETHODIMP 
@@ -269,7 +270,7 @@ totemGMPSettings::SetVolume(PRInt32 volume)
   nsresult rv = mPlugin->mPlugin->SetVolume ((double) volume / 100);
 
   /* Volume passed in is 0 through to 100 */
-  mVolume = volume;
+  mPlugin->mPlugin->mVolume = volume;
 
   return NS_OK;
 }

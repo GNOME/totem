@@ -247,6 +247,25 @@ totemPlugin::SetVolume (gdouble aVolume)
 }
 
 nsresult
+totemPlugin::SetFullscreen (gboolean enabled)
+{
+	D ("SetFullscreen '%d'", enabled);
+
+	/* FIXME: queue the action instead */
+	if (!mViewerReady)
+		return NS_OK;
+
+	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	dbus_g_proxy_call_no_reply (mViewerProxy,
+				    "SetFullscreen",
+				    G_TYPE_BOOLEAN, enabled,
+				    G_TYPE_INVALID,
+				    G_TYPE_INVALID);
+
+	return NS_OK;
+}
+
+nsresult
 totemPlugin::ClearPlaylist (void)
 {
 	D ("ClearPlaylist");
@@ -511,6 +530,20 @@ totemPlugin::ViewerSetup ()
 				     reinterpret_cast<void*>(this),
 				     NULL);
 
+	dbus_g_object_register_marshaller
+		(totempluginviewer_marshal_VOID__STRING_BOXED,
+		 G_TYPE_NONE, G_TYPE_STRING, G_TYPE_BOXED, G_TYPE_INVALID);
+	dbus_g_proxy_add_signal (mViewerProxy,
+				 "PropertyChange",
+				 G_TYPE_STRING,
+				 G_TYPE_VALUE,
+				 G_TYPE_INVALID);
+	dbus_g_proxy_connect_signal (mViewerProxy,
+				     "PropertyChange",
+				     G_CALLBACK (PropertyChangeCallback),
+				     reinterpret_cast<void*>(this),
+				     NULL);
+
 	if (mHidden) {
 		ViewerReady ();
 	} else {
@@ -555,6 +588,10 @@ totemPlugin::ViewerCleanup ()
 		dbus_g_proxy_disconnect_signal (mViewerProxy,
 						"Tick",
 						G_CALLBACK (TickCallback),
+						reinterpret_cast<void*>(this));
+		dbus_g_proxy_disconnect_signal (mViewerProxy,
+						"PropertyChange",
+						G_CALLBACK (PropertyChangeCallback),
 						reinterpret_cast<void*>(this));
 
 		g_object_unref (mViewerProxy);
@@ -979,6 +1016,25 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 
 	plugin->mTime = aTime;
 	plugin->mDuration = aDuration;
+}
+
+/* static */ void PR_CALLBACK
+totemPlugin::PropertyChangeCallback (DBusGProxy  *proxy,
+				     const char *aType,
+				     GValue *value,
+				     void *aData)
+{
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+
+	NS_ASSERTION (aType != NULL, "aType is NULL probably garbage");
+
+	DD ("PropertyChange signal received, aType %s", aType);
+
+	if (strcmp (aType, TOTEM_PROPERTY_VOLUME) == 0) {
+		plugin->mVolume = g_value_get_double (value);
+	} else if (strcmp (aType, TOTEM_PROPERTY_ISFULLSCREEN) == 0) {
+		plugin->mIsFullscreen = g_value_get_boolean (value);
+	}
 }
 
 /* static */ void PR_CALLBACK

@@ -44,7 +44,6 @@ class totemGMPSettings : public totemIGMPSettings,
   private:
     ~totemGMPSettings ();
 
-    PRInt32 mVolume;
     PRUint32 mMute : 1;
 
     totemScriptablePlugin *mPlugin;

@@ -57,7 +57,8 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 };
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
-  : mPlugin(aPlugin)
+  : mPlugin(aPlugin),
+    mMute(PR_FALSE)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
@@ -345,9 +346,27 @@ totemScriptablePlugin::SetTime(PRInt32 aPosition)
 NS_IMETHODIMP
 totemScriptablePlugin::GetState(PRInt32 *aState)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  NS_ENSURE_STATE (IsValid());
+
+  /* IDLE/CLOSE=0,
+   * OPENING=1,
+   * BUFFERING=2,
+   * PLAYING=3,
+   * PAUSED=4,
+   * STOPPING=5,
+   * ERROR=6
+   */
+  if (mPlugin->mState == TOTEM_STATE_PLAYING) {
+    *aState = 3;
+  } else if (mPlugin->mState == TOTEM_STATE_PAUSED) {
+    *aState = 4;
+  } else {
+    *aState = 0;
+  }
+
+  return NS_OK;
 }
 
 NS_IMETHODIMP
@@ -383,38 +402,58 @@ totemScriptablePlugin::SetRate(double aRate)
 NS_IMETHODIMP
 totemScriptablePlugin::GetMute(PRBool *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-//  *_retval = mMute;
+  *_retval = mMute;
   return NS_OK;
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::SetMute(PRBool enabled)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  nsresult rv;
 
-//  mMute = enabled != PR_FALSE;
-  return NS_OK;
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  NS_ENSURE_STATE (IsValid ());
+
+  if (enabled == PR_FALSE) {
+    mMute = PR_FALSE;
+    rv = mPlugin->SetVolume (mSavedVolume);
+  } else {
+    mMute = PR_TRUE;
+    mSavedVolume = mPlugin->mVolume;
+    rv = mPlugin->SetVolume (0);
+  };
+
+  return rv;
 }
 
 /* attribute long volume */
 NS_IMETHODIMP
 totemScriptablePlugin::GetVolume(PRInt32 *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-//  *_retval = mVolume;
+  NS_ENSURE_STATE (IsValid ());
+
+  *_retval = mPlugin->mVolume * 200.0;
   return NS_OK;
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::SetVolume(PRInt32 aVolume)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-//  mVolume = aVolume;
-  return NS_OK;
+  NS_ENSURE_STATE (IsValid ());
+
+  nsresult rv = mPlugin->SetVolume ((double) aVolume / 200.0);
+
+  /* Volume passed in is 0 through to 200 */
+  mPlugin->mVolume = (double) aVolume / 200.0;
+
+  return rv;
 }
 
 /* attribute long track */
@@ -456,10 +495,7 @@ totemScriptablePlugin::ToggleMute()
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  NS_ENSURE_STATE (IsValid ());
-
-  return PR_TRUE;
-//  return mPlugin->ClearPlaylist ();
+  return SetMute (!mMute);
 }
 
 /* totemIConeAudio */
@@ -488,18 +524,26 @@ totemScriptablePlugin::GetHeight (PRInt32 *aHeight)
 NS_IMETHODIMP
 totemScriptablePlugin::GetFullscreen(PRBool *_retval)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-//  *_retval = mMute;
+  NS_ENSURE_STATE (IsValid ());
+
+  *_retval = mPlugin->mIsFullscreen;
+
   return NS_OK;
 }
 
 NS_IMETHODIMP
 totemScriptablePlugin::SetFullscreen(PRBool enabled)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-//  mMute = enabled != PR_FALSE;
+  NS_ENSURE_STATE (IsValid ());
+
+  nsresult rv = mPlugin->SetFullscreen (enabled);
+
+  mPlugin->mIsFullscreen = enabled != PR_FALSE;
+
   return NS_OK;
 }
 
@@ -563,8 +607,11 @@ totemScriptablePlugin::ToggleFullscreen()
 
   NS_ENSURE_STATE (IsValid ());
 
-  return PR_TRUE;
-//  return mPlugin->ClearPlaylist ();
+  nsresult rv = mPlugin->SetFullscreen (!mPlugin->mIsFullscreen);
+
+  mPlugin->mIsFullscreen = !mPlugin->mIsFullscreen;
+
+  return NS_OK;
 }
 
 /* void toggleTeletext () */

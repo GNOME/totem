@@ -53,7 +53,6 @@ class totemScriptablePlugin : public totemIComplexPlayer,
     totemPlugin *mPlugin;
 
     PRInt32 mNumLoops;
-    PRInt32 mVolume;
 
     nsCString mAuthor;
     nsCString mBackgroundColour;

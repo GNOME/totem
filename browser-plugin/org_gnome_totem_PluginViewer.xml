@@ -41,7 +41,7 @@
       <arg type="s" name="HrefURI" direction="in" />
       <arg type="s" name="Target" direction="in" />
     </method>
-    <method name="SetErrorLogo"/>
+    <method name="SetErrorLogo" />
     <method name="LaunchPlayer">
        <arg type="s" name="URI" direction="in" />
        <arg type="u" name="Time" direction="in" />
@@ -53,6 +53,9 @@
     <method name="AddItem">
       <arg type="s" name="URI" direction="in" />
     </method>
+    <method name="SetFullscreen">
+      <arg type="b" name="FullscreenEnabled" direction="in" />
+    </method>
 
     <signal name="ButtonPress">
       <arg type="u" name="Time" />
@@ -62,6 +65,10 @@
       <arg type="u" name="Time" />
       <arg type="u" name="Duration" />
       <arg type="s" name="State" />
+    </signal>
+    <signal name="PropertyChange">
+      <arg type="s" name="PropertyType" />
+      <arg type="v" name="Value" />
     </signal>
     <signal name="StartStream" />
     <signal name="StopStream" />

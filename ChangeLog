@@ -1,3 +1,37 @@
+2008-02-15  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/org_gnome_totem_PluginViewer.xml:
+	* browser-plugin/totem-plugin-viewer-constants.h:
+	* browser-plugin/totempluginviewer-marshal.list:
+	* browser-plugin/totem-plugin-viewer.c:
+	(totem_embedded_class_init), (totem_embedded_save_volume),
+	(totem_embedded_stop), (totem_embedded_set_volume),
+	(totem_embedded_set_fullscreen),
+	(totem_embedded_toggle_fullscreen), (cb_vol), (on_tick),
+	(totem_embedded_action_volume_relative),
+	(totem_embedded_construct):
+	Implement a property change signal when fullscreen state
+	or volume changes
+
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPlugin.h: As above and implement
+	SetFullscreen()
+
+	* browser-plugin/totemComplexPlugin.cpp:
+	* browser-plugin/totemComplexPlugin.h:
+	* browser-plugin/totemGMPSettings.cpp:
+	* browser-plugin/totemGMPSettings.h:
+	* browser-plugin/totemNarrowSpacePlugin.cpp:
+	* browser-plugin/totemNarrowSpacePlugin.h:
+	Fix for changes above
+
+	* browser-plugin/totemConePlugin.cpp:
+	* browser-plugin/totemConePlugin.h:
+	Implement ToggleFullscreen/ToggleMute, state, mute,
+	volume and fullscreen properties
+
+	(Closes: #462544)
+
 2008-02-15  Tim-Philipp Müller  <tim at centricular dot net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: (get_media_size):

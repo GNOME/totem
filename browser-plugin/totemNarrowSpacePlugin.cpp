@@ -71,8 +71,7 @@ totemScriptablePlugin::operator new (size_t aSize) CPP_THROW_NEW
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
   : mPluginState(eState_Waiting),
-    mPlugin(aPlugin),
-    mVolume(100)
+    mPlugin(aPlugin)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
 }
@@ -969,22 +968,25 @@ totemScriptablePlugin::GetVolume(PRUint32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
-  *_retval = mVolume;
+  NS_ENSURE_STATE (IsValid ());
+
+  *_retval = mPlugin->mVolume * 100.0;
   return NS_OK;
 }
 
 /* void SetVolume (in unsigned long volume); */
 NS_IMETHODIMP
-totemScriptablePlugin::SetVolume(PRUint32 volume)
+totemScriptablePlugin::SetVolume(PRUint32 aVolume)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
   NS_ENSURE_STATE (IsValid ());
 
-  nsresult rv = mPlugin->SetVolume ((double) volume / 100);
+  nsresult rv = mPlugin->SetVolume ((double) aVolume / 100);
 
   /* Volume passed in is 0 through to 100 */
-  mVolume = volume;
+  mPlugin->mVolume = (double) aVolume / 100;
 
-  return NS_OK;
+  return rv;
 }
+

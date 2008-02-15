@@ -68,8 +68,6 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
     nsCString mRectangle;
     nsCString mMovieName;
 
-    PRInt32 mVolume;
-
     PRUint32 mAutoPlay : 1;
     PRUint32 mControllerVisible : 1;
     PRUint32 mIsLooping : 1;

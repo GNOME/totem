@@ -64,6 +64,9 @@ class totemScriptablePlugin : public totemICone,
     ~totemScriptablePlugin ();
 
     totemPlugin *mPlugin;
+
+    PRUint32 mMute : 1;
+    double mSavedVolume;
 };
 
 #endif /* __CONE_PLUGIN_H__ */

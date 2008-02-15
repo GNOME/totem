@@ -40,4 +40,7 @@ static const char *totem_states[] = {
 	"INVALID"
 };
 
+#define TOTEM_PROPERTY_VOLUME		"volume"
+#define TOTEM_PROPERTY_ISFULLSCREEN	"is-fullscreen"
+
 #endif /* !__TOTEM_PLUGIN_VIEWER_CONSTANTS__ */

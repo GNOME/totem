@@ -62,6 +62,7 @@ class totemPlugin {
     nsresult SetVolume (gdouble aVolume);
     nsresult ClearPlaylist (void);
     nsresult AddItem (const nsACString &aURI);
+    nsresult SetFullscreen (gboolean enabled);
 
     nsresult SetSrc (const nsACString &aURL);
 
@@ -125,6 +126,10 @@ class totemPlugin {
     					  guint aDuration,
     					  char *aState,
 					  void *aData);
+    static void PR_CALLBACK PropertyChangeCallback (DBusGProxy  *proxy,
+    						    const char *type,
+						    GValue *value,
+						    void *aData);
 
     static void PR_CALLBACK ViewerSetWindowCallback (DBusGProxy *aProxy,
 						     DBusGProxyCall *aCall,
@@ -213,6 +218,8 @@ class totemPlugin {
     PRUint32 mTime;
     PRUint32 mDuration;
     TotemStates mState;
+    double mVolume;
+    PRBool mIsFullscreen;
 
 #ifdef TOTEM_GMP_PLUGIN
   public:

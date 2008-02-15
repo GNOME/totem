@@ -68,7 +68,6 @@ totemScriptablePlugin::operator new (size_t aSize) CPP_THROW_NEW
 
 totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
   : mPlugin(aPlugin),
-    mVolume(50),
     mPlayState(eState_Stopped)
 {
   D ("%s ctor [%p]", kClassDescription, (void*) this);
@@ -2019,7 +2018,7 @@ totemScriptablePlugin::SetVolume (PRInt32 volume)
   nsresult rv = mPlugin->SetVolume ((double) volume / 100);
 
   /* Volume passed in is 0 through to 100 */
-  mVolume = volume;
+  mPlugin->mVolume = volume;
 
   return NS_OK;
 }
@@ -2030,7 +2029,7 @@ totemScriptablePlugin::GetVolume(PRInt32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
   
-  *_retval = mVolume;
+  *_retval = mPlugin->mVolume;
   return NS_OK;
 }
 

@@ -189,6 +189,7 @@ enum {
 	START_STREAM,
 	STOP_STREAM,
 	SIGNAL_TICK,
+	PROPERTY_CHANGE,
 	LAST_SIGNAL
 };
 
@@ -257,6 +258,14 @@ static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 				NULL /* accu */, NULL /* accu data */,
 				totempluginviewer_marshal_VOID__UINT_UINT_STRING,
 				G_TYPE_NONE, 3, param_types);
+	signals[PROPERTY_CHANGE] =
+		g_signal_new ("property-change",
+			      G_TYPE_FROM_CLASS (object_class),
+			      G_SIGNAL_RUN_LAST,
+			      0 /* class offset */,
+			      NULL /* accu */, NULL /* accu data */,
+			      totempluginviewer_marshal_VOID__STRING_BOXED,
+			      G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_VALUE);
 }
 
 static void
@@ -279,10 +288,17 @@ static void
 totem_embedded_save_volume (TotemEmbedded *emb, double volume)
 {
 	GConfClient *gc;
+	GValue value = { 0, };
 
 	gc = gconf_client_get_default ();
 	gconf_client_set_int (gc, GCONF_PREFIX"/volume", (int) (volume * 100.0), NULL);
 	g_object_unref (G_OBJECT (gc));
+
+	g_value_init (&value, G_TYPE_DOUBLE);
+	g_value_set_double (&value, volume);
+	g_signal_emit (emb, signals[PROPERTY_CHANGE], 0,
+		       TOTEM_PROPERTY_VOLUME,
+		       &value);
 }
 
 static void
@@ -543,6 +559,11 @@ totem_embedded_stop (TotemEmbedded *emb,
 	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 	bacon_video_widget_stop (emb->bvw);
 
+	g_signal_emit (emb, signals[SIGNAL_TICK], 0,
+		       (guint32) 0,
+		       (guint32) 0,
+		       totem_states[emb->state]);
+
 	return TRUE;
 }
 
@@ -604,6 +625,7 @@ totem_embedded_set_volume (TotemEmbedded *embedded,
 {
 	g_message ("totem_embedded_set_volume: %f", volume);
 	bacon_video_widget_set_volume (embedded->bvw, volume);
+	totem_embedded_save_volume (embedded, volume);
 	return TRUE;
 }
 
@@ -992,6 +1014,62 @@ totem_embedded_add_item (TotemEmbedded *embedded, const char *uri, GError *error
 					FALSE);
 		totem_embedded_open_internal (embedded, FALSE, NULL /* FIXME */);
 	}
+
+	return TRUE;
+}
+
+static gboolean
+totem_embedded_set_fullscreen (TotemEmbedded *emb,
+			       gboolean fullscreen_enabled,
+			       GError **error)
+{
+	GValue value = { 0, };
+	GtkAction *fs_action;
+	
+	fs_action = GTK_ACTION (gtk_builder_get_object 
+				(emb->menuxml, "fullscreen1"));
+
+	if (totem_fullscreen_is_fullscreen (emb->fs) == fullscreen_enabled)
+		return TRUE;
+
+	g_message ("totem_embedded_set_fullscreen: %d", fullscreen_enabled);
+
+	if (fullscreen_enabled == FALSE) {
+		GtkWidget * container;
+		container = GTK_WIDGET (gtk_builder_get_object (emb->xml,
+								"video_box"));
+
+		totem_fullscreen_set_fullscreen (emb->fs, FALSE);
+		gtk_widget_reparent (GTK_WIDGET (emb->bvw), container);
+		gtk_widget_hide_all (emb->fs_window);
+
+		gtk_action_set_sensitive (fs_action, TRUE);
+	} else {
+		GdkRectangle rect;
+		int monitor;
+
+		/* Move the fullscreen window to the screen where the
+		 * video widget currently is */
+		monitor = gdk_screen_get_monitor_at_window (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
+							    GTK_WIDGET (emb->bvw)->window);
+		gdk_screen_get_monitor_geometry (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
+						 monitor, &rect);
+		gtk_window_move (GTK_WINDOW (emb->fs_window), rect.x, rect.y);
+
+		gtk_widget_reparent (GTK_WIDGET (emb->bvw), emb->fs_window);
+		bacon_video_widget_set_fullscreen (emb->bvw, TRUE);
+		gtk_window_fullscreen (GTK_WINDOW (emb->fs_window));
+		totem_fullscreen_set_fullscreen (emb->fs, TRUE);
+		gtk_widget_show_all (emb->fs_window);
+
+		gtk_action_set_sensitive (fs_action, FALSE);
+	}
+
+	g_value_init (&value, G_TYPE_BOOLEAN);
+	g_value_set_boolean (&value, fullscreen_enabled);
+	g_signal_emit (emb, signals[PROPERTY_CHANGE], 0,
+		       TOTEM_PROPERTY_ISFULLSCREEN,
+		       &value);
 
 	return TRUE;
 }
@@ -1460,40 +1538,10 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 static void
 totem_embedded_toggle_fullscreen (TotemEmbedded *emb)
 {
-	GtkAction * fs_action = GTK_ACTION (gtk_builder_get_object 
-					    (emb->menuxml, "fullscreen1"));
-
 	if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
-	{
-		GtkWidget * container;
-		container = GTK_WIDGET (gtk_builder_get_object (emb->xml,
-								"video_box"));
-
-		totem_fullscreen_set_fullscreen (emb->fs, FALSE);
-		gtk_widget_reparent (GTK_WIDGET (emb->bvw), container);
-		gtk_widget_hide_all (emb->fs_window);
-		
-		gtk_action_set_sensitive (fs_action, TRUE);
-	} else {
-		GdkRectangle rect;
-		int monitor;
-
-		/* Move the fullscreen window to the screen where the
-		 * video widget currently is */
-		monitor = gdk_screen_get_monitor_at_window (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
-							    GTK_WIDGET (emb->bvw)->window);
-		gdk_screen_get_monitor_geometry (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
-						 monitor, &rect);
-		gtk_window_move (GTK_WINDOW (emb->fs_window), rect.x, rect.y);
-
-		gtk_widget_reparent (GTK_WIDGET (emb->bvw), emb->fs_window);
-		bacon_video_widget_set_fullscreen (emb->bvw, TRUE);
-		gtk_window_fullscreen (GTK_WINDOW (emb->fs_window));
-		totem_fullscreen_set_fullscreen (emb->fs, TRUE);
-		gtk_widget_show_all (emb->fs_window);
-
-		gtk_action_set_sensitive (fs_action, FALSE);
-	}
+		totem_embedded_set_fullscreen (emb, FALSE, NULL);
+	else
+		totem_embedded_set_fullscreen (emb, TRUE, NULL);
 }
 
 static void
@@ -1638,6 +1686,7 @@ static void
 cb_vol (GtkWidget *val, gdouble value, TotemEmbedded *emb)
 {
 	bacon_video_widget_set_volume (emb->bvw, value);
+	totem_embedded_save_volume (emb, value);
 }
 
 static void
@@ -1669,7 +1718,9 @@ on_tick (GtkWidget *bvw,
 	}
 
 	g_signal_emit (emb, signals[SIGNAL_TICK], 0,
-		       (guint32) current_time, (guint32) stream_length, totem_states[emb->state]);
+		       (guint32) current_time,
+		       (guint32) stream_length,
+		       totem_states[emb->state]);
 }
 
 static void
@@ -1736,6 +1787,7 @@ totem_embedded_action_volume_relative (TotemEmbedded *emb, double off_pct)
 	
 	vol = bacon_video_widget_get_volume (emb->bvw);
 	bacon_video_widget_set_volume (emb->bvw, vol + off_pct);
+	totem_embedded_save_volume (emb, vol + off_pct);
 }
 
 static gboolean
@@ -1948,6 +2000,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (G_OBJECT (emb->volume), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
 	bacon_video_widget_set_volume (emb->bvw, volume);
+	totem_embedded_save_volume (emb, volume);
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
