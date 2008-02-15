@@ -16,6 +16,7 @@ class DownloadThread (threading.Thread):
 		threading.Thread.__init__ (self)
 	def run (self):
 		self.youtube.entry[self.treeview_name] = self.youtube.service.Get (self.url).entry
+		self.youtube.results_downloaded = True
 
 class YouTube (totem.Plugin):
 	def __init__ (self):
@@ -24,6 +25,7 @@ class YouTube (totem.Plugin):
 
 		self.max_results = 20
 		self.button_down = False
+		self.results_downloaded = True
 
 		self.search_terms = ""
 		self.youtube_id = ""
@@ -140,9 +142,18 @@ class YouTube (totem.Plugin):
 		"""Find the last clause in the URL; after the last /"""
 		return url.split ("/").pop ()
 	def populate_list_from_results (self, treeview_name):
-		"""Wait until we have some results to display"""
+		"""Wait until we have some results to display, or return if there are none (or we've finished)"""
 		if self.entry[treeview_name] == None or len (self.entry[treeview_name]) == 0:
-			return True
+			if self.results_downloaded:
+				"""Revert the cursor"""
+				window = self.vbox.window
+				window.set_cursor (None)
+
+				self.entry[treeview_name] = None
+				return False
+			else:
+				return True
+
 		"""Only do one result at a time, as the thumbnail has to be downloaded; give them a temporary MRL until the real one is resolved before playing"""
 		entry = self.entry[treeview_name].pop (0)
 		self.results[treeview_name] += 1
@@ -174,15 +185,6 @@ class YouTube (totem.Plugin):
 
 		self.liststore[treeview_name].append ([pixbuf, entry.title.text, mrl, youtube_id])
 
-		"""Have we finished?"""
-		if len (self.entry[treeview_name]) == 0:
-			"""Revert the cursor"""
-			window = self.vbox.window
-			window.set_cursor (None)
-
-			self.entry[treeview_name] = None
-			return False
-
 		return True
 	def on_search_button_clicked (self, button):
 		search_terms = self.search_entry.get_text ()
@@ -210,6 +212,7 @@ class YouTube (totem.Plugin):
 		window = self.vbox.window
 		window.set_cursor (gtk.gdk.Cursor (gtk.gdk.WATCH))
 
+		self.results_downloaded = False
 		DownloadThread (self, url, treeview_name).start ()
 		gobject.idle_add (self.populate_list_from_results, treeview_name)
 
