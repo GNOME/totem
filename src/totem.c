@@ -3194,7 +3194,6 @@ main (int argc, char **argv)
 	gtk_range_set_adjustment (GTK_RANGE (totem->fs->seek), totem->seekadj);
 
 	totem_session_setup (totem, argv);
-	totem_setup_recent (totem);
 	totem_setup_file_monitoring (totem);
 	totem_setup_file_filters ();
 	totem_setup_play_disc (totem);
@@ -3258,6 +3257,8 @@ main (int argc, char **argv)
 				(BaconMessageReceivedFunc)
 				totem_message_connection_receive_cb, totem);
 	}
+
+	totem_setup_recent (totem);
 
 	gtk_main ();
 
