@@ -374,28 +374,19 @@ drop_cb (GtkWidget        *widget,
 	 guint             time, 
 	 TotemPlaylist    *playlist)
 {
-	GList *list, *p, *file_list;
+	char **list;
+	GList *p, *file_list;
+	guint i;
 
-	list = gnome_vfs_uri_list_parse ((char *)data->data);
-
-	if (list == NULL) {
-		gtk_drag_finish (context, FALSE, FALSE, time);
-		return;
-	}
-
-	p = list;
+	list = g_uri_list_extract_uris ((char *)data->data);
 	file_list = NULL;
 
-	while (p != NULL) {
+	for (i = 0; list[i] != NULL; i++) {
 		/* We get the list in the wrong order here,
 		 * so when we insert the files at the same position
 		 * in the tree, they are in the right order.*/
-		file_list = g_list_prepend (file_list,
-					    gnome_vfs_uri_to_string ((const GnomeVFSURI*)(p->data), 0));
-		p = p->next;
+		file_list = g_list_prepend (file_list, list[i]);
 	}
-
-	gnome_vfs_uri_list_free (list);
 
 	if (file_list == NULL) {
 		gtk_drag_finish (context, FALSE, FALSE, time);
@@ -427,7 +418,6 @@ drop_cb (GtkWidget        *widget,
 		title = NULL;
 
 		if (info == 1) {
-			g_free (p->data);
 			p = p->next;
 			if (p != NULL) {
 				if (g_str_has_prefix (p->data, "file:") != FALSE)
@@ -440,9 +430,9 @@ drop_cb (GtkWidget        *widget,
 		totem_playlist_add_mrl (playlist, filename, title);
 
 		g_free (filename);
-		g_free (p->data);
 	}
 
+	g_strfreev (list);
 	g_list_free (file_list);
 	gtk_drag_finish (context, TRUE, FALSE, time);
 	gtk_tree_path_free (playlist->priv->tree_path);

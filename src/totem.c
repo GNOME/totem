@@ -1248,26 +1248,17 @@ static gboolean
 totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		int drop_type, gboolean empty_pl)
 {
-	GList *list, *p, *file_list;
+	char **list;
+	guint i;
+	GList *p, *file_list;
 	gboolean cleared = FALSE;
 
-	list = gnome_vfs_uri_list_parse ((const char *)data->data);
-
-	if (list == NULL)
-		return FALSE;
-
-	p = list;
+	list = g_uri_list_extract_uris ((const char *)data->data);
 	file_list = NULL;
 
-	while (p != NULL)
-	{
-		file_list = g_list_prepend (file_list, 
-				gnome_vfs_uri_to_string
-				((const GnomeVFSURI*)(p->data), 0));
-		p = p->next;
-	}
+	for (i = 0; list[i] != NULL; ++i)
+		file_list = g_list_prepend (file_list, list[i]);
 
-	gnome_vfs_uri_list_free (list);
 	if (file_list == NULL)
 		return FALSE;
 
@@ -1305,7 +1296,6 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		/* Super _NETSCAPE_URL trick */
 		if (drop_type == 1)
 		{
-			g_free (p->data);
 			p = p->next;
 			if (p != NULL) {
 				if (g_str_has_prefix (p->data, "file:") != FALSE)
@@ -1318,9 +1308,9 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		totem_playlist_add_mrl (totem->playlist, filename, title);
 
 		g_free (filename);
-		g_free (p->data);
 	}
 
+	g_strfreev (list);
 	g_list_free (file_list);
 	gdk_window_set_cursor (totem->win->window, NULL);
 

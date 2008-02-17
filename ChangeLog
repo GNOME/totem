@@ -1,5 +1,12 @@
 2008-02-17  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* src/totem-playlist.c: (drop_cb):
+	* src/totem.c: (totem_action_drop_files): Use
+	g_uri_list_extract_uris instead of gnome_vfs_uri_list_parse
+	for drop targets. (Closes: #512600)
+
+2008-02-17  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/totem.c: (main): Patch from Riccardo Lucchese
 	to set up the recent files list later on in startup.
 	(Helps: #514087)
