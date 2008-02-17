@@ -4065,13 +4065,13 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
       g_object_set (element, "device", device, NULL);
       if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
         GST_DEBUG ("Couldn't change the state to PAUSED");
-        g_object_unref (element);
+        gst_object_unref (element);
         return NULL;
       }
       if (gst_element_query_duration (element, &fmt, &num_titles) == FALSE) {
         GST_DEBUG ("Couldn't query the \"duration\" (number of titles)");
 	gst_element_set_state (element, GST_STATE_NULL);
-	g_object_unref (element);
+	gst_object_unref (element);
 	return NULL;
       }
 
@@ -4096,15 +4096,15 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
           break;
 	}
 	/* If it's less than 30 seconds long, we kick it out */
-	if (GST_TIME_AS_SECONDS (len) > 30) {
+	if (len >= (30 * GST_SECOND)) {
 	  g_ptr_array_add (array, g_strdup_printf ("dvd://%"G_GINT64_FORMAT, i));
-	  GST_DEBUG ("URI: dvd://%"G_GINT64_FORMAT" (time: %"G_GINT64_FORMAT" mins %"G_GINT64_FORMAT" seconds)",
-		     i, GST_TIME_AS_SECONDS (len) / 60, GST_TIME_AS_SECONDS (len) % 60);
+	  GST_DEBUG ("URI: dvd://%d (time: %" GST_TIME_FORMAT ")",
+              (gint) i, GST_TIME_ARGS (len));
 	}
       }
 
       gst_element_set_state (element, GST_STATE_NULL);
-      g_object_unref (element);
+      gst_object_unref (element);
       if (array->len >= 1)
       	g_ptr_array_add (array, NULL);
       mrls = (char **) g_ptr_array_free (array, FALSE);

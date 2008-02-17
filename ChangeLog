@@ -1,3 +1,10 @@
+2008-02-17  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  (bacon_video_widget_get_mrls):
+	  Don't use the GST_TIME_AS_SECONDS macro for now, since
+	  it only appeared in GStreamer 0.10.16. (Closes: #516853)
+
 2008-02-17  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/totem-playlist.c: (drop_cb):
