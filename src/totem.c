@@ -3218,6 +3218,8 @@ main (int argc, char **argv)
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
 
+	totem_setup_recent (totem);
+
 	/* Command-line handling */
 	totem_options_process_late (totem, &optionstate);
 
@@ -3247,8 +3249,6 @@ main (int argc, char **argv)
 				(BaconMessageReceivedFunc)
 				totem_message_connection_receive_cb, totem);
 	}
-
-	totem_setup_recent (totem);
 
 	gtk_main ();
 
