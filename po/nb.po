@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.21.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 23:03+0100\n"
-"PO-Revision-Date: 2008-02-10 23:04+0100\n"
+"POT-Creation-Date: 2008-02-18 11:23+0100\n"
+"PO-Revision-Date: 2008-02-18 11:24+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -499,8 +499,8 @@ msgid "Text Subtitles"
 msgstr "Teksting"
 
 #. Title
-#: ../data/totem.ui.h:72 ../src/totem.c:888 ../src/totem.c:3095
-#: ../src/totem.c:3124 ../browser-plugin/totem-plugin-viewer.c:1800
+#: ../data/totem.ui.h:72 ../src/totem.c:901 ../src/totem.c:3100
+#: ../src/totem.c:3129 ../browser-plugin/totem-plugin-viewer.c:1911
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -971,11 +971,11 @@ msgstr "GNOME"
 msgid "Movie Player using %s and %s"
 msgstr "Filmavspiller bruker %s og %s"
 
-#: ../src/totem-menu.c:1212 ../browser-plugin/totem-plugin-viewer.c:1214
+#: ../src/totem-menu.c:1212 ../browser-plugin/totem-plugin-viewer.c:1351
 msgid "Copyright © 2002-2007 Bastien Nocera"
 msgstr "Opphavsrett © 2002-2007 Bastien Nocera"
 
-#: ../src/totem-menu.c:1217 ../browser-plugin/totem-plugin-viewer.c:1217
+#: ../src/totem-menu.c:1217 ../browser-plugin/totem-plugin-viewer.c:1354
 msgid "translator-credits"
 msgstr ""
 "Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -1082,38 +1082,38 @@ msgstr "Spillelisteindeks"
 msgid "Movies to play"
 msgstr "Filmer som skal spilles av"
 
-#: ../src/totem-playlist.c:339 ../src/totem-playlist.c:952
+#: ../src/totem-playlist.c:339 ../src/totem-playlist.c:942
 msgid "Could not save the playlist"
 msgstr "Kunne ikke lagre spillelisten"
 
-#: ../src/totem-playlist.c:952
+#: ../src/totem-playlist.c:942
 msgid "Unknown file extension."
 msgstr "Ukjent filtype."
 
-#: ../src/totem-playlist.c:965
+#: ../src/totem-playlist.c:955
 msgid "Select playlist format:"
 msgstr "Velg format på spilleliste:"
 
-#: ../src/totem-playlist.c:970
+#: ../src/totem-playlist.c:960
 msgid "By extension"
 msgstr "Etter filtype"
 
-#: ../src/totem-playlist.c:1000
+#: ../src/totem-playlist.c:990
 msgid "Save Playlist"
 msgstr "Lagre spilleliste"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1011 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:1001 ../src/totem-sidebar.c:105
 msgid "Playlist"
 msgstr "Spilleliste"
 
-#: ../src/totem-playlist.c:1730
+#: ../src/totem-playlist.c:1720
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Spilleliste «%s» kunne ikke leses, den kan være ødelagt."
 
-#: ../src/totem-playlist.c:1731
+#: ../src/totem-playlist.c:1721
 msgid "Playlist error"
 msgstr "Feil med spilleliste"
 
@@ -1184,8 +1184,8 @@ msgstr "Lagre skjermdump"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:880
-#: ../browser-plugin/totem-plugin-viewer.c:327
+#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:893
+#: ../browser-plugin/totem-plugin-viewer.c:341
 msgid "Stopped"
 msgstr "Stoppet"
 
@@ -1397,43 +1397,37 @@ msgstr "Velg fil for teksting"
 msgid "Select Movies or Playlists"
 msgstr "Velg filmer eller spillelister"
 
-#: ../src/totem.c:304 ../browser-plugin/totem-plugin-viewer.c:343
+#: ../src/totem.c:304 ../browser-plugin/totem-plugin-viewer.c:357
 msgid "Playing"
 msgstr "Spiller"
 
-#: ../src/totem.c:311 ../browser-plugin/totem-plugin-viewer.c:339
+#: ../src/totem.c:311 ../browser-plugin/totem-plugin-viewer.c:353
 msgid "Paused"
 msgstr "Pause"
 
-#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:983
-#: ../src/totem.c:1105
+#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:996
+#: ../src/totem.c:1118
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke spille av «%s»."
 
-#: ../src/totem.c:494
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
-"som  kreves for å lese fra platen."
+#: ../src/totem.c:495
+msgid "More information about watching TV"
+msgstr "Mer informasjon om å se på TV"
 
 #: ../src/totem.c:496
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
-"som  kreves for å håndtere det."
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "Totem mangler en liste over kanaler for å kunne stille inn mottakeren."
 
-#. Basically BVW_CAN_PLAY_UNSUPPORTED
-#: ../src/totem.c:499
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "Totem kan ikke spille av denne typen media (%s) fordi det ikke er støttet."
+#: ../src/totem.c:497
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr "Vennligst følg veiledningen gitt i lenken for å opprette en kanalliste."
+
+#: ../src/totem.c:501
+msgid "More information about media plugins"
+msgstr "Mer informasjon om media-tillegg"
 
 #: ../src/totem.c:502
 msgid ""
@@ -1443,11 +1437,35 @@ msgstr ""
 "Installer de nødvendige tilleggene og start Totem på nytt for å kunne spille "
 "av dette mediet."
 
-#: ../src/totem.c:503
-msgid "More information about media plugins"
-msgstr "Mer informasjon om media-tillegg"
+#: ../src/totem.c:504
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
+"som  kreves for å lese fra platen."
 
-#: ../src/totem.c:511
+#: ../src/totem.c:506
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
+"som  kreves for å håndtere det."
+
+#: ../src/totem.c:509
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi det ikke er støttet."
+
+#: ../src/totem.c:510
+msgid "Please insert another disc to play back."
+msgstr "Vennligst sett inn en annen plate som skal spilles av."
+
+#: ../src/totem.c:524
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1456,7 +1474,7 @@ msgstr ""
 "Totem kunne ikke spille av dette mediet (%s) selv om et tillegg finnes som "
 "skal håndtere det."
 
-#: ../src/totem.c:512
+#: ../src/totem.c:525
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1464,88 +1482,88 @@ msgstr ""
 "Du bør sjekke at det finnes en disk i stasjonen og at den er riktig "
 "konfigurert."
 
-#: ../src/totem.c:540
+#: ../src/totem.c:553
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunne ikke spille av denne platen."
 
-#: ../src/totem.c:541 ../src/totem.c:2958
-#: ../browser-plugin/totem-plugin-viewer.c:1791
+#: ../src/totem.c:554 ../src/totem.c:2963
+#: ../browser-plugin/totem-plugin-viewer.c:1902
 msgid "No reason."
 msgstr "Ingen årsak."
 
-#: ../src/totem.c:555
+#: ../src/totem.c:568
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem støtter ikke avspilling av lyd-CDer"
 
-#: ../src/totem.c:556
+#: ../src/totem.c:569
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Vennligst bruk et musikkavspillingsprogram eller en CD-ripper til å spille "
 "av denne CDen"
 
-#: ../src/totem.c:797 ../src/totem.c:805
+#: ../src/totem.c:810 ../src/totem.c:818
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunne ikke ta et skjermdump av denne filmen."
 
-#: ../src/totem.c:805
+#: ../src/totem.c:818
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Dette skal ikke skje. Vennligst rapporter feilen."
 
-#: ../src/totem.c:989
+#: ../src/totem.c:1002
 msgid "No error message"
 msgstr "Ingen feilmelding"
 
-#: ../src/totem.c:1228
+#: ../src/totem.c:1241
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: ../src/totem.c:1496 ../src/totem.c:1498
-#: ../browser-plugin/totem-plugin-viewer.c:1462
+#: ../src/totem.c:1499 ../src/totem.c:1501
+#: ../browser-plugin/totem-plugin-viewer.c:1569
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
-#: ../src/totem.c:2819 ../src/totem.c:2821
+#: ../src/totem.c:2824 ../src/totem.c:2826
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem.c:2827 ../src/totem.c:2829
+#: ../src/totem.c:2832 ../src/totem.c:2834
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem.c:2836 ../src/totem.c:2838
+#: ../src/totem.c:2841 ../src/totem.c:2843
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem.c:2958
+#: ../src/totem.c:2963
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: ../src/totem.c:3096
+#: ../src/totem.c:3101
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../src/totem.c:3096
+#: ../src/totem.c:3101
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
 #. Handle command line arguments
-#: ../src/totem.c:3104
+#: ../src/totem.c:3109
 msgid "- Play movies and songs"
 msgstr "Spill av filmer og sanger"
 
-#: ../src/totem.c:3113
+#: ../src/totem.c:3118
 msgid "Totem could not parse the command-line options"
 msgstr "Totem kunne ikke tolke kommandolinjeflagg"
 
-#: ../src/totem.c:3132
+#: ../src/totem.c:3137
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: ../src/totem.c:3132
+#: ../src/totem.c:3137
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2433
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2437
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1553,18 +1571,18 @@ msgstr ""
 "Forespurt utgang for lyd ble ikke funnet. Velg annen utgang for lyd i «Valg "
 "av multimediesystemer»"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2438
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2442
 msgid "Location not found."
 msgstr "Plassering ikke funnet."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2446
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Kunne ikke åpne lokasjon. Du har kanskje ikke tillatelse til å åpne den "
 "filen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2453
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1573,7 +1591,7 @@ msgstr ""
 "Filmutdataen er i bruk av et annet program. Avslutt andre filmprogrammer "
 "eller velg en annen utdata for film i «Valg av multimediesystem»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2459
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2463
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1583,14 +1601,14 @@ msgstr ""
 "i «Valg av multimediesystem». Du kan muligens bruke en lydtjener."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2483
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2487
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Avspilling av denne filmen krever et tillegg %s og dette er ikke installert."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2484
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1602,45 +1620,45 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2509
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2513
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Kan ikke spille denne filen over nettverket. Prøv å laste den ned først."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2581
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2585
 msgid "Media file could not be played."
 msgstr "Mediet kunne ikke spilles av."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2658
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2724
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2662
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2728
 #, c-format
 msgid "Failed to retrieve working directory"
 msgstr "Kunne ikke finne arbeidskatalog"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4369
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4376
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4371
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4378
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4373
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4380
 msgid "Stereo"
 msgstr "Stereo"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4604
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4611
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "Den installerte versjonen av GStreamer er for gammel"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4611
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4618
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Medier inneholder ingen støttede videostrømmer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4984
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4991
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1649,8 +1667,8 @@ msgstr ""
 "Kunne ikke opprette et spilleobjekt for GStreamer. Sjekk din GStreamer "
 "installasjon."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5116
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5233
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5123
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5240
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1659,7 +1677,7 @@ msgstr ""
 "Kunne ikke åpne utdata for video. Det er kanskje ikke tilgjengelig. Velg en "
 "annen utdata for video i «Valg av multimediesystem»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5128
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5135
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1669,7 +1687,7 @@ msgstr ""
 "Kunne ikke åpne utgang for video. Du må kanskje installere flere tillegg for "
 "GStreamer. eller velge en annen utgang for video i «Valg av multimediesystem»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5163
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5170
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1680,7 +1698,7 @@ msgstr ""
 "lydenheten eller lydtjeneren kjører ikke. Velg en annen utgang for lyd i "
 "«Valg av multimediesystemer»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5183
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5190
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -2173,25 +2191,25 @@ msgstr "Relaterte videoer"
 msgid "Search:"
 msgstr "Søk:"
 
-#: ../src/plugins/youtube/youtube.py:59
+#: ../src/plugins/youtube/youtube.py:62
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:76
+#: ../src/plugins/youtube/youtube.py:79
 msgid "Videos"
 msgstr "Videoer"
 
-#: ../browser-plugin/totem-plugin-viewer.c:454
+#: ../browser-plugin/totem-plugin-viewer.c:468
 #, c-format
 msgid "No URI to play"
 msgstr "Ingen URI å spille av"
 
-#: ../browser-plugin/totem-plugin-viewer.c:480
+#: ../browser-plugin/totem-plugin-viewer.c:494
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem kunne ikke spille av «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:870
+#: ../browser-plugin/totem-plugin-viewer.c:890
 #, c-format
 msgid "Opening %s"
 msgstr "Åpner %s"
@@ -2199,34 +2217,34 @@ msgstr "Åpner %s"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1156
+#: ../browser-plugin/totem-plugin-viewer.c:1293
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Åpne med «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1207
+#: ../browser-plugin/totem-plugin-viewer.c:1344
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Tillegg for nettleser bruker %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1212
+#: ../browser-plugin/totem-plugin-viewer.c:1349
 msgid "Totem Browser Plugin"
 msgstr "Totem nettlesertillegg"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1791
+#: ../browser-plugin/totem-plugin-viewer.c:1902
 msgid "The Totem plugin could not be started."
 msgstr "Tillegget for Totem kunne ikke starte opp."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2155
+#: ../browser-plugin/totem-plugin-viewer.c:2244
 msgid "No playlist or playlist empty"
 msgstr "Ingen spilleliste eller tom spilleliste"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2259
+#: ../browser-plugin/totem-plugin-viewer.c:2348
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2259
+#: ../browser-plugin/totem-plugin-viewer.c:2348
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Sjekk systeminstallasjonen. Tillegget for Totem avslutter nå."
