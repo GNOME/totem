@@ -833,7 +833,7 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 		requestURI = mURLURI;
 		baseURI = mSrcURI; /* FIXME: that correct? */
 	}
-#endif
+#endif /* TOTEM_GMP_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* Prefer qtsrc over src */
@@ -847,7 +847,11 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 		requestURL = href;
 	}
 #endif
-#endif
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
+
+#ifdef TOTEM_MULLY_PLUGIN
+	aForceViewer = PR_TRUE;
+#endif /* TOTEM_MULLY_PLUGIN */
 
 	/* Fallback */
 	if (!requestURI)
