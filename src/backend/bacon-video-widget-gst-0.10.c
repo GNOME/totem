@@ -2671,7 +2671,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     /* Handle "icy://" URLs from QuickTime */
     g_free (bvw->com->mrl);
     bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 4);
-  } else if (g_str_has_prefix (mrl, "icy:") != FALSE) {
+  } else if (g_str_has_prefix (mrl, "icyx:") != FALSE) {
     /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
     g_free (bvw->com->mrl);
     bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 5);
