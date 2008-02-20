@@ -1,5 +1,15 @@
 2008-02-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-fullscreen.c: (totem_fullscreen_finalize):
+	Avoid warning on exit when we're fullscreen and
+	exiting
+	* src/totem.c: (totem_action_exit), (main): Fix _set_fullscreen
+	being called multiple times on startup, fixes not being able 
+	to get out of fullscreen on startup, and the next normal run
+	showing up as maximised (Closes: #376149)
+
+2008-02-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c:
 	(bacon_video_widget_can_play):
 	Check for flupsdemux version, if it's installed, if it's

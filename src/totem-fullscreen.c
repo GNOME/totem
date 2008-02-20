@@ -446,7 +446,7 @@ totem_fullscreen_finalize (GObject *object)
 
 	totem_fullscreen_popup_timeout_remove (fs);
 	if (fs->priv->motion_handler_id != 0) {
-		g_signal_handler_disconnect (G_OBJECT (fs),
+		g_signal_handler_disconnect (G_OBJECT (fs->priv->bvw),
 					     fs->priv->motion_handler_id);
 		fs->priv->motion_handler_id = 0;
 	}

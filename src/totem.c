@@ -254,11 +254,11 @@ totem_action_exit (Totem *totem)
 	if (totem->gc)
 		g_object_unref (G_OBJECT (totem->gc));
 
-	if (totem->win)
-		gtk_widget_destroy (GTK_WIDGET (totem->win));
-
 	if (totem->fs)
 		g_object_unref (totem->fs);
+
+	if (totem->win)
+		gtk_widget_destroy (GTK_WIDGET (totem->win));
 
 	g_object_unref (totem);
 
@@ -667,11 +667,14 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		return FALSE;
 
 	if (event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {
-		if (totem->controls_visibility != TOTEM_CONTROLS_UNDEFINED)
+		if (totem->controls_visibility != TOTEM_CONTROLS_UNDEFINED) {
+			g_message ("vis is %d", totem->controls_visibility);
 			totem_action_save_size (totem);
+		}
 		totem_fullscreen_set_fullscreen (totem->fs, TRUE);
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
+		g_message ("setting to fullscreen now");
 		show_controls (totem, FALSE);
 		totem_action_set_sensitivity ("fullscreen", FALSE);
 	} else {
@@ -682,10 +685,13 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		action = gtk_action_group_get_action (totem->main_action_group,
 				"show-controls");
 
-		if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
+		if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action))) {
 			totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-		else
+			g_message ("vis is %d (is active)", totem->controls_visibility);
+		} else {
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
+			g_message ("vis is %d (is not active)", totem->controls_visibility);
+		}
 
 		show_controls (totem, TRUE);
 		totem_action_set_sensitivity ("fullscreen", TRUE);
@@ -694,12 +700,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 	g_object_notify (G_OBJECT (totem), "fullscreen");
 
 	return FALSE;
-}
-
-void
-fs_exit1_activate_cb (GtkButton *button, Totem *totem)
-{
-	totem_action_fullscreen_toggle (totem);
 }
 
 void
@@ -718,6 +718,12 @@ totem_action_fullscreen (Totem *totem, gboolean state)
 		return;
 
 	totem_action_fullscreen_toggle (totem);
+}
+
+void
+fs_exit1_activate_cb (GtkButton *button, Totem *totem)
+{
+	totem_action_fullscreen (totem, FALSE);
 }
 
 void
@@ -3208,12 +3214,10 @@ main (int argc, char **argv)
 	totem_fullscreen_set_video_widget (totem->fs, totem->bvw);
 
 	if (optionstate.fullscreen != FALSE) {
-		totem_action_fullscreen (totem, TRUE);
-		long_action ();
 		gtk_widget_show (totem->win);
 		gdk_flush ();
+		totem_action_fullscreen (totem, TRUE);
 	}
-	long_action ();
 
 	/* The prefs after the video widget is connected */
 	totem_setup_preferences (totem);
