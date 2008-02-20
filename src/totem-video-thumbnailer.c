@@ -349,6 +349,7 @@ capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output)
 	{
 		PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
 		if (bacon_video_widget_seek (bvw, frame_locations[current], NULL) == FALSE) {
+			PROGRESS_DEBUG("Couldn't seek to %f\n", frame_locations[current]);
 			bacon_video_widget_play (bvw, NULL);
 		}
 
