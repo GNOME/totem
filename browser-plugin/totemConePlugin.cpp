@@ -36,6 +36,8 @@
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
+#include "totemICone.h"
+
 #include "totemDebug.h"
 #include "totemClassInfo.h"
 
@@ -437,7 +439,7 @@ totemScriptablePlugin::GetVolume(PRInt32 *_retval)
 
   NS_ENSURE_STATE (IsValid ());
 
-  *_retval = mPlugin->mVolume * 200.0;
+  *_retval = (PRInt32) (mPlugin->mVolume * 200.0);
   return NS_OK;
 }
 
