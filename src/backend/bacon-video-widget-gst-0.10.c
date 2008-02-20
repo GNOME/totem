@@ -3932,6 +3932,10 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
       if (!gst_default_registry_check_feature_version ("dvdreadsrc", 0, 10, 0)) {
         GST_DEBUG ("Missing dvdreadsrc");
         res = BVW_CAN_PLAY_MISSING_PLUGINS;
+      } else if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
+      		 !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
+        GST_DEBUG ("flupsdemux not new enough for DVD playback");
+        res = BVW_CAN_PLAY_MISSING_PLUGINS;
       } else {
         res = BVW_CAN_PLAY_SUCCESS;
       }
@@ -3945,6 +3949,12 @@ bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
           !gst_default_registry_check_feature_version ("mpegtsparse", 0, 10, 0) ||
           !gst_default_registry_check_feature_version ("dvbsrc", 0, 10, 0)) {
         GST_DEBUG ("Missing one or all of: dvbsrc, dvbbasebin, mpegtsparse");
+        res = BVW_CAN_PLAY_MISSING_PLUGINS;
+        break;
+      }
+      if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
+      	  !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
+        GST_DEBUG ("flupsdemux not new enough for DVB playback");
         res = BVW_CAN_PLAY_MISSING_PLUGINS;
         break;
       }
