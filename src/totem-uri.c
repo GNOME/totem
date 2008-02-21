@@ -196,7 +196,7 @@ totem_is_block_device (const char *uri)
 	return (S_ISBLK (buf.st_mode));
 }
 
-char*
+char *
 totem_create_full_path (const char *path)
 {
 	char *retval, *curdir, *curdir_withslash, *escaped;
@@ -262,19 +262,33 @@ static const char subtitle_ext[][4] = {
 	"ass"
 };
 
+static inline gboolean
+totem_uri_exists (const char *uri)
+{
+	GnomeVFSURI *vfsuri = gnome_vfs_uri_new (uri);
+	if (vfsuri != NULL) {
+		if (gnome_vfs_uri_exists (vfsuri)) {
+			gnome_vfs_uri_unref (vfsuri);
+			return TRUE;
+		}
+		gnome_vfs_uri_unref (vfsuri);
+	}
+	return FALSE;
+}
+
 static char *
 totem_uri_get_subtitle_for_uri (const char *uri)
 {
 	GnomeVFSURI *vfsuri;
-	char *subtitle;
+	char *subtitle, *subtitle_ext_upper;
 	guint len, i, suffix;
 
-        /* Find the filename suffix delimiter */
+	/* Find the filename suffix delimiter */
 	len = strlen (uri);
 	for (suffix = len - 1; suffix > 0; suffix--) {
 		if (uri[suffix] == G_DIR_SEPARATOR ||
-                    (uri[suffix] == '/')) {
-			/* This filename has no extension, we'll need to 
+		    (uri[suffix] == '/')) {
+			/* This filename has no extension; we'll need to 
 			 * add one */
 			suffix = len;
 			break;
@@ -284,29 +298,30 @@ totem_uri_get_subtitle_for_uri (const char *uri)
 			break;
 		}
 	}
-        if (suffix < 0) {
+	if (suffix < 0)
 		return NULL;
-	}
 
 	/* Generate a subtitle string with room at the end to store the
-	 * 3 character extensions we want to search for */
+	 * 3 character extensions for which we want to search */
 	subtitle = g_malloc0 (suffix + 4 + 1);
 	g_return_val_if_fail (subtitle != NULL, NULL);
 	g_strlcpy (subtitle, uri, suffix + 4 + 1);
 	g_strlcpy (subtitle + suffix, ".???", 5);
 	
 	/* Search for any files with one of our known subtitle extensions */
-	for (i = 0; i < G_N_ELEMENTS(subtitle_ext) ; i++) {
+	for (i = 0; i < G_N_ELEMENTS (subtitle_ext) ; i++) {
 		memcpy (subtitle + suffix + 1, subtitle_ext[i], 3);
 
-		vfsuri = gnome_vfs_uri_new (subtitle);
-		if (vfsuri != NULL) {
-			if (gnome_vfs_uri_exists (vfsuri)) {
-				gnome_vfs_uri_unref (vfsuri);
-				return subtitle;
-			}
-			gnome_vfs_uri_unref (vfsuri);
-		}
+		if (totem_uri_exists (subtitle))
+			return subtitle;
+
+		/* Check with upper-cased extension */
+		subtitle_ext_upper = g_ascii_strup (subtitle_ext[i], -1);
+		memcpy (subtitle + suffix + 1, subtitle_ext_upper, 3);
+		g_free (subtitle_ext_upper);
+
+		if (totem_uri_exists (subtitle))
+			return subtitle;
 	}
 	g_free (subtitle);
 	return NULL;
@@ -368,7 +383,7 @@ totem_uri_get_subtitle_uri (const char *uri)
 	return subtitle;
 }
 
-char*
+char *
 totem_uri_escape_for_display (const char *uri)
 {
 	char *disp, *tmp;
