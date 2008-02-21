@@ -68,9 +68,8 @@ totem_dot_dir (void)
 		return totem_dir;
 	}
 
-	totem_dir = g_build_filename (g_get_home_dir (),
-				      ".gnome2",
-				      "Totem",
+	totem_dir = g_build_filename (g_get_user_config_dir (),
+				      "totem",
 				      NULL);
 
 	totem_ensure_dot_dir (totem_dir);

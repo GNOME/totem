@@ -1,5 +1,17 @@
 2008-02-21  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* browser-plugin/README.browser-plugin:
+	* browser-plugin/totemPluginGlue.cpp:
+	* src/backend/bacon-video-widget-xine.c: (setup_config),
+	(bacon_video_widget_unrealize):
+	* src/totem-uri.c: (totem_dot_dir): Change to use
+	g_get_user_config_dir() instead of hardcoding the config
+	directory. This breaks old configurations, which were
+	in ~/.gnome2/Totem --- they're now in ~/.config/totem/, and
+	use the XDG base directory spec. (Closes: #517717)
+
+2008-02-21  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/totem-uri.c: (totem_uri_get_subtitle_for_uri): Remove
 	an unused variable (whoops).
 

@@ -353,9 +353,8 @@ NP_GetMIMEDescription (void)
 	}
 
 	char *user_ini_file;
-	user_ini_file = g_build_filename (g_get_home_dir (),
-					  ".gnome2",
-					  "Totem",
+	user_ini_file = g_build_filename (g_get_user_config_dir (),
+					  "totem",
 					  "browser-plugins.ini",
 					  NULL);
 	if (g_key_file_load_from_file (user,

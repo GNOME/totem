@@ -63,7 +63,9 @@
 
 #define DEFAULT_HEIGHT 180
 #define DEFAULT_WIDTH 240
-#define CONFIG_FILE ".gnome2"G_DIR_SEPARATOR_S"Totem"G_DIR_SEPARATOR_S"xine_config"
+/* This is built into a path with g_get_user_config_dir(), so the full
+ * path is something like ~/.config/totem/xine_config */
+#define CONFIG_FILE "totem"G_DIR_SEPARATOR_S"xine_config"
 
 /* Signals */
 enum {
@@ -801,7 +803,7 @@ setup_config (BaconVideoWidget *bvw)
 	xine_cfg_entry_t entry;
 
 	path = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), CONFIG_FILE, NULL);
+			g_get_user_config_dir (), CONFIG_FILE, NULL);
 	xine_config_load (bvw->priv->xine, path);
 	g_free (path);
 
@@ -1688,7 +1690,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	/* save config */
 	configfile = g_build_path (G_DIR_SEPARATOR_S,
-			g_get_home_dir (), CONFIG_FILE, NULL);
+			g_get_user_config_dir (), CONFIG_FILE, NULL);
 	xine_config_save (bvw->priv->xine, configfile);
 	g_free (configfile);
 
