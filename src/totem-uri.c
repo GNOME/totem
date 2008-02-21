@@ -444,6 +444,7 @@ totem_setup_file_filters (void)
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-microdvd"); /* *.sub */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-mpsub"); /* *.sub */
 	gtk_file_filter_add_mime_type (filter_subs, "text/x-ssa"); /* *.ssa, *.ass */
+	gtk_file_filter_add_mime_type (filter_subs, "text/x-subviewer"); /* *.sub */
 	g_object_ref_sink (filter_subs);
 }
 

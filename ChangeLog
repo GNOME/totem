@@ -1,5 +1,10 @@
 2008-02-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c (totem_setup_file_filters): Add subviewer
+	files as possible subtitles
+
+2008-02-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (video_widget_create), (main): Fix another
 	gst_value_set_fraction: assertion `denominator != 0' failed
 	error, as the vis is setup before the video window exists
