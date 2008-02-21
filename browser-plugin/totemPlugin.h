@@ -87,7 +87,7 @@ class totemPlugin {
                        uint16* stype);
     NPError DestroyStream (NPStream* stream,
                            NPError reason);
-    nsresult RequestRead (PRInt32 offset);
+  
     int32 WriteReady (NPStream *stream);
     int32 Write (NPStream *stream,
                 int32 offset,
@@ -193,7 +193,6 @@ class totemPlugin {
   public:
     PRUint32 mBytesStreamed;
     PRUint32 mBytesLength;
-    PRBool   mSeekable;
   private:
     PRUint8 mStreamType;
 
