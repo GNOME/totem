@@ -2972,7 +2972,6 @@ video_widget_create (Totem *totem)
 	}
 
 	totem_preferences_tvout_setup (totem);
-	totem_preferences_visuals_setup (totem);
 	totem_action_zoom (totem, ZOOM_RESET);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
@@ -3045,6 +3044,8 @@ video_widget_create (Totem *totem)
 
 	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
+
+	totem_preferences_visuals_setup (totem);
 
 	bacon_video_widget_set_volume (totem->bvw,
 			((double) gconf_client_get_int (totem->gc,
