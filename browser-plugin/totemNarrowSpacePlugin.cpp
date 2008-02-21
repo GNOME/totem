@@ -860,6 +860,8 @@ totemScriptablePlugin::GetTime(PRUint32 *_retval)
 {
   TOTEM_SCRIPTABLE_LOG_ACCESS ();
 
+  NS_ENSURE_STATE (IsValid ());
+
   *_retval = mPlugin->mTime;
   return NS_OK;
 }
@@ -868,9 +870,16 @@ totemScriptablePlugin::GetTime(PRUint32 *_retval)
 NS_IMETHODIMP
 totemScriptablePlugin::SetTime(PRUint32 time)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED();
+  NPByteRange byterange;
 
-  return NS_OK;
+  TOTEM_SCRIPTABLE_LOG_ACCESS ();
+
+  NS_ENSURE_STATE (IsValid ());
+
+  if (mPlugin->mTime <= 0)
+    return NS_ERROR_NOT_AVAILABLE;
+
+  return mPlugin->RequestRead (time * mPlugin->mBytesLength / mPlugin->mTime);
 }
 
 /* unsigned long GetTimeScale (); */

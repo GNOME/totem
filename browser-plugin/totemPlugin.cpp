@@ -2085,7 +2085,7 @@ totemPlugin::NewStream (NPMIMEType type,
 	if (!stream || !stream->url)
 		return NPERR_GENERIC_ERROR;
 
-	D ("NewStream mimetype '%s' URL '%s'", (const char *) type, stream->url);
+	D ("NewStream mimetype '%s' URL '%s' seekable '%s'", (const char *) type, stream->url, seekable ? "TRUE" : "FALSE");
 
 	/* We already have a live stream */
 	if (mStream) {
@@ -2143,6 +2143,9 @@ totemPlugin::NewStream (NPMIMEType type,
 	if (g_str_has_prefix (stream->url, "file://")) {
 		*stype = NP_ASFILEONLY;
 		mStreamType = NP_ASFILEONLY;
+	} else if (seekable) {
+		*stype = NP_SEEK;
+		mStreamType = NP_SEEK;
 	} else {
 		*stype = NP_ASFILE;
 		mStreamType = NP_ASFILE;
@@ -2162,6 +2165,7 @@ totemPlugin::NewStream (NPMIMEType type,
 	/* To track how many data we get from ::Write */
 	mBytesStreamed = 0;
 	mBytesLength = stream->end;
+	mSeekable = seekable;
 
 	return NPERR_NO_ERROR;
 }
@@ -2178,6 +2182,7 @@ totemPlugin::DestroyStream (NPStream* stream,
 	mStream = nsnull;
 	mBytesStreamed = 0;
 	mBytesLength = 0;
+	mSeekable = PR_FALSE;
 
 	int ret = close (mViewerFD);
 	if (ret < 0) {
@@ -2188,6 +2193,30 @@ totemPlugin::DestroyStream (NPStream* stream,
 	mViewerFD = -1;
 
 	return NPERR_NO_ERROR;
+}
+
+nsresult
+totemPlugin::RequestRead (PRInt32 offset)
+{
+	NPByteRange range;
+
+	if (!mStream)
+		return NS_ERROR_INVALID_POINTER;
+	if (!mSeekable)
+		return NS_ERROR_NOT_AVAILABLE;
+
+	D ("RequestRead %d", offset);
+
+	range.offset = offset;
+	range.length = mBytesLength - offset;
+	range.next = NULL;
+
+	if (CallNPN_RequestReadProc (sNPN.requestread,
+				     mStream,
+				     &range) == NPERR_NO_ERROR)
+		return NPERR_NO_ERROR;
+
+	return NPERR_GENERIC_ERROR;
 }
 
 int32
@@ -2280,7 +2309,7 @@ totemPlugin::Write (NPStream *stream,
 	} else /* ret >= 0 */ {
 		DD ("Wrote %d bytes", ret);
 
-		mBytesStreamed += ret;
+		mBytesStreamed = offset + ret;
 	}
 
 	return ret;
