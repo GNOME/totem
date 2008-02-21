@@ -279,7 +279,6 @@ totem_uri_exists (const char *uri)
 static char *
 totem_uri_get_subtitle_for_uri (const char *uri)
 {
-	GnomeVFSURI *vfsuri;
 	char *subtitle, *subtitle_ext_upper;
 	guint len, i, suffix;
 
