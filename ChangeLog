@@ -1,5 +1,13 @@
 2008-02-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_new):
+	Use the fastest speed as the default connection speed,
+	so we don't get low quality videos by default,
+	for GStreamer this time
+
+2008-02-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-xine.c
 	(bacon_video_widget_set_connection_speed),
 	(bacon_video_widget_get_connection_speed):

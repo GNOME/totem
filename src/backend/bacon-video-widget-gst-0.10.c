@@ -5022,7 +5022,7 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->show_vfx = FALSE;
   bvw->priv->vis_element_name = g_strdup ("goom");
   bvw->priv->tv_out_type = TV_OUT_NONE;
-  bvw->priv->connection_speed = 0;
+  bvw->priv->connection_speed = 11;
   bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
   bvw->priv->cursor_shown = TRUE;
@@ -5323,6 +5323,9 @@ bacon_video_widget_new (int width, int height,
     bacon_video_widget_set_connection_speed (bvw,
         gconf_value_get_int (confvalue)); 
     gconf_value_free (confvalue);
+  } else {
+    bacon_video_widget_set_connection_speed (bvw,
+    	bvw->priv->connection_speed);
   }
 
   /* those are private to us, i.e. not Xine-compatible */
