@@ -3130,7 +3130,7 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget *bvw, int speed)
 			6,
 			(char **) mms_bandwidth_strs,
 			"Network bandwidth",
-			NULL, 0, NULL, NULL);
+			NULL, 11, NULL, NULL);
 
 	xine_config_lookup_entry (bvw->priv->xine,
 			"media.network.bandwidth", &entry);
@@ -3152,7 +3152,7 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
 			6,
 			(char **) mms_bandwidth_strs,
 			"Network bandwidth",
-			NULL, 0, NULL, NULL);
+			NULL, 11, NULL, NULL);
 
 	xine_config_lookup_entry (bvw->priv->xine,
 			"media.network.bandwidth", &entry);
@@ -3432,7 +3432,7 @@ bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 	if (bvw->priv->stream == NULL)
 		return FALSE;
 
-	return (xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY && xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED) == XINE_SPEED_NORMAL);
+	return (xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY && xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED) != XINE_SPEED_PAUSED);
 }
 
 gboolean
