@@ -1,7 +1,7 @@
 SUBDIRS = icons
 
 bugreportdir = $(libexecdir)/totem
-bugreport_SCRIPTS = totem-bugreport.sh
+bugreport_SCRIPTS = totem-bugreport.py
 
 man_MANS = totem.1 totem-video-thumbnailer.1
 
