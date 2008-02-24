@@ -1,5 +1,25 @@
 New features and significant updates in version...
 
+2.21.94:
+
+Note that configuration files are now in ~/.config/totem/ instead
+of ~/.gnome2/Totem. You will need to move the files by hand.
+
+* Movie player:
+  - Fix crash when pressing a remote button in windowed mode
+  - Fix the YouTube plugin when there's no search results
+  - Better support for using "--fullscreen" on startup
+  - Default to using the fastest speed for MMS streaming
+  - Support auto-loading subtitles when the suffix is upper-case
+  - Add a bug-buddy script so we get more information when totem crashes
+* Browser plugin:
+  - Support the audio/x-ms-wma mime-type
+  - Better VLC Javascript support
+  - Implement stubs for DivX Player Javascript support
+  - Force opening videos directly with the DivX plugin
+* GStreamer backend:
+  - Check for DVB plugins before saying it's available
+
 2.21.93:
 * Movie player:
   - Make "Aspect ratio" menu items work again
