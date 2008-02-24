@@ -1,5 +1,8 @@
 SUBDIRS = icons
 
+bugreportdir = $(libexecdir)/totem
+bugreport_SCRIPTS = totem-bugreport.sh
+
 man_MANS = totem.1 totem-video-thumbnailer.1
 
 stuffdir = $(pkgdatadir)
