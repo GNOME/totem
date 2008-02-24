@@ -87,6 +87,7 @@ endif
 EXTRA_DIST = \
 	$(man_MANS)			\
 	$(stuff_DATA)			\
+	$(bugreport_SCRIPTS)		\
 	desktop.sh			\
 	handlers.sh			\
 	lirc_example			\
