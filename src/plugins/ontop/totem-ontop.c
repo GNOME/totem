@@ -92,9 +92,13 @@ totem_ontop_plugin_init (TotemOntopPlugin *plugin)
 static void
 update_from_state (TotemOntopPluginPrivate *priv)
 {
+	GValue has_video = { 0, };
+
+	bacon_video_widget_get_metadata (priv->bvw, BVW_INFO_HAS_VIDEO, &has_video);
+
 	gtk_window_set_keep_above (priv->window,
 				   (totem_is_playing (priv->totem) != FALSE &&
-				    bacon_video_widget_can_get_frames (priv->bvw, NULL) != FALSE));
+				    g_value_get_boolean (&has_video) != FALSE));
 }
 
 static void
