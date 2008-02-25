@@ -3434,7 +3434,7 @@ bacon_video_widget_is_playing (BaconVideoWidget *bvw)
 	if (bvw->priv->stream == NULL)
 		return FALSE;
 
-	return (xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY && xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED) != XINE_SPEED_PAUSED);
+	return (xine_get_status (bvw->priv->stream) == XINE_STATUS_PLAY && xine_get_param (bvw->priv->stream, XINE_PARAM_SPEED) != XINE_SPEED_PAUSE);
 }
 
 gboolean
