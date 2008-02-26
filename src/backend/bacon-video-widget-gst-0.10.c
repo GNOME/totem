@@ -4147,7 +4147,6 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
             }
             g_strfreev(fields);
           }
-          line = lines[++i];
         }
         g_strfreev(lines);
       } else {
