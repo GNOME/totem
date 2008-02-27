@@ -666,7 +666,13 @@ load_video_out_driver (BaconVideoWidget *bvw, BvwUseType type)
 	res_v = (DisplayHeight (bvw->priv->display, bvw->priv->screen) * 1000 /
 			DisplayHeightMM (bvw->priv->display,
 				bvw->priv->screen));
-	bvw->priv->display_ratio = res_v / res_h;
+
+	/* FIXME this should be fixed with proper multi-head handling in
+	 * the xine-lib backend */
+	if (res_h == 0 || res_v == 0)
+		bvw->priv->display_ratio = 1.0;
+	else
+		bvw->priv->display_ratio = res_v / res_h;
 
 	if (fabs (bvw->priv->display_ratio - 1.0) < 0.01) {
 		bvw->priv->display_ratio = 1.0;
