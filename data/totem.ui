@@ -2112,7 +2112,9 @@
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
 			  <property name="angle">0</property>
-			  
+			  <accessibility>
+			    <relation target="tmw_seek_hscale" type="label-for"/>
+			  </accessibility>
 			</object>
 			<packing>
 			  <property name="padding">0</property>
@@ -2135,7 +2137,14 @@
 			  <signal name="button-press-event" handler="seek_slider_pressed_cb"/>
 			  <signal name="button-release-event" handler="seek_slider_released_cb"/>
 			  <signal name="scroll-event" handler="window_scroll_event_cb"/>
-			  
+			  <child internal-child="accessible">
+                            <object class="AtkObject" id="a11y-tmw_seek_hscale">
+                              <property name="AtkObject::accessible-name" translatable="yes">Time seek bar</property>
+                            </object>
+                          </child>
+			  <accessibility>
+			    <relation target="tmw_time_label" type="labelled-by"/>
+			  </accessibility>
 			</object>
 			<packing>
 			  <property name="padding">0</property>
