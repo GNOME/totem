@@ -3595,7 +3595,12 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 
   GST_DEBUG ("ratio = %.2f", ratio);
 
-  get_media_size (bvw, &w, &h);
+  if (!bvw->priv->media_has_video && bvw->priv->show_vfx) {
+    get_visualization_size (bvw, &w, &h, NULL, NULL);
+  } else {
+    get_media_size (bvw, &w, &h);
+  }
+
   if (ratio == 0.0) {
     if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 2.0))
       ratio = 2.0;

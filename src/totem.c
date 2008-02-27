@@ -668,13 +668,11 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 	if (event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {
 		if (totem->controls_visibility != TOTEM_CONTROLS_UNDEFINED) {
-			g_message ("vis is %d", totem->controls_visibility);
 			totem_action_save_size (totem);
 		}
 		totem_fullscreen_set_fullscreen (totem->fs, TRUE);
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
-		g_message ("setting to fullscreen now");
 		show_controls (totem, FALSE);
 		totem_action_set_sensitivity ("fullscreen", FALSE);
 	} else {
@@ -687,10 +685,8 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 		if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action))) {
 			totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-			g_message ("vis is %d (is active)", totem->controls_visibility);
 		} else {
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
-			g_message ("vis is %d (is not active)", totem->controls_visibility);
 		}
 
 		show_controls (totem, TRUE);
