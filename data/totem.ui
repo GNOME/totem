@@ -2137,11 +2137,6 @@
 			  <signal name="button-press-event" handler="seek_slider_pressed_cb"/>
 			  <signal name="button-release-event" handler="seek_slider_released_cb"/>
 			  <signal name="scroll-event" handler="window_scroll_event_cb"/>
-			  <child internal-child="accessible">
-                            <object class="AtkObject" id="a11y-tmw_seek_hscale">
-                              <property name="AtkObject::accessible-name" translatable="yes">Time seek bar</property>
-                            </object>
-                          </child>
 			  <accessibility>
 			    <relation target="tmw_time_label" type="labelled-by"/>
 			  </accessibility>
