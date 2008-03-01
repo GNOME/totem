@@ -40,23 +40,6 @@ Group: Applications/Internet
 Totem is simple movie player for the Gnome desktop. The mozilla plugin
 for totem allows totem to be embeded into a web browser. 
 
-%package devel
-Summary: Libraries/include files for Totem.
-Group: Development/Libraries
-Requires: %{name} = %{version}-%{release}
-Requires: gnome-vfs2-devel
-Requires: libxml2-devel
-Requires: gtk2-devel
-
-%description devel
-Totem is simple movie player for the Gnome desktop. It features a
-simple playlist, a full-screen mode, seek and volume controls, as well as
-a pretty complete keyboard navigation.
-
-This package contains the libraries and includes files necessary to develop
-applications with Totem's plparser library.
-
-
 %prep
 %setup -q
 
@@ -89,6 +72,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/screensaver/libscreensaver.a
 rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/screensaver/libscreensaver.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/skipto/libskipto.a
 rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/skipto/libskipto.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/media-player-keys/libmedia_player_keys.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/media-player-keys/libmedia_player_keys.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/properties/libmovie-properties.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/properties/libmovie-properties.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -119,9 +106,9 @@ done
 %{_datadir}/omf/%{name}/
 %{_datadir}/%{name}/
 %{_datadir}/icons
-%{_libdir}/libtotem-plparser.*
 %{_libdir}/nautilus/extensions-1.0/*.so*
 %{_bindir}/%{name}-video-thumbnailer
+%{_bindir}/%{name}-audio-preview
 %{_mandir}/man1/%{name}.1*
 %{_mandir}/man1/totem-video-thumbnailer.1.gz
 %{_datadir}/locale
@@ -132,22 +119,31 @@ done
 %{_libdir}/totem/plugins/screensaver/libscreensaver.so
 %{_libdir}/totem/plugins/screensaver/screensaver.totem-plugin
 %{_libdir}/totem/plugins/skipto/libskipto.so
-%{_libdir}/totem/plugins/skipto/skip_to.glade
 %{_libdir}/totem/plugins/skipto/skipto.totem-plugin
-%exclude /var/lib/scrollkeeper
+%{_libdir}/totem/plugins/skipto/skipto.ui
+%{_libdir}/totem/plugins/media-player-keys/libmedia_player_keys.so
+%{_libdir}/totem/plugins/media-player-keys/media-player-keys.totem-plugin
+%{_libdir}/totem/plugins/properties/libmovie-properties.so
+%{_libdir}/totem/plugins/properties/movie-properties.totem-plugin
+%{_libdir}/totem/plugins/totem/*.py
+%{_libdir}/totem/plugins/totem/*.pyc
+%{_libdir}/totem/plugins/totem/*.pyo
+%{_libdir}/totem/plugins/youtube/*.py
+%{_libdir}/totem/plugins/youtube/*.pyc
+%{_libdir}/totem/plugins/youtube/*.pyo
+%{_libdir}/totem/plugins/youtube/youtube.totem-plugin
+%{_libdir}/totem/plugins/youtube/youtube.ui
+%{_libexecdir}/totem/totem-bugreport.*
 
 %files mozplugin
 %defattr(-, root, root)
-%{_libdir}/mozilla/plugins/*
+%{_libdir}/mozilla/libtotem*
 %{_libexecdir}/totem-plugin-viewer
 
-%files devel
-%defattr(-, root, root)
-%{_includedir}/%{name}/1/plparser
-%{_libdir}/pkgconfig/*.pc
-%{_libdir}/*so
-
 %changelog
+* Sat Mar 1 2008 Christian Schaller <christian.schaller@collabora.co.uk>
+- Update for new plugins and removed pl-parser
+
 * Fri May 18 2007 Christian Schaller <christian@fluendo.com>
 - Update for plugins system
 
