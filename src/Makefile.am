@@ -109,7 +109,6 @@ totem_SOURCES = 					\
 	totem-sidebar.c totem-sidebar.h \
 	totem-open-location.c totem-open-location.h \
 	totem-menu.c totem-menu.h	\
-	totem-missing-plugins.c totem-missing-plugins.h \
 	totem-uri.c totem-uri.h		\
 	ev-sidebar.c ev-sidebar.h	\
 	totem-subtitle-encoding.c	\
@@ -148,8 +147,7 @@ totem_LDADD =						\
 	$(NVTV_LIBS)					\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)					\
-	$(X_LIBS)					\
-	$(MISSING_PLUGINS_LIBS)
+	$(X_LIBS)
 
 if ENABLE_PYTHON
 totem_LDADD += \

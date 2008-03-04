@@ -1,6 +1,6 @@
 noinst_PROGRAMS = bvw-test
 
-noinst_LTLIBRARIES = libbaconvideowidget.la
+lib_LTLIBRARIES = libbaconvideowidget.la
 
 bvw_test_SOURCES = bvw-test.c
 
@@ -38,9 +38,11 @@ libbaconvideowidget_la_SOURCES = \
 	debug.h
 
 if TOTEM_GST
-libbaconvideowidget_la_SOURCES += \
-	bacon-video-widget-gst-0.10.c \
-	gstscreenshot.c \
+libbaconvideowidget_la_SOURCES +=			\
+	bacon-video-widget-gst-0.10.c			\
+	bacon-video-widget-gst-missing-plugins.c	\
+	bacon-video-widget-gst-missing-plugins.h	\
+	gstscreenshot.c					\
 	gstscreenshot.h
 else
 libbaconvideowidget_la_SOURCES += \
@@ -53,15 +55,23 @@ libbaconvideowidget_la_CPPFLAGS =		\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
-libbaconvideowidget_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
-	$(NVTV_CFLAGS) 		\
-	$(AM_CFLAGS)		\
+libbaconvideowidget_la_CFLAGS =		\
+	$(EXTRA_GNOME_CFLAGS)		\
+	$(MM_CFLAGS)			\
+	$(MISSING_PLUGINS_CFLAGS)	\
+	$(NVTV_CFLAGS) 			\
+	$(AM_CFLAGS)			\
 	-I$(top_srcdir)/
 
 
-libbaconvideowidget_la_LIBADD = \
-	$(XVIDMODE_LIBS)
+libbaconvideowidget_la_LIBADD =	\
+	$(XVIDMODE_LIBS)	\
+	$(MM_LIBS)		\
+	$(GST_LIBS)		\
+	$(MISSING_PLUGINS_LIBS)
+
+libbaconvideowidget_la_LDFLAGS=	\
+	-no-undefined
 
 CLEANFILES = $(BUILT_SOURCES)
 

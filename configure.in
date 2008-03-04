@@ -176,7 +176,7 @@ if test x$ENABLE_XINE = xno && test x$HAVE_GSTREAMER = xno; then
 fi
 
 if test x$HAVE_GSTREAMER = xno; then
-	MM="libxine >= $XINE_REQS gconf-2.0 gnome-keyring-1"
+	MM="libxine >= $XINE_REQS gconf-2.0 gnome-keyring-1 gnome-vfs-2.0"
 	PKG_CHECK_MODULES(XINE, $MM, HAVE_XINE=yes,
 		[
 			AC_MSG_RESULT(no)
@@ -234,15 +234,17 @@ dnl Seems that the order matters because libtool blows
 dnl Also check if we're going to be using GTK+ only
 if test x$ENABLE_GTK = "xno" ; then
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS $ISO_CODES $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS libgnome-2.0 >= $LIBGNOME_REQS  gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS $ISO_CODES)
 	HAVE_GNOME=yes
 else
 # FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS $ISO_CODES $MM)
+	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS gnome-vfs-2.0 >= $GNOMEVFS_REQS gnome-vfs-module-2.0 >= $GNOMEVFS_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS $ISO_CODES)
 	AC_DEFINE(USE_STABLE_LIBGNOMEUI, 1, [defined if we don't have GNOME])
 	AC_DEFINE(HAVE_GTK_ONLY, 1, [defined if GNOME isn't used])
 	HAVE_GNOME=no
 fi
+
+PKG_CHECK_MODULES(MM, $MM)
 
 AM_CONDITIONAL(HAVE_GNOME, test x$HAVE_GNOME = "xyes")
 EXTRA_GNOME_CFLAGS="$EXTRA_GNOME_CFLAGS"
@@ -250,7 +252,7 @@ EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(EXTRA_GNOME_CFLAGS)
 AC_SUBST(EXTRA_GNOME_LIBS)
 
-PKG_CHECK_MODULES(GTK, gtk+-2.0 $MM gthread-2.0)
+PKG_CHECK_MODULES(GTK, gtk+-2.0 gthread-2.0)
 AC_SUBST(GTK_CFLAGS)
 GTK_LIBS="$GTK_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(GTK_LIBS)
@@ -880,7 +882,7 @@ AC_ARG_ENABLE(nautilus,
 	[ENABLE_NAUTILUS=yes]) dnl Default value
 
 if test x$ENABLE_NAUTILUS = "xyes" ; then
-	PKG_CHECK_MODULES(NAUTILUS, gtk+-2.0 $MM gthread-2.0 libnautilus-extension,
+	PKG_CHECK_MODULES(NAUTILUS, gtk+-2.0 gthread-2.0 libnautilus-extension,
 			[HAVE_NAUTILUS=yes], [HAVE_NAUTILUS=no])
 fi
 

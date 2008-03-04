@@ -1,4 +1,4 @@
-/* totem-missing-plugins.h
+/* bacon-video-widget-gst-missing-plugins.h
 
    Copyright (C) 2007 Tim-Philipp Müller <tim centricular net>
 
@@ -20,15 +20,15 @@
    Author: Tim-Philipp Müller <tim centricular net>
  */
 
-#ifndef TOTEM_MISSING_PLUGINS_H
-#define TOTEM_MISSING_PLUGINS_H
+#ifndef BACON_VIDEO_WIDGET_GST_MISSING_PLUGINS_H
+#define BACON_VIDEO_WIDGET_GST_MISSING_PLUGINS_H
 
-#include "totem.h"
+#include "bacon-video-widget.h"
 
 G_BEGIN_DECLS
 
-void totem_missing_plugins_setup (Totem *totem);
+void bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw);
 
 G_END_DECLS
 
-#endif /* TOTEM_MISSING_PLUGINS_H */
+#endif /* BACON_VIDEO_WIDGET_GST_MISSING_PLUGINS_H */

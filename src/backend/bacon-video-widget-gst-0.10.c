@@ -64,6 +64,7 @@
 
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-common.h"
+#include "bacon-video-widget-gst-missing-plugins.h"
 #include "baconvideowidget-marshal.h"
 #include "video-utils.h"
 #include "gstscreenshot.h"
@@ -551,6 +552,8 @@ bacon_video_widget_realize (GtkWidget * widget)
   /* nice hack to show the logo fullsize, while still being resizable */
   get_media_size (BACON_VIDEO_WIDGET (widget), &w, &h);
   totem_widget_set_preferred_size (widget, w, h);
+
+  bacon_video_widget_gst_missing_plugins_setup (bvw);
 
 #ifdef HAVE_NVTV
   if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {

@@ -1,5 +1,23 @@
 2008-03-04  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-missing-plugins.[ch]: Move the missing plugins
+	framework from here to ...
+	* src/backend/bacon-video-widget-gst-missing-plugins.[ch]:
+	... here and ...
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bacon_video_widget_realize):
+	* src/totem.c: ... adapt those files for the changes
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/backend/Makefile.am:
+	Install a libbaconvideowidget.so.0 that the front-ends
+	can link against, and make sure the front-ends don't link
+	against any backend-specific libraries
+
+2008-03-04  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Update GTK+ requirements to avoid
 	crashing if the GTK+ doesn't implement GtkBuilder with
 	a11y

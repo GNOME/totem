@@ -22,11 +22,10 @@
 
 #include "config.h"
 
-#include "totem-missing-plugins.h"
+#include "bacon-video-widget-gst-missing-plugins.h"
 
 #ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
 
-#include "totem-private.h"
 #include "bacon-video-widget.h"
 
 #include <gst/pbutils/pbutils.h>
@@ -53,12 +52,59 @@ typedef struct
 	gboolean   playing;
 	gchar    **descriptions;
 	gchar    **details;
-	Totem     *totem;
+	BaconVideoWidget *bvw;
 }
 TotemCodecInstallContext;
 
+#ifdef GDK_WINDOWING_X11
+/* Adapted from totem-interface.c */
+static GdkNativeWindow
+bacon_video_widget_gtk_plug_get_toplevel (GtkPlug *plug)
+{
+	Window root, parent, *children;
+	guint nchildren;
+	GdkNativeWindow xid;
+
+	g_return_val_if_fail (GTK_IS_PLUG (plug), 0);
+
+	xid = gtk_plug_get_id (plug);
+
+	do
+	{
+		/* FIXME: multi-head */
+		if (XQueryTree (GDK_DISPLAY (), xid, &root,
+					&parent, &children, &nchildren) == 0)
+		{
+			g_warning ("Couldn't find window manager window");
+			return 0;
+		}
+
+		if (root == parent)
+			return xid;
+
+		xid = parent;
+	}
+	while (TRUE);
+}
+
+static GdkNativeWindow
+bacon_video_widget_gst_get_toplevel (GtkWidget *widget)
+{
+	GtkWidget *parent;
+
+	parent = gtk_widget_get_toplevel (GTK_WIDGET (widget));
+	if (parent == NULL)
+		return 0;
+
+	if (GTK_IS_PLUG (parent))
+		return bacon_video_widget_gtk_plug_get_toplevel (GTK_PLUG (parent));
+	else
+		return GDK_WINDOW_XID(widget->window);
+}
+#endif
+
 static gboolean
-totem_codec_install_plugin_is_blacklisted (const gchar * detail)
+bacon_video_widget_gst_codec_install_plugin_is_blacklisted (const gchar * detail)
 {
 	GList *res;
 
@@ -70,9 +116,9 @@ totem_codec_install_plugin_is_blacklisted (const gchar * detail)
 }
 
 static void
-totem_codec_install_blacklist_plugin (const gchar * detail)
+bacon_video_widget_gst_codec_install_blacklist_plugin (const gchar * detail)
 {
-	if (!totem_codec_install_plugin_is_blacklisted (detail))
+	if (!bacon_video_widget_gst_codec_install_plugin_is_blacklisted (detail))
 	{
 		blacklisted_plugins = g_list_prepend (blacklisted_plugins,
 		                                      g_strdup (detail));
@@ -80,7 +126,7 @@ totem_codec_install_blacklist_plugin (const gchar * detail)
 }
 
 static void
-totem_codec_install_context_free (TotemCodecInstallContext *ctx)
+bacon_video_widget_gst_codec_install_context_free (TotemCodecInstallContext *ctx)
 {
 	g_strfreev (ctx->descriptions);
 	g_strfreev (ctx->details);
@@ -105,16 +151,16 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				/* blacklist installed plugins too, so that we don't get
 				 * into endless installer loops in case of inconsistencies */
 				for (p = ctx->details; p != NULL && *p != NULL; ++p)
-					totem_codec_install_blacklist_plugin (*p);
+					bacon_video_widget_gst_codec_install_blacklist_plugin (*p);
 
-				bacon_video_widget_stop (ctx->totem->bvw);
+				bacon_video_widget_stop (ctx->bvw);
 				g_message ("Missing plugins installed. Updating plugin registry ...");
 
 				/* force GStreamer to re-read its plugin registry */
 				if (gst_update_registry ())
 				{
 					g_message ("Plugin registry updated, trying again.");
-					bacon_video_widget_play (ctx->totem->bvw, NULL);
+					bacon_video_widget_play (ctx->bvw, NULL);
 				} else {
 					g_warning ("GStreamer registry update failed");
 					/* FIXME: should we show an error message here? */
@@ -132,16 +178,16 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				 * could not play anything we should blacklist them as well,
 				 * so the install wizard isn't called again for nothing */
 				for (p = ctx->details; p != NULL && *p != NULL; ++p)
-					totem_codec_install_blacklist_plugin (*p);
+					bacon_video_widget_gst_codec_install_blacklist_plugin (*p);
 
 				if (ctx->playing)
 				{
-					bacon_video_widget_play (ctx->totem->bvw, NULL);
+					bacon_video_widget_play (ctx->bvw, NULL);
 				} else {
 					/* wizard has not shown error, do stop/play again,
 					 * so that an error message gets shown */
-					bacon_video_widget_stop (ctx->totem->bvw);
-					bacon_video_widget_play (ctx->totem->bvw, NULL);
+					bacon_video_widget_stop (ctx->bvw);
+					bacon_video_widget_play (ctx->bvw, NULL);
 				}
 			}
 			break;
@@ -150,15 +196,15 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				/* blacklist on user abort, so we show an error next time (or
 				 * just play what we can) instead of calling the installer */
 				for (p = ctx->details; p != NULL && *p != NULL; ++p)
-					totem_codec_install_blacklist_plugin (*p);
+					bacon_video_widget_gst_codec_install_blacklist_plugin (*p);
 
 				if (ctx->playing) {
-					bacon_video_widget_play (ctx->totem->bvw, NULL);
+					bacon_video_widget_play (ctx->bvw, NULL);
 				} else {
 					/* if we couldn't play anything, do stop/play again,
 					 * so that an error message gets shown */
-					bacon_video_widget_stop (ctx->totem->bvw);
-					bacon_video_widget_play (ctx->totem->bvw, NULL);
+					bacon_video_widget_stop (ctx->bvw);
+					bacon_video_widget_play (ctx->bvw, NULL);
 				}
 			}
 			break;
@@ -170,20 +216,20 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				           gst_install_plugins_return_get_name (res));
 
 				if (ctx->playing)
-					bacon_video_widget_play (ctx->totem->bvw, NULL);
+					bacon_video_widget_play (ctx->bvw, NULL);
 				else
-					bacon_video_widget_stop (ctx->totem->bvw);
+					bacon_video_widget_stop (ctx->bvw);
 				break;
 			}
 	}
 
-	totem_codec_install_context_free (ctx);
+	bacon_video_widget_gst_codec_install_context_free (ctx);
 }
 
 static gboolean
-totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
-                                char **descriptions, gboolean playing,
-                                Totem *totem)
+bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
+						 char **descriptions, gboolean playing,
+						 gpointer user_data)
 {
 	GstInstallPluginsContext *install_ctx;
 	TotemCodecInstallContext *ctx;
@@ -197,11 +243,11 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 	ctx->descriptions = g_strdupv (descriptions);
 	ctx->details = g_strdupv (details);
 	ctx->playing = playing;
-	ctx->totem = totem;
+	ctx->bvw = bvw;
 
 	for (i = 0; i < num; ++i)
 	{
-		if (totem_codec_install_plugin_is_blacklisted (ctx->details[i]))
+		if (bacon_video_widget_gst_codec_install_plugin_is_blacklisted (ctx->details[i]))
 		{
 			g_message ("Missing plugin: %s (ignoring)", ctx->details[i]);
 			g_free (ctx->details[i]);
@@ -220,18 +266,18 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 	if (num == 0)
 	{
 		g_message ("All missing plugins are blacklisted, doing nothing");
-		totem_codec_install_context_free (ctx);
+		bacon_video_widget_gst_codec_install_context_free (ctx);
 		return FALSE;
 	}
 
 	install_ctx = gst_install_plugins_context_new ();
 
 #ifdef GDK_WINDOWING_X11
-	if (totem->win != NULL && GTK_WIDGET_REALIZED (totem->win))
+	if (GTK_WIDGET (bvw)->window != NULL && GTK_WIDGET_REALIZED (bvw))
 	{
 		gulong xid = 0;
 
-		xid = GDK_WINDOW_XWINDOW (GTK_WIDGET (totem->win)->window);
+		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (bvw));
 		gst_install_plugins_context_set_xid (install_ctx, xid);
 	}
 #endif
@@ -254,7 +300,7 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 			g_warning ("Failed to start codec installation: %s",
 			           gst_install_plugins_return_get_name (status));
 		}
-		totem_codec_install_context_free (ctx);
+		bacon_video_widget_gst_codec_install_context_free (ctx);
 		return FALSE;
 	}
 
@@ -270,13 +316,13 @@ totem_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
 #endif /* ENABLE_MISSING_PLUGIN_INSTALLATION */
 
 void
-totem_missing_plugins_setup (Totem *totem)
+bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 {
 #ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
-	g_signal_connect (G_OBJECT (totem->bvw),
+	g_signal_connect (G_OBJECT (bvw),
 			"missing-plugins",
-			G_CALLBACK (totem_on_missing_plugins_event),
-			totem);
+			G_CALLBACK (bacon_video_widget_gst_on_missing_plugins_event),
+			bvw);
 
 	gst_pb_utils_init ();
 

@@ -57,7 +57,6 @@
 #include "totem-screenshot.h"
 #include "totem-sidebar.h"
 #include "totem-menu.h"
-#include "totem-missing-plugins.h"
 #include "totem-options.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
@@ -3006,8 +3005,6 @@ video_widget_create (Totem *totem)
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
-
-	totem_missing_plugins_setup (totem);
 
 	container = GTK_CONTAINER (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
 	gtk_container_add (container,
