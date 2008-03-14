@@ -1,5 +1,30 @@
 2008-03-14  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* configure.in:
+	* src/plugins/publish/totem-publish.c:
+	* src/totem-menu.c: (totem_action_add_recent),
+	(on_play_dvb_activate), (add_drive_to_menu),
+	(update_drive_menu_items), (on_movie_menu_select),
+	(on_g_volume_monitor_event), (totem_setup_play_disc):
+	* src/totem-playlist.c: (totem_playlist_mrl_to_title),
+	(totem_playlist_compare_with_mount),
+	(totem_playlist_clear_with_g_mount):
+	* src/totem-playlist.h:
+	* src/totem-private.h:
+	* src/totem-uri.c: (totem_get_mount_for_uri),
+	(totem_get_mount_for_media), (totem_is_special_mrl),
+	(totem_create_full_path), (totem_action_on_unmount),
+	(totem_setup_file_monitoring), (totem_uri_exists),
+	(totem_uri_get_subtitle_in_subdir), (totem_uri_get_subtitle_uri),
+	(totem_uri_escape_for_display):
+	* src/totem-uri.h:
+	* src/totem.c: (totem_action_exit), (totem_action_eject),
+	(drag_video_cb), (update_media_menu_items), (main): Convert the bulk
+	of Totem to GIO, leaving the plugins and backends still to convert.
+	(Closes: #512594, helps: #512602)
+
+2008-03-14  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/plugins/sample-vala/totem-sample-vala-plugin.vala: Update the
 	sample Vala plugin to match.
 

@@ -25,10 +25,10 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <string.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <gio/gio.h>
 
 #include "totem-mime-types.h"
 #include "totem-uri.h"
@@ -88,25 +88,26 @@ totem_pictures_dir (void)
 	return g_strdup (dir);
 }
 
-static GnomeVFSVolume *
-totem_get_volume_for_uri (GnomeVFSVolumeMonitor *monitor, const char *path)
+static GMount *
+totem_get_mount_for_uri (const char *path)
 {
-	GnomeVFSVolume *vol;
-	GnomeVFSDeviceType type;
+	GMount *mount;
+	GFile *file;
 
-	vol = gnome_vfs_volume_monitor_get_volume_for_path (monitor, path);
-	if (vol == NULL)
+	file = g_file_new_for_path (path);
+	mount = g_file_find_enclosing_mount (file, NULL, NULL);
+	g_object_unref (file);
+
+	if (mount == NULL)
 		return NULL;
 
-	type = gnome_vfs_volume_get_device_type (vol);
-	if (type != GNOME_VFS_DEVICE_TYPE_AUDIO_CD
-	    && type != GNOME_VFS_DEVICE_TYPE_VIDEO_DVD
-	    && type != GNOME_VFS_DEVICE_TYPE_CDROM) {
-	    	gnome_vfs_volume_unref (vol);
-	    	vol = NULL;
+	/* FIXME: We used to explicitly check whether it was a CD/DVD */
+	if (g_mount_can_eject (mount) == TRUE) {
+		g_object_unref (mount);
+		return NULL;
 	}
 
-	return vol;
+	return mount;
 }
 
 static char *
@@ -123,32 +124,29 @@ totem_get_mountpoint_for_vcd (const char *uri)
 	return NULL;
 }
 
-GnomeVFSVolume *
-totem_get_volume_for_media (const char *uri)
+GMount *
+totem_get_mount_for_media (const char *uri)
 {
-	GnomeVFSVolumeMonitor *monitor;
-	GnomeVFSVolume *ret;
-	char *mount;
+	GMount *ret;
+	char *mount_path;
 
 	if (uri == NULL)
 		return NULL;
 
-	mount = NULL;
-	ret = NULL;
+	mount_path = NULL;
 
 	if (g_str_has_prefix (uri, "dvd://") != FALSE)
-		mount = totem_get_mountpoint_for_dvd (uri);
+		mount_path = totem_get_mountpoint_for_dvd (uri);
 	else if (g_str_has_prefix (uri, "vcd:") != FALSE)
-		mount = totem_get_mountpoint_for_vcd (uri);
+		mount_path = totem_get_mountpoint_for_vcd (uri);
 	else if (g_str_has_prefix (uri, "file:") != FALSE)
-		mount = g_filename_from_uri (uri, NULL, NULL);
+		mount_path = g_filename_from_uri (uri, NULL, NULL);
 
-	if (mount == NULL)
+	if (mount_path == NULL)
 		return NULL;
 
-	monitor = gnome_vfs_get_volume_monitor ();
-	ret = totem_get_volume_for_uri (monitor, mount);
-	g_free (mount);
+	ret = totem_get_mount_for_uri (mount_path);
+	g_free (mount_path);
 
 	return ret;
 }
@@ -156,20 +154,18 @@ totem_get_volume_for_media (const char *uri)
 static gboolean
 totem_is_special_mrl (const char *uri)
 {
-	GnomeVFSVolume *vol;
-	gboolean retval;
+	GMount *mount;
 
 	if (uri == NULL || g_str_has_prefix (uri, "file:") != FALSE)
 		return FALSE;
 	if (g_str_has_prefix (uri, "dvb:") != FALSE)
 		return TRUE;
 
-	vol = totem_get_volume_for_media (uri);
-	retval = (vol != NULL);
-	if (vol != NULL)
-		gnome_vfs_volume_unref (vol);
+	mount = totem_get_mount_for_media (uri);
+	if (mount != NULL)
+		g_object_unref (mount);
 
-	return retval;
+	return (mount != NULL);
 }
 
 gboolean
@@ -198,7 +194,8 @@ totem_is_block_device (const char *uri)
 char *
 totem_create_full_path (const char *path)
 {
-	char *retval, *curdir, *curdir_withslash, *escaped;
+	GFile *file;
+	char *retval;
 
 	g_return_val_if_fail (path != NULL, NULL);
 
@@ -207,45 +204,28 @@ totem_create_full_path (const char *path)
 	if (totem_is_special_mrl (path) != FALSE)
 		return NULL;
 
-	if (path[0] == G_DIR_SEPARATOR) {
-		escaped = gnome_vfs_escape_path_string (path);
-
-		retval = g_strdup_printf ("file://%s", escaped);
-		g_free (escaped);
-		return retval;
-	}
-
-	curdir = g_get_current_dir ();
-	escaped = gnome_vfs_escape_path_string (curdir);
-	curdir_withslash = g_strdup_printf ("file://%s%c",
-					    escaped, G_DIR_SEPARATOR);
-	g_free (escaped);
-	g_free (curdir);
-
-	escaped = gnome_vfs_escape_path_string (path);
-	retval = gnome_vfs_uri_make_full_from_relative
-		(curdir_withslash, escaped);
-	g_free (curdir_withslash);
-	g_free (escaped);
+	file = g_file_new_for_commandline_arg (path);
+	retval = g_file_get_uri (file);
+	g_object_unref (file);
 
 	return retval;
 }
 
 static void
-totem_action_on_unmount (GnomeVFSVolumeMonitor *vfsvolumemonitor,
-			 GnomeVFSVolume *volume,
+totem_action_on_unmount (GVolumeMonitor *volume_monitor,
+			 GMount *mount,
 			 Totem *totem)
 {
-	totem_playlist_clear_with_gnome_vfs_volume (totem->playlist, volume);
+	totem_playlist_clear_with_g_mount (totem->playlist, mount);
 }
 
 void
 totem_setup_file_monitoring (Totem *totem)
 {
-	totem->monitor = gnome_vfs_get_volume_monitor ();
+	totem->monitor = g_volume_monitor_get ();
 
 	g_signal_connect (G_OBJECT (totem->monitor),
-			  "volume_pre_unmount",
+			  "mount-pre-unmount",
 			  G_CALLBACK (totem_action_on_unmount),
 			  totem);
 }
@@ -264,13 +244,13 @@ static const char subtitle_ext[][4] = {
 static inline gboolean
 totem_uri_exists (const char *uri)
 {
-	GnomeVFSURI *vfsuri = gnome_vfs_uri_new (uri);
-	if (vfsuri != NULL) {
-		if (gnome_vfs_uri_exists (vfsuri)) {
-			gnome_vfs_uri_unref (vfsuri);
+	GFile *file = g_file_new_for_uri (uri);
+	if (file != NULL) {
+		if (g_file_query_exists (file, NULL)) {
+			g_object_unref (file);
 			return TRUE;
 		}
-		gnome_vfs_uri_unref (vfsuri);
+		g_object_unref (file);
 	}
 	return FALSE;
 }
@@ -326,24 +306,27 @@ totem_uri_get_subtitle_for_uri (const char *uri)
 }
 
 static char *
-totem_uri_get_subtitle_in_subdir (GnomeVFSURI *vfsuri, const char *subdir)
+totem_uri_get_subtitle_in_subdir (GFile *file, const char *subdir)
 {
-	char *filename, *subtitle, *fullpath_str;
-	GnomeVFSURI *parent, *fullpath, *directory;
-
-	parent = gnome_vfs_uri_get_parent (vfsuri);
-	directory = gnome_vfs_uri_append_path (parent, subdir);
-	gnome_vfs_uri_unref (parent);
-
-	filename = g_path_get_basename (gnome_vfs_uri_get_path (vfsuri));
-	fullpath = gnome_vfs_uri_append_string (directory, filename);
-	gnome_vfs_uri_unref (directory);
-	g_free (filename);
-
-	fullpath_str = gnome_vfs_uri_to_string (fullpath, 0);
-	gnome_vfs_uri_unref (fullpath);
-	subtitle = totem_uri_get_subtitle_for_uri (fullpath_str);
-	g_free (fullpath_str);
+	char *filename, *subtitle, *full_path_str;
+	GFile *parent, *full_path, *directory;
+  
+	/* Get the sibling directory @subdir of the file @file */
+	parent = g_file_get_parent (file);
+	directory = g_file_get_child (parent, subdir);
+	g_object_unref (parent);
+  
+	/* Get the file of the same name as @file in the @subdir directory */
+	filename = g_file_get_basename (file);
+	full_path = g_file_get_child (directory, filename);
+	g_object_unref (directory);
+  	g_free (filename);
+  
+	/* Get the subtitles from that URI */
+	full_path_str = g_file_get_uri (full_path);
+	g_object_unref (full_path);
+	subtitle = totem_uri_get_subtitle_for_uri (full_path_str);
+	g_free (full_path_str);
 
 	return subtitle;
 }
@@ -351,32 +334,32 @@ totem_uri_get_subtitle_in_subdir (GnomeVFSURI *vfsuri, const char *subdir)
 char *
 totem_uri_get_subtitle_uri (const char *uri)
 {
-	GnomeVFSURI *vfsuri;
+	GFile *file;
 	char *subtitle;
 
-	if (g_str_has_prefix (uri, "http") != FALSE) {
+	if (g_str_has_prefix (uri, "http") != FALSE)
 		return NULL;
-	}
 
 	/* Has the user specified a subtitle file manually? */
-	if (strstr (uri, "#subtitle:") != NULL) {
+	if (strstr (uri, "#subtitle:") != NULL)
+		return NULL;
+
+	/* Does the file exist? */
+	file = g_file_new_for_uri (uri);
+	if (g_file_query_exists (file, NULL) != TRUE) {
+		g_object_unref (file);
 		return NULL;
 	}
-
-	/* Does gnome-vfs support that scheme? */
-	vfsuri = gnome_vfs_uri_new (uri);
-	if (vfsuri == NULL)
-		return NULL;
 
 	/* Try in the current directory */
 	subtitle = totem_uri_get_subtitle_for_uri (uri);
 	if (subtitle != NULL) {
-		gnome_vfs_uri_unref (vfsuri);
+		g_object_unref (file);
 		return subtitle;
 	}
 
-	subtitle = totem_uri_get_subtitle_in_subdir (vfsuri, "subtitles");
-	gnome_vfs_uri_unref (vfsuri);
+	subtitle = totem_uri_get_subtitle_in_subdir (file, "subtitles");
+	g_object_unref (file);
 
 	return subtitle;
 }
@@ -384,29 +367,14 @@ totem_uri_get_subtitle_uri (const char *uri)
 char *
 totem_uri_escape_for_display (const char *uri)
 {
-	char *disp, *tmp;
+	GFile *file;
+	char *disp;
 
-	disp = gnome_vfs_unescape_string_for_display (uri);
-	/* If we don't have UTF-8, try to convert */
-	if (g_utf8_validate (disp, -1, NULL) != FALSE)
-		return disp;
+	file = g_file_new_for_uri (uri);
+	disp = g_file_get_parse_name (file);
+	g_object_unref (file);
 
-	/* If we don't have UTF-8, try to convert */
-	tmp = g_locale_to_utf8 (disp, -1, NULL, NULL, NULL);
-	/* If we couldn't convert using the current codeset, try
-	 * another one */
-	if (tmp != NULL) {
-		g_free (disp);
-		return tmp;
-	}
-
-	tmp = g_convert (disp, -1, "UTF-8", "ISO8859-1", NULL, NULL, NULL);
-	if (tmp != NULL) {
-		g_free (disp);
-		return tmp;
-	}
-
-	return g_strdup (uri);
+	return disp;
 }
 
 void

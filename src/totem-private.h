@@ -30,7 +30,7 @@
 
 #include <gconf/gconf-client.h>
 #include <gtk/gtk.h>
-#include <libgnomevfs/gnome-vfs.h>
+#include <gio/gio.h>
 
 #include "totem-playlist.h"
 #include "bacon-message-connection.h"
@@ -138,7 +138,7 @@ struct TotemObject {
 	guint recent_ui_id;
 
 	/* Monitor for playlist unmounts and drives/volumes monitoring */
-	GnomeVFSVolumeMonitor *monitor;
+	GVolumeMonitor *monitor;
 	gboolean drives_changed;
 
 	/* session */

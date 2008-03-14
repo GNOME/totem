@@ -34,6 +34,7 @@
 #include <totem-disc.h>
 #include <stdlib.h>
 #include <math.h>
+#include <gio/gio.h>
 
 #ifndef HAVE_GTK_ONLY
 #include <gnome.h>
@@ -261,8 +262,6 @@ totem_action_exit (Totem *totem)
 
 	g_object_unref (totem);
 
-	gnome_vfs_shutdown ();
-
 	exit (0);
 }
 
@@ -345,10 +344,10 @@ play_pause_set_label (Totem *totem, TotemStates state)
 void
 totem_action_eject (Totem *totem)
 {
-	GnomeVFSVolume *volume;
+	GMount *mount;
 
-	volume = totem_get_volume_for_media (totem->mrl);
-	if (volume == NULL)
+	mount = totem_get_mount_for_media (totem->mrl);
+	if (mount == NULL)
 		return;
 
 	g_free (totem->mrl);
@@ -356,9 +355,9 @@ totem_action_eject (Totem *totem)
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
 
-	/* the volume monitoring will take care of removing the items */
-	gnome_vfs_volume_eject (volume, NULL, NULL);
-	gnome_vfs_volume_unref (volume);
+	/* The volume monitoring will take care of removing the items */
+	g_mount_eject (mount, G_MOUNT_UNMOUNT_NONE, NULL, NULL, NULL);
+	g_object_unref (mount);
 }
 
 void
@@ -1366,33 +1365,33 @@ drop_playlist_cb (GtkWidget     *widget,
 
 static void
 drag_video_cb (GtkWidget *widget,
-		GdkDragContext *context,
-		GtkSelectionData *selection_data,
-		guint info,
-		guint32 time,
-		gpointer callback_data)
+	       GdkDragContext *context,
+	       GtkSelectionData *selection_data,
+	       guint info,
+	       guint32 time,
+	       gpointer callback_data)
 {
 	Totem *totem = (Totem *) callback_data;
 	char *text;
 	int len;
+	GFile *file;
 
 	g_assert (selection_data != NULL);
 
 	if (totem->mrl == NULL)
 		return;
 
-	if (totem->mrl[0] == '/')
-		text = gnome_vfs_get_uri_from_local_path (totem->mrl);
-	else
-		text = g_strdup (totem->mrl);
+	/* Canonicalise the MRL as a proper URI */
+	file = g_file_new_for_commandline_arg (totem->mrl);
+	text = g_file_get_uri (file);
+	g_object_unref (file);
 
 	g_return_if_fail (text != NULL);
 
 	len = strlen (text);
 
-	gtk_selection_data_set (selection_data,
-			selection_data->target,
-			8, (guchar *) text, len);
+	gtk_selection_data_set (selection_data, selection_data->target,
+				8, (guchar *) text, len);
 
 	g_free (text);
 }
@@ -2650,7 +2649,7 @@ window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 static void
 update_media_menu_items (Totem *totem)
 {
-	GnomeVFSVolume *volume;
+	GMount *mount;
 	gboolean playing;
 
 	playing = totem_playing_dvd (totem->mrl);
@@ -2663,10 +2662,10 @@ update_media_menu_items (Totem *totem)
 	/* FIXME we should only show that if we have multiple angles */
 	totem_action_set_sensitivity ("next-angle", playing);
 
-	volume = totem_get_volume_for_media (totem->mrl);
-	totem_action_set_sensitivity ("eject", volume != NULL);
-	if (volume != NULL)
-		gnome_vfs_volume_unref (volume);
+	mount = totem_get_mount_for_media (totem->mrl);
+	totem_action_set_sensitivity ("eject", mount != NULL);
+	if (mount != NULL)
+		g_object_unref (mount);
 }
 
 static void
@@ -3128,8 +3127,6 @@ main (int argc, char **argv)
 
 	g_set_application_name (_("Totem Movie Player"));
 	gtk_window_set_default_icon_name ("totem");
-
-	gnome_vfs_init ();
 
 	gc = gconf_client_get_default ();
 	if (gc == NULL)

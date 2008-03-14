@@ -24,8 +24,8 @@
 #define TOTEM_PLAYLIST_H
 
 #include <gtk/gtkvbox.h>
-#include <libgnomevfs/gnome-vfs-volume.h>
 #include <totem-pl-parser.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -96,8 +96,8 @@ void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */
 gboolean   totem_playlist_clear (TotemPlaylist *playlist);
-void       totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
-						       GnomeVFSVolume *volume);
+void       totem_playlist_clear_with_g_mount (TotemPlaylist *playlist,
+					      GMount *mount);
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist,
 					   char **subtitle);
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,

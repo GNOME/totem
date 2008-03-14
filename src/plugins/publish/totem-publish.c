@@ -39,6 +39,7 @@
 #include <libepc/service-monitor.h>
 
 #include <libepc-ui/progress-window.h>
+#include <libgnomevfs/gnome-vfs.h>
 
 #include "ev-sidebar.h"
 #include "totem-plugin.h"

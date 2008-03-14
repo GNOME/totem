@@ -686,13 +686,24 @@ totem_action_add_recent (Totem *totem, const char *filename)
 {
 	GtkRecentData data;
 	char *groups[] = { NULL, NULL };
+	GFile *file;
+	GFileInfo *file_info;
 
 	memset (&data, 0, sizeof (data));
 
-	data.mime_type = gnome_vfs_get_mime_type (filename);
+	file = g_file_new_for_uri (filename);
+	file_info = g_file_query_info (file, G_FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE, G_FILE_QUERY_INFO_NONE, NULL, NULL);
+
+	/* Probably an unsupported URI scheme */
+	if (file_info == NULL)
+		return;
+
+	data.mime_type = g_strdup (g_file_info_get_content_type (file_info));
+	g_object_unref (file_info);
+
 	if (data.mime_type == NULL) {
 		/* No mime-type means warnings, and it breaks when adding
-		 * non-gnome-vfs supported URI schemes */
+		 * unsupported URI schemes */
 		return;
 	}
 	data.display_name = NULL;
@@ -744,7 +755,6 @@ on_play_disc_activate (GtkAction *action, Totem *totem)
 }
 
 /* Play DVB menu items */
-
 static void
 on_play_dvb_activate (GtkAction *action, Totem *totem)
 {
@@ -756,145 +766,103 @@ on_play_dvb_activate (GtkAction *action, Totem *totem)
 	totem_action_play_media (totem, MEDIA_TYPE_DVB, str);
 	g_free (str);
 }
-/* A GnomeVFSDrive and GnomeVFSVolume share many similar methods, but do not
-   share a base class other than GObject. */
-static char *
-fake_gnome_vfs_device_get_something (GObject *device,
-		char *(*volume_function) (GnomeVFSVolume *),
-		char *(*drive_function) (GnomeVFSDrive *)) {
-        if (GNOME_IS_VFS_VOLUME (device)) {
-                return (*volume_function) (GNOME_VFS_VOLUME (device));
-        } else if (GNOME_IS_VFS_DRIVE (device)) {
-                return (*drive_function) (GNOME_VFS_DRIVE (device));
-        } else {
-                g_warning ("neither a GnomeVFSVolume or a GnomeVFSDrive");
-                return NULL;
-        }
-}
-
-static char *
-my_gnome_vfs_volume_get_mount_path (GnomeVFSVolume *volume)
-{
-	char *uri, *path;
-
-	uri = gnome_vfs_volume_get_activation_uri (volume);
-	path = g_filename_from_uri (uri, NULL, NULL);
-	g_free (uri);
-
-	if (path == NULL)
-		return gnome_vfs_volume_get_device_path (volume);
-	return path;
-}
 
 static void
-add_device_to_menu (GObject *device, guint position, Totem *totem)
+add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 {
-	char *name, *escaped_name, *icon_name, *device_path;
-	char *label, *activation_uri;
+	char *name, *escaped_name, *device_path, *label;
 	GtkAction *action;
 	gboolean disabled = FALSE;
+	GList *volumes, *i;
+	GMount *mount;
+	GFile *root;
+	GIcon *icon;
+	const char * const *icon_names;
 
-	/* Add devices with blank CDs and audio CDs in them, but disable them */
-	activation_uri = fake_gnome_vfs_device_get_something (device,
-		&gnome_vfs_volume_get_activation_uri,
-		&gnome_vfs_drive_get_activation_uri);
-	if (activation_uri != NULL) {
-		if (g_str_has_prefix (activation_uri, "burn://") != FALSE || g_str_has_prefix (activation_uri, "cdda://") != FALSE) {
+	/* Repeat for all the drive's volumes */
+	volumes = g_drive_get_volumes (drive);
+
+	for (i = volumes; i != NULL; i = i->next) {
+		/* Add devices with blank CDs and audio CDs in them, but disable them */
+		mount = g_volume_get_mount (i->data);
+
+		if (mount == NULL)
+			continue;
+
+		root = g_mount_get_root (mount);
+		g_object_unref (mount);
+
+		device_path = g_file_get_path (root);
+
+		if (g_file_has_uri_scheme (root, "burn") != FALSE || g_file_has_uri_scheme (root, "cdda") != FALSE)
 			disabled = TRUE;
-		}
-		g_free (activation_uri);
-	} else {
-		if (GNOME_IS_VFS_DRIVE (device)) {
-			device_path = gnome_vfs_drive_get_device_path
-				(GNOME_VFS_DRIVE (device));
+		if (root == NULL)
 			disabled = !totem_cd_has_medium (device_path);
+
+		/* Work out an icon to display */
+		icon = g_volume_get_icon (i->data);
+		icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+
+		/* Get the volume's pretty name for the menu label */
+		name = g_volume_get_name (i->data);
+		g_strstrip (name);
+		escaped_name = escape_label_for_menu (name);
+		g_free (name);
+		label = g_strdup_printf (_("Play Disc '%s'"), escaped_name);
+		g_free (escaped_name);
+
+		name = g_strdup_printf (_("device%d"), position);
+
+		action = gtk_action_new (name, label, NULL, NULL);
+		g_object_set (G_OBJECT (action),
+			      "icon-name", icon_names[0],
+			      "sensitive", !disabled, NULL);
+		gtk_action_group_add_action (totem->devices_action_group, action);
+		g_object_unref (action);
+
+		gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
+			"/tmw-menubar/movie/devices-placeholder", name, name,
+			GTK_UI_MANAGER_MENUITEM, FALSE);
+
+		g_free (name);
+		g_free (label);
+		g_object_unref (icon);
+
+		if (disabled != FALSE) {
 			g_free (device_path);
+			return;
 		}
+
+		g_object_set_data_full (G_OBJECT (action),
+					"device_path", device_path,
+					(GDestroyNotify) g_free);
+
+		g_signal_connect (G_OBJECT (action), "activate",
+				  G_CALLBACK (on_play_disc_activate), totem);
 	}
 
-	name = fake_gnome_vfs_device_get_something (device,
-		&gnome_vfs_volume_get_display_name,
-		&gnome_vfs_drive_get_display_name);
-	icon_name = fake_gnome_vfs_device_get_something (device,
-		&gnome_vfs_volume_get_icon, &gnome_vfs_drive_get_icon);
-	device_path = fake_gnome_vfs_device_get_something (device,
-		&my_gnome_vfs_volume_get_mount_path,
-		&gnome_vfs_drive_get_device_path);
-
-	g_strstrip (name);
-	escaped_name = escape_label_for_menu (name);
-	g_free (name);
-	label = g_strdup_printf (_("Play Disc '%s'"), escaped_name);
-	g_free (escaped_name);
-
-	name = g_strdup_printf (_("device%d"), position);
-	action = gtk_action_new (name, label, NULL, NULL);
-	g_object_set (G_OBJECT (action), "icon-name", icon_name,
-		      "sensitive", !disabled, NULL);
-	gtk_action_group_add_action (totem->devices_action_group, action);
-	g_object_unref (action);
-	gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
-		"/tmw-menubar/movie/devices-placeholder", name, name,
-		GTK_UI_MANAGER_MENUITEM, FALSE);
-	g_free (name);
-	g_free (label);
-	g_free (icon_name);
-
-	if (disabled != FALSE) {
-		g_free (device_path);
-		return;
-	}
-
-	g_object_set_data_full (G_OBJECT (action),
-				"device_path", device_path,
-				(GDestroyNotify) g_free);
-
-	g_signal_connect (G_OBJECT (action), "activate",
-			G_CALLBACK (on_play_disc_activate), totem);
+	g_list_free (volumes);
 }
 
 static void
-update_drives_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
+update_drive_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 {
-	GList *devices, *volumes, *drives, *i;
+	GList *drives, *i;
 	guint position;
 
-	/* Create a list of suitable devices */
-	devices = NULL;
-
-	volumes = gnome_vfs_volume_monitor_get_mounted_volumes
-		(totem->monitor);
-	for (i = volumes; i != NULL; i = i->next) {
-		if (gnome_vfs_volume_get_device_type (i->data) != GNOME_VFS_DEVICE_TYPE_CDROM)
-			continue;
-
-		gnome_vfs_volume_ref (i->data);
-		devices = g_list_append (devices, i->data);
-	}
-	gnome_vfs_drive_volume_list_free (volumes);
-
-	drives = gnome_vfs_volume_monitor_get_connected_drives (totem->monitor);
-	for (i = drives; i != NULL; i = i->next) {
-		if (gnome_vfs_drive_get_device_type (i->data) != GNOME_VFS_DEVICE_TYPE_CDROM)
-			continue;
-		else if (gnome_vfs_drive_is_mounted (i->data))
-			continue;
-
-		gnome_vfs_volume_ref (i->data);
-		devices = g_list_append (devices, i->data);
-	}
-	gnome_vfs_drive_volume_list_free (drives);
-
-	/* Add the devices to the menu */
+	/* Add any suitable devices to the menu */
 	position = 0;
 
-	for (i = devices; i != NULL; i = i->next) {
-		position++;
-		add_device_to_menu (i->data, position, totem);
-	}
+	drives = g_volume_monitor_get_connected_drives (totem->monitor);
+	for (i = drives; i != NULL; i = i->next) {
+		/* FIXME: We used to explicitly check whether it was a CD/DVD drive */
+		if (g_drive_can_eject (i->data) == FALSE)
+			continue;
 
-	g_list_foreach (devices, (GFunc) g_object_unref, NULL);
-	g_list_free (devices);
+		position++;
+		add_drive_to_menu (i->data, position, totem);
+	}
+	g_list_free (drives);
 
 	totem->drives_changed = FALSE;
 }
@@ -961,11 +929,9 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 	gtk_ui_manager_insert_action_group (totem->ui_manager,
 			totem->devices_action_group, -1);
 
+	update_drive_menu_items (movie_menuitem, totem);
 
-	if (totem->drives_changed != FALSE)
-		update_drives_menu_items (movie_menuitem, totem);
-
-	/* check for DVB */
+	/* Check for DVB */
 	/* FIXME we should only update if we have an updated as per HAL */
 	update_dvb_menu_items (movie_menuitem, totem);
 
@@ -973,9 +939,9 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 }
 
 static void
-on_gnome_vfs_monitor_event (GnomeVFSVolumeMonitor *monitor,
-		GnomeVFSDrive *drive,
-		Totem *totem)
+on_g_volume_monitor_event (GVolumeMonitor *monitor,
+			   gpointer *device,
+			   Totem *totem)
 {
 	totem->drives_changed = TRUE;
 }
@@ -990,17 +956,17 @@ totem_setup_play_disc (Totem *totem)
 			G_CALLBACK (on_movie_menu_select), totem);
 
 	g_signal_connect (G_OBJECT (totem->monitor),
-			"drive-connected",
-			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+			"volume-added",
+			G_CALLBACK (on_g_volume_monitor_event), totem);
 	g_signal_connect (G_OBJECT (totem->monitor),
-			"drive-disconnected",
-			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+			"volume-removed",
+			G_CALLBACK (on_g_volume_monitor_event), totem);
 	g_signal_connect (G_OBJECT (totem->monitor),
-			"volume-mounted",
-			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+			"mount-added",
+			G_CALLBACK (on_g_volume_monitor_event), totem);
 	g_signal_connect (G_OBJECT (totem->monitor),
-			"volume-unmounted",
-			G_CALLBACK (on_gnome_vfs_monitor_event), totem);
+			"mount-removed",
+			G_CALLBACK (on_g_volume_monitor_event), totem);
 
 	totem->drives_changed = TRUE;
 }

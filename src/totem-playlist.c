@@ -29,8 +29,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gconf/gconf-client.h>
-#include <libgnomevfs/gnome-vfs.h>
-#include <libgnomevfs/gnome-vfs-mime-utils.h>
+#include <gio/gio.h>
 #include <string.h>
 
 #include "totem-uri.h"
@@ -259,17 +258,18 @@ totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 	gtk_widget_show (error_dialog);
 }
 
-/* This one returns a new string, in UTF8 even if the mrl is encoded
+/* This one returns a new string, in UTF8 even if the MRL is encoded
  * in the locale's encoding
  */
 static char *
 totem_playlist_mrl_to_title (const gchar *mrl)
 {
-	char *filename_for_display, *filename, *unescaped;
+	GFile *file;
+	char *filename_for_display, *unescaped;
 
-	filename = g_path_get_basename (mrl);
-	unescaped = gnome_vfs_unescape_string_for_display (filename);
-	g_free (filename);
+	file = g_file_new_for_uri (mrl);
+	unescaped = g_file_get_basename (file);
+	g_object_unref (file);
 
 	filename_for_display = g_filename_to_utf8 (unescaped,
 			-1,             /* length */
@@ -1840,35 +1840,32 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 }
 
 static int
-totem_playlist_compare_with_volume (gpointer a, gpointer b)
+totem_playlist_compare_with_mount (gpointer a, gpointer b)
 {
-	GnomeVFSVolume *clear_volume = (GnomeVFSVolume *) b;
+	GMount *clear_mount = (GMount *) b;
 	const char *mrl = (const char *) a;
 
-	GnomeVFSVolume *volume;
-	GnomeVFSVolumeMonitor *monitor;
+	GMount *mount;
 	gboolean retval = FALSE;
 
-	monitor = gnome_vfs_get_volume_monitor ();
+	mount = totem_get_mount_for_media (mrl);
 
-	volume = totem_get_volume_for_media (mrl);
-
-	if (volume == clear_volume)
+	if (mount == clear_mount)
 		retval = TRUE;
 
-	if (volume != NULL)
-		gnome_vfs_volume_unref (volume);
+	if (mount != NULL)
+		g_object_unref (mount);
 
 	return retval;
 }
 
 void
-totem_playlist_clear_with_gnome_vfs_volume (TotemPlaylist *playlist,
-					    GnomeVFSVolume *volume)
+totem_playlist_clear_with_g_mount (TotemPlaylist *playlist,
+				   GMount *mount)
 {
 	totem_playlist_clear_with_compare (playlist,
-					   (GCompareFunc) totem_playlist_compare_with_volume,
-					   volume);
+					   (GCompareFunc) totem_playlist_compare_with_mount,
+					   mount);
 }
 
 char *
