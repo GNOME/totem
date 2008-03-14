@@ -17,7 +17,7 @@ namespace Totem {
 
 		[NoArrayLength]
 		[CCode (cname = "totem_plugin_activate")]
-		public abstract void activate (Totem.Object totem);
+		public abstract bool activate (Totem.Object totem) throws GLib.Error;
 		[NoArrayLength]
 		[CCode (cname = "totem_plugin_deactivate")]
 		public abstract void deactivate (Totem.Object totem);
