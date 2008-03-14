@@ -2,8 +2,9 @@ using GLib;
 using Totem;
 
 class SampleValaPlugin: Totem.Plugin {
-	public override void activate (Totem.Object totem) {
+	public override bool activate (Totem.Object totem) throws GLib.Error {
 		stdout.printf ("Hello world\n");
+		return true;
 	}
 
 	public override void deactivate (Totem.Object totem) {
