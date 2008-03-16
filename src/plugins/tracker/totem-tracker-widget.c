@@ -31,8 +31,7 @@
 #include <tracker.h>
 #include <tracker-client.h>
 #include <glib/gi18n-lib.h>
-#include <libgnomevfs/gnome-vfs.h>
-#include <libgnomeui/gnome-thumbnail.h>
+#include <gio/gio.h>
 
 #include "totem-tracker-widget.h"
 #include "totem-cell-renderer-video.h"
@@ -138,18 +137,20 @@ static void
 populate_result (TotemTrackerWidget *widget, char *result)
 {
 	GtkTreeIter iter;
-	GnomeVFSFileInfo *info;
-	GnomeVFSResult vfs_result;
+	GFile *file;
+	GFileInfo *info;
+	GError *error = NULL;
 	GdkPixbuf *thumbnail = NULL;
-	char *thumbnail_path, *file_uri;
+	const char *thumbnail_path;
+	char *file_uri;
 
-	info = gnome_vfs_file_info_new ();
-	vfs_result = gnome_vfs_get_file_info (result, info, GNOME_VFS_FILE_INFO_NAME_ONLY);
+	file = g_file_new_for_path (result);
+	info = g_file_query_info (file, "standard::display-name,thumbnail::path", G_FILE_QUERY_INFO_NONE, NULL, &error);
 
-	if (vfs_result == GNOME_VFS_OK) {
+	if (error == NULL) {
 		gtk_list_store_append (GTK_LIST_STORE (widget->priv->result_store), &iter);  /* Acquire an iterator */
-		file_uri = gnome_vfs_get_uri_from_local_path (result);
-		thumbnail_path = gnome_thumbnail_path_for_uri (file_uri, GNOME_THUMBNAIL_SIZE_NORMAL);
+		file_uri = g_file_get_uri (file);
+		thumbnail_path = g_file_info_get_attribute_byte_string (info, G_FILE_ATTRIBUTE_THUMBNAIL_PATH);
 
 		if (thumbnail_path != NULL)
 			thumbnail = gdk_pixbuf_new_from_file (thumbnail_path, NULL);
@@ -157,21 +158,22 @@ populate_result (TotemTrackerWidget *widget, char *result)
 		gtk_list_store_set (GTK_LIST_STORE (widget->priv->result_store), &iter,
 				    IMAGE_COLUMN, thumbnail,
 				    FILE_COLUMN, file_uri,
-				    NAME_COLUMN, info->name,
+				    NAME_COLUMN, g_file_info_get_attribute_string (info, G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME),
 				    -1);
 
-		g_free (thumbnail_path);
 		g_free (file_uri);
 		if (thumbnail != NULL)
 			g_object_unref (thumbnail);
 	} else {
 		/* Display an error */
-		char *message = g_strdup_printf (_("Could not get metadata for file %s."), result);
+		char *message = g_strdup_printf (_("Could not get metadata for file %s: %s"), result, error->message);
 		totem_interface_error_blocking	(_("File Error"), message, NULL);
 		g_free (message);
+		g_error_free (error);
 	}
 
-	g_free (info);
+	g_object_unref (info);
+	g_object_unref (file);
 }
 
 static int
