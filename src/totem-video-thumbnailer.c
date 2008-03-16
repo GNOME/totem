@@ -39,7 +39,6 @@
 #ifndef HAVE_GTK_ONLY
 #include <libgnomeui/gnome-authentication-manager.h>
 #endif
-#include <libgnomevfs/gnome-vfs-init.h>
 #include "bacon-video-widget.h"
 #include "totem-resources.h"
 
@@ -469,8 +468,6 @@ int main (int argc, char *argv[])
 		g_log_set_always_fatal (fatal_mask);
 	}
 #endif /* THUMB_DEBUG */
-
-	gnome_vfs_init ();
 
 #ifndef HAVE_GTK_ONLY
 	gnome_authentication_manager_init ();

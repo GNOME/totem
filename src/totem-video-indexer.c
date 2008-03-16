@@ -40,8 +40,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
-#include <libgnomevfs/gnome-vfs-init.h>
 #include <glib/gi18n.h>
 
 #include "totem-resources.h"
@@ -171,7 +169,6 @@ int main (int argc, char **argv)
 	gnome_authentication_manager_init ();
 #endif
 
-	gnome_vfs_init ();
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", error->message);
 		g_error_free (error);
