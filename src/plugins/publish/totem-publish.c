@@ -39,7 +39,7 @@
 #include <libepc/service-monitor.h>
 
 #include <libepc-ui/progress-window.h>
-#include <libgnomevfs/gnome-vfs.h>
+#include <gio/gio.h>
 
 #include "ev-sidebar.h"
 #include "totem-plugin.h"
@@ -228,19 +228,20 @@ totem_publish_plugin_stream_cb (EpcContents *contents,
 				gsize       *length,
 				gpointer     data)
 {
-	GnomeVFSHandle *handle = data;
-	GnomeVFSFileSize size = 65536;
+	GInputStream *stream = data;
+	gssize size = 65536;
 
 	g_return_val_if_fail (NULL != contents, FALSE);
 	g_return_val_if_fail (NULL != length, FALSE);
 
-	if (NULL == data || *length < size) {
-		*length = MAX (*length, size);
+	if (NULL == data || *length < ABS (size)) {
+		*length = MAX (*length, ABS (size));
 		return FALSE;
 	}
 
-	if (GNOME_VFS_OK != gnome_vfs_read (handle, buffer, size, &size)) {
-		gnome_vfs_close (handle);
+	size = g_input_stream_read (stream, buffer, size, NULL, NULL);
+	if (size == -1) {
+		g_input_stream_close (stream, NULL, NULL);
 		size = 0;
 	}
 
@@ -254,11 +255,19 @@ totem_publish_plugin_media_cb (EpcPublisher *publisher,
 			       const gchar  *key,
 			       gpointer      data)
 {
-	GnomeVFSHandle *handle = NULL;
+	GFileInputStream *stream;
 	const gchar *url = data;
+	GFile *file;
 
-	if (GNOME_VFS_OK == gnome_vfs_open (&handle, url, GNOME_VFS_OPEN_READ))
-		return epc_contents_stream_new (NULL, totem_publish_plugin_stream_cb, handle, NULL);
+	file = g_file_new_for_uri (url);
+	stream = g_file_read (file, NULL, NULL);
+	g_object_unref (file);
+
+	if (stream) {
+		EpcContents *output = epc_contents_stream_new (NULL, totem_publish_plugin_stream_cb, stream, NULL);
+		g_object_unref (stream);
+		return output;
+	}
 
 	return NULL;
 }

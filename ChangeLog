@@ -1,5 +1,11 @@
 2008-03-16  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* src/plugins/publish/totem-publish.c:
+	(totem_publish_plugin_stream_cb), (totem_publish_plugin_media_cb):
+	Convert the Publish plugin to GIO. (Closes: #512589)
+
+2008-03-16  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* configure.in:
 	* src/plugins/tracker/totem-tracker-widget.c: (populate_result):
 	Convert the Tracker plugin to GIO and remove its dependency on
