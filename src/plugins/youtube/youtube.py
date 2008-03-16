@@ -97,29 +97,42 @@ class YouTube (totem.Plugin):
 		self.youtube_id = youtube_id
 		self.start_index["related"] = 1
 		self.results["related"] = 0
-		self.get_results ("/feeds/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
+		self.get_results ("/feeds/api/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
+	def check_url_for_redirects (self, url_path):
+		try:
+			conn = httplib.HTTPConnection ("www.youtube.com")
+			conn.request ("GET", url_path)
+			response = conn.getresponse ()
+			conn.close ()
+		except:
+			print "Could not resolve stream MRL for YouTube video \"" + url_path + "\"."
+			return False
+
+		if response.status >= 300 and response.status < 400:
+			return response.getheader("location")
+		else:
+			return False
 	def on_starting_video (self, treeview, path, user_data):
 		model, rows = treeview.get_selection ().get_selected_rows ()
 		iter = model.get_iter (rows[0])
 		youtube_id = model.get_value (iter, 3)
 
 		"""Get the video stream MRL"""
-		try:
-			conn = httplib.HTTPConnection ("www.youtube.com")
-			conn.request ("GET", "/v/" + urllib.quote (youtube_id))
-			response = conn.getresponse ()
-		except:
-			print "Could not resolve stream MRL for YouTube video \"" + youtube_id + "\"."
-			return True
+		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
 
-		if response.status == 303:
-			location = response.getheader("location")
+		if location != False:
 			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
+			"""location_check = self.check_url_for_redirects (mrl)
+			if location_check != False:
+				mrl = location_check
+			else:
+				mrl = "http://www.youtube.com" + mrl"""
 		else:
-			mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
-		conn.close ()
+			"""Leave it as taken from the GData feed"""
+			mrl = False
 
-		model.set_value (iter, 2, mrl)
+		if mrl != False:
+			model.set_value (iter, 2, mrl)
 
 		return True
 	def on_button_press_event (self, widget, event):
@@ -132,11 +145,11 @@ class YouTube (totem.Plugin):
 		if not self.button_down and (adjustment.get_value () + adjustment.page_size) / adjustment.upper > 0.8 and self.results[self.current_treeview_name] >= self.max_results:
 			self.results[self.current_treeview_name] = 0
 			if self.current_treeview_name == "search":
-				self.get_results ("/feeds/videos?vq=" + urllib.quote_plus (self.search_terms) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index["search"]), "search", False)
+				self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (self.search_terms) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index["search"]), "search", False)
 				if self.debug:
 					print "Getting more results for search \"" + self.search_terms + "\" from offset " + str (self.start_index["search"])
 			elif self.current_treeview_name == "related":
-				self.get_results ("/feeds/videos/" + urllib.quote_plus (self.youtube_id) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index["related"]), "related", False)
+				self.get_results ("/feeds/api/videos/" + urllib.quote_plus (self.youtube_id) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index["related"]), "related", False)
 				if self.debug:
 					print "Getting more related videos for video \"" + self.youtube_id + "\" from offset " + str (self.start_index["related"])
 	def convert_url_to_id (self, url):
@@ -163,14 +176,18 @@ class YouTube (totem.Plugin):
 		self.results[treeview_name] += 1
 		self.start_index[treeview_name] += 1
 		youtube_id = self.convert_url_to_id (entry.id.text)
-		mrl = "http://www.youtube.com/v/" + urllib.quote (youtube_id)
 
 		self.entry_lock.release ()
 
-		"""Find the thumbnail tag"""
+		"""Find the content tag"""
 		for _element in entry.extension_elements:
-			if _element.tag == "group":
-				break
+			if _element.tag =="group":
+				break;
+
+		content_elements = _element.FindChildren ("content")
+		if len (content_elements) == 0:
+			return True;
+		mrl = content_elements[0].attributes['url']
 
 		"""Download the thumbnail and store it in a temporary location so we can get a pixbuf from it"""
 		thumbnail_url = _element.FindChildren ("thumbnail")[0].attributes['url']
@@ -204,7 +221,7 @@ class YouTube (totem.Plugin):
 		self.search_terms = search_terms
 		self.start_index["search"] = 1
 		self.results["search"] = 0
-		self.get_results ("/feeds/videos?vq=" + urllib.quote_plus (search_terms) + "&orderby=relevance&max-results=" + str (self.max_results), "search")
+		self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (search_terms) + "&orderby=relevance&max-results=" + str (self.max_results), "search")
 	def on_search_entry_activated (self, entry):
 		self.search_button.clicked ()
 	def get_results (self, url, treeview_name, clear = True):
