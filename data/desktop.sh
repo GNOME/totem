@@ -10,3 +10,4 @@ for i in $MIMETYPES ; do
 	echo_mime;
 done
 
+echo ""
