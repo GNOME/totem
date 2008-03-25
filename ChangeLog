@@ -1,5 +1,12 @@
 2008-03-25  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* src/plugins/publish/totem-publish.c:
+	(totem_publish_plugin_media_cb): Patch from  Mathias Hasselmann
+	<mathias.hasselmann@gmx.de> to properly unref the input stream in
+	the publish plugin. (Closes: #512589)
+
+2008-03-25  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/totem.c: (main): Patch from Krzysztof Kotlenga
 	<piernik@gmail.com> to fix a crash on an unrecognised command line.
 	(Closes: #522070)

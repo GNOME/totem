@@ -264,8 +264,10 @@ totem_publish_plugin_media_cb (EpcPublisher *publisher,
 	g_object_unref (file);
 
 	if (stream) {
-		EpcContents *output = epc_contents_stream_new (NULL, totem_publish_plugin_stream_cb, stream, NULL);
-		g_object_unref (stream);
+		EpcContents *output = epc_contents_stream_new (
+			NULL, totem_publish_plugin_stream_cb,
+			stream, g_object_unref);
+
 		return output;
 	}
 
