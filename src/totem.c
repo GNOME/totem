@@ -3114,7 +3114,10 @@ main (int argc, char **argv)
 #ifdef HAVE_GTK_ONLY
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
-		totem_action_error_and_exit (_("Totem could not parse the command-line options"), error->message, NULL);
+		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
+				error->message, argv[0]);
+		g_error_free (error);
+		totem_action_exit (NULL);
 	}
 #else
 	program = gnome_program_init (PACKAGE, VERSION,
