@@ -16,7 +16,11 @@ class DownloadThread (threading.Thread):
 		threading.Thread.__init__ (self)
 	def run (self):
 		self.youtube.entry_lock.acquire (True)
-		self.youtube.entry[self.treeview_name] = self.youtube.service.Get (self.url).entry
+		try:
+			self.youtube.entry[self.treeview_name] = self.youtube.service.Get (self.url).entry
+		except RequestError:
+			"""Probably a 503 service unavailable. Unfortunately we can't give an error message, as we're not in the GUI thread"""
+			"""Just let the lock go and return"""
 		self.youtube.entry_lock.release ()
 
 class YouTube (totem.Plugin):
