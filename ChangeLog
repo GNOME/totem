@@ -1,3 +1,12 @@
+2008-03-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_finalize),
+	(bvw_update_brightness_and_contrast_from_gconf),
+	(bvw_update_colorbalance_from_gconf_delayed),
+	(bvw_update_interface_implementations), (bacon_video_widget_new):
+	Backport fix for #471159
+
 2008-01-15  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plparse/Makefile.am: Use 64-bit versions of the
