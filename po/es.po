@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-16 12:51+0000\n"
-"PO-Revision-Date: 2008-03-16 14:52+0100\n"
+"POT-Creation-Date: 2008-03-25 15:20+0000\n"
+"PO-Revision-Date: 2008-03-30 11:04+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -511,7 +511,7 @@ msgstr "Barra de tiempo"
 
 #. Title
 #: ../data/totem.ui.h:73 ../src/totem.c:901 ../src/totem.c:3099
-#: ../src/totem.c:3128 ../browser-plugin/totem-plugin-viewer.c:1911
+#: ../src/totem.c:3131 ../browser-plugin/totem-plugin-viewer.c:1911
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
@@ -1582,14 +1582,19 @@ msgid "- Play movies and songs"
 msgstr "- Reproduzca películas y canciones"
 
 #: ../src/totem.c:3117
-msgid "Totem could not parse the command-line options"
-msgstr "Totem no pudo analizar las opciones de línea de comandos"
+#, c-format
+msgid ""
+"%s\n"
+"Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+"%s\n"
+"Ejecute \"%s --help\" para ver una lista completa de todas las opciones disponibles de la línea de comandos.\n"
 
-#: ../src/totem.c:3134
+#: ../src/totem.c:3137
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3134
+#: ../src/totem.c:3137
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
@@ -2135,7 +2140,7 @@ msgstr "%d Kbps"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/publish/totem-publish.c:571
+#: ../src/plugins/publish/totem-publish.c:580
 msgid "Neighbours"
 msgstr "Vecinos"
 
