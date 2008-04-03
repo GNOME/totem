@@ -1,3 +1,11 @@
+2008-04-03  Bastien Nocera  <hadess@hadess.net>
+
+        * src/backend/bacon-video-widget-gst-0.10.c
+	(bvw_update_interface_implementations):
+	Fix unreffing a non-reffed element, fixes warnings
+	when ximagesink is forced (Closes: #524807)
+	Patch from Sjoerd Simons <sjoerd@luon.net>
+
 2008-03-28  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/plugins/youtube/youtube.py: Don't fall over if the YouTube
