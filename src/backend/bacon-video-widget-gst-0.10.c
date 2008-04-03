@@ -4872,7 +4872,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     element = gst_bin_get_by_interface (GST_BIN (video_sink),
                                         GST_TYPE_X_OVERLAY);
   } else {
-    element = video_sink;
+    element = gst_object_ref(video_sink);
   }
 
   if (GST_IS_X_OVERLAY (element)) {
@@ -4880,6 +4880,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     bvw->priv->xoverlay = GST_X_OVERLAY (element);
   } else {
     GST_DEBUG ("No xoverlay found");
+    gst_object_unref (element);
     bvw->priv->xoverlay = NULL;
   }
 
