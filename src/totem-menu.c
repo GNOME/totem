@@ -805,18 +805,12 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 
 			mount = g_volume_get_mount (i->data);
 			if (mount != NULL) {
-				char *path;
-
 				root = g_mount_get_root (mount);
 				g_object_unref (mount);
 
-				path = g_file_get_path (root);
 				if (g_file_has_uri_scheme (root, "burn") != FALSE || g_file_has_uri_scheme (root, "cdda") != FALSE)
 					disabled = TRUE;
 				g_object_unref (root);
-
-				g_message ("device path: %s", path);
-				g_free (path);
 			}
 		}
 
