@@ -1,5 +1,12 @@
 2008-04-03  Bastien Nocera  <hadess@hadess.net>
 
+	* bindings/python/override_common.c:
+	* bindings/python/override_common.h: Fix missing
+	exception, the code was relicensed as part of the
+	plugins code relicensing already (Helps: #525856)
+
+2008-04-03  Bastien Nocera  <hadess@hadess.net>
+
         * src/backend/bacon-video-widget-gst-0.10.c
 	(bvw_update_interface_implementations):
 	Fix unreffing a non-reffed element, fixes warnings

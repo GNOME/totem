@@ -21,6 +21,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA.
  *
+ * Sunday 13th May 2007: Bastien Nocera: Add exception clause.
+ * See license_change file for details.
+ *
  */
 
 #ifndef __OVERRIDE_COMMON_H
