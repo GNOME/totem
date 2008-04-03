@@ -770,38 +770,66 @@ on_play_dvb_activate (GtkAction *action, Totem *totem)
 static void
 add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 {
-	char *name, *escaped_name, *device_path, *label;
-	GtkAction *action;
-	gboolean disabled = FALSE;
+	GtkIconTheme *theme;
 	GList *volumes, *i;
-	GMount *mount;
-	GFile *root;
-	GIcon *icon;
-	const char * const *icon_names;
+
+	theme = gtk_icon_theme_get_default ();
 
 	/* Repeat for all the drive's volumes */
 	volumes = g_drive_get_volumes (drive);
 
 	for (i = volumes; i != NULL; i = i->next) {
-		/* Add devices with blank CDs and audio CDs in them, but disable them */
-		mount = g_volume_get_mount (i->data);
+		char *name, *escaped_name, *label;
+		GtkAction *action;
+		gboolean disabled;
+		GIcon *icon;
+		const char * const *icon_names;
+		const char *icon_name;
+		guint j;
+		char *device_path;
 
-		if (mount == NULL)
+		disabled = FALSE;
+
+		/* Add devices with blank CDs and audio CDs in them, but disable them */
+		device_path = g_volume_get_identifier (i->data, G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+		if (device_path == NULL)
 			continue;
 
-		root = g_mount_get_root (mount);
-		g_object_unref (mount);
-
-		device_path = g_file_get_path (root);
-
-		if (g_file_has_uri_scheme (root, "burn") != FALSE || g_file_has_uri_scheme (root, "cdda") != FALSE)
+		/* Check whether we have a media... */
+		if (g_drive_has_media (drive) == FALSE) {
 			disabled = TRUE;
-		if (root == NULL)
-			disabled = !totem_cd_has_medium (device_path);
+		} else {
+			/* ... Or an audio CD or a blank media */
+			GMount *mount;
+			GFile *root;
+
+			mount = g_volume_get_mount (i->data);
+			if (mount != NULL) {
+				char *path;
+
+				root = g_mount_get_root (mount);
+				g_object_unref (mount);
+
+				path = g_file_get_path (root);
+				if (g_file_has_uri_scheme (root, "burn") != FALSE || g_file_has_uri_scheme (root, "cdda") != FALSE)
+					disabled = TRUE;
+				g_object_unref (root);
+
+				g_message ("device path: %s", path);
+				g_free (path);
+			}
+		}
 
 		/* Work out an icon to display */
 		icon = g_volume_get_icon (i->data);
+		icon_name = NULL;
 		icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+
+		for (j = 0; icon_names[j] != NULL; j++) {
+			icon_name = icon_names[j];
+			if (gtk_icon_theme_has_icon (theme, icon_name) != FALSE)
+				break;
+		}
 
 		/* Get the volume's pretty name for the menu label */
 		name = g_volume_get_name (i->data);
@@ -815,7 +843,7 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 
 		action = gtk_action_new (name, label, NULL, NULL);
 		g_object_set (G_OBJECT (action),
-			      "icon-name", icon_names[0],
+			      "icon-name", icon_name,
 			      "sensitive", !disabled, NULL);
 		gtk_action_group_add_action (totem->devices_action_group, action);
 		g_object_unref (action);
@@ -855,7 +883,9 @@ update_drive_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 
 	drives = g_volume_monitor_get_connected_drives (totem->monitor);
 	for (i = drives; i != NULL; i = i->next) {
-		/* FIXME: We used to explicitly check whether it was a CD/DVD drive */
+		/* FIXME: We used to explicitly check whether it was a CD/DVD drive
+		 * Use:
+		 * udi = g_volume_get_identifier (i->data, G_VOLUME_IDENTIFIER_KIND_HAL_UDI); */
 		if (g_drive_can_eject (i->data) == FALSE)
 			continue;
 
