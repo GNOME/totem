@@ -1,3 +1,12 @@
+2008-04-05  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_get_subtitled): If the subtitle
+	file isn't local, try to get its local FUSE path via
+	GVFS (Closes: #520910)
+	* src/totem-uri.c (totem_add_subtitle): Allow loading remote
+	subtitles for all the backends
+
 2008-04-03  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-menu.c (add_drive_to_menu): Remove debug

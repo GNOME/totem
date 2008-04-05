@@ -40,6 +40,7 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 /* gtk+/gnome */
+#include <gio/gio.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <gconf/gconf-client.h>
@@ -2248,8 +2249,25 @@ bacon_video_widget_get_backend_name (BaconVideoWidget *bvw)
 static char *
 bacon_video_widget_get_subtitled (const char *mrl, const char *subtitle_uri)
 {
-	g_return_val_if_fail (g_str_has_prefix (subtitle_uri, "file://"), NULL);
-	return g_strdup_printf ("%s#subtitle:%s", mrl, subtitle_uri + strlen ("file://"));
+	GFile *file;
+	char *local_path, *local_uri, *retval;
+
+	file = g_file_new_for_uri (subtitle_uri);
+	local_path = g_file_get_path (file);
+	g_object_unref (file);
+
+	if (local_path == NULL)
+		return NULL;
+
+	local_uri = g_filename_to_uri (local_path, NULL, NULL);
+	g_free (local_path);
+	if (local_uri == NULL)
+		return NULL;
+
+	retval = g_strdup_printf ("%s#subtitle:%s", mrl, local_uri + strlen ("file://"));
+	g_free (local_uri);
+
+	return retval;
 }
 
 static void

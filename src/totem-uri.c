@@ -490,7 +490,7 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 					  GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 					  NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
-	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), TRUE);
+	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
@@ -516,10 +516,7 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 	totem_add_default_dirs (GTK_FILE_CHOOSER (fs));
 
 	if (gtk_dialog_run (GTK_DIALOG (fs)) == GTK_RESPONSE_ACCEPT) {
-		char *filename;
-		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fs));
-		subtitle = g_filename_to_uri (filename, NULL, NULL);
-		g_free(filename);		
+		subtitle = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
 	}
 
 	gtk_widget_destroy (fs);
