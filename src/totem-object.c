@@ -37,6 +37,7 @@
 #include "totem-plugins-engine.h"
 #include "ev-sidebar.h"
 #include "totem-playlist.h"
+#include "bacon-video-widget.h"
 
 enum {
 	PROP_0,
@@ -231,6 +232,12 @@ totem_get_video_widget (Totem *totem)
 	g_object_ref (G_OBJECT (totem->bvw));
 
 	return GTK_WIDGET (totem->bvw);
+}
+
+char *
+totem_get_video_widget_backend_name (Totem *totem)
+{
+	return bacon_video_widget_get_backend_name (totem->bvw);
 }
 
 gint64

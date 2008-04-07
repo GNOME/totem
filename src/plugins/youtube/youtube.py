@@ -23,6 +23,7 @@ class YouTube (totem.Plugin):
 	def __init__ (self):
 		totem.Plugin.__init__(self)
 		self.debug = False
+		self.gstreamer_plugins_present = True
 
 		self.max_results = 20
 		self.button_down = False
@@ -41,6 +42,23 @@ class YouTube (totem.Plugin):
 		self.vadjust = {}
 		self.liststore = {}
 	def activate (self, totem_object):
+		"""Check for the availability of the flvdemux and souphttpsrc GStreamer plugins"""
+		bvw_name = totem_object.get_video_widget_backend_name ()
+
+		if bvw_name.find ("GStreamer") != -1:
+			try:
+				import pygst
+				pygst.require ("0.10")
+				import gst
+
+				registry = gst.registry_get_default ()
+				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("souphttpsrc") == None:
+					"""This means an error will be displayed when they try to play anything"""
+					self.gstreamer_plugins_present = False
+			except ImportError:
+				"""Do nothing; either it's using xine or python-gstreamer isn't installed"""
+
+		"""Continue loading the plugin as before"""		
 		self.builder = self.load_interface ("youtube.ui", True, totem_object.get_main_window (), self)
 		self.totem = totem_object
 
@@ -75,7 +93,7 @@ class YouTube (totem.Plugin):
 		treeview = self.builder.get_object ("yt_treeview_" + treeview_name)
 		treeview.set_property ("totem", self.totem)
 		treeview.connect ("row-activated", self.on_row_activated)
-		treeview.connect ("starting-video", self.on_starting_video)
+		treeview.connect_after ("starting-video", self.on_starting_video)
 		treeview.insert_column_with_attributes (0, _("Videos"), renderer, thumbnail=0, title=1)
 
 		self.vadjust[treeview_name] = treeview.get_vadjustment ()
@@ -99,6 +117,15 @@ class YouTube (totem.Plugin):
 		self.results["related"] = 0
 		self.get_results ("/feeds/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
 	def on_starting_video (self, treeview, path, user_data):
+		"""Display an error if the required GStreamer plugins aren't installed"""
+		if self.gstreamer_plugins_present == False:
+			self.totem.interface_error_with_link (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it.") % _("YouTube"),
+							      _("Please install the necessary plugins and restart Totem to be able to play this media."),
+							      "http://www.gnome.org/projects/totem/#codecs",
+							      _("More information about media plugins"),
+							      self.totem.get_main_window ())
+			return False
+
 		model, rows = treeview.get_selection ().get_selected_rows ()
 		iter = model.get_iter (rows[0])
 		youtube_id = model.get_value (iter, 3)
@@ -110,7 +137,7 @@ class YouTube (totem.Plugin):
 			response = conn.getresponse ()
 		except:
 			print "Could not resolve stream MRL for YouTube video \"" + youtube_id + "\"."
-			return True
+			return False
 
 		if response.status == 303:
 			location = response.getheader("location")

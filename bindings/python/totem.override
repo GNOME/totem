@@ -66,6 +66,23 @@ _wrap_totem_action_error (PyGObject *self, PyObject *args, PyObject *kwargs)
 	return Py_None;
 }
 %%
+override totem_interface_error_with_link kwargs
+static PyObject *
+_wrap_totem_interface_error_with_link (PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+	static char *kwlist[] = { "title", "reason", "uri", "label", "parent", NULL };
+	char *title, *reason, *uri, *label;
+	PyGObject *parent;
+
+	if (!PyArg_ParseTupleAndKeywords (args, kwargs, "ssssO!:TotemObject.interface_error_with_link", kwlist, &title, &reason, &uri, &label, &PyGtkWindow_Type, &parent))
+		return NULL;
+    
+	totem_interface_error_with_link (title, reason, uri, label, GTK_WINDOW(parent->obj), TOTEM_OBJECT(self->obj));
+    
+	Py_INCREF (Py_None);
+	return Py_None;
+}
+%%
 override totem_plugin_load_interface kwargs
 static PyObject *
 _wrap_totem_plugin_load_interface (PyGObject *self, PyObject *args, PyObject *kwargs)

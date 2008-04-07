@@ -166,6 +166,7 @@ gboolean totem_is_seekable			(Totem *totem);
 GtkWindow *totem_get_main_window		(Totem *totem);
 GtkUIManager *totem_get_ui_manager		(Totem *totem);
 GtkWidget *totem_get_video_widget		(Totem *totem);
+char *totem_get_video_widget_backend_name	(Totem *totem);
 
 /* Current media information */
 char *	totem_get_short_title			(Totem *totem);

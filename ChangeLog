@@ -1,3 +1,13 @@
+2008-04-07  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* bindings/python/totem.defs:
+	* bindings/python/totem.override:
+	* src/plugins/youtube/youtube.py:
+	* src/totem-object.c: (totem_get_video_widget_backend_name):
+	* src/totem.h: Add runtime checks for flvdemux and souphttpsrc and
+	display an error if they're not present for YouTube videos.
+	(Closes: #522547)
+
 2008-04-07  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in:
