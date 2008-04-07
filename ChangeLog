@@ -1,5 +1,11 @@
 2008-04-07  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/Makefile.am: Fix bugreport script not having
+	a full-path (Closes: #526664)
+
+2008-04-07  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (totem_action_load_media_device):
 	Fix break-statement follow-through crasher when
 	trying to load audio CDs, spotted by Stephen Moehle

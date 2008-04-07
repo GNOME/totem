@@ -44,7 +44,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
-	cat totem.desktop.in.in > $@ &&\
+	cat totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
 	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> $@
 
