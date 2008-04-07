@@ -401,6 +401,12 @@
   (return-type "GtkWidget*")
 )
 
+(define-method get_video_widget_backend_name
+  (of-object "TotemObject")
+  (c-name "totem_get_video_widget_backend_name")
+  (return-type "char*")
+)
+
 (define-method get_current_time
   (of-object "TotemObject")
   (c-name "totem_get_current_time")
@@ -452,3 +458,18 @@
   )
 )
 
+
+;; From totem-interface.h
+
+(define-method interface_error_with_link
+  (of-object "TotemObject")
+  (c-name "totem_interface_error_with_link")
+  (return-type "none")
+  (parameters
+    '("const-char*" "title")
+    '("const-char*" "reason")
+    '("const-char*" "uri")
+    '("const-char*" "label")
+    '("GtkWindow" "parent")
+  )
+)
