@@ -567,6 +567,7 @@ totem_action_load_media_device (Totem *totem, const char *device)
 					    _("Please consider using a music player or a CD extractor to play this CD"),
 					    totem);
 			retval = FALSE;
+			break;
 		default:
 			g_assert_not_reached ();
 	}
