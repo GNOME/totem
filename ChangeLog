@@ -1,3 +1,10 @@
+2008-04-08  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_strdupnv), (bacon_video_widget_get_mrls):
+	xine-lib doesn't NULL terminate its string arrays, so do without
+	(Closes: #526497)
+
 2008-04-07  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* bindings/python/totem.defs:
