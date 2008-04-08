@@ -6,7 +6,7 @@ import httplib
 import atom
 import threading
 import re
-from os import unlink
+import os
 
 class DownloadThread (threading.Thread):
 	def __init__ (self, youtube, url, treeview_name):
@@ -45,6 +45,7 @@ class YouTube (totem.Plugin):
 
 		self.vadjust = {}
 		self.liststore = {}
+		self.treeview = {}
 	def activate (self, totem_object):
 		"""Check for the availability of the flvdemux and souphttpsrc GStreamer plugins"""
 		bvw_name = totem_object.get_video_widget_backend_name ()
@@ -100,6 +101,23 @@ class YouTube (totem.Plugin):
 		treeview.connect_after ("starting-video", self.on_starting_video)
 		treeview.insert_column_with_attributes (0, _("Videos"), renderer, thumbnail=0, title=1)
 
+		"""Add the extra popup menu options. This is done here rather than in the UI file, because it's done for multiple treeviews;
+		if it were done in the UI file, the same action group would be used multiple times, which GTK+ doesn't like."""
+		ui_manager = treeview.get_ui_manager ()
+		action_group = gtk.ActionGroup ("youtube-action-group")
+		action = gtk.Action ("open-in-web-browser", _("_Open in Web Browser"), _("Open the video in your web browser"), "gtk-jump-to")
+		action_group.add_action_with_accel (action, None)
+
+		ui_manager.insert_action_group (action_group, 1)
+		ui_manager.add_ui (ui_manager.new_merge_id (),
+				   "/ui/totem-video-list-popup/",
+				   "open-in-web-browser",
+				   "open-in-web-browser",
+				   gtk.UI_MANAGER_MENUITEM,
+				   False)
+		menu_item = ui_manager.get_action ("/ui/totem-video-list-popup/open-in-web-browser")
+		menu_item.connect ("activate", self.on_open_in_web_browser_activated)
+
 		self.vadjust[treeview_name] = treeview.get_vadjustment ()
 		self.vadjust[treeview_name].connect ("value-changed", self.on_value_changed)
 		vscroll = self.builder.get_object ("yt_scrolled_window_" + treeview_name).get_vscrollbar ()
@@ -107,6 +125,7 @@ class YouTube (totem.Plugin):
 		vscroll.connect ("button-release-event", self.on_button_release_event)
 
 		self.liststore[treeview_name] = self.builder.get_object ("yt_liststore_" + treeview_name)
+		self.treeview[treeview_name] = treeview
 		treeview.set_model (self.liststore[treeview_name])
 	def on_notebook_page_changed (self, notebook, notebook_page, page_num):
 		self.current_treeview_name = self.notebook_pages[page_num]
@@ -166,6 +185,13 @@ class YouTube (totem.Plugin):
 			model.set_value (iter, 2, mrl)
 
 		return True
+	def on_open_in_web_browser_activated (self, action):
+		model, rows = self.treeview[self.current_treeview_name].get_selection ().get_selected_rows ()
+		iter = model.get_iter (rows[0])
+		youtube_id = model.get_value (iter, 3)
+
+		"""Open the video in the browser"""
+		os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", "http://www.youtube.com/watch?v=" + urllib.quote (youtube_id))
 	def on_button_press_event (self, widget, event):
 		self.button_down = True
 	def on_button_release_event (self, widget, event):
@@ -225,17 +251,17 @@ class YouTube (totem.Plugin):
 		try:
 			filename, headers = urllib.urlretrieve (thumbnail_url)
 		except IOError:
-			print "Could not load thumbnail " + thumbnail_url + " for video."
+			print "Could not retrieve thumbnail " + thumbnail_url + " for video."
 			return True
 
 		try:
 			pixbuf = gtk.gdk.pixbuf_new_from_file (filename)
 		except gobject.GError:
-			print "Could not load thumbnail " + filename + " for video. It has been left in place for investigation."
+			print "Could not open thumbnail " + filename + " for video. It has been left in place for investigation."
 			return True
 
 		"""Don't leak the temporary file"""
-		unlink (filename)
+		os.unlink (filename)
 
 		self.liststore[treeview_name].append ([pixbuf, entry.title.text, mrl, youtube_id])
 

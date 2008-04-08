@@ -434,3 +434,9 @@ copy_location_action_callback (GtkAction *action, TotemVideoList *self)
 	g_list_free (l);
 }
 
+GtkUIManager *
+totem_video_list_get_ui_manager (TotemVideoList *self)
+{
+	return self->priv->ui_manager;
+}
+
