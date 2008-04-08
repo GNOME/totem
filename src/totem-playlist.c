@@ -267,6 +267,12 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	GFile *file;
 	char *filename_for_display, *unescaped;
 
+	if (g_str_has_prefix (mrl, "dvd://") != FALSE) {
+		/* This is "Title 3", where title is a DVD title
+		 * Note: NOT a DVD chapter */
+		return g_strdup_printf (_("Title %d"), (int) g_strtod (mrl + 6, NULL));
+	}
+
 	file = g_file_new_for_uri (mrl);
 	unescaped = g_file_get_basename (file);
 	g_object_unref (file);
