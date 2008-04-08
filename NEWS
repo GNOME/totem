@@ -1,5 +1,26 @@
 New features and significant updates in version...
 
+2.23.1:
+* Port large portions of the code to GIO
+* Add audio/x-speex as a supported mime-type
+* Update Vala sample plugin and bindings to use new features
+* Movie Player:
+  - Add an icon to "Clear playlist"
+  - Fix a crash when a command-line argument isn't known in the GTK+
+    only build
+  - Fix the bug report script
+  - Fix crasher when trying to load (unsupported) audio CDs
+* YouTube Plugin:
+  - Make the plugin faster, by downloading less data
+  - Don't crash when the server returns HTTP errors
+  - Check for required GStreamer plugins in the YouTube plugin
+* GStreamer backend:
+  - Fix a possible crash when forcing use of ximagesink (as is the case
+    for small videos on trailers.apple.com)
+* xine-lib backend:
+  - Allow loading remote subtitle files using gvfs' fuse
+  - Fix potential crasher when copying MRLs from the engine
+
 2.23.0:
 * Build the backend as a shared library instead of statically
   inside the front-ends, so they can easily be swapped out
