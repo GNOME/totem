@@ -18,7 +18,7 @@ class DownloadThread (threading.Thread):
 		self.youtube.entry_lock.acquire (True)
 		try:
 			self.youtube.entry[self.treeview_name] = self.youtube.service.Get (self.url).entry
-		except RequestError:
+		except gdata.service.RequestError:
 			"""Probably a 503 service unavailable. Unfortunately we can't give an error message, as we're not in the GUI thread"""
 			"""Just let the lock go and return"""
 		self.youtube.entry_lock.release ()
