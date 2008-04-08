@@ -1,5 +1,17 @@
 New features and significant updates in version...
 
+2.22.1:
+* Add audio/x-speex as a supported mime-type
+* Movie player:
+  - Fix crasher when trying to load (unsupported) audio CDs
+  - Fix the bug report script
+  - Check for required GStreamer plugins in the YouTube plugin
+* GStreamer backend:
+  - Fix a possible crash when forcing use of ximagesink (as is the case
+    for small videos on trailers.apple.com)
+* xine-lib backend:
+  - Fix potential crasher when copying MRLs from the engine
+
 2.22.0:
 
 * Update GTK+ requirement for the accessibility support

@@ -3497,6 +3497,20 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, TotemDiscMediaType type)
 	return BVW_CAN_PLAY_MISSING_PLUGINS;
 }
 
+static char *
+bacon_video_widget_strdupnv (const char **mrls, int num_mrls)
+{
+	guint i;
+	char **retval;
+
+	retval = g_new (gchar*, num_mrls + 1);
+	for (i = 0; i < num_mrls; i++)
+		retval[i] = g_strdup (mrls[i]);
+	retval[num_mrls] = NULL;
+
+	return retval;
+}
+
 char **
 bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 			     TotemDiscMediaType type,
@@ -3552,10 +3566,10 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 			return NULL;
 		/* The first channel can be the last channel played,
 		 * or a copy of the first one, ignore it */
-		return g_strdupv (mrls++);
+		return bacon_video_widget_strdupnv (mrls++, num_mrls - 1);
 	}
 
-	return g_strdupv (mrls);
+	return bacon_video_widget_strdupnv (mrls, num_mrls);
 }
 
 void
