@@ -1,5 +1,15 @@
 2008-04-08  Philip Withnall  <pwithnall@svn.gnome.org>
 
+	* bindings/python/totem.defs: Remove set_mrl_* functions from the
+	bindings, as they bypass the playlist.
+	* src/plugins/totem-plugin.c:
+	* src/totem-cell-renderer-video.c:
+	* src/totem-object.c:
+	* src/totem.c: Add API documentation for most of the plugin-visible
+	API. (Helps: #524119)
+
+2008-04-08  Philip Withnall  <pwithnall@svn.gnome.org>
+
 	* src/plugins/youtube/youtube.py: Fix RequestError exception to
 	actually work.
 

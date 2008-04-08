@@ -121,6 +121,15 @@ long_action (void)
 		gtk_main_iteration ();
 }
 
+/**
+ * totem_action_error:
+ * @title: the error dialog title
+ * @reason: the error dialog text
+ * @totem: a #TotemObject
+ *
+ * Displays a non-blocking error dialog with the
+ * given @title and @reason.
+ **/
 void
 totem_action_error (const char *title, const char *reason, Totem *totem)
 {
@@ -199,6 +208,12 @@ totem_action_wait_force_exit (gpointer user_data)
 	exit (1);
 }
 
+/**
+ * totem_action_exit:
+ * @totem: a #TotemObject
+ *
+ * Closes Totem.
+ **/
 void
 totem_action_exit (Totem *totem)
 {
@@ -367,6 +382,13 @@ totem_action_show_properties (Totem *totem)
 		totem_sidebar_set_current_page (totem, "properties", TRUE);
 }
 
+/**
+ * totem_action_play:
+ * @totem: a #TotemObject
+ *
+ * Plays the current stream. If Totem is already playing, it continues
+ * to play. If the stream cannot be played, and error dialog is displayed.
+ **/
 void
 totem_action_play (Totem *totem)
 {
@@ -431,6 +453,16 @@ totem_action_seek (Totem *totem, double pos)
 	}
 }
 
+/**
+ * totem_action_set_mrl_and_play:
+ * @totem: a #TotemObject
+ * @mrl: the MRL to play
+ * @subtitle: a subtitle file to load, or %NULL
+ *
+ * Loads the specified @mrl and plays it, if possible.
+ * Calls totem_action_set_mrl() then totem_action_play().
+ * For more information, see the documentation for totem_action_set_mrl_with_warning().
+ **/
 void
 totem_action_set_mrl_and_play (Totem *totem, const char *mrl, const char *subtitle)
 {
@@ -578,6 +610,18 @@ totem_action_load_media_device (Totem *totem, const char *device)
 	return retval;
 }
 
+/**
+ * totem_action_play_media_device:
+ * @totem: a #TotemObject
+ * @device: the media device's path
+ *
+ * Attempts to play the media device (for example, a DVD drive or CD drive)
+ * with the given @device path by first adding it to the playlist, then
+ * playing it.
+ *
+ * An error dialog will be displayed if Totem cannot read or play what's on
+ * the media device.
+ **/
 void
 totem_action_play_media_device (Totem *totem, const char *device)
 {
@@ -590,6 +634,17 @@ totem_action_play_media_device (Totem *totem, const char *device)
 	}
 }
 
+/**
+ * totem_action_play_media:
+ * @totem: a #TotemObject
+ * @type: the type of disc media
+ * @device: the media's device path
+ *
+ * Attempts to play the media found on @device (for example, a DVD in a drive or a DVB
+ * tuner) by first adding it to the playlist, then playing it.
+ *
+ * An error dialog will be displayed if Totem cannot support media of @type.
+ **/
 void
 totem_action_play_media (Totem *totem, TotemDiscMediaType type, const char *device)
 {
@@ -602,6 +657,12 @@ totem_action_play_media (Totem *totem, TotemDiscMediaType type, const char *devi
 	}
 }
 
+/**
+ * totem_action_stop:
+ * @totem: a #TotemObject
+ *
+ * Stops the current stream.
+ **/
 void
 totem_action_stop (Totem *totem)
 {
@@ -609,6 +670,13 @@ totem_action_stop (Totem *totem)
 	play_pause_set_label (totem, STATE_STOPPED);
 }
 
+/**
+ * totem_action_play_pause:
+ * @totem: a #TotemObject
+ *
+ * Gets the current MRL from the playlist and attempts to play it.
+ * If the stream is already playing, playback is paused.
+ **/
 void
 totem_action_play_pause (Totem *totem)
 {
@@ -639,6 +707,13 @@ totem_action_play_pause (Totem *totem)
 	}
 }
 
+/**
+ * totem_action_pause:
+ * @totem: a #TotemObject
+ *
+ * Pauses the current stream. If Totem is already paused, it continues
+ * to be paused.
+ **/
 void
 totem_action_pause (Totem *totem)
 {
@@ -697,6 +772,13 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 	return FALSE;
 }
 
+/**
+ * totem_action_fullscreen_toggle:
+ * @totem: a #TotemObject
+ *
+ * Toggles Totem's fullscreen state; if Totem is fullscreened, calling
+ * this makes it unfullscreened and vice-versa.
+ **/
 void
 totem_action_fullscreen_toggle (Totem *totem)
 {
@@ -706,6 +788,13 @@ totem_action_fullscreen_toggle (Totem *totem)
 		gtk_window_fullscreen (GTK_WINDOW (totem->win));
 }
 
+/**
+ * totem_action_fullscreen:
+ * @totem: a #TotemObject
+ * @state: %TRUE if Totem should be fullscreened
+ *
+ * Sets Totem's fullscreen state according to @state.
+ **/
 void
 totem_action_fullscreen (Totem *totem, gboolean state)
 {
@@ -903,6 +992,24 @@ update_mrl_label (Totem *totem, const char *name)
 	}
 }
 
+/**
+ * totem_action_set_mrl_with_warning:
+ * @totem: a #TotemObject
+ * @mrl: the MRL to play
+ * @subtitle: a subtitle file to load, or %NULL
+ * @warn: %TRUE if error dialogs should be displayed
+ *
+ * Loads the specified @mrl and optionally the specified subtitle
+ * file. If @subtitle is %NULL Totem will attempt to auto-locate
+ * any subtitle files for @mrl.
+ *
+ * If a stream is already playing, it will be stopped and closed.
+ *
+ * If any errors are encountered, error dialogs will only be displayed
+ * if @warn is %TRUE.
+ *
+ * Return value: %TRUE on success
+ **/
 gboolean
 totem_action_set_mrl_with_warning (Totem *totem,
 				   const char *mrl, 
@@ -1022,6 +1129,17 @@ totem_action_set_mrl_with_warning (Totem *totem,
 	return retval;
 }
 
+/**
+ * totem_action_set_mrl:
+ * @totem: a #TotemObject
+ * @mrl: the MRL to load
+ * @subtitle: a subtitle file to load, or %NULL
+ *
+ * Calls totem_action_set_mrl_with_warning() with warnings enabled.
+ * For more information, see the documentation for totem_action_set_mrl_with_warning().
+ *
+ * Return value: %TRUE on success
+ **/
 gboolean
 totem_action_set_mrl (Totem *totem, const char *mrl, const char *subtitle)
 {
@@ -1072,12 +1190,27 @@ totem_action_direction (Totem *totem, TotemPlaylistDirection dir)
 	}
 }
 
+/**
+ * totem_action_previous:
+ * @totem: a #TotemObject
+ *
+ * If a DVD is being played, goes to the previous chapter. If a normal stream
+ * is being played, goes to the start of the stream if possible. If seeking is
+ * not possible, plays the previous entry in the playlist.
+ **/
 void
 totem_action_previous (Totem *totem)
 {
 	totem_action_direction (totem, TOTEM_PLAYLIST_DIRECTION_PREVIOUS);
 }
 
+/**
+ * totem_action_next:
+ * @totem: a #TotemObject
+ *
+ * If a DVD is being played, goes to the next chapter. If a normal stream
+ * is being played, plays the next entry in the playlist.
+ **/
 void
 totem_action_next (Totem *totem)
 {
@@ -1126,12 +1259,28 @@ totem_seek_time_rel (Totem *totem, gint64 time, gboolean relative)
 	}
 }
 
+/**
+ * totem_action_seek_relative:
+ * @totem: a #TotemObject
+ * @offset: the time offset to seek to
+ *
+ * Seeks to an @offset from the current position in the stream,
+ * or displays an error dialog if that's not possible.
+ **/
 void
 totem_action_seek_relative (Totem *totem, gint64 offset)
 {
 	totem_seek_time_rel (totem, offset, TRUE);
 }
 
+/**
+ * totem_action_seek_time:
+ * @totem: a #TotemObject
+ * @sec: the time to seek to
+ *
+ * Seeks to an absolute time in the stream, or displays an
+ * error dialog if that's not possible.
+ **/
 void
 totem_action_seek_time (Totem *totem, gint64 sec)
 {
@@ -1186,6 +1335,13 @@ totem_action_zoom_reset (Totem *totem)
 	totem_action_zoom (totem, 100);
 }
 
+/**
+ * totem_action_volume_relative:
+ * @totem: a #TotemObject
+ * @off_pct: the percentage by which to increase or decrease the volume
+ *
+ * Sets the volume relative to its current level.
+ **/
 void
 totem_action_volume_relative (Totem *totem, double off_pct)
 {
@@ -1198,6 +1354,13 @@ totem_action_volume_relative (Totem *totem, double off_pct)
 	bacon_video_widget_set_volume (totem->bvw, vol + off_pct);
 }
 
+/**
+ * totem_action_toggle_aspect_ratio:
+ * @totem: a #TotemObject
+ *
+ * Toggles the aspect ratio selected in the menu to the
+ * next one in the list.
+ **/
 void
 totem_action_toggle_aspect_ratio (Totem *totem)
 {
@@ -1213,18 +1376,42 @@ totem_action_toggle_aspect_ratio (Totem *totem)
 	gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action), tmp);
 }
 
+/**
+ * totem_action_set_aspect_ratio:
+ * @totem: a #TotemObject
+ * @ratio: the aspect ratio to use
+ *
+ * Sets the aspect ratio selected in the menu to @ratio,
+ * as defined in #BaconVideoWidgetAspectRatio.
+ **/
 void
-totem_action_set_aspect_ratio (Totem *totem, int  ratio)
+totem_action_set_aspect_ratio (Totem *totem, int ratio)
 {
 	bacon_video_widget_set_aspect_ratio (totem->bvw, ratio);
 }
 
+/**
+ * totem_action_get_aspect_ratio:
+ * @totem: a #TotemObject
+ *
+ * Gets the current aspect ratio as defined in #BaconVideoWidgetAspectRatio.
+ *
+ * Return value: the current aspect ratio
+ **/
 int
 totem_action_get_aspect_ratio (Totem *totem)
 {
 	return (bacon_video_widget_get_aspect_ratio (totem->bvw));
 }
 
+/**
+ * totem_action_set_scale_ratio:
+ * @totem: a #TotemObject
+ * @ratio: the scale ratio to use
+ *
+ * Sets the video scale ratio, as a float where, for example,
+ * 1.0 is 1:1 and 2.0 is 2:1.
+ **/
 void
 totem_action_set_scale_ratio (Totem *totem, gfloat ratio)
 {
@@ -1865,6 +2052,13 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 	}
 }
 
+/**
+ * totem_action_toggle_controls:
+ * @totem: a #TotemObject
+ *
+ * If Totem's not fullscreened, this toggles the state of the "Show Controls"
+ * menu entry, and consequently shows or hides the controls in the UI.
+ **/
 void
 totem_action_toggle_controls (Totem *totem)
 {
@@ -1899,6 +2093,19 @@ totem_action_set_playlist_index (Totem *totem, guint index)
 	g_free (subtitle);
 }
 
+/**
+ * totem_action_remote:
+ * @totem: a #TotemObject
+ * @cmd: a #TotemRemoteCommand
+ * @url: an MRL to play, or %NULL
+ *
+ * Executes the specified @cmd on this instance of Totem. If @cmd
+ * is an operation requiring an MRL, @url is required; it can be %NULL
+ * otherwise.
+ *
+ * If Totem's fullscreened and the operation is executed correctly,
+ * the controls will appear as if the user had moved the mouse.
+ **/
 void
 totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 {
@@ -2196,6 +2403,14 @@ playlist_shuffle_toggle_cb (TotemPlaylist *playlist, gboolean shuffle, Totem *to
 			NULL, NULL, totem);
 }
 
+/**
+ * totem_is_fullscreen:
+ * @totem: a #TotemObject
+ *
+ * Returns %TRUE if Totem is fullscreened.
+ *
+ * Return value: %TRUE if Totem is fullscreened
+ **/
 gboolean
 totem_is_fullscreen (Totem *totem)
 {
@@ -2204,6 +2419,14 @@ totem_is_fullscreen (Totem *totem)
 	return (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 }
 
+/**
+ * totem_is_playing:
+ * @totem: a #TotemObject
+ *
+ * Returns %TRUE if Totem is playing a stream.
+ *
+ * Return value: %TRUE if Totem is playing a stream
+ **/
 gboolean
 totem_is_playing (Totem *totem)
 {
@@ -2223,6 +2446,14 @@ totem_is_paused (Totem *totem)
 	return totem->state == STATE_PAUSED;
 }
 
+/**
+ * totem_is_seekable:
+ * @totem: a #TotemObject
+ *
+ * Returns %TRUE if the current stream is seekable.
+ *
+ * Return value: %TRUE if the current stream is seekable
+ **/
 gboolean
 totem_is_seekable (Totem *totem)
 {

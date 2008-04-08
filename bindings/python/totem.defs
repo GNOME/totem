@@ -269,37 +269,6 @@
   )
 )
 
-(define-method action_set_mrl
-  (of-object "TotemObject")
-  (c-name "totem_action_set_mrl")
-  (return-type "gboolean")
-  (parameters
-    '("const-char*" "mrl")
-    '("const-char*" "subtitle")
-  )
-)
-
-(define-method action_set_mrl_and_play
-  (of-object "TotemObject")
-  (c-name "totem_action_set_mrl_and_play")
-  (return-type "none")
-  (parameters
-    '("const-char*" "mrl")
-    '("const-char*" "subtitle")
-  )
-)
-
-(define-method action_set_mrl_with_warning
-  (of-object "TotemObject")
-  (c-name "totem_action_set_mrl_with_warning")
-  (return-type "gboolean")
-  (parameters
-    '("const-char*" "mrl")
-    '("const-char*" "subtitle")
-    '("gboolean" "warn")
-  )
-)
-
 (define-method action_play_media
   (of-object "TotemObject")
   (c-name "totem_action_play_media")

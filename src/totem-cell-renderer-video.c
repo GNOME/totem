@@ -61,6 +61,17 @@ static void totem_cell_renderer_video_render (GtkCellRenderer *cell, GdkDrawable
 
 G_DEFINE_TYPE (TotemCellRendererVideo, totem_cell_renderer_video, GTK_TYPE_CELL_RENDERER)
 
+/**
+ * totem_cell_renderer_video_new:
+ * @use_placeholder: if %TRUE, use a placeholder thumbnail
+ *
+ * Creates a new #TotemCellRendererVideo with its :use-placeholder
+ * property set to @use_placeholder. If @use_placeholder is %TRUE,
+ * the renderer will display a generic placeholder thumbnail if a
+ * proper one is not available.
+ *
+ * Return value: a new #TotemCellRendererVideo
+ **/
 TotemCellRendererVideo *
 totem_cell_renderer_video_new (gboolean use_placeholder)
 {

@@ -194,18 +194,39 @@ totem_object_get_property (GObject *object,
 	}
 }
 
+/**
+ * totem_object_plugins_init:
+ * @totem: a #TotemObject
+ *
+ * Initialises the plugin engine and activates all the
+ * enabled plugins.
+ **/
 void
 totem_object_plugins_init (TotemObject *totem)
 {
 	totem_plugins_engine_init (totem);
 }
 
+/**
+ * totem_object_plugins_shutdown:
+ *
+ * Shuts down the plugin engine and deactivates all the
+ * plugins.
+ **/
 void
 totem_object_plugins_shutdown (void)
 {
 	totem_plugins_engine_shutdown ();
 }
 
+/**
+ * totem_get_main_window:
+ * @totem: a #TotemObject
+ *
+ * Gets Totem's main window and increments its reference count.
+ *
+ * Return value: Totem's main window
+ **/
 GtkWindow *
 totem_get_main_window (Totem *totem)
 {
@@ -216,6 +237,14 @@ totem_get_main_window (Totem *totem)
 	return GTK_WINDOW (totem->win);
 }
 
+/**
+ * totem_get_ui_manager:
+ * @totem: a #TotemObject
+ *
+ * Gets Totem's UI manager, but does not change its reference count.
+ *
+ * Return value: Totem's UI manager
+ **/
 GtkUIManager *
 totem_get_ui_manager (Totem *totem)
 {
@@ -224,6 +253,14 @@ totem_get_ui_manager (Totem *totem)
 	return totem->ui_manager;
 }
 
+/**
+ * totem_get_video_widget:
+ * @totem: a #TotemObject
+ *
+ * Gets Totem's video widget and increments its reference count.
+ *
+ * Return value: Totem's video widget
+ **/
 GtkWidget *
 totem_get_video_widget (Totem *totem)
 {
@@ -240,6 +277,14 @@ totem_get_video_widget_backend_name (Totem *totem)
 	return bacon_video_widget_get_backend_name (totem->bvw);
 }
 
+/**
+ * totem_get_current_time:
+ * @totem: a #TotemObject
+ *
+ * Gets the current position's time in the stream as a gint64.
+ *
+ * Return value: the current position in the stream
+ **/
 gint64
 totem_get_current_time (Totem *totem)
 {
@@ -304,6 +349,17 @@ totem_get_short_title (Totem *totem)
 	return totem_playlist_get_current_title (totem->playlist, &custom);
 }
 
+/**
+ * totem_add_sidebar_page:
+ * @totem: a #TotemObject
+ * @page_id: a string used to identify the page
+ * @title: the page's title
+ * @main_widget: the main widget for the page
+ *
+ * Adds a sidebar page to Totem's sidebar with the given @page_id.
+ * @main_widget is added into the page and shown automatically, while
+ * @title is displayed as the page's title in the tab bar.
+ **/
 void
 totem_add_sidebar_page (Totem *totem,
 			const char *page_id,
@@ -316,6 +372,15 @@ totem_add_sidebar_page (Totem *totem,
 			     main_widget);
 }
 
+/**
+ * totem_remove_sidebar_page:
+ * @totem: a #TotemObject
+ * @page_id: a string used to identify the page
+ *
+ * Removes the page identified by @page_id from Totem's sidebar.
+ * If @page_id doesn't exist in the sidebar, this function does
+ * nothing.
+ **/
 void
 totem_remove_sidebar_page (Totem *totem,
 			   const char *page_id)
@@ -324,6 +389,14 @@ totem_remove_sidebar_page (Totem *totem,
 				page_id);
 }
 
+/**
+ * totem_file_opened:
+ * @totem: a #TotemObject
+ * @mrl: the MRL opened
+ *
+ * Emits the ::file-opened signal on @totem, with the
+ * specified @mrl.
+ **/
 void
 totem_file_opened (TotemObject *totem,
 		   const char *mrl)
@@ -333,6 +406,12 @@ totem_file_opened (TotemObject *totem,
 		       0, mrl);
 }
 
+/**
+ * totem_file_closed:
+ * @totem: a #TotemObject
+ *
+ * Emits the ::file-closed signal on @totem.
+ **/
 void
 totem_file_closed (TotemObject *totem)
 {
@@ -342,6 +421,16 @@ totem_file_closed (TotemObject *totem)
 
 }
 
+/**
+ * totem_metadata_updated:
+ * @totem: a #TotemObject
+ * @artist: the stream's artist
+ * @title: the stream's title
+ * @album: the stream's album
+ *
+ * Emits the ::metadata-updated signal on @totem,
+ * with the specified stream data.
+ **/
 void
 totem_metadata_updated (TotemObject *totem,
 			const char *artist,

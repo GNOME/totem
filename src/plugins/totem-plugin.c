@@ -158,6 +158,16 @@ totem_plugin_get_property (GObject *object,
 	}
 }
 
+/**
+ * totem_plugin_activate:
+ * @plugin: a #TotemPlugin
+ * @totem: a #TotemObject
+ * @error: return location for a #GError, or %NULL
+ *
+ * Activates the passed @plugin by calling its activate method.
+ *
+ * Return value: %TRUE on success
+ **/
 gboolean
 totem_plugin_activate (TotemPlugin *plugin,
 		       TotemObject *totem,
@@ -172,6 +182,13 @@ totem_plugin_activate (TotemPlugin *plugin,
 	return TRUE;
 }
 
+/**
+ * totem_plugin_deactivate:
+ * @plugin: a #TotemPlugin
+ * @totem: a #TotemObject
+ *
+ * Deactivates @plugin by calling its deactivate method.
+ **/
 void
 totem_plugin_deactivate	(TotemPlugin *plugin,
 			 TotemObject *totem)
@@ -183,6 +200,16 @@ totem_plugin_deactivate	(TotemPlugin *plugin,
 		TOTEM_PLUGIN_GET_CLASS (plugin)->deactivate (plugin, totem);
 }
 
+/**
+ * totem_plugin_is_configurable:
+ * @plugin: a #TotemPlugin
+ *
+ * Returns %TRUE if the plugin is configurable and has a
+ * configuration dialog. It calls the plugin's
+ * is_configurable method.
+ *
+ * Return value: %TRUE if the plugin is configurable
+ **/
 gboolean
 totem_plugin_is_configurable (TotemPlugin *plugin)
 {
@@ -191,6 +218,15 @@ totem_plugin_is_configurable (TotemPlugin *plugin)
 	return TOTEM_PLUGIN_GET_CLASS (plugin)->is_configurable (plugin);
 }
 
+/**
+ * totem_plugin_create_configure_dialog:
+ * @plugin: a #TotemPlugin
+ *
+ * Returns the plugin's configuration dialog, as created by
+ * the plugin's create_configure_dialog method.
+ *
+ * Return value: the configuration dialog, or %NULL
+ **/
 GtkWidget *
 totem_plugin_create_configure_dialog (TotemPlugin *plugin)
 {
@@ -232,7 +268,20 @@ totem_get_plugin_paths (void)
 	return paths;
 }
 
-
+/**
+ * totem_plugin_find_file:
+ * @plugin: a #TotemPlugin
+ * @file: the file to find
+ *
+ * Finds the specified @file by looking in the plugin paths
+ * listed by totem_get_plugin_paths() and then in the system
+ * Totem data directory.
+ *
+ * This should be used by plugins to find plugin-specific
+ * resource files.
+ *
+ * Return value: a newly-allocated absolute path for the file, or %NULL
+ **/
 char *
 totem_plugin_find_file (TotemPlugin *plugin,
 			const char *file)
@@ -276,6 +325,21 @@ totem_plugin_find_file (TotemPlugin *plugin,
 	return ret;
 }
 
+/**
+ * totem_plugin_load_interface:
+ * @plugin: a #TotemPlugin
+ * @name: interface filename
+ * @fatal: %TRUE if it's a fatal error if the interface can't be loaded
+ * @parent: the interface's parent #GtkWindow
+ * @user_data: a pointer to be passed to each signal handler in the interface when they're called
+ *
+ * Loads an interface file (GtkBuilder UI file) for a plugin, given its filename and
+ * assuming it's installed in the plugin's data directory.
+ *
+ * This should be used instead of attempting to load interfaces manually in plugins.
+ *
+ * Return value: the #GtkBuilder instance for the interface
+ **/
 GtkBuilder *
 totem_plugin_load_interface (TotemPlugin *plugin, const char *name,
 			     gboolean fatal, GtkWindow *parent,
