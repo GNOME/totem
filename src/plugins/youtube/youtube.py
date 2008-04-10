@@ -42,7 +42,7 @@ class YouTube (totem.Plugin):
 		self.vadjust = {}
 		self.liststore = {}
 	def activate (self, totem_object):
-		"""Check for the availability of the flvdemux and souphttpsrc GStreamer plugins"""
+		"""Check for the availability of the flvdemux and soup GStreamer plugins"""
 		bvw_name = totem_object.get_video_widget_backend_name ()
 
 		if bvw_name.find ("GStreamer") != -1:
@@ -52,7 +52,7 @@ class YouTube (totem.Plugin):
 				import gst
 
 				registry = gst.registry_get_default ()
-				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("souphttpsrc") == None:
+				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("soup") == None:
 					"""This means an error will be displayed when they try to play anything"""
 					self.gstreamer_plugins_present = False
 			except ImportError:
