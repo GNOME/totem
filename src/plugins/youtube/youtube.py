@@ -57,7 +57,7 @@ class YouTube (totem.Plugin):
 				import gst
 
 				registry = gst.registry_get_default ()
-				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("souphttpsrc") == None:
+				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("soup") == None:
 					"""This means an error will be displayed when they try to play anything"""
 					self.gstreamer_plugins_present = False
 			except ImportError:
