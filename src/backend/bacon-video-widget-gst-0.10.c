@@ -4883,7 +4883,8 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     bvw->priv->xoverlay = GST_X_OVERLAY (element);
   } else {
     GST_DEBUG ("No xoverlay found");
-    gst_object_unref (element);
+    if (element)
+      gst_object_unref (element);
     bvw->priv->xoverlay = NULL;
   }
 

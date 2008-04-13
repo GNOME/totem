@@ -1,3 +1,9 @@
+2008-04-13  Tim-Philipp Müller  <tim at centricular dot net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  (bvw_update_interface_implementations):
+	  Don't unref NULL elements though (fixes #524807 some more).
+
 2008-04-10  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/plugins/youtube/youtube.py: Fix check for soup plugin.
