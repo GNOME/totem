@@ -1,3 +1,10 @@
+2008-04-29  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_open_with_subtitle):
+	Use GIO to get 1) a nice URI, 2) or a local fuse path
+	if giosrc isn't available (Closes: #528762)
+
 2008-04-24  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/idl/totemIBasicPlayer.idl:

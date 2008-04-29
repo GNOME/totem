@@ -2628,6 +2628,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     const gchar * mrl, const gchar *subtitle_uri, GError ** error)
 {
   GstMessage *err_msg = NULL;
+  GFile *file;
   gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
@@ -2652,23 +2653,19 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
 
   /* this allows non-URI type of files in the thumbnailer and so on */
   g_free (bvw->com->mrl);
-  if (mrl[0] == '/') {
-    bvw->com->mrl = g_strdup_printf ("file://%s", mrl);
-  } else {
-    if (strchr (mrl, ':')) {
-      bvw->com->mrl = g_strdup (mrl);
-    } else {
-      gchar *cur_dir = g_get_current_dir ();
+  file = g_file_new_for_commandline_arg (mrl);
 
-      if (!cur_dir) {
-        g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
-                     _("Failed to retrieve working directory"));
-        return FALSE;
-      }
-      bvw->com->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
-      g_free (cur_dir);
-    }
-  }
+  /* If giosrc isn't available, try to get the MRL's local path */
+  if (gst_default_registry_check_feature_version ("giosrc", 0, 10, 0) != FALSE)
+    bvw->com->mrl = g_file_get_uri (file);
+  else
+    bvw->com->mrl = g_file_get_path (file);
+
+  g_object_unref (file);
+
+  /* No path? Choke on your errors already! */
+  if (bvw->com->mrl == NULL)
+    bvw->com->mrl = g_strdup (mrl);
 
   if (g_str_has_prefix (mrl, "icy:") != FALSE) {
     /* Handle "icy://" URLs from QuickTime */
