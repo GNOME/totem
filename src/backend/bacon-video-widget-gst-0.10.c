@@ -60,6 +60,7 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 #include <gconf/gconf-client.h>
 
 #include "bacon-video-widget.h"
