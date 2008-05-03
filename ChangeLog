@@ -1,3 +1,14 @@
+2008-05-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_open_with_subtitle):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_strdupnv), (bacon_video_widget_get_mrls):
+	Make sure we store URIs as the MRL, not local paths, fixes
+	direct seeking not working on local files
+	Fix a few compilation warnings in the xine-lib backend
+
 2008-04-29  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c: Add missing include

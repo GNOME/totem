@@ -2444,9 +2444,12 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 5);
 	} else {
 		GFile *file;
+		char *path;
 
 		file = g_file_new_for_commandline_arg (mrl);
-		bvw->com->mrl = g_file_get_path (file);
+		path = g_file_get_path (file);
+		bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
+		g_free (path);
 		g_object_unref (file);
 
 		if (bvw->com->mrl == NULL)
@@ -3522,8 +3525,8 @@ bacon_video_widget_can_play (BaconVideoWidget *bvw, TotemDiscMediaType type)
 	return BVW_CAN_PLAY_MISSING_PLUGINS;
 }
 
-static char *
-bacon_video_widget_strdupnv (const char **mrls, int num_mrls)
+static char **
+bacon_video_widget_strdupnv (const char **mrls, guint num_mrls)
 {
 	guint i;
 	char **retval;
@@ -3591,10 +3594,10 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 			return NULL;
 		/* The first channel can be the last channel played,
 		 * or a copy of the first one, ignore it */
-		return bacon_video_widget_strdupnv (mrls++, num_mrls - 1);
+		return bacon_video_widget_strdupnv ((const char **) mrls++, num_mrls - 1);
 	}
 
-	return bacon_video_widget_strdupnv (mrls, num_mrls);
+	return bacon_video_widget_strdupnv ((const char **) mrls, num_mrls);
 }
 
 void

@@ -2659,8 +2659,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   /* If giosrc isn't available, try to get the MRL's local path */
   if (gst_default_registry_check_feature_version ("giosrc", 0, 10, 0) != FALSE)
     bvw->com->mrl = g_file_get_uri (file);
-  else
-    bvw->com->mrl = g_file_get_path (file);
+  else {
+    char *path;
+
+    path = g_file_get_path (file);
+    bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
+    g_free (path);
+  }
 
   g_object_unref (file);
 
