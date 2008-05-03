@@ -121,6 +121,21 @@ long_action (void)
 		gtk_main_iteration ();
 }
 
+static void
+reset_seek_status (Totem *totem)
+{
+	/* Release the lock and reset everything so that we
+	 * avoid being "stuck" seeking on errors */
+
+	if (totem->seek_lock != FALSE) {
+		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
+		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
+		totem->seek_lock = FALSE;
+		bacon_video_widget_seek (totem->bvw, 0, NULL);
+		totem_action_stop (totem);
+	}
+}
+
 /**
  * totem_action_error:
  * @title: the error dialog title
@@ -133,6 +148,7 @@ long_action (void)
 void
 totem_action_error (const char *title, const char *reason, Totem *totem)
 {
+	reset_seek_status (totem);
 	totem_interface_error (title, reason,
 			GTK_WINDOW (totem->win));
 }
@@ -141,6 +157,7 @@ static void
 totem_action_error_and_exit (const char *title,
 		const char *reason, Totem *totem)
 {
+	reset_seek_status (totem);
 	totem_interface_error_blocking (title, reason,
 			GTK_WINDOW (totem->win));
 	totem_action_exit (totem);
@@ -439,13 +456,7 @@ totem_action_seek (Totem *totem, double pos)
 		msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 		g_free (disp);
 
-		/* Release the lock and reset everything so that we
-		 * avoid being "stuck" seeking */
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
-		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
-		totem->seek_lock = FALSE;
-		bacon_video_widget_seek (totem->bvw, 0, NULL);
-		totem_action_stop (totem);
+		reset_seek_status (totem);
 
 		totem_action_error (msg, err->message, totem);
 		g_free (msg);

@@ -1,5 +1,13 @@
 2008-05-03  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c (reset_seek_status), (totem_action_error),
+	(totem_action_error_and_exit), (totem_action_seek):
+	When an async error occurs during seeking, reset the seeking status
+	to avoid being stuck seeking (this already worked for the xine-lib
+	backend as the seeking is synchronous, GStreamer's is async)
+
+2008-05-03  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_open_with_subtitle):
 	Remove useless g_free(), if there's a MRL stored, it will
