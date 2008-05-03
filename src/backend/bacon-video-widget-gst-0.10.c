@@ -2653,7 +2653,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   }
 
   /* this allows non-URI type of files in the thumbnailer and so on */
-  g_free (bvw->com->mrl);
   file = g_file_new_for_commandline_arg (mrl);
 
   /* If giosrc isn't available, try to get the MRL's local path */
