@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-02 13:54+0000\n"
-"PO-Revision-Date: 2008-03-10 02:00+0100\n"
+"POT-Creation-Date: 2008-05-02 11:05+0000\n"
+"PO-Revision-Date: 2008-05-04 15:06+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Leave Fullscreen"
 msgstr "Teljes képernyő elhagyása"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:72
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:93
 msgid "Time:"
 msgstr "Idő:"
 
@@ -128,7 +128,7 @@ msgstr "Album:"
 msgid "Artist:"
 msgstr "Előadó:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:5
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:21
 #: ../src/totem-properties-view.c:91
 msgid "Audio"
 msgstr "Hang"
@@ -161,7 +161,7 @@ msgstr "Időtartam:"
 msgid "Framerate:"
 msgstr "Képkockasebesség:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:18
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:35
 msgid "General"
 msgstr "Általános"
 
@@ -228,465 +228,549 @@ msgstr "Médialejátszó"
 msgid "Play movies and songs"
 msgstr "Filmek és dalok lejátszása"
 
-#: ../data/totem.ui.h:1 ../src/totem-menu.c:1369
+#: ../data/totem.ui.h:1
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "1.5 Mbps T1/Intranet/LAN"
+
+#: ../data/totem.ui.h:2
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "112 Kbps duál ISDN/DSL"
+
+#: ../data/totem.ui.h:3
+msgid "14.4 Kbps Modem"
+msgstr "14.4 Kbps modem"
+
+#: ../data/totem.ui.h:4 ../src/totem-menu.c:1369
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (szélesvásznú)"
 
-#: ../data/totem.ui.h:2 ../src/totem-menu.c:1370
+#: ../data/totem.ui.h:5
+msgid "19.2 Kbps Modem"
+msgstr "19.2 Kbps modem"
+
+#: ../data/totem.ui.h:6 ../src/totem-menu.c:1370
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:3 ../src/totem-menu.c:1368
-msgid "4:3 (TV)"
-msgstr "4:3 (tévé)"
+#: ../data/totem.ui.h:7
+msgid "256 Kbps DSL/Cable"
+msgstr "256 Kbps DSL/kábel"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:8
+msgid "28.8 Kbps Modem"
+msgstr "28.8 Kbps modem"
+
+#: ../data/totem.ui.h:9
+msgid "33.6 Kbps Modem"
+msgstr "33.6 Kbps modem"
+
+#: ../data/totem.ui.h:10
+msgid "34.4 Kbps Modem"
+msgstr "34.4 Kbps modem"
+
+#: ../data/totem.ui.h:11
+msgid "384 Kbps DSL/Cable"
+msgstr "384 Kbps DSL/kábel"
+
+#: ../data/totem.ui.h:12
+msgid "4-channel"
+msgstr "4 csatorna"
+
+#: ../data/totem.ui.h:13
+msgid "4.1-channel"
+msgstr "4.1 csatorna"
+
+#: ../data/totem.ui.h:14 ../src/totem-menu.c:1368
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: ../data/totem.ui.h:15
+msgid "5.0-channel"
+msgstr "5.0 csatorna"
+
+#: ../data/totem.ui.h:16
+msgid "5.1-channel"
+msgstr "5.1 csatorna"
+
+#: ../data/totem.ui.h:17
+msgid "512 Kbps DSL/Cable"
+msgstr "512 Kbps DSL/kábel"
+
+#: ../data/totem.ui.h:18
+msgid "56 Kbps Modem/ISDN"
+msgstr "56 Kbps modem/ISDN"
+
+#: ../data/totem.ui.h:19
+msgid "AC3 Passthrough"
+msgstr "AC3 Passthrough"
+
+#: ../data/totem.ui.h:20
 msgid "A_udio Menu"
 msgstr "_Hang menü"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:22
 msgid "Audio Output"
 msgstr "Hangkimenet"
 
-#: ../data/totem.ui.h:7 ../src/totem-menu.c:340 ../src/totem-menu.c:1366
+#: ../data/totem.ui.h:23 ../src/totem-menu.c:340 ../src/totem-menu.c:1366
 msgid "Auto"
 msgstr "Auto"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:24
 msgid "Automatically _load subtitle files when movie is loaded"
 msgstr "Feliratfájlok automatikus be_töltése videó betöltésekor"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:25
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Ablak automatikus átmé_retezése új videó betöltésekor"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:26
 msgid "Clear the playlist"
 msgstr "Lejátszólista törlése"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:27
 msgid "Co_ntrast:"
 msgstr "Ko_ntraszt:"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:28
 msgid "Color Balance"
 msgstr "Színegyensúly"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:29
 msgid "Connection _speed:"
 msgstr "Csatlakozási _sebesség:"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:30
 msgid "Decrease volume"
 msgstr "Hangerő csökkentése"
 
-#: ../data/totem.ui.h:15 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:31 ../src/totem-menu.c:1360
 msgid "Deinterlace"
 msgstr "Váltottsorosság megszüntetése"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:32
 msgid "Display"
 msgstr "Megjelenítés"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:33
+msgid "Extra Large"
+msgstr "Nagyon nagy"
+
+#: ../data/totem.ui.h:34
 msgid "Fit Window to Movie"
 msgstr "Ablak igazítása a filmhez"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:36
 msgid "Go to the DVD menu"
 msgstr "Ugrás a DVD menüre"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:37
 msgid "Go to the angle menu"
 msgstr "Ugrás a szög menüre"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:38
 msgid "Go to the audio menu"
 msgstr "Ugrás a hang menüre"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:39
 msgid "Go to the chapter menu"
 msgstr "Ugrás a fejezet menüre"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:40
 msgid "Go to the title menu"
 msgstr "Ugrás a cím menüre"
 
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:41
 msgid "Help contents"
 msgstr "Súgótartalom"
 
-#: ../data/totem.ui.h:25
+#: ../data/totem.ui.h:42
 msgid "Increase volume"
 msgstr "Hangerő növelése"
 
-#: ../data/totem.ui.h:26
+#: ../data/totem.ui.h:43
+msgid "Intranet/LAN"
+msgstr "Intranet/LAN"
+
+#: ../data/totem.ui.h:44
+msgid "Large"
+msgstr "Nagy"
+
+#: ../data/totem.ui.h:45
 msgid "Networking"
 msgstr "Hálózatkezelés"
 
-#: ../data/totem.ui.h:27
+#: ../data/totem.ui.h:46
 msgid "Next chapter or movie"
 msgstr "Következő fejezet vagy film"
 
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:47
+msgid "Normal"
+msgstr "Normál"
+
+#: ../data/totem.ui.h:48
 msgid "Open _Location..."
 msgstr "He_ly megnyitása..."
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:49
 msgid "Open a file"
 msgstr "Fájl megnyitása"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:50
 msgid "Open a non-local file"
 msgstr "Nem helyi fájl megnyitása"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:51
 msgid "Play / P_ause"
 msgstr "Lejátszás/Szü_net"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:52
 msgid "Play or pause the movie"
 msgstr "A film lejátszása vagy szüneteltetése"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:53
 msgid "Plugins..."
 msgstr "Bővítmények..."
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:54
 msgid "Prefere_nces"
 msgstr "_Beállítások"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:55
 msgid "Previous chapter or movie"
 msgstr "Előző fejezet vagy film"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:56
 msgid "Quit the program"
 msgstr "Kilépés a programból"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:57
 msgid "Reset To _Defaults"
 msgstr "Alapértelmezések _visszaállítása"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:58
 msgid "Resize _1:1"
 msgstr "Átméretezés _1:1"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:59
 msgid "Resize _2:1"
 msgstr "Átméretezés _2:1"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:60
 msgid "Resize to double the original video size"
 msgstr "Átméretezés a videóméret duplájára"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:61
 msgid "Resize to half the original video size"
 msgstr "Átméretezés a videóméret felére"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:62
 msgid "Resize to the original video size"
 msgstr "Átméretezés az eredeti videóméretre"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:63
 msgid "S_ubtitles"
 msgstr "_Feliratok"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:64
 msgid "Sat_uration:"
 msgstr "_Telítettség:"
 
-#: ../data/totem.ui.h:45 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:65 ../src/totem-menu.c:1358
 msgid "Set the repeat mode"
 msgstr "Ismétlés mód beállítása"
 
-#: ../data/totem.ui.h:46 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:66 ../src/totem-menu.c:1359
 msgid "Set the shuffle mode"
 msgstr "Véletlenszerű lejátszás mód beállítása"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:67
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "16:9-es (szélesvásznú) méretarány beállítása"
 
-#: ../data/totem.ui.h:48 ../src/totem-menu.c:1370
+#: ../data/totem.ui.h:68 ../src/totem-menu.c:1370
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "2.11:1-es (DVB) méretarány beállítása"
 
-#: ../data/totem.ui.h:49 ../src/totem-menu.c:1368
+#: ../data/totem.ui.h:69 ../src/totem-menu.c:1368
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "4:3-as (tévé) méretarány beállítása"
 
-#: ../data/totem.ui.h:50 ../src/totem-menu.c:1366
+#: ../data/totem.ui.h:70 ../src/totem-menu.c:1366
 msgid "Sets automatic aspect ratio"
 msgstr "Automatikus méretarány beállítása"
 
-#: ../data/totem.ui.h:51 ../src/totem-menu.c:1367
+#: ../data/totem.ui.h:71 ../src/totem-menu.c:1367
 msgid "Sets square aspect ratio"
 msgstr "Négyzetes méretarány beállítása"
 
-#: ../data/totem.ui.h:52 ../src/totem-menu.c:1361
+#: ../data/totem.ui.h:72 ../src/totem-menu.c:1361
 msgid "Show _Controls"
 msgstr "_Vezérlés megjelenítése"
 
-#: ../data/totem.ui.h:53
+#: ../data/totem.ui.h:73
 msgid "Show _visual effects when an audio file is played"
 msgstr "_Vizuális effektusok megjelenítése hangfájl lejátszásánál"
 
-#: ../data/totem.ui.h:54 ../src/totem-menu.c:1361
+#: ../data/totem.ui.h:74 ../src/totem-menu.c:1361
 msgid "Show controls"
 msgstr "Vezérlés megjelenítése"
 
-#: ../data/totem.ui.h:55 ../src/totem-menu.c:1362
+#: ../data/totem.ui.h:75 ../src/totem-menu.c:1362
 msgid "Show or hide the sidebar"
 msgstr "Az oldalsáv mutatása vagy elrejtése"
 
-#: ../data/totem.ui.h:56 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:76 ../src/totem-menu.c:1359
 msgid "Shuff_le Mode"
 msgstr "_Véletlenszerű lejátszás mód"
 
-#: ../data/totem.ui.h:57 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
+#: ../data/totem.ui.h:77 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
 msgid "Skip _Backwards"
 msgstr "Ugrás _vissza"
 
-#: ../data/totem.ui.h:58 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
+#: ../data/totem.ui.h:78 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
 msgid "Skip _Forward"
 msgstr "Ugrás _előre"
 
-#: ../data/totem.ui.h:59 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
+#: ../data/totem.ui.h:79 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
 msgid "Skip backwards"
 msgstr "Ugrás vissza"
 
-#: ../data/totem.ui.h:60 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
+#: ../data/totem.ui.h:80 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
 msgid "Skip forward"
 msgstr "Ugrás előre"
 
-#: ../data/totem.ui.h:61 ../src/totem-menu.c:1367
+#: ../data/totem.ui.h:81 ../src/totem-menu.c:1367
 msgid "Square"
 msgstr "Négyzet"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:82 ../src/backend/bacon-video-widget-gst-0.10.c:4397
+msgid "Stereo"
+msgstr "Sztereó"
+
+#: ../data/totem.ui.h:83
 msgid "Switch An_gles"
 msgstr "Szögek _váltása"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:84
 msgid "Switch camera angles"
 msgstr "Kameraszögek váltása"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:85
 msgid "Switch to fullscreen"
 msgstr "Átváltás teljes képernyőre"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:86
 msgid "TV-Out"
 msgstr "Tévékimenet"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:87
 msgid "TV-out in fullscreen by Nvidia (NTSC)"
 msgstr "Teljes képernyős tévékimenet az Nvidia-tól (NTSC)"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:88
 msgid "TV-out in fullscreen by Nvidia (PAL)"
 msgstr "Teljes képernyős tévékimenet az Nvidia-tól (PAL)"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:89
 msgid "Take _Screenshot..."
 msgstr "_Képernyőkép készítése..."
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:90
 msgid "Take a screenshot"
 msgstr "Képernyőkép készítése"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:91
 msgid "Text Subtitles"
 msgstr "Feliratok"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:92
 msgid "Time seek bar"
 msgstr "Keresősáv"
 
 #. Title
-#: ../data/totem.ui.h:73 ../src/totem.c:903 ../src/totem.c:3103
-#: ../src/totem.c:3132 ../browser-plugin/totem-plugin-viewer.c:1911
+#: ../data/totem.ui.h:94 ../src/totem.c:904 ../src/totem.c:3104
+#: ../src/totem.c:3133 ../browser-plugin/totem-plugin-viewer.c:1911
 msgid "Totem Movie Player"
 msgstr "Totem filmlejátszó"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:95
 msgid "Totem Preferences"
 msgstr "Totem beállításai"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:96
 msgid "Visual Effects"
 msgstr "Vizuális effektusok"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:97
 msgid "Visualisation _size:"
 msgstr "Vizualizáció _mérete:"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:98
 msgid "Volume _Down"
 msgstr "Hangerő _le"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:99
 msgid "Volume _Up"
 msgstr "Hangerő _fel"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:100
 msgid "Zoom In"
 msgstr "Nagyítás"
 
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:101
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:102
 msgid "Zoom Reset"
 msgstr "Nagyítás visszaállítása"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:103
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:104
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:105
 msgid "Zoom reset"
 msgstr "Nagyítás visszaállítása"
 
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:106
 msgid "_About"
 msgstr "_Névjegy"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:107
 msgid "_Allow the screensaver to activate even when audio-only is playing"
 msgstr "A _képernyővédő aktivizálódhat csak hang lejátszása esetén"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:108
 msgid "_Angle Menu"
 msgstr "_Szög menü"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:109
 msgid "_Aspect Ratio"
 msgstr "Méret_arány"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:110
 msgid "_Audio output type:"
 msgstr "_Hangkimenet típusa:"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:111
 msgid "_Brightness:"
 msgstr "_Fényerősség:"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:112
 msgid "_Chapter Menu"
 msgstr "_Fejezet menü"
 
-#: ../data/totem.ui.h:92
+#: ../data/totem.ui.h:113
 msgid "_Clear Playlist"
 msgstr "Lejátszólista _törlése"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:114
 msgid "_Contents"
 msgstr "_Tartalom"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:115
 msgid "_DVD Menu"
 msgstr "_DVD menü"
 
-#: ../data/totem.ui.h:95 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:116 ../src/totem-menu.c:1360
 msgid "_Deinterlace"
 msgstr "_Váltottsorosság megszüntetése"
 
-#: ../data/totem.ui.h:96
+#: ../data/totem.ui.h:117
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:118
 msgid "_Eject"
 msgstr "_Kiadás"
 
-#: ../data/totem.ui.h:98
+#: ../data/totem.ui.h:119
 msgid "_Encoding:"
 msgstr "Kó_dolás:"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:120
 msgid "_Font:"
 msgstr "_Betűkészlet:"
 
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:121
 msgid "_Fullscreen"
 msgstr "_Teljes képernyő"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:122
 msgid "_Go"
 msgstr "_Ugrás"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:123
 msgid "_Help"
 msgstr "_Súgó"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:124
 msgid "_Hue:"
 msgstr "Á_rnyalat:"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:125
 msgid "_Languages"
 msgstr "Nye_lvek"
 
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:126
 msgid "_Movie"
 msgstr "_Film"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:127
 msgid "_Next Chapter/Movie"
 msgstr "_Következő fejezet/film"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:128
 msgid "_No TV-out"
 msgstr "_Nincs tévékimenet"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:129
 msgid "_Open..."
 msgstr "_Megnyitás..."
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:130
 msgid "_Previous Chapter/Movie"
 msgstr "_Előző fejezet/film"
 
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:131
 msgid "_Properties"
 msgstr "_Tulajdonságok"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:132
 msgid "_Quit"
 msgstr "_Kilépés"
 
-#: ../data/totem.ui.h:112 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:133 ../src/totem-menu.c:1358
 msgid "_Repeat Mode"
 msgstr "_Ismétlés mód"
 
-#: ../data/totem.ui.h:113
+#: ../data/totem.ui.h:134
 msgid "_Resize 1:2"
 msgstr "Át_méretezés 1:2"
 
-#: ../data/totem.ui.h:114
+#: ../data/totem.ui.h:135
 msgid "_Sidebar"
 msgstr "_Oldalsáv"
 
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:136
 msgid "_Sound"
 msgstr "_Hang"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:137
 msgid "_Title Menu"
 msgstr "_Cím menü"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:138
 msgid "_Type of visualisation:"
 msgstr "Vizualizáció _típusa:"
 
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:139
 msgid "_View"
 msgstr "_Nézet"
 
@@ -698,7 +782,9 @@ msgstr "A képernyővédő aktivizálódhat csak hang lejátszása esetén"
 msgid ""
 "Allow the screensaver to activate even when audio-only is playing. This is "
 "useful for monitor powered speakers."
-msgstr "A képernyővédő aktivizálódhat csak hang lejátszása esetén. Ez monitorról működtetett hangszórók esetén hasznos."
+msgstr ""
+"A képernyővédő aktivizálódhat csak hang lejátszása esetén. Ez monitorról "
+"működtetett hangszórók esetén hasznos."
 
 #: ../data/totem.schemas.in.h:3
 msgid ""
@@ -900,7 +986,10 @@ msgid ""
 "terms of the GNU General Public License as published by the Free Software "
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
-msgstr "A Totem szabad szoftver, terjesztheti és/vagy módosíthatja a Free Software Foundation által kiadott GNU General Public License második (vagy bármely későbbi) változatában foglaltak alapján."
+msgstr ""
+"A Totem szabad szoftver, terjesztheti és/vagy módosíthatja a Free Software "
+"Foundation által kiadott GNU General Public License második (vagy bármely "
+"későbbi) változatában foglaltak alapján."
 
 #: ../src/totem-interface.c:312
 msgid ""
@@ -1192,7 +1281,7 @@ msgstr "Képernyőkép mentése"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:895
+#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:896
 #: ../browser-plugin/totem-plugin-viewer.c:341
 msgid "Stopped"
 msgstr "Leállítva"
@@ -1413,8 +1502,8 @@ msgstr "Lejátszás"
 msgid "Paused"
 msgstr "Szüneteltetve"
 
-#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:998
-#: ../src/totem.c:1120
+#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:999
+#: ../src/totem.c:1121
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "A Totem nem tudja lejátszani a következőt: „%s”."
@@ -1433,11 +1522,11 @@ msgid ""
 "listing."
 msgstr "A csatornalista létrehozásához kövesse a hivatkozáson megadott utasításokat."
 
-#: ../src/totem.c:501
+#: ../src/totem.c:501 ../src/plugins/youtube/youtube.py:125
 msgid "More information about media plugins"
 msgstr "További információk a médiabővítményekről"
 
-#: ../src/totem.c:502
+#: ../src/totem.c:502 ../src/plugins/youtube/youtube.py:123
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1454,8 +1543,8 @@ msgstr ""
 "A Totem nem tudja lejátszani ezt a típusú médiát (%s), mert nincsenek "
 "megfelelő bővítmények a lemezről történő olvasáshoz."
 
-#: ../src/totem.c:506
-#, c-format
+#: ../src/totem.c:506 ../src/plugins/youtube/youtube.py:122
+#, c-format, python-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
@@ -1493,7 +1582,7 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "A Totem nem volt képes lejátszani ezt a lemezt."
 
-#: ../src/totem.c:554 ../src/totem.c:2965
+#: ../src/totem.c:554 ../src/totem.c:2966
 #: ../browser-plugin/totem-plugin-viewer.c:1902
 msgid "No reason."
 msgstr "Nincs ok."
@@ -1506,67 +1595,67 @@ msgstr "A Totem nem támogatja a hang CD-k lejátszását"
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "A CD lejátszásához használjon zenelejátszót vagy CD-beolvasót"
 
-#: ../src/totem.c:812 ../src/totem.c:820
+#: ../src/totem.c:813 ../src/totem.c:821
 msgid "Totem could not get a screenshot of that film."
 msgstr "A Totem nem tud képernyőképet szerezni a filmről."
 
-#: ../src/totem.c:820
+#: ../src/totem.c:821
 msgid "This is not supposed to happen; please file a bug report."
 msgstr ""
 "Ennek a bekövetkezését nem tételeztük fel, kérjük küldjön be egy "
 "hibajelentést."
 
-#: ../src/totem.c:1004
+#: ../src/totem.c:1005
 msgid "No error message"
 msgstr "Nincs hibaüzenet"
 
-#: ../src/totem.c:1243
+#: ../src/totem.c:1244
 msgid "Totem could not display the help contents."
 msgstr "A Totem nem tudja megjeleníteni a súgótartalmat."
 
-#: ../src/totem.c:1501 ../src/totem.c:1503
+#: ../src/totem.c:1502 ../src/totem.c:1504
 #: ../browser-plugin/totem-plugin-viewer.c:1569
 msgid "An error occurred"
 msgstr "Hiba történt"
 
-#: ../src/totem.c:2826 ../src/totem.c:2828
+#: ../src/totem.c:2827 ../src/totem.c:2829
 msgid "Previous Chapter/Movie"
 msgstr "Előző fejezet/film"
 
-#: ../src/totem.c:2834 ../src/totem.c:2836
+#: ../src/totem.c:2835 ../src/totem.c:2837
 msgid "Play / Pause"
 msgstr "Lejátszás / Szünet"
 
-#: ../src/totem.c:2843 ../src/totem.c:2845
+#: ../src/totem.c:2844 ../src/totem.c:2846
 msgid "Next Chapter/Movie"
 msgstr "Következő fejezet/film"
 
-#: ../src/totem.c:2965
+#: ../src/totem.c:2966
 msgid "Totem could not startup."
 msgstr "A Totem nem tud elindulni."
 
-#: ../src/totem.c:3104
+#: ../src/totem.c:3105
 msgid "Could not initialize the thread-safe libraries."
 msgstr "A szálbiztos programkönyvtárak nem inicializálhatók."
 
-#: ../src/totem.c:3104
+#: ../src/totem.c:3105
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Ellenőrizze a rendszer telepítését. A Totem most kilép."
 
 #. Handle command line arguments
-#: ../src/totem.c:3112
+#: ../src/totem.c:3113
 msgid "- Play movies and songs"
 msgstr "– Filmek és dalok lejátszása"
 
-#: ../src/totem.c:3121
+#: ../src/totem.c:3122
 msgid "Totem could not parse the command-line options"
 msgstr "A Totem nem tudta feldolgozni a parancssori kapcsolókat"
 
-#: ../src/totem.c:3140
+#: ../src/totem.c:3141
 msgid "Totem could not initialize the configuration engine."
 msgstr "A Totem nem tudja inicializálni a beállítómotort."
 
-#: ../src/totem.c:3140
+#: ../src/totem.c:3141
 msgid "Make sure that GNOME is properly installed."
 msgstr "Győződjön meg róla, hogy a GNOME megfelelően van telepítve."
 
@@ -1650,10 +1739,6 @@ msgstr "Térhatású"
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4397
-msgid "Stereo"
-msgstr "Sztereó"
-
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4628
 #, c-format
 msgid "Too old version of GStreamer installed."
@@ -1664,7 +1749,7 @@ msgstr "A GStreamer telepített verziója túl régi."
 msgid "Media contains no supported video streams."
 msgstr "A média nem tartalmaz támogatott videofolyamot."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5008
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5010
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1673,8 +1758,8 @@ msgstr ""
 "Nem sikerült GStreamer-lejátszóobjektumot létrehozni. Kérem ellenőrizze a "
 "GStreamer telepítését."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5140
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5257
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5142
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5259
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1683,7 +1768,7 @@ msgstr ""
 "A videokimenet megnyitása sikertelen, lehet hogy nem áll rendelkezésre. "
 "Kérem válasszon másik videokimenetet a Multimédia rendszer választóban."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5152
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5154
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1694,7 +1779,7 @@ msgstr ""
 "kell telepítenie, vagy válasszon másik videokimenetet a Multimédia rendszer "
 "választóban."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5187
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5189
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1705,7 +1790,7 @@ msgstr ""
 "hangeszköz megnyitásához vagy a hangkiszolgáló nem fut. Kérem válasszon "
 "másik hangkimenetet a Multimédia rendszer választóban. "
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5207
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5209
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -1860,24 +1945,24 @@ msgstr ""
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Ez egy hangfájl, és nem érhető el hangkimenet."
 
-#: ../src/backend/bacon-video-widget-xine.c:4110
-#: ../src/backend/bacon-video-widget-xine.c:4157
-#: ../src/backend/bacon-video-widget-xine.c:4179
+#: ../src/backend/bacon-video-widget-xine.c:4124
+#: ../src/backend/bacon-video-widget-xine.c:4171
+#: ../src/backend/bacon-video-widget-xine.c:4193
 #, c-format
 msgid "Language %d"
 msgstr "%d nyelv"
 
-#: ../src/backend/bacon-video-widget-xine.c:4268
+#: ../src/backend/bacon-video-widget-xine.c:4282
 #, c-format
 msgid "No video to capture."
 msgstr "Nincs rögzítendő videó."
 
-#: ../src/backend/bacon-video-widget-xine.c:4276
+#: ../src/backend/bacon-video-widget-xine.c:4290
 #, c-format
 msgid "Video codec is not handled."
 msgstr "A videokodek nincs kezelve."
 
-#: ../src/backend/bacon-video-widget-xine.c:4287
+#: ../src/backend/bacon-video-widget-xine.c:4301
 #, c-format
 msgid "Movie is not playing."
 msgstr "Filmlejátszás áll."
@@ -2206,11 +2291,11 @@ msgstr "Kapcsolódó videók"
 msgid "Search:"
 msgstr "Keresés:"
 
-#: ../src/plugins/youtube/youtube.py:62
+#: ../src/plugins/youtube/youtube.py:80 ../src/plugins/youtube/youtube.py:122
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:79
+#: ../src/plugins/youtube/youtube.py:97
 msgid "Videos"
 msgstr "Videók"
 
