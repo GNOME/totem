@@ -2645,13 +2645,6 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   GST_DEBUG ("mrl = %s", GST_STR_NULL (mrl));
   GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
   
-  /* hmm... */
-  if (bvw->com->mrl && strcmp (bvw->com->mrl, mrl) == 0) {
-    GST_DEBUG ("same as current mrl");
-    /* FIXME: shouldn't we ensure playing state here? */
-    return TRUE;
-  }
-
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
@@ -2662,8 +2655,10 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
     char *path;
 
     path = g_file_get_path (file);
-    bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
-    g_free (path);
+    if (path) {
+      bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
+      g_free (path);
+    }
   }
 
   g_object_unref (file);

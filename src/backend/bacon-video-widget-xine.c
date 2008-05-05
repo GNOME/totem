@@ -2448,8 +2448,10 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 
 		file = g_file_new_for_commandline_arg (mrl);
 		path = g_file_get_path (file);
-		bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
-		g_free (path);
+		if (path != NULL) {
+			bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
+			g_free (path);
+		}
 		g_object_unref (file);
 
 		if (bvw->com->mrl == NULL)
