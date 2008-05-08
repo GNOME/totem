@@ -1498,10 +1498,31 @@ on_popup_button_button_pressed (GtkToggleButton *button,
 	return FALSE;
 }
 
+static char *
+resolve_redirect (const char *old_mrl, const char *mrl)
+{
+	GFile *old_file, *parent, *new_file;
+	char *retval;
+
+	/* Get the parent for the current MRL, that's our base */
+	old_file = g_file_new_for_uri (old_mrl);
+	parent = g_file_get_parent (old_file);
+	g_object_unref (old_file);
+
+	/* Resolve the URL */
+	new_file = g_file_get_child (parent, mrl);
+	g_object_unref (parent);
+
+	retval = g_file_get_uri (new_file);
+	g_object_unref (new_file);
+
+	return retval;
+}
+
 static void
 on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 {
-	char *new_uri = NULL;
+	char *new_uri;
 
 	g_message ("stream uri: %s", emb->stream_uri ? emb->stream_uri : "(null)");
 	g_message ("current uri: %s", emb->current_uri ? emb->current_uri : "(null)");
@@ -1510,29 +1531,31 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 
 	bacon_video_widget_close (emb->bvw);
 
+	/* If we don't have a relative URI */
+	if (strstr (mrl, "://") != NULL)
+		new_uri = NULL;
 	/* We are using a local cache, so we resolve against the stream_uri */
 	if (emb->stream_uri)
-		new_uri = totem_pl_parser_resolve_url (emb->stream_uri, mrl);
+		new_uri = resolve_redirect (emb->stream_uri, mrl);
 	/* We don't have a local cache, so resolve against the URI */
 	else if (emb->current_uri)
-		new_uri = totem_pl_parser_resolve_url (emb->current_uri, mrl);
+		new_uri = resolve_redirect (emb->current_uri, mrl);
 	/* FIXME: not sure that this is actually correct... */
 	else if (emb->base_uri)
-		new_uri = totem_pl_parser_resolve_url (emb->base_uri, mrl);
+		new_uri = resolve_redirect (emb->base_uri, mrl);
 
-	if (!new_uri)
-		return;
-
-	g_message ("Redirecting to '%s'", new_uri);
+	g_message ("Redirecting to '%s'", new_uri ? new_uri : mrl);
 
 	/* FIXME: clear playlist? or replace current entry? or add a new entry? */
 	/* FIXME: use totem_embedded_open_uri? */
 
-	totem_embedded_set_uri (emb, new_uri, emb->base_uri /* FIXME? */, FALSE);
+	totem_embedded_set_uri (emb, new_uri ? new_uri : mrl , emb->base_uri /* FIXME? */, FALSE);
 
 	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
 	totem_embedded_open_internal (emb, TRUE, NULL /* FIXME? */);
+
+	g_free (new_uri);
 }
 
 static void
