@@ -23,9 +23,7 @@
 #include <mozilla-config.h>
 #include "config.h"
 
-#include <libgnomevfs/gnome-vfs-mime-handlers.h>
-#include <libgnomevfs/gnome-vfs-mime-info.h>
-#include <libgnomevfs/gnome-vfs-utils.h>
+#include <gio/gio.h>
 #include <dlfcn.h>
 
 #include "npapi.h"
@@ -370,24 +368,25 @@ NP_GetMIMEDescription (void)
 	PRUint32 count;
 	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
 	for (PRUint32 i = 0; i < count; ++i) {
-		const char *desc;
+		char *desc;
 
 		if (totem_plugin_mimetype_is_disabled (mimetypes[i].mimetype, system, user))
 			continue;
 
-		desc = gnome_vfs_mime_get_description (mimetypes[i].mimetype);
+		desc = g_content_type_get_description (mimetypes[i].mimetype);
 		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
-			desc = gnome_vfs_mime_get_description
+			desc = g_content_type_get_description
 				(mimetypes[i].mime_alias);
 		}
 		if (desc == NULL) {
-			desc = mimetypes[i].mime_alias;
+			desc = g_strdup (mimetypes[i].mime_alias);
 		}
 
 		g_string_append_printf (list,"%s:%s:%s;",
 					mimetypes[i].mimetype,
 					mimetypes[i].extensions,
 					desc ? desc : "-");
+		g_free (desc);
 	}
 
 	mime_list = g_string_free (list, FALSE);
