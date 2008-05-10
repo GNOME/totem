@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-08 23:29+0100\n"
-"PO-Revision-Date: 2008-04-16 06:48+0300\n"
+"POT-Creation-Date: 2008-05-02 11:04+0000\n"
+"PO-Revision-Date: 2008-05-03 16:29+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Leave Fullscreen"
 msgstr "Välju täisekraanvaatest"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:72
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:93
 msgid "Time:"
 msgstr "Aeg:"
 
@@ -132,7 +132,7 @@ msgstr "Album:"
 msgid "Artist:"
 msgstr "Esitaja:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:5
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:21
 #: ../src/totem-properties-view.c:91
 msgid "Audio"
 msgstr "Audio"
@@ -165,7 +165,7 @@ msgstr "Kestus:"
 msgid "Framerate:"
 msgstr "Kaadrisagedus:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:18
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:35
 msgid "General"
 msgstr "Üldine"
 
@@ -232,465 +232,549 @@ msgstr "Filmiesitaja"
 msgid "Play movies and songs"
 msgstr "Filmide ja muusika esitamine"
 
-#: ../data/totem.ui.h:1 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:1
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "1.5 Mbps T1/intranet/kohtvõrk"
+
+#: ../data/totem.ui.h:2
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "112 Kbps duaalne ISDN/DSL"
+
+#: ../data/totem.ui.h:3
+msgid "14.4 Kbps Modem"
+msgstr "14.4 Kbps Modem"
+
+#: ../data/totem.ui.h:4 ../src/totem-menu.c:1359
 msgid "16:9 (Widescreen)"
 msgstr "16:3 (Laiekraan)"
 
-#: ../data/totem.ui.h:2 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:5
+msgid "19.2 Kbps Modem"
+msgstr "19.2 Kbps Modem"
+
+#: ../data/totem.ui.h:6 ../src/totem-menu.c:1360
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:3 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:7
+msgid "256 Kbps DSL/Cable"
+msgstr "256 Kbps DSL/kaabel"
+
+#: ../data/totem.ui.h:8
+msgid "28.8 Kbps Modem"
+msgstr "28.8 Kbps Modem"
+
+#: ../data/totem.ui.h:9
+msgid "33.6 Kbps Modem"
+msgstr "33.6 Kbps Modem"
+
+#: ../data/totem.ui.h:10
+msgid "34.4 Kbps Modem"
+msgstr "34.4 Kbps Modem"
+
+#: ../data/totem.ui.h:11
+msgid "384 Kbps DSL/Cable"
+msgstr "384 Kbps DSL/kaabel"
+
+#: ../data/totem.ui.h:12
+msgid "4-channel"
+msgstr "4-channel"
+
+#: ../data/totem.ui.h:13
+msgid "4.1-channel"
+msgstr "4.1-channel"
+
+#: ../data/totem.ui.h:14 ../src/totem-menu.c:1358
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:15
+msgid "5.0-channel"
+msgstr "5.0-channel"
+
+#: ../data/totem.ui.h:16
+msgid "5.1-channel"
+msgstr "5.1-channel"
+
+#: ../data/totem.ui.h:17
+msgid "512 Kbps DSL/Cable"
+msgstr "512 Kbps DSL/kaabel"
+
+#: ../data/totem.ui.h:18
+msgid "56 Kbps Modem/ISDN"
+msgstr "56 Kbps Modem/ISDN"
+
+#: ../data/totem.ui.h:19
+msgid "AC3 Passthrough"
+msgstr "AC3 läbilaskerežiim"
+
+#: ../data/totem.ui.h:20
 msgid "A_udio Menu"
 msgstr "_Helimenüü"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:22
 msgid "Audio Output"
 msgstr "Heliväljund"
 
-#: ../data/totem.ui.h:7 ../src/totem-menu.c:340 ../src/totem-menu.c:1356
+#: ../data/totem.ui.h:23 ../src/totem-menu.c:340 ../src/totem-menu.c:1356
 msgid "Auto"
 msgstr "Automaatne"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:24
 msgid "Automatically _load subtitle files when movie is loaded"
 msgstr "Pärast _uue video laadimist laaditakse subtiitrid automaatselt"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:25
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Pärast _uue video laadimist muudetakse automaatselt akna suurust"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:26
 msgid "Clear the playlist"
 msgstr "Esitusnimekirja puhastamine"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:27
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:28
 msgid "Color Balance"
 msgstr "Värvitasakaal"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:29
 msgid "Connection _speed:"
 msgstr "Ühenduse _kiirus:"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:30
 msgid "Decrease volume"
 msgstr "Heli vaiksemaks"
 
-#: ../data/totem.ui.h:15 ../src/totem-menu.c:1350
+#: ../data/totem.ui.h:31 ../src/totem-menu.c:1350
 msgid "Deinterlace"
 msgstr "Ülerealaotuse eemaldamine"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:32
 msgid "Display"
 msgstr "Kuva"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:33
+msgid "Extra Large"
+msgstr "Eriti suur"
+
+#: ../data/totem.ui.h:34
 msgid "Fit Window to Movie"
 msgstr "Sobita aken filmi järgi"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:36
 msgid "Go to the DVD menu"
 msgstr "Liigu DVD menüüsse"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:37
 msgid "Go to the angle menu"
 msgstr "Nurgamenüü avamine"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:38
 msgid "Go to the audio menu"
 msgstr "Liigu audio menüüsse"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:39
 msgid "Go to the chapter menu"
 msgstr "Peatükimenüü avamine"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:40
 msgid "Go to the title menu"
 msgstr "Pealkirjamenüü avamine"
 
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:41
 msgid "Help contents"
 msgstr "Abiteabe sisukord"
 
-#: ../data/totem.ui.h:25
+#: ../data/totem.ui.h:42
 msgid "Increase volume"
 msgstr "Heli valjemaks"
 
-#: ../data/totem.ui.h:26
+#: ../data/totem.ui.h:43
+msgid "Intranet/LAN"
+msgstr "Intranet/kohtvõrk"
+
+#: ../data/totem.ui.h:44
+msgid "Large"
+msgstr "Suur"
+
+#: ../data/totem.ui.h:45
 msgid "Networking"
 msgstr "Võrk"
 
-#: ../data/totem.ui.h:27
+#: ../data/totem.ui.h:46
 msgid "Next chapter or movie"
 msgstr "Järgmisele filmilõigule või filmile lülitumine"
 
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:47
+msgid "Normal"
+msgstr "Tavaline"
+
+#: ../data/totem.ui.h:48
 msgid "Open _Location..."
 msgstr "Ava a_sukoht..."
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:49
 msgid "Open a file"
 msgstr "Faili avamine"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:50
 msgid "Open a non-local file"
 msgstr "Faili avamine võrgust"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:51
 msgid "Play / P_ause"
 msgstr "Esita / p_ausi"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:52
 msgid "Play or pause the movie"
 msgstr "Filmi esitamine või esitamisse pausi tegemine"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:53
 msgid "Plugins..."
 msgstr "Pluginad..."
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:54
 msgid "Prefere_nces"
 msgstr "_Eelistused"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:55
 msgid "Previous chapter or movie"
 msgstr "Eelmisele filmilõigule või filmile lülitumine"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:56
 msgid "Quit the program"
 msgstr "Programmi töö lõpetamine"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:57
 msgid "Reset To _Defaults"
 msgstr "Määra _vaikeväärtused"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:58
 msgid "Resize _1:1"
 msgstr "Suurus _1:1"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:59
 msgid "Resize _2:1"
 msgstr "Suurus _2:1"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:60
 msgid "Resize to double the original video size"
 msgstr "Suurenda topeltsuurusele originaalsuurusest"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:61
 msgid "Resize to half the original video size"
 msgstr "Suurenda poole suuruseni originaalsuurusest"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:62
 msgid "Resize to the original video size"
 msgstr "Taasta video originaalsuurus"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:63
 msgid "S_ubtitles"
 msgstr "S_ubtiitrid"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:64
 msgid "Sat_uration:"
 msgstr "_Küllastus:"
 
-#: ../data/totem.ui.h:45 ../src/totem-menu.c:1348
+#: ../data/totem.ui.h:65 ../src/totem-menu.c:1348
 msgid "Set the repeat mode"
 msgstr "Esitusnimekirja kordava režiimi määramine"
 
-#: ../data/totem.ui.h:46 ../src/totem-menu.c:1349
+#: ../data/totem.ui.h:66 ../src/totem-menu.c:1349
 msgid "Set the shuffle mode"
 msgstr "Esitusjärjekorra juhusliku valiku määramine"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:67
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "16:9 (laiekraan) kuvasuhte määramine"
 
-#: ../data/totem.ui.h:48 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:68 ../src/totem-menu.c:1360
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "2.11:1 (DVB) kuvasuhte määramine"
 
-#: ../data/totem.ui.h:49 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:69 ../src/totem-menu.c:1358
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "4:3 (TV) kuvasuhte määramine"
 
-#: ../data/totem.ui.h:50 ../src/totem-menu.c:1356
+#: ../data/totem.ui.h:70 ../src/totem-menu.c:1356
 msgid "Sets automatic aspect ratio"
 msgstr "Automaatse kuvasuhte määramine"
 
-#: ../data/totem.ui.h:51 ../src/totem-menu.c:1357
+#: ../data/totem.ui.h:71 ../src/totem-menu.c:1357
 msgid "Sets square aspect ratio"
 msgstr "Ruudukujulise kuvasuhte määramine"
 
-#: ../data/totem.ui.h:52 ../src/totem-menu.c:1351
+#: ../data/totem.ui.h:72 ../src/totem-menu.c:1351
 msgid "Show _Controls"
 msgstr "Näita _juhtnuppe"
 
-#: ../data/totem.ui.h:53
+#: ../data/totem.ui.h:73
 msgid "Show _visual effects when an audio file is played"
 msgstr "_Visuaalefektide näitamine audiofailide esitamise ajal"
 
-#: ../data/totem.ui.h:54 ../src/totem-menu.c:1351
+#: ../data/totem.ui.h:74 ../src/totem-menu.c:1351
 msgid "Show controls"
 msgstr "Juhtnuppude näitamine"
 
-#: ../data/totem.ui.h:55 ../src/totem-menu.c:1352
+#: ../data/totem.ui.h:75 ../src/totem-menu.c:1352
 msgid "Show or hide the sidebar"
 msgstr "Külgriba näitamine või peitmine"
 
-#: ../data/totem.ui.h:56 ../src/totem-menu.c:1349
+#: ../data/totem.ui.h:76 ../src/totem-menu.c:1349
 msgid "Shuff_le Mode"
 msgstr "_Segatud režiim"
 
-#: ../data/totem.ui.h:57 ../src/totem-menu.c:1339 ../src/totem-menu.c:1344
+#: ../data/totem.ui.h:77 ../src/totem-menu.c:1339 ../src/totem-menu.c:1344
 msgid "Skip _Backwards"
 msgstr "Keri _tagasi"
 
-#: ../data/totem.ui.h:58 ../src/totem-menu.c:1338 ../src/totem-menu.c:1343
+#: ../data/totem.ui.h:78 ../src/totem-menu.c:1338 ../src/totem-menu.c:1343
 msgid "Skip _Forward"
 msgstr "Keri _edasi"
 
-#: ../data/totem.ui.h:59 ../src/totem-menu.c:1339 ../src/totem-menu.c:1344
+#: ../data/totem.ui.h:79 ../src/totem-menu.c:1339 ../src/totem-menu.c:1344
 msgid "Skip backwards"
 msgstr "Tagasikerimine"
 
-#: ../data/totem.ui.h:60 ../src/totem-menu.c:1338 ../src/totem-menu.c:1343
+#: ../data/totem.ui.h:80 ../src/totem-menu.c:1338 ../src/totem-menu.c:1343
 msgid "Skip forward"
 msgstr "Edasikerimine"
 
-#: ../data/totem.ui.h:61 ../src/totem-menu.c:1357
+#: ../data/totem.ui.h:81 ../src/totem-menu.c:1357
 msgid "Square"
 msgstr "Ruut"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:82 ../src/backend/bacon-video-widget-gst-0.10.c:4398
+msgid "Stereo"
+msgstr "Stereo"
+
+#: ../data/totem.ui.h:83
 msgid "Switch An_gles"
 msgstr "_Vaatenurga muutmine"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:84
 msgid "Switch camera angles"
 msgstr "Vaatenurkade muutmine"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:85
 msgid "Switch to fullscreen"
 msgstr "Lülitumine täisekraanvaatesse"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:86
 msgid "TV-Out"
 msgstr "TV-väljund"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:87
 msgid "TV-out in fullscreen by Nvidia (NTSC)"
 msgstr "Täisekraan Nvidia TV-väljund (NTSC)"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:88
 msgid "TV-out in fullscreen by Nvidia (PAL)"
 msgstr "Täisekraan Nvidia TV-väljund (PAL)"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:89
 msgid "Take _Screenshot..."
 msgstr "Võta _kuvatõmmis..."
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:90
 msgid "Take a screenshot"
 msgstr "Kuvatõmmise võtmine"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:91
 msgid "Text Subtitles"
 msgstr "Tekstilised subtiitrid"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:92
 msgid "Time seek bar"
 msgstr "Kerimisriba"
 
 #. Title
-#: ../data/totem.ui.h:73 ../src/totem.c:991 ../src/totem.c:3331
+#: ../data/totem.ui.h:94 ../src/totem.c:991 ../src/totem.c:3331
 #: ../src/totem.c:3363 ../browser-plugin/totem-plugin-viewer.c:1911
 msgid "Totem Movie Player"
 msgstr "Totem filmiesitaja"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:95
 msgid "Totem Preferences"
 msgstr "Totem'i eelistused"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:96
 msgid "Visual Effects"
 msgstr "Visuaalefektid"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:97
 msgid "Visualisation _size:"
 msgstr "Visualisee_rimise suurus:"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:98
 msgid "Volume _Down"
 msgstr "Heli _vaiksemaks"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:99
 msgid "Volume _Up"
 msgstr "Heli va_ljemaks"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:100
 msgid "Zoom In"
 msgstr "Suurendamine"
 
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:101
 msgid "Zoom Out"
 msgstr "Vähendamine"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:102
 msgid "Zoom Reset"
 msgstr "Algsuurendus"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:103
 msgid "Zoom in"
 msgstr "Suurendamine"
 
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:104
 msgid "Zoom out"
 msgstr "Vähendamine"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:105
 msgid "Zoom reset"
 msgstr "Algse suuruse määramine"
 
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:106
 msgid "_About"
 msgstr "_Programmist"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:107
 msgid "_Allow the screensaver to activate even when audio-only is playing"
 msgstr "Ekraanisäästjat on lubatud ka ainult au_dio esitamise ajal aktiveerida"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:108
 msgid "_Angle Menu"
 msgstr "_Nurgamenüü"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:109
 msgid "_Aspect Ratio"
 msgstr "_Kuvasuhe"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:110
 msgid "_Audio output type:"
 msgstr "_Heliväljundi liik:"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:111
 msgid "_Brightness:"
 msgstr "_Heledus:"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:112
 msgid "_Chapter Menu"
 msgstr "_Peatükimenüü"
 
-#: ../data/totem.ui.h:92
+#: ../data/totem.ui.h:113
 msgid "_Clear Playlist"
 msgstr "_Puhasta esitusnimekiri"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:114
 msgid "_Contents"
 msgstr "_Sisukord"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:115
 msgid "_DVD Menu"
 msgstr "_DVD menüü"
 
-#: ../data/totem.ui.h:95 ../src/totem-menu.c:1350
+#: ../data/totem.ui.h:116 ../src/totem-menu.c:1350
 msgid "_Deinterlace"
 msgstr "_Eemalda ülerealaotus"
 
-#: ../data/totem.ui.h:96
+#: ../data/totem.ui.h:117
 msgid "_Edit"
 msgstr "_Redaktor"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:118
 msgid "_Eject"
 msgstr "_Väljasta"
 
-#: ../data/totem.ui.h:98
+#: ../data/totem.ui.h:119
 msgid "_Encoding:"
 msgstr "Koo_ditabel:"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:120
 msgid "_Font:"
 msgstr "_Kirjatüüp:"
 
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:121
 msgid "_Fullscreen"
 msgstr "_Täisekraanvaade"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:122
 msgid "_Go"
 msgstr "_Liikumine"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:123
 msgid "_Help"
 msgstr "A_bi"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:124
 msgid "_Hue:"
 msgstr "_Toon:"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:125
 msgid "_Languages"
 msgstr "_Keeled"
 
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:126
 msgid "_Movie"
 msgstr "_Film"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:127
 msgid "_Next Chapter/Movie"
 msgstr "_Järgmine lõik/film"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:128
 msgid "_No TV-out"
 msgstr "TV-väljund _puudub"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:129
 msgid "_Open..."
 msgstr "_Avamine..."
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:130
 msgid "_Previous Chapter/Movie"
 msgstr "_Eelmine lõik/film"
 
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:131
 msgid "_Properties"
 msgstr "_Omadused"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:132
 msgid "_Quit"
 msgstr "_Lõpeta"
 
-#: ../data/totem.ui.h:112 ../src/totem-menu.c:1348
+#: ../data/totem.ui.h:133 ../src/totem-menu.c:1348
 msgid "_Repeat Mode"
 msgstr "_Kordav režiim"
 
-#: ../data/totem.ui.h:113
+#: ../data/totem.ui.h:134
 msgid "_Resize 1:2"
 msgstr "_Suurus 1:2"
 
-#: ../data/totem.ui.h:114
+#: ../data/totem.ui.h:135
 msgid "_Sidebar"
 msgstr "_Külgriba"
 
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:136
 msgid "_Sound"
 msgstr "_Heli"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:137
 msgid "_Title Menu"
 msgstr "_Pealkirjamenüü"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:138
 msgid "_Type of visualisation:"
 msgstr "Visualiseerimise l_iik:"
 
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:139
 msgid "_View"
 msgstr "_Vaade"
 
@@ -1595,7 +1679,7 @@ msgstr "Totemil pole võimalik seadistusmootorit lähtestada."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Veendu, et GNOME on õigesti paigaldatud."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2441
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1603,18 +1687,18 @@ msgstr ""
 "Soovitud audioväljundit ei leitud. Palun vali Multimeediasüsteemide valija "
 "abil mõni teine audioväljund."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2445
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2446
 msgid "Location not found."
 msgstr "Asukohta ei leitud."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2449
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2450
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Asukohta pole võimalik avada. Võib-olla pole Sul selle faili avamiseks "
 "õiguseid."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2460
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2461
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1624,7 +1708,7 @@ msgstr ""
 "videorakendused või vali mõni teine videoväljund Multimeediasüsteemide "
 "valija abil."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2466
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2467
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1635,14 +1719,14 @@ msgstr ""
 "audioserveri kasutamist."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2484
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2485
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2491
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Selle filmi esitamine vajab %s pluginat, see plugin pole aga paigaldatud."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2491
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2492
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1655,46 +1739,41 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2516
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2517
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Seda faili pole võimalik otse võrgust mängida. Proovi see kõigepealt kettale "
 "laadida."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2588
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2589
 msgid "Media file could not be played."
 msgstr "Meediumifaili pole võimalik esitada."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2665
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2731
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2729
 #, c-format
 msgid "Failed to retrieve working directory"
 msgstr "Tõrge aktiivse kataloogi kasutamisel"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4396
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4394
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4398
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4396
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4400
-msgid "Stereo"
-msgstr "Stereo"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4631
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4629
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "Paigaldatud GStreamer on liiga vana."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4638
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4636
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Meedia ei sisalda ühtegi toetatud videostriimi."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5012
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1703,8 +1782,8 @@ msgstr ""
 "Tõrge GStreamer esitusobjekti loomisel. Palun kontrolli GStreameri "
 "paigaldust."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5144
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5261
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5143
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5260
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1713,7 +1792,7 @@ msgstr ""
 "Tõrge videoväljundi avamisel. See pole võibolla saadaval. Palun vali "
 "Multimeediasüsteemide valija abil mõni muu videoväljund."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5156
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5155
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1724,7 +1803,7 @@ msgstr ""
 "täiendavaid GStreamer'i pluginaid või valida Multimeediasüsteemide valija "
 "abil mõni teine videoväljund."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5191
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5190
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1735,7 +1814,7 @@ msgstr ""
 "avamiseks või audioserver ei ole käivitatud. Palun vali "
 "Multimeediasüsteemide valija abil mõni teine audioväljund."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5211
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5210
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -1865,7 +1944,7 @@ msgstr "Seda filmi pole võimalik avada."
 msgid "Generic Error."
 msgstr "Üldine viga."
 
-#: ../src/backend/bacon-video-widget-xine.c:2526
+#: ../src/backend/bacon-video-widget-xine.c:2533
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1874,7 +1953,7 @@ msgstr ""
 "Videokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
 "filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2530
+#: ../src/backend/bacon-video-widget-xine.c:2537
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1883,29 +1962,29 @@ msgstr ""
 "Audiokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
 "filmitüüpide vaatamiseks täiendavaid pluginaid."
 
-#: ../src/backend/bacon-video-widget-xine.c:2544
+#: ../src/backend/bacon-video-widget-xine.c:2551
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "See on audiofail aga hetkel pole audioväljundit saadaval."
 
-#: ../src/backend/bacon-video-widget-xine.c:4142
-#: ../src/backend/bacon-video-widget-xine.c:4189
-#: ../src/backend/bacon-video-widget-xine.c:4211
+#: ../src/backend/bacon-video-widget-xine.c:4149
+#: ../src/backend/bacon-video-widget-xine.c:4196
+#: ../src/backend/bacon-video-widget-xine.c:4218
 #, c-format
 msgid "Language %d"
 msgstr "Keel %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4300
+#: ../src/backend/bacon-video-widget-xine.c:4307
 #, c-format
 msgid "No video to capture."
 msgstr "Pole videot, mida salvestada."
 
-#: ../src/backend/bacon-video-widget-xine.c:4308
+#: ../src/backend/bacon-video-widget-xine.c:4315
 #, c-format
 msgid "Video codec is not handled."
 msgstr "Videokoodek pole käsitletud."
 
-#: ../src/backend/bacon-video-widget-xine.c:4319
+#: ../src/backend/bacon-video-widget-xine.c:4326
 #, c-format
 msgid "Movie is not playing."
 msgstr "Filmi ei esitata."
