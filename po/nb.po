@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 2.21.x\n"
+"Project-Id-Version: totem 2.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-06 19:31+0200\n"
-"PO-Revision-Date: 2008-04-21 21:02+0200\n"
+"POT-Creation-Date: 2008-05-14 15:09+0200\n"
+"PO-Revision-Date: 2008-05-14 15:09+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -503,8 +503,8 @@ msgid "Time seek bar"
 msgstr "Søk på tid"
 
 #. Title
-#: ../data/totem.ui.h:73 ../src/totem.c:1002 ../src/totem.c:3342
-#: ../src/totem.c:3374 ../browser-plugin/totem-plugin-viewer.c:1911
+#: ../data/totem.ui.h:73 ../src/totem.c:1002 ../src/totem.c:3359
+#: ../src/totem.c:3391 ../browser-plugin/totem-plugin-viewer.c:1934
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -1498,8 +1498,8 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunne ikke spille av denne platen."
 
-#: ../src/totem.c:595 ../src/totem.c:3206
-#: ../browser-plugin/totem-plugin-viewer.c:1902
+#: ../src/totem.c:595 ../src/totem.c:3223
+#: ../browser-plugin/totem-plugin-viewer.c:1925
 msgid "No reason."
 msgstr "Ingen årsak."
 
@@ -1529,41 +1529,41 @@ msgstr "Ingen feilmelding"
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: ../src/totem.c:1698 ../src/totem.c:1700
-#: ../browser-plugin/totem-plugin-viewer.c:1569
+#: ../src/totem.c:1715 ../src/totem.c:1717
+#: ../browser-plugin/totem-plugin-viewer.c:1592
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
-#: ../src/totem.c:3067 ../src/totem.c:3069
+#: ../src/totem.c:3084 ../src/totem.c:3086
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem.c:3075 ../src/totem.c:3077
+#: ../src/totem.c:3092 ../src/totem.c:3094
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem.c:3084 ../src/totem.c:3086
+#: ../src/totem.c:3101 ../src/totem.c:3103
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem.c:3206
+#: ../src/totem.c:3223
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: ../src/totem.c:3343
+#: ../src/totem.c:3360
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../src/totem.c:3343
+#: ../src/totem.c:3360
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
 #. Handle command line arguments
-#: ../src/totem.c:3351
+#: ../src/totem.c:3368
 msgid "- Play movies and songs"
 msgstr "Spill av filmer og sanger"
 
-#: ../src/totem.c:3360
+#: ../src/totem.c:3377
 #, c-format
 msgid ""
 "%s\n"
@@ -1573,11 +1573,11 @@ msgstr ""
 "Kjør «%s --help» for å se en full liste med tilgjengelige "
 "komanndolinjeflagg.\n"
 
-#: ../src/totem.c:3380
+#: ../src/totem.c:3397
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: ../src/totem.c:3380
+#: ../src/totem.c:3397
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
@@ -2122,6 +2122,25 @@ msgstr "Publiser spilleliste"
 msgid "Share the current playlist via HTTP"
 msgstr "Del denne spillelisten via HTTP"
 
+#: ../src/plugins/publish/publish-plugin.ui.h:2
+#, no-c-format
+msgid ""
+"<small>The name used for announcing the playlist service on the network.\n"
+"All occurances of the string <b>%u</b> will be replaced by your name,\n"
+"and <b>%h</b> will be replaced by your computer's host name.</small>"
+msgstr ""
+"<small>Navn brukt for å annonsere spillelistetjenesten på nettverket.\n"
+"Alle oppføringer av strengen <b>%u</b> vil bli erstattet av ditt navn,\n"
+"og <b>%h</b> vil bli erstattet av navnet på din datamaskin.</small>"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:5
+msgid "Service _Name:"
+msgstr "_Navn på tjeneste:"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:6
+msgid "Use _encrypted transport protocol (HTTPS)"
+msgstr "Bruk krypt_ert transportprotokoll (HTTPS)"
+
 #: ../src/plugins/skipto/totem-skipto.c:189
 msgid "Skip to"
 msgstr "Hopp til"
@@ -2266,18 +2285,18 @@ msgstr "Totem nettlesertillegg"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1902
+#: ../browser-plugin/totem-plugin-viewer.c:1925
 msgid "The Totem plugin could not be started."
 msgstr "Tillegget for Totem kunne ikke starte opp."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2244
+#: ../browser-plugin/totem-plugin-viewer.c:2267
 msgid "No playlist or playlist empty"
 msgstr "Ingen spilleliste eller tom spilleliste"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2348
+#: ../browser-plugin/totem-plugin-viewer.c:2371
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2348
+#: ../browser-plugin/totem-plugin-viewer.c:2371
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Sjekk systeminstallasjonen. Tillegget for Totem avslutter nå."
