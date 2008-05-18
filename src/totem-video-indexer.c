@@ -187,7 +187,10 @@ int main (int argc, char **argv)
 		print_mimetypes ();
 		return 0;
 	} else if (filenames == NULL || g_strv_length (filenames) != 1) {
-		g_print ("Expects exactly one URI\n");
+		char *help;
+		help = g_option_context_get_help (context, FALSE, NULL);
+		g_print ("%s", help);
+		g_free (help);
 		return 1;
 	}
 

@@ -108,7 +108,10 @@ int main (int argc, char **argv)
 	}
 
 	if (filenames != NULL && g_strv_length (filenames) != 1) {
-		g_print ("Too many URIs passed but only one is required\n");
+		char *help;
+		help = g_option_context_get_help (context, FALSE, NULL);
+		g_print ("%s", help);
+		g_free (help);
 		return 1;
 	}
 	path = filenames ? filenames[0] : "fd://0";

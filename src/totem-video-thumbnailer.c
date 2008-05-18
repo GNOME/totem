@@ -474,7 +474,10 @@ int main (int argc, char *argv[])
 #endif
 
 	if (filenames == NULL || g_strv_length (filenames) != 2) {
-		g_print ("Expects an input and an output file\n");
+		char *help;
+		help = g_option_context_get_help (context, FALSE, NULL);
+		g_print ("%s", help);
+		g_free (help);
 		return 1;
 	}
 	input = filenames[0];
