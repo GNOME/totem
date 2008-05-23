@@ -7,11 +7,6 @@ plugin_in_files = mythtv.totem-plugin.in
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-schema_in_files = totem-mythtv.schemas.in
-schemadir = $(GCONF_SCHEMA_FILE_DIR)
-schema_DATA = $(schema_in_files:.schemas.in=.schemas)
-@INTLTOOL_SCHEMAS_RULE@
-
 install-data-local: $(schema_DATA)
 if GCONF_SCHEMAS_INSTALL
 	if test -z "$(DESTDIR)" ; then \

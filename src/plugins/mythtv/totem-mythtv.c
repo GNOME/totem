@@ -46,6 +46,8 @@
 #include <gmyth/gmyth_file_transfer.h>
 #include <gmyth/gmyth_scheduler.h>
 #include <gmyth/gmyth_util.h>
+#include <gmyth_upnp.h>
+
 
 #define TOTEM_TYPE_MYTHTV_PLUGIN		(totem_mythtv_plugin_get_type ())
 #define TOTEM_MYTHTV_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin))
@@ -74,7 +76,8 @@ typedef struct
 {
 	TotemPlugin parent;
 
-	GMythBackendInfo *b_info;
+	GList *lst_b_info;
+	GMythUPnP *upnp;
 
 	TotemObject *totem;
 	GConfClient *client;
@@ -103,7 +106,7 @@ TOTEM_PLUGIN_REGISTER(TotemMythtvPlugin, totem_mythtv_plugin)
 #define THUMB_HEIGHT 32
 
 static GdkPixbuf *
-get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
+get_thumbnail (TotemMythtvPlugin *plugin, GMythBackendInfo *b_info, char *fname)
 {
 	GMythFileTransfer *transfer;
 	GdkPixbufLoader *loader;
@@ -112,10 +115,10 @@ get_thumbnail (TotemMythtvPlugin *plugin, char *fname)
 	guint64 to_read;
 	GByteArray *data;
 
-	if (gmyth_util_file_exists (plugin->b_info, fname) == FALSE)
+	if (gmyth_util_file_exists (b_info, fname) == FALSE)
 		return NULL;
 
-	transfer = gmyth_file_transfer_new (plugin->b_info);
+	transfer = gmyth_file_transfer_new (b_info);
 	if (gmyth_file_transfer_open(transfer, fname) == FALSE)
 		return NULL;
 
@@ -204,17 +207,18 @@ create_treeview (TotemMythtvPlugin *plugin)
 }
 
 static void
-totem_mythtv_list_recordings (TotemMythtvPlugin *plugin)
+totem_mythtv_list_recordings (TotemMythtvPlugin *plugin,
+							  GMythBackendInfo *b_info)
 {
 	GMythScheduler *scheduler;
 	GList *list, *l;
 
-	if (plugin->b_info == NULL)
+	if (b_info == NULL)
 		return;
 
 	scheduler = gmyth_scheduler_new();
 	if (gmyth_scheduler_connect_with_timeout(scheduler,
-						 plugin->b_info, 5) == FALSE) {
+						 b_info, 5) == FALSE) {
 		g_message ("Couldn't connect to scheduler");
 		g_object_unref (scheduler);
 		return;
@@ -234,7 +238,7 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin)
 		RecordedInfo *recorded_info = (RecordedInfo *) l->data;
 
 		if (gmyth_util_file_exists
-		    (plugin->b_info, recorded_info->basename->str)) {
+		    (b_info, recorded_info->basename->str)) {
 		    	GtkTreeIter iter;
 		    	GdkPixbuf *pixbuf;
 		    	char *full_name = NULL;
@@ -246,10 +250,10 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin)
 		    					     recorded_info->subtitle->str);
 		    	thumb_fname = g_strdup_printf ("%s.png", recorded_info->basename->str);
 		    	uri = g_strdup_printf ("myth://%s:%d/%s",
-		    			       plugin->b_info->hostname,
-		    			       plugin->b_info->port,
+		    			       b_info->hostname,
+		    			       b_info->port,
 		    			       recorded_info->basename->str);
-		    	pixbuf = get_thumbnail (plugin, thumb_fname);
+		    	pixbuf = get_thumbnail (plugin, b_info, thumb_fname);
 		    	g_free (thumb_fname);
 
 		    	gtk_list_store_insert_with_values (GTK_LIST_STORE (plugin->model), &iter, G_MAXINT32,
@@ -281,55 +285,84 @@ totem_mythtv_plugin_class_init (TotemMythtvPluginClass *klass)
 }
 
 static void
-totem_mythtv_update_binfo (TotemMythtvPlugin *plugin)
+device_found_cb (GMythUPnP *upnp,
+				 GMythBackendInfo *b_info,
+				 TotemMythtvPlugin *plugin)
 {
-	char *address, *user, *password, *database;
-	int port;
+	if (!g_list_find (plugin->lst_b_info, b_info)) {
+		plugin->lst_b_info = g_list_append (plugin->lst_b_info,
+				g_object_ref (b_info));
+		totem_mythtv_list_recordings (plugin, b_info);
+	}
+}
 
-	if (plugin->b_info != NULL) {
-		//FIXME why would this crash?
-		//g_object_unref (plugin->b_info);
-		plugin->b_info = NULL;
+static void
+device_lost_cb (GMythUPnP *upnp,
+				 GMythBackendInfo *info,
+				 TotemMythtvPlugin *plugin)
+{
+	GList *elem;
+	GMythBackendInfo *b_info;
+
+	elem = g_list_find (plugin->lst_b_info, info);
+	if (elem && elem->data) {
+		b_info = elem->data;
+		plugin->lst_b_info = g_list_remove (plugin->lst_b_info,
+				b_info);
+		g_object_unref (b_info);
 	}
 
-	if (plugin->client == NULL)
-		plugin->client = gconf_client_get_default ();
-	if (plugin->client == NULL)
-		return;
+}
 
-	address = gconf_client_get_string (plugin->client, CONF_IP, NULL);
-	/* No address? */
-	if (address == NULL || address[0] == '\0')
-		return;
+static void
+totem_mythtv_update_binfo (TotemMythtvPlugin *plugin)
+{
+	GList *lst;
+	GList *w;
 
-	user = gconf_client_get_string (plugin->client, CONF_USER, NULL);
-	if (user == NULL || user[0] == '\0')
-		user = g_strdup ("mythtv");
-	password = gconf_client_get_string (plugin->client, CONF_PASSWORD, NULL);
-	if (password == NULL || password[0] == '\0')
-		password = g_strdup ("mythtv");
-	database = gconf_client_get_string (plugin->client, CONF_DATABASE, NULL);
-	if (database == NULL || database[0] == '\0')
-		database = g_strdup ("mythconverg");
-	port = gconf_client_get_int (plugin->client, CONF_PORT, NULL);
-	if (port == 0)
-		port = 6543;
+	/* Clear old b_info */
+	if (plugin->lst_b_info != NULL) {
+		g_list_foreach (plugin->lst_b_info, (GFunc) g_object_unref, NULL);
+		g_list_free (plugin->lst_b_info);
+		plugin->lst_b_info = NULL;
+	}
 
-	plugin->b_info = gmyth_backend_info_new_full (address,
-						      user,
-						      password,
-						      database,
-						      port);
+
+	/* Using GMythUPnP to search for avaliable servers */
+	if (plugin->upnp == NULL) {
+		plugin->upnp = gmyth_upnp_get_instance ();
+		g_signal_connect (G_OBJECT (plugin->upnp),
+						  "device-found",
+						  G_CALLBACK (device_found_cb),
+						  plugin);
+		plugin->upnp = gmyth_upnp_get_instance ();
+		g_signal_connect (G_OBJECT (plugin->upnp),
+						  "device-lost",
+						  G_CALLBACK (device_lost_cb),
+						  plugin);
+	}
+
+	/* Load current servers */
+	lst = gmyth_upnp_get_devices (plugin->upnp);
+	for (w = lst; w != NULL; w = w->next) {
+		GMythBackendInfo *b_info;
+
+		b_info = (GMythBackendInfo *) w->data;
+		plugin->lst_b_info = g_list_append (plugin->lst_b_info,
+				b_info);
+		totem_mythtv_list_recordings (plugin, b_info);
+	}
+	g_list_free (lst);
+	gmyth_upnp_search (plugin->upnp);
 }
 
 static void
 refresh_cb (GtkWidget *button, TotemMythtvPlugin *plugin)
 {
 	gtk_widget_set_sensitive (button, FALSE);
-	totem_mythtv_update_binfo (plugin);
 	gtk_list_store_clear (GTK_LIST_STORE (plugin->model));
+	totem_mythtv_update_binfo (plugin);
 	totem_gdk_window_set_waiting_cursor (plugin->sidebar->window);
-	totem_mythtv_list_recordings (plugin);
 	gdk_window_set_cursor (plugin->sidebar->window, NULL);
 	gtk_widget_set_sensitive (button, TRUE);
 }
@@ -345,9 +378,10 @@ totem_mythtv_plugin_finalize (GObject *object)
 {
 	TotemMythtvPlugin *plugin = TOTEM_MYTHTV_PLUGIN(object);
 
-	if (plugin->b_info != NULL) {
-		g_object_unref (plugin->b_info);
-		plugin->b_info = NULL;
+	if (plugin->lst_b_info != NULL) {
+		g_list_foreach (plugin->lst_b_info, (GFunc ) g_object_unref, NULL);
+		g_list_free (plugin->lst_b_info);
+		plugin->lst_b_info = NULL;
 	}
 	if (plugin->client != NULL) {
 		g_object_unref (plugin->client);

@@ -1,5 +1,16 @@
 2008-05-23  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: require gmyth-upnp
+	* src/plugins/mythtv/totem-mythtv.c (get_thumbnail),
+	(totem_mythtv_list_recordings), (device_found_cb),
+	(device_lost_cb), (totem_mythtv_update_binfo), (refresh_cb),
+	(totem_mythtv_plugin_finalize): Patch by Renato Araujo Oliveira Filho
+	<renatox@gmail.com> to use UPNP to discover GMyth servers, and avoid
+	having any types of configuration to make (Closes: #516672)
+	* src/plugins/mythtv/totem-mythtv.schemas.in: Remove
+
+2008-05-23  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c
 	(totem_embedded_launch_player), (totem_embedded_get_app_for_uri),
 	(totem_embedded_update_menu), (on_open1_activate), (main):
