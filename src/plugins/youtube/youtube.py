@@ -71,6 +71,7 @@ class YouTube (totem.Plugin):
 		self.search_entry.connect ("activate", self.on_search_entry_activated)
 		self.search_button = self.builder.get_object ("yt_search_button")
 		self.search_button.connect ("clicked", self.on_search_button_clicked)
+		self.progress_bar = self.builder.get_object ("yt_progress_bar")
 
 		self.notebook = self.builder.get_object ("yt_notebook")
 		self.notebook.connect ("switch-page", self.on_notebook_page_changed)
@@ -138,6 +139,7 @@ class YouTube (totem.Plugin):
 		self.youtube_id = youtube_id
 		self.start_index["related"] = 1
 		self.results["related"] = 0
+		self.progress_bar.set_text (_("Fetching related videos..."))
 		self.get_results ("/feeds/api/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
 	def check_url_for_redirects (self, url_path):
 		try:
@@ -201,6 +203,7 @@ class YouTube (totem.Plugin):
 		"""Load more results when we get near the bottom of the treeview"""
 		if not self.button_down and (adjustment.get_value () + adjustment.page_size) / adjustment.upper > 0.8 and self.results[self.current_treeview_name] >= self.max_results:
 			self.results[self.current_treeview_name] = 0
+			self.progress_bar.set_text (_("Fetching more videos..."))
 			if self.current_treeview_name == "search":
 				self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (self.search_terms) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index["search"]), "search", False)
 				if self.debug:
@@ -215,6 +218,7 @@ class YouTube (totem.Plugin):
 	def populate_list_from_results (self, treeview_name):
 		"""Check and acquire the lock"""
 		if self.entry_lock.acquire (False) == False:
+			self.progress_bar.pulse ()
 			return True
 
 		"""Return if there are no results (or we've finished)"""
@@ -222,6 +226,8 @@ class YouTube (totem.Plugin):
 			"""Revert the cursor"""
 			window = self.vbox.window
 			window.set_cursor (None)
+			self.progress_bar.set_fraction (0.0)
+			self.progress_bar.set_text ("")
 
 			self.entry[treeview_name] = None
 			self.entry_lock.release ()
@@ -233,6 +239,9 @@ class YouTube (totem.Plugin):
 		self.results[treeview_name] += 1
 		self.start_index[treeview_name] += 1
 		youtube_id = self.convert_url_to_id (entry.id.text)
+
+		"""Update the progress bar"""
+		self.progress_bar.set_fraction (float (self.results[treeview_name]) / float (self.max_results))
 
 		self.entry_lock.release ()
 
@@ -278,6 +287,7 @@ class YouTube (totem.Plugin):
 		self.search_terms = search_terms
 		self.start_index["search"] = 1
 		self.results["search"] = 0
+		self.progress_bar.set_text (_("Fetching search results..."))
 		self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (search_terms) + "&orderby=relevance&max-results=" + str (self.max_results), "search")
 	def on_search_entry_activated (self, entry):
 		self.search_button.clicked ()
@@ -291,6 +301,7 @@ class YouTube (totem.Plugin):
 		"""Give us a nice waiting cursor"""
 		window = self.vbox.window
 		window.set_cursor (gtk.gdk.Cursor (gtk.gdk.WATCH))
+		self.progress_bar.pulse ()
 
 		self.results_downloaded = False
 		DownloadThread (self, url, treeview_name).start ()

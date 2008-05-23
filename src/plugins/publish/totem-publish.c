@@ -234,8 +234,8 @@ totem_publish_plugin_stream_cb (EpcContents *contents,
 	g_return_val_if_fail (NULL != contents, FALSE);
 	g_return_val_if_fail (NULL != length, FALSE);
 
-	if (NULL == data || *length < ABS (size)) {
-		*length = MAX (*length, ABS (size));
+	if (NULL == data || *length < (gsize)size) {
+		*length = MAX (*length, (gsize)size);
 		return FALSE;
 	}
 

@@ -1,3 +1,13 @@
+2008-05-23  Philip Withnall  <pwithnall@svn.gnome.org>
+
+	* src/plugins/publish/totem-publish.c:
+	(totem_publish_plugin_stream_cb): Improve my fix for a signed/unsigned
+	comparison warning.
+	* src/plugins/youtube/youtube.py:
+	* src/plugins/youtube/youtube.ui: Add a progress bar when doing
+	YouTube searches to show the current status of the operation.
+	(Closes: #522548)
+
 2008-05-23  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* src/plugins/publish/publish-plugin.ui:
