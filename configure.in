@@ -176,7 +176,7 @@ if test x$ENABLE_XINE = xno && test x$HAVE_GSTREAMER = xno; then
 fi
 
 if test x$HAVE_GSTREAMER = xno; then
-	MM="libxine >= $XINE_REQS gconf-2.0 gnome-keyring-1 gnome-vfs-2.0"
+	MM="libxine >= $XINE_REQS gconf-2.0"
 	PKG_CHECK_MODULES(XINE, $MM, HAVE_XINE=yes,
 		[
 			AC_MSG_RESULT(no)
@@ -646,8 +646,6 @@ fi
 if test "$enable_browser_plugins" = "yes" ; then
 	PKG_CHECK_MODULES([BROWSER_PLUGIN],
 		[glib-2.0
-		 gnome-vfs-2.0 >= $GNOMEVFS_REQS
-		 gnome-vfs-module-2.0 >= $GNOMEVFS_REQS
 		 gthread-2.0
 		 totem-plparser-mini >= $TOTEM_PLPARSER_REQS],
 		[],[enable_browser_plugins=no])

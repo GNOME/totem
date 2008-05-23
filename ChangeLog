@@ -1,3 +1,15 @@
+2008-05-23  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c
+	(totem_embedded_launch_player), (totem_embedded_get_app_for_uri),
+	(totem_embedded_update_menu), (on_open1_activate), (main):
+	Use GIO and GDK to launch the full-blown player, startup notification
+	only available with GTK+ 2.13 (Closes: #512587)
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_open_with_subtitle): Remove remains of gnome-vfs
+	code, gvfs doesn't support passing credentials in the URI anyway
+	* configure.in: Remove gnome-vfs deps, not used anymore
+
 2008-05-23  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* src/plugins/publish/totem-publish.c:
