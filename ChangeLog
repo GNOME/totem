@@ -1,5 +1,16 @@
 2008-05-24  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c (init_treeview),
+	(totem_playlist_compare_with_monitor),
+	(totem_playlist_file_changed), (totem_playlist_init),
+	(totem_playlist_add_one_mrl), (totem_playlist_clear_with_compare),
+	(totem_playlist_compare_with_mount),
+	(totem_playlist_clear_with_g_mount): Monitor all the "native" files
+	that get added to the playlist, and automatically remove the files
+	that get deleted (Closes: #497996)
+
+2008-05-24  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c (init_treeview):
 	* src/totem-playlist.h:
 	* src/totem.c (on_playlist_change_name): Remove dead-code dating

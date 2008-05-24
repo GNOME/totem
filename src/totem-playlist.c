@@ -42,6 +42,14 @@
 static void ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle);
 static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl, const char *display_name);
 
+typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
+		gpointer data);
+typedef gboolean (*ClearComparisonFunc) (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data);
+
+static void totem_playlist_clear_with_compare (TotemPlaylist *playlist,
+					       ClearComparisonFunc func,
+					       gconstpointer data);
+
 /* Callback function for GtkBuilder */
 void totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist);
 void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist);
@@ -52,8 +60,6 @@ void playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *p
 void playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist);
 void playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist);
 
-typedef gboolean (*PlaylistCallback) (TotemPlaylist *playlist, const char *mrl,
-		gpointer data);
 
 typedef struct {
 	TotemPlaylist *playlist;
@@ -137,6 +143,7 @@ enum {
 	URI_COL,
 	TITLE_CUSTOM_COL,
 	SUBTITLE_URI_COL,
+	FILE_MONITOR_COL,
 	NUM_COLS
 };
 
@@ -1309,7 +1316,8 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 				G_TYPE_STRING,
 				G_TYPE_STRING,
 				G_TYPE_BOOLEAN,
-				G_TYPE_STRING));
+				G_TYPE_STRING,
+				G_TYPE_OBJECT));
 
 	/* the treeview */
 	gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), model);
@@ -1519,6 +1527,43 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	totem_playlist_add_one_mrl (playlist, uri, title);
 }
 
+static gboolean
+totem_playlist_compare_with_monitor (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data)
+{
+	GFileMonitor *monitor = (GFileMonitor *) data;
+	GFileMonitor *_monitor;
+	gboolean retval = FALSE;
+
+	gtk_tree_model_get (playlist->priv->model, iter,
+			    FILE_MONITOR_COL, &_monitor, -1);
+
+	if (_monitor == monitor)
+		retval = TRUE;
+
+	if (_monitor != NULL)
+		g_object_unref (_monitor);
+
+	return retval;
+}
+
+static void
+totem_playlist_file_changed (GFileMonitor *monitor,
+			     GFile *file,
+			     GFile *other_file,
+			     GFileMonitorEvent event_type,
+			     TotemPlaylist *playlist)
+{
+	if (event_type == G_FILE_MONITOR_EVENT_DELETED) {
+		char *uri;
+
+		uri = g_file_get_uri (file);
+		totem_playlist_clear_with_compare (playlist,
+						   (ClearComparisonFunc) totem_playlist_compare_with_monitor,
+						   monitor);
+		g_free (uri);
+	}
+}
+
 static void
 totem_playlist_dispose (GObject *object)
 {
@@ -1603,8 +1648,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 	init_config (playlist);
 
 	gtk_widget_show_all (GTK_WIDGET (playlist));
-
-
 }
 
 GtkWidget*
@@ -1629,6 +1672,8 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	GtkTreeIter iter;
 	char *filename_for_display, *uri;
 	GtkTreeRowReference *ref;
+	GFileMonitor *monitor;
+	GFile *file;
 	int pos;
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
@@ -1655,11 +1700,28 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	}
 
 	store = GTK_LIST_STORE (playlist->priv->model);
+
+	/* Get the file monitor */
+	file = g_file_new_for_uri (uri ? uri : mrl);
+	if (g_file_is_native (file) != FALSE) {
+		monitor = g_file_monitor_file (file,
+					       G_FILE_MONITOR_NONE,
+					       NULL,
+					       NULL);
+		g_signal_connect (G_OBJECT (monitor),
+				  "changed",
+				  G_CALLBACK (totem_playlist_file_changed),
+				  playlist);
+	} else {
+		monitor = NULL;
+	}
+
 	gtk_list_store_insert_with_values (store, &iter, pos,
 			PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
 			FILENAME_COL, filename_for_display,
 			URI_COL, uri ? uri : mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
+			FILE_MONITOR_COL, monitor,
 			-1);
 
 	g_signal_emit (playlist,
@@ -1765,22 +1827,24 @@ totem_playlist_clear (TotemPlaylist *playlist)
 }
 
 static void
-totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
-		gconstpointer data)
+totem_playlist_clear_with_compare (TotemPlaylist *playlist,
+				   ClearComparisonFunc func,
+				   gconstpointer data)
 {
 	GList *list = NULL, *l;
 	guint num_items, i;
-	gboolean has_items;
+	gboolean has_items, current_removed;
 
 	num_items = PL_LEN;
 	if (num_items == 0)
 		return;
 
+	current_removed = FALSE;
+
 	for (i = 0; i < num_items; i++)
 	{
 		GtkTreeIter iter;
 		char *index;
-		char *mrl;
 
 		index = g_strdup_printf ("%d", i);
 		if (gtk_tree_model_get_iter_from_string
@@ -1792,10 +1856,7 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 		}
 		g_free (index);
 
-		gtk_tree_model_get (playlist->priv->model, &iter,
-				URI_COL, &mrl, -1);
-
-		if ((* func) (mrl, data) != FALSE)
+		if ((* func) (playlist, &iter, data) != FALSE)
 		{
 			GtkTreePath *path;
 			GtkTreeRowReference *ref;
@@ -1806,8 +1867,6 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 			list = g_list_prepend (list, ref);
 			gtk_tree_path_free (path);
 		}
-
-		g_free (mrl);
 	}
 
 	has_items = (list != NULL);
@@ -1819,6 +1878,8 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 
 		path = gtk_tree_row_reference_get_path (l->data);
 		gtk_tree_model_get_iter (playlist->priv->model, &iter, path);
+		if (gtk_tree_path_compare (path, playlist->priv->current) == 0)
+			current_removed = TRUE;
 
 		totem_playlist_emit_item_removed (playlist, &iter);
 		gtk_list_store_remove (GTK_LIST_STORE (playlist->priv->model), &iter);
@@ -1827,7 +1888,7 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 	}
 	g_list_free (list);
 
-	if (has_items != FALSE) {
+	if (has_items != FALSE && current_removed != FALSE) {
 		playlist->priv->current_shuffled = -1;
 
 		ensure_shuffled (playlist, playlist->priv->shuffle);
@@ -1836,19 +1897,27 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist, GCompareFunc func,
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[CURRENT_REMOVED],
 				0, NULL);
+	} else if (has_items != FALSE) {
+		ensure_shuffled (playlist, playlist->priv->shuffle);
+		g_signal_emit (G_OBJECT (playlist),
+			       totem_playlist_table_signals[CHANGED], 0,
+			       NULL);
 	}
 }
 
-static int
-totem_playlist_compare_with_mount (gpointer a, gpointer b)
+static gboolean
+totem_playlist_compare_with_mount (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data)
 {
-	GMount *clear_mount = (GMount *) b;
-	const char *mrl = (const char *) a;
+	GMount *clear_mount = (GMount *) data;
+	char *mrl;
 
 	GMount *mount;
 	gboolean retval = FALSE;
 
+	gtk_tree_model_get (playlist->priv->model, iter,
+			    URI_COL, &mrl, -1);
 	mount = totem_get_mount_for_media (mrl);
+	g_free (mrl);
 
 	if (mount == clear_mount)
 		retval = TRUE;
@@ -1864,7 +1933,7 @@ totem_playlist_clear_with_g_mount (TotemPlaylist *playlist,
 				   GMount *mount)
 {
 	totem_playlist_clear_with_compare (playlist,
-					   (GCompareFunc) totem_playlist_compare_with_mount,
+					   (ClearComparisonFunc) totem_playlist_compare_with_mount,
 					   mount);
 }
 
