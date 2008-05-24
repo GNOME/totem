@@ -2649,7 +2649,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   file = g_file_new_for_commandline_arg (mrl);
 
   /* If giosrc isn't available, try to get the MRL's local path */
-  if (gst_default_registry_check_feature_version ("giosrc", 0, 10, 0) != FALSE)
+  if (gst_default_registry_check_feature_version ("gio", 0, 10, 0) != FALSE)
     bvw->com->mrl = g_file_get_uri (file);
   else {
     char *path;
