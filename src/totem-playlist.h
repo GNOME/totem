@@ -105,10 +105,6 @@ char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 char      *totem_playlist_get_title (TotemPlaylist *playlist,
 				     guint index);
 
-gboolean   totem_playlist_get_current_metadata (TotemPlaylist *playlist,
-						char         **artist,
-						char         **title,
-						char         **album);
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
 				     const char *title,
 				     gboolean force);

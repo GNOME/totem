@@ -136,9 +136,6 @@ enum {
 	FILENAME_COL,
 	URI_COL,
 	TITLE_CUSTOM_COL,
-	CACHE_TITLE_COL,
-	CACHE_ARTIST_COL,
-	CACHE_ALBUM_COL,
 	SUBTITLE_URI_COL,
 	NUM_COLS
 };
@@ -1312,9 +1309,6 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 				G_TYPE_STRING,
 				G_TYPE_STRING,
 				G_TYPE_BOOLEAN,
-				G_TYPE_STRING,
-				G_TYPE_STRING,
-				G_TYPE_STRING,
 				G_TYPE_STRING));
 
 	/* the treeview */
@@ -1952,34 +1946,6 @@ totem_playlist_get_title (TotemPlaylist *playlist, guint index)
 			    -1);
 
 	return title;
-}
-
-gboolean
-totem_playlist_get_current_metadata (TotemPlaylist *playlist,
-				     char         **artist,
-				     char         **title,
-				     char         **album)
-{
-	GtkTreeIter iter;
-
-        g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
-
-	if (update_current_from_playlist (playlist) == FALSE)
-		return FALSE;
-
-	gtk_tree_model_get_iter (playlist->priv->model,
-				 &iter,
-				 playlist->priv->current);
-
-	*artist = NULL;
-	gtk_tree_model_get (playlist->priv->model,
-			    &iter,
-			    CACHE_ARTIST_COL, artist,
-			    CACHE_TITLE_COL, title,
-			    CACHE_ALBUM_COL, album,
-			    -1);
-
-	return (*artist != NULL);
 }
 
 gboolean

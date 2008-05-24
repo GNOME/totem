@@ -1672,15 +1672,6 @@ on_playlist_change_name (TotemPlaylist *playlist, Totem *totem)
 		update_mrl_label (totem, name);
 		g_free (name);
 	}
-
-	if (totem_playlist_get_current_metadata (playlist, &artist,
-						 &title, &album) != FALSE) {
-		totem_metadata_updated (totem, artist, title, album);
-
-		g_free (artist);
-		g_free (album);
-		g_free (title);
-	}
 }
 
 static void
