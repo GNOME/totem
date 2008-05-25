@@ -35,8 +35,6 @@
 
 #include <glib.h>
 
-#include <libgnomevfs/gnome-vfs-mime-utils.h>
-
 #include "totem-pl-parser-mini.h"
 #include "totem-plugin-viewer-options.h"
 #include "totempluginviewer-marshal.h"
