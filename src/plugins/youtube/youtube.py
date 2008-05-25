@@ -1,5 +1,5 @@
 import totem
-import gobject, gtk
+import gobject, gtk, gconf
 import gdata.service
 import urllib
 import httplib
@@ -50,6 +50,10 @@ class YouTube (totem.Plugin):
 		"""Check for the availability of the flvdemux and souphttpsrc GStreamer plugins"""
 		bvw_name = totem_object.get_video_widget_backend_name ()
 
+		"""If the user's selected 1.5Mbps or greater as their connection speed, grab higher-quality videos
+		   and drop the requirement for the flvdemux plugin."""
+		self.gconf_client = gconf.client_get_default ()
+
 		if bvw_name.find ("GStreamer") != -1:
 			try:
 				import pygst
@@ -57,13 +61,13 @@ class YouTube (totem.Plugin):
 				import gst
 
 				registry = gst.registry_get_default ()
-				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("soup") == None:
+				if (self.get_fmt_string () == "" and registry.find_plugin ("flvdemux") == None) or registry.find_plugin ("soup") == None:
 					"""This means an error will be displayed when they try to play anything"""
 					self.gstreamer_plugins_present = False
 			except ImportError:
 				"""Do nothing; either it's using xine or python-gstreamer isn't installed"""
 
-		"""Continue loading the plugin as before"""		
+		"""Continue loading the plugin as before"""
 		self.builder = self.load_interface ("youtube.ui", True, totem_object.get_main_window (), self)
 		self.totem = totem_object
 
@@ -141,6 +145,11 @@ class YouTube (totem.Plugin):
 		self.results["related"] = 0
 		self.progress_bar.set_text (_("Fetching related videos..."))
 		self.get_results ("/feeds/api/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
+	def get_fmt_string (self):
+		if self.gconf_client.get_int ("/apps/totem/connection_speed") >= 10:
+			return "&fmt=18"
+		else:
+			return ""
 	def check_url_for_redirects (self, url_path):
 		try:
 			conn = httplib.HTTPConnection ("www.youtube.com")
@@ -173,7 +182,8 @@ class YouTube (totem.Plugin):
 		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
 
 		if location != False:
-			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0]) + self.get_fmt_string ()
+
 			"""location_check = self.check_url_for_redirects (mrl)
 			if location_check != False:
 				mrl = location_check
@@ -193,7 +203,7 @@ class YouTube (totem.Plugin):
 		youtube_id = model.get_value (iter, 3)
 
 		"""Open the video in the browser"""
-		os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", "http://www.youtube.com/watch?v=" + urllib.quote (youtube_id))
+		os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", "http://www.youtube.com/watch?v=" + urllib.quote (youtube_id) + self.get_fmt_string ())
 	def on_button_press_event (self, widget, event):
 		self.button_down = True
 	def on_button_release_event (self, widget, event):
