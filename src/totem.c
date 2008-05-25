@@ -1664,7 +1664,7 @@ on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 static void
 on_playlist_change_name (TotemPlaylist *playlist, Totem *totem)
 {
-	char *name, *artist, *album, *title;
+	char *name;
 	gboolean cur;
 
 	if ((name = totem_playlist_get_current_title (playlist,
