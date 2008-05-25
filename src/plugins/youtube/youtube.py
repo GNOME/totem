@@ -59,8 +59,7 @@ class YouTube (totem.Plugin):
 				registry = gst.registry_get_default ()
 				if registry.find_plugin ("flvdemux") == None or registry.find_plugin ("soup") == None:
 					"""This means an error will be displayed when they try to play anything"""
-					self.gstreamer_plugins_present = True
-#					self.gstreamer_plugins_present = False
+					self.gstreamer_plugins_present = False
 			except ImportError:
 				"""Do nothing; either it's using xine or python-gstreamer isn't installed"""
 
@@ -174,7 +173,7 @@ class YouTube (totem.Plugin):
 		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
 
 		if location != False:
-			mrl = "http://www.youtube.com/get_video?fmt=6&video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0])
 			"""location_check = self.check_url_for_redirects (mrl)
 			if location_check != False:
 				mrl = location_check
@@ -194,7 +193,7 @@ class YouTube (totem.Plugin):
 		youtube_id = model.get_value (iter, 3)
 
 		"""Open the video in the browser"""
-		os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", "http://www.youtube.com/watch?fmt=6&v=" + urllib.quote (youtube_id))
+		os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", "http://www.youtube.com/watch?v=" + urllib.quote (youtube_id))
 	def on_button_press_event (self, widget, event):
 		self.button_down = True
 	def on_button_release_event (self, widget, event):
