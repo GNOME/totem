@@ -1,3 +1,16 @@
+2008-05-26  Bastien Nocera  <hadess@hadess.net>
+
+	* data/mime-type-list.txt: Add video/x-flv as a support mime-type
+
+	* src/totem-menu.c (about_action_callback): Remove "GNOME" vs. "GTK+"
+	backends
+
+	* src/totem-video-indexer.c (main):
+	* src/totem-video-thumbnailer.c (main):
+	* src/totem.c (main): Remove calls to
+	gnome_authentication_manager_init (), as we don't use gnome-vfs
+	anymore (Closes: #534824)
+
 2008-05-25  Claudio Saavedra  <csaavedra@gnome.org>
 
 	* browser-plugin/totemPlugin.cpp: Remove include of

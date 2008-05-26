@@ -31,10 +31,6 @@
 
 #include <gtk/gtk.h>
 
-#ifndef HAVE_GTK_ONLY
-#include <gnome.h>
-#endif
-
 #include <bacon-video-widget.h>
 #include <glib/gthread.h>
 #include <string.h>
@@ -164,10 +160,6 @@ int main (int argc, char **argv)
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
 	g_type_init ();
-
-#ifndef HAVE_GTK_ONLY
-	gnome_authentication_manager_init ();
-#endif
 
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", error->message);

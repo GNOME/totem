@@ -3388,10 +3388,6 @@ main (int argc, char **argv)
 		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
 
-#ifndef HAVE_GTK_ONLY
-	gnome_authentication_manager_init ();
-#endif /* !HAVE_GTK_ONLY */
-
 	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
 	totem->gc = gc;
 

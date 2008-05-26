@@ -36,9 +36,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifndef HAVE_GTK_ONLY
-#include <libgnomeui/gnome-authentication-manager.h>
-#endif
 #include "bacon-video-widget.h"
 #include "totem-resources.h"
 
@@ -468,10 +465,6 @@ int main (int argc, char *argv[])
 		g_log_set_always_fatal (fatal_mask);
 	}
 #endif /* THUMB_DEBUG */
-
-#ifndef HAVE_GTK_ONLY
-	gnome_authentication_manager_init ();
-#endif
 
 	if (filenames == NULL || g_strv_length (filenames) != 2) {
 		char *help;

@@ -1167,7 +1167,6 @@ void
 about_action_callback (GtkAction *action, Totem *totem)
 {
 	char *backend_version, *description;
-	const char *frontend_type;
 
 	const char *authors[] =
 	{
@@ -1185,17 +1184,10 @@ about_action_callback (GtkAction *action, Totem *totem)
 	};
 	char *license = totem_interface_get_license ();
 
-#ifdef HAVE_GTK_ONLY
-	frontend_type = N_("GTK+");
-#else
-	frontend_type = N_("GNOME");
-#endif
-
 	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
-	/* This lists the back-end and front-end types and versions, such as
-	 * Movie Player using GStreamer 0.10.1 and GNOME */
-	description = g_strdup_printf (_("Movie Player using %s and %s"),
-				       backend_version, _(frontend_type));
+	/* This lists the back-end type and version, such as
+	 * Movie Player using GStreamer 0.10.1 */
+	description = g_strdup_printf (_("Movie Player using %s"), backend_version);
 
 	gtk_show_about_dialog (GTK_WINDOW (totem->win),
 				     "version", VERSION,
