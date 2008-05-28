@@ -256,6 +256,65 @@ AC_SUBST(GTK_CFLAGS)
 GTK_LIBS="$GTK_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(GTK_LIBS)
 
+dnl *************************
+dnl X11 related functionality
+dnl *************************
+have_x11=no
+if test x$(pkg-config --variable=target gtk+-2.0) = xx11; then
+	AC_PATH_X
+
+	have_x11=yes
+
+	if test x"$x_includes" != x"NONE" && test -n "$x_includes" ; then
+		X_INCLUDES=-I`echo $x_includes | sed -e "s/:/ -I/g"`
+	fi
+	if test x"$x_libraries" != x"NONE" && test -n "$x_libraries" ; then
+		X_LIBRARIES=-L`echo $x_libraries | sed -e "s/:/ -L/g"`
+	fi
+	CFLAGS="$X_INCLUDES $CFLAGS"
+	LIBS="$X_LIBRARIES $LIBS"
+
+	XTEST_LIBS=""
+	enable_xtest=no
+	AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
+		XTEST_LIBS="-lX11 -lXtst $X_LIBRARIES"
+		enable_xtest=yes
+		AC_DEFINE(HAVE_XTEST, 1, [defined if you have XTest library]),
+		,
+		$X_LIBRARIES)
+	AC_SUBST(XTEST_LIBS)
+
+	PKG_CHECK_MODULES(XVIDMODE, xrandr >= 1.1.1 xxf86vm >= 1.0.1,
+		have_xvidmode=yes, have_xvidmode=no)
+
+	if test x$have_xvidmode = xyes; then
+		AC_DEFINE(HAVE_XVIDMODE,, [Define this if you have the XVidMode and XRandR extension installed])
+	fi
+
+	X_LIBS=""
+
+	dnl Explicitely link against libX11 to avoid problems with crappy linkers
+	X_LIBS="$X_LIBRARIES -lX11"
+	AC_SUBST(X_LIBS)
+
+	dnl Multimedia keys
+	have_xfree=no
+	AC_COMPILE_IFELSE([
+		#include <X11/XF86keysym.h>
+		int main(int argc,char **argv) {
+		return 0;
+		}
+		],
+		have_xfree=yes
+	)
+	AC_MSG_CHECKING(for X11 XFree86 headers)
+	AC_MSG_RESULT([$have_xfree])
+	if test x"$have_xfree" = "xyes" ; then
+		AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
+	fi
+fi
+AM_CONDITIONAL(HAVE_XVIDMODE, [test x$have_xvidmode = xyes])
+
 dnl ================================================================
 dnl Python plugins
 dnl ================================================================
@@ -474,6 +533,12 @@ for plugin in ${used_plugins}; do
 				[HAVE_LIBGALAGO=yes], [HAVE_LIBGALAGO=no])
 			if test "${HAVE_LIBGALAGO}" != "yes" ; then
 				plugin_error_or_ignore "you need libgalago >= 0.5.2 installed for the galago plugin"
+				add_plugin="0"
+			fi
+		;;
+		gromit)
+			if test "${have_x11}" != "yes" ; then
+				plugin_error_or_ignore "the gromit plugin is not supported on non-X11 targets"
 				add_plugin="0"
 			fi
 		;;
@@ -910,58 +975,6 @@ if test "x$with_dbus" != "xno"; then
 	fi
 fi
 AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
-
-AC_PATH_X
-
-if test x"$x_includes" != x"NONE" && test -n "$x_includes" ; then
-	X_INCLUDES=-I`echo $x_includes | sed -e "s/:/ -I/g"`
-fi
-if test x"$x_libraries" != x"NONE" && test -n "$x_libraries" ; then
-	X_LIBRARIES=-L`echo $x_libraries | sed -e "s/:/ -L/g"`
-fi
-CFLAGS="$X_INCLUDES $CFLAGS"
-LIBS="$X_LIBRARIES $LIBS"
-
-XTEST_LIBS=""
-enable_xtest=no
-AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
-		XTEST_LIBS="-lX11 -lXtst $X_LIBRARIES"
-		enable_xtest=yes
-		AC_DEFINE(HAVE_XTEST, 1, [defined if you have XTest library]),
-		,
-		$X_LIBRARIES)
-AC_SUBST(XTEST_LIBS)
-
-PKG_CHECK_MODULES(XVIDMODE, xrandr >= 1.1.1 xxf86vm >= 1.0.1,
-		have_xvidmode=yes, have_xvidmode=no)
-
-AM_CONDITIONAL(HAVE_XVIDMODE, [test x$have_xvidmode = xyes])
-if test x$have_xvidmode = xyes; then
-	AC_DEFINE(HAVE_XVIDMODE,, [Define this if you have the XVidMode and XRandR extension installed])
-fi
-
-X_LIBS=""
-if test x$(pkg-config --variable=target gtk+-2.0) = xx11; then
-	dnl Explicitely link against libX11 to avoid problems with crappy linkers
-	X_LIBS="$X_LIBRARIES -lX11"
-fi
-AC_SUBST(X_LIBS)
-
-dnl Multimedia keys
-have_xfree=no
-AC_COMPILE_IFELSE([
-	#include <X11/XF86keysym.h>
-	int main(int argc,char **argv) {
-	return 0;
-	}
-	],
-	have_xfree=yes
-)
-AC_MSG_CHECKING(for X11 XFree86 headers)
-AC_MSG_RESULT([$have_xfree])
-if test x"$have_xfree" = "xyes" ; then
-	AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
-fi
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
