@@ -73,10 +73,6 @@ totem_sidebar_toggle (Totem *totem, gboolean state)
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), state);
 	totem_signal_unblock_by_data (G_OBJECT (action), totem);
 
-	gconf_client_set_bool (totem->gc,
-				GCONF_PREFIX"/sidebar_shown",
-				state,
-				NULL);
 	totem->sidebar_shown = state;
 	cb_resize(totem);
 }
