@@ -1,8 +1,8 @@
-/* Totem Basic Plugin
+/* Totem GMP plugin
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
- * Copyright (C) 2006 Christian Persch
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2006, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,201 +18,141 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id: totemGMPPlugin.cpp 3790 2006-12-15 23:08:57Z chpe $
  */
 
-#include <mozilla-config.h>
-#include "config.h"
+#include <config.h>
 
-#include <nsDOMError.h>
-#include <nsIProgrammingLanguage.h>
-#include <nsISupportsImpl.h>
-#include <nsMemory.h>
-#include <nsXPCOM.h>
+#include <string.h>
 
-#define GNOME_ENABLE_DEBUG 1
-/* define GNOME_ENABLE_DEBUG for more debug spew */
-#include "debug.h"
-
-#include "totemDebug.h"
-
-#include "totemGMPPlugin.h"
-#include "totemClassInfo.h"
+#include <glib.h>
 
 #include "totemGMPPlaylist.h"
 
-/* cf079ca3-c94f-4676-a9ae-6d9bffd765bd */
-static const nsCID kClassID = 
-  { 0xcf079ca3, 0xc94f, 0x4676, \
-    { 0xa9, 0xae, 0x6d, 0x9b, 0xff, 0xd7, 0x65, 0xbd } };
+static const char *propertyNames[] = {
+  "attributeCount",
+  "count",
+  "name"
+};
 
-static const char kClassDescription[] = "totemGMPPlaylist";
+static const char *methodNames[] = {
+  "appendItem",
+  "attributeName",
+  "getAttributeName",
+  "getItemInfo",
+  "insertItem",
+  "isIdentical",
+  "item",
+  "moveItem",
+  "removeItem",
+  "setItemInfo"
+};
 
-totemGMPPlaylist::totemGMPPlaylist (totemScriptablePlugin *aScriptable)
+TOTEM_IMPLEMENT_NPCLASS (totemGMPPlaylist,
+                         propertyNames, G_N_ELEMENTS (propertyNames),
+                         methodNames, G_N_ELEMENTS (methodNames),
+                         NULL);
+
+totemGMPPlaylist::totemGMPPlaylist (NPP aNPP)
+  : totemNPObject (aNPP),
+    mName (NPN_StrDup ("Playlist"))
 {
-  D ("%s ctor [%p]", kClassDescription, (void*) this);
-
-  /* We keep a reference to the main scriptable, so the code won't be unloaded unless it's ok to do so */
-  mScriptable = aScriptable;
-  NS_ADDREF (mScriptable);
+  TOTEM_LOG_CTOR ();
 }
 
 totemGMPPlaylist::~totemGMPPlaylist ()
 {
-  D ("%s dtor [%p]", kClassDescription, (void*) this);
+  TOTEM_LOG_DTOR ();
 
-  NS_RELEASE (mScriptable);
-  mScriptable = nsnull;
+  g_free (mName);
 }
 
-/* Interface implementations */
-
-NS_IMPL_ISUPPORTS2 (totemGMPPlaylist,
-		    totemIGMPPlaylist,
-		    nsIClassInfo)
-
-/* nsIClassInfo */
-
-TOTEM_CLASSINFO_BEGIN (totemGMPPlaylist,
-		       1,
-		       kClassID,
-		       kClassDescription)
-  TOTEM_CLASSINFO_ENTRY (0, totemIGMPPlaylist)
-TOTEM_CLASSINFO_END
-
-/* totemIGMPPlayer */
-
-#undef TOTEM_SCRIPTABLE_INTERFACE
-#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPPlaylist"
-
-/* void appendItem (in totemIGMPMedia item); */
-NS_IMETHODIMP 
-totemGMPPlaylist::AppendItem(totemIGMPMedia *item)
+bool
+totemGMPPlaylist::InvokeByIndex (int aIndex,
+                                 const NPVariant *argv,
+                                 uint32_t argc,
+                                 NPVariant *_result)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_LOG_INVOKE (aIndex, totemGMPPlaylist);
 
-  return NS_OK;
+  switch (Methods (aIndex)) {
+    case eAttributeName:
+      /* AUTF8String attributeName (in long index); */
+    case eGetAttributeName:
+      /* AUTF8String getAttributeName (in long index); */
+    case eGetItemInfo:
+      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemGMPPlaylist);
+      /* AUTF8String getItemInfo (in AUTF8String name); */
+      return StringVariant (_result, "");
+
+    case eIsIdentical: {
+      /* boolean isIdentical (in totemIGMPPlaylist playlist); */
+      NPObject *other;
+      if (!GetObjectFromArguments (argv, argc, 0, other))
+        return false;
+
+      return BoolVariant (_result, other == static_cast<NPObject*>(this));
+    }
+
+    case eItem:
+      /* totemIGMPMedia item (in long index); */
+      TOTEM_WARN_1_INVOKE_UNIMPLEMENTED (aIndex, totemGMPPlaylist);
+      return NullVariant (_result);
+
+    case eAppendItem:
+      /* void appendItem (in totemIGMPMedia item); */
+    case eInsertItem:
+      /* void insertItem (in long index, in totemIGMPMedia item); */
+    case eMoveItem:
+      /* void moveItem (in long oldIndex, in long newIndex); */
+    case eRemoveItem:
+      /* void removeItem (in totemIGMPMedia item); */
+    case eSetItemInfo:
+      /* void setItemInfo (in AUTF8String name, in AUTF8String value); */
+      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemGMPPlaylist);
+      return VoidVariant (_result);
+  }
+
+  return false;
 }
 
-/* readonly attribute long attributeCount; */
-NS_IMETHODIMP 
-totemGMPPlaylist::GetAttributeCount(PRInt32 *aAttributeCount)
+bool
+totemGMPPlaylist::GetPropertyByIndex (int aIndex,
+                                      NPVariant *_result)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_LOG_GETTER (aIndex, totemGMPPlaylist);
 
-  *aAttributeCount = 0;
-  return NS_OK;
+  switch (Properties (aIndex)) {
+    case eAttributeCount:
+      /* readonly attribute long attributeCount; */
+    case eCount:
+      /* readonly attribute long count; */
+      return Int32Variant (_result, 0);
+
+    case eName:
+      /* attribute AUTF8String name; */
+      return StringVariant (_result, mName);
+  }
+
+  return false;
 }
 
-/* AUTF8String attributeName (in long index); */
-NS_IMETHODIMP 
-totemGMPPlaylist::AttributeName(PRInt32 index, nsACString & _retval)
+bool
+totemGMPPlaylist::SetPropertyByIndex (int aIndex,
+                                      const NPVariant *aValue)
 {
-  return GetAttributeName (index, _retval);
-}
+  TOTEM_LOG_SETTER (aIndex, totemGMPPlaylist);
 
-/* AUTF8String getattributeName (in long index); */
-NS_IMETHODIMP 
-totemGMPPlaylist::GetAttributeName(PRInt32 index, nsACString & _retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  switch (Properties (aIndex)) {
+    case eName:
+      /* attribute AUTF8String name; */
+      return DupStringFromArguments (aValue, 1, 0, mName);
 
-  _retval.Assign ("");
-  return NS_OK;
-}
+    case eAttributeCount:
+      /* readonly attribute long attributeCount; */
+    case eCount:
+      /* readonly attribute long count; */
+      return ThrowPropertyNotWritable ();
+  }
 
-/* readonly attribute long count; */
-NS_IMETHODIMP 
-totemGMPPlaylist::GetCount(PRInt32 *aCount)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  *aCount = 0;
-  return NS_OK;
-}
-
-/* AUTF8String getItemInfo (in AUTF8String name); */
-NS_IMETHODIMP 
-totemGMPPlaylist::GetItemInfo(const nsACString & name, nsACString & _retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  _retval.Assign ("");
-  return NS_OK;
-}
-
-/* void insertItem (in long index, in totemIGMPMedia item); */
-NS_IMETHODIMP 
-totemGMPPlaylist::InsertItem(PRInt32 index, totemIGMPMedia *item)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_OK;
-}
-
-/* boolean isIdentical (in totemIGMPPlaylist playlist); */
-NS_IMETHODIMP 
-totemGMPPlaylist::IsIdentical(totemIGMPPlaylist *playlist, PRBool *_retval)
-{
-  nsISupports *thisPlaylist = static_cast<nsISupports*>
-                                         (static_cast<totemIGMPPlaylist*>(this));
-
-  *_retval = thisPlaylist == playlist;
-  return NS_OK;
-}
-
-/* totemIGMPMedia item (in long index); */
-NS_IMETHODIMP 
-totemGMPPlaylist::Item(PRInt32 index, totemIGMPMedia **_retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* void moveItem (in long oldIndex, in long newIndex); */
-NS_IMETHODIMP 
-totemGMPPlaylist::MoveItem(PRInt32 oldIndex, PRInt32 newIndex)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_OK;
-}
-
-/* attribute AUTF8String name; */
-NS_IMETHODIMP 
-totemGMPPlaylist::GetName(nsACString & aName)
-{
-  TOTEM_SCRIPTABLE_LOG_ACCESS ();
-
-  aName = mName;
-  return NS_OK;
-}
-
-NS_IMETHODIMP 
-totemGMPPlaylist::SetName(const nsACString & aName)
-{
-  TOTEM_SCRIPTABLE_LOG_ACCESS ();
-
-  mName = aName;
-  return NS_OK;
-}
-
-/* void removeItem (in totemIGMPMedia item); */
-NS_IMETHODIMP 
-totemGMPPlaylist::RemoveItem(totemIGMPMedia *item)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_OK;
-}
-
-/* void setItemInfo (in AUTF8String name, in AUTF8String value); */
-NS_IMETHODIMP 
-totemGMPPlaylist::SetItemInfo(const nsACString & name, const nsACString & value)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_OK;
+  return false;
 }

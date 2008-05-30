@@ -16,300 +16,208 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id: totemGMPPlugin.cpp 3928 2007-01-22 14:59:07Z chpe $
  */
 
-#include <mozilla-config.h>
-#include "config.h"
+#include <config.h>
+
+#include <string.h>
 
 #include <glib.h>
 
-#include <nsDOMError.h>
-#include <nsIProgrammingLanguage.h>
-#include <nsISupportsImpl.h>
-#include <nsMemory.h>
-#include <nsXPCOM.h>
-
-#define GNOME_ENABLE_DEBUG 1
-/* define GNOME_ENABLE_DEBUG for more debug spew */
-#include "debug.h"
-
-#include "totemIGMPControls.h"
-
-#include "totemDebug.h"
-#include "totemClassInfo.h"
-
-#include "totemGMPPlugin.h"
 #include "totemPlugin.h"
-
 #include "totemGMPSettings.h"
 
-/* 693329d8-866e-469a-805c-718c4291be70 */
-static const nsCID kClassID =
-  { 0x693329d8, 0x866e, 0x469a, \
-    { 0x80, 0x5c, 0x71, 0x8c, 0x42, 0x91, 0xbe, 0x70 } };
+static const char *propertyNames[] = {
+  "autostart",
+  "balance",
+  "baseURL",
+  "defaultAudioLanguage",
+  "defaultFrame",
+  "enableErrorDialogs",
+  "invokeURLs",
+  "mediaAccessRights",
+  "mute",
+  "playCount",
+  "rate",
+  "volume"
+};
 
-static const char kClassDescription[] = "totemGMPSettings";
+static const char *methodNames[] = {
+  "getMode",
+  "isAvailable",
+  "requestMediaAccessRights",
+  "setMode",
+};
 
-totemGMPSettings::totemGMPSettings (totemScriptablePlugin *aPlugin)
-  : mPlugin(aPlugin)
+TOTEM_IMPLEMENT_NPCLASS (totemGMPSettings,
+                         propertyNames, G_N_ELEMENTS (propertyNames),
+                         methodNames, G_N_ELEMENTS (methodNames),
+                         NULL);
+
+totemGMPSettings::totemGMPSettings (NPP aNPP)
+  : totemNPObject (aNPP),
+    mMute (false)
 {
-  D ("%s ctor [%p]", kClassDescription, (void*) this);
+  TOTEM_LOG_CTOR ();
 }
 
 totemGMPSettings::~totemGMPSettings ()
 {
-  D ("%s dtor [%p]", kClassDescription, (void*) this);
+  TOTEM_LOG_DTOR ();
 }
 
-/* Interface implementations */
-
-NS_IMPL_ISUPPORTS2 (totemGMPSettings,
-		    totemIGMPSettings,
-		    nsIClassInfo)
-
-/* nsIClassInfo */
-
-TOTEM_CLASSINFO_BEGIN (totemGMPSettings,
-		       1,
-		       kClassID,
-		       kClassDescription)
-  TOTEM_CLASSINFO_ENTRY (0, totemIGMPSettings)
-TOTEM_CLASSINFO_END
-
-/* totemIGMPSettings */
-
-#undef TOTEM_SCRIPTABLE_INTERFACE
-#define TOTEM_SCRIPTABLE_INTERFACE "totemIGMPSettings"
-
-/* attribute boolean autoStart; */
-NS_IMETHODIMP 
-totemGMPSettings::GetAutoStart(PRBool *aAutoStart)
+bool
+totemGMPSettings::InvokeByIndex (int aIndex,
+                                 const NPVariant *argv,
+                                 uint32_t argc,
+                                 NPVariant *_result)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_LOG_INVOKE (aIndex, totemGMPSettings);
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetAutoStart(PRBool aAutoStart)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  switch (Methods (aIndex)) {
+    case eIsAvailable:
+      /* boolean isAvailable (in ACString name); */
+    case eGetMode:
+      /* boolean getMode (in ACString modeName); */
+    case eSetMode:
+      /* void setMode (in ACString modeName, in boolean state); */
+    case eRequestMediaAccessRights:
+      /* boolean requestMediaAccessRights (in ACString access); */
+      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return BoolVariant (_result, false);
+  }
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  return false;
 }
 
-/* attribute AUTF8String baseURL; */
-NS_IMETHODIMP 
-totemGMPSettings::GetBaseURL(nsACString & aBaseURL)
+bool
+totemGMPSettings::GetPropertyByIndex (int aIndex,
+                                      NPVariant *_result)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_LOG_GETTER (aIndex, totemGMPSettings);
 
-  return NS_ERROR_NOT_IMPLEMENTED;
+  switch (Properties (aIndex)) {
+    case eMute:
+      /* attribute boolean mute; */
+      return BoolVariant (_result, Plugin()->IsMute());
+
+    case eVolume:
+      /* attribute long volume; */
+      return Int32Variant (_result, Plugin()->Volume () * 100.0);
+
+    case eAutostart:
+      /* attribute boolean autoStart; */
+      return BoolVariant (_result, Plugin()->AutoPlay());
+
+    case eBalance:
+      /* attribute long balance; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return Int32Variant (_result, 0);
+
+    case eBaseURL:
+      /* attribute AUTF8String baseURL; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return StringVariant (_result, "");
+
+    case eDefaultAudioLanguage:
+      /* readonly attribute long defaultAudioLanguage; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return Int32Variant (_result, 0); /* FIXME */
+
+    case eDefaultFrame:
+      /* attribute AUTF8String defaultFrame; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return StringVariant (_result, "");
+
+    case eEnableErrorDialogs:
+      /* attribute boolean enableErrorDialogs; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return BoolVariant (_result, true);
+
+    case eInvokeURLs:
+      /* attribute boolean invokeURLs; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return BoolVariant (_result, true);
+
+    case eMediaAccessRights:
+      /* readonly attribute ACString mediaAccessRights; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return StringVariant (_result, "");
+
+    case ePlayCount:
+      /* attribute long playCount; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return Int32Variant (_result, 1);
+
+    case eRate:
+      /* attribute double rate; */
+      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return DoubleVariant (_result, 1.0);
+  }
+
+  return false;
 }
 
-NS_IMETHODIMP 
-totemGMPSettings::SetBaseURL(const nsACString & aBaseURL)
+bool
+totemGMPSettings::SetPropertyByIndex (int aIndex,
+                                      const NPVariant *aValue)
 {
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+  TOTEM_LOG_SETTER (aIndex, totemGMPSettings);
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
+  switch (Properties (aIndex)) {
+    case eMute: {
+      /* attribute boolean mute; */
+      bool enabled;
+      if (!GetBoolFromArguments (aValue, 1, 0, enabled))
+        return false;
 
-/* readonly attribute long defaultAudioLanguage; */
-NS_IMETHODIMP 
-totemGMPSettings::GetDefaultAudioLanguage(PRInt32 *aDefaultAudioLanguage)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+      Plugin()->SetMute (enabled);
+      return true;
+    }
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
+    case eVolume: {
+      /* attribute long volume; */
+      int32_t volume;
+      if (!GetInt32FromArguments (aValue, 1, 0, volume))
+        return false;
 
-/* attribute AUTF8String defaultFrame; */
-NS_IMETHODIMP 
-totemGMPSettings::GetDefaultFrame(nsACString & aDefaultFrame)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+      Plugin()->SetVolume ((double) CLAMP (volume, 0, 100) / 100.0);
+      return true;
+    }
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetDefaultFrame(const nsACString & aDefaultFrame)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+    case eAutostart: {
+      /* attribute boolean autoStart; */
+      bool enabled;
+      if (!GetBoolFromArguments (aValue, 1, 0, enabled))
+        return false;
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
+      Plugin()->SetAutoPlay (enabled);
+      return true;
+    }
 
-/* attribute boolean enableErrorDialogs; */
-NS_IMETHODIMP 
-totemGMPSettings::GetEnableErrorDialogs(PRBool *aEnableErrorDialogs)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+    case eBalance:
+      /* attribute long balance; */
+    case eBaseURL:
+      /* attribute AUTF8String baseURL; */
+    case eDefaultFrame:
+      /* attribute AUTF8String defaultFrame; */
+    case eEnableErrorDialogs:
+      /* attribute boolean enableErrorDialogs; */
+    case eInvokeURLs:
+      /* attribute boolean invokeURLs; */
+    case ePlayCount:
+      /* attribute long playCount; */
+    case eRate:
+      /* attribute double rate; */
+      TOTEM_WARN_SETTER_UNIMPLEMENTED (aIndex, totemGMPSettings);
+      return true;
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetEnableErrorDialogs(PRBool aEnableErrorDialogs)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
+    case eDefaultAudioLanguage:
+      /* readonly attribute long defaultAudioLanguage; */
+    case eMediaAccessRights:
+      /* readonly attribute ACString mediaAccessRights; */
+      return ThrowPropertyNotWritable ();
+  }
 
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* attribute boolean invokeURLs; */
-NS_IMETHODIMP 
-totemGMPSettings::GetInvokeURLs(PRBool *aInvokeURLs)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetInvokeURLs(PRBool aInvokeURLs)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* readonly attribute ACString mediaAccessRights; */
-NS_IMETHODIMP 
-totemGMPSettings::GetMediaAccessRights(nsACString & aMediaAccessRights)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* attribute boolean mute; */
-NS_IMETHODIMP 
-totemGMPSettings::GetMute(PRBool *_retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  *_retval = mMute;
-  return NS_OK;
-}
-
-NS_IMETHODIMP 
-totemGMPSettings::SetMute(PRBool enabled)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  mMute = enabled != PR_FALSE;
-  return NS_OK;
-}
-
-/* attribute long playCount; */
-NS_IMETHODIMP 
-totemGMPSettings::GetPlayCount(PRInt32 *aPlayCount)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetPlayCount(PRInt32 aPlayCount)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* attribute double rate; */
-NS_IMETHODIMP 
-totemGMPSettings::GetRate(double *aRate)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetRate(double aRate)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* attribute long balance; */
-NS_IMETHODIMP 
-totemGMPSettings::GetBalance(PRInt32 *aBalance)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetBalance(PRInt32 aBalance)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_ERROR_NOT_IMPLEMENTED;
-}
-
-/* attribute long volume; */
-NS_IMETHODIMP 
-totemGMPSettings::GetVolume(PRInt32 *_retval)
-{
-  TOTEM_SCRIPTABLE_LOG_ACCESS ();
-
-  NS_ENSURE_STATE (IsValid ());
-
-  *_retval = mPlugin->mPlugin->mVolume;
-  return NS_OK;
-}
-NS_IMETHODIMP 
-totemGMPSettings::SetVolume(PRInt32 volume)
-{
-  TOTEM_SCRIPTABLE_LOG_ACCESS ();
-
-  NS_ENSURE_STATE (IsValid ());
-
-  nsresult rv = mPlugin->mPlugin->SetVolume ((double) volume / 100);
-
-  /* Volume passed in is 0 through to 100 */
-  mPlugin->mPlugin->mVolume = volume;
-
-  return NS_OK;
-}
-
-/* boolean isAvailable (in ACString setting); */
-NS_IMETHODIMP 
-totemGMPSettings::IsAvailable(const nsACString & setting, PRBool *_retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  *_retval = PR_FALSE;
-  return NS_OK;
-}
-
-/* boolean getMode (in ACString mode); */
-NS_IMETHODIMP 
-totemGMPSettings::GetMode(const nsACString & mode, PRBool *_retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  *_retval = PR_FALSE;
-  return NS_OK;
-}
-
-/* void setMode (in ACString mode, in boolean enabled); */
-NS_IMETHODIMP 
-totemGMPSettings::SetMode(const nsACString & mode, PRBool enabled)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  return NS_OK;
-}
-
-/* boolean requestMediaAccessRights (in ACString mode); */
-NS_IMETHODIMP 
-totemGMPSettings::RequestMediaAccessRights (const nsACString & mode, PRBool *_retval)
-{
-  TOTEM_SCRIPTABLE_WARN_UNIMPLEMENTED ();
-
-  *_retval = PR_FALSE;
-  return NS_OK;
+  return false;
 }

@@ -632,89 +632,20 @@ AC_MSG_CHECKING([whether to compile the browser plugins])
 
 AC_ARG_ENABLE([browser-plugins],
 	[AS_HELP_STRING([--enable-browser-plugins],[compile the totem browser plugins])],
-	[],[enable_browser_plugins=autodetect])
-
-# Backward compatibility
-AC_ARG_ENABLE([mozilla],[],[enable_browser_plugins=$enableval],[])
-
+	[],[enable_browser_plugins=yes])
 AC_MSG_RESULT([$enable_browser_plugins])
 
-# Check which mozilla to use
-
-if test "$enable_browser_plugins" != "no" ; then
-	AC_MSG_CHECKING([which gecko to use])
-
-	AC_ARG_WITH([gecko],
-		[AS_HELP_STRING([--with-gecko],[Which gecko engine to use (default: autodetect)])])
-
-	# backward compat
-	AC_ARG_WITH([mozilla],[],[with_gecko=$withval])
-
-	GECKOS="xulrunner firefox mozilla-firefox seamonkey mozilla"
-	gecko=$with_gecko
-
-	if test -z "$with_gecko"; then
-		dnl Autodetect gecko
-		for g in $GECKOS; do
-			if $PKG_CONFIG --exists $g-xpcom; then
-				gecko=$g
-				break;
-			fi
-		done
-	elif ! $PKG_CONFIG --exists $gecko-xpcom; then
-		AC_MSG_ERROR([Gecko "$gecko" not found])
-	fi
-
-	if test -z "$gecko" -a "$enable_browser_plugins" = "autodetect"; then
-		dnl No gecko found, disable plugin
-		AC_MSG_WARN([No gecko found, disabling plugin])
-		enable_browser_plugins=no
-	elif test -z "$gecko"; then
-		AC_MSG_ERROR([No gecko found])
-	elif ! ( echo "$GECKOS" | egrep "(^| )$gecko(\$| )" > /dev/null); then
-		AC_MSG_ERROR([Unknown gecko "$gecko" specified])
-	else
-		enable_browser_plugins=yes
-	fi
-
-	AC_MSG_RESULT([$gecko])
-
-	case "$gecko" in
-		mozilla) MOZILLA_VERSION_MIN=1.7 ;;
-		seamonkey) MOZILLA_VERSION_MIN=1.0 ;;
-		*firefox) MOZILLA_VERSION_MIN=1.0 ;;
-		xulrunner) MOZILLA_VERSION_MIN=1.8 ;;
-	esac
-
-	MOZILLA=$gecko
-	AC_SUBST([MOZILLA])
-
-	if test "$enable_cxx_warnings" != "no" -a "$GXX" = "yes"; then
-		PLUGIN_EXTRA_WARN_CXXFLAGS="-Wno-ctor-dtor-privacy -Wno-non-virtual-dtor -Woverloaded-virtual"
-	else
-		PLUGIN_EXTRA_WARN_CXXFLAGS=
-	fi
-	AC_SUBST([PLUGIN_EXTRA_WARN_CXXFLAGS])
-fi
-
-# Check for mozilla modules, but keep the CFLAGS and LIBS in
-# separate vars
 if test "$enable_browser_plugins" = "yes" ; then
-	PKG_CHECK_MODULES([MOZILLA_NOT_LINKED],
-		[$MOZILLA-xpcom >= $MOZILLA_VERSION_MIN \
-		 $MOZILLA-plugin],,
-                [enable_browser_plugins=no])
-fi
-# Check for other required modules, and merge CFLAGS, but not link
-# flags to avoid linking against -lxpcom -lplds4 -lplc4 -lnspr4
-if test "$enable_browser_plugins" = "yes" ; then
+	AC_DEFINE([ENABLE_BROWSER_PLUGINS],[1],[Define to build the browser plugin])
+
+	BROWSER_PLUGIN_DIR="\${libdir}/mozilla/plugins"
+	AC_ARG_VAR([BROWSER_PLUGIN_DIR],[Where to install the plugin to])
+
 	PKG_CHECK_MODULES([BROWSER_PLUGIN],
 		[glib-2.0
-		 gthread-2.0
 		 totem-plparser-mini >= $TOTEM_PLPARSER_REQS],
 		[],[enable_browser_plugins=no])
 
-	BROWSER_PLUGIN_CFLAGS="$MOZILLA_NOT_LINKED_CFLAGS $BROWSER_PLUGIN_CFLAGS"
 	AC_SUBST([BROWSER_PLUGIN_CFLAGS])
 	AC_SUBST([BROWSER_PLUGIN_LIBS])
 
@@ -724,9 +655,7 @@ if test "$enable_browser_plugins" = "yes" ; then
 			[AC_MSG_ERROR([
 				The Browser plugin requires shared-mime-info
 				>= 0.22 to function.])])
-fi
 
-if test "$enable_browser_plugins" = "yes" ; then
 	PKG_CHECK_MODULES([DBUS], [dbus-glib-1 >= $DBUS_REQS],,
 			[enable_browser_plugins=no])
 	DBUSLIBDIR="`$PKG_CONFIG dbus-glib-1 --variable=libdir`"
@@ -736,108 +665,14 @@ if test "$enable_browser_plugins" = "yes" ; then
 		AC_MSG_WARN([dbus-binding-tool not found])
 		enable_browser_plugins=no
 	fi
-fi
 
-if test "$enable_browser_plugins" = "yes" ; then
 	PKG_CHECK_MODULES([SN], [ libstartup-notification-1.0 >= 0.8 ], [enable_browser_plugins=yes], [enable_browser_plugins=no])
 	if test "x$enable_browser_plugins" != "xyes" ; then
 		AC_MSG_WARN([libstartup-notification not found, necessary to build the plugin viewer])
 	fi
-fi
 
-# Sets some variables, and check for xpidl
-if test "$enable_browser_plugins" = "yes" ; then
-	MOZILLA_PREFIX="`$PKG_CONFIG $MOZILLA-xpcom --variable=prefix`"
-	MOZILLA_LIBDIR="`$PKG_CONFIG $MOZILLA-xpcom --variable=libdir`"
-	MOZILLA_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
-	MOZILLA_XPCOM_CFLAGS="-I`$PKG_CONFIG --variable=includedir $MOZILLA-xpcom`"
-	MOZILLA_PLUGINDIR="${MOZILLA_PLUGINDIR:-"\${libdir}/mozilla/plugins"}"
+        # check for -fno-rtti flag
 
-	AC_PATH_PROG([MOZILLA_XPIDL], [xpidl], [no], [$MOZILLA_LIBDIR:$PATH])
-	if test "x$MOZILLA_XPIDL" = "xno"; then
-		AC_MSG_ERROR([xpidl compiler not found])
-	fi
-
-	AC_PATH_PROG([MOZILLA_XPT_LINK],[xpt_link],[no],[$MOZILLA_LIBDIR:$PATH])
-	if test "$MOZILLA_XPT_LINK" = "no"; then
-		AC_MSG_ERROR([xpt_link not found])
-	fi
-
-	AC_SUBST([MOZILLA_PREFIX])
-	AC_SUBST([MOZILLA_LIBDIR])
-	AC_SUBST([MOZILLA_XPCOM_CFLAGS])
-	AC_SUBST([MOZILLA_INCLUDE_ROOT])
-	AC_ARG_VAR([MOZILLA_PLUGINDIR],[Where to install the plugin to])
-fi
-
-# Search for the idl include directory
-if test "$enable_browser_plugins" = "yes" ; then
-	dnl This only works on gecko 1.8
-	MOZILLA_IDLDIR="`$PKG_CONFIG --variable=idldir $MOZILLA-xpcom`"
-	dnl Fallback for older versions
-	if test "x$MOZILLA_IDLDIR" = "x"; then
-		MOZILLA_IDLDIR="`echo $MOZILLA_LIBDIR | sed -e s!lib!share/idl!`"
-	fi
-	dnl Some distributions (Gentoo) have it in unusual places
-	if test "x$MOZILLA_IDLDIR" = "x"; then
-		MOZILLA_IDLDIR="$MOZILLA_INCLUDE_ROOT/idl"
-	fi
-
-	AC_SUBST([MOZILLA_IDLDIR])
-fi
-
-if test "$enable_browser_plugins" = "yes" ; then
-	AC_DEFINE([ENABLE_BROWSER_PLUGINS],[1],[Define if you build the mozilla plugin])
-fi
-
-AM_CONDITIONAL([ENABLE_BROWSER_PLUGINS], [test "$enable_browser_plugins" = "yes"])
-
-# check for libxpcomglue_s
-
-LIBXPCOMGLUE_S=
-
-if test "$enable_browser_plugins" = "yes"; then
-	AC_LANG_PUSH([C++])
-	__SAVE_CPPFLAGS=$CPPFLAGS
-	__SAVE_CXXFLAGS=$CXXFLAGS
-	__SAVE_LIBS=$LIBS
-	__SAVE_LDFLAGS=$LDFLAGS
-
-	CPPFLAGS="$CPPFLAGS -I$MOZILLA_INCLUDE_ROOT"
-	CXXFLAGS="$CXXFLAGS $MOZILLA_NOT_LINKED_CFLAGS"
-	LIBS="$LIBS -L$MOZILLA_LIBDIR -lxpcom -lxpcomglue_s"
-	LDFLAGS="$LDFLAGS -Wl,--rpath -Wl,$MOZILLA_LIBDIR"
-
-	AC_MSG_CHECKING([for libxpcomglue_s])
-	AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-#include <mozilla-config.h>
-#include <nsStringAPI.h>
-		]],[[
-nsCString s;
-const char *t = s.get ();
-		]])],
-	[have_libxpcomglue_s=yes],
-	[have_libxpcomglue_s=no])
-	AC_MSG_RESULT([$have_libxpcomglue_s])
-
-	CPPFLAGS=$__SAVE_CPPFLAGS
-	CXXFLAGS=$__SAVE_CXXFLAGS
-	LIBS=$__SAVE_LIBS
-	LDFLAGS=$__SAVE_LDFLAGS
-	AC_LANG_POP([C++])
-
-	if test "$have_libxpcomglue_s" = "yes"; then
-		LIBXPCOMGLUE_S="-L$MOZILLA_LIBDIR -lxpcomglue_s"
-	else
-		AC_MSG_WARN([libxpcomglue_s not available; plugins may not be portable])
-	fi
-fi
-
-AC_SUBST([LIBXPCOMGLUE_S])
-
-# check for -fno-rtti flag
-
-if test "$enable_browser_plugins" = "yes"; then
 	AC_LANG_PUSH([C++])
 	__SAVE_CXXFLAGS=$CXXFLAGS
 	CXXFLAGS="-fno-rtti $CXXFLAGS"
@@ -854,31 +689,7 @@ if test "$enable_browser_plugins" = "yes"; then
 	fi
 fi
 
-# check for some additional xpcom headers and for string compatibility
-
-if test "$enable_browser_plugins" = "yes"; then
-	AC_LANG_PUSH([C++])
-	__SAVE_CPPFLAGS=$CPPFLAGS
-	CPPFLAGS="$CPPFLAGS $MOZILLA_NOT_LINKED_CFLAGS -I$MOZILLA_INCLUDE_ROOT -I$MOZILLA_INCLUDE_ROOT/xpcom"
-
-	AC_CHECK_HEADERS([nsTArray.h])
-
-	AC_MSG_CHECKING([whether we need string glue])
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([
-				#include <mozilla-config.h>
-				#include <nsStringAPI.h>
-		],[
-				nsDependentCString test("Test");
-		])],[need_string_glue=no],[need_string_glue=yes])
-	AC_MSG_RESULT([$need_string_glue])
-
-	CPPFLAGS=$__SAVE_CPPFLAGS
-	AC_LANG_POP([C++])
-
-	if test "$need_string_glue" = "yes"; then
-		AC_DEFINE([NEED_STRING_GLUE],[1],[Define if we need string glue])
-	fi
-fi
+AM_CONDITIONAL([ENABLE_BROWSER_PLUGINS], [test "$enable_browser_plugins" = "yes"])
 
 # check which plugins to enable
 
@@ -899,7 +710,7 @@ AC_MSG_RESULT([$enable_gmp_plugin])
 AC_MSG_CHECKING([whether to enable the Complex browser plugin])
 AC_ARG_ENABLE([complex-plugin],
 	AS_HELP_STRING([--enable-complex-plugin],[Whether to enable the complex browser plugin]),
-	[],[enable_complex_plugin=yes])
+	[],[enable_complex_plugin=no])
 AC_MSG_RESULT([$enable_complex_plugin])
 
 AC_MSG_CHECKING([whether to enable the NarrowSpace browser plugin])
@@ -1069,7 +880,6 @@ src/plugins/youtube/Makefile
 src/plugins/publish/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
-browser-plugin/idl/Makefile
 data/Makefile
 data/totem.desktop.in.in
 data/icons/Makefile

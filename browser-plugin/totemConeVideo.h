@@ -1,4 +1,4 @@
-/* Totem GMP plugin
+/* Totem Cone plugin
  *
  * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
@@ -20,40 +20,32 @@
  * Boston, MA 02110-1301  USA.
  */
 
-#ifndef __TOTEM_GMP_SETTINGS_H__
-#define __TOTEM_GMP_SETTINGS_H__
+#ifndef __TOTEM_CONE_VIDEO_H__
+#define __TOTEM_CONE_VIDEO_H__
 
 #include "totemNPClass.h"
 #include "totemNPObject.h"
 
-class totemGMPSettings : public totemNPObject
+class totemConeVideo : public totemNPObject
 {
   public:
-    totemGMPSettings (NPP);
-    virtual ~totemGMPSettings ();
+    totemConeVideo (NPP);
+    virtual ~totemConeVideo ();
 
   private:
 
     enum Methods {
-      eGetMode,
-      eIsAvailable,
-      eRequestMediaAccessRights,
-      eSetMode
+      eToggleFullscreen,
+      eToggleTeletext
     };
 
     enum Properties {
-      eAutostart,
-      eBalance,
-      eBaseURL,
-      eDefaultAudioLanguage,
-      eDefaultFrame,
-      eEnableErrorDialogs,
-      eInvokeURLs,
-      eMediaAccessRights,
-      eMute,
-      ePlayCount,
-      eRate,
-      eVolume
+      eAspectRatio,
+      eFullscreen,
+      eHeight,
+      eSubtitle,
+      eTeletext,
+      eWidth
     };
 
     virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
@@ -61,8 +53,9 @@ class totemGMPSettings : public totemNPObject
     virtual bool SetPropertyByIndex (int aIndex, const NPVariant *aValue);
 
     bool mMute;
+    double mSaveVolume;
 };
 
-TOTEM_DEFINE_NPCLASS (totemGMPSettings);
+TOTEM_DEFINE_NPCLASS (totemConeVideo);
 
-#endif /* __TOTEM_GMP_SETTINGS_H__ */
+#endif /* __TOTEM_CONE_VIDEO_H__ */

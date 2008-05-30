@@ -2,7 +2,7 @@
  * 
  * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
- * Copyright © 2006, 2007 Christian Persch
+ * Copyright © 2006, 2007, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,49 +20,29 @@
  * Boston, MA 02110-1301  USA.
  */
 
-#include <mozilla-config.h>
-#include "config.h"
+#include <config.h>
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <unistd.h>
 #include <fcntl.h>
-#include <sys/wait.h>
-#include <sys/poll.h>
-#include <string.h>
+#include <stdint.h>
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/poll.h>
+#include <sys/wait.h>
 
 #include <glib.h>
 
 #include "totem-pl-parser-mini.h"
 #include "totem-plugin-viewer-options.h"
-#include "totempluginviewer-marshal.h"
+#include "marshal.h"
 
 #include "npapi.h"
+#include "npruntime.h"
 #include "npupp.h"
 
-#include <nsIDOMWindow.h>
-#include <nsIURI.h>
-#include <nsEmbedString.h>
-#include <nsIInterfaceRequestor.h>
-#include <nsIInterfaceRequestorUtils.h>
-#include <nsIWebNavigation.h>
-
-#include <nsIServiceManager.h>
-#include <nsIDOMDocument.h>
-#include <nsIDOMElement.h>
-#include <nsIDOM3Node.h>
-#include <nsIIOService.h>
-#include <nsITimer.h>
-#include <nsIComponentManager.h>
-#include <nsIProtocolHandler.h>
-#include <nsIExternalProtocolHandler.h>
-
-/* for NS_IOSERVICE_CONTRACTID */
-#include <nsNetCID.h>
-
-#define GNOME_ENABLE_DEBUG 1
 /* define GNOME_ENABLE_DEBUG for more debug spew */
 /* FIXME define D() so that it prints the |this| pointer, so we can differentiate between different concurrent plugins! */
 #include "debug.h"
@@ -74,15 +54,110 @@
 #define DD(args...)
 #endif
 
-#include "totemPluginGlue.h"
 #include "totemPlugin.h"
+
+#if defined(TOTEM_BASIC_PLUGIN)
+#include "totemBasicPlugin.h"
+#elif defined(TOTEM_GMP_PLUGIN)
+#include "totemGMPControls.h"
+#include "totemGMPNetwork.h"
+#include "totemGMPPlayer.h"
+#include "totemGMPSettings.h"
+#elif defined(TOTEM_COMPLEX_PLUGIN)
+#include "totemComplexPlayer.h"
+#elif defined(TOTEM_NARROWSPACE_PLUGIN)
+#include "totemNarrowSpacePlugin.h"
+#elif defined(TOTEM_MULLY_PLUGIN)
+#include "totemMullYPlugin.h"
+#elif defined(TOTEM_CONE_PLUGIN)
+#include "totemCone.h"
+#include "totemConeAudio.h"
+#include "totemConeInput.h"
+#include "totemConePlaylist.h"
+#include "totemConePlaylistItems.h"
+#include "totemConeVideo.h"
+#else
+#error Unknown plugin type
+#endif
 
 #define DASHES "--"
 
 /* How much data bytes to request */
 #define PLUGIN_STREAM_CHUNK_SIZE (8 * 1024)
 
-NPNetscapeFuncs totemPlugin::sNPN;
+static const totemPluginMimeEntry kMimeTypes[] = {
+#if defined(TOTEM_BASIC_PLUGIN)
+  { "application/x-ogg","ogg",NULL },
+  { "application/ogg", "ogg", NULL },
+  { "audio/ogg", "oga", NULL },
+  { "audio/x-ogg", "ogg", NULL },
+  { "video/ogg", "ogv", NULL },
+  { "video/x-ogg", "ogg", NULL },
+  { "application/annodex", "anx", NULL },
+  { "audio/annodex", "axa", NULL },
+  { "video/annodex", "axv", NULL },
+  { "video/mpeg", "mpg, mpeg, mpe", NULL },
+  { "audio/wav", "wav", NULL },
+  { "audio/x-wav", "wav", NULL },
+  { "audio/mpeg", "mp3", NULL },
+  { "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
+  { "video/flv", "flv", "application/x-flash-video" },
+  { "application/x-totem-plugin", "", "application/octet-stream" },
+#elif defined(TOTEM_GMP_PLUGIN)
+  { "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
+  { "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
+  { "video/x-msvideo", "asf, wmv", NULL },
+  { "video/x-ms-asf", "asf", NULL },
+  { "video/x-ms-wmv", "wmv", "video/x-ms-wmv" },
+  { "video/x-wmv", "wmv", "video/x-ms-wmv" },
+  { "video/x-ms-wvx", "wmv", "video/x-ms-wmv" },
+  { "video/x-ms-wm", "wmv", "video/x-ms-wmv" },
+  { "video/x-ms-wmp", "wmv", "video/x-ms-wmv" },
+  { "application/x-ms-wms", "wms", "video/x-ms-wmv" },
+  { "application/asx", "asx", "audio/x-ms-asx" },
+  { "audio/x-ms-wma", "wma", NULL }
+#elif defined(TOTEM_COMPLEX_PLUGIN)
+  { "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
+#elif defined(TOTEM_NARROWSPACE_PLUGIN)
+  { "video/quicktime", "mov", NULL },
+  { "video/mp4", "mp4", NULL },
+  { "image/x-macpaint", "pntg", NULL },
+  { "image/x-quicktime", "pict, pict1, pict2", "image/x-pict" },
+  { "video/x-m4v", "m4v", NULL },
+#elif defined(TOTEM_MULLY_PLUGIN)
+  { "video/divx", "divx", "video/x-msvideo" },
+#elif defined(TOTEM_CONE_PLUGIN)
+  { "application/x-vlc-plugin", "", "application/octet-stream" },
+  { "application/vlc", "", "application/octet-stream" },
+  { "video/x-google-vlc-plugin", "", "application/octet-stream" },
+#else
+#error Unknown plugin type
+#endif
+};
+
+static const char kPluginDescription[] =
+#if defined(TOTEM_BASIC_PLUGIN)
+  "Totem Web Browser Plugin " VERSION;
+#elif defined(TOTEM_GMP_PLUGIN)
+  "Windows Media Player Plug-in 10 (compatible; Totem)";
+#elif defined(TOTEM_COMPLEX_PLUGIN)
+  "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
+#elif defined(TOTEM_NARROWSPACE_PLUGIN)
+  "QuickTime Plug-in " TOTEM_NARROWSPACE_VERSION;
+#elif defined(TOTEM_MULLY_PLUGIN)
+  "DivX\xC2\xAE Web Player";
+#elif defined(TOTEM_CONE_PLUGIN)
+  "VLC Multimedia Plugin (compatible Totem " VERSION ")";
+#else
+#error Unknown plugin type
+#endif
+
+static const char kPluginLongDescription[] =
+#if defined(TOTEM_MULLY_PLUGIN)
+  "DivX Web Player version " TOTEM_MULLY_VERSION;
+#else
+  "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
+#endif
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 nsTArray<totemPlugin*> *totemPlugin::sPlugins;
@@ -113,7 +188,7 @@ static const char *kControl[] = {
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
 void*
-totemPlugin::operator new (size_t aSize) CPP_THROW_NEW
+totemPlugin::operator new (size_t aSize) throw ()
 {
 	void *object = ::operator new (aSize);
 	if (object) {
@@ -123,24 +198,31 @@ totemPlugin::operator new (size_t aSize) CPP_THROW_NEW
 	return object;
 }
 
-totemPlugin::totemPlugin (NPP aInstance)
-:	mInstance (aInstance),
+totemPlugin::totemPlugin (NPP aNPP)
+:	mNPP (aNPP),
+        mMimeType (NULL),
+        mBaseURI (NULL),
+        mSrcURI (NULL),
+        mRequestBaseURI (NULL),
+        mRequestURI (NULL),
+        mViewerBusAddress (NULL),
+        mViewerServiceName (NULL),
+	mViewerFD (-1),
 	mWidth (-1),
 	mHeight (-1),
-	mViewerFD (-1),
-	mState (TOTEM_STATE_STOPPED),
 #ifdef TOTEM_COMPLEX_PLUGIN
-	mAutostart (PR_FALSE),
+	mAutoPlay (false),
 #else
-	mAutostart (PR_TRUE),
+	mAutoPlay (true),
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
-	mNeedViewer (PR_TRUE)
+	mNeedViewer (true),
+	mState (TOTEM_STATE_STOPPED)
 {
-	D ("totemPlugin ctor [%p]", (void*) this);
+        TOTEM_LOG_CTOR ();
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 	/* Add |this| to the global plugins list */
-	NS_ASSERTION (sPlugins->IndexOf (this) == NoIndex, "WTF?");
+	assert (sPlugins->IndexOf (this) == NoIndex); //, "WTF?");
 	if (!sPlugins->AppendElement (this)) {
 		D ("Couldn't maintain plugin list!");
 	}
@@ -157,11 +239,7 @@ totemPlugin::~totemPlugin ()
 	TransferConsole ();
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
-	if (mScriptable) {
-		mScriptable->SetPlugin (nsnull);
-		NS_RELEASE (mScriptable);
-		mScriptable = nsnull;
-	}
+        /* FIXMEchpe invalidate the scriptable object, or is that done automatically? */
 
 	if (mBusProxy) {
 		dbus_g_proxy_disconnect_signal (mBusProxy,
@@ -174,133 +252,207 @@ totemPlugin::~totemPlugin ()
 
 	ViewerCleanup ();
 
-	if (mTimer) {
-		mTimer->Cancel ();
-		NS_RELEASE (mTimer);
-		mTimer = nsnull;
+	if (mTimerID != 0) {
+                g_source_remove (mTimerID);
+                mTimerID = 0;
 	}
 
-	NS_IF_RELEASE (mServiceManager);
-	NS_IF_RELEASE (mIOService);
-	NS_IF_RELEASE (mPluginDOMElement);
-	NS_IF_RELEASE (mBaseURI);
-	NS_IF_RELEASE (mRequestBaseURI);
-	NS_IF_RELEASE (mRequestURI);
-	NS_IF_RELEASE (mSrcURI);
-
 #ifdef TOTEM_GMP_PLUGIN
-	NS_IF_RELEASE (mURLURI);
+	g_free (mURLURI);
 #endif
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	NS_IF_RELEASE (mHrefURI);
-	NS_IF_RELEASE (mQtsrcURI);
+        g_free (mHref);
+        g_free (mTarget);
+        g_free (mHrefURI);
+        g_free (mQtsrcURI);
 #endif
 
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	NS_IF_RELEASE (mPluginOwnerDocument);
-#endif /* TOTEM_COMPLEX_PLUGIN */
+        g_free (mMimeType);
 
-	D ("totemPlugin dtor [%p]", (void*) this);
+        g_free (mSrcURI);
+        g_free (mBaseURI);
+        g_free (mRequestURI);
+        g_free (mRequestBaseURI);
+
+        g_free (mViewerBusAddress);
+        g_free (mViewerServiceName);
+
+        g_free (mBackgroundColor);
+        g_free (mMatrix);
+        g_free (mRectangle);
+        g_free (mMovieName);
+
+        TOTEM_LOG_DTOR ();
 }
 
 /* public functions */
 
-nsresult
-totemPlugin::DoCommand (const char *aCommand)
+void
+totemPlugin::Command (const char *aCommand)
 {
-	D ("DoCommand '%s'", aCommand);
+	D ("Command '%s'", aCommand);
 
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
-		return NS_OK;
+		return;
 
-	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "DoCommand",
 				    G_TYPE_STRING, aCommand,
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
-
-	return NS_OK;
 }
 
-nsresult
-totemPlugin::SetVolume (gdouble aVolume)
+void
+totemPlugin::SetVolume (double aVolume)
 {
 	D ("SetVolume '%f'", aVolume);
 
+        mVolume = CLAMP (aVolume, 0.0, 1.0);
+
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
-		return NS_OK;
+		return;
 
-	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "SetVolume",
-				    G_TYPE_DOUBLE, aVolume,
+				    G_TYPE_DOUBLE, gdouble (Volume()),
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
-
-	return NS_OK;
 }
 
-nsresult
-totemPlugin::SetFullscreen (gboolean enabled)
+void
+totemPlugin::SetFullscreen (bool enabled)
 {
 	D ("SetFullscreen '%d'", enabled);
 
+        mIsFullscreen = enabled;
+
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
-		return NS_OK;
+		return;
 
-	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "SetFullscreen",
-				    G_TYPE_BOOLEAN, enabled,
+				    G_TYPE_BOOLEAN, gboolean (IsFullscreen()),
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
-
-	return NS_OK;
 }
 
-nsresult
-totemPlugin::ClearPlaylist (void)
+void
+totemPlugin::ClearPlaylist ()
 {
 	D ("ClearPlaylist");
 
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
-		return NS_OK;
+		return;
 
-	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "ClearPlaylist",
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
-
-	return NS_OK;
 }
 
-nsresult
-totemPlugin::AddItem (const nsACString &aURI)
+int32_t
+totemPlugin::AddItem (const char* aURI)
 {
-	const nsCString string (aURI);
-	const char *str = string.get ();
+        if (!aURI || !aURI[0])
+                return -1;
 
-	D ("AddItem '%s'", str);
+        /* FIXMEchpe: resolve against mBaseURI or mSrcURI ?? */
+
+	D ("AddItem '%s'", aURI);
 
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
-		return NS_OK;
+		return false;
 
-	NS_ASSERTION (mViewerProxy, "No viewer proxy");
+	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "AddItem",
-				    G_TYPE_STRING, str,
+				    G_TYPE_STRING, aURI,
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
 
-	return NS_OK;
+	return 0;
+}
+
+void
+totemPlugin::SetMute (bool enabled)
+{
+  mMute = enabled;
+  /* FIXMEchpe do stuff in the viewer! */
+}
+
+void
+totemPlugin::SetLooping (bool enabled)
+{
+  mIsLooping = enabled;
+  /* FIXMEchpe do stuff in the viewer! */
+}
+
+void
+totemPlugin::SetAutoPlay (bool enabled)
+{
+  mAutoPlay = enabled;
+}
+
+void
+totemPlugin::SetControllerVisible (bool enabled)
+{
+  mControllerHidden = !enabled; // FIXMEchpe
+}
+
+void
+totemPlugin::SetBackgroundColor (const char* color)
+{
+  g_free (mBackgroundColor);
+  mBackgroundColor = g_strdup (color);
+}
+
+void
+totemPlugin::SetMatrix (const char* matrix)
+{
+  g_free (mMatrix);
+  mMatrix = g_strdup (matrix);
+}
+
+void
+totemPlugin::SetRectangle (const char *rectangle)
+{
+  g_free (mRectangle);
+  mRectangle = g_strdup (rectangle);
+}
+
+void
+totemPlugin::SetMovieName (const char *name)
+{
+  g_free (mMovieName);
+  mMovieName = g_strdup (name);
+}
+
+void
+totemPlugin::SetRate (double rate)
+{
+  // FIXMEchpe
+}
+
+double
+totemPlugin::Rate () const
+{
+  double rate;
+  if (mState == TOTEM_STATE_PLAYING) {
+    rate = 1.0;
+  } else {
+    rate = 0.0;
+  }
+  return rate;
 }
 
 /* Viewer interaction */
@@ -314,8 +466,7 @@ totemPlugin::ViewerFork ()
 		return NPERR_NO_ERROR;
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
-	const char *userAgent = CallNPN_UserAgentProc (sNPN.uagent,
-						       mInstance);
+	const char *userAgent = NPN_UserAgent (mNPP);
 	if (!userAgent) {
 		/* See https://bugzilla.mozilla.org/show_bug.cgi?id=328778 */
 		D ("User agent has more than 127 characters; fix your browser!");
@@ -374,9 +525,9 @@ totemPlugin::ViewerFork ()
 	}
 
 	/* FIXME: remove this */
-	if (!mMimeType.IsEmpty ()) {
+	if (mMimeType) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_MIMETYPE));
-		g_ptr_array_add (arr, g_strdup (mMimeType.get()));
+		g_ptr_array_add (arr, g_strdup (mMimeType));
 	}
 
 	if (mControllerHidden) {
@@ -399,7 +550,7 @@ totemPlugin::ViewerFork ()
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_AUDIOONLY));
 	}
 
-	if (!mAutostart) {
+	if (!mAutoPlay) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_NOAUTOSTART));
 	}
 
@@ -421,18 +572,13 @@ totemPlugin::ViewerFork ()
 	}
 #endif
 
-	mViewerReady = PR_FALSE;
+	mViewerReady = false;
 
 	/* Don't wait forever! */
-	const PRUint32 kViewerTimeout = 30 * 1000; /* ms */
-	nsresult rv = mTimer->InitWithFuncCallback (ViewerForkTimeoutCallback,
-						    reinterpret_cast<void*>(this),
-						    kViewerTimeout,
-						    nsITimer::TYPE_ONE_SHOT);
-	if (NS_FAILED (rv)) {
-		D ("Failed to initialise timer");
-		return NPERR_GENERIC_ERROR;
-	}
+	const guint kViewerTimeout = 30 * 1000; /* ms */
+        mTimerID = g_timeout_add (kViewerTimeout,
+                                  (GSourceFunc) ViewerForkTimeoutCallback,
+                                  reinterpret_cast<void*>(this));
 
 	/* FIXME: once gecko is multihead-safe, this should use gdk_spawn_on_screen_with_pipes */
 	GError *error = NULL;
@@ -476,18 +622,18 @@ totemPlugin::ViewerSetup ()
 	if (mViewerSetUp)
 		return;
 
-	mViewerSetUp = PR_TRUE;
+	mViewerSetUp = true;
 
 	D ("ViewerSetup");
 
 	/* Cancel timeout */
-	nsresult rv = mTimer->Cancel ();
-	if (NS_FAILED (rv)) {
-		D ("Failed to cancel timer");
+        if (mTimerID != 0) {
+          g_source_remove (mTimerID);
+          mTimerID = 0;
 	}
 
 	mViewerProxy = dbus_g_proxy_new_for_name (mBusConnection,
-						  mViewerServiceName.get (),
+						  mViewerServiceName,
 						  TOTEM_PLUGIN_VIEWER_DBUS_PATH,
 						  TOTEM_PLUGIN_VIEWER_INTERFACE_NAME);
 
@@ -550,8 +696,8 @@ totemPlugin::ViewerSetup ()
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 	/* Notify all consoles */
-	PRUint32 count = sPlugins->Length ();
-	for (PRUint32 i = 0; i < count; ++i) {
+	uint32_t count = sPlugins->Length ();
+	for (uint32_t i = 0; i < count; ++i) {
 		totemPlugin *plugin = sPlugins->ElementAt (i);
 
 		if (plugin->mConsoleClassRepresentant == this)
@@ -564,10 +710,12 @@ totemPlugin::ViewerSetup ()
 void
 totemPlugin::ViewerCleanup ()
 {
-	mViewerReady = PR_FALSE;
+	mViewerReady = false;
 
-	mViewerBusAddress.SetLength (0);
-	mViewerServiceName.SetLength (0);
+        g_free (mViewerBusAddress);
+        mViewerBusAddress = NULL;
+        g_free (mViewerServiceName);
+        mViewerServiceName = NULL;
 
 	if (mViewerPendingCall) {
 		dbus_g_proxy_cancel_call (mViewerProxy, mViewerPendingCall);
@@ -621,12 +769,12 @@ totemPlugin::ViewerSetWindow ()
 
 	/* FIXME this shouldn't happen here */
 	if (mHidden) {
-		mWindowSet = PR_TRUE;
+		mWindowSet = true;
 		ViewerReady ();
 		return;
 	}
 
-	NS_ASSERTION (mViewerPendingCall == NULL, "Have a pending call");
+	assert (mViewerPendingCall == NULL); /* Have a pending call */
 
 	D ("Calling SetWindow");
 	mViewerPendingCall = 
@@ -641,11 +789,11 @@ totemPlugin::ViewerSetWindow ()
 					 G_TYPE_STRING, "All",
 #endif
 					 G_TYPE_UINT, (guint) mWindow,
-					 G_TYPE_INT, (gint) mWidth,
-					 G_TYPE_INT, (gint) mHeight,
+					 G_TYPE_INT, mWidth,
+					 G_TYPE_INT, mHeight,
 					 G_TYPE_INVALID);
 		
-	mWindowSet = PR_TRUE;
+	mWindowSet = true;
 }
 
 void
@@ -653,23 +801,23 @@ totemPlugin::ViewerReady ()
 {
 	D ("ViewerReady");
 
-	NS_ASSERTION (!mViewerReady, "Viewer already ready");
+	assert (!mViewerReady);
 
-	mViewerReady = PR_TRUE;
+	mViewerReady = true;
 
-	if (mAutostart) {
-		RequestStream (PR_FALSE);
+	if (mAutoPlay) {
+		RequestStream (false);
 	} else {
-		mWaitingForButtonPress = PR_TRUE;
+		mWaitingForButtonPress = true;
 	}
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* Tell the viewer it has an href */
-	if (!mHref.IsEmpty ()) {
+	if (mHref) {
 		dbus_g_proxy_call_no_reply (mViewerProxy,
 					    "SetHref",
-					    G_TYPE_STRING, mHref.get (),
-					    G_TYPE_STRING, mTarget.get (),
+					    G_TYPE_STRING, mHref,
+					    G_TYPE_STRING, mTarget ? mTarget : "",
 					    G_TYPE_INVALID);
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
@@ -682,20 +830,22 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* FIXME set href="" afterwards, so we don't try to launch again when the user clicks again? */
-	if (!mHref.IsEmpty ()) {
-		if (g_ascii_strcasecmp (mTarget.get (), "quicktimeplayer") == 0) {
-			D ("Opening movie '%s' in external player", mHref.get ());
+	if (mHref) {
+		if (mTarget &&
+                    g_ascii_strcasecmp (mTarget, "quicktimeplayer") == 0) {
+			D ("Opening movie '%s' in external player", mHref);
 			dbus_g_proxy_call_no_reply (mViewerProxy,
 						    "LaunchPlayer",
-						    G_TYPE_STRING, mHref.get (),
+						    G_TYPE_STRING, mHref,
 						    G_TYPE_UINT, time,
 						    G_TYPE_INVALID);
 			return;
 		}
-		if (g_ascii_strcasecmp (mTarget.get (), "myself") == 0 ||
-		    mTarget.Equals (NS_LITERAL_CSTRING ("_current")) ||
-		    mTarget.Equals (NS_LITERAL_CSTRING ("_self"))) {
-			D ("Opening movie '%s'", mHref.get ());
+                if (mTarget &&
+                    (g_ascii_strcasecmp (mTarget, "myself") == 0 ||
+                     g_ascii_strcasecmp (mTarget, "_current") == 0 ||
+                     g_ascii_strcasecmp (mTarget, "_self") == 0)) {
+                        D ("Opening movie '%s'", mHref);
 			dbus_g_proxy_call_no_reply (mViewerProxy,
 						    "SetHref",
 						    G_TYPE_STRING, NULL,
@@ -703,25 +853,22 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 						    G_TYPE_INVALID);
 			/* FIXME this isn't right, we should just create a mHrefURI and instruct to load that one */
 			SetQtsrc (mHref);
-			RequestStream (PR_TRUE);
+			RequestStream (true);
 			return;
 		}
 
 		/* Load URL in browser. This will either open a new website,
 		 * or execute some javascript.
 		 */
-		nsCString href;
+                const char *href = NULL;
 		if (mHrefURI) {
-			mHrefURI->GetSpec (href);
+			href = mHrefURI;
 		} else {
 			href = mHref;
 		}
 
-		if (CallNPN_GetURLProc (sNPN.geturl,
-					mInstance,
-					href.get (),
-					mTarget.get ()) != NPERR_NO_ERROR) {
-			D ("Failed to launch URL '%s' in browser", mHref.get ());
+		if (NPN_GetURL (mNPP, href, mTarget) != NPERR_NO_ERROR) {
+			D ("Failed to launch URL '%s' in browser", mHref);
 		}
 
 		return;
@@ -731,12 +878,12 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 	if (!mWaitingForButtonPress)
 		return;
 
-	mWaitingForButtonPress = PR_FALSE;
+	mWaitingForButtonPress = false;
 
 	/* Now is the time to start the stream */
-	if (!mAutostart &&
+	if (!mAutoPlay &&
 	    !mStream) {
-		RequestStream (PR_FALSE);
+		RequestStream (false);
 	}
 }
 
@@ -749,41 +896,40 @@ totemPlugin::NameOwnerChanged (const char *aName,
 		return;
 
 	/* Construct viewer interface name */
-	if (NS_UNLIKELY (mViewerServiceName.IsEmpty ())) {
-		char name[256];
-
-		g_snprintf (name, sizeof (name),
-			    TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE,
-			    mViewerPID);
-		mViewerServiceName.Assign (name);
-
-		D ("Viewer DBus interface name is '%s'", mViewerServiceName.get ());
+	if (G_UNLIKELY (!mViewerServiceName)) {
+		mViewerServiceName = g_strdup_printf (TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE, mViewerPID);
+		D ("Viewer DBus interface name is '%s'", mViewerServiceName);
 	}
 
-	if (!mViewerServiceName.Equals (nsDependentCString (aName)))
+	if (strcmp (mViewerServiceName, aName) != 0)
 		return;
 
 	D ("NameOwnerChanged old-owner '%s' new-owner '%s'", aOldOwner, aNewOwner);
 
 	if (aOldOwner[0] == '\0' /* empty */ &&
 	    aNewOwner[0] != '\0' /* non-empty */) {
-		if (mViewerBusAddress.Equals (nsDependentCString (aNewOwner))) {
+		if (mViewerBusAddress &&
+                    strcmp (mViewerBusAddress, aNewOwner) == 0) {
 			D ("Already have owner, why are we notified again?");
-		} else if (!mViewerBusAddress.IsEmpty ()) {
+                        g_free (mViewerBusAddress);
+		} else if (mViewerBusAddress) {
 			D ("WTF, new owner!?");
+                        g_free (mViewerBusAddress);
 		} else {
 			/* This is the regular case */
 			D ("Viewer now connected to the bus");
 		}
 
-		mViewerBusAddress.Assign (aNewOwner);
+		mViewerBusAddress = g_strdup (aNewOwner);
 
 		ViewerSetup ();
-	} else if (!mViewerBusAddress.IsEmpty () &&
-		   mViewerBusAddress.Equals (nsDependentCString (aOldOwner))) {
+	} else if (mViewerBusAddress &&
+		   strcmp (mViewerBusAddress, aOldOwner) == 0) {
 		D ("Viewer lost connection!");
 
-		mViewerBusAddress.SetLength (0); /* truncate */
+		g_free (mViewerBusAddress);
+                mViewerBusAddress = NULL;
+
 		/* FIXME */
 		/* ViewerCleanup () ? */
 		/* FIXME if we're not quitting, put up error viewer */
@@ -798,20 +944,19 @@ totemPlugin::NameOwnerChanged (const char *aName,
 void
 totemPlugin::ClearRequest ()
 {
-	if (mRequestBaseURI) {
-		NS_RELEASE (mRequestBaseURI);
-		mRequestBaseURI = nsnull;
-	}
-	if (mRequestURI) {
-		NS_RELEASE (mRequestURI);
-		mRequestURI = nsnull;
-	}
+  g_free (mRequestURI);
+  mRequestURI = NULL;
+
+  g_free (mRequestBaseURI);
+  mRequestBaseURI = NULL;
 }
 
 void
-totemPlugin::RequestStream (PRBool aForceViewer)
+totemPlugin::RequestStream (bool aForceViewer)
 {
-	NS_ASSERTION (mViewerReady, "Viewer not ready");
+//        assert (mViewerReady);
+        if (!mViewerReady)
+          return;//FIXMEchpe
 
 	if (mStream) {
 		D ("Unexpectedly have a stream!");
@@ -822,8 +967,8 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 	ClearRequest ();
 
 	/* Now work out which URL to request */
-	nsIURI *baseURI = nsnull;
-	nsIURI *requestURI = nsnull;
+	const char *baseURI = NULL;
+	const char *requestURI = NULL;
 
 #ifdef TOTEM_GMP_PLUGIN
 	/* Prefer filename over src */
@@ -848,7 +993,7 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #ifdef TOTEM_MULLY_PLUGIN
-	aForceViewer = PR_TRUE;
+	aForceViewer = true;
 #endif /* TOTEM_MULLY_PLUGIN */
 
 	/* Fallback */
@@ -859,24 +1004,15 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 		baseURI = mBaseURI;
 
 	/* Nothing to do */
-	if (!requestURI)
-		return;
-
-	NS_ADDREF (mRequestBaseURI = baseURI);
-	NS_ADDREF (mRequestURI = requestURI);
-
-	/* FIXME use the right base! */
-	nsCString baseSpec, spec;
-	baseURI->GetSpec (baseSpec);
-	requestURI->GetSpec (spec);
-
-	/* Shouldn't happen, but who knows */
-	if (spec.IsEmpty ())
+	if (!requestURI || !requestURI[0])
 		return;
 
 	/* If we don't have a proxy yet */
 	if (!mViewerReady)
 		return;
+
+        mRequestURI = g_strdup (requestURI);
+        mRequestBaseURI = g_strdup (baseURI);
 
 	/* If the URL is supported and the caller isn't asking us to make
 	 * the viewer open the stream, we call OpenStream, and
@@ -891,8 +1027,8 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 						 ViewerOpenStreamCallback,
 						 reinterpret_cast<void*>(this),
 						 NULL,
-						 G_TYPE_STRING, spec.get (),
-						 G_TYPE_STRING, baseSpec.get (),
+						 G_TYPE_STRING, requestURI,
+						 G_TYPE_STRING, baseURI,
 						 G_TYPE_INVALID);
 	} else {
 		mViewerPendingCall =
@@ -901,16 +1037,18 @@ totemPlugin::RequestStream (PRBool aForceViewer)
 						 ViewerOpenURICallback,
 						 reinterpret_cast<void*>(this),
 						 NULL,
-						 G_TYPE_STRING, spec.get (),
-						 G_TYPE_STRING, baseSpec.get (),
+						 G_TYPE_STRING, requestURI,
+						 G_TYPE_STRING, baseURI,
 						 G_TYPE_INVALID);
 	}
 
 	/* FIXME: start playing in the callbacks ! */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	if (mScriptable) {
-		mScriptable->mPluginState = totemScriptablePlugin::eState_Playable;
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
@@ -921,29 +1059,30 @@ totemPlugin::UnsetStream ()
 	if (!mStream)
 		return;
 
-	if (CallNPN_DestroyStreamProc (sNPN.destroystream,
-	    			       mInstance,
-				       mStream,
-				       NPRES_DONE) != NPERR_NO_ERROR) {
-		    g_warning ("Couldn't destroy the stream");
-		    /* FIXME: set mStream to NULL here too? */
-		    return;
+	if (NPN_DestroyStream (mNPP,
+                               mStream,
+                               NPRES_DONE) != NPERR_NO_ERROR) {
+                  g_warning ("Couldn't destroy the stream");
+                  /* FIXME: set mStream to NULL here too? */
+                  return;
 	}
 
 	/* Calling DestroyStream should already have set this to NULL */
-	NS_ASSERTION (!mStream, "Should not have a stream anymore");
-	mStream = nsnull; /* just to make sure */
+	assert (!mStream); /* Should not have a stream anymore */
+	mStream = NULL; /* just to make sure */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	if (mScriptable) {
-		mScriptable->mPluginState = totemScriptablePlugin::eState_Waiting;
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Waiting;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
 /* Callbacks */
 
-/* static */ void PR_CALLBACK 
+/* static */ void 
 totemPlugin::NameOwnerChangedCallback (DBusGProxy *proxy,
 				       const char *aName,
 				       const char *aOldOwner,
@@ -955,22 +1094,25 @@ totemPlugin::NameOwnerChangedCallback (DBusGProxy *proxy,
 	plugin->NameOwnerChanged (aName, aOldOwner, aNewOwner);
 }
 
-/* static */ void PR_CALLBACK
-totemPlugin::ViewerForkTimeoutCallback (nsITimer *aTimer,
-				        void *aData)
+/* static */ gboolean
+totemPlugin::ViewerForkTimeoutCallback (void *aData)
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+
+        plugin->mTimerID = 0;
 
 	D ("ViewerForkTimeoutCallback");
 
 	/* FIXME: can this really happen? */
-	NS_ASSERTION (!plugin->mViewerReady, "Viewer ready but timeout running?");
+	assert (!plugin->mViewerReady); /* Viewer ready but timeout running? */
 
 	plugin->ViewerCleanup ();
 	/* FIXME start error viewer */
+
+        return FALSE; /* don't run again */
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
 				  guint aTimestamp,
 				  guint aButton,
@@ -983,7 +1125,7 @@ totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
 	plugin->ViewerButtonPressed (aTimestamp, aButton);
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::StopStreamCallback (DBusGProxy *proxy,
 			         void *aData)
 {
@@ -994,7 +1136,7 @@ totemPlugin::StopStreamCallback (DBusGProxy *proxy,
 	plugin->UnsetStream ();
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::TickCallback (DBusGProxy *proxy,
 			   guint aTime,
 			   guint aDuration,
@@ -1002,10 +1144,11 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 			   void *aData)
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
-	TotemStates state;
 	guint i;
 
-	NS_ASSERTION (aState != NULL, "aState is NULL probably garbage");
+	//assert (aState != NULL) /* aState is NULL probably garbage */
+        if (!aState)
+                return;
 
 	DD ("Tick signal received, aState %s, aTime %d, aDuration %d", aState, aTime, aDuration);
 
@@ -1020,7 +1163,7 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 	plugin->mDuration = aDuration;
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::PropertyChangeCallback (DBusGProxy  *proxy,
 				     const char *aType,
 				     GValue *value,
@@ -1028,7 +1171,9 @@ totemPlugin::PropertyChangeCallback (DBusGProxy  *proxy,
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
-	NS_ASSERTION (aType != NULL, "aType is NULL probably garbage");
+	//NS_ASSERTION (aType != NULL, "aType is NULL probably garbage");
+        if (!aType)
+                return;
 
 	DD ("PropertyChange signal received, aType %s", aType);
 
@@ -1039,7 +1184,7 @@ totemPlugin::PropertyChangeCallback (DBusGProxy  *proxy,
 	}
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::ViewerSetWindowCallback (DBusGProxy *aProxy,
 				      DBusGProxyCall *aCall,
 				      void *aData)
@@ -1048,13 +1193,15 @@ totemPlugin::ViewerSetWindowCallback (DBusGProxy *aProxy,
 
 	D ("SetWindow reply");
 
-	NS_ASSERTION (aCall == plugin->mViewerPendingCall, "SetWindow not the current call");
+	//assert (aCall == plugin->mViewerPendingCall, "SetWindow not the current call");
+        if (aCall != plugin->mViewerPendingCall)
+          return;
 
 	plugin->mViewerPendingCall = NULL;
 
 	GError *error = NULL;
 	if (!dbus_g_proxy_end_call (aProxy, aCall, &error, G_TYPE_INVALID)) {
-		/* FIXME: mViewerFailed = PR_TRUE */
+		/* FIXME: mViewerFailed = true */
 		g_warning ("SetWindow failed: %s", error->message);
 		g_error_free (error);
 		return;
@@ -1063,7 +1210,7 @@ totemPlugin::ViewerSetWindowCallback (DBusGProxy *aProxy,
 	plugin->ViewerReady ();
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 				       DBusGProxyCall *aCall,
 				       void *aData)
@@ -1072,7 +1219,9 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 
 	D ("OpenStream reply");
 
-	NS_ASSERTION (aCall == plugin->mViewerPendingCall, "OpenStream not the current call");
+// 	assert (aCall == plugin->mViewerPendingCall, "OpenStream not the current call");
+        if (aCall != plugin->mViewerPendingCall)
+          return;
 
 	plugin->mViewerPendingCall = NULL;
 
@@ -1085,39 +1234,40 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 
 	/* FIXME this isn't the best way... */
 	if (plugin->mHidden &&
-	    plugin->mAutostart) {
-		plugin->DoCommand (TOTEM_COMMAND_PLAY);
+	    plugin->mAutoPlay) {
+		plugin->Command (TOTEM_COMMAND_PLAY);
 	}
 
-	NS_ASSERTION (!plugin->mExpectingStream, "Already expecting a stream");
-	NS_ENSURE_TRUE (plugin->mRequestURI, );
+	assert (!plugin->mExpectingStream); /* Already expecting a stream */
 
-	plugin->mExpectingStream = PR_TRUE;
+        //assert (plugin->mRequestURI);
+	if (!plugin->mRequestURI)
+          return;
 
-	nsCString spec;
-	plugin->mRequestURI->GetSpec (spec);
+	plugin->mExpectingStream = true;
 
 	/* Use GetURLNotify so we can reset mExpectingStream on failure */
-	NPError err = CallNPN_GetURLNotifyProc (sNPN.geturlnotify,
-						plugin->mInstance,
-						spec.get (),
-						nsnull,
-						nsnull);
+	NPError err = NPN_GetURLNotify (plugin->mNPP,
+                                        plugin->mRequestURI,
+                                        NULL,
+                                        NULL);
 	if (err != NPERR_NO_ERROR) {
-		plugin->mExpectingStream = PR_FALSE;
+		plugin->mExpectingStream = false;
 
-		D ("GetURLNotify '%s' failed with error %d", spec.get (), err);
+		D ("GetURLNotify '%s' failed with error %d", plugin->mRequestURI, err);
 		return;
 	}
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	if (plugin->mScriptable) {
-		plugin->mScriptable->mPluginState = totemScriptablePlugin::eState_Playable;
+        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
-/* static */ void PR_CALLBACK
+/* static */ void
 totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 				    DBusGProxyCall *aCall,
 				    void *aData)
@@ -1126,7 +1276,9 @@ totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 
 	D ("OpenURI reply");
 
-	NS_ASSERTION (aCall == plugin->mViewerPendingCall, "OpenURI not the current call");
+// 	//assert (aCall == plugin->mViewerPendingCall, "OpenURI not the current call");
+        if (aCall != plugin->mViewerPendingCall)
+          return;
 
 	plugin->mViewerPendingCall = NULL;
 
@@ -1138,35 +1290,51 @@ totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 	}
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	if (plugin->mScriptable) {
-		plugin->mScriptable->mPluginState = totemScriptablePlugin::eState_Playable;
+        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 	/* FIXME this isn't the best way... */
-	if (plugin->mAutostart) {
-		plugin->DoCommand (TOTEM_COMMAND_PLAY);
+	if (plugin->mAutoPlay) {
+		plugin->Command (TOTEM_COMMAND_PLAY);
 	}
 }
 
 /* Auxiliary functions */
 
-void
-totemPlugin::GetRealMimeType (const char *mimetype,
-			      nsACString &_retval)
+
+/* static */ char *
+totemPlugin::PluginDescription ()
 {
-	_retval.Assign ("");
+  return (char*) kPluginDescription;
+}
 
-	const totemPluginMimeEntry *mimetypes;
-	PRUint32 count;
-	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
+/* static */ char *
+totemPlugin::PluginLongDescription ()
+{
+  return (char*) kPluginLongDescription;
+}
 
-	for (PRUint32 i = 0; i < count; ++i) {
-		if (strcmp (mimetypes[i].mimetype, mimetype) == 0) {
-			if (mimetypes[i].mime_alias != NULL) {
-				_retval.Assign (mimetypes[i].mime_alias);
+/* static */ void
+totemPlugin::PluginMimeTypes (const totemPluginMimeEntry **_entries,
+					uint32_t *_count)
+{
+  *_entries = kMimeTypes;
+  *_count = G_N_ELEMENTS (kMimeTypes);
+}
+
+void
+totemPlugin::SetRealMimeType (const char *mimetype)
+{
+	for (uint32_t i = 0; i < G_N_ELEMENTS (kMimeTypes); ++i) {
+		if (strcmp (kMimeTypes[i].mimetype, mimetype) == 0) {
+			if (kMimeTypes[i].mime_alias != NULL) {
+				mMimeType = g_strdup (kMimeTypes[i].mime_alias);
 			} else {
-				_retval.Assign (mimetype);
+				mMimeType = g_strdup (mimetype);
 			}
 			return;
 		}
@@ -1175,47 +1343,40 @@ totemPlugin::GetRealMimeType (const char *mimetype,
 	D ("Real mime-type for '%s' not found", mimetype);
 }
 
-PRBool
-totemPlugin::IsSchemeSupported (nsIURI *aURI)
+bool
+totemPlugin::IsSchemeSupported (const char *aURI)
 {
-	if (!aURI)
-		return PR_FALSE;
+  if (!aURI)
+    return false;
 
-	nsCString scheme;
-	nsresult rv = aURI->GetScheme (scheme);
-	if (NS_FAILED (rv) || scheme.IsEmpty ())
-		return PR_FALSE;
+  char *scheme = g_uri_parse_scheme (aURI);
+  if (!scheme)
+    return false;
 
-	nsIProtocolHandler *handler = nsnull;
-	rv = mIOService->GetProtocolHandler (scheme.get (), &handler);
+  bool isSupported = false;
+  if (g_ascii_strcasecmp (scheme, "http") == 0 ||
+      g_ascii_strcasecmp (scheme, "https") == 0 ||
+      g_ascii_strcasecmp (scheme, "ftp") == 0)
+    isSupported = true;
 
-	/* Check that it's not the external protocol handler! */
-	nsIExternalProtocolHandler *extHandler = nsnull;
-	if (NS_SUCCEEDED (rv) && handler) {
-		CallQueryInterface (handler, &extHandler);
-	}
+  D("IsSchemeSupported scheme '%s': %s", scheme, isSupported ? "yes" : "no");
 
-	PRBool isSupported = NS_SUCCEEDED (rv) && handler && !extHandler;
+  g_free (scheme);
 
-	NS_IF_RELEASE (handler); /* this nullifies |handler| */
-	NS_IF_RELEASE (extHandler);
-
-	D ("IsSchemeSupported scheme '%s': %s", scheme.get (), isSupported ? "yes" : "no");
-
-	return isSupported;
+  return isSupported;
 }
 
-PRBool
+bool
 totemPlugin::ParseBoolean (const char *key,
 			   const char *value,
-			   PRBool default_val)
+			   bool default_val)
 {
 	if (value == NULL || strcmp (value, "") == 0)
 		return default_val;
 	if (g_ascii_strcasecmp (value, "false") == 0 || g_ascii_strcasecmp (value, "no") == 0)
-		return PR_FALSE;
+		return false;
 	if (g_ascii_strcasecmp (value, "true") == 0 || g_ascii_strcasecmp (value, "yes") == 0)
-		return PR_TRUE;
+		return true;
 
         char *endptr = NULL;
         errno = 0;
@@ -1229,10 +1390,10 @@ totemPlugin::ParseBoolean (const char *key,
 	return default_val;
 }
 
-PRBool
+bool
 totemPlugin::GetBooleanValue (GHashTable *args,
 			      const char *key,
-			      PRBool default_val)
+			      bool default_val)
 {
 	const char *value;
 
@@ -1243,18 +1404,18 @@ totemPlugin::GetBooleanValue (GHashTable *args,
 	return ParseBoolean (key, value, default_val);
 }
 
-PRUint32
+uint32_t
 totemPlugin::GetEnumIndex (GHashTable *args,
 			   const char *key,
 			   const char *values[],
-			   PRUint32 n_values,
-			   PRUint32 default_value)
+			   uint32_t n_values,
+			   uint32_t default_value)
 {
 	const char *value = (const char *) g_hash_table_lookup (args, key);
 	if (!value)
 		return default_value;
 
-	for (PRUint32 i = 0; i < n_values; ++i) {
+	for (uint32_t i = 0; i < n_values; ++i) {
 		if (g_ascii_strcasecmp (value, values[i]) == 0)
 			return i;
 	}
@@ -1264,120 +1425,87 @@ totemPlugin::GetEnumIndex (GHashTable *args,
 
 /* Public functions for use by the scriptable plugin */
 
-nsresult
-totemPlugin::SetSrc (const nsACString& aURL)
+bool
+totemPlugin::SetSrc (const char* aURL)
 {
-	if (mSrcURI) {
-		NS_RELEASE (mSrcURI);
-		mSrcURI = nsnull;
-	}
-
-	mSrc = aURL;
+        g_free (mSrcURI);
 
 	/* If |src| is empty, don't resolve the URI! Otherwise we may
 	 * try to load an (probably iframe) html document as our video stream.
 	 */
-	if (mSrc.Length () == 0)
-		return NS_OK;
+	if (!aURL || !aURL[0]) {
+              mSrcURI = NULL;
+              return true;
+        }
 
-	nsresult rv = mIOService->NewURI (aURL, nsnull /* FIXME! use document charset */,
-					  mBaseURI, &mSrcURI);
-	if (NS_FAILED (rv)) {
-		D ("Failed to create src URI (rv=%x)", rv);
-		mSrcURI = nsnull;
-	} else {
-		if (mAutostart) {
-			RequestStream (PR_FALSE);
-		} else {
-			mWaitingForButtonPress = PR_TRUE;
-		}
-	}
+        mSrcURI = g_strdup (aURL);
 
-	return rv;
+        if (mAutoPlay) {
+                RequestStream (false);
+        } else {
+                mWaitingForButtonPress = true;
+        }
+
+        return true;
 }
 
 #ifdef TOTEM_GMP_PLUGIN
 
-nsresult
-totemPlugin::SetURL (const nsACString& aURL)
+void
+totemPlugin::SetURL (const char* aURL)
 {
-	if (mURLURI) {
-		NS_RELEASE (mURLURI);
-		mURLURI = nsnull;
-	}
+        g_free (mURLURI);
 
 	/* Don't allow empty URL */
-	if (aURL.Length () == 0)
-		return NS_OK;
+        if (!aURL || !aURL[0]) {
+                mURLURI = NULL;
+		return;
+        }
 
-	/* FIXME: what is the correct base for the URL param? */
-	nsresult rv;
-	nsIURI *baseURI;
-	if (mSrcURI) {
-		baseURI = mSrcURI;
-	} else {
-		baseURI = mBaseURI;
-	}
+        mURLURI = g_strdup (aURL);
 
-	rv = mIOService->NewURI (aURL, nsnull /* FIXME document charset? */,
-				 baseURI, &mURLURI);
-	if (NS_FAILED (rv)) {
-		D ("Failed to create URL URI (rv=%x)", rv);
-	}
-
+	/* FIXME: what is the correct base for the URL param? mSrcURI or mBaseURI? */
 	/* FIXME: security checks? */
-
-	return rv;
+        /* FIXMEchpe: resolve the URI here? */
 }
 
 #endif /* TOTEM_GMP_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 
-nsresult
-totemPlugin::SetQtsrc (const nsCString& aURL)
+bool
+totemPlugin::SetQtsrc (const char* aURL)
 {
 	/* FIXME can qtsrc have URL extensions? */
 
-	if (mQtsrcURI) {
-		NS_RELEASE (mQtsrcURI);
-		mQtsrcURI = nsnull;
-	}
-
+        g_free (mQtsrcURI);
+        
 	/* Don't allow empty qtsrc */
-	if (aURL.Length () == 0)
-		return NS_OK;
+	if (!aURL || !aURL[0]) {
+                mQtsrcURI = NULL;
+		return true;
+        }
 
-	nsresult rv;
-	nsIURI *baseURI;
-	if (mSrcURI) {
-		baseURI = mSrcURI;
-	} else {
-		baseURI = mBaseURI;
-	}
-
-	rv = mIOService->NewURI (aURL, nsnull /* FIXME document charset? */,
-				 baseURI, &mQtsrcURI);
-	if (NS_FAILED (rv)) {
-		D ("Failed to create QTSRC URI (rv=%x)", rv);
-	}
+        mQtsrcURI = g_strdup (aURL);
 
 	/* FIXME: security checks? */
+        /* FIXMEchpe: resolve the URI here? */
 
-	return rv;
+        return true;
 }
 
-nsresult
-totemPlugin::SetHref (const nsCString& aURL)
+bool
+totemPlugin::SetHref (const char* aURL)
 {
-	nsCString url, target;
-	PRBool hasExtensions = ParseURLExtensions (aURL, url, target);
+	char *url = NULL, *target = NULL;
+	bool hasExtensions = ParseURLExtensions (aURL, &url, &target);
 
 	D ("SetHref '%s' has-extensions %d (url: '%s' target: '%s')",
-	   nsCString (aURL).get (), hasExtensions, url.get (), target.get ());
+	   aURL ? aURL : "", hasExtensions, url ? url : "", target ? target : "");
 
-	nsresult rv;
-	nsIURI *baseURI;
+#if 0
+// 	nsresult rv = NS_OK;
+	char *baseURI;
 	if (mQtsrcURI) {
 		baseURI = mQtsrcURI;
 	} else if (mSrcURI) {
@@ -1385,50 +1513,69 @@ totemPlugin::SetHref (const nsCString& aURL)
 	} else {
 		baseURI = mBaseURI;
 	}
+#endif
 
 	if (hasExtensions) {
+                g_free (mHref);
+                mHref = g_strdup (url && url[0] ? url : NULL);
+#if 0
 		rv = baseURI->Resolve (url, mHref);
-
-		if (!target.IsEmpty ())
-			mTarget = target;
+#endif
+                g_free (mTarget);
+                mTarget = g_strdup (target);
 	} else {
+                g_free (mHref);
+                mHref = g_strdup (aURL && aURL[0] ? aURL : NULL);
+#if 0
 		rv = baseURI->Resolve (aURL, mHref);
+#endif
+
+                g_free (mTarget);
+                mTarget = NULL;
 	}
+#if 0
 	if (NS_SUCCEEDED (rv)) {
-		D ("Resolved HREF '%s'", mHref.get());
+		D ("Resolved HREF '%s'", mHref ? mHref : "");
 	} else {
 		D ("Failed to resolve HREF (rv=%x)", rv);
-		mHref = hasExtensions ? url : aURL; /* save unresolved HREF */
+		mHref = hasExtensions ? g_strdup (url) : g_strdup (aURL); /* save unresolved HREF */
 	}
+#endif
 
-	return rv;
+        g_free (url);
+        g_free (target);
+
+	return true; // FIXMEchpe
 }
 
-PRBool
-totemPlugin::ParseURLExtensions (const nsACString &aString,
-				 nsACString &_url,
-				 nsACString &_target)
+bool
+totemPlugin::ParseURLExtensions (const char* str,
+				 char **_url,
+				 char **_target)
 {
-	const nsCString string (aString);
+        if (!str || !str[0])
+                return false;
 
-	const char *str = string.get ();
+        /* FIXMEchpe allo whitespace in front? */
 	if (str[0] != '<')
-		return PR_FALSE;
+		return false;
 
 	/* The expected form is "<URL> T<target> E<name=value pairs>".
 	 * But since this is untrusted input from the web, we'll make sure it conforms to this!
 	 */
 	const char *end = strchr (str, '>');
 	if (!end)
-		return PR_FALSE;
+		return false;
 
-	_url = nsDependentCSubstring (string, 1, PRUint32 (end - str - 1));
+//	_url = nsDependentCSubstring (string, 1, uint32_t (end - str - 1));
+        *_url = g_strndup (str + 1, end - str - 1);
 
 	const char *ext = strstr (end, " T<");
 	if (ext) {
 		const char *extend = strchr (ext, '>');
 		if (extend) {
-			_target = nsDependentCSubstring (ext + 3, PRUint32 (extend - ext - 3));
+                        *_target = g_strndup (ext + 3, extend - ext - 3);
+		//	_target = nsDependentCSubstring (ext + 3, uint32_t (extend - ext - 3));
 		}
 	}
 
@@ -1437,12 +1584,12 @@ totemPlugin::ParseURLExtensions (const nsACString &aString,
 	if (ext) {
 		const char *extend = strchr (ext, '>');
 		if (extend) {
-			D ("E = %s", nsCString (ext + 3, PRUint32 (extend - ext - 3)).get ());
+			D ("E = %s", nsCString (ext + 3, uint32_t (extend - ext - 3)).get ());
 		}
 	}
 #endif
 
-	return PR_TRUE;
+	return true;
 }
 
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
@@ -1458,17 +1605,17 @@ totemPlugin::FindConsoleClassRepresentant ()
 	    mConsole.Equals (NS_LITERAL_CSTRING ("_unique")) ||
 	    mConsole.Equals (NS_LITERAL_CSTRING ("_master"))) {
 		D ("We're the representant for the console class");
-		return nsnull;
+		return NULL;
 	}
 
-	totemPlugin *representant = nsnull;
+	totemPlugin *representant = NULL;
 
 	/* Try to find a the representant of the console class */
-	PRUint32 count = sPlugins->Length ();
-	for (PRUint32 i = 0; i < count; ++i) {
+	uint32_t count = sPlugins->Length ();
+	for (uint32_t i = 0; i < count; ++i) {
 		totemPlugin *plugin = sPlugins->ElementAt (i);
 
-		PRBool equal = PR_FALSE;
+		bool equal = false;
 		/* FIXME: is this correct? Maybe we should use the toplevel document
 		 * to allow frames (and check the frames for same-origin, obviously) ?
 		 */
@@ -1492,36 +1639,39 @@ totemPlugin::FindConsoleClassRepresentant ()
 	return representant;
 }
 
-nsresult
-totemPlugin::SetConsole (const nsACString &aConsole)
+bool
+totemPlugin::SetConsole (const char * aConsole)
 {
 	/* Can't change console group */
-	if (!mConsole.IsEmpty ())
-		return NS_ERROR_ALREADY_INITIALIZED;
+	if (mConsole) {
+// 		return NS_ERROR_ALREADY_INITIALIZED;
+          // FIXMEchpe set exception
+          return false;
+        }
 
 	/* FIXME: we might allow this, and kill the viewer instead.
 	 * Or maybe not spawn the viewer if we don't have a console yet?
 	 */
 	if (mViewerPID)
-		return NS_ERROR_ALREADY_INITIALIZED;
+		return false; // FIXMEchpe throw exception
 
-	mConsole = aConsole;
+        mConsole = g_strdup (aConsole);
 
-	NS_ASSERTION (mConsoleClassRepresentant == nsnull, "Already have a representant");
+// 	assert (mConsoleClassRepresentant == NULL, "Already have a representant");
 
 	mConsoleClassRepresentant = FindConsoleClassRepresentant ();
-	mNeedViewer = (nsnull == mConsoleClassRepresentant);
+	mNeedViewer = (NULL == mConsoleClassRepresentant);
 
-	return NS_OK;
+	return true;
 }
 
 void
 totemPlugin::TransferConsole ()
 {
 	/* Find replacement representant */
-	totemPlugin *representant = nsnull;
+	totemPlugin *representant = NULL;
 
-	PRUint32 i, count = sPlugins->Length ();
+	uint32_t i, count = sPlugins->Length ();
 	for (i = 0; i < count; ++i) {
 		totemPlugin *plugin = sPlugins->ElementAt (i);
 
@@ -1538,7 +1688,7 @@ totemPlugin::TransferConsole ()
 	D ("Transferring console from %p to %p", (void*) this, (void*) representant);
 
 	/* Store new representant in the plugins */
-	representant->mConsoleClassRepresentant = nsnull;
+	representant->mConsoleClassRepresentant = NULL;
 	/* We can start at i since we got out when we found the first one in the loop above */
 	for ( ; i < count; ++i) {
 		totemPlugin *plugin = sPlugins->ElementAt (i);
@@ -1548,14 +1698,16 @@ totemPlugin::TransferConsole ()
 	}
 
 	/* Now transfer viewer ownership */
+#if 0
 	if (mScriptable) {
-		NS_ASSERTION (!representant->mScriptable, "WTF");
+		assert (!representant->mScriptable, "WTF");
 		representant->mScriptable = mScriptable;
 		mScriptable->SetPlugin (representant);
-		mScriptable = nsnull;
+		mScriptable = NULL;
 	}
+#endif
 
-	representant->mNeedViewer = PR_TRUE;
+	representant->mNeedViewer = true;
 
 	representant->mViewerPID = mViewerPID;
 	mViewerPID = 0;
@@ -1563,8 +1715,8 @@ totemPlugin::TransferConsole ()
 	representant->mViewerFD = mViewerFD;
 	mViewerFD = -1;
 
-	representant->mViewerBusAddress = mViewerBusAddress;
-	representant->mViewerServiceName = mViewerServiceName;
+	representant->mViewerBusAddress = g_strdup (mViewerBusAddress);
+	representant->mViewerServiceName = g_strdup (mViewerServiceName);
 
 	/* FIXME correct condition? */
 	if (mViewerSetUp)
@@ -1578,11 +1730,11 @@ totemPlugin::UnownedViewerSetup ()
 	if (mUnownedViewerSetUp)
 		return;
 
-	mUnownedViewerSetUp = PR_TRUE;
+	mUnownedViewerSetUp = true;
 
 	D ("UnownedViewerSetup");
 
-	NS_ASSERTION (mConsoleClassRepresentant, "We own the viewer!?");
+	assert (mConsoleClassRepresentant); /* We own the viewer!? */
 
 	UnownedViewerSetWindow ();
 }
@@ -1598,20 +1750,20 @@ totemPlugin::UnownedViewerSetWindow ()
 		return;
 	}
 
-	NS_ASSERTION (mConsoleClassRepresentant, "We own the viewer!");
+	assert (mConsoleClassRepresentant); /* We own the viewer! */
 
-	NS_ENSURE_TRUE (mConsoleClassRepresentant->mViewerProxy, );
+	assert (mConsoleClassRepresentant->mViewerProxy);
 
 	/* FIXME: do we need a reply callback? */
 	dbus_g_proxy_call_no_reply (mConsoleClassRepresentant->mViewerProxy,
 				    "SetWindow",
 				    G_TYPE_STRING, mControls.get (),
 				    G_TYPE_UINT, (guint) mWindow,
-				    G_TYPE_INT, (gint) mWidth,
-				    G_TYPE_INT, (gint) mHeight,
+				    G_TYPE_INT, mWidth,
+				    G_TYPE_INT, mHeight,
 				    G_TYPE_INVALID);
 
-	mWindowSet = PR_TRUE;
+	mWindowSet = true;
 }
 
 void
@@ -1623,16 +1775,16 @@ totemPlugin::UnownedViewerUnsetWindow ()
 	if (!mUnownedViewerSetUp)
 		return;
 
-	NS_ASSERTION (mConsoleClassRepresentant, "We own the viewer!");
+	assert (mConsoleClassRepresentant); /* We own the viewer! */
 
-	NS_ENSURE_TRUE (mConsoleClassRepresentant->mViewerProxy, );
+	assert (mConsoleClassRepresentant->mViewerProxy);
 
 	dbus_g_proxy_call_no_reply (mConsoleClassRepresentant->mViewerProxy,
 				    "UnsetWindow",
 				    G_TYPE_UINT, (guint) mWindow,
 				    G_TYPE_INVALID);
 
-	mWindowSet = PR_FALSE;
+	mWindowSet = false;
 }
 
 #endif /* TOTEM_COMPLEX_PLUGIN */
@@ -1656,37 +1808,22 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 */
 
 	NPError err;
-	err = CallNPN_GetValueProc (sNPN.getvalue,
-				    mInstance, NPNVserviceManager,
-				    reinterpret_cast<void *>
-                        (reinterpret_cast<void **>(&mServiceManager)));
-	if (err != NPERR_NO_ERROR || !mServiceManager) {
-		D ("Failed to get the service manager");
-		return NPERR_GENERIC_ERROR;
-	}
-
-	nsresult rv;
-	rv = mServiceManager->GetServiceByContractID (NS_IOSERVICE_CONTRACTID,
-						      NS_GET_IID (nsIIOService),
-						      reinterpret_cast<void **>(&mIOService));
-	if (NS_FAILED (rv) || !mIOService) {
-		D ("Failed to get IO service");
-		return NPERR_GENERIC_ERROR;
-	}
-
-	err = CallNPN_GetValueProc (sNPN.getvalue,
-				    mInstance, NPNVDOMElement,
-				    reinterpret_cast<void *>
-                        (reinterpret_cast<void **>(&mPluginDOMElement)));
-	if (err != NPERR_NO_ERROR || !mPluginDOMElement) {
-		D ("Failed to get our DOM Element");
+        err = NPN_GetValue (mNPP,
+                            NPNVPluginElementNPObject,
+                            getter_Retains (mPluginElement));
+	if (err != NPERR_NO_ERROR || mPluginElement.IsNull ()) {
+		D ("Failed to get our DOM Element NPObject");
 		return NPERR_GENERIC_ERROR;
 	}
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	rv = mPluginDOMElement->GetOwnerDocument (&mPluginOwnerDocument);
-	if (NS_FAILED (rv) || !mPluginOwnerDocument) {
-		D ("Plugin in a document!?");
+        /* FIXMEchpe untested; test this! */
+        if (!NPN_GetProperty (mNPP,
+                              mPluginElement,
+                              NPN_GetStringIdentifier ("ownerDocument"),
+                              getter_Retains (mPluginOwnerDocument)) ||
+            mPluginOwnerDocument.IsNull ()) {
+		D ("Failed to get the plugin element's ownerDocument");
 		return NPERR_GENERIC_ERROR;
 	}
 #endif /* TOTEM_COMPLEX_PLUGIN */
@@ -1696,50 +1833,20 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * for non-MOZILLA_INTERNAL_API code). nsIDOM3Node isn't frozen either,
 	 * but should be safe enough.
 	 */
-	nsIDOM3Node *dom3Node = nsnull;
-	rv = CallQueryInterface (mPluginDOMElement, &dom3Node);
-	if (NS_FAILED (rv) || !dom3Node) {
-		D ("Failed to QI the DOM element to nsIDOM3Node");
-		return NPERR_GENERIC_ERROR;
-	}
-
-        /* FIXME: can we cache this, or can it change (so we'll need to re-get every time we use it)? */
-	nsString baseASpec;
-	rv = dom3Node->GetBaseURI (baseASpec);
-	if (NS_FAILED (rv) || baseASpec.IsEmpty ()) {
-		/* We can't go on without a base URI ! */
-		D ("Failed to get base URI spec");
-		return NPERR_GENERIC_ERROR;
-	}
-
-	NS_ConvertUTF16toUTF8 baseSpec (baseASpec);
-
-	D ("Base URI is '%s'", baseSpec.get ());
-
-	rv = mIOService->NewURI (baseSpec, nsnull /* FIXME: use document charset */,
-				 nsnull, &mBaseURI);
-	if (NS_FAILED (rv) || !mBaseURI) {
-		D ("Failed to construct base URI");
-		return NPERR_GENERIC_ERROR;
-	}
-
-        /* Create timer */
-        nsIComponentManager *compMan = nsnull;
-	rv = CallQueryInterface (mServiceManager, &compMan);
-        if (NS_FAILED (rv) || !compMan) {
-                D ("Failed to get component manager");
-                return NPERR_GENERIC_ERROR;
+	
+        /* This is a property on nsIDOM3Node */
+        totemNPVariantWrapper baseURI;
+        if (!NPN_GetProperty (mNPP,
+                              mPluginElement,
+                              NPN_GetStringIdentifier ("baseURI"),
+                              getter_Copies (baseURI)) ||
+            !baseURI.IsString ()) {
+          D ("Failed to get the base URI");
+          return NPERR_GENERIC_ERROR;
         }
 
-        /* FIXME ? */
-        rv = compMan->CreateInstanceByContractID (NS_TIMER_CONTRACTID,
-                                                  nsnull,
-                                                  NS_GET_IID (nsITimer),
-                                                  reinterpret_cast<void **>(&mTimer));
-        if (NS_FAILED (rv) || !mTimer) {
-                D ("Failed to create timer: rv=%x", rv);
-                return NPERR_GENERIC_ERROR;
-        }
+        mBaseURI = g_strdup (baseURI.GetString ());
+	D ("Base URI is '%s'", mBaseURI ? mBaseURI : "");
 
 	/* Setup DBus connection handling */
 	GError *error = NULL;
@@ -1771,9 +1878,9 @@ totemPlugin::Init (NPMIMEType mimetype,
 				     NULL);
 
 	/* Find the "real" mime-type */
-	GetRealMimeType (mimetype, mMimeType);
+	SetRealMimeType (mimetype);
 
-	D ("Real mimetype for '%s' is '%s'", mimetype, mMimeType.get());
+	D ("Real mimetype for '%s' is '%s'", mimetype, mMimeType ? mMimeType : "(null)");
 
 	/* Now parse the attributes */
 	/* Note: argv[i] is NULL for the "PARAM" arg which separates the attributes
@@ -1796,7 +1903,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* We only use the size attributes to detect whether we're hidden;
 	 * we'll get our real size from SetWindow.
 	 */
-	PRInt32 width = -1, height = -1;
+	int width = -1, height = -1;
 
 	value = (const char *) g_hash_table_lookup (args, "width");
 	if (value != NULL) {
@@ -1821,7 +1928,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* Are we hidden? */
 	/* Treat hidden without a value as TRUE */
 	mHidden = g_hash_table_lookup (args, "hidden") != NULL &&
-		  GetBooleanValue (args, "hidden", PR_TRUE);
+		  GetBooleanValue (args, "hidden", true);
 
 	/* Used as a replacement for HIDDEN=TRUE attribute.
 	 * See http://mxr.mozilla.org/mozilla/source/modules/plugin/base/src/ns4xPluginInstance.cpp#1135
@@ -1830,20 +1937,18 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * as -1 is our value for unset/unknown sizes
 	 */
 	if (width == 0 || height == 0)
-		mHidden = PR_TRUE;
+		mHidden = true;
 
 	/* Whether to automatically stream and play the content */
-	mAutostart = GetBooleanValue (args, "autoplay",
-				      GetBooleanValue (args, "autostart", mAutostart));
+	mAutoPlay = GetBooleanValue (args, "autoplay",
+				      GetBooleanValue (args, "autostart", mAutoPlay));
 
 	/* Whether to loop */
 	mRepeat = GetBooleanValue (args, "repeat",
-				   GetBooleanValue (args, "loop", PR_FALSE));
+				   GetBooleanValue (args, "loop", false));
 
 	/* Now collect URI attributes */
-	const char *src = nsnull, *href = nsnull, *qtsrc = nsnull, *filename = nsnull;
-
-	src = (const char *) g_hash_table_lookup (args, "src");
+	const char *src = (const char *) g_hash_table_lookup (args, "src");
 	/* DATA is only used in OBJECTs, see:
 	 * http://developer.mozilla.org/en/docs/Gecko_Plugin_API_Reference:Plug-in_Basics#Plug-in_Display_Modes
 	 */
@@ -1854,36 +1959,36 @@ totemPlugin::Init (NPMIMEType mimetype,
 	if (!src) {
 		src = (const char *) g_hash_table_lookup (args, "data");
 	}
-	if (src) {
-		SetSrc (nsDependentCString (src));
-	}
+
+        SetSrc (src);
 
 #ifdef TOTEM_GMP_PLUGIN
 	/* http://windowssdk.msdn.microsoft.com/en-us/library/aa392440(VS.80).aspx */
-	filename = (const char *) g_hash_table_lookup (args, "filename");
+	const char *filename = (const char *) g_hash_table_lookup (args, "filename");
 	if (!filename)
 		filename = (const char *) g_hash_table_lookup (args, "url");
-	if (filename) {
-		SetURL (nsDependentCString (filename));
-	}
+
+        if (filename) {
+                SetURL (filename);
+        }
 #endif /* TOTEM_GMP_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* Target */
 	value = (const char *) g_hash_table_lookup (args, "target");
 	if (value) {
-		mTarget.Assign (value);
+                mTarget = g_strdup (value);
 	}
 
-	href = (const char *) g_hash_table_lookup (args, "href");
+	const char *href = (const char *) g_hash_table_lookup (args, "href");
 	if (href) {
-		SetHref (nsDependentCString (href));
+		SetHref (href);
 	}
 
 	/* http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
-	qtsrc = (const char *) g_hash_table_lookup (args, "qtsrc");
+	const char *qtsrc = (const char *) g_hash_table_lookup (args, "qtsrc");
 	if (qtsrc) {
-		SetQtsrc (nsDependentCString (qtsrc));
+		SetQtsrc (qtsrc);
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
@@ -1891,14 +1996,14 @@ totemPlugin::Init (NPMIMEType mimetype,
 #ifdef TOTEM_MULLY_PLUGIN
 	value = (const char *) g_hash_table_lookup (args, "video");
 	if (value) {
-		SetSrc (nsDependentCString (value));
+                SetSrc (value);
 	}
 #endif /* TOTEM_MULLY_PLUGIN */
 
 #ifdef TOTEM_CONE_PLUGIN
 	value = (const char *) g_hash_table_lookup (args, "target");
 	if (value) {
-		SetSrc (nsDependentCString (value));
+                SetSrc (value);
 	}
 #endif /* TOTEM_CONE_PLUGIN */
 
@@ -1909,25 +2014,27 @@ totemPlugin::Init (NPMIMEType mimetype,
 		mHref = g_strdup (mSrc);
 #endif /* TOTEM_MULLY_PLUGIN */
 
+        /* FIXMEchpe: check if this doesn't work anymore because the URLs aren't fully resolved! */
 	/* If we're set to start automatically, we'll use the src stream */
 	if (mRequestURI &&
-	    mRequestURI == mSrcURI) {
-		mExpectingStream = mAutostart;
+            mSrcURI &&
+            strcmp (mRequestURI, mSrcURI) == 0) {
+		mExpectingStream = mAutoPlay;
 	}
 
 	/* Caching behaviour */
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	if (strcmp (mimetype, "video/quicktime") != 0) {
-		mCache = PR_TRUE;
+		mCache = true;
 	}
 
 	mCache = GetBooleanValue (args, "cache", mCache);
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #if defined (TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
-	mControllerHidden = !GetBooleanValue (args, "controller", PR_TRUE);
+	mControllerHidden = !GetBooleanValue (args, "controller", true);
 
-	mAutoPlay = GetBooleanValue (args, "autoplay", PR_TRUE);
+	mAutoPlay = GetBooleanValue (args, "autoplay", true);
 
 #endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
 
@@ -1961,7 +2068,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 		"TACCtrl",
 		"VolumeSlider",
 	};
-	PRUint32 control = GetEnumIndex (args, "controls",
+	uint32_t control = GetEnumIndex (args, "controls",
 				         kControls, G_N_ELEMENTS (kControls),
 					 0);
 	mControls = kControls[control];
@@ -1974,11 +2081,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 	value = (char *) g_hash_table_lookup (args, "uimode");
 	if (value != NULL) {
 		if (g_ascii_strcasecmp (value, "none") == 0) {
-			mControllerHidden = PR_TRUE;
+			mControllerHidden = true;
 		} else if (g_ascii_strcasecmp (value, "invisible") == 0) {
-			mHidden = PR_TRUE;
+			mHidden = true;
 		} else if (g_ascii_strcasecmp (value, "full") == 0) {
-			mShowStatusbar = PR_TRUE;
+			mShowStatusbar = true;
 		} else if (g_ascii_strcasecmp (value, "mini") == 0) {
 			;
 		}
@@ -1988,7 +2095,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * http://www.htmlcodetutorial.com/embeddedobjects/_EMBED_CONTROLLER.html */
 	/* ShowXXX parameters as per http://support.microsoft.com/kb/285154 */
 	mControllerHidden = !GetBooleanValue (args, "controller",
-					      GetBooleanValue (args, "showcontrols", PR_TRUE));
+					      GetBooleanValue (args, "showcontrols", true));
 
 	mShowStatusbar = GetBooleanValue (args, "showstatusbar", mShowStatusbar);
 #endif /* TOTEM_GMP_PLUGIN */
@@ -2004,35 +2111,35 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * controllers need to be showing, otherwise it's useless */
 #ifdef TOTEM_GMP_PLUGIN
 	if (height == 40 && !mControllerHidden) {
-		mAudioOnly = PR_TRUE;
+		mAudioOnly = true;
 	}
 #endif /* TOTEM_GMP_PLUGIN */
 #if defined(TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
 	if (height <= 16 && !mControllerHidden) {
-		mAudioOnly = PR_TRUE;
+		mAudioOnly = true;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* We need to autostart if we're using an HREF
 	 * otherwise the start image isn't shown */
-	if (!mHref.IsEmpty ()) {
-		mExpectingStream = PR_TRUE;
-		mAutostart = PR_TRUE;
+	if (mHref) {
+		mExpectingStream = true;
+		mAutoPlay = true;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 	/* Dump some disagnostics */
-	D ("mSrc: %s", mSrc.get ());
+	D ("mSrcURI: %s", mSrcURI ? mSrcURI : "");
 	D ("mCache: %d", mCache);
 	D ("mControllerHidden: %d", mControllerHidden);
 	D ("mShowStatusbar: %d", mShowStatusbar);
 	D ("mHidden: %d", mHidden);
 	D ("mAudioOnly: %d", mAudioOnly);
-	D ("mAutostart: %d, mRepeat: %d", mAutostart, mRepeat);
+	D ("mAutoPlay: %d, mRepeat: %d", mAutoPlay, mRepeat);
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	D ("mHref: %s", mHref.get ());
-	D ("mTarget: %s", mTarget.get ());
+	D ("mHref: %s", mHref ? mHref : "");
+	D ("mTarget: %s", mTarget ? mTarget : "");
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 	D ("mConsole: %s", mConsole.get ());
@@ -2093,10 +2200,9 @@ totemPlugin::NewStream (NPMIMEType type,
 		 * since, using gecko trunk (1.9), this causes the plugin to be destroyed,
 		 * if this is the automatic |src| stream. Same for the other calls below.
 		 */
-		return CallNPN_DestroyStreamProc (sNPN.destroystream,
-						  mInstance,
-						  stream,
-						  NPRES_DONE);
+		return NPN_DestroyStream (mNPP,
+                                          stream,
+                                          NPRES_DONE);
 	}
 
 	/* Either:
@@ -2109,14 +2215,13 @@ totemPlugin::NewStream (NPMIMEType type,
 	if (!mExpectingStream) {
 		D ("Not expecting a new stream; aborting stream");
 
-		return CallNPN_DestroyStreamProc (sNPN.destroystream,
-						  mInstance,
-						  stream,
-						  NPRES_DONE);
+		return NPN_DestroyStream (mNPP,
+                                          stream,
+                                          NPRES_DONE);
 	}
 
 	/* This was an expected stream, no more expected */
-	mExpectingStream = PR_FALSE;
+	mExpectingStream = false;
 
 #if 1 // #if 0
 	// This is fixed now _except_ the "if (!mViewerReady)" problem in StreamAsFile
@@ -2129,10 +2234,9 @@ totemPlugin::NewStream (NPMIMEType type,
 	if (!mViewerReady) {
 		D ("Viewer not ready, aborting stream");
 
-		return CallNPN_DestroyStreamProc (sNPN.destroystream,
-						  mInstance,
-						  stream,
-						  NPRES_DONE);
+		return NPN_DestroyStream (mNPP,
+                                          stream,
+                                          NPRES_DONE);
 	}
 #endif
 
@@ -2147,15 +2251,17 @@ totemPlugin::NewStream (NPMIMEType type,
 	}
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	if (mScriptable) {
-		mScriptable->mPluginState = totemScriptablePlugin::eState_Loading;
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Loading;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 	mStream = stream;
 
-	mCheckedForPlaylist = PR_FALSE;
-	mIsPlaylist = PR_FALSE;
+	mCheckedForPlaylist = false;
+	mIsPlaylist = false;
 
 	/* To track how many data we get from ::Write */
 	mBytesStreamed = 0;
@@ -2173,7 +2279,7 @@ totemPlugin::DestroyStream (NPStream* stream,
 
 	D ("DestroyStream reason %d", reason);
 
-	mStream = nsnull;
+	mStream = NULL;
 	mBytesStreamed = 0;
 	mBytesLength = 0;
 
@@ -2188,7 +2294,7 @@ totemPlugin::DestroyStream (NPStream* stream,
 	return NPERR_NO_ERROR;
 }
 
-int32
+int32_t
 totemPlugin::WriteReady (NPStream *stream)
 {
 	/* FIXME this could probably be an assertion instead */
@@ -2213,10 +2319,10 @@ totemPlugin::WriteReady (NPStream *stream)
 	return 0;
 }
 
-int32
+int32_t
 totemPlugin::Write (NPStream *stream,
-		    int32 offset,
-		    int32 len,
+		    int32_t offset,
+		    int32_t len,
 		    void *buffer)
 {
 	/* FIXME this could probably be an assertion instead */
@@ -2237,13 +2343,13 @@ totemPlugin::Write (NPStream *stream,
 	 * So we can only do this at the start of the stream.
 	 */
 	if (!mCheckedForPlaylist) {
-		NS_ASSERTION (offset == 0, "Not checked for playlist but not at the start of the stream!?");
+		assert (offset == 0); /* Not checked for playlist but not at the start of the stream!? */
 
-		mCheckedForPlaylist = PR_TRUE;
+		mCheckedForPlaylist = true;
 
 		if (totem_pl_parser_can_parse_from_data ((const char *) buffer, len, TRUE /* FIXME */)) {
 			D ("Is playlist; need to wait for the file to be downloaded completely");
-			mIsPlaylist = PR_TRUE;
+			mIsPlaylist = true;
 
 			/* Close the viewer */
 			dbus_g_proxy_call_no_reply (mViewerProxy,
@@ -2260,7 +2366,7 @@ totemPlugin::Write (NPStream *stream,
 	int ret = write (mViewerFD, buffer, len);
 	/* FIXME shouldn't we retry if errno is EINTR ? */
 
-	if (NS_UNLIKELY (ret < 0)) {
+	if (G_UNLIKELY (ret < 0)) {
 		int err = errno;
 		D ("Write failed with errno %d: %s", err, g_strerror (err));
 
@@ -2268,10 +2374,9 @@ totemPlugin::Write (NPStream *stream,
 			/* fd://0 got closed, probably because the backend
 			 * crashed on us. Destroy the stream.
 			 */
-			if (CallNPN_DestroyStreamProc (sNPN.destroystream,
-			    			       mInstance,
-						       mStream,
-						       NPRES_DONE) != NPERR_NO_ERROR) {
+			if (NPN_DestroyStream (mNPP,
+                                               mStream,
+                                               NPRES_DONE) != NPERR_NO_ERROR) {
 				g_warning ("Couldn't destroy the stream");
 			}
 		}
@@ -2306,14 +2411,12 @@ totemPlugin::StreamAsFile (NPStream *stream,
 		return;
 	}
 
-	NS_ASSERTION (mViewerProxy, "No viewer proxy");
-	NS_ASSERTION (mViewerReady, "Viewer not ready");
+	assert (mViewerProxy); /* No viewer proxy!? */
+	assert (mViewerReady); /* Viewer not ready? */
 
-	NS_ENSURE_TRUE (mRequestBaseURI && mRequestURI, );
-
-	nsCString baseSpec, spec;
-	mRequestBaseURI->GetSpec (baseSpec);
-	mRequestURI->GetSpec (spec);
+	//assert (mRequestBaseURI && mRequestURI, );
+        if (!mRequestBaseURI || !mRequestURI)
+          return;
 
 	/* FIXME: these calls need to be async!!
 	 * But the file may be unlinked as soon as we return from this
@@ -2326,8 +2429,8 @@ totemPlugin::StreamAsFile (NPStream *stream,
 					    "SetPlaylist",
 					    &error,
 					    G_TYPE_STRING, fname,
-					    G_TYPE_STRING, spec.get (),
-					    G_TYPE_STRING, baseSpec.get (),
+					    G_TYPE_STRING, mRequestURI,
+					    G_TYPE_STRING, mRequestBaseURI,
 					    G_TYPE_INVALID,
 					    G_TYPE_INVALID);
 	}
@@ -2340,8 +2443,8 @@ totemPlugin::StreamAsFile (NPStream *stream,
 					    "SetLocalFile",
 					    &error,
 					    G_TYPE_STRING, fname,
-					    G_TYPE_STRING, spec.get (),
-					    G_TYPE_STRING, baseSpec.get (),
+					    G_TYPE_STRING, mRequestURI,
+					    G_TYPE_STRING, mRequestBaseURI,
 					    G_TYPE_INVALID,
 					    G_TYPE_INVALID);
 	}
@@ -2364,8 +2467,10 @@ totemPlugin::StreamAsFile (NPStream *stream,
 		return;
 	}
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	if (mScriptable) {
-		mScriptable->mPluginState = totemScriptablePlugin::eState_Complete;
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Complete;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
@@ -2392,37 +2497,91 @@ totemPlugin::URLNotify (const char *url,
 			/* FIXME: show error to user? */
 		}
 
-		mExpectingStream = PR_FALSE;
+		mExpectingStream = false;
 	}
 }
 
-NPError
-totemPlugin::GetScriptable (void *_retval)
+NPObject*
+totemPlugin::GetNPObject (ObjectEnum which)
 {
-	D ("GetScriptable [%p]", (void*) this);
+  if (!mNPObjects[which].IsNull ())
+    return mNPObjects[which];
 
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	if (mConsoleClassRepresentant) {
-		return mConsoleClassRepresentant->GetScriptable (_retval);
-	}
-#endif /* TOTEM_COMPLEX_PLUGIN */
+  totemNPClass_base *npclass = 0;
 
-	if (!mScriptable) {
-		mScriptable = new totemScriptablePlugin (this);
-		if (!mScriptable)
-			return NPERR_OUT_OF_MEMORY_ERROR;
+#if defined(TOTEM_BASIC_PLUGIN)
+  npclass = totemBasicPlayerNPClass::Instance();
+#elif defined(TOTEM_GMP_PLUGIN)
+  switch (which) {
+    case ePluginScriptable:
+      npclass = totemGMPPlayerNPClass::Instance();
+      break;
+    case eGMPControls:
+      npclass = totemGMPControlsNPClass::Instance();
+      break;
+    case eGMPNetwork:
+      npclass = totemGMPNetworkNPClass::Instance();
+      break;
+    case eGMPSettings:
+      npclass = totemGMPSettingsNPClass::Instance();
+      break;
+  }
+#elif defined(TOTEM_COMPLEX_PLUGIN)
+  npclass = totemComplexPlayerNPClass::Instance();
+#elif defined(TOTEM_NARROWSPACE_PLUGIN)
+  npclass = totemNarrowSpacePlayerNPClass::Instance();
+#elif defined(TOTEM_MULLY_PLUGIN)
+  npclass = totemMullYPlayerNPClass::Instance();
+#elif defined(TOTEM_CONE_PLUGIN)
+  switch (which) {
+    case ePluginScriptable:
+      npclass = totemConeNPClass::Instance();
+      break;
+    case eConeAudio:
+      npclass = totemConeAudioNPClass::Instance();
+      break;
+    case eConeInput:
+      npclass = totemConeInputNPClass::Instance();
+      break;
+    case eConePlaylist:
+      npclass = totemConePlaylistNPClass::Instance();
+      break;
+    case eConePlaylistItems:
+      npclass = totemConePlaylistItemsNPClass::Instance();
+      break;
+    case eConeVideo:
+      npclass = totemConeVideoNPClass::Instance();
+      break;
+  }
+#else
+#error Unknown plugin type
+#endif
 
-#ifdef TOTEM_NARROWSPACE_PLUGIN
-		mScriptable->mPluginState = totemScriptablePlugin::eState_Waiting;
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
+  if (!npclass)
+    return NULL;
 
-		NS_ADDREF (mScriptable);
-	}
+  mNPObjects[which] = do_CreateInstance (npclass, mNPP);
+  if (mNPObjects[which].IsNull ()) {
+    D ("Creating scriptable NPObject failed!");
+    return NULL;
+  }
 
-	nsresult rv = mScriptable->QueryInterface (NS_GET_IID (nsISupports),
-						   reinterpret_cast<void **>(_retval));
+  return mNPObjects[which];
+}
 
-	return NS_SUCCEEDED (rv) ? NPERR_NO_ERROR : NPERR_GENERIC_ERROR;
+NPError
+totemPlugin::GetScriptableNPObject (void *_retval)
+{
+  D ("GetScriptableNPObject [%p]", (void *) this);
+
+  NPObject *scriptable = GetNPObject (ePluginScriptable);
+  if (!scriptable)
+    return NPERR_GENERIC_ERROR;
+
+  NPN_RetainObject (scriptable);
+
+  *reinterpret_cast<NPObject**>(_retval) = scriptable;
+  return NPERR_NO_ERROR;
 }
 
 /* static */ NPError
@@ -2447,9 +2606,33 @@ totemPlugin::Shutdown ()
 		}
 
 		delete sPlugins;
-		sPlugins = nsnull;
+		sPlugins = NULL;
 	}
 #endif /* TOTEM_COMPLEX_PLUGIN */
+
+#if defined(TOTEM_BASIC_PLUGIN)
+        totemBasicPlayerNPClass::Shutdown ();
+#elif defined(TOTEM_GMP_PLUGIN)
+        totemGMPPlayerNPClass::Shutdown ();
+        totemGMPControlsNPClass::Shutdown ();
+        totemGMPNetworkNPClass::Shutdown ();
+        totemGMPSettingsNPClass::Shutdown ();
+#elif defined(TOTEM_COMPLEX_PLUGIN)
+#error FIXME
+#elif defined(TOTEM_NARROWSPACE_PLUGIN)
+        totemNarrowSpacePlayerNPClass::Shutdown ();
+#elif defined(TOTEM_MULLY_PLUGIN)
+        totemMullYPlayerNPClass::Shutdown ();
+#elif defined(TOTEM_CONE_PLUGIN)
+        totemConeNPClass::Shutdown ();
+        totemConeAudioNPClass::Shutdown ();
+        totemConeInputNPClass::Shutdown ();
+        totemConePlaylistNPClass::Shutdown ();
+        totemConePlaylistItemsNPClass::Shutdown ();
+        totemConeVideoNPClass::Shutdown ();
+#else
+#error Unknown plugin type
+#endif
 
 	return NPERR_NO_ERROR;
 }

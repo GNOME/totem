@@ -2,9 +2,9 @@
  * (C) Copyright 2007 Bastien Nocera <hadess@hadess.net>
  *
  * Glow code from libwnck/libwnck/tasklist.c:
- * Copyright (C) 2001 Havoc Pennington
- * Copyright (C) 2003 Kim Woelders
- * Copyright (C) 2003 Red Hat, Inc.
+ * Copyright © 2001 Havoc Pennington
+ * Copyright © 2003 Kim Woelders
+ * Copyright © 2003 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public

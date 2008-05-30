@@ -1,7 +1,8 @@
 /* Totem NarrowSpace plugin scriptable
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,36 +18,19 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id$
  */
 
 #ifndef __NARROWSPACE_PLUGIN_H__
 #define __NARROWSPACE_PLUGIN_H__
 
-#include <nsIClassInfo.h>
+#include "totemNPClass.h"
+#include "totemNPObject.h"
 
-#include "totemINarrowSpacePlayer.h"
-#include "totemPlugin.h"
-
-class totemScriptablePlugin : public totemINarrowSpacePlayer,
-			      public nsIClassInfo
+class totemNarrowSpacePlayer : public totemNPObject
 {
   public:
-    NS_DECL_ISUPPORTS
-    NS_DECL_TOTEMINARROWSPACEPLAYER
-    NS_DECL_NSICLASSINFO
-
-    void* operator new (size_t aSize) CPP_THROW_NEW;
-
-    totemScriptablePlugin (totemPlugin *aPlugin);
-
-    PRBool IsValid () { return mPlugin != nsnull; }
-    void SetPlugin (totemPlugin *aPlugin) { mPlugin = aPlugin; }
-
-    static char *PluginDescription ();
-    static char *PluginLongDescription();
-    static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
+    totemNarrowSpacePlayer (NPP);
+    virtual ~totemNarrowSpacePlayer ();
 
     enum PluginState {
       eState_Complete,
@@ -56,26 +40,103 @@ class totemScriptablePlugin : public totemINarrowSpacePlayer,
       eState_Waiting
     };
 
-    PRUint32 mPluginState : 3; /* enough bits for PluginState enum values */
+    PluginState mPluginState;
 
   private:
-    ~totemScriptablePlugin ();
 
-    totemPlugin *mPlugin;
+    enum Methods {
+      eGetAutoPlay,
+      eGetBgColor,
+      eGetComponentVersion,
+      eGetControllerVisible,
+      eGetDuration,
+      eGetEndTime,
+      eGetFieldOfView,
+      eGetHotpotTarget,
+      eGetHotpotUrl,
+      eGetHREF,
+      eGetIsLooping,
+      eGetIsQuickTimeRegistered,
+      eGetIsVRMovie,
+      eGetKioskMode,
+      eGetLanguage,
+      eGetLoopIsPalindrome,
+      eGetMatrix,
+      eGetMaxBytesLoaded,
+      eGetMaxTimeLoaded,
+      eGetMIMEType,
+      eGetMovieID,
+      eGetMovieName,
+      eGetMovieSize,
+      eGetMute,
+      eGetNodeCount,
+      eGetNodeID,
+      eGetPanAngle,
+      eGetPlayEveryFrame,
+      eGetPluginStatus,
+      eGetPluginVersion,
+      eGetQTNextUrl,
+      eGetQuickTimeConnectionSpeed,
+      eGetQuickTimeLanguage,
+      eGetQuickTimeVersion,
+      eGetRate,
+      eGetRectangle,
+      eGetResetPropertiesOnReload,
+      eGetSpriteTrackVariable,
+      eGetStartTime,
+      eGetTarget,
+      eGetTiltAngle,
+      eGetTime,
+      eGetTimeScale,
+      eGetTrackCount,
+      eGetTrackEnabled,
+      eGetTrackName,
+      eGetTrackType,
+      eGetURL,
+      eGetUserData,
+      eGetVolume,
+      eGoPreviousNode,
+      ePlay,
+      eRewind,
+      eSetAutoPlay,
+      eSetBgColor,
+      eSetControllerVisible,
+      eSetEndTime,
+      eSetFieldOfView,
+      eSetHotpotTarget,
+      eSetHotpotUrl,
+      eSetHREF,
+      eSetIsLooping,
+      eSetKioskMode,
+      eSetLanguage,
+      eSetLoopIsPalindrome,
+      eSetMatrix,
+      eSetMovieID,
+      eSetMovieName,
+      eSetMute,
+      eSetNodeID,
+      eSetPanAngle,
+      eSetPlayEveryFrame,
+      eSetQTNextUrl,
+      eSetRate,
+      eSetRectangle,
+      eSetResetPropertiesOnReload,
+      eSetSpriteTrackVariable,
+      eSetStartTime,
+      eSetTarget,
+      eSetTiltAngle,
+      eSetTime,
+      eSetTrackEnabled,
+      eSetURL,
+      eSetVolume,
+      eShowDefaultView,
+      eStep,
+      eStop
+    };
 
-    nsCString mBackgroundColour;
-    nsCString mMatrix;
-    nsCString mRectangle;
-    nsCString mMovieName;
-
-    PRUint32 mAutoPlay : 1;
-    PRUint32 mControllerVisible : 1;
-    PRUint32 mIsLooping : 1;
-    PRUint32 mKioskMode : 1;
-    PRUint32 mLoopIsPalindrome : 1;
-    PRUint32 mMute : 1;
-    PRUint32 mPlayEveryFrame : 1;
-    PRUint32 mResetPropertiesOnReload : 1;
+    virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
 };
+
+TOTEM_DEFINE_NPCLASS (totemNarrowSpacePlayer);
 
 #endif /* __NARROWSPACE_PLUGIN_H__ */

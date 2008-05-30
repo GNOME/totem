@@ -1,6 +1,8 @@
 /* Totem GMP plugin
  *
- * Copyright © 2006, 2007 Christian Persch
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2006, 2007, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -16,37 +18,37 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id: totemGMPPlugin.h 3717 2006-11-15 17:21:16Z chpe $
  */
 
-#ifndef __GMP_ERROR_H__
-#define __GMP_ERROR_H__
+#ifndef __TOTEM_GMP_ERROR_H__
+#define __TOTEM_GMP_ERROR_H__
 
-#include <nsIClassInfo.h>
+#include "totemNPClass.h"
+#include "totemNPObject.h"
 
-#include "totemIGMPError.h"
-#include "totemIGMPErrorItem.h"
-
-class totemScriptablePlugin;
-
-class totemGMPError : public totemIGMPError,
-		      public totemIGMPErrorItem,
-		      public nsIClassInfo
+class totemGMPError : public totemNPObject
 {
   public:
-    NS_DECL_ISUPPORTS
-    NS_DECL_TOTEMIGMPERROR
-    NS_DECL_TOTEMIGMPERRORITEM
-    NS_DECL_NSICLASSINFO
-
-    totemGMPError (totemScriptablePlugin *aPlugin);
+    totemGMPError (NPP);
+    virtual ~totemGMPError ();
 
   private:
-    ~totemGMPError ();
 
-    totemScriptablePlugin *mPlugin;
-    PRInt32 mCount;
+    enum Methods {
+      eClearErrorQueue,
+      eItem,
+      eWebHelp
+    };
+
+    enum Properties {
+      eErrorCount
+    };
+
+    virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
+    virtual bool GetPropertyByIndex (int aIndex, NPVariant *_result);
+    virtual bool SetPropertyByIndex (int aIndex, const NPVariant *aValue);
 };
 
-#endif /* __GMP_ERROR_H__ */
+TOTEM_DEFINE_NPCLASS (totemGMPError);
+
+#endif /* __TOTEM_GMP_ERROR_H__ */

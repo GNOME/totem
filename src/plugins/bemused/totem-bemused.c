@@ -413,7 +413,6 @@ static void
 write_directory_listing (TotemBemusedPlugin *tp, GIOChannel *source, gboolean at_root)
 {
 	char *filename;
-	char *root;
 	char buf[2];
 
 	if (at_root == FALSE)

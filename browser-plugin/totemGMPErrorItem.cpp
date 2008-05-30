@@ -26,79 +26,64 @@
 
 #include <glib.h>
 
-#include "totemGMPError.h"
+#include "totemGMPErrorItem.h"
 
 static const char *propertyNames[] = {
-  "errorCount",
+  "condition",
+  "customURL",
+  "errorCode",
+  "errorContext",
+  "errorDescription",
 };
 
-static const char *methodNames[] = {
-  "clearErrorQueue",
-  "item",
-  "webHelp"
-};
-
-TOTEM_IMPLEMENT_NPCLASS (totemGMPError,
+TOTEM_IMPLEMENT_NPCLASS (totemGMPErrorItem,
                          propertyNames, G_N_ELEMENTS (propertyNames),
-                         methodNames, G_N_ELEMENTS (methodNames),
+                         NULL, 0,
                          NULL);
 
-totemGMPError::totemGMPError (NPP aNPP)
+totemGMPErrorItem::totemGMPErrorItem (NPP aNPP)
   : totemNPObject (aNPP)
 {
   TOTEM_LOG_CTOR ();
 }
 
-totemGMPError::~totemGMPError ()
+totemGMPErrorItem::~totemGMPErrorItem ()
 {
   TOTEM_LOG_DTOR ();
 }
 
 bool
-totemGMPError::InvokeByIndex (int aIndex,
-                              const NPVariant *argv,
-                              uint32_t argc,
-                              NPVariant *_result)
+totemGMPErrorItem::GetPropertyByIndex (int aIndex,
+                                       NPVariant *_result)
 {
-  TOTEM_LOG_INVOKE (aIndex, totemGMPError);
-
-  switch (Methods (aIndex)) {
-    case eClearErrorQueue:
-      /* void clearErrorQueue (); */
-    case eWebHelp:
-      /* void webHelp (); */
-      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemGMPError);
-      return VoidVariant (_result);
-  
-    case eItem:
-      /* totemIGMPErrorItem item (in long index); */
-      TOTEM_WARN_1_INVOKE_UNIMPLEMENTED (aIndex, totemGMPError);
-      return NullVariant (_result);
-  }
-
-  return false;
-}
-
-bool
-totemGMPError::GetPropertyByIndex (int aIndex,
-                                   NPVariant *_result)
-{
-  TOTEM_LOG_GETTER (aIndex, totemGMPError);
+  TOTEM_LOG_GETTER (aIndex, totemGMPErrorItem);
 
   switch (Properties (aIndex)) {
-    case eErrorCount:
-      /* readonly attribute long errorCount; */
+    case eCondition:
+      /* readonly attribute long condition; */
+    case eErrorCode:
+      /* readonly attribute long errorCode; */
       return Int32Variant (_result, 0);
+
+    case eErrorContext:
+      /* readonly attribute AUTF8String errorContext; */
+    case eErrorDescription:
+      /* readonly attribute AUTF8String errorDescription; */
+      return StringVariant (_result, "Error<1>");
+
+    case eCustomURL:
+      /* readonly attribute AUTF8String customURL; */
+      return StringVariant (_result, "http://www.gnome.org/projects/totem");
   }
 
   return false;
 }
 
 bool
-totemGMPError::SetPropertyByIndex (int aIndex,
-                                   const NPVariant *aValue)
+totemGMPErrorItem::SetPropertyByIndex (int aIndex,
+                                       const NPVariant *aValue)
 {
-  TOTEM_LOG_SETTER (aIndex, totemGMPError);
+  TOTEM_LOG_SETTER (aIndex, totemGMPErrorItem);
 
   return ThrowPropertyNotWritable ();
 }

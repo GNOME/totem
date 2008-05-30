@@ -1,8 +1,8 @@
 /* Totem Mozilla plugin
  * 
- * Copyright (C) 2004-2006 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
- * Copyright (C) 2006 Christian Persch
+ * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2006, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,8 +20,9 @@
  * Boston, MA 02110-1301  USA.
  */
 
-#include <mozilla-config.h>
-#include "config.h"
+#include <config.h>
+
+#include <string.h>
 
 #include <gio/gio.h>
 #include <dlfcn.h>
@@ -29,12 +30,11 @@
 #include "npapi.h"
 #include "npupp.h"
 
-#define GNOME_ENABLE_DEBUG 1
-/* define GNOME_ENABLE_DEBUG for more debug spew */
 #include "debug.h"
 
-#include "totemPluginGlue.h"
 #include "totemPlugin.h"
+
+NPNetscapeFuncs NPNFuncs; /* used in npn_gate.cpp */
 
 static char *mime_list = NULL;
 
@@ -54,13 +54,13 @@ totem_plugin_new_instance (NPMIMEType mimetype,
 	if (!plugin)
 		return NPERR_OUT_OF_MEMORY_ERROR;
 
+	instance->pdata = reinterpret_cast<void*> (plugin);
+
 	NPError rv = plugin->Init (mimetype, mode, argc, argn, argv, savedData);
 	if (rv != NPERR_NO_ERROR) {
 		delete plugin;
-		plugin = nsnull;
+		instance->pdata = 0;
 	}
-
-	instance->pdata = plugin;
 
 	return rv;
 }
@@ -72,13 +72,13 @@ totem_plugin_destroy_instance (NPP instance,
 	if (!instance)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return NPERR_NO_ERROR;
 
 	delete plugin;
 
-	instance->pdata = nsnull;
+	instance->pdata = 0;
 
 	return NPERR_NO_ERROR;
 }
@@ -90,7 +90,7 @@ totem_plugin_set_window (NPP instance,
 	if (!instance)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -107,7 +107,7 @@ totem_plugin_new_stream (NPP instance,
 	if (!instance)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -125,38 +125,38 @@ totem_plugin_destroy_stream (NPP instance,
 		return NPERR_NO_ERROR;
 	}
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
 	return plugin->DestroyStream (stream, reason);
 }
 
-static int32
+static int32_t
 totem_plugin_write_ready (NPP instance,
 			  NPStream *stream)
 {
 	if (!instance)
 		return -1;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return -1;
 
 	return plugin->WriteReady (stream);
 }
 
-static int32
+static int32_t
 totem_plugin_write (NPP instance,
 		    NPStream *stream,
-		    int32 offset,
-		    int32 len,
+		    int32_t offset,
+		    int32_t len,
 		    void *buffer)
 {
 	if (!instance)
 		return -1;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return -1;
 
@@ -171,7 +171,7 @@ totem_plugin_stream_as_file (NPP instance,
 	if (!instance)
 		return;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return;
 
@@ -187,7 +187,7 @@ totem_plugin_url_notify (NPP instance,
 	if (!instance)
 		return;
 
-	totemPlugin *plugin = (totemPlugin *) instance->pdata;
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	if (!plugin)
 		return;
 
@@ -201,10 +201,12 @@ totem_plugin_print (NPP instance,
 	D ("Print");
 }
 
-const char *
-totem_plugin_get_long_description (void)
+static int16_t
+totem_plugin_handle_event (NPP instance,
+                           void* event)
 {
-	return "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
+	D ("Handle event");
+        return FALSE;
 }
 
 static NPError
@@ -212,59 +214,39 @@ totem_plugin_get_value (NPP instance,
 			NPPVariable variable,
 		        void *value)
 {
-	totemPlugin *plugin = nsnull;
+	totemPlugin *plugin = 0;
 	NPError err = NPERR_NO_ERROR;
 
-	/* See NPPVariable in npapi.h */
-	D ("GetValue variable %d (%x)", variable, variable);
-
 	if (instance) {
-		plugin = (totemPlugin *) instance->pdata;
+                plugin = reinterpret_cast<totemPlugin*> (instance->pdata);
 	}
 
+	/* See NPPVariable in npapi.h */
 	switch (variable) {
 	case NPPVpluginNameString:
-		*((char **)value) = totemScriptablePlugin::PluginDescription ();
+		*((char **)value) = totemPlugin::PluginDescription ();
 		break;
 	case NPPVpluginDescriptionString:
-		*((char **)value) = totemScriptablePlugin::PluginLongDescription ();
+		*((char **)value) = totemPlugin::PluginLongDescription ();
 		break;
 	case NPPVpluginNeedsXEmbed:
+                // FIXMEchpe fix webkit which passes a (unsigned int*) here...
 		*((NPBool *)value) = TRUE;
 		break;
-	case NPPVpluginScriptableIID: {
-		nsIID* ptr = static_cast<nsIID *>(totemPlugin::sNPN.memalloc (sizeof (nsIID)));
-		if (ptr) {
-			*ptr = NS_GET_IID (nsISupports);
-			*static_cast<nsIID **>(value) = ptr;
-		} else {
-			err = NPERR_OUT_OF_MEMORY_ERROR;
-		}
-		break;
-	}
-	case NPPVpluginScriptableInstance: {
-		if (plugin) {
-			err = plugin->GetScriptable (value);
-		}
-		else {
-			err = NPERR_INVALID_PLUGIN_ERROR;
-		}
-		break;
-	}
-	case NPPVjavascriptPushCallerBool:
-		D ("Unhandled variable NPPVjavascriptPushCallerBool");
-		err = NPERR_INVALID_PARAM;
-		break;
-	case NPPVpluginKeepLibraryInMemory:
-		D ("Unhandled variable NPPVpluginKeepLibraryInMemory");
-		err = NPERR_INVALID_PARAM;
+	case NPPVpluginScriptableIID:
+	case NPPVpluginScriptableInstance:
+                /* XPCOM scripting, obsolete */
+                err = NPERR_GENERIC_ERROR;
 		break;
 	case NPPVpluginScriptableNPObject:
-		D ("Unhandled variable NPPVpluginScriptableNPObject");
-		err = NPERR_INVALID_PARAM;
+                if (plugin) {
+                        err = plugin->GetScriptableNPObject (value);
+                } else {
+			err = NPERR_INVALID_PLUGIN_ERROR;
+                }
 		break;
 	default:
-		D ("Unhandled variable");
+		D ("Unhandled variable %d instance %p", variable, plugin);
 		err = NPERR_INVALID_PARAM;
 		break;
 	}
@@ -323,6 +305,7 @@ totem_plugin_mimetype_is_disabled (const char *mimetype,
 		}
 	}
 
+        // FIXME g_free (key);
 	return retval;
 }
 
@@ -365,9 +348,9 @@ NP_GetMIMEDescription (void)
 	g_free (user_ini_file);
 
 	const totemPluginMimeEntry *mimetypes;
-	PRUint32 count;
-	totemScriptablePlugin::PluginMimeTypes (&mimetypes, &count);
-	for (PRUint32 i = 0; i < count; ++i) {
+	uint32_t count;
+	totemPlugin::PluginMimeTypes (&mimetypes, &count);
+	for (uint32_t i = 0; i < count; ++i) {
 		char *desc;
 
 		if (totem_plugin_mimetype_is_disabled (mimetypes[i].mimetype, system, user))
@@ -399,42 +382,49 @@ NP_GetMIMEDescription (void)
 	return mime_list;
 }
 
-NPError
-NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
-	       NPPluginFuncs * plugin_funcs)
-{
-	NPError err = NPERR_NO_ERROR;
-	NPBool supportsXEmbed = PR_FALSE;
-	NPNToolkitType toolkit = (NPNToolkitType) 0;
+// FIXMEchpe!!!!
+typedef enum {
+  NPNVGtk12 = 1,
+  NPNVGtk2
+} NPNToolkitType;
 
+NPError
+NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
+	       NPPluginFuncs *aPluginVTable)
+{
 	D ("NP_Initialize");
 
-	/* Do we support XEMBED? */
-	err = CallNPN_GetValueProc (aMozillaFuncs->getvalue, NULL,
-			NPNVSupportsXEmbedBool,
-			(void *)&supportsXEmbed);
+	if (aMozillaVTable == NULL || aPluginVTable == NULL)
+		return NPERR_INVALID_FUNCTABLE_ERROR;
 
-	if (err != NPERR_NO_ERROR || supportsXEmbed != PR_TRUE)
+	if ((aMozillaVTable->version >> 8) > NP_VERSION_MAJOR)
 		return NPERR_INCOMPATIBLE_VERSION_ERROR;
 
-	/* Are we using a GTK+ 2.x Moz? */
-	err = CallNPN_GetValueProc (aMozillaFuncs->getvalue, NULL,
-			NPNVToolkit, (void *)&toolkit);
+	if (aMozillaVTable->size < sizeof (NPNetscapeFuncs))
+		return NPERR_INVALID_FUNCTABLE_ERROR;
+	if (aPluginVTable->size < sizeof (NPPluginFuncs))
+		return NPERR_INVALID_FUNCTABLE_ERROR;
 
+        /* Copy the function table. We can use memcpy here since we've already
+         * established that the aMozillaVTable is at least as big as the compile-
+         * time NPNetscapeFuncs.
+         */
+        memcpy (&NPNFuncs, aMozillaVTable, sizeof (NPNetscapeFuncs));
+        NPNFuncs.size = sizeof (NPNetscapeFuncs);
+#if 0 // FIXMEchpe
+	/* Do we support XEMBED? */
+	NPError err;
+	NPBool supportsXEmbed = 0;
+	err = NPN_GetValue (NULL, NPNVSupportsXEmbedBool, (void *) &supportsXEmbed);
+	if (err != NPERR_NO_ERROR || !supportsXEmbed)
+		return NPERR_INCOMPATIBLE_VERSION_ERROR;
+
+        /* Are we using a GTK+ 2.x Moz? */
+	NPNToolkitType toolkit = (NPNToolkitType) 0;
+	err = NPN_GetValue (NULL, NPNVToolkit, (void *) &toolkit);
 	if (err != NPERR_NO_ERROR || toolkit != NPNVGtk2)
 		return NPERR_INCOMPATIBLE_VERSION_ERROR;
-
-	if(aMozillaFuncs == NULL || plugin_funcs == NULL)
-		return NPERR_INVALID_FUNCTABLE_ERROR;
-
-	if ((aMozillaFuncs->version >> 8) > NP_VERSION_MAJOR)
-		return NPERR_INCOMPATIBLE_VERSION_ERROR;
-	/* FIXME: check instead: indexof (last known entry in NPNetscapeFuncs) */
-	if (aMozillaFuncs->size < sizeof (NPNetscapeFuncs))
-		return NPERR_INVALID_FUNCTABLE_ERROR;
-	if (plugin_funcs->size < sizeof (NPPluginFuncs))
-		return NPERR_INVALID_FUNCTABLE_ERROR;
-
+#endif
 	/* we want to open libdbus-glib-1.so.2 in such a way
 	 * in such a way that it becomes permanentely resident */
 	void *handle;
@@ -446,69 +436,28 @@ NP_Initialize (NPNetscapeFuncs * aMozillaFuncs,
 	/* RTLD_NODELETE allows us to close right away ... */
 	dlclose(handle);
 
-
-	/*
-	 * Copy all of the fields of the Mozilla function table into our
-	 * copy so we can call back into Mozilla later.  Note that we need
-	 * to copy the fields one by one, rather than assigning the whole
-	 * structure, because the Mozilla function table could actually be
-	 * bigger than what we expect.
-	 */
-	totemPlugin::sNPN.size             = aMozillaFuncs->size;
-	totemPlugin::sNPN.version          = aMozillaFuncs->version;
-	totemPlugin::sNPN.geturl           = aMozillaFuncs->geturl;
-	totemPlugin::sNPN.posturl          = aMozillaFuncs->posturl;
-	totemPlugin::sNPN.requestread      = aMozillaFuncs->requestread;
-	totemPlugin::sNPN.newstream        = aMozillaFuncs->newstream;
-	totemPlugin::sNPN.write            = aMozillaFuncs->write;
-	totemPlugin::sNPN.destroystream    = aMozillaFuncs->destroystream;
-	totemPlugin::sNPN.status           = aMozillaFuncs->status;
-	totemPlugin::sNPN.uagent           = aMozillaFuncs->uagent;
-	totemPlugin::sNPN.memalloc         = aMozillaFuncs->memalloc;
-	totemPlugin::sNPN.memfree          = aMozillaFuncs->memfree;
-	totemPlugin::sNPN.memflush         = aMozillaFuncs->memflush;
-	totemPlugin::sNPN.reloadplugins    = aMozillaFuncs->reloadplugins;
-	totemPlugin::sNPN.getJavaEnv       = aMozillaFuncs->getJavaEnv;
-	totemPlugin::sNPN.getJavaPeer      = aMozillaFuncs->getJavaPeer;
-	totemPlugin::sNPN.geturlnotify     = aMozillaFuncs->geturlnotify;
-	totemPlugin::sNPN.posturlnotify    = aMozillaFuncs->posturlnotify;
-	totemPlugin::sNPN.getvalue         = aMozillaFuncs->getvalue;
-	totemPlugin::sNPN.setvalue         = aMozillaFuncs->setvalue;
-	totemPlugin::sNPN.invalidaterect   = aMozillaFuncs->invalidaterect;
-	totemPlugin::sNPN.invalidateregion = aMozillaFuncs->invalidateregion;
-	totemPlugin::sNPN.forceredraw      = aMozillaFuncs->forceredraw;
-
 	/*
 	 * Set up a plugin function table that Mozilla will use to call
 	 * into us.  Mozilla needs to know about our version and size and
 	 * have a UniversalProcPointer for every function we implement.
 	 */
 
-	plugin_funcs->size = sizeof(NPPluginFuncs);
-	plugin_funcs->version = (NP_VERSION_MAJOR << 8) + NP_VERSION_MINOR;
-	plugin_funcs->newp = NewNPP_NewProc(totem_plugin_new_instance);
-	plugin_funcs->destroy =
-		NewNPP_DestroyProc(totem_plugin_destroy_instance);
-	plugin_funcs->setwindow =
-		NewNPP_SetWindowProc(totem_plugin_set_window);
-	plugin_funcs->newstream =
-		NewNPP_NewStreamProc(totem_plugin_new_stream);
-	plugin_funcs->destroystream =
-		NewNPP_DestroyStreamProc(totem_plugin_destroy_stream);
-	plugin_funcs->asfile =
-		NewNPP_StreamAsFileProc(totem_plugin_stream_as_file);
-	plugin_funcs->writeready =
-		NewNPP_WriteReadyProc(totem_plugin_write_ready);
-	plugin_funcs->write = NewNPP_WriteProc(totem_plugin_write);
-	/* Printing ? */
-	plugin_funcs->print = NewNPP_PrintProc(totem_plugin_print);
-	/* What's that for ? */
-	plugin_funcs->event = NewNPP_HandleEventProc(NULL);
-	plugin_funcs->urlnotify =
-		NewNPP_URLNotifyProc(totem_plugin_url_notify);
-	plugin_funcs->javaClass = NULL;
-	plugin_funcs->getvalue = NewNPP_GetValueProc(totem_plugin_get_value);
-	plugin_funcs->setvalue = NewNPP_SetValueProc(totem_plugin_set_value);
+	aPluginVTable->size           = sizeof (NPPluginFuncs);
+	aPluginVTable->version        = (NP_VERSION_MAJOR << 8) + NP_VERSION_MINOR;
+	aPluginVTable->newp           = NewNPP_NewProc (totem_plugin_new_instance);
+	aPluginVTable->destroy        = NewNPP_DestroyProc (totem_plugin_destroy_instance);
+	aPluginVTable->setwindow      = NewNPP_SetWindowProc (totem_plugin_set_window);
+	aPluginVTable->newstream      = NewNPP_NewStreamProc (totem_plugin_new_stream);
+	aPluginVTable->destroystream  = NewNPP_DestroyStreamProc (totem_plugin_destroy_stream);
+	aPluginVTable->asfile         = NewNPP_StreamAsFileProc (totem_plugin_stream_as_file);
+	aPluginVTable->writeready     = NewNPP_WriteReadyProc (totem_plugin_write_ready);
+	aPluginVTable->write          = NewNPP_WriteProc (totem_plugin_write);
+	aPluginVTable->print          = NewNPP_PrintProc (totem_plugin_print);
+	aPluginVTable->event          = NewNPP_HandleEventProc (totem_plugin_handle_event);
+	aPluginVTable->urlnotify      = NewNPP_URLNotifyProc (totem_plugin_url_notify);
+	aPluginVTable->javaClass      = NULL; 
+	aPluginVTable->getvalue       = NewNPP_GetValueProc (totem_plugin_get_value);
+	aPluginVTable->setvalue       = NewNPP_SetValueProc (totem_plugin_set_value);
 
 	D ("NP_Initialize succeeded");
 

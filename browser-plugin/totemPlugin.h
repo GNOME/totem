@@ -2,7 +2,7 @@
  *
  * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
- * Copyright © 2006 Christian Persch
+ * Copyright © 2006, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,49 +25,46 @@
 
 #include <stdint.h>
 #include <dbus/dbus-glib.h>
-#include <npapi.h>
 
-#include <nsStringAPI.h>
+#include "npapi.h"
 
-#ifdef NEED_STRING_GLUE
-#include "totemStringGlue.h"
-#endif
-
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-#include <nsTArray.h>
-#endif /* TOTEM_COMPLEX_PLUGIN */
+#include "totemNPClass.h"
+#include "totemNPObject.h"
+#include "totemNPObjectWrapper.h"
+#include "totemNPVariantWrapper.h"
 
 #include "totem-plugin-viewer-constants.h"
 
-class nsIDOMDocument;
-class nsIDOMElement;
-class nsIIOService;
-class nsIServiceManager;
-class nsITimer;
-class nsIURI;
-class nsVoidArray;
-class totemScriptablePlugin;
-struct _NPNetscapeFuncs;
+#define TOTEM_COMPLEX_VERSION_BUILD "10.0"
+#define TOTEM_NARROWSPACE_VERSION   "7.2.0"
+#define TOTEM_MULLY_VERSION         "1.4.0.233"
+#define TOTEM_CONE_VERSION          "0.8.6"
+#define TOTEM_GMP_VERSION_BUILD     "11.0.0.1024"
+
+typedef struct {
+  const char *mimetype;
+  const char *extensions;
+  const char *mime_alias;
+} totemPluginMimeEntry;
+
+class totemBasicPlayer;
+class totemComplexPlayer;
+class totemConePlayer;
+class totemGMPControls;
+class totemGMPError;
+class totemGMPPlayer;
+class totemGMPSettings;
+class totemMullYPlayer;
+class totemNarrowSpacePlayer;
 
 class totemPlugin {
   public:
-    totemPlugin (NPP aInstance);
+    totemPlugin (NPP aNPP);
     ~totemPlugin ();
   
-    void* operator new (size_t aSize) CPP_THROW_NEW;
-
-    /* Interface to scriptable */
-
-    nsresult DoCommand (const char *aCommand);
-    nsresult SetVolume (gdouble aVolume);
-    nsresult ClearPlaylist (void);
-    nsresult AddItem (const nsACString &aURI);
-    nsresult SetFullscreen (gboolean enabled);
-
-    nsresult SetSrc (const nsACString &aURL);
+    void* operator new (size_t aSize) throw ();
 
     /* plugin glue */
-    static _NPNetscapeFuncs sNPN;
 
     static NPError Initialise ();
     static NPError Shutdown ();
@@ -88,11 +85,11 @@ class totemPlugin {
     NPError DestroyStream (NPStream* stream,
                            NPError reason);
   
-    int32 WriteReady (NPStream *stream);
-    int32 Write (NPStream *stream,
-                int32 offset,
-                int32 len,
-                void *buffer);
+    int32_t WriteReady (NPStream *stream);
+    int32_t Write (NPStream *stream,
+                   int32_t offset,
+                   int32_t len,
+                   void *buffer);
     void StreamAsFile (NPStream *stream,
                        const char* fname);
 
@@ -100,44 +97,47 @@ class totemPlugin {
 		    NPReason reason,
 		    void *notifyData);
 
-    NPError GetScriptable (void *_retval);
+    NPError GetScriptableNPObject (void *_retval);
+
+    static char *PluginDescription ();
+    static char *PluginLongDescription();
+    static void PluginMimeTypes (const totemPluginMimeEntry **, uint32_t *);
 
   private:
 
-    static void PR_CALLBACK NameOwnerChangedCallback (DBusGProxy *proxy,
+    static void NameOwnerChangedCallback (DBusGProxy *proxy,
 						      const char *svc,
 						      const char *old_owner,
 						      const char *new_owner,
 						      void *aData);
 
-    static void PR_CALLBACK ViewerForkTimeoutCallback (nsITimer *aTimer,
-						       void *aData);
+    static gboolean ViewerForkTimeoutCallback (void *aData);
 
-    static void PR_CALLBACK ButtonPressCallback (DBusGProxy  *proxy,
+    static void ButtonPressCallback (DBusGProxy  *proxy,
 						 guint aTimestamp,
 		    				 guint aButton,
 					         void *aData);
 
-    static void PR_CALLBACK StopStreamCallback (DBusGProxy  *proxy,
+    static void StopStreamCallback (DBusGProxy  *proxy,
 						void *aData);
 
-    static void PR_CALLBACK TickCallback (DBusGProxy  *proxy,
+    static void TickCallback (DBusGProxy  *proxy,
     					  guint aTime,
     					  guint aDuration,
     					  char *aState,
 					  void *aData);
-    static void PR_CALLBACK PropertyChangeCallback (DBusGProxy  *proxy,
+    static void PropertyChangeCallback (DBusGProxy  *proxy,
     						    const char *type,
 						    GValue *value,
 						    void *aData);
 
-    static void PR_CALLBACK ViewerSetWindowCallback (DBusGProxy *aProxy,
+    static void ViewerSetWindowCallback (DBusGProxy *aProxy,
 						     DBusGProxyCall *aCall,
 						     void *aData);
-    static void PR_CALLBACK ViewerOpenStreamCallback (DBusGProxy *aProxy,
+    static void ViewerOpenStreamCallback (DBusGProxy *aProxy,
 						      DBusGProxyCall *aCall,
 						      void *aData);
-    static void PR_CALLBACK ViewerOpenURICallback (DBusGProxy *aProxy,
+    static void ViewerOpenURICallback (DBusGProxy *aProxy,
 						   DBusGProxyCall *aCall,
 						   void *aData);
 
@@ -155,105 +155,141 @@ class totemPlugin {
 
     void ComputeRequest ();
     void ClearRequest ();
-    void RequestStream (PRBool aForceViewer);
+    void RequestStream (bool aForceViewer);
     void UnsetStream ();
 
-    PRBool IsMimeTypeSupported (const char *aMimeType,
-				const char *aURL);
-    PRBool IsSchemeSupported (nsIURI *aURI);
-    void GetRealMimeType (const char *aMimeType,
-			  nsACString &_retval);
-    PRBool ParseBoolean (const char *key,
-			 const char *value,
-			 PRBool default_val);
-    PRBool GetBooleanValue (GHashTable *args,
-			    const char *key,
-			    PRBool default_val);
-    PRUint32 GetEnumIndex (GHashTable *args,
+    bool IsMimeTypeSupported (const char *aMimeType,
+                              const char *aURL);
+    bool IsSchemeSupported (const char *aURI);
+    void SetRealMimeType (const char *aMimeType);
+    bool ParseBoolean (const char *key,
+                       const char *value,
+                       bool default_val);
+    bool GetBooleanValue (GHashTable *args,
+                          const char *key,
+                          bool default_val);
+    uint32_t GetEnumIndex (GHashTable *args,
 			   const char *key,
 			   const char *values[],
-			   PRUint32 n_values,
-			   PRUint32 default_value);
+			   uint32_t n_values,
+			   uint32_t default_value);
 
-    NPP mInstance;
+    NPP mNPP;
 
-    /* FIXME make these use nsCOMPtr<> !! */
-    totemScriptablePlugin *mScriptable;
-    nsIServiceManager *mServiceManager;
-    nsIIOService *mIOService;
-    nsIDOMElement *mPluginDOMElement;
-    nsITimer *mTimer;
-    nsIURI *mBaseURI;
+    totemNPObjectWrapper mPluginElement;
 
-    nsIURI *mRequestBaseURI;
-    nsIURI *mRequestURI;
+    guint mTimerID;
 
     /* Stream data */
     NPStream *mStream;
   public:
-    PRUint32 mBytesStreamed;
-    PRUint32 mBytesLength;
+    uint32_t mBytesStreamed;
+    uint32_t mBytesLength;
   private:
-    PRUint8 mStreamType;
+    uint8_t mStreamType;
 
-    nsCString mMimeType;
+    char* mMimeType;
 
-    nsCString mSrc;
-    nsIURI *mSrcURI;
-
-    Window mWindow;
-    PRInt32 mWidth;
-    PRInt32 mHeight;
+    char* mBaseURI;
+    char* mSrcURI; /* relative to mBaseURI */
+    char* mRequestBaseURI;
+    char* mRequestURI; /* relative to mRequestBaseURI */
 
     DBusGConnection *mBusConnection;
     DBusGProxy *mBusProxy;
     DBusGProxy *mViewerProxy;
     DBusGProxyCall *mViewerPendingCall;
-    nsCString mViewerBusAddress;
-    nsCString mViewerServiceName;
+    char* mViewerBusAddress;
+    char* mViewerServiceName;
     int mViewerPID;
     int mViewerFD;
 
-  public:
-    PRUint32 mTime;
-    PRUint32 mDuration;
-    TotemStates mState;
+    Window mWindow;
+    int mWidth;
+    int mHeight;
+
+  private:
+
+    bool mAllowContextMenu;
+    bool mAudioOnly;
+    bool mAutoPlay;
+    bool mCache;
+    bool mCheckedForPlaylist;
+    bool mControllerHidden;
+    bool mControllerVisible;
+    bool mExpectingStream;
+    bool mHadStream;
+    bool mHidden;
+    bool mIsFullscreen;
+    bool mIsLooping;
+    bool mIsMute;
+    bool mIsPlaylist;
+    bool mIsSupportedSrc;
+    bool mIsWindowless;
+    bool mKioskMode;
+    bool mLoopIsPalindrome;
+    bool mMute;
+    bool mNeedViewer;
+    bool mPlayEveryFrame;
+    bool mRepeat;
+    bool mRequestIsSrc;
+    bool mResetPropertiesOnReload;
+    bool mShowStatusbar;
+    bool mTimerRunning;
+    bool mUnownedViewerSetUp;
+    bool mViewerReady;
+    bool mViewerSetUp;
+    bool mWaitingForButtonPress;
+    bool mWindowSet;
+
+    char *mBackgroundColor;
+    char *mMatrix;
+    char *mRectangle;
+    char *mMovieName;
+
     double mVolume;
-    PRBool mIsFullscreen;
+
+    TotemStates mState;
+
+    uint32_t mDuration;
+    uint32_t mTime;
 
 #ifdef TOTEM_GMP_PLUGIN
   public:
-    nsresult SetURL (const nsACString &aURL);
+    void SetURL (const char* aURL);
+    const char* URL() const { return mURLURI; }
 
   private:
-    nsIURI *mURLURI;
+    char* mURLURI;
 #endif
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
   public:
-    nsresult SetQtsrc (const nsCString &aURL);
-    nsresult SetHref (const nsCString& aURL);
+    bool SetQtsrc (const char* aURL);
+    bool SetHref (const char* aURL);
+
+    const char* QtSrc () const { return mQtsrcURI; }
+    const char* Href () const { return mHref; }
+    const char* Target () const { return mTarget; }
 
   private:
-    PRBool ParseURLExtensions (const nsACString &aString,
-			       nsACString &_url,
-			       nsACString &_target);
+    bool ParseURLExtensions (const char* aString,
+			     char* *_url,
+			     char* *_target);
 
-    void LaunchTotem (const nsCString &aURL,
-		      PRUint32 aTimestamp);
+    void LaunchTotem (const char* aURL,
+		      uint32_t aTimestamp);
 
-    nsIURI *mQtsrcURI;
-
-    nsCString mHref;
-    nsIURI *mHrefURI;
-
-    nsCString mTarget;
+    char* mQtsrcURI;
+    char* mHref;
+    char* mHrefURI;
+    char* mTarget;
 #endif
 
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
+#if 0 //defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
   public:
 
-    nsresult SetConsole (const nsACString &aConsole);
+    bool SetConsole (const char* aConsole);
 
   private:
 
@@ -264,9 +300,9 @@ class totemPlugin {
     void UnownedViewerSetWindow ();
     void UnownedViewerUnsetWindow ();
 
-    nsIDOMDocument *mPluginOwnerDocument;
-    nsCString mConsole;
-    nsCString mControls;
+    totemNPObjectWrapper mPluginOwnerDocument;
+    char* mConsole;
+    char* mControls;
 
     /* nsnull if we're the representant ourself */
     totemPlugin *mConsoleClassRepresentant;
@@ -275,37 +311,101 @@ class totemPlugin {
 
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
+  public:
+
+    enum ObjectEnum {
+      ePluginScriptable,
+#if defined(TOTEM_GMP_PLUGIN)
+      eGMPControls,
+      eGMPNetwork,
+      eGMPSettings,
+#elif defined(TOTEM_CONE_PLUGIN)
+      eConeAudio,
+      eConeInput,
+      eConePlaylist,
+      eConePlaylistItems,
+      eConeVideo,
+#endif
+      eLastNPObject
+    };
+
   private:
 
-    PRUint32 mAutostart : 1;
-    PRUint32 mAutoPlay : 1;
-    PRUint32 mCache : 1;
-    PRUint32 mCheckedForPlaylist : 1;
-    PRUint32 mControllerHidden : 1;
-    PRUint32 mExpectingStream : 1;
-    PRUint32 mHadStream : 1;
-    PRUint32 mHidden : 1;
-    PRUint32 mIsPlaylist : 1;
-    PRUint32 mIsSupportedSrc : 1;
-    PRUint32 mNeedViewer : 1;
-    PRUint32 mRepeat : 1;
-    PRUint32 mRequestIsSrc : 1;
-    PRUint32 mShowStatusbar : 1;
-    PRUint32 mTimerRunning : 1;
-    PRUint32 mUnownedViewerSetUp : 1;
-    PRUint32 mViewerReady : 1;
-    PRUint32 mViewerSetUp : 1;
-    PRUint32 mWaitingForButtonPress : 1;
-    PRUint32 mWindowSet : 1;
-    PRUint32 mAudioOnly : 1;
+    totemNPObjectWrapper mNPObjects[eLastNPObject];
+
+  public:
+
+    NPObject* GetNPObject (ObjectEnum which);
+
+    bool SetSrc (const char* aURL);
+    const char* Src() const { return mSrcURI; }
+
+    void Command (const char *aCommand);
+    void ClearPlaylist ();
+    int32_t AddItem (const char*);
+
+    void SetIsWindowless (bool enabled) { mIsWindowless = enabled; }
+    bool IsWindowless () const { return mIsWindowless; }
+
+    void SetVolume (double aVolume);
+    double Volume () const { return mVolume; }
+
+    void SetMute (bool mute);
+    bool IsMute () const { return mIsMute; }
+
+    void SetFullscreen (bool enabled);
+    bool IsFullscreen () const { return mIsFullscreen; }
+
+    void SetAllowContextMenu (bool enabled) { mAllowContextMenu = enabled; }
+    bool AllowContextMenu () const { return mAllowContextMenu; }
+
+    void SetLooping (bool enabled);
+    bool IsLooping () const { return mIsLooping; }
+
+    void SetAutoPlay (bool enabled);
+    bool AutoPlay () const { return mAutoPlay; }
+
+    void SetControllerVisible (bool enabled);
+    bool IsControllerVisible () const { return !mControllerHidden; }
+
+    void SetKioskMode (bool enabled) { mKioskMode = enabled; }
+    bool IsKioskMode () const { return mKioskMode; }
+
+    void SetLoopIsPalindrome (bool enabled) { mLoopIsPalindrome = enabled; }
+    bool IsLoopPalindrome () const { return mLoopIsPalindrome; }
+
+    void SetPlayEveryFrame (bool enabled) { mPlayEveryFrame = enabled; }
+    bool PlayEveryFrame () const { return mPlayEveryFrame; }
+
+    void SetBackgroundColor (const char* color);
+    const char *BackgroundColor () const { return mBackgroundColor; }
+
+    void SetMatrix (const char* matrix);
+    const char* Matrix () const { return mMatrix; }
+
+    void SetRectangle (const char *rectangle);
+    const char* Rectangle () const { return mRectangle; }
+
+    void SetMovieName (const char *name);
+    const char* MovieName () const { return mMovieName; }
+
+    void SetResetPropertiesOnReload (bool enabled) { mResetPropertiesOnReload = enabled; }
+    bool ResetPropertiesOnReload () const { return mResetPropertiesOnReload; }
+
+    void SetRate (double rate);
+    double Rate () const;
+
+    double Duration () const { return double (mDuration); }
+
+    int32_t BytesStreamed () const { return mBytesStreamed; }
+
+    int32_t BytesLength () const { return mBytesLength; }
+
+    uint32_t Time () const { return mTime; }
+
+    TotemStates State () const { return mState; }
+
+    uint32_t Bandwidth () const { return 300000; /* bit/s */ /* FIXMEchpe! */ }
 };
-
-typedef struct {
-  const char *mimetype;
-  const char *extensions;
-  const char *mime_alias;
-} totemPluginMimeEntry;
-
-const char *totem_plugin_get_long_description (void);
 
 #endif /* __TOTEM_PLUGIN_H__ */

@@ -1,7 +1,7 @@
 /* Totem Complex Plugin scriptable
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -44,9 +44,6 @@ class totemScriptablePlugin : public totemIComplexPlayer,
     PRBool IsValid () { return mPlugin != nsnull; }
     void SetPlugin (totemPlugin *aPlugin) { mPlugin = aPlugin; }
 
-    static char *PluginDescription ();
-    static char *PluginLongDescription();
-    static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
   private:
     ~totemScriptablePlugin ();
 

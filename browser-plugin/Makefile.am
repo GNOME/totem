@@ -1,67 +1,60 @@
-SUBDIRS = idl
-
-plugindir = $(MOZILLA_PLUGINDIR)
+plugindir = $(BROWSER_PLUGIN_DIR)
 plugin_LTLIBRARIES =
-
-BUILT_SOURCES =
 
 EXTRA_DIST =		\
 	plugin.symbols	\
+	marshal.list	\
 	TODO		\
 	README.browser-plugin
 
-CLEANFILES = $(BUILT_SOURCES)
+BUILT_SOURCES =
 
-gecko_include_subdirs = \
-	.		\
-	docshell	\
-	dom		\
-	necko		\
-	xpcom
+CLEANFILES = $(BUILT_SOURCES)
 
 # Marshaller
 
-MARSHALFILES = totempluginviewer-marshal.h totempluginviewer-marshal.c
-BUILT_SOURCES += $(MARSHALFILES)
+BUILT_SOURCES += \
+	marshal.h \
+	marshal.c \
+	$(NULL)
 
-totempluginviewer-marshal.h: totempluginviewer-marshal.list
-	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --header $< > $@
-totempluginviewer-marshal.c: totempluginviewer-marshal.list
-	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --body --header $< > $@
+marshal.h: marshal.list
+	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --header $< > $@
+marshal.c: marshal.list
+	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --body --header $< > $@
 
-noinst_LTLIBRARIES = libtotempluginviewer_helper.la
+noinst_LTLIBRARIES = libtotembrowserplugin_helper.la
 
-libtotempluginviewer_helper_la_SOURCES =	\
-	totempluginviewer-marshal.h		\
-	totempluginviewer-marshal.c		\
-	totem-glow-button.c			\
-	totem-glow-button.h
+libtotembrowserplugin_helper_la_SOURCES = \
+	marshal.h \
+	marshal.c \
+	$(NULL)
 
-libtotempluginviewer_helper_la_CPPFLAGS =	\
+libtotembrowserplugin_helper_la_CPPFLAGS =	\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
-libtotempluginviewer_helper_la_CFLAGS =	\
+libtotembrowserplugin_helper_la_CFLAGS =	\
 	$(EXTRA_GNOME_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
-libtotempluginviewer_helper_la_LIBADD = 	\
+libtotembrowserplugin_helper_la_LIBADD = 	\
 	$(EXTRA_GNOME_CFLAGS)			\
 	$(WARN_CFLAGS)				\
 	$(AM_CFLAGS)
-
-EXTRA_DIST += \
-	totempluginviewer-marshal.list
 
 # The Glow button test program
 
 noinst_PROGRAMS = test-glow-button
 
-test_glow_button_SOURCES = test-glow-button.c
+test_glow_button_SOURCES = \
+	totem-glow-button.c \
+	totem-glow-button.h \
+	test-glow-button.c
 
-test_glow_button_LDADD =			\
-	libtotempluginviewer_helper.la		\
+test_glow_button_LDADD = \
+	libtotembrowserplugin_helper.la		\
 	$(EXTRA_GNOME_LIBS)
 
 test_glow_button_CFLAGS =	\
@@ -78,10 +71,13 @@ test_glow_button_CPPFLAGS =	\
 libexec_PROGRAMS = totem-plugin-viewer
 
 totem_plugin_viewer_SOURCES = \
+	totem-glow-button.c		\
+	totem-glow-button.h		\
 	totem-plugin-viewer.c		\
 	totem-plugin-viewer-interface.h	\
 	totem-plugin-viewer-constants.h	\
-	totem-plugin-viewer-options.h
+	totem-plugin-viewer-options.h	\
+	$(NULL)
 
 totem_plugin_viewer_CPPFLAGS = \
 	-D_REENTRANT					\
@@ -96,7 +92,6 @@ totem_plugin_viewer_CPPFLAGS = \
 	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DDATADIR="\"$(datadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	-DSHAREDIR="\"$(pkgdatadir)\""			\
 	-DLOGO_NAME="\"totem_logo.png\""		\
 	-DG_LOG_DOMAIN=\""TotemEmbedded\""		\
@@ -115,7 +110,7 @@ totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/lib/libtotemscrsaver.la				\
-	libtotempluginviewer_helper.la					\
+	libtotembrowserplugin_helper.la					\
 	$(EXTRA_GNOME_LIBS)	\
 	$(SN_LIBS)		\
 	$(XVIDMODE_LIBS) 	\
@@ -140,15 +135,21 @@ if ENABLE_BASIC_PLUGIN
 plugin_LTLIBRARIES += libtotem-basic-plugin.la
 
 libtotem_basic_plugin_la_SOURCES =	\
-	totemDebug.h			\
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemNPVariantWrapper.h		\
 	totemPluginGlue.cpp		\
-	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemStringGlue.h		\
 	totemBasicPlugin.cpp		\
 	totemBasicPlugin.h		\
-	totemClassInfo.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_basic_plugin_la_CPPFLAGS = \
@@ -156,34 +157,28 @@ libtotem_basic_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-Iidl						\
-	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DXP_UNIX					\
+	-DMOZ_X11					\
 	-DTOTEM_BASIC_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_basic_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_basic_plugin_la_LIBADD =					\
-	libtotempluginviewer_helper.la					\
-	$(DBUS_LIBS)	\
-	$(BROWSER_PLUGIN_LIBS)	\
-	$(LIBXPCOMGLUE_S)
+libtotem_basic_plugin_la_LIBADD = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
 
 libtotem_basic_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -200,21 +195,30 @@ if ENABLE_GMP_PLUGIN
 plugin_LTLIBRARIES += libtotem-gmp-plugin.la
 
 libtotem_gmp_plugin_la_SOURCES =	\
-	totemDebug.h			\
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemGMPControls.cpp		\
+	totemGMPControls.h		\
 	totemGMPError.cpp		\
 	totemGMPError.h			\
+	totemGMPNetwork.cpp		\
+	totemGMPNetwork.h		\
+	totemGMPPlayer.cpp		\
+	totemGMPPlayer.h		\
 	totemGMPPlaylist.cpp		\
 	totemGMPPlaylist.h		\
 	totemGMPSettings.cpp		\
 	totemGMPSettings.h		\
 	totemPluginGlue.cpp		\
-	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemStringGlue.h		\
-	totemGMPPlugin.cpp		\
-	totemGMPPlugin.h		\
-	totemClassInfo.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_gmp_plugin_la_CPPFLAGS = \
@@ -222,34 +226,28 @@ libtotem_gmp_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-Iidl						\
-	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DXP_UNIX					\
+	-DMOZ_X11					\
 	-DTOTEM_GMP_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_gmp_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_gmp_plugin_la_LIBADD =						\
-	libtotempluginviewer_helper.la	\
-	$(DBUS_LIBS)	\
-	$(BROWSER_PLUGIN_LIBS)	\
-	$(LIBXPCOMGLUE_S)
+libtotem_gmp_plugin_la_LIBADD = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
 
 libtotem_gmp_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -266,15 +264,21 @@ if ENABLE_COMPLEX_PLUGIN
 plugin_LTLIBRARIES += libtotem-complex-plugin.la
 
 libtotem_complex_plugin_la_SOURCES =	\
-	totemDebug.h			\
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemNPVariantWrapper.h		\
 	totemPluginGlue.cpp		\
-	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemStringGlue.h		\
-	totemComplexPlugin.cpp		\
-	totemComplexPlugin.h		\
-	totemClassInfo.h		\
+	totemComplexPlayer.cpp		\
+	totemComplexPlayer.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_complex_plugin_la_CPPFLAGS = \
@@ -282,34 +286,28 @@ libtotem_complex_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-Iidl						\
-	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DXP_UNIX					\
+	-DMOZ_X11					\
 	-DTOTEM_COMPLEX_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_complex_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_complex_plugin_la_LIBADD =					\
-	libtotempluginviewer_helper.la					\
-	$(DBUS_LIBS)	\
-	$(BROWSER_PLUGIN_LIBS)	\
-	$(LIBXPCOMGLUE_S)
+libtotem_complex_plugin_la_LIBADD = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
 
 libtotem_complex_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -326,15 +324,21 @@ if ENABLE_NARROWSPACE_PLUGIN
 plugin_LTLIBRARIES += libtotem-narrowspace-plugin.la
 
 libtotem_narrowspace_plugin_la_SOURCES = \
-	totemDebug.h			\
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemNPVariantWrapper.h		\
 	totemPluginGlue.cpp		\
-	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemStringGlue.h		\
 	totemNarrowSpacePlugin.cpp	\
 	totemNarrowSpacePlugin.h	\
-	totemClassInfo.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_narrowspace_plugin_la_CPPFLAGS = \
@@ -342,34 +346,28 @@ libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-Iidl						\
-	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DXP_UNIX					\
+	-DMOZ_X11					\
 	-DTOTEM_NARROWSPACE_PLUGIN			\
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_narrowspace_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_narrowspace_plugin_la_LIBADD =					\
-	libtotempluginviewer_helper.la					\
-	$(DBUS_LIBS)	\
-	$(BROWSER_PLUGIN_LIBS)	\
-	$(LIBXPCOMGLUE_S)
+libtotem_narrowspace_plugin_la_LIBADD = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
 
 libtotem_narrowspace_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -386,15 +384,21 @@ if ENABLE_MULLY_PLUGIN
 plugin_LTLIBRARIES += libtotem-mully-plugin.la
 
 libtotem_mully_plugin_la_SOURCES =	\
-	totemDebug.h			\
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemNPVariantWrapper.h		\
 	totemPluginGlue.cpp		\
-	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemStringGlue.h		\
 	totemMullYPlugin.cpp		\
 	totemMullYPlugin.h		\
-	totemClassInfo.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_mully_plugin_la_CPPFLAGS = \
@@ -402,34 +406,28 @@ libtotem_mully_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-Iidl						\
-	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DXP_UNIX					\
+	-DMOZ_X11					\
 	-DTOTEM_MULLY_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_mully_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_mully_plugin_la_LIBADD =					\
-	libtotempluginviewer_helper.la					\
-	$(DBUS_LIBS)	\
-	$(BROWSER_PLUGIN_LIBS)	\
-	$(LIBXPCOMGLUE_S)
+libtotem_mully_plugin_la_LIBADD = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
 
 libtotem_mully_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -446,15 +444,31 @@ if ENABLE_CONE_PLUGIN
 plugin_LTLIBRARIES += libtotem-cone-plugin.la
 
 libtotem_cone_plugin_la_SOURCES =	\
-	totemDebug.h			\
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemNPVariantWrapper.h		\
+	totemConeAudio.cpp		\
+	totemConeAudio.h		\
+	totemCone.cpp			\
+	totemCone.h			\
+	totemConeInput.cpp		\
+	totemConeInput.h		\
+	totemConePlaylist.cpp		\
+	totemConePlaylist.h		\
+	totemConePlaylistItems.cpp	\
+	totemConePlaylistItems.h	\
+	totemConeVideo.cpp		\
+	totemConeVideo.h		\
 	totemPluginGlue.cpp		\
-	totemPluginGlue.h		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemStringGlue.h		\
-	totemConePlugin.cpp		\
-	totemConePlugin.h		\
-	totemClassInfo.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_cone_plugin_la_CPPFLAGS = \
@@ -462,34 +476,28 @@ libtotem_cone_plugin_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
-	-Iidl						\
-	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
+	-DXP_UNIX					\
+	-DMOZ_X11					\
 	-DTOTEM_CONE_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DDATADIR="\"$(pkgdatadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DBINDIR="\"$(bindir)\""			\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_cone_plugin_la_CXXFLAGS = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(MOZILLA_XPCOM_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_cone_plugin_la_LIBADD =					\
-	libtotempluginviewer_helper.la					\
-	$(DBUS_LIBS)	\
-	$(BROWSER_PLUGIN_LIBS)	\
-	$(LIBXPCOMGLUE_S)
+libtotem_cone_plugin_la_LIBADD = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
 
 libtotem_cone_plugin_la_LDFLAGS = \
 	-avoid-version	\
@@ -498,4 +506,3 @@ libtotem_cone_plugin_la_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 endif
-

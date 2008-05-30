@@ -52,7 +52,7 @@
 
 #include "totem-plugin-viewer-constants.h"
 #include "totem-plugin-viewer-options.h"
-#include "totempluginviewer-marshal.h"
+#include "marshal.h"
 
 GtkWidget *totem_statusbar_create (void);
 GtkWidget *totem_volume_create (void);
@@ -665,6 +665,48 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 	return result;
 }
 
+static char *
+resolve_uri (const char *base_uri,
+             const char *relative_uri)
+{
+  char *uri, *scheme;
+  GFile *base_gfile, *base_parent_gfile, *resolved_gfile;
+
+  if (!relative_uri)
+    return g_strdup (base_uri);
+
+  if (!base_uri)
+    return g_strdup (relative_uri);
+
+  /* If |relative_uri| has a scheme, it's a full URI, just return it */
+  scheme = g_uri_parse_scheme (relative_uri);
+  if (scheme) {
+    g_free (scheme);
+    return g_strdup (relative_uri);
+  }
+
+  base_gfile = g_file_new_for_uri (base_uri);
+  base_parent_gfile = g_file_get_parent (base_gfile);
+  if (!base_parent_gfile) {
+    g_print ("Base URI %s has no parent!\n", base_uri);
+    g_object_unref (base_gfile);
+    return NULL;
+  }
+  g_object_unref (base_gfile);
+
+  resolved_gfile = g_file_resolve_relative_path (base_parent_gfile, relative_uri);
+  g_object_unref (base_parent_gfile);
+  if (!resolved_gfile) {
+    g_warning ("Failed to resolve relative URI '%s' against base '%s'\n", relative_uri, base_uri);
+    return NULL;
+  }
+
+  uri = g_file_get_uri (resolved_gfile);
+  g_object_unref (resolved_gfile);
+
+  return uri;
+}
+
 static void
 totem_embedded_set_uri (TotemEmbedded *emb,
 		        const char *uri,
@@ -677,10 +719,12 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	old_base = emb->base_uri;
 	old_href = emb->href_uri;
 
-	emb->current_uri = g_strdup (uri);
 	emb->base_uri = g_strdup (base_uri);
+	emb->current_uri = resolve_uri (base_uri, uri);
 	emb->is_browser_stream = (is_browser_stream != FALSE);
 	emb->href_uri = NULL;
+
+        g_print ("totem_embedded_set_uri uri %s base %s => resolved %s\n", uri, base_uri, emb->current_uri);
 
 	g_free (old_uri);
 	g_free (old_base);
@@ -1086,9 +1130,10 @@ on_about1_activate (GtkButton *button, TotemEmbedded *emb)
 	license = totem_interface_get_license ();
 
 	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-				   "name", _("Totem Browser Plugin"),
+				   "program-name", _("Totem Browser Plugin"),
 				   "version", VERSION,
-				   "copyright", _("Copyright \xc2\xa9 2002-2007 Bastien Nocera"),
+				   "copyright", "Copyright © 2002-2007 Bastien Nocera\n"
+                                                "Copyright © 2006, 2007, 2008 Christian Persch",
 				   "comments", description,
 				   "authors", authors,
 				   "translator-credits", _("translator-credits"),

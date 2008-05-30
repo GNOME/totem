@@ -1,7 +1,8 @@
 /* Totem MullY Plugin
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,39 +18,87 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id$
  */
 
-#ifndef __MULLY_PLUGIN_H__
-#define __MULLY_PLUGIN_H__
+#ifndef __TOTEM_MULLY_PLUGIN_H__
+#define __TOTEM_MULLY_PLUGIN_H__
 
-#include <nsIClassInfo.h>
+#include "totemNPClass.h"
+#include "totemNPObject.h"
 
-#include "totemIMullYPlayer.h"
-
-#include "totemPlugin.h"
-
-class totemScriptablePlugin : public totemIMullYPlayer,
-			      public nsIClassInfo
+class totemMullYPlayer : public totemNPObject
 {
   public:
-    NS_DECL_ISUPPORTS
-    NS_DECL_TOTEMIMULLYPLAYER
-    NS_DECL_NSICLASSINFO
+    totemMullYPlayer (NPP);
+    virtual ~totemMullYPlayer ();
 
-    totemScriptablePlugin (totemPlugin *aPlugin);
-
-    PRBool IsValid () { return mPlugin != nsnull; }
-    void SetPlugin (totemPlugin *aPlugin) { mPlugin = aPlugin; }
-
-    static char *PluginDescription ();
-    static char *PluginLongDescription();
-    static void PluginMimeTypes (const totemPluginMimeEntry **, PRUint32 *);
   private:
-    ~totemScriptablePlugin ();
 
-    totemPlugin *mPlugin;
+    enum Methods {
+      /* Version */
+      eGetVersion,
+
+      /* Setup */
+      eSetMinVersion,
+      eSetMode,
+      eSetAllowContextMenu,
+      eSetAutoPlay,
+      eSetLoop,
+      eSetBufferingMode,
+      eSetBannerEnabled,
+      eSetVolume,
+      eSetMovieTitle,
+      eSetPreviewImage,
+      eSetPreviewMessage,
+      eSetPreviewMessageFontSize,
+
+      /* Media management */
+      eOpen,
+
+      /* Playback */
+      ePlay,
+      ePause,
+      eStepForward,
+      eStepBackward,
+      eFF,
+      eRW,
+      eStop,
+      eMute,
+      eUnMute,
+      eSeek,
+
+      /* Windowing */
+      eAbout,
+      eShowPreferences,
+      eShowContextMenu,
+      eGoEmbedded,
+      eGoWindowed,
+      eGoFullscreen,
+      eResize,
+
+      /* Media information */
+      eGetTotalTime,
+      eGetVideoWidth,
+      eGetVideoHeight,
+      eGetTotalVideoFrames,
+      eGetVideoFramerate,
+      eGetNumberOfAudioTracks,
+      eGetNumberOfSubtitleTracks,
+      eGetAudioTrackLanguage,
+      eGetSubtitleTrackLanguage,
+      eGetAudioTrackName,
+      eGetSubtitleTrackName,
+      eGetCurrentAudioTrack,
+      eGetCurrentSubtitleTrack,
+
+      /* Media management */
+      eSetCurrentAudioTrack,
+      eSetCurrentSubtitleTrack,
+    };
+
+    virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
 };
 
-#endif /* __MULLY_PLUGIN_H__ */
+TOTEM_DEFINE_NPCLASS (totemMullYPlayer);
+
+#endif /* __TOTEM_MULLY_PLUGIN_H__ */

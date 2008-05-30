@@ -20,49 +20,52 @@
  * Boston, MA 02110-1301  USA.
  */
 
-#ifndef __TOTEM_GMP_SETTINGS_H__
-#define __TOTEM_GMP_SETTINGS_H__
+#ifndef __TOTEM_GMP_CONTROLS_H__
+#define __TOTEM_GMP_CONTROLS_H__
 
 #include "totemNPClass.h"
 #include "totemNPObject.h"
 
-class totemGMPSettings : public totemNPObject
+class totemGMPControls : public totemNPObject
 {
   public:
-    totemGMPSettings (NPP);
-    virtual ~totemGMPSettings ();
+    totemGMPControls (NPP);
+    virtual ~totemGMPControls ();
 
   private:
 
     enum Methods {
-      eGetMode,
+      eFastForward,
+      eFastReverse,
+      eGetAudioLanguageDescription,
+      eGetAudioLanguageID,
+      eGetLanguageName,
       eIsAvailable,
-      eRequestMediaAccessRights,
-      eSetMode
+      eNext,
+      ePause,
+      ePlay,
+      ePlayItem,
+      ePrevious,
+      eStep,
+      eStop
     };
 
     enum Properties {
-      eAutostart,
-      eBalance,
-      eBaseURL,
-      eDefaultAudioLanguage,
-      eDefaultFrame,
-      eEnableErrorDialogs,
-      eInvokeURLs,
-      eMediaAccessRights,
-      eMute,
-      ePlayCount,
-      eRate,
-      eVolume
+      eAudioLanguageCount,
+      eCurrentAudioLanguage,
+      eCurrentAudioLanguageIndex,
+      eCurrentItem,
+      eCurrentMarker,
+      eCurrentPosition,
+      eCurrentPositionString,
+      eCurrentPositionTimecode
     };
 
     virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
     virtual bool GetPropertyByIndex (int aIndex, NPVariant *_result);
     virtual bool SetPropertyByIndex (int aIndex, const NPVariant *aValue);
-
-    bool mMute;
 };
 
-TOTEM_DEFINE_NPCLASS (totemGMPSettings);
+TOTEM_DEFINE_NPCLASS (totemGMPControls);
 
-#endif /* __TOTEM_GMP_SETTINGS_H__ */
+#endif /* __TOTEM_GMP_CONTROLS_H__ */

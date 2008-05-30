@@ -1,7 +1,8 @@
-/* Totem Basic Plugin
+/* Totem GMP plugin
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2006, 2007, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,34 +18,48 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id: totemScriptablePlugin.h 3717 2006-11-15 17:21:16Z chpe $
  */
 
-#ifndef __GMP_PLAYLIST_H__
-#define __GMP_PLAYLIST_H__
+#ifndef __TOTEM_GMP_PLAYLIST_H__
+#define __TOTEM_GMP_PLAYLIST_H__
 
-#include <nsIClassInfo.h>
+#include "totemNPClass.h"
+#include "totemNPObject.h"
 
-#include "totemIGMPPlaylist.h"
-
-#include "totemGMPPlugin.h"
-
-class totemGMPPlaylist : public totemIGMPPlaylist,
-			 public nsIClassInfo
+class totemGMPPlaylist : public totemNPObject
 {
   public:
-    NS_DECL_ISUPPORTS
-    NS_DECL_TOTEMIGMPPLAYLIST
-    NS_DECL_NSICLASSINFO
+    totemGMPPlaylist (NPP);
+    virtual ~totemGMPPlaylist ();
 
-    totemGMPPlaylist (totemScriptablePlugin *aScriptable);
-  
   private:
-    ~totemGMPPlaylist ();
 
-    totemScriptablePlugin *mScriptable;
-    nsCString mName;
+    enum Methods {
+      eAppendItem,
+      eAttributeName,
+      eGetAttributeName,
+      eGetItemInfo,
+      eInsertItem,
+      eIsIdentical,
+      eItem,
+      eMoveItem,
+      eRemoveItem,
+      eSetItemInfo
+    };
+
+    enum Properties {
+      eAttributeCount,
+      eCount,
+      eName
+    };
+
+    virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
+    virtual bool GetPropertyByIndex (int aIndex, NPVariant *_result);
+    virtual bool SetPropertyByIndex (int aIndex, const NPVariant *aValue);
+
+    char *mName;
 };
 
-#endif /* __GMP_PLAYLIST_H__ */
+TOTEM_DEFINE_NPCLASS (totemGMPPlaylist);
+
+#endif /* __TOTEM_GMP_PLAYLIST_H__ */

@@ -20,49 +20,62 @@
  * Boston, MA 02110-1301  USA.
  */
 
-#ifndef __TOTEM_GMP_SETTINGS_H__
-#define __TOTEM_GMP_SETTINGS_H__
+#ifndef __TOTEM_GMP_NETWORK_H__
+#define __TOTEM_GMP_NETWORK_H__
 
 #include "totemNPClass.h"
 #include "totemNPObject.h"
 
-class totemGMPSettings : public totemNPObject
+class totemGMPSettings;
+
+class totemGMPNetwork : public totemNPObject
 {
   public:
-    totemGMPSettings (NPP);
-    virtual ~totemGMPSettings ();
+    totemGMPNetwork (NPP);
+    virtual ~totemGMPNetwork ();
 
   private:
 
     enum Methods {
-      eGetMode,
-      eIsAvailable,
-      eRequestMediaAccessRights,
-      eSetMode
+      eGetProxyBypassForLocal,
+      eGetProxyExceptionList,
+      eGetProxyName,
+      eGetProxyPort,
+      eGetProxySettings,
+      eSetProxyBypassForLocal,
+      eSetProxyExceptionList,
+      eSetProxyName,
+      eSetProxyPort,
+      eSetProxySettings
     };
 
     enum Properties {
-      eAutostart,
-      eBalance,
-      eBaseURL,
-      eDefaultAudioLanguage,
-      eDefaultFrame,
-      eEnableErrorDialogs,
-      eInvokeURLs,
-      eMediaAccessRights,
-      eMute,
-      ePlayCount,
-      eRate,
-      eVolume
+      eBandWidth,
+      eBitRate,
+      eBufferingCount,
+      eBufferingProgress,
+      eBufferingTime,
+      eDownloadProgress,
+      eEncodedFrameRate,
+      eFrameRate,
+      eFramesSkipped,
+      eLostPackets,
+      eMaxBandwidth,
+      eMaxBitRate,
+      eReceivedPackets,
+      eReceptionQuality,
+      eRecoveredPackets,
+      eSourceProtocol
     };
 
     virtual bool InvokeByIndex (int aIndex, const NPVariant *argv, uint32_t argc, NPVariant *_result);
     virtual bool GetPropertyByIndex (int aIndex, NPVariant *_result);
     virtual bool SetPropertyByIndex (int aIndex, const NPVariant *aValue);
 
-    bool mMute;
+    char *mSrc;
+    bool mWindowlessVideo;
 };
 
-TOTEM_DEFINE_NPCLASS (totemGMPSettings);
+TOTEM_DEFINE_NPCLASS (totemGMPNetwork);
 
-#endif /* __TOTEM_GMP_SETTINGS_H__ */
+#endif /* __TOTEM_GMP_NETWORK_H__ */

@@ -2,7 +2,7 @@
 #include <gtk/gtk.h>
 #include "totem-glow-button.h"
 
-#if 1
+#if 0
 static gboolean
 idle_cb (gpointer data)
 {

@@ -47,13 +47,6 @@ static const nsCID kClassID =
   { 0x91, 0x8c, 0x09, 0xaa, 0x92, 0x36, 0xe3, 0xbb } };
 
 static const char kClassDescription[] = "totemComplexPlugin";
-static const char kPluginDescription[] = "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
-
-#define TOTEM_COMPLEX_VERSION_BUILD "10.0"
-
-static const totemPluginMimeEntry kMimeTypes[] = {
-	{ "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
-};
 
 void*
 totemScriptablePlugin::operator new (size_t aSize) CPP_THROW_NEW
@@ -76,26 +69,6 @@ totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
 totemScriptablePlugin::~totemScriptablePlugin ()
 {
   D ("%s dtor [%p]", kClassDescription, (void*) this);
-}
-
-/* static */ char *
-totemScriptablePlugin::PluginDescription ()
-{
-  return (char*) kPluginDescription;
-}
-
-/* static */ char *
-totemScriptablePlugin::PluginLongDescription ()
-{
-  return (char*) totem_plugin_get_long_description();
-}
-
-/* static */ void
-totemScriptablePlugin::PluginMimeTypes (const totemPluginMimeEntry **_entries,
-					PRUint32 *_count)
-{
-  *_entries = kMimeTypes;
-  *_count = G_N_ELEMENTS (kMimeTypes);
 }
 
 /* Interface implementations */

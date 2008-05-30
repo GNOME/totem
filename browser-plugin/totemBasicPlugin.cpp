@@ -1,8 +1,8 @@
 /* Totem Basic Plugin
  *
- * Copyright (C) 2004 Bastien Nocera <hadess@hadess.net>
- * Copyright (C) 2002 David A. Schleef <ds@schleef.org>
- * Copyright (C) 2006 Christian Persch
+ * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002 David A. Schleef <ds@schleef.org>
+ * Copyright © 2006, 2008 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,123 +18,62 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301  USA.
- *
- * $Id$
  */
 
-#include <mozilla-config.h>
-#include "config.h"
+#include <config.h>
 
 #include <glib.h>
 
-#include <nsISupportsImpl.h>
-#include <nsMemory.h>
-#include <nsXPCOM.h>
-#include <nsIProgrammingLanguage.h>
-
-#define GNOME_ENABLE_DEBUG 1
-/* define GNOME_ENABLE_DEBUG for more debug spew */
-#include "debug.h"
-
-#include "totemClassInfo.h"
-
+#include "totemPlugin.h"
 #include "totemBasicPlugin.h"
 
-/* 11ef8fce-9eb4-494e-804e-d56eae788625 */
-static const nsCID kClassID = 
-  { 0x11ef8fce, 0x9eb4, 0x494e,
-    { 0x80, 0x4e, 0xd5, 0x6e, 0xae, 0x78, 0x86, 0x25 } };
-
-static const char kClassDescription[] = "totemBasicPlugin";
-static const char kPluginDescription[] = "Totem Web Browser Plugin " VERSION;
-
-static const totemPluginMimeEntry kMimeTypes[] = {
-	{ "application/x-ogg","ogg",NULL },
-	{ "application/ogg", "ogg", NULL },
-	{ "audio/ogg", "oga", NULL },
-	{ "audio/x-ogg", "ogg", NULL },
-	{ "video/ogg", "ogv", NULL },
-	{ "video/x-ogg", "ogg", NULL },
-	{ "application/annodex", "anx", NULL },
-	{ "audio/annodex", "axa", NULL },
-	{ "video/annodex", "axv", NULL },
-	{ "video/mpeg", "mpg, mpeg, mpe", NULL },
-	{ "audio/wav", "wav", NULL },
-	{ "audio/x-wav", "wav", NULL },
-	{ "audio/mpeg", "mp3", NULL },
-	{ "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
-	{ "video/flv", "flv", "application/x-flash-video" },
-	{ "application/x-totem-plugin", "", "application/octet-stream" },
+static const char *methodNames[] = {
+  "Play",
+  "Rewind",
+  "Stop"
 };
 
-totemScriptablePlugin::totemScriptablePlugin (totemPlugin *aPlugin)
-  : mPlugin(aPlugin)
+totemBasicPlayer::totemBasicPlayer (NPP aNPP)
+  : totemNPObject (aNPP)
 {
-  D ("%s ctor [%p]", kClassDescription, (void*) this);
+  TOTEM_LOG_CTOR ();
 }
 
-totemScriptablePlugin::~totemScriptablePlugin ()
+totemBasicPlayer::~totemBasicPlayer ()
 {
-  D ("%s dtor [%p]", kClassDescription, (void*) this);
+  TOTEM_LOG_DTOR ();
 }
 
-/* static */ char *
-totemScriptablePlugin::PluginDescription ()
+bool
+totemBasicPlayer::InvokeByIndex (int aIndex,
+                                 const NPVariant *argv,
+                                 uint32_t argc,
+                                 NPVariant *_result)
 {
-  return (char*) kPluginDescription;
+  TOTEM_LOG_INVOKE (aIndex, totemBasicPlayer);
+
+  VOID_TO_NPVARIANT (*_result);
+
+  switch (Methods (aIndex)) {
+    case ePlay:
+      Plugin()->Command (TOTEM_COMMAND_PLAY);
+      return VoidVariant (_result);
+
+    case eRewind:
+      Plugin()->Command (TOTEM_COMMAND_PAUSE);
+      return VoidVariant (_result);
+
+    case eStop:
+      Plugin()->Command (TOTEM_COMMAND_STOP);
+      return VoidVariant (_result);
+  }
+
+  return false;
 }
 
-/* static */ char *
-totemScriptablePlugin::PluginLongDescription ()
-{
-  return (char*) totem_plugin_get_long_description();
-}
+/* totemBasicPlayerNPClass */
 
-/* static */ void
-totemScriptablePlugin::PluginMimeTypes (const totemPluginMimeEntry **_entries,
-					PRUint32 *_count)
-{
-  *_entries = kMimeTypes;
-  *_count = G_N_ELEMENTS (kMimeTypes);
-}
-
-/* Interface implementations */
-
-NS_IMPL_ISUPPORTS2 (totemScriptablePlugin,
-		    totemIBasicPlayer,
-		    nsIClassInfo)
-
-/* nsIClassInfo */
-
-TOTEM_CLASSINFO_BEGIN (totemScriptablePlugin,
-		       1,
-		       kClassID,
-		       kClassDescription)
-  TOTEM_CLASSINFO_ENTRY (0, totemIBasicPlayer)
-TOTEM_CLASSINFO_END
-
-/* totemIBasicPlayer */
-
-NS_IMETHODIMP
-totemScriptablePlugin::Play ()
-{
-  NS_ENSURE_STATE (IsValid ());
-
-  return mPlugin->DoCommand (TOTEM_COMMAND_PLAY);
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::Rewind ()
-{
-  NS_ENSURE_STATE (IsValid ());
-
-  return mPlugin->DoCommand (TOTEM_COMMAND_PAUSE);
-}
-
-NS_IMETHODIMP
-totemScriptablePlugin::Stop ()
-{
-  NS_ENSURE_STATE (IsValid ());
-
-  return mPlugin->DoCommand (TOTEM_COMMAND_STOP);
-}
+TOTEM_IMPLEMENT_NPCLASS (totemBasicPlayer,
+                         NULL, 0,
+                         methodNames, G_N_ELEMENTS (methodNames),
+                         NULL)

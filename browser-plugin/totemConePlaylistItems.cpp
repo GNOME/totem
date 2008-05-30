@@ -1,4 +1,4 @@
-/* Totem GMP plugin
+/* Totem Cone plugin
  *
  * Copyright © 2004 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
@@ -26,79 +26,70 @@
 
 #include <glib.h>
 
-#include "totemGMPError.h"
+#include "totemPlugin.h"
+#include "totemConePlaylistItems.h"
 
 static const char *propertyNames[] = {
-  "errorCount",
+  "count"
 };
 
 static const char *methodNames[] = {
-  "clearErrorQueue",
-  "item",
-  "webHelp"
+  "clear"
 };
 
-TOTEM_IMPLEMENT_NPCLASS (totemGMPError,
+TOTEM_IMPLEMENT_NPCLASS (totemConePlaylistItems,
                          propertyNames, G_N_ELEMENTS (propertyNames),
                          methodNames, G_N_ELEMENTS (methodNames),
                          NULL);
 
-totemGMPError::totemGMPError (NPP aNPP)
+totemConePlaylistItems::totemConePlaylistItems (NPP aNPP)
   : totemNPObject (aNPP)
 {
   TOTEM_LOG_CTOR ();
 }
 
-totemGMPError::~totemGMPError ()
+totemConePlaylistItems::~totemConePlaylistItems ()
 {
   TOTEM_LOG_DTOR ();
 }
 
 bool
-totemGMPError::InvokeByIndex (int aIndex,
-                              const NPVariant *argv,
-                              uint32_t argc,
-                              NPVariant *_result)
+totemConePlaylistItems::InvokeByIndex (int aIndex,
+                                       const NPVariant *argv,
+                                       uint32_t argc,
+                                       NPVariant *_result)
 {
-  TOTEM_LOG_INVOKE (aIndex, totemGMPError);
+  TOTEM_LOG_INVOKE (aIndex, totemConePlaylistItems);
 
   switch (Methods (aIndex)) {
-    case eClearErrorQueue:
-      /* void clearErrorQueue (); */
-    case eWebHelp:
-      /* void webHelp (); */
-      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemGMPError);
+    case eClear:
+      Plugin()->ClearPlaylist ();
       return VoidVariant (_result);
-  
-    case eItem:
-      /* totemIGMPErrorItem item (in long index); */
-      TOTEM_WARN_1_INVOKE_UNIMPLEMENTED (aIndex, totemGMPError);
-      return NullVariant (_result);
   }
 
   return false;
 }
 
 bool
-totemGMPError::GetPropertyByIndex (int aIndex,
-                                   NPVariant *_result)
+totemConePlaylistItems::GetPropertyByIndex (int aIndex,
+                                            NPVariant *_result)
 {
-  TOTEM_LOG_GETTER (aIndex, totemGMPError);
+  TOTEM_LOG_GETTER (aIndex, totemConePlaylistItems);
 
   switch (Properties (aIndex)) {
-    case eErrorCount:
-      /* readonly attribute long errorCount; */
-      return Int32Variant (_result, 0);
+    case eCount:
+      TOTEM_WARN_GETTER_UNIMPLEMENTED (aIndex, totemConePlaylistItems);
+      return Int32Variant (_result, 1);
   }
 
   return false;
 }
 
 bool
-totemGMPError::SetPropertyByIndex (int aIndex,
-                                   const NPVariant *aValue)
+totemConePlaylistItems::SetPropertyByIndex (int aIndex,
+                                            const NPVariant *aValue)
 {
-  TOTEM_LOG_SETTER (aIndex, totemGMPError);
+  TOTEM_LOG_SETTER (aIndex, totemConePlaylistItems);
 
   return ThrowPropertyNotWritable ();
 }
