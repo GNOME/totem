@@ -85,8 +85,9 @@ typedef enum {
 
 typedef GObjectClass TotemEmbeddedClass;
 
-typedef struct _TotemPlItem {
+typedef struct {
 	char *uri;
+	char *title;
 	int duration;
 	int starttime;
 } TotemPlItem;
@@ -734,6 +735,16 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 }
 
 static void
+totem_embedded_update_title (TotemEmbedded *emb, const char *title)
+{
+	if (title == NULL)
+		gtk_window_set_title (GTK_WINDOW (emb->fs_window), _("Totem Movie Player"));
+	else
+		gtk_window_set_title (GTK_WINDOW (emb->fs_window), title);
+	totem_fullscreen_set_title (emb->fs, title);
+}
+
+static void
 totem_pl_item_free (gpointer data, gpointer user_data)
 {
 	TotemPlItem *item = (TotemPlItem *) data;
@@ -741,22 +752,24 @@ totem_pl_item_free (gpointer data, gpointer user_data)
 	if (!item)
 		return;
 	g_free (item->uri);
+	g_free (item->title);
 	g_free (item);
 }
 
 static gboolean
-totem_embedded_clear_playlist (TotemEmbedded *embedded, GError *error)
+totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 {
-	g_list_foreach (embedded->playlist, (GFunc) totem_pl_item_free, NULL);
-	g_list_free (embedded->playlist);
+	g_list_foreach (emb->playlist, (GFunc) totem_pl_item_free, NULL);
+	g_list_free (emb->playlist);
 
-	embedded->playlist = NULL;
-	embedded->current = NULL;
-	embedded->num_items = 0;
+	emb->playlist = NULL;
+	emb->current = NULL;
+	emb->num_items = 0;
 
-	totem_embedded_set_uri (embedded, NULL, NULL, FALSE);
+	totem_embedded_set_uri (emb, NULL, NULL, FALSE);
 
-	bacon_video_widget_close (embedded->bvw);
+	bacon_video_widget_close (emb->bvw);
+	totem_embedded_update_title (emb, NULL);
 
 	return TRUE;
 }
@@ -920,6 +933,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			        FALSE);
 
 	bacon_video_widget_close (emb->bvw);
+	totem_embedded_update_title (emb, plitem->title);
 	if (totem_embedded_open_internal (emb, FALSE, NULL /* FIXME */)) {
 		if (plitem->starttime > 0) {
 			gboolean retval;
@@ -1343,6 +1357,56 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	g_free (new_uri);
 }
 
+static char *
+totem_embedded_get_nice_name_for_stream (BaconVideoWidget *bvw)
+{
+	char *title, *artist, *retval;
+	int tracknum;
+	GValue value = { 0, };
+
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_TITLE, &value);
+	title = g_value_dup_string (&value);
+	g_value_unset (&value);
+
+	if (title == NULL)
+		return NULL;
+
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_ARTIST, &value);
+	artist = g_value_dup_string (&value);
+	g_value_unset (&value);
+
+	if (artist == NULL)
+		return title;
+
+	bacon_video_widget_get_metadata (bvw,
+					 BVW_INFO_TRACK_NUMBER,
+					 &value);
+	tracknum = g_value_get_int (&value);
+
+	if (tracknum != 0) {
+		retval = g_strdup_printf ("%02d. %s - %s",
+				tracknum, artist, title);
+	} else {
+		retval = g_strdup_printf ("%s - %s", artist, title);
+	}
+	g_free (artist);
+	g_free (title);
+
+	return retval;
+}
+
+static void
+on_got_metadata (BaconVideoWidget *bvw, TotemEmbedded *emb)
+{
+	char *title;
+
+	title = totem_embedded_get_nice_name_for_stream (bvw);
+	if (title == NULL)
+		return;
+
+	totem_embedded_update_title (emb, title);
+}
+
 static void
 totem_embedded_toggle_fullscreen (TotemEmbedded *emb)
 {
@@ -1703,8 +1767,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	}
 
 	/* FIXME! */
-	if (emb->bvw == NULL)
-	{
+	if (emb->bvw == NULL) {
 		/* FIXME! */
 		/* FIXME construct and show error message */
 		totem_embedded_error_and_exit (_("The Totem plugin could not be started."), err != NULL ? err->message : _("No reason."), emb);
@@ -1746,6 +1809,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	g_signal_connect (G_OBJECT(emb->bvw), "got-redirect",
 			G_CALLBACK (on_got_redirect), emb);
+	g_signal_connect (G_OBJECT(emb->bvw), "got-metadata",
+			  G_CALLBACK (on_got_metadata), emb);
 	g_signal_connect (G_OBJECT (emb->bvw), "eos",
 			G_CALLBACK (on_eos_event), emb);
 	g_signal_connect (G_OBJECT (emb->bvw), "error",
@@ -1997,14 +2062,15 @@ entry_parsed (TotemPlParser *parser,
 	g_hash_table_foreach (metadata, (GHFunc) entry_metadata_foreach, NULL);
 
 	/* Skip short advert streams */
-	duration = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "duration"), FALSE);
+	duration = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_DURATION), FALSE);
 	if (duration == 0)
 		return;
 
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
+	item->title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
 	item->duration = duration;
-	item->starttime = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, "starttime"), FALSE);
+	item->starttime = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME), FALSE);
 
 	emb->playlist = g_list_prepend (emb->playlist, item);
 }

@@ -1,3 +1,14 @@
+2008-05-31  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c
+	(totem_embedded_update_title), (totem_pl_item_free),
+	(totem_embedded_clear_playlist),
+	(totem_embedded_open_playlist_item),
+	(totem_embedded_get_nice_name_for_stream), (on_got_metadata),
+	(totem_embedded_construct), (entry_parsed):
+	Listen to got-metadata signal, and set the fullscreen title using
+	either the playlist data, or the metadata from the playlist itself
+
 2008-05-31  Christian Persch <chpe@gnome.org>
 
 	* src/totem-preferences.c: (totem_setup_preferences): Use the right
