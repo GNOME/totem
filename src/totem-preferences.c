@@ -562,7 +562,9 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
-			G_CALLBACK (gtk_widget_hide), NULL);
+			G_CALLBACK (gtk_widget_hide_on_delete), NULL);
+        g_signal_connect (totem->prefs, "destroy",
+                          G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
 	/* Auto-resize */
 	auto_resize = gconf_client_get_bool (totem->gc,
