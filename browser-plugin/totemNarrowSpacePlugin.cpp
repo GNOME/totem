@@ -22,8 +22,8 @@
 
 #include <config.h>
 
-#include "totemNarrowSpacePlugin.h"
 #include "totemPlugin.h"
+#include "totemNarrowSpacePlugin.h"
 
 static const char *methodNames[] = {
   "GetAutoPlay",

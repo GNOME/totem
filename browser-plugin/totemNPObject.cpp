@@ -145,6 +145,8 @@ totemNPObject::CheckArgType (NPVariantType argType,
                   argType == NPVariantType_Null ||
                   argType == NPVariantType_Void);
       break;
+    default:
+      conforms = false;
   }
 
   if (!conforms) {
