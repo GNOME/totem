@@ -1,3 +1,11 @@
+2008-06-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-subtitle-encoding.c (subtitle_encoding_init),
+	(subtitle_encoding_get_charset), (subtitle_encoding_create_store):
+	Don't remove encodings that can't pass through ASCII, as UTF-16 and
+	UTF-32 certainly won't pass through, spotted by Christian Persch
+	<chpe@gnome.org> (Closes: #535823)
+
 2008-05-31  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c

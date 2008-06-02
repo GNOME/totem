@@ -146,7 +146,6 @@ typedef enum
 typedef struct
 {
   int index;
-  gboolean valid;
   char *charset;
   char *name;
 } SubtitleEncoding;
@@ -154,183 +153,183 @@ typedef struct
 
 static SubtitleEncoding encodings[] = {
 
-  {SUBTITLE_ENCODING_CURRENT_LOCALE, TRUE,
+  {SUBTITLE_ENCODING_CURRENT_LOCALE,
       NULL, N_("Current Locale")},
 
-  {SUBTITLE_ENCODING_ISO_8859_6, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_6,
       "ISO-8859-6", N_("Arabic")},
-  {SUBTITLE_ENCODING_IBM_864, FALSE,
+  {SUBTITLE_ENCODING_IBM_864,
       "IBM864", N_("Arabic")},
-  {SUBTITLE_ENCODING_MAC_ARABIC, FALSE,
+  {SUBTITLE_ENCODING_MAC_ARABIC,
       "MAC_ARABIC", N_("Arabic")},
-  {SUBTITLE_ENCODING_WINDOWS_1256, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1256,
       "WINDOWS-1256", N_("Arabic")},
 
-  {SUBTITLE_ENCODING_ARMSCII_8, FALSE,
+  {SUBTITLE_ENCODING_ARMSCII_8,
       "ARMSCII-8", N_("Armenian")},
 
-  {SUBTITLE_ENCODING_ISO_8859_4, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_4,
       "ISO-8859-4", N_("Baltic")},
-  {SUBTITLE_ENCODING_ISO_8859_13, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_13,
       "ISO-8859-13", N_("Baltic")},
-  {SUBTITLE_ENCODING_WINDOWS_1257, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1257,
       "WINDOWS-1257", N_("Baltic")},
 
-  {SUBTITLE_ENCODING_ISO_8859_14, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_14,
       "ISO-8859-14", N_("Celtic")},
 
-  {SUBTITLE_ENCODING_ISO_8859_2, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_2,
       "ISO-8859-2", N_("Central European")},
-  {SUBTITLE_ENCODING_IBM_852, FALSE,
+  {SUBTITLE_ENCODING_IBM_852,
       "IBM852", N_("Central European")},
-  {SUBTITLE_ENCODING_MAC_CE, FALSE,
+  {SUBTITLE_ENCODING_MAC_CE,
       "MAC_CE", N_("Central European")},
-  {SUBTITLE_ENCODING_WINDOWS_1250, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1250,
       "WINDOWS-1250", N_("Central European")},
 
-  {SUBTITLE_ENCODING_GB18030, FALSE,
+  {SUBTITLE_ENCODING_GB18030,
       "GB18030", N_("Chinese Simplified")},
-  {SUBTITLE_ENCODING_GB2312, FALSE,
+  {SUBTITLE_ENCODING_GB2312,
       "GB2312", N_("Chinese Simplified")},
-  {SUBTITLE_ENCODING_GBK, FALSE,
+  {SUBTITLE_ENCODING_GBK,
       "GBK", N_("Chinese Simplified")},
-  {SUBTITLE_ENCODING_HZ, FALSE,
+  {SUBTITLE_ENCODING_HZ,
       "HZ", N_("Chinese Simplified")},
 
-  {SUBTITLE_ENCODING_BIG5, FALSE,
+  {SUBTITLE_ENCODING_BIG5,
       "BIG5", N_("Chinese Traditional")},
-  {SUBTITLE_ENCODING_BIG5_HKSCS, FALSE,
+  {SUBTITLE_ENCODING_BIG5_HKSCS,
       "BIG5-HKSCS", N_("Chinese Traditional")},
-  {SUBTITLE_ENCODING_EUC_TW, FALSE,
+  {SUBTITLE_ENCODING_EUC_TW,
       "EUC-TW", N_("Chinese Traditional")},
 
-  {SUBTITLE_ENCODING_MAC_CROATIAN, FALSE,
+  {SUBTITLE_ENCODING_MAC_CROATIAN,
       "MAC_CROATIAN", N_("Croatian")},
 
-  {SUBTITLE_ENCODING_ISO_8859_5, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_5,
       "ISO-8859-5", N_("Cyrillic")},
-  {SUBTITLE_ENCODING_IBM_855, FALSE,
+  {SUBTITLE_ENCODING_IBM_855,
       "IBM855", N_("Cyrillic")},
-  {SUBTITLE_ENCODING_ISO_IR_111, FALSE,
+  {SUBTITLE_ENCODING_ISO_IR_111,
       "ISO-IR-111", N_("Cyrillic")},
-  {SUBTITLE_ENCODING_KOI8_R, FALSE,
+  {SUBTITLE_ENCODING_KOI8_R,
       "KOI8-R", N_("Cyrillic")},
-  {SUBTITLE_ENCODING_MAC_CYRILLIC, FALSE,
+  {SUBTITLE_ENCODING_MAC_CYRILLIC,
       "MAC-CYRILLIC", N_("Cyrillic")},
-  {SUBTITLE_ENCODING_WINDOWS_1251, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1251,
       "WINDOWS-1251", N_("Cyrillic")},
 
-  {SUBTITLE_ENCODING_CP_866, FALSE,
+  {SUBTITLE_ENCODING_CP_866,
       "CP866", N_("Cyrillic/Russian")},
 
-  {SUBTITLE_ENCODING_MAC_UKRAINIAN, FALSE,
+  {SUBTITLE_ENCODING_MAC_UKRAINIAN,
       "MAC_UKRAINIAN", N_("Cyrillic/Ukrainian")},
-  {SUBTITLE_ENCODING_KOI8_U, FALSE,
+  {SUBTITLE_ENCODING_KOI8_U,
       "KOI8-U", N_("Cyrillic/Ukrainian")},
 
-  {SUBTITLE_ENCODING_GEOSTD8, FALSE,
+  {SUBTITLE_ENCODING_GEOSTD8,
       "GEORGIAN-PS", N_("Georgian")},
 
-  {SUBTITLE_ENCODING_ISO_8859_7, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_7,
       "ISO-8859-7", N_("Greek")},
-  {SUBTITLE_ENCODING_MAC_GREEK, FALSE,
+  {SUBTITLE_ENCODING_MAC_GREEK,
       "MAC_GREEK", N_("Greek")},
-  {SUBTITLE_ENCODING_WINDOWS_1253, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1253,
       "WINDOWS-1253", N_("Greek")},
 
-  {SUBTITLE_ENCODING_MAC_GUJARATI, FALSE,
+  {SUBTITLE_ENCODING_MAC_GUJARATI,
       "MAC_GUJARATI", N_("Gujarati")},
 
-  {SUBTITLE_ENCODING_MAC_GURMUKHI, FALSE,
+  {SUBTITLE_ENCODING_MAC_GURMUKHI,
       "MAC_GURMUKHI", N_("Gurmukhi")},
 
-  {SUBTITLE_ENCODING_ISO_8859_8_I, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_8_I,
       "ISO-8859-8-I", N_("Hebrew")},
-  {SUBTITLE_ENCODING_IBM_862, FALSE,
+  {SUBTITLE_ENCODING_IBM_862,
       "IBM862", N_("Hebrew")},
-  {SUBTITLE_ENCODING_MAC_HEBREW, FALSE,
+  {SUBTITLE_ENCODING_MAC_HEBREW,
       "MAC_HEBREW", N_("Hebrew")},
-  {SUBTITLE_ENCODING_WINDOWS_1255, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1255,
       "WINDOWS-1255", N_("Hebrew")},
 
-  {SUBTITLE_ENCODING_ISO_8859_8, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_8,
       "ISO-8859-8", N_("Hebrew Visual")},
 
-  {SUBTITLE_ENCODING_MAC_DEVANAGARI, FALSE,
+  {SUBTITLE_ENCODING_MAC_DEVANAGARI,
       "MAC_DEVANAGARI", N_("Hindi")},
 
-  {SUBTITLE_ENCODING_MAC_ICELANDIC, FALSE,
+  {SUBTITLE_ENCODING_MAC_ICELANDIC,
       "MAC_ICELANDIC", N_("Icelandic")},
 
-  {SUBTITLE_ENCODING_EUC_JP, FALSE,
+  {SUBTITLE_ENCODING_EUC_JP,
       "EUC-JP", N_("Japanese")},
-  {SUBTITLE_ENCODING_ISO_2022_JP, FALSE,
+  {SUBTITLE_ENCODING_ISO_2022_JP,
       "ISO2022JP", N_("Japanese")},
-  {SUBTITLE_ENCODING_SHIFT_JIS, FALSE,
+  {SUBTITLE_ENCODING_SHIFT_JIS,
       "SHIFT-JIS", N_("Japanese")},
 
-  {SUBTITLE_ENCODING_EUC_KR, FALSE,
+  {SUBTITLE_ENCODING_EUC_KR,
       "EUC-KR", N_("Korean")},
-  {SUBTITLE_ENCODING_ISO_2022_KR, FALSE,
+  {SUBTITLE_ENCODING_ISO_2022_KR,
       "ISO2022KR", N_("Korean")},
-  {SUBTITLE_ENCODING_JOHAB, FALSE,
+  {SUBTITLE_ENCODING_JOHAB,
       "JOHAB", N_("Korean")},
-  {SUBTITLE_ENCODING_UHC, FALSE,
+  {SUBTITLE_ENCODING_UHC,
       "UHC", N_("Korean")},
 
-  {SUBTITLE_ENCODING_ISO_8859_10, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_10,
       "ISO-8859-10", N_("Nordic")},
 
-  {SUBTITLE_ENCODING_MAC_FARSI, FALSE,
+  {SUBTITLE_ENCODING_MAC_FARSI,
       "MAC_FARSI", N_("Persian")},
 
-  {SUBTITLE_ENCODING_ISO_8859_16, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_16,
       "ISO-8859-16", N_("Romanian")},
-  {SUBTITLE_ENCODING_MAC_ROMANIAN, FALSE,
+  {SUBTITLE_ENCODING_MAC_ROMANIAN,
       "MAC_ROMANIAN", N_("Romanian")},
 
-  {SUBTITLE_ENCODING_ISO_8859_3, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_3,
       "ISO-8859-3", N_("South European")},
 
-  {SUBTITLE_ENCODING_TIS_620, FALSE,
+  {SUBTITLE_ENCODING_TIS_620,
       "TIS-620", N_("Thai")},
 
-  {SUBTITLE_ENCODING_ISO_8859_9, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_9,
       "ISO-8859-9", N_("Turkish")},
-  {SUBTITLE_ENCODING_IBM_857, FALSE,
+  {SUBTITLE_ENCODING_IBM_857,
       "IBM857", N_("Turkish")},
-  {SUBTITLE_ENCODING_MAC_TURKISH, FALSE,
+  {SUBTITLE_ENCODING_MAC_TURKISH,
       "MAC_TURKISH", N_("Turkish")},
-  {SUBTITLE_ENCODING_WINDOWS_1254, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1254,
       "WINDOWS-1254", N_("Turkish")},
 
-  {SUBTITLE_ENCODING_UTF_7, FALSE,
+  {SUBTITLE_ENCODING_UTF_7,
       "UTF-7", N_("Unicode")},
-  {SUBTITLE_ENCODING_UTF_8, FALSE,
+  {SUBTITLE_ENCODING_UTF_8,
       "UTF-8", N_("Unicode")},
-  {SUBTITLE_ENCODING_UTF_16, FALSE,
+  {SUBTITLE_ENCODING_UTF_16,
       "UTF-16", N_("Unicode")},
-  {SUBTITLE_ENCODING_UCS_2, FALSE,
+  {SUBTITLE_ENCODING_UCS_2,
       "UCS-2", N_("Unicode")},
-  {SUBTITLE_ENCODING_UCS_4, FALSE,
+  {SUBTITLE_ENCODING_UCS_4,
       "UCS-4", N_("Unicode")},
 
-  {SUBTITLE_ENCODING_ISO_8859_1, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_1,
       "ISO-8859-1", N_("Western")},
-  {SUBTITLE_ENCODING_ISO_8859_15, FALSE,
+  {SUBTITLE_ENCODING_ISO_8859_15,
       "ISO-8859-15", N_("Western")},
-  {SUBTITLE_ENCODING_IBM_850, FALSE,
+  {SUBTITLE_ENCODING_IBM_850,
       "IBM850", N_("Western")},
-  {SUBTITLE_ENCODING_MAC_ROMAN, FALSE,
+  {SUBTITLE_ENCODING_MAC_ROMAN,
       "MAC_ROMAN", N_("Western")},
-  {SUBTITLE_ENCODING_WINDOWS_1252, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1252,
       "WINDOWS-1252", N_("Western")},
 
-  {SUBTITLE_ENCODING_TCVN, FALSE,
+  {SUBTITLE_ENCODING_TCVN,
       "TCVN", N_("Vietnamese")},
-  {SUBTITLE_ENCODING_VISCII, FALSE,
+  {SUBTITLE_ENCODING_VISCII,
       "VISCII", N_("Vietnamese")},
-  {SUBTITLE_ENCODING_WINDOWS_1258, FALSE,
+  {SUBTITLE_ENCODING_WINDOWS_1258,
       "WINDOWS-1258", N_("Vietnamese")}
 };
 
@@ -357,62 +356,16 @@ find_encoding_by_charset (const char *charset)
 static void
 subtitle_encoding_init (void)
 {
-  int i;
-  gsize bytes_read, bytes_written;
-  gchar *converted;
-  gchar ascii_sample[96];
+  guint i;
 
   g_get_charset ((const char **)
       &encodings[SUBTITLE_ENCODING_CURRENT_LOCALE].charset);
 
   g_assert (G_N_ELEMENTS (encodings) == SUBTITLE_ENCODING_LAST);
 
-  /* Initialize the sample text with all of the printing ASCII characters
-   * from space (32) to the tilde (126), 95 in all. */
-  for (i = 0; i < (int) sizeof (ascii_sample); i++)
-    ascii_sample[i] = i + 32;
-
-  ascii_sample[sizeof (ascii_sample) - 1] = '\0';
-
-  i = 0;
-  while (i < SUBTITLE_ENCODING_LAST) {
-    bytes_read = 0;
-    bytes_written = 0;
-
-    g_assert (encodings[i].index == i);
-
+  for (i = 0; i < SUBTITLE_ENCODING_LAST; i++) {
     /* Translate the names */
     encodings[i].name = _(encodings[i].name);
-
-    /* Test that the encoding is a proper superset of ASCII (which naive
-     * apps are going to use anyway) by attempting to validate the text
-     * using the current encoding.  This also flushes out any encodings
-     * which the underlying GIConv implementation can't support.
-     */
-    converted = g_convert (ascii_sample, sizeof (ascii_sample) - 1,
-        encodings[i].charset, encodings[i].charset,
-        &bytes_read, &bytes_written, NULL);
-
-    /* The encoding is only valid if ASCII passes through cleanly. */
-    if (i == SUBTITLE_ENCODING_CURRENT_LOCALE)
-      encodings[i].valid = TRUE;
-    else
-      encodings[i].valid =
-          (bytes_read == (sizeof (ascii_sample) - 1)) &&
-          (converted != NULL) && (strcmp (converted, ascii_sample) == 0);
-
-#ifdef DEBUG_ENCODINGS
-    if (!encodings[i].valid) {
-      g_print ("Rejecting encoding %s as invalid:\n", encodings[i].charset);
-      g_print (" input  \"%s\"\n", ascii_sample);
-      g_print (" output \"%s\"\n\n", converted ? converted : "(null)");
-    }
-#endif
-
-    /* Discard the converted string. */
-    g_free (converted);
-
-    ++i;
   }
 }
 
@@ -436,8 +389,6 @@ subtitle_encoding_get_charset (int index)
   if (index >= SUBTITLE_ENCODING_LAST)
     e = &encodings[SUBTITLE_ENCODING_CURRENT_LOCALE];
   else if (index < SUBTITLE_ENCODING_CURRENT_LOCALE)
-    e = &encodings[SUBTITLE_ENCODING_CURRENT_LOCALE];
-  else if (!encodings[index].valid)
     e = &encodings[SUBTITLE_ENCODING_CURRENT_LOCALE];
   else
     e = &encodings[index];
@@ -491,19 +442,17 @@ subtitle_encoding_create_store (void)
   store = gtk_tree_store_new (2, G_TYPE_INT, G_TYPE_STRING);
 
   for (i = 0; i < SUBTITLE_ENCODING_LAST; i++) {
-    if (encodings[i].valid) {
-      if (strcmp (lastlang, encodings[i].name)) {
-        lastlang = encodings[i].name;
-        gtk_tree_store_append (store, &iter, NULL);
-        gtk_tree_store_set (store, &iter, INDEX_COL,
-            -1, NAME_COL, lastlang, -1);
-      }
-      label = g_strdup_printf("%s (%s)", lastlang, encodings[i].charset);
-      gtk_tree_store_append (store, &iter2, &iter);
-      gtk_tree_store_set (store, &iter2, INDEX_COL,
-          encodings[i].index, NAME_COL, label, -1);
-      g_free(label);
+    if (strcmp (lastlang, encodings[i].name)) {
+      lastlang = encodings[i].name;
+      gtk_tree_store_append (store, &iter, NULL);
+      gtk_tree_store_set (store, &iter, INDEX_COL,
+          -1, NAME_COL, lastlang, -1);
     }
+    label = g_strdup_printf("%s (%s)", lastlang, encodings[i].charset);
+    gtk_tree_store_append (store, &iter2, &iter);
+    gtk_tree_store_set (store, &iter2, INDEX_COL,
+        encodings[i].index, NAME_COL, label, -1);
+    g_free(label);
   }
   gtk_tree_sortable_set_default_sort_func (GTK_TREE_SORTABLE (store),
       compare, NULL, NULL);
