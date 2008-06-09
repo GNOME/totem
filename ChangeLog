@@ -1,3 +1,11 @@
+2008-06-09  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/TODO: Remove already done TODO items
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_open_with_subtitle): Even when giosrc is
+	available, use the local filename if it's available, works around
+	early giosrc bugs
+
 2008-06-02  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-subtitle-encoding.c (subtitle_encoding_init),

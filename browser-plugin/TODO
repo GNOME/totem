@@ -12,17 +12,9 @@ Plugin:
 - invert DBUS-OpenStream/NPN_GetURL order: this is necessary so we can push the real stream URI
   to the viewer (for use as base uri for redirects)
 
-Viewer:
-- show totem logo image when waiting for click to start?
-
-GMP plugin:
-- write IDL files (where [_not_ MSDN !] to find documentation?)
-
 Complex plugin:
 - write IDL file (nsIHXPlayer.idl available, but incompatible with totem's
   licence exception; is the exception needed for the *plugin* itself?)
 - implement the various 'controls' types in the viewer
 - in the viewer, cope with the 'main' window being removed? (maybe reparent to a hidden window)
 
-NarrowSpace plugin:
-- write IDL file (where to find documentation?)

@@ -2631,6 +2631,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   GstMessage *err_msg = NULL;
   GFile *file;
   gboolean ret;
+  char *path;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (mrl != NULL, FALSE);
@@ -2648,17 +2649,13 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
-  /* If giosrc isn't available, try to get the MRL's local path */
-  if (gst_default_registry_check_feature_version ("gio", 0, 10, 0) != FALSE)
+  /* Only use the URI when FUSE isn't available for a file */
+  path = g_file_get_path (file);
+  if (path) {
+    bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
+    g_free (path);
+  } else {
     bvw->com->mrl = g_file_get_uri (file);
-  else {
-    char *path;
-
-    path = g_file_get_path (file);
-    if (path) {
-      bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
-      g_free (path);
-    }
   }
 
   g_object_unref (file);
