@@ -2039,6 +2039,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 #endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
 
+/* VLC plugin defaults to have its controller hidden */
+#ifdef TOTEM_CONE_PLUGIN
+	mControllerHidden = true;
+#endif
+
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 	value = (const char *) g_hash_table_lookup (args, "console");
 	if (value) {
