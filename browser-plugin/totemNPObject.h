@@ -25,6 +25,9 @@
 #include "npapi.h"
 #include "npruntime.h"
 
+//FIXME force debug on
+#define GNOME_ENABLE_DEBUG 1
+
 #include "debug.h"
 
 class totemPlugin;

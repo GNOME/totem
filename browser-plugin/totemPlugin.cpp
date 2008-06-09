@@ -44,6 +44,7 @@
 #include "npupp.h"
 
 /* define GNOME_ENABLE_DEBUG for more debug spew */
+#define GNOME_ENABLE_DEBUG 1
 /* FIXME define D() so that it prints the |this| pointer, so we can differentiate between different concurrent plugins! */
 #include "debug.h"
 
@@ -64,7 +65,7 @@
 #include "totemGMPPlayer.h"
 #include "totemGMPSettings.h"
 #elif defined(TOTEM_COMPLEX_PLUGIN)
-#include "totemComplexPlayer.h"
+#include "totemComplexPlugin.h"
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
 #include "totemNarrowSpacePlugin.h"
 #elif defined(TOTEM_MULLY_PLUGIN)
@@ -2527,7 +2528,7 @@ totemPlugin::GetNPObject (ObjectEnum which)
       break;
   }
 #elif defined(TOTEM_COMPLEX_PLUGIN)
-  npclass = totemComplexPlayerNPClass::Instance();
+  npclass = totemComplexPluginNPClass::Instance();
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
   npclass = totemNarrowSpacePlayerNPClass::Instance();
 #elif defined(TOTEM_MULLY_PLUGIN)
@@ -2618,7 +2619,7 @@ totemPlugin::Shutdown ()
         totemGMPNetworkNPClass::Shutdown ();
         totemGMPSettingsNPClass::Shutdown ();
 #elif defined(TOTEM_COMPLEX_PLUGIN)
-#error FIXME
+	totemComplexPluginNPClass::Shutdown ();
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
         totemNarrowSpacePlayerNPClass::Shutdown ();
 #elif defined(TOTEM_MULLY_PLUGIN)

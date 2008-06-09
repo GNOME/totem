@@ -277,8 +277,8 @@ libtotem_complex_plugin_la_SOURCES =	\
 	totemPluginGlue.cpp		\
 	totemPlugin.cpp			\
 	totemPlugin.h			\
-	totemComplexPlayer.cpp		\
-	totemComplexPlayer.h		\
+	totemComplexPlugin.cpp		\
+	totemComplexPlugin.h		\
 	totem-plugin-viewer-constants.h
 
 libtotem_complex_plugin_la_CPPFLAGS = \

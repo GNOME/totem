@@ -30,6 +30,7 @@
 #include "npapi.h"
 #include "npupp.h"
 
+#define GNOME_ENABLE_DEBUG 1
 #include "debug.h"
 
 #include "totemPlugin.h"
