@@ -868,7 +868,10 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 			href = mHref;
 		}
 
-		if (NPN_GetURL (mNPP, href, mTarget) != NPERR_NO_ERROR) {
+		/* By default, an empty target will make the movie load
+		 * inside our existing instance, so use a target to be certain
+		 * it opens in the current frame, as before */
+		if (NPN_GetURL (mNPP, href, mTarget ? mTarget : "_current") != NPERR_NO_ERROR) {
 			D ("Failed to launch URL '%s' in browser", mHref);
 		}
 
