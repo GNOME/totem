@@ -395,8 +395,6 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
     }
 
     case eGetPluginStatus: {
-      return true;
-#if 0
       /* ACString GetPluginStatus (); */
       static const char *kState[] = {
         "Complete",
@@ -406,11 +404,10 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
         "Waiting"
       };
 
-      if (Plugin()->State() == eState_Error)
+      if (mPluginState == eState_Error)
         return StringVariant (_result, "Error:<1>");
 
-      return StringVariant (_result, kState[Plugin()->State()]);
-#endif
+      return StringVariant (_result, kState[mPluginState]);
     }
 
     case eGetTrackCount:

@@ -1,5 +1,12 @@
 2008-06-09  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemConePlaylist.cpp: Implement Playlist::isplaying,
+	(Closes: #526737)
+	* browser-plugin/totemNarrowSpacePlugin.cpp: Fix GetPluginStatus()
+	to return the status in the same form QT callers are expecting
+
+2008-06-09  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemPlugin.cpp: Hide the controls by
 	default in the VLC plugin (Closes: #526738)
 

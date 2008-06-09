@@ -114,8 +114,7 @@ totemConePlaylist::GetPropertyByIndex (int aIndex,
       return ObjectVariant (_result, Plugin()->GetNPObject (totemPlugin::eConePlaylistItems));
 
     case eIsPlaying:
-      TOTEM_WARN_GETTER_UNIMPLEMENTED (aIndex, _result);
-      return BoolVariant (_result, true);
+      return BoolVariant (_result, Plugin()->State() == TOTEM_STATE_PLAYING);
   }
 
   return false;
