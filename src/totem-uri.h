@@ -30,6 +30,7 @@
 G_BEGIN_DECLS
 
 const char *	totem_dot_dir			(void);
+const char *	totem_data_dot_dir		(void);
 char *		totem_pictures_dir		(void);
 char *		totem_create_full_path		(const char *path);
 GMount *	totem_get_mount_for_media	(const char *uri);

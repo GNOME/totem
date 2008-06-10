@@ -50,7 +50,7 @@ totem_playing_dvd (const char *uri)
 }
 
 static void
-totem_ensure_dot_dir (const char *path)
+totem_ensure_dir (const char *path)
 {
 	if (g_file_test (path, G_FILE_TEST_IS_DIR) != FALSE)
 		return;
@@ -64,7 +64,7 @@ totem_dot_dir (void)
 	static char *totem_dir = NULL;
 
 	if (totem_dir != NULL) {
-		totem_ensure_dot_dir (totem_dir);
+		totem_ensure_dir (totem_dir);
 		return totem_dir;
 	}
 
@@ -72,7 +72,26 @@ totem_dot_dir (void)
 				      "totem",
 				      NULL);
 
-	totem_ensure_dot_dir (totem_dir);
+	totem_ensure_dir (totem_dir);
+
+	return (const char *)totem_dir;
+}
+
+const char *
+totem_data_dot_dir (void)
+{
+	static char *totem_dir = NULL;
+
+	if (totem_dir != NULL) {
+		totem_ensure_dir (totem_dir);
+		return totem_dir;
+	}
+
+	totem_dir = g_build_filename (g_get_user_data_dir (),
+				      "totem",
+				      NULL);
+
+	totem_ensure_dir (totem_dir);
 
 	return (const char *)totem_dir;
 }

@@ -1,5 +1,12 @@
 2008-06-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/totem-plugin.c (totem_get_plugin_paths):
+	* src/totem-uri.c (totem_ensure_dir), (totem_dot_dir),
+	(totem_data_dot_dir):
+	* src/totem-uri.h: Use ~/.local/share/totem/plugins/ for user-plugins
+
+2008-06-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/mythtv/totem-mythtv.c (totem_mythtv_plugin_finalize),
 	(impl_deactivate): Kill some more stuff on plugin exit
 

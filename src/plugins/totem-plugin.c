@@ -251,7 +251,7 @@ totem_get_plugin_paths (void)
 
 	client = gconf_client_get_default ();
 	if (gconf_client_get_bool (client, GCONF_PREFIX"/disable_user_plugins", NULL) == FALSE) {
-		path = g_build_filename (totem_dot_dir (), "plugins", NULL);
+		path = g_build_filename (totem_data_dot_dir (), "plugins", NULL);
 		paths = g_list_prepend (paths, path);
 	}
 
