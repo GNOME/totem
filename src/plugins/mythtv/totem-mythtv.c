@@ -387,6 +387,14 @@ totem_mythtv_plugin_finalize (GObject *object)
 		g_object_unref (plugin->client);
 		plugin->client = NULL;
 	}
+	if (plugin->upnp != NULL) {
+		g_object_unref (plugin->upnp);
+		plugin->upnp = NULL;
+	}
+	if (plugin->sidebar != NULL) {
+		g_object_unref (plugin->sidebar);
+		plugin->sidebar = NULL;
+	}
 
 	G_OBJECT_CLASS (totem_mythtv_plugin_parent_class)->finalize (object);
 }
@@ -439,13 +447,26 @@ impl_deactivate	(TotemPlugin *plugin,
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
 
-	g_object_unref (tm->sidebar);
 	totem_remove_sidebar_page (totem, "mythtv");
 
-	if (tm && tm->client != NULL) {
+	if (tm->lst_b_info != NULL) {
+		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
+		g_list_free (tm->lst_b_info);
+		tm->lst_b_info = NULL;
+	}
+	if (tm->client != NULL) {
 		g_object_unref (tm->client);
 		tm->client = NULL;
 	}
+	if (tm->upnp != NULL) {
+		g_object_unref (tm->upnp);
+		tm->upnp = NULL;
+	}
+	if (tm->sidebar != NULL) {
+		gtk_widget_destroy (tm->sidebar);
+		tm->sidebar = NULL;
+	}
+
 	g_object_unref (totem);
 }
 
