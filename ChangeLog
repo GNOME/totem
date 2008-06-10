@@ -1,5 +1,12 @@
 2008-06-10  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c
+	(on_video_button_press_event): Patch from Baptiste Mille-Mathias
+	<bmm80@free.fr> to add double-click -> fullscreen support
+	(Closes: #502073)
+
+2008-06-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/totem-plugin.c (totem_get_plugin_paths):
 	* src/totem-uri.c (totem_ensure_dir), (totem_dot_dir),
 	(totem_data_dot_dir):

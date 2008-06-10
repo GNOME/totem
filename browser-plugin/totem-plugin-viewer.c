@@ -1457,6 +1457,8 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 
 		gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
 				event->button, event->time);
+	} else if (event->type == GDK_2BUTTON_PRESS && event->button == 1 && state == 0) {
+		totem_embedded_toggle_fullscreen (emb);
 	}
 
 	return FALSE;
