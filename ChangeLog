@@ -1,5 +1,21 @@
 2008-06-10  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Require gstreamer-tag as well
+	* src/backend/bacon-video-widget.h:
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_metadata_pixbuf),
+	(bacon_video_widget_get_best_image),
+	(bacon_video_widget_get_metadata): Add code to read covers from
+	video and audio files, through the tags
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_get_metadata): Implement stubs of the above
+	* src/totem-video-thumbnailer.c (capture_interesting_frame),
+	(capture_frame_at_time), (has_audio), (on_got_metadata_event),
+	(main): Implement saving the cover of a video/audio file
+	(Closes: #318748)
+
+2008-06-10  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totem-plugin-viewer.c
 	(on_video_button_press_event): Patch from Baptiste Mille-Mathias
 	<bmm80@free.fr> to add double-click -> fullscreen support

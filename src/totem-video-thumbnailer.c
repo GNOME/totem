@@ -57,6 +57,11 @@ static gboolean g_fatal_warnings = FALSE;
 static gint64 second_index = -1;
 static char **filenames = NULL;
 
+typedef struct {
+	const char *output;
+	const char *input;
+} callback_data;
+
 #ifdef THUMB_DEBUG
 static void
 show_pixbuf (GdkPixbuf *pix)
@@ -326,7 +331,9 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 }
 
 static GdkPixbuf *
-capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output) 
+capture_interesting_frame (BaconVideoWidget *bvw,
+			   const char *input,
+			   const char *output) 
 {
 	GdkPixbuf* pixbuf;
 	guint current;
@@ -343,9 +350,9 @@ capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output)
 	 * interesting frame */
 	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
 	{
-		PROGRESS_DEBUG("About to seek to %f\n", frame_locations[current]);
+		PROGRESS_DEBUG("About to seek to %f", frame_locations[current]);
 		if (bacon_video_widget_seek (bvw, frame_locations[current], NULL) == FALSE) {
-			PROGRESS_DEBUG("Couldn't seek to %f\n", frame_locations[current]);
+			PROGRESS_DEBUG("Couldn't seek to %f", frame_locations[current]);
 			bacon_video_widget_play (bvw, NULL);
 		}
 
@@ -362,10 +369,10 @@ capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output)
 		}
 
 		/* Pull the frame, if it's interesting we bail early */
-		PROGRESS_DEBUG("About to get frame for iter %d\n", current);
+		PROGRESS_DEBUG("About to get frame for iter %d", current);
 		pixbuf = bacon_video_widget_get_current_frame (bvw);
 		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
-			PROGRESS_DEBUG("Frame for iter %d is interesting\n", current);
+			PROGRESS_DEBUG("Frame for iter %d is interesting", current);
 			break;
 		}
 
@@ -377,13 +384,16 @@ capture_interesting_frame (BaconVideoWidget * bvw, char *input, char *output)
 				pixbuf = NULL;
 			}
 		}
-		PROGRESS_DEBUG("Frame for iter %d was not interesting\n", current);
+		PROGRESS_DEBUG("Frame for iter %d was not interesting", current);
 	}
 	return pixbuf;
 }
 
 static GdkPixbuf *
-capture_frame_at_time(BaconVideoWidget *bvw, char *input, char *output,  gint64 seconds) 
+capture_frame_at_time(BaconVideoWidget *bvw,
+		      const char *input,
+		      const char *output,
+		      gint64 seconds) 
 {
 	GError *err = NULL;
 
@@ -412,6 +422,42 @@ capture_frame_at_time(BaconVideoWidget *bvw, char *input, char *output,  gint64 
 	return bacon_video_widget_get_current_frame (bvw);
 }
 
+static gboolean
+has_audio (BaconVideoWidget *bvw)
+{
+	GValue value = { 0, };
+
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_HAS_VIDEO, &value);
+	return g_value_get_boolean (&value);
+}
+
+static void
+on_got_metadata_event (BaconVideoWidget *bvw, callback_data *data)
+{
+	GValue value = { 0, };
+	GdkPixbuf *pixbuf;
+
+	PROGRESS_DEBUG("Got metadata, checking if we have a cover");
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_COVER, &value);
+	pixbuf = g_value_get_object (&value);
+
+	if (pixbuf) {
+		PROGRESS_DEBUG("Saving cover image");
+
+		bacon_video_widget_close (bvw);
+		totem_resources_monitor_stop ();
+		gtk_widget_destroy (GTK_WIDGET (bvw));
+
+		save_pixbuf (pixbuf, data->output, data->input, output_size, TRUE);
+		g_object_unref (pixbuf);
+
+		exit (0);
+	} else if (has_audio (bvw) == FALSE) {
+		PROGRESS_DEBUG("No covers, and no video, exiting");
+		exit (0);
+	}
+}
+
 static const GOptionEntry entries[] = {
 	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
@@ -432,7 +478,8 @@ int main (int argc, char *argv[])
 	GError *err = NULL;
 	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
-	char *input, *output;
+	const char *input, *output;
+	callback_data data;
 
 #ifdef G_OS_UNIX
 	nice (20);
@@ -456,7 +503,6 @@ int main (int argc, char *argv[])
 		return 1;
 	}
 
-#ifndef THUMB_DEBUG
 	if (g_fatal_warnings) {
 		GLogLevelFlags fatal_mask;
 
@@ -464,7 +510,6 @@ int main (int argc, char *argv[])
 		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
 		g_log_set_always_fatal (fatal_mask);
 	}
-#endif /* THUMB_DEBUG */
 
 	if (filenames == NULL || g_strv_length (filenames) != 2) {
 		char *help;
@@ -476,7 +521,7 @@ int main (int argc, char *argv[])
 	input = filenames[0];
 	output = filenames[1];
 
-	PROGRESS_DEBUG("Initialised libraries, about to create video widget\n");
+	PROGRESS_DEBUG("Initialised libraries, about to create video widget");
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL) {
@@ -485,13 +530,18 @@ int main (int argc, char *argv[])
 		g_error_free (err);
 		exit (1);
 	}
+	data.input = input;
+	data.output = output;
+	g_signal_connect (G_OBJECT (bvw), "got-metadata",
+			  G_CALLBACK (on_got_metadata_event),
+			  &data);
 
-	PROGRESS_DEBUG("Video widget created\n");
+	PROGRESS_DEBUG("Video widget created");
 
 	if (time_limit != FALSE)
 		totem_resources_monitor_start (input, 0);
 
-	PROGRESS_DEBUG("About to open video file\n");
+	PROGRESS_DEBUG("About to open video file");
 
 	if (bacon_video_widget_open (bvw, input, &err) == FALSE) {
 		g_print ("totem-video-thumbnailer couldn't open file '%s'\n"
@@ -501,8 +551,8 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	PROGRESS_DEBUG("Opened video file: '%s'\n", input);
-	PROGRESS_DEBUG("About to play file\n");
+	PROGRESS_DEBUG("Opened video file: '%s'", input);
+	PROGRESS_DEBUG("About to play file");
 
 	bacon_video_widget_play (bvw, &err);
 	if (err != NULL) {
@@ -511,8 +561,7 @@ int main (int argc, char *argv[])
 		g_error_free (err);
 		exit (1);
 	}
-
-	PROGRESS_DEBUG("Started playing file\n");
+	PROGRESS_DEBUG("Started playing file");
 
 	/* If the user has told us to use a frame at a specific second 
 	 * into the video, just use that frame no matter how boring it
@@ -533,7 +582,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	PROGRESS_DEBUG("Saving captured screenshot\n");
+	PROGRESS_DEBUG("Saving captured screenshot");
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	g_object_unref (pixbuf);
 

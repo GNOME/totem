@@ -4032,6 +4032,8 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 	case BVW_INFO_HAS_AUDIO:
 		bacon_video_widget_get_metadata_bool (bvw, type, value);
 		break;
+	case BVW_INFO_COVER:
+		break;
 	default:
 		g_assert_not_reached ();
 	}
