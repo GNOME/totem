@@ -1,5 +1,30 @@
 New features and significant updates in version...
 
+2.23.4:
+* Remove gnome-vfs requirements, all over
+* Better help output when wrong arguments are passed
+* Automatically remove files from the playlist when they've been
+  removed from the filesystem
+* Bug fixes for build on MacOS X with native GTK+
+* Always use files on fuse when available
+* Plenty of small bug fixes
+
+* Thumbnailer:
+  - When a file contains cover art, use the art as the thumbnail
+
+* Web browser plugin:
+  - Remove mozilla specific requirements
+  - Show stream titles in fullscreen
+  - Add double-click -> fullscreen
+  - Hide controls by default in the Cone (VLC) plugin
+  - Implement Playlist::isplaying for Cone
+
+* Plugins:
+  - Remove need to configure the MythTV plugin, use UPNP instead
+  - Add a progress bar to the YouTube plugin
+  - Add support for high-res YouTube videos
+  - Use ~/.local/share/totem/plugins/ for user-plugins
+
 2.23.3:
 * Update FSF address in the sources
 * Use GIO when a GIO source isn't available (xine-lib, GStreamer)
