@@ -1,3 +1,11 @@
+2008-06-15  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c (bacon_video_widget_init),
+	(bacon_video_widget_get_mrls): Don't say we can't support DVB: just
+	because we're missing a simple channels.conf, it might appear before
+	we try to use DVB,
+	Set the device as expected when supporting multiple DVB adapters
+
 ============ Version 2.23.4
 
 2008-06-11  Bastien Nocera  <hadess@hadess.net>

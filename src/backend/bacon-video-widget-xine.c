@@ -463,13 +463,7 @@ bacon_video_widget_init (BaconVideoWidget *bvw)
 		} else if (g_ascii_strcasecmp (autoplug_list[i], "DVD") == 0) {
 			bvw->priv->can_dvd = TRUE;
 		} else if (g_ascii_strcasecmp (autoplug_list[i], "DVB") == 0) {
-			char *path;
-
-			path = g_build_filename (g_get_home_dir (),
-						 ".xine", "channels.conf", NULL);
-			if (g_file_test (path, G_FILE_TEST_IS_REGULAR) != FALSE)
-				bvw->priv->can_dvb = TRUE;
-			g_free (path);
+			bvw->priv->can_dvb = TRUE;
 		}
 		i++;
 	}
@@ -3477,8 +3471,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 	g_return_val_if_fail (bvw != NULL, NULL);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
-	//FIXME enable when we use devices for DVB
-	//g_return_val_if_fail (device != NULL, NULL);
+	g_return_val_if_fail (device != NULL, NULL);
 
 	entry_name = plugin_id = NULL;
 
@@ -3490,14 +3483,22 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 		entry_name = "media.vcd.device";
 	} else if (type == MEDIA_TYPE_DVB) {
 		plugin_id = "DVB";
+		entry_name = "media.dvb.adapter";
 	}
 
-	if (entry_name != NULL) {
+	if (type != MEDIA_TYPE_DVB) {
 		xine_cfg_entry_t entry;
 		bvw_config_helper_string (bvw->priv->xine,
 					  entry_name,
 					  device, &entry);
 		entry.str_value = (char *) device;
+		xine_config_update_entry (bvw->priv->xine, &entry);
+	} else {
+		xine_cfg_entry_t entry;
+		bvw_config_helper_string (bvw->priv->xine,
+					  entry_name,
+					  0, &entry);
+		entry.num_value = atoi (device);
 		xine_config_update_entry (bvw->priv->xine, &entry);
 	}
 
