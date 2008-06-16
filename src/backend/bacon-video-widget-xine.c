@@ -4034,6 +4034,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 		bacon_video_widget_get_metadata_bool (bvw, type, value);
 		break;
 	case BVW_INFO_COVER:
+		g_value_init (value, GDK_TYPE_PIXBUF);
 		break;
 	default:
 		g_assert_not_reached ();
