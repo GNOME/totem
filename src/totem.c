@@ -1960,7 +1960,8 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
 			} else if (g_str_equal (filename, "dvb:") != FALSE) {
-				changed = totem_action_load_media (totem, MEDIA_TYPE_DVB, NULL);
+				totem_action_play_media (totem, MEDIA_TYPE_DVB, "0");
+				changed = TRUE;
 			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
 				changed = TRUE;
@@ -2185,7 +2186,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			/* FIXME b0rked */
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
-			totem_action_play_media (totem, MEDIA_TYPE_DVB, NULL);
+			totem_action_play_media (totem, MEDIA_TYPE_DVB, "0");
 		} else if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
 		}
@@ -2755,17 +2756,19 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_plus:
 	case GDK_KP_Add:
-		if (!(event->state & GDK_CONTROL_MASK))
-			return FALSE;
-
-		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		if (!(event->state & GDK_CONTROL_MASK)) {
+			totem_action_next (totem);
+		} else {
+			totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		}
 		break;
 	case GDK_minus:
 	case GDK_KP_Subtract:
-		if (!(event->state & GDK_CONTROL_MASK))
-			return FALSE;
-
-		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+		if (!(event->state & GDK_CONTROL_MASK)) {
+			totem_action_previous (totem);
+		} else {
+			totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+		}
 		break;
 	case GDK_KP_Up:
 	case GDK_KP_8:

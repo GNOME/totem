@@ -4671,7 +4671,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
       {
         const GValue *cover_value;
 
-	g_value_init (value, GDK_TYPE_PIXBUF);
+	g_value_init (value, G_TYPE_OBJECT);
 
         if (bvw->priv->tagcache == NULL)
           break;

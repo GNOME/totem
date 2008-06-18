@@ -464,9 +464,7 @@ static const GOptionEntry entries[] = {
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail", NULL },
-#ifndef THUMB_DEBUG
 	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
-#endif /* THUMB_DEBUG */
  	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[FILE...]" },
 	{ NULL }
 };

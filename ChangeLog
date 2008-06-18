@@ -1,3 +1,22 @@
+2008-06-18  Bastien Nocera  <hadess@hadess.net>
+
+	* README:
+	* src/totem.c (totem_action_open_files_list),
+	(totem_action_remote), (totem_action_handle_key_press):
+	'+' and '-' on their own can now be used to go to the next/previous
+	track, Force playback when using DVB, otherwise playback won't
+	autostart
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_metadata): Fix warning when fetching cover art
+
+	* src/backend/bacon-video-widget-xine.c (xine_event_message),
+	(bacon_video_widget_get_metadata): As above, and also try to give a
+	better error message when TV signal is lost
+
+	* src/totem-video-thumbnailer.c: Always have --g-fatal-warnings
+	enabled
+
 2008-06-16  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c

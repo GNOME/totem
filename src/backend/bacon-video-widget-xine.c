@@ -1340,7 +1340,11 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	case XINE_MSG_NO_ERROR:
 		return;
 	case XINE_MSG_GENERAL_WARNING:
-		return;
+		if (data->messages != NULL && strcmp (data->messages, "DVB Signal Lost.  Please check connections.") == 0) {
+			num = BVW_ERROR_INVALID_DEVICE;
+			message = g_strdup (_("The TV adapter could not tune into the channel. Please check your hardware setup, and channel configuration."));
+		}
+		break;
 	case XINE_MSG_UNKNOWN_HOST:
 		num = BVW_ERROR_UNKNOWN_HOST;
 		message = g_strdup (_("The server you are trying to connect to is not known."));
@@ -4034,7 +4038,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
 		bacon_video_widget_get_metadata_bool (bvw, type, value);
 		break;
 	case BVW_INFO_COVER:
-		g_value_init (value, GDK_TYPE_PIXBUF);
+		g_value_init (value, G_TYPE_OBJECT);
 		break;
 	default:
 		g_assert_not_reached ();
