@@ -565,7 +565,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		mythtv)
-			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7 gmyth-upnp >= 0.7.1,
+			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7.1 gmyth-upnp >= 0.7.1,
 					  [HAVE_GMYTH=yes], [HAVE_GMYTH=no])
 			if test "${HAVE_GMYTH}" != "yes"; then
 				plugin_error_or_ignore "you need GMyth >= 0.7 installed for the MythTV plugin"
