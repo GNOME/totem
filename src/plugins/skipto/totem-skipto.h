@@ -38,10 +38,10 @@
 G_BEGIN_DECLS
 
 #define TOTEM_TYPE_SKIPTO		(totem_skipto_get_type ())
-#define TOTEM_SKIPTO(obj)		(GTK_CHECK_CAST ((obj), TOTEM_TYPE_SKIPTO, TotemSkipto))
-#define TOTEM_SKIPTO_CLASS(klass)	(GTK_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_SKIPTO, TotemSkiptoClass))
-#define TOTEM_IS_SKIPTO(obj)		(GTK_CHECK_TYPE ((obj), TOTEM_TYPE_SKIPTO))
-#define TOTEM_IS_SKIPTO_CLASS(klass)	(GTK_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_SKIPTO))
+#define TOTEM_SKIPTO(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SKIPTO, TotemSkipto))
+#define TOTEM_SKIPTO_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_SKIPTO, TotemSkiptoClass))
+#define TOTEM_IS_SKIPTO(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_SKIPTO))
+#define TOTEM_IS_SKIPTO_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_SKIPTO))
 
 GType totem_skipto_register_type	(GTypeModule *module);
 
@@ -58,7 +58,7 @@ struct TotemSkiptoClass {
 	GtkDialogClass parent_class;
 };
 
-GtkType totem_skipto_get_type	(void);
+GType totem_skipto_get_type	(void);
 GtkWidget *totem_skipto_new	(TotemSkiptoPlugin *plugin);
 gint64 totem_skipto_get_range	(TotemSkipto *skipto);
 void totem_skipto_update_range	(TotemSkipto *skipto, gint64 time);
