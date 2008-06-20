@@ -1,5 +1,26 @@
 2008-06-20  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-xine.c (setup_config),
+	(xine_event_message), (bacon_video_widget_get_mrls):
+	Ask xine-lib to not remember the last DVB channel used,
+	so we don't have to skip one when copying the MRLs,
+	prepare for better error message when getting the list
+	of MRLs for DVB
+
+	* src/totem-playlist.c (totem_playlist_mrl_to_title):
+	Another label work-around for DVB MRLs, just like the DVD one
+
+	* src/totem.c (totem_action_set_mrl_with_warning),
+	(totem_action_open_files_list), (totem_action_remote),
+	(on_eos_event): When calling play_pause_set_label() make sure the
+	right enum is used (fixes playlist and play button showing the
+	wrong status), Only call "_load_media()" for DVB, it will
+	automatically start playing if it's successful,
+	Print out a decent error message when receiving an EOS from DVB,
+	it can only happen when losing the signal
+
+2008-06-20  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: Fix possible missing symbol when using a
 	totem-pl-parser without GIO support
 

@@ -824,6 +824,12 @@ setup_config (BaconVideoWidget *bvw)
 	entry.num_value = 0;
 	xine_config_update_entry (bvw->priv->xine, &entry);
 
+	/* Don't save the last viewed channel for DVB */
+	bvw_config_helper_num (bvw->priv->xine,
+			       "media.dvb.remember_channel", 1, &entry);
+	entry.num_value = 0;
+	xine_config_update_entry (bvw->priv->xine, &entry);
+
 	if (bvw->priv->gc == NULL) {
 		g_warning ("GConf not available, broken installation?");
 		return;
@@ -1340,6 +1346,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 	case XINE_MSG_NO_ERROR:
 		return;
 	case XINE_MSG_GENERAL_WARNING:
+		g_message ("general warning: %s", data->messages);
 		if (data->messages != NULL && strcmp (data->messages, "DVB Signal Lost.  Please check connections.") == 0) {
 			num = BVW_ERROR_INVALID_DEVICE;
 			message = g_strdup (_("The TV adapter could not tune into the channel. Please check your hardware setup, and channel configuration."));
@@ -3521,11 +3528,15 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 		}
 	} else if (type == MEDIA_TYPE_DVB) {
 		/* No channels.conf, and we couldn't find it */
-		if (g_str_has_prefix (mrls[0], "Sorry") != FALSE)
+		if (g_str_has_prefix (mrls[0], "Sorry, No valid channels.conf found") != FALSE) {
 			return NULL;
+		} else if (g_str_has_prefix (mrls[0], "Sorry, No DVB input device found.") != FALSE) {
+			g_message ("Device is busy...");
+			return NULL;
+		}
 		/* The first channel can be the last channel played,
 		 * or a copy of the first one, ignore it */
-		return bacon_video_widget_strdupnv ((const char **) mrls++, num_mrls - 1);
+		return bacon_video_widget_strdupnv ((const char **) mrls, num_mrls);
 	}
 
 	return bacon_video_widget_strdupnv ((const char **) mrls, num_mrls);

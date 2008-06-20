@@ -275,6 +275,9 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 		/* This is "Title 3", where title is a DVD title
 		 * Note: NOT a DVD chapter */
 		return g_strdup_printf (_("Title %d"), (int) g_strtod (mrl + 6, NULL));
+	} else if (g_str_has_prefix (mrl, "dvb://") != FALSE) {
+		/* This is "BBC ONE(BBC)" for "dvb://BBC ONE(BBC)" */
+		return g_strdup (mrl + 6);
 	}
 
 	file = g_file_new_for_uri (mrl);

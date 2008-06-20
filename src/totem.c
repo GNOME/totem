@@ -1035,14 +1035,14 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
 		totem_file_closed (totem);
-		play_pause_set_label (totem, TOTEM_PLAYLIST_STATUS_NONE);
+		play_pause_set_label (totem, STATE_STOPPED);
 	}
 
 	if (mrl == NULL)
 	{
 		retval = FALSE;
 
-		play_pause_set_label (totem, TOTEM_PLAYLIST_STATUS_NONE);
+		play_pause_set_label (totem, STATE_STOPPED);
 
 		/* Play/Pause */
 		totem_action_set_sensitivity ("play", FALSE);
@@ -1960,7 +1960,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
 			} else if (g_str_equal (filename, "dvb:") != FALSE) {
-				totem_action_play_media (totem, MEDIA_TYPE_DVB, "0");
+				totem_action_load_media (totem, MEDIA_TYPE_DVB, "0");
 				changed = TRUE;
 			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
 				totem_action_add_recent (totem, filename);
@@ -2186,7 +2186,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			/* FIXME b0rked */
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
-			totem_action_play_media (totem, MEDIA_TYPE_DVB, "0");
+			totem_action_load_media (totem, MEDIA_TYPE_DVB, "0");
 		} else if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
 			totem_action_add_recent (totem, url);
 		}
@@ -2515,6 +2515,15 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 {
 	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
 		return FALSE;
+
+	/* EOS on DVB means that we lost the signal */
+	if (totem->mrl != NULL && g_str_has_prefix (totem->mrl, "dvb://") != FALSE) {
+		totem_action_stop (totem);
+		totem_action_error_and_exit (_("TV signal lost"),
+					     _("Please verify your hardware setup."),
+					     totem);
+		return FALSE;
+	}
 
 	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE
 			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
