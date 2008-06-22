@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-18 10:50+0000\n"
-"PO-Revision-Date: 2008-06-21 19:10+0200\n"
+"POT-Creation-Date: 2008-06-21 20:17+0000\n"
+"PO-Revision-Date: 2008-06-22 11:56+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -594,8 +594,8 @@ msgid "Time seek bar"
 msgstr "Barra de tiempo"
 
 #. Title
-#: ../data/totem.ui.h:94 ../src/totem.c:1002 ../src/totem.c:3353
-#: ../src/totem.c:3385 ../browser-plugin/totem-plugin-viewer.c:741
+#: ../data/totem.ui.h:94 ../src/totem.c:1002 ../src/totem.c:3362
+#: ../src/totem.c:3394 ../browser-plugin/totem-plugin-viewer.c:741
 #: ../browser-plugin/totem-plugin-viewer.c:1784
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
@@ -1197,38 +1197,38 @@ msgstr "Películas que reproducir"
 msgid "Title %d"
 msgstr "Título %d"
 
-#: ../src/totem-playlist.c:349 ../src/totem-playlist.c:952
+#: ../src/totem-playlist.c:352 ../src/totem-playlist.c:955
 msgid "Could not save the playlist"
 msgstr "No se pudo guardar la lista de reproducción"
 
-#: ../src/totem-playlist.c:952
+#: ../src/totem-playlist.c:955
 msgid "Unknown file extension."
 msgstr "Extensión de archivo desconocida."
 
-#: ../src/totem-playlist.c:965
+#: ../src/totem-playlist.c:968
 msgid "Select playlist format:"
 msgstr "Seleccione el formato de la lista de reproducción:"
 
-#: ../src/totem-playlist.c:970
+#: ../src/totem-playlist.c:973
 msgid "By extension"
 msgstr "Por extensión"
 
-#: ../src/totem-playlist.c:1000
+#: ../src/totem-playlist.c:1003
 msgid "Save Playlist"
 msgstr "Guardar lista de reproducción"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1011 ../src/totem-sidebar.c:101
+#: ../src/totem-playlist.c:1014 ../src/totem-sidebar.c:101
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
-#: ../src/totem-playlist.c:1782
+#: ../src/totem-playlist.c:1785
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "La lista de reproducción «%s» no se pudo analizar, quizá esté dañada."
 
-#: ../src/totem-playlist.c:1783
+#: ../src/totem-playlist.c:1786
 msgid "Playlist error"
 msgstr "Error en la lista de reproducción"
 
@@ -1600,7 +1600,7 @@ msgstr ""
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem.c:595 ../src/totem.c:3217
+#: ../src/totem.c:595 ../src/totem.c:3226
 #: ../browser-plugin/totem-plugin-viewer.c:1775
 msgid "No reason."
 msgstr "No hay razón."
@@ -1636,36 +1636,44 @@ msgstr "Totem no pudo mostrar el contenido de la ayuda."
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem.c:3078 ../src/totem.c:3080
+#: ../src/totem.c:2522
+msgid "TV signal lost"
+msgstr "Se perdió la señal de TV"
+
+#: ../src/totem.c:2523
+msgid "Please verify your hardware setup."
+msgstr "Compruebe su configuración del hardware."
+
+#: ../src/totem.c:3087 ../src/totem.c:3089
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/película anterior"
 
-#: ../src/totem.c:3086 ../src/totem.c:3088
+#: ../src/totem.c:3095 ../src/totem.c:3097
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem.c:3095 ../src/totem.c:3097
+#: ../src/totem.c:3104 ../src/totem.c:3106
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/película siguiente"
 
-#: ../src/totem.c:3217
+#: ../src/totem.c:3226
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem.c:3354
+#: ../src/totem.c:3363
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:3354
+#: ../src/totem.c:3363
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
 #. Handle command line arguments
-#: ../src/totem.c:3362
+#: ../src/totem.c:3371
 msgid "- Play movies and songs"
 msgstr "- Reproduzca películas y canciones"
 
-#: ../src/totem.c:3371
+#: ../src/totem.c:3380
 #, c-format
 msgid ""
 "%s\n"
@@ -1675,11 +1683,11 @@ msgstr ""
 "Ejecute \"%s --help\" para ver una lista completa de todas las opciones "
 "disponibles de la línea de comandos.\n"
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3400
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem no pudo inicializar el motor de configuración."
 
-#: ../src/totem.c:3391
+#: ../src/totem.c:3400
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
@@ -1835,8 +1843,8 @@ msgstr ""
 "No se ha podido cargar el controlador de sonido «%s»\n"
 "Verifique que el dispositivo no este ocupado."
 
-#: ../src/backend/bacon-video-widget-xine.c:1221
-#: ../src/backend/bacon-video-widget-xine.c:1814
+#: ../src/backend/bacon-video-widget-xine.c:1227
+#: ../src/backend/bacon-video-widget-xine.c:1821
 #, c-format
 msgid ""
 "No video output is available. Make sure that the program is correctly "
@@ -1845,38 +1853,38 @@ msgstr ""
 "No hay salida de vídeo disponible. Asegúrese de que el programa está "
 "instalado correctamente."
 
-#: ../src/backend/bacon-video-widget-xine.c:1345
+#: ../src/backend/bacon-video-widget-xine.c:1352
 msgid ""
 "The TV adapter could not tune into the channel. Please check your hardware "
 "setup, and channel configuration."
 msgstr ""
-"El adaptador de TV no pudo sintonizar el canal. Compruebe su configuración del "
-"hardware y la configuración del canal."
+"El adaptador de TV no pudo sintonizar el canal. Compruebe su configuración "
+"del hardware y la configuración del canal."
 
-#: ../src/backend/bacon-video-widget-xine.c:1350
+#: ../src/backend/bacon-video-widget-xine.c:1357
 msgid "The server you are trying to connect to is not known."
 msgstr "El servidor al que está intentando conectar no es conocido."
 
-#: ../src/backend/bacon-video-widget-xine.c:1354
+#: ../src/backend/bacon-video-widget-xine.c:1361
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "El nombre de dispositivo que especificó (%s) parece ser inválido."
 
-#: ../src/backend/bacon-video-widget-xine.c:1358
+#: ../src/backend/bacon-video-widget-xine.c:1365
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "El servidor al que está intentando conectar (%s) es inalcanzable."
 
-#: ../src/backend/bacon-video-widget-xine.c:1362
+#: ../src/backend/bacon-video-widget-xine.c:1369
 msgid "The connection to this server was refused."
 msgstr "La conexión a este servidor fue rehusada."
 
-#: ../src/backend/bacon-video-widget-xine.c:1366
+#: ../src/backend/bacon-video-widget-xine.c:1373
 msgid "The specified movie could not be found."
 msgstr "La película especificada no se pudo encontrar."
 
-#: ../src/backend/bacon-video-widget-xine.c:1372
-#: ../src/backend/bacon-video-widget-xine.c:1388
+#: ../src/backend/bacon-video-widget-xine.c:1379
+#: ../src/backend/bacon-video-widget-xine.c:1395
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1884,82 +1892,82 @@ msgstr ""
 "La fuente parece cifrada, y no puede leerse. ¿Está intentando reproducir un "
 "DVD cifrado sin libdvdcss?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1375
+#: ../src/backend/bacon-video-widget-xine.c:1382
 msgid "The movie could not be read."
 msgstr "La película no se pudo leer."
 
-#: ../src/backend/bacon-video-widget-xine.c:1382
+#: ../src/backend/bacon-video-widget-xine.c:1389
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr ""
 "Ocurrió un problema durante la carga de una biblioteca o un decodificador (%"
 "s)."
 
-#: ../src/backend/bacon-video-widget-xine.c:1391
+#: ../src/backend/bacon-video-widget-xine.c:1398
 msgid "This file is encrypted and cannot be played back."
 msgstr "Este archivo está cifrado y no puede reproducirse."
 
-#: ../src/backend/bacon-video-widget-xine.c:1396
+#: ../src/backend/bacon-video-widget-xine.c:1403
 msgid "For security reasons, this movie can not be played back."
 msgstr "por razones de seguridad, esta película no puede reproducirse."
 
-#: ../src/backend/bacon-video-widget-xine.c:1401
+#: ../src/backend/bacon-video-widget-xine.c:1408
 msgid "The audio device is busy. Is another application using it?"
 msgstr "El dispositivo de sonido está ocupado. ¿Hay alguna otra aplicación usándolo?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1407
+#: ../src/backend/bacon-video-widget-xine.c:1414
 msgid "Authentication is required to access this file."
 msgstr "Se requiere autenticación para acceder a este archivo."
 
-#: ../src/backend/bacon-video-widget-xine.c:1409
+#: ../src/backend/bacon-video-widget-xine.c:1416
 msgid "Authentication is required to access this file or stream."
 msgstr "Se requiere autenticación para acceder a este archivo o flujo."
 
-#: ../src/backend/bacon-video-widget-xine.c:1415
+#: ../src/backend/bacon-video-widget-xine.c:1422
 msgid "You are not allowed to open this file."
 msgstr "No se le permite abrir este archivo."
 
-#: ../src/backend/bacon-video-widget-xine.c:1417
+#: ../src/backend/bacon-video-widget-xine.c:1424
 msgid "The server refused access to this file or stream."
 msgstr "El servidor rechazó el acceso a este archivo a flujo."
 
-#: ../src/backend/bacon-video-widget-xine.c:1421
+#: ../src/backend/bacon-video-widget-xine.c:1428
 msgid "The file you tried to play is an empty file."
 msgstr "El archivo que intentó reproducir está vacío."
 
-#: ../src/backend/bacon-video-widget-xine.c:1605
+#: ../src/backend/bacon-video-widget-xine.c:1612
 #, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr ""
 "No hay ningún complemento de entrada que pueda manejar la dirección de esta "
 "película"
 
-#: ../src/backend/bacon-video-widget-xine.c:1609
+#: ../src/backend/bacon-video-widget-xine.c:1616
 #, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "No hay ningún complemento que pueda manejar esta película."
 
-#: ../src/backend/bacon-video-widget-xine.c:1613
+#: ../src/backend/bacon-video-widget-xine.c:1620
 #, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "Esta película está corrompida y no se puede continuar reproduciendo."
 
-#: ../src/backend/bacon-video-widget-xine.c:1617
+#: ../src/backend/bacon-video-widget-xine.c:1624
 #, c-format
 msgid "This location is not a valid one."
 msgstr "Esta dirección no es válida."
 
-#: ../src/backend/bacon-video-widget-xine.c:1621
+#: ../src/backend/bacon-video-widget-xine.c:1628
 #, c-format
 msgid "This movie could not be opened."
 msgstr "Esta película no pudo abrirse."
 
-#: ../src/backend/bacon-video-widget-xine.c:1625
+#: ../src/backend/bacon-video-widget-xine.c:1632
 #, c-format
 msgid "Generic Error."
 msgstr "Error genérico."
 
-#: ../src/backend/bacon-video-widget-xine.c:2460
+#: ../src/backend/bacon-video-widget-xine.c:2467
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1969,7 +1977,7 @@ msgstr ""
 "complementos adicionales para ser capaz de reproducir algunos tipos de "
 "películas"
 
-#: ../src/backend/bacon-video-widget-xine.c:2464
+#: ../src/backend/bacon-video-widget-xine.c:2471
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1979,29 +1987,29 @@ msgstr ""
 "complementos adicionales para ser capaz de reproducir algunos tipos de "
 "películas"
 
-#: ../src/backend/bacon-video-widget-xine.c:2478
+#: ../src/backend/bacon-video-widget-xine.c:2485
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Este es un archivo que sólo tiene sonido, no hay salida de vídeo disponible."
 
-#: ../src/backend/bacon-video-widget-xine.c:4086
-#: ../src/backend/bacon-video-widget-xine.c:4133
-#: ../src/backend/bacon-video-widget-xine.c:4155
+#: ../src/backend/bacon-video-widget-xine.c:4097
+#: ../src/backend/bacon-video-widget-xine.c:4144
+#: ../src/backend/bacon-video-widget-xine.c:4166
 #, c-format
 msgid "Language %d"
 msgstr "Idioma %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4244
+#: ../src/backend/bacon-video-widget-xine.c:4255
 #, c-format
 msgid "No video to capture."
 msgstr "No hay vídeo para capturar."
 
-#: ../src/backend/bacon-video-widget-xine.c:4252
+#: ../src/backend/bacon-video-widget-xine.c:4263
 #, c-format
 msgid "Video codec is not handled."
 msgstr "No es posible manejar el códec de vídeo."
 
-#: ../src/backend/bacon-video-widget-xine.c:4263
+#: ../src/backend/bacon-video-widget-xine.c:4274
 #, c-format
 msgid "Movie is not playing."
 msgstr "La película no se está reproduciendo."
