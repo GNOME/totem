@@ -346,7 +346,7 @@ if test "x$have_python" != "xno"; then
 	PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
 	PY_EXEC_PREFIX=`$PYTHON -c 'import sys ; print sys.exec_prefix'`
 	PYTHON_LIBS="-lpython$PYTHON_VERSION"
-	if test -d $PY_EXEC_PREFIX/lib64 ; then
+	if test -d $PY_EXEC_PREFIX/lib64/python$PYTHON_VERSION ; then
 		PYTHON_LIB_LOC="-L$PY_EXEC_PREFIX/lib64/python$PYTHON_VERSION/config"
 		PYTHON_MAKEFILE="$PY_EXEC_PREFIX/lib64/python$PYTHON_VERSION/config/Makefile"
 	else

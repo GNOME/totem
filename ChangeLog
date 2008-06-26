@@ -1,3 +1,9 @@
+2008-06-26  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in: Even when $(prefix)/lib64 is present, check
+	that the python directory is present, spotted by Mikael Lindberg
+	<mikael.lindberg@gmail.com> (Closes: #540289)
+
 2008-06-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-xine.c (setup_config),
