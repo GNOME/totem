@@ -80,6 +80,7 @@ typedef enum {
 	/* Devices */
 	BVW_ERROR_DVD_ENCRYPTED,
 	BVW_ERROR_INVALID_DEVICE,
+	BVW_ERROR_DEVICE_BUSY,
 	/* Network */
 	BVW_ERROR_UNKNOWN_HOST,
 	BVW_ERROR_NETWORK_UNREACHABLE,
@@ -171,20 +172,10 @@ void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
 						  int speed);
 int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
 
-typedef enum {
-	BVW_CAN_PLAY_SUCCESS,
-	BVW_CAN_PLAY_MISSING_CHANNELS,
-	BVW_CAN_PLAY_MISSING_PLUGINS,
-	BVW_CAN_PLAY_UNSUPPORTED
-} BaconVideoWidgetCanPlayStatus;
-
-BaconVideoWidgetCanPlayStatus bacon_video_widget_can_play
-						 (BaconVideoWidget *bvw,
-						  TotemDiscMediaType type);
-
 gchar **bacon_video_widget_get_mrls		 (BaconVideoWidget *bvw,
 						  TotemDiscMediaType type,
-						  const char *device);
+						  const char *device,
+						  GError **error);
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,

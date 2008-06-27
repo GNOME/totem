@@ -1572,12 +1572,9 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	/* Steal messages from the async queue, if there's an error,
 	 * to use as the error message rather than the crappy errors from
 	 * xine_open() */
-	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL)
-	{
-		if (data->signal == ERROR_ASYNC || data->signal == MESSAGE_ASYNC)
-		{
-			if (save_data != NULL)
-			{
+	while ((data = g_async_queue_try_pop (bvw->priv->queue)) != NULL) {
+		if (data->signal == ERROR_ASYNC || data->signal == MESSAGE_ASYNC) {
+			if (save_data != NULL) {
 				g_free (save_data->msg);
 				g_free (save_data);
 			}
@@ -1588,8 +1585,7 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 		}
 	}
 
-	if (save_data != NULL)
-	{
+	if (save_data != NULL) {
 		g_set_error (error, BVW_ERROR, save_data->num,
 				"%s", save_data->msg);
 		g_free (save_data->msg);
@@ -3419,43 +3415,6 @@ bacon_video_widget_is_seekable (BaconVideoWidget *bvw)
 			XINE_STREAM_INFO_SEEKABLE);
 }
 
-BaconVideoWidgetCanPlayStatus
-bacon_video_widget_can_play (BaconVideoWidget *bvw, TotemDiscMediaType type)
-{
-	switch (type)
-	{
-	case MEDIA_TYPE_DVD:
-		if (bvw->priv->can_dvd != FALSE)
-			return BVW_CAN_PLAY_SUCCESS;
-		break;
-	case MEDIA_TYPE_VCD:
-		if (bvw->priv->can_vcd != FALSE)
-			return BVW_CAN_PLAY_SUCCESS;
-		break;
-	case MEDIA_TYPE_DVB:
-		if (bvw->priv->can_dvb != FALSE) {
-			char *path;
-
-			path = g_build_filename (g_get_home_dir (),
-						 ".xine",
-						 "channels.conf",
-						 NULL);
-			if (g_file_test (path, G_FILE_TEST_IS_REGULAR) == FALSE) {
-				g_free (path);
-				return BVW_CAN_PLAY_MISSING_CHANNELS;
-			}
-			g_free (path);
-			return BVW_CAN_PLAY_SUCCESS;
-		}
-		break;
-	case MEDIA_TYPE_CDDA:
-	default:
-		return BVW_CAN_PLAY_UNSUPPORTED;
-	}
-
-	return BVW_CAN_PLAY_MISSING_PLUGINS;
-}
-
 static char **
 bacon_video_widget_strdupnv (const char **mrls, guint num_mrls)
 {
@@ -3473,7 +3432,8 @@ bacon_video_widget_strdupnv (const char **mrls, guint num_mrls)
 char **
 bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 			     TotemDiscMediaType type,
-			     const char *device)
+			     const char *device,
+			     GError **error)
 {
 	const char *plugin_id, *entry_name;
 	int num_mrls;
@@ -3484,17 +3444,63 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 	g_return_val_if_fail (bvw->priv->xine != NULL, NULL);
 	g_return_val_if_fail (device != NULL, NULL);
 
-	entry_name = plugin_id = NULL;
-
-	if (type == MEDIA_TYPE_DVD) {
+	switch (type) {
+	case MEDIA_TYPE_DVD:
+		if (bvw->priv->can_dvd == FALSE) {
+			g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+				     "XXX Do not use XXX");
+			return NULL;
+		}
 		plugin_id = "DVD";
 		entry_name = "media.dvd.device";
-	} else if (type == MEDIA_TYPE_VCD) {
+		break;
+	case MEDIA_TYPE_VCD:
+		if (bvw->priv->can_vcd == FALSE) {
+			g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+				     "XXX Do not use XXX");
+			return NULL;
+		}
 		plugin_id = "VCD";
 		entry_name = "media.vcd.device";
-	} else if (type == MEDIA_TYPE_DVB) {
+		break;
+	case MEDIA_TYPE_DVB:
+		if (bvw->priv->can_dvb == FALSE) {
+			g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+				     "XXX Do not use XXX");
+			return NULL;
+		} else {
+			char *path;
+
+			path = g_strdup_printf ("/dev/dvb/adapter%s/frontend0", device);
+			if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE) {
+				g_free (path);
+				g_set_error (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+					     "XXX Do not use XXX");
+				return NULL;
+			}
+			g_free (path);
+
+			path = g_build_filename (g_get_home_dir (),
+						 ".xine",
+						 "channels.conf",
+						 NULL);
+			if (g_file_test (path, G_FILE_TEST_IS_REGULAR) == FALSE) {
+				g_free (path);
+				g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+					     "XXX Do not use XXX");
+				return NULL;
+			}
+			g_free (path);
+		}
 		plugin_id = "DVB";
 		entry_name = "media.dvb.adapter";
+		break;
+	case MEDIA_TYPE_CDDA:
+		g_set_error (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
+			     "XXX Do not use XXX");
+		return NULL;
+	default:
+		g_assert_not_reached ();
 	}
 
 	if (type != MEDIA_TYPE_DVB) {
@@ -3529,14 +3535,14 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 	} else if (type == MEDIA_TYPE_DVB) {
 		/* No channels.conf, and we couldn't find it */
 		if (g_str_has_prefix (mrls[0], "Sorry, No valid channels.conf found") != FALSE) {
+			g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+				     "XXX Do not use XXX");
 			return NULL;
 		} else if (g_str_has_prefix (mrls[0], "Sorry, No DVB input device found.") != FALSE) {
-			g_message ("Device is busy...");
+			g_set_error (error, BVW_ERROR, BVW_ERROR_DEVICE_BUSY,
+				     "XXX Do not use XXX");
 			return NULL;
 		}
-		/* The first channel can be the last channel played,
-		 * or a copy of the first one, ignore it */
-		return bacon_video_widget_strdupnv ((const char **) mrls, num_mrls);
 	}
 
 	return bacon_video_widget_strdupnv ((const char **) mrls, num_mrls);

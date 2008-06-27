@@ -1,3 +1,20 @@
+2008-06-27  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget.h: Kill bacon_video_widget_can_play
+	and get errors directly from _get_mrls().
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_channels_file),
+	(bacon_video_widget_get_dvd_mrls),
+	(bacon_video_widget_get_dvb_mrls), (bacon_video_widget_get_mrls):
+	* src/backend/bacon-video-widget-xine.c (xine_try_error),
+	(bacon_video_widget_get_mrls):
+	Better errors when a device isn't present, channels file is missing,
+	or the device is busy
+
+	* src/totem.c (totem_action_load_media): Changes for the above
+	(Closes: #539319)
+
 2008-06-27  Gabor Kelemen  <kelemeng@gnome.hu>
 
 	* data/playlist.ui: Add accelerator to the Select text subtitle... text

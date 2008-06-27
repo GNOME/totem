@@ -519,25 +519,22 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 static gboolean
 totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *device)
 {
-	char **mrls;
-	char *msg;
+	char **mrls, *msg;
+	GError *error = NULL;
+	const char *link, *link_text, *secondary;
 	gboolean retval;
-	BaconVideoWidgetCanPlayStatus status;
 
-	status = bacon_video_widget_can_play (totem->bvw, type);
-
-	if (status != BVW_CAN_PLAY_SUCCESS) {
-		const char *link, *link_text, *secondary;
-
-		switch (status) {
-		case BVW_CAN_PLAY_MISSING_CHANNELS:
-			g_assert (type == MEDIA_TYPE_DVB);
-			link = "http://www.gnome.org/projects/totem/#dvb";
-			link_text = _("More information about watching TV");
-			msg = g_strdup (_("Totem is missing a channels listing to be able to tune the receiver."));
-			secondary = _("Please follow the instructions provided in the link to create a channels listing.");
-			break;
-		case BVW_CAN_PLAY_MISSING_PLUGINS:
+	mrls = bacon_video_widget_get_mrls (totem->bvw, type, device, &error);
+	if (mrls == NULL) {
+		/* No errors? Weird */
+		if (error == NULL) {
+			msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
+			totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
+			g_free (msg);
+			return FALSE;
+		}
+		/* No plugin for the media type */
+		if (g_error_matches (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE) != FALSE) {
 			link = "http://www.gnome.org/projects/totem/#codecs";
 			link_text = _("More information about media plugins");
 			secondary = _("Please install the necessary plugins and restart Totem to be able to play this media.");
@@ -545,25 +542,33 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."), _(totem_cd_get_human_readable_name (type)));
 			else
 				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
-			break;
-		case BVW_CAN_PLAY_UNSUPPORTED:
+		/* Device doesn't exist */
+		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE) != FALSE) {
+			g_assert (type == MEDIA_TYPE_DVB);
+			msg = N_("Totem cannot play TV, because no TV adapters are present or they are not supported.");
+			totem_action_error (_(msg), _("Please insert a supported TV adapter."), totem);
+			return FALSE;
+		/* No channels.conf file */
+		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND) != FALSE) {
+			g_assert (type == MEDIA_TYPE_DVB);
+			link = "http://www.gnome.org/projects/totem/#dvb";
+			link_text = _("More information about watching TV");
+			msg = g_strdup (_("Totem is missing a channels listing to be able to tune the receiver."));
+			secondary = _("Please follow the instructions provided in the link to create a channels listing.");
+		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_DEVICE_BUSY) != FALSE) {
+			g_assert (type == MEDIA_TYPE_DVB);
+			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because the TV device is busy."), _(totem_cd_get_human_readable_name (type)));
+			totem_action_error (msg, _("Please try again later."), totem);
+			g_free (msg);
+			return FALSE;
+		/* Unsupported type (ie. CDDA) */
+		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION) != FALSE) {
 			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
 			totem_action_error (msg, _("Please insert another disc to play back."), totem);
 			g_free (msg);
 			return FALSE;
-		default:
-			g_assert_not_reached ();
 		}
-
 		totem_interface_error_with_link (msg, secondary, link, link_text, GTK_WINDOW (totem->win), totem);
-		g_free (msg);
-		return FALSE;
-	}
-
-	mrls = bacon_video_widget_get_mrls (totem->bvw, type, device);
-	if (mrls == NULL) {
-		msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
-		totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
 		g_free (msg);
 		return FALSE;
 	}

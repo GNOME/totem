@@ -3907,81 +3907,23 @@ bacon_video_widget_get_channels_file (void)
   gchar *filename;
 
   filename = g_strdup(g_getenv("GST_DVB_CHANNELS_CONF"));
-  if (filename == NULL) {
+  if (filename == NULL || g_file_test (filename, G_FILE_TEST_IS_REGULAR) == FALSE) {
     gchar *directory;
-
     guint major, minor, micro, nano;
+
+    g_free (filename);
     gst_version(&major, &minor, &micro, &nano);
     directory = g_strdup_printf (".gstreamer-%d.%d", major, minor);
     filename = g_build_filename (g_get_home_dir (), directory, "dvb-channels.conf", NULL);
     g_free (directory);
+
+    if (g_file_test (filename, G_FILE_TEST_IS_REGULAR) == FALSE) {
+      g_free (filename);
+      filename = g_build_filename (g_get_home_dir (), ".xine", "channels.conf", NULL);
+    }
   }
 
   return filename;
-}
-
-BaconVideoWidgetCanPlayStatus
-bacon_video_widget_can_play (BaconVideoWidget * bvw, TotemDiscMediaType type)
-{
-  BaconVideoWidgetCanPlayStatus res;
-
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-
-  switch (type) {
-    case MEDIA_TYPE_VCD:
-      res = BVW_CAN_PLAY_SUCCESS;
-      break;
-    case MEDIA_TYPE_DVD: {
-      if (!gst_default_registry_check_feature_version ("dvdreadsrc", 0, 10, 0)) {
-        GST_DEBUG ("Missing dvdreadsrc");
-        res = BVW_CAN_PLAY_MISSING_PLUGINS;
-      } else if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
-      		 !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
-        GST_DEBUG ("flupsdemux not new enough for DVD playback");
-        res = BVW_CAN_PLAY_MISSING_PLUGINS;
-      } else {
-        res = BVW_CAN_PLAY_SUCCESS;
-      }
-      break;
-    }
-    case MEDIA_TYPE_DVB: {
-      gchar *filename;
-
-      /* FIXME: change to 0,10,6 once gst-plugins-bad 0.10.6 has been released */
-      if (!gst_default_registry_check_feature_version ("dvbbasebin", 0, 10, 0) ||
-          !gst_default_registry_check_feature_version ("mpegtsparse", 0, 10, 0) ||
-          !gst_default_registry_check_feature_version ("dvbsrc", 0, 10, 0)) {
-        GST_DEBUG ("Missing one or all of: dvbsrc, dvbbasebin, mpegtsparse");
-        res = BVW_CAN_PLAY_MISSING_PLUGINS;
-        break;
-      }
-      if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
-      	  !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
-        GST_DEBUG ("flupsdemux not new enough for DVB playback");
-        res = BVW_CAN_PLAY_MISSING_PLUGINS;
-        break;
-      }
-
-      filename = bacon_video_widget_get_channels_file ();
-      if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
-        res = BVW_CAN_PLAY_SUCCESS;
-      } else {
-        GST_DEBUG ("no channels file '%s'", filename);
-        res = BVW_CAN_PLAY_MISSING_CHANNELS;
-      }
-      g_free(filename);
-      break;
-    }
-    case MEDIA_TYPE_CDDA:
-    default:
-      res = BVW_CAN_PLAY_UNSUPPORTED;
-      break;
-  }
-
-  GST_DEBUG ("type=%d, can_play=%d", type, res);
-  return res;
 }
 
 static char
@@ -4042,9 +3984,113 @@ bacon_video_widget_dvb_get_adapter_type (const char *device)
   return adapter_type;
 }
 
+static gchar **
+bacon_video_widget_get_dvd_mrls (const char *device)
+{
+  GstFormat fmt;
+  GstElement *element;
+  gint64 num_titles, i;
+  GPtrArray *array;
+
+  element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
+  if (element == NULL)
+    return NULL;
+  /* We need to get the format after instantiating dvdreadsrc, as
+   * the nick is registered in that class init */
+  fmt = gst_format_get_by_nick ("title");
+  g_object_set (element, "device", device, NULL);
+  if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
+    GST_DEBUG ("Couldn't change the state to PAUSED");
+    gst_object_unref (element);
+    return NULL;
+  }
+  if (gst_element_query_duration (element, &fmt, &num_titles) == FALSE) {
+    GST_DEBUG ("Couldn't query the \"duration\" (number of titles)");
+    gst_element_set_state (element, GST_STATE_NULL);
+    gst_object_unref (element);
+    return NULL;
+  }
+
+  fmt = GST_FORMAT_TIME;
+  array = g_ptr_array_new ();
+  for (i = 1 ; i <= num_titles; i++) {
+    gint64 len;
+
+    /* Reset to NULL, change the title, and go back to PAUSED */
+    if (gst_element_set_state (element, GST_STATE_NULL) != GST_STATE_CHANGE_SUCCESS) {
+      GST_DEBUG ("Couldn't set state to NULL for title %"G_GINT64_FORMAT, i);
+      break;
+    }
+    g_object_set (element, "title", i, NULL);
+    if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
+      GST_DEBUG ("Couldn't set state for title %"G_GINT64_FORMAT, i);
+      break;
+    }
+
+    if (gst_element_query_duration (element, &fmt, &len) == FALSE) {
+      GST_DEBUG ("Couldnt' query duration for title %"G_GINT64_FORMAT, i);
+      break;
+    }
+    /* If it's less than 30 seconds long, we kick it out */
+    if (len >= (30 * GST_SECOND)) {
+      g_ptr_array_add (array, g_strdup_printf ("dvd://%"G_GINT64_FORMAT, i));
+      GST_DEBUG ("URI: dvd://%d (time: %" GST_TIME_FORMAT ")",
+		 (gint) i, GST_TIME_ARGS (len));
+    }
+  }
+
+  gst_element_set_state (element, GST_STATE_NULL);
+  gst_object_unref (element);
+  if (array->len >= 1)
+    g_ptr_array_add (array, NULL);
+  return (char **) g_ptr_array_free (array, FALSE);
+}
+
+static gchar **
+bacon_video_widget_get_dvb_mrls (const char *device)
+{
+  gchar* filename;
+  gchar* contents;
+  GPtrArray *array;
+  gchar adapter_type;
+
+  adapter_type = bacon_video_widget_dvb_get_adapter_type (device);
+  filename = bacon_video_widget_get_channels_file ();
+
+  if (g_file_get_contents (filename, &contents, NULL, NULL) != FALSE) {
+    gchar **lines, *line;
+    guint i;
+
+    lines = g_strsplit (contents, "\n", 0);
+    array = g_ptr_array_new ();
+
+    for (i = 0; lines[i] != NULL; i++) {
+      line = lines[i];
+
+      if (line[0] != '#') {
+	gchar** fields = g_strsplit(line, ":", 0);
+	if ((g_strv_length (fields) == 13 && adapter_type == 'T') ||
+	    (g_strv_length (fields) == 8 && adapter_type == 'S') ||
+	    (g_strv_length (fields) == 9 && adapter_type == 'C')) {
+	  g_ptr_array_add (array, g_strdup_printf("dvb://%s", fields[0]));
+	}
+	g_strfreev(fields);
+      }
+    }
+    g_strfreev(lines);
+  } else {
+    return NULL;
+  }
+  if (array->len >= 1)
+    g_ptr_array_add (array, NULL);
+  return (char **) g_ptr_array_free (array, FALSE);
+}
+
 gchar **
-bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
-			     const char *device)
+bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
+			     TotemDiscMediaType type,
+			     const char *device,
+			     GError **error)
 {
   gchar **mrls;
 
@@ -4055,120 +4101,85 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw, TotemDiscMediaType type,
   GST_DEBUG ("type = %d", type);
   GST_DEBUG ("device = %s", GST_STR_NULL (device));
 
-  g_free (bvw->priv->media_device);
-  bvw->priv->media_device = g_strdup (device);
-
   switch (type) {
     case MEDIA_TYPE_VCD: {
-      gchar *uri[] = { NULL, NULL };
-      uri[0] = g_strdup_printf ("vcd://%s", device);
-      mrls = g_strdupv (uri);
-      g_free (uri[0]);
-      break;
-    }
-
+	gchar *uri[] = { NULL, NULL };
+	uri[0] = g_strdup_printf ("vcd://%s", device);
+	mrls = g_strdupv (uri);
+	g_free (uri[0]);
+	break;
+      }
     case MEDIA_TYPE_DVD: {
-      GstFormat fmt;
-      GstElement *element;
-      gint64 num_titles, i;
-      GPtrArray *array;
-
-      element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
-      if (element == NULL)
+      if (!gst_default_registry_check_feature_version ("dvdreadsrc", 0, 10, 0)) {
+        GST_DEBUG ("Missing dvdreadsrc");
+	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+		     "XXX Do not use XXX");
         return NULL;
-      /* We need to get the format after instantiating dvdreadsrc, as
-       * the nick is registered in that class init */
-      fmt = gst_format_get_by_nick ("title");
-      g_object_set (element, "device", device, NULL);
-      if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
-        GST_DEBUG ("Couldn't change the state to PAUSED");
-        gst_object_unref (element);
+      } else if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
+      		 !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
+        GST_DEBUG ("flupsdemux not new enough for DVD playback");
+	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+		     "XXX Do not use XXX");
         return NULL;
+      } else {
+        mrls = bacon_video_widget_get_dvd_mrls (device);
       }
-      if (gst_element_query_duration (element, &fmt, &num_titles) == FALSE) {
-        GST_DEBUG ("Couldn't query the \"duration\" (number of titles)");
-	gst_element_set_state (element, GST_STATE_NULL);
-	gst_object_unref (element);
-	return NULL;
-      }
-
-      fmt = GST_FORMAT_TIME;
-      array = g_ptr_array_new ();
-      for (i = 1 ; i <= num_titles; i++) {
-        gint64 len;
-
-        /* Reset to NULL, change the title, and go back to PAUSED */
-	if (gst_element_set_state (element, GST_STATE_NULL) != GST_STATE_CHANGE_SUCCESS) {
-	  GST_DEBUG ("Couldn't set state to NULL for title %"G_GINT64_FORMAT, i);
-	  break;
-	}
-        g_object_set (element, "title", i, NULL);
-	if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
-	  GST_DEBUG ("Couldn't set state for title %"G_GINT64_FORMAT, i);
-	  break;
-	}
-
-        if (gst_element_query_duration (element, &fmt, &len) == FALSE) {
-	  GST_DEBUG ("Couldnt' query duration for title %"G_GINT64_FORMAT, i);
-          break;
-	}
-	/* If it's less than 30 seconds long, we kick it out */
-	if (len >= (30 * GST_SECOND)) {
-	  g_ptr_array_add (array, g_strdup_printf ("dvd://%"G_GINT64_FORMAT, i));
-	  GST_DEBUG ("URI: dvd://%d (time: %" GST_TIME_FORMAT ")",
-              (gint) i, GST_TIME_ARGS (len));
-	}
-      }
-
-      gst_element_set_state (element, GST_STATE_NULL);
-      gst_object_unref (element);
-      if (array->len >= 1)
-      	g_ptr_array_add (array, NULL);
-      mrls = (char **) g_ptr_array_free (array, FALSE);
       break;
     }
     case MEDIA_TYPE_DVB: {
-      gchar* filename;
-      gchar* contents;
-      GPtrArray *array;
-      gchar adapter_type;
+      gchar *filename;
 
-      adapter_type = bacon_video_widget_dvb_get_adapter_type (device);
-      filename = bacon_video_widget_get_channels_file ();
-
-      if (g_file_get_contents (filename, &contents, NULL, NULL) != FALSE) {
-        gchar **lines, *line;
-        guint i;
-
-	lines = g_strsplit (contents, "\n", 0);
-        array = g_ptr_array_new ();
-
-	for (i = 0; lines[i] != NULL; i++) {
-	  line = lines[i];
-
-          if (line[0] != '#') {
-            gchar** fields = g_strsplit(line, ":", 0);
-            if ((g_strv_length (fields) == 13 && adapter_type == 'T') ||
-                (g_strv_length (fields) == 8 && adapter_type == 'S') ||
-		(g_strv_length (fields) == 9 && adapter_type == 'C')) {
-              g_ptr_array_add (array, g_strdup_printf("dvb://%s", fields[0]));
-            }
-            g_strfreev(fields);
-          }
-        }
-        g_strfreev(lines);
-      } else {
+      if (!gst_default_registry_check_feature_version ("dvbbasebin", 0, 10, 6) ||
+          !gst_default_registry_check_feature_version ("mpegtsparse", 0, 10, 6) ||
+          !gst_default_registry_check_feature_version ("dvbsrc", 0, 10, 6)) {
+        GST_DEBUG ("Missing one or all of: dvbsrc, dvbbasebin, mpegtsparse");
+	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+		     "XXX Do not use XXX");
         return NULL;
       }
-      if (array->len >= 1)
-      	g_ptr_array_add (array, NULL);
-      mrls = (char **) g_ptr_array_free (array, FALSE);
+      if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
+      	  !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
+        GST_DEBUG ("flupsdemux not new enough for DVB playback");
+	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+		     "XXX Do not use XXX");
+	return NULL;
+      }
+
+      filename = g_strdup_printf ("/dev/dvb/adapter%s/frontend0", device);
+      if (!g_file_test (filename, G_FILE_TEST_EXISTS)) {
+	g_free (filename);
+	g_set_error (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+		     "XXX Do not use XXX");
+	return NULL;
+      }
+      g_free (filename);
+
+      filename = bacon_video_widget_get_channels_file ();
+      if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
+	g_free (filename);
+        mrls = bacon_video_widget_get_dvb_mrls (device);
+      } else {
+        GST_DEBUG ("no channels file '%s'", filename);
+	g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+		     "XXX Do not use XXX");
+	g_free (filename);
+	return NULL;
+      }
       break;
     }
+    case MEDIA_TYPE_CDDA:
+      g_set_error (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
+		   "XXX Do not use XXX");
+      return NULL;
     default:
-      mrls = NULL;
-      break;
+      g_assert_not_reached();
   }
+
+  if (mrls == NULL)
+    return NULL;
+
+  g_free (bvw->priv->media_device);
+  bvw->priv->media_device = g_strdup (device);
 
   return mrls;
 }
@@ -5464,3 +5475,6 @@ sink_error:
   }
 }
 
+/*
+ * vim: sw=2 ts=8 cindent noai bs=2
+ */
