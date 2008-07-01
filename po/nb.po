@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-25 01:58+0200\n"
-"PO-Revision-Date: 2008-06-25 01:59+0200\n"
+"POT-Creation-Date: 2008-07-01 10:41+0200\n"
+"PO-Revision-Date: 2008-07-01 10:43+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -56,17 +56,17 @@ msgstr "Lagre spilleliste ..."
 msgid "Select a file to use for text subtitles"
 msgstr "Velg en fil som skal brukes som undertekst"
 
-#: ../data/playlist.ui.h:9
-msgid "Select text subtitle..."
-msgstr "Velg teksting ..."
-
-#: ../data/playlist.ui.h:10 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:9 ../data/video-list.ui.h:4
 msgid "_Copy Location"
 msgstr "_Kopier lokasjon"
 
-#: ../data/playlist.ui.h:11
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "Fje_rn"
+
+#: ../data/playlist.ui.h:11
+msgid "_Select text subtitle..."
+msgstr "_Velg undertittel..."
 
 #: ../data/plugins.ui.h:1
 msgid "Author:"
@@ -542,7 +542,7 @@ msgstr "Hopp fremover"
 msgid "Square"
 msgstr "Kvadratisk"
 
-#: ../data/totem.ui.h:82 ../src/backend/bacon-video-widget-gst-0.10.c:4397
+#: ../data/totem.ui.h:82 ../src/backend/bacon-video-widget-gst-0.10.c:4408
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -587,8 +587,8 @@ msgid "Time seek bar"
 msgstr "Søk på tid"
 
 #. Title
-#: ../data/totem.ui.h:94 ../src/totem.c:1002 ../src/totem.c:3362
-#: ../src/totem.c:3394 ../browser-plugin/totem-plugin-viewer.c:741
+#: ../data/totem.ui.h:94 ../src/totem.c:1007 ../src/totem.c:3367
+#: ../src/totem.c:3399 ../browser-plugin/totem-plugin-viewer.c:741
 #: ../browser-plugin/totem-plugin-viewer.c:1784
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
@@ -1272,7 +1272,7 @@ msgstr "Lagre skjermdump"
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:348 ../src/totem.c:994
+#: ../src/totem-statusbar.c:111 ../src/totem.c:348 ../src/totem.c:999
 #: ../browser-plugin/totem-plugin-viewer.c:338
 msgid "Stopped"
 msgstr "Stoppet"
@@ -1493,68 +1493,13 @@ msgstr "Spiller"
 msgid "Paused"
 msgstr "Pause"
 
-#: ../src/totem.c:429 ../src/totem.c:456 ../src/totem.c:1115
-#: ../src/totem.c:1263
+#: ../src/totem.c:429 ../src/totem.c:456 ../src/totem.c:1120
+#: ../src/totem.c:1268
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke spille av «%s»."
 
-#: ../src/totem.c:536
-msgid "More information about watching TV"
-msgstr "Mer informasjon om å se på TV"
-
-#: ../src/totem.c:537
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "Totem mangler en liste over kanaler for å kunne stille inn mottakeren."
-
-#: ../src/totem.c:538
-msgid ""
-"Please follow the instructions provided in the link to create a channels "
-"listing."
-msgstr ""
-"Vennligst følg veiledningen gitt i lenken for å opprette en kanalliste."
-
-#: ../src/totem.c:542 ../src/plugins/youtube/youtube.py:173
-msgid "More information about media plugins"
-msgstr "Mer informasjon om media-tillegg"
-
-#: ../src/totem.c:543 ../src/plugins/youtube/youtube.py:171
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr ""
-"Installer de nødvendige tilleggene og start Totem på nytt for å kunne spille "
-"av dette mediet."
-
-#: ../src/totem.c:545
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
-"som  kreves for å lese fra platen."
-
-#: ../src/totem.c:547 ../src/plugins/youtube/youtube.py:170
-#, c-format, python-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
-"som  kreves for å håndtere det."
-
-#: ../src/totem.c:550
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr ""
-"Totem kan ikke spille av denne typen media (%s) fordi det ikke er støttet."
-
-#: ../src/totem.c:551
-msgid "Please insert another disc to play back."
-msgstr "Vennligst sett inn en annen plate som skal spilles av."
-
-#: ../src/totem.c:565
+#: ../src/totem.c:531
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1563,7 +1508,7 @@ msgstr ""
 "Totem kunne ikke spille av dette mediet (%s) selv om et tillegg finnes som "
 "skal håndtere det."
 
-#: ../src/totem.c:566
+#: ../src/totem.c:532
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1571,84 +1516,159 @@ msgstr ""
 "Du bør sjekke at det finnes en disk i stasjonen og at den er riktig "
 "konfigurert."
 
-#: ../src/totem.c:594
+#: ../src/totem.c:539 ../src/plugins/youtube/youtube.py:173
+msgid "More information about media plugins"
+msgstr "Mer informasjon om media-tillegg"
+
+#: ../src/totem.c:540 ../src/plugins/youtube/youtube.py:171
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"Installer de nødvendige tilleggene og start Totem på nytt for å kunne spille "
+"av dette mediet."
+
+#: ../src/totem.c:542
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
+"som  kreves for å lese fra platen."
+
+#: ../src/totem.c:544 ../src/plugins/youtube/youtube.py:170
+#, c-format, python-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
+"som  kreves for å håndtere det."
+
+#: ../src/totem.c:548
+msgid ""
+"Totem cannot play TV, because no TV adapters are present or they are not "
+"supported."
+msgstr "Totem kan ikke spille av TV fordi ingen TV-kort finnes eller er støttet."
+
+#: ../src/totem.c:549
+msgid "Please insert a supported TV adapter."
+msgstr "Vennligst sett inn et støttet TV-kort."
+
+#: ../src/totem.c:555
+msgid "More information about watching TV"
+msgstr "Mer informasjon om å se på TV"
+
+#: ../src/totem.c:556
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "Totem mangler en liste over kanaler for å kunne stille inn mottakeren."
+
+#: ../src/totem.c:557
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr ""
+"Vennligst følg veiledningen gitt i lenken for å opprette en kanalliste."
+
+#: ../src/totem.c:560
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because the TV device is busy."
+msgstr "Totem kan ikke spille av denne typen media (%s) fordi TV-enheten er opptatt."
+
+#: ../src/totem.c:561
+msgid "Please try again later."
+msgstr "Vennligst prøv igjen senere."
+
+#: ../src/totem.c:566
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr ""
+"Totem kan ikke spille av denne typen media (%s) fordi det ikke er støttet."
+
+#: ../src/totem.c:567
+msgid "Please insert another disc to play back."
+msgstr "Vennligst sett inn en annen plate som skal spilles av."
+
+#: ../src/totem.c:599
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunne ikke spille av denne platen."
 
-#: ../src/totem.c:595 ../src/totem.c:3226
+#: ../src/totem.c:600 ../src/totem.c:3231
 #: ../browser-plugin/totem-plugin-viewer.c:1775
 msgid "No reason."
 msgstr "Ingen årsak."
 
-#: ../src/totem.c:609
+#: ../src/totem.c:614
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem støtter ikke avspilling av lyd-CDer"
 
-#: ../src/totem.c:610
+#: ../src/totem.c:615
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Vennligst bruk et musikkavspillingsprogram eller en CD-ripper til å spille "
 "av denne CDen"
 
-#: ../src/totem.c:911 ../src/totem.c:919
+#: ../src/totem.c:916 ../src/totem.c:924
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem kunne ikke ta et skjermdump av denne filmen."
 
-#: ../src/totem.c:919
+#: ../src/totem.c:924
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Dette skal ikke skje. Vennligst rapporter feilen."
 
-#: ../src/totem.c:1121
+#: ../src/totem.c:1126
 msgid "No error message"
 msgstr "Ingen feilmelding"
 
-#: ../src/totem.c:1440
+#: ../src/totem.c:1445
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: ../src/totem.c:1706 ../src/totem.c:1708
+#: ../src/totem.c:1711 ../src/totem.c:1713
 #: ../browser-plugin/totem-plugin-viewer.c:1441
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
-#: ../src/totem.c:2522
+#: ../src/totem.c:2527
 msgid "TV signal lost"
 msgstr "TV-signal borte"
 
-#: ../src/totem.c:2523
+#: ../src/totem.c:2528
 msgid "Please verify your hardware setup."
 msgstr "Vennligst sjekk oppsett av maskinvaren."
 
-#: ../src/totem.c:3087 ../src/totem.c:3089
+#: ../src/totem.c:3092 ../src/totem.c:3094
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem.c:3095 ../src/totem.c:3097
+#: ../src/totem.c:3100 ../src/totem.c:3102
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem.c:3104 ../src/totem.c:3106
+#: ../src/totem.c:3109 ../src/totem.c:3111
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem.c:3226
+#: ../src/totem.c:3231
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: ../src/totem.c:3363
+#: ../src/totem.c:3368
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../src/totem.c:3363
+#: ../src/totem.c:3368
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
 
 #. Handle command line arguments
-#: ../src/totem.c:3371
+#: ../src/totem.c:3376
 msgid "- Play movies and songs"
 msgstr "Spill av filmer og sanger"
 
-#: ../src/totem.c:3380
+#: ../src/totem.c:3385
 #, c-format
 msgid ""
 "%s\n"
@@ -1658,11 +1678,11 @@ msgstr ""
 "Kjør «%s --help» for å se en full liste med tilgjengelige "
 "komanndolinjeflagg.\n"
 
-#: ../src/totem.c:3400
+#: ../src/totem.c:3405
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunne ikke initiere konfigurasjonsmotoren."
 
-#: ../src/totem.c:3400
+#: ../src/totem.c:3405
 msgid "Make sure that GNOME is properly installed."
 msgstr "Sjekk at GNOME er korrekt installert."
 
@@ -1738,25 +1758,25 @@ msgstr "Mediet kunne ikke spilles av."
 msgid "Failed to retrieve working directory"
 msgstr "Kunne ikke finne arbeidskatalog"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4404
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4395
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4406
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4714
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4725
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "Den installerte versjonen av GStreamer er for gammel"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4721
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4732
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Medier inneholder ingen støttede videostrømmer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5096
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5107
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1765,8 +1785,8 @@ msgstr ""
 "Kunne ikke opprette et spilleobjekt for GStreamer. Sjekk din GStreamer "
 "installasjon."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5228
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5345
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5239
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5356
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1775,7 +1795,7 @@ msgstr ""
 "Kunne ikke åpne utdata for video. Det er kanskje ikke tilgjengelig. Velg en "
 "annen utdata for video i «Valg av multimediesystem»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5240
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5251
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1785,7 +1805,7 @@ msgstr ""
 "Kunne ikke åpne utgang for video. Du må kanskje installere flere tillegg for "
 "GStreamer. eller velge en annen utgang for video i «Valg av multimediesystem»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5275
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5286
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1796,7 +1816,7 @@ msgstr ""
 "lydenheten eller lydtjeneren kjører ikke. Velg en annen utgang for lyd i "
 "«Valg av multimediesystemer»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5295
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5306
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -1817,7 +1837,7 @@ msgstr ""
 "Sjekk at enheten ikke er opptatt."
 
 #: ../src/backend/bacon-video-widget-xine.c:1227
-#: ../src/backend/bacon-video-widget-xine.c:1821
+#: ../src/backend/bacon-video-widget-xine.c:1817
 #, c-format
 msgid ""
 "No video output is available. Make sure that the program is correctly "
@@ -1829,7 +1849,9 @@ msgstr ""
 msgid ""
 "The TV adapter could not tune into the channel. Please check your hardware "
 "setup, and channel configuration."
-msgstr "TV-kortet kunne ikke stille inn kanalen. Vennligst sjekk maskinvaren og kanalens konfigurasjon."
+msgstr ""
+"TV-kortet kunne ikke stille inn kanalen. Vennligst sjekk maskinvaren og "
+"kanalens konfigurasjon."
 
 #: ../src/backend/bacon-video-widget-xine.c:1357
 msgid "The server you are trying to connect to is not known."
@@ -1903,37 +1925,37 @@ msgstr "Tjeneren nektet tilgang til denne filen eller strømmen."
 msgid "The file you tried to play is an empty file."
 msgstr "Filen du prøvde å spille er tom."
 
-#: ../src/backend/bacon-video-widget-xine.c:1612
+#: ../src/backend/bacon-video-widget-xine.c:1608
 #, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Det finnes ingen tillegg som håndterer plasseringen for denne filmen"
 
-#: ../src/backend/bacon-video-widget-xine.c:1616
+#: ../src/backend/bacon-video-widget-xine.c:1612
 #, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "Det finnes ingen tillegg som håndterer denne filmen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1620
+#: ../src/backend/bacon-video-widget-xine.c:1616
 #, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "Denne filmen er ødelagt og kan ikke spilles av videre."
 
-#: ../src/backend/bacon-video-widget-xine.c:1624
+#: ../src/backend/bacon-video-widget-xine.c:1620
 #, c-format
 msgid "This location is not a valid one."
 msgstr "Denne lokasjonen er ikke gyldig."
 
-#: ../src/backend/bacon-video-widget-xine.c:1628
+#: ../src/backend/bacon-video-widget-xine.c:1624
 #, c-format
 msgid "This movie could not be opened."
 msgstr "Kunne ikke åpne denne filmen."
 
-#: ../src/backend/bacon-video-widget-xine.c:1632
+#: ../src/backend/bacon-video-widget-xine.c:1628
 #, c-format
 msgid "Generic Error."
 msgstr "Generisk feil."
 
-#: ../src/backend/bacon-video-widget-xine.c:2467
+#: ../src/backend/bacon-video-widget-xine.c:2463
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1942,7 +1964,7 @@ msgstr ""
 "Bildekoding av type «%s» håndteres ikke. Du vil kanskje måtte installere "
 "flere tillegg for å kunne spille av noen typer filmer"
 
-#: ../src/backend/bacon-video-widget-xine.c:2471
+#: ../src/backend/bacon-video-widget-xine.c:2467
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1951,30 +1973,30 @@ msgstr ""
 "Lydkoding av type «%s» håndteres ikke. Du vil kanskje måtte installere flere "
 "tillegg for å kunne spille av noen typer filmer"
 
-#: ../src/backend/bacon-video-widget-xine.c:2485
+#: ../src/backend/bacon-video-widget-xine.c:2481
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr ""
 "Dette er en lydfil, og det finnes innen mulighet for avspilling av lyd."
 
-#: ../src/backend/bacon-video-widget-xine.c:4097
-#: ../src/backend/bacon-video-widget-xine.c:4144
-#: ../src/backend/bacon-video-widget-xine.c:4166
+#: ../src/backend/bacon-video-widget-xine.c:4103
+#: ../src/backend/bacon-video-widget-xine.c:4150
+#: ../src/backend/bacon-video-widget-xine.c:4172
 #, c-format
 msgid "Language %d"
 msgstr "Språk %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4255
+#: ../src/backend/bacon-video-widget-xine.c:4261
 #, c-format
 msgid "No video to capture."
 msgstr "Ingen video å fange."
 
-#: ../src/backend/bacon-video-widget-xine.c:4263
+#: ../src/backend/bacon-video-widget-xine.c:4269
 #, c-format
 msgid "Video codec is not handled."
 msgstr "Denne typen koding av video er ikke støttet."
 
-#: ../src/backend/bacon-video-widget-xine.c:4274
+#: ../src/backend/bacon-video-widget-xine.c:4280
 #, c-format
 msgid "Movie is not playing."
 msgstr "Filmen spilles ikke av."
@@ -2299,6 +2321,10 @@ msgid "Related Videos"
 msgstr "Relaterte videoer"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
+msgid "Search YouTube"
+msgstr "Søk på YouTube"
+
+#: ../src/plugins/youtube/youtube.ui.h:4
 msgid "Search:"
 msgstr "Søk:"
 
