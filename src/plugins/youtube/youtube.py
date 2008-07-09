@@ -25,7 +25,7 @@ class DownloadThread (threading.Thread):
 
 class YouTube (totem.Plugin):
 	def __init__ (self):
-		totem.Plugin.__init__(self)
+		totem.Plugin.__init__ (self)
 		self.debug = False
 		self.gstreamer_plugins_present = True
 
@@ -90,7 +90,7 @@ class YouTube (totem.Plugin):
 		totem_object.add_sidebar_page ("youtube", _("YouTube"), self.vbox)
 
 		"""Set up the service"""
-		self.service = gdata.service.GDataService (None, None, "HOSTED_OR_GOOGLE", None, None, "gdata.youtube.com")
+		self.service = gdata.service.GDataService (account_type = "HOSTED_OR_GOOGLE", server = "gdata.youtube.com")
 	def deactivate (self, totem):
 		totem.remove_sidebar_page ("youtube")
 	def setup_treeview (self, treeview_name):
@@ -173,28 +173,6 @@ class YouTube (totem.Plugin):
 							      _("More information about media plugins"),
 							      self.totem.get_main_window ())
 			return False
-
-		model, rows = treeview.get_selection ().get_selected_rows ()
-		iter = model.get_iter (rows[0])
-		youtube_id = model.get_value (iter, 3)
-
-		"""Get the video stream MRL"""
-		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
-
-		if location != False:
-			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0]) + self.get_fmt_string ()
-
-			"""location_check = self.check_url_for_redirects (mrl)
-			if location_check != False:
-				mrl = location_check
-			else:
-				mrl = "http://www.youtube.com" + mrl"""
-		else:
-			"""Leave it as taken from the GData feed"""
-			mrl = False
-
-		if mrl != False:
-			model.set_value (iter, 2, mrl)
 
 		return True
 	def on_open_in_web_browser_activated (self, action):
@@ -281,6 +259,18 @@ class YouTube (totem.Plugin):
 
 		"""Don't leak the temporary file"""
 		os.unlink (filename)
+
+		"""Get the video stream MRL"""
+		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
+
+		if location != False:
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0]) + self.get_fmt_string ()
+
+			"""location_check = self.check_url_for_redirects (mrl)
+			if location_check != False:
+				mrl = location_check
+			else:
+				mrl = "http://www.youtube.com" + mrl"""
 
 		self.liststore[treeview_name].append ([pixbuf, entry.title.text, mrl, youtube_id])
 

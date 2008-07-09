@@ -1,3 +1,9 @@
+2008-07-09  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/youtube/youtube.py: Resolve the video URI of YouTube
+	videos when loading search results, rather than when playing them
+	to ensure URIs added to the playlist are correct. (Closes: #541916)
+
 2008-06-27  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget.h: Kill bacon_video_widget_can_play
