@@ -1,5 +1,11 @@
 2008-07-14  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-interface.c (totem_interface_load),
+	(totem_interface_load_with_full_path): Fix a crasher
+	when GtkBuilder interface files are missing (Closes: #542446)
+
+2008-07-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/Makefile.am: Patch from Götz Waschk
 	<waschk@mandriva.org> to fix the build with nvtv enabled
 	(Closes: #541546)

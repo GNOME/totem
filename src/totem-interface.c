@@ -167,6 +167,19 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
 	char *filename;
 
 	filename = totem_interface_get_full_path (name);
+	if (filename == NULL) {
+		char *msg;
+
+		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), name, _("The file does not exist."));
+		if (fatal == FALSE)
+			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
+		else
+			totem_interface_error_blocking (msg, _("Make sure that Totem is properly installed."), parent);
+
+		g_free (msg);
+		return NULL;
+	}
+
 	builder = totem_interface_load_with_full_path (filename, fatal, parent,
 						       user_data);
 	g_free (filename);
@@ -186,8 +199,7 @@ totem_interface_load_with_full_path (const char *filename, gboolean fatal,
 		gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
 	}
 
-	if (builder == NULL || gtk_builder_add_from_file (builder, filename, &error) == FALSE)
-	{
+	if (builder == NULL || gtk_builder_add_from_file (builder, filename, &error) == FALSE) {
 		char *msg;
 
 		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), filename, error->message);
