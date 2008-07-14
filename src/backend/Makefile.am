@@ -18,7 +18,7 @@ bvw_test_CFLAGS = \
 
 bvw_test_LDADD = \
 	libbaconvideowidget.la \
-	$(EXTRA_GNOME_LIBS) $(GTK_LIBS) $(XVIDMODE_LIBS) $(NVTV_LIBS) $(XTEST_LIBS) $(X_LIBS)
+	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) $(XTEST_LIBS)
 
 BVWMARSHALFILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
@@ -68,6 +68,9 @@ libbaconvideowidget_la_LIBADD =	\
 	$(XVIDMODE_LIBS)	\
 	$(MM_LIBS)		\
 	$(GST_LIBS)		\
+	$(NVTV_LIBS)		\
+	$(GTK_LIBS)		\
+	$(X_LIBS)		\
 	$(MISSING_PLUGINS_LIBS)
 
 libbaconvideowidget_la_LDFLAGS=	\
