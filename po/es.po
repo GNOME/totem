@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 16:37+0000\n"
-"PO-Revision-Date: 2008-06-27 23:25+0200\n"
+"POT-Creation-Date: 2008-07-14 10:43+0000\n"
+"PO-Revision-Date: 2008-07-15 18:19+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -988,16 +988,21 @@ msgstr "El navegador predeterminado no está configurado"
 msgid "Error launching URI"
 msgstr "Error al lanzar el URI"
 
-#: ../src/totem-interface.c:193
+#: ../src/totem-interface.c:173 ../src/totem-interface.c:205
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "No se pudo cargar la interfaz «%s». %s"
 
-#: ../src/totem-interface.c:195 ../src/totem-interface.c:197
+#: ../src/totem-interface.c:173
+msgid "The file does not exist."
+msgstr "El archivo no existe."
+
+#: ../src/totem-interface.c:175 ../src/totem-interface.c:177
+#: ../src/totem-interface.c:207 ../src/totem-interface.c:209
 msgid "Make sure that Totem is properly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: ../src/totem-interface.c:308
+#: ../src/totem-interface.c:320
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1009,7 +1014,7 @@ msgstr ""
 "se publica por la Free Software Foundation; tanto en la versión 2de la "
 "Licencia, como a (su elección) cualquier versión posterior."
 
-#: ../src/totem-interface.c:312
+#: ../src/totem-interface.c:324
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1021,7 +1026,7 @@ msgstr ""
 "ADECUACIÓN PARA UN PROPÓSITO PARTICULAR. Vea la Licencia Publica General "
 "para más detalles."
 
-#: ../src/totem-interface.c:316
+#: ../src/totem-interface.c:328
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1031,7 +1036,7 @@ msgstr ""
 "con este programa. Si no, escriba a la Free Software Foundation, Inc., 59 "
 "Temple Place - Suite 330, Boston, MA 02111-1307, EE. UU."
 
-#: ../src/totem-interface.c:319
+#: ../src/totem-interface.c:331
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1577,7 +1582,9 @@ msgstr ""
 msgid ""
 "Totem cannot play TV, because no TV adapters are present or they are not "
 "supported."
-msgstr "Totem no puede reproducir TV porque no hay ningún adaptador de TV presente o no están soportados."
+msgstr ""
+"Totem no puede reproducir TV porque no hay ningún adaptador de TV presente o "
+"no están soportados."
 
 #: ../src/totem.c:549
 msgid "Please insert a supported TV adapter."
@@ -1600,7 +1607,9 @@ msgstr "Siga las instrucciones en el enlace para crear una lista de canales."
 #: ../src/totem.c:560
 #, c-format
 msgid "Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr "Totem no puede reproducir este tipo de soporte (%s) porque el dispositivo de TV está ocupado."
+msgstr ""
+"Totem no puede reproducir este tipo de soporte (%s) porque el dispositivo de "
+"TV está ocupado."
 
 #: ../src/totem.c:561
 msgid "Please try again later."
@@ -2387,11 +2396,11 @@ msgstr "Abrir el vídeo en su navegador web"
 msgid "Fetching related videos..."
 msgstr "Obteniendo vídeos relacionados…"
 
-#: ../src/plugins/youtube/youtube.py:216
+#: ../src/plugins/youtube/youtube.py:194
 msgid "Fetching more videos..."
 msgstr "Obteniendo más vídeos…"
 
-#: ../src/plugins/youtube/youtube.py:300
+#: ../src/plugins/youtube/youtube.py:290
 msgid "Fetching search results..."
 msgstr "Obteniendo los resultados de la búsqueda…"
 
