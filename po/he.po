@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 16:37+0000\n"
+"POT-Creation-Date: 2008-07-14 10:43+0000\n"
 "PO-Revision-Date: 2008-02-26 15:57+0200\n"
 "Last-Translator: Mark Krapivner <mark125@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -969,16 +969,21 @@ msgstr "לא מוגדר דפדפן ברירת מחדל"
 msgid "Error launching URI"
 msgstr "שגיאה בהפעלת כתובת"
 
-#: ../src/totem-interface.c:193
+#: ../src/totem-interface.c:173 ../src/totem-interface.c:205
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "לא ניתן לטעון את הממשק '%s'. %s"
 
-#: ../src/totem-interface.c:195 ../src/totem-interface.c:197
+#: ../src/totem-interface.c:173
+msgid "The file does not exist."
+msgstr "הקובץ אינו קיים."
+
+#: ../src/totem-interface.c:175 ../src/totem-interface.c:177
+#: ../src/totem-interface.c:207 ../src/totem-interface.c:209
 msgid "Make sure that Totem is properly installed."
 msgstr "וודא ש- Totem מותקן כראוי."
 
-#: ../src/totem-interface.c:308
+#: ../src/totem-interface.c:320
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -990,7 +995,7 @@ msgstr ""
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
 
-#: ../src/totem-interface.c:312
+#: ../src/totem-interface.c:324
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1002,7 +1007,7 @@ msgstr ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 
-#: ../src/totem-interface.c:316
+#: ../src/totem-interface.c:328
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1012,7 +1017,7 @@ msgstr ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:319
+#: ../src/totem-interface.c:331
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -2303,9 +2308,9 @@ msgid "Related Videos"
 msgstr "סרטונים קשורים"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
-#, fuzzy
 msgid "Search YouTube"
-msgstr "YouTube"
+msgstr ""
+"חפש ב-YouTube"
 
 #: ../src/plugins/youtube/youtube.ui.h:4
 msgid "Search:"
@@ -2331,11 +2336,11 @@ msgstr "פתח את הוידאו בדפדפן שלך"
 msgid "Fetching related videos..."
 msgstr "מקבל סרטונים קשורים..."
 
-#: ../src/plugins/youtube/youtube.py:216
+#: ../src/plugins/youtube/youtube.py:194
 msgid "Fetching more videos..."
 msgstr "מקבל סרטונים נוספים..."
 
-#: ../src/plugins/youtube/youtube.py:300
+#: ../src/plugins/youtube/youtube.py:290
 msgid "Fetching search results..."
 msgstr "מקבל תוצאות חיפוש..."
 
