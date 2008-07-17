@@ -1,3 +1,11 @@
+2008-07-17  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_realize), (bacon_video_widget_set_zoom):
+	Apply the zoom level even if there's no stream yet
+	* src/totem.c (totem_action_zoom_reset): Make sure that we
+	use the zoom constants rather than some hard coded numbers
+
 2008-07-14  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-interface.c (totem_interface_load),

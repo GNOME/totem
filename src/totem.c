@@ -1348,7 +1348,7 @@ totem_action_zoom_relative (Totem *totem, int off_pct)
 void
 totem_action_zoom_reset (Totem *totem)
 {
-	totem_action_zoom (totem, 100);
+	totem_action_zoom (totem, ZOOM_RESET);
 }
 
 /**

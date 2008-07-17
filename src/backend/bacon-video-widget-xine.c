@@ -182,6 +182,7 @@ struct BaconVideoWidgetPrivate {
 	BaconVideoWidgetAudioOutType audio_out_type;
 	TvOutType tvout;
 	gint64 stream_length;
+	int zoom;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -1251,6 +1252,10 @@ bacon_video_widget_realize (GtkWidget *widget)
 			bvw->priv->ao_driver, bvw->priv->vo_driver);
 	setup_config_stream (bvw);
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
+
+	/* Set the zoom that might have been recorded */
+	if (bvw->priv->zoom != 0)
+		bacon_video_widget_set_zoom (bvw, bvw->priv->zoom);
 
 	/* Setup xine events */
 	xine_event_create_listener_thread (bvw->priv->ev_queue,
@@ -3713,8 +3718,11 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw, int zoom)
 	g_return_if_fail (bvw->priv->xine != NULL);
 	g_return_if_fail (zoom >= 0 && zoom <= 400);
 
-	if (bvw->priv->stream == NULL)
+	if (bvw->priv->stream == NULL) {
+		/* No stream yet, remember the zoom level */
+		bvw->priv->zoom = zoom;
 		return;
+	}
 
 	xine_set_param (bvw->priv->stream,
 			XINE_PARAM_VO_ZOOM_X, zoom);
