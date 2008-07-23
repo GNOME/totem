@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-14 10:43+0000\n"
-"PO-Revision-Date: 2008-07-22 20:25+0200\n"
+"PO-Revision-Date: 2008-07-23 12:35+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,6 @@ msgid "Codec:"
 msgstr "Codec:"
 
 #: ../data/properties.ui.h:13
-#, fuzzy
 msgid "Comment:"
 msgstr "Komenti:"
 
@@ -348,7 +347,7 @@ msgstr "Ul zërin"
 
 #: ../data/totem.ui.h:31 ../src/totem-menu.c:1342
 msgid "Deinterlace"
-msgstr ""
+msgstr "Deinterlace"
 
 #: ../data/totem.ui.h:32
 msgid "Display"
@@ -683,7 +682,7 @@ msgstr "Menu e _DVD"
 
 #: ../data/totem.ui.h:116 ../src/totem-menu.c:1342
 msgid "_Deinterlace"
-msgstr ""
+msgstr "_Deinterlace"
 
 #: ../data/totem.ui.h:117
 msgid "_Edit"
@@ -827,7 +826,7 @@ msgstr ""
 
 #: ../data/totem.schemas.in.h:9
 msgid "Enable deinterlacing"
-msgstr ""
+msgstr "Aktivizo deinterlacing"
 
 #: ../data/totem.schemas.in.h:10
 msgid "Encoding charset for subtitle"
@@ -1264,7 +1263,7 @@ msgstr "Audio/Video"
 #: ../src/totem-screenshot.c:59 ../src/totem-screenshot.c:69
 #, c-format
 msgid "Screenshot%d.png"
-msgstr "PamjeEkrani%d.png"
+msgstr "PamjeEkrani-%d.png"
 
 #: ../src/totem-screenshot.c:92
 msgid "Screenshot.png"
@@ -1272,11 +1271,11 @@ msgstr "PamjeEkrani.png"
 
 #: ../src/totem-screenshot.c:168
 msgid "There was an error saving the screenshot."
-msgstr "Ndodhi një gabim në ruajtjen e pamjes së ekranit."
+msgstr "U verifikuar një gabim gjatë ruajtjes së pamjes së ekranit."
 
 #: ../src/totem-screenshot.c:218
 msgid "Save Screenshot"
-msgstr "Ruaj Pamjen e Ekranit"
+msgstr "Ruaj pamjen e ekranit"
 
 #: ../src/totem-statusbar.c:106
 msgid "0:00 / 0:00"
@@ -1285,12 +1284,12 @@ msgstr "0:00 / 0:00"
 #: ../src/totem-statusbar.c:111 ../src/totem.c:348 ../src/totem.c:999
 #: ../browser-plugin/totem-plugin-viewer.c:338
 msgid "Stopped"
-msgstr "Ndalur"
+msgstr "Ndërprerë"
 
 #: ../src/totem-statusbar.c:128
 #, c-format
 msgid "%s (Streaming)"
-msgstr "%s (Duke rrjedhur)"
+msgstr "%s (në streaming)"
 
 #. Elapsed / Total Length
 #: ../src/totem-statusbar.c:135 ../src/totem-time-label.c:67
@@ -1302,11 +1301,11 @@ msgstr "%s / %s"
 #: ../src/totem-statusbar.c:138 ../src/totem-time-label.c:70
 #, c-format
 msgid "Seek to %s / %s"
-msgstr "Kërko në %s / %s"
+msgstr "Shko tek %s / %s"
 
 #: ../src/totem-statusbar.c:210
 msgid "Buffering"
-msgstr "Duke regjistruar"
+msgstr "Duke mbushur buffer"
 
 #. eg: 75 %
 #: ../src/totem-statusbar.c:221
@@ -1316,219 +1315,184 @@ msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
 #: ../src/totem-statusbar.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %s"
-msgstr "%s %s"
+msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "%s, %d %%"
-msgstr "%d %%"
+msgstr "%s, %d %%"
 
 #: ../src/totem-subtitle-encoding.c:157
-#, fuzzy
 msgid "Current Locale"
 msgstr "Gjuha aktuale"
 
 #: ../src/totem-subtitle-encoding.c:160 ../src/totem-subtitle-encoding.c:162
 #: ../src/totem-subtitle-encoding.c:164 ../src/totem-subtitle-encoding.c:166
-#, fuzzy
 msgid "Arabic"
-msgstr "Arabe"
+msgstr "Arabisht"
 
 #: ../src/totem-subtitle-encoding.c:169
-#, fuzzy
 msgid "Armenian"
 msgstr "Armenisht"
 
 #: ../src/totem-subtitle-encoding.c:172 ../src/totem-subtitle-encoding.c:174
 #: ../src/totem-subtitle-encoding.c:176
-#, fuzzy
 msgid "Baltic"
 msgstr "Balltike"
 
 #: ../src/totem-subtitle-encoding.c:179
-#, fuzzy
 msgid "Celtic"
-msgstr "Celtic"
+msgstr "Celtike"
 
 #: ../src/totem-subtitle-encoding.c:182 ../src/totem-subtitle-encoding.c:184
 #: ../src/totem-subtitle-encoding.c:186 ../src/totem-subtitle-encoding.c:188
-#, fuzzy
 msgid "Central European"
-msgstr "Europa Qendrore"
+msgstr "Europiane qendrore"
 
 #: ../src/totem-subtitle-encoding.c:191 ../src/totem-subtitle-encoding.c:193
 #: ../src/totem-subtitle-encoding.c:195 ../src/totem-subtitle-encoding.c:197
-#, fuzzy
 msgid "Chinese Simplified"
 msgstr "Kineze e thjeshtëzuar"
 
 #: ../src/totem-subtitle-encoding.c:200 ../src/totem-subtitle-encoding.c:202
 #: ../src/totem-subtitle-encoding.c:204
-#, fuzzy
 msgid "Chinese Traditional"
 msgstr "Kineze tradicionale"
 
 #: ../src/totem-subtitle-encoding.c:207
-#, fuzzy
 msgid "Croatian"
 msgstr "Kroate"
 
 #: ../src/totem-subtitle-encoding.c:210 ../src/totem-subtitle-encoding.c:212
 #: ../src/totem-subtitle-encoding.c:214 ../src/totem-subtitle-encoding.c:216
 #: ../src/totem-subtitle-encoding.c:218 ../src/totem-subtitle-encoding.c:220
-#, fuzzy
 msgid "Cyrillic"
 msgstr "Cyrillic"
 
 #: ../src/totem-subtitle-encoding.c:223
-#, fuzzy
 msgid "Cyrillic/Russian"
 msgstr "Cyrillic/Rusisht"
 
 #: ../src/totem-subtitle-encoding.c:226 ../src/totem-subtitle-encoding.c:228
-#, fuzzy
 msgid "Cyrillic/Ukrainian"
 msgstr "Cyrillic/Ukrahina"
 
 #: ../src/totem-subtitle-encoding.c:231
-#, fuzzy
 msgid "Georgian"
 msgstr "Gjeorgjisht"
 
 #: ../src/totem-subtitle-encoding.c:234 ../src/totem-subtitle-encoding.c:236
 #: ../src/totem-subtitle-encoding.c:238
-#, fuzzy
 msgid "Greek"
 msgstr "Greqisht"
 
 #: ../src/totem-subtitle-encoding.c:241
-#, fuzzy
 msgid "Gujarati"
 msgstr "Gujarati"
 
 #: ../src/totem-subtitle-encoding.c:244
-#, fuzzy
 msgid "Gurmukhi"
 msgstr "Gurmuki"
 
 #: ../src/totem-subtitle-encoding.c:247 ../src/totem-subtitle-encoding.c:249
 #: ../src/totem-subtitle-encoding.c:251 ../src/totem-subtitle-encoding.c:253
-#, fuzzy
 msgid "Hebrew"
 msgstr "Hebraike"
 
 #: ../src/totem-subtitle-encoding.c:256
-#, fuzzy
 msgid "Hebrew Visual"
 msgstr "Hebraike vizuale"
 
 #: ../src/totem-subtitle-encoding.c:259
-#, fuzzy
 msgid "Hindi"
 msgstr "Hindi"
 
 #: ../src/totem-subtitle-encoding.c:262
-#, fuzzy
 msgid "Icelandic"
 msgstr "Islandeze"
 
 #: ../src/totem-subtitle-encoding.c:265 ../src/totem-subtitle-encoding.c:267
 #: ../src/totem-subtitle-encoding.c:269
-#, fuzzy
 msgid "Japanese"
 msgstr "Japonisht"
 
 #: ../src/totem-subtitle-encoding.c:272 ../src/totem-subtitle-encoding.c:274
 #: ../src/totem-subtitle-encoding.c:276 ../src/totem-subtitle-encoding.c:278
-#, fuzzy
 msgid "Korean"
-msgstr "Pa arsye"
+msgstr "Koreane"
 
 #: ../src/totem-subtitle-encoding.c:281
-#, fuzzy
 msgid "Nordic"
-msgstr "Nordik"
+msgstr "Nordike"
 
 #: ../src/totem-subtitle-encoding.c:284
-#, fuzzy
 msgid "Persian"
 msgstr "Persiane"
 
 #: ../src/totem-subtitle-encoding.c:287 ../src/totem-subtitle-encoding.c:289
-#, fuzzy
 msgid "Romanian"
 msgstr "Rumanisht"
 
 #: ../src/totem-subtitle-encoding.c:292
-#, fuzzy
 msgid "South European"
-msgstr "Europa Jugore"
+msgstr "Europa jugore"
 
 #: ../src/totem-subtitle-encoding.c:295
-#, fuzzy
 msgid "Thai"
-msgstr "Thai"
+msgstr "Tailandeze"
 
 #: ../src/totem-subtitle-encoding.c:298 ../src/totem-subtitle-encoding.c:300
 #: ../src/totem-subtitle-encoding.c:302 ../src/totem-subtitle-encoding.c:304
-#, fuzzy
 msgid "Turkish"
 msgstr "Turqisht"
 
 #: ../src/totem-subtitle-encoding.c:307 ../src/totem-subtitle-encoding.c:309
 #: ../src/totem-subtitle-encoding.c:311 ../src/totem-subtitle-encoding.c:313
 #: ../src/totem-subtitle-encoding.c:315
-#, fuzzy
 msgid "Unicode"
 msgstr "Unicode"
 
 #: ../src/totem-subtitle-encoding.c:318 ../src/totem-subtitle-encoding.c:320
 #: ../src/totem-subtitle-encoding.c:322 ../src/totem-subtitle-encoding.c:324
 #: ../src/totem-subtitle-encoding.c:326
-#, fuzzy
 msgid "Western"
 msgstr "Perëndimore"
 
 #: ../src/totem-subtitle-encoding.c:329 ../src/totem-subtitle-encoding.c:331
 #: ../src/totem-subtitle-encoding.c:333
-#, fuzzy
 msgid "Vietnamese"
 msgstr "Vietnameze"
 
 #: ../src/totem-uri.c:405
 msgid "All files"
-msgstr "Të tërë file-t"
+msgstr "Të gjithë file"
 
 #: ../src/totem-uri.c:410
 msgid "Supported files"
-msgstr "File-t e suportuar"
+msgstr "File e suportuar"
 
 #: ../src/totem-uri.c:422
-#, fuzzy
 msgid "Audio files"
-msgstr "Të tërë file-t"
+msgstr "File audio"
 
 #: ../src/totem-uri.c:430
-#, fuzzy
 msgid "Video files"
-msgstr "Video CD"
+msgstr "File video"
 
 #: ../src/totem-uri.c:440
-#, fuzzy
 msgid "Subtitle files"
-msgstr "Nëntitujt"
+msgstr "File për nëntitujt"
 
 #: ../src/totem-uri.c:505
-#, fuzzy
 msgid "Select text subtitle"
-msgstr "Zgjidh Gërmën e Nëntitujve"
+msgstr "Zgjidh tekstin për nëntitujt"
 
 #: ../src/totem-uri.c:555
 msgid "Select Movies or Playlists"
-msgstr "Zgjidh Filmat ose Listën"
+msgstr "Zgjidh filma ose renditje"
 
 #: ../src/totem.c:334 ../browser-plugin/totem-plugin-viewer.c:354
 msgid "Playing"
@@ -1536,13 +1500,13 @@ msgstr "Duke riprodhuar"
 
 #: ../src/totem.c:341 ../browser-plugin/totem-plugin-viewer.c:350
 msgid "Paused"
-msgstr "Pezulluar"
+msgstr "Në pauzë"
 
 #: ../src/totem.c:429 ../src/totem.c:456 ../src/totem.c:1120
 #: ../src/totem.c:1268
 #, c-format
 msgid "Totem could not play '%s'."
-msgstr "Totem nuk arriti të riprodhojë '%s'."
+msgstr "I pamundur riprodhimi i '%s'."
 
 #: ../src/totem.c:531
 #, c-format
@@ -1550,37 +1514,37 @@ msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr ""
-"Totem nuk mundi të riprodhojë këtë medie (%s) edhe pse një gjendet një "
-"plugin për të."
+"I pamundur riprodhimi i këtij lloj file (%s) megjithëse ekziston një plugin që "
+"trajton këtë format."
 
 #: ../src/totem.c:532
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
-"Duhet të kontrollosh që një disk është gjendet në lexues dhe që është "
-"konfiguruar siç duhet."
+"Kontrollo që një në lexues është futur një disk dhe që lexuesi të jetë "
+"konfiguruar sikurse duhet."
 
 #: ../src/totem.c:539 ../src/plugins/youtube/youtube.py:173
 msgid "More information about media plugins"
-msgstr ""
+msgstr "Informacione të tjera në lidhje me plugin"
 
 #: ../src/totem.c:540 ../src/plugins/youtube/youtube.py:171
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"Të lutem instalo plugin-at e nevojshëm dhe rinis Totem për të riprodhuar "
-"këtë media."
+"Që të mund të riprodhohet ky file multimedial këshillohet instalimi i plugin "
+"të nevojshëm dhe të riniset Totem."
 
 #: ../src/totem.c:542
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
 "appropriate plugins to be able to read from the disc."
 msgstr ""
-"Totem nuk mundi të riprodhojë këtë lloj medieje (%s) pasi nuk ke plugin-at e "
-"duhur për të."
+"I pamundur riprodhimi i këtij lloj file (%s) sepse mungon plugin i duhur "
+"për të lexuar nga disku."
 
 #: ../src/totem.c:544 ../src/plugins/youtube/youtube.py:170
 #, c-format, python-format
@@ -1588,87 +1552,79 @@ msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr ""
-"Totem nuk mundi të riprodhojë këtë lloj medieje (%s) pasi nuk ke plugin-at e "
-"duhur për të."
+"I pamundur riprodhimi i këtij lloj file (%s) pasi nuk keni plugin e duhur për"
+"ta trajtuar."
 
 #: ../src/totem.c:548
-#, fuzzy
 msgid ""
 "Totem cannot play TV, because no TV adapters are present or they are not "
 "supported."
-msgstr "TV jo TV."
+msgstr ""
+"I pamundur riprodhimi TV, pasi përshtatësit TV nuk u gjetën ose janë të "
+"pasuportuar."
 
 #: ../src/totem.c:549
-#, fuzzy
 msgid "Please insert a supported TV adapter."
-msgstr "a TV."
+msgstr "Të lutem lidh një përshtatës të suportuar TV."
 
 #: ../src/totem.c:555
-#, fuzzy
 msgid "More information about watching TV"
-msgstr "TV"
+msgstr "Informacione shtesë në lidhje me shikimin e TV"
 
 #: ../src/totem.c:556
-#, fuzzy
 msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "është a."
+msgstr "Mungon një listë me kanalet për të sintonizuar ricevitorin."
 
 #: ../src/totem.c:557
-#, fuzzy
 msgid ""
 "Please follow the instructions provided in the link to create a channels "
 "listing."
-msgstr "në lidhje a."
+msgstr "Ndiq udhëzimet e dhëna në lidhje për të krijuar një listë me kanale."
 
 #: ../src/totem.c:560
-#, fuzzy, c-format
+#, c-format
 msgid "Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr ""
-"Totem nuk mundi të riprodhojë këtë lloj medieje (%s) pasi nuk ke plugin-at e "
-"duhur për të."
+msgstr "I pamundur riprodhimi i këtij lloj file (%s) pasi dispozitivi TV është i zënë."
 
 #: ../src/totem.c:561
 msgid "Please try again later."
-msgstr ""
+msgstr "Provo përsëri më vonë."
 
 #: ../src/totem.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr ""
-"Totem nuk mundi të riprodhojë këtë lloj medieje (%s) pasi nuk ke plugin-at e "
-"duhur për të."
+msgstr "I pamundur riprodhimi i këtij lloj file (%s) pasi nuk suportohet."
 
 #: ../src/totem.c:567
-#, fuzzy
 msgid "Please insert another disc to play back."
-msgstr "mbrapa."
+msgstr "Fut një disk tjetër për ta riprodhuar."
 
 #: ../src/totem.c:599
 msgid "Totem was not able to play this disc."
-msgstr "Totem nuk pati mundësi ta luajë këtë disk."
+msgstr "Totem nuk arriti të riprodhojë këtë disk."
 
 #: ../src/totem.c:600 ../src/totem.c:3231
 #: ../browser-plugin/totem-plugin-viewer.c:1775
 msgid "No reason."
-msgstr "Pa arsye."
+msgstr "Shkak i panjohur."
 
 #: ../src/totem.c:614
-#, fuzzy
 msgid "Totem does not support playback of Audio CDs"
-msgstr "nga Zëri"
+msgstr "Totem nuk suporton riprodhimin e CDve audio."
 
 #: ../src/totem.c:615
-#, fuzzy
 msgid "Please consider using a music player or a CD extractor to play this CD"
-msgstr "a a"
+msgstr ""
+"Përdor një riprodhues muzikor ose një nxjerrës këngësh nga CD për të "
+"riprodhuar këtë CD"
 
 #: ../src/totem.c:916 ../src/totem.c:924
 msgid "Totem could not get a screenshot of that film."
-msgstr "Totem nuk mundi të marrë një pamje ekrani nga ai film."
+msgstr "E pamundur marrja e një pamje nga filmi."
 
 #: ../src/totem.c:924
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Kjo nuk duhet të ndodhte, të lutem skedo një raportim defekti."
+msgstr "U verifikua një situatë e paparashikuar; të lutem raporto një bug."
 
 #: ../src/totem.c:1126
 msgid "No error message"
@@ -1676,90 +1632,85 @@ msgstr "Asnjë mesazh gabimi"
 
 #: ../src/totem.c:1445
 msgid "Totem could not display the help contents."
-msgstr "Totem nuk mundi të shfaqë përmbajtjen e ndihmës."
+msgstr "E pamundur shfaqja e përmbajtjes së ndihmës."
 
 #: ../src/totem.c:1711 ../src/totem.c:1713
 #: ../browser-plugin/totem-plugin-viewer.c:1441
 msgid "An error occurred"
-msgstr "Ndodhi një gabim"
+msgstr "U verifikua një gabim"
 
 #: ../src/totem.c:2527
-#, fuzzy
 msgid "TV signal lost"
-msgstr "TV"
+msgstr "Humbi sinjali TV"
 
 #: ../src/totem.c:2528
 msgid "Please verify your hardware setup."
-msgstr ""
+msgstr "Kontrollo konfigurimin hardware."
 
 #: ../src/totem.c:3092 ../src/totem.c:3094
-#, fuzzy
 msgid "Previous Chapter/Movie"
-msgstr "Kapitulli/Filmi _Paraardhës"
+msgstr "Kapitulli/Filmi paraardhës"
 
 #: ../src/totem.c:3100 ../src/totem.c:3102
-#, fuzzy
 msgid "Play / Pause"
-msgstr "Luaj / Pa_uzë"
+msgstr "Luaj / Pauzë"
 
 #: ../src/totem.c:3109 ../src/totem.c:3111
-#, fuzzy
 msgid "Next Chapter/Movie"
-msgstr "Kapitulli/Filmi _Tjetër"
+msgstr "Kapitulli/Filmi në vijim"
 
 #: ../src/totem.c:3231
 msgid "Totem could not startup."
-msgstr "Totem nuk mundi të nisë."
+msgstr "E pamundur nisja e Totem."
 
 #: ../src/totem.c:3368
 msgid "Could not initialize the thread-safe libraries."
-msgstr "E pamundur nisja e librarive thread-safe."
+msgstr "I pamundur fillimi i librarive thread-safe."
 
 #: ../src/totem.c:3368
 msgid "Verify your system installation. Totem will now exit."
-msgstr "Kontrollo instalimin e sistemit. Totem tani do dalë."
+msgstr "Kontrollo instalimin e sistemit. Totem do të mbyllet."
 
 #. Handle command line arguments
 #: ../src/totem.c:3376
-#, fuzzy
 msgid "- Play movies and songs"
-msgstr "Luaj filmat dhe këngët"
+msgstr "- Riprodhon filma dhe këngë"
 
 #: ../src/totem.c:3385
 #, c-format
-#, fuzzy
 msgid ""
 "%s\n"
 "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 "%s\n"
-"Shkruaj '%s --help' për të shikuar listën e plotë të opcioneve të rreshtit "
+"Shkruaj '%s --help' për të shikuar listën e plotë të opsioneve të rreshtit "
 "të komandës.\n"
 
 #: ../src/totem.c:3405
 msgid "Totem could not initialize the configuration engine."
-msgstr "Totem nuk mundi të niste motorin e konfigurimit."
+msgstr "I pamundur fillimi i motorit të konfigurimit."
 
 #: ../src/totem.c:3405
 msgid "Make sure that GNOME is properly installed."
-msgstr "Sigurohu që GNOME është instaluar saktë."
+msgstr "Sigurohu që GNOME të jetë instaluar si duhet."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2444
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr ""
-"Dalja e duhur e zërit nuk u gjet. Ju lutem zgjidhni një tjetër dalje zëri në "
-"Zgjedhësin e Sistemeve Multimedialë."
+"Dalja audio e kërkuar nuk gjendet në dispozicion. Zgjidh një dalje tjetër audio "
+"nga Zgjedhësi i sistemeve multimedialë të GNOME."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2449
 msgid "Location not found."
-msgstr "Vendndodhja nuk u gjet."
+msgstr "Pozicioni nuk u gjet."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2453
-#, fuzzy
 msgid "Could not open location; you might not have permission to open the file."
-msgstr "E pamundur hapja e vendndodhjes; Nuk keni të drejtë të hapni atë file."
+msgstr ""
+"E pamundur hapja e pozicionit; kontrolloni që keni të drejta të mjaftueshme "
+"për të hapur atë file."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2464
 msgid ""
@@ -1767,9 +1718,9 @@ msgid ""
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Dalja e videos është duke u përdorur nga një program tjetër. Ju lutem "
-"mbyllni programe të tjerë videosh, ose zgjidhni një tjetër dalje videoje në "
-"Zgjedhësin e Sistemeve Multimedialë."
+"Dalja video është aktualisht duke u përdorur nga një aplikativ tjetër. Mbyllni "
+"aplikativët e tjerë video, ose zgjidhni një dalje tjetër video nga Zgjedhësi "
+"i sistemeve multimedialë të GNOME."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2470
 msgid ""
@@ -1777,61 +1728,62 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Dalja e zërit është duke u përdorur nga një program tjetër. Ju lutem "
-"zgjidhni një tjetër dalje audio në Zgjedhësin e Sistemeve Multimedialë. Mund "
-"të konsideroni përdorimin e një shërbyesi zëri."
+"Dalja audio është duke u përdorur nga një aplikativ tjetër. Zgjidh një dalje "
+"tjetër audio nga Zgjedhësi i sistemeve multimedialë të GNOME.. Mund "
+"të konsideroni përdorimin e një serveri zëri."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2488
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2494
 #, c-format
-#, fuzzy
 msgid "The playback of this movie requires a %s plugin which is not installed."
-msgstr "nga a është."
+msgstr ""
+"Për të riprodhuar këtë film është i nevojshëm një plugin %s që nuk është "
+"instaluar."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2495
 #, c-format
-#, fuzzy
 msgid ""
 "The playback of this movie requires the following decoders which are not "
 "installed:\n"
 "\n"
 "%s"
-msgstr "nga vijues j j"
+msgstr ""
+"Për të riprodhuar këtë film nevoiten dekodifikuesit si në vijim që nuk janë "
+"të instaluar:\n"
+"\n"
+"%s"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2520
 msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr ""
-"E pamundur luajtja e këtij file në rrjet. Provo ta shkarkosh në disk "
-"fillimisht."
+msgstr "I pamundur riprodhimi i filmit në rrjet. Provo fillimisht ta shkarkosh në disk."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2592
 msgid "Media file could not be played."
-msgstr "File nuk mundi të luhej."
+msgstr "I pamundur riprodhimi i file."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2728
 #, c-format
 msgid "Failed to retrieve working directory"
-msgstr "Dështoi në tërheqjen e dosjes së punës"
+msgstr "E pamundur marrja e directory të punës"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4404
-#, fuzzy
 msgid "Surround"
-msgstr "_Zëri"
+msgstr "Surround"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4406
 msgid "Mono"
-msgstr ""
+msgstr "Mono"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4725
 #, c-format
 msgid "Too old version of GStreamer installed."
-msgstr "Versioni i instaluar për GStreamer është tepër i vjetër."
+msgstr "Versioni i GStreamer i instaluar është tepër i vjetër."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4732
 #, c-format
 msgid "Media contains no supported video streams."
-msgstr "Media nuk përmban rrjedhë video."
+msgstr "Suporti nuk përmban asnjë stream të suportuar video."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5107
 #, c-format
@@ -1839,8 +1791,8 @@ msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"Dështoi në krijimin e një objekti GStreamer. Ju lutem kontrolloni instalimin "
-"e GStreamer."
+"Krijimi i një objekti play të GStreamer dështoi. Kontrollo instalimin e "
+"GStreamer."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5239
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5356
@@ -1849,8 +1801,8 @@ msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
-"Dështoi në hapjen e daljes së videos. Mund të mos jetë e pranishme. Ju lutem "
-"zgjidhni një dalje tjetër video në Zgjedhësin e Sistemeve Multimedialë."
+"Hapja e daljes video dështoi. Mund të mos jetë në dispozicion. Zgjidh një dalje "
+"tjetër video nga Zgjedhësi i sistemeve multimedialë."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5251
 #, c-format
@@ -1859,9 +1811,9 @@ msgid ""
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Dështoi në hapjen e daljes së videos. Mund të ju duhet të instaloni plugin "
-"shtesë GStreamer ose të zgjidhni një dalje tjetër video në Zgjedhësin e "
-"Sistemeve Multimedialë."
+"E pamundur gjetja e daljes video. Provo instalimin e plugin shtesë të "
+"GStreamer, ose zgjidh një dalje tjetër video nga Zgjedhësi i sistemeve "
+"multimedialë të GNOME."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5286
 #, c-format
@@ -1870,10 +1822,9 @@ msgid ""
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
 msgstr ""
-"Dështoi në hapjen e daljes së zërit. Mund të mos keni të drejtën për të "
-"hapur dispozitivin e zërit, ose shërbyesi i zërit mund të mos jetë duke "
-"xhiruar. Ju lutem zgjidhni një tjetër dalje zëri në Zgjedhësin e Sistemeve "
-"Multimedialë."
+"Hapja e daljes audio dështoi. Kontrollo që keni të drejtat e duhura për hapjen "
+"e dispozitivit të zërit dhe që serveri i zërit të jetë duke funksionuar. Zgjidhni "
+"një dalje tjetër audio nga Zgjedhësi i sistemeve multimedialë të GNOME."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5306
 #, c-format
@@ -1882,9 +1833,9 @@ msgid ""
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Dalja e duhur e zërit nuk u gjet. Mund të ju duhet të instaloni plugin "
-"shtesë GStreamer ose të zgjidhni një tjetër dalje zëri në Zgjedhësin e "
-"Sistemeve Multimedialë"
+"E pamundur gjetja e daljes audio. Provo instalimin e plugin shtesë të "
+"GStreamer, ose zgjidh një dalje tjetër audio nga Zgjedhësi i sistemeve "
+"multimedialë të GNOME."
 
 #: ../src/backend/bacon-video-widget-xine.c:757
 #, c-format
@@ -1892,8 +1843,8 @@ msgid ""
 "Couldn't load the '%s' audio driver\n"
 "Check that the device is not busy."
 msgstr ""
-"Nuk munda të ngarkoj driver-in e zërit '%s'\n"
-"Kontrollo që dispozitivi nuk është i zënë."
+"I pamundur ngarkimi i driver audio \"%s\".\n"
+"Kontrollo që dispozitivi të mos jetë në përdorim."
 
 #: ../src/backend/bacon-video-widget-xine.c:1227
 #: ../src/backend/bacon-video-widget-xine.c:1817
@@ -1901,14 +1852,17 @@ msgstr ""
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
-msgstr "Asnjë dalje video në dispozicion. Sigurohu që programi është instaluar saktë."
+msgstr ""
+"Asnjë dalje video në dispozicion. Sigurohu që programi të jetë instaluar "
+"në menyrë korrekte."
 
 #: ../src/backend/bacon-video-widget-xine.c:1352
-#, fuzzy
 msgid ""
 "The TV adapter could not tune into the channel. Please check your hardware "
 "setup, and channel configuration."
-msgstr "TV dhe."
+msgstr ""
+"Përshtatësi TV nuk arrin të sinkronizohet me kanalin. Kontrollo konfigurimin "
+"hardware dhe konfigurimin e kanalit."
 
 #: ../src/backend/bacon-video-widget-xine.c:1357
 msgid "The server you are trying to connect to is not known."
@@ -1917,7 +1871,7 @@ msgstr "Serveri me të cilin po përpiqesh të lidhesh është i panjohur."
 #: ../src/backend/bacon-video-widget-xine.c:1361
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
-msgstr "Emri i dispozitivit që përcaktove (%s) ngjan të jetë i pavlefshëm."
+msgstr "Emri i dispozitivit të përcaktuar (%s) ngjan të jetë i pavlefshëm."
 
 #: ../src/backend/bacon-video-widget-xine.c:1365
 #, c-format
@@ -1930,7 +1884,7 @@ msgstr "Lidhja me këtë server nuk u pranua."
 
 #: ../src/backend/bacon-video-widget-xine.c:1373
 msgid "The specified movie could not be found."
-msgstr "Filmi në fjalë nuk u gjet."
+msgstr "E pamundur gjetja e filmit të specifikuar."
 
 #: ../src/backend/bacon-video-widget-xine.c:1379
 #: ../src/backend/bacon-video-widget-xine.c:1395
@@ -1938,81 +1892,81 @@ msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
-"Buruesit ngjajnë të jenë kodifikuar, dhe nuk mund të lexohen. Mos po "
-"përpiqesh të shikosh një DVD të kodifikuar pa libdvdcss?"
+"Burimi mesa duket është i shifruar dhe nuk mund të lexohet. Është duke "
+"u riprodhuar një DVD e shifruar pa patur libdvdcss?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1382
 msgid "The movie could not be read."
-msgstr "Filmi nuk mundi të lexohej."
+msgstr "I pamundur leximi i filmit."
 
 #: ../src/backend/bacon-video-widget-xine.c:1389
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr "Pati një problem gjatë ngarkimit të një librarie apo një çkodifikuesi (%s)."
+msgstr ""
+"Është verifikuar një problem gjatë ngarkimit të një librarie apo të "
+"një dekodifikuesi (%s)."
 
 #: ../src/backend/bacon-video-widget-xine.c:1398
 msgid "This file is encrypted and cannot be played back."
-msgstr "File është i kodifikuar dhe nuk mund të shikohet."
+msgstr "Ky film është i kodifikuar dhe nuk mund të riprodhohet."
 
 #: ../src/backend/bacon-video-widget-xine.c:1403
 msgid "For security reasons, this movie can not be played back."
-msgstr "Për arsye sigurie, ky film nuk mund të shikohet."
+msgstr "Për arsye sigurie, ky film nuk mund të riprodhohet."
 
 #: ../src/backend/bacon-video-widget-xine.c:1408
 msgid "The audio device is busy. Is another application using it?"
-msgstr "Dispozitivi i zërit është i zënë. Mos po e përdor ndonjë program tjetër?"
+msgstr "Dispozitivi audio është i zënë. Është në përdorim nga ndonjë aplikativ tjetër?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1414
-#, fuzzy
 msgid "Authentication is required to access this file."
-msgstr "Autentifikimi është file."
+msgstr "Për tu futur tek ky file nevoitet identifikimi."
 
 #: ../src/backend/bacon-video-widget-xine.c:1416
-#, fuzzy
 msgid "Authentication is required to access this file or stream."
-msgstr "Serveri nuk pranoi hyrjen me këtë file apo rrymë."
+msgstr "Për tu futur tek ky file ose stream nevoitet identifikimi."
 
 #: ../src/backend/bacon-video-widget-xine.c:1422
 msgid "You are not allowed to open this file."
-msgstr "Nuk lejohet ta hapësh këtë file."
+msgstr "Të drejta të pamjaftueshme për të hapur këtë file."
 
 #: ../src/backend/bacon-video-widget-xine.c:1424
 msgid "The server refused access to this file or stream."
-msgstr "Serveri nuk pranoi hyrjen me këtë file apo rrymë."
+msgstr "Serveri refuzoi hyrjen tek ky file apo stream."
 
 #: ../src/backend/bacon-video-widget-xine.c:1428
 msgid "The file you tried to play is an empty file."
-msgstr "File që po përpiqesh të luash është një file bosh."
+msgstr "File që u kërkua të riprodhohet është bosh."
 
 #: ../src/backend/bacon-video-widget-xine.c:1608
 #, c-format
 msgid "There is no input plugin to handle the location of this movie"
-msgstr "Nuk ka asnjë plugin hyrës për të parë këtë film"
+msgstr "Nuk gjëndet asnjë plugin i input për të trajtuar pozicionin e këtij filmi"
 
 #: ../src/backend/bacon-video-widget-xine.c:1612
 #, c-format
 msgid "There is no plugin to handle this movie."
-msgstr "Nuk ka asnjë plugin për të parë këtë film."
+msgstr "Nuk gjëndet asnjë plugin për të trajtuar këtë film."
 
 #: ../src/backend/bacon-video-widget-xine.c:1616
 #, c-format
 msgid "This movie is broken and can not be played further."
-msgstr "Ky film ka gabime dhe nuk mund të shikohet më tej."
+msgstr "Ky film është i dëmtuar dhe është i pamundur vazhdimi i riprodhimit."
 
 #: ../src/backend/bacon-video-widget-xine.c:1620
 #, c-format
 msgid "This location is not a valid one."
-msgstr "Kjo vendndodhje nuk është e vlefshme."
+msgstr "Pozicioni i specifikuar nuk është i vlefshëm."
 
 #: ../src/backend/bacon-video-widget-xine.c:1624
 #, c-format
 msgid "This movie could not be opened."
-msgstr "Ky film nuk mund të shikohej."
+msgstr "E pamundur hapja e filmit."
 
 #: ../src/backend/bacon-video-widget-xine.c:1628
 #, c-format
 msgid "Generic Error."
-msgstr "Gabim i Përgjithshëm."
+msgstr "Gabim i përgjithshëm."
 
 #: ../src/backend/bacon-video-widget-xine.c:2463
 #, c-format
@@ -2020,8 +1974,8 @@ msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr ""
-"Kodifikuesi i videos '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a "
-"të tjerë për të parë disa lloje filmash."
+"Codec video \"%s\" nuk suportohet. Provo instalimin e plugin të tjerë "
+"shtesë për riprodhimin e llojeve të tjerë filmi"
 
 #: ../src/backend/bacon-video-widget-xine.c:2467
 #, c-format
@@ -2029,13 +1983,15 @@ msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
 "plugins to be able to play some types of movies"
 msgstr ""
-"Kodifikuesi i zërit '%s' nuk punon. Ndoshta të duhet të instalosh plugin-a "
-"të tjerë për të parë disa lloje filmash."
+"Codec audio \"%s\" nuk suportohet. Provo instalimin e plugin të tjerë "
+"shtesë për riprodhimin e llojeve të tjerë filmi"
 
 #: ../src/backend/bacon-video-widget-xine.c:2481
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
-msgstr "Ky është vetëm një file audio, dhe nuk ka dalje zëri në dispozicion."
+msgstr ""
+"Ky file është i llojit vetëm-audio dhe nuk gjëndet asnjë dalje audio "
+"në dispozicion."
 
 #: ../src/backend/bacon-video-widget-xine.c:4103
 #: ../src/backend/bacon-video-widget-xine.c:4150
@@ -2047,17 +2003,17 @@ msgstr "Gjuha %d"
 #: ../src/backend/bacon-video-widget-xine.c:4261
 #, c-format
 msgid "No video to capture."
-msgstr "Asnjë sinjal video."
+msgstr "Asnjë video për marrje."
 
 #: ../src/backend/bacon-video-widget-xine.c:4269
 #, c-format
 msgid "Video codec is not handled."
-msgstr "Kodifikuesi i videos nuk punon."
+msgstr "Codec i pasuportuar video."
 
 #: ../src/backend/bacon-video-widget-xine.c:4280
 #, c-format
 msgid "Movie is not playing."
-msgstr "Filmi ka ndalur."
+msgstr "Filmi nuk është duke u riprodhuar."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -2070,7 +2026,7 @@ msgstr "Filmi ka ndalur."
 #: ../src/backend/video-utils.c:221
 #, c-format
 msgid "long time format|%d:%02d:%02d"
-msgstr ""
+msgstr "%d:%02d:%02d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -2083,7 +2039,7 @@ msgstr ""
 #: ../src/backend/video-utils.c:231
 #, c-format
 msgid "short time format|%d:%02d"
-msgstr ""
+msgstr "%d:%02d"
 
 #: ../src/backend/video-utils.c:250
 #, c-format
@@ -2097,7 +2053,7 @@ msgstr[1] "%d orë"
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minutë"
-msgstr[1] "%d minutë"
+msgstr[1] "%d minuta"
 
 #: ../src/backend/video-utils.c:255
 #, c-format
@@ -2125,126 +2081,118 @@ msgid "%s"
 msgstr "%s"
 
 #: ../src/plugins/totem-plugin-manager.c:51
-#, fuzzy
 msgid "Plugin"
-msgstr "Duke riprodhuar"
+msgstr "Plugin"
 
 #: ../src/plugins/totem-plugin-manager.c:52
-#, fuzzy
 msgid "Enabled"
-msgstr "Aktivo gjetjen e gabimeve"
+msgstr "Aktiv"
 
 #: ../src/plugins/totem-plugins-engine.c:576
 #, c-format
-#, fuzzy
 msgid ""
 "Unable to activate plugin %s.\n"
 "%s"
-msgstr "aktivo j"
+msgstr ""
+"I pamundur aktivizimi i plugin %s.\n"
+"%s"
 
 #: ../src/plugins/totem-plugins-engine.c:579
 #, c-format
-#, fuzzy
 msgid "Unable to activate plugin %s"
-msgstr "aktivo"
+msgstr "I pamundur aktivizimi i plugin %s"
 
 #: ../src/plugins/totem-plugins-engine.c:581
-#, fuzzy
 msgid "Plugin Error"
-msgstr "Gabim liste riprodhimi"
+msgstr "Gabim i plugin"
 
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
-#, fuzzy
 msgid "Bemused"
-msgstr "Pezulluar"
+msgstr "Bemused"
 
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
-#, fuzzy
 msgid "Control Totem through a mobile phone with a Bemused client"
-msgstr "Kontrollo a a"
+msgstr ""
+"Kontrollo Totem me anë të një telefoni mobile të paisur me një klient "
+"Bemused"
 
 #: ../src/plugins/bemused/totem-bemused.c:185
 #, c-format
-#, fuzzy
 msgid "Untitled %d"
-msgstr "Pa titull"
+msgstr "Pa titull %d"
 
 #: ../src/plugins/bemused/totem-bemused.c:607
-#, fuzzy
 msgid "Totem Bemused Server"
-msgstr "Serveri"
+msgstr "Server Bemused për Totem"
 
 #. FIXME version
 #: ../src/plugins/bemused/totem-bemused.c:609
-#, fuzzy
 msgid "Totem Bemused Server version 1.0"
-msgstr "Serveri 0"
+msgstr "Server Bemused versioni 1.0 për Totem"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
-msgstr ""
+msgstr "Gjendja e programit për mesazhet e menjëhershëm"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:2
-#, fuzzy
 msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr "a është"
+msgstr ""
+"Cakto gjëndjen e programit për mesazhet e menjëhershëm si \"mungon\" "
+"gjatë riprodhimit të një filmi"
 
 #: ../src/plugins/galago/totem-galago.c:171
 #, c-format
 msgid "Could not connect to the Galago daemon."
-msgstr ""
+msgstr "E pamundur lidhja me demonin Galago"
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
 msgid "Gromit Annotations"
-msgstr ""
+msgstr "Shënime Gromit"
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
-#, fuzzy
 msgid "Presentation helper to make annotations on screen"
-msgstr "Prezantim në"
+msgstr ""
+"Instrument për prezantime që jep mundësinë e krijimit të shënimeve "
+"në ekran"
 
 #: ../src/plugins/gromit/totem-gromit.c:276
 #, c-format
 msgid "The gromit binary was not found."
-msgstr ""
+msgstr "E pamundur gjetja e të zbatueshmes \"gromit\"."
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
-#, fuzzy
 msgid "Infrared Remote Control"
-msgstr "Kontrollo"
+msgstr "Kontrolli në distancë me infrared"
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
-#, fuzzy
 msgid "Support infrared remote control"
-msgstr "Suporti"
+msgstr "Suporti për kontrollin në distancë me infrared"
 
 #: ../src/plugins/lirc/totem-lirc.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't initialize lirc."
-msgstr "E pamundur nisja e librarive thread-safe."
+msgstr "I pamundur fillimi i lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:247
 #, c-format
 msgid "Couldn't read lirc configuration."
-msgstr ""
+msgstr "I pamundur leximi i konfigurimit të lirc."
 
 #: ../src/plugins/mythtv/totem-mythtv.c:201
 msgid "Recordings"
-msgstr ""
+msgstr "Regjistrime"
 
 #: ../src/plugins/mythtv/totem-mythtv.c:428
 msgid "MythTV Recordings"
-msgstr ""
+msgstr "Regjistrime të MythTV"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
-#, fuzzy
 msgid "Always On Top"
-msgstr "Gjithmonë _sipër"
+msgstr "Gjithmonë në plan të parë"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
-#, fuzzy
 msgid "Keep the main window on top when playing a movie"
-msgstr "Nëse dritarja kryesore duhet të qëndrojë në pamje të parë"
+msgstr "Mbaj dritaren kryesore në plan të parë gjatë riprodhimit të një filmi"
 
 #: ../src/plugins/properties/totem-movie-properties.c:159
 msgid "Properties"
@@ -2258,50 +2206,50 @@ msgstr "%d x %d"
 #: ../src/plugins/properties/bacon-video-widget-properties.c:237
 #, c-format
 msgid "%d frames per second"
-msgstr "%d pamje për sekondë"
+msgstr "%d fotograme për sekondë"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:239
 #: ../src/plugins/properties/bacon-video-widget-properties.c:256
 #, c-format
 msgid "%d kbps"
-msgstr "%d kbps"
+msgstr "%d kb/s"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:259
-#, fuzzy, c-format
+#, c-format
 msgid "%d Hz"
-msgstr "%d %%"
+msgstr "%d Hz"
 
 #: ../src/plugins/publish/totem-publish.c:582
 msgid "Neighbours"
-msgstr ""
+msgstr "Të afërt"
 
 #: ../src/plugins/publish/publish.totem-plugin.in.h:1
-#, fuzzy
 msgid "Publish Playlist"
-msgstr "Lista e riprodhimit"
+msgstr "Publiko renditjen"
 
 #: ../src/plugins/publish/publish.totem-plugin.in.h:2
 msgid "Share the current playlist via HTTP"
-msgstr ""
+msgstr "Bashkënda renditjen aktuale via HTTP"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:2
 #, no-c-format
-#, fuzzy
 msgid ""
 "<small>The name used for announcing the playlist service on the network.\n"
 "All occurances of the string <b>%u</b> will be replaced by your name,\n"
 "and <b>%h</b> will be replaced by your computer's host name.</small>"
-msgstr "<small> emri për në nga stringë<b></b> emri<b></b> emri</small>"
+msgstr ""
+"<small>Emri i përdorur për të njoftuar shërbimin e renditjes në rrjet.\n"
+"Sa herë që të ndeshet stringa <b>%u</b> do të zëvendësohet me emrin,\n"
+"tuaj dhe <b>%h</b> do të zëvendësohet me emrin e host të komjuterit\n"
+"tuaj.</small>"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:5
-#, fuzzy
 msgid "Service _Name:"
-msgstr "Shërbimi Emri:"
+msgstr "_Emri i shërbimit:"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:6
-#, fuzzy
 msgid "Use _encrypted transport protocol (HTTPS)"
-msgstr "Përdorimi"
+msgstr "Përdor protokoll të _kriptuar transporti (HTTPS)"
 
 #: ../src/plugins/skipto/totem-skipto.c:189
 msgid "Skip to"
@@ -2313,12 +2261,12 @@ msgstr "_Kapërce tek..."
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:216
 msgid "Skip to a specific time"
-msgstr "Kapërce në një moment të caktuar"
+msgstr "Kapërce tek një moment i caktuar"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "Could not load the \"Skip to\" dialogue interface."
-msgstr "Nuk munda të ngarkoj ndërfaqen '%s'."
+msgstr "I pamundur ngarkimi i interfaqes së dialogut \"Kapërce tek\"."
 
 #: ../src/plugins/skipto/skipto.ui.h:2
 msgid "_Skip to:"
@@ -2330,20 +2278,18 @@ msgstr "sekonda"
 
 #. Display an error
 #: ../src/plugins/tracker/totem-tracker-widget.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "Could not get metadata for file %s: %s"
-msgstr "Nuk munda të hap file-n '%s': %s"
+msgstr "E pamundur marrja e metadata për file \"%s\": %s"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:170
-#, fuzzy
 msgid "File Error"
-msgstr "File Gabim"
+msgstr "Gabim në file"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:224
 #: ../src/plugins/tracker/totem-tracker-widget.c:276
-#, fuzzy
 msgid "No results"
-msgstr "Pa arsye"
+msgstr "Asnjë rezultat"
 
 #. Translators:
 #. * This is used to show which items are listed in the list view, for example:
@@ -2352,147 +2298,127 @@ msgstr "Pa arsye"
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
 #: ../src/plugins/tracker/totem-tracker-widget.c:231
 #, c-format
-#, fuzzy
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
-msgstr[0] "nga"
-msgstr[1] "nga"
+msgstr[0] "Rezultati %i - %i në %i gjetur"
+msgstr[1] "Rezultate %i - %i në %i të gjetur"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:367
 #: ../src/plugins/youtube/youtube.ui.h:2
-#, fuzzy
 msgid "Search Results"
-msgstr "Kërko"
+msgstr "Rezultatet e kërkimit"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:416
-#, fuzzy
 msgid "Page"
-msgstr "Pezullo"
+msgstr "Faqja"
 
 #: ../src/plugins/tracker/totem-tracker.c:92
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
-#, fuzzy
 msgid "Local Search"
-msgstr "Lokal Kërko"
+msgstr "Kërkim lokal"
 
 #: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:1
-#, fuzzy
 msgid "Set the window icon to the thumbnail of the playing movie"
-msgstr "dritare ikonë nga"
+msgstr "Vendos ikonën e dritares si miniaturë e filmit duke u shfaqur"
 
 #: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:2
 msgid "Thumbnail"
-msgstr ""
+msgstr "Miniaturë"
 
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
-#, fuzzy
 msgid "Search for local videos using Tracker"
-msgstr "Kërko për"
+msgstr "Kërko për video lokale duke përdorur Tracker"
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
-#, fuzzy
 msgid "A plugin to let you browse YouTube videos."
-msgstr "A."
+msgstr "Një plugin që mundëson eksplorimin e videove YouTube."
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
 msgid "YouTube browser"
-msgstr ""
+msgstr "Shfletuesi YouTube"
 
 #: ../src/plugins/youtube/youtube.ui.h:1
-#, fuzzy
 msgid "Related Videos"
-msgstr "E ngjashme"
+msgstr "Video të ngjashme"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
-#, fuzzy
 msgid "Search YouTube"
-msgstr "Kërko"
+msgstr "Kërko në YouTube"
 
 #: ../src/plugins/youtube/youtube.ui.h:4
-#, fuzzy
 msgid "Search:"
-msgstr "Viti:"
+msgstr "Kërko:"
 
 #: ../src/plugins/youtube/youtube.py:90 ../src/plugins/youtube/youtube.py:170
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
 #: ../src/plugins/youtube/youtube.py:107
-#, fuzzy
 msgid "Videos"
 msgstr "Video"
 
 #: ../src/plugins/youtube/youtube.py:113
-#, fuzzy
 msgid "_Open in Web Browser"
-msgstr "Hap në Web Shfletuesi"
+msgstr "_Hap në shfletuesin web"
 
 #: ../src/plugins/youtube/youtube.py:113
-#, fuzzy
 msgid "Open the video in your web browser"
-msgstr "Hap në"
+msgstr "Hap videon në shfletuesin tuaj web"
 
 #: ../src/plugins/youtube/youtube.py:146
 msgid "Fetching related videos..."
-msgstr ""
+msgstr "Marrja e videove të ngjashme..."
 
 #: ../src/plugins/youtube/youtube.py:194
 msgid "Fetching more videos..."
-msgstr ""
+msgstr "Marrja e videove të tjera..."
 
 #: ../src/plugins/youtube/youtube.py:290
 msgid "Fetching search results..."
-msgstr ""
+msgstr "Marrja e rezultateve të kërkimit..."
 
 #: ../browser-plugin/totem-plugin-viewer.c:465
 #, c-format
-#, fuzzy
 msgid "No URI to play"
-msgstr "Jo URI"
+msgstr "Asnjë URI për tu riprodhuar"
 
 #: ../browser-plugin/totem-plugin-viewer.c:491
-#, fuzzy, c-format
+#, c-format
 msgid "Totem could not play '%s'"
-msgstr "Totem nuk arriti të riprodhojë '%s'."
+msgstr "I pamundur riprodhimi i '%s'"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
 #: ../browser-plugin/totem-plugin-viewer.c:1091
 #, c-format
-#, fuzzy
 msgid "_Open with \"%s\""
-msgstr "_Hape me \"%s\""
+msgstr "_Hap me \"%s\""
 
 #: ../browser-plugin/totem-plugin-viewer.c:1142
-#, fuzzy, c-format
+#, c-format
 msgid "Browser Plugin using %s"
-msgstr "Riprodhues Filmi duke përdorur %s"
+msgstr "Plugin për shfletues bazuar në %s"
 
 #: ../browser-plugin/totem-plugin-viewer.c:1147
-#, fuzzy
 msgid "Totem Browser Plugin"
-msgstr "Shfletuesi Plugin"
+msgstr "Plugin për shfletuesin Totem"
 
 #. FIXME!
 #. FIXME construct and show error message
 #: ../browser-plugin/totem-plugin-viewer.c:1775
-#, fuzzy
 msgid "The Totem plugin could not be started."
-msgstr "Filmi nuk mundi të lexohej."
+msgstr "E pamundur nisja e plugin të Totem."
 
 #: ../browser-plugin/totem-plugin-viewer.c:2120
-#, fuzzy
 msgid "No playlist or playlist empty"
-msgstr "Jo"
+msgstr "Asnjë renditje apo renditje boshe"
 
 #: ../browser-plugin/totem-plugin-viewer.c:2224
-#, fuzzy
 msgid "Could not initialise the thread-safe libraries."
-msgstr "E pamundur nisja e librarive thread-safe."
+msgstr "I pamundur fillimi i librarive thread-safe."
 
 #: ../browser-plugin/totem-plugin-viewer.c:2224
-#, fuzzy
 msgid "Verify your system installation. The Totem plugin will now exit."
-msgstr "Kontrollo instalimin e sistemit. Totem tani do dalë."
+msgstr "Kontrollo instalimin e sistemit. Plugin i Totem do të mbyllet."
 
