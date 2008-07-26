@@ -1,0 +1,805 @@
+# translation of totem manual to Polish
+# Copyright (C) 2001-2008 Free Software Foundation, Inc.
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Aviary.pl
+# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
+# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
+# gnomepl@aviary.pl
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# review by Piotr Zaryk <pzaryk@aviary.pl>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: totem help\n"
+"POT-Creation-Date: 2008-06-30 03:20+0000\n"
+"PO-Revision-Date: 2008-07-26 21:38+0100\n"
+"Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
+"Language-Team: Aviary.pl <gnomepl@aviary.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/totem.xml:227(None)
+msgid "@@image: 'figures/totem_start_window.png'; md5=85daf6f6aaae9262482c8f1b0b6d67b0"
+msgstr "@@image: 'figures/totem_start_window.png'; md5=85daf6f6aaae9262482c8f1b0b6d67b0"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/totem.xml:375(None)
+msgid "@@image: 'figures/totem_pause_button.png'; md5=8af1d98e40e2ebda89cc2cd86550c5f2"
+msgstr "@@image: 'figures/totem_pause_button.png'; md5=8af1d98e40e2ebda89cc2cd86550c5f2"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/totem.xml:387(None)
+msgid "@@image: 'figures/totem_play_button.png'; md5=feb4dec4237e6eb7ce571af2dbd0cf79"
+msgstr "@@image: 'figures/totem_play_button.png'; md5=feb4dec4237e6eb7ce571af2dbd0cf79"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/totem.xml:482(None)
+msgid "@@image: 'figures/totem_next_button.png'; md5=c7f9041dc1804edc6777cfe68456e703"
+msgstr "@@image: 'figures/totem_next_button.png'; md5=c7f9041dc1804edc6777cfe68456e703"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/totem.xml:498(None)
+msgid "@@image: 'figures/totem_previous_button.png'; md5=a966195040a035bf48daab94c9320afc"
+msgstr "@@image: 'figures/totem_previous_button.png'; md5=a966195040a035bf48daab94c9320afc"
+
+#: C/totem.xml:30(title)
+msgid "<application>Totem Movie Player</application> Manual"
+msgstr "Podręcznik <application>Odtwarzacza filmów Totem</application> "
+
+#: C/totem.xml:32(year)
+msgid "2003"
+msgstr "2003"
+
+#: C/totem.xml:33(holder)
+msgid "Chee Bin HOH"
+msgstr "Chee Bin HOH"
+
+#: C/totem.xml:37(para)
+msgid "Totem Movie Player is a media player for GNOME that runs on GStreamer by default, but can also be run on xine. It has support for most audio and video codecs including DVDs and Digital CDs among many others. Features include TV-out, fullscreen, subtitles, and more."
+msgstr "Odtwarzacz filmów Totem jest odtwarzaczem multimediów dla GNOME domyślnie używającym GStreamer, ale mogącym także używać xine. Wspiera większość kodeków dźwiękowych i wideo. Wspiera funkcje takie jak wyjście TV, odtwarzanie pełnoekranowe, napisy i inne."
+
+#: C/totem.xml:44(publishername)
+#: C/totem.xml:57(orgname)
+#: C/totem.xml:104(para)
+msgid "GNOME Documentation Project"
+msgstr "Projekt dokumentacji GNOME"
+
+#: C/totem.xml:2(para)
+msgid "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any later version published by the Free Software Foundation with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
+msgstr "Udziela się  zezwolenia do  kopiowania rozpowszechniania i/lub modyfikację tego dokumentu zgodnie z zasadami Licencji GNU Wolnej Dokumentacji w wersji 1.1 lub dowolnej późniejszej opublikowanej przez Free Software Foundation; wraz z zawartymi Sekcjami Niezmiennymi, wraz z Tekstem na Przedniej Okładce i z Tekstem na Tylnej Okładce. Kopia licencji załączona jest w sekcji zatytułowanej \"GNU Free Documentation License\""
+
+#: C/totem.xml:12(para)
+msgid "This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the license to the manual, as described in section 6 of the license."
+msgstr "This manual is part of a collection of GNOME manuals distributed under the GFDL. If you want to distribute this manual separately from the collection, you can do so by adding a copy of the license to the manual, as described in section 6 of the license."
+
+#: C/totem.xml:19(para)
+msgid "Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters."
+msgstr "Many of the names used by companies to distinguish their products and services are claimed as trademarks. Where those names appear in any GNOME documentation, and the members of the GNOME Documentation Project are made aware of those trademarks, then the names are in capital letters or initial capital letters."
+
+#: C/totem.xml:35(para)
+msgid "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
+msgstr "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT, YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
+
+#: C/totem.xml:55(para)
+msgid "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES."
+msgstr "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY CONTRIBUTOR, OR ANY DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH PARTIES, BE LIABLE TO ANY PERSON FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR LOSSES ARISING OUT OF OR RELATING TO USE OF THE DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT, EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES."
+
+#: C/totem.xml:28(para)
+msgid "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: <placeholder-1/>"
+msgstr "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: <placeholder-1/>"
+
+#: C/totem.xml:54(firstname)
+msgid "Chee Bin"
+msgstr "Chee Bin"
+
+#: C/totem.xml:55(surname)
+msgid "HOH"
+msgstr "HOH"
+
+#: C/totem.xml:58(email)
+msgid "cbhoh@gnome.org"
+msgstr "cbhoh@gnome.org"
+
+#: C/totem.xml:62(firstname)
+msgid "Baptiste"
+msgstr "Baptiste"
+
+#: C/totem.xml:63(surname)
+msgid "Mille-Mathias"
+msgstr "Mille-Mathias"
+
+#: C/totem.xml:65(orgname)
+msgid "GNOME Documentation project"
+msgstr "Projekt Dokumentacji GNOME"
+
+#: C/totem.xml:66(email)
+msgid "baptiste.millemathias@gmail.org"
+msgstr "baptiste.millemathias@gmail.org"
+
+#: C/totem.xml:68(contrib)
+msgid "Update documentation"
+msgstr "Aktualizuj dokumentację"
+
+#: C/totem.xml:98(revnumber)
+msgid "Totem Movie Player Manual V2.0"
+msgstr "Podręcznik odtwarzacza filmów Totem V2.0"
+
+#: C/totem.xml:99(date)
+msgid "August 2006"
+msgstr "Sierpień 2006"
+
+#: C/totem.xml:101(para)
+msgid "Chee Bin HOH <email>cbhoh@gnome.org</email>"
+msgstr "Chee Bin HOH <email>cbhoh@gnome.org</email>"
+
+#: C/totem.xml:109(releaseinfo)
+msgid "This manual describes version 1.6.0 of Totem Movie Player."
+msgstr "Podręcznik opisuje wersję 1.6.0 odtwarzacza filmów Totem."
+
+#: C/totem.xml:112(title)
+msgid "Feedback"
+msgstr "Informacje zwrotne"
+
+#: C/totem.xml:113(para)
+#: C/totem.xml:940(para)
+msgid "To report a bug or make a suggestion regarding the Totem Movie Player application or this manual, follow the directions in the <ulink url=\"ghelp:user-guide#feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr "Aby zgłosić błąd lub sugestię na temat programu Totem lub tego podręcznika, proszę zobaczyć instrukcję na <ulink url=\"ghelp:user-guide#feedback\" type=\"help\">Stronie informacji zwrotnych GNOME</ulink>."
+
+#: C/totem.xml:121(primary)
+#: C/totem.xml:230(application)
+msgid "Totem Movie Player"
+msgstr "Odtwarzacz filmów Totem"
+
+#: C/totem.xml:124(primary)
+#: C/totem.xml:205(command)
+msgid "totem"
+msgstr "totem"
+
+#: C/totem.xml:133(title)
+msgid "Introduction"
+msgstr "Wprowadzenie"
+
+#: C/totem.xml:134(para)
+msgid "The <application>Totem Movie Player</application> application is a movie player for the GNOME desktop based on GStreamer framework and xine library, and enables you to play movies or songs."
+msgstr "<application>Odtwarzacz filmów Totem</application> jest odtwarzaczem filmów dla GNOME korzystającym z GStreamer i biblioteki xine, dającym możliwość odtwarzania filmów i utworów."
+
+#: C/totem.xml:137(para)
+msgid "<application>Totem Movie Player</application> provides the following features:"
+msgstr "<application>Odtwarzacz filmów Totem</application> dostarcza następujące funkcje:"
+
+#: C/totem.xml:140(para)
+msgid "Support a variety of video and audio files."
+msgstr "Obsługuje różnorodne formaty plików dźwiękowych i wideo."
+
+#: C/totem.xml:143(para)
+msgid "Provide a variety of zoom levels and aspect ratios, and a fullscreen view."
+msgstr "Udostępnia różnorodne tryby powiększeń i proporcji obrazu oraz tryb pełnoekranowy."
+
+#: C/totem.xml:147(para)
+msgid "Seek and Volume controls."
+msgstr "Obsługa przewijania i regulacja głośności."
+
+#: C/totem.xml:150(para)
+msgid "A playlist."
+msgstr "Lista odtwarzania."
+
+#: C/totem.xml:153(para)
+msgid "Complete keyboard navigation."
+msgstr "Nawigacja przy pomocy klawiatury."
+
+#: C/totem.xml:157(para)
+msgid "<application>Totem Movie Player</application> also comes with additional functionality such as:"
+msgstr "<application>Odtwarzacz filmów Totem</application> jest dostarczany z następującymi funkcjami:"
+
+#: C/totem.xml:161(para)
+msgid "Video thumbnailer for GNOME."
+msgstr "Generator miniaturek wideo dla GNOME."
+
+#: C/totem.xml:164(para)
+msgid "Nautilus properties tab."
+msgstr "Karta właściwości w programie Nautilus."
+
+#: C/totem.xml:181(title)
+msgid "Getting Started"
+msgstr "Pierwsze kroki"
+
+#: C/totem.xml:184(title)
+msgid "To Start Totem Movie Player"
+msgstr "Uruchamianie odtwarzacza filmów Totem"
+
+#: C/totem.xml:185(para)
+msgid "You can start <application>Totem Movie Player</application> in the following ways:"
+msgstr "<application>Odtwarzacz filmów Totem</application> można uruchomić w następujący sposób:"
+
+#: C/totem.xml:189(term)
+msgid "<guimenu>Applications</guimenu> menu"
+msgstr "Menu <guimenu>Programy</guimenu>"
+
+#: C/totem.xml:191(para)
+msgid "Choose <menuchoice><guisubmenu>Sound &amp; Video</guisubmenu><guimenuitem>Movie Player</guimenuitem></menuchoice>."
+msgstr "Należy wybrać <menuchoice><guisubmenu>Dźwięk &amp; Obraz</guisubmenu><guimenuitem>Odtwarzacz filmów Totem</guimenuitem></menuchoice>."
+
+#: C/totem.xml:200(term)
+msgid "Command line"
+msgstr "Wiersz poleceń"
+
+#: C/totem.xml:202(para)
+msgid "To start <application>Totem Movie Player</application> from a command line, type the following command, then press <keycap>Return</keycap>:"
+msgstr "Aby uruchomić <application>Odtwarzacz filmów Totem</application> z wiersza poleceń, należy wprowadzić poniższe polecenie i nacisnąć <keycap>Enter</keycap>:"
+
+#: C/totem.xml:208(para)
+msgid "To view other command line options that are available, type <command>totem --help</command>, then press <keycap>Return</keycap>."
+msgstr "Aby wyświetlić inne dostępne opcje uruchamiania z wiersza poleceń, należy wprowadzić <command>totem --help</command>, i nacisnąć <keycap>Enter</keycap>."
+
+#: C/totem.xml:218(title)
+msgid "When You Start Totem Movie Player"
+msgstr "Po uruchomieniu odtwarzacza filmów Totem"
+
+#: C/totem.xml:219(para)
+msgid "When you start <application>Totem Movie Player</application>, the following window is displayed."
+msgstr "Po uruchomieniu <application>Odtwarzacza filmów Totem</application> zostanie wyświetlone następujące okno:"
+
+#: C/totem.xml:223(title)
+msgid "Totem Movie Player Start Up Window"
+msgstr "Okno początkowe odtwarzacza filmów Totem"
+
+#: C/totem.xml:230(phrase)
+msgid "Shows <placeholder-1/> main window with sidebar opened on playlist. Contains menubar, display area, sidebar, time elapsed slider, seek control buttons, volume slider and statusbar."
+msgstr "Wyświetla <placeholder-1/> okno główne z panelem otwartym na liście odtwarzania. Zawiera pasek menu, obszar wyświetlania, panel, suwak upływu czasu, przyciski przewijania, suwak głośności i pasek stanu."
+
+#. for example, the items on the menubar and on the toolbar. This section is optional.
+#: C/totem.xml:243(para)
+msgid "The <application>Totem Movie Player</application> window contains the following elements:"
+msgstr "Okno <application>Odtwarzacza filmów Totem</application> zawiera następujące elementy:"
+
+#: C/totem.xml:247(term)
+msgid "Menubar."
+msgstr "Pasek menu."
+
+#: C/totem.xml:249(para)
+msgid "The menus on the menubar contain all of the commands you need to use in <application>Totem Movie Player</application>."
+msgstr "Pasek menu zawiera wszystkie polecenia które są potrzebne do używania <application>Odtwarzacza filmów Totem </application>."
+
+#: C/totem.xml:254(term)
+msgid "Display area."
+msgstr "Obszar wyświetlania."
+
+#: C/totem.xml:256(para)
+msgid "The display area displays the movie or a visualisation of the current song."
+msgstr "Na obszarze wyświetlania pojawia się film albo wizualizacja aktualnego utworu."
+
+#: C/totem.xml:261(term)
+msgid "Sidebar."
+msgstr "Panel."
+
+#: C/totem.xml:263(para)
+msgid "The sidebar displays properties of the file played and acts as playlist. It can also be used by various plugins, such as the MythTV, YouTube and Video Search plugins."
+msgstr "Panel wyświetla właściwości odtwarzanego pliku oraz listę odtwarzania. Może być używana przez różne wtyczki, takie jak MythTV, YouTube oraz wyszukiwanie filmów/wideo."
+
+#: C/totem.xml:270(term)
+msgid "Time elapsed slider."
+msgstr "Suwak upływu czasu."
+
+#: C/totem.xml:272(para)
+msgid "The time elapsed slider displays the elapsed time of movie or song that is playing. It also enables you to skip forward or backward in a movie or song."
+msgstr "Suwak upływu czasu wyświetla upływ czasu filmu lub utworu. Umożliwia także przewijanie filmu lub utworu do przodu lub do tyłu."
+
+#: C/totem.xml:278(term)
+msgid "Seek control buttons."
+msgstr "Przyciski obsługi przewijania."
+
+#: C/totem.xml:280(para)
+msgid "The seek control buttons enables you to move to the next or previous track, and to pause or play a movie or song."
+msgstr "Przyciski obsługi przewijania pozwalają na przejście pozwalają na przemieszczenie do poprzedniego/następnego utworu oraz odtwarzaniu/wstrzymaniu filmu lub utworu."
+
+#: C/totem.xml:286(term)
+msgid "Volume slider."
+msgstr "Suwak głośności."
+
+#: C/totem.xml:288(para)
+msgid "The volume slider enables you to adjust the volume."
+msgstr "Suwak głośności umożliwia dostosowanie poziomu głośności."
+
+#: C/totem.xml:292(term)
+msgid "Statusbar."
+msgstr "Pasek stanu."
+
+#: C/totem.xml:294(para)
+msgid "The statusbar displays status information about the movie or song that is playing."
+msgstr "Pasek stanu wyświetla informację o stanie odtwarzanego filmu lub utworu."
+
+#: C/totem.xml:306(title)
+msgid "Usage"
+msgstr "Użytkowanie"
+
+#: C/totem.xml:310(title)
+msgid "To Open a File"
+msgstr "Otwieranie pliku"
+
+#: C/totem.xml:311(para)
+msgid "To open a video or an audio file, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut><guimenu>Movie</guimenu><guisubmenu>Open</guisubmenu></menuchoice>. The <guilabel>Select Movies or Playlists</guilabel> dialog is displayed. Select the file(s) you want to open, then click <guibutton>OK</guibutton>."
+msgstr "Aby otworzyć plik dźwiękowy lub wideo, należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut><guimenu>Film</guimenu><guisubmenu>Otwórz</guisubmenu></menuchoice>. Wyświetli się okno <guilabel>Wybór filmów lub list odtwarzania</guilabel>. Należy wybrać plik(i) do otwarcia, i nacisnąć <guibutton>OK</guibutton>."
+
+#: C/totem.xml:321(para)
+msgid "You can drag a file from another application such as a file manager to the <application>Totem Movie Player</application> window. The <application>Totem Movie Player</application> application will open the file and play the movie or song. <application>Totem Movie Player</application> displays the title of the movie or song in the titlebar of the window and in the playlist in the sidebar."
+msgstr "Można przeciągnąć plik z innego programu takiego jak np. menedżer plików do okna <application>Odtwarzacza filmów Totem</application>. <application>Odtwarzacz filmów Totem</application> otworzy i odtworzy film lub utwór. <application>Odtwarzacz filmów Totem</application> wyświetli tytuł filmu/utwór w belce tytułowej okna i w liście odtwarzania na panelu."
+
+#: C/totem.xml:327(para)
+msgid "If you try to open a file format that <application>Totem Movie Player</application> does not recognize, the application displays an error message. This error is most often encountered if you do not have the correct codecs installed. Information on getting codecs working can be found on the <ulink url=\"http://www.gnome.org/projects/totem/#codecs\">Totem Movie Player website</ulink>."
+msgstr "Przy próbie otwarcia nieobsługiwanego formatu program wyświetli okno błędu. Błąd pojawia się często przy braku  poprawnie zainstalowanych kodeków. Informacje o kodekach można znaleźć na <ulink url=\"http://www.gnome.org/projects/totem/#codecs\">stronie WWW odtwarzacza filmów Totem</ulink>."
+
+#: C/totem.xml:333(para)
+msgid "You can double-click on a video or an audio file in the <application>Nautilus</application> file manager to open it on the <application>Totem Movie Player</application> window."
+msgstr "Można kliknąć dwukrotnie plik dźwiękowy lub filmowy w menedżerze plików <application>Nautilus</application>, aby odtworzyć go w oknie <application>Odtwarzacza filmów Totem</application>."
+
+#: C/totem.xml:340(title)
+msgid "To Open a Location"
+msgstr "Otwieranie z położenia"
+
+#: C/totem.xml:341(para)
+msgid "To open a file by URI location, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Open Location</guimenuitem></menuchoice>. The <guilabel>Open Location</guilabel> dialog is displayed. Use the drop-down combination box to specify the URI location of file you would like to open (it lists URIs which have previously been opened) – or type one in directly – then click on the <guibutton>Open</guibutton> button."
+msgstr "Oby otworzyć plik z adresu URI, należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut><guimenu>Film</guimenu><guimenuitem>Otwórz z położenia</guimenuitem></menuchoice>. Wyświetli się okno dialogowe <guilabel>Otwórz z położenia</guilabel>. Należy wybrać adres URI z listy (zawarte są tam ostatnio otwierane adresy URI) – albo wprowadzić bezpośrednio – następnie nacisnąć przycisk<guibutton>Otwórz</guibutton>."
+
+#: C/totem.xml:354(title)
+msgid "To Play a Movie (DVD, VCD or CD)"
+msgstr "Odtwarzanie filmu (DVD, VCD lub CD)"
+
+#: C/totem.xml:355(para)
+msgid "Insert the disc in the optical device of your computer, then choose <menuchoice><guimenu>Movie</guimenu><guimenuitem>Play Disc</guimenuitem></menuchoice>."
+msgstr "Należy włożyć płytę do napędu optycznego w komputerze, a następnie wybrać <menuchoice><guimenu>Film</guimenu><guimenuitem>Odtwarzaj płytę</guimenuitem></menuchoice>."
+
+#: C/totem.xml:361(title)
+msgid "To Eject a DVD, VCD or CD"
+msgstr "Wysuwanie płyt DVD, VCD lub CD"
+
+#: C/totem.xml:362(para)
+msgid "To eject a DVD, VCD, or CD, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Eject</guimenuitem></menuchoice>."
+msgstr "Aby wysunąć płytę DVD, VCD lub CD, należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut><guimenu>Film</guimenu><guimenuitem>Wysuń płytę</guimenuitem></menuchoice>."
+
+#: C/totem.xml:372(title)
+msgid "To Pause a Movie or Song"
+msgstr "Wstrzymanie filmu lub utworu"
+
+#: C/totem.xml:376(phrase)
+msgid "Shows pause button."
+msgstr "Wyświetla przycisk wstrzymania."
+
+#: C/totem.xml:373(para)
+msgid "To pause a movie or song that is playing, click on the <placeholder-1/> button, or choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Play / Pause</guimenuitem></menuchoice>. You may also use the <keycap>P</keycap> key to pause or play a movie. When you pause a movie or song, the statusbar displays <guilabel>Paused</guilabel> and the time elapsed on the current movie or song stops."
+msgstr "Aby wstrzymać odtwarzany film lub utwór, należy nacisnąć przycisk <placeholder-1/> lub wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Spacja</keycap></keycombo></shortcut><guimenu>Film</guimenu><guimenuitem>Odtwarzaj / Wstrzymaj</guimenuitem></menuchoice>. Można także użyć klawisza <keycap>P</keycap>. Po wstrzymaniu filmu lub utworu, na pasku stanu wyświetla się napis <guilabel>Wstrzymany</guilabel>, a odtwarzanie filmu zostaje wstrzymane."
+
+#: C/totem.xml:388(phrase)
+msgid "Shows play button."
+msgstr "Wyświetla przycisk odtwarzania."
+
+#: C/totem.xml:385(para)
+msgid "To resume playing a movie or song, click on the <placeholder-1/> button, or choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Play / Pause</guimenuitem></menuchoice>."
+msgstr "Aby wznowić odtwarzanie filmu lub utworu należy nacisnąć przycisk <placeholder-1/>, lub wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo></shortcut><guimenu>Film</guimenu><guimenuitem>Odtwarzaj / Wstrzymaj</guimenuitem></menuchoice>."
+
+#: C/totem.xml:399(title)
+msgid "To View Properties of a Movie or Song"
+msgstr "Wyświetlanie właściwości filmu lub piosenki"
+
+#: C/totem.xml:400(para)
+msgid "To view properties of a movie or song, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> to make the sidebar appear, and choose <guimenu>Properties</guimenu> in the drop-down list."
+msgstr "Aby wyświetlić właściwości filmu lub piosenki należy wybrać <menuchoice><guimenu>Widok</guimenu><guimenuitem>Panel</guimenuitem></menuchoice> aby panel się pojawił, a następnie <guimenu>Właściwości</guimenu> z listy."
+
+#: C/totem.xml:408(term)
+#: C/totem.xml:794(title)
+msgid "General"
+msgstr "Ogólne"
+
+#: C/totem.xml:410(para)
+msgid "Title, artist, album, year and duration of the movie or song, as well as any embedded comment the movie or song has."
+msgstr "Tytuł, wykonawca, album, rok oraz czas trwania filmu lub piosenki, a także załączony komentarz."
+
+#: C/totem.xml:414(term)
+msgid "Video"
+msgstr "Wideo"
+
+#: C/totem.xml:416(para)
+msgid "Video dimensions, codec, framerate and bitrate."
+msgstr "Wymiary nagrania wideo, kodek, liczba klatek na sekundę oraz gęstość bitowa."
+
+#: C/totem.xml:420(term)
+#: C/totem.xml:898(title)
+msgid "Audio"
+msgstr "Dźwięk"
+
+#: C/totem.xml:422(para)
+msgid "Audio codec, channels, sample rate and bitrate."
+msgstr "Kodek dźwięku, kanały, częstotliwość próbkowania oraz gęstość bitowa."
+
+#: C/totem.xml:405(para)
+msgid "The dialog contains the following information: <placeholder-1/>"
+msgstr "Okno zawiera następujące informacje:<placeholder-1/>"
+
+#: C/totem.xml:430(title)
+msgid "To Seek Through Movies or Songs"
+msgstr "Nawigacja pomiędzy filmami i utworami"
+
+#: C/totem.xml:431(para)
+msgid "To seek through movies or songs, you can use the following methods:"
+msgstr "Można przechodzić pomiędzy filmami i utworami w następujący sposób:"
+
+#: C/totem.xml:435(term)
+msgid "To skip forward"
+msgstr "Przechodzenie naprzód"
+
+#: C/totem.xml:437(para)
+msgid "To skip forward a movie or song, choose <menuchoice><shortcut><keycap>Right</keycap></shortcut><guimenu>Go</guimenu><guimenuitem>Skip Forward</guimenuitem></menuchoice>."
+msgstr "Aby przejść naprzód należy wybrać <menuchoice><shortcut><keycap>W prawo</keycap></shortcut><guimenu>Przejdź</guimenu><guimenuitem>Przejdź naprzód</guimenuitem></menuchoice>."
+
+#: C/totem.xml:447(term)
+msgid "To skip backward"
+msgstr "Przechodzenie wstecz"
+
+#: C/totem.xml:449(para)
+msgid "To skip backward a movie or song, choose <menuchoice><shortcut><keycap>Left</keycap></shortcut><guimenu>Go</guimenu><guimenuitem>Skip Backward</guimenuitem></menuchoice>."
+msgstr "Aby przejść wstecz należy wybrać <menuchoice><shortcut><keycap>W lewo</keycap></shortcut><guimenu>Przejdź</guimenu><guimenuitem>Przejdź wstecz</guimenuitem></menuchoice>."
+
+#: C/totem.xml:459(term)
+msgid "To skip to a time"
+msgstr "Przejście do"
+
+#: C/totem.xml:461(para)
+msgid "To skip to a specific elapsed time in the movie or song, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut><guimenu>Go</guimenu><guimenuitem>Skip to</guimenuitem></menuchoice>. The <guilabel>Skip to</guilabel> dialog is displayed. Use the spin box to specify the elapsed time (in seconds) to skip to, then click <guibutton>OK</guibutton>."
+msgstr "Aby przejść do określonego czasu w filmie/utworze, należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut><guimenu>Przejdź</guimenu><guimenuitem>Przejdź do</guimenuitem></menuchoice>. Wyświetlone zostanie okno dialogowe <guilabel>Przejdź do</guilabel>. Należy użyć pola wyboru do ustawienia czasu (w sekundach), a następnie nacisnąć <guibutton>OK</guibutton>."
+
+#: C/totem.xml:473(term)
+msgid "To move to the next movie or song"
+msgstr "Przemieszczanie do następnego filmu lub utworu"
+
+#: C/totem.xml:483(phrase)
+msgid "Shows a seek next button"
+msgstr "Wyświetla przycisk następny"
+
+#: C/totem.xml:475(para)
+msgid "To move to the next movie or song, choose <menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>Right</keycap></keycombo></shortcut><guimenu>Go</guimenu><guimenuitem>Next Chapter/Movie</guimenuitem></menuchoice> or click on the <placeholder-1/> button."
+msgstr "Aby przenieść się do następnego filmu lub utworu należy wybrać <menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>W prawo</keycap></keycombo></shortcut><guimenu>Przejdź</guimenu><guimenuitem>Następny rozdział/film</guimenuitem></menuchoice>, albo nacisnąć przycisk <placeholder-1/>."
+
+#: C/totem.xml:489(term)
+msgid "To move to the previous movie or song"
+msgstr "Przejście do poprzedniego filmu lub utworu"
+
+#: C/totem.xml:499(phrase)
+msgid "Shows a seek previous button"
+msgstr "Wyświetla przycisk poprzedni"
+
+#: C/totem.xml:491(para)
+msgid "To move to the previous movie or song, choose <menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>Left</keycap></keycombo></shortcut><guimenu>Go</guimenu><guimenuitem>Previous Chapter/Movie</guimenuitem></menuchoice>, or click on the <placeholder-1/> button."
+msgstr "Aby przejść do poprzedniego filmu lub utworu należy wybrać <menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>W lewo</keycap></keycombo></shortcut><guimenu>Przejdź</guimenu><guimenuitem>Poprzedni rozdział/film</guimenuitem></menuchoice>, albo nacisnąć przycisk <placeholder-1/>."
+
+#: C/totem.xml:508(title)
+msgid "To Change the Zoom Factor"
+msgstr "Zmiana dopasowania obrazu do okna"
+
+#: C/totem.xml:510(title)
+msgid "To Change the Video Size"
+msgstr "Zmiana rozmiaru wideo"
+
+#: C/totem.xml:511(para)
+msgid "To change the zoom factor of the display area, you can use the following methods:"
+msgstr "Można zmienić dopasowanie okna do obrazu w następujący sposób:"
+
+#: C/totem.xml:516(para)
+msgid "To zoom to fullscreen mode, choose <menuchoice><shortcut><keycap>F11</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Fullscreen</guimenuitem></menuchoice>. You can also use the <keycap>F</keycap> key to toggle fullscreen mode. To exit fullscreen mode, click on the <guibutton>Leave Fullscreen</guibutton> button or press <keycap>Esc</keycap>, <keycap>F11</keycap> or <keycap>F</keycap>."
+msgstr "Aby przełączyć się do trybu pełnoekranowego należy wybrać <menuchoice><shortcut><keycap>F11</keycap></shortcut><guimenu>Widok</guimenu><guimenuitem>Pełny ekran</guimenuitem></menuchoice>. Można użyć klawisza <keycap>F</keycap> do przełączania trybu pełnego ekranu. Aby opuścić tryb pełnoekranowy należy nacisnąć przycisk <guibutton>Opuść pełny ekran</guibutton> albo <keycap>Esc</keycap>, <keycap>F11</keycap> lub <keycap>F</keycap>."
+
+#: C/totem.xml:526(para)
+msgid "To zoom to half the size (50%) of the original movie or visualisation, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></keycombo></shortcut><guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu><guimenuitem>Resize 1:2</guimenuitem></menuchoice>."
+msgstr "Aby wyświetlać 50 % pierwotnego rozmiaru filmu/wizualizacji należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></keycombo></shortcut><guimenu>Widok</guimenu><guisubmenu>Dopasowanie okna do obrazu</guisubmenu><guimenuitem>Rozmiar 1:2</guimenuitem></menuchoice>."
+
+#: C/totem.xml:536(para)
+msgid "To zoom to the size (100%) of the original movie or visualisation, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>1</keycap></keycombo></shortcut><guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu><guimenuitem>Resize 1:1</guimenuitem></menuchoice>."
+msgstr "Aby wyświetlać 100% pierwotnego rozmiaru filmu/wizualizacji należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>1</keycap></keycombo></shortcut><guimenu>Widok</guimenu><guisubmenu>Dopasowanie okna do obrazu</guisubmenu><guimenuitem>Rozmiar 1:1</guimenuitem></menuchoice>."
+
+#: C/totem.xml:546(para)
+msgid "To zoom to double the size (200%) of the original movie or visualisation, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>2</keycap></keycombo></shortcut><guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu><guimenuitem>Resize 2:1</guimenuitem></menuchoice>."
+msgstr "Aby wyświetlać 200 % pierwotnego rozmiaru filmu/wizualizacji należy wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>2</keycap></keycombo></shortcut><guimenu>Widok</guimenu><guisubmenu>Dopasowanie okna do obrazu</guisubmenu><guimenuitem>Rozmiar 2:1</guimenuitem></menuchoice>."
+
+#: C/totem.xml:558(title)
+msgid "To Change the Video Aspect Ratio"
+msgstr "Zmiana proporcji obrazu"
+
+#: C/totem.xml:566(para)
+msgid "Auto"
+msgstr "Automatycznie"
+
+#: C/totem.xml:567(para)
+msgid "Square"
+msgstr "Kwadratowy"
+
+#: C/totem.xml:568(para)
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: C/totem.xml:569(para)
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (Szeroki ekran)"
+
+#: C/totem.xml:570(para)
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: C/totem.xml:573(para)
+msgid "The default aspect ratio is Auto."
+msgstr "Domyślnie proporcje obrazu ustawiane są automatycznie."
+
+#: C/totem.xml:559(para)
+msgid "To switch between different aspect ratios, choose <menuchoice><shortcut><keycap>A</keycap></shortcut><guimenu>View</guimenu><guisubmenu>Aspect Ratio</guisubmenu></menuchoice>. The supported aspect ratios available are: <placeholder-1/><placeholder-2/>"
+msgstr "Aby przełączać się między różnymi proporcjami obrazu, należy wybrać <menuchoice><shortcut><keycap>A</keycap></shortcut><guimenu>Widok</guimenu><guisubmenu>Proporcje obrazu</guisubmenu></menuchoice>. Dostępne proporcje to: <placeholder-1/><placeholder-2/>"
+
+#: C/totem.xml:581(title)
+msgid "To Adjust the Volume"
+msgstr "Ustawianie głośności"
+
+#: C/totem.xml:582(para)
+msgid "To increase the volume, choose <menuchoice><shortcut><keycap>Up</keycap></shortcut><guimenu>Sound</guimenu><guimenuitem>Volume Up</guimenuitem></menuchoice> or move the volume slider to the right. To decrease the volume, choose <menuchoice><shortcut><keycap>Down</keycap></shortcut><guimenu>Sound</guimenu><guimenuitem>Volume Down</guimenuitem></menuchoice> or move the volume slider to the left."
+msgstr "Aby zwiększyć głośność, należy wybrać <menuchoice><shortcut><keycap>W górę</keycap></shortcut><guimenu>Dźwięk</guimenu><guimenuitem>Zwiększ głośność</guimenuitem></menuchoice> albo przesunąć suwak głośności w prawo. Aby zmniejszyć głośność należy wybrać <menuchoice><shortcut><keycap>W dół</keycap></shortcut><guimenu>Dźwięk</guimenu><guimenuitem>Zmniejsz głośność</guimenuitem></menuchoice> albo przesunąć suwak głośności w lewo."
+
+#: C/totem.xml:595(para)
+msgid "To adjust the sound volume, you can also use the volume button. Press the volume button and choose the volume level with the slider."
+msgstr "Aby ustawić poziom głośności, można także użyć przycisku głośności. Należy nacisnąć przycisk i wybrać poziom głośności suwakiem."
+
+#: C/totem.xml:601(title)
+msgid "To Make the Window Always On Top"
+msgstr "Ustawianie okna zawsze na wierzchu"
+
+#: C/totem.xml:602(para)
+msgid "To make the <application>Totem Movie Player</application> window always on top of other application windows, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. Select the <guilabel>Always on Top</guilabel> plugin to enable it. The Totem Movie Player window will now stay on top of all other windows while a movie is playing, but not while audio or visualisations are playing."
+msgstr "Aby ustawić okno <application>Odtwarzacza filmów Totem</application> zawsze na wierzchu, należy wybrać <menuchoice><guimenu>Edycja</guimenu><guimenuitem>Wtyczki</guimenuitem></menuchoice>. Następnie należy wybrać wtyczkę <guilabel>Zawsze na wierzchu</guilabel> i włączyć ją. Odtwarzacz filmów Totem będzie na wierzchu wszystkich okien podczas odtwarzania filmu, z wyjątkiem odtwarzania pliku dźwiękowego."
+
+#: C/totem.xml:610(para)
+msgid "To stop the window always being on top, disable the <guilabel>Always on Top</guilabel> plugin again."
+msgstr "Aby wyłączyć funkcję bycia zawsze na wierzchu, należy włączyć wtyczkę <guilabel>Zawsze na wierzchu</guilabel>."
+
+#: C/totem.xml:614(title)
+msgid "To Show or Hide Controls"
+msgstr "Wyświetlanie/ukrywanie elementów sterujących"
+
+#: C/totem.xml:615(para)
+msgid "To show or hide the <application>Totem Movie Player</application> window controls, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></keycombo></shortcut><guimenu>View</guimenu><guimenuitem>Show Controls</guimenuitem></menuchoice>, or press the <keycap>H</keycap> key. You can also right-click on the <application>Totem Movie Player</application> window, then choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></keycombo></shortcut><guimenuitem>Show Controls</guimenuitem></menuchoice> from the popup menu."
+msgstr "Aby wyświetlić/ukryć elementy sterujące <application>Odtwarzacza filmów Totemie</application>, należy wybrać <choice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></keycombo></shortcut><guimenu>Widok</guimenu><guimenuitem>Wyświetlanie elementów sterujących</guimenuitem></menuchoice>, lub nacisnąć klawisz <keycap>H</keycap>. Można także nacisnąć prawym przyciskiem myszy okno <application>Odtwarzacza filmów Totem</application>, a następnie wybrać <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></keycombo></shortcut><guimenuitem>Wyświetlanie elementów sterujących</guimenuitem></menuchoice> z menu podręcznego."
+
+#: C/totem.xml:627(para)
+msgid "If the <guilabel>Show Controls</guilabel> option is selected, <application>Totem Movie Player</application> will show the menubar, time elapsed slider, seek control buttons, volume slider and statusbar on the window. If the <guilabel>Show Controls</guilabel> option is unselected, the application will hide these controls and show only the display area."
+msgstr "Jeżeli opcja <guilabel>Wyświetlanie elementów sterujących</guilabel> jest zaznaczona, <application>Odtwarzacz filmów Totem</application> wyświetli pasek menu, pole upływu czasu, przyciski obsługi przewijania, przycisk głośności i pasek menu. Jeżeli opcja<guilabel>Wyświetlanie elementów sterujących</guilabel> jest odznaczona, elementy te zostaną ukryte i będzie wyświetlany tylko obszar wyświetlania.\""
+
+#: C/totem.xml:636(title)
+msgid "To Manage the Playlist"
+msgstr "Zarządzanie listą odtwarzania"
+
+#: C/totem.xml:655(title)
+msgid "To Show or Hide the Playlist"
+msgstr "Wyświetlanie lub ukrywanie listy odtwarzania"
+
+#: C/totem.xml:656(para)
+msgid "To show the playlist, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice>, or click the <guilabel>Sidebar</guilabel> button, and choose <guimenu>Playlist</guimenu> on the top of the sidebar. The <guilabel>Playlist</guilabel> dialog is displayed."
+msgstr "Aby włączyć listę odtwarzania należy wybrać <menuchoice><guimenu>Widok</guimenu><guimenuitem>Panel</guimenuitem></menuchoice>, lub nacisnąć przycisk <guilabel>Panel</guilabel> i wybrać <guimenu>Lista odtwarzania</guimenu> na górze panelu. Wyświetlone zostanie okno <guilabel>Listy odtwarzania</guilabel>."
+
+#: C/totem.xml:662(para)
+msgid "To hide Playlist, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the <guilabel>Sidebar</guilabel> button again."
+msgstr "Aby ukryć listę odtwarzania należy wybrać <menuchoice><guimenu>Widok</guimenu><guimenuitem>Panel</guimenuitem></menuchoice> lub nacisnąć ponownie przycisk <guilabel>Panel</guilabel>."
+
+#: C/totem.xml:669(title)
+msgid "Manage a Playlist"
+msgstr "Zarządzanie listą odtwarzania"
+
+#: C/totem.xml:673(term)
+msgid "To add a track or movie"
+msgstr "Dodawanie utworu lub filmu"
+
+#: C/totem.xml:675(para)
+msgid "To add a track or movie to the playlist, click on the <guibutton>Add</guibutton> button. The <guilabel>Select Movies or Playlists</guilabel> dialog is displayed. Select the file that you want to add to the playlist, then click <guibutton>Add</guibutton>."
+msgstr "Aby dodać utwór do listy odtwarzania, należy nacisnąć przycisk <guibutton>Dodaje...</guibutton>. Wyświetli się okno dialogowe <guilabel>Wybór filmów i list odtwarzania</guilabel>. Należy zaznaczyć plik do dodania do listy odtwarzania i nacisnąć <guibutton>Dodaje...</guibutton>."
+
+#: C/totem.xml:682(term)
+msgid "To remove a track or movie"
+msgstr "Usuwanie utworu lub filmu"
+
+#: C/totem.xml:684(para)
+msgid "To remove a track or movie from the playlist, select the items to remove from the <guilabel>filename</guilabel> list box, then click on the <guibutton>Remove</guibutton> button."
+msgstr "Aby usunąć utwór z listy odtwarzania, należy wybrać utwory do usunięcia z listy, a następnie nacisnąć przycisk <guibutton>Usuwa</guibutton>."
+
+#: C/totem.xml:690(term)
+msgid "To save the playlist to a file"
+msgstr "Zapisywanie listy odtwarzania do pliku"
+
+#: C/totem.xml:692(para)
+msgid "To save the playlist to a file, click on the <guibutton>Save Playlist</guibutton> button. The <guilabel>Save Playlist</guilabel> dialog is displayed; specify the filename as which you want to save the playlist, and click <guibutton>Save</guibutton>."
+msgstr "Aby zapisać listę odtwarzania do pliku, należy nacisnąć przycisk<guibutton>Zapisuje listę odtwarzania...</guibutton>. Gdy wyświetli się okno dialogowe <guilabel>Zapis listy odtwarzania</guilabel>, należy wprowadzić nazwę pliku pod jakim ma być zapisana lista, i kliknąć <guibutton>Zapisz</guibutton>."
+
+#: C/totem.xml:699(term)
+msgid "To move a track or movie up the playlist"
+msgstr "Przesuwanie utworu lub filmu w górę na liście odtwarzania"
+
+#: C/totem.xml:701(para)
+msgid "To move a track or movie up the playlist, select the item from the <guilabel>filename</guilabel> list box, then click on the <guibutton>Move Up</guibutton> button."
+msgstr "Aby przesunąć utwór w górę listy odtwarzania, należy wybrać go z listy, i nacisnąć przycisk <guibutton>Przesuwa w górę</guibutton>."
+
+#: C/totem.xml:707(term)
+msgid "To move a track or movie down the playlist"
+msgstr "Przesuwanie utworu lub filmu w dół na liście odtwarzania"
+
+#: C/totem.xml:709(para)
+msgid "To move a track or movie down the playlist, select the item from the <guilabel>filename</guilabel> list box, then click on the <guibutton>Move Down</guibutton> button."
+msgstr "Aby przesunąć utwór w dół listy odtwarzania, należy wybrać go z listy i nacisnąć przycisk <guibutton>Przesuwa w dół</guibutton>."
+
+#: C/totem.xml:670(para)
+msgid "You can use the <guilabel>Playlist</guilabel> dialog to do the following: <placeholder-1/>"
+msgstr "Można użyć pola <guilabel>Lista odtwarzania</guilabel> do następujących czynności: <placeholder-1/>"
+
+#: C/totem.xml:718(title)
+msgid "To Select or Unselect Repeat Mode"
+msgstr "Zaznaczanie/odznaczanie powtarzania"
+
+#: C/totem.xml:719(para)
+msgid "To enable or disable repeat mode, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Repeat Mode</guimenuitem></menuchoice>."
+msgstr "Aby włączyć/wyłączyć powtarzanie, należy wybrać <menuchoice><guimenu>Edycja</guimenu><guimenuitem>Powtarzanie</guimenuitem></menuchoice>."
+
+#: C/totem.xml:724(title)
+msgid "To Select or Unselect Shuffle Mode"
+msgstr "Zaznaczanie/odznaczanie trybu losowego"
+
+#: C/totem.xml:725(para)
+msgid "To enable or disable shuffle mode, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Shuffle Mode</guimenuitem></menuchoice>."
+msgstr "Aby włączyć/wyłączyć tryb losowy, należy wybrać <menuchoice><guimenu>Edycja</guimenu><guimenuitem>Tryb losowy</guimenuitem></menuchoice>."
+
+#: C/totem.xml:733(title)
+msgid "To Choose Subtitles"
+msgstr "Wybór napisów"
+
+#: C/totem.xml:734(para)
+msgid "To choose the language of the subtitles, select <menuchoice><guimenu>View</guimenu><guisubmenu>Subtitles</guisubmenu></menuchoice> and choose the subtitle language you want to display."
+msgstr "Aby zmienić język napisów należy w <menuchoice><guimenu>Widok</guimenu><guisubmenu>Napisy</guisubmenu></menuchoice> wybrać język w jakim mają być wyświetlane napisy."
+
+#: C/totem.xml:738(para)
+msgid "To disable the display of subtitles, select <menuchoice><guimenu>View</guimenu><guisubmenu>Subtitles</guisubmenu><guimenuitem>None</guimenuitem></menuchoice>."
+msgstr "Aby wyłączyć wyświetlanie napisów, należy wybrać <menuchoice><guimenu>Widok</guimenu><guisubmenu>Napisy</guisubmenu><guimenuitem>Pusty</guimenuitem></menuchoice>."
+
+#: C/totem.xml:740(para)
+msgid "By default, Totem Movie Player will choose the same language for the subtitles as the one you normally use on your computer."
+msgstr "Odtwarzacz filmów Totem wybiera domyślnie taki język napisów, jaki jest normalnie używany podczas pracy."
+
+#: C/totem.xml:742(para)
+msgid "Totem Movie Player will automatically load and display subtitles if the file which contains them has the same name as the video file played and the extension <filename>asc</filename>, <filename>txt</filename>, <filename>sub</filename>, <filename>smi</filename>, or <filename>ssa</filename>."
+msgstr "Odtwarzacz filmów Totem automatycznie wczytuje i wyświetla napisy jeżeli plik który je zawiera ma taką samą nazwę jak odtwarzany plik wideo i rozszerzenie <filename>asc</filename>, <filename>txt</filename>, <filename>sub</filename>, <filename>smi</filename>, lub <filename>ssa</filename>."
+
+#: C/totem.xml:749(title)
+msgid "To Take a Screenshot"
+msgstr "Pobieranie zrzutu ekranu"
+
+#: C/totem.xml:750(para)
+msgid "To take a screenshot of the movie or visualisation that is playing, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Take Screenshot</guimenuitem></menuchoice>. The <guilabel>Save Screenshot</guilabel> dialog is displayed. Choose a location and insert the filename as which you want to save the screenshot, then click the <guibutton>Save</guibutton> button to save the screenshot."
+msgstr "Aby pobrać zrzut ekranu filmu lub wizualizacji należy wybrać <menuchoice><guimenu>Edycja</guimenu><guimenuitem>Zrzut ekranu</guimenuitem></menuchoice>. Zostanie wyświetlone okno <guilabel>Zrzut ekranu</guilabel>. Proszę wybrać położenie i wprowadzić nazwę pliku do jakiego ma zostać zapisany zrzut, i nacisnąć przycisk <guibutton>Zapisz</guibutton>."
+
+#: C/totem.xml:758(para)
+msgid "Totem Movie Player will display a preview of the screenshot which is to be saved on the left-hand side of the <guilabel>Save Screenshot</guilabel> dialog."
+msgstr "Odtwarzacz filmów Totem wyświetli podgląd zrzutu ekranu po lewej stronie okna <guilabel>Zrzut ekranu</guilabel>."
+
+#: C/totem.xml:767(title)
+msgid "Preferences"
+msgstr "Preferencje"
+
+#: C/totem.xml:768(para)
+msgid "To modify the preferences of <application>Totem Movie Player</application>, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice>. The <guilabel>Preferences</guilabel> dialog contains the following tabbed sections:"
+msgstr "Aby zmodyfikować ustawienia <application>Odtwarzacza filmów Totem</application>, należy wybrać <menuchoice><guimenu>Edycja</guimenu><guimenuitem>Ustawienia</guimenuitem></menuchoice>. Okno <guilabel>Ustawienia</guilabel> zawiera następujące sekcje w kartach:"
+
+#: C/totem.xml:797(term)
+msgid "Networking"
+msgstr "Sieć"
+
+#: C/totem.xml:799(para)
+msgid "Select network connection speed from the <guilabel>Connection speed</guilabel> drop-down list box."
+msgstr "Należy wybrać prędkość połączenia internetowego z listy <guilabel>Prędkość połączenia</guilabel>."
+
+#: C/totem.xml:805(term)
+msgid "TV-Out"
+msgstr "Wyjście TV"
+
+#: C/totem.xml:809(para)
+msgid "<guilabel>No TV-out</guilabel>: select this option if you have no TV-out connection (Selected by default if you don't have an TV-out interface)."
+msgstr "<guilabel>Brak wyjścia TV</guilabel>: należy wybrać opcję w przypadku braku wyjścia TV (pole jest zaznaczone domyślnie jeżeli nie ma interfejsu wyjścia TV)."
+
+#: C/totem.xml:814(para)
+msgid "<guilabel>TV-out in fullscreen by Nvidia (NTSC)</guilabel>: select this option if you want TV-out connection in NTSC."
+msgstr "<guilabel>Pełnoekranowe wyjście TV poprzez Nvidia (NTSC)</guilabel>: należy wybrać opcję jeżeli wyjście TV ma być w formacie NTSC."
+
+#: C/totem.xml:818(para)
+msgid "<guilabel>TV-out in fullscreen by Nvidia (PAL)</guilabel>: select this option if you want TV-out connection in PAL."
+msgstr "<guilabel>Pełnoekranowe wyjście TV poprzez Nvidia (PAL)</guilabel>: należy wybrać opcję jeżeli wyjście TV ma być w formacie PAL."
+
+#: C/totem.xml:825(term)
+msgid "Text Subtitles"
+msgstr "Napisy"
+
+#: C/totem.xml:829(para)
+msgid "<guilabel>Font</guilabel>: select this option to change the font used to display subtitles."
+msgstr "<guilabel>Czcionka</guilabel>: należy wybrać tę opcję, aby zmienić czcionkę używaną do wyświetlania napisów."
+
+#: C/totem.xml:833(para)
+msgid "<guilabel>Encoding</guilabel>: select this option to change the encoding used to display subtitles."
+msgstr "<guilabel>Kodowanie</guilabel>: należy wybrać tę opcję, aby zmienić kodowanie używane do wyświetlania napisów."
+
+#: C/totem.xml:842(title)
+#: C/totem.xml:845(term)
+msgid "Display"
+msgstr "Wyświetlanie"
+
+#: C/totem.xml:847(para)
+msgid "Select the <guilabel>resize</guilabel> option if you want <application>Totem Movie Player</application> to automatically resize the window when a new video is loaded."
+msgstr "Należy wybrać <guilabel>Automatyczne skalowanie okna po wczytaniu nowego pliku wideo</guilabel>, aby <application>Odtwarzacz filmów Totem</application> automatycznie dostosowywał swój rozmiar po wczytaniu nowego pliku."
+
+#: C/totem.xml:853(term)
+msgid "Visual Effects"
+msgstr "Efekty wizualne"
+
+#: C/totem.xml:857(para)
+msgid "<guilabel>Visual</guilabel>: select this option to show visual effects while an audio file is playing."
+msgstr "<guilabel>Efekty wizualne podczas odtwarzania plików dźwiękowych</guilabel>: należy wybrać tę opcję, aby podczas odtwarzania pliku dźwiękowego były wyświetlane efekty wizualne ."
+
+#: C/totem.xml:862(para)
+msgid "<guilabel>Type of visualisation</guilabel>: select type of visualisation from the drop-down list box."
+msgstr "<guilabel>Rodzaj efektu</guilabel>: należy wybrać rodzaj efektu z listy."
+
+#: C/totem.xml:867(para)
+msgid "<guilabel>Visualisation size</guilabel>: select visualisation size from the drop-down list box."
+msgstr "<guilabel>Rozmiar wizualizacji</guilabel>: należy wybrać rozmiar wizualizacji z listy."
+
+#: C/totem.xml:875(term)
+msgid "Color balance"
+msgstr "Równowaga koloru"
+
+#: C/totem.xml:879(para)
+msgid "<guilabel>Brightness</guilabel>: use the slider to specify the level of brightness."
+msgstr "<guilabel>Jaskrawość</guilabel>: należy użyć suwaka, aby ustalić poziom jaskrawości."
+
+#: C/totem.xml:882(para)
+msgid "<guilabel>Contrast</guilabel>: use the slider to specify the level of contrast."
+msgstr "<guilabel>Kontrast</guilabel>: należy użyć suwaka, aby ustalić poziom kontrastu."
+
+#: C/totem.xml:885(para)
+msgid "<guilabel>Saturation</guilabel>: use the slider to specify the level of saturation."
+msgstr "<guilabel>Nasycenie</guilabel>: należy użyć suwaka, aby ustalić poziom nasycenia."
+
+#: C/totem.xml:889(para)
+msgid "<guilabel>Hue</guilabel>: use the slider to specify the level of hue."
+msgstr "<guilabel>Odcień</guilabel>: należy użyć suwaka, aby ustalić poziom odcienia."
+
+#: C/totem.xml:901(term)
+msgid "Audio Output"
+msgstr "Wyjście dźwięku"
+
+#: C/totem.xml:903(para)
+msgid "Select audio output type from the <guilabel>Audio output type</guilabel> drop-down list."
+msgstr "Należy wybrać rodzaj wyjścia dźwięku z listy <guilabel>Rodzaj wyjścia dźwięku</guilabel>."
+
+#: C/totem.xml:931(title)
+msgid "About <application>Totem Movie Player</application>"
+msgstr "O <application>Odtwarzaczu filmów Totem</application>"
+
+#: C/totem.xml:932(para)
+msgid "<application>Totem Movie Player</application> is written by Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</email>) for GStreamer backend, and Guenter Bartsch (<email>guenter@users.sourceforge.net</email>). To find more information about <application>Totem Movie Player</application>, please visit the <ulink url=\"http://www.gnome.org/projects/totem/\" type=\"http\"><application>Totem Movie Player</application> Home Page</ulink>."
+msgstr "<application>Odtwarzacz filmów Totem</application> został napisany przez Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</email>) dla GStreamer, i Guenter Bartsch (<email>guenter@users.sourceforge.net</email>). Aby dowiedzieć się więcej o <application>Odtwarzaczu filmów Totem</application>, proszę odwiedzić <ulink url=\"http://www.gnome.org/projects/totem/\" type=\"http\">witrynę <application>Odtwarzacza filmów Totem</application></ulink>."
+
+#: C/totem.xml:945(para)
+msgid "This program is distributed under the terms of the GNU General Public license as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. A copy of this license can be found at this <ulink url=\"ghelp:gpl\" type=\"help\">link</ulink>, or in the file COPYING included with the source code of this program."
+msgstr "This program is distributed under the terms of the GNU General Public license as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. A copy of this license can be found at this <ulink url=\"ghelp:gpl\" type=\"help\">link</ulink>, or in the file COPYING included with the source code of this program."
+
+# review by Piotr Zaryk <pzaryk@aviary.pl>, 2008.
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#: C/totem.xml:0(None)
+msgid "translator-credits"
+msgstr ""
+"Aviary.pl <gnomepl@aviary.pl>\n"
+"Wojtek Jamrozy <wojtekrj@gmail.com>, 2008."
+
