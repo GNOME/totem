@@ -129,12 +129,13 @@ update_from_state (TotemThumbnailPluginPrivate *priv,
 				      NULL);
 
 	pixbuf = gdk_pixbuf_new_from_file (file_name, &err);
+	/* Try loading from the "large" thumbnails if normal fails */
 	if (pixbuf == NULL && err != NULL && err->domain == G_FILE_ERROR) {
 		g_clear_error (&err);
 		g_free (file_name);
 		file_name= g_build_filename (g_get_home_dir (),
 					     ".thumbnails",
-					     "normal",
+					     "large",
 					     file_basename,
 					     NULL);
 
