@@ -116,7 +116,9 @@ totem_SOURCES = 					\
 	totem-cell-renderer-video.c	\
 	totem-cell-renderer-video.h	\
 	totem-video-list.c		\
-	totem-video-list.h
+	totem-video-list.h		\
+	totem-dvb-setup.c		\
+	totem-dvb-setup.h
 
 totem_CPPFLAGS = \
 	-I$(top_srcdir)/		\

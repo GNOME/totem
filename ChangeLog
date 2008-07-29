@@ -1,5 +1,16 @@
 2008-07-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/totem-dvb-setup.c (totem_dvb_setup_helper),
+	(child_watch_func), (totem_dvb_setup_device):
+	* src/totem-dvb-setup.h:
+	* src/totem.c (totem_dvb_setup_result), (totem_action_load_media):
+	Add support for a helper script in $(libexecdir)/totem-dvb-scanner
+	that would scan for channels on the specified adapter when loading
+	the channels list fails
+
+2008-07-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/thumbnail/totem-thumbnail.c (update_from_state):
 	Look for the thumbnail in the normal and large thumbnails, not
 	twice in the normal ones, spotted by Robin Stocker <robin@nibor.org>

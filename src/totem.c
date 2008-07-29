@@ -52,6 +52,7 @@
 #endif
 
 #include "bacon-video-widget.h"
+#include "totem-dvb-setup.h"
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
 #include "totem-session.h"
@@ -97,6 +98,7 @@ static const GtkTargetEntry target_table[] = {
 
 static gboolean totem_action_open_files (Totem *totem, char **list);
 static gboolean totem_action_open_files_list (Totem *totem, GSList *list);
+static gboolean totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *device);
 static void update_buttons (Totem *totem);
 static void update_media_menu_items (Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
@@ -516,6 +518,14 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 	return TRUE;
 }
 
+static void
+totem_dvb_setup_result (int result, const char *device, gpointer user_data)
+{
+	Totem *totem = (Totem *) user_data;
+
+	totem_action_load_media (totem, MEDIA_TYPE_DVB, device);
+}
+
 static gboolean
 totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *device)
 {
@@ -551,6 +561,10 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 		/* No channels.conf file */
 		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND) != FALSE) {
 			g_assert (type == MEDIA_TYPE_DVB);
+
+			if (totem_dvb_setup_device (device, GTK_WINDOW (totem->win), totem_dvb_setup_result, totem) == TOTEM_DVB_SETUP_STARTED_OK)
+				return FALSE;
+
 			link = "http://www.gnome.org/projects/totem/#dvb";
 			link_text = _("More information about watching TV");
 			msg = g_strdup (_("Totem is missing a channels listing to be able to tune the receiver."));
@@ -567,6 +581,8 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 			totem_action_error (msg, _("Please insert another disc to play back."), totem);
 			g_free (msg);
 			return FALSE;
+		} else {
+			g_assert_not_reached ();
 		}
 		totem_interface_error_with_link (msg, secondary, link, link_text, GTK_WINDOW (totem->win), totem);
 		g_free (msg);
