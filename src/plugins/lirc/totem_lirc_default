@@ -4,7 +4,7 @@
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_PLAY
 	repeat = 1
 	config = play
 end
@@ -12,7 +12,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_PAUSE
 	repeat = 0
 	config = pause
 end
@@ -20,7 +20,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_FASTFORWARD
 	repeat = 1
 	config = seek_forward
 end
@@ -28,23 +28,24 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_REWIND
 	repeat = 1
 	config = seek_backward
 end
 
-begin
-	prog = Totem
-	remote = *
-	button = YOUR_BUTTON
-	repeat = 1
-	config = fullscreen
-end
+# FIXME
+#begin
+#	prog = Totem
+#	remote = *
+#	button = YOUR_BUTTON
+#	repeat = 1
+#	config = fullscreen
+#end
 
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_VOLUMEUP
 	repeat = 1
 	config = volume_up
 end
@@ -53,7 +54,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_VOLUMEDOWN
 	repeat = 1
 	config = volume_down
 end
@@ -62,7 +63,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_NEXT
 	repeat = 1
 	config = next
 end
@@ -70,7 +71,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_PREVIOUS
 	repeat = 1
 	config = previous
 end
@@ -78,7 +79,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_EXIT
 	repeat = 1
 	config = quit
 end
@@ -86,7 +87,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_UP
 	repeat = 1
 	config = up
 end
@@ -94,7 +95,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_DOWN
 	repeat = 1
 	config = down
 end
@@ -102,7 +103,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_LEFT
 	repeat = 1
 	config = left
 end
@@ -110,7 +111,7 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_RIGHT
 	repeat = 1
 	config = right
 end
@@ -118,8 +119,56 @@ end
 begin
 	prog = Totem
 	remote = *
-	button = YOUR_BUTTON
+	button = KEY_SELECT
 	repeat = 1
 	config = select
+end
+
+begin
+	prog = Totem
+	remote = *
+	button = KEY_MENU
+	repeat = 1
+	config = menu
+end
+
+begin
+	prog = Totem
+	remote = *
+	button = KEY_PLAYPAUSE
+	repeat = 1
+	config = play_pause
+end
+
+begin
+	prog = Totem
+	remote = *
+	button = KEY_SELECT
+	repeat = 1
+	config = select
+end
+
+begin
+	prog = Totem
+	remote = *
+	button = KEY_EJECTCD
+	repeat = 1
+	config = eject
+end
+
+begin
+	prog = Totem
+	remote = *
+	button = KEY_DVD
+	repeat = 1
+	config = play_dvd
+end
+
+begin
+	prog = Totem
+	remote = *
+	button = KEY_MUTE
+	repeat = 1
+	config = mute
 end
 

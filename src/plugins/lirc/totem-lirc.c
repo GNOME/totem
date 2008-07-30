@@ -231,6 +231,7 @@ impl_activate (TotemPlugin *plugin,
 	       GError **error)
 {
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
+	char *path;
 	int fd;
 
 	pi->totem = g_object_ref (totem);
@@ -242,12 +243,20 @@ impl_activate (TotemPlugin *plugin,
 		return FALSE;
 	}
 
-	if (lirc_readconfig (NULL, &pi->lirc_config, NULL) == -1) {
-		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-				_("Couldn't read lirc configuration."));
-		close (fd);
-		return FALSE;
+	/* Load the default Totem setup */
+	path = totem_plugin_find_file (plugin, "totem_lirc_default");
+	if (path != NULL) {
+		if (lirc_readconfig (path, &pi->lirc_config, NULL) == -1) {
+			g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+				     _("Couldn't read lirc configuration."));
+			close (fd);
+			return FALSE;
+		}
+		g_free (path);
 	}
+
+	/* Load the user config, doesn't matter if it's not there */
+	lirc_readconfig (NULL, &pi->lirc_config, NULL);
 
 	pi->lirc_channel = g_io_channel_unix_new (fd);
 	g_io_channel_set_encoding (pi->lirc_channel, NULL, NULL);

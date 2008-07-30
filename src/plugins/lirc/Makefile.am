@@ -9,6 +9,9 @@ plugin_in_files = lirc.totem-plugin.in
 
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
+configdir = $(PLUGINDIR)/lirc
+config_DATA = totem_lirc_default
+
 common_defines = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
@@ -35,7 +38,7 @@ liblirc_la_CFLAGS = \
 	-I$(top_srcdir)/src	\
 	-I$(top_srcdir)/src/plugins
 
-EXTRA_DIST = $(plugin_in_files)
+EXTRA_DIST = $(plugin_in_files) $(config_DATA)
 
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)
