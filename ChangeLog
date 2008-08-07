@@ -1,3 +1,14 @@
+2008-08-07  Tim-Philipp Müller  <tim.muller at collabora co uk>
+
+	Patch by: David Schleef <ds@schleef.org>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  (bacon_video_widget_get_video_property),
+	  (bacon_video_widget_set_video_property)::
+	  Fix rounding errors when converting colorbalance values to/from
+	  a different value range. Should fix drift in colour balance.
+	  (Closes: #545566, #537889)
+
 2008-07-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/plugins/lirc/totem-lirc.c (impl_activate): Also fail to load

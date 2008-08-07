@@ -58,6 +58,7 @@
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
@@ -3708,8 +3709,9 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
         GST_DEBUG ("channel %s: cur=%d, min=%d, max=%d", found_channel->label,
             cur, found_channel->min_value, found_channel->max_value);
 
-        ret = ((double) cur - found_channel->min_value) * 65535 /
-              ((double) found_channel->max_value - found_channel->min_value);
+        ret = floor (0.5 +
+            ((double) cur - found_channel->min_value) * 65535 /
+            ((double) found_channel->max_value - found_channel->min_value));
 
         GST_DEBUG ("channel %s: returning value %d", found_channel->label, ret);
         g_object_unref (found_channel);
@@ -3782,8 +3784,10 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 
       if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
         {
-          int i_value = value * ((double) found_channel->max_value -
-              found_channel->min_value) / 65535 + found_channel->min_value;
+          int i_value;
+          
+          i_value = floor (0.5 + value * ((double) found_channel->max_value -
+              found_channel->min_value) / 65535 + found_channel->min_value);
 
           GST_DEBUG ("channel %s: set to %d/65535", found_channel->label, value);
 
