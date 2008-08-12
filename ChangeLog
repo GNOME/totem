@@ -1,3 +1,14 @@
+2008-08-12  Tim-Philipp Müller  <tim.muller at collabora co uk>
+
+	Based on patch by: Robin Stocker <robin at nibor org>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	  (bacon_video_widget_get_zoom), (bvw_get_color_balance_channel),
+	  (bacon_video_widget_get_video_property),
+	  (bacon_video_widget_set_video_property)::
+	  Refactor common code into bvw_get_color_balance_channel function.
+	  (Closes: #547003)
+
 2008-08-12  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.ui: Make sure we use the border width is set to

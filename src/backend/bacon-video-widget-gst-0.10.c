@@ -3651,6 +3651,31 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
   return 100;
 }
 
+/* Search for the color balance channel corresponding to type and return it. */
+static GstColorBalanceChannel *
+bvw_get_color_balance_channel (GstColorBalance * color_balance,
+    BaconVideoWidgetVideoProperty type)
+{
+  const GList *channels;
+
+  channels = gst_color_balance_list_channels (color_balance);
+
+  for (; channels != NULL; channels = channels->next) {
+    GstColorBalanceChannel *c = channels->data;
+
+    if (type == BVW_VIDEO_BRIGHTNESS && g_strrstr (c->label, "BRIGHTNESS"))
+      return g_object_ref (c);
+    else if (type == BVW_VIDEO_CONTRAST && g_strrstr (c->label, "CONTRAST"))
+      return g_object_ref (c);
+    else if (type == BVW_VIDEO_SATURATION && g_strrstr (c->label, "SATURATION"))
+      return g_object_ref (c);
+    else if (type == BVW_VIDEO_HUE && g_strrstr (c->label, "HUE"))
+      return g_object_ref (c);
+  }
+
+  return NULL;
+}
+
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
                                        BaconVideoWidgetVideoProperty type)
@@ -3664,42 +3689,10 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
   
   if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
     {
-      const GList *channels_list = NULL;
       GstColorBalanceChannel *found_channel = NULL;
       
-      channels_list = gst_color_balance_list_channels (bvw->priv->balance);
+      found_channel = bvw_get_color_balance_channel (bvw->priv->balance, type);
       
-      while (channels_list != NULL && found_channel == NULL)
-        { /* We search for the right channel corresponding to type */
-          GstColorBalanceChannel *channel = channels_list->data;
-
-          if (type == BVW_VIDEO_BRIGHTNESS && channel &&
-              g_strrstr (channel->label, "BRIGHTNESS"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          else if (type == BVW_VIDEO_CONTRAST && channel &&
-              g_strrstr (channel->label, "CONTRAST"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          else if (type == BVW_VIDEO_SATURATION && channel &&
-              g_strrstr (channel->label, "SATURATION"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          else if (type == BVW_VIDEO_HUE && channel &&
-              g_strrstr (channel->label, "HUE"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          channels_list = g_list_next (channels_list);
-        }
-        
       if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel)) {
         gint cur;
 
@@ -3746,41 +3739,9 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 
   if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
     {
-      const GList *channels_list = NULL;
       GstColorBalanceChannel *found_channel = NULL;
       
-      channels_list = gst_color_balance_list_channels (bvw->priv->balance);
-
-      while (found_channel == NULL && channels_list != NULL) {
-          /* We search for the right channel corresponding to type */
-          GstColorBalanceChannel *channel = channels_list->data;
-
-          if (type == BVW_VIDEO_BRIGHTNESS && channel &&
-              g_strrstr (channel->label, "BRIGHTNESS"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          else if (type == BVW_VIDEO_CONTRAST && channel &&
-              g_strrstr (channel->label, "CONTRAST"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          else if (type == BVW_VIDEO_SATURATION && channel &&
-              g_strrstr (channel->label, "SATURATION"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          else if (type == BVW_VIDEO_HUE && channel &&
-              g_strrstr (channel->label, "HUE"))
-            {
-              g_object_ref (channel);
-              found_channel = channel;
-            }
-          channels_list = g_list_next (channels_list);
-        }
+      found_channel = bvw_get_color_balance_channel (bvw->priv->balance, type);
 
       if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
         {
