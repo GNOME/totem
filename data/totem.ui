@@ -124,7 +124,7 @@
                <property name="tooltip" translatable="yes">Resize to half the original video size</property>
                <signal name="activate" handler="zoom_1_2_action_callback"/>
             </object>
-            <accelerator key="0" modifiers="GDK_CONTROL_MASK"/>
+            <accelerator key="0"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-1-1">
@@ -132,7 +132,7 @@
                <property name="tooltip" translatable="yes">Resize to the original video size</property>
                <signal name="activate" handler="zoom_1_1_action_callback"/>
             </object>
-            <accelerator key="1" modifiers="GDK_CONTROL_MASK"/>
+            <accelerator key="1"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-2-1">
@@ -140,7 +140,7 @@
                <property name="tooltip" translatable="yes">Resize to double the original video size</property>
                <signal name="activate" handler="zoom_2_1_action_callback"/>
             </object>
-            <accelerator key="2" modifiers="GDK_CONTROL_MASK"/>
+            <accelerator key="2"/>
          </child>
          <child>
             <object class="GtkAction" id="aspect-ratio-menu">
@@ -388,6 +388,7 @@
                <property name="tooltip" translatable="yes">Zoom reset</property>
                <signal name="activate" handler="zoom_reset_action_callback"/>
             </object>
+            <accelerator key="0" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="zoom-out">
