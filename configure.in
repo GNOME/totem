@@ -638,7 +638,7 @@ AC_MSG_RESULT([$enable_browser_plugins])
 if test "$enable_browser_plugins" = "yes" ; then
 	AC_DEFINE([ENABLE_BROWSER_PLUGINS],[1],[Define to build the browser plugin])
 
-	BROWSER_PLUGIN_DIR="\${libdir}/mozilla/plugins"
+	BROWSER_PLUGIN_DIR="${BROWSER_PLUGIN_DIR:-"\${libdir}/mozilla/plugins"}"
 	AC_ARG_VAR([BROWSER_PLUGIN_DIR],[Where to install the plugin to])
 
 	PKG_CHECK_MODULES([BROWSER_PLUGIN],
