@@ -5,6 +5,7 @@ import urllib
 import httplib
 import atom
 import threading
+import time
 import re
 import os
 
@@ -206,7 +207,9 @@ class YouTube (totem.Plugin):
 	def populate_list_from_results (self, treeview_name):
 		"""Check and acquire the lock"""
 		if self.entry_lock.acquire (False) == False:
-			self.progress_bar.pulse ()
+			if (self.last_pulse + 0.035) < time.time():
+				self.progress_bar.pulse ()
+				self.last_pulse = time.time()
 			return True
 
 		"""Return if there are no results (or we've finished)"""
@@ -302,6 +305,7 @@ class YouTube (totem.Plugin):
 		window = self.vbox.window
 		window.set_cursor (gtk.gdk.Cursor (gtk.gdk.WATCH))
 		self.progress_bar.pulse ()
+		self.last_pulse = time.time()
 
 		self.results_downloaded = False
 		DownloadThread (self, url, treeview_name).start ()
