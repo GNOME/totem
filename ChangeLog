@@ -1,5 +1,15 @@
 2008-08-14  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: Support libtool 2.2, don't try to check for
+	presence of Python through compiling against it, as libtool is
+	required to compile against it, and libtool isn't available yet
+	during configure
+	Adapted from patches by Rémi Cardona and Patryk Zawadzki
+	(Closes: #532591)
+	Also fix the message telling us whether Vala is enabled
+
+2008-08-14  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: Handle video/ogg for thumbnails,
 	because libgnomeui sucks (Closes: #545130)
 
