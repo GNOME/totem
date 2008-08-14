@@ -1,5 +1,10 @@
 2008-08-14  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mime-type-list.txt: Handle video/ogg for thumbnails,
+	because libgnomeui sucks (Closes: #545130)
+
+2008-08-14  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c (playlist_select_subtitle_action_callback),
 	(playlist_copy_location_action_callback): Always call
 	totem_add_subtitle with the path of the currently playing movie
