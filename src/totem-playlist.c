@@ -461,18 +461,39 @@ drop_cb (GtkWidget        *widget,
 void
 playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist)
 {
-	char *subtitle;
+	char *subtitle, *current, *path;
 	GList *l;
+	GFile *file, *dir;
 	TotemPlaylistStatus playing;
 	GtkTreeIter iter;
 
-	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), NULL);
+	l = gtk_tree_selection_get_selected_rows (playlist->priv->selection, NULL);
+	gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
+	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
+	g_list_free (l);
+
+	/* Look for the directory of the current movie */
+	gtk_tree_model_get (playlist->priv->model, &iter,
+			    FILENAME_COL, &current,
+			    -1);
+
+	if (current == NULL)
+		return;
+
+	path = NULL;
+	file = g_file_new_for_commandline_arg (current);
+	dir = g_file_get_parent (file);
+	g_object_unref (file);
+	if (dir != NULL) {
+		path = g_file_get_path (dir);
+		g_object_unref (dir);
+	}
+
+	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), path);
+	g_free (path);
 
 	if (subtitle == NULL)
 		return;
-
-	l = gtk_tree_selection_get_selected_rows (playlist->priv->selection, NULL);
-	gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
 
 	gtk_tree_model_get (playlist->priv->model, &iter,
 			    PLAYING_COL, &playing,
@@ -495,16 +516,15 @@ void
 playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playlist)
 {
 	GList *l;
-	GtkTreePath *path;
 	GtkClipboard *clip;
 	char *url;
 	GtkTreeIter iter;
 
 	l = gtk_tree_selection_get_selected_rows (playlist->priv->selection,
 			NULL);
-	path = l->data;
-
-	gtk_tree_model_get_iter (playlist->priv->model, &iter, path);
+	gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
+	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
+	g_list_free (l);
 
 	gtk_tree_model_get (playlist->priv->model,
 			&iter,
@@ -520,8 +540,6 @@ playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playli
 	gtk_clipboard_set_text (clip, url, -1);
 	g_free (url);
 
-	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
-	g_list_free (l);
 }
 
 static gboolean

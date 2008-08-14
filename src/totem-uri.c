@@ -516,16 +516,20 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 
 	conf = gconf_client_get_default ();
 	set_folder = TRUE;
-	if (path != NULL) {
+
+	new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
+	if (new_path != NULL && *new_path != '\0') {
 		set_folder = gtk_file_chooser_set_current_folder_uri
-			(GTK_FILE_CHOOSER (fs), path);
-	} else {
-		new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
-		if (new_path != NULL && *new_path != '\0') {
+			(GTK_FILE_CHOOSER (fs), new_path);
+	}
+	g_free (new_path);
+
+	if (path != NULL) {
+		if (set_folder == FALSE) {
 			set_folder = gtk_file_chooser_set_current_folder_uri
-				(GTK_FILE_CHOOSER (fs), new_path);
+				(GTK_FILE_CHOOSER (fs), path);
 		}
-		g_free (new_path);
+		gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), path, NULL);
 	}
 	
 	if (set_folder == FALSE) {
