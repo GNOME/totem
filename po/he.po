@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-30 09:50+0000\n"
+"POT-Creation-Date: 2008-08-06 09:16+0000\n"
 "PO-Revision-Date: 2008-02-26 15:57+0200\n"
 "Last-Translator: Mark Krapivner <mark125@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -1554,7 +1554,8 @@ msgid ""
 "Totem cannot play TV, because no TV adapters are present or they are not "
 "supported."
 msgstr ""
-"‏Totem אינו יכול לנגן טלוויזיה מכיון לא מחוברים התקני טלוויזיה או שהם אינם נתמכים."
+"‏Totem אינו יכול לנגן טלוויזיה מכיון לא מחוברים התקני טלוויזיה או שהם אינם "
+"נתמכים."
 
 #: ../src/totem.c:559
 msgid "Please insert a supported TV adapter."
@@ -1578,8 +1579,7 @@ msgstr "מידע על התקנת רשימת ערוצים נימצא בקישור
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr ""
-"‏Totem אינו יכול לנגן סוג מדיה זה (%s) מכיוון שהתקן הטלוויזיה עסוק."
+msgstr "‏Totem אינו יכול לנגן סוג מדיה זה (%s) מכיוון שהתקן הטלוויזיה עסוק."
 
 #: ../src/totem.c:575
 msgid "Please try again later."
@@ -2131,12 +2131,12 @@ msgstr "שלט אינפרא אדום"
 msgid "Support infrared remote control"
 msgstr "תמיכה בשלט אינפרא אדום"
 
-#: ../src/plugins/lirc/totem-lirc.c:241
+#: ../src/plugins/lirc/totem-lirc.c:242
 #, c-format
 msgid "Couldn't initialize lirc."
 msgstr "לא ניתן לאתחל את lirc."
 
-#: ../src/plugins/lirc/totem-lirc.c:247
+#: ../src/plugins/lirc/totem-lirc.c:251
 #, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "לא ניתן לקרוא את הגדרות lirc."
@@ -2429,633 +2429,190 @@ msgid ""
 "default password ('totem')."
 msgstr ""
 
-#~ msgid "_Sidebar"
-#~ msgstr "סרגל _צד"
 
-#~ msgid "GTK+"
-#~ msgstr "GTK+"
 
-#~ msgid "GNOME"
-#~ msgstr "GNOME"
 
-#~ msgid "IP address of the local MythTV server"
-#~ msgstr "כתובת IP של שרת ה-MythTV המקומי"
 
-#~ msgid "Name of the database for the local MythTV server"
-#~ msgstr "Name of the database for the local MythTV server"
 
-#~ msgid "Password to access the local MythTV server"
-#~ msgstr "Password to access the local MythTV server"
 
-#~ msgid "Port to access the local MythTV server"
-#~ msgstr "Port to access the local MythTV server"
 
-#~ msgid "Username to access the local MythTV server"
-#~ msgstr "Username to access the local MythTV server"
 
-#~ msgid "gtk-close"
-#~ msgstr "gtk-close"
 
-#~ msgid "Opening %s"
-#~ msgstr "פותח %s"
 
-#~ msgid "Totem could not parse the command-line options"
-#~ msgstr "‏Totem נכשל בניתוח אפשרויות שורת הפקודה."
 
-#~ msgid "Play / Pa_use"
-#~ msgstr "נגן / ה_שהה"
 
-#~ msgid "Resize to video size"
-#~ msgstr "התאם לגודל הוידאו"
 
-#~ msgid "Resize to twice the video size"
-#~ msgstr "שנה לפעמיים מגודל הוידאו"
 
-#~ msgid "Volume up"
-#~ msgstr "הגבר עוצמה"
 
-#~ msgid "Volume down"
-#~ msgstr "הנמך עוצמה"
 
-#~ msgid "Couldn't load the 'ui description' file"
-#~ msgstr "לא ניתן לטעון את קובץ תאור הממשק"
 
-#~ msgid "Totem could not eject the optical media."
-#~ msgstr "Totem אינו יכול להוציא את המדיה האופטית."
 
-#~ msgid "Failed to find mountpoint for device %s"
-#~ msgstr "נכשל במציאת נקודת עיגון עבור ההתקן: %s"
 
-#~ msgid "Could not connect to the HAL daemon"
-#~ msgstr "נכשל להתחברות אל HAL daemon"
 
-#~ msgid "Please check that a disc is present in the drive."
-#~ msgstr "אנא בדוק שקיים דיסק בכונן"
 
-#~ msgid "Failed to mount %s"
-#~ msgstr "נכשל בעיגון: %s"
 
-#~ msgid "Failed to find mountpoint for %s"
-#~ msgstr "נכשל במציאת נקודת עיגון עבור: %s"
 
-#~ msgid "Audio CD"
-#~ msgstr "תקליטור שמע"
 
-#~ msgid "Video CD"
-#~ msgstr "תקליטור וידאו"
 
-#~ msgid "DVD"
-#~ msgstr "DVD"
 
-#~ msgid "Couldn't write parser: %s"
-#~ msgstr "לא ניתן לכתוב מפענח: %s"
 
-#~ msgid "Couldn't open file '%s': %s"
-#~ msgstr "לא ניתן לפתוח קובץ '%s': %s"
 
-#~ msgid "Rhythmbox Plugins"
-#~ msgstr "תוספי Rhythmbox"
 
-#~ msgid ""
-#~ "14.4 Kbps Modem\n"
-#~ "19.2 Kbps Modem\n"
-#~ "28.8 Kbps Modem\n"
-#~ "33.6 Kbps Modem\n"
-#~ "34.4 Kbps Modem\n"
-#~ "56 Kbps Modem/ISDN\n"
-#~ "112 Kbps Dual ISDN/DSL\n"
-#~ "256 Kbps DSL/Cable\n"
-#~ "384 Kbps DSL/Cable\n"
-#~ "512 Kbps DSL/Cable\n"
-#~ "1.5 Mbps T1/Intranet/LAN\n"
-#~ "Intranet/LAN"
-#~ msgstr ""
-#~ "מודם ‎14.4 Kbps\n"
-#~ "מודם ‎19.2 Kbps\n"
-#~ "מודם ‎28.8 Kbps\n"
-#~ "מודם 33.6‎ Kbps\n"
-#~ "מודם ‎34.4 Kbps\n"
-#~ "מודם 56‎ Kbps/ISDN\n"
-#~ "מודם 112‎ Kbps/ISDN כפול\n"
-#~ "‏‎256 Kbps DSL/כבלים\n"
-#~ "‏‎384 Kbps DSL/כבלים\n"
-#~ "‏512‎ Kbps DSL/כבלים\n"
-#~ "‏‎1.5 Mbps T1/אינטראנט/רשת\n"
-#~ "אינטראנט/רשת"
 
-#~ msgid ""
-#~ "Small\n"
-#~ "Normal\n"
-#~ "Large\n"
-#~ "Extra Large"
-#~ msgstr ""
-#~ "קטן\n"
-#~ "רגיל\n"
-#~ "גדול\n"
-#~ "גדול מאוד"
 
-#~ msgid ""
-#~ "Stereo\n"
-#~ "4-channel\n"
-#~ "4.1-channel\n"
-#~ "5.0-channel\n"
-#~ "5.1-channel\n"
-#~ "AC3 Passthrough"
-#~ msgstr ""
-#~ "סטריאו\n"
-#~ "4 ערוצים\n"
-#~ "4.1 ערוצים\n"
-#~ "5.0 ערוצים\n"
-#~ "5.1 ערוצים\n"
-#~ "מעבר AC3"
 
-#~ msgid "Volume"
-#~ msgstr "עוצמה"
 
-#~ msgid "+"
-#~ msgstr "+"
 
-#~ msgid "-"
-#~ msgstr "-"
 
-#~ msgid "Muted"
-#~ msgstr "מושתק"
 
-#~ msgid "Full Volume"
-#~ msgstr "עוצמה מלאה"
 
-#~ msgid "playlist"
-#~ msgstr "רשימת השמעה"
 
-#~ msgid "main window"
-#~ msgstr "חלון ראשי"
 
-#~ msgid "Plugins Manager"
-#~ msgstr "מנהל תוספים"
 
 #, fuzzy
-#~ msgid "Media Player Keys"
-#~ msgstr "נגן סרטים"
 
-#~ msgid "Properties dialog"
-#~ msgstr "דו-שיח מאפיינים"
 
 #, fuzzy
-#~ msgid "Movie Properties"
-#~ msgstr "מאפיינים"
 
-#~ msgid "Screensaver"
-#~ msgstr "שומר מסך"
 
 #, fuzzy
-#~ msgid "Skipto"
-#~ msgstr "דלג אל"
 
-#~ msgid "Menu"
-#~ msgstr "תפריט"
 
-#~ msgid "Open Location"
-#~ msgstr "פתח מיקום"
 
-#~ msgid "Totem could not seek in '%s'."
-#~ msgstr "Totem לא יכול לדלג בתוך '%s'."
 
-#~ msgid "<b>Audio</b>"
-#~ msgstr "<b>שמע</b>"
 
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>כללי</b>"
 
-#~ msgid "<b>Video</b>"
-#~ msgstr "<b>וידאו</b>"
 
-#~ msgid "<i>Channels:</i>"
-#~ msgstr "<i>ערוצים:</i>"
 
-#~ msgid "<i>Duration:</i>"
-#~ msgstr "<i>משך זמן:</i>"
 
-#~ msgid "<i>Title:</i>"
-#~ msgstr "<i>כותרת:</i>"
 
-#~ msgid "<i>Year:</i>"
-#~ msgstr "<i>שנה:</i>"
 
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>תצוגה מקדימה</b>"
 
-#~ msgid "Save screenshot"
-#~ msgstr "שמור תצלום מסך"
 
-#~ msgid "Save screenshot to _desktop"
-#~ msgstr "שמור תצלום מסך ל_שולחן העבודה"
 
-#~ msgid "Save screenshot to _file:"
-#~ msgstr "שמור תצלום מסך ל_קובץ:"
 
-#~ msgid "<b>Display</b>"
-#~ msgstr "‏<b>תצוגה</b>"
 
-#~ msgid "<span size=\"medium\"><b>No file</b></span>"
-#~ msgstr "‏<span size=\"medium\"><b>ללא קובץ</b></span>"
 
-#~ msgid "Vanity Webcam utility"
-#~ msgstr "תוכנית שירות למצלמת רשת Vanity"
 
-#~ msgid "View live webcam and upload pictures"
-#~ msgstr "צפה במצלמת רשת חיה והעלה תמונות"
 
-#~ msgid "Save File"
-#~ msgstr "שמור קובץ"
 
-#~ msgid "Vanity"
-#~ msgstr "Vanity"
 
-#~ msgid "Vanity Preferences"
-#~ msgstr "העדפות Vanity"
 
-#~ msgid "Zoom 1:1"
-#~ msgstr "קירוב 1:1"
 
-#~ msgid "Zoom 1:2"
-#~ msgstr "קירוב 1:2"
 
-#~ msgid "Zoom 2:1"
-#~ msgstr "קירוב 2:1"
 
-#~ msgid "Zoom _1:1"
-#~ msgstr "קירוב _1:1"
 
-#~ msgid "Zoom _2:1"
-#~ msgstr "קירוב _2:1"
 
-#~ msgid "_Picture"
-#~ msgstr "_תמונה"
 
-#~ msgid "_Zoom 1:2"
-#~ msgstr "_קירוב 1:2"
 
-#~ msgid "Unnamed CDROM"
-#~ msgstr "תקליטור ללא שם"
 
-#~ msgid "Always on top"
-#~ msgstr "תמיד עליון"
 
-#~ msgid "File '%s' already exists."
-#~ msgstr "הקובץ '%s' כבר קיים."
 
-#~ msgid "The screenshot was not saved"
-#~ msgstr "תצלום המסך לא נשמר"
 
-#~ msgid "Shadow type"
-#~ msgstr "סוג צללית"
-
-#~ msgid "Style of bevel around the statusbar text"
-#~ msgstr "סוג השיפוע סביב טקסט שורת המצב"
-
-#~ msgid "Webcam utility using %s"
-#~ msgstr "תוכנית שירות למצלמת רשת בשימוש %s"
-
-#~ msgid "Copyright © 2002-2005 Bastien Nocera"
-#~ msgstr "Copyright © 2002-2005 Bastien Nocera"
-
-#~ msgid ""
-#~ "Vanity could not startup:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Vanity לא יכל לאתחל:\n"
-#~ "%s"
-
-#~ msgid "No reason"
-#~ msgstr "אין סיבה"
 
-#~ msgid ""
-#~ "Vanity could not contact the webcam.\n"
-#~ "Reason: %s"
-#~ msgstr ""
-#~ "Vanity לא יכל ליצור קשר עם מצלמת הרשת.\n"
-#~ "סיבה: %s"
 
-#~ msgid ""
-#~ "Vanity could not play video from the webcam.\n"
-#~ "Reason: %s"
-#~ msgstr ""
-#~ "Vanity לא יכל לנגן וידאו ממצלמת הרשת.\n"
-#~ "סיבה: %s"
 
-#~ msgid "Debug mode on"
-#~ msgstr "מצב ניפוי מופעל"
 
-#~ msgid ""
-#~ "Could not initialize the thread-safe libraries.\n"
-#~ "Verify your system installation. Vanity will now exit."
-#~ msgstr ""
-#~ "לא ניתן לאתחל את ספריות ה-thread-safe.\n"
-#~ "ודא את התקנת המערכת שלך. Vanity יצא עכשיו."
 
-#~ msgid "Vanity Webcam Utility"
-#~ msgstr "תוכנית שירות למצלמת רשת Vanity"
 
-#~ msgid ""
-#~ "Vanity could not initialize the \n"
-#~ "configuration engine:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "‏Vanity לא יכול לאתחל את\n"
-#~ "מנוע ההגדרות:\n"
-#~ "%s"
 
-#~ msgid ""
-#~ "Couldn't load the main interface (vanity.glade).\n"
-#~ "Make sure that Vanity is properly installed."
-#~ msgstr ""
-#~ "לא ניתן לטעון את הממשק הראשי (vanity.glade).\n"
-#~ "ודא כי Vanity מותקן כראוי."
 
-#~ msgid "Save..."
-#~ msgstr "שמור..."
 
-#~ msgid "Backend options"
-#~ msgstr "אפשרויות אחוריות"
 
-#~ msgid "Failed to find real device node for %s: %s"
-#~ msgstr "Failed to find real device node for %s: %s"
 
-#~ msgid "Failed to read symbolic link %s: %s"
-#~ msgstr "Failed to read symbolic link %s: %s"
 
-#~ msgid "Option '%s' is unknown and was ignored\n"
-#~ msgstr "האפשרות '%s' אינה ידועה ו- Totem התעלם ממנה\n"
 
-#~ msgid ""
-#~ "Switching on or off this type of TV-Out requires a restart to take effect."
-#~ msgstr ""
-#~ "פתיחה או סגירת סוג זה של יציאת טלוויזיה דורשים הפעלה מחדש כדי להכנס לתוקף."
 
-#~ msgid "Failed to start stand-alone movie player"
-#~ msgstr "נכשל בהפעלת נגן הסרטים"
 
-#~ msgid "    "
-#~ msgstr "    "
 
-#~ msgid "*"
-#~ msgstr "*"
 
-#~ msgid "Languages"
-#~ msgstr "שפות"
 
-#~ msgid "No Language Selection Available"
-#~ msgstr "בחירת שפה לא זמינה"
 
-#~ msgid "No subtitles selection available"
-#~ msgstr "בחירת כתוביות לא זמינות"
 
-#~ msgid "Set the aspect ratio"
-#~ msgstr "קבע את יחס החזות"
 
-#~ msgid "Side_bar"
-#~ msgstr "_סרגל צד"
 
-#~ msgid "Empty"
-#~ msgstr "ריק"
 
-#~ msgid "Overwrite file?"
-#~ msgstr "לשכתב את הקובץ?"
 
-#~ msgid ""
-#~ "A file named '%s' already exists.  Are you sure you want to overwrite it?"
-#~ msgstr "קובץ בשם '%s' כבר קיים.  האם ברצונך להחליפו?"
 
-#~ msgid "video popup menu"
-#~ msgstr "תפריט קופץ - וידאו"
 
-#~ msgid "This movie is a still image. You can open it with an image viewer."
-#~ msgstr "סרט זה הוא תמונה דוממת. באפשרותך לפתוח אותו עם מציג תמונות."
 
-#~ msgid "Height of the video widget"
-#~ msgstr "Height of the video widget"
 
-#~ msgid "Whether the sidebar is shown"
-#~ msgstr "Whether the sidebar is shown"
 
-#~ msgid "Width of the video widget"
-#~ msgstr "Width of the video widget"
 
-#~ msgid "_DXR3 TV-out"
-#~ msgstr "יציאת טלוויזיה _DXR3"
 
-#~ msgid "Totem"
-#~ msgstr "Totem"
 
-#~ msgid "Totem couldn't show the movie properties window."
-#~ msgstr "Totem אינו יכול להציג את חלון מאפייני הסרט."
 
-#~ msgid "Make sure that Totem is correctly installed."
-#~ msgstr "וודא שאכן Totem מותקן כראוי."
 
-#~ msgid "Totem Video Window"
-#~ msgstr "חלון וידאו של Totem"
 
-#~ msgid "Failed to open media file; unknown error"
-#~ msgstr "נכשל בפתיחת קובץ מדיה; שגיאה לא ידועה"
 
-#~ msgid "Failed to play: %s"
-#~ msgstr "נכשל בניגון: %s"
 
-#~ msgid "unknown error"
-#~ msgstr "שגיאה לא ידועה"
 
-#~ msgid "Failed to find mountpoint for device %s in /etc/fstab"
-#~ msgstr "Failed to find mountpoint for device %s in /etc/fstab"
 
-#~ msgid "Failed to open device %s for reading: %s"
-#~ msgstr "נכשל בפתיחת התקן %s לקריאה: %s"
 
-#~ msgid "Failed to retrieve capabilities of device %s: %s"
-#~ msgstr "Failed to retrieve capabilities of device %s: %s"
 
-#~ msgid "Drive status 0x%x (%s) - check disc"
-#~ msgstr "מצב כונן 0x%x (%s) - בדוק דיסק"
 
-#~ msgid "Error getting %s disc status: %s"
-#~ msgstr "נכשל בקבלת %s מצב דיסק: %s"
 
-#~ msgid "Unexpected/unknown cd type 0x%x (%s)"
-#~ msgstr "סוג תקליטור לא ידוע/צפוי 0x%x (%s)"
 
-#~ msgid "Select CD"
-#~ msgstr "בחר תקליטור"
 
-#~ msgid "Please select the currently playing CD:"
-#~ msgstr "אנא בחר בתקליטור המתנגן כעת:"
 
-#~ msgid "Failed to play Audio/Video Disc"
-#~ msgstr "נכשל בניגון דיסק שמע/וידאו"
 
-#~ msgid "Reason unknown"
-#~ msgstr "סיבה לא ידועה"
 
-#~ msgid "Select Files"
-#~ msgstr "בחר קבצים"
 
-#~ msgid "Unexpected error status %d while mounting %s"
-#~ msgstr "Unexpected error status %d while mounting %s"
 
-#~ msgid "_Show/Hide Sidebar"
-#~ msgstr "ה_צג/הסתר את סרגל הצד"
 
-#~ msgid "Repeat _mode"
-#~ msgstr "_מצב חזרה"
 
-#~ msgid "Shuf_fle mode"
-#~ msgstr "מצב _ערבוב"
 
-#~ msgid "<b>Optical Device</b>"
-#~ msgstr "<b>התקן אופטי</b>"
 
-#~ msgid "<b>Proprietary Plugins</b>"
-#~ msgstr "<b>תוספים קניינים</b>"
 
-#~ msgid "Exit Fullscreen"
-#~ msgstr "צא ממסך-מלא"
 
-#~ msgid "File name"
-#~ msgstr "שם הקובץ"
 
-#~ msgid "Play _Audio CD"
-#~ msgstr "נגן תקליטור _שמע"
 
-#~ msgid "Play _DVD"
-#~ msgstr "נגן _DVD"
 
-#~ msgid "Play _VCD"
-#~ msgstr "נגן _VCD"
 
-#~ msgid "Play a Video CD"
-#~ msgstr "נגן תקליטור וידאו"
 
-#~ msgid "Play a Video DVD"
-#~ msgstr "נגן DVD וידאו"
 
-#~ msgid "Play an audio CD"
-#~ msgstr "נגן תקליטור שמע"
 
-#~ msgid "Show/Hide Playlist"
-#~ msgstr "הצג/הסתר את רשימת השמע"
 
-#~ msgid "Small"
-#~ msgstr "קטן"
 
-#~ msgid "Switch to double size"
-#~ msgstr "החלף לגודל כפול"
 
-#~ msgid "Zoom to half size"
-#~ msgstr "קירוב לחצי גודל"
 
-#~ msgid "Zoom to one for one size"
-#~ msgstr "קירוב לגודל אחד על אחד"
 
-#~ msgid "_Add Proprietary Plugins..."
-#~ msgstr "_הוסף תוסף קנייני"
 
-#~ msgid "_Optical device path:"
-#~ msgstr "_נתיב התקן אופטי:"
 
-#~ msgid "Enable deinterlacing."
-#~ msgstr "מאפשר פירוק."
 
-#~ msgid "Name of the visual effects plugins."
-#~ msgstr "שמות תוספי האפקטים הויזואליים."
 
-#~ msgid "Path to the optical media device"
-#~ msgstr "נתיב להתקן מדיה אופטית"
 
-#~ msgid "Path to the optical media device."
-#~ msgstr "נתיב להתקן מדיה אופטית."
 
-#~ msgid "Repeat mode."
-#~ msgstr "מצב חזרה."
 
-#~ msgid "Resize the canvas automatically on file load."
-#~ msgstr "שנה את גודל האריגים באופן אוטומטי בטעינת קובץ."
 
-#~ msgid "Shuffle mode."
-#~ msgstr "מצב ערבוב."
 
-#~ msgid "The brightness of the video."
-#~ msgstr "הבהירות של הווידאו."
 
-#~ msgid "The contrast of the video."
-#~ msgstr "הניגודיות של הווידאו."
 
-#~ msgid "The hue of the video."
-#~ msgstr "הגוון של הווידיאו."
 
-#~ msgid "The saturation of the video."
-#~ msgstr "הרוויה של הווידיאו."
 
-#~ msgid "Whether to enable debug for the playback engine."
-#~ msgstr "האם לאפשר ניפוי למנוע הניגון החוזר."
 
-#~ msgid "X coordinate for the Playlist"
-#~ msgstr "קואורדינטת ה X לרשימת השמע"
 
-#~ msgid "X coordinate for the Playlist."
-#~ msgstr "קואורדינטת ה X לרשימת השמע."
 
-#~ msgid "Y coordinate for the Playlist"
-#~ msgstr "קואורדינטת ה Y לרשימת השמע"
 
-#~ msgid "Y coordinate for the Playlist."
-#~ msgstr "קואורדינטת ה Y לרשימת השמע."
 
-#~ msgid "Open from URI"
-#~ msgstr "פתח את הכתובת"
 
-#~ msgid "Select the drive"
-#~ msgstr "בחר את הכונן"
 
-#~ msgid "Unnamed Video Device"
-#~ msgstr "התקן וידאו ללא-שם"
 
-#~ msgid "0 second"
-#~ msgstr "0 שניות"
 
-#~ msgid "Unnamed SCSI CD-ROM (%s)"
-#~ msgstr "תקליטור SCSI ללא-שם (%s)"
 
-#~ msgid "File image"
-#~ msgstr "קובץ תמונה"
 
-#~ msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-#~ msgstr "לא ניתן לטעון את הממשק הראשי (mozilla-viewer.glade)."
 
-#~ msgid "Make sure that the Totem plugin is properly installed."
-#~ msgstr "וודא כי תוסף טוטם מותקן כראוי."
 
-#~ msgid "Totem could not start the file manager."
-#~ msgstr "טוטם לא יכל להפעיל את מנהל הקבצים."
 
-#~ msgid "URI currently displayed"
-#~ msgstr "הכתובת המוצגת כעת"
 
-#~ msgid "Video and Audio information properties page"
-#~ msgstr "עמוד מאפייני וידאו ושמע"
 
-#~ msgid "No reason given."
-#~ msgstr "לא ניתנה סיבה."
 
-#~ msgid "%s - Totem Movie Player"
-#~ msgstr "%s - נגן הסרטים טוטם"
 
-#~ msgid "Please file a bug, this isn't supposed to happen."
-#~ msgstr "אנא מלא באג, זה לא אמור לקרות."
 
-#~ msgid "Couldn't load the main interface (totem.glade)."
-#~ msgstr "לא ניתן לטעון את הממשק הראשי (totem.glade)."
 
-#~ msgid "Couldn't load the interface for the playlist."
-#~ msgstr "לא ניתן לטעון ממשק לרשימת השמע."
 
-#~ msgid "Please file a bug, this isn't supposed to happen"
-#~ msgstr "אנא מלא באג, זה לא אמור לקרות"
+
+
+
+
+
