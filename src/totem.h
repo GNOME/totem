@@ -183,6 +183,7 @@ void totem_add_to_playlist_and_play		(Totem *totem,
 						 const char *uri,
 						 const char *display_name,
 						 gboolean add_to_recent);
+char *  totem_get_current_mrl			(Totem *totem);
 
 /* Sidebar handling */
 void    totem_add_sidebar_page			(Totem *totem,

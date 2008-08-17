@@ -1,3 +1,11 @@
+2008-08-17  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* bindings/python/totem.defs:
+	* src/totem-object.c: (totem_get_current_mrl):
+	* src/totem.h: Add a totem_get_current_mrl function and expose it in
+	the Python bindings. Necessary for the Totem plugin for Conduit.
+	(Closes: #459505)
+
 2008-08-14  Bastien Nocera  <hadess@hadess.net>
 
 	* configure.in: Support libtool 2.2, don't try to check for

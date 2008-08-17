@@ -389,6 +389,12 @@
   (return-type "gint64")
 )
 
+(define-method get_current_mrl
+  (of-object "TotemObject")
+  (c-name "totem_get_current_mrl")
+  (return-type "char*")
+)
+
 (define-method add_sidebar_page
   (of-object "TotemObject")
   (c-name "totem_add_sidebar_page")

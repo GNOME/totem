@@ -324,6 +324,12 @@ totem_add_to_playlist_and_play (Totem *totem,
 	}
 }
 
+char *
+totem_get_current_mrl (Totem *totem)
+{
+	return totem_playlist_get_current_mrl (totem->playlist, NULL);
+}
+
 guint
 totem_get_playlist_length (Totem *totem)
 {
