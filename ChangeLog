@@ -1,5 +1,14 @@
 2008-08-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-session.c (totem_session_restore):
+	* src/totem.c (update_mrl_label), (on_error_event),
+	(update_seekable): Only seek for session restore once
+	we've opened the file, and we know it's seekable,
+	fixes restoring playlists from the session, including
+	seeking (Closes: #434936)
+
+2008-08-18  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: update GTK+ req
 	* src/totem-audio-preview.c: remove unneeded gnome
 	include

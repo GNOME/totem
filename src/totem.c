@@ -992,17 +992,8 @@ totem_get_nice_name_for_stream (Totem *totem)
 static void
 update_mrl_label (Totem *totem, const char *name)
 {
-	gint time;
-
 	if (name != NULL)
 	{
-		/* Get the length of the stream */
-		time = bacon_video_widget_get_stream_length (totem->bvw);
-		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
-						     (totem->statusbar), 0, time / 1000);
-
-		g_object_notify (G_OBJECT (totem), "stream-length");
-
 		/* Update the mrl label */
 		totem_fullscreen_set_title (totem->fs, name);
 
@@ -1717,6 +1708,10 @@ static void
 on_error_event (BaconVideoWidget *bvw, char *message,
                 gboolean playback_stopped, gboolean fatal, Totem *totem)
 {
+	/* Clear the seek if it's there, we only want to try and seek
+	 * the first file, even if it's not there */
+	totem->seek_to = 0;
+
 	if (playback_stopped)
 		play_pause_set_label (totem, STATE_STOPPED);
 
@@ -1764,6 +1759,14 @@ update_seekable (Totem *totem)
 
 	action = gtk_action_group_get_action (action_group, "skip-backwards");
 	gtk_action_set_sensitive (action, seekable);
+
+	/* This is for the session restore to seek */
+	if (seekable != FALSE && totem->seek_to != 0) {
+		bacon_video_widget_seek_time (totem->bvw,
+				totem->seek_to, NULL);
+		totem_action_pause (totem);
+	}
+	totem->seek_to = 0;
 
 	g_object_notify (G_OBJECT (totem), "seekable");
 }

@@ -145,11 +145,8 @@ totem_session_restore (Totem *totem, char **filenames)
 
 	totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
 
-	if (totem->seek_to != 0) {
-		bacon_video_widget_seek_time (totem->bvw,
-				totem->seek_to, NULL);
-	}
-	bacon_video_widget_pause (totem->bvw);
+	/* We do the seeking after being told that the stream is seekable,
+	 * not straight away */
 
 	g_free (mrl);
 	g_free (subtitle);
