@@ -1,3 +1,16 @@
+2008-08-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_can_deinterlace):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_can_deinterlace):
+	* src/backend/bacon-video-widget.h:
+	Add _can_deinterlace function to the backends
+
+	* src/totem.c (totem_callback_connect): Only show
+	the deinterlacing menu item if the backend supports it
+	(Helps: #491627)
+
 2008-08-17  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* bindings/python/totem.defs:

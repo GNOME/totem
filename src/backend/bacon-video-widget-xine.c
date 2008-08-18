@@ -3128,6 +3128,12 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget *bvw)
 	return entry.num_value;
 }
 
+gboolean
+bacon_video_widget_can_deinterlace (BaconVideoWidget *bvw)
+{
+	return TRUE;
+}
+
 void
 bacon_video_widget_set_deinterlacing (BaconVideoWidget *bvw,
 		gboolean deinterlace)

@@ -2246,6 +2246,12 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
   }
 }
 
+gboolean
+bacon_video_widget_can_deinterlace (BaconVideoWidget *bvw)
+{
+  return FALSE;
+}
+
 void
 bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
                                       gboolean deinterlace)
