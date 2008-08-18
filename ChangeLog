@@ -1,5 +1,16 @@
 2008-08-18  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in: update GTK+ req
+	* src/totem-audio-preview.c: remove unneeded gnome
+	include
+	* src/totem-menu.c (totem_ui_manager_setup):
+	* src/totem.c (totem_action_show_help): Use a newer GTK+
+	to launch the help, and don't require libgnomeui for that,
+	based on patch from Philip Withnall <philip@tecnocode.co.uk>
+	(Closes: #514384)
+
+2008-08-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_can_deinterlace):
 	* src/backend/bacon-video-widget-xine.c

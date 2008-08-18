@@ -1371,12 +1371,6 @@ totem_ui_manager_setup (Totem *totem)
 				G_N_ELEMENTS (seek_entries_rtl), totem);
 	}
 
-	/* Hide help if we're using GTK+ only */
-#ifdef HAVE_GTK_ONLY
-	GtkAction *action = gtk_action_group_get_action (totem->main_action_group, "contents");
-	gtk_action_set_visible (action, FALSE);
-#endif /* HAVE_GTK_ONLY */
-
 	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
 
 	totem->devices_action_group = NULL;

@@ -32,10 +32,6 @@
 
 #include <gtk/gtk.h>
 
-#ifndef HAVE_GTK_ONLY
-#include <gnome.h>
-#endif
-
 #include <bacon-video-widget.h>
 #include <glib/gthread.h>
 #include <string.h>

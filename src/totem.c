@@ -1453,15 +1453,12 @@ totem_action_set_scale_ratio (Totem *totem, gfloat ratio)
 void
 totem_action_show_help (Totem *totem)
 {
-#ifndef HAVE_GTK_ONLY
-	GError *err = NULL;
+	GError *error = NULL;
 
-	if (gnome_help_display ("totem.xml", NULL, &err) == FALSE)
-	{
-		totem_action_error (_("Totem could not display the help contents."), err->message, totem);
-		g_error_free (err);
+	if (gtk_show_uri (gtk_widget_get_screen (totem->win), "ghelp:totem", gtk_get_current_event_time (), &error) == FALSE) {
+		totem_action_error (_("Totem could not display the help contents."), error->message, totem);
+		g_error_free (error);
 	}
-#endif /* !HAVE_GTK_ONLY */
 }
 
 static gboolean
