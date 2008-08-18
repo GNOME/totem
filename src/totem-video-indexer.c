@@ -73,6 +73,7 @@ totem_print_string (BaconVideoWidget *bvw, const char *key, BaconVideoWidgetMeta
 	if (str != NULL) {
 		g_print ("%s=%s\n", key, str);
 	}
+	g_value_unset (&value);
 }
 
 static void
@@ -87,6 +88,7 @@ totem_print_int (BaconVideoWidget *bvw, const char *key, BaconVideoWidgetMetadat
 	if (num != 0) {
 		g_print ("%s=%d\n", key, num);
 	}
+	g_value_unset (&value);
 }
 
 static void

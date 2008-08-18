@@ -44,6 +44,7 @@ cb_resize (Totem * totem)
 	pane = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
 	gtk_widget_style_get_property (pane, "handle-size", &gvalue_size);
 	handle_size = g_value_get_int (&gvalue_size);
+	g_value_unset (&gvalue_size);
 	
 	if (totem->sidebar_shown) {
 		w += totem->sidebar->allocation.width + handle_size;

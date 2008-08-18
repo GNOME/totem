@@ -1,5 +1,21 @@
 2008-08-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/ontop/totem-ontop.c (update_from_state):
+	* src/plugins/tracker/totem-tracker-widget.c
+	(totem_tracker_widget_set_property):
+	* src/totem-cell-renderer-video.c
+	(totem_cell_renderer_video_set_property):
+	* src/totem-sidebar.c (cb_resize):
+	* src/totem-video-indexer.c (totem_print_string),
+	(totem_print_int):
+	* src/totem-video-thumbnailer.c (has_audio),
+	(on_got_metadata_event):
+	* src/totem.c (totem_get_nice_name_for_stream), (show_controls):
+	Unset GValues after having used them, to make sure they get cleaned
+	up, fixes a few memleaks, Use g_value_dup_* functions when necessary
+
+2008-08-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-session.c (totem_session_restore):
 	* src/totem.c (update_mrl_label), (on_error_event),
 	(update_seekable): Only seek for session restore once

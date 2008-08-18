@@ -125,7 +125,7 @@ totem_tracker_widget_set_property (GObject *object,
 	switch (property_id)
 	{
 	case PROP_TOTEM:
-		widget->totem = g_object_ref (g_value_get_object (value));
+		widget->totem = g_value_dup_object (value);
 		g_object_set (G_OBJECT (widget->priv->result_list), "totem", widget->totem, NULL);
 		break;
 	default:

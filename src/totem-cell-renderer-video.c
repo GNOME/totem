@@ -156,7 +156,7 @@ totem_cell_renderer_video_set_property (GObject *object, guint property_id, cons
 			break;
 		case PROP_TITLE:
 			g_free (priv->title);
-			priv->title = g_strdup (g_value_get_string (value));
+			priv->title = g_value_dup_string (value);
 			break;
 		case PROP_ALIGNMENT:
 			priv->alignment = g_value_get_enum (value);

@@ -426,9 +426,12 @@ static gboolean
 has_audio (BaconVideoWidget *bvw)
 {
 	GValue value = { 0, };
+	gboolean retval;
 
 	bacon_video_widget_get_metadata (bvw, BVW_INFO_HAS_VIDEO, &value);
-	return g_value_get_boolean (&value);
+	retval = g_value_get_boolean (&value);
+	g_value_unset (&value);
+	return retval;
 }
 
 static void
@@ -439,7 +442,8 @@ on_got_metadata_event (BaconVideoWidget *bvw, callback_data *data)
 
 	PROGRESS_DEBUG("Got metadata, checking if we have a cover");
 	bacon_video_widget_get_metadata (bvw, BVW_INFO_COVER, &value);
-	pixbuf = g_value_get_object (&value);
+	pixbuf = g_value_dup_object (&value);
+	g_value_unset (&value);
 
 	if (pixbuf) {
 		PROGRESS_DEBUG("Saving cover image");

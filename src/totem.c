@@ -976,6 +976,7 @@ totem_get_nice_name_for_stream (Totem *totem)
 					 BVW_INFO_TRACK_NUMBER,
 					 &value);
 	tracknum = g_value_get_int (&value);
+	g_value_unset (&value);
 
 	if (tracknum != 0) {
 		retval = g_strdup_printf ("%02d. %s - %s",
@@ -2049,6 +2050,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			gtk_widget_style_get_property (pane, "handle-size",
 					&value);
 			handle_size = g_value_get_int (&value);
+			g_value_unset (&value);
 			
 			gtk_widget_show (totem->sidebar);
 			width += totem->sidebar->allocation.width

@@ -99,6 +99,7 @@ update_from_state (TotemOntopPluginPrivate *priv)
 	gtk_window_set_keep_above (priv->window,
 				   (totem_is_playing (priv->totem) != FALSE &&
 				    g_value_get_boolean (&has_video) != FALSE));
+	g_value_unset (&has_video);
 }
 
 static void
