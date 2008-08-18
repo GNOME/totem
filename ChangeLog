@@ -1,5 +1,12 @@
 2008-08-18  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c (bvw_bus_message_cb):
+	When we have a streaming title, pass it on using the TITLE_CHANGE
+	signal. Fixes stream title not updating for soma.fm streams
+	(Closes: #471233)
+
+2008-08-18  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bvw-test.c (on_got_metadata), (on_title_changed),
 	(main): Listen to got-metadata and title-change signals
 

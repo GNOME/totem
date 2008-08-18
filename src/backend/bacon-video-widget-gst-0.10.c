@@ -1449,7 +1449,17 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
        * only later when we can be sure we got it all */
       if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
           bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
-        g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+	/* If we updated metadata and we have a new title, send it
+ 	 * using TITLE_CHANGE, so that the UI knows it has a new
+	 * streaming title */
+	GValue value = { 0, };
+
+	g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_TITLE, &value);
+	if (g_value_get_string (&value))
+	  g_signal_emit (bvw, bvw_signals[SIGNAL_TITLE_CHANGE], 0, g_value_get_string (&value));
+	g_value_unset (&value);
       }
       break;
     }
