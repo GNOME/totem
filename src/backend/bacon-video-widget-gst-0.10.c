@@ -3950,6 +3950,8 @@ bacon_video_widget_dvb_get_adapter_type (const char *device)
 	    adapter_type = 'S';
 	  } else if (g_str_equal (g_value_get_string (val), "DVB-C") != FALSE) {
 	    adapter_type = 'C';
+	  } else if (g_str_equal (g_value_get_string (val), "ATSC") != FALSE) {
+	    adapter_type = 'A';
 	  }
 	}
 	gst_message_unref (msg);
@@ -4052,7 +4054,8 @@ bacon_video_widget_get_dvb_mrls (const char *device)
 	gchar** fields = g_strsplit(line, ":", 0);
 	if ((g_strv_length (fields) == 13 && adapter_type == 'T') ||
 	    (g_strv_length (fields) == 8 && adapter_type == 'S') ||
-	    (g_strv_length (fields) == 9 && adapter_type == 'C')) {
+	    (g_strv_length (fields) == 9 && adapter_type == 'C') ||
+	    (g_strv_length (fields) == 6 && adapter_type == 'A')) {
 	  g_ptr_array_add (array, g_strdup_printf("dvb://%s", fields[0]));
 	}
 	g_strfreev(fields);
