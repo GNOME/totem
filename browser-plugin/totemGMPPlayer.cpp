@@ -184,7 +184,6 @@ totemGMPPlayer::GetPropertyByIndex (int aIndex,
 
     case ePlayState:
       /* readonly attribute long playState; */
-      TOTEM_LOG_INVOKE (aIndex,totemGMPPlayer);
       return Int32Variant (_result, mPluginState);
 
     case eStretchToFit:
