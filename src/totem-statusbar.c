@@ -44,10 +44,6 @@ static void totem_statusbar_class_init       (TotemStatusbarClass *class);
 static void totem_statusbar_init             (TotemStatusbar      *statusbar);
 static void totem_statusbar_dispose          (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
-#if !GTK_CHECK_VERSION (2, 11, 0)
-static void totem_statusbar_size_allocate    (GtkWidget           *widget,
-                                              GtkAllocation       *allocation);
-#endif
 
 G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_STATUSBAR)
 
@@ -55,11 +51,6 @@ static void
 totem_statusbar_class_init (TotemStatusbarClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-#if !GTK_CHECK_VERSION (2, 11, 0)
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  widget_class->size_allocate = totem_statusbar_size_allocate;
-#endif
 
   gobject_class->dispose = totem_statusbar_dispose;
 }
@@ -314,25 +305,6 @@ totem_statusbar_dispose (GObject *object)
 
   G_OBJECT_CLASS (totem_statusbar_parent_class)->dispose (object);
 }
-
-#if !GTK_CHECK_VERSION (2, 11, 0)
-static void
-totem_statusbar_size_allocate (GtkWidget *widget,
-                               GtkAllocation *allocation)
-{
-  GtkStatusbar *gstatusbar = GTK_STATUSBAR (widget);
-  GtkWidget *label, *box;
-
-  /* HACK HACK HACK ! */
-  label = gstatusbar->label;
-  box = gtk_bin_get_child (GTK_BIN (gstatusbar->frame));
-  gstatusbar->label = box;
-
-  GTK_WIDGET_CLASS (totem_statusbar_parent_class)->size_allocate (widget, allocation);
-
-  gstatusbar->label = label;
-}
-#endif /* !GTK 2.11.0 */
 
 /*
  * vim: sw=2 ts=8 cindent noai bs=2

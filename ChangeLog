@@ -1,6 +1,13 @@
 2008-08-19  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c
+	(totem_embedded_launch_player):
+	* src/totem-statusbar.c (totem_statusbar_class_init):
+	Remove code that supports older versions of GTK+
+
+2008-08-19  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c
 	(totem_embedded_update_menu): Don't put the "Open with Movie
 	Player" menu item at the very top of the contextual menu,
 	people press it by accident (Closes: #516703)
