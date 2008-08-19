@@ -108,8 +108,18 @@ totemGMPControls::InvokeByIndex (int aIndex,
 
     case eIsAvailable:
       /* boolean isAvailable (in ACString name); */
-      TOTEM_WARN_1_INVOKE_UNIMPLEMENTED (aIndex,totemGMPControls);
-      return BoolVariant (_result, true);
+      const char *name;
+      TOTEM_LOG_INVOKE (aIndex,totemGMPControls);
+      if (!GetStringFromArguments (argv, argc, 0, name))
+        return false;
+      if (strcasecmp (name, "currentItem") == 0
+      	  || strcasecmp (name, "next") == 0
+      	  || strcasecmp (name, "pause") == 0
+      	  || strcasecmp (name, "play") == 0
+      	  || strcasecmp (name, "previous") == 0
+      	  || strcasecmp (name, "stop") == 0)
+      	  return BoolVariant (_result, true);
+      return BoolVariant (_result, false);
 
     case eFastForward:
       /* void fastForward (); */

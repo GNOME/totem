@@ -34,6 +34,23 @@ class totemGMPPlayer : public totemNPObject
     totemGMPPlayer (NPP);
     virtual ~totemGMPPlayer ();
 
+    enum PluginState {
+      eState_Undefined,
+      eState_Stopped,
+      eState_Paused,
+      eState_Playing,
+      eState_ScanForward,
+      eState_ScanReverse,
+      eState_Buffering,
+      eState_Waiting,
+      eState_MediaEnded,
+      eState_Transitioning,
+      eState_Ready,
+      eState_Reconnecting
+    };
+
+    PluginState mPluginState;
+
   private:
 
     enum Methods {

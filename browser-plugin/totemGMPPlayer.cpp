@@ -184,8 +184,8 @@ totemGMPPlayer::GetPropertyByIndex (int aIndex,
 
     case ePlayState:
       /* readonly attribute long playState; */
-      TOTEM_WARN_1_GETTER_UNIMPLEMENTED (aIndex, totemGMPPlayer);
-      return Int32Variant (_result, 0);
+      TOTEM_LOG_INVOKE (aIndex,totemGMPPlayer);
+      return Int32Variant (_result, mPluginState);
 
     case eStretchToFit:
       /* attribute boolean stretchToFit; */

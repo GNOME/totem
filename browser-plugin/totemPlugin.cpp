@@ -1055,6 +1055,13 @@ totemPlugin::RequestStream (bool aForceViewer)
 		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
+#ifdef TOTEM_GMP_PLUGIN
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+		scriptable->mPluginState = totemGMPPlayer::eState_Waiting;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 }
 
 void
@@ -1082,6 +1089,13 @@ totemPlugin::UnsetStream ()
 		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Waiting;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
+#ifdef TOTEM_GMP_PLUGIN
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+		scriptable->mPluginState = totemGMPPlayer::eState_MediaEnded;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 }
 
 /* Callbacks */
@@ -1165,6 +1179,26 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 
 	plugin->mTime = aTime;
 	plugin->mDuration = aDuration;
+
+#ifdef TOTEM_GMP_PLUGIN
+        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+                switch (plugin->mState) {
+		case TOTEM_STATE_PLAYING:
+			scriptable->mPluginState = totemGMPPlayer::eState_Playing;
+			break;
+		case TOTEM_STATE_PAUSED:
+			scriptable->mPluginState = totemGMPPlayer::eState_Paused;
+			break;
+		case TOTEM_STATE_STOPPED:
+			scriptable->mPluginState = totemGMPPlayer::eState_Stopped;
+			break;
+		default:
+			scriptable->mPluginState = totemGMPPlayer::eState_Undefined;
+		}
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 }
 
 /* static */ void
@@ -1269,6 +1303,13 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
+#ifdef TOTEM_GMP_PLUGIN
+        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+		scriptable->mPluginState = totemGMPPlayer::eState_Waiting;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 }
 
 /* static */ void
@@ -1300,6 +1341,13 @@ totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
+#ifdef TOTEM_GMP_PLUGIN
+        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+		scriptable->mPluginState = totemGMPPlayer::eState_Ready;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 
 	/* FIXME this isn't the best way... */
 	if (plugin->mAutoPlay) {
@@ -2266,6 +2314,13 @@ totemPlugin::NewStream (NPMIMEType type,
 		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Loading;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
+#ifdef TOTEM_GMP_PLUGIN
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+		scriptable->mPluginState = totemGMPPlayer::eState_Buffering;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 
 	mStream = stream;
 
@@ -2482,6 +2537,13 @@ totemPlugin::StreamAsFile (NPStream *stream,
 		scriptable->mPluginState = totemNarrowSpacePlayer::eState_Complete;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
+#ifdef TOTEM_GMP_PLUGIN
+        if (!mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = mNPObjects[ePluginScriptable];
+                totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
+		scriptable->mPluginState = totemGMPPlayer::eState_Ready;
+	}
+#endif /* TOTEM_GMP_PLUGIN */
 }
     
 void
