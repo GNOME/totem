@@ -1,5 +1,12 @@
 2008-08-19  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c
+	(totem_embedded_update_menu): Don't put the "Open with Movie
+	Player" menu item at the very top of the contextual menu,
+	people press it by accident (Closes: #516703)
+
+2008-08-19  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemGMPControls.cpp:
 	* browser-plugin/totemGMPPlayer.cpp: A few fixes pointed out
 	by Christian Persch <chpe@gnome.org> (Helps: #547659)

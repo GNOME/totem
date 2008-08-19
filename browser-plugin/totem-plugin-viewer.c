@@ -1099,7 +1099,7 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 	emb->menu_item = item;
 
 	menu = GTK_MENU_SHELL (gtk_builder_get_object (emb->menuxml, "menu"));
-	gtk_menu_shell_prepend (menu, item);
+	gtk_menu_shell_insert (menu, item, 1);
 }
 
 static void
