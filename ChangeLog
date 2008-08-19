@@ -1,3 +1,10 @@
+2008-08-19  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c (entry_parsed):
+	Fix accessing a freed string, the metadata hashtable from
+	the playlist parser returns const data, which we need to
+	duplicate
+
 2008-08-18  Zaheer Abbas Merali  <zaheerabbas at merali dot org>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

@@ -2070,7 +2070,7 @@ entry_parsed (TotemPlParser *parser,
 
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
-	item->title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
+	item->title = g_strdup (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE));
 	item->duration = duration;
 	item->starttime = totem_pl_parser_parse_duration (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME), FALSE);
 
