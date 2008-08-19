@@ -103,8 +103,9 @@ class PythonConsolePlugin(totem.Plugin):
 						             destroy_cb = self.destroy_console)
 
 			console.set_size_request(600, 400)
-			console.eval(_('print "You can access the totem object through ' \
-				     '\'totem_object\' :\\n%s" % totem_object'), False)
+			console.eval('print "%s" %% totem_object' % _("You can access the totem object through " \
+				     "\'totem_object\' :\\n%s"), False)
+
 	
 			self.window = gtk.Window()
 			self.window.set_title(_('Totem Python Console'))
