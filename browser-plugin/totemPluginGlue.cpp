@@ -357,19 +357,23 @@ NP_GetMIMEDescription (void)
 		if (totem_plugin_mimetype_is_disabled (mimetypes[i].mimetype, system, user))
 			continue;
 
-		desc = g_content_type_get_description (mimetypes[i].mimetype);
-		if (desc == NULL && mimetypes[i].mime_alias != NULL) {
-			desc = g_content_type_get_description
-				(mimetypes[i].mime_alias);
+		desc = NULL;
+		if (mimetypes[i].mime_alias != NULL) {
+			if (strstr (mimetypes[i].mime_alias, "/") != NULL) {
+				desc = g_content_type_get_description
+					(mimetypes[i].mime_alias);
+			} else {
+				desc = g_strdup (mimetypes[i].mime_alias);
+			}
 		}
-		if (desc == NULL) {
-			desc = g_strdup (mimetypes[i].mime_alias);
-		}
+
+		if (desc == NULL)
+			desc = g_content_type_get_description (mimetypes[i].mimetype);
 
 		g_string_append_printf (list,"%s:%s:%s;",
 					mimetypes[i].mimetype,
 					mimetypes[i].extensions,
-					desc ? desc : "-");
+					desc);
 		g_free (desc);
 	}
 

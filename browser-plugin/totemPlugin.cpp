@@ -88,7 +88,7 @@
 
 static const totemPluginMimeEntry kMimeTypes[] = {
 #if defined(TOTEM_BASIC_PLUGIN)
-  { "application/x-ogg","ogg",NULL },
+  { "application/x-ogg","ogg","application/ogg" },
   { "application/ogg", "ogg", NULL },
   { "audio/ogg", "oga", NULL },
   { "audio/x-ogg", "ogg", NULL },
@@ -103,7 +103,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "audio/mpeg", "mp3", NULL },
   { "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
   { "video/flv", "flv", "application/x-flash-video" },
-  { "application/x-totem-plugin", "", "application/octet-stream" },
+  { "application/x-totem-plugin", "", "Totem Multimedia plugin" },
 #elif defined(TOTEM_GMP_PLUGIN)
   { "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
   { "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
@@ -128,9 +128,9 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 #elif defined(TOTEM_MULLY_PLUGIN)
   { "video/divx", "divx", "video/x-msvideo" },
 #elif defined(TOTEM_CONE_PLUGIN)
-  { "application/x-vlc-plugin", "", "application/octet-stream" },
-  { "application/vlc", "", "application/octet-stream" },
-  { "video/x-google-vlc-plugin", "", "application/octet-stream" },
+  { "application/x-vlc-plugin", "", "VLC Multimedia Plugin" },
+  { "application/vlc", "", "VLC Multimedia Plugin" },
+  { "video/x-google-vlc-plugin", "", "VLC Multimedia Plugin" },
 #else
 #error Unknown plugin type
 #endif

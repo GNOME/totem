@@ -1,5 +1,13 @@
 2008-08-20  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp:
+	* browser-plugin/totemPluginGlue.cpp: Fix crummy
+	descriptions for some mime-types, g_content_type_get_description
+	always returns a description when the equivalent gnome-vfs
+	function didn't for unknown types (Closes: #548301)
+
+2008-08-20  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-dvb-setup.c (totem_dvb_setup_device):
 	Don't add to the array after having got the pdata
 
