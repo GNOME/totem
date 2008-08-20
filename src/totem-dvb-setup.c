@@ -93,8 +93,9 @@ totem_dvb_setup_device (const char *device,
 	tmp = g_strdup_printf ("--transient-for=%u", (unsigned int) GDK_WINDOW_XID (GTK_WIDGET (parent)->window));
 	g_ptr_array_add (arr, tmp);
 	g_ptr_array_add (arr, g_strdup (device));
-	argv = (gchar **) arr->pdata;
 	g_ptr_array_add (arr, NULL);
+
+	argv = (gchar **) arr->pdata;
 
 	if (g_spawn_async (NULL, argv, NULL, G_SPAWN_DO_NOT_REAP_CHILD, NULL,
 			   NULL, &pid, NULL) == FALSE) {
