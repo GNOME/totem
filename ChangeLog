@@ -1,3 +1,13 @@
+2008-08-20  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_open_with_subtitle):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_open_with_subtitle):
+	g_file_get_uri() might lose arguments for some MRLs,
+	so don't use it, and just copy the MRL itself instead
+	(Closes: #545864)
+
 2008-08-19  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totem-plugin-viewer.c

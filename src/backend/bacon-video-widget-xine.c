@@ -2400,11 +2400,10 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		if (path != NULL) {
 			bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
 			g_free (path);
+		} else {
+			bvw->com->mrl = g_strdup (mrl);
 		}
 		g_object_unref (file);
-
-		if (bvw->com->mrl == NULL)
-			bvw->com->mrl = g_strdup (mrl);
 	}
 
 	if (g_str_has_prefix (mrl, "fd://") != FALSE) {
