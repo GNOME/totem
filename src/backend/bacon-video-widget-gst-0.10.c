@@ -4589,7 +4589,7 @@ bacon_video_widget_get_metadata_pixbuf (BaconVideoWidget * bvw,
 static const GValue *
 bacon_video_widget_get_best_image (BaconVideoWidget *bvw)
 {
-  const GValue *cover_value;
+  const GValue *cover_value = NULL;
   guint i;
 
   for (i = 0; ; i++) {
