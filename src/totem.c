@@ -2164,6 +2164,20 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_PAUSE:
 		totem_action_pause (totem);
 		break;
+	case TOTEM_REMOTE_COMMAND_STOP: {
+		char *mrl, *subtitle;
+
+		totem_playlist_set_at_start (totem->playlist);
+		update_buttons (totem);
+		totem_action_stop (totem);
+		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
+		if (mrl != NULL) {
+			totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
+			bacon_video_widget_pause (totem->bvw);
+			g_free (mrl);
+			g_free (subtitle);
+		}
+	};
 	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
 		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
 		break;

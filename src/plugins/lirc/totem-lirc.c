@@ -67,6 +67,7 @@ typedef struct
 /* strings that we recognize as commands from lirc */
 #define TOTEM_IR_COMMAND_PLAY "play"
 #define TOTEM_IR_COMMAND_PAUSE "pause"
+#define TOTEM_IR_COMMAND_STOP "stop"
 #define TOTEM_IR_COMMAND_NEXT "next"
 #define TOTEM_IR_COMMAND_PREVIOUS "previous"
 #define TOTEM_IR_COMMAND_SEEK_FORWARD "seek_forward"
@@ -133,6 +134,8 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_PAUSE;
 	else if (strcmp (str, TOTEM_IR_COMMAND_PLAYPAUSE) == 0)
 		return TOTEM_REMOTE_COMMAND_PLAYPAUSE;
+	else if (strcmp (str, TOTEM_IR_COMMAND_STOP) == 0)
+		return TOTEM_REMOTE_COMMAND_STOP;
 	else if (strcmp (str, TOTEM_IR_COMMAND_NEXT) == 0)
 		return TOTEM_REMOTE_COMMAND_NEXT;
 	else if (strcmp (str, TOTEM_IR_COMMAND_PREVIOUS) == 0)

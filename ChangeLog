@@ -1,3 +1,18 @@
+2008-08-21  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/lirc/totem-lirc.c (totem_lirc_to_command):
+	* src/plugins/lirc/totem_lirc_default:
+	* src/totem.c (totem_action_remote):
+	* src/totem.h: Add support for the stop remote control key,
+	will stop the playback and go back to the beginning of the playlist
+	(as the stop button on a CD player would do)
+
+	* src/backend/bacon-video-widget-gst-0.10.c (got_time_tick),
+	(bacon_video_widget_stop): Don't print out warnings when trying to
+	stop a stream but nothing is opened
+
+	See http://bugzilla.gnome.org/show_bug.cgi?id=470672#c3
+
 2008-08-20  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c
