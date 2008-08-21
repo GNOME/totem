@@ -329,3 +329,21 @@ bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 	GST_INFO ("Set up support for automatic missing plugin installation");
 #endif
 }
+
+void 
+bacon_video_widget_gst_missing_plugins_blacklist (void)
+{
+	const gchar *blacklisted_elements[] = { "ffdemux_flv" };
+	guint i;
+
+	for (i = 0; i < G_N_ELEMENTS (blacklisted_elements); ++i) {
+		GstPluginFeature *feature;
+
+		feature = gst_default_registry_find_feature (blacklisted_elements[i],
+							     GST_TYPE_ELEMENT_FACTORY);
+
+		if (feature)
+			gst_plugin_feature_set_rank (feature, GST_RANK_NONE);
+	}
+}
+

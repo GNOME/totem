@@ -1116,6 +1116,8 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   bvw->priv->missing_plugins = NULL;
   bvw->priv->plugin_install_in_progress = FALSE;
+
+  bacon_video_widget_gst_missing_plugins_blacklist ();
 }
 
 static void

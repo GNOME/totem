@@ -28,6 +28,7 @@
 G_BEGIN_DECLS
 
 void bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw);
+void bacon_video_widget_gst_missing_plugins_blacklist (void);
 
 G_END_DECLS
 
