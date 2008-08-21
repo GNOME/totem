@@ -2178,12 +2178,33 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			g_free (subtitle);
 		}
 	};
-	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD:
-		totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
+	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD: {
+		double offset = 0;
+
+		g_message ("TOTEM_REMOTE_COMMAND_SEEK_FORWARD");
+
+		if (url != NULL)
+			offset = g_ascii_strtod (url, NULL);
+		if (offset == 0) {
+			g_message ("seeking empty");
+			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
+		} else {
+			g_message ("seeking relative %ld", offset);
+			totem_action_seek_relative (totem, offset * 1000);
+		}
 		break;
-	case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD:
-		totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000);
+	}
+	case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD: {
+		double offset = 0;
+
+		if (url != NULL)
+			offset = g_ascii_strtod (url, NULL);
+		if (offset == 0)
+			totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000);
+		else
+			totem_action_seek_relative (totem,  - (offset * 1000));
 		break;
+	}
 	case TOTEM_REMOTE_COMMAND_VOLUME_UP:
 		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;

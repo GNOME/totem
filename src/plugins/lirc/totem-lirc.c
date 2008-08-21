@@ -125,8 +125,21 @@ totem_lirc_plugin_finalize (GObject *object)
 	G_OBJECT_CLASS (totem_lirc_plugin_parent_class)->finalize (object);
 }
 
+static char *
+totem_lirc_get_url (const char *str)
+{
+	char *s;
+
+	if (str == NULL)
+		return NULL;
+	s = strchr (str, ':');
+	if (s == NULL)
+		return NULL;
+	return g_strdup (s + 1);
+}
+
 static TotemRemoteCommand
-totem_lirc_to_command (const gchar *str)
+totem_lirc_to_command (const gchar *str, char **url)
 {
 	if (strcmp (str, TOTEM_IR_COMMAND_PLAY) == 0)
 		return TOTEM_REMOTE_COMMAND_PLAY;
@@ -140,11 +153,13 @@ totem_lirc_to_command (const gchar *str)
 		return TOTEM_REMOTE_COMMAND_NEXT;
 	else if (strcmp (str, TOTEM_IR_COMMAND_PREVIOUS) == 0)
 		return TOTEM_REMOTE_COMMAND_PREVIOUS;
-	else if (strcmp (str, TOTEM_IR_COMMAND_SEEK_FORWARD) == 0)
+	else if (g_str_has_prefix (str, TOTEM_IR_COMMAND_SEEK_FORWARD) != FALSE) {
+		*url = totem_lirc_get_url (str);
 		return TOTEM_REMOTE_COMMAND_SEEK_FORWARD;
-	else if (strcmp (str, TOTEM_IR_COMMAND_SEEK_BACKWARD) == 0)
+	} else if (g_str_has_prefix (str, TOTEM_IR_COMMAND_SEEK_BACKWARD) != FALSE) {
+		*url = totem_lirc_get_url (str);
 		return TOTEM_REMOTE_COMMAND_SEEK_BACKWARD;
-	else if (strcmp (str, TOTEM_IR_COMMAND_VOLUME_UP) == 0)
+	} else if (strcmp (str, TOTEM_IR_COMMAND_VOLUME_UP) == 0)
 		return TOTEM_REMOTE_COMMAND_VOLUME_UP;
 	else if (strcmp (str, TOTEM_IR_COMMAND_VOLUME_DOWN) == 0)
 		return TOTEM_REMOTE_COMMAND_VOLUME_DOWN;
@@ -188,7 +203,7 @@ static gboolean
 totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugin *pi)
 {
 	char *code;
-	char *str = NULL;
+	char *str = NULL, *url = NULL;
 	int ok;
 	TotemRemoteCommand cmd;
 
@@ -218,9 +233,10 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 			break;
 		}
 
-		cmd = totem_lirc_to_command (str);
+		cmd = totem_lirc_to_command (str, &url);
 
-		totem_action_remote (pi->totem, cmd, NULL);
+		totem_action_remote (pi->totem, cmd, url);
+		g_free (url);
 	} while (TRUE);
 
 	g_free (code);

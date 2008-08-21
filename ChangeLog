@@ -1,5 +1,21 @@
 2008-08-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c (totem_action_remote): Allow passing an
+	offset for the backward/forward seeking, through the url
+	parameter
+
+	* src/plugins/lirc/totem-lirc.c (totem_lirc_get_url),
+	(totem_lirc_to_command), (totem_lirc_read_code):
+	Parse seek_backward and seek_forward and allow users
+	to append a seek offset, meaning you can configure different
+	keys for different seeking lengths
+
+	* src/plugins/lirc/totem_lirc_default: document the above
+
+	(Closes: #470672)
+
+2008-08-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/lirc/totem-lirc.c (totem_lirc_to_command):
 	* src/plugins/lirc/totem_lirc_default:
 	* src/totem.c (totem_action_remote):

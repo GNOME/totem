@@ -25,6 +25,12 @@ begin
 	config = stop
 end
 
+# For seek_forward and seek_backward you can
+# append ":20" to seek 20 seconds in the
+# aforementioned direction
+#
+# Eg. seek_forward:60 -> seek forward 60 seconds
+# seek_backward:5 -> seek backwards 5 seconds
 begin
 	prog = Totem
 	remote = *
