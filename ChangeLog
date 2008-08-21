@@ -5,6 +5,7 @@
 	(bacon_video_widget_gst_missing_plugins_blacklist):
 	There's some plugins we just don't want to use, like
 	the gst-ffmpeg FLV demuxer (doesn't seek), so blacklist it
+	(code from Tim-Philipp Müller <tim.muller at collabora co uk>)
 
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_init): Call the function above to
