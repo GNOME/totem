@@ -60,6 +60,7 @@ GtkWidget *totem_pp_create (void);
 
 #define VOLUME_DOWN_OFFSET (-0.08)
 #define VOLUME_UP_OFFSET (0.08)
+#define MINIMUM_VIDEO_SIZE 150
 
 /* For newer D-Bus version */
 #ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
@@ -1647,6 +1648,15 @@ controls_size_allocate_cb (GtkWidget *controls,
 #endif
 
 static void
+video_widget_size_allocate_cb (GtkWidget *controls,
+			       GtkAllocation *allocation,
+			       BaconVideoWidget *bvw)
+{
+	bacon_video_widget_set_show_visuals (bvw, allocation->height > MINIMUM_VIDEO_SIZE);
+	g_signal_handlers_disconnect_by_func (controls, G_CALLBACK (video_widget_size_allocate_cb), NULL);
+}
+
+static void
 totem_embedded_action_volume_relative (TotemEmbedded *emb, double off_pct)
 {
 	double vol;
@@ -1828,7 +1838,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 		/* FIXME: why can't this wait until the whole window is realised? */
 		gtk_widget_realize (GTK_WIDGET (emb->bvw));
 		gtk_widget_show (GTK_WIDGET (emb->bvw));
-		bacon_video_widget_set_show_visuals (emb->bvw, TRUE);
+
+		/* Let us know when the size has been allocated for the video widget */
+		g_signal_connect_after (G_OBJECT (emb->bvw), "size-allocate",
+					G_CALLBACK (video_widget_size_allocate_cb), emb->bvw);
 	} else if (emb->audioonly != FALSE) {
 		gtk_widget_hide (container);
 	}

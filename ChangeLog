@@ -1,3 +1,10 @@
+2008-08-22  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c
+	(video_widget_size_allocate_cb), (totem_embedded_construct):
+	Don't show visuals if the video widget size is under 150 pixels
+	(Closes: #542491)
+
 2008-08-21  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-missing-plugins.h:
