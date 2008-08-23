@@ -9,21 +9,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-03 10:42+0100\n"
-"PO-Revision-Date: 2008-03-03 10:45+0100\n"
+"POT-Creation-Date: 2008-08-23 18:05+0200\n"
+"PO-Revision-Date: 2008-08-23 18:50+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../data/fullscreen.ui.h:1
 msgid "Leave Fullscreen"
 msgstr "Irten pantaila osotik"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:72
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:94
 msgid "Time:"
 msgstr "Denbora:"
 
@@ -59,17 +59,17 @@ msgstr "Gorde erreprodukzio-zerrenda..."
 msgid "Select a file to use for text subtitles"
 msgstr "Hautatu azpitituluen fitxategia erabiltzeko"
 
-#: ../data/playlist.ui.h:9
-msgid "Select text subtitle..."
-msgstr "Hautatu azpitutuluak..."
-
-#: ../data/playlist.ui.h:10 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:9 ../data/video-list.ui.h:4
 msgid "_Copy Location"
 msgstr "_Kopiatu helbidea"
 
-#: ../data/playlist.ui.h:11
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "_Kendu"
+
+#: ../data/playlist.ui.h:11
+msgid "_Select text subtitle..."
+msgstr "_Hautatu testuaren azpitutuluak..."
 
 #: ../data/plugins.ui.h:1
 msgid "Author:"
@@ -129,7 +129,7 @@ msgstr "Albuma:"
 msgid "Artist:"
 msgstr "Artista:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:5
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:21
 #: ../src/totem-properties-view.c:91
 msgid "Audio"
 msgstr "Audioa"
@@ -162,7 +162,7 @@ msgstr "Iraupena:"
 msgid "Framerate:"
 msgstr "Fotograma-tasa:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:18
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:35
 msgid "General"
 msgstr "Orokorra"
 
@@ -229,467 +229,552 @@ msgstr "Film-erreproduzigailua"
 msgid "Play movies and songs"
 msgstr "Erreproduzitu filmak eta kantak"
 
-#: ../data/totem.ui.h:1 ../src/totem-menu.c:1369
+#: ../data/totem.ui.h:1
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "1.5 Mbps T1/Intranet/LAN"
+
+#: ../data/totem.ui.h:2
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "112 Kbps Dual ISDN/DSL"
+
+#: ../data/totem.ui.h:3
+msgid "14.4 Kbps Modem"
+msgstr "14.4 Kbps modema"
+
+#: ../data/totem.ui.h:4 ../src/totem-menu.c:1351
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (panoramikoa)"
 
-#: ../data/totem.ui.h:2 ../src/totem-menu.c:1370
+#: ../data/totem.ui.h:5
+msgid "19.2 Kbps Modem"
+msgstr "19.2 Kbps modema"
+
+#: ../data/totem.ui.h:6 ../src/totem-menu.c:1352
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:3 ../src/totem-menu.c:1368
+#: ../data/totem.ui.h:7
+msgid "256 Kbps DSL/Cable"
+msgstr "256 Kbps DSL/Cable"
+
+#: ../data/totem.ui.h:8
+msgid "28.8 Kbps Modem"
+msgstr "28.8 Kbps modema"
+
+#: ../data/totem.ui.h:9
+msgid "33.6 Kbps Modem"
+msgstr "33.6 Kbps modema"
+
+#: ../data/totem.ui.h:10
+msgid "34.4 Kbps Modem"
+msgstr "34.4 Kbps modema"
+
+#: ../data/totem.ui.h:11
+msgid "384 Kbps DSL/Cable"
+msgstr "384 Kbps DSL/Cable"
+
+#: ../data/totem.ui.h:12
+msgid "4-channel"
+msgstr "4 kanal"
+
+#: ../data/totem.ui.h:13
+msgid "4.1-channel"
+msgstr "4.1 kanal"
+
+#: ../data/totem.ui.h:14 ../src/totem-menu.c:1350
 msgid "4:3 (TV)"
 msgstr "4:3 (TB)"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:15
+msgid "5.0-channel"
+msgstr "5.0 kanal"
+
+#: ../data/totem.ui.h:16
+msgid "5.1-channel"
+msgstr "5.1 kanal"
+
+#: ../data/totem.ui.h:17
+msgid "512 Kbps DSL/Cable"
+msgstr "512 Kbps DSL/Cable"
+
+#: ../data/totem.ui.h:18
+msgid "56 Kbps Modem/ISDN"
+msgstr "56 Kbps modema/ISDN"
+
+#: ../data/totem.ui.h:19
+msgid "AC3 Passthrough"
+msgstr "AC3"
+
+#: ../data/totem.ui.h:20
 msgid "A_udio Menu"
 msgstr "A_udioaren menua"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:22
 msgid "Audio Output"
 msgstr "Audioaren irteera"
 
-#: ../data/totem.ui.h:7 ../src/totem-menu.c:340 ../src/totem-menu.c:1366
+#: ../data/totem.ui.h:23 ../src/totem-menu.c:340 ../src/totem-menu.c:1348
 msgid "Auto"
 msgstr "Auto"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:24
 msgid "Automatically _load subtitle files when movie is loaded"
 msgstr "Automatikoki _kargatu azpitituluen fitxategiak filmea kargatzean"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:25
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "_Aldatu leihoaren tamaina automatikoki bideo berria kargatzean"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:26
 msgid "Clear the playlist"
 msgstr "Garbitu erreprodukzio-zerrenda"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:27
 msgid "Co_ntrast:"
 msgstr "_Kontrastea:"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:28
 msgid "Color Balance"
 msgstr "Kolore-balantzea"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:29
 msgid "Connection _speed:"
 msgstr "Konexio-a_biadura:"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:30
 msgid "Decrease volume"
 msgstr "Jeitsi bolumena"
 
-#: ../data/totem.ui.h:15 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:31 ../src/totem-menu.c:1342
 msgid "Deinterlace"
 msgstr "Gurutzelarkatu"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:32
 msgid "Display"
 msgstr "Pantaila"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:33
+msgid "Extra Large"
+msgstr "Oso handia"
+
+#: ../data/totem.ui.h:34
 msgid "Fit Window to Movie"
 msgstr "Doitu leihoa filmara"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:36
 msgid "Go to the DVD menu"
 msgstr "Joan DVDaren menura"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:37
 msgid "Go to the angle menu"
 msgstr "Joan angeluaren menura"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:38
 msgid "Go to the audio menu"
 msgstr "Joan audioaren menura"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:39
 msgid "Go to the chapter menu"
 msgstr "Joan kapituluen menura"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:40
 msgid "Go to the title menu"
 msgstr "Joan tituluaren menura"
 
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:41
 msgid "Help contents"
 msgstr "Laguntzaren edukia"
 
-#: ../data/totem.ui.h:25
+#: ../data/totem.ui.h:42
 msgid "Increase volume"
 msgstr "Igo bolumena"
 
-#: ../data/totem.ui.h:26
+#: ../data/totem.ui.h:43
+msgid "Intranet/LAN"
+msgstr "Intranet/LAN"
+
+#: ../data/totem.ui.h:44
+msgid "Large"
+msgstr "Handia"
+
+#: ../data/totem.ui.h:45
 msgid "Networking"
 msgstr "Sarea"
 
-#: ../data/totem.ui.h:27
+#: ../data/totem.ui.h:46
 msgid "Next chapter or movie"
 msgstr "Hurrengo kapitulua edo filma"
 
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:47
+msgid "Normal"
+msgstr "Normala"
+
+#: ../data/totem.ui.h:48
 msgid "Open _Location..."
 msgstr "Ireki _kokalekua..."
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:49
 msgid "Open a file"
 msgstr "Ireki fitxategia"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:50
 msgid "Open a non-local file"
 msgstr "Ireki lokalekoa ez den fitxategia"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:51
 msgid "Play / P_ause"
 msgstr "Erreproduzitu / P_ausarazi"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:52
 msgid "Play or pause the movie"
 msgstr "Erreproduzitu edo pausarazi filma"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:53
 msgid "Plugins..."
 msgstr "Plugin-ak..."
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:54
 msgid "Prefere_nces"
 msgstr "_Hobespenak"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:55
 msgid "Previous chapter or movie"
 msgstr "Aurreko kapitulua edo filma"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:56
 msgid "Quit the program"
 msgstr "Irten programatik"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:57
 msgid "Reset To _Defaults"
 msgstr "Berrezarri _lehenetsira"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:58
 msgid "Resize _1:1"
 msgstr "Aldatu tamaina: 1:1"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:59
 msgid "Resize _2:1"
 msgstr "Aldatu tamaina: 2:1"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:60
 msgid "Resize to double the original video size"
 msgstr "Aldatu jatorrizko bideoaren tamainaren bikoitzera"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:61
 msgid "Resize to half the original video size"
 msgstr "Aldatu jatorrizko bideoaren tamainaren erdira"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:62
 msgid "Resize to the original video size"
 msgstr "Aldatu jatorrizko bideoaren tamaina"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:63 ../src/totem-menu.c:1344
+msgid "S_idebar"
+msgstr "_Albo-panela"
+
+#: ../data/totem.ui.h:64
 msgid "S_ubtitles"
 msgstr "A_zpitituluak"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:65
 msgid "Sat_uration:"
 msgstr "Sat_urazioa:"
 
-#: ../data/totem.ui.h:45 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:66 ../src/totem-menu.c:1340
 msgid "Set the repeat mode"
 msgstr "Ezarri errepikatze-modua"
 
-#: ../data/totem.ui.h:46 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:67 ../src/totem-menu.c:1341
 msgid "Set the shuffle mode"
 msgstr "Ezarri ausazko-modua"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:68
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "16:9 (panoramikoa) aspektu-erlazioa ezartzen du"
 
-#: ../data/totem.ui.h:48 ../src/totem-menu.c:1370
+#: ../data/totem.ui.h:69 ../src/totem-menu.c:1352
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "2.11:1 (DVB) aspektu-erlazioa ezartzen du."
 
-#: ../data/totem.ui.h:49 ../src/totem-menu.c:1368
+#: ../data/totem.ui.h:70 ../src/totem-menu.c:1350
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "4:3 (TB) aspektu-erlazioa ezartzen du."
 
-#: ../data/totem.ui.h:50 ../src/totem-menu.c:1366
+#: ../data/totem.ui.h:71 ../src/totem-menu.c:1348
 msgid "Sets automatic aspect ratio"
 msgstr "Aspektu-erlazio automatikoa ezartzen du."
 
-#: ../data/totem.ui.h:51 ../src/totem-menu.c:1367
+#: ../data/totem.ui.h:72 ../src/totem-menu.c:1349
 msgid "Sets square aspect ratio"
 msgstr "Lauki-erlazioa ezartzen du"
 
-#: ../data/totem.ui.h:52 ../src/totem-menu.c:1361
+#: ../data/totem.ui.h:73 ../src/totem-menu.c:1343
 msgid "Show _Controls"
 msgstr "Erakutsi _kontrolak"
 
-#: ../data/totem.ui.h:53
+#: ../data/totem.ui.h:74
 msgid "Show _visual effects when an audio file is played"
 msgstr "Erakutsi efektu _bisualak audioko fitxategia erreproduzitzen ari denean"
 
-#: ../data/totem.ui.h:54 ../src/totem-menu.c:1361
+#: ../data/totem.ui.h:75 ../src/totem-menu.c:1343
 msgid "Show controls"
 msgstr "Erakutsi kontrolak"
 
-#: ../data/totem.ui.h:55 ../src/totem-menu.c:1362
+#: ../data/totem.ui.h:76 ../src/totem-menu.c:1344
 msgid "Show or hide the sidebar"
 msgstr "Erakutsi edo ezkutatu albo-panela"
 
-#: ../data/totem.ui.h:56 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:77 ../src/totem-menu.c:1341
 msgid "Shuff_le Mode"
 msgstr "Au_sazko modua"
 
-#: ../data/totem.ui.h:57 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
+#: ../data/totem.ui.h:78 ../src/totem-menu.c:1331 ../src/totem-menu.c:1336
 msgid "Skip _Backwards"
 msgstr "Saltatu a_tzerantz"
 
-#: ../data/totem.ui.h:58 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
+#: ../data/totem.ui.h:79 ../src/totem-menu.c:1330 ../src/totem-menu.c:1335
 msgid "Skip _Forward"
 msgstr "Saltatu a_urrerantz"
 
-#: ../data/totem.ui.h:59 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
+#: ../data/totem.ui.h:80 ../src/totem-menu.c:1331 ../src/totem-menu.c:1336
 msgid "Skip backwards"
 msgstr "Saltatu atzerantz"
 
-#: ../data/totem.ui.h:60 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
+#: ../data/totem.ui.h:81 ../src/totem-menu.c:1330 ../src/totem-menu.c:1335
 msgid "Skip forward"
 msgstr "Saltatu aurrerantz"
 
-#: ../data/totem.ui.h:61 ../src/totem-menu.c:1367
+#: ../data/totem.ui.h:82 ../src/totem-menu.c:1349
 msgid "Square"
 msgstr "Laukia"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:83 ../src/backend/bacon-video-widget-gst-0.10.c:4386
+msgid "Stereo"
+msgstr "Estereoa"
+
+#: ../data/totem.ui.h:84
 msgid "Switch An_gles"
 msgstr "Aldatu an_geluak"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:85
 msgid "Switch camera angles"
 msgstr "Aldatu kameraren angeluak"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:86
 msgid "Switch to fullscreen"
 msgstr "Aldatu pantaila osora"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:87
 msgid "TV-Out"
 msgstr "TB irteera"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:88
 msgid "TV-out in fullscreen by Nvidia (NTSC)"
 msgstr "TB irteera pantaila osoan - Nvidia (NTSC)"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:89
 msgid "TV-out in fullscreen by Nvidia (PAL)"
 msgstr "TB irteera pantaila osoan - Nvidia (PAL)"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:90
 msgid "Take _Screenshot..."
 msgstr "Egin pan_taila-argazkia..."
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:91
 msgid "Take a screenshot"
 msgstr "Egin pantaila-argazki bat"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:92
 msgid "Text Subtitles"
 msgstr "Azpitituluak"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:93
 msgid "Time seek bar"
 msgstr "Denbora-barra"
 
 #. Title
-#: ../data/totem.ui.h:73 ../src/totem.c:903 ../src/totem.c:3103
-#: ../src/totem.c:3132 ../browser-plugin/totem-plugin-viewer.c:1911
+#: ../data/totem.ui.h:95 ../src/totem.c:1015 ../src/totem.c:3422
+#: ../src/totem.c:3454 ../browser-plugin/totem-plugin-viewer.c:737
+#: ../browser-plugin/totem-plugin-viewer.c:1789
 msgid "Totem Movie Player"
 msgstr "Totem film-erreproduzigailua"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:96
 msgid "Totem Preferences"
 msgstr "Totem-en hobespenak"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:97
 msgid "Visual Effects"
 msgstr "Efektu bisualak"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:98
 msgid "Visualisation _size:"
 msgstr "Bistaratzeko _tamaina:"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:99
 msgid "Volume _Down"
 msgstr "_Jaitsi bolumena"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:100
 msgid "Volume _Up"
 msgstr "_Igo bolumena"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:101
 msgid "Zoom In"
 msgstr "Zooma handiagotu"
 
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:102
 msgid "Zoom Out"
 msgstr "Zooma txikiagotu"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:103
 msgid "Zoom Reset"
 msgstr "Berrezarri zooma"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:104
 msgid "Zoom in"
 msgstr "Zooma handiagotu"
 
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:105
 msgid "Zoom out"
 msgstr "Zooma txikiagotu"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:106
 msgid "Zoom reset"
 msgstr "Berrezarri zooma"
 
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:107
 msgid "_About"
 msgstr "Honi _buruz"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:108
 msgid "_Allow the screensaver to activate even when audio-only is playing"
 msgstr ""
 "_Baimendu pantaila-babeslea aktibatzea audioa soilik erreproduzitzen ari "
 "denean"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:109
 msgid "_Angle Menu"
 msgstr "_Angeluaren menua"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:110
 msgid "_Aspect Ratio"
 msgstr "Aspektu-e_rlazioa"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:111
 msgid "_Audio output type:"
 msgstr "_Audioaren irteera mota:"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:112
 msgid "_Brightness:"
 msgstr "_Distira:"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:113
 msgid "_Chapter Menu"
 msgstr "A_talen menua"
 
-#: ../data/totem.ui.h:92
+#: ../data/totem.ui.h:114
 msgid "_Clear Playlist"
 msgstr "_Garbitu erreprodukzio-zerrenda"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:115
 msgid "_Contents"
 msgstr "_Edukia"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:116
 msgid "_DVD Menu"
 msgstr "_DVD menua"
 
-#: ../data/totem.ui.h:95 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:117 ../src/totem-menu.c:1342
 msgid "_Deinterlace"
 msgstr "_Gurutzelarkatu"
 
-#: ../data/totem.ui.h:96
+#: ../data/totem.ui.h:118
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:119
 msgid "_Eject"
 msgstr "_Egotzi"
 
-#: ../data/totem.ui.h:98
+#: ../data/totem.ui.h:120
 msgid "_Encoding:"
 msgstr "_Kodeketa:"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:121
 msgid "_Font:"
 msgstr "_Letra-tipoa:"
 
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:122
 msgid "_Fullscreen"
 msgstr "_Pantaila osoa"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:123
 msgid "_Go"
 msgstr "_Joan"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:124
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:125
 msgid "_Hue:"
 msgstr "_Ñabardura:"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:126
 msgid "_Languages"
 msgstr "_Hizkuntzak"
 
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:127
 msgid "_Movie"
 msgstr "_Filma"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:128
 msgid "_Next Chapter/Movie"
 msgstr "_Hurrengo kapitulua/filma"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:129
 msgid "_No TV-out"
 msgstr "TB irteerarik _ez"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:130
 msgid "_Open..."
 msgstr "_Ireki..."
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:131
 msgid "_Previous Chapter/Movie"
 msgstr "_Aurreko kapitulua/filma"
 
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:132
 msgid "_Properties"
 msgstr "_Propietateak"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:133
 msgid "_Quit"
 msgstr "I_rten"
 
-#: ../data/totem.ui.h:112 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:134 ../src/totem-menu.c:1340
 msgid "_Repeat Mode"
 msgstr "E_rrepikatze-modua"
 
-#: ../data/totem.ui.h:113
+#: ../data/totem.ui.h:135
 msgid "_Resize 1:2"
 msgstr "_Aldatu tamaina: 1:2"
 
-#: ../data/totem.ui.h:114
-msgid "_Sidebar"
-msgstr "_Albo-panela"
-
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:136
 msgid "_Sound"
 msgstr "_Soinua"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:137
 msgid "_Title Menu"
 msgstr "_Tituluaren menua"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:138
 msgid "_Type of visualisation:"
 msgstr "_Bistaratze mota:"
 
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:139
 msgid "_View"
 msgstr "_Ikusi"
 
@@ -873,7 +958,7 @@ msgstr "Idatzi fitxategiaren _helbidea irekitzeko:"
 msgid "Playing a movie"
 msgstr "Filma erreproduzitzea"
 
-#: ../src/totem-cell-renderer-video.c:91
+#: ../src/totem-cell-renderer-video.c:102
 msgid "Unknown video"
 msgstr "Bideo ezezaguna"
 
@@ -894,16 +979,21 @@ msgstr "Arakatzaile lehenetsia ez dago konfiguratuta"
 msgid "Error launching URI"
 msgstr "Errorea URIa abiaraztean"
 
-#: ../src/totem-interface.c:193
+#: ../src/totem-interface.c:173 ../src/totem-interface.c:205
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Ezin izan da '%s' interfazea kargatu. %s"
 
-#: ../src/totem-interface.c:195 ../src/totem-interface.c:197
+#: ../src/totem-interface.c:173
+msgid "The file does not exist."
+msgstr "Fitxategia ez da existitzen."
+
+#: ../src/totem-interface.c:175 ../src/totem-interface.c:177
+#: ../src/totem-interface.c:207 ../src/totem-interface.c:209
 msgid "Make sure that Totem is properly installed."
 msgstr "Ziurtatu Totem behar bezala instalatuta dagoela."
 
-#: ../src/totem-interface.c:308
+#: ../src/totem-interface.c:320
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -914,7 +1004,7 @@ msgstr ""
 "ek argitaratutako GNU Lizentzia Publiko Orokorraren 2. bertsioan, edo "
 "(nahiago baduzu) beste berriago batean, jasotako baldintzak betez gero."
 
-#: ../src/totem-interface.c:312
+#: ../src/totem-interface.c:324
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -926,7 +1016,7 @@ msgstr ""
 "HELBURU PARTIKULARRETARAKO ERABILTZEKO. Argibide gehiago nahi izanez gero, "
 "ikus GNU Lizentzia Publiko Orokorra."
 
-#: ../src/totem-interface.c:316
+#: ../src/totem-interface.c:328
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -936,7 +1026,7 @@ msgstr ""
 "jasoko zenuen; hala ez bada, idatzi hona: Free SoftwareFoundation, Inc., 59 "
 "Temple Place - Suite 330, Boston, MA 02110-1301  USA."
 
-#: ../src/totem-interface.c:319
+#: ../src/totem-interface.c:331
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -948,19 +1038,19 @@ msgstr ""
 msgid "None"
 msgstr "Bat ere ez"
 
-#: ../src/totem-menu.c:827
+#: ../src/totem-menu.c:833
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Erreproduzitu '%s' diskoa"
 
-#: ../src/totem-menu.c:830
+#: ../src/totem-menu.c:836
 #, c-format
 msgid "device%d"
 msgstr "gailua%d"
 
 #. translators: the index of the adapter
 #. * DVB Adapter 1
-#: ../src/totem-menu.c:918
+#: ../src/totem-menu.c:910
 #, c-format
 msgid "DVB Adapter %u"
 msgstr "DVBren %u. egokitzailea"
@@ -969,49 +1059,37 @@ msgstr "DVBren %u. egokitzailea"
 #. * Watch TV on 'DVB Adapter 1'
 #. * or
 #. * Watch TV on 'Hauppauge Nova-T Stick'
-#: ../src/totem-menu.c:923
+#: ../src/totem-menu.c:915
 #, c-format
 msgid "Watch TV on '%s'"
 msgstr "Ikusi telebista hemen: %s"
 
-#: ../src/totem-menu.c:1199
-msgid "GTK+"
-msgstr "GTK+"
-
-#: ../src/totem-menu.c:1201
-msgid "GNOME"
-msgstr "GNOME"
-
-#. This lists the back-end and front-end types and versions, such as
-#. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1207
+#. This lists the back-end type and version, such as
+#. * Movie Player using GStreamer 0.10.1
+#: ../src/totem-menu.c:1190
 #, c-format
-msgid "Movie Player using %s and %s"
-msgstr "Film-erreproduzigailua %s eta %s erabiltzen ari da"
+msgid "Movie Player using %s"
+msgstr "Film-erreproduzigailua %s erabiltzen ari da"
 
-#: ../src/totem-menu.c:1212 ../browser-plugin/totem-plugin-viewer.c:1351
+#: ../src/totem-menu.c:1194
 msgid "Copyright © 2002-2007 Bastien Nocera"
 msgstr "Copyright-a © 2002-2007 Bastien Nocera"
 
-#: ../src/totem-menu.c:1217 ../browser-plugin/totem-plugin-viewer.c:1354
+#: ../src/totem-menu.c:1199 ../browser-plugin/totem-plugin-viewer.c:1149
 msgid "translator-credits"
 msgstr ""
 "Hizkuntza Politikarako Sailburuordetza <hizkpol@ej-gv.es>\n"
 "Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>"
 
-#: ../src/totem-menu.c:1221
+#: ../src/totem-menu.c:1203
 msgid "Totem Website"
 msgstr "Totem-en web gunea"
 
-#: ../src/totem-menu.c:1256
+#: ../src/totem-menu.c:1238
 msgid "Configure Plugins"
 msgstr "Konfiguratu plugin-ak"
 
-#: ../src/totem-menu.c:1362
-msgid "S_idebar"
-msgstr "_Albo-panela"
-
-#: ../src/totem-menu.c:1369
+#: ../src/totem-menu.c:1351
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "16:9 (anamorfikoa) aspektu-erlazioa ezartzen du."
 
@@ -1027,11 +1105,11 @@ msgstr "Gaitu arazketa"
 msgid "Play/Pause"
 msgstr "Erreproduzitu/Pausarazi"
 
-#: ../src/totem-options.c:39 ../src/totem.c:313 ../src/totem.c:323
+#: ../src/totem-options.c:39 ../src/totem.c:345 ../src/totem.c:355
 msgid "Play"
 msgstr "Erreproduzitu"
 
-#: ../src/totem-options.c:40 ../src/totem.c:306
+#: ../src/totem-options.c:40 ../src/totem.c:338
 msgid "Pause"
 msgstr "Pausarazi"
 
@@ -1100,38 +1178,45 @@ msgstr "Erreprodukzio-zerrendaren indizea"
 msgid "Movies to play"
 msgstr "Filmak erreproduzitzeko"
 
-#: ../src/totem-playlist.c:339 ../src/totem-playlist.c:942
+#. This is "Title 3", where title is a DVD title
+#. * Note: NOT a DVD chapter
+#: ../src/totem-playlist.c:277
+#, c-format
+msgid "Title %d"
+msgstr "%d. titulua"
+
+#: ../src/totem-playlist.c:352 ../src/totem-playlist.c:973
 msgid "Could not save the playlist"
 msgstr "Ezin izan da erreprodukzio-zerrenda gorde"
 
-#: ../src/totem-playlist.c:942
+#: ../src/totem-playlist.c:973
 msgid "Unknown file extension."
 msgstr "Fitxategi-luzapen ezezaguna."
 
-#: ../src/totem-playlist.c:955
+#: ../src/totem-playlist.c:986
 msgid "Select playlist format:"
 msgstr "Hautatu erreprodukzio-zerrendaren formatua:"
 
-#: ../src/totem-playlist.c:960
+#: ../src/totem-playlist.c:991
 msgid "By extension"
 msgstr "Luzapenaren arabera"
 
-#: ../src/totem-playlist.c:990
+#: ../src/totem-playlist.c:1021
 msgid "Save Playlist"
 msgstr "Gorde erreprodukzio-zerrenda"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1001 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:1032 ../src/totem-sidebar.c:102
 msgid "Playlist"
 msgstr "Erreprodukzio-zerrenda"
 
-#: ../src/totem-playlist.c:1720
+#: ../src/totem-playlist.c:1803
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "'%s' erreprodukzio-zerrenda ezin izan da analizatu, hondatuta egongo da."
 
-#: ../src/totem-playlist.c:1721
+#: ../src/totem-playlist.c:1804
 msgid "Playlist error"
 msgstr "Erreprodukzio-zerrendaren errorea"
 
@@ -1171,7 +1256,7 @@ msgstr "Soinu-irteera mota aldatzeak Totem berrabiaraztean izango du eragina."
 msgid "Preferences"
 msgstr "Hobespenak"
 
-#: ../src/totem-preferences.c:707
+#: ../src/totem-preferences.c:709
 msgid "Select Subtitle Font"
 msgstr "Hautatu azpitituluen letra-tipoa"
 
@@ -1198,291 +1283,238 @@ msgstr "Errorea gertatu da pantaila-argazkia gordetzean."
 msgid "Save Screenshot"
 msgstr "Gorde pantaila-argazkia"
 
-#: ../src/totem-statusbar.c:106
+#: ../src/totem-statusbar.c:97
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:895
-#: ../browser-plugin/totem-plugin-viewer.c:341
+#: ../src/totem-statusbar.c:102 ../src/totem.c:350 ../src/totem.c:1007
+#: ../browser-plugin/totem-plugin-viewer.c:339
 msgid "Stopped"
 msgstr "Geldituta"
 
-#: ../src/totem-statusbar.c:128
+#: ../src/totem-statusbar.c:119
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Korrontea)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:135 ../src/totem-time-label.c:67
+#: ../src/totem-statusbar.c:126 ../src/totem-time-label.c:67
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:138 ../src/totem-time-label.c:70
+#: ../src/totem-statusbar.c:129 ../src/totem-time-label.c:70
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Saltatu hona: %s / %s"
 
-#: ../src/totem-statusbar.c:210
+#: ../src/totem-statusbar.c:201
 msgid "Buffering"
 msgstr "Bufferreratzen"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:221
+#: ../src/totem-statusbar.c:212
 #, c-format
 msgid "%d %%"
 msgstr "%%%d"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:291
+#: ../src/totem-statusbar.c:282
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:296
+#: ../src/totem-statusbar.c:287
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %%%d"
 
-#: ../src/totem-subtitle-encoding.c:158
+#: ../src/totem-subtitle-encoding.c:157
 msgid "Current Locale"
 msgstr "Uneko hizkuntza-ezarpena"
 
-#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
-#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+#: ../src/totem-subtitle-encoding.c:160 ../src/totem-subtitle-encoding.c:162
+#: ../src/totem-subtitle-encoding.c:164 ../src/totem-subtitle-encoding.c:166
 msgid "Arabic"
 msgstr "Arabiera"
 
-#: ../src/totem-subtitle-encoding.c:170
+#: ../src/totem-subtitle-encoding.c:169
 msgid "Armenian"
 msgstr "Armeniera"
 
-#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
-#: ../src/totem-subtitle-encoding.c:177
+#: ../src/totem-subtitle-encoding.c:172 ../src/totem-subtitle-encoding.c:174
+#: ../src/totem-subtitle-encoding.c:176
 msgid "Baltic"
 msgstr "Baltikoa"
 
-#: ../src/totem-subtitle-encoding.c:180
+#: ../src/totem-subtitle-encoding.c:179
 msgid "Celtic"
 msgstr "Zeltiarra"
 
-#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
-#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+#: ../src/totem-subtitle-encoding.c:182 ../src/totem-subtitle-encoding.c:184
+#: ../src/totem-subtitle-encoding.c:186 ../src/totem-subtitle-encoding.c:188
 msgid "Central European"
 msgstr "Europako Erdialdekoa"
 
-#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
-#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+#: ../src/totem-subtitle-encoding.c:191 ../src/totem-subtitle-encoding.c:193
+#: ../src/totem-subtitle-encoding.c:195 ../src/totem-subtitle-encoding.c:197
 msgid "Chinese Simplified"
 msgstr "Txinatar soildua"
 
-#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
-#: ../src/totem-subtitle-encoding.c:205
+#: ../src/totem-subtitle-encoding.c:200 ../src/totem-subtitle-encoding.c:202
+#: ../src/totem-subtitle-encoding.c:204
 msgid "Chinese Traditional"
 msgstr "Txinatar tradizionala"
 
-#: ../src/totem-subtitle-encoding.c:208
+#: ../src/totem-subtitle-encoding.c:207
 msgid "Croatian"
 msgstr "Kroaziera"
 
-#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
-#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
-#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+#: ../src/totem-subtitle-encoding.c:210 ../src/totem-subtitle-encoding.c:212
+#: ../src/totem-subtitle-encoding.c:214 ../src/totem-subtitle-encoding.c:216
+#: ../src/totem-subtitle-encoding.c:218 ../src/totem-subtitle-encoding.c:220
 msgid "Cyrillic"
 msgstr "Zirilikoa"
 
-#: ../src/totem-subtitle-encoding.c:224
+#: ../src/totem-subtitle-encoding.c:223
 msgid "Cyrillic/Russian"
 msgstr "Zirilikoa/Errusiarra"
 
-#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+#: ../src/totem-subtitle-encoding.c:226 ../src/totem-subtitle-encoding.c:228
 msgid "Cyrillic/Ukrainian"
 msgstr "Zirilikoa/Ukrainarra"
 
-#: ../src/totem-subtitle-encoding.c:232
+#: ../src/totem-subtitle-encoding.c:231
 msgid "Georgian"
 msgstr "Georgiera"
 
-#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
-#: ../src/totem-subtitle-encoding.c:239
+#: ../src/totem-subtitle-encoding.c:234 ../src/totem-subtitle-encoding.c:236
+#: ../src/totem-subtitle-encoding.c:238
 msgid "Greek"
 msgstr "Greziera"
 
-#: ../src/totem-subtitle-encoding.c:242
+#: ../src/totem-subtitle-encoding.c:241
 msgid "Gujarati"
 msgstr "Gujaratiera"
 
-#: ../src/totem-subtitle-encoding.c:245
+#: ../src/totem-subtitle-encoding.c:244
 msgid "Gurmukhi"
 msgstr "Gurmukhi-koa"
 
-#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
-#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+#: ../src/totem-subtitle-encoding.c:247 ../src/totem-subtitle-encoding.c:249
+#: ../src/totem-subtitle-encoding.c:251 ../src/totem-subtitle-encoding.c:253
 msgid "Hebrew"
 msgstr "Hebreera"
 
-#: ../src/totem-subtitle-encoding.c:257
+#: ../src/totem-subtitle-encoding.c:256
 msgid "Hebrew Visual"
 msgstr "Hebrear bisuala"
 
-#: ../src/totem-subtitle-encoding.c:260
+#: ../src/totem-subtitle-encoding.c:259
 msgid "Hindi"
 msgstr "Hindiera"
 
-#: ../src/totem-subtitle-encoding.c:263
+#: ../src/totem-subtitle-encoding.c:262
 msgid "Icelandic"
 msgstr "Islandiera"
 
-#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
-#: ../src/totem-subtitle-encoding.c:270
+#: ../src/totem-subtitle-encoding.c:265 ../src/totem-subtitle-encoding.c:267
+#: ../src/totem-subtitle-encoding.c:269
 msgid "Japanese"
 msgstr "Japoniera"
 
-#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
-#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+#: ../src/totem-subtitle-encoding.c:272 ../src/totem-subtitle-encoding.c:274
+#: ../src/totem-subtitle-encoding.c:276 ../src/totem-subtitle-encoding.c:278
 msgid "Korean"
 msgstr "Koreera"
 
-#: ../src/totem-subtitle-encoding.c:282
+#: ../src/totem-subtitle-encoding.c:281
 msgid "Nordic"
 msgstr "Nordikoa"
 
-#: ../src/totem-subtitle-encoding.c:285
+#: ../src/totem-subtitle-encoding.c:284
 msgid "Persian"
 msgstr "Persiera"
 
-#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+#: ../src/totem-subtitle-encoding.c:287 ../src/totem-subtitle-encoding.c:289
 msgid "Romanian"
 msgstr "Errumaniera"
 
-#: ../src/totem-subtitle-encoding.c:293
+#: ../src/totem-subtitle-encoding.c:292
 msgid "South European"
 msgstr "Europako Hegoaldekoa"
 
-#: ../src/totem-subtitle-encoding.c:296
+#: ../src/totem-subtitle-encoding.c:295
 msgid "Thai"
 msgstr "Thailandiera"
 
-#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
-#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+#: ../src/totem-subtitle-encoding.c:298 ../src/totem-subtitle-encoding.c:300
+#: ../src/totem-subtitle-encoding.c:302 ../src/totem-subtitle-encoding.c:304
 msgid "Turkish"
 msgstr "Turkiera"
 
-#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
-#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
-#: ../src/totem-subtitle-encoding.c:316
+#: ../src/totem-subtitle-encoding.c:307 ../src/totem-subtitle-encoding.c:309
+#: ../src/totem-subtitle-encoding.c:311 ../src/totem-subtitle-encoding.c:313
+#: ../src/totem-subtitle-encoding.c:315
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
-#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
-#: ../src/totem-subtitle-encoding.c:327
+#: ../src/totem-subtitle-encoding.c:318 ../src/totem-subtitle-encoding.c:320
+#: ../src/totem-subtitle-encoding.c:322 ../src/totem-subtitle-encoding.c:324
+#: ../src/totem-subtitle-encoding.c:326
 msgid "Western"
 msgstr "Mendebalekoa"
 
-#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
-#: ../src/totem-subtitle-encoding.c:334
+#: ../src/totem-subtitle-encoding.c:329 ../src/totem-subtitle-encoding.c:331
+#: ../src/totem-subtitle-encoding.c:333
 msgid "Vietnamese"
 msgstr "Vietnamera"
 
-#: ../src/totem-uri.c:418
+#: ../src/totem-uri.c:405
 msgid "All files"
 msgstr "Fitxategi guztiak"
 
-#: ../src/totem-uri.c:423
+#: ../src/totem-uri.c:410
 msgid "Supported files"
 msgstr "Onartutako fitxategiak"
 
-#: ../src/totem-uri.c:435
+#: ../src/totem-uri.c:422
 msgid "Audio files"
 msgstr "Audio-fitxategiak"
 
-#: ../src/totem-uri.c:443
+#: ../src/totem-uri.c:430
 msgid "Video files"
 msgstr "Bideo-fitxategiak"
 
-#: ../src/totem-uri.c:453
+#: ../src/totem-uri.c:440
 msgid "Subtitle files"
 msgstr "Azpitituluen fitxategiak"
 
-#: ../src/totem-uri.c:518
+#: ../src/totem-uri.c:505
 msgid "Select text subtitle"
 msgstr "Hautatu azpitituluak"
 
-#: ../src/totem-uri.c:571
+#: ../src/totem-uri.c:559
 msgid "Select Movies or Playlists"
 msgstr "Hautatu filma edo erreprodukzio-zerrenda"
 
-#: ../src/totem.c:304 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem.c:336 ../browser-plugin/totem-plugin-viewer.c:355
 msgid "Playing"
 msgstr "Erreproduzitzen"
 
-#: ../src/totem.c:311 ../browser-plugin/totem-plugin-viewer.c:353
+#: ../src/totem.c:343 ../browser-plugin/totem-plugin-viewer.c:351
 msgid "Paused"
 msgstr "Pausarazita"
 
-#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:998
-#: ../src/totem.c:1120
+#: ../src/totem.c:431 ../src/totem.c:458 ../src/totem.c:1128
+#: ../src/totem.c:1276
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem-ek ezin izan du '%s' erreproduzitu."
 
-#: ../src/totem.c:495
-msgid "More information about watching TV"
-msgstr "Telebista ikusteari buruzko informazio gehiago"
-
-#: ../src/totem.c:496
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "Totem-i kanalen zerrenda falta zaio hargailua sintonizatu ahal izateko."
-
-#: ../src/totem.c:497
-msgid ""
-"Please follow the instructions provided in the link to create a channels "
-"listing."
-msgstr "Jarraitu estekan emandako instrukzioak kanalen zerrenda sortzeko."
-
-#: ../src/totem.c:501
-msgid "More information about media plugins"
-msgstr "Euskarrien plugin-ei buruzko informazio gehiago"
-
-#: ../src/totem.c:502
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr ""
-"Instalatu behar diren plugin-ak eta berrabiarazi Totem euskarri hori "
-"erreproduzitu ahal izateko."
-
-#: ../src/totem.c:504
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, diskotik irakurtzeko "
-"plugin egokiak ez dituzulako."
-
-#: ../src/totem.c:506
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, hura kudeatzeko "
-"plugin egokiak ez dituzulako."
-
-#: ../src/totem.c:509
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, ez baitago onartuta."
-
-#: ../src/totem.c:510
-msgid "Please insert another disc to play back."
-msgstr "Sartu beste disko bat erreproduzitzeko."
-
-#: ../src/totem.c:524
+#: ../src/totem.c:541
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1491,7 +1523,7 @@ msgstr ""
 "Totem-ek ezin izan du euskarri hori (%s) erreproduzitu, nahiz eta hura "
 "kudeatzeko plugin-a instalatuta dagoen."
 
-#: ../src/totem.c:525
+#: ../src/totem.c:542
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1499,88 +1531,175 @@ msgstr ""
 "Ziurtatu unitatean diskoa dagoela eta unitatea behar bezala konfiguratuta "
 "dagoela."
 
-#: ../src/totem.c:553
+#: ../src/totem.c:549 ../src/plugins/youtube/youtube.py:174
+msgid "More information about media plugins"
+msgstr "Euskarrien plugin-ei buruzko informazio gehiago"
+
+#: ../src/totem.c:550 ../src/plugins/youtube/youtube.py:172
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"Instalatu behar diren plugin-ak eta berrabiarazi Totem euskarri hori "
+"erreproduzitu ahal izateko."
+
+#: ../src/totem.c:552
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, diskotik irakurtzeko "
+"plugin egokiak ez dituzulako."
+
+#: ../src/totem.c:554 ../src/plugins/youtube/youtube.py:171
+#, c-format, python-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, hura kudeatzeko "
+"plugin egokiak ez dituzulako."
+
+#: ../src/totem.c:558
+msgid ""
+"Totem cannot play TV, because no TV adapters are present or they are not "
+"supported."
+msgstr ""
+"Totem-ek ezin du TB erreproduzitu, ez baitago telebistako egokitazilerik edo "
+"ez daudelako onartuta."
+
+#: ../src/totem.c:559
+msgid "Please insert a supported TV adapter."
+msgstr "Sartu onartutako TB egokitzailea."
+
+#: ../src/totem.c:569
+msgid "More information about watching TV"
+msgstr "Telebista ikusteari buruzko informazio gehiago"
+
+#: ../src/totem.c:570
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "Totem-i kanalen zerrenda falta zaio hargailua sintonizatu ahal izateko."
+
+#: ../src/totem.c:571
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr "Jarraitu estekan emandako instrukzioak kanalen zerrenda sortzeko."
+
+#: ../src/totem.c:574
+#, c-format
+msgid "Totem cannot play this type of media (%s) because the TV device is busy."
+msgstr "Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, TB gailua lanpetuta dagoelako."
+
+#: ../src/totem.c:575
+msgid "Please try again later."
+msgstr "Saiatu berriro beranduago."
+
+#: ../src/totem.c:580
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr "Totem-ek ezin du euskarri mota hori (%s) erreproduzitu, ez baitago onartuta."
+
+#: ../src/totem.c:581
+msgid "Please insert another disc to play back."
+msgstr "Sartu beste disko bat erreproduzitzeko."
+
+#: ../src/totem.c:615
 msgid "Totem was not able to play this disc."
 msgstr "Totem ez da gai disko hau erreproduzitzeko."
 
-#: ../src/totem.c:554 ../src/totem.c:2965
-#: ../browser-plugin/totem-plugin-viewer.c:1902
+#: ../src/totem.c:616 ../src/totem.c:3286
+#: ../browser-plugin/totem-plugin-viewer.c:1780
 msgid "No reason."
 msgstr "Ez dago arrazoirik"
 
-#: ../src/totem.c:568
+#: ../src/totem.c:630
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem-ek ez du Audioko CDak erreproduzitzea onartzen"
 
-#: ../src/totem.c:569
+#: ../src/totem.c:631
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Aholkua: erabili musika-erreproduzigailu edo CD erauzle bat CD hau "
 "erreproduzitzeko"
 
-#: ../src/totem.c:812 ../src/totem.c:820
+#: ../src/totem.c:932 ../src/totem.c:940
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem-ek ezin izan du film horren pantaila-argazkia egin."
 
-#: ../src/totem.c:820
+#: ../src/totem.c:940
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Honek ez luke gertatu behar: bidali errore honi buruzko txostena."
 
-#: ../src/totem.c:1004
+#: ../src/totem.c:1134
 msgid "No error message"
 msgstr "Ez dago errore mezurik"
 
-#: ../src/totem.c:1243
+#: ../src/totem.c:1451
 msgid "Totem could not display the help contents."
 msgstr "Totem-ek ezin du laguntzako edukia bistaratu."
 
-#: ../src/totem.c:1501 ../src/totem.c:1503
-#: ../browser-plugin/totem-plugin-viewer.c:1569
+#: ../src/totem.c:1720 ../src/totem.c:1722
+#: ../browser-plugin/totem-plugin-viewer.c:1437
 msgid "An error occurred"
 msgstr "Errorea gertatu da"
 
-#: ../src/totem.c:2826 ../src/totem.c:2828
+#: ../src/totem.c:2580
+msgid "TV signal lost"
+msgstr "TBren seinalea galduta"
+
+#: ../src/totem.c:2581
+msgid "Please verify your hardware setup."
+msgstr "Egiaztatu hardwarearen konfigurazioa."
+
+#: ../src/totem.c:3147 ../src/totem.c:3149
 msgid "Previous Chapter/Movie"
 msgstr "Aurreko kapitulua/filma"
 
-#: ../src/totem.c:2834 ../src/totem.c:2836
+#: ../src/totem.c:3155 ../src/totem.c:3157
 msgid "Play / Pause"
 msgstr "Erreproduzitu / Pausarazi"
 
-#: ../src/totem.c:2843 ../src/totem.c:2845
+#: ../src/totem.c:3164 ../src/totem.c:3166
 msgid "Next Chapter/Movie"
 msgstr "Hurrengo kapitulua/filma"
 
-#: ../src/totem.c:2965
+#: ../src/totem.c:3286
 msgid "Totem could not startup."
 msgstr "Ezin izan da Totem abiarazi."
 
-#: ../src/totem.c:3104
+#: ../src/totem.c:3423
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ezin izan dira hari seguruko liburutegiak abiarazi."
 
-#: ../src/totem.c:3104
+#: ../src/totem.c:3423
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Egiaztatu sistemaren instalazioa. Totem itxi egingo da orain."
 
 #. Handle command line arguments
-#: ../src/totem.c:3112
+#: ../src/totem.c:3431
 msgid "- Play movies and songs"
 msgstr "- Erreproduzitu filmak eta kantak"
 
-#: ../src/totem.c:3121
-msgid "Totem could not parse the command-line options"
-msgstr "Totem-ek ezin izan du komando-lerroko aukerak analizatu"
+#: ../src/totem.c:3440
+#, c-format
+msgid ""
+"%s\n"
+"Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+"%s\n"
+"Exekutatu '%s --help' aukeren zerrenda osoa ikusteko.\n"
 
-#: ../src/totem.c:3140
+#: ../src/totem.c:3460
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem-ek ezin izan du konfigurazio-motorra abiarazi."
 
-#: ../src/totem.c:3140
+#: ../src/totem.c:3460
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ziurtatu GNOME behar bezala instalatuta dagoela."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2437
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2462
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1588,15 +1707,15 @@ msgstr ""
 "Eskatutako audio-irteera ez da aurkitu. Hautatu beste audio-irteera "
 "Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2467
 msgid "Location not found."
 msgstr "Kokalekua ez da aurkitu."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2446
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2471
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "Ezin izan da kokalekua ireki. Ez duzu nahikoa baimen fitxategia irekitzeko."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2482
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1605,7 +1724,7 @@ msgstr ""
 "Bideo-irteera beste aplikazio batek darabil. Itxi beste bideo-aplikazioa edo "
 "hautatu beste bideo-irteera Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2463
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1616,13 +1735,13 @@ msgstr ""
 "dezakezu."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2506
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2512
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "Filma hau erreproduzitzeko %s plugin-a behar da, baina ez dago instalatuta."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2513
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1635,45 +1754,40 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2513
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2538
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Ezin da fitxategia erreproduzitu sarearen bitartez. Saiatu aurrenik diskora "
 "deskargatzen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2610
 msgid "Media file could not be played."
 msgstr "Multimediako fitxategia ezin izan da irakurri."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2662
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2728
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2742
 #, c-format
 msgid "Failed to retrieve working directory"
 msgstr "Huts egin du laneko direktorioa jasotzean"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4382
 msgid "Surround"
 msgstr "Ingurakaria"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4395
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4384
 msgid "Mono"
 msgstr "Monoa"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4397
-msgid "Stereo"
-msgstr "Estereoa"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4628
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4703
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "GStreamer-en bertsio zaharregia dago instalatuta."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4635
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4710
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Euskarriak onartzen ez den bideo-korrontea dauka."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5008
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5085
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1682,8 +1796,8 @@ msgstr ""
 "Huts egin du GStreamer-ern erreprodukzio-objektua sortzean. Egiaztatu "
 "GStreamer-en instalazioa."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5140
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5257
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5217
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5334
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1692,7 +1806,7 @@ msgstr ""
 "Huts egin du bideo-irteera irekitzean. Ez dago erabilgarri. Hautatu beste "
 "bideo-irteera Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5152
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5229
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1703,7 +1817,7 @@ msgstr ""
 "gehigarri batzuk instalatu beharko dira, edo hautatu beste bideo-irteera "
 "Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5187
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5264
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1714,7 +1828,7 @@ msgstr ""
 "gailua irekitzeko, edo soinuaren zerbitzaria ez da exekutatzen ari. Hautatu "
 "beste audio-irteera Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5207
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5284
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -1724,7 +1838,7 @@ msgstr ""
 "Ezin izan da audio-irteera aurkitu. Hautatu beste audio-irteera Multimedia-"
 "sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-xine.c:768
+#: ../src/backend/bacon-video-widget-xine.c:758
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1733,8 +1847,8 @@ msgstr ""
 "Ezin izan da '%s' audio-unitatea kargatu\n"
 "Egiaztatu gailua ez dagoela lanpetuta."
 
-#: ../src/backend/bacon-video-widget-xine.c:1232
-#: ../src/backend/bacon-video-widget-xine.c:1821
+#: ../src/backend/bacon-video-widget-xine.c:1228
+#: ../src/backend/bacon-video-widget-xine.c:1822
 #, c-format
 msgid ""
 "No video output is available. Make sure that the program is correctly "
@@ -1744,29 +1858,37 @@ msgstr ""
 "instalatuta dagoela."
 
 #: ../src/backend/bacon-video-widget-xine.c:1357
+msgid ""
+"The TV adapter could not tune into the channel. Please check your hardware "
+"setup, and channel configuration."
+msgstr ""
+"TB egokitzaileak ezin du kanala hartu. Egiaztatu hardwarearen "
+"eta kanalaren konfigurazioa."
+
+#: ../src/backend/bacon-video-widget-xine.c:1362
 msgid "The server you are trying to connect to is not known."
 msgstr "Konektatzen saiatzen ari zaren zerbitzaria ez da ezaguna."
 
-#: ../src/backend/bacon-video-widget-xine.c:1361
+#: ../src/backend/bacon-video-widget-xine.c:1366
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Zuk zehaztutako gailuaren izena (%s) baliogabea dela dirudi."
 
-#: ../src/backend/bacon-video-widget-xine.c:1365
+#: ../src/backend/bacon-video-widget-xine.c:1370
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Konektatzen saiatzen ari zaren zerbitzaria (%s) ezin da atzitu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1369
+#: ../src/backend/bacon-video-widget-xine.c:1374
 msgid "The connection to this server was refused."
 msgstr "Zerbitzari honen konexioa ukatu egin da."
 
-#: ../src/backend/bacon-video-widget-xine.c:1373
+#: ../src/backend/bacon-video-widget-xine.c:1378
 msgid "The specified movie could not be found."
 msgstr "Ezin izan da adierazitako filma aurkitu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1379
-#: ../src/backend/bacon-video-widget-xine.c:1395
+#: ../src/backend/bacon-video-widget-xine.c:1384
+#: ../src/backend/bacon-video-widget-xine.c:1400
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1774,78 +1896,78 @@ msgstr ""
 "Iturburua enkriptatuta dagoela dirudi eta ezin da irakurri. Enkriptatutako "
 "DVDa erreproduzitzen saiatzen ari zara libdvdcss gabe?."
 
-#: ../src/backend/bacon-video-widget-xine.c:1382
+#: ../src/backend/bacon-video-widget-xine.c:1387
 msgid "The movie could not be read."
 msgstr "Filma ezin izan da irakurri."
 
-#: ../src/backend/bacon-video-widget-xine.c:1389
+#: ../src/backend/bacon-video-widget-xine.c:1394
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "Arazoa gertatu da liburutegia edo deskodetzailea (%s) kargatzean."
 
-#: ../src/backend/bacon-video-widget-xine.c:1398
+#: ../src/backend/bacon-video-widget-xine.c:1403
 msgid "This file is encrypted and cannot be played back."
 msgstr "Fitxategi hau enkriptatuta dago eta ezin da gehiago erreproduzitu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1403
+#: ../src/backend/bacon-video-widget-xine.c:1408
 msgid "For security reasons, this movie can not be played back."
 msgstr "Segurtasun arrazoiak direlako, filme hau ezin da gehiago erreproduzitu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1408
+#: ../src/backend/bacon-video-widget-xine.c:1413
 msgid "The audio device is busy. Is another application using it?"
 msgstr "Audio gailua lanpetuta dago. Beste aplikazio bat erabiltzen ari da?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1414
+#: ../src/backend/bacon-video-widget-xine.c:1419
 msgid "Authentication is required to access this file."
 msgstr "Autentifikazioa beharrezkoa da fitxategi hau atzitzeko."
 
-#: ../src/backend/bacon-video-widget-xine.c:1416
+#: ../src/backend/bacon-video-widget-xine.c:1421
 msgid "Authentication is required to access this file or stream."
 msgstr "Autentifikazioa beharrezkoa da fitxategi edo korronte hau atzitzeko."
 
-#: ../src/backend/bacon-video-widget-xine.c:1422
+#: ../src/backend/bacon-video-widget-xine.c:1427
 msgid "You are not allowed to open this file."
 msgstr "Ez daukazu baimenik fitxategi hau irekitzeko."
 
-#: ../src/backend/bacon-video-widget-xine.c:1424
+#: ../src/backend/bacon-video-widget-xine.c:1429
 msgid "The server refused access to this file or stream."
 msgstr "Zerbitzariak fitxategia edo korrontea atzitzea ukatu du."
 
-#: ../src/backend/bacon-video-widget-xine.c:1428
+#: ../src/backend/bacon-video-widget-xine.c:1433
 msgid "The file you tried to play is an empty file."
 msgstr "Erreproduzitzen saiatzen ari zaren fitxategia hutsik dago."
 
-#: ../src/backend/bacon-video-widget-xine.c:1612
+#: ../src/backend/bacon-video-widget-xine.c:1613
 #, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Ez dago sarrerako plugin-ik film honen kokalekua kudeatzeko."
 
-#: ../src/backend/bacon-video-widget-xine.c:1616
+#: ../src/backend/bacon-video-widget-xine.c:1617
 #, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "Ez dago plugin-ik film hau kudeatzeko."
 
-#: ../src/backend/bacon-video-widget-xine.c:1620
+#: ../src/backend/bacon-video-widget-xine.c:1621
 #, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "Film hau hondatuta dago eta ezin da gehiago erreproduzitu."
 
-#: ../src/backend/bacon-video-widget-xine.c:1624
+#: ../src/backend/bacon-video-widget-xine.c:1625
 #, c-format
 msgid "This location is not a valid one."
 msgstr "Kokaleku hau ez da baliozkoa."
 
-#: ../src/backend/bacon-video-widget-xine.c:1628
+#: ../src/backend/bacon-video-widget-xine.c:1629
 #, c-format
 msgid "This movie could not be opened."
 msgstr "Ezin izan da film hau ireki."
 
-#: ../src/backend/bacon-video-widget-xine.c:1632
+#: ../src/backend/bacon-video-widget-xine.c:1633
 #, c-format
 msgid "Generic Error."
 msgstr "Errore orokorra."
 
-#: ../src/backend/bacon-video-widget-xine.c:2508
+#: ../src/backend/bacon-video-widget-xine.c:2467
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1854,7 +1976,7 @@ msgstr ""
 "'%s' bideo-kodeka ezin da kudeatu. Plugin osagarriak instalatzea komeni "
 "zaizu film-mota batzuk erreproduzitu ahal izateko"
 
-#: ../src/backend/bacon-video-widget-xine.c:2512
+#: ../src/backend/bacon-video-widget-xine.c:2471
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1863,29 +1985,29 @@ msgstr ""
 "'%s' audio-kodeka ezin da kudeatu. Plugin osagarriak instalatzea komeni "
 "zaizu film-mota batzuk erreproduzitu ahal izateko"
 
-#: ../src/backend/bacon-video-widget-xine.c:2526
+#: ../src/backend/bacon-video-widget-xine.c:2485
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "Fitxategi honek audioa bakarrik du eta ez dago audio-irteerarik erabilgarri."
 
-#: ../src/backend/bacon-video-widget-xine.c:4110
-#: ../src/backend/bacon-video-widget-xine.c:4157
-#: ../src/backend/bacon-video-widget-xine.c:4179
+#: ../src/backend/bacon-video-widget-xine.c:4116
+#: ../src/backend/bacon-video-widget-xine.c:4163
+#: ../src/backend/bacon-video-widget-xine.c:4185
 #, c-format
 msgid "Language %d"
 msgstr "%d. hizkuntza"
 
-#: ../src/backend/bacon-video-widget-xine.c:4268
+#: ../src/backend/bacon-video-widget-xine.c:4274
 #, c-format
 msgid "No video to capture."
 msgstr "Ez dago kapturatzeko bideorik."
 
-#: ../src/backend/bacon-video-widget-xine.c:4276
+#: ../src/backend/bacon-video-widget-xine.c:4282
 #, c-format
 msgid "Video codec is not handled."
 msgstr "Bideoaren kodeka ezin da kudeatu."
 
-#: ../src/backend/bacon-video-widget-xine.c:4287
+#: ../src/backend/bacon-video-widget-xine.c:4293
 #, c-format
 msgid "Movie is not playing."
 msgstr "Filma ez da erreproduzitzen ari."
@@ -1994,12 +2116,12 @@ msgstr "Kontrolatu Totem telefono mugikorraren bidez Bemused bezeroarekin"
 msgid "Untitled %d"
 msgstr "%d titulurik gabe"
 
-#: ../src/plugins/bemused/totem-bemused.c:608
+#: ../src/plugins/bemused/totem-bemused.c:607
 msgid "Totem Bemused Server"
 msgstr "Totem Bemused zerbitzaria"
 
 #. FIXME version
-#: ../src/plugins/bemused/totem-bemused.c:610
+#: ../src/plugins/bemused/totem-bemused.c:609
 msgid "Totem Bemused Server version 1.0"
 msgstr "Totem Bemused zerbitzaria, 1.0 bertsioa"
 
@@ -2037,43 +2159,23 @@ msgstr "Urruneko Infragorri Kontrola"
 msgid "Support infrared remote control"
 msgstr "Onartu urruneko infragorri kontrola"
 
-#: ../src/plugins/lirc/totem-lirc.c:241
+#: ../src/plugins/lirc/totem-lirc.c:261
 #, c-format
 msgid "Couldn't initialize lirc."
 msgstr "Ezin izan da lirc hasieratu."
 
-#: ../src/plugins/lirc/totem-lirc.c:247
+#: ../src/plugins/lirc/totem-lirc.c:270
 #, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "Ezin izan da lirc konfigurazioa irakurri."
 
-#: ../src/plugins/mythtv/totem-mythtv.c:198
+#: ../src/plugins/mythtv/totem-mythtv.c:201
 msgid "Recordings"
 msgstr "Grabazioak"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:386
+#: ../src/plugins/mythtv/totem-mythtv.c:428
 msgid "MythTV Recordings"
 msgstr "MythTV grabazioak"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:1
-msgid "IP address of the local MythTV server"
-msgstr "IP helbidea (lokaleko MythTV zerbitzariarena)"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:2
-msgid "Name of the database for the local MythTV server"
-msgstr "Datu-basearen izena (lokaleko MythTV zerbitzariarena)"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:3
-msgid "Password to access the local MythTV server"
-msgstr "Pasahitza lokaleko MythTV zerbitzarira sarbidetzeko"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:4
-msgid "Port to access the local MythTV server"
-msgstr "Ataka lokaleko MythTV zerbitzarira sarbidetzeko"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:5
-msgid "Username to access the local MythTV server"
-msgstr "Erabiltzaile-izena lokaleko MythTV zerbitzarira sarbidetzeko"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
@@ -2108,7 +2210,7 @@ msgstr "%d kb/s"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/publish/totem-publish.c:570
+#: ../src/plugins/publish/totem-publish.c:582
 msgid "Neighbours"
 msgstr "Ondokoak"
 
@@ -2119,6 +2221,25 @@ msgstr "Argitaratu erreprodukzio-zerrenda"
 #: ../src/plugins/publish/publish.totem-plugin.in.h:2
 msgid "Share the current playlist via HTTP"
 msgstr "Partekatu uneko erreprodukzio-zerrenda HTTP bidez"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:2
+#, no-c-format
+msgid ""
+"<small>The name used for announcing the playlist service on the network.\n"
+"All occurances of the string <b>%u</b> will be replaced by your name,\n"
+"and <b>%h</b> will be replaced by your computer's host name.</small>"
+msgstr ""
+"<small>Sareko erreprodukzio-zerrenda jakinarazteko erabili den izena.\n"
+"<b>%u</b> katearen agerpen guztiak zure izenarekin ordeztuko dira,\n"
+"eta <b>%h</b> katea berriz zure ordenagailuaren izenarekin ordeztuko da.</small>"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:5
+msgid "Service _Name:"
+msgstr "Zerbitzu-_izena:"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:6
+msgid "Use _encrypted transport protocol (HTTPS)"
+msgstr "Erabili _enkriptatutako garraio-protokoloa (HTTPS)"
 
 #: ../src/plugins/skipto/totem-skipto.c:189
 msgid "Skip to"
@@ -2148,15 +2269,15 @@ msgstr "segundo"
 #. Display an error
 #: ../src/plugins/tracker/totem-tracker-widget.c:169
 #, c-format
-msgid "Could not get metadata for file %s."
-msgstr "Ezin izan da %s fitxategiaren metadaturik lortu."
+msgid "Could not get metadata for file %s: %s"
+msgstr "Ezin izan da %s fitxategiaren metadaturik lortu: %s"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:170
 msgid "File Error"
 msgstr "Fitxategiaren errorea"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:222
-#: ../src/plugins/tracker/totem-tracker-widget.c:274
+#: ../src/plugins/tracker/totem-tracker-widget.c:224
+#: ../src/plugins/tracker/totem-tracker-widget.c:276
 msgid "No results"
 msgstr "Emaitzarik ez"
 
@@ -2165,19 +2286,19 @@ msgstr "Emaitzarik ez"
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:229
+#: ../src/plugins/tracker/totem-tracker-widget.c:231
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Bat datorrena %i - %i / %i erakusten"
 msgstr[1] "Bat datozten %i - %i / %i erakusten"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:365
+#: ../src/plugins/tracker/totem-tracker-widget.c:367
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "Bilaketaren emaitzak"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:414
+#: ../src/plugins/tracker/totem-tracker-widget.c:416
 msgid "Page"
 msgstr "Orrialdea"
 
@@ -2211,64 +2332,130 @@ msgid "Related Videos"
 msgstr "Zerikusia duten bideoak"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
+msgid "Search YouTube"
+msgstr "Bilatu YouTube-n"
+
+#: ../src/plugins/youtube/youtube.ui.h:4
 msgid "Search:"
 msgstr "Bilatu:"
 
-#: ../src/plugins/youtube/youtube.py:62
+#: ../src/plugins/youtube/youtube.py:91 ../src/plugins/youtube/youtube.py:171
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:79
+#: ../src/plugins/youtube/youtube.py:108
 msgid "Videos"
 msgstr "Bideoak"
 
-#: ../browser-plugin/totem-plugin-viewer.c:468
+#: ../src/plugins/youtube/youtube.py:114
+msgid "_Open in Web Browser"
+msgstr "_Ireki web arakatzailean"
+
+#: ../src/plugins/youtube/youtube.py:114
+msgid "Open the video in your web browser"
+msgstr "Ireki bideoa web arakatzailean"
+
+#: ../src/plugins/youtube/youtube.py:147
+msgid "Fetching related videos..."
+msgstr "Zerikusia duten bideoak eskuratzen..."
+
+#: ../src/plugins/youtube/youtube.py:195
+msgid "Fetching more videos..."
+msgstr "Bideo gehiago eskuratzen..."
+
+#: ../src/plugins/youtube/youtube.py:293
+msgid "Fetching search results..."
+msgstr "Bilaketaren emaitzak eskuratzen..."
+
+#: ../browser-plugin/totem-plugin-viewer.c:466
 #, c-format
 msgid "No URI to play"
 msgstr "Ez dago URIrik erreproduzitzeko"
 
-#: ../browser-plugin/totem-plugin-viewer.c:494
+#: ../browser-plugin/totem-plugin-viewer.c:492
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem-ek ezin izan du '%s' erreproduzitu"
 
-#: ../browser-plugin/totem-plugin-viewer.c:890
-#, c-format
-msgid "Opening %s"
-msgstr "%s irekitzen"
-
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1293
+#: ../browser-plugin/totem-plugin-viewer.c:1087
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Ireki honekin: %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1344
+#: ../browser-plugin/totem-plugin-viewer.c:1138
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Arakatzaile plugin-a %s erabiltzen ari da"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1349
+#: ../browser-plugin/totem-plugin-viewer.c:1143
 msgid "Totem Browser Plugin"
 msgstr "Totem-en arakatzaile plugin-a"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1902
+#: ../browser-plugin/totem-plugin-viewer.c:1780
 msgid "The Totem plugin could not be started."
 msgstr "Ezin izan da Totem plugin-a abiarazi."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2244
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "No playlist or playlist empty"
 msgstr "Ez dago erreprodukzio-zerrendarik, edo hutsik dago"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2348
+#: ../browser-plugin/totem-plugin-viewer.c:2232
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Ezin izan dira hari seguruko liburutegiak hasieratu."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2348
+#: ../browser-plugin/totem-plugin-viewer.c:2232
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Egiaztatu sistemaren instalazioa. Totem plugin-a itxi egingo da orain."
+
+#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
+msgid "Interactive python console."
+msgstr "Python-en kontsola elkarreragilea."
+
+#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:2
+msgid "Python Console"
+msgstr "Python-en kontsola"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:74
+msgid "Python Console Menu"
+msgstr "Python-en kontsolaren menua"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:77
+msgid "_Python Console"
+msgstr "_Python-en kontsola"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:78
+msgid "Show Totem's python console"
+msgstr "Erakutsi Totem-en Python-en kontsola"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:83
+msgid "Python Debugger"
+msgstr "Python-en araztailea"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:84
+msgid "Enable remote python debugging with rpdb2"
+msgstr "Gaitu urruneko Python-en araztailea rpdb2-rekin"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:106
+#, python-format
+msgid "You can access the totem object through 'totem_object' :\\n%s"
+msgstr "Totem-en objektua atzi dezakezu 'totem_object' erabiliz:\n%s"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:111
+msgid "Totem Python Console"
+msgstr "Totem-en Python-en kontsola"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:120
+msgid ""
+"After you press OK, Totem will wait until you connect to it with winpdb or "
+"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"default password ('totem')."
+msgstr ""
+"Ados sakatzen baduzu, Totem zai egongo da winpdb edo rpdb2-rekin "
+"konektatzen zaren arte. Ez baduzu araztailearen pasahitzik zehaztu "
+"GConf-en, pasahitz lehenetsia erabiliko da ('totem')."
 
