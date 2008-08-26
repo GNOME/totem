@@ -1,5 +1,11 @@
 2008-08-26  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c (size_changed_cb):
+	When changing screen size through XRandR, update the aspect
+	ratio of the visualisation (Closes: #327811)
+
+2008-08-26  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-functions.sh: Fix a stupid typo
 	* data/schemas.sh: Fix another stupid typo,
 	and output to fd 3, so we can see the stderr

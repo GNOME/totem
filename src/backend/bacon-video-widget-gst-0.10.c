@@ -637,6 +637,7 @@ static void
 size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 {
   /* FIXME */
+  setup_vis (bvw);
 }
 
 static gboolean
