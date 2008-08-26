@@ -7,7 +7,7 @@ COMMAND="$2/totem-video-thumbnailer -s %s %u %o"
 
 upd_schema()
 {
-	echo "gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\"" 1>&2
+	echo "gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\"" 1>&3
 }
 
 schema()
@@ -52,18 +52,19 @@ done
 get_audio_mimetypes $1;
 
 for i in $MIMETYPES ; do
-	DIR=`echo $i | sed 's,/,@,' sed 's,+,@,'`
+	DIR=`echo $i | sed 's,/,@,' | sed 's,+,@,'`
+
 	NAME="$DIR/enable";
 	TYPE="bool";
 	DEFAULT="false";
-	upd_schema;
+	schema;
 
 	NAME="$DIR/command";
 	TYPE="string";
 	DEFAULT="$COMMAND";
-	upd_schema;
+	schema;
 done
 
 echo "    </schemalist>";
 echo "</gconfschemafile>"
-    
+

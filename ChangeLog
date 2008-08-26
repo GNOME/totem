@@ -1,5 +1,15 @@
 2008-08-26  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mime-functions.sh: Fix a stupid typo
+	* data/schemas.sh: Fix another stupid typo,
+	and output to fd 3, so we can see the stderr
+	* data/Makefile.am: capture fd 3 for the gconf updater
+	script
+	* data/mime-type-list.txt: Add audio/x-vorbis+ogg to
+	the mime-types (Closes: #549038)
+
+2008-08-26  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/tests/.htaccess: Add mime-type for
 	a test
 

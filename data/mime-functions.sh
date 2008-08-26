@@ -3,7 +3,7 @@
 get_audio_mimetypes ()
 {
 	MIMETYPES=`grep -v ^# $1 | grep "\/" | grep audio | grep -v "audio/x-pn-realaudio"`
-	MIMEYPES="$MIMETYPES application/x-flac"
+	MIMETYPES="$MIMETYPES application/x-flac"
 }
 
 get_video_mimetypes ()

@@ -61,7 +61,7 @@ update-gconf.sh: totem-video-thumbnail.schemas.in
 totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt mime-functions.sh
 	$(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
 	> $@								\
-	2> update-gconf.sh
+	3> update-gconf.sh
 
 totem-handlers.schemas.in: handlers.sh
 	$(srcdir)/handlers.sh > $@
