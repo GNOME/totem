@@ -2181,15 +2181,11 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD: {
 		double offset = 0;
 
-		g_message ("TOTEM_REMOTE_COMMAND_SEEK_FORWARD");
-
 		if (url != NULL)
 			offset = g_ascii_strtod (url, NULL);
 		if (offset == 0) {
-			g_message ("seeking empty");
 			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
 		} else {
-			g_message ("seeking relative %ld", offset);
 			totem_action_seek_relative (totem, offset * 1000);
 		}
 		break;
