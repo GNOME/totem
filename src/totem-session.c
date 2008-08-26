@@ -29,7 +29,6 @@
 
 #ifndef HAVE_GTK_ONLY
 
-#include <libgnome/gnome-config.h>
 #include <libgnomeui/gnome-client.h>
 
 static char *

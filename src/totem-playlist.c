@@ -1328,23 +1328,7 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 static void
 init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 {
-	GtkTreeModel *model;
 	GtkTreeSelection *selection;
-
-	/* the model */
-	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
-				G_TYPE_INT,
-				G_TYPE_STRING,
-				G_TYPE_STRING,
-				G_TYPE_BOOLEAN,
-				G_TYPE_STRING,
-				G_TYPE_OBJECT));
-
-	/* the treeview */
-	gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), model);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
-	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
-	g_object_unref (G_OBJECT (model));
 
 	init_columns (GTK_TREE_VIEW (treeview), playlist);
 

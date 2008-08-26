@@ -1,5 +1,13 @@
 2008-08-26  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* data/playlist.ui:
+	* src/totem-playlist.c: (init_treeview):
+	* src/totem-session.c: Move the playlist treeview model to the
+	GtkBuilder UI file. Also remove an extraneous #include.
+	(Closes: #454243)
+
+2008-08-26  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* data/totem.1: Update the man page to remove documentation for a now
 	non-existent --usage option and freshen up the rest of the
 	documentation. (Closes: #548855)

@@ -41,6 +41,17 @@
    </ui>
 </object>
 
+<object class="GtkListStore" id="playlist_list_store">
+  <columns>
+    <column type="gint"/><!--playing-->
+    <column type="gchararray"/><!--filename-->
+    <column type="gchararray"/><!--URI-->
+    <column type="gboolean"/><!--custom title-->
+    <column type="gchararray"/><!--subtitle URI-->
+    <column type="GObject"/><!--file monitor-->
+  </columns>
+</object>
+
 <object class="GtkVBox" id="vbox4">
   <property name="border_width">0</property>
   <property name="visible">True</property>
@@ -58,15 +69,16 @@
 
       <child>
 	<object class="GtkTreeView" id="treeview1">
+	  <property name="model">playlist_list_store</property>
 	  <property name="visible">True</property>
-	  <property name="can_focus">True</property>
-	  <property name="headers_visible">True</property>
-	  <property name="rules_hint">False</property>
+	  <property name="can-focus">True</property>
+	  <property name="headers-visible">False</property>
+	  <property name="rules-hint">True</property>
 	  <property name="reorderable">False</property>
-	  <property name="enable_search">True</property>
-	  <property name="fixed_height_mode">False</property>
-	  <property name="hover_selection">False</property>
-	  <property name="hover_expand">False</property>
+	  <property name="enable-search">True</property>
+	  <property name="fixed-height-mode">False</property>
+	  <property name="hover-selection">False</property>
+	  <property name="hover-expand">False</property>
 	</object>
       </child>
     </object>
