@@ -13,34 +13,33 @@
 .\" You should have received a copy of the GNU General Public License 
 .\" along with this; if not write to the Free Software Foundation, Inc.
 .\" 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
-.TH totem 1 "2004\-04\-07" "GNOME"
+.TH totem 1 "2008\-08\-25" "GNOME"
 .SH NAME
-totem \- GNOME-desktop movie player based on the xine backend
+Totem \- GNOME desktop movie player based on GStreamer or xine
 .SH SYNOPSIS
 .B totem
 .RI [ option... ] " " [ filenames | URI ]
 .SH DESCRIPTION
-.B totem
+.B Totem
 is a movie player for the GNOME desktop.  Through use of the
+.B GStreamer
+or
 .B xine
-backend many popular file and streaming formats are supported including:
+backends many popular file and streaming formats are supported including:
 MPEG audio and video (MP3/MPV), Ogg, AVI, ASF, MOV, WMV,
-Quicktime, and more.  Playing of DVD and VCD media is
-usually possible if you have the appropriate drive.
+QuickTime, and more.  Playing of DVD and VCD media is
+also possible.
 Although primarily intended as a movie player,
-.B totem
+.B Totem
 can also play many audio formats.
 .P
 For additional documentation on interactive use of 
-.B totem
+.B Totem
 select the
 .I Help
 menu option.  The menus allow access to some features not
 available through keybindings or command-line options.
 .SH OPTIONS
-.TP
-.B --usage
-Output a brief synopsis of command options then quit.
 .TP
 .B \-?, --help
 Output a longer help message then quit.  (Any discrepancies
@@ -51,71 +50,76 @@ should be reported as a documentation bug.)
 .B --version
 Output version information then quit.
 .P
-The following options command an already running instance of
-.B totem
+The following options command an already-running instance of
+.B Totem
 to do something; they are useful for remote-control scripting:
 .TP
 .B --play-pause
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to toggle between play and pause.
 .TP
 .B --play
-Tell an already running instance of
-.B totem
+Tell an already-running instance of
+.B Totem
 to play (has no effect if already playing)
 .TP
 .B --pause
-Tell an already running instance of
-.B totem
+Tell an already-running instance of
+.B Totem
 to pause (has no effect if already paused)
 .TP
 .B --next
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to skip to the next movie or chapter in the playlist.
 .TP
 .B --previous
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to return to the previous movie or chapter in the playlist.
 .TP
 .B --seek-fwd
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to seek forwards 15 seconds in the current movie.
 .TP
 .B --seek-bwd
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to seek backwards 15 seconds in the current movie.
 .TP
 .B --volume-up
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to raise the volume by 8%.
 .TP
 .B --volume-down
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to lower the volume by 8%.
 .TP
 .B --fullscreen
-Tell an already running instance of 
-.B totem
+Tell an already-running instance of 
+.B Totem
 to toggle fullscreen mode.
 .TP
+.B --toggle-controls
+Tell an already-running instance of
+.B Totem
+to toggle showing the controls.
+.TP
 .B --quit
-Tell an already running instance of
-.B totem
+Tell an already-running instance of
+.B Totem
 to quit.
 .TP
 .BI "--enqueue " filename|URI
-Tell an already running instance of totem to add a new stream
+Tell an already-running instance of Totem to add a new stream
 to the playlist.
 .TP
 .BI "--replace " filename|URI
-Tell an already running instance of totem to play 
+Tell an already-running instance of Totem to play 
 from the playlist.
 .P
 The following options are standard to applications using the
@@ -195,7 +199,7 @@ Specify prefix of saved configuration
 Disable connecting to session manager.
 .SH KEYBINDINGS
 Global keybindings for
-.BR totem :
+.BR Totem :
 .P
 .ta \w'Down-arrow   'u	
 i	toggle interlacing on and off
@@ -237,8 +241,6 @@ Ctrl+Left-arrow   skip back 3 minutes
 .br
 Ctrl+Right arrow  skip forward 10 minutes
 .br
-s	show the "Skip to..." dialog
-.br
 Up-arrow	increase volume by 8%
 .br
 Down-arrow	decrease volume by 8%
@@ -249,25 +251,22 @@ n		jump to next chapter/movie in playlist
 .br
 q		quit
 .br
-s		show the "skip to" dialog
+Ctrl+E          eject the playing optical media
 .br
+Ctrl+O		open a new file
 .br
-Ctrl-E          eject the playing optical media
+Ctrl+L		open a new URI
 .br
-Ctrl-O		open a new file
-.br
-Ctrl-L		open a new URI
-.br
-Ctrl-P		toggle display of the playlist
+F9		toggle display of the playlist
 .br
 m		show the DVD menu
 .br
 c		show the DVD chapter menu
 .SH BUGS
-.B totem
+.B Totem
 cannot play files using some proprietary codecs.
 .SH AUTHOR
-.B totem
+.B Totem
 was written by Bastien Nocera <hadess@hadess.net>.
 This manual page was written by Andre Lehovich for the
 Debian Project.
