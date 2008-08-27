@@ -552,25 +552,24 @@ totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info, TotemObject *t
 gboolean
 totem_plugins_engine_activate_plugin (TotemPluginInfo *info)
 {
-	char *msg;
+	char *msg, *key_name;
 	GError *error = NULL;
+	gboolean ret;
 
 	g_return_val_if_fail (info != NULL, FALSE);
 
 	if (info->active)
 		return TRUE;
 
-	if (totem_plugins_engine_activate_plugin_real (info, totem_plugins_object, &error)) {
-		char *key_name;
+	ret = totem_plugins_engine_activate_plugin_real (info, totem_plugins_object, &error);
+	key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
+	gconf_client_set_bool (client, key_name, ret, NULL);
+	g_free (key_name);
 
-		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
-		gconf_client_set_bool (client, key_name, TRUE, NULL);
-		g_free (key_name);
+	info->active = ret;
 
-		info->active = TRUE;
-
+	if (ret != FALSE)
 		return TRUE;
-	}
 
 	if (error != NULL) {
 		msg = g_strdup_printf (_("Unable to activate plugin %s.\n%s"), info->name, error->message);

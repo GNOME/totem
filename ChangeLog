@@ -1,5 +1,12 @@
 2008-08-27  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/totem-plugins-engine.c
+	(totem_plugins_engine_activate_plugin): When we fail to activate
+	a plugin, set its GConf key to FALSE, otherwise we get bugged on
+	every start up without any ways to disable it
+
+2008-08-27  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (totem_dvb_setup_result):
 	Always try to play whatever's supposed to be playing
 	after a successful channels setup (Closes: #548539)
