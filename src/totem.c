@@ -523,7 +523,7 @@ totem_dvb_setup_result (int result, const char *device, gpointer user_data)
 {
 	Totem *totem = (Totem *) user_data;
 
-	totem_action_load_media (totem, MEDIA_TYPE_DVB, device);
+	totem_action_play_media (totem, MEDIA_TYPE_DVB, device);
 }
 
 static gboolean
