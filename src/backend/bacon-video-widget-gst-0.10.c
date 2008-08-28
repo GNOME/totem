@@ -173,6 +173,8 @@ struct BaconVideoWidgetPrivate
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
+  gboolean                     window_resized; /* Whether the window has already been resized
+						  for this media */
   const GValue                *movie_par; /* Movie pixel aspect ratio */
   gint                         video_width_pixels; /* Scaled movie width */
   gint                         video_height_pixels; /* Scaled movie height */
@@ -1169,7 +1171,9 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
       g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
     }
 
-    if (bvw->priv->auto_resize && !bvw->priv->fullscreen_mode) {
+    if (bvw->priv->auto_resize
+       	&& !bvw->priv->fullscreen_mode
+	&& !bvw->priv->window_resized) {
       gint w, h;
 
       shrink_toplevel (bvw);
@@ -1189,6 +1193,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
         bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
       }
     }
+    bvw->priv->window_resized = TRUE;
   } else {
     g_message ("Unhandled application message %s", msg_name);
   }
@@ -2968,6 +2973,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   g_free (bvw->com->mrl);
   bvw->com->mrl = NULL;
+  bvw->priv->window_resized = FALSE;
 
   g_object_notify (G_OBJECT (bvw), "seekable");
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);

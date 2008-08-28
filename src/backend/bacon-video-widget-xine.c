@@ -209,6 +209,8 @@ struct BaconVideoWidgetPrivate {
 	guint bevent_consumed : 1;
 	guint fullscreen_mode : 1;
 	guint cursor_shown : 1;
+	/* Whether the window has already been resized for this media */
+	guint window_resized : 1;
 };
 
 static const char *mms_bandwidth_strs[] = {
@@ -606,9 +608,12 @@ frame_output_cb (void *bvw_gen,
 
 		if (bvw->priv->auto_resize != FALSE
 				&& bvw->priv->logo_mode == FALSE
-				&& bvw->priv->fullscreen_mode == FALSE)
+				&& bvw->priv->fullscreen_mode == FALSE
+				&& bvw->priv->window_resized == FALSE)
 		{
 			signal_data *data;
+
+			bvw->priv->window_resized = TRUE;
 
 			data = g_new0 (signal_data, 1);
 			data->signal = RATIO_ASYNC;
@@ -2706,6 +2711,7 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	g_free (bvw->com->mrl);
 	bvw->com->mrl = NULL;
 	bvw->priv->stream_length = 0;
+	bvw->priv->window_resized = FALSE;
 
 	g_object_notify (G_OBJECT (bvw), "seekable");
 	bacon_video_widget_reconfigure_tick (bvw, FALSE);
