@@ -1,5 +1,38 @@
 New features and significant updates in version...
 
+2.23.91:
+* Numerous UI and bug fixes
+
+* DVB playback:
+  - Add support for a helper to setup DVB channels
+  - Support multiple DVB adapters
+  - Better DVB error messages
+
+* New features:
+  - Allow '+' and '-' to go to the previous/next tracks
+  - Make the LIRC plugin work out-of-the-box on a majority of remotes, and add
+    support for the Stop key
+  - Add a Python console plugin
+
+* Movie player:
+  - Require a newer gmyth to support newer MythTV instances
+  - UI fixes for the playlist and play buttons showing the wrong status on error
+  - Fix restoring previous sessions
+  - Don't resize the window in the middle of a stream, for example, when watching TV
+  - Build fixes for Python and Vala plugin backends
+
+* Youtube plugin:
+  - Fix webpage URLs getting added to the playlist, rather than movies themselves
+  - Don't eat the CPU when searching for videos
+  - Blacklist the ffmpeg FLV demuxer, and popup the plugin installation helper
+    if no other demuxers are available
+
+* GStreamer backend:
+  - Fix possible drifts in the colour balance
+  - Fix the UI not updating for internet radio titles when streaming
+  - Add support for ATSC (North-American DVB)
+  - Update visualisations aspect ratio when the screen size changes
+
 2.23.4:
 * Remove gnome-vfs requirements, all over
 * Better help output when wrong arguments are passed

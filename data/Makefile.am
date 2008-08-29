@@ -90,7 +90,6 @@ EXTRA_DIST = \
 	$(bugreport_SCRIPTS)		\
 	desktop.sh			\
 	handlers.sh			\
-	lirc_example			\
 	mime-type-include.sh		\
 	mime-type-list.txt		\
 	schemas.sh			\
