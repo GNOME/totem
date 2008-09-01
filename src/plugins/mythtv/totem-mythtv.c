@@ -45,6 +45,7 @@
 #include <gmyth/gmyth_backendinfo.h>
 #include <gmyth/gmyth_file_transfer.h>
 #include <gmyth/gmyth_scheduler.h>
+#include <gmyth/gmyth_epg.h>
 #include <gmyth/gmyth_util.h>
 #include <gmyth_upnp.h>
 
@@ -56,12 +57,8 @@
 #define TOTEM_IS_MYTHTV_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_MYTHTV_PLUGIN))
 #define TOTEM_MYTHTV_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPluginClass))
 
-#define CONF_PREFIX "/apps/totem/plugins/totem_mythtv/"
-#define CONF_IP CONF_PREFIX "address"
-#define CONF_USER CONF_PREFIX "user"
-#define CONF_PASSWORD CONF_PREFIX "password"
-#define CONF_DATABASE CONF_PREFIX "database"
-#define CONF_PORT CONF_PREFIX "port"
+#define MYTHTV_SIDEBAR_RECORDINGS "mythtv-recordings"
+#define MYTHTV_SIDEBAR_LIVETV "mythtv-livetv"
 
 enum {
 	FILENAME_COL,
@@ -81,9 +78,9 @@ typedef struct
 
 	TotemObject *totem;
 	GConfClient *client;
-	GtkTreeView *treeview;
-	GtkTreeModel *model;
-	GtkWidget *sidebar;
+
+	GtkWidget *sidebar_recordings;
+	GtkWidget *sidebar_livetv;
 } TotemMythtvPlugin;
 
 typedef struct
@@ -174,43 +171,48 @@ get_thumbnail (TotemMythtvPlugin *plugin, GMythBackendInfo *b_info, char *fname)
 	return pixbuf;
 }
 
-static void
+static GtkWidget *
 create_treeview (TotemMythtvPlugin *plugin)
 {
 	TotemCellRendererVideo *renderer;
+	GtkWidget *treeview;
+	GtkTreeModel *model;
 
 	/* Treeview and model */
-	plugin->model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
-							    G_TYPE_STRING,
-							    G_TYPE_STRING,
-							    G_TYPE_OBJECT,
-							    G_TYPE_STRING,
-							    G_TYPE_STRING));
+	model = GTK_TREE_MODEL (gtk_list_store_new (NUM_COLS,
+						    G_TYPE_STRING,
+						    G_TYPE_STRING,
+						    G_TYPE_OBJECT,
+						    G_TYPE_STRING,
+						    G_TYPE_STRING));
 
-	plugin->treeview = g_object_new (TOTEM_TYPE_VIDEO_LIST,
-					 "totem", plugin->totem,
-					 "mrl-column", URI_COL,
-					 "tooltip-column", DESCRIPTION_COL,
-					 NULL);
+	treeview = GTK_WIDGET (g_object_new (TOTEM_TYPE_VIDEO_LIST,
+					     "totem", plugin->totem,
+					     "mrl-column", URI_COL,
+					     "tooltip-column", DESCRIPTION_COL,
+					     NULL));
 
-	gtk_tree_view_set_model (GTK_TREE_VIEW (plugin->treeview),
-				 GTK_TREE_MODEL (plugin->model));
+	gtk_tree_view_set_model (GTK_TREE_VIEW (treeview),
+				 GTK_TREE_MODEL (model));
 
 	renderer = totem_cell_renderer_video_new (TRUE);
-	gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (plugin->treeview), 0,
+	gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (treeview), 0,
 						     _("Recordings"), GTK_CELL_RENDERER (renderer),
 						     "thumbnail", THUMBNAIL_COL,
 						     "title", NAME_COL,
 						     NULL);
 
-	gtk_tree_view_set_headers_visible (plugin->treeview, FALSE);
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
+
+	return treeview;
 }
 
 static void
-totem_mythtv_list_recordings (TotemMythtvPlugin *plugin,
-							  GMythBackendInfo *b_info)
+totem_mythtv_list_recordings (TotemMythtvPlugin *tm,
+			      GMythBackendInfo *b_info)
 {
 	GMythScheduler *scheduler;
+	GtkTreeModel *model;
 	GList *list, *l;
 
 	if (b_info == NULL)
@@ -234,6 +236,8 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin,
 	gmyth_scheduler_disconnect (scheduler);
 	g_object_unref (scheduler);
 
+	model = g_object_get_data (G_OBJECT (tm->sidebar_recordings), "model");
+
 	for (l = list; l != NULL; l = l->next) {
 		RecordedInfo *recorded_info = (RecordedInfo *) l->data;
 
@@ -253,10 +257,10 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin,
 		    			       b_info->hostname,
 		    			       b_info->port,
 		    			       recorded_info->basename->str);
-		    	pixbuf = get_thumbnail (plugin, b_info, thumb_fname);
+		    	pixbuf = get_thumbnail (tm, b_info, thumb_fname);
 		    	g_free (thumb_fname);
 
-		    	gtk_list_store_insert_with_values (GTK_LIST_STORE (plugin->model), &iter, G_MAXINT32,
+		    	gtk_list_store_insert_with_values (GTK_LIST_STORE (model), &iter, G_MAXINT32,
 		    					   FILENAME_COL, recorded_info->basename->str,
 		    					   URI_COL, uri,
 		    					   THUMBNAIL_COL, pixbuf,
@@ -270,6 +274,70 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *plugin,
 	}
 
 	g_list_free (list);
+}
+
+static gint
+sort_channels (GMythChannelInfo *a, GMythChannelInfo *b)
+{
+	int a_int, b_int;
+
+	a_int = g_strtod (a->channel_num->str, NULL);
+	b_int = g_strtod (b->channel_num->str, NULL);
+
+	if (a_int < b_int)
+		return -1;
+	if (a_int > b_int)
+		return 1;
+	return 0;
+}
+
+static void
+totem_mythtv_list_livetv (TotemMythtvPlugin *tm,
+			  GMythBackendInfo *b_info)
+{
+	GMythEPG *epg;
+	int length;
+	GList *clist, *ch;
+	GtkTreeModel *model;
+
+	epg = gmyth_epg_new ();
+	if (!gmyth_epg_connect (epg, b_info)) {
+		g_object_unref (epg);
+		return;
+	}
+
+	length = gmyth_epg_get_channel_list (epg, &clist);
+	gmyth_epg_disconnect (epg);
+	g_object_unref (epg);
+
+	model = g_object_get_data (G_OBJECT (tm->sidebar_livetv), "model");
+	clist = g_list_sort (clist, (GCompareFunc) sort_channels);
+
+	for (ch = clist; ch != NULL; ch = ch->next) {
+		GMythChannelInfo *info = (GMythChannelInfo *) ch->data;
+		GtkTreeIter iter;
+		char *uri;
+		GdkPixbuf *pixbuf;
+
+		if ((info->channel_name == NULL) || (info->channel_num == NULL))
+			continue;
+
+		pixbuf = NULL;
+		if (info->channel_icon != NULL && info->channel_icon->str[0] != '\0') {
+			pixbuf = get_thumbnail (tm, b_info, info->channel_icon->str);
+			g_message ("icon name: %s", info->channel_icon->str);
+		}
+
+		uri = g_strdup_printf ("myth://%s:%d/?channel=%s", b_info->hostname, b_info->port, info->channel_num->str);
+
+		gtk_list_store_insert_with_values (GTK_LIST_STORE (model), &iter, G_MAXINT32,
+						   URI_COL, uri,
+						   THUMBNAIL_COL, pixbuf,
+						   NAME_COL, info->channel_name->str,
+						   -1);
+	}
+
+	gmyth_free_channel_list (clist);
 }
 
 static void
@@ -286,13 +354,14 @@ totem_mythtv_plugin_class_init (TotemMythtvPluginClass *klass)
 
 static void
 device_found_cb (GMythUPnP *upnp,
-				 GMythBackendInfo *b_info,
-				 TotemMythtvPlugin *plugin)
+		 GMythBackendInfo *b_info,
+		 TotemMythtvPlugin *plugin)
 {
 	if (!g_list_find (plugin->lst_b_info, b_info)) {
 		plugin->lst_b_info = g_list_append (plugin->lst_b_info,
 				g_object_ref (b_info));
 		totem_mythtv_list_recordings (plugin, b_info);
+		totem_mythtv_list_livetv (plugin, b_info);
 	}
 }
 
@@ -351,19 +420,30 @@ totem_mythtv_update_binfo (TotemMythtvPlugin *plugin)
 		plugin->lst_b_info = g_list_append (plugin->lst_b_info,
 				b_info);
 		totem_mythtv_list_recordings (plugin, b_info);
+		totem_mythtv_list_livetv (plugin, b_info);
 	}
 	g_list_free (lst);
 	gmyth_upnp_search (plugin->upnp);
 }
 
 static void
-refresh_cb (GtkWidget *button, TotemMythtvPlugin *plugin)
+refresh_cb (GtkWidget *button, TotemMythtvPlugin *tm)
 {
+	GtkTreeModel *model;
+
 	gtk_widget_set_sensitive (button, FALSE);
-	gtk_list_store_clear (GTK_LIST_STORE (plugin->model));
-	totem_mythtv_update_binfo (plugin);
-	totem_gdk_window_set_waiting_cursor (plugin->sidebar->window);
-	gdk_window_set_cursor (plugin->sidebar->window, NULL);
+	totem_gdk_window_set_waiting_cursor (tm->sidebar_recordings->window);
+	totem_gdk_window_set_waiting_cursor (tm->sidebar_livetv->window);
+
+	model = g_object_get_data (G_OBJECT (tm->sidebar_recordings), "model");
+	gtk_list_store_clear (GTK_LIST_STORE (model));
+	model = g_object_get_data (G_OBJECT (tm->sidebar_livetv), "model");
+	gtk_list_store_clear (GTK_LIST_STORE (model));
+
+	totem_mythtv_update_binfo (tm);
+
+	gdk_window_set_cursor (tm->sidebar_recordings->window, NULL);
+	gdk_window_set_cursor (tm->sidebar_livetv->window, NULL);
 	gtk_widget_set_sensitive (button, TRUE);
 }
 
@@ -376,78 +456,7 @@ totem_mythtv_plugin_init (TotemMythtvPlugin *plugin)
 static void
 totem_mythtv_plugin_finalize (GObject *object)
 {
-	TotemMythtvPlugin *plugin = TOTEM_MYTHTV_PLUGIN(object);
-
-	if (plugin->lst_b_info != NULL) {
-		g_list_foreach (plugin->lst_b_info, (GFunc ) g_object_unref, NULL);
-		g_list_free (plugin->lst_b_info);
-		plugin->lst_b_info = NULL;
-	}
-	if (plugin->client != NULL) {
-		g_object_unref (plugin->client);
-		plugin->client = NULL;
-	}
-	if (plugin->upnp != NULL) {
-		g_object_unref (plugin->upnp);
-		plugin->upnp = NULL;
-	}
-	if (plugin->sidebar != NULL) {
-		g_object_unref (plugin->sidebar);
-		plugin->sidebar = NULL;
-	}
-
-	G_OBJECT_CLASS (totem_mythtv_plugin_parent_class)->finalize (object);
-}
-
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
-{
-	GtkWidget *scrolled, *box, *button;
-	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
- 
-	tm->totem = g_object_ref (totem);
-
-	box = gtk_vbox_new (FALSE, 6);
-	button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
-	g_signal_connect (G_OBJECT (button), "clicked",
-			  G_CALLBACK (refresh_cb), plugin);
-	scrolled = gtk_scrolled_window_new (NULL, NULL);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-					GTK_POLICY_NEVER,
-					GTK_POLICY_AUTOMATIC);
-	create_treeview (tm);
-	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled),
-					       GTK_WIDGET (tm->treeview));
-	gtk_container_add (GTK_CONTAINER (box), scrolled);
-	gtk_box_pack_end (GTK_BOX (box), button, FALSE, FALSE, 0);
-	gtk_widget_show_all (box);
-	totem_add_sidebar_page (totem,
-				"mythtv",
-				_("MythTV Recordings"),
-				box);
-
-	tm->sidebar = g_object_ref (box);
-
-	totem_mythtv_update_binfo (TOTEM_MYTHTV_PLUGIN(plugin));
-
-	/* FIXME we should only do that if it will be done in the background */
-#if 0
-	totem_gdk_window_set_waiting_cursor (box->window);
-	totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin));
-	gdk_window_set_cursor (box->window, NULL);
-#endif
-	return TRUE;
-}
-
-static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
-{
-	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
-
-	totem_remove_sidebar_page (totem, "mythtv");
+	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(object);
 
 	if (tm->lst_b_info != NULL) {
 		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
@@ -462,11 +471,100 @@ impl_deactivate	(TotemPlugin *plugin,
 		g_object_unref (tm->upnp);
 		tm->upnp = NULL;
 	}
-	if (tm->sidebar != NULL) {
-		gtk_widget_destroy (tm->sidebar);
-		tm->sidebar = NULL;
+	if (tm->sidebar_recordings != NULL) {
+		gtk_widget_destroy (tm->sidebar_recordings);
+		tm->sidebar_recordings = NULL;
+	}
+	if (tm->sidebar_livetv != NULL) {
+		gtk_widget_destroy (tm->sidebar_livetv);
+		tm->sidebar_livetv = NULL;
 	}
 
+	G_OBJECT_CLASS (totem_mythtv_plugin_parent_class)->finalize (object);
+}
+
+static GtkWidget *
+add_sidebar (TotemMythtvPlugin *tm, const char *name, const char *label)
+{
+	GtkWidget *box, *scrolled, *treeview, *button;
+
+	box = gtk_vbox_new (FALSE, 6);
+	button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
+	g_signal_connect (G_OBJECT (button), "clicked",
+			  G_CALLBACK (refresh_cb), tm);
+	scrolled = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+					GTK_POLICY_NEVER,
+					GTK_POLICY_AUTOMATIC);
+	treeview = create_treeview (tm);
+	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled),
+					       GTK_WIDGET (treeview));
+	gtk_container_add (GTK_CONTAINER (box), scrolled);
+	gtk_box_pack_end (GTK_BOX (box), button, FALSE, FALSE, 0);
+	gtk_widget_show_all (box);
+	totem_add_sidebar_page (tm->totem, name, label, box);
+
+	g_object_set_data (G_OBJECT (box), "treeview", treeview);
+	g_object_set_data (G_OBJECT (box), "model",
+			   gtk_tree_view_get_model (GTK_TREE_VIEW (treeview)));
+
+	return g_object_ref (box);
+}
+
+static gboolean
+impl_activate (TotemPlugin *plugin,
+	       TotemObject *totem,
+	       GError **error)
+{
+	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
+
+	tm->totem = g_object_ref (totem);
+
+	tm->sidebar_recordings = add_sidebar (tm, "mythtv-recordings", _("MythTV Recordings"));
+	tm->sidebar_livetv = add_sidebar (tm, "mythtv-livetv", _("MythTV LiveTV"));
+
+	totem_mythtv_update_binfo (TOTEM_MYTHTV_PLUGIN(plugin));
+
+	/* FIXME we should only do that if it will be done in the background */
+#if 0
+	totem_gdk_window_set_waiting_cursor (box->window);
+	totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin));
+	totem_mythtv_list_livetv (TOTEM_MYTHTV_PLUGIN(plugin));
+	gdk_window_set_cursor (box->window, NULL);
+#endif
+	return TRUE;
+}
+
+static void
+impl_deactivate	(TotemPlugin *plugin,
+		 TotemObject *totem)
+{
+	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
+
+	totem_remove_sidebar_page (totem, MYTHTV_SIDEBAR_RECORDINGS);
+	totem_remove_sidebar_page (totem, MYTHTV_SIDEBAR_LIVETV);
+
+	if (tm->lst_b_info != NULL) {
+		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
+		g_list_free (tm->lst_b_info);
+		tm->lst_b_info = NULL;
+	}
+	if (tm->client != NULL) {
+		g_object_unref (tm->client);
+		tm->client = NULL;
+	}
+	if (tm->upnp != NULL) {
+		g_object_unref (tm->upnp);
+		tm->upnp = NULL;
+	}
+	if (tm->sidebar_recordings != NULL) {
+		gtk_widget_destroy (tm->sidebar_recordings);
+		tm->sidebar_recordings = NULL;
+	}
+	if (tm->sidebar_livetv != NULL) {
+		gtk_widget_destroy (tm->sidebar_livetv);
+		tm->sidebar_livetv = NULL;
+	}
 	g_object_unref (totem);
 }
 

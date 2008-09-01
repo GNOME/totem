@@ -1,3 +1,13 @@
+2008-09-01  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/mythtv/totem-mythtv.c (create_treeview),
+	(totem_mythtv_list_recordings), (sort_channels),
+	(totem_mythtv_list_livetv), (device_found_cb),
+	(totem_mythtv_update_binfo), (refresh_cb),
+	(totem_mythtv_plugin_finalize), (add_sidebar), (impl_activate),
+	(impl_deactivate): Add support for playing back live TV using
+	gmyth, and streaming from MythTV (Closes: #549893)
+
 ============ Version 2.23.91
 
 2008-08-29  Bastien Nocera  <hadess@hadess.net>
