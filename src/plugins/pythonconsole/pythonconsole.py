@@ -75,13 +75,13 @@ class PythonConsolePlugin(totem.Plugin):
 		data['action_group'].add_action(action)
 
 		action = gtk.Action('PythonConsole', _('_Python Console'),
-		                    _("Show Totem's python console"),
+		                    _("Show Totem's Python console"),
 		                    'gnome-mime-text-x-python')
 		action.connect('activate', self.show_console, totem_object)
 		data['action_group'].add_action(action)
 
 		action = gtk.Action('PythonDebugger', _('Python Debugger'),
-				    _("Enable remote python debugging with rpdb2"),
+				    _("Enable remote Python debugging with rpdb2"),
 				    None)
 		if have_rpdb2:
 			action.connect('activate', self.enable_debugging, totem_object)

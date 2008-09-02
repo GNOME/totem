@@ -219,7 +219,7 @@ impl_activate (TotemPlugin *plugin,
 	builder_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skipto.ui");
 	if (builder_path == NULL) {
 		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-				_("Could not load the \"Skip to\" dialogue interface."));
+				_("Could not load the \"Skip to\" dialog interface."));
 		return FALSE;
 	}
 	g_free (builder_path);

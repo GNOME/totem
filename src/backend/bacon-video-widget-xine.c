@@ -1359,7 +1359,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		g_message ("general warning: %s", data->messages);
 		if (data->messages != NULL && strcmp (data->messages, "DVB Signal Lost.  Please check connections.") == 0) {
 			num = BVW_ERROR_INVALID_DEVICE;
-			message = g_strdup (_("The TV adapter could not tune into the channel. Please check your hardware setup, and channel configuration."));
+			message = g_strdup (_("The TV adapter could not tune into the channel. Please check your hardware setup and channel configuration."));
 		}
 		break;
 	case XINE_MSG_UNKNOWN_HOST:
@@ -1386,7 +1386,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		if (g_str_has_prefix (bvw->com->mrl, "dvd:") != FALSE)
                 {
                         num = BVW_ERROR_DVD_ENCRYPTED;
-                        message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+                        message = g_strdup (_("The source seems encrypted and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
                 } else {
 			num = BVW_ERROR_READ_ERROR;
 			message = g_strdup (_("The movie could not be read."));
@@ -1402,7 +1402,7 @@ xine_event_message (BaconVideoWidget *bvw, xine_ui_message_data_t *data)
 		if (g_str_has_prefix (bvw->com->mrl, "dvd:") != FALSE)
 		{
 			num = BVW_ERROR_DVD_ENCRYPTED;
-			message = g_strdup (_("The source seems encrypted, and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
+			message = g_strdup (_("The source seems encrypted and can't be read. Are you trying to play an encrypted DVD without libdvdcss?"));
 		} else {
 			num = BVW_ERROR_FILE_ENCRYPTED;
 			message = g_strdup (_("This file is encrypted and cannot be played back."));
@@ -2487,7 +2487,7 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 		bacon_video_widget_close (bvw);
 
 		g_set_error (error, BVW_ERROR, BVW_ERROR_AUDIO_ONLY,
-				_("This is an audio-only file, and there is no audio output available."));
+				_("This is an audio-only file and there is no audio output available."));
 
 		return FALSE;
 	}
