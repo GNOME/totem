@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-02 08:14+0200\n"
-"PO-Revision-Date: 2008-09-02 08:14+0200\n"
+"POT-Creation-Date: 2008-09-04 15:30+0200\n"
+"PO-Revision-Date: 2008-09-04 15:32+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -798,22 +798,22 @@ msgid "Buffer size"
 msgstr "Størrelse på buffer"
 
 #: ../data/totem.schemas.in.h:5
-msgid "Default location for the \"Open...\" dialogues"
+msgid "Default location for the \"Open...\" dialogs"
 msgstr "Forvalgt lokasjon for «Åpne»-dialoger"
 
 #: ../data/totem.schemas.in.h:6
 msgid ""
-"Default location for the \"Open...\" dialogues, default is the current "
+"Default location for the \"Open...\" dialogs, default is the current "
 "directory"
 msgstr "Forvalgt lokasjon for «Åpne»-dialoger. Forvalg er aktiv katalog"
 
 #: ../data/totem.schemas.in.h:7
-msgid "Default location for the \"Take Screenshot\" dialogues"
+msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Forvalgt lokasjon for «Ta skjermdump»-dialoger"
 
 #: ../data/totem.schemas.in.h:8
 msgid ""
-"Default location for the \"Take Screenshot\" dialogues, default is the "
+"Default location for the \"Take Screenshot\" dialogs, default is the "
 "Pictures directory"
 msgstr ""
 "Forvalgt lokasjon for «Ta skjermdump»-dialoger. Forvalg er brukerens "
@@ -1851,7 +1851,7 @@ msgstr ""
 #: ../src/backend/bacon-video-widget-xine.c:1362
 msgid ""
 "The TV adapter could not tune into the channel. Please check your hardware "
-"setup, and channel configuration."
+"setup and channel configuration."
 msgstr ""
 "TV-kortet kunne ikke stille inn kanalen. Vennligst sjekk maskinvaren og "
 "kanalens konfigurasjon."
@@ -1881,11 +1881,9 @@ msgstr "Angitt film ble ikke funnet."
 #: ../src/backend/bacon-video-widget-xine.c:1389
 #: ../src/backend/bacon-video-widget-xine.c:1405
 msgid ""
-"The source seems encrypted, and can't be read. Are you trying to play an "
+"The source seems encrypted and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
-msgstr ""
-"Kilden ser ut til å være kryptert, og kan ikke leses. Prøver du å spille av "
-"en DVD uten libdvdcss?"
+msgstr "Kilden ser ut til å være kryptert, og kan ikke leses. Prøver du å spille av en kryptert DVD uten libdvdcss?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1392
 msgid "The movie could not be read."
@@ -1978,9 +1976,8 @@ msgstr ""
 
 #: ../src/backend/bacon-video-widget-xine.c:2490
 #, c-format
-msgid "This is an audio-only file, and there is no audio output available."
-msgstr ""
-"Dette er en lydfil, og det finnes innen mulighet for avspilling av lyd."
+msgid "This is an audio-only file and there is no audio output available."
+msgstr "Dette er en lydfil, og det finnes ingen mulighet for avspilling av lyd."
 
 #: ../src/backend/bacon-video-widget-xine.c:4122
 #: ../src/backend/bacon-video-widget-xine.c:4169
@@ -2222,11 +2219,11 @@ msgstr "Del denne spillelisten via HTTP"
 #, no-c-format
 msgid ""
 "<small>The name used for announcing the playlist service on the network.\n"
-"All occurances of the string <b>%u</b> will be replaced by your name,\n"
+"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
 "and <b>%h</b> will be replaced by your computer's host name.</small>"
 msgstr ""
 "<small>Navn brukt for å annonsere spillelistetjenesten på nettverket.\n"
-"Alle oppføringer av strengen <b>%u</b> vil bli erstattet av ditt navn,\n"
+"Alle oppføringer av strengen <b>%u</b> vil bli erstattet med ditt navn,\n"
 "og <b>%h</b> vil bli erstattet av navnet på din datamaskin.</small>"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:5
@@ -2251,7 +2248,7 @@ msgstr "Hopp til en gitt tid"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:222
 #, c-format
-msgid "Could not load the \"Skip to\" dialogue interface."
+msgid "Could not load the \"Skip to\" dialog interface."
 msgstr "Kunne ikke laste grensesnitt for «Hopp til»."
 
 #: ../src/plugins/skipto/skipto.ui.h:2
@@ -2409,8 +2406,8 @@ msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Sjekk systeminstallasjonen. Tillegget for Totem avslutter nå."
 
 #: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
-msgid "Interactive python console."
-msgstr "Interaktivt python-konsoll"
+msgid "Interactive Python console."
+msgstr "Interaktivt Python-konsoll."
 
 #: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:2
 msgid "Python Console"
@@ -2425,16 +2422,16 @@ msgid "_Python Console"
 msgstr "_Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:78
-msgid "Show Totem's python console"
-msgstr "Vis Totem's python-konsoll"
+msgid "Show Totem's Python console"
+msgstr "Vis Totem's Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:83
 msgid "Python Debugger"
 msgstr "Python feilsøking"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:84
-msgid "Enable remote python debugging with rpdb2"
-msgstr "Aktiver ekstern python-feilsøking med rpdb2"
+msgid "Enable remote Python debugging with rpdb2"
+msgstr "Aktiver ekstern Python-feilsøking med rpdb2"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:106
 #, python-format
