@@ -42,7 +42,6 @@ libbaconmessageconnection_la_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 
-EGGDIR=$(srcdir)/../../libegg/libegg/recent-files/
 BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
 	EGGFILES="$(BACON_MESSAGE_CONNECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
