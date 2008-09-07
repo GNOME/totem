@@ -552,7 +552,7 @@ totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info, TotemObject *t
 gboolean
 totem_plugins_engine_activate_plugin (TotemPluginInfo *info)
 {
-	char *msg, *key_name;
+	char *msg;
 	GError *error = NULL;
 	gboolean ret;
 
@@ -562,9 +562,13 @@ totem_plugins_engine_activate_plugin (TotemPluginInfo *info)
 		return TRUE;
 
 	ret = totem_plugins_engine_activate_plugin_real (info, totem_plugins_object, &error);
-	key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
-	gconf_client_set_bool (client, key_name, ret, NULL);
-	g_free (key_name);
+	if (info->visible != FALSE || ret != FALSE) {
+		char *key_name;
+
+		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
+		gconf_client_set_bool (client, key_name, ret, NULL);
+		g_free (key_name);
+	}
 
 	info->active = ret;
 
