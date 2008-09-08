@@ -4,14 +4,15 @@
 # Runa Bhattacharjee<runa77@softhome.net>, 2003.
 # Runa Bhattacharjee <runabh@gmail.com>, 2007.
 # Runa Bhattacharjee <runab@fedoraproject.org>, 2008.
+# Runa Bhattacharjee <runab@redhat.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: bn_IN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-02 13:54+0000\n"
-"PO-Revision-Date: 2008-03-03 15:37+0530\n"
-"Last-Translator: Runa Bhattacharjee <runab@fedoraproject.org>\n"
-"Language-Team: Bengali INDIA <discuss@ankur.co.in>\n"
+"POT-Creation-Date: 2008-09-08 11:15+0000\n"
+"PO-Revision-Date: 2008-09-08 20:06+0530\n"
+"Last-Translator: Runa Bhattacharjee <runab@redhat.com>\n"
+"Language-Team: Bengali INDIA <fedora-trans-bn_IN@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +27,7 @@ msgstr ""
 msgid "Leave Fullscreen"
 msgstr "সম্পূর্ণ পর্দায় প্রদর্শন বন্ধ করুন"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:72
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:94
 msgid "Time:"
 msgstr "সময়:"
 
@@ -62,18 +63,18 @@ msgstr "প্লে-লিস্ট সংরক্ষণ করুন..."
 msgid "Select a file to use for text subtitles"
 msgstr "অনুবাদলিপির জন্য ব্যবহারযোগ্য ফাইল নির্বাচন করুন"
 
-# msgstr "এই পাসওয়ার্ডটি মনে রাখা হবে"
-#: ../data/playlist.ui.h:9
-msgid "Select text subtitle..."
-msgstr "অনুবাদলিপির লেখনি নির্বাচন করুন..."
-
-#: ../data/playlist.ui.h:10 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:9 ../data/video-list.ui.h:4
 msgid "_Copy Location"
 msgstr "অবস্থান কপি করুন(_C)"
 
-#: ../data/playlist.ui.h:11
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "অপসারণ (_R)"
+
+# msgstr "এই পাসওয়ার্ডটি মনে রাখা হবে"
+#: ../data/playlist.ui.h:11
+msgid "_Select text subtitle..."
+msgstr "অনুবাদলিপির লেখনি নির্বাচন করুন...(_S)"
 
 # msgstr "কোনটিই নয়"
 # msgstr "একটিও নয়"
@@ -137,7 +138,7 @@ msgstr "শিল্পী:"
 
 # msgstr "কোনটিই নয়"
 # msgstr "একটিও নয়"
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:5
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:21
 #: ../src/totem-properties-view.c:91
 msgid "Audio"
 msgstr "অডিও"
@@ -170,7 +171,7 @@ msgstr "অবকাল:"
 msgid "Framerate:"
 msgstr "ফ্রেমের মাত্রা:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:18
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:35
 msgid "General"
 msgstr "সাধারণ"
 
@@ -246,39 +247,103 @@ msgstr "মুভি প্লেয়ার"
 msgid "Play movies and songs"
 msgstr "চলচ্চিত্র ও সংগীত পরিবেশন"
 
-#: ../data/totem.ui.h:1 ../src/totem-menu.c:1369
+#: ../data/totem.ui.h:1
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "১.৫ মেগাবাইট/সেকেন্ড T1/ইন্ট্রানেট/LAN"
+
+#: ../data/totem.ui.h:2
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "১১২ কিলোবাইট/সেকেন্ড ISDN/DSL"
+
+#: ../data/totem.ui.h:3
+msgid "14.4 Kbps Modem"
+msgstr "১৪.৪ কিলোবাইট/সেকেন্ড মোডেম"
+
+#: ../data/totem.ui.h:4 ../src/totem-menu.c:1351
 msgid "16:9 (Widescreen)"
 msgstr "১৬:৯ (প্রসারিত পর্দা)"
 
-#: ../data/totem.ui.h:2 ../src/totem-menu.c:1370
+#: ../data/totem.ui.h:5
+msgid "19.2 Kbps Modem"
+msgstr "১৯.২ কিলোবাইট/সেকেন্ড মোডেম"
+
+#: ../data/totem.ui.h:6 ../src/totem-menu.c:1352
 msgid "2.11:1 (DVB)"
 msgstr "২.১১:১ (DVB)"
 
-#: ../data/totem.ui.h:3 ../src/totem-menu.c:1368
+#: ../data/totem.ui.h:7
+msgid "256 Kbps DSL/Cable"
+msgstr "২৫৬ কিলোবাইট/সেকেন্ড DSL/কেবল"
+
+#: ../data/totem.ui.h:8
+msgid "28.8 Kbps Modem"
+msgstr "২৮.৬ কিলোবাইট/সেকেন্ড মোডেম"
+
+#: ../data/totem.ui.h:9
+msgid "33.6 Kbps Modem"
+msgstr "৩৩.৬ কিলোবাইট/সেকেন্ড মোডেম"
+
+#: ../data/totem.ui.h:10
+msgid "34.4 Kbps Modem"
+msgstr "৪৪.৪ কিলোবাইট/সেকেন্ড মোডেম"
+
+#: ../data/totem.ui.h:11
+msgid "384 Kbps DSL/Cable"
+msgstr "৩৮৪ কিলোবাইট/সেকেন্ড DSL/কেবল"
+
+#: ../data/totem.ui.h:12
+msgid "4-channel"
+msgstr "৪-চ্যানেল"
+
+#: ../data/totem.ui.h:13
+msgid "4.1-channel"
+msgstr "৪.১-চ্যানেল"
+
+#: ../data/totem.ui.h:14 ../src/totem-menu.c:1350
 msgid "4:3 (TV)"
 msgstr "৪:৩ (টেলিভিশান)"
 
+#: ../data/totem.ui.h:15
+msgid "5.0-channel"
+msgstr "৫.০-চ্যানেল"
+
+#: ../data/totem.ui.h:16
+msgid "5.1-channel"
+msgstr "৫.১-চ্যানেল"
+
+#: ../data/totem.ui.h:17
+msgid "512 Kbps DSL/Cable"
+msgstr "৫১২ কিলোবাইট/সেকেন্ড DSL/কেবল"
+
+#: ../data/totem.ui.h:18
+msgid "56 Kbps Modem/ISDN"
+msgstr "৫৬ কিলোবাইট/সেকেন্ড মোডেম/ISDN"
+
+#: ../data/totem.ui.h:19
+msgid "AC3 Passthrough"
+msgstr "AC3 পাসথ্রু"
+
 # msgstr "অ্যাঙ্গেল (কোণ) মেনু"
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:20
 msgid "A_udio Menu"
 msgstr "অডিও মেনু (_u)"
 
 # msgstr "অ্যাঙ্গেল (কোণ) মেনু"
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:22
 msgid "Audio Output"
 msgstr "অডিও আউটপুট"
 
 # msgstr "কোনটিই নয়"
 # msgstr "একটিও নয়"
-#: ../data/totem.ui.h:7 ../src/totem-menu.c:340 ../src/totem-menu.c:1366
+#: ../data/totem.ui.h:23 ../src/totem-menu.c:340 ../src/totem-menu.c:1348
 msgid "Auto"
 msgstr "স্বয়ংক্রিয়"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:24
 msgid "Automatically _load subtitle files when movie is loaded"
 msgstr "চলচ্চিত্র লোড করা হলে স্বয়ংক্রিয়রূপে অনুবাদলিপি লোড করা হবে (_l)"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:25
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "নতুন ভিডিও লোড করা হলে স্বয়ংক্রিয়রূপে উইন্ডোর মাপ পরিবর্তন করা হবে (_r)"
 
@@ -286,406 +351,431 @@ msgstr "নতুন ভিডিও লোড করা হলে স্বয়�
 # Chapter=অধ্যায়
 # অশুদ্ধ - পরিক্ষা
 # শুদ্ধ - পরীক্ষা
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:26
 msgid "Clear the playlist"
 msgstr "প্লে-লিস্ট পরিষ্কার করুন"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:27
 msgid "Co_ntrast:"
 msgstr "বৈপরীত্য: (_n)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:28
 msgid "Color Balance"
 msgstr "রঙের ভারসাম্য"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:29
 msgid "Connection _speed:"
 msgstr "সংযোগের গতি: (_s)"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:30
 msgid "Decrease volume"
 msgstr "আওয়াজ হ্রাস করুন"
 
 # msgstr "ডিভিডি মেনু"
-#: ../data/totem.ui.h:15 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:31 ../src/totem-menu.c:1342
 msgid "Deinterlace"
 msgstr "ডি-ইন্টারলেস"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:32
 msgid "Display"
 msgstr "প্রদর্শন"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:33
+msgid "Extra Large"
+msgstr "অধিক বৃহৎ"
+
+#: ../data/totem.ui.h:34
 msgid "Fit Window to Movie"
 msgstr "চলচ্চিত্র অনুযায়ী উইন্ডোর মাপ পরিবর্তন করা হবে"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:36
 msgid "Go to the DVD menu"
 msgstr "DVD মেনু প্রদর্শন"
 
 # msgstr "ডিভিডি মেনু দেখানো হোক"
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:37
 msgid "Go to the angle menu"
 msgstr "অ্যাঙ্গেল মেনু প্রদর্শন"
 
 # msgstr "অ্যাঙ্গেল (কোণ) মেনু দেখানো হোক"
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:38
 msgid "Go to the audio menu"
 msgstr "অডিও মেনু প্রদর্শন"
 
 # msgstr "অডিও মেনু দেখানো হোক"
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:39
 msgid "Go to the chapter menu"
 msgstr "চ্যাপ্টার মেনু প্রদর্শন"
 
 # msgstr "অধ্যায় মেনুতে দেখানো হোক"
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:40
 msgid "Go to the title menu"
 msgstr "শিরোনাম মেনু প্রদর্শন"
 
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:41
 msgid "Help contents"
 msgstr "সহায়িকার বিষয়বস্তু"
 
-#: ../data/totem.ui.h:25
+#: ../data/totem.ui.h:42
 msgid "Increase volume"
 msgstr "আওয়াজ বৃদ্ধি করুন"
 
-#: ../data/totem.ui.h:26
+#: ../data/totem.ui.h:43
+msgid "Intranet/LAN"
+msgstr "ইন্ট্রানেট/LAN"
+
+#: ../data/totem.ui.h:44
+msgid "Large"
+msgstr "বৃহৎ"
+
+#: ../data/totem.ui.h:45
 msgid "Networking"
 msgstr "নেটওয়ার্ক ব্যবস্থা"
 
-#: ../data/totem.ui.h:27
+#: ../data/totem.ui.h:46
 msgid "Next chapter or movie"
 msgstr "পরবর্তি অধ্যায় অথবা চলচ্চিত্র"
 
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:47
+msgid "Normal"
+msgstr "স্বাভাবিক"
+
+#: ../data/totem.ui.h:48
 msgid "Open _Location..."
 msgstr "চিহ্নিত অবস্থান খুলুন...(_L)"
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:49
 msgid "Open a file"
 msgstr "ফাইল খুলুন"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:50
 msgid "Open a non-local file"
 msgstr "স্থানীয় অবস্থান বহির্ভূত ফাইল খুলুন"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:51
 msgid "Play / P_ause"
 msgstr "চালানো / থামানো হবে (_a)"
 
 # ঠিক করেন
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:52
 msgid "Play or pause the movie"
 msgstr "চলচ্চিত্র চালানো অথবা থামানো হবে"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:53
 msgid "Plugins..."
 msgstr "প্লাগ-ইন..."
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:54
 msgid "Prefere_nces"
 msgstr "বৈশিষ্ট্যাবলী (_n)"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:55
 msgid "Previous chapter or movie"
 msgstr "পূর্ববর্তী অধ্যায় অথবা চলচ্চিত্র"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:56
 msgid "Quit the program"
 msgstr "প্রোগ্রাম থেকে প্রস্থান"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:57
 msgid "Reset To _Defaults"
 msgstr "ডিফল্ট মান পুনরায় স্থাপন করুন (_D)"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:58
 msgid "Resize _1:1"
 msgstr "মাপ পরিবর্তন ১:১ (_1)"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:59
 msgid "Resize _2:1"
 msgstr "মাপ পরিবর্তন ১:১ (_2)"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:60
 msgid "Resize to double the original video size"
 msgstr "ভিডিও-র মাপ অনুযায়ী দ্বিগুণ মাপ নির্ধারণ করা হবে"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:61
 msgid "Resize to half the original video size"
 msgstr "ভিডিও-র মাপ অনুযায়ী অর্ধেক মাপ নির্ধারণ করা হবে"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:62
 msgid "Resize to the original video size"
 msgstr "ভিডিও-র মাপ অনুযায়ী প্রকৃত মাপ নির্ধারণ করা হবে"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:63 ../src/totem-menu.c:1344
+msgid "S_idebar"
+msgstr "সাইড-বার (_i)"
+
+#: ../data/totem.ui.h:64
 msgid "S_ubtitles"
 msgstr "অনুবাদলিপি (_u)"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:65
 msgid "Sat_uration:"
 msgstr "স্যাচুরেশন: (_u)"
 
 # সংরক্ষণ, করা হোক
-#: ../data/totem.ui.h:45 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:66 ../src/totem-menu.c:1340
 msgid "Set the repeat mode"
 msgstr "পুনরাবৃত্তি মোড নির্ধারণ করুন"
 
 # সংরক্ষণ, করা হোক
-#: ../data/totem.ui.h:46 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:67 ../src/totem-menu.c:1341
 msgid "Set the shuffle mode"
 msgstr "পাচঁমিশেলি মোড নির্ধারণ করুন"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:68
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "১৬:৯ (ওয়াইড-স্ক্রিন) অ্যাস্পেক্ট অনুপাত নির্ধারণ করে"
 
-#: ../data/totem.ui.h:48 ../src/totem-menu.c:1370
+#: ../data/totem.ui.h:69 ../src/totem-menu.c:1352
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "২.১১:১ (DVB) অ্যাস্পেক্ট অনুপাত নির্ধারণ করে"
 
 # msgstr "_অ্যাস্পেক্টের (আবয়ব) অনুপাত পরিবর্তন করা হোক"
-#: ../data/totem.ui.h:49 ../src/totem-menu.c:1368
+#: ../data/totem.ui.h:70 ../src/totem-menu.c:1350
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "৪:৩ (টেলিভিশন) অ্যাস্পেক্ট অনুপাত নির্ধারণ করে"
 
 # msgstr "_অ্যাস্পেক্টের (আবয়ব) অনুপাত পরিবর্তন করা হোক"
-#: ../data/totem.ui.h:50 ../src/totem-menu.c:1366
+#: ../data/totem.ui.h:71 ../src/totem-menu.c:1348
 msgid "Sets automatic aspect ratio"
 msgstr "স্বয়ংক্রিয়রূপে অ্যাস্পেক্টের অনুপাত নির্ধারণ করে"
 
 # msgstr "_অ্যাস্পেক্টের (আবয়ব) অনুপাত পরিবর্তন করা হোক"
 # ../data/totem.glade.ue:h:71
-#: ../data/totem.ui.h:51 ../src/totem-menu.c:1367
+#: ../data/totem.ui.h:72 ../src/totem-menu.c:1349
 msgid "Sets square aspect ratio"
 msgstr "চতুষ্কোন অ্যাস্পেক্ট অনুপাত নির্ধারণ করে"
 
-#: ../data/totem.ui.h:52 ../src/totem-menu.c:1361
+#: ../data/totem.ui.h:73 ../src/totem-menu.c:1343
 msgid "Show _Controls"
 msgstr "নিয়ন্ত্রক বাটন প্রদর্শন করা হবে (_C)"
 
 # msgstr "ফাইল লোড করা হলে স্বয়ংক্রিয়ভাবে ক্যানভাসের আকার পরিবর্তন করা হোক" <-- এটাও সোজা করে দিলাম ;-)
-#: ../data/totem.ui.h:53
+#: ../data/totem.ui.h:74
 msgid "Show _visual effects when an audio file is played"
 msgstr "অডিও ফাইল চালানো হলে ভিজুয়াল ইফেক্ট প্রদর্শন করা হবে (_v)"
 
-#: ../data/totem.ui.h:54 ../src/totem-menu.c:1361
+#: ../data/totem.ui.h:75 ../src/totem-menu.c:1343
 msgid "Show controls"
 msgstr "নিয়ন্ত্রক বাটন প্রদর্শন করা হবে"
 
-#: ../data/totem.ui.h:55 ../src/totem-menu.c:1362
+#: ../data/totem.ui.h:76 ../src/totem-menu.c:1344
 msgid "Show or hide the sidebar"
 msgstr "সাইড-বার প্রদর্শন অথবা আড়াল করুন"
 
-#: ../data/totem.ui.h:56 ../src/totem-menu.c:1359
+#: ../data/totem.ui.h:77 ../src/totem-menu.c:1341
 msgid "Shuff_le Mode"
 msgstr "পাঁচমিশেলি মোড (_l)"
 
 # আগেরটার মত
-#: ../data/totem.ui.h:57 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
+#: ../data/totem.ui.h:78 ../src/totem-menu.c:1331 ../src/totem-menu.c:1336
 msgid "Skip _Backwards"
 msgstr "পিছিয়ে যান (_B)"
 
 # msgstr "পেছনে"
-#: ../data/totem.ui.h:58 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
+#: ../data/totem.ui.h:79 ../src/totem-menu.c:1330 ../src/totem-menu.c:1335
 msgid "Skip _Forward"
 msgstr "এগিয়ে চলুন (_F)"
 
 # আগেরটার মত
-#: ../data/totem.ui.h:59 ../src/totem-menu.c:1349 ../src/totem-menu.c:1354
+#: ../data/totem.ui.h:80 ../src/totem-menu.c:1331 ../src/totem-menu.c:1336
 msgid "Skip backwards"
 msgstr "পিছিয়ে যান"
 
 # msgstr "পেছনে"
-#: ../data/totem.ui.h:60 ../src/totem-menu.c:1348 ../src/totem-menu.c:1353
+#: ../data/totem.ui.h:81 ../src/totem-menu.c:1330 ../src/totem-menu.c:1335
 msgid "Skip forward"
 msgstr "এগিয়ে চলুন"
 
-#: ../data/totem.ui.h:61 ../src/totem-menu.c:1367
+#: ../data/totem.ui.h:82 ../src/totem-menu.c:1349
 msgid "Square"
 msgstr "চৌকো"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:83 ../src/backend/bacon-video-widget-gst-0.10.c:4393
+msgid "Stereo"
+msgstr "স্টিরিও"
+
+#: ../data/totem.ui.h:84
 msgid "Switch An_gles"
 msgstr "অ্যাঙ্গেল পরিবর্তন করুন (_g)"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:85
 msgid "Switch camera angles"
 msgstr "ক্যামেরার কোণ পরিবর্তন করুন"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:86
 msgid "Switch to fullscreen"
 msgstr "সম্পূর্ণ পর্দা জুড়ে প্রদর্শন করা হবে"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:87
 msgid "TV-Out"
 msgstr "TV-আউটপুট"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:88
 msgid "TV-out in fullscreen by Nvidia (NTSC)"
 msgstr "Nvidia (NTSC) দ্বারা সম্পূর্ণ পর্দাজুড়ে TV-আউটপুট"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:89
 msgid "TV-out in fullscreen by Nvidia (PAL)"
 msgstr "Nvidia (PAL) দ্বারা সম্পূর্ণ পর্দাজুড়ে TV-আউটপুট"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:90
 msgid "Take _Screenshot..."
 msgstr "পর্দার ছবি নিন...(_S)"
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:91
 msgid "Take a screenshot"
 msgstr "পর্দার ছবি নিন"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:92
 msgid "Text Subtitles"
 msgstr "অনুবাদলিপি"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:93
 msgid "Time seek bar"
 msgstr "সময় প্রাপ্ত করতে ব্যবহৃত বার"
 
 # বাজানো হোক, দেখানো হোক
 # msgstr "চলচ্চিত্র ও গান চালানো হোক" <-- Short cut ;-)
 #. Title
-#: ../data/totem.ui.h:73 ../src/totem.c:903 ../src/totem.c:3103
-#: ../src/totem.c:3132 ../browser-plugin/totem-plugin-viewer.c:1911
+#: ../data/totem.ui.h:95 ../src/totem.c:1015 ../src/totem.c:3418
+#: ../src/totem.c:3450 ../browser-plugin/totem-plugin-viewer.c:737
+#: ../browser-plugin/totem-plugin-viewer.c:1789
 msgid "Totem Movie Player"
 msgstr "Totem মুভি প্লেয়ার"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:96
 msgid "Totem Preferences"
 msgstr "Totem সংক্রান্ত পছন্দ"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:97
 msgid "Visual Effects"
 msgstr "ভিজুয়াল ইফেক্ট"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:98
 msgid "Visualisation _size:"
 msgstr "ভিশুয়ালাইজেশন প্রদর্শনের মাপ: (_s)"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:99
 msgid "Volume _Down"
 msgstr "শব্দের মাত্রা হ্রাস করুন (_D)"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:100
 msgid "Volume _Up"
 msgstr "শব্দের মাত্রা বৃদ্ধি করুন (_U)"
 
 # msgstr "১:২ অনুপাতে প্রদর্শন করা হোক"
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:101
 msgid "Zoom In"
 msgstr "বড় করে প্রদর্শন"
 
 # msgstr "ভ্যানিটি সংক্রান্ত পছন্দ"
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:102
 msgid "Zoom Out"
 msgstr "ছোট করে প্রদর্শন"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:103
 msgid "Zoom Reset"
 msgstr "জুম প্রদর্শনের মান পুনরায় নির্ধারণ"
 
 # msgstr "১:২ অনুপাতে প্রদর্শন করা হোক"
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:104
 msgid "Zoom in"
 msgstr "বড় করে প্রদর্শন"
 
 # msgstr "ভ্যানিটি সংক্রান্ত পছন্দ"
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:105
 msgid "Zoom out"
 msgstr "ছোট করে প্রদর্শন"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:106
 msgid "Zoom reset"
 msgstr "জুম প্রদর্শনের মান পুনরায় নির্ধারণ"
 
 # msgstr "কোনটিই নয়"
 # msgstr "একটিও নয়"
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:107
 msgid "_About"
 msgstr "পরিচিতি (_A)"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:108
 msgid "_Allow the screensaver to activate even when audio-only is playing"
 msgstr "শুধুমাত্র অডিও চালনার সময় স্ক্রিন-সেভার সক্রিয় করা যাবে (_A)"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:109
 msgid "_Angle Menu"
 msgstr "অ্যাঙ্গেল মেনু (_A)"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:110
 msgid "_Aspect Ratio"
 msgstr "অ্যাসপেক্টের অনুপাত (_A)"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:111
 msgid "_Audio output type:"
 msgstr "অডিও আউটপুটের ধরন: (_A)"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:112
 msgid "_Brightness:"
 msgstr "উজ্জ্বলতা: (_B)"
 
 # msgstr "নতুন ভিডিও লোড করা হলে স্বয়ংক্রিয়ভাবে উইন্ডোর আকার পরিবর্তন করা হোক" <-- একটু সোজা করে দিলাম ;-)
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:113
 msgid "_Chapter Menu"
 msgstr "অধ্যায় মেনু (_C)"
 
-#: ../data/totem.ui.h:92
+#: ../data/totem.ui.h:114
 msgid "_Clear Playlist"
 msgstr "প্লে-লিস্ট ফাঁকা করুন (_C)"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:115
 msgid "_Contents"
 msgstr "বিষয় বস্তু (_C)"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:116
 msgid "_DVD Menu"
 msgstr "DVD মেনু (_D)"
 
-#: ../data/totem.ui.h:95 ../src/totem-menu.c:1360
+#: ../data/totem.ui.h:117 ../src/totem-menu.c:1342
 msgid "_Deinterlace"
 msgstr "ডি-ইন্টারলেস (_D)"
 
-#: ../data/totem.ui.h:96
+#: ../data/totem.ui.h:118
 msgid "_Edit"
 msgstr "সম্পাদনা(_E)"
 
 # বাংলায় লিখতে পারেন
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:119
 msgid "_Eject"
 msgstr "বহিষ্কার (_E)"
 
-#: ../data/totem.ui.h:98
+#: ../data/totem.ui.h:120
 msgid "_Encoding:"
 msgstr "এনকোডিং: (_E)"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:121
 msgid "_Font:"
 msgstr "ফন্ট: (_F)"
 
 # msgstr "বের করে দেওয়া হোক (_ব)"
 # Eject অর্থে 'বার' শব্দটা সম্ভবত কথ্য ভাষার। Dict দেখেন।
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:122
 msgid "_Fullscreen"
 msgstr "সম্পূর্ণ পর্দা জুড়ে প্রদর্শন (_F)"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:123
 msgid "_Go"
 msgstr "চালনা (_G)"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:124
 msgid "_Help"
 msgstr "সাহায্য (_H)"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:125
 msgid "_Hue:"
 msgstr "হিউ: (_H)"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:126
 msgid "_Languages"
 msgstr "ভাষা (_L)"
 
@@ -693,61 +783,57 @@ msgstr "ভাষা (_L)"
 # msgstr "প্রদর্শন করা হোক (_প)"
 # msgstr "প্রদর্শন (_প)"
 # আমি এটার Context সম্পর্কে জানিনা। তাই ভালভাবে বুঝতে পারতেছি না।
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:127
 msgid "_Movie"
 msgstr "চলচ্চিত্র (_M)"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:128
 msgid "_Next Chapter/Movie"
 msgstr "পরবর্তী অধ্যায়/চলচ্চিত্র (_N)"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:129
 msgid "_No TV-out"
 msgstr "TV-আউটপুট অনুপস্থিত (_N)"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:130
 msgid "_Open..."
 msgstr "খুলুন...(_O)"
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:131
 msgid "_Previous Chapter/Movie"
 msgstr "পূর্ববর্তী অধ্যায়/চলচ্চিত্র (_P)"
 
 # এটা কি ঠিক আছে ?
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:132
 msgid "_Properties"
 msgstr "বিবিধ বৈশিষ্ট্য (_P)"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:133
 msgid "_Quit"
 msgstr "প্রস্থান (_Q)"
 
-#: ../data/totem.ui.h:112 ../src/totem-menu.c:1358
+#: ../data/totem.ui.h:134 ../src/totem-menu.c:1340
 msgid "_Repeat Mode"
 msgstr "পুনরাবৃত্তি মোড (_R)"
 
-#: ../data/totem.ui.h:113
+#: ../data/totem.ui.h:135
 msgid "_Resize 1:2"
 msgstr "মাপ পরিবর্তন ১:২ (_R)"
 
-#: ../data/totem.ui.h:114
-msgid "_Sidebar"
-msgstr "সাইড-বার (_S)"
-
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:136
 msgid "_Sound"
 msgstr "শব্দ (_S)"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:137
 msgid "_Title Menu"
 msgstr "শিরোনাম মেনু (_T)"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:138
 msgid "_Type of visualisation:"
 msgstr "ভিশুয়ালাইজেশনের ধরন: (_T)"
 
 # ঠিক করেন
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:139
 msgid "_View"
 msgstr "প্রদর্শন (_V)"
 
@@ -759,7 +845,9 @@ msgstr "শুধুমাত্র অডিও চালনার সময় �
 msgid ""
 "Allow the screensaver to activate even when audio-only is playing. This is "
 "useful for monitor powered speakers."
-msgstr "শুধুমাত্র অডিও চালনার সময় স্ক্রিন-সেভার সক্রিয় করা যাবে। মনিটর থেকে বিদ্যুৎ প্রয়োগ করে চালিত স্পিকারের ক্ষেত্রে এই মান নির্ধারণ করা সুবিধাজনক।"
+msgstr ""
+"শুধুমাত্র অডিও চালনার সময় স্ক্রিন-সেভার সক্রিয় করা যাবে। মনিটর থেকে বিদ্যুৎ প্রয়োগ "
+"করে চালিত স্পিকারের ক্ষেত্রে এই মান নির্ধারণ করা সুবিধাজনক।"
 
 #: ../data/totem.schemas.in.h:3
 msgid ""
@@ -924,7 +1012,7 @@ msgstr "খোলার উদ্দেশ্যে ফাইলের ঠিক
 msgid "Playing a movie"
 msgstr "চলচ্চিত্র চালানো হচ্ছে"
 
-#: ../src/totem-cell-renderer-video.c:91
+#: ../src/totem-cell-renderer-video.c:102
 msgid "Unknown video"
 msgstr "অজানা ভিডিও"
 
@@ -945,16 +1033,21 @@ msgstr "ডিফল্ট ব্রাউজার কনফিগার কর
 msgid "Error launching URI"
 msgstr "URI আরম্ভ করতে ত্রুটি"
 
-#: ../src/totem-interface.c:193
+#: ../src/totem-interface.c:173 ../src/totem-interface.c:205
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "'%s' ইন্টারফেস লোড করা যায়নি। %s"
 
-#: ../src/totem-interface.c:195 ../src/totem-interface.c:197
+#: ../src/totem-interface.c:173
+msgid "The file does not exist."
+msgstr "ফাইল বর্তমানে উপস্থিত নেই।"
+
+#: ../src/totem-interface.c:175 ../src/totem-interface.c:177
+#: ../src/totem-interface.c:207 ../src/totem-interface.c:209
 msgid "Make sure that Totem is properly installed."
 msgstr "Totem সঠিকভাবে ইনস্টল করা হয়েছে কিনা পরীক্ষা করুন।"
 
-#: ../src/totem-interface.c:308
+#: ../src/totem-interface.c:320
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -965,7 +1058,7 @@ msgstr ""
 "Public License-র শর্তানুযায়ী এটি বিতরণ ও পরিবর্তন করা যাবে; লাইসেন্সের সংস্করণ ২ "
 "অথবা (আপনার সুবিধানুযায়ী) ঊর্ধ্বতন কোনো সংস্করণের অধীন।"
 
-#: ../src/totem-interface.c:312
+#: ../src/totem-interface.c:324
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -976,7 +1069,7 @@ msgstr ""
 "কোনো সুস্পষ্ট ওয়ারেন্টি উপস্থিত নেই; বাণিজ্যিক ও কোনো সুনির্দিষ্ট কর্ম সাধনের জন্য "
 "অন্তর্নিহীত ওয়ারেন্টিও অনুপস্থিত। অধিক জানতে GNU General Public License পড়ুন।"
 
-#: ../src/totem-interface.c:316
+#: ../src/totem-interface.c:328
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -986,7 +1079,7 @@ msgstr ""
 "থাকলে নিম্নলিখিত ঠিকানায় লিখে তা সংগ্রহ করুন Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../src/totem-interface.c:319
+#: ../src/totem-interface.c:331
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -998,19 +1091,19 @@ msgstr ""
 msgid "None"
 msgstr "ফাঁকা"
 
-#: ../src/totem-menu.c:827
+#: ../src/totem-menu.c:833
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "'%s' নামক ডিস্ক চালান"
 
-#: ../src/totem-menu.c:830
+#: ../src/totem-menu.c:836
 #, c-format
 msgid "device%d"
 msgstr "ডিভাইস%d"
 
 #. translators: the index of the adapter
 #. * DVB Adapter 1
-#: ../src/totem-menu.c:918
+#: ../src/totem-menu.c:910
 #, c-format
 msgid "DVB Adapter %u"
 msgstr "DVB অ্যাডাপ্টার %u"
@@ -1019,49 +1112,37 @@ msgstr "DVB অ্যাডাপ্টার %u"
 #. * Watch TV on 'DVB Adapter 1'
 #. * or
 #. * Watch TV on 'Hauppauge Nova-T Stick'
-#: ../src/totem-menu.c:923
+#: ../src/totem-menu.c:915
 #, c-format
 msgid "Watch TV on '%s'"
 msgstr "'%s'-র মধ্যে TV দেখুন"
 
-#: ../src/totem-menu.c:1199
-msgid "GTK+"
-msgstr "GTK+"
-
-#: ../src/totem-menu.c:1201
-msgid "GNOME"
-msgstr "GNOME"
-
 # নিজের নামে আন্ডারস্কোর দিছেন কেন ???@@#!!!
 # msgstr "রুনা ভট্টাচার্য্য <runab77@softhome.net>" <-- ঠিক আছেনা ?
-#. This lists the back-end and front-end types and versions, such as
-#. * Movie Player using GStreamer 0.10.1 and GNOME
-#: ../src/totem-menu.c:1207
+#. This lists the back-end type and version, such as
+#. * Movie Player using GStreamer 0.10.1
+#: ../src/totem-menu.c:1190
 #, c-format
-msgid "Movie Player using %s and %s"
-msgstr "%s ও %s প্রয়োগকারী মুভি প্লেয়ার"
+msgid "Movie Player using %s"
+msgstr "%s প্রয়োগকারী মুভি প্লেয়ার"
 
-#: ../src/totem-menu.c:1212 ../browser-plugin/totem-plugin-viewer.c:1351
+#: ../src/totem-menu.c:1194
 msgid "Copyright © 2002-2007 Bastien Nocera"
 msgstr "স্বত্বাধিকার ২০০২-২০০৭ বেস্টিয়ান নোসেরা"
 
-#: ../src/totem-menu.c:1217 ../browser-plugin/totem-plugin-viewer.c:1354
+#: ../src/totem-menu.c:1199 ../browser-plugin/totem-plugin-viewer.c:1149
 msgid "translator-credits"
 msgstr "রুণা ভট্টাচার্য্য"
 
-#: ../src/totem-menu.c:1221
+#: ../src/totem-menu.c:1203
 msgid "Totem Website"
 msgstr "Totem ওয়েব-সাইট"
 
-#: ../src/totem-menu.c:1256
+#: ../src/totem-menu.c:1238
 msgid "Configure Plugins"
 msgstr "প্লাগ-ইন কনফিগার করুন"
 
-#: ../src/totem-menu.c:1362
-msgid "S_idebar"
-msgstr "সাইড-বার (_i)"
-
-#: ../src/totem-menu.c:1369
+#: ../src/totem-menu.c:1351
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "১৬:৯ (অ্যানামোরফিক) অ্যাস্পেক্ট অনুপাত নির্ধারণ করে"
 
@@ -1078,11 +1159,11 @@ msgstr "ডি-বাগ ব্যবস্থা সক্রিয় করা �
 msgid "Play/Pause"
 msgstr "চালানো/থামানো হবে"
 
-#: ../src/totem-options.c:39 ../src/totem.c:313 ../src/totem.c:323
+#: ../src/totem-options.c:39 ../src/totem.c:345 ../src/totem.c:355
 msgid "Play"
 msgstr "চালানো হবে"
 
-#: ../src/totem-options.c:40 ../src/totem.c:306
+#: ../src/totem-options.c:40 ../src/totem.c:338
 msgid "Pause"
 msgstr "থামানো হবে"
 
@@ -1159,23 +1240,30 @@ msgstr "প্লে-লিস্টের ইনডেক্স"
 msgid "Movies to play"
 msgstr "চালানোর জন্য চিহ্নিত চলচ্চিত্র।"
 
-#: ../src/totem-playlist.c:339 ../src/totem-playlist.c:942
+#. This is "Title 3", where title is a DVD title
+#. * Note: NOT a DVD chapter
+#: ../src/totem-playlist.c:277
+#, c-format
+msgid "Title %d"
+msgstr "শিরোনাম %d"
+
+#: ../src/totem-playlist.c:352 ../src/totem-playlist.c:973
 msgid "Could not save the playlist"
 msgstr "প্লে-লিস্ট সংরক্ষণ করা যায়নি"
 
-#: ../src/totem-playlist.c:942
+#: ../src/totem-playlist.c:973
 msgid "Unknown file extension."
 msgstr "অজানা ফাইল এক্সেটেনশন।"
 
-#: ../src/totem-playlist.c:955
+#: ../src/totem-playlist.c:986
 msgid "Select playlist format:"
 msgstr "প্লে-লিস্টের বিন্যাস নির্বাচন করুন:"
 
-#: ../src/totem-playlist.c:960
+#: ../src/totem-playlist.c:991
 msgid "By extension"
 msgstr "এক্সটেনশন অনুযায়ী"
 
-#: ../src/totem-playlist.c:990
+#: ../src/totem-playlist.c:1021
 msgid "Save Playlist"
 msgstr "প্লে-লিস্ট সংরক্ষণ করুন"
 
@@ -1185,11 +1273,11 @@ msgstr "প্লে-লিস্ট সংরক্ষণ করুন"
 # শুদ্ধ - পরীক্ষা
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1001 ../src/totem-sidebar.c:105
+#: ../src/totem-playlist.c:1032 ../src/totem-sidebar.c:102
 msgid "Playlist"
 msgstr "প্লে-লিস্ট"
 
-#: ../src/totem-playlist.c:1720
+#: ../src/totem-playlist.c:1787
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "সম্ভবত ক্ষতিগ্রস্ত হওয়ার ফলে '%s' প্লে-লিস্টটি পড়া যায়নি।"
@@ -1198,7 +1286,7 @@ msgstr "সম্ভবত ক্ষতিগ্রস্ত হওয়ার ফ
 # Chapter=অধ্যায়
 # অশুদ্ধ - পরিক্ষা
 # শুদ্ধ - পরীক্ষা
-#: ../src/totem-playlist.c:1721
+#: ../src/totem-playlist.c:1788
 msgid "Playlist error"
 msgstr "প্লে-লিস্ট সংক্রান্ত সমস্যা"
 
@@ -1239,7 +1327,7 @@ msgid "Preferences"
 msgstr "পছন্দ"
 
 # msgstr "এই পাসওয়ার্ডটি মনে রাখা হবে"
-#: ../src/totem-preferences.c:707
+#: ../src/totem-preferences.c:709
 msgid "Select Subtitle Font"
 msgstr "অনুবাদলিপির ফন্ট নির্বাচন"
 
@@ -1272,297 +1360,246 @@ msgid "Save Screenshot"
 msgstr "পর্দার ছবি সংরক্ষণ করুন"
 
 # msgstr "স্থগিত"
-#: ../src/totem-statusbar.c:106
+#: ../src/totem-statusbar.c:97
 msgid "0:00 / 0:00"
 msgstr "০:০০ / ০:০০"
 
 # msgstr "স্ট্যাটাসবারে লিখিত টেক্সটের চারপাশে প্রদর্শিত বেভেলের ধরন"
-#: ../src/totem-statusbar.c:111 ../src/totem.c:318 ../src/totem.c:895
-#: ../browser-plugin/totem-plugin-viewer.c:341
+#: ../src/totem-statusbar.c:102 ../src/totem.c:350 ../src/totem.c:1007
+#: ../browser-plugin/totem-plugin-viewer.c:339
 msgid "Stopped"
 msgstr "স্থগিত"
 
-#: ../src/totem-statusbar.c:128
+#: ../src/totem-statusbar.c:119
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (স্ট্রিম করা হচ্ছে)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:135 ../src/totem-time-label.c:67
+#: ../src/totem-statusbar.c:126 ../src/totem-time-label.c:67
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:138 ../src/totem-time-label.c:70
+#: ../src/totem-statusbar.c:129 ../src/totem-time-label.c:70
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "%s / %s অনুসন্ধান করা হবে"
 
-#: ../src/totem-statusbar.c:210
+#: ../src/totem-statusbar.c:201
 msgid "Buffering"
 msgstr "বাফার করা হচ্ছে"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:221
+#: ../src/totem-statusbar.c:212
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:291
+#: ../src/totem-statusbar.c:282
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:296
+#: ../src/totem-statusbar.c:287
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
 
-#: ../src/totem-subtitle-encoding.c:158
+#: ../src/totem-subtitle-encoding.c:157
 msgid "Current Locale"
 msgstr "বর্তমানে ব্যবহৃত লোকেইল"
 
-#: ../src/totem-subtitle-encoding.c:161 ../src/totem-subtitle-encoding.c:163
-#: ../src/totem-subtitle-encoding.c:165 ../src/totem-subtitle-encoding.c:167
+#: ../src/totem-subtitle-encoding.c:160 ../src/totem-subtitle-encoding.c:162
+#: ../src/totem-subtitle-encoding.c:164 ../src/totem-subtitle-encoding.c:166
 msgid "Arabic"
 msgstr "আরবি"
 
-#: ../src/totem-subtitle-encoding.c:170
+#: ../src/totem-subtitle-encoding.c:169
 msgid "Armenian"
 msgstr "আর্মেনিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:173 ../src/totem-subtitle-encoding.c:175
-#: ../src/totem-subtitle-encoding.c:177
+#: ../src/totem-subtitle-encoding.c:172 ../src/totem-subtitle-encoding.c:174
+#: ../src/totem-subtitle-encoding.c:176
 msgid "Baltic"
 msgstr "বল্টিক"
 
-#: ../src/totem-subtitle-encoding.c:180
+#: ../src/totem-subtitle-encoding.c:179
 msgid "Celtic"
 msgstr "সেল্টিক"
 
-#: ../src/totem-subtitle-encoding.c:183 ../src/totem-subtitle-encoding.c:185
-#: ../src/totem-subtitle-encoding.c:187 ../src/totem-subtitle-encoding.c:189
+#: ../src/totem-subtitle-encoding.c:182 ../src/totem-subtitle-encoding.c:184
+#: ../src/totem-subtitle-encoding.c:186 ../src/totem-subtitle-encoding.c:188
 msgid "Central European"
 msgstr "মধ্য ইউরোপিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:192 ../src/totem-subtitle-encoding.c:194
-#: ../src/totem-subtitle-encoding.c:196 ../src/totem-subtitle-encoding.c:198
+#: ../src/totem-subtitle-encoding.c:191 ../src/totem-subtitle-encoding.c:193
+#: ../src/totem-subtitle-encoding.c:195 ../src/totem-subtitle-encoding.c:197
 msgid "Chinese Simplified"
 msgstr "সরলীকৃত চীনা"
 
-#: ../src/totem-subtitle-encoding.c:201 ../src/totem-subtitle-encoding.c:203
-#: ../src/totem-subtitle-encoding.c:205
+#: ../src/totem-subtitle-encoding.c:200 ../src/totem-subtitle-encoding.c:202
+#: ../src/totem-subtitle-encoding.c:204
 msgid "Chinese Traditional"
 msgstr "পারম্পরিক চীনা"
 
-#: ../src/totem-subtitle-encoding.c:208
+#: ../src/totem-subtitle-encoding.c:207
 msgid "Croatian"
 msgstr "ক্রোয়িশান"
 
-#: ../src/totem-subtitle-encoding.c:211 ../src/totem-subtitle-encoding.c:213
-#: ../src/totem-subtitle-encoding.c:215 ../src/totem-subtitle-encoding.c:217
-#: ../src/totem-subtitle-encoding.c:219 ../src/totem-subtitle-encoding.c:221
+#: ../src/totem-subtitle-encoding.c:210 ../src/totem-subtitle-encoding.c:212
+#: ../src/totem-subtitle-encoding.c:214 ../src/totem-subtitle-encoding.c:216
+#: ../src/totem-subtitle-encoding.c:218 ../src/totem-subtitle-encoding.c:220
 msgid "Cyrillic"
 msgstr "সিরিলিক"
 
-#: ../src/totem-subtitle-encoding.c:224
+#: ../src/totem-subtitle-encoding.c:223
 msgid "Cyrillic/Russian"
 msgstr "সিরিলিক/রুশি"
 
-#: ../src/totem-subtitle-encoding.c:227 ../src/totem-subtitle-encoding.c:229
+#: ../src/totem-subtitle-encoding.c:226 ../src/totem-subtitle-encoding.c:228
 msgid "Cyrillic/Ukrainian"
 msgstr "সিরিলিক/ইউক্রেনিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:232
+#: ../src/totem-subtitle-encoding.c:231
 msgid "Georgian"
 msgstr "জর্জিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:235 ../src/totem-subtitle-encoding.c:237
-#: ../src/totem-subtitle-encoding.c:239
+#: ../src/totem-subtitle-encoding.c:234 ../src/totem-subtitle-encoding.c:236
+#: ../src/totem-subtitle-encoding.c:238
 msgid "Greek"
 msgstr "গ্রিক"
 
-#: ../src/totem-subtitle-encoding.c:242
+#: ../src/totem-subtitle-encoding.c:241
 msgid "Gujarati"
 msgstr "গুজরাতি"
 
-#: ../src/totem-subtitle-encoding.c:245
+#: ../src/totem-subtitle-encoding.c:244
 msgid "Gurmukhi"
 msgstr "গুরুমুখী"
 
-#: ../src/totem-subtitle-encoding.c:248 ../src/totem-subtitle-encoding.c:250
-#: ../src/totem-subtitle-encoding.c:252 ../src/totem-subtitle-encoding.c:254
+#: ../src/totem-subtitle-encoding.c:247 ../src/totem-subtitle-encoding.c:249
+#: ../src/totem-subtitle-encoding.c:251 ../src/totem-subtitle-encoding.c:253
 msgid "Hebrew"
 msgstr "হিব্রু"
 
-#: ../src/totem-subtitle-encoding.c:257
+#: ../src/totem-subtitle-encoding.c:256
 msgid "Hebrew Visual"
 msgstr "হিব্রু ভিসুয়াল"
 
-#: ../src/totem-subtitle-encoding.c:260
+#: ../src/totem-subtitle-encoding.c:259
 msgid "Hindi"
 msgstr "হিন্দি"
 
-#: ../src/totem-subtitle-encoding.c:263
+#: ../src/totem-subtitle-encoding.c:262
 msgid "Icelandic"
 msgstr "আইসল্যান্ডিক"
 
-#: ../src/totem-subtitle-encoding.c:266 ../src/totem-subtitle-encoding.c:268
-#: ../src/totem-subtitle-encoding.c:270
+#: ../src/totem-subtitle-encoding.c:265 ../src/totem-subtitle-encoding.c:267
+#: ../src/totem-subtitle-encoding.c:269
 msgid "Japanese"
 msgstr "জাপানি"
 
-#: ../src/totem-subtitle-encoding.c:273 ../src/totem-subtitle-encoding.c:275
-#: ../src/totem-subtitle-encoding.c:277 ../src/totem-subtitle-encoding.c:279
+#: ../src/totem-subtitle-encoding.c:272 ../src/totem-subtitle-encoding.c:274
+#: ../src/totem-subtitle-encoding.c:276 ../src/totem-subtitle-encoding.c:278
 msgid "Korean"
 msgstr "কোরিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:282
+#: ../src/totem-subtitle-encoding.c:281
 msgid "Nordic"
 msgstr "নর্ডিক"
 
-#: ../src/totem-subtitle-encoding.c:285
+#: ../src/totem-subtitle-encoding.c:284
 msgid "Persian"
 msgstr "ফার্সি"
 
-#: ../src/totem-subtitle-encoding.c:288 ../src/totem-subtitle-encoding.c:290
+#: ../src/totem-subtitle-encoding.c:287 ../src/totem-subtitle-encoding.c:289
 msgid "Romanian"
 msgstr "রোমেনিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:293
+#: ../src/totem-subtitle-encoding.c:292
 msgid "South European"
 msgstr "দক্ষিণ ইউরোপিয়ান"
 
-#: ../src/totem-subtitle-encoding.c:296
+#: ../src/totem-subtitle-encoding.c:295
 msgid "Thai"
 msgstr "থাই"
 
-#: ../src/totem-subtitle-encoding.c:299 ../src/totem-subtitle-encoding.c:301
-#: ../src/totem-subtitle-encoding.c:303 ../src/totem-subtitle-encoding.c:305
+#: ../src/totem-subtitle-encoding.c:298 ../src/totem-subtitle-encoding.c:300
+#: ../src/totem-subtitle-encoding.c:302 ../src/totem-subtitle-encoding.c:304
 msgid "Turkish"
 msgstr "তুর্কি"
 
-#: ../src/totem-subtitle-encoding.c:308 ../src/totem-subtitle-encoding.c:310
-#: ../src/totem-subtitle-encoding.c:312 ../src/totem-subtitle-encoding.c:314
-#: ../src/totem-subtitle-encoding.c:316
+#: ../src/totem-subtitle-encoding.c:307 ../src/totem-subtitle-encoding.c:309
+#: ../src/totem-subtitle-encoding.c:311 ../src/totem-subtitle-encoding.c:313
+#: ../src/totem-subtitle-encoding.c:315
 msgid "Unicode"
 msgstr "ইউনিকোড"
 
-#: ../src/totem-subtitle-encoding.c:319 ../src/totem-subtitle-encoding.c:321
-#: ../src/totem-subtitle-encoding.c:323 ../src/totem-subtitle-encoding.c:325
-#: ../src/totem-subtitle-encoding.c:327
+#: ../src/totem-subtitle-encoding.c:318 ../src/totem-subtitle-encoding.c:320
+#: ../src/totem-subtitle-encoding.c:322 ../src/totem-subtitle-encoding.c:324
+#: ../src/totem-subtitle-encoding.c:326
 msgid "Western"
 msgstr "পশ্চিমি"
 
-#: ../src/totem-subtitle-encoding.c:330 ../src/totem-subtitle-encoding.c:332
-#: ../src/totem-subtitle-encoding.c:334
+#: ../src/totem-subtitle-encoding.c:329 ../src/totem-subtitle-encoding.c:331
+#: ../src/totem-subtitle-encoding.c:333
 msgid "Vietnamese"
 msgstr "ভিয়েতনামিস"
 
 # msgstr "এই পাসওয়ার্ডটি মনে রাখা হবে"
-#: ../src/totem-uri.c:418
+#: ../src/totem-uri.c:405
 msgid "All files"
 msgstr "সমস্ত ফাইল"
 
-#: ../src/totem-uri.c:423
+#: ../src/totem-uri.c:410
 msgid "Supported files"
 msgstr "সমর্থিত ফাইল"
 
 # msgstr "এই পাসওয়ার্ডটি মনে রাখা হবে"
-#: ../src/totem-uri.c:435
+#: ../src/totem-uri.c:422
 msgid "Audio files"
 msgstr "অডিও ফাইল"
 
 # ঠিক করেন
-#: ../src/totem-uri.c:443
+#: ../src/totem-uri.c:430
 msgid "Video files"
 msgstr "ভিডিও ফাইল"
 
-#: ../src/totem-uri.c:453
+#: ../src/totem-uri.c:440
 msgid "Subtitle files"
 msgstr "অনুবাদলিপির ফাইল"
 
 # msgstr "এই পাসওয়ার্ডটি মনে রাখা হবে"
-#: ../src/totem-uri.c:518
+#: ../src/totem-uri.c:505
 msgid "Select text subtitle"
 msgstr "অনুবাদলিপির লেখনি নির্বাচন করুন"
 
-#: ../src/totem-uri.c:571
+#: ../src/totem-uri.c:559
 msgid "Select Movies or Playlists"
 msgstr "চলচ্চিত্র অথবা প্লে-লিস্ট নির্বাচন করুন"
 
-#: ../src/totem.c:304 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem.c:336 ../browser-plugin/totem-plugin-viewer.c:355
 msgid "Playing"
 msgstr "চালানো হচ্ছে"
 
-#: ../src/totem.c:311 ../browser-plugin/totem-plugin-viewer.c:353
+#: ../src/totem.c:343 ../browser-plugin/totem-plugin-viewer.c:351
 msgid "Paused"
 msgstr "থামানো হয়েছে"
 
-#: ../src/totem.c:392 ../src/totem.c:419 ../src/totem.c:998
-#: ../src/totem.c:1120
+#: ../src/totem.c:431 ../src/totem.c:458 ../src/totem.c:1128
+#: ../src/totem.c:1276
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem সহযোগে '%s' চালানো যায়নি।"
 
-#: ../src/totem.c:495
-msgid "More information about watching TV"
-msgstr "TV প্রদর্শন সম্বন্ধে অধিক তথ্য"
-
-#: ../src/totem.c:496
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "রিসিভার টিউন করার উদ্দেশ্যে আবশ্যক চ্যানেলের তালিকা Totem-র জন্য উপলব্ধ নেই।"
-
-#: ../src/totem.c:497
-msgid ""
-"Please follow the instructions provided in the link to create a channels "
-"listing."
-msgstr "চ্যানেলের তালিকা নির্মাণের জন্য অনুগ্রহ করে প্রদত্ত লিঙ্কের মধ্যে উপস্থিত নির্দেশাবলী অনুসরণ করুন।"
-
-#: ../src/totem.c:501
-msgid "More information about media plugins"
-msgstr "মিডিয়া প্লাগ-ইন সম্বন্ধে অধিক তথ্য"
-
-#: ../src/totem.c:502
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr "এই মিডিয়া চালানোর জন্য সঠিক প্লাগ-ইন ইনস্টল করে Totem পুনরায় চালু করুন।"
-
-#: ../src/totem.c:504
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"ডিস্ক থেকে তথ্য পাঠের উদ্দেশ্যে সঠিক প্লাগ-ইন উপস্থিত না থাকার ফলে Totem-র পক্ষে এই ধরনের মিডিয়া (%s) চালানো "
-"সম্ভব নয়।"
-
-#: ../src/totem.c:506
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"সঠিক প্লাগ-ইন উপস্থিত না থাকার ফলে Totem-র পক্ষে এই ধরনের মিডিয়া (%s) চালানো "
-"সম্ভব নয়।"
-
-#: ../src/totem.c:509
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "এই ধরনের মিডিয়া (%s) Totem দ্বারা সমর্থিত না হওয়ার ফলে এটি চালানো যাবে না।"
-
-#: ../src/totem.c:510
-msgid "Please insert another disc to play back."
-msgstr "চালনার জন্য অনুগ্রহ করে একটি ডিস্ক ঢুকিয়ে দিন।"
-
 # msgstr ""
 # "সঠিক প্লাগিন না থাকায় টোটেম এধরনের মিডিয়া চালাতে অক্ষম।\n"
 # "এই মিডিয়া ব্যবহারের জন্য সঠিক প্লাগিন ইনস্টল করে পুনরায় টোটেম চালু করুন।"
-#: ../src/totem.c:524
+#: ../src/totem.c:541
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1572,95 +1609,180 @@ msgstr "সঠিক প্লাগ-ইন উপস্থিত থাকা �
 # msgstr ""
 # "সঠিক প্লাগিন না থাকায় টোটেম এধরনের মিডিয়া চালাতে অক্ষম।\n"
 # "এই মিডিয়া ব্যবহারের জন্য সঠিক প্লাগিন ইনস্টল করে পুনরায় টোটেম চালু করুন।"
-#: ../src/totem.c:525
+#: ../src/totem.c:542
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "ড্রাইভে ডিস্ক আছে কিনা এবং তা সঠিকভাবে কনফিগার করা হয়েছে কিনা পরীক্ষা করুন।"
 
-#: ../src/totem.c:553
+#: ../src/totem.c:549 ../src/plugins/youtube/youtube.py:174
+msgid "More information about media plugins"
+msgstr "মিডিয়া প্লাগ-ইন সম্বন্ধে অধিক তথ্য"
+
+#: ../src/totem.c:550 ../src/plugins/youtube/youtube.py:172
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr "এই মিডিয়া চালানোর জন্য সঠিক প্লাগ-ইন ইনস্টল করে Totem পুনরায় চালু করুন।"
+
+#: ../src/totem.c:552
+#, c-format
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"ডিস্ক থেকে তথ্য পাঠের উদ্দেশ্যে সঠিক প্লাগ-ইন উপস্থিত না থাকার ফলে Totem-র পক্ষে এই "
+"ধরনের মিডিয়া (%s) চালানো সম্ভব নয়।"
+
+#: ../src/totem.c:554 ../src/plugins/youtube/youtube.py:171
+#, c-format, python-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"সঠিক প্লাগ-ইন উপস্থিত না থাকার ফলে Totem-র পক্ষে এই ধরনের মিডিয়া (%s) চালানো "
+"সম্ভব নয়।"
+
+#: ../src/totem.c:558
+msgid ""
+"Totem cannot play TV, because no TV adapters are present or they are not "
+"supported."
+msgstr "Totem দ্বারা TV চালানো সম্ভব হবে না, কারণ TV অ্যাডাপ্টার বর্তমানে উপস্থিত নয় অথবা সমর্থিত নয়।"
+
+#: ../src/totem.c:559
+msgid "Please insert a supported TV adapter."
+msgstr "অনুগ্রহ করে একটি সমর্থিত TV অ্যাডাপ্টার যোগ করুন।"
+
+#: ../src/totem.c:569
+msgid "More information about watching TV"
+msgstr "TV প্রদর্শন সম্বন্ধে অধিক তথ্য"
+
+#: ../src/totem.c:570
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "রিসিভার টিউন করার উদ্দেশ্যে আবশ্যক চ্যানেলের তালিকা Totem-র জন্য উপলব্ধ নেই।"
+
+#: ../src/totem.c:571
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr ""
+"চ্যানেলের তালিকা নির্মাণের জন্য অনুগ্রহ করে প্রদত্ত লিঙ্কের মধ্যে উপস্থিত নির্দেশাবলী "
+"অনুসরণ করুন।"
+
+#: ../src/totem.c:574
+#, c-format
+msgid "Totem cannot play this type of media (%s) because the TV device is busy."
+msgstr "এই ধরনের মিডিয়া (%s) Totem দ্বারা চালানো সম্ভব নয় কারণ TV ডিভাউস বর্তমানে মুক্ত নয়।"
+
+#: ../src/totem.c:575
+msgid "Please try again later."
+msgstr "অনুগ্রহ করে পরে প্রচেষ্টা করুন।"
+
+#: ../src/totem.c:580
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr "এই ধরনের মিডিয়া (%s) Totem দ্বারা সমর্থিত না হওয়ার ফলে এটি চালানো যাবে না।"
+
+#: ../src/totem.c:581
+msgid "Please insert another disc to play back."
+msgstr "চালনার জন্য অনুগ্রহ করে একটি ডিস্ক ঢুকিয়ে দিন।"
+
+#: ../src/totem.c:615
 msgid "Totem was not able to play this disc."
 msgstr "Totem দ্বারা এই ডিস্ক চালানো সম্ভব হয়নি।"
 
-#: ../src/totem.c:554 ../src/totem.c:2965
-#: ../browser-plugin/totem-plugin-viewer.c:1902
+#: ../src/totem.c:616 ../src/totem.c:3282
+#: ../browser-plugin/totem-plugin-viewer.c:1780
 msgid "No reason."
 msgstr "কারণ নেই।"
 
-#: ../src/totem.c:568
+#: ../src/totem.c:630
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem দ্বারা অডিও CD চালানো সম্ভব নয়"
 
-#: ../src/totem.c:569
+#: ../src/totem.c:631
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "এই CD চালানোর জন্য অনুগ্রহ করে কোনো মিউজিক প্লেয়ার অথবা CD এক্সট্র্যাক্টার ব্যবহার করুন"
 
-#: ../src/totem.c:812 ../src/totem.c:820
+#: ../src/totem.c:932 ../src/totem.c:940
 msgid "Totem could not get a screenshot of that film."
 msgstr "Totem দ্বারা চলচ্চিত্র চালনার ছবি গ্রহণ করা সম্ভব হয়নি।"
 
-#: ../src/totem.c:820
+#: ../src/totem.c:940
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "এই আচরণ প্রত্যাশিত নয়; অনুগ্রহ করে বাগ-রিপোর্ট নথিভুক্ত করুন"
 
-#: ../src/totem.c:1004
+#: ../src/totem.c:1134
 msgid "No error message"
 msgstr "সমস্যাজড়িত বার্তা নেই"
 
-#: ../src/totem.c:1243
+#: ../src/totem.c:1451
 msgid "Totem could not display the help contents."
 msgstr "Totem দ্বারা সহায়িকার বিষয় বস্তু প্রদর্শন করা যায়নি।"
 
-#: ../src/totem.c:1501 ../src/totem.c:1503
-#: ../browser-plugin/totem-plugin-viewer.c:1569
+#: ../src/totem.c:1720 ../src/totem.c:1722
+#: ../browser-plugin/totem-plugin-viewer.c:1437
 msgid "An error occurred"
 msgstr "সমস্যা উৎপন্ন হয়েছে"
 
-#: ../src/totem.c:2826 ../src/totem.c:2828
+#: ../src/totem.c:2576
+msgid "TV signal lost"
+msgstr "TV সংকেত পাওয়া যায়নি"
+
+#: ../src/totem.c:2577
+msgid "Please verify your hardware setup."
+msgstr "অনুগ্রহ করে হার্ডওয়্যার সেট-আপ পরীক্ষা করুন।"
+
+#: ../src/totem.c:3143 ../src/totem.c:3145
 msgid "Previous Chapter/Movie"
 msgstr "পূর্ববর্তী অধ্যায়/চলচ্চিত্র"
 
-#: ../src/totem.c:2834 ../src/totem.c:2836
+#: ../src/totem.c:3151 ../src/totem.c:3153
 msgid "Play / Pause"
 msgstr "চালানো / থামানো হবে"
 
-#: ../src/totem.c:2843 ../src/totem.c:2845
+#: ../src/totem.c:3160 ../src/totem.c:3162
 msgid "Next Chapter/Movie"
 msgstr "পরবর্তী অধ্যায়/চলচ্চিত্র"
 
-#: ../src/totem.c:2965
+#: ../src/totem.c:3282
 msgid "Totem could not startup."
 msgstr "Totem আরম্ভ করা যায়নি।"
 
-#: ../src/totem.c:3104
+#: ../src/totem.c:3419
 msgid "Could not initialize the thread-safe libraries."
 msgstr "থ্রেড-সেফ লাইব্রেরি চালু করা যায়নি।"
 
-#: ../src/totem.c:3104
+#: ../src/totem.c:3419
 msgid "Verify your system installation. Totem will now exit."
 msgstr "আপনার সিস্টেমের ইনস্টলেশন পরীক্ষা করুন। Totem এখন বন্ধ করা হবে।"
 
 # msgstr "বৎসর:" <-- বানান
 # msgstr "বছর:"
 #. Handle command line arguments
-#: ../src/totem.c:3112
+#: ../src/totem.c:3427
 msgid "- Play movies and songs"
 msgstr "- চলচ্চিত্র ও সংগীত পরিবেশন"
 
-#: ../src/totem.c:3121
-msgid "Totem could not parse the command-line options"
-msgstr "Totem দ্বারা কমান্ড-লাইন থেকে ব্যবহারযোগ্য বিকল্প পার্স করা যায়নি"
+#: ../src/totem.c:3436
+#, c-format
+msgid ""
+"%s\n"
+"Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+"%s\n"
+"কমান্ড-লাইন থেকে ব্যবহারযোগ্য বিকল্পের সম্পূর্ণ তালিকা দেখার জন্য '%s --help' ব্যবহার করুন।\n"
 
 # পরীক্ষা
-#: ../src/totem.c:3140
+#: ../src/totem.c:3456
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem দ্বারা এই কনফিগারেশন ইঞ্জিনটি আরম্ভ করা যায়নি।"
 
-#: ../src/totem.c:3140
+#: ../src/totem.c:3456
 msgid "Make sure that GNOME is properly installed."
 msgstr "GNOME সঠিকরূপে ইনস্টল করা হয়েছে কিনা পরীক্ষা করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2437
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2468
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1668,15 +1790,15 @@ msgstr ""
 "অনুরোধ করা অডিও আউটপুট পাওয়া যায়নি। মাল্টি-মিডিয়া সিস্টেম নির্বাচন ব্যবস্থায় অনুগ্রহ "
 "করে অন্য একটি অডিও আউটপুট নির্বাচন করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2473
 msgid "Location not found."
 msgstr "অবস্থান পাওয়া যায়নি।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2446
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "অবস্থান খোলা যায়নি; সম্ভবত এই ফাইল খুলতে আপনি অনুমতিপ্রাপ্ত নন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1686,7 +1808,7 @@ msgstr ""
 "অ্যাপ্লিকেশন বন্ধ করুন অথবা মাল্টি-মিডিয়া সিস্টেম নির্বাচন ব্যবস্থায় অন্য একটি ভিডিও "
 "আউটপুট ব্যবস্থা নির্বাচন করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2463
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2494
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1697,13 +1819,13 @@ msgstr ""
 "ব্যবহার সম্পর্কে বিবেচনা করা যাবে।"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2512
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2518
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "এই চলচ্চিত্র প্রদর্শনের জন্য আবশ্যক %s প্লাগ-ইন, ইনস্টল করা হয়নি।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2519
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1715,46 +1837,41 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2513
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2544
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "নেটওয়ার্কের মাধ্যমে এই ফাইল চালানো যাবে না। প্রতমে এটি ডিস্কে ডাউনলোড করার "
 "প্রচেষ্টা করুন।"
 
 # msgstr "এই অবস্থানটি অবৈধ"
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2616
 msgid "Media file could not be played."
 msgstr "মিডিয়া ফাইল চালানো যায়নি।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2662
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2728
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2748
 #, c-format
 msgid "Failed to retrieve working directory"
 msgstr "কার্যকর ডিরেক্টরি উদ্ধার করা যায়নি"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4389
 msgid "Surround"
 msgstr "সারাউন্ড"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4395
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4391
 msgid "Mono"
 msgstr "মোনো"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4397
-msgid "Stereo"
-msgstr "স্টিরিও"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4628
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4710
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "GStreamer-র অত্যন্ত পুরোনো সংস্করণ ইনস্টল করা হয়েছে।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4635
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4717
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "কোনো সমর্থিত ভিডিও স্ট্রিম মিডিয়ার মধ্যে উপস্থিত নেই।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5008
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5092
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1763,8 +1880,8 @@ msgstr ""
 "GStreamer প্লে অবজেক্ট নির্মাণ করা যায়নি। অনুগ্রহ করে আপনার সিস্টেমে ইনস্টল করা "
 "GStreamer পরীক্ষা করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5140
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5257
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5224
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5341
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1773,7 +1890,7 @@ msgstr ""
 "ভিডিও আউটপুট খোলা যায়নি। সম্ভবত এটি উপস্থিত নেই। অনুগ্রহ করে মাল্টি-মিডিয়া সিস্টেম "
 "নির্বাচন ব্যবস্থায় অন্য একটি ভিডিও আউটপুট নির্বাচন করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5152
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5236
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1783,7 +1900,7 @@ msgstr ""
 "ভিডিও আউটপুট পাওয়া যায়নি। সম্ভবত অতিরিক্ত GStreamer প্লাগ-ইন ইনস্টল করা আবশ্যক "
 "অথবা মাল্টি-মিডিয়া সিস্টেম নির্বাচন ব্যবস্থায় অন্য একটি ভিডিও আউটপুট নির্বাচন করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5187
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5271
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1794,7 +1911,7 @@ msgstr ""
 "সাউন্ড সার্ভার বর্তমানে সক্রিয় নয়। অনুগ্রহ করে মাল্টি-মিডিয়া সিস্টেম নির্বাচন ব্যবস্থায় "
 "অন্য একটি অডিও আউটপুট নির্বাচন করুন।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5207
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5291
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -1805,7 +1922,7 @@ msgstr ""
 "মাল্টি-মিডিয়া সিস্টেম নির্বাচন ব্যবস্থায় অন্য একটি অডিও আউটপুট নির্বাচন করুন।"
 
 # msgstr "%d কিলোবিট/সেকেন্ড"
-#: ../src/backend/bacon-video-widget-xine.c:768
+#: ../src/backend/bacon-video-widget-xine.c:763
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -1814,43 +1931,49 @@ msgstr ""
 "'%s' অডিও ড্রাইভার লোড করা সম্ভব যায়নি\n"
 "ডিভাইসটি বর্তমানে ব্যস্ত কিনা পরীক্ষা করুন।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1232
-#: ../src/backend/bacon-video-widget-xine.c:1821
+#: ../src/backend/bacon-video-widget-xine.c:1233
+#: ../src/backend/bacon-video-widget-xine.c:1827
 #, c-format
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "কোনো ভিডিও আউটপুট উপলব্ধ নেই। প্রোগ্রাম সঠিকরূপে ইনস্টল করা হয়েছে কিনা পরীক্ষা করুন।"
 
+#: ../src/backend/bacon-video-widget-xine.c:1362
+msgid ""
+"The TV adapter could not tune into the channel. Please check your hardware "
+"setup, and channel configuration."
+msgstr "TV অ্যাডাপ্টারের সাহায্যে কোনো চ্যানোল টিউন করা যায়নি। অনুগ্রহ করে হার্ডওয়্যার সেট-আপ ও চ্যানেল কনফিগারেশন পরীক্ষা করুন।"
+
 # msgstr ""
 # "'%s' অডিও ড্রাইভারটি লোড করা সম্ভব হয়নি\n"
 # "ডিভাইসটি বর্তমানে ব্যস্ত কিনা তা পরিক্ষা করে দেখুন" <-- বানান
 # ** "ডিভাইসটি বর্তমানে ব্যস্ত কিনা তা পরীক্ষা করুন।"
-#: ../src/backend/bacon-video-widget-xine.c:1357
+#: ../src/backend/bacon-video-widget-xine.c:1367
 msgid "The server you are trying to connect to is not known."
 msgstr "সংযোগ স্থাপনের জন্য চিহ্নিত সার্ভারটি সনাক্ত করতে ব্যর্থ।"
 
 # এটা নিয়ে কিছুটা Confusion আছে
-#: ../src/backend/bacon-video-widget-xine.c:1361
+#: ../src/backend/bacon-video-widget-xine.c:1371
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "উল্লিখিত ডিভাইসের নাম (%s) সম্ভবত বৈধ নয়।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1365
+#: ../src/backend/bacon-video-widget-xine.c:1375
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "সংযোগ স্থাপনের জন্য চিহ্নিত সার্ভারের (%s) সাথে সংযোগ করতে ব্যর্থ।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1369
+#: ../src/backend/bacon-video-widget-xine.c:1379
 msgid "The connection to this server was refused."
 msgstr "চিহ্নিত সার্ভারের সাথে সংযোগ প্রত্যাখ্যান করা হয়েছে।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1373
+#: ../src/backend/bacon-video-widget-xine.c:1383
 msgid "The specified movie could not be found."
 msgstr "নির্ধারিত চলচ্চিত্র পাওয়া যায়নি।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1379
-#: ../src/backend/bacon-video-widget-xine.c:1395
+#: ../src/backend/bacon-video-widget-xine.c:1389
+#: ../src/backend/bacon-video-widget-xine.c:1405
 msgid ""
 "The source seems encrypted, and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
@@ -1858,81 +1981,81 @@ msgstr ""
 "উৎস সম্ভবত এনক্রিপ্ট করা হয়েছে এবং পড়া সম্ভব নয়। আপনি কি libdvdcss বিনা কোনো "
 "এনক্রিপ্ট করা DVD চালানোর প্রচেষ্টা করছেন?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1382
+#: ../src/backend/bacon-video-widget-xine.c:1392
 msgid "The movie could not be read."
 msgstr "চলচ্চিত্রটি পড়া যায়নি।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1389
+#: ../src/backend/bacon-video-widget-xine.c:1399
 #, c-format
 msgid "A problem occurred while loading a library or a decoder (%s)."
 msgstr "লাইব্রারি অথবা ডিকোডার (%s) লোড করতে সমস্যা।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1398
+#: ../src/backend/bacon-video-widget-xine.c:1408
 msgid "This file is encrypted and cannot be played back."
 msgstr "চিহ্নিত ফাইলটি এনক্রিপ্ট করা অবস্থায় রয়েছে।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1403
+#: ../src/backend/bacon-video-widget-xine.c:1413
 msgid "For security reasons, this movie can not be played back."
 msgstr "নিরাপত্তা জড়িত কারণে এই চলচ্চিত্র চালানো সম্ভব নয়।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1408
+#: ../src/backend/bacon-video-widget-xine.c:1418
 msgid "The audio device is busy. Is another application using it?"
 msgstr "অডিও ডিভাইস বর্তমানে ব্যস্ত। অন্য কোনো অ্যাপ্লিকেশনের দ্বারা এটি ব্যবহৃত হচ্ছে কি?"
 
-#: ../src/backend/bacon-video-widget-xine.c:1414
+#: ../src/backend/bacon-video-widget-xine.c:1424
 msgid "Authentication is required to access this file."
 msgstr "এই ফাইল ব্যবহার করার জন্য অনুমোদন প্রাপ্ত করা আবশ্যক।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1416
+#: ../src/backend/bacon-video-widget-xine.c:1426
 msgid "Authentication is required to access this file or stream."
 msgstr "এই ফাইল অথবা স্ট্রিম ব্যবহার করার জন্য অনুমোদন প্রাপ্ত করা আবশ্যক।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1422
+#: ../src/backend/bacon-video-widget-xine.c:1432
 msgid "You are not allowed to open this file."
 msgstr "এই ফাইলটি খোলার অনুমতি আপনার নেই।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1424
+#: ../src/backend/bacon-video-widget-xine.c:1434
 msgid "The server refused access to this file or stream."
 msgstr "সার্ভারের দ্বারা এই ফাইল অথবা স্ট্রিমের ব্যবহার প্রতিরোধ করা হয়েছে।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1428
+#: ../src/backend/bacon-video-widget-xine.c:1438
 msgid "The file you tried to play is an empty file."
 msgstr "আপনি একটি ফাঁকা ফাইল চালানোর প্রচেষ্টা করেছিলেন।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1612
+#: ../src/backend/bacon-video-widget-xine.c:1618
 #, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "চলচ্চিত্রের অবস্থান ব্যবস্থাপনার জন্য কোনো ইনপুট প্লাগ-ইন উপস্থিত নেই।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1616
+#: ../src/backend/bacon-video-widget-xine.c:1622
 #, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "এই চলচ্চিত্র চালানোর জন্য যথাযত প্লাগ-ইন উপস্থিত নেই।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1620
+#: ../src/backend/bacon-video-widget-xine.c:1626
 #, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "এই চলচ্চিত্রটি ক্ষতিগ্রস্ত ও এর পরবর্তী অংশ পড়া যাবে না।"
 
 # msgstr "এই চলচ্চিত্রটি ভাঙা এবং এর পরবর্তি অংশ চালানো সম্ভব নয়" <-- বানান
 # msgstr "এই চলচ্চিত্রটি ত্রুটিযুক্ত এবং এর পরবর্তী অংশ চালানো সম্ভব নয়"
-#: ../src/backend/bacon-video-widget-xine.c:1624
+#: ../src/backend/bacon-video-widget-xine.c:1630
 #, c-format
 msgid "This location is not a valid one."
 msgstr "চিহ্নিত অবস্থা বৈধ নয়।"
 
 # msgstr "এই অবস্থানটি অবৈধ"
-#: ../src/backend/bacon-video-widget-xine.c:1628
+#: ../src/backend/bacon-video-widget-xine.c:1634
 #, c-format
 msgid "This movie could not be opened."
 msgstr "এই চলচ্চিত্রটি পড়া যায়নি।"
 
-#: ../src/backend/bacon-video-widget-xine.c:1632
+#: ../src/backend/bacon-video-widget-xine.c:1638
 #, c-format
 msgid "Generic Error."
 msgstr "সাধারণ সমস্যা।"
 
-#: ../src/backend/bacon-video-widget-xine.c:2508
+#: ../src/backend/bacon-video-widget-xine.c:2472
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1941,7 +2064,7 @@ msgstr ""
 "'%s' নামক ভিডিও কোডেক ব্যবস্থাপনা করা যায়নি। কিছু বিশেষ ধরনের চলচ্চিত্র চালানোর "
 "জন্য সম্ভবত অতিরিক্ত প্লাগ-ইন ইনস্টল করা আবশ্যক।"
 
-#: ../src/backend/bacon-video-widget-xine.c:2512
+#: ../src/backend/bacon-video-widget-xine.c:2476
 #, c-format
 msgid ""
 "Audio codec '%s' is not handled. You might need to install additional "
@@ -1950,29 +2073,29 @@ msgstr ""
 "'%s' নামক অডিও কোডেক ব্যবস্থাপনা করা যায়নি। কিছু বিশেষ ধরনের চলচ্চিত্র চালানোর "
 "জন্য সম্ভবত অতিরিক্ত প্লাগ-ইন ইনস্টল করা আবশ্যক।"
 
-#: ../src/backend/bacon-video-widget-xine.c:2526
+#: ../src/backend/bacon-video-widget-xine.c:2490
 #, c-format
 msgid "This is an audio-only file, and there is no audio output available."
 msgstr "শুধুমাত্র অডিও ফাইল হওয়া সত্বেও এর থেকে কোনো অডিও আউটপুট উপলব্ধ নেই।"
 
-#: ../src/backend/bacon-video-widget-xine.c:4110
-#: ../src/backend/bacon-video-widget-xine.c:4157
-#: ../src/backend/bacon-video-widget-xine.c:4179
+#: ../src/backend/bacon-video-widget-xine.c:4122
+#: ../src/backend/bacon-video-widget-xine.c:4169
+#: ../src/backend/bacon-video-widget-xine.c:4191
 #, c-format
 msgid "Language %d"
 msgstr "ভাষা %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4268
+#: ../src/backend/bacon-video-widget-xine.c:4280
 #, c-format
 msgid "No video to capture."
 msgstr "আহরণের জন্য ভিডিও উপস্থিত নেই।"
 
-#: ../src/backend/bacon-video-widget-xine.c:4276
+#: ../src/backend/bacon-video-widget-xine.c:4288
 #, c-format
 msgid "Video codec is not handled."
 msgstr "ভিডিও কোডেক-র ব্যবস্থাপনা করা সম্ভব নয়।"
 
-#: ../src/backend/bacon-video-widget-xine.c:4287
+#: ../src/backend/bacon-video-widget-xine.c:4299
 #, c-format
 msgid "Movie is not playing."
 msgstr "চলচ্চিত্র চলতে ব্যর্থ।"
@@ -2051,7 +2174,7 @@ msgstr "প্লাগ-ইন"
 msgid "Enabled"
 msgstr "সক্রিয়"
 
-#: ../src/plugins/totem-plugins-engine.c:576
+#: ../src/plugins/totem-plugins-engine.c:579
 #, c-format
 msgid ""
 "Unable to activate plugin %s.\n"
@@ -2060,12 +2183,12 @@ msgstr ""
 "%s প্লাগ-ইন সক্রিয় করতে ব্যর্থ।\n"
 "%s"
 
-#: ../src/plugins/totem-plugins-engine.c:579
+#: ../src/plugins/totem-plugins-engine.c:582
 #, c-format
 msgid "Unable to activate plugin %s"
 msgstr "%s প্লাগ-ইন সক্রিয় করতে ব্যর্থ"
 
-#: ../src/plugins/totem-plugins-engine.c:581
+#: ../src/plugins/totem-plugins-engine.c:584
 msgid "Plugin Error"
 msgstr "প্লাগ-ইন সংক্রান্ত ত্রুটি"
 
@@ -2082,12 +2205,12 @@ msgstr "Bemused ক্লায়েন্ট সহযোগে মোবাই�
 msgid "Untitled %d"
 msgstr "নামবিহীন %d"
 
-#: ../src/plugins/bemused/totem-bemused.c:608
+#: ../src/plugins/bemused/totem-bemused.c:607
 msgid "Totem Bemused Server"
 msgstr "Totem Bemused সার্ভার"
 
 #. FIXME version
-#: ../src/plugins/bemused/totem-bemused.c:610
+#: ../src/plugins/bemused/totem-bemused.c:609
 msgid "Totem Bemused Server version 1.0"
 msgstr "Totem Bemused সার্ভার সংস্করণ ১.০"
 
@@ -2125,43 +2248,23 @@ msgstr "ইনফ্রা-রেড রিমোট কন্ট্রোল"
 msgid "Support infrared remote control"
 msgstr "ইনফ্রা-রেড রিমোট কন্ট্রোলের সহায়তা"
 
-#: ../src/plugins/lirc/totem-lirc.c:241
+#: ../src/plugins/lirc/totem-lirc.c:261
 #, c-format
 msgid "Couldn't initialize lirc."
 msgstr "lirc আরম্ভ করতে ব্যর্থ।"
 
-#: ../src/plugins/lirc/totem-lirc.c:247
+#: ../src/plugins/lirc/totem-lirc.c:270
 #, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "lirc কনফিগারেশন পড়তে ব্যর্থ।"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:198
+#: ../src/plugins/mythtv/totem-mythtv.c:201
 msgid "Recordings"
 msgstr "রেকর্ডিং"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:386
+#: ../src/plugins/mythtv/totem-mythtv.c:428
 msgid "MythTV Recordings"
 msgstr "MythTV রেকর্ডিং"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:1
-msgid "IP address of the local MythTV server"
-msgstr "স্থানীয় MythTV সার্ভারের IP ঠিকানা"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:2
-msgid "Name of the database for the local MythTV server"
-msgstr "স্থানীয় MythTV সার্ভার দ্বারা ব্যবহৃত ডাটাবেসের নাম"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:3
-msgid "Password to access the local MythTV server"
-msgstr "স্থানীয় MythTV সার্ভার ব্যবহারের ক্ষেত্রে প্রযোজ্য পাসওয়ার্ড"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:4
-msgid "Port to access the local MythTV server"
-msgstr "স্থানীয় MythTV সার্ভার ব্যবহারের ক্ষেত্রে প্রযোজ্য পোর্ট সংখ্যা"
-
-#: ../src/plugins/mythtv/totem-mythtv.schemas.in.h:5
-msgid "Username to access the local MythTV server"
-msgstr "স্থানীয় MythTV সার্ভার ব্যবহারের ক্ষেত্রে প্রযোজ্য ব্যবহারকারীর নাম"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
@@ -2197,7 +2300,7 @@ msgstr "%d কিলোবাইট/সেকেন্ড"
 msgid "%d Hz"
 msgstr "%d হার্টজ"
 
-#: ../src/plugins/publish/totem-publish.c:570
+#: ../src/plugins/publish/totem-publish.c:582
 msgid "Neighbours"
 msgstr "প্রতিবেশি"
 
@@ -2212,6 +2315,25 @@ msgstr "প্লে-লিস্ট প্রকাশ করুন"
 #: ../src/plugins/publish/publish.totem-plugin.in.h:2
 msgid "Share the current playlist via HTTP"
 msgstr "HTTP-র সাহায্যে বর্তমান প্লে-লিস্ট বিতরণ করুন"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:2
+#, no-c-format
+msgid ""
+"<small>The name used for announcing the playlist service on the network.\n"
+"All occurances of the string <b>%u</b> will be replaced by your name,\n"
+"and <b>%h</b> will be replaced by your computer's host name.</small>"
+msgstr ""
+"<small>নেটওয়ার্কের মধ্যে প্লে-লিস্ট পরিসেবার ঘোষনার জন্য ব্যবহৃত নাম।\n"
+"<b>%u</b>-র পরিবর্তে সকল স্থানে আপনার নাম প্রতিস্থাপন করা হবে,\n"
+"ও <b>%h</b>-র পরিবর্তে কম্পিউটারের হোস্ট-নেম স্থাপন করা হবে।</small>"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:5
+msgid "Service _Name:"
+msgstr "পরিসেবার নাম: (_N)"
+
+#: ../src/plugins/publish/publish-plugin.ui.h:6
+msgid "Use _encrypted transport protocol (HTTPS)"
+msgstr "এনক্রিপশনসহ সম্প্রচার প্রোটোকল প্রয়োগ করুন (HTTPS) (_e)"
 
 # msgstr "সামনে"
 #: ../src/plugins/skipto/totem-skipto.c:189
@@ -2245,15 +2367,15 @@ msgstr "সেকেন্ড"
 #. Display an error
 #: ../src/plugins/tracker/totem-tracker-widget.c:169
 #, c-format
-msgid "Could not get metadata for file %s."
-msgstr "ফাইল %s-র জন্য মিটাডাটা প্রাপ্ত করা যায়নি।"
+msgid "Could not get metadata for file %s: %s"
+msgstr "ফাইল %s-র জন্য মিটাডাটা প্রাপ্ত করা যায়নি: %s"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:170
 msgid "File Error"
 msgstr "ফাইল সংক্রান্ত ত্রুটি"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:222
-#: ../src/plugins/tracker/totem-tracker-widget.c:274
+#: ../src/plugins/tracker/totem-tracker-widget.c:224
+#: ../src/plugins/tracker/totem-tracker-widget.c:276
 msgid "No results"
 msgstr "কোনো ফলাফল পাওয়া যায়নি"
 
@@ -2262,19 +2384,19 @@ msgstr "কোনো ফলাফল পাওয়া যায়নি"
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:229
+#: ../src/plugins/tracker/totem-tracker-widget.c:231
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "%i প্রদর্শিত - %i ফলাফল, সর্বমোট %i"
-msgstr[1] ""
+msgstr[1] "%i প্রদর্শিত - %i ফলাফল, সর্বমোট %i"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:365
+#: ../src/plugins/tracker/totem-tracker-widget.c:367
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "অনুসন্ধানের ফলাফল"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:414
+#: ../src/plugins/tracker/totem-tracker-widget.c:416
 msgid "Page"
 msgstr "পৃষ্ঠা"
 
@@ -2308,69 +2430,132 @@ msgid "Related Videos"
 msgstr "সম্বন্ধীয় ভিডিও"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
+msgid "Search YouTube"
+msgstr "YouTube-এ অনুসন্ধান করুন"
+
+#: ../src/plugins/youtube/youtube.ui.h:4
 msgid "Search:"
 msgstr "অনুসন্ধান:"
 
-#: ../src/plugins/youtube/youtube.py:62
+#: ../src/plugins/youtube/youtube.py:91 ../src/plugins/youtube/youtube.py:171
 msgid "YouTube"
 msgstr "YouTube"
 
 # ঠিক করেন
-#: ../src/plugins/youtube/youtube.py:79
+#: ../src/plugins/youtube/youtube.py:108
 msgid "Videos"
 msgstr "ভিডিও"
 
-#: ../browser-plugin/totem-plugin-viewer.c:468
+#: ../src/plugins/youtube/youtube.py:114
+msgid "_Open in Web Browser"
+msgstr "ওয়েব-ব্রাউজার খুলুন (_O)"
+
+#: ../src/plugins/youtube/youtube.py:114
+msgid "Open the video in your web browser"
+msgstr "ওয়েব-ব্রাউজারের মধ্যে ভিডিও খুলুন"
+
+#: ../src/plugins/youtube/youtube.py:147
+msgid "Fetching related videos..."
+msgstr "সম্বন্ধীয় ভিডিও আহরণ করা হচ্ছে..."
+
+#: ../src/plugins/youtube/youtube.py:195
+msgid "Fetching more videos..."
+msgstr "অধিক ভিডিও আহরণ করা হচ্ছে..."
+
+#: ../src/plugins/youtube/youtube.py:293
+msgid "Fetching search results..."
+msgstr "অনুসন্ধানের ফলাফল প্রাপ্ত করা হচ্ছে..."
+
+#: ../browser-plugin/totem-plugin-viewer.c:466
 #, c-format
 msgid "No URI to play"
 msgstr "চালানোর জন্য কোনো URI চিহ্নিত করা হয়নি"
 
-#: ../browser-plugin/totem-plugin-viewer.c:494
+#: ../browser-plugin/totem-plugin-viewer.c:492
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Totem সহযোগে '%s' চালানো যায়নি"
 
-#: ../browser-plugin/totem-plugin-viewer.c:890
-#, c-format
-msgid "Opening %s"
-msgstr "%s খোলা হচ্ছে"
-
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1293
+#: ../browser-plugin/totem-plugin-viewer.c:1087
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" সহযোগে খুলুন (_O)"
 
 # নিজের নামে আন্ডারস্কোর দিছেন কেন ???@@#!!!
 # msgstr "রুনা ভট্টাচার্য্য <runab77@softhome.net>" <-- ঠিক আছেনা ?
-#: ../browser-plugin/totem-plugin-viewer.c:1344
+#: ../browser-plugin/totem-plugin-viewer.c:1138
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s প্রয়োগকারী ব্রাউজার প্লাগ-ইন"
 
 # বাজানো হোক, দেখানো হোক
 # msgstr "চলচ্চিত্র ও গান চালানো হোক" <-- Short cut ;-)
-#: ../browser-plugin/totem-plugin-viewer.c:1349
+#: ../browser-plugin/totem-plugin-viewer.c:1143
 msgid "Totem Browser Plugin"
 msgstr "Totem Browser প্লাগ-ইন"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1902
+#: ../browser-plugin/totem-plugin-viewer.c:1780
 msgid "The Totem plugin could not be started."
 msgstr "Totem প্লাগ-ইন আরম্ভ করতে ব্যর্থ।"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2244
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "No playlist or playlist empty"
 msgstr "প্লে-লিস্ট ফাঁকা অথবা অনুপস্থিত"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2348
+#: ../browser-plugin/totem-plugin-viewer.c:2232
 msgid "Could not initialise the thread-safe libraries."
 msgstr "থ্রেড-সেফ লাইব্রেরি আরম্ভ করা যায়নি।"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2348
+#: ../browser-plugin/totem-plugin-viewer.c:2232
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "আপনার সিস্টেমের ইনস্টলেশন পরীক্ষা করুন। Totem প্লাগ-ইন এখন বন্ধ করা হবে।"
+
+#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
+msgid "Interactive python console."
+msgstr "ইন্টারেক্টিভ python কনসোল।"
+
+#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:2
+msgid "Python Console"
+msgstr "Python কনসোল"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:74
+msgid "Python Console Menu"
+msgstr "Python কনসোল মেনু"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:77
+msgid "_Python Console"
+msgstr "Python কনসোল (_P)"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:78
+msgid "Show Totem's python console"
+msgstr "Totem-র python কনসোল"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:83
+msgid "Python Debugger"
+msgstr "Python ডিবাগার"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:84
+msgid "Enable remote python debugging with rpdb2"
+msgstr "rpdb2-র সাহায্যে দূরবর্তী অবস্থান থেকে python ডিবাগ প্রক্রিয়া সক্রিয় করুন"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:106
+#, python-format
+msgid "You can access the totem object through 'totem_object' :\\n%s"
+msgstr "'totem_object'-র সাহায্যে totem অবজেক্ট ব্যবহার করা যাবে :\\n%s"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:111
+msgid "Totem Python Console"
+msgstr "Totem Python কনসোল"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:120
+msgid ""
+"After you press OK, Totem will wait until you connect to it with winpdb or "
+"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"default password ('totem')."
+msgstr "'ঠিক আছে' টেপা হলে, winpdb অথবা rpdb2-র সাথে সংযোগ স্থাপন না করা অবধি Totem দ্বারা অপেক্ষা করা হবে। GConf-র মধ্যে ডিবাগার পাসওয়ার্ড নির্ধারণ না করা হলে ডিফল্ট পাসওয়ার্ড প্রয়োগ করা হবে ('totem')।"
 
