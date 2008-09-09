@@ -1,5 +1,15 @@
 2008-09-09  Bastien Nocera  <hadess@hadess.net>
 
+	* data/mime-type-list.txt:
+	* src/totem-menu.c (totem_action_add_recent):
+	* src/totem-menu.h: Fix recent-menu not adding anything
+	because it couldn't get a fast mime-type for the file,
+	(Closes: #551360), also fix addition of streams to the
+	list, otherwise nothing to go in the "Open Location"
+	dialogue
+
+2008-09-09  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_get_mrls): Also allow the Fluendo MPEG
 	demuxers recently moved to GStreamer main

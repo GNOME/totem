@@ -37,7 +37,7 @@ void totem_sublang_exit (Totem *totem);
 void totem_setup_play_disc (Totem *totem);
 
 void totem_setup_recent (Totem *totem);
-void totem_action_add_recent (Totem *totem, const char *filename);
+void totem_action_add_recent (Totem *totem, const char *uri);
 
 G_END_DECLS
 
