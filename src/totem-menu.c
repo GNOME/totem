@@ -682,7 +682,7 @@ totem_setup_recent (Totem *totem)
 }
 
 void
-totem_action_add_recent (Totem *totem, const char *filename)
+totem_action_add_recent (Totem *totem, const char *uri)
 {
 	GtkRecentData data;
 	char *groups[] = { NULL, NULL };
@@ -691,51 +691,33 @@ totem_action_add_recent (Totem *totem, const char *filename)
 
 	memset (&data, 0, sizeof (data));
 
-	file = g_file_new_for_uri (filename);
-	file_info = g_file_query_info (file, G_FILE_ATTRIBUTE_STANDARD_FAST_CONTENT_TYPE, G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	file = g_file_new_for_uri (uri);
+	file_info = g_file_query_info (file,
+				       G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE "," G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+				       G_FILE_QUERY_INFO_NONE, NULL, NULL);
 
 	/* Probably an unsupported URI scheme */
-	if (file_info == NULL)
-		return;
-
-	data.mime_type = g_strdup (g_file_info_get_content_type (file_info));
-	g_object_unref (file_info);
-
-	if (data.mime_type == NULL) {
-		/* No mime-type means warnings, and it breaks when adding
-		 * unsupported URI schemes */
-		return;
-	}
-	data.display_name = NULL;
-
-	if (strstr (filename, "file:///") == NULL) {
-		/* It's a URI/stream */
+	if (file_info == NULL) {
+		data.display_name = NULL;
+		/* Bogus mime-type, we just want it added */
+		data.mime_type = g_strdup ("video/x-totem-stream");
 		groups[0] = "TotemStreams";
+		g_message ("no file info");
 	} else {
-		char *display;
-
-		/* Local files with no mime-type probably don't exist */
-		if (data.mime_type == NULL)
-			return;
-		if (strcmp (data.mime_type, "x-directory/normal") == 0) {
-			g_free (data.mime_type);
-			return;
-		}
-
-		/* It's a local file */
-		display = g_filename_from_uri (filename, NULL, NULL);
-		if (display) {
-			data.display_name = g_filename_display_basename (display);
-			g_free (display);
-		}
+		data.mime_type = g_strdup (g_file_info_get_content_type (file_info));
+		data.display_name = g_strdup (g_file_info_get_display_name (file_info));
+		g_object_unref (file_info);
 		groups[0] = "Totem";
 	}
+	g_object_unref (file);
 
 	data.app_name = g_strdup (g_get_application_name ());
 	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
 	data.groups = groups;
-	gtk_recent_manager_add_full (totem->recent_manager,
-				     filename, &data);
+	if (gtk_recent_manager_add_full (totem->recent_manager,
+				     uri, &data) == FALSE) {
+		g_message ("Couldn't add recent file for '%s'", uri);
+	}
 
 	g_free (data.display_name);
 	g_free (data.mime_type);
