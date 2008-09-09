@@ -4100,7 +4100,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
 		     "XXX Do not use XXX");
         return NULL;
-      } else if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
+      } else if (!gst_default_registry_check_feature_version ("mpegpsdemux", 0, 10, 0) &&
+		 gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
       		 !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
         GST_DEBUG ("flupsdemux not new enough for DVD playback");
 	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
@@ -4122,7 +4123,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 		     "XXX Do not use XXX");
         return NULL;
       }
-      if (gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
+      if (!gst_default_registry_check_feature_version ("mpegpsdemux", 0, 10, 0) &&
+	  gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
       	  !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
         GST_DEBUG ("flupsdemux not new enough for DVB playback");
 	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
