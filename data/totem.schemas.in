@@ -97,6 +97,30 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/totem/connection_speed</key>
+        <applyto>/apps/totem/connection_speed</applyto>
+        <owner>totem</owner>
+        <type>int</type>
+        <default>11</default>
+        <locale name="C">
+          <short>Network connection speed</short>
+	  <long>Approximate network connection speed, used to select quality on media over the network:
+      		"0" for 14.4 Kbps Modem,
+      		"1" for 19.2 Kbps Modem,
+      		"2" for 28.8 Kbps Modem,
+      		"3" for 33.6 Kbps Modem,
+      		"4" for 34.4 Kbps Modem,
+      		"5" for 56 Kbps Modem/ISDN,
+      		"6" for 112 Kbps Dual ISDN/DSL,
+      		"7" for 256 Kbps DSL/Cable,
+      		"8" for 384 Kbps DSL/Cable,
+      		"9" for 512 Kbps DSL/Cable,
+      		"10" for 1.5 Mbps T1/Intranet/LAN,
+      		"11" for Intranet/LAN.</long>
+        </locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/totem/repeat</key>
 	<applyto>/apps/totem/repeat</applyto>
 	<owner>totem</owner>
@@ -171,6 +195,22 @@
 	    Whether the main window should stay on top of the other ones
 	  </long>
 	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/totem/visual_quality</key>
+        <applyto>/apps/totem/visual_quality</applyto>
+        <owner>totem</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short>Visualisation quality setting</short>
+	  <long>Quality settings for the audio visualization:
+	  	"0" for small,
+		"1" for normal,
+		"2" for large,
+		"3" for extra large.</long>
+        </locale>
       </schema>
 
       <schema>

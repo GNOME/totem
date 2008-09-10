@@ -213,7 +213,7 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 
 /* Visualisation functions */
 typedef enum {
-	VISUAL_SMALL,
+	VISUAL_SMALL = 0,
 	VISUAL_NORMAL,
 	VISUAL_LARGE,
 	VISUAL_EXTRA_LARGE,
