@@ -137,6 +137,18 @@ if test x$ENABLE_XINE = xno || test x$ENABLE_XINE = xauto; then
 	gst010_toolsdir=`$PKG_CONFIG --variable=toolsdir gstreamer-0.10`
 	gst010_inspect="$gst010_toolsdir/gst-inspect-0.10"
 
+	dnl Give error and exit if we don't have the gst_inspect tool
+	AC_MSG_CHECKING([GStreamer 0.10 inspection tool])
+	if test -r "$gst010_inspect"; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		AC_MSG_ERROR([
+			Cannot find required GStreamer-0.10 tool 'gst-inspect-0.10'.
+			It should be part of gstreamer-0_10-utils. Please install it.
+		])
+	fi
+
 	dnl Check for elements from gst-plugins-base
 	for base_element in playbin ffmpegcolorspace videoscale
 	do
