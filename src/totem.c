@@ -2177,6 +2177,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			g_free (mrl);
 			g_free (subtitle);
 		}
+		break;
 	};
 	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD: {
 		double offset = 0;
