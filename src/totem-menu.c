@@ -1173,7 +1173,7 @@ about_action_callback (GtkAction *action, Totem *totem)
 
 	gtk_show_about_dialog (GTK_WINDOW (totem->win),
 				     "version", VERSION,
-				     "copyright", _("Copyright \xc2\xa9 2002-2007 Bastien Nocera"),
+				     "copyright", _("Copyright \xc2\xa9 2002-2008 Bastien Nocera"),
 				     "comments", description,
 				     "authors", authors,
 				     "documenters", documenters,

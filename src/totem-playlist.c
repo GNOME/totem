@@ -246,9 +246,9 @@ totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
-				title);
+				"%s", title);
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
-						  reason);
+						  "%s", reason);
 
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),

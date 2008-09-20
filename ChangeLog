@@ -1,3 +1,13 @@
+2008-09-20  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/tracker/totem-tracker-widget.c (get_search_count):
+	* src/totem-playlist.c (totem_playlist_error): Fix using unvetted
+	strings in printf-style functions.
+	* data/totem.schemas.in:
+	* src/totem-menu.c (about_action_callback):
+	* src/totem-options.c: Fix some hyphenation problems in strings, and
+	update the copyright date in the about dialogue.
+
 2008-09-18  Bastien Nocera  <hadess@hadess.net>
 
 	* COPYING.LIB: Remove obsolete file, spotted by

@@ -187,7 +187,7 @@ get_search_count (TrackerClient *client, const char *search)
 			   G_TYPE_INVALID, G_TYPE_INT, &count, G_TYPE_INVALID);
 
 	if (error) {
-		g_warning (error->message);
+		g_warning ("%s", error->message);
 		g_error_free (error);
 		return -1;
 	}
