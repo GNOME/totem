@@ -276,13 +276,14 @@ languages_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
 
 static GtkAction *
 add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
-		const char *path, const char *prefix, const char *lang, 
+		const char **paths, const char *prefix, const char *lang, 
 		int lang_id, int index, GSList **group)
 {
 	const char *full_lang;
 	char *label;
 	char *name;
 	GtkAction *action;
+	guint i;
 
 	full_lang = totem_lang_get_full (lang);
 
@@ -298,7 +299,6 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		label = escape_label_for_menu (full_lang ? full_lang : lang);
 	}
 
-        /* FIXMEchpe i18n! */
 	name = g_strdup_printf ("%s-%d", prefix, lang_id);
 
 	action = g_object_new (GTK_TYPE_RADIO_ACTION,
@@ -312,8 +312,10 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 	*group = gtk_radio_action_get_group (GTK_RADIO_ACTION (action));
 	gtk_action_group_add_action (action_group, action);
 	g_object_unref (action);
-	gtk_ui_manager_add_ui (totem->ui_manager, ui_id,
-			       path, name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
+	for (i = 0; paths[i] != NULL; i++) {
+		gtk_ui_manager_add_ui (totem->ui_manager, ui_id,
+				       paths[i], name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
+	}
 	g_free (name);
 
 	return action;
@@ -321,7 +323,7 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 
 static GtkAction *
 create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
-		const char *path, const char *prefix, GList *list,
+		const char **paths, const char *prefix, GList *list,
 		gboolean is_lang)
 {
 	GtkAction *action = NULL;
@@ -332,11 +334,11 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 	char *action_data;
 
 	if (is_lang == FALSE) {
-		add_lang_action (totem, action_group, ui_id, path, prefix,
+		add_lang_action (totem, action_group, ui_id, paths, prefix,
 				_("None"), -2, 0, &group);
 	}
 
-	action = add_lang_action (totem, action_group, ui_id, path, prefix,
+	action = add_lang_action (totem, action_group, ui_id, paths, prefix,
 			_("Auto"), -1, 0, &group);
 
 	i = 0;
@@ -357,7 +359,7 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 			g_hash_table_replace (lookup, l->data, GINT_TO_POINTER (num + 1));
 		}
 
-		add_lang_action (totem, action_group, ui_id, path, prefix,
+		add_lang_action (totem, action_group, ui_id, paths, prefix,
 				 action_data, i, num + 1, &group);
 		g_free (action_data);
  		i++;
@@ -400,6 +402,7 @@ static void
 totem_languages_update (Totem *totem, GList *list)
 {
 	GtkAction *action;
+	const char *paths[3] = { "/tmw-menubar/sound/languages/placeholder", "/totem-main-popup/popup-languages/placeholder", NULL };
 	int current;
 
 	/* Remove old UI */
@@ -416,11 +419,10 @@ totem_languages_update (Totem *totem, GList *list)
 	gtk_ui_manager_insert_action_group (totem->ui_manager,
 			totem->languages_action_group, -1);
 
-	if (list != NULL)
-	{
+	if (list != NULL) {
 		action = create_lang_actions (totem, totem->languages_action_group,
 				totem->languages_ui_id,
-				"/tmw-menubar/sound/languages/placeholder",
+				paths,
 			       	"languages", list, TRUE);
 		gtk_ui_manager_ensure_update (totem->ui_manager);
 
@@ -440,6 +442,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 {
 	GtkAction *action;
 	int current;
+	const char *paths[3] = { "/tmw-menubar/view/subtitles/placeholder", "/totem-main-popup/popup-subtitles/placeholder", NULL };
 
 	/* Remove old UI */
 	gtk_ui_manager_remove_ui (totem->ui_manager, totem->subtitles_ui_id);
@@ -460,7 +463,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 	{
 		action = create_lang_actions (totem, totem->subtitles_action_group,
 				totem->subtitles_ui_id,
-				"/tmw-menubar/view/subtitles/placeholder",
+				paths,
 			       	"subtitles", list, FALSE);
 		gtk_ui_manager_ensure_update (totem->ui_manager);
 
