@@ -5,7 +5,6 @@ SUBDIRS += browser-plugin
 endif
 
 EXTRA_DIST =			\
-	COPYING.LIB		\
 	license_change		\
 	autogen.sh		\
 	intltool-extract.in	\
