@@ -1,3 +1,14 @@
+2008-09-29  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-playlist.c (totem_playlist_set_reorderable),
+	(totem_playlist_foreach_selected), (playlist_remove_files),
+	(totem_playlist_move_files), (totem_playlist_file_changed),
+	(totem_playlist_clear_with_compare): Clean up, and use only
+	one codepath to remove files, whether selected files, or
+	files matching a certain criteria.
+	Should fix playlist weirdness when removing deleted files
+	from the playlist (Closes: #550225)
+
 2008-09-29  Christian Persch  <chpe@gnome.org>
 
         Bug 554224 – format not a string literal and no format arguments
