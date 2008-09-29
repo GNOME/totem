@@ -1,5 +1,11 @@
 2008-09-29  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c (totem_embedded_set_uri):
+	Fix a crash when emptying the playlist on Solaris machines
+	(Closes: #552462)
+
+2008-09-29  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-sidebar.c (totem_sidebar_toggle),
 	(totem_sidebar_setup):
 	* src/totem.c (totem_callback_connect): Make the sidebar arrow

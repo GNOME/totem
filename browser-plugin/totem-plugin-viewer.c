@@ -721,7 +721,10 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	emb->is_browser_stream = (is_browser_stream != FALSE);
 	emb->href_uri = NULL;
 
-        g_print ("totem_embedded_set_uri uri %s base %s => resolved %s\n", uri, base_uri, emb->current_uri);
+	if (uri != NULL)
+		g_print ("totem_embedded_set_uri uri %s base %s => resolved %s\n", uri, base_uri, emb->current_uri);
+	else
+		g_print ("Emptying current_uri\n");
 
 	g_free (old_uri);
 	g_free (old_base);
