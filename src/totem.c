@@ -3169,7 +3169,8 @@ totem_callback_connect (Totem *totem)
 	item = gtk_toggle_button_new ();
 	gtk_action_connect_proxy (action, item);
 	arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
-	gtk_widget_show (arrow);
+	g_object_set_data (G_OBJECT (box), "arrow", arrow);
+	gtk_button_set_image_position (GTK_BUTTON (item), GTK_POS_RIGHT);
 	gtk_button_set_image (GTK_BUTTON (item), arrow);
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "drag_data_received",

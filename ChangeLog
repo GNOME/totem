@@ -1,5 +1,14 @@
 2008-09-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-sidebar.c (totem_sidebar_toggle),
+	(totem_sidebar_setup):
+	* src/totem.c (totem_callback_connect): Make the sidebar arrow
+	face right when closed, and face left when opened, showing the
+	movement the sidebar would take, place the arrow to the right
+	of the label (and vice-versa for RTL languages)
+
+2008-09-29  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.ui:
 	* src/totem.c (update_mrl_label): Use "Movie Player", and
 	not "Totem Movie Player" in the UI

@@ -60,6 +60,7 @@ void
 totem_sidebar_toggle (Totem *totem, gboolean state)
 {
 	GtkAction *action;
+	GtkWidget *box, *arrow;
 
 	if (GTK_WIDGET_VISIBLE (GTK_WIDGET (totem->sidebar)) == state)
 		return;
@@ -73,6 +74,10 @@ totem_sidebar_toggle (Totem *totem, gboolean state)
 	totem_signal_block_by_data (G_OBJECT (action), totem);
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), state);
 	totem_signal_unblock_by_data (G_OBJECT (action), totem);
+
+	box = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_sidebar_button_hbox"));
+	arrow = g_object_get_data (G_OBJECT (box), "arrow");
+	gtk_arrow_set (GTK_ARROW (arrow), state ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
 
 	totem->sidebar_shown = state;
 	cb_resize(totem);
@@ -124,8 +129,15 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 	gtk_widget_show_all (totem->sidebar);
 	gtk_widget_realize (totem->sidebar);
 
-	if (!visible)
+	if (!visible) {
 		gtk_widget_hide (totem->sidebar);
+	} else {
+		GtkWidget *box, *arrow;
+
+		box = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_sidebar_button_hbox"));
+		arrow = g_object_get_data (G_OBJECT (box), "arrow");
+		gtk_arrow_set (GTK_ARROW (arrow), GTK_ARROW_LEFT, GTK_SHADOW_NONE);
+	}
 }
 
 char *
