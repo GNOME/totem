@@ -304,9 +304,9 @@ totem_embedded_set_error (TotemEmbedded *emb,
 			  int code,
 			  char *secondary)
 {
-	emb->error = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
-				  code,
-				  secondary);
+	emb->error = g_error_new_literal (TOTEM_EMBEDDED_ERROR_QUARK,
+	                                  code,
+	                                  secondary);
 	g_message ("totem_embedded_set_error: '%s'", secondary);
 }
 
