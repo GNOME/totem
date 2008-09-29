@@ -1532,43 +1532,6 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	totem_playlist_add_one_mrl (playlist, uri, title);
 }
 
-static gboolean
-totem_playlist_compare_with_monitor (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data)
-{
-	GFileMonitor *monitor = (GFileMonitor *) data;
-	GFileMonitor *_monitor;
-	gboolean retval = FALSE;
-
-	gtk_tree_model_get (playlist->priv->model, iter,
-			    FILE_MONITOR_COL, &_monitor, -1);
-
-	if (_monitor == monitor)
-		retval = TRUE;
-
-	if (_monitor != NULL)
-		g_object_unref (_monitor);
-
-	return retval;
-}
-
-static void
-totem_playlist_file_changed (GFileMonitor *monitor,
-			     GFile *file,
-			     GFile *other_file,
-			     GFileMonitorEvent event_type,
-			     TotemPlaylist *playlist)
-{
-	if (event_type == G_FILE_MONITOR_EVENT_DELETED) {
-		char *uri;
-
-		uri = g_file_get_uri (file);
-		totem_playlist_clear_with_compare (playlist,
-						   (ClearComparisonFunc) totem_playlist_compare_with_monitor,
-						   monitor);
-		g_free (uri);
-	}
-}
-
 static void
 totem_playlist_dispose (GObject *object)
 {
@@ -1677,8 +1640,6 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	GtkTreeIter iter;
 	char *filename_for_display, *uri;
 	GtkTreeRowReference *ref;
-	GFileMonitor *monitor;
-	GFile *file;
 	int pos;
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
@@ -1706,27 +1667,11 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	store = GTK_LIST_STORE (playlist->priv->model);
 
-	/* Get the file monitor */
-	file = g_file_new_for_uri (uri ? uri : mrl);
-	if (g_file_is_native (file) != FALSE) {
-		monitor = g_file_monitor_file (file,
-					       G_FILE_MONITOR_NONE,
-					       NULL,
-					       NULL);
-		g_signal_connect (G_OBJECT (monitor),
-				  "changed",
-				  G_CALLBACK (totem_playlist_file_changed),
-				  playlist);
-	} else {
-		monitor = NULL;
-	}
-
 	gtk_list_store_insert_with_values (store, &iter, pos,
 			PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
 			FILENAME_COL, filename_for_display,
 			URI_COL, uri ? uri : mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
-			FILE_MONITOR_COL, monitor,
 			-1);
 
 	g_signal_emit (playlist,

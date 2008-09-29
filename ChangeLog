@@ -1,5 +1,11 @@
 2008-09-29  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c (totem_playlist_add_one_mrl):
+	Disable the code to remove deleted files from the playlist,
+	it screws up the ->current pointer (Helps: #550225)
+
+2008-09-29  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/README.browser-plugin: Fix typo spotted
 	by Yan Morin <progysm@gmail.com>, the keyword is "disabled", not
 	"disable"
