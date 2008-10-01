@@ -99,7 +99,7 @@ bacon_video_widget_gst_get_toplevel (GtkWidget *widget)
 	if (GTK_IS_PLUG (parent))
 		return bacon_video_widget_gtk_plug_get_toplevel (GTK_PLUG (parent));
 	else
-		return GDK_WINDOW_XID(widget->window);
+		return GDK_WINDOW_XID(parent->window);
 }
 #endif
 
