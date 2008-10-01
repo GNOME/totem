@@ -7,9 +7,6 @@ endif
 EXTRA_DIST =			\
 	license_change		\
 	autogen.sh		\
-	intltool-extract.in	\
-	intltool-merge.in	\
-	intltool-update.in	\
 	AUTHORS NEWS		\
 	totem.spec.in		\
 	totem.spec		\
