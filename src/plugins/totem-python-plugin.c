@@ -39,7 +39,10 @@ call_python_method (TotemPythonObject *object,
 		    TotemObject       *totem,
 		    gchar             *method)
 {
+	PyGILState_STATE state;
 	PyObject *py_ret = NULL;
+
+	state = pyg_gil_state_ensure();
 
 	g_return_val_if_fail (PyObject_HasAttrString (object->instance, method), NULL);
 
@@ -57,6 +60,8 @@ call_python_method (TotemPythonObject *object,
 	if (!py_ret)
 		PyErr_Print ();
 
+	pyg_gil_state_release (state);
+
 	return py_ret;
 }
 
@@ -64,6 +69,10 @@ static gboolean
 check_py_object_is_gtk_widget (PyObject *py_obj)
 {
 	static PyTypeObject *_PyGtkWidget_Type = NULL;
+	PyGILState_STATE state;
+	gboolean res = FALSE;
+
+	state = pyg_gil_state_ensure();
 
 	if (_PyGtkWidget_Type == NULL) {
 		PyObject *module;
@@ -76,12 +85,16 @@ check_py_object_is_gtk_widget (PyObject *py_obj)
 		if (_PyGtkWidget_Type == NULL) {
 			PyErr_SetString(PyExc_TypeError, "could not find python gtk widget type");
 			PyErr_Print();
-
-			return FALSE;
+			res = FALSE;
+			goto done;
 		}
 	}
 
-	return PyObject_TypeCheck (py_obj, _PyGtkWidget_Type) ? TRUE : FALSE;
+	res = PyObject_TypeCheck (py_obj, _PyGtkWidget_Type) ? TRUE : FALSE;
+
+done:
+	pyg_gil_state_release (state);
+	return res;
 }
 
 static void
@@ -180,6 +193,9 @@ static void
 totem_python_object_init (TotemPythonObject *object)
 {
 	TotemPythonObjectClass *class;
+	PyGILState_STATE state;
+
+	state = pyg_gil_state_ensure();
 
 	g_debug ("Creating Python plugin instance");
 
@@ -188,6 +204,8 @@ totem_python_object_init (TotemPythonObject *object)
 	object->instance = PyObject_CallObject (class->type, NULL);
 	if (object->instance == NULL)
 		PyErr_Print();
+
+	pyg_gil_state_release (state);
 }
 
 static void
@@ -239,6 +257,10 @@ totem_python_object_get_type (GTypeModule *module,
 		0,		/* n_preallocs */
 		(GInstanceInitFunc) totem_python_object_init
 	};
+
+	/* no need for pyg_gil_state_ensure() here since this function is only
+	 * used from within totem_python_module_load() where this is already
+	 * done */
 
 	Py_INCREF (type);
 

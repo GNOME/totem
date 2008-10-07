@@ -1,3 +1,14 @@
+2008-10-07  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/totem-python-module.c
+	(totem_python_module_init_python), (totem_python_module_load):
+	* src/plugins/totem-python-plugin.c (call_python_method),
+	(check_py_object_is_gtk_widget), (totem_python_object_init),
+	(totem_python_object_get_type): Patch from Tim-Philipp Müller
+	<tim.muller@collabora.co.uk>, Prepare python for use from multiple
+	threads and add missing locking where applicable
+	(Closes: #554868)
+
 2008-10-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-missing-plugins.c

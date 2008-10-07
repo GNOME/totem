@@ -258,21 +258,31 @@ totem_python_module_init_python (void)
 	gettext_args = Py_BuildValue ("ss", GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	PyObject_CallObject (install, gettext_args);
 	Py_DECREF (gettext_args);
+
+	/* ideally totem should clean up the python stuff again at some point,
+	 * for which we'd need to save the result of SaveThread so we can then
+	 * restore the state in a class_finalize or so, but since totem doesn't
+	 * do any clean-up at this point, we'll just skip this as well */
+	PyEval_SaveThread();
 }
 
 static gboolean
 totem_python_module_load (GTypeModule *gmodule)
 {
 	TotemPythonModulePrivate *priv = TOTEM_PYTHON_MODULE_GET_PRIVATE (gmodule);
+	PyGILState_STATE state;
 	PyObject *main_module, *main_locals, *locals, *key, *value;
 	PyObject *module, *fromlist;
 	Py_ssize_t pos = 0;
+	gboolean res = FALSE;
+
+	state = pyg_gil_state_ensure();
 
 	main_module = PyImport_AddModule ("__main__");
 	if (main_module == NULL)
 	{
 		g_warning ("Could not get __main__.");
-		return FALSE;
+		goto done;
 	}
 
 	/* If we have a special path, we register it */
@@ -296,7 +306,7 @@ totem_python_module_load (GTypeModule *gmodule)
 	Py_DECREF (fromlist);
 	if (!module) {
 		PyErr_Print ();
-		return FALSE;
+		goto done;
 	}
 
 	locals = PyModule_GetDict (module);
@@ -308,13 +318,17 @@ totem_python_module_load (GTypeModule *gmodule)
 		if (PyObject_IsSubclass (value, (PyObject*) PyTotemPlugin_Type))
 		{
 			priv->type = totem_python_object_get_type (gmodule, value);
-			return TRUE;
+			res = TRUE;
+			goto done;
 		}
 	}
 
 	g_debug ("Failed to find any totem.Plugin-derived classes in Python plugin");
 
-	return FALSE;
+done:
+
+	pyg_gil_state_release (state);
+	return res;
 }
 
 static void
