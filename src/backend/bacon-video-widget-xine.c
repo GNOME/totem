@@ -2084,10 +2084,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		}
 	}
 
-	if (stream_length > 0)
-		bvw->priv->is_live = FALSE;
-	else
-		bvw->priv->is_live = TRUE;
+	bvw->priv->is_live = (stream_length > 0);
 
 	if (stream_length != 0 && bvw->com->mrl != NULL) {
 		seekable = xine_get_stream_info (bvw->priv->stream,
@@ -2708,6 +2705,7 @@ bacon_video_widget_close (BaconVideoWidget *bvw)
 	bacon_video_widget_stop (bvw);
 	xine_close (bvw->priv->stream);
 	bvw->priv->has_subtitle = FALSE;
+	bvw->priv->is_live = FALSE;
 	g_free (bvw->com->mrl);
 	bvw->com->mrl = NULL;
 	bvw->priv->stream_length = 0;

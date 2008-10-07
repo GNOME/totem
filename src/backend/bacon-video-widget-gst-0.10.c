@@ -145,6 +145,7 @@ struct BaconVideoWidgetPrivate
   gint64                       current_time_nanos;
   gint64                       current_time;
   gdouble                      current_position;
+  gboolean                     is_live;
 
   GstTagList                  *tagcache;
   GstTagList                  *audiotags;
@@ -1672,6 +1673,8 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
     seekable = TRUE;
   }
 
+  bvw->priv->is_live = (bvw->priv->stream_length > 0);
+
 /*
   GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
       GST_TIME_ARGS (bvw->priv->current_time),
@@ -2973,6 +2976,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   g_free (bvw->com->mrl);
   bvw->com->mrl = NULL;
+  bvw->priv->is_live = FALSE;
   bvw->priv->window_resized = FALSE;
 
   g_object_notify (G_OBJECT (bvw), "seekable");
@@ -3120,6 +3124,12 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
   g_return_if_fail (bvw->com->mrl != NULL);
+
+  if (bvw->priv->is_live != FALSE) {
+    GST_LOG ("Stopping because we have a live stream");
+    bacon_video_widget_stop (bvw);
+    return;
+  }
 
   GST_LOG ("Pausing");
   gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
