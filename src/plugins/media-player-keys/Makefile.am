@@ -26,7 +26,7 @@ libmedia_player_keys_la_LIBADD = $(MEDIA_PLAYER_KEYS_LIBS)
 libmedia_player_keys_la_CPPFLAGS = $(common_defines)
 
 libmedia_player_keys_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(MEDIA_PLAYER_KEYS_CFLAGS) \
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\

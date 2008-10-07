@@ -33,7 +33,7 @@ libbaconmessageconnection_la_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 libbaconmessageconnection_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(GTK_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)
@@ -65,7 +65,7 @@ libtotem_player_la_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 libtotem_player_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -129,7 +129,7 @@ totem_CPPFLAGS = \
 
 totem_CFLAGS = \
 	$(WARN_CFLAGS)			\
-	$(EXTRA_GNOME_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
 	$(NVTV_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS) \
@@ -143,12 +143,35 @@ totem_LDADD =						\
 	plugins/libtotemmodule.la			\
 	libbaconmessageconnection.la			\
 	libtotem_player.la				\
-	$(EXTRA_GNOME_LIBS)				\
+	$(DEPENDENCY_LIBS)				\
 	$(XVIDMODE_LIBS)				\
 	$(NVTV_LIBS)					\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)					\
 	$(X_LIBS)
+
+if WITH_SMCLIENT
+totem_SOURCES += \
+	eggdesktopfile.c \
+	eggdesktopfile.h \
+	eggsmclient.c \
+	eggsmclient.h \
+	eggsmclient-private.h \
+	$(NULL)
+totem_CFLAGS += $(SMCLIENT_CFLAGS)
+totem_LDADD += $(SMCLIENT_LIBS)
+
+if WITH_SMCLIENT_XSMP
+totem_SOURCES += eggsmclient-xsmp.c
+totem_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
+endif
+if WITH_SMCLIENT_WIN32
+totem_SOURCES += eggsmclient-win32.c
+endif
+if WITH_SMCLIENT_QUARTZ
+totem_SOURCES += eggsmclient-osx.c
+endif
+endif
 
 if ENABLE_PYTHON
 totem_LDADD += \
@@ -170,7 +193,7 @@ totem_video_thumbnailer_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 totem_video_thumbnailer_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
@@ -180,8 +203,8 @@ totem_video_thumbnailer_LDFLAGS = \
 
 totem_video_thumbnailer_LDADD =			\
 	backend/libbaconvideowidget.la		\
-	$(GTK_LIBS) 				\
-	$(EXTRA_GNOME_LIBS)			\
+	$(DEPENDENCY_LIBS)			\
+	$(EXTRA_BACKEND_LIBS) 			\
 	$(NVTV_LIBS)				\
 	$(XTEST_LIBS)				\
 	$(XVIDMODE_LIBS)			\
@@ -209,7 +232,7 @@ libtotem_properties_page_la_CPPFLAGS =		\
 
 libtotem_properties_page_la_CFLAGS = \
 	$(WARN_CFLAGS)		\
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(NAUTILUS_CFLAGS)	\
 	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
@@ -222,7 +245,7 @@ libtotem_properties_page_la_LIBADD =				\
 	backend/libbaconvideowidget.la				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
 	libtotem_player.la					\
-	$(EXTRA_GNOME_LIBS)					\
+	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)					\
 	$(NVTV_LIBS)						\
 	$(XTEST_LIBS)						\
@@ -247,7 +270,7 @@ test_properties_page_CPPFLAGS = 		\
 
 test_properties_page_CFLAGS = \
 	$(WARN_CFLAGS)		\
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(NAUTILUS_CFLAGS)	\
 	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
@@ -259,7 +282,7 @@ test_properties_page_LDADD = 					\
 	backend/libbaconvideowidget.la				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
 	libtotem_player.la					\
-	$(EXTRA_GNOME_LIBS)					\
+	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)					\
 	$(NVTV_LIBS)						\
 	$(XTEST_LIBS)						\
@@ -284,7 +307,7 @@ totem_video_indexer_CPPFLAGS = \
 
 totem_video_indexer_CFLAGS = \
 	$(WARN_CFLAGS)		\
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -293,8 +316,8 @@ totem_video_indexer_LDFLAGS = \
 
 totem_video_indexer_LDADD = \
 	backend/libbaconvideowidget.la	\
-	$(EXTRA_GNOME_LIBS)		\
-	$(GTK_LIBS)			\
+	$(DEPENDENCY_LIBS)		\
+	$(EXTRA_BACKEND_LIBS)		\
 	$(NVTV_LIBS)			\
 	$(XTEST_LIBS)			\
 	$(XVIDMODE_LIBS)		\
@@ -315,7 +338,7 @@ totem_audio_preview_CPPFLAGS =	\
 
 totem_audio_preview_CFLAGS = \
 	$(WARN_CFLAGS)		\
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -324,8 +347,8 @@ totem_audio_preview_LDFLAGS = \
 
 totem_audio_preview_LDADD = \
 	backend/libbaconvideowidget.la	\
-	$(EXTRA_GNOME_LIBS)		\
-	$(GTK_LIBS)			\
+	$(DEPENDENCY_LIBS)		\
+	$(EXTRA_BACKEND_LIBS)		\
 	$(NVTV_LIBS)			\
 	$(XTEST_LIBS)			\
 	$(XVIDMODE_LIBS)		\

@@ -26,7 +26,7 @@ libtracker_la_LIBADD = $(TRACKER_LIBS)
 libtracker_la_CPPFLAGS = $(common_defines)
 
 libtracker_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(TRACKER_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\

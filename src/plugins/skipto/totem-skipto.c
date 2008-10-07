@@ -31,7 +31,6 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <gconf/gconf-client.h>
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>

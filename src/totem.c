@@ -36,10 +36,6 @@
 #include <math.h>
 #include <gio/gio.h>
 
-#ifndef HAVE_GTK_ONLY
-#include <gnome.h>
-#endif /* !HAVE_GTK_ONLY */
-
 #include <string.h>
 
 #ifdef GDK_WINDOWING_X11
@@ -3395,16 +3391,47 @@ totem_message_connection_receive_cb (const char *msg, Totem *totem)
 	g_free (url);
 }
 
+static void
+about_url_hook (GtkAboutDialog *about,
+	        const char *link,
+	        gpointer user_data)
+{
+	GError *error = NULL;
+
+	if (!gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (about)),
+	                   link,
+	                   gtk_get_current_event_time (),
+	                   &error))
+	{
+	        totem_interface_error (_("Could not open link"),
+	                               error->message,
+	                               GTK_WINDOW (about));
+	        g_error_free (error);
+	}
+}
+
+
+static void
+about_email_hook (GtkAboutDialog *about,
+		  const char *email_address,
+		  gpointer user_data)
+{
+	char *escaped, *uri;
+
+	escaped = g_uri_escape_string (email_address, NULL, FALSE);
+	uri = g_strdup_printf ("mailto:%s", escaped);
+	g_free (escaped);
+
+	about_url_hook (about, uri, user_data);
+	g_free (uri);
+}
+
 int
 main (int argc, char **argv)
 {
 	Totem *totem;
 	GConfClient *gc;
-#ifndef HAVE_GTK_ONLY
-	GnomeProgram *program;
-#else
 	GError *error = NULL;
-#endif
 	GOptionContext *context;
 	GOptionGroup *baconoptiongroup;
 	char *sidebar_pageid;
@@ -3432,25 +3459,20 @@ main (int argc, char **argv)
 	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, baconoptiongroup);
 
-#ifdef HAVE_GTK_ONLY
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
 		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
 				error->message, argv[0]);
 		g_error_free (error);
+	        g_option_context_free (context);
 		totem_action_exit (NULL);
 	}
-#else
-	program = gnome_program_init (PACKAGE, VERSION,
-			LIBGNOMEUI_MODULE,
-			argc, argv,
-			GNOME_PARAM_APP_DATADIR, DATADIR,
-			GNOME_PARAM_GOPTION_CONTEXT, context,
-			GNOME_PARAM_NONE);
-#endif /* HAVE_GTK_ONLY */
+	g_option_context_free (context);
 
 	g_set_application_name (_("Totem Movie Player"));
 	gtk_window_set_default_icon_name ("totem");
+	gtk_about_dialog_set_url_hook (about_url_hook, NULL, NULL);
+	gtk_about_dialog_set_email_hook (about_email_hook, NULL, NULL);
 
 	gc = gconf_client_get_default ();
 	if (gc == NULL)
@@ -3567,9 +3589,5 @@ main (int argc, char **argv)
 
 	gtk_main ();
 
-#ifndef HAVE_GTK_ONLY
-	/* Will destroy GOption allocated data automatically */
-	g_object_unref (program);
-#endif	
 	return 0;
 }

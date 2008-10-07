@@ -12,13 +12,13 @@ bvw_test_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 bvw_test_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)		\
 	-I$(top_srcdir)/
 
 bvw_test_LDADD = \
 	libbaconvideowidget.la \
-	$(EXTRA_GNOME_LIBS) $(XVIDMODE_LIBS) $(XTEST_LIBS)
+	$(DEPENDENCY_LIBS) $(XVIDMODE_LIBS) $(XTEST_LIBS)
 
 BVWMARSHALFILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
 GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
@@ -56,7 +56,7 @@ libbaconvideowidget_la_CPPFLAGS =		\
 	$(AM_CPPFLAGS)
 
 libbaconvideowidget_la_CFLAGS =		\
-	$(EXTRA_GNOME_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)		\
 	$(MM_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
 	$(NVTV_CFLAGS) 			\
@@ -69,7 +69,7 @@ libbaconvideowidget_la_LIBADD =	\
 	$(MM_LIBS)		\
 	$(GST_LIBS)		\
 	$(NVTV_LIBS)		\
-	$(GTK_LIBS)		\
+	$(EXTRA_BACKEND_LIBS)	\
 	$(X_LIBS)		\
 	$(MISSING_PLUGINS_LIBS)
 

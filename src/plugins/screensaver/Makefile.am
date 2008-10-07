@@ -26,10 +26,11 @@ libscreensaver_la_LIBADD = $(top_builddir)/lib/libtotemscrsaver.la
 libscreensaver_la_CPPFLAGS = $(common_defines)
 
 libscreensaver_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
+	$(SCREENSAVER_CFLAGS)	\
 	-I$(top_srcdir)/	\
 	-I$(top_srcdir)/lib	\
 	-I$(top_srcdir)/src	\

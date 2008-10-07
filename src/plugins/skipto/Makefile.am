@@ -34,7 +34,7 @@ libskipto_la_CPPFLAGS = \
 	-I$(top_srcdir)/plparse
 
 libskipto_la_CFLAGS = 			\
-	$(EXTRA_GNOME_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(AM_CFLAGS)			\

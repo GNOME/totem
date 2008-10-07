@@ -28,7 +28,7 @@ libmovie_properties_la_LIBADD = libbaconvideowidgetproperties.la
 libmovie_properties_la_CPPFLAGS = $(common_defines)
 
 libmovie_properties_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
@@ -41,7 +41,7 @@ libbaconvideowidgetproperties_la_SOURCES =		\
 	bacon-video-widget-properties.h
 
 libbaconvideowidgetproperties_la_CFLAGS =	\
-	$(EXTRA_GNOME_CFLAGS)			\
+	$(DEPENDENCY_CFLAGS)			\
 	$(WARN_CFLAGS)				\
 	$(DBUS_CFLAGS)				\
 	$(AM_CFLAGS)				\

@@ -29,7 +29,7 @@ libpublish_la_LIBADD = $(LIBEPC_LIBS)
 libpublish_la_CPPFLAGS = $(common_defines)
 
 libpublish_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(LIBEPC_CFLAGS)	\

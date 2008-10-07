@@ -1,5 +1,40 @@
 2008-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* bindings/python/Makefile.am:
+	* browser-plugin/Makefile.am:
+	* configure.in:
+	* lib/Makefile.am:
+	* src/Makefile.am:
+	* src/backend/Makefile.am:
+	* src/plugins/Makefile.am:
+	* src/plugins/bemused/Makefile.am:
+	* src/plugins/galago/Makefile.am:
+	* src/plugins/gromit/Makefile.am:
+	* src/plugins/lirc/Makefile.am:
+	* src/plugins/media-player-keys/Makefile.am:
+	* src/plugins/mythtv/Makefile.am:
+	* src/plugins/ontop/Makefile.am:
+	* src/plugins/properties/Makefile.am:
+	* src/plugins/publish/Makefile.am:
+	* src/plugins/sample-vala/Makefile.am:
+	* src/plugins/screensaver/Makefile.am:
+	* src/plugins/sidebar-test/Makefile.am:
+	* src/plugins/skipto/Makefile.am:
+	* src/plugins/skipto/totem-skipto.c:
+	* src/plugins/thumbnail/Makefile.am:
+	* src/plugins/tracker/Makefile.am:
+	* src/totem-interface.c (totem_interface_error),
+	(totem_interface_error_with_link):
+	* src/totem-options.c (option_version_cb):
+	* src/totem-session.c (totem_save_state_cb), (totem_quit_cb),
+	(totem_session_setup), (totem_session_restore):
+	* src/totem.c (about_url_hook), (about_email_hook), (main):
+	* src/update-from-egg.sh: Big patch from Christian Persch
+	<chpe@gnome.org> to remove the libgnome dependencies
+	(Closes: #554226)
+
+2008-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in: up up version
 
 2008-10-07  Bastien Nocera  <hadess@hadess.net>

@@ -14,7 +14,7 @@ plugin_LTLIBRARIES = libsample-vala.la
 install-pluginLTLIBRARIES:
 
 totem-sample-vala-plugin.c totem-sample-vala-plugin.h: totem-sample-vala-plugin.vala
-	$(VALAC) -C --vapidir=$(top_srcdir)/bindings/vala -X -I$(top_srcdir)/src/plugins -X -I$(top_srcdir)/src/ --pkg=totem -X "$(EXTRA_GNOME_CFLAGS)" $^
+	$(VALAC) -C --vapidir=$(top_srcdir)/bindings/vala -X -I$(top_srcdir)/src/plugins -X -I$(top_srcdir)/src/ --pkg=totem -X "$(DEPENDENCY_CFLAGS)" $^
 
 common_defines = \
 	-D_REENTRANT					\
@@ -32,7 +32,7 @@ libsample_vala_la_LDFLAGS = $(modules_flags)
 libsample_vala_la_CPPFLAGS = $(common_defines)
 
 libsample_vala_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

@@ -18,7 +18,7 @@ libtotemscrsaver_la_SOURCES =				\
 
 libtotemscrsaver_la_CFLAGS =				\
 	$(common_defines)				\
-	$(EXTRA_GNOME_CFLAGS)				\
+	$(DEPENDENCY_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	$(DBUS_CFLAGS)					\
 	$(AM_CFLAGS)

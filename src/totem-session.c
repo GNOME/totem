@@ -27,9 +27,10 @@
 #include "totem-session.h"
 #include "totem-uri.h"
 
-#ifndef HAVE_GTK_ONLY
+#ifdef WITH_SMCLIENT
 
-#include <libgnomeui/gnome-client.h>
+#include <unistd.h>
+#include "eggsmclient.h"
 
 static char *
 totem_session_create_key (void)
@@ -46,17 +47,14 @@ totem_session_create_key (void)
 	return path;
 }
 
-static gboolean
-totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
-		gboolean shutting_down, GnomeInteractStyle interact_style,
-		gboolean fast, Totem *totem)
+static void
+totem_save_state_cb (EggSMClient *client,
+	             GKeyFile *key_file,
+	             Totem *totem)
 {
 	char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 	int i = 0;
 	char *path_id, *current, *seek, *uri;
-
-	if (style == GNOME_SAVE_GLOBAL)
-		return TRUE;
 
 	path_id = totem_session_create_key ();
 	totem_playlist_save_current_playlist (totem->playlist, path_id);
@@ -65,7 +63,7 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 	argv[i++] = "rm";
 	argv[i++] = "-f";
 	argv[i++] = path_id;
-	gnome_client_set_discard_command (client, i, argv);
+	egg_sm_client_set_discard_command (client, i, (const char **) argv);
 
 	/* How to clone or restart */
 	i = 0;
@@ -82,19 +80,20 @@ totem_save_yourself_cb (GnomeClient *client, int phase, GnomeSaveStyle style,
 	uri = g_filename_to_uri (path_id, NULL, NULL);
 	argv[i++] = uri;
 
-	gnome_client_set_clone_command (client, i, argv);
-	gnome_client_set_restart_command (client, i, argv);
+	/* FIXME: what's this used for? */
+	/* egg_sm_client_set_clone_command (client, i, argv); */
+
+	egg_sm_client_set_restart_command (client, i, (const char **) argv);
 
 	g_free (path_id);
 	g_free (current);
 	g_free (seek);
 	g_free (uri);
-
-	return TRUE;
 }
 
 static void
-totem_client_die_cb (GnomeClient *client, Totem *totem)
+totem_quit_cb (EggSMClient *client,
+	       Totem *totem)
 {
 	totem_action_exit (totem);
 }
@@ -102,19 +101,17 @@ totem_client_die_cb (GnomeClient *client, Totem *totem)
 void
 totem_session_setup (Totem *totem, char **argv)
 {
-	GnomeClient *client;
-	GnomeClientFlags flags;
+	EggSMClient *sm_client;
 
 	totem->argv0 = argv[0];
 
-	client = gnome_master_client ();
-	g_signal_connect (G_OBJECT (client), "save-yourself",
-			G_CALLBACK (totem_save_yourself_cb), totem);
-	g_signal_connect (G_OBJECT (client), "die",
-			G_CALLBACK (totem_client_die_cb), totem);
+	sm_client = egg_sm_client_get ();
+	g_signal_connect (sm_client, "save-state",
+	                  G_CALLBACK (totem_save_state_cb), totem);
+	g_signal_connect (sm_client, "quit",
+	                  G_CALLBACK (totem_quit_cb), totem);
 
-	flags = gnome_client_get_flags (client);
-	if (flags & GNOME_CLIENT_RESTORED)
+	if (egg_sm_client_is_resumed (sm_client))
 		totem->session_restored = TRUE;
 }
 
@@ -149,8 +146,6 @@ totem_session_restore (Totem *totem, char **filenames)
 
 	g_free (mrl);
 	g_free (subtitle);
-
-	return;
 }
 
 #else
@@ -165,4 +160,4 @@ totem_session_restore (Totem *totem, char **argv)
 {
 }
 
-#endif /* !HAVE_GTK_ONLY */
+#endif /* WITH_SMCLIENT */

@@ -33,6 +33,18 @@
 
 TotemCmdLineOptions optionstate;	/* Decoded command line options */
 
+static gboolean
+option_version_cb (const gchar *option_name,
+	           const gchar *value,
+	           gpointer     data,
+	           GError     **error)
+{
+	g_print ("%s %s\n", PACKAGE, VERSION);
+
+	exit (0);
+	return FALSE;
+}
+ 
 const GOptionEntry options[] = {
 	{"debug", '\0', 0, G_OPTION_ARG_NONE, &optionstate.debug, N_("Enable debug"), NULL},
 	{"play-pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.playpause, N_("Play/Pause"), NULL},
@@ -54,6 +66,7 @@ const GOptionEntry options[] = {
 	{"printplaying", '\0', 0, G_OPTION_ARG_NONE, &optionstate.printplaying, N_("Print playing movie"), NULL},
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
 	{"playlist-idx", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_DOUBLE, &optionstate.playlistidx, N_("Playlist index"), NULL},
+	{ "version", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, option_version_cb, NULL, NULL },
 	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &optionstate.filenames, N_("Movies to play"), NULL},
 	{NULL} /* end the list */
 };

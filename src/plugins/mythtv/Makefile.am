@@ -35,7 +35,7 @@ libtotem_mythtv_la_CPPFLAGS = $(common_defines)
 libtotem_mythtv_la_LIBADD = $(GMYTH_LIBS)
 
 libtotem_mythtv_la_CFLAGS =	\
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(GMYTH_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\

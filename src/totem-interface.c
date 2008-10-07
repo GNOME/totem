@@ -77,13 +77,10 @@ totem_interface_error (const char *title, const char *reason,
 
 	error_dialog = totem_interface_error_dialog (title, reason, parent);
 
-	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
 	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 
-	gtk_widget_show (error_dialog);
+	gtk_window_present (GTK_WINDOW (error_dialog));
 }
 
 void
@@ -151,13 +148,10 @@ totem_interface_error_with_link (const char *title, const char *reason,
 
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog), GTK_RESPONSE_OK);
 
-	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
 	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
 			(gtk_widget_destroy), error_dialog);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
 
-	gtk_widget_show_all (error_dialog);
+	gtk_window_present (GTK_WINDOW (error_dialog));
 }
 
 GtkBuilder *

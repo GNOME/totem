@@ -35,12 +35,12 @@ libtotembrowserplugin_helper_la_CPPFLAGS =	\
 	$(AM_CPPFLAGS)
 
 libtotembrowserplugin_helper_la_CFLAGS =	\
-	$(EXTRA_GNOME_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
 libtotembrowserplugin_helper_la_LIBADD = 	\
-	$(EXTRA_GNOME_CFLAGS)			\
+	$(DEPENDENCY_CFLAGS)			\
 	$(WARN_CFLAGS)				\
 	$(AM_CFLAGS)
 
@@ -55,10 +55,10 @@ test_glow_button_SOURCES = \
 
 test_glow_button_LDADD = \
 	libtotembrowserplugin_helper.la		\
-	$(EXTRA_GNOME_LIBS)
+	$(DEPENDENCY_LIBS)
 
 test_glow_button_CFLAGS =	\
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -99,7 +99,7 @@ totem_plugin_viewer_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 totem_plugin_viewer_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(NVTV_CFLAGS)		\
@@ -111,7 +111,7 @@ totem_plugin_viewer_LDADD =						\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/lib/libtotemscrsaver.la				\
 	libtotembrowserplugin_helper.la					\
-	$(EXTRA_GNOME_LIBS)	\
+	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
 	$(XVIDMODE_LIBS) 	\
 	$(DBUS_LIBS)		\

@@ -1,25 +1,26 @@
 #!/bin/sh
 
-function die() {
-  echo $*
-  exit 1
-}
+SVN_URI=http://svn.gnome.org/svn/libegg/trunk/libegg/smclient
+FILES="eggdesktopfile.c
+       eggdesktopfile.h
+       eggsmclient.c
+       eggsmclient.h
+       eggsmclient-osx.c
+       eggsmclient-private.h
+       eggsmclient-win32.c
+       eggsmclient-xsmp.c"
+PATCHES="eggsmclient-1.patch
+         eggsmclient-2.patch
+         eggsmclient-3.patch"
 
-if test -z "$EGGDIR"; then
-   echo "Must set EGGDIR"
-   exit 1
-fi
+echo "Obtaining latest version of the sources"
+for FILE in $FILES
+do
+  svn export $SVN_URI/$FILE
+done
 
-if test -z "$EGGFILES"; then
-   echo "Must set EGGFILES"
-   exit 1
-fi
-
-for FILE in $EGGFILES; do
-  if cmp -s $EGGDIR/$FILE $FILE; then
-     echo "File $FILE is unchanged"
-  else
-     cp $EGGDIR/$FILE $FILE || die "Could not move $EGGDIR/$FILE to $FILE"
-     echo "Updated $FILE"
-  fi
+echo "Applying patches"
+for PATCH in $PATCHES
+do
+  patch -p3 -i $PATCH
 done

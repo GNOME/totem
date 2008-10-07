@@ -26,7 +26,7 @@ libgromit_la_LIBADD =
 libgromit_la_CPPFLAGS = $(common_defines)
 
 libgromit_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

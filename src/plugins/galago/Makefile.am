@@ -26,7 +26,7 @@ libtgp_la_LIBADD = $(LIBGALAGO_LIBS)
 libtgp_la_CPPFLAGS = $(common_defines)
 
 libtgp_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(LIBGALAGO_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\

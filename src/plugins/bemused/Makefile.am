@@ -26,7 +26,7 @@ libbemused_la_CPPFLAGS = $(common_defines)
 libbemused_la_LIBADD = $(BEMUSED_LIBS)
 
 libbemused_la_CFLAGS =			\
-	$(EXTRA_GNOME_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(BEMUSED_CFLAGS)		\
 	$(AM_CFLAGS)			\

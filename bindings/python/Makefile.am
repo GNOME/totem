@@ -10,7 +10,7 @@ totem_python_la_LDFLAGS = \
 	-module -avoid-version
 
 totem_python_la_LIBADD = \
-	$(EXTRA_GNOME_LIBS)	\
+	$(DEPENDENCY_LIBS)	\
 	$(PYTHON_LIBS)		\
 	$(PYTHON_EXTRA_LIBS)	\
 	$(PYGTK_LIBS)
@@ -19,7 +19,7 @@ totem_python_la_CFLAGS = \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/src		\
 	-I$(top_srcdir)/src/plugins	\
-	$(EXTRA_GNOME_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)		\
 	$(PYGTK_CFLAGS)			\
 	$(PYTHON_CFLAGS)		\
 	$(AM_CFLAGS)			\

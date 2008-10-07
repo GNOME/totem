@@ -233,42 +233,52 @@ else
 	ISO_CODES=""
 fi
 
-dnl Check for GTK+ only build
-AC_ARG_ENABLE(gtk,
-	AC_HELP_STRING([--enable-gtk],[compile a gtk+ only version]),
-	[case "${enableval}" in
-	yes) ENABLE_GTK=yes ;;
-	no) ENABLE_GTK=no ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --disable-gtk) ;;
-	esac],
-	[ENABLE_GTK=no]) dnl Default value
+dnl Check the smclient backend
+GDK_TARGET="$($PKG_CONFIG --variable target gdk-2.0)"
 
-dnl Seems that the order matters because libtool blows
-dnl Also check if we're going to be using GTK+ only
-if test x$ENABLE_GTK = "xno" ; then
-# FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS libgnomeui-2.0 >= $GNOMEUI_REQS gio-2.0 libgnome-2.0 >= $LIBGNOME_REQS gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS $ISO_CODES)
-	HAVE_GNOME=yes
-else
-# FIXME: use gmodule-no-export instead!
-	PKG_CHECK_MODULES(EXTRA_GNOME, glib-2.0 >= $GLIB_REQS gtk+-2.0 >= $GTK_REQS gio-2.0 gnome-icon-theme >= $GNOMEICON_REQS gmodule-2.0 gconf-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS $ISO_CODES)
-	AC_DEFINE(USE_STABLE_LIBGNOMEUI, 1, [defined if we don't have GNOME])
-	AC_DEFINE(HAVE_GTK_ONLY, 1, [defined if GNOME isn't used])
-	HAVE_GNOME=no
+SMCLIENT_PKGS=
+AC_MSG_CHECKING([which smclient backend to use])
+AC_ARG_WITH([smclient],
+  [AS_HELP_STRING([--with-smclient],[which smclient backend to use (xsmp/win32/quartz)])],
+  [],
+  [case "$GDK_TARGET" in
+    x11) with_smclient=xsmp SMCLIENT_PKGS="sm" ;;
+    win32|quartz) with_smclient=$GDK_TARGET ;;
+    *) with_smclient=no ;;
+   esac])
+AC_MSG_RESULT([$with_smclient])
+
+if test "$with_smclient" != "no"; then
+  PKG_CHECK_MODULES([SMCLIENT],[$SMCLIENT_PKGS])
+  AC_DEFINE([WITH_SMCLIENT],[1],[Define if smclient is enabled])
 fi
+
+AM_CONDITIONAL([WITH_SMCLIENT],[test "$with_smclient" != "no"])
+AM_CONDITIONAL([WITH_SMCLIENT_XSMP],[test "$with_smclient" = "xsmp"])
+AM_CONDITIONAL([WITH_SMCLIENT_WIN32],[test "$with_smclient" = "win32"])
+AM_CONDITIONAL([WITH_SMCLIENT_QUARTZ],[test "$with_smclient" = "quartz"])
+
+dnl Pkg-config checks
+
+PKG_CHECK_MODULES([DEPENDENCY],[
+  glib-2.0 >= $GLIB_REQS
+  gio-2.0
+  gtk+-2.0 >= $GTK_REQS
+  gmodule-2.0
+  gconf-2.0
+  totem-plparser >= $TOTEM_PLPARSER_REQS])
 
 PKG_CHECK_MODULES(MM, $MM)
 
-AM_CONDITIONAL(HAVE_GNOME, test x$HAVE_GNOME = "xyes")
-EXTRA_GNOME_CFLAGS="$EXTRA_GNOME_CFLAGS"
-EXTRA_GNOME_LIBS="$EXTRA_GNOME_LIBS $EXTRA_BACKEND_LIBS"
-AC_SUBST(EXTRA_GNOME_CFLAGS)
-AC_SUBST(EXTRA_GNOME_LIBS)
-
-PKG_CHECK_MODULES(GTK, gtk+-2.0 gthread-2.0)
-AC_SUBST(GTK_CFLAGS)
+PKG_CHECK_MODULES([GTK],[gtk+-2.0 gthread-2.0])
 GTK_LIBS="$GTK_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(GTK_LIBS)
+
+AC_SUBST([EXTRA_BACKEND_LIBS])
+
+PKG_CHECK_EXISTS([
+  $ISO_CODES
+  gnome-icon-theme >= $GNOMEICON_REQS])
 
 dnl *************************
 dnl X11 related functionality
@@ -515,6 +525,9 @@ for plugin in ${used_plugins}; do
 	add_plugin="1"
 
 	case ${plugin} in
+		screensaver)
+			PKG_CHECK_MODULES(SCREENSAVER, gconf-2.0)
+		;;
 		galago)
 			PKG_CHECK_MODULES(LIBGALAGO, libgalago >= 0.5.2,
 				[HAVE_LIBGALAGO=yes], [HAVE_LIBGALAGO=no])
@@ -552,7 +565,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		mythtv)
-			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7.1 gmyth-upnp >= 0.7.1,
+			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7.1 gmyth-upnp >= 0.7.1 gconf-2.0,
 					  [HAVE_GMYTH=yes], [HAVE_GMYTH=no])
 			if test "${HAVE_GMYTH}" != "yes"; then
 				plugin_error_or_ignore "you need GMyth >= 0.7 installed for the MythTV plugin"
@@ -902,11 +915,6 @@ if test x$found_nvtv = xyes ; then
 else
 	AC_MSG_NOTICE([   nvtv support disabled])
 fi
-if test x$ENABLE_GTK = xyes ; then
-	AC_MSG_NOTICE([** GTK+-only version enabled])
-else
-	AC_MSG_NOTICE([** GNOME version enabled])
-fi
 if test x$enable_python = xyes ; then
 	AC_MSG_NOTICE([** Python binding support enabled])
 else
@@ -997,6 +1005,11 @@ if test x$have_xfree = xyes ; then
 	AC_MSG_NOTICE([** XFree86 multimedia keys support enabled])
 else
 	AC_MSG_NOTICE([   XFree86 multimedia keys support disabled])
+fi
+if test "$with_smclient" != "no" ; then
+	AC_MSG_NOTICE([** SM client support enabled])
+else
+	AC_MSG_NOTICE([   SM client support disabled])
 fi
 
 AC_MSG_NOTICE([End options])

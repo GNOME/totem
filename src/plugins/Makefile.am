@@ -31,7 +31,7 @@ libtotemmodule_la_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 libtotemmodule_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
@@ -51,7 +51,7 @@ if ENABLE_PYTHON
 SUBDIRS += totem
 
 libtotemmodule_la_LIBADD = \
-	$(EXTRA_GNOME_LIBS)	\
+	$(DEPENDENCY_LIBS)	\
 	$(PYTHON_LIBS)		\
 	$(PYTHON_EXTRA_LIBS)	\
 	$(PYGTK_LIBS)

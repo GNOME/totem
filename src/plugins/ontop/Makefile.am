@@ -26,7 +26,7 @@ libontop_la_LIBADD = $(top_builddir)/lib/libtotemscrsaver.la
 libontop_la_CPPFLAGS = $(common_defines)
 
 libontop_la_CFLAGS = \
-	$(EXTRA_GNOME_CFLAGS)	\
+	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
