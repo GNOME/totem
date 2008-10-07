@@ -1,5 +1,12 @@
 2008-10-07  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_mrls): Require rsndvdbin
+	for DVD playback, as that does handle menus
+	(Closes: #515982)
+
+2008-10-07  Bastien Nocera  <hadess@hadess.net>
+
 	* bindings/python/Makefile.am:
 	* browser-plugin/Makefile.am:
 	* configure.in:

@@ -3979,68 +3979,6 @@ bacon_video_widget_dvb_get_adapter_type (const char *device)
 }
 
 static gchar **
-bacon_video_widget_get_dvd_mrls (const char *device)
-{
-  GstFormat fmt;
-  GstElement *element;
-  gint64 num_titles, i;
-  GPtrArray *array;
-
-  element = gst_element_factory_make ("dvdreadsrc", "test_dvdsrc");
-  if (element == NULL)
-    return NULL;
-  /* We need to get the format after instantiating dvdreadsrc, as
-   * the nick is registered in that class init */
-  fmt = gst_format_get_by_nick ("title");
-  g_object_set (element, "device", device, NULL);
-  if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
-    GST_DEBUG ("Couldn't change the state to PAUSED");
-    gst_object_unref (element);
-    return NULL;
-  }
-  if (gst_element_query_duration (element, &fmt, &num_titles) == FALSE) {
-    GST_DEBUG ("Couldn't query the \"duration\" (number of titles)");
-    gst_element_set_state (element, GST_STATE_NULL);
-    gst_object_unref (element);
-    return NULL;
-  }
-
-  fmt = GST_FORMAT_TIME;
-  array = g_ptr_array_new ();
-  for (i = 1 ; i <= num_titles; i++) {
-    gint64 len;
-
-    /* Reset to NULL, change the title, and go back to PAUSED */
-    if (gst_element_set_state (element, GST_STATE_NULL) != GST_STATE_CHANGE_SUCCESS) {
-      GST_DEBUG ("Couldn't set state to NULL for title %"G_GINT64_FORMAT, i);
-      break;
-    }
-    g_object_set (element, "title", i, NULL);
-    if (gst_element_set_state (element, GST_STATE_PAUSED) != GST_STATE_CHANGE_SUCCESS) {
-      GST_DEBUG ("Couldn't set state for title %"G_GINT64_FORMAT, i);
-      break;
-    }
-
-    if (gst_element_query_duration (element, &fmt, &len) == FALSE) {
-      GST_DEBUG ("Couldnt' query duration for title %"G_GINT64_FORMAT, i);
-      break;
-    }
-    /* If it's less than 30 seconds long, we kick it out */
-    if (len >= (30 * GST_SECOND)) {
-      g_ptr_array_add (array, g_strdup_printf ("dvd://%"G_GINT64_FORMAT, i));
-      GST_DEBUG ("URI: dvd://%d (time: %" GST_TIME_FORMAT ")",
-		 (gint) i, GST_TIME_ARGS (len));
-    }
-  }
-
-  gst_element_set_state (element, GST_STATE_NULL);
-  gst_object_unref (element);
-  if (array->len >= 1)
-    g_ptr_array_add (array, NULL);
-  return (char **) g_ptr_array_free (array, FALSE);
-}
-
-static gchar **
 bacon_video_widget_get_dvb_mrls (const char *device)
 {
   gchar* filename;
@@ -4105,8 +4043,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 	break;
       }
     case MEDIA_TYPE_DVD: {
-      if (!gst_default_registry_check_feature_version ("dvdreadsrc", 0, 10, 0)) {
-        GST_DEBUG ("Missing dvdreadsrc");
+      if (!gst_default_registry_check_feature_version ("rsndvdbin", 0, 10, 0)) {
+        GST_DEBUG ("Missing rsndvdbin");
 	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
 		     "XXX Do not use XXX");
         return NULL;
@@ -4118,7 +4056,10 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 		     "XXX Do not use XXX");
         return NULL;
       } else {
-        mrls = bacon_video_widget_get_dvd_mrls (device);
+	gchar *uri[] = { NULL, NULL };
+	uri[0] = g_strdup_printf ("dvd://%s", device);
+	mrls = g_strdupv (uri);
+	g_free (uri[0]);
       }
       break;
     }
