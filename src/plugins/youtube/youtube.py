@@ -1,5 +1,6 @@
 import totem
 import gobject, gtk, gconf
+gobject.threads_init()
 import gdata.service
 import urllib
 import httplib
@@ -14,15 +15,45 @@ class DownloadThread (threading.Thread):
 		self.youtube = youtube
 		self.url = url
 		self.treeview_name = treeview_name
+		self._done = False
+		self._lock = threading.Lock()
 		threading.Thread.__init__ (self)
+
 	def run (self):
-		self.youtube.entry_lock.acquire (True)
 		try:
-			self.youtube.entry[self.treeview_name] = self.youtube.service.Get (self.url).entry
+			res = self.youtube.service.Get (self.url).entry
 		except gdata.service.RequestError:
 			"""Probably a 503 service unavailable. Unfortunately we can't give an error message, as we're not in the GUI thread"""
 			"""Just let the lock go and return"""
-		self.youtube.entry_lock.release ()
+			res = None
+		gobject.idle_add(self.publish_results, res)
+
+	def publish_results(self, res):
+		self._lock.acquire (True)
+		self.youtube.entry[self.treeview_name] = res
+		self._done = True
+		self._lock.release ()
+		return False
+
+	@property
+	def done(self):
+		""" Thread-safe property to know whether the query is done or not """
+		self._lock.acquire(True)
+		res = self._done
+		self._lock.release()
+		return res
+
+class CallbackThread(threading.Thread):
+	def __init__(self, callback, *args, **kwargs):
+		self.callback = callback
+		self.args = args
+		self.kwargs = kwargs
+		threading.Thread.__init__(self)
+
+	def run (self):
+		res = self.callback(*self.args, **self.kwargs)
+		while res == True:
+			res = self.callback(*self.args, **self.kwargs)
 
 class YouTube (totem.Plugin):
 	def __init__ (self):
@@ -39,7 +70,6 @@ class YouTube (totem.Plugin):
 		self.start_index = {}
 		self.results = {} # This is just the number of results from the last pagination query
 		self.entry = {}
-		self.entry_lock = threading.Lock ()
 
 		self.current_treeview_name = ""
 		self.notebook_pages = []
@@ -136,16 +166,19 @@ class YouTube (totem.Plugin):
 	def on_notebook_page_changed (self, notebook, notebook_page, page_num):
 		self.current_treeview_name = self.notebook_pages[page_num]
 	def on_row_activated (self, treeview, path, column):
+		print "Activating row"
 		model, rows = treeview.get_selection ().get_selected_rows ()
 		iter = model.get_iter (rows[0])
 		youtube_id = model.get_value (iter, 3)
-		
+
 		"""Get related videos"""
 		self.youtube_id = youtube_id
 		self.start_index["related"] = 1
 		self.results["related"] = 0
 		self.progress_bar.set_text (_("Fetching related videos..."))
 		self.get_results ("/feeds/api/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
+		print "Done Activating row"
+
 	def get_fmt_string (self):
 		if self.gconf_client.get_int ("/apps/totem/connection_speed") >= 10:
 			return "&fmt=18"
@@ -204,14 +237,16 @@ class YouTube (totem.Plugin):
 	def convert_url_to_id (self, url):
 		"""Find the last clause in the URL; after the last /"""
 		return url.split ("/").pop ()
-	def populate_list_from_results (self, treeview_name):
+
+	def populate_list_from_results (self, treeview_name, thread):
 		"""Check and acquire the lock"""
-		if self.entry_lock.acquire (False) == False:
-			if (self.last_pulse + 0.035) < time.time():
-				self.progress_bar.pulse ()
-				self.last_pulse = time.time()
+		if not thread.done:
+			self.progress_bar.pulse ()
 			return True
 
+		CallbackThread(self.process_next_thumbnail, treeview_name).start()
+
+	def process_next_thumbnail(self, treeview_name):
 		"""Return if there are no results (or we've finished)"""
 		if self.entry[treeview_name] == None or len (self.entry[treeview_name]) == 0:
 			"""Revert the cursor"""
@@ -221,7 +256,6 @@ class YouTube (totem.Plugin):
 			self.progress_bar.set_text ("")
 
 			self.entry[treeview_name] = None
-			self.entry_lock.release ()
 
 			return False
 
@@ -234,16 +268,14 @@ class YouTube (totem.Plugin):
 		"""Update the progress bar"""
 		self.progress_bar.set_fraction (float (self.results[treeview_name]) / float (self.max_results))
 
-		self.entry_lock.release ()
-
 		"""Find the content tag"""
 		for _element in entry.extension_elements:
 			if _element.tag =="group":
-				break;
+				break
 
 		content_elements = _element.FindChildren ("content")
 		if len (content_elements) == 0:
-			return True;
+			return True
 		mrl = content_elements[0].attributes['url']
 
 		"""Download the thumbnail and store it in a temporary location so we can get a pixbuf from it"""
@@ -251,7 +283,6 @@ class YouTube (totem.Plugin):
 		try:
 			filename, headers = urllib.urlretrieve (thumbnail_url)
 		except IOError:
-			print "Could not retrieve thumbnail " + thumbnail_url + " for video."
 			return True
 
 		try:
@@ -275,9 +306,15 @@ class YouTube (totem.Plugin):
 			else:
 				mrl = "http://www.youtube.com" + mrl"""
 
-		self.liststore[treeview_name].append ([pixbuf, entry.title.text, mrl, youtube_id])
+		gobject.idle_add(self._append_to_liststore, treeview_name,
+				 pixbuf, entry.title.text, mrl, youtube_id)
 
 		return True
+
+	def _append_to_liststore(self, treeview_name, pixbuf, title, mrl, id):
+		self.liststore[treeview_name].append([pixbuf, title, mrl, id])
+
+
 	def on_search_button_clicked (self, button):
 		search_terms = self.search_entry.get_text ()
 
@@ -294,6 +331,7 @@ class YouTube (totem.Plugin):
 		self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (search_terms) + "&orderby=relevance&max-results=" + str (self.max_results), "search")
 	def on_search_entry_activated (self, entry):
 		self.search_button.clicked ()
+
 	def get_results (self, url, treeview_name, clear = True):
 		if clear:
 			self.liststore[treeview_name].clear ()
@@ -305,9 +343,9 @@ class YouTube (totem.Plugin):
 		window = self.vbox.window
 		window.set_cursor (gtk.gdk.Cursor (gtk.gdk.WATCH))
 		self.progress_bar.pulse ()
-		self.last_pulse = time.time()
 
 		self.results_downloaded = False
-		DownloadThread (self, url, treeview_name).start ()
-		gobject.idle_add (self.populate_list_from_results, treeview_name)
+		thread = DownloadThread (self, url, treeview_name)
+		gobject.timeout_add (350, self.populate_list_from_results, treeview_name, thread)
+		thread.start()
 
