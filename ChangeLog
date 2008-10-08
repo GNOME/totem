@@ -1,5 +1,13 @@
 2008-10-08  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c (relative_uri_remove_query),
+	(resolve_uri): g_file_resolve_relative_path() doesn't handle queries
+	(or fragments, but we don't care about them), so work around that
+	fact. Fixes resolution of filenames when they have a '?' in their
+	name (Helps: #555417)
+
+2008-10-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/eggdesktopfile.c:
 	* src/eggdesktopfile.h:
 	* src/eggsmclient-1.patch:

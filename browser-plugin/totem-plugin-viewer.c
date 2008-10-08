@@ -663,45 +663,85 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 }
 
 static char *
-resolve_uri (const char *base_uri,
-             const char *relative_uri)
+relative_uri_remove_query (const char *uri, char **query)
 {
-  char *uri, *scheme;
-  GFile *base_gfile, *base_parent_gfile, *resolved_gfile;
+	char *qmark;
 
-  if (!relative_uri)
-    return g_strdup (base_uri);
+	/* Look for '?' */
+	qmark = strrchr (uri, '?');
+	if (qmark == NULL)
+		return NULL;
 
-  if (!base_uri)
-    return g_strdup (relative_uri);
+	*query = g_strdup (qmark);
+	return g_strndup (uri, qmark - uri);
+}
 
-  /* If |relative_uri| has a scheme, it's a full URI, just return it */
-  scheme = g_uri_parse_scheme (relative_uri);
-  if (scheme) {
-    g_free (scheme);
-    return g_strdup (relative_uri);
-  }
+static char *
+resolve_uri (const char *base_uri,
+	     const char *relative_uri)
+{
+	char *uri, *scheme, *query, *new_relative_uri;
+	GFile *base_gfile, *base_parent_gfile, *resolved_gfile;
 
-  base_gfile = g_file_new_for_uri (base_uri);
-  base_parent_gfile = g_file_get_parent (base_gfile);
-  if (!base_parent_gfile) {
-    g_print ("Base URI %s has no parent!\n", base_uri);
-    g_object_unref (base_gfile);
-    return NULL;
-  }
-  g_object_unref (base_gfile);
+	if (!relative_uri)
+		return g_strdup (base_uri);
 
-  resolved_gfile = g_file_resolve_relative_path (base_parent_gfile, relative_uri);
-  g_object_unref (base_parent_gfile);
-  if (!resolved_gfile) {
-    g_warning ("Failed to resolve relative URI '%s' against base '%s'\n", relative_uri, base_uri);
-    return NULL;
-  }
+	if (!base_uri)
+		return g_strdup (relative_uri);
 
-  uri = g_file_get_uri (resolved_gfile);
-  g_object_unref (resolved_gfile);
+	/* If |relative_uri| has a scheme, it's a full URI, just return it */
+	scheme = g_uri_parse_scheme (relative_uri);
+	if (scheme) {
+		g_free (scheme);
+		return g_strdup (relative_uri);
+	}
 
-  return uri;
+	base_gfile = g_file_new_for_uri (base_uri);
+	base_parent_gfile = g_file_get_parent (base_gfile);
+	if (!base_parent_gfile) {
+		g_print ("Base URI %s has no parent!\n", base_uri);
+		g_object_unref (base_gfile);
+		return NULL;
+	}
+	g_object_unref (base_gfile);
+
+	query = NULL;
+	new_relative_uri = relative_uri_remove_query (relative_uri, &query);
+
+	if (new_relative_uri) {
+		char *tmpuri;
+
+		resolved_gfile = g_file_resolve_relative_path (base_parent_gfile, new_relative_uri);
+		g_object_unref (base_parent_gfile);
+		if (!resolved_gfile) {
+			g_warning ("Failed to resolve relative URI '%s' against base '%s'\n", relative_uri, base_uri);
+			g_free (new_relative_uri);
+			g_free (query);
+			return NULL;
+		}
+
+		tmpuri = g_file_get_uri (resolved_gfile);
+		g_object_unref (resolved_gfile);
+		uri = g_strdup_printf ("%s%s", tmpuri, query);
+
+		g_free (tmpuri);
+		g_free (new_relative_uri);
+		g_free (query);
+
+		return uri;
+	} else {
+		resolved_gfile = g_file_resolve_relative_path (base_parent_gfile, relative_uri);
+		g_object_unref (base_parent_gfile);
+		if (!resolved_gfile) {
+			g_warning ("Failed to resolve relative URI '%s' against base '%s'\n", relative_uri, base_uri);
+			return NULL;
+		}
+
+		uri = g_file_get_uri (resolved_gfile);
+		g_object_unref (resolved_gfile);
+
+		return uri;
+	}
 }
 
 static void
