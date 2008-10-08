@@ -1,0 +1,25 @@
+From 6140b363d9e51abe35f995e66e06e4610a081608 Mon Sep 17 00:00:00 2001
+From: Christian Persch <chpe@gnome.org>
+Date: Tue, 30 Sep 2008 15:07:51 +0200
+Subject: [PATCH] Use G_OPTION_ARG_FILENAME here.
+
+---
+ libegg/smclient/eggsmclient.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/libegg/smclient/eggsmclient.c b/libegg/smclient/eggsmclient.c
+index f8cd242..81b66c5 100644
+--- a/libegg/smclient/eggsmclient.c
++++ b/libegg/smclient/eggsmclient.c
+@@ -184,7 +184,7 @@ static GOptionEntry entries[] = {
+     G_OPTION_ARG_NONE, &sm_client_disable,
+     N_("Disable connection to session manager"), NULL },
+   { "sm-client-state-file", 0, 0,
+-    G_OPTION_ARG_STRING, &sm_client_state_file,
++    G_OPTION_ARG_FILENAME, &sm_client_state_file,
+     N_("Specify file containing saved configuration"), N_("FILE") },
+   { "sm-client-id", 0, 0,
+     G_OPTION_ARG_STRING, &sm_client_id,
+-- 
+1.5.6
+
