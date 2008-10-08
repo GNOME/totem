@@ -959,6 +959,8 @@ totemPlugin::ClearRequest ()
 void
 totemPlugin::RequestStream (bool aForceViewer)
 {
+	D ("Stream requested (force viewer: %d)", aForceViewer);
+
 //        assert (mViewerReady);
         if (!mViewerReady)
           return;//FIXMEchpe
@@ -1022,7 +1024,7 @@ totemPlugin::RequestStream (bool aForceViewer)
 	/* If the URL is supported and the caller isn't asking us to make
 	 * the viewer open the stream, we call OpenStream, and
 	 * otherwise OpenURI. */
-	if (!aForceViewer && IsSchemeSupported (requestURI)) {
+	if (!aForceViewer && IsSchemeSupported (requestURI, baseURI)) {
 		/* This will fail for the 2nd stream, but we shouldn't
 		 * ever come to using it for the 2nd stream... */
 
@@ -1397,14 +1399,17 @@ totemPlugin::SetRealMimeType (const char *mimetype)
 }
 
 bool
-totemPlugin::IsSchemeSupported (const char *aURI)
+totemPlugin::IsSchemeSupported (const char *aURI, const char *aBaseURI)
 {
   if (!aURI)
     return false;
 
   char *scheme = g_uri_parse_scheme (aURI);
-  if (!scheme)
-    return false;
+  if (!scheme) {
+    scheme = g_uri_parse_scheme (aBaseURI);
+    if (!scheme)
+      return false;
+  }
 
   bool isSupported = false;
   if (g_ascii_strcasecmp (scheme, "http") == 0 ||
