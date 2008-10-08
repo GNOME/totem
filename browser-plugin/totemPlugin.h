@@ -160,7 +160,7 @@ class totemPlugin {
 
     bool IsMimeTypeSupported (const char *aMimeType,
                               const char *aURL);
-    bool IsSchemeSupported (const char *aURI);
+    bool IsSchemeSupported (const char *aURI, const char *aBaseURI);
     void SetRealMimeType (const char *aMimeType);
     bool ParseBoolean (const char *key,
                        const char *value,
