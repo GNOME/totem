@@ -1,3 +1,14 @@
+2008-10-09  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/Makefile.am:
+	* browser-plugin/idl/totemIBasicPlayer.idl:
+	* browser-plugin/totem-plugin-viewer.c (parse_plugin_type):
+	* browser-plugin/totemBasicPlugin.cpp:
+	* browser-plugin/totemBasicPlugin.h:
+	* browser-plugin/totemPlugin.cpp:
+	* configure.in: Remove the "basic" web browser plugin, you should
+	now use the VLC API to control the basic mime-types (Closes: #554867)
+
 2008-10-08  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp:

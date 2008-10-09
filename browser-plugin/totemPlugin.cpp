@@ -57,9 +57,7 @@
 
 #include "totemPlugin.h"
 
-#if defined(TOTEM_BASIC_PLUGIN)
-#include "totemBasicPlugin.h"
-#elif defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_GMP_PLUGIN)
 #include "totemGMPControls.h"
 #include "totemGMPNetwork.h"
 #include "totemGMPPlayer.h"
@@ -87,24 +85,7 @@
 #define PLUGIN_STREAM_CHUNK_SIZE (8 * 1024)
 
 static const totemPluginMimeEntry kMimeTypes[] = {
-#if defined(TOTEM_BASIC_PLUGIN)
-  { "application/x-ogg","ogg","application/ogg" },
-  { "application/ogg", "ogg", NULL },
-  { "audio/ogg", "oga", NULL },
-  { "audio/x-ogg", "ogg", NULL },
-  { "video/ogg", "ogv", NULL },
-  { "video/x-ogg", "ogg", NULL },
-  { "application/annodex", "anx", NULL },
-  { "audio/annodex", "axa", NULL },
-  { "video/annodex", "axv", NULL },
-  { "video/mpeg", "mpg, mpeg, mpe", NULL },
-  { "audio/wav", "wav", NULL },
-  { "audio/x-wav", "wav", NULL },
-  { "audio/mpeg", "mp3", NULL },
-  { "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
-  { "video/flv", "flv", "application/x-flash-video" },
-  { "application/x-totem-plugin", "", "Totem Multimedia plugin" },
-#elif defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_GMP_PLUGIN)
   { "application/x-mplayer2", "avi, wma, wmv", "video/x-msvideo" },
   { "video/x-ms-asf-plugin", "asf, wmv", "video/x-ms-asf" },
   { "video/x-msvideo", "asf, wmv", NULL },
@@ -132,15 +113,29 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "application/x-vlc-plugin", "", "VLC Multimedia Plugin" },
   { "application/vlc", "", "VLC Multimedia Plugin" },
   { "video/x-google-vlc-plugin", "", "VLC Multimedia Plugin" },
+  { "application/x-ogg","ogg","application/ogg" },
+  { "application/ogg", "ogg", NULL },
+  { "audio/ogg", "oga", NULL },
+  { "audio/x-ogg", "ogg", NULL },
+  { "video/ogg", "ogv", NULL },
+  { "video/x-ogg", "ogg", NULL },
+  { "application/annodex", "anx", NULL },
+  { "audio/annodex", "axa", NULL },
+  { "video/annodex", "axv", NULL },
+  { "video/mpeg", "mpg, mpeg, mpe", NULL },
+  { "audio/wav", "wav", NULL },
+  { "audio/x-wav", "wav", NULL },
+  { "audio/mpeg", "mp3", NULL },
+  { "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
+  { "video/flv", "flv", "application/x-flash-video" },
+  { "application/x-totem-plugin", "", "Totem Multimedia plugin" },
 #else
 #error Unknown plugin type
 #endif
 };
 
 static const char kPluginDescription[] =
-#if defined(TOTEM_BASIC_PLUGIN)
-  "Totem Web Browser Plugin " VERSION;
-#elif defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_GMP_PLUGIN)
   "Windows Media Player Plug-in 10 (compatible; Totem)";
 #elif defined(TOTEM_COMPLEX_PLUGIN)
   "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
@@ -505,9 +500,7 @@ totemPlugin::ViewerFork ()
 #endif
 
 	g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_PLUGIN_TYPE));
-#if defined(TOTEM_BASIC_PLUGIN)
-	g_ptr_array_add (arr, g_strdup ("basic"));
-#elif defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_GMP_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("gmp"));
 #elif defined(TOTEM_COMPLEX_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("complex"));
@@ -2089,12 +2082,12 @@ totemPlugin::Init (NPMIMEType mimetype,
 	mCache = GetBooleanValue (args, "cache", mCache);
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
-#if defined (TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
+#if defined (TOTEM_NARROWSPACE_PLUGIN)
 	mControllerHidden = !GetBooleanValue (args, "controller", true);
 
 	mAutoPlay = GetBooleanValue (args, "autoplay", true);
 
-#endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 /* VLC plugin defaults to have its controller hidden */
 #ifdef TOTEM_CONE_PLUGIN
@@ -2177,11 +2170,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 		mAudioOnly = true;
 	}
 #endif /* TOTEM_GMP_PLUGIN */
-#if defined(TOTEM_NARROWSPACE_PLUGIN) || defined (TOTEM_BASIC_PLUGIN)
+#if defined(TOTEM_NARROWSPACE_PLUGIN)
 	if (height <= 16 && !mControllerHidden) {
 		mAudioOnly = true;
 	}
-#endif /* TOTEM_NARROWSPACE_PLUGIN || TOTEM_BASIC_PLUGIN */
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* We need to autostart if we're using an HREF
@@ -2586,9 +2579,7 @@ totemPlugin::GetNPObject (ObjectEnum which)
 
   totemNPClass_base *npclass = 0;
 
-#if defined(TOTEM_BASIC_PLUGIN)
-  npclass = totemBasicPlayerNPClass::Instance();
-#elif defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_GMP_PLUGIN)
   switch (which) {
     case ePluginScriptable:
       npclass = totemGMPPlayerNPClass::Instance();
@@ -2687,9 +2678,7 @@ totemPlugin::Shutdown ()
 	}
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
-#if defined(TOTEM_BASIC_PLUGIN)
-        totemBasicPlayerNPClass::Shutdown ();
-#elif defined(TOTEM_GMP_PLUGIN)
+#if defined(TOTEM_GMP_PLUGIN)
         totemGMPPlayerNPClass::Shutdown ();
         totemGMPControlsNPClass::Shutdown ();
         totemGMPNetworkNPClass::Shutdown ();

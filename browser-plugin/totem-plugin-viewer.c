@@ -68,7 +68,6 @@ GtkWidget *totem_pp_create (void);
 #endif
 
 typedef enum {
-	TOTEM_PLUGIN_TYPE_BASIC,
 	TOTEM_PLUGIN_TYPE_GMP,
 	TOTEM_PLUGIN_TYPE_COMPLEX,
 	TOTEM_PLUGIN_TYPE_NARROWSPACE,
@@ -2206,7 +2205,6 @@ parse_plugin_type (const gchar *option_name,
 	           GError **error)
 {
 	const char types[TOTEM_PLUGIN_TYPE_LAST][12] = {
-		"basic",
 		"gmp",
 		"complex",
 		"narrowspace",

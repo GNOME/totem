@@ -128,66 +128,6 @@ totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
 EXTRA_DIST += \
 	org_gnome_totem_PluginViewer.xml
 
-# Totem Basic Plugin
-
-if ENABLE_BASIC_PLUGIN
-
-plugin_LTLIBRARIES += libtotem-basic-plugin.la
-
-libtotem_basic_plugin_la_SOURCES =	\
-	npapi.h				\
-	npruntime.h			\
-	npupp.h				\
-	totemNPNGlue.cpp		\
-	totemNPClass.cpp		\
-	totemNPClass.h			\
-	totemNPObject.cpp		\
-	totemNPObject.h			\
-	totemNPObjectWrapper.h		\
-	totemNPVariantWrapper.h		\
-	totemPluginGlue.cpp		\
-	totemPlugin.cpp			\
-	totemPlugin.h			\
-	totemBasicPlugin.cpp		\
-	totemBasicPlugin.h		\
-	totem-plugin-viewer-constants.h
-
-libtotem_basic_plugin_la_CPPFLAGS = \
-	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/backend			\
-	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/backend			\
-	-DXP_UNIX					\
-	-DMOZ_X11					\
-	-DTOTEM_BASIC_PLUGIN				\
-	-DTOTEM_PL_PARSER_MINI				\
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	$(DISABLE_DEPRECATED)				\
-	$(AM_CPPFLAGS)
-
-libtotem_basic_plugin_la_CXXFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CXXFLAGS)		\
-	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CXXFLAGS)
-
-libtotem_basic_plugin_la_LIBADD = \
-	libtotembrowserplugin_helper.la	\
-	$(DBUS_LIBS)			\
-	$(BROWSER_PLUGIN_LIBS)
-
-libtotem_basic_plugin_la_LDFLAGS = \
-	-avoid-version	\
-	-export-symbols $(srcdir)/plugin.symbols \
-	-module		\
-	$(AM_LDFLAGS)
-
-endif
-
 # Totem GMP Plugin
 
 if ENABLE_GMP_PLUGIN
