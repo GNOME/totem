@@ -1,3 +1,10 @@
+2008-10-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_best_image): Patch from John Millikin
+	<jmillikin@gmail.com> to also look for the GST_TAG_PREVIEW_IMAGE
+	tag when trying to get audio file covers (Closes: #556074)
+
 2008-10-09  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/Makefile.am:

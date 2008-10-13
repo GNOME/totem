@@ -4559,8 +4559,13 @@ bacon_video_widget_get_best_image (BaconVideoWidget *bvw)
     value = gst_tag_list_get_value_index (bvw->priv->tagcache,
 					  GST_TAG_IMAGE,
 					  i);
-    if (value == NULL)
-      break;
+    if (value == NULL) {
+      value = gst_tag_list_get_value_index (bvw->priv->tagcache,
+					    GST_TAG_PREVIEW_IMAGE,
+					    i);
+      if (value == NULL)
+	break;
+    }
 
     buffer = gst_value_get_buffer (value);
 
