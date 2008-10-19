@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.gnome-2-16.ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-21 12:56+0100\n"
+"POT-Creation-Date: 2008-10-19 12:33+0100\n"
 "PO-Revision-Date: 2008-09-16 14:46+0300\n"
 "Last-Translator: Anas Afif Emad <anas.e87@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -516,8 +516,8 @@ msgstr "شريط رنو الوقت"
 
 #. Title
 #: ../data/totem.ui.h:74 ../src/totem.c:1015 ../src/totem.c:3419
-#: ../src/totem.c:3451 ../browser-plugin/totem-plugin-viewer.c:737
-#: ../browser-plugin/totem-plugin-viewer.c:1789
+#: ../src/totem.c:3451 ../browser-plugin/totem-plugin-viewer.c:777
+#: ../browser-plugin/totem-plugin-viewer.c:1829
 msgid "Totem Movie Player"
 msgstr "مشغل الأفلام طوطم"
 
@@ -987,7 +987,7 @@ msgstr "عارض الأفلام يستخدم ‪%s"
 msgid "Copyright © 2002-2007 Bastien Nocera"
 msgstr "حقوق النشر © 2002-2007 Bastien Nocera"
 
-#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1149
+#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1189
 msgid "translator-credits"
 msgstr ""
 "فريق عربآيز للترجمة http://www.arabeyes.org :\n"
@@ -1129,12 +1129,12 @@ msgstr "إحفظ قائمة التّشغيل"
 msgid "Playlist"
 msgstr "قائمة تشغيل"
 
-#: ../src/totem-playlist.c:1787
+#: ../src/totem-playlist.c:1732
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "عاجز عن تحليل قائمة التشغيل '%s'، قد تكون تالفة."
 
-#: ../src/totem-playlist.c:1788
+#: ../src/totem-playlist.c:1733
 msgid "Playlist error"
 msgstr "خطأ بقائمة التّشغيل"
 
@@ -1443,11 +1443,11 @@ msgid ""
 "correctly configured."
 msgstr "رجاء تثبّت من وجود القرص في محرك الأقراص و أنه معدّ بصورة صحيحة."
 
-#: ../src/totem.c:549 ../src/plugins/youtube/youtube.py:174
+#: ../src/totem.c:549 ../src/plugins/youtube/youtube.py:207
 msgid "More information about media plugins"
 msgstr "معلومات حول ملحقات الوسائط"
 
-#: ../src/totem.c:550 ../src/plugins/youtube/youtube.py:172
+#: ../src/totem.c:550 ../src/plugins/youtube/youtube.py:205
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1462,7 +1462,7 @@ msgstr ""
 "يعجز طوطم عن تشغيل هذا النوع من الوسائط (%s) لأنه يفتقد الملحقات الملائمة "
 "لقراءتها من القرص."
 
-#: ../src/totem.c:554 ../src/plugins/youtube/youtube.py:171
+#: ../src/totem.c:554 ../src/plugins/youtube/youtube.py:204
 #, c-format, python-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1521,7 +1521,7 @@ msgid "Totem was not able to play this disc."
 msgstr "عجز طوطم عن تشغيل هذا القرص."
 
 #: ../src/totem.c:616 ../src/totem.c:3283
-#: ../browser-plugin/totem-plugin-viewer.c:1780
+#: ../browser-plugin/totem-plugin-viewer.c:1820
 msgid "No reason."
 msgstr "بدون سبب."
 
@@ -1550,7 +1550,7 @@ msgid "Totem could not display the help contents."
 msgstr "عجز طوطم عن عرض محتويات المساعدة."
 
 #: ../src/totem.c:1720 ../src/totem.c:1722
-#: ../browser-plugin/totem-plugin-viewer.c:1437
+#: ../browser-plugin/totem-plugin-viewer.c:1477
 msgid "An error occurred"
 msgstr "حدث خطأ"
 
@@ -2256,31 +2256,31 @@ msgstr "ابحث في يوتيوب"
 msgid "Search:"
 msgstr "إبحث:"
 
-#: ../src/plugins/youtube/youtube.py:91 ../src/plugins/youtube/youtube.py:171
+#: ../src/plugins/youtube/youtube.py:121 ../src/plugins/youtube/youtube.py:204
 msgid "YouTube"
 msgstr "يوتوب"
 
-#: ../src/plugins/youtube/youtube.py:108
+#: ../src/plugins/youtube/youtube.py:138
 msgid "Videos"
 msgstr "مرئيات"
 
-#: ../src/plugins/youtube/youtube.py:114
+#: ../src/plugins/youtube/youtube.py:144
 msgid "_Open in Web Browser"
 msgstr "ا_فتح في متصفح الويب"
 
-#: ../src/plugins/youtube/youtube.py:114
+#: ../src/plugins/youtube/youtube.py:144
 msgid "Open the video in your web browser"
 msgstr "افتح الفيديو في متصفح الويب"
 
-#: ../src/plugins/youtube/youtube.py:147
+#: ../src/plugins/youtube/youtube.py:178
 msgid "Fetching related videos..."
 msgstr "إحضار الفيديو المرتبطة..."
 
-#: ../src/plugins/youtube/youtube.py:195
+#: ../src/plugins/youtube/youtube.py:228
 msgid "Fetching more videos..."
 msgstr "جار إحضار المزيد من الفيديو..."
 
-#: ../src/plugins/youtube/youtube.py:293
+#: ../src/plugins/youtube/youtube.py:330
 msgid "Fetching search results..."
 msgstr "إحضار نتائج البحث..."
 
@@ -2297,35 +2297,35 @@ msgstr "عجز طوطم عن تشغيل '%s'"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1087
+#: ../browser-plugin/totem-plugin-viewer.c:1127
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "ا_فتح بـ \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1138
+#: ../browser-plugin/totem-plugin-viewer.c:1178
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "ملحق المتصفح يستخدم %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1143
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 msgid "Totem Browser Plugin"
 msgstr "ملحق متصفح طوطم"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1780
+#: ../browser-plugin/totem-plugin-viewer.c:1820
 msgid "The Totem plugin could not be started."
 msgstr "عاجز عن بدء ملحقات طوطم."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2128
+#: ../browser-plugin/totem-plugin-viewer.c:2168
 msgid "No playlist or playlist empty"
 msgstr "لايوجد قائمة تشغيل أو قائمة التشغيل فارغة"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2232
+#: ../browser-plugin/totem-plugin-viewer.c:2272
 msgid "Could not initialise the thread-safe libraries."
 msgstr "عاجز عن تشغيل المكتبات النظامية السليمة."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2232
+#: ../browser-plugin/totem-plugin-viewer.c:2272
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "راجع تثبيت نظامك. سيخرج ملحق طوطم الآن."
 
