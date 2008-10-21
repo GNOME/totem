@@ -1399,14 +1399,15 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
         error = bvw_error_from_gst_error (bvw, message);
 
-        g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
-                       error->message, TRUE, FALSE);
-
+        bvw->priv->target_state = GST_STATE_NULL;
         if (bvw->priv->play)
           gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
 
-        bvw->priv->target_state = GST_STATE_NULL;
         bvw->priv->buffering = FALSE;
+
+        g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
+                       error->message, TRUE, FALSE);
+
         g_error_free (error);
       }
       break;
