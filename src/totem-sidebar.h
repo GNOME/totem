@@ -30,6 +30,7 @@ void totem_sidebar_setup (Totem *totem, gboolean visible,
 void totem_sidebar_toggle (Totem *totem, gboolean state);
 void totem_sidebar_set_visibility (Totem *totem, gboolean visible);
 gboolean totem_sidebar_is_visible (Totem *totem);
+gboolean totem_sidebar_is_focused (Totem *totem);
 char *totem_sidebar_get_current_page (Totem *totem);
 void totem_sidebar_set_current_page (Totem *totem,
 				     const char *name,

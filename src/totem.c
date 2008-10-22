@@ -2888,13 +2888,8 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 int
 window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
-	GtkWidget *focused;
-
-	focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
-	if (focused != NULL && gtk_widget_is_ancestor
-			(focused, GTK_WIDGET (totem->sidebar)) != FALSE) {
+	if (totem_sidebar_is_focused (totem) != FALSE)
 		return FALSE;
-	}
 
 	/* Special case Eject, Open, Open URI and
 	 * seeking keyboard shortcuts */

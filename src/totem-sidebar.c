@@ -95,6 +95,20 @@ totem_sidebar_is_visible (Totem *totem)
 	return totem->sidebar_shown;
 }
 
+gboolean
+totem_sidebar_is_focused (Totem *totem)
+{
+	GtkWidget *focused;
+
+	focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
+	if (focused != NULL && gtk_widget_is_ancestor
+			(focused, GTK_WIDGET (totem->sidebar)) != FALSE) {
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 void
 totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 {
