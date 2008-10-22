@@ -1856,8 +1856,10 @@ gboolean
 seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem)
 {
 	totem->seek_lock = TRUE;
-	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), TRUE);
+	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE) {
+		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
+		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), TRUE);
+	}
 
 	return FALSE;
 }
