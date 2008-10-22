@@ -1,5 +1,12 @@
 2008-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c (bvw_query_timeout):
+	Don't tell the front-end we have metadata with a timeout when
+	in capture or metadata mode, patch from Tim-Philipp Müller
+	<tim.muller@collabora.co.uk> (Closes: #554355)
+
+2008-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (seek_slider_pressed_cb): Don't show seeking to
 	label when we can direct seek (Closes: #338390)
 

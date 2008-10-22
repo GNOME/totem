@@ -1742,7 +1742,10 @@ bvw_query_timeout (BaconVideoWidget *bvw)
     if (len != -1 && fmt == GST_FORMAT_TIME) {
       bvw->priv->stream_length = len / GST_MSECOND;
       if (bvw->priv->stream_length != prev_len) {
-        g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+	 if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
+	     bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
+	   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+	 }
       }
     }
   } else {
