@@ -1,5 +1,11 @@
 2008-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.ui: Remove accelerators for the window resize
+	menu items, they were causing problems with the latest GTK+
+	whenever the sidebar was used (Closes: #557447)
+
+2008-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (seek_slider_pressed_cb): Don't show seeking to
 	label when we can direct seek (Closes: #338390)
 
