@@ -1,5 +1,14 @@
 2008-10-22  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_video_property):
+	* src/totem-preferences.c (totem_setup_preferences):
+	Only display colour balance sliders that are available for
+	the video adapter in use, hide the whole preference if
+	nothing is available (Closes: #556009)
+
+2008-10-22  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c (bvw_query_timeout):
 	Don't tell the front-end we have metadata with a timeout when
 	in capture or metadata mode, patch from Tim-Philipp Müller

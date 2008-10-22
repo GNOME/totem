@@ -509,12 +509,24 @@ totem_setup_preferences (Totem *totem)
 	GtkWidget *menu;
 	GtkAction *action;
 	gboolean show_visuals, auto_resize, is_local, deinterlace, lock_screensaver_on_audio;
-	int connection_speed, i;
+	int connection_speed;
+	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
 	BaconVideoWidgetAudioOutType audio_out;
 	GConfValue *value;
 	GObject *item;
+
+	static struct {
+		const char *name;
+		BaconVideoWidgetVideoProperty prop;
+		const char *label;
+	} props[4] = {
+		{ "tpw_contrast_scale", BVW_VIDEO_CONTRAST, "tpw_contrast_label" },
+		{ "tpw_saturation_scale", BVW_VIDEO_SATURATION, "tpw_saturation_label" },
+		{ "tpw_bright_scale", BVW_VIDEO_BRIGHTNESS, "tpw_brightness_label" },
+		{ "tpw_hue_scale", BVW_VIDEO_HUE, "tpw_hue_label" }
+	};
 
 	g_return_if_fail (totem->gc != NULL);
 
@@ -633,8 +645,7 @@ totem_setup_preferences (Totem *totem)
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_type_combobox");
 
 	i = 0;
-	for (l = list; l != NULL; l = l->next)
-	{
+	for (l = list; l != NULL; l = l->next) {
 		const char *name = l->data;
 
 		gtk_combo_box_append_text (GTK_COMBO_BOX (item), name);
@@ -653,29 +664,28 @@ totem_setup_preferences (Totem *totem)
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
 
-	/* Brightness */
-	item = gtk_builder_get_object (totem->xml, "tpw_bright_scale");
-	i = bacon_video_widget_get_video_property (totem->bvw,
-			BVW_VIDEO_BRIGHTNESS);
-	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
+	/* Brightness and all */
+	hidden = 0;
+	for (i = 0; i < G_N_ELEMENTS (props); i++) {
+		int value;
+		item = gtk_builder_get_object (totem->xml, props[i].name);
+		value = bacon_video_widget_get_video_property (totem->bvw,
+							       props[i].prop);
+		if (value >= 0)
+			gtk_range_set_value (GTK_RANGE (item), (gdouble) value);
+		else {
+			gtk_range_set_value (GTK_RANGE (item), (gdouble) 65535/2);
+			gtk_widget_hide (GTK_WIDGET (item));
+			item = gtk_builder_get_object (totem->xml, props[i].label);
+			gtk_widget_hide (GTK_WIDGET (item));
+			hidden++;
+		}
+	}
 
-	/* Contrast */
-	item = gtk_builder_get_object (totem->xml, "tpw_contrast_scale");
-	i = bacon_video_widget_get_video_property (totem->bvw,
-			BVW_VIDEO_CONTRAST);
-	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
-
-	/* Saturation */
-	item = gtk_builder_get_object (totem->xml, "tpw_saturation_scale");
-	i = bacon_video_widget_get_video_property (totem->bvw,
-			BVW_VIDEO_SATURATION);
-	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
-
-	/* Hue */
-	item = gtk_builder_get_object (totem->xml, "tpw_hue_scale");
-	i = bacon_video_widget_get_video_property (totem->bvw,
-			BVW_VIDEO_HUE);
-	gtk_range_set_value (GTK_RANGE (item), (gdouble) i);
+	if (hidden == G_N_ELEMENTS (props)) {
+		item = gtk_builder_get_object (totem->xml, "tpw_bright_contr_vbox");
+		gtk_widget_hide (GTK_WIDGET (item));
+	}
 
 	/* Sound output type */
 	item = gtk_builder_get_object (totem->xml, "tpw_sound_output_combobox");

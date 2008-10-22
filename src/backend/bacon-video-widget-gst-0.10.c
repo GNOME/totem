@@ -3717,6 +3717,8 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535/2);
   
   g_mutex_lock (bvw->priv->lock);
+
+  ret = 0;
   
   if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
     {
@@ -3740,11 +3742,14 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
         GST_DEBUG ("channel %s: returning value %d", found_channel->label, ret);
         g_object_unref (found_channel);
         goto done;
+      } else {
+	ret = -1;
       }
     }
 
   /* value wasn't found, get from gconf */
-  ret = gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
+  if (ret == 0)
+    ret = gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
 
   GST_DEBUG ("nothing found for type %d, returning value %d from gconf key %s",
       type, ret, video_props_str[type]);
