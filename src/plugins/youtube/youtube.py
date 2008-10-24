@@ -184,6 +184,7 @@ class YouTube (totem.Plugin):
 			return "&fmt=18"
 		else:
 			return ""
+
 	def check_url_for_redirects (self, url_path):
 		try:
 			conn = httplib.HTTPConnection ("www.youtube.com")
@@ -198,6 +199,31 @@ class YouTube (totem.Plugin):
 			return response.getheader("location")
 		else:
 			return False
+
+	def resolve_t_param (self, youtube_id):
+		"""We have to get the t parameter from the actual video page, since Google changed how their URLs work"""
+		stream = urllib.urlopen ("http://youtube.com/watch?v=" + urllib.quote (youtube_id))
+		regexp1 = re.compile ("swfArgs.*\"t\": \"([^\"]+)\"")
+		regexp2 = re.compile ("</head>")
+
+		line = stream.readline ()
+		while (line != ""):
+			"""Check for the t parameter, which is now in a JavaScript array on the video page"""
+			matches = regexp1.search (line)
+			if (matches != None):
+				stream.close ()
+				return matches.group (1)
+
+			"""Check to see if we've come to the end of the <head> tag; in which case, we should give up"""
+			if (regexp2.search (line) != None):
+				stream.close ()
+				return ""
+
+			line = stream.readline ()
+
+		stream.close ()
+		return ""
+
 	def on_starting_video (self, treeview, path, user_data):
 		"""Display an error if the required GStreamer plugins aren't installed"""
 		if self.gstreamer_plugins_present == False:
@@ -298,15 +324,9 @@ class YouTube (totem.Plugin):
 		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
 
 		if location != False:
-			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (re.match (".*[?&]t=([^&]+)", location).groups ()[0]) + self.get_fmt_string ()
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (self.resolve_t_param (youtube_id)) + self.get_fmt_string ()
 
-			"""location_check = self.check_url_for_redirects (mrl)
-			if location_check != False:
-				mrl = location_check
-			else:
-				mrl = "http://www.youtube.com" + mrl"""
-
-		gobject.idle_add(self._append_to_liststore, treeview_name,
+		gobject.idle_add (self._append_to_liststore, treeview_name,
 				 pixbuf, entry.title.text, mrl, youtube_id)
 
 		return True
