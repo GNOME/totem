@@ -185,21 +185,6 @@ class YouTube (totem.Plugin):
 		else:
 			return ""
 
-	def check_url_for_redirects (self, url_path):
-		try:
-			conn = httplib.HTTPConnection ("www.youtube.com")
-			conn.request ("GET", url_path)
-			response = conn.getresponse ()
-			conn.close ()
-		except:
-			print "Could not resolve stream MRL for YouTube video \"" + url_path + "\"."
-			return False
-
-		if response.status >= 300 and response.status < 400:
-			return response.getheader("location")
-		else:
-			return False
-
 	def resolve_t_param (self, youtube_id):
 		"""We have to get the t parameter from the actual video page, since Google changed how their URLs work"""
 		stream = urllib.urlopen ("http://youtube.com/watch?v=" + urllib.quote (youtube_id))
@@ -321,10 +306,10 @@ class YouTube (totem.Plugin):
 		os.unlink (filename)
 
 		"""Get the video stream MRL"""
-		location = self.check_url_for_redirects ("/v/" + urllib.quote (youtube_id))
+		t_param = self.resolve_t_param (youtube_id)
 
-		if location != False:
-			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (self.resolve_t_param (youtube_id)) + self.get_fmt_string ()
+		if t_param != "":
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (t_param) + self.get_fmt_string ()
 
 		gobject.idle_add (self._append_to_liststore, treeview_name,
 				 pixbuf, entry.title.text, mrl, youtube_id)
