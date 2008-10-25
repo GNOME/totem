@@ -207,20 +207,18 @@ class YouTube (totem.Plugin):
 		regexp1 = re.compile ("swfArgs.*\"t\": \"([^\"]+)\"")
 		regexp2 = re.compile ("</head>")
 
-		line = stream.readline ()
-		while (line != ""):
+		contents = stream.read ()
+		if contents != "":
 			"""Check for the t parameter, which is now in a JavaScript array on the video page"""
-			matches = regexp1.search (line)
+			matches = regexp1.search (contents)
 			if (matches != None):
 				stream.close ()
 				return matches.group (1)
 
 			"""Check to see if we've come to the end of the <head> tag; in which case, we should give up"""
-			if (regexp2.search (line) != None):
+			if (regexp2.search (contents) != None):
 				stream.close ()
 				return ""
-
-			line = stream.readline ()
 
 		stream.close ()
 		return ""

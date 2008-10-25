@@ -1,5 +1,12 @@
 2008-10-25  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/plugins/youtube/youtube.py: Patch from Matthew Adams
+	<roguestar191@comcast.net> to use read() instead of readline() when
+	searching for the t-param in YouTube searches, in order to reduce the
+	number of regexp searches.
+
+2008-10-25  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/plugins/youtube/youtube.py: Fix YouTube plugin behaviour when
 	attempting to perform multiple searches simultaneously, and fix some
 	threading problems where GTK+ functions were being called from a
