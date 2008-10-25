@@ -1,3 +1,10 @@
+2008-10-25  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/youtube/youtube.py: Fix YouTube plugin behaviour when
+	attempting to perform multiple searches simultaneously, and fix some
+	threading problems where GTK+ functions were being called from a
+	spawned thread. (Closes: #557470)
+
 2008-10-24  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/youtube/youtube.py: Remove redundant HTTP request

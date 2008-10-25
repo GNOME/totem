@@ -9,6 +9,7 @@ import threading
 import time
 import re
 import os
+import random
 
 class DownloadThread (threading.Thread):
 	def __init__ (self, youtube, url, treeview_name):
@@ -16,7 +17,7 @@ class DownloadThread (threading.Thread):
 		self.url = url
 		self.treeview_name = treeview_name
 		self._done = False
-		self._lock = threading.Lock()
+		self._lock = threading.Lock ()
 		threading.Thread.__init__ (self)
 
 	def run (self):
@@ -26,7 +27,7 @@ class DownloadThread (threading.Thread):
 			"""Probably a 503 service unavailable. Unfortunately we can't give an error message, as we're not in the GUI thread"""
 			"""Just let the lock go and return"""
 			res = None
-		gobject.idle_add(self.publish_results, res)
+		gobject.idle_add (self.publish_results, res)
 
 	def publish_results(self, res):
 		self._lock.acquire (True)
@@ -36,30 +37,34 @@ class DownloadThread (threading.Thread):
 		return False
 
 	@property
-	def done(self):
+	def done (self):
 		""" Thread-safe property to know whether the query is done or not """
-		self._lock.acquire(True)
+		self._lock.acquire (True)
 		res = self._done
-		self._lock.release()
+		self._lock.release ()
 		return res
 
-class CallbackThread(threading.Thread):
-	def __init__(self, callback, *args, **kwargs):
+class CallbackThread (threading.Thread):
+	def __init__ (self, callback, *args, **kwargs):
 		self.callback = callback
 		self.args = args
 		self.kwargs = kwargs
-		threading.Thread.__init__(self)
+		threading.Thread.__init__ (self)
 
 	def run (self):
-		res = self.callback(*self.args, **self.kwargs)
+		res = self.callback (*self.args, **self.kwargs)
 		while res == True:
-			res = self.callback(*self.args, **self.kwargs)
+			res = self.callback (*self.args, **self.kwargs)
 
 class YouTube (totem.Plugin):
 	def __init__ (self):
 		totem.Plugin.__init__ (self)
 		self.debug = False
 		self.gstreamer_plugins_present = True
+
+		"""Search counters (per search type)"""
+		self.in_search = {}
+		self.search_token = {} # Used as an ID for a search thread
 
 		self.max_results = 20
 		self.button_down = False
@@ -77,6 +82,7 @@ class YouTube (totem.Plugin):
 		self.vadjust = {}
 		self.liststore = {}
 		self.treeview = {}
+
 	def activate (self, totem_object):
 		"""Check for the availability of the flvdemux and souphttpsrc GStreamer plugins"""
 		bvw_name = totem_object.get_video_widget_backend_name ()
@@ -122,12 +128,15 @@ class YouTube (totem.Plugin):
 
 		"""Set up the service"""
 		self.service = gdata.service.GDataService (account_type = "HOSTED_OR_GOOGLE", server = "gdata.youtube.com")
+
 	def deactivate (self, totem):
 		totem.remove_sidebar_page ("youtube")
+
 	def setup_treeview (self, treeview_name):
 		self.start_index[treeview_name] = 1
 		self.results[treeview_name] = 0
 		self.entry[treeview_name] = None
+		self.in_search[treeview_name] = False
 
 		"""This is done here rather than in the UI file, because UI files parsed in C and GObjects created in Python apparently don't mix."""
 		renderer = totem.CellRendererVideo (use_placeholder = True)
@@ -163,10 +172,14 @@ class YouTube (totem.Plugin):
 		self.liststore[treeview_name] = self.builder.get_object ("yt_liststore_" + treeview_name)
 		self.treeview[treeview_name] = treeview
 		treeview.set_model (self.liststore[treeview_name])
+
 	def on_notebook_page_changed (self, notebook, notebook_page, page_num):
 		self.current_treeview_name = self.notebook_pages[page_num]
+
 	def on_row_activated (self, treeview, path, column):
-		print "Activating row"
+		if self.debug:
+			print "Activating row"
+
 		model, rows = treeview.get_selection ().get_selected_rows ()
 		iter = model.get_iter (rows[0])
 		youtube_id = model.get_value (iter, 3)
@@ -175,9 +188,12 @@ class YouTube (totem.Plugin):
 		self.youtube_id = youtube_id
 		self.start_index["related"] = 1
 		self.results["related"] = 0
-		self.progress_bar.set_text (_("Fetching related videos..."))
+		if self.in_search == False or self.current_treeview_name == "related":
+			self.progress_bar.set_text (_("Fetching related videos..."))
 		self.get_results ("/feeds/api/videos/" + urllib.quote (youtube_id) + "/related?max-results=" + str (self.max_results), "related")
-		print "Done Activating row"
+
+		if self.debug:
+			print "Done activating row"
 
 	def get_fmt_string (self):
 		if self.gconf_client.get_int ("/apps/totem/connection_speed") >= 10:
@@ -220,6 +236,7 @@ class YouTube (totem.Plugin):
 			return False
 
 		return True
+
 	def on_open_in_web_browser_activated (self, action):
 		model, rows = self.treeview[self.current_treeview_name].get_selection ().get_selected_rows ()
 		iter = model.get_iter (rows[0])
@@ -227,46 +244,59 @@ class YouTube (totem.Plugin):
 
 		"""Open the video in the browser"""
 		os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", "http://www.youtube.com/watch?v=" + urllib.quote (youtube_id) + self.get_fmt_string ())
+
 	def on_button_press_event (self, widget, event):
 		self.button_down = True
+
 	def on_button_release_event (self, widget, event):
 		self.button_down = False
 		self.on_value_changed (self.vadjust[self.current_treeview_name])
+
 	def on_value_changed (self, adjustment):
 		"""Load more results when we get near the bottom of the treeview"""
 		if not self.button_down and (adjustment.get_value () + adjustment.page_size) / adjustment.upper > 0.8 and self.results[self.current_treeview_name] >= self.max_results:
-			self.results[self.current_treeview_name] = 0
-			self.progress_bar.set_text (_("Fetching more videos..."))
 			if self.current_treeview_name == "search":
-				self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (self.search_terms) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index["search"]), "search", False)
 				if self.debug:
 					print "Getting more results for search \"" + self.search_terms + "\" from offset " + str (self.start_index["search"])
+				self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (self.search_terms) + "&max-results=" + str (self.max_results) + "&orderby=relevance&start-index=" + str (self.start_index["search"]), "search", False)
 			elif self.current_treeview_name == "related":
-				self.get_results ("/feeds/api/videos/" + urllib.quote_plus (self.youtube_id) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index["related"]), "related", False)
 				if self.debug:
 					print "Getting more related videos for video \"" + self.youtube_id + "\" from offset " + str (self.start_index["related"])
+				self.get_results ("/feeds/api/videos/" + urllib.quote_plus (self.youtube_id) + "/related?max-results=" + str (self.max_results) + "&start-index=" + str (self.start_index["related"]), "related", False)
+
 	def convert_url_to_id (self, url):
 		"""Find the last clause in the URL; after the last /"""
 		return url.split ("/").pop ()
 
-	def populate_list_from_results (self, treeview_name, thread):
+	def populate_list_from_results (self, search_token, treeview_name, thread):
+		"""Check to see if this search has been cancelled"""
+		if search_token != self.search_token[treeview_name]:
+			return False
+
 		"""Check and acquire the lock"""
 		if not thread.done:
-			self.progress_bar.pulse ()
+			if self.current_treeview_name == treeview_name:
+				self.progress_bar.pulse ()
 			return True
 
-		CallbackThread(self.process_next_thumbnail, treeview_name).start()
+		CallbackThread (self.process_next_thumbnail, search_token, treeview_name).start ()
+		return False
 
-	def process_next_thumbnail(self, treeview_name):
+	def process_next_thumbnail (self, search_token, treeview_name):
+		"""Note that all the calls to gobject.idle_add are so that the respective
+		   UI function calls are made in the main thread, since process_next_thumbnail
+		   is run in the CallbackThread thread."""
+
+		"""Check to see if this search has been cancelled"""
+		if search_token != self.search_token[treeview_name]:
+			return False
+
 		"""Return if there are no results (or we've finished)"""
 		if self.entry[treeview_name] == None or len (self.entry[treeview_name]) == 0:
-			"""Revert the cursor"""
-			window = self.vbox.window
-			window.set_cursor (None)
-			self.progress_bar.set_fraction (0.0)
-			self.progress_bar.set_text ("")
+			gobject.idle_add (self._clear_ui, treeview_name)
 
 			self.entry[treeview_name] = None
+			self.in_search[treeview_name] = False
 
 			return False
 
@@ -275,9 +305,6 @@ class YouTube (totem.Plugin):
 		self.results[treeview_name] += 1
 		self.start_index[treeview_name] += 1
 		youtube_id = self.convert_url_to_id (entry.id.text)
-
-		"""Update the progress bar"""
-		self.progress_bar.set_fraction (float (self.results[treeview_name]) / float (self.max_results))
 
 		"""Find the content tag"""
 		for _element in entry.extension_elements:
@@ -311,14 +338,31 @@ class YouTube (totem.Plugin):
 		if t_param != "":
 			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (t_param) + self.get_fmt_string ()
 
-		gobject.idle_add (self._append_to_liststore, treeview_name,
-				 pixbuf, entry.title.text, mrl, youtube_id)
+		gobject.idle_add (self._append_to_liststore, treeview_name, pixbuf, entry.title.text, mrl, youtube_id, search_token)
 
 		return True
 
-	def _append_to_liststore(self, treeview_name, pixbuf, title, mrl, id):
-		self.liststore[treeview_name].append([pixbuf, title, mrl, id])
+	def _clear_ui (self, treeview_name):
+		"""Revert the cursor"""
+		window = self.vbox.window
+		window.set_cursor (None)
 
+		if self.in_search == True or self.current_treeview_name == treeview_name:
+			"""Only blank the progress bar if we're the only search taking place"""
+			self.progress_bar.set_fraction (0.0)
+			self.progress_bar.set_text ("")
+
+		return False
+
+	def _append_to_liststore (self, treeview_name, pixbuf, title, mrl, id, search_token):
+		"""Check to see if this search has been cancelled"""
+		if search_token != self.search_token[treeview_name]:
+			return False
+
+		if self.in_search == True or self.current_treeview_name == treeview_name:
+			self.progress_bar.set_fraction (float (self.results[treeview_name]) / float (self.max_results))
+		self.liststore[treeview_name].append ([pixbuf, title, mrl, id])
+		return False
 
 	def on_search_button_clicked (self, button):
 		search_terms = self.search_entry.get_text ()
@@ -334,23 +378,40 @@ class YouTube (totem.Plugin):
 		self.results["search"] = 0
 		self.progress_bar.set_text (_("Fetching search results..."))
 		self.get_results ("/feeds/api/videos?vq=" + urllib.quote_plus (search_terms) + "&orderby=relevance&max-results=" + str (self.max_results), "search")
+
 	def on_search_entry_activated (self, entry):
 		self.search_button.clicked ()
 
 	def get_results (self, url, treeview_name, clear = True):
+		if self.in_search[treeview_name] == True and clear == False:
+			"""If we're trying to fetch more results while another search is happening, just cancel"""
+			if self.debug:
+				print "Cancelling getting more results due to existing incomplete search."
+			self.in_search[treeview_name] = False
+			return
+		elif clear == False:
+			self.results[self.current_treeview_name] = 0
+			self.progress_bar.set_text (_("Fetching more videos..."))
+
+		"""If we're trying to do another full search while one's already happening, just continue as
+		   normal. The populate_list_from_results function will notice, and cancel the old search."""
+
 		if clear:
 			self.liststore[treeview_name].clear ()
 
 		if self.debug:
 			print "Getting results from URL \"" + url + "\""
 
+		self.in_search[treeview_name] = True
+		self.search_token[treeview_name] = random.random ()
+
 		"""Give us a nice waiting cursor"""
 		window = self.vbox.window
 		window.set_cursor (gtk.gdk.Cursor (gtk.gdk.WATCH))
-		self.progress_bar.pulse ()
+		if self.current_treeview_name == treeview_name:
+			self.progress_bar.pulse ()
 
-		self.results_downloaded = False
 		thread = DownloadThread (self, url, treeview_name)
-		gobject.timeout_add (350, self.populate_list_from_results, treeview_name, thread)
+		gobject.timeout_add (350, self.populate_list_from_results, self.search_token[treeview_name], treeview_name, thread)
 		thread.start()
 
