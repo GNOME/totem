@@ -1358,9 +1358,10 @@ totem_action_zoom_reset (Totem *totem)
 /**
  * totem_action_volume_relative:
  * @totem: a #TotemObject
- * @off_pct: the percentage by which to increase or decrease the volume
+ * @off_pct: the value by which to increase or decrease the volume
  *
- * Sets the volume relative to its current level.
+ * Sets the volume relative to its current level, with 1.0 being the
+ * maximum, and 0.0 being the minimum level.
  **/
 void
 totem_action_volume_relative (Totem *totem, double off_pct)

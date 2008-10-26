@@ -1,3 +1,10 @@
+2008-10-26  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* bindings/python/totem.defs: Fix the Python bindings for
+	totem.action_volume_relative so that a float is expected, rather than
+	an int.
+	* src/totem.c: Fix the documentation for the same function.
+
 2008-10-25  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/youtube/youtube.py: Patch from Matthew Adams
