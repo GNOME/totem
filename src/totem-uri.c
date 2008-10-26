@@ -502,7 +502,7 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 	char *subtitle = NULL;
 	gboolean set_folder;
 
-	fs = gtk_file_chooser_dialog_new (_("Select text subtitle"), 
+	fs = gtk_file_chooser_dialog_new (_("Select Text Subtitles"), 
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
 					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
