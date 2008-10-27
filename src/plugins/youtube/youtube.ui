@@ -25,17 +25,6 @@
 	<property name="homogeneous">False</property>
 	<property name="spacing">6</property>
 	<child>
-		<object class="GtkLabel" id="label0">
-			<property name="label" translatable="yes">Search:</property>
-			<property name="xalign">0.0</property>
-		</object>
-		<packing>
-			<property name="padding">0</property>
-			<property name="expand">False</property>
-			<property name="fill">True</property>
-		</packing>
-	</child>
-	<child>
 		<object class="GtkHBox" id="yt_hbox">
 			<child>
 				<object class="GtkEntry" id="yt_search_entry"/>
@@ -48,18 +37,7 @@
 			<child>
 				<object class="GtkButton" id="yt_search_button">
 					<property name="use-stock">True</property>
-					<property name="tooltip-text" translatable="yes">Search YouTube</property>
-					<child>
-						<object class="GtkImage" id="yt_search_button_image">
-							<property name="visible">True</property>
-							<property name="stock">gtk-find</property>
-							<property name="icon_size">4</property>
-							<property name="xalign">0.5</property>
-							<property name="yalign">0.5</property>
-							<property name="xpad">0</property>
-							<property name="ypad">0</property>
-						</object>
-					</child>
+					<property name="label">gtk-find</property>
 				</object>
 				<packing>
 					<property name="padding">0</property>

@@ -44,7 +44,7 @@
 #define TRACKER_INTERFACE		"org.freedesktop.Tracker.Search"
 #define TOTEM_TRACKER_MAX_RESULTS_SIZE	20
 
-G_DEFINE_TYPE (TotemTrackerWidget, totem_tracker_widget, GTK_TYPE_EVENT_BOX)
+G_DEFINE_TYPE (TotemTrackerWidget, totem_tracker_widget, GTK_TYPE_VBOX)
 
 struct TotemTrackerWidgetPrivate {
 	GtkWidget *search_entry;
@@ -385,7 +385,8 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 
 	init_result_list (widget);
 
-	v_box = gtk_vbox_new (FALSE, 2);
+	v_box = gtk_vbox_new (FALSE, 6);
+	gtk_container_set_border_width (GTK_CONTAINER (v_box), 5);
 
 	/* Search entry */
 	widget->priv->search_entry = gtk_entry_new ();
@@ -395,10 +396,10 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 
 	/* Add the search entry and button to the search box,
 	   and add the search box to the main vertical box */
-	search_box = gtk_hbox_new (FALSE, 2);	
-	gtk_container_add (GTK_CONTAINER (search_box), widget->priv->search_entry);
-	gtk_container_add (GTK_CONTAINER (search_box), widget->priv->search_button);	
-	gtk_box_pack_start (GTK_BOX (v_box), search_box, FALSE, FALSE, 2);
+	search_box = gtk_hbox_new (FALSE, 2);
+	gtk_box_pack_start (GTK_BOX (search_box), widget->priv->search_entry, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (search_box), widget->priv->search_button, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (v_box), search_box, FALSE, TRUE, 0);
 
 	/* Insert the result list and initialize the viewport */
 	scroll = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
