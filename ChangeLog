@@ -1,3 +1,9 @@
+2008-10-29  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/backend/video-utils.c (totem_time_to_string): Use C_() instead
+	of Q_() to separate translation context from strings.
+	(Closes: #513627)
+
 2008-10-27  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/tracker/totem-tracker-widget.c
