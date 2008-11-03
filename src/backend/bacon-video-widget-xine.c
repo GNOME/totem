@@ -2084,7 +2084,7 @@ bacon_video_widget_tick_send (BaconVideoWidget *bvw)
 		}
 	}
 
-	bvw->priv->is_live = (stream_length > 0);
+	bvw->priv->is_live = (stream_length == 0);
 
 	if (stream_length != 0 && bvw->com->mrl != NULL) {
 		seekable = xine_get_stream_info (bvw->priv->stream,

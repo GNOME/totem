@@ -1674,7 +1674,7 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
     seekable = TRUE;
   }
 
-  bvw->priv->is_live = (bvw->priv->stream_length > 0);
+  bvw->priv->is_live = (bvw->priv->stream_length == 0);
 
 /*
   GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",

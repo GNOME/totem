@@ -1,3 +1,12 @@
+2008-11-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c (got_time_tick):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_tick_send): Patch by Robin Stocker
+	<robin@nibor.org> to fix the inverted logic in the "is_live_stream"
+	calculation, fixes local files being stopped instead of paused
+	(Closes: #559078)
+
 2008-10-29  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/backend/video-utils.c (totem_time_to_string): Use C_() instead
