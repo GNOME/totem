@@ -25,7 +25,7 @@
 #ifndef __TOTEM_GLOW_BUTTON_H__
 #define __TOTEM_GLOW_BUTTON_H__
 
-#include <gtk/gtkbutton.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

@@ -29,9 +29,7 @@
 
 #include <glib/gi18n.h>
 
-#include <gtk/gtklabel.h>
-#include <gtk/gtkvseparator.h>
-#include <gtk/gtkversion.h>
+#include <gtk/gtk.h>
 
 #include "totem-statusbar.h"
 #include "video-utils.h"

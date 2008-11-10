@@ -23,7 +23,7 @@
 #ifndef TOTEM_PLAYLIST_H
 #define TOTEM_PLAYLIST_H
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 #include <totem-pl-parser.h>
 #include <gio/gio.h>
 

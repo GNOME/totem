@@ -29,7 +29,6 @@
 
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <glib/gthread.h>
 
 #include <unistd.h>
 #include <stdlib.h>

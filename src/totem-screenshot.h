@@ -23,7 +23,7 @@
 #ifndef TOTEM_SCREENSHOT_H
 #define TOTEM_SCREENSHOT_H
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

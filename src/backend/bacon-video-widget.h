@@ -28,7 +28,7 @@
 #ifndef HAVE_BACON_VIDEO_WIDGET_H
 #define HAVE_BACON_VIDEO_WIDGET_H
 
-#include <gtk/gtkeventbox.h>
+#include <gtk/gtk.h>
 /* for optical disc enumeration type */
 #include <totem-disc.h>
 

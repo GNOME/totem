@@ -24,7 +24,7 @@
 #define TOTEM_URI_H
 
 #include "totem.h"
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include <gio/gio.h>
 
 G_BEGIN_DECLS

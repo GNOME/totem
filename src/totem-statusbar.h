@@ -28,8 +28,7 @@
 #ifndef __TOTEM_STATUSBAR_H__
 #define __TOTEM_STATUSBAR_H__
 
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkstatusbar.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

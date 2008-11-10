@@ -28,7 +28,7 @@
 #ifndef __EV_SIDEBAR_H__
 #define __EV_SIDEBAR_H__
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

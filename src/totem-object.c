@@ -29,7 +29,7 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 
 #include "totem.h"
 #include "totemobject-marshal.h"

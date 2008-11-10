@@ -2,7 +2,7 @@
 #ifndef TOTEM_TIME_LABEL_H
 #define TOTEM_TIME_LABEL_H
 
-#include <gtk/gtklabel.h>
+#include <gtk/gtk.h>
 
 #define TOTEM_TYPE_TIME_LABEL            (totem_time_label_get_type ())
 #define TOTEM_TIME_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_TIME_LABEL, TotemTimeLabel))

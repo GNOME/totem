@@ -30,7 +30,7 @@
 #ifndef TOTEM_OPEN_LOCATION_H
 #define TOTEM_OPEN_LOCATION_H
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

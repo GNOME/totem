@@ -34,7 +34,7 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
-#include <glib/gkeyfile.h>
+#include <glib.h>
 #include <gconf/gconf-client.h>
 
 #include "totem-plugin.h"

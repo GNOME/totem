@@ -33,7 +33,7 @@
 #include <gtk/gtk.h>
 
 #include <bacon-video-widget.h>
-#include <glib/gthread.h>
+#include <glib.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>

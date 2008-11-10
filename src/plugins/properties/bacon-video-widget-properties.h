@@ -23,7 +23,7 @@
 #ifndef BACON_VIDEO_WIDGET_PROPERTIES_H
 #define BACON_VIDEO_WIDGET_PROPERTIES_H
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtk.h>
 
 #define BACON_TYPE_VIDEO_WIDGET_PROPERTIES            (bacon_video_widget_properties_get_type ())
 #define BACON_VIDEO_WIDGET_PROPERTIES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetProperties))

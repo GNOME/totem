@@ -30,7 +30,7 @@
 #ifndef TOTEM_SKIPTO_H
 #define TOTEM_SKIPTO_H
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtk.h>
 
 #include "totem.h"
 #include "totem-skipto-plugin.h"
