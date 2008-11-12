@@ -5123,7 +5123,7 @@ bacon_video_widget_new (int width, int height,
       GDate d;
 
       g_date_clear (&d, 1);
-      g_date_set_time (&d, time (NULL));
+      g_date_set_time_t (&d, time (NULL));
       if (g_date_day (&d) == 1 && g_date_month (&d) == G_DATE_APRIL) {
         confvalue = gconf_client_get_without_default (bvw->priv->gc,
             GCONF_PREFIX"/puzzle_year", NULL);
