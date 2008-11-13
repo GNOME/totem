@@ -1175,11 +1175,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (bvw->priv->auto_resize
        	&& !bvw->priv->fullscreen_mode
 	&& !bvw->priv->window_resized) {
-      gint w, h;
-
-      shrink_toplevel (bvw);
-      get_media_size (bvw, &w, &h);
-      totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
+      bacon_video_widget_set_scale_ratio (bvw, 1);
     } else {
       bacon_video_widget_size_allocate (GTK_WIDGET (bvw),
                                         &GTK_WIDGET (bvw)->allocation);
