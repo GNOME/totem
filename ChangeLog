@@ -1,3 +1,26 @@
+2008-11-23  Christian Persch  <chpe@gnome.org>
+
+	Bug 560328 – update smclient with latest libegg
+
+	* src/eggdesktopfile.c: (egg_desktop_file_new),
+	(egg_desktop_file_new_from_dirs),
+	(egg_desktop_file_new_from_key_file), (start_startup_notification),
+	(egg_desktop_file_launchv):
+	* src/eggdesktopfile.h:
+	* src/eggsmclient-1.patch:
+	* src/eggsmclient-osx.c: (egg_sm_client_osx_class_init),
+	(egg_sm_client_osx_new), (sm_client_osx_startup),
+	(idle_quit_requested), (quit_requested), (quit_requested_resumed),
+	(idle_will_quit):
+	* src/eggsmclient-win32.c: (egg_sm_client_win32_init),
+	(sm_client_win32_end_session), (emit_quit_requested), (emit_quit),
+	(emit_quit_cancelled), (got_message),
+	(g_win32_handle_source_finalize):
+	* src/eggsmclient-xsmp.c: (sm_client_xsmp_set_initial_properties),
+	(save_state), (set_properties), (ptrarray_prop):
+	* src/eggsmclient.c: (sm_client_post_parse_func),
+	(egg_sm_client_get): Update from libegg.
+
 2008-11022  Patryk Zawadzki  <patrys@pld-linux.org>
 
 	* data/totem.desktop.in.in.in: Drop X-* categories
