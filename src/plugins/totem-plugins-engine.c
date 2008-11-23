@@ -160,8 +160,7 @@ totem_plugins_engine_load (const gchar *file)
 	if (str && strcmp(str, "python") == 0) {
 		info->lang = TOTEM_PLUGIN_LOADER_PY;
 #ifndef ENABLE_PYTHON
-		g_debug ("Cannot load Python extension '%s', Totem was not "
-					"compiled with Python support", file);
+		g_warning ("Cannot load Python extension '%s', Totem was not compiled with Python support", file);
 		g_free (str);
 		goto error;
 #endif
@@ -505,7 +504,7 @@ load_plugin_module (TotemPluginInfo *info)
 #ifdef ENABLE_PYTHON
 			info->module = G_TYPE_MODULE (totem_python_module_new (info->file, info->location));
 #else
-			g_debug ("Cannot load plugin %s, Python plugin support is disabled", info->location);
+			g_warning ("Cannot load plugin %s, Python plugin support is disabled", info->location);
 #endif
 			break;
 	}

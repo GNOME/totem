@@ -36,6 +36,7 @@
 
 #include <gmodule.h>
 
+#include "debug.h"
 #include "totem-plugin.h"
 #include "totem-python-module.h"
 #include "totem-python-plugin.h"
@@ -323,7 +324,7 @@ totem_python_module_load (GTypeModule *gmodule)
 		}
 	}
 
-	g_debug ("Failed to find any totem.Plugin-derived classes in Python plugin");
+	g_warning ("Failed to find any totem.Plugin-derived classes in Python plugin");
 
 done:
 
@@ -335,7 +336,7 @@ static void
 totem_python_module_unload (GTypeModule *module)
 {
 	TotemPythonModulePrivate *priv = TOTEM_PYTHON_MODULE_GET_PRIVATE (module);
-	g_debug ("Unloading Python module");
+	D("Unloading Python module");
 
 	priv->type = 0;
 }
@@ -349,7 +350,7 @@ totem_python_module_new_object (TotemPythonModule *module)
 	if (priv->type == 0)
 		return NULL;
 
-	g_debug ("Creating object of type %s", g_type_name (priv->type));
+	D("Creating object of type %s", g_type_name (priv->type));
 	object = (TotemPythonObject*) (g_object_new (priv->type,
 						  "name", priv->module,
 						  NULL));
@@ -374,7 +375,7 @@ totem_python_module_new_object (TotemPythonModule *module)
 static void
 totem_python_module_init (TotemPythonModule *module)
 {
-	g_debug ("Init of Python module");
+	D("Init of Python module");
 }
 
 static void
@@ -383,7 +384,7 @@ totem_python_module_finalize (GObject *object)
 	TotemPythonModulePrivate *priv = TOTEM_PYTHON_MODULE_GET_PRIVATE (object);
 
 	if (priv && priv->type) {
-		g_debug ("Finalizing Python module %s", g_type_name (priv->type));
+		D("Finalizing Python module %s", g_type_name (priv->type));
 
 		g_free (priv->module);
 		g_free (priv->path);

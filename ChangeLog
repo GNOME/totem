@@ -1,3 +1,14 @@
+2008-11-23  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/totem-plugins-engine.c (totem_plugins_engine_load),
+	(load_plugin_module):
+	* src/plugins/totem-python-module.c (totem_python_module_load),
+	(totem_python_module_unload), (totem_python_module_new_object),
+	(totem_python_module_init), (totem_python_module_finalize):
+	* src/plugins/totem-python-plugin.c (totem_python_object_init),
+	(totem_python_object_finalize), (totem_python_object_get_type):
+	Standardise debug output from the plugin system to use the D() macro.
+
 2008-11-23  Christian Persch  <chpe@gnome.org>
 
 	Bug 560328 – update smclient with latest libegg
