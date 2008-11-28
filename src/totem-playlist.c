@@ -392,6 +392,10 @@ drop_cb (GtkWidget        *widget,
 	GList *p, *file_list;
 	guint i;
 
+	if (context->action == GDK_ACTION_MOVE) {
+		totem_playlist_clear (playlist);
+	}
+
 	list = g_uri_list_extract_uris ((char *)data->data);
 	file_list = NULL;
 

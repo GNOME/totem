@@ -1548,9 +1548,30 @@ drop_video_cb (GtkWidget     *widget,
 	 Totem              *totem)
 {
 	gboolean retval;
+	gboolean empty_pl;
 
-	retval = totem_action_drop_files (totem, data, info, TRUE);
+	empty_pl = (context->action == GDK_ACTION_MOVE);
+
+	retval = totem_action_drop_files (totem, data, info, empty_pl);
 	gtk_drag_finish (context, retval, FALSE, time);
+}
+
+static void
+drag_motion_video_cb (GtkWidget      *widget,
+                      GdkDragContext *context,
+                      gint            x,
+                      gint            y,
+                      guint           time,
+                      Totem          *totem)
+{
+	GdkModifierType mask;
+
+	gdk_window_get_pointer (widget->window, NULL, NULL, &mask);
+	if (mask & GDK_CONTROL_MASK) {
+		gdk_drag_status (context, GDK_ACTION_COPY, time);
+	} else {
+		gdk_drag_status (context, GDK_ACTION_MOVE, time);
+	}
 }
 
 static void
@@ -1564,8 +1585,11 @@ drop_playlist_cb (GtkWidget     *widget,
 	       Totem              *totem)
 {
 	gboolean retval;
+	gboolean empty_pl;
 
-	retval = totem_action_drop_files (totem, data, info, FALSE);
+	empty_pl = (context->action == GDK_ACTION_MOVE);
+
+	retval = totem_action_drop_files (totem, data, info, empty_pl);
 	gtk_drag_finish (context, retval, FALSE, time);
 }
 
@@ -3344,6 +3368,8 @@ video_widget_create (Totem *totem)
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
 			G_CALLBACK (drop_video_cb), totem);
+	g_signal_connect (G_OBJECT (totem->bvw), "drag_motion",
+			G_CALLBACK (drag_motion_video_cb), totem);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
 			GDK_ACTION_COPY | GDK_ACTION_MOVE);

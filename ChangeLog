@@ -1,3 +1,12 @@
+2008-11-28  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/totem-playlist.c (drop_cb):
+	* src/totem.c (drop_video_cb), (drag_motion_video_cb),
+	(drop_playlist_cb), (video_widget_create): Patch by Robin Stocker
+	<robin@nibor.org> to add a drag-and-drop modifier key for the video
+	widget and playlist, allowing adding to and replacing of the playlist,
+	respectively. (Closes: #372220)
+
 2008-11-23  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/totem-plugins-engine.c (totem_plugins_engine_load),
