@@ -1,3 +1,10 @@
+2008-11-28  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_set_scale_ratio): Fix warnings
+	in the thumbnailer, indexer and sound preview, as we don't
+	have any video windows
+
 2008-11-28  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/totem-playlist.c (drop_cb):

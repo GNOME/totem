@@ -3623,6 +3623,9 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 
   GST_DEBUG ("ratio = %.2f", ratio);
 
+  if (bvw->priv->video_window == NULL)
+    return;
+
   if (!bvw->priv->media_has_video && bvw->priv->show_vfx) {
     get_visualization_size (bvw, &w, &h, NULL, NULL);
   } else {
