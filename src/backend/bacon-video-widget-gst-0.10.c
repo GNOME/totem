@@ -184,6 +184,8 @@ struct BaconVideoWidgetPrivate
 
   guint                        init_width;
   guint                        init_height;
+
+  gint                         zoom;
   
   gchar                       *media_device;
 
@@ -890,6 +892,51 @@ bacon_video_widget_size_request (GtkWidget * widget,
 }
 
 static void
+resize_video_window (BaconVideoWidget *bvw)
+{
+  const GtkAllocation *allocation;
+  gfloat width, height, ratio, x, y;
+  int w, h;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  allocation = &GTK_WIDGET (bvw)->allocation;
+
+  get_media_size (bvw, &w, &h);
+  if (!w || !h) {
+    w = allocation->width;
+    h = allocation->height;
+  }
+  width = w;
+  height = h;
+
+  /* calculate ratio for fitting video into the available space */
+  if ((gfloat) allocation->width / width >
+      (gfloat) allocation->height / height) {
+    ratio = (gfloat) allocation->height / height;
+  } else {
+    ratio = (gfloat) allocation->width / width;
+  }
+
+  /* apply zoom factor */
+  ratio = ratio * bvw->priv->zoom / 100;
+
+  width *= ratio;
+  height *= ratio;
+  x = (allocation->width - width) / 2;
+  y = (allocation->height - height) / 2;
+
+  bvw->priv->video_window_allocation.width = width;
+  bvw->priv->video_window_allocation.height = height;
+  bvw->priv->video_window_allocation.x = x;
+  bvw->priv->video_window_allocation.y = y;
+
+  gdk_window_move_resize (bvw->priv->video_window, x, y, width, height);
+  gtk_widget_queue_draw (GTK_WIDGET (bvw));
+}
+
+static void
 bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
@@ -900,41 +947,12 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
   widget->allocation = *allocation;
 
   if (GTK_WIDGET_REALIZED (widget)) {
-    gfloat width, height, ratio;
-    int w, h;
 
     gdk_window_move_resize (widget->window,
                             allocation->x, allocation->y,
                             allocation->width, allocation->height);
 
-    /* resize video_window */
-    get_media_size (bvw, &w, &h);
-    if (!w || !h) {
-      w = allocation->width;
-      h = allocation->height;
-    }
-    width = w;
-    height = h;
-
-    if ((gfloat) allocation->width / width >
-        (gfloat) allocation->height / height) {
-      ratio = (gfloat) allocation->height / height;
-    } else {
-      ratio = (gfloat) allocation->width / width;
-    }
-
-    width *= ratio;
-    height *= ratio;
-
-    bvw->priv->video_window_allocation.width = width;
-    bvw->priv->video_window_allocation.height = height;
-    bvw->priv->video_window_allocation.x = (allocation->width - width) / 2;
-    bvw->priv->video_window_allocation.y = (allocation->height - height) / 2;
-    gdk_window_move_resize (bvw->priv->video_window,
-                            (allocation->width - width) / 2,
-                            (allocation->height - height) / 2,
-                            width, height);
-    gtk_widget_queue_draw (widget);
+    resize_video_window (bvw);
   }
 }
 
@@ -3656,12 +3674,6 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
 }
 
-gboolean
-bacon_video_widget_can_set_zoom (BaconVideoWidget *bvw)
-{
-  return FALSE;
-}
-
 void
 bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
                              int               zoom)
@@ -3669,7 +3681,9 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  /* implement me */
+  bvw->priv->zoom = zoom;
+  if (bvw->priv->video_window != NULL)
+    resize_video_window (bvw);
 }
 
 int
@@ -3678,7 +3692,7 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
   g_return_val_if_fail (bvw != NULL, 100);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 100);
 
-  return 100;
+  return bvw->priv->zoom;
 }
 
 /* Search for the color balance channel corresponding to type and return it. */

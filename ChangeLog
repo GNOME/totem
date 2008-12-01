@@ -1,3 +1,15 @@
+2008-12-01  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c (resize_video_window),
+	(bacon_video_widget_size_allocate), (bacon_video_widget_set_zoom),
+	(bacon_video_widget_get_zoom):
+	Patch from Robin Stocker <robin@nibor.org> to add zoom support
+	to the GStreamer backend (Closes: #171916)
+	* src/backend/bacon-video-widget-xine.c:
+	* src/backend/bacon-video-widget.h:
+	* src/totem.c (totem_callback_connect):
+	Remove _can_set_zoom() function, both our backends can
+
 2008-11-28  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c

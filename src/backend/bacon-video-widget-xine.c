@@ -3713,12 +3713,6 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	totem_widget_set_preferred_size (toplevel, new_w, new_h);
 }
 
-gboolean
-bacon_video_widget_can_set_zoom (BaconVideoWidget *bvw)
-{
-	return TRUE;
-}
-
 void
 bacon_video_widget_set_zoom (BaconVideoWidget *bvw, int zoom)
 {

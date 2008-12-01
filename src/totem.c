@@ -3150,8 +3150,6 @@ totem_callback_connect (Totem *totem)
 	GtkBox *box;
 
 	/* Menu items */
-	gtk_action_group_set_visible (totem->zoom_action_group,
-		bacon_video_widget_can_set_zoom (totem->bvw));
 	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "deinterlace"));
 	gtk_action_set_visible (action, bacon_video_widget_can_deinterlace (totem->bvw));
 
