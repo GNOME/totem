@@ -935,12 +935,7 @@ else
 	AC_MSG_NOTICE([   No Totem plugins enabled])
 fi
 if test x$enable_browser_plugins = xyes ; then
-	AC_MSG_NOTICE([** Browser plugin enabled (using $MOZILLA)])
-	if test x$enable_basic_plugin = xyes ; then
-		AC_MSG_NOTICE([** Basic browser plugin enabled])
-	else
-		AC_MSG_NOTICE([   Basic browser plugin disabled])
-	fi
+	AC_MSG_NOTICE([** Browser plugin enabled])
 	if test x$enable_gmp_plugin = xyes ; then
 		AC_MSG_NOTICE([** GMP (Windows Media) plugin enabled])
 	else
