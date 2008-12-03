@@ -62,6 +62,7 @@
     '("unknown" "TOTEM_REMOTE_COMMAND_UNKNOWN")
     '("play" "TOTEM_REMOTE_COMMAND_PLAY")
     '("pause" "TOTEM_REMOTE_COMMAND_PAUSE")
+    '("stop" "TOTEM_REMOTE_COMMAND_STOP")
     '("playpause" "TOTEM_REMOTE_COMMAND_PLAYPAUSE")
     '("next" "TOTEM_REMOTE_COMMAND_NEXT")
     '("previous" "TOTEM_REMOTE_COMMAND_PREVIOUS")
@@ -88,9 +89,9 @@
     '("eject" "TOTEM_REMOTE_COMMAND_EJECT")
     '("play-dvd" "TOTEM_REMOTE_COMMAND_PLAY_DVD")
     '("mute" "TOTEM_REMOTE_COMMAND_MUTE")
+    '("toggle-aspect" "TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT")
   )
 )
-
 
 ;; From totem-plugin.h
 
@@ -387,6 +388,17 @@
   (of-object "TotemObject")
   (c-name "totem_get_current_time")
   (return-type "gint64")
+)
+
+(define-method add_to_playlist_and_play
+  (of-object "Totem")
+  (c-name "totem_add_to_playlist_and_play")
+  (return-type "none")
+  (parameters
+    '("const-char*" "uri")
+    '("const-char*" "display_name")
+    '("gboolean" "add_to_recent")
+  )
 )
 
 (define-method get_current_mrl
