@@ -149,7 +149,7 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	/* Duration */
 	bacon_video_widget_properties_from_time (props, 0);
 	/* Comment */
-	bacon_video_widget_properties_set_label (props, "comment", _("Unknown"));
+	bacon_video_widget_properties_set_label (props, "comment", "");
 
 	/* Dimensions */
 	bacon_video_widget_properties_set_label (props, "dimensions", _("N/A"));
