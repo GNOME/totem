@@ -115,6 +115,8 @@ struct TotemObject {
 	/* Volume */
 	GtkWidget *volume;
 	gboolean volume_sensitive;
+	gboolean muted;
+	double prev_volume;
 
 	/* Subtitles/Languages menus */
 	GtkWidget *subtitles;

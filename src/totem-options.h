@@ -43,6 +43,7 @@ typedef struct
 	gboolean seekbwd;
 	gboolean volumeup;
 	gboolean volumedown;
+	gboolean mute;
 	gboolean fullscreen;
 	gboolean togglecontrols;
 	gboolean quit;

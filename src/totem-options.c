@@ -56,6 +56,7 @@ const GOptionEntry options[] = {
 	{"seek-bwd", '\0', 0, G_OPTION_ARG_NONE, &optionstate.seekbwd, N_("Seek Backwards"), NULL},
 	{"volume-up", '\0', 0, G_OPTION_ARG_NONE, &optionstate.volumeup, N_("Volume Up"), NULL},
 	{"volume-down", '\0', 0, G_OPTION_ARG_NONE, &optionstate.volumedown, N_("Volume Down"), NULL},
+	{"mute", '\0', 0, G_OPTION_ARG_NONE, &optionstate.mute, N_("Mute sound"), NULL},
 	{"fullscreen", '\0', 0, G_OPTION_ARG_NONE, &optionstate.fullscreen, N_("Toggle Fullscreen"), NULL},
 	{"toggle-controls", '\0', 0, G_OPTION_ARG_NONE, &optionstate.togglecontrols, N_("Show/Hide Controls"), NULL},
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
@@ -214,6 +215,11 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 	if (options->volumedown) {
 		commands = g_list_append (commands, totem_option_create_line
 					  (TOTEM_REMOTE_COMMAND_VOLUME_DOWN));
+	}
+
+	if (options->mute) {
+		commands = g_list_append (commands, totem_option_create_line
+					  (TOTEM_REMOTE_COMMAND_MUTE));
 	}
 
 	if (options->fullscreen) {

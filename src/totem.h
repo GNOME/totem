@@ -131,6 +131,7 @@ void	totem_action_previous			(Totem *totem);
 void	totem_action_seek_time			(Totem *totem, gint64 sec);
 void	totem_action_seek_relative		(Totem *totem, gint64 offset);
 void	totem_action_volume_relative		(Totem *totem, double off_pct);
+void	totem_action_volume_toggle_mute		(Totem *totem);
 gboolean totem_action_set_mrl			(Totem *totem,
 						 const char *mrl,
 						 const char *subtitle);

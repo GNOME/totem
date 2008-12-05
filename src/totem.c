@@ -264,7 +264,10 @@ totem_action_exit (Totem *totem)
 	if (totem->bvw) {
 		int vol;
 
-		vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
+		if (totem->muted != FALSE)
+			vol = totem->prev_volume * 100.0 + 0.5;
+		else
+			vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
 		/* FIXME move the volume to the static file? */
 		gconf_client_set_int (totem->gc,
 				GCONF_PREFIX"/volume",
@@ -1370,9 +1373,30 @@ totem_action_volume_relative (Totem *totem, double off_pct)
 
 	if (bacon_video_widget_can_set_volume (totem->bvw) == FALSE)
 		return;
+	if (totem->muted != FALSE)
+		totem_action_volume_toggle_mute (totem);
 
 	vol = bacon_video_widget_get_volume (totem->bvw);
 	bacon_video_widget_set_volume (totem->bvw, vol + off_pct);
+}
+
+/**
+ * totem_action_volume_toggle_mute:
+ * @totem: a #TotemObject
+ *
+ * Toggles the mute status.
+ **/
+void
+totem_action_volume_toggle_mute (Totem *totem)
+{
+	if (totem->muted == FALSE) {
+		totem->muted = TRUE;
+		totem->prev_volume = bacon_video_widget_get_volume (totem->bvw);
+		bacon_video_widget_set_volume (totem->bvw, 0.0);
+	} else {
+		totem->muted = FALSE;
+		bacon_video_widget_set_volume (totem->bvw, totem->prev_volume);
+	}
 }
 
 /**
@@ -1831,6 +1855,7 @@ update_current_time (BaconVideoWidget *bvw,
 void
 volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, Totem *totem)
 {
+	totem->muted = FALSE;
 	bacon_video_widget_set_volume (totem->bvw, value);
 }
 
@@ -2358,7 +2383,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		/* TODO - how to see if can, and play the DVD (like the menu item) */
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
-		totem_action_volume_relative (totem, -1.0);
+		totem_action_volume_toggle_mute (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT:
 		totem_action_toggle_aspect_ratio (totem);

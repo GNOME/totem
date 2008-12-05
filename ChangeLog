@@ -1,5 +1,17 @@
 2008-12-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-options.c (totem_options_process_for_server):
+	* src/totem-options.h:
+	* src/totem-private.h:
+	* src/totem.c (totem_action_exit), (totem_action_volume_relative),
+	(totem_action_volume_toggle_mute),
+	(volume_button_value_changed_cb), (totem_action_remote):
+	* src/totem.h: Add proper support for mute toggling through
+	the remote interface, and add a command-line option for it
+	(Closes: #554318)
+
+2008-12-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/jamendo/jamendo.glade:
 	* src/plugins/jamendo/jamendo.py: Corrected previous
 	commits, patch from David JEAN LOUIS <izimobil@gmail.com>
