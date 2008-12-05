@@ -1532,6 +1532,8 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 			if (bacon_video_widget_is_seekable (emb->bvw) != FALSE) {
 				bacon_video_widget_pause (emb->bvw);
 				bacon_video_widget_seek (emb->bvw, 0.0, NULL);
+				if (start_play != FALSE)
+					totem_embedded_play (emb, NULL);
 			} else {
 				bacon_video_widget_close (emb->bvw);
 				totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);

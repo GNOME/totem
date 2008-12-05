@@ -1,5 +1,11 @@
 2008-12-05  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totem-plugin-viewer.c (on_eos_event):
+	Fix repeat being ignored when playing back the stream
+	from the disk and it is seekable (Closes: #557407)
+
+2008-12-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_init): Fix default zoom ratio being
 	zero when using the web browser, and a single dot appearing
