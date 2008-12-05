@@ -760,4 +760,49 @@ MP3</property>
   </child>
 </widget>
 
+<widget class="GtkMenu" id="popup_menu">
+
+  <child>
+    <widget class="GtkImageMenuItem" id="add_to_playlist">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">_Add to Playlist</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_add_to_playlist_activate" last_modification_time="Thu, 04 Dec 2008 14:11:09 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image4">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-add</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="jamendo_album_page">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">Open Jamendo album page in browser</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_open_jamendo_album_page_activate" last_modification_time="Thu, 04 Dec 2008 14:11:09 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image5">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-jump-to</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+</widget>
+
 </glade-interface>

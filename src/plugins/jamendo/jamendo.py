@@ -69,11 +69,11 @@ class JamendoPlugin(totem.Plugin):
     """
     Jamendo totem plugin GUI.
     """
-    SEARCH_CRITERIUM = ['artist_name', 'tag_idstr']
-    AUDIO_FORMATS    = ['ogg2', 'mp31']
-    TAB_RESULTS      = 0
-    TAB_POPULAR      = 1
-    TAB_LATEST       = 2
+    SEARCH_CRITERIA = ['artist_name', 'tag_idstr']
+    AUDIO_FORMATS   = ['ogg2', 'mp31']
+    TAB_RESULTS     = 0
+    TAB_POPULAR     = 1
+    TAB_LATEST      = 2
 
     def __init__(self):
         totem.Plugin.__init__(self)
@@ -87,6 +87,7 @@ class JamendoPlugin(totem.Plugin):
         f = os.path.join(os.path.dirname(__file__), 'jamendo.glade')
         self.glade = gtk.glade.XML(f)
         self.config_dialog = self.glade.get_widget('config_dialog')
+        self.popup = self.glade.get_widget('popup_menu')
         self.window = self.glade.get_widget('mainwindow')
         self.container = self.glade.get_widget('mainwindow_container')
         self.notebook = self.glade.get_widget('notebook')
@@ -102,6 +103,11 @@ class JamendoPlugin(totem.Plugin):
             self.glade.get_widget('popular_progressbar'),
             self.glade.get_widget('latest_progressbar'),
         ]
+        self.treeviews = [
+            self.glade.get_widget('results_treeview'),
+            self.glade.get_widget('popular_treeview'),
+            self.glade.get_widget('latest_treeview'),
+        ]
         self.setup_treeviews()
 
         # connect signals to slots
@@ -116,6 +122,9 @@ class JamendoPlugin(totem.Plugin):
             'on_album_button_clicked': self.on_album_button_clicked,
             'on_cancel_button_clicked': self.on_cancel_button_clicked,
             'on_ok_button_clicked': self.on_ok_button_clicked,
+            'on_add_to_playlist_activate': self.on_add_to_playlist_activate,
+            'on_open_jamendo_album_page_activate':
+                self.on_open_jamendo_album_page_activate,
         })
 
         self.reset()
@@ -156,6 +165,11 @@ class JamendoPlugin(totem.Plugin):
             self.TAB_POPULAR: 1,
             self.TAB_LATEST : 1
         }
+        self.running_threads = {
+            self.TAB_RESULTS: False,
+            self.TAB_POPULAR: False,
+            self.TAB_LATEST : False
+        }
         self.pages = {
             self.TAB_RESULTS: [],
             self.TAB_POPULAR: [],
@@ -185,14 +199,10 @@ class JamendoPlugin(totem.Plugin):
         """
         Setup the 3 treeview: result, popular and latest
         """
-        self.treeviews = [
-            self.glade.get_widget('results_treeview'),
-            self.glade.get_widget('popular_treeview'),
-            self.glade.get_widget('latest_treeview'),
-        ]
         self.current_treeview = self.treeviews[0]
         for w in self.treeviews:
-
+            w.get_selection().set_mode(gtk.SELECTION_MULTIPLE)
+            #w.set_rubber_banding(True)
             # build a treestore
             model = gtk.TreeStore(
                 gobject.TYPE_PYOBJECT, # album or track dict
@@ -294,6 +304,32 @@ class JamendoPlugin(totem.Plugin):
         pindex = self.treeviews.index(treeview)
         self.album_count[pindex] += 1
 
+    def add_album_to_playlist(self, mode, album):
+        """
+        Add an album to the playlist, mode can be: replace, enqueue or
+        enqueue_and_play.
+        """
+        for i, track in enumerate(album['tracks']):
+            if mode in ('replace', 'enqueue_and_play'):
+                if i == 0:
+                    # play first track
+                    self.add_track_to_playlist(mode, track)
+                else:
+                    # and enqueue other tracks
+                    self.add_track_to_playlist('enqueue', track)
+            else:
+                self.add_track_to_playlist('enqueue', track)
+
+    def add_track_to_playlist(self, mode, t):
+        """
+        Add a track to the playlist, mode can be: replace, enqueue or
+        enqueue_and_play.
+        """
+        if mode == 'replace':
+            self.totem.action_remote(totem.REMOTE_COMMAND_REPLACE, t['stream'])
+        elif mode == 'enqueue':
+            self.totem.action_remote(totem.REMOTE_COMMAND_ENQUEUE, t['stream'])
+
     def fetch_albums(self, pn=1):
         """
         Initialize the fetch thread.
@@ -307,7 +343,7 @@ class JamendoPlugin(totem.Plugin):
             value = self.search_entry.get_text()
             if not value:
                 return
-            prop = self.SEARCH_CRITERIUM[self.search_combo.get_active()]
+            prop = self.SEARCH_CRITERIA[self.search_combo.get_active()]
             params = {'order': 'date_desc', prop: value}
         params['pn'] = pn
         self.current_treeview.get_model().clear()
@@ -324,6 +360,7 @@ class JamendoPlugin(totem.Plugin):
         ecb = (self.on_fetch_albums_error, self.current_treeview)
         thread = JamendoService(params, lcb, dcb, ecb)
         thread.start()
+        self.running_threads[tab_index] = True
 
     def on_fetch_albums_loop(self, treeview, album):
         """
@@ -349,6 +386,7 @@ class JamendoPlugin(totem.Plugin):
         self.progressbars[pindex].set_fraction(0.0)
         self.progressbars[pindex].hide()
         self.album_count[pindex] = 0
+        self.running_threads[pindex] = False
 
     def on_fetch_albums_error(self, treeview, exc):
         """
@@ -358,6 +396,7 @@ class JamendoPlugin(totem.Plugin):
         pindex = self.treeviews.index(treeview)
         self.progressbars[pindex].set_fraction(0.0)
         self.progressbars[pindex].hide()
+        self.running_threads[pindex] = False
         dlg = gtk.MessageDialog(
             type=gtk.MESSAGE_ERROR,
             buttons=gtk.BUTTONS_OK
@@ -410,8 +449,9 @@ class JamendoPlugin(totem.Plugin):
         self.current_treeview = self.treeviews[int(tab_num)]
         self._update_buttons_state()
         model = self.current_treeview.get_model()
-        # fetch popular and latest albums once only
-        if not new_search and len(model):
+        # fetch popular and latest albums only once
+        if self.running_threads[int(tab_num)] == True or \
+           (not new_search and len(model)):
             return
         if new_search:
             self.current_page[self.TAB_RESULTS] = 1
@@ -425,32 +465,30 @@ class JamendoPlugin(totem.Plugin):
         """
         Called when the user double-clicked on a treeview element.
         """
-        sel = self._get_selection_at(0)
         try:
-            prop = (len(path) == 1) and 'album_id' or 'id'
-            url = '%s/stream/track/redirect/?%s=%s&streamencoding=%s' %\
-                (JamendoService.API_URL, prop, sel['id'],
-                 JamendoService.AUDIO_FORMAT)
-            self.totem.action_set_mrl_and_play(url)
-            # update play icon
-            empty = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, 1, 1)
-            icon = self.window.render_icon(gtk.STOCK_MEDIA_PLAY,
-                                           gtk.ICON_SIZE_MENU)
-            for treeview in self.treeviews:
-                model = treeview.get_model()
-                for row in model:
-                    if row.path == path:
-                        path = (path[0], 0)
-                    for subrow in row.iterchildren():
-                        subrow[1] = subrow.path == path and icon or empty
+            item = self._get_selection()[0] # first item selected
         except:
-            raise
+            return
+        if len(path) == 1:
+            self.add_album_to_playlist('replace', item)
+        else:
+            self.add_track_to_playlist('replace', item)
 
     def on_treeview_row_clicked(self, tv, evt):
         """
         Called when the user clicked on a treeview element.
         """
         try:
+            if evt.button == 3:
+                path = tv.get_path_at_pos(int(evt.x), int(evt.y))
+                sel  = tv.get_selection()
+                rows = sel.get_selected_rows()
+                if path[0] not in rows[1]:
+                    sel.unselect_all()
+                    sel.select_path(path[0])
+                tv.grab_focus()
+                self.popup.popup(None, None, None, evt.button, evt.time)
+                return True
             coords = evt.get_coords()
             path, c, x, y = tv.get_path_at_pos(int(coords[0]), int(coords[1]))
             if (len(path) == 1):
@@ -476,46 +514,42 @@ class JamendoPlugin(totem.Plugin):
         """
         Called when the user clicked the previous button.
         """
-        try:
-            self._update_buttons_state()
-            model = self.current_treeview.get_model()
-            model.clear()
-            pindex = self.treeviews.index(self.current_treeview)
-            self.current_page[pindex] -= 1
-            albums = self.pages[pindex][self.current_page[pindex]-1]
-            for album in albums:
-                self.add_treeview_item(self.current_treeview, album)
-            self.on_fetch_albums_done(self.current_treeview, albums, False)
-        except:
-            raise
+        self._update_buttons_state()
+        model = self.current_treeview.get_model()
+        model.clear()
+        pindex = self.treeviews.index(self.current_treeview)
+        self.current_page[pindex] -= 1
+        albums = self.pages[pindex][self.current_page[pindex]-1]
+        for album in albums:
+            self.add_treeview_item(self.current_treeview, album)
+        self.on_fetch_albums_done(self.current_treeview, albums, False)
 
     def on_next_button_clicked(self, *args):
         """
         Called when the user clicked the next button.
         """
-        try:
-            self._update_buttons_state()
-            model = self.current_treeview.get_model()
-            model.clear()
-            pindex = self.treeviews.index(self.current_treeview)
-            if self.current_page[pindex] == len(self.pages[pindex]):
-                self.fetch_albums(self.current_page[pindex]+1)
-            else:
-                self.current_page[pindex] += 1
-                albums = self.pages[pindex][self.current_page[pindex]-1]
-                for album in albums:
-                    self.add_treeview_item(self.current_treeview, album)
-                self.on_fetch_albums_done(self.current_treeview, albums, False)
-        except:
-            raise
+        self._update_buttons_state()
+        model = self.current_treeview.get_model()
+        model.clear()
+        pindex = self.treeviews.index(self.current_treeview)
+        if self.current_page[pindex] == len(self.pages[pindex]):
+            self.fetch_albums(self.current_page[pindex]+1)
+        else:
+            self.current_page[pindex] += 1
+            albums = self.pages[pindex][self.current_page[pindex]-1]
+            for album in albums:
+                self.add_treeview_item(self.current_treeview, album)
+            self.on_fetch_albums_done(self.current_treeview, albums, False)
 
     def on_album_button_clicked(self, *args):
         """
         Called when the user clicked on the album button.
         """
-        album_id = self._get_selection_at(0, None, True)['id']
-        os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", '%s/url/album/redirect/?id=%s' % (
-		(JamendoService.API_URL, album_id)))
+        try:
+            url = self._get_selection(True)[0]['url']
+            os.spawnlp(os.P_NOWAIT, "xdg-open", "xdg-open", url)
+        except:
+            pass
 
     def on_cancel_button_clicked(self, *args):
         """
@@ -540,31 +574,59 @@ class JamendoPlugin(totem.Plugin):
         except:
             pass
 
+    def on_add_to_playlist_activate(self, *args):
+        """
+        Called when the user clicked on the add to playlist button of the
+        popup menu.
+        """
+        items = self._get_selection()
+        for item in items:
+            if 'tracks' in item:
+                # we have an album
+                self.add_album_to_playlist('enqueue', item)
+            else:
+                # we have a track
+                self.add_track_to_playlist('enqueue', item)
+
+    def on_open_jamendo_album_page_activate(self, *args):
+        """
+        Called when the user clicked on the jamendo album page button of the
+        popup menu.
+        """
+        return self.on_album_button_clicked()
+
+    def _get_selection(self, root=False):
+        """
+        Shortcut method to retrieve the treeview items selected.
+        """
+        ret = []
+        sel = self.current_treeview.get_selection()
+        model, rows = sel.get_selected_rows()
+        for row in rows:
+            if root:
+                it = model.get_iter((row[0],))
+            else:
+                it = model.get_iter(row)
+            elt = model.get(it, 0)[0]
+            if elt not in ret:
+                ret.append(elt)
+        return ret
+
     def _update_buttons_state(self):
         """
         Update the state of the previous and next buttons.
         """
         sel = self.current_treeview.get_selection()
-        model, it = sel.get_selected()
+        model, rows = sel.get_selected_rows()
+        try:
+            it = model.get_iter(rows[0])
+        except:
+            it = None
         pindex = self.treeviews.index(self.current_treeview)
         self.previous_button.set_sensitive(self.current_page[pindex] > 1)
         self.next_button.set_sensitive(len(model)==JamendoService.NUM_PER_PAGE)
         self.album_button.set_sensitive(it is not None)
 
-    def _get_selection_at(self, at=0, sel=None, root=False):
-        """
-        Shortcut method to retrieve the value of the selected item at the
-        given column.
-        """
-        if sel is None:
-            sel = self.current_treeview.get_selection()
-        model, it = sel.get_selected()
-        if root:
-            while model.iter_parent(it) is not None:
-                it = model.iter_parent(it)
-        if it is not None:
-            return model.get(it, at)[0]
-        return None
 
     def _format_str(self, st, truncate=False):
         """
@@ -608,7 +670,7 @@ class JamendoService(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        url = '%s/id+name+duration+image+genre+dates+artist_id+' \
+        url = '%s/id+name+duration+image+genre+dates+url+artist_id+' \
               'artist_name+artist_url/album/json/?n=%s&imagesize=50' % \
               (self.API_URL, self.NUM_PER_PAGE)
         if len(self.params):
@@ -621,7 +683,7 @@ class JamendoService(threading.Thread):
                 fname, headers = urllib.urlretrieve(album['image'])
                 album['image'] = fname
                 album['tracks'] = json.loads(self._request(
-                    '%s/id+name+duration/track/json/?album_id=%s'\
+                    '%s/id+name+duration+stream/track/json/?album_id=%s'\
                     '&order=numalbum_asc' % (self.API_URL, album['id'])
                 ))
                 album['license'] = json.loads(self._request(
