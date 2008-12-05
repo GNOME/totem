@@ -47,9 +47,6 @@ for totem allows totem to be embeded into a web browser.
 export MOZILLA_PLUGINDIR=%{_libdir}/mozilla 
 %configure --enable-gstreamer=yes --enable-mozilla --enable-nvtv
 
-#apparently someone forgot to autogen before disting 0.99.17 :)
-#perl -pi -e 's/gstvideowidget.h//g' src/Makefile
-
 make %{?_smp_mflags}
 
 %install
@@ -58,24 +55,10 @@ export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 make install DESTDIR=$RPM_BUILD_ROOT
 
 # no static libs and libtool archives either
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/*.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/*.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/gromit/libgromit.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/gromit/libgromit.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/ontop/libontop.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/ontop/libontop.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/screensaver/libscreensaver.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/screensaver/libscreensaver.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/skipto/libskipto.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/skipto/libskipto.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/media-player-keys/libmedia_player_keys.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/media-player-keys/libmedia_player_keys.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/properties/libmovie-properties.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/properties/libmovie-properties.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.{a,la}
+rm -f $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-1.0/*.{a,la}
+rm -f $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/*.{a,la}
+rm -f $RPM_BUILD_ROOT%{_libdir}/totem/plugins/*/*.{a,la}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -137,6 +120,11 @@ done
 %{_libdir}/totem/plugins/pythonconsole/*.pyc
 %{_libdir}/totem/plugins/pythonconsole/*.pyo
 %{_libdir}/totem/plugins/pythonconsole/pythonconsole.totem-plugin
+%{_libdir}/totem/plugins/jamendo/*.py
+%{_libdir}/totem/plugins/jamendo/*.pyc
+%{_libdir}/totem/plugins/jamendo/*.pyo
+%{_libdir}/totem/plugins/jamendo/jamendo.totem-plugin
+%{_libdir}/totem/plugins/jamendo/jamendo.glade
 %{_libexecdir}/totem/totem-bugreport.*
 
 %files mozplugin
@@ -145,6 +133,9 @@ done
 %{_libexecdir}/totem-plugin-viewer
 
 %changelog
+* Tue Nov 25 2008 David JEAN LOUIS <izimobil@gmail.com>
+- Added jamendo python plugin
+
 * Sat Mar 1 2008 Christian Schaller <christian.schaller@collabora.co.uk>
 - Update for new plugins and removed pl-parser
 
