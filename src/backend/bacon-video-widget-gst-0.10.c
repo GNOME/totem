@@ -1133,6 +1133,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->tagcache = NULL;
   priv->audiotags = NULL;
   priv->videotags = NULL;
+  priv->zoom = 100;
 
   priv->lock = g_mutex_new ();
 

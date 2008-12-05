@@ -1,5 +1,12 @@
 2008-12-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_init): Fix default zoom ratio being
+	zero when using the web browser, and a single dot appearing
+	as video
+
+2008-12-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/properties/bacon-video-widget-properties.c
 	(bacon_video_widget_properties_reset): Change empty
 	comment to show as empty not "Unknown" (Closes: #563298)
