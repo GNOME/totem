@@ -131,7 +131,7 @@ checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 static void
-totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
+totem_prefs_set_show_visuals (Totem *totem, gboolean value)
 {
 	GtkWidget *item;
 
@@ -149,21 +149,8 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value, gboolean warn)
 			"tpw_visuals_size_combobox"));
 	gtk_widget_set_sensitive (item, value);
 
-	if (warn == FALSE)
-	{
-		bacon_video_widget_set_show_visuals
-			(BACON_VIDEO_WIDGET (totem->bvw), value);
-		return;
-	}
-
-	if (bacon_video_widget_set_show_visuals
-			(BACON_VIDEO_WIDGET (totem->bvw), value) == FALSE)
-	{
-		totem_action_info (_("The change of this setting will only "
-					"take effect for the next movie, or "
-					"when Totem is restarted."),
-				totem);
-	}
+	bacon_video_widget_set_show_visuals
+		(BACON_VIDEO_WIDGET (totem->bvw), value);
 }
 
 void
@@ -184,7 +171,7 @@ checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 		}
 	}
 
-	totem_prefs_set_show_visuals (totem, value, TRUE);
+	totem_prefs_set_show_visuals (totem, value);
 }
 
 void
@@ -592,7 +579,7 @@ totem_setup_preferences (Totem *totem)
 	g_signal_handlers_disconnect_by_func (item, checkbutton2_toggled_cb, totem);
 	gtk_toggle_button_set_active
 		(GTK_TOGGLE_BUTTON (item), show_visuals);
-	totem_prefs_set_show_visuals (totem, show_visuals, FALSE);
+	totem_prefs_set_show_visuals (totem, show_visuals);
 	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton2_toggled_cb), totem);
 
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",

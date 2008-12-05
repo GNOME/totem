@@ -3096,18 +3096,16 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_DEINTERLACE);
 }
 
-gboolean
+void
 bacon_video_widget_set_show_visuals (BaconVideoWidget *bvw,
 		gboolean show_visuals)
 {
-	g_return_val_if_fail (bvw != NULL, FALSE);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-	g_return_val_if_fail (bvw->priv->xine != NULL, FALSE);
+	g_return_if_fail (bvw != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xine != NULL);
 
 	bvw->priv->show_vfx = show_visuals;
 	show_vfx_update (bvw, show_visuals);
-
-	return TRUE;
 }
 
 GList *

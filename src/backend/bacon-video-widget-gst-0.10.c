@@ -3400,18 +3400,16 @@ beach:
   return;
 }
 
-gboolean
+void
 bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
                                      gboolean show_visuals)
 {
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   bvw->priv->show_vfx = show_visuals;
   bvw->priv->vis_changed = TRUE;
-  
-  return TRUE;
 }
 
 static gboolean

@@ -1,5 +1,17 @@
 2008-12-05  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_set_show_visuals):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_set_show_visuals):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-preferences.c (totem_prefs_set_show_visuals),
+	(checkbutton2_toggled_cb), (totem_setup_preferences):
+	Remove retval from bacon_video_widget_set_show_visuals()
+	as both backends can switch visuals on-the-fly
+
+2008-12-05  Bastien Nocera  <hadess@hadess.net>
+
 	* configure.in:
 	* data/totem.ui:
 	* src/backend/bacon-video-widget-gst-0.10.c

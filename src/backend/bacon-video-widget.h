@@ -220,7 +220,7 @@ typedef enum {
 	NUM_VISUAL_QUALITIES
 } VisualsQuality;
 
-gboolean bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
+void bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
 						   gboolean show_visuals);
 GList *bacon_video_widget_get_visuals_list	  (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
