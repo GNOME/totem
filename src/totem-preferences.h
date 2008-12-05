@@ -32,7 +32,6 @@
 G_BEGIN_DECLS
 
 void totem_setup_preferences (Totem *totem);
-void totem_preferences_tvout_setup (Totem *totem);
 void totem_preferences_visuals_setup (Totem *totem);
 
 GtkWidget * bacon_cd_selection_create (void);

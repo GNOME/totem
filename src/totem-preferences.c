@@ -51,7 +51,6 @@ void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-void tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
 void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
 void visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem);
@@ -210,22 +209,6 @@ checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	gconf_client_set_bool (totem->gc,
 			       GCONF_PREFIX"/lock_screensaver_on_audio", 
 			       value, NULL);
-}
-
-void
-tvout_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
-{
-	TvOutType type;
-	gboolean value;
-
-	value = gtk_toggle_button_get_active (togglebutton);
-	if (value == FALSE)
-		return;
-
-	type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (togglebutton),
-				"tvout_type"));
-	bacon_video_widget_set_tv_out
-		(BACON_VIDEO_WIDGET (totem->bvw), type);
 }
 
 static void
@@ -564,7 +547,6 @@ totem_setup_preferences (Totem *totem)
 
 	/* Boldify some labels */
 	totem_interface_boldify_label (totem->xml, "tpw_network_label");
-	totem_interface_boldify_label (totem->xml, "tpw_tvout_label");
 	totem_interface_boldify_label (totem->xml, "tpw_text_subtitles_label");
 	totem_interface_boldify_label (totem->xml, "tpw_display_label");
 	totem_interface_boldify_label (totem->xml, "tpw_visuals_label");
@@ -757,52 +739,6 @@ totem_setup_preferences (Totem *totem)
 			(GConfClientNotifyFunc) encoding_changed_cb,
 			totem, NULL, NULL);
 
-}
-
-void
-totem_preferences_tvout_setup (Totem *totem)
-{
-	GObject *item;
-	TvOutType type;
-	const char *name;
-
-	type = bacon_video_widget_get_tv_out (totem->bvw);
-	switch (type)
-	{
-	case TV_OUT_NONE:
-		name = "tpw_notvout_radio_button";
-		break;
-	case TV_OUT_NVTV_PAL:
-		name = "tpw_nvtvpalmode_radio_button";
-		break;
-	case TV_OUT_NVTV_NTSC:
-		name = "tpw_nvtvntscmode_radio_button";
-		break;
-	default:
-		g_assert_not_reached ();
-		name = NULL;
-	}
-
-	item = gtk_builder_get_object (totem->xml, name);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
-
-	item = gtk_builder_get_object (totem->xml, "tpw_notvout_radio_button");
-	g_object_set_data (item, "tvout_type",
-			GINT_TO_POINTER (TV_OUT_NONE));
-	gtk_widget_set_sensitive (GTK_WIDGET (item), 
-			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NONE));
-
-	item = gtk_builder_get_object (totem->xml, "tpw_nvtvpalmode_radio_button");
-        g_object_set_data (item, "tvout_type",
-                GINT_TO_POINTER (TV_OUT_NVTV_PAL));
-	gtk_widget_set_sensitive (GTK_WIDGET (item), 
-			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_PAL));
-
-	item = gtk_builder_get_object (totem->xml, "tpw_nvtvntscmode_radio_button");
-	g_object_set_data (item, "tvout_type",
-                GINT_TO_POINTER (TV_OUT_NVTV_NTSC));
-	gtk_widget_set_sensitive (GTK_WIDGET (item), 
-			bacon_video_widget_fullscreen_mode_available (totem->bvw, TV_OUT_NVTV_NTSC));
 }
 
 void

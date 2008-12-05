@@ -1,5 +1,23 @@
 2008-12-05  Bastien Nocera  <hadess@hadess.net>
 
+	* configure.in:
+	* data/totem.ui:
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_realize), (bacon_video_widget_unrealize),
+	(bacon_video_widget_set_fullscreen), (bacon_video_widget_new):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_realize), (bacon_video_widget_unrealize),
+	(bacon_video_widget_set_fullscreen):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-preferences.c (totem_setup_preferences):
+	* src/totem-preferences.h:
+	* src/totem.c (video_widget_create): Kill NVTV support,
+	nv supports tv-out through XRandR for the G80 (GeForce 8000) and up,
+	and nouveau for pretty much everything it supports
+	(Closes: #473692)
+
+2008-12-05  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-options.c (totem_options_process_for_server):
 	* src/totem-options.h:
 	* src/totem-private.h:

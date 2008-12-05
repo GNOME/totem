@@ -312,20 +312,6 @@ gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
 						  GError **error);
 GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 
-/* TV-Out functions */
-typedef enum {
-	TV_OUT_NONE,
-	TV_OUT_NVTV_PAL,
-	TV_OUT_NVTV_NTSC
-} TvOutType;
-
-gboolean bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
-						       TvOutType tvout);
-
-void bacon_video_widget_set_tv_out               (BaconVideoWidget *bvw,
-						  TvOutType tvout);
-TvOutType bacon_video_widget_get_tv_out          (BaconVideoWidget *bvw);
-
 /* Audio-out functions */
 typedef enum {
 	BVW_AUDIO_SOUND_STEREO,

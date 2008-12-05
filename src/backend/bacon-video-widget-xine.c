@@ -23,11 +23,6 @@
 
 #include <config.h>
 
-#ifdef HAVE_NVTV
-#include <nvtv_simple.h>
-#endif 
-
-
 /* system */
 #include <math.h>
 #include <string.h>
@@ -180,7 +175,6 @@ struct BaconVideoWidgetPrivate {
 	guint tick_id;
 	double volume;
 	BaconVideoWidgetAudioOutType audio_out_type;
-	TvOutType tvout;
 	gint64 stream_length;
 	int zoom;
 
@@ -1266,12 +1260,6 @@ bacon_video_widget_realize (GtkWidget *widget)
 	xine_event_create_listener_thread (bvw->priv->ev_queue,
 			xine_event, (void *) bvw);
 
-#ifdef HAVE_NVTV
-	if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
-		nvtv_simple_enable(FALSE);
-	} 
-#endif
-
 	return;
 }
 
@@ -1678,11 +1666,6 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 		gconf_client_set_int (bvw->priv->gc, GCONF_PREFIX"/volume",
 				CLAMP (vol, 0, 100), NULL);
 	}
-
-	/* Kill the TV out */
-#ifdef HAVE_NVTV
-        nvtv_simple_exit();
-#endif
 
 	xine_port_send_gui_data (bvw->priv->vo_driver,
 			XINE_GUI_SEND_WILL_DESTROY_DRAWABLE,
@@ -2984,33 +2967,6 @@ bacon_video_widget_get_volume (BaconVideoWidget *bvw)
 	return bvw->priv->volume;
 }
 
-gboolean
-bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
-		TvOutType tvout) 
-{
-	switch(tvout) {
-	case TV_OUT_NONE:
-		/* Assume that ordinary fullscreen always works */
-		return TRUE;
-	case TV_OUT_NVTV_NTSC:
-	case TV_OUT_NVTV_PAL:
-#ifdef HAVE_NVTV
-		/* Make sure nvtv is initialized, it will not do any harm 
-		 * if it is done twice any way */
-		if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
-			nvtv_simple_enable(FALSE);
-		}
-		return (nvtv_simple_is_available());
-#else
-		return FALSE;
-#endif
-	default:
-		g_assert_not_reached ();
-	}
-
-	return FALSE;
-}
-
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 {
@@ -3023,33 +2979,14 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw, gboolean fullscreen)
 				"have-xvidmode", &have_xvidmode,
 				NULL);
 
-	if (have_xvidmode == FALSE &&
-			bvw->priv->tvout != TV_OUT_NVTV_NTSC &&
-			bvw->priv->tvout != TV_OUT_NVTV_PAL)
+	if (have_xvidmode == FALSE)
 		return;
 
 	bvw->priv->fullscreen_mode = fullscreen;
 
 	if (fullscreen == FALSE)
 	{
-#ifdef HAVE_NVTV
-		/* If NVTV is used */
-		if (nvtv_simple_get_state() == NVTV_SIMPLE_TV_ON) {
-			nvtv_simple_switch(NVTV_SIMPLE_TV_OFF,0,0);
-        
-			/* Else if just auto resize is used */
-		} else if (bvw->priv->auto_resize != FALSE) {
-#endif
-			bacon_resize_restore (bvw->priv->bacon_resize);
-#ifdef HAVE_NVTV
-		}
-		/* Turn fullscreen on with NVTV if that option is on */
-	} else if ((bvw->priv->tvout == TV_OUT_NVTV_NTSC) ||
-			(bvw->priv->tvout == TV_OUT_NVTV_PAL)) {
-		nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
-				bvw->priv->video_width,
-				bvw->priv->video_height);
-#endif
+		bacon_resize_restore (bvw->priv->bacon_resize);
 		/* Turn fullscreen on when we have xvidmode */
 	} else if (have_xvidmode != FALSE) {
 		bacon_resize_resize (bvw->priv->bacon_resize);
@@ -3157,34 +3094,6 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget *bvw)
 	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
 
 	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_DEINTERLACE);
-}
-
-void
-bacon_video_widget_set_tv_out (BaconVideoWidget *bvw, TvOutType tvout)
-{
-	g_return_if_fail (bvw != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-	g_return_if_fail (bvw->priv->xine != NULL);
-
-#ifdef HAVE_NVTV
-	if (tvout == TV_OUT_NVTV_PAL) {
-		nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_PAL);
-	} else if (tvout == TV_OUT_NVTV_NTSC) {
-		nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_NTSC);
-	}
-#endif
-
-	bvw->priv->tvout = tvout;
-}
-
-TvOutType
-bacon_video_widget_get_tv_out (BaconVideoWidget *bvw)
-{
-	g_return_val_if_fail (bvw != NULL, 0);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 0);
-
-	return bvw->priv->tvout;
 }
 
 gboolean

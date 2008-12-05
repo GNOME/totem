@@ -3337,7 +3337,6 @@ video_widget_create (Totem *totem)
 			g_error_free (err);
 	}
 
-	totem_preferences_tvout_setup (totem);
 	totem_action_zoom (totem, ZOOM_RESET);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),

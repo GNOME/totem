@@ -30,10 +30,6 @@
 
 #include <config.h>
 
-#ifdef HAVE_NVTV
-#include <nvtv_simple.h>
-#endif 
-
 #include <gst/gst.h>
 
 /* GStreamer Interfaces */
@@ -190,7 +186,6 @@ struct BaconVideoWidgetPrivate
   gchar                       *media_device;
 
   BaconVideoWidgetAudioOutType speakersetup;
-  TvOutType                    tv_out_type;
   gint                         connection_speed;
 
   GstMessageType               ignore_messages_mask;
@@ -565,12 +560,6 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
 
-#ifdef HAVE_NVTV
-  if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
-    nvtv_simple_enable(FALSE);
-  } 
-#endif
-
   bvw->priv->bacon_resize = bacon_resize_new (widget);
 }
 
@@ -578,11 +567,6 @@ static void
 bacon_video_widget_unrealize (GtkWidget *widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-
-#ifdef HAVE_NVTV
-  /* Kill the TV out */
-  nvtv_simple_exit();
-#endif
 
   g_object_unref (bvw->priv->bacon_resize);
   gdk_window_set_user_data (bvw->priv->video_window, NULL);
@@ -2303,34 +2287,6 @@ bacon_video_widget_get_deinterlacing (BaconVideoWidget * bvw)
   return FALSE;
 }
 
-void
-bacon_video_widget_set_tv_out (BaconVideoWidget * bvw, TvOutType tvout)
-{
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  bvw->priv->tv_out_type = tvout;
-  gconf_client_set_int (bvw->priv->gc,
-      GCONF_PREFIX"/tv_out_type", tvout, NULL);
-
-#ifdef HAVE_NVTV
-  if (tvout == TV_OUT_NVTV_PAL) {
-    nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_PAL);
-  } else if (tvout == TV_OUT_NVTV_NTSC) {
-    nvtv_simple_set_tvsystem(NVTV_SIMPLE_TVSYSTEM_NTSC);
-  }
-#endif
-}
-
-TvOutType
-bacon_video_widget_get_tv_out (BaconVideoWidget * bvw)
-{
-  g_return_val_if_fail (bvw != NULL, 0);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-
-  return bvw->priv->tv_out_type;
-}
-
 static gint
 get_num_audio_channels (BaconVideoWidget * bvw)
 {
@@ -3222,30 +3178,6 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
   return vol;
 }
 
-gboolean
-bacon_video_widget_fullscreen_mode_available (BaconVideoWidget *bvw,
-                TvOutType tvout) 
-{
-  switch(tvout) {
-  case TV_OUT_NONE:
-    /* Assume that ordinary fullscreen always works */
-    return TRUE;
-  case TV_OUT_NVTV_NTSC:
-  case TV_OUT_NVTV_PAL:
-#ifdef HAVE_NVTV
-    /* Make sure nvtv is initialized, it will not do any harm 
-     * if it is done twice any way */
-    if (!(nvtv_simple_init() && nvtv_enable_autoresize(TRUE))) {
-      nvtv_simple_enable(FALSE);
-    }
-    return (nvtv_simple_is_available());
-#else
-    return FALSE;
-#endif
-  }
-  return FALSE;
-}
-
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
                                    gboolean fullscreen)
@@ -3259,33 +3191,14 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
         "have-xvidmode", &have_xvidmode,
         NULL);
 
-  if (have_xvidmode == FALSE &&
-      bvw->priv->tv_out_type != TV_OUT_NVTV_NTSC &&
-      bvw->priv->tv_out_type != TV_OUT_NVTV_PAL)
+  if (have_xvidmode == FALSE)
     return;
 
   bvw->priv->fullscreen_mode = fullscreen;
 
   if (fullscreen == FALSE)
   {
-#ifdef HAVE_NVTV
-    /* If NVTV is used */
-    if (nvtv_simple_get_state() == NVTV_SIMPLE_TV_ON) {
-      nvtv_simple_switch(NVTV_SIMPLE_TV_OFF,0,0);
-
-    /* Else if just auto resize is used */
-    } else if (bvw->priv->auto_resize != FALSE) {
-#endif
-      bacon_resize_restore (bvw->priv->bacon_resize);
-#ifdef HAVE_NVTV
-    }
-  /* Turn fullscreen on with NVTV if that option is on */
-  } else if ((bvw->priv->tv_out_type == TV_OUT_NVTV_NTSC) ||
-             (bvw->priv->tv_out_type == TV_OUT_NVTV_PAL)) {
-    nvtv_simple_switch(NVTV_SIMPLE_TV_ON,
-                       bvw->priv->video_width,
-                       bvw->priv->video_height);
-#endif
+    bacon_resize_restore (bvw->priv->bacon_resize);
     /* Turn fullscreen on when we have xvidmode */
   } else if (have_xvidmode != FALSE) {
     bacon_resize_resize (bvw->priv->bacon_resize);
@@ -5088,7 +5001,6 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->visq = VISUAL_SMALL;
   bvw->priv->show_vfx = FALSE;
   bvw->priv->vis_element_name = g_strdup ("goom");
-  bvw->priv->tv_out_type = TV_OUT_NONE;
   bvw->priv->connection_speed = 11;
   bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
@@ -5378,12 +5290,6 @@ bacon_video_widget_new (int width, int height,
 #endif
 
   /* tv/conn (not used yet) */
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX "/tv_out_type", NULL);
-  if (confvalue != NULL) {
-    bvw->priv->tv_out_type = gconf_value_get_int (confvalue);
-    gconf_value_free (confvalue);
-  }
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX "/connection_speed", NULL);
   if (confvalue != NULL) {
