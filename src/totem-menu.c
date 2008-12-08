@@ -902,7 +902,7 @@ update_dvb_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 			name = g_strdup_printf ("dvbdevice%d", i);
 			action = gtk_action_new (name, label, NULL, NULL);
 
-			g_object_set (G_OBJECT(action), "icon-name", "camera-video", "sensitive", TRUE, NULL);
+			g_object_set (G_OBJECT(action), "icon-name", "totem-tv", "sensitive", TRUE, NULL);
 			gtk_action_group_add_action (totem->devices_action_group, action);
 			g_object_unref (action);
 			gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
