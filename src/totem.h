@@ -105,7 +105,8 @@ typedef struct {
 	void (*metadata_updated)		(Totem *totem,
 						 const char *artist,
 						 const char *title,
-						 const char *album);
+						 const char *album,
+						 guint track_num);
 } TotemObjectClass;
 
 GType	totem_object_get_type			(void);
@@ -117,7 +118,8 @@ void	totem_file_closed			(TotemObject *totem);
 void	totem_metadata_updated			(TotemObject *totem,
 						 const char *artist,
 						 const char *title,
-						 const char *album);
+						 const char *album,
+						 guint track_num);
 
 void	totem_action_exit			(Totem *totem) G_GNUC_NORETURN;
 void	totem_action_play			(Totem *totem);

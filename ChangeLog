@@ -1,5 +1,19 @@
 2008-12-08  Bastien Nocera  <hadess@hadess.net>
 
+	* bindings/python/totem.defs:
+	* src/plugins/properties/totem-movie-properties.c
+	(totem_movie_properties_plugin_metadata_updated):
+	* src/totem-object.c (totem_object_class_init),
+	(totem_metadata_updated):
+	* src/totem.c (totem_get_nice_name_for_stream),
+	(on_channels_change_event), (on_got_metadata_event):
+	* src/totem.h:
+	* src/totemobject-marshal.list: Fix the metadata-updated
+	signal to actually pass data, add track number to its
+	arguments (Closes: #562788)
+
+2008-12-08  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-fullscreen.c (totem_fullscreen_motion_notify),
 	(totem_fullscreen_show_popups):
 	* src/totem-fullscreen.h:

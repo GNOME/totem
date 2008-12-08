@@ -953,38 +953,53 @@ totem_action_take_screenshot (Totem *totem)
 static char *
 totem_get_nice_name_for_stream (Totem *totem)
 {
-	char *title, *artist, *retval;
-	int tracknum;
+	GValue title_value = { 0, };
+	GValue album_value = { 0, };
+	GValue artist_value = { 0, };
 	GValue value = { 0, };
+	char *retval;
+	int tracknum;
 
-	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TITLE, &value);
-	title = g_value_dup_string (&value);
-	g_value_unset (&value);
-
-	if (title == NULL)
-		return NULL;
-
-	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_ARTIST, &value);
-	artist = g_value_dup_string (&value);
-	g_value_unset (&value);
-
-	if (artist == NULL)
-		return title;
-
+	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_TITLE, &title_value);
+	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_ARTIST, &artist_value);
+	bacon_video_widget_get_metadata (totem->bvw, BVW_INFO_ALBUM, &album_value);
 	bacon_video_widget_get_metadata (totem->bvw,
 					 BVW_INFO_TRACK_NUMBER,
 					 &value);
+
 	tracknum = g_value_get_int (&value);
 	g_value_unset (&value);
 
+	totem_metadata_updated (totem,
+				g_value_get_string (&artist_value),
+				g_value_get_string (&title_value),
+				g_value_get_string (&album_value),
+				tracknum);
+
+	if (g_value_get_string (&title_value) == NULL) {
+		retval = NULL;
+		goto bail;
+	}
+	if (g_value_get_string (&artist_value) == NULL) {
+		retval = g_value_dup_string (&title_value);
+		goto bail;
+	}
+
 	if (tracknum != 0) {
 		retval = g_strdup_printf ("%02d. %s - %s",
-				tracknum, artist, title);
+					  tracknum,
+					  g_value_get_string (&artist_value),
+					  g_value_get_string (&title_value));
 	} else {
-		retval = g_strdup_printf ("%s - %s", artist, title);
+		retval = g_strdup_printf ("%s - %s",
+					  g_value_get_string (&artist_value),
+					  g_value_get_string (&title_value));
 	}
-	g_free (artist);
-	g_free (title);
+
+bail:
+	g_value_unset (&album_value);
+	g_value_unset (&artist_value);
+	g_value_unset (&title_value);
 
 	return retval;
 }
@@ -1706,8 +1721,6 @@ on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 	/* updated stream info (new song) */
 	name = totem_get_nice_name_for_stream (totem);
 
-	totem_metadata_updated (totem, NULL, NULL, NULL);
-
 	if (name != NULL) {
 		update_mrl_label (totem, name);
 		totem_playlist_set_title
@@ -1734,8 +1747,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 {
         char *name = NULL;
 	
-	totem_metadata_updated (totem, NULL, NULL, NULL);
-
 	name = totem_get_nice_name_for_stream (totem);
 
 	if (name != NULL) {

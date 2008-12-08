@@ -126,6 +126,7 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 						const char *artist, 
 						const char *title, 
 						const char *album,
+						guint track_num,
 						TotemMoviePropertiesPlugin *plugin)
 {
 	if (artist == NULL && title == NULL && album == NULL) {

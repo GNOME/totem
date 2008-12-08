@@ -130,8 +130,8 @@ totem_object_class_init (TotemObjectClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemObjectClass, metadata_updated),
 				NULL, NULL,
-				totemobject_marshal_VOID__STRING_STRING_STRING,
-				G_TYPE_NONE, 3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+				totemobject_marshal_VOID__STRING_STRING_STRING_UINT,
+				G_TYPE_NONE, 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UINT);
 }
 
 static void
@@ -441,14 +441,16 @@ void
 totem_metadata_updated (TotemObject *totem,
 			const char *artist,
 			const char *title,
-			const char *album)
+			const char *album,
+			guint track_num)
 {
 	g_signal_emit (G_OBJECT (totem),
 		       totem_table_signals[METADATA_UPDATED],
 		       0,
 		       artist,
 		       title,
-		       album);
+		       album,
+		       track_num);
 }
 
 GQuark
