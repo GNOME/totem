@@ -28,10 +28,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <libintl.h>
-#include <tracker.h>
-#include <tracker-client.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gio.h>
+#include <dbus/dbus.h>
+#include <tracker.h>
 
 #include "totem-tracker-widget.h"
 #include "totem-cell-renderer-video.h"
