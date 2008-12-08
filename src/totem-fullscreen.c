@@ -256,15 +256,22 @@ gboolean
 totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 				TotemFullscreen *fs)
 {
+	totem_fullscreen_show_popups (fs, TRUE);
+	return FALSE;
+}
+
+void
+totem_fullscreen_show_popups (TotemFullscreen *fs, gboolean show_cursor)
+{
 	GtkWidget *item;
 
 	g_assert (fs->is_fullscreen != FALSE);
 
 	if (fs->priv->popup_in_progress != FALSE)
-		return FALSE;
+		return;
 
 	if (gtk_window_is_active (GTK_WINDOW (fs->priv->parent_window)) == FALSE)
-		return FALSE;
+		return;
 
 	fs->priv->popup_in_progress = TRUE;
 
@@ -281,15 +288,15 @@ totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 	gtk_widget_show_all (fs->priv->exit_popup);
 	gtk_widget_show_all (fs->priv->control_popup);
 
-	/* Show the mouse cursor */
-	totem_fullscreen_set_cursor (fs, TRUE);
+	if (show_cursor != FALSE) {
+		/* Show the mouse cursor */
+		totem_fullscreen_set_cursor (fs, TRUE);
+	}
 
 	/* Reset the popup timeout */
 	totem_fullscreen_popup_timeout_add (fs);
 
 	fs->priv->popup_in_progress = FALSE;
-
-	return FALSE;
 }
 
 void

@@ -72,9 +72,8 @@ void     totem_fullscreen_set_video_widget   (TotemFullscreen *fs,
 					      BaconVideoWidget *bvw);
 void     totem_fullscreen_set_parent_window  (TotemFullscreen *fs,
 					      GtkWindow *parent_window);
-gboolean totem_fullscreen_motion_notify      (GtkWidget *widget,
-					      GdkEventMotion *event,
-					      TotemFullscreen *fs);
+void     totem_fullscreen_show_popups        (TotemFullscreen *fs,
+					      gboolean show_cursor);
 gboolean totem_fullscreen_is_fullscreen      (TotemFullscreen *fs);
 void     totem_fullscreen_set_fullscreen     (TotemFullscreen *fs,
 					      gboolean fullscreen);

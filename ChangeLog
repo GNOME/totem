@@ -1,5 +1,15 @@
 2008-12-08  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-fullscreen.c (totem_fullscreen_motion_notify),
+	(totem_fullscreen_show_popups):
+	* src/totem-fullscreen.h:
+	* src/totem.c (totem_action_remote), (on_mouse_click_fullscreen),
+	(totem_action_handle_key_press), (totem_action_handle_scroll):
+	Show the popup when seeking with the keyboard in fullscreen,
+	patch from Robin Stocker <robin@nibor.org> (Closes: #559024)
+
+2008-12-08  Bastien Nocera  <hadess@hadess.net>
+
 	* data/icons/16x16/Makefile.am:
 	* data/icons/16x16/totem-tv.svg:
 	* data/icons/22x22/Makefile.am:
