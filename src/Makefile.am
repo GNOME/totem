@@ -100,6 +100,7 @@ totem_SOURCES = 					\
 	$(TOTEMMARSHALFILES)				\
 	totem-private.h					\
 	totem-preferences.c totem-preferences.h		\
+	totem-dnd-menu.c totem-dnd-menu.h 		\
 	totem-options.c totem-options.h	\
 	totem-playlist.c totem-playlist.h \
 	totem-screenshot.c		\

@@ -32,6 +32,7 @@
 #include <gio/gio.h>
 #include <string.h>
 
+#include "totem-dnd-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "video-utils.h"
@@ -392,9 +393,16 @@ drop_cb (GtkWidget        *widget,
 	GList *p, *file_list;
 	guint i;
 
-	if (context->action == GDK_ACTION_MOVE) {
-		totem_playlist_clear (playlist);
+	if (context->suggested_action == GDK_ACTION_ASK) {
+		context->action = totem_drag_ask (PL_LEN != 0);
+		if (context->action == 0) {
+			gtk_drag_finish (context, FALSE, FALSE, time);
+			return;
+		}
 	}
+
+	if (context->action == GDK_ACTION_MOVE)
+		totem_playlist_clear (playlist);
 
 	list = g_uri_list_extract_uris ((char *)data->data);
 	file_list = NULL;
@@ -551,7 +559,7 @@ static gboolean
 playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 {
 	guint button = 0;
-       	guint32 time;
+	guint32 time;
 	GtkTreePath *path;
 	gint count;
 	GtkWidget *menu;

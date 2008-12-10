@@ -59,6 +59,7 @@
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "video-utils.h"
+#include "totem-dnd-menu.h"
 
 #include "totem.h"
 #include "totem-private.h"
@@ -1586,12 +1587,18 @@ drop_video_cb (GtkWidget     *widget,
 	 guint               time,
 	 Totem              *totem)
 {
-	gboolean retval;
+	gboolean retval = FALSE;
 	gboolean empty_pl;
 
-	empty_pl = (context->action == GDK_ACTION_MOVE);
+	if (context->suggested_action == GDK_ACTION_ASK)
+		context->action = totem_drag_ask (TRUE); //FIXME should be playlist != empty
 
-	retval = totem_action_drop_files (totem, data, info, empty_pl);
+	if (context->action != GDK_ACTION_DEFAULT ) {
+		empty_pl = (context->action == GDK_ACTION_MOVE);
+		totem_action_drop_files (totem, data, info, empty_pl);
+		gtk_drag_finish (context, TRUE, FALSE, time);
+		return;
+	}
 	gtk_drag_finish (context, retval, FALSE, time);
 }
 
@@ -1608,6 +1615,8 @@ drag_motion_video_cb (GtkWidget      *widget,
 	gdk_window_get_pointer (widget->window, NULL, NULL, &mask);
 	if (mask & GDK_CONTROL_MASK) {
 		gdk_drag_status (context, GDK_ACTION_COPY, time);
+	} else if (mask & GDK_MOD1_MASK || context->suggested_action == GDK_ACTION_ASK) {
+		gdk_drag_status (context, GDK_ACTION_ASK, time);
 	} else {
 		gdk_drag_status (context, GDK_ACTION_MOVE, time);
 	}
