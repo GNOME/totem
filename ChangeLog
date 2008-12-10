@@ -1,5 +1,17 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-object.c (totem_add_to_playlist_and_play),
+	(totem_get_playlist_length):
+	* src/totem-playlist.c (totem_playlist_get_current),
+	(totem_playlist_get_last):
+	* src/totem-playlist.h:
+	* src/totem-session.c (totem_save_state_cb):
+	* src/totem.h: Fix totem_playlist_get_current() and
+	totem_playlist_get_last() returning negative values
+	(Closes: #563961)
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/totem-dnd-menu.[ch]:
 	* src/totem-playlist.c (drop_cb):

@@ -180,7 +180,7 @@ gint64	totem_get_current_time			(Totem *totem);
 guint	totem_get_playlist_length		(Totem *totem);
 void	totem_action_set_playlist_index		(Totem *totem,
 						 guint index);
-guint	totem_get_playlist_pos			(Totem *totem);
+int	totem_get_playlist_pos			(Totem *totem);
 char *	totem_get_title_at_playlist_pos		(Totem *totem,
 						 guint index);
 void totem_add_to_playlist_and_play		(Totem *totem,

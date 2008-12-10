@@ -55,6 +55,12 @@ totem_save_state_cb (EggSMClient *client,
 	char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 	int i = 0;
 	char *path_id, *current, *seek, *uri;
+	int current_index;
+
+	current_index = totem_playlist_get_current (totem->playlist);
+
+	if (current_index == -1)
+		return;
 
 	path_id = totem_session_create_key ();
 	totem_playlist_save_current_playlist (totem->playlist, path_id);
@@ -67,8 +73,7 @@ totem_save_state_cb (EggSMClient *client,
 
 	/* How to clone or restart */
 	i = 0;
-	current = g_strdup_printf ("%d",
-			totem_playlist_get_current (totem->playlist));
+	current = g_strdup_printf ("%d", current_index);
 	seek = g_strdup_printf ("%"G_GINT64_FORMAT,
 			bacon_video_widget_get_current_time (totem->bvw));
 	argv[i++] = (char *) totem->argv0;

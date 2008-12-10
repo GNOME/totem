@@ -2404,19 +2404,19 @@ totem_playlist_set_at_end (TotemPlaylist *playlist)
 	}
 }
 
-guint
+int
 totem_playlist_get_current (TotemPlaylist *playlist)
 {
 	char *path;
 	double index;
 
-	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), 0);
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), -1);
 
 	if (playlist->priv->current == NULL)
-		return 0;
+		return -1;
 	path = gtk_tree_path_to_string (playlist->priv->current);
 	if (path == NULL)
-		return 0;
+		return -1;
 
 	index = g_ascii_strtod (path, NULL);
 	g_free (path);
@@ -2424,12 +2424,17 @@ totem_playlist_get_current (TotemPlaylist *playlist)
 	return index;
 }
 
-guint
+int
 totem_playlist_get_last (TotemPlaylist *playlist)
 {
+	guint len = PL_LEN;
+
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), -1);
 
-	return PL_LEN - 1;
+	if (len == 0)
+		return -1;
+
+	return len - 1;
 }
 
 void

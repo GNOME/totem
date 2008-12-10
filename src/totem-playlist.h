@@ -130,8 +130,8 @@ TotemPlaylistStatus totem_playlist_get_playing (TotemPlaylist *playlist);
 void       totem_playlist_set_at_start (TotemPlaylist *playlist);
 void       totem_playlist_set_at_end (TotemPlaylist *playlist);
 
-guint      totem_playlist_get_current (TotemPlaylist *playlist);
-guint      totem_playlist_get_last (TotemPlaylist *playlist);
+int        totem_playlist_get_current (TotemPlaylist *playlist);
+int        totem_playlist_get_last (TotemPlaylist *playlist);
 void       totem_playlist_set_current (TotemPlaylist *playlist, guint index);
 
 void       totem_playlist_foreach (TotemPlaylist *playlist,

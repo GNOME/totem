@@ -300,7 +300,7 @@ totem_add_to_playlist_and_play (Totem *totem,
 				gboolean add_to_recent)
 {
 	gboolean playlist_changed;
-	guint end;
+	int end;
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
@@ -311,7 +311,7 @@ totem_add_to_playlist_and_play (Totem *totem,
 
 	totem_signal_unblock_by_data (totem->playlist, totem);
 
-	if (playlist_changed)
+	if (playlist_changed && end != -1)
 	{
 		char *mrl, *subtitle;
 
@@ -333,10 +333,15 @@ totem_get_current_mrl (Totem *totem)
 guint
 totem_get_playlist_length (Totem *totem)
 {
-	return totem_playlist_get_last (totem->playlist) + 1;
+	int last;
+
+	last = totem_playlist_get_last (totem->playlist);
+	if (last == -1)
+		return 0;
+	return last + 1;
 }
 
-guint
+int
 totem_get_playlist_pos (Totem *totem)
 {
 	return totem_playlist_get_current (totem->playlist);
