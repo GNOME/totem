@@ -1593,7 +1593,6 @@ drop_video_cb (GtkWidget     *widget,
 	 guint               time,
 	 Totem              *totem)
 {
-	gboolean retval = FALSE;
 	gboolean empty_pl;
 
 	if (context->suggested_action == GDK_ACTION_ASK)
@@ -1605,7 +1604,7 @@ drop_video_cb (GtkWidget     *widget,
 		gtk_drag_finish (context, TRUE, FALSE, time);
 		return;
 	}
-	gtk_drag_finish (context, retval, FALSE, time);
+	gtk_drag_finish (context, FALSE, FALSE, time);
 }
 
 static void
