@@ -1,5 +1,14 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-dnd-menu.c (drag_menu_deactivate_callback),
+	(totem_drag_ask):
+	* src/totem-playlist.c (drop_cb):
+	* src/totem.c (drop_video_cb), (drop_playlist_cb): Use
+	GDK_ACTION_DEFAULT instead of 0 for the cancelled drops,
+	as pointed out by Robin Stocker <robin@nibor.org>
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (drop_video_cb), (drop_playlist_cb),
 	(drag_motion_playlist_cb), (totem_callback_connect):
 	Make "ask" drag'n'drop work on the sidebar button as well

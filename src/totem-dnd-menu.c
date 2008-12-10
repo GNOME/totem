@@ -38,7 +38,7 @@ static void
 drag_menu_deactivate_callback (GtkWidget *menu,
 			       DragData *dt)
 {
-	dt->ch = 0;
+	dt->ch = GDK_ACTION_DEFAULT;
 	if (g_main_loop_is_running (dt->loop))
 		g_main_loop_quit (dt->loop);
 }
@@ -100,7 +100,7 @@ totem_drag_ask (gboolean show_add_to)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 	gtk_widget_show (menu_item);
 
-	drag_append_drop_action_menu_item (menu, _("Cancel"), NULL, 0, &dt);
+	drag_append_drop_action_menu_item (menu, _("Cancel"), NULL, GDK_ACTION_DEFAULT, &dt);
 
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (drag_menu_deactivate_callback), &dt);

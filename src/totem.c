@@ -1593,7 +1593,7 @@ drop_video_cb (GtkWidget     *widget,
 	if (context->suggested_action == GDK_ACTION_ASK)
 		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
 
-	if (context->action != 0) {
+	if (context->action != GDK_ACTION_DEFAULT) {
 		empty_pl = (context->action == GDK_ACTION_MOVE);
 		totem_action_drop_files (totem, data, info, empty_pl);
 		gtk_drag_finish (context, TRUE, FALSE, time);
@@ -1637,7 +1637,7 @@ drop_playlist_cb (GtkWidget     *widget,
 	if (context->suggested_action == GDK_ACTION_ASK)
 		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
 
-	if (context->action == 0) {
+	if (context->action == GDK_ACTION_DEFAULT) {
 		gtk_drag_finish (context, FALSE, FALSE, time);
 		return;
 	}

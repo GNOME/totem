@@ -392,7 +392,7 @@ drop_cb (GtkWidget        *widget,
 
 	if (context->suggested_action == GDK_ACTION_ASK) {
 		context->action = totem_drag_ask (PL_LEN != 0);
-		if (context->action == 0) {
+		if (context->action == GDK_ACTION_DEFAULT) {
 			gtk_drag_finish (context, FALSE, FALSE, time);
 			return;
 		}
