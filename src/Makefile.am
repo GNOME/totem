@@ -101,8 +101,9 @@ totem_SOURCES = 					\
 	totem-private.h					\
 	totem-preferences.c totem-preferences.h		\
 	totem-dnd-menu.c totem-dnd-menu.h 		\
-	totem-options.c totem-options.h	\
-	totem-playlist.c totem-playlist.h \
+	totem-options.c totem-options.h			\
+	totem-playlist.c totem-playlist.h		\
+	eggfileformatchooser.c eggfileformatchooser.h	\
 	totem-screenshot.c		\
 	totem-screenshot.h		\
 	totem-session.c totem-session.h	\

@@ -1,5 +1,18 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/Makefile.am:
+	* src/eggfileformatchooser.[ch]: Add the EggFileFormatChooser
+	from bug 440431
+	* src/totem-playlist.c (totem_playlist_save_playlist),
+	(suffix_match_replace), (format_selection_changed),
+	(totem_playlist_save_add_format_chooser),
+	(totem_playlist_save_files): Use a better file format chooser,
+	- if the extension isn't known, use "PLS"
+	- when changing the file type, change the prefix of the saved file
+	(Closes: #379608)
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (drop_video_cb): Only show the "Add to playlist"
 	menu item on drop when the playlist isn't empty
 
