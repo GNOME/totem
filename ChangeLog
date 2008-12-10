@@ -1,5 +1,11 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c (drop_video_cb), (drop_playlist_cb),
+	(drag_motion_playlist_cb), (totem_callback_connect):
+	Make "ask" drag'n'drop work on the sidebar button as well
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/Makefile.am:
 	* src/eggfileformatchooser.[ch]: Add the EggFileFormatChooser
 	from bug 440431

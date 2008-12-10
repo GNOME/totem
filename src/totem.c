@@ -1593,7 +1593,7 @@ drop_video_cb (GtkWidget     *widget,
 	if (context->suggested_action == GDK_ACTION_ASK)
 		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
 
-	if (context->action != GDK_ACTION_DEFAULT ) {
+	if (context->action != 0) {
 		empty_pl = (context->action == GDK_ACTION_MOVE);
 		totem_action_drop_files (totem, data, info, empty_pl);
 		gtk_drag_finish (context, TRUE, FALSE, time);
@@ -1632,15 +1632,38 @@ drop_playlist_cb (GtkWidget     *widget,
 	       guint               time,
 	       Totem              *totem)
 {
-	gboolean retval;
 	gboolean empty_pl;
+
+	if (context->suggested_action == GDK_ACTION_ASK)
+		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
+
+	if (context->action == 0) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
 
 	empty_pl = (context->action == GDK_ACTION_MOVE);
 
-	retval = totem_action_drop_files (totem, data, info, empty_pl);
-	gtk_drag_finish (context, retval, FALSE, time);
+	totem_action_drop_files (totem, data, info, empty_pl);
+	gtk_drag_finish (context, TRUE, FALSE, time);
 }
 
+static void
+drag_motion_playlist_cb (GtkWidget      *widget,
+			 GdkDragContext *context,
+			 gint            x,
+			 gint            y,
+			 guint           time,
+			 Totem          *totem)
+{
+	GdkModifierType mask;
+
+	gdk_window_get_pointer (widget->window, NULL, NULL, &mask);
+
+	if (mask & GDK_MOD1_MASK || context->suggested_action == GDK_ACTION_ASK) {
+		gdk_drag_status (context, GDK_ACTION_ASK, time);
+	}
+}
 static void
 drag_video_cb (GtkWidget *widget,
 	       GdkDragContext *context,
@@ -3249,6 +3272,8 @@ totem_callback_connect (Totem *totem)
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
+	g_signal_connect (G_OBJECT (item), "drag_motion",
+			G_CALLBACK (drag_motion_playlist_cb), totem);
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
 			GDK_ACTION_COPY | GDK_ACTION_MOVE);
