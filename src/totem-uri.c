@@ -260,6 +260,21 @@ static const char subtitle_ext[][4] = {
 	"ass"
 };
 
+gboolean
+totem_uri_is_subtitle (const char *uri)
+{
+	guint len, i;
+
+	len = strlen (uri);
+	if (len < 4 || uri[len - 4] != '.')
+		return FALSE;
+	for (i = 0; i < G_N_ELEMENTS (subtitle_ext); i++) {
+		if (g_str_has_suffix (uri, subtitle_ext[i]) != FALSE)
+			return TRUE;
+	}
+	return FALSE;
+}
+
 static inline gboolean
 totem_uri_exists (const char *uri)
 {

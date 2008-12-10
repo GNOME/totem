@@ -116,6 +116,8 @@ char      *totem_playlist_get_title (TotemPlaylist *playlist,
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
 				     const char *title,
 				     gboolean force);
+void       totem_playlist_set_current_subtitle (TotemPlaylist *playlist,
+						const char *subtitle_uri);
 
 #define    totem_playlist_has_direction(playlist, direction) (direction == TOTEM_PLAYLIST_DIRECTION_NEXT ? totem_playlist_has_next_mrl (playlist) : totem_playlist_has_previous_mrl (playlist))
 gboolean   totem_playlist_has_previous_mrl (TotemPlaylist *playlist);

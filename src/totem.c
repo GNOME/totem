@@ -1501,15 +1501,24 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		int drop_type, gboolean empty_pl)
 {
 	char **list;
-	guint i;
+	guint i, len;
 	GList *p, *file_list;
 	gboolean cleared = FALSE;
 
 	list = g_uri_list_extract_uris ((const char *)data->data);
 	file_list = NULL;
 
-	for (i = 0; list[i] != NULL; ++i)
-		file_list = g_list_prepend (file_list, list[i]);
+	for (i = 0; list[i] != NULL; i++) {
+		char *filename;
+
+		if (list[i] == NULL)
+			continue;
+
+		filename = totem_create_full_path (list[i]);
+		file_list = g_list_prepend (file_list,
+					    filename ? filename : g_strdup (list[i]));
+	}
+	g_strfreev (list);
 
 	if (file_list == NULL)
 		return FALSE;
@@ -1521,20 +1530,23 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	else
 		file_list = g_list_reverse (file_list);
 
-	for (p = file_list; p != NULL; p = p->next)
-	{
-		char *filename, *title;
+	/* How many files? Check whether those could be subtitles */
+	len = g_list_length (file_list);
+	if (len == 1 || (len == 2 && drop_type == 1)) {
+		if (totem_uri_is_subtitle (file_list->data) != FALSE) {
+			totem_playlist_set_current_subtitle (totem->playlist, file_list->data);
+			goto bail;
+		}
+	}
 
-		if (p->data == NULL)
-			continue;
+	for (p = file_list; p != NULL; p = p->next) {
+		const char *filename;
+		char *title;
 
-		filename = totem_create_full_path (p->data);
-		if (filename == NULL)
-			filename = g_strdup (p->data);
+		filename = p->data;
 		title = NULL;
 
-		if (empty_pl != FALSE && cleared == FALSE)
-		{
+		if (empty_pl != FALSE && cleared == FALSE) {
 			/* The function that calls us knows better
 			 * if we should be doing something with the 
 			 * changed playlist ... */
@@ -1546,11 +1558,10 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		}
 
 		/* Super _NETSCAPE_URL trick */
-		if (drop_type == 1)
-		{
+		if (drop_type == 1) {
 			p = p->next;
 			if (p != NULL) {
-				if (g_str_has_prefix (p->data, "file:") != FALSE)
+				if (g_str_has_prefix (p->data, "File:") != FALSE)
 					title = (char *)p->data + 5;
 				else
 					title = p->data;
@@ -1558,11 +1569,10 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		}
 
 		totem_playlist_add_mrl (totem->playlist, filename, title);
-
-		g_free (filename);
 	}
 
-	g_strfreev (list);
+bail:
+	g_list_foreach (file_list, (GFunc) g_free, NULL);
 	g_list_free (file_list);
 	gdk_window_set_cursor (totem->win->window, NULL);
 

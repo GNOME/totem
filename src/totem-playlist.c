@@ -311,7 +311,7 @@ totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSele
 			    PLAYING_COL, &playing,
 			    -1);
 
-	gtk_list_store_set (GTK_LIST_STORE(playlist->priv->model), &iter, 
+	gtk_list_store_set (GTK_LIST_STORE(playlist->priv->model), &iter,
 			    SUBTITLE_URI_COL, subtitle,
 			    -1);
 
@@ -324,6 +324,24 @@ totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSele
 	g_free(subtitle);
 }
 
+void
+totem_playlist_set_current_subtitle (TotemPlaylist *playlist, const char *subtitle_uri)
+{
+	GtkTreeIter iter;
+
+	if (playlist->priv->current == NULL)
+		return;
+
+	gtk_tree_model_get_iter (playlist->priv->model, &iter, playlist->priv->current);
+
+	gtk_list_store_set (GTK_LIST_STORE(playlist->priv->model), &iter,
+			    SUBTITLE_URI_COL, subtitle_uri,
+			    -1);
+
+	g_signal_emit (G_OBJECT (playlist),
+		       totem_playlist_table_signals[SUBTITLE_CHANGED], 0,
+		       NULL);
+}
 
 /* This one returns a new string, in UTF8 even if the MRL is encoded
  * in the locale's encoding

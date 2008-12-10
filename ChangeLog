@@ -1,5 +1,21 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c (totem_uri_is_subtitle):
+	* src/totem-uri.h: Add totem_uri_is_subtitle() to check
+	whether a URI is a subtitle
+
+	* src/totem-playlist.c (totem_playlist_set_current_subtitle):
+	* src/totem-playlist.h: Add totem_playlist_set_current_subtitle()
+	to set the subtitle for the currently playing movie
+
+	* src/totem.c (totem_action_drop_files): When dropping files
+	on the video widget, if there's only one file, and it looks
+	like a subtitle, use it for the currently playing movie
+
+	(Closes: #469566)
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c (drop_video_cb): Fix some calls to
 	gtk_drag_finish()
 
