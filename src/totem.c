@@ -1591,7 +1591,7 @@ drop_video_cb (GtkWidget     *widget,
 	gboolean empty_pl;
 
 	if (context->suggested_action == GDK_ACTION_ASK)
-		context->action = totem_drag_ask (TRUE); //FIXME should be playlist != empty
+		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
 
 	if (context->action != GDK_ACTION_DEFAULT ) {
 		empty_pl = (context->action == GDK_ACTION_MOVE);

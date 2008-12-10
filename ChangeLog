@@ -1,5 +1,10 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c (drop_video_cb): Only show the "Add to playlist"
+	menu item on drop when the playlist isn't empty
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-object.c (totem_add_to_playlist_and_play),
 	(totem_get_playlist_length):
 	* src/totem-playlist.c (totem_playlist_get_current),
