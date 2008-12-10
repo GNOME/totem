@@ -570,10 +570,10 @@ totemPlugin::ViewerFork ()
 	mViewerReady = false;
 
 	/* Don't wait forever! */
-	const guint kViewerTimeout = 30 * 1000; /* ms */
-        mTimerID = g_timeout_add (kViewerTimeout,
-                                  (GSourceFunc) ViewerForkTimeoutCallback,
-                                  reinterpret_cast<void*>(this));
+	const guint kViewerTimeout = 30; /* seconds */
+        mTimerID = g_timeout_add_seconds (kViewerTimeout,
+					  (GSourceFunc) ViewerForkTimeoutCallback,
+					  reinterpret_cast<void*>(this));
 
 	/* FIXME: once gecko is multihead-safe, this should use gdk_spawn_on_screen_with_pipes */
 	GError *error = NULL;

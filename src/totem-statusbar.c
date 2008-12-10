@@ -221,10 +221,9 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 
   if (statusbar->timeout == 0)
   {
-    statusbar->timeout = g_timeout_add (1000,
-                    (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
+    statusbar->timeout = g_timeout_add_seconds (1, (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
   }
-  
+
   if (need_update)
     totem_statusbar_sync_description (statusbar);
 }

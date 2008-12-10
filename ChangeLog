@@ -1,5 +1,13 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* browser-plugin/totemPlugin.cpp:
+	* lib/totem-scrsaver.c (screensaver_disable_x11):
+	* src/totem-statusbar.c (totem_statusbar_push):
+	Use g_timeout_add_seconds instead of g_timeout_add for
+	a couple of non time critical places
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.ui:
 	* src/totem-menu.c (select_subtitle_action_callback):
 	* src/totem-playlist.c (totem_playlist_select_subtitle_dialog),

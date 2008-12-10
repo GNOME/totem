@@ -296,13 +296,12 @@ screensaver_disable_x11 (TotemScrsaver *scr)
 				&scr->priv->allow_exposures);
 		XUnlockDisplay (GDK_DISPLAY());
 
-		if (scr->priv->timeout != 0)
-		{
-			g_timeout_add (scr->priv->timeout / 2 * 1000,
-					(GSourceFunc) fake_event, scr);
+		if (scr->priv->timeout != 0) {
+			g_timeout_add_seconds (scr->priv->timeout / 2,
+					       (GSourceFunc) fake_event, scr);
 		} else {
-			g_timeout_add (XSCREENSAVER_MIN_TIMEOUT / 2 * 1000,
-					(GSourceFunc) fake_event, scr);
+			g_timeout_add_seconds (XSCREENSAVER_MIN_TIMEOUT / 2,
+					       (GSourceFunc) fake_event, scr);
 		}
 
 		return;
