@@ -73,6 +73,7 @@ void deinterlace_action_callback (GtkToggleAction *action, Totem *totem);
 void show_controls_action_callback (GtkToggleAction *action, Totem *totem);
 void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
+void select_subtitle_action_callback (GtkAction *action, Totem *totem);
 void clear_playlist_action_callback (GtkAction *action, Totem *totem);
 
 /* Helper function to escape underscores in labels
@@ -1069,6 +1070,13 @@ zoom_out_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 }
+
+void
+select_subtitle_action_callback (GtkAction *action, Totem *totem)
+{
+	totem_playlist_select_subtitle_dialog (totem->playlist,
+					       TOTEM_PLAYLIST_DIALOG_PLAYING);
+} 
 
 void
 next_angle_action_callback (GtkAction *action, Totem *totem)

@@ -46,6 +46,12 @@ typedef enum {
 	TOTEM_PLAYLIST_DIRECTION_PREVIOUS
 } TotemPlaylistDirection;
 
+typedef enum {
+	TOTEM_PLAYLIST_DIALOG_SELECTED,
+	TOTEM_PLAYLIST_DIALOG_PLAYING
+} TotemPlaylistSelectDialog;
+
+
 typedef struct TotemPlaylist	       TotemPlaylist;
 typedef struct TotemPlaylistClass      TotemPlaylistClass;
 typedef struct TotemPlaylistPrivate    TotemPlaylistPrivate;
@@ -92,6 +98,8 @@ void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
 					   const char *output);
 void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
 					   const char *output, TotemPlParserType type);
+void totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,
+					    TotemPlaylistSelectDialog mode);
 
 /* totem_playlist_clear doesn't emit the current_removed signal, even if it does
  * because the caller should know what to do after it's done with clearing */

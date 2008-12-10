@@ -1093,6 +1093,9 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		/* Clear the playlist */
 		totem_action_set_sensitivity ("clear-playlist", FALSE);
 
+		/* Subtitle selection */
+		totem_action_set_sensitivity ("select-subtitle", FALSE);
+
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		update_mrl_label (totem, NULL);
@@ -1132,6 +1135,9 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		/* Clear the playlist */
 		totem_action_set_sensitivity ("clear-playlist", retval);
 
+		/* Subtitle selection */
+		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl) && retval);
+	
 		/* Set the playlist */
 		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
 

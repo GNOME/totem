@@ -1,5 +1,19 @@
 2008-12-10  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.ui:
+	* src/totem-menu.c (select_subtitle_action_callback):
+	* src/totem-playlist.c (totem_playlist_select_subtitle_dialog),
+	(playlist_select_subtitle_action_callback):
+	* src/totem-playlist.h:
+	* src/totem-uri.c:
+	* src/totem-uri.h:
+	* src/totem.c (totem_action_set_mrl_with_warning):
+	Patch from Kamil Pawlowski <kamilpe@gmail.com> to allow
+	selecting a text subtitle for the currently playing
+	movie, from the View menu (Closes: #499463)
+
+2008-12-10  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-dnd-menu.c (drag_menu_deactivate_callback),
 	(totem_drag_ask):
 	* src/totem-playlist.c (drop_cb):

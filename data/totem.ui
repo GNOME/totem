@@ -359,6 +359,14 @@
                <property name="hide-if-empty">False</property>
             </object>
          </child>
+         <child>
+            <object class="GtkAction" id="select-subtitle">
+               <property name="label" translatable="yes">_Select Text Subtitles...</property>
+               <property name="tooltip" translatable="yes">Select a file to use for text subtitles</property>
+               <signal name="activate" handler="select_subtitle_action_callback"/>
+            </object>
+         </child>
+
          <placeholder name="subtitle-download-placeholder"/>
          <child>
             <object class="GtkAction" id="languages-menu">
@@ -470,6 +478,7 @@
             <menuitem name="deinterlace" action="deinterlace"/>
             <menuitem name="next-angle" action="next-angle"/>
             <menuitem name="show-controls" action="show-controls"/>
+            <menuitem name="select-subtitle" action="select-subtitle"/>
             <menu name="subtitles" action="subtitles-menu">
                <placeholder name="placeholder"/>
             </menu>
@@ -509,6 +518,7 @@
          <menuitem name="skip-backwards" action="skip-backwards"/>
          <menuitem name="show-controls" action="show-controls"/>
          <menuitem name="fullscreen" action="fullscreen"/>
+         <menuitem name="select-subtitle" action="select-subtitle"/>
          <separator/>
          <menu name="popup-languages" action="languages-menu">
             <placeholder name="placeholder"/>

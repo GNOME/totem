@@ -261,6 +261,70 @@ totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 	gtk_widget_show (error_dialog);
 }
 
+void
+totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSelectDialog mode)
+{
+	char *subtitle, *current, *path;
+	GFile *file, *dir;
+	TotemPlaylistStatus playing;
+	GtkTreeIter iter;
+
+	if (mode == TOTEM_PLAYLIST_DIALOG_PLAYING) {
+		/* Set subtitle file for the currently playing movie */
+		gtk_tree_model_get_iter (playlist->priv->model, &iter, playlist->priv->current);
+	} else if (mode == TOTEM_PLAYLIST_DIALOG_SELECTED) {
+		/* Set subtitle file in for the first selected playlist item */
+		GList *l;
+
+		l = gtk_tree_selection_get_selected_rows (playlist->priv->selection, NULL);
+		gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
+		g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
+		g_list_free (l);
+	} else {
+		g_assert_not_reached ();
+	}
+
+	/* Look for the directory of the current movie */
+	gtk_tree_model_get (playlist->priv->model, &iter,
+			    FILENAME_COL, &current,
+			    -1);
+
+	if (current == NULL)
+		return;
+
+	path = NULL;
+	file = g_file_new_for_commandline_arg (current);
+	dir = g_file_get_parent (file);
+	g_object_unref (file);
+	if (dir != NULL) {
+		path = g_file_get_path (dir);
+		g_object_unref (dir);
+	}
+
+	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), path);
+	g_free (path);
+
+	if (subtitle == NULL)
+		return;
+
+	gtk_tree_model_get (playlist->priv->model, &iter,
+			    PLAYING_COL, &playing,
+			    -1);
+
+	gtk_list_store_set (GTK_LIST_STORE(playlist->priv->model), &iter, 
+			    SUBTITLE_URI_COL, subtitle,
+			    -1);
+
+	if (playing != TOTEM_PLAYLIST_STATUS_NONE) {
+		g_signal_emit (G_OBJECT (playlist),
+			       totem_playlist_table_signals[SUBTITLE_CHANGED], 0,
+			       NULL);
+	}
+
+	g_free(subtitle);
+}
+
+
 /* This one returns a new string, in UTF8 even if the MRL is encoded
  * in the locale's encoding
  */
@@ -471,55 +535,7 @@ drop_cb (GtkWidget        *widget,
 void
 playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist)
 {
-	char *subtitle, *current, *path;
-	GList *l;
-	GFile *file, *dir;
-	TotemPlaylistStatus playing;
-	GtkTreeIter iter;
-
-	l = gtk_tree_selection_get_selected_rows (playlist->priv->selection, NULL);
-	gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
-	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
-	g_list_free (l);
-
-	/* Look for the directory of the current movie */
-	gtk_tree_model_get (playlist->priv->model, &iter,
-			    FILENAME_COL, &current,
-			    -1);
-
-	if (current == NULL)
-		return;
-
-	path = NULL;
-	file = g_file_new_for_commandline_arg (current);
-	dir = g_file_get_parent (file);
-	g_object_unref (file);
-	if (dir != NULL) {
-		path = g_file_get_path (dir);
-		g_object_unref (dir);
-	}
-
-	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), path);
-	g_free (path);
-
-	if (subtitle == NULL)
-		return;
-
-	gtk_tree_model_get (playlist->priv->model, &iter,
-			    PLAYING_COL, &playing,
-			    -1);
-
-	gtk_list_store_set (GTK_LIST_STORE(playlist->priv->model), &iter, 
-			    SUBTITLE_URI_COL, subtitle,
-			    -1);
-
-	if (playing != TOTEM_PLAYLIST_STATUS_NONE) {
-		g_signal_emit (G_OBJECT (playlist),
-			       totem_playlist_table_signals[SUBTITLE_CHANGED], 0,
-			       NULL);
-	}
-
-	g_free(subtitle);
+	totem_playlist_select_subtitle_dialog (playlist, TOTEM_PLAYLIST_DIALOG_SELECTED);
 }
 
 void

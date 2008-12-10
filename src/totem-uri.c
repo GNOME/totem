@@ -170,7 +170,7 @@ totem_get_mount_for_media (const char *uri)
 	return ret;
 }
 
-static gboolean
+gboolean
 totem_is_special_mrl (const char *uri)
 {
 	GMount *mount;
