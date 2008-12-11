@@ -273,13 +273,13 @@ bacon_video_widget_properties_from_metadata (BaconVideoWidgetProperties *props,
 {
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
-	g_return_if_fail (title != NULL);
-	g_return_if_fail (artist != NULL);
-	g_return_if_fail (album != NULL);
 
-	bacon_video_widget_properties_set_label (props, "title", title);
-	bacon_video_widget_properties_set_label (props, "artist", artist);
-	bacon_video_widget_properties_set_label (props, "album", album);
+	if (title != NULL)
+		bacon_video_widget_properties_set_label (props, "title", title);
+	if (artist != NULL)
+		bacon_video_widget_properties_set_label (props, "artist", artist);
+	if (album != NULL)
+		bacon_video_widget_properties_set_label (props, "album", album);
 }
 
 GtkWidget*
