@@ -5004,7 +5004,7 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = FALSE;
-  bvw->priv->auto_resize = TRUE;
+  bvw->priv->auto_resize = FALSE;
 
   /* gconf setting in backend */
   bvw->priv->gc = gconf_client_get_default ();
