@@ -102,7 +102,6 @@ totem_plugin_viewer_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
-	$(NVTV_CFLAGS)		\
 	$(SN_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -115,7 +114,6 @@ totem_plugin_viewer_LDADD =						\
 	$(SN_LIBS)		\
 	$(XVIDMODE_LIBS) 	\
 	$(DBUS_LIBS)		\
-	$(NVTV_LIBS) 		\
 	$(XTEST_LIBS)		\
 	$(X_LIBS)
 

@@ -59,7 +59,6 @@ libbaconvideowidget_la_CFLAGS =		\
 	$(DEPENDENCY_CFLAGS)		\
 	$(MM_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
-	$(NVTV_CFLAGS) 			\
 	$(AM_CFLAGS)			\
 	-I$(top_srcdir)/
 
@@ -68,7 +67,6 @@ libbaconvideowidget_la_LIBADD =	\
 	$(XVIDMODE_LIBS)	\
 	$(MM_LIBS)		\
 	$(GST_LIBS)		\
-	$(NVTV_LIBS)		\
 	$(EXTRA_BACKEND_LIBS)	\
 	$(X_LIBS)		\
 	$(MISSING_PLUGINS_LIBS)

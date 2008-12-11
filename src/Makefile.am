@@ -133,7 +133,6 @@ totem_CFLAGS = \
 	$(WARN_CFLAGS)			\
 	$(DEPENDENCY_CFLAGS)		\
 	$(DBUS_CFLAGS)			\
-	$(NVTV_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS) \
 	$(AM_CFLAGS)
 
@@ -147,7 +146,6 @@ totem_LDADD =						\
 	libtotem_player.la				\
 	$(DEPENDENCY_LIBS)				\
 	$(XVIDMODE_LIBS)				\
-	$(NVTV_LIBS)					\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)					\
 	$(X_LIBS)
@@ -197,7 +195,6 @@ totem_video_thumbnailer_CPPFLAGS = \
 totem_video_thumbnailer_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
-	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
 totem_video_thumbnailer_LDFLAGS = \
@@ -207,7 +204,6 @@ totem_video_thumbnailer_LDADD =			\
 	backend/libbaconvideowidget.la		\
 	$(DEPENDENCY_LIBS)			\
 	$(EXTRA_BACKEND_LIBS) 			\
-	$(NVTV_LIBS)				\
 	$(XTEST_LIBS)				\
 	$(XVIDMODE_LIBS)			\
 	$(X_LIBS)
@@ -236,7 +232,6 @@ libtotem_properties_page_la_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
 	$(NAUTILUS_CFLAGS)	\
-	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_properties_page_la_LDFLAGS = \
@@ -249,7 +244,6 @@ libtotem_properties_page_la_LIBADD =				\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)					\
-	$(NVTV_LIBS)						\
 	$(XTEST_LIBS)						\
 	$(XVIDMODE_LIBS)					\
 	$(X_LIBS)
@@ -274,7 +268,6 @@ test_properties_page_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
 	$(NAUTILUS_CFLAGS)	\
-	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
 test_properties_page_LDFLAGS = \
@@ -286,7 +279,6 @@ test_properties_page_LDADD = 					\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)					\
-	$(NVTV_LIBS)						\
 	$(XTEST_LIBS)						\
 	$(XVIDMODE_LIBS)					\
 	$(X_LIBS)
@@ -310,7 +302,6 @@ totem_video_indexer_CPPFLAGS = \
 totem_video_indexer_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
-	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
 totem_video_indexer_LDFLAGS = \
@@ -320,7 +311,6 @@ totem_video_indexer_LDADD = \
 	backend/libbaconvideowidget.la	\
 	$(DEPENDENCY_LIBS)		\
 	$(EXTRA_BACKEND_LIBS)		\
-	$(NVTV_LIBS)			\
 	$(XTEST_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(X_LIBS)
@@ -341,7 +331,6 @@ totem_audio_preview_CPPFLAGS =	\
 totem_audio_preview_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
-	$(NVTV_CFLAGS)		\
 	$(AM_CFLAGS)
 
 totem_audio_preview_LDFLAGS = \
@@ -351,7 +340,6 @@ totem_audio_preview_LDADD = \
 	backend/libbaconvideowidget.la	\
 	$(DEPENDENCY_LIBS)		\
 	$(EXTRA_BACKEND_LIBS)		\
-	$(NVTV_LIBS)			\
 	$(XTEST_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(X_LIBS)
