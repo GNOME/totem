@@ -42,6 +42,7 @@
 #include "totem-mime-types.h"
 
 static gboolean show_mimetype = FALSE;
+static gboolean time_limit = TRUE;
 static gboolean g_fatal_warnings = FALSE;
 static char **filenames = NULL;
 
@@ -137,6 +138,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 
 static const GOptionEntry entries[] = {
 	{"mimetype", 'm', 0, G_OPTION_ARG_NONE, &show_mimetype, "List the supported mime-types", NULL},
+	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{"g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL},
 	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, "Movies to index", NULL},
 	{NULL}
@@ -200,7 +202,8 @@ int main (int argc, char **argv)
 			NULL);
 
 	path = filenames[0];
-	totem_resources_monitor_start (path, 0);
+	if (time_limit != FALSE)
+		totem_resources_monitor_start (path, 0);
 	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
