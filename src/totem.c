@@ -3323,11 +3323,14 @@ totem_callback_connect (Totem *totem)
 	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK);
 	gtk_widget_add_events (totem->fs->seek, GDK_SCROLL_MASK);
 
-	/* FIXME Hack to fix bug #462286 */
+	/* FIXME Hack to fix bug #462286 and #563894 */
 	g_signal_connect (G_OBJECT (totem->fs->seek), "button-press-event",
 			G_CALLBACK (seek_slider_pressed_cb), totem);
 	g_signal_connect (G_OBJECT (totem->fs->seek), "button-release-event",
 			G_CALLBACK (seek_slider_released_cb), totem);
+	g_signal_connect (G_OBJECT (totem->fs->seek), "scroll-event",
+			  G_CALLBACK (window_scroll_event_cb), totem);
+
 
 	/* Set sensitivity of the toolbar buttons */
 	totem_action_set_sensitivity ("play", FALSE);

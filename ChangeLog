@@ -1,5 +1,10 @@
 2008-12-11  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem.c (totem_callback_connect): Fix the scrollwheel
+	not working on the fullscreen seekbar (Closes: #563894)
+
+2008-12-11  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/properties/bacon-video-widget-properties.c
 	(bacon_video_widget_properties_from_metadata): Fix warnings
 	playing back video from
