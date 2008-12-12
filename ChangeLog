@@ -1,3 +1,10 @@
+2008-12-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_motion_notify): Don't eat motion
+	notify events, the xine-lib backend never did, and that's
+	unneeded
+
 2008-12-11  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/eggdesktopfile.c (set_startup_notification_timeout):

@@ -771,8 +771,6 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
       GstNavigation *nav = GST_NAVIGATION (videosink);
 
       gst_navigation_send_mouse_event (nav, "mouse-move", 0, event->x, event->y);
-
-      res = TRUE;
     }
 
     if (videosink)
