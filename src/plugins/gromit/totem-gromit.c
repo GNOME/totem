@@ -69,7 +69,7 @@ typedef struct
 	TotemPluginClass parent_class;
 } TotemGromitPluginClass;
 
-#define INTERVAL 10000
+#define INTERVAL 10 /* seconds */
 
 static const char *start_cmd[] =	{ NULL, "-a", "-k", "none", NULL };
 static const char *toggle_cmd[] =	{ NULL, "-t", NULL };
@@ -238,7 +238,7 @@ totem_gromit_clear (TotemGromitPlugin *plugin, gboolean now)
 
 	launch (visibility_cmd);
 	launch (clear_cmd);
-	plugin->id = g_timeout_add (INTERVAL, totem_gromit_timeout_cb, plugin);
+	plugin->id = g_timeout_add_seconds (INTERVAL, totem_gromit_timeout_cb, plugin);
 }
 
 static gboolean

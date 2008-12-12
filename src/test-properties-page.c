@@ -92,7 +92,7 @@ int main (int argc, char **argv)
 #else
 		create_props (argv[1]);
 #endif
-		g_timeout_add (4000, main_loop_exit, NULL);
+		g_timeout_add_seconds (4, main_loop_exit, NULL);
 		gtk_main ();
 #if 1
 		destroy_props ();

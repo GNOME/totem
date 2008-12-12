@@ -541,7 +541,7 @@ totem_python_shutdown ()
 			/* loop */;
 
 		/* This helps to force Python to give up its shell reference */
-		g_timeout_add (1000, finalise_collect_cb, NULL);
+		g_idle_add (finalise_collect_cb, NULL);
 
 		/* Disable for now, due to bug 334188
 		Py_Finalize ();*/

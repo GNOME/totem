@@ -44,8 +44,8 @@ int main (int argc, char **argv)
 
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (button), TRUE);
 
-//	g_timeout_add (1000, idle_cb, button);
-	g_timeout_add (5000, idle_un_cb, button);
+//	g_timeout_add_seconds (1, idle_cb, button);
+	g_timeout_add_seconds (5, idle_un_cb, button);
 
 	gtk_widget_show_all (window);
 

@@ -1,3 +1,14 @@
+2008-12-12  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* browser-plugin/test-glow-button.c (main):
+	* src/plugins/gromit/totem-gromit.c (totem_gromit_clear):
+	* src/plugins/totem-plugins-engine.c (totem_plugins_engine_init),
+	(totem_plugins_engine_shutdown):
+	* src/plugins/totem-python-module.c (totem_python_shutdown):
+	* src/test-properties-page.c (main): Use g_timeout_add_seconds
+	instead of g_timeout_add where possible to allow for event grouping.
+	(Closes: #564073)
+
 2008-12-12  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c

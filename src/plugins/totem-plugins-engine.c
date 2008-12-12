@@ -375,7 +375,13 @@ totem_plugins_engine_init (TotemObject *totem)
 
 	totem_plugins_engine_load_all ();
 
-	garbage_collect_id = g_timeout_add_full (G_PRIORITY_LOW, 20000, garbage_collect_cb, NULL, NULL);
+#if 0
+#ifdef ENABLE_PYTHON
+	/* Commented out because it's a no-op. A further section is commented out below, and more's commented out
+	 * in totem-python-module.c. */
+	garbage_collect_id = g_timeout_add_seconds_full (G_PRIORITY_LOW, 20, garbage_collect_cb, NULL, NULL);
+#endif
+#endif
 
 	return TRUE;
 }
@@ -432,9 +438,13 @@ totem_plugins_engine_shutdown (void)
 		g_object_unref (totem_plugins_object);
 	totem_plugins_object = NULL;
 
+#if 0
+#ifdef ENABLE_PYTHON
 	if (garbage_collect_id > 0)
 		g_source_remove (garbage_collect_id);
 	totem_plugins_engine_garbage_collect ();
+#endif
+#endif
 
 	if (client != NULL)
 		g_object_unref (client);
