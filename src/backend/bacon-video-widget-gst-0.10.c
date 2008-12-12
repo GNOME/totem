@@ -5261,30 +5261,6 @@ bacon_video_widget_new (int width, int height,
     bacon_video_widget_set_audio_out_type (bvw, BVW_AUDIO_SOUND_STEREO);
   }
 
-  /* visualization */
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX "/show_vfx", NULL);
-  if (confvalue != NULL) {
-    bvw->priv->show_vfx = gconf_value_get_bool (confvalue);
-    gconf_value_free (confvalue);
-  }
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX "/visual_quality", NULL);
-  if (confvalue != NULL) {
-    bvw->priv->visq = gconf_value_get_int (confvalue);
-    gconf_value_free (confvalue);
-  }
-#if 0
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX "/visual", NULL);
-  if (confvalue != NULL) {
-    bvw->priv->vis_element = 
-        gst_element_factory_make (gconf_value_get_string (confvalue), NULL);
-    gconf_value_free (confvalue);
-  }
-  setup_vis ();
-#endif
-
   /* tv/conn (not used yet) */
   confvalue = gconf_client_get_without_default (bvw->priv->gc,
       GCONF_PREFIX "/connection_speed", NULL);
