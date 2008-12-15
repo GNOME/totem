@@ -319,7 +319,7 @@ totem_uri_get_subtitle_for_uri (const char *uri)
 	g_return_val_if_fail (subtitle != NULL, NULL);
 	g_strlcpy (subtitle, uri, suffix + 4 + 1);
 	g_strlcpy (subtitle + suffix, ".???", 5);
-	
+
 	/* Search for any files with one of our known subtitle extensions */
 	for (i = 0; i < G_N_ELEMENTS (subtitle_ext) ; i++) {
 		memcpy (subtitle + suffix + 1, subtitle_ext[i], 3);
@@ -344,18 +344,18 @@ totem_uri_get_subtitle_in_subdir (GFile *file, const char *subdir)
 {
 	char *filename, *subtitle, *full_path_str;
 	GFile *parent, *full_path, *directory;
-  
+
 	/* Get the sibling directory @subdir of the file @file */
 	parent = g_file_get_parent (file);
 	directory = g_file_get_child (parent, subdir);
 	g_object_unref (parent);
-  
+
 	/* Get the file of the same name as @file in the @subdir directory */
 	filename = g_file_get_basename (file);
 	full_path = g_file_get_child (directory, filename);
 	g_object_unref (directory);
-  	g_free (filename);
-  
+	g_free (filename);
+
 	/* Get the subtitles from that URI */
 	full_path_str = g_file_get_uri (full_path);
 	g_object_unref (full_path);
@@ -363,6 +363,32 @@ totem_uri_get_subtitle_in_subdir (GFile *file, const char *subdir)
 	g_free (full_path_str);
 
 	return subtitle;
+}
+
+static char *
+totem_uri_get_cached_subtitle_for_uri (const char *uri)
+{
+	char *basename, *fake_filename, *fake_uri, *ret;
+
+	basename = g_path_get_basename (uri);
+	if (basename == NULL || strcmp (basename, ".") == 0) {
+		g_free (basename);
+		return NULL;
+	}
+
+	fake_filename = g_build_filename (g_get_user_cache_dir (),
+				"totem",
+				"subtitles",
+				basename,
+				NULL);
+	g_free (basename);
+	fake_uri = g_filename_to_uri (fake_filename, NULL, NULL);
+	g_free (fake_filename);
+
+	ret = totem_uri_get_subtitle_for_uri (fake_uri);
+	g_free (fake_uri);
+
+	return ret;
 }
 
 char *
@@ -383,6 +409,13 @@ totem_uri_get_subtitle_uri (const char *uri)
 	if (g_file_query_exists (file, NULL) != TRUE) {
 		g_object_unref (file);
 		return NULL;
+	}
+
+	/* Try in the cached subtitles directory */
+	subtitle = totem_uri_get_cached_subtitle_for_uri (uri);
+	if (subtitle != NULL) {
+		g_object_unref (file);
+		return subtitle;
 	}
 
 	/* Try in the current directory */

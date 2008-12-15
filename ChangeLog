@@ -1,5 +1,11 @@
 2008-12-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-uri.c (totem_uri_get_cached_subtitle_for_uri),
+	(totem_uri_get_subtitle_uri): Also look for subtitles
+	in our subtitles cache directory (Helps: #561085)
+
+2008-12-15  Bastien Nocera  <hadess@hadess.net>
+
 	* data/totem.ui: Move the subtitle download
 	placeholder to the correct location (Helps: #561085)
 
