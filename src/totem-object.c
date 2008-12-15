@@ -360,6 +360,12 @@ totem_get_short_title (Totem *totem)
 	return totem_playlist_get_current_title (totem->playlist, &custom);
 }
 
+void
+totem_set_current_subtitle (Totem *totem, const char *subtitle_uri)
+{
+	totem_playlist_set_current_subtitle (totem->playlist, subtitle_uri);
+}
+
 /**
  * totem_add_sidebar_page:
  * @totem: a #TotemObject

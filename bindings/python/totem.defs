@@ -408,6 +408,15 @@
   (return-type "char*")
 )
 
+(define-method set_current_subtitle
+  (of-object "TotemObject")
+  (c-name "totem_set_current_subtitle")
+  (return-type "none")
+  (parameters
+    '("const-char*" "subtitle_uri")
+  )
+)
+
 (define-method add_sidebar_page
   (of-object "TotemObject")
   (c-name "totem_add_sidebar_page")

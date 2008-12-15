@@ -1,5 +1,12 @@
 2008-12-15  Bastien Nocera  <hadess@hadess.net>
 
+	* bindings/python/totem.defs:
+	* src/totem-object.c (totem_set_current_subtitle):
+	* src/totem.h: Add a way to set the subtitle for the currently
+	playing movie from Python (Helps: #561085)
+
+2008-12-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c (create_gallery):
 	Fix warning, and translate headers when creating a gallery
 
