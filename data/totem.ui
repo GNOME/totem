@@ -367,7 +367,6 @@
             </object>
          </child>
 
-         <placeholder name="subtitle-download-placeholder"/>
          <child>
             <object class="GtkAction" id="languages-menu">
                <property name="label" translatable="yes">_Languages</property>
@@ -477,8 +476,10 @@
             </menu>
             <menuitem name="deinterlace" action="deinterlace"/>
             <menuitem name="next-angle" action="next-angle"/>
-            <menuitem name="show-controls" action="show-controls"/>
-            <menuitem name="select-subtitle" action="select-subtitle"/>
+	    <menuitem name="show-controls" action="show-controls"/>
+            <separator/>
+	    <menuitem name="select-subtitle" action="select-subtitle"/>
+	    <placeholder name="subtitle-download-placeholder"/>
             <menu name="subtitles" action="subtitles-menu">
                <placeholder name="placeholder"/>
             </menu>
