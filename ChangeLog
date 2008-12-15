@@ -1,5 +1,16 @@
 2008-12-15  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/opensubtitles/Makefile.am:
+	* src/plugins/opensubtitles/hash.py:
+	* src/plugins/opensubtitles/opensubtitles.py:
+	* src/plugins/opensubtitles/opensubtitles.totem-plugin.in:
+	* src/plugins/opensubtitles/opensubtitles.ui: Patch
+	from Xavier Queralt <xqueralt@gmail.com> and adebarbara@gmail.com
+	to add a plugin to download subtitles for the currently playing
+	movie (Closes: #561085)
+
+2008-12-15  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-uri.c (totem_uri_get_cached_subtitle_for_uri),
 	(totem_uri_get_subtitle_uri): Also look for subtitles
 	in our subtitles cache directory (Helps: #561085)
