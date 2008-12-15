@@ -50,7 +50,7 @@ AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo"
+allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -854,6 +854,7 @@ src/plugins/gromit/Makefile
 src/plugins/lirc/Makefile
 src/plugins/media-player-keys/Makefile
 src/plugins/mythtv/Makefile
+src/plugins/opensubtitles/Makefile
 src/plugins/properties/Makefile
 src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
