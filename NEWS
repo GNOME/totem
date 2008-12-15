@@ -1,5 +1,47 @@
 New features and significant updates in version...
 
+2.25.3 (changes since 2.24.3):
+* Interface changes:
+  - Make the left-click seek directly to the destination
+  - Hide colour balance sliders that aren't available
+  - Make modifiers work as expected when drag'n'dropping files
+  - Use "Movie Player" everywhere in the interface
+  - Add an arrow to the sidebar button
+  - Convert British English messages to American English
+  - Show the fullscreen popups when seeking with the keyboard
+  - Better behaviour when changing the type of playlist to be saved
+  - Fix playlist problems when removing an file that was deleted
+    from the filesystem
+* Subtitle handling:
+  - Add plugin to download text subtitles from OpenSubtitles.org
+  - Allow selecting a text subtitle from the View menu, or by dropping
+    the file onto the video widget
+  - Add the subtitle and languages menus to the fullscreen popup
+* Browser plugin:
+  - Remove the "basic" web browser plugin, we now use the same
+    API as VideoLAN for our default plugin
+  - Fix relative paths not resolving in some cases
+  - Fix repeat=true only playing files twice
+* Plugins:
+  - Add Jamendo plugin
+  - Add support for streaming TV from MythTV
+  - Fix YouTube movie playback following website changes
+  - Make the local search and YouTube search sidebars look more alike
+  - Add proper mute support for remote controls
+  - Fix the metadata-updated signal to be useful
+* Build:
+  - Remove libgnome dependency
+  - Remove NVTV support
+  - Use g_timeout_add_seconds() when possible
+* GStreamer backend:
+  - Require the rsndvdbin plugin for DVD playback
+  - Add zoom support
+  - Fix some files not giving us metadata with the video indexer
+  - Fix the video window getting bigger than the screen
+  - When streaming, the pause button stops
+* Other:
+  - Add ability to create a gallery image using the video thumbnailer
+
 2.23.91:
 * Numerous UI and bug fixes
 
