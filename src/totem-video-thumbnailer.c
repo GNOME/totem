@@ -636,10 +636,13 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	/* Build the header information */
 	duration_text = totem_time_to_string (stream_length * 1000);
 	filename = g_path_get_basename (input);
-	header_text = g_strdup_printf (_("<b>Filename</b>: %s\n<b>Resolution</b>: %d\u00D7%d\n<b>Duration</b>: %s"),
+	header_text = g_strdup_printf (_("<b>%s</b>: %s\n<b>%s</b>: %d\303\227%d\n<b>%s</b>: %s"),
+				       _("Filename"),
 				       filename,
+				       _("Resolution"),
 				       screenshot_width,
 				       screenshot_height,
+				       _("Duration"),
 				       duration_text);
 	g_free (duration_text);
 	g_free (filename);
