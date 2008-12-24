@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "bacon-video-widget-gst-missing-plugins.h"
+#include <gst/gst.h> /* for gst_registry_update and functions in bacon_video_widget_gst_missing_plugins_blacklist */
 
 #ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
 
@@ -30,8 +31,6 @@
 
 #include <gst/pbutils/pbutils.h>
 #include <gst/pbutils/install-plugins.h>
-
-#include <gst/gst.h> /* for gst_registry_update */
 
 #include <gtk/gtk.h>
 
