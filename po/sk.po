@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-10 09:11+0200\n"
-"PO-Revision-Date: 2008-09-19 17:29+0200\n"
+"POT-Creation-Date: 2008-12-26 00:08+0100\n"
+"PO-Revision-Date: 2008-11-09 12:02+0100\n"
 "Last-Translator: Pavol Klačanský <pavolzetor@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Leave Fullscreen"
 msgstr "Opustiť režim celej obrazovky"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:73
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:94
 msgid "Time:"
 msgstr "Čas:"
 
@@ -127,7 +127,7 @@ msgstr "Album:"
 msgid "Artist:"
 msgstr "Umelec:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:5
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:21
 #: ../src/totem-properties-view.c:91
 msgid "Audio"
 msgstr "Zvuk"
@@ -160,7 +160,7 @@ msgstr "Dĺžka:"
 msgid "Framerate:"
 msgstr "Počet snímkov/s:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:18
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:35
 msgid "General"
 msgstr "Všeobecné"
 
@@ -227,467 +227,551 @@ msgstr "Prehrávač filmov"
 msgid "Play movies and songs"
 msgstr "Prehrávať filmy a hudbu"
 
-#: ../data/totem.ui.h:1 ../src/totem-menu.c:1333
+#: ../data/totem.ui.h:1
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "1.5 Mbps T1/Intranet/LAN"
+
+#: ../data/totem.ui.h:2
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "112 Kbps Dual ISDN/DSL"
+
+#: ../data/totem.ui.h:3
+msgid "14.4 Kbps Modem"
+msgstr "14.4 Kbps Modem"
+
+#: ../data/totem.ui.h:4 ../src/totem-menu.c:1333
 msgid "16:9 (Widescreen)"
 msgstr "16:9 (Širokouhlý)"
 
-#: ../data/totem.ui.h:2 ../src/totem-menu.c:1334
+#: ../data/totem.ui.h:5
+msgid "19.2 Kbps Modem"
+msgstr "19.2 Kbps Modem"
+
+#: ../data/totem.ui.h:6 ../src/totem-menu.c:1334
 msgid "2.11:1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:3 ../src/totem-menu.c:1332
+#: ../data/totem.ui.h:7
+msgid "256 Kbps DSL/Cable"
+msgstr "256 Kbps DSL/Cable"
+
+#: ../data/totem.ui.h:8
+msgid "28.8 Kbps Modem"
+msgstr "28.8 Kbps Modem"
+
+#: ../data/totem.ui.h:9
+msgid "33.6 Kbps Modem"
+msgstr "33.6 Kbps Modem"
+
+#: ../data/totem.ui.h:10
+msgid "34.4 Kbps Modem"
+msgstr "34.4 Kbps Modem"
+
+#: ../data/totem.ui.h:11
+msgid "384 Kbps DSL/Cable"
+msgstr "384 Kbps DSL/Cable"
+
+#: ../data/totem.ui.h:12
+msgid "4-channel"
+msgstr "4-kanálový"
+
+#: ../data/totem.ui.h:13
+msgid "4.1-channel"
+msgstr "4.1-kanálový"
+
+#: ../data/totem.ui.h:14 ../src/totem-menu.c:1332
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:4
-msgid "A_udio Menu"
-msgstr "Zv_ukové ponuka"
+#: ../data/totem.ui.h:15
+msgid "5.0-channel"
+msgstr "5.0-kanálový"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:16
+msgid "5.1-channel"
+msgstr "5.1-kanálový"
+
+#: ../data/totem.ui.h:17
+msgid "512 Kbps DSL/Cable"
+msgstr "512 Kbps DSL/Cable"
+
+#: ../data/totem.ui.h:18
+msgid "56 Kbps Modem/ISDN"
+msgstr "56 Kbps Modem/ISDN"
+
+#: ../data/totem.ui.h:19
+msgid "AC3 Passthrough"
+msgstr "AC3 Passthrough"
+
+#: ../data/totem.ui.h:20
+msgid "A_udio Menu"
+msgstr "Zv_uková ponuka"
+
+#: ../data/totem.ui.h:22
 msgid "Audio Output"
 msgstr "Zvukový výstup"
 
-#: ../data/totem.ui.h:7 ../src/totem-menu.c:340 ../src/totem-menu.c:1330
+#: ../data/totem.ui.h:23 ../src/totem-menu.c:340 ../src/totem-menu.c:1330
 msgid "Auto"
 msgstr "Auto"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:24
 msgid "Automatically _load subtitle files when movie is loaded"
 msgstr "Automaticky _načítať súbory s titulkami, keď je film načítaný"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:25
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "Automaticky _prispôsobiť veľkosť okna pri spustení nového videa"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:26
 msgid "Clear the playlist"
 msgstr "Vymazať zoznam filmov/skladieb"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:27
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:28
 msgid "Color Balance"
 msgstr "Vyváženie farieb"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:29
 msgid "Connection _speed:"
 msgstr "_Rýchlosť pripojenia:"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:30
 msgid "Decrease volume"
 msgstr "Znížiť hlasitosť"
 
-#: ../data/totem.ui.h:15 ../src/totem-menu.c:1324
+#: ../data/totem.ui.h:31 ../src/totem-menu.c:1324
 msgid "Deinterlace"
 msgstr "Deinterlacovať"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:32
 msgid "Display"
 msgstr "Zobraziť"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:33
+msgid "Extra Large"
+msgstr "Veľmi veľká"
+
+#: ../data/totem.ui.h:34
 msgid "Fit Window to Movie"
 msgstr "Prispôsobiť okno filmu"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:36
 msgid "Go to the DVD menu"
 msgstr "Otvoriť DVD ponuku"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:37
 msgid "Go to the angle menu"
 msgstr "Prejsť do ponuky pohľadov"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:38
 msgid "Go to the audio menu"
 msgstr "Prejsť do zvukovej ponuky"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:39
 msgid "Go to the chapter menu"
 msgstr "Prejsť do ponuky kapitol"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:40
 msgid "Go to the title menu"
 msgstr "Prejsť do ponuky titulov"
 
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:41
 msgid "Help contents"
 msgstr "Obsah pomocníka"
 
-#: ../data/totem.ui.h:25
+#: ../data/totem.ui.h:42
 msgid "Increase volume"
 msgstr "Zvýšiť hlasitosť"
 
-#: ../data/totem.ui.h:26
+#: ../data/totem.ui.h:43
+msgid "Intranet/LAN"
+msgstr "Intranet/LAN"
+
+#: ../data/totem.ui.h:44
+msgid "Large"
+msgstr "Veľká"
+
+#: ../data/totem.ui.h:45
 msgid "Networking"
 msgstr "Sieť"
 
-#: ../data/totem.ui.h:27
+#: ../data/totem.ui.h:46
 msgid "Next chapter or movie"
 msgstr "Ďalšia kapitola alebo film"
 
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:47
+msgid "Normal"
+msgstr "Normálna"
+
+#: ../data/totem.ui.h:48
 msgid "Open _Location..."
 msgstr "Otvoriť _umiestnenie..."
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:49
 msgid "Open a file"
 msgstr "Otvoriť súbor"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:50
 msgid "Open a non-local file"
 msgstr "Otvoriť vzdialený súbor"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:51
 msgid "Play / P_ause"
 msgstr "Prehrávať / Po_zastaviť"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:52
 msgid "Play or pause the movie"
 msgstr "Prehrávať alebo pozastaviť film"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:53
 msgid "Plugins..."
 msgstr "Zásuvné moduly..."
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:54
 msgid "Prefere_nces"
 msgstr "_Predvoľby"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:55
 msgid "Previous chapter or movie"
 msgstr "Predchádzajúca kapitola alebo film"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:56
 msgid "Quit the program"
 msgstr "Ukončiť program"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:57
 msgid "Reset To _Defaults"
 msgstr "_Obnoviť pôvodné hodnoty"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:58
 msgid "Resize _1:1"
 msgstr "Veľkosť _1:1"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:59
 msgid "Resize _2:1"
 msgstr "Veľkosť _2:1"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:60
 msgid "Resize to double the original video size"
 msgstr "Zmeniť veľkosť na dvojnásobok pôvodnej veľkosti videa"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:61
 msgid "Resize to half the original video size"
 msgstr "Zmeniť veľkosť pôvodného videa na polovicu"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:62
 msgid "Resize to the original video size"
 msgstr "Zmeniť veľkosť pôvodného videa"
 
-#: ../data/totem.ui.h:43 ../src/totem-menu.c:1326
+#: ../data/totem.ui.h:63 ../src/totem-menu.c:1326
 msgid "S_idebar"
 msgstr "Bočný _panel"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:64
 msgid "S_ubtitles"
 msgstr "_Titulky"
 
-#: ../data/totem.ui.h:45
+#: ../data/totem.ui.h:65
 msgid "Sat_uration:"
 msgstr "Sý_tosť farieb:"
 
-#: ../data/totem.ui.h:46 ../src/totem-menu.c:1322
+#: ../data/totem.ui.h:66 ../src/totem-menu.c:1322
 msgid "Set the repeat mode"
 msgstr "Nastaviť režim opakovania"
 
-#: ../data/totem.ui.h:47 ../src/totem-menu.c:1323
+#: ../data/totem.ui.h:67 ../src/totem-menu.c:1323
 msgid "Set the shuffle mode"
 msgstr "Nastaviť režim náhodného prehrávania"
 
-#: ../data/totem.ui.h:48
+#: ../data/totem.ui.h:68
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "Nastaví 16:9 (širokouhlý) pomer strán"
 
-#: ../data/totem.ui.h:49 ../src/totem-menu.c:1334
+#: ../data/totem.ui.h:69 ../src/totem-menu.c:1334
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "Nastaví 2.11:1 (DVB) pomer strán"
 
-#: ../data/totem.ui.h:50 ../src/totem-menu.c:1332
+#: ../data/totem.ui.h:70 ../src/totem-menu.c:1332
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Nastaví 4:3 (TV) pomer strán"
 
-#: ../data/totem.ui.h:51 ../src/totem-menu.c:1330
+#: ../data/totem.ui.h:71 ../src/totem-menu.c:1330
 msgid "Sets automatic aspect ratio"
 msgstr "Nastaví automatický pomer strán"
 
-#: ../data/totem.ui.h:52 ../src/totem-menu.c:1331
+#: ../data/totem.ui.h:72 ../src/totem-menu.c:1331
 msgid "Sets square aspect ratio"
 msgstr "Nastaví štvorcový pomer strán"
 
-#: ../data/totem.ui.h:53 ../src/totem-menu.c:1325
+#: ../data/totem.ui.h:73 ../src/totem-menu.c:1325
 msgid "Show _Controls"
 msgstr "Zobraziť _ovládacie prvky"
 
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:74
 msgid "Show _visual effects when an audio file is played"
 msgstr "Zobraziť _vizuálne efekty počas prehrávania zvukového súboru"
 
-#: ../data/totem.ui.h:55 ../src/totem-menu.c:1325
+#: ../data/totem.ui.h:75 ../src/totem-menu.c:1325
 msgid "Show controls"
 msgstr "Zobraziť ovládacie prvky"
 
-#: ../data/totem.ui.h:56 ../src/totem-menu.c:1326
+#: ../data/totem.ui.h:76 ../src/totem-menu.c:1326
 msgid "Show or hide the sidebar"
 msgstr "Zobraziť alebo skryť bočný panel"
 
-#: ../data/totem.ui.h:57 ../src/totem-menu.c:1323
+#: ../data/totem.ui.h:77 ../src/totem-menu.c:1323
 msgid "Shuff_le Mode"
 msgstr "Režim _náhodného prehrávania"
 
-#: ../data/totem.ui.h:58 ../src/totem-menu.c:1313 ../src/totem-menu.c:1318
+#: ../data/totem.ui.h:78 ../src/totem-menu.c:1313 ../src/totem-menu.c:1318
 msgid "Skip _Backwards"
 msgstr "Preskočiť do_zadu"
 
-#: ../data/totem.ui.h:59 ../src/totem-menu.c:1312 ../src/totem-menu.c:1317
+#: ../data/totem.ui.h:79 ../src/totem-menu.c:1312 ../src/totem-menu.c:1317
 msgid "Skip _Forward"
 msgstr "Preskočiť do_predu"
 
-#: ../data/totem.ui.h:60 ../src/totem-menu.c:1313 ../src/totem-menu.c:1318
+#: ../data/totem.ui.h:80 ../src/totem-menu.c:1313 ../src/totem-menu.c:1318
 msgid "Skip backwards"
 msgstr "Preskočiť dozadu"
 
-#: ../data/totem.ui.h:61 ../src/totem-menu.c:1312 ../src/totem-menu.c:1317
+#: ../data/totem.ui.h:81 ../src/totem-menu.c:1312 ../src/totem-menu.c:1317
 msgid "Skip forward"
 msgstr "Preskočiť dopredu"
 
-#: ../data/totem.ui.h:62 ../src/totem-menu.c:1331
+#: ../data/totem.ui.h:82 ../src/totem-menu.c:1331
 msgid "Square"
 msgstr "Štvorec"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:83 ../src/backend/bacon-video-widget-gst-0.10.c:4396
+msgid "Stereo"
+msgstr "Stereo"
+
+#: ../data/totem.ui.h:84
 msgid "Switch An_gles"
 msgstr "Prepnúť u_hly"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:85
 msgid "Switch camera angles"
 msgstr "Prepnúť uhly kamery"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:86
 msgid "Switch to fullscreen"
 msgstr "Prepnúť na celú obrazovku"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:87
 msgid "TV-Out"
 msgstr "TV výstup"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:88
 msgid "TV-out in fullscreen by Nvidia (NTSC)"
 msgstr "TV výstup na celú obrazovku od Nvidia (NTSC)"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:89
 msgid "TV-out in fullscreen by Nvidia (PAL)"
 msgstr "TV výstup na celú obrazovku od Nvidia (PAL)"
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:90
 msgid "Take _Screenshot..."
 msgstr "Zachytiť o_brazovku..."
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:91
 msgid "Take a screenshot"
 msgstr "Zachytiť obrazovku"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:92
 msgid "Text Subtitles"
 msgstr "Titulky"
 
-#: ../data/totem.ui.h:72
+#: ../data/totem.ui.h:93
 msgid "Time seek bar"
 msgstr "Panel časového priebehu"
 
 #. Title
-#: ../data/totem.ui.h:74 ../src/totem.c:1015 ../src/totem.c:3419
-#: ../src/totem.c:3451 ../browser-plugin/totem-plugin-viewer.c:777
+#: ../data/totem.ui.h:95 ../src/totem.c:1015 ../src/totem.c:3431
+#: ../src/totem.c:3463 ../browser-plugin/totem-plugin-viewer.c:777
 #: ../browser-plugin/totem-plugin-viewer.c:1829
 msgid "Totem Movie Player"
 msgstr "Prehrávač filmov Totem"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:96
 msgid "Totem Preferences"
 msgstr "Predvoľby programu Totem"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:97
 msgid "Visual Effects"
 msgstr "Vizuálne efekty"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:98
 msgid "Visualisation _size:"
 msgstr "_Veľkosť vizualizácie:"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:99
 msgid "Volume _Down"
 msgstr "Z_nížiť hlasitosť"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:100
 msgid "Volume _Up"
 msgstr "Z_výšiť hlasitosť"
 
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:101
 msgid "Zoom In"
 msgstr "Zväčšiť"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:102
 msgid "Zoom Out"
 msgstr "Zmenšiť"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:103
 msgid "Zoom Reset"
 msgstr "Zrušiť zväčšenie/zmenšenie"
 
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:104
 msgid "Zoom in"
 msgstr "Zväčšiť"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:105
 msgid "Zoom out"
 msgstr "Zmenšiť"
 
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:106
 msgid "Zoom reset"
 msgstr "Zrušiť zväčšenie/zmenšenie"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:107
 msgid "_About"
 msgstr "_O programe"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:108
 msgid "_Allow the screensaver to activate even when audio-only is playing"
 msgstr ""
 "Povoliť _aktiváciu šetriča obrazovky aj vtedy, keď sa prehráva len zvuk"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:109
 msgid "_Angle Menu"
 msgstr "Ponuka _pohľadov"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:110
 msgid "_Aspect Ratio"
 msgstr "_Pomer strán"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:111
 msgid "_Audio output type:"
 msgstr "_Typ zvukového výstupu:"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:112
 msgid "_Brightness:"
 msgstr "_Jas:"
 
-#: ../data/totem.ui.h:92
+#: ../data/totem.ui.h:113
 msgid "_Chapter Menu"
 msgstr "Ponuka _kapitol"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:114
 msgid "_Clear Playlist"
 msgstr "_Vymazať zoznam filmov/skladieb"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:115
 msgid "_Contents"
 msgstr "Ob_sah"
 
-#: ../data/totem.ui.h:95
+#: ../data/totem.ui.h:116
 msgid "_DVD Menu"
 msgstr "_DVD ponuka"
 
-#: ../data/totem.ui.h:96 ../src/totem-menu.c:1324
+#: ../data/totem.ui.h:117 ../src/totem-menu.c:1324
 msgid "_Deinterlace"
 msgstr "_Deinterlacovať"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:118
 msgid "_Edit"
 msgstr "_Upraviť"
 
-#: ../data/totem.ui.h:98
+#: ../data/totem.ui.h:119
 msgid "_Eject"
 msgstr "_Vysunúť"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:120
 msgid "_Encoding:"
 msgstr "_Kódovanie:"
 
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:121
 msgid "_Font:"
 msgstr "_Písmo:"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:122
 msgid "_Fullscreen"
 msgstr "_Celá obrazovka"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:123
 msgid "_Go"
 msgstr "_Prejsť"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:124
 msgid "_Help"
 msgstr "_Pomocník"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:125
 msgid "_Hue:"
 msgstr "Farebný _odtieň:"
 
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:126
 msgid "_Languages"
 msgstr "_Jazyky"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:127
 msgid "_Movie"
 msgstr "_Film"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:128
 msgid "_Next Chapter/Movie"
 msgstr "Ď_alšia kapitola/film"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:129
 msgid "_No TV-out"
 msgstr "_Bez TV výstupu"
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:130
 msgid "_Open..."
 msgstr "_Otvoriť..."
 
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:131
 msgid "_Previous Chapter/Movie"
 msgstr "_Predchádzajúca kapitola/film"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:132
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
-#: ../data/totem.ui.h:112
+#: ../data/totem.ui.h:133
 msgid "_Quit"
 msgstr "_Koniec"
 
-#: ../data/totem.ui.h:113 ../src/totem-menu.c:1322
+#: ../data/totem.ui.h:134 ../src/totem-menu.c:1322
 msgid "_Repeat Mode"
 msgstr "Režim _opakovania"
 
-#: ../data/totem.ui.h:114
+#: ../data/totem.ui.h:135
 msgid "_Resize 1:2"
 msgstr "_Veľkosť 1:2"
 
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:136
 msgid "_Sound"
 msgstr "Zv_uk"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:137
 msgid "_Title Menu"
 msgstr "Ponuka _titulov"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:138
 msgid "_Type of visualisation:"
 msgstr "_Typ vizualizácie:"
 
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:139
 msgid "_View"
 msgstr "_Zobraziť"
 
@@ -1439,11 +1523,11 @@ msgstr ""
 "Mali by ste skontrolovať, že mechanika obsahuje disk a že je správne "
 "nakonfigurovaná."
 
-#: ../src/totem.c:549 ../src/plugins/youtube/youtube.py:207
+#: ../src/totem.c:549 ../src/plugins/youtube/youtube.py:232
 msgid "More information about media plugins"
 msgstr "Viac informácií o zásuvných moduloch medií"
 
-#: ../src/totem.c:550 ../src/plugins/youtube/youtube.py:205
+#: ../src/totem.c:550 ../src/plugins/youtube/youtube.py:230
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1460,7 +1544,7 @@ msgstr ""
 "Totem nemôže prehrať tento typ média (%s), pretože nemáte vhodné zásuvné "
 "moduly schopné čítať z disku."
 
-#: ../src/totem.c:554 ../src/plugins/youtube/youtube.py:204
+#: ../src/totem.c:554 ../src/plugins/youtube/youtube.py:229
 #, c-format, python-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1520,7 +1604,7 @@ msgstr "Pre prehrávanie vložte, prosím, iný disk"
 msgid "Totem was not able to play this disc."
 msgstr "Totem nemohol prehrať tento disk."
 
-#: ../src/totem.c:616 ../src/totem.c:3283
+#: ../src/totem.c:616 ../src/totem.c:3295
 #: ../browser-plugin/totem-plugin-viewer.c:1820
 msgid "No reason."
 msgstr "Žiaden dôvod."
@@ -1556,44 +1640,44 @@ msgstr "Totemu sa nepodarilo zobraziť obsah pomocníka."
 msgid "An error occurred"
 msgstr "Vyskytla sa chyba"
 
-#: ../src/totem.c:2577
+#: ../src/totem.c:2589
 msgid "TV signal lost"
 msgstr "TV signal stratený"
 
-#: ../src/totem.c:2578
+#: ../src/totem.c:2590
 msgid "Please verify your hardware setup."
 msgstr "Overte, prosím, vaše nastavenie hardvéru."
 
-#: ../src/totem.c:3144 ../src/totem.c:3146
+#: ../src/totem.c:3156 ../src/totem.c:3158
 msgid "Previous Chapter/Movie"
 msgstr "Predchádzajúca kapitola/film"
 
-#: ../src/totem.c:3152 ../src/totem.c:3154
+#: ../src/totem.c:3164 ../src/totem.c:3166
 msgid "Play / Pause"
 msgstr "Prehrávať / Pozastaviť"
 
-#: ../src/totem.c:3161 ../src/totem.c:3163
+#: ../src/totem.c:3173 ../src/totem.c:3175
 msgid "Next Chapter/Movie"
 msgstr "Ďalšia kapitola/film"
 
-#: ../src/totem.c:3283
+#: ../src/totem.c:3295
 msgid "Totem could not startup."
 msgstr "Totemu sa nepodarilo naštartovať."
 
-#: ../src/totem.c:3420
+#: ../src/totem.c:3432
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nepodarilo sa inicializovať \"thread-safe\" knižnice."
 
-#: ../src/totem.c:3420
+#: ../src/totem.c:3432
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Skontrolujte svoj systém. Totem teraz skončí."
 
 #. Handle command line arguments
-#: ../src/totem.c:3428
+#: ../src/totem.c:3440
 msgid "- Play movies and songs"
 msgstr "- Prehrávať filmy a hudbu"
 
-#: ../src/totem.c:3437
+#: ../src/totem.c:3449
 #, c-format
 msgid ""
 "%s\n"
@@ -1603,15 +1687,15 @@ msgstr ""
 "Spustiť '%s --help' pre zobrazenie celého zoznamu dostupných volieb pre "
 "príkazový riadok..\n"
 
-#: ../src/totem.c:3457
+#: ../src/totem.c:3469
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totemu sa nepodarilo inicializovať konfiguračný nástroj."
 
-#: ../src/totem.c:3457
+#: ../src/totem.c:3469
 msgid "Make sure that GNOME is properly installed."
 msgstr "Skontrolujte, že je GNOME správne nainštalované."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2468
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2469
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1619,17 +1703,17 @@ msgstr ""
 "Požadovaný zvukový výstup sa nepodarilo nájsť. Prosím vyberte iný zvukový "
 "výstup vo Výbere systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2473
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2474
 msgid "Location not found."
 msgstr "Umiestnenie sa nenašlo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2478
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Nemohlo byť otvorené umiestnenie; pravdepodobne nemáte právo otvoriť súbor."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2489
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1638,7 +1722,7 @@ msgstr ""
 "Video výstup používa iná aplikácia. Prosím zatvorte ostatné video aplikácie, "
 "alebo vyberte iný video výstup vo Výbere systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2494
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2495
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1648,14 +1732,14 @@ msgstr ""
 "Výbere systému multimédií. Zvážte tiež použitie zvukového servera."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2512
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2518
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2513
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2519
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Prehrávanie tohto filmu vyžaduje doplnok %s, ktorý nie je nainštalovaný."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2519
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2520
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1668,44 +1752,40 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2544
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2545
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Nemožno prehrať tento súbor cez sieť. Skúste to najprv stiahnuť na disk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2616
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2617
 msgid "Media file could not be played."
 msgstr "Médiový súbor sa nepodarilo prehrať."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2748
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2749
 #, c-format
 msgid "Failed to retrieve working directory"
 msgstr "Nepodarilo sa zistiť aktuálny adresár"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4391
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4392
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4394
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4395
-msgid "Stereo"
-msgstr "Stereo"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4712
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4713
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "Je nainštalovaná príliš stará verzia GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4719
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4720
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Médium neobsahuje žiadne podporované video prúdy dát."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5094
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5095
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1714,8 +1794,8 @@ msgstr ""
 "Nepodarilo sa vytvoriť prehrávací objekt GStreamer. Skontrolujte inštaláciu "
 "GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5226
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5343
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5227
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5344
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1724,7 +1804,7 @@ msgstr ""
 "Nepodarilo sa otvoriť video výstup. Možno nie je dostupný. Prosím vyberte "
 "iný video výstup vo Výbere systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5238
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5239
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -1735,7 +1815,7 @@ msgstr ""
 "pluginy pre GStreamer, alebo vyberte iný video výstup vo Výbere systému "
 "multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5273
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5274
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1746,7 +1826,7 @@ msgstr ""
 "otvorenie zvukového zariadenia, alebo zvukový server nie je spustený. Prosím "
 "vyberte iný zvukový výstup vo Výbere systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5293
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5294
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -2068,7 +2148,7 @@ msgstr "Poznámky Gromit"
 
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
-msgstr ""
+msgstr "Prezentačná pomôcka k vytváraniu poznámok na obrazovke"
 
 #: ../src/plugins/gromit/totem-gromit.c:276
 #, c-format
@@ -2261,33 +2341,33 @@ msgstr "Hľadanie YouTube"
 msgid "Search:"
 msgstr "Hľadať:"
 
-#: ../src/plugins/youtube/youtube.py:121 ../src/plugins/youtube/youtube.py:204
+#: ../src/plugins/youtube/youtube.py:127 ../src/plugins/youtube/youtube.py:229
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:138
+#: ../src/plugins/youtube/youtube.py:147
 msgid "Videos"
 msgstr "Videá"
 
-#: ../src/plugins/youtube/youtube.py:144
+#: ../src/plugins/youtube/youtube.py:153
 msgid "_Open in Web Browser"
 msgstr "_Otvoriť v internetovom prehliadači"
 
-#: ../src/plugins/youtube/youtube.py:144
+#: ../src/plugins/youtube/youtube.py:153
 msgid "Open the video in your web browser"
 msgstr "Otvoriť video vo vašom internetovom prehliadači"
 
-#: ../src/plugins/youtube/youtube.py:178
+#: ../src/plugins/youtube/youtube.py:192
 msgid "Fetching related videos..."
 msgstr "Získavajú sa súvisiace videá..."
 
-#: ../src/plugins/youtube/youtube.py:228
-msgid "Fetching more videos..."
-msgstr "Získava sa viac videí..."
-
-#: ../src/plugins/youtube/youtube.py:330
+#: ../src/plugins/youtube/youtube.py:377
 msgid "Fetching search results..."
 msgstr "Získavajú sa výsledky hľadania..."
+
+#: ../src/plugins/youtube/youtube.py:392
+msgid "Fetching more videos..."
+msgstr "Získava sa viac videí..."
 
 #: ../browser-plugin/totem-plugin-viewer.c:466
 #, c-format
@@ -2363,11 +2443,9 @@ msgid "Enable remote python debugging with rpdb2"
 msgstr "Povoliť vzdialené python ladenie pomocou rpdb2"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "You can access the totem object through 'totem_object' :\\n%s"
-msgstr ""
-"vypísať \"Môžete sprístupniť objekt totem cez 'totem_object' :\\n%s\" % "
-"totem_object"
+msgstr "Môžete sprístupniť objekt totem cez 'totem_object' :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:111
 msgid "Totem Python Console"
@@ -2379,66 +2457,6 @@ msgid ""
 "rpdb2. If you have not set a debugger password in GConf, it will use the "
 "default password ('totem')."
 msgstr ""
-
-#~ msgid "1.5 Mbps T1/Intranet/LAN"
-#~ msgstr "1.5 Mbps T1/Intranet/LAN"
-
-#~ msgid "112 Kbps Dual ISDN/DSL"
-#~ msgstr "112 Kbps Dual ISDN/DSL"
-
-#~ msgid "14.4 Kbps Modem"
-#~ msgstr "14.4 Kbps Modem"
-
-#~ msgid "19.2 Kbps Modem"
-#~ msgstr "19.2 Kbps Modem"
-
-#~ msgid "256 Kbps DSL/Cable"
-#~ msgstr "256 Kbps DSL/Cable"
-
-#~ msgid "28.8 Kbps Modem"
-#~ msgstr "28.8 Kbps Modem"
-
-#~ msgid "33.6 Kbps Modem"
-#~ msgstr "33.6 Kbps Modem"
-
-#~ msgid "34.4 Kbps Modem"
-#~ msgstr "34.4 Kbps Modem"
-
-#~ msgid "384 Kbps DSL/Cable"
-#~ msgstr "384 Kbps DSL/Cable"
-
-#~ msgid "4-channel"
-#~ msgstr "4-kanálový"
-
-#~ msgid "4.1-channel"
-#~ msgstr "4.1-kanálový"
-
-#~ msgid "5.0-channel"
-#~ msgstr "5.0-kanálový"
-
-#~ msgid "5.1-channel"
-#~ msgstr "5.1-kanálový"
-
-#~ msgid "512 Kbps DSL/Cable"
-#~ msgstr "512 Kbps DSL/Cable"
-
-#~ msgid "56 Kbps Modem/ISDN"
-#~ msgstr "56 Kbps Modem/ISDN"
-
-#~ msgid "AC3 Passthrough"
-#~ msgstr "AC3 Passthrough"
-
-#~ msgid "Extra Large"
-#~ msgstr "Veľmi veľká"
-
-#~ msgid "Intranet/LAN"
-#~ msgstr "Intranet/LAN"
-
-#~ msgid "Large"
-#~ msgstr "Veľká"
-
-#~ msgid "Normal"
-#~ msgstr "Normálna"
 
 #~ msgid "_Sidebar"
 #~ msgstr "Bočný panel"
