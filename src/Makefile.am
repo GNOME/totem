@@ -104,8 +104,6 @@ totem_SOURCES = 					\
 	totem-options.c totem-options.h			\
 	totem-playlist.c totem-playlist.h		\
 	eggfileformatchooser.c eggfileformatchooser.h	\
-	totem-screenshot.c		\
-	totem-screenshot.h		\
 	totem-session.c totem-session.h	\
 	totem-sidebar.c totem-sidebar.h \
 	totem-open-location.c totem-open-location.h \

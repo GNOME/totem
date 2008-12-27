@@ -69,15 +69,6 @@
             </object>
          </child>
          <child>
-            <object class="GtkAction" id="take-screenshot">
-               <property name="label" translatable="yes">Take _Screenshot...</property>
-               <property name="icon-name">camera-photo</property>
-               <property name="tooltip" translatable="yes">Take a screenshot</property>
-               <signal name="activate" handler="take_screenshot_action_callback"/>
-            </object>
-            <accelerator key="S" modifiers="GDK_SHIFT_MASK"/>
-         </child>
-         <child>
             <object class="GtkAction" id="clear-playlist">
                <property name="label" translatable="yes">_Clear Playlist</property>
                <property name="icon-name">gtk-clear</property>
@@ -446,8 +437,6 @@
             <menuitem name="quit" action="quit"/>
          </menu>
          <menu name="edit" action="edit-menu">
-            <menuitem name="take-screenshot" action="take-screenshot"/>
-            <separator/>
             <menuitem name="repeat-mode" action="repeat-mode"/>
             <menuitem name="shuffle-mode" action="shuffle-mode"/>
             <separator/>

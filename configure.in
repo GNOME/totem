@@ -50,7 +50,7 @@ AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles"
+allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -257,7 +257,8 @@ PKG_CHECK_MODULES([DEPENDENCY],[
   gtk+-2.0 >= $GTK_REQS
   gmodule-2.0
   gconf-2.0
-  totem-plparser >= $TOTEM_PLPARSER_REQS])
+  totem-plparser >= $TOTEM_PLPARSER_REQS
+  cairo])
 
 PKG_CHECK_MODULES(MM, $MM)
 
@@ -843,6 +844,7 @@ src/Makefile
 src/plugins/Makefile
 src/plugins/bemused/Makefile
 src/plugins/screensaver/Makefile
+src/plugins/screenshot/Makefile
 src/plugins/ontop/Makefile
 src/plugins/galago/Makefile
 src/plugins/gromit/Makefile

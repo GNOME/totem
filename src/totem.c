@@ -52,7 +52,6 @@
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
 #include "totem-session.h"
-#include "totem-screenshot.h"
 #include "totem-sidebar.h"
 #include "totem-menu.h"
 #include "totem-options.h"
@@ -913,44 +912,6 @@ totem_action_open_location (Totem *totem)
 	gtk_widget_show (GTK_WIDGET (totem->open_location));
 }
 
-void
-totem_action_take_screenshot (Totem *totem)
-{
-	GdkPixbuf *pixbuf;
-	GtkWidget *dialog;
-	char *filename;
-	GError *err = NULL;
-
-	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
-		return;
-
-	if (bacon_video_widget_can_get_frames (totem->bvw, &err) == FALSE)
-	{
-		if (err == NULL)
-			return;
-
-		totem_action_error (_("Totem could not get a screenshot of that film."), err->message, totem);
-		g_error_free (err);
-		return;
-	}
-
-	pixbuf = bacon_video_widget_get_current_frame (totem->bvw);
-	if (pixbuf == NULL)
-	{
-		totem_action_error (_("Totem could not get a screenshot of that film."), _("This is not supposed to happen; please file a bug report."), totem);
-		return;
-	}
-
-	filename = g_build_filename (DATADIR,
-			"totem", "screenshot.ui", NULL);
-	dialog = totem_screenshot_new (pixbuf);
-	g_free (filename);
-
-	gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_destroy (dialog);
-	g_object_unref (pixbuf);
-}
-
 static char *
 totem_get_nice_name_for_stream (Totem *totem)
 {
@@ -1087,9 +1048,6 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		totem_action_set_sensitivity ("next-chapter", FALSE);
 		totem_action_set_sensitivity ("previous-chapter", FALSE);
 
-		/* Take a screenshot */
-		totem_action_set_sensitivity ("take-screenshot", FALSE);
-
 		/* Clear the playlist */
 		totem_action_set_sensitivity ("clear-playlist", FALSE);
 
@@ -1128,9 +1086,6 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		totem_action_set_sensitivity ("volume-up", caps && volume < (1.0 - VOLUME_EPSILON));
 		totem_action_set_sensitivity ("volume-down", caps && volume > VOLUME_EPSILON);
 		totem->volume_sensitive = caps;
-
-		/* Take a screenshot */
-		totem_action_set_sensitivity ("take-screenshot", retval);
 
 		/* Clear the playlist */
 		totem_action_set_sensitivity ("clear-playlist", retval);
@@ -1801,9 +1756,6 @@ on_got_metadata_event (BaconVideoWidget *bvw, Totem *totem)
 			(TOTEM_PLAYLIST (totem->playlist), name, FALSE);
 		g_free (name);
 	}
-	
-	totem_action_set_sensitivity ("take-screenshot",
-				      bacon_video_widget_can_get_frames (bvw, NULL));
 	
 	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }
@@ -2854,19 +2806,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case XF86XK_ZoomIn:
 #endif /* HAVE_XFREE */
 		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
-		break;
-#ifdef HAVE_XFREE
-	case XF86XK_Save:
-		totem_action_take_screenshot (totem);
-		break;
-#endif /* HAVE_XFREE */
-	case GDK_s:
-	case GDK_S:
-		if (event->state & GDK_CONTROL_MASK) {
-			totem_action_take_screenshot (totem);
-		} else {
-			return FALSE;
-		}
 		break;
 	case GDK_t:
 	case GDK_T:

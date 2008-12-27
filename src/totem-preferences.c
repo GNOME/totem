@@ -290,20 +290,6 @@ autoload_subtitles_changed_cb (GConfClient *client, guint cnxn_id,
 			G_CALLBACK (checkbutton3_toggled_cb), totem);
 }
 
-static void
-disable_save_to_disk_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, Totem *totem)
-{
-	GtkWidget *item;
-	gboolean locked;
-
-	locked = gconf_client_get_bool (totem->gc,
-			"/desktop/gnome/lockdown/disable_save_to_disk", NULL);
-	item = GTK_WIDGET (gtk_builder_get_object (totem->xml,
-			"tmw_take_screenshot_menu_item"));
-	gtk_widget_set_sensitive (item, !locked);
-}
-
 void
 connection_combobox_changed (GtkComboBox *combobox, Totem *totem)
 {
@@ -509,11 +495,6 @@ totem_setup_preferences (Totem *totem)
 			totem, NULL, NULL);
 	gconf_client_add_dir (totem->gc, "/desktop/gnome/lockdown",
 			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (totem->gc,
-			"/desktop/gnome/lockdown/disable_save_to_disk",
-			(GConfClientNotifyFunc)
-			disable_save_to_disk_changed_cb,
-			totem, NULL, NULL);
 
 	/* Work-around builder dialogue not parenting properly for
 	 * On top windows */
@@ -673,14 +654,6 @@ totem_setup_preferences (Totem *totem)
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/deinterlace",
 			(GConfClientNotifyFunc) deinterlace_changed_cb,
 			totem, NULL, NULL);
-
-	/* Save to disk Lockdown */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"take-screenshot");
-	gtk_action_set_sensitive (action,
-			!gconf_client_get_bool (totem->gc,
-				"/desktop/gnome/lockdown/disable_save_to_disk",
-				NULL));
 
 	/* Subtitle font selection */
 	item = gtk_builder_get_object (totem->xml, "font_sel_button");

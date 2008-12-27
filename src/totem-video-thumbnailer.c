@@ -50,6 +50,11 @@
 #define PROGRESS_DEBUG(format...) { if (verbose != FALSE) g_message (format); }
 #endif
 
+/* The main() function controls progress in the first and last 10% */
+#define PRINT_PROGRESS(p) { g_printf ("%f%% complete\n", p); }
+#define MIN_PROGRESS 10.0
+#define MAX_PROGRESS 90.0
+
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
 #define GALLERY_MIN 3				/* minimum number of screenshots in a gallery */
 #define GALLERY_MAX 30				/* maximum number of screenshots in a gallery */
@@ -59,6 +64,7 @@ static gboolean jpeg_output = FALSE;
 static gboolean output_size = 128;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
+static gboolean print_progress = FALSE;
 static gboolean g_fatal_warnings = FALSE;
 static gint gallery = -1;
 static gint64 second_index = -1;
@@ -608,6 +614,9 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 		PROGRESS_DEBUG ("Composited screenshot from %" G_GINT64_FORMAT " seconds (address %u) at (%u,%u).",
 				pos, GPOINTER_TO_UINT (screenshot), x, y);
 
+		/* We print progress in the range 10% (MIN_PROGRESS) to 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0 */
+		PRINT_PROGRESS (MIN_PROGRESS + (current_row * columns + current_column) * (((MAX_PROGRESS - MIN_PROGRESS) / gallery) / 2.0));
+
 		current_column = (current_column + 1) % columns;
 		x += output_size + x_padding;
 		if (current_column == 0) {
@@ -697,6 +706,9 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 				x - layout_width - 0.02 * output_size,
 				y - layout_height - 0.02 * scale * screenshot_height);
 
+		/* We print progress in the range 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0) to 90% (MAX_PROGRESS) */
+		PRINT_PROGRESS (MIN_PROGRESS + (MAX_PROGRESS - MIN_PROGRESS) / 2.0 + (current_row * columns + current_column) * (((MAX_PROGRESS - MIN_PROGRESS) / gallery) / 2.0));
+
 		g_free (timestamp_text);
 
 		current_column = (current_column + 1) % columns;
@@ -727,6 +739,7 @@ static const GOptionEntry entries[] = {
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
 	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
 	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
+	{ "print-progress", 'p', 0, G_OPTION_ARG_NONE, &print_progress, "Only print progress updates (can't be used with --verbose)", NULL },
  	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[FILE...]" },
 	{ NULL }
 };
@@ -772,7 +785,8 @@ int main (int argc, char *argv[])
 	}
 
 	if (filenames == NULL || g_strv_length (filenames) != 2 ||
-	    (second_index != -1 && gallery != -1)) {
+	    (second_index != -1 && gallery != -1) ||
+	    (print_progress == TRUE && verbose == TRUE)) {
 		char *help;
 		help = g_option_context_get_help (context, FALSE, NULL);
 		g_print ("%s", help);
@@ -783,6 +797,7 @@ int main (int argc, char *argv[])
 	output = filenames[1];
 
 	PROGRESS_DEBUG("Initialised libraries, about to create video widget");
+	PRINT_PROGRESS (2.0);
 
 	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL) {
@@ -798,6 +813,7 @@ int main (int argc, char *argv[])
 			  &data);
 
 	PROGRESS_DEBUG("Video widget created");
+	PRINT_PROGRESS (6.0);
 
 	if (time_limit != FALSE)
 		totem_resources_monitor_start (input, 0);
@@ -814,6 +830,7 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("Opened video file: '%s'", input);
 	PROGRESS_DEBUG("About to play file");
+	PRINT_PROGRESS (8.0);
 
 	bacon_video_widget_play (bvw, &err);
 	if (err != NULL) {
@@ -823,6 +840,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 	PROGRESS_DEBUG("Started playing file");
+	PRINT_PROGRESS (10.0);
 
 	if (gallery == -1) {
 		/* If the user has told us to use a frame at a specific second 
@@ -832,6 +850,7 @@ int main (int argc, char *argv[])
 			pixbuf = capture_frame_at_time (bvw, input, output, second_index);
 		else
 			pixbuf = capture_interesting_frame (bvw, input, output);
+		PRINT_PROGRESS (90.0);
 	} else {
 		/* We're producing a gallery of screenshots from throughout the file */
 		pixbuf = create_gallery (bvw, input, output);
@@ -841,6 +860,7 @@ int main (int argc, char *argv[])
 	bacon_video_widget_close (bvw);
 	totem_resources_monitor_stop ();
 	gtk_widget_destroy (GTK_WIDGET (bvw));
+	PRINT_PROGRESS (92.0);
 
 	if (pixbuf == NULL) {
 		g_print ("totem-video-thumbnailer couldn't get a picture from "
@@ -851,6 +871,7 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Saving captured screenshot");
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	g_object_unref (pixbuf);
+	PRINT_PROGRESS (100.0);
 
 	return 0;
 }

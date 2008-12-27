@@ -43,7 +43,6 @@ void eject_action_callback (GtkAction *action, Totem *totem);
 void properties_action_callback (GtkAction *action, Totem *totem);
 void play_action_callback (GtkAction *action, Totem *totem);
 void quit_action_callback (GtkAction *action, Totem *totem);
-void take_screenshot_action_callback (GtkAction *action, Totem *totem);
 void preferences_action_callback (GtkAction *action, Totem *totem);
 void fullscreen_action_callback (GtkAction *action, Totem *totem);
 void zoom_1_2_action_callback (GtkAction *action, Totem *totem);
@@ -1015,12 +1014,6 @@ void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_exit (totem);
-}
-
-void
-take_screenshot_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_take_screenshot (totem);
 }
 
 void

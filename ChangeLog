@@ -1,3 +1,50 @@
+2008-12-27  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* configure.in:
+	* data/totem.ui:
+	* src/Makefile.am:
+	* src/plugins/screenshot/Makefile.am:
+	* src/plugins/screenshot/gallery.ui:
+	* src/plugins/screenshot/screenshot.totem-plugin.in:
+	* src/plugins/screenshot/totem-gallery-progress.c
+	(totem_gallery_progress_class_init), (totem_gallery_progress_init),
+	(totem_gallery_progress_finalize), (totem_gallery_progress_new),
+	(dialog_response_callback), (process_line), (stdout_watch_cb),
+	(totem_gallery_progress_run):
+	* src/plugins/screenshot/totem-gallery-progress.h:
+	* src/plugins/screenshot/totem-gallery.c
+	(totem_gallery_class_init), (totem_gallery_init),
+	(totem_gallery_new), (default_screenshot_count_toggled_callback),
+	(dialog_response_callback):
+	* src/plugins/screenshot/totem-gallery.h:
+	* src/plugins/screenshot/totem-screenshot-plugin.c
+	(totem_screenshot_plugin_class_init),
+	(totem_screenshot_plugin_init), (take_screenshot_action_cb),
+	(take_gallery_action_cb), (window_key_press_event_cb),
+	(update_state), (got_metadata_cb), (notify_logo_mode_cb),
+	(disable_save_to_disk_changed_cb), (impl_activate),
+	(impl_deactivate), (make_filename_for_dir),
+	(totem_screenshot_plugin_setup_file_chooser),
+	(totem_screenshot_plugin_update_file_chooser):
+	* src/plugins/screenshot/totem-screenshot-plugin.h:
+	* src/plugins/screenshot/totem-screenshot.c
+	(totem_screenshot_response), (totem_screenshot_init),
+	(totem_screenshot_new):
+	* src/plugins/screenshot/totem-screenshot.h:
+	* src/totem-menu.c:
+	* src/totem-preferences.c (totem_setup_preferences):
+	* src/totem-private.h:
+	* src/totem-screenshot.c:
+	* src/totem-screenshot.h:
+	* src/totem-video-thumbnailer.c (create_gallery), (main):
+	* src/totem.c (totem_action_set_mrl_with_warning),
+	(on_got_metadata_event), (totem_action_handle_key_press): Add UI to
+	allow creation of galleries, by moving the current screenshot
+	dialogue out to a built-in "screenshot" plugin, and adding a
+	dialogue for creating galleries, as well as a progress dialogue.
+	Currently, the progress dialogue does not fully work due to pipe
+	problems. (Helps: #561088)
+
 2008-12-25  Eric Piel  <e.a.b.piel@tudelft.nl>
 
 	reviewed by: Philip Withnall

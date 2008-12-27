@@ -1,24 +1,29 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* totem-screenshot.c
-
-   Copyright (C) 2004 Bastien Nocera
-
-   The Gnome Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public License as
-   published by the Free Software Foundation; either version 2 of the
-   License, or (at your option) any later version.
-
-   The Gnome Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public
-   License along with the Gnome Library; see the file COPYING.LIB.  If not,
-   write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301  USA.
-
-   Author: Bastien Nocera <hadess@hadess.net>
+/* 
+ * Copyright (C) 2004 Bastien Nocera
+ * Copyright (C) 2008 Philip Withnall <philip@tecnocode.co.uk>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+ *
+ * The Totem project hereby grant permission for non-gpl compatible GStreamer
+ * plugins to be used and distributed together with GStreamer and Totem. This
+ * permission are above and beyond the permissions granted by the GPL license
+ * Totem is covered by.
+ *
+ * Monday 7th February 2005: Christian Schaller: Add exception clause.
+ * See license_change file for details.
  */
 
 #include "config.h"
@@ -27,7 +32,6 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <gconf/gconf-client.h>
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -36,6 +40,7 @@
 #include "debug.h"
 #include "totem-interface.h"
 #include "totem-uri.h"
+#include "totem-screenshot-plugin.h"
 
 struct TotemScreenshotPrivate
 {
@@ -48,32 +53,7 @@ struct TotemScreenshotPrivate
 static void totem_screenshot_class_init (TotemScreenshotClass *class);
 static void totem_screenshot_init       (TotemScreenshot      *screenshot);
 
-G_DEFINE_TYPE(TotemScreenshot, totem_screenshot, GTK_TYPE_DIALOG)
-
-static char *
-totem_screenshot_make_filename_for_dir (const char *directory)
-{
-	char *fullpath, *filename;
-	guint i = 1;
-
-	filename = g_strdup_printf (_("Screenshot%d.png"), i);
-	fullpath = g_build_filename (directory, filename, NULL);
-
-	while (g_file_test (fullpath, G_FILE_TEST_EXISTS) != FALSE
-	       && i < G_MAXINT)
-	{
-		i++;
-		g_free (filename);
-		g_free (fullpath);
-
-		filename = g_strdup_printf (_("Screenshot%d.png"), i);
-		fullpath = g_build_filename (directory, filename, NULL);
-	}
-
-	g_free (fullpath);
-
-	return filename;
-}
+G_DEFINE_TYPE (TotemScreenshot, totem_screenshot, GTK_TYPE_DIALOG)
 
 static void
 totem_screenshot_temp_file_create (TotemScreenshot *screenshot)
@@ -151,44 +131,31 @@ static void
 totem_screenshot_response (GtkDialog *dialog, int response)
 {
 	TotemScreenshot *screenshot = TOTEM_SCREENSHOT (dialog);
-	char *filename = NULL;
-	char *dir;
+	char *filename;
 	GError *err = NULL;
-	GConfClient *client;
 
 	if (response != GTK_RESPONSE_ACCEPT)
 		return;
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (screenshot->_priv->chooser));
 
-	if (gdk_pixbuf_save (screenshot->_priv->pixbuf,
-			     filename, "png", &err, NULL) == FALSE)
-	{
-		totem_interface_error
-			(_("There was an error saving the screenshot."),
-			 err->message,
-			 GTK_WINDOW (screenshot));
+	if (gdk_pixbuf_save (screenshot->_priv->pixbuf, filename, "png", &err, NULL) == FALSE) {
+		totem_interface_error (_("There was an error saving the screenshot."),
+				       err->message,
+			 	       GTK_WINDOW (screenshot));
 		g_error_free (err);
 		g_free (filename);
 		return;
 	}
 
-	client = gconf_client_get_default ();
-	dir = g_path_get_dirname (filename);
+	totem_screenshot_plugin_update_file_chooser (filename);
 	g_free (filename);
-	gconf_client_set_string (client,
-				 "/apps/totem/screenshot_save_path",
-				 dir, NULL);
-	g_free (dir);
-	g_object_unref (G_OBJECT (client));
 }
 
 static void
 totem_screenshot_init (TotemScreenshot *screenshot)
 {
 	GtkWidget *box;
-	GConfClient *client;
-	char *path, *filename;
 
 	screenshot->_priv = g_new0 (TotemScreenshotPrivate, 1);
 
@@ -229,29 +196,8 @@ totem_screenshot_init (TotemScreenshot *screenshot)
 			GDK_ACTION_COPY);
 	gtk_drag_source_add_uri_targets (GTK_WIDGET (screenshot->_priv->image));
 
-	/* Set the default path */
-	client = gconf_client_get_default ();
-	path = gconf_client_get_string (client,
-					"/apps/totem/screenshot_save_path",
-					NULL);
-	g_object_unref (client);
-
-	/* Default to the Pictures directory */
-	if (path == NULL || path[0] == '\0') {
-		g_free (path);
-		path = totem_pictures_dir ();
-		/* No pictures dir, then it's the home dir */
-		if (path == NULL)
-			path = g_strdup (g_get_home_dir ());
-	}
-
-	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (screenshot->_priv->chooser),
-					     path);
-	filename = totem_screenshot_make_filename_for_dir (path);
-	g_free (path);
-	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (screenshot->_priv->chooser),
-					   filename);
-	g_free (filename);
+	/* Set the default path and filename */
+	totem_screenshot_plugin_setup_file_chooser (GTK_FILE_CHOOSER (screenshot->_priv->chooser), N_("Screenshot%d.png"));
 
 	gtk_widget_show_all (GTK_DIALOG (screenshot)->vbox);
 }
@@ -279,7 +225,7 @@ totem_screenshot_new (GdkPixbuf *screen_image)
 	TotemScreenshot *screenshot;
 	int width, height;
 
-	screenshot = TOTEM_SCREENSHOT (g_object_new (GTK_TYPE_SCREENSHOT, NULL));
+	screenshot = TOTEM_SCREENSHOT (g_object_new (TOTEM_TYPE_SCREENSHOT, NULL));
 
 	height = 200;
 	width = height * gdk_pixbuf_get_width (screen_image)
