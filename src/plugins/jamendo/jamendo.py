@@ -36,7 +36,6 @@ import gettext
 import gconf
 import gobject
 import gtk
-import gtk.glade
 import pango
 import socket
 import threading
@@ -54,7 +53,7 @@ except ImportError:
             type=gtk.MESSAGE_ERROR,
             buttons=gtk.BUTTONS_OK
         )
-        dlg.set_markup(_('You need to install the python simplejson module'))
+        dlg.set_markup(_('You need to install the Python simplejson module.'))
         dlg.run()
         dlg.destroy()
         raise
@@ -83,60 +82,51 @@ class JamendoPlugin(totem.Plugin):
         self.gconf = gconf.client_get_default()
         self.init_settings()
 
-        # init glade interface
-        f = os.path.join(os.path.dirname(__file__), 'jamendo.glade')
-        self.glade = gtk.glade.XML(f)
-        self.config_dialog = self.glade.get_widget('config_dialog')
-        self.popup = self.glade.get_widget('popup_menu')
-        self.window = self.glade.get_widget('mainwindow')
-        self.container = self.glade.get_widget('mainwindow_container')
-        self.notebook = self.glade.get_widget('notebook')
-        self.search_entry = self.glade.get_widget('search_entry')
-        self.search_combo = self.glade.get_widget('search_combo')
-        # XXX active property set in glade file does not work
-        self.search_combo.set_active(0)
-        self.album_button = self.glade.get_widget('album_button')
-        self.previous_button = self.glade.get_widget('previous_button')
-        self.next_button = self.glade.get_widget('next_button')
-        self.progressbars = [
-            self.glade.get_widget('results_progressbar'),
-            self.glade.get_widget('popular_progressbar'),
-            self.glade.get_widget('latest_progressbar'),
-        ]
-        self.treeviews = [
-            self.glade.get_widget('results_treeview'),
-            self.glade.get_widget('popular_treeview'),
-            self.glade.get_widget('latest_treeview'),
-        ]
-        self.setup_treeviews()
-
-        # connect signals to slots
-        self.glade.signal_autoconnect({
-            'on_search_button_clicked': self.on_search_button_clicked,
-            'on_search_entry_activate': self.on_search_entry_activate,
-            'on_notebook_switch_page': self.on_notebook_switch_page,
-            'on_treeview_row_activated': self.on_treeview_row_activated,
-            'on_treeview_row_clicked': self.on_treeview_row_clicked,
-            'on_previous_button_clicked': self.on_previous_button_clicked,
-            'on_next_button_clicked': self.on_next_button_clicked,
-            'on_album_button_clicked': self.on_album_button_clicked,
-            'on_cancel_button_clicked': self.on_cancel_button_clicked,
-            'on_ok_button_clicked': self.on_ok_button_clicked,
-            'on_add_to_playlist_activate': self.on_add_to_playlist_activate,
-            'on_open_jamendo_album_page_activate':
-                self.on_open_jamendo_album_page_activate,
-        })
-
-        self.reset()
-
     def activate(self, totem_object):
         """
         Plugin activation.
         """
+        # Initialise the interface
+        self.builder = self.load_interface("jamendo.ui", True,
+            totem_object.get_main_window(), self)
+        self.config_dialog = self.builder.get_object('config_dialog')
+        self.popup = self.builder.get_object('popup_menu')
+        container = self.builder.get_object('container')
+        self.notebook = self.builder.get_object('notebook')
+        self.search_entry = self.builder.get_object('search_entry')
+        self.search_combo = self.builder.get_object('search_combo')
+        self.search_combo.set_active(0)
+        self.album_button = self.builder.get_object('album_button')
+        self.previous_button = self.builder.get_object('previous_button')
+        self.next_button = self.builder.get_object('next_button')
+        self.progressbars = [
+            self.builder.get_object('results_progressbar'),
+            self.builder.get_object('popular_progressbar'),
+            self.builder.get_object('latest_progressbar'),
+        ]
+        self.treeviews = [
+            self.builder.get_object('results_treeview'),
+            self.builder.get_object('popular_treeview'),
+            self.builder.get_object('latest_treeview'),
+        ]
+        self.setup_treeviews()
+
+        # Set up signals
+        self.builder.get_object('search_button').connect('clicked', self.on_search_button_clicked)
+        self.search_entry.connect('activate', self.on_search_entry_activate)
+        self.notebook.connect('switch-page', self.on_notebook_switch_page)
+        self.previous_button.connect('clicked', self.on_previous_button_clicked)
+        self.next_button.connect('clicked', self.on_next_button_clicked)
+        self.album_button.connect('clicked', self.on_album_button_clicked)
+        self.builder.get_object('cancel_button').connect('clicked', self.on_cancel_button_clicked)
+        self.builder.get_object('ok_button').connect('clicked', self.on_ok_button_clicked)
+        self.builder.get_object('add_to_playlist').connect('activate', self.on_add_to_playlist_activate)
+        self.builder.get_object('jamendo_album_page').connect('activate', self.on_open_jamendo_album_page_activate)
+
         self.totem = totem_object
-        # unparent the container to embed it into totem sidebar
-        self.container.unparent()
-        self.totem.add_sidebar_page("jamendo", _("Jamendo"), self.container)
+        self.reset()
+        container.show_all()
+        self.totem.add_sidebar_page("jamendo", _("Jamendo"), container)
 
     def deactivate(self, totem_object):
         """
@@ -150,9 +140,9 @@ class JamendoPlugin(totem.Plugin):
         """
         format = self.gconf.get_string('%s/format' % gconf_key)
         num_per_page = self.gconf.get_int('%s/num_per_page' % gconf_key)
-        combo = self.glade.get_widget('preferred_format_combo')
+        combo = self.builder.get_object('preferred_format_combo')
         combo.set_active(self.AUDIO_FORMATS.index(format))
-        spinbutton = self.glade.get_widget('album_num_spinbutton')
+        spinbutton = self.builder.get_object('album_num_spinbutton')
         spinbutton.set_value(num_per_page)
         return self.config_dialog
 
@@ -202,16 +192,6 @@ class JamendoPlugin(totem.Plugin):
         self.current_treeview = self.treeviews[0]
         for w in self.treeviews:
             w.get_selection().set_mode(gtk.SELECTION_MULTIPLE)
-            #w.set_rubber_banding(True)
-            # build a treestore
-            model = gtk.TreeStore(
-                gobject.TYPE_PYOBJECT, # album or track dict
-                gtk.gdk.Pixbuf,        # album cover or track icon
-                str,                   # album or track description
-                str,                   # album or track duration
-                str,                   # album or track tooltip
-            )
-            w.set_model(model)
 
             # build pixbuf column
             cell = gtk.CellRendererPixbuf()
@@ -229,12 +209,7 @@ class JamendoPlugin(totem.Plugin):
             col.set_attributes(cell, markup=2)
             col.set_expand(True)
             w.append_column(col)
-            w.connect_after(
-                'size-allocate',
-                self.on_treeview_size_allocate,
-                col,
-                cell
-            )
+            w.connect_after('size-allocate', self.on_treeview_size_allocate, col, cell)
 
             # duration column
             cell = gtk.CellRendererText()
@@ -249,6 +224,11 @@ class JamendoPlugin(totem.Plugin):
             # configure the treeview
             w.set_show_expanders(False) # we manage internally expand/collapse
             w.set_tooltip_column(4)     # set the tooltip column
+
+            # Connect signals
+            w.connect("button-press-event", self.on_treeview_row_clicked)
+            w.connect("row-activated", self.on_treeview_row_activated)
+
 
     def add_treeview_item(self, treeview, album):
         if not isinstance(album['image'], gtk.gdk.Pixbuf):
@@ -268,8 +248,10 @@ class JamendoPlugin(totem.Plugin):
         dur = self._format_duration(album['duration'])
         # format tooltip
         try:
-            release = time.strptime(album['dates']['release'][0:10], '%Y-%m-%d')
-            release = time.strftime('%x', release)
+            # Translators: this is the release date of an album in Python strptime format
+            release = time.strptime(album['dates']['release'][0:10], _('%Y-%m-%d'))
+            # Translators: this is the release time of an album in Python strftime format
+            release = time.strftime(_('%x'), release)
         except:
             release = ''
         tip = '\n'.join([
@@ -287,7 +269,9 @@ class JamendoPlugin(totem.Plugin):
         icon = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, 1, 1)
         for i, track in enumerate(album['tracks']):
             # track title
-            tt = '<small>%02d. %s</small>' % \
+            # Translators: this is the title of a track in Python format
+            # (first argument is the track number, second is the track title)
+            tt = ('<small>%s</small>' % _('%02d. %s')) % \
                 (i+1, self._format_str(track['name']))
             # track duration
             td = self._format_duration(track['duration'])
@@ -402,7 +386,7 @@ class JamendoPlugin(totem.Plugin):
             buttons=gtk.BUTTONS_OK
         )
         dlg.set_markup(
-            '<b>%s</b>' % _('An error occured while fetching albums.')
+            '<b>%s</b>' % _('An error occurred while fetching albums.')
         )
         # managing exceptions with urllib is a real PITA... :(
         if hasattr(exc, 'reason'):
@@ -414,9 +398,9 @@ class JamendoPlugin(totem.Plugin):
                 except:
                     reason = str(exc)
             reason = reason.capitalize()
-            msg = _('Failed to connect to jamendo server.\n%s.') % reason
+            msg = _('Failed to connect to Jamendo server.\n%s.') % reason
         elif hasattr(exc, 'code'):
-            msg = _('The jamendo server returned code %s') % exc.code
+            msg = _('The Jamendo server returned code %s.') % exc.code
         else:
             msg = str(exc)
         dlg.format_secondary_text(msg)
@@ -561,8 +545,8 @@ class JamendoPlugin(totem.Plugin):
         """
         Called when the user clicked ok in the config dialog.
         """
-        combo = self.glade.get_widget('preferred_format_combo')
-        spinbutton = self.glade.get_widget('album_num_spinbutton')
+        combo = self.builder.get_object('preferred_format_combo')
+        spinbutton = self.builder.get_object('album_num_spinbutton')
         format = self.AUDIO_FORMATS[combo.get_active()]
         self.gconf.set_string('%s/format' % gconf_key, format)
         num_per_page = int(spinbutton.get_value())
@@ -646,8 +630,12 @@ class JamendoPlugin(totem.Plugin):
         try:
             secs = int(secs)
             if secs >= 3600:
-                return time.strftime('%H:%M:%S', time.gmtime(secs))
-            return time.strftime('%M:%S', time.gmtime(secs))
+                # Translators: time formatting (in Python strftime format) for the Jamendo plugin
+                # for times longer than an hour
+                return time.strftime(_('%H:%M:%S'), time.gmtime(secs))
+            # Translators: time formatting (in Python strftime format) for the Jamendo plugin
+            # for times shorter than an hour
+            return time.strftime(_('%M:%S'), time.gmtime(secs))
         except:
             return ''
 
