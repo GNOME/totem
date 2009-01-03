@@ -22,22 +22,14 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkImage" id="image_find">
-    <property name="visible">True</property>
-    <property name="stock">gtk-find</property>
-  </object>
   <object class="GtkImage" id="image_apply">
     <property name="visible">True</property>
     <property name="stock">gtk-media-play</property>
     <property name="icon-size">4</property>
   </object>
-  <object class="GtkImage" id="image_close">
-    <property name="visible">True</property>
-    <property name="stock">gtk-close</property>
-  </object>
   <object class="GtkWindow" id="subtitles_dialog">
     <property name="border_width">5</property>
-    <property name="title">Download Movie Subtitles</property>
+    <property name="title" translatable="yes">Download Movie Subtitles</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">400</property>
     <property name="default_height">400</property>
@@ -61,7 +53,9 @@
                         <child>
                           <object class="GtkLabel" id="label3">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Subtitle language;</property>
+                            <property name="use-underline">True</property>
+                            <property name="mnemonic-widget">language_combobox</property>
+                            <property name="label" translatable="yes">Subtitle _language:</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -80,11 +74,11 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="find_button">
-                            <property name="label" translatable="yes">_Search</property>
+                            <property name="label">gtk-find</property>
+                            <property name="use-stock">True</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="image">image_find</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -151,7 +145,7 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="apply_button">
-                <property name="label" translatable="yes">Play with subtitle</property>
+                <property name="label" translatable="yes">_Play with Subtitle</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -165,11 +159,11 @@
             </child>
             <child>
               <object class="GtkButton" id="close_button">
-                <property name="label" translatable="yes">Close</property>
+                <property name="label">gtk-close</property>
+                <property name="use-stock">True</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="image">image_close</property>
               </object>
               <packing>
                 <property name="expand">False</property>
