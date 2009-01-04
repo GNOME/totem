@@ -92,7 +92,7 @@ totem_print_int (BaconVideoWidget *bvw, const char *key, BaconVideoWidgetMetadat
 	g_value_unset (&value);
 }
 
-static void
+G_GNUC_NORETURN static void
 on_got_metadata_event (BaconVideoWidget *bvw, gpointer data)
 {
 	GValue value = { 0, };

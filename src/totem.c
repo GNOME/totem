@@ -151,7 +151,7 @@ totem_action_error (const char *title, const char *reason, Totem *totem)
 			GTK_WINDOW (totem->win));
 }
 
-static void
+G_GNUC_NORETURN static void
 totem_action_error_and_exit (const char *title,
 		const char *reason, Totem *totem)
 {
@@ -216,7 +216,7 @@ totem_action_save_state (Totem *totem, const char *page_id)
 	g_free (contents);
 }
 
-static void
+G_GNUC_NORETURN static void
 totem_action_wait_force_exit (gpointer user_data)
 {
 	g_usleep (10 * G_USEC_PER_SEC);
@@ -310,12 +310,10 @@ totem_action_menu_popup (Totem *totem, guint button)
 	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
 }
 
-gboolean
+G_GNUC_NORETURN gboolean
 main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, Totem *totem)
 {
 	totem_action_exit (totem);
-
-	return FALSE;
 }
 
 static void

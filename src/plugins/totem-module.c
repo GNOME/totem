@@ -53,9 +53,6 @@ struct _TotemModule
 
 typedef GType (*TotemModuleRegisterFunc) (GTypeModule *);
 
-static void totem_module_init		(TotemModule *action);
-static void totem_module_class_init	(TotemModuleClass *class);
-
 static GObjectClass *parent_class = NULL;
 
 G_DEFINE_TYPE (TotemModule, totem_module, G_TYPE_TYPE_MODULE)

@@ -40,8 +40,6 @@
 #include "totem-open-location.h"
 #include "totem-interface.h"
 
-static void totem_open_location_class_init	(TotemOpenLocationClass *class);
-static void totem_open_location_init		(TotemOpenLocation *open_location);
 static void totem_open_location_dispose		(GObject *object);
 
 struct TotemOpenLocationPrivate

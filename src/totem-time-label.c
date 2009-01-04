@@ -5,9 +5,6 @@
 #include <glib/gi18n.h>
 #include "video-utils.h"
 
-static void totem_time_label_class_init (TotemTimeLabelClass *class);
-static void totem_time_label_init       (TotemTimeLabel      *label);
-
 struct _TotemTimeLabelPrivate {
 	gint64 time;
 	gint64 length;

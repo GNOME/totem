@@ -381,7 +381,7 @@ void
 tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 {
 	guint i;
-	char *scales[] = {
+	const char *scales[] = {
 		"tpw_bright_scale",
 		"tpw_contrast_scale",
 		"tpw_saturation_scale",

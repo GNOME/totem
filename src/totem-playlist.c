@@ -160,9 +160,6 @@ static const GtkTargetEntry target_table[] = {
 	{ "_NETSCAPE_URL", 0, 1 }
 };
 
-static void totem_playlist_class_init (TotemPlaylistClass *class);
-static void totem_playlist_init       (TotemPlaylist      *playlist);
-
 static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 
 #define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, TOTEM_PLAYLIST_STATUS_NONE)

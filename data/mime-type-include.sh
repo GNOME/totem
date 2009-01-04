@@ -12,7 +12,7 @@ if [ x"$1" = "x--nautilus" ] ; then
 	echo "/* generated with mime-types-include.sh in the totem module, don't edit or "
 	echo "   commit in the nautilus module without filing a bug against totem */"
 
-	echo "static char *audio_mime_types[] = {"
+	echo "static const char *audio_mime_types[] = {"
 	for i in $MIMETYPES ; do
 		echo_mime;
 	done
@@ -25,7 +25,7 @@ fi
 MIMETYPES=`grep -v ^# $1 | grep -v x-content/`
 
 echo "/* generated with mime-types-include.sh, don't edit */"
-echo "char *mime_types[] = {"
+echo "const char *mime_types[] = {"
 
 for i in $MIMETYPES ; do
 	echo_mime;
@@ -35,7 +35,7 @@ echo "};"
 
 get_audio_mimetypes $1;
 
-echo "char *audio_mime_types[] = {"
+echo "const char *audio_mime_types[] = {"
 for i in $MIMETYPES ; do
 	echo_mime;
 done
@@ -44,7 +44,7 @@ echo "};"
 
 get_video_mimetypes $1;
 
-echo "char *video_mime_types[] = {"
+echo "const char *video_mime_types[] = {"
 for i in $MIMETYPES ; do
 	echo_mime;
 done

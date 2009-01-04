@@ -66,7 +66,6 @@ typedef struct
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType totem_ontop_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_ontop_plugin_init		(TotemOntopPlugin *plugin);
 static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 

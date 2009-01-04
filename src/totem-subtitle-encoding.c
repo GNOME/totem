@@ -146,7 +146,7 @@ typedef enum
 typedef struct
 {
   int index;
-  char *charset;
+  const char *charset;
   char *name;
 } SubtitleEncoding;
 

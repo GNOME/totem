@@ -58,9 +58,6 @@ struct TotemScreenshotPluginPrivate {
 	GtkActionGroup *action_group;
 };
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
-
-static void totem_screenshot_plugin_init		(TotemScreenshotPlugin *plugin);
 static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 

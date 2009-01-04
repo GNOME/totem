@@ -1010,7 +1010,7 @@ play_action_callback (GtkAction *action, Totem *totem)
 	totem_action_play_pause (totem);
 }
 
-void
+G_GNUC_NORETURN void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_exit (totem);

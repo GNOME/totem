@@ -33,8 +33,6 @@
 #include <X11/extensions/Xrender.h>
 #endif
 
-static void bacon_resize_class_init	(BaconResizeClass *klass);
-static void bacon_resize_init		(BaconResize *ggo);
 static void bacon_resize_set_property	(GObject *object,
 					 guint property_id,
 					 const GValue *value,

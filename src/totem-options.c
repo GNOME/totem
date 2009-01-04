@@ -33,7 +33,7 @@
 
 TotemCmdLineOptions optionstate;	/* Decoded command line options */
 
-static gboolean
+G_GNUC_NORETURN static gboolean
 option_version_cb (const gchar *option_name,
 	           const gchar *value,
 	           gpointer     data,
@@ -42,7 +42,6 @@ option_version_cb (const gchar *option_name,
 	g_print ("%s %s\n", PACKAGE, VERSION);
 
 	exit (0);
-	return FALSE;
 }
  
 const GOptionEntry options[] = {
@@ -98,7 +97,7 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 			       options->debug, NULL);
 }
 
-static void
+G_GNUC_NORETURN static void
 totem_print_playing_cb (const gchar *msg, gpointer user_data)
 {
 	if (strcmp (msg, SHOW_PLAYING_NO_TRACKS) != 0)

@@ -1,3 +1,51 @@
+2009-01-04  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* data/mime-type-include.sh:
+	* lib/totem-scrsaver.c:
+	* src/backend/bacon-resize.c:
+	* src/backend/bvw-test.c (test_bvw_set_mrl):
+	* src/backend/video-utils.c (totem_time_to_string):
+	* src/plugins/gromit/totem-gromit.c
+	(totem_gromit_ensure_config_file):
+	* src/plugins/media-player-keys/totem-media-player-keys.c:
+	* src/plugins/ontop/totem-ontop.c:
+	* src/plugins/properties/bacon-video-widget-properties.c:
+	* src/plugins/properties/totem-movie-properties.c:
+	* src/plugins/screensaver/totem-screensaver.c:
+	* src/plugins/screenshot/totem-gallery-progress.c:
+	* src/plugins/screenshot/totem-gallery.c:
+	* src/plugins/screenshot/totem-screenshot-plugin.c:
+	* src/plugins/screenshot/totem-screenshot.c:
+	* src/plugins/sidebar-test/totem-sidebar-test.c:
+	* src/plugins/skipto/totem-skipto-plugin.c:
+	* src/plugins/skipto/totem-skipto.c:
+	* src/plugins/thumbnail/totem-thumbnail.c:
+	* src/plugins/totem-module.c:
+	* src/plugins/totem-plugin.h:
+	* src/plugins/totem-plugins-engine.c (garbage_collect_cb):
+	* src/plugins/totem-python-module.c
+	(totem_python_module_init_python), (totem_python_garbage_collect),
+	(totem_python_shutdown):
+	* src/plugins/tracker/totem-tracker-widget.c:
+	* src/plugins/tracker/totem-tracker.c:
+	* src/totem-fullscreen.c:
+	* src/totem-menu.c:
+	* src/totem-open-location.c:
+	* src/totem-options.c (option_version_cb):
+	* src/totem-playlist.c:
+	* src/totem-preferences.c (tpw_color_reset_clicked_cb):
+	* src/totem-properties-view.c:
+	* src/totem-resources.c:
+	* src/totem-session.c:
+	* src/totem-statusbar.c:
+	* src/totem-subtitle-encoding.c:
+	* src/totem-time-label.c:
+	* src/totem-uri.c (totem_uri_get_subtitle_for_uri):
+	* src/totem-video-indexer.c:
+	* src/totem.c (main_window_destroy_cb): Cleanups to fix a few
+	warnings when building with more gcc warning flags than normal.
+	(Closes: #565874)
+
 2009-01-03  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/opensubtitles/opensubtitles.ui: UI and string cleanups

@@ -50,9 +50,6 @@ struct TotemScreenshotPrivate
 	char *temp_file;
 };
 
-static void totem_screenshot_class_init (TotemScreenshotClass *class);
-static void totem_screenshot_init       (TotemScreenshot      *screenshot);
-
 G_DEFINE_TYPE (TotemScreenshot, totem_screenshot, GTK_TYPE_DIALOG)
 
 static void

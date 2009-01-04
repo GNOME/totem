@@ -113,7 +113,7 @@ totem_python_module_init_python (void)
 	PyObject *sys_path;
 	struct sigaction old_sigint;
 	gint res;
-	char *argv[] = { "totem", NULL };
+	const char *argv[] = { "totem", NULL };
 	GList *paths;
 
 	if (Py_IsInitialized ()) {
@@ -503,7 +503,7 @@ run_gc (gpointer data)
 #endif
 
 void
-totem_python_garbage_collect ()
+totem_python_garbage_collect (void)
 {
 #if 0
 	if (Py_IsInitialized() && idle_garbage_collect_id == 0) {
@@ -528,7 +528,7 @@ finalise_collect_cb (gpointer data)
 #endif
 
 void
-totem_python_shutdown ()
+totem_python_shutdown (void)
 {
 #if 0
 	if (Py_IsInitialized ()) {

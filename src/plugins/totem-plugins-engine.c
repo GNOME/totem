@@ -349,12 +349,17 @@ totem_plugins_engine_load_all (void)
 	}
 }
 
+#if 0
+#ifdef ENABLE_PYTHON
 static gboolean
 garbage_collect_cb (gpointer data)
 {
+	/* Commented out due to line 387 being commented out. More's commented out in totem-python-module.c. */
 	totem_plugins_engine_garbage_collect ();
 	return TRUE;
 }
+#endif
+#endif
 
 gboolean
 totem_plugins_engine_init (TotemObject *totem)

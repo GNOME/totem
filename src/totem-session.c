@@ -96,7 +96,7 @@ totem_save_state_cb (EggSMClient *client,
 	g_free (uri);
 }
 
-static void
+G_GNUC_NORETURN static void
 totem_quit_cb (EggSMClient *client,
 	       Totem *totem)
 {

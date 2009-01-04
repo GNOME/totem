@@ -43,8 +43,6 @@ struct TotemPropertiesViewPriv {
 };
 
 static GObjectClass *parent_class = NULL;
-static void totem_properties_view_init (TotemPropertiesView *self);
-static void totem_properties_view_class_init (TotemPropertiesViewClass *class);
 static void totem_properties_view_finalize (GObject *object);
 
 G_DEFINE_TYPE (TotemPropertiesView, totem_properties_view, GTK_TYPE_TABLE)

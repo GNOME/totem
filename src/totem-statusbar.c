@@ -38,8 +38,6 @@
 #define NORMAL_CONTEXT "text"
 #define BUFFERING_CONTEXT "buffering"
 
-static void totem_statusbar_class_init       (TotemStatusbarClass *class);
-static void totem_statusbar_init             (TotemStatusbar      *statusbar);
 static void totem_statusbar_dispose          (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
 

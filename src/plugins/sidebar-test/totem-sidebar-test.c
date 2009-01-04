@@ -57,7 +57,6 @@ typedef struct
 G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_sidebar_test_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_sidebar_test_plugin_init		(TotemSidebarTestPlugin *plugin);
 static void totem_sidebar_test_plugin_finalize		(GObject *object);
 static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);

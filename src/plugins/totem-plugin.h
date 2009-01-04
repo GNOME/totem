@@ -159,7 +159,8 @@ register_totem_plugin (GTypeModule *module)					\
 		NULL, /* class_data */						\
 		sizeof (PluginName),						\
 		0, /* n_preallocs */						\
-		(GInstanceInitFunc) plugin_name##_init				\
+		(GInstanceInitFunc) plugin_name##_init,				\
+		NULL								\
 	};									\
 										\
 	/* Initialise the i18n stuff */						\

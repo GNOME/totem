@@ -96,7 +96,6 @@ static const char *visibility_cmd[] =	{ NULL, "-v", NULL };
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType	totem_gromit_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_gromit_plugin_init		(TotemGromitPlugin *plugin);
 static void totem_gromit_plugin_finalize		(GObject *object);
 static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
@@ -137,7 +136,7 @@ static void
 totem_gromit_ensure_config_file (void)
 {
 	char *path;
-	int fd;
+	GError *error = NULL;
 
 	path = g_build_filename (g_get_home_dir (), ".gromitrc", NULL);
 	if (g_file_test (path, G_FILE_TEST_EXISTS) != FALSE) {
@@ -147,14 +146,11 @@ totem_gromit_ensure_config_file (void)
 
 	g_message ("%s doesn't exist", path);
 
-	fd = creat (path, 0755);
-	g_free (path);
-	if (fd < 0) {
-		return;
+	if (g_file_set_contents (path, DEFAULT_CONFIG, sizeof (DEFAULT_CONFIG), &error) == FALSE) {
+		g_warning ("Could not write default config file: %s.", error->message);
+		g_error_free (error);
 	}
-
-	write (fd, DEFAULT_CONFIG, sizeof (DEFAULT_CONFIG));
-	close (fd);
+	g_free (path);
 }
 
 static gboolean

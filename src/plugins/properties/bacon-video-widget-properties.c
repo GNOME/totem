@@ -85,11 +85,6 @@ struct BaconVideoWidgetPropertiesPrivate
 
 static GtkWidgetClass *parent_class = NULL;
 
-static void bacon_video_widget_properties_class_init
-	(BaconVideoWidgetPropertiesClass *class);
-static void bacon_video_widget_properties_init
-	(BaconVideoWidgetProperties *props);
-
 G_DEFINE_TYPE(BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_VBOX)
 
 static void

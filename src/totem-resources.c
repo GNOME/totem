@@ -79,7 +79,7 @@ set_resource_limits (const char *input)
 	setrlimit (RLIMIT_CPU, &limit);
 }
 
-static gpointer
+G_GNUC_NORETURN static gpointer
 time_monitor (gpointer data)
 {
 	const char *app_name;

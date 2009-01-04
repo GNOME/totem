@@ -217,17 +217,15 @@ totem_time_to_string (gint64 msecs)
 		 * of "%d" if your locale uses localized digits.
 		 */
 		return g_strdup_printf (C_("long time format", "%d:%02d:%02d"), hour, min, sec);
-	} else {
-		/* minutes:seconds */
-		/* Translators: This is a time format, like "5:02" for 5
-		 * minutes and 2 seconds. You may change ":" to the
-		 * separator that your locale uses or use "%Id" instead of
-		 * "%d" if your locale uses localized digits.
-		 */
-		return g_strdup_printf (C_("short time format", "%d:%02d"), min, sec);
 	}
 
-	return NULL;
+	/* minutes:seconds */
+	/* Translators: This is a time format, like "5:02" for 5
+	 * minutes and 2 seconds. You may change ":" to the
+	 * separator that your locale uses or use "%Id" instead of
+	 * "%d" if your locale uses localized digits.
+	 */
+	return g_strdup_printf (C_("short time format", "%d:%02d"), min, sec);
 }
 
 char *

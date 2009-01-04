@@ -42,8 +42,6 @@
 #include "video-utils.h"
 #include "bacon-video-widget.h"
 
-static void totem_skipto_class_init	(TotemSkiptoClass *class);
-static void totem_skipto_init		(TotemSkipto *ggo);
 static void totem_skipto_dispose	(GObject *object);
 
 /* Callback functions for GtkBuilder */

@@ -36,7 +36,6 @@
 
 #include "totem-gallery-progress.h"
 
-static void totem_gallery_progress_init (TotemGalleryProgress *self);
 static void totem_gallery_progress_finalize (GObject *object);
 static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGalleryProgress *self);
 

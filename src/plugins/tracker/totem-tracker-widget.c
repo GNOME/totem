@@ -74,8 +74,6 @@ enum {
 	PROP_TOTEM
 };
 
-static void totem_tracker_widget_class_init	(TotemTrackerWidgetClass *klass);
-static void totem_tracker_widget_init		(TotemTrackerWidget	 *widget);
 static void totem_tracker_widget_dispose	(GObject *object);
 static void totem_tracker_widget_set_property	(GObject *object,
 						 guint property_id,

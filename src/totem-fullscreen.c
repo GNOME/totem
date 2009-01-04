@@ -39,8 +39,6 @@
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
 
-static void totem_fullscreen_class_init	(TotemFullscreenClass *class);
-static void totem_fullscreen_init (TotemFullscreen *parser);
 static void totem_fullscreen_dispose (GObject *object);
 static void totem_fullscreen_finalize (GObject *object);
 static gboolean totem_fullscreen_popup_hide (TotemFullscreen *fs);
@@ -50,6 +48,7 @@ gboolean totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget, GdkEventButt
 gboolean totem_fullscreen_vol_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 gboolean totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 gboolean totem_fullscreen_seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+gboolean totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event, TotemFullscreen *fs);
 
 struct _TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;

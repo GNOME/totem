@@ -50,8 +50,6 @@
 #define XSCREENSAVER_MIN_TIMEOUT 60
 
 static GObjectClass *parent_class = NULL;
-static void totem_scrsaver_class_init (TotemScrsaverClass *class);
-static void totem_scrsaver_init       (TotemScrsaver      *parser);
 static void totem_scrsaver_finalize   (GObject *object);
 
 

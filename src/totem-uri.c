@@ -293,7 +293,8 @@ static char *
 totem_uri_get_subtitle_for_uri (const char *uri)
 {
 	char *subtitle, *subtitle_ext_upper;
-	guint len, i, suffix;
+	guint len, i;
+	gint suffix;
 
 	/* Find the filename suffix delimiter */
 	len = strlen (uri);

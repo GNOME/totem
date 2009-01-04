@@ -35,7 +35,6 @@
 #include "totem-gallery-progress.h"
 #include "totem-screenshot-plugin.h"
 
-static void totem_gallery_init (TotemGallery *self);
 static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self);
 
 /* GtkBuilder callbacks */
