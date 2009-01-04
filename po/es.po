@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-01-03 14:41+0000\n"
-"PO-Revision-Date: 2009-01-03 16:03+0100\n"
+"POT-Creation-Date: 2009-01-03 18:51+0000\n"
+"PO-Revision-Date: 2009-01-04 13:50+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,7 +221,7 @@ msgid "Add the video to the playlist"
 msgstr "Añadir el vídeo a la lista de reproducción"
 
 #: ../data/video-list.ui.h:3 ../src/totem-dnd-menu.c:97
-#: ../src/plugins/jamendo/jamendo.glade.h:14
+#: ../src/plugins/jamendo/jamendo.ui.h:10
 msgid "_Add to Playlist"
 msgstr "_Añadir a la lista de reproducción"
 
@@ -2290,118 +2290,147 @@ msgstr "Ayudante de presentaciones para tomar anotacones en la pantalla"
 msgid "The gromit binary was not found."
 msgstr "No se encontró el binario gromit."
 
-#: ../src/plugins/jamendo/jamendo.glade.h:1
-msgid ""
-"By artist\n"
-"By tag"
-msgstr ""
-"Por artista\n"
-"Por etiqueta"
+#: ../src/plugins/jamendo/jamendo.ui.h:1
+msgid "By artist"
+msgstr "Por artista"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:3
-msgid "Jamendo album page"
+#: ../src/plugins/jamendo/jamendo.ui.h:2
+msgid "By tag"
+msgstr "Por etiqueta"
+
+#: ../src/plugins/jamendo/jamendo.ui.h:3
+msgid "Jamendo Album Page"
 msgstr "Página del álbum en Jamendo"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:4
-msgid "Jamendo plugin configuration"
+#: ../src/plugins/jamendo/jamendo.ui.h:4
+msgid "Jamendo Plugin Configuration"
 msgstr "Configuración del complemento de Jamendo"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:5
-msgid "Jamendo totem plugin"
-msgstr "Complemento de Jamendo para Totem"
-
-#: ../src/plugins/jamendo/jamendo.glade.h:6
-msgid "Latest releases"
+#: ../src/plugins/jamendo/jamendo.ui.h:5
+msgid "Latest Releases"
 msgstr "Últimas publicaciones"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:7
-msgid "Number of albums to retrieve"
-msgstr "Número de álbumes para obtener"
+#: ../src/plugins/jamendo/jamendo.ui.h:6
+msgid "Number of albums to _retrieve"
+msgstr "Número de álbumes para _obtener"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:8
-msgid ""
-"Ogg\n"
-"MP3"
-msgstr ""
-"Ogg\n"
-"MP3"
-
-#: ../src/plugins/jamendo/jamendo.glade.h:10
-msgid "Open Jamendo album page in browser"
-msgstr "Abrir la página del álbum en Jamendo en el navegador"
-
-#: ../src/plugins/jamendo/jamendo.glade.h:11
+#: ../src/plugins/jamendo/jamendo.ui.h:7
 msgid "Popular"
 msgstr "Popular"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:12
-msgid "Preferred audio format"
-msgstr "Formato de sonido preferido"
+#: ../src/plugins/jamendo/jamendo.ui.h:8
+msgid "Preferred audio _format"
+msgstr "_Formato de sonido preferido"
 
-#: ../src/plugins/jamendo/jamendo.glade.h:13
-msgid "Search results"
+#: ../src/plugins/jamendo/jamendo.ui.h:9
+#: ../src/plugins/tracker/totem-tracker-widget.c:367
+#: ../src/plugins/youtube/youtube.ui.h:2
+msgid "Search Results"
 msgstr "Resultados de la búsqueda"
 
-#: ../src/plugins/jamendo/jamendo.py:57
-msgid "You need to install the python simplejson module"
-msgstr "Debe instalar el módulo python simplejson"
+#: ../src/plugins/jamendo/jamendo.ui.h:11
+msgid "_Open Jamendo Album Page in Browser"
+msgstr "_Abrir la página del álbum en Jamendo en el navegador"
 
-#: ../src/plugins/jamendo/jamendo.py:139
+#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
+#: ../src/plugins/jamendo/jamendo.py:129
 msgid "Jamendo"
 msgstr "Jamendo"
 
-#: ../src/plugins/jamendo/jamendo.py:266 ../src/plugins/jamendo/jamendo.py:277
-#: ../src/plugins/jamendo/jamendo.py:298
+#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
+msgid ""
+"Listen to the large collection of Creative Commons licensed music on Jamendo."
+msgstr ""
+"Escuchar la gran colección de música licenciada bajo Creative Commons en "
+"Jamendo."
+
+#: ../src/plugins/jamendo/jamendo.py:56
+msgid "You need to install the Python simplejson module."
+msgstr "Debe instalar el módulo Python simplejson."
+
+#: ../src/plugins/jamendo/jamendo.py:246 ../src/plugins/jamendo/jamendo.py:259
+#: ../src/plugins/jamendo/jamendo.py:282
 #, python-format
 msgid "Artist: %s"
 msgstr "Artista: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:278
+#. Translators: this is the release date of an album in Python strptime format
+#: ../src/plugins/jamendo/jamendo.py:252
+msgid "%Y-%m-%d"
+msgstr "%d-%m-%Y"
+
+#. Translators: this is the release time of an album in Python strftime format
+#: ../src/plugins/jamendo/jamendo.py:254
+#, python-format
+msgid "%x"
+msgstr "%x"
+
+#: ../src/plugins/jamendo/jamendo.py:260
 #, python-format
 msgid "Genre: %s"
 msgstr "Género: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:279
+#: ../src/plugins/jamendo/jamendo.py:261
 #, python-format
 msgid "Released on: %s"
 msgstr "Publicado en: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:280
+#: ../src/plugins/jamendo/jamendo.py:262
 #, python-format
 msgid "License: %s"
 msgstr "Licencia: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:297
+#. track title
+#. Translators: this is the title of a track in Python format
+#. (first argument is the track number, second is the track title)
+#: ../src/plugins/jamendo/jamendo.py:274
+#, python-format
+msgid "%02d. %s"
+msgstr "%02d. %s"
+
+#: ../src/plugins/jamendo/jamendo.py:281
 #, python-format
 msgid "Album: %s"
 msgstr "Álbum: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:299
+#: ../src/plugins/jamendo/jamendo.py:283
 #, python-format
 msgid "Duration: %s"
 msgstr "Duración: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:356
+#: ../src/plugins/jamendo/jamendo.py:340
 msgid "Fetching albums, please wait..."
 msgstr "Obteniendo álbumes, espere…"
 
-#: ../src/plugins/jamendo/jamendo.py:405
-msgid "An error occured while fetching albums."
+#: ../src/plugins/jamendo/jamendo.py:389
+msgid "An error occurred while fetching albums."
 msgstr "Ocurrió un error al obtener los álbumes."
 
-#: ../src/plugins/jamendo/jamendo.py:417
+#: ../src/plugins/jamendo/jamendo.py:401
 #, python-format
 msgid ""
-"Failed to connect to jamendo server.\n"
+"Failed to connect to Jamendo server.\n"
 "%s."
 msgstr ""
-"Falló al contactar con el servidor de jamendo.\n"
+"Falló al contactar con el servidor de Jamendo.\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:419
+#: ../src/plugins/jamendo/jamendo.py:403
 #, python-format
-msgid "The jamendo server returned code %s"
-msgstr "El servidor de jamendo devolvió el código %s"
+msgid "The Jamendo server returned code %s."
+msgstr "El servidor de Jamendo devolvió el código %s."
+
+#. Translators: time formatting (in Python strftime format) for the Jamendo plugin
+#. for times longer than an hour
+#: ../src/plugins/jamendo/jamendo.py:635
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#. Translators: time formatting (in Python strftime format) for the Jamendo plugin
+#. for times shorter than an hour
+#: ../src/plugins/jamendo/jamendo.py:638
+msgid "%M:%S"
+msgstr "%M:%S"
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -2438,20 +2467,16 @@ msgid "<b>Language</b>"
 msgstr "<b>Idioma</b>"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
-msgid "Close"
-msgstr "Cerrar"
+msgid "Download Movie Subtitles"
+msgstr "Descargar subtítulos de la película"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:3
-msgid "Play with subtitle"
-msgstr "Reproducir con subtítulos"
+msgid "Subtitle _language:"
+msgstr "_Idioma del subtítulo:"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:4
-msgid "Subtitle language;"
-msgstr "Idioma del subtítulo;"
-
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:5
-msgid "_Search"
-msgstr "_Buscar"
+msgid "_Play with Subtitle"
+msgstr "_Reproducir con subtítulos"
 
 #: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:1
 msgid "Look for a subtitle for the currently playing movie"
@@ -2719,11 +2744,6 @@ msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Mostrando %i - %i de %i coincidencia"
 msgstr[1] "Mostrando %i - %i de %i coincidencias"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:367
-#: ../src/plugins/youtube/youtube.ui.h:2
-msgid "Search Results"
-msgstr "Resultados de la búsqueda"
-
 #: ../src/plugins/tracker/totem-tracker-widget.c:417
 msgid "Page"
 msgstr "Página"
@@ -2880,6 +2900,25 @@ msgstr ""
 "Después de que pulse Aceptar, Totem esperará a que se conecte con winpdb o "
 "rpdb2. Si no ha establecido una contraseña para el depurador en GConf, se "
 "usará la contraseña predeterminada («totem»)."
+
+#~ msgid "Jamendo totem plugin"
+#~ msgstr "Complemento de Jamendo para Totem"
+
+#~ msgid ""
+#~ "Ogg\n"
+#~ "MP3"
+#~ msgstr ""
+#~ "Ogg\n"
+#~ "MP3"
+
+#~ msgid "Search results"
+#~ msgstr "Resultados de la búsqueda"
+
+#~ msgid "Close"
+#~ msgstr "Cerrar"
+
+#~ msgid "_Search"
+#~ msgstr "_Buscar"
 
 #~ msgid "TV-Out"
 #~ msgstr "Salida de TV"
