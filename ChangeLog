@@ -1,5 +1,13 @@
 2009-01-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-object.c (totem_add_to_playlist_and_play):
+	Fix totem_add_to_playlist_and_play() to add files to
+	the playlist and play them, even if the playlist is empty,
+	spotted by Philip Withnall <philip@tecnocode.co.uk>
+	(Closes: #563961)
+
+2009-01-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_get_metadata_string):
 	* src/backend/bacon-video-widget-xine.c

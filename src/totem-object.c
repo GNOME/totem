@@ -304,15 +304,14 @@ totem_add_to_playlist_and_play (Totem *totem,
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
-	end = totem_playlist_get_last (totem->playlist);
 	playlist_changed = totem_playlist_add_mrl_with_cursor (totem->playlist, uri, display_name);
 	if (add_to_recent != FALSE)
 		gtk_recent_manager_add_item (totem->recent_manager, uri);
+	end = totem_playlist_get_last (totem->playlist);
 
 	totem_signal_unblock_by_data (totem->playlist, totem);
 
-	if (playlist_changed && end != -1)
-	{
+	if (playlist_changed && end != -1) {
 		char *mrl, *subtitle;
 
 		subtitle = NULL;
