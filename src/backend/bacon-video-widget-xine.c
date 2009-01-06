@@ -3813,6 +3813,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 	if (string != NULL && string[0] == '\0')
 		string = NULL;
 
+	/* Remove line feeds */
+	if (strstr (string, "\n") != NULL)
+		g_strdelimit (string, "\n", " ");
+
 	if (string != NULL)
 	{
 		if (g_utf8_validate (string, -1, NULL) == FALSE)

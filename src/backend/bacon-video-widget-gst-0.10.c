@@ -4288,6 +4288,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       g_assert_not_reached ();
     }
 
+  /* Remove line feeds */
+  if (string && strstr (string, "\n") != NULL)
+    g_strdelimit (string, "\n", ' ');
+
   if (res && string && g_utf8_validate (string, -1, NULL)) {
     g_value_take_string (value, string);
     GST_DEBUG ("%s = '%s'", get_metadata_type_name (type), string);

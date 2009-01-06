@@ -1,5 +1,14 @@
 2009-01-06  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_metadata_string):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_get_metadata_string):
+	Remove linefeeds from strings, and replace them by spaces
+	(Closes: #566455)
+
+2009-01-06  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-uri.c (totem_uri_get_subtitle_for_uri):
 	Reduce the scope of subtitle_ext_upper
 
