@@ -292,7 +292,7 @@ totem_uri_exists (const char *uri)
 static char *
 totem_uri_get_subtitle_for_uri (const char *uri)
 {
-	char *subtitle, *subtitle_ext_upper;
+	char *subtitle;
 	guint len, i;
 	gint suffix;
 
@@ -323,6 +323,7 @@ totem_uri_get_subtitle_for_uri (const char *uri)
 
 	/* Search for any files with one of our known subtitle extensions */
 	for (i = 0; i < G_N_ELEMENTS (subtitle_ext) ; i++) {
+		char *subtitle_ext_upper;
 		memcpy (subtitle + suffix + 1, subtitle_ext[i], 3);
 
 		if (totem_uri_exists (subtitle))
