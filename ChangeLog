@@ -1,5 +1,15 @@
 2009-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_set_video_property):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_set_video_property): Patch from
+	Anssi Hannula <anssi@mandriva.org> to avoid
+	reseting the colour balance sliders when they're
+	at the maximum or minimum (Closes: #567279)
+
+2009-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* data/mime-type-list.txt: Add application/vnd.ms-wpl
 	as a supported playlist
 

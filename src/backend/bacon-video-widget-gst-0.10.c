@@ -3693,7 +3693,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   
   GST_DEBUG ("set video property type %d to value %d", type, value);
   
-  if ( !(value < 65535 && value > 0) )
+  if ( !(value <= 65535 && value >= 0) )
     return;
 
   if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
