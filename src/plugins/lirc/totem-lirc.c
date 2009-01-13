@@ -92,6 +92,10 @@ typedef struct
 #define TOTEM_IR_COMMAND_MUTE "mute"
 #define TOTEM_IR_COMMAND_TOGGLE_ASPECT "toggle_aspect"
 
+#define TOTEM_IR_SETTING "setting_"
+#define TOTEM_IR_SETTING_TOGGLE_REPEAT "setting_repeat"
+#define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
+
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
@@ -136,6 +140,17 @@ totem_lirc_get_url (const char *str)
 	if (s == NULL)
 		return NULL;
 	return g_strdup (s + 1);
+}
+
+static TotemRemoteSetting
+totem_lirc_to_setting (const gchar *str, char **url)
+{
+	if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_REPEAT) == 0)
+		return TOTEM_REMOTE_SETTING_REPEAT;
+	else if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_SHUFFLE) == 0)
+		return TOTEM_REMOTE_SETTING_SHUFFLE;
+	else
+		return -1;
 }
 
 static TotemRemoteCommand
@@ -233,9 +248,20 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 			break;
 		}
 
-		cmd = totem_lirc_to_command (str, &url);
+		if (g_str_has_prefix (str, TOTEM_IR_SETTING) != FALSE) {
+			TotemRemoteSetting setting;
 
-		totem_action_remote (pi->totem, cmd, url);
+			setting = totem_lirc_to_setting (str, &url);
+			if (setting >= 0) {
+				gboolean value;
+
+				value = totem_action_remote_get_setting (pi->totem, setting);
+				totem_action_remote_set_setting (pi->totem, setting, !value);
+			}
+		} else {
+			cmd = totem_lirc_to_command (str, &url);
+			totem_action_remote (pi->totem, cmd, url);
+		}
 		g_free (url);
 	} while (TRUE);
 
