@@ -262,8 +262,8 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 
 void
 bacon_video_widget_properties_from_metadata (BaconVideoWidgetProperties *props,
-					     const char *title,
 					     const char *artist,
+					     const char *title,
 					     const char *album)
 {
 	g_return_if_fail (props != NULL);

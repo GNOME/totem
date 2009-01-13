@@ -1,5 +1,11 @@
 2009-01-13  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/properties/bacon-video-widget-properties.c
+	(bacon_video_widget_properties_from_metadata): Fix artist
+	title mixup, spotted by Sebastian Keller (Closes: #567580)
+
+2009-01-13  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/lirc/totem-lirc.c (totem_lirc_to_setting),
 	(totem_lirc_read_code):
 	* src/plugins/lirc/totem_lirc_default: Patch from
