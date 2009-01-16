@@ -1,5 +1,9 @@
 2009-01-16  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.ui: Move burn menu item above the properties
+
+2009-01-16  Bastien Nocera  <hadess@hadess.net>
+
 	Patch from Philippe Rouquier <bonfire-app@wanadoo.fr> and
 	Luis Medinas <lmedinas@gnome.org> to add a Brasero plugin
 
@@ -8,34 +12,6 @@
 	* src/plugins/brasero-disc-recorder/*:
 	Add Brasero plugin to allow creating VCDs from playing video
 	files, and duplicate VCDs and DVDs (Closes: #565383)
-
-2009-01-16  Bastien Nocera  <hadess@hadess.net>
-
-	reviewed by: <delete if not using a buddy>
-
-	* configure.in:
-	* data/totem.ui:
-	* src/plugins/brasero-disc-recorder/Makefile.am:
-	* src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plu
-	gin.in:
-	* src/plugins/brasero-disc-recorder/totem-disc-recorder.c
-	(totem_disc_recorder_plugin_start_burning),
-	(totem_disc_recorder_plugin_write_video_project),
-	(totem_disc_recorder_plugin_burn),
-	(totem_disc_recorder_plugin_copy),
-	(totem_disc_recorder_file_closed),
-	(totem_disc_recorder_file_opened), (impl_activate),
-	(impl_deactivate), (totem_disc_recorder_plugin_finalize),
-	(totem_disc_recorder_plugin_class_init),
-	(totem_disc_recorder_plugin_init):
-	* src/plugins/screenshot/totem-gallery-progress.c
-	(totem_gallery_progress_finalize), (dialog_response_callback),
-	(process_line), (stdout_watch_cb), (totem_gallery_progress_run):
-	* src/plugins/screenshot/totem-gallery.c
-	(dialog_response_callback):
-	* src/plugins/screenshot/totem-screenshot-plugin.c
-	(dialog_response_cb), (take_gallery_action_cb):
-	* src/totem-video-thumbnailer.c:
 
 2009-01-13  Bastien Nocera  <hadess@hadess.net>
 
