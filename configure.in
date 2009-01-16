@@ -50,7 +50,7 @@ AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot"
+allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot brasero-disc-recorder"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -599,6 +599,15 @@ for plugin in ${used_plugins}; do
 				add_plugin="0"
 			fi
 		;;
+		brasero-disc-recorder)
+			dnl this is only needed to use brasero icons
+			PKG_CHECK_MODULES(DISC_RECORDER, libxml-2.0 >= 2.6.0 gtk+-x11-2.0,
+					[BUILD_RECORDER=yes], [BUILD_RECORDER=no])
+			if test "${BUILD_RECORDER}" != "yes" ; then
+				plugin_error_or_ignore "you need libxml-2.0 >= 2.6.0 and gtk+-x11-2.0 to use the brasero-disc-recorder plugin"
+				add_plugin="0"
+			fi
+		;;
 	esac
 
 	# Add the specified plugin
@@ -864,6 +873,7 @@ src/plugins/youtube/Makefile
 src/plugins/pythonconsole/Makefile
 src/plugins/publish/Makefile
 src/plugins/jamendo/Makefile
+src/plugins/brasero-disc-recorder/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
 data/Makefile
