@@ -553,7 +553,7 @@ on_recent_file_item_activated (GtkAction *action,
 	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
 	uri = gtk_recent_info_get_uri (recent_info);
 
-	totem_add_to_playlist_and_play (totem, uri, NULL, TRUE);
+	totem_add_to_playlist_and_play (totem, uri, NULL, FALSE);
 }
 
 static gint

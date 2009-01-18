@@ -315,7 +315,7 @@ totem_add_to_playlist_and_play (Totem *totem,
 		char *mrl, *subtitle;
 
 		subtitle = NULL;
-		totem_playlist_set_current (totem->playlist, end + 1);
+		totem_playlist_set_current (totem->playlist, end);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		totem_action_set_mrl_and_play (totem, mrl, subtitle);
 		g_free (mrl);

@@ -1,3 +1,13 @@
+2009-01-18  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-menu.c (on_recent_file_item_activated):
+	Don't add the recent file to the recent files list
+	*again*
+	* src/totem-object.c (totem_add_to_playlist_and_play):
+	Don't try to play past the last item in the playlist,
+	so that clicking on a menu item doesn't play the
+	current file again, but the one we just added
+
 2009-01-16  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem.ui: Move burn menu item above the properties
