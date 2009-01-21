@@ -1,5 +1,14 @@
 2009-01-21  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c (totem_playlist_add_one_mrl):
+	Don't ever use empty titles as the display name
+
+	* src/plugins/coherence_upnp/coherence_upnp.py: Add a shadow
+	around the treeview and use add_to_playlist_and_play
+	for the double-click
+
+2009-01-21  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem.c: Fix retval
 
 2009-01-20  Bastien Nocera  <hadess@hadess.net>

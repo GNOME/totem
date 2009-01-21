@@ -1658,7 +1658,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	if (display_name == NULL)
+	if (display_name == NULL || *display_name == '\0')
 		filename_for_display = totem_playlist_mrl_to_title (mrl);
 	else
 		filename_for_display = g_strdup (display_name);

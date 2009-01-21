@@ -18,6 +18,7 @@ class UPnPClient(totem.Plugin):
     def __init__ (self):
         totem.Plugin.__init__(self)
         self.ui = TreeWidget()
+        self.ui.window.set_shadow_type(gtk.SHADOW_IN)
         self.ui.cb_item_right_click = self.button_pressed
         self.ui.window.show_all()
         selection = self.ui.treeview.get_selection()
@@ -104,8 +105,7 @@ class UPnPClient(totem.Plugin):
         self.totem_object = totem_object
 
         def load_and_play(url):
-            totem_object.action_remote(totem.REMOTE_COMMAND_REPLACE,url)
-            totem_object.action_remote(totem.REMOTE_COMMAND_PLAY,url)
+            totem_object.add_to_playlist_and_play (url, '', True)
 
         self.ui.cb_item_dbl_click = load_and_play
 
