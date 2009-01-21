@@ -3009,7 +3009,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem)
 	}
 }
 
-int
+gboolean
 window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, Totem *totem)
 {
 	return totem_action_handle_scroll (totem, event->direction);
