@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-05 21:00+0100\n"
-"PO-Revision-Date: 2009-01-06 21:12+0100\n"
+"POT-Creation-Date: 2009-01-22 09:18+0100\n"
+"PO-Revision-Date: 2009-01-22 09:25+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -963,7 +963,7 @@ msgstr "Filen är inte en giltig .desktop-fil"
 #: ../src/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr ""
+msgstr "Okänd Version \"%s\" i skrivbordsfil"
 
 #: ../src/eggdesktopfile.c:958
 #, c-format
@@ -978,17 +978,17 @@ msgstr "Programmet accepterar inte dokument på kommandoraden"
 #: ../src/eggdesktopfile.c:1168
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "Okänd startflagga: %d"
 
 #: ../src/eggdesktopfile.c:1373
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Kan inte skicka dokument-URI:er till ett \"Type=Link\"-skrivbordsobjekt"
 
 #: ../src/eggdesktopfile.c:1392
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Inte ett startbart objekt"
 
 #: ../src/eggfileformatchooser.c:63
 #, c-format
@@ -1013,7 +1013,7 @@ msgstr "Inaktivera anslutning till sessionshanterare"
 
 #: ../src/eggsmclient.c:227
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Ange fil som innehåller sparad konfiguration"
 
 #: ../src/eggsmclient.c:227
 msgid "FILE"
@@ -1021,7 +1021,7 @@ msgstr "FIL"
 
 #: ../src/eggsmclient.c:230
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Ange id för sessionshantering"
 
 #: ../src/eggsmclient.c:230
 msgid "ID"
@@ -1029,11 +1029,11 @@ msgstr "ID"
 
 #: ../src/eggsmclient.c:244
 msgid "Session management options:"
-msgstr ""
+msgstr "Flaggor för sessionshantering:"
 
 #: ../src/eggsmclient.c:245
 msgid "Show session management options"
-msgstr ""
+msgstr "Visa flaggor för sessionshantering"
 
 #: ../src/totem-cell-renderer-video.c:102
 msgid "Unknown video"
@@ -1261,11 +1261,11 @@ msgstr "MP3 ShoutCast-spellista"
 
 #: ../src/totem-playlist.c:151
 msgid "MP3 audio (streamed)"
-msgstr ""
+msgstr "MP3-ljud (strömmande)"
 
 #: ../src/totem-playlist.c:152
 msgid "MP3 audio (streamed, DOS format)"
-msgstr ""
+msgstr "MP3-ljud (strömmande, DOS-format)"
 
 #: ../src/totem-playlist.c:153
 msgid "XML Shareable Playlist"
@@ -1579,31 +1579,31 @@ msgstr "Upplösning"
 msgid "Duration"
 msgstr "Speltid"
 
-#: ../src/totem-uri.c:454
+#: ../src/totem-uri.c:455
 msgid "All files"
 msgstr "Alla filer"
 
-#: ../src/totem-uri.c:459
+#: ../src/totem-uri.c:460
 msgid "Supported files"
 msgstr "Filer som stöds"
 
-#: ../src/totem-uri.c:471
+#: ../src/totem-uri.c:472
 msgid "Audio files"
 msgstr "Ljudfiler"
 
-#: ../src/totem-uri.c:479
+#: ../src/totem-uri.c:480
 msgid "Video files"
 msgstr "Videofiler"
 
-#: ../src/totem-uri.c:489
+#: ../src/totem-uri.c:490
 msgid "Subtitle files"
 msgstr "Undertextfiler"
 
-#: ../src/totem-uri.c:554
+#: ../src/totem-uri.c:555
 msgid "Select Text Subtitles"
 msgstr "Välj undertexter"
 
-#: ../src/totem-uri.c:608
+#: ../src/totem-uri.c:609
 msgid "Select Movies or Playlists"
 msgstr "Välj filmer eller spellistor"
 
@@ -1856,33 +1856,33 @@ msgstr "Surround"
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4595
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4599
 #, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "En för gammal version av GStreamer är installerad."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4602
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4606
 #, c-format
 msgid "Media contains no supported video streams."
 msgstr "Mediet innehåller inga videoströmmar som stöds."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4977
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4981
 #, c-format
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Misslyckades med att skapa ett GStreamer-spelobjekt. Kontrollera din installation av GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5108
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5225
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5112
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5229
 #, c-format
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna videoutgången. Den kanske inte är tillgänglig. Välj en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5120
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5124
 #, c-format
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta videoutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan videoutgång i väljaren för multimediasystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5155
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5159
 #, c-format
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna ljudutgången. Du kanske inte har rättigheter att öppna ljudutgången, eller så kanske inte ljudservern körs. Välj en annan ljudutgång i väljaren för multimediasystem."
@@ -1890,7 +1890,7 @@ msgstr "Misslyckades med att öppna ljudutgången. Du kanske inte har rättighet
 # FIXME: Bör ha punkt på slutet.
 # http://bugzilla.gnome.org/show_bug.cgi?id=318817
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5175
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5179
 #, c-format
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta ljudutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan ljudutgång i väljaren för multimediasystem."
@@ -2027,24 +2027,24 @@ msgstr "Ljudkodeken \"%s\" hanteras inte. Du kan behöva installera ytterligare 
 msgid "This is an audio-only file and there is no audio output available."
 msgstr "Detta är en fil med endast ljud och det finns ingen ljudutmatning tillgänglig."
 
-#: ../src/backend/bacon-video-widget-xine.c:4021
-#: ../src/backend/bacon-video-widget-xine.c:4068
-#: ../src/backend/bacon-video-widget-xine.c:4090
+#: ../src/backend/bacon-video-widget-xine.c:4025
+#: ../src/backend/bacon-video-widget-xine.c:4072
+#: ../src/backend/bacon-video-widget-xine.c:4094
 #, c-format
 msgid "Language %d"
 msgstr "Språk %d"
 
-#: ../src/backend/bacon-video-widget-xine.c:4179
+#: ../src/backend/bacon-video-widget-xine.c:4183
 #, c-format
 msgid "No video to capture."
 msgstr "Ingen video att fånga."
 
-#: ../src/backend/bacon-video-widget-xine.c:4187
+#: ../src/backend/bacon-video-widget-xine.c:4191
 #, c-format
 msgid "Video codec is not handled."
 msgstr "Videokodeken hanteras inte."
 
-#: ../src/backend/bacon-video-widget-xine.c:4198
+#: ../src/backend/bacon-video-widget-xine.c:4202
 #, c-format
 msgid "Movie is not playing."
 msgstr "Filmen spelas inte upp."
@@ -2160,6 +2160,62 @@ msgstr "Totem Bemused Server"
 msgid "Totem Bemused Server version 1.0"
 msgstr "Totem Bemused Server version 1.0"
 
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:77
+msgid "_Create Video Disc..."
+msgstr "_Skapa videoskiva..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
+msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+msgstr "Skapa en video-dvd eller en (s)vcd från aktuellt öppnad film"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
+msgid "Copy Vide_o DVD..."
+msgstr "Kopiera vide_o-dvd..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
+msgid "Copy the currently playing video DVD"
+msgstr "Kopiera den för närvarande spelande video-dvd"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+msgid "Copy Vide_o (S)VCD..."
+msgstr "Kopiera vide_o-(s)vcd..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:84
+msgid "Copy the currently playing (S)VCD"
+msgstr "Kopiera för närvarande spelande (s)vcd"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
+msgid "The video disc could not be duplicated."
+msgstr "Videoskivan kunde inte kopieras."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:128
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:279
+msgid "The movie could not be recorded."
+msgstr "Filmen kunde inte spelas in."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:160
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:170
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:266
+msgid "Unable to write a project."
+msgstr "Kunde inte skriva ett projekt."
+
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+msgid "Records (S)VCDs or video DVDs"
+msgstr "Spelar in (s)vcd eller video-dvd"
+
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
+msgid "Video Disc Recorder"
+msgstr "Videoskivsinspelare"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+msgid "Coherence DLNA/UPnP Client"
+msgstr "Coherence DLNA/UPnP-klient"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+msgid "A DLNA/UPnP client for Totem powered by Coherence"
+msgstr "En DLNA/UPnP-klient för Totem som drivs av Coherence"
+
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "Status för snabbmeddelande"
@@ -2192,7 +2248,7 @@ msgstr "Efter artist"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:2
 msgid "By tag"
-msgstr ""
+msgstr "Efter tagg"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:3
 msgid "Jamendo Album Page"
@@ -2200,7 +2256,7 @@ msgstr "Jamendos albumsida"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:4
 msgid "Jamendo Plugin Configuration"
-msgstr ""
+msgstr "Konfiguration för Jamendo-insticksmodul"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:5
 msgid "Latest Releases"
@@ -2212,7 +2268,7 @@ msgstr "Antal album att _hämta"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:7
 msgid "Popular"
-msgstr ""
+msgstr "Populär"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:8
 msgid "Preferred audio _format"
@@ -2334,12 +2390,12 @@ msgstr "Infraröd fjärrkontroll"
 msgid "Support infrared remote control"
 msgstr "Stöd för infraröd fjärrkontroll"
 
-#: ../src/plugins/lirc/totem-lirc.c:261
+#: ../src/plugins/lirc/totem-lirc.c:287
 #, c-format
 msgid "Couldn't initialize lirc."
 msgstr "Kunde inte initiera lirc."
 
-#: ../src/plugins/lirc/totem-lirc.c:270
+#: ../src/plugins/lirc/totem-lirc.c:296
 #, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "Kunde inte läsa lirc-konfiguration."
