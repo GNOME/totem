@@ -125,6 +125,7 @@ totem_session_restore (Totem *totem, char **filenames)
 {
 	char *mrl, *uri, *subtitle;
 
+	g_return_if_fail (filenames != NULL);
 	g_return_if_fail (filenames[0] != NULL);
 	uri = filenames[0];
 	subtitle = NULL;
