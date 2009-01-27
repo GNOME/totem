@@ -1,17 +1,17 @@
 # Finnish messages for totem.
-# Copyright (C) 2002-2008 Free Software Foundation, Inc.
+# Copyright (C) 2002-2009 Free Software Foundation, Inc.
 # Suomennos: http://gnome.fi/
 #
 # Tommi Vainikainen <Tommi.Vainikainen@iki.fi>, 2003-2005, 2008.
-# Ilkka Tuohela <hile@iki.fi>, 2002,2003,2005-2008.
+# Ilkka Tuohela <hile@iki.fi>, 2002,2003,2005-2009.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-11 20:19+0200\n"
-"PO-Revision-Date: 2009-01-11 20:19+0200\n"
+"POT-Creation-Date: 2009-01-27 18:00+0300\n"
+"PO-Revision-Date: 2009-01-27 18:05+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1159,7 +1159,7 @@ msgstr "Tekijänoikeudet © 2002-2008 Bastien Nocera"
 #: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
 msgid "translator-credits"
 msgstr ""
-"Ilkka Tuohela, 2002-2008\n"
+"Ilkka Tuohela, 2002-2009\n"
 "Tommi Vainikainen, 2003-2005, 2007\n"
 "Timo Jyrinki, 2008-2009\n"
 "\n"
@@ -2222,6 +2222,62 @@ msgstr "Totemin Bemused-palvelin"
 msgid "Totem Bemused Server version 1.0"
 msgstr "Totemin Bemused-palvelimen versio 1.0"
 
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:77
+msgid "_Create Video Disc..."
+msgstr "_Luo videolevy..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
+msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+msgstr "Luo DVD- tai S(VCD)-videolevy auki olevasta elokuvasta"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
+msgid "Copy Vide_o DVD..."
+msgstr "Kopioi video-DVD..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
+msgid "Copy the currently playing video DVD"
+msgstr "Kopioi toistettava video-DVD"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+msgid "Copy Vide_o (S)VCD..."
+msgstr "Kopioi vide_o-(S)VCD..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:84
+msgid "Copy the currently playing (S)VCD"
+msgstr "Kopioi toistettava (S)VCD"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
+msgid "The video disc could not be duplicated."
+msgstr "Videolevyä ei voitu kopioida."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:128
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:279
+msgid "The movie could not be recorded."
+msgstr "Elokuvaa ei voitu nauhoittaa."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:160
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:170
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:266
+msgid "Unable to write a project."
+msgstr "Projektia ei voitu kirjoittaa."
+
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+msgid "Records (S)VCDs or video DVDs"
+msgstr "Kirjoittaa (S)VCD- ja DVD-videolevyjä"
+
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
+msgid "Video Disc Recorder"
+msgstr "Videolevyjen nauhoitin"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+msgid "Coherence DLNA/UPnP Client"
+msgstr "Coherence DLAN/UPnP-asiakas"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+msgid "A DLNA/UPnP client for Totem powered by Coherence"
+msgstr "Coherencen toteuttama DLNA/UPnP-asiakas totemille"
+
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "Pikaviestimen tila"
@@ -2397,12 +2453,12 @@ msgstr "Kauko-ohjaus infrapunalla"
 msgid "Support infrared remote control"
 msgstr "Tuki infrapunaa käyttäville kauko-ohjaimille"
 
-#: ../src/plugins/lirc/totem-lirc.c:261
+#: ../src/plugins/lirc/totem-lirc.c:287
 #, c-format
 msgid "Couldn't initialize lirc."
 msgstr "LIRC:iä ei voitu alustaa."
 
-#: ../src/plugins/lirc/totem-lirc.c:270
+#: ../src/plugins/lirc/totem-lirc.c:296
 #, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "LIRC:in asetuksia ei voitu lukea."
