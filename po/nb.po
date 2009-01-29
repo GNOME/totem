@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.25.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 15:52+0100\n"
-"PO-Revision-Date: 2009-01-12 15:58+0100\n"
+"POT-Creation-Date: 2009-01-29 16:21+0100\n"
+"PO-Revision-Date: 2009-01-29 16:24+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -2205,6 +2205,62 @@ msgstr "Totem Bemused-tjener"
 msgid "Totem Bemused Server version 1.0"
 msgstr "Totem Bemused-tjener versjon 1.0"
 
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:77
+msgid "_Create Video Disc..."
+msgstr "_Lag videoplate..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
+msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+msgstr "Lag en video-DVD eller en (S)VCD med denne filmen"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
+msgid "Copy Vide_o DVD..."
+msgstr "Kopier video-DVD..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
+msgid "Copy the currently playing video DVD"
+msgstr "Kopier (S)VCDen som spilles av"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+msgid "Copy Vide_o (S)VCD..."
+msgstr "Kopier vide_o-(S)VCD..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:84
+msgid "Copy the currently playing (S)VCD"
+msgstr "Kopier (S)VCD som spilles av"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
+msgid "The video disc could not be duplicated."
+msgstr "Videoplaten kunne ikke kopieres."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:128
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:279
+msgid "The movie could not be recorded."
+msgstr "Kunne ikke ta opp filmen."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:160
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:170
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:266
+msgid "Unable to write a project."
+msgstr "Kan ikke skrive et prosjekt."
+
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+msgid "Records (S)VCDs or video DVDs"
+msgstr ""
+
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
+msgid "Video Disc Recorder"
+msgstr "Opptak av videoplater"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+msgid "Coherence DLNA/UPnP Client"
+msgstr "Coherence DLNA/UPnP klient"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+msgid "A DLNA/UPnP client for Totem powered by Coherence"
+msgstr ""
+
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "Status for lynmeldingsklient"
@@ -2281,7 +2337,9 @@ msgstr "Jamendo"
 #: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
 msgid ""
 "Listen to the large collection of Creative Commons licensed music on Jamendo."
-msgstr "Lytt til den store samlingen musikk lisensiert under Creative Commons på Jamendp."
+msgstr ""
+"Lytt til den store samlingen musikk lisensiert under Creative Commons på "
+"Jamendp."
 
 #: ../src/plugins/jamendo/jamendo.py:56
 msgid "You need to install the Python simplejson module."
@@ -2379,12 +2437,12 @@ msgstr "Infrarød fjernkontroll"
 msgid "Support infrared remote control"
 msgstr "Støtte for infrarød fjernkontroll"
 
-#: ../src/plugins/lirc/totem-lirc.c:261
+#: ../src/plugins/lirc/totem-lirc.c:287
 #, c-format
 msgid "Couldn't initialize lirc."
 msgstr "Kunne ikke initiere lirc."
 
-#: ../src/plugins/lirc/totem-lirc.c:270
+#: ../src/plugins/lirc/totem-lirc.c:296
 #, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "Kunne ikke lese konfigurasjon for lirc."
