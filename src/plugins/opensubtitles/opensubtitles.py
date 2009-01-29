@@ -461,12 +461,14 @@ class OpenSubtitles(totem.Plugin):
 	self.progress.set_fraction(0.0)
 	self.find_button.set_sensitive(True)
         self.apply_button.set_sensitive(False)
+        self.treeview.set_sensitive(True)
         return False
 
     def os_download_and_apply(self):
         self.apply_button.set_sensitive(False)
         self.find_button.set_sensitive(False)
         self.action.set_sensitive(False)
+        self.treeview.set_sensitive(False)
         self.os_save_selected_subtitle()
 
     # Callbacks
