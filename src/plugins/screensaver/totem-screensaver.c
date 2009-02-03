@@ -51,6 +51,7 @@ typedef struct
 {
 	TotemPlugin   parent;
 	TotemObject  *totem;
+	BaconVideoWidget *bvw;
 
 	TotemScrsaver *scr;
 	guint          handler_id_playing;
@@ -136,6 +137,12 @@ property_notify_cb (TotemObject *totem,
 }
 
 static void
+got_metadata_cb (BaconVideoWidget *bvw, TotemScreensaverPlugin *pi)
+{
+	totem_screensaver_update_from_state (pi->totem, pi);
+}
+
+static void
 lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 				      GConfEntry *entry, TotemScreensaverPlugin *pi)
 {
@@ -150,6 +157,8 @@ impl_activate (TotemPlugin *plugin,
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	GConfClient *gc;
 
+	pi->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+
 	gc = gconf_client_get_default ();
 	gconf_client_add_dir (gc, GCONF_PREFIX,
 			      GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
@@ -161,6 +170,10 @@ impl_activate (TotemPlugin *plugin,
 	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
 				"notify::playing",
 				G_CALLBACK (property_notify_cb),
+				pi);
+	pi->handler_id_playing = g_signal_connect (G_OBJECT (pi->bvw),
+				"got-metadata",
+				G_CALLBACK (got_metadata_cb),
 				pi);
 
 	pi->totem = g_object_ref (totem);
@@ -185,6 +198,7 @@ impl_deactivate	(TotemPlugin *plugin,
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
 
 	g_object_unref (pi->totem);
+	g_object_unref (pi->bvw);
 
 	totem_scrsaver_enable (pi->scr);
 }

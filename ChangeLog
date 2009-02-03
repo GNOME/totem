@@ -1,3 +1,11 @@
+2009-02-03  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/screensaver/totem-screensaver.c (got_metadata_cb),
+	(impl_activate), (impl_deactivate): Also update the screensaver
+	status when we get more metadata from the backend, as it's possible
+	we don't detect there's a video stream when playing starts
+	(Closes: #562847)
+
 2009-01-29  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
 	* src/plugins/opensubtitles/opensubtitles.py:
