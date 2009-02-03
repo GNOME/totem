@@ -1,3 +1,9 @@
+2009-02-03  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/totem-python-module.c (totem_python_module_load):
+	Ensure Python's initialised before loading any Python modules.
+	Makes Totem more robust in the case of bug #570087.
+
 ============ Version 2.25.90
 
 2009-02-03  Bastien Nocera  <hadess@hadess.net>

@@ -277,6 +277,8 @@ totem_python_module_load (GTypeModule *gmodule)
 	Py_ssize_t pos = 0;
 	gboolean res = FALSE;
 
+	g_return_val_if_fail (Py_IsInitialized (), FALSE);
+
 	state = pyg_gil_state_ensure();
 
 	main_module = PyImport_AddModule ("__main__");
