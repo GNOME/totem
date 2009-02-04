@@ -2661,7 +2661,12 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		g_free (mrl);
 		g_free (subtitle);
 	} else {
-		totem_action_next (totem);
+		if (totem_playlist_get_repeat (totem->playlist)
+				&& totem_playlist_get_last  (totem->playlist) == 0
+				&& totem_is_seekable (totem))
+			totem_action_seek_time (totem, 0);
+		else
+			totem_action_next (totem);
 	}
 
 	return FALSE;
