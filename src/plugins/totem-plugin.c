@@ -25,6 +25,16 @@
  *
  */
 
+/**
+ * SECTION:totem-plugin
+ * @short_description: plugin
+ * @stability: Unstable
+ * @include: totem-plugin.h
+ *
+ * #TotemPlugin is a general-purpose architecture for adding plugins to Totem, with
+ * derived support for different programming languages.
+ **/
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -91,7 +101,14 @@ totem_plugin_class_init (TotemPluginClass *klass)
 	klass->create_configure_dialog = NULL;
 	klass->is_configurable = is_configurable;
 
-	/* this should be a construction property, but due to the python plugin hack can't be */
+	/* FIXME: this should be a construction property, but due to the python plugin hack can't be */
+	/**
+	 * TotemPlugin:name:
+	 *
+	 * The plugin's name. It should be a construction property, but due to the Python plugin hack, it
+	 * can't be: do not change the name after construction. Should be the same as used for naming plugin-
+	 * specific resources.
+	 **/
 	g_object_class_install_property (object_class,
 					 PROP_NAME,
 					 g_param_spec_string ("name",

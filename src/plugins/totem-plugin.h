@@ -78,8 +78,13 @@ typedef struct
 	TotemPluginBooleanFunc		is_configurable;
 } TotemPluginClass;
 
-typedef enum
-{
+/**
+ * TotemPluginError:
+ * @TOTEM_PLUGIN_ERROR_ACTIVATION: there was an error activating the plugin
+ *
+ * Error codes returned by #TotemPlugin operations.
+ **/
+typedef enum {
 	TOTEM_PLUGIN_ERROR_ACTIVATION
 } TotemPluginError;
 

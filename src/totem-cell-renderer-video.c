@@ -26,6 +26,16 @@
  *
  */
 
+/**
+ * SECTION:totem-cell-renderer-video
+ * @short_description: video cell renderer
+ * @stability: Unstable
+ * @include: totem-cell-renderer-video.h
+ *
+ * #TotemCellRendererVideo is a #GtkCellRenderer for rendering video thumbnails, typically in a #TotemVideoList.
+ * It supports drawing a video thumbnail, and the video's title underneath.
+ **/
+
 #include "config.h"
 
 #include <glib.h>
@@ -94,17 +104,41 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	renderer_class->get_size = totem_cell_renderer_video_get_size;
 	renderer_class->render = totem_cell_renderer_video_render;
 
+	/**
+	 * TotemCellRendererVideo:thumbnail:
+	 *
+	 * A #GdkPixbuf of a thumbnail of the video to display. When rendered, it will scale to the width of the parent #GtkTreeView,
+	 * so can be as large as reasonable.
+	 **/
 	g_object_class_install_property (object_class, PROP_THUMBNAIL,
 				g_param_spec_object ("thumbnail", NULL, NULL,
 					GDK_TYPE_PIXBUF, G_PARAM_READWRITE));
+
+	/**
+	 * TotemCellRendererVideo:title:
+	 *
+	 * The title of the video, as it should be displayed. The default title is "Unknown video".
+	 **/
 	g_object_class_install_property (object_class, PROP_TITLE,
 				g_param_spec_string ("title", NULL, NULL,
 					_("Unknown video"), G_PARAM_READWRITE));
+
+	/**
+	 * TotemCellRendererVideo:alignment:
+	 *
+	 * A #PangoAlignment giving the text alignment for the video title. The default is %PANGO_ALIGN_CENTER.
+	 **/
 	g_object_class_install_property (object_class, PROP_ALIGNMENT,
 				g_param_spec_enum ("alignment", NULL, NULL,
 					PANGO_TYPE_ALIGNMENT,
 					PANGO_ALIGN_CENTER,
 					G_PARAM_READWRITE));
+
+	/**
+	 * TotemCellRendererVideo:use-placeholder:
+	 *
+	 * If %TRUE, a placeholder image should be used for the video thumbnail if a :thumbnail isn't provided.
+	 **/
 	g_object_class_install_property (object_class, PROP_USE_PLACEHOLDER,
 				g_param_spec_boolean ("use-placeholder", NULL, NULL,
 					FALSE, G_PARAM_READWRITE));

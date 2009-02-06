@@ -1,3 +1,17 @@
+2009-02-06  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/totem-object.c (totem_object_class_init),
+	(totem_object_get_property): Remove unused and broken error-shown
+	property.
+	* src/plugins/totem-plugin.c (totem_plugin_class_init):
+	* src/plugins/totem-plugin.h:
+	* src/totem-cell-renderer-video.c
+	(totem_cell_renderer_video_class_init):
+	* src/totem-interface.c:
+	* src/totem-video-list.c (totem_video_list_class_init):
+	* src/totem.h: Add the rest of the plugin-visible API documentation.
+	(Closes: #524119)
+
 2009-02-04  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem.c (on_eos_event): Patch from Maxim Ermilov

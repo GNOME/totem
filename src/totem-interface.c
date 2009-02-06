@@ -129,6 +129,18 @@ link_button_clicked_cb (GtkWidget *widget, Totem *totem)
 	g_free (browser);
 }
 
+/**
+ * totem_interface_error_with_link:
+ * @title: the error title
+ * @reason: the error reason (secondary text)
+ * @uri: the URI to open
+ * @label: a label for the URI's button, or %NULL to use @uri as the label
+ * @parent: the error dialogue's parent #GtkWindow
+ * @totem: a #TotemObject
+ *
+ * Display a modal error dialogue like totem_interface_error_dialog(),
+ * but add a button which will open @uri in a browser window.
+ **/
 void
 totem_interface_error_with_link (const char *title, const char *reason,
 				 const char *uri, const char *label, GtkWindow *parent, Totem *totem)

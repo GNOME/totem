@@ -26,6 +26,16 @@
  *
  */
 
+/**
+ * SECTION:totem-video-list
+ * @short_description: video list
+ * @stability: Unstable
+ * @include: totem-video-list.h
+ *
+ * #TotemVideoList is a #GtkTreeView designed for listing videos by their thumbnails using #TotemCellRendererVideo.
+ * It supports tooltips, loading the videos by activating tree view rows, and #GtkUIManager actions in the popup menu.
+ **/
+
 #include "config.h"
 
 #include <glib.h>
@@ -79,6 +89,13 @@ static gint totem_video_list_table_signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (TotemVideoList, totem_video_list, GTK_TYPE_TREE_VIEW)
 
+/**
+ * totem_video_list_new:
+ *
+ * Creates a new #TotemVideoList with default properties.
+ *
+ * Return value: a new #TotemVideoList
+ **/
 TotemVideoList *
 totem_video_list_new (void)
 {
@@ -103,18 +120,48 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	object_class->set_property = totem_video_list_set_property;
 	object_class->get_property = totem_video_list_get_property;
 	object_class->dispose = totem_video_list_dispose;
+	klass->starting_video = default_starting_video_cb;
 
+	/**
+	 * TotemVideoList:tooltip-column:
+	 *
+	 * The column number of the #GtkTreeModel column containing tooltips to be displayed by the video list.
+	 * If it's set to -1, no tooltips shall be displayed.
+	 **/
 	g_object_class_install_property (object_class, PROP_TOOLTIP_COLUMN,
 				g_param_spec_int ("tooltip-column", NULL, NULL,
 					-1, G_MAXINT, -1, G_PARAM_READWRITE));
+
+	/**
+	 * TotemVideoList:mrl-column:
+	 *
+	 * The column number of the #GtkTreeModel column containing MRLs of the videos in the video list.
+	 * If it's set to -1, video rows will not be activatable (e.g. by double-clicking them).
+	 **/
 	g_object_class_install_property (object_class, PROP_MRL_COLUMN,
 				g_param_spec_int ("mrl-column", NULL, NULL,
 					-1, G_MAXINT, -1, G_PARAM_READWRITE));
+
+	/**
+	 * TotemVideoList:totem:
+	 *
+	 * A #TotemObject for integration purposes.
+	 **/
+	/* FIXME: Is there no better way to do this? */
 	g_object_class_install_property (object_class, PROP_TOTEM,
 				g_param_spec_object ("totem", NULL, NULL,
 					TOTEM_TYPE_OBJECT, G_PARAM_READWRITE));
 
-	klass->starting_video = default_starting_video_cb;
+	/**
+	 * TotemVideoList::starting-video:
+	 * @video_list: the #TotemVideoList which received the signal
+	 * @tree_path: the #GtkTreePath of the video row about to be played
+	 *
+	 * The ::starting-video signal is emitted when a video row is activated, just before the video is
+	 * added to the playlist. It allows for the video's MRL in the #GtkTreeModel to be modified, for example.
+	 *
+	 * If this returns %TRUE, the video will be played; otherwise, it will not.
+	 */
 	totem_video_list_table_signals[STARTING_VIDEO] = g_signal_new ("starting-video",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
@@ -434,6 +481,14 @@ copy_location_action_callback (GtkAction *action, TotemVideoList *self)
 	g_list_free (l);
 }
 
+/**
+ * totem_video_list_get_ui_manager:
+ * @self: a #TotemVideoList
+ *
+ * Returns the #GtkUIManager in use by @self.
+ *
+ * Return value: @self's #GtkUIManager
+ **/
 GtkUIManager *
 totem_video_list_get_ui_manager (TotemVideoList *self)
 {

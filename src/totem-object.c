@@ -26,6 +26,15 @@
  *
  */
 
+/**
+ * SECTION:totem-object
+ * @short_description: main object
+ * @stability: Unstable
+ * @include: totem-object.h
+ *
+ * #TotemObject is the core object of Totem; a singleton which controls all Totem's main functions.
+ **/
+
 #include "config.h"
 
 #include <glib-object.h>
@@ -46,7 +55,6 @@ enum {
 	PROP_STREAM_LENGTH,
 	PROP_SEEKABLE,
 	PROP_CURRENT_TIME,
-	PROP_ERROR_SHOWN,
 	PROP_CURRENT_MRL
 };
 
@@ -82,30 +90,69 @@ totem_object_class_init (TotemObjectClass *klass)
 	object_class->get_property = totem_object_get_property;
 	object_class->finalize = totem_object_finalize;
 
+	/**
+	 * TotemObject:fullscreen:
+	 *
+	 * If %TRUE, Totem is in fullscreen mode.
+	 **/
 	g_object_class_install_property (object_class, PROP_FULLSCREEN,
 					 g_param_spec_boolean ("fullscreen", NULL, NULL,
 							       FALSE, G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:playing:
+	 *
+	 * If %TRUE, Totem is playing an audio or video file.
+	 **/
 	g_object_class_install_property (object_class, PROP_PLAYING,
 					 g_param_spec_boolean ("playing", NULL, NULL,
 							       FALSE, G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:stream-length:
+	 *
+	 * The length of the current stream, in milliseconds.
+	 **/
 	g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
 					 g_param_spec_int64 ("stream-length", NULL, NULL,
 							     G_MININT64, G_MAXINT64, 0,
 							     G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:current-time:
+	 *
+	 * The player's position (time) in the current stream, in milliseconds.
+	 **/
 	g_object_class_install_property (object_class, PROP_CURRENT_TIME,
 					 g_param_spec_int64 ("current-time", NULL, NULL,
 							     G_MININT64, G_MAXINT64, 0,
 							     G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:seekable:
+	 *
+	 * If %TRUE, the current stream is seekable.
+	 **/
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
 					 g_param_spec_boolean ("seekable", NULL, NULL,
 							       FALSE, G_PARAM_READABLE));
-	g_object_class_install_property (object_class, PROP_ERROR_SHOWN,
-					 g_param_spec_boolean ("error-shown", NULL, NULL,
-							       FALSE, G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:current-mrl:
+	 *
+	 * The MRL of the current stream.
+	 **/
 	g_object_class_install_property (object_class, PROP_CURRENT_MRL,
 					 g_param_spec_string ("current-mrl", NULL, NULL,
 							      NULL, G_PARAM_READABLE));
 
+	/**
+	 * TotemObject::file-opened:
+	 * @totem: the #TotemObject which received the signal
+	 * @mrl: the MRL of the opened stream
+	 *
+	 * The ::file-opened signal is emitted when a new stream is opened by Totem.
+	 */
 	totem_table_signals[FILE_OPENED] =
 		g_signal_new ("file-opened",
 				G_TYPE_FROM_CLASS (object_class),
@@ -115,6 +162,12 @@ totem_object_class_init (TotemObjectClass *klass)
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
 
+	/**
+	 * TotemObject::file-closed:
+	 * @totem: the #TotemObject which received the signal
+	 *
+	 * The ::file-closed signal is emitted when Totem closes a stream.
+	 */
 	totem_table_signals[FILE_CLOSED] =
 		g_signal_new ("file-closed",
 				G_TYPE_FROM_CLASS (object_class),
@@ -124,6 +177,17 @@ totem_object_class_init (TotemObjectClass *klass)
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0, G_TYPE_NONE);
 
+	/**
+	 * TotemObject::metadata-updated:
+	 * @totem: the #TotemObject which received the signal
+	 * @artist: the name of the artist, or %NULL
+	 * @title: the stream title, or %NULL
+	 * @album: the name of the stream's album, or %NULL
+	 * @track_number: the stream's track number
+	 *
+	 * The ::metadata-updated signal is emitted when the metadata of a stream is updated, typically
+	 * when it's being loaded.
+	 */
 	totem_table_signals[METADATA_UPDATED] =
 		g_signal_new ("metadata-updated",
 				G_TYPE_FROM_CLASS (object_class),
@@ -182,9 +246,6 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_SEEKABLE:
 		g_value_set_boolean (value, totem_is_seekable (totem));
-		break;
-	case PROP_ERROR_SHOWN:
-		//g_value_set_boolean (value, XXX);
 		break;
 	case PROP_CURRENT_MRL:
 		g_value_set_string (value, totem->mrl);
@@ -271,6 +332,15 @@ totem_get_video_widget (Totem *totem)
 	return GTK_WIDGET (totem->bvw);
 }
 
+/**
+ * totem_get_video_widget_backend_name:
+ * @totem: a #TotemObject
+ *
+ * Gets the name string of the backend video widget, typically the video library's
+ * version string (e.g. what's returned by gst_version_string()).
+ *
+ * Return value: the name string of the backend video widget
+ **/
 char *
 totem_get_video_widget_backend_name (Totem *totem)
 {
@@ -293,6 +363,15 @@ totem_get_current_time (Totem *totem)
 	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
+/**
+ * totem_add_to_playlist_and_play:
+ * @totem: a #TotemObject
+ * @uri: the URI to add to the playlist
+ * @display_name: the display name of the URI
+ * @add_to_recent: if %TRUE, add the URI to the recent items list
+ *
+ * Add @uri to the playlist and play it immediately.
+ **/
 void
 totem_add_to_playlist_and_play (Totem *totem,
 				const char *uri,
@@ -323,6 +402,14 @@ totem_add_to_playlist_and_play (Totem *totem,
 	}
 }
 
+/**
+ * totem_get_current_mrl:
+ * @totem: a #TotemObject
+ *
+ * Get the MRL of the current stream, or %NULL if nothing's playing.
+ *
+ * Return value: the MRL of the current stream
+ **/
 char *
 totem_get_current_mrl (Totem *totem)
 {
@@ -359,6 +446,14 @@ totem_get_short_title (Totem *totem)
 	return totem_playlist_get_current_title (totem->playlist, &custom);
 }
 
+/**
+ * totem_set_current_subtitle:
+ * @totem: a #TotemObject
+ * @subtitle_uri: the URI of the subtitle file to add
+ *
+ * Add the @subtitle_uri subtitle file to the playlist, setting it as the subtitle for the current
+ * playlist entry.
+ **/
 void
 totem_set_current_subtitle (Totem *totem, const char *subtitle_uri)
 {

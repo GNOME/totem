@@ -37,6 +37,42 @@
 
 G_BEGIN_DECLS
 
+/**
+ * TotemRemoteCommand:
+ * @TOTEM_REMOTE_COMMAND_UNKNOWN: unknown command
+ * @TOTEM_REMOTE_COMMAND_PLAY: play the current stream
+ * @TOTEM_REMOTE_COMMAND_PAUSE: pause the current stream
+ * @TOTEM_REMOTE_COMMAND_STOP: stop playing the current stream
+ * @TOTEM_REMOTE_COMMAND_PLAYPAUSE: toggle play/pause on the current stream
+ * @TOTEM_REMOTE_COMMAND_NEXT: play the next playlist item
+ * @TOTEM_REMOTE_COMMAND_PREVIOUS: play the previous playlist item
+ * @TOTEM_REMOTE_COMMAND_SEEK_FORWARD: seek forwards in the current stream
+ * @TOTEM_REMOTE_COMMAND_SEEK_BACKWARD: seek backwards in the current stream
+ * @TOTEM_REMOTE_COMMAND_VOLUME_UP: increase the volume
+ * @TOTEM_REMOTE_COMMAND_VOLUME_DOWN: decrease the volume
+ * @TOTEM_REMOTE_COMMAND_FULLSCREEN: toggle fullscreen mode
+ * @TOTEM_REMOTE_COMMAND_QUIT: quit the instance of Totem
+ * @TOTEM_REMOTE_COMMAND_ENQUEUE: enqueue a new playlist item
+ * @TOTEM_REMOTE_COMMAND_REPLACE: replace an item in the playlist
+ * @TOTEM_REMOTE_COMMAND_SHOW: show the Totem instance
+ * @TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS: toggle the control visibility
+ * @TOTEM_REMOTE_COMMAND_SHOW_PLAYING: return the current stream's metadata
+ * @TOTEM_REMOTE_COMMAND_SHOW_VOLUME: return the current volume
+ * @TOTEM_REMOTE_COMMAND_UP: go up (DVD controls)
+ * @TOTEM_REMOTE_COMMAND_DOWN: go down (DVD controls)
+ * @TOTEM_REMOTE_COMMAND_LEFT: go left (DVD controls)
+ * @TOTEM_REMOTE_COMMAND_RIGHT: go right (DVD controls)
+ * @TOTEM_REMOTE_COMMAND_SELECT: select the current item (DVD controls)
+ * @TOTEM_REMOTE_COMMAND_DVD_MENU: go to the DVD menu
+ * @TOTEM_REMOTE_COMMAND_ZOOM_UP: increase the zoom level
+ * @TOTEM_REMOTE_COMMAND_ZOOM_DOWN: decrease the zoom level
+ * @TOTEM_REMOTE_COMMAND_EJECT: eject the current disc
+ * @TOTEM_REMOTE_COMMAND_PLAY_DVD: play a DVD in a drive
+ * @TOTEM_REMOTE_COMMAND_MUTE: toggle mute
+ * @TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT: toggle the aspect ratio
+ *
+ * Represents a command which can be sent to a running Totem instance remotely.
+ **/
 typedef enum {
 	TOTEM_REMOTE_COMMAND_UNKNOWN,
 	TOTEM_REMOTE_COMMAND_PLAY,
