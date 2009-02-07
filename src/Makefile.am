@@ -4,7 +4,8 @@ bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-pre
 libexec_PROGRAMS =
 noinst_LTLIBRARIES =				\
 	libbaconmessageconnection.la		\
-	libtotem_player.la
+	libtotem_player.la			\
+	libtotem_main.la
 
 common_defines = \
 	-D_REENTRANT					\
@@ -46,16 +47,16 @@ BACONDIR=$(srcdir)/../../libbacon/src
 regenerate-built-sources:
 	EGGFILES="$(BACON_MESSAGE_CONNECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
-# Totem UI ltlibrary
+# Totem UI ltlibrary (used by browser plugins)
 
-libtotem_player_la_SOURCES =		\
-	totem-statusbar.c		\
-	totem-statusbar.h		\
-	totem-interface.c		\
-	totem-interface.h		\
-	totem-fullscreen.c		\
-	totem-fullscreen.h		\
-	totem-time-label.c		\
+libtotem_player_la_SOURCES = \
+	totem-statusbar.c	\
+	totem-statusbar.h	\
+	totem-interface.c	\
+	totem-interface.h	\
+	totem-fullscreen.c	\
+	totem-fullscreen.h	\
+	totem-time-label.c	\
 	totem-time-label.h
 
 libtotem_player_la_CPPFLAGS = \
@@ -70,7 +71,102 @@ libtotem_player_la_CFLAGS = \
 	$(AM_CFLAGS)
 
 libtotem_player_la_LDFLAGS = \
+	$(AM_LDFLAGS) 
+
+# Totem main library (used for main player; separate to allow gtk-doc to be used)
+
+libtotem_main_la_SOURCES = \
+	$(TOTEMMARSHALFILES)		\
+	totem-object.c			\
+	totem.h				\
+	totem-private.h			\
+	totem-cell-renderer-video.c	\
+	totem-cell-renderer-video.h	\
+	totem-video-list.c		\
+	totem-video-list.h		\
+	totem-preferences.c		\
+	totem-preferences.h		\
+	totem-dnd-menu.c		\
+	totem-dnd-menu.h 		\
+	totem-options.c			\
+	totem-options.h			\
+	totem-playlist.c		\
+	totem-playlist.h		\
+	eggfileformatchooser.c		\
+	eggfileformatchooser.h		\
+	totem-session.c			\
+	totem-session.h			\
+	totem-sidebar.c			\
+	totem-sidebar.h 		\
+	totem-open-location.c		\
+	totem-open-location.h 		\
+	totem-menu.c			\
+	totem-menu.h			\
+	totem-uri.c			\
+	totem-uri.h			\
+	ev-sidebar.c			\
+	ev-sidebar.h			\
+	totem-subtitle-encoding.c	\
+	totem-subtitle-encoding.h	\
+	totem-dvb-setup.c		\
+	totem-dvb-setup.h
+
+libtotem_main_la_CPPFLAGS = \
+	-I$(top_srcdir)/		\
+	-I$(srcdir)/backend		\
+	-I$(srcdir)/plugins		\
+	-I$(top_builddir)/data		\
+	$(common_defines)		\
+	$(AM_CPPFLAGS)
+
+libtotem_main_la_CFLAGS = \
+	$(DEPENDENCY_CFLAGS)		\
+	$(WARN_CFLAGS)			\
+	$(DBUS_CFLAGS)			\
+	$(MISSING_PLUGINS_CFLAGS)	\
+	$(AM_CFLAGS)
+
+libtotem_main_la_LDFLAGS = \
 	$(AM_LDFLAGS)
+
+libtotem_main_la_LIBADD = \
+	libtotem_player.la		\
+	backend/libbaconvideowidget.la	\
+	plugins/libtotemmodule.la	\
+	libbaconmessageconnection.la	\
+	$(DBUS_LIBS)			\
+	$(XVIDMODE_LIBS)		\
+	$(XTEST_LIBS)			\
+	$(X_LIBS)
+
+if WITH_SMCLIENT
+libtotem_main_la_SOURCES += \
+	eggdesktopfile.c \
+	eggdesktopfile.h \
+	eggsmclient.c \
+	eggsmclient.h \
+	eggsmclient-private.h \
+	$(NULL)
+libtotem_main_la_CFLAGS += $(SMCLIENT_CFLAGS)
+libtotem_main_la_LIBADD += $(SMCLIENT_LIBS)
+
+if WITH_SMCLIENT_XSMP
+libtotem_main_la_SOURCES += eggsmclient-xsmp.c
+libtotem_main_la_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
+endif
+if WITH_SMCLIENT_WIN32
+libtotem_main_la_SOURCES += eggsmclient-win32.c
+endif
+if WITH_SMCLIENT_QUARTZ
+libtotem_main_la_SOURCES += eggsmclient-osx.c
+endif
+endif
+
+if ENABLE_PYTHON
+libtotem_main_la_LIBADD += \
+	$(PYTHON_LIBS)						\
+	$(top_builddir)/bindings/python/totem-python.la
+endif
 
 # Totem
 
@@ -94,88 +190,28 @@ totemvideolist-marshal.h: totemvideolist-marshal.list Makefile
 totemvideolist-marshal.c: totemvideolist-marshal.h Makefile
 	( $(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header --body > totemvideolist-marshal.c )
 
-totem_SOURCES = 					\
-	totem.c totem.h					\
-	totem-object.c					\
-	$(TOTEMMARSHALFILES)				\
-	totem-private.h					\
-	totem-preferences.c totem-preferences.h		\
-	totem-dnd-menu.c totem-dnd-menu.h 		\
-	totem-options.c totem-options.h			\
-	totem-playlist.c totem-playlist.h		\
-	eggfileformatchooser.c eggfileformatchooser.h	\
-	totem-session.c totem-session.h	\
-	totem-sidebar.c totem-sidebar.h \
-	totem-open-location.c totem-open-location.h \
-	totem-menu.c totem-menu.h	\
-	totem-uri.c totem-uri.h		\
-	ev-sidebar.c ev-sidebar.h	\
-	totem-subtitle-encoding.c	\
-	totem-subtitle-encoding.h	\
-	totem-cell-renderer-video.c	\
-	totem-cell-renderer-video.h	\
-	totem-video-list.c		\
-	totem-video-list.h		\
-	totem-dvb-setup.c		\
-	totem-dvb-setup.h
+totem_SOURCES = totem.c
 
 totem_CPPFLAGS = \
 	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
-	-I$(srcdir)/plugins		\
-	-I$(top_builddir)/data		\
 	$(common_defines)		\
 	$(AM_CPPFLAGS)
 
 totem_CFLAGS = \
 	$(WARN_CFLAGS)			\
 	$(DEPENDENCY_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(MISSING_PLUGINS_CFLAGS) \
 	$(AM_CFLAGS)
 
 totem_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 totem_LDADD =						\
-	backend/libbaconvideowidget.la			\
-	plugins/libtotemmodule.la			\
-	libbaconmessageconnection.la			\
-	libtotem_player.la				\
+	libtotem_main.la				\
 	$(DEPENDENCY_LIBS)				\
 	$(XVIDMODE_LIBS)				\
-	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)					\
 	$(X_LIBS)
-
-if WITH_SMCLIENT
-totem_SOURCES += \
-	eggdesktopfile.c \
-	eggdesktopfile.h \
-	eggsmclient.c \
-	eggsmclient.h \
-	eggsmclient-private.h \
-	$(NULL)
-totem_CFLAGS += $(SMCLIENT_CFLAGS)
-totem_LDADD += $(SMCLIENT_LIBS)
-
-if WITH_SMCLIENT_XSMP
-totem_SOURCES += eggsmclient-xsmp.c
-totem_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
-endif
-if WITH_SMCLIENT_WIN32
-totem_SOURCES += eggsmclient-win32.c
-endif
-if WITH_SMCLIENT_QUARTZ
-totem_SOURCES += eggsmclient-osx.c
-endif
-endif
-
-if ENABLE_PYTHON
-totem_LDADD += \
-	$(PYTHON_LIBS)			\
-	$(top_builddir)/bindings/python/totem-python.la
-endif
 
 # Totem video thumbnailer
 

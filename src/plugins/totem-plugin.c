@@ -60,9 +60,9 @@ static void totem_plugin_get_property (GObject *object,
 				       GValue *value,
 				       GParamSpec *pspec);
 
-typedef struct {
+struct TotemPluginPrivate {
 	char *name;
-} TotemPluginPrivate;
+};
 
 enum
 {

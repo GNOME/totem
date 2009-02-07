@@ -1,3 +1,67 @@
+2009-02-07  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/Makefile.am:
+	* src/plugins/totem-plugin.c:
+	* src/plugins/totem-plugin.h:
+	* src/totem-object.c (reset_seek_status), (totem_action_error),
+	(totem_action_error_and_exit), (totem_action_save_size),
+	(totem_action_save_state), (totem_action_wait_force_exit),
+	(totem_action_exit), (totem_action_menu_popup),
+	(main_window_destroy_cb), (play_pause_set_label),
+	(totem_action_eject), (totem_action_show_properties),
+	(totem_action_play), (totem_action_seek),
+	(totem_action_set_mrl_and_play), (totem_action_open_dialog),
+	(totem_dvb_setup_result), (totem_action_load_media),
+	(totem_action_load_media_device), (totem_action_play_media_device),
+	(totem_action_play_media), (totem_action_stop),
+	(totem_action_play_pause), (totem_action_pause),
+	(window_state_event_cb), (totem_action_fullscreen_toggle),
+	(totem_action_fullscreen), (fs_exit1_activate_cb),
+	(totem_action_open), (totem_open_location_destroy),
+	(totem_open_location_response_cb), (totem_action_open_location),
+	(totem_get_nice_name_for_stream), (update_mrl_label),
+	(totem_action_set_mrl_with_warning), (totem_action_set_mrl),
+	(totem_time_within_seconds), (totem_action_direction),
+	(totem_action_previous), (totem_action_next),
+	(totem_seek_time_rel), (totem_action_seek_relative),
+	(totem_action_seek_time), (totem_action_zoom),
+	(totem_action_zoom_relative), (totem_action_zoom_reset),
+	(totem_action_volume_relative), (totem_action_volume_toggle_mute),
+	(totem_action_toggle_aspect_ratio),
+	(totem_action_set_aspect_ratio), (totem_action_get_aspect_ratio),
+	(totem_action_set_scale_ratio), (totem_action_show_help),
+	(totem_action_drop_files), (drop_video_cb), (drag_motion_video_cb),
+	(drop_playlist_cb), (drag_motion_playlist_cb), (drag_video_cb),
+	(on_got_redirect), (on_title_change_event),
+	(on_channels_change_event), (on_playlist_change_name),
+	(on_got_metadata_event), (on_error_event), (on_buffering_event),
+	(update_seekable), (update_current_time),
+	(volume_button_value_changed_cb), (update_volume_sliders),
+	(property_notify_cb_volume), (property_notify_cb_logo_mode),
+	(property_notify_cb_seekable), (seek_slider_pressed_cb),
+	(seek_slider_changed_cb), (seek_slider_released_cb),
+	(totem_action_open_files), (totem_action_open_files_list),
+	(show_controls), (totem_action_toggle_controls),
+	(totem_action_next_angle), (totem_action_set_playlist_index),
+	(totem_action_remote), (totem_action_remote_set_setting),
+	(totem_action_remote_get_setting), (playlist_changed_cb),
+	(item_activated_cb), (current_removed_cb), (subtitle_changed_cb),
+	(playlist_repeat_toggle_cb), (playlist_shuffle_toggle_cb),
+	(totem_is_fullscreen), (totem_is_playing), (totem_is_paused),
+	(totem_is_seekable), (on_mouse_click_fullscreen),
+	(on_video_button_press_event), (on_eos_event),
+	(totem_action_handle_key_release), (totem_action_handle_seek),
+	(totem_action_handle_key_press), (totem_action_handle_scroll),
+	(window_key_press_event_cb), (window_scroll_event_cb),
+	(update_media_menu_items), (update_buttons),
+	(main_pane_size_allocated), (totem_setup_window),
+	(totem_callback_connect), (playlist_widget_setup),
+	(video_widget_create):
+	* src/totem-private.h:
+	* src/totem.c: Move most of totem.c into totem-object.c and break
+	the core of Totem out to a noinst library, libtotem_main.la.
+	This allows gtk-doc to be run on it. (Helps: #570861)
+
 2009-02-06  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/totem-object.c (totem_object_class_init),

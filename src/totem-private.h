@@ -180,7 +180,14 @@ void	totem_action_zoom_relative		(Totem *totem, int off_pct);
 void	totem_action_zoom_reset			(Totem *totem);
 void	totem_action_show_help			(Totem *totem);
 void	totem_action_show_properties		(Totem *totem);
+gboolean totem_action_open_files		(Totem *totem, char **list);
+G_GNUC_NORETURN void totem_action_error_and_exit (const char *title, const char *reason, Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
+
+char	*totem_setup_window			(Totem *totem);
+void	totem_callback_connect			(Totem *totem);
+void	playlist_widget_setup			(Totem *totem);
+void	video_widget_create			(Totem *totem);
 
 #endif /* __TOTEM_PRIVATE_H__ */

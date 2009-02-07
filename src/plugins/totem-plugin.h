@@ -49,8 +49,7 @@ G_BEGIN_DECLS
 /*
  * Main object structure
  */
-typedef struct
-{
+typedef struct {
 	GObject parent;
 } TotemPlugin;
 
@@ -63,8 +62,7 @@ typedef gboolean	(*TotemPluginBooleanFunc)		(TotemPlugin *plugin);
 /*
  * Class definition
  */
-typedef struct
-{
+typedef struct {
 	GObjectClass parent_class;
 
 	/* Virtual public methods */
@@ -87,6 +85,8 @@ typedef struct
 typedef enum {
 	TOTEM_PLUGIN_ERROR_ACTIVATION
 } TotemPluginError;
+
+typedef struct TotemPluginPrivate	TotemPluginPrivate;
 
 GType totem_plugin_error_get_type	(void);
 GQuark totem_plugin_error_quark 	(void);
