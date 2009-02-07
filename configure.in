@@ -786,6 +786,7 @@ GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
 GNOME_CXX_WARNINGS
 GNOME_MAINTAINER_MODE_DEFINES
+GTK_DOC_CHECK(1.0)
 
 # This macro expands DIR and assigns it to RET.
 # If DIR is NONE, then it's replaced by DEFAULT.
@@ -892,6 +893,9 @@ help/bg/Makefile
 bindings/Makefile
 bindings/python/Makefile
 bindings/vala/Makefile
+docs/Makefile
+docs/reference/Makefile
+docs/reference/version.xml
 ])
 
 AC_MSG_NOTICE([Totem was configured with the following options:])
