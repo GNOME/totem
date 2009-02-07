@@ -1,5 +1,28 @@
 2009-02-07  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* configure.in:
+	* docs/reference/Makefile.am:
+	* docs/reference/totem-docs.sgml:
+	* docs/reference/totem-docs.xml:
+	* docs/reference/totem-sections.txt:
+	* src/plugins/totem-plugin.c:
+	* src/plugins/totem-plugin.h:
+	* src/totem-cell-renderer-video.c
+	(totem_cell_renderer_video_class_init):
+	* src/totem-cell-renderer-video.h:
+	* src/totem-interface.c:
+	* src/totem-object.c (totem_object_class_init):
+	* src/totem-video-list.c (totem_video_list_class_init):
+	* src/totem-video-list.h:
+	* src/totem.h: Documentation updates and fixes: all documented and
+	plugin-visible API is now listed in the documentation, and the
+	section titles/descriptions have all been updated. The documentation
+	layout has been tidied up, and recent gtk-doc features have been
+	taken advantage of
+	(http://live.gnome.org/DocumentationProject/GtkDocGnomeGoal).
+
+2009-02-07  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* Makefile.am:
 	* configure.in:
 	* docs/Makefile.am:

@@ -28,9 +28,10 @@
 
 /**
  * SECTION:totem-video-list
- * @short_description: video list
+ * @short_description: a #GtkTreeView widget for listing videos
  * @stability: Unstable
  * @include: totem-video-list.h
+ * @see_also: #TotemCellRendererVideo
  *
  * #TotemVideoList is a #GtkTreeView designed for listing videos by their thumbnails using #TotemCellRendererVideo.
  * It supports tooltips, loading the videos by activating tree view rows, and #GtkUIManager actions in the popup menu.
@@ -157,7 +158,7 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	 * @video_list: the #TotemVideoList which received the signal
 	 * @tree_path: the #GtkTreePath of the video row about to be played
 	 *
-	 * The ::starting-video signal is emitted when a video row is activated, just before the video is
+	 * The #TotemVideoList::starting-video signal is emitted when a video row is activated, just before the video is
 	 * added to the playlist. It allows for the video's MRL in the #GtkTreeModel to be modified, for example.
 	 *
 	 * If this returns %TRUE, the video will be played; otherwise, it will not.

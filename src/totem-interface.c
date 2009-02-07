@@ -29,6 +29,15 @@
  *
  */
 
+/**
+ * SECTION:totem-interface
+ * @short_description: interface utility/loading/error functions
+ * @stability: Unstable
+ * @include: totem-interface.h
+ *
+ * A collection of interface utility functions, for loading interfaces and displaying errors.
+ **/
+
 #include "config.h"
 
 #include <glib.h>

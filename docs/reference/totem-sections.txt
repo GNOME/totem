@@ -1,7 +1,48 @@
 <SECTION>
 <FILE>totem-object</FILE>
+<TITLE>TotemObject</TITLE>
 TotemObject
 TotemObjectClass
+TotemRemoteCommand
+totem_object_plugins_init
+totem_object_plugins_shutdown
+totem_file_opened
+totem_file_closed
+totem_metadata_updated
+totem_action_error
+totem_action_exit
+totem_add_to_playlist_and_play
+totem_action_play
+totem_action_play_media
+totem_action_play_media_device
+totem_action_play_pause
+totem_action_pause
+totem_action_stop
+totem_action_fullscreen
+totem_action_fullscreen_toggle
+totem_action_next
+totem_action_previous
+totem_action_seek_time
+totem_action_seek_relative
+totem_action_volume_relative
+totem_action_toggle_aspect_ratio
+totem_action_get_aspect_ratio
+totem_action_set_aspect_ratio
+totem_action_toggle_controls
+totem_action_set_scale_ratio
+totem_action_remote
+totem_is_fullscreen
+totem_is_playing
+totem_is_seekable
+totem_get_main_window
+totem_get_ui_manager
+totem_get_video_widget
+totem_get_video_widget_backend_name
+totem_get_current_mrl
+totem_get_current_time
+totem_set_current_subtitle
+totem_add_sidebar_page
+totem_remove_sidebar_page
 <SUBSECTION Standard>
 TOTEM_OBJECT
 TOTEM_IS_OBJECT
@@ -12,14 +53,29 @@ TOTEM_IS_OBJECT_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>totem-interface</FILE>
+<TITLE>Interface</TITLE>
+totem_interface_error_with_link
+</SECTION>
+
+<SECTION>
 <FILE>totem-plugin</FILE>
+<TITLE>TotemPlugin</TITLE>
 TotemPlugin
 TotemPluginClass
+TotemPluginError
+totem_plugin_activate
+totem_plugin_deactivate
+totem_plugin_create_configure_dialog
+totem_plugin_is_configurable
+totem_plugin_load_interface
+totem_plugin_find_file
 <SUBSECTION Standard>
 TOTEM_PLUGIN
 TOTEM_IS_PLUGIN
 TOTEM_TYPE_PLUGIN
 totem_plugin_get_type
+TOTEM_PLUGIN_GET_CLASS
 TOTEM_PLUGIN_CLASS
 TOTEM_IS_PLUGIN_CLASS
 <SUBSECTION Private>
@@ -28,13 +84,17 @@ TotemPluginPrivate
 
 <SECTION>
 <FILE>totem-video-list</FILE>
+<TITLE>TotemVideoList</TITLE>
 TotemVideoList
 TotemVideoListClass
+totem_video_list_new
+totem_video_list_get_ui_manager
 <SUBSECTION Standard>
 TOTEM_VIDEO_LIST
 TOTEM_IS_VIDEO_LIST
 TOTEM_TYPE_VIDEO_LIST
 totem_video_list_get_type
+TOTEM_VIDEO_LIST_GET_CLASS
 TOTEM_VIDEO_LIST_CLASS
 TOTEM_IS_VIDEO_LIST_CLASS
 <SUBSECTION Private>
@@ -43,13 +103,16 @@ TotemVideoListPrivate
 
 <SECTION>
 <FILE>totem-cell-renderer-video</FILE>
+<TITLE>TotemCellRendererVideo</TITLE>
 TotemCellRendererVideo
 TotemCellRendererVideoClass
+totem_cell_renderer_video_new
 <SUBSECTION Standard>
 TOTEM_CELL_RENDERER_VIDEO
 TOTEM_IS_CELL_RENDERER_VIDEO
 TOTEM_TYPE_CELL_RENDERER_VIDEO
 totem_cell_renderer_video_get_type
+TOTEM_CELL_RENDERER_VIDEO_GET_CLASS
 TOTEM_CELL_RENDERER_VIDEO_CLASS
 TOTEM_IS_CELL_RENDERER_VIDEO_CLASS
 <SUBSECTION Private>

@@ -28,7 +28,7 @@
 
 /**
  * SECTION:totem-object
- * @short_description: main object
+ * @short_description: main Totem object
  * @stability: Unstable
  * @include: totem.h
  *
@@ -225,7 +225,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * @totem: the #TotemObject which received the signal
 	 * @mrl: the MRL of the opened stream
 	 *
-	 * The ::file-opened signal is emitted when a new stream is opened by Totem.
+	 * The #TotemObject::file-opened signal is emitted when a new stream is opened by Totem.
 	 */
 	totem_table_signals[FILE_OPENED] =
 		g_signal_new ("file-opened",
@@ -240,7 +240,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * TotemObject::file-closed:
 	 * @totem: the #TotemObject which received the signal
 	 *
-	 * The ::file-closed signal is emitted when Totem closes a stream.
+	 * The #TotemObject::file-closed signal is emitted when Totem closes a stream.
 	 */
 	totem_table_signals[FILE_CLOSED] =
 		g_signal_new ("file-closed",
@@ -259,7 +259,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * @album: the name of the stream's album, or %NULL
 	 * @track_number: the stream's track number
 	 *
-	 * The ::metadata-updated signal is emitted when the metadata of a stream is updated, typically
+	 * The #TotemObject::metadata-updated signal is emitted when the metadata of a stream is updated, typically
 	 * when it's being loaded.
 	 */
 	totem_table_signals[METADATA_UPDATED] =
@@ -411,9 +411,9 @@ totem_get_video_widget (Totem *totem)
  * @totem: a #TotemObject
  *
  * Gets the name string of the backend video widget, typically the video library's
- * version string (e.g. what's returned by gst_version_string()).
+ * version string (e.g. what's returned by gst_version_string()). Free with g_free().
  *
- * Return value: the name string of the backend video widget
+ * Return value: a newly-allocated string of the name of the backend video widget
  **/
 char *
 totem_get_video_widget_backend_name (Totem *totem)
@@ -481,8 +481,9 @@ totem_add_to_playlist_and_play (Totem *totem,
  * @totem: a #TotemObject
  *
  * Get the MRL of the current stream, or %NULL if nothing's playing.
+ * Free with g_free().
  *
- * Return value: the MRL of the current stream
+ * Return value: a newly-allocated string containing the MRL of the current stream
  **/
 char *
 totem_get_current_mrl (Totem *totem)
@@ -579,7 +580,7 @@ totem_remove_sidebar_page (Totem *totem,
  * @totem: a #TotemObject
  * @mrl: the MRL opened
  *
- * Emits the ::file-opened signal on @totem, with the
+ * Emits the #TotemObject::file-opened signal on @totem, with the
  * specified @mrl.
  **/
 void
@@ -595,7 +596,7 @@ totem_file_opened (TotemObject *totem,
  * totem_file_closed:
  * @totem: a #TotemObject
  *
- * Emits the ::file-closed signal on @totem.
+ * Emits the #TotemObject::file-closed signal on @totem.
  **/
 void
 totem_file_closed (TotemObject *totem)
@@ -609,11 +610,12 @@ totem_file_closed (TotemObject *totem)
 /**
  * totem_metadata_updated:
  * @totem: a #TotemObject
- * @artist: the stream's artist
- * @title: the stream's title
- * @album: the stream's album
+ * @artist: the stream's artist, or %NULL
+ * @title: the stream's title, or %NULL
+ * @album: the stream's album, or %NULL
+ * @track_num: the track number of the stream
  *
- * Emits the ::metadata-updated signal on @totem,
+ * Emits the #TotemObject::metadata-updated signal on @totem,
  * with the specified stream data.
  **/
 void

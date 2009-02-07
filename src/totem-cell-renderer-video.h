@@ -43,11 +43,22 @@ G_BEGIN_DECLS
 
 typedef struct _TotemCellRendererVideoPrivate	TotemCellRendererVideoPrivate;
 
+/**
+ * TotemCellRendererVideo:
+ *
+ * All the fields in the #TotemCellRendererVideo structure are private and should never be accessed directly.
+ **/
 typedef struct {
 	GtkCellRenderer parent;
 	TotemCellRendererVideoPrivate *priv;
 } TotemCellRendererVideo;
 
+/**
+ * TotemCellRendererVideoClass:
+ * @parent: the parent class
+ *
+ * The class structure for the #TotemCellRendererVideo type.
+ **/
 typedef struct {
 	GtkCellRendererClass parent;
 } TotemCellRendererVideoClass;

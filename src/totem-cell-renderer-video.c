@@ -28,9 +28,10 @@
 
 /**
  * SECTION:totem-cell-renderer-video
- * @short_description: video cell renderer
+ * @short_description: a #GtkCellRenderer widget for listing videos
  * @stability: Unstable
  * @include: totem-cell-renderer-video.h
+ * @see_also: #TotemVideoList
  *
  * #TotemCellRendererVideo is a #GtkCellRenderer for rendering video thumbnails, typically in a #TotemVideoList.
  * It supports drawing a video thumbnail, and the video's title underneath.
@@ -75,7 +76,7 @@ G_DEFINE_TYPE (TotemCellRendererVideo, totem_cell_renderer_video, GTK_TYPE_CELL_
  * totem_cell_renderer_video_new:
  * @use_placeholder: if %TRUE, use a placeholder thumbnail
  *
- * Creates a new #TotemCellRendererVideo with its :use-placeholder
+ * Creates a new #TotemCellRendererVideo with its #TotemCellRendererVideo:use-placeholder
  * property set to @use_placeholder. If @use_placeholder is %TRUE,
  * the renderer will display a generic placeholder thumbnail if a
  * proper one is not available.
@@ -117,7 +118,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	/**
 	 * TotemCellRendererVideo:title:
 	 *
-	 * The title of the video, as it should be displayed. The default title is "Unknown video".
+	 * The title of the video, as it should be displayed.
 	 **/
 	g_object_class_install_property (object_class, PROP_TITLE,
 				g_param_spec_string ("title", NULL, NULL,
@@ -126,7 +127,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	/**
 	 * TotemCellRendererVideo:alignment:
 	 *
-	 * A #PangoAlignment giving the text alignment for the video title. The default is %PANGO_ALIGN_CENTER.
+	 * A #PangoAlignment giving the text alignment for the video title.
 	 **/
 	g_object_class_install_property (object_class, PROP_ALIGNMENT,
 				g_param_spec_enum ("alignment", NULL, NULL,
@@ -137,7 +138,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	/**
 	 * TotemCellRendererVideo:use-placeholder:
 	 *
-	 * If %TRUE, a placeholder image should be used for the video thumbnail if a :thumbnail isn't provided.
+	 * If %TRUE, a placeholder image should be used for the video thumbnail if a #TotemCellRendererVideo:thumbnail isn't provided.
 	 **/
 	g_object_class_install_property (object_class, PROP_USE_PLACEHOLDER,
 				g_param_spec_boolean ("use-placeholder", NULL, NULL,

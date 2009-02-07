@@ -43,11 +43,24 @@ G_BEGIN_DECLS
 
 typedef struct _TotemVideoListPrivate	TotemVideoListPrivate;
 
+/**
+ * TotemVideoList:
+ *
+ * All the fields in the #TotemVideoList structure are private and should never be accessed directly.
+ **/
 typedef struct {
 	GtkTreeView parent;
 	TotemVideoListPrivate *priv;
 } TotemVideoList;
 
+/**
+ * TotemVideoListClass:
+ * @parent: the parent class
+ * @starting_video: the generic signal handler for the #TotemVideoList::starting-video signal,
+ * which can be overridden by inheriting classes
+ *
+ * The class structure for the #TotemVideoList type.
+ **/
 typedef struct {
 	GtkTreeViewClass parent;
 	gboolean (*starting_video) (TotemVideoList *video_list, GtkTreePath *path);

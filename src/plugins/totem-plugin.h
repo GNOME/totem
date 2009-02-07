@@ -46,9 +46,11 @@ G_BEGIN_DECLS
 #define TOTEM_IS_PLUGIN_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PLUGIN))
 #define TOTEM_PLUGIN_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS((obj), TOTEM_TYPE_PLUGIN, TotemPluginClass))
 
-/*
- * Main object structure
- */
+/**
+ * TotemPlugin:
+ *
+ * All the fields in the #TotemPlugin structure are private and should never be accessed directly.
+ **/
 typedef struct {
 	GObject parent;
 } TotemPlugin;
@@ -59,9 +61,20 @@ typedef void		(*TotemPluginDeactivationFunc)		(TotemPlugin *plugin, TotemObject 
 typedef GtkWidget *	(*TotemPluginWidgetFunc)		(TotemPlugin *plugin);
 typedef gboolean	(*TotemPluginBooleanFunc)		(TotemPlugin *plugin);
 
-/*
- * Class definition
- */
+/**
+ * TotemPluginClass:
+ * @parent_class: the parent class
+ * @activate: function called when activating a plugin using totem_plugin_activate().
+ * It must be set by inheriting classes, and should return %TRUE if it successfully created/got handles to
+ * the resources needed by the plugin. If it returns %FALSE, loading the plugin is abandoned.
+ * @deactivate: function called when deactivating a plugin using totem_plugin_deactivate();
+ * It must be set by inheriting classes, and should free/unref any resources the plugin used.
+ * @create_configure_dialog: function called when configuring a plugin using totem_plugin_create_configure_dialog().
+ * If non-%NULL, it should create and return the plugin's configuration dialog. If %NULL, the plugin is not
+ * configurable.
+ *
+ * The class structure for the #TotemPlParser type.
+ **/
 typedef struct {
 	GObjectClass parent_class;
 
@@ -71,6 +84,7 @@ typedef struct {
 	TotemPluginDeactivationFunc	deactivate;
 	TotemPluginWidgetFunc		create_configure_dialog;
 
+	/*< private >*/
 	/* Plugins should not override this, it's handled automatically by
 	   the TotemPluginClass */
 	TotemPluginBooleanFunc		is_configurable;

@@ -130,9 +130,26 @@ GQuark totem_disc_media_type_quark	(void);
 #define TOTEM_IS_OBJECT(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, totem_object_get_type ()))
 #define TOTEM_IS_OBJECT_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), totem_object_get_type ()))
 
+/**
+ * TotemObject:
+ *
+ * All the fields in the #TotemObject structure are private and should never be accessed directly.
+ **/
 typedef struct TotemObject Totem;
 typedef struct TotemObject TotemObject;
 
+/**
+ * TotemObjectClass:
+ * @parent_class: the parent class
+ * @file_opened: the generic signal handler for the #TotemObject::file-opened signal,
+ * which can be overridden by inheriting classes
+ * @file_closed: the generic signal handler for the #TotemObject::file-closed signal,
+ * which can be overridden by inheriting classes
+ * @metadata_updated: the generic signal handler for the #TotemObject::metadata-updated signal,
+ * which can be overridden by inheriting classes
+ *
+ * The class structure for the #TotemPlParser type.
+ **/
 typedef struct {
 	GObjectClass parent_class;
 

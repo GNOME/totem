@@ -27,7 +27,7 @@
 
 /**
  * SECTION:totem-plugin
- * @short_description: plugin
+ * @short_description: base plugin class and loading/unloading functions
  * @stability: Unstable
  * @include: totem-plugin.h
  *
