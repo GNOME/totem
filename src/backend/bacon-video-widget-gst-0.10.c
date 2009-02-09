@@ -2720,8 +2720,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
       } else {
         gchar *cur_dir = g_get_current_dir ();
         if (!cur_dir) {
-          g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
-              _("Failed to retrieve working directory"));
+          g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
+                               _("Failed to retrieve working directory"));
           return FALSE;
         }
         subtitle_uri = g_strdup_printf ("file://%s/%s", cur_dir, uris[1]);
@@ -3977,15 +3977,15 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
     case MEDIA_TYPE_DVD: {
       if (!gst_default_registry_check_feature_version ("rsndvdbin", 0, 10, 0)) {
         GST_DEBUG ("Missing rsndvdbin");
-	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-		     "XXX Do not use XXX");
+	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                             "XXX Do not use XXX");
         return NULL;
       } else if (!gst_default_registry_check_feature_version ("mpegpsdemux", 0, 10, 0) &&
 		 gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
       		 !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
         GST_DEBUG ("flupsdemux not new enough for DVD playback");
-	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-		     "XXX Do not use XXX");
+	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                             "XXX Do not use XXX");
         return NULL;
       } else {
 	gchar *uri[] = { NULL, NULL };
@@ -4002,24 +4002,24 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
           !gst_default_registry_check_feature_version ("mpegtsparse", 0, 10, 6) ||
           !gst_default_registry_check_feature_version ("dvbsrc", 0, 10, 6)) {
         GST_DEBUG ("Missing one or all of: dvbsrc, dvbbasebin, mpegtsparse");
-	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-		     "XXX Do not use XXX");
+	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                             "XXX Do not use XXX");
         return NULL;
       }
       if (!gst_default_registry_check_feature_version ("mpegpsdemux", 0, 10, 0) &&
 	  gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
       	  !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
         GST_DEBUG ("flupsdemux not new enough for DVB playback");
-	g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-		     "XXX Do not use XXX");
+	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                             "XXX Do not use XXX");
 	return NULL;
       }
 
       filename = g_strdup_printf ("/dev/dvb/adapter%s/frontend0", device);
       if (!g_file_test (filename, G_FILE_TEST_EXISTS)) {
 	g_free (filename);
-	g_set_error (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-		     "XXX Do not use XXX");
+	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+                             "XXX Do not use XXX");
 	return NULL;
       }
       g_free (filename);
@@ -4030,16 +4030,16 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
         mrls = bacon_video_widget_get_dvb_mrls (device);
       } else {
         GST_DEBUG ("no channels file '%s'", filename);
-	g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-		     "XXX Do not use XXX");
+	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+                             "XXX Do not use XXX");
 	g_free (filename);
 	return NULL;
       }
       break;
     }
     case MEDIA_TYPE_CDDA:
-      g_set_error (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
-		   "XXX Do not use XXX");
+      g_set_error_literal (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
+                           "XXX Do not use XXX");
       return NULL;
     default:
       g_assert_not_reached();
@@ -4595,14 +4595,14 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   /* check for version */
   if (!g_object_class_find_property (
            G_OBJECT_GET_CLASS (bvw->priv->play), "frame")) {
-    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
-        _("Too old version of GStreamer installed."));
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
+                         _("Too old version of GStreamer installed."));
     return FALSE;
   }
 
   /* check for video */
   if (!bvw->priv->media_has_video && !bvw->priv->show_vfx) {
-    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
         _("Media contains no supported video streams."));
     return FALSE;
   }
@@ -4977,7 +4977,7 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
-    g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
+    g_set_error_literal (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
     g_object_ref_sink (bvw);
@@ -5108,7 +5108,7 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+          g_set_error_literal (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                _("Failed to open video output. It may not be available. "
                  "Please select another video output in the Multimedia "
                  "Systems Selector."));
@@ -5120,7 +5120,7 @@ bacon_video_widget_new (int width, int height,
       }
     }
   } else {
-    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+    g_set_error_literal (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                  _("Could not find the video output. "
                    "You may need to install additional GStreamer plugins, "
                    "or select another video output in the Multimedia Systems "
@@ -5155,7 +5155,7 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+          g_set_error_literal (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                        _("Failed to open audio output. You may not have "
                          "permission to open the sound device, or the sound "
                          "server may not be running. "
@@ -5175,7 +5175,7 @@ bacon_video_widget_new (int width, int height,
     }
     gst_object_unref (bus);
   } else {
-    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+    g_set_error_literal (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "
                    "You may need to install additional GStreamer plugins, or "
                    "select another audio output in the Multimedia Systems "
@@ -5225,7 +5225,7 @@ bacon_video_widget_new (int width, int height,
     ret = gst_element_get_state (video_sink, NULL, NULL, 5 * GST_SECOND);
     if (ret != GST_STATE_CHANGE_SUCCESS) {
       GST_WARNING ("Timeout setting videosink to READY");
-      g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+      g_set_error_literal (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
           _("Failed to open video output. It may not be available. "
           "Please select another video output in the Multimedia Systems Selector."));
       return NULL;

@@ -1584,8 +1584,8 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	}
 
 	if (save_data != NULL) {
-		g_set_error (error, BVW_ERROR, save_data->num,
-				"%s", save_data->msg);
+		g_set_error_literal (error, BVW_ERROR, save_data->num,
+                                     save_data->msg);
 		g_free (save_data->msg);
 		g_free (save_data);
 
@@ -1602,28 +1602,28 @@ xine_try_error (BaconVideoWidget *bvw, gboolean probe_error, GError **error)
 	switch (err)
 	{
 	case XINE_ERROR_NO_INPUT_PLUGIN:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-				_("There is no input plugin to handle the location of this movie"));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                                     _("There is no input plugin to handle the location of this movie"));
 		break;
 	case XINE_ERROR_NO_DEMUX_PLUGIN:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-				_("There is no plugin to handle this movie."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                                     _("There is no plugin to handle this movie."));
 		break;
 	case XINE_ERROR_DEMUX_FAILED:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_BROKEN_FILE,
-				_("This movie is broken and can not be played further."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_BROKEN_FILE,
+                                     _("This movie is broken and can not be played further."));
 		break;
 	case XINE_ERROR_MALFORMED_MRL:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
-				_("This location is not a valid one."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
+                                     _("This location is not a valid one."));
 		break;
 	case XINE_ERROR_INPUT_FAILED:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
-				_("This movie could not be opened."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_GENERIC,
+                                     _("This movie could not be opened."));
 		break;
 	default:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
-				_("Generic Error."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
+				     _("Generic Error."));
 		break;
 	}
 }
@@ -1806,8 +1806,8 @@ bacon_video_widget_new (int width, int height,
 		g_free (bvw->priv);
 		g_free (bvw);
 
-		g_set_error (error, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-				_("No video output is available. Make sure that the program is correctly installed."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+                                     _("No video output is available. Make sure that the program is correctly installed."));
 		return NULL;
 	}
 
@@ -2466,8 +2466,8 @@ bacon_video_widget_open_with_subtitle (BaconVideoWidget *bvw, const char *mrl,
 	    && bvw->priv->ao_driver == NULL) {
 		bacon_video_widget_close (bvw);
 
-		g_set_error (error, BVW_ERROR, BVW_ERROR_AUDIO_ONLY,
-				_("This is an audio-only file and there is no audio output available."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_ONLY,
+                                     _("This is an audio-only file and there is no audio output available."));
 
 		return FALSE;
 	}
@@ -3368,8 +3368,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 	switch (type) {
 	case MEDIA_TYPE_DVD:
 		if (bvw->priv->can_dvd == FALSE) {
-			g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-				     "XXX Do not use XXX");
+			g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+                                             "XXX Do not use XXX");
 			return NULL;
 		}
 		plugin_id = "DVD";
@@ -3377,8 +3377,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 		break;
 	case MEDIA_TYPE_VCD:
 		if (bvw->priv->can_vcd == FALSE) {
-			g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-				     "XXX Do not use XXX");
+			g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+				             "XXX Do not use XXX");
 			return NULL;
 		}
 		plugin_id = "VCD";
@@ -3386,8 +3386,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 		break;
 	case MEDIA_TYPE_DVB:
 		if (bvw->priv->can_dvb == FALSE) {
-			g_set_error (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-				     "XXX Do not use XXX");
+			g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
+				             "XXX Do not use XXX");
 			return NULL;
 		} else {
 			char *path;
@@ -3395,8 +3395,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 			path = g_strdup_printf ("/dev/dvb/adapter%s/frontend0", device);
 			if (g_file_test (path, G_FILE_TEST_EXISTS) == FALSE) {
 				g_free (path);
-				g_set_error (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-					     "XXX Do not use XXX");
+				g_set_error_literal (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+					             "XXX Do not use XXX");
 				return NULL;
 			}
 			g_free (path);
@@ -3407,8 +3407,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 						 NULL);
 			if (g_file_test (path, G_FILE_TEST_IS_REGULAR) == FALSE) {
 				g_free (path);
-				g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-					     "XXX Do not use XXX");
+				g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+					             "XXX Do not use XXX");
 				return NULL;
 			}
 			g_free (path);
@@ -3417,8 +3417,8 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 		entry_name = "media.dvb.adapter";
 		break;
 	case MEDIA_TYPE_CDDA:
-		g_set_error (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
-			     "XXX Do not use XXX");
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
+			             "XXX Do not use XXX");
 		return NULL;
 	default:
 		g_assert_not_reached ();
@@ -3456,12 +3456,12 @@ bacon_video_widget_get_mrls (BaconVideoWidget *bvw,
 	} else if (type == MEDIA_TYPE_DVB) {
 		/* No channels.conf, and we couldn't find it */
 		if (g_str_has_prefix (mrls[0], "Sorry, No valid channels.conf found") != FALSE) {
-			g_set_error (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-				     "XXX Do not use XXX");
+			g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+                                             "XXX Do not use XXX");
 			return NULL;
 		} else if (g_str_has_prefix (mrls[0], "Sorry, No DVB input device found.") != FALSE) {
-			g_set_error (error, BVW_ERROR, BVW_ERROR_DEVICE_BUSY,
-				     "XXX Do not use XXX");
+			g_set_error_literal (error, BVW_ERROR, BVW_ERROR_DEVICE_BUSY,
+                                             "XXX Do not use XXX");
 			return NULL;
 		}
 	}
@@ -4179,16 +4179,16 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 				XINE_STREAM_INFO_HAS_VIDEO) == FALSE
 			&& bvw->priv->using_vfx == FALSE)
 	{
-		g_set_error (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
-				_("No video to capture."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
+				     _("No video to capture."));
 		return FALSE;
 	}
 
 	if (xine_get_stream_info (bvw->priv->stream,
 				XINE_STREAM_INFO_VIDEO_HANDLED) == FALSE)
 	{
-		g_set_error (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
-				_("Video codec is not handled."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
+                                     _("Video codec is not handled."));
 		return FALSE;
 	}
 
@@ -4198,8 +4198,8 @@ bacon_video_widget_can_get_frames (BaconVideoWidget *bvw, GError **error)
 	if (xine_get_status (bvw->priv->stream) != XINE_STATUS_PLAY
 			&& bvw->priv->logo_mode == FALSE)
 	{
-		g_set_error (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
-				_("Movie is not playing."));
+		g_set_error_literal (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
+                                     _("Movie is not playing."));
 		return FALSE;
 	}
 

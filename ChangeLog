@@ -1,5 +1,23 @@
 2009-02-09  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* browser-plugin/totem-plugin-viewer.c
+	(totem_embedded_open_internal), (totem_embedded_set_window):
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_get_mrls), (bacon_video_widget_can_get_frames),
+	(bacon_video_widget_new):
+	* src/backend/bacon-video-widget-xine.c (xine_try_error),
+	(bacon_video_widget_new), (bacon_video_widget_open_with_subtitle),
+	(bacon_video_widget_get_mrls), (bacon_video_widget_can_get_frames):
+	* src/plugins/galago/totem-galago.c (impl_activate):
+	* src/plugins/gromit/totem-gromit.c (impl_activate):
+	* src/plugins/lirc/totem-lirc.c (impl_activate):
+	* src/plugins/skipto/totem-skipto-plugin.c (impl_activate): Patch
+	from Christian Persch <chpe@gnome.org> to use g_set_error_literal
+	where appropriate. (Closes: #570538)
+
+2009-02-09  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/backend/video-utils.c (totem_string_to_time):
 	* src/backend/video-utils.h: Utility function to convert a
 	human-friendly time string to a gint64.

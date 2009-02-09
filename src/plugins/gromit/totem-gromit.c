@@ -268,8 +268,8 @@ impl_activate (TotemPlugin *plugin,
 	GtkWindow *window;
 
 	if (!totem_gromit_available (pi)) {
-		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-				_("The gromit binary was not found."));
+		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+                                     _("The gromit binary was not found."));
 
 		return FALSE;
 	}

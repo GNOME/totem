@@ -459,10 +459,10 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		uri = emb->current_uri;
 
 	if (!uri) {
-		g_set_error (error,
-			     TOTEM_EMBEDDED_ERROR_QUARK,
-			     TOTEM_EMBEDDED_NO_URI,
-			     _("No URI to play"));
+		g_set_error_literal (error,
+                                     TOTEM_EMBEDDED_ERROR_QUARK,
+                                     TOTEM_EMBEDDED_NO_URI,
+                                     _("No URI to play"));
 		//FIXME totem_embedded_set_error (emb, error); |error| may be null?
 
 		return FALSE;
@@ -582,9 +582,9 @@ totem_embedded_do_command (TotemEmbedded *embedded,
 	}
 		
 	g_set_error (error,
-		     TOTEM_EMBEDDED_ERROR_QUARK,
-		     TOTEM_EMBEDDED_UNKNOWN_COMMAND,
-		     "Unknown command '%s'", command);
+                     TOTEM_EMBEDDED_ERROR_QUARK,
+                     TOTEM_EMBEDDED_UNKNOWN_COMMAND,
+                     "Unknown command '%s'", command);
 	return FALSE;
 }
 
@@ -2053,18 +2053,18 @@ totem_embedded_set_window (TotemEmbedded *embedded,
 	if (embedded->window != NULL) {
 		g_warning ("Viewer: Already have a window!");
 
-		g_set_error (error,
-			     TOTEM_EMBEDDED_ERROR_QUARK,
-			     TOTEM_EMBEDDED_SETWINDOW_HAVE_WINDOW,
-			     "Already have a window");
+		g_set_error_literal (error,
+                                     TOTEM_EMBEDDED_ERROR_QUARK,
+                                     TOTEM_EMBEDDED_SETWINDOW_HAVE_WINDOW,
+                                     "Already have a window");
 		return FALSE;
 	}
 
 	if (window == 0) {
-		g_set_error (error,
-			     TOTEM_EMBEDDED_ERROR_QUARK,
-			     TOTEM_EMBEDDED_SETWINDOW_INVALID_XID,
-			     "Invalid XID");
+		g_set_error_literal (error,
+                                     TOTEM_EMBEDDED_ERROR_QUARK,
+                                     TOTEM_EMBEDDED_SETWINDOW_INVALID_XID,
+                                     "Invalid XID");
 		return FALSE;
 	}
 

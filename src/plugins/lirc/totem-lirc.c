@@ -283,8 +283,8 @@ impl_activate (TotemPlugin *plugin,
 
 	fd = lirc_init ("Totem", 0);
 	if (fd < 0) {
-		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-				_("Couldn't initialize lirc."));
+		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+                                     _("Couldn't initialize lirc."));
 		return FALSE;
 	}
 
@@ -292,8 +292,8 @@ impl_activate (TotemPlugin *plugin,
 	path = totem_plugin_find_file (plugin, "totem_lirc_default");
 	if (path == NULL || lirc_readconfig (path, &pi->lirc_config, NULL) == -1) {
 		g_free (path);
-		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-			     _("Couldn't read lirc configuration."));
+		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+                                     _("Couldn't read lirc configuration."));
 		close (fd);
 		return FALSE;
 	}

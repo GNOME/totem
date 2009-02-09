@@ -167,8 +167,8 @@ impl_activate (TotemPlugin *plugin,
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
 
 	if (!galago_is_connected ()) {
-		g_set_error (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-				_("Could not connect to the Galago daemon."));
+		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
+                                     _("Could not connect to the Galago daemon."));
 		return FALSE;
 	}
 
