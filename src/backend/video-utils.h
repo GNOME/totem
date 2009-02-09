@@ -15,6 +15,7 @@ guint8 *yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
 gboolean totem_display_is_local (void);
 
 char *totem_time_to_string (gint64 msecs);
+gint64 totem_string_to_time (const char *time_string);
 char *totem_time_to_string_text (gint64 msecs);
 
 void totem_widget_set_preferred_size (GtkWidget *widget, gint width,

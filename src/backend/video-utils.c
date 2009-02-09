@@ -228,6 +228,28 @@ totem_time_to_string (gint64 msecs)
 	return g_strdup_printf (C_("short time format", "%d:%02d"), min, sec);
 }
 
+gint64
+totem_string_to_time (const char *time_string)
+{
+	int sec, min, hour, args;
+
+	args = sscanf (time_string, C_("long time format", "%d:%02d:%02d"), &hour, &min, &sec);
+
+	if (args == 3) {
+		/* Parsed all three arguments successfully */
+		return (hour * (60 * 60) + min * 60 + sec) * 1000;
+	} else if (args == 2) {
+		/* Only parsed the first two arguments; treat hour and min as min and sec, respectively */
+		return (hour * 60 + min) * 1000;
+	} else if (args == 1) {
+		/* Only parsed the first argument; treat hour as sec */
+		return hour * 1000;
+	} else {
+		/* Error! */
+		return -1;
+	}
+}
+
 char *
 totem_time_to_string_text (gint64 msecs)
 {

@@ -45,13 +45,11 @@
 static void totem_skipto_dispose	(GObject *object);
 
 /* Callback functions for GtkBuilder */
-void spin_button_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
-void spin_button_value_changed_cb (GtkSpinButton *spinbutton, TotemSkipto *skipto);
+void time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
 
 struct TotemSkiptoPrivate {
 	GtkBuilder *xml;
-	GtkWidget *label;
-	GtkWidget *spinbutton;
+	GtkWidget *time_entry;
 	gint64 time;
 	Totem *totem;
 };
@@ -75,7 +73,7 @@ totem_skipto_response_cb (GtkDialog *dialog, gint response_id, gpointer data)
 	TotemSkipto *skipto;
 
 	skipto = TOTEM_SKIPTO (dialog);
-	gtk_spin_button_update (GTK_SPIN_BUTTON (skipto->priv->spinbutton));
+	gtk_spin_button_update (GTK_SPIN_BUTTON (skipto->priv->time_entry));
 }
 
 static void
@@ -83,6 +81,7 @@ totem_skipto_init (TotemSkipto *skipto)
 {
 	skipto->priv = G_TYPE_INSTANCE_GET_PRIVATE (skipto, TOTEM_TYPE_SKIPTO, TotemSkiptoPrivate);
 
+	gtk_dialog_set_default_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 	g_signal_connect (skipto, "response",
 				G_CALLBACK (totem_skipto_response_cb), NULL);
 }
@@ -108,7 +107,7 @@ totem_skipto_update_range (TotemSkipto *skipto, gint64 time)
 	if (time == skipto->priv->time)
 		return;
 
-	gtk_spin_button_set_range (GTK_SPIN_BUTTON (skipto->priv->spinbutton),
+	gtk_spin_button_set_range (GTK_SPIN_BUTTON (skipto->priv->time_entry),
 			0, (gdouble) time / 1000);
 	skipto->priv->time = time;
 }
@@ -120,7 +119,7 @@ totem_skipto_get_range (TotemSkipto *skipto)
 
 	g_return_val_if_fail (TOTEM_IS_SKIPTO (skipto), 0);
 
-	time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->priv->spinbutton)) * 1000;
+	time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->priv->time_entry)) * 1000;
 
 	return time;
 }
@@ -139,29 +138,17 @@ totem_skipto_set_current (TotemSkipto *skipto, gint64 time)
 {
 	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
 
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (skipto->priv->spinbutton),
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (skipto->priv->time_entry),
 			(gdouble) (time / 1000));
 }
 
 void
-spin_button_activate_cb (GtkEntry *entry, TotemSkipto *skipto)
+time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto)
 {
 	gtk_dialog_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 }
 
-void
-spin_button_value_changed_cb (GtkSpinButton *spinbutton, TotemSkipto *skipto)
-{
-	int sec;
-	char *str;
-
-	sec = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (spinbutton));
-	str = totem_time_to_string_text (sec * 1000);
-	gtk_label_set_text (GTK_LABEL (skipto->priv->label), str);
-	g_free (str);
-}
-
-GtkWidget*
+GtkWidget *
 totem_skipto_new (TotemSkiptoPlugin *plugin)
 {
 	TotemSkipto *skipto;
@@ -178,30 +165,28 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 		g_object_unref (skipto);
 		return NULL;
 	}
-	skipto->priv->label = GTK_WIDGET (gtk_builder_get_object
-		(skipto->priv->xml, "tstw_position_label"));
-	skipto->priv->spinbutton = GTK_WIDGET (gtk_builder_get_object
-		(skipto->priv->xml, "tstw_skip_spinbutton"));
+	skipto->priv->time_entry = GTK_WIDGET (gtk_builder_get_object
+		(skipto->priv->xml, "tstw_skip_time_entry"));
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip to"));
 	gtk_dialog_set_has_separator (GTK_DIALOG (skipto), FALSE);
 	gtk_dialog_add_buttons (GTK_DIALOG (skipto),
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_OK, GTK_RESPONSE_OK,
-			NULL);
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				GTK_STOCK_OK, GTK_RESPONSE_OK,
+				NULL);
 
 	/* Skipto dialog */
 	g_signal_connect (G_OBJECT (skipto), "delete-event",
-			G_CALLBACK (gtk_widget_destroy), skipto);
+			  G_CALLBACK (gtk_widget_destroy), skipto);
 
 	container = GTK_WIDGET (gtk_builder_get_object (skipto->priv->xml,
-			"tstw_skip_vbox"));
+				"tstw_skip_vbox"));
 	gtk_container_set_border_width (GTK_CONTAINER (skipto), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (skipto)->vbox),
-			container,
-			TRUE,       /* expand */
-			TRUE,       /* fill */
-			0);         /* padding */
+			    container,
+			    TRUE,       /* expand */
+			    TRUE,       /* fill */
+			    0);         /* padding */
 
 	gtk_window_set_transient_for (GTK_WINDOW (skipto),
 				      totem_get_main_window (plugin->totem));

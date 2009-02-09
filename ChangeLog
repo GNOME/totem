@@ -1,3 +1,21 @@
+2009-02-09  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/backend/video-utils.c (totem_string_to_time):
+	* src/backend/video-utils.h: Utility function to convert a
+	human-friendly time string to a gint64.
+	* src/plugins/skipto/Makefile.am:
+	* src/plugins/skipto/skipto.ui:
+	* src/plugins/skipto/totem-skipto.c (totem_skipto_response_cb),
+	(totem_skipto_init), (totem_skipto_update_range),
+	(totem_skipto_get_range), (totem_skipto_set_current),
+	(time_entry_activate_cb), (totem_skipto_new):
+	* src/plugins/skipto/totem-time-entry.c
+	(totem_time_entry_class_init), (totem_time_entry_init),
+	(totem_time_entry_new), (output_cb), (input_cb):
+	* src/plugins/skipto/totem-time-entry.h: Accept more human-friendly
+	input formats in the "Skip to" dialogue using a new TotemTimeEntry
+	widget. (Closes: #565988)
+
 2009-02-09  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-object.c (on_video_button_press_event):
