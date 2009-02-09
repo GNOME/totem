@@ -3448,10 +3448,14 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		}
 		break;
 	case GDK_space:
-		if (totem_is_fullscreen (totem) != FALSE || gtk_widget_is_focus (GTK_WIDGET (totem->bvw)) != FALSE)
-			totem_action_play_pause (totem);
-		else
-			retval = FALSE;
+		{
+			GtkWidget *focus = gtk_window_get_focus (totem->win);
+			if (totem_is_fullscreen (totem) != FALSE ||
+			    focus == NULL || focus == totem->bvw || focus == totem->seek)
+				totem_action_play_pause (totem);
+			else
+				retval = FALSE;
+		}
 		break;
 	case GDK_Up:
 		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
