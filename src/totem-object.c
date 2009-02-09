@@ -3221,7 +3221,10 @@ static gboolean
 on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		Totem *totem)
 {
-	if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
+	if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+		gtk_widget_grab_focus (bvw);
+		return TRUE;
+	} else if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
 		totem_action_fullscreen_toggle(totem);
 		return TRUE;
 	} else if (event->type == GDK_BUTTON_PRESS && event->button == 2) {
