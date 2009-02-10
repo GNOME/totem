@@ -1,7 +1,7 @@
 #ifndef __EGG_FILE_FORMAT_CHOOSER_H__
 #define __EGG_FILE_FORMAT_CHOOSER_H__
 
-#include <gtk/gtkexpander.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
