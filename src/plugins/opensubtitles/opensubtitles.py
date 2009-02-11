@@ -1,4 +1,5 @@
 import totem
+import gettext
 import gobject, gtk, gio
 gobject.threads_init()
 import xmlrpclib
@@ -7,6 +8,9 @@ import xdg.BaseDirectory
 from os import sep
 
 from hash import hashFile
+
+D_ = gettext.dgettext
+_ = gettext.gettext
 
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
@@ -23,20 +27,112 @@ SUBTITLES_EXT = [
 ]
 
 # Map of the language codes used by opensubtitles.org's API to their human-readable name
-LANGUAGES_STR = [(_('Catalan'), 'cat'),
-                 (_('English'), 'eng'),
-                 (_('French'),  'fre'),
-                 (_('German'),  'ger'),
-                 (_('Spanish'), 'spa'),
-                 (_('Portuguese'), 'por'),]
+LANGUAGES_STR = [(D_('iso_639_3', 'Albanian'), 'sq'),
+		 (D_('iso_639_3', 'Arabic'), 'ar'),
+		 (D_('iso_639_3', 'Armenian'), 'hy'),
+		 (D_('iso_639_3', 'Neo-Aramaic, Assyrian'), 'ay'),
+		 (D_('iso_639_3', 'Bosnian'), 'bs'),
+		 (_('Brasilian Portuguese'), 'pb'),
+		 (D_('iso_639_3', 'Bulgarian'), 'bg'),
+		 (D_('iso_639_3', 'Catalan'), 'ca'),
+		 (D_('iso_639_3', 'Chinese'), 'zh'),
+		 (D_('iso_639_3', 'Croatian'), 'hr'),
+		 (D_('iso_639_3', 'Czech'), 'cs'),
+		 (D_('iso_639_3', 'Danish'), 'da'),
+		 (D_('iso_639_3', 'Dutch'), 'nl'),
+		 (D_('iso_639_3', 'English'), 'en'),
+		 (D_('iso_639_3', 'Esperanto'), 'eo'),
+		 (D_('iso_639_3', 'Estonian'), 'et'),
+		 (D_('iso_639_3', 'Finnish'), 'fi'),
+		 (D_('iso_639_3', 'French'), 'fr'),
+		 (D_('iso_639_3', 'Galician'), 'gl'),
+		 (D_('iso_639_3', 'Georgian'), 'ka'),
+		 (D_('iso_639_3', 'German'), 'de'),
+		 (D_('iso_639_3', 'Greek, Modern (1453-)'), 'el'),
+		 (D_('iso_639_3', 'Hebrew'), 'he'),
+		 (D_('iso_639_3', 'Hindi'), 'hi'),
+		 (D_('iso_639_3', 'Hungarian'), 'hu'),
+		 (D_('iso_639_3', 'Icelandic'), 'is'),
+		 (D_('iso_639_3', 'Indonesian'), 'id'),
+		 (D_('iso_639_3', 'Italian'), 'it'),
+		 (D_('iso_639_3', 'Japanese'), 'ja'),
+		 (D_('iso_639_3', 'Kazakh'), 'kk'),
+		 (D_('iso_639_3', 'Korean'), 'ko'),
+		 (D_('iso_639_3', 'Latvian'), 'lv'),
+		 (D_('iso_639_3', 'Lithuanian'), 'lt'),
+		 (D_('iso_639_3', 'Luxembourgish'), 'lb'),
+		 (D_('iso_639_3', 'Macedonian'), 'mk'),
+		 (D_('iso_639_3', 'Malay (macrolanguage)'), 'ms'),
+		 (D_('iso_639_3', 'Norwegian'), 'no'),
+		 (D_('iso_639_3', 'Occitan (post 1500)'), 'oc'),
+		 (D_('iso_639_3', 'Persian'), 'fa'),
+		 (D_('iso_639_3', 'Polish'), 'pl'),
+		 (D_('iso_639_3', 'Portuguese'), 'pt'),
+		 (D_('iso_639_3', 'Romanian'), 'ro'),
+		 (D_('iso_639_3', 'Russian'), 'ru'),
+		 (D_('iso_639_3', 'Serbian'), 'sr'),
+		 (D_('iso_639_3', 'Slovak'), 'sk'),
+		 (D_('iso_639_3', 'Slovenian'), 'sl'),
+		 (D_('iso_639_3', 'Spanish'), 'es'),
+		 (D_('iso_639_3', 'Swedish'), 'sv'),
+		 (D_('iso_639_3', 'Thai'), 'th'),
+		 (D_('iso_639_3', 'Turkish'), 'tr'),
+		 (D_('iso_639_3', 'Ukrainian'), 'uk'),
+		 (D_('iso_639_3', 'Vietnamese'), 'vi'),]
 
 # Map of ISO 639-1 language codes to the codes used by opensubtitles.org's API
-LANGUAGES =     {'ca':'cat',
-                 'de':'ger',
-                 'en':'eng',
-                 'es':'spa',
-                 'fr':'fre',
-                 'pt':'por',}
+LANGUAGES =     {'sq':'alb',
+		 'ar':'ara',
+		 'hy':'arm',
+		 'ay':'ass',
+		 'bs':'bos',
+		 'pb':'pob',
+		 'bg':'bul',
+		 'ca':'cat',
+		 'zh':'chi',
+		 'hr':'hrv',
+		 'cs':'cze',
+		 'da':'dan',
+		 'nl':'dut',
+		 'en':'eng',
+		 'eo':'epo',
+		 'et':'est',
+		 'fi':'fin',
+		 'fr':'fre',
+		 'gl':'glg',
+		 'ka':'geo',
+		 'de':'ger',
+		 'el':'ell',
+		 'he':'heb',
+		 'hi':'hin',
+		 'hu':'hun',
+		 'is':'ice',
+		 'id':'ind',
+		 'it':'ita',
+		 'ja':'jpn',
+		 'kk':'kaz',
+		 'ko':'kor',
+		 'lv':'lav',
+		 'lt':'lit',
+		 'lb':'ltz',
+		 'mk':'mac',
+		 'ms':'may',
+		 'no':'nor',
+		 'oc':'oci',
+		 'fa':'per',
+		 'pl':'pol',
+		 'pt':'por',
+		 'ro':'rum',
+		 'ru':'rus',
+		 'sr':'scc',
+		 'sk':'slo',
+		 'sl':'slv',
+		 'es':'spa',
+		 'sv':'swe',
+		 'th':'tha',
+		 'tr':'tur',
+		 'uk':'ukr',
+		 'vi':'vie',}
 
 class SearchThread(threading.Thread):
     """
