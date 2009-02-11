@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-22 09:18+0100\n"
-"PO-Revision-Date: 2009-01-22 09:25+0100\n"
+"POT-Creation-Date: 2009-02-11 15:00+0100\n"
+"PO-Revision-Date: 2009-02-11 15:00+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -115,8 +115,7 @@ msgstr "0 kb/s"
 
 #. 0 seconds
 #: ../data/properties.ui.h:5
-#: ../src/backend/video-utils.c:264
-#: ../src/plugins/skipto/skipto.ui.h:1
+#: ../src/backend/video-utils.c:286
 msgid "0 seconds"
 msgstr "0 sekunder"
 
@@ -230,7 +229,7 @@ msgstr "_Lägg till i spellista"
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1
 #: ../data/totem.ui.h:45
-#: ../src/totem.c:989
+#: ../src/totem-object.c:1593
 msgid "Movie Player"
 msgstr "Filmuppspelare"
 
@@ -1035,7 +1034,7 @@ msgstr "Flaggor för sessionshantering:"
 msgid "Show session management options"
 msgstr "Visa flaggor för sessionshantering"
 
-#: ../src/totem-cell-renderer-video.c:102
+#: ../src/totem-cell-renderer-video.c:125
 msgid "Unknown video"
 msgstr "Okänd video"
 
@@ -1051,51 +1050,51 @@ msgstr "Avbryt"
 msgid "No File"
 msgstr "Ingen fil"
 
-#: ../src/totem-interface.c:112
-#: ../src/totem-interface.c:120
+#: ../src/totem-interface.c:121
+#: ../src/totem-interface.c:129
 #, c-format
 msgid "Could not launch URL \"%s\": %s"
 msgstr "Kunde inte starta url:en \"%s\": %s"
 
-#: ../src/totem-interface.c:112
+#: ../src/totem-interface.c:121
 msgid "Default browser not configured"
 msgstr "Standardwebbläsare har inte konfigurerats"
 
-#: ../src/totem-interface.c:113
-#: ../src/totem-interface.c:121
+#: ../src/totem-interface.c:122
+#: ../src/totem-interface.c:130
 msgid "Error launching URI"
 msgstr "Fel vid start av URI"
 
-#: ../src/totem-interface.c:167
-#: ../src/totem-interface.c:199
+#: ../src/totem-interface.c:188
+#: ../src/totem-interface.c:220
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Kunde inte läsa in \"%s\"-gränssnittet. %s"
 
-#: ../src/totem-interface.c:167
+#: ../src/totem-interface.c:188
 msgid "The file does not exist."
 msgstr "Filen finns inte."
 
-#: ../src/totem-interface.c:169
-#: ../src/totem-interface.c:171
-#: ../src/totem-interface.c:201
-#: ../src/totem-interface.c:203
+#: ../src/totem-interface.c:190
+#: ../src/totem-interface.c:192
+#: ../src/totem-interface.c:222
+#: ../src/totem-interface.c:224
 msgid "Make sure that Totem is properly installed."
 msgstr "Försäkra dig om att Totem är korrekt installerat."
 
-#: ../src/totem-interface.c:314
+#: ../src/totem-interface.c:335
 msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
 msgstr "Totem är fri programvara. Du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation, antingen version 2 eller (om du så vill) någon senare version."
 
-#: ../src/totem-interface.c:318
+#: ../src/totem-interface.c:339
 msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
 msgstr "Totem distribueras i hopp om att det ska vara användbart, men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public License för ytterligare information."
 
-#: ../src/totem-interface.c:322
+#: ../src/totem-interface.c:343
 msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 msgstr "Du bör ha fått en kopia av GNU General Public License tillsammans med detta program. Om inte, skriv till Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA"
 
-#: ../src/totem-interface.c:325
+#: ../src/totem-interface.c:346
 msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
 msgstr "Totem innehåller ett undantag för att tillåta användningen av proprietära GStreamer-insticksmoduler."
 
@@ -1162,6 +1161,169 @@ msgstr "Konfigurera insticksmoduler"
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Ställer in bildförhållandet 16:9 (anamorfiskt)"
 
+#: ../src/totem-object.c:937
+#: ../browser-plugin/totem-plugin-viewer.c:354
+msgid "Playing"
+msgstr "Spelar upp"
+
+#: ../src/totem-object.c:939
+#: ../src/totem-options.c:51
+msgid "Pause"
+msgstr "Gör paus"
+
+#: ../src/totem-object.c:944
+#: ../browser-plugin/totem-plugin-viewer.c:350
+msgid "Paused"
+msgstr "Gör paus"
+
+#: ../src/totem-object.c:946
+#: ../src/totem-object.c:956
+#: ../src/totem-options.c:50
+msgid "Play"
+msgstr "Spela upp"
+
+#: ../src/totem-object.c:951
+#: ../src/totem-object.c:1585
+#: ../src/totem-statusbar.c:98
+#: ../browser-plugin/totem-plugin-viewer.c:338
+msgid "Stopped"
+msgstr "Stoppad"
+
+#: ../src/totem-object.c:1032
+#: ../src/totem-object.c:1059
+#: ../src/totem-object.c:1706
+#: ../src/totem-object.c:1854
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem kunde inte spela upp \"%s\"."
+
+#: ../src/totem-object.c:1142
+#, c-format
+msgid "Totem could not play this media (%s) although a plugin is present to handle it."
+msgstr "Totem kunde inte spela upp detta media (%s) trots att en insticksmodul som hanterar den är installerad."
+
+#: ../src/totem-object.c:1143
+msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
+msgstr "Du bör kontrollera om det finns en skiva i enheten och att den är korrekt konfigurerad."
+
+#: ../src/totem-object.c:1150
+#: ../src/plugins/youtube/youtube.py:232
+msgid "More information about media plugins"
+msgstr "Mer information om mediainsticksmoduler"
+
+#: ../src/totem-object.c:1151
+#: ../src/plugins/youtube/youtube.py:230
+msgid "Please install the necessary plugins and restart Totem to be able to play this media."
+msgstr "Installera de insticksmoduler som krävs och starta om Totem för att kunna spela upp denna typ av media."
+
+#: ../src/totem-object.c:1153
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
+msgstr "Totem kan inte spela upp denna typ av media (%s) därför att lämpliga insticksmoduler saknas för att kunna läsa från skivan."
+
+#: ../src/totem-object.c:1155
+#: ../src/plugins/youtube/youtube.py:229
+#, c-format, python-format
+msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
+msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom du saknar lämpliga insticksmoduler för att hantera den."
+
+#: ../src/totem-object.c:1159
+msgid "Totem cannot play TV, because no TV adapters are present or they are not supported."
+msgstr "Totem kan inte spela upp TV därför att det inte finns några TV-kort eller att de inte stöds."
+
+#: ../src/totem-object.c:1160
+msgid "Please insert a supported TV adapter."
+msgstr "Anslut ett TV-kort som stöds."
+
+#: ../src/totem-object.c:1170
+msgid "More information about watching TV"
+msgstr "Mer information om tv-tittande"
+
+#: ../src/totem-object.c:1171
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr "Totem saknar en kanallistning för att kunna justera mottagaren."
+
+#: ../src/totem-object.c:1172
+msgid "Please follow the instructions provided in the link to create a channels listing."
+msgstr "Följ instruktionerna som anges i länken för att skapa en kanallistning."
+
+#: ../src/totem-object.c:1175
+#, c-format
+msgid "Totem cannot play this type of media (%s) because the TV device is busy."
+msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom TV-enheten är upptagen."
+
+#: ../src/totem-object.c:1176
+msgid "Please try again later."
+msgstr "Försök igen senare."
+
+#: ../src/totem-object.c:1181
+#, c-format
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom den inte stöds."
+
+#: ../src/totem-object.c:1182
+msgid "Please insert another disc to play back."
+msgstr "Mata in en annan skiva att spela upp."
+
+#: ../src/totem-object.c:1216
+msgid "Totem was not able to play this disc."
+msgstr "Totem kunde inte spela upp den här skivan."
+
+#: ../src/totem-object.c:1217
+#: ../src/totem-object.c:3954
+#: ../browser-plugin/totem-plugin-viewer.c:1824
+msgid "No reason."
+msgstr "Ingen orsak."
+
+#: ../src/totem-object.c:1231
+msgid "Totem does not support playback of Audio CDs"
+msgstr "Totem saknar stöd för uppspelning av ljud-cd-skivor"
+
+#: ../src/totem-object.c:1232
+msgid "Please consider using a music player or a CD extractor to play this CD"
+msgstr "Överväg att använda en musikspelare eller en cd-extraherare för att spela upp denna skiva"
+
+#: ../src/totem-object.c:1712
+msgid "No error message"
+msgstr "Inget felmeddelande"
+
+#: ../src/totem-object.c:2051
+msgid "Totem could not display the help contents."
+msgstr "Totem kunde inte visa hjälpinnehållet."
+
+#: ../src/totem-object.c:2377
+#: ../src/totem-object.c:2379
+#: ../browser-plugin/totem-plugin-viewer.c:1479
+msgid "An error occurred"
+msgstr "Ett fel inträffade"
+
+#: ../src/totem-object.c:3250
+msgid "TV signal lost"
+msgstr "TV-signalen förlorades"
+
+#: ../src/totem-object.c:3251
+msgid "Please verify your hardware setup."
+msgstr "Kontrollera din hårdvarukonfiguration."
+
+#: ../src/totem-object.c:3809
+#: ../src/totem-object.c:3811
+msgid "Previous Chapter/Movie"
+msgstr "Föregående kapitel/film"
+
+#: ../src/totem-object.c:3817
+#: ../src/totem-object.c:3819
+msgid "Play / Pause"
+msgstr "Spela upp / Gör paus"
+
+#: ../src/totem-object.c:3826
+#: ../src/totem-object.c:3828
+msgid "Next Chapter/Movie"
+msgstr "Nästa kapitel/film"
+
+#: ../src/totem-object.c:3954
+msgid "Totem could not startup."
+msgstr "Totem kunde inte starta."
+
 #: ../src/totem-open-location.c:171
 msgid "Open Location..."
 msgstr "Öppna plats..."
@@ -1173,17 +1335,6 @@ msgstr "Aktivera felsökning"
 #: ../src/totem-options.c:49
 msgid "Play/Pause"
 msgstr "Spela upp/Gör paus"
-
-#: ../src/totem-options.c:50
-#: ../src/totem.c:342
-#: ../src/totem.c:352
-msgid "Play"
-msgstr "Spela upp"
-
-#: ../src/totem-options.c:51
-#: ../src/totem.c:335
-msgid "Pause"
-msgstr "Gör paus"
 
 #: ../src/totem-options.c:52
 msgid "Next"
@@ -1340,13 +1491,6 @@ msgstr "Ljud/Video"
 #: ../src/totem-statusbar.c:93
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
-
-#: ../src/totem-statusbar.c:98
-#: ../src/totem.c:347
-#: ../src/totem.c:981
-#: ../browser-plugin/totem-plugin-viewer.c:338
-msgid "Stopped"
-msgstr "Stoppad"
 
 #: ../src/totem-statusbar.c:115
 #, c-format
@@ -1607,176 +1751,31 @@ msgstr "Välj undertexter"
 msgid "Select Movies or Playlists"
 msgstr "Välj filmer eller spellistor"
 
-#: ../src/totem.c:333
-#: ../browser-plugin/totem-plugin-viewer.c:354
-msgid "Playing"
-msgstr "Spelar upp"
-
-#: ../src/totem.c:340
-#: ../browser-plugin/totem-plugin-viewer.c:350
-msgid "Paused"
-msgstr "Gör paus"
-
-#: ../src/totem.c:428
-#: ../src/totem.c:455
-#: ../src/totem.c:1102
-#: ../src/totem.c:1250
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem kunde inte spela upp \"%s\"."
-
-#: ../src/totem.c:538
-#, c-format
-msgid "Totem could not play this media (%s) although a plugin is present to handle it."
-msgstr "Totem kunde inte spela upp detta media (%s) trots att en insticksmodul som hanterar den är installerad."
-
-#: ../src/totem.c:539
-msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
-msgstr "Du bör kontrollera om det finns en skiva i enheten och att den är korrekt konfigurerad."
-
-#: ../src/totem.c:546
-#: ../src/plugins/youtube/youtube.py:232
-msgid "More information about media plugins"
-msgstr "Mer information om mediainsticksmoduler"
-
-#: ../src/totem.c:547
-#: ../src/plugins/youtube/youtube.py:230
-msgid "Please install the necessary plugins and restart Totem to be able to play this media."
-msgstr "Installera de insticksmoduler som krävs och starta om Totem för att kunna spela upp denna typ av media."
-
-#: ../src/totem.c:549
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
-msgstr "Totem kan inte spela upp denna typ av media (%s) därför att lämpliga insticksmoduler saknas för att kunna läsa från skivan."
-
-#: ../src/totem.c:551
-#: ../src/plugins/youtube/youtube.py:229
-#, c-format, python-format
-msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
-msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom du saknar lämpliga insticksmoduler för att hantera den."
-
-#: ../src/totem.c:555
-msgid "Totem cannot play TV, because no TV adapters are present or they are not supported."
-msgstr "Totem kan inte spela upp TV därför att det inte finns några TV-kort eller att de inte stöds."
-
-#: ../src/totem.c:556
-msgid "Please insert a supported TV adapter."
-msgstr "Anslut ett TV-kort som stöds."
-
-#: ../src/totem.c:566
-msgid "More information about watching TV"
-msgstr "Mer information om tv-tittande"
-
-#: ../src/totem.c:567
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "Totem saknar en kanallistning för att kunna justera mottagaren."
-
-#: ../src/totem.c:568
-msgid "Please follow the instructions provided in the link to create a channels listing."
-msgstr "Följ instruktionerna som anges i länken för att skapa en kanallistning."
-
-#: ../src/totem.c:571
-#, c-format
-msgid "Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom TV-enheten är upptagen."
-
-#: ../src/totem.c:572
-msgid "Please try again later."
-msgstr "Försök igen senare."
-
-#: ../src/totem.c:577
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "Totem kan inte spela upp denna typ av media (%s) eftersom den inte stöds."
-
-#: ../src/totem.c:578
-msgid "Please insert another disc to play back."
-msgstr "Mata in en annan skiva att spela upp."
-
-#: ../src/totem.c:612
-msgid "Totem was not able to play this disc."
-msgstr "Totem kunde inte spela upp den här skivan."
-
-#: ../src/totem.c:613
-#: ../src/totem.c:3338
-#: ../browser-plugin/totem-plugin-viewer.c:1824
-msgid "No reason."
-msgstr "Ingen orsak."
-
-#: ../src/totem.c:627
-msgid "Totem does not support playback of Audio CDs"
-msgstr "Totem saknar stöd för uppspelning av ljud-cd-skivor"
-
-#: ../src/totem.c:628
-msgid "Please consider using a music player or a CD extractor to play this CD"
-msgstr "Överväg att använda en musikspelare eller en cd-extraherare för att spela upp denna skiva"
-
-#: ../src/totem.c:1108
-msgid "No error message"
-msgstr "Inget felmeddelande"
-
-#: ../src/totem.c:1447
-msgid "Totem could not display the help contents."
-msgstr "Totem kunde inte visa hjälpinnehållet."
-
-#: ../src/totem.c:1773
-#: ../src/totem.c:1775
-#: ../browser-plugin/totem-plugin-viewer.c:1479
-msgid "An error occurred"
-msgstr "Ett fel inträffade"
-
-#: ../src/totem.c:2643
-msgid "TV signal lost"
-msgstr "TV-signalen förlorades"
-
-#: ../src/totem.c:2644
-msgid "Please verify your hardware setup."
-msgstr "Kontrollera din hårdvarukonfiguration."
-
-#: ../src/totem.c:3193
-#: ../src/totem.c:3195
-msgid "Previous Chapter/Movie"
-msgstr "Föregående kapitel/film"
-
-#: ../src/totem.c:3201
-#: ../src/totem.c:3203
-msgid "Play / Pause"
-msgstr "Spela upp / Gör paus"
-
-#: ../src/totem.c:3210
-#: ../src/totem.c:3212
-msgid "Next Chapter/Movie"
-msgstr "Nästa kapitel/film"
-
-#: ../src/totem.c:3338
-msgid "Totem could not startup."
-msgstr "Totem kunde inte starta."
-
-#: ../src/totem.c:3465
+#: ../src/totem.c:95
 msgid "Could not open link"
 msgstr "Kunde inte öppna länk"
 
-#: ../src/totem.c:3506
-#: ../src/totem.c:3531
+#: ../src/totem.c:136
+#: ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
 #: ../browser-plugin/totem-plugin-viewer.c:1833
 msgid "Totem Movie Player"
 msgstr "Filmuppspelaren Totem"
 
-#: ../src/totem.c:3507
+#: ../src/totem.c:137
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Kunde inte initiera de trådsäkra biblioteken."
 
-#: ../src/totem.c:3507
+#: ../src/totem.c:137
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontrollera din systeminstallation. Totem kommer nu att avslutas."
 
 #. Handle command line arguments
-#: ../src/totem.c:3515
+#: ../src/totem.c:145
 msgid "- Play movies and songs"
 msgstr "- Spela upp filmer och låtar"
 
-#: ../src/totem.c:3523
+#: ../src/totem.c:153
 #, c-format
 msgid ""
 "%s\n"
@@ -1785,11 +1784,11 @@ msgstr ""
 "%s\n"
 "Kör \"%s --help\" för en komplett lista över tillgängliga kommandoradsflaggor.\n"
 
-#: ../src/totem.c:3539
+#: ../src/totem.c:169
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem kunde inte initiera konfigurationsmotorn."
 
-#: ../src/totem.c:3539
+#: ../src/totem.c:169
 msgid "Make sure that GNOME is properly installed."
 msgstr "Försäkra dig om att GNOME är korrekt installerat."
 
@@ -1843,7 +1842,6 @@ msgid "Media file could not be played."
 msgstr "Mediafilen kunde inte spelas upp."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:2724
-#, c-format
 msgid "Failed to retrieve working directory"
 msgstr "Misslyckades med att hämta arbetskatalogen"
 
@@ -1857,33 +1855,27 @@ msgid "Mono"
 msgstr "Mono"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4599
-#, c-format
 msgid "Too old version of GStreamer installed."
 msgstr "En för gammal version av GStreamer är installerad."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4606
-#, c-format
 msgid "Media contains no supported video streams."
 msgstr "Mediet innehåller inga videoströmmar som stöds."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:4981
-#, c-format
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Misslyckades med att skapa ett GStreamer-spelobjekt. Kontrollera din installation av GStreamer."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5112
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5229
-#, c-format
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna videoutgången. Den kanske inte är tillgänglig. Välj en annan videoutgång i väljaren för multimediasystem."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5124
-#, c-format
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta videoutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan videoutgång i väljaren för multimediasystem."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5159
-#, c-format
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Misslyckades med att öppna ljudutgången. Du kanske inte har rättigheter att öppna ljudutgången, eller så kanske inte ljudservern körs. Välj en annan ljudutgång i väljaren för multimediasystem."
 
@@ -1891,7 +1883,6 @@ msgstr "Misslyckades med att öppna ljudutgången. Du kanske inte har rättighet
 # http://bugzilla.gnome.org/show_bug.cgi?id=318817
 #
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5179
-#, c-format
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Kunde inte hitta ljudutgången. Du kanske behöver installera ytterligare insticksmoduler för GStreamer eller välja en annan ljudutgång i väljaren för multimediasystem."
 
@@ -1906,7 +1897,6 @@ msgstr ""
 
 #: ../src/backend/bacon-video-widget-xine.c:1227
 #: ../src/backend/bacon-video-widget-xine.c:1810
-#, c-format
 msgid "No video output is available. Make sure that the program is correctly installed."
 msgstr "Ingen videoutmatning är tillgänglig. Försäkra dig om att programmet är korrekt installerat."
 
@@ -1983,32 +1973,26 @@ msgid "The file you tried to play is an empty file."
 msgstr "Filen du försökte spela upp är en tom fil."
 
 #: ../src/backend/bacon-video-widget-xine.c:1606
-#, c-format
 msgid "There is no input plugin to handle the location of this movie"
 msgstr "Det finns ingen inmatningsinsticksmodul för att hantera platsen för denna film"
 
 #: ../src/backend/bacon-video-widget-xine.c:1610
-#, c-format
 msgid "There is no plugin to handle this movie."
 msgstr "Det finns ingen insticksmodul för att hantera denna film."
 
 #: ../src/backend/bacon-video-widget-xine.c:1614
-#, c-format
 msgid "This movie is broken and can not be played further."
 msgstr "Denna film är trasig och kan inte spelas upp längre."
 
 #: ../src/backend/bacon-video-widget-xine.c:1618
-#, c-format
 msgid "This location is not a valid one."
 msgstr "Denna plats är inte giltig."
 
 #: ../src/backend/bacon-video-widget-xine.c:1622
-#, c-format
 msgid "This movie could not be opened."
 msgstr "Denna film kunde inte öppnas."
 
 #: ../src/backend/bacon-video-widget-xine.c:1626
-#, c-format
 msgid "Generic Error."
 msgstr "Allmänt fel."
 
@@ -2023,7 +2007,6 @@ msgid "Audio codec '%s' is not handled. You might need to install additional plu
 msgstr "Ljudkodeken \"%s\" hanteras inte. Du kan behöva installera ytterligare insticksmoduler för att kunna spela upp en del filmtyper"
 
 #: ../src/backend/bacon-video-widget-xine.c:2470
-#, c-format
 msgid "This is an audio-only file and there is no audio output available."
 msgstr "Detta är en fil med endast ljud och det finns ingen ljudutmatning tillgänglig."
 
@@ -2035,17 +2018,14 @@ msgid "Language %d"
 msgstr "Språk %d"
 
 #: ../src/backend/bacon-video-widget-xine.c:4183
-#, c-format
 msgid "No video to capture."
 msgstr "Ingen video att fånga."
 
 #: ../src/backend/bacon-video-widget-xine.c:4191
-#, c-format
 msgid "Video codec is not handled."
 msgstr "Videokodeken hanteras inte."
 
 #: ../src/backend/bacon-video-widget-xine.c:4202
-#, c-format
 msgid "Movie is not playing."
 msgstr "Filmen spelas inte upp."
 
@@ -2056,6 +2036,7 @@ msgstr "Filmen spelas inte upp."
 #. * of "%d" if your locale uses localized digits.
 #.
 #: ../src/backend/video-utils.c:219
+#: ../src/backend/video-utils.c:236
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -2073,21 +2054,21 @@ msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/backend/video-utils.c:244
+#: ../src/backend/video-utils.c:266
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d timme"
 msgstr[1] "%d timmar"
 
-#: ../src/backend/video-utils.c:246
+#: ../src/backend/video-utils.c:268
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minut"
 msgstr[1] "%d minuter"
 
-#: ../src/backend/video-utils.c:249
+#: ../src/backend/video-utils.c:271
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -2095,19 +2076,19 @@ msgstr[0] "%d sekund"
 msgstr[1] "%d sekunder"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:255
+#: ../src/backend/video-utils.c:277
 #, c-format
 msgid "%s %s %s"
 msgstr "%s, %s, %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:258
+#: ../src/backend/video-utils.c:280
 #, c-format
 msgid "%s %s"
 msgstr "%s, %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:261
+#: ../src/backend/video-utils.c:283
 #, c-format
 msgid "%s"
 msgstr "%s"
@@ -2225,7 +2206,6 @@ msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Ställ in status för din snabbmeddelandeklient till frånvarande under tiden en film spelas upp"
 
 #: ../src/plugins/galago/totem-galago.c:171
-#, c-format
 msgid "Could not connect to the Galago daemon."
 msgstr "Kunde inte ansluta till Galago-demonen."
 
@@ -2238,7 +2218,6 @@ msgid "Presentation helper to make annotations on screen"
 msgstr "Presentationshjälpare för att skriva ut noteringar på skärmen"
 
 #: ../src/plugins/gromit/totem-gromit.c:272
-#, c-format
 msgid "The gromit binary was not found."
 msgstr "Binären gromit hittades inte."
 
@@ -2391,12 +2370,10 @@ msgid "Support infrared remote control"
 msgstr "Stöd för infraröd fjärrkontroll"
 
 #: ../src/plugins/lirc/totem-lirc.c:287
-#, c-format
 msgid "Couldn't initialize lirc."
 msgstr "Kunde inte initiera lirc."
 
 #: ../src/plugins/lirc/totem-lirc.c:296
-#, c-format
 msgid "Couldn't read lirc configuration."
 msgstr "Kunde inte läsa lirc-konfiguration."
 
@@ -2436,66 +2413,71 @@ msgstr "Leta efter en undertext för den uppspelade filmen"
 msgid "Subtitles downloader"
 msgstr "Hämta undertexter"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:25
+#. Map of the language codes used by opensubtitles.org's API to their human-readable name
+#: ../src/plugins/opensubtitles/opensubtitles.py:26
 msgid "Catalan"
 msgstr "Katalanska"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:26
+#: ../src/plugins/opensubtitles/opensubtitles.py:27
 msgid "English"
 msgstr "Engelska"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:27
+#: ../src/plugins/opensubtitles/opensubtitles.py:28
 msgid "French"
 msgstr "Franska"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:28
+#: ../src/plugins/opensubtitles/opensubtitles.py:29
 msgid "German"
 msgstr "Tyska"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:29
+#: ../src/plugins/opensubtitles/opensubtitles.py:30
 msgid "Spanish"
 msgstr "Spanska"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:138
-#: ../src/plugins/opensubtitles/opensubtitles.py:154
-#: ../src/plugins/opensubtitles/opensubtitles.py:171
-#: ../src/plugins/opensubtitles/opensubtitles.py:177
+#: ../src/plugins/opensubtitles/opensubtitles.py:31
+msgid "Portuguese"
+msgstr "Portugisiska"
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:142
+#: ../src/plugins/opensubtitles/opensubtitles.py:158
+#: ../src/plugins/opensubtitles/opensubtitles.py:175
+#: ../src/plugins/opensubtitles/opensubtitles.py:181
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Kunde inte kontakta webbplatsen OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:159
+#: ../src/plugins/opensubtitles/opensubtitles.py:163
 msgid "No results found"
 msgstr "Inga resultat hittades"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:260
+#: ../src/plugins/opensubtitles/opensubtitles.py:264
 msgid "Subtitles"
 msgstr "Undertexter"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:263
+#: ../src/plugins/opensubtitles/opensubtitles.py:267
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:266
+#: ../src/plugins/opensubtitles/opensubtitles.py:270
 msgid "Rating"
 msgstr "Betyg"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:304
+#: ../src/plugins/opensubtitles/opensubtitles.py:308
 msgid "_Download Movie Subtitles..."
 msgstr "_Hämta filmundertexter..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:305
+#: ../src/plugins/opensubtitles/opensubtitles.py:309
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Hämta filmundertexter från OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:364
+#: ../src/plugins/opensubtitles/opensubtitles.py:368
 msgid "Searching subtitles..."
 msgstr "Söker efter undertexter..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:417
+#: ../src/plugins/opensubtitles/opensubtitles.py:421
 msgid "Downloading the subtitles..."
 msgstr "Hämtar undertexterna..."
 
@@ -2638,7 +2620,7 @@ msgstr "Skapa skärmbilds_galleri..."
 msgid "Create a gallery of screenshots"
 msgstr "Skapa ett galleri av skärmbilder"
 
-#: ../src/plugins/skipto/totem-skipto.c:186
+#: ../src/plugins/skipto/totem-skipto.c:171
 msgid "Skip to"
 msgstr "Hoppa till"
 
@@ -2651,15 +2633,14 @@ msgid "Skip to a specific time"
 msgstr "Hoppa till en specifik tid"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:221
-#, c-format
 msgid "Could not load the \"Skip to\" dialog interface."
 msgstr "Kunde inte läsa in \"Hoppa till\"-dialoggränssnittet."
 
-#: ../src/plugins/skipto/skipto.ui.h:2
+#: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
 msgstr "_Hoppa till:"
 
-#: ../src/plugins/skipto/skipto.ui.h:3
+#: ../src/plugins/skipto/skipto.ui.h:2
 msgid "seconds"
 msgstr "sekunder"
 
@@ -2753,7 +2734,6 @@ msgid "Fetching more videos..."
 msgstr "Hämtar fler videoklipp..."
 
 #: ../browser-plugin/totem-plugin-viewer.c:465
-#, c-format
 msgid "No URI to play"
 msgstr "Ingen uri att spela upp"
 
