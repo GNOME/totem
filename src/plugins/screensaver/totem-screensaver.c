@@ -55,6 +55,7 @@ typedef struct
 
 	TotemScrsaver *scr;
 	guint          handler_id_playing;
+	guint          handler_id_metadata;
 	guint          handler_id_gconf;
 } TotemScreensaverPlugin;
 
@@ -168,13 +169,13 @@ impl_activate (TotemPlugin *plugin,
 	g_object_unref (gc);
 
 	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
-				"notify::playing",
-				G_CALLBACK (property_notify_cb),
-				pi);
-	pi->handler_id_playing = g_signal_connect (G_OBJECT (pi->bvw),
-				"got-metadata",
-				G_CALLBACK (got_metadata_cb),
-				pi);
+						   "notify::playing",
+						   G_CALLBACK (property_notify_cb),
+						   pi);
+	pi->handler_id_metadata = g_signal_connect (G_OBJECT (pi->bvw),
+						    "got-metadata",
+						    G_CALLBACK (got_metadata_cb),
+						    pi);
 
 	pi->totem = g_object_ref (totem);
 
@@ -195,7 +196,14 @@ impl_deactivate	(TotemPlugin *plugin,
 	gconf_client_notify_remove (gc, pi->handler_id_gconf);
 	g_object_unref (gc);
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+	if (pi->handler_id_playing != 0) {
+		g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+		pi->handler_id_playing = 0;
+	}
+	if (pi->handler_id_metadata != 0) {
+		g_signal_handler_disconnect (G_OBJECT (pi->bvw), pi->handler_id_metadata);
+		pi->handler_id_metadata = 0;
+	}
 
 	g_object_unref (pi->totem);
 	g_object_unref (pi->bvw);
