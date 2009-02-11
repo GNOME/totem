@@ -22,17 +22,21 @@ SUBTITLES_EXT = [
         "ass",
 ]
 
+# Map of the language codes used by opensubtitles.org's API to their human-readable name
 LANGUAGES_STR = [(_('Catalan'), 'cat'),
                  (_('English'), 'eng'),
                  (_('French'),  'fre'),
                  (_('German'),  'ger'),
-                 (_('Spanish'), 'spa'),]
+                 (_('Spanish'), 'spa'),
+                 (_('Portuguese'), 'por'),]
 
+# Map of ISO 639-1 language codes to the codes used by opensubtitles.org's API
 LANGUAGES =     {'ca':'cat',
                  'de':'ger',
                  'en':'eng',
                  'es':'spa',
-                 'fr':'fre'}
+                 'fr':'fre',
+                 'pt':'por',}
 
 class SearchThread(threading.Thread):
     """
