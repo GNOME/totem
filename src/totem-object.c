@@ -117,7 +117,7 @@ gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem
 void seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem);
 gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem);
 void volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, Totem *totem);
-int window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem);
+gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem);
 int window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, Totem *totem);
 void main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, Totem *totem);
 void fs_exit1_activate_cb (GtkButton *button, Totem *totem);
@@ -3559,7 +3559,7 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 	return retval;
 }
 
-int
+gboolean
 window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
 	if (totem_sidebar_is_focused (totem) != FALSE)
