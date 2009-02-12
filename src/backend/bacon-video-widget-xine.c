@@ -3814,7 +3814,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 		string = NULL;
 
 	/* Remove line feeds */
-	if (strstr (string, "\n") != NULL)
+	if (string != NULL && strstr (string, "\n") != NULL)
 		g_strdelimit (string, "\n", " ");
 
 	if (string != NULL)

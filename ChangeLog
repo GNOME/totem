@@ -1,3 +1,9 @@
+2009-02-12  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_get_metadata_string): Fix possible crasher
+	when the string is NULL (Closes: #571480)
+
 2009-02-11  Philip Withnall  <philip@tecnocode.co.uk>
 
 	Update svn:ignore properties.
