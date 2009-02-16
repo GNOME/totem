@@ -51,7 +51,7 @@
 #endif
 
 /* The main() function controls progress in the first and last 10% */
-#define PRINT_PROGRESS(p) { g_printf ("%f%% complete\n", p); }
+#define PRINT_PROGRESS(p) { if (print_progress) g_printf ("%f%% complete\n", p); }
 #define MIN_PROGRESS 10.0
 #define MAX_PROGRESS 90.0
 
@@ -644,7 +644,16 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 
 	/* Build the header information */
 	duration_text = totem_time_to_string (stream_length * 1000);
-	filename = g_path_get_basename (input);
+	filename = NULL;
+	if (strstr (input, "://")) {
+		char *local;
+		local = g_filename_from_uri (input, NULL, NULL);
+		filename = g_path_get_basename (local);
+		g_free (local);
+	}
+	if (filename == NULL)
+		filename = g_path_get_basename (input);
+
 	header_text = g_strdup_printf (_("<b>%s</b>: %s\n<b>%s</b>: %d\303\227%d\n<b>%s</b>: %s"),
 				       _("Filename"),
 				       filename,

@@ -1,5 +1,12 @@
 2009-02-16  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c (create_gallery): Only ever
+	print progress when we are asked to do so. Fix filename
+	in galleries showing up unescaped when a URI is passed as 
+	input
+
+2009-02-16  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/totem-plugins-engine.c
 	(totem_plugins_engine_load_file): Patch from Philip Withnall
 	<philip@tecnocode.co.uk> to allow builtin plugins to be disabled
