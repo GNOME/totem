@@ -128,19 +128,12 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 						guint track_num,
 						TotemMoviePropertiesPlugin *plugin)
 {
-	if (artist == NULL && title == NULL && album == NULL) {
-		GtkWidget *bvw;
+	GtkWidget *bvw;
 
-		bvw = totem_get_video_widget (totem);
-		bacon_video_widget_properties_update
-			(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
-		g_object_unref (bvw);
-	} else {
-		bacon_video_widget_properties_from_metadata
-			(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props),
-			 artist, title, album);
-	}
-
+	bvw = totem_get_video_widget (totem);
+	bacon_video_widget_properties_update
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
+	g_object_unref (bvw);
 }
 
 static gboolean

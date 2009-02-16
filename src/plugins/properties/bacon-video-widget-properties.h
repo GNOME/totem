@@ -50,10 +50,6 @@ GtkWidget *bacon_video_widget_properties_new		(void);
 void bacon_video_widget_properties_reset		(BaconVideoWidgetProperties *props);
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
 							 GtkWidget *bvw);
-void bacon_video_widget_properties_from_metadata	(BaconVideoWidgetProperties *props,
-							 const char *title,
-							 const char *artist,
-							 const char *album);
 void bacon_video_widget_properties_from_time		(BaconVideoWidgetProperties *props,
 							 int time);
 

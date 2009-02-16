@@ -260,23 +260,6 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 #undef UPDATE_FROM_INT2
 }
 
-void
-bacon_video_widget_properties_from_metadata (BaconVideoWidgetProperties *props,
-					     const char *artist,
-					     const char *title,
-					     const char *album)
-{
-	g_return_if_fail (props != NULL);
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
-
-	if (title != NULL)
-		bacon_video_widget_properties_set_label (props, "title", title);
-	if (artist != NULL)
-		bacon_video_widget_properties_set_label (props, "artist", artist);
-	if (album != NULL)
-		bacon_video_widget_properties_set_label (props, "album", album);
-}
-
 GtkWidget*
 bacon_video_widget_properties_new (void)
 {
