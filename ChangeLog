@@ -1,5 +1,12 @@
 2009-02-16  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/totem-plugins-engine.c
+	(totem_plugins_engine_load_file): Patch from Philip Withnall
+	<philip@tecnocode.co.uk> to allow builtin plugins to be disabled
+	when a GConf key exists for them (Closes: #565975)
+
+2009-02-16  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/properties/bacon-video-widget-properties.c:
 	* src/plugins/properties/bacon-video-widget-properties.h:
 	* src/plugins/properties/totem-movie-properties.c

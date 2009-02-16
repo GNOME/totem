@@ -262,6 +262,7 @@ totem_plugins_engine_load_file (const char *plugin_file)
 {
 	TotemPluginInfo *info;
 	char *key_name;
+	GConfValue *activate_value;
 	gboolean activate;
 
 	if (g_str_has_suffix (plugin_file, PLUGIN_EXT) == FALSE)
@@ -278,12 +279,6 @@ totem_plugins_engine_load_file (const char *plugin_file)
 
 	g_hash_table_insert (totem_plugins, info->location, info);
 
-	if (info->builtin != FALSE) {
-		info->visible = FALSE;
-		totem_plugins_engine_activate_plugin (info);
-		return;
-	}
-
 	key_name = g_strdup_printf (GCONF_PREFIX_PLUGIN, info->location);
 	gconf_client_add_dir (client, key_name, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	g_free (key_name);
@@ -295,18 +290,29 @@ totem_plugins_engine_load_file (const char *plugin_file)
 								info,
 								NULL,
 								NULL);
-	activate = gconf_client_get_bool (client, key_name, NULL);
+	activate_value = gconf_client_get (client, key_name, NULL);
 	g_free (key_name);
 
-	key_name = g_strdup_printf (GCONF_PLUGIN_HIDDEN, info->location);
-	info->visible_notification_id = gconf_client_notify_add (client,
-								 key_name,
-								 (GConfClientNotifyFunc)totem_plugins_engine_plugin_visible_cb,
-								 info,
-								 NULL,
-								 NULL);
-	info->visible = !gconf_client_get_bool (client, key_name, NULL);
-	g_free (key_name);
+	if (activate_value == NULL) {
+		/* Builtin plugins are activated by default; other plugins aren't */
+		activate = info->builtin;
+	} else {
+		activate = gconf_value_get_bool (activate_value);
+		gconf_value_free (activate_value);
+	}
+
+	if (info->builtin == FALSE) {
+		/* Builtin plugins are *always* invisible */
+		key_name = g_strdup_printf (GCONF_PLUGIN_HIDDEN, info->location);
+		info->visible_notification_id = gconf_client_notify_add (client,
+									 key_name,
+									 (GConfClientNotifyFunc)totem_plugins_engine_plugin_visible_cb,
+									 info,
+									 NULL,
+									 NULL);
+		info->visible = !gconf_client_get_bool (client, key_name, NULL);
+		g_free (key_name);
+	}
 
 	if (activate)
 		totem_plugins_engine_activate_plugin (info);
