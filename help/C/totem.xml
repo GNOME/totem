@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "1.6.0">
-  <!ENTITY manrevision "2.0">
-  <!ENTITY date "August 2006">
+  <!ENTITY appversion "2.26">
+  <!ENTITY manrevision "3.0">
+  <!ENTITY date "February 2009">
   <!ENTITY app "Totem Movie Player">
   <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
@@ -31,12 +31,13 @@
     <copyright> 
       <year>2003</year> 
       <holder>Chee Bin HOH</holder> 
-    </copyright> 
+    </copyright>
+    <releaseinfo revision="2.26" role="update"/>
 
     <abstract role="description">
       <para>&app; is a media player for GNOME that runs on GStreamer by default, but can
 also be run on xine. It has support for most audio and video codecs including
-DVDs and Digital CDs among many others. Features include TV-out, fullscreen,
+DVDs among many others. Features include TV-out, fullscreen,
 subtitles, and more.</para>
     </abstract>
 
@@ -66,7 +67,15 @@ subtitles, and more.</para>
   	<address> <email>baptiste.millemathias@gmail.org</email> </address> 
   </affiliation>
         <contrib>Update documentation</contrib>      
-      </author>      
+      </author>
+       <author>
+	<firstname>Philip</firstname> 
+	<surname>Withnall</surname> 
+	<affiliation> 
+  	<address> <email>philip@tecnocode.co.uk</email> </address> 
+  </affiliation>
+        <contrib>Update documentation</contrib>      
+      </author>   
 
 <!-- This is appropriate place for other contributors: translators,
      maintainers,  etc. Commented out by default.
@@ -138,19 +147,24 @@ subtitles, and more.</para>
     <itemizedlist> 
       <listitem> 
 	<para>Support a variety of video and audio files.</para>
-      </listitem> 
-      <listitem> 
-	<para>Provide a variety of zoom levels and aspect ratios, and a fullscreen view.
-        </para> 
       </listitem>
       <listitem>
-        <para>Seek and Volume controls.</para>
+	<para>Provide a variety of zoom levels and aspect ratios, and a fullscreen view.</para> 
+      </listitem>
+      <listitem>
+        <para>Seek and volume controls.</para>
       </listitem>
       <listitem>
         <para>A playlist.</para>
       </listitem>
       <listitem>
+        <para>Subtitle support.</para>
+      </listitem>
+      <listitem>
 	<para>Complete keyboard navigation.</para>
+      </listitem>
+      <listitem>
+	<para>Comprehensive set of plugins, including a subtitle downloader, YouTube browser, and disc burner.</para>
       </listitem>
     </itemizedlist> 
     <note>
@@ -159,6 +173,9 @@ subtitles, and more.</para>
       <itemizedlist>
 	<listitem>
 	  <para>Video thumbnailer for GNOME.</para>
+        </listitem>
+        <listitem>
+	  <para>Audio preview application for GNOME.</para>
         </listitem>
 	<listitem>
 	  <para>Nautilus properties tab.</para>
@@ -262,7 +279,7 @@ subtitles, and more.</para>
 	  <listitem>
 	    <para>The sidebar displays properties of the file played and acts as
 		playlist. It can also be used by various plugins, such as the MythTV, YouTube and Video
-		Search plugins.
+		Search plugins. They can be selected by clicking on the drop-down menu at the top of the sidebar.
             </para>
 	  </listitem>
 	</varlistentry>
@@ -270,22 +287,23 @@ subtitles, and more.</para>
 	  <term>Time elapsed slider.</term>
 	  <listitem>
 	    <para>The time elapsed slider displays the elapsed time of movie or song that is playing.
-              It also enables you to skip forward or backward in a movie or song.
+              It also enables you to skip forward or backward in a movie or song by dragging the slider's handle along the bar,
+              or by clicking on a point on the bar.
             </para>
 	  </listitem>
         </varlistentry>
         <varlistentry>
           <term>Seek control buttons.</term>
           <listitem>
-            <para>The seek control buttons enables you to move to the next or previous track, and to pause or play
+            <para>The seek control buttons enable you to move to the next or previous track, and to pause or play
               a movie or song.
             </para>
 	  </listitem>
         </varlistentry>
 	<varlistentry>
-	  <term>Volume slider.</term>
+	  <term>Volume button.</term>
           <listitem>
-	    <para>The volume slider enables you to adjust the volume.</para>
+	    <para>The volume button enables you to adjust the volume.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
@@ -319,7 +337,9 @@ subtitles, and more.</para>
 	<guibutton>OK</guibutton>. 
       </para>
       <para>You can drag a file from another application such as a file manager to the
-        <application>&app;</application> window. The <application>&app;</application> application
+        <application>&app;</application> window. If you drag the file to the display area, the file will replace the current
+        playlist and will start playing immediately. If you drag the file to the playlist in the sidebar, the file will be
+        appended to the current playlist. The <application>&app;</application> application
         will open the file and play the movie or song. <application>&app;</application> 
         displays the title of the movie or song in the titlebar of
         the window and in the playlist in the sidebar.
@@ -327,46 +347,43 @@ subtitles, and more.</para>
       <para>If you try to open a file format that <application>&app;</application> does
 	not recognize, the application displays an error message. This error is most often encountered
 	if you do not have the correct codecs installed. Information on getting codecs working can be found on
-	the <ulink url="http://www.gnome.org/projects/totem/#codecs">&app; website</ulink>.
+	the <ulink url="http://projects.gnome.org/totem/#codecs">&app; website</ulink>.
       </para>
       <tip>
 	<para>You can double-click on a video or an audio file in the <application>Nautilus</application>
-          file manager to open it on the <application>&app;</application> window.
+          file manager to open it in the <application>&app;</application> window.
         </para>
       </tip>
     </sect2> 
 
     <sect2 id="totem-usage-open-location">
       <title>To Open a Location</title>
-      <para>To open a file by URI location, choose
+      <para>To open a file by URI (location), choose
         <menuchoice>
 	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut>
 	  <guimenu>Movie</guimenu>
 	  <guimenuitem>Open Location</guimenuitem>
         </menuchoice>. The <guilabel>Open Location</guilabel> dialog is displayed. Use the drop-down
-        combination box to specify the URI location of file you would like to open (it lists URIs which have
+        combination box to specify the URI you would like to open (it lists URIs which have
         previously been opened) &#8211; or type one in directly &#8211; then click 
         on the <guibutton>Open</guibutton> button.
       </para>
+      <para>If you have a URI in the clipboard already, it will automatically be pasted into the combination box.</para>
     </sect2>
 
     <sect2 id="totem-usage-play">
-      <title>To Play a Movie (DVD, VCD or CD)</title>
+      <title>To Play a Movie (DVD or VCD)</title>
 	      <para>Insert the disc in the optical device of your computer, then choose
           	<menuchoice><guimenu>Movie</guimenu><guimenuitem>Play Disc</guimenuitem>
               </menuchoice>.</para>
-       </sect2>
-
-    <sect2 id="totem-usage-eject">
-      <title>To Eject a DVD, VCD or CD</title>
-      <para>To eject a DVD, VCD, or CD, choose 
+             <para>To eject a DVD or VCD, choose 
         <menuchoice>
 	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut>
 	  <guimenu>Movie</guimenu>
 	  <guimenuitem>Eject</guimenuitem>
         </menuchoice>.
       </para>
-    </sect2>
+       </sect2>
 
     <sect2 id="totem-usage-pause">
       <title>To Pause a Movie or Song</title>
@@ -386,7 +403,7 @@ subtitles, and more.</para>
         <inlinemediaobject>
 	  <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject>
           <textobject><phrase>Shows play button.</phrase></textobject>
-        </inlinemediaobject> button, or choose 
+        </inlinemediaobject> button again, or choose 
         <menuchoice>
 	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo></shortcut>
 	  <guimenu>Movie</guimenu>
@@ -397,33 +414,11 @@ subtitles, and more.</para>
 
     <sect2 id="totem-usage-view-properties">
       <title>To View Properties of a Movie or Song</title>
-      <para>To view properties of a movie or song, choose 
+      <para>To view the properties of a movie or song, choose 
         <menuchoice>
 	  <guimenu>View</guimenu>
 	  <guimenuitem>Sidebar</guimenuitem></menuchoice> to make the sidebar
-	  appear, and choose <guimenu>Properties</guimenu> in the drop-down list.</para>
-	  <para>The dialog contains the following information:
-        <variablelist>
-	  <varlistentry>
-            <term>General</term>
-            <listitem>
-	      <para>Title, artist, album, year and duration of the movie or song, as well as any embedded comment the movie or song has.</para>
-            </listitem>
-          </varlistentry>
-	  <varlistentry>
-            <term>Video</term>
-            <listitem>
-              <para>Video dimensions, codec, framerate and bitrate.</para>
-            </listitem>
-          </varlistentry>
-	  <varlistentry>
-            <term>Audio</term>
-            <listitem>
-              <para>Audio codec, channels, sample rate and bitrate.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </para>
+	  appear, and choose <guimenu>Properties</guimenu> in the drop-down list at the top of the sidebar.</para>
     </sect2>
 
     <sect2 id="totem-usage-seek">
@@ -434,7 +429,7 @@ subtitles, and more.</para>
 	<varlistentry>
 	  <term>To skip forward</term>
 	  <listitem>
-	    <para>To skip forward a movie or song, choose
+	    <para>To skip forward through a movie or song, choose
               <menuchoice>
 		<shortcut><keycap>Right</keycap></shortcut>
                 <guimenu>Go</guimenu>
@@ -446,11 +441,11 @@ subtitles, and more.</para>
 	<varlistentry>
 	  <term>To skip backward</term>
 	  <listitem>
-	    <para>To skip backward a movie or song, choose
+	    <para>To skip backwards through a movie or song, choose
               <menuchoice>
 		<shortcut><keycap>Left</keycap></shortcut>
                 <guimenu>Go</guimenu>
-		<guimenuitem>Skip Backward</guimenuitem>
+		<guimenuitem>Skip Backwards</guimenuitem>
               </menuchoice>.
              </para>
           </listitem>
@@ -466,6 +461,10 @@ subtitles, and more.</para>
               </menuchoice>. The <guilabel>Skip to</guilabel> dialog is displayed. Use the 
               spin box to specify the elapsed time (in seconds) to skip to, then
               click <guibutton>OK</guibutton>.
+            </para>
+            <para>The spin box also allows more natural language to be used. You can enter a time in the
+            formats "hh:mm:ss", "mm:ss" or "ss"; where "hh" is the hour, "mm" is the minute and "ss" is the
+            second to skip to.
             </para>
           </listitem>
         </varlistentry>
@@ -523,35 +522,14 @@ subtitles, and more.</para>
           </para>
     </listitem>
 	<listitem>
-	  <para>To zoom to half the size (50%) of the original movie or visualisation,
+	  <para>To change the size original movie or visualisation,
             choose 
             <menuchoice>
 	      <shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></keycombo></shortcut>
-	      <guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu>
-              <guimenuitem>Resize 1:2</guimenuitem>
-            </menuchoice>.
+	      <guimenu>View</guimenu><guimenuitem>Fit Window to Movie</guimenuitem>
+            </menuchoice> and choose a scale ratio.
       </para>
     </listitem>
-	<listitem>
-	  <para>To zoom to the size (100%) of the original movie or visualisation,
-            choose 
-            <menuchoice>
-	      <shortcut><keycombo><keycap>Ctrl</keycap><keycap>1</keycap></keycombo></shortcut>
-	      <guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu>
-              <guimenuitem>Resize 1:1</guimenuitem>
-            </menuchoice>.
-      </para>
-    </listitem>
-	<listitem>
-	  <para>To zoom to double the size (200%) of the original movie or visualisation,
-            choose 
-            <menuchoice>
-	      <shortcut><keycombo><keycap>Ctrl</keycap><keycap>2</keycap></keycombo></shortcut>
-	      <guimenu>View</guimenu><guisubmenu>Fit Window to Movie</guisubmenu>
-              <guimenuitem>Resize 2:1</guimenuitem>
-            </menuchoice>.
-          </para>
-        </listitem>
 	</itemizedlist>
 	</sect3>
 	 <sect3 id="totem-usage-change-ratio">
@@ -561,19 +539,7 @@ subtitles, and more.</para>
 	      <shortcut><keycap>A</keycap></shortcut>
 	      <guimenu>View</guimenu>
 	      <guisubmenu>Aspect Ratio</guisubmenu>
-            </menuchoice>. The supported aspect ratios available are:
-            <itemizedlist>
-              <listitem><para>Auto</para></listitem>
-	          <listitem><para>Square</para></listitem>
-              <listitem><para>4:3 (TV)</para></listitem>
-              <listitem><para>16:9 (Widescreen)</para></listitem>
-              <listitem><para>2.11:1 (DVB)</para></listitem>
-            </itemizedlist>
-            <note>
-              <para>The default aspect ratio is Auto.
-              </para>
-            </note>
-          </para>
+            </menuchoice>.</para>
 	  </sect3>
     </sect2>
 
@@ -584,21 +550,19 @@ subtitles, and more.</para>
 	  <shortcut><keycap>Up</keycap></shortcut>
           <guimenu>Sound</guimenu>
           <guimenuitem>Volume Up</guimenuitem>
-        </menuchoice> or move the volume slider to the right. 
+        </menuchoice>. 
         To decrease the volume, choose
         <menuchoice>
 	  <shortcut><keycap>Down</keycap></shortcut>
           <guimenu>Sound</guimenu>
           <guimenuitem>Volume Down</guimenuitem>
-        </menuchoice> or move the volume slider to the left.         
+        </menuchoice>.         
       </para>
-      <para>To adjust the sound volume, you can also use the volume button.
-	  Press the volume button and choose the volume level with the slider.
-      </para>
+      <para>You can also use the volume button: press the volume button and choose the volume level with the slider.</para>
     </sect2>
 
     <sect2 id="totem-usage-on-top">
-      <title>To Make the Window Always On Top</title>
+      <title>To Make the Window Always on Top</title>
       <para>To make the <application>&app;</application> window always on top of other application windows,
         choose
         <menuchoice>
@@ -653,16 +617,12 @@ subtitles, and more.</para>
 
       <sect3 id="totem-usage-playlist-show-hide">
 	<title>To Show or Hide the Playlist</title>
-	<para>To show the playlist, choose 
+	<para>To show or hide the playlist, choose 
           <menuchoice>
 	    <guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem>
           </menuchoice>, or click the <guilabel>Sidebar</guilabel> button, and
 		  choose <guimenu>Playlist</guimenu> on the top of 
-		  the sidebar. The <guilabel>Playlist</guilabel> dialog is displayed.</para>
-		  <para>To hide Playlist, choose <menuchoice><guimenu>View</guimenu>
-	    <guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
-         <guilabel>Sidebar</guilabel> button again.
-        </para>
+		  the sidebar.</para>
       </sect3>
 
       <sect3 id="totem-usage-playlist-manage">
@@ -739,13 +699,14 @@ subtitles, and more.</para>
 	  <menuchoice><guimenu>View</guimenu><guisubmenu>Subtitles</guisubmenu><guimenuitem>None</guimenuitem></menuchoice>.</para>
 	  <note><para>By default, &app; will choose the same language for the
 	  subtitles as the one you normally use on your computer.</para></note>
-	  <tip><para>&app; will automatically load and display subtitles if the file which contains them has the same
+	  <para>&app; will automatically load and display subtitles if the file which contains them has the same
 	  name as the video file played and the extension <filename>asc</filename>, <filename>txt</filename>,
-	  <filename>sub</filename>, <filename>smi</filename>, or <filename>ssa</filename>.
+	  <filename>sub</filename>, <filename>srt</filename>, <filename>smi</filename>, <filename>ssa</filename> or <filename>ass</filename>.
 	  </para>
 	  <para>If the file containing the subtitles has a different name to the video being played, you can
 	  right-click on the video in the playlist and choose <menuchoice><guimenuitem>Select Text Subtitles...</guimenuitem></menuchoice>
-	  from the popup menu to load the correct subtitle file.</para></tip>
+	  from the popup menu to load the correct subtitle file. You may also choose subtitles by choosing
+	  <menuchoice><guimenu>View</guimenu><guimenuitem>Select Text Subtitles...</guimenuitem></menuchoice>.</para>
 	</sect2>
 
     <sect2 id="totem-usage-take-screenshot">
@@ -761,6 +722,22 @@ subtitles, and more.</para>
       <tip><para>&app; will display a preview of the screenshot which is to be saved on the left-hand side of the <guilabel>Save Screenshot</guilabel> dialog.</para></tip>
     </sect2>
 
+    <sect2 id="totem-usage-create-screenshot-gallery">
+      <title>To Create a Screenshot Gallery</title>
+      <para>To create a gallery of screenshots of the movie or visualisation that is playing, choose
+        <menuchoice>
+          <guimenu>Edit</guimenu>
+          <guimenuitem>Create Screenshot Gallery</guimenuitem>
+        </menuchoice>. The <guilabel>Save Gallery</guilabel> dialog is displayed. Choose a location and
+	insert the filename as which you want to save the gallery image, then click the <guibutton>Save</guibutton> button
+	to save the screenshot.
+      </para>
+      <tip><para>You may specify the width of the individual screenshots in the gallery using the <guilabel>Screenshot width</guilabel> entry.
+      The default width is 128 pixels.</para>
+      <para>You may also specify the number of screenshots to be put in the gallery. By default, this is calculated based on the length of the movie;
+      however, this may be overridden by unchecking the <guilabel>Calculate the number of screenshots</guilabel> checkbox and entering the new
+      number in the <guilabel>Number of screenshots</guilabel> spin box.</para></tip>
+    </sect2>
   </sect1>
 
 <!-- =========== Usage ======================================= -->
@@ -805,29 +782,13 @@ subtitles, and more.</para>
           </listitem>
         </varlistentry>	
 	<varlistentry>
-	  <term>TV-Out</term>
-	  <listitem>
-	    <itemizedlist>
-	      <listitem>
-                <para><guilabel>No TV-out</guilabel>: select this option if you
-				have no TV-out connection (Selected by default if you don't have an
-				TV-out interface).</para>
-              </listitem>
-	      <listitem>
-			<para><guilabel>TV-out in fullscreen by Nvidia (NTSC)</guilabel>:
-			select this option if you want TV-out connection in NTSC.</para>
-              </listitem>
-			  <listitem>
-			  	<para><guilabel>TV-out in fullscreen by Nvidia (PAL)</guilabel>:
-			select this option if you want TV-out connection in PAL.</para>
-			  </listitem>
-            </itemizedlist>
-          </listitem>
-        </varlistentry>
-		<varlistentry>
 	  <term>Text Subtitles</term>
 	  <listitem>
 	    <itemizedlist>
+	      <listitem>
+	      	<para><guilabel>Automatically load subtitle files</guilabel>: check this option to automatically load any subtitle
+	      	files with the same filename as a movie when the movie is loaded.</para>
+	      </listitem>
 	      <listitem>
                 <para><guilabel>Font</guilabel>: select this option to change
 				the font used to display subtitles.</para>
@@ -848,8 +809,12 @@ subtitles, and more.</para>
 	  <term>Display</term>
 	  <listitem>
 	    <para>Select the <guilabel>resize</guilabel> option if you want <application>&app;</application>
-              to automatically resize the window when a new video is loaded.
+              to automatically resize the window to the size of the video when a new video is loaded.
             </para>
+          </listitem>
+          <listitem>
+            <para>Select the <guilabel>screensaver</guilabel> option if you want to allow the screensaver to activate when
+            playing audio files. Some monitors with integrated speakers may stop playing music when the screensaver is activated.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
@@ -893,6 +858,8 @@ subtitles, and more.</para>
 			 of hue.</para>
           </listitem>
 	    </itemizedlist>
+	    <tip><para>You may use the <guilabel>Reset To Defaults</guilabel> button to reset the color balance controls to their
+	    default positions.</para></tip>
       </listitem>
 	</varlistentry>
       </variablelist>
@@ -937,7 +904,7 @@ subtitles, and more.</para>
       Julien Moutte (<email>julien@moutte.net</email>) for GStreamer backend,
       and Guenter Bartsch (<email>guenter@users.sourceforge.net</email>).
       To find more information about <application>&app;</application>, please visit the 
-      <ulink url="http://www.gnome.org/projects/totem/" type="http"><application>&app;</application> 
+      <ulink url="http://projects.gnome.org/totem/" type="http"><application>&app;</application> 
       Home Page</ulink>. 
     </para>
     <para>
