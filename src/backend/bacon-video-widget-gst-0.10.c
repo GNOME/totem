@@ -138,7 +138,6 @@ struct BaconVideoWidgetPrivate
   gboolean                     media_has_audio;
   gint                         seekable; /* -1 = don't know, FALSE = no */
   gint64                       stream_length;
-  gint64                       current_time_nanos;
   gint64                       current_time;
   gdouble                      current_position;
   gboolean                     is_live;
@@ -150,7 +149,6 @@ struct BaconVideoWidgetPrivate
   gboolean                     got_redirect;
 
   GdkWindow                   *video_window;
-  GtkAllocation                video_window_allocation;
 
   /* Visual effects */
   GList                       *vis_plugins_list;
@@ -161,7 +159,6 @@ struct BaconVideoWidgetPrivate
   GstElement                  *audio_capsfilter;
 
   /* Other stuff */
-  gint                         xpos, ypos;
   gboolean                     logo_mode;
   gboolean                     cursor_shown;
   gboolean                     fullscreen_mode;
@@ -177,9 +174,6 @@ struct BaconVideoWidgetPrivate
   gint                         video_height_pixels; /* Scaled movie height */
   gint                         video_fps_n;
   gint                         video_fps_d;
-
-  guint                        init_width;
-  guint                        init_height;
 
   gint                         zoom;
   
@@ -908,11 +902,6 @@ resize_video_window (BaconVideoWidget *bvw)
   height *= ratio;
   x = (allocation->width - width) / 2;
   y = (allocation->height - height) / 2;
-
-  bvw->priv->video_window_allocation.width = width;
-  bvw->priv->video_window_allocation.height = height;
-  bvw->priv->video_window_allocation.x = x;
-  bvw->priv->video_window_allocation.y = y;
 
   gdk_window_move_resize (bvw->priv->video_window, x, y, width, height);
   gtk_widget_queue_draw (GTK_WIDGET (bvw));
@@ -1651,8 +1640,6 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  bvw->priv->current_time_nanos = time_nanos;
 
   bvw->priv->current_time = (gint64) time_nanos / GST_MSECOND;
 
@@ -4996,8 +4983,6 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
   bvw->priv->media_device = g_strdup ("/dev/dvd");
-  bvw->priv->init_width = 240;
-  bvw->priv->init_height = 180;
   bvw->priv->visq = VISUAL_SMALL;
   bvw->priv->show_vfx = FALSE;
   bvw->priv->vis_element_name = g_strdup ("goom");
@@ -5031,8 +5016,6 @@ bacon_video_widget_new (int width, int height,
   if (type == BVW_USE_TYPE_VIDEO) {
     if (width > 0 && width < SMALL_STREAM_WIDTH &&
         height > 0 && height < SMALL_STREAM_HEIGHT) {
-      bvw->priv->init_height = height;
-      bvw->priv->init_width = width;
       GST_INFO ("forcing ximagesink, image size only %dx%d", width, height);
       video_sink = gst_element_factory_make ("ximagesink", "video-sink");
     } else {
