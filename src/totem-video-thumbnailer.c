@@ -36,6 +36,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "bacon-video-widget.h"
@@ -783,6 +784,11 @@ int main (int argc, char *argv[])
 		g_print ("couldn't parse command-line options: %s\n", err->message);
 		g_error_free (err);
 		return 1;
+	}
+
+	if (print_progress) {
+		fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
+		setbuf (stdout, NULL);
 	}
 
 	if (g_fatal_warnings) {

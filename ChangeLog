@@ -1,5 +1,10 @@
 2009-02-16  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-video-thumbnailer.c (main): When printing
+	gallery progress, switch off buffering, and blocking output
+
+2009-02-16  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c (create_gallery): Only ever
 	print progress when we are asked to do so. Fix filename
 	in galleries showing up unescaped when a URI is passed as 
