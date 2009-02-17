@@ -40,6 +40,7 @@ libbaconvideowidgetproperties_la_SOURCES =		\
 	bacon-video-widget-properties.c			\
 	bacon-video-widget-properties.h
 
+libbaconvideowidgetproperties_la_CPPFLAGS = $(common_defines)
 libbaconvideowidgetproperties_la_CFLAGS =	\
 	$(DEPENDENCY_CFLAGS)			\
 	$(WARN_CFLAGS)				\
