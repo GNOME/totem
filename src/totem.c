@@ -160,6 +160,7 @@ main (int argc, char **argv)
 
 	g_set_application_name (_("Totem Movie Player"));
 	gtk_window_set_default_icon_name ("totem");
+	g_setenv("PULSE_PROP_media.role", "video", TRUE);
 	gtk_about_dialog_set_url_hook (about_url_hook, NULL, NULL);
 	gtk_about_dialog_set_email_hook (about_email_hook, NULL, NULL);
 
