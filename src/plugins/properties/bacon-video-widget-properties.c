@@ -77,35 +77,43 @@
 		g_free (temp); \
 	} while (0)
 
-struct BaconVideoWidgetPropertiesPrivate
-{
+static void bacon_video_widget_properties_dispose (GObject *object);
+
+struct BaconVideoWidgetPropertiesPrivate {
 	GtkBuilder *xml;
 	int time;
 };
 
-static GtkWidgetClass *parent_class = NULL;
+#define BACON_VIDEO_WIDGET_PROPERTIES_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetPropertiesPrivate))
 
-G_DEFINE_TYPE(BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_VBOX)
+
+static void
+bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
+{
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	g_type_class_add_private (klass, sizeof (BaconVideoWidgetPropertiesPrivate));
+
+	object_class->dispose = bacon_video_widget_properties_dispose;
+}
 
 static void
 bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)
 {
-	props->priv = g_new0 (BaconVideoWidgetPropertiesPrivate, 1);
+	props->priv = G_TYPE_INSTANCE_GET_PRIVATE (props, BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetPropertiesPrivate);
 }
 
 static void
-bacon_video_widget_properties_finalize (GObject *object)
+bacon_video_widget_properties_dispose (GObject *object)
 {
-	BaconVideoWidgetProperties *props = BACON_VIDEO_WIDGET_PROPERTIES (object);
+	BaconVideoWidgetPropertiesPrivate *priv = BACON_VIDEO_WIDGET_PROPERTIES_GET_PRIVATE (object);
 
-	g_return_if_fail (object != NULL);
+	if (priv->xml != NULL)
+		g_object_unref (priv->xml);
+	priv->xml = NULL;
 
-	g_object_unref (props->priv->xml);
-	g_free (props->priv);
-
-	if (G_OBJECT_CLASS (parent_class)->finalize != NULL) {
-		(* G_OBJECT_CLASS (parent_class)->finalize) (object);
-	}
+	G_OBJECT_CLASS (bacon_video_widget_properties_parent_class)->dispose (object);
 }
 
 static void
@@ -308,13 +316,5 @@ bacon_video_widget_properties_new (void)
 	gtk_widget_show_all (GTK_WIDGET (props));
 
 	return GTK_WIDGET (props);
-}
-
-static void
-bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
-{
-	parent_class = gtk_type_class (gtk_vbox_get_type ());
-
-	G_OBJECT_CLASS (klass)->finalize = bacon_video_widget_properties_finalize;
 }
 
