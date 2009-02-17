@@ -114,6 +114,15 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 }
 
 static void
+take_gallery_response_cb (GtkDialog *dialog,
+			  int response_id,
+			  TotemScreenshotPlugin *self)
+{
+	if (response_id != GTK_RESPONSE_OK)
+		gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
 take_gallery_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 {
 	Totem *totem = self->priv->totem;
@@ -124,9 +133,9 @@ take_gallery_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 
 	dialog = GTK_DIALOG (totem_gallery_new (totem, TOTEM_PLUGIN (self)));
 
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (take_gallery_response_cb), self);
 	gtk_widget_show (GTK_WIDGET (dialog));
-	gtk_dialog_run (dialog);
-	gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static gboolean

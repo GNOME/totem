@@ -29,6 +29,7 @@
 
 #include <signal.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
@@ -43,7 +44,6 @@ struct _TotemGalleryProgressPrivate {
 	GPid child_pid;
 	GString *line;
 	gchar *output_filename;
-	GMainLoop *loop;
 
 	GtkProgressBar *progress_bar;
 };
@@ -77,8 +77,6 @@ totem_gallery_progress_finalize (GObject *object)
 
 	if (priv->line != NULL)
 		g_string_free (priv->line, TRUE);
-	if (priv->loop != NULL)
-		g_main_loop_unref (priv->loop);
 
 	/* Chain up to the parent class */
 	G_OBJECT_CLASS (totem_gallery_progress_parent_class)->finalize (object);
@@ -118,21 +116,21 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 	container = gtk_dialog_get_content_area (GTK_DIALOG (self));
 	gtk_box_pack_start (GTK_BOX (container), GTK_WIDGET (self->priv->progress_bar), TRUE, TRUE, 5);
 
+	gtk_widget_show_all (container);
+
 	return self;
 }
 
 static void
 dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGalleryProgress *self)
 {
-	/* Cancel the operation by killing the process */
-	kill (self->priv->child_pid, SIGINT);
+	if (response_id != GTK_RESPONSE_OK) {
+		/* Cancel the operation by killing the process */
+		kill (self->priv->child_pid, SIGINT);
 
-	/* Unlink the output file, just in case (race condition) it's already been created */
-	g_unlink (self->priv->output_filename);
-
-	/* Quit the main loop */
-	if (self->priv->loop != NULL && g_main_loop_is_running (self->priv->loop))
-		g_main_loop_quit (self->priv->loop);
+		/* Unlink the output file, just in case (race condition) it's already been created */
+		g_unlink (self->priv->output_filename);
+	}
 }
 
 static gboolean
@@ -157,7 +155,7 @@ stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgres
 	TotemGalleryProgressPrivate *priv = self->priv;
 	gboolean retval = TRUE;
 
-	if (condition & G_IO_IN || condition & G_IO_PRI) {
+	if (condition & G_IO_IN) {
 		gchar *line;
 		gchar buf[1];
 		GIOStatus status;
@@ -210,9 +208,8 @@ stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgres
 	}
 
 	if (retval == FALSE) {
-		/* Exit the main loop; we're done processing input */
-		if (self->priv->loop != NULL && g_main_loop_is_running (self->priv->loop))
-			g_main_loop_quit (self->priv->loop);
+		/* We're done processing input, we now have an answer */
+		gtk_dialog_response (GTK_DIALOG (self), GTK_RESPONSE_OK);
 	}
 
 	return retval;
@@ -221,25 +218,16 @@ stdout_watch_cb (GIOChannel *source, GIOCondition condition, TotemGalleryProgres
 void
 totem_gallery_progress_run (TotemGalleryProgress *self, gint stdout_fd)
 {
-	TotemGalleryProgressPrivate *priv = self->priv;
 	GIOChannel *channel;
-	guint stdout_watch_id;
+
+	fcntl (stdout_fd, F_SETFL, O_NONBLOCK);
 
 	/* Watch the output from totem-video-thumbnailer */
 	channel = g_io_channel_unix_new (stdout_fd);
 	g_io_channel_set_flags (channel, g_io_channel_get_flags (channel) | G_IO_FLAG_NONBLOCK, NULL);
-	g_io_channel_set_encoding (channel, NULL, NULL);
-	g_io_channel_set_buffered (channel, FALSE);
 
-	stdout_watch_id = g_io_add_watch (channel, G_IO_IN | G_IO_PRI | G_IO_HUP | G_IO_ERR | G_IO_NVAL, (GIOFunc) stdout_watch_cb, self);
+	g_io_add_watch (channel, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_NVAL, (GIOFunc) stdout_watch_cb, self);
 
 	g_io_channel_unref (channel);
-
-	/* Listen in a recursive main loop so this function is synchronous */
-	priv->loop = g_main_loop_new (NULL, FALSE);
-	g_main_loop_run (priv->loop);
-
-	g_source_remove (stdout_watch_id);
-	g_main_loop_unref (priv->loop);
-	priv->loop = NULL;
 }
+

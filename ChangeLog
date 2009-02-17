@@ -1,5 +1,18 @@
 2009-02-17  Bastien Nocera  <hadess@hadess.net>
 
+	* src/plugins/screenshot/totem-gallery-progress.c
+	(totem_gallery_progress_finalize), (totem_gallery_progress_new),
+	(dialog_response_callback), (stdout_watch_cb),
+	(totem_gallery_progress_run):
+	* src/plugins/screenshot/totem-gallery.c
+	(dialog_response_callback):
+	* src/plugins/screenshot/totem-screenshot-plugin.c
+	(take_gallery_response_cb), (take_gallery_action_cb): Avoid
+	using gtk_dialog_run() inside a gtk_dialog_run() call, fixes
+	the gallery plugin (Closes: #561088)
+
+2009-02-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-video-thumbnailer.c (save_pixbuf): Avoid warnings
 	when saving to JPEG format
 

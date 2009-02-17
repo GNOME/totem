@@ -127,11 +127,15 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	gint stdout_fd;
 	GPid child_pid;
 	GtkWidget *progress_dialog;
+	gboolean ret;
 	GError *error = NULL;
 
 	if (response_id != GTK_RESPONSE_OK)
 		return;
 	gtk_widget_hide (GTK_WIDGET (dialog));
+
+	/* Don't call in here again */
+	g_signal_handlers_disconnect_by_func (G_OBJECT (self), dialog_response_callback, self);
 
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->priv->default_screenshot_count)) == TRUE)
 		screenshot_count = 0;
@@ -154,21 +158,26 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 	argv[8] = NULL;
 
 	/* Run the command */
-	if (g_spawn_async_with_pipes (NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
-				      &child_pid, NULL, &stdout_fd, NULL, &error) == FALSE) {
+	ret = g_spawn_async_with_pipes (NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
+					&child_pid, NULL, &stdout_fd, NULL, &error);
+
+	/* Free argv, minus the filename */
+	for (i = 4; i < G_N_ELEMENTS (argv) - 2; i++)
+		g_free (argv[i]);
+
+	if (ret == FALSE) {
 		g_warning ("Error spawning totem-video-thumbnailer: %s", error->message);
 		g_error_free (error);
-		goto error;
+		return;
 	}
 
 	/* Create the progress dialogue */
 	progress_dialog = GTK_WIDGET (totem_gallery_progress_new (child_pid, filename));
-	gtk_widget_show_all (progress_dialog);
+	g_free (filename);
 	totem_gallery_progress_run (TOTEM_GALLERY_PROGRESS (progress_dialog), stdout_fd);
+	gtk_dialog_run (GTK_DIALOG (progress_dialog));
 	gtk_widget_destroy (progress_dialog);
 
-error:
-	/* Free argv */
-	for (i = 4; i < G_N_ELEMENTS (argv); i++)
-		g_free (argv[i]);
+	gtk_dialog_response (GTK_DIALOG (self), 0);
 }
+
