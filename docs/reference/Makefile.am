@@ -89,4 +89,5 @@ include $(top_srcdir)/gtk-doc.make
 # e.g. EXTRA_DIST += version.xml.in
 EXTRA_DIST += version.xml.in
 
+TESTS_ENVIRONMENT = cd $(srcdir) && 
 TESTS = $(GTKDOC_CHECK)
