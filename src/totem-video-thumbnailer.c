@@ -314,7 +314,7 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	int width, height;
 	GdkPixbuf *with_holes;
 	GError *err = NULL;
-	char *a_width, *a_height;
+	gboolean ret;
 
 	height = gdk_pixbuf_get_height (pixbuf);
 	width = gdk_pixbuf_get_width (pixbuf);
@@ -325,18 +325,22 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	else
 		with_holes = g_object_ref (pixbuf);
 
-	a_width = g_strdup_printf ("%d", width);
-	a_height = g_strdup_printf ("%d", height);
 
-	if (gdk_pixbuf_save (with_holes, path,
-				jpeg_output ? "jpeg" : "png", &err,
-				"tEXt::Thumb::Image::Width", a_width,
-				"tEXt::Thumb::Image::Height", a_height,
-				NULL) == FALSE)
-	{
-		g_free (a_width);
-		g_free (a_height);
+	if (jpeg_output == FALSE) {
+		char *a_width, *a_height;
 
+		a_width = g_strdup_printf ("%d", width);
+		a_height = g_strdup_printf ("%d", height);
+
+		ret = gdk_pixbuf_save (with_holes, path, "png", &err,
+				       "tEXt::Thumb::Image::Width", a_width,
+				       "tEXt::Thumb::Image::Height", a_height,
+				       NULL);
+	} else {
+		ret = gdk_pixbuf_save (with_holes, path, "jpeg", &err, NULL);
+	}
+
+	if (ret == FALSE) {
 		if (err != NULL) {
 			g_print ("totem-video-thumbnailer couldn't write the thumbnail '%s' for video '%s': %s\n", path, video_path, err->message);
 			g_error_free (err);
