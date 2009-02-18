@@ -3222,7 +3222,7 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		Totem *totem)
 {
 	if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-		gtk_widget_grab_focus (bvw);
+		gtk_widget_grab_focus (GTK_WIDGET (bvw));
 		return TRUE;
 	} else if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
 		totem_action_fullscreen_toggle(totem);
@@ -3452,9 +3452,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_space:
 		{
-			GtkWidget *focus = gtk_window_get_focus (totem->win);
-			if (totem_is_fullscreen (totem) != FALSE ||
-			    focus == NULL || focus == totem->bvw || focus == totem->seek)
+			GtkWidget *focus = gtk_window_get_focus (GTK_WINDOW (totem->win));
+			if (totem_is_fullscreen (totem) != FALSE || focus == NULL ||
+			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek)
 				totem_action_play_pause (totem);
 			else
 				retval = FALSE;
