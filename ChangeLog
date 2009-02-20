@@ -1,3 +1,9 @@
+2009-02-20  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/eggdesktopfile.c (egg_desktop_file_launchv): Patch from Martin
+	<mnemo@minimum.se> to fix freeing uninitialised memory in libegg.
+	(Closes: #572540)
+
 2009-02-19  Robin Stocker  <robin@nibor.org>
 
 	* src/totem-object.c: Fixed warnings about passing and comparison of
