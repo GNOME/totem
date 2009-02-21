@@ -34,7 +34,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+#ifdef G_OS_UNIX
 #include <sys/resource.h>
+#endif
 
 #include "totem-resources.h"
 
@@ -48,6 +51,7 @@ static gboolean finished = TRUE;
 static void
 set_resource_limits (const char *input)
 {
+#ifdef G_OS_UNIX
 	struct rlimit limit;
 	struct stat buf;
 	rlim_t max;
@@ -77,6 +81,9 @@ set_resource_limits (const char *input)
 	limit.rlim_cur = MAX_HELPER_SECONDS;
 	limit.rlim_max = MAX_HELPER_SECONDS;
 	setrlimit (RLIMIT_CPU, &limit);
+#else
+#warning unimplemented
+#endif
 }
 
 G_GNUC_NORETURN static gpointer
