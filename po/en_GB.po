@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-23 17:47+0000\n"
+"POT-Creation-Date: 2009-02-23 21:06+0000\n"
 "PO-Revision-Date: 2009-02-23 17:57+0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team:  <en@li.org>\n"
@@ -1699,7 +1699,10 @@ msgstr "Western"
 msgid "Vietnamese"
 msgstr "Vietnamese"
 
-#: ../src/totem-video-thumbnailer.c:662
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1710,15 +1713,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:663
+#: ../src/totem-video-thumbnailer.c:666
 msgid "Filename"
 msgstr "Filename"
 
-#: ../src/totem-video-thumbnailer.c:665
+#: ../src/totem-video-thumbnailer.c:668
 msgid "Resolution"
 msgstr "Resolution"
 
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Duration"
 msgstr "Duration"
 
@@ -2099,7 +2102,7 @@ msgstr "Movie is not playing."
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
-msgstr ""
+msgstr "%d:%02d:%02d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -2111,7 +2114,7 @@ msgstr ""
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
-msgstr ""
+msgstr "%d:%02d"
 
 #: ../src/backend/video-utils.c:266
 #, c-format
@@ -2600,7 +2603,8 @@ msgstr "Screenshot width (in pixels):"
 msgid "Save Gallery"
 msgstr "Save Gallery"
 
-#: ../src/plugins/screenshot/totem-gallery.c:105
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
 #, c-format
 msgid "Screenshot%d.jpg"
 msgstr "Screenshot%d.jpg"
