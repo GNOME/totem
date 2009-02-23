@@ -659,6 +659,9 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	if (filename == NULL)
 		filename = g_path_get_basename (input);
 
+	/* Translators: The first string is "Filename" (as translated); the second is an actual filename.
+			The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+			The sixth string is "Duration" (as translated); the seventh is the movie duration in words. */
 	header_text = g_strdup_printf (_("<b>%s</b>: %s\n<b>%s</b>: %d\303\227%d\n<b>%s</b>: %s"),
 				       _("Filename"),
 				       filename,

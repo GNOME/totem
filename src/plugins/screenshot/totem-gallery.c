@@ -102,6 +102,7 @@ totem_gallery_new (Totem *totem, TotemPlugin *plugin)
 	container = GTK_WIDGET (gtk_builder_get_object (builder,
 				"gallery_dialog_content"));
 	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (gallery), container);
+	/* Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg". */
 	totem_screenshot_plugin_setup_file_chooser (GTK_FILE_CHOOSER (gallery), N_("Screenshot%d.jpg"));
 
 	gtk_widget_show_all (GTK_WIDGET (gallery));
