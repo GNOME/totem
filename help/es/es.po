@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.help.HEAD\n"
-"POT-Creation-Date: 2009-02-16 20:38+0000\n"
-"PO-Revision-Date: 2009-02-24 22:30+0100\n"
+"POT-Creation-Date: 2009-02-24 21:31+0000\n"
+"PO-Revision-Date: 2009-02-28 11:35+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -77,11 +77,6 @@ msgid "Chee Bin HOH"
 msgstr "Chee Bin HOH"
 
 #: C/totem.xml:38(para)
-#| msgid ""
-#| "Totem Movie Player is a media player for GNOME that runs on GStreamer by "
-#| "default, but can also be run on xine. It has support for most audio and "
-#| "video codecs including DVDs and Digital CDs among many others. Features "
-#| "include TV-out, fullscreen, subtitles, and more."
 msgid ""
 "Totem Movie Player is a media player for GNOME that runs on GStreamer by "
 "default, but can also be run on xine. It has support for most audio and "
@@ -251,7 +246,6 @@ msgid "philip@tecnocode.co.uk"
 msgstr "philip@tecnocode.co.uk"
 
 #: C/totem.xml:107(revnumber)
-#| msgid "Totem Movie Player Manual V2.0"
 msgid "Totem Movie Player Manual V3.0"
 msgstr "Manual del reproductor de películas Totem V3.0"
 
@@ -264,7 +258,6 @@ msgid "Chee Bin HOH <email>cbhoh@gnome.org</email>"
 msgstr "Chee Bin HOH <email>cbhoh@GNOME.org</email>"
 
 #: C/totem.xml:118(releaseinfo)
-#| msgid "This manual describes version 1.6.0 of Totem Movie Player."
 msgid "This manual describes version 2.26 of Totem Movie Player."
 msgstr ""
 "Este manual describe la versión 2.26 del reproductor de películas Totem."
@@ -325,7 +318,6 @@ msgstr ""
 "pantalla completa."
 
 #: C/totem.xml:155(para)
-#| msgid "Seek and Volume controls."
 msgid "Seek and volume controls."
 msgstr "Controles de búsqueda y volumen."
 
@@ -346,6 +338,8 @@ msgid ""
 "Comprehensive set of plugins, including a subtitle downloader, YouTube "
 "browser, and disc burner."
 msgstr ""
+"Conjunto exhaustivo de complementos incluyendo un descargador de subtítulos, "
+"un examinador de YouTube y un grabador de discos."
 
 #: C/totem.xml:171(para)
 msgid ""
@@ -479,7 +473,6 @@ msgid "Sidebar."
 msgstr "Barra lateral."
 
 #: C/totem.xml:280(para)
-#, fuzzy
 #| msgid ""
 #| "The sidebar displays properties of the file played and acts as playlist. "
 #| "It can also be used by various plugins, such as the MythTV, YouTube and "
@@ -492,14 +485,14 @@ msgid ""
 msgstr ""
 "La barra lateral muestra las propiedades del archivo reproducido y actúa "
 "como una lista de reproducción. También pueden usarla varios complementos, "
-"tales como MythTV, YouTube y Búsqueda de vídeos."
+"tales como MythTV, YouTube y Búsqueda de vídeos. Se pueden seleccionar "
+"pulsando en el menú desplegable en la parte superior de la barra lateral."
 
 #: C/totem.xml:287(term)
 msgid "Time elapsed slider."
 msgstr "Marcador deslizante de tiempo."
 
 #: C/totem.xml:289(para)
-#, fuzzy
 #| msgid ""
 #| "The time elapsed slider displays the elapsed time of movie or song that "
 #| "is playing. It also enables you to skip forward or backward in a movie or "
@@ -512,14 +505,14 @@ msgid ""
 msgstr ""
 "El marcador deslizante de tiempo muestra el tiempo de la película o canción "
 "que se está reproduciendo. También permite saltar adelante o atrás en una "
-"película o canción."
+"película o canción arrastrando el manejador a lo largo de la barra, o "
+"pulsando en un punto de la barra."
 
 #: C/totem.xml:296(term)
 msgid "Seek control buttons."
 msgstr "Botones de control de búsqueda."
 
 #: C/totem.xml:298(para)
-#, fuzzy
 #| msgid ""
 #| "The seek control buttons enables you to move to the next or previous "
 #| "track, and to pause or play a movie or song."
@@ -531,15 +524,13 @@ msgstr ""
 "pista, y pausar o reproducir una película o canción."
 
 #: C/totem.xml:304(term)
-#| msgid "Shows pause button."
 msgid "Volume button."
 msgstr "Botón de volumen."
 
 #: C/totem.xml:306(para)
-#, fuzzy
 #| msgid "The volume slider enables you to adjust the volume."
 msgid "The volume button enables you to adjust the volume."
-msgstr "El deslizador de volumen le permite ajustar el volumen."
+msgstr "El botón de volumen le permite ajustar el volumen."
 
 #: C/totem.xml:310(term)
 msgid "Statusbar."
@@ -578,7 +569,6 @@ msgstr ""
 "quiere abrir y pulse <guibutton>Aceptar</guibutton>."
 
 #: C/totem.xml:339(para)
-#, fuzzy
 #| msgid ""
 #| "You can drag a file from another application such as a file manager to "
 #| "the <application>Totem Movie Player</application> window. The "
@@ -599,14 +589,17 @@ msgid ""
 msgstr ""
 "Puede arrastrar un archivo desde otra aplicación, como un gestor de "
 "archivos, a la ventana del <application>Reproductor de películas Totem</"
-"application>. La aplicación <application>Reproductor de películas Totem</"
-"application> abrirá el archivo y reproducirá la película o canción. El "
-"<application>Reproductor de películas Totem</application> muestra el título "
-"de la película o canción en la barra de título de la ventana y en la lista "
-"de reproducción de la barra lateral."
+"application>. Si arrastra el archivo al área de visualización, el archivo "
+"reemplazará la lista de reproducción actual y comenzará a reproducirlo "
+"inmediatamente. Si arrastra el archivo a la barra lateral, el archivo se "
+"añadirá a la lista de reproducción actual. La aplicación "
+"<application>Reproductor de películas Totem</application> abrirá el archivo "
+"y reproducirá la película o canción. El <application>Reproductor de "
+"películas Totem</application> muestra el título de la película o canción en "
+"la barra de título de la ventana y en la lista de reproducción de la barra "
+"lateral."
 
 #: C/totem.xml:347(para)
-#, fuzzy
 #| msgid ""
 #| "If you try to open a file format that <application>Totem Movie Player</"
 #| "application> does not recognize, the application displays an error "
@@ -626,11 +619,10 @@ msgstr ""
 "películas Totem</application> no reconoce, la aplicación mostrará un mensaje "
 "de error. Este error sucede habitualmente si no tiene los códecs correctos "
 "instalados. Se puede obtener información para que los códecs funcionen en la "
-"<ulink url=\"http://www.gnome.org/projects/totem/#codecs\">Página web del "
+"<ulink url=\"http://projects.gnome.org/totem/#codecs\">Página web del "
 "Reproductor de películas Totem</ulink>."
 
 #: C/totem.xml:353(para)
-#, fuzzy
 #| msgid ""
 #| "You can double-click on a video or an audio file in the "
 #| "<application>Nautilus</application> file manager to open it on the "
@@ -641,15 +633,14 @@ msgid ""
 "<application>Totem Movie Player</application> window."
 msgstr ""
 "Puede pulsar dos veces en un archivo de sonido o vídeo en el gestor de "
-"archivos <application>Nautilus</application> para abrirlo en la ventana de "
-"<application>Totem</application>."
+"archivos <application>Nautilus</application> para abrirlo en la ventana del "
+"<application>Reproductor de películas Totem</application>."
 
 #: C/totem.xml:360(title)
 msgid "To Open a Location"
 msgstr "Para abrir una dirección"
 
 #: C/totem.xml:361(para)
-#, fuzzy
 #| msgid ""
 #| "To open a file by URI location, choose "
 #| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></"
@@ -668,7 +659,7 @@ msgid ""
 "like to open (it lists URIs which have previously been opened) – or type one "
 "in directly – then click on the <guibutton>Open</guibutton> button."
 msgstr ""
-"Para abrir un archivo por dirección URI, elija "
+"Para abrir un archivo por dirección URI (ubicación), elija "
 "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></"
 "keycombo></shortcut><guimenu>Película</guimenu><guimenuitem>Abrir dirección</"
 "guimenuitem></menuchoice>. Se muestra el diálogo <guilabel>Abrir dirección</"
@@ -682,9 +673,10 @@ msgid ""
 "If you have a URI in the clipboard already, it will automatically be pasted "
 "into the combination box."
 msgstr ""
+"Si ya tiene un URI en el portapapeles se pegará automáticamente en la caja "
+"de combinación."
 
 #: C/totem.xml:375(title)
-#| msgid "To Play a Movie (DVD, VCD or CD)"
 msgid "To Play a Movie (DVD or VCD)"
 msgstr "Reproducir una película (DVD o VCD)"
 
@@ -699,7 +691,6 @@ msgstr ""
 "guimenuitem></menuchoice>."
 
 #: C/totem.xml:379(para)
-#, fuzzy
 #| msgid ""
 #| "To eject a DVD, VCD, or CD, choose "
 #| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></"
@@ -710,7 +701,7 @@ msgid ""
 "keycap><keycap>E</keycap></keycombo></shortcut><guimenu>Movie</"
 "guimenu><guimenuitem>Eject</guimenuitem></menuchoice>."
 msgstr ""
-"Para expulsar un DVD, VCD, o CD, elija "
+"Para expulsar un DVD o VCD CD, elija "
 "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></"
 "keycombo></shortcut><guimenu>Película</guimenu><guimenuitem>Expulsar</"
 "guimenuitem></menuchoice>."
@@ -748,7 +739,6 @@ msgid "Shows play button."
 msgstr "Muestra el botón de reproducción."
 
 #: C/totem.xml:402(para)
-#, fuzzy
 #| msgid ""
 #| "To resume playing a movie or song, click on the <placeholder-1/> button, "
 #| "or choose <menuchoice><shortcut><keycombo><keycap>Ctrl</"
@@ -761,16 +751,16 @@ msgid ""
 "guimenu><guimenuitem>Play / Pause</guimenuitem></menuchoice>."
 msgstr ""
 "Para continuar reproduciendo una película o canción, pulse el botón "
-"<placeholder-1/> o elija <menuchoice><shortcut><keycombo><keycap>Ctrl</"
-"keycap><keycap>Espacio</keycap></keycombo></shortcut><guimenu>Película</"
-"guimenu><guimenuitem>Reproducir / Pausa</guimenuitem></menuchoice>."
+"<placeholder-1/> de nuevo o elija "
+"<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Espacio</"
+"keycap></keycombo></shortcut><guimenu>Película</"
+"guimenu><guimenuitem>Reproducir / Pausar</guimenuitem></menuchoice>."
 
 #: C/totem.xml:416(title)
 msgid "To View Properties of a Movie or Song"
 msgstr "Para ver las propiedades de una película o canción"
 
 #: C/totem.xml:417(para)
-#, fuzzy
 #| msgid ""
 #| "To view properties of a movie or song, choose <menuchoice><guimenu>View</"
 #| "guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> to make the "
@@ -785,7 +775,8 @@ msgstr ""
 "Para ver las propiedades de una canción o película , elija "
 "<menuchoice><guimenu>Ver</guimenu><guimenuitem>Barra lateral</guimenuitem></"
 "menuchoice> para hacer que aparezca la barra lateral, y elija "
-"<guilabel>Propiedades</guilabel> en la lista desplegable."
+"<guilabel>Propiedades</guilabel> de la lista desplegable en la parte "
+"superior de la barra lateral."
 
 #: C/totem.xml:425(title)
 msgid "To Seek Through Movies or Songs"
@@ -802,7 +793,6 @@ msgid "To skip forward"
 msgstr "Saltar adelante"
 
 #: C/totem.xml:432(para)
-#, fuzzy
 #| msgid ""
 #| "To skip forward a movie or song, choose "
 #| "<menuchoice><shortcut><keycap>Right</keycap></shortcut><guimenu>Go</"
@@ -821,7 +811,6 @@ msgid "To skip backward"
 msgstr "Saltar atrás"
 
 #: C/totem.xml:444(para)
-#, fuzzy
 #| msgid ""
 #| "To skip backward a movie or song, choose "
 #| "<menuchoice><shortcut><keycap>Left</keycap></shortcut><guimenu>Go</"
@@ -861,6 +850,9 @@ msgid ""
 "time in the formats \"hh:mm:ss\", \"mm:ss\" or \"ss\"; where \"hh\" is the "
 "hour, \"mm\" is the minute and \"ss\" is the second to skip to."
 msgstr ""
+"La caja incrementable también permite usar un lenguaje más natural. Puede "
+"introducir tiempos en el formato «hh:mm:ss», «mm:ss» o «ss», donde «hh» es la "
+"hora, «mm» es el minuto y «ss» el segundo al que saltar."
 
 #: C/totem.xml:472(term)
 msgid "To move to the next movie or song"
@@ -938,7 +930,6 @@ msgstr ""
 "<keycap>F11</keycap> o <keycap>F</keycap>."
 
 #: C/totem.xml:525(para)
-#, fuzzy
 #| msgid ""
 #| "To zoom to half the size (50%) of the original movie or visualisation, "
 #| "choose <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</"
@@ -951,18 +942,16 @@ msgid ""
 "keycombo></shortcut><guimenu>View</guimenu><guimenuitem>Fit Window to Movie</"
 "guimenuitem></menuchoice> and choose a scale ratio."
 msgstr ""
-"Para ampliar a la mitad del tamaño de la película original (50%) o "
-"visualización, elija <menuchoice><shortcut><keycombo><keycap>Ctrl</"
-"keycap><keycap>0</keycap></keycombo></shortcut><guimenu>Ver</"
-"guimenu><guisubmenu>Ajustar ventana a la película</"
-"guisubmenu><guimenuitem>Redimensionar 1:2</guimenuitem></menuchoice>."
+"Para cambiar el tamaño original de la película o visualización elija "
+"<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></"
+"keycombo></shortcut><guimenu>Ver</guimenu><guisubmenu>Ajustar ventana a la "
+"película</guisubmenu></menuchoice> y elija una proporción de escala."
 
 #: C/totem.xml:536(title)
 msgid "To Change the Video Aspect Ratio"
 msgstr "Cambiar el la proporción del vídeo"
 
 #: C/totem.xml:537(para)
-#, fuzzy
 #| msgid ""
 #| "To switch between different aspect ratios, choose "
 #| "<menuchoice><shortcut><keycap>A</keycap></shortcut><guimenu>View</"
@@ -975,15 +964,13 @@ msgid ""
 msgstr ""
 "Para cambiar entre diferentes proporciones, elija <menuchoice> "
 "<shortcut><keycap>A</keycap></shortcut><guimenu>Ver</"
-"guimenu><guisubmenu>Proporción</guisubmenu></menuchoice>. Las proporciones "
-"soportadas son:<placeholder-1/><placeholder-2/>"
+"guimenu><guisubmenu>Proporción</guisubmenu></menuchoice>."
 
 #: C/totem.xml:547(title)
 msgid "To Adjust the Volume"
 msgstr "Ajustar el volumen"
 
 #: C/totem.xml:548(para)
-#, fuzzy
 #| msgid ""
 #| "To increase the volume, choose <menuchoice><shortcut><keycap>Up</keycap></"
 #| "shortcut><guimenu>Sound</guimenu><guimenuitem>Volume Up</guimenuitem></"
@@ -998,16 +985,13 @@ msgid ""
 "<menuchoice><shortcut><keycap>Down</keycap></shortcut><guimenu>Sound</"
 "guimenu><guimenuitem>Volume Down</guimenuitem></menuchoice>."
 msgstr ""
-"Para incrementar el volumen, elija <menuchoice><shortcut><keycap>Arriba</"
-"keycap></shortcut> <guimenu>Sonido</guimenu> <guimenuitem>Subir volumen</"
-"guimenuitem> </menuchoice> o mueva el deslizador del volumen a la derecha. "
-"Para decrementar el volumen, elija <menuchoice><shortcut><keycap>Abajo</"
-"keycap></shortcut><guimenu>Sonido</guimenu> <guimenuitem>Bajar volumen</"
-"guimenuitem></menuchoice> o mueva el deslizador del volumen hacia la "
-"izquierda."
+"Para subir el volumen, elija <menuchoice><shortcut><keycap>Arriba</keycap></"
+"shortcut> <guimenu>Sonido</guimenu> <guimenuitem>Subir volumen</guimenuitem> "
+"</menuchoice>. Para bajar el volumen, elija "
+"<menuchoice><shortcut><keycap>Abajo</keycap></shortcut><guimenu>Sonido</"
+"guimenu> <guimenuitem>Bajar volumen</guimenuitem></menuchoice>."
 
 #: C/totem.xml:561(para)
-#, fuzzy
 #| msgid ""
 #| "To adjust the sound volume, you can also use the volume button. Press the "
 #| "volume button and choose the volume level with the slider."
@@ -1015,11 +999,10 @@ msgid ""
 "You can also use the volume button: press the volume button and choose the "
 "volume level with the slider."
 msgstr ""
-"Para ajustar el volumen de sonido, puede usar el botón de volumen. Pulse el "
-"botón de volumen y elija el nivel de volumen con el deslizador."
+"También puede usar el botón de volumen: pulse el botón de volumen y elija el "
+"nivel de volumen con el deslizador."
 
 #: C/totem.xml:565(title)
-#| msgid "To Make the Window Always On Top"
 msgid "To Make the Window Always on Top"
 msgstr "Hacer que la ventana siempre esté encima"
 
@@ -1100,7 +1083,6 @@ msgid "To Show or Hide the Playlist"
 msgstr "Para mostrar u ocultar la lista de reproducción"
 
 #: C/totem.xml:620(para)
-#, fuzzy
 #| msgid ""
 #| "To show the playlist, choose <menuchoice><guimenu>View</"
 #| "guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice>, or click the "
@@ -1113,11 +1095,11 @@ msgid ""
 "<guilabel>Sidebar</guilabel> button, and choose <guimenu>Playlist</guimenu> "
 "on the top of the sidebar."
 msgstr ""
-"Para mostrar la lista de reproducción elija <menuchoice><guimenu>Ver</"
-"guimenu><guimenuitem>Barra lateral</guimenuitem></menuchoice> o pulse el "
-"botón <guilabel>Barra lateral</guilabel> y elija <guimenu>Lista de "
-"reproducción</guimenu> en la parte superior de la barra lateral. Se muestra "
-"el diálogo de <guilabel>Lista de reproducción</guilabel>."
+"Para mostrar u ocultar la lista de reproducción elija "
+"<menuchoice><guimenu>Ver</guimenu><guimenuitem>Barra lateral</guimenuitem></"
+"menuchoice> o pulse el botón <guilabel>Barra lateral</guilabel> y elija "
+"<guimenu>Lista de reproducción</guimenu> en la parte superior de la barra "
+"lateral."
 
 #: C/totem.xml:629(title)
 msgid "Manage a Playlist"
@@ -1266,7 +1248,6 @@ msgstr ""
 "idioma para los subtítulos que el que esté usando en su equipo."
 
 #: C/totem.xml:702(para)
-#, fuzzy
 #| msgid ""
 #| "Totem Movie Player will automatically load and display subtitles if the "
 #| "file which contains them has the same name as the video file played and "
@@ -1283,11 +1264,11 @@ msgstr ""
 "El reproductor de películas Totem cargará y mostrará automáticamente los "
 "subtítulos si el archivo que los contiene tiene el mismo nombre que el "
 "archivo de vídeo reproducido y la extensión <filename>asc</filename>, "
-"<filename>txt</filename>, <filename>sub</filename>, <filename>smi</filename> "
-"o <filename>ssa</filename>."
+"<filename>txt</filename>, <filename>sub</filename>, <filename>srt</"
+"filename>, <filename>smi</filename>, <filename>ssa</filename> o "
+"<filename>ass</filename>."
 
 #: C/totem.xml:706(para)
-#, fuzzy
 #| msgid ""
 #| "If the file containing the subtitles has a different name to the video "
 #| "being played, you can right-click on the video in the playlist and choose "
@@ -1305,7 +1286,9 @@ msgstr ""
 "vídeo en reproducción, puede pulsar con el botón derecho en la lista de "
 "reproducción de vídeos y seleccionar <menuchoice><guimenuitem>Seleccionar "
 "subtítulos de texto...</guimenuitem></menuchoice> del menú emergente para "
-"cargar el archivo de subtítulo correcto."
+"cargar el archivo de subtítulo correcto. También puede elegir los subtítulos "
+"seleccionando <menuchoice><guimenu>Ver</guimenu><guimenuitem>Seleccionar "
+"subtítulos de texto...</guimenuitem></menuchoice>."
 
 #: C/totem.xml:713(title)
 msgid "To Take a Screenshot"
@@ -1339,12 +1322,10 @@ msgstr ""
 "de pantalla que se guardará."
 
 #: C/totem.xml:726(title)
-#| msgid "To Take a Screenshot"
 msgid "To Create a Screenshot Gallery"
 msgstr "Crear una galería de capturas de pantalla"
 
 #: C/totem.xml:727(para)
-#, fuzzy
 #| msgid ""
 #| "To take a screenshot of the movie or visualisation that is playing, "
 #| "choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Take Screenshot</"
@@ -1360,13 +1341,13 @@ msgid ""
 "which you want to save the gallery image, then click the <guibutton>Save</"
 "guibutton> button to save the screenshot."
 msgstr ""
-"Para tomar una captura de pantalla de la película o de la visualización que "
-"se está reproduciendo, elija <menuchoice><guimenu>Editar</"
-"guimenu><guimenuitem>Capturar pantalla</guimenuitem></menuchoice>. Se "
-"muestra el diálogo <guilabel>Guardar la captura</guilabel>. Elija una "
-"ubicación e introduzca el nombre de archivo con el que quiere guardar la "
-"captura de pantalla, después pulse el botón <guibutton>Guardar</guibutton> "
-"para guardar la captura de pantalla."
+"Para crear una galería de capturas de pantalla de la película o de la "
+"visualización que se está reproduciendo, elija <menuchoice><guimenu>Editar</"
+"guimenu><guimenuitem>Crear una galería de capturas…</guimenuitem></"
+"menuchoice>. Se muestra el diálogo <guilabel>Guardar galería</guilabel>. "
+"Elija una ubicación e introduzca el nombre de archivo con el que quiere "
+"guardar la galerías de capturas de pantalla, después pulse el botón "
+"<guibutton>Guardar</guibutton> para guardar la captura de pantalla."
 
 #: C/totem.xml:735(para)
 msgid ""
@@ -1374,6 +1355,9 @@ msgid ""
 "the <guilabel>Screenshot width</guilabel> entry. The default width is 128 "
 "pixels."
 msgstr ""
+"Puede especificar el ancho de las capturas individuales para la galería "
+"usando la entrada <guilabel>Anchura de la captura</guilabel>. La anchura "
+"predeterminada es de 128 píxeles."
 
 #: C/totem.xml:737(para)
 msgid ""
@@ -1383,6 +1367,12 @@ msgid ""
 "screenshots</guilabel> checkbox and entering the new number in the "
 "<guilabel>Number of screenshots</guilabel> spin box."
 msgstr ""
+"También puede especificar el número de capturas de pantalla que poner en la "
+"galería. De forma predeterminada esto se calcula en base a la duración de la "
+"película; no obstante, esto se puede sobreescribir deseleccionando la "
+"casilla de verificación <guilabel>Calcular el número de capturas</guilabel> "
+"e introduciendo un número nuevo en la caja incremental <guilabel>Número de "
+"capturas:</guilabel>."
 
 #: C/totem.xml:747(title)
 msgid "Preferences"
@@ -1426,6 +1416,10 @@ msgid ""
 "automatically load any subtitle files with the same filename as a movie when "
 "the movie is loaded."
 msgstr ""
+"<guilabel>Cargar los archivos de subtítulos automáticamente cuando se carga "
+"la película</guilabel>: seleccione esta opción para cargar automáticamente "
+"cualquier archivo de subtítulos con el mismo nombre que la película al "
+"cargar la película."
 
 #: C/totem.xml:793(para)
 msgid ""
@@ -1448,7 +1442,6 @@ msgid "Display"
 msgstr "Área de visualización"
 
 #: C/totem.xml:811(para)
-#, fuzzy
 #| msgid ""
 #| "Select the <guilabel>resize</guilabel> option if you want "
 #| "<application>Totem Movie Player</application> to automatically resize the "
@@ -1458,9 +1451,10 @@ msgid ""
 "Movie Player</application> to automatically resize the window to the size of "
 "the video when a new video is loaded."
 msgstr ""
-"Seleccione la opción <guilabel>redimensionar</guilabel> si quiere que "
-"<application>Totem</application> redimensione automáticamente la ventana "
-"cuando se cargue un vídeo nuevo."
+"Seleccione la opción <guilabel>Autoredimensionar la ventana cuando se carga "
+"un vídeo nuevo</guilabel> si quiere que el <application>Reproductor de "
+"películas Totem</application> redimensione automáticamente la ventana cuando "
+"se cargue un vídeo nuevo."
 
 #: C/totem.xml:816(para)
 msgid ""
@@ -1468,6 +1462,11 @@ msgid ""
 "screensaver to activate when playing audio files. Some monitors with "
 "integrated speakers may stop playing music when the screensaver is activated."
 msgstr ""
+"Seleccione la opción <guilabel>Permitir que el salvapantallas se active "
+"incluso cuando se está reproduciendo sonido</guilabel> si quiere permitir "
+"que se active el salvapantallas al reproducir archivos de sonido. Algunos "
+"monitores con altavoces integrados pueden dejar de reproducir música si se "
+"activa el salvapantallas."
 
 #: C/totem.xml:821(term)
 msgid "Visual Effects"
@@ -1535,6 +1534,9 @@ msgid ""
 "You may use the <guilabel>Reset To Defaults</guilabel> button to reset the "
 "color balance controls to their default positions."
 msgstr ""
+"Puede usar el botón <guilabel>Restablecer predeterminados</guilabel> para "
+"restablecer los controles de balance de color a sus posiciones "
+"predeterminadas."
 
 #: C/totem.xml:868(title)
 msgid "Audio"
@@ -1557,7 +1559,6 @@ msgid "About <application>Totem Movie Player</application>"
 msgstr "Acerca del <application>Reproductor de películas Totem</application>"
 
 #: C/totem.xml:902(para)
-#, fuzzy
 #| msgid ""
 #| "<application>Totem Movie Player</application> is written by Bastien "
 #| "Nocera (<email>hadess@hadess.net</email>), Julien Moutte "
@@ -1580,8 +1581,8 @@ msgstr ""
 "Bartsch (<email>guenter@users.sourceforge.net</email>) escribieron el "
 "<application>Reproductor de películas Totem</application>. Para obtener más "
 "información acerca del <application>Reproductor de películas Totem</"
-"application>, visite la <ulink url=\"http://www.gnome.org/projects/totem/\" "
-"type=\"http\">Página web del <application>Reproductor de películas Totem</"
+"application>, visite la <ulink url=\"http://projects.gnome.org/totem/\" type="
+"\"http\">Página web del <application>Reproductor de películas Totem</"
 "application></ulink>."
 
 #: C/totem.xml:915(para)
