@@ -10,8 +10,10 @@ import gtk
 from coherence.ui.av_widgets import TreeWidget
 from coherence.ui.av_widgets import UDN_COLUMN,UPNP_CLASS_COLUMN,SERVICE_COLUMN
 
-
 import totem
+import gettext
+
+_ = gettext.gettext
 
 class UPnPClient(totem.Plugin):
 
@@ -73,9 +75,11 @@ class UPnPClient(totem.Plugin):
 
         if not hasattr(self, 'context_no_delete'):
             self.context_no_delete = gtk.Menu()
-            play_menu = gtk.MenuItem("Play")
+            # Translators: this refers to a media file
+            play_menu = gtk.MenuItem(_("Play"))
             play_menu.connect("activate", action, 'item.play')
-            enqueue_menu = gtk.MenuItem("Enqueue")
+            # Translators: this refers to a media file
+            enqueue_menu = gtk.MenuItem(_("Enqueue"))
             enqueue_menu.connect("activate", action, 'item.enqueue')
             self.context_no_delete.append(play_menu)
             self.context_no_delete.append(enqueue_menu)
@@ -83,14 +87,17 @@ class UPnPClient(totem.Plugin):
 
         if not hasattr(self, 'context_with_delete'):
             self.context_with_delete = gtk.Menu()
-            play_menu = gtk.MenuItem("Play")
+            # Translators: this refers to a media file
+            play_menu = gtk.MenuItem(_("Play"))
             play_menu.connect("activate", action, 'item.play')
-            enqueue_menu = gtk.MenuItem("Enqueue")
+            # Translators: this refers to a media file
+            enqueue_menu = gtk.MenuItem(_("Enqueue"))
             enqueue_menu.connect("activate", action, 'item.enqueue')
             self.context_with_delete.append(play_menu)
             self.context_with_delete.append(enqueue_menu)
             self.context_with_delete.append(gtk.SeparatorMenuItem())
-            menu = gtk.MenuItem("Delete")
+            # Translators: this refers to a media file
+            menu = gtk.MenuItem(_("Delete"))
             menu.connect("activate", action, 'item.delete')
             self.context_with_delete.append(menu)
             self.context_with_delete.show_all()
