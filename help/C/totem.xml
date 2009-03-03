@@ -30,9 +30,13 @@
     <title><application>&app;</application> Manual</title>       
     <copyright> 
       <year>2003</year> 
-      <holder>Chee Bin HOH</holder> 
+      <holder>Chee Bin HOH</holder>
     </copyright>
-    <releaseinfo revision="2.26" role="update"/>
+    <copyright>
+      <year>2009</year>
+      <holder>Philip Withnall</holder>
+    </copyright>
+    <releaseinfo revision="2.26" role="review"/>
 
     <abstract role="description">
       <para>&app; is a media player for GNOME that runs on GStreamer by default, but can
@@ -104,15 +108,25 @@ subtitles, and more.</para>
 <!-- to V3.0, and so on. -->  
     <revhistory>
       <revision> 
-        <revnumber>&app; Manual V&manrevision;</revnumber> 
-	<date>&date;</date> 
+        <revnumber>&app; Manual V2.0</revnumber> 
+	<date>August 2006</date> 
 	<revdescription> 
 	  <para role="author">Chee Bin HOH
 	    <email>cbhoh@gnome.org</email>
 	  </para>
 	  <para role="publisher">GNOME Documentation Project</para>
         </revdescription> 
-      </revision> 
+      </revision>
+      <revision> 
+        <revnumber>&app; Manual V&manrevision;</revnumber> 
+	<date>&date;</date> 
+	<revdescription> 
+	  <para role="author">Philip Withnall
+	    <email>philip@tecnocode.co.uk</email>
+	  </para>
+	  <para role="publisher">GNOME Documentation Project</para>
+        </revdescription> 
+      </revision>
     </revhistory> 
 
     <releaseinfo>This manual describes version &appversion; of &app;.
@@ -270,7 +284,7 @@ subtitles, and more.</para>
 	<varlistentry>
 	  <term>Display area.</term>
 	  <listitem>
-	    <para>The display area displays the movie or a visualisation of the current song.
+	    <para>The display area displays the movie or a visualization of the current song.
             </para>
 	  </listitem>
 	</varlistentry>
@@ -522,7 +536,7 @@ subtitles, and more.</para>
           </para>
     </listitem>
 	<listitem>
-	  <para>To change the size original movie or visualisation,
+	  <para>To change the size original movie or visualization,
             choose 
             <menuchoice>
 	      <shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></keycombo></shortcut>
@@ -568,10 +582,11 @@ subtitles, and more.</para>
         <menuchoice>
           <guimenu>Edit</guimenu>
           <guimenuitem>Plugins</guimenuitem>
-        </menuchoice>. Select the <guilabel>Always on Top</guilabel> plugin to enable it. The &app; window will now stay on
-        top of all other windows while a movie is playing, but not while audio or visualisations are playing.
+        </menuchoice>. Select the <guilabel>Always on Top</guilabel> plugin to enable it. The <application>&app;</application> window will now stay on
+        top of all other windows while a movie is playing, but not while audio or visualizations are playing.
        </para>
-       <para>To stop the window always being on top, disable the <guilabel>Always on Top</guilabel> plugin again.</para>
+       <para>To stop the window always being on top, disable the <guilabel>Always on Top</guilabel> plugin again.
+       See <xref linkend="totem-plugins-always-on-top"/> for more information.</para>
     </sect2>
 
     <sect2 id="totem-usage-show-control">
@@ -620,7 +635,7 @@ subtitles, and more.</para>
 	<para>To show or hide the playlist, choose 
           <menuchoice>
 	    <guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem>
-          </menuchoice>, or click the <guilabel>Sidebar</guilabel> button, and
+          </menuchoice>, or click the <guibutton>Sidebar</guibutton> button, and
 		  choose <guimenu>Playlist</guimenu> on the top of 
 		  the sidebar.</para>
       </sect3>
@@ -707,11 +722,13 @@ subtitles, and more.</para>
 	  right-click on the video in the playlist and choose <menuchoice><guimenuitem>Select Text Subtitles...</guimenuitem></menuchoice>
 	  from the popup menu to load the correct subtitle file. You may also choose subtitles by choosing
 	  <menuchoice><guimenu>View</guimenu><guimenuitem>Select Text Subtitles...</guimenuitem></menuchoice>.</para>
+	  <para>Using the <guilabel>Subtitles downloader</guilabel> plugin, you can also download subtitles from the OpenSubtitles service. See
+	  <xref linkend="totem-plugins-opensubtitles"/> for more information.</para>
 	</sect2>
 
     <sect2 id="totem-usage-take-screenshot">
       <title>To Take a Screenshot</title>
-      <para>To take a screenshot of the movie or visualisation that is playing, choose 
+      <para>To take a screenshot of the movie or visualization that is playing, choose 
         <menuchoice>
           <guimenu>Edit</guimenu>
           <guimenuitem>Take Screenshot</guimenuitem>
@@ -724,7 +741,7 @@ subtitles, and more.</para>
 
     <sect2 id="totem-usage-create-screenshot-gallery">
       <title>To Create a Screenshot Gallery</title>
-      <para>To create a gallery of screenshots of the movie or visualisation that is playing, choose
+      <para>To create a gallery of screenshots of the movie or visualization that is playing, choose
         <menuchoice>
           <guimenu>Edit</guimenu>
           <guimenuitem>Create Screenshot Gallery</guimenuitem>
@@ -737,6 +754,201 @@ subtitles, and more.</para>
       <para>You may also specify the number of screenshots to be put in the gallery. By default, this is calculated based on the length of the movie;
       however, this may be overridden by unchecking the <guilabel>Calculate the number of screenshots</guilabel> checkbox and entering the new
       number in the <guilabel>Number of screenshots</guilabel> spin box.</para></tip>
+    </sect2>
+  </sect1>
+
+<!-- =========== Plugins ======================================= -->
+  <sect1 id="totem-plugins">
+    <title>Plugins</title>
+    <para><application>&app;</application> has many features which are present in the form of plugins — pieces of the software which are only loaded
+      if necessary.</para>
+    <sect2 id="totem-plugins-load">
+      <title>To Enable a Plugin</title>
+      <para>To view the list of installed plugins, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. The
+        <guilabel>Configure Plugins</guilabel> dialog is displayed. On the left is a list of all the plugins you have installed, while on the right is
+        a description of the currently-selected plugin. Plugins which have options which can be changed will have the <guibutton>Configure</guibutton>
+        button on the right sensitive.</para>
+      <para>To enable a plugin, simply check the checkbox to the left of its name in the plugin list, and the plugin will be loaded immediately. If
+        there is any error loading the plugin, an error dialog will also be displayed immediately.</para>
+      <para>To disable a plugin again, uncheck its checkbox. Plugins will remain enabled/disabled as set even when <application>&app;</application>'s
+        closed.</para>
+    </sect2>
+    <sect2 id="totem-plugins-always-on-top">
+      <title>Always on Top</title>
+      <para>When enabled, the <guilabel>Always on Top</guilabel> plugin will force the main <application>&app;</application> window to be on top of
+        all other windows while a movie is playing, but not while audio or visualizations are playing. To stop the window being on top, disable
+        the plugin again.</para>
+    </sect2>
+    <sect2 id="totem-plugins-coherence">
+      <title>Coherence DLNA/UPnP Client</title>
+      <para>The <guilabel>Coherence DLNA/UPnP Client</guilabel> plugin allows <application>&app;</application> to play multimedia content from
+        UPnP media servers (such as Coherence servers) on the local network.</para>
+      <para>With the <guilabel>Coherence DLNA/UPnP Client</guilabel> plugin enabled, choose
+        <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
+        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Coherence DLNA/UPnP Client</guilabel> from the drop-down at the
+        top of the sidebar to display the <guilabel>Coherence DLNA/UPnP Client</guilabel> sidebar.</para>
+      <para>The tree view in the sidebar will list the available media servers. Clicking on one will expand it to show the types of media it can serve,
+        and clicking on a media folder will expand it to list the media files available. Double-clicking on a media file will add it to
+        <application>&app;</application>'s playlist and play it. You may alternatively right-click on a file and choose
+        <menuchoice><guimenuitem>Play</guimenuitem></menuchoice> or <menuchoice><guimenuitem>Enqueue</guimenuitem></menuchoice> to play the file
+        immediately or add it to the playlist, respectively.</para>
+      <para>If the media server allows it, choosing <menuchoice><guimenuitem>Delete</guimenuitem></menuchoice> from a file's context menu allows you to
+        delete that file from the media server.</para>
+    </sect2>
+    <sect2 id="totem-plugins-gromit">
+      <title>Gromit Annotations</title>
+      <para>The <guilabel>Gromit Annotations</guilabel> plugin allows you to draw on top of movies as they are played using
+        <application>Gromit</application>. You must have <application>Gromit</application> installed before you can enable the plugin — consult your
+        operating system documentation for information on how to do this.</para>
+      <para>With the plugin enabled, press <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> to toggle <application>Gromit</application>
+        on or off. When <application>Gromit</application> is enabled, your cursor will change to a crosshair. To draw on the screen, hold down your
+        mouse button and drag your cursor around, before releasing your mouse button. Press <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo>
+        again to toggle <application>Gromit</application> off.</para>
+      <para>To clear the screen of annotations, press <keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>, or close
+        <application>&app;</application>.</para>
+    </sect2>
+    <sect2 id="totem-plugins-jamendo">
+      <title>Jamendo</title>
+      <para>The <guilabel>Jamendo</guilabel> plugin allows you to listen to the collection of Creative Commons-licensed music on the Jamendo
+        service.</para>
+      <sect3 id="totem-plugins-jamendo-configuration">
+        <title>To Configure the Plugin</title>
+        <para>The <guilabel>Jamendo</guilabel> plugin can be configured. Press the <guibutton>Configure</guibutton> button when enabling the plugin,
+          and the <guilabel>Jamendo Plugin Configuration</guilabel> dialog will be displayed. Here, you can choose whether to download songs in OGG or
+          MP3 format (OGG is preferred due to its open-source nature); and the number of albums to retrieve when doing a search (choose more albums if
+          you have a faster Internet connection).</para>
+        <para>Once you're done, press the <guibutton>OK</guibutton> button.</para>
+      </sect3>
+      <sect3 id="totem-plugins-jamendo-setup">
+        <title>To Display the Jamendo Sidebar</title>
+        <para>With the <guilabel>Jamendo</guilabel> plugin enabled, choose
+          <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
+          <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Jamendo</guilabel> from the drop-down at the top of the sidebar
+          to display the <guilabel>Jamendo</guilabel> sidebar.</para>
+      </sect3>
+      <sect3 id="totem-plugins-jamendo-search">
+        <title>To Search for Music</title>
+        <para>Enter your search terms in the search entry at the top of the <guilabel>Jamendo</guilabel> sidebar. You can search by either artist or
+          by tags. Press the search button to start your search.</para>
+        <para>Search results will be displayed in the tree view in the <guilabel>Search Results</guilabel> page of the sidebar, and can be browsed
+          through using the arrow buttons at the bottom of the sidebar. Albums are listed, and if you click on an album, its tracks will be listed
+          below it. Click again to hide the album's tracks.</para>
+        <para>With an artist selected, you can press the <guibutton>Jamendo Album Page</guibutton> button to open that album's page on the
+          Jamendo website. Double-clicking an album, or choosing <menuchoice><guimenuitem>Add to Playlist</guimenuitem></menuchoice> from the album's
+          context menu, will replace your playlist with all the tracks on that album and begin streaming the first track from Jamendo's website.
+          Double-clicking an individual track will replace your playlist with just that track.</para>
+      </sect3>
+      <sect3 id="totem-plugins-jamendo-popular">
+        <title>Popular Albums and Latest Releases</title>
+        <para>Viewing the <guilabel>Popular</guilabel> page in the <guilabel>Jamendo</guilabel> sidebar will load a list of the most popular albums
+          on Jamendo at the moment, which can be played as with search results. Viewing the <guilabel>Latest Releases</guilabel> page will likewise
+          load a list of the latest albums released on Jamendo.</para>
+      </sect3>
+    </sect2>
+    <sect2 id="totem-plugins-tracker">
+      <title>Local Search</title>
+      <para>The <guilabel>Local Search</guilabel> plugin allows you to search for playable movies and audio files on your computer from within
+        <application>&app;</application>. With the plugin enabled, choose
+        <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
+        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Local Search</guilabel> from the drop-down at the top of the
+        sidebar to display the <guilabel>Local Search</guilabel> sidebar.</para>
+      <para>To perform a search, enter your search terms in the search entry at the top of the sidebar and press <guibutton>Find</guibutton>. Your
+        search terms may include wildcards such as <literal>*</literal>, which will match any character. For example, the search
+        <userinput>*.mpg</userinput> will find all movies with the <filename class="extension">.mpg</filename> extension.</para>
+      <para>Search results may be browsed using the <guibutton>Back</guibutton> and <guibutton>Forward</guibutton> buttons at the bottom of the
+        sidebar, and you may jump to a specific results page by entering its number in the spin button.</para>
+    </sect2>
+    <sect2 id="totem-plugins-publish">
+      <title>Publish Playlist</title>
+      <para>The <guilabel>Publish Playlist</guilabel> plugin allows you to publish playlists on your local network to allow other computers to access
+        and play them.</para>
+      <sect3 id="totem-plugins-publish-configuration">
+        <title>To Configure the Plugin</title>
+        <para>The <guilabel>Publish Playlist</guilabel> plugin can be configured. Press the <guibutton>Configure</guibutton> button when enabling the
+          plugin, and the configuration dialog will be displayed. Here, you can change the name which will appear for your playlist share. The following
+          strings will be replaced when playlists are published:
+          <variablelist>
+	    <varlistentry>
+	      <term>%a</term>
+	      <listitem><para>Replaced with the program's name: <application>&app;</application>.</para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>%h</term>
+	      <listitem><para>Replaced with your computer's host name.</para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>%u</term>
+	      <listitem><para>Replaced with your username.</para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>%U</term>
+	      <listitem><para>Replaced with your real name.</para></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>%%</term>
+	      <listitem><para>Replaced with a literal percent sign.</para></listitem>
+	    </varlistentry>
+	  </variablelist>
+	</para>
+	<para>You can also check the <guilabel>Use encrypted transport protocol</guilabel> check box if you wish to encrypt the shared playlists when
+	  they're transmitted over the network.</para>
+        <para>Once you're done, press the <guibutton>Close</guibutton> button.</para>
+      </sect3>
+      <sect3 id="totem-plugins-publish-publishing">
+        <title>To Publish Playlists</title>
+        <para>With the plugin enabled, you do not need to explicitly publish playlists; they are automatically made available on the network as
+          a Zeroconf website.</para>
+      </sect3>
+      <sect3 id="totem-plugins-publish-neighborhood">
+        <title>To Browse your Neighborhood</title>
+        <para>To view the shared playlists of others on your network, select <guilabel>Neighborhood</guilabel> from the drop-down at the top of the
+          sidebar. If any playlists have been published on the network, they will be listed here. Double-click on a playlist to load and play it on
+          your computer.</para>
+      </sect3>
+    </sect2>
+    <sect2 id="totem-plugins-opensubtitles">
+      <title>Subtitles downloader</title>
+      <para>The <guilabel>Subtitles downloader</guilabel> plugin allows you to find and download subtitle files from the OpenSubtitles service.</para>
+      <para>Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
+        the currently-playing movie, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>, which
+        will display the <guilabel>Download Movie Subtitles</guilabel> dialog.</para>
+      <para>Select the language in which you wish to have your subtitles from the drop-down at the top of the dialog, then press the
+        <guibutton>Find</guibutton> button to search for subtitles for the current movie. Subtitles are found on the basis of the movie's content,
+        rather than its filename or tags.</para>
+      <para>Search results are listed in the tree view in the middle of the dialog. Currently, subtitles can only be used with a movie by
+        <emphasis>reloading</emphasis> the movie with the subtitles, so after selecting the subtitle file you wish to download, press the
+        <guibutton>Play with Subtitle</guibutton> button to download the subtitles reload the movie.</para>
+      <note><para>Downloaded subtitle files are cached so that they do not need to be downloaded again when playing the movie again. When downloading
+        new subtitles for a movie, any previously-downloaded subtitles for that movie are deleted.</para></note>
+    </sect2>
+    <sect2 id="totem-plugins-thumbnail">
+      <title>Thumbnail</title>
+      <para>The <guilabel>Thumbnail</guilabel> plugin sets <application>&app;</application>'s main window icon to a thumbnail of the current movie,
+        and updates the icon when new movies are loaded.</para>
+      <note><para>If a thumbnail doesn't exist for the current movie (or if you're playing an audio file), the main window icon will be reset to the
+        <application>&app;</application> logo.</para></note>
+    </sect2>
+    <sect2 id="totem-plugins-brasero">
+      <title>Video Disc Recorder</title>
+      <para>The <guilabel>Video Disc Recorder</guilabel> plugin allows you to burn the current playlist to a DVD or VCD using Brasero.</para>
+      <para>To burn the current playlist, choose <menuchoice><guimenu>Movie</guimenu><guimenuitem>Create Video Disc</guimenuitem></menuchoice>.
+        A Brasero dialog will be displayed, giving options for converting the movies to the appropriate format and burning them to disc. For more
+        information, see <xref linkend="brasero-new-project-video"/>.</para>
+    </sect2>
+    <sect2 id="totem-plugins-youtube">
+      <title>YouTube browser</title>
+      <para>The <guilabel>YouTube browser</guilabel> plugin allows you to search and browse YouTube, and play YouTube videos directly in
+        <application>&app;</application>. With the plugin enabled, choose
+        <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
+        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>YouTube</guilabel> from the drop-down at the top of the
+        sidebar to display the <guilabel>YouTube</guilabel> sidebar.</para>
+      <para>To search for a YouTube video, enter your search terms in the entry at the top of the sidebar, then press <guibutton>Find</guibutton>.
+        The search results will be listed in the tree view below. More results will be loaded automatically as you scroll down the list.</para>
+      <para>To play a video, double-click it in the results list, or choose <menuchoice><guimenuitem>Add to Playlist</guimenuitem></menuchoice> from
+        its context menu. When a video is played, a list of related videos will automatically be loaded in the <guilabel>Related Videos</guilabel>
+        page of the <guilabel>YouTube</guilabel> sidebar.</para>
+      <para>YouTube videos can be opened in a web browser by choosing <menuchoice><guimenuitem>Open in Web Browser</guimenuitem></menuchoice> from
+        their context menu. This will open the video in its original location on the YouTube website.</para>
     </sect2>
   </sect1>
 
@@ -827,12 +1039,12 @@ subtitles, and more.</para>
                 </para>
               </listitem>
 	      <listitem>
-		<para><guilabel>Type of visualisation</guilabel>: select type of visualisation from the
+		<para><guilabel>Type of visualization</guilabel>: select type of visualization from the
                   drop-down list box.
                 </para>
               </listitem>
 	      <listitem>
-		<para><guilabel>Visualisation size</guilabel>: select visualisation size from the
+		<para><guilabel>Visualization size</guilabel>: select visualization size from the
                   drop-down list box.
                 </para>
               </listitem>
