@@ -4,6 +4,7 @@ if ENABLE_BROWSER_PLUGINS
 SUBDIRS += browser-plugin
 endif
 
+
 EXTRA_DIST =			\
 	license_change		\
 	autogen.sh		\
@@ -22,4 +23,5 @@ CLEANFILES = totem.spec
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
 		 gnome-doc-utils.make
 
+DIST_SUBDIRS = $(SUBDIRS) browser-plugin
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --enable-gtk-doc
