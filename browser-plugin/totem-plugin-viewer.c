@@ -906,6 +906,9 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 	totem_embedded_clear_playlist (emb, NULL);
 
 	totem_embedded_set_uri (emb, uri, base_uri, FALSE);
+	/* We can only have one item in the "playlist" when
+	 * we open a particular URI like this */
+	emb->num_items = 1;
 
 	return totem_embedded_open_internal (emb, TRUE, error);
 }
