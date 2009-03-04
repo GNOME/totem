@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-23 14:36+0100\n"
-"PO-Revision-Date: 2009-02-23 14:36+0100\n"
+"POT-Creation-Date: 2009-03-04 09:09+0100\n"
+"PO-Revision-Date: 2009-03-04 09:09+0100\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -1192,7 +1192,7 @@ msgstr "Mediaspeler, maakt gebruik van %s"
 msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Copyright © 2002–2008 Bastien Nocera"
 
-#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "Wouter Bolsterlee\n"
@@ -1225,8 +1225,11 @@ msgstr "Pauzeren"
 msgid "Paused"
 msgstr "Gepauzeerd"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "Afspelen"
 
@@ -1343,7 +1346,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem kon deze schijf niet afspelen."
 
 #: ../src/totem-object.c:1217 ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "Geen reden."
 
@@ -1367,7 +1370,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem kan de hulpinhoud niet weergeven."
 
 #: ../src/totem-object.c:2377 ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
@@ -1449,7 +1452,10 @@ msgstr "Bedieningsknoppen weergeven/verbergen"
 msgid "Quit"
 msgstr "Afsluiten"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "In lijst plaatsen"
 
@@ -1755,7 +1761,10 @@ msgstr "Westers"
 msgid "Vietnamese"
 msgstr "Vietnamees"
 
-#: ../src/totem-video-thumbnailer.c:662
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1766,16 +1775,16 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:663
+#: ../src/totem-video-thumbnailer.c:666
 msgid "Filename"
 msgstr "Bestandsnaam"
 
-#: ../src/totem-video-thumbnailer.c:665
+#: ../src/totem-video-thumbnailer.c:668
 msgid "Resolution"
 msgstr "Resolutie"
 
 # lengte/duur
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Duration"
 msgstr "Lengte"
 
@@ -1813,7 +1822,7 @@ msgstr "Kon verwijzing niet openen"
 
 #: ../src/totem.c:136 ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "Totem mediaspeler"
 
@@ -2325,7 +2334,12 @@ msgstr "(S)VCD's of video-dvd's opnemen"
 msgid "Video Disc Recorder"
 msgstr "Video-cd's opnemen"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Coherence DLNA-DLNA-cliënt"
@@ -2683,7 +2697,8 @@ msgstr "Schermafdrukbreedthe (in pixels):"
 msgid "Save Gallery"
 msgstr "Galerij opstlaan"
 
-#: ../src/plugins/screenshot/totem-gallery.c:105
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
 #, c-format
 msgid "Screenshot%d.jpg"
 msgstr "Schermafdruk-%d.png"
@@ -2870,35 +2885,35 @@ msgstr "Totem kon ‘%s’ niet afspelen."
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Openen met ‘%s’"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Mediaspeler, maakt gebruik van %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Totem browserplugin"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "De Totem-plugin kon niet worden opgestart."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "Geen of lege afspeellijst"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kon thread-veilige bibliotheken niet initialiseren."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Verifieer uw systeeminstallatie. De Totem-plugin zal nu afsluiten."
 
