@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-14 15:36+0100\n"
-"PO-Revision-Date: 2009-02-14 15:38+0100\n"
+"POT-Creation-Date: 2009-03-04 16:45+0100\n"
+"PO-Revision-Date: 2009-03-04 16:45+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Aviary.pl <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
@@ -105,13 +105,13 @@ msgstr "Strona:"
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:167
+#: ../src/plugins/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 kanałów"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:165
+#: ../src/plugins/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -184,16 +184,16 @@ msgstr "Ogólne"
 #. Video Codec
 #. Audio Codec
 #: ../data/properties.ui.h:18
-#: ../src/plugins/properties/bacon-video-widget-properties.c:150
-#: ../src/plugins/properties/bacon-video-widget-properties.c:152
-#: ../src/plugins/properties/bacon-video-widget-properties.c:155
 #: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#: ../src/plugins/properties/bacon-video-widget-properties.c:161
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
 #: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:232
-#: ../src/plugins/properties/bacon-video-widget-properties.c:234
-#: ../src/plugins/properties/bacon-video-widget-properties.c:251
-#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#: ../src/plugins/properties/bacon-video-widget-properties.c:242
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
+#: ../src/plugins/properties/bacon-video-widget-properties.c:262
 msgid "N/A"
 msgstr "Brak danych"
 
@@ -210,10 +210,10 @@ msgstr "Tytuł:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:137
-#: ../src/plugins/properties/bacon-video-widget-properties.c:139
-#: ../src/plugins/properties/bacon-video-widget-properties.c:141
-#: ../src/plugins/properties/bacon-video-widget-properties.c:143
+#: ../src/plugins/properties/bacon-video-widget-properties.c:145
+#: ../src/plugins/properties/bacon-video-widget-properties.c:147
+#: ../src/plugins/properties/bacon-video-widget-properties.c:149
+#: ../src/plugins/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Nieznany"
 
@@ -594,7 +594,7 @@ msgid "Square"
 msgstr "Kwadratowy"
 
 #: ../data/totem.ui.h:85
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4278
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4265
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -1147,7 +1147,7 @@ msgstr "Copyright © 2002-2008 Bastien Nocera"
 
 # review by Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 #: ../src/totem-menu.c:1185
-#: ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "Aviary.pl <gnomepl@aviary.pl>, 2007, 2008, 2009\n"
@@ -1180,9 +1180,12 @@ msgstr "Wstrzymanie"
 msgid "Paused"
 msgstr "Wstrzymany"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946
 #: ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "Odtwarzanie"
 
@@ -1275,7 +1278,7 @@ msgstr "Program Totem nie mógł odtworzyć płyty."
 
 #: ../src/totem-object.c:1217
 #: ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "Brak powodu."
 
@@ -1297,7 +1300,7 @@ msgstr "Nie można wyświetlić zawartości pomocy programu Totem."
 
 #: ../src/totem-object.c:2377
 #: ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
@@ -1380,7 +1383,10 @@ msgstr "Wyświetla/ukrywa elementy sterujące"
 msgid "Quit"
 msgstr "Kończy działanie"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "Dodaje do kolejki"
 
@@ -1704,7 +1710,10 @@ msgstr "Zachodnie"
 msgid "Vietnamese"
 msgstr "Wietnamskie"
 
-#: ../src/totem-video-thumbnailer.c:648
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1715,15 +1724,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:649
+#: ../src/totem-video-thumbnailer.c:666
 msgid "Filename"
 msgstr "Nazwa pliku"
 
-#: ../src/totem-video-thumbnailer.c:651
+#: ../src/totem-video-thumbnailer.c:668
 msgid "Resolution"
 msgstr "Rozdzielczość"
 
-#: ../src/totem-video-thumbnailer.c:654
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Duration"
 msgstr "Czas trwania"
 
@@ -1762,7 +1771,7 @@ msgstr "Nie można było otworzyć odnośnika"
 #: ../src/totem.c:136
 #: ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "Odtwarzacz filmów Totem"
 
@@ -1788,42 +1797,42 @@ msgstr ""
 "%s\n"
 "Aby wyświetlić pełną listę dostępnych opcji z wiersza poleceń proszę uruchomić \"%s --help\".\n"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:170
 msgid "Totem could not initialize the configuration engine."
 msgstr "Nie można zainicjować mechanizmu konfiguracyjnego przez program Totem."
 
-#: ../src/totem.c:169
+#: ../src/totem.c:170
 msgid "Make sure that GNOME is properly installed."
 msgstr "Proszę się upewnić, czy środowisko GNOME zostało prawidłowo zainstalowane."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2444
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2431
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Żądane wyjście dźwięku nie zostało odnalezione. Proszę wybrać inne wyjście dźwięku w Wyborze systemu multimediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2449
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2436
 msgid "Location not found."
 msgstr "Nie znaleziono położenia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2453
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2440
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "Nie można otworzyć położenia; Użytkownik może nie mieć uprawnień do otwarcia pliku."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2464
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2451
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Wyjście wideo jest używane przez inny program. Proszę zamknąć inne programy wideo lub wybrać inne wyjście wideo w Wyborze systemu multimediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2470
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Wyjście dźwięku jest używane przez inny program. Proszę wybrać inne wyjście dźwięku w Wyborze systemu multimediów. Możesz rozważyć również użycie serwera dźwięku."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2488
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2494
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2475
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "Odtworzenie tego filmu wymaga wtyczki %s, która nie jest zainstalowana."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2495
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2482
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not installed:\n"
@@ -1834,52 +1843,52 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2520
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2507
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Nie można odtworzyć pliku poprzez sieć. Proszę spróbować najpierw pobrać plik na dysk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2592
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2579
 msgid "Media file could not be played."
 msgstr "Nie można odtworzyć pliku mediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2724
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2711
 msgid "Failed to retrieve working directory"
 msgstr "Pobranie katalogu roboczego nie powiodło się"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4274
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4261
 msgid "Surround"
 msgstr "Przestrzenny"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4276
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4263
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4599
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4586
 msgid "Too old version of GStreamer installed."
 msgstr "Zainstalowana wersja GStreamer jest zbyt stara."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4606
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4593
 msgid "Media contains no supported video streams."
 msgstr "Plik mediów zawiera nieobsługiwany strumień wideo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4981
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4968
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Utworzenie obiektu odtwarzania GStreamer nie powiodło się. Proszę sprawdzić poprawność instalacji GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5112
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5229
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5095
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5212
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Otwarcie wyjścia wideo nie powiodło się. Może być ono niedostępne. Proszę wybrać inne wyjście wideo w Wyborze systemu multimediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5124
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5107
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Nie można odnaleźć wyjścia wideo. Może być wymagana instalacja dodatkowych wtyczek GStreamer, lub należy wybrać inne wyjście wideo w Wyborze systemu multimediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5159
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5142
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Otwarcie wyjścia dźwięku nie powiodło się. Użytkownik może nie mieć uprawnień do urządzenia dźwiękowego albo nie jest uruchomiony serwer dźwięku. Proszę wybrać inne wyjście dźwięku w Wyborze systemu multimediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5179
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5162
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Nie można odnaleźć wyjścia dźwięku. Może być wymagana instalacja dodatkowych wtyczek GStreamer, lub należy wybrać inne wyjście dźwięku w Wyborze systemu multimediów."
 
@@ -2101,7 +2110,7 @@ msgstr "Wtyczka"
 msgid "Enabled"
 msgstr "Włączona"
 
-#: ../src/plugins/totem-plugins-engine.c:593
+#: ../src/plugins/totem-plugins-engine.c:599
 #, c-format
 msgid ""
 "Unable to activate plugin %s.\n"
@@ -2110,12 +2119,12 @@ msgstr ""
 "Włączenie wtyczki %s niemożliwe.\n"
 "%s"
 
-#: ../src/plugins/totem-plugins-engine.c:596
+#: ../src/plugins/totem-plugins-engine.c:602
 #, c-format
 msgid "Unable to activate plugin %s"
 msgstr "Włączenie wtyczki %s niemożliwe"
 
-#: ../src/plugins/totem-plugins-engine.c:598
+#: ../src/plugins/totem-plugins-engine.c:604
 msgid "Plugin Error"
 msgstr "Błąd wtyczki"
 
@@ -2188,7 +2197,12 @@ msgstr "Nagrywa płyty (S)VCD lub DVD-Video"
 msgid "Video Disc Recorder"
 msgstr "Nagrywarka płyt wideo"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "Usuń"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Klient DLNA/UPnP Coherence"
@@ -2468,27 +2482,27 @@ msgstr "Zawsze na wierzchu"
 msgid "Keep the main window on top when playing a movie"
 msgstr "Utrzymywanie głównego okna ponad innymi podczas odtwarzania filmu"
 
-#: ../src/plugins/properties/totem-movie-properties.c:159
+#: ../src/plugins/properties/totem-movie-properties.c:152
 msgid "Properties"
 msgstr "Właściwości"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:229
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:232
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
 #, c-format
 msgid "%d frames per second"
 msgstr "%d klatek/s"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:234
-#: ../src/plugins/properties/bacon-video-widget-properties.c:251
+#: ../src/plugins/properties/bacon-video-widget-properties.c:242
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:262
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
@@ -2540,18 +2554,19 @@ msgstr "Szerokość zrzutu ekranu (w pikselach):"
 msgid "Save Gallery"
 msgstr "Zapis galerii"
 
-#: ../src/plugins/screenshot/totem-gallery.c:105
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
 #, c-format
 msgid "Screenshot%d.jpg"
 msgstr "Zrzut_ekranu%d.jpg"
 
 #. Set up the window
-#: ../src/plugins/screenshot/totem-gallery-progress.c:103
+#: ../src/plugins/screenshot/totem-gallery-progress.c:101
 msgid "Creating Gallery..."
 msgstr "Tworzenie galerii..."
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:110
+#: ../src/plugins/screenshot/totem-gallery-progress.c:108
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Zapisywanie galerii jako \"%s\""
@@ -2583,19 +2598,19 @@ msgstr "Program Totem nie może pobrać zrzutu ekranu tego wideo."
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Nie przewidziano takiego zdarzenia; proszę wypełnić zgłoszenie błędu."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:199
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take _Screenshot..."
 msgstr "Zrzut _ekranu..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:199
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take a screenshot"
 msgstr "Pobiera zrzut ekranu"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:200
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
 msgid "Create Screenshot _Gallery..."
 msgstr "Utwórz galerię zrzutów _ekranu..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:200
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
 msgid "Create a gallery of screenshots"
 msgstr "Tworzy galerię zrzutów ekranu"
 
@@ -2725,35 +2740,35 @@ msgstr "Program Totem nie może odtworzyć \"%s\""
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Otwórz za pomocą \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Wtyczka przeglądarki używa %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Wtyczka przeglądarki programu Totem"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "Nie można uruchomić wtyczki programu Totem."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "Brak listy odtwarzania lub lista jest pusta"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Nie można zainicjować bibliotek bezpiecznych dla wątków."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Proszę sprawdzić poprawność instalacji systemu. Działanie wtyczki programu Totem zostanie teraz zakończone."
 
