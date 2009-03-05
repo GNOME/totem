@@ -1,6 +1,6 @@
 import totem
 import gettext
-import gobject, gtk, gio
+import gobject, gtk, gio, gconf
 gobject.threads_init()
 import xmlrpclib
 import threading
@@ -291,6 +291,9 @@ class OpenSubtitles(totem.Plugin):
     def __init__(self):
         totem.Plugin.__init__(self)
         self.dialog = None
+        self.gconf_client = gconf.client_get_default()
+        self.GCONF_BASE_DIR = "/apps/totem/plugins/opensubtitles/"
+        self.GCONF_LANGUAGE = "language"
 
     # totem.Plugin methods
 
@@ -348,9 +351,10 @@ class OpenSubtitles(totem.Plugin):
         combobox.pack_start(renderer, True)
         combobox.add_attribute(renderer, 'text', 0)
 
+        self.model.lang = self.gconf_get_str (self.GCONF_BASE_DIR + self.GCONF_LANGUAGE, self.model.lang)
         for lang in LANGUAGES_STR:
             it = languages.append(lang)
-            if lang[1] == self.model.lang:
+            if LANGUAGES[lang[1]] == self.model.lang:
                 combobox.set_active_iter(it)
 
         # Set up the results treeview 
@@ -611,7 +615,9 @@ class OpenSubtitles(totem.Plugin):
 
     def on_combobox__changed(self, combobox):
         iter = combobox.get_active_iter()
-        self.model.lang = combobox.get_model().get_value(iter, 1)
+        self.model.lang = LANGUAGES[combobox.get_model().get_value(iter, 1)]
+        self.gconf_set_str(self.GCONF_BASE_DIR + self.GCONF_LANGUAGE,
+                           self.model.lang)
 
     def on_close_clicked(self, data):
         self.dialog.destroy()
@@ -627,3 +633,15 @@ class OpenSubtitles(totem.Plugin):
         self.model.hash , self.model.size = hashFile(self.filename)
 
         self.os_get_results()
+
+    def gconf_get_str(self, key, default = ""):
+        val = self.gconf_client.get(key)
+        
+        if val is not None and val.type == gconf.VALUE_STRING:
+            return val.get_string()
+        else:
+            return default
+
+    def gconf_set_str(self, key, val):
+        self.gconf_client.set_string(key, val)
+
