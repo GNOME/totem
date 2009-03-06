@@ -1,4 +1,6 @@
 # Korean translation for Totem
+# This file is distributed under the same license as the totem package.
+#
 # Jang,Jae-Man <jacojang@korea.com>, 2003.
 # Young-Ho Cha <ganadist@gmail.com>, 2006
 # Changwoo Ryu <cwryu@debian.org>, 2004, 2005, 2006, 2007, 2008, 2009.
@@ -10,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-18 09:11+0900\n"
-"PO-Revision-Date: 2009-02-18 09:12+0900\n"
+"POT-Creation-Date: 2009-03-06 13:43+0900\n"
+"PO-Revision-Date: 2009-03-06 13:43+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -1149,7 +1151,7 @@ msgstr "동영상 플레이어, %s 사용"
 msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Copyright © 2002-2008 Bastien Nocera"
 
-#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "장재만 <jacojang@korea.com>\n"
@@ -1180,8 +1182,11 @@ msgstr "일시 정지"
 msgid "Paused"
 msgstr "일시 정지"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "재생"
 
@@ -1294,7 +1299,7 @@ msgid "Totem was not able to play this disc."
 msgstr "이 디스크를 플레이할 수 없습니다."
 
 #: ../src/totem-object.c:1217 ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "이유 없음."
 
@@ -1316,7 +1321,7 @@ msgid "Totem could not display the help contents."
 msgstr "토템 도움말 차례를 표시할 수 없습니다."
 
 #: ../src/totem-object.c:2377 ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
@@ -1396,7 +1401,10 @@ msgstr "컨트롤 보이기/감추기"
 msgid "Quit"
 msgstr "끝내기"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "큐에 넣기"
 
@@ -1692,7 +1700,10 @@ msgstr "서양어"
 msgid "Vietnamese"
 msgstr "베트남어"
 
-#: ../src/totem-video-thumbnailer.c:662
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1703,15 +1714,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:663
+#: ../src/totem-video-thumbnailer.c:666
 msgid "Filename"
 msgstr "파일 이름"
 
-#: ../src/totem-video-thumbnailer.c:665
+#: ../src/totem-video-thumbnailer.c:668
 msgid "Resolution"
 msgstr "해상도"
 
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Duration"
 msgstr "재생 시간"
 
@@ -1749,7 +1760,7 @@ msgstr "링크를 열 수 없습니다"
 
 #: ../src/totem.c:136 ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "토템 동영상 플레이어"
 
@@ -2232,7 +2243,12 @@ msgstr "VCD/SVCD나 비디오 DVD를 녹화합니다"
 msgid "Video Disc Recorder"
 msgstr "비디오 디스크 녹화"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "삭제"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Coherence DLNA/UPnP 클라이언트"
@@ -2472,35 +2488,35 @@ msgstr "OpenSubtitles 웹사이트에 연결할 수 없습니다"
 msgid "No results found"
 msgstr "결과 없음"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:360
+#: ../src/plugins/opensubtitles/opensubtitles.py:364
 msgid "Subtitles"
 msgstr "자막"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:363
+#: ../src/plugins/opensubtitles/opensubtitles.py:367
 msgid "Format"
 msgstr "형식"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:366
+#: ../src/plugins/opensubtitles/opensubtitles.py:370
 msgid "Rating"
 msgstr "평가"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:404
+#: ../src/plugins/opensubtitles/opensubtitles.py:408
 msgid "_Download Movie Subtitles..."
 msgstr "동영상 자막 다운로드(_D)..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:405
+#: ../src/plugins/opensubtitles/opensubtitles.py:409
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "OpenSubtitles에서 동영상 자막을 다운로드합니다"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:464
+#: ../src/plugins/opensubtitles/opensubtitles.py:468
 msgid "Searching subtitles..."
 msgstr "자막을 찾는 중입니다..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:517
+#: ../src/plugins/opensubtitles/opensubtitles.py:521
 msgid "Downloading the subtitles..."
 msgstr "자막을 다운로드하는 중입니다..."
 
@@ -2584,7 +2600,8 @@ msgstr "스크린샷 너비 (픽셀 수):"
 msgid "Save Gallery"
 msgstr "갤러리 저장"
 
-#: ../src/plugins/screenshot/totem-gallery.c:105
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
 #, c-format
 msgid "Screenshot%d.jpg"
 msgstr "스크린샷%d.jpg"
@@ -2766,35 +2783,35 @@ msgstr "토템이 '%s'을(를) 재생할 수 없습니다"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\"(으)로 열기(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s 사용 브라우저 플러그인"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "토템 브라우저 플러그인"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "토템 플러그인을 시작할 수 없습니다."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "재생 목록이 없거나 목록이 비어 있습니다"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "스레드에 안전한 라이브러리를 초기화할 수 없습니다."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. 토템 플러그인을 끝냅니다."
 
