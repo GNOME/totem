@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2009-02-23 21:07+0000\n"
-"PO-Revision-Date: 2009-02-24 08:18+0100\n"
+"POT-Creation-Date: 2009-03-07 16:40+0000\n"
+"PO-Revision-Date: 2009-03-07 19:56+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian\n"
 "MIME-Version: 1.0\n"
@@ -986,7 +986,7 @@ msgstr "Ni mogoče poslati naslova dokumenta preko 'Vrsta=povezava' vnosa namizj
 #: ../src/eggdesktopfile.c:1392
 #, c-format
 msgid "Not a launchable item"
-msgstr "Ni zagonljiv predmet"
+msgstr "Predmeta ni mogoče zagnati"
 
 #: ../src/eggfileformatchooser.c:63
 #, c-format
@@ -1139,7 +1139,7 @@ msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Avtorske pravice © 2002-2008 Bastien Nocera"
 
 #: ../src/totem-menu.c:1185
-#: ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "Matej Urbančič <mateju@svn.gnome.org>\n"
@@ -1172,9 +1172,12 @@ msgstr "Pavza"
 msgid "Paused"
 msgstr "Pavza"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946
 #: ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "Predvajaj"
 
@@ -1267,7 +1270,7 @@ msgstr "Ni mogoče predvajati diska."
 
 #: ../src/totem-object.c:1217
 #: ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "Brez razloga."
 
@@ -1289,7 +1292,7 @@ msgstr "Ni mogoče zagnati vsebine pomoči."
 
 #: ../src/totem-object.c:2377
 #: ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
@@ -1372,7 +1375,10 @@ msgstr "Pokaži/skrij ukazne gumbe"
 msgid "Quit"
 msgstr "Zaključi"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "Razvrsti"
 
@@ -1757,7 +1763,7 @@ msgstr "Ni bilo mogoče odprti povezave"
 #: ../src/totem.c:136
 #: ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "Totem predvajalnik filmov"
 
@@ -2186,7 +2192,12 @@ msgstr "Zapiše (S)VCD ali video DVD"
 msgid "Video Disc Recorder"
 msgstr "Snemalnik video diskov"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "Izbriši"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Coherence DLNA/UPnP odjemalec"
@@ -2426,35 +2437,35 @@ msgstr "Ni se mogoče povezati z OpenSubtitles spletiščem"
 msgid "No results found"
 msgstr "Ni najdenih zadetkov"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:360
+#: ../src/plugins/opensubtitles/opensubtitles.py:364
 msgid "Subtitles"
 msgstr "Podnapisi"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:363
+#: ../src/plugins/opensubtitles/opensubtitles.py:367
 msgid "Format"
 msgstr "Zapis"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:366
+#: ../src/plugins/opensubtitles/opensubtitles.py:370
 msgid "Rating"
 msgstr "Ocena"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:404
+#: ../src/plugins/opensubtitles/opensubtitles.py:408
 msgid "_Download Movie Subtitles..."
 msgstr "_Prenos podnapisa filma ..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:405
+#: ../src/plugins/opensubtitles/opensubtitles.py:409
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Prenesi podnapise filmov preko OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:464
+#: ../src/plugins/opensubtitles/opensubtitles.py:468
 msgid "Searching subtitles..."
 msgstr "Iskanje podnapisov ..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:517
+#: ../src/plugins/opensubtitles/opensubtitles.py:521
 msgid "Downloading the subtitles..."
 msgstr "Prenos  podnapisov ..."
 
@@ -2725,35 +2736,35 @@ msgstr "Ni mogoče predvajati '%s'."
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Odpri z \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Vstavek brskanja uporablja %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Totem vstavek brskanja"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "Vstavka programa Totem ni mogoče zagnati."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "Ni seznama predvajanja ali pa je ta prazen"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Ni mogoče zagnati knjižnic varovanja niti."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Preverite sistemske nastavitve. Vstavek predvajalnika Totem se bo izključil."
 
