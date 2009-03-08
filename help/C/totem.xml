@@ -36,7 +36,7 @@
       <year>2009</year>
       <holder>Philip Withnall</holder>
     </copyright>
-    <releaseinfo revision="2.26" role="review"/>
+    <releaseinfo revision="2.26" role="candidate"/>
 
     <abstract role="description">
       <para>&app; is a media player for GNOME that runs on GStreamer by default, but can
@@ -160,10 +160,10 @@ subtitles, and more.</para>
     <para><application>&app;</application> provides the following features:</para>
     <itemizedlist> 
       <listitem> 
-	<para>Support a variety of video and audio files.</para>
+	<para>Support for a variety of video and audio files.</para>
       </listitem>
       <listitem>
-	<para>Provide a variety of zoom levels and aspect ratios, and a fullscreen view.</para> 
+	<para>A variety of zoom levels and aspect ratios, and a fullscreen view.</para> 
       </listitem>
       <listitem>
         <para>Seek and volume controls.</para>
@@ -260,7 +260,7 @@ subtitles, and more.</para>
 	    <textobject> 
 	      <phrase>Shows <application>&app;</application> main window with
 		  sidebar opened on playlist. Contains
-		  menubar, display area, sidebar, time elapsed slider, seek control
+		  menubar, display area, sidebar, elapsed time slider, seek control
 		  buttons, volume slider and statusbar.
           </phrase>
 	    </textobject> 
@@ -293,14 +293,14 @@ subtitles, and more.</para>
 	  <listitem>
 	    <para>The sidebar displays properties of the file played and acts as
 		playlist. It can also be used by various plugins, such as the MythTV, YouTube and Video
-		Search plugins. They can be selected by clicking on the drop-down menu at the top of the sidebar.
+		Search plugins. They can be selected by clicking on the drop-down list at the top of the sidebar.
             </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term>Time elapsed slider.</term>
+	  <term>Elapsed time slider.</term>
 	  <listitem>
-	    <para>The time elapsed slider displays the elapsed time of movie or song that is playing.
+	    <para>The elapsed time slider displays the elapsed time of the movie or song that is playing.
               It also enables you to skip forward or backward in a movie or song by dragging the slider's handle along the bar,
               or by clicking on a point on the bar.
             </para>
@@ -346,8 +346,8 @@ subtitles, and more.</para>
           <guimenu>Movie</guimenu>
 	  <guisubmenu>Open</guisubmenu>
         </menuchoice>.
-        The <guilabel>Select Movies or Playlists</guilabel> dialog is displayed.
-		Select the file(s) you want to open, then click 
+        The <application>Select Movies or Playlists</application> dialog is displayed.
+		Select the file or files you want to open, then press 
 	<guibutton>OK</guibutton>. 
       </para>
       <para>You can drag a file from another application such as a file manager to the
@@ -377,10 +377,9 @@ subtitles, and more.</para>
 	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut>
 	  <guimenu>Movie</guimenu>
 	  <guimenuitem>Open Location</guimenuitem>
-        </menuchoice>. The <guilabel>Open Location</guilabel> dialog is displayed. Use the drop-down
+        </menuchoice>. The <application>Open Location</application> dialog is displayed. Use the drop-down
         combination box to specify the URI you would like to open (it lists URIs which have
-        previously been opened) &#8211; or type one in directly &#8211; then click 
-        on the <guibutton>Open</guibutton> button.
+        previously been opened) &#8211; or type one in directly &#8211; then press the <guibutton>Open</guibutton> button.
       </para>
       <para>If you have a URI in the clipboard already, it will automatically be pasted into the combination box.</para>
     </sect2>
@@ -401,7 +400,7 @@ subtitles, and more.</para>
 
     <sect2 id="totem-usage-pause">
       <title>To Pause a Movie or Song</title>
-      <para>To pause a movie or song that is playing, click on the 
+      <para>To pause a movie or song that is playing, press the 
         <inlinemediaobject>
 	  <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject>
           <textobject><phrase>Shows pause button.</phrase></textobject>
@@ -410,10 +409,9 @@ subtitles, and more.</para>
 	  <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo></shortcut>
 	  <guimenu>Movie</guimenu>
           <guimenuitem>Play / Pause</guimenuitem>
-        </menuchoice>. You may also use the <keycap>P</keycap> key to pause or play a movie. When you pause a movie or song, the statusbar displays <guilabel>Paused</guilabel>
-        and the time elapsed on the current movie or song stops.
+        </menuchoice>. You may also use the <keycap>P</keycap> key to pause or play a movie.
       </para>
-      <para>To resume playing a movie or song, click on the 
+      <para>To resume playing a movie or song, press the 
         <inlinemediaobject>
 	  <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject>
           <textobject><phrase>Shows play button.</phrase></textobject>
@@ -472,9 +470,9 @@ subtitles, and more.</para>
 		<shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut>
                 <guimenu>Go</guimenu>
 		<guimenuitem>Skip to</guimenuitem>
-              </menuchoice>. The <guilabel>Skip to</guilabel> dialog is displayed. Use the 
+              </menuchoice>. The <application>Skip to</application> dialog is displayed. Use the 
               spin box to specify the elapsed time (in seconds) to skip to, then
-              click <guibutton>OK</guibutton>.
+              press <guibutton>OK</guibutton>.
             </para>
             <para>The spin box also allows more natural language to be used. You can enter a time in the
             formats "hh:mm:ss", "mm:ss" or "ss"; where "hh" is the hour, "mm" is the minute and "ss" is the
@@ -490,7 +488,7 @@ subtitles, and more.</para>
                 <shortcut><keycombo><keycap>Alt</keycap><keycap>Right</keycap></keycombo></shortcut>
                 <guimenu>Go</guimenu>
                 <guimenuitem>Next Chapter/Movie</guimenuitem>
-              </menuchoice> or click on the 
+              </menuchoice> or press the 
               <inlinemediaobject> 
 	        <imageobject><imagedata fileref="figures/totem_next_button.png" format="PNG"/></imageobject>
 	        <textobject><phrase>Shows a seek next button</phrase></textobject>
@@ -506,7 +504,7 @@ subtitles, and more.</para>
                 <shortcut><keycombo><keycap>Alt</keycap><keycap>Left</keycap></keycombo></shortcut>
                 <guimenu>Go</guimenu>
                 <guimenuitem>Previous Chapter/Movie</guimenuitem>
-              </menuchoice>, or click on the
+              </menuchoice>, or press the
               <inlinemediaobject> 
 	        <imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject>
 	        <textobject><phrase>Shows a seek previous button</phrase></textobject>
@@ -530,13 +528,13 @@ subtitles, and more.</para>
 	  <menuchoice><shortcut><keycap>F11</keycap></shortcut>
 	  <guimenu>View</guimenu><guimenuitem>Fullscreen</guimenuitem></menuchoice>. You can also
 	  use the <keycap>F</keycap> key to toggle fullscreen mode.
-	  To exit fullscreen mode, click on the
+	  To exit fullscreen mode, press the
 			<guibutton>Leave Fullscreen</guibutton> button or press
 			<keycap>Esc</keycap>, <keycap>F11</keycap> or <keycap>F</keycap>.
           </para>
     </listitem>
 	<listitem>
-	  <para>To change the size original movie or visualization,
+	  <para>To change the size of the original movie or visualization,
             choose 
             <menuchoice>
 	      <shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></keycombo></shortcut>
@@ -585,7 +583,7 @@ subtitles, and more.</para>
         </menuchoice>. Select the <guilabel>Always on Top</guilabel> plugin to enable it. The <application>&app;</application> window will now stay on
         top of all other windows while a movie is playing, but not while audio or visualizations are playing.
        </para>
-       <para>To stop the window always being on top, disable the <guilabel>Always on Top</guilabel> plugin again.
+       <para>To stop the window from always being on top, disable the <guilabel>Always on Top</guilabel> plugin again.
        See <xref linkend="totem-plugins-always-on-top"/> for more information.</para>
     </sect2>
 
@@ -604,7 +602,7 @@ subtitles, and more.</para>
         </menuchoice> from the popup menu.
       </para>
       <para>If the <guilabel>Show Controls</guilabel> option is selected,
-        <application>&app;</application> will show the menubar, time elapsed slider,
+        <application>&app;</application> will show the menubar, elapsed time slider,
         seek control buttons, volume slider and statusbar on the window. If
         the <guilabel>Show Controls</guilabel> option is unselected, the application
         will hide these controls and show only the display area.
@@ -635,38 +633,38 @@ subtitles, and more.</para>
 	<para>To show or hide the playlist, choose 
           <menuchoice>
 	    <guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem>
-          </menuchoice>, or click the <guibutton>Sidebar</guibutton> button, and
+          </menuchoice>, or press the <guibutton>Sidebar</guibutton> button, and
 		  choose <guimenu>Playlist</guimenu> on the top of 
 		  the sidebar.</para>
       </sect3>
 
       <sect3 id="totem-usage-playlist-manage">
 	<title>Manage a Playlist</title>
-	<para>You can use the <guilabel>Playlist</guilabel> dialog to do the following:
+	<para>You can use the <application>Playlist</application> dialog to do the following:
           <variablelist>
 	    <varlistentry>
 	      <term>To add a track or movie</term>
 	      <listitem>
-		<para>To add a track or movie to the playlist, click on the <guibutton>Add</guibutton>
-                  button. The <guilabel>Select Movies or Playlists</guilabel> dialog is displayed. Select the file that you 
-                  want to add to the playlist, then click <guibutton>Add</guibutton>.
+		<para>To add a track or movie to the playlist, press the <guibutton>Add</guibutton>
+                  button. The <application>Select Movies or Playlists</application> dialog is displayed. Select the file that you 
+                  want to add to the playlist, then press <guibutton>Add</guibutton>.
                 </para>
               </listitem>
             </varlistentry>
 	    <varlistentry>
 	      <term>To remove a track or movie</term>
 	      <listitem>
-		<para>To remove a track or movie from the playlist, select the items to remove from the
-                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Remove</guibutton> button.
+		<para>To remove a track or movie from the playlist, select the item or items to remove from the
+                  playlist, then press the <guibutton>Remove</guibutton> button.
                 </para>
               </listitem>
 	    </varlistentry>
 	    <varlistentry>
 	      <term>To save the playlist to a file</term>
 	      <listitem>
-		<para>To save the playlist to a file, click on the <guibutton>Save Playlist</guibutton>
-                  button. The <guilabel>Save Playlist</guilabel> dialog is displayed; specify
-                  the filename as which you want to save the playlist, and click <guibutton>Save</guibutton>.
+		<para>To save the playlist to a file, press the <guibutton>Save Playlist</guibutton>
+                  button. The <application>Save Playlist</application> dialog is displayed; specify
+                  the filename as which you want to save the playlist, and press <guibutton>Save</guibutton>.
                 </para>
               </listitem>
 	    </varlistentry>
@@ -674,7 +672,7 @@ subtitles, and more.</para>
 	      <term>To move a track or movie up the playlist</term>
 	      <listitem>
 		<para>To move a track or movie up the playlist, select the item from the 
-                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Move Up</guibutton> button.
+                  <guilabel>filename</guilabel> list box, then press the <guibutton>Move Up</guibutton> button.
                 </para>
               </listitem>
 	    </varlistentry>
@@ -682,7 +680,7 @@ subtitles, and more.</para>
 	      <term>To move a track or movie down the playlist</term>
 	      <listitem>
 		<para>To move a track or movie down the playlist, select the item from the 
-                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Move Down</guibutton> button.
+                  <guilabel>filename</guilabel> list box, then press the <guibutton>Move Down</guibutton> button.
                 </para>
               </listitem>
 	    </varlistentry>
@@ -718,7 +716,7 @@ subtitles, and more.</para>
 	  name as the video file played and the extension <filename>asc</filename>, <filename>txt</filename>,
 	  <filename>sub</filename>, <filename>srt</filename>, <filename>smi</filename>, <filename>ssa</filename> or <filename>ass</filename>.
 	  </para>
-	  <para>If the file containing the subtitles has a different name to the video being played, you can
+	  <para>If the file containing the subtitles has a different name from the video being played, you can
 	  right-click on the video in the playlist and choose <menuchoice><guimenuitem>Select Text Subtitles...</guimenuitem></menuchoice>
 	  from the popup menu to load the correct subtitle file. You may also choose subtitles by choosing
 	  <menuchoice><guimenu>View</guimenu><guimenuitem>Select Text Subtitles...</guimenuitem></menuchoice>.</para>
@@ -732,11 +730,11 @@ subtitles, and more.</para>
         <menuchoice>
           <guimenu>Edit</guimenu>
           <guimenuitem>Take Screenshot</guimenuitem>
-        </menuchoice>. The <guilabel>Save Screenshot</guilabel> dialog is displayed. Choose a location and
-	insert the filename as which you want to save the screenshot, then click the <guibutton>Save</guibutton> button
+        </menuchoice>. The <application>Save Screenshot</application> dialog is displayed. Choose a location and
+	insert the filename as which you want to save the screenshot, then press the <guibutton>Save</guibutton> button
 	to save the screenshot.
       </para>
-      <tip><para>&app; will display a preview of the screenshot which is to be saved on the left-hand side of the <guilabel>Save Screenshot</guilabel> dialog.</para></tip>
+      <tip><para>&app; will display a preview of the screenshot which is to be saved on the left-hand side of the <application>Save Screenshot</application> dialog.</para></tip>
     </sect2>
 
     <sect2 id="totem-usage-create-screenshot-gallery">
@@ -745,14 +743,14 @@ subtitles, and more.</para>
         <menuchoice>
           <guimenu>Edit</guimenu>
           <guimenuitem>Create Screenshot Gallery</guimenuitem>
-        </menuchoice>. The <guilabel>Save Gallery</guilabel> dialog is displayed. Choose a location and
-	insert the filename as which you want to save the gallery image, then click the <guibutton>Save</guibutton> button
+        </menuchoice>. The <application>Save Gallery</application> dialog is displayed. Choose a location and
+	insert the filename as which you want to save the gallery image, then press the <guibutton>Save</guibutton> button
 	to save the screenshot.
       </para>
       <tip><para>You may specify the width of the individual screenshots in the gallery using the <guilabel>Screenshot width</guilabel> entry.
       The default width is 128 pixels.</para>
       <para>You may also specify the number of screenshots to be put in the gallery. By default, this is calculated based on the length of the movie;
-      however, this may be overridden by unchecking the <guilabel>Calculate the number of screenshots</guilabel> checkbox and entering the new
+      however, this may be overridden by deselecting the <guilabel>Calculate the number of screenshots</guilabel> checkbox and entering the new
       number in the <guilabel>Number of screenshots</guilabel> spin box.</para></tip>
     </sect2>
   </sect1>
@@ -765,12 +763,12 @@ subtitles, and more.</para>
     <sect2 id="totem-plugins-load">
       <title>To Enable a Plugin</title>
       <para>To view the list of installed plugins, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. The
-        <guilabel>Configure Plugins</guilabel> dialog is displayed. On the left is a list of all the plugins you have installed, while on the right is
-        a description of the currently-selected plugin. Plugins which have options which can be changed will have the <guibutton>Configure</guibutton>
+        <application>Configure Plugins</application> dialog is displayed. On the left is a list of all the plugins you have installed, while on the right is
+        a description of the currently selected plugin. Plugins which have options which can be changed will have the <guibutton>Configure</guibutton>
         button on the right sensitive.</para>
-      <para>To enable a plugin, simply check the checkbox to the left of its name in the plugin list, and the plugin will be loaded immediately. If
+      <para>To enable a plugin, simply select the checkbox to the left of its name in the plugin list, and the plugin will be loaded immediately. If
         there is any error loading the plugin, an error dialog will also be displayed immediately.</para>
-      <para>To disable a plugin again, uncheck its checkbox. Plugins will remain enabled/disabled as set even when <application>&app;</application>'s
+      <para>To disable a plugin again, deselect its checkbox. Plugins will remain enabled or disabled as set even when <application>&app;</application> is
         closed.</para>
     </sect2>
     <sect2 id="totem-plugins-always-on-top">
@@ -785,7 +783,7 @@ subtitles, and more.</para>
         UPnP media servers (such as Coherence servers) on the local network.</para>
       <para>With the <guilabel>Coherence DLNA/UPnP Client</guilabel> plugin enabled, choose
         <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
-        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Coherence DLNA/UPnP Client</guilabel> from the drop-down at the
+        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Coherence DLNA/UPnP Client</guilabel> from the drop-down list at the
         top of the sidebar to display the <guilabel>Coherence DLNA/UPnP Client</guilabel> sidebar.</para>
       <para>The tree view in the sidebar will list the available media servers. Clicking on one will expand it to show the types of media it can serve,
         and clicking on a media folder will expand it to list the media files available. Double-clicking on a media file will add it to
@@ -814,8 +812,8 @@ subtitles, and more.</para>
       <sect3 id="totem-plugins-jamendo-configuration">
         <title>To Configure the Plugin</title>
         <para>The <guilabel>Jamendo</guilabel> plugin can be configured. Press the <guibutton>Configure</guibutton> button when enabling the plugin,
-          and the <guilabel>Jamendo Plugin Configuration</guilabel> dialog will be displayed. Here, you can choose whether to download songs in OGG or
-          MP3 format (OGG is preferred due to its open-source nature); and the number of albums to retrieve when doing a search (choose more albums if
+          and the <application>Jamendo Plugin Configuration</application> dialog will be displayed. Here, you can choose whether to download songs in Ogg or
+          MP3 format (Ogg is preferred due to its open-source nature); and the number of albums to retrieve when doing a search (choose more albums if
           you have a faster Internet connection).</para>
         <para>Once you're done, press the <guibutton>OK</guibutton> button.</para>
       </sect3>
@@ -823,7 +821,7 @@ subtitles, and more.</para>
         <title>To Display the Jamendo Sidebar</title>
         <para>With the <guilabel>Jamendo</guilabel> plugin enabled, choose
           <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
-          <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Jamendo</guilabel> from the drop-down at the top of the sidebar
+          <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Jamendo</guilabel> from the drop-down list at the top of the sidebar
           to display the <guilabel>Jamendo</guilabel> sidebar.</para>
       </sect3>
       <sect3 id="totem-plugins-jamendo-search">
@@ -850,13 +848,13 @@ subtitles, and more.</para>
       <para>The <guilabel>Local Search</guilabel> plugin allows you to search for playable movies and audio files on your computer from within
         <application>&app;</application>. With the plugin enabled, choose
         <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
-        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Local Search</guilabel> from the drop-down at the top of the
+        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Local Search</guilabel> from the drop-down list at the top of the
         sidebar to display the <guilabel>Local Search</guilabel> sidebar.</para>
       <para>To perform a search, enter your search terms in the search entry at the top of the sidebar and press <guibutton>Find</guibutton>. Your
         search terms may include wildcards such as <literal>*</literal>, which will match any character. For example, the search
         <userinput>*.mpg</userinput> will find all movies with the <filename class="extension">.mpg</filename> extension.</para>
       <para>Search results may be browsed using the <guibutton>Back</guibutton> and <guibutton>Forward</guibutton> buttons at the bottom of the
-        sidebar, and you may jump to a specific results page by entering its number in the spin button.</para>
+        sidebar, and you may jump to a specific results page by entering its number in the spin box.</para>
     </sect2>
     <sect2 id="totem-plugins-publish">
       <title>Publish Playlist</title>
@@ -890,7 +888,7 @@ subtitles, and more.</para>
 	    </varlistentry>
 	  </variablelist>
 	</para>
-	<para>You can also check the <guilabel>Use encrypted transport protocol</guilabel> check box if you wish to encrypt the shared playlists when
+	<para>You can also select the <guilabel>Use encrypted transport protocol</guilabel> checkbox if you wish to encrypt the shared playlists when
 	  they're transmitted over the network.</para>
         <para>Once you're done, press the <guibutton>Close</guibutton> button.</para>
       </sect3>
@@ -901,25 +899,25 @@ subtitles, and more.</para>
       </sect3>
       <sect3 id="totem-plugins-publish-neighborhood">
         <title>To Browse your Neighborhood</title>
-        <para>To view the shared playlists of others on your network, select <guilabel>Neighborhood</guilabel> from the drop-down at the top of the
+        <para>To view the shared playlists of others on your network, select <guilabel>Neighborhood</guilabel> from the drop-down list at the top of the
           sidebar. If any playlists have been published on the network, they will be listed here. Double-click on a playlist to load and play it on
           your computer.</para>
       </sect3>
     </sect2>
     <sect2 id="totem-plugins-opensubtitles">
-      <title>Subtitles downloader</title>
-      <para>The <guilabel>Subtitles downloader</guilabel> plugin allows you to find and download subtitle files from the OpenSubtitles service.</para>
+      <title>Subtitle Downloader</title>
+      <para>The <guilabel>Subtitle Downloader</guilabel> plugin allows you to find and download subtitle files from the OpenSubtitles service.</para>
       <para>Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
         the currently-playing movie, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>, which
-        will display the <guilabel>Download Movie Subtitles</guilabel> dialog.</para>
-      <para>Select the language in which you wish to have your subtitles from the drop-down at the top of the dialog, then press the
+        will display the <application>Download Movie Subtitles</application> dialog.</para>
+      <para>Select the language in which you wish to have your subtitles from the drop-down list at the top of the dialog, then press the
         <guibutton>Find</guibutton> button to search for subtitles for the current movie. Subtitles are found on the basis of the movie's content,
         rather than its filename or tags.</para>
       <para>Search results are listed in the tree view in the middle of the dialog. Currently, subtitles can only be used with a movie by
         <emphasis>reloading</emphasis> the movie with the subtitles, so after selecting the subtitle file you wish to download, press the
         <guibutton>Play with Subtitle</guibutton> button to download the subtitles reload the movie.</para>
       <note><para>Downloaded subtitle files are cached so that they do not need to be downloaded again when playing the movie again. When downloading
-        new subtitles for a movie, any previously-downloaded subtitles for that movie are deleted.</para></note>
+        new subtitles for a movie, any previously downloaded subtitles for that movie are deleted.</para></note>
     </sect2>
     <sect2 id="totem-plugins-thumbnail">
       <title>Thumbnail</title>
@@ -930,17 +928,17 @@ subtitles, and more.</para>
     </sect2>
     <sect2 id="totem-plugins-brasero">
       <title>Video Disc Recorder</title>
-      <para>The <guilabel>Video Disc Recorder</guilabel> plugin allows you to burn the current playlist to a DVD or VCD using Brasero.</para>
+      <para>The <guilabel>Video Disc Recorder</guilabel> plugin allows you to burn the current playlist to a DVD or VCD using <application>Brasero</application>.</para>
       <para>To burn the current playlist, choose <menuchoice><guimenu>Movie</guimenu><guimenuitem>Create Video Disc</guimenuitem></menuchoice>.
-        A Brasero dialog will be displayed, giving options for converting the movies to the appropriate format and burning them to disc. For more
+        A <application>Brasero</application> dialog will be displayed, giving options for converting the movies to the appropriate format and burning them to disc. For more
         information, see <xref linkend="brasero-new-project-video"/>.</para>
     </sect2>
     <sect2 id="totem-plugins-youtube">
-      <title>YouTube browser</title>
-      <para>The <guilabel>YouTube browser</guilabel> plugin allows you to search and browse YouTube, and play YouTube videos directly in
+      <title>YouTube Browser</title>
+      <para>The <guilabel>YouTube Browser</guilabel> plugin allows you to search and browse YouTube, and play YouTube videos directly in
         <application>&app;</application>. With the plugin enabled, choose
         <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or press the
-        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>YouTube</guilabel> from the drop-down at the top of the
+        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>YouTube</guilabel> from the drop-down list at the top of the
         sidebar to display the <guilabel>YouTube</guilabel> sidebar.</para>
       <para>To search for a YouTube video, enter your search terms in the entry at the top of the sidebar, then press <guibutton>Find</guibutton>.
         The search results will be listed in the tree view below. More results will be loaded automatically as you scroll down the list.</para>
@@ -961,26 +959,7 @@ subtitles, and more.</para>
       <menuchoice>
         <guimenu>Edit</guimenu>
 	<guimenuitem>Preferences</guimenuitem>
-      </menuchoice>. The 
-      <guilabel>Preferences</guilabel> dialog contains the following tabbed
-      sections:</para> 
-    <itemizedlist> 
-      <listitem> 
-	<para> 
-	  <xref linkend="totem-prefs-general"/>
-        </para> 
-      </listitem> 
-      <listitem> 
-        <para> 
-          <xref linkend="totem-prefs-display"/>
-        </para> 
-      </listitem> 
-      <listitem> 
-  	<para> 
-	  <xref linkend="totem-prefs-audio"/>
-        </para> 
-      </listitem> 
-    </itemizedlist>
+      </menuchoice>.</para>
 
     <sect2 id="totem-prefs-general">
       <title>General</title>
@@ -989,7 +968,7 @@ subtitles, and more.</para>
 	  <term>Networking</term>
 	  <listitem>
 	    <para>Select network connection speed from the <guilabel>Connection speed</guilabel> 
-              drop-down list box.
+              drop-down list.
             </para>
           </listitem>
         </varlistentry>	
@@ -998,7 +977,7 @@ subtitles, and more.</para>
 	  <listitem>
 	    <itemizedlist>
 	      <listitem>
-	      	<para><guilabel>Automatically load subtitle files</guilabel>: check this option to automatically load any subtitle
+	      	<para><guilabel>Automatically load subtitle files</guilabel>: select this option to automatically load any subtitle
 	      	files with the same filename as a movie when the movie is loaded.</para>
 	      </listitem>
 	      <listitem>
@@ -1020,12 +999,12 @@ subtitles, and more.</para>
 	<varlistentry>
 	  <term>Display</term>
 	  <listitem>
-	    <para>Select the <guilabel>resize</guilabel> option if you want <application>&app;</application>
+	    <para>Select the resize option if you want <application>&app;</application>
               to automatically resize the window to the size of the video when a new video is loaded.
             </para>
           </listitem>
           <listitem>
-            <para>Select the <guilabel>screensaver</guilabel> option if you want to allow the screensaver to activate when
+            <para>Select the screensaver option if you want to allow the screensaver to activate when
             playing audio files. Some monitors with integrated speakers may stop playing music when the screensaver is activated.</para>
           </listitem>
         </varlistentry>
@@ -1040,12 +1019,12 @@ subtitles, and more.</para>
               </listitem>
 	      <listitem>
 		<para><guilabel>Type of visualization</guilabel>: select type of visualization from the
-                  drop-down list box.
+                  drop-down list.
                 </para>
               </listitem>
 	      <listitem>
 		<para><guilabel>Visualization size</guilabel>: select visualization size from the
-                  drop-down list box.
+                  drop-down list.
                 </para>
               </listitem>
             </itemizedlist>
@@ -1070,7 +1049,7 @@ subtitles, and more.</para>
 			 of hue.</para>
           </listitem>
 	    </itemizedlist>
-	    <tip><para>You may use the <guilabel>Reset To Defaults</guilabel> button to reset the color balance controls to their
+	    <tip><para>You may use the <guilabel>Reset to Defaults</guilabel> button to reset the color balance controls to their
 	    default positions.</para></tip>
       </listitem>
 	</varlistentry>
