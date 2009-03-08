@@ -579,7 +579,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	self->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
 	epc_service_monitor_set_skip_our_own (self->monitor, TRUE);
 
-	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbours"),
+	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbors"),
 			     totem_publish_plugin_create_neigbours_page (self));
 
 	self->publisher = epc_publisher_new (service_name, "totem", NULL);
