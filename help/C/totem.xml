@@ -361,7 +361,7 @@ subtitles, and more.</para>
       <para>If you try to open a file format that <application>&app;</application> does
 	not recognize, the application displays an error message. This error is most often encountered
 	if you do not have the correct codecs installed. Information on getting codecs working can be found on
-	the <ulink url="http://projects.gnome.org/totem/#codecs"><application>&app;</application> website</ulink>.
+	the <ulink url="http://projects.gnome.org/totem/#codecs" type="http"><application>&app;</application> website</ulink>.
       </para>
       <tip>
 	<para>You can double-click on a video or an audio file in the <application>Nautilus</application>
@@ -504,7 +504,7 @@ subtitles, and more.</para>
                 <shortcut><keycombo><keycap>Alt</keycap><keycap>Left</keycap></keycombo></shortcut>
                 <guimenu>Go</guimenu>
                 <guimenuitem>Previous Chapter/Movie</guimenuitem>
-              </menuchoice>, or click on the
+              </menuchoice> or click on the
               <inlinemediaobject> 
 	        <imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject>
 	        <textobject><phrase>Shows a seek previous button</phrase></textobject>
@@ -611,29 +611,13 @@ subtitles, and more.</para>
 
     <sect2 id="totem-usage-playlist">
       <title>To Manage the Playlist</title>
-      <para>
-        <itemizedlist>
-	  <listitem>
-	    <para><xref linkend="totem-usage-playlist-show-hide"/></para>
-	  </listitem>
-	  <listitem>
-	    <para><xref linkend="totem-usage-playlist-manage"/></para>
-	  </listitem>
-	  <listitem>
-	    <para><xref linkend="totem-usage-playlist-repeat"/></para>
-	  </listitem>
-	  <listitem>
-	    <para><xref linkend="totem-usage-playlist-shuffle"/></para>
-	  </listitem>
-        </itemizedlist>
-      </para>
 
       <sect3 id="totem-usage-playlist-show-hide">
 	<title>To Show or Hide the Playlist</title>
 	<para>To show or hide the playlist, choose 
           <menuchoice>
 	    <guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem>
-          </menuchoice>, or click on the <guibutton>Sidebar</guibutton> button, and
+          </menuchoice> or click on the <guibutton>Sidebar</guibutton> button, and
 		  choose <guimenu>Playlist</guimenu> on the top of 
 		  the sidebar.</para>
       </sect3>
@@ -672,7 +656,7 @@ subtitles, and more.</para>
 	      <term>To move a track or movie up the playlist</term>
 	      <listitem>
 		<para>To move a track or movie up the playlist, select the item from the 
-                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Move Up</guibutton> button.
+                  playlist, then click on the <guibutton>Move Up</guibutton> button.
                 </para>
               </listitem>
 	    </varlistentry>
@@ -680,7 +664,7 @@ subtitles, and more.</para>
 	      <term>To move a track or movie down the playlist</term>
 	      <listitem>
 		<para>To move a track or movie down the playlist, select the item from the 
-                  <guilabel>filename</guilabel> list box, then click on the <guibutton>Move Down</guibutton> button.
+                  playlist, then click on the <guibutton>Move Down</guibutton> button.
                 </para>
               </listitem>
 	    </varlistentry>
@@ -712,8 +696,8 @@ subtitles, and more.</para>
 	  <menuchoice><guimenu>View</guimenu><guisubmenu>Subtitles</guisubmenu><guimenuitem>None</guimenuitem></menuchoice>.</para>
 	  <note><para>By default, <application>&app;</application> will choose the same language for the
 	  subtitles as the one you normally use on your computer.</para></note>
-	  <para><application>&app;</application> will automatically load and display subtitles if the file which contains them has the same
-	  name as the video file played and the extension <filename>asc</filename>, <filename>txt</filename>,
+	  <para><application>&app;</application> will automatically load and display subtitles for a video if it finds a subtitle file with the
+	  same name as the video being played, and the extension <filename>asc</filename>, <filename>txt</filename>,
 	  <filename>sub</filename>, <filename>srt</filename>, <filename>smi</filename>, <filename>ssa</filename> or <filename>ass</filename>.
 	  </para>
 	  <para>If the file containing the subtitles has a different name from the video being played, you can
@@ -764,8 +748,8 @@ subtitles, and more.</para>
       <title>To Enable a Plugin</title>
       <para>To view the list of installed plugins, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. The
         <application>Configure Plugins</application> dialog is displayed. On the left is a list of all the plugins you have installed, while on the right is
-        a description of the currently selected plugin. Plugins which have options which can be changed will have the <guibutton>Configure</guibutton>
-        button on the right sensitive.</para>
+        a description of the currently selected plugin. Plugins which have options which can be changed will have a sensitive <guibutton>Configure</guibutton>
+        button on the right.</para>
       <para>To enable a plugin, simply select the checkbox to the left of its name in the plugin list, and the plugin will be loaded immediately. If
         there is any error loading the plugin, an error dialog will also be displayed immediately.</para>
       <para>To disable a plugin again, deselect its checkbox. Plugins will remain enabled or disabled as set even when <application>&app;</application> is
@@ -796,8 +780,9 @@ subtitles, and more.</para>
     <sect2 id="totem-plugins-gromit">
       <title>Gromit Annotations</title>
       <para>The <guilabel>Gromit Annotations</guilabel> plugin allows you to draw on top of movies as they are played using
-        <application>Gromit</application>. You must have <application>Gromit</application> installed before you can enable the plugin — consult your
-        operating system documentation for information on how to do this.</para>
+        <ulink type="http" url="http://www.home.unix-ag.org/simon/gromit/"><application>Gromit</application></ulink>. You must have
+        <application>Gromit</application> installed before you can enable the plugin — consult your operating system documentation for
+        information on how to do this.</para>
       <para>With the plugin enabled, press <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> to toggle <application>Gromit</application>
         on or off. When <application>Gromit</application> is enabled, your pointer will change to a crosshair. To draw on the screen, hold down your
         mouse button and drag your pointer around, before releasing your mouse button. Press <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo>
@@ -807,8 +792,8 @@ subtitles, and more.</para>
     </sect2>
     <sect2 id="totem-plugins-jamendo">
       <title>Jamendo</title>
-      <para>The <guilabel>Jamendo</guilabel> plugin allows you to listen to the collection of Creative Commons-licensed music on the Jamendo
-        service.</para>
+      <para>The <guilabel>Jamendo</guilabel> plugin allows you to listen to the collection of Creative Commons-licensed music on the
+        <ulink type="http" url="http://www.jamendo.com/en/">Jamendo</ulink> service.</para>
       <sect3 id="totem-plugins-jamendo-configuration">
         <title>To Configure the Plugin</title>
         <para>The <guilabel>Jamendo</guilabel> plugin can be configured. Click on the <guibutton>Configure</guibutton> button when enabling the plugin,
@@ -852,7 +837,7 @@ subtitles, and more.</para>
         sidebar to display the <guilabel>Local Search</guilabel> sidebar.</para>
       <para>To perform a search, enter your search terms in the search entry at the top of the sidebar and click <guibutton>Find</guibutton>. Your
         search terms may include wildcards such as <literal>*</literal>, which will match any character. For example, the search
-        <userinput>*.mpg</userinput> will find all movies with the <filename class="extension">.mpg</filename> extension.</para>
+        <userinput>*.mpg</userinput> will find all movies with the <filename class="extension">.mpg</filename> file extension.</para>
       <para>Search results may be browsed using the <guibutton>Back</guibutton> and <guibutton>Forward</guibutton> buttons at the bottom of the
         sidebar, and you may jump to a specific results page by entering its number in the spin box.</para>
     </sect2>
@@ -867,23 +852,23 @@ subtitles, and more.</para>
           strings will be replaced when playlists are published:
           <variablelist>
 	    <varlistentry>
-	      <term>%a</term>
+	      <term><literal>%a</literal></term>
 	      <listitem><para>Replaced with the program's name: <application>&app;</application>.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term>%h</term>
+	      <term><literal>%h</literal></term>
 	      <listitem><para>Replaced with your computer's host name.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term>%u</term>
+	      <term><literal>%u</literal></term>
 	      <listitem><para>Replaced with your username.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term>%U</term>
+	      <term><literal>%U</literal></term>
 	      <listitem><para>Replaced with your real name.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term>%%</term>
+	      <term><literal>%%</literal></term>
 	      <listitem><para>Replaced with a literal percent sign.</para></listitem>
 	    </varlistentry>
 	  </variablelist>
@@ -906,9 +891,10 @@ subtitles, and more.</para>
     </sect2>
     <sect2 id="totem-plugins-opensubtitles">
       <title>Subtitle Downloader</title>
-      <para>The <guilabel>Subtitle Downloader</guilabel> plugin allows you to find and download subtitle files from the OpenSubtitles service.</para>
+      <para>The <guilabel>Subtitle Downloader</guilabel> plugin allows you to find and download subtitle files from the
+        <ulink type="http" url="http://www.opensubtitles.org/en">OpenSubtitles</ulink> service.</para>
       <para>Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
-        the currently-playing movie, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>, which
+        the currently playing movie, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>, which
         will display the <application>Download Movie Subtitles</application> dialog.</para>
       <para>Select the language in which you wish to have your subtitles from the drop-down list at the top of the dialog, then click on the
         <guibutton>Find</guibutton> button to search for subtitles for the current movie. Subtitles are found on the basis of the movie's content,
@@ -935,7 +921,8 @@ subtitles, and more.</para>
     </sect2>
     <sect2 id="totem-plugins-youtube">
       <title>YouTube Browser</title>
-      <para>The <guilabel>YouTube Browser</guilabel> plugin allows you to search and browse YouTube, and play YouTube videos directly in
+      <para>The <guilabel>YouTube Browser</guilabel> plugin allows you to search and browse
+        <ulink type="http" url="http://www.youtube.com/">YouTube</ulink>, and play YouTube videos directly in
         <application>&app;</application>. With the plugin enabled, choose
         <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
         <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>YouTube</guilabel> from the drop-down list at the top of the
