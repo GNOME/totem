@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem trunk\n"
+"Project-Id-Version: totem gnome-2-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-03 00:09+0900\n"
-"PO-Revision-Date: 2009-03-03 00:08+0900\n"
+"POT-Creation-Date: 2009-03-10 00:33+0900\n"
+"PO-Revision-Date: 2009-03-10 00:33+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1094,7 +1094,7 @@ msgid ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 msgstr ""
-"totem は有用とは思いますが、頒布にあたっては市場性または特定の目的に対する適"
+"Totem は有用とは思いますが、頒布にあたっては市場性または特定の目的に対する適"
 "合性についての暗黙の保証を含めて、いかなる保証も行ないません。詳細には GNU 一"
 "般公衆利用許諾契約書をご覧下さい。"
 
@@ -1157,7 +1157,7 @@ msgstr "%s を使った動画プレイヤーです。"
 msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Copyright © 2002-2008 Bastien Nocera"
 
-#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
@@ -1191,8 +1191,11 @@ msgstr "一時停止する"
 msgid "Paused"
 msgstr "一時停止中"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "再生する"
 
@@ -1307,7 +1310,7 @@ msgid "Totem was not able to play this disc."
 msgstr "このディスクを再生できませんでした。"
 
 #: ../src/totem-object.c:1217 ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "原因は不明です。"
 
@@ -1330,7 +1333,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
 #: ../src/totem-object.c:2377 ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
@@ -1410,7 +1413,10 @@ msgstr "コントロールの表示を切り替える"
 msgid "Quit"
 msgstr "終了する"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "キューに追加する"
 
@@ -1766,7 +1772,7 @@ msgstr "リンクを開けませんでした"
 
 #: ../src/totem.c:136 ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "Totem 動画プレイヤー"
 
@@ -2259,7 +2265,12 @@ msgstr "(S)VCDs または VIDEO-DVD を作成します"
 msgid "Video Disc Recorder"
 msgstr "動画ディスク・レコーダ"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "削除"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "コヒーレンス DLNA/UPnP クライアント"
@@ -2503,35 +2514,35 @@ msgstr "OpenSubtitles のウェブサイトにアクセスできませんでし�
 msgid "No results found"
 msgstr "見つかりませんでした"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:360
+#: ../src/plugins/opensubtitles/opensubtitles.py:364
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:363
+#: ../src/plugins/opensubtitles/opensubtitles.py:367
 msgid "Format"
 msgstr "形式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:366
+#: ../src/plugins/opensubtitles/opensubtitles.py:370
 msgid "Rating"
 msgstr "評価"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:404
+#: ../src/plugins/opensubtitles/opensubtitles.py:408
 msgid "_Download Movie Subtitles..."
 msgstr "字幕のダウンロード(_D)..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:405
+#: ../src/plugins/opensubtitles/opensubtitles.py:409
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "OpenSubtitles から動画の字幕をダウンロードします"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:464
+#: ../src/plugins/opensubtitles/opensubtitles.py:468
 msgid "Searching subtitles..."
 msgstr "問い合わせ中..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:517
+#: ../src/plugins/opensubtitles/opensubtitles.py:521
 msgid "Downloading the subtitles..."
 msgstr "ダウンロード中..."
 
@@ -2800,35 +2811,35 @@ msgstr "'%s' を再生できませんでした"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" で開く(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s を使ったブラウザ用プラグイン"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Totem のブラウザ用プラグインです"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "Totem のプラグインを起動できませんでした。"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "再生一覧が存在しないか空です"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "スレッドセーフなライブラリを初期化できませんでした。"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "システムのインストールを確認して下さい。Totem のプラグインを終了します。"
