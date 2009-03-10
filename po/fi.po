@@ -2,7 +2,7 @@
 # Copyright (C) 2002-2009 Free Software Foundation, Inc.
 # Suomennos: http://gnome.fi/
 #
-# Tommi Vainikainen <Tommi.Vainikainen@iki.fi>, 2003-2005, 2008.
+# Tommi Vainikainen <Tommi.Vainikainen@iki.fi>, 2003-2005, 2008-2009.
 # Ilkka Tuohela <hile@iki.fi>, 2002,2003,2005-2009.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-16 21:11+0300\n"
-"PO-Revision-Date: 2009-02-16 21:15+0300\n"
+"POT-Creation-Date: 2009-03-10 12:03+0200\n"
+"PO-Revision-Date: 2009-03-10 12:04+0200\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -93,13 +93,13 @@ msgstr "Sivusto:"
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:167
+#: ../src/plugins/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 kanavaa"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:165
+#: ../src/plugins/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -169,16 +169,16 @@ msgstr "Yleistä"
 #. Video Codec
 #. Audio Codec
 #: ../data/properties.ui.h:18
-#: ../src/plugins/properties/bacon-video-widget-properties.c:150
-#: ../src/plugins/properties/bacon-video-widget-properties.c:152
-#: ../src/plugins/properties/bacon-video-widget-properties.c:155
 #: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#: ../src/plugins/properties/bacon-video-widget-properties.c:161
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
 #: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:232
-#: ../src/plugins/properties/bacon-video-widget-properties.c:234
-#: ../src/plugins/properties/bacon-video-widget-properties.c:251
-#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#: ../src/plugins/properties/bacon-video-widget-properties.c:242
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
+#: ../src/plugins/properties/bacon-video-widget-properties.c:262
 msgid "N/A"
 msgstr "-"
 
@@ -195,10 +195,10 @@ msgstr "Nimi:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:137
-#: ../src/plugins/properties/bacon-video-widget-properties.c:139
-#: ../src/plugins/properties/bacon-video-widget-properties.c:141
-#: ../src/plugins/properties/bacon-video-widget-properties.c:143
+#: ../src/plugins/properties/bacon-video-widget-properties.c:145
+#: ../src/plugins/properties/bacon-video-widget-properties.c:147
+#: ../src/plugins/properties/bacon-video-widget-properties.c:149
+#: ../src/plugins/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -1156,7 +1156,7 @@ msgstr "Elokuvasoitin, käyttäen %s kirjastoja"
 msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Tekijänoikeudet © 2002-2008 Bastien Nocera"
 
-#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "Ilkka Tuohela, 2002-2009\n"
@@ -1189,8 +1189,11 @@ msgstr "Tauko"
 msgid "Paused"
 msgstr "Tauko"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "Toista"
 
@@ -1303,7 +1306,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem ei voinut soittaa tätä levyä."
 
 #: ../src/totem-object.c:1217 ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "Ei syytä."
 
@@ -1324,7 +1327,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
 #: ../src/totem-object.c:2377 ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
@@ -1404,7 +1407,10 @@ msgstr "Näytä/piilota säätimet"
 msgid "Quit"
 msgstr "Lopeta"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "Lisää jonoon"
 
@@ -1703,7 +1709,10 @@ msgstr "Läntinen"
 msgid "Vietnamese"
 msgstr "Vietnam"
 
-#: ../src/totem-video-thumbnailer.c:658
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1714,15 +1723,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:659
+#: ../src/totem-video-thumbnailer.c:666
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: ../src/totem-video-thumbnailer.c:661
+#: ../src/totem-video-thumbnailer.c:668
 msgid "Resolution"
 msgstr "Tarkkuus"
 
-#: ../src/totem-video-thumbnailer.c:664
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Duration"
 msgstr "Kesto"
 
@@ -1760,7 +1769,7 @@ msgstr "Linkkiä ei voi avata"
 
 #: ../src/totem.c:136 ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "Totem-elokuvasoitin"
 
@@ -1786,11 +1795,11 @@ msgstr ""
 "%s\n"
 "Komennolla '%s --help' näet kaikki mahdolliset komentorivivalitsimet.\n"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:170
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem ei voinut alustaa asetusmoottoria."
 
-#: ../src/totem.c:169
+#: ../src/totem.c:170
 msgid "Make sure that GNOME is properly installed."
 msgstr "Varmista, että GNOME on oikein asennettu.."
 
@@ -2251,7 +2260,12 @@ msgstr "Kirjoittaa (S)VCD- ja DVD-videolevyjä"
 msgid "Video Disc Recorder"
 msgstr "Videolevyjen nauhoitin"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "Poista"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Coherence DLAN/UPnP-asiakas"
@@ -2492,35 +2506,35 @@ msgstr "OpenSubtitles-WWW-sivustoon ei voi yhdistää"
 msgid "No results found"
 msgstr "Ei tuloksia"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:360
+#: ../src/plugins/opensubtitles/opensubtitles.py:364
 msgid "Subtitles"
 msgstr "Tekstitykset"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:363
+#: ../src/plugins/opensubtitles/opensubtitles.py:367
 msgid "Format"
 msgstr "Muoto"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:366
+#: ../src/plugins/opensubtitles/opensubtitles.py:370
 msgid "Rating"
 msgstr "Arvostelu"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:404
+#: ../src/plugins/opensubtitles/opensubtitles.py:408
 msgid "_Download Movie Subtitles..."
 msgstr "_Lataa elokuvatekstityksiä..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:405
+#: ../src/plugins/opensubtitles/opensubtitles.py:409
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Lataa elokuvatekstityksiä OpenSubtitles-sivustolta"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:464
+#: ../src/plugins/opensubtitles/opensubtitles.py:468
 msgid "Searching subtitles..."
 msgstr "Etsitään tekstityksiä..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:517
+#: ../src/plugins/opensubtitles/opensubtitles.py:521
 msgid "Downloading the subtitles..."
 msgstr "Ladataan tekstityksiä..."
 
@@ -2536,23 +2550,23 @@ msgstr "Pidä pääikkuna aina päällimmäisenä näytettäessä elokuvaa"
 msgid "Properties"
 msgstr "Ominaisuudet"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:229
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
 #, c-format
 msgid "%d x %d"
 msgstr "%d × %d"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:232
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
 #, c-format
 msgid "%d frames per second"
 msgstr "%d kehystä sekunnissa"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:234
-#: ../src/plugins/properties/bacon-video-widget-properties.c:251
+#: ../src/plugins/properties/bacon-video-widget-properties.c:242
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:254
+#: ../src/plugins/properties/bacon-video-widget-properties.c:262
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
@@ -2604,18 +2618,19 @@ msgstr "Kuvakaappauksen leveys (pikseleissä):"
 msgid "Save Gallery"
 msgstr "Tallenna galleria"
 
-#: ../src/plugins/screenshot/totem-gallery.c:105
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
 #, c-format
 msgid "Screenshot%d.jpg"
 msgstr "Kuvakaappaus%d.png"
 
 #. Set up the window
-#: ../src/plugins/screenshot/totem-gallery-progress.c:103
+#: ../src/plugins/screenshot/totem-gallery-progress.c:101
 msgid "Creating Gallery..."
 msgstr "Luodaan galleriaa..."
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:110
+#: ../src/plugins/screenshot/totem-gallery-progress.c:108
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Tallennetaan galleria nimellä ”%s”"
@@ -2647,19 +2662,19 @@ msgstr "Totem ei voinut kaapata kuvaa tästä videosta."
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Näin ei pitäisi päästä tapahtumaan. Ole hyvä ja ilmoita viasta."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:199
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take _Screenshot..."
 msgstr "Ota _kuvakaappaus..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:199
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take a screenshot"
 msgstr "Ota kuvakaappaus"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:200
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
 msgid "Create Screenshot _Gallery..."
 msgstr "Luo kuvakaappaus_galleria..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:200
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
 msgid "Create a gallery of screenshots"
 msgstr "Luo galleria kuvakaappauksista"
 
@@ -2787,35 +2802,35 @@ msgstr "Totem ei voinut toistaa lähdettä \"%s\"."
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Avaa sovelluksella \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Selainliitännäinen käyttäen %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Totemin selainliitännäinen"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "Totemin liitännäistä ei voitu käynnistää."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "Soittolistaa ei ole tai se on tyhjä"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totemin liitännäinen suljetaan."
 
