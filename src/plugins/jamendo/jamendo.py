@@ -32,7 +32,6 @@ TODO:
 
 import os
 import totem
-import gettext
 import gconf
 import gobject
 import gtk
@@ -60,7 +59,6 @@ except ImportError:
 
 socket.setdefaulttimeout(30)
 gobject.threads_init()
-_ = gettext.gettext
 gconf_key = '/apps/totem/plugins/jamendo'
 
 

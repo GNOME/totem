@@ -1,3 +1,16 @@
+2009-03-10  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/totem/__init__.py: Import gettext and set the
+	translation domain when importing the module
+
+	* src/plugins/coherence_upnp/coherence_upnp.py:
+	* src/plugins/jamendo/jamendo.py:
+	* src/plugins/opensubtitles/opensubtitles.py:
+	* src/plugins/youtube/youtube.py: Use the gettext set in the
+	totem Python module
+
+	Spotted by Gabor Kelemen <kelemeng@gnome.hu> (Closes: #574700)
+
 2009-03-08  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/publish/totem-publish.c

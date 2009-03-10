@@ -1,5 +1,4 @@
 import totem
-import gettext
 import gobject, gtk, gio, gconf
 gobject.threads_init()
 import xmlrpclib
@@ -10,7 +9,6 @@ from os import sep
 from hash import hashFile
 
 D_ = gettext.dgettext
-_ = gettext.gettext
 
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
