@@ -8,8 +8,6 @@ from os import sep
 
 from hash import hashFile
 
-D_ = gettext.dgettext
-
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
 TOTEM_REMOTE_COMMAND_REPLACE = 14
