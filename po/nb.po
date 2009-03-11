@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.25.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-26 13:28+0100\n"
-"PO-Revision-Date: 2009-02-26 13:30+0100\n"
+"POT-Creation-Date: 2009-03-11 22:26+0100\n"
+"PO-Revision-Date: 2009-03-11 22:27+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -443,7 +443,7 @@ msgid "Quit the program"
 msgstr "Avslutt programmet"
 
 #: ../data/totem.ui.h:58
-msgid "Reset To _Defaults"
+msgid "Reset to _Defaults"
 msgstr "Sett til _forvalg"
 
 #: ../data/totem.ui.h:59
@@ -1142,7 +1142,7 @@ msgstr "Filmavspiller bruker %s"
 msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Opphavsrett © 2002-2008 Bastien Nocera"
 
-#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr ""
 "Kjartan Maraas <kmaraas@gnome.org>\n"
@@ -1172,8 +1172,11 @@ msgstr "Pause"
 msgid "Paused"
 msgstr "Pause"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:76
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "Spill av"
 
@@ -1205,11 +1208,11 @@ msgstr ""
 "Du bør sjekke at det finnes en disk i stasjonen og at den er riktig "
 "konfigurert."
 
-#: ../src/totem-object.c:1150 ../src/plugins/youtube/youtube.py:235
+#: ../src/totem-object.c:1150 ../src/plugins/youtube/youtube.py:232
 msgid "More information about media plugins"
 msgstr "Mer informasjon om media-tillegg"
 
-#: ../src/totem-object.c:1151 ../src/plugins/youtube/youtube.py:233
+#: ../src/totem-object.c:1151 ../src/plugins/youtube/youtube.py:230
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1226,7 +1229,7 @@ msgstr ""
 "Totem kan ikke spille av denne typen media (%s) fordi du ikke har tilleggene "
 "som  kreves for å lese fra platen."
 
-#: ../src/totem-object.c:1155 ../src/plugins/youtube/youtube.py:232
+#: ../src/totem-object.c:1155 ../src/plugins/youtube/youtube.py:229
 #, c-format, python-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1287,7 +1290,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem kunne ikke spille av denne platen."
 
 #: ../src/totem-object.c:1217 ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "Ingen årsak."
 
@@ -1310,7 +1313,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
 #: ../src/totem-object.c:2377 ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
@@ -1390,7 +1393,10 @@ msgstr "Vis/skjul kontroller"
 msgid "Quit"
 msgstr "Avslutt"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Enqueue"
 msgstr "Legg i kø"
 
@@ -1748,7 +1754,7 @@ msgstr "Kunne ikke åpne lenken"
 
 #: ../src/totem.c:136 ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "Totem filmavspiller"
 
@@ -2237,7 +2243,12 @@ msgstr "Tar opp (S)VCDer eller video-DVDer"
 msgid "Video Disc Recorder"
 msgstr "Opptak av videoplater"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
+msgid "Delete"
+msgstr "Slett"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:108
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Coherence DLNA/UPnP klient"
@@ -2313,7 +2324,7 @@ msgid "_Open Jamendo Album Page in Browser"
 msgstr "_Åpne Jamendo albumside i nettleser"
 
 #: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:129
+#: ../src/plugins/jamendo/jamendo.py:127
 msgid "Jamendo"
 msgstr "Jamendo"
 
@@ -2324,38 +2335,38 @@ msgstr ""
 "Lytt til den store samlingen musikk lisensiert under Creative Commons på "
 "Jamendp."
 
-#: ../src/plugins/jamendo/jamendo.py:56
+#: ../src/plugins/jamendo/jamendo.py:55
 msgid "You need to install the Python simplejson module."
 msgstr "Du må installere Python-modulen simplejson."
 
-#: ../src/plugins/jamendo/jamendo.py:246 ../src/plugins/jamendo/jamendo.py:259
-#: ../src/plugins/jamendo/jamendo.py:282
+#: ../src/plugins/jamendo/jamendo.py:244 ../src/plugins/jamendo/jamendo.py:257
+#: ../src/plugins/jamendo/jamendo.py:280
 #, python-format
 msgid "Artist: %s"
 msgstr "Artist: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:252
+#: ../src/plugins/jamendo/jamendo.py:250
 msgid "%Y-%m-%d"
 msgstr "%d.%m.%Y"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:254
+#: ../src/plugins/jamendo/jamendo.py:252
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:260
+#: ../src/plugins/jamendo/jamendo.py:258
 #, python-format
 msgid "Genre: %s"
 msgstr "Sjanger: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:261
+#: ../src/plugins/jamendo/jamendo.py:259
 #, python-format
 msgid "Released on: %s"
 msgstr "Utgitt: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:262
+#: ../src/plugins/jamendo/jamendo.py:260
 #, python-format
 msgid "License: %s"
 msgstr "Lisens: %s"
@@ -2363,30 +2374,30 @@ msgstr "Lisens: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:272
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:281
+#: ../src/plugins/jamendo/jamendo.py:279
 #, python-format
 msgid "Album: %s"
 msgstr "Album: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:283
+#: ../src/plugins/jamendo/jamendo.py:281
 #, python-format
 msgid "Duration: %s"
 msgstr "Varighet: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:340
+#: ../src/plugins/jamendo/jamendo.py:338
 msgid "Fetching albums, please wait..."
 msgstr "Henter album. Vennligst vent..."
 
-#: ../src/plugins/jamendo/jamendo.py:389
+#: ../src/plugins/jamendo/jamendo.py:387
 msgid "An error occurred while fetching albums."
 msgstr "En feil oppsto under henting av album."
 
-#: ../src/plugins/jamendo/jamendo.py:401
+#: ../src/plugins/jamendo/jamendo.py:399
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2395,20 +2406,20 @@ msgstr ""
 "Klarte ikke å koble til Jamendo-tjener.\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:403
+#: ../src/plugins/jamendo/jamendo.py:401
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "Jamendo-tjener returnerte kode %s."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:635
+#: ../src/plugins/jamendo/jamendo.py:633
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:638
+#: ../src/plugins/jamendo/jamendo.py:636
 msgid "%M:%S"
 msgstr "%H.%S"
 
@@ -2457,25 +2468,25 @@ msgid "_Play with Subtitle"
 msgstr "S_pill av med undertekst"
 
 #: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:1
-msgid "Look for a subtitle for the currently playing movie"
-msgstr "Se etter en undertekst for filmen som spilles av"
+msgid "Look for subtitles for the currently playing movie."
+msgstr "Se etter en undertekst for filmen som spilles av."
 
 #: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:2
-msgid "Subtitles downloader"
+msgid "Subtitle Downloader"
 msgstr "Nedlasting av undertekst"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:35
+#: ../src/plugins/opensubtitles/opensubtitles.py:31
 msgid "Brasilian Portuguese"
 msgstr "Brasiliensk portugisisk"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:238
-#: ../src/plugins/opensubtitles/opensubtitles.py:254
-#: ../src/plugins/opensubtitles/opensubtitles.py:271
-#: ../src/plugins/opensubtitles/opensubtitles.py:277
+#: ../src/plugins/opensubtitles/opensubtitles.py:234
+#: ../src/plugins/opensubtitles/opensubtitles.py:250
+#: ../src/plugins/opensubtitles/opensubtitles.py:267
+#: ../src/plugins/opensubtitles/opensubtitles.py:273
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Kunne ikke kontakte nettstedet for OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:259
+#: ../src/plugins/opensubtitles/opensubtitles.py:255
 msgid "No results found"
 msgstr "Ingen resultater funnet"
 
@@ -2545,7 +2556,7 @@ msgid "%d Hz"
 msgstr "%d Hz"
 
 #: ../src/plugins/publish/totem-publish.c:582
-msgid "Neighbours"
+msgid "Neighbors"
 msgstr "Naboer"
 
 #: ../src/plugins/publish/publish.totem-plugin.in.h:1
@@ -2728,38 +2739,38 @@ msgid "A plugin to let you browse YouTube videos."
 msgstr "Et tillegg som lar deg se på YouTube-videoer."
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
-msgid "YouTube browser"
+msgid "YouTube Browser"
 msgstr "YouTube-leser"
 
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "Relaterte videoer"
 
-#: ../src/plugins/youtube/youtube.py:130 ../src/plugins/youtube/youtube.py:232
+#: ../src/plugins/youtube/youtube.py:127 ../src/plugins/youtube/youtube.py:229
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:150
+#: ../src/plugins/youtube/youtube.py:147
 msgid "Videos"
 msgstr "Videoer"
 
-#: ../src/plugins/youtube/youtube.py:156
+#: ../src/plugins/youtube/youtube.py:153
 msgid "_Open in Web Browser"
 msgstr "_Åpne i nettleser"
 
-#: ../src/plugins/youtube/youtube.py:156
+#: ../src/plugins/youtube/youtube.py:153
 msgid "Open the video in your web browser"
 msgstr "Åpne videoen i din nettleser"
 
-#: ../src/plugins/youtube/youtube.py:195
+#: ../src/plugins/youtube/youtube.py:192
 msgid "Fetching related videos..."
 msgstr "Henter relaterte videoer..."
 
-#: ../src/plugins/youtube/youtube.py:380
+#: ../src/plugins/youtube/youtube.py:377
 msgid "Fetching search results..."
 msgstr "Henter søkeresultater..."
 
-#: ../src/plugins/youtube/youtube.py:395
+#: ../src/plugins/youtube/youtube.py:392
 msgid "Fetching more videos..."
 msgstr "Henter flere videoer..."
 
@@ -2775,35 +2786,35 @@ msgstr "Totem kunne ikke spille av «%s»"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Åpne med «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Tillegg for nettleser bruker %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "Totem nettlesertillegg"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "Tillegget for Totem kunne ikke starte opp."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "Ingen spilleliste eller tom spilleliste"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "Kunne ikke initiere trådsikre biblioteker."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Sjekk systeminstallasjonen. Tillegget for Totem avslutter nå."
 
