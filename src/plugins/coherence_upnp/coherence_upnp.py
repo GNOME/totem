@@ -11,9 +11,6 @@ from coherence.ui.av_widgets import TreeWidget
 from coherence.ui.av_widgets import UDN_COLUMN,UPNP_CLASS_COLUMN,SERVICE_COLUMN
 
 import totem
-import gettext
-
-_ = gettext.gettext
 
 class UPnPClient(totem.Plugin):
 

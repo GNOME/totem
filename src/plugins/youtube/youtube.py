@@ -10,9 +10,6 @@ import time
 import re
 import os
 import random
-import gettext
-
-_ = gettext.gettext
 
 class DownloadThread (threading.Thread):
 	def __init__ (self, youtube, url, treeview_name):
