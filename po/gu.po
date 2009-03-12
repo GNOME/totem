@@ -1,13 +1,13 @@
-# translation of totem.HEAD.gu.po to Gujarati
+# translation of totem.gnome-2-26.gu.po to Gujarati
 # Ankit Patel <ankit644@yahoo.com>, 2005, 2006.
 # Ankit Patel <ankit@redhat.com>, 2007.
 # Sweta Kothari <swkothar@redhat.com>, 2008, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: totem.HEAD.gu\n"
+"Project-Id-Version: totem.gnome-2-26.gu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2009-02-20 07:08+0000\n"
-"PO-Revision-Date: 2009-02-27 14:00+0530\n"
+"POT-Creation-Date: 2009-03-04 07:29+0000\n"
+"PO-Revision-Date: 2009-03-12 15:16+0530\n"
 "Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
 "Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
@@ -772,6 +772,8 @@ msgid ""
 "Allow the screensaver to activate even when audio-only is playing. This is "
 "useful for monitor-powered speakers."
 msgstr ""
+"જ્યારે ફક્ત ઓડિયો વગાડી રહ્યા હોય ત્યારે સ્ક્રીનસેવર ને સક્રિય કરવાની પરવાનગી આપો. આ "
+"મોનિટર પાવર થયેલ બોલનારાઓ માટે ઉપયોગી છે."
 
 #: ../data/totem.schemas.in.h:3
 msgid ""
@@ -788,6 +790,12 @@ msgid ""
 "DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
 "\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
 msgstr ""
+"લગભગ નેટવર્ક જોડાણ ઝડપી છે, નેટવર્ક પર મિડિયા પર ગુણવત્તા પસંદ કરવા માટે વપરાયેલ છે: "
+"14.4 Kbps Modem માટે \"0\", 19.2 Kbps Modem માટે \"1\", 28.8 Kbps Modem માટે \"2\", "
+"33.6 Kbps Modem માટે \"3\", 34.4 Kbps Modem માટે \"4\", 56 Kbps Modem/ISDN માટે \"5\", "
+"112 Kbps Dual ISDN/DSL માટે \"6\", 256 Kbps DSL/Cable માટે \"7\", "
+"384 Kbps DSL/Cable માટે \"8\", 512 Kbps DSL/Cable માટે \"9\", 1.5 Mbps T1/Intranet/LAN માટે "
+"\"10\", Intranet/LAN માટે \"11\"."
 
 #: ../data/totem.schemas.in.h:5
 msgid "Buffer size"
@@ -846,6 +854,8 @@ msgid ""
 "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 "normal, \"2\" for large, \"3\" for extra large."
 msgstr ""
+"કાલ્પનિક ઓડિયો માટે ગુણવત્તા સુયોજનો: નાનાં માટે \"0\", સામાન્ય માટે \"1\", "
+"વિશાળ માટે \"2\", વધારે વિશાળ માટે \"3\"."
 
 #: ../data/totem.schemas.in.h:18
 msgid "Repeat mode"
@@ -934,7 +944,7 @@ msgstr "શું મુખ્ય વિન્ડો બીજી કોઈન�
 
 #: ../data/totem.schemas.in.h:41
 msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr ""
+msgstr "જ્યારે મુવી લોડ થયેલ હોય ત્યારે ક્યાંતો લખાણ ઉપશિર્ષક ફાઇલો આપોઆપ લોડ થશે કે નહિં "
 
 #: ../data/totem.schemas.in.h:42
 msgid "Whether to disable the plugins in the user's home directory"
@@ -975,7 +985,7 @@ msgstr "કાર્યક્રમો એ આદેશ વાક્ય પર �
 #: ../src/eggdesktopfile.c:1168
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "ઓળખી શકાય ન હોય તેવુ શરૂઆતી વિકલ્પ: %d"
 
 #: ../src/eggdesktopfile.c:1373
 #, c-format
@@ -985,7 +995,7 @@ msgstr "'Type=Link' ડેસ્કટોપ પ્રવેશમાં દસ�
 #: ../src/eggdesktopfile.c:1392
 #, c-format
 msgid "Not a launchable item"
-msgstr ""
+msgstr "શરૂઆત કરી શકાય તેવી વસ્તુ નથી"
 
 #: ../src/eggfileformatchooser.c:63
 #, c-format
@@ -1158,7 +1168,7 @@ msgstr "%s ની મદદથી મુવી પ્લેયર"
 msgid "Copyright © 2002-2008 Bastien Nocera"
 msgstr "Copyright © 2002-2008 Bastien Nocera"
 
-#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1191
+#: ../src/totem-menu.c:1185 ../browser-plugin/totem-plugin-viewer.c:1194
 msgid "translator-credits"
 msgstr "અંકિત પટેલ <ankit644@yahoo.com>, શ્ર્વેતા કોઠારી <swkothar@redhat.com>"
 
@@ -1186,8 +1196,11 @@ msgstr "અટકાવો"
 msgid "Paused"
 msgstr "અટકાવાયેલ છે"
 
+#. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Play"
 msgstr "વગાડો"
 
@@ -1263,7 +1276,7 @@ msgstr "TV જોવા વિશે વધુ જાણકારી"
 
 #: ../src/totem-object.c:1171
 msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr ""
+msgstr "Totem એ મેળવનારની ટ્યુનને સક્ષમ કરવા માટે ચેનલો ગુમ થયેલ છે."
 
 #: ../src/totem-object.c:1172
 msgid ""
@@ -1294,7 +1307,7 @@ msgid "Totem was not able to play this disc."
 msgstr "ટોટેમ આ ડિસ્ક વગાડવા માટે સમર્થ હતું નહિં."
 
 #: ../src/totem-object.c:1217 ../src/totem-object.c:3954
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "No reason."
 msgstr "કોઈ કારણ નથી."
 
@@ -1315,7 +1328,7 @@ msgid "Totem could not display the help contents."
 msgstr "ટોટેમ મદદ સમાવિષ્ટો પ્રદર્શિત કરી શક્યું નહિં."
 
 #: ../src/totem-object.c:2377 ../src/totem-object.c:2379
-#: ../browser-plugin/totem-plugin-viewer.c:1479
+#: ../browser-plugin/totem-plugin-viewer.c:1482
 msgid "An error occurred"
 msgstr "ભૂલ ઉદ્દભવી"
 
@@ -1395,7 +1408,10 @@ msgstr "નિયંત્રણો બતાવો/છુપાવો"
 msgid "Quit"
 msgstr "બહાર નીકળો"
 
+#. Translators: this refers to a media file
 #: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Enqueue"
 msgstr "એનક્યુ"
 
@@ -1691,7 +1707,10 @@ msgstr "પશ્ચિમી"
 msgid "Vietnamese"
 msgstr "વિયેટનામી"
 
-#: ../src/totem-video-thumbnailer.c:662
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1702,15 +1721,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:663
+#: ../src/totem-video-thumbnailer.c:666
 msgid "Filename"
 msgstr "ફાઇલ નામ"
 
-#: ../src/totem-video-thumbnailer.c:665
+#: ../src/totem-video-thumbnailer.c:668
 msgid "Resolution"
 msgstr "રિઝોલ્યુશન"
 
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Duration"
 msgstr "સમયગાળો"
 
@@ -1748,7 +1767,7 @@ msgstr "કડીને ખોલી શક્યા નહિં"
 
 #: ../src/totem.c:136 ../src/totem.c:161
 #: ../browser-plugin/totem-plugin-viewer.c:779
-#: ../browser-plugin/totem-plugin-viewer.c:1833
+#: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
 msgstr "ટોટેમ ચિત્રપટ પ્લેયર"
 
@@ -1926,7 +1945,6 @@ msgid ""
 msgstr "કોઈ વિડીયો આઉટપુટ ઉપ્લબ્ધ નથી. ખાતરી કરો કે કાર્યક્રમ યોગ્ય રીતે સ્થાપિત થયેલ છે."
 
 #: ../src/backend/bacon-video-widget-xine.c:1350
-#, fuzzy
 #| msgid ""
 #| "The TV adapter could not tune into the channel. Please check your "
 #| "hardware setup, and channel configuration."
@@ -1934,7 +1952,7 @@ msgid ""
 "The TV adapter could not tune into the channel. Please check your hardware "
 "setup and channel configuration."
 msgstr ""
-"TV એડેપ્ટર ચેનલમાં ટ્યુન કરી શકતુ નથી. મહેરબાની કરીને તમારા હાર્ડવેરને સુયોજિત, અને ચેનલ "
+"TV એડેપ્ટર ચેનલમાં ટ્યુન કરી શકતુ નથી. મહેરબાની કરીને તમારા હાર્ડવેરને સુયોજન અને ચેનલ "
 "રૂપરેખાંકનને ચકાસો."
 
 #: ../src/backend/bacon-video-widget-xine.c:1355
@@ -1961,7 +1979,6 @@ msgstr "સ્પષ્ટ કરેલ ફિલ્મ શોધી શકા�
 
 #: ../src/backend/bacon-video-widget-xine.c:1377
 #: ../src/backend/bacon-video-widget-xine.c:1393
-#, fuzzy
 #| msgid ""
 #| "The source seems encrypted, and can't be read. Are you trying to play an "
 #| "encrypted DVD without libdvdcss?"
@@ -1969,7 +1986,7 @@ msgid ""
 "The source seems encrypted and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
-"સ્રોત એનક્રિપ્ટ કરેલ હોય એમ લાગે છે, અને વાંચી શકાતું નથી. શું તમે એનક્રિપ્ટેડ DVD ને "
+"સ્રોત એનક્રિપ્ટ કરેલ હોય એમ લાગે છે અને વાંચી શકાતું નથી. શું તમે એનક્રિપ્ટેડ DVD ને "
 "libdvdcss વગર વગાડવાનો પ્રયત્ન કરી રહ્યા છો?"
 
 #: ../src/backend/bacon-video-widget-xine.c:1380
@@ -2236,7 +2253,12 @@ msgstr "અહેવાલો (S)VCDs અથવા વિડિઓ DVDs"
 msgid "Video Disc Recorder"
 msgstr "વિડિઓ ડિસ્ક રેકોર્ડર"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:104
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+msgid "Delete"
+msgstr "કાઢી નાંખો"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "સુસંગત DLNA/UPnP ક્લાઇન્ટ"
@@ -2318,7 +2340,7 @@ msgstr "Jamendo"
 
 #: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
 msgid "Listen to the large collection of Creative Commons licensed music on Jamendo."
-msgstr ""
+msgstr "Jamendo પર Creative Commons licensed સંગીતનાં વિશાળ સંગ્રહ ને સાંભળો."
 
 #: ../src/plugins/jamendo/jamendo.py:56
 msgid "You need to install the Python simplejson module."
@@ -2394,7 +2416,7 @@ msgstr ""
 #: ../src/plugins/jamendo/jamendo.py:403
 #, python-format
 msgid "The Jamendo server returned code %s."
-msgstr ""
+msgstr "Jamendo સર્વર એ કોડ %s ને પાછુ મેળવેલ છે."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
@@ -2559,6 +2581,9 @@ msgid ""
 "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
 "and <b>%h</b> will be replaced by your computer's host name.</small>"
 msgstr ""
+"<small>નેટવર્ક પર પ્લેયાદી સેવાની રજૂઆત કરવા માટે વપરાયેલ નામ.\n"
+"શબ્દમાળા <b>%u</b> નાં બધા બનાવો એ તમારા નામ દ્દારા બદલાયેલ હશે,\n"
+"અને <b>%h</b> એ તમારા કૉમ્પ્યુટરનાં યજમાન નામ દ્દારા બદલાયેલ હશે.</small>"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:5
 msgid "Service _Name:"
@@ -2584,7 +2609,8 @@ msgstr "સ્ક્રીનશોટ પહોળાઇ (પિક્સેલ
 msgid "Save Gallery"
 msgstr "ગેલેરી ને સંગ્રહો"
 
-#: ../src/plugins/screenshot/totem-gallery.c:105
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
 #, c-format
 msgid "Screenshot%d.jpg"
 msgstr "સ્ક્રીનશોટ%d.jpg"
@@ -2717,7 +2743,7 @@ msgstr "ટ્રેકર વાપરી રહ્યા હોય તેવ�
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
-msgstr ""
+msgstr "તમને YouTube વિડિયોને બ્રાઉઝ કરવા માટે પ્લગઇન."
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
 msgid "YouTube browser"
@@ -2767,35 +2793,35 @@ msgstr "ટોટેમ '%s' વગાડી શક્યું નહિં"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1132
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" સાથે ખોલો (_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1180
+#: ../browser-plugin/totem-plugin-viewer.c:1183
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "બ્રાઉઝર પ્લગઈન %s વાપરી રહ્યું છે"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1185
+#: ../browser-plugin/totem-plugin-viewer.c:1188
 msgid "Totem Browser Plugin"
 msgstr "ટોટેમ બ્રાઉઝર પ્લગઈન"
 
 #. FIXME!
 #. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1824
+#: ../browser-plugin/totem-plugin-viewer.c:1827
 msgid "The Totem plugin could not be started."
 msgstr "ટોટેમ પ્લગઈન શરૂ કરી શક્યા નહિં."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2172
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "વગાડવાની યાદી નથી અથવા વગાડવાની યાદી ખાલી છે"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Could not initialise the thread-safe libraries."
 msgstr "થ્રેડ-સુરક્ષિત લાઈબ્રેરીઓનો આરંભ કરી શક્યા નહિં."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2278
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "તમારા સિસ્ટમ સ્થાપનની ખાતરી કરો. ટોટેમ પ્લગઈન હવે બંધ થઈ જશે."
 
@@ -2842,4 +2868,6 @@ msgid ""
 "rpdb2. If you have not set a debugger password in GConf, it will use the "
 "default password ('totem')."
 msgstr ""
+"તમે બરાબર દબાવ્યા પછી, Totem એ રાહ જોશે ત્યાં સુધી તમે તેને winpdb અથવા rpdb2 જોડશો નહિં. "
+"જો GConf માં તમે ડિબગર પાસવર્ડ ને સુયોજિત કરેલ ન હોય તો, તે મૂળભૂત પાસવર્ડ ('totem') ને વાપરશે."
 
