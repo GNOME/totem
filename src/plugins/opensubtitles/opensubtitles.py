@@ -5,8 +5,11 @@ import xmlrpclib
 import threading
 import xdg.BaseDirectory
 from os import sep
+import gettext
 
 from hash import hashFile
+
+D_ = gettext.dgettext
 
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
