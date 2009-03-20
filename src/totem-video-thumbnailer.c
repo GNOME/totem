@@ -30,7 +30,7 @@
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 #include <unistd.h>
 #include <string.h>
