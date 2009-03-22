@@ -6,6 +6,7 @@ import threading
 import xdg.BaseDirectory
 from os import sep
 import gettext
+import pango
 
 from hash import hashFile
 
@@ -359,14 +360,22 @@ class OpenSubtitles(totem.Plugin):
         # Set up the results treeview 
         renderer = gtk.CellRendererText()
         self.treeview.set_model(self.liststore)
-	self.treeview.set_headers_visible(False)
-        self.treeview.insert_column_with_attributes(0, _("Subtitles"), renderer, text=0)
+        self.treeview.set_headers_visible(False)
+        renderer.set_property('ellipsize', pango.ELLIPSIZE_END)
+        column = gtk.TreeViewColumn(_("Subtitles"), renderer, text=0)
+        column.set_resizable(True)
+        column.set_expand(True)
+        self.treeview.append_column(column)
 	# translators comment:
 	# This is the file-type of the subtitle file detected
-        self.treeview.insert_column_with_attributes(1, _("Format"), renderer, text=1)
+        column = gtk.TreeViewColumn(_("Format"), renderer, text=1)
+        column.set_resizable(False)
+        self.treeview.append_column(column)
 	# translators comment:
 	# This is a rating of the quality of the subtitle
-        self.treeview.insert_column_with_attributes(2, _("Rating"), renderer, text=2)
+        column = gtk.TreeViewColumn(_("Rating"), renderer, text=2)
+        column.set_resizable(False)
+        self.treeview.append_column(column)
 
 	self.apply_button.set_sensitive(False)
 
