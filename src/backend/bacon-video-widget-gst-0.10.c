@@ -3378,6 +3378,25 @@ setup_vis (BaconVideoWidget * bvw)
       gst_caps_unref (caps);
     }
   }
+
+  if (bvw->priv->media_has_audio &&
+      !bvw->priv->media_has_video && bvw->priv->video_window) {
+    gint flags;
+
+    g_object_get (bvw->priv->play, "flags", &flags, NULL);
+    if (bvw->priv->show_vfx) {
+      gdk_window_show (bvw->priv->video_window);
+      GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+      flags |= GST_PLAY_FLAGS_VIS;
+    } else {
+      gdk_window_hide (bvw->priv->video_window);
+      GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+      flags &= ~GST_PLAY_FLAGS_VIS;
+    }
+    g_object_set (bvw->priv->play, "flags", flags, NULL);
+
+    gtk_widget_queue_draw (GTK_WIDGET (bvw));
+  }
   
   bvw->priv->vis_changed = FALSE;
   
@@ -3397,8 +3416,11 @@ bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
+  if (show_visuals == bvw->priv->show_vfx)
+    return;
+
   bvw->priv->show_vfx = show_visuals;
-  bvw->priv->vis_changed = TRUE;
+  setup_vis (bvw);
 }
 
 static gboolean
