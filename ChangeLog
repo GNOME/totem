@@ -1,3 +1,20 @@
+2009-03-23  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
+
+	* configure.in:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	(bvw_handle_application_message), (parse_stream_info),
+	(playbin_stream_changed_cb), (bacon_video_widget_finalize),
+	(bacon_video_widget_get_subtitle),
+	(bacon_video_widget_set_subtitle), (get_lang_list_for_type),
+	(bacon_video_widget_get_subtitles), (setup_vis),
+	(bvw_get_current_stream_num), (bvw_get_tags_of_current_stream),
+	(bvw_get_caps_of_current_stream),
+	(bacon_video_widget_get_metadata_string),
+	(bvw_update_interfaces_delayed),
+	(bvw_update_interface_implementations), (bacon_video_widget_new):
+	Initial port of the GStreamer backend to playbin2 (Partially fixes
+	bug #542663).
+
 2009-03-22  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
 	* src/plugins/opensubtitles/opensubtitles.py:

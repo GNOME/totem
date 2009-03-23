@@ -61,8 +61,8 @@ dnl the two versions here implicate the gstreamer core and gst-plugins
 dnl release versions.
 XINE_REQS=1.1.7
 GST_MAJORMINOR=0.10
-GST_REQS=0.10.12
-GSTPLUG_REQS=0.10.12
+GST_REQS=0.10.22
+GSTPLUG_REQS=0.10.22
 
 AC_ARG_ENABLE(xine,
 	AC_HELP_STRING([--enable-xine], [use xine instead of GStreamer for the backend]),
@@ -141,7 +141,7 @@ if test x$ENABLE_XINE = xno || test x$ENABLE_XINE = xauto; then
 	fi
 
 	dnl Check for elements from gst-plugins-base
-	for base_element in playbin ffmpegcolorspace videoscale
+	for base_element in playbin2 ffmpegcolorspace videoscale
 	do
 		AC_MSG_CHECKING([GStreamer 0.10 $base_element plugin])
 		if $gst010_inspect $base_element >/dev/null 2>/dev/null; then
