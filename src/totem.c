@@ -149,6 +149,7 @@ main (int argc, char **argv)
 	g_option_context_add_group (context, baconoptiongroup);
 
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+	totem_session_add_options (context);
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
 		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
 				error->message, argv[0]);
