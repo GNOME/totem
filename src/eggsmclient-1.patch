@@ -1,4 +1,4 @@
-From 2b5284a034b47858eee43c0e8067d8c6d9d2a867 Mon Sep 17 00:00:00 2001
+From b134b02356a5811b504106c09e437f189c807f1f Mon Sep 17 00:00:00 2001
 From: Christian Persch <chpe@gnome.org>
 Date: Wed, 24 Sep 2008 13:33:57 +0200
 Subject: [PATCH] Add egg_sm_client_set_discard_command() to set the discard command when using egg_sm_client_set_restart_command(), to ease porting from GnomeClient without needing to support a new session file format.
@@ -132,10 +132,10 @@ index e4b11f6..dcaf36b 100644
    return cmd;
  }
 diff --git a/libegg/smclient/eggsmclient.c b/libegg/smclient/eggsmclient.c
-index 8e2254f..6bec6ed 100644
+index efa901d..85aaee4 100644
 --- a/libegg/smclient/eggsmclient.c
 +++ b/libegg/smclient/eggsmclient.c
-@@ -437,6 +437,27 @@ egg_sm_client_set_restart_command (EggSMClient  *client,
+@@ -445,6 +445,27 @@ egg_sm_client_set_restart_command (EggSMClient  *client,
  }
  
  /**
