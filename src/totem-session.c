@@ -104,6 +104,12 @@ totem_quit_cb (EggSMClient *client,
 }
 
 void
+totem_session_add_options (GOptionContext *context)
+{
+	g_option_context_add_group (context, egg_sm_client_get_option_group ());
+}
+
+void
 totem_session_setup (Totem *totem, char **argv)
 {
 	EggSMClient *sm_client;
@@ -155,6 +161,11 @@ totem_session_restore (Totem *totem, char **filenames)
 }
 
 #else
+
+void
+totem_session_add_options (GOptionContext *context)
+{
+}
 
 void
 totem_session_setup (Totem *totem, char **argv)

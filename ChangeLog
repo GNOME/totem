@@ -1,5 +1,12 @@
 2009-03-24  Christian Persch  <chpe@gnome.org>
 
+	* src/totem-session.c: (totem_session_restore):
+	* src/totem-session.h:
+	* src/totem.c: (main): Add smclient options when parsing totem's
+	command line. Bug #576620.
+
+2009-03-24  Christian Persch  <chpe@gnome.org>
+
 	* src/eggdesktopfile.c: (egg_set_desktop_file):
 	* src/eggsmclient-1.patch:
 	* src/eggsmclient.c: (egg_sm_client_get_option_group): Update smclient
