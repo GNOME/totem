@@ -205,7 +205,7 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 	TotemScreenshotPlugin *self = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	const GtkActionEntry menu_entries[] = {
-		{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<Shift>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_cb) },
+		{ "take-screenshot", "camera-photo", N_("Take _Screenshot..."), "<Ctrl>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_cb) },
 		{ "take-gallery", NULL, N_("Create Screenshot _Gallery..."), NULL, N_("Create a gallery of screenshots"), G_CALLBACK (take_gallery_action_cb) }
 	};
 
