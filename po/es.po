@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-03-17 22:49+0000\n"
-"PO-Revision-Date: 2009-03-23 23:14+0100\n"
+"POT-Creation-Date: 2009-03-23 22:18+0000\n"
+"PO-Revision-Date: 2009-03-30 10:01+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -556,7 +556,7 @@ msgstr "Saltar adelante"
 msgid "Square"
 msgstr "Cuadrada"
 
-#: ../data/totem.ui.h:85 ../src/backend/bacon-video-widget-gst-0.10.c:4265
+#: ../data/totem.ui.h:85 ../src/backend/bacon-video-widget-gst-0.10.c:4299
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -914,7 +914,7 @@ msgstr "La saturación del vídeo"
 
 #: ../data/totem.schemas.in.h:31
 msgid "Type of audio output to use"
-msgstr "Tipo de salida de sonido a usar"
+msgstr "Tipo de salida de sonido que usar"
 
 #: ../data/totem.schemas.in.h:32
 msgid ""
@@ -922,8 +922,8 @@ msgid ""
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
 msgstr ""
-"Tipo de salida de sonido a usar: «0» para estéreo, «1» para 4 canales, «2» para "
-"salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
+"Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, «2» "
+"para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
 
 #. Translators: This is default subtitle encoding
 #. character set. You can change this to be the most common
@@ -1128,8 +1128,8 @@ msgid ""
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
 "Debería haber recibido una copia de la Licencia Pública General GNU junto "
-"con este programa. Si no, escriba a la Free Software Foundation, Inc., 59 "
-"Temple Place - Suite 330, Boston, MA 02111-1307, EE. UU."
+"con este programa. De lo contrario, escriba a la Free Software Foundation, "
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, EE. UU."
 
 #: ../src/totem-interface.c:346
 msgid ""
@@ -1833,7 +1833,7 @@ msgstr "Totem no pudo inicializar el motor de configuración."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2431
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2433
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1841,17 +1841,17 @@ msgstr ""
 "No se encontró la salida de sonido solicitada. Seleccione otra salida de "
 "sonido en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2436
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2438
 msgid "Location not found."
 msgstr "Dirección no encontrada."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2442
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la dirección; quizá no tiene permiso para abrir el archivo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2451
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2453
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1861,7 +1861,7 @@ msgstr ""
 "aplicaciones de vídeo o seleccione otra salida de vídeo en el selector de "
 "Sistemas Multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2459
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1872,15 +1872,15 @@ msgstr ""
 "un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2475
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2483
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "La reproducción de esta película requiere un complemento %s que no está "
 "instalado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2482
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2484
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1893,38 +1893,38 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2507
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2509
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2579
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2581
 msgid "Media file could not be played."
 msgstr "El archivo soporte no se pudo reproducir."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2711
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2713
 msgid "Failed to retrieve working directory"
 msgstr "Falló al obtener un directorio de trabajo"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4261
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4295
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4263
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4297
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4586
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4620
 msgid "Too old version of GStreamer installed."
 msgstr "La versión de GStreamer que está instalada es demasiado antigua."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4593
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4627
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4968
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1932,8 +1932,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5095
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5212
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5138
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5259
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1941,7 +1941,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Quizá no esté disponible. Seleccione otra "
 "salida de vídeo en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5107
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5150
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1951,7 +1951,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5142
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5185
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1961,7 +1961,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5162
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5205
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2536,50 +2536,50 @@ msgstr ""
 msgid "Subtitle Downloader"
 msgstr "Descargador de subtítulos"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:31
+#: ../src/plugins/opensubtitles/opensubtitles.py:35
 msgid "Brasilian Portuguese"
 msgstr "Portugués de Brasil"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:234
-#: ../src/plugins/opensubtitles/opensubtitles.py:250
-#: ../src/plugins/opensubtitles/opensubtitles.py:267
-#: ../src/plugins/opensubtitles/opensubtitles.py:273
+#: ../src/plugins/opensubtitles/opensubtitles.py:238
+#: ../src/plugins/opensubtitles/opensubtitles.py:254
+#: ../src/plugins/opensubtitles/opensubtitles.py:271
+#: ../src/plugins/opensubtitles/opensubtitles.py:277
 msgid "Could not contact the OpenSubtitles website"
 msgstr "No se pudo contactar con la página web OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:255
+#: ../src/plugins/opensubtitles/opensubtitles.py:259
 msgid "No results found"
 msgstr "No se encontraron resultados"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:360
+#: ../src/plugins/opensubtitles/opensubtitles.py:365
 msgid "Subtitles"
 msgstr "Subtítulos"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:363
+#: ../src/plugins/opensubtitles/opensubtitles.py:371
 msgid "Format"
 msgstr "Formato"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:366
+#: ../src/plugins/opensubtitles/opensubtitles.py:376
 msgid "Rating"
 msgstr "Puntuación"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:404
+#: ../src/plugins/opensubtitles/opensubtitles.py:416
 msgid "_Download Movie Subtitles..."
 msgstr "_Descargar subtítulos para la película…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:405
+#: ../src/plugins/opensubtitles/opensubtitles.py:417
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Descargar subtítulos para la película desde OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:464
+#: ../src/plugins/opensubtitles/opensubtitles.py:476
 msgid "Searching subtitles..."
 msgstr "Buscando subtítulos…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:517
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "Downloading the subtitles..."
 msgstr "Descargando los subtítulos…"
 
