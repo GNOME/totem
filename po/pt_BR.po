@@ -7,7 +7,7 @@
 # Guilherme de S. Pastore <gpastore@gnome.org>, 2006.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003, 2006.
 # Raphael Higino <In memoriam>, 2004-2005, 2007.
-# Og Maciel <ogmaciel@gnome.org>, 2007-2008.
+# Og Maciel <ogmaciel@gnome.org>, 2007-2009.
 # Vladimir Melo <vmelo@gnome.org>, 2007, 2009.
 # Djavan Fagundes <dnoway@gmail.com>, 2008.
 # Taylon Silmer <taylonsilva@gmail.com>, 2009.
@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-05 11:50-0500\n"
-"PO-Revision-Date: 2009-03-05 00:51-0300\n"
-"Last-Translator: Andre Gondim <andregondim@ubuntu.com>\n"
+"POT-Creation-Date: 2009-03-30 08:28-0400\n"
+"PO-Revision-Date: 2009-03-30 08:28-0400\n"
+"Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -455,7 +455,7 @@ msgid "Quit the program"
 msgstr "Sai do programa"
 
 #: ../data/totem.ui.h:58
-msgid "Reset To _Defaults"
+msgid "Reset to _Defaults"
 msgstr "_Restaurar padrões"
 
 #: ../data/totem.ui.h:59
@@ -558,7 +558,7 @@ msgstr "Pula para frente"
 msgid "Square"
 msgstr "Quadrada"
 
-#: ../data/totem.ui.h:85 ../src/backend/bacon-video-widget-gst-0.10.c:4265
+#: ../data/totem.ui.h:85 ../src/backend/bacon-video-widget-gst-0.10.c:4299
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -1019,31 +1019,31 @@ msgstr "Formato do arquivo"
 msgid "Extension(s)"
 msgstr "Extensão(ões)"
 
-#: ../src/eggsmclient.c:224
+#: ../src/eggsmclient.c:225
 msgid "Disable connection to session manager"
 msgstr "Desabilita a conexão com o gerenciador de sessão"
 
-#: ../src/eggsmclient.c:227
+#: ../src/eggsmclient.c:228
 msgid "Specify file containing saved configuration"
 msgstr "Especifica o arquivo que contém a configuração salva"
 
-#: ../src/eggsmclient.c:227
+#: ../src/eggsmclient.c:228
 msgid "FILE"
 msgstr "ARQUIVO"
 
-#: ../src/eggsmclient.c:230
+#: ../src/eggsmclient.c:231
 msgid "Specify session management ID"
 msgstr "Especifica o ID de gerenciamento de sessão"
 
-#: ../src/eggsmclient.c:230
+#: ../src/eggsmclient.c:231
 msgid "ID"
 msgstr "ID"
 
-#: ../src/eggsmclient.c:244
+#: ../src/eggsmclient.c:252
 msgid "Session management options:"
 msgstr "Opções de gerenciamento de sessão:"
 
-#: ../src/eggsmclient.c:245
+#: ../src/eggsmclient.c:253
 msgid "Show session management options"
 msgstr "Mostra opções de gerenciamento de sessão"
 
@@ -1214,8 +1214,8 @@ msgstr "Pausado"
 #. Translators: this refers to a media file
 #: ../src/totem-object.c:946 ../src/totem-object.c:956
 #: ../src/totem-options.c:50
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:76
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "Reproduzir"
 
@@ -1247,11 +1247,11 @@ msgstr ""
 "Talvez você queira verificar se há um disco presente no drive e se ele está "
 "configurado corretamente."
 
-#: ../src/totem-object.c:1150 ../src/plugins/youtube/youtube.py:235
+#: ../src/totem-object.c:1150 ../src/plugins/youtube/youtube.py:232
 msgid "More information about media plugins"
 msgstr "Mais informações sobre plug-ins de mídia"
 
-#: ../src/totem-object.c:1151 ../src/plugins/youtube/youtube.py:233
+#: ../src/totem-object.c:1151 ../src/plugins/youtube/youtube.py:230
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1268,7 +1268,7 @@ msgstr ""
 "O Totem não pode reproduzir este tipo de mídia (%s) porque você não tem os "
 "plug-ins apropriados para ler do disco."
 
-#: ../src/totem-object.c:1155 ../src/plugins/youtube/youtube.py:232
+#: ../src/totem-object.c:1155 ../src/plugins/youtube/youtube.py:229
 #, c-format, python-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1438,8 +1438,8 @@ msgstr "Sai"
 
 #. Translators: this refers to a media file
 #: ../src/totem-options.c:62
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Enqueue"
 msgstr "Adiciona à fila de reprodução"
 
@@ -1798,7 +1798,7 @@ msgstr "Selecionar filmes ou listas de reprodução"
 msgid "Could not open link"
 msgstr "Não foi possível abrir o link"
 
-#: ../src/totem.c:136 ../src/totem.c:161
+#: ../src/totem.c:136 ../src/totem.c:162
 #: ../browser-plugin/totem-plugin-viewer.c:779
 #: ../browser-plugin/totem-plugin-viewer.c:1836
 msgid "Totem Movie Player"
@@ -1817,7 +1817,7 @@ msgstr "Verifique a instalação do seu sistema. O Totem sairá agora."
 msgid "- Play movies and songs"
 msgstr "- Reproduz filmes e músicas"
 
-#: ../src/totem.c:153
+#: ../src/totem.c:154
 #, c-format
 msgid ""
 "%s\n"
@@ -1827,15 +1827,15 @@ msgstr ""
 "Execute \"%s --help\" para ver uma lista completa de opções de linha de "
 "comandos disponíveis.\n"
 
-#: ../src/totem.c:170
+#: ../src/totem.c:171
 msgid "Totem could not initialize the configuration engine."
 msgstr "O Totem não pôde inicializar o mecanismo de configuração."
 
-#: ../src/totem.c:170
+#: ../src/totem.c:171
 msgid "Make sure that GNOME is properly installed."
 msgstr "Certifique-se de que o GNOME está instalado adequadamente."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2431
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2433
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1843,18 +1843,18 @@ msgstr ""
 "A saída de áudio requisitada não foi localizada. Por favor, selecione outra "
 "saída de áudio no Seletor de Sistemas Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2436
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2438
 msgid "Location not found."
 msgstr "Localização não localizada."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2442
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Não foi possível abrir a localização; talvez você não tenha permissão para "
 "abrir o arquivo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2451
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2453
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1864,7 +1864,7 @@ msgstr ""
 "outro aplicativo de vídeo ou selecione outra saída de vídeo no Seletor de "
 "Sistemas Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2459
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1875,13 +1875,13 @@ msgstr ""
 "considerar o uso de um servidor de som."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2475
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2477
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2483
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "A reprodução desse filme requer um plug-in %s, que não está instalado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2482
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2484
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1894,38 +1894,38 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2507
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2509
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Não foi possível reproduzir esse arquivo através da rede. Tente baixá-lo "
 "para o disco antes."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2579
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2581
 msgid "Media file could not be played."
 msgstr "Não foi possível reproduzir o arquivo de mídia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2711
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2713
 msgid "Failed to retrieve working directory"
 msgstr "Falha ao carregar o diretório de trabalho"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4261
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4295
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4263
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4297
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4586
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4620
 msgid "Too old version of GStreamer installed."
 msgstr "Instalada uma versão muito antiga do GStream."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4593
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4627
 msgid "Media contains no supported video streams."
 msgstr "A mídia não contém fluxos de vídeo com suporte."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:4968
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5011
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1933,8 +1933,8 @@ msgstr ""
 "Falha ao criar um objeto de reprodução do GStreamer. Por favor, verifique a "
 "sua instalação do GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5095
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5212
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5138
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5259
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1942,7 +1942,7 @@ msgstr ""
 "Falha ao abrir a saída de vídeo. Ele pode não estar disponível. Por favor, "
 "selecione outra saída de vídeo no Seletor de Sistema Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5107
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5150
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1952,7 +1952,7 @@ msgstr ""
 "plug-ins adicionais do GStreamer, ou adicionar outra saída de vídeo no "
 "Seletor de Sistema Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5142
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5185
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1962,7 +1962,7 @@ msgstr ""
 "dispositivo ou o servidor de som pode não estar em execução. Por favor, "
 "selecione outra saída de áudio no Seletor de Sistemas Multimídia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5162
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5205
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2298,11 +2298,11 @@ msgid "Video Disc Recorder"
 msgstr "Gravador de discos de vídeo"
 
 #. Translators: this refers to a media file
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:100
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
 msgid "Delete"
 msgstr "Excluir"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:111
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:108
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Cliente DLNA/UPnP Coherence"
@@ -2380,7 +2380,7 @@ msgid "_Open Jamendo Album Page in Browser"
 msgstr "_Abrir a página de álbuns do Jamendo no navegador"
 
 #: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:129
+#: ../src/plugins/jamendo/jamendo.py:127
 msgid "Jamendo"
 msgstr "Jamendo"
 
@@ -2390,38 +2390,38 @@ msgid ""
 msgstr ""
 "Ouça a grande coleção de músicas licenciadas em Creative Commons no Jamendo."
 
-#: ../src/plugins/jamendo/jamendo.py:56
+#: ../src/plugins/jamendo/jamendo.py:55
 msgid "You need to install the Python simplejson module."
 msgstr "Você precisa instalar o módulo simplejson do Python."
 
-#: ../src/plugins/jamendo/jamendo.py:246 ../src/plugins/jamendo/jamendo.py:259
-#: ../src/plugins/jamendo/jamendo.py:282
+#: ../src/plugins/jamendo/jamendo.py:244 ../src/plugins/jamendo/jamendo.py:257
+#: ../src/plugins/jamendo/jamendo.py:280
 #, python-format
 msgid "Artist: %s"
 msgstr "Artista: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:252
+#: ../src/plugins/jamendo/jamendo.py:250
 msgid "%Y-%m-%d"
 msgstr "%d/%m/%Y"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:254
+#: ../src/plugins/jamendo/jamendo.py:252
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:260
+#: ../src/plugins/jamendo/jamendo.py:258
 #, python-format
 msgid "Genre: %s"
 msgstr "Gênero: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:261
+#: ../src/plugins/jamendo/jamendo.py:259
 #, python-format
 msgid "Released on: %s"
 msgstr "Lançado em: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:262
+#: ../src/plugins/jamendo/jamendo.py:260
 #, python-format
 msgid "License: %s"
 msgstr "Licença: %s"
@@ -2429,30 +2429,30 @@ msgstr "Licença: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:272
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:281
+#: ../src/plugins/jamendo/jamendo.py:279
 #, python-format
 msgid "Album: %s"
 msgstr "Álbum: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:283
+#: ../src/plugins/jamendo/jamendo.py:281
 #, python-format
 msgid "Duration: %s"
 msgstr "Duração: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:340
+#: ../src/plugins/jamendo/jamendo.py:338
 msgid "Fetching albums, please wait..."
 msgstr "Buscando álbuns, por favor aguarde..."
 
-#: ../src/plugins/jamendo/jamendo.py:389
+#: ../src/plugins/jamendo/jamendo.py:387
 msgid "An error occurred while fetching albums."
 msgstr "Ocorreu um erro ao buscar os álbuns."
 
-#: ../src/plugins/jamendo/jamendo.py:401
+#: ../src/plugins/jamendo/jamendo.py:399
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2461,20 +2461,20 @@ msgstr ""
 "Falha ao conectar com o servidor do Jamendo.\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:403
+#: ../src/plugins/jamendo/jamendo.py:401
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "O servidor do Jamendo retornou o código %s."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:635
+#: ../src/plugins/jamendo/jamendo.py:633
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:638
+#: ../src/plugins/jamendo/jamendo.py:636
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2523,11 +2523,11 @@ msgid "_Play with Subtitle"
 msgstr "Re_produzir com legenda"
 
 #: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:1
-msgid "Look for a subtitle for the currently playing movie"
-msgstr "Procura por uma legenda para o filme que está sendo reproduzido"
+msgid "Look for subtitles for the currently playing movie."
+msgstr "Procura por uma legenda para o filme que está sendo reproduzido."
 
 #: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:2
-msgid "Subtitles downloader"
+msgid "Subtitle Downloader"
 msgstr "Buscador de legendas"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:35
@@ -2545,35 +2545,35 @@ msgstr "Não foi possível contactar o website OpenSubtitles"
 msgid "No results found"
 msgstr "Nenhum resultado encontrado"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:360
+#: ../src/plugins/opensubtitles/opensubtitles.py:365
 msgid "Subtitles"
 msgstr "Legendas"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:363
+#: ../src/plugins/opensubtitles/opensubtitles.py:371
 msgid "Format"
 msgstr "Formato"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:366
+#: ../src/plugins/opensubtitles/opensubtitles.py:376
 msgid "Rating"
 msgstr "Avaliação"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:404
+#: ../src/plugins/opensubtitles/opensubtitles.py:416
 msgid "_Download Movie Subtitles..."
 msgstr "_Baixar a legenda do filme..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:405
+#: ../src/plugins/opensubtitles/opensubtitles.py:417
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Baixa a legenda do filme a partir do OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:464
+#: ../src/plugins/opensubtitles/opensubtitles.py:476
 msgid "Searching subtitles..."
 msgstr "Procurando legendas..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:517
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "Downloading the subtitles..."
 msgstr "Baixando a legenda"
 
@@ -2611,7 +2611,7 @@ msgid "%d Hz"
 msgstr "%d Hz"
 
 #: ../src/plugins/publish/totem-publish.c:582
-msgid "Neighbours"
+msgid "Neighbors"
 msgstr "Vizinhos"
 
 #: ../src/plugins/publish/publish.totem-plugin.in.h:1
@@ -2795,38 +2795,38 @@ msgid "A plugin to let you browse YouTube videos."
 msgstr "Um plug-in para navegar pelos vídeos do YouTube."
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
-msgid "YouTube browser"
+msgid "YouTube Browser"
 msgstr "Navegador do YouTube"
 
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "Vídeos relacionados"
 
-#: ../src/plugins/youtube/youtube.py:130 ../src/plugins/youtube/youtube.py:232
+#: ../src/plugins/youtube/youtube.py:127 ../src/plugins/youtube/youtube.py:229
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/youtube.py:150
+#: ../src/plugins/youtube/youtube.py:147
 msgid "Videos"
 msgstr "Vídeos"
 
-#: ../src/plugins/youtube/youtube.py:156
+#: ../src/plugins/youtube/youtube.py:153
 msgid "_Open in Web Browser"
 msgstr "A_brir no navegador web"
 
-#: ../src/plugins/youtube/youtube.py:156
+#: ../src/plugins/youtube/youtube.py:153
 msgid "Open the video in your web browser"
 msgstr "Abre o vídeo no seu navegador web"
 
-#: ../src/plugins/youtube/youtube.py:195
+#: ../src/plugins/youtube/youtube.py:192
 msgid "Fetching related videos..."
 msgstr "Obtendo vídeos relacionados..."
 
-#: ../src/plugins/youtube/youtube.py:380
+#: ../src/plugins/youtube/youtube.py:377
 msgid "Fetching search results..."
 msgstr "Obtendo resultados da pesquisa..."
 
-#: ../src/plugins/youtube/youtube.py:395
+#: ../src/plugins/youtube/youtube.py:392
 msgid "Fetching more videos..."
 msgstr "Obtendo mais vídeos..."
 
