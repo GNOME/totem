@@ -1,6 +1,4 @@
 <?xml version="1.0" ?>
-<!--*- mode: xml -*--><!DOCTYPE glade-interface
-  SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
 <interface>
 
 <object class="GtkUIManager" id="totem-playlist-ui-manager">
@@ -100,7 +98,7 @@
 	  <property name="visible">True</property>
 	  <property name="tooltip-text" translatable="yes">Add...</property>
 	  <property name="can_focus">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
+	  <property name="relief">GTK_RELIEF_NONE</property>
 	  <property name="focus_on_click">True</property>
 	  <signal name="clicked" handler="totem_playlist_add_files"/>
 
@@ -158,7 +156,7 @@
 	  <property name="sensitive">False</property>
 	  <property name="tooltip-text" translatable="yes">Remove</property>
 	  <property name="can_focus">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
+	  <property name="relief">GTK_RELIEF_NONE</property>
 	  <property name="focus_on_click">True</property>
 	  <signal name="clicked" handler="playlist_remove_button_clicked"/>
 
@@ -186,7 +184,7 @@
 	  <property name="visible">True</property>
 	  <property name="tooltip-text" translatable="yes">Save Playlist...</property>
 	  <property name="can_focus">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
+	  <property name="relief">GTK_RELIEF_NONE</property>
 	  <property name="focus_on_click">True</property>
 	  <signal name="clicked" handler="totem_playlist_save_files"/>
 
@@ -244,7 +242,7 @@
 	  <property name="sensitive">False</property>
 	  <property name="tooltip-text" translatable="yes">Move Up</property>
 	  <property name="can_focus">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
+	  <property name="relief">GTK_RELIEF_NONE</property>
 	  <property name="focus_on_click">True</property>
 	  <signal name="clicked" handler="totem_playlist_up_files"/>
 
@@ -273,7 +271,7 @@
 	  <property name="sensitive">False</property>
 	  <property name="tooltip-text" translatable="yes">Move Down</property>
 	  <property name="can_focus">True</property>
-	  <property name="relief">GTK_RELIEF_NORMAL</property>
+	  <property name="relief">GTK_RELIEF_NONE</property>
 	  <property name="focus_on_click">True</property>
 	  <signal name="clicked" handler="totem_playlist_down_files"/>
 
