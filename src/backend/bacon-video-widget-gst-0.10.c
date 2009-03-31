@@ -2943,6 +2943,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   g_object_notify (G_OBJECT (bvw), "seekable");
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+  got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
 }
 
 void
