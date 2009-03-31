@@ -1,5 +1,12 @@
 2009-03-31  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-object.c (totem_action_set_mrl_with_warning),
+	(video_widget_create): Set the default drag action to be copy,
+	and only make the video widget a drag source when there's a video
+	loaded (Closes: #574565)
+
+2009-03-31  Bastien Nocera  <hadess@hadess.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_close): Reset the seekbar to 0 when a file
 	is closed (Closes: #577255)

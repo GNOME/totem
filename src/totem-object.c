@@ -1659,6 +1659,9 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		update_mrl_label (totem, NULL);
+
+		/* Unset the drag */
+		gtk_drag_source_unset (GTK_WIDGET (totem->bvw));
 	} else {
 		gboolean caps;
 		gdouble volume;
@@ -1722,7 +1725,17 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			totem->mrl = NULL;
 			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		} else {
+			const GtkTargetEntry source_table[] = {
+				{ "text/uri-list", 0, 0 }
+			};
+
 			totem_file_opened (totem, totem->mrl);
+
+			/* Set the drag source */
+			gtk_drag_source_set (GTK_WIDGET (totem->bvw),
+					     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+					     source_table, G_N_ELEMENTS (source_table),
+					     GDK_ACTION_COPY);
 		}
 	}
 	update_buttons (totem);
@@ -3943,9 +3956,6 @@ video_widget_create (Totem *totem)
 	GError *err = NULL;
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
-	const GtkTargetEntry source_table[] = {
-		{ "text/uri-list", 0, 0 }
-	};
 
 	totem->bvw = BACON_VIDEO_WIDGET
 		(bacon_video_widget_new (-1, -1, BVW_USE_TYPE_VIDEO, &err));
@@ -4017,10 +4027,6 @@ video_widget_create (Totem *totem)
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_get",
 			G_CALLBACK (drag_video_cb), totem);
-	gtk_drag_source_set (GTK_WIDGET (totem->bvw),
-			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-			source_table, G_N_ELEMENTS (source_table),
-			GDK_ACTION_LINK);
 
 	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
