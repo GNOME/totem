@@ -4020,7 +4020,7 @@ video_widget_create (Totem *totem)
 	gtk_drag_source_set (GTK_WIDGET (totem->bvw),
 			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 			source_table, G_N_ELEMENTS (source_table),
-			GDK_ACTION_LINK);
+			GDK_ACTION_COPY);
 
 	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
