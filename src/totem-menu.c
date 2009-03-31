@@ -1160,14 +1160,11 @@ about_action_callback (GtkAction *action, Totem *totem)
 		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
 		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
 		"Tim-Philipp M\303\274ller <tim\100centricular\056net> (GStreamer backend)",
+		"Philip Withnall <philip@tecnocode.co.uk>",
 		NULL
 	};
 	const char *artists[] = { "Jakub Steiner <jimmac@ximian.com>", NULL };
-	const char *documenters[] =
-	{
-		"Chee Bin Hoh <cbhoh@gnome.org>",
-		NULL
-	};
+	#include "../help/totem-docs.h"
 	char *license = totem_interface_get_license ();
 
 	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
@@ -1177,17 +1174,17 @@ about_action_callback (GtkAction *action, Totem *totem)
 
 	gtk_show_about_dialog (GTK_WINDOW (totem->win),
 				     "version", VERSION,
-				     "copyright", _("Copyright \xc2\xa9 2002-2008 Bastien Nocera"),
+				     "copyright", _("Copyright \xc2\xa9 2002-2009 Bastien Nocera"),
 				     "comments", description,
 				     "authors", authors,
-				     "documenters", documenters,
+				     "documenters", documentation_credits,
 				     "artists", artists,
 				     "translator-credits", _("translator-credits"),
 				     "logo-icon-name", "totem",
 				     "license", license,
 				     "wrap-license", TRUE,
 				     "website-label", _("Totem Website"),
-				     "website", "http://www.gnome.org/projects/totem/",
+				     "website", "http://projects.gnome.org/totem/",
 				     NULL);
 
 	g_free (backend_version);

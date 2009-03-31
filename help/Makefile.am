@@ -3,6 +3,8 @@ dist-hook: doc-dist-hook
 
 DOC_MODULE = totem
 DOC_ENTITIES = legal.xml
+DOC_H_FILE = totem-docs.h
+DOC_H_DOCS = C/totem.xml
 DOC_INCLUDES = 
 
 DOC_FIGURES  = 	figures/totem_show_playlist_button.png 	\
