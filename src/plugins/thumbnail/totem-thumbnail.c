@@ -96,6 +96,7 @@ set_icon_to_default (TotemObject *totem)
 	g_return_if_fail (TOTEM_IS_OBJECT (totem));
 
 	window = totem_get_main_window (totem);
+	gtk_window_set_icon (window, NULL);
 	gtk_window_set_icon_name (window, "totem");
 }
 
