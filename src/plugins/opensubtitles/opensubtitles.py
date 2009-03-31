@@ -346,7 +346,9 @@ class OpenSubtitles(totem.Plugin):
 
         # Set up and populate the languages combobox
         renderer = gtk.CellRendererText()
-        combobox.set_model(languages)
+        sorted_languages = gtk.TreeModelSort(languages)
+        sorted_languages.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        combobox.set_model(sorted_languages)
         combobox.pack_start(renderer, True)
         combobox.add_attribute(renderer, 'text', 0)
 
@@ -354,7 +356,8 @@ class OpenSubtitles(totem.Plugin):
         for lang in LANGUAGES_STR:
             it = languages.append(lang)
             if LANGUAGES[lang[1]] == self.model.lang:
-                combobox.set_active_iter(it)
+                parentit = sorted_languages.convert_child_iter_to_iter (None, it)
+                combobox.set_active_iter(parentit)
 
         # Set up the results treeview 
         renderer = gtk.CellRendererText()
