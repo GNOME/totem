@@ -1383,7 +1383,7 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 {
 	RandomData data;
 	GArray *array;
-	int i, current;
+	int i, current, current_new;
 	int *indices;
 
 	if (shuffle == FALSE || PL_LEN != playlist->priv->shuffle_len)
@@ -1402,6 +1402,8 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 	} else {
 		current = -1;
 	}
+	
+	current_new = -1;
 
 	playlist->priv->shuffled = g_new (int, PL_LEN);
 	playlist->priv->shuffle_len = PL_LEN;
@@ -1426,7 +1428,13 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 
 		if (playlist->priv->current != NULL
 				&& playlist->priv->shuffled[i] == current)
-			playlist->priv->current_shuffled = i;
+			current_new = i;
+	}
+
+	if (current_new > -1) {
+		playlist->priv->shuffled[current_new] = playlist->priv->shuffled[0];
+		playlist->priv->shuffled[0] = current;
+		playlist->priv->current_shuffled = 0;
 	}
 
 	g_array_free (array, TRUE);
