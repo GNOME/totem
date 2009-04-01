@@ -1,5 +1,11 @@
 2009-04-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-playlist.c (totem_playlist_file_changed):
+	Only remove files when the location is about to be umounted,
+	or is umounted (Closes: #574097)
+
+2009-04-01  Bastien Nocera  <hadess@hadess.net>
+
 	* browser-plugin/totemNarrowSpacePlugin.cpp: Fix Rewind()
 	and Stop() functions to do what they're supposed to in
 	the QuickTime compat plugin (Closes: #544066)
