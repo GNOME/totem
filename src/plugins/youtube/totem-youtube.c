@@ -117,6 +117,158 @@ totem_youtube_plugin_init (TotemYouTubePlugin *plugin)
 	/* Nothing to see here; move along */
 }
 
+/* ----------------------------------------------------------------------------------------------------------------- */
+/* Copied from http://bugzilla.gnome.org/show_bug.cgi?id=575900 while waiting for them to be committed to gdk-pixbuf */
+
+typedef	struct {
+	gint width;
+	gint height;
+	gboolean preserve_aspect_ratio;
+} AtScaleData;
+
+static void
+new_from_stream_thread (GSimpleAsyncResult *result,
+			GInputStream       *stream,
+			GCancellable       *cancellable)
+{
+	GdkPixbuf *pixbuf;
+	AtScaleData *data;
+	GError *error = NULL;
+
+	/* If data != NULL, we're scaling the pixbuf while loading it */
+	data = g_simple_async_result_get_op_res_gpointer (result);
+	if (data != NULL)
+		pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream, data->width, data->height, data->preserve_aspect_ratio, cancellable, &error);
+	else
+		pixbuf = gdk_pixbuf_new_from_stream (stream, cancellable, &error);
+
+	g_free (data); /* GSimpleAsyncResult doesn't destroy result pointers when setting a new value over the top */
+	g_simple_async_result_set_op_res_gpointer (result, NULL, NULL);
+
+	/* Set the new pixbuf as the result, or error out */
+	if (pixbuf == NULL) {
+		g_simple_async_result_set_from_error (result, error);
+		g_error_free (error);
+	} else {
+		g_simple_async_result_set_op_res_gpointer (result, pixbuf, g_object_unref);
+	}
+}
+
+ /**
+ * gdk_pixbuf_new_from_stream_at_scale_async:
+ * @stream: a #GInputStream from which to load the pixbuf
+ * @width: the width the image should have or -1 to not constrain the width
+ * @height: the height the image should have or -1 to not constrain the height
+ * @preserve_aspect_ratio: %TRUE to preserve the image's aspect ratio
+ * @cancellable: optional #GCancellable object, %NULL to ignore
+ * @callback: a #GAsyncReadyCallback to call when the the pixbuf is loaded
+ * @user_data: the data to pass to the callback function 
+ *
+ * Creates a new pixbuf by asynchronously loading an image from an input stream.  
+ *
+ * For more details see gdk_pixbuf_new_from_stream_at_scale(), which is the synchronous
+ * version of this function.
+ *
+ * When the operation is finished, @callback will be called in the main thread.
+ * You can then call gdk_pixbuf_new_from_stream_finish() to get the result of the operation.
+ *
+ * Since: 2.18
+ **/
+static void
+totem_gdk_pixbuf_new_from_stream_at_scale_async (GInputStream        *stream,
+					   gint                 width,
+					   gint                 height,
+					   gboolean             preserve_aspect_ratio,
+					   GCancellable        *cancellable,
+					   GAsyncReadyCallback  callback,
+					   gpointer             user_data)
+{
+	GSimpleAsyncResult *result;
+	AtScaleData *data;
+
+	g_return_if_fail (G_IS_INPUT_STREAM (stream));
+	g_return_if_fail (callback != NULL);
+
+	data = g_new (AtScaleData, 1);
+	data->width = width;
+	data->height = height;
+	data->preserve_aspect_ratio = preserve_aspect_ratio;
+
+	result = g_simple_async_result_new (G_OBJECT (stream), callback, user_data, totem_gdk_pixbuf_new_from_stream_at_scale_async);
+	g_simple_async_result_set_op_res_gpointer (result, data, (GDestroyNotify) g_free);
+	g_simple_async_result_run_in_thread (result, (GSimpleAsyncThreadFunc) new_from_stream_thread, G_PRIORITY_DEFAULT, cancellable);
+	g_object_unref (result);
+}
+
+/**
+ * gdk_pixbuf_new_from_stream_async:
+ * @stream: a #GInputStream from which to load the pixbuf
+ * @cancellable: optional #GCancellable object, %NULL to ignore
+ * @callback: a #GAsyncReadyCallback to call when the the pixbuf is loaded
+ * @user_data: the data to pass to the callback function 
+ *
+ * Creates a new pixbuf by asynchronously loading an image from an input stream.  
+ *
+ * For more details see gdk_pixbuf_new_from_stream(), which is the synchronous
+ * version of this function.
+ *
+ * When the operation is finished, @callback will be called in the main thread.
+ * You can then call gdk_pixbuf_new_from_stream_finish() to get the result of the operation.
+ *
+ * Since: 2.18
+ **/
+static void
+totem_gdk_pixbuf_new_from_stream_async (GInputStream        *stream,
+				  GCancellable        *cancellable,
+				  GAsyncReadyCallback  callback,
+				  gpointer             user_data)
+{
+	GSimpleAsyncResult *result;
+
+	g_return_if_fail (G_IS_INPUT_STREAM (stream));
+	g_return_if_fail (callback != NULL);
+
+	result = g_simple_async_result_new (G_OBJECT (stream), callback, user_data, totem_gdk_pixbuf_new_from_stream_async);
+	g_simple_async_result_run_in_thread (result, (GSimpleAsyncThreadFunc) new_from_stream_thread, G_PRIORITY_DEFAULT, cancellable);
+	g_object_unref (result);
+}
+
+/**
+ * gdk_pixbuf_new_from_stream_finish:
+ * @async_result: a #GAsyncResult
+ * @error: a #GError, or %NULL
+ *
+ * Finishes an asynchronous pixbuf creation operation started with
+ * gdk_pixbuf_new_from_stream_async().
+ *
+ * Return value: a #GdkPixbuf or %NULL on error. Free the returned
+ * object with g_object_unref().
+ *
+ * Since: 2.18
+ **/
+static GdkPixbuf *
+totem_gdk_pixbuf_new_from_stream_finish (GAsyncResult  *async_result,
+				   GError       **error)
+{
+	GdkPixbuf *pixbuf;
+	GSimpleAsyncResult *result = G_SIMPLE_ASYNC_RESULT (async_result);
+
+	g_return_val_if_fail (G_IS_ASYNC_RESULT (async_result), NULL);
+	g_warn_if_fail (g_simple_async_result_get_source_tag (result) == totem_gdk_pixbuf_new_from_stream_async ||
+			g_simple_async_result_get_source_tag (result) == totem_gdk_pixbuf_new_from_stream_at_scale_async);
+
+	if (g_simple_async_result_propagate_error (result, error))
+		return NULL;
+
+	pixbuf = GDK_PIXBUF (g_simple_async_result_get_op_res_gpointer (result));
+	if (pixbuf != NULL)
+		return g_object_ref (pixbuf);
+
+	return NULL;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
 static void
 set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 {
@@ -411,7 +563,7 @@ thumbnail_loaded_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	TotemYouTubePlugin *self = data->plugin;
 
 	/* Finish loading the thumbnail */
-	thumbnail = gdk_pixbuf_new_from_stream_finish (result, &error);
+	thumbnail = totem_gdk_pixbuf_new_from_stream_finish (result, &error);
 
 	if (thumbnail == NULL) {
 		GtkWindow *window;
@@ -464,7 +616,7 @@ thumbnail_opened_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	}
 
 	g_debug ("Creating thumbnail from stream");
-	gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (input_stream), THUMBNAIL_WIDTH, -1, TRUE,
+	totem_gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (input_stream), THUMBNAIL_WIDTH, -1, TRUE,
 						   self->cancellable[data->tree_view], (GAsyncReadyCallback) thumbnail_loaded_cb, data);
 	g_object_unref (input_stream);
 }

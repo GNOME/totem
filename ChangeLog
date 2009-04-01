@@ -1,5 +1,14 @@
 2009-04-01  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/plugins/youtube/totem-youtube.c (new_from_stream_thread),
+	(totem_gdk_pixbuf_new_from_stream_at_scale_async),
+	(totem_gdk_pixbuf_new_from_stream_async),
+	(totem_gdk_pixbuf_new_from_stream_finish), (thumbnail_loaded_cb),
+	(thumbnail_opened_cb): Temporarily copy functions from bug #575900
+	into the YouTube plugin in lieu of them being committed.
+
+2009-04-01  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* configure.in:
 	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_can_play_youtube_videos):
