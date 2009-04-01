@@ -1,5 +1,11 @@
 2009-04-01  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-options.c (totem_options_process_for_server):
+	* src/totem-options.h: Remove --print-playing, we
+	have a D-Bus plugin to export that data now (Closes: #512232)
+
+2009-04-01  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-playlist.c (totem_playlist_file_changed):
 	Only remove files when the location is about to be umounted,
 	or is umounted (Closes: #574097)

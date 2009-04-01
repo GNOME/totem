@@ -62,8 +62,6 @@ const GOptionEntry options[] = {
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
 	{"no-existing-session", '\0', 0, G_OPTION_ARG_NONE, &optionstate.notconnectexistingsession, N_("Don't connect to an already-running instance"), NULL},
-	/* translators: this option prints the current movie's title on the command-line */
-	{"printplaying", '\0', 0, G_OPTION_ARG_NONE, &optionstate.printplaying, N_("Print playing movie"), NULL},
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
 	{"playlist-idx", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_DOUBLE, &optionstate.playlistidx, N_("Playlist index"), NULL},
 	{ "version", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, option_version_cb, NULL, NULL },
@@ -120,22 +118,6 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 
 	commands = NULL;
 	default_action = TOTEM_REMOTE_COMMAND_REPLACE;
-
-	/* We can only handle "printplaying" on its own */
-	if (options->printplaying)
-	{
-		char *line;
-		GMainLoop *loop = g_main_loop_new (NULL, FALSE);
-
-		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_SHOW_PLAYING);
-		bacon_message_connection_set_callback (conn,
-				totem_print_playing_cb, loop);
-		bacon_message_connection_send (conn, line);
-		g_free (line);
-
-		g_main_loop_run (loop);
-		return;
-	}
 
 	/* Are we quitting ? */
 	if (options->quit) {
