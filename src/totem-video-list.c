@@ -232,14 +232,17 @@ totem_video_list_set_property (GObject *object, guint property_id, const GValue 
 	{
 		case PROP_TOOLTIP_COLUMN:
 			priv->tooltip_column = g_value_get_int (value);
+			g_object_notify (object, "tooltip-column");
 			break;
 		case PROP_MRL_COLUMN:
 			priv->mrl_column = g_value_get_int (value);
+			g_object_notify (object, "mrl-column");
 			break;
 		case PROP_TOTEM:
 			if (priv->totem != NULL)
 				g_object_unref (priv->totem);
 			priv->totem = (Totem*) g_value_dup_object (value);
+			g_object_notify (object, "totem");
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -342,7 +345,8 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 				self->priv->tooltip_column, &display_name,
 				-1);
 
-	totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name, FALSE);
+	if (mrl != NULL)
+		totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name, FALSE);
 
 	g_free (mrl);
 	g_free (display_name);

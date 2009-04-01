@@ -1,3 +1,38 @@
+2009-04-01  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* configure.in:
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_can_play_youtube_videos):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_can_play_youtube_videos):
+	* src/backend/bacon-video-widget.h:
+	* src/plugins/youtube/Makefile.am:
+	* src/plugins/youtube/totem-youtube.c
+	(totem_youtube_plugin_class_init), (totem_youtube_plugin_init),
+	(set_up_tree_view), (impl_activate), (impl_deactivate),
+	(get_fmt_param), (progress_bar_pulse_cb), (set_progress_bar_text),
+	(increment_progress_bar_fraction), (resolve_t_param_cb),
+	(resolve_t_param), (thumbnail_loaded_cb), (thumbnail_opened_cb),
+	(query_finished_cb), (query_progress_cb), (execute_query),
+	(search_button_clicked_cb), (search_entry_activate_cb),
+	(load_related_videos), (notebook_switch_page_cb),
+	(open_in_web_browser_activate_cb), (value_changed_cb),
+	(button_press_event_cb), (button_release_event_cb),
+	(starting_video_cb):
+	* src/plugins/youtube/youtube.py:
+	* src/plugins/youtube/youtube.totem-plugin.in:
+	* src/plugins/youtube/youtube.ui:
+	* src/totem-cell-renderer-video.c
+	(totem_cell_renderer_video_class_init),
+	(totem_cell_renderer_video_init),
+	(totem_cell_renderer_video_dispose),
+	(totem_cell_renderer_video_finalize),
+	(totem_cell_renderer_video_set_property), (get_size),
+	(totem_cell_renderer_video_render):
+	* src/totem-video-list.c (totem_video_list_set_property),
+	(row_activated_cb): Ported the YouTube plugin to C, using the shiny
+	new libgdata library.
+
 2009-04-01  Philip Withnall <philip@tecnocode.co.uk>
 
 	Update svn:ignore properties.

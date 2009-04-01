@@ -48,7 +48,6 @@
 #include "totem-private.h"
 
 struct _TotemCellRendererVideoPrivate {
-	gboolean dispose_has_run;
 	gchar *title;
 	GdkPixbuf *thumbnail;
 	PangoAlignment alignment;
@@ -67,6 +66,7 @@ enum {
 static void totem_cell_renderer_video_set_property (GObject *object, guint property_id, const GValue *value, GParamSpec *pspec);
 static void totem_cell_renderer_video_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec);
 static void totem_cell_renderer_video_dispose (GObject *object);
+static void totem_cell_renderer_video_finalize (GObject *object);
 static void totem_cell_renderer_video_get_size (GtkCellRenderer *cell, GtkWidget *widget, GdkRectangle *cell_area, gint *x_offset, gint *y_offset, gint *width, gint *height);
 static void totem_cell_renderer_video_render (GtkCellRenderer *cell, GdkDrawable *window, GtkWidget *widget, GdkRectangle *background_area, GdkRectangle *cell_area, GdkRectangle *expose_area, GtkCellRendererState flags);
 
@@ -102,6 +102,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	object_class->set_property = totem_cell_renderer_video_set_property;
 	object_class->get_property = totem_cell_renderer_video_get_property;
 	object_class->dispose = totem_cell_renderer_video_dispose;
+	object_class->finalize = totem_cell_renderer_video_finalize;
 	renderer_class->get_size = totem_cell_renderer_video_get_size;
 	renderer_class->render = totem_cell_renderer_video_render;
 
@@ -149,7 +150,6 @@ static void
 totem_cell_renderer_video_init (TotemCellRendererVideo *self)
 {
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_CELL_RENDERER_VIDEO, TotemCellRendererVideoPrivate);
-	self->priv->dispose_has_run = FALSE;
 	self->priv->title = NULL;
 	self->priv->thumbnail = NULL;
 	self->priv->alignment = PANGO_ALIGN_CENTER;
@@ -164,17 +164,23 @@ totem_cell_renderer_video_dispose (GObject *object)
 {
 	TotemCellRendererVideo *self = TOTEM_CELL_RENDERER_VIDEO (object);
 
-	/* Make sure we only run once */
-	if (self->priv->dispose_has_run)
-		return;
-	self->priv->dispose_has_run = TRUE;
-
-	g_free (self->priv->title);
 	if (self->priv->thumbnail != NULL)
 		g_object_unref (self->priv->thumbnail);
+	self->priv->thumbnail = NULL;
 
 	/* Chain up to the parent class */
 	G_OBJECT_CLASS (totem_cell_renderer_video_parent_class)->dispose (object);
+}
+
+static void
+totem_cell_renderer_video_finalize (GObject *object)
+{
+	TotemCellRendererVideo *self = TOTEM_CELL_RENDERER_VIDEO (object);
+
+	g_free (self->priv->title);
+
+	/* Chain up to the parent class */
+	G_OBJECT_CLASS (totem_cell_renderer_video_parent_class)->finalize (object);
 }
 
 static void
@@ -187,7 +193,7 @@ totem_cell_renderer_video_set_property (GObject *object, guint property_id, cons
 		case PROP_THUMBNAIL:
 			if (priv->thumbnail != NULL)
 				g_object_unref (priv->thumbnail);
-			priv->thumbnail = (GdkPixbuf*) g_value_dup_object (value);
+			priv->thumbnail = GDK_PIXBUF (g_value_dup_object (value));
 			break;
 		case PROP_TITLE:
 			g_free (priv->title);
@@ -266,17 +272,16 @@ get_size (GtkCellRenderer *cell,
 	if (priv->thumbnail != NULL)
 		pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 	context = gtk_widget_get_pango_context (widget);
-	metrics = pango_context_get_metrics (context,
-				font_desc,
-				pango_context_get_language (context));
+	metrics = pango_context_get_metrics (context, font_desc, pango_context_get_language (context));
 
 	if (cell_area)
 		title_width = cell_area->width;
-	else
+	else if (cell->width != -1)
 		title_width = cell->width;
+	else
+		title_width = pixbuf_width;
 
-	title_height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
-				pango_font_metrics_get_descent (metrics));
+	title_height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) + pango_font_metrics_get_descent (metrics));
 
 	pango_font_metrics_unref (metrics);
 	pango_font_description_free (font_desc);
@@ -302,10 +307,10 @@ get_size (GtkCellRenderer *cell,
 		draw_area->height = calc_height;
 
 		/*if (cell_area) {
-			g_message ("Cell area: X: %i, Y: %i, W: %i, H: %i", cell_area->x, cell_area->y, cell_area->width, cell_area->height);
-			g_message ("X-align: %f, Y-align: %f", cell->xalign, cell->yalign);
+			g_debug ("Cell area: X: %i, Y: %i, W: %i, H: %i", cell_area->x, cell_area->y, cell_area->width, cell_area->height);
+			g_debug ("X-align: %f, Y-align: %f", cell->xalign, cell->yalign);
 		}
-		g_message ("Draw area: X: %i, Y: %i, W: %i, H: %i", draw_area->x, draw_area->y, draw_area->width, draw_area->height);*/
+		g_debug ("Draw area: X: %i, Y: %i, W: %i, H: %i", draw_area->x, draw_area->y, draw_area->width, draw_area->height);*/
 
 		if (title_area) {
 			if (cell_area) {
@@ -322,7 +327,7 @@ get_size (GtkCellRenderer *cell,
 			else
 				title_area->y = draw_area->y;
 
-			/*g_message ("Title area: X: %i, Y: %i, W: %i, H: %i", title_area->x, title_area->y, title_area->width, title_area->height);*/
+			/*g_debug ("Title area: X: %i, Y: %i, W: %i, H: %i", title_area->x, title_area->y, title_area->width, title_area->height);*/
 		}
 
 		if (pixbuf_height > 0 && thumbnail_area) {
@@ -334,10 +339,10 @@ get_size (GtkCellRenderer *cell,
 			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
 			thumbnail_area->height = pixbuf_height;
 
-			/*g_message ("Thumbnail area: X: %i, Y: %i, W: %i, H: %i", thumbnail_area->x, thumbnail_area->y, thumbnail_area->width, thumbnail_area->height);*/
+			/*g_debug ("Thumbnail area: X: %i, Y: %i, W: %i, H: %i", thumbnail_area->x, thumbnail_area->y, thumbnail_area->width, thumbnail_area->height);*/
 		}
 
-		/*g_message ("---");*/
+		/*g_debug ("---");*/
 	}
 }
 
@@ -391,17 +396,14 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	draw_area.height -= cell->ypad * 2;
 
 	if (!gdk_rectangle_intersect (cell_area, &draw_area, &draw_rect) ||
-				!gdk_rectangle_intersect (expose_area, &draw_rect, &draw_rect))
+	    !gdk_rectangle_intersect (expose_area, &draw_rect, &draw_rect))
 		return;
 
 	/* Sort out the thumbnail */
 	if (priv->thumbnail != NULL)
 		pixbuf = priv->thumbnail;
 	else if (priv->use_placeholder == TRUE)
-		pixbuf = gtk_widget_render_icon (widget,
-					GTK_STOCK_MISSING_IMAGE,
-					GTK_ICON_SIZE_DIALOG,
-					NULL);
+		pixbuf = gtk_widget_render_icon (widget, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG, NULL);
 	else
 		pixbuf = NULL;
 
