@@ -935,6 +935,13 @@ subtitles, and more.</para>
       <para>YouTube videos can be opened in a web browser by choosing <menuchoice><guimenuitem>Open in Web Browser</guimenuitem></menuchoice> from
         their context menu. This will open the video in its original location on the YouTube website.</para>
     </sect2>
+    <sect2 id="totem-plugins-dbus-service">
+      <title>D-Bus Service</title>
+      <para>The <guilabel>D-Bus Service</guilabel> plugin broadcasts notifications of which track is playing in <application>&app;</application>
+        on the D-Bus session bus. Applications such as <application>Gajim</application> can listen for such notifications and respond accordingly by,
+        for example, updating your instant messaging status message to display the video currently being played in
+        <application>&app;</application>.</para>
+    </sect2>
   </sect1>
 
 <!-- =========== Usage ======================================= -->
