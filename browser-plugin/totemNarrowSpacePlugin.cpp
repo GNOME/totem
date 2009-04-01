@@ -148,12 +148,12 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
     case eStop:
       /* void Stop (); */
-      Plugin()->Command (TOTEM_COMMAND_STOP);
+      Plugin()->Command (TOTEM_COMMAND_PAUSE);
       return VoidVariant (_result);
 
     case eRewind:
       /* void Rewind (); */
-      Plugin()->Command (TOTEM_COMMAND_PAUSE);
+      Plugin()->Command (TOTEM_COMMAND_STOP);
       return VoidVariant (_result);
 
     case eGetMaxBytesLoaded:
