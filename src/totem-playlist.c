@@ -1544,7 +1544,8 @@ totem_playlist_file_changed (GFileMonitor *monitor,
 			     GFileMonitorEvent event_type,
 			     TotemPlaylist *playlist)
 {
-	if (event_type == G_FILE_MONITOR_EVENT_DELETED) {
+	if (event_type == G_FILE_MONITOR_EVENT_PRE_UNMOUNT ||
+	    event_type == G_FILE_MONITOR_EVENT_UNMOUNTED) {
 		totem_playlist_clear_with_compare (playlist,
 						   (ClearComparisonFunc) totem_playlist_compare_with_monitor,
 						   monitor);
