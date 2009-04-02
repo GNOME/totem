@@ -1612,10 +1612,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 	playlist->priv->action_group = GTK_ACTION_GROUP (gtk_builder_get_object (playlist->priv->xml, "playlist-action-group"));
 	playlist->priv->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (playlist->priv->xml, "totem-playlist-ui-manager"));
 	
-	/* tooltips */
-	gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(playlist->priv->treeview),
-					 FILENAME_COL);
-
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",
 			  G_CALLBACK (totem_playlist_key_press), playlist);
@@ -1635,6 +1631,10 @@ totem_playlist_init (TotemPlaylist *playlist)
 	init_treeview (playlist->priv->treeview, playlist);
 	playlist->priv->model = gtk_tree_view_get_model
 		(GTK_TREE_VIEW (playlist->priv->treeview));
+
+	/* tooltips */
+	gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(playlist->priv->treeview),
+					 FILENAME_COL);
 
 	/* The configuration */
 	init_config (playlist);
