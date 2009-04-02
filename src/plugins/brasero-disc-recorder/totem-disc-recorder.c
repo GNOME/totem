@@ -80,7 +80,7 @@ static GtkActionEntry totem_disc_recorder_plugin_actions [] = {
 	{ "VideoDVDCopy", "media-optical-copy", N_("Copy Vide_o DVD..."), NULL,
 		N_("Copy the currently playing video DVD"),
 		G_CALLBACK (totem_disc_recorder_plugin_copy) },
-	{ "VideoVCDCopy", "media-optical-copy", N_("Copy Vide_o (S)VCD..."), NULL,
+	{ "VideoVCDCopy", "media-optical-copy", N_("Copy (S)VCD..."), NULL,
 		N_("Copy the currently playing (S)VCD"),
 		G_CALLBACK (totem_disc_recorder_plugin_copy) },
 };
