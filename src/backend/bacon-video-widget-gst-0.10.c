@@ -4891,7 +4891,6 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
 {
   GstColorBalance *old_balance = bvw->priv->balance;
   GstXOverlay *old_xoverlay = bvw->priv->xoverlay;
-  GstNavigation *old_navigation = bvw->priv->navigation;
   GstElement *video_sink = NULL;
   GstElement *element = NULL;
   GstIteratorResult ires;
