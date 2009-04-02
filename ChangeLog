@@ -1,3 +1,17 @@
+2009-04-02  Jan Schmidt  <jan.schmidt@sun.com>
+
+	* configure.in:
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bvw_get_navigation_iface), (bacon_video_widget_motion_notify),
+	(bacon_video_widget_button_press),
+	(bacon_video_widget_button_release), (bvw_handle_element_message),
+	(bacon_video_widget_finalize), (bvw_do_navigation_command),
+	(bacon_video_widget_dvd_event),
+	(bacon_video_widget_set_show_cursor),
+	(bvw_update_interface_implementations), (bacon_video_widget_new):
+	Add support for new DVD navigation interfaces in gst-plugins-base,
+	and bump the requirement to 0.10.22.1 to ensure they're available.
+
 2009-04-02  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-playlist.c (totem_playlist_init):
