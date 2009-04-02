@@ -535,7 +535,7 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	TParamData *data;
 
 	/* We have to get the t parameter from the actual HTML video page, since Google changed how their URIs work */
-	link = gdata_entry_lookup_link (entry, "alternate");
+	link = gdata_entry_look_up_link (entry, "alternate");
 	g_assert (link != NULL);
 
 	data = g_slice_new (TParamData);
@@ -862,7 +862,7 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 
 		/* Get the HTML page for the video; its <link rel="alternate" ... /> */
 		gtk_tree_model_get (model, &iter, 3, &video, -1);
-		link = gdata_entry_lookup_link (GDATA_ENTRY (video), "alternate");
+		link = gdata_entry_look_up_link (GDATA_ENTRY (video), "alternate");
 		g_object_unref (video);
 
 		/* Display the page */

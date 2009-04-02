@@ -36,8 +36,6 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 GLIB_REQS=2.13.4
 GTK_REQS=2.13.0
 TOTEM_PLPARSER_REQS=2.23.91
-GNOMEUI_REQS=2.3.3
-LIBGNOME_REQS=2.14.0
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.61
 VALA_REQS=0.1.6
@@ -611,7 +609,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		youtube)
-			PKG_CHECK_MODULES(LIBGDATA, libgdata,
+			PKG_CHECK_MODULES(LIBGDATA, libgdata >= 0.1.1,
 				[HAVE_LIBGDATA=yes], [HAVE_LIBGDATA=no])
 			if test "${HAVE_LIBGDATA}" != "yes" ; then
 				plugin_error_or_ignore "you need libgdata installed for the YouTube plugin"
