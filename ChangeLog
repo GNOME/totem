@@ -1,3 +1,19 @@
+2009-04-02  Bastien Nocera  <hadess@hadess.net>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/bacon-message-connection.c:
+	* src/bacon-message-connection.h:
+	* src/plugins/lirc/totem-lirc.c (totem_lirc_to_command):
+	* src/totem-object.c (totem_remote_command_get_type),
+	(totem_action_exit), (totem_action_remote):
+	* src/totem-options.c (totem_options_process_for_server):
+	* src/totem-options.h:
+	* src/totem-private.h:
+	* src/totem.c (totem_message_received_cb), (main):
+	* src/totem.h: Remove use of bacon-message-connection and
+	use libunique instead (Closes: #162822)
+
 2009-04-01  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-options.c (totem_options_process_for_server):

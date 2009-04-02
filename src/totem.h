@@ -56,8 +56,6 @@ G_BEGIN_DECLS
  * @TOTEM_REMOTE_COMMAND_REPLACE: replace an item in the playlist
  * @TOTEM_REMOTE_COMMAND_SHOW: show the Totem instance
  * @TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS: toggle the control visibility
- * @TOTEM_REMOTE_COMMAND_SHOW_PLAYING: return the current stream's metadata
- * @TOTEM_REMOTE_COMMAND_SHOW_VOLUME: return the current volume
  * @TOTEM_REMOTE_COMMAND_UP: go up (DVD controls)
  * @TOTEM_REMOTE_COMMAND_DOWN: go down (DVD controls)
  * @TOTEM_REMOTE_COMMAND_LEFT: go left (DVD controls)
@@ -74,7 +72,7 @@ G_BEGIN_DECLS
  * Represents a command which can be sent to a running Totem instance remotely.
  **/
 typedef enum {
-	TOTEM_REMOTE_COMMAND_UNKNOWN,
+	TOTEM_REMOTE_COMMAND_UNKNOWN = 0,
 	TOTEM_REMOTE_COMMAND_PLAY,
 	TOTEM_REMOTE_COMMAND_PAUSE,
 	TOTEM_REMOTE_COMMAND_STOP,
@@ -91,8 +89,6 @@ typedef enum {
 	TOTEM_REMOTE_COMMAND_REPLACE,
 	TOTEM_REMOTE_COMMAND_SHOW,
 	TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS,
-	TOTEM_REMOTE_COMMAND_SHOW_PLAYING,
-	TOTEM_REMOTE_COMMAND_SHOW_VOLUME,
 	TOTEM_REMOTE_COMMAND_UP,
 	TOTEM_REMOTE_COMMAND_DOWN,
 	TOTEM_REMOTE_COMMAND_LEFT,
@@ -121,8 +117,6 @@ GType totem_disc_media_type_get_type	(void);
 GQuark totem_disc_media_type_quark	(void);
 #define TOTEM_TYPE_DISC_MEDIA_TYPE	(totem_disc_media_type_get_type())
 #define TOTEM_DISC_MEDIA_TYPE		totem_disc_media_type_quark ()
-
-#define SHOW_PLAYING_NO_TRACKS "NONE"
 
 #define TOTEM_TYPE_OBJECT              (totem_object_get_type ())
 #define TOTEM_OBJECT(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), totem_object_get_type (), TotemObject))

@@ -57,27 +57,25 @@ long_action (void)
 		gtk_main_iteration ();
 }
 
-static void
-totem_message_connection_receive_cb (const char *msg, Totem *totem)
+static UniqueResponse
+totem_message_received_cb (UniqueApp         *app,
+			   int                command,
+			   UniqueMessageData *message_data,
+			   guint              time_,
+			   Totem             *totem)
 {
-	char *command_str, *url;
-	int command;
+	char *url;
 
-	if (strlen (msg) < 4)
-		return;
-
-	command_str = g_strndup (msg, 3);
-	sscanf (command_str, "%d", &command);
-	g_free (command_str);
-
-	if (msg[4] != '\0')
-		url = g_strdup (msg + 4);
+	if (message_data != NULL)
+		url = unique_message_data_get_text (message_data);
 	else
 		url = NULL;
 
 	totem_action_remote (totem, command, url);
 
 	g_free (url);
+
+	return UNIQUE_RESPONSE_OK;;
 }
 
 static void
@@ -176,9 +174,9 @@ main (int argc, char **argv)
 
 	/* IPC stuff */
 	if (optionstate.notconnectexistingsession == FALSE) {
-		totem->conn = bacon_message_connection_new (GETTEXT_PACKAGE);
-		if (bacon_message_connection_get_is_server (totem->conn) == FALSE) {
-			totem_options_process_for_server (totem->conn, &optionstate);
+		totem->app = unique_app_new ("org.gnome.Totem", NULL);
+		if (unique_app_is_running (totem->app) != FALSE) {
+			totem_options_process_for_server (totem->app, &optionstate);
 			gdk_notify_startup_complete ();
 			totem_action_exit (totem);
 		} else {
@@ -271,11 +269,9 @@ main (int argc, char **argv)
 	if (optionstate.fullscreen == FALSE)
 		gdk_window_set_cursor (totem->win->window, NULL);
 
-	if (totem->conn != NULL && bacon_message_connection_get_is_server (totem->conn) != FALSE)
-	{
-		bacon_message_connection_set_callback (totem->conn,
-				(BaconMessageReceivedFunc)
-				totem_message_connection_receive_cb, totem);
+	if (totem->app != NULL) {
+		g_signal_connect (totem->app, "message-received",
+				  G_CALLBACK (totem_message_received_cb), totem);
 	}
 
 	gtk_main ();

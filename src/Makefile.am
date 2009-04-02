@@ -3,7 +3,6 @@ SUBDIRS = plugins backend
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
 libexec_PROGRAMS =
 noinst_LTLIBRARIES =				\
-	libbaconmessageconnection.la		\
 	libtotem_player.la			\
 	libtotem_main.la
 
@@ -19,33 +18,6 @@ common_defines = \
 	$(DISABLE_DEPRECATED)
 
 modules_flags = -export_dynamic -avoid-version -module -no-undefined
-
-# Bacon message connection ltlibrary
-
-BACON_MESSAGE_CONNECTION = \
-	bacon-message-connection.c \
-	bacon-message-connection.h
-
-libbaconmessageconnection_la_SOURCES =	\
-	$(BACON_MESSAGE_CONNECTION)
-
-libbaconmessageconnection_la_CPPFLAGS = \
-	$(common_defines)	\
-	$(AM_CPPFLAGS)
-
-libbaconmessageconnection_la_CFLAGS = \
-	$(GTK_CFLAGS)		\
-	$(WARN_CFLAGS)		\
-	$(DBUS_CFLAGS)		\
-	$(AM_CFLAGS)
-
-libbaconmessageconnection_la_LDFLAGS = \
-	$(AM_LDFLAGS)
-
-
-BACONDIR=$(srcdir)/../../libbacon/src
-regenerate-built-sources:
-	EGGFILES="$(BACON_MESSAGE_CONNECTION)" EGGDIR="$(BACONDIR)" $(srcdir)/update-from-egg.sh || true
 
 # Totem UI ltlibrary (used by browser plugins)
 
@@ -68,6 +40,7 @@ libtotem_player_la_CPPFLAGS = \
 libtotem_player_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
+	$(UNIQUE_CFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_player_la_LDFLAGS = \
@@ -124,6 +97,7 @@ libtotem_main_la_CFLAGS = \
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
+	$(UNIQUE_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_main_la_LDFLAGS = \
@@ -133,7 +107,7 @@ libtotem_main_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
 	plugins/libtotemmodule.la	\
-	libbaconmessageconnection.la	\
+	$(UNIQUE_LIBS)			\
 	$(DBUS_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(XTEST_LIBS)			\
@@ -192,13 +166,14 @@ totemvideolist-marshal.c: totemvideolist-marshal.h Makefile
 
 totem_SOURCES = totem.c
 
-totem_CPPFLAGS = \
+totem_CPPFLAGS =			\
 	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
 	$(common_defines)		\
 	$(AM_CPPFLAGS)
 
-totem_CFLAGS = \
+totem_CFLAGS =				\
+	$(UNIQUE_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(DEPENDENCY_CFLAGS)		\
 	$(AM_CFLAGS)

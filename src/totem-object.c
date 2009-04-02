@@ -670,8 +670,6 @@ totem_remote_command_get_type (void)
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_REPLACE, "Replace"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW, "Show"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS, "Toggle controls"),
-			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW_PLAYING, "Show playing"),
-			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW_VOLUME, "Show volume"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_UP, "Up"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_DOWN, "Down"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_LEFT, "Left"),
@@ -880,8 +878,8 @@ totem_action_exit (Totem *totem)
 		totem_action_save_size (totem);
 	}
 
-	if (totem->conn != NULL)
-		bacon_message_connection_free (totem->conn);
+	if (totem->app != NULL)
+		g_object_unref (totem->app);
 	totem_action_save_state (totem, page_id);
 	g_free (page_id);
 
@@ -2943,32 +2941,6 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 					 "show-controls"));
 			state = gtk_toggle_action_get_active (action);
 			gtk_toggle_action_set_active (action, !state);
-		}
-		break;
-	case TOTEM_REMOTE_COMMAND_SHOW_PLAYING:
-		{
-			char *title;
-			gboolean custom;
-
-			title = totem_playlist_get_current_title
-				(totem->playlist, &custom);
-			bacon_message_connection_send (totem->conn,
-					title ? title : SHOW_PLAYING_NO_TRACKS);
-			g_free (title);
-		}
-		break;
-	case TOTEM_REMOTE_COMMAND_SHOW_VOLUME:
-		{
-			char *vol_str;
-			int vol;
-
-			if (bacon_video_widget_can_set_volume (totem->bvw) == FALSE)
-				vol = 0;
-			else
-				vol = bacon_video_widget_get_volume (totem->bvw);
-			vol_str = g_strdup_printf ("%d", vol);
-			bacon_message_connection_send (totem->conn, vol_str);
-			g_free (vol_str);
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_UP:

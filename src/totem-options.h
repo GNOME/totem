@@ -24,9 +24,9 @@
 #define TOTEM_OPTIONS_H
 
 #include <gconf/gconf-client.h>
+#include <unique/uniqueapp.h>
 
 #include "totem.h"
-#include "bacon-message-connection.h"
 
 G_BEGIN_DECLS
 
@@ -62,7 +62,7 @@ void totem_options_process_early (Totem *totem,
 	const TotemCmdLineOptions* options);
 void totem_options_process_late (Totem *totem, 
 	const TotemCmdLineOptions* options);
-void totem_options_process_for_server (BaconMessageConnection *conn, 
+void totem_options_process_for_server (UniqueApp *app,
 	const TotemCmdLineOptions* options);
 
 G_END_DECLS

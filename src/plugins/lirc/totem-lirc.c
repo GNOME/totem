@@ -85,8 +85,6 @@ typedef struct
 #define TOTEM_IR_COMMAND_PLAYPAUSE "play_pause"
 #define TOTEM_IR_COMMAND_ZOOM_UP "zoom_up"
 #define TOTEM_IR_COMMAND_ZOOM_DOWN "zoom_down"
-#define TOTEM_IR_COMMAND_SHOW_PLAYING "show_playing"
-#define TOTEM_IR_COMMAND_SHOW_VOLUME "show_volume"
 #define TOTEM_IR_COMMAND_EJECT "eject"
 #define TOTEM_IR_COMMAND_PLAY_DVD "play_dvd"
 #define TOTEM_IR_COMMAND_MUTE "mute"
@@ -198,10 +196,6 @@ totem_lirc_to_command (const gchar *str, char **url)
 		return TOTEM_REMOTE_COMMAND_ZOOM_UP;
 	else if (strcmp (str, TOTEM_IR_COMMAND_ZOOM_DOWN) == 0)
 		return TOTEM_REMOTE_COMMAND_ZOOM_DOWN;
-	else if (strcmp (str, TOTEM_IR_COMMAND_SHOW_PLAYING) == 0)
-		return TOTEM_REMOTE_COMMAND_SHOW_PLAYING;
-	else if (strcmp (str, TOTEM_IR_COMMAND_SHOW_VOLUME) == 0)
-		return TOTEM_REMOTE_COMMAND_SHOW_VOLUME;
 	else if (strcmp (str, TOTEM_IR_COMMAND_EJECT) == 0)
 		return TOTEM_REMOTE_COMMAND_EJECT;
 	else if (strcmp (str, TOTEM_IR_COMMAND_PLAY_DVD) == 0)

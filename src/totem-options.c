@@ -95,23 +95,9 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 			       options->debug, NULL);
 }
 
-G_GNUC_NORETURN static void
-totem_print_playing_cb (const gchar *msg, gpointer user_data)
-{
-	if (strcmp (msg, SHOW_PLAYING_NO_TRACKS) != 0)
-		g_print ("%s\n", msg);
-	exit (0);
-}
-
-static char *
-totem_option_create_line (int command)
-{
-	return g_strdup_printf ("%03d ", command);
-}
-
 void
-totem_options_process_for_server (BaconMessageConnection *conn,
-		const TotemCmdLineOptions* options)
+totem_options_process_for_server (UniqueApp *app,
+				  const TotemCmdLineOptions* options)
 {
 	GList *commands, *l;
 	int default_action, i;
@@ -121,10 +107,7 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 
 	/* Are we quitting ? */
 	if (options->quit) {
-		char *line;
-		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_QUIT);
-		bacon_message_connection_send (conn, line);
-		g_free (line);
+		unique_app_send_message (app, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 		return;
 	}
 
@@ -139,93 +122,94 @@ totem_options_process_for_server (BaconMessageConnection *conn,
 	}
 
 	/* Send the files to enqueue */
-	for (i = 0; options->filenames && options->filenames[i] != NULL; i++)
-	{
-		char *line, *full_path;
+	for (i = 0; options->filenames && options->filenames[i] != NULL; i++) {
+		UniqueMessageData *data;
+		char *full_path;
+
+		data = unique_message_data_new ();
 		full_path = totem_create_full_path (options->filenames[i]);
-		line = g_strdup_printf ("%03d %s", default_action,
-					full_path ? full_path : options->filenames[i]);
-		bacon_message_connection_send (conn, line);
+		unique_message_data_set_text (data, full_path ? full_path : options->filenames[i], -1);
+		full_path = totem_create_full_path (options->filenames[i]);
+
+		unique_app_send_message (app, default_action, data);
+
 		/* Even if the default action is replace, we only want to replace with the
 		   first file.  After that, we enqueue. */
 		default_action = TOTEM_REMOTE_COMMAND_ENQUEUE;
-		g_free (line);
+		unique_message_data_free (data);
 		g_free (full_path);
 	}
 
 	if (options->playpause) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PLAYPAUSE));
 	}
 
 	if (options->play) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PLAY));
 	}
 
 	if (options->pause) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PAUSE));
 	}
 
 	if (options->next) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_NEXT));
 	}
 
 	if (options->previous) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PREVIOUS));
 	}
 
 	if (options->seekfwd) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_SEEK_FORWARD));
 	}
 
 	if (options->seekbwd) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_SEEK_BACKWARD));
 	}
 
 	if (options->volumeup) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_VOLUME_UP));
 	}
 
 	if (options->volumedown) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_VOLUME_DOWN));
 	}
 
 	if (options->mute) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_MUTE));
 	}
 
 	if (options->fullscreen) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_FULLSCREEN));
 	}
 
 	if (options->togglecontrols) {
-		commands = g_list_append (commands, totem_option_create_line
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS));
 	}
 
 	/* No commands, no files, show ourselves */
 	if (commands == NULL && options->filenames == NULL) {
-		char *line;
-		line = totem_option_create_line (TOTEM_REMOTE_COMMAND_SHOW);
-		bacon_message_connection_send (conn, line);
-		g_free (line);
+		unique_app_send_message (app, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
 
 	/* Send commands */
 	for (l = commands; l != NULL; l = l->next) {
-		bacon_message_connection_send (conn, l->data);
-		g_free (l->data);
+		int command = GPOINTER_TO_INT (l->data);
+		unique_app_send_message (app, command, NULL);
 	}
 	g_list_free (commands);
 }

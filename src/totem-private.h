@@ -31,9 +31,9 @@
 #include <gconf/gconf-client.h>
 #include <gtk/gtk.h>
 #include <gio/gio.h>
+#include <unique/uniqueapp.h>
 
 #include "totem-playlist.h"
-#include "bacon-message-connection.h"
 #include "bacon-video-widget.h"
 #include "totem-open-location.h"
 #include "totem-fullscreen.h"
@@ -157,7 +157,7 @@ struct TotemObject {
 	char *mrl;
 	TotemPlaylist *playlist;
 	GConfClient *gc;
-	BaconMessageConnection *conn;
+	UniqueApp *app;
 	TotemStates state;
 	TotemOpenLocation *open_location;
 };
