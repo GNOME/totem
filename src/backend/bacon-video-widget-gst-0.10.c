@@ -134,6 +134,7 @@ struct BaconVideoWidgetPrivate
   GstElement                  *play;
   GstXOverlay                 *xoverlay;      /* protect with lock */
   GstColorBalance             *balance;       /* protect with lock */
+  GstNavigation               *navigation;    /* protect with lock */
   guint                        interface_update_id;  /* protect with lock */
   GMutex                      *lock;
 
@@ -156,6 +157,7 @@ struct BaconVideoWidgetPrivate
   gboolean                     got_redirect;
 
   GdkWindow                   *video_window;
+  GdkCursor                   *cursor;
 
   /* Visual effects */
   GList                       *vis_plugins_list;
@@ -741,6 +743,20 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   return TRUE;
 }
 
+static GstNavigation *
+bvw_get_navigation_iface (BaconVideoWidget *bvw)
+{
+  GstNavigation *nav = NULL;
+  g_mutex_lock (bvw->priv->lock);
+  if (bvw->priv->navigation == NULL)
+    bvw_update_interface_implementations (bvw);
+  if (bvw->priv->navigation)
+    nav = gst_object_ref (GST_OBJECT (bvw->priv->navigation));
+  g_mutex_unlock (bvw->priv->lock);
+
+  return nav;
+}
+    
 /* need to use gstnavigation interface for these vmethods, to allow for the sink
    to map screen coordinates to video coordinates in the presence of e.g.
    hardware scaling */
@@ -754,26 +770,11 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
   if (!bvw->priv->logo_mode) {
-    GstElement *videosink = NULL;
-
-    g_object_get (bvw->priv->play, "video-sink", &videosink, NULL);
-
-    if (videosink && GST_IS_BIN (videosink)) {
-      GstElement *newvideosink;
-      newvideosink = gst_bin_get_by_interface (GST_BIN (videosink),
-          GST_TYPE_NAVIGATION);
-      gst_object_unref (videosink);
-      videosink = newvideosink;
-    }
-
-    if (videosink && GST_IS_NAVIGATION (videosink)) {
-      GstNavigation *nav = GST_NAVIGATION (videosink);
-
+    GstNavigation *nav = bvw_get_navigation_iface (bvw);
+    if (nav) {
       gst_navigation_send_mouse_event (nav, "mouse-move", 0, event->x, event->y);
+      gst_object_unref (GST_OBJECT (nav));
     }
-
-    if (videosink)
-      gst_object_unref (videosink);
   }
 
   if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
@@ -791,31 +792,16 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
   if (!bvw->priv->logo_mode) {
-    GstElement *videosink = NULL;
-
-    g_object_get (bvw->priv->play, "video-sink", &videosink, NULL);
-
-    if (videosink && GST_IS_BIN (videosink)) {
-      GstElement *newvideosink;
-      newvideosink = gst_bin_get_by_interface (GST_BIN (videosink),
-          GST_TYPE_NAVIGATION);
-      gst_object_unref (videosink);
-      videosink = newvideosink;
-    }
-
-    if (videosink && GST_IS_NAVIGATION (videosink)) {
-      GstNavigation *nav = GST_NAVIGATION (videosink);
-
+    GstNavigation *nav = bvw_get_navigation_iface (bvw);
+    if (nav) {
       gst_navigation_send_mouse_event (nav,
           "mouse-button-press", event->button, event->x, event->y);
+      gst_object_unref (GST_OBJECT (nav));
 
       /* FIXME need to check whether the backend will have handled
        * the button press
       res = TRUE; */
     }
-
-    if (videosink)
-      gst_object_unref (videosink);
   }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
@@ -833,29 +819,14 @@ bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event)
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
   if (!bvw->priv->logo_mode) {
-    GstElement *videosink = NULL;
-
-    g_object_get (bvw->priv->play, "video-sink", &videosink, NULL);
-
-    if (videosink && GST_IS_BIN (videosink)) {
-      GstElement *newvideosink;
-      newvideosink = gst_bin_get_by_interface (GST_BIN (videosink),
-          GST_TYPE_NAVIGATION);
-      gst_object_unref (videosink);
-      videosink = newvideosink;
-    }
-
-    if (videosink && GST_IS_NAVIGATION (videosink)) {
-      GstNavigation *nav = GST_NAVIGATION (videosink);
-
+    GstNavigation *nav = bvw_get_navigation_iface (bvw);
+    if (nav) {
       gst_navigation_send_mouse_event (nav,
           "mouse-button-release", event->button, event->x, event->y);
+      gst_object_unref (GST_OBJECT (nav));
 
       res = TRUE;
     }
-
-    if (videosink)
-      gst_object_unref (videosink);
   }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
@@ -1235,6 +1206,31 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     bvw->priv->missing_plugins =
       g_list_prepend (bvw->priv->missing_plugins, gst_message_ref (msg));
     goto done;
+  } else {
+    GstNavigationMessageType nav_msg_type =
+        gst_navigation_message_get_type (msg);
+
+    switch (nav_msg_type) {
+      case GST_NAVIGATION_MESSAGE_MOUSE_OVER: {
+        gint active;
+        if (!gst_navigation_message_parse_mouse_over (msg, &active))
+          break;
+        if (active) {
+          if (bvw->priv->cursor == NULL) {
+            bvw->priv->cursor = gdk_cursor_new (GDK_HAND2);
+          }
+        } else {
+          if (bvw->priv->cursor != NULL) {
+            gdk_cursor_unref (bvw->priv->cursor);
+            bvw->priv->cursor = NULL;
+          }
+        }
+        gdk_window_set_cursor (GTK_WIDGET(bvw)->window, bvw->priv->cursor);
+        break;
+      }
+      default:
+        break;
+    }
   }
 
 unhandled:
@@ -1923,6 +1919,11 @@ bacon_video_widget_finalize (GObject * object)
 
   if (bvw->priv->eos_id != 0)
     g_source_remove (bvw->priv->eos_id);
+
+  if (bvw->priv->cursor != NULL) {
+    gdk_cursor_unref (bvw->priv->cursor);
+    bvw->priv->cursor = NULL;
+  }
 
   g_mutex_free (bvw->priv->lock);
 
@@ -2946,6 +2947,17 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
 }
 
+static void
+bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
+{
+  GstNavigation *nav = bvw_get_navigation_iface (bvw);
+  if (nav == NULL)
+    return;
+
+  gst_navigation_send_command (nav, command);
+  gst_object_unref (GST_OBJECT (nav));
+}
+
 void
 bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
                               BaconVideoWidgetDVDEvent type)
@@ -2956,28 +2968,54 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
 
   switch (type) {
     case BVW_DVD_ROOT_MENU:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_MENU);
+      break;
     case BVW_DVD_TITLE_MENU:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_TITLE_MENU);
+      break;
     case BVW_DVD_SUBPICTURE_MENU:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_SUBPICTURE_MENU);
+      break;
     case BVW_DVD_AUDIO_MENU:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_AUDIO_MENU);
+      break;
     case BVW_DVD_ANGLE_MENU:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_ANGLE_MENU);
+      break;
     case BVW_DVD_CHAPTER_MENU:
-      /* FIXME */
-      GST_WARNING ("FIXME: implement type %d", type);
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_CHAPTER_MENU);
+      break;
+    case BVW_DVD_NEXT_ANGLE:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_NEXT_ANGLE);
+      break;
+    case BVW_DVD_PREV_ANGLE:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_PREV_ANGLE);
+      break;
+    case BVW_DVD_ROOT_MENU_UP:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_UP);
+      break;
+    case BVW_DVD_ROOT_MENU_DOWN:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DOWN);
+      break;
+    case BVW_DVD_ROOT_MENU_LEFT:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_LEFT);
+      break;
+    case BVW_DVD_ROOT_MENU_RIGHT:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_RIGHT);
+      break;
+    case BVW_DVD_ROOT_MENU_SELECT:
+      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_ACTIVATE);
       break;
     case BVW_DVD_NEXT_CHAPTER:
     case BVW_DVD_PREV_CHAPTER:
     case BVW_DVD_NEXT_TITLE:
-    case BVW_DVD_PREV_TITLE:
-    case BVW_DVD_NEXT_ANGLE:
-    case BVW_DVD_PREV_ANGLE: {
+    case BVW_DVD_PREV_TITLE: {
       const gchar *fmt_name;
       GstFormat fmt;
       gint64 val;
       gint dir;
 
-      if (type == BVW_DVD_NEXT_CHAPTER ||
-          type == BVW_DVD_NEXT_TITLE ||
-          type == BVW_DVD_NEXT_ANGLE)
+      if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_NEXT_TITLE)
         dir = 1;
       else
         dir = -1;
@@ -3209,7 +3247,7 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
   if (show_cursor == FALSE) {
     totem_gdk_window_set_invisible_cursor (GTK_WIDGET (bvw)->window);
   } else {
-    gdk_window_set_cursor (GTK_WIDGET (bvw)->window, NULL);
+    gdk_window_set_cursor (GTK_WIDGET (bvw)->window, bvw->priv->cursor);
   }
 }
 
@@ -4847,24 +4885,28 @@ bvw_update_interfaces_delayed (BaconVideoWidget *bvw)
   return FALSE;
 }
 
+/* Must be called with bvw->priv->lock held */
 static void
 bvw_update_interface_implementations (BaconVideoWidget *bvw)
 {
   GstColorBalance *old_balance = bvw->priv->balance;
   GstXOverlay *old_xoverlay = bvw->priv->xoverlay;
+  GstNavigation *old_navigation = bvw->priv->navigation;
   GstElement *video_sink = NULL;
   GstElement *element = NULL;
   GstIteratorResult ires;
   GstIterator *iter;
 
   if (g_thread_self() != gui_thread) {
-    /* caller will have acquired bvw->priv->lock already */
     if (bvw->priv->balance)
       gst_object_unref (bvw->priv->balance);
     bvw->priv->balance = NULL;
     if (bvw->priv->xoverlay)
       gst_object_unref (bvw->priv->xoverlay);
     bvw->priv->xoverlay = NULL;
+    if (bvw->priv->navigation)
+      gst_object_unref (bvw->priv->navigation);
+    bvw->priv->navigation = NULL;
 
     if (bvw->priv->interface_update_id)
        g_source_remove (bvw->priv->interface_update_id);
@@ -4893,6 +4935,25 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     if (element)
       gst_object_unref (element);
     bvw->priv->xoverlay = NULL;
+  }
+
+  /* Try to find the navigation interface */
+  if (GST_IS_BIN (video_sink)) {
+    GST_DEBUG ("Retrieving navigation from bin ...");
+    element = gst_bin_get_by_interface (GST_BIN (video_sink),
+                                        GST_TYPE_NAVIGATION);
+  } else {
+    element = gst_object_ref(video_sink);
+  }
+
+  if (GST_IS_NAVIGATION (element)) {
+    GST_DEBUG ("Found navigation: %s", GST_OBJECT_NAME (element));
+    bvw->priv->navigation = GST_NAVIGATION (element);
+  } else {
+    GST_DEBUG ("No navigation found");
+    if (element)
+      gst_object_unref (element);
+    bvw->priv->navigation = NULL;
   }
 
   /* Find best color balance element (using custom iterator so
@@ -5248,6 +5309,9 @@ bacon_video_widget_new (int width, int height,
   g_signal_connect (bvw->priv->play, "text-changed",
       G_CALLBACK (playbin_stream_changed_cb), bvw);
 
+  /* assume we're always called from the main Gtk+ GUI thread */
+  gui_thread = g_thread_self();
+
   if (type == BVW_USE_TYPE_VIDEO) {
     GstStateChangeReturn ret;
 
@@ -5261,7 +5325,9 @@ bacon_video_widget_new (int width, int height,
           "Please select another video output in the Multimedia Systems Selector."));
       return NULL;
     }
+    g_mutex_lock (bvw->priv->lock);
     bvw_update_interface_implementations (bvw);
+    g_mutex_unlock (bvw->priv->lock);
   }
 
   /* we want to catch "prepare-xwindow-id" element messages synchronously */
@@ -5323,9 +5389,6 @@ bacon_video_widget_new (int width, int height,
         (guint64) (GST_SECOND * gconf_value_get_float (confvalue)), NULL);
     gconf_value_free (confvalue);
   }
-
-  /* assume we're always called from the main Gtk+ GUI thread */
-  gui_thread = g_thread_self();
 
   return GTK_WIDGET (bvw);
 
