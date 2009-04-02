@@ -3817,7 +3817,7 @@ totem_callback_connect (Totem *totem)
 	box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_sidebar_button_hbox"));
 	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
 	item = gtk_toggle_button_new ();
-	gtk_action_connect_proxy (action, item);
+	gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
 	arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
 	g_object_set_data (G_OBJECT (box), "arrow", arrow);
 	gtk_button_set_image_position (GTK_BUTTON (item), GTK_POS_RIGHT);
