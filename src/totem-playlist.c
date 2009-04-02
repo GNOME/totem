@@ -1611,10 +1611,14 @@ totem_playlist_init (TotemPlaylist *playlist)
 	/* popup menu */
 	playlist->priv->action_group = GTK_ACTION_GROUP (gtk_builder_get_object (playlist->priv->xml, "playlist-action-group"));
 	playlist->priv->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (playlist->priv->xml, "totem-playlist-ui-manager"));
+	
+	/* tooltips */
+	gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(playlist->priv->treeview),
+					 FILENAME_COL);
 
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",
-			G_CALLBACK (totem_playlist_key_press), playlist);
+			  G_CALLBACK (totem_playlist_key_press), playlist);
 
 	/* Reparent the vbox */
 	container = GTK_WIDGET (gtk_builder_get_object (playlist->priv->xml, "vbox4"));
