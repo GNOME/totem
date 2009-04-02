@@ -32,6 +32,7 @@
 
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
+#include <gconf/gconf-client.h>
 
 #include <libepc/consumer.h>
 #include <libepc/enums.h>
@@ -70,6 +71,7 @@ typedef struct
 	TotemPlugin parent;
 
 	TotemObject       *totem;
+	GConfClient       *client;
 	GtkWidget         *settings;
 	GtkWidget         *scanning;
 	GtkBuilder        *ui;
@@ -132,7 +134,7 @@ totem_publish_plugin_service_name_entry_changed_cb (GtkEntry *entry,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 
-	gconf_client_set_string (self->totem->gc,
+	gconf_client_set_string (self->client,
 				 TOTEM_PUBLISH_CONFIG_NAME,
 				 gtk_entry_get_text (entry),
 				 NULL);
@@ -145,7 +147,7 @@ totem_publish_plugin_encryption_button_toggled_cb (GtkToggleButton *button,
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	gboolean encryption = gtk_toggle_button_get_active (button);
 
-	gconf_client_set_string (self->totem->gc,
+	gconf_client_set_string (self->client,
 				 TOTEM_PUBLISH_CONFIG_PROTOCOL,
 				 encryption ? "https" : "http",
 				 NULL);
@@ -520,6 +522,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 	EpcProtocol protocol = EPC_PROTOCOL_HTTPS;
+	GtkWindow *window;
 	GError *internal_error = NULL;
 
 	gchar *protocol_name;
@@ -534,35 +537,38 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 
 	self->totem = g_object_ref (totem);
 	self->ui = totem_plugin_load_interface (plugin, "publish-plugin.ui", TRUE, NULL, self);
-	epc_progress_window_install (GTK_WINDOW (self->totem->win));
 
-	gconf_client_add_dir (self->totem->gc,
+	window = totem_get_main_window (self->totem);
+	epc_progress_window_install (window);
+	g_object_unref (window);
+
+	gconf_client_add_dir (self->client,
 			      TOTEM_PUBLISH_CONFIG_ROOT,
 			      GCONF_CLIENT_PRELOAD_ONELEVEL,
 			      NULL);
 
-	protocol_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_PROTOCOL, NULL);
-	service_pattern = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
+	protocol_name = gconf_client_get_string (self->client, TOTEM_PUBLISH_CONFIG_PROTOCOL, NULL);
+	service_pattern = gconf_client_get_string (self->client, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 
 	if (!protocol_name) {
 		protocol_name = g_strdup ("http");
-		gconf_client_set_string (self->totem->gc,
+		gconf_client_set_string (self->client,
 					 TOTEM_PUBLISH_CONFIG_PROTOCOL,
 					 protocol_name, NULL);
 	}
 
 	if (!service_pattern) {
 		service_pattern = g_strdup ("%a of %u on %h");
-		gconf_client_set_string (self->totem->gc,
+		gconf_client_set_string (self->client,
 					 TOTEM_PUBLISH_CONFIG_NAME,
 					 service_pattern, NULL);
 	}
 
-	self->name_id = gconf_client_notify_add (self->totem->gc,
+	self->name_id = gconf_client_notify_add (self->client,
 						 TOTEM_PUBLISH_CONFIG_NAME,
 						 totem_publish_plugin_name_changed_cb,
 						 self, NULL, NULL);
-	self->protocol_id = gconf_client_notify_add (self->totem->gc,
+	self->protocol_id = gconf_client_notify_add (self->client,
 						     TOTEM_PUBLISH_CONFIG_PROTOCOL,
 						     totem_publish_plugin_protocol_changed_cb,
 						     self, NULL, NULL);
@@ -649,9 +655,9 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 	}
 
 	if (self->totem) {
-		gconf_client_notify_remove (self->totem->gc, self->name_id);
-		gconf_client_notify_remove (self->totem->gc, self->protocol_id);
-		gconf_client_remove_dir (self->totem->gc, TOTEM_PUBLISH_CONFIG_ROOT, NULL);
+		gconf_client_notify_remove (self->client, self->name_id);
+		gconf_client_notify_remove (self->client, self->protocol_id);
+		gconf_client_remove_dir (self->client, TOTEM_PUBLISH_CONFIG_ROOT, NULL);
 
 		ev_sidebar_remove_page (EV_SIDEBAR (self->totem->sidebar), "neighbours");
 
@@ -695,7 +701,7 @@ totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 
 	if (NULL == self->settings && GTK_IS_BUILDER (self->ui)) {
-		gchar *service_name = gconf_client_get_string (self->totem->gc, TOTEM_PUBLISH_CONFIG_NAME, NULL);
+		gchar *service_name = gconf_client_get_string (self->client, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 		EpcProtocol protocol = epc_publisher_get_protocol (self->publisher);
 		GtkWidget *widget;
 
@@ -717,11 +723,18 @@ totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
 static void
 totem_publish_plugin_init (TotemPublishPlugin *self)
 {
+	self->client = gconf_client_get_default ();
 }
 
 static void
 totem_publish_plugin_dispose (GObject *object)
 {
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (object);
+
+	if (self->client != NULL) {
+		g_object_unref (self->client);
+		self->client = NULL;
+	}
 	totem_publish_plugin_deactivate (TOTEM_PLUGIN (object), NULL);
 	G_OBJECT_CLASS (totem_publish_plugin_parent_class)->dispose (object);
 }

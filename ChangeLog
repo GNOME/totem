@@ -1,3 +1,15 @@
+2009-04-02  Bastien Nocera  <hadess@hadess.net>
+
+	* src/plugins/publish/Makefile.am:
+	* src/plugins/publish/totem-publish.c
+	(totem_publish_plugin_service_name_entry_changed_cb),
+	(totem_publish_plugin_encryption_button_toggled_cb),
+	(totem_publish_plugin_activate), (totem_publish_plugin_deactivate),
+	(totem_publish_plugin_create_configure_dialog),
+	(totem_publish_plugin_init), (totem_publish_plugin_dispose): Slightly
+	reduce the publish plugin's use of our internals, and make it compile
+	again with the libunique changes
+
 2009-04-02  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/plugins/brasero-disc-recorder/totem-disc-recorder.c:

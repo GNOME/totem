@@ -33,6 +33,7 @@ libpublish_la_CFLAGS = \
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(LIBEPC_CFLAGS)	\
+	$(UNIQUE_CFLAGS)	\
 	$(AM_CFLAGS)		\
 	-I$(top_srcdir)/	\
 	-I$(top_srcdir)/lib	\
