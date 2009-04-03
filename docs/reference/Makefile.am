@@ -48,12 +48,28 @@ CFILE_GLOB=$(top_srcdir)/src/*.c
 # Header files to ignore when scanning.
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
 IGNORE_HFILES = \
-	totem-private.h		\
-	ev-sidebar.h		\
-	eggdesktopfile.h	\
-	eggfileformatchooser.h	\
-	eggsmclient.h		\
-	eggsmclient-private.h
+	totem-private.h			\
+	ev-sidebar.h			\
+	eggdesktopfile.h		\
+	eggfileformatchooser.h		\
+	eggsmclient.h			\
+	eggsmclient-private.h		\
+	totemobject-marshal.h		\
+	totemplaylist-marshal.h		\
+	totemvideolist-marshal.h
+
+# Plugin files
+IGNORE_HFILES += \
+	bacon-video-widget-properties.h	\
+	totem-gallery.h			\
+	totem-gallery-progress.h	\
+	totem-screenshot.h		\
+	totem-screenshot-plugin.h	\
+	totem-skipto.h			\
+	totem-skipto-plugin.h		\
+	totem-time-entry.h		\
+	totem-tracker-widget.h		\
+	totem-marshal.h
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png
