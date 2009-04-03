@@ -1,6 +1,6 @@
-<?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appversion "2.26">
   <!ENTITY manrevision "3.0">
@@ -71,14 +71,14 @@ subtitles, and more.</para>
 	<affiliation> 
           <orgname>GNOME Documentation project</orgname>
         </affiliation>
+        <contrib>Update documentation</contrib>
         <email>baptiste.millemathias@gmail.org</email>
-        <contrib>Update documentation</contrib>      
       </author>
        <author>
 	<firstname>Philip</firstname> 
-	<surname>Withnall</surname> 
+	<surname>Withnall</surname>
+        <contrib>Update documentation</contrib>
 	<email>philip@tecnocode.co.uk</email>
-        <contrib>Update documentation</contrib>      
       </author>   
 
 <!-- This is appropriate place for other contributors: translators,
@@ -108,7 +108,7 @@ subtitles, and more.</para>
 <!-- to V3.0, and so on. -->  
     <revhistory>
       <revision> 
-        <revnumber><application>&app;</application> Manual V2.0</revnumber> 
+        <revnumber>&app; Manual V2.0</revnumber> 
 	<date>August 2006</date> 
 	<revdescription> 
 	  <para role="author">Chee Bin HOH
@@ -118,7 +118,7 @@ subtitles, and more.</para>
         </revdescription> 
       </revision>
       <revision> 
-        <revnumber><application>&app;</application> Manual V&manrevision;</revnumber> 
+        <revnumber>&app; Manual V&manrevision;</revnumber> 
 	<date>&date;</date> 
 	<revdescription> 
 	  <para role="author">Philip Withnall
@@ -129,7 +129,7 @@ subtitles, and more.</para>
       </revision>
     </revhistory> 
 
-    <releaseinfo>This manual describes version &appversion; of <application>&app;</application>.
+    <releaseinfo>This manual describes version &appversion; of &app;.
     </releaseinfo> 
     <legalnotice> 
       <title>Feedback</title> 
@@ -697,8 +697,9 @@ subtitles, and more.</para>
 	  <note><para>By default, <application>&app;</application> will choose the same language for the
 	  subtitles as the one you normally use on your computer.</para></note>
 	  <para><application>&app;</application> will automatically load and display subtitles for a video if it finds a subtitle file with the
-	  same name as the video being played, and the extension <filename>asc</filename>, <filename>txt</filename>,
-	  <filename>sub</filename>, <filename>srt</filename>, <filename>smi</filename>, <filename>ssa</filename> or <filename>ass</filename>.
+	  same name as the video being played, and the extension <filename class="extension">asc</filename>, <filename class="extension">txt</filename>,
+	  <filename class="extension">sub</filename>, <filename class="extension">srt</filename>, <filename class="extension">smi</filename>,
+	  <filename class="extension">ssa</filename> or <filename class="extension">ass</filename>.
 	  </para>
 	  <para>If the file containing the subtitles has a different name from the video being played, you can
 	  right-click on the video in the playlist and choose <menuchoice><guimenuitem>Select Text Subtitles</guimenuitem></menuchoice>
@@ -993,13 +994,17 @@ subtitles, and more.</para>
 	<varlistentry>
 	  <term>Display</term>
 	  <listitem>
-	    <para>Select the resize option if you want <application>&app;</application>
-              to automatically resize the window to the size of the video when a new video is loaded.
-            </para>
-          </listitem>
-          <listitem>
-            <para>Select the screensaver option if you want to allow the screensaver to activate when
-            playing audio files. Some monitors with integrated speakers may stop playing music when the screensaver is activated.</para>
+	    <itemizedlist>
+	      <listitem>
+	        <para>Select the resize option if you want <application>&app;</application>
+                  to automatically resize the window to the size of the video when a new video is loaded.
+                </para>
+              </listitem>
+              <listitem>
+                <para>Select the screensaver option if you want to allow the screensaver to activate when
+                  playing audio files. Some monitors with integrated speakers may stop playing music when the screensaver is activated.</para>
+              </listitem>
+            </itemizedlist>
           </listitem>
         </varlistentry>
 	<varlistentry>
