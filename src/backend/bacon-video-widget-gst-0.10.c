@@ -4179,7 +4179,7 @@ bvw_get_tags_of_current_stream (BaconVideoWidget * bvw,
   g_free (cur_sig_str);
   g_free (lower);
 
-  GST_LOG ("current %s stream info object %p", stream_type, tags);
+  GST_LOG ("current %s stream tags %" GST_PTR_FORMAT, stream_type, tags);
   return tags;
 }
 
