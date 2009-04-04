@@ -307,9 +307,6 @@ void bacon_video_widget_set_subtitle             (BaconVideoWidget *bvw,
 gboolean bacon_video_widget_has_next_track	 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_has_previous_track	 (BaconVideoWidget *bvw);
 
-/* YouTube functions */
-gboolean bacon_video_widget_can_play_youtube_videos (BaconVideoWidget *bvw);
-
 /* Screenshot functions */
 gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
 						  GError **error);

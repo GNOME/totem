@@ -5411,12 +5411,6 @@ sink_error:
   }
 }
 
-gboolean
-bacon_video_widget_can_play_youtube_videos (BaconVideoWidget *bvw)
-{
-  return gst_default_registry_check_feature_version ("souphttpsrc", 0, 10, 0);
-}
-
 /*
  * vim: sw=2 ts=8 cindent noai bs=2
  */

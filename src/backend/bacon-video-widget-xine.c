@@ -4339,9 +4339,3 @@ bacon_video_widget_get_current_frame (BaconVideoWidget *bvw)
 
 	return pixbuf;
 }
-
-gboolean
-bacon_video_widget_can_play_youtube_videos (BaconVideoWidget *bvw)
-{
-	return TRUE;
-}

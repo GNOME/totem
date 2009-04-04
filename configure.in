@@ -167,8 +167,6 @@ if test x$ENABLE_XINE = xno || test x$ENABLE_XINE = xauto; then
 			])
 		fi
 	done
-
-
 fi
 
 if test x$ENABLE_XINE = xno && test x$HAVE_GSTREAMER = xno; then
@@ -614,6 +612,21 @@ for plugin in ${used_plugins}; do
 			if test "${HAVE_LIBGDATA}" != "yes" ; then
 				plugin_error_or_ignore "you need libgdata installed for the YouTube plugin"
 				add_plugin="0"
+			fi
+
+			dnl We need the souphttpsrc element for the YouTube plugin, if we're using GStreamer.
+			dnl The xine backend is fine for YouTube videos.
+			if test "$HAVE_GSTREAMER" = "yes"; then
+				AC_MSG_CHECKING([GStreamer 0.10 souphttpsrc plugin])
+				if $gst010_inspect souphttpsrc >/dev/null 2>/dev/null; then
+					AC_MSG_RESULT([yes])
+				else
+					AC_MSG_RESULT([no])
+					AC_MSG_ERROR([
+						Cannot find required GStreamer-0.10 plugin 'souphttpsrc'.
+						It should be part of gst-plugins-good. Please install it.
+					])
+				fi
 			fi
 		;;
 	esac

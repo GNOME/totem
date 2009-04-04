@@ -1,3 +1,14 @@
+2009-04-04  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* configure.in:
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_get_current_frame):
+	* src/backend/bacon-video-widget.h:
+	* src/plugins/youtube/totem-youtube.c (starting_video_cb):
+	Changed from run-time to compile-time detection of GStreamer elements
+	required by the YouTube plugin (i.e. souphttpsrc).
+
 2009-04-03  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

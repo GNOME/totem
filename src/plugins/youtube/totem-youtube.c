@@ -915,24 +915,6 @@ starting_video_cb (TotemVideoList *video_list, GtkTreeView *tree_view, GtkTreePa
 	GtkTreeIter iter;
 	GDataYouTubeVideo *video_entry;
 
-	if (bacon_video_widget_can_play_youtube_videos (self->bvw) == FALSE) {
-		gchar *title;
-		GtkWindow *main_window;
-
-		/* Display an error if the required GStreamer plugins aren't installed */
-		title = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _("YouTube"));
-		main_window = totem_get_main_window (self->totem);
-
-		totem_interface_error_with_link (title, _("Please install the necessary plugins and restart Totem to be able to play this media."),
-						 "http://projects.gnome.org/totem/#codecs", _("More information about media plugins"),
-						 main_window, self->totem);
-
-		g_object_unref (main_window);
-		g_free (title);
-
-		return FALSE;
-	}
-
 	/* Store the current entry */
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, path) == FALSE)
 		return FALSE;
