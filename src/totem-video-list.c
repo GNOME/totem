@@ -299,6 +299,11 @@ query_tooltip_cb (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, Gtk
 				self->priv->tooltip_column, &tooltip_text,
 				self->priv->mrl_column, &mrl_text,
 				-1);
+
+		/* Display "No video URI" if the MRL is unset */
+		if (mrl_text == NULL)
+			mrl_text = g_strdup (_("No video URI"));
+
 		final_text = g_strdup_printf ("%s\n%s", tooltip_text, mrl_text);
 		gtk_tooltip_set_text (tooltip, final_text);
 
@@ -368,6 +373,9 @@ show_popup_menu (TotemVideoList *self, GdkEventButton *event)
 	gint count;
 	GtkWidget *menu;
 	GtkAction *action; 
+	gboolean have_mrl = FALSE;
+	GList *rows, *row;
+	GtkTreeModel *model;
 	GtkTreeView *tree_view = GTK_TREE_VIEW (self);
 	GtkTreeSelection *selection = gtk_tree_view_get_selection (tree_view);
 
@@ -394,8 +402,30 @@ show_popup_menu (TotemVideoList *self, GdkEventButton *event)
 	if (count == 0)
 		return FALSE;
 
+	/* Work out if any of the rows have the MRL set */
+	rows = gtk_tree_selection_get_selected_rows (selection, &model);
+	for (row = rows; row != NULL; row = row->next) {
+		GtkTreeIter iter;
+		gchar *mrl;
+
+		if (gtk_tree_model_get_iter (model, &iter, (GtkTreePath*) (row->data)) == FALSE)
+			continue;
+
+		gtk_tree_model_get (model, &iter, self->priv->mrl_column, &mrl, -1);
+		if (mrl != NULL)
+			have_mrl = TRUE;
+		g_free (mrl);
+		gtk_tree_path_free (row->data);
+	}
+	g_list_free (rows);
+
+	/* Only allow the location to be copied iff one row is selected and we have an MRL */
 	action = gtk_action_group_get_action (self->priv->action_group, "copy-location");
-	gtk_action_set_sensitive (action, count == 1);
+	gtk_action_set_sensitive (action, (count == 1 && have_mrl == TRUE) ? TRUE : FALSE);
+
+	/* Likewise, only allow things to be enqueued if we have an MRL */
+	action = gtk_action_group_get_action (self->priv->action_group, "add-to-playlist");
+	gtk_action_set_sensitive (action, have_mrl);
 
 	menu = gtk_ui_manager_get_widget (self->priv->ui_manager, "/totem-video-list-popup");
 
@@ -443,6 +473,12 @@ add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self)
 				self->priv->tooltip_column, &display_name,
 				-1);
 
+		/* We can only continue if we have an MRL */
+		if (mrl == NULL) {
+			g_free (display_name);
+			continue;
+		}
+
 		totem_playlist_add_mrl_with_cursor (playlist, mrl, display_name);
 
 		g_free (mrl);
@@ -473,6 +509,10 @@ copy_location_action_callback (GtkAction *action, TotemVideoList *self)
 				self->priv->mrl_column, &mrl,
 				-1);
 
+	/* We can only continue if we have an MRL */
+	if (mrl == NULL)
+		goto error;
+
 	/* Set both the middle-click and the super-paste buffers */
 	clip = gtk_clipboard_get_for_display
 		(gdk_display_get_default(), GDK_SELECTION_CLIPBOARD);
@@ -482,6 +522,7 @@ copy_location_action_callback (GtkAction *action, TotemVideoList *self)
 	gtk_clipboard_set_text (clip, mrl, -1);
 	g_free (mrl);
 
+error:
 	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
 	g_list_free (l);
 }

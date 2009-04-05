@@ -1,3 +1,10 @@
+2009-04-05  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/totem-video-list.c (query_tooltip_cb), (show_popup_menu),
+	(add_to_playlist_action_callback), (copy_location_action_callback):
+	Fixed TotemVideoList to change the sensitivity of its context menu
+	entries according to the data available for the current row.
+
 2009-04-04  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* configure.in:
