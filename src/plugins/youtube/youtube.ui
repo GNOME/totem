@@ -24,18 +24,18 @@
 	<property name="homogeneous">False</property>
 	<property name="spacing">6</property>
 	<child>
+		<object class="GtkEntry" id="yt_search_entry">
+			<signal name="activate" handler="search_entry_activate_cb"/>
+		</object>
+		<packing>
+			<property name="padding">0</property>
+			<property name="expand">False</property>
+			<property name="fill">True</property>
+		</packing>
+	</child>
+	<child>
 		<object class="GtkHBox" id="yt_hbox">
 			<property name="spacing">4</property>
-			<child>
-				<object class="GtkEntry" id="yt_search_entry">
-					<signal name="activate" handler="search_entry_activate_cb"/>
-				</object>
-				<packing>
-					<property name="padding">0</property>
-					<property name="expand">True</property>
-					<property name="fill">True</property>
-				</packing>
-			</child>
 			<child>
 				<object class="GtkButton" id="yt_search_button">
 					<property name="use-stock">True</property>
@@ -44,7 +44,20 @@
 				</object>
 				<packing>
 					<property name="padding">0</property>
-					<property name="expand">False</property>
+					<property name="expand">True</property>
+					<property name="fill">True</property>
+				</packing>
+			</child>
+			<child>
+				<object class="GtkButton" id="yt_cancel_button">
+					<property name="use-stock">True</property>
+					<property name="label">gtk-cancel</property>
+					<property name="sensitive">False</property>
+					<signal name="clicked" handler="cancel_button_clicked_cb"/>
+				</object>
+				<packing>
+					<property name="padding">0</property>
+					<property name="expand">True</property>
 					<property name="fill">True</property>
 				</packing>
 			</child>
@@ -60,6 +73,7 @@
 			<signal name="switch-page" handler="notebook_switch_page_cb"/>
 			<child>
 				<object class="GtkVBox" id="yt_vbox_related">
+					<property name="spacing">4</property>
 					<child>
 						<object class="GtkScrolledWindow" id="yt_scrolled_window_search">
 							<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>

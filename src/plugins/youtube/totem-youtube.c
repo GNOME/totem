@@ -78,6 +78,7 @@ typedef struct {
 	GtkAdjustment *vadjust[NUM_TREE_VIEWS];
 	GtkListStore *list_store[NUM_TREE_VIEWS];
 	GtkTreeView *tree_view[NUM_TREE_VIEWS];
+	GtkWidget *cancel_button;
 } TotemYouTubePlugin;
 
 typedef struct {
@@ -93,6 +94,7 @@ static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 /* GtkBuilder callbacks */
 void notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, TotemYouTubePlugin *self);
 void search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self);
+void cancel_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self);
 void search_entry_activate_cb (GtkEntry *entry, TotemYouTubePlugin *self);
 gboolean button_press_event_cb (GtkWidget *widget, GdkEventButton *event, TotemYouTubePlugin *self);
 gboolean button_release_event_cb (GtkWidget *widget, GdkEventButton *event, TotemYouTubePlugin *self);
@@ -316,6 +318,8 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	/* Connect to more scroll events */
 	self->vadjust[key] = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (tree_view));
 	g_signal_connect (self->vadjust[key], "value-changed", G_CALLBACK (value_changed_cb), self);
+
+	self->cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "yt_cancel_button"));
 }
 
 static gboolean
@@ -437,12 +441,24 @@ increment_progress_bar_fraction (TotemYouTubePlugin *self, guint tree_view)
 	g_debug ("Incrementing progress bar by %f (new value: %f)", self->progress_bar_increment[tree_view], new_value);
 	gtk_progress_bar_set_fraction (self->progress_bar[tree_view], new_value);
 
+	/* Change the text if the operation's been cancelled */
+	if (self->cancellable[tree_view] == NULL || g_cancellable_is_cancelled (self->cancellable[tree_view]) == TRUE)
+		gtk_progress_bar_set_text (self->progress_bar[tree_view], _("Cancelling query…"));
+
 	/* Update the UI */
 	if (gtk_progress_bar_get_fraction (self->progress_bar[tree_view]) == 1.0) {
 		/* The entire search process (including loading thumbnails and t params) is finished, so update the progress bar */
 		gdk_window_set_cursor (gtk_widget_get_window (self->vbox), NULL);
 		gtk_progress_bar_set_text (self->progress_bar[tree_view], "");
 		gtk_progress_bar_set_fraction (self->progress_bar[tree_view], 0.0);
+
+		/* Disable the "Cancel" button, if it applies to the current tree view */
+		if (self->current_tree_view == tree_view)
+			gtk_widget_set_sensitive (self->cancel_button, FALSE);
+
+		/* Unref cancellable */
+		g_object_unref (self->cancellable[tree_view]);
+		self->cancellable[tree_view] = NULL;
 	}
 }
 
@@ -466,6 +482,12 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 	/* Finish loading the page */
 	if (g_file_load_contents_finish (G_FILE (source_object), result, &contents, &length, NULL, &error) == FALSE) {
 		GtkWindow *window;
+
+		/* Bail out if the operation was cancelled */
+		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
+			g_error_free (error);
+			goto free_data;
+		}
 
 		/* Couldn't load the page contents; error */
 		window = totem_get_main_window (data->plugin->totem);
@@ -568,6 +590,12 @@ thumbnail_loaded_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	if (thumbnail == NULL) {
 		GtkWindow *window;
 
+		/* Bail out if the operation was cancelled */
+		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
+			g_error_free (error);
+			goto free_data;
+		}
+
 		/* Display an error message */
 		window = totem_get_main_window (data->plugin->totem);
 		totem_interface_error (_("Error Loading Video Thumbnail"), error->message, window);
@@ -635,13 +663,19 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 
 	g_debug ("Search finished!");
 
-	/* Unref cancellable */
-	g_object_unref (self->cancellable[data->tree_view]);
-	self->cancellable[data->tree_view] = NULL;
-
 	feed = gdata_service_query_finish (GDATA_SERVICE (self->service), result, &error);
 	if (feed == NULL) {
 		GtkWindow *window;
+
+		/* Stop the progress bar; a little hacky, but it works */
+		self->progress_bar_increment[data->tree_view] = 1.0;
+		increment_progress_bar_fraction (self, data->tree_view);
+
+		/* Bail out if the operation was cancelled */
+		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
+			g_error_free (error);
+			goto free_data;
+		}
 
 		/* Error! */
 		window = totem_get_main_window (data->plugin->totem);
@@ -764,6 +798,10 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 							   (GDataQueryProgressCallback) query_progress_cb, data,
 							   (GAsyncReadyCallback) query_finished_cb, data);
 	}
+
+	/* Enable the "Cancel" button if it applies to the current tree view */
+	if (self->current_tree_view == tree_view)
+		gtk_widget_set_sensitive (self->cancel_button, TRUE);
 }
 
 void
@@ -808,6 +846,15 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 }
 
 void
+cancel_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
+{
+	g_assert (self->cancellable[self->current_tree_view] != NULL);
+
+	g_debug ("Cancelling search");
+	g_cancellable_cancel (self->cancellable[self->current_tree_view]);
+}
+
+void
 search_entry_activate_cb (GtkEntry *entry, TotemYouTubePlugin *self)
 {
 	search_button_clicked_cb (self->search_button, self);
@@ -832,6 +879,9 @@ notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint pag
 {
 	/* Change the tree view */
 	self->current_tree_view = page_num;
+
+	/* Sort out the "Cancel" button's sensitivity */
+	gtk_widget_set_sensitive (self->cancel_button, (self->cancellable[page_num] != NULL) ? TRUE : FALSE);
 
 	/* If we're changing to the "Related Videos" tree view and have played a video, load
 	 * the related videos for that video; but only if the related tree view's empty first */

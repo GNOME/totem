@@ -1,5 +1,14 @@
 2009-04-05  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/plugins/youtube/totem-youtube.c (set_up_tree_view),
+	(increment_progress_bar_fraction), (resolve_t_param_cb),
+	(thumbnail_loaded_cb), (query_finished_cb), (execute_query),
+	(cancel_button_clicked_cb), (notebook_switch_page_cb):
+	* src/plugins/youtube/youtube.ui: Added support for cancelling queries
+	to the YouTube plugin and tidied up the UI a little.
+
+2009-04-05  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/totem-video-list.c (query_tooltip_cb), (show_popup_menu),
 	(add_to_playlist_action_callback), (copy_location_action_callback):
 	Fixed TotemVideoList to change the sensitivity of its context menu
