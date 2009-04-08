@@ -45,7 +45,7 @@
 static void totem_skipto_dispose	(GObject *object);
 
 /* Callback functions for GtkBuilder */
-void time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
+G_MODULE_EXPORT void time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
 
 struct TotemSkiptoPrivate {
 	GtkBuilder *xml;
