@@ -111,16 +111,16 @@ static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
 
 /* Callback functions for GtkBuilder */
-gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, Totem *totem);
-gboolean window_state_event_cb (GtkWidget *window, GdkEventWindowState *event, Totem *totem);
-gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem);
-void seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem);
-gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem);
-void volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, Totem *totem);
-gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem);
-int window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, Totem *totem);
-void main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, Totem *totem);
-void fs_exit1_activate_cb (GtkButton *button, Totem *totem);
+G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, Totem *totem);
+G_MODULE_EXPORT gboolean window_state_event_cb (GtkWidget *window, GdkEventWindowState *event, Totem *totem);
+G_MODULE_EXPORT gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem);
+G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, Totem *totem);
+G_MODULE_EXPORT gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, Totem *totem);
+G_MODULE_EXPORT void volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, Totem *totem);
+G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem);
+G_MODULE_EXPORT int window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, Totem *totem);
+G_MODULE_EXPORT void main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, Totem *totem);
+G_MODULE_EXPORT void fs_exit1_activate_cb (GtkButton *button, Totem *totem);
 
 enum {
 	PROP_0,

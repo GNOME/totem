@@ -41,6 +41,8 @@
 static void totem_statusbar_dispose          (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
 
+G_MODULE_EXPORT GType totem_statusbar_get_type(void);
+
 G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_STATUSBAR)
 
 static void

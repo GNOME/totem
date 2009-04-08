@@ -83,8 +83,8 @@ static gboolean button_pressed_cb (GtkTreeView *tree_view, GdkEventButton *event
 static gboolean popup_menu_cb (GtkTreeView *tree_view, TotemVideoList *video_list);
 
 /* Callback functions for GtkBuilder */
-void add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self);
-void copy_location_action_callback (GtkAction *action, TotemVideoList *self);
+G_MODULE_EXPORT void add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self);
+G_MODULE_EXPORT void copy_location_action_callback (GtkAction *action, TotemVideoList *self);
 
 static gint totem_video_list_table_signals[LAST_SIGNAL] = { 0 };
 

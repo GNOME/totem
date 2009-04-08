@@ -51,14 +51,14 @@ static void totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 					       gconstpointer data);
 
 /* Callback function for GtkBuilder */
-void totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist);
-void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist);
-void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist);
-void totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist);
-void totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist);
-void playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playlist);
-void playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist);
-void playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist);
+G_MODULE_EXPORT void totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist);
+G_MODULE_EXPORT void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist);
+G_MODULE_EXPORT void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist);
+G_MODULE_EXPORT void totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist);
+G_MODULE_EXPORT void totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist);
+G_MODULE_EXPORT void playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playlist);
+G_MODULE_EXPORT void playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist);
+G_MODULE_EXPORT void playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist);
 
 
 typedef struct {

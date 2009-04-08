@@ -44,11 +44,11 @@ static void totem_fullscreen_finalize (GObject *object);
 static gboolean totem_fullscreen_popup_hide (TotemFullscreen *fs);
 
 /* Callback functions for GtkBuilder */
-gboolean totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
-gboolean totem_fullscreen_vol_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
-gboolean totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
-gboolean totem_fullscreen_seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
-gboolean totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_vol_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_vol_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event, TotemFullscreen *fs);
 
 struct _TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;
@@ -251,7 +251,7 @@ totem_fullscreen_popup_hide (TotemFullscreen *fs)
 	return FALSE;
 }
 
-gboolean
+G_MODULE_EXPORT gboolean
 totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 				TotemFullscreen *fs)
 {

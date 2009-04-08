@@ -81,7 +81,7 @@ static void plugin_manager_toggle_active (GtkTreeIter *iter, GtkTreeModel *model
 static void plugin_manager_toggle_all (TotemPluginManager *pm);
 
 /* Callback functions for GtkBuilder */
-void configure_button_cb (GtkWidget *button, TotemPluginManager *pm);
+G_MODULE_EXPORT void configure_button_cb (GtkWidget *button, TotemPluginManager *pm);
 
 static void
 totem_plugin_manager_class_init (TotemPluginManagerClass *klass)

@@ -1,3 +1,17 @@
+2009-04-08  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/totem-plugin-manager.c:
+	* src/totem-fullscreen.c:
+	* src/totem-menu.c:
+	* src/totem-object.c:
+	* src/totem-playlist.c:
+	* src/totem-preferences.c:
+	* src/totem-statusbar.c:
+	* src/totem-time-label.c:
+	* src/totem-video-list.c: Patch from Shixin Zeng
+	<zeng.shixin@gmail.com> to add G_MODULE_EXPORT to signal handlers
+	and *_get_type functions. (Helps: #342926)
+
 2009-04-05  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* docs/reference/Makefile.am: Only run the gtk-doc test suite if

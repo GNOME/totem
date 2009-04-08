@@ -47,23 +47,23 @@
 #include "debug.h"
 
 /* Callback functions for GtkBuilder */
-void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
-void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
-void visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem);
-void brightness_changed (GtkRange *range, Totem *totem);
-void contrast_changed (GtkRange *range, Totem *totem);
-void saturation_changed (GtkRange *range, Totem *totem);
-void hue_changed (GtkRange *range, Totem *totem);
-void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
-void audio_out_menu_changed (GtkComboBox *combobox, Totem *totem);
-void font_set_cb (GtkFontButton * fb, Totem * totem);
-void encoding_set_cb (GtkComboBox *cb, Totem *totem);
-void font_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
-void encoding_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
+G_MODULE_EXPORT void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
+G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
+G_MODULE_EXPORT void visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem);
+G_MODULE_EXPORT void brightness_changed (GtkRange *range, Totem *totem);
+G_MODULE_EXPORT void contrast_changed (GtkRange *range, Totem *totem);
+G_MODULE_EXPORT void saturation_changed (GtkRange *range, Totem *totem);
+G_MODULE_EXPORT void hue_changed (GtkRange *range, Totem *totem);
+G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
+G_MODULE_EXPORT void audio_out_menu_changed (GtkComboBox *combobox, Totem *totem);
+G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
+G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
+G_MODULE_EXPORT void font_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
+G_MODULE_EXPORT void encoding_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
 
 static void
 totem_action_info (char *reason, Totem *totem)
