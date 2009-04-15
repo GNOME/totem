@@ -86,7 +86,7 @@ typedef enum {
 	BVW_ERROR_NETWORK_UNREACHABLE,
 	BVW_ERROR_CONNECTION_REFUSED,
 	/* Generic */
-	BVW_ERROR_UNVALID_LOCATION,
+	BVW_ERROR_INVALID_LOCATION,
 	BVW_ERROR_GENERIC,
 	BVW_ERROR_CODEC_NOT_HANDLED,
 	BVW_ERROR_AUDIO_ONLY,
@@ -116,8 +116,7 @@ GtkWidget *bacon_video_widget_new		 (int width, int height,
 char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 
 /* Actions */
-#define bacon_video_widget_open(bvw, mrl, error) bacon_video_widget_open_with_subtitle(bvw, mrl, NULL, error)
-gboolean bacon_video_widget_open_with_subtitle	 (BaconVideoWidget *bvw,
+gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
 						  const char *mrl,
 						  const char *subtitle_uri,
 						  GError **error);

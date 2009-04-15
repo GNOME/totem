@@ -842,7 +842,7 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("About to open video file");
 
-	if (bacon_video_widget_open (bvw, input, &err) == FALSE) {
+	if (bacon_video_widget_open (bvw, input, NULL, &err) == FALSE) {
 		g_print ("totem-video-thumbnailer couldn't open file '%s'\n"
 				"Reason: %s.\n",
 				input, err->message);

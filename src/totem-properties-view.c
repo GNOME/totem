@@ -176,7 +176,7 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 		bacon_video_widget_close (props->priv->bvw);
 		bacon_video_widget_properties_reset (props->priv->props);
 
-		if (bacon_video_widget_open (props->priv->bvw, location, &error) == FALSE) {
+		if (bacon_video_widget_open (props->priv->bvw, location, NULL, &error) == FALSE) {
 			g_warning ("Couldn't open %s: %s", location, error->message);
 			g_error_free (error);
 			return;

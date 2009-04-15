@@ -1175,7 +1175,7 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 			g_free (msg);
 			return FALSE;
 		/* Unsupported type (ie. CDDA) */
-		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION) != FALSE) {
+		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_INVALID_LOCATION) != FALSE) {
 			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
 			totem_action_error (msg, _("Please insert another disc to play back."), totem);
 			g_free (msg);
@@ -1672,8 +1672,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			autoload_sub = totem_uri_get_subtitle_uri (mrl);
 
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
-		retval = bacon_video_widget_open_with_subtitle (totem->bvw, mrl,
-								subtitle ? subtitle : autoload_sub, &err);
+		retval = bacon_video_widget_open (totem->bvw, mrl, subtitle ? subtitle : autoload_sub, &err);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (totem->win->window, NULL);
 		totem->mrl = g_strdup (mrl);
@@ -2309,7 +2308,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
 	totem_gdk_window_set_waiting_cursor (totem->win->window);
-	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL);
+	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL, NULL);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (totem->win->window, NULL);
 	bacon_video_widget_play (bvw, NULL);

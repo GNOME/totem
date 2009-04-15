@@ -104,7 +104,7 @@ enum
   PROP_STREAM_LENGTH,
   PROP_PLAYING,
   PROP_SEEKABLE,
-  PROP_SHOWCURSOR,
+  PROP_SHOW_CURSOR,
   PROP_SHOW_VISUALS,
   PROP_VOLUME
 };
@@ -972,12 +972,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 	                           g_param_spec_double ("volume", NULL, NULL,
 	                                                0.0, 1.0, 0.0,
 	                                                G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_SHOWCURSOR,
-                                   g_param_spec_boolean ("showcursor", NULL,
+  g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
+                                   g_param_spec_boolean ("show-cursor", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
-                                   g_param_spec_boolean ("showvisuals", NULL,
+                                   g_param_spec_boolean ("show-visuals", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_WRITABLE));
 
@@ -1945,7 +1945,7 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_logo_mode (bvw,
       g_value_get_boolean (value));
       break;
-    case PROP_SHOWCURSOR:
+    case PROP_SHOW_CURSOR:
       bacon_video_widget_set_show_cursor (bvw,
       g_value_get_boolean (value));
       break;
@@ -1990,7 +1990,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       g_value_set_boolean (value,
       bacon_video_widget_is_seekable (bvw));
       break;
-    case PROP_SHOWCURSOR:
+    case PROP_SHOW_CURSOR:
       g_value_set_boolean (value,
       bacon_video_widget_get_show_cursor (bvw));
       break;
@@ -2618,8 +2618,8 @@ error:
 }
 
 gboolean
-bacon_video_widget_open_with_subtitle (BaconVideoWidget * bvw,
-    const gchar * mrl, const gchar *subtitle_uri, GError ** error)
+bacon_video_widget_open (BaconVideoWidget * bvw,
+                         const gchar * mrl, const gchar *subtitle_uri, GError ** error)
 {
   GstMessage *err_msg = NULL;
   GFile *file;
@@ -4090,7 +4090,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
       break;
     }
     case MEDIA_TYPE_CDDA:
-      g_set_error_literal (error, BVW_ERROR, BVW_ERROR_UNVALID_LOCATION,
+      g_set_error_literal (error, BVW_ERROR, BVW_ERROR_INVALID_LOCATION,
                            "XXX Do not use XXX");
       return NULL;
     default:

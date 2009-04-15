@@ -474,7 +474,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 	/* FIXME: remove |err| and rely on async on_error? */
 	g_message ("BEFORE _open");
-	retval = bacon_video_widget_open (emb->bvw, uri, &err);
+	retval = bacon_video_widget_open (emb->bvw, uri, NULL, &err);
 	g_message ("AFTER _open (ret: %d)", retval);
 	if (retval == FALSE)
 	{
