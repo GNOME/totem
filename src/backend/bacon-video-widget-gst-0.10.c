@@ -581,9 +581,11 @@ static void
 bacon_video_widget_show (GtkWidget *widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GdkWindow *window;
 
-  if (widget->window)
-    gdk_window_show (widget->window);
+  window = gtk_widget_get_window (widget);
+  if (window)
+    gdk_window_show (window);
   if (bvw->priv->video_window)
     gdk_window_show (bvw->priv->video_window);
 
@@ -595,9 +597,11 @@ static void
 bacon_video_widget_hide (GtkWidget *widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GdkWindow *window;
 
-  if (widget->window)
-    gdk_window_hide (widget->window);
+  window = gtk_widget_get_window (widget);
+  if (window)
+    gdk_window_hide (window);
   if (bvw->priv->video_window)
     gdk_window_hide (bvw->priv->video_window);
 
@@ -637,6 +641,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   GstXOverlay *xoverlay;
   gboolean draw_logo;
   XID window;
+  GdkWindow *win;
 
   if (event && event->count > 0)
     return TRUE;
@@ -658,7 +663,8 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
     gst_x_overlay_set_xwindow_id (xoverlay, window);
 
   /* Start with a nice black canvas */
-  gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE, 0, 0,
+  win = gtk_widget_get_window (widget);
+  gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0, 0,
       widget->allocation.width, widget->allocation.height);
 
   /* if there's only audio and no visualisation, draw the logo as well */
@@ -679,11 +685,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       rect.height = widget->allocation.height;
       region = gdk_region_rectangle (&rect);
 
-      gdk_window_begin_paint_region (widget->window,
-				     region);
+      gdk_window_begin_paint_region (win, region);
       gdk_region_destroy (region);
 
-      gdk_window_clear_area (widget->window,
+      gdk_window_clear_area (win,
 			     0, 0,
 			     widget->allocation.width,
 			     widget->allocation.height);
@@ -705,22 +710,22 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       if (s_width <= 1 || s_height <= 1) {
         if (xoverlay != NULL)
 	  gst_object_unref (xoverlay);
-	gdk_window_end_paint (widget->window);
+	gdk_window_end_paint (win);
 	return TRUE;
       }
 
       logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
           s_width, s_height, GDK_INTERP_BILINEAR);
 
-      gdk_draw_pixbuf (widget->window, widget->style->fg_gc[0], logo,
+      gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
           0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
           s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
-      gdk_window_end_paint (widget->window);
+      gdk_window_end_paint (win);
       g_object_unref (logo);
-    } else if (widget->window) {
+    } else if (win) {
       /* No pixbuf, just draw a black background then */
-      gdk_window_clear_area (widget->window,
+      gdk_window_clear_area (win,
 			     0, 0,
 			     widget->allocation.width,
 			     widget->allocation.height);
@@ -731,7 +736,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       gst_x_overlay_expose (xoverlay);
     else {
       /* No xoverlay to expose yet */
-      gdk_window_clear_area (widget->window,
+      gdk_window_clear_area (win,
 			     0, 0,
 			     widget->allocation.width,
 			     widget->allocation.height);
@@ -895,7 +900,7 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
   if (GTK_WIDGET_REALIZED (widget)) {
 
-    gdk_window_move_resize (widget->window,
+    gdk_window_move_resize (gtk_widget_get_window (widget),
                             allocation->x, allocation->y,
                             allocation->width, allocation->height);
 
@@ -1073,6 +1078,8 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (bvw), TRUE);
+
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
   bvw->com = g_new0 (BaconVideoWidgetCommon, 1);
   
@@ -1121,6 +1128,7 @@ static void
 bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *msg_name;
+  GdkWindow *window;
 
   msg_name = gst_structure_get_name (msg->structure);
   g_return_if_fail (msg_name != NULL);
@@ -1149,10 +1157,11 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
       /* Uhm, so this ugly hack here makes media loading work for
        * weird laptops with NVIDIA graphics cards... Dunno what the
        * bug is really, but hey, it works. :). */
-      if (GTK_WIDGET (bvw)->window) {
-        gdk_window_hide (GTK_WIDGET (bvw)->window);
-        gdk_window_show (GTK_WIDGET (bvw)->window);
-        
+      window = gtk_widget_get_window (GTK_WIDGET (bvw));
+      if (window) {
+        gdk_window_hide (window);
+        gdk_window_show (window);
+
         bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
       }
     }
@@ -1225,7 +1234,8 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
             bvw->priv->cursor = NULL;
           }
         }
-        gdk_window_set_cursor (GTK_WIDGET(bvw)->window, bvw->priv->cursor);
+        gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(bvw)),
+            bvw->priv->cursor);
         break;
       }
       default:
@@ -3235,19 +3245,22 @@ void
 bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
                                     gboolean show_cursor)
 {
+  GdkWindow *window;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
+
   bvw->priv->cursor_shown = show_cursor;
-  
-  if (!GTK_WIDGET (bvw)->window) {
+  window = gtk_widget_get_window (GTK_WIDGET (bvw));
+
+  if (!window) {
     return;
   }
 
   if (show_cursor == FALSE) {
-    totem_gdk_window_set_invisible_cursor (GTK_WIDGET (bvw)->window);
+    totem_gdk_window_set_invisible_cursor (window);
   } else {
-    gdk_window_set_cursor (GTK_WIDGET (bvw)->window, bvw->priv->cursor);
+    gdk_window_set_cursor (window, bvw->priv->cursor);
   }
 }
 

@@ -648,7 +648,7 @@ load_video_out_driver (BaconVideoWidget *bvw, BvwUseType type)
 
 	vis.display = bvw->priv->display;
 	vis.screen = bvw->priv->screen;
-	vis.d = GDK_WINDOW_XID (GTK_WIDGET(bvw)->window);
+	vis.d = GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET(bvw)));
 	res_h = (DisplayWidth (bvw->priv->display, bvw->priv->screen) * 1000 /
 			DisplayWidthMM (bvw->priv->display,
 				bvw->priv->screen));
@@ -1463,7 +1463,7 @@ xine_event (void *user_data, const xine_event_t *event)
 				bvw->priv->cursor = NULL;
 			}
 		}
-		gdk_window_set_cursor (GTK_WIDGET(bvw)->window,
+		gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(bvw)),
 				       bvw->priv->cursor);
 		break;
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
@@ -1669,7 +1669,7 @@ bacon_video_widget_unrealize (GtkWidget *widget)
 
 	xine_port_send_gui_data (bvw->priv->vo_driver,
 			XINE_GUI_SEND_WILL_DESTROY_DRAWABLE,
-			(void*)widget->window);
+			(void*) gtk_widget_get_window (widget));
 
 	g_object_unref (bvw->priv->bacon_resize);
 
@@ -1850,23 +1850,25 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		gfloat ratio;
 		GdkRegion *region;
 		GdkRectangle rect;
+		GdkWindow *window;
 
 		rect.x = rect.y = 0;
 		rect.width = widget->allocation.width;
 		rect.height = widget->allocation.height;
 		region = gdk_region_rectangle (&rect);
 
-		gdk_window_begin_paint_region (widget->window,
-					       region);
+		window = gtk_widget_get_window (widget);
+
+		gdk_window_begin_paint_region (window, region);
 		gdk_region_destroy (region);
 
-		gdk_window_clear_area (widget->window,
+		gdk_window_clear_area (window,
 				       0, 0,
 				       widget->allocation.width,
 				       widget->allocation.height);
 
 		if (bvw->priv->logo_pixbuf == NULL) {
-			gdk_window_end_paint (widget->window);
+			gdk_window_end_paint (window);
 			return FALSE;
 		}
 
@@ -1885,20 +1887,21 @@ bacon_video_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 		s_height *= ratio;
 
 		if (s_width <= 1 || s_height <= 1) {
-			gdk_window_end_paint (widget->window);
+			gdk_window_end_paint (window);
 			return FALSE;
 		}
 
 		logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
 				s_width, s_height, GDK_INTERP_BILINEAR);
 
-		gdk_draw_pixbuf (widget->window, widget->style->fg_gc[0], logo,
+		gdk_draw_pixbuf (window,
+				 gtk_widget_get_style (widget)->fg_gc[0], logo,
 				0, 0,
 				(w_width - s_width) / 2,
 				(w_height - s_height) / 2,
 				s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
-		gdk_window_end_paint (widget->window);
+		gdk_window_end_paint (window);
 		g_object_unref (logo);
 	}
 
@@ -1945,8 +1948,11 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 static void
 bacon_video_widget_show (GtkWidget *widget)
 {
-	if (widget->window != NULL)
-		gdk_window_show (widget->window);
+	GdkWindow *window;
+
+	window = gtk_widget_get_window (widget);
+	if (window != NULL)
+		gdk_window_show (window);
 
 	if (GTK_WIDGET_CLASS (parent_class)->show != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->show) (widget);
@@ -1955,8 +1961,11 @@ bacon_video_widget_show (GtkWidget *widget)
 static void
 bacon_video_widget_hide (GtkWidget *widget)
 {
-	if (widget->window != NULL)
-		gdk_window_hide (widget->window);
+	GdkWindow *window;
+
+	window = gtk_widget_get_window (widget);
+	if (window != NULL)
+		gdk_window_hide (window);
 
 	if (GTK_WIDGET_CLASS (parent_class)->hide != NULL)
 		(* GTK_WIDGET_CLASS (parent_class)->hide) (widget);
@@ -1994,7 +2003,7 @@ bacon_video_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 
 	if (GTK_WIDGET_REALIZED (widget))
 	{
-		gdk_window_move_resize (widget->window,
+		gdk_window_move_resize (gtk_widget_get_window (widget),
 					allocation->x,
 					allocation->y,
 					allocation->width,
@@ -2997,15 +3006,17 @@ void
 bacon_video_widget_set_show_cursor (BaconVideoWidget *bvw,
 				    gboolean show_cursor)
 {
+	GdkWindow *window;
+
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
+	window = gtk_widget_get_window (GTK_WIDGET (bvw));
 	if (show_cursor == FALSE)
 	{
-		totem_gdk_window_set_invisible_cursor (GTK_WIDGET(bvw)->window);
+		totem_gdk_window_set_invisible_cursor (window);
 	} else {
-		gdk_window_set_cursor (GTK_WIDGET(bvw)->window,
-				       bvw->priv->cursor);
+		gdk_window_set_cursor (window, bvw->priv->cursor);
 	}
 
 	bvw->priv->cursor_shown = show_cursor;
@@ -3559,6 +3570,7 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 {
 	GtkWidget *toplevel, *widget;
 	int new_w, new_h, win_w, win_h;
+	GdkWindow *window;
 
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3570,15 +3582,16 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 		return;
 
 	widget = GTK_WIDGET (bvw);
+	window = gtk_widget_get_window (widget);
 
 	/* Try best fit for the screen */
 	if (ratio == 0)
 	{
-		if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, 2) != FALSE) {
+		if (totem_ratio_fits_screen (window, bvw->priv->video_width, bvw->priv->video_height, 2) != FALSE) {
 			ratio = 2;
-		} else if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, 1) != FALSE) {
+		} else if (totem_ratio_fits_screen (window, bvw->priv->video_width, bvw->priv->video_height, 1) != FALSE) {
 			ratio = 1;
-		} else if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, 0.5) != FALSE) {
+		} else if (totem_ratio_fits_screen (window, bvw->priv->video_width, bvw->priv->video_height, 0.5) != FALSE) {
 			ratio = 0.5;
 		} else {
 			return;
@@ -3586,14 +3599,15 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 	} else {
 		/* don't scale to something bigger than the screen, and leave
 		 * us some room */
-		if (totem_ratio_fits_screen (widget->window, bvw->priv->video_width, bvw->priv->video_height, ratio) == FALSE)
+		if (totem_ratio_fits_screen (window, bvw->priv->video_width, bvw->priv->video_height, ratio) == FALSE)
 			return;
 	}
 
 	toplevel = gtk_widget_get_toplevel (widget);
+	window = gtk_widget_get_window (toplevel);
 
 	/* Get the size of the toplevel window */
-	gdk_drawable_get_size (GDK_DRAWABLE (toplevel->window),
+	gdk_drawable_get_size (GDK_DRAWABLE (window),
 			&win_w, &win_h);
 
 	/* Calculate the new size of the window, depending on the size of the

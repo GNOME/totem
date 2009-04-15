@@ -1,5 +1,22 @@
 2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_show), (bacon_video_widget_hide),
+	(bacon_video_widget_expose_event),
+	(bacon_video_widget_size_allocate), (bacon_video_widget_init),
+	(bvw_handle_application_message), (bvw_handle_element_message),
+	(bacon_video_widget_set_show_cursor):
+	* src/backend/bacon-video-widget-xine.c (load_video_out_driver),
+	(xine_event), (bacon_video_widget_unrealize),
+	(bacon_video_widget_expose), (bacon_video_widget_show),
+	(bacon_video_widget_hide), (bacon_video_widget_size_allocate),
+	(bacon_video_widget_set_show_cursor),
+	(bacon_video_widget_set_scale_ratio): Patches from Víctor Manuel
+	Jáquez Leal <vjaquez@igalia.com> to use proper GtkWidget accessors
+	in BaconVideoWidget. (Helps: #578591)
+
+2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/backend/bacon-video-widget-gst-0.10.c (resize_video_window),
 	(bacon_video_widget_init), (bacon_video_widget_set_zoom),
 	(bacon_video_widget_get_zoom):
