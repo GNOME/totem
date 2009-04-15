@@ -157,7 +157,7 @@ struct BaconVideoWidgetPrivate {
 	xine_post_t *vis;
 	GList *visuals;
 	char *queued_vis;
-	VisualsQuality quality;
+	BvwVisualsQuality quality;
 
 	/* Seeking stuff */
 	int seeking;
@@ -174,7 +174,7 @@ struct BaconVideoWidgetPrivate {
 	int xpos, ypos;
 	guint tick_id;
 	double volume;
-	BaconVideoWidgetAudioOutType audio_out_type;
+	BvwAudioOutType audio_out_type;
 	gint64 stream_length;
 	int zoom;
 
@@ -990,7 +990,7 @@ dvd_skip_behaviour (BaconVideoWidget *bvw, int behaviour)
 }
 
 void
-bacon_video_widget_dvd_event (BaconVideoWidget *bvw, BaconVideoWidgetDVDEvent type)
+bacon_video_widget_dvd_event (BaconVideoWidget *bvw, BvwDVDEvent type)
 {
         xine_event_t event;
 
@@ -1235,7 +1235,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	if (bvw->priv->ao_driver != NULL
 			&& bvw->priv->ao_driver_none == FALSE)
 	{
-		BaconVideoWidgetAudioOutType type;
+		BvwAudioOutType type;
 
 		if (bvw->priv->vis_name == NULL)
 			bvw->priv->vis_name = g_strdup ("goom");
@@ -1764,7 +1764,7 @@ bacon_video_widget_new (int width, int height,
 	/* load the output drivers */
 	if (type == BVW_USE_TYPE_AUDIO)
 	{
-		BaconVideoWidgetAudioOutType type;
+		BvwAudioOutType type;
 
 		bvw->priv->ao_driver = load_audio_out_driver (bvw,
 				FALSE, error);
@@ -3202,7 +3202,7 @@ bacon_video_widget_set_visuals_quality_size (BaconVideoWidget *bvw,
 
 void
 bacon_video_widget_set_visuals_quality (BaconVideoWidget *bvw,
-		VisualsQuality quality)
+					BvwVisualsQuality quality)
 {
 	GdkScreen *screen;
 	int fps, h, w;
@@ -3535,7 +3535,7 @@ bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw, const char *enc
 
 void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
-		BaconVideoWidgetAspectRatio ratio)
+		BvwAspectRatio ratio)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3544,7 +3544,7 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
 	xine_set_param (bvw->priv->stream, XINE_PARAM_VO_ASPECT_RATIO, ratio);
 }
 
-BaconVideoWidgetAspectRatio
+BvwAspectRatio
 bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, 0);
@@ -3655,7 +3655,7 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
-		BaconVideoWidgetVideoProperty type)
+		BvwVideoProperty type)
 {
 	g_return_val_if_fail (bvw != NULL, 65535 / 2);
 	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535 / 2);
@@ -3666,7 +3666,7 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
 
 void
 bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
-		BaconVideoWidgetVideoProperty type, int value)
+		BvwVideoProperty type, int value)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3679,7 +3679,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
 	gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);
 }
 
-BaconVideoWidgetAudioOutType
+BvwAudioOutType
 bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 {
 	g_return_val_if_fail (bvw != NULL, BVW_AUDIO_SOUND_STEREO);
@@ -3693,7 +3693,7 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 
 gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
-		BaconVideoWidgetAudioOutType type)
+		BvwAudioOutType type)
 {
 	xine_cfg_entry_t entry;
 	int value;
@@ -3750,7 +3750,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
 }
 
 static void
-bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetMetadataType type,
+bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BvwMetadataType type,
 		GValue *value)
 {
 	const char *string = NULL;
@@ -3838,7 +3838,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget *bvw, BaconVideoWidgetM
 
 static void
 bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
-		BaconVideoWidgetMetadataType type, GValue *value)
+		BvwMetadataType type, GValue *value)
 {
 	int integer = 0;
 
@@ -3908,7 +3908,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget *bvw,
 
 static void
 bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
-		BaconVideoWidgetMetadataType type, GValue *value)
+		BvwMetadataType type, GValue *value)
 {
 	gboolean boolean = FALSE;
 
@@ -3943,7 +3943,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget *bvw,
 
 void
 bacon_video_widget_get_metadata (BaconVideoWidget *bvw,
-		BaconVideoWidgetMetadataType type, GValue *value)
+		BvwMetadataType type, GValue *value)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));

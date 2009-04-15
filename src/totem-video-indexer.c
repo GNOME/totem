@@ -63,7 +63,7 @@ boolean_to_string (gboolean data)
 }
 
 static void
-totem_print_string (BaconVideoWidget *bvw, const char *key, BaconVideoWidgetMetadataType id)
+totem_print_string (BaconVideoWidget *bvw, const char *key, BvwMetadataType id)
 {
 	GValue value = { 0, };
 	const char *str;
@@ -78,7 +78,7 @@ totem_print_string (BaconVideoWidget *bvw, const char *key, BaconVideoWidgetMeta
 }
 
 static void
-totem_print_int (BaconVideoWidget *bvw, const char *key, BaconVideoWidgetMetadataType id)
+totem_print_int (BaconVideoWidget *bvw, const char *key, BvwMetadataType id)
 {
 	GValue value = { 0, };
 	int num;

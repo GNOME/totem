@@ -129,7 +129,7 @@ typedef enum {
 
 struct BaconVideoWidgetPrivate
 {
-  BaconVideoWidgetAspectRatio  ratio_type;
+  BvwAspectRatio  ratio_type;
 
   GstElement                  *play;
   GstXOverlay                 *xoverlay;      /* protect with lock */
@@ -163,7 +163,7 @@ struct BaconVideoWidgetPrivate
   GList                       *vis_plugins_list;
   gboolean                     show_vfx;
   gboolean                     vis_changed;
-  VisualsQuality               visq;
+  BvwVisualsQuality            visq;
   gchar                       *vis_element_name;
   GstElement                  *audio_capsfilter;
 
@@ -188,7 +188,7 @@ struct BaconVideoWidgetPrivate
   
   gchar                       *media_device;
 
-  BaconVideoWidgetAudioOutType speakersetup;
+  BvwAudioOutType	       speakersetup;
   gint                         connection_speed;
 
   GstMessageType               ignore_messages_mask;
@@ -2368,7 +2368,7 @@ set_audio_filter (BaconVideoWidget *bvw)
   gst_object_unref (pad);
 }
 
-BaconVideoWidgetAudioOutType
+BvwAudioOutType
 bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);
@@ -2379,7 +2379,7 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 
 gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
-                                       BaconVideoWidgetAudioOutType type)
+                                       BvwAudioOutType type)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2960,7 +2960,7 @@ bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
 
 void
 bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
-                              BaconVideoWidgetDVDEvent type)
+                              BvwDVDEvent type)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3537,7 +3537,7 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 
 void
 bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
-                                        VisualsQuality quality)
+                                        BvwVisualsQuality quality)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3574,7 +3574,7 @@ bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
 
 void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
-                                BaconVideoWidgetAspectRatio ratio)
+                                BvwAspectRatio ratio)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3583,7 +3583,7 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
   got_video_size (bvw);
 }
 
-BaconVideoWidgetAspectRatio
+BvwAspectRatio
 bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 {
   g_return_val_if_fail (bvw != NULL, 0);
@@ -3660,7 +3660,7 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 /* Search for the color balance channel corresponding to type and return it. */
 static GstColorBalanceChannel *
 bvw_get_color_balance_channel (GstColorBalance * color_balance,
-    BaconVideoWidgetVideoProperty type)
+    BvwVideoProperty type)
 {
   const GList *channels;
 
@@ -3684,7 +3684,7 @@ bvw_get_color_balance_channel (GstColorBalance * color_balance,
 
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
-                                       BaconVideoWidgetVideoProperty type)
+                                       BvwVideoProperty type)
 {
   int ret;
 
@@ -3737,7 +3737,7 @@ done:
 
 void
 bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
-                                       BaconVideoWidgetVideoProperty type,
+                                       BvwVideoProperty type,
                                        int value)
 {
   g_return_if_fail (bvw != NULL);
@@ -4107,7 +4107,7 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 }
 
 static struct _metadata_map_info {
-  BaconVideoWidgetMetadataType type;
+  BvwMetadataType type;
   const gchar *str;
 } metadata_str_map[] = {
   { BVW_INFO_TITLE, "title" },
@@ -4131,7 +4131,7 @@ static struct _metadata_map_info {
 };
 
 static const gchar *
-get_metadata_type_name (BaconVideoWidgetMetadataType type)
+get_metadata_type_name (BvwMetadataType type)
 {
   guint i;
   for (i = 0; i < G_N_ELEMENTS (metadata_str_map); ++i) {
@@ -4238,7 +4238,7 @@ audio_caps_have_LFE (GstStructure * s)
 
 static void
 bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
-                                        BaconVideoWidgetMetadataType type,
+                                        BvwMetadataType type,
                                         GValue * value)
 {
   char *string = NULL;
@@ -4365,7 +4365,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 
 static void
 bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
-                                     BaconVideoWidgetMetadataType type,
+                                     BvwMetadataType type,
                                      GValue * value)
 {
   int integer = 0;
@@ -4447,7 +4447,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
 
 static void
 bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
-                                      BaconVideoWidgetMetadataType type,
+                                      BvwMetadataType type,
                                       GValue * value)
 {
   gboolean boolean = FALSE;
@@ -4579,7 +4579,7 @@ bacon_video_widget_get_best_image (BaconVideoWidget *bvw)
 
 void
 bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
-                                 BaconVideoWidgetMetadataType type,
+                                 BvwMetadataType type,
                                  GValue * value)
 {
   g_return_if_fail (bvw != NULL);

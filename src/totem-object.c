@@ -2016,7 +2016,7 @@ totem_action_toggle_aspect_ratio (Totem *totem)
  * @ratio: the aspect ratio to use
  *
  * Sets the aspect ratio selected in the menu to @ratio,
- * as defined in #BaconVideoWidgetAspectRatio.
+ * as defined in #BvwAspectRatio.
  **/
 void
 totem_action_set_aspect_ratio (Totem *totem, int ratio)
@@ -2028,7 +2028,7 @@ totem_action_set_aspect_ratio (Totem *totem, int ratio)
  * totem_action_get_aspect_ratio:
  * @totem: a #TotemObject
  *
- * Gets the current aspect ratio as defined in #BaconVideoWidgetAspectRatio.
+ * Gets the current aspect ratio as defined in #BvwAspectRatio.
  *
  * Return value: the current aspect ratio
  **/

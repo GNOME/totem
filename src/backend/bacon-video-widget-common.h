@@ -41,7 +41,7 @@ struct BaconVideoWidgetCommon {
 };
 
 gboolean bacon_video_widget_common_can_direct_seek (BaconVideoWidgetCommon *com);
-gboolean bacon_video_widget_common_get_vis_quality (VisualsQuality q,
+gboolean bacon_video_widget_common_get_vis_quality (BvwVisualsQuality q,
 						    int *height,
 						    int *fps);
 

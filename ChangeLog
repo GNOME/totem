@@ -1,5 +1,41 @@
 2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/backend/bacon-video-widget-common.c
+	(bacon_video_widget_common_get_vis_quality):
+	* src/backend/bacon-video-widget-common.h:
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_set_audio_out_type),
+	(bacon_video_widget_dvd_event),
+	(bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_set_aspect_ratio),
+	(bvw_get_color_balance_channel),
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property), (get_metadata_type_name),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_dvd_event), (bacon_video_widget_realize),
+	(bacon_video_widget_new), (bacon_video_widget_set_visuals_quality),
+	(bacon_video_widget_set_aspect_ratio),
+	(bacon_video_widget_get_video_property),
+	(bacon_video_widget_set_video_property),
+	(bacon_video_widget_set_audio_out_type),
+	(bacon_video_widget_get_metadata_string),
+	(bacon_video_widget_get_metadata_int),
+	(bacon_video_widget_get_metadata_bool),
+	(bacon_video_widget_get_metadata):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-object.c:
+	* src/totem-preferences.c (audio_out_menu_changed),
+	(totem_setup_preferences):
+	* src/totem-video-indexer.c (totem_print_string),
+	(totem_print_int): Standardise BaconVideoWidget's enums to be in the
+	"Bvw" namespace. (Helps: #577961)
+
+2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* browser-plugin/totem-plugin-viewer.c
 	(totem_embedded_open_internal):
 	* src/backend/bacon-video-widget-gst-0.10.c

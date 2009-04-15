@@ -203,10 +203,10 @@ typedef enum {
 	BVW_INFO_AUDIO_CODEC,
 	BVW_INFO_AUDIO_SAMPLE_RATE,
 	BVW_INFO_AUDIO_CHANNELS
-} BaconVideoWidgetMetadataType;
+} BvwMetadataType;
 
 void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
-						  BaconVideoWidgetMetadataType
+						  BvwMetadataType
 						  type,
 						  GValue *value);
 
@@ -217,7 +217,7 @@ typedef enum {
 	VISUAL_LARGE,
 	VISUAL_EXTRA_LARGE,
 	NUM_VISUAL_QUALITIES
-} VisualsQuality;
+} BvwVisualsQuality;
 
 void bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
 						   gboolean show_visuals);
@@ -225,7 +225,7 @@ GList *bacon_video_widget_get_visuals_list	  (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
 						   const char *name);
 void bacon_video_widget_set_visuals_quality	  (BaconVideoWidget *bvw,
-						   VisualsQuality quality);
+						   BvwVisualsQuality quality);
 
 /* Picture settings */
 typedef enum {
@@ -233,7 +233,7 @@ typedef enum {
 	BVW_VIDEO_CONTRAST,
 	BVW_VIDEO_SATURATION,
 	BVW_VIDEO_HUE
-} BaconVideoWidgetVideoProperty;
+} BvwVideoProperty;
 
 typedef enum {
 	BVW_RATIO_AUTO = 0,
@@ -241,7 +241,7 @@ typedef enum {
 	BVW_RATIO_FOURBYTHREE = 2,
 	BVW_RATIO_ANAMORPHIC = 3,
 	BVW_RATIO_DVB = 4
-} BaconVideoWidgetAspectRatio;
+} BvwAspectRatio;
 
 gboolean bacon_video_widget_can_deinterlace	 (BaconVideoWidget *bvw);
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
@@ -249,9 +249,9 @@ void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
 gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_aspect_ratio         (BaconVideoWidget *bvw,
-						  BaconVideoWidgetAspectRatio
+						  BvwAspectRatio
 						  ratio);
-BaconVideoWidgetAspectRatio bacon_video_widget_get_aspect_ratio
+BvwAspectRatio bacon_video_widget_get_aspect_ratio
 						 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
@@ -262,10 +262,10 @@ void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
 int bacon_video_widget_get_zoom			 (BaconVideoWidget *bvw);
 
 int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
-						  BaconVideoWidgetVideoProperty
+						  BvwVideoProperty
 						  type);
 void bacon_video_widget_set_video_property       (BaconVideoWidget *bvw,
-						  BaconVideoWidgetVideoProperty
+						  BvwVideoProperty
 						  type,
 						  int value);
 
@@ -288,10 +288,10 @@ typedef enum {
 	BVW_DVD_ROOT_MENU_LEFT,
 	BVW_DVD_ROOT_MENU_RIGHT,
 	BVW_DVD_ROOT_MENU_SELECT
-} BaconVideoWidgetDVDEvent;
+} BvwDVDEvent;
 
 void bacon_video_widget_dvd_event                (BaconVideoWidget *bvw,
-						  BaconVideoWidgetDVDEvent
+						  BvwDVDEvent
 						  type);
 GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_language              (BaconVideoWidget *bvw);
@@ -319,12 +319,12 @@ typedef enum {
 	BVW_AUDIO_SOUND_5CHANNEL,
 	BVW_AUDIO_SOUND_51CHANNEL,
 	BVW_AUDIO_SOUND_AC3PASSTHRU
-} BaconVideoWidgetAudioOutType;
+} BvwAudioOutType;
 
-BaconVideoWidgetAudioOutType bacon_video_widget_get_audio_out_type
+BvwAudioOutType bacon_video_widget_get_audio_out_type
 						 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_set_audio_out_type   (BaconVideoWidget *bvw,
-						  BaconVideoWidgetAudioOutType
+						  BvwAudioOutType
 						  type);
 
 G_END_DECLS

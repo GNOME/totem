@@ -398,7 +398,7 @@ tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 void
 audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
-	BaconVideoWidgetAudioOutType audio_out;
+	BvwAudioOutType audio_out;
 	gboolean need_restart;
 
 	audio_out = gtk_combo_box_get_active (combobox);
@@ -469,13 +469,13 @@ totem_setup_preferences (Totem *totem)
 	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
-	BaconVideoWidgetAudioOutType audio_out;
+	BvwAudioOutType audio_out;
 	GConfValue *value;
 	GObject *item;
 
 	static struct {
 		const char *name;
-		BaconVideoWidgetVideoProperty prop;
+		BvwVideoProperty prop;
 		const char *label;
 	} props[4] = {
 		{ "tpw_contrast_scale", BVW_VIDEO_CONTRAST, "tpw_contrast_label" },
