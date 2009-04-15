@@ -500,26 +500,17 @@ bacon_video_widget_realize (GtkWidget * widget)
   GdkWindowAttr attributes;
   gint attributes_mask, w, h;
   GdkColor colour;
+  GdkWindow *window;
+  GdkEventMask event_mask;
 
-  /* Creating our widget's window */
-  attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x = widget->allocation.x;
-  attributes.y = widget->allocation.y;
-  attributes.width = widget->allocation.width;
-  attributes.height = widget->allocation.height;
-  attributes.wclass = GDK_INPUT_OUTPUT;
-  attributes.visual = gtk_widget_get_visual (widget);
-  attributes.colormap = gtk_widget_get_colormap (widget);
-  attributes.event_mask = gtk_widget_get_events (widget);
-  attributes.event_mask |= GDK_EXPOSURE_MASK |
-                           GDK_POINTER_MOTION_MASK |
-                           GDK_BUTTON_PRESS_MASK |
-                           GDK_KEY_PRESS_MASK;
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+  event_mask = gtk_widget_get_events (widget)
+    | GDK_POINTER_MOTION_MASK
+    | GDK_KEY_PRESS_MASK;
+  gtk_widget_set_events (widget, event_mask);
 
-  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-      &attributes, attributes_mask);
-  gdk_window_set_user_data (widget->window, widget);
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  window = gtk_widget_get_window (widget);
 
   /* Creating our video window */
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -535,18 +526,19 @@ bacon_video_widget_realize (GtkWidget * widget)
                            GDK_KEY_PRESS_MASK;
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-  bvw->priv->video_window = gdk_window_new (widget->window,
+  bvw->priv->video_window = gdk_window_new (window,
       &attributes, attributes_mask);
   gdk_window_set_user_data (bvw->priv->video_window, widget);
 
   gdk_color_parse ("black", &colour);
   gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
 			    &colour, TRUE, TRUE);
-  gdk_window_set_background (widget->window, &colour);
-  widget->style = gtk_style_attach (widget->style, widget->window);
+  gdk_window_set_background (window, &colour);
+  gtk_widget_set_style (widget,
+      gtk_style_attach (gtk_widget_get_style (widget), window));
 
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-  
+
   /* Connect to configure event on the top level window */
   g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
       "configure-event", G_CALLBACK (bacon_video_widget_configure_event), bvw);
@@ -1077,8 +1069,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
-
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX (bvw), TRUE);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
   bvw->com = g_new0 (BaconVideoWidgetCommon, 1);

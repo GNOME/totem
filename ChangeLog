@@ -1,6 +1,15 @@
 2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_realize), (bacon_video_widget_init):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_realize): Remainders of the patches below to
+	use GtkWidget accessors in BaconVideoWidget, which changes how Bvw's
+	GdkWindows are created. (Closes: #578591)
+
+2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_show), (bacon_video_widget_hide),
 	(bacon_video_widget_expose_event),
 	(bacon_video_widget_size_allocate), (bacon_video_widget_init),

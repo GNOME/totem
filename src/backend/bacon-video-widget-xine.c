@@ -1159,9 +1159,10 @@ size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 static void
 bacon_video_widget_realize (GtkWidget *widget)
 {
-	GdkWindowAttr attr;
 	GdkColor black;
 	BaconVideoWidget *bvw;
+	GdkWindow *window;
+	GdkEventMask event_mask;
 
 	bvw = BACON_VIDEO_WIDGET (widget);
 	if (bvw->priv->type != BVW_USE_TYPE_VIDEO)
@@ -1170,32 +1171,26 @@ bacon_video_widget_realize (GtkWidget *widget)
 		return;
 	}
 
-	/* set realized flag */
-	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
-	/* Create the widget's window */
-	attr.x = widget->allocation.x;
-	attr.y = widget->allocation.y;
-	attr.width = widget->allocation.width;
-	attr.height = widget->allocation.height;
-	attr.window_type = GDK_WINDOW_CHILD;
-	attr.wclass = GDK_INPUT_OUTPUT;
-	attr.event_mask = gtk_widget_get_events (widget) | GDK_EXPOSURE_MASK
+	event_mask = gtk_widget_get_events (widget)
 		| GDK_POINTER_MOTION_MASK
-		| GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK;
-	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-			&attr, GDK_WA_X | GDK_WA_Y);
-	gdk_window_show (widget->window);
+		| GDK_KEY_PRESS_MASK;
+	gtk_widget_set_events (widget, event_mask);
+
+	GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
 	/* Flush, so that the window is really shown */
 	gdk_flush ();
-	gdk_window_set_user_data (widget->window, bvw);
+
+	window = gtk_widget_get_window (widget);
 
 	gdk_color_parse ("Black", &black);
 	gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
 				  &black, TRUE, TRUE);
-	gdk_window_set_background (widget->window, &black);
-	widget->style = gtk_style_attach (widget->style, widget->window);
+	gdk_window_set_background (window, &black);
+	gtk_widget_set_style
+		(widget,
+		 gtk_style_attach (gtk_widget_get_style (widget), window));
 
 	/* track configure events of toplevel window */
 	g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
