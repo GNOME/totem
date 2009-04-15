@@ -85,9 +85,9 @@
 #define SEEK_FORWARD_LONG_OFFSET 10*60
 #define SEEK_BACKWARD_LONG_OFFSET -3*60
 
-#define ZOOM_UPPER 200
-#define ZOOM_RESET 100
-#define ZOOM_LOWER 10
+#define ZOOM_UPPER 2.0
+#define ZOOM_RESET 1.0
+#define ZOOM_LOWER 0.1
 #define ZOOM_DISABLE (ZOOM_LOWER - 1)
 #define ZOOM_ENABLE (ZOOM_UPPER + 1)
 
@@ -1900,7 +1900,7 @@ totem_action_seek_time (Totem *totem, gint64 sec)
 }
 
 static void
-totem_action_zoom (Totem *totem, int zoom)
+totem_action_zoom (Totem *totem, double zoom)
 {
 	GtkAction *action;
 	gboolean zoom_reset, zoom_in, zoom_out;
@@ -1933,9 +1933,9 @@ totem_action_zoom (Totem *totem, int zoom)
 }
 
 void
-totem_action_zoom_relative (Totem *totem, int off_pct)
+totem_action_zoom_relative (Totem *totem, double off_pct)
 {
-	int zoom;
+	double zoom;
 
 	zoom = bacon_video_widget_get_zoom (totem->bvw);
 	totem_action_zoom (totem, zoom + off_pct);

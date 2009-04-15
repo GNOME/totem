@@ -170,13 +170,13 @@ GtkWidget *totem_volume_create (void);
 #define VOLUME_DOWN_OFFSET (-0.08)
 #define VOLUME_UP_OFFSET (0.08)
 
-#define ZOOM_IN_OFFSET 1
-#define ZOOM_OUT_OFFSET -1
+#define ZOOM_IN_OFFSET 0.01
+#define ZOOM_OUT_OFFSET -0.01
 
 void	totem_action_open			(Totem *totem);
 void	totem_action_open_location		(Totem *totem);
 void	totem_action_eject			(Totem *totem);
-void	totem_action_zoom_relative		(Totem *totem, int off_pct);
+void	totem_action_zoom_relative		(Totem *totem, double off_pct);
 void	totem_action_zoom_reset			(Totem *totem);
 void	totem_action_show_help			(Totem *totem);
 void	totem_action_show_properties		(Totem *totem);

@@ -184,7 +184,7 @@ struct BaconVideoWidgetPrivate
   gint                         video_fps_n;
   gint                         video_fps_d;
 
-  gint                         zoom;
+  gdouble                      zoom;
   
   gchar                       *media_device;
 
@@ -872,7 +872,7 @@ resize_video_window (BaconVideoWidget *bvw)
   }
 
   /* apply zoom factor */
-  ratio = ratio * bvw->priv->zoom / 100;
+  ratio = ratio * bvw->priv->zoom;
 
   width *= ratio;
   height *= ratio;
@@ -1080,7 +1080,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->tagcache = NULL;
   priv->audiotags = NULL;
   priv->videotags = NULL;
-  priv->zoom = 100;
+  priv->zoom = 1.0;
 
   priv->lock = g_mutex_new ();
 
@@ -3638,7 +3638,7 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 
 void
 bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
-                             int               zoom)
+                             double            zoom)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3648,11 +3648,11 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
     resize_video_window (bvw);
 }
 
-int
+double
 bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 {
-  g_return_val_if_fail (bvw != NULL, 100);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 100);
+  g_return_val_if_fail (bvw != NULL, 1.0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 1.0);
 
   return bvw->priv->zoom;
 }

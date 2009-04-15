@@ -258,8 +258,8 @@ void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  float ratio);
 
 void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
-						  int zoom);
-int bacon_video_widget_get_zoom			 (BaconVideoWidget *bvw);
+						  double zoom);
+double bacon_video_widget_get_zoom		 (BaconVideoWidget *bvw);
 
 int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
 						  BvwVideoProperty

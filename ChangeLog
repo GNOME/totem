@@ -1,5 +1,19 @@
 2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/backend/bacon-video-widget-gst-0.10.c (resize_video_window),
+	(bacon_video_widget_init), (bacon_video_widget_set_zoom),
+	(bacon_video_widget_get_zoom):
+	* src/backend/bacon-video-widget-xine.c
+	(bacon_video_widget_realize), (bacon_video_widget_set_zoom),
+	(bacon_video_widget_get_zoom):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-object.c (totem_action_zoom),
+	(totem_action_zoom_relative):
+	* src/totem-private.h: Change bacon_video_widget_set_zoom to take a
+	double. (Closes: #577961)
+
+2009-04-15  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/backend/bacon-video-widget-common.c
 	(bacon_video_widget_common_get_vis_quality):
 	* src/backend/bacon-video-widget-common.h:

@@ -176,7 +176,7 @@ struct BaconVideoWidgetPrivate {
 	double volume;
 	BvwAudioOutType audio_out_type;
 	gint64 stream_length;
-	int zoom;
+	double zoom;
 
 	GAsyncQueue *queue;
 	int video_width, video_height;
@@ -1253,7 +1253,7 @@ bacon_video_widget_realize (GtkWidget *widget)
 	bvw->priv->ev_queue = xine_event_new_queue (bvw->priv->stream);
 
 	/* Set the zoom that might have been recorded */
-	if (bvw->priv->zoom != 0)
+	if (bvw->priv->zoom != 0.0)
 		bacon_video_widget_set_zoom (bvw, bvw->priv->zoom);
 
 	/* Setup xine events */
@@ -3621,12 +3621,12 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget *bvw, gfloat ratio)
 }
 
 void
-bacon_video_widget_set_zoom (BaconVideoWidget *bvw, int zoom)
+bacon_video_widget_set_zoom (BaconVideoWidget *bvw, double zoom)
 {
 	g_return_if_fail (bvw != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 	g_return_if_fail (bvw->priv->xine != NULL);
-	g_return_if_fail (zoom >= 0 && zoom <= 400);
+	g_return_if_fail (zoom >= 0.0 && zoom <= 4.0);
 
 	if (bvw->priv->stream == NULL) {
 		/* No stream yet, remember the zoom level */
@@ -3635,22 +3635,22 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw, int zoom)
 	}
 
 	xine_set_param (bvw->priv->stream,
-			XINE_PARAM_VO_ZOOM_X, zoom);
+			XINE_PARAM_VO_ZOOM_X, (int) (zoom * 100));
 	xine_set_param (bvw->priv->stream,
-			XINE_PARAM_VO_ZOOM_Y, zoom);
+			XINE_PARAM_VO_ZOOM_Y, (int) (zoom * 100));
 }
 
-int
+double
 bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 {
-	g_return_val_if_fail (bvw != NULL, 100);
-	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 100);
-	g_return_val_if_fail (bvw->priv->xine != NULL, 100);
+	g_return_val_if_fail (bvw != NULL, 1.0);
+	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 1.0);
+	g_return_val_if_fail (bvw->priv->xine != NULL, 1.0);
 
 	if (bvw->priv->stream == NULL)
-		return 100;
+		return 1.0;
 
-	return xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ZOOM_X);
+	return (double) xine_get_param (bvw->priv->stream, XINE_PARAM_VO_ZOOM_X) / 100.0;
 }
 
 int
