@@ -610,7 +610,7 @@ for plugin in ${used_plugins}; do
 			PKG_CHECK_MODULES(LIBGDATA, libgdata >= 0.1.1,
 				[HAVE_LIBGDATA=yes], [HAVE_LIBGDATA=no])
 			if test "${HAVE_LIBGDATA}" != "yes" ; then
-				plugin_error_or_ignore "you need libgdata installed for the YouTube plugin"
+				plugin_error_or_ignore "you need libgdata >= 0.1.1 installed for the YouTube plugin"
 				add_plugin="0"
 			fi
 
