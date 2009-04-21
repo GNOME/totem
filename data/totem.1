@@ -52,7 +52,11 @@ Output version information then quit.
 .P
 The following options command an already-running instance of
 .B Totem
-to do something; they are useful for remote-control scripting:
+to do something; they are useful for remote-control scripting. If 
+.B Totem
+is not already running, these commands will launch a new instance of
+.B Totem
+but will not do anything further.
 .TP
 .B --play-pause
 Tell an already-running instance of 
@@ -121,82 +125,6 @@ to the playlist.
 .BI "--replace " filename|URI
 Tell an already-running instance of Totem to play 
 from the playlist.
-.P
-The following options are standard to applications using the
-GDK and GTK+ libraries:
-.TP
-.BI --gdk-debug= flags
-GDK debugging flags to set.
-.TP
-.BI --gdk-no-debug= flags
-GDK debugging flags to unset.
-.TP
-.BI --display= display
-X display to use
-.TP
-.BI --screen= screen
-X screen to use.
-.TP
-.BI --sync
-Make X calls synchronous to facilitate debugging.
-.TP
-.BI --name= name
-Program name as used by the window manager.
-.TP
-.BI --class= class
-Program class a sused by the window manager.
-.TP
-.BI --gxid-host= host
-.TP
-.BI --gxid-port= port
-.TP
-.B --g-fatal-warnings
-Make all warnings fatal.
-.TP
-.BI --gtk-debug= flags
-GTK+ debugging flags to set.
-.TP
-.BI --gtk-no-debug= flags
-GTK+ debugging flags to unset
-.TP
-.BI --gtk-module= module
-Load an additional GTK module.
-.P
-The following options are for Bonobo activation support
-.TP
-.BI --oaf-ior-fd= fd
-File descriptor to print IOR on
-.TP
-.BI --oaf-activate-iid= iid
-IID to activate.
-.TP
-.BI --oaf-private
-Prevent registering of server with OAF
-.P
-The following are standard GNOME options:
-.TP
-.BI --disable-sound
-Disable sound server use.
-.TP
-.BI --enable-sound
-Enable sound server use.
-.TP
-.BI --espeaker= hostname : port
-Specify the host and port on which the sound server is listening.
-.TP
-.BI --disable-crash-dialog
-Disable the crash-reporting dialog.
-.P
-The following options are for session management:
-.TP
-.BI --sm-client-id= ID
-Specify session management ID
-.TP
-.BI --sm-config-prefix= prefix
-Specify prefix of saved configuration
-.TP
-.BI --sm-disable
-Disable connecting to session manager.
 .SH KEYBINDINGS
 Global keybindings for
 .BR Totem :
