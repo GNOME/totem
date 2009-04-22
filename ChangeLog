@@ -1,3 +1,9 @@
+2009-04-22  Bastien Nocera  <hadess@hadess.net>
+
+	* browser-plugin/totem-plugin-viewer.c (resolve_uri):
+	Fix resolve_uri returning an empty URI when trying to resolve
+	with a base at the root of a webserver (Closes: #579716)
+
 2009-04-21  Bastien Nocera  <hadess@hadess.net>
 
 	* data/totem-video-thumbnailer.1:

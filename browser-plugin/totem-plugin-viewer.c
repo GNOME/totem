@@ -698,9 +698,10 @@ resolve_uri (const char *base_uri,
 	base_gfile = g_file_new_for_uri (base_uri);
 	base_parent_gfile = g_file_get_parent (base_gfile);
 	if (!base_parent_gfile) {
-		g_print ("Base URI %s has no parent!\n", base_uri);
-		g_object_unref (base_gfile);
-		return NULL;
+		resolved_gfile = g_file_resolve_relative_path (base_gfile, relative_uri);
+		uri = g_file_get_uri (resolved_gfile);
+		g_object_unref (resolved_gfile);
+		return uri; 
 	}
 	g_object_unref (base_gfile);
 
