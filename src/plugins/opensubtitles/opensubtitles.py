@@ -517,7 +517,7 @@ class OpenSubtitles(totem.Plugin):
             if not filename:
                 directory = gio.File(xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep) 
                 if not directory.query_exists():
-                    directory.make_directory()
+                    directory.make_directory_with_parents()
 
                 file = gio.File(self.filename)
                 movie_name = file.get_basename().rpartition('.')[0]
