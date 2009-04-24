@@ -567,6 +567,13 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 	conf = gconf_client_get_default ();
 	set_folder = TRUE;
 
+	new_path = g_build_filename (g_get_user_cache_dir (),
+				     "totem",
+				     "subtitles",
+				     NULL);
+	gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), new_path, NULL);
+	g_free (new_path);
+
 	new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
 	if (new_path != NULL && *new_path != '\0') {
 		set_folder = gtk_file_chooser_set_current_folder_uri
