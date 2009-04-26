@@ -318,15 +318,7 @@ def httpretrieve(url, filename):
     f.close() 
 
 def httpget(url):
-    resp = ''
-    data = ''
-    try:
-        resp, data = http.request(url, 'GET')
-    except:
-        #print "Response for status %s for %s" % (resp.status, data)
-        totem.action_error (_('Network Error'), _('Failed to fetch URI: %s') % url)
-        raise
-    
+    resp, data = http.request(url, 'GET')
     return data
 
 def parse_entry_id(entry_id):

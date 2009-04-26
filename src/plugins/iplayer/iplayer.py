@@ -17,8 +17,12 @@ class IplayerPlugin (totem.Plugin):
 		# Build the interface
 		builder = self.load_interface ("iplayer.ui", True, totem_object.get_main_window (), self)
 		container = builder.get_object ('iplayer_vbox')
-		self.tree_store = builder.get_object ('iplayer_programme_store')
+
+		self.tv_tree_store = builder.get_object ('iplayer_programme_store')
+		#self.radio_tree_store = builder.get_object ('iplayer_radio_programme_store')
+		#for object_id in ('iplayer_programme_list', 'iplayer_radio_programme_list')
 		programme_list = builder.get_object ('iplayer_programme_list')
+		#	programme_list.set_data ('id', object_id)
 		programme_list.connect ('row-expanded', self._row_expanded_cb)
 		programme_list.connect ('row-activated', self._row_activated_cb)
 
@@ -26,38 +30,44 @@ class IplayerPlugin (totem.Plugin):
 		container.show_all ()
 
 		self.tv = iplayer2.feed ('tv')
-		# TODO: Radio support
-		#self.radio = feed ('radio')
+		#self.radio = iplayer2.feed ('radio')
 
+		# Add the interface to Totem's sidebar
 		self.totem.add_sidebar_page ("iplayer", _("BBC iPlayer"), container)
 
-		self.populate_channel_list ()
+		# Get the channel category listings
+		self.populate_channel_list (self.tv, self.tv_tree_store)
+		#self.populate_channel_list (self.radio, self.radio_tree_store)
 
 	def deactivate (self, totem_object):
 		totem_object.remove_sidebar_page ("iplayer")
 
-	def populate_channel_list (self):
+	def populate_channel_list (self, feed, tree_store):
 		if self.debug:
 			print "Populating channel list…"
 
 		# Add all the channels as top-level rows in the tree store
-		channels = self.tv.channels ()
+		channels = feed.channels ()
 		for channel_id, title in channels.items ():
-			parent_iter = self.tree_store.append (None, [title, channel_id, None])
+			parent_iter = tree_store.append (None, [title, channel_id, None])
 
 		# Add the channels' categories in a thread, since they each require a network request
-		parent_path = self.tree_store.get_path (parent_iter)
-		thread = PopulateChannelsThread (self, parent_path, self.tv, self.tree_store)
+		parent_path = tree_store.get_path (parent_iter)
+		thread = PopulateChannelsThread (self, parent_path, feed, tree_store)
         	thread.start ()
 
-	def _populate_channel_list_cb (self, parent_path, values):
+	def _populate_channel_list_cb (self, tree_store, parent_path, values):
 		# Callback from PopulateChannelsThread to add stuff to the tree store
-		parent_iter = self.tree_store.get_iter (parent_path)
-		category_iter = self.tree_store.append (parent_iter, values)
+		if values == None:
+			self.totem.action_error (_('Error Listing Channel Categories'), 'TODO')
+			return False
+
+		parent_iter = tree_store.get_iter (parent_path)
+		category_iter = tree_store.append (parent_iter, values)
 
 		# Append a dummy child row so that the expander's visible; we can
 		# then queue off the expander to load the programme listing for this category
-		self.tree_store.append (category_iter, [_('Loading…'), None, None])
+		tree_store.append (category_iter, [_('Loading…'), None, None])
 
 		return False
 
@@ -73,36 +83,46 @@ class IplayerPlugin (totem.Plugin):
 			return
 
 		# Populate it with programmes asynchronously
-		self.populate_programme_list (row_iter)
+		#if tree_view.get_data ('id') == 'iplayer_programme_store':
+		feed = self.tv
+		#else:
+		#	feed = self.radio
+
+		self.populate_programme_list (feed, tree_model, row_iter)
 
 	def _row_activated_cb (self, tree_view, path, view_column):
-		tree_iter = self.tree_store.get_iter (path)
-		mrl = self.tree_store.get_value (tree_iter, 2)
+		tree_store = tree_view.get_model ()
+		tree_iter = tree_store.get_iter (path)
+		mrl = tree_store.get_value (tree_iter, 2)
 
 		# Only allow programme rows to be activated, not channel or category rows
 		if mrl == None:
 			return
 
 		# Add the programme to the playlist and play it
-		self.totem.add_to_playlist_and_play (mrl, self.tree_store.get_value (tree_iter, 0), True)
+		self.totem.add_to_playlist_and_play (mrl, tree_store.get_value (tree_iter, 0), True)
 
-	def populate_programme_list (self, category_iter):
+	def populate_programme_list (self, feed, tree_store, category_iter):
 		if self.debug:
 			print "Populating programme list…"
 
-		category_path = self.tree_store.get_path (category_iter)
-		thread = PopulateProgrammesThread (self, self.tv, self.tree_store, category_path)
+		category_path = tree_store.get_path (category_iter)
+		thread = PopulateProgrammesThread (self, feed, tree_store, category_path)
 		thread.start ()
 
-	def _populate_programme_list_cb (self, category_path, values, remove_placeholder):
+	def _populate_programme_list_cb (self, tree_store, category_path, values, remove_placeholder):
 		# Callback from PopulateProgrammesThread to add stuff to the tree store
-		category_iter = self.tree_store.get_iter (category_path)
+		if values == None:
+			totem.action_error (_('Error getting programme feed'), _('There was an unknown error getting the list of programmes for this channel and category combination.'))
+			return False
 
-		self.tree_store.append (category_iter, values)
+		category_iter = tree_store.get_iter (category_path)
+
+		tree_store.append (category_iter, values)
 
 		# Remove the placeholder row
 		if remove_placeholder:
-			self.tree_store.remove (self.tree_store.iter_children (category_iter))
+			tree_store.remove (tree_store.iter_children (category_iter))
 
 		return False
 
@@ -130,12 +150,15 @@ class PopulateChannelsThread (threading.Thread):
 			channel_id = self.tree_model.get_value (tree_iter, 1)
 			parent_path = self.tree_model.get_path (tree_iter)
 
-			# Add this channel's categories as sub-rows
-			# We have to pass a path because the model could theoretically be modified
-			# while the idle function is waiting in the queue, invalidating an iter
-			for name, count in self.feed.get (channel_id).categories ():
-				category_id = category_name_to_id (name)
-				gobject.idle_add (self.plugin._populate_channel_list_cb, parent_path, [name, category_id, None])
+			try:
+				# Add this channel's categories as sub-rows
+				# We have to pass a path because the model could theoretically be modified
+				# while the idle function is waiting in the queue, invalidating an iter
+				for name, count in self.feed.get (channel_id).categories ():
+					category_id = category_name_to_id (name)
+					gobject.idle_add (self.plugin._populate_channel_list_cb, self.tree_model, parent_path, [name, category_id, None])
+			except:
+				gobject.idle_add (self.plugin._populate_channel_list_cb, self.tree_model, parent_path, None)
 
 			tree_iter = self.tree_model.iter_next (tree_iter)
 
@@ -158,13 +181,19 @@ class PopulateProgrammesThread (threading.Thread):
 		# Retrieve the programmes and return them
 		feed = self.feed.get (channel_id).get (category_id)
 		if feed == None:
-			totem.action_error (_('Error getting programme feed'), _('There was an unknown error getting the list of programmes for this channel and category combination.'))
-			gobject.idle_add (self.plugin._populate_programme_list_cb, self.category_path, None)
+			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None)
 			self.plugin.programme_download_lock.release ()
 			return
 
-		# Get the programmes and add them to the tree store
-		programmes = feed.list ()
+		# Get the programmes
+		try:
+			programmes = feed.list ()
+		except:
+			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None)
+			self.plugin.programme_download_lock.release ()
+			return
+
+		# Add the programmes to the tree store
 		remove_placeholder = True
 		for programme in programmes:
 			programme_item = programme.programme
@@ -174,10 +203,11 @@ class PopulateProgrammesThread (threading.Thread):
 			# which isn't currently supported by GStreamer or xine
 			media = programme_item.get_media_for ('mobile')
 			if media == None:
+				# Not worth displaying an error in the interface for this
 				print "Programme has no HTTP streams"
 				continue
 
-			gobject.idle_add (self.plugin._populate_programme_list_cb, self.category_path,
+			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path,
 					  [programme.get_title (), programme.get_summary (), media.url], remove_placeholder)
 			remove_placeholder = False
 

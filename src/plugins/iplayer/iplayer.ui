@@ -9,32 +9,77 @@
 	</columns>
 </object>
 
+<!--<object class="GtkTreeStore" id="iplayer_radio_programme_store">
+	<columns>
+		<column type="gchararray"/><!-Title->
+		<column type="gchararray"/><!-Summary->
+		<column type="gchararray"/><!-MRL->
+	</columns>
+</object>-->
+
 <object class="GtkVBox" id="iplayer_vbox">
 	<property name="border-width">5</property>
 	<property name="homogeneous">False</property>
 	<property name="spacing">6</property>
 	<child>
-		<object class="GtkScrolledWindow" id="iplayer_scrolled_window">
-			<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
-			<property name="vscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
-			<child>
-				<object class="GtkTreeView" id="iplayer_programme_list">
-					<property name="model">iplayer_programme_store</property>
-					<property name="expander-column">iplayer_title_column</property>
-					<property name="headers-visible">False</property>
+		<!--<object class="GtkNotebook" id="iplayer_notebook">
+			<child>-->
+				<object class="GtkScrolledWindow" id="iplayer_scrolled_window">
+					<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
+					<property name="vscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
 					<child>
-						<object class="GtkTreeViewColumn" id="iplayer_title_column">
+						<object class="GtkTreeView" id="iplayer_programme_list">
+							<property name="model">iplayer_programme_store</property>
+							<property name="expander-column">iplayer_title_column</property>
+							<property name="headers-visible">False</property>
 							<child>
-								<object class="GtkCellRendererText" id="iplayer_title_cell_renderer"/>
-								<attributes>
-									<attribute name="text">0</attribute>
-								</attributes>
+								<object class="GtkTreeViewColumn" id="iplayer_title_column">
+									<child>
+										<object class="GtkCellRendererText" id="iplayer_title_cell_renderer"/>
+										<attributes>
+											<attribute name="text">0</attribute>
+										</attributes>
+									</child>
+								</object>
+							</child>
+						</object>
+					</child>
+				</object>
+			<!--</child>
+			<child type="tab">
+				<object class="GtkLabel" id="iplayer_tv_tab">
+					<property name="label" translatable="yes">Television</property>
+				</object>
+			</child>
+			<child>
+				<object class="GtkScrolledWindow" id="iplayer_radio_scrolled_window">
+					<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
+					<property name="vscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
+					<child>
+						<object class="GtkTreeView" id="iplayer_radio_programme_list">
+							<property name="model">iplayer_radio_programme_store</property>
+							<property name="expander-column">iplayer_radio_title_column</property>
+							<property name="headers-visible">False</property>
+							<child>
+								<object class="GtkTreeViewColumn" id="iplayer_radio_title_column">
+									<child>
+										<object class="GtkCellRendererText" id="iplayer_radio_title_cell_renderer"/>
+										<attributes>
+											<attribute name="text">0</attribute>
+										</attributes>
+									</child>
+								</object>
 							</child>
 						</object>
 					</child>
 				</object>
 			</child>
-		</object>
+			<child type="tab">
+				<object class="GtkLabel" id="iplayer_radio_tab">
+					<property name="label" translatable="yes">Radio</property>
+				</object>
+			</child>
+		</object>-->
 	</child>
 </object>
 </interface>
