@@ -11,6 +11,7 @@ class IplayerPlugin (totem.Plugin):
 		totem.Plugin.__init__ (self)
 		self.debug = False
 		self.totem = None
+		self.programme_download_lock = threading.Lock ()
 
 	def activate (self, totem_object):
 		# Build the interface
@@ -145,11 +146,10 @@ class PopulateProgrammesThread (threading.Thread):
 		self.feed = feed
 		self.tree_model = tree_model
 		self.category_path = category_path
-		self.lock = threading.Lock ()
 		threading.Thread.__init__ (self)
 
 	def run (self):
-		self.lock.acquire ()
+		self.plugin.programme_download_lock.acquire ()
 
 		category_iter = self.tree_model.get_iter (self.category_path)
 		category_id = self.tree_model.get_value (category_iter, 1)
@@ -160,7 +160,7 @@ class PopulateProgrammesThread (threading.Thread):
 		if feed == None:
 			totem.action_error (_('Error getting programme feed'), _('There was an unknown error getting the list of programmes for this channel and category combination.'))
 			gobject.idle_add (self.plugin._populate_programme_list_cb, self.category_path, None)
-			self.lock.release ()
+			self.plugin.programme_download_lock.release ()
 			return
 
 		# Get the programmes and add them to the tree store
@@ -181,4 +181,4 @@ class PopulateProgrammesThread (threading.Thread):
 					  [programme.get_title (), programme.get_summary (), media.url], remove_placeholder)
 			remove_placeholder = False
 
-		self.lock.release ()
+		self.plugin.programme_download_lock.release ()
