@@ -69,9 +69,7 @@ channels_tv_list = [
     ('cbeebies', 'CBeebies'),
     ('bbc_news24', 'BBC News Channel'),
     ('bbc_parliament', 'BBC Parliament'),
-    ('bbc_one_northern_ireland', 'BBC One Northern Ireland'), 
-    ('bbc_one_scotland', 'BBC One Scotland'),
-    ('bbc_one_wales', 'BBC One Wales'),
+    ('bbc_hd', 'BBC HD'),
     ('bbc_alba', 'BBC Alba'),
 ]
 channels_tv = dict(channels_tv_list)
@@ -192,13 +190,15 @@ categories_list = [
     ('drama', 'Drama'),
     ('entertainment', 'Entertainment'),
     ('factual', 'Factual'),
+    ('films', 'Films'),
     ('music', 'Music'),
     ('news', 'News'),
     ('religion_and_ethics', 'Religion & Ethics'),
     ('sport', 'Sport'),
-    ('olympics', 'Olympics'),
-    ('wales', 'Wales'),
-    ('signed', 'Sign Zone')
+    ('signed', 'Sign Zone'),
+    ('northern_ireland', 'Northern Ireland'),
+    ('scotland', 'Scotland'),
+    ('wales', 'Wales')
 ]
 categories = dict(categories_list)
 
