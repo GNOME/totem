@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--*- mode: xml -*-->
+<interface>
+<object class="GtkListStore" id="iplayer_programme_list_store">
+	<columns>
+		<column type="GdkPixbuf"/><!--Thumbnail-->
+		<column type="gchararray"/><!--Title-->
+		<column type="gchararray"/><!--MRL-->
+		<column type="GObject"/><!--Video entry; TODO: should be GDataYouTubeVideo, see bug #576285-->
+	</columns>
+</object>
+
+<object class="GtkVBox" id="iplayer_vbox">
+	<property name="border-width">5</property>
+	<property name="homogeneous">False</property>
+	<property name="spacing">6</property>
+</object>
+</interface>
