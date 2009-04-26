@@ -8,8 +8,7 @@ from pprint import pformat
 from socket import timeout as SocketTimeoutError
 from time import time
 
-# XBMC libs
-import xbmcgui
+import totem
 
 # external libs
 import httplib2
@@ -325,9 +324,7 @@ def httpget(url):
         resp, data = http.request(url, 'GET')
     except:
         #print "Response for status %s for %s" % (resp.status, data)
-        dialog = xbmcgui.Dialog()
-        dialog.ok('Network Error', 'Failed to fetch URL', url)
-        print 'Network Error. Failed to fetch URL %s' % url
+        totem.action_error ('Network Error', 'Failed to fetch URL %s' % url)
         raise
     
     return data
