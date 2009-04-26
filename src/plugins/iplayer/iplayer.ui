@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <!--*- mode: xml -*-->
 <interface>
-<object class="GtkListStore" id="iplayer_programme_list_store">
+<object class="GtkTreeStore" id="iplayer_programme_store">
 	<columns>
-		<column type="GdkPixbuf"/><!--Thumbnail-->
 		<column type="gchararray"/><!--Title-->
+		<column type="gchararray"/><!--Summary-->
 		<column type="gchararray"/><!--MRL-->
-		<column type="GObject"/><!--Video entry; TODO: should be GDataYouTubeVideo, see bug #576285-->
 	</columns>
 </object>
 
@@ -14,5 +13,28 @@
 	<property name="border-width">5</property>
 	<property name="homogeneous">False</property>
 	<property name="spacing">6</property>
+	<child>
+		<object class="GtkScrolledWindow" id="iplayer_scrolled_window">
+			<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
+			<property name="vscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
+			<child>
+				<object class="GtkTreeView" id="iplayer_programme_list">
+					<property name="model">iplayer_programme_store</property>
+					<property name="expander-column">iplayer_title_column</property>
+					<property name="headers-visible">False</property>
+					<child>
+						<object class="GtkTreeViewColumn" id="iplayer_title_column">
+							<child>
+								<object class="GtkCellRendererText" id="iplayer_title_cell_renderer"/>
+								<attributes>
+									<attribute name="text">0</attribute>
+								</attributes>
+							</child>
+						</object>
+					</child>
+				</object>
+			</child>
+		</object>
+	</child>
 </object>
 </interface>
