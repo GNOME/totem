@@ -293,7 +293,7 @@ class NoItemsError(Exception):
     
     def __str__(self):
         reason = self.reason or '<no reason given>'
-        return "Programme unavailable ('%s')" % (reason)
+        return _('Programme unavailable ("%s")') % (reason)
     
 
 class memoize(object):
@@ -324,7 +324,7 @@ def httpget(url):
         resp, data = http.request(url, 'GET')
     except:
         #print "Response for status %s for %s" % (resp.status, data)
-        totem.action_error ('Network Error', 'Failed to fetch URL: %s' % url)
+        totem.action_error (_('Network Error'), _('Failed to fetch URI: %s') % url)
         raise
     
     return data
@@ -835,6 +835,7 @@ class feed(object):
         """
         path = []
         
+        # TODO: This is not i18n-friendly whatsoever
         # if got a channel, don't need tv/radio distinction
         if self.channel:
             assert self.channel in channels_tv or self.channel in channels_radio, 'Unknown channel'
