@@ -810,6 +810,13 @@ class feed(object):
             path = [self.channel]
             if self.atoz:
                 path += ['atoz', self.atoz]
+            if self.category:
+                path += [self.category]
+            path += [listing]
+        elif self.category:
+            path = [self.category]
+            if self.atoz:
+                path += ['atoz', self.atoz]
             path += [listing]
         elif self.atoz:
             path = ['atoz', self.atoz, listing]
@@ -929,14 +936,11 @@ class feed(object):
         Returns a child/subfeed of this feed.
         child: can be channel/cat/subcat/letter, e.g. 'bbc_one'
         """
-        if self.channel and subfeed in categories: 
-            # no children: channel feeds don't support categories
-            return None
+        if self.channel:
+            return self.sub(category=subfeed)
         elif self.category:
             # no children: TODO support subcategories
             return None
-        elif subfeed in categories:
-            return self.sub(category=subfeed)
         elif self.is_atoz(subfeed):
             return self.sub(atoz=self.is_atoz(subfeed))
         else:
@@ -956,7 +960,7 @@ class feed(object):
             d = []
             for entry in progs.entries: 
                 pid = parse_entry_id(entry.id)
-                p = programme_simple(pid, entry)
+                p = programme(pid)
                 d.append(p)        
             logging.info('Found %d entries', len(d))
             rss_cache[url] = d
