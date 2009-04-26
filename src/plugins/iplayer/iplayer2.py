@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
 # Python libs
-import re, time, os, sys
+import re, os
 import urllib2
-import logging
-from pprint import pformat
+#import logging
+#from pprint import pformat
 from socket import timeout as SocketTimeoutError
-from time import time
+#from time import time
 
 import totem
 
@@ -18,20 +18,20 @@ from BeautifulSoup import BeautifulStoneSoup
 
 IMG_DIR = os.path.join(os.getcwd(), 'resources', 'media')
 
-try:
-    logging.basicConfig(
-        filename='iplayer2.log', 
-        filemode='w',
-        format='%(asctime)s %(levelname)4s %(message)s',
-        level=logging.DEBUG
-    )
-except IOError:
-    #print "iplayer2 logging to stdout"
-    logging.basicConfig(
-        stream=sys.stdout,
-        level=logging.DEBUG,
-        format='iplayer2.py: %(asctime)s %(levelname)4s %(message)s',
-    )    
+#try:
+#    logging.basicConfig(
+#        filename='iplayer2.log', 
+#        filemode='w',
+#        format='%(asctime)s %(levelname)4s %(message)s',
+#        level=logging.DEBUG
+#    )
+#except IOError:
+#    #print "iplayer2 logging to stdout"
+#    logging.basicConfig(
+#        stream=sys.stdout,
+#        level=logging.DEBUG,
+#        format='iplayer2.py: %(asctime)s %(levelname)4s %(message)s',
+#    )    
 # me want 2.5!!!
 def any(iterable):
      for element in iterable:
@@ -324,7 +324,7 @@ def httpget(url):
         resp, data = http.request(url, 'GET')
     except:
         #print "Response for status %s for %s" % (resp.status, data)
-        totem.action_error ('Network Error', 'Failed to fetch URL %s' % url)
+        totem.action_error ('Network Error', 'Failed to fetch URL: %s' % url)
         raise
     
     return data
@@ -348,11 +348,11 @@ class media(object):
     @property
     def url(self):
         if self.connection_method == 'resolve':
-            logging.info("Resolving URL %s", self.connection_href)
+            #logging.info("Resolving URL %s", self.connection_href)
             page = urllib2.urlopen(self.connection_href)
             page.close()
             url = page.geturl()
-            logging.info("URL resolved to %s", url)
+            #logging.info("URL resolved to %s", url)
             return page.geturl()
         else:
             return self.connection_href
@@ -407,19 +407,18 @@ class media(object):
             server = conn.get('server')
             identifier = conn.get('identifier')
 
-            if self.connection_live:
-                logging.error("No support for live streams!")                
-            else:
+            if not self.connection_live:
+                #logging.error("No support for live streams!")
                 auth = conn.get('authstring')
                 params = dict(ip=server, server=server, auth=auth, identifier=identifier)
                 self.connection_href = "rtmp://%(ip)s:1935/ondemand?_fcs_vhost=%(server)s&auth=%(auth)s&aifp=v001&slist=%(identifier)s" % params
-        else:
-            logging.error("connectionkind %s unknown", self.connection_kind)
+        #else:
+        #    logging.error("connectionkind %s unknown", self.connection_kind)
         
-        if self.connection_protocol:
-            logging.info("conn protocol: %s - conn kind: %s - media type: %s - media encoding: %s" % 
-                         (self.connection_protocol, self.connection_kind, self.mimetype, self.encoding))
-            logging.info("conn href: %s", self.connection_href)
+        #if self.connection_protocol:
+        #    logging.info("conn protocol: %s - conn kind: %s - media type: %s - media encoding: %s" % 
+        #                 (self.connection_protocol, self.connection_kind, self.mimetype, self.encoding))
+        #    logging.info("conn href: %s", self.connection_href)
 
     
     @property 
@@ -456,7 +455,7 @@ class item(object):
         """
         self.kind = node.get('kind')
         self.identifier = node.get('identifier')
-        logging.info('Found item: %s, %s', self.kind, self.identifier)
+        #logging.info('Found item: %s, %s', self.kind, self.identifier)
         if self.kind in ['programme', 'radioProgramme']:
             self.live = node.get('live') == 'true'
             #self.title = node.get('title')
@@ -509,7 +508,7 @@ class item(object):
         """
         if self.medias: return self.medias
         url = self.mediaselector_url
-        logging.info("Stream XML URL: %s", str(url))
+        #logging.info("Stream XML URL: %s", str(url))
         _, xml = http.request(url)
         soup = BeautifulStoneSoup(xml)
         medias = [media(self, m) for m in soup('media')]
@@ -551,18 +550,18 @@ class programme(object):
 
     @call_once
     def read_playlist(self):
-        logging.info('Read playlist for %s...', self.pid)
+        #logging.info('Read playlist for %s...', self.pid)
         self.parse_playlist(self.playlist)
     
     def get_playlist_xml(self):
         """ Downloads and returns the XML for a PID from the iPlayer site. """
         try:
             url = self.playlist_url
-            logging.info("Getting XML playlist at URL: %s", url)
+            #logging.info("Getting XML playlist at URL: %s", url)
             r, xml = http.request(url, 'GET')
             return xml
         except SocketTimeoutError:
-            logging.error("Timed out trying to download programme XML")
+            #logging.error("Timed out trying to download programme XML")
             raise
 
     def parse_playlist(self, xml):
@@ -576,19 +575,19 @@ class programme(object):
         self._items = []
         self._related = []
 
-        logging.info('  Found programme: %s', soup.playlist.title.string)
+        #logging.info('  Found programme: %s', soup.playlist.title.string)
         self.meta['title'] = soup.playlist.title.string
         self.meta['summary'] = soup.playlist.summary.string
         self.meta['updated'] = soup.playlist.updated.string
         
         if soup.playlist.noitems:
-            logging.info('No playlist items: %s', soup.playlist.noitems.get('reason'))
+            #logging.info('No playlist items: %s', soup.playlist.noitems.get('reason'))
             self.meta['reason'] = soup.playlist.noitems.get('reason')
                         
         self._items = [item(self, i) for i in soup('item')]
-        for i in self._items:
-            print i, i.alternate , " ",
-        print
+        #for i in self._items:
+        #    print i, i.alternate , " ",
+        #print
 
         rId = re.compile('concept_pid:([a-z0-9]{8})')
         for link in soup('relatedlink'):
@@ -879,7 +878,7 @@ class feed(object):
         Return a list of available channels as a list of feeds.
         """
         if self.channel:
-            logging.warning("%s doesn\'t have any channels!", self.channel)
+            #logging.warning("%s doesn\'t have any channels!", self.channel)
             return None
         if self.tvradio == 'tv': 
             return [feed('tv', channel=ch) for (ch, title) in channels_tv_list]
@@ -951,9 +950,9 @@ class feed(object):
 
     @classmethod
     def read_rss(self, url):
-        logging.info('Read RSS: %s', url)
+        #logging.info('Read RSS: %s', url)
         if url not in rss_cache:
-            logging.info('Feed URL not in cache, requesting...')
+            #logging.info('Feed URL not in cache, requesting...')
             xml = httpget(url)
             progs = listparser.parse(xml)
             if not progs: return []
@@ -962,10 +961,10 @@ class feed(object):
                 pid = parse_entry_id(entry.id)
                 p = programme(pid)
                 d.append(p)        
-            logging.info('Found %d entries', len(d))
+            #logging.info('Found %d entries', len(d))
             rss_cache[url] = d
-        else:
-            logging.info('RSS found in cache')
+        #else:
+        #    logging.info('RSS found in cache')
         return rss_cache[url]
     
     def popular(self):
