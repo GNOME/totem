@@ -676,6 +676,14 @@ class JamendoService(threading.Thread):
                     '%s/name/license/json/album_license/?album_id=%s'\
                     % (self.API_URL, album['id'])
                 ))
+                # Translators: If Jamendo supports your language, replace "en" with the language code, enclosed
+                # in slashes, used to view pages in your language on the Jamendo website. e.g. For French, "en"
+                # would be translated to "fr", as Jamendo uses that in its URLs:
+                #  http://www.jamendo.com/fr/album/4818
+                # Compared to:
+                #  http://www.jamendo.com/en/album/4818
+                # If Jamendo doesn't support your language, *do not translate this string*!
+                album['url'] = album['url'].replace('/en/', '/' + _('en') + '/')
                 gobject.idle_add(self.loop_cb[0], self.loop_cb[1], album)
             gobject.idle_add(self.done_cb[0], self.done_cb[1], albums)
         except Exception, exc:

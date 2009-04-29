@@ -18,9 +18,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2009-04-24 13:18+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-29 15:04+0100\n"
 "PO-Revision-Date: 2009-04-26 21:04+0200\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -2333,8 +2332,8 @@ msgid ""
 "Plugin for sending notifications of currently-playing movies to the D-Bus "
 "subsystem."
 msgstr ""
-"Greffon pour l'envoi de notifications des films en cours de visionnement "
-"au sous-système D-Bus."
+"Greffon pour l'envoi de notifications des films en cours de visionnement au "
+"sous-système D-Bus."
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
@@ -2503,6 +2502,17 @@ msgstr "%H:%M:%S"
 #: ../src/plugins/jamendo/jamendo.py:636
 msgid "%M:%S"
 msgstr "%M:%S"
+
+#. Translators: If Jamendo supports your language, replace "en" with the language code, enclosed
+#. in slashes, used to view pages in your language on the Jamendo website. e.g. For French, "en"
+#. would be translated to "fr", as Jamendo uses that in its URLs:
+#. http://www.jamendo.com/fr/album/4818
+#. Compared to:
+#. http://www.jamendo.com/en/album/4818
+#. If Jamendo doesn't support your language, *do not translate this string*!
+#: ../src/plugins/jamendo/jamendo.py:686
+msgid "en"
+msgstr "fr"
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
 msgid "Infrared Remote Control"
