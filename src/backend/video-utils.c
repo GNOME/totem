@@ -122,32 +122,11 @@ guint8 * yv12torgb (guint8 *src_y, guint8 *src_u, guint8 *src_v,
 void
 totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 {
-	GdkBitmap *empty_bitmap;
 	GdkCursor *cursor;
-	GdkColor useless;
-	char invisible_cursor_bits[] = { 0x0 }; 
 
-	useless.red = useless.green = useless.blue = 0;
-	useless.pixel = 0;
-
-	empty_bitmap = gdk_bitmap_create_from_data (window,
-			invisible_cursor_bits,
-			1, 1);
-
-	/* When there's no window, there's no bitmap */
-	if (empty_bitmap == NULL)
-		return;
-
-	cursor = gdk_cursor_new_from_pixmap (empty_bitmap,
-			empty_bitmap,
-			&useless,
-			&useless, 0, 0);
-
+	cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
 	gdk_window_set_cursor (window, cursor);
-
 	gdk_cursor_unref (cursor);
-
-	g_object_unref (empty_bitmap);
 }
 
 void
