@@ -58,6 +58,12 @@ IGNORE_HFILES = \
 	totemplaylist-marshal.h		\
 	totemvideolist-marshal.h
 
+# Files we don't want exported to plugins
+IGNORE_HFILES += \
+	bacon-video-widget-common.h	\
+	baconvideowidget-marshal.h	\
+	bacon-video-widget-gst-missing-plugins.h
+
 # Plugin files
 IGNORE_HFILES += \
 	bacon-video-widget-properties.h	\
@@ -92,6 +98,7 @@ expand_content_files=
 GTKDOC_CFLAGS = \
 	-I$(top_srcdir)/		\
 	-I$(top_srcdir)/src		\
+	-I$(top_srcdir)/src/backend	\
 	-I$(top_srcdir)/src/plugins	\
 	$(DEPENDENCY_CFLAGS)
 GTKDOC_LIBS = \

@@ -2613,9 +2613,9 @@ gboolean bacon_video_widget_seek (BaconVideoWidget *bvw,
 }
 
 gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
-		GError **gerror)
+		GError **error)
 {
-	int error, speed, status;
+	int error_num, speed, status;
 	gint64 length;
 
 	g_return_val_if_fail (bvw != NULL, -1);
@@ -2644,11 +2644,11 @@ gboolean bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,
 		return TRUE;
 	}
 
-	error = xine_play (bvw->priv->stream, 0, CLAMP (time, 0, length));
+	error_num = xine_play (bvw->priv->stream, 0, CLAMP (time, 0, length));
 
-	if (error == 0)
+	if (error_num == 0)
 	{
-		xine_error (bvw, gerror);
+		xine_error (bvw, error);
 		return FALSE;
 	}
 

@@ -29,6 +29,17 @@
  *
  */
 
+/**
+ * SECTION:bacon-video-widget
+ * @short_description: video playing widget and abstraction
+ * @stability: Unstable
+ * @include: bacon-video-widget.h
+ *
+ * #BaconVideoWidget is a widget to play audio or video streams, with support for visualisations for audio-only streams. It has a GStreamer and xine
+ * backend, and abstracts away the differences to provide a simple interface to the functionality required by Totem. It handles all the low-level
+ * audio and video work for Totem (or passes the work off to the backend).
+ **/
+
 #include <config.h>
 
 #include <gst/gst.h>
@@ -945,40 +956,98 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   object_class->finalize = bacon_video_widget_finalize;
 
   /* Properties */
+  /**
+   * BaconVideoWidget:logo-mode:
+   *
+   * Whether the logo should be displayed when no stream is loaded, or the widget
+   * should take up no space.
+   **/
   g_object_class_install_property (object_class, PROP_LOGO_MODE,
                                    g_param_spec_boolean ("logo_mode", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE));
+
+  /**
+   * BaconVideoWidget:position:
+   *
+   * The current position in the stream, as a percentage between %0 and %1.
+   **/
   g_object_class_install_property (object_class, PROP_POSITION,
                                    g_param_spec_double ("position", NULL, NULL,
 							0, 1.0, 0,
 							G_PARAM_READABLE));
+
+  /**
+   * BaconVideoWidget:stream-length:
+   *
+   * The length of the current stream, in milliseconds.
+   **/
   g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
 	                           g_param_spec_int64 ("stream-length", NULL,
                                                      NULL, 0, G_MAXINT64, 0,
                                                      G_PARAM_READABLE));
+
+  /**
+   * BaconVideoWidget:playing:
+   *
+   * Whether a stream is currently playing.
+   **/
   g_object_class_install_property (object_class, PROP_PLAYING,
                                    g_param_spec_boolean ("playing", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READABLE));
+
+  /**
+   * BaconVideoWidget:seekable:
+   *
+   * Whether the current stream can be seeked.
+   **/
   g_object_class_install_property (object_class, PROP_SEEKABLE,
                                    g_param_spec_boolean ("seekable", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READABLE));
+
+  /**
+   * BaconVideoWidget:volume:
+   *
+   * The current volume level, as a percentage between %0 and %1.
+   **/
   g_object_class_install_property (object_class, PROP_VOLUME,
 	                           g_param_spec_double ("volume", NULL, NULL,
 	                                                0.0, 1.0, 0.0,
 	                                                G_PARAM_READWRITE));
+
+  /**
+   * BaconVideoWidget:show-cursor:
+   *
+   * Whether the cursor should be shown, or should be invisible, when it is over
+   * the video widget.
+   **/
   g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
                                    g_param_spec_boolean ("show-cursor", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE));
+
+  /**
+   * BaconVideoWidget:show-visuals:
+   *
+   * Whether visualisations should be shown for audio-only streams.
+   **/
   g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
                                    g_param_spec_boolean ("show-visuals", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_WRITABLE));
 
   /* Signals */
+  /**
+   * BaconVideoWidget::error:
+   * @message: the error message
+   * @playback_stopped: %TRUE if playback has stopped due to the error, %FALSE otherwise
+   * @fatal: %TRUE if the error was fatal to playback, %FALSE otherwise
+   *
+   * Emitted when the backend wishes to asynchronously report an error. If @fatal is %TRUE,
+   * playback of this stream cannot be restarted.
+   **/
   bvw_signals[SIGNAL_ERROR] =
     g_signal_new ("error",
                   G_TYPE_FROM_CLASS (object_class),
@@ -989,6 +1058,11 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_TYPE_NONE, 3, G_TYPE_STRING,
                   G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
 
+  /**
+   * BaconVideoWidget::eos:
+   *
+   * Emitted when the end of the current stream is reached.
+   **/
   bvw_signals[SIGNAL_EOS] =
     g_signal_new ("eos",
                   G_TYPE_FROM_CLASS (object_class),
@@ -996,6 +1070,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, eos),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
+  /**
+   * BaconVideoWidget::got-metadata:
+   *
+   * Emitted when the widget has updated the metadata of the current stream. This
+   * will typically happen just after opening a stream.
+   *
+   * Call bacon_video_widget_get_metadata() to query the updated metadata.
+   **/
   bvw_signals[SIGNAL_GOT_METADATA] =
     g_signal_new ("got-metadata",
                   G_TYPE_FROM_CLASS (object_class),
@@ -1003,6 +1085,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
+  /**
+   * BaconVideoWidget::got-redirect:
+   * @new_mrl: the new MRL
+   *
+   * Emitted when a redirect response is received from a stream's server.
+   **/
   bvw_signals[SIGNAL_REDIRECT] =
     g_signal_new ("got-redirect",
                   G_TYPE_FROM_CLASS (object_class),
@@ -1011,6 +1099,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   NULL, NULL, g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
+  /**
+   * BaconVideoWidget::title-change:
+   * @title: the new stream title
+   *
+   * Emitted when the stream's title changes, along with BaconVideoWidget::got-metadata.
+   **/
   bvw_signals[SIGNAL_TITLE_CHANGE] =
     g_signal_new ("title-change",
                   G_TYPE_FROM_CLASS (object_class),
@@ -1020,6 +1114,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
+  /**
+   * BaconVideoWidget::channels-change:
+   *
+   * Emitted when the number of audio languages available changes, or when the
+   * selected audio language is changed.
+   *
+   * Query the new list of audio languages with bacon_video_widget_get_languages().
+   **/
   bvw_signals[SIGNAL_CHANNELS_CHANGE] =
     g_signal_new ("channels-change",
                   G_TYPE_FROM_CLASS (object_class),
@@ -1027,6 +1129,15 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, channels_change),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
+  /**
+   * BaconVideoWidget::tick:
+   * @current_time: the current position in the stream, in milliseconds since the beginning of the stream
+   * @stream_length: the length of the stream, in milliseconds
+   * @current_position: the current position in the stream, as a percentage between %0 and %1
+   * @seekable: %TRUE if the stream can be seeked, %FALSE otherwise
+   *
+   * Emitted every time an important time event happens, or at regular intervals when playing a stream.
+   **/
   bvw_signals[SIGNAL_TICK] =
     g_signal_new ("tick",
                   G_TYPE_FROM_CLASS (object_class),
@@ -1037,6 +1148,13 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_DOUBLE,
                   G_TYPE_BOOLEAN);
 
+  /**
+   * BaconVideoWidget::buffering:
+   * @percentage: the percentage of buffering completed, between %0 and %1
+   *
+   * Emitted regularly when a network stream is being buffered, to provide status updates on the buffering
+   * progress.
+   **/
   bvw_signals[SIGNAL_BUFFERING] =
     g_signal_new ("buffering",
                   G_TYPE_FROM_CLASS (object_class),
@@ -1045,13 +1163,19 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 
-  /* missing plugins signal:
-   *  - string array: details of missing plugins for libgimme-codec
-   *  - string array: details of missing plugins (human-readable strings)
-   *  - bool: if we managed to start playing something even without those plugins
-   *  return value: callback must return TRUE to indicate that it took some
-   *                action, FALSE will be interpreted as no action taken
-   */
+  /**
+   * BaconVideoWidget::missing-plugins:
+   * @details: a %NULL-terminated array of missing plugin details for use when installing the plugins with libgimme-codec
+   * @descriptions: a %NULL-terminated array of missing plugin descriptions for display to the user
+   * @playing: %TRUE if the stream could be played even without these plugins, %FALSE otherwise
+   *
+   * Emitted when plugins required to play the current stream are not found. This allows the application
+   * to request the user install them before proceeding to try and play the stream again.
+   *
+   * Note that this signal is only available for the GStreamer backend.
+   *
+   * Return value: %TRUE if the signal was handled and some action was taken, %FALSE otherwise
+   **/
   bvw_signals[SIGNAL_MISSING_PLUGINS] =
     g_signal_new ("missing-plugins",
                   G_TYPE_FROM_CLASS (object_class),
@@ -2009,12 +2133,34 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
 /*                                                               */
 /* ============================================================= */
 
+/**
+ * bacon_video_widget_get_backend_name:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the name string for @bvw. For the GStreamer backend, it is the output
+ * of gst_version_string(). For the xine backend, it is a string of the
+ * form <literal>xine-lib version <replaceable>%s</replaceable></literal>, where
+ * <replaceable>%s</replaceable> is the version number from xine_get_version_string().
+ *
+ * Return value: the backend's name; free with g_free()
+ **/
 char *
 bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
 {
   return gst_version_string ();
 }
 
+/**
+ * bacon_video_widget_get_subtitle:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the index of the current subtitles.
+ *
+ * If the widget is not playing, %-2 will be returned. If no subtitles are
+ * being used, %-1 is returned.
+ *
+ * Return value: the subtitle index
+ **/
 int
 bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 {
@@ -2035,6 +2181,14 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   return subtitle;
 }
 
+/**
+ * bacon_video_widget_set_subtitle:
+ * @bvw: a #BaconVideoWidget
+ * @subtitle: a subtitle index
+ *
+ * Sets the subtitle index for @bvw. If @subtitle is %-1, no subtitles will
+ * be used.
+ **/
 void
 bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 {
@@ -2056,6 +2210,15 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   g_object_set (bvw->priv->play, "flags", flags, "current-text", subtitle, NULL);
 }
 
+/**
+ * bacon_video_widget_has_next_track:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Determines whether there is another track after the current one, typically
+ * as a chapter on a DVD.
+ *
+ * Return value: %TRUE if there is another track, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
 {
@@ -2063,6 +2226,15 @@ bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
   return TRUE;
 }
 
+/**
+ * bacon_video_widget_has_previous_track:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Determines whether there is another track before the current one, typically
+ * as a chapter on a DVD.
+ *
+ * Return value: %TRUE if there is another track, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 {
@@ -2148,6 +2320,15 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
   return g_list_reverse (ret);
 }
 
+/**
+ * bacon_video_widget_get_subtitles:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns a list of subtitle tags, each in the form <literal>TEXT <replaceable>x</replaceable></literal>,
+ * where <replaceable>x</replaceable> is the subtitle index.
+ *
+ * Return value: a #GList of subtitle tags, or %NULL; free each element with g_free() and the list with g_list_free()
+ **/
 GList *
 bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 {
@@ -2162,6 +2343,15 @@ bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
   return list;
 }
 
+/**
+ * bacon_video_widget_get_languages:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns a list of audio language tags, each in the form <literal>AUDIO <replaceable>x</replaceable></literal>,
+ * where <replaceable>x</replaceable> is the language index.
+ *
+ * Return value: a #GList of audio language tags, or %NULL; free each element with g_free() and the list with g_list_free()
+ **/
 GList *
 bacon_video_widget_get_languages (BaconVideoWidget * bvw)
 {
@@ -2172,6 +2362,16 @@ bacon_video_widget_get_languages (BaconVideoWidget * bvw)
   return get_lang_list_for_type (bvw, "AUDIO");
 }
 
+/**
+ * bacon_video_widget_get_language:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the index of the current audio language.
+ *
+ * If the widget is not playing, or the default language is in use, %-2 will be returned.
+ *
+ * Return value: the audio language index
+ **/
 int
 bacon_video_widget_get_language (BaconVideoWidget * bvw)
 {
@@ -2189,6 +2389,14 @@ bacon_video_widget_get_language (BaconVideoWidget * bvw)
   return language;
 }
 
+/**
+ * bacon_video_widget_set_language:
+ * @bvw: a #BaconVideoWidget
+ * @language: an audio language index
+ *
+ * Sets the audio language index for @bvw. If @language is %-1, the default language will
+ * be used.
+ **/
 void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 {
@@ -2227,6 +2435,15 @@ connection_speed_enum_to_kbps (gint speed)
     (((conv_table[speed] % 1000) != 0) ? 1 : 0);
 }
 
+/**
+ * bacon_video_widget_get_connection_speed:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current connection speed, where %0 is the lowest speed
+ * and %11 is the highest.
+ *
+ * Return value: the connection speed index
+ **/
 int
 bacon_video_widget_get_connection_speed (BaconVideoWidget * bvw)
 {
@@ -2236,6 +2453,14 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget * bvw)
   return bvw->priv->connection_speed;
 }
 
+/**
+ * bacon_video_widget_set_connection_speed:
+ * @bvw: a #BaconVideoWidget
+ * @speed: the connection speed index
+ *
+ * Sets the connection speed from the given @speed index, where %0 is the lowest speed
+ * and %11 is the highest.
+ **/
 void
 bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 {
@@ -2257,18 +2482,42 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
   }
 }
 
+/**
+ * bacon_video_widget_can_deinterlace:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the widget can deinterlace videos.
+ *
+ * Return value: %TRUE if deinterlacing is supported, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_can_deinterlace (BaconVideoWidget *bvw)
 {
   return FALSE;
 }
 
+/**
+ * bacon_video_widget_set_deinterlacing:
+ * @bvw: a #BaconVideoWidget
+ * @deinterlace: %TRUE if videos should be deinterlaced, %FALSE otherwise
+ *
+ * Sets whether the widget should deinterlace videos. This is a no-op if
+ * bacon_video_widget_can_deinterlace() returns %FALSE.
+ **/
 void
 bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
                                       gboolean deinterlace)
 {
 }
 
+/**
+ * bacon_video_widget_get_deinterlacing:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether deinterlacing of videos is enabled for this widget.
+ *
+ * Return value: %TRUE if deinterlacing is enabled, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_get_deinterlacing (BaconVideoWidget * bvw)
 {
@@ -2368,6 +2617,15 @@ set_audio_filter (BaconVideoWidget *bvw)
   gst_object_unref (pad);
 }
 
+/**
+ * bacon_video_widget_get_audio_out_type:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current audio output type (e.g. how many speaker channels)
+ * from #BaconVideoWidgetAudioOutType.
+ *
+ * Return value: the audio output type, or %-1
+ **/
 BvwAudioOutType
 bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 {
@@ -2377,6 +2635,16 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
   return bvw->priv->speakersetup;
 }
 
+/**
+ * bacon_video_widget_set_audio_out_type:
+ * @bvw: a #BaconVideoWidget
+ * @type: the new audio output type
+ *
+ * Sets the audio output type (number of speaker channels) in the video widget,
+ * and stores it in GConf.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BvwAudioOutType type)
@@ -2617,6 +2885,25 @@ error:
   return FALSE;
 }
 
+/**
+ * bacon_video_widget_open:
+ * @bvw: a #BaconVideoWidget
+ * @mrl: an MRL
+ * @subtitle_uri: the URI of a subtitle file, or %NULL
+ * @error: a #GError, or %NULL
+ *
+ * Opens the given @mrl in @bvw for playing. If @subtitle_uri is not %NULL, the given
+ * subtitle file is also loaded. Alternatively, the subtitle URI can be passed in @mrl
+ * by adding it after <literal>#subtitle:</literal>. For example:
+ * <literal>http://example.com/video.mpg#subtitle:/home/user/subtitle.ass</literal>.
+ *
+ * If there was a filesystem error, a %BVW_ERROR_GENERIC error will be returned. Otherwise,
+ * more specific #BvwError errors will be returned.
+ *
+ * On success, the MRL is loaded and waiting to be played with bacon_video_widget_play().
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_open (BaconVideoWidget * bvw,
                          const gchar * mrl, const gchar *subtitle_uri, GError ** error)
@@ -2788,6 +3075,21 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   return ret;
 }
 
+/**
+ * bacon_video_widget_play:
+ * @bvw: a #BaconVideoWidget
+ * @error: a #GError, or %NULL
+ *
+ * Plays the currently-loaded video in @bvw.
+ *
+ * Errors from the GStreamer backend will be returned asynchronously via the
+ * #BaconVideoWidget::error signal, even if this function returns %TRUE.
+ *
+ * The xine backend will synchronously return a #BvwError in @error if it
+ * encounters a problem.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 {
@@ -2822,6 +3124,14 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   return TRUE;
 }
 
+/**
+ * bacon_video_widget_can_direct_seek:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Determines whether direct seeking is possible for the current stream.
+ *
+ * Return value: %TRUE if direct seeking is possible, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 {
@@ -2832,8 +3142,18 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   return bacon_video_widget_common_can_direct_seek (bvw->com);
 }
 
+/**
+ * bacon_video_widget_seek_time:
+ * @bvw: a #BaconVideoWidget
+ * @time: the time to which to seek, in milliseconds
+ * @error: a #GError, or %NULL
+ *
+ * Seeks the currently-playing stream to the absolute position @time, in milliseconds.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerror)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2863,6 +3183,17 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **gerro
   return TRUE;
 }
 
+/**
+ * bacon_video_widget_seek:
+ * @bvw: a #BaconVideoWidget
+ * @position: the percentage of the way through the stream to which to seek
+ * @error: a #GError, or %NULL
+ *
+ * Seeks the currently-playing stream to @position as a percentage of the total
+ * stream length.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
 {
@@ -2913,6 +3244,12 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   GST_DEBUG ("stopped");
 }
 
+/**
+ * bacon_video_widget_stop:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Stops playing the current stream and resets to the first position in the stream.
+ **/
 void
 bacon_video_widget_stop (BaconVideoWidget * bvw)
 {
@@ -2927,6 +3264,12 @@ bacon_video_widget_stop (BaconVideoWidget * bvw)
   got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
 }
 
+/**
+ * bacon_video_widget_close:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Closes the current stream and frees the resources associated with it.
+ **/
 void
 bacon_video_widget_close (BaconVideoWidget * bvw)
 {
@@ -2958,6 +3301,16 @@ bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
   gst_object_unref (GST_OBJECT (nav));
 }
 
+/**
+ * bacon_video_widget_dvd_event:
+ * @bvw: a #BaconVideoWidget
+ * @type: the type of DVD event to issue
+ *
+ * Issues a DVD navigation event to the video widget, such as one to skip to the
+ * next chapter, or navigate to the DVD title menu.
+ *
+ * This is a no-op if the current stream is not navigable.
+ **/
 void
 bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
                               BvwDVDEvent type)
@@ -3045,6 +3398,13 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
   }
 }
 
+/**
+ * bacon_video_widget_set_logo:
+ * @bvw: a #BaconVideoWidget
+ * @filename: the logo filename
+ *
+ * Sets the logo displayed on the video widget when no stream is loaded.
+ **/
 void
 bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
 {
@@ -3065,6 +3425,15 @@ bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
   }
 }
 
+/**
+ * bacon_video_widget_set_logo_pixbuf:
+ * @bvw: a #BaconVideoWidget
+ * @logo: the logo #GdkPixbuf
+ *
+ * Sets the logo displayed on the video widget when no stream is loaded,
+ * by passing in a #GdkPixbuf directly. @logo is reffed, so can be unreffed
+ * once this function call is complete.
+ **/
 void
 bacon_video_widget_set_logo_pixbuf (BaconVideoWidget * bvw, GdkPixbuf *logo)
 {
@@ -3079,6 +3448,16 @@ bacon_video_widget_set_logo_pixbuf (BaconVideoWidget * bvw, GdkPixbuf *logo)
   bvw->priv->logo_pixbuf = logo;
 }
 
+/**
+ * bacon_video_widget_set_logo_mode:
+ * @bvw: a #BaconVideoWidget
+ * @logo_mode: %TRUE to display the logo, %FALSE otherwise
+ *
+ * Sets whether to display a logo set with @bacon_video_widget_set_logo when
+ * no stream is loaded. If @logo_mode is %FALSE, nothing will be displayed
+ * and the video widget will take up no space. Otherwise, the logo will be
+ * displayed and will requisition a corresponding amount of space.
+ **/
 void
 bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
 {
@@ -3110,6 +3489,14 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
   }
 }
 
+/**
+ * bacon_video_widget_get_logo_mode
+ * @bvw: a #BaconVideoWidget
+ *
+ * Gets whether the logo is displayed when no stream is loaded.
+ *
+ * Return value: %TRUE if the logo is displayed, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
 {
@@ -3118,6 +3505,14 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
   return bvw->priv->logo_mode;
 }
 
+/**
+ * bacon_video_widget_pause:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Pauses the current stream in the video widget.
+ *
+ * If a live stream is being played, playback is stopped entirely.
+ **/
 void
 bacon_video_widget_pause (BaconVideoWidget * bvw)
 {
@@ -3137,6 +3532,16 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
   bvw->priv->target_state = GST_STATE_PAUSED;
 }
 
+/**
+ * bacon_video_widget_set_subtitle_font:
+ * @bvw: a #BaconVideoWidget
+ * @font: a font description string
+ *
+ * Sets the font size and style in which to display subtitles.
+ *
+ * @font is a Pango font description string, as understood by
+ * pango_font_description_from_string().
+ **/
 void
 bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
                                           const gchar * font)
@@ -3150,6 +3555,14 @@ bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
   g_object_set (bvw->priv->play, "subtitle-font-desc", font, NULL);
 }
 
+/**
+ * bacon_video_widget_set_subtitle_encoding:
+ * @bvw: a #BaconVideoWidget
+ * @encoding: an encoding system
+ *
+ * Sets the encoding system for the subtitles, so that they can be decoded
+ * properly.
+ **/
 void
 bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw,
                                           const char *encoding)
@@ -3163,6 +3576,17 @@ bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw,
   g_object_set (bvw->priv->play, "subtitle-encoding", encoding, NULL);
 }
 
+/**
+ * bacon_video_widget_can_set_volume:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the volume level can be set, given the current settings.
+ *
+ * The volume cannot be set if the audio output type is set to
+ * %BVW_AUDIO_SOUND_AC3PASSTHRU.
+ *
+ * Return value: %TRUE if the volume can be set, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
 {
@@ -3176,6 +3600,15 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
   return !bvw->priv->uses_fakesink;
 }
 
+/**
+ * bacon_video_widget_set_volume:
+ * @bvw: a #BaconVideoWidget
+ * @volume: the new volume level, as a percentage between %0 and %1
+ *
+ * Sets the volume level of the stream as a percentage between %0 and %1.
+ *
+ * If bacon_video_widget_can_set_volume() returns %FALSE, this is a no-op.
+ **/
 void
 bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
 {
@@ -3191,6 +3624,14 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
   }
 }
 
+/**
+ * bacon_video_widget_get_volume:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current volume level, as a percentage between %0 and %1.
+ *
+ * Return value: the volume as a percentage between %0 and %1
+ **/
 double
 bacon_video_widget_get_volume (BaconVideoWidget * bvw)
 {
@@ -3204,6 +3645,15 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
   return vol;
 }
 
+/**
+ * bacon_video_widget_set_fullscreen:
+ * @bvw: a #BaconVideoWidget
+ * @fullscreen: %TRUE to go fullscreen, %FALSE otherwise
+ *
+ * Sets whether the widget renders the stream in fullscreen mode.
+ *
+ * Fullscreen rendering is done only when possible, as xvidmode is required.
+ **/
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
                                    gboolean fullscreen)
@@ -3231,6 +3681,15 @@ bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
   }
 }
 
+/**
+ * bacon_video_widget_set_show_cursor:
+ * @bvw: a #BaconVideoWidget
+ * @show_cursor: %TRUE to show the cursor, %FALSE otherwise
+ *
+ * Sets whether the cursor should be shown when it is over the video
+ * widget. If @show_cursor is %FALSE, the cursor will be invisible
+ * when it is moved over the video widget.
+ **/
 void
 bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
                                     gboolean show_cursor)
@@ -3254,6 +3713,14 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
   }
 }
 
+/**
+ * bacon_video_widget_get_show_cursor:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the cursor is shown when it is over the video widget.
+ *
+ * Return value: %TRUE if the cursor is shown, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
 {
@@ -3450,6 +3917,13 @@ beach:
   return;
 }
 
+/**
+ * bacon_video_widget_set_show_visuals:
+ * @bvw: a #BaconVideoWidget
+ * @show_visuals: %TRUE to show visualisations, %FALSE otherwise
+ *
+ * Sets whether to show visualisations when playing audio-only streams.
+ **/
 void
 bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
                                      gboolean show_visuals)
@@ -3492,6 +3966,14 @@ add_longname (GstElementFactory *f, GList ** to)
   *to = g_list_append (*to, (gchar *) gst_element_factory_get_longname (f));
 }
 
+/**
+ * bacon_video_widget_get_visuals_list:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns a list of the visualisations available when playing audio-only streams.
+ *
+ * Return value: a #GList of visualisation names; owned by @bvw
+ **/
 GList *
 bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
 {
@@ -3513,6 +3995,18 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
   return names;
 }
 
+/**
+ * bacon_video_widget_set_visuals:
+ * @bvw: a #BaconVideoWidget
+ * @name: the visualisation's name, or %NULL
+ *
+ * Sets the visualisation to display when playing audio-only streams.
+ *
+ * If @name is %NULL, visualisations will be disabled. Otherwise, @name
+ * should be from the list returned by bacon_video_widget_get_visuals_list().
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 {
@@ -3538,6 +4032,13 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
   return FALSE;
 }
 
+/**
+ * bacon_video_widget_set_visuals_quality:
+ * @bvw: a #BaconVideoWidget
+ * @quality: the visualisation quality
+ *
+ * Sets the quality/size of displayed visualisations.
+ **/
 void
 bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
                                         BvwVisualsQuality quality)
@@ -3554,6 +4055,14 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
   setup_vis (bvw);
 }
 
+/**
+ * bacon_video_widget_get_auto_resize:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the widget will automatically resize to fit videos.
+ *
+ * Return value: %TRUE if the widget will resize, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_get_auto_resize (BaconVideoWidget * bvw)
 {
@@ -3563,6 +4072,15 @@ bacon_video_widget_get_auto_resize (BaconVideoWidget * bvw)
   return bvw->priv->auto_resize;
 }
 
+/**
+ * bacon_video_widget_set_auto_resize:
+ * @bvw: a #BaconVideoWidget
+ * @auto_resize: %TRUE to automatically resize for new videos, %FALSE otherwise
+ *
+ * Sets whether the widget should automatically resize to fit to new videos when
+ * they are loaded. Changes to this will take effect when the next media file is
+ * loaded.
+ **/
 void
 bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
                                     gboolean auto_resize)
@@ -3575,6 +4093,15 @@ bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
   /* this will take effect when the next media file loads */
 }
 
+/**
+ * bacon_video_widget_set_aspect_ratio:
+ * @bvw: a #BaconVideoWidget
+ * @ratio: the new aspect ratio
+ *
+ * Sets the aspect ratio used by the widget, from #BaconVideoWidgetAspectRatio.
+ *
+ * Changes to this take effect immediately.
+ **/
 void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
                                 BvwAspectRatio ratio)
@@ -3586,6 +4113,15 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
   got_video_size (bvw);
 }
 
+/**
+ * bacon_video_widget_get_aspect_ratio:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current aspect ratio used by the widget, from
+ * #BaconVideoWidgetAspectRatio.
+ *
+ * Return value: the aspect ratio
+ **/
 BvwAspectRatio
 bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 {
@@ -3595,6 +4131,15 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
   return bvw->priv->ratio_type;
 }
 
+/**
+ * bacon_video_widget_set_scale_ratio:
+ * @bvw: a #BaconVideoWidget
+ * @ratio: the new scale ratio
+ *
+ * Sets the ratio by which the widget will scale videos when they are
+ * displayed. If @ratio is set to %0, the highest ratio possible will
+ * be chosen.
+ **/
 void
 bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 {
@@ -3639,6 +4184,15 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
 }
 
+/**
+ * bacon_video_widget_set_zoom:
+ * @bvw: a #BaconVideoWidget
+ * @zoom: a percentage zoom factor
+ *
+ * Sets the zoom factor applied to the video when it is displayed,
+ * as an integeric percentage between %0 and %1
+ * (e.g. set @zoom to %1 to not zoom at all).
+ **/
 void
 bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
                              double            zoom)
@@ -3651,6 +4205,16 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
     resize_video_window (bvw);
 }
 
+/**
+ * bacon_video_widget_get_zoom:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the zoom factor applied to videos displayed by the widget,
+ * as an integeric percentage between %0 and %1
+ * (e.g. %1 means no zooming at all).
+ *
+ * Return value: the zoom factor
+ **/
 double
 bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 {
@@ -3685,6 +4249,18 @@ bvw_get_color_balance_channel (GstColorBalance * color_balance,
   return NULL;
 }
 
+/**
+ * bacon_video_widget_get_video_property:
+ * @bvw: a #BaconVideoWidget
+ * @type: the type of property
+ *
+ * Returns the given property of the video, such as its brightness or saturation.
+ *
+ * It is returned as a percentage in the full range of integer values; from %0
+ * to %G_MAXINT, where %G_MAXINT/2 is the default.
+ *
+ * Return value: the property's value, in the range %0 to %G_MAXINT
+ **/
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
                                        BvwVideoProperty type)
@@ -3738,6 +4314,17 @@ done:
   return ret;
 }
 
+/**
+ * bacon_video_widget_set_video_property:
+ * @bvw: a #BaconVideoWidget
+ * @type: the type of property
+ * @value: the property's value, in the range %0 to %G_MAXINT
+ *
+ * Sets the given property of the video, such as its brightness or saturation.
+ *
+ * It should be given as a percentage in the full range of integer values; from %0
+ * to %G_MAXINT, where %G_MAXINT/2 is the default.
+ **/
 void
 bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
                                        BvwVideoProperty type,
@@ -3782,6 +4369,15 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   GST_DEBUG ("setting value %d on gconf key %s", value, video_props_str[type]);
 }
 
+/**
+ * bacon_video_widget_get_position:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current position in the stream, as a value between
+ * %0 and %1.
+ *
+ * Return value: the current position, or %-1
+ **/
 double
 bacon_video_widget_get_position (BaconVideoWidget * bvw)
 {
@@ -3790,6 +4386,15 @@ bacon_video_widget_get_position (BaconVideoWidget * bvw)
   return bvw->priv->current_position;
 }
 
+/**
+ * bacon_video_widget_get_current_time:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the current position in the stream, as the time (in milliseconds)
+ * since the beginning of the stream.
+ *
+ * Return value: time since the beginning of the stream, in milliseconds, or %-1
+ **/
 gint64
 bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
 {
@@ -3798,6 +4403,14 @@ bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
   return bvw->priv->current_time;
 }
 
+/**
+ * bacon_video_widget_get_stream_length:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the total length of the stream, in milliseconds.
+ *
+ * Return value: the stream length, in milliseconds, or %-1
+ **/
 gint64
 bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 {
@@ -3816,6 +4429,14 @@ bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
   return bvw->priv->stream_length;
 }
 
+/**
+ * bacon_video_widget_is_playing:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the widget is currently playing a stream.
+ *
+ * Return value: %TRUE if a stream is playing, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 {
@@ -3831,6 +4452,16 @@ bacon_video_widget_is_playing (BaconVideoWidget * bvw)
   return ret;
 }
 
+/**
+ * bacon_video_widget_is_seekable:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether seeking is possible in the current stream.
+ *
+ * If no stream is loaded, %FALSE is returned.
+ *
+ * Return value: %TRUE if the stream is seekable, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
 {
@@ -4006,6 +4637,35 @@ bacon_video_widget_get_dvb_mrls (const char *device)
   return (char **) g_ptr_array_free (array, FALSE);
 }
 
+/**
+ * bacon_video_widget_get_mrls:
+ * @bvw: a #BaconVideoWidget
+ * @type: the media type
+ * @device: the device name
+ * @error: a #GError, or %NULL
+ *
+ * Returns an array of MRLs available for the given @device and media @type.
+ *
+ * @device should typically be the number of the device (e.g. %0 for the first
+ * DVD drive, or the number of the DVB adapter).
+ *
+ * @type can be any value from #TotemDiscMediaType, but a %BVW_ERROR_INVALID_LOCATION error
+ * will be returned if @type is %MEDIA_TYPE_CDDA, as CDDA support has been removed from
+ * Totem (and hence #BaconVideoWidget).
+ *
+ * A %BVW_ERROR_NO_PLUGIN_FOR_FILE error will be returned if the required GStreamer elements do
+ * not exist for the given @type (for the GStreamer backend), or if the media type is
+ * unsupported by xine (for the xine backend).
+ *
+ * If @device does not exist, a %BVW_ERROR_INVALID_DEVICE error will be returned.
+ *
+ * If @type is %MEDIA_TYPE_DVB and the DVB channels file (as given by
+ * bacon_video_widget_get_channels_file() for the GStreamer backend, and in the user's
+ * <filename class="directory">.xine</filename> directory for the xine backend)
+ * does not exist, a %BVW_ERROR_FILE_NOT_FOUND error will be returned.
+ *
+ * Return value: a %NULL-terminated array of MRLs, or %NULL; free with g_strfreev()
+ **/
 gchar **
 bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 			     TotemDiscMediaType type,
@@ -4580,6 +5240,16 @@ bacon_video_widget_get_best_image (BaconVideoWidget *bvw)
   return cover_value;
 }
 
+/**
+ * bacon_video_widget_get_metadata:
+ * @bvw: a #BaconVideoWidget
+ * @type: the type of metadata to return
+ * @value: a #GValue
+ *
+ * Provides metadata of the given @type about the current stream in @value.
+ *
+ * Free the #GValue with g_value_unset().
+ **/
 void
 bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
                                  BvwMetadataType type,
@@ -4648,6 +5318,20 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 }
 
 /* Screenshot functions */
+
+/**
+ * bacon_video_widget_can_get_frames:
+ * @bvw: a #BaconVideoWidget
+ * @error: a #GError, or %NULL
+ *
+ * Determines whether individual frames from the current stream can
+ * be returned using bacon_video_widget_get_current_frame().
+ *
+ * Frames cannot be returned for audio-only streams, unless visualisations
+ * are enabled.
+ *
+ * Return value: %TRUE if frames can be captured, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
 {
@@ -4679,6 +5363,16 @@ destroy_pixbuf (guchar *pix, gpointer data)
   gst_buffer_unref (GST_BUFFER (data));
 }
 
+/**
+ * bacon_video_widget_get_current_frame:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns a #GdkPixbuf containing the current frame from the playing
+ * stream. This will wait for any pending seeks to complete before
+ * capturing the frame.
+ *
+ * Return value: the current frame, or %NULL; unref with g_object_unref()
+ **/
 GdkPixbuf *
 bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
@@ -4806,12 +5500,35 @@ G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 /* applications must use exactly one of bacon_video_widget_get_option_group()
  * OR bacon_video_widget_init_backend(), but not both */
 
+/**
+ * bacon_video_widget_get_option_group:
+ *
+ * Returns the #GOptionGroup containing command-line options for
+ * #BaconVideoWidget.
+ *
+ * Applications must call either this or bacon_video_widget_init_backend() exactly
+ * once; but not both.
+ *
+ * Return value: a #GOptionGroup giving command-line options for #BaconVideoWidget
+ **/
 GOptionGroup*
 bacon_video_widget_get_option_group (void)
 {
   return gst_init_get_option_group ();
 }
 
+/**
+ * bacon_video_widget_init_backend:
+ * @argc: pointer to application's argc
+ * @argv: pointer to application's argv
+ *
+ * Initialises #BaconVideoWidget's backend (either GStreamer or xine). If this fails
+ * for the GStreamer backend, your application will be terminated. This is a no-op
+ * for the xine backend.
+ *
+ * Applications must call either this or bacon_video_widget_get_option_group() exactly
+ * once; but not both.
+ **/
 void
 bacon_video_widget_init_backend (int *argc, char ***argv)
 {
@@ -5041,9 +5758,29 @@ got_new_video_sink_bin_element (GstBin *video_sink, GstElement *element,
   g_mutex_unlock (bvw->priv->lock);
 }
 
+/**
+ * bacon_video_widget_new:
+ * @width: initial or expected video width, in pixels, or %-1
+ * @height: initial or expected video height, in pixels, or %-1
+ * @type: the widget's use type
+ * @error: a #GError, or %NULL
+ *
+ * Creates a new #BaconVideoWidget for the purpose specified in @type.
+ *
+ * If @type is %BVW_USE_TYPE_VIDEO, the #BaconVideoWidget will be fully-featured; other
+ * values of @type will enable less functionality on the widget, which will come with
+ * corresponding decreases in the size of its memory footprint.
+ *
+ * @width and @height give the initial or expected video height. Set them to %-1 if the
+ * video size is unknown. For small videos, #BaconVideoWidget will be configured differently.
+ *
+ * A #BvwError will be returned on error.
+ *
+ * Return value: a new #BaconVideoWidget, or %NULL; destroy with gtk_widget_destroy()
+ **/
 GtkWidget *
 bacon_video_widget_new (int width, int height,
-                        BvwUseType type, GError ** err)
+                        BvwUseType type, GError ** error)
 {
   GConfValue *confvalue;
   BaconVideoWidget *bvw;
@@ -5071,7 +5808,7 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->play = gst_element_factory_make ("playbin2", "play");
   if (!bvw->priv->play) {
-    g_set_error_literal (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
     g_object_ref_sink (bvw);
@@ -5198,19 +5935,19 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error_literal (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+          g_set_error_literal (error, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                _("Failed to open video output. It may not be available. "
                  "Please select another video output in the Multimedia "
                  "Systems Selector."));
-        } else if (err) {
-          *err = bvw_error_from_gst_error (bvw, err_msg);
+        } else if (error) {
+          *error = bvw_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
         goto sink_error;
       }
     }
   } else {
-    g_set_error_literal (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                  _("Could not find the video output. "
                    "You may need to install additional GStreamer plugins, "
                    "or select another video output in the Multimedia Systems "
@@ -5245,14 +5982,14 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error_literal (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+          g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                        _("Failed to open audio output. You may not have "
                          "permission to open the sound device, or the sound "
                          "server may not be running. "
                          "Please select another audio output in the Multimedia "
                          "Systems Selector."));
-        } else if (err) {
-          *err = bvw_error_from_gst_error (bvw, err_msg);
+        } else if (error) {
+          *error = bvw_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
         gst_object_unref (bus);
@@ -5265,7 +6002,7 @@ bacon_video_widget_new (int width, int height,
     }
     gst_object_unref (bus);
   } else {
-    g_set_error_literal (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "
                    "You may need to install additional GStreamer plugins, or "
                    "select another audio output in the Multimedia Systems "
@@ -5322,7 +6059,7 @@ bacon_video_widget_new (int width, int height,
     ret = gst_element_get_state (video_sink, NULL, NULL, 5 * GST_SECOND);
     if (ret != GST_STATE_CHANGE_SUCCESS) {
       GST_WARNING ("Timeout setting videosink to READY");
-      g_set_error_literal (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+      g_set_error_literal (error, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
           _("Failed to open video output. It may not be available. "
           "Please select another video output in the Multimedia Systems Selector."));
       return NULL;
