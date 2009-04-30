@@ -491,6 +491,14 @@ totem_get_current_mrl (Totem *totem)
 	return totem_playlist_get_current_mrl (totem->playlist, NULL);
 }
 
+/**
+ * totem_get_playlist_length:
+ * @totem: a #TotemObject
+ *
+ * Returns the length of the current playlist.
+ *
+ * Return value: the playlist length
+ **/
 guint
 totem_get_playlist_length (Totem *totem)
 {
@@ -502,18 +510,44 @@ totem_get_playlist_length (Totem *totem)
 	return last + 1;
 }
 
+/**
+ * totem_get_playlist_pos:
+ * @totem: a #TotemObject
+ *
+ * Returns the %0-based index of the current entry in the playlist. If
+ * there is no current entry in the playlist, %-1 is returned.
+ *
+ * Return value: the index of the current playlist entry, or %-1
+ **/
 int
 totem_get_playlist_pos (Totem *totem)
 {
 	return totem_playlist_get_current (totem->playlist);
 }
 
+/**
+ * totem_get_title_at_playlist_pos:
+ * @totem: a #TotemObject
+ * @index: the %0-based entry index
+ *
+ * Gets the title of the playlist entry at @index.
+ *
+ * Return value: the entry title at @index, or %NULL; free with g_free()
+ **/
 char *
 totem_get_title_at_playlist_pos (Totem *totem, guint index)
 {
 	return totem_playlist_get_title (totem->playlist, index);
 }
 
+/**
+ * totem_get_short_title:
+ * @totem: a #TotemObject
+ *
+ * Gets the title of the current entry in the playlist.
+ *
+ * Return value: the current entry's title, or %NULL; free with g_free()
+ **/
 char *
 totem_get_short_title (Totem *totem)
 {
@@ -2797,6 +2831,13 @@ totem_action_toggle_controls (Totem *totem)
  	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), !state);
 }
 
+/**
+ * totem_action_next_angle:
+ * @totem: a #TotemObject
+ *
+ * Switches to the next angle, if watching a DVD. If not watching a DVD, this is a
+ * no-op.
+ **/
 void
 totem_action_next_angle (Totem *totem)
 {
@@ -2804,6 +2845,17 @@ totem_action_next_angle (Totem *totem)
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_ANGLE);
 }
 
+/**
+ * totem_action_set_playlist_index:
+ * @totem: a #TotemObject
+ * @index: the new playlist index
+ *
+ * Sets the %0-based playlist index to @index, causing Totem to load and
+ * start playing that playlist entry.
+ *
+ * If @index is higher than the current length of the playlist, this
+ * has the effect of restarting the current playlist entry.
+ **/
 void
 totem_action_set_playlist_index (Totem *totem, guint index)
 {
@@ -2996,6 +3048,14 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	}
 }
 
+/**
+ * totem_action_remote_set_setting:
+ * @totem: a #TotemObject
+ * @setting: a #TotemRemoteSetting
+ * @value: the new value for the setting
+ *
+ * Sets @setting to @value on this instance of Totem.
+ **/
 void totem_action_remote_set_setting (Totem *totem,
 				      TotemRemoteSetting setting,
 				      gboolean value)
@@ -3018,6 +3078,15 @@ void totem_action_remote_set_setting (Totem *totem,
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), value);
 }
 
+/**
+ * totem_action_remote_get_setting:
+ * @totem: a #TotemObject
+ * @setting: a #TotemRemoteSetting
+ *
+ * Returns the value of @setting for this instance of Totem.
+ *
+ * Return value: %TRUE if the setting is enabled, %FALSE otherwise
+ **/
 gboolean totem_action_remote_get_setting (Totem *totem,
 					  TotemRemoteSetting setting)
 {
@@ -3167,6 +3236,14 @@ totem_is_playing (Totem *totem)
 	return bacon_video_widget_is_playing (totem->bvw) != FALSE;
 }
 
+/**
+ * totem_is_paused:
+ * @totem: a #TotemObject
+ *
+ * Returns %TRUE if playback is paused.
+ *
+ * Return value: %TRUE if playback is paused, %FALSE otherwise
+ **/
 gboolean
 totem_is_paused (Totem *totem)
 {

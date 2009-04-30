@@ -64,6 +64,37 @@ IGNORE_HFILES += \
 	baconvideowidget-marshal.h	\
 	bacon-video-widget-gst-missing-plugins.h
 
+# Files we don't want exported to plugins
+IGNORE_HFILES += \
+	bacon-video-widget-common.h			\
+	baconvideowidget-marshal.h			\
+	bacon-video-widget-gst-missing-plugins.h	\
+	bacon-resize.h					\
+	totem-playlist.h				\
+	totem-fullscreen.h				\
+	totem-module.h					\
+	totem-time-label.h				\
+	totem-plugin-manager.h				\
+	totem-properties-view.h				\
+	totem-open-location.h				\
+	totem-python-module.h				\
+	totem-statusbar.h				\
+	totem-sidebar.h					\
+	totem-session.h					\
+	totem-resources.h				\
+	totem-plugins-engine.h				\
+	totem-options.h					\
+	totem-preferences.h				\
+	totem-dvb-setup.h				\
+	gstscreenshot.h					\
+	totem-uri.h					\
+	totem-python-plugin.h				\
+	totem-subtitle-encoding.h			\
+	totem-menu.h					\
+	video-utils.h					\
+	debug.h						\
+	totem-dnd-menu.h
+
 # Plugin files
 IGNORE_HFILES += \
 	bacon-video-widget-properties.h	\

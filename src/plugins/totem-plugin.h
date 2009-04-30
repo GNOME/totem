@@ -55,9 +55,49 @@ typedef struct {
 	GObject parent;
 } TotemPlugin;
 
+/**
+ * TotemPluginActivationFunc:
+ * @plugin: the #TotemPlugin
+ * @totem: a #TotemObject
+ * @error: a #GError
+ *
+ * Called when the user has requested @plugin be activated, this function should be used to initialise
+ * any resources the plugin needs, and attach itself to the Totem UI.
+ *
+ * If an error is encountered while setting up the plugin, @error should be set, and the function
+ * should return %FALSE. Totem will then not mark the plugin as activated, and will ensure it's not loaded
+ * again unless explicitly asked for by the user.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 typedef gboolean	(*TotemPluginActivationFunc)		(TotemPlugin *plugin, TotemObject *totem,
 								 GError **error);
+
+/**
+ * TotemPluginDeactivationFunc:
+ * @plugin: the #TotemPlugin
+ * @totem: a #TotemObject
+ *
+ * Called when the user has requested @plugin be deactivated, this function should destroy all resources
+ * created during the plugin's lifetime, especially those created in the activation function.
+ *
+ * It should be possible to activate and deactivate the plugin multiple times sequentially in a single Totem
+ * session without memory or resource leaks, or errors.
+ **/
 typedef void		(*TotemPluginDeactivationFunc)		(TotemPlugin *plugin, TotemObject *totem);
+
+/**
+ * TotemPluginWidgetFunc:
+ * @plugin: the #TotemPlugin
+ *
+ * Called when the configuration dialogue for the plugin needs to be built, this function should return
+ * a complete window which will be shown by the Totem code. The widget needs to be capable of hiding itself
+ * when configuration is complete.
+ *
+ * If your plugin is not configurable, do not define this function.
+ *
+ * Return value: a #GtkWidget
+ **/
 typedef GtkWidget *	(*TotemPluginWidgetFunc)		(TotemPlugin *plugin);
 typedef gboolean	(*TotemPluginBooleanFunc)		(TotemPlugin *plugin);
 
@@ -133,15 +173,33 @@ GtkBuilder *     totem_plugin_load_interface    (TotemPlugin *plugin,
 
 GList *          totem_get_plugin_paths            (void);
 
-/*
- * Utility macro used to register plugins
+/**
+ * TOTEM_PLUGIN_REGISTER:
+ * @PluginName: the plugin's name in camelcase
+ * @plugin_name: the plugin's name in lowercase, with underscores
  *
- * use: TOTEM_PLUGIN_REGISTER(TOTEMSamplePlugin, totem_sample_plugin)
- */
-
+ * Registers a new Totem plugin type. A plugin is, at its core, just a class which is
+ * instantiated and activated on the user's request. This macro registers that class.
+ **/
 #define TOTEM_PLUGIN_REGISTER(PluginName, plugin_name)				\
 	TOTEM_PLUGIN_REGISTER_EXTENDED(PluginName, plugin_name, {})
 
+/**
+ * TOTEM_PLUGIN_REGISTER_EXTENDED:
+ * @PluginName: the plugin's name in camelcase
+ * @plugin_name: the plugin's name in lowercase, with underscores
+ * @_C_: extra code to call in the module type registration function
+ *
+ * Registers a new Totem plugin type with custom code in the module type registration
+ * function. See TOTEM_PLUGIN_REGISTER() for more information about the registration
+ * process.
+ *
+ * A variable named @our_info is available with the module's #GTypeInfo information.
+ * @plugin_module_type is the plugin's #GTypeModule.
+ * @<replaceable>plugin_name</replaceable>_type is the plugin's newly-registered #GType
+ * (where <replaceable>plugin_name</replaceable> is the plugin name passed to the
+ * TOTEM_PLUGIN_REGISTER_EXTENDED() macro).
+ **/
 #define TOTEM_PLUGIN_REGISTER_EXTENDED(PluginName, plugin_name, _C_)		\
 	_TOTEM_PLUGIN_REGISTER_EXTENDED_BEGIN (PluginName, plugin_name) {_C_;} _TOTEM_PLUGIN_REGISTER_EXTENDED_END(plugin_name)
 
@@ -200,9 +258,25 @@ register_totem_plugin (GTypeModule *module)					\
 	return plugin_name##_type;						\
 }
 
+/**
+ * TOTEM_PLUGIN_REGISTER_TYPE:
+ * @type_name: the type's name in lowercase, with underscores
+ *
+ * Calls the type registration function for a type inside a plugin module previously
+ * defined with TOTEM_PLUGIN_DEFINE_TYPE().
+ **/
 #define TOTEM_PLUGIN_REGISTER_TYPE(type_name)					\
 	type_name##_register_type (plugin_module_type)
 
+/**
+ * TOTEM_PLUGIN_DEFINE_TYPE:
+ * @TypeName: the type name in camelcase
+ * @type_name: the type name in lowercase, with underscores
+ * @TYPE_PARENT: the type's parent name in uppercase, with underscores
+ *
+ * Registers a type to be used inside a Totem plugin, but not the plugin's itself;
+ * use TOTEM_PLUGIN_REGISTER() for that.
+ **/
 #define TOTEM_PLUGIN_DEFINE_TYPE(TypeName, type_name, TYPE_PARENT)		\
 static void type_name##_init (TypeName *self); 					\
 static void type_name##_class_init (TypeName##Class *klass); 			\

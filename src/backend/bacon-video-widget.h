@@ -292,6 +292,7 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
  * @VISUAL_NORMAL: normal size (320×25)
  * @VISUAL_LARGE: large size (480×25)
  * @VISUAL_EXTRA_LARGE: extra large size (600×30)
+ * @NUM_VISUAL_QUALITIES: the number of visual qualities available
  *
  * The different visualisation sizes or qualities available for use
  * with bacon_video_widget_set_visuals_quality().

@@ -78,6 +78,15 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	return error_dialog;
 }
 
+/**
+ * totem_interface_error:
+ * @title: the error title
+ * @reason: the error reason (secondary text)
+ * @parent: the error dialogue's parent #GtkWindow
+ *
+ * Display a modal error dialogue with @title as its primary error text, and @reason
+ * as its secondary text.
+ **/
 void
 totem_interface_error (const char *title, const char *reason,
 		GtkWindow *parent)
@@ -92,6 +101,15 @@ totem_interface_error (const char *title, const char *reason,
 	gtk_window_present (GTK_WINDOW (error_dialog));
 }
 
+/**
+ * totem_interface_error_blocking:
+ * @title: the error title
+ * @reason: the error reason (secondary text)
+ * @parent: the error dialogue's parent #GtkWindow
+ *
+ * Display a modal error dialogue like totem_interface_error() which blocks until the user has
+ * dismissed it.
+ **/
 void
 totem_interface_error_blocking (const char *title, const char *reason,
 		GtkWindow *parent)
@@ -147,7 +165,7 @@ link_button_clicked_cb (GtkWidget *widget, Totem *totem)
  * @parent: the error dialogue's parent #GtkWindow
  * @totem: a #TotemObject
  *
- * Display a modal error dialogue like totem_interface_error_dialog(),
+ * Display a modal error dialogue like totem_interface_error(),
  * but add a button which will open @uri in a browser window.
  **/
 void
@@ -354,6 +372,18 @@ totem_interface_get_license (void)
 			  NULL);
 }
 
+/**
+ * totem_interface_boldify_label:
+ * @builder: a #GtkBuilder
+ * @name: the label name
+ *
+ * Makes the text of the @name label bold.
+ *
+ * This should be used instead of putting the Pango markup directly into a #GtkBuilder
+ * UI file so that translators don't have to translate text formatting markup unnecessarily.
+ *
+ * This function can only be used if the entire text of a label is to be made bold.
+ **/
 void
 totem_interface_boldify_label (GtkBuilder *builder, const char *name)
 {
@@ -388,6 +418,18 @@ totem_interface_boldify_label (GtkBuilder *builder, const char *name)
 	g_free (str_final);
 }
 
+/**
+ * totem_interface_italicise_label:
+ * @builder: a #GtkBuilder
+ * @name: the label name
+ *
+ * Makes the text of the @name label italic.
+ *
+ * This should be used instead of putting the Pango markup directly into a #GtkBuilder
+ * UI file so that translators don't have to translate text formatting markup unnecessarily.
+ *
+ * This function can only be used if the entire text of a label is to be made italic.
+ **/
 void
 totem_interface_italicise_label (GtkBuilder *builder, const char *name)
 {

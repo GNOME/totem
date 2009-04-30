@@ -33,6 +33,11 @@
 #include <totem-disc.h>
 #include "totem-playlist.h"
 
+/**
+ * TOTEM_GCONF_PREFIX:
+ *
+ * The GConf prefix under which all Totem GConf keys are stored.
+ **/
 #define TOTEM_GCONF_PREFIX "/apps/totem"
 
 G_BEGIN_DECLS
@@ -103,6 +108,13 @@ typedef enum {
 	TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT
 } TotemRemoteCommand;
 
+/**
+ * TotemRemoteSetting:
+ * @TOTEM_REMOTE_SETTING_SHUFFLE: whether shuffle is enabled
+ * @TOTEM_REMOTE_SETTING_REPEAT: whether repeat is enabled
+ *
+ * Represents a boolean setting or preference on a remote Totem instance.
+ **/
 typedef enum {
 	TOTEM_REMOTE_SETTING_SHUFFLE,
 	TOTEM_REMOTE_SETTING_REPEAT
@@ -123,6 +135,12 @@ GQuark totem_disc_media_type_quark	(void);
 #define TOTEM_OBJECT_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), totem_object_get_type (), TotemObjectClass))
 #define TOTEM_IS_OBJECT(obj)           (G_TYPE_CHECK_INSTANCE_TYPE (obj, totem_object_get_type ()))
 #define TOTEM_IS_OBJECT_CLASS(klass)   (G_CHECK_INSTANCE_GET_CLASS ((klass), totem_object_get_type ()))
+
+/**
+ * Totem:
+ *
+ * The #Totem object is a handy synonym for #TotemObject, and the two can be used interchangably.
+ **/
 
 /**
  * TotemObject:
