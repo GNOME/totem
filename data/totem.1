@@ -190,6 +190,24 @@ F9		toggle display of the playlist
 m		show the DVD menu
 .br
 c		show the DVD chapter menu
+.SH FILES
+.I /usr/lib/totem/plugins/
+.RS
+The global plugins directory, which contains all the system-installed
+plugins.
+.RE
+.I ~/.local/share/totem/plugins/
+.RS
+The user plugins directory, containing plugins available only to that user.
+It is always in the "totem/plugins" subdirectory of your 
+.B XDG_DATA_HOME
+directory.
+.RE
+.I ~/.config/totem/state.ini
+.RS
+The configuration file for the main window's appearance, stored in a
+simple INI format.
+.RE
 .SH BUGS
 .B Totem
 cannot play files using some proprietary codecs.
@@ -200,8 +218,8 @@ This manual page was written by Andre Lehovich for the
 Debian Project.
 .SH DISTRIBUTION
 The latest version of Totem may be downloaded from
-.UR http://www.gnome.org/projects/totem/
-<http://www.gnome.org/projects/totem/>
+.UR http://projects.gnome.org/totem/
+<http://projects.gnome.org/totem/>
 .UE
 .SH SEE ALSO
 .BR "totem-video-thumbnailer" (1),
