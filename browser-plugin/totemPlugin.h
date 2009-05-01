@@ -284,6 +284,7 @@ class totemPlugin {
     char* mHref;
     char* mHrefURI;
     char* mTarget;
+    bool mAutoHref;
 #endif
 
 #if 0 //defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)

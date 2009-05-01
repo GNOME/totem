@@ -815,6 +815,8 @@ totemPlugin::ViewerReady ()
 					    G_TYPE_STRING, mTarget ? mTarget : "",
 					    G_TYPE_INVALID);
 	}
+	if (mHref && mAutoHref)
+		ViewerButtonPressed (0, 0);
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
@@ -2025,16 +2027,20 @@ totemPlugin::Init (NPMIMEType mimetype,
 #endif /* TOTEM_GMP_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-	/* Target */
+	const char *href = (const char *) g_hash_table_lookup (args, "href");
+	if (href) {
+		SetHref (href);
+	}
+
+	/* Target, set it after SetHref() call, otherwise mTarget will be empty */
 	value = (const char *) g_hash_table_lookup (args, "target");
 	if (value) {
                 mTarget = g_strdup (value);
 	}
 
-	const char *href = (const char *) g_hash_table_lookup (args, "href");
-	if (href) {
-		SetHref (href);
-	}
+	/* http://www.apple.com/quicktime/tutorials/embed2.html */
+	mAutoHref = g_hash_table_lookup (args, "autohref") != NULL &&
+		GetBooleanValue (args, "autohref", false);
 
 	/* http://developer.apple.com/documentation/QuickTime/QT6WhatsNew/Chap1/chapter_1_section_13.html */
 	const char *qtsrc = (const char *) g_hash_table_lookup (args, "qtsrc");
