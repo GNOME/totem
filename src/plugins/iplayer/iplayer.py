@@ -19,10 +19,7 @@ class IplayerPlugin (totem.Plugin):
 		container = builder.get_object ('iplayer_vbox')
 
 		self.tv_tree_store = builder.get_object ('iplayer_programme_store')
-		#self.radio_tree_store = builder.get_object ('iplayer_radio_programme_store')
-		#for object_id in ('iplayer_programme_list', 'iplayer_radio_programme_list')
 		programme_list = builder.get_object ('iplayer_programme_list')
-		#	programme_list.set_data ('id', object_id)
 		programme_list.connect ('row-expanded', self._row_expanded_cb)
 		programme_list.connect ('row-activated', self._row_activated_cb)
 
@@ -30,14 +27,12 @@ class IplayerPlugin (totem.Plugin):
 		container.show_all ()
 
 		self.tv = iplayer2.feed ('tv')
-		#self.radio = iplayer2.feed ('radio')
 
 		# Add the interface to Totem's sidebar
 		self.totem.add_sidebar_page ("iplayer", _("BBC iPlayer"), container)
 
 		# Get the channel category listings
 		self.populate_channel_list (self.tv, self.tv_tree_store)
-		#self.populate_channel_list (self.radio, self.radio_tree_store)
 
 	def deactivate (self, totem_object):
 		totem_object.remove_sidebar_page ("iplayer")
@@ -59,7 +54,7 @@ class IplayerPlugin (totem.Plugin):
 	def _populate_channel_list_cb (self, tree_store, parent_path, values):
 		# Callback from PopulateChannelsThread to add stuff to the tree store
 		if values == None:
-			self.totem.action_error (_('Error Listing Channel Categories'), 'TODO')
+			self.totem.action_error (_('Error Listing Channel Categories'), _('There was an unknown error getting the list of television channels available on BBC iPlayer.'))
 			return False
 
 		parent_iter = tree_store.get_iter (parent_path)
@@ -83,12 +78,7 @@ class IplayerPlugin (totem.Plugin):
 			return
 
 		# Populate it with programmes asynchronously
-		#if tree_view.get_data ('id') == 'iplayer_programme_store':
-		feed = self.tv
-		#else:
-		#	feed = self.radio
-
-		self.populate_programme_list (feed, tree_model, row_iter)
+		self.populate_programme_list (self.tv, tree_model, row_iter)
 
 	def _row_activated_cb (self, tree_view, path, view_column):
 		tree_store = tree_view.get_model ()
@@ -201,6 +191,7 @@ class PopulateProgrammesThread (threading.Thread):
 			# Get the media, which gives the stream URI.
 			# We go for mobile quality, since the higher-quality streams are RTMP-only
 			# which isn't currently supported by GStreamer or xine
+			# TODO: Use higher-quality streams once http://bugzilla.gnome.org/show_bug.cgi?id=566604 is fixed
 			media = programme_item.get_media_for ('mobile')
 			if media == None:
 				# Not worth displaying an error in the interface for this
