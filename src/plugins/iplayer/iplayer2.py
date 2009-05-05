@@ -20,7 +20,7 @@ IMG_DIR = os.path.join(os.getcwd(), 'resources', 'media')
 
 #try:
 #    logging.basicConfig(
-#        filename='iplayer2.log', 
+#        filename='iplayer2.log',
 #        filemode='w',
 #        format='%(asctime)s %(levelname)4s %(message)s',
 #        level=logging.DEBUG
@@ -31,7 +31,7 @@ IMG_DIR = os.path.join(os.getcwd(), 'resources', 'media')
 #        stream=sys.stdout,
 #        level=logging.DEBUG,
 #        format='iplayer2.py: %(asctime)s %(levelname)4s %(message)s',
-#    )    
+#    )
 # me want 2.5!!!
 def any(iterable):
      for element in iterable:
@@ -61,9 +61,9 @@ def loaded_by(loader):
     return decorator
 
 channels_tv_list = [
-    ('bbc_one', 'BBC One'), 
-    ('bbc_two', 'BBC Two'), 
-    ('bbc_three', 'BBC Three'), 
+    ('bbc_one', 'BBC One'),
+    ('bbc_two', 'BBC Two'),
+    ('bbc_three', 'BBC Three'),
     ('bbc_four', 'BBC Four'),
     ('cbbc', 'CBBC'),
     ('cbeebies', 'CBeebies'),
@@ -74,14 +74,14 @@ channels_tv_list = [
 ]
 channels_tv = dict(channels_tv_list)
 channels_national_radio_list = [
-    ('bbc_radio_one', 'Radio 1'), 
+    ('bbc_radio_one', 'Radio 1'),
     ('bbc_1xtra', '1 Xtra'),
-    ('bbc_radio_two', 'Radio 2'), 
-    ('bbc_radio_three', 'Radio 3'), 
-    ('bbc_radio_four', 'Radio 4'), 
-    ('bbc_radio_five_live', '5 Live'), 
-    ('bbc_radio_five_live_sports_extra', '5 Live Sports Extra'), 
-    ('bbc_6music', '6 Music'), 
+    ('bbc_radio_two', 'Radio 2'),
+    ('bbc_radio_three', 'Radio 3'),
+    ('bbc_radio_four', 'Radio 4'),
+    ('bbc_radio_five_live', '5 Live'),
+    ('bbc_radio_five_live_sports_extra', '5 Live Sports Extra'),
+    ('bbc_6music', '6 Music'),
     ('bbc_7', 'BBC 7'),
     ('bbc_asian_network', 'Asian Network'),
     ('bbc_radio_scotland', 'BBC Scotland'),
@@ -260,7 +260,6 @@ live_radio_stations = {'Radio 1': 'http://www.bbc.co.uk/radio1/wm_asx/aod/radio1
                        'BBC Ulster': 'http://www.bbc.co.uk/ni/realmedia/ru-live.ram',
                        'BBC Wales': 'http://www.bbc.co.uk/wales/live/rwg2.ram',
                        'BBC Tees': 'http://www.bbc.co.uk/england/realmedia/live/localradio/cleveland.ram',
-                       
                        }
 live_webcams = {'Radio 1': 'http://www.bbc.co.uk/radio1/webcam/images/live/webcam.jpg',
                 '1 Xtra':  'http://www.bbc.co.uk/1xtra/webcam/live/1xtraa.jpg',
@@ -290,11 +289,10 @@ def set_http_cache(c):
 class NoItemsError(Exception):
     def __init__(self, reason=None):
         self.reason = reason
-    
+
     def __str__(self):
         reason = self.reason or '<no reason given>'
         return _('Programme unavailable ("%s")') % (reason)
-    
 
 class memoize(object):
     def __init__(self, func):
@@ -315,7 +313,7 @@ def httpretrieve(url, filename):
     _, data = http.request(url, 'GET')
     f = open(filename, 'wb')
     f.write(data)
-    f.close() 
+    f.close()
 
 def httpget(url):
     resp, data = http.request(url, 'GET')
@@ -336,7 +334,7 @@ class media(object):
         self.method = None
         self.width, self.height = None, None
         self.read_media_node(media_node)
-    
+
     @property
     def url(self):
         if self.connection_method == 'resolve':
@@ -348,7 +346,7 @@ class media(object):
             return page.geturl()
         else:
             return self.connection_href
-        
+
     @property
     def application(self):
         """
@@ -376,14 +374,14 @@ class media(object):
         self.encoding = media.get('encoding')
         self.width, self.height = media.get('width'), media.get('height')
         self.live = media.get('live') == 'true'
-        
+
         conn = media.find('connection')
         self.connection_kind = conn.get('kind')
         self.connection_live = conn.get('live') == 'true'
         self.connection_protocol = None
         self.connection_href = None
         self.connection_method = None
-          
+
         if self.connection_kind in ['http', 'sis']: # http
             self.connection_href = conn.get('href')
             self.connection_protocol = 'http'
@@ -391,7 +389,7 @@ class media(object):
                 # iPhone, don't redirect or it goes to license failure page
                 self.connection_method = 'iphone'
             elif self.kind == 'captions':
-                self.connection_method = None                
+                self.connection_method = None
             else:
                 self.connection_method = 'resolve'
         elif self.connection_kind in ['level3', 'akamai']: #rtmp
@@ -406,25 +404,24 @@ class media(object):
                 self.connection_href = "rtmp://%(ip)s:1935/ondemand?_fcs_vhost=%(server)s&auth=%(auth)s&aifp=v001&slist=%(identifier)s" % params
         #else:
         #    logging.error("connectionkind %s unknown", self.connection_kind)
-        
+
         #if self.connection_protocol:
-        #    logging.info("conn protocol: %s - conn kind: %s - media type: %s - media encoding: %s" % 
+        #    logging.info("conn protocol: %s - conn kind: %s - media type: %s - media encoding: %s" %
         #                 (self.connection_protocol, self.connection_kind, self.mimetype, self.encoding))
         #    logging.info("conn href: %s", self.connection_href)
 
-    
-    @property 
+    @property
     def programme(self):
         return self.item.programme
 
 class item(object):
     """
     Represents an iPlayer programme item. Most programmes consist of 2 such items,
-    (1) the ident, and (2) the actual programme. The item specifies the properties 
+    (1) the ident, and (2) the actual programme. The item specifies the properties
     of the media available, such as whether it's a radio/TV programme, if it's live,
     signed, etc.
     """
-    
+
     def __init__(self, programme, item_node):
         """
         programme: a programme object that represents the 'parent' of this item.
@@ -439,7 +436,7 @@ class item(object):
         self.duration = ''
         self.medias = None
         self.read_item_node(item_node)
-            
+
     def read_item_node(self, node):
         """
         Reads the specified XML &lt;item&gt; node and sets this instance's
@@ -457,8 +454,8 @@ class item(object):
             self.service = node.service and node.service.get('id')
             self.masterbrand = node.masterbrand and node.masterbrand.get('id')
             self.alternate = node.alternate and node.alternate.get('id')
-            self.guidance = node.guidance 
-        
+            self.guidance = node.guidance
+
     @property
     def is_radio(self):
         """ True if this stream is a radio programme. """
@@ -488,11 +485,11 @@ class item(object):
     def is_signed(self):
         """ True if this stream is 'signed' for the hard-of-hearing. """
         return self.alternate == 'signed'
-    
+
     @property
-    def mediaselector_url(self):        
-        return "http://www.bbc.co.uk/mediaselector/4/mtis/stream/%s" % self.identifier    
-        
+    def mediaselector_url(self):
+        return "http://www.bbc.co.uk/mediaselector/4/mtis/stream/%s" % self.identifier
+
     @property
     def media(self):
         """
@@ -507,7 +504,7 @@ class item(object):
         #logging.info('Found media: %s', pformat(medias, indent=8))
         self.medias = medias
         return medias
-    
+
     def get_media_for(self, application):
         """
         Returns a media object for the given application type.
@@ -533,7 +530,7 @@ class programme(object):
     and contains the programme title, subtitle, broadcast time and list of playlist
     items (e.g. ident and then the actual programme.)
     """
-    
+
     def __init__(self, pid):
         self.pid = pid
         self.meta = {}
@@ -544,7 +541,7 @@ class programme(object):
     def read_playlist(self):
         #logging.info('Read playlist for %s...', self.pid)
         self.parse_playlist(self.playlist)
-    
+
     def get_playlist_xml(self):
         """ Downloads and returns the XML for a PID from the iPlayer site. """
         try:
@@ -560,9 +557,9 @@ class programme(object):
         #logging.info('Parsing playlist XML... %s', xml)
         #xml.replace('<summary/>', '<summary></summary>')
         #xml = fix_selfclosing(xml)
-        
+
         soup = BeautifulStoneSoup(xml, selfClosingTags=self_closing_tags)
-        
+
         self.meta = {}
         self._items = []
         self._related = []
@@ -571,11 +568,11 @@ class programme(object):
         self.meta['title'] = soup.playlist.title.string
         self.meta['summary'] = soup.playlist.summary.string
         self.meta['updated'] = soup.playlist.updated.string
-        
+
         if soup.playlist.noitems:
             #logging.info('No playlist items: %s', soup.playlist.noitems.get('reason'))
             self.meta['reason'] = soup.playlist.noitems.get('reason')
-                        
+
         self._items = [item(self, i) for i in soup('item')]
         #for i in self._items:
         #    print i, i.alternate , " ",
@@ -589,7 +586,7 @@ class programme(object):
             i['pid'] = (rId.findall(link.id.string) or [None])[0]
             i['programme'] = programme(i['pid'])
             self._related.append(i)
-        
+
     def get_thumbnail(self, size='large', tvradio='tv'):
         """
         Returns the URL of a thumbnail.
@@ -605,14 +602,14 @@ class programme(object):
             return "http://www.bbc.co.uk/iplayer/images/episode/%s_150_84.jpg" % (self.pid)
         else:
             return os.path.join(IMG_DIR, '%s.png' % tvradio)
-       
+
 
     def get_url(self):
         """
         Returns the programmes episode page.
         """
         return "http://www.bbc.co.uk/iplayer/episode/%s" % (self.pid)
-    
+
     @property
     def playlist_url(self):
         return "http://www.bbc.co.uk/iplayer/playlist/%s" % self.pid
@@ -623,11 +620,11 @@ class programme(object):
 
     def get_updated(self):
         return self.meta['updated']
-    
+
     @loaded_by(read_playlist)
     def get_title(self):
         return self.meta['title']
-    
+
     @loaded_by(read_playlist)
     def get_summary(self):
         return self.meta['summary']
@@ -652,7 +649,7 @@ class programme(object):
     title = property(get_title)
     summary = property(get_summary)
     updated = property(get_updated)
-    thumbnail = property(get_thumbnail)    
+    thumbnail = property(get_thumbnail)
     related = property(get_related)
     items = property(get_items)
 
@@ -664,14 +661,14 @@ class programme_simple(object):
     Represents an individual iPlayer programme, as identified by an 8-letter PID,
     and contains the programme pid, title, subtitle etc
     """
-    
+
     def __init__(self, pid, entry):
         self.pid = pid
         self.meta = {}
         self.meta['title'] = entry.title
         self.meta['summary'] = entry.summary
         self.meta['updated'] = entry.updated
-        self.categories = [] 
+        self.categories = []
         for c in entry.categories:
             if c != 'TV':
                 self.categories.append(c.rstrip())
@@ -681,19 +678,19 @@ class programme_simple(object):
     @call_once
     def read_playlist(self):
         pass
-        
+
     def get_playlist_xml(self):
         pass
 
     def parse_playlist(self, xml):
         pass
-        
+
     def get_thumbnail(self, size='large', tvradio='tv'):
         """
         Returns the URL of a thumbnail.
         size: '640x360'/'biggest'/'largest' or '512x288'/'big'/'large' or None
         """
-        
+
         if size in ['640x360', '640x', 'x360', 'biggest', 'largest']:
             return "http://www.bbc.co.uk/iplayer/images/episode/%s_640_360.jpg" % (self.pid)
         elif size in ['512x288', '512x', 'x288', 'big', 'large']:
@@ -711,7 +708,7 @@ class programme_simple(object):
         Returns the programmes episode page.
         """
         return "http://www.bbc.co.uk/iplayer/episode/%s" % (self.pid)
-    
+
     @property
     def playlist_url(self):
         return "http://www.bbc.co.uk/iplayer/playlist/%s" % self.pid
@@ -722,11 +719,11 @@ class programme_simple(object):
 
     def get_updated(self):
         return self.meta['updated']
-    
+
     @loaded_by(read_playlist)
     def get_title(self):
         return self.meta['title']
-    
+
     @loaded_by(read_playlist)
     def get_summary(self):
         return self.meta['summary']
@@ -751,7 +748,7 @@ class programme_simple(object):
     title = property(get_title)
     summary = property(get_summary)
     updated = property(get_updated)
-    thumbnail = property(get_thumbnail)    
+    thumbnail = property(get_thumbnail)
     related = property(get_related)
     items = property(get_items)
 
@@ -775,17 +772,17 @@ class feed(object):
                 self.tvradio = 'radio'
             else:
                 raise Exception, "TV channel '%s' not recognised." % self.channel
-                                
+
         elif tvradio in ['tv', 'radio']:
             self.tvradio = tvradio
         else:
             self.tvradio = None
         self.channel = channel
-        self.category = category            
+        self.category = category
         self.subcategory = subcategory
         self.atoz = atoz
-        self.searchterm = searchterm      
-        
+        self.searchterm = searchterm
+
     def create_url(self, listing):
         """
         <channel>/['list'|'popular'|'highlights']
@@ -797,7 +794,7 @@ class feed(object):
             if self.tvradio:
                 path += [self.tvradio]
             path += ['?q=%s' % self.searchterm]
-        elif self.channel: 
+        elif self.channel:
             path = [self.channel]
             if self.atoz:
                 path += ['atoz', self.atoz]
@@ -816,17 +813,16 @@ class feed(object):
         else:
             assert listing != 'list', "Can't list at tv/radio level'"
             path = [listing, self.tvradio]
-          
+
         return "http://feeds.bbc.co.uk/iplayer/" + '/'.join(path)
 
-       
     def get_name(self, separator=' '):
         """
         A readable title for this feed, e.g. 'BBC One' or 'TV Drama' or 'BBC One Drama'
         separator: string to separate name parts with, defaults to ' '. Use None to return a list (e.g. ['TV', 'Drama']).
         """
         path = []
-        
+
         # TODO: This is not i18n-friendly whatsoever
         # if got a channel, don't need tv/radio distinction
         if self.channel:
@@ -836,27 +832,27 @@ class feed(object):
                 path.append(channels_tv.get(self.channel, '(TV)'))
             else:
                 path.append(channels_radio.get(self.channel, '(Radio)'))
-        elif self.tvradio: 
+        elif self.tvradio:
             # no channel
             medium = 'TV'
             if self.tvradio == 'radio': medium = 'Radio'
             path.append(medium)
-                    
+
         if self.searchterm:
             path += ['Search results for %s' % self.searchterm]
-                    
+
         if self.category:
             assert self.category in categories, 'Unknown category'
             path.append(categories.get(self.category, '(Category)'))
-            
+
         if self.atoz:
             path.append("beginning with %s" % self.atoz.upper())
-        
+
         if separator != None:
             return separator.join(path)
         else:
             return path
-    
+
     def channels(self):
         """
         Return a list of available channels.
@@ -864,8 +860,8 @@ class feed(object):
         if self.channel: return None
         if self.tvradio == 'tv': return channels_tv
         if self.tvradio == 'radio': return channels_radio
-        return None    
-    
+        return None
+
     def channels_feed(self):
         """
         Return a list of available channels as a list of feeds.
@@ -873,22 +869,21 @@ class feed(object):
         if self.channel:
             #logging.warning("%s doesn\'t have any channels!", self.channel)
             return None
-        if self.tvradio == 'tv': 
+        if self.tvradio == 'tv':
             return [feed('tv', channel=ch) for (ch, title) in channels_tv_list]
-        if self.tvradio == 'radio': 
+        if self.tvradio == 'radio':
             return [feed('radio', channel=ch) for (ch, title) in channels_radio_list]
         return None
 
-        
     def subcategories(self):
         raise NotImplementedError('Sub-categories not yet supported')
-    
+
     @classmethod
     def is_atoz(self, letter):
         """
         Return False if specified letter is not a valid 'A to Z' directory entry.
         Otherwise returns the directory name.
-        
+
         >>> feed.is_atoz('a'), feed.is_atoz('z')
         ('a', 'z')
         >>> feed.is_atoz('0'), feed.is_atoz('9')
@@ -899,17 +894,17 @@ class feed(object):
         (False, False)
         """
         l = letter.lower()
-        if len(l) != 1 and l != '0-9': 
+        if len(l) != 1 and l != '0-9':
             return False
         if l in '0123456789': l = "0-9"
         if l not in 'abcdefghijklmnopqrstuvwxyz0-9':
             return False
         return l
-    
+
     def sub(self, *args, **kwargs):
         """
         Clones this feed, altering the specified parameters.
-        
+
         >>> feed('tv').sub(channel='bbc_one').channel
         'bbc_one'
         >>> feed('tv', channel='bbc_one').sub(channel='bbc_two').channel
@@ -917,12 +912,12 @@ class feed(object):
         >>> feed('tv', channel='bbc_one').sub(category='drama').category
         'drama'
         >>> feed('tv', channel='bbc_one').sub(channel=None).channel
-        >>> 
+        >>>
         """
         d = self.__dict__.copy()
         d.update(kwargs)
         return feed(**d)
-    
+
     def get(self, subfeed):
         """
         Returns a child/subfeed of this feed.
@@ -950,25 +945,25 @@ class feed(object):
             progs = listparser.parse(xml)
             if not progs: return []
             d = []
-            for entry in progs.entries: 
+            for entry in progs.entries:
                 pid = parse_entry_id(entry.id)
                 p = programme(pid)
-                d.append(p)        
+                d.append(p)
             #logging.info('Found %d entries', len(d))
             rss_cache[url] = d
         #else:
         #    logging.info('RSS found in cache')
         return rss_cache[url]
-    
+
     def popular(self):
         return self.read_rss(self.create_url('popular'))
 
     def highlights(self):
         return self.read_rss(self.create_url('highlights'))
-        
+
     def list(self):
         return self.read_rss(self.create_url('list'))
-    
+
     def categories(self):
         # quick and dirty category extraction and count
         xmlURL = self.create_url('list')
@@ -988,7 +983,7 @@ class feed(object):
             c = c.replace('&gt;', '>')
             c = c.replace('&lt;', '<')
             alist.append((c, n))
-        return alist    
+        return alist
 
     @property
     def is_radio(self):
