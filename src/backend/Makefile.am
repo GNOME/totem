@@ -38,7 +38,7 @@ libbaconvideowidget_la_SOURCES = \
 	bacon-video-widget-gst-missing-plugins.c	\
 	bacon-video-widget-gst-missing-plugins.h	\
 	gstscreenshot.c					\
-	gstscreenshot.h
+	gstscreenshot.h					\
 	debug.h
 
 libbaconvideowidget_la_CPPFLAGS =		\
