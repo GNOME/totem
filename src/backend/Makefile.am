@@ -1,6 +1,6 @@
 noinst_PROGRAMS = bvw-test
 
-lib_LTLIBRARIES = libbaconvideowidget.la
+noinst_LTLIBRARIES = libbaconvideowidget.la
 
 bvw_test_SOURCES = bvw-test.c
 
@@ -32,22 +32,14 @@ baconvideowidget-marshal.c: baconvideowidget-marshal.h
 libbaconvideowidget_la_SOURCES = \
 	$(BVWMARSHALFILES) 		\
 	bacon-video-widget.h		\
-	bacon-video-widget-common.h bacon-video-widget-common.c \
 	bacon-resize.h bacon-resize.c 	\
 	video-utils.c video-utils.h 	\
-	debug.h
-
-if TOTEM_GST
-libbaconvideowidget_la_SOURCES +=			\
 	bacon-video-widget-gst-0.10.c			\
 	bacon-video-widget-gst-missing-plugins.c	\
 	bacon-video-widget-gst-missing-plugins.h	\
 	gstscreenshot.c					\
 	gstscreenshot.h
-else
-libbaconvideowidget_la_SOURCES += \
-	bacon-video-widget-xine.c
-endif
+	debug.h
 
 libbaconvideowidget_la_CPPFLAGS =		\
 	-D_REENTRANT				\

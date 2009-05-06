@@ -1,3 +1,30 @@
+2009-05-06  Bastien Nocera  <hadess@hadess.net>
+
+	* COPYING:
+	* README:
+	* configure.in:
+	* data/icons/scalable/totem.svg:
+	* data/totem-video-thumbnailer.1:
+	* data/totem-video-thumbnailer.pod:
+	* data/totem.1:
+	* src/backend/Makefile.am:
+	* src/backend/bacon-video-widget-common.c:
+	* src/backend/bacon-video-widget-common.h:
+	* src/backend/bacon-video-widget-gst-0.10.c (bvw_error_msg),
+	(bacon_video_widget_init), (bacon_video_widget_finalize),
+	(bacon_video_widget_open), (bacon_video_widget_play),
+	(bacon_video_widget_can_direct_seek),
+	(bacon_video_widget_seek_time), (bacon_video_widget_close),
+	(bacon_video_widget_pause), (get_visualization_size),
+	(bacon_video_widget_is_seekable):
+	* src/backend/bacon-video-widget-xine.c:
+	* src/backend/bacon-video-widget.h:
+	* src/backend/video-utils.c:
+	* src/backend/video-utils.h:
+	* totem.doap:
+	7 years later, remove xine-lib backend.
+	Bye bye
+
 2009-05-01  Bastien Nocera  <hadess@hadess.net>
 
 	* browser-plugin/totemPlugin.cpp:

@@ -38,8 +38,8 @@
 .    if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\"  diablo 12 pitch
 .    ds L" ""
 .    ds R" ""
-.    ds C` ""
-.    ds C' ""
+.    ds C` 
+.    ds C' 
 'br\}
 .el\{\
 .    ds -- \|\(em\|
@@ -131,8 +131,8 @@
 .rm #[ #] #H #V #F C
 .\" ========================================================================
 .\"
-.IX Title "TOTEM-VIDEO-THUMBNAILER 1"
-.TH TOTEM-VIDEO-THUMBNAILER 1 "2009-04-21" "GNOME" ""
+.IX Title "totem-video-thumbnailer 1"
+.TH totem-video-thumbnailer 1 "2009-05-06" "GNOME" ""
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -157,7 +157,7 @@ The input filename. This can be in any format that \fBtotem\fR can play.
 The output filename, output in \s-1PNG\s0 format.
 .IP "\fBbackend options\fR" 8
 .IX Item "backend options"
-Options to be passed to the backend (i.e. \fBxine\fR or \fBgstreamer\fR).
+Options to be passed to the backend (i.e. \fBgstreamer\fR).
 .SH "OPTIONS"
 .IX Header "OPTIONS"
 .IP "\fB\-j\fR \fB\-\-jpeg\fR" 8

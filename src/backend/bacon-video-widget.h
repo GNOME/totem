@@ -52,7 +52,6 @@ typedef struct BaconVideoWidgetCommon BaconVideoWidgetCommon;
 typedef struct {
 	/*< private >*/
 	GtkEventBox parent;
-	BaconVideoWidgetCommon *com;
 	BaconVideoWidgetPrivate *priv;
 } BaconVideoWidget;
 

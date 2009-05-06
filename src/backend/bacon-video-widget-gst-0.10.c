@@ -35,7 +35,7 @@
  * @stability: Unstable
  * @include: bacon-video-widget.h
  *
- * #BaconVideoWidget is a widget to play audio or video streams, with support for visualisations for audio-only streams. It has a GStreamer and xine
+ * #BaconVideoWidget is a widget to play audio or video streams, with support for visualisations for audio-only streams. It has a GStreamer
  * backend, and abstracts away the differences to provide a simple interface to the functionality required by Totem. It handles all the low-level
  * audio and video work for Totem (or passes the work off to the backend).
  **/
@@ -76,7 +76,6 @@
 #include <gconf/gconf-client.h>
 
 #include "bacon-video-widget.h"
-#include "bacon-video-widget-common.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "baconvideowidget-marshal.h"
 #include "video-utils.h"
@@ -85,6 +84,8 @@
 
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH  315
+#define SMALL_STREAM_WIDTH 200
+#define SMALL_STREAM_HEIGHT 120
 
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
@@ -140,7 +141,8 @@ typedef enum {
 
 struct BaconVideoWidgetPrivate
 {
-  BvwAspectRatio  ratio_type;
+  char                        *mrl;
+  BvwAspectRatio               ratio_type;
 
   GstElement                  *play;
   GstXOverlay                 *xoverlay;      /* protect with lock */
@@ -345,7 +347,7 @@ bvw_error_msg (BaconVideoWidget * bvw, GstMessage * msg)
     GST_ERROR ("code    = %d", err->code);
     GST_ERROR ("debug   = %s", GST_STR_NULL (dbg));
     GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
-    GST_ERROR ("uri     = %s", GST_STR_NULL (bvw->com->mrl));
+    GST_ERROR ("uri     = %s", GST_STR_NULL (bvw->priv->mrl));
 
     g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
         GST_STR_NULL (dbg));
@@ -1195,8 +1197,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
-  bvw->com = g_new0 (BaconVideoWidgetCommon, 1);
-  
+
   priv->update_id = 0;
   priv->tagcache = NULL;
   priv->audiotags = NULL;
@@ -2001,8 +2002,8 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = NULL;
 
-  g_free (bvw->com->mrl);
-  bvw->com->mrl = NULL;
+  g_free (bvw->priv->mrl);
+  bvw->priv->mrl = NULL;
 
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
@@ -2050,8 +2051,6 @@ bacon_video_widget_finalize (GObject * object)
   }
 
   g_mutex_free (bvw->priv->lock);
-
-  g_free (bvw->com);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -2138,10 +2137,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
  * @bvw: a #BaconVideoWidget
  *
  * Returns the name string for @bvw. For the GStreamer backend, it is the output
- * of gst_version_string(). For the xine backend, it is a string of the
- * form <literal>xine-lib version <replaceable>%s</replaceable></literal>, where
- * <replaceable>%s</replaceable> is the version number from xine_get_version_string().
- *
+ * of gst_version_string(). *
  * Return value: the backend's name; free with g_free()
  **/
 char *
@@ -2919,7 +2915,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   
   /* So we aren't closed yet... */
-  if (bvw->com->mrl) {
+  if (bvw->priv->mrl) {
     bacon_video_widget_close (bvw);
   }
   
@@ -2932,32 +2928,32 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   /* Only use the URI when FUSE isn't available for a file */
   path = g_file_get_path (file);
   if (path) {
-    bvw->com->mrl = g_filename_to_uri (path, NULL, NULL);
+    bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
     g_free (path);
   } else {
-    bvw->com->mrl = g_strdup (mrl);
+    bvw->priv->mrl = g_strdup (mrl);
   }
 
   g_object_unref (file);
 
   if (g_str_has_prefix (mrl, "icy:") != FALSE) {
     /* Handle "icy://" URLs from QuickTime */
-    g_free (bvw->com->mrl);
-    bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 4);
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 4);
   } else if (g_str_has_prefix (mrl, "icyx:") != FALSE) {
     /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
-    g_free (bvw->com->mrl);
-    bvw->com->mrl = g_strdup_printf ("http:%s", mrl + 5);
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
   } else if (g_str_has_prefix (mrl, "dvd:///")) {
     /* this allows to play backups of dvds */
-    g_free (bvw->com->mrl);
-    bvw->com->mrl = g_strdup ("dvd://");
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("dvd://");
     g_free (bvw->priv->media_device);
     bvw->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
   } else if (g_str_has_prefix (mrl, "vcd:///")) {
     /* this allows to play backups of vcds */
-    g_free (bvw->com->mrl);
-    bvw->com->mrl = g_strdup ("vcd://");
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("vcd://");
     g_free (bvw->priv->media_device);
     bvw->priv->media_device = g_strdup (mrl + strlen ("vcd://"));
   }
@@ -2982,11 +2978,11 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     setup_vis (bvw);
   }
 
-  if (g_strrstr (bvw->com->mrl, "#subtitle:")) {
+  if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
     gchar **uris;
     gchar *subtitle_uri;
 
-    uris = g_strsplit (bvw->com->mrl, "#subtitle:", 2);
+    uris = g_strsplit (bvw->priv->mrl, "#subtitle:", 2);
     /* Try to fix subtitle uri if needed */
     if (uris[1][0] == '/') {
       subtitle_uri = g_strdup_printf ("file://%s", uris[1]);
@@ -3005,12 +3001,12 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
         g_free (cur_dir);
       }
     }
-    g_object_set (bvw->priv->play, "uri", bvw->com->mrl,
+    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
                   "suburi", subtitle_uri, NULL);
     g_free (subtitle_uri);
     g_strfreev (uris);
   } else {
-    g_object_set (bvw->priv->play, "uri", bvw->com->mrl,
+    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
                   "suburi", subtitle_uri, NULL);
   }
 
@@ -3055,8 +3051,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     } else {
       bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
       bvw_stop_play_pipeline (bvw);
-      g_free (bvw->com->mrl);
-      bvw->com->mrl = NULL;
+      g_free (bvw->priv->mrl);
+      bvw->priv->mrl = NULL;
     }
   }
   
@@ -3085,9 +3081,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
  * Errors from the GStreamer backend will be returned asynchronously via the
  * #BaconVideoWidget::error signal, even if this function returns %TRUE.
  *
- * The xine backend will synchronously return a #BvwError in @error if it
- * encounters a problem.
- *
  * Return value: %TRUE on success, %FALSE otherwise
  **/
 gboolean
@@ -3098,7 +3091,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-  g_return_val_if_fail (bvw->com->mrl != NULL, FALSE);
+  g_return_val_if_fail (bvw->priv->mrl != NULL, FALSE);
 
   bvw->priv->target_state = GST_STATE_PLAYING;
 
@@ -3139,7 +3132,17 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  return bacon_video_widget_common_can_direct_seek (bvw->com);
+  if (bvw->priv->mrl == NULL)
+    return FALSE;
+
+  /* (instant seeking only make sense with video,
+   * hence no cdda:// here) */
+  if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
+      g_str_has_prefix (bvw->priv->mrl, "dvd:/") ||
+      g_str_has_prefix (bvw->priv->mrl, "vcd:/"))
+    return TRUE;
+
+  return FALSE;
 }
 
 /**
@@ -3163,8 +3166,8 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error
 
   if (time > bvw->priv->stream_length
       && bvw->priv->stream_length > 0
-      && !g_str_has_prefix (bvw->com->mrl, "dvd:")
-      && !g_str_has_prefix (bvw->com->mrl, "vcd:")) {
+      && !g_str_has_prefix (bvw->priv->mrl, "dvd:")
+      && !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
     if (bvw->priv->eos_id == 0)
       bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
     return TRUE;
@@ -3280,8 +3283,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   GST_LOG ("Closing");
   bvw_stop_play_pipeline (bvw);
 
-  g_free (bvw->com->mrl);
-  bvw->com->mrl = NULL;
+  g_free (bvw->priv->mrl);
+  bvw->priv->mrl = NULL;
   bvw->priv->is_live = FALSE;
   bvw->priv->window_resized = FALSE;
 
@@ -3519,7 +3522,7 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-  g_return_if_fail (bvw->com->mrl != NULL);
+  g_return_if_fail (bvw->priv->mrl != NULL);
 
   if (bvw->priv->is_live != FALSE) {
     GST_LOG ("Stopping because we have a live stream");
@@ -3730,6 +3733,16 @@ bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
   return bvw->priv->cursor_shown;
 }
 
+static struct {
+	int height;
+	int fps;
+} const vis_qualities[] = {
+	{ 240, 15 }, /* VISUAL_SMALL */
+	{ 320, 25 }, /* VISUAL_NORMAL */
+	{ 480, 25 }, /* VISUAL_LARGE */
+	{ 600, 30 }  /* VISUAL_EXTRA_LARGE */
+};
+
 static void
 get_visualization_size (BaconVideoWidget *bvw,
                         int *w, int *h, gint *fps_n, gint *fps_d)
@@ -3737,11 +3750,15 @@ get_visualization_size (BaconVideoWidget *bvw,
   GdkScreen *screen;
   int new_fps_n;
 
+  g_return_if_fail (h != NULL);
+  g_return_if_fail (fps_n != NULL);
+  g_return_if_fail (bvw->priv->visq < G_N_ELEMENTS (vis_qualities));
+
   if (!bvw->priv->video_window)
     return;
 
-  if (bacon_video_widget_common_get_vis_quality (bvw->priv->visq, h, &new_fps_n) == FALSE)
-    return;
+  *h = vis_qualities[bvw->priv->visq].height;
+  new_fps_n = vis_qualities[bvw->priv->visq].fps;
 
   screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
   *w = *h * gdk_screen_get_width (screen) / gdk_screen_get_height (screen);
@@ -4472,7 +4489,7 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  if (bvw->com->mrl == NULL)
+  if (bvw->priv->mrl == NULL)
     return FALSE;
 
   old_seekable = bvw->priv->seekable;
@@ -4654,14 +4671,11 @@ bacon_video_widget_get_dvb_mrls (const char *device)
  * Totem (and hence #BaconVideoWidget).
  *
  * A %BVW_ERROR_NO_PLUGIN_FOR_FILE error will be returned if the required GStreamer elements do
- * not exist for the given @type (for the GStreamer backend), or if the media type is
- * unsupported by xine (for the xine backend).
- *
+ * not exist for the given @type (for the GStreamer backend). *
  * If @device does not exist, a %BVW_ERROR_INVALID_DEVICE error will be returned.
  *
  * If @type is %MEDIA_TYPE_DVB and the DVB channels file (as given by
- * bacon_video_widget_get_channels_file() for the GStreamer backend, and in the user's
- * <filename class="directory">.xine</filename> directory for the xine backend)
+ * bacon_video_widget_get_channels_file() for the GStreamer backend)
  * does not exist, a %BVW_ERROR_FILE_NOT_FOUND error will be returned.
  *
  * Return value: a %NULL-terminated array of MRLs, or %NULL; free with g_strfreev()
@@ -5522,9 +5536,8 @@ bacon_video_widget_get_option_group (void)
  * @argc: pointer to application's argc
  * @argv: pointer to application's argv
  *
- * Initialises #BaconVideoWidget's backend (either GStreamer or xine). If this fails
- * for the GStreamer backend, your application will be terminated. This is a no-op
- * for the xine backend.
+ * Initialises #BaconVideoWidget's GStreamer backend. If this fails
+ * for the GStreamer backend, your application will be terminated.
  *
  * Applications must call either this or bacon_video_widget_get_option_group() exactly
  * once; but not both.
