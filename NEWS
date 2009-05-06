@@ -1,5 +1,24 @@
 New features and significant updates in version...
 
+2.27.1 (since 2.26.2):
+
+Major changes:
+* Port GStreamer backend to playbin2
+* Remove xine-lib backend
+* New BBC iPlayer plugin
+* Port YouTube plugin to C, much faster
+* Use libunique instead of our home-cooked version
+
+New features:
+* Add a D-Bus service plugin, to allow getting playback information
+  from a running Totem
+* Add support for DVD navigation to the GStreamer backend
+
+Misc bug fixes:
+* Remove relief from the playlist buttons
+* Set the default drag action to be copy, and only make
+  the video widget a drag source when a video is loaded
+
 2.25.92:
 * Set PulseAudio application properties
 * Fix possible crasher in eggdesktopfile
