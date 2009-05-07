@@ -3751,7 +3751,6 @@ get_visualization_size (BaconVideoWidget *bvw,
   int new_fps_n;
 
   g_return_if_fail (h != NULL);
-  g_return_if_fail (fps_n != NULL);
   g_return_if_fail (bvw->priv->visq < G_N_ELEMENTS (vis_qualities));
 
   if (!bvw->priv->video_window)
