@@ -1,3 +1,15 @@
+2009-05-13  Jan Schmidt  <thaytan@noraisin.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c (bvw_element_msg_sync):
+	Avoid a race with xoverlay interface discovery. Because the
+	update_interface implementations function only searches for interfaces
+	from the main gui thread, there's a race when the sync_msg comes in
+	requesting an xid to embed and the xoverlay interface isn't available
+	until the gui thread updates it.
+
+	Avoid the race by using the sender of the message when it (as it
+	always should) implements the GstXOverlay interface.
+
 2009-05-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c (totem_uri_get_cached_subtitle_for_uri):
