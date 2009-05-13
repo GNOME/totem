@@ -370,9 +370,14 @@ totem_uri_get_subtitle_in_subdir (GFile *file, const char *subdir)
 static char *
 totem_uri_get_cached_subtitle_for_uri (const char *uri)
 {
-	char *basename, *fake_filename, *fake_uri, *ret;
+	char *filename, *basename, *fake_filename, *fake_uri, *ret;
 
-	basename = g_path_get_basename (uri);
+	filename = g_filename_from_uri (uri, NULL, NULL);
+	if (filename == NULL)
+		return NULL;
+
+	basename = g_path_get_basename (filename);
+	g_free (filename);
 	if (basename == NULL || strcmp (basename, ".") == 0) {
 		g_free (basename);
 		return NULL;
