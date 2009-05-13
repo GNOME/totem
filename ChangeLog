@@ -1,5 +1,15 @@
 2009-05-13  Jan Schmidt  <thaytan@noraisin.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bvw_do_navigation_query), (bvw_handle_element_message),
+	(bacon_video_widget_has_menus):
+	* src/backend/bacon-video-widget.h:
+
+	Provide a method to know if there are buttons currently
+	onscreen.
+
+2009-05-13  Jan Schmidt  <thaytan@noraisin.net>
+
 	* src/backend/bacon-video-widget-gst-0.10.c (bvw_element_msg_sync):
 	Avoid a race with xoverlay interface discovery. Because the
 	update_interface implementations function only searches for interfaces

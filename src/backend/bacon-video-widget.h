@@ -372,6 +372,8 @@ void bacon_video_widget_set_video_property       (BaconVideoWidget *bvw,
 						  BvwVideoProperty type,
 						  int value);
 
+gboolean bacon_video_widget_has_menus            (BaconVideoWidget *bvw);
+
 /* DVD functions */
 /**
  * BvwDVDEvent:

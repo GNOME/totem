@@ -186,6 +186,7 @@ struct BaconVideoWidgetPrivate
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
   gboolean                     uses_fakesink;
+  gboolean                     is_menu;
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
@@ -1286,6 +1287,21 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
   }
 }
 
+static gboolean
+bvw_do_navigation_query (BaconVideoWidget * bvw, GstQuery *query)
+{
+  GstNavigation *nav = bvw_get_navigation_iface (bvw);
+  gboolean res;
+
+  if (G_UNLIKELY (nav == NULL || !GST_IS_ELEMENT (nav)))
+    return FALSE;
+
+  res = gst_element_query (GST_ELEMENT_CAST (nav), query);
+  gst_object_unref (GST_OBJECT (nav));
+
+  return res;
+}
+
 static void
 bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
@@ -1351,7 +1367,33 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
         }
         gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(bvw)),
             bvw->priv->cursor);
-        break;
+        goto done;
+      }
+      case GST_NAVIGATION_MESSAGE_COMMANDS_CHANGED: {
+        GstQuery *cmds_q = gst_navigation_query_new_commands();
+        gboolean res = bvw_do_navigation_query (bvw, cmds_q);
+
+        if (res) {
+          gboolean is_menu = FALSE;
+          gint i, n;
+
+          if (gst_navigation_query_parse_commands_length (cmds_q, &n)) {
+            for (i = 0; i < n; i++) {
+              GstNavigationCommand cmd;
+              if (!gst_navigation_query_parse_commands_nth (cmds_q, i, &cmd))
+                break;
+              is_menu |= (cmd == GST_NAVIGATION_COMMAND_ACTIVATE);
+              is_menu |= (cmd == GST_NAVIGATION_COMMAND_LEFT);
+              is_menu |= (cmd == GST_NAVIGATION_COMMAND_RIGHT);
+              is_menu |= (cmd == GST_NAVIGATION_COMMAND_UP);
+              is_menu |= (cmd == GST_NAVIGATION_COMMAND_DOWN);
+            }
+          }
+          bvw->priv->is_menu = is_menu;
+        }
+
+        gst_query_unref (cmds_q);
+        goto done;
       }
       default:
         break;
@@ -4328,6 +4370,18 @@ done:
 
   g_mutex_unlock (bvw->priv->lock);
   return ret;
+}
+
+gboolean
+bacon_video_widget_has_menus (BaconVideoWidget *bvw)
+{
+    g_return_val_if_fail (bvw != NULL, FALSE);
+    g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+    if (bacon_video_widget_is_playing (bvw) == FALSE)
+        return FALSE;
+
+    return bvw->priv->is_menu;
 }
 
 /**
