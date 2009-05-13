@@ -1,3 +1,9 @@
+2009-05-13  Bastien Nocera  <hadess@hadess.net>
+
+	* src/totem-uri.c (totem_uri_get_cached_subtitle_for_uri):
+	Fix loading subtitles from the cache when the filename contains
+	characters that need to be escaped (Closes: #582316) 
+
 2009-05-13  Jan Schmidt  <thaytan@noraisin.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c (bvw_element_msg_sync):
