@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-03-04 07:29+0000\n"
-"PO-Revision-Date: 2009-05-06 16:33+0300\n"
+"POT-Creation-Date: 2009-05-13 12:24+0000\n"
+"PO-Revision-Date: 2009-05-15 09:41+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -332,7 +332,7 @@ msgstr "Eelmisele filmilõigule või filmile lülitumine"
 msgid "Quit the program"
 msgstr "Programmi töö lõpetamine"
 
-msgid "Reset To _Defaults"
+msgid "Reset to _Defaults"
 msgstr "_Lähtesta"
 
 msgid "Resize _1:1"
@@ -887,8 +887,8 @@ msgstr "Vaata telekanalit '%s'"
 msgid "Movie Player using %s"
 msgstr "Filmiesitaja (%s)"
 
-msgid "Copyright © 2002-2008 Bastien Nocera"
-msgstr "Autoriõigused © 2002-2008 Bastien Nocera"
+msgid "Copyright © 2002-2009 Bastien Nocera"
+msgstr "Autoriõigused © 2002-2009 Bastien Nocera"
 
 msgid "translator-credits"
 msgstr ""
@@ -958,7 +958,7 @@ msgstr ""
 "Totem pole võimeline seda meedialiiki (%s) esitama, kuna plaadilt lugemiseks "
 "pole sobivaid pluginaid."
 
-#, c-format, python-format
+#, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
@@ -1096,10 +1096,6 @@ msgstr "Asendamine"
 
 msgid "Don't connect to an already-running instance"
 msgstr "Ära ühendu juba töötava protsessiga"
-
-#. translators: this option prints the current movie's title on the command-line
-msgid "Print playing movie"
-msgstr "Esitatava filmi printimine"
 
 msgid "Seek"
 msgstr "Kerimine"
@@ -1305,6 +1301,9 @@ msgstr "Lääne"
 msgid "Vietnamese"
 msgstr "Vietnami"
 
+msgid "No video URI"
+msgstr ""
+
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
@@ -1495,131 +1494,6 @@ msgstr ""
 "täiendavaid GStreamer'i pluginaid või valida Multimeediasüsteemide valija "
 "abil mõni teine audioväljund."
 
-#, c-format
-msgid ""
-"Couldn't load the '%s' audio driver\n"
-"Check that the device is not busy."
-msgstr ""
-"Audiodraiverit '%s' pole võimalik laadida\n"
-"Veendu, et seade pole hõivatud."
-
-msgid ""
-"No video output is available. Make sure that the program is correctly "
-"installed."
-msgstr "Videoväljund pole saadaval. Veendu, et Totem on õigesti paigaldatud."
-
-msgid ""
-"The TV adapter could not tune into the channel. Please check your hardware "
-"setup and channel configuration."
-msgstr ""
-"TV-adapterit pole võimalik kanalile häälestada. Palun kontrolli oma "
-"riistvara seadeid ning kanali häälestusparameetreid."
-
-msgid "The server you are trying to connect to is not known."
-msgstr "Server, millega sa proovid ühendust võtta, on tundmatu."
-
-#, c-format
-msgid "The device name you specified (%s) seems to be invalid."
-msgstr "Sinu määratud seadmenimi (%s) paistab olevat vigane."
-
-#, c-format
-msgid "The server you are trying to connect to (%s) is unreachable."
-msgstr "Server, millega sa proovid ühendust luua (%s), pole kättesaadav."
-
-msgid "The connection to this server was refused."
-msgstr "Ühendus sellese serverisse lükati tagasi."
-
-msgid "The specified movie could not be found."
-msgstr "Kirjeldatud filmi ei leitud."
-
-msgid ""
-"The source seems encrypted and can't be read. Are you trying to play an "
-"encrypted DVD without libdvdcss?"
-msgstr ""
-"Lähteallikas paistab olevat krüptitud ja seda pole võimalik lugeda. Kas sa "
-"proovid krüptitud DVD-d esitada ilma libdvdcss'ita?"
-
-msgid "The movie could not be read."
-msgstr "Filmi pole võimalik lugeda."
-
-#, c-format
-msgid "A problem occurred while loading a library or a decoder (%s)."
-msgstr "Teegi või dekoodri laadimisel tekkis viga (%s)."
-
-msgid "This file is encrypted and cannot be played back."
-msgstr "See fail on krüptitud ja seda pole võimalik esitada."
-
-msgid "For security reasons, this movie can not be played back."
-msgstr "Turvakaalutlustel pole võimalik seda filmi esitada."
-
-msgid "The audio device is busy. Is another application using it?"
-msgstr "Audioseade on hõivatud. Kas mõni rakendus kasutab seda?"
-
-msgid "Authentication is required to access this file."
-msgstr "Sellele failile ligipääsuks nõutakse autentimist."
-
-msgid "Authentication is required to access this file or stream."
-msgstr "Sellele failile või striimile ligipääsuks nõutakse autentimist."
-
-msgid "You are not allowed to open this file."
-msgstr "Sul pole lubatud seda faili avada."
-
-msgid "The server refused access to this file or stream."
-msgstr "Server piirab ligipääsu sellele failile või striimile."
-
-msgid "The file you tried to play is an empty file."
-msgstr "Fail mida sa üritasid esitada on tühi fail."
-
-msgid "There is no input plugin to handle the location of this movie"
-msgstr "Puudub sisendplugin selle filmitüübi asukoha käsitlemiseks"
-
-msgid "There is no plugin to handle this movie."
-msgstr "Puudub plugin selle filmitüübi käsitlemiseks."
-
-msgid "This movie is broken and can not be played further."
-msgstr "See film on katki ja seda pole võimalik edasi esitada."
-
-msgid "This location is not a valid one."
-msgstr "See asukoht ei ole korrektne."
-
-msgid "This movie could not be opened."
-msgstr "Seda filmi pole võimalik avada."
-
-msgid "Generic Error."
-msgstr "Üldine viga."
-
-#, c-format
-msgid ""
-"Video codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"Videokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
-"filmitüüpide vaatamiseks täiendavaid pluginaid."
-
-#, c-format
-msgid ""
-"Audio codec '%s' is not handled. You might need to install additional "
-"plugins to be able to play some types of movies"
-msgstr ""
-"Audiokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
-"filmitüüpide vaatamiseks täiendavaid pluginaid."
-
-msgid "This is an audio-only file and there is no audio output available."
-msgstr "See on audiofail aga hetkel pole audioväljund saadaval."
-
-#, c-format
-msgid "Language %d"
-msgstr "Keel %d"
-
-msgid "No video to capture."
-msgstr "Pole videot, mida salvestada."
-
-msgid "Video codec is not handled."
-msgstr "Videokoodek pole käsitletud."
-
-msgid "Movie is not playing."
-msgstr "Filmi ei esitata."
-
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
 #. * hours, 5 minutes, and 2 seconds. You may change ":" to
@@ -1725,8 +1599,8 @@ msgstr "Kopeeri vide_o DVD..."
 msgid "Copy the currently playing video DVD"
 msgstr "Koopia praegu mängivast DVD'st"
 
-msgid "Copy Vide_o (S)VCD..."
-msgstr "Kopeeri vide_o (S)VCD..."
+msgid "Copy (S)VCD..."
+msgstr "Kopeeri (S)VCD..."
 
 msgid "Copy the currently playing (S)VCD"
 msgstr "Praegu esitatava (S)VCD kopeerimine"
@@ -1756,6 +1630,14 @@ msgstr "Coherence DLNA/UPnP klient"
 msgid "A DLNA/UPnP client for Totem powered by Coherence"
 msgstr "DLNA/UPnP klient Totemi jaoks, mille on tootnud Coherence"
 
+msgid "D-Bus Service"
+msgstr "D-Bus teenus"
+
+msgid ""
+"Plugin for sending notifications of currently-playing movies to the D-Bus "
+"subsystem."
+msgstr ""
+
 msgid "Instant Messenger status"
 msgstr "Välksõnumirakenduse olek"
 
@@ -1773,6 +1655,38 @@ msgstr "Esitlusabiline kommentaaride lisamiseks ekraanile"
 
 msgid "The gromit binary was not found."
 msgstr "gromit-i binaarfaili ei leitud"
+
+#. Add the interface to Totem's sidebar
+msgid "BBC iPlayer"
+msgstr "BBC iPlayer"
+
+msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
+msgstr ""
+
+msgid "Error Listing Channel Categories"
+msgstr ""
+
+msgid ""
+"There was an unknown error getting the list of television channels available "
+"on BBC iPlayer."
+msgstr ""
+
+#. Append a dummy child row so that the expander's visible; we can
+#. then queue off the expander to load the programme listing for this category
+msgid "Loading…"
+msgstr "Laadimine…"
+
+msgid "Error getting programme feed"
+msgstr ""
+
+msgid ""
+"There was an unknown error getting the list of programmes for this channel "
+"and category combination."
+msgstr ""
+
+#, python-format
+msgid "Programme unavailable (\"%s\")"
+msgstr ""
 
 msgid "By artist"
 msgstr "Esitaja"
@@ -1883,6 +1797,16 @@ msgstr "%H:%M:%S"
 msgid "%M:%S"
 msgstr "%M:%S"
 
+#. Translators: If Jamendo supports your language, replace "en" with the language code, enclosed
+#. in slashes, used to view pages in your language on the Jamendo website. e.g. For French, "en"
+#. would be translated to "fr", as Jamendo uses that in its URLs:
+#. http://www.jamendo.com/fr/album/4818
+#. Compared to:
+#. http://www.jamendo.com/en/album/4818
+#. If Jamendo doesn't support your language, *do not translate this string*!
+msgid "en"
+msgstr ""
+
 msgid "Infrared Remote Control"
 msgstr "Infrapuna-kaugjuhtimine"
 
@@ -1916,10 +1840,10 @@ msgstr "Subtiitrite _keel:"
 msgid "_Play with Subtitle"
 msgstr "_Esita subtiitritega"
 
-msgid "Look for a subtitle for the currently playing movie"
-msgstr "Esitatavale filmile subtiitrite otsimine"
+msgid "Look for subtitles for the currently playing movie."
+msgstr "Esitatavale filmile subtiitrite otsimine."
 
-msgid "Subtitles downloader"
+msgid "Subtitle Downloader"
 msgstr "Subtiitrite allalaadija"
 
 msgid "Brasilian Portuguese"
@@ -1981,7 +1905,7 @@ msgstr "%d kb/s"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-msgid "Neighbours"
+msgid "Neighbors"
 msgstr "Naabrid"
 
 msgid "Publish Playlist"
@@ -2122,14 +2046,11 @@ msgstr "Kohalike videote otsimine Trackeri abil"
 msgid "A plugin to let you browse YouTube videos."
 msgstr "Plugin YouTube videote sirvimiseks."
 
-msgid "YouTube browser"
+msgid "YouTube Browser"
 msgstr "YouTube sirvija"
 
 msgid "Related Videos"
 msgstr "Seotud videod"
-
-msgid "YouTube"
-msgstr "YouTube"
 
 msgid "Videos"
 msgstr "Videod"
@@ -2140,14 +2061,35 @@ msgstr "Ava _veebisirvijas"
 msgid "Open the video in your web browser"
 msgstr "Video avamine veebisirvijas"
 
-msgid "Fetching related videos..."
-msgstr "Seotud videote hankimine..."
+#. Add the sidebar page
+msgid "YouTube"
+msgstr "YouTube"
 
-msgid "Fetching search results..."
-msgstr "Otsingutulemuste hankimine..."
+msgid "Cancelling query…"
+msgstr "Päringu tühistamine…"
 
-msgid "Fetching more videos..."
-msgstr "Lisavideote hankimine..."
+msgid "Error Looking Up Video URI"
+msgstr ""
+
+msgid "Error Loading Video Thumbnail"
+msgstr ""
+
+msgid "Error Searching for Videos"
+msgstr "Viga videote otsimisel"
+
+#. Update the UI
+msgid "Fetching search results…"
+msgstr "Otsingutulemuste hankimine…"
+
+#. Update the UI
+msgid "Fetching related videos…"
+msgstr "Seotud videote hankimine…"
+
+msgid "Error Opening Video in Web Browser"
+msgstr "Viga video avamisel veebisirvijas"
+
+msgid "Fetching more videos…"
+msgstr "Lisavideote hankimine…"
 
 msgid "No URI to play"
 msgstr "Esitamiseks puudub URI"
@@ -2221,6 +2163,125 @@ msgstr ""
 "ühendust. Kui GConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
 
+#~ msgid "Print playing movie"
+#~ msgstr "Esitatava filmi printimine"
+
+#~ msgid ""
+#~ "Couldn't load the '%s' audio driver\n"
+#~ "Check that the device is not busy."
+#~ msgstr ""
+#~ "Audiodraiverit '%s' pole võimalik laadida\n"
+#~ "Veendu, et seade pole hõivatud."
+
+#~ msgid ""
+#~ "No video output is available. Make sure that the program is correctly "
+#~ "installed."
+#~ msgstr ""
+#~ "Videoväljund pole saadaval. Veendu, et Totem on õigesti paigaldatud."
+
+#~ msgid ""
+#~ "The TV adapter could not tune into the channel. Please check your "
+#~ "hardware setup and channel configuration."
+#~ msgstr ""
+#~ "TV-adapterit pole võimalik kanalile häälestada. Palun kontrolli oma "
+#~ "riistvara seadeid ning kanali häälestusparameetreid."
+
+#~ msgid "The server you are trying to connect to is not known."
+#~ msgstr "Server, millega sa proovid ühendust võtta, on tundmatu."
+
+#~ msgid "The device name you specified (%s) seems to be invalid."
+#~ msgstr "Sinu määratud seadmenimi (%s) paistab olevat vigane."
+
+#~ msgid "The server you are trying to connect to (%s) is unreachable."
+#~ msgstr "Server, millega sa proovid ühendust luua (%s), pole kättesaadav."
+
+#~ msgid "The connection to this server was refused."
+#~ msgstr "Ühendus sellese serverisse lükati tagasi."
+
+#~ msgid "The specified movie could not be found."
+#~ msgstr "Kirjeldatud filmi ei leitud."
+
+#~ msgid ""
+#~ "The source seems encrypted and can't be read. Are you trying to play an "
+#~ "encrypted DVD without libdvdcss?"
+#~ msgstr ""
+#~ "Lähteallikas paistab olevat krüptitud ja seda pole võimalik lugeda. Kas "
+#~ "sa proovid krüptitud DVD-d esitada ilma libdvdcss'ita?"
+
+#~ msgid "The movie could not be read."
+#~ msgstr "Filmi pole võimalik lugeda."
+
+#~ msgid "A problem occurred while loading a library or a decoder (%s)."
+#~ msgstr "Teegi või dekoodri laadimisel tekkis viga (%s)."
+
+#~ msgid "This file is encrypted and cannot be played back."
+#~ msgstr "See fail on krüptitud ja seda pole võimalik esitada."
+
+#~ msgid "For security reasons, this movie can not be played back."
+#~ msgstr "Turvakaalutlustel pole võimalik seda filmi esitada."
+
+#~ msgid "The audio device is busy. Is another application using it?"
+#~ msgstr "Audioseade on hõivatud. Kas mõni rakendus kasutab seda?"
+
+#~ msgid "Authentication is required to access this file."
+#~ msgstr "Sellele failile ligipääsuks nõutakse autentimist."
+
+#~ msgid "Authentication is required to access this file or stream."
+#~ msgstr "Sellele failile või striimile ligipääsuks nõutakse autentimist."
+
+#~ msgid "You are not allowed to open this file."
+#~ msgstr "Sul pole lubatud seda faili avada."
+
+#~ msgid "The server refused access to this file or stream."
+#~ msgstr "Server piirab ligipääsu sellele failile või striimile."
+
+#~ msgid "The file you tried to play is an empty file."
+#~ msgstr "Fail mida sa üritasid esitada on tühi fail."
+
+#~ msgid "There is no input plugin to handle the location of this movie"
+#~ msgstr "Puudub sisendplugin selle filmitüübi asukoha käsitlemiseks"
+
+#~ msgid "There is no plugin to handle this movie."
+#~ msgstr "Puudub plugin selle filmitüübi käsitlemiseks."
+
+#~ msgid "This movie is broken and can not be played further."
+#~ msgstr "See film on katki ja seda pole võimalik edasi esitada."
+
+#~ msgid "This location is not a valid one."
+#~ msgstr "See asukoht ei ole korrektne."
+
+#~ msgid "This movie could not be opened."
+#~ msgstr "Seda filmi pole võimalik avada."
+
+#~ msgid ""
+#~ "Video codec '%s' is not handled. You might need to install additional "
+#~ "plugins to be able to play some types of movies"
+#~ msgstr ""
+#~ "Videokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
+#~ "filmitüüpide vaatamiseks täiendavaid pluginaid."
+
+#~ msgid ""
+#~ "Audio codec '%s' is not handled. You might need to install additional "
+#~ "plugins to be able to play some types of movies"
+#~ msgstr ""
+#~ "Audiokoodek '%s' pole käsitletud. Sa pead ilmselt paigaldama mõningate "
+#~ "filmitüüpide vaatamiseks täiendavaid pluginaid."
+
+#~ msgid "This is an audio-only file and there is no audio output available."
+#~ msgstr "See on audiofail aga hetkel pole audioväljund saadaval."
+
+#~ msgid "Language %d"
+#~ msgstr "Keel %d"
+
+#~ msgid "No video to capture."
+#~ msgstr "Pole videot, mida salvestada."
+
+#~ msgid "Video codec is not handled."
+#~ msgstr "Videokoodek pole käsitletud."
+
+#~ msgid "Movie is not playing."
+#~ msgstr "Filmi ei esitata."
+
 #~ msgid ""
 #~ "Ogg\n"
 #~ "MP3"
@@ -2233,21 +2294,6 @@ msgstr ""
 
 #~ msgid "_Search"
 #~ msgstr "_Otsi"
-
-#~ msgid "Catalan"
-#~ msgstr "Katalaani"
-
-#~ msgid "English"
-#~ msgstr "Inglise"
-
-#~ msgid "French"
-#~ msgstr "Prantsuse"
-
-#~ msgid "German"
-#~ msgstr "Saksa"
-
-#~ msgid "Spanish"
-#~ msgstr "Hispaania"
 
 #~ msgid "TV-Out"
 #~ msgstr "TV-väljund"
