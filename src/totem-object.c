@@ -686,11 +686,12 @@ totem_remote_command_get_type (void)
 {
 	static GType etype = 0;
 
-	if (etype == 0)	{
+	if (etype == 0) {
 		static const GEnumValue values[] = {
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_UNKNOWN, "Unknown command"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAY, "Play"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PAUSE, "Pause"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_STOP, "Stop"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAYPAUSE, "Play or pause"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_NEXT, "Next file"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PREVIOUS, "Previous file"),
@@ -715,6 +716,7 @@ totem_remote_command_get_type (void)
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_EJECT, "Eject"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_PLAY_DVD, "Play DVD"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_MUTE, "Mute"),
+			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT, "Toggle Aspect Ratio"),
 			{ 0, NULL, NULL }
 		};
 
