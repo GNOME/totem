@@ -175,6 +175,7 @@ main (int argc, char **argv)
 	/* IPC stuff */
 	if (optionstate.notconnectexistingsession == FALSE) {
 		totem->app = unique_app_new ("org.gnome.Totem", NULL);
+		totem_options_register_remote_commands (totem);
 		if (unique_app_is_running (totem->app) != FALSE) {
 			totem_options_process_for_server (totem->app, &optionstate);
 			gdk_notify_startup_complete ();

@@ -83,6 +83,21 @@ totem_options_process_late (Totem *totem, const TotemCmdLineOptions* options)
 }
 
 void
+totem_options_register_remote_commands (Totem *totem)
+{
+	GEnumClass *klass;
+	guint i;
+
+	klass = (GEnumClass *) g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
+	for (i = TOTEM_REMOTE_COMMAND_UNKNOWN + 1; i < klass->n_values; i++) {
+		GEnumValue *val;
+		val = g_enum_get_value (klass, i);
+		unique_app_add_command (totem->app, val->value_name, i);
+	}
+	g_type_class_unref (klass);
+}
+
+void
 totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 {
 	if (options->quit) {

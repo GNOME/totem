@@ -1,5 +1,12 @@
 2009-05-16  Bastien Nocera  <hadess@hadess.net>
 
+	* src/totem-options.c (totem_options_register_remote_commands):
+	* src/totem-options.h:
+	* src/totem.c (main): Register the remote commands for
+	use by UniqueApp, fixes remote commands not working...
+
+2009-05-16  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-object.c (totem_remote_command_get_type):
 	Add missing enum values to the GEnumClass
 
