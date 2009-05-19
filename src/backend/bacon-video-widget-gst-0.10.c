@@ -2393,11 +2393,23 @@ bacon_video_widget_get_subtitles (BaconVideoWidget * bvw)
 GList *
 bacon_video_widget_get_languages (BaconVideoWidget * bvw)
 {
+  GList *list;
+
   g_return_val_if_fail (bvw != NULL, NULL);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (bvw->priv->play != NULL, NULL);
 
-  return get_lang_list_for_type (bvw, "AUDIO");
+  list = get_lang_list_for_type (bvw, "AUDIO");
+
+  /* When we have only one language, we don't need to show
+   * any languages, we default to the only track */
+  if (g_list_length (list) == 1) {
+    g_free (list->data);
+    g_list_free (list);
+    list = NULL;
+  }
+
+  return list;
 }
 
 /**
@@ -2406,7 +2418,7 @@ bacon_video_widget_get_languages (BaconVideoWidget * bvw)
  *
  * Returns the index of the current audio language.
  *
- * If the widget is not playing, or the default language is in use, %-2 will be returned.
+ * If the widget is not playing, or the default language is in use, %-1 will be returned.
  *
  * Return value: the audio language index
  **/
@@ -2415,14 +2427,11 @@ bacon_video_widget_get_language (BaconVideoWidget * bvw)
 {
   int language = -1;
 
-  g_return_val_if_fail (bvw != NULL, -2);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -2);
-  g_return_val_if_fail (bvw->priv->play != NULL, -2);
+  g_return_val_if_fail (bvw != NULL, -1);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+  g_return_val_if_fail (bvw->priv->play != NULL, -1);
 
   g_object_get (G_OBJECT (bvw->priv->play), "current-audio", &language, NULL);
-
-  if (language == -1)
-    language = -2;
 
   return language;
 }

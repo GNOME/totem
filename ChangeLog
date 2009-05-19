@@ -1,3 +1,13 @@
+2009-05-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_get_languages),
+	(bacon_video_widget_get_language): Fix API, -2 was for
+	"no audio" track, which we don't really want to support,
+	avoids warnings when there's only one audio track.
+	Also avoid showing the redundant "Auto" and "AUDIO 0" tracks
+	when there's only one audio track
+
 2009-05-16  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-options.c (totem_options_register_remote_commands):
