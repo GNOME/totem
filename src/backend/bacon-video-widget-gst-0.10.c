@@ -2284,7 +2284,7 @@ static GList *
 get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
   GList *ret = NULL;
-  gint num = 0;
+  gint num = 1;
 
   if (g_str_equal (type_name, "AUDIO")) {
     gint i, n;
@@ -2311,11 +2311,11 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 	} else if (cd) {
 	  ret = g_list_prepend (ret, cd);
 	} else {
-	  ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+	  ret = g_list_prepend (ret, g_strdup_printf (_("Audio Track #%d"), num++));
 	}
 	gst_tag_list_free (tags);
       } else {
-	ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+	ret = g_list_prepend (ret, g_strdup_printf (_("Audio Track #%d"), num++));
       }
     }
   } else if (g_str_equal (type_name, "TEXT")) {
@@ -2343,11 +2343,11 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 	} else if (cd) {
 	  ret = g_list_prepend (ret, cd);
 	} else {
-	  ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+	  ret = g_list_prepend (ret, g_strdup_printf (_("Subtitle #%d"), num++));
 	}
 	gst_tag_list_free (tags);
       } else {
-	ret = g_list_prepend (ret, g_strdup_printf ("%s %d", type_name, num++));
+	ret = g_list_prepend (ret, g_strdup_printf (_("Subtitle #%d"), num++));
       }
     }
   } else {

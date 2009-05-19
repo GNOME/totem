@@ -1,6 +1,12 @@
 2009-05-19  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c
+	(get_lang_list_for_type): Better fallbacks
+	languages and audio track names
+
+2009-05-19  Bastien Nocera  <hadess@hadess.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c
 	(bacon_video_widget_get_languages),
 	(bacon_video_widget_get_language): Fix API, -2 was for
 	"no audio" track, which we don't really want to support,
