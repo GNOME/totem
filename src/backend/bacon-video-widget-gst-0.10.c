@@ -1375,7 +1375,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 
         if (res) {
           gboolean is_menu = FALSE;
-          gint i, n;
+          guint i, n;
 
           if (gst_navigation_query_parse_commands_length (cmds_q, &n)) {
             for (i = 0; i < n; i++) {
