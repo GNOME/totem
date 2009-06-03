@@ -456,7 +456,8 @@ increment_progress_bar_fraction (TotemYouTubePlugin *self, guint tree_view)
 			gtk_widget_set_sensitive (self->cancel_button, FALSE);
 
 		/* Unref cancellable */
-		g_object_unref (self->cancellable[tree_view]);
+		if (self->cancellable[tree_view] != NULL)
+			g_object_unref (self->cancellable[tree_view]);
 		self->cancellable[tree_view] = NULL;
 	}
 }
@@ -644,7 +645,7 @@ thumbnail_opened_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 
 	g_debug ("Creating thumbnail from stream");
 	totem_gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (input_stream), THUMBNAIL_WIDTH, -1, TRUE,
-						   self->cancellable[data->tree_view], (GAsyncReadyCallback) thumbnail_loaded_cb, data);
+							 self->cancellable[data->tree_view], (GAsyncReadyCallback) thumbnail_loaded_cb, data);
 	g_object_unref (input_stream);
 }
 
@@ -678,7 +679,17 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 
 		/* Error! */
 		window = totem_get_main_window (data->plugin->totem);
-		totem_interface_error (_("Error Searching for Videos"), error->message, window);
+		if (g_error_matches (error, GDATA_SERVICE_ERROR, GDATA_SERVICE_ERROR_PROTOCOL_ERROR) == TRUE) {
+			/* Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
+			 * if we're receiving a protocol error). */
+			totem_interface_error (_("Error Searching for Videos"),
+					       _("The response from the server could not be understood. "
+					         "Please check you are running the latest version of libgdata."), window);
+		} else {
+			/* Spew out the error message as provided */
+			totem_interface_error (_("Error Searching for Videos"), error->message, window);
+		}
+
 		g_object_unref (window);
 		g_error_free (error);
 		goto free_data;
@@ -774,8 +785,10 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 	QueryData *data;
 
 	/* Cancel previous searches on this tree view */
-	if (self->cancellable[tree_view] != NULL)
+	if (self->cancellable[tree_view] != NULL) {
 		g_cancellable_cancel (self->cancellable[tree_view]);
+		g_object_unref (self->cancellable[tree_view]);
+	}
 
 	/* Clear the tree views */
 	if (clear_tree_view == TRUE)

@@ -1,5 +1,15 @@
 2009-06-03  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* configure.in:
+	* src/plugins/youtube/totem-youtube.c
+	(increment_progress_bar_fraction), (query_finished_cb),
+	(execute_query): Bump to libgdata >= 0.4.0 to work around
+	locale-dependency problems in string parsing. Fix some reference
+	problems in the YouTube plugin and hide ugly technical error messages
+	from libgdata. (Helps: #584691)
+
+2009-06-03  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/plugins/youtube/totem-youtube.c (new_from_stream_thread): Fix
 	a double-free when downloading YouTube video thumbnails.
 
