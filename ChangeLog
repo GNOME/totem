@@ -1,3 +1,8 @@
+2009-06-03  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/plugins/youtube/totem-youtube.c (new_from_stream_thread): Fix
+	a double-free when downloading YouTube video thumbnails.
+
 2009-05-31  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* docs/reference/Makefile.am: Add the builddir to gtkdoc-mkhtml's

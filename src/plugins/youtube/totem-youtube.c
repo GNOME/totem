@@ -144,7 +144,6 @@ new_from_stream_thread (GSimpleAsyncResult *result,
 	else
 		pixbuf = gdk_pixbuf_new_from_stream (stream, cancellable, &error);
 
-	g_free (data); /* GSimpleAsyncResult doesn't destroy result pointers when setting a new value over the top */
 	g_simple_async_result_set_op_res_gpointer (result, NULL, NULL);
 
 	/* Set the new pixbuf as the result, or error out */
