@@ -1637,8 +1637,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_BUFFERING: {
       gint percent = 0;
 
-      /* FIXME: use gst_message_parse_buffering() once core 0.10.11 is out */
-      gst_structure_get_int (message->structure, "buffer-percent", &percent);
+      gst_message_parse_buffering (message, &percent);
       g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
 
       if (percent >= 100) {

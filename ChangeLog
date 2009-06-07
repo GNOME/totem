@@ -1,3 +1,9 @@
+2009-06-07  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	Use gst_message_parse_buffering() instead of manually getting
+	the percents from the message.
+
 2009-06-03  Philip Withnall  <philip@tecnocode.co.uk>
 
 	* configure.in:
