@@ -257,6 +257,12 @@ static int bvw_signals[LAST_SIGNAL] = { 0 };
 
 static GThread *gui_thread;
 
+/* FIXME: Remove this when we depend on gst-plugins-base >= 0.10.24
+ *
+ * TRUE if playbin2 from GIT with {audio,video,text}-tags-changed
+ * signals is found */
+static gboolean playbin2_tags_changed_signals = FALSE;
+
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
 
@@ -1519,6 +1525,147 @@ bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
 }
 
 static void
+bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type)
+{
+  GstTagList **cache = NULL;
+  GstTagList *result;
+
+  GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
+
+  /* all tags (replace previous tags, title/artist/etc. might change
+   * in the middle of a stream, e.g. with radio streams) */
+  result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
+                                   GST_TAG_MERGE_REPLACE);
+  if (bvw->priv->tagcache)
+    gst_tag_list_free (bvw->priv->tagcache);
+  bvw->priv->tagcache = result;
+
+  /* media-type-specific tags */
+  if (!strcmp (type, "video")) {
+    cache = &bvw->priv->videotags;
+  } else if (!strcmp (type, "audio")) {
+    cache = &bvw->priv->audiotags;
+  }
+
+  if (cache) {
+    result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_REPLACE);
+    if (*cache)
+      gst_tag_list_free (*cache);
+    *cache = result;
+  }
+
+  /* clean up */
+  gst_tag_list_free (tag_list);
+
+  /* if we're not interactive, we want to announce metadata
+   * only later when we can be sure we got it all */
+  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+      bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+      /* If we updated metadata and we have a new title, send it
+       * using TITLE_CHANGE, so that the UI knows it has a new
+       * streaming title */
+    GValue value = { 0, };
+    
+    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+
+    bacon_video_widget_get_metadata (bvw, BVW_INFO_TITLE, &value);
+    if (g_value_get_string (&value))
+      g_signal_emit (bvw, bvw_signals[SIGNAL_TITLE_CHANGE], 0, g_value_get_string (&value));
+    g_value_unset (&value);
+  }
+}
+
+typedef struct {
+  BaconVideoWidget *bvw;
+  GstTagList *tags;
+  const gchar *type;
+} UpdateTagsDelayedData;
+
+static gboolean
+bvw_update_tags_dispatcher (gpointer user_data)
+{
+  UpdateTagsDelayedData *data = user_data;
+
+  bvw_update_tags (data->bvw, data->tags, data->type);
+
+  g_object_unref (G_OBJECT (data->bvw));
+
+  g_free (data);
+
+  return FALSE;
+}
+
+/* Marshal the changed tags to the main thread for updating the GUI
+ * and sending the BVW signals */
+static void
+bvw_update_tags_delayed (BaconVideoWidget *bvw, GstTagList *tags, const gchar *type) {
+  UpdateTagsDelayedData *data = g_new0 (UpdateTagsDelayedData, 1);
+
+  data->bvw = g_object_ref (G_OBJECT (bvw));
+  data->tags = tags;
+  data->type = type;
+
+  g_idle_add (bvw_update_tags_dispatcher, data);
+}
+
+static void
+video_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
+{
+  BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
+  GstTagList *tags = NULL;
+  gint current_stream_id = 0;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "current-video", &current_stream_id, NULL);
+
+  /* Only get the updated tags if it's for our current stream id */
+  if (current_stream_id != stream_id)
+    return;
+
+  g_signal_emit_by_name (G_OBJECT (bvw->priv->play), "get-video-tags", stream_id, &tags);
+
+  if (tags)
+    bvw_update_tags_delayed (bvw, tags, "video");
+}
+
+static void
+audio_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
+{
+  BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
+  GstTagList *tags = NULL;
+  gint current_stream_id = 0;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "current-audio", &current_stream_id, NULL);
+
+  /* Only get the updated tags if it's for our current stream id */
+  if (current_stream_id != stream_id)
+    return;
+
+  g_signal_emit_by_name (G_OBJECT (bvw->priv->play), "get-audio-tags", stream_id, &tags);
+
+  if (tags)
+    bvw_update_tags_delayed (bvw, tags, "audio");
+}
+
+static void
+text_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
+{
+  BaconVideoWidget *bvw = (BaconVideoWidget *) user_data;
+  GstTagList *tags = NULL;
+  gint current_stream_id = 0;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "current-text", &current_stream_id, NULL);
+
+  /* Only get the updated tags if it's for our current stream id */
+  if (current_stream_id != stream_id)
+    return;
+
+  g_signal_emit_by_name (G_OBJECT (bvw->priv->play), "get-text-tags", stream_id, &tags);
+
+  if (tags)
+    bvw_update_tags_delayed (bvw, tags, "text");
+}
+
+static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) data;
@@ -1570,63 +1717,29 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
       break;
     }
-    case GST_MESSAGE_TAG: {
-      GstTagList *tag_list, *result;
-      GstElementFactory *f;
+    case GST_MESSAGE_TAG: 
+      /* If we get tags from the -tags-changed signals ignore the tag messages */
+      if (!playbin2_tags_changed_signals) {
+	GstTagList *taglist;
+	const gchar *type = "none";
+	GstElementFactory *f;
+	
+	gst_message_parse_tag (message, &taglist);
 
-      gst_message_parse_tag (message, &tag_list);
+        /* get stream type */
+        if (GST_IS_ELEMENT (message->src) &&
+            (f = gst_element_get_factory (GST_ELEMENT (message->src)))) {
+          const gchar *klass = gst_element_factory_get_klass (f);
 
-      GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
-
-      /* all tags (replace previous tags, title/artist/etc. might change
-       * in the middle of a stream, e.g. with radio streams) */
-      result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
-                                   GST_TAG_MERGE_REPLACE);
-      if (bvw->priv->tagcache)
-        gst_tag_list_free (bvw->priv->tagcache);
-      bvw->priv->tagcache = result;
-
-      /* media-type-specific tags */
-      if (GST_IS_ELEMENT (message->src) &&
-          (f = gst_element_get_factory (GST_ELEMENT (message->src)))) {
-        const gchar *klass = gst_element_factory_get_klass (f);
-        GstTagList **cache = NULL;
-
-        if (g_strrstr (klass, "Video")) {
-          cache = &bvw->priv->videotags;
-        } else if (g_strrstr (klass, "Audio")) {
-          cache = &bvw->priv->audiotags;
-        }
-
-        if (cache) {
-          result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_REPLACE);
-          if (*cache)
-            gst_tag_list_free (*cache);
-          *cache = result;
-        }
-      }
-
-      /* clean up */
-      gst_tag_list_free (tag_list);
-
-      /* if we're not interactive, we want to announce metadata
-       * only later when we can be sure we got it all */
-      if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
-          bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
-	/* If we updated metadata and we have a new title, send it
- 	 * using TITLE_CHANGE, so that the UI knows it has a new
-	 * streaming title */
-	GValue value = { 0, };
-
-	g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
-
-	bacon_video_widget_get_metadata (bvw, BVW_INFO_TITLE, &value);
-	if (g_value_get_string (&value))
-	  g_signal_emit (bvw, bvw_signals[SIGNAL_TITLE_CHANGE], 0, g_value_get_string (&value));
-	g_value_unset (&value);
+          if (g_strrstr (klass, "Video")) {
+            type = "video";
+          } else if (g_strrstr (klass, "Audio")) {
+            type = "audio";
+          }
+	}
+	bvw_update_tags (bvw, taglist, type);
       }
       break;
-    }
     case GST_MESSAGE_EOS:
       GST_DEBUG ("EOS message");
       /* update slider one last time */
@@ -2229,6 +2342,7 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 void
 bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 {
+  GstTagList *tags;
   gint flags;
 
   g_return_if_fail (bvw != NULL);
@@ -2245,6 +2359,13 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   }
   
   g_object_set (bvw->priv->play, "flags", flags, "current-text", subtitle, NULL);
+  
+  if (flags & GST_PLAY_FLAGS_TEXT) {
+    g_object_get (bvw->priv->play, "current-text", &subtitle, NULL);
+
+    g_signal_emit_by_name (G_OBJECT (bvw->priv->play), "get-text-tags", subtitle, &tags);
+    bvw_update_tags (bvw, tags, "text");
+  }
 }
 
 /**
@@ -2446,6 +2567,8 @@ bacon_video_widget_get_language (BaconVideoWidget * bvw)
 void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 {
+  GstTagList *tags;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->priv->play != NULL);
@@ -2461,6 +2584,9 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 
   g_object_get (bvw->priv->play, "current-audio", &language, NULL);
   GST_DEBUG ("current-audio now: %d", language);
+
+  g_signal_emit_by_name (G_OBJECT (bvw->priv->play), "get-audio-tags", language, &tags);
+  bvw_update_tags (bvw, tags, "audio");
 
   /* so it updates its metadata for the newly-selected stream */
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
@@ -5572,6 +5698,12 @@ cb_gconf (GConfClient * client,
 
 G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 
+static void check_playbin2_version (GstElement *playbin2)
+{
+  if (g_signal_lookup ("audio-tags-changed", G_TYPE_FROM_INSTANCE (playbin2)))
+    playbin2_tags_changed_signals = TRUE;
+}
+
 /* applications must use exactly one of bacon_video_widget_get_option_group()
  * OR bacon_video_widget_init_backend(), but not both */
 
@@ -6126,6 +6258,17 @@ bacon_video_widget_new (int width, int height,
       G_CALLBACK (playbin_stream_changed_cb), bvw);
   g_signal_connect (bvw->priv->play, "text-changed",
       G_CALLBACK (playbin_stream_changed_cb), bvw);
+
+  /* Check if we have playbin2 with the -tags-changed signals */
+  check_playbin2_version (bvw->priv->play);
+  if (playbin2_tags_changed_signals) {
+    g_signal_connect (bvw->priv->play, "video-tags-changed",
+        G_CALLBACK (video_tags_changed_cb), bvw);
+    g_signal_connect (bvw->priv->play, "audio-tags-changed",
+        G_CALLBACK (audio_tags_changed_cb), bvw);
+    g_signal_connect (bvw->priv->play, "text-tags-changed",
+        G_CALLBACK (text_tags_changed_cb), bvw);
+  }
 
   /* assume we're always called from the main Gtk+ GUI thread */
   gui_thread = g_thread_self();

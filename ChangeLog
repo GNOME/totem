@@ -1,3 +1,16 @@
+2009-06-08  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	If we have playbin2 from gst-plugins-base 0.10.23.1 or newer use
+	the new {audio,video,text}-tags-changed signals for noticing if
+	tags have changed. This also gives us immediately the corresponding
+	stream id and the type of the stream and makes it unnecessary to
+	try to get the type via the tag messages' sender.
+
+	This fixes bug #584689, prevents tags for unused streams to be
+	displayed and makes sure that audio/video tags of a demuxer or
+	other generic elements are used.
+
 2009-06-07  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:
