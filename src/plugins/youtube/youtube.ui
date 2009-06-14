@@ -76,7 +76,7 @@
 					<property name="spacing">4</property>
 					<child>
 						<object class="GtkScrolledWindow" id="yt_scrolled_window_search">
-							<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
+							<property name="hscrollbar-policy">GTK_POLICY_NEVER</property>
 							<property name="vscrollbar-policy">GTK_POLICY_AUTOMATIC</property>
 							<property name="shadow-type">GTK_SHADOW_IN</property>
 							<property name="window-placement">GTK_CORNER_TOP_LEFT</property>
@@ -91,15 +91,8 @@
 									<child>
 										<object class="GtkTreeViewColumn" id="yt_treeview_search_column">
 											<property name="title" translatable="yes">Videos</property>
-											<child>
-												<object class="TotemCellRendererVideo" id="yt_treeview_search_renderer">
-													<property name="use-placeholder">True</property>
-												</object>
-												<attributes>
-													<attribute name="thumbnail">0</attribute>
-													<attribute name="title">1</attribute>
-												</attributes>
-											</child>
+											<property name="expand">True</property>
+											<!-- Placeholder -->
 										</object>
 									</child>
 								</object>
@@ -143,15 +136,8 @@
 									<child>
 										<object class="GtkTreeViewColumn" id="yt_treeview_related_column">
 											<property name="title" translatable="yes">Videos</property>
-											<child>
-												<object class="TotemCellRendererVideo" id="yt_treeview_related_renderer">
-													<property name="use-placeholder">True</property>
-												</object>
-												<attributes>
-													<attribute name="thumbnail">0</attribute>
-													<attribute name="title">1</attribute>
-												</attributes>
-											</child>
+											<property name="expand">True</property>
+											<!-- Placeholder -->
 										</object>
 									</child>
 								</object>

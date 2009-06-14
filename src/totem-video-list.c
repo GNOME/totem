@@ -168,9 +168,9 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemVideoListClass, starting_video),
 				NULL, NULL,
-				totemvideolist_marshal_BOOLEAN__OBJECT_OBJECT,
-				G_TYPE_BOOLEAN, 2,
-				TOTEM_TYPE_VIDEO_LIST, GTK_TYPE_TREE_PATH);
+				totemvideolist_marshal_BOOLEAN__BOXED,
+				G_TYPE_BOOLEAN, 1,
+				GTK_TYPE_TREE_PATH);
 }
 
 static void
@@ -336,23 +336,27 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 	if (self->priv->mrl_column == -1)
 		return;
 
-	g_signal_emit (G_OBJECT (tree_view), totem_video_list_table_signals[STARTING_VIDEO], 0,
-				self,
-				path,
-				&play_video);
-
-	if (play_video == FALSE)
-		return;
-
+	/* Get the MRL and display name before emitting the signal, since the signal handler
+	 * could clear the tree model */
 	gtk_tree_model_get_iter (model, &iter, path);
 	gtk_tree_model_get (model, &iter,
 				self->priv->mrl_column, &mrl,
 				self->priv->tooltip_column, &display_name,
 				-1);
 
+	/* Emit the starting-video signal, to allow video playback to be cancelled */
+	g_signal_emit (tree_view, totem_video_list_table_signals[STARTING_VIDEO], 0,
+		       path,
+		       &play_video);
+
+	if (play_video == FALSE)
+		goto finish;
+g_message ("row_activated_cb: model: %lu, path: %lu, MRL col: %u, tt col: %u", model, path, self->priv->mrl_column, self->priv->tooltip_column);
+
 	if (mrl != NULL)
 		totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name, FALSE);
 
+finish:
 	g_free (mrl);
 	g_free (display_name);
 }
@@ -368,7 +372,7 @@ static gboolean
 show_popup_menu (TotemVideoList *self, GdkEventButton *event)
 {
 	guint button = 0;
-       	guint32 time;
+	guint32 _time;
 	GtkTreePath *path;
 	gint count;
 	GtkWidget *menu;
@@ -381,7 +385,7 @@ show_popup_menu (TotemVideoList *self, GdkEventButton *event)
 
 	if (event != NULL) {
 		button = event->button;
-		time = event->time;
+		_time = event->time;
 
 		if (gtk_tree_view_get_path_at_pos (tree_view,
 				 event->x, event->y, &path, NULL, NULL, NULL)) {
@@ -394,7 +398,7 @@ show_popup_menu (TotemVideoList *self, GdkEventButton *event)
 			gtk_tree_selection_unselect_all (selection);
 		}
 	} else {
-		time = gtk_get_current_event_time ();
+		_time = gtk_get_current_event_time ();
 	}
 
 	count = gtk_tree_selection_count_selected_rows (selection);
@@ -432,7 +436,7 @@ show_popup_menu (TotemVideoList *self, GdkEventButton *event)
 	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
 
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-			button, time);
+			button, _time);
 
 	return TRUE;
 }

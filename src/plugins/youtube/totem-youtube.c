@@ -35,6 +35,7 @@
 #include "totem-video-list.h"
 #include "totem-interface.h"
 #include "backend/bacon-video-widget.h"
+#include "totem-cell-renderer-video.h"
 
 /* Notebook pages */
 enum {
@@ -100,7 +101,7 @@ gboolean button_press_event_cb (GtkWidget *widget, GdkEventButton *event, TotemY
 gboolean button_release_event_cb (GtkWidget *widget, GdkEventButton *event, TotemYouTubePlugin *self);
 void open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self);
 void value_changed_cb (GtkAdjustment *adjustment, TotemYouTubePlugin *self);
-gboolean starting_video_cb (TotemVideoList *video_list, GtkTreeView *tree_view, GtkTreePath *path, TotemYouTubePlugin *self);
+gboolean starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePlugin *self);
 
 TOTEM_PLUGIN_REGISTER (TotemYouTubePlugin, totem_youtube_plugin)
 
@@ -277,6 +278,16 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	GtkActionGroup *action_group;
 	GtkAction *action, *menu_item;
 	GtkWidget *vscroll, *tree_view;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
+
+	/* Add the cell renderer. This can't be done with GtkBuilder, because it unavoidably sets the expand parameter to FALSE */
+	/* TODO: Depends on bug #453692 */
+	renderer = GTK_CELL_RENDERER (totem_cell_renderer_video_new (TRUE));
+	column = GTK_TREE_VIEW_COLUMN (gtk_builder_get_object (builder,
+							       (key == SEARCH_TREE_VIEW) ? "yt_treeview_search_column" : "yt_treeview_related_column"));
+	gtk_tree_view_column_pack_start (column, renderer, TRUE);
+	gtk_tree_view_column_set_attributes (column, renderer, "thumbnail", 0, "title", 1, NULL);
 
 	/* Give the video lists a handle to Totem and connect their scrollbar signals */
 	if (key == SEARCH_TREE_VIEW) {
@@ -521,7 +532,8 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 		GDataMediaContent *content;
 
 		/* We don't have a match, which is odd; fall back to the FLV URI as advertised by the YouTube API */
-		content = GDATA_MEDIA_CONTENT (gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (data->entry), "application/x-shockwave-flash"));
+		content = GDATA_MEDIA_CONTENT (gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (data->entry),
+										    "application/x-shockwave-flash"));
 		if (content != NULL) {
 			video_uri = g_strdup (gdata_media_content_get_uri (content));
 			g_debug ("Couldn't find the t param of entry %s; falling back to its FLV URI (\"%s\")", video_id, video_uri);
@@ -973,7 +985,7 @@ button_release_event_cb (GtkWidget *widget, GdkEventButton *event, TotemYouTubeP
 }
 
 gboolean
-starting_video_cb (TotemVideoList *video_list, GtkTreeView *tree_view, GtkTreePath *path, TotemYouTubePlugin *self)
+starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePlugin *self)
 {
 	GtkTreeIter iter;
 	GDataYouTubeVideo *video_entry;
@@ -982,6 +994,7 @@ starting_video_cb (TotemVideoList *video_list, GtkTreeView *tree_view, GtkTreePa
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, path) == FALSE)
 		return FALSE;
 	gtk_tree_model_get (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, 3, &video_entry, -1);
+g_message ("starting_video_cb: model: %lu, path: %lu, current tv: %u", self->list_store[self->current_tree_view], path, self->current_tree_view);
 
 	if (self->playing_video != NULL)
 		g_object_unref (self->playing_video);

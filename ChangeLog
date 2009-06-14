@@ -1,5 +1,18 @@
 2009-06-14  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/plugins/youtube/totem-youtube.c (set_up_tree_view),
+	(resolve_t_param_cb), (starting_video_cb):
+	* src/plugins/youtube/youtube.ui:
+	* src/totem-cell-renderer-video.c (get_size),
+	(totem_cell_renderer_video_get_size),
+	(totem_cell_renderer_video_render):
+	* src/totem-video-list.c (totem_video_list_class_init),
+	(row_activated_cb), (show_popup_menu):
+	* src/totemvideolist-marshal.list: Fix video list rendering for the
+	YouTube plugin, as well as playback of related videos.
+
+2009-06-14  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/plugins/youtube/totem-youtube.c (resolve_t_param_cb),
 	(resolve_t_param), (query_progress_cb),
 	(open_in_web_browser_activate_cb): Update YouTube plugin to use

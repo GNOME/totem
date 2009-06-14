@@ -242,7 +242,7 @@ get_size (GtkCellRenderer *cell,
 	  GdkRectangle *title_area,
 	  GdkRectangle *thumbnail_area)
 {
-	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE (cell);
+	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO (cell)->priv;
 	guint pixbuf_width = 0;
 	guint pixbuf_height = 0;
 	guint title_width, title_height;
@@ -293,8 +293,7 @@ get_size (GtkCellRenderer *cell,
 	if (draw_area) {
 		if (cell_area && calc_width > 0 && calc_height > 0) {
 			draw_area->x = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-				(1.0 - cell->xalign) : cell->xalign) * 
-				(cell_area->width - calc_width));
+				(1.0 - cell->xalign) : cell->xalign) * (cell_area->width - calc_width));
 			draw_area->x = MAX (draw_area->x, 0);
 			draw_area->y = (cell->yalign * (cell_area->height - calc_height));
 			draw_area->y = MAX (draw_area->y, 0);
@@ -303,14 +302,10 @@ get_size (GtkCellRenderer *cell,
 			draw_area->y = 0;
 		}
 
+		draw_area->x += cell->xpad;
+		draw_area->y += cell->ypad;
 		draw_area->width = calc_width;
 		draw_area->height = calc_height;
-
-		/*if (cell_area) {
-			g_debug ("Cell area: X: %i, Y: %i, W: %i, H: %i", cell_area->x, cell_area->y, cell_area->width, cell_area->height);
-			g_debug ("X-align: %f, Y-align: %f", cell->xalign, cell->yalign);
-		}
-		g_debug ("Draw area: X: %i, Y: %i, W: %i, H: %i", draw_area->x, draw_area->y, draw_area->width, draw_area->height);*/
 
 		if (title_area) {
 			if (cell_area) {
@@ -326,8 +321,6 @@ get_size (GtkCellRenderer *cell,
 				title_area->y = draw_area->y + pixbuf_height + cell->ypad;
 			else
 				title_area->y = draw_area->y;
-
-			/*g_debug ("Title area: X: %i, Y: %i, W: %i, H: %i", title_area->x, title_area->y, title_area->width, title_area->height);*/
 		}
 
 		if (pixbuf_height > 0 && thumbnail_area) {
@@ -338,11 +331,7 @@ get_size (GtkCellRenderer *cell,
 			thumbnail_area->y = draw_area->y;
 			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
 			thumbnail_area->height = pixbuf_height;
-
-			/*g_debug ("Thumbnail area: X: %i, Y: %i, W: %i, H: %i", thumbnail_area->x, thumbnail_area->y, thumbnail_area->width, thumbnail_area->height);*/
 		}
-
-		/*g_debug ("---");*/
 	}
 }
 
@@ -356,6 +345,7 @@ totem_cell_renderer_video_get_size (GtkCellRenderer *cell,
 				    gint *height)
 {
 	GdkRectangle draw_area;
+
 	get_size (cell, widget, cell_area, &draw_area, NULL, NULL);
 
 	if (x_offset)
@@ -377,7 +367,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 				  GdkRectangle *expose_area,
 				  GtkCellRendererState flags)
 {
-	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO_GET_PRIVATE (cell);
+	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO (cell)->priv;
 	GdkPixbuf *pixbuf;
 	GdkRectangle draw_rect;
 	GdkRectangle draw_area;
@@ -385,13 +375,12 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	GdkRectangle thumbnail_area;
 	cairo_t *cr;
 	PangoLayout *layout;
-	PangoFontDescription *desc;
 	GtkStateType state;
 
 	get_size (cell, widget, cell_area, &draw_area, &title_area, &thumbnail_area);
 
-	draw_area.x += cell_area->x + cell->xpad;
-	draw_area.y += cell_area->y + cell->ypad;
+	draw_area.x += cell_area->x;
+	draw_area.y += cell_area->y;
 	draw_area.width -= cell->xpad * 2;
 	draw_area.height -= cell->ypad * 2;
 
@@ -430,34 +419,29 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 
 	/* Draw the title */
 	layout = gtk_widget_create_pango_layout (widget, priv->title);
-	desc = pango_font_description_copy_static (widget->style->font_desc);
-	if (pixbuf != NULL)
+	if (pixbuf != NULL) {
+		PangoFontDescription *desc = pango_font_description_copy_static (widget->style->font_desc);
 		pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
+		pango_layout_set_font_description (layout, desc);
+		pango_font_description_free (desc);
+	}
 
-	pango_layout_set_font_description (layout, desc);
 	pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
 	pango_layout_set_width (layout, title_area.width * PANGO_SCALE);
 	pango_layout_set_alignment (layout, priv->alignment);
 
-	gtk_paint_layout (widget->style,
-				window,
-				state,
-				TRUE,
-				expose_area,
-				widget,
-				"cellrenderervideotitle",
-				cell_area->x + title_area.x + cell->xpad,
-				cell_area->y + title_area.y + cell->ypad,
-				layout);
+	gtk_paint_layout (widget->style, window, state, TRUE, expose_area, widget, "cellrenderervideotitle",
+			  cell_area->x + title_area.x,
+			  cell_area->y + title_area.y,
+			  layout);
 
-	pango_font_description_free (desc);
 	g_object_unref (layout);
 
 	/* Draw the thumbnail */
 	if (pixbuf != NULL) {
 		cr = gdk_cairo_create (window);
 
-		gdk_cairo_set_source_pixbuf (cr, pixbuf, cell_area->x + thumbnail_area.x + cell->xpad, cell_area->y + thumbnail_area.y + cell->ypad);
+		gdk_cairo_set_source_pixbuf (cr, pixbuf, cell_area->x + thumbnail_area.x, cell_area->y + thumbnail_area.y);
 		gdk_cairo_rectangle (cr, &draw_rect);
 		cairo_fill (cr);
 
