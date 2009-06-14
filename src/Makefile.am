@@ -115,8 +115,6 @@ libtotem_main_la_LIBADD = \
 
 if WITH_SMCLIENT
 libtotem_main_la_SOURCES += \
-	eggdesktopfile.c \
-	eggdesktopfile.h \
 	eggsmclient.c \
 	eggsmclient.h \
 	eggsmclient-private.h \
@@ -125,7 +123,10 @@ libtotem_main_la_CFLAGS += $(SMCLIENT_CFLAGS)
 libtotem_main_la_LIBADD += $(SMCLIENT_LIBS)
 
 if WITH_SMCLIENT_XSMP
-libtotem_main_la_SOURCES += eggsmclient-xsmp.c
+libtotem_main_la_SOURCES += \
+	eggdesktopfile.c \
+	eggdesktopfile.h \
+	eggsmclient-xsmp.c
 libtotem_main_la_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
 endif
 if WITH_SMCLIENT_WIN32

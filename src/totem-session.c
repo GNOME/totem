@@ -30,7 +30,12 @@
 #ifdef WITH_SMCLIENT
 
 #include <unistd.h>
+
 #include "eggsmclient.h"
+
+#ifdef GDK_WINDOWING_X11
+#include "eggdesktopfile.h"
+#endif
 
 static char *
 totem_session_create_key (void)
@@ -106,6 +111,10 @@ totem_quit_cb (EggSMClient *client,
 void
 totem_session_add_options (GOptionContext *context)
 {
+#ifdef GDK_WINDOWING_X11
+	egg_set_desktop_file (DATADIR "/applications/" PACKAGE ".desktop");
+#endif
+
 	g_option_context_add_group (context, egg_sm_client_get_option_group ());
 }
 
