@@ -521,9 +521,9 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 		GDataMediaContent *content;
 
 		/* We don't have a match, which is odd; fall back to the FLV URI as advertised by the YouTube API */
-		content = gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (data->entry), "application/x-shockwave-flash");
+		content = GDATA_MEDIA_CONTENT (gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (data->entry), "application/x-shockwave-flash"));
 		if (content != NULL) {
-			video_uri = g_strdup (content->uri);
+			video_uri = g_strdup (gdata_media_content_get_uri (content));
 			g_debug ("Couldn't find the t param of entry %s; falling back to its FLV URI (\"%s\")", video_id, video_uri);
 		} else {
 			/* Cop out */
@@ -566,7 +566,7 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	data->iter = *iter;
 	data->tree_view = tree_view;
 
-	video_page = g_file_new_for_uri (link->href);
+	video_page = g_file_new_for_uri (gdata_link_get_uri (link));
 	g_file_load_contents_async (video_page, self->cancellable[tree_view], (GAsyncReadyCallback) resolve_t_param_cb, data);
 	g_object_unref (video_page);
 }
@@ -748,9 +748,9 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 		gint new_delta;
 		GDataMediaThumbnail *current_thumb = (GDataMediaThumbnail*) thumbnails->data;
 
-		g_debug ("%u pixel wide thumbnail available for entry %s", current_thumb->width, id);
+		g_debug ("%u pixel wide thumbnail available for entry %s", gdata_media_thumbnail_get_width (current_thumb), id);
 
-		new_delta = current_thumb->width - THUMBNAIL_WIDTH;
+		new_delta = gdata_media_thumbnail_get_width (current_thumb) - THUMBNAIL_WIDTH;
 		if (delta == 0) {
 			break;
 		} else if ((delta == G_MININT) ||
@@ -758,7 +758,8 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 			   (delta > 0 && new_delta > 0 && new_delta < delta)) {
 			delta = new_delta;
 			thumbnail = current_thumb;
-			g_debug ("Choosing a %u pixel wide thumbnail (delta: %i) for entry %s", current_thumb->width, new_delta, id);
+			g_debug ("Choosing a %u pixel wide thumbnail (delta: %i) for entry %s",
+				 gdata_media_thumbnail_get_width (current_thumb), new_delta, id);
 		}
 	}
 
@@ -772,7 +773,7 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 		t_data->tree_view = data->tree_view;
 
 		g_debug ("Starting thumbnail download for entry %s", id);
-		thumbnail_file = g_file_new_for_uri (thumbnail->uri);
+		thumbnail_file = g_file_new_for_uri (gdata_media_thumbnail_get_uri (thumbnail));
 		g_file_read_async (thumbnail_file, G_PRIORITY_DEFAULT, self->cancellable[data->tree_view],
 				   (GAsyncReadyCallback) thumbnail_opened_cb, t_data);
 		g_object_unref (thumbnail_file);
@@ -928,7 +929,7 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 		g_object_unref (video);
 
 		/* Display the page */
-		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->bvw)), link->href, GDK_CURRENT_TIME, &error) == FALSE) {
+		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->bvw)), gdata_link_get_uri (link), GDK_CURRENT_TIME, &error) == FALSE) {
 			GtkWindow *window = totem_get_main_window (self->totem);
 			totem_interface_error (_("Error Opening Video in Web Browser"), error->message, window);
 			g_object_unref (window);
