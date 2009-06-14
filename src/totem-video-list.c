@@ -351,7 +351,6 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 
 	if (play_video == FALSE)
 		goto finish;
-g_message ("row_activated_cb: model: %lu, path: %lu, MRL col: %u, tt col: %u", model, path, self->priv->mrl_column, self->priv->tooltip_column);
 
 	if (mrl != NULL)
 		totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name, FALSE);
