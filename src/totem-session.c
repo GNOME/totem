@@ -112,7 +112,7 @@ void
 totem_session_add_options (GOptionContext *context)
 {
 #ifdef GDK_WINDOWING_X11
-	egg_set_desktop_file (DATADIR "/applications/" PACKAGE ".desktop");
+	egg_set_desktop_file_without_defaults (DATADIR "/applications/" PACKAGE ".desktop");
 #endif
 
 	g_option_context_add_group (context, egg_sm_client_get_option_group ());
