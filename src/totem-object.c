@@ -3498,9 +3498,23 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		else
 			totem_action_fullscreen (totem, FALSE);
 		break;
+	case GDK_space:
+	case GDK_Return:
+		{
+			GtkWidget *focus = gtk_window_get_focus (GTK_WINDOW (totem->win));
+			if (totem_is_fullscreen (totem) != FALSE || focus == NULL ||
+			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek) {
+				if (event->keyval == GDK_space)
+					totem_action_play_pause (totem);
+				else if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
+					bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_SELECT);
+			} else
+				retval = FALSE;
+		}
+		break;
 	case GDK_Left:
 	case GDK_Right:
-		{
+		if (bacon_video_widget_has_menus (totem->bvw) == FALSE) {
 			gboolean is_forward;
 
 			if (totem_is_fullscreen (totem) != FALSE)
@@ -3511,23 +3525,24 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 				is_forward = !is_forward;
 			totem_action_handle_seek (totem, event, is_forward);
-		}
-		break;
-	case GDK_space:
-		{
-			GtkWidget *focus = gtk_window_get_focus (GTK_WINDOW (totem->win));
-			if (totem_is_fullscreen (totem) != FALSE || focus == NULL ||
-			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek)
-				totem_action_play_pause (totem);
+		} else {
+			if (event->keyval == GDK_Left)
+				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_LEFT);
 			else
-				retval = FALSE;
+				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_RIGHT);
 		}
 		break;
 	case GDK_Up:
-		totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
+		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
+			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_UP);
+		else
+			totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
 	case GDK_Down:
-		totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
+		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
+			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_DOWN);
+		else
+			totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
 	case GDK_0:
 		if (event->state & GDK_CONTROL_MASK)
