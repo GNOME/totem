@@ -1,5 +1,14 @@
 2009-06-30  Bastien Nocera  <hadess@hadess.net>
 
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_step):
+	* src/backend/bacon-video-widget.h:
+	* src/totem-object.c (totem_action_handle_key_press):
+	Add frame-by-frame stepping, requires gstreamer 0.10.24,
+	and a newer gst-plugins-base (Closes: #151909)
+
+2009-06-30  Bastien Nocera  <hadess@hadess.net>
+
 	* src/plugins/lirc/totem_lirc_default: Small tweaks for the
 	default LIRC setup
 

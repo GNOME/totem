@@ -3391,6 +3391,19 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
   return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, error);
 }
 
+gboolean
+bacon_video_widget_step (BaconVideoWidget *bvw, GError **error)
+{
+#if GST_CHECK_VERSION(0,10,24)
+  GstEvent *event;
+
+  event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
+
+  gst_element_send_event (bvw->priv->play, event);
+#endif
+  return TRUE;
+}
+
 static void
 bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 {

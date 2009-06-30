@@ -183,6 +183,8 @@ gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
 gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
 						  gint64 time,
 						  GError **error);
+gboolean bacon_video_widget_step		 (BaconVideoWidget *bvw,
+						  GError **error);
 gboolean bacon_video_widget_can_direct_seek	 (BaconVideoWidget *bvw);
 double bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);

@@ -3463,6 +3463,10 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		else 
 			totem_action_play_pause (totem);
 		break;
+	case GDK_period:
+		totem_action_pause (totem);
+		bacon_video_widget_step (totem->bvw, NULL);
+		break;
 #ifdef HAVE_XFREE
 	case XF86XK_AudioPause:
 	case XF86XK_AudioStop:
