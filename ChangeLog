@@ -1,3 +1,11 @@
+2009-07-07  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
+
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	Change all calls to gst_element_get_pad() to gst_element_get_static_pad()
+	
+	gst_element_get_pad() is deprecated for some reasons (see the docs)
+	and all places where it was used should use get_static_pad() anyway.
+
 2009-06-30  Bastien Nocera  <hadess@hadess.net>
 
 	* src/backend/bacon-video-widget-gst-0.10.c

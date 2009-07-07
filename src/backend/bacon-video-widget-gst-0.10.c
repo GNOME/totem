@@ -2762,7 +2762,7 @@ set_audio_filter (BaconVideoWidget *bvw)
   /* construct possible caps to filter down to our chosen caps */
   /* Start with what the audio sink supports, but limit the allowed
    * channel count to our speaker output configuration */
-  pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "src");
+  pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "src");
   caps = gst_pad_peer_get_caps (pad);        
   gst_object_unref (pad);
 
@@ -2784,7 +2784,7 @@ set_audio_filter (BaconVideoWidget *bvw)
   }
 
   /* reset */
-  pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "src");
+  pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "src");
   gst_pad_set_caps (pad, NULL);
   gst_object_unref (pad);
 }
@@ -4045,18 +4045,18 @@ setup_vis (BaconVideoWidget * bvw)
     gst_bin_add_many (GST_BIN (vis_bin), vis_element, vis_capsfilter, NULL);
     
     /* Sink ghostpad */
-    pad = gst_element_get_pad (vis_element, "sink");
+    pad = gst_element_get_static_pad (vis_element, "sink");
     gst_element_add_pad (vis_bin, gst_ghost_pad_new ("sink", pad));
     gst_object_unref (pad);
 
     /* Source ghostpad, link with vis_element */
-    pad = gst_element_get_pad (vis_capsfilter, "src");
+    pad = gst_element_get_static_pad (vis_capsfilter, "src");
     gst_element_add_pad (vis_bin, gst_ghost_pad_new ("src", pad));
     gst_element_link_pads (vis_element, "src", vis_capsfilter, "sink");
     gst_object_unref (pad);
 
     /* Get allowed output caps from visualisation element */
-    pad = gst_element_get_pad (vis_element, "src");
+    pad = gst_element_get_static_pad (vis_element, "src");
     caps = gst_pad_get_allowed_caps (pad);
     gst_object_unref (pad);
     
@@ -6250,7 +6250,7 @@ bacon_video_widget_new (int width, int height,
     gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
         audio_sink, "sink");
 
-    pad = gst_element_get_pad (bvw->priv->audio_capsfilter, "sink");
+    pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
     gst_element_add_pad (bin, gst_ghost_pad_new ("sink", pad));
     gst_object_unref (pad);
 
