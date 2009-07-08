@@ -377,15 +377,14 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
     }
   } else {
     if (bvw->priv->media_has_video) {
-      GValue * disp_par = NULL;
+      GValue disp_par = {0, };
       guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
       
       /* Create and init the fraction value */
-      disp_par = g_new0 (GValue, 1);
-      g_value_init (disp_par, GST_TYPE_FRACTION);
+      g_value_init (&disp_par, GST_TYPE_FRACTION);
 
       /* Square pixel is our default */
-      gst_value_set_fraction (disp_par, 1, 1);
+      gst_value_set_fraction (&disp_par, 1, 1);
     
       /* Now try getting display's pixel aspect ratio */
       if (bvw->priv->xoverlay) {
@@ -402,17 +401,17 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
           g_object_get_property (G_OBJECT (bvw->priv->xoverlay),
               "pixel-aspect-ratio", &disp_par_prop);
 
-          if (!g_value_transform (&disp_par_prop, disp_par)) {
+          if (!g_value_transform (&disp_par_prop, &disp_par)) {
             GST_WARNING ("Transform failed, assuming pixel-aspect-ratio = 1/1");
-            gst_value_set_fraction (disp_par, 1, 1);
+            gst_value_set_fraction (&disp_par, 1, 1);
           }
         
           g_value_unset (&disp_par_prop);
         }
       }
       
-      disp_par_n = gst_value_get_fraction_numerator (disp_par);
-      disp_par_d = gst_value_get_fraction_denominator (disp_par);
+      disp_par_n = gst_value_get_fraction_numerator (&disp_par);
+      disp_par_d = gst_value_get_fraction_denominator (&disp_par);
       
       GST_DEBUG ("display PAR is %d/%d", disp_par_n, disp_par_d);
       
@@ -503,8 +502,7 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       *height = bvw->priv->video_height_pixels;
       
       /* Free the PAR fraction */
-      g_value_unset (disp_par);
-      g_free (disp_par);
+      g_value_unset (&disp_par);
     }
     else {
       *width = 0;
@@ -1590,7 +1588,7 @@ bvw_update_tags_dispatcher (gpointer user_data)
 
   g_object_unref (G_OBJECT (data->bvw));
 
-  g_free (data);
+  g_slice_free (UpdateTagsDelayedData, data);
 
   return FALSE;
 }
@@ -1599,7 +1597,7 @@ bvw_update_tags_dispatcher (gpointer user_data)
  * and sending the BVW signals */
 static void
 bvw_update_tags_delayed (BaconVideoWidget *bvw, GstTagList *tags, const gchar *type) {
-  UpdateTagsDelayedData *data = g_new0 (UpdateTagsDelayedData, 1);
+  UpdateTagsDelayedData *data = g_slice_new0 (UpdateTagsDelayedData);
 
   data->bvw = g_object_ref (G_OBJECT (bvw));
   data->tags = tags;
