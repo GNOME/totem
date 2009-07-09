@@ -251,13 +251,12 @@ totem_setup_file_monitoring (Totem *totem)
 
 /* List from xine-lib's demux_sputext.c */
 static const char subtitle_ext[][4] = {
-	"asc",
-	"txt",
 	"sub",
 	"srt",
 	"smi",
 	"ssa",
-	"ass"
+	"ass",
+	"asc"
 };
 
 gboolean
