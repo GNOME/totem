@@ -1,3 +1,11 @@
+2009-07-14  Jan Schmidt  <thaytan@noraisin.net>
+
+	* src/backend/bacon-video-widget-gst-0.10.c (setup_vis):
+	Sink the floating reference on the visualisation element
+	before giving it to playbin2, so that we can make sure we own
+	the ref regardless of what playbin2 does internally. playbin2
+	currently sinks the element itself, but may change.
+
 2009-07-08  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
 
 	* src/backend/bacon-video-widget-gst-0.10.c:

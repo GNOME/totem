@@ -4039,6 +4039,9 @@ setup_vis (BaconVideoWidget * bvw)
       gst_object_unref (vis_capsfilter);
       goto beach;
     }
+    /* We created the bin, now ref and sink to make sure we own it */
+    gst_object_ref (vis_bin);
+    gst_object_sink (vis_bin);
     
     gst_bin_add_many (GST_BIN (vis_bin), vis_element, vis_capsfilter, NULL);
     
