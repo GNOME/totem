@@ -160,6 +160,10 @@ struct TotemObject {
 	UniqueApp *app;
 	TotemStates state;
 	TotemOpenLocation *open_location;
+
+	/* Stored source_window of GdkDragContext from a video drag,
+	 * used to detect when the video is dropped on itself. */
+	GdkWindow *video_drag_source_window;
 };
 
 GtkWidget *totem_volume_create (void);

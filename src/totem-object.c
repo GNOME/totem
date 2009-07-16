@@ -2208,16 +2208,27 @@ drop_video_cb (GtkWidget     *widget,
 {
 	gboolean empty_pl;
 
-	if (context->suggested_action == GDK_ACTION_ASK)
+	if (context->suggested_action == GDK_ACTION_ASK) {
 		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
+	}
 
-	if (context->action != GDK_ACTION_DEFAULT) {
-		empty_pl = (context->action == GDK_ACTION_MOVE);
-		totem_action_drop_files (totem, data, info, empty_pl);
-		gtk_drag_finish (context, TRUE, FALSE, time);
+	/* User selected cancel */
+	if (context->action == GDK_ACTION_DEFAULT) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
 		return;
 	}
-	gtk_drag_finish (context, FALSE, FALSE, time);
+
+	/* Drop of video on itself */
+	if (context->source_window == totem->video_drag_source_window &&
+	    context->action == GDK_ACTION_MOVE) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
+
+	empty_pl = (context->action == GDK_ACTION_MOVE);
+	totem_action_drop_files (totem, data, info, empty_pl);
+	gtk_drag_finish (context, TRUE, FALSE, time);
+	return;
 }
 
 static void
@@ -2311,6 +2322,8 @@ drag_video_cb (GtkWidget *widget,
 
 	gtk_selection_data_set (selection_data, selection_data->target,
 				8, (guchar *) text, len);
+
+	totem->video_drag_source_window = context->source_window;
 
 	g_free (text);
 }
