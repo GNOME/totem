@@ -261,12 +261,6 @@ static int bvw_signals[LAST_SIGNAL] = { 0 };
 
 static GThread *gui_thread;
 
-/* FIXME: Remove this when we depend on gst-plugins-base >= 0.10.24
- *
- * TRUE if playbin2 from GIT with {audio,video,text}-tags-changed
- * signals is found */
-static gboolean playbin2_tags_changed_signals = FALSE;
-
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
 
@@ -1802,27 +1796,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     }
     case GST_MESSAGE_TAG: 
-      /* If we get tags from the -tags-changed signals ignore the tag messages */
-      if (!playbin2_tags_changed_signals) {
-	GstTagList *taglist;
-	const gchar *type = "none";
-	GstElementFactory *f;
-	
-	gst_message_parse_tag (message, &taglist);
-
-        /* get stream type */
-        if (GST_IS_ELEMENT (message->src) &&
-            (f = gst_element_get_factory (GST_ELEMENT (message->src)))) {
-          const gchar *klass = gst_element_factory_get_klass (f);
-
-          if (g_strrstr (klass, "Video")) {
-            type = "video";
-          } else if (g_strrstr (klass, "Audio")) {
-            type = "audio";
-          }
-	}
-	bvw_update_tags (bvw, taglist, type);
-      }
+      /* Ignore TAG messages, we get updated tags from the
+       * {audio,video,text}-tags-changed signals of playbin2
+       */
       break;
     case GST_MESSAGE_EOS:
       GST_DEBUG ("EOS message");
@@ -3487,13 +3463,11 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
 gboolean
 bacon_video_widget_step (BaconVideoWidget *bvw, GError **error)
 {
-#if GST_CHECK_VERSION(0,10,24)
   GstEvent *event;
 
   event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
 
   gst_element_send_event (bvw->priv->play, event);
-#endif
   return TRUE;
 }
 
@@ -5807,12 +5781,6 @@ cb_gconf (GConfClient * client,
 
 G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 
-static void check_playbin2_version (GstElement *playbin2)
-{
-  if (g_signal_lookup ("audio-tags-changed", G_TYPE_FROM_INSTANCE (playbin2)))
-    playbin2_tags_changed_signals = TRUE;
-}
-
 /* applications must use exactly one of bacon_video_widget_get_option_group()
  * OR bacon_video_widget_init_backend(), but not both */
 
@@ -6368,16 +6336,12 @@ bacon_video_widget_new (int width, int height,
   g_signal_connect (bvw->priv->play, "text-changed",
       G_CALLBACK (playbin_stream_changed_cb), bvw);
 
-  /* Check if we have playbin2 with the -tags-changed signals */
-  check_playbin2_version (bvw->priv->play);
-  if (playbin2_tags_changed_signals) {
-    g_signal_connect (bvw->priv->play, "video-tags-changed",
-        G_CALLBACK (video_tags_changed_cb), bvw);
-    g_signal_connect (bvw->priv->play, "audio-tags-changed",
-        G_CALLBACK (audio_tags_changed_cb), bvw);
-    g_signal_connect (bvw->priv->play, "text-tags-changed",
-        G_CALLBACK (text_tags_changed_cb), bvw);
-  }
+  g_signal_connect (bvw->priv->play, "video-tags-changed",
+      G_CALLBACK (video_tags_changed_cb), bvw);
+  g_signal_connect (bvw->priv->play, "audio-tags-changed",
+      G_CALLBACK (audio_tags_changed_cb), bvw);
+  g_signal_connect (bvw->priv->play, "text-tags-changed",
+      G_CALLBACK (text_tags_changed_cb), bvw);
 
   /* assume we're always called from the main Gtk+ GUI thread */
   gui_thread = g_thread_self();
