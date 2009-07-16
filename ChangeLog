@@ -1,3 +1,9 @@
+2009-07-16  Sebastian Dröge  <sebastian.droege@collabora.co.uk>
+	
+	* src/backend/bacon-video-widget-gst-0.10.c:
+	Try to mount GIO locations that are not mounted yet (Closes: #588079).
+	This requires the giosrc element from gst-plugins-base 0.10.23.2.
+
 2009-07-16  Robin Stocker  <robin@nibor.org>
 
 	* src/totem-object.c (drop_video_cb, drag_video_cb):

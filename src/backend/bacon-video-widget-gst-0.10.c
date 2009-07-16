@@ -226,6 +226,10 @@ struct BaconVideoWidgetPrivate
   GList                       *missing_plugins;   /* GList of GstMessages */
   gboolean                     plugin_install_in_progress;
 
+  /* for mounting locations if necessary */
+  GCancellable                *mount_cancellable;
+  gboolean                     mount_in_progress;
+
   /* Bacon resize */
   BaconResize                 *bacon_resize;
 };
@@ -1214,6 +1218,9 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->missing_plugins = NULL;
   bvw->priv->plugin_install_in_progress = FALSE;
 
+  bvw->priv->mount_cancellable = NULL;
+  bvw->priv->mount_in_progress = FALSE;
+
   bacon_video_widget_gst_missing_plugins_blacklist ();
 }
 
@@ -1307,6 +1314,45 @@ bvw_do_navigation_query (BaconVideoWidget * bvw, GstQuery *query)
 }
 
 static void
+mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
+{
+  BaconVideoWidget * bvw = user_data;
+  gboolean ret;
+  const gchar *uri;
+  GError *error = NULL;
+
+  ret = g_file_mount_enclosing_volume_finish (G_FILE (obj), res, &error);
+
+  g_object_unref (bvw->priv->mount_cancellable);
+  bvw->priv->mount_cancellable = NULL;
+  bvw->priv->mount_in_progress = FALSE;
+
+  g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
+
+  if (ret) {
+
+    GST_DEBUG ("Mounting location '%s' successful", GST_STR_NULL (uri));
+    bacon_video_widget_play (bvw, NULL);
+  } else {
+    GError *err = NULL;
+    GstMessage *msg;
+
+    GST_DEBUG ("Mounting location '%s' failed: %s", GST_STR_NULL (uri), error->message);
+
+    /* create a fake GStreamer error so we get a nice warning message */
+    err = g_error_new_literal (GST_RESOURCE_ERROR, GST_RESOURCE_ERROR_OPEN_READ, error->message);
+    msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, error->message);
+    g_error_free (err);
+    g_error_free (error);
+    err = bvw_error_from_gst_error (bvw, msg);
+    gst_message_unref (msg);
+    g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE, FALSE);
+    g_error_free (err);
+    bacon_video_widget_play (bvw, NULL);
+  }
+}
+
+static void
 bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *type_name = NULL;
@@ -1349,6 +1395,46 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
   } else if (gst_is_missing_plugin_message (msg)) {
     bvw->priv->missing_plugins =
       g_list_prepend (bvw->priv->missing_plugins, gst_message_ref (msg));
+    goto done;
+  } else if (strcmp (type_name, "not-mounted") == 0) {
+    const GValue *val;
+    GFile *file;
+    GMountOperation *mount_op;
+    GtkWidget *toplevel;
+    const gchar *uri;
+
+    g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
+
+    if (bvw->priv->mount_in_progress) {
+      g_cancellable_cancel (bvw->priv->mount_cancellable);
+      g_object_unref (bvw->priv->mount_cancellable);
+      bvw->priv->mount_cancellable = NULL;
+      bvw->priv->mount_in_progress = FALSE;
+    }
+
+    GST_DEBUG ("Trying to mount location '%s'", GST_STR_NULL (uri));
+    
+    toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+    if (toplevel == GTK_WIDGET (bvw) || !GTK_IS_WINDOW (toplevel))
+      toplevel = NULL;
+
+    val = gst_structure_get_value (msg->structure, "file");
+    if (val == NULL)
+      goto done;
+      
+    file = G_FILE (g_value_get_object (val));
+    if (file == NULL)
+      goto done;
+
+    bacon_video_widget_stop (bvw);
+
+    mount_op = gtk_mount_operation_new (toplevel ? GTK_WINDOW (toplevel) : NULL);
+    bvw->priv->mount_in_progress = TRUE;
+    bvw->priv->mount_cancellable = g_cancellable_new ();
+    g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
+        mount_op, bvw->priv->mount_cancellable, mount_cb, bvw);
+
+    g_object_unref (mount_op);
     goto done;
   } else {
     GstNavigationMessageType nav_msg_type =
@@ -2200,6 +2286,12 @@ bacon_video_widget_finalize (GObject * object)
   if (bvw->priv->cursor != NULL) {
     gdk_cursor_unref (bvw->priv->cursor);
     bvw->priv->cursor = NULL;
+  }
+
+  if (bvw->priv->mount_cancellable) {
+    g_cancellable_cancel (bvw->priv->mount_cancellable);
+    g_object_unref (bvw->priv->mount_cancellable);
+    bvw->priv->mount_cancellable = NULL;
   }
 
   g_mutex_free (bvw->priv->lock);
@@ -3281,6 +3373,9 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
   if (bvw->priv->plugin_install_in_progress && cur_state != GST_STATE_PAUSED) {
     GST_DEBUG ("plugin install in progress and nothing to play, doing nothing");
+    return TRUE;
+  } else if (bvw->priv->mount_in_progress) {
+    GST_DEBUG ("Mounting in progress, doing nothing");
     return TRUE;
   }
 
