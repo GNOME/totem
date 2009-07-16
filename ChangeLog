@@ -1,3 +1,10 @@
+2009-07-16  Robin Stocker  <robin@nibor.org>
+
+	* src/totem-object.c (drop_video_cb, drag_video_cb):
+	* src/totem-private.h (TotemObject): When dragging the video and
+	then accidentally dropping it again on itself, ignore it instead
+	of restarting the video. (Closes: #578249)
+
 2009-05-13  Bastien Nocera  <hadess@hadess.net>
 
 	* src/totem-uri.c (totem_uri_get_cached_subtitle_for_uri):
