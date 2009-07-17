@@ -1769,6 +1769,8 @@ totem_action_set_mrl_with_warning (Totem *totem,
 					     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 					     source_table, G_N_ELEMENTS (source_table),
 					     GDK_ACTION_COPY);
+
+			totem_action_add_recent (totem, totem->mrl);
 		}
 	}
 	update_buttons (totem);
@@ -2714,7 +2716,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				totem_action_load_media (totem, MEDIA_TYPE_DVB, "0");
 				changed = TRUE;
 			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
-				totem_action_add_recent (totem, filename);
 				changed = TRUE;
 			}
 		}
@@ -2969,9 +2970,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		break;
 	case TOTEM_REMOTE_COMMAND_ENQUEUE:
 		g_assert (url != NULL);
-		if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
-			totem_action_add_recent (totem, url);
-		}
+		totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
 		break;
 	case TOTEM_REMOTE_COMMAND_REPLACE:
 		totem_playlist_clear (totem->playlist);
@@ -2989,8 +2988,8 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
 		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
 			totem_action_load_media (totem, MEDIA_TYPE_DVB, "0");
-		} else if (totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL) != FALSE) {
-			totem_action_add_recent (totem, url);
+		} else {
+			totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:

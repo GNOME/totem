@@ -696,6 +696,9 @@ totem_action_add_recent (Totem *totem, const char *uri)
 
 	memset (&data, 0, sizeof (data));
 
+	if (totem_is_special_mrl (uri) != FALSE)
+		return;
+
 	file = g_file_new_for_uri (uri);
 	file_info = g_file_query_info (file,
 				       G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE "," G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
