@@ -265,8 +265,8 @@ lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 					      checkbutton4_toggled_cb, totem);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-				      gconf_client_get_bool (totem->gc,
-							     GCONF_PREFIX"/lock_screensaver_on_audio", NULL));
+				      !gconf_client_get_bool (totem->gc,
+							      GCONF_PREFIX"/lock_screensaver_on_audio", NULL));
 
 	g_signal_connect (item, "toggled",
 			  G_CALLBACK (checkbutton4_toggled_cb), totem);
@@ -540,7 +540,7 @@ totem_setup_preferences (Totem *totem)
 	lock_screensaver_on_audio = gconf_client_get_bool (totem->gc,
 							   GCONF_PREFIX"/lock_screensaver_on_audio", NULL);
 	item = gtk_builder_get_object (totem->xml, "tpw_screensaver_checkbutton");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), lock_screensaver_on_audio);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), !lock_screensaver_on_audio);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/lock_screensaver_on_audio",
 				 (GConfClientNotifyFunc) lock_screensaver_on_audio_changed_cb,
 				 totem, NULL, NULL);

@@ -1,5 +1,16 @@
 2009-07-17  Bastien Nocera  <hadess@hadess.net>
 
+	* data/totem.schemas.in:
+	* data/totem.ui:
+	* src/plugins/screensaver/totem-screensaver.c
+	(totem_screensaver_update_from_state):
+	* src/totem-preferences.c (lock_screensaver_on_audio_changed_cb),
+	(totem_setup_preferences): Fix wording of the checkbox to
+	allow the screensaver to start when audio streams are playing
+	(Closes: #526264)
+
+2009-07-17  Bastien Nocera  <hadess@hadess.net>
+
 	* src/totem-menu.c (totem_action_add_recent):
 	* src/totem-object.c (totem_action_set_mrl_with_warning),
 	(totem_action_open_files_list), (totem_action_remote):

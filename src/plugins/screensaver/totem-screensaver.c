@@ -121,7 +121,9 @@ totem_screensaver_update_from_state (TotemObject *totem,
 							   NULL);
 	can_get_frames = bacon_video_widget_can_get_frames (bvw, NULL);
 
-	if (totem_is_playing (totem) != FALSE && (lock_screensaver_on_audio || can_get_frames))
+	if (totem_is_playing (totem) != FALSE && can_get_frames)
+		totem_scrsaver_disable (pi->scr);
+	else if (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)
 		totem_scrsaver_disable (pi->scr);
 	else
 		totem_scrsaver_enable (pi->scr);
