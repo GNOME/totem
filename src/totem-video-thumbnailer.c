@@ -536,8 +536,8 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	PangoLayout *layout;
 	PangoFontDescription *font_desc;
 	gint64 stream_length, screenshot_interval, pos;
-	guint columns, rows, current_column, current_row, x, y;
-	gint screenshot_width, screenshot_height = 0, x_padding = 0, y_padding = 0;
+	guint columns = 3, rows, current_column, current_row, x, y;
+	gint screenshot_width = 0, screenshot_height = 0, x_padding = 0, y_padding = 0;
 	gfloat scale = 1.0;
 	gchar *header_text, *duration_text, *filename;
 
@@ -772,7 +772,8 @@ int main (int argc, char *argv[])
 	callback_data data;
 
 #ifdef G_OS_UNIX
-	nice (20);
+	if (nice (20) != 20)
+		g_warning ("Couldn't change nice value of process.");
 #endif
 
 	g_thread_init (NULL);

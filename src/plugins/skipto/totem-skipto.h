@@ -61,9 +61,9 @@ struct TotemSkiptoClass {
 GType totem_skipto_get_type	(void);
 GtkWidget *totem_skipto_new	(TotemSkiptoPlugin *plugin);
 gint64 totem_skipto_get_range	(TotemSkipto *skipto);
-void totem_skipto_update_range	(TotemSkipto *skipto, gint64 time);
+void totem_skipto_update_range	(TotemSkipto *skipto, gint64 _time);
 void totem_skipto_set_seekable	(TotemSkipto *skipto, gboolean seekable);
-void totem_skipto_set_current	(TotemSkipto *skipto, gint64 time);
+void totem_skipto_set_current	(TotemSkipto *skipto, gint64 _time);
 
 G_END_DECLS
 

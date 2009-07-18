@@ -33,6 +33,7 @@
 #include "totem-sidebar.h"
 #include "totem-plugin-manager.h"
 #include "bacon-video-widget.h"
+#include "totem-uri.h"
 
 #include "debug.h"
 
@@ -279,7 +280,7 @@ languages_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
 static GtkAction *
 add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		const char **paths, const char *prefix, const char *lang, 
-		int lang_id, int index, GSList **group)
+		int lang_id, int lang_index, GSList **group)
 {
 	const char *full_lang;
 	char *label;
@@ -289,12 +290,12 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 
 	full_lang = totem_lang_get_full (lang);
 
-	if (index > 1) {
+	if (lang_index > 1) {
 		char *num_lang;
 
 		num_lang = g_strdup_printf ("%s #%u",
 					    full_lang ? full_lang : lang,
-					    index);
+					    lang_index);
 		label = escape_label_for_menu (num_lang);
 		g_free (num_lang);
 	} else {
@@ -709,13 +710,13 @@ totem_action_add_recent (Totem *totem, const char *uri)
 		data.display_name = NULL;
 		/* Bogus mime-type, we just want it added */
 		data.mime_type = g_strdup ("video/x-totem-stream");
-		groups[0] = "TotemStreams";
+		groups[0] = (gchar*) "TotemStreams";
 		g_message ("no file info");
 	} else {
 		data.mime_type = g_strdup (g_file_info_get_content_type (file_info));
 		data.display_name = g_strdup (g_file_info_get_display_name (file_info));
 		g_object_unref (file_info);
-		groups[0] = "Totem";
+		groups[0] = (gchar*) "Totem";
 	}
 	g_object_unref (file);
 

@@ -181,7 +181,7 @@ gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
 						  double position,
 						  GError **error);
 gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
-						  gint64 time,
+						  gint64 _time,
 						  GError **error);
 gboolean bacon_video_widget_step		 (BaconVideoWidget *bvw,
 						  GError **error);
@@ -201,7 +201,7 @@ double bacon_video_widget_get_volume             (BaconVideoWidget *bvw);
 
 /* Properties */
 void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
-						  char *filename);
+						  const char *filename);
 void bacon_video_widget_set_logo_pixbuf		 (BaconVideoWidget *bvw,
 						  GdkPixbuf *logo);
 void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,

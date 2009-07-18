@@ -247,7 +247,7 @@ void	totem_action_set_playlist_index		(Totem *totem,
 						 guint index);
 int	totem_get_playlist_pos			(Totem *totem);
 char *	totem_get_title_at_playlist_pos		(Totem *totem,
-						 guint index);
+						 guint playlist_index);
 void totem_add_to_playlist_and_play		(Totem *totem,
 						 const char *uri,
 						 const char *display_name,

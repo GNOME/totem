@@ -111,7 +111,7 @@ char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist,
 char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
 					     gboolean *custom);
 char      *totem_playlist_get_title (TotemPlaylist *playlist,
-				     guint index);
+				     guint title_index);
 
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
 				     const char *title,
@@ -142,7 +142,7 @@ void       totem_playlist_set_at_end (TotemPlaylist *playlist);
 
 int        totem_playlist_get_current (TotemPlaylist *playlist);
 int        totem_playlist_get_last (TotemPlaylist *playlist);
-void       totem_playlist_set_current (TotemPlaylist *playlist, guint index);
+void       totem_playlist_set_current (TotemPlaylist *playlist, guint current_index);
 
 void       totem_playlist_foreach (TotemPlaylist *playlist,
 				   TotemPlaylistForeachFunc callback,

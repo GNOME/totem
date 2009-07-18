@@ -71,14 +71,14 @@ totem_display_is_local (void)
 char *
 totem_time_to_string (gint64 msecs)
 {
-	int sec, min, hour, time;
+	int sec, min, hour, _time;
 
-	time = (int) (msecs / 1000);
-	sec = time % 60;
-	time = time - sec;
-	min = (time % (60*60)) / 60;
-	time = time - (min * 60);
-	hour = time / (60*60);
+	_time = (int) (msecs / 1000);
+	sec = _time % 60;
+	_time = _time - sec;
+	min = (_time % (60*60)) / 60;
+	_time = _time - (min * 60);
+	hour = _time / (60*60);
 
 	if (hour > 0)
 	{
@@ -126,14 +126,14 @@ char *
 totem_time_to_string_text (gint64 msecs)
 {
 	char *secs, *mins, *hours, *string;
-	int sec, min, hour, time;
+	int sec, min, hour, _time;
 
-	time = (int) (msecs / 1000);
-	sec = time % 60;
-	time = time - sec;
-	min = (time % (60*60)) / 60;
-	time = time - (min * 60);
-	hour = time / (60*60);
+	_time = (int) (msecs / 1000);
+	sec = _time % 60;
+	_time = _time - sec;
+	min = (_time % (60*60)) / 60;
+	_time = _time - (min * 60);
+	hour = _time / (60*60);
 
 	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
 

@@ -177,21 +177,21 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 
 void
 bacon_video_widget_properties_from_time (BaconVideoWidgetProperties *props,
-					 int time)
+					 int _time)
 {
 	char *string;
 
 	g_return_if_fail (props != NULL);
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
 
-	if (time == props->priv->time)
+	if (_time == props->priv->time)
 		return;
 
-	string = totem_time_to_string_text (time);
+	string = totem_time_to_string_text (_time);
 	bacon_video_widget_properties_set_label (props, "duration", string);
 	g_free (string);
 
-	props->priv->time = time;
+	props->priv->time = _time;
 }
 
 void

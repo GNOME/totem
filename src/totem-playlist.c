@@ -155,9 +155,10 @@ static PlaylistSaveType save_types [] = {
 
 static int totem_playlist_table_signals[LAST_SIGNAL];
 
+/* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
-	{ "text/uri-list", 0, 0 },
-	{ "_NETSCAPE_URL", 0, 1 }
+	{ (gchar*) "text/uri-list", 0, 0 },
+	{ (gchar*) "_NETSCAPE_URL", 0, 1 }
 };
 
 static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
@@ -462,7 +463,7 @@ drop_cb (GtkWidget        *widget,
 	 gint              y,
 	 GtkSelectionData *data, 
 	 guint             info, 
-	 guint             time, 
+	 guint             _time, 
 	 TotemPlaylist    *playlist)
 {
 	char **list;
@@ -472,7 +473,7 @@ drop_cb (GtkWidget        *widget,
 	if (context->suggested_action == GDK_ACTION_ASK) {
 		context->action = totem_drag_ask (PL_LEN != 0);
 		if (context->action == GDK_ACTION_DEFAULT) {
-			gtk_drag_finish (context, FALSE, FALSE, time);
+			gtk_drag_finish (context, FALSE, FALSE, _time);
 			return;
 		}
 	}
@@ -491,7 +492,7 @@ drop_cb (GtkWidget        *widget,
 	}
 
 	if (file_list == NULL) {
-		gtk_drag_finish (context, FALSE, FALSE, time);
+		gtk_drag_finish (context, FALSE, FALSE, _time);
 		return;
 	}
 
@@ -536,7 +537,7 @@ drop_cb (GtkWidget        *widget,
 
 	g_strfreev (list);
 	g_list_free (file_list);
-	gtk_drag_finish (context, TRUE, FALSE, time);
+	gtk_drag_finish (context, TRUE, FALSE, _time);
 	gtk_tree_path_free (playlist->priv->tree_path);
 	playlist->priv->tree_path = NULL;
 
@@ -587,7 +588,7 @@ static gboolean
 playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 {
 	guint button = 0;
-	guint32 time;
+	guint32 _time;
 	GtkTreePath *path;
 	gint count;
 	GtkWidget *menu;
@@ -596,7 +597,7 @@ playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 
 	if (event != NULL) {
 		button = event->button;
-		time = event->time;
+		_time = event->time;
 
 		if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (playlist->priv->treeview),
 				 event->x, event->y, &path, NULL, NULL, NULL)) {
@@ -609,7 +610,7 @@ playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 			gtk_tree_selection_unselect_all (playlist->priv->selection);
 		}
 	} else {
-		time = gtk_get_current_event_time ();
+		_time = gtk_get_current_event_time ();
 	}
 
 	count = gtk_tree_selection_count_selected_rows (playlist->priv->selection);
@@ -628,7 +629,7 @@ playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
 
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-			button, time);
+			button, _time);
 
 	return TRUE;
 }
@@ -665,19 +666,19 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 	for (i = 0; i < num_items; i++)
 	{
 		GtkTreeIter iter;
-		char *index;
+		char *playlist_index;
 		GtkTreePath *path;
 		TotemPlaylistStatus playing;
 
-		index = g_strdup_printf ("%d", i);
+		playlist_index = g_strdup_printf ("%d", i);
 		if (gtk_tree_model_get_iter_from_string
 				(playlist->priv->model,
-				 &iter, index) == FALSE)
+				 &iter, playlist_index) == FALSE)
 		{
-			g_free (index);
+			g_free (playlist_index);
 			continue;
 		}
-		g_free (index);
+		g_free (playlist_index);
 
 		gtk_tree_model_get (playlist->priv->model, &iter, PLAYING_COL, &playing, -1);
 		if (playing == TOTEM_PLAYLIST_STATUS_NONE)
@@ -1849,14 +1850,14 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 
 		for (i = 0; i < num_items; i++) {
 			GtkTreeIter iter;
-			char *index;
+			char *playlist_index;
 
-			index = g_strdup_printf ("%d", i);
-			if (gtk_tree_model_get_iter_from_string (playlist->priv->model, &iter, index) == FALSE) {
-				g_free (index);
+			playlist_index = g_strdup_printf ("%d", i);
+			if (gtk_tree_model_get_iter_from_string (playlist->priv->model, &iter, playlist_index) == FALSE) {
+				g_free (playlist_index);
 				continue;
 			}
-			g_free (index);
+			g_free (playlist_index);
 
 			if ((* func) (playlist, &iter, data) != FALSE) {
 				GtkTreePath *path;
@@ -2047,7 +2048,7 @@ totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
 }
 
 char *
-totem_playlist_get_title (TotemPlaylist *playlist, guint index)
+totem_playlist_get_title (TotemPlaylist *playlist, guint title_index)
 {
 	GtkTreeIter iter;
 	GtkTreePath *path;
@@ -2055,7 +2056,7 @@ totem_playlist_get_title (TotemPlaylist *playlist, guint index)
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), NULL);
 
-	path = gtk_tree_path_new_from_indices (index, -1);
+	path = gtk_tree_path_new_from_indices (title_index, -1);
 
 	gtk_tree_model_get_iter (playlist->priv->model,
 				 &iter, path);
@@ -2388,7 +2389,7 @@ int
 totem_playlist_get_current (TotemPlaylist *playlist)
 {
 	char *path;
-	double index;
+	double current_index;
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), -1);
 
@@ -2398,10 +2399,10 @@ totem_playlist_get_current (TotemPlaylist *playlist)
 	if (path == NULL)
 		return -1;
 
-	index = g_ascii_strtod (path, NULL);
+	current_index = g_ascii_strtod (path, NULL);
 	g_free (path);
 
-	return index;
+	return current_index;
 }
 
 int
@@ -2418,17 +2419,17 @@ totem_playlist_get_last (TotemPlaylist *playlist)
 }
 
 void
-totem_playlist_set_current (TotemPlaylist *playlist, guint index)
+totem_playlist_set_current (TotemPlaylist *playlist, guint current_index)
 {
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
 
-	if (index >= (guint) PL_LEN)
+	if (current_index >= (guint) PL_LEN)
 		return;
 
 	totem_playlist_unset_playing (playlist);
 	//FIXME problems when shuffled?
 	gtk_tree_path_free (playlist->priv->current);
-	playlist->priv->current = gtk_tree_path_new_from_indices (index, -1);
+	playlist->priv->current = gtk_tree_path_new_from_indices (current_index, -1);
 }
 
 static void

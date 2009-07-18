@@ -105,18 +105,18 @@ static void
 totem_skipto_update_from_state (TotemObject *totem,
 				TotemSkiptoPlugin *plugin)
 {
-	gint64 time;
+	gint64 _time;
 	gboolean seekable;
 	GtkAction *action;
 	TotemSkiptoPluginPrivate *priv = plugin->priv;
 
 	g_object_get (G_OBJECT (totem),
-				"stream-length", &time,
+				"stream-length", &_time,
 				"seekable", &seekable,
 				NULL);
 
 	if (priv->st != NULL) {
-		totem_skipto_update_range (priv->st, time);
+		totem_skipto_update_range (priv->st, _time);
 		totem_skipto_set_seekable (priv->st, seekable);
 	}
 

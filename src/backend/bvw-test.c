@@ -8,31 +8,29 @@
 #include <X11/Xlib.h>
 #endif
 
-static GtkWidget *win;
-static GtkWidget *bvw;
 static char *mrl, *argument;
 
 static void
-test_bvw_set_mrl (const char *path)
+test_bvw_set_mrl (GtkWidget *bvw, const char *path)
 {
 	mrl = g_strdup (path);
 	bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), mrl, NULL, NULL);
 }
 
 static void
-on_redirect (GtkWidget *bvw, const char *mrl, gpointer data)
+on_redirect (GtkWidget *bvw, const char *redirect_mrl, gpointer data)
 {
-	g_message ("Redirect to: %s", mrl);
+	g_message ("Redirect to: %s", redirect_mrl);
 }
 
 static void
-on_eos_event (GtkWidget *widget, gpointer user_data)
+on_eos_event (GtkWidget *bvw, gpointer user_data)
 {
 	bacon_video_widget_stop (BACON_VIDEO_WIDGET (bvw));
 	bacon_video_widget_close (BACON_VIDEO_WIDGET (bvw));
 	g_free (mrl);
 
-	test_bvw_set_mrl (argument);
+	test_bvw_set_mrl (bvw, argument);
 
 	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
 }
@@ -73,6 +71,7 @@ error_cb (GtkWidget *bvw, const char *message,
 int main
 (int argc, char **argv)
 {
+	GtkWidget *win, *bvw;
 	guint32 height = 500;
 	guint32 width = 500;
 
@@ -112,7 +111,7 @@ int main
 	gtk_widget_show (bvw);
 
 	mrl = NULL;
-	test_bvw_set_mrl (argv[1] ? argv[1] : LOGO_PATH);
+	test_bvw_set_mrl (bvw, argv[1] ? argv[1] : LOGO_PATH);
 	argument = g_strdup (argv[1] ? argv[1] : LOGO_PATH);
 	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
 	gtk_main ();

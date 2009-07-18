@@ -91,6 +91,8 @@
   (e->domain == GST_##d##_ERROR && \
    e->code == GST_##d##_ERROR_##c)
 
+G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
+
 /* Signals */
 enum
 {
@@ -3222,16 +3224,16 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
     gchar **uris;
-    gchar *subtitle_uri;
+    gchar *new_subtitle_uri;
 
     uris = g_strsplit (bvw->priv->mrl, "#subtitle:", 2);
     /* Try to fix subtitle uri if needed */
     if (uris[1][0] == '/') {
-      subtitle_uri = g_strdup_printf ("file://%s", uris[1]);
+      new_subtitle_uri = g_strdup_printf ("file://%s", uris[1]);
     }
     else {
       if (strchr (uris[1], ':')) {
-        subtitle_uri = g_strdup (uris[1]);
+        new_subtitle_uri = g_strdup (uris[1]);
       } else {
         gchar *cur_dir = g_get_current_dir ();
         if (!cur_dir) {
@@ -3239,13 +3241,13 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
                                _("Failed to retrieve working directory"));
           return FALSE;
         }
-        subtitle_uri = g_strdup_printf ("file://%s/%s", cur_dir, uris[1]);
+        new_subtitle_uri = g_strdup_printf ("file://%s/%s", cur_dir, uris[1]);
         g_free (cur_dir);
       }
     }
     g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
-                  "suburi", subtitle_uri, NULL);
-    g_free (subtitle_uri);
+                  "suburi", new_subtitle_uri, NULL);
+    g_free (new_subtitle_uri);
     g_strfreev (uris);
   } else {
     g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
@@ -3401,15 +3403,15 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
  * Return value: %TRUE on success, %FALSE otherwise
  **/
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **error)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
+  GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (_time * GST_MSECOND));
 
-  if (time > bvw->priv->stream_length
+  if (_time > bvw->priv->stream_length
       && bvw->priv->stream_length > 0
       && !g_str_has_prefix (bvw->priv->mrl, "dvd:")
       && !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
@@ -3419,11 +3421,11 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error
   }
 
   /* Emit a time tick of where we are going, we are paused */
-  got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
+  got_time_tick (bvw->priv->play, _time * GST_MSECOND, bvw);
   
   gst_element_seek (bvw->priv->play, 1.0,
       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
-      GST_SEEK_TYPE_SET, time * GST_MSECOND,
+      GST_SEEK_TYPE_SET, _time * GST_MSECOND,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
   gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
@@ -3665,7 +3667,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
  * Sets the logo displayed on the video widget when no stream is loaded.
  **/
 void
-bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
+bacon_video_widget_set_logo (BaconVideoWidget * bvw, const gchar * filename)
 {
   GError *error = NULL;
 
@@ -5778,8 +5780,6 @@ cb_gconf (GConfClient * client,
 /*          Widget typing & Creation           */
 /*                                             */
 /* =========================================== */
-
-G_DEFINE_TYPE(BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 
 /* applications must use exactly one of bacon_video_widget_get_option_group()
  * OR bacon_video_widget_init_backend(), but not both */

@@ -617,12 +617,12 @@ totem_setup_preferences (Totem *totem)
 	/* Brightness and all */
 	hidden = 0;
 	for (i = 0; i < G_N_ELEMENTS (props); i++) {
-		int value;
+		int prop_value;
 		item = gtk_builder_get_object (totem->xml, props[i].name);
-		value = bacon_video_widget_get_video_property (totem->bvw,
+		prop_value = bacon_video_widget_get_video_property (totem->bvw,
 							       props[i].prop);
-		if (value >= 0)
-			gtk_range_set_value (GTK_RANGE (item), (gdouble) value);
+		if (prop_value >= 0)
+			gtk_range_set_value (GTK_RANGE (item), (gdouble) prop_value);
 		else {
 			gtk_range_set_value (GTK_RANGE (item), (gdouble) 65535/2);
 			gtk_widget_hide (GTK_WIDGET (item));

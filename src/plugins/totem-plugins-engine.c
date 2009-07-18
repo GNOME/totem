@@ -528,6 +528,8 @@ load_plugin_module (TotemPluginInfo *info)
 			g_warning ("Cannot load plugin %s, Python plugin support is disabled", info->location);
 #endif
 			break;
+		default:
+			g_assert_not_reached ();
 	}
 
 	if (g_type_module_use (info->module) == FALSE) {
@@ -548,6 +550,8 @@ load_plugin_module (TotemPluginInfo *info)
 			info->plugin = TOTEM_PLUGIN (totem_python_module_new_object (TOTEM_PYTHON_MODULE (info->module)));
 #endif
 			break;
+		default:
+			g_assert_not_reached ();
 	}
 
 	return TRUE;
@@ -692,7 +696,7 @@ totem_plugins_engine_configure_plugin (TotemPluginInfo *info,
 }
 
 static void
-totem_plugins_engine_plugin_active_cb (GConfClient *client,
+totem_plugins_engine_plugin_active_cb (GConfClient *gconf_client,
 				       guint cnxn_id,
 				       GConfEntry *entry,
 				       TotemPluginInfo *info)
@@ -705,7 +709,7 @@ totem_plugins_engine_plugin_active_cb (GConfClient *client,
 }
 
 static void
-totem_plugins_engine_plugin_visible_cb (GConfClient *client,
+totem_plugins_engine_plugin_visible_cb (GConfClient *gconf_client,
 					guint cnxn_id,
 					GConfEntry *entry,
 					TotemPluginInfo *info)

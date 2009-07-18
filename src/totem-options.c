@@ -44,7 +44,7 @@ option_version_cb (const gchar *option_name,
 	exit (0);
 }
  
-const GOptionEntry options[] = {
+const GOptionEntry all_options[] = {
 	{"debug", '\0', 0, G_OPTION_ARG_NONE, &optionstate.debug, N_("Enable debug"), NULL},
 	{"play-pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.playpause, N_("Play/Pause"), NULL},
 	{"play", '\0', 0, G_OPTION_ARG_NONE, &optionstate.play, N_("Play"), NULL},
@@ -70,7 +70,7 @@ const GOptionEntry options[] = {
 };
 
 void
-totem_options_process_late (Totem *totem, const TotemCmdLineOptions* options)
+totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
 {
 	if (options->togglecontrols) 
 		totem_action_toggle_controls (totem);

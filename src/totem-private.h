@@ -51,9 +51,9 @@
 
 #define totem_action_set_sensitivity(name, state)					\
 	{										\
-		GtkAction *action;							\
-		action = gtk_action_group_get_action (totem->main_action_group, name);	\
-		gtk_action_set_sensitive (action, state);				\
+		GtkAction *__action;							\
+		__action = gtk_action_group_get_action (totem->main_action_group, name);\
+		gtk_action_set_sensitive (__action, state);				\
 	}
 
 typedef enum {

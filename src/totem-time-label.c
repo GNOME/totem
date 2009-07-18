@@ -11,20 +11,19 @@ struct _TotemTimeLabelPrivate {
 	gboolean seeking;
 };
 
-G_MODULE_EXPORT GType totem_time_label_get_type(void);
-
+G_MODULE_EXPORT GType totem_time_label_get_type (void);
 G_DEFINE_TYPE (TotemTimeLabel, totem_time_label, GTK_TYPE_LABEL)
 #define TOTEM_TIME_LABEL_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_TIME_LABEL, TotemTimeLabelPrivate))
 
 static void
 totem_time_label_init (TotemTimeLabel *label)
 {
-	char *time;
+	char *time_string;
 	label->priv = G_TYPE_INSTANCE_GET_PRIVATE (label, TOTEM_TYPE_TIME_LABEL, TotemTimeLabelPrivate);
 
-	time = totem_time_to_string (0);
-	gtk_label_set_text (GTK_LABEL (label), time);
-	g_free (time);
+	time_string = totem_time_to_string (0);
+	gtk_label_set_text (GTK_LABEL (label), time_string);
+	g_free (time_string);
 
 	label->priv->time = 0;
 	label->priv->length = -1;
@@ -44,22 +43,22 @@ totem_time_label_class_init (TotemTimeLabelClass *klass)
 }
 
 void
-totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
+totem_time_label_set_time (TotemTimeLabel *label, gint64 _time, gint64 length)
 {
 	char *label_str;
 
 	g_return_if_fail (TOTEM_IS_TIME_LABEL (label));
 
-	if (time / 1000 == label->priv->time / 1000
+	if (_time / 1000 == label->priv->time / 1000
 			&& length / 1000 == label->priv->length / 1000)
 		return;
 
 	if (length <= 0) {
-		label_str = totem_time_to_string (time);
+		label_str = totem_time_to_string (_time);
 	} else {
 		char *time_str, *length_str;
 
-		time_str = totem_time_to_string (time);
+		time_str = totem_time_to_string (_time);
 		length_str = totem_time_to_string (length);
 		if (label->priv->seeking == FALSE)
 			/* Elapsed / Total Length */
@@ -74,7 +73,7 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 time, gint64 length)
 	gtk_label_set_text (GTK_LABEL (label), label_str);
 	g_free (label_str);
 
-	label->priv->time = time;
+	label->priv->time = _time;
 	label->priv->length = length;
 }
 

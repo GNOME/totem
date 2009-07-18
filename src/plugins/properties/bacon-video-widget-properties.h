@@ -51,8 +51,6 @@ void bacon_video_widget_properties_reset		(BaconVideoWidgetProperties *props);
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
 							 GtkWidget *bvw);
 void bacon_video_widget_properties_from_time		(BaconVideoWidgetProperties *props,
-							 int time);
-
-char *bacon_video_widget_properties_time_to_string	(int time);
+							 int _time);
 
 #endif /* BACON_VIDEO_WIDGET_PROPERTIES_H */

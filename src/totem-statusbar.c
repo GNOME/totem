@@ -41,8 +41,7 @@
 static void totem_statusbar_dispose          (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
 
-G_MODULE_EXPORT GType totem_statusbar_get_type(void);
-
+G_MODULE_EXPORT GType totem_statusbar_get_type (void);
 G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_STATUSBAR)
 
 static void
@@ -109,26 +108,26 @@ totem_statusbar_new (void)
 static void
 totem_statusbar_update_time (TotemStatusbar *statusbar)
 {
-  char *time, *length, *label;
+  char *time_string, *length, *label;
 
-  time = totem_time_to_string (statusbar->time * 1000);
+  time_string = totem_time_to_string (statusbar->time * 1000);
 
   if (statusbar->length < 0) {
-    label = g_strdup_printf (_("%s (Streaming)"), time);
+    label = g_strdup_printf (_("%s (Streaming)"), time_string);
   } else {
     length = totem_time_to_string
 	    (statusbar->length == -1 ? 0 : statusbar->length * 1000);
 
     if (statusbar->seeking == FALSE)
       /* Elapsed / Total Length */
-      label = g_strdup_printf (_("%s / %s"), time, length);
+      label = g_strdup_printf (_("%s / %s"), time_string, length);
     else
       /* Seeking to Time / Total Length */
-      label = g_strdup_printf (_("Seek to %s / %s"), time, length);
+      label = g_strdup_printf (_("Seek to %s / %s"), time_string, length);
 
     g_free (length);
   }
-  g_free (time);
+  g_free (time_string);
 
   gtk_label_set_text (GTK_LABEL (statusbar->time_label), label);
   g_free (label);
@@ -150,14 +149,14 @@ totem_statusbar_set_text (TotemStatusbar *statusbar, const char *label)
 }
 
 void
-totem_statusbar_set_time (TotemStatusbar *statusbar, gint time)
+totem_statusbar_set_time (TotemStatusbar *statusbar, gint _time)
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  if (statusbar->time == time)
+  if (statusbar->time == _time)
     return;
 
-  statusbar->time = time;
+  statusbar->time = _time;
   totem_statusbar_update_time (statusbar);
 }
 
@@ -240,13 +239,13 @@ totem_statusbar_pop (TotemStatusbar *statusbar)
 
 void
 totem_statusbar_set_time_and_length (TotemStatusbar *statusbar,
-				     gint time, gint length)
+				     gint _time, gint length)
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  if (time != statusbar->time ||
+  if (_time != statusbar->time ||
       length != statusbar->length) {
-    statusbar->time = time;
+    statusbar->time = _time;
     statusbar->length = length;
 
     totem_statusbar_update_time (statusbar);

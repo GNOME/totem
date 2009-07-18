@@ -97,11 +97,11 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 	gboolean ret;
 
 	array = g_ptr_array_new ();
-	g_ptr_array_add (array, "brasero");
+	g_ptr_array_add (array, (gpointer) "brasero");
 	if (copy != FALSE)
-		g_ptr_array_add (array, "-c");
+		g_ptr_array_add (array, (gpointer) "-c");
 	else
-		g_ptr_array_add (array, "-r");
+		g_ptr_array_add (array, (gpointer) "-r");
 	g_ptr_array_add (array, (gpointer) path);
 
 	main_window = totem_get_main_window (pi->totem);
@@ -109,7 +109,7 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 		int xid;
 		xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (GTK_WIDGET (main_window)->window));
 		xid_str = g_strdup_printf ("%d", xid);
-		g_ptr_array_add (array, "-x");
+		g_ptr_array_add (array, (gpointer) "-x");
 		g_ptr_array_add (array, xid_str);
 	} else {
 		xid_str = NULL;

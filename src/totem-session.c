@@ -57,7 +57,7 @@ totem_save_state_cb (EggSMClient *client,
 	             GKeyFile *key_file,
 	             Totem *totem)
 {
-	char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+	const char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 	int i = 0;
 	char *path_id, *current, *seek, *uri;
 	int current_index;
@@ -81,7 +81,7 @@ totem_save_state_cb (EggSMClient *client,
 	current = g_strdup_printf ("%d", current_index);
 	seek = g_strdup_printf ("%"G_GINT64_FORMAT,
 			bacon_video_widget_get_current_time (totem->bvw));
-	argv[i++] = (char *) totem->argv0;
+	argv[i++] = totem->argv0;
 	argv[i++] = "--playlist-idx";
 	argv[i++] = current;
 	argv[i++] = "--seek";

@@ -218,16 +218,16 @@ bacon_resize_resize (BaconResize *resize)
 	gboolean found = FALSE;
 	GdkWindow *root;
 	GdkScreen *screen;
-	Display *Display;
+	Display *xdisplay;
 
 	g_return_if_fail (GTK_IS_WIDGET (resize->priv->video_widget));
 	g_return_if_fail (GTK_WIDGET_REALIZED (resize->priv->video_widget));
 
-	Display = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
-	if (Display == NULL)
+	xdisplay = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
+	if (xdisplay == NULL)
 		return;
 
-	XLockDisplay (Display);
+	XLockDisplay (xdisplay);
 
 	screen = gtk_widget_get_screen (resize->priv->video_widget);
 	root = gdk_screen_get_root_window (screen);
@@ -236,7 +236,7 @@ bacon_resize_resize (BaconResize *resize)
 	if (gdk_screen_get_n_monitors (screen) > 1)
 		goto bail;
 
-	res = XF86VidModeGetModeLine (Display, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
+	res = XF86VidModeGetModeLine (xdisplay, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
 	if (!res)
 		goto bail;
 
@@ -250,7 +250,7 @@ bacon_resize_resize (BaconResize *resize)
 	gdk_error_trap_push ();
 
 	/* Find the XRandR mode that corresponds to the real size */
-	resize->priv->xr_screen_conf = XRRGetScreenInfo (Display, GDK_WINDOW_XWINDOW (root));
+	resize->priv->xr_screen_conf = XRRGetScreenInfo (xdisplay, GDK_WINDOW_XWINDOW (root));
 	xr_sizes = XRRConfigSizes (resize->priv->xr_screen_conf, &xr_nsize);
 	resize->priv->xr_original_size = XRRConfigCurrentConfiguration (resize->priv->xr_screen_conf, &(resize->priv->xr_current_rotation));
 	if (gdk_error_trap_pop ()) {
@@ -269,7 +269,7 @@ bacon_resize_resize (BaconResize *resize)
 		goto bail;
 
 	gdk_error_trap_push ();
-	XRRSetScreenConfig (Display,
+	XRRSetScreenConfig (xdisplay,
 			resize->priv->xr_screen_conf,
 			GDK_WINDOW_XWINDOW (root),
 			(SizeID) i,
@@ -282,7 +282,7 @@ bacon_resize_resize (BaconResize *resize)
 		resize->priv->resized = TRUE;
 
 bail:
-	XUnlockDisplay (Display);
+	XUnlockDisplay (xdisplay);
 #endif /* HAVE_XVIDMODE */
 }
 
@@ -294,7 +294,7 @@ bacon_resize_restore (BaconResize *resize)
 	XF86VidModeModeLine modeline;
 	GdkWindow *root;
 	GdkScreen *screen;
-	Display *Display;
+	Display *xdisplay;
 
 	g_return_if_fail (GTK_IS_WIDGET (resize->priv->video_widget));
 	g_return_if_fail (GTK_WIDGET_REALIZED (resize->priv->video_widget));
@@ -304,15 +304,15 @@ bacon_resize_restore (BaconResize *resize)
 	if (resize->priv->xr_screen_conf == NULL)
 		return;
 
-	Display = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
-	if (Display == NULL)
+	xdisplay = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
+	if (xdisplay == NULL)
 		return;
 
-	XLockDisplay (Display);
+	XLockDisplay (xdisplay);
 
 	screen = gtk_widget_get_screen (resize->priv->video_widget);
 	root = gdk_screen_get_root_window (screen);
-	res = XF86VidModeGetModeLine (Display, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
+	res = XF86VidModeGetModeLine (xdisplay, GDK_SCREEN_XNUMBER (screen), &dotclock, &modeline);
 	if (!res)
 		goto bail;
 
@@ -324,7 +324,7 @@ bacon_resize_restore (BaconResize *resize)
 		goto bail;
 
 	gdk_error_trap_push ();
-	XRRSetScreenConfig (Display,
+	XRRSetScreenConfig (xdisplay,
 			resize->priv->xr_screen_conf,
 			GDK_WINDOW_XWINDOW (root),
 			resize->priv->xr_original_size,
@@ -340,7 +340,7 @@ bacon_resize_restore (BaconResize *resize)
 	resize->priv->xr_screen_conf = NULL;
 
 bail:
-	XUnlockDisplay (Display);
+	XUnlockDisplay (xdisplay);
 #endif
 }
 

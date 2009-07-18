@@ -1,3 +1,65 @@
+2009-07-18  Philip Withnall  <philip@tecnocode.co.uk>
+
+	* src/backend/bacon-resize.c (bacon_resize_resize),
+	(bacon_resize_restore):
+	* src/backend/bacon-video-widget-gst-0.10.c
+	(bacon_video_widget_open), (bacon_video_widget_seek_time),
+	(bacon_video_widget_set_logo):
+	* src/backend/bacon-video-widget.h:
+	* src/backend/bvw-test.c (test_bvw_set_mrl), (on_redirect),
+	(on_eos_event), (main):
+	* src/backend/video-utils.c (totem_time_to_string),
+	(totem_time_to_string_text):
+	* src/plugins/brasero-disc-recorder/totem-disc-recorder.c
+	(totem_disc_recorder_plugin_start_burning):
+	* src/plugins/properties/bacon-video-widget-properties.c
+	(bacon_video_widget_properties_from_time):
+	* src/plugins/properties/bacon-video-widget-properties.h:
+	* src/plugins/publish/totem-publish.c
+	(totem_publish_plugin_playlist_cb):
+	* src/plugins/screenshot/totem-gallery.c
+	(dialog_response_callback):
+	* src/plugins/screenshot/totem-screenshot.c (drag_data_get):
+	* src/plugins/skipto/totem-skipto-plugin.c
+	(totem_skipto_update_from_state):
+	* src/plugins/skipto/totem-skipto.c (totem_skipto_update_range),
+	(totem_skipto_get_range), (totem_skipto_set_current):
+	* src/plugins/skipto/totem-skipto.h:
+	* src/plugins/totem-plugins-engine.c (load_plugin_module),
+	(totem_plugins_engine_plugin_active_cb),
+	(totem_plugins_engine_plugin_visible_cb):
+	* src/plugins/youtube/totem-youtube.c (starting_video_cb):
+	* src/totem-menu.c (add_lang_action), (totem_action_add_recent):
+	* src/totem-object.c (totem_get_title_at_playlist_pos),
+	(totem_action_load_media), (window_state_event_cb),
+	(totem_action_set_mrl_with_warning), (totem_time_within_seconds),
+	(totem_seek_time_rel), (drop_video_cb), (drag_motion_video_cb),
+	(drop_playlist_cb), (drag_motion_playlist_cb), (drag_video_cb),
+	(seek_slider_changed_cb), (totem_action_set_playlist_index),
+	(totem_action_remote), (totem_action_handle_key_release),
+	(window_key_press_event_cb):
+	* src/totem-options.c (totem_options_process_late):
+	* src/totem-options.h:
+	* src/totem-playlist.c (drop_cb), (playlist_show_popup_menu),
+	(totem_playlist_set_reorderable),
+	(totem_playlist_clear_with_compare), (totem_playlist_get_title),
+	(totem_playlist_get_current), (totem_playlist_set_current):
+	* src/totem-playlist.h:
+	* src/totem-preferences.c (totem_setup_preferences):
+	* src/totem-private.h:
+	* src/totem-session.c (totem_save_state_cb):
+	* src/totem-statusbar.c (totem_statusbar_update_time),
+	(totem_statusbar_set_time), (totem_statusbar_set_time_and_length):
+	* src/totem-subtitle-encoding.c (subtitle_encoding_get_charset),
+	(subtitle_encoding_create_store),
+	(totem_subtitle_encoding_get_selected),
+	(totem_subtitle_encoding_set):
+	* src/totem-time-label.c (totem_time_label_init),
+	(totem_time_label_set_time):
+	* src/totem-video-thumbnailer.c (create_gallery), (main):
+	* src/totem.c (totem_message_received_cb), (main):
+	* src/totem.h: Fixed some strict gcc warnings.
+
 2009-07-18  Robin Stocker  <robin@nibor.org>
 
 	* src/totem-object.c (drop_video_cb, drop_playlist_cb):

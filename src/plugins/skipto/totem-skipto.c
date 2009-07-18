@@ -100,28 +100,28 @@ totem_skipto_dispose (GObject *object)
 }
 
 void
-totem_skipto_update_range (TotemSkipto *skipto, gint64 time)
+totem_skipto_update_range (TotemSkipto *skipto, gint64 _time)
 {
 	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
 
-	if (time == skipto->priv->time)
+	if (_time == skipto->priv->time)
 		return;
 
 	gtk_spin_button_set_range (GTK_SPIN_BUTTON (skipto->priv->time_entry),
-			0, (gdouble) time / 1000);
-	skipto->priv->time = time;
+			0, (gdouble) _time / 1000);
+	skipto->priv->time = _time;
 }
 
 gint64
 totem_skipto_get_range (TotemSkipto *skipto)
 {
-	gint64 time;
+	gint64 _time;
 
 	g_return_val_if_fail (TOTEM_IS_SKIPTO (skipto), 0);
 
-	time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->priv->time_entry)) * 1000;
+	_time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (skipto->priv->time_entry)) * 1000;
 
-	return time;
+	return _time;
 }
 
 void
@@ -134,12 +134,12 @@ totem_skipto_set_seekable (TotemSkipto *skipto, gboolean seekable)
 }
 
 void
-totem_skipto_set_current (TotemSkipto *skipto, gint64 time)
+totem_skipto_set_current (TotemSkipto *skipto, gint64 _time)
 {
 	g_return_if_fail (TOTEM_IS_SKIPTO (skipto));
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (skipto->priv->time_entry),
-			(gdouble) (time / 1000));
+			(gdouble) (_time / 1000));
 }
 
 void

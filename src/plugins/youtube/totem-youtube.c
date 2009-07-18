@@ -994,7 +994,6 @@ starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePl
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, path) == FALSE)
 		return FALSE;
 	gtk_tree_model_get (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, 3, &video_entry, -1);
-g_message ("starting_video_cb: model: %lu, path: %lu, current tv: %u", self->list_store[self->current_tree_view], path, self->current_tree_view);
 
 	if (self->playing_video != NULL)
 		g_object_unref (self->playing_video);

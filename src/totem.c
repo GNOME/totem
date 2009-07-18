@@ -75,7 +75,7 @@ totem_message_received_cb (UniqueApp         *app,
 
 	g_free (url);
 
-	return UNIQUE_RESPONSE_OK;;
+	return UNIQUE_RESPONSE_OK;
 }
 
 static void
@@ -142,7 +142,7 @@ main (int argc, char **argv)
 	/* Handle command line arguments */
 	context = g_option_context_new (N_("- Play movies and songs"));
 	baconoptiongroup = bacon_video_widget_get_option_group();
-	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
 	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, baconoptiongroup);
 

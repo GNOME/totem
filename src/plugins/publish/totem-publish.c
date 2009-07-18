@@ -201,14 +201,14 @@ totem_publish_plugin_playlist_cb (EpcPublisher *publisher,
 				g_slist_length (self->playlist));
 
 	for (iter = self->playlist, i = 1; iter; iter = iter->next, ++i) {
-		gchar *key = iter->data;
+		gchar *file_key = iter->data;
 		gchar *uri;
 
-		uri = epc_publisher_get_uri (publisher, key, NULL);
+		uri = epc_publisher_get_uri (publisher, file_key, NULL);
 
 		g_string_append_printf (buffer,
 					"File%d=%s\nTitle%d=%s\n",
-					i, uri, i, key + 6);
+					i, uri, i, file_key + 6);
 
 		g_free (uri);
 	}
