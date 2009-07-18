@@ -2210,19 +2210,19 @@ drop_video_cb (GtkWidget     *widget,
 {
 	gboolean empty_pl;
 
-	if (context->suggested_action == GDK_ACTION_ASK) {
+	/* Drop of video on itself */
+	if (context->source_window == totem->video_drag_source_window &&
+	    context->action == GDK_ACTION_MOVE) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
+
+	if (context->action == GDK_ACTION_ASK) {
 		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
 	}
 
 	/* User selected cancel */
 	if (context->action == GDK_ACTION_DEFAULT) {
-		gtk_drag_finish (context, FALSE, FALSE, time);
-		return;
-	}
-
-	/* Drop of video on itself */
-	if (context->source_window == totem->video_drag_source_window &&
-	    context->action == GDK_ACTION_MOVE) {
 		gtk_drag_finish (context, FALSE, FALSE, time);
 		return;
 	}
@@ -2265,7 +2265,7 @@ drop_playlist_cb (GtkWidget     *widget,
 {
 	gboolean empty_pl;
 
-	if (context->suggested_action == GDK_ACTION_ASK)
+	if (context->action == GDK_ACTION_ASK)
 		context->action = totem_drag_ask (totem_get_playlist_length (totem) > 0);
 
 	if (context->action == GDK_ACTION_DEFAULT) {
