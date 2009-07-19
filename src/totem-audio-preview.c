@@ -78,6 +78,11 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 	gdk_threads_init ();
+
+	g_set_application_name (_("Audio Preview"));
+	gtk_window_set_default_icon_name ("totem");
+	g_setenv("PULSE_PROP_media.role", "audio", TRUE);
+
 	context = g_option_context_new ("Plays audio passed on the standard input or the filename passed on the command-line");
 	options = bacon_video_widget_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
