@@ -4,7 +4,7 @@ gobject.threads_init()
 import xmlrpclib
 import threading
 import xdg.BaseDirectory
-from os import sep
+from os import sep, path, mkdir
 import gettext
 import pango
 
@@ -517,7 +517,12 @@ class OpenSubtitles(totem.Plugin):
             if not filename:
                 directory = gio.File(xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep) 
                 if not directory.query_exists():
-                    directory.make_directory_with_parents()
+                    if not path.exists (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep):
+                        mkdir (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep)
+                    if not path.exists (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep):
+                        mkdir (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep)
+                    # FIXME: We can't use this function until we depend on GLib (PyGObject) 2.18
+                    # directory.make_directory_with_parents()
 
                 file = gio.File(self.filename)
                 movie_name = file.get_basename().rpartition('.')[0]
