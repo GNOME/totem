@@ -426,7 +426,7 @@ class OpenSubtitles(totem.Plugin):
 
         self.menu_id = self.manager.new_merge_id()
         self.manager.add_ui(self.menu_id,
-                             '/tmw-menubar/view/subtitle-download-placeholder',
+                             '/tmw-menubar/view/subtitles/subtitle-download-placeholder',
                              'opensubtitles',
                              'opensubtitles',
                              gtk.UI_MANAGER_MENUITEM,

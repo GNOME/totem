@@ -462,8 +462,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 			totem->subtitles_action_group, -1);
 
 
-	if (list != NULL)
-	{
+	if (list != NULL) {
 		action = create_lang_actions (totem, totem->subtitles_action_group,
 				totem->subtitles_ui_id,
 				paths,
