@@ -2190,6 +2190,9 @@ int main (int argc, char **argv)
 
 	g_thread_init (NULL);
 
+	g_set_application_name (_("Movie browser plugin"));
+	gtk_window_set_default_icon_name ("totem");
+
 #ifdef GNOME_ENABLE_DEBUG
 	{
 		int i;
@@ -2209,40 +2212,40 @@ int main (int argc, char **argv)
 	dbus_g_thread_init ();
 
 #ifdef GNOME_ENABLE_DEBUG
-{
-	const char *env;
+	{
+		const char *env;
 
-	env = g_getenv ("TOTEM_EMBEDDED_GDB");
-	if (env && g_ascii_strtoull (env, NULL, 10) == 1) {
-		char *gdbargv[6];
-		char pid[32];
-		GError *gdberr = NULL;
-		int gdbargc = 0;
+		env = g_getenv ("TOTEM_EMBEDDED_GDB");
+		if (env && g_ascii_strtoull (env, NULL, 10) == 1) {
+			char *gdbargv[6];
+			char pid[32];
+			GError *gdberr = NULL;
+			int gdbargc = 0;
 
-		g_snprintf (pid, sizeof (pid), "%d", getpid ());
+			g_snprintf (pid, sizeof (pid), "%d", getpid ());
 
-		gdbargv[gdbargc++] = "/usr/bin/xterm";
-		gdbargv[gdbargc++] = "-e";
-		gdbargv[gdbargc++] = "gdb";
-		gdbargv[gdbargc++] = argv[0];
-		gdbargv[gdbargc++] = pid;
-		gdbargv[gdbargc++] = NULL;
+			gdbargv[gdbargc++] = "/usr/bin/xterm";
+			gdbargv[gdbargc++] = "-e";
+			gdbargv[gdbargc++] = "gdb";
+			gdbargv[gdbargc++] = argv[0];
+			gdbargv[gdbargc++] = pid;
+			gdbargv[gdbargc++] = NULL;
 
-		if (!g_spawn_async (NULL,
-				    gdbargv,
-				    NULL /* env */,
-				    0,
-				    NULL, NULL,
-				    NULL,
-				    &gdberr)) {
-			g_warning ("Failed to spawn debugger: %s", gdberr->message);
-			g_error_free (gdberr);
-		} else {
-			g_print ("Sleeping....\n");
-			g_usleep (10* 1000 * 1000); /* 10s */
+			if (!g_spawn_async (NULL,
+					    gdbargv,
+					    NULL /* env */,
+					    0,
+					    NULL, NULL,
+					    NULL,
+					    &gdberr)) {
+				g_warning ("Failed to spawn debugger: %s", gdberr->message);
+				g_error_free (gdberr);
+			} else {
+				g_print ("Sleeping....\n");
+				g_usleep (10* 1000 * 1000); /* 10s */
+			}
 		}
 	}
-}
 #endif
 
 	if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &e))
@@ -2251,6 +2254,11 @@ int main (int argc, char **argv)
 		g_error_free (e);
 		exit (1);
 	}
+
+	if (arg_audioonly != FALSE)
+		g_setenv("PULSE_PROP_media.role", "video", TRUE);
+	else
+		g_setenv("PULSE_PROP_media.role", "audio", TRUE);
 
         // FIXME check that ALL necessary params were given!
 	if (arg_plugin_type == TOTEM_PLUGIN_TYPE_LAST) {
