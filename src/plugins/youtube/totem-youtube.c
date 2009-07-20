@@ -569,7 +569,7 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	TParamData *data;
 
 	/* We have to get the t parameter from the actual HTML video page, since Google changed how their URIs work */
-	link = gdata_entry_look_up_link (entry, "alternate");
+	link = gdata_entry_look_up_link (entry, GDATA_LINK_ALTERNATE);
 	g_assert (link != NULL);
 
 	data = g_slice_new (TParamData);
@@ -600,18 +600,14 @@ thumbnail_loaded_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	thumbnail = totem_gdk_pixbuf_new_from_stream_finish (result, &error);
 
 	if (thumbnail == NULL) {
-		GtkWindow *window;
-
 		/* Bail out if the operation was cancelled */
 		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
 			g_error_free (error);
 			goto free_data;
 		}
 
-		/* Display an error message */
-		window = totem_get_main_window (data->plugin->totem);
-		totem_interface_error (_("Error Loading Video Thumbnail"), error->message, window);
-		g_object_unref (window);
+		/* Don't display an error message, since this isn't really meant to happen */
+		g_warning ("Error loading video thumbnail: %s", error->message);
 		g_error_free (error);
 		goto free_data;
 	}
@@ -645,12 +641,8 @@ thumbnail_opened_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	input_stream = g_file_read_finish (thumbnail_file, result, &error);
 
 	if (input_stream == NULL) {
-		GtkWindow *window;
-
-		/* Display an error message */
-		window = totem_get_main_window (data->plugin->totem);
-		totem_interface_error (_("Error Loading Video Thumbnail"), error->message, window);
-		g_object_unref (window);
+		/* Don't display an error message, since this isn't really meant to happen */
+		g_warning ("Error loading video thumbnail: %s", error->message);
 		g_error_free (error);
 		return;
 	}
@@ -937,7 +929,7 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 
 		/* Get the HTML page for the video; its <link rel="alternate" ... /> */
 		gtk_tree_model_get (model, &iter, 3, &video, -1);
-		link = gdata_entry_look_up_link (GDATA_ENTRY (video), "alternate");
+		link = gdata_entry_look_up_link (GDATA_ENTRY (video), GDATA_LINK_ALTERNATE);
 		g_object_unref (video);
 
 		/* Display the page */

@@ -1,5 +1,13 @@
 2009-07-20  Philip Withnall  <philip@tecnocode.co.uk>
 
+	* src/plugins/youtube/totem-youtube.c (resolve_t_param),
+	(thumbnail_loaded_cb), (thumbnail_opened_cb),
+	(open_in_web_browser_activate_cb): Fixed compatibility problems
+	with libgdata 0.4.0 and removed some unnecessary error dialogues from
+	the YouTube plugin.
+
+2009-07-20  Philip Withnall  <philip@tecnocode.co.uk>
+
 	* src/plugins/tracker/totem-tracker-widget.c
 	(totem_tracker_widget_init): Homogenise the Local Search plugin's
 	appearance with the Jamendo and YouTube plugins. (Closes: #572292)
