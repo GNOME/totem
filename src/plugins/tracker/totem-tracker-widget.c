@@ -375,7 +375,6 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 {
 	GtkWidget *v_box;		/* the main vertical box of the widget */
 	GtkWidget *pager_box;		/* box that holds the next and previous buttons */
-	GtkWidget *search_box;		/* the search box contains the search entry and the search button */
 	GtkScrolledWindow *scroll;	/* make the result list scrollable */
 	GtkAdjustment *adjust;		/* adjustment for the page selector spin button */
 
@@ -384,20 +383,14 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 	init_result_list (widget);
 
 	v_box = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (v_box), 5);
 
 	/* Search entry */
 	widget->priv->search_entry = gtk_entry_new ();
 
 	/* Search button */
 	widget->priv->search_button = gtk_button_new_from_stock (GTK_STOCK_FIND);
-
-	/* Add the search entry and button to the search box,
-	   and add the search box to the main vertical box */
-	search_box = gtk_hbox_new (FALSE, 2);
-	gtk_box_pack_start (GTK_BOX (search_box), widget->priv->search_entry, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (search_box), widget->priv->search_button, FALSE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (v_box), search_box, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (v_box), widget->priv->search_entry, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (v_box), widget->priv->search_button, FALSE, TRUE, 0);
 
 	/* Insert the result list and initialize the viewport */
 	scroll = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
