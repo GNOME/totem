@@ -204,7 +204,7 @@ int main (int argc, char **argv)
 	path = filenames[0];
 	if (time_limit != FALSE)
 		totem_resources_monitor_start (path, 0);
-	if (bacon_video_widget_open (bvw, path, NULL, &error) == FALSE) {
+	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
 	}
