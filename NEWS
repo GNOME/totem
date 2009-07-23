@@ -1,5 +1,31 @@
 New features and significant updates in version...
 
+2.27.2:
+* Movie Player:
+  - Add frame-by-frame stepping
+  - Better fallback names for audio and languages tracks
+  - Make the arrow keys navigate DVD menus when one is loaded
+  - Move subtitles-related menu items to View → Subtitles.
+  - Bug fixes:
+    - Fix loading subtitles from the cache
+    - Fix loading videos when Totem is already running
+    - Fix drag'n'dropping a video onto itself reloading the video
+    - Only add a file to the recent files when it has been played,
+      makes startup with loads of files much quicker
+
+* GStreamer backend:
+  - Prevent tags from other tracks to show up when
+    they're not used
+  - Try to mount the location where the file is when it's
+    not already mounted
+
+* YouTube plugin:
+  - Fix a possible crasher when loading thumbnails
+  - Fix problems in non-English locales
+  - Fix video list rendering problems
+
+- Fix UI differences between the YouTube, Jamendo and local seach plugins
+
 2.27.1 (since 2.26.2):
 
 Major changes:
