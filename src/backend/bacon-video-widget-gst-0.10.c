@@ -3129,10 +3129,13 @@ error:
  * bacon_video_widget_open:
  * @bvw: a #BaconVideoWidget
  * @mrl: an MRL
+ * @subtitle_uri: the URI of a subtitle file, or %NULL
  * @error: a #GError, or %NULL
  *
  * Opens the given @mrl in @bvw for playing. If @subtitle_uri is not %NULL, the given
- * subtitle file is also loaded.
+ * subtitle file is also loaded. Alternatively, the subtitle URI can be passed in @mrl
+ * by adding it after <literal>#subtitle:</literal>. For example:
+ * <literal>http://example.com/video.mpg#subtitle:/home/user/subtitle.ass</literal>.
  *
  * If there was a filesystem error, a %BVW_ERROR_GENERIC error will be returned. Otherwise,
  * more specific #BvwError errors will be returned.
@@ -3143,7 +3146,7 @@ error:
  **/
 gboolean
 bacon_video_widget_open (BaconVideoWidget * bvw,
-                         const gchar * mrl, GError ** error)
+                         const gchar * mrl, const gchar *subtitle_uri, GError ** error)
 {
   GstMessage *err_msg = NULL;
   GFile *file;
@@ -3161,7 +3164,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   }
   
   GST_DEBUG ("mrl = %s", GST_STR_NULL (mrl));
-
+  GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
+  
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
@@ -3218,7 +3222,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     setup_vis (bvw);
   }
 
-  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl, NULL);
+  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
+                "suburi", subtitle_uri, NULL);
 
   bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
@@ -3527,27 +3532,6 @@ bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
   gst_navigation_send_command (nav, command);
   gst_object_unref (GST_OBJECT (nav));
 }
-
-/** bacon_video_widget_set_text_subtitle:
- * @bvw: a #BaconVideoWidget
- * @subtitle_uri: the URI of a subtitle file, or %NULL
- *
- * Sets the URI for the text subtitle file to be displayed alongside
- * the current video. Use %NULL is you * want to unload the current text subtitle
- * file  being used.
- */
-void
-bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
-				      const gchar * subtitle_uri)
-{
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-  
-  GST_LOG ("Setting subtitle as %s", GST_STR_NULL (subtitle_uri));
-  g_object_set (bvw->priv->play, "suburi", subtitle_uri, NULL);
-}
-
 
 /**
  * bacon_video_widget_dvd_event:

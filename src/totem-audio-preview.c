@@ -126,7 +126,7 @@ int main (int argc, char **argv)
 	bvw = BACON_VIDEO_WIDGET (widget);
 
 	totem_resources_monitor_start (NULL, -1);
-	if (bacon_video_widget_open (bvw, path, &error) == FALSE) {
+	if (bacon_video_widget_open (bvw, path, NULL, &error) == FALSE) {
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
 	}

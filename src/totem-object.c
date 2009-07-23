@@ -1711,8 +1711,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			autoload_sub = totem_uri_get_subtitle_uri (mrl);
 
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
-		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
-		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
+		retval = bacon_video_widget_open (totem->bvw, mrl, subtitle ? subtitle : autoload_sub, &err);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (totem->win->window, NULL);
 		totem->mrl = g_strdup (mrl);
@@ -2364,7 +2363,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
 	totem_gdk_window_set_waiting_cursor (totem->win->window);
-	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL);
+	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL, NULL);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (totem->win->window, NULL);
 	bacon_video_widget_play (bvw, NULL);
