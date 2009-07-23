@@ -3222,37 +3222,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     setup_vis (bvw);
   }
 
-  if (g_strrstr (bvw->priv->mrl, "#subtitle:")) {
-    gchar **uris;
-    gchar *new_subtitle_uri;
-
-    uris = g_strsplit (bvw->priv->mrl, "#subtitle:", 2);
-    /* Try to fix subtitle uri if needed */
-    if (uris[1][0] == '/') {
-      new_subtitle_uri = g_strdup_printf ("file://%s", uris[1]);
-    }
-    else {
-      if (strchr (uris[1], ':')) {
-        new_subtitle_uri = g_strdup (uris[1]);
-      } else {
-        gchar *cur_dir = g_get_current_dir ();
-        if (!cur_dir) {
-          g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
-                               _("Failed to retrieve working directory"));
-          return FALSE;
-        }
-        new_subtitle_uri = g_strdup_printf ("file://%s/%s", cur_dir, uris[1]);
-        g_free (cur_dir);
-      }
-    }
-    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
-                  "suburi", new_subtitle_uri, NULL);
-    g_free (new_subtitle_uri);
-    g_strfreev (uris);
-  } else {
-    g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
-                  "suburi", subtitle_uri, NULL);
-  }
+  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
+                "suburi", subtitle_uri, NULL);
 
   bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
