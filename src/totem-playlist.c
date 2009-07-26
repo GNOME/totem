@@ -41,7 +41,7 @@
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->priv->model, NULL))
 
-static void ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle);
+static void ensure_shuffled (TotemPlaylist *playlist);
 static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl, const char *display_name);
 
 typedef gboolean (*ClearComparisonFunc) (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data);
@@ -1380,24 +1380,23 @@ compare_random (gconstpointer ptr_a, gconstpointer ptr_b)
 }
 
 static void
-ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
+ensure_shuffled (TotemPlaylist *playlist)
 {
 	RandomData data;
 	GArray *array;
 	int i, current, current_new;
 	int *indices;
 
-	if (shuffle == FALSE || PL_LEN != playlist->priv->shuffle_len)
-	{
-		g_free (playlist->priv->shuffled);
-		playlist->priv->shuffled = NULL;
-	}
+	if (playlist->priv->shuffled == NULL)
+		playlist->priv->shuffled = g_new (int, PL_LEN);
+	else if (PL_LEN != playlist->priv->shuffle_len)
+		playlist->priv->shuffled = g_renew (int, playlist->priv->shuffled, PL_LEN);
+	playlist->priv->shuffle_len = PL_LEN;
 
-	if (shuffle == FALSE || PL_LEN == 0)
+	if (PL_LEN == 0)
 		return;
 
-	if (playlist->priv->current != NULL)
-	{
+	if (playlist->priv->current != NULL) {
 		indices = gtk_tree_path_get_indices (playlist->priv->current);
 		current = indices[0];
 	} else {
@@ -1406,14 +1405,9 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 	
 	current_new = -1;
 
-	playlist->priv->shuffled = g_new (int, PL_LEN);
-	playlist->priv->shuffle_len = PL_LEN;
+	array = g_array_sized_new (FALSE, FALSE, sizeof (RandomData), PL_LEN);
 
-	array = g_array_sized_new (FALSE, FALSE,
-			sizeof (RandomData), PL_LEN);
-
-	for (i = 0; i < PL_LEN; i++)
-	{
+	for (i = 0; i < PL_LEN; i++) {
 		data.random = g_random_int_range (0, PL_LEN);
 		data.index = i;
 
@@ -1422,13 +1416,10 @@ ensure_shuffled (TotemPlaylist *playlist, gboolean shuffle)
 
 	g_array_sort (array, compare_random);
 
-	for (i = 0; i < PL_LEN; i++)
-	{
-		playlist->priv->shuffled[i]
-			= g_array_index (array, RandomData, i).index;
+	for (i = 0; i < PL_LEN; i++) {
+		playlist->priv->shuffled[i] = g_array_index (array, RandomData, i).index;
 
-		if (playlist->priv->current != NULL
-				&& playlist->priv->shuffled[i] == current)
+		if (playlist->priv->current != NULL && playlist->priv->shuffled[i] == current)
 			current_new = i;
 	}
 
@@ -1449,7 +1440,13 @@ update_shuffle_cb (GConfClient *client, guint cnxn_id,
 
 	shuffle = gconf_value_get_bool (entry->value);
 	playlist->priv->shuffle = shuffle;
-	ensure_shuffled (playlist, shuffle);
+	if (shuffle == FALSE) {
+		g_free (playlist->priv->shuffled);
+		playlist->priv->shuffled = NULL;
+		playlist->priv->shuffle_len = 0;
+	} else {
+		ensure_shuffled (playlist);
+	}
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
@@ -1726,7 +1723,8 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 
 	if (playlist->priv->current == NULL && playlist->priv->shuffle == FALSE)
 		playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
-	ensure_shuffled (playlist, playlist->priv->shuffle);
+	if (playlist->priv->shuffle)
+		ensure_shuffled (playlist);
 
 	/* And update current to point to the right file again */
 	if (ref != NULL) {
@@ -1934,7 +1932,8 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 		}
 
 		playlist->priv->current_shuffled = -1;
-		ensure_shuffled (playlist, playlist->priv->shuffle);
+		if (playlist->priv->shuffle)
+			ensure_shuffled (playlist);
 
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[CURRENT_REMOVED],
@@ -1947,7 +1946,8 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 			gtk_tree_row_reference_free (ref);
 		}
 
-		ensure_shuffled (playlist, playlist->priv->shuffle);
+		if (playlist->priv->shuffle)
+			ensure_shuffled (playlist);
 
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[CHANGED], 0,
