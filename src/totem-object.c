@@ -75,8 +75,6 @@
 #include "totem-dnd-menu.h"
 #include "totem-preferences.h"
 
-#include "debug.h"
-
 #define REWIND_OR_PREVIOUS 4000
 
 #define SEEK_FORWARD_SHORT_OFFSET 15

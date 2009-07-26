@@ -36,7 +36,7 @@
 #include "bacon-video-widget.h"
 #include "totem-uri.h"
 
-#include "debug.h"
+#include "totem-profile.h"
 
 #define TOTEM_MAX_RECENT_ITEM_LEN 40
 

@@ -28,7 +28,6 @@
 
 #include "totem-python-plugin.h"
 #include "totem-plugin.h"
-#include "debug.h"
 
 #include <pygobject.h>
 #include <string.h>
@@ -198,7 +197,7 @@ totem_python_object_init (TotemPythonObject *object)
 
 	state = pyg_gil_state_ensure();
 
-	D("Creating Python plugin instance");
+	g_debug ("Creating Python plugin instance");
 
 	class = (TotemPythonObjectClass*) (((GTypeInstance*) object)->g_class);
 
@@ -212,7 +211,7 @@ totem_python_object_init (TotemPythonObject *object)
 static void
 totem_python_object_finalize (GObject *object)
 {
-	D("Finalizing Python plugin instance");
+	g_debug ("Finalizing Python plugin instance");
 
 	if (((TotemPythonObject *) object)->instance) {
 		Py_DECREF (((TotemPythonObject *) object)->instance);
@@ -268,7 +267,7 @@ totem_python_object_get_type (GTypeModule *module,
 	type_name = g_strdup_printf ("%s+TotemPythonPlugin",
 				     PyString_AsString (PyObject_GetAttrString (type, "__name__")));
 
-	D("Registering Python plugin instance: %s", type_name);
+	g_debug ("Registering Python plugin instance: %s", type_name);
 	gtype = g_type_module_register_type (module,
 					     TOTEM_TYPE_PLUGIN,
 					     type_name,

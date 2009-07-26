@@ -44,8 +44,6 @@
 #include "totem-plugin.h"
 #include "totem-plugins-engine.h"
 
-#include "debug.h"
-
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);

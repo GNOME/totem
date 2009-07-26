@@ -25,11 +25,6 @@
 #include "npapi.h"
 #include "npruntime.h"
 
-//FIXME force debug on
-#define GNOME_ENABLE_DEBUG 1
-
-#include "debug.h"
-
 class totemPlugin;
 class totemNPObject;
 class totemNPClass_base;
@@ -104,17 +99,14 @@ class totemNPObject : public NPObject {
 };
 
 /* Helper macros */
-
-#ifdef GNOME_ENABLE_DEBUG
-
-#define TOTEM_LOG_CTOR() D ("%s [%p]", __func__, (void*) this)
-#define TOTEM_LOG_DTOR() D ("%s [%p]", __func__, (void*) this)
+#define TOTEM_LOG_CTOR() g_debug ("%s [%p]", __func__, (void*) this)
+#define TOTEM_LOG_DTOR() g_debug ("%s [%p]", __func__, (void*) this)
 
 #define TOTEM_LOG_INVOKE(i, T) \
 {\
   static bool logAccess[G_N_ELEMENTS (methodNames)];\
   if (!logAccess[i]) {\
-    D ("NOTE: site calls function %s::%s", #T, methodNames[i]);\
+    g_debug ("NOTE: site calls function %s::%s", #T, methodNames[i]);\
     logAccess[i] = true;\
   }\
 }
@@ -123,7 +115,7 @@ class totemNPObject : public NPObject {
 {\
   static bool logAccess[G_N_ELEMENTS (propertyNames)];\
   if (!logAccess[i]) {\
-    D ("NOTE: site gets property %s::%s", #T, propertyNames[i]);\
+    g_debug ("NOTE: site gets property %s::%s", #T, propertyNames[i]);\
     logAccess[i] = true;\
   }\
 }
@@ -132,26 +124,16 @@ class totemNPObject : public NPObject {
 {\
   static bool logAccess[G_N_ELEMENTS (propertyNames)];\
   if (!logAccess[i]) {\
-    D ("NOTE: site sets property %s::%s", #T, propertyNames[i]);\
+    g_debug ("NOTE: site sets property %s::%s", #T, propertyNames[i]);\
     logAccess[i] = true;\
   }\
 }
-
-#else
-
-#define TOTEM_LOG_CTOR()
-#define TOTEM_LOG_DTOR()
-#define TOTEM_LOG_INVOKE(i, T)
-#define TOTEM_LOG_GETTER(i, T)
-#define TOTEM_LOG_SETTER(i, T)
-
-#endif /* GNOME_ENABLE_DEBUG */
 
 #define TOTEM_WARN_INVOKE_UNIMPLEMENTED(i, T) \
 {\
   static bool logWarning[G_N_ELEMENTS (methodNames)];\
   if (!logWarning[i]) {\
-    D ("WARNING: function %s::%s is unimplemented", #T, methodNames[i]);\
+    g_warning ("WARNING: function %s::%s is unimplemented", #T, methodNames[i]);\
     logWarning[i] = true;\
   }\
 }
@@ -160,7 +142,7 @@ class totemNPObject : public NPObject {
 {\
   static bool logWarning;\
   if (!logWarning) {\
-    D ("WARNING: function %s::%s is unimplemented", #T, methodNames[i]);\
+    g_warning ("WARNING: function %s::%s is unimplemented", #T, methodNames[i]);\
     logWarning = true;\
   }\
 }
@@ -169,7 +151,7 @@ class totemNPObject : public NPObject {
 {\
   static bool logWarning[G_N_ELEMENTS (propertyNames)];\
   if (!logWarning[i]) {\
-    D ("WARNING: getter for property %s::%s is unimplemented", #T, propertyNames[i]);\
+    g_warning ("WARNING: getter for property %s::%s is unimplemented", #T, propertyNames[i]);\
     logWarning[i] = true;\
   }\
 }
@@ -178,7 +160,7 @@ class totemNPObject : public NPObject {
 {\
   static bool logWarning;\
   if (!logWarning) {\
-    D ("WARNING: getter for property %s::%s is unimplemented", #T, propertyNames[i]);\
+    g_warning ("WARNING: getter for property %s::%s is unimplemented", #T, propertyNames[i]);\
     logWarning = true;\
   }\
 }
@@ -187,7 +169,7 @@ class totemNPObject : public NPObject {
 {\
   static bool logWarning[G_N_ELEMENTS (propertyNames)];\
   if (!logWarning[i]) {\
-    D ("WARNING: setter for property %s::%s is unimplemented", #T, propertyNames[i]);\
+    g_warning ("WARNING: setter for property %s::%s is unimplemented", #T, propertyNames[i]);\
     logWarning[i] = true;\
   }\
 }
@@ -196,7 +178,7 @@ class totemNPObject : public NPObject {
 {\
   static bool logWarning;\
   if (!logWarning) {\
-    D ("WARNING: setter for property %s::%s is unimplemented", #T, propertyNames[i]);\
+    g_warning ("WARNING: setter for property %s::%s is unimplemented", #T, propertyNames[i]);\
     logWarning = true;\
   }\
 }

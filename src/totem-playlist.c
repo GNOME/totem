@@ -37,7 +37,6 @@
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "video-utils.h"
-#include "debug.h"
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->priv->model, NULL))
 
@@ -1677,8 +1676,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 	ref = NULL;
 	uri = totem_create_full_path (mrl);
 
-	D("totem_playlist_add_one_mrl (): %s %s %s\n",
-				filename_for_display, uri ? uri : "(null)", display_name);
+	g_debug ("totem_playlist_add_one_mrl (): %s %s %s\n", filename_for_display, uri, display_name);
 
 	if (playlist->priv->tree_path != NULL && playlist->priv->current != NULL) {
 		int *indices;

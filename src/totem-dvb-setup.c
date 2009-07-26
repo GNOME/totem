@@ -25,7 +25,6 @@
 #include <gdk/gdk.h>
 
 #include "totem-dvb-setup.h"
-#include "debug.h"
 
 #ifdef GDK_WINDOWING_X11
 

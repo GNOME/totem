@@ -43,16 +43,18 @@
 #include "npruntime.h"
 #include "npupp.h"
 
-/* define GNOME_ENABLE_DEBUG for more debug spew */
-#define GNOME_ENABLE_DEBUG 1
-/* FIXME define D() so that it prints the |this| pointer, so we can differentiate between different concurrent plugins! */
-#include "debug.h"
+#ifdef G_HAVE_ISO_VARARGS
+#define D(m, ...) g_debug ("%p: "#m, this, __VA_ARGS__)
+#elif defined(G_HAVE_GNUC_VARARGS)
+#define D(m, x...) g_debug ("%p: "#m, this, x)
+#endif
+#define Dm(m) g_debug ("%p: "#m, this)
 
-// really noisy debug
+// Really noisy messages; let's noop them for now
 #ifdef G_HAVE_ISO_VARARGS
 #define DD(...)
 #elif defined(G_HAVE_GNUC_VARARGS)
-#define DD(args...)
+#define DD(x...)
 #endif
 
 #include "totemPlugin.h"
@@ -343,7 +345,7 @@ totemPlugin::SetFullscreen (bool enabled)
 void
 totemPlugin::ClearPlaylist ()
 {
-	D ("ClearPlaylist");
+	Dm ("ClearPlaylist");
 
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
@@ -466,7 +468,7 @@ totemPlugin::ViewerFork ()
 	const char *userAgent = NPN_UserAgent (mNPP);
 	if (!userAgent) {
 		/* See https://bugzilla.mozilla.org/show_bug.cgi?id=328778 */
-		D ("User agent has more than 127 characters; fix your browser!");
+		Dm ("User agent has more than 127 characters; fix your browser!");
 	}
 
         GPtrArray *arr = g_ptr_array_new ();
@@ -619,7 +621,7 @@ totemPlugin::ViewerSetup ()
 
 	mViewerSetUp = true;
 
-	D ("ViewerSetup");
+	Dm ("ViewerSetup");
 
 	/* Cancel timeout */
         if (mTimerID != 0) {
@@ -758,7 +760,7 @@ totemPlugin::ViewerSetWindow ()
 		return;
 
 	if (!mViewerProxy) {
-		D ("No viewer proxy yet, deferring SetWindow");
+		Dm ("No viewer proxy yet, deferring SetWindow");
 		return;
 	}
 
@@ -771,7 +773,7 @@ totemPlugin::ViewerSetWindow ()
 
 	assert (mViewerPendingCall == NULL); /* Have a pending call */
 
-	D ("Calling SetWindow");
+	Dm ("Calling SetWindow");
 	mViewerPendingCall = 
 		dbus_g_proxy_begin_call (mViewerProxy,
 					 "SetWindow",
@@ -794,7 +796,7 @@ totemPlugin::ViewerSetWindow ()
 void
 totemPlugin::ViewerReady ()
 {
-	D ("ViewerReady");
+	Dm ("ViewerReady");
 
 	assert (!mViewerReady);
 
@@ -823,7 +825,7 @@ totemPlugin::ViewerReady ()
 void
 totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 {
-	D ("ButtonPress");
+	Dm ("ButtonPress");
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* FIXME set href="" afterwards, so we don't try to launch again when the user clicks again? */
@@ -910,14 +912,14 @@ totemPlugin::NameOwnerChanged (const char *aName,
 	    aNewOwner[0] != '\0' /* non-empty */) {
 		if (mViewerBusAddress &&
                     strcmp (mViewerBusAddress, aNewOwner) == 0) {
-			D ("Already have owner, why are we notified again?");
+			Dm ("Already have owner, why are we notified again?");
                         g_free (mViewerBusAddress);
 		} else if (mViewerBusAddress) {
-			D ("WTF, new owner!?");
+			Dm ("WTF, new owner!?");
                         g_free (mViewerBusAddress);
 		} else {
 			/* This is the regular case */
-			D ("Viewer now connected to the bus");
+			Dm ("Viewer now connected to the bus");
 		}
 
 		mViewerBusAddress = g_strdup (aNewOwner);
@@ -925,7 +927,7 @@ totemPlugin::NameOwnerChanged (const char *aName,
 		ViewerSetup ();
 	} else if (mViewerBusAddress &&
 		   strcmp (mViewerBusAddress, aOldOwner) == 0) {
-		D ("Viewer lost connection!");
+		Dm ("Viewer lost connection!");
 
 		g_free (mViewerBusAddress);
                 mViewerBusAddress = NULL;
@@ -961,7 +963,7 @@ totemPlugin::RequestStream (bool aForceViewer)
           return;//FIXMEchpe
 
 	if (mStream) {
-		D ("Unexpectedly have a stream!");
+		Dm ("Unexpectedly have a stream!");
 		/* FIXME cancel existing stream, schedule new timer to try again */
 		return;
 	}
@@ -1117,7 +1119,7 @@ totemPlugin::ViewerForkTimeoutCallback (void *aData)
 
         plugin->mTimerID = 0;
 
-	D ("ViewerForkTimeoutCallback");
+	g_debug ("ViewerForkTimeoutCallback");
 
 	/* FIXME: can this really happen? */
 	assert (!plugin->mViewerReady); /* Viewer ready but timeout running? */
@@ -1136,7 +1138,7 @@ totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
-	D ("ButtonPress signal received");
+	g_debug ("ButtonPress signal received");
 
 	plugin->ViewerButtonPressed (aTimestamp, aButton);
 }
@@ -1147,7 +1149,7 @@ totemPlugin::StopStreamCallback (DBusGProxy *proxy,
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
-	D ("StopStream signal received");
+	g_debug ("StopStream signal received");
 
 	plugin->UnsetStream ();
 }
@@ -1227,7 +1229,7 @@ totemPlugin::ViewerSetWindowCallback (DBusGProxy *aProxy,
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
-	D ("SetWindow reply");
+	g_debug ("SetWindow reply");
 
 	//assert (aCall == plugin->mViewerPendingCall, "SetWindow not the current call");
         if (aCall != plugin->mViewerPendingCall)
@@ -1253,7 +1255,7 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
-	D ("OpenStream reply");
+	g_debug ("OpenStream reply");
 
 // 	assert (aCall == plugin->mViewerPendingCall, "OpenStream not the current call");
         if (aCall != plugin->mViewerPendingCall)
@@ -1290,7 +1292,7 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 	if (err != NPERR_NO_ERROR) {
 		plugin->mExpectingStream = false;
 
-		D ("GetURLNotify '%s' failed with error %d", plugin->mRequestURI, err);
+		g_debug ("GetURLNotify '%s' failed with error %d", plugin->mRequestURI, err);
 		return;
 	}
 
@@ -1317,7 +1319,7 @@ totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
-	D ("OpenURI reply");
+	g_debug ("OpenURI reply");
 
 // 	//assert (aCall == plugin->mViewerPendingCall, "OpenURI not the current call");
         if (aCall != plugin->mViewerPendingCall)
@@ -1865,7 +1867,7 @@ totemPlugin::Init (NPMIMEType mimetype,
                             NPNVPluginElementNPObject,
                             getter_Retains (mPluginElement));
 	if (err != NPERR_NO_ERROR || mPluginElement.IsNull ()) {
-		D ("Failed to get our DOM Element NPObject");
+		Dm ("Failed to get our DOM Element NPObject");
 		return NPERR_GENERIC_ERROR;
 	}
 
@@ -1876,7 +1878,7 @@ totemPlugin::Init (NPMIMEType mimetype,
                               NPN_GetStringIdentifier ("ownerDocument"),
                               getter_Retains (mPluginOwnerDocument)) ||
             mPluginOwnerDocument.IsNull ()) {
-		D ("Failed to get the plugin element's ownerDocument");
+		Dm ("Failed to get the plugin element's ownerDocument");
 		return NPERR_GENERIC_ERROR;
 	}
 #endif /* TOTEM_COMPLEX_PLUGIN */
@@ -1894,7 +1896,7 @@ totemPlugin::Init (NPMIMEType mimetype,
                               NPN_GetStringIdentifier ("baseURI"),
                               getter_Copies (baseURI)) ||
             !baseURI.IsString ()) {
-          D ("Failed to get the base URI");
+          Dm ("Failed to get the base URI");
           return NPERR_GENERIC_ERROR;
         }
 
@@ -1914,7 +1916,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	      					     DBUS_SERVICE_DBUS,
 						     DBUS_PATH_DBUS,
 						     DBUS_INTERFACE_DBUS))) {
-		D ("Failed to get DBUS proxy");
+		Dm ("Failed to get DBUS proxy");
 		return NPERR_OUT_OF_MEMORY_ERROR;
 	}
 
@@ -2217,7 +2219,7 @@ NPError
 totemPlugin::SetWindow (NPWindow *window)
 {
 	if (mHidden && window->window != 0) {
-		D("SetWindow: hidden, can't set window");
+		Dm ("SetWindow: hidden, can't set window");
 		return NPERR_GENERIC_ERROR;
 	}
 
@@ -2237,7 +2239,7 @@ totemPlugin::SetWindow (NPWindow *window)
 
 		ViewerSetWindow ();
 	} else {
-		D ("Setting a new window != mWindow, this is unsupported!");
+		Dm ("Setting a new window != mWindow, this is unsupported!");
 	}
 
 	return NPERR_NO_ERROR;
@@ -2256,7 +2258,7 @@ totemPlugin::NewStream (NPMIMEType type,
 
 	/* We already have a live stream */
 	if (mStream) {
-		D ("Already have a live stream, aborting stream");
+		Dm ("Already have a live stream, aborting stream");
 
 		/* We don't just return NPERR_GENERIC_ERROR (or any other error code),
 		 * since, using gecko trunk (1.9), this causes the plugin to be destroyed,
@@ -2275,7 +2277,7 @@ totemPlugin::NewStream (NPMIMEType type,
 	 *   doesn't catch always this.
 	 */
 	if (!mExpectingStream) {
-		D ("Not expecting a new stream; aborting stream");
+		Dm ("Not expecting a new stream; aborting stream");
 
 		return NPN_DestroyStream (mNPP,
                                           stream,
@@ -2294,7 +2296,7 @@ totemPlugin::NewStream (NPMIMEType type,
 	 * until the viewer is ready.
 	 */
 	if (!mViewerReady) {
-		D ("Viewer not ready, aborting stream");
+		Dm ("Viewer not ready, aborting stream");
 
 		return NPN_DestroyStream (mNPP,
                                           stream,
@@ -2417,7 +2419,7 @@ totemPlugin::Write (NPStream *stream,
 		mCheckedForPlaylist = true;
 
 		if (totem_pl_parser_can_parse_from_data ((const char *) buffer, len, TRUE /* FIXME */)) {
-			D ("Is playlist; need to wait for the file to be downloaded completely");
+			Dm ("Is playlist; need to wait for the file to be downloaded completely");
 			mIsPlaylist = true;
 
 			/* Close the viewer */
@@ -2476,7 +2478,7 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	 * it finishes before we're ready.
 	 */
 	if (!mViewerReady) {
-		D ("Viewer not ready yet, deferring SetLocalFile");
+		Dm ("Viewer not ready yet, deferring SetLocalFile");
 		return;
 	}
 
@@ -2569,7 +2571,7 @@ totemPlugin::URLNotify (const char *url,
 					   G_TYPE_INVALID,
 					   G_TYPE_INVALID);
 		} else if (reason != NPRES_DONE) {
-			D ("Failed to get stream");
+			Dm ("Failed to get stream");
 			/* FIXME: show error to user? */
 		}
 
@@ -2636,7 +2638,7 @@ totemPlugin::GetNPObject (ObjectEnum which)
 
   mNPObjects[which] = do_CreateInstance (npclass, mNPP);
   if (mNPObjects[which].IsNull ()) {
-    D ("Creating scriptable NPObject failed!");
+    Dm ("Creating scriptable NPObject failed!");
     return NULL;
   }
 

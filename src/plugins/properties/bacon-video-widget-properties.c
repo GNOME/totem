@@ -30,8 +30,6 @@
 #include "video-utils.h"
 #include "totem-interface.h"
 
-#include "debug.h"
-
 /* used in bacon_video_widget_properties_update() */
 #define UPDATE_FROM_STRING(type, name) \
 	do { \

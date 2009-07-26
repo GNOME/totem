@@ -30,9 +30,6 @@
 #include "npapi.h"
 #include "npupp.h"
 
-#define GNOME_ENABLE_DEBUG 1
-#include "debug.h"
-
 #include "totemPlugin.h"
 
 NPNetscapeFuncs NPNFuncs; /* used in npn_gate.cpp */
@@ -121,7 +118,7 @@ totem_plugin_destroy_stream (NPP instance,
 			     NPError reason)
 {
 	if (!instance) {
-		D("totem_plugin_destroy_stream instance is NULL");
+		g_debug ("totem_plugin_destroy_stream instance is NULL");
 		/* FIXME? */
 		return NPERR_NO_ERROR;
 	}
@@ -199,14 +196,14 @@ static void
 totem_plugin_print (NPP instance,
                     NPPrint* platformPrint)
 {
-	D ("Print");
+	g_debug ("Print");
 }
 
 static int16_t
 totem_plugin_handle_event (NPP instance,
                            void* event)
 {
-	D ("Handle event");
+	g_debug ("Handle event");
         return FALSE;
 }
 
@@ -247,7 +244,7 @@ totem_plugin_get_value (NPP instance,
                 }
 		break;
 	default:
-		D ("Unhandled variable %d instance %p", variable, plugin);
+		g_debug ("Unhandled variable %d instance %p", variable, plugin);
 		err = NPERR_INVALID_PARAM;
 		break;
 	}
@@ -260,7 +257,7 @@ totem_plugin_set_value (NPP instance,
 			NPNVariable variable,
 			void *value)
 {
-	D ("SetValue variable %d (%x)", variable, variable);
+	g_debug ("SetValue variable %d (%x)", variable, variable);
 
 	return NPERR_NO_ERROR;
 }
@@ -397,7 +394,7 @@ NPError
 NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 	       NPPluginFuncs *aPluginVTable)
 {
-	D ("NP_Initialize");
+	g_debug ("NP_Initialize");
 
 	if (aMozillaVTable == NULL || aPluginVTable == NULL)
 		return NPERR_INVALID_FUNCTABLE_ERROR;
@@ -464,7 +461,7 @@ NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 	aPluginVTable->getvalue       = NewNPP_GetValueProc (totem_plugin_get_value);
 	aPluginVTable->setvalue       = NewNPP_SetValueProc (totem_plugin_set_value);
 
-	D ("NP_Initialize succeeded");
+	g_debug ("NP_Initialize succeeded");
 
 	return totemPlugin::Initialise ();
 }
@@ -472,7 +469,7 @@ NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 NPError
 NP_Shutdown(void)
 {
-	D ("NP_Shutdown");
+	g_debug ("NP_Shutdown");
 
 	g_free (mime_list);
 	mime_list = NULL;

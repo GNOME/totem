@@ -37,7 +37,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include "debug.h"
 #include "totem-interface.h"
 #include "totem-uri.h"
 #include "totem-screenshot-plugin.h"
