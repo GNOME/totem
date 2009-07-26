@@ -1320,16 +1320,14 @@ static void
 menu_item_select_cb (GtkMenuItem *proxy, Totem *totem)
 {
 	GtkAction *action;
-	char *message;
+	const gchar *message;
 
 	action = gtk_activatable_get_related_action (GTK_ACTIVATABLE (proxy));
 	g_return_if_fail (action != NULL);
 
-	g_object_get (G_OBJECT (action), "tooltip", &message, NULL);
-	if (message) {
+	message = gtk_action_get_tooltip (action);
+	if (message)
 		totem_statusbar_push_help (TOTEM_STATUSBAR (totem->statusbar), message);
-		g_free (message);
-	}
 }
 
 static void
