@@ -60,10 +60,6 @@ struct _TotemPluginManagerPrivate
 	GtkTreeModel	*plugin_model;
 
 	GtkWidget	*configure_button;
-	GtkWidget	*site_label;
-	GtkWidget	*copyright_label;
-	GtkWidget	*authors_label;
-	GtkWidget	*description_label;
 	GtkWidget	*header_hbox;
 	GtkWidget	*plugin_icon;
 	GtkWidget	*site_text;
@@ -502,15 +498,6 @@ totem_plugin_manager_init (TotemPluginManager *pm)
 	pm->priv->configure_button = GTK_WIDGET (gtk_builder_get_object (xml, "configure_button"));
 	pm->priv->header_hbox = GTK_WIDGET (gtk_builder_get_object (xml, "header_hbox"));
 	pm->priv->plugin_title = GTK_WIDGET (gtk_builder_get_object (xml, "plugin_title"));
-
-	pm->priv->site_label = GTK_WIDGET (gtk_builder_get_object (xml, "site_label"));
-	totem_interface_boldify_label (xml, "site_label");
-	pm->priv->copyright_label = GTK_WIDGET (gtk_builder_get_object (xml, "copyright_label"));
-	totem_interface_boldify_label (xml, "copyright_label");
-	pm->priv->authors_label = GTK_WIDGET (gtk_builder_get_object (xml, "authors_label"));
-	totem_interface_boldify_label (xml, "authors_label");
-	pm->priv->description_label = GTK_WIDGET (gtk_builder_get_object (xml, "description_label"));
-	totem_interface_boldify_label (xml, "description_label");
 
 	pm->priv->plugin_icon = GTK_WIDGET (gtk_builder_get_object (xml, "plugin_icon"));
 	pm->priv->site_text = GTK_WIDGET (gtk_builder_get_object (xml, "site_text"));

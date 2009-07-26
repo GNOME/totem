@@ -53,10 +53,6 @@ void		 totem_interface_error_with_link (const char *title,
 void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
 char *		 totem_interface_get_license	(void);
-void		 totem_interface_boldify_label	(GtkBuilder *builder,
-						 const char *name);
-void		 totem_interface_italicise_label(GtkBuilder *builder,
-						 const char *name);
 
 G_END_DECLS
 
