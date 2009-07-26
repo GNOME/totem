@@ -73,6 +73,9 @@ void       totem_statusbar_set_seeking          (TotemStatusbar *statusbar,
 
 void       totem_statusbar_set_text             (TotemStatusbar *statusbar,
 						 const char *label);
+void       totem_statusbar_push_help            (TotemStatusbar *statusbar,
+						 const char *message);
+void       totem_statusbar_pop_help             (TotemStatusbar *statusbar);
 void	   totem_statusbar_push			(TotemStatusbar *statusbar,
 						 guint percentage);
 void       totem_statusbar_pop			(TotemStatusbar *statusbar);

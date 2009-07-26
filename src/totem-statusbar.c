@@ -37,6 +37,7 @@
 #define SPACING 4
 #define NORMAL_CONTEXT "text"
 #define BUFFERING_CONTEXT "buffering"
+#define HELP_CONTEXT "help"
 
 static void totem_statusbar_dispose          (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
@@ -158,6 +159,28 @@ totem_statusbar_set_time (TotemStatusbar *statusbar, gint _time)
 
   statusbar->time = _time;
   totem_statusbar_update_time (statusbar);
+}
+
+/* Set a help message to be displayed in the status bar. */
+void
+totem_statusbar_push_help (TotemStatusbar *statusbar, const char *message)
+{
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
+  guint id;
+
+  id = gtk_statusbar_get_context_id (gstatusbar, HELP_CONTEXT);
+  gtk_statusbar_push (gstatusbar, id, message);
+}
+
+/* Remove the last help message of the status bar. */
+void
+totem_statusbar_pop_help (TotemStatusbar *statusbar)
+{
+  GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
+  guint id;
+
+  id = gtk_statusbar_get_context_id (gstatusbar, HELP_CONTEXT);
+  gtk_statusbar_pop (gstatusbar, id);
 }
 
 static gboolean
