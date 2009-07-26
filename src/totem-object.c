@@ -913,6 +913,7 @@ totem_action_exit (Totem *totem)
 				CLAMP (vol, 0, 100),
 				NULL);
 		totem_action_save_size (totem);
+		totem_save_position (totem);
 	}
 
 	if (totem->app != NULL)
@@ -1352,8 +1353,7 @@ totem_action_stop (Totem *totem)
 void
 totem_action_play_pause (Totem *totem)
 {
-	if (totem->mrl == NULL)
-	{
+	if (totem->mrl == NULL) {
 		char *mrl, *subtitle;
 
 		/* Try to pull an mrl from the playlist */
@@ -1369,13 +1369,15 @@ totem_action_play_pause (Totem *totem)
 		}
 	}
 
-	if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
-	{
+	if (bacon_video_widget_is_playing (totem->bvw) == FALSE) {
 		bacon_video_widget_play (totem->bvw, NULL);
 		play_pause_set_label (totem, STATE_PLAYING);
 	} else {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
+
+		/* Save the stream position */
+		totem_save_position (totem);
 	}
 }
 
@@ -1392,6 +1394,9 @@ totem_action_pause (Totem *totem)
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE) {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
+
+		/* Save the stream position */
+		totem_save_position (totem);
 	}
 }
 
@@ -1657,8 +1662,8 @@ totem_action_set_mrl_with_warning (Totem *totem,
 {
 	gboolean retval = TRUE;
 
-	if (totem->mrl != NULL)
-	{
+	if (totem->mrl != NULL) {
+		totem_save_position (totem);
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
@@ -1666,8 +1671,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		play_pause_set_label (totem, STATE_STOPPED);
 	}
 
-	if (mrl == NULL)
-	{
+	if (mrl == NULL) {
 		retval = FALSE;
 
 		play_pause_set_label (totem, STATE_STOPPED);
@@ -1711,6 +1715,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			autoload_sub = totem_uri_get_subtitle_uri (mrl);
 
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
+		totem_try_restore_position (totem, mrl);
 		retval = bacon_video_widget_open (totem->bvw, mrl, subtitle ? subtitle : autoload_sub, &err);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (totem->win->window, NULL);
@@ -1737,8 +1742,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		/* Set the playlist */
 		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
 
-		if (retval == FALSE && warn != FALSE)
-		{
+		if (retval == FALSE && warn != FALSE) {
 			char *msg, *disp;
 
 			disp = totem_uri_escape_for_display (totem->mrl);
@@ -1753,8 +1757,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			g_free (msg);
 		}
 
-		if (retval == FALSE)
-		{
+		if (retval == FALSE) {
 			if (err)
 				g_error_free (err);
 			g_free (totem->mrl);

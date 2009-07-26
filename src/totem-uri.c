@@ -34,6 +34,15 @@
 #include "totem-uri.h"
 #include "totem-private.h"
 
+/* 5 minute threshold. We don't want to save the position within a 3
+ * minute song for example. */
+#define SAVE_POSITION_THRESHOLD 5 * 60 * 1000
+/* Don't save the position of a stream if we're within 5% of the end so that,
+ * for example, we don't save if the user exits when they reach the credits of a film */
+#define SAVE_POSITION_END_THRESHOLD 0.05
+/* The GIO file attribute used to store the position in a stream */
+#define SAVE_POSITION_FILE_ATTRIBUTE "metadata::totem::position"
+
 static GtkFileFilter *filter_all = NULL;
 static GtkFileFilter *filter_subs = NULL;
 static GtkFileFilter *filter_supported = NULL;
@@ -682,3 +691,84 @@ totem_add_files (GtkWindow *parent, const char *path)
 	return filenames;
 }
 
+void
+totem_save_position (Totem *totem)
+{
+	gint64 stream_length, position;
+	char *mrl, *pos_str;
+	GFile *file;
+	GError *error = NULL;
+
+	if (totem->remember_position == FALSE)
+		return;
+
+	stream_length = bacon_video_widget_get_stream_length (totem->bvw);
+	position = bacon_video_widget_get_current_time (totem->bvw);
+	mrl = totem_get_current_mrl (totem);
+
+	if (mrl == NULL)
+		return;
+
+	/* Don't save if it's:
+	 *  - a live stream
+	 *  - too short to make saving useful
+	 *  - too close to the end to make saving useful
+	 */
+	if (stream_length < SAVE_POSITION_THRESHOLD ||
+	    (stream_length - position) < stream_length * SAVE_POSITION_END_THRESHOLD) {
+		g_debug ("not saving position because the video/track is too short");
+		g_free (mrl);
+		return;
+	}
+
+	g_debug ("saving position: %"G_GINT64_FORMAT, position);
+
+	file = g_file_new_for_uri (mrl);
+	g_free (mrl);
+
+	/* Save the position in the stream as a file attribute */
+	pos_str = g_strdup_printf ("%"G_GINT64_FORMAT, position);
+	g_file_set_attribute (file,
+			      SAVE_POSITION_FILE_ATTRIBUTE,
+			      G_FILE_ATTRIBUTE_TYPE_STRING, pos_str,
+			      G_FILE_QUERY_INFO_NONE, NULL, &error);
+	g_free (pos_str);
+
+	if (error != NULL) {
+		g_warning ("g_file_set_attribute failed: %s", error->message);
+		g_error_free (error);
+	}
+	g_object_unref (file);
+}
+
+void
+totem_try_restore_position (Totem *totem, const char *mrl)
+{
+	GFile *file;
+	GFileInfo *file_info;
+	const char *seek_str;
+
+	if (totem->remember_position == FALSE)
+		return;
+
+	if (mrl == NULL)
+		return;
+
+	file = g_file_new_for_uri (mrl);
+	g_debug ("trying to restore position of: %s", mrl);
+
+	/* Get the file attribute containing the position */
+	file_info = g_file_query_info (file, SAVE_POSITION_FILE_ATTRIBUTE, G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	g_object_unref (file);
+
+	if (file_info == NULL)
+		return;
+
+	seek_str = g_file_info_get_attribute_string (file_info, SAVE_POSITION_FILE_ATTRIBUTE);
+	g_debug ("seek time: %s", seek_str);
+
+	if (seek_str != NULL)
+		totem->seek_to = g_ascii_strtoull (seek_str, NULL, 0);
+
+	g_object_unref (file_info);
+}

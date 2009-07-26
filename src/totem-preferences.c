@@ -51,6 +51,7 @@ G_MODULE_EXPORT void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Tot
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem);
@@ -198,6 +199,19 @@ checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 			       value, NULL);
 }
 
+void
+remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+
+	gconf_client_set_bool (totem->gc,
+			       GCONF_PREFIX"/remember_position",
+			       value, NULL);
+	totem->remember_position = value;
+}
+
 static void
 deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
 		GConfEntry *entry, Totem *totem)
@@ -216,6 +230,24 @@ deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
 
 	g_signal_handlers_unblock_matched (G_OBJECT (action),
 			G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
+}
+
+static void
+remember_position_changed_cb (GConfClient *client, guint cnxn_id,
+                              GConfEntry *entry, Totem *totem)
+{
+	GObject *item;
+
+	item = gtk_builder_get_object (totem->xml, "tpw_remember_position_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+			remember_position_checkbutton_toggled_cb, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+			gconf_client_get_bool (totem->gc,
+				GCONF_PREFIX"/remember_position", NULL));
+
+	g_signal_connect (item, "toggled",
+			G_CALLBACK (remember_position_checkbutton_toggled_cb), totem);
 }
 
 static void
@@ -514,6 +546,7 @@ totem_setup_preferences (Totem *totem)
 	gtk_widget_destroy (GTK_WIDGET (item));
 
 	/* Boldify some labels */
+	totem_interface_boldify_label (totem->xml, "tpw_playback_label");
 	totem_interface_boldify_label (totem->xml, "tpw_network_label");
 	totem_interface_boldify_label (totem->xml, "tpw_text_subtitles_label");
 	totem_interface_boldify_label (totem->xml, "tpw_display_label");
@@ -527,6 +560,15 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (gtk_widget_hide_on_delete), NULL);
         g_signal_connect (totem->prefs, "destroy",
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
+
+	/* Remember position */
+	totem->remember_position = gconf_client_get_bool (totem->gc,
+			GCONF_PREFIX"/remember_position", NULL);
+	item = gtk_builder_get_object (totem->xml, "tpw_remember_position_checkbutton");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), totem->remember_position);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/remember_position",
+	                         (GConfClientNotifyFunc) remember_position_changed_cb,
+	                         totem, NULL, NULL);
 
 	/* Auto-resize */
 	auto_resize = gconf_client_get_bool (totem->gc,
