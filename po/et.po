@@ -15,9 +15,9 @@ msgstr ""
 "Project-Id-Version: totem HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-07-19 22:51+0000\n"
-"PO-Revision-Date: 2009-06-18 12:25+0300\n"
-"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"POT-Creation-Date: 2009-07-26 19:26+0000\n"
+"PO-Revision-Date: 2009-07-27 08:32+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -230,6 +230,9 @@ msgstr "AC3 läbilaskerežiim"
 msgid "A_udio Menu"
 msgstr "_Helimenüü"
 
+msgid "About this application"
+msgstr "Lähem teave selle rakenduse kohta"
+
 msgid "Also disable the screensaver when playing _audio"
 msgstr "Ekraanisäästja on keelatud ka _audioesituse ajal"
 
@@ -254,6 +257,12 @@ msgstr "Ko_ntrast:"
 msgid "Color Balance"
 msgstr "Värvustasakaal"
 
+msgid "Configure plugins to extend the application"
+msgstr "Rakenduse laiendamise pluginate seadistamine"
+
+msgid "Configure the application"
+msgstr "Rakenduse seadistamine"
+
 msgid "Connection _speed:"
 msgstr "Ühenduse kii_rus:"
 
@@ -265,6 +274,9 @@ msgstr "Ülerealaotuse eemaldamine"
 
 msgid "Display"
 msgstr "Kuva"
+
+msgid "Eject the current disc"
+msgstr "Praeguse plaadi väljastamine"
 
 msgid "Extra Large"
 msgstr "Eriti suur"
@@ -322,6 +334,9 @@ msgstr "Esita / p_ausi"
 
 msgid "Play or pause the movie"
 msgstr "Filmi esitamine või esitamisse pausi tegemine"
+
+msgid "Playback"
+msgstr "Esitamine"
 
 msgid "Plugins..."
 msgstr "Pluginad..."
@@ -413,6 +428,9 @@ msgstr "Edasikerimine"
 msgid "Square"
 msgstr "Ruut"
 
+msgid "Start playing files from last position"
+msgstr "Failide esitamise alustamine viimati kasutatud asukohalt"
+
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -433,6 +451,9 @@ msgstr "Kerimisriba"
 
 msgid "Totem Preferences"
 msgstr "Totem'i eelistused"
+
+msgid "View the properties of the current stream"
+msgstr "Praeguse andmevoo omaduste vaatamine"
 
 msgid "Visual Effects"
 msgstr "Visuaalefektid"
@@ -717,6 +738,13 @@ msgstr "Kas kasutaja kodukataloogis olevad pluginad on lubatud või mitte"
 msgid "Whether to enable debug for the playback engine"
 msgstr "Kas lubada silumisteabe väljastamist esitusmootori poolt"
 
+msgid ""
+"Whether to remember the position of played audio/video files when pausing or "
+"closing them."
+msgstr ""
+"Kas audio- ja videofailide viimane asukoht tuleb esitamise pausimisel või "
+"faili sulgemisel meelde jätta või mitte."
+
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Sisesta faili _aadress, mida sa soovid avada:"
 
@@ -752,8 +780,14 @@ msgid "Not a launchable item"
 msgstr "Pole käivitatav element"
 
 #, c-format
-msgid "File Format: %s"
-msgstr "Faili vorming: %s"
+msgid "File _Format: %s"
+msgstr "Faili _vorming: %s"
+
+msgid "All Files"
+msgstr "Kõik failid"
+
+msgid "All Supported Files"
+msgstr "Kõik toetatud failitüübid"
 
 msgid "By Extension"
 msgstr "Laiendi järgi"
@@ -763,6 +797,19 @@ msgstr "Faili vorming"
 
 msgid "Extension(s)"
 msgstr "Laiendi(d)"
+
+#, c-format
+msgid ""
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
+"choose a file format from the list below."
+msgstr ""
+"Programmil pole võimalik `%s' jaoks failivormingut leida. Palun veendu, et "
+"sul on selle faili jaoks plugin või vali allpool olevast nimekirjast sobiv "
+"vorming."
+
+msgid "File format not recognized"
+msgstr "Faili vormingut pole võimalik ära tunda"
 
 msgid "Disable connection to session manager"
 msgstr "Seansihalduriga ühendumise keelamine"
@@ -1449,9 +1496,6 @@ msgstr ""
 msgid "Media file could not be played."
 msgstr "Meediumifaili pole võimalik esitada."
 
-msgid "Failed to retrieve working directory"
-msgstr "Tõrge aktiivse kataloogi kasutamisel"
-
 msgid "Surround"
 msgstr "Surround"
 
@@ -2088,9 +2132,6 @@ msgstr "Päringu tühistamine…"
 msgid "Error Looking Up Video URI"
 msgstr "Video-URI otsimisel esines viga"
 
-msgid "Error Loading Video Thumbnail"
-msgstr "Viga video pisipildi laadimisel"
-
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
@@ -2192,6 +2233,12 @@ msgstr ""
 "Pärast \"Olgu\" vajutamist ootab Totem winpdb või rpdb2 abil loodud "
 "ühendust. Kui GConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
+
+#~ msgid "Failed to retrieve working directory"
+#~ msgstr "Tõrge aktiivse kataloogi kasutamisel"
+
+#~ msgid "Error Loading Video Thumbnail"
+#~ msgstr "Viga video pisipildi laadimisel"
 
 #~ msgid "_Allow the screensaver to activate even when audio-only is playing"
 #~ msgstr "Ekraanisäästjat on lubatud au_dio esitamise ajal aktiveerida"
