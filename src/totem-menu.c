@@ -802,12 +802,22 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 		/* Work out an icon to display */
 		icon = g_volume_get_icon (i->data);
 		icon_name = NULL;
-		icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
 
-		for (j = 0; icon_names[j] != NULL; j++) {
-			icon_name = icon_names[j];
-			if (gtk_icon_theme_has_icon (theme, icon_name) != FALSE)
-				break;
+		if (G_IS_EMBLEMED_ICON (icon) != FALSE) {
+			GIcon *new_icon;
+			new_icon = g_emblemed_icon_get_icon (G_EMBLEMED_ICON (icon));
+			g_object_unref (icon);
+			icon = new_icon;
+		}
+
+		if (G_IS_THEMED_ICON (icon)) {
+			icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+
+			for (j = 0; icon_names[j] != NULL; j++) {
+				icon_name = icon_names[j];
+				if (gtk_icon_theme_has_icon (theme, icon_name) != FALSE)
+					break;
+			}
 		}
 
 		/* Get the volume's pretty name for the menu label */
