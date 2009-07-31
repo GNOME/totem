@@ -237,15 +237,15 @@ remember_position_changed_cb (GConfClient *client, guint cnxn_id,
 	GObject *item;
 
 	item = gtk_builder_get_object (totem->xml, "tpw_remember_position_checkbutton");
-	g_signal_handlers_disconnect_by_func (item,
-			remember_position_checkbutton_toggled_cb, totem);
+	g_signal_handlers_block_by_func (item, remember_position_checkbutton_toggled_cb,
+					 totem);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/remember_position", NULL));
+				      gconf_client_get_bool (totem->gc,
+							     GCONF_PREFIX"/remember_position", NULL));
 
-	g_signal_connect (item, "toggled",
-			G_CALLBACK (remember_position_checkbutton_toggled_cb), totem);
+	g_signal_handlers_unblock_by_func (item, remember_position_checkbutton_toggled_cb,
+					   totem);
 }
 
 static void
