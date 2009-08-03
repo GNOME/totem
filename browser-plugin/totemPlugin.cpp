@@ -2601,6 +2601,8 @@ totemPlugin::GetNPObject (ObjectEnum which)
     case eGMPSettings:
       npclass = totemGMPSettingsNPClass::Instance();
       break;
+    case eLastNPObject:
+      g_assert_not_reached ();
   }
 #elif defined(TOTEM_COMPLEX_PLUGIN)
   npclass = totemComplexPluginNPClass::Instance();
@@ -2628,6 +2630,8 @@ totemPlugin::GetNPObject (ObjectEnum which)
     case eConeVideo:
       npclass = totemConeVideoNPClass::Instance();
       break;
+    case eLastNPObject:
+      g_assert_not_reached ();
   }
 #else
 #error Unknown plugin type
