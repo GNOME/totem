@@ -112,7 +112,7 @@ totem_python_module_init_python (void)
 	PyObject *sys_path;
 	struct sigaction old_sigint;
 	gint res;
-	const char *argv[] = { "totem", NULL };
+	char *argv[] = { "totem", NULL };
 	GList *paths;
 
 	if (Py_IsInitialized ()) {
