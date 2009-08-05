@@ -3457,6 +3457,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 #endif /* HAVE_XFREE */
 	case GDK_N:
 	case GDK_n:
+	case GDK_End:
 		totem_action_next (totem);
 		break;
 #ifdef HAVE_XFREE
@@ -3555,6 +3556,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			else
 				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_RIGHT);
 		}
+		break;
+	case GDK_Home:
+		totem_action_seek (totem, 0);
 		break;
 	case GDK_Up:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
