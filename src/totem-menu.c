@@ -544,6 +544,7 @@ connect_proxy_cb (GtkActionGroup *action_group,
         }
 
         gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), image);
+        gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy), TRUE);
 }
 
 static void
@@ -778,6 +779,8 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 		const char *icon_name;
 		guint j;
 		char *device_path;
+		GtkWidget *menu_item;
+		char *menu_item_path;
 
 		disabled = FALSE;
 
@@ -846,6 +849,14 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 		gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
 			"/tmw-menubar/movie/devices-placeholder", name, name,
 			GTK_UI_MANAGER_MENUITEM, FALSE);
+
+		/* TODO: This can be made cleaner once bug #589842 is fixed */
+		menu_item_path = g_strdup_printf ("/tmw-menubar/movie/devices-placeholder/%s", name);
+		menu_item = gtk_ui_manager_get_widget (totem->ui_manager, menu_item_path);
+		g_free (menu_item_path);
+
+		if (menu_item != NULL)
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menu_item), TRUE);
 
 		g_free (name);
 		g_free (label);
