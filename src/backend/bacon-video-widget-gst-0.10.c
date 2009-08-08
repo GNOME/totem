@@ -696,7 +696,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
     if (pixbuf != NULL) {
       /* draw logo here */
       GdkPixbuf *logo = NULL;
-      gint s_width, s_height, w_width, w_height;
+      gint s_width, s_height, d_width, d_height;
       gfloat ratio;
       GdkRegion *region;
       GdkRectangle rect;
@@ -716,17 +716,17 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
       s_width = gdk_pixbuf_get_width (pixbuf);
       s_height = gdk_pixbuf_get_height (pixbuf);
-      w_width = widget->allocation.width;
-      w_height = widget->allocation.height;
+      d_width = widget->allocation.width;
+      d_height = widget->allocation.height;
 
       /* Limit the width/height to 256×256 pixels, but only if we're displaying the logo proper */
-      if (!bvw->priv->cover_pixbuf && (w_width > LOGO_SIZE || w_height > LOGO_SIZE))
-        w_width = w_height = LOGO_SIZE;
+      if (!bvw->priv->cover_pixbuf && d_width > LOGO_SIZE && d_height > LOGO_SIZE)
+        d_width = d_height = LOGO_SIZE;
 
-      if ((gfloat) w_width / s_width > (gfloat) w_height / s_height) {
-        ratio = (gfloat) w_height / s_height;
+      if ((gfloat) d_width / s_width > (gfloat) d_height / s_height) {
+        ratio = (gfloat) d_height / s_height;
       } else {
-        ratio = (gfloat) w_width / s_width;
+        ratio = (gfloat) d_width / s_width;
       }
 
       s_width *= ratio;
@@ -739,8 +739,11 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 	return TRUE;
       }
 
-      logo = gdk_pixbuf_scale_simple (pixbuf,
-          s_width, s_height, GDK_INTERP_BILINEAR);
+      /* Only scale the logo if necessary */
+      if (d_width != LOGO_SIZE || d_height != LOGO_SIZE)
+        logo = gdk_pixbuf_scale_simple (pixbuf, s_width, s_height, GDK_INTERP_BILINEAR);
+      else
+        logo = g_object_ref (pixbuf);
 
       gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
           0, 0, (widget->allocation.width - s_width) / 2, (widget->allocation.height - s_height) / 2,
