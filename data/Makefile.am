@@ -10,7 +10,6 @@ stuff_DATA =				\
 	filmholes.png			\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
-	totem_logo.png			\
 	totem.ui			\
 	fullscreen.ui			\
 	playlist.ui			\

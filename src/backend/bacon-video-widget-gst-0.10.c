@@ -86,6 +86,8 @@
 #define DEFAULT_WIDTH  315
 #define SMALL_STREAM_WIDTH 200
 #define SMALL_STREAM_HEIGHT 120
+/* Maximum size of the logo */
+#define LOGO_SIZE 256
 
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
@@ -717,6 +719,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       w_width = widget->allocation.width;
       w_height = widget->allocation.height;
 
+      /* Limit the width/height to 256×256 pixels, but only if we're displaying the logo proper */
+      if (!bvw->priv->cover_pixbuf && (w_width > LOGO_SIZE || w_height > LOGO_SIZE))
+        w_width = w_height = LOGO_SIZE;
+
       if ((gfloat) w_width / s_width > (gfloat) w_height / s_height) {
         ratio = (gfloat) w_height / s_height;
       } else {
@@ -737,7 +743,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
           s_width, s_height, GDK_INTERP_BILINEAR);
 
       gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
-          0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
+          0, 0, (widget->allocation.width - s_width) / 2, (widget->allocation.height - s_height) / 2,
           s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
       gdk_window_end_paint (win);
@@ -3649,51 +3655,29 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
 /**
  * bacon_video_widget_set_logo:
  * @bvw: a #BaconVideoWidget
- * @filename: the logo filename
+ * @name: the icon name of the logo
  *
  * Sets the logo displayed on the video widget when no stream is loaded.
  **/
 void
-bacon_video_widget_set_logo (BaconVideoWidget * bvw, const gchar * filename)
+bacon_video_widget_set_logo (BaconVideoWidget *bvw, const gchar *name)
 {
+  GtkIconTheme *theme;
   GError *error = NULL;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (filename != NULL);
+  g_return_if_fail (name != NULL);
 
   if (bvw->priv->logo_pixbuf != NULL)
     g_object_unref (bvw->priv->logo_pixbuf);
 
-  bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
+  theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (bvw)));
+  bvw->priv->logo_pixbuf = gtk_icon_theme_load_icon (theme, name, LOGO_SIZE, 0, &error);
 
   if (error) {
-    g_warning ("An error occurred trying to open logo %s: %s",
-               filename, error->message);
+    g_warning ("An error occurred trying to open logo %s: %s", name, error->message);
     g_error_free (error);
   }
-}
-
-/**
- * bacon_video_widget_set_logo_pixbuf:
- * @bvw: a #BaconVideoWidget
- * @logo: the logo #GdkPixbuf
- *
- * Sets the logo displayed on the video widget when no stream is loaded,
- * by passing in a #GdkPixbuf directly. @logo is reffed, so can be unreffed
- * once this function call is complete.
- **/
-void
-bacon_video_widget_set_logo_pixbuf (BaconVideoWidget * bvw, GdkPixbuf *logo)
-{
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (logo != NULL);
-
-  if (bvw->priv->logo_pixbuf != NULL)
-    g_object_unref (bvw->priv->logo_pixbuf);
-
-  g_object_ref (logo);
-  bvw->priv->logo_pixbuf = logo;
 }
 
 /**

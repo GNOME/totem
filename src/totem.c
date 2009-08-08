@@ -265,7 +265,7 @@ main (int argc, char **argv)
 	}
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
-	bacon_video_widget_set_logo (totem->bvw, LOGO_PATH);
+	bacon_video_widget_set_logo (totem->bvw, "totem");
 
 	if (optionstate.fullscreen == FALSE)
 		gdk_window_set_cursor (totem->win->window, NULL);

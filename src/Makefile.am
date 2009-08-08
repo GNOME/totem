@@ -14,7 +14,6 @@ common_defines = \
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\
-	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"	\
 	$(DISABLE_DEPRECATED)
 
 modules_flags = -export_dynamic -avoid-version -module -no-undefined

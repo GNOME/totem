@@ -375,68 +375,16 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	emb->state = state;
 }
 
-static GdkPixbuf *
-totem_embedded_pad_pixbuf_for_size (GdkPixbuf *pixbuf,
-				    int width, int height)
-{
-	GdkPixbuf *logo;
-	guchar *pixels;
-	int rowstride, i;
-	int dest_x, dest_y;
-
-	logo = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			       TRUE, 8, width, height);
-	pixels = gdk_pixbuf_get_pixels (logo);
-	rowstride = gdk_pixbuf_get_rowstride (logo);
-
-	/* Clear it */
-	for (i = 0; i < height; i++) {
-		memset (pixels + i * rowstride, 0, width * 4);
-	}
-
-	dest_x = (width - gdk_pixbuf_get_width (pixbuf)) / 2;
-	dest_y = (height - gdk_pixbuf_get_height (pixbuf)) / 2;
-	gdk_pixbuf_copy_area (pixbuf,
-			      0, 0,
-			      MIN (gdk_pixbuf_get_width (logo), gdk_pixbuf_get_width (pixbuf)),
-			      MIN (gdk_pixbuf_get_height (logo), gdk_pixbuf_get_height (pixbuf)),
-			      logo,
-			      dest_x,
-			      dest_y);
-
-	return logo;
-}
-
 static void
 totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 				 const char *name)
 {
-	GtkIconTheme *theme;
-	GdkPixbuf *logo, *padded;
-	int size, width, height;
-
 	totem_embedded_set_state (embedded, TOTEM_STATE_STOPPED);
 
 	if (embedded->audioonly != FALSE || embedded->hidden != FALSE)
 		return;
 
-	theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (embedded->window));
-
-	width = GTK_WIDGET (embedded->bvw)->allocation.width;
-	height = GTK_WIDGET (embedded->bvw)->allocation.height;
-	size = MIN (width, height);
-
-	logo = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
-	if (logo == NULL) {
-		g_warning ("Couldn't load '%s' icon from theme", name);
-		return;
-	}
-	padded = totem_embedded_pad_pixbuf_for_size (logo, width, height);
-	g_object_unref (logo);
-	if (padded != NULL) {
-		bacon_video_widget_set_logo_pixbuf (embedded->bvw, padded);
-		bacon_video_widget_set_logo_mode (embedded->bvw, TRUE);
-	}
+	bacon_video_widget_set_logo (embedded->bvw, name);
 }
 
 static void
