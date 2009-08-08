@@ -156,6 +156,7 @@ struct BaconVideoWidgetPrivate
   guint                        update_id;
 
   GdkPixbuf                   *logo_pixbuf;
+  GdkPixbuf                   *cover_pixbuf; /* stream-specific image */
 
   gboolean                     media_has_video;
   gboolean                     media_has_audio;
@@ -256,6 +257,8 @@ static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
+static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
+static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -368,9 +371,12 @@ static void
 get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 {
   if (bvw->priv->logo_mode) {
-    if (bvw->priv->logo_pixbuf) {
-      *width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
-      *height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    const GdkPixbuf *pixbuf;
+
+    pixbuf = bvw_get_logo_pixbuf (bvw);
+    if (pixbuf) {
+      *width = gdk_pixbuf_get_width (pixbuf);
+      *height = gdk_pixbuf_get_height (pixbuf);
     } else {
       *width = 0;
       *height = 0;
@@ -682,7 +688,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       !bvw->priv->media_has_video && !bvw->priv->show_vfx;
 
   if (bvw->priv->logo_mode || draw_logo) {
-    if (bvw->priv->logo_pixbuf != NULL) {
+    const GdkPixbuf *pixbuf;
+
+    pixbuf = bvw_get_logo_pixbuf (bvw);
+    if (pixbuf != NULL) {
       /* draw logo here */
       GdkPixbuf *logo = NULL;
       gint s_width, s_height, w_width, w_height;
@@ -703,8 +712,8 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 			     widget->allocation.width,
 			     widget->allocation.height);
 
-      s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
-      s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      s_width = gdk_pixbuf_get_width (pixbuf);
+      s_height = gdk_pixbuf_get_height (pixbuf);
       w_width = widget->allocation.width;
       w_height = widget->allocation.height;
 
@@ -724,7 +733,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 	return TRUE;
       }
 
-      logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
+      logo = gdk_pixbuf_scale_simple (pixbuf,
           s_width, s_height, GDK_INTERP_BILINEAR);
 
       gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
@@ -1636,6 +1645,9 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
 
   /* clean up */
   gst_tag_list_free (tag_list);
+
+  if (bvw->priv->use_type != BVW_USE_TYPE_METADATA)
+    bvw_check_for_cover_pixbuf (bvw);
 
   /* if we're not interactive, we want to announce metadata
    * only later when we can be sure we got it all */
@@ -3473,6 +3485,10 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->buffering = FALSE;
   bvw->priv->plugin_install_in_progress = FALSE;
   bvw->priv->ignore_messages_mask = 0;
+  if (bvw->priv->cover_pixbuf) {
+    g_object_unref (bvw->priv->cover_pixbuf);
+    bvw->priv->cover_pixbuf = NULL;
+  }
   GST_DEBUG ("stopped");
 }
 
@@ -3735,6 +3751,37 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   return bvw->priv->logo_mode;
+}
+
+static gboolean
+bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw)
+{
+  GValue value = { 0, };
+
+  /* for efficiency reasons (decoding of encoded image into pixbuf) we assume
+   * that all potential images come in the same taglist, so once we've
+   * determined the best image/cover, we assume that's really the best one
+   * for this stream, even if more tag messages come in later (this should
+   * not be a problem in practice) */
+  if (bvw->priv->cover_pixbuf)
+    return TRUE;
+
+  bacon_video_widget_get_metadata (bvw, BVW_INFO_COVER, &value);
+  if (G_VALUE_HOLDS_OBJECT (&value)) {
+    bvw->priv->cover_pixbuf = g_value_dup_object (&value);
+    g_value_unset (&value);
+  }
+
+  return (bvw->priv->cover_pixbuf != NULL);
+}
+
+static const GdkPixbuf *
+bvw_get_logo_pixbuf (BaconVideoWidget * bvw)
+{
+  if (bvw_check_for_cover_pixbuf (bvw))
+    return bvw->priv->cover_pixbuf;
+  else
+    return bvw->priv->logo_pixbuf;
 }
 
 /**
@@ -5441,21 +5488,21 @@ bacon_video_widget_get_metadata_pixbuf (BaconVideoWidget * bvw,
 					GstBuffer *buffer)
 {
   GdkPixbufLoader *loader;
-  GdkPixbuf *pixbuf;
+  GdkPixbuf *pixbuf = NULL;
+  GError *err = NULL;
 
   loader = gdk_pixbuf_loader_new ();
-  if (!gdk_pixbuf_loader_write (loader, buffer->data, buffer->size, NULL)) {
-    g_object_unref (loader);
-    return NULL;
-  }
-  if (!gdk_pixbuf_loader_close (loader, NULL)) {
-    g_object_unref (loader);
-    return NULL;
+
+  if (gdk_pixbuf_loader_write (loader, buffer->data, buffer->size, &err) &&
+      gdk_pixbuf_loader_close (loader, &err)) {
+    pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+    if (pixbuf)
+      g_object_ref (pixbuf);
+  } else {
+    GST_WARNING("could not convert tag image to pixbuf: %s", err->message);
+    g_error_free (err);
   }
 
-  pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-  if (pixbuf)
-    g_object_ref (pixbuf);
   g_object_unref (loader);
   return pixbuf;
 }
