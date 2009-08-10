@@ -9,7 +9,7 @@ plugin_in_files = screenshot.totem-plugin.in
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
-ui_DATA = gallery.ui
+ui_DATA = gallery.ui gnome-screenshot.ui
 
 common_defines = \
 	-D_REENTRANT					\
@@ -23,6 +23,8 @@ common_defines = \
 	$(DISABLE_DEPRECATED)
 
 libscreenshot_la_SOURCES = \
+	gnome-screenshot-widget.c	\
+	gnome-screenshot-widget.h	\
 	totem-screenshot-plugin.c	\
 	totem-screenshot-plugin.h	\
 	totem-screenshot.c		\

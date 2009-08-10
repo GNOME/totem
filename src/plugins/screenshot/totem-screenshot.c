@@ -31,22 +31,16 @@
 
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
+#include <glib.h>
 #include <gtk/gtk.h>
-#include <string.h>
-#include <sys/types.h>
 #include <unistd.h>
-#include <sys/stat.h>
 
 #include "totem-interface.h"
-#include "totem-uri.h"
 #include "totem-screenshot-plugin.h"
+#include "gnome-screenshot-widget.h"
 
-struct TotemScreenshotPrivate
-{
-	GtkWidget *chooser;
-	GtkWidget *image;
-	GdkPixbuf *pixbuf, *scaled;
-	char *temp_file;
+struct TotemScreenshotPrivate {
+	GnomeScreenshotWidget *widget;
 };
 
 G_DEFINE_TYPE (TotemScreenshot, totem_screenshot, GTK_TYPE_DIALOG)
@@ -54,7 +48,8 @@ G_DEFINE_TYPE (TotemScreenshot, totem_screenshot, GTK_TYPE_DIALOG)
 static void
 totem_screenshot_temp_file_create (TotemScreenshot *screenshot)
 {
-	char *dir, *fulldir;
+	char *dir, *fulldir, *temp_filename;
+	GdkPixbuf *pixbuf;
 
 	dir = g_strdup_printf ("totem-screenshot-%d", getpid ());
 	fulldir = g_build_filename (g_get_tmp_dir (), dir, NULL);
@@ -63,116 +58,79 @@ totem_screenshot_temp_file_create (TotemScreenshot *screenshot)
 		g_free (dir);
 		return;
 	}
-	screenshot->_priv->temp_file = g_build_filename
-		(g_get_tmp_dir (),
-		 dir, _("Screenshot.png"), NULL);
+
+	/* Write the screenshot to the temporary file */
+	temp_filename = g_build_filename (g_get_tmp_dir (), dir, _("Screenshot.png"), NULL);
+	pixbuf = gnome_screenshot_widget_get_screenshot (screenshot->priv->widget);
+
+	if (gdk_pixbuf_save (pixbuf, temp_filename, "png", NULL, NULL) == FALSE)
+		goto error;
+
+	gnome_screenshot_widget_set_temporary_filename (screenshot->priv->widget, temp_filename);
+
+error:
+	g_free (temp_filename);
 }
 
 static void
-totem_screenshot_temp_file_remove (TotemScreenshot *screenshot)
+totem_screenshot_temp_file_remove (GnomeScreenshotWidget *widget)
 {
 	char *dirname;
+	const gchar *temp_filename;
 
-	if (screenshot->_priv->temp_file == NULL)
+	temp_filename = gnome_screenshot_widget_get_temporary_filename (widget);
+	if (temp_filename == NULL)
 		return;
 
-	unlink (screenshot->_priv->temp_file);
-	dirname = g_path_get_dirname (screenshot->_priv->temp_file);
-	rmdir (dirname);
+	g_unlink (temp_filename);
+	dirname = g_path_get_dirname (temp_filename);
+	g_rmdir (dirname);
 	g_free (dirname);
 
-	g_free (screenshot->_priv->temp_file);
-}
-
-
-static void
-drag_data_get (GtkWidget          *widget,
-	       GdkDragContext     *context,
-	       GtkSelectionData   *selection_data,
-	       guint               info,
-	       guint               _time,
-	       TotemScreenshot    *screenshot)
-{
-	char *string;
-
-	/* FIXME We should cancel the drag */
-	if (screenshot->_priv->temp_file == NULL)
-		return;
-
-	string = g_strdup_printf ("file://%s\r\n",
-			screenshot->_priv->temp_file);
-	gtk_selection_data_set (selection_data,
-			selection_data->target,
-			8, (guchar *)string, strlen (string)+1);
-	g_free (string);
-}
-
-static void
-drag_begin (GtkWidget *widget, GdkDragContext *context,
-		TotemScreenshot *screenshot)
-{
-	if (screenshot->_priv->temp_file == NULL)
-	{
-		gtk_drag_set_icon_pixbuf (context, screenshot->_priv->scaled,
-				0, 0);
-		totem_screenshot_temp_file_create (screenshot);
-		g_return_if_fail (screenshot->_priv->temp_file != NULL);
-		gdk_pixbuf_save (screenshot->_priv->pixbuf,
-				screenshot->_priv->temp_file, "png",
-				NULL, NULL);
-	}
+	gnome_screenshot_widget_set_temporary_filename (widget, NULL);
 }
 
 static void
 totem_screenshot_response (GtkDialog *dialog, int response)
 {
 	TotemScreenshot *screenshot = TOTEM_SCREENSHOT (dialog);
-	char *filename;
+	char *uri, *path;
+	GdkPixbuf *pixbuf;
 	GError *err = NULL;
+	GFile *file;
 
 	if (response != GTK_RESPONSE_ACCEPT)
 		return;
 
-	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (screenshot->_priv->chooser));
+	uri = gnome_screenshot_widget_get_uri (screenshot->priv->widget);
+	file = g_file_new_for_uri (uri);
+	path = g_file_get_path (file);
 
-	if (gdk_pixbuf_save (screenshot->_priv->pixbuf, filename, "png", &err, NULL) == FALSE) {
+	pixbuf = gnome_screenshot_widget_get_screenshot (screenshot->priv->widget);
+
+	if (gdk_pixbuf_save (pixbuf, path, "png", &err, NULL) == FALSE) {
 		totem_interface_error (_("There was an error saving the screenshot."),
 				       err->message,
 			 	       GTK_WINDOW (screenshot));
 		g_error_free (err);
-		g_free (filename);
+		g_free (uri);
+		g_free (path);
 		return;
 	}
 
-	totem_screenshot_plugin_update_file_chooser (filename);
-	g_free (filename);
+	totem_screenshot_plugin_update_file_chooser (uri);
+	g_free (uri);
+	g_free (path);
 }
 
 static void
 totem_screenshot_init (TotemScreenshot *screenshot)
 {
-	GtkWidget *box;
+	GtkBox *content_area;
 
-	screenshot->_priv = g_new0 (TotemScreenshotPrivate, 1);
+	screenshot->priv = G_TYPE_INSTANCE_GET_PRIVATE (screenshot, TOTEM_TYPE_SCREENSHOT, TotemScreenshotPrivate);
 
 	gtk_container_set_border_width (GTK_CONTAINER (screenshot), 5);
-
-	screenshot->_priv->chooser = gtk_file_chooser_widget_new (GTK_FILE_CHOOSER_ACTION_SAVE);
-	totem_add_pictures_dir (screenshot->_priv->chooser);
-	box = gtk_hbox_new (FALSE, 5);
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (screenshot)->vbox), box);
-	screenshot->_priv->image = gtk_image_new ();
-	gtk_box_pack_start (GTK_BOX (box),
-			    screenshot->_priv->image,
-			    FALSE,
-			    FALSE,
-			    0);
-	gtk_box_pack_start (GTK_BOX (box),
-			    screenshot->_priv->chooser,
-			    TRUE,
-			    TRUE,
-			    0);
-
 	gtk_dialog_add_buttons (GTK_DIALOG (screenshot),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
@@ -180,58 +138,36 @@ totem_screenshot_init (TotemScreenshot *screenshot)
 	gtk_dialog_set_has_separator (GTK_DIALOG (screenshot), FALSE);
 	gtk_window_set_title (GTK_WINDOW (screenshot), _("Save Screenshot"));
 	gtk_dialog_set_default_response (GTK_DIALOG (screenshot), GTK_RESPONSE_ACCEPT);
+	gtk_window_set_resizable (GTK_WINDOW (screenshot), FALSE);
 
-	/* Setup the DnD for the image */
-	g_signal_connect (G_OBJECT (screenshot->_priv->image), "drag_begin",
-			G_CALLBACK (drag_begin), screenshot);
-	g_signal_connect (G_OBJECT (screenshot->_priv->image), "drag_data_get",
-			G_CALLBACK (drag_data_get), screenshot);
-	gtk_drag_source_set (GTK_WIDGET (screenshot->_priv->image),
-			GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-			NULL, 0,
-			GDK_ACTION_COPY);
-	gtk_drag_source_add_uri_targets (GTK_WIDGET (screenshot->_priv->image));
-
-	/* Set the default path and filename */
-	totem_screenshot_plugin_setup_file_chooser (GTK_FILE_CHOOSER (screenshot->_priv->chooser), N_("Screenshot%d.png"));
-
-	gtk_widget_show_all (GTK_DIALOG (screenshot)->vbox);
+	content_area = GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (screenshot)));
+	gtk_box_set_spacing (content_area, 2);
 }
 
-static void
-totem_screenshot_finalize (GObject *object)
-{
-	TotemScreenshot *screenshot = TOTEM_SCREENSHOT (object);
-
-	g_return_if_fail (object != NULL);
-
-	totem_screenshot_temp_file_remove (screenshot);
-
-	if (screenshot->_priv->pixbuf != NULL)
-		g_object_unref (screenshot->_priv->pixbuf);
-	if (screenshot->_priv->scaled != NULL)
-		g_object_unref (screenshot->_priv->scaled);
-
-	G_OBJECT_CLASS (totem_screenshot_parent_class)->finalize (object);
-}
-
-GtkWidget*
-totem_screenshot_new (GdkPixbuf *screen_image)
+GtkWidget *
+totem_screenshot_new (TotemPlugin *screenshot_plugin, GdkPixbuf *screen_image)
 {
 	TotemScreenshot *screenshot;
-	int width, height;
+	GtkContainer *content_area;
+	char *interface_path, *initial_uri;
 
 	screenshot = TOTEM_SCREENSHOT (g_object_new (TOTEM_TYPE_SCREENSHOT, NULL));
 
-	height = 200;
-	width = height * gdk_pixbuf_get_width (screen_image)
-		/ gdk_pixbuf_get_height (screen_image);
-	screenshot->_priv->pixbuf = screen_image;
-	g_object_ref (G_OBJECT (screenshot->_priv->pixbuf));
-	screenshot->_priv->scaled = gdk_pixbuf_scale_simple (screen_image,
-			width, height, GDK_INTERP_BILINEAR);
-	gtk_image_set_from_pixbuf (GTK_IMAGE (screenshot->_priv->image),
-				   screenshot->_priv->scaled);
+	/* Create the screenshot widget */
+	initial_uri = totem_screenshot_plugin_setup_file_chooser (N_("Screenshot%d.png"));
+	interface_path = totem_plugin_find_file (screenshot_plugin, "gnome-screenshot.ui");
+	screenshot->priv->widget = GNOME_SCREENSHOT_WIDGET (gnome_screenshot_widget_new (interface_path, screen_image, initial_uri));
+	g_free (interface_path);
+	g_free (initial_uri);
+
+	/* Ensure we remove the temporary file before we're destroyed */
+	g_signal_connect (screenshot->priv->widget, "destroy", G_CALLBACK (totem_screenshot_temp_file_remove), NULL);
+
+	content_area = GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (screenshot)));
+	gtk_container_add (content_area, GTK_WIDGET (screenshot->priv->widget));
+	gtk_container_set_border_width (GTK_CONTAINER (screenshot->priv->widget), 5);
+
+	totem_screenshot_temp_file_create (screenshot);
 
 	return GTK_WIDGET (screenshot);
 }
@@ -239,7 +175,7 @@ totem_screenshot_new (GdkPixbuf *screen_image)
 static void
 totem_screenshot_class_init (TotemScreenshotClass *klass)
 {
-	G_OBJECT_CLASS (klass)->finalize = totem_screenshot_finalize;
+	g_type_class_add_private (klass, sizeof (TotemScreenshotPrivate));
 	GTK_DIALOG_CLASS (klass)->response = totem_screenshot_response;
 }
 

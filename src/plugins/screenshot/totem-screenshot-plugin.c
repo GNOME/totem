@@ -106,7 +106,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		return;
 	}
 
-	dialog = totem_screenshot_new (pixbuf);
+	dialog = totem_screenshot_new (TOTEM_PLUGIN (self), pixbuf);
 
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
@@ -316,17 +316,15 @@ make_filename_for_dir (const char *directory, const char *format)
 	return filename;
 }
 
-void
-totem_screenshot_plugin_setup_file_chooser (GtkFileChooser *file_chooser, const char *filename_format)
+gchar *
+totem_screenshot_plugin_setup_file_chooser (const char *filename_format)
 {
 	GConfClient *client;
-	char *path, *filename;
+	char *path, *filename, *full, *uri;
 
 	/* Set the default path */
 	client = gconf_client_get_default ();
-	path = gconf_client_get_string (client,
-					"/apps/totem/screenshot_save_path",
-					NULL);
+	path = gconf_client_get_string (client, "/apps/totem/screenshot_save_path", NULL);
 	g_object_unref (client);
 
 	/* Default to the Pictures directory */
@@ -338,25 +336,36 @@ totem_screenshot_plugin_setup_file_chooser (GtkFileChooser *file_chooser, const 
 			path = g_strdup (g_get_home_dir ());
 	}
 
-	gtk_file_chooser_set_current_folder (file_chooser, path);
 	filename = make_filename_for_dir (path, filename_format);
-	g_free (path);
 
-	gtk_file_chooser_set_current_name (file_chooser, filename);
+	/* Build the URI */
+	full = g_build_filename (path, filename, NULL);
+	g_free (path);
 	g_free (filename);
+
+	uri = g_strconcat ("file://", full, NULL);
+	g_free (full);
+
+	return uri;
 }
 
 void
-totem_screenshot_plugin_update_file_chooser (const char *filename)
+totem_screenshot_plugin_update_file_chooser (const char *uri)
 {
 	GConfClient *client;
 	char *dir;
+	GFile *file, *parent;
+
+	file = g_file_new_for_uri (uri);
+	parent = g_file_get_parent (file);
+	g_object_unref (file);
+
+	dir = g_file_get_path (parent);
+	g_object_unref (parent);
 
 	client = gconf_client_get_default ();
-	dir = g_path_get_dirname (filename);
 	gconf_client_set_string (client,
 				 "/apps/totem/screenshot_save_path",
 				 dir, NULL);
 	g_free (dir);
-	g_object_unref (client);
 }

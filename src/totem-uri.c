@@ -543,19 +543,6 @@ totem_add_default_dirs (GtkFileChooser *dialog)
 	}
 }
 
-void
-totem_add_pictures_dir (GtkWidget *chooser)
-{
-	const char *dir;
-
-	g_return_if_fail (GTK_IS_FILE_CHOOSER (chooser) != FALSE);
-
-	dir = g_get_user_special_dir (G_USER_DIRECTORY_PICTURES);
-	if (dir == NULL)
-		return;
-	gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (chooser), dir, NULL);
-}
-
 char *
 totem_add_subtitle (GtkWindow *parent, const char *path)
 {
