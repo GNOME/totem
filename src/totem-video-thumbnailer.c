@@ -62,6 +62,7 @@
 #define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
 
 static gboolean jpeg_output = FALSE;
+static gboolean raw_output = FALSE;
 static gboolean output_size = 128;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
@@ -319,11 +320,12 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	height = gdk_pixbuf_get_height (pixbuf);
 	width = gdk_pixbuf_get_width (pixbuf);
 
-	/* If we're outputting a gallery, don't scale the pixbuf or add borders */
-	if (gallery == -1)
-		with_holes = scale_pixbuf (pixbuf, size, is_still);
-	else
+	/* If we're outputting a gallery or a raw image, don't scale the
+	 * pixbuf or add borders */
+	if (gallery != -1 || raw_output)
 		with_holes = g_object_ref (pixbuf);
+	else
+		with_holes = scale_pixbuf (pixbuf, size, is_still);
 
 
 	if (jpeg_output == FALSE) {
@@ -751,6 +753,7 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 static const GOptionEntry entries[] = {
 	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
 	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
+	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
 	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
