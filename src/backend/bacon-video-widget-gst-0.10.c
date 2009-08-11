@@ -3264,13 +3264,15 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     ret = poll_for_state_change_full (bvw, bvw->priv->play,
         GST_STATE_PAUSED, &err_msg, -1);
 
-    bvw_process_pending_tag_messages (bvw);
-    bacon_video_widget_get_stream_length (bvw);
-    GST_DEBUG ("stream length = %u", bvw->priv->stream_length);
+    if (bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
+      bvw_process_pending_tag_messages (bvw);
+      bacon_video_widget_get_stream_length (bvw);
+      GST_DEBUG ("stream length = %u", bvw->priv->stream_length);
 
-    /* even in case of an error (e.g. no decoders installed) we might still
-     * have useful metadata (like codec types, duration, etc.) */
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+      /* even in case of an error (e.g. no decoders installed) we might still
+       * have useful metadata (like codec types, duration, etc.) */
+      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    }
   }
   
   if (ret) {
