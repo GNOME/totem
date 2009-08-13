@@ -743,7 +743,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       if (d_width != LOGO_SIZE || d_height != LOGO_SIZE)
         logo = gdk_pixbuf_scale_simple (pixbuf, s_width, s_height, GDK_INTERP_BILINEAR);
       else
-        logo = g_object_ref (pixbuf);
+        logo = g_object_ref (G_OBJECT (pixbuf));
 
       gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
           0, 0, (widget->allocation.width - s_width) / 2, (widget->allocation.height - s_height) / 2,
