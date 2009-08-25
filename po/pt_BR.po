@@ -9,7 +9,7 @@
 # Raphael Higino <In memoriam>, 2004-2005, 2007.
 # Og Maciel <ogmaciel@gnome.org>, 2007-2008.
 # Vladimir Melo <vmelo@gnome.org>, 2007, 2009.
-# Djavan Fagundes <dnoway@gmail.com>, 2008.
+# Djavan Fagundes <dnoway@gmail.com>, 2008, 2009.
 # Taylon Silmer <taylonsilva@gmail.com>, 2009.
 # André Gondim <andregondim@ubuntu.com>, 2009.
 # Leonardo Ferreira Fontenelle <leonardof@gnome.org>, 2009
@@ -17,11 +17,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2009-08-13 12:42+0000\n"
-"PO-Revision-Date: 2009-03-05 00:51-0300\n"
-"Last-Translator: Leonardo Ferreira Fontenelle <leonardof@gnome.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-25 15:27-0300\n"
+"PO-Revision-Date: 2009-08-25 11:24-0300\n"
+"Last-Translator: Djavan Fagundes <dnoway@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2639,6 +2638,32 @@ msgstr "Número de capturas de tela:"
 msgid "Screenshot width (in pixels):"
 msgstr "Largura da captura de tela (em pixels):"
 
+#: ../src/plugins/screenshot/gnome-screenshot.ui.h:1
+msgid "*"
+msgstr "*"
+
+#: ../src/plugins/screenshot/gnome-screenshot.ui.h:2
+msgid "Save in _folder:"
+msgstr "Salvar na _pasta:"
+
+#: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
+msgid "Select a folder"
+msgstr "Selecionar uma pasta"
+
+#: ../src/plugins/screenshot/gnome-screenshot.ui.h:4
+msgid "_Name:"
+msgstr "_Nome:"
+
+# Encurtei "Capturadetela" para "Captura" para melhorar
+# a legibilidade. Como o usuário já solicitou a captura
+# de tela, a essa altura o contexto deve estar bem claro.
+# Leonardo
+#. Write the screenshot to the temporary file
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:379
+#: ../src/plugins/screenshot/totem-screenshot.c:63
+msgid "Screenshot.png"
+msgstr "Captura.png"
+
 #: ../src/plugins/screenshot/totem-gallery.c:89
 msgid "Save Gallery"
 msgstr "Salvar galeria"
@@ -2663,15 +2688,6 @@ msgstr "Criando galeria..."
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Salvando galeria como \"%s\""
-
-# Encurtei "Capturadetela" para "Captura" para melhorar
-# a legibilidade. Como o usuário já solicitou a captura
-# de tela, a essa altura o contexto deve estar bem claro.
-# Leonardo
-#. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/totem-screenshot.c:63
-msgid "Screenshot.png"
-msgstr "Captura.png"
 
 #: ../src/plugins/screenshot/totem-screenshot.c:112
 msgid "There was an error saving the screenshot."
@@ -3115,9 +3131,6 @@ msgstr ""
 
 #~ msgid "Unknown file extension."
 #~ msgstr "Extensão de arquivo desconhecida."
-
-#~ msgid "Select playlist format:"
-#~ msgstr "Selecionar formato da lista de reprodução:"
 
 #~ msgid ""
 #~ "The change of this setting will only take effect for the next movie, or "
