@@ -2154,7 +2154,7 @@ int main (int argc, char **argv)
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
-		totem_embedded_error_and_exit (_("Could not initialise the thread-safe libraries."), _("Verify your system installation. The Totem plugin will now exit."), NULL);
+		totem_embedded_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. The Totem plugin will now exit."), NULL);
 	}
 
 	dbus_g_thread_init ();
