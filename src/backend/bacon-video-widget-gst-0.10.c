@@ -101,7 +101,6 @@ enum
   SIGNAL_ERROR,
   SIGNAL_EOS,
   SIGNAL_REDIRECT,
-  SIGNAL_TITLE_CHANGE,
   SIGNAL_CHANNELS_CHANGE,
   SIGNAL_TICK,
   SIGNAL_GOT_METADATA,
@@ -1125,21 +1124,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
   /**
-   * BaconVideoWidget::title-change:
-   * @title: the new stream title
-   *
-   * Emitted when the stream's title changes, along with BaconVideoWidget::got-metadata.
-   **/
-  bvw_signals[SIGNAL_TITLE_CHANGE] =
-    g_signal_new ("title-change",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (BaconVideoWidgetClass, title_change),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__STRING,
-                  G_TYPE_NONE, 1, G_TYPE_STRING);
-
-  /**
    * BaconVideoWidget::channels-change:
    *
    * Emitted when the number of audio languages available changes, or when the
@@ -1661,19 +1645,8 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   /* if we're not interactive, we want to announce metadata
    * only later when we can be sure we got it all */
   if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
-      bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
-      /* If we updated metadata and we have a new title, send it
-       * using TITLE_CHANGE, so that the UI knows it has a new
-       * streaming title */
-    GValue value = { 0, };
-    
+      bvw->priv->use_type == BVW_USE_TYPE_AUDIO)
     g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
-
-    bacon_video_widget_get_metadata (bvw, BVW_INFO_TITLE, &value);
-    if (g_value_get_string (&value))
-      g_signal_emit (bvw, bvw_signals[SIGNAL_TITLE_CHANGE], 0, g_value_get_string (&value));
-    g_value_unset (&value);
-  }
 }
 
 typedef struct {

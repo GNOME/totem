@@ -2371,16 +2371,6 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 	g_free (new_mrl);
 }
 
-/* This is only called when we are playing a DVD or a radio */
-static void
-on_title_change_event (BaconVideoWidget *bvw, const char *string, Totem *totem)
-{
-	update_mrl_label (totem, string);
-	update_buttons (totem);
-	totem_playlist_set_title (TOTEM_PLAYLIST (totem->playlist),
-				  string, TRUE);
-}
-
 static void
 on_channels_change_event (BaconVideoWidget *bvw, Totem *totem)
 {
@@ -4075,10 +4065,6 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"got-redirect",
 			G_CALLBACK (on_got_redirect),
-			totem);
-	g_signal_connect (G_OBJECT(totem->bvw),
-			"title-change",
-			G_CALLBACK (on_title_change_event),
 			totem);
 	g_signal_connect (G_OBJECT(totem->bvw),
 			"channels-change",
