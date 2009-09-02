@@ -261,7 +261,7 @@ totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 void
 totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSelectDialog mode)
 {
-	char *subtitle, *current, *path;
+	char *subtitle, *current, *uri;
 	GFile *file, *dir;
 	TotemPlaylistStatus playing;
 	GtkTreeIter iter;
@@ -283,23 +283,23 @@ totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSele
 
 	/* Look for the directory of the current movie */
 	gtk_tree_model_get (playlist->priv->model, &iter,
-			    FILENAME_COL, &current,
+			    URI_COL, &current,
 			    -1);
 
 	if (current == NULL)
 		return;
 
-	path = NULL;
-	file = g_file_new_for_commandline_arg (current);
+	uri = NULL;
+	file = g_file_new_for_uri (current);
 	dir = g_file_get_parent (file);
 	g_object_unref (file);
 	if (dir != NULL) {
-		path = g_file_get_path (dir);
+		uri = g_file_get_uri (dir);
 		g_object_unref (dir);
 	}
 
-	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), path);
-	g_free (path);
+	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), uri);
+	g_free (uri);
 
 	if (subtitle == NULL)
 		return;
