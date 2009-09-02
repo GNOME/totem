@@ -2216,10 +2216,8 @@ int main (int argc, char **argv)
 
 	/* FIXME: check the UA strings of the legacy plugins themselves */
 	/* FIXME: at least hxplayer seems to send different UAs depending on the protocol!? */
-	/* FIXME: this won't work with gvfs:
-	 * http://bugzilla.gnome.org/show_bug.cgi?id=534482 */
 	if (arg_user_agent != NULL) {
-		g_setenv ("GNOME_VFS_HTTP_USER_AGENT", arg_user_agent, TRUE);
+		g_setenv ("BACON_VIDEO_WIDGET_HTTP_USER_AGENT", arg_user_agent, TRUE);
 		g_free (arg_user_agent);
 		arg_user_agent = NULL;
 	}

@@ -158,6 +158,15 @@ static const char kPluginLongDescription[] =
   "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
 #endif
 
+static const char kPluginUserAgent[] =
+#if defined(TOTEM_NARROWSPACE_PLUGIN)
+  "Quicktime/"TOTEM_NARROWSPACE_VERSION;
+#elif defined(TOTEM_GMP_PLUGIN)
+  "Windows-Media-Player/10.00.00.4019";
+#else
+  "";
+#endif
+
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
 nsTArray<totemPlugin*> *totemPlugin::sPlugins;
 
@@ -465,10 +474,14 @@ totemPlugin::ViewerFork ()
 		return NPERR_NO_ERROR;
 #endif /* TOTEM_COMPLEX_PLUGIN */
 
-	const char *userAgent = NPN_UserAgent (mNPP);
-	if (!userAgent) {
-		/* See https://bugzilla.mozilla.org/show_bug.cgi?id=328778 */
-		Dm ("User agent has more than 127 characters; fix your browser!");
+	const char *userAgent = kPluginUserAgent;
+
+	if (*kPluginUserAgent == '\0') {
+		userAgent = NPN_UserAgent (mNPP);
+		if (!userAgent) {
+			/* See https://bugzilla.mozilla.org/show_bug.cgi?id=328778 */
+			Dm ("User agent has more than 127 characters; fix your browser!");
+		}
 	}
 
         GPtrArray *arr = g_ptr_array_new ();
