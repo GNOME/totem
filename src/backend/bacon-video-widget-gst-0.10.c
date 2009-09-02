@@ -2049,6 +2049,21 @@ bvw_set_device_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
+bvw_set_user_agent_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  const char *ua;
+
+  ua = g_getenv ("BACON_VIDEO_WIDGET_HTTP_USER_AGENT");
+  if (ua == NULL)
+    return;
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "user-agent")) {
+    GST_DEBUG ("Setting HTTP user-agent to '%s'", ua);
+    g_object_set (element, "user-agent", ua, NULL);
+  }
+}
+
+static void
 playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
 {
   GObject *source = NULL;
@@ -2072,6 +2087,7 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   if (source) {
     GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
     bvw_set_device_on_element (bvw, GST_ELEMENT (source));
+    bvw_set_user_agent_on_element (bvw, GST_ELEMENT (source));
     g_object_unref (source);
   }
 }
