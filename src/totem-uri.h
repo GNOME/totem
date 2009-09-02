@@ -46,7 +46,7 @@ char *		totem_uri_escape_for_display	(const char *uri);
 GSList *	totem_add_files			(GtkWindow *parent,
 						 const char *path);
 char *		totem_add_subtitle		(GtkWindow *parent, 
-						 const char *path);
+						 const char *uri);
 
 void totem_save_position (Totem *totem);
 void totem_try_restore_position (Totem *totem, const char *mrl);

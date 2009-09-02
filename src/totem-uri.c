@@ -544,13 +544,13 @@ totem_add_default_dirs (GtkFileChooser *dialog)
 }
 
 char *
-totem_add_subtitle (GtkWindow *parent, const char *path)
+totem_add_subtitle (GtkWindow *parent, const char *uri)
 {
 	GtkWidget *fs;
 	GConfClient *conf;
 	char *new_path;
 	char *subtitle = NULL;
-	gboolean set_folder;
+	gboolean folder_set;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Text Subtitles"), 
 					  parent,
@@ -565,8 +565,9 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 
 	conf = gconf_client_get_default ();
-	set_folder = TRUE;
+	folder_set = FALSE;
 
+	/* Add the subtitles cache dir as a shortcut */
 	new_path = g_build_filename (g_get_user_cache_dir (),
 				     "totem",
 				     "subtitles",
@@ -574,22 +575,22 @@ totem_add_subtitle (GtkWindow *parent, const char *path)
 	gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), new_path, NULL);
 	g_free (new_path);
 
+	/* Add the last open path as a shortcut */
 	new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
 	if (new_path != NULL && *new_path != '\0') {
-		set_folder = gtk_file_chooser_set_current_folder_uri
-			(GTK_FILE_CHOOSER (fs), new_path);
+		gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), new_path, NULL);
 	}
 	g_free (new_path);
 
-	if (path != NULL) {
-		if (set_folder == FALSE) {
-			set_folder = gtk_file_chooser_set_current_folder_uri
-				(GTK_FILE_CHOOSER (fs), path);
-		}
-		gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), path, NULL);
+	/* Try to set the passed path as the current folder */
+	if (uri != NULL) {
+		folder_set = gtk_file_chooser_set_current_folder_uri
+			(GTK_FILE_CHOOSER (fs), uri);
+		gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), uri, NULL);
 	}
 	
-	if (set_folder == FALSE) {
+	/* And set it as home if it fails */
+	if (folder_set == FALSE) {
 		gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (fs),
 						     g_get_home_dir ());
 	}
