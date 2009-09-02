@@ -807,7 +807,7 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 			GIcon *new_icon;
 			new_icon = g_emblemed_icon_get_icon (G_EMBLEMED_ICON (icon));
 			g_object_unref (icon);
-			icon = new_icon;
+			icon = g_object_ref (new_icon);
 		}
 
 		if (G_IS_THEMED_ICON (icon)) {
