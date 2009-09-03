@@ -2206,7 +2206,7 @@ int main (int argc, char **argv)
 	if (arg_audioonly != FALSE)
 		g_setenv("PULSE_PROP_media.role", "video", TRUE);
 	else
-		g_setenv("PULSE_PROP_media.role", "audio", TRUE);
+		g_setenv("PULSE_PROP_media.role", "music", TRUE);
 
         // FIXME check that ALL necessary params were given!
 	if (arg_plugin_type == TOTEM_PLUGIN_TYPE_LAST) {
