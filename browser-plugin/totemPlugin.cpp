@@ -2110,9 +2110,12 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
-/* VLC plugin defaults to have its controller hidden */
+/* VLC plugin defaults to have its controller hidden
+ * But we don't want to hide it if VLC wasn't explicitely
+ * requested */
 #ifdef TOTEM_CONE_PLUGIN
-	mControllerHidden = true;
+	if (strstr ((const char *) mimetype, "vlc") != NULL)
+		mControllerHidden = true;
 #endif
 
 #if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
