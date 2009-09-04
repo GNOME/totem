@@ -206,20 +206,10 @@ totem_fullscreen_set_cursor (TotemFullscreen *fs, gboolean state)
 		bacon_video_widget_set_show_cursor (fs->priv->bvw, state);
 }
 
-static GtkWidget *
-totem_fullscreen_get_volume_popup (TotemFullscreen *fs)
-{
-	return gtk_widget_get_toplevel (GTK_SCALE_BUTTON (fs->volume)->plus_button);
-}
-
 static gboolean
 totem_fullscreen_is_volume_popup_visible (TotemFullscreen *fs)
 {
-	GtkWidget *toplevel;
-
-	/* FIXME we should use the popup-visible property instead */
-	toplevel = totem_fullscreen_get_volume_popup (fs);
-	return GTK_WIDGET_VISIBLE (toplevel);
+	return GTK_WIDGET_VISIBLE (gtk_scale_button_get_popup (GTK_SCALE_BUTTON (fs->volume)));
 }
 
 static void
@@ -331,7 +321,7 @@ totem_fullscreen_parent_window_notify (GtkWidget *parent_window,
 	if (totem_fullscreen_is_fullscreen (fs) == FALSE)
 		return;
 
-	popup = totem_fullscreen_get_volume_popup (fs);
+	popup = gtk_scale_button_get_popup (GTK_SCALE_BUTTON (fs->volume));
 	if (parent_window == fs->priv->parent_window &&
 	    gtk_window_is_active (GTK_WINDOW (parent_window)) == FALSE &&
 	    GTK_WIDGET_VISIBLE (popup) == FALSE) {
