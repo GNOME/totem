@@ -42,10 +42,10 @@ BUILT_SOURCES =			\
 
 #Rule to generate the marshal files
 totem-marshal.c: totem-marshal.list
-	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header --body > $@
+	$(AM_V_GEN) @GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header --body > $@
 
 totem-marshal.h: totem-marshal.list
-	@GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header > $@
+	$(AM_V_GEN) @GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header > $@
 
 EXTRA_DIST = totem-marshal.list $(plugin_in_files)
 

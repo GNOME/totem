@@ -43,27 +43,27 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
-	cat totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
+	$(AM_V_GEN) cat totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
 	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt	\
 	>> $@
 
 nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h
 totem-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
-	$(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	\
+	$(AM_V_GEN) $(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	\
 	> $@
 nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
-	$(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt	\
+	$(AM_V_GEN) $(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt	\
 	> $@
 
 update-gconf.sh: totem-video-thumbnail.schemas.in
 
 totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt mime-functions.sh
-	$(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
+	$(AM_V_GEN) $(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
 	> $@								\
 	3> update-gconf.sh
 
 totem-handlers.schemas.in: handlers.sh
-	$(srcdir)/handlers.sh > $@
+	$(AM_V_GEN) $(srcdir)/handlers.sh > $@
 
 generated_schema_in_files = totem-video-thumbnail.schemas.in totem-handlers.schemas.in
 schema_in_files = totem.schemas.in $(generated_schema_in_files)
@@ -72,7 +72,7 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 totem-video-thumbnailer.1: totem-video-thumbnailer.pod
-	pod2man -c "" -s 1 -q none -n totem-video-thumbnailer -r GNOME $< > $@
+	$(AM_V_GEN) pod2man -c "" -s 1 -q none -n totem-video-thumbnailer -r GNOME $< > $@
 
 install-data-local: $(schema_DATA)
 if GCONF_SCHEMAS_INSTALL
