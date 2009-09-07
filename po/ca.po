@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-24 18:22+0200\n"
-"PO-Revision-Date: 2009-08-24 18:29+0200\n"
+"POT-Creation-Date: 2009-09-07 23:46+0200\n"
+"PO-Revision-Date: 2009-09-07 23:46+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -1118,7 +1118,7 @@ msgstr "_Reprodueix"
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: ../src/totem-fullscreen.c:494
+#: ../src/totem-fullscreen.c:484
 msgid "No File"
 msgstr "Cap fitxer"
 
@@ -1384,7 +1384,7 @@ msgstr "Inseriu un altre disc a reproduir."
 msgid "Totem was not able to play this disc."
 msgstr "El Totem no pot reproduir aquest disc."
 
-#: ../src/totem-object.c:1255 ../src/totem-object.c:4060
+#: ../src/totem-object.c:1255 ../src/totem-object.c:4050
 #: ../browser-plugin/totem-plugin-viewer.c:1703
 msgid "No reason."
 msgstr "Sense motiu."
@@ -1407,32 +1407,32 @@ msgstr "No hi ha cap missatge d'error"
 msgid "Totem could not display the help contents."
 msgstr "El Totem no ha pogut mostrar els continguts de l'ajuda."
 
-#: ../src/totem-object.c:2443 ../src/totem-object.c:2445
+#: ../src/totem-object.c:2433 ../src/totem-object.c:2435
 #: ../browser-plugin/totem-plugin-viewer.c:1358
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
-#: ../src/totem-object.c:3331
+#: ../src/totem-object.c:3321
 msgid "TV signal lost"
 msgstr "S'ha perdut la senyal de televisió"
 
-#: ../src/totem-object.c:3332
+#: ../src/totem-object.c:3322
 msgid "Please verify your hardware setup."
 msgstr "Verifiqueu la configuració del maquinari."
 
-#: ../src/totem-object.c:3918 ../src/totem-object.c:3920
+#: ../src/totem-object.c:3908 ../src/totem-object.c:3910
 msgid "Previous Chapter/Movie"
 msgstr "Capítol/pel·lícula anterior"
 
-#: ../src/totem-object.c:3926 ../src/totem-object.c:3928
+#: ../src/totem-object.c:3916 ../src/totem-object.c:3918
 msgid "Play / Pause"
 msgstr "Reprodueix / Fes una pausa"
 
-#: ../src/totem-object.c:3935 ../src/totem-object.c:3937
+#: ../src/totem-object.c:3925 ../src/totem-object.c:3927
 msgid "Next Chapter/Movie"
 msgstr "Capítol/pel·lícula següent"
 
-#: ../src/totem-object.c:4060
+#: ../src/totem-object.c:4050
 msgid "Totem could not startup."
 msgstr "No s'ha pogut executar el Totem."
 
@@ -1707,7 +1707,7 @@ msgstr "Georgià"
 #: ../src/totem-subtitle-encoding.c:233 ../src/totem-subtitle-encoding.c:235
 #: ../src/totem-subtitle-encoding.c:237
 msgid "Greek"
-msgstr "Crec"
+msgstr "Grec"
 
 #: ../src/totem-subtitle-encoding.c:240
 msgid "Gujarati"
@@ -1841,7 +1841,7 @@ msgstr "Fitxers de subtítols"
 msgid "Select Text Subtitles"
 msgstr "Seleccioneu els subtítols"
 
-#: ../src/totem-uri.c:616
+#: ../src/totem-uri.c:617
 msgid "Select Movies or Playlists"
 msgstr "Seleccioneu pel·lícules o llistes de reproducció"
 
@@ -1855,7 +1855,7 @@ msgstr "No s'ha pogut obrir l'enllaç"
 msgid "Totem Movie Player"
 msgstr "Reproductor de vídeo Totem"
 
-#: ../src/totem.c:135
+#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2157
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No s'han pogut inicialitzar les biblioteques que permeten fils segurs."
 
@@ -1886,19 +1886,19 @@ msgstr "El Totem no ha pogut inicialitzar el motor de configuració."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Assegureu-vos que el GNOME està instal·lat correctament."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2523
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2527
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2512
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2516
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista d'àudio #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2555
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2559
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2544
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2548
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítol #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2963
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2952
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1906,18 +1906,18 @@ msgstr ""
 "No s'ha trobat la sortida d'àudio demanada. Seleccioneu una altra sortida "
 "d'àudio en el selector de sistemes multimèdia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2968
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2957
 msgid "Location not found."
 msgstr "No s'ha trobat la ubicació."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2972
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2961
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No s'ha pogut obrir la ubicació. Potser no teniu permís per a obrir el "
 "fitxer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2983
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2972
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1927,7 +1927,7 @@ msgstr ""
 "aplicacions de vídeo, o seleccioneu una altra sortida de vídeo al selector "
 "de sistemes multimèdia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2989
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2978
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1938,14 +1938,14 @@ msgstr ""
 "considerar utilitzar un servidor de so."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3007
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3013
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2996
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3002
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Hauríeu d'instal·lar el connector %s per a reproduir aquesta pel·lícula."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3014
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3003
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1958,14 +1958,14 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3039
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3028
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No es pot reproduir aquest fitxer a través de la xarxa. Proveu de baixar-lo "
 "al disc primer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3111
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3100
 msgid "Media file could not be played."
 msgstr "No s'ha pogut reproduir el fitxer multimèdia."
 
@@ -2180,7 +2180,7 @@ msgstr "No s'ha pogut enregistrar la pel·lícula."
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:170
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:266
 msgid "Unable to write a project."
-msgstr "No s'ha pogut escrure un projecte."
+msgstr "No s'ha pogut escriure un projecte."
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
 msgid "Records (S)VCDs or video DVDs"
@@ -2621,18 +2621,14 @@ msgid "Screenshot width (in pixels):"
 msgstr "Amplada de la captura de pantalla (en píxels):"
 
 #: ../src/plugins/screenshot/gnome-screenshot.ui.h:1
-msgid "*"
-msgstr "*"
-
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:2
 msgid "Save in _folder:"
 msgstr "Desa en la _carpeta:"
 
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
+#: ../src/plugins/screenshot/gnome-screenshot.ui.h:2
 msgid "Select a folder"
 msgstr "Seleccioneu una carpeta"
 
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:4
+#: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
 msgid "_Name:"
 msgstr "_Nom:"
 
@@ -2888,11 +2884,6 @@ msgstr "No hi ha cap llista de reproducció o bé és buida"
 msgid "Movie browser plugin"
 msgstr "Connector per a veure pel·lícules al navegador"
 
-# FIXME
-#: ../browser-plugin/totem-plugin-viewer.c:2157
-msgid "Could not initialise the thread-safe libraries."
-msgstr "No s'han pogut inicialitzar les biblioteques de fils segurs."
-
 #: ../browser-plugin/totem-plugin-viewer.c:2157
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
@@ -2944,6 +2935,13 @@ msgstr ""
 "Després de prémer D'acord, el Totem s'esperarà fins que us hi connecteu amb "
 "el winpdb o el rpdb2. Si no heu establert una contrasenya de depuració en el "
 "GConf, utilitzarà la contrasenya predeterminada («totem»)."
+
+#~ msgid "*"
+#~ msgstr "*"
+
+# FIXME
+#~ msgid "Could not initialise the thread-safe libraries."
+#~ msgstr "No s'han pogut inicialitzar les biblioteques de fils segurs."
 
 #~ msgid "_Allow the screensaver to activate even when audio-only is playing"
 #~ msgstr ""
