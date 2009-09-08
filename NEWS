@@ -1,5 +1,31 @@
 New features and significant updates in version...
 
+2.27.92:
+* Movie Player:
+  - Remember the current file position when Pause is clicked
+  - Show menu item description in status bar
+  - Make Home and End keys seek to the start and the end of streams
+  - Use Totem's icon as the main window logo
+  - Make screenshot dialogue more like GNOME's
+  - Bug fixes:
+    - Fix crash when a storage volume is encrypted
+    - Make shuffle playlists faster with a large number of items
+    - Fix the artist not showing up in the window title
+    - Detect non-xine DVB channel configurations
+    - Select the directory in which the movie is by default,
+      when looking for a subtitle
+
+* Web browser plugin:
+  - Use the user-agents for the plugins we're mimicking
+  - Show controls for the Cone plugin when VLC compatibility
+    isn't explicitely asked
+
+* Thumbnailer:
+  - Make it possible to output thumbnails without the film borders
+
+* Plugins:
+  - Add plugin authoring tutorial
+
 2.27.2:
 * Movie Player:
   - Add frame-by-frame stepping
