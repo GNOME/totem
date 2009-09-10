@@ -688,23 +688,20 @@ totem_setup_recent (Totem *totem)
 	totem_recent_manager_changed_callback (totem->recent_manager, totem);
 }
 
-void
-totem_action_add_recent (Totem *totem, const char *uri)
+static void
+recent_info_cb (GFile *file,
+		GAsyncResult *res,
+		Totem *totem)
 {
 	GtkRecentData data;
 	char *groups[] = { NULL, NULL };
-	GFile *file;
 	GFileInfo *file_info;
+	const char *uri;
 
 	memset (&data, 0, sizeof (data));
 
-	if (totem_is_special_mrl (uri) != FALSE)
-		return;
-
-	file = g_file_new_for_uri (uri);
-	file_info = g_file_query_info (file,
-				       G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE "," G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
-				       G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	file_info = g_file_query_info_finish (file, res, NULL);
+	uri = g_object_get_data (G_OBJECT (file), "uri");
 
 	/* Probably an unsupported URI scheme */
 	if (file_info == NULL) {
@@ -719,7 +716,6 @@ totem_action_add_recent (Totem *totem, const char *uri)
 		g_object_unref (file_info);
 		groups[0] = (gchar*) "Totem";
 	}
-	g_object_unref (file);
 
 	data.app_name = g_strdup (g_get_application_name ());
 	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
@@ -733,6 +729,23 @@ totem_action_add_recent (Totem *totem, const char *uri)
 	g_free (data.mime_type);
 	g_free (data.app_name);
 	g_free (data.app_exec);
+
+	g_object_unref (file);
+}
+
+void
+totem_action_add_recent (Totem *totem, const char *uri)
+{
+	GFile *file;
+
+	if (totem_is_special_mrl (uri) != FALSE)
+		return;
+
+	file = g_file_new_for_uri (uri);
+	g_object_set_data_full (G_OBJECT (file), "uri", g_strdup (uri), g_free);
+	g_file_query_info_async (file,
+				 G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE "," G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
+				 G_FILE_QUERY_INFO_NONE, 0, NULL, (GAsyncReadyCallback) recent_info_cb, totem);
 }
 
 /* Play Disc menu items */
