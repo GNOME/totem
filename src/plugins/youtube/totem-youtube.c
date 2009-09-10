@@ -513,12 +513,17 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 	/* Check for the t parameter, which is now in a JavaScript array on the video page */
 	g_regex_match (self->regex, contents, 0, &match_info);
 	if (g_match_info_matches (match_info) == TRUE) {
-		gchar *t_param;
+		gchar *t_param, *s;
 		const gchar *fmt_param;
 		GString *video_uri_string;
 
 		/* We have a match */
-		t_param = g_match_info_fetch (match_info, 1);
+		s = g_match_info_fetch (match_info, 1);
+		t_param = g_uri_unescape_string (s, NULL);
+		if (t_param == NULL)
+			t_param = s;
+		else
+			g_free (s);
 		fmt_param = get_fmt_param (self);
 
 		video_uri_string = g_string_new ("http://www.youtube.com/get_video?video_id=");
