@@ -696,16 +696,17 @@ recent_info_cb (GFile *file,
 	GtkRecentData data;
 	char *groups[] = { NULL, NULL };
 	GFileInfo *file_info;
-	const char *uri;
+	const char *uri, *display_name;
 
 	memset (&data, 0, sizeof (data));
 
 	file_info = g_file_query_info_finish (file, res, NULL);
 	uri = g_object_get_data (G_OBJECT (file), "uri");
+	display_name = g_object_get_data (G_OBJECT (file), "display_name");
 
 	/* Probably an unsupported URI scheme */
 	if (file_info == NULL) {
-		data.display_name = NULL;
+		data.display_name = g_strdup (display_name);
 		/* Bogus mime-type, we just want it added */
 		data.mime_type = g_strdup ("video/x-totem-stream");
 		groups[0] = (gchar*) "TotemStreams";
@@ -734,7 +735,7 @@ recent_info_cb (GFile *file,
 }
 
 void
-totem_action_add_recent (Totem *totem, const char *uri)
+totem_action_add_recent (Totem *totem, const char *uri, const char *display_name)
 {
 	GFile *file;
 
@@ -743,6 +744,7 @@ totem_action_add_recent (Totem *totem, const char *uri)
 
 	file = g_file_new_for_uri (uri);
 	g_object_set_data_full (G_OBJECT (file), "uri", g_strdup (uri), g_free);
+	g_object_set_data_full (G_OBJECT (file), "display_name", g_strdup (display_name), g_free);
 	g_file_query_info_async (file,
 				 G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE "," G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME,
 				 G_FILE_QUERY_INFO_NONE, 0, NULL, (GAsyncReadyCallback) recent_info_cb, totem);

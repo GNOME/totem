@@ -2036,11 +2036,18 @@ totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
 			&iter,
 			playlist->priv->current);
 
-	gtk_tree_model_get (playlist->priv->model,
-			&iter,
-			FILENAME_COL, &path,
-			TITLE_CUSTOM_COL, custom,
-			-1);
+	if (custom != NULL) {
+		gtk_tree_model_get (playlist->priv->model,
+				    &iter,
+				    FILENAME_COL, &path,
+				    TITLE_CUSTOM_COL, custom,
+				    -1);
+	} else {
+		gtk_tree_model_get (playlist->priv->model,
+				    &iter,
+				    FILENAME_COL, &path,
+				    -1);
+	}
 
 	return path;
 }

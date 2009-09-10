@@ -1762,6 +1762,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			totem->mrl = NULL;
 			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		} else {
+			char *display_name;
 			/* cast is to shut gcc up */
 			const GtkTargetEntry source_table[] = {
 				{ (gchar*) "text/uri-list", 0, 0 }
@@ -1775,7 +1776,9 @@ totem_action_set_mrl_with_warning (Totem *totem,
 					     source_table, G_N_ELEMENTS (source_table),
 					     GDK_ACTION_COPY);
 
-			totem_action_add_recent (totem, totem->mrl);
+			display_name = totem_playlist_get_current_title (totem->playlist, NULL);
+			totem_action_add_recent (totem, totem->mrl, display_name);
+			g_free (display_name);
 		}
 	}
 	update_buttons (totem);
@@ -2393,10 +2396,9 @@ static void
 on_playlist_change_name (TotemPlaylist *playlist, Totem *totem)
 {
 	char *name;
-	gboolean cur;
 
-	if ((name = totem_playlist_get_current_title (playlist,
-						      &cur)) != NULL) {
+	name = totem_playlist_get_current_title (playlist, NULL);
+	if (name != NULL) {
 		update_mrl_label (totem, name);
 		g_free (name);
 	}
