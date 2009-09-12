@@ -78,8 +78,8 @@ static guint signals[SIGNAL_LAST];
 G_DEFINE_TYPE (EggFileFormatChooser, 
 	       egg_file_format_chooser,
                GTK_TYPE_EXPANDER);
-EGG_DEFINE_QUARK (EggFileFormatFilterInfo,
-                  egg_file_format_filter_info);
+static EGG_DEFINE_QUARK (EggFileFormatFilterInfo,
+                         egg_file_format_filter_info);
 
 static EggFileFormatFilterInfo*
 egg_file_format_filter_info_new (const gchar *name,
