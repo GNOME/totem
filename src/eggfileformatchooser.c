@@ -1146,7 +1146,7 @@ egg_file_format_chooser_append_extension (EggFileFormatChooser *self,
 
   if (0 == format)
     {
-      g_warning ("%s: No file format selected. Cannot append extension.", __FUNCTION__);
+      g_warning ("%s: No file format selected. Cannot append extension.", G_STRFUNC);
       return NULL;
     }
 
@@ -1173,7 +1173,7 @@ egg_file_format_chooser_append_extension (EggFileFormatChooser *self,
   if (NULL == extensions)
     {
       g_warning ("%s: File format %d doesn't provide file extensions. "
-                 "Cannot append extension.", __FUNCTION__, format);
+                 "Cannot append extension.", G_STRFUNC, format);
       return NULL;
     }
 
