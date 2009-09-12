@@ -81,7 +81,7 @@ class totemNPObject : public NPObject {
     bool GetBoolFromArguments (const NPVariant*, uint32_t, uint32_t, bool&);
     bool GetInt32FromArguments (const NPVariant*, uint32_t, uint32_t, int32_t&);
     bool GetDoubleFromArguments (const NPVariant*, uint32_t, uint32_t, double&);
-    bool GetStringFromArguments (const NPVariant*, uint32_t, uint32_t, const char*&);
+    bool GetNPStringFromArguments (const NPVariant*, uint32_t, uint32_t, NPString&);
     bool DupStringFromArguments (const NPVariant*, uint32_t, uint32_t, char*&);
     bool GetObjectFromArguments (const NPVariant*, uint32_t, uint32_t, NPObject*&);
 

@@ -243,8 +243,8 @@ totemGMPPlayer::SetPropertyByIndex (int aIndex,
 
     case eURL: {
       /* attribute AUTF8String URL; */
-      const char* url;
-      if (!GetStringFromArguments (aValue, 1, 0, url))
+      NPString url;
+      if (!GetNPStringFromArguments (aValue, 1, 0, url))
         return false;
 
       Plugin()->SetSrc (url); /* FIXMEchpe: use SetURL instead?? */

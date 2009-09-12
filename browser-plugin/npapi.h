@@ -784,6 +784,7 @@ void        NPN_MemFree(void* ptr);
 uint32        NPN_MemFlush(uint32 size);
 void* NPN_MemDup (const void*, uint32);
 char* NPN_StrDup (const char *);
+char* NPN_StrnDup (const char *, uint32);
 void        NPN_ReloadPlugins(NPBool reloadPages);
 JRIEnv*     NPN_GetJavaEnv(void);
 jref        NPN_GetJavaPeer(NPP instance);

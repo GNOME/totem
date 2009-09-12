@@ -108,15 +108,15 @@ totemGMPControls::InvokeByIndex (int aIndex,
 
     case eIsAvailable:
       /* boolean isAvailable (in ACString name); */
-      const char *name;
-      if (!GetStringFromArguments (argv, argc, 0, name))
+      NPString name;
+      if (!GetNPStringFromArguments (argv, argc, 0, name))
         return false;
-      if (g_ascii_strcasecmp (name, "currentItem") == 0
-      	  || g_ascii_strcasecmp (name, "next") == 0
-      	  || g_ascii_strcasecmp (name, "pause") == 0
-      	  || g_ascii_strcasecmp (name, "play") == 0
-      	  || g_ascii_strcasecmp (name, "previous") == 0
-      	  || g_ascii_strcasecmp (name, "stop") == 0)
+      if (g_ascii_strncasecmp (name.UTF8Characters, "currentItem", name.UTF8Length) == 0
+      	  || g_ascii_strncasecmp (name.UTF8Characters, "next", name.UTF8Length) == 0
+      	  || g_ascii_strncasecmp (name.UTF8Characters, "pause", name.UTF8Length) == 0
+      	  || g_ascii_strncasecmp (name.UTF8Characters, "play", name.UTF8Length) == 0
+      	  || g_ascii_strncasecmp (name.UTF8Characters, "previous", name.UTF8Length) == 0
+      	  || g_ascii_strncasecmp (name.UTF8Characters, "stop", name.UTF8Length) == 0)
       	  return BoolVariant (_result, true);
       return BoolVariant (_result, false);
 

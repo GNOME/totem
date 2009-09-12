@@ -287,8 +287,8 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
       
     case eSetBgColor: {
       /* void SetBgColor (in ACString color); */
-      const char *color;
-      if (!GetStringFromArguments (argv, argc, 0, color))
+      NPString color;
+      if (!GetNPStringFromArguments (argv, argc, 0, color))
         return false;
 
       Plugin()->SetBackgroundColor (color);
@@ -358,8 +358,8 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
     case eSetMatrix: {
       /* void SetMatrix (in ACString matrix); */
-      const char *matrix;
-      if (!GetStringFromArguments (argv, argc, 0, matrix))
+      NPString matrix;
+      if (!GetNPStringFromArguments (argv, argc, 0, matrix))
         return false;
 
       Plugin()->SetMatrix (matrix);
@@ -372,8 +372,8 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
     case eSetMovieName: {
       /* void SetMovieName (in AUTF8String movieName); */
-      const char *name;
-      if (!GetStringFromArguments (argv, argc, 0, name))
+      NPString name;
+      if (!GetNPStringFromArguments (argv, argc, 0, name))
         return false;
 
       Plugin()->SetMovieName (name);
@@ -386,8 +386,8 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
     case eSetRectangle: {
       /* void SetRectangle (in ACString rect); */
-      const char *rectangle;
-      if (!GetStringFromArguments (argv, argc, 0, rectangle))
+      NPString rectangle;
+      if (!GetNPStringFromArguments (argv, argc, 0, rectangle))
         return false;
 
       Plugin()->SetRectangle (rectangle);

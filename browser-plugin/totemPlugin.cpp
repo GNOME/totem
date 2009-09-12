@@ -368,25 +368,28 @@ totemPlugin::ClearPlaylist ()
 }
 
 int32_t
-totemPlugin::AddItem (const char* aURI)
+totemPlugin::AddItem (const NPString& aURI)
 {
-        if (!aURI || !aURI[0])
+        if (!aURI.UTF8Characters || !aURI.UTF8Length)
                 return -1;
 
         /* FIXMEchpe: resolve against mBaseURI or mSrcURI ?? */
-
-	D ("AddItem '%s'", aURI);
 
 	/* FIXME: queue the action instead */
 	if (!mViewerReady)
 		return false;
 
 	assert (mViewerProxy);
-	dbus_g_proxy_call_no_reply (mViewerProxy,
+
+        char *uri = g_strndup (aURI.UTF8Characters, aURI.UTF8Length);
+	D ("AddItem '%s'", uri);
+
+        dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "AddItem",
-				    G_TYPE_STRING, aURI,
+				    G_TYPE_STRING, uri,
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
+        g_free (uri);
 
 	return 0;
 }
@@ -418,31 +421,31 @@ totemPlugin::SetControllerVisible (bool enabled)
 }
 
 void
-totemPlugin::SetBackgroundColor (const char* color)
+totemPlugin::SetBackgroundColor (const NPString& color)
 {
   g_free (mBackgroundColor);
-  mBackgroundColor = g_strdup (color);
+  mBackgroundColor = g_strndup (color.UTF8Characters, color.UTF8Length);
 }
 
 void
-totemPlugin::SetMatrix (const char* matrix)
+totemPlugin::SetMatrix (const NPString& matrix)
 {
   g_free (mMatrix);
-  mMatrix = g_strdup (matrix);
+  mMatrix = g_strndup (matrix.UTF8Characters, matrix.UTF8Length);
 }
 
 void
-totemPlugin::SetRectangle (const char *rectangle)
+totemPlugin::SetRectangle (const NPString& rectangle)
 {
   g_free (mRectangle);
-  mRectangle = g_strdup (rectangle);
+  mRectangle = g_strndup (rectangle.UTF8Characters, rectangle.UTF8Length);
 }
 
 void
-totemPlugin::SetMovieName (const char *name)
+totemPlugin::SetMovieName (const NPString& name)
 {
   g_free (mMovieName);
-  mMovieName = g_strdup (name);
+  mMovieName = g_strndup (name.UTF8Characters, name.UTF8Length);
 }
 
 void
@@ -1507,6 +1510,30 @@ totemPlugin::SetSrc (const char* aURL)
         }
 
         mSrcURI = g_strdup (aURL);
+
+        if (mAutoPlay) {
+                RequestStream (false);
+        } else {
+                mWaitingForButtonPress = true;
+        }
+
+        return true;
+}
+
+bool
+totemPlugin::SetSrc (const NPString& aURL)
+{
+        g_free (mSrcURI);
+
+	/* If |src| is empty, don't resolve the URI! Otherwise we may
+	 * try to load an (probably iframe) html document as our video stream.
+	 */
+	if (!aURL.UTF8Characters || !aURL.UTF8Length) {
+              mSrcURI = NULL;
+              return true;
+        }
+
+        mSrcURI = g_strndup (aURL.UTF8Characters, aURL.UTF8Length);
 
         if (mAutoPlay) {
                 RequestStream (false);

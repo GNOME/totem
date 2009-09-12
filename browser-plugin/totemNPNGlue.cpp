@@ -297,7 +297,28 @@ void* NPN_MemDup (const void* aMem, uint32 aLen)
   return memcpy (dup, aMem, aLen);
 }
 
-char* NPN_StrDup (const char* aString)
+char* NPN_StrDup (const char *aString)
 {
-  return (char*) NPN_MemDup (aString, strlen (aString) + 1);
+  if (!aString)
+    return NULL;
+
+  return NPN_StrnDup (aString, strlen (aString));
+}
+
+char* NPN_StrnDup (const char *aString, uint32 aLen)
+{
+  if (!aString)
+    return NULL;
+
+  if (aLen < 0)
+    aLen = strlen (aString);
+
+  char* dup = (char*) NPN_MemAlloc (aLen + 1);
+  if (!dup)
+    return NULL;
+
+  memcpy (dup, aString, aLen);
+  dup[aLen] = '\0';
+
+  return dup;
 }

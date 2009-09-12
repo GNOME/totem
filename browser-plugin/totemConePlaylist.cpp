@@ -75,8 +75,8 @@ totemConePlaylist::InvokeByIndex (int aIndex,
       if (!CheckArgc (argc, 1, 3))
         return false;
 
-      const char *mrl;
-      if (!GetStringFromArguments (argv, argc, 0, mrl))
+      NPString mrl;
+      if (!GetNPStringFromArguments (argv, argc, 0, mrl))
         return false;
 
       Plugin()->AddItem (mrl);

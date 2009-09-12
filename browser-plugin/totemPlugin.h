@@ -339,11 +339,12 @@ class totemPlugin {
     NPObject* GetNPObject (ObjectEnum which);
 
     bool SetSrc (const char* aURL);
+    bool SetSrc (const NPString& aURL);
     const char* Src() const { return mSrcURI; }
 
     void Command (const char *aCommand);
     void ClearPlaylist ();
-    int32_t AddItem (const char*);
+    int32_t AddItem (const NPString&);
 
     void SetIsWindowless (bool enabled) { mIsWindowless = enabled; }
     bool IsWindowless () const { return mIsWindowless; }
@@ -378,16 +379,16 @@ class totemPlugin {
     void SetPlayEveryFrame (bool enabled) { mPlayEveryFrame = enabled; }
     bool PlayEveryFrame () const { return mPlayEveryFrame; }
 
-    void SetBackgroundColor (const char* color);
+    void SetBackgroundColor (const NPString& color);
     const char *BackgroundColor () const { return mBackgroundColor; }
 
-    void SetMatrix (const char* matrix);
+    void SetMatrix (const NPString& matrix);
     const char* Matrix () const { return mMatrix; }
 
-    void SetRectangle (const char *rectangle);
+    void SetRectangle (const NPString& rectangle);
     const char* Rectangle () const { return mRectangle; }
 
-    void SetMovieName (const char *name);
+    void SetMovieName (const NPString& name);
     const char* MovieName () const { return mMovieName; }
 
     void SetResetPropertiesOnReload (bool enabled) { mResetPropertiesOnReload = enabled; }

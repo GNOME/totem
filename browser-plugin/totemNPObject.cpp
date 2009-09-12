@@ -263,22 +263,21 @@ totemNPObject::GetDoubleFromArguments (const NPVariant* argv,
 }
 
 bool
-totemNPObject::GetStringFromArguments (const NPVariant* argv,
-                                       uint32_t argc,
-                                       uint32_t argNum,
-                                       const char*& _result)
+totemNPObject::GetNPStringFromArguments (const NPVariant* argv,
+                                         uint32_t argc,
+                                         uint32_t argNum,
+                                         NPString& _result)
 {
   if (!CheckArg (argv, argc, argNum, NPVariantType_String))
     return false;
 
   NPVariant arg = argv[argNum];
   if (NPVARIANT_IS_STRING (arg)) {
-    NPString string = NPVARIANT_TO_STRING (arg);
-    // FIXMEchpe this assumes it's 0-terminated, check that this holds!
-    _result = string.UTF8Characters;
+    _result = NPVARIANT_TO_STRING (arg);
   } else if (NPVARIANT_IS_NULL (arg) ||
              NPVARIANT_IS_VOID (arg)) {
-    _result = NULL;
+    _result.UTF8Characters = NULL;
+    _result.UTF8Length = 0;
   }
 
   return true;
@@ -293,12 +292,11 @@ totemNPObject::DupStringFromArguments (const NPVariant* argv,
   NPN_MemFree (_result);
   _result = NULL;
 
-  const char *newValue;
-  if (!GetStringFromArguments (argv, argc, argNum, newValue))
+  NPString newValue;
+  if (!GetNPStringFromArguments (argv, argc, argNum, newValue))
     return false;
 
-  /* This assumes every NPString is 0-terminated. FIXMEchpe check that this holds! */
-  _result = NPN_StrDup (newValue);
+  _result = NPN_StrnDup (newValue.UTF8Characters, newValue.UTF8Length);
   return true;
 }
 
