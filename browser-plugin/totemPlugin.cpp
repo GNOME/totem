@@ -1940,7 +1940,7 @@ totemPlugin::Init (NPMIMEType mimetype,
           return NPERR_GENERIC_ERROR;
         }
 
-        mBaseURI = g_strdup (baseURI.GetString ());
+	mBaseURI = g_strndup (baseURI.GetString (), baseURI.GetStringLen());
 	D ("Base URI is '%s'", mBaseURI ? mBaseURI : "");
 
 	/* Setup DBus connection handling */

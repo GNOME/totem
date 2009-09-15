@@ -54,6 +54,7 @@ class totemNPVariantWrapper {
     uint32_t  GetInt32    () const { return NPVARIANT_TO_INT32 (mVariant);   }
     double    GetDouble   () const { return NPVARIANT_TO_DOUBLE (mVariant);  }
     char *    GetString   () const { return (char *) NPVARIANT_TO_STRING (mVariant).UTF8Characters;  }
+    uint32_t  GetStringLen() const { return NPVARIANT_TO_STRING (mVariant).UTF8Length; }
     NPString  GetNPString () const { return NPVARIANT_TO_STRING (mVariant);  }
     NPObject* GetObject   () const { return NPVARIANT_TO_OBJECT (mVariant);  }
 
