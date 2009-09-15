@@ -334,7 +334,7 @@ class YouTube (totem.Plugin):
 		t_param = self.resolve_t_param (youtube_id)
 
 		if t_param != "":
-			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + urllib.quote (t_param) + self.get_fmt_string ()
+			mrl = "http://www.youtube.com/get_video?video_id=" + urllib.quote (youtube_id) + "&t=" + t_param + self.get_fmt_string ()
 
 		gobject.idle_add (self._append_to_liststore, treeview_name, pixbuf, entry.title.text, mrl, youtube_id, search_token)
 
