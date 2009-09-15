@@ -189,7 +189,9 @@ struct BaconVideoWidgetPrivate
   gboolean                     cursor_shown;
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
-  gboolean                     uses_fakesink;
+  gboolean                     uses_audio_fakesink;
+  GstElement                  *pulse_audio_sink;
+  gdouble                      volume;
   gboolean                     is_menu;
   
   gint                         video_width; /* Movie width */
@@ -1210,6 +1212,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->audiotags = NULL;
   priv->videotags = NULL;
   priv->zoom = 1.0;
+  priv->volume = -1.0;
 
   priv->lock = g_mutex_new ();
 
@@ -2234,6 +2237,11 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
 
+  if (bvw->priv->pulse_audio_sink) {
+    g_object_unref (bvw->priv->pulse_audio_sink);
+    bvw->priv->pulse_audio_sink = NULL;
+  }
+
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
     bvw->priv->vis_plugins_list = NULL;
@@ -2350,7 +2358,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       bacon_video_widget_get_show_cursor (bvw));
       break;
     case PROP_VOLUME:
-      g_value_set_double (value, bacon_video_widget_get_volume (bvw));
+      g_value_set_double (value, bvw->priv->volume);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3854,7 +3862,7 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
   if (bvw->priv->speakersetup == BVW_AUDIO_SOUND_AC3PASSTHRU)
     return FALSE;
 
-  return !bvw->priv->uses_fakesink;
+  return !bvw->priv->uses_audio_fakesink;
 }
 
 /**
@@ -3872,11 +3880,32 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
+  if (bvw->priv->volume < 0.0 && bvw->priv->pulse_audio_sink != NULL) {
+    bvw->priv->volume = volume;
+    return;
+  }
+
   if (bacon_video_widget_can_set_volume (bvw) != FALSE)
   {
     volume = CLAMP (volume, 0.0, 1.0);
-    g_object_set (bvw->priv->play, "volume",
-	          (gdouble) volume, NULL);
+    if (bvw->priv->pulse_audio_sink) {
+      GstState cur_state;
+
+      gst_element_get_state (bvw->priv->pulse_audio_sink, &cur_state, NULL, 0);
+      if (cur_state == GST_STATE_READY || cur_state == GST_STATE_PLAYING)
+      {
+	gdouble new_vol;
+	g_object_set (bvw->priv->pulse_audio_sink, "volume",
+		      (gdouble) volume, NULL);
+
+        g_object_get (bvw->priv->pulse_audio_sink, "volume", &new_vol, NULL);
+      }
+    } else {
+      g_object_set (bvw->priv->play, "volume",
+		    (gdouble) volume, NULL);
+    }
+
+    bvw->priv->volume = volume;
     g_object_notify (G_OBJECT (bvw), "volume");
   }
 }
@@ -3892,14 +3921,10 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
 double
 bacon_video_widget_get_volume (BaconVideoWidget * bvw)
 {
-  double vol;
-
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0.0);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), 0.0);
 
-  g_object_get (G_OBJECT (bvw->priv->play), "volume", &vol, NULL);
-
-  return vol;
+  return bvw->priv->volume;
 }
 
 /**
@@ -4597,6 +4622,27 @@ bacon_video_widget_has_menus (BaconVideoWidget *bvw)
         return FALSE;
 
     return bvw->priv->is_menu;
+}
+
+static gboolean
+notify_volume_idle_cb (BaconVideoWidget *bvw)
+{
+  gdouble vol;
+
+  g_object_get (G_OBJECT (bvw->priv->pulse_audio_sink), "volume", &vol, NULL);
+  bvw->priv->volume = vol;
+
+  g_object_notify (G_OBJECT (bvw), "volume");
+
+  return FALSE;
+}
+
+static void
+notify_volume_cb (GObject             *object,
+		  GParamSpec          *pspec,
+		  BaconVideoWidget    *bvw)
+{
+  g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
 }
 
 /**
@@ -6138,15 +6184,18 @@ bacon_video_widget_new (int width, int height,
       cb_gconf, bvw, NULL, NULL);
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
-    audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
+    audio_sink = gst_element_factory_make ("pulsesink", "audio-sink");
     if (audio_sink == NULL) {
-      g_warning ("Could not create element 'gconfaudiosink'");
-      /* Try to fallback on autoaudiosink */
-      audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
-    } else {
-      /* set the profile property on the gconfaudiosink to "music and movies" */
-      if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "profile"))
-        g_object_set (G_OBJECT (audio_sink), "profile", 1, NULL);
+      audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
+      if (audio_sink == NULL) {
+	g_warning ("Could not create element 'gconfaudiosink'");
+	/* Try to fallback on autoaudiosink */
+	audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+      } else {
+	/* set the profile property on the gconfaudiosink to "music and movies" */
+	if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "profile"))
+	  g_object_set (G_OBJECT (audio_sink), "profile", 1, NULL);
+      }
     }
   } else {
     audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
@@ -6293,9 +6342,17 @@ bacon_video_widget_new (int width, int height,
       /* make fakesink sync to the clock like a real sink */
       g_object_set (audio_sink, "sync", TRUE, NULL);
       GST_DEBUG ("audio sink doesn't work, using fakesink instead");
-      bvw->priv->uses_fakesink = TRUE;
+      bvw->priv->uses_audio_fakesink = TRUE;
     }
     gst_object_unref (bus);
+
+    /* If we're using a sink that has a volume property, then that's what
+     * we need to modify, not playbin's one */
+    if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "volume")) {
+      bvw->priv->pulse_audio_sink = g_object_ref (audio_sink);
+      g_signal_connect (G_OBJECT (bvw->priv->pulse_audio_sink), "notify::volume",
+			G_CALLBACK (notify_volume_cb), bvw);
+    }
   } else {
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "
