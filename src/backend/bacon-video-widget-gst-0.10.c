@@ -5949,7 +5949,6 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
   GstXOverlay *old_xoverlay = bvw->priv->xoverlay;
   GstElement *video_sink = NULL;
   GstElement *element = NULL;
-  GstIteratorResult ires;
   GstIterator *iter;
 
   if (g_thread_self() != gui_thread) {
@@ -6021,7 +6020,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
                                            GST_TYPE_COLOR_BALANCE);
   /* naively assume no resync */
   element = NULL;
-  ires = gst_iterator_fold (iter,
+  gst_iterator_fold (iter,
       (GstIteratorFoldFunction) find_colorbalance_element, NULL, &element);
   gst_iterator_free (iter);
 
