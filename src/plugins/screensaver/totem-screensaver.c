@@ -106,16 +106,13 @@ static void
 totem_screensaver_update_from_state (TotemObject *totem,
 				     TotemScreensaverPlugin *pi)
 {
-	gboolean lock_screensaver_on_audio, visual_effects, can_get_frames;
+	gboolean lock_screensaver_on_audio, can_get_frames;
 	BaconVideoWidget *bvw;
 	GConfClient *gc;
 
 	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget ((Totem *)(totem)));
 	gc = gconf_client_get_default ();
 
-	visual_effects = gconf_client_get_bool (gc,
-						GCONF_PREFIX"/show_vfx",
-						NULL);
 	lock_screensaver_on_audio = gconf_client_get_bool (gc, 
 							   GCONF_PREFIX"/lock_screensaver_on_audio",
 							   NULL);
