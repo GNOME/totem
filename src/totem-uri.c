@@ -37,7 +37,7 @@
 /* 5 minute threshold. We don't want to save the position within a 3
  * minute song for example. */
 #define SAVE_POSITION_THRESHOLD 5 * 60 * 1000
-/* Don't save the position of a stream if we're within 5% of the end so that,
+/* Don't save the position of a stream if we're within 5% of the beginning or end so that,
  * for example, we don't save if the user exits when they reach the credits of a film */
 #define SAVE_POSITION_END_THRESHOLD 0.05
 /* The GIO file attribute used to store the position in a stream */
@@ -697,33 +697,43 @@ totem_save_position (Totem *totem)
 	if (mrl == NULL)
 		return;
 
+	file = g_file_new_for_uri (mrl);
+	g_free (mrl);
+
 	/* Don't save if it's:
 	 *  - a live stream
 	 *  - too short to make saving useful
-	 *  - too close to the end to make saving useful
+	 *  - too close to the beginning or end to make saving useful
 	 */
 	if (stream_length < SAVE_POSITION_THRESHOLD ||
-	    (stream_length - position) < stream_length * SAVE_POSITION_END_THRESHOLD) {
+	    (stream_length - position) < stream_length * SAVE_POSITION_END_THRESHOLD ||
+	    position < stream_length * SAVE_POSITION_END_THRESHOLD) {
 		g_debug ("not saving position because the video/track is too short");
-		g_free (mrl);
+
+		/* Remove the attribute if it is currently set on the file; this ensures that if we start watching a stream and save the position
+		 * half-way through, then later continue watching it to the end, the mid-way saved position will be removed when we finish the
+		 * stream. Only do this for non-live streams. */
+		if (stream_length > 0) {
+			g_file_set_attribute_string (file, SAVE_POSITION_FILE_ATTRIBUTE, NULL, G_FILE_QUERY_INFO_NONE, NULL, &error);
+			if (error != NULL) {
+				g_warning ("g_file_set_attribute_string failed: %s", error->message);
+				g_error_free (error);
+			}
+		}
+
+		g_object_unref (file);
 		return;
 	}
 
 	g_debug ("saving position: %"G_GINT64_FORMAT, position);
 
-	file = g_file_new_for_uri (mrl);
-	g_free (mrl);
-
 	/* Save the position in the stream as a file attribute */
 	pos_str = g_strdup_printf ("%"G_GINT64_FORMAT, position);
-	g_file_set_attribute (file,
-			      SAVE_POSITION_FILE_ATTRIBUTE,
-			      G_FILE_ATTRIBUTE_TYPE_STRING, pos_str,
-			      G_FILE_QUERY_INFO_NONE, NULL, &error);
+	g_file_set_attribute_string (file, SAVE_POSITION_FILE_ATTRIBUTE, pos_str, G_FILE_QUERY_INFO_NONE, NULL, &error);
 	g_free (pos_str);
 
 	if (error != NULL) {
-		g_warning ("g_file_set_attribute failed: %s", error->message);
+		g_warning ("g_file_set_attribute_string failed: %s", error->message);
 		g_error_free (error);
 	}
 	g_object_unref (file);
