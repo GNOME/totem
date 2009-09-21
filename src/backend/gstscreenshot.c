@@ -98,13 +98,13 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
       !create_element ("fakesink", &sink, &error)) {
     g_warning ("Could not take screenshot: %s", error->message);
     g_error_free (error);
-    return NULL;
+    goto bail;
   }
 
   pipeline = gst_pipeline_new ("screenshot-pipeline");
   if (pipeline == NULL) {
     g_warning ("Could not take screenshot: %s", "no pipeline (unknown error)");
-    return NULL;
+    goto bail;
   }
 
   GST_DEBUG ("adding elements");
@@ -133,23 +133,23 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
   /* FIXME: linking is still way too expensive, profile this properly */
   GST_DEBUG ("linking src->csp");
   if (!gst_element_link_pads (src, "src", csp, "sink"))
-    return NULL;
+    goto bail;
 
   GST_DEBUG ("linking csp->filter1");
   if (!gst_element_link_pads (csp, "src", filter1, "sink"))
-    return NULL;
+    goto bail;
 
   GST_DEBUG ("linking filter1->vscale");
   if (!gst_element_link_pads (filter1, "src", vscale, "sink"))
-    return NULL;
+    goto bail;
 
   GST_DEBUG ("linking vscale->capsfilter");
   if (!gst_element_link_pads (vscale, "src", filter2, "sink"))
-    return NULL;
+    goto bail;
 
   GST_DEBUG ("linking capsfilter->sink");
   if (!gst_element_link_pads (filter2, "src", sink, "sink"))
-    return NULL;
+    goto bail;
 
   GST_DEBUG ("running conversion pipeline");
   gst_element_set_state (pipeline, GST_STATE_PLAYING);
@@ -193,6 +193,9 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 
   gst_element_set_state (pipeline, GST_STATE_NULL);
   gst_object_unref (pipeline);
+
+bail:
+  g_object_unref (buf);
 
   return result;
 }
