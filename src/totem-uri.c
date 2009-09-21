@@ -714,7 +714,7 @@ totem_save_position (Totem *totem)
 		 * half-way through, then later continue watching it to the end, the mid-way saved position will be removed when we finish the
 		 * stream. Only do this for non-live streams. */
 		if (stream_length > 0) {
-			g_file_set_attribute_string (file, SAVE_POSITION_FILE_ATTRIBUTE, NULL, G_FILE_QUERY_INFO_NONE, NULL, &error);
+			g_file_set_attribute_string (file, SAVE_POSITION_FILE_ATTRIBUTE, "", G_FILE_QUERY_INFO_NONE, NULL, &error);
 			if (error != NULL) {
 				g_warning ("g_file_set_attribute_string failed: %s", error->message);
 				g_error_free (error);
