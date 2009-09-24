@@ -24,8 +24,11 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <errno.h>
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -641,6 +644,12 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	else
 		g_print ("Emptying current_uri\n");
 
+	if (old_uri != NULL &&
+	    g_str_has_prefix (old_uri, "fd://") != FALSE) {
+		int fd;
+		fd = strtol (old_uri + strlen ("fd://"), NULL, 0);
+		close (fd);
+	}
 	g_free (old_uri);
 	g_free (old_base);
 	g_free (old_href);
@@ -900,18 +909,23 @@ totem_embedded_set_local_cache (TotemEmbedded *emb,
 				const char *path,
 				GError **error)
 {
-	char *file_uri;
+	int fd;
 
 	/* FIXME Should also handle playlists */
 	if (!emb->is_browser_stream)
 		return TRUE;
 
-	file_uri = g_filename_to_uri (path, NULL, error);
-	if (!file_uri)
+	/* Keep the temporary file open, so that StreamAsFile
+	 * doesn't remove it from under us */
+	fd = open (path, O_RDONLY);
+	if (fd < 0) {
+		g_message ("Failed to open local cache file '%s': %s",
+			   path, g_strerror (errno));
 		return FALSE;
+	}
 
 	emb->stream_uri = emb->current_uri;
-	emb->current_uri = file_uri;
+	emb->current_uri = g_strdup_printf ("fd://%d", fd);
 
 	return TRUE;
 }
