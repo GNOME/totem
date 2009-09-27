@@ -108,5 +108,19 @@ _wrap_totem_plugin_load_interface (PyGObject *self, PyObject *args, PyObject *kw
     
 	builder = totem_plugin_load_interface (TOTEM_PLUGIN (self->obj), name, fatal, parent, user_data);
     
-	return pygobject_new((GObject *)builder);
+	return pygobject_new ((GObject *)builder);
+}
+%%
+override totem_get_version noargs
+static PyObject *
+_wrap_totem_get_version (PyGObject *self)
+{
+	PyObject *py_string;
+	char *version;
+
+	version = totem_get_version ();
+	py_string = PyString_FromString (version);
+	g_free (version);
+
+	return py_string;
 }

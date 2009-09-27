@@ -125,6 +125,11 @@ GQuark totem_remote_command_quark	(void);
 #define TOTEM_TYPE_REMOTE_COMMAND	(totem_remote_command_get_type())
 #define TOTEM_REMOTE_COMMAND		totem_remote_command_quark ()
 
+GType totem_remote_setting_get_type	(void);
+GQuark totem_remote_setting_quark	(void);
+#define TOTEM_TYPE_REMOTE_SETTING	(totem_remote_setting_get_type())
+#define TOTEM_REMOTE_SETTING		totem_remote_setting_quark ()
+
 GType totem_disc_media_type_get_type	(void);
 GQuark totem_disc_media_type_quark	(void);
 #define TOTEM_TYPE_DISC_MEDIA_TYPE	(totem_disc_media_type_get_type())
@@ -197,6 +202,8 @@ void	totem_action_next			(Totem *totem);
 void	totem_action_previous			(Totem *totem);
 void	totem_action_seek_time			(Totem *totem, gint64 sec);
 void	totem_action_seek_relative		(Totem *totem, gint64 offset);
+double	totem_get_volume			(Totem *totem);
+void	totem_action_volume			(Totem *totem, double volume);
 void	totem_action_volume_relative		(Totem *totem, double off_pct);
 void	totem_action_volume_toggle_mute		(Totem *totem);
 gboolean totem_action_set_mrl			(Totem *totem,
@@ -236,6 +243,7 @@ GtkWindow *totem_get_main_window		(Totem *totem);
 GtkUIManager *totem_get_ui_manager		(Totem *totem);
 GtkWidget *totem_get_video_widget		(Totem *totem);
 char *totem_get_video_widget_backend_name	(Totem *totem);
+char *totem_get_version				(void);
 
 /* Current media information */
 char *	totem_get_short_title			(Totem *totem);

@@ -422,6 +422,19 @@ totem_get_video_widget_backend_name (Totem *totem)
 }
 
 /**
+ * totem_get_version:
+ *
+ * Gets the application name and version (e.g. "Totem 2.28.0").
+ *
+ * Return value: a newly-allocated string of the name and version of the application
+ **/
+char *
+totem_get_version (void)
+{
+	return g_strdup_printf (_("Totem %s"), VERSION);
+}
+
+/**
  * totem_get_current_time:
  * @totem: a #TotemObject
  *
@@ -721,6 +734,34 @@ totem_remote_command_get_type (void)
 		};
 
 		etype = g_enum_register_static ("TotemRemoteCommand", values);
+	}
+
+	return etype;
+}
+
+GQuark
+totem_remote_setting_quark (void)
+{
+	static GQuark quark = 0;
+	if (!quark)
+		quark = g_quark_from_static_string ("totem_remote_setting");
+
+	return quark;
+}
+
+GType
+totem_remote_setting_get_type (void)
+{
+	static GType etype = 0;
+
+	if (etype == 0) {
+		static const GEnumValue values[] = {
+			ENUM_ENTRY (TOTEM_REMOTE_SETTING_SHUFFLE, "Shuffle"),
+			ENUM_ENTRY (TOTEM_REMOTE_SETTING_REPEAT, "Repeat"),
+			{ 0, NULL, NULL }
+		};
+
+		etype = g_enum_register_static ("TotemRemoteSetting", values);
 	}
 
 	return etype;
@@ -1991,12 +2032,42 @@ totem_action_zoom_reset (Totem *totem)
 }
 
 /**
+ * totem_action_get_volume:
+ * @totem: a #TotemObject
+ *
+ * Gets the current volume level, as a value between %0.0 and %1.0.
+ *
+ * Return value: the volume level
+ **/
+double
+totem_get_volume (Totem *totem)
+{
+	return bacon_video_widget_get_volume (totem->bvw);
+}
+
+/**
+ * totem_action_volume:
+ * @totem: a #TotemObject
+ * @volume: the new absolute volume value
+ *
+ * Sets the volume, with %1.0 being the maximum, and %0.0 being the minimum level.
+ **/
+void
+totem_action_volume (Totem *totem, double volume)
+{
+	if (bacon_video_widget_can_set_volume (totem->bvw) == FALSE)
+		return;
+
+	bacon_video_widget_set_volume (totem->bvw, volume);
+}
+
+/**
  * totem_action_volume_relative:
  * @totem: a #TotemObject
  * @off_pct: the value by which to increase or decrease the volume
  *
- * Sets the volume relative to its current level, with 1.0 being the
- * maximum, and 0.0 being the minimum level.
+ * Sets the volume relative to its current level, with %1.0 being the
+ * maximum, and %0.0 being the minimum level.
  **/
 void
 totem_action_volume_relative (Totem *totem, double off_pct)

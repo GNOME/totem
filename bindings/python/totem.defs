@@ -93,6 +93,16 @@
   )
 )
 
+(define-enum RemoteSetting
+  (in-module "Totem")
+  (c-name "TotemRemoteSetting")
+  (gtype-id "TOTEM_TYPE_REMOTE_SETTING")
+  (values
+    '("shuffle" "TOTEM_REMOTE_SETTING_SHUFFLE")
+    '("repeat" "TOTEM_REMOTE_SETTING_REPEAT")
+  )
+)
+
 ;; From totem-plugin.h
 
 (define-function totem_plugin_error_quark
@@ -269,6 +279,21 @@
   )
 )
 
+(define-method get_volume
+  (of-object "TotemObject")
+  (c-name "totem_get_volume")
+  (return-type "gfloat")
+)
+
+(define-method action_volume
+  (of-object "TotemObject")
+  (c-name "totem_action_volume")
+  (return-type "none")
+  (parameters
+    '("gfloat" "volume")
+  )
+)
+
 (define-method action_volume_relative
   (of-object "TotemObject")
   (c-name "totem_action_volume_relative")
@@ -355,6 +380,12 @@
   (return-type "gboolean")
 )
 
+(define-method is_paused
+  (of-object "TotemObject")
+  (c-name "totem_is_paused")
+  (return-type "gboolean")
+)
+
 (define-method is_seekable
   (of-object "TotemObject")
   (c-name "totem_is_seekable")
@@ -382,6 +413,33 @@
 (define-method get_video_widget_backend_name
   (of-object "TotemObject")
   (c-name "totem_get_video_widget_backend_name")
+  (return-type "char*")
+)
+
+(define-method get_version
+  (of-object "TotemObject")
+  (c-name "totem_get_version")
+  (return-type "char*")
+)
+
+(define-method get_playlist_length
+  (of-object "TotemObject")
+  (c-name "totem_get_playlist_length")
+  (return-type "guint")
+)
+
+(define-method get_playlist_pos
+  (of-object "TotemObject")
+  (c-name "totem_get_playlist_pos")
+  (return-type "int")
+)
+
+(define-method get_title_at_playlist_pos
+  (of-object "TotemObject")
+  (c-name "totem_get_title_at_playlist_pos")
+  (parameters
+    '("guint" "playlist_index")
+  )
   (return-type "char*")
 )
 
@@ -444,6 +502,25 @@
   (parameters
     '("TotemRemoteCommand" "cmd")
     '("const-char*" "url")
+  )
+)
+
+(define-method action_remote_set_setting
+  (of-object "TotemObject")
+  (c-name "totem_action_remote_set_setting")
+  (return-type "none")
+  (parameters
+    '("TotemRemoteSetting" "setting")
+    '("gboolean" "value")
+  )
+)
+
+(define-method action_remote_get_setting
+  (of-object "TotemObject")
+  (c-name "totem_action_remote_get_setting")
+  (return-type "gboolean")
+  (parameters
+    '("TotemRemoteSetting" "setting")
   )
 )
 
