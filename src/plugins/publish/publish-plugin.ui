@@ -55,11 +55,14 @@
                 <property name="xalign">0</property>
                 <property name="yalign">0</property>
                 <property name="xpad">12</property>
-                <property name="label" translatable="yes">&lt;small&gt;The name used for announcing the playlist service on the network.
+                <property name="label" translatable="yes">The name used for announcing the playlist service on the network.
 All occurrences of the string &lt;b&gt;%u&lt;/b&gt; will be replaced by your name,
-and &lt;b&gt;%h&lt;/b&gt; will be replaced by your computer's host name.&lt;/small&gt;</property>
+and &lt;b&gt;%h&lt;/b&gt; will be replaced by your computer's host name.</property>
                 <property name="use_markup">True</property>
                 <property name="wrap">True</property>
+                <attributes>
+                  <attribute name="scale" value="0.833333333"/><!-- PANGO_SCALE_SMALL -->
+                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>

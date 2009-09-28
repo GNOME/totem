@@ -35,7 +35,7 @@
 	</child>
 	<child>
 		<object class="GtkHBox" id="yt_hbox">
-			<property name="spacing">4</property>
+			<property name="spacing">6</property>
 			<child>
 				<object class="GtkButton" id="yt_search_button">
 					<property name="use-stock">True</property>
@@ -73,7 +73,7 @@
 			<signal name="switch-page" handler="notebook_switch_page_cb"/>
 			<child>
 				<object class="GtkVBox" id="yt_vbox_search">
-					<property name="spacing">4</property>
+					<property name="spacing">6</property>
 					<child>
 						<object class="GtkScrolledWindow" id="yt_scrolled_window_search">
 							<property name="hscrollbar-policy">GTK_POLICY_NEVER</property>
@@ -119,6 +119,7 @@
 			</child>
 			<child>
 				<object class="GtkVBox" id="yt_vbox_related">
+					<property name="spacing">6</property>
 					<child>
 						<object class="GtkScrolledWindow" id="yt_scrolled_window_related">
 							<property name="hscrollbar-policy">GTK_POLICY_AUTOMATIC</property>

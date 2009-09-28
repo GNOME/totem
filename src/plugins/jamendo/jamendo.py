@@ -142,6 +142,7 @@ class JamendoPlugin(totem.Plugin):
         combo.set_active(self.AUDIO_FORMATS.index(format))
         spinbutton = self.builder.get_object('album_num_spinbutton')
         spinbutton.set_value(num_per_page)
+        self.config_dialog.set_default_response(gtk.RESPONSE_OK)
         return self.config_dialog
 
     def reset(self):

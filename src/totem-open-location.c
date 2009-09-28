@@ -174,6 +174,7 @@ totem_open_location_new (Totem *totem)
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OPEN, GTK_RESPONSE_OK,
 			NULL);
+	gtk_container_set_border_width (GTK_CONTAINER (open_location), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (open_location), GTK_RESPONSE_OK);
 
 	g_signal_connect (G_OBJECT (open_location), "delete-event",

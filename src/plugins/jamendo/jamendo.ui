@@ -88,6 +88,15 @@
 			</popup>
 		</ui>
 	</object>
+	<object class="GtkImage" id="album_button_image">
+		<property name="visible">True</property>
+		<property name="stock">gtk-jump-to</property>
+		<property name="icon_size">4</property>
+		<property name="xalign">0.5</property>
+		<property name="yalign">0.5</property>
+		<property name="xpad">0</property>
+		<property name="ypad">0</property>
+	</object>
 	<object class="GtkVBox" id="container">
 		<property name="visible">True</property>
 		<property name="homogeneous">False</property>
@@ -113,7 +122,7 @@
 			<object class="GtkHBox" id="search_hbox">
 				<property name="visible">True</property>
 				<property name="homogeneous">False</property>
-				<property name="spacing">4</property>
+				<property name="spacing">6</property>
 				<child>
 					<object class="GtkComboBox" id="search_combo">
 						<property name="model">search_combo_model</property>
@@ -164,7 +173,7 @@
 					<object class="GtkVBox" id="vbox1">
 						<property name="visible">True</property>
 						<property name="homogeneous">False</property>
-						<property name="spacing">4</property>
+						<property name="spacing">6</property>
 						<child>
 							<object class="GtkScrolledWindow" id="results_scrolledwindow">
 								<property name="visible">True</property>
@@ -178,29 +187,17 @@
 										<property name="visible">True</property>
 										<property name="shadow_type">GTK_SHADOW_IN</property>
 										<child>
-											<object class="GtkVBox" id="results_vbox">
+											<object class="GtkTreeView" id="results_treeview">
+												<property name="model">results_treeview_model</property>
 												<property name="visible">True</property>
-												<property name="homogeneous">False</property>
-												<property name="spacing">0</property>
-												<child>
-													<object class="GtkTreeView" id="results_treeview">
-								                        <property name="model">results_treeview_model</property>
-														<property name="visible">True</property>
-														<property name="can_focus">True</property>
-														<property name="headers_visible">False</property>
-														<property name="rules_hint">False</property>
-														<property name="reorderable">False</property>
-														<property name="enable_search">True</property>
-														<property name="fixed_height_mode">False</property>
-														<property name="hover_selection">False</property>
-														<property name="hover_expand">False</property>
-													</object>
-													<packing>
-														<property name="padding">0</property>
-														<property name="expand">True</property>
-														<property name="fill">True</property>
-													</packing>
-												</child>
+												<property name="can_focus">True</property>
+												<property name="headers_visible">False</property>
+												<property name="rules_hint">False</property>
+												<property name="reorderable">False</property>
+												<property name="enable_search">True</property>
+												<property name="fixed_height_mode">False</property>
+												<property name="hover_selection">False</property>
+												<property name="hover_expand">False</property>
 											</object>
 										</child>
 									</object>
@@ -254,7 +251,7 @@
 					<object class="GtkVBox" id="vbox2">
 						<property name="visible">True</property>
 						<property name="homogeneous">False</property>
-						<property name="spacing">4</property>
+						<property name="spacing">6</property>
 						<child>
 							<object class="GtkScrolledWindow" id="popular_scrolledwindow">
 								<property name="visible">True</property>
@@ -268,29 +265,17 @@
 										<property name="visible">True</property>
 										<property name="shadow_type">GTK_SHADOW_IN</property>
 										<child>
-											<object class="GtkVBox" id="popular_vbox">
+											<object class="GtkTreeView" id="popular_treeview">
+												<property name="model">popular_treeview_model</property>
 												<property name="visible">True</property>
-												<property name="homogeneous">False</property>
-												<property name="spacing">0</property>
-												<child>
-													<object class="GtkTreeView" id="popular_treeview">
-								                        <property name="model">popular_treeview_model</property>
-														<property name="visible">True</property>
-														<property name="can_focus">True</property>
-														<property name="headers_visible">False</property>
-														<property name="rules_hint">False</property>
-														<property name="reorderable">False</property>
-														<property name="enable_search">True</property>
-														<property name="fixed_height_mode">False</property>
-														<property name="hover_selection">False</property>
-														<property name="hover_expand">False</property>
-													</object>
-													<packing>
-														<property name="padding">0</property>
-														<property name="expand">True</property>
-														<property name="fill">True</property>
-													</packing>
-												</child>
+												<property name="can_focus">True</property>
+												<property name="headers_visible">False</property>
+												<property name="rules_hint">False</property>
+												<property name="reorderable">False</property>
+												<property name="enable_search">True</property>
+												<property name="fixed_height_mode">False</property>
+												<property name="hover_selection">False</property>
+												<property name="hover_expand">False</property>
 											</object>
 										</child>
 									</object>
@@ -344,7 +329,7 @@
 					<object class="GtkVBox" id="vbox3">
 						<property name="visible">True</property>
 						<property name="homogeneous">False</property>
-						<property name="spacing">4</property>
+						<property name="spacing">6</property>
 						<child>
 							<object class="GtkScrolledWindow" id="latest_scrolledwindow">
 								<property name="visible">True</property>
@@ -358,29 +343,17 @@
 										<property name="visible">True</property>
 										<property name="shadow_type">GTK_SHADOW_IN</property>
 										<child>
-											<object class="GtkVBox" id="latest_vbox">
+											<object class="GtkTreeView" id="latest_treeview">
+												<property name="model">latest_treeview_model</property>
 												<property name="visible">True</property>
-												<property name="homogeneous">False</property>
-												<property name="spacing">0</property>
-												<child>
-													<object class="GtkTreeView" id="latest_treeview">
-								                        <property name="model">latest_treeview_model</property>
-														<property name="visible">True</property>
-														<property name="can_focus">True</property>
-														<property name="headers_visible">False</property>
-														<property name="rules_hint">False</property>
-														<property name="reorderable">False</property>
-														<property name="enable_search">True</property>
-														<property name="fixed_height_mode">False</property>
-														<property name="hover_selection">False</property>
-														<property name="hover_expand">False</property>
-													</object>
-													<packing>
-														<property name="padding">0</property>
-														<property name="expand">True</property>
-														<property name="fill">True</property>
-													</packing>
-												</child>
+												<property name="can_focus">True</property>
+												<property name="headers_visible">False</property>
+												<property name="rules_hint">False</property>
+												<property name="reorderable">False</property>
+												<property name="enable_search">True</property>
+												<property name="fixed_height_mode">False</property>
+												<property name="hover_selection">False</property>
+												<property name="hover_expand">False</property>
 											</object>
 										</child>
 									</object>
@@ -441,7 +414,7 @@
 			<object class="GtkHBox" id="hbox1">
 				<property name="visible">True</property>
 				<property name="homogeneous">False</property>
-				<property name="spacing">0</property>
+				<property name="spacing">6</property>
 				<child>
 					<object class="GtkButton" id="album_button">
 						<property name="visible">True</property>
@@ -449,53 +422,8 @@
 						<property name="can_focus">True</property>
 						<property name="relief">GTK_RELIEF_NORMAL</property>
 						<property name="focus_on_click">True</property>
-						<child>
-							<object class="GtkHBox" id="album_button_hbox">
-								<property name="visible">True</property>
-								<property name="homogeneous">False</property>
-								<property name="spacing">0</property>
-								<child>
-									<object class="GtkImage" id="album_button_image">
-										<property name="visible">True</property>
-										<property name="stock">gtk-jump-to</property>
-										<property name="icon_size">4</property>
-										<property name="xalign">0.5</property>
-										<property name="yalign">0.5</property>
-										<property name="xpad">0</property>
-										<property name="ypad">0</property>
-									</object>
-									<packing>
-										<property name="padding">0</property>
-										<property name="expand">True</property>
-										<property name="fill">True</property>
-									</packing>
-								</child>
-								<child>
-									<object class="GtkLabel" id="download_button_label">
-										<property name="visible">True</property>
-										<property name="label" translatable="yes">Jamendo Album Page</property>
-										<property name="use_underline">False</property>
-										<property name="use_markup">False</property>
-										<property name="justify">GTK_JUSTIFY_LEFT</property>
-										<property name="wrap">False</property>
-										<property name="selectable">False</property>
-										<property name="xalign">0.5</property>
-										<property name="yalign">0.5</property>
-										<property name="xpad">0</property>
-										<property name="ypad">0</property>
-										<property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-										<property name="width_chars">-1</property>
-										<property name="single_line_mode">False</property>
-										<property name="angle">0</property>
-									</object>
-									<packing>
-										<property name="padding">0</property>
-										<property name="expand">True</property>
-										<property name="fill">True</property>
-									</packing>
-								</child>
-							</object>
-						</child>
+						<property name="image">album_button_image</property>
+						<property name="label" translatable="yes">Jamendo Album Page</property>
 					</object>
 					<packing>
 						<property name="padding">0</property>
@@ -507,7 +435,7 @@
 					<object class="GtkHBox" id="hbox2">
 						<property name="visible">True</property>
 						<property name="homogeneous">False</property>
-						<property name="spacing">0</property>
+						<property name="spacing">6</property>
 						<child>
 							<object class="GtkButton" id="previous_button">
 								<property name="visible">True</property>
@@ -594,7 +522,7 @@
 			<object class="GtkVBox" id="config_dialog_container">
 				<property name="visible">True</property>
 				<property name="homogeneous">False</property>
-				<property name="spacing">2</property>
+				<property name="spacing">12</property>
 				<child internal-child="action_area">
 					<object class="GtkHButtonBox" id="buttons">
 						<property name="visible">True</property>
@@ -617,6 +545,9 @@
 								<property name="use_stock">True</property>
 								<property name="relief">GTK_RELIEF_NORMAL</property>
 								<property name="focus_on_click">True</property>
+								<property name="can_default">True</property>
+								<property name="has_default">True</property>
+								<property name="receives_default">True</property>
 							</object>
 						</child>
 					</object>
@@ -633,12 +564,13 @@
 						<property name="n_rows">2</property>
 						<property name="n_columns">2</property>
 						<property name="homogeneous">False</property>
-						<property name="row_spacing">0</property>
-						<property name="column_spacing">2</property>
+						<property name="row_spacing">6</property>
+						<property name="column_spacing">6</property>
+						<property name="border_width">5</property>
 						<child>
 							<object class="GtkLabel" id="album_num_label">
 								<property name="visible">True</property>
-								<property name="label" translatable="yes">Number of albums to _retrieve</property>
+								<property name="label" translatable="yes">Number of albums to _retrieve:</property>
 								<property name="use_underline">True</property>
 								<property name="mnemonic-widget">album_num_spinbutton</property>
 								<property name="use_markup">False</property>
@@ -704,7 +636,7 @@
 						<child>
 							<object class="GtkLabel" id="preferred_format_label">
 								<property name="visible">True</property>
-								<property name="label" translatable="yes">Preferred audio _format</property>
+								<property name="label" translatable="yes">Preferred audio _format:</property>
 								<property name="use_underline">True</property>
 								<property name="mnemonic-widget">preferred_format_combo</property>
 								<property name="use_markup">False</property>
@@ -737,8 +669,8 @@
 			</object>
 		</child>
 		<action-widgets>
-			<action-widget response="0">cancel_button</action-widget>
-			<action-widget response="0">ok_button</action-widget>
+			<action-widget response="-6">cancel_button</action-widget><!-- GTK_RESPONSE_CANCEL -->
+			<action-widget response="-5">ok_button</action-widget><!-- GTK_RESPONSE_OK -->
 		</action-widgets>
 	</object>
 	<object class="GtkMenu" constructor="uimanager1" id="popup_menu"/>

@@ -393,7 +393,8 @@ class OpenSubtitles(totem.Plugin):
 	self.dialog.set_transient_for (self.totem.get_main_window())
 	self.dialog.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
 
-	# Connect the callback
+	# Connect the callbacks
+	self.dialog.connect ('key-press-event', self.on_window__key_press_event)
         self.treeview.get_selection().connect('changed', self.on_treeview__row_change)
         self.treeview.connect('row-activated', self.on_treeview__row_activate)
 
@@ -592,6 +593,13 @@ class OpenSubtitles(totem.Plugin):
         self.os_save_selected_subtitle()
 
     # Callbacks
+
+    def on_window__key_press_event(self, widget, event):
+        if event.keyval == gtk.keysyms.Escape:
+            self.dialog.destroy()
+            self.dialog = None
+            return True
+        return False
 
     def on_treeview__row_change(self, selection):
         if selection.count_selected_rows() > 0:

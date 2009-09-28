@@ -28,7 +28,7 @@
     <property name="icon-size">4</property>
   </object>
   <object class="GtkWindow" id="subtitles_dialog">
-    <property name="border_width">5</property>
+    <property name="border_width">12</property>
     <property name="title" translatable="yes">Download Movie Subtitles</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">400</property>
@@ -101,8 +101,11 @@
             <child type="label">
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">&lt;b&gt;Language&lt;/b&gt;</property>
+                <property name="label" translatable="yes">Language</property>
                 <property name="use_markup">True</property>
+                <attributes>
+                  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+                </attributes>
               </object>
             </child>
           </object>
@@ -139,38 +142,45 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHButtonBox" id="hbbox1">
-            <property name="visible">True</property>
-            <property name="spacing">12</property>
-            <property name="layout_style">end</property>
+          <object class="GtkAlignment" id="alignment2">
+            <property name="top_padding">12</property>
             <child>
-              <object class="GtkButton" id="apply_button">
-                <property name="label" translatable="yes">_Play with Subtitle</property>
+              <object class="GtkHButtonBox" id="hbbox1">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">image_apply</property>
-                <property name="use-underline">True</property>
+                <property name="spacing">6</property>
+                <property name="layout_style">end</property>
+                <child>
+                  <object class="GtkButton" id="apply_button">
+                    <property name="label" translatable="yes">_Play with Subtitle</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="image">image_apply</property>
+                    <property name="use-underline">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="close_button">
+                    <property name="label">gtk-close</property>
+                    <property name="use-stock">True</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="can_default">True</property>
+                    <property name="has_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="close_button">
-                <property name="label">gtk-close</property>
-                <property name="use-stock">True</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
           <packing>
