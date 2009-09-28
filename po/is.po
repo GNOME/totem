@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n % 100 != 1 && n % 100 != 21 && n % 100 != 31 && n % 100 != 41 && n % 100 != 51 && n % 100 != 61 && n % 100 != 71 && n % 100 != 81 && n % 100 != 91);\n"
 
 #: data/playlist.glade.h:1 src/totem-playlist.c:1444
 msgid "Playlist"
@@ -937,18 +937,19 @@ msgstr "Totem vídeógluggi"
 
 #: src/bacon-video-widget-properties.c:122
 #, c-format
+#, fuzzy
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d klukkustundir"
 
 #: src/bacon-video-widget-properties.c:124
-#, c-format
+#, fuzzy, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d mínútur"
 
 #: src/bacon-video-widget-properties.c:127
-#, c-format
+#, fuzzy, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d sekúndur"
