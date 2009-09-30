@@ -5950,6 +5950,7 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
   GstElement *video_sink = NULL;
   GstElement *element = NULL;
   GstIterator *iter;
+  GstElement *play;
 
   if (g_thread_self() != gui_thread) {
     if (bvw->priv->balance)
@@ -5969,8 +5970,14 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     return;
   }
 
+  play = gst_object_ref(bvw->priv->play);
+
+  g_mutex_unlock (bvw->priv->lock);
   g_object_get (bvw->priv->play, "video-sink", &video_sink, NULL);
   g_assert (video_sink != NULL);
+  g_mutex_lock (bvw->priv->lock);
+
+  gst_object_unref(play);
 
   /* We try to get an element supporting XOverlay interface */
   if (GST_IS_BIN (video_sink)) {
