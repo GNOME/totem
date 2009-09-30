@@ -214,7 +214,11 @@ totem_python_object_finalize (GObject *object)
 	g_debug ("Finalizing Python plugin instance");
 
 	if (((TotemPythonObject *) object)->instance) {
+		PyGILState_STATE state;
+
+		state = pyg_gil_state_ensure();
 		Py_DECREF (((TotemPythonObject *) object)->instance);
+		pyg_gil_state_release (state);
 	}
 
 	G_OBJECT_CLASS (parent_class)->finalize (object);
