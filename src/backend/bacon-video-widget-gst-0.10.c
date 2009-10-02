@@ -4955,16 +4955,26 @@ bacon_video_widget_get_dvb_mrls (const char *device)
 	    (g_strv_length (fields) == 9 && adapter_type == 'C') ||
 	    (g_strv_length (fields) == 6 && adapter_type == 'A')) {
 	  g_ptr_array_add (array, g_strdup_printf("dvb://%s", fields[0]));
+	} else if (g_strv_length (fields) == 0) {
+	  /* Empty line */
+	  g_strfreev (fields);
+	  continue;
 	} else {
 	  /* Exit if the channels.conf is in a format we don't understand */
+	  GST_DEBUG ("'%s' file has line %d with the wrong number of fields (%d) for adapter type %c",
+		     filename, i + 1, g_strv_length (fields), adapter_type);
+	  g_free (filename);
 	  g_ptr_array_free (array, TRUE);
 	  return (char **) NULL;
 	}
 	g_strfreev(fields);
       }
     }
+    g_free (filename);
     g_strfreev(lines);
   } else {
+    GST_DEBUG ("Couldn't get contents of file: '%s'", filename);
+    g_free (filename);
     return NULL;
   }
   if (array->len >= 1)
@@ -5073,22 +5083,22 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 
       filename = bacon_video_widget_get_channels_file ();
       if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
-	g_free (filename);
         mrls = bacon_video_widget_get_dvb_mrls (device);
 	if (mrls == NULL) {
 	  GST_DEBUG ("broken channels file '%s'", filename);
+	  g_free (filename);
 	  g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
 			       "XXX Do not use XXX");
-	  g_free (filename);
 	  return NULL;
 	}
       } else {
         GST_DEBUG ("no channels file '%s'", filename);
+	g_free (filename);
 	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
                              "XXX Do not use XXX");
-	g_free (filename);
 	return NULL;
       }
+      g_free (filename);
       break;
     }
     case MEDIA_TYPE_CDDA:
