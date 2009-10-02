@@ -131,6 +131,7 @@ enum {
 enum {
 	PLAYING_COL,
 	FILENAME_COL,
+	FILENAME_ESCAPED_COL,
 	URI_COL,
 	TITLE_CUSTOM_COL,
 	SUBTITLE_URI_COL,
@@ -1631,7 +1632,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 
 	/* tooltips */
 	gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(playlist->priv->treeview),
-					 FILENAME_COL);
+					 FILENAME_ESCAPED_COL);
 
 	/* The configuration */
 	init_config (playlist);
@@ -1654,12 +1655,13 @@ totem_playlist_new (void)
 }
 
 static gboolean
-totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
-		const char *display_name)
+totem_playlist_add_one_mrl (TotemPlaylist *playlist,
+			    const char *mrl,
+			    const char *display_name)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
-	char *filename_for_display, *uri;
+	char *filename_for_display, *uri, *escaped_filename;
 	GtkTreeRowReference *ref;
 	GFileMonitor *monitor;
 	GFile *file;
@@ -1704,13 +1706,16 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl,
 		monitor = NULL;
 	}
 
+	escaped_filename = g_markup_escape_text (filename_for_display, -1);
 	gtk_list_store_insert_with_values (store, &iter, pos,
 			PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
 			FILENAME_COL, filename_for_display,
+			FILENAME_ESCAPED_COL, escaped_filename,
 			URI_COL, uri ? uri : mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			FILE_MONITOR_COL, monitor,
 			-1);
+	g_free (escaped_filename);
 
 	g_signal_emit (playlist,
 		       totem_playlist_table_signals[ITEM_ADDED],
@@ -2139,6 +2144,7 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title, gboolean f
 	GtkListStore *store;
 	GtkTreeIter iter;
 	gboolean custom_title;
+	char *escaped_title;
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
 
@@ -2161,10 +2167,13 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title, gboolean f
 			return TRUE;
 	}
 
+	escaped_title = g_markup_escape_text (title, -1);
 	gtk_list_store_set (store, &iter,
 			FILENAME_COL, title,
+			FILENAME_ESCAPED_COL, escaped_title,
 			TITLE_CUSTOM_COL, TRUE,
 			-1);
+	g_free (escaped_title);
 
 	g_signal_emit (playlist,
 		       totem_playlist_table_signals[ACTIVE_NAME_CHANGED], 0);
