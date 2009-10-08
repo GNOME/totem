@@ -12,11 +12,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem HEAD\n"
+"Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-08-19 19:14+0000\n"
-"PO-Revision-Date: 2009-09-05 08:25+0300\n"
+"POT-Creation-Date: 2009-09-28 08:32+0000\n"
+"PO-Revision-Date: 2009-10-08 08:03+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -943,7 +943,7 @@ msgstr "Autoriõigused © 2002-2009 Bastien Nocera"
 msgid "translator-credits"
 msgstr ""
 "Ilmar Kerm <ikerm@hot.ee>, 2002.\n"
-"Ivar Smolin <okul@linux.ee>, 2005-2009.\n"
+"Ivar Smolin <okul linuxnee>, 2005-2009.\n"
 "Priit Laes <amd@store20.com>, 2005-2007.\n"
 "Mattias Põldaru <mahfiaz gmail com>, 2008-2009."
 
@@ -1765,14 +1765,14 @@ msgstr "Jamendo plugina sätted"
 msgid "Latest Releases"
 msgstr "Hiljutised väljalasked"
 
-msgid "Number of albums to _retrieve"
-msgstr "_Tõmmatavate albumite arv"
+msgid "Number of albums to _retrieve:"
+msgstr "_Tõmmatavate albumite arv:"
 
 msgid "Popular"
 msgstr "Populaarsed"
 
-msgid "Preferred audio _format"
-msgstr "Eelistatav audio_vorming"
+msgid "Preferred audio _format:"
+msgstr "Eelistatav audio_vorming:"
 
 msgid "Search Results"
 msgstr "Otsing"
@@ -1890,11 +1890,11 @@ msgstr "MythTV salvestised"
 msgid "MythTV LiveTV"
 msgstr "MythTV LiveTV"
 
-msgid "<b>Language</b>"
-msgstr "<b>Keeled</b>"
-
 msgid "Download Movie Subtitles"
 msgstr "Filmi subtiitrite allalaadimine"
+
+msgid "Language"
+msgstr "Keel"
 
 msgid "Subtitle _language:"
 msgstr "Subtiitrite _keel:"
@@ -1976,18 +1976,18 @@ msgstr "Esitusnimekirja avaldamine"
 msgid "Share the current playlist via HTTP"
 msgstr "Praeguse esitusnimekirja jagamine HTTP kaudu"
 
-#, no-c-format
-msgid ""
-"<small>The name used for announcing the playlist service on the network.\n"
-"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-"and <b>%h</b> will be replaced by your computer's host name.</small>"
-msgstr ""
-"<small>Nime kasutatakse võrgus oleva esitusnimekirjateenuse teavitamiseks.\n"
-"Kõik alamstringid <b>%u</b> asendatakse sinu nimega ja <b>%h</b> sinu\n"
-"arvuti hostinimega.</small>"
-
 msgid "Service _Name:"
 msgstr "Teenuse _nimi:"
+
+#, no-c-format
+msgid ""
+"The name used for announcing the playlist service on the network.\n"
+"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
+"and <b>%h</b> will be replaced by your computer's host name."
+msgstr ""
+"Nime kasutatakse võrgus oleva esitusnimekirjateenuse teavitamiseks.\n"
+"Kõik alamstringid <b>%u</b> asendatakse sinu nimega ja <b>%h</b> sinu\n"
+"arvuti hostinimega."
 
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "_Kasutatakse krüptitud transpordiprotokolli (HTTPS)"
@@ -2000,9 +2000,6 @@ msgstr "Kuvatõmmiste arv:"
 
 msgid "Screenshot width (in pixels):"
 msgstr "Kuvatõmmise laius (pikslites):"
-
-msgid "*"
-msgstr "*"
 
 msgid "Save in _folder:"
 msgstr "Salvesta _kataloogi:"
@@ -2205,9 +2202,6 @@ msgstr "Esitusnimekiri on puudu või tühi"
 msgid "Movie browser plugin"
 msgstr "Filmisirvija plugin"
 
-msgid "Could not initialise the thread-safe libraries."
-msgstr "Thread-safe teeke pole võimalik lähtestada."
-
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Kontrolli oma süsteemi paigaldust. Totemi plugin lõpetab oma töö."
 
@@ -2248,6 +2242,9 @@ msgstr ""
 "ühendust. Kui GConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
 
+#~ msgid "Could not initialise the thread-safe libraries."
+#~ msgstr "Thread-safe teeke pole võimalik lähtestada."
+
 #~ msgid "Failed to retrieve working directory"
 #~ msgstr "Tõrge aktiivse kataloogi kasutamisel"
 
@@ -2256,13 +2253,6 @@ msgstr ""
 
 #~ msgid "_Allow the screensaver to activate even when audio-only is playing"
 #~ msgstr "Ekraanisäästjat on lubatud au_dio esitamise ajal aktiveerida"
-
-#~ msgid ""
-#~ "Couldn't load the '%s' audio driver\n"
-#~ "Check that the device is not busy."
-#~ msgstr ""
-#~ "Audiodraiverit '%s' pole võimalik laadida\n"
-#~ "Veendu, et seade pole hõivatud."
 
 #~ msgid ""
 #~ "No video output is available. Make sure that the program is correctly "
@@ -2337,9 +2327,3 @@ msgstr ""
 
 #~ msgid "This movie is broken and can not be played further."
 #~ msgstr "See film on katki ja seda pole võimalik edasi esitada."
-
-#~ msgid "This location is not a valid one."
-#~ msgstr "See asukoht ei ole korrektne."
-
-#~ msgid "This movie could not be opened."
-#~ msgstr "Seda filmi pole võimalik avada."
