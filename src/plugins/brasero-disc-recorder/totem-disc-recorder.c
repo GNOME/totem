@@ -91,10 +91,12 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 					  gboolean copy)
 {
 	GtkWindow *main_window;
+	GdkScreen *screen;
 	GPtrArray *array;
 	char **args, *xid_str;
 	GError *error = NULL;
 	gboolean ret;
+	int xid;
 
 	array = g_ptr_array_new ();
 	g_ptr_array_add (array, (gpointer) "brasero");
@@ -105,21 +107,19 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 	g_ptr_array_add (array, (gpointer) path);
 
 	main_window = totem_get_main_window (pi->totem);
-	if (main_window && GTK_WIDGET (main_window)->window) {
-		int xid;
-		xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (GTK_WIDGET (main_window)->window));
-		xid_str = g_strdup_printf ("%d", xid);
-		g_ptr_array_add (array, (gpointer) "-x");
-		g_ptr_array_add (array, xid_str);
-	} else {
-		xid_str = NULL;
-	}
+	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
+	xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (GTK_WIDGET (main_window)->window));
+	xid_str = g_strdup_printf ("%d", xid);
+	g_ptr_array_add (array, (gpointer) "-x");
+	g_ptr_array_add (array, xid_str);
 
 	g_ptr_array_add (array, NULL);
 	args = (char **) g_ptr_array_free (array, FALSE);
 
 	ret = TRUE;
-	if (!g_spawn_async (NULL, args, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error)) {
+	if (gdk_spawn_on_screen (screen, NULL, args, NULL,
+				 G_SPAWN_SEARCH_PATH | G_SPAWN_FILE_AND_ARGV_ZERO,
+				 NULL, NULL, NULL, &error) == FALSE) {
 		if (copy != FALSE) {
 			totem_interface_error (_("The video disc could not be duplicated."),
 					       error->message,

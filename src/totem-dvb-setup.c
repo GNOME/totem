@@ -76,6 +76,7 @@ totem_dvb_setup_device (const char *device,
 			TotemDvbSetupResultFunc func,
 			gpointer user_data)
 {
+	GdkScreen *screen;
 	GPtrArray *arr;
 	char *tmp, **argv;
 	GPid pid;
@@ -89,6 +90,8 @@ totem_dvb_setup_device (const char *device,
 
 	arr = g_ptr_array_new ();
 	g_ptr_array_add (arr, g_strdup (totem_dvb_setup_helper ()));
+
+	screen = gtk_widget_get_screen (GTK_WIDGET (parent));
 	tmp = g_strdup_printf ("--transient-for=%u", (unsigned int) GDK_WINDOW_XID (GTK_WIDGET (parent)->window));
 	g_ptr_array_add (arr, tmp);
 	g_ptr_array_add (arr, g_strdup (device));
@@ -96,8 +99,9 @@ totem_dvb_setup_device (const char *device,
 
 	argv = (gchar **) arr->pdata;
 
-	if (g_spawn_async (NULL, argv, NULL, G_SPAWN_DO_NOT_REAP_CHILD, NULL,
-			   NULL, &pid, NULL) == FALSE) {
+	if (gdk_spawn_on_screen (screen, NULL, argv, NULL,
+				 G_SPAWN_FILE_AND_ARGV_ZERO | G_SPAWN_DO_NOT_REAP_CHILD,
+				 NULL, NULL, &pid, NULL) == FALSE) {
 		g_ptr_array_free (arr, TRUE);
 		return TOTEM_DVB_SETUP_FAILURE;
 	}
