@@ -194,7 +194,7 @@ checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 
 	gconf_client_set_bool (totem->gc,
 			       GCONF_PREFIX"/lock_screensaver_on_audio", 
-			       value, NULL);
+			       !value, NULL);
 }
 
 void
