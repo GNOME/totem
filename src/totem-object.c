@@ -3314,6 +3314,8 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 static gboolean
 on_eos_event (GtkWidget *widget, Totem *totem)
 {
+	reset_seek_status (totem);
+
 	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
 		return FALSE;
 
