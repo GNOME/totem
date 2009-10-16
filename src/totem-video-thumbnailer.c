@@ -760,7 +760,7 @@ static const GOptionEntry entries[] = {
 	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
 	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
 	{ "print-progress", 'p', 0, G_OPTION_ARG_NONE, &print_progress, "Only print progress updates (can't be used with --verbose)", NULL },
- 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[FILE...]" },
+	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[INPUT FILE] [OUTPUT FILE]" },
 	{ NULL }
 };
 
