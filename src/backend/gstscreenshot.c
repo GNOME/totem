@@ -195,7 +195,7 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
   gst_object_unref (pipeline);
 
 bail:
-  g_object_unref (buf);
+  gst_buffer_unref (buf);
 
   return result;
 }
