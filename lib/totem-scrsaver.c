@@ -130,10 +130,12 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 			/* try the old API */
 			res = dbus_g_proxy_call (scr->priv->gs_proxy,
 						 "InhibitActivation",
-						 &error,
+						 NULL,
 						 G_TYPE_STRING, reason,
 						 G_TYPE_INVALID,
 						 G_TYPE_INVALID);
+			if (res)
+				g_error_free (error);
 		}
 
 		g_free (reason);
@@ -153,9 +155,11 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 			/* try the old API */
 			res = dbus_g_proxy_call (scr->priv->gs_proxy,
 						 "AllowActivation",
-						 &error,
+						 NULL,
 						 G_TYPE_INVALID,
 						 G_TYPE_INVALID);
+			if (res)
+				g_error_free (error);
 		}
 	}
 
