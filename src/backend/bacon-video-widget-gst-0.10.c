@@ -3894,11 +3894,8 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
       gst_element_get_state (bvw->priv->pulse_audio_sink, &cur_state, NULL, 0);
       if (cur_state == GST_STATE_READY || cur_state == GST_STATE_PLAYING)
       {
-	gdouble new_vol;
 	g_object_set (bvw->priv->pulse_audio_sink, "volume",
 		      (gdouble) volume, NULL);
-
-        g_object_get (bvw->priv->pulse_audio_sink, "volume", &new_vol, NULL);
       }
     } else {
       g_object_set (bvw->priv->play, "volume",
