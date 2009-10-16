@@ -938,15 +938,47 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 			     GError **error)
 {
 	char *file_uri;
+	char *tmpfile;
+	GError *err = NULL;
+	GFile *src, *dst;
+	int fd;
 
 	g_message ("Setting the current playlist to %s (base: %s)",
 		   path, base_uri);
 
 	totem_embedded_clear_playlist (emb, NULL);
 
-	file_uri = g_filename_to_uri (path, NULL, error);
-	if (!file_uri)
-		return FALSE;
+	/* FIXME, we should remove that when we can
+	 * parse from memory or 
+	 * https://bugzilla.gnome.org/show_bug.cgi?id=598702 is fixed */
+	fd = g_file_open_tmp ("totem-browser-plugin-playlist-XXXXXX",
+			      &tmpfile,
+			      &err);
+	if (fd < 0) {
+		g_warning ("Couldn't open temporary file for playlist: %s",
+			   err->message);
+		g_error_free (err);
+		return TRUE;
+	}
+	src = g_file_new_for_path (path);
+	dst = g_file_new_for_path (tmpfile);
+	if (g_file_copy (src, dst, G_FILE_COPY_OVERWRITE, NULL, NULL, NULL, &err) == FALSE) {
+		g_warning ("Failed to copy playlist '%s' to '%s': %s",
+			   path, tmpfile, err->message);
+		g_error_free (err);
+		g_object_unref (src);
+		g_object_unref (dst);
+		g_free (tmpfile);
+		close (fd);
+		return TRUE;
+	}
+	g_free (tmpfile);
+
+	file_uri = g_file_get_uri (dst);
+
+	g_object_unref (src);
+	g_object_unref (dst);
+	close (fd);
 
 	totem_embedded_set_uri (emb, file_uri, base_uri, FALSE);
 	g_free (file_uri);
@@ -2028,6 +2060,7 @@ totem_embedded_push_parser (gpointer data)
 	TotemEmbedded *emb = (TotemEmbedded *) data;
 	TotemPlParser *parser;
 	TotemPlParserResult res;
+	GFile *file;
 
 	emb->parser_id = 0;
 
@@ -2039,6 +2072,12 @@ totem_embedded_push_parser (gpointer data)
 	res = totem_pl_parser_parse_with_base (parser, emb->current_uri,
 					       emb->base_uri, FALSE);
 	g_object_unref (parser);
+
+	/* Delete the temporary file created in
+	 * totem_embedded_set_playlist */
+	file = g_file_new_for_uri (emb->current_uri);
+	g_file_delete (file, NULL, NULL);
+	g_object_unref (file);
 
 	if (res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
 		//FIXME show a proper error message
