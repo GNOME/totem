@@ -184,6 +184,7 @@ totem_interface_error_with_link (const char *title, const char *reason,
 	hbox = gtk_hbox_new (TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), link_button, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_dialog)->vbox), hbox, TRUE, FALSE, 0); 
+	gtk_widget_show_all (hbox);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog), GTK_RESPONSE_OK);
 
