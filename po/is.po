@@ -1,836 +1,980 @@
+# translation of totem.gnome-2-26.is.po to Icelandic
 # Icelandic translation of totem.
-# Copyright (C) 2004 THE totem'S COPYRIGHT HOLDER
+# Copyright (C) 2004-2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
 # Áki G. Karlsson <aki@akademia.is>, 2004.
-# , fuzzy
-# 
-# 
+# Sveinn í Felli <sveinki@nett.is>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 0.99\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-10 20:55+0000\n"
-"PO-Revision-Date: 2004-05-09 22:17+0000\n"
-"Last-Translator: Áki G. Karlsson <aki@akademia.is>\n"
-"Language-Team: Icelandic <gnome@techattack.nu>\n"
+"Project-Id-Version: totem.gnome-2-26.is\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
+"POT-Creation-Date: 2009-07-31 18:05+0000\n"
+"PO-Revision-Date: 2009-10-16 04:01+0000\n"
+"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#: data/playlist.glade.h:1 src/totem-playlist.c:1444
-msgid "Playlist"
-msgstr "Spilunarlisti"
+#: ../data/fullscreen.ui.h:1
+msgid "Leave Fullscreen"
+msgstr "Fara úr heilskjá"
 
-#: data/playlist.glade.h:2
-msgid "Repeat _mode"
-msgstr "Endurtekning"
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:91
+msgid "Time:"
+msgstr "Tími:"
 
-#: data/playlist.glade.h:3
-msgid "Shuf_fle mode"
-msgstr "S_tokkun"
-
-#: data/playlist.glade.h:4
-msgid "_Add..."
+#: ../data/playlist.ui.h:1
+msgid "Add..."
 msgstr "_Bæta við..."
 
-#: data/playlist.glade.h:5
+#: ../data/playlist.ui.h:2 ../data/video-list.ui.h:2
+msgid "Copy the location to the clipboard"
+msgstr ""
+
+#: ../data/playlist.ui.h:3
+msgid "Move Down"
+msgstr "Færa niður"
+
+#: ../data/playlist.ui.h:4
+msgid "Move Up"
+msgstr "Færa upp"
+
+#: ../data/playlist.ui.h:5
+msgid "Remove"
+msgstr "Fjarlægja"
+
+#: ../data/playlist.ui.h:6
+msgid "Remove file from playlist"
+msgstr ""
+
+#: ../data/playlist.ui.h:7
+msgid "Save Playlist..."
+msgstr "Vista spilunarlista..."
+
+#: ../data/playlist.ui.h:8 ../data/totem.ui.h:67
+msgid "Select a file to use for text subtitles"
+msgstr ""
+
+#: ../data/playlist.ui.h:9 ../data/video-list.ui.h:4
 #, fuzzy
 msgid "_Copy Location"
 msgstr "Opna _slóð..."
 
-#: data/playlist.glade.h:6
-msgid "_Save..."
-msgstr "_Vista"
+#: ../data/playlist.ui.h:10
+#, fuzzy
+#| msgid "_Movie"
+msgid "_Remove"
+msgstr "Kvik_mynd"
 
-#: data/properties.glade.h:1 data/screenshot.glade.h:1 data/totem.glade.h:1
-msgid "    "
-msgstr "    "
+#: ../data/playlist.ui.h:11 ../data/totem.ui.h:131
+msgid "_Select Text Subtitles..."
+msgstr ""
 
-#: data/properties.glade.h:2 src/bacon-video-widget-properties.c:186
+#: ../data/plugins.ui.h:1
+#, fuzzy
+#| msgid "Auto"
+msgid "Author:"
+msgstr "Sjálfvirkt"
+
+#: ../data/plugins.ui.h:2
+msgid "C_onfigure..."
+msgstr ""
+
+#: ../data/plugins.ui.h:3
+#, fuzzy
+msgid "Copyright:"
+msgstr "Höfundarréttur:"
+
+#: ../data/plugins.ui.h:4
+#, fuzzy
+#| msgid "Duration:"
+msgid "Description:"
+msgstr "Lengd:"
+
+#: ../data/plugins.ui.h:5
+#, fuzzy
+#| msgid "Title:"
+msgid "Site:"
+msgstr "Titill:"
+
+#. Channels
+#: ../data/properties.ui.h:1
+#: ../src/plugins/properties/bacon-video-widget-properties.c:175
+#, fuzzy
+#| msgid "5.0-channel"
+msgid "0 Channels"
+msgstr "5.0 rása"
+
+#. Sample rate
+#: ../data/properties.ui.h:2
+#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+msgid "0 Hz"
+msgstr ""
+
+#: ../data/properties.ui.h:3
 msgid "0 frames per second"
 msgstr "0 rammar á sekúndu"
 
-#. Bitrate
-#: data/properties.glade.h:3 src/bacon-video-widget-properties.c:188
+#: ../data/properties.ui.h:4
 msgid "0 kbps"
 msgstr "0 kb/s"
 
 #. 0 seconds
-#: data/properties.glade.h:4 data/totem.glade.h:2
-#: src/bacon-video-widget-properties.c:142
+#: ../data/properties.ui.h:5 ../src/backend/video-utils.c:286
 msgid "0 seconds"
 msgstr "0 sekúndur"
 
-#. Dimensions
-#: data/properties.glade.h:5 src/bacon-video-widget-properties.c:181
+#: ../data/properties.ui.h:6
 msgid "0 x 0"
 msgstr "0 x 0"
 
-#: data/properties.glade.h:6
-msgid "<b>Audio</b>"
-msgstr "<b>Hljóð</b>"
+#: ../data/properties.ui.h:7
+#, fuzzy
+msgid "Album:"
+msgstr "Plata:"
 
-#: data/properties.glade.h:7
-msgid "<b>General</b>"
-msgstr "<b>Almennt</b>"
-
-#: data/properties.glade.h:8
-msgid "<b>Video</b>"
-msgstr "<b>Mynd</b>"
-
-#: data/properties.glade.h:9
+#: ../data/properties.ui.h:8
 msgid "Artist:"
 msgstr "Höfundur:"
 
-#: data/properties.glade.h:10
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:21
+#: ../src/totem-properties-view.c:89
+msgid "Audio"
+msgstr "Hljóð"
+
+#: ../data/properties.ui.h:10
 msgid "Bitrate:"
 msgstr "Bitatíðni:"
 
-#: data/properties.glade.h:11
+#: ../data/properties.ui.h:11
+#, fuzzy
+#| msgid "4-channel"
+msgid "Channels:"
+msgstr "4ra rása"
+
+#: ../data/properties.ui.h:12
 msgid "Codec:"
 msgstr "Lyklun:"
 
-#: data/properties.glade.h:12
+#: ../data/properties.ui.h:13
+#, fuzzy
+msgid "Comment:"
+msgstr "Athugasemd:"
+
+#: ../data/properties.ui.h:14
 msgid "Dimensions:"
 msgstr "Hlutföll:"
 
-#: data/properties.glade.h:13
+#: ../data/properties.ui.h:15
 msgid "Duration:"
 msgstr "Lengd:"
 
-#: data/properties.glade.h:14
+#: ../data/properties.ui.h:16
 msgid "Framerate:"
 msgstr "Rammatíðni:"
 
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:35
+msgid "General"
+msgstr "Almennt"
+
+#. Dimensions
 #. Video Codec
-#: data/properties.glade.h:15 src/bacon-video-widget-properties.c:183
-#: src/bacon-video-widget-properties.c:190
-#: src/bacon-video-widget-properties.c:259
-#: src/bacon-video-widget-properties.c:291
+#. Audio Codec
+#: ../data/properties.ui.h:18
+#: ../src/plugins/properties/bacon-video-widget-properties.c:158
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#: ../src/plugins/properties/bacon-video-widget-properties.c:163
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#: ../src/plugins/properties/bacon-video-widget-properties.c:242
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
+#: ../src/plugins/properties/bacon-video-widget-properties.c:262
 msgid "N/A"
 msgstr "N/A"
 
-#: data/properties.glade.h:16 src/totem.c:2030
-msgid "Properties"
-msgstr "Eiginleikar"
+#: ../data/properties.ui.h:19
+#, fuzzy
+#| msgid "Framerate:"
+msgid "Sample rate:"
+msgstr "Rammatíðni:"
 
-#: data/properties.glade.h:17
+#: ../data/properties.ui.h:20
 msgid "Title:"
 msgstr "Titill:"
 
 #. Title
-#: data/properties.glade.h:18 src/bacon-video-widget-properties.c:173
-#: src/bacon-video-widget-properties.c:175
-#: src/bacon-video-widget-properties.c:177
-#: src/bacon-video-widget-properties.c:208
-#: src/bacon-video-widget-properties.c:215
-#: src/bacon-video-widget-properties.c:222
+#. Artist
+#. Album
+#. Year
+#: ../data/properties.ui.h:21
+#: ../src/plugins/properties/bacon-video-widget-properties.c:145
+#: ../src/plugins/properties/bacon-video-widget-properties.c:147
+#: ../src/plugins/properties/bacon-video-widget-properties.c:149
+#: ../src/plugins/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Óþekkt"
 
-#: data/properties.glade.h:19
+#: ../data/properties.ui.h:22 ../src/totem-properties-view.c:85
+#, fuzzy
+#| msgid "Video CD"
+msgid "Video"
+msgstr "Mynddiskur"
+
+#: ../data/properties.ui.h:23
 msgid "Year:"
 msgstr "Ár:"
 
-#: data/screenshot.glade.h:2 data/uri.glade.h:1
-msgid "*"
-msgstr "*"
-
-#: data/screenshot.glade.h:3
-msgid "<b>Preview</b>"
-msgstr "<b>Forsýn</b>"
-
-#: data/screenshot.glade.h:4 src/totem-screenshot.c:308
-msgid "Save Screenshot"
-msgstr "Vista skjámynd:"
-
-#: data/screenshot.glade.h:5
+#: ../data/video-list.ui.h:1
 #, fuzzy
-msgid "Save screenshot"
-msgstr "Vista skjámynd:"
+#| msgid "Could not save the playlist"
+msgid "Add the video to the playlist"
+msgstr "Tókst ekki að vista spilunarlistann"
 
-#: data/screenshot.glade.h:6
+#: ../data/video-list.ui.h:3 ../src/totem-dnd-menu.c:97
+#: ../src/plugins/jamendo/jamendo.ui.h:10
 #, fuzzy
-msgid "Save screenshot to _desktop"
-msgstr "Vista skjámynd á skjá_borðið"
+#| msgid "Playlist"
+msgid "_Add to Playlist"
+msgstr "Spilunarlisti"
 
-#: data/screenshot.glade.h:7
-msgid "Save screenshot to _file:"
-msgstr "Vista skjámynd í _skrá:"
+#. Title
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:45
+#: ../src/totem-object.c:1593
+#, fuzzy
+#| msgid "Totem Movie Player"
+msgid "Movie Player"
+msgstr "Totem myndspilari"
 
-#: data/totem.desktop.in.h:1
+#: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies and songs"
 msgstr "Leika kvikmyndir og tónlist"
 
-#. Title
-#: data/totem.desktop.in.h:2 data/totem.glade.h:101 src/totem.c:694
-#: src/totem.c:3637
-msgid "Totem Movie Player"
-msgstr "Totem myndspilari"
-
-#: data/totem.glade.h:3
+#: ../data/totem.ui.h:1
 msgid "1.5 Mbps T1/Intranet/LAN"
 msgstr "1.5 Mb/s T1/Intranet/LAN"
 
-#: data/totem.glade.h:4
+#: ../data/totem.ui.h:2
 msgid "112 Kbps Dual ISDN/DSL"
 msgstr "112 Kb/s Dual ISDN/DSL"
 
-#: data/totem.glade.h:5
+#: ../data/totem.ui.h:3
 msgid "14.4 Kbps Modem"
 msgstr "14.4 Kb/s mótald"
 
-#: data/totem.glade.h:6
+#: ../data/totem.ui.h:4 ../src/totem-menu.c:1347
 msgid "16:9 (Widescreen)"
 msgstr ""
 
-#: data/totem.glade.h:7
+#: ../data/totem.ui.h:5
 msgid "19.2 Kbps Modem"
 msgstr "19.2 Kb/s mótald"
 
-#: data/totem.glade.h:8
+#: ../data/totem.ui.h:6 ../src/totem-menu.c:1348
 msgid "2.11:1 (DVB)"
 msgstr ""
 
-#: data/totem.glade.h:9
+#: ../data/totem.ui.h:7
 msgid "256 Kbps DSL/Cable"
 msgstr "256 Kb/s DSL/Kapall"
 
-#: data/totem.glade.h:10
+#: ../data/totem.ui.h:8
 msgid "28.8 Kbps Modem"
 msgstr "28.8 Kb/s mótald"
 
-#: data/totem.glade.h:11
+#: ../data/totem.ui.h:9
 msgid "33.6 Kbps Modem"
 msgstr "33.6 Kb/s mótald"
 
-#: data/totem.glade.h:12
+#: ../data/totem.ui.h:10
 msgid "34.4 Kbps Modem"
 msgstr "34.4 Kb/s mótald"
 
-#: data/totem.glade.h:13
+#: ../data/totem.ui.h:11
 msgid "384 Kbps DSL/Cable"
 msgstr "384 Kb/s DSL/Kapall"
 
-#: data/totem.glade.h:14
+#: ../data/totem.ui.h:12
 msgid "4-channel"
 msgstr "4ra rása"
 
-#: data/totem.glade.h:15
+#: ../data/totem.ui.h:13
+#, fuzzy
+#| msgid "5.1-channel"
+msgid "4.1-channel"
+msgstr "5.1 rása"
+
+#: ../data/totem.ui.h:14 ../src/totem-menu.c:1346
 msgid "4:3 (TV)"
 msgstr ""
 
-#: data/totem.glade.h:16
+#: ../data/totem.ui.h:15
 msgid "5.0-channel"
 msgstr "5.0 rása"
 
-#: data/totem.glade.h:17
+#: ../data/totem.ui.h:16
 msgid "5.1-channel"
 msgstr "5.1 rása"
 
-#: data/totem.glade.h:18
+#: ../data/totem.ui.h:17
 msgid "512 Kbps DSL/Cable"
 msgstr "512 Kb/s DSL/Kapall"
 
-#: data/totem.glade.h:19
+#: ../data/totem.ui.h:18
 msgid "56 Kbps Modem/ISDN"
 msgstr "56 Kb/s mótald/ISDN"
 
-#: data/totem.glade.h:20
-msgid "<b>Audio Output</b>"
-msgstr "<b>Hljóðúttak</b>"
-
-#: data/totem.glade.h:21
-msgid "<b>Color balance</b>"
-msgstr "<b>Litajafnvægi</b>"
-
-#: data/totem.glade.h:22
-msgid "<b>Display</b>"
-msgstr "<b>Sýn</b>"
-
-#: data/totem.glade.h:23
-msgid "<b>Networking</b>"
-msgstr "<b>Net</b>"
-
-#: data/totem.glade.h:24
-msgid "<b>Optical Device</b>"
-msgstr "<b>Sjóntæki</b>"
-
-#: data/totem.glade.h:25
-msgid "<b>Proprietary Plugins</b>"
-msgstr "<b>Ófrjáls íforrit</b>"
-
-#: data/totem.glade.h:26
-msgid "<b>TV-Out</b>"
-msgstr "<b>Sjónvarpsúttak</b>"
-
-#: data/totem.glade.h:27
-msgid "<b>Visual Effects</b>"
-msgstr "<b>Sjónrænir effektar</b>"
-
-#: data/totem.glade.h:28
+#: ../data/totem.ui.h:19
 msgid "AC3 Passthrough"
 msgstr "AC3 gegnumstreymi"
 
-#: data/totem.glade.h:29
+#: ../data/totem.ui.h:20
 msgid "A_udio Menu"
 msgstr "_Hljóðvalmynd"
 
-#: data/totem.glade.h:30
-msgid "Always on _Top"
-msgstr "Alltaf _efst"
+#: ../data/totem.ui.h:22
+#, fuzzy
+#| msgid "<b>Audio Output</b>"
+msgid "Audio Output"
+msgstr "<b>Hljóðúttak</b>"
 
-#: data/totem.glade.h:31
-msgid "Always on top"
-msgstr "Alltaf efst"
-
-#: data/totem.glade.h:32
-msgid "Audio"
-msgstr "Hljóð"
-
-#: data/totem.glade.h:33 src/totem.c:2879 src/totem.c:2900
+#: ../data/totem.ui.h:23 ../src/totem-menu.c:342 ../src/totem-menu.c:1344
 msgid "Auto"
 msgstr "Sjálfvirkt"
 
-#: data/totem.glade.h:34
+#: ../data/totem.ui.h:24
+#, fuzzy
+#| msgid "Automatically _resize the window when a new video is loaded"
+msgid "Automatically _load subtitle files when movie is loaded"
+msgstr "_Endurstilla stærð gluggans þegar ný kvikmynd er spiluð"
+
+#: ../data/totem.ui.h:25
 msgid "Automatically _resize the window when a new video is loaded"
 msgstr "_Endurstilla stærð gluggans þegar ný kvikmynd er spiluð"
 
-#: data/totem.glade.h:35
+#: ../data/totem.ui.h:26
+#, fuzzy
+#| msgid "Could not save the playlist"
+msgid "Clear the playlist"
+msgstr "Tókst ekki að vista spilunarlistann"
+
+#: ../data/totem.ui.h:27
 msgid "Co_ntrast:"
 msgstr "_Birtuskil:"
 
-#: data/totem.glade.h:36
+#: ../data/totem.ui.h:28
+#, fuzzy
+#| msgid "<b>Color balance</b>"
+msgid "Color Balance"
+msgstr "<b>Litajafnvægi</b>"
+
+#: ../data/totem.ui.h:29
 msgid "Connection _speed:"
 msgstr "_Hraði tengingar:"
 
-#: data/totem.glade.h:37
+#: ../data/totem.ui.h:30
+#, fuzzy
+msgid "Decrease volume"
+msgstr "Snížit hlasitost"
+
+#: ../data/totem.ui.h:31 ../src/totem-menu.c:1338
 msgid "Deinterlace"
 msgstr "Aftvinna"
 
-#: data/totem.glade.h:38
+#: ../data/totem.ui.h:32
 msgid "Display"
 msgstr "Skjár"
 
-#: data/totem.glade.h:39
-msgid "Exit Fullscreen"
-msgstr "Fara úr heilskjá"
-
-#: data/totem.glade.h:40
+#: ../data/totem.ui.h:33
 msgid "Extra Large"
 msgstr "Mjög stór"
 
-#: data/totem.glade.h:41
-msgid "File name"
-msgstr "Skráarheiti"
+#: ../data/totem.ui.h:34
+msgid "Fit Window to Movie"
+msgstr ""
 
-#: data/totem.glade.h:42
-msgid "General"
-msgstr "Almennt"
-
-#: data/totem.glade.h:43
+#: ../data/totem.ui.h:36
 msgid "Go to the DVD menu"
 msgstr "Fara í DVD-valmynd"
 
-#: data/totem.glade.h:44
+#: ../data/totem.ui.h:37
 msgid "Go to the angle menu"
 msgstr "Fara í sjónarhornsvalmynd"
 
-#: data/totem.glade.h:45
+#: ../data/totem.ui.h:38
 msgid "Go to the audio menu"
 msgstr "Fara í hljóðvalmynd"
 
-#: data/totem.glade.h:46
+#: ../data/totem.ui.h:39
 msgid "Go to the chapter menu"
 msgstr "Fara í kaflavalmynd"
 
-#: data/totem.glade.h:47
+#: ../data/totem.ui.h:40
 msgid "Go to the title menu"
 msgstr "Fara í titilvalmynd"
 
-#: data/totem.glade.h:48
+#: ../data/totem.ui.h:41
 msgid "Help contents"
 msgstr "Hjálp"
 
-#: data/totem.glade.h:49
+#: ../data/totem.ui.h:42
+#, fuzzy
+msgid "Increase volume"
+msgstr "Zvýšit hlasitost"
+
+#: ../data/totem.ui.h:43
 msgid "Intranet/LAN"
 msgstr "Innranet/LAN"
 
-#: data/totem.glade.h:50
-msgid "Languages"
-msgstr "Tungumál"
-
-#: data/totem.glade.h:51
+#: ../data/totem.ui.h:44
 msgid "Large"
 msgstr "Stór"
 
-#: data/totem.glade.h:52 src/totem.c:81
-msgid "Next"
-msgstr "Næsta"
+#: ../data/totem.ui.h:46
+#, fuzzy
+#| msgid "<b>Networking</b>"
+msgid "Networking"
+msgstr "<b>Net</b>"
 
-#: data/totem.glade.h:53
+#: ../data/totem.ui.h:47
 msgid "Next chapter or movie"
 msgstr "Næsti kafli eða mynd"
 
-#: data/totem.glade.h:54
-msgid "No Language Selection Available"
-msgstr "Engin tungumál til staðar"
-
-#: data/totem.glade.h:55
-msgid "No subtitles selection available"
-msgstr "Engir textar"
-
-#: data/totem.glade.h:56
+#: ../data/totem.ui.h:48
 msgid "Normal"
 msgstr "Venjuleg"
 
-#: data/totem.glade.h:57
+#: ../data/totem.ui.h:49
 msgid "Open _Location..."
 msgstr "Opna _slóð..."
 
-#: data/totem.glade.h:58
+#: ../data/totem.ui.h:50
+#, fuzzy
+#| msgid "Open a non-local file"
+msgid "Open a file"
+msgstr "Opna útværa skrá"
+
+#: ../data/totem.ui.h:51
 msgid "Open a non-local file"
 msgstr "Opna útværa skrá"
 
-#: data/totem.glade.h:59
-msgid "Play / Pa_use"
+#: ../data/totem.ui.h:52
+#, fuzzy
+#| msgid "Play / Pa_use"
+msgid "Play / P_ause"
 msgstr "Spila / s_töðva"
 
-#: data/totem.glade.h:60
-msgid "Play _Audio CD"
-msgstr "Spila _hljóðdisk"
-
-#: data/totem.glade.h:61
-msgid "Play _DVD"
-msgstr "Spila _DVD"
-
-#: data/totem.glade.h:62
-msgid "Play _VCD"
-msgstr "Spila _VCD"
-
-#: data/totem.glade.h:63
-msgid "Play a Video CD"
-msgstr "Spila mynddisk"
-
-#: data/totem.glade.h:64
-msgid "Play a Video DVD"
-msgstr "Spila DVD-mynddisk"
-
-#: data/totem.glade.h:65
-msgid "Play an audio CD"
-msgstr "Spila hljóðdisk"
-
-#: data/totem.glade.h:66
+#: ../data/totem.ui.h:53
 msgid "Play or pause the movie"
 msgstr "Spila eða stöðva myndina"
 
-#: data/totem.glade.h:67 src/totem.c:80
-msgid "Play/Pause"
-msgstr "Spila/stöðva"
+#: ../data/totem.ui.h:54
+msgid "Plugins..."
+msgstr ""
 
-#: data/totem.glade.h:68 src/totem.c:82
-msgid "Previous"
-msgstr "Fyrri"
+#: ../data/totem.ui.h:55
+#, fuzzy
+#| msgid "Totem Preferences"
+msgid "Prefere_nces"
+msgstr "Totem stillingar"
 
-#: data/totem.glade.h:69
+#: ../data/totem.ui.h:56
 msgid "Previous chapter or movie"
 msgstr "Fyrri kafli eða kvikmynd"
 
-#: data/totem.glade.h:70
+#: ../data/totem.ui.h:57
+#, fuzzy
+msgid "Quit the program"
+msgstr "Hætta í forritinu"
+
+#: ../data/totem.ui.h:58
+msgid "Reset To _Defaults"
+msgstr ""
+
+#: ../data/totem.ui.h:59
+msgid "Resize _1:1"
+msgstr ""
+
+#: ../data/totem.ui.h:60
+msgid "Resize _2:1"
+msgstr ""
+
+#: ../data/totem.ui.h:61
+msgid "Resize to double the original video size"
+msgstr ""
+
+#: ../data/totem.ui.h:62
+msgid "Resize to half the original video size"
+msgstr ""
+
+#: ../data/totem.ui.h:63
+msgid "Resize to the original video size"
+msgstr ""
+
+#: ../data/totem.ui.h:64 ../src/totem-menu.c:1340
+msgid "S_idebar"
+msgstr ""
+
+#: ../data/totem.ui.h:65
 msgid "S_ubtitles"
 msgstr "T_extar"
 
-#: data/totem.glade.h:71
+#: ../data/totem.ui.h:66
 msgid "Sat_uration:"
 msgstr "_Mettun:"
 
-#: data/totem.glade.h:72
-#, fuzzy
-msgid "Set the aspect ratio"
-msgstr "Skipta hlutföllum"
-
-#: data/totem.glade.h:73
+#: ../data/totem.ui.h:68 ../src/totem-menu.c:1336
 msgid "Set the repeat mode"
 msgstr "Stilla á endurtekningu"
 
-#: data/totem.glade.h:74
+#: ../data/totem.ui.h:69 ../src/totem-menu.c:1337
 msgid "Set the shuffle mode"
 msgstr "Stilla á stokkun"
 
-#: data/totem.glade.h:75
-msgid "Sets 16:9 (Anamorphic) aspect ratio"
-msgstr ""
+#: ../data/totem.ui.h:70
+#, fuzzy
+msgid "Sets 16:9 (widescreen) aspect ratio"
+msgstr "Skipta hlutföllum"
 
-#: data/totem.glade.h:76
+#: ../data/totem.ui.h:71 ../src/totem-menu.c:1348
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr ""
 
-#: data/totem.glade.h:77
+#: ../data/totem.ui.h:72 ../src/totem-menu.c:1346
 #, fuzzy
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Skipta hlutföllum"
 
-#: data/totem.glade.h:78
+#: ../data/totem.ui.h:73 ../src/totem-menu.c:1344
 #, fuzzy
 msgid "Sets automatic aspect ratio"
 msgstr "Skipta hlutföllum"
 
-#: data/totem.glade.h:79
+#: ../data/totem.ui.h:74 ../src/totem-menu.c:1345
 #, fuzzy
 msgid "Sets square aspect ratio"
 msgstr "Skipta hlutföllum"
 
-#: data/totem.glade.h:80
+#: ../data/totem.ui.h:75 ../src/totem-menu.c:1339
 msgid "Show _Controls"
 msgstr "Sýna Stjórn_tæki"
 
-#: data/totem.glade.h:81
+#: ../data/totem.ui.h:76
 msgid "Show _visual effects when an audio file is played"
 msgstr "Sýna sjónræna _effekta þegar hljóðskrá er spiluð"
 
-#: data/totem.glade.h:82
+#: ../data/totem.ui.h:77 ../src/totem-menu.c:1339
 msgid "Show controls"
 msgstr "Sýna stjórntæki"
 
-#: data/totem.glade.h:83
-msgid "Show or hide the playlist"
+#: ../data/totem.ui.h:78 ../src/totem-menu.c:1340
+#, fuzzy
+#| msgid "Show or hide the playlist"
+msgid "Show or hide the sidebar"
 msgstr "Sýna eða fela spilunarlistann"
 
-#: data/totem.glade.h:84
-msgid "Show/Hide Playlist"
-msgstr "Sýna/fela spilunarlista"
-
-#: data/totem.glade.h:85
+#: ../data/totem.ui.h:79 ../src/totem-menu.c:1337
 msgid "Shuff_le Mode"
 msgstr "S_tokkun"
 
-#: data/totem.glade.h:86
+#: ../data/totem.ui.h:80 ../src/totem-menu.c:1327 ../src/totem-menu.c:1332
 msgid "Skip _Backwards"
 msgstr "Stökkva _aftur"
 
-#: data/totem.glade.h:87
+#: ../data/totem.ui.h:81 ../src/totem-menu.c:1326 ../src/totem-menu.c:1331
 msgid "Skip _Forward"
 msgstr "Stökkva á_fram"
 
-#: data/totem.glade.h:88
+#: ../data/totem.ui.h:82 ../src/totem-menu.c:1327 ../src/totem-menu.c:1332
 msgid "Skip backwards"
 msgstr "Stökkva aftur"
 
-#: data/totem.glade.h:89
+#: ../data/totem.ui.h:83 ../src/totem-menu.c:1326 ../src/totem-menu.c:1331
 msgid "Skip forward"
 msgstr "Stökkva áfram"
 
-#: data/totem.glade.h:90
-msgid "Skip to"
-msgstr "Stökkva til"
-
-#: data/totem.glade.h:91
-msgid "Skip to a specific time"
-msgstr "Stökkva að tilgreindum stað"
-
-#: data/totem.glade.h:92
-msgid "Small"
-msgstr "Lítil"
-
-#: data/totem.glade.h:93
+#: ../data/totem.ui.h:84 ../src/totem-menu.c:1345
+#, fuzzy
 msgid "Square"
-msgstr ""
+msgstr "Ferningur"
 
-#: data/totem.glade.h:94
+#: ../data/totem.ui.h:85 ../src/backend/bacon-video-widget-gst-0.10.c:4266
 msgid "Stereo"
 msgstr "Víðóma"
 
-#: data/totem.glade.h:95
-msgid "Subtitles"
-msgstr "Textar"
+#: ../data/totem.ui.h:86
+msgid "Switch An_gles"
+msgstr ""
 
-#: data/totem.glade.h:96
-msgid "Switch to double size"
-msgstr "Stilla á tvöfalda stærð"
+#: ../data/totem.ui.h:87
+msgid "Switch camera angles"
+msgstr ""
 
-#: data/totem.glade.h:97
+#: ../data/totem.ui.h:88
 msgid "Switch to fullscreen"
 msgstr "Stilla á heilskjá"
 
-#: data/totem.glade.h:98
-msgid "Take _Screenshot"
-msgstr "Taka _skjámynd"
+#: ../data/totem.ui.h:89
+#, fuzzy
+#| msgid "Subtitles"
+msgid "Text Subtitles"
+msgstr "Textar"
 
-#: data/totem.glade.h:99
-msgid "Take a screenshot"
-msgstr "Taka skjámynd"
+#: ../data/totem.ui.h:90
+msgid "Time seek bar"
+msgstr ""
 
-#: data/totem.glade.h:100
-msgid "Time:"
-msgstr "Tími:"
-
-#: data/totem.glade.h:102
+#: ../data/totem.ui.h:92
 msgid "Totem Preferences"
 msgstr "Totem stillingar"
 
-#: data/totem.glade.h:103
-msgid "Tv-out in fullscreen by Nvidia (NTSC)"
-msgstr ""
+#: ../data/totem.ui.h:93
+#, fuzzy
+#| msgid "<b>Visual Effects</b>"
+msgid "Visual Effects"
+msgstr "<b>Sjónrænir effektar</b>"
 
-#: data/totem.glade.h:104
-msgid "Tv-out in fullscreen by Nvidia (PAL)"
-msgstr ""
-
-#: data/totem.glade.h:105
+#: ../data/totem.ui.h:94
 msgid "Visualisation _size:"
 msgstr "Stærð sýningar:"
 
-#: data/totem.glade.h:106
+#: ../data/totem.ui.h:95
 msgid "Volume _Down"
 msgstr "_Lækka hljóðstyrk"
 
-#: data/totem.glade.h:107
+#: ../data/totem.ui.h:96
 msgid "Volume _Up"
 msgstr "_Hækka hljóðstyrk"
 
-#: data/totem.glade.h:108
-msgid "Volume down"
-msgstr "Lækka hljóðstyrk"
+#: ../data/totem.ui.h:97
+#, fuzzy
+#| msgid "Zoom 1:1"
+msgid "Zoom In"
+msgstr "Stækkun 1:1"
 
-#: data/totem.glade.h:109
-msgid "Volume up"
-msgstr "Hækka hljóðstyrk"
+#: ../data/totem.ui.h:98
+#, fuzzy
+#| msgid "Zoom 1:1"
+msgid "Zoom Out"
+msgstr "Stækkun 1:1"
 
-#: data/totem.glade.h:110 data/vanity.glade.h:7
-msgid "Zoom _1:1"
-msgstr "Stækkun _1:1"
+#: ../data/totem.ui.h:99
+msgid "Zoom Reset"
+msgstr ""
 
-#: data/totem.glade.h:111 data/vanity.glade.h:8
-msgid "Zoom _2:1"
-msgstr "Stækkun _2:1"
+#: ../data/totem.ui.h:100
+#, fuzzy
+#| msgid "Zoom 1:1"
+msgid "Zoom in"
+msgstr "Stækkun 1:1"
 
-#: data/totem.glade.h:112
-msgid "Zoom to half size"
-msgstr "Hálf stærð"
+#: ../data/totem.ui.h:101
+#, fuzzy
+#| msgid "Zoom 1:1"
+msgid "Zoom out"
+msgstr "Stækkun 1:1"
 
-#: data/totem.glade.h:113
-msgid "Zoom to one for one size"
-msgstr "Stærð einn móti einum"
+#: ../data/totem.ui.h:102
+msgid "Zoom reset"
+msgstr ""
 
-#: data/totem.glade.h:114
-msgid "_Add Proprietary Plugins..."
-msgstr "_Bæta við ófrjálsum íforritum..."
+#: ../data/totem.ui.h:103
+#, fuzzy
+#| msgid "Auto"
+msgid "_About"
+msgstr "Sjálfvirkt"
 
-#: data/totem.glade.h:115
+#: ../data/totem.ui.h:104
+msgid "_Allow the screensaver to activate even when audio-only is playing"
+msgstr ""
+
+#: ../data/totem.ui.h:105
 msgid "_Angle Menu"
 msgstr "_Sjónarhornsvalmynd"
 
-#: data/totem.glade.h:116
+#: ../data/totem.ui.h:106
 #, fuzzy
 msgid "_Aspect Ratio"
 msgstr "Skipta _hlutföllum"
 
-#: data/totem.glade.h:117
+#: ../data/totem.ui.h:107
 msgid "_Audio output type:"
 msgstr "Tegund _hljóðúttaks:"
 
-#: data/totem.glade.h:118
+#: ../data/totem.ui.h:108
 msgid "_Brightness:"
 msgstr "_Lýsing"
 
-#: data/totem.glade.h:119
+#: ../data/totem.ui.h:109
 msgid "_Chapter Menu"
 msgstr "_Kaflavalmynd"
 
-#: data/totem.glade.h:120
+#: ../data/totem.ui.h:110
+#, fuzzy
+#| msgid "Playlist"
+msgid "_Clear Playlist"
+msgstr "Spilunarlisti"
+
+#: ../data/totem.ui.h:111
 msgid "_Contents"
 msgstr "_Innihald"
 
-#: data/totem.glade.h:121
+#: ../data/totem.ui.h:112
 msgid "_DVD Menu"
 msgstr "_DVD-valmynd"
 
-#: data/totem.glade.h:122
-msgid "_DXR3 TV-out"
-msgstr "_DXR3-sjónvarpsúttak"
-
-#: data/totem.glade.h:123
+#: ../data/totem.ui.h:113 ../src/totem-menu.c:1338
 msgid "_Deinterlace"
 msgstr "_Aftvinna"
 
-#: data/totem.glade.h:124
+#: ../data/totem.ui.h:114
+#, fuzzy
+msgid "_Edit"
+msgstr "_Sýsla"
+
+#: ../data/totem.ui.h:115
 msgid "_Eject"
 msgstr "_Spýta út"
 
-#: data/totem.glade.h:125
+#: ../data/totem.ui.h:116
+msgid "_Encoding:"
+msgstr ""
+
+#: ../data/totem.ui.h:117
+#, fuzzy
+msgid "_Font:"
+msgstr "Leturgerð:"
+
+#: ../data/totem.ui.h:118
 msgid "_Fullscreen"
 msgstr "_Heilskjár"
 
-#: data/totem.glade.h:126
+#: ../data/totem.ui.h:119
 msgid "_Go"
 msgstr "Á_fram"
 
-#: data/totem.glade.h:127
+#: ../data/totem.ui.h:120
+#, fuzzy
+#| msgid "_Hue:"
+msgid "_Help"
+msgstr "_Litblær:"
+
+#: ../data/totem.ui.h:121
 msgid "_Hue:"
 msgstr "_Litblær:"
 
-#: data/totem.glade.h:128
+#: ../data/totem.ui.h:122
 msgid "_Languages"
 msgstr "_Tungumál"
 
-#: data/totem.glade.h:129
+#: ../data/totem.ui.h:123
 msgid "_Movie"
 msgstr "Kvik_mynd"
 
-#: data/totem.glade.h:130
+#: ../data/totem.ui.h:124
 msgid "_Next Chapter/Movie"
 msgstr "_Næsti kafli/kvikmynd"
 
-#: data/totem.glade.h:131
-msgid "_No TV-out"
-msgstr "_Ekkert sjónvarpsúttak"
+#: ../data/totem.ui.h:125
+#, fuzzy
+#| msgid "_Save..."
+msgid "_Open..."
+msgstr "_Vista"
 
-#: data/totem.glade.h:132
-msgid "_Optical device path:"
-msgstr "Slóð að _sjóntæki:"
-
-#: data/totem.glade.h:133
+#: ../data/totem.ui.h:126
 msgid "_Previous Chapter/Movie"
 msgstr "_Fyrri kafli/kvikmynd"
 
-#: data/totem.glade.h:134
+#: ../data/totem.ui.h:127
+#, fuzzy
+#| msgid "Properties"
+msgid "_Properties"
+msgstr "Eiginleikar"
+
+#: ../data/totem.ui.h:128
+#, fuzzy
+#| msgid "Quit"
+msgid "_Quit"
+msgstr "Hætta"
+
+#: ../data/totem.ui.h:129 ../src/totem-menu.c:1336
 msgid "_Repeat Mode"
 msgstr "_Endurtekning"
 
-#: data/totem.glade.h:135
-msgid "_Reset defaults"
+#: ../data/totem.ui.h:130
+msgid "_Resize 1:2"
 msgstr ""
 
-#: data/totem.glade.h:136
-msgid "_Show/Hide Playlist"
-msgstr "_Sýna/fela spilunarlista"
-
-#: data/totem.glade.h:137
-msgid "_Skip to..."
-msgstr "_Stökkva til..."
-
-#: data/totem.glade.h:138
-msgid "_Skip to:"
-msgstr "_Stökkva til:"
-
-#: data/totem.glade.h:139
+#: ../data/totem.ui.h:132
 msgid "_Sound"
 msgstr "_Hljóð"
 
-#: data/totem.glade.h:140
+#: ../data/totem.ui.h:133
 msgid "_Title Menu"
 msgstr "_Titilvalmynd"
 
-#: data/totem.glade.h:141
+#: ../data/totem.ui.h:134
 msgid "_Type of visualisation:"
 msgstr "_Tegund skoðunar"
 
-#: data/totem.glade.h:142 data/vanity.glade.h:10
-msgid "_Zoom 1:2"
-msgstr "_Stækkun 1:2"
+#: ../data/totem.ui.h:135
+#, fuzzy
+msgid "_View"
+msgstr "_Birta"
 
-#: data/totem.glade.h:143
-msgid "seconds"
-msgstr "sekúndur"
+#: ../data/totem.schemas.in.h:1
+msgid "Allow the screensaver to activate even when audio-only is playing"
+msgstr ""
 
-#: data/totem.schemas.in.h:1
+#: ../data/totem.schemas.in.h:2
+msgid ""
+"Allow the screensaver to activate even when audio-only is playing. This is "
+"useful for monitor-powered speakers."
+msgstr ""
+
+#: ../data/totem.schemas.in.h:3
+msgid ""
+"Amount of data to buffer for network streams before starting to display the "
+"stream (in seconds)"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:4
+msgid ""
+"Approximate network connection speed, used to select quality on media over "
+"the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
+"28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
+"for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
+"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
+"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+msgstr ""
+
+#: ../data/totem.schemas.in.h:5
+#, fuzzy
+#| msgid "Buffering"
+msgid "Buffer size"
+msgstr "Hleð í minni"
+
+#: ../data/totem.schemas.in.h:6
+msgid "Default location for the \"Open...\" dialogs"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:7
+msgid ""
+"Default location for the \"Open...\" dialogs, default is the current "
+"directory"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:8
+msgid "Default location for the \"Take Screenshot\" dialogs"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:9
+msgid ""
+"Default location for the \"Take Screenshot\" dialogs, default is the "
+"Pictures directory"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:10
 msgid "Enable deinterlacing"
 msgstr "Virkja aftvinnun"
 
-#: data/totem.schemas.in.h:2
-msgid "Enable deinterlacing."
-msgstr "Virkja aftvinnun."
+#: ../data/totem.schemas.in.h:11
+msgid "Encoding charset for subtitle"
+msgstr ""
 
-#: data/totem.schemas.in.h:3
-msgid "Height of the video widget"
-msgstr "Hæð myndspilaraviðfangs"
+#: ../data/totem.schemas.in.h:12
+msgid "Maximum amount of data to decode ahead of display (in seconds)"
+msgstr ""
 
-#: data/totem.schemas.in.h:4
+#: ../data/totem.schemas.in.h:13
 msgid "Name of the visual effects plugins"
 msgstr "Heiti íforrits fyrir sjónræna effekta"
 
-#: data/totem.schemas.in.h:5
-msgid "Name of the visual effects plugins."
-msgstr "Heiti íforrita fyrir sjónræna effekta."
+#: ../data/totem.schemas.in.h:14
+msgid "Network buffering threshold"
+msgstr ""
 
-#: data/totem.schemas.in.h:6
-msgid "Path to the optical media device"
-msgstr "Slóð að sjónmiðlatæki"
+#: ../data/totem.schemas.in.h:15
+#, fuzzy
+#| msgid "Connection _speed:"
+msgid "Network connection speed"
+msgstr "_Hraði tengingar:"
 
-#: data/totem.schemas.in.h:7
-msgid "Path to the optical media device."
-msgstr "Slóð að sjónmiðlatæki."
+#: ../data/totem.schemas.in.h:16
+msgid "Pango font description for subtitle rendering"
+msgstr ""
 
-#: data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:17
+msgid ""
+"Quality settings for the audio visualization: \"0\" for small, \"1\" for "
+"normal, \"2\" for large, \"3\" for extra large."
+msgstr ""
+
+#: ../data/totem.schemas.in.h:18
 msgid "Repeat mode"
 msgstr "Endurtekning"
 
-#: data/totem.schemas.in.h:9
-msgid "Repeat mode."
-msgstr "Endurtekningarhamur."
-
-#: data/totem.schemas.in.h:10
+#: ../data/totem.schemas.in.h:19
 msgid "Resize the canvas automatically on file load"
 msgstr "Endurstilla stærð tjalds þegar skrá er hlaðið inn"
 
-#: data/totem.schemas.in.h:11
-msgid "Resize the canvas automatically on file load."
-msgstr "Endurstilla stærð tjalds þegar skrá er hlaðið inn."
-
-#: data/totem.schemas.in.h:12
+#: ../data/totem.schemas.in.h:20
 msgid "Show visual effects when no video is displayed"
 msgstr "Sýna sjónræna effekta þegar engin mynd er"
 
-#: data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:21
 msgid "Show visual effects when playing an audio only file."
 msgstr "Sýna sjónræna effekta þegar hljóðskrá er spiluð."
 
-#: data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:22
 msgid "Shuffle mode"
 msgstr "Stokkun"
 
-#: data/totem.schemas.in.h:15
-msgid "Shuffle mode."
-msgstr "Stokkunarhamur."
+#: ../data/totem.schemas.in.h:23
+msgid "Sound volume"
+msgstr ""
 
-#: data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:24
+msgid "Sound volume, in percent, between 0 and 100"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:25
+#, fuzzy
+#| msgid "Subtitles"
+msgid "Subtitle encoding"
+msgstr "Textar"
+
+#: ../data/totem.schemas.in.h:26
+#, fuzzy
+#| msgid "Subtitles"
+msgid "Subtitle font"
+msgstr "Textar"
+
+#: ../data/totem.schemas.in.h:27
 msgid "The brightness of the video"
 msgstr "Lýsing myndar"
 
-#: data/totem.schemas.in.h:17
-msgid "The brightness of the video."
-msgstr "Lýsing myndar."
-
-#: data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:28
 msgid "The contrast of the video"
 msgstr "Birtuskil myndar"
 
-#: data/totem.schemas.in.h:19
-msgid "The contrast of the video."
-msgstr "Birtuskil myndar."
-
-#: data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:29
 msgid "The hue of the video"
 msgstr "Litblær myndar"
 
-#: data/totem.schemas.in.h:21
-msgid "The hue of the video."
-msgstr "Litblær myndar."
-
-#: data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:30
 msgid "The saturation of the video"
 msgstr "Mettun myndar"
 
-#: data/totem.schemas.in.h:23
-msgid "The saturation of the video."
-msgstr "Mettun myndar."
-
-#: data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:31
 msgid "Type of audio output to use"
 msgstr "Tegund hljóðúttaks sem á að nota"
 
-#: data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:32
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -839,154 +983,1120 @@ msgstr ""
 "Tegund hljóðs: \"0\" fyrir víðóma, \"1\" fyrir 4ra rása úttak,\"2\" fyrir "
 "5.0 rása úttak, \"3\" fyrir 5.1 rása úttak, \"4\" fyrir AC3gegnumstreymi."
 
-#: data/totem.schemas.in.h:26
+#. Translators: This is default subtitle encoding
+#. character set. You can change this to be the most common
+#. encoding for fansub subtitles in your language. File a bug
+#. against Totem, and leave UTF-8 as the default if in doubt.
+#: ../data/totem.schemas.in.h:37
+#, fuzzy
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: ../data/totem.schemas.in.h:38
+#, fuzzy
+#| msgid "Visualisation _size:"
+msgid "Visualisation quality setting"
+msgstr "Stærð sýningar:"
+
+#: ../data/totem.schemas.in.h:39
 msgid "Whether the main window should stay on top"
 msgstr "Hvort aðalglugginn á að halda sér efst"
 
-#: data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:40
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Hvort aðalglugginn á að haldast yfir öllum hinum."
 
-#: data/totem.schemas.in.h:28
+#: ../data/totem.schemas.in.h:41
+msgid "Whether to autoload text subtitle files when a movie is loaded"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:42
+msgid "Whether to disable the plugins in the user's home directory"
+msgstr ""
+
+#: ../data/totem.schemas.in.h:43
 msgid "Whether to enable debug for the playback engine"
 msgstr "Hvort á að heimila aflúsun fyrir afspilunarvélina"
 
-#: data/totem.schemas.in.h:29
-msgid "Whether to enable debug for the playback engine."
-msgstr "Hvort á að heimila aflúsun fyrir afspilunarvélina."
-
-#: data/totem.schemas.in.h:30
-msgid "Width of the video widget"
-msgstr "Breidd myndspilaraviðfangs"
-
-#: data/totem.schemas.in.h:31
-msgid "X coordinate for the Playlist"
-msgstr "X-hnit spilunarlista"
-
-#: data/totem.schemas.in.h:32
-msgid "X coordinate for the Playlist."
-msgstr "X-hnit spilunarlista."
-
-#: data/totem.schemas.in.h:33
-msgid "Y coordinate for the Playlist"
-msgstr "Y-hnit spilunarlista"
-
-#: data/totem.schemas.in.h:34
-msgid "Y coordinate for the Playlist."
-msgstr "Y-hnit spilunarlista."
-
-#: data/uri.glade.h:2
-msgid "Enter the _location (URI) of the file you would like to open:"
+#: ../data/uri.ui.h:1
+#, fuzzy
+#| msgid "Enter the _location (URI) of the file you would like to open:"
+msgid "Enter the _address of the file you would like to open:"
 msgstr "Sláðu inn s_lóð (URI) skrárinnar sem þú vilt opna:"
 
-#: data/uri.glade.h:3
-msgid "Open from URI"
-msgstr "Opna URI"
+#: ../lib/totem-scrsaver.c:115
+#, fuzzy
+#| msgid "Playing"
+msgid "Playing a movie"
+msgstr "Spila"
 
-#: data/vanity.desktop.in.h:1
-msgid "Vanity Webcam utility"
-msgstr "Vanity vefmyndavélarforrit"
+#: ../src/eggdesktopfile.c:165
+#, fuzzy, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Þetta er ekki gild slóð."
 
-#: data/vanity.desktop.in.h:2
-msgid "View live webcam and upload pictures"
-msgstr "Skoða vefmyndavél og senda myndir"
-
-#: data/vanity.glade.h:1
-msgid "Save File"
-msgstr "Vista skrá"
-
-#: data/vanity.glade.h:2 src/vanity.c:278
-msgid "Vanity"
-msgstr "Vanity"
-
-#: data/vanity.glade.h:3
-msgid "Vanity Preferences"
-msgstr "Vanity-stillingar"
-
-#: data/vanity.glade.h:4
-msgid "Zoom 1:1"
-msgstr "Stækkun 1:1"
-
-#: data/vanity.glade.h:5
-msgid "Zoom 1:2"
-msgstr "Stækkun 1:2"
-
-#: data/vanity.glade.h:6
-msgid "Zoom 2:1"
-msgstr "Stækkun 2:1"
-
-#: data/vanity.glade.h:9
-msgid "_Picture"
-msgstr "_Mynd"
-
-#: src/bacon-cd-selection.c:257
-msgid "Unnamed CDROM"
-msgstr "Ónefndur geisladiskur"
-
-#: src/bacon-cd-selection.c:302 src/bacon-v4l-selection.c:299
-msgid "Select the drive"
-msgstr "Velja drif"
-
-#: src/bacon-v4l-selection.c:254
-msgid "Unnamed Video Device"
-msgstr "Ónefnt vídeótæki"
-
-#: src/bacon-video-widget-gst.c:62
-msgid "Totem Video Window"
-msgstr "Totem vídeógluggi"
-
-#: src/bacon-video-widget-properties.c:122
+#: ../src/eggdesktopfile.c:188
 #, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d klukkustundir"
+msgid "Unrecognized desktop file Version '%s'"
+msgstr ""
 
-#: src/bacon-video-widget-properties.c:124
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d mínútur"
+#: ../src/eggdesktopfile.c:958
+#, fuzzy, c-format
+msgid "Starting %s"
+msgstr "Ræsi %s"
 
-#: src/bacon-video-widget-properties.c:127
+#: ../src/eggdesktopfile.c:1100
 #, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d sekúndur"
+msgid "Application does not accept documents on command line"
+msgstr ""
 
-#. hour:minutes:seconds
-#: src/bacon-video-widget-properties.c:133
+#: ../src/eggdesktopfile.c:1168
 #, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
+msgid "Unrecognized launch option: %d"
+msgstr ""
 
-#. minutes:seconds
-#: src/bacon-video-widget-properties.c:136
+#: ../src/eggdesktopfile.c:1373
 #, c-format
-msgid "%s %s"
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+
+#: ../src/eggdesktopfile.c:1392
+#, fuzzy, c-format
+msgid "Not a launchable item"
+msgstr "Þetta er ekki ræsanlegur íhlutur"
+
+#: ../src/eggfileformatchooser.c:63
+#, c-format
+msgid "File Format: %s"
+msgstr ""
+
+#: ../src/eggfileformatchooser.c:171
+msgid "By Extension"
+msgstr ""
+
+#: ../src/eggfileformatchooser.c:185
+#, fuzzy
+#| msgid "File image"
+msgid "File Format"
+msgstr "Skráarmynd"
+
+#: ../src/eggfileformatchooser.c:203
+#, fuzzy
+#| msgid "Dimensions:"
+msgid "Extension(s)"
+msgstr "Hlutföll:"
+
+#: ../src/eggsmclient.c:225
+#, fuzzy
+msgid "Disable connection to session manager"
+msgstr "Afvirkja tengingu við setustjóra"
+
+#: ../src/eggsmclient.c:228
+msgid "Specify file containing saved configuration"
+msgstr ""
+
+#: ../src/eggsmclient.c:228
+#, fuzzy
+msgid "FILE"
+msgstr "SKRÁ"
+
+#: ../src/eggsmclient.c:231
+#, fuzzy
+msgid "Specify session management ID"
+msgstr "Tilgreinið auðkenni setustjórnunar"
+
+#: ../src/eggsmclient.c:231
+#, fuzzy
+msgid "ID"
+msgstr "Auðkenni"
+
+#: ../src/eggsmclient.c:252
+msgid "Session management options:"
+msgstr ""
+
+#: ../src/eggsmclient.c:253
+msgid "Show session management options"
+msgstr ""
+
+#: ../src/totem-cell-renderer-video.c:125
+#, fuzzy
+#| msgid "Unknown"
+msgid "Unknown video"
+msgstr "Óþekkt"
+
+#: ../src/totem-dnd-menu.c:94
+msgid "_Play Now"
+msgstr ""
+
+#: ../src/totem-dnd-menu.c:103
+#, fuzzy
+msgid "Cancel"
+msgstr "Hætta við"
+
+#: ../src/totem-fullscreen.c:494
+#, fuzzy
+#| msgid "No file"
+msgid "No File"
+msgstr "Engin skrá"
+
+#: ../src/totem-interface.c:121 ../src/totem-interface.c:129
+#, c-format
+msgid "Could not launch URL \"%s\": %s"
+msgstr ""
+
+#: ../src/totem-interface.c:121
+msgid "Default browser not configured"
+msgstr ""
+
+#: ../src/totem-interface.c:122 ../src/totem-interface.c:130
+msgid "Error launching URI"
+msgstr ""
+
+#: ../src/totem-interface.c:188 ../src/totem-interface.c:220
+#, fuzzy, c-format
+#| msgid "Couldn't load the 'Open Location...' interface."
+msgid "Couldn't load the '%s' interface. %s"
+msgstr "Tókst ekki að hlaða inn 'opna slóð...' viðmótið."
+
+#: ../src/totem-interface.c:188
+msgid "The file does not exist."
+msgstr ""
+
+#: ../src/totem-interface.c:190 ../src/totem-interface.c:192
+#: ../src/totem-interface.c:222 ../src/totem-interface.c:224
+msgid "Make sure that Totem is properly installed."
+msgstr "Athugaðu hvort Totem er rétt uppsett."
+
+#: ../src/totem-interface.c:335
+msgid ""
+"Totem is free software; you can redistribute it and/or modify it under the "
+"terms of the GNU General Public License as published by the Free Software "
+"Foundation; either version 2 of the License, or (at your option) any later "
+"version."
+msgstr ""
+
+#: ../src/totem-interface.c:339
+msgid ""
+"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
+"details."
+msgstr ""
+
+#: ../src/totem-interface.c:343
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
+"Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+
+#: ../src/totem-interface.c:346
+msgid ""
+"Totem contains an exception to allow the use of proprietary GStreamer "
+"plugins."
+msgstr ""
+
+#: ../src/totem-menu.c:338
+msgid "None"
+msgstr "Ekkert"
+
+#: ../src/totem-menu.c:828
+#, c-format
+msgid "Play Disc '%s'"
+msgstr ""
+
+#: ../src/totem-menu.c:831
+#, c-format
+msgid "device%d"
+msgstr ""
+
+#. translators: the index of the adapter
+#. * DVB Adapter 1
+#: ../src/totem-menu.c:905
+#, c-format
+msgid "DVB Adapter %u"
+msgstr ""
+
+#. translators:
+#. * Watch TV on 'DVB Adapter 1'
+#. * or
+#. * Watch TV on 'Hauppauge Nova-T Stick'
+#: ../src/totem-menu.c:910
+#, c-format
+msgid "Watch TV on '%s'"
+msgstr ""
+
+#. This lists the back-end type and version, such as
+#. * Movie Player using GStreamer 0.10.1
+#: ../src/totem-menu.c:1186
+#, c-format
+msgid "Movie Player using %s"
+msgstr "Myndspilari sem notar %s"
+
+#: ../src/totem-menu.c:1190
+msgid "Copyright © 2002-2008 Bastien Nocera"
+msgstr ""
+
+#: ../src/totem-menu.c:1195 ../browser-plugin/totem-plugin-viewer.c:1195
+#, fuzzy
+#| msgid "translator_credits"
+msgid "translator-credits"
+msgstr ""
+"Áki G. Karlsson aki@akademia.is, 2004.\n"
+"Sveinn í Felli sveinki@nett.is, 2009."
+
+#: ../src/totem-menu.c:1199
+msgid "Totem Website"
+msgstr ""
+
+#: ../src/totem-menu.c:1234
+msgid "Configure Plugins"
+msgstr ""
+
+#: ../src/totem-menu.c:1347
+msgid "Sets 16:9 (Anamorphic) aspect ratio"
+msgstr ""
+
+#: ../src/totem-object.c:937 ../browser-plugin/totem-plugin-viewer.c:354
+msgid "Playing"
+msgstr "Spila"
+
+#: ../src/totem-object.c:939 ../src/totem-options.c:51
+#, fuzzy
+#| msgid "Paused"
+msgid "Pause"
+msgstr "Hlé"
+
+#: ../src/totem-object.c:944 ../browser-plugin/totem-plugin-viewer.c:350
+msgid "Paused"
+msgstr "Hlé"
+
+#. Translators: this refers to a media file
+#: ../src/totem-object.c:946 ../src/totem-object.c:956
+#: ../src/totem-options.c:50
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:76
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:88
+#, fuzzy
+#| msgid "Playing"
+msgid "Play"
+msgstr "Spila"
+
+#: ../src/totem-object.c:951 ../src/totem-object.c:1585
+#: ../src/totem-statusbar.c:98 ../browser-plugin/totem-plugin-viewer.c:338
+msgid "Stopped"
+msgstr "Stöðvað"
+
+#: ../src/totem-object.c:1032 ../src/totem-object.c:1059
+#: ../src/totem-object.c:1706 ../src/totem-object.c:1854
+#, c-format
+msgid "Totem could not play '%s'."
+msgstr "Totem tókst ekki að spila '%s'."
+
+#: ../src/totem-object.c:1142
+#, c-format
+msgid ""
+"Totem could not play this media (%s) although a plugin is present to handle "
+"it."
+msgstr ""
+"Totem tókst ekki að spila þessa skrá (%s) þótt íforrit sé til fyrir hana."
+
+#: ../src/totem-object.c:1143
+msgid ""
+"You might want to check that a disc is present in the drive and that it is "
+"correctly configured."
+msgstr ""
+"Þú ættir að athuga hvort diskurinn sé í drifinu og hvort hann errétt "
+"stilltur."
+
+#: ../src/totem-object.c:1150 ../src/plugins/youtube/youtube.py:232
+msgid "More information about media plugins"
+msgstr ""
+
+#: ../src/totem-object.c:1151 ../src/plugins/youtube/youtube.py:230
+msgid ""
+"Please install the necessary plugins and restart Totem to be able to play "
+"this media."
+msgstr ""
+"Vinsamlega settu upp nauðsynleg íforrit og endurræstu Totem til að geta "
+"spilaðþessa skrá."
+
+#: ../src/totem-object.c:1153
+#, fuzzy, c-format
+#| msgid ""
+#| "Totem cannot play this type of media (%s) because you do not have the "
+#| "appropriate plugins to handle it."
+msgid ""
+"Totem cannot play this type of media (%s) because it does not have the "
+"appropriate plugins to be able to read from the disc."
+msgstr ""
+"Totem getur ekki spilað þessa tegund skráar (%s) af því að þú ert ekki "
+"meðrétt íforrit fyrir hana."
+
+#: ../src/totem-object.c:1155 ../src/plugins/youtube/youtube.py:229
+#, c-format, python-format
+msgid ""
+"Totem cannot play this type of media (%s) because you do not have the "
+"appropriate plugins to handle it."
+msgstr ""
+"Totem getur ekki spilað þessa tegund skráar (%s) af því að þú ert ekki "
+"meðrétt íforrit fyrir hana."
+
+#: ../src/totem-object.c:1159
+msgid ""
+"Totem cannot play TV, because no TV adapters are present or they are not "
+"supported."
+msgstr ""
+
+#: ../src/totem-object.c:1160
+msgid "Please insert a supported TV adapter."
+msgstr ""
+
+#: ../src/totem-object.c:1170
+msgid "More information about watching TV"
+msgstr ""
+
+#: ../src/totem-object.c:1171
+msgid "Totem is missing a channels listing to be able to tune the receiver."
+msgstr ""
+
+#: ../src/totem-object.c:1172
+msgid ""
+"Please follow the instructions provided in the link to create a channels "
+"listing."
+msgstr ""
+
+#: ../src/totem-object.c:1175
+#, fuzzy, c-format
+#| msgid ""
+#| "Totem cannot play this type of media (%s) because you do not have the "
+#| "appropriate plugins to handle it."
+msgid ""
+"Totem cannot play this type of media (%s) because the TV device is busy."
+msgstr ""
+"Totem getur ekki spilað þessa tegund skráar (%s) af því að þú ert ekki "
+"meðrétt íforrit fyrir hana."
+
+#: ../src/totem-object.c:1176
+msgid "Please try again later."
+msgstr ""
+
+#: ../src/totem-object.c:1181
+#, fuzzy, c-format
+#| msgid ""
+#| "Totem cannot play this type of media (%s) because you do not have the "
+#| "appropriate plugins to handle it."
+msgid "Totem cannot play this type of media (%s) because it is not supported."
+msgstr ""
+"Totem getur ekki spilað þessa tegund skráar (%s) af því að þú ert ekki "
+"meðrétt íforrit fyrir hana."
+
+#: ../src/totem-object.c:1182
+msgid "Please insert another disc to play back."
+msgstr ""
+
+#: ../src/totem-object.c:1216
+msgid "Totem was not able to play this disc."
+msgstr ""
+
+#: ../src/totem-object.c:1217 ../src/totem-object.c:3967
+#: ../browser-plugin/totem-plugin-viewer.c:1828
+msgid "No reason."
+msgstr "Engin ástæða gefin."
+
+#: ../src/totem-object.c:1231
+msgid "Totem does not support playback of Audio CDs"
+msgstr ""
+
+#: ../src/totem-object.c:1232
+msgid "Please consider using a music player or a CD extractor to play this CD"
+msgstr ""
+
+#: ../src/totem-object.c:1712
+msgid "No error message"
+msgstr ""
+
+#: ../src/totem-object.c:2051
+msgid "Totem could not display the help contents."
+msgstr "Totem tókst ekki að sýna hjálpina."
+
+#: ../src/totem-object.c:2390 ../src/totem-object.c:2392
+#: ../browser-plugin/totem-plugin-viewer.c:1483
+#, fuzzy
+#| msgid "An error occured"
+msgid "An error occurred"
+msgstr "Villa átti sér stað"
+
+#: ../src/totem-object.c:3263
+msgid "TV signal lost"
+msgstr ""
+
+#: ../src/totem-object.c:3264
+msgid "Please verify your hardware setup."
+msgstr ""
+
+#: ../src/totem-object.c:3822 ../src/totem-object.c:3824
+#, fuzzy
+#| msgid "_Previous Chapter/Movie"
+msgid "Previous Chapter/Movie"
+msgstr "_Fyrri kafli/kvikmynd"
+
+#: ../src/totem-object.c:3830 ../src/totem-object.c:3832
+#, fuzzy
+#| msgid "Play / Pa_use"
+msgid "Play / Pause"
+msgstr "Spila / s_töðva"
+
+#: ../src/totem-object.c:3839 ../src/totem-object.c:3841
+#, fuzzy
+#| msgid "_Next Chapter/Movie"
+msgid "Next Chapter/Movie"
+msgstr "_Næsti kafli/kvikmynd"
+
+#: ../src/totem-object.c:3967
+msgid "Totem could not startup."
+msgstr "Totem tókst ekki að ræsa sig."
+
+#: ../src/totem-open-location.c:171
+#, fuzzy
+#| msgid "Open _Location..."
+msgid "Open Location..."
+msgstr "Opna _slóð..."
+
+#: ../src/totem-options.c:48
+#, fuzzy
+msgid "Enable debug"
+msgstr "Virkja aftvinnun"
+
+#: ../src/totem-options.c:49
+msgid "Play/Pause"
+msgstr "Spila/stöðva"
+
+#: ../src/totem-options.c:52
+msgid "Next"
+msgstr "Næsta"
+
+#: ../src/totem-options.c:53
+msgid "Previous"
+msgstr "Fyrri"
+
+#: ../src/totem-options.c:54
+msgid "Seek Forwards"
+msgstr "Sækja áfram"
+
+#: ../src/totem-options.c:55
+msgid "Seek Backwards"
+msgstr "Sækja aftur"
+
+#: ../src/totem-options.c:56
+msgid "Volume Up"
+msgstr "Hækka hljóðstyrk"
+
+#: ../src/totem-options.c:57
+msgid "Volume Down"
+msgstr "Lækka hljóðstyrk"
+
+#: ../src/totem-options.c:58
+msgid "Mute sound"
+msgstr ""
+
+#: ../src/totem-options.c:59
+msgid "Toggle Fullscreen"
+msgstr "Skipta heilskjá"
+
+#: ../src/totem-options.c:60
+#, fuzzy
+#| msgid "Show _Controls"
+msgid "Show/Hide Controls"
+msgstr "Sýna Stjórn_tæki"
+
+#: ../src/totem-options.c:61
+msgid "Quit"
+msgstr "Hætta"
+
+#. Translators: this refers to a media file
+#: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
+msgid "Enqueue"
+msgstr "Setja í bið"
+
+#: ../src/totem-options.c:63
+msgid "Replace"
+msgstr "Skipta út"
+
+#: ../src/totem-options.c:64
+msgid "Don't connect to an already-running instance"
+msgstr ""
+
+#. translators: this option prints the current movie's title on the command-line
+#: ../src/totem-options.c:66
+msgid "Print playing movie"
+msgstr ""
+
+#: ../src/totem-options.c:67
+#, fuzzy
+#| msgid "Seek to"
+msgid "Seek"
+msgstr "Sækja til"
+
+#: ../src/totem-options.c:68
+#, fuzzy
+#| msgid "Playlist"
+msgid "Playlist index"
+msgstr "Spilunarlisti"
+
+#: ../src/totem-options.c:70
+#, fuzzy
+msgid "Movies to play"
+msgstr "Kvikmynd er ekki í gangi"
+
+#. By extension entry
+#: ../src/totem-playlist.c:150
+#, fuzzy
+#| msgid "Save playlist"
+msgid "MP3 ShoutCast playlist"
+msgstr "Vista spilunarlista"
+
+#: ../src/totem-playlist.c:151
+msgid "MP3 audio (streamed)"
+msgstr ""
+
+#: ../src/totem-playlist.c:152
+msgid "MP3 audio (streamed, DOS format)"
+msgstr ""
+
+#: ../src/totem-playlist.c:153
+#, fuzzy
+#| msgid "Save playlist"
+msgid "XML Shareable Playlist"
+msgstr "Vista spilunarlista"
+
+#. This is "Title 3", where title is a DVD title
+#. * Note: NOT a DVD chapter
+#: ../src/totem-playlist.c:355
+#, fuzzy, c-format
+#| msgid "Title:"
+msgid "Title %d"
+msgstr "Titill:"
+
+#: ../src/totem-playlist.c:430
+msgid "Could not save the playlist"
+msgstr "Tókst ekki að vista spilunarlistann"
+
+#: ../src/totem-playlist.c:1000
+#, fuzzy
+#| msgid "Save playlist"
+msgid "Save Playlist"
+msgstr "Vista spilunarlista"
+
+#. translators: Playlist is the default saved playlist filename,
+#. * without the suffix
+#: ../src/totem-playlist.c:1012 ../src/totem-sidebar.c:121
+msgid "Playlist"
+msgstr "Spilunarlisti"
+
+#: ../src/totem-playlist.c:1770
+#, fuzzy, c-format
+#| msgid "The movie '%s' could not be read."
+msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgstr "Ekki hægt að lesa kvikmyndina '%s'."
+
+#: ../src/totem-playlist.c:1771
+#, fuzzy
+#| msgid "Playlist"
+msgid "Playlist error"
+msgstr "Spilunarlisti"
+
+#: ../src/totem-preferences.c:107
+#, fuzzy
+#| msgid "Name of the visual effects plugins"
+msgid "Enable visual effects?"
+msgstr "Heiti íforrits fyrir sjónræna effekta"
+
+#: ../src/totem-preferences.c:109
+msgid ""
+"It seems you are running Totem remotely.\n"
+"Are you sure you want to enable the visual effects?"
+msgstr ""
+"Þú virðist vera að nota Totem í gegnum net.\n"
+"Ertu viss um að þú viljir heimila sjónræna effekta?"
+
+#: ../src/totem-preferences.c:323
+msgid "Changing the visuals effect type will require a restart to take effect."
+msgstr ""
+"Það þarf að endurræsa til að breytingar á tegund sjónrænna effekta taki "
+"gildi."
+
+#: ../src/totem-preferences.c:407
+#, fuzzy
+#| msgid ""
+#| "The change of this setting will only take effect for the next movie, or "
+#| "when Totem is restarted"
+msgid ""
+"The change of audio output type will only take effect when Totem is "
+"restarted."
+msgstr ""
+"Breyting á þessari stillingu tekur aðeins gildi fyrir næstu kvikmynd eða "
+"þegarTotem er endurræst"
+
+#: ../src/totem-preferences.c:502
+#, fuzzy
+#| msgid "Totem Preferences"
+msgid "Preferences"
+msgstr "Totem stillingar"
+
+#: ../src/totem-preferences.c:661
+#, fuzzy
+#| msgid "Select files"
+msgid "Select Subtitle Font"
+msgstr "Velja skrár"
+
+#. FIXME this should be setting an error?
+#: ../src/totem-properties-main.c:114 ../src/totem-properties-view.c:83
+#: ../src/totem-properties-view.c:91
+#, fuzzy
+#| msgid "Audio"
+msgid "Audio/Video"
+msgstr "Hljóð"
+
+#: ../src/totem-statusbar.c:93
+msgid "0:00 / 0:00"
+msgstr "0:00 / 0:00"
+
+#: ../src/totem-statusbar.c:115
+#, c-format
+msgid "%s (Streaming)"
+msgstr "%s (flæði)"
+
+#. Elapsed / Total Length
+#: ../src/totem-statusbar.c:122 ../src/totem-time-label.c:64
+#, fuzzy, c-format
+#| msgid "%s %s"
+msgid "%s / %s"
 msgstr "%s %s"
 
-#. seconds
-#: src/bacon-video-widget-properties.c:139
+#. Seeking to Time / Total Length
+#: ../src/totem-statusbar.c:125 ../src/totem-time-label.c:67
+#, fuzzy, c-format
+#| msgid "Seek to"
+msgid "Seek to %s / %s"
+msgstr "Sækja til"
+
+#: ../src/totem-statusbar.c:197
+msgid "Buffering"
+msgstr "Hleð í minni"
+
+#. eg: 75 %
+#: ../src/totem-statusbar.c:208
 #, c-format
-msgid "%s"
-msgstr "%s"
+msgid "%d %%"
+msgstr "%d %%"
 
-#. Duration
-#: src/bacon-video-widget-properties.c:179
-msgid "0 second"
-msgstr "0 sekúndur"
+#. eg: Paused, 0:32 / 1:05
+#: ../src/totem-statusbar.c:277
+#, fuzzy, c-format
+#| msgid "%s %s"
+msgid "%s, %s"
+msgstr "%s %s"
 
-#: src/bacon-video-widget-properties.c:264
+#. eg: Buffering, 75 %
+#: ../src/totem-statusbar.c:282
+#, fuzzy, c-format
+#| msgid "%d %%"
+msgid "%s, %d %%"
+msgstr "%d %%"
+
+#: ../src/totem-subtitle-encoding.c:157
+msgid "Current Locale"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:160 ../src/totem-subtitle-encoding.c:162
+#: ../src/totem-subtitle-encoding.c:164 ../src/totem-subtitle-encoding.c:166
+#, fuzzy
+msgid "Arabic"
+msgstr "Arabískt"
+
+#: ../src/totem-subtitle-encoding.c:169
+#, fuzzy
+msgid "Armenian"
+msgstr "Armenskt"
+
+#: ../src/totem-subtitle-encoding.c:172 ../src/totem-subtitle-encoding.c:174
+#: ../src/totem-subtitle-encoding.c:176
+#, fuzzy
+msgid "Baltic"
+msgstr "Baltneskt"
+
+#: ../src/totem-subtitle-encoding.c:179
+#, fuzzy
+msgid "Celtic"
+msgstr "Celtic"
+
+#: ../src/totem-subtitle-encoding.c:182 ../src/totem-subtitle-encoding.c:184
+#: ../src/totem-subtitle-encoding.c:186 ../src/totem-subtitle-encoding.c:188
+#, fuzzy
+msgid "Central European"
+msgstr "Mið-evrópskt"
+
+#: ../src/totem-subtitle-encoding.c:191 ../src/totem-subtitle-encoding.c:193
+#: ../src/totem-subtitle-encoding.c:195 ../src/totem-subtitle-encoding.c:197
+#, fuzzy
+msgid "Chinese Simplified"
+msgstr "Einfölduð kínverska"
+
+#: ../src/totem-subtitle-encoding.c:200 ../src/totem-subtitle-encoding.c:202
+#: ../src/totem-subtitle-encoding.c:204
+#, fuzzy
+msgid "Chinese Traditional"
+msgstr "Hefðbundin kínverska"
+
+#: ../src/totem-subtitle-encoding.c:207
+#, fuzzy
+msgid "Croatian"
+msgstr "Króatíska"
+
+#: ../src/totem-subtitle-encoding.c:210 ../src/totem-subtitle-encoding.c:212
+#: ../src/totem-subtitle-encoding.c:214 ../src/totem-subtitle-encoding.c:216
+#: ../src/totem-subtitle-encoding.c:218 ../src/totem-subtitle-encoding.c:220
+#, fuzzy
+msgid "Cyrillic"
+msgstr "Kýrílskt"
+
+#: ../src/totem-subtitle-encoding.c:223
+msgid "Cyrillic/Russian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:226 ../src/totem-subtitle-encoding.c:228
+msgid "Cyrillic/Ukrainian"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:231
+#, fuzzy
+msgid "Georgian"
+msgstr "Georgíska"
+
+#: ../src/totem-subtitle-encoding.c:234 ../src/totem-subtitle-encoding.c:236
+#: ../src/totem-subtitle-encoding.c:238
+#, fuzzy
+msgid "Greek"
+msgstr "Grískt"
+
+#: ../src/totem-subtitle-encoding.c:241
+#, fuzzy
+msgid "Gujarati"
+msgstr "Gujarati"
+
+#: ../src/totem-subtitle-encoding.c:244
+#, fuzzy
+msgid "Gurmukhi"
+msgstr "Gurmukhi"
+
+#: ../src/totem-subtitle-encoding.c:247 ../src/totem-subtitle-encoding.c:249
+#: ../src/totem-subtitle-encoding.c:251 ../src/totem-subtitle-encoding.c:253
+#, fuzzy
+msgid "Hebrew"
+msgstr "Hebreskt"
+
+#: ../src/totem-subtitle-encoding.c:256
+msgid "Hebrew Visual"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:259
+#, fuzzy
+msgid "Hindi"
+msgstr "Hindi"
+
+#: ../src/totem-subtitle-encoding.c:262
+#, fuzzy
+msgid "Icelandic"
+msgstr "Íslenska"
+
+#: ../src/totem-subtitle-encoding.c:265 ../src/totem-subtitle-encoding.c:267
+#: ../src/totem-subtitle-encoding.c:269
+#, fuzzy
+msgid "Japanese"
+msgstr "Japanska"
+
+#: ../src/totem-subtitle-encoding.c:272 ../src/totem-subtitle-encoding.c:274
+#: ../src/totem-subtitle-encoding.c:276 ../src/totem-subtitle-encoding.c:278
+#, fuzzy
+#| msgid "No reason"
+msgid "Korean"
+msgstr "Engin ástæða gefin"
+
+#: ../src/totem-subtitle-encoding.c:281
+msgid "Nordic"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:284
+#, fuzzy
+msgid "Persian"
+msgstr "Persneska"
+
+#: ../src/totem-subtitle-encoding.c:287 ../src/totem-subtitle-encoding.c:289
+#, fuzzy
+msgid "Romanian"
+msgstr "Rúmenska"
+
+#: ../src/totem-subtitle-encoding.c:292
+msgid "South European"
+msgstr ""
+
+#: ../src/totem-subtitle-encoding.c:295
+#, fuzzy
+msgid "Thai"
+msgstr "Tælenskt"
+
+#: ../src/totem-subtitle-encoding.c:298 ../src/totem-subtitle-encoding.c:300
+#: ../src/totem-subtitle-encoding.c:302 ../src/totem-subtitle-encoding.c:304
+#, fuzzy
+msgid "Turkish"
+msgstr "Tyrkneska"
+
+#: ../src/totem-subtitle-encoding.c:307 ../src/totem-subtitle-encoding.c:309
+#: ../src/totem-subtitle-encoding.c:311 ../src/totem-subtitle-encoding.c:313
+#: ../src/totem-subtitle-encoding.c:315
+#, fuzzy
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../src/totem-subtitle-encoding.c:318 ../src/totem-subtitle-encoding.c:320
+#: ../src/totem-subtitle-encoding.c:322 ../src/totem-subtitle-encoding.c:324
+#: ../src/totem-subtitle-encoding.c:326
+#, fuzzy
+msgid "Western"
+msgstr "Vestræn"
+
+#: ../src/totem-subtitle-encoding.c:329 ../src/totem-subtitle-encoding.c:331
+#: ../src/totem-subtitle-encoding.c:333
+#, fuzzy
+#| msgid "Filename"
+msgid "Vietnamese"
+msgstr "Skráarheiti"
+
+#. Translators: The first string is "Filename" (as translated); the second is an actual filename.
+#. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+#. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
+#: ../src/totem-video-thumbnailer.c:665
 #, c-format
-msgid "%d frames per second"
-msgstr "%d rammar á sekúndu"
+msgid ""
+"<b>%s</b>: %s\n"
+"<b>%s</b>: %d×%d\n"
+"<b>%s</b>: %s"
+msgstr ""
 
-#: src/bacon-video-widget-properties.c:282
+#: ../src/totem-video-thumbnailer.c:666
+msgid "Filename"
+msgstr "Skráarheiti"
+
+#: ../src/totem-video-thumbnailer.c:668
+#, fuzzy
+msgid "Resolution"
+msgstr "Upplausn"
+
+#: ../src/totem-video-thumbnailer.c:671
+#, fuzzy
+#| msgid "Duration:"
+msgid "Duration"
+msgstr "Lengd:"
+
+#: ../src/totem-uri.c:460
+#, fuzzy
+#| msgid "Select files"
+msgid "All files"
+msgstr "Velja skrár"
+
+#: ../src/totem-uri.c:465
+msgid "Supported files"
+msgstr ""
+
+#: ../src/totem-uri.c:477
+#, fuzzy
+#| msgid "No file"
+msgid "Audio files"
+msgstr "Engin skrá"
+
+#: ../src/totem-uri.c:485
+#, fuzzy
+#| msgid "No file"
+msgid "Video files"
+msgstr "Engin skrá"
+
+#: ../src/totem-uri.c:495
+#, fuzzy
+#| msgid "Subtitles"
+msgid "Subtitle files"
+msgstr "Textar"
+
+#: ../src/totem-uri.c:560
+#, fuzzy
+#| msgid "Select files"
+msgid "Select Text Subtitles"
+msgstr "Velja skrár"
+
+#: ../src/totem-uri.c:621
+msgid "Select Movies or Playlists"
+msgstr ""
+
+#: ../src/totem.c:95
+#, fuzzy
+#| msgid "Could not save the playlist"
+msgid "Could not open link"
+msgstr "Tókst ekki að vista spilunarlistann"
+
+#: ../src/totem.c:136 ../src/totem.c:162
+#: ../browser-plugin/totem-plugin-viewer.c:780
+#: ../browser-plugin/totem-plugin-viewer.c:1837
+msgid "Totem Movie Player"
+msgstr "Totem myndspilari"
+
+#: ../src/totem.c:137
+#, fuzzy
+#| msgid "Could not initialise the thread-safe libraries."
+msgid "Could not initialize the thread-safe libraries."
+msgstr "Tókst ekki að frumstilla þráðviss aðgerðasöfn."
+
+#: ../src/totem.c:137
+msgid "Verify your system installation. Totem will now exit."
+msgstr "Athugaðu kerfisuppsetningu. Totem kveður núna."
+
+#. Handle command line arguments
+#: ../src/totem.c:145
+#, fuzzy
+#| msgid "Play movies and songs"
+msgid "- Play movies and songs"
+msgstr "Leika kvikmyndir og tónlist"
+
+#: ../src/totem.c:154
 #, c-format
-msgid "%d kbps"
-msgstr "%d kb/s"
+msgid ""
+"%s\n"
+"Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
 
-#: src/bacon-video-widget-xine.c:687
+#: ../src/totem.c:171
+#, fuzzy
+#| msgid "Totem couln't initialise the configuration engine."
+msgid "Totem could not initialize the configuration engine."
+msgstr "Totem tókst ekki að frumstilla stillingavélina."
+
+#: ../src/totem.c:171
+msgid "Make sure that GNOME is properly installed."
+msgstr "Athugaðu hvort GNOME er rétt uppsett."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2431
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2436
+msgid "Location not found."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2440
+msgid ""
+"Could not open location; you might not have permission to open the file."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2451
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2457
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+
+#. should be exactly one missing thing (source or converter)
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2475
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2481
+#, c-format
+msgid "The playback of this movie requires a %s plugin which is not installed."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2482
+#, c-format
+msgid ""
+"The playback of this movie requires the following decoders which are not "
+"installed:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2507
+msgid ""
+"Cannot play this file over the network. Try downloading it to disk first."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2579
+#, fuzzy
+msgid "Media file could not be played."
+msgstr "Ekki var hægt að opna þessa kvikmynd"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2711
+msgid "Failed to retrieve working directory"
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4262
+#, fuzzy
+#| msgid "_Sound"
+msgid "Surround"
+msgstr "_Hljóð"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4264
+#, fuzzy
+msgid "Mono"
+msgstr "Mónó"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4587
+msgid "Too old version of GStreamer installed."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4594
+msgid "Media contains no supported video streams."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:4974
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5101
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5218
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5113
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5148
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5168
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-xine.c:757
 #, c-format
 msgid ""
 "Couldn't load the '%s' audio driver\n"
@@ -995,100 +2105,134 @@ msgstr ""
 "Tókst ekki að hlaða inn '%s' hljóðrekil\n"
 "Vertu viss um að vélin sé ekki í notkun."
 
-#: src/bacon-video-widget-xine.c:1177 src/bacon-video-widget-xine.c:1608
+#: ../src/backend/bacon-video-widget-xine.c:1227
+#: ../src/backend/bacon-video-widget-xine.c:1810
 #, fuzzy
 msgid ""
 "No video output is available. Make sure that the program is correctly "
 "installed."
 msgstr "Athugaðu hvort Totem er rétt uppsett."
 
-#: src/bacon-video-widget-xine.c:1284
+#: ../src/backend/bacon-video-widget-xine.c:1350
+msgid ""
+"The TV adapter could not tune into the channel. Please check your hardware "
+"setup and channel configuration."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-xine.c:1355
 msgid "The server you are trying to connect to is not known."
 msgstr "Þjónninn sem þú ert að reyna að tengjast er óþekktur."
 
-#: src/bacon-video-widget-xine.c:1287
+#: ../src/backend/bacon-video-widget-xine.c:1359
 #, c-format
 msgid "The device name you specified (%s) seems to be invalid."
 msgstr "Nafn tækisins sem þú tilgreindir (%s) virðist vera ógilt."
 
-#: src/bacon-video-widget-xine.c:1290
+#: ../src/backend/bacon-video-widget-xine.c:1363
 #, c-format
 msgid "The server you are trying to connect to (%s) is unreachable."
 msgstr "Ekki næst í þjóninn sem þú ert að reyna að tengjast (%s)."
 
-#: src/bacon-video-widget-xine.c:1293
+#: ../src/backend/bacon-video-widget-xine.c:1367
 msgid "The connection to this server was refused."
 msgstr "Þjónninn neitaði tengingu."
 
-#: src/bacon-video-widget-xine.c:1296
-#, c-format
-msgid "The specified movie '%s' could not be found."
+#: ../src/backend/bacon-video-widget-xine.c:1371
+#, fuzzy
+#| msgid "The specified movie '%s' could not be found."
+msgid "The specified movie could not be found."
 msgstr "Kvikmyndin '%s' fannst ekki."
 
-#: src/bacon-video-widget-xine.c:1299
-#, c-format
-msgid "The movie '%s' could not be read."
-msgstr "Ekki hægt að lesa kvikmyndina '%s'."
-
-#: src/bacon-video-widget-xine.c:1302
-#, c-format
-msgid "A problem occured while loading a library or a decoder (%s)."
-msgstr "Vandamál kom upp við að hlaða inn aðgerðasafni eða aflyklara (%s)."
-
-#: src/bacon-video-widget-xine.c:1306
+#: ../src/backend/bacon-video-widget-xine.c:1377
+#: ../src/backend/bacon-video-widget-xine.c:1393
+#, fuzzy
+#| msgid ""
+#| "The source seems encrypted, and can't be read. Are you trying to play an "
+#| "encrypted DVD without libdvdcss?"
 msgid ""
-"The source seems encrypted, and can't be read. Are you trying to play an "
+"The source seems encrypted and can't be read. Are you trying to play an "
 "encrypted DVD without libdvdcss?"
 msgstr ""
 "Skráin virðist dulkóðuð og ekki er hægt að lesa hana. Ertu að reyna að "
 "spilalæstan DVD-disk án libdvdcss?"
 
-#: src/bacon-video-widget-xine.c:1308
+#: ../src/backend/bacon-video-widget-xine.c:1380
+#, fuzzy
+#| msgid "The movie '%s' could not be read."
+msgid "The movie could not be read."
+msgstr "Ekki hægt að lesa kvikmyndina '%s'."
+
+#: ../src/backend/bacon-video-widget-xine.c:1387
+#, fuzzy, c-format
+#| msgid "A problem occured while loading a library or a decoder (%s)."
+msgid "A problem occurred while loading a library or a decoder (%s)."
+msgstr "Vandamál kom upp við að hlaða inn aðgerðasafni eða aflyklara (%s)."
+
+#: ../src/backend/bacon-video-widget-xine.c:1396
 msgid "This file is encrypted and cannot be played back."
 msgstr "Þessi kvikmynd er dulkóðuð og óspilanleg."
 
-#: src/bacon-video-widget-xine.c:1311
+#: ../src/backend/bacon-video-widget-xine.c:1401
 msgid "For security reasons, this movie can not be played back."
 msgstr "Af öryggisástæðum er ekki hægt að spila þessa kvikmynd."
 
-#: src/bacon-video-widget-xine.c:1315
+#: ../src/backend/bacon-video-widget-xine.c:1406
 msgid "The audio device is busy. Is another application using it?"
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:1319
+#: ../src/backend/bacon-video-widget-xine.c:1412
+#, fuzzy
+#| msgid "Authentication Required"
+msgid "Authentication is required to access this file."
+msgstr "Lykilorð nauðsynlegt"
+
+#: ../src/backend/bacon-video-widget-xine.c:1414
+msgid "Authentication is required to access this file or stream."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-xine.c:1420
 msgid "You are not allowed to open this file."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:1321
+#: ../src/backend/bacon-video-widget-xine.c:1422
 msgid "The server refused access to this file or stream."
 msgstr ""
 
-#: src/bacon-video-widget-xine.c:1447
+#: ../src/backend/bacon-video-widget-xine.c:1426
+msgid "The file you tried to play is an empty file."
+msgstr ""
+
+#: ../src/backend/bacon-video-widget-xine.c:1606
+#, fuzzy
+msgid "There is no input plugin to handle the location of this movie"
+msgstr "Ekkert íforrit styður þessa kvikmynd"
+
+#: ../src/backend/bacon-video-widget-xine.c:1610
 #, fuzzy
 msgid "There is no plugin to handle this movie."
 msgstr "Ekkert íforrit styður þessa kvikmynd"
 
-#: src/bacon-video-widget-xine.c:1451
+#: ../src/backend/bacon-video-widget-xine.c:1614
 #, fuzzy
 msgid "This movie is broken and can not be played further."
 msgstr "Þessi kvikmynd er gölluð og ekki hægt að spila lengra."
 
-#: src/bacon-video-widget-xine.c:1455
+#: ../src/backend/bacon-video-widget-xine.c:1618
 #, fuzzy
 msgid "This location is not a valid one."
 msgstr "Þetta er ekki gild slóð."
 
-#: src/bacon-video-widget-xine.c:1459
+#: ../src/backend/bacon-video-widget-xine.c:1622
 #, fuzzy
 msgid "This movie could not be opened."
 msgstr "Ekki var hægt að opna þessa kvikmynd"
 
-#: src/bacon-video-widget-xine.c:1462
+#: ../src/backend/bacon-video-widget-xine.c:1626
 #, fuzzy
 msgid "Generic Error."
 msgstr "Ótilgreind villa"
 
-#: src/bacon-video-widget-xine.c:1905
+#: ../src/backend/bacon-video-widget-xine.c:2452
 #, c-format
 msgid ""
 "Video codec '%s' is not handled. You might need to install additional "
@@ -1097,519 +2241,887 @@ msgstr ""
 "Myndlyklunin '%s' er óstudd. Þú gætir þurft að setja uppnýtt íforrit til að "
 "hægt sé að spila sumar tegundir kvikmynda"
 
-#: src/bacon-video-widget-xine.c:1925
+#: ../src/backend/bacon-video-widget-xine.c:2456
+#, fuzzy, c-format
+#| msgid ""
+#| "Video codec '%s' is not handled. You might need to install additional "
+#| "plugins to be able to play some types of movies"
+msgid ""
+"Audio codec '%s' is not handled. You might need to install additional "
+"plugins to be able to play some types of movies"
+msgstr ""
+"Myndlyklunin '%s' er óstudd. Þú gætir þurft að setja uppnýtt íforrit til að "
+"hægt sé að spila sumar tegundir kvikmynda"
+
+#: ../src/backend/bacon-video-widget-xine.c:2470
 #, fuzzy
-msgid "This is an audio-only file, and there is no audio output available."
+msgid "This is an audio-only file and there is no audio output available."
 msgstr "Þetta er hljóðskrá, og ekkert hljóðúttak er til staðar."
 
-#: src/bacon-video-widget-xine.c:3400
-#, fuzzy
-msgid "Movie is not playing."
-msgstr "Kvikmynd er ekki í gangi"
+#: ../src/backend/bacon-video-widget-xine.c:4025
+#: ../src/backend/bacon-video-widget-xine.c:4072
+#: ../src/backend/bacon-video-widget-xine.c:4094
+#, fuzzy, c-format
+#| msgid "Languages"
+msgid "Language %d"
+msgstr "Tungumál"
 
-#: src/bacon-video-widget-xine.c:3408
+#: ../src/backend/bacon-video-widget-xine.c:4183
 #, fuzzy
 msgid "No video to capture."
 msgstr "Ekkert vídeó til að taka upp"
 
-#: src/bacon-video-widget-xine.c:3415
+#: ../src/backend/bacon-video-widget-xine.c:4191
 #, fuzzy
 msgid "Video codec is not handled."
 msgstr "Myndkóðun er ekki studd"
 
-#: src/cd-drive.c:573
-#, c-format
-msgid "Unnamed SCSI CD-ROM (%s)"
-msgstr "Ónefndur SCSI-geisladiskur (%s)"
-
-#: src/cd-drive.c:1151
-msgid "File image"
-msgstr "Skráarmynd"
-
-#. disp = gnome_vfs_unescape_string_for_display (totem->mrl);
-#: src/totem-mozilla-viewer.c:72 src/totem.c:363 src/totem.c:391
-#: src/totem.c:816 src/totem.c:925
-#, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem tókst ekki að spila '%s'."
-
-#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+#: ../src/backend/bacon-video-widget-xine.c:4202
 #, fuzzy
-msgid "Couldn't load the main interface (mozilla-viewer.glade)."
-msgstr "Tókst ekki að hlaða inn aðalviðmótið (totem.glade)."
+msgid "Movie is not playing."
+msgstr "Kvikmynd er ekki í gangi"
 
-#: src/totem-mozilla-viewer.c:104 src/totem-mozilla-viewer.c:111
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/backend/video-utils.c:219 ../src/backend/video-utils.c:236
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d"
+msgstr ""
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/backend/video-utils.c:228
+#, fuzzy, c-format
+msgctxt "short time format"
+msgid "%d:%02d"
+msgstr "%d:%02d"
+
+#: ../src/backend/video-utils.c:266
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d klukkustund"
+msgstr[1] "%d klukkustundir"
+
+#: ../src/backend/video-utils.c:268
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d mínúta"
+msgstr[1] "%d mínútur"
+
+#: ../src/backend/video-utils.c:271
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d sekúnda"
+msgstr[1] "%d sekúndur"
+
+#. hour:minutes:seconds
+#: ../src/backend/video-utils.c:277
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: ../src/backend/video-utils.c:280
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: ../src/backend/video-utils.c:283
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../src/plugins/totem-plugin-manager.c:51
 #, fuzzy
-msgid "Make sure that the Totem plugin is properly installed."
-msgstr "Athugaðu hvort Totem er rétt uppsett."
-
-#: src/totem-mozilla-viewer.c:122
-#, fuzzy
-msgid "The Totem plugin could not startup."
-msgstr "Totem tókst ekki að ræsa sig."
-
-#: src/totem-mozilla-viewer.c:122 src/totem.c:3347
-msgid "No reason."
-msgstr "Engin ástæða gefin."
-
-#: src/totem-mozilla-viewer.c:154 src/totem.c:3642
-msgid "Could not initialise the thread-safe libraries."
-msgstr "Tókst ekki að frumstilla þráðviss aðgerðasöfn."
-
-#: src/totem-mozilla-viewer.c:154
-#, fuzzy
-msgid "Verify your system installation. The Totem plugin will now exit."
-msgstr "Athugaðu kerfisuppsetningu. Totem kveður núna."
-
-#: src/totem-playlist.c:339
-msgid "Could not save the playlist"
-msgstr "Tókst ekki að vista spilunarlistann"
-
-#: src/totem-playlist.c:613 src/totem.c:1560
-msgid "Select files"
-msgstr "Velja skrár"
-
-#: src/totem-playlist.c:794
-msgid "Save playlist"
-msgstr "Vista spilunarlista"
-
-#: src/totem-playlist.c:839
-#, c-format
-msgid ""
-"A file named '%s' already exists.\n"
-"Are you sure you want to overwrite it?"
-msgstr ""
-"Skrá með heitinu '%s' er þegar til.\n"
-"Ert viss um að þú viljir skrifa yfir hana?"
-
-#: src/totem-playlist.c:1024
-msgid "Filename"
-msgstr "Skráarheiti"
-
-#: src/totem-pl-parser.c:225
-#, c-format
-msgid "Couldn't write parser: %s"
-msgstr "Tókst ekki að skrifa þáttara. %s"
-
-#: src/totem-pl-parser.c:289
-#, c-format
-msgid "Couldn't open parser: %s"
-msgstr "Tókst ekki að opna þáttara: %s"
-
-#: src/totem-preferences.c:82
-msgid ""
-"It seems you are running Totem remotely.\n"
-"Are you sure you want to enable the visual effects?"
-msgstr ""
-"Þú virðist vera að nota Totem í gegnum net.\n"
-"Ertu viss um að þú viljir heimila sjónræna effekta?"
-
-#: src/totem-preferences.c:135
-msgid ""
-"The change of this setting will only take effect for the next movie, or when "
-"Totem is restarted"
-msgstr ""
-"Breyting á þessari stillingu tekur aðeins gildi fyrir næstu kvikmynd eða "
-"þegarTotem er endurræst"
-
-#: src/totem-preferences.c:179
-msgid ""
-"Switching on or off this type of TV-Out requires a restart to take effect."
-msgstr ""
-"Til að slökkva eða kveikja á þessari tegund sjónvarpsúttaks þarf að "
-"endurræsa."
-
-#: src/totem-preferences.c:312
-msgid "Totem could not start the file manager."
-msgstr "Totem tókst ekki að ræsa skráarstjórann."
-
-#: src/totem-preferences.c:340
-msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr ""
-"Það þarf að endurræsa til að breytingar á tegund sjónrænna effekta taki "
-"gildi."
-
-#: src/totem-properties-page.c:123
-msgid "URI currently displayed"
-msgstr "URI sem verið er að sýna"
-
-#: src/totem-properties-page.c:193
-msgid "Video and Audio information properties page"
-msgstr "Upplýsingasíða um eiginleika myndar og hljóðs"
-
-#: src/totem-screenshot.c:186 src/totem-screenshot.c:197
-#, c-format
-msgid "Screenshot%d.png"
-msgstr "Skjámynd%d.png"
-
-#: src/totem-screenshot.c:239
-#, c-format
-msgid "File '%s' already exists."
-msgstr "Skráin '%s' er þegar til."
-
-#: src/totem-screenshot.c:241
-msgid "The screenshot was not saved"
-msgstr "Skjámyndin var ekki vistuð"
-
-#: src/totem-screenshot.c:252
-msgid "There was an error saving the screenshot."
-msgstr "Villa kom upp við vistun skjámyndar."
-
-#: src/totem-statusbar.c:154
-msgid "Shadow type"
-msgstr "Tegund skugga"
-
-#: src/totem-statusbar.c:155
-msgid "Style of bevel around the statusbar text"
-msgstr "Tegund fláa kringum texta á stöðustiku"
-
-#: src/totem-statusbar.c:187 src/totem.c:307 src/totem.c:676
-msgid "Stopped"
-msgstr "Stöðvað"
-
-#: src/totem-statusbar.c:196
-msgid "0:00 / 0:00"
-msgstr "0:00 / 0:00"
-
-#: src/totem-statusbar.c:224
-#, c-format
-msgid "%s (Streaming)"
-msgstr "%s (flæði)"
-
-#: src/totem-statusbar.c:232
-msgid "Seek to"
-msgstr "Sækja til"
-
-#: src/totem-statusbar.c:294
-msgid "Buffering"
-msgstr "Hleð í minni"
-
-#. eg: 75 %
-#: src/totem-statusbar.c:297
-#, c-format
-msgid "%d %%"
-msgstr "%d %%"
-
-#: src/totem.c:78
-msgid "Backend options"
-msgstr ""
-
-#: src/totem.c:79
-#, fuzzy
-msgid "Enable debug"
-msgstr "Virkja aftvinnun"
-
-#: src/totem.c:83
-msgid "Seek Forwards"
-msgstr "Sækja áfram"
-
-#: src/totem.c:84
-msgid "Seek Backwards"
-msgstr "Sækja aftur"
-
-#: src/totem.c:85
-msgid "Volume Up"
-msgstr "Hækka hljóðstyrk"
-
-#: src/totem.c:86
-msgid "Volume Down"
-msgstr "Lækka hljóðstyrk"
-
-#: src/totem.c:87
-msgid "Toggle Fullscreen"
-msgstr "Skipta heilskjá"
-
-#: src/totem.c:88
-msgid "Quit"
-msgstr "Hætta"
-
-#: src/totem.c:89
-msgid "Enqueue"
-msgstr "Setja í bið"
-
-#: src/totem.c:90
-msgid "Replace"
-msgstr "Skipta út"
-
-#: src/totem.c:297
-msgid "Playing"
+#| msgid "Playing"
+msgid "Plugin"
 msgstr "Spila"
 
-#: src/totem.c:302
-msgid "Paused"
+#: ../src/plugins/totem-plugin-manager.c:52
+#, fuzzy
+msgid "Enabled"
+msgstr "Virkja aftvinnun"
+
+#: ../src/plugins/totem-plugins-engine.c:599
+#, c-format
+msgid ""
+"Unable to activate plugin %s.\n"
+"%s"
+msgstr ""
+
+#: ../src/plugins/totem-plugins-engine.c:602
+#, c-format
+msgid "Unable to activate plugin %s"
+msgstr ""
+
+#: ../src/plugins/totem-plugins-engine.c:604
+msgid "Plugin Error"
+msgstr ""
+
+#: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
+#, fuzzy
+#| msgid "Paused"
+msgid "Bemused"
 msgstr "Hlé"
 
-#: src/totem.c:342
-msgid "Totem could not eject the optical media."
-msgstr "Totem tókst ekki að spýta myndmiðlinum út."
+#: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
+msgid "Control Totem through a mobile phone with a Bemused client"
+msgstr ""
 
-#: src/totem.c:342
+#: ../src/plugins/bemused/totem-bemused.c:185
+#, c-format
+msgid "Untitled %d"
+msgstr ""
+
+#: ../src/plugins/bemused/totem-bemused.c:607
+msgid "Totem Bemused Server"
+msgstr ""
+
+#. FIXME version
+#: ../src/plugins/bemused/totem-bemused.c:609
+msgid "Totem Bemused Server version 1.0"
+msgstr ""
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:77
+msgid "_Create Video Disc..."
+msgstr ""
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
+msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+msgstr ""
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
 #, fuzzy
-msgid "No reason given."
-msgstr "Engin ástæða gefin"
+#| msgid "Play a Video DVD"
+msgid "Copy Vide_o DVD..."
+msgstr "Spila DVD-mynddisk"
 
-#: src/totem.c:411
-msgid "DVD"
-msgstr "DVD"
-
-#: src/totem.c:412
-msgid "Video CD"
-msgstr "Mynddiskur"
-
-#: src/totem.c:413
-msgid "Audio CD"
-msgstr "Hljóðdiskur"
-
-#: src/totem.c:424
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
+msgid "Copy the currently playing video DVD"
 msgstr ""
-"Totem getur ekki spilað þessa tegund skráar (%s) af því að þú ert ekki "
-"meðrétt íforrit fyrir hana."
 
-#: src/totem.c:425
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+msgid "Copy Vide_o (S)VCD..."
 msgstr ""
-"Vinsamlega settu upp nauðsynleg íforrit og endurræstu Totem til að geta "
-"spilaðþessa skrá."
 
-#: src/totem.c:433
-#, c-format
-msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:84
+msgid "Copy the currently playing (S)VCD"
 msgstr ""
-"Totem tókst ekki að spila þessa skrá (%s) þótt íforrit sé til fyrir hana."
 
-#: src/totem.c:434
-msgid ""
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr ""
-"Þú ættir að athuga hvort diskurinn sé í drifinu og hvort hann errétt "
-"stilltur."
-
-#. Title
-#: src/totem.c:669
-#, c-format
-msgid "%s - Totem Movie Player"
-msgstr "%s - Totem myndspilari"
-
-#: src/totem.c:683 src/totem.c:3442
-msgid "No file"
-msgstr "Engin skrá"
-
-#: src/totem.c:720 src/totem.c:1948
-msgid "Totem"
-msgstr "Totem"
-
-#: src/totem.c:1228
-msgid "An error occured"
-msgstr "Villa átti sér stað"
-
-#: src/totem.c:1637 src/totem.c:1645
-msgid "Couldn't load the 'Open Location...' interface."
-msgstr "Tókst ekki að hlaða inn 'opna slóð...' viðmótið."
-
-#: src/totem.c:1637 src/totem.c:1645 src/totem.c:3677 src/totem.c:3702
-#: src/totem.c:3727
-msgid "Make sure that Totem is properly installed."
-msgstr "Athugaðu hvort Totem er rétt uppsett."
-
-#: src/totem.c:1901
-msgid "Totem could not display the help contents."
-msgstr "Totem tókst ekki að sýna hjálpina."
-
-#: src/totem.c:1919 src/vanity.c:251
-msgid "translator_credits"
-msgstr "þýðing"
-
-#: src/totem.c:1945
-#, c-format
-msgid "Movie Player using %s"
-msgstr "Myndspilari sem notar %s"
-
-#: src/totem.c:1985 src/totem.c:1993 src/vanity.c:316 src/vanity.c:324
-msgid "Totem could not get a screenshot of that film."
-msgstr "Totem náði ekki skjámynd af kvikmyndinni."
-
-#: src/totem.c:1993
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
 #, fuzzy
-msgid "Please file a bug, this isn't supposed to happen."
-msgstr "Vinsamlega skráðu villu. Þetta á ekki að gerast."
+#| msgid "The movie '%s' could not be read."
+msgid "The video disc could not be duplicated."
+msgstr "Ekki hægt að lesa kvikmyndina '%s'."
 
-#: src/totem.c:2020
-msgid "Totem couldn't show the movie properties window."
-msgstr "Totem tókst ekki að sýna eiginleika myndar."
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:128
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:279
+#, fuzzy
+#| msgid "The movie '%s' could not be read."
+msgid "The movie could not be recorded."
+msgstr "Ekki hægt að lesa kvikmyndina '%s'."
 
-#: src/totem.c:2020
-msgid "Make sure that Totem is correctly installed."
-msgstr "Athugaðu hvort Totem er rétt uppsett."
-
-#: src/totem.c:2105
-#, c-format
-msgid "Totem could not seek in '%s'."
-msgstr "Totem gat ekki sótt í '%s'."
-
-#: src/totem.c:2875 src/totem.c:2897
-msgid "None"
-msgstr "Ekkert"
-
-#: src/totem.c:3347
-msgid "Totem could not startup."
-msgstr "Totem tókst ekki að ræsa sig."
-
-#: src/totem.c:3547
-#, c-format
-msgid "Option '%s' is unknown and was ignored\n"
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:160
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:170
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:266
+msgid "Unable to write a project."
 msgstr ""
 
-#: src/totem.c:3642
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Athugaðu kerfisuppsetningu. Totem kveður núna."
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+msgid "Records (S)VCDs or video DVDs"
+msgstr ""
 
-#: src/totem.c:3665
-msgid "Totem couln't initialise the configuration engine."
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
+msgid "Video Disc Recorder"
+msgstr ""
+
+#. Translators: this refers to a media file
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
+#, fuzzy
+msgid "Delete"
+msgstr "Eyða"
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:108
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+msgid "Coherence DLNA/UPnP Client"
+msgstr ""
+
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+msgid "A DLNA/UPnP client for Totem powered by Coherence"
+msgstr ""
+
+#: ../src/plugins/galago/galago.totem-plugin.in.h:1
+msgid "Instant Messenger status"
+msgstr ""
+
+#: ../src/plugins/galago/galago.totem-plugin.in.h:2
+msgid "Set your Instant Messenger status to away when a movie is playing"
+msgstr ""
+
+#: ../src/plugins/galago/totem-galago.c:171
+msgid "Could not connect to the Galago daemon."
+msgstr ""
+
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
+msgid "Gromit Annotations"
+msgstr ""
+
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
+msgid "Presentation helper to make annotations on screen"
+msgstr ""
+
+#: ../src/plugins/gromit/totem-gromit.c:272
+msgid "The gromit binary was not found."
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:1
+#, fuzzy
+#| msgid "Artist:"
+msgid "By artist"
+msgstr "Höfundur:"
+
+#: ../src/plugins/jamendo/jamendo.ui.h:2
+msgid "By tag"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:3
+msgid "Jamendo Album Page"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:4
+msgid "Jamendo Plugin Configuration"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:5
+msgid "Latest Releases"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:6
+msgid "Number of albums to _retrieve"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:7
+msgid "Popular"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:8
+msgid "Preferred audio _format"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.ui.h:9
+#: ../src/plugins/tracker/totem-tracker-widget.c:365
+#: ../src/plugins/youtube/youtube.ui.h:2
+#, fuzzy
+msgid "Search Results"
+msgstr "Leitarniðurstaða"
+
+#: ../src/plugins/jamendo/jamendo.ui.h:11
+msgid "_Open Jamendo Album Page in Browser"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
+#: ../src/plugins/jamendo/jamendo.py:127
+msgid "Jamendo"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
+msgid ""
+"Listen to the large collection of Creative Commons licensed music on Jamendo."
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:55
+msgid "You need to install the Python simplejson module."
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:244 ../src/plugins/jamendo/jamendo.py:257
+#: ../src/plugins/jamendo/jamendo.py:280
+#, fuzzy, python-format
+#| msgid "Artist:"
+msgid "Artist: %s"
+msgstr "Höfundur:"
+
+#. Translators: this is the release date of an album in Python strptime format
+#: ../src/plugins/jamendo/jamendo.py:250
+msgid "%Y-%m-%d"
+msgstr ""
+
+#. Translators: this is the release time of an album in Python strftime format
+#: ../src/plugins/jamendo/jamendo.py:252
+#, python-format
+msgid "%x"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:258
+#, python-format
+msgid "Genre: %s"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:259
+#, python-format
+msgid "Released on: %s"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:260
+#, python-format
+msgid "License: %s"
+msgstr ""
+
+#. track title
+#. Translators: this is the title of a track in Python format
+#. (first argument is the track number, second is the track title)
+#: ../src/plugins/jamendo/jamendo.py:272
+#, fuzzy, python-format
+#| msgid "%s %s"
+msgid "%02d. %s"
+msgstr "%s %s"
+
+#: ../src/plugins/jamendo/jamendo.py:279
+#, python-format
+msgid "Album: %s"
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:281
+#, fuzzy, python-format
+#| msgid "Duration:"
+msgid "Duration: %s"
+msgstr "Lengd:"
+
+#: ../src/plugins/jamendo/jamendo.py:338
+msgid "Fetching albums, please wait..."
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:387
+msgid "An error occurred while fetching albums."
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:399
+#, python-format
+msgid ""
+"Failed to connect to Jamendo server.\n"
+"%s."
+msgstr ""
+
+#: ../src/plugins/jamendo/jamendo.py:401
+#, python-format
+msgid "The Jamendo server returned code %s."
+msgstr ""
+
+#. Translators: time formatting (in Python strftime format) for the Jamendo plugin
+#. for times longer than an hour
+#: ../src/plugins/jamendo/jamendo.py:633
+#, fuzzy
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#. Translators: time formatting (in Python strftime format) for the Jamendo plugin
+#. for times shorter than an hour
+#: ../src/plugins/jamendo/jamendo.py:636
+msgid "%M:%S"
+msgstr ""
+
+#: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
+msgid "Infrared Remote Control"
+msgstr ""
+
+#: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
+msgid "Support infrared remote control"
+msgstr ""
+
+#: ../src/plugins/lirc/totem-lirc.c:287
+#, fuzzy
+#| msgid "Could not initialise the thread-safe libraries."
+msgid "Couldn't initialize lirc."
+msgstr "Tókst ekki að frumstilla þráðviss aðgerðasöfn."
+
+#: ../src/plugins/lirc/totem-lirc.c:296
+#, fuzzy
+#| msgid "Totem couln't initialise the configuration engine."
+msgid "Couldn't read lirc configuration."
 msgstr "Totem tókst ekki að frumstilla stillingavélina."
 
-#: src/totem.c:3665
-msgid "Make sure that GNOME is properly installed."
-msgstr "Athugaðu hvort GNOME er rétt uppsett."
-
-#: src/totem.c:3677 src/totem.c:3702
-msgid "Couldn't load the main interface (totem.glade)."
-msgstr "Tókst ekki að hlaða inn aðalviðmótið (totem.glade)."
-
-#: src/totem.c:3727
-msgid "Couldn't load the interface for the playlist."
-msgstr "Tókst ekki að hlaða inn viðmótið fyrir spilunarlistann."
-
-#: src/vanity.c:79
-msgid "Debug mode on"
-msgstr "Aflúsunarhamur á"
-
-#: src/vanity.c:275
-#, c-format
-msgid "Webcam utility using %s"
-msgstr "Vefmyndavélarforrit sem notar %s"
-
-#: src/vanity.c:324
-msgid "Please file a bug, this isn't supposed to happen"
-msgstr "Vinsamlega skráðu villu. Þetta á ekki að gerast."
-
-#: src/vanity.c:567
-#, c-format
-msgid ""
-"Vanity could not startup:\n"
-"%s"
+#: ../src/plugins/mythtv/totem-mythtv.c:200
+msgid "Recordings"
 msgstr ""
-"Vanity tókst ekki að ræsa sig:\n"
-"%s"
 
-#: src/vanity.c:568
-msgid "No reason"
-msgstr "Engin ástæða gefin"
+#: ../src/plugins/mythtv/totem-mythtv.c:523
+msgid "MythTV Recordings"
+msgstr ""
 
-#: src/vanity.c:606
-#, c-format
-msgid ""
-"Vanity could not contact the webcam.\n"
-"Reason: %s"
+#: ../src/plugins/mythtv/totem-mythtv.c:524
+msgid "MythTV LiveTV"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
+#, fuzzy
+#| msgid "Languages"
+msgid "<b>Language</b>"
+msgstr "Tungumál"
+
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
+msgid "Download Movie Subtitles"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:3
+msgid "Subtitle _language:"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:4
+msgid "_Play with Subtitle"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:1
+msgid "Look for a subtitle for the currently playing movie"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:2
+#, fuzzy
+#| msgid "Subtitles"
+msgid "Subtitles downloader"
+msgstr "Textar"
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:34
+msgid "Brasilian Portuguese"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:237
+#: ../src/plugins/opensubtitles/opensubtitles.py:253
+#: ../src/plugins/opensubtitles/opensubtitles.py:270
+#: ../src/plugins/opensubtitles/opensubtitles.py:276
+#, fuzzy
+#| msgid ""
+#| "Vanity could not contact the webcam.\n"
+#| "Reason: %s"
+msgid "Could not contact the OpenSubtitles website"
 msgstr ""
 "Vanity náði ekki sambandi við vefmyndavél.\n"
 "Ástæða: %s"
 
-#: src/vanity.c:622
+#: ../src/plugins/opensubtitles/opensubtitles.py:258
+#, fuzzy
+#| msgid "No reason"
+msgid "No results found"
+msgstr "Engin ástæða gefin"
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:366
+msgid "Subtitles"
+msgstr "Textar"
+
+#. translators comment:
+#. This is the file-type of the subtitle file detected
+#: ../src/plugins/opensubtitles/opensubtitles.py:369
+#, fuzzy
+#| msgid "Normal"
+msgid "Format"
+msgstr "Venjuleg"
+
+#. translators comment:
+#. This is a rating of the quality of the subtitle
+#: ../src/plugins/opensubtitles/opensubtitles.py:372
+#, fuzzy
+#| msgid "Playing"
+msgid "Rating"
+msgstr "Spila"
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:410
+msgid "_Download Movie Subtitles..."
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:411
+msgid "Download movie subtitles from OpenSubtitles"
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:470
+msgid "Searching subtitles..."
+msgstr ""
+
+#: ../src/plugins/opensubtitles/opensubtitles.py:523
+#, fuzzy
+#| msgid "Downloading the plug-ins"
+msgid "Downloading the subtitles..."
+msgstr "Hleð inn íforritum"
+
+#: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
+#, fuzzy
+#| msgid "Always on _Top"
+msgid "Always On Top"
+msgstr "Alltaf _efst"
+
+#: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
+#, fuzzy
+#| msgid "Whether the main window should stay on top"
+msgid "Keep the main window on top when playing a movie"
+msgstr "Hvort aðalglugginn á að halda sér efst"
+
+#: ../src/plugins/properties/totem-movie-properties.c:152
+msgid "Properties"
+msgstr "Eiginleikar"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
+#, fuzzy, c-format
+#| msgid "%d %%"
+msgid "%d x %d"
+msgstr "%d %%"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
 #, c-format
-msgid ""
-"Vanity could not play video from the webcam.\n"
-"Reason: %s"
-msgstr ""
-"Vanity tókst ekki að sýna frá vefmyndavél.\n"
-"Ástæða: %s"
+msgid "%d frames per second"
+msgstr "%d rammar á sekúndu"
 
-#: src/vanity.c:658
-msgid "Vanity Webcam Utility"
-msgstr "Vanity vefmyndavélarforrit"
-
-#: src/vanity.c:663
-msgid ""
-"Could not initialise the thread-safe libraries.\n"
-"Verify your system installation. Vanity will now exit."
-msgstr ""
-"Tókst ekki að frumstilla þráðheldu aðgerðasöfnin.\n"
-"Athugaðu kerfisuppsetningu. Vanity kveður núna."
-
-#: src/vanity.c:688
+#: ../src/plugins/properties/bacon-video-widget-properties.c:242
+#: ../src/plugins/properties/bacon-video-widget-properties.c:259
 #, c-format
-msgid ""
-"Vanity couln't initialise the \n"
-"configuration engine:\n"
-"%s"
+msgid "%d kbps"
+msgstr "%d kb/s"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:262
+#, fuzzy, c-format
+#| msgid "%d %%"
+msgid "%d Hz"
+msgstr "%d %%"
+
+#: ../src/plugins/publish/totem-publish.c:582
+msgid "Neighbours"
 msgstr ""
-"Vanity tókst ekki að frumstilla \n"
-"stillingavélina:\n"
-"%s"
 
-#: src/vanity.c:705 src/vanity.c:720
-msgid ""
-"Couldn't load the main interface (vanity.glade).\n"
-"Make sure that Vanity is properly installed."
+#: ../src/plugins/publish/publish.totem-plugin.in.h:1
+#, fuzzy
+#| msgid "Playlist"
+msgid "Publish Playlist"
+msgstr "Spilunarlisti"
+
+#: ../src/plugins/publish/publish.totem-plugin.in.h:2
+msgid "Share the current playlist via HTTP"
 msgstr ""
-"Tókst ekki að hlaða inn aðalviðmóti (vanity.glade).\n"
-"Athugaðu hvort Vanity er rétt uppsett."
 
-#~ msgid "Connecting to the server"
-#~ msgstr "Tengist þjóni"
+#: ../src/plugins/publish/publish-plugin.ui.h:2
+#, no-c-format
+msgid ""
+"<small>The name used for announcing the playlist service on the network.\n"
+"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
+"and <b>%h</b> will be replaced by your computer's host name.</small>"
+msgstr ""
 
-#~ msgid "Done"
-#~ msgstr "Lokið"
+#: ../src/plugins/publish/publish-plugin.ui.h:5
+msgid "Service _Name:"
+msgstr ""
 
-#~ msgid "Downloading the plug-ins"
-#~ msgstr "Hleð inn íforritum"
+#: ../src/plugins/publish/publish-plugin.ui.h:6
+msgid "Use _encrypted transport protocol (HTTPS)"
+msgstr ""
 
-#~ msgid "Installing the plug-ins"
-#~ msgstr "Uppsetning íforrita"
+#: ../src/plugins/screenshot/gallery.ui.h:1
+msgid "Calculate the number of screenshots"
+msgstr ""
 
-#~ msgid "Plug-ins Download"
-#~ msgstr "Sækja íforrit"
+#: ../src/plugins/screenshot/gallery.ui.h:2
+#, fuzzy
+#| msgid "Take a screenshot"
+msgid "Number of screenshots:"
+msgstr "Taka skjámynd"
 
-#~ msgid "_TV-out mode"
-#~ msgstr "_Sjónvarpsúttak"
+#: ../src/plugins/screenshot/gallery.ui.h:3
+msgid "Screenshot width (in pixels):"
+msgstr ""
 
-#~ msgid "Your HTTP Proxy requires you to log in.\n"
-#~ msgstr "HTTP-netselið þitt krefst innskráningar.\n"
+#: ../src/plugins/screenshot/totem-gallery.c:88
+#, fuzzy
+#| msgid "Save File"
+msgid "Save Gallery"
+msgstr "Vista skrá"
 
-#~ msgid ""
-#~ "You must log in to access \"%s\".\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Þú verður að skrá þig inn fyrir aðgang að \"%s\".\n"
-#~ "\n"
-#~ "%s"
+#. Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:106
+#, fuzzy, c-format
+#| msgid "Screenshot%d.png"
+msgid "Screenshot%d.jpg"
+msgstr "Skjámynd%d.png"
 
-#~ msgid "Your password will be transmitted unencrypted."
-#~ msgstr "Lykilorðið þitt verður sent ódulkóðað."
+#. Set up the window
+#: ../src/plugins/screenshot/totem-gallery-progress.c:101
+msgid "Creating Gallery..."
+msgstr ""
 
-#~ msgid "Your password will be transmitted encrypted."
-#~ msgstr "Lykilorðið þitt verður sent dulkóðað."
+#. Set the progress label
+#: ../src/plugins/screenshot/totem-gallery-progress.c:108
+#, c-format
+msgid "Saving gallery as \"%s\""
+msgstr ""
 
-#~ msgid "Authentication Required"
-#~ msgstr "Lykilorð nauðsynlegt"
+#: ../src/plugins/screenshot/totem-screenshot.c:69
+#, fuzzy
+#| msgid "Screenshot%d.png"
+msgid "Screenshot.png"
+msgstr "Skjámynd%d.png"
 
-#~ msgid "_Username:"
-#~ msgstr "_Notandanafn:"
+#: ../src/plugins/screenshot/totem-screenshot.c:140
+msgid "There was an error saving the screenshot."
+msgstr "Villa kom upp við vistun skjámyndar."
 
-#~ msgid "_Password:"
-#~ msgstr "_Lykilorð:"
+#: ../src/plugins/screenshot/totem-screenshot.c:182
+msgid "Save Screenshot"
+msgstr "Vista skjámynd:"
 
-#~ msgid "Remember this password"
-#~ msgstr "Muna þetta lykilorð"
+#. Set the default path and filename
+#: ../src/plugins/screenshot/totem-screenshot.c:197
+#, c-format
+msgid "Screenshot%d.png"
+msgstr "Skjámynd%d.png"
 
-#~ msgid "Download"
-#~ msgstr "Hlaða niður"
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:98
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
+#, fuzzy
+#| msgid "Totem could not get a screenshot of that film."
+msgid "Totem could not get a screenshot of the video."
+msgstr "Totem náði ekki skjámynd af kvikmyndinni."
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
+msgid "This is not supposed to happen; please file a bug report."
+msgstr ""
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
+#, fuzzy
+#| msgid "Take _Screenshot"
+msgid "Take _Screenshot..."
+msgstr "Taka _skjámynd"
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
+msgid "Take a screenshot"
+msgstr "Taka skjámynd"
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
+msgid "Create Screenshot _Gallery..."
+msgstr ""
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
+#, fuzzy
+#| msgid "Take a screenshot"
+msgid "Create a gallery of screenshots"
+msgstr "Taka skjámynd"
+
+#: ../src/plugins/skipto/totem-skipto.c:171
+msgid "Skip to"
+msgstr "Stökkva til"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:215
+msgid "_Skip to..."
+msgstr "_Stökkva til..."
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:215
+msgid "Skip to a specific time"
+msgstr "Stökkva að tilgreindum stað"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:221
+#, fuzzy
+#| msgid "Couldn't load the 'Open Location...' interface."
+msgid "Could not load the \"Skip to\" dialog interface."
+msgstr "Tókst ekki að hlaða inn 'opna slóð...' viðmótið."
+
+#: ../src/plugins/skipto/skipto.ui.h:1
+msgid "_Skip to:"
+msgstr "_Stökkva til:"
+
+#: ../src/plugins/skipto/skipto.ui.h:2
+msgid "seconds"
+msgstr "sekúndur"
+
+#. Display an error
+#: ../src/plugins/tracker/totem-tracker-widget.c:167
+#, c-format
+msgid "Could not get metadata for file %s: %s"
+msgstr ""
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:168
+#, fuzzy
+msgid "File Error"
+msgstr "Skráarvilla"
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:222
+#: ../src/plugins/tracker/totem-tracker-widget.c:274
+#, fuzzy
+#| msgid "No reason"
+msgid "No results"
+msgstr "Engin ástæða gefin"
+
+#. Translators:
+#. * This is used to show which items are listed in the list view, for example:
+#. * Showing 10-20 of 128 matches
+#. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
+#. * Personalized Results 1 - 10 of about 4,130,000 for foobar
+#: ../src/plugins/tracker/totem-tracker-widget.c:229
+#, c-format
+msgid "Showing %i - %i of %i match"
+msgid_plural "Showing %i - %i of %i matches"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:415
+#, fuzzy
+#| msgid "Large"
+msgid "Page"
+msgstr "Stór"
+
+#: ../src/plugins/tracker/totem-tracker.c:91
+#: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
+msgid "Local Search"
+msgstr ""
+
+#: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:1
+msgid "Set the window icon to the thumbnail of the playing movie"
+msgstr ""
+
+#: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:2
+#, fuzzy
+msgid "Thumbnail"
+msgstr "Smámynd"
+
+#: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
+msgid "Search for local videos using Tracker"
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
+msgid "A plugin to let you browse YouTube videos."
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
+msgid "YouTube browser"
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.ui.h:1
+msgid "Related Videos"
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.py:127 ../src/plugins/youtube/youtube.py:229
+msgid "YouTube"
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.py:147
+#, fuzzy
+#| msgid "Video CD"
+msgid "Videos"
+msgstr "Mynddiskur"
+
+#: ../src/plugins/youtube/youtube.py:153
+msgid "_Open in Web Browser"
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.py:153
+msgid "Open the video in your web browser"
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.py:192
+msgid "Fetching related videos..."
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.py:377
+msgid "Fetching search results..."
+msgstr ""
+
+#: ../src/plugins/youtube/youtube.py:392
+msgid "Fetching more videos..."
+msgstr ""
+
+#: ../browser-plugin/totem-plugin-viewer.c:465
+msgid "No URI to play"
+msgstr ""
+
+#: ../browser-plugin/totem-plugin-viewer.c:491
+#, fuzzy, c-format
+#| msgid "Totem could not play '%s'."
+msgid "Totem could not play '%s'"
+msgstr "Totem tókst ekki að spila '%s'."
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1133
+#, fuzzy, c-format
+msgid "_Open with \"%s\""
+msgstr "Opna með \"%s\""
+
+#: ../browser-plugin/totem-plugin-viewer.c:1184
+#, fuzzy, c-format
+#| msgid "Movie Player using %s"
+msgid "Browser Plugin using %s"
+msgstr "Myndspilari sem notar %s"
+
+#: ../browser-plugin/totem-plugin-viewer.c:1189
+msgid "Totem Browser Plugin"
+msgstr ""
+
+#. FIXME!
+#. FIXME construct and show error message
+#: ../browser-plugin/totem-plugin-viewer.c:1828
+#, fuzzy
+msgid "The Totem plugin could not be started."
+msgstr "Totem tókst ekki að ræsa sig."
+
+#: ../browser-plugin/totem-plugin-viewer.c:2176
+msgid "No playlist or playlist empty"
+msgstr ""
+
+#: ../browser-plugin/totem-plugin-viewer.c:2279
+msgid "Could not initialise the thread-safe libraries."
+msgstr "Tókst ekki að frumstilla þráðviss aðgerðasöfn."
+
+#: ../browser-plugin/totem-plugin-viewer.c:2279
+#, fuzzy
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Athugaðu kerfisuppsetningu. Totem kveður núna."
+
+#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
+msgid "Interactive Python console."
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:2
+#, fuzzy
+msgid "Python Console"
+msgstr "Python stjórnskjár"
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:74
+msgid "Python Console Menu"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:77
+msgid "_Python Console"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:78
+msgid "Show Totem's Python console"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:83
+msgid "Python Debugger"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:84
+msgid "Enable remote Python debugging with rpdb2"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:106
+#, python-format
+msgid "You can access the totem object through 'totem_object' :\\n%s"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:111
+msgid "Totem Python Console"
+msgstr ""
+
+#: ../src/plugins/pythonconsole/pythonconsole.py:120
+msgid ""
+"After you press OK, Totem will wait until you connect to it with winpdb or "
+"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"default password ('totem')."
+msgstr ""
