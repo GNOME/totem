@@ -433,8 +433,7 @@ totem_scrsaver_set_state (TotemScrsaver *scr, gboolean enable)
 	if (scr->priv->disabled == !enable)
 		return;
 
-	scr->priv->disabled = !enable;
-	if (scr->priv->disabled != FALSE)
+	if (enable == FALSE)
 		totem_scrsaver_disable (scr);
 	else
 		totem_scrsaver_enable (scr);
