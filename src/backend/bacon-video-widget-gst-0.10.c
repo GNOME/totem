@@ -54,6 +54,8 @@
 #include <gst/audio/gstbaseaudiosink.h>
 /* for pretty multichannel strings */
 #include <gst/audio/multichannel.h>
+/* for the volume property */
+#include <gst/interfaces/streamvolume.h>
 
 /* for missing decoder/demuxer detection */
 #include <gst/pbutils/pbutils.h>
@@ -3894,8 +3896,14 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
       gst_element_get_state (bvw->priv->pulse_audio_sink, &cur_state, NULL, 0);
       if (cur_state == GST_STATE_READY || cur_state == GST_STATE_PLAYING)
       {
-	g_object_set (bvw->priv->pulse_audio_sink, "volume",
-		      (gdouble) volume, NULL);
+	if (gst_element_implements_interface (bvw->priv->pulse_audio_sink,
+					      GST_TYPE_STREAM_VOLUME)) {
+	  gst_stream_volume_set_volume (GST_STREAM_VOLUME (bvw->priv->pulse_audio_sink),
+					GST_STREAM_VOLUME_FORMAT_CUBIC,
+					volume);
+	} else {
+	  g_object_set (bvw->priv->pulse_audio_sink, "volume", volume, NULL);
+	}
       }
     } else {
       g_object_set (bvw->priv->play, "volume",
@@ -4626,7 +4634,13 @@ notify_volume_idle_cb (BaconVideoWidget *bvw)
 {
   gdouble vol;
 
-  g_object_get (G_OBJECT (bvw->priv->pulse_audio_sink), "volume", &vol, NULL);
+  if (gst_element_implements_interface (bvw->priv->pulse_audio_sink,
+					GST_TYPE_STREAM_VOLUME)) {
+    vol = gst_stream_volume_get_volume (GST_STREAM_VOLUME (bvw->priv->pulse_audio_sink),
+					GST_STREAM_VOLUME_FORMAT_CUBIC);
+  } else {
+    g_object_get (G_OBJECT (bvw->priv->pulse_audio_sink), "volume", &vol, NULL);
+  }
   bvw->priv->volume = vol;
 
   g_object_notify (G_OBJECT (bvw), "volume");
