@@ -200,7 +200,8 @@ struct BaconVideoWidgetPrivate
   gint                         video_height; /* Movie height */
   gboolean                     window_resized; /* Whether the window has already been resized
 						  for this media */
-  const GValue                *movie_par; /* Movie pixel aspect ratio */
+  gint                         movie_par_n; /* Movie pixel aspect ratio numerator */
+  gint                         movie_par_d; /* Movie pixel aspect ratio denominator */
   gint                         video_width_pixels; /* Scaled movie width */
   gint                         video_height_pixels; /* Scaled movie height */
   gint                         video_fps_n;
@@ -455,16 +456,8 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       }
       else {
         /* Use the movie pixel aspect ratio if any */
-        if (bvw->priv->movie_par) {
-          movie_par_n = gst_value_get_fraction_numerator (bvw->priv->movie_par);
-          movie_par_d =
-              gst_value_get_fraction_denominator (bvw->priv->movie_par);
-        }
-        else {
-          /* Square pixels */
-          movie_par_n = 1;
-          movie_par_d = 1;
-        }
+        movie_par_n = bvw->priv->movie_par_n;
+        movie_par_d = bvw->priv->movie_par_d;
       }
       
       GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
@@ -2118,6 +2111,8 @@ caps_set (GObject * obj,
   /* Get video decoder caps */
   s = gst_caps_get_structure (caps, 0);
   if (s) {
+    const GValue *movie_par;
+
     /* We need at least width/height and framerate */
     if (!(gst_structure_get_fraction (s, "framerate", &bvw->priv->video_fps_n, 
           &bvw->priv->video_fps_d) &&
@@ -2126,7 +2121,16 @@ caps_set (GObject * obj,
       return;
     
     /* Get the movie PAR if available */
-    bvw->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+    movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+    if (movie_par) {
+      bvw->priv->movie_par_n = gst_value_get_fraction_numerator (movie_par);
+      bvw->priv->movie_par_d = gst_value_get_fraction_denominator (movie_par);
+    }
+    else {
+      /* Square pixels */
+      bvw->priv->movie_par_n = 1;
+      bvw->priv->movie_par_d = 1;
+    }
     
     /* Now set for real */
     bacon_video_widget_set_aspect_ratio (bvw, bvw->priv->ratio_type);
