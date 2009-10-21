@@ -1820,16 +1820,48 @@ totem_playlist_clear (TotemPlaylist *playlist)
 	return TRUE;
 }
 
+static int
+compare_removal (GtkTreeRowReference *ref, GtkTreePath *path)
+{
+	GtkTreePath *ref_path;
+	int ret = -1;
+
+	ref_path = gtk_tree_row_reference_get_path (ref);
+	if (gtk_tree_path_compare (path, ref_path) == 0)
+		ret = 0;
+	gtk_tree_path_free (ref_path);
+	return ret;
+}
+
+/* Whether the item in question will be removed */
+static gboolean
+totem_playlist_item_to_be_removed (TotemPlaylist *playlist,
+				   GtkTreePath *path,
+				   ClearComparisonFunc func)
+{
+	GList *ret;
+
+	if (func == NULL) {
+		GtkTreeSelection *selection;
+
+		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (playlist->priv->treeview));
+		return gtk_tree_selection_path_is_selected (selection, path);
+	}
+
+	ret = g_list_find_custom (playlist->priv->list, path, (GCompareFunc) compare_removal);
+	return (ret != NULL);
+}
+
 static void
 totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 				   ClearComparisonFunc func,
 				   gconstpointer data)
 {
 	GtkTreeRowReference *ref;
-	int next_pos;
+	GtkTreeRowReference *next;
 
 	ref = NULL;
-	next_pos = -1;
+	next = NULL;
 
 	if (func == NULL) {
 		GtkTreeSelection *selection;
@@ -1866,9 +1898,10 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 
 				path = gtk_tree_path_new_from_indices (i, -1);
 				r = gtk_tree_row_reference_new (playlist->priv->model, path);
-				if (playlist->priv->current != NULL) {
-					if (gtk_tree_path_compare (path, playlist->priv->current) == 0)
+				if (playlist->priv->current_to_be_removed == FALSE && playlist->priv->current != NULL) {
+					if (gtk_tree_path_compare (path, playlist->priv->current) == 0) {
 						playlist->priv->current_to_be_removed = TRUE;
+					}
 				}
 				playlist->priv->list = g_list_prepend (playlist->priv->list, r);
 				gtk_tree_path_free (path);
@@ -1881,19 +1914,30 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 
 	/* If the current item is to change, we need to keep an static
 	 * reference to it, TreeIter and TreePath don't allow that */
-	if (playlist->priv->current != NULL) {
-		int *indices;
-
+	if (playlist->priv->current_to_be_removed == FALSE &&
+	    playlist->priv->current != NULL) {
 		ref = gtk_tree_row_reference_new (playlist->priv->model,
-				playlist->priv->current);
-		indices = gtk_tree_path_get_indices (playlist->priv->current);
-		next_pos = indices[0];
+						  playlist->priv->current);
+	} else if (playlist->priv->current != NULL) {
+		GtkTreePath *item;
 
+		item = gtk_tree_path_copy (playlist->priv->current);
+		gtk_tree_path_next (item);
+		next = gtk_tree_row_reference_new (playlist->priv->model, item);
+		while (next != NULL) {
+			if (totem_playlist_item_to_be_removed (playlist, item, func) == FALSE) {
+				/* Found the item after the current one that
+				 * won't be removed, thus the new current */
+				break;
+			}
+			gtk_tree_row_reference_free (next);
+			gtk_tree_path_next (item);
+			next = gtk_tree_row_reference_new (playlist->priv->model, item);
+		}
 	}
 
 	/* We destroy the items, one-by-one from the list built above */
-	while (playlist->priv->list != NULL)
-	{
+	while (playlist->priv->list != NULL) {
 		GtkTreePath *path;
 		GtkTreeIter iter;
 
@@ -1915,21 +1959,9 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 
 	if (playlist->priv->current_to_be_removed != FALSE) {
 		/* The current item was removed from the playlist */
-		if (next_pos != -1) {
-			char *str;
-			GtkTreeIter iter;
-			GtkTreePath *cur;
-
-			str = g_strdup_printf ("%d", next_pos);
-			cur = gtk_tree_path_new_from_string (str);
-
-			if (gtk_tree_model_get_iter (playlist->priv->model, &iter, cur) == FALSE) {
-				playlist->priv->current = NULL;
-				gtk_tree_path_free (cur);
-			} else {
-				playlist->priv->current = cur;
-			}
-			g_free (str);
+		if (next != NULL) {
+			playlist->priv->current = gtk_tree_row_reference_get_path (next);
+			gtk_tree_row_reference_free (next);
 		} else {
 			playlist->priv->current = NULL;
 		}
@@ -1944,9 +1976,7 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 	} else {
 		if (ref != NULL) {
 			/* The path to the current item changed */
-			playlist->priv->current =
-				gtk_tree_row_reference_get_path (ref);
-			gtk_tree_row_reference_free (ref);
+			playlist->priv->current = gtk_tree_row_reference_get_path (ref);
 		}
 
 		if (playlist->priv->shuffle)
@@ -1956,6 +1986,8 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 				totem_playlist_table_signals[CHANGED], 0,
 				NULL);
 	}
+	if (ref != NULL)
+		gtk_tree_row_reference_free (ref);
 	totem_playlist_update_save_button (playlist);
 	gtk_tree_view_columns_autosize (GTK_TREE_VIEW (playlist->priv->treeview));
 
@@ -2292,24 +2324,21 @@ totem_playlist_set_next (TotemPlaylist *playlist)
 
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
 
-	if (totem_playlist_has_next_mrl (playlist) == FALSE)
-	{
+	if (totem_playlist_has_next_mrl (playlist) == FALSE) {
 		totem_playlist_set_at_start (playlist);
 		return;
 	}
 
 	totem_playlist_unset_playing (playlist);
 
-	if (playlist->priv->shuffle == FALSE)
-	{
+	if (playlist->priv->shuffle == FALSE) {
 		gtk_tree_model_get_iter (playlist->priv->model,
-				&iter,
-				playlist->priv->current);
+					 &iter,
+					 playlist->priv->current);
 
 		gtk_tree_model_iter_next (playlist->priv->model, &iter);
 		gtk_tree_path_free (playlist->priv->current);
-		playlist->priv->current = gtk_tree_model_get_path
-			(playlist->priv->model, &iter);
+		playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
 	} else {
 		int indice;
 
