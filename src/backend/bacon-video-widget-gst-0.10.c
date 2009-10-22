@@ -4,6 +4,7 @@
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
  * Copyright (C) 2005-2008 Tim-Philipp Müller <tim centricular net>
  * Copyright (C) 2009 Sebastian Dröge <sebastian.droege@collabora.co.uk>
+ * Copyright © 2009 Christian Persch
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,6 +121,7 @@ enum
   PROP_CURRENT_TIME,
   PROP_STREAM_LENGTH,
   PROP_PLAYING,
+  PROP_REFERRER,
   PROP_SEEKABLE,
   PROP_SHOW_CURSOR,
   PROP_SHOW_VISUALS,
@@ -149,6 +151,7 @@ struct BaconVideoWidgetPrivate
 {
   char                        *user_agent;
 
+  char                        *referrer;
   char                        *mrl;
   BvwAspectRatio               ratio_type;
 
@@ -1060,6 +1063,16 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_boolean ("show-visuals", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_WRITABLE));
+
+  /**
+   * BaconVideoWidget:referrer:
+   *
+   * The HTTP referrer URI.
+   **/
+  g_object_class_install_property (object_class, PROP_USER_AGENT,
+                                   g_param_spec_string ("referrer", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:user-agent:
@@ -2046,9 +2059,41 @@ bvw_set_user_agent_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
+bvw_set_referrer_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  BaconVideoWidgetPrivate *priv = bvw->priv;
+  GstStructure *extra_headers = NULL;
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "extra-headers") == NULL)
+    return;
+
+  GST_DEBUG ("Setting HTTP referrer to '%s'", priv->referrer ? priv->referrer : "none");
+
+  g_object_get (element, "extra-headers", &extra_headers, NULL);
+  if (extra_headers == NULL) {
+    extra_headers = gst_structure_empty_new ("extra-headers");
+  }
+  g_assert (GST_IS_STRUCTURE (extra_headers));
+
+  if (priv->referrer != NULL) {
+    gst_structure_set (extra_headers,
+                       "Referer" /* not a typo! */,
+                       G_TYPE_STRING,
+                       priv->referrer,
+                       NULL);
+  } else {
+    gst_structure_remove_field (extra_headers,
+                                "Referer" /* not a typo! */);
+  }
+
+  g_object_set (element, "extra-headers", extra_headers, NULL);
+  gst_structure_free (extra_headers);
+}
+
+static void
 playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
 {
-  GObject *source = NULL;
+  GstElement *source = NULL;
 
   /* CHECKME: do we really need these taglist frees here (tpm)? */
   if (bvw->priv->tagcache) {
@@ -2065,13 +2110,14 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   }
 
   g_object_get (play, "source", &source, NULL);
-
-  if (source) {
-    GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
-    bvw_set_device_on_element (bvw, GST_ELEMENT (source));
-    bvw_set_user_agent_on_element (bvw, GST_ELEMENT (source));
-    g_object_unref (source);
-  }
+  if (source == NULL)
+    return;
+    
+  GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
+  bvw_set_device_on_element (bvw, source);
+  bvw_set_user_agent_on_element (bvw, source);
+  bvw_set_referrer_on_element (bvw, source);
+  g_object_unref (source);
 }
 
 static gboolean
@@ -2251,6 +2297,9 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = NULL;
 
+  g_free (bvw->priv->referrer);
+  bvw->priv->referrer = NULL;
+
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
 
@@ -2323,6 +2372,10 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_logo_mode (bvw,
       g_value_get_boolean (value));
       break;
+    case PROP_REFERRER:
+      bacon_video_widget_set_referrer (bvw,
+      g_value_get_string (value));
+      break;
     case PROP_SHOW_CURSOR:
       bacon_video_widget_set_show_cursor (bvw,
       g_value_get_boolean (value));
@@ -2367,6 +2420,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_PLAYING:
       g_value_set_boolean (value,
       bacon_video_widget_is_playing (bvw));
+      break;
+    case PROP_REFERRER:
+      g_value_set_string (value, bvw->priv->referrer);
       break;
     case PROP_SEEKABLE:
       g_value_set_boolean (value,
@@ -3889,6 +3945,39 @@ bacon_video_widget_set_user_agent (BaconVideoWidget *bvw,
   g_object_notify (G_OBJECT (bvw), "user-agent");
 
   /* FIXME: set the new UA on the source element if it already exists */
+}
+
+/**
+ * bacon_video_widget_set_referrer:
+ * @bvw: a #BaconVideoWidget
+ * @referrer: a HTTP referrer URI, or %NULL
+ *
+ * Sets the HTTP referrer URI to use when fetching HTTP ressources.
+ **/
+void
+bacon_video_widget_set_referrer (BaconVideoWidget *bvw,
+                                 const char *referrer)
+{
+  BaconVideoWidgetPrivate *priv;
+  char *frag;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  priv = bvw->priv;
+
+  if (g_strcmp0 (referrer, priv->referrer) == 0)
+    return;
+
+  g_free (priv->referrer);
+  priv->referrer = g_strdup (referrer);
+
+  /* Referrer URIs must not have a fragment */
+  if ((frag = strchr (priv->referrer, '#')) != NULL)
+    *frag = '\0';
+  
+  g_object_notify (G_OBJECT (bvw), "referrer");
+
+  /* FIXME: set the new referrer on the source element if it already exists */
 }
 
 /**

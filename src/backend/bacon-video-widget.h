@@ -235,6 +235,9 @@ void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
 void bacon_video_widget_set_user_agent           (BaconVideoWidget *bvw,
                                                   const char *user_agent);
 
+void bacon_video_widget_set_referrer             (BaconVideoWidget *bvw,
+                                                  const char *referrer);
+
 /* Metadata */
 /**
  * BvwMetadataType:
