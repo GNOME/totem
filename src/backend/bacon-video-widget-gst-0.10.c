@@ -156,6 +156,7 @@ struct BaconVideoWidgetPrivate
   BvwAspectRatio               ratio_type;
 
   GstElement                  *play;
+  GstElement                  *source;
   GstXOverlay                 *xoverlay;      /* protect with lock */
   GstColorBalance             *balance;       /* protect with lock */
   GstNavigation               *navigation;    /* protect with lock */
@@ -2050,13 +2051,11 @@ bvw_set_user_agent_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
   BaconVideoWidgetPrivate *priv = bvw->priv;
 
-  if (priv->user_agent == NULL)
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "user-agent") == NULL)
     return;
 
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "user-agent")) {
-    GST_DEBUG ("Setting HTTP user-agent to '%s'", priv->user_agent);
-    g_object_set (element, "user-agent", priv->user_agent, NULL);
-  }
+  GST_DEBUG ("Setting HTTP user-agent to '%s'", priv->user_agent ? priv->user_agent : "(default)");
+  g_object_set (element, "user-agent", priv->user_agent, NULL);
 }
 
 static void
@@ -2094,6 +2093,7 @@ bvw_set_referrer_on_element (BaconVideoWidget * bvw, GstElement * element)
 static void
 playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
 {
+  BaconVideoWidgetPrivate *priv = bvw->priv;
   GstElement *source = NULL;
 
   /* CHECKME: do we really need these taglist frees here (tpm)? */
@@ -2111,6 +2111,12 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   }
 
   g_object_get (play, "source", &source, NULL);
+
+  if (priv->source != NULL) {
+    g_object_unref (priv->source);
+  }
+
+  priv->source = source;
   if (source == NULL)
     return;
     
@@ -2118,7 +2124,6 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   bvw_set_device_on_element (bvw, source);
   bvw_set_user_agent_on_element (bvw, source);
   bvw_set_referrer_on_element (bvw, source);
-  g_object_unref (source);
 }
 
 static gboolean
@@ -2315,6 +2320,11 @@ bacon_video_widget_finalize (GObject * object)
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
     bvw->priv->vis_plugins_list = NULL;
+  }
+
+  if (bvw->priv->source != NULL) {
+    g_object_unref (bvw->priv->source);
+    bvw->priv->source = NULL;
   }
 
   if (bvw->priv->play != NULL && GST_IS_ELEMENT (bvw->priv->play)) {
@@ -3948,9 +3958,11 @@ bacon_video_widget_set_user_agent (BaconVideoWidget *bvw,
   g_free (priv->user_agent);
   priv->user_agent = g_strdup (user_agent);
 
-  g_object_notify (G_OBJECT (bvw), "user-agent");
+  if (priv->source) {
+    bvw_set_user_agent_on_element (bvw, priv->source);
+  }
 
-  /* FIXME: set the new UA on the source element if it already exists */
+  g_object_notify (G_OBJECT (bvw), "user-agent");
 }
 
 /**
@@ -3980,10 +3992,12 @@ bacon_video_widget_set_referrer (BaconVideoWidget *bvw,
   /* Referrer URIs must not have a fragment */
   if ((frag = strchr (priv->referrer, '#')) != NULL)
     *frag = '\0';
-  
-  g_object_notify (G_OBJECT (bvw), "referrer");
 
-  /* FIXME: set the new referrer on the source element if it already exists */
+  if (priv->source) {
+    bvw_set_referrer_on_element (bvw, priv->source);
+  }
+
+  g_object_notify (G_OBJECT (bvw), "referrer");
 }
 
 /**
