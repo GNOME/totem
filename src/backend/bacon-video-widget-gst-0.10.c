@@ -123,6 +123,7 @@ enum
   PROP_SEEKABLE,
   PROP_SHOW_CURSOR,
   PROP_SHOW_VISUALS,
+  PROP_USER_AGENT,
   PROP_VOLUME
 };
 
@@ -146,6 +147,8 @@ typedef enum {
 
 struct BaconVideoWidgetPrivate
 {
+  char                        *user_agent;
+
   char                        *mrl;
   BvwAspectRatio               ratio_type;
 
@@ -1057,6 +1060,16 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_boolean ("show-visuals", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_WRITABLE));
+
+  /**
+   * BaconVideoWidget:user-agent:
+   *
+   * The HTTP user agent string to use.
+   **/
+  g_object_class_install_property (object_class, PROP_USER_AGENT,
+                                   g_param_spec_string ("user-agent", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /* Signals */
   /**
@@ -2021,15 +2034,14 @@ bvw_set_device_on_element (BaconVideoWidget * bvw, GstElement * element)
 static void
 bvw_set_user_agent_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
-  const char *ua;
+  BaconVideoWidgetPrivate *priv = bvw->priv;
 
-  ua = g_getenv ("BACON_VIDEO_WIDGET_HTTP_USER_AGENT");
-  if (ua == NULL)
+  if (priv->user_agent == NULL)
     return;
 
   if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "user-agent")) {
-    GST_DEBUG ("Setting HTTP user-agent to '%s'", ua);
-    g_object_set (element, "user-agent", ua, NULL);
+    GST_DEBUG ("Setting HTTP user-agent to '%s'", priv->user_agent);
+    g_object_set (element, "user-agent", priv->user_agent, NULL);
   }
 }
 
@@ -2233,6 +2245,9 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->bus = NULL;
   }
 
+  g_free (bvw->priv->user_agent);
+  bvw->priv->user_agent = NULL;
+
   g_free (bvw->priv->media_device);
   bvw->priv->media_device = NULL;
 
@@ -2316,6 +2331,10 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_show_visuals (bvw,
       g_value_get_boolean (value));
       break;
+    case PROP_USER_AGENT:
+      bacon_video_widget_set_user_agent (bvw,
+      g_value_get_string (value));
+      break;
     case PROP_VOLUME:
       bacon_video_widget_set_volume (bvw, g_value_get_double (value));
       break;
@@ -2356,6 +2375,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_SHOW_CURSOR:
       g_value_set_boolean (value,
       bacon_video_widget_get_show_cursor (bvw));
+      break;
+    case PROP_USER_AGENT:
+      g_value_set_string (value, bvw->priv->user_agent);
       break;
     case PROP_VOLUME:
       g_value_set_double (value, bvw->priv->volume);
@@ -3839,6 +3861,34 @@ bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw,
   if (!g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "subtitle-encoding"))
     return;
   g_object_set (bvw->priv->play, "subtitle-encoding", encoding, NULL);
+}
+
+/**
+ * bacon_video_widget_set_user_agent:
+ * @bvw: a #BaconVideoWidget
+ * @user_agent: a HTTP user agent string, or %NULL to use the default
+ *
+ * Sets the HTTP user agent string to use when fetching HTTP ressources.
+ **/
+void
+bacon_video_widget_set_user_agent (BaconVideoWidget *bvw,
+                                   const char *user_agent)
+{
+  BaconVideoWidgetPrivate *priv;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  priv = bvw->priv;
+
+  if (g_strcmp0 (user_agent, priv->user_agent) == 0)
+    return;
+
+  g_free (priv->user_agent);
+  priv->user_agent = g_strdup (user_agent);
+
+  g_object_notify (G_OBJECT (bvw), "user-agent");
+
+  /* FIXME: set the new UA on the source element if it already exists */
 }
 
 /**

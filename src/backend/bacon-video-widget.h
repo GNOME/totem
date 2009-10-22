@@ -232,6 +232,9 @@ void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
 						  const char *encoding);
 
+void bacon_video_widget_set_user_agent           (BaconVideoWidget *bvw,
+                                                  const char *user_agent);
+
 /* Metadata */
 /**
  * BvwMetadataType:
