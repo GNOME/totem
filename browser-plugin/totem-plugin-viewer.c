@@ -110,6 +110,7 @@ typedef struct _TotemEmbedded {
 	TotemStatusbar *statusbar;
 	TotemScrsaver *scrsaver;
 	int width, height;
+        char *user_agent;
 	const char *mimetype;
 	char *base_uri;
 	char *current_uri;
@@ -1742,14 +1743,12 @@ totem_embedded_construct (TotemEmbedded *emb,
 					       (-1, -1, type, &err));
 	}
 
-	/* FIXME! */
-	if (emb->bvw == NULL) {
-		/* FIXME! */
-		/* FIXME construct and show error message */
-		totem_embedded_error_and_exit (_("The Totem plugin could not be started."), err != NULL ? err->message : _("No reason."), emb);
-
-		if (err != NULL)
-			g_error_free (err);
+	/* FIXME: check the UA strings of the legacy plugins themselves */
+	/* FIXME: at least hxplayer seems to send different UAs depending on the protocol!? */
+	if (emb->user_agent != NULL) {
+                bacon_video_widget_set_user_agent (emb->bvw, emb->user_agent);
+		g_free (emb->user_agent);
+		emb->user_agent = NULL;
 	}
 
 	/* Fullscreen setup */
@@ -2267,14 +2266,6 @@ int main (int argc, char **argv)
 		exit (1);
 	}
 
-	/* FIXME: check the UA strings of the legacy plugins themselves */
-	/* FIXME: at least hxplayer seems to send different UAs depending on the protocol!? */
-	if (arg_user_agent != NULL) {
-		g_setenv ("BACON_VIDEO_WIDGET_HTTP_USER_AGENT", arg_user_agent, TRUE);
-		g_free (arg_user_agent);
-		arg_user_agent = NULL;
-	}
-
 	bacon_video_widget_init_backend (NULL, NULL);
 
 	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
@@ -2322,6 +2313,7 @@ int main (int argc, char **argv)
 	emb->autostart = !arg_no_autostart;
 	emb->audioonly = arg_audioonly;
 	emb->type = arg_plugin_type;
+        emb->user_agent = arg_user_agent;
 
 	/* FIXME: register this BEFORE requesting the service name? */
 	dbus_g_connection_register_g_object
