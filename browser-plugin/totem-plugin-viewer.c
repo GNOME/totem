@@ -2,7 +2,7 @@
  *
  * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
- * Copyright © 2006 Christian Persch
+ * Copyright © 2006, 2009 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -112,6 +112,7 @@ typedef struct _TotemEmbedded {
 	int width, height;
         char *user_agent;
 	const char *mimetype;
+        char *referrer_uri;
 	char *base_uri;
 	char *current_uri;
 	char *href_uri;
@@ -1751,6 +1752,16 @@ totem_embedded_construct (TotemEmbedded *emb,
 		emb->user_agent = NULL;
 	}
 
+        /* FIXMEchpe: this is just the initial value. I think in case e.g. we're doing
+         * a playlist, the playlist's URI should become the referrer?
+         */
+        g_print ("Referrer URI: %s\n", emb->referrer_uri);
+        if (emb->referrer_uri != NULL) {
+                bacon_video_widget_set_referrer (emb->bvw, emb->referrer_uri);
+                g_free (emb->referrer_uri);
+                emb->referrer_uri = NULL;
+        }
+
 	/* Fullscreen setup */
 	emb->fs_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_widget_realize (emb->fs_window);
@@ -2122,6 +2133,7 @@ totem_embedded_push_parser (gpointer data)
 static char *arg_user_agent = NULL;
 static char *arg_mime_type = NULL;
 static char **arg_remaining = NULL;
+static char *arg_referrer = NULL;
 static gboolean arg_no_controls = FALSE;
 static gboolean arg_statusbar = FALSE;
 static gboolean arg_hidden = FALSE;
@@ -2169,6 +2181,7 @@ static GOptionEntry option_entries [] =
 	{ TOTEM_OPTION_REPEAT, 0, 0, G_OPTION_ARG_NONE, &arg_repeat, NULL, NULL },
 	{ TOTEM_OPTION_NOAUTOSTART, 0, 0, G_OPTION_ARG_NONE, &arg_no_autostart, NULL, NULL },
 	{ TOTEM_OPTION_AUDIOONLY, 0, 0, G_OPTION_ARG_NONE, &arg_audioonly, NULL, NULL },
+        { TOTEM_OPTION_REFERRER, 0, 0, G_OPTION_ARG_STRING, &arg_referrer, NULL, NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY /* STRING? */, &arg_remaining, NULL },
 	{ NULL }
 };
@@ -2314,6 +2327,7 @@ int main (int argc, char **argv)
 	emb->audioonly = arg_audioonly;
 	emb->type = arg_plugin_type;
         emb->user_agent = arg_user_agent;
+        emb->referrer_uri = arg_referrer;
 
 	/* FIXME: register this BEFORE requesting the service name? */
 	dbus_g_connection_register_g_object

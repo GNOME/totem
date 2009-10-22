@@ -190,6 +190,7 @@ class totemPlugin {
 
     char* mMimeType;
 
+    char* mDocumentURI;
     char* mBaseURI;
     char* mSrcURI; /* relative to mBaseURI */
     char* mRequestBaseURI;

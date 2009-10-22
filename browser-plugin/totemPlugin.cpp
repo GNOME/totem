@@ -2,7 +2,7 @@
  * 
  * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
- * Copyright © 2006, 2007, 2008 Christian Persch
+ * Copyright © 2006, 2007, 2008, 2009 Christian Persch
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -210,6 +210,7 @@ totemPlugin::operator new (size_t aSize) throw ()
 totemPlugin::totemPlugin (NPP aNPP)
 :	mNPP (aNPP),
         mMimeType (NULL),
+        mDocumentURI (NULL),
         mBaseURI (NULL),
         mSrcURI (NULL),
         mRequestBaseURI (NULL),
@@ -280,6 +281,7 @@ totemPlugin::~totemPlugin ()
         g_free (mMimeType);
 
         g_free (mSrcURI);
+        g_free (mDocumentURI);
         g_free (mBaseURI);
         g_free (mRequestURI);
         g_free (mRequestBaseURI);
@@ -537,6 +539,15 @@ totemPlugin::ViewerFork ()
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_USER_AGENT));
 		g_ptr_array_add (arr, g_strdup (userAgent));
 	}
+
+        /* FIXMEchpe: This passes the document URI of the document the plugin is in
+         * as the HTTP referrer. I'm not at all sure this is the right URI! Need
+         * to check what exactly the various legacy plugins pass here.
+         */
+        if (mDocumentURI) {
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_REFERRER));
+		g_ptr_array_add (arr, g_strdup (mDocumentURI));
+        }
 
 	/* FIXME: remove this */
 	if (mMimeType) {
@@ -1923,6 +1934,33 @@ totemPlugin::Init (NPMIMEType mimetype,
 		return NPERR_GENERIC_ERROR;
 	}
 #endif /* TOTEM_COMPLEX_PLUGIN */
+
+        /* FIXMEchpe: should use totemNPObjectWrapper + getter_Retains(),
+         * but that causes a crash somehow, deep inside libxul...
+         */
+        totemNPVariantWrapper ownerDocument;
+        if (!NPN_GetProperty (mNPP,
+                              mPluginElement,
+                              NPN_GetStringIdentifier ("ownerDocument"),
+                              getter_Copies (ownerDocument)) ||
+            !ownerDocument.IsObject ()) {
+		Dm ("Failed to get the plugin element's ownerDocument");
+		return NPERR_GENERIC_ERROR;
+	}
+
+        totemNPVariantWrapper docURI;
+        if (!NPN_GetProperty (mNPP,
+                              ownerDocument.GetObject(),
+                              NPN_GetStringIdentifier ("documentURI"),
+                              getter_Copies (docURI)) ||
+            !docURI.IsString ()) {
+                Dm ("Failed to get the document URI");
+                return NPERR_GENERIC_ERROR;
+        }
+  
+        /* FIXMEchpe: need to resolve this against any base URIs ? */
+        mDocumentURI = g_strndup (docURI.GetString(), docURI.GetStringLen());
+        D ("Document URI is '%s'", mDocumentURI ? mDocumentURI : "");
 
 	/* We'd like to get the base URI of our DOM element as a nsIURI,
 	 * but there's no frozen method to do so (nsIContent/nsINode isn't available
