@@ -1,5 +1,26 @@
 New features and significant updates in version...
 
+2.28.2:
+* Movie Player:
+  - Fix possible crash on exit when using Python plugins
+  - Fix warning when displaying file tooltip in the playlist
+  - Fix help links not showing up in error messages
+  - Fix "disabling screensaver when audio is playing" checkbox
+    never turning off (or on)
+  - Fix play order when removing currently playing song
+
+* Web browser plugin:
+  - Fix screensaver not being stopped when playing movies
+  - Fix parsing of playlist files when using WebKit
+  - Add support for midi files
+
+* GStreamer backend:
+  - Fix possible hang on startup
+  - Fix DVB channels file not being detected properly
+  - Fix warning when creating a screenshot
+  - Use cubic volumes when PulseAudio is used
+  - Fix intermittent pixel-aspect-ratio warnings
+
 2.28.1:
 * Movie Player:
   - Fix some problems with the "remember position"
