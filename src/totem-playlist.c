@@ -1304,6 +1304,51 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 	}
 }
 
+static gboolean
+search_equal_is_match (const gchar * s, const gchar * lc_key)
+{
+	gboolean match = FALSE;
+
+	if (s != NULL) {
+		gchar *lc_s;
+
+		/* maybe also normalize both strings? */
+		lc_s = g_utf8_strdown (s, -1);
+		match = (lc_s != NULL && strstr (lc_s, lc_key) != NULL);
+		g_free (lc_s);
+	}
+
+	return match;
+}
+
+static gboolean
+search_equal_func (GtkTreeModel *model, gint col, const gchar *key,
+                   GtkTreeIter *iter, gpointer userdata)
+{
+	gboolean match;
+	gchar *lc_key, *fn = NULL;
+
+	lc_key = g_utf8_strdown (key, -1);
+
+        /* type-ahead search: first check display filename / title, then URI */
+	gtk_tree_model_get (model, iter, FILENAME_COL, &fn, -1);
+	match = search_equal_is_match (fn, lc_key);
+	g_free (fn);
+
+	if (!match) {
+		gchar *uri = NULL;
+
+		gtk_tree_model_get (model, iter, URI_COL, &uri, -1);
+		fn = g_filename_from_uri (uri, NULL, NULL);
+		match = search_equal_is_match (fn, lc_key);
+		g_free (fn);
+		g_free (uri);
+	}
+
+	g_free (lc_key);
+	return !match; /* needs to return FALSE if row matches */
+}
+
 static void
 init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 {
@@ -1339,6 +1384,10 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 					      GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 	playlist->priv->selection = selection;
+
+	/* make type-ahead search work in the playlist */
+	gtk_tree_view_set_search_equal_func (GTK_TREE_VIEW (treeview),
+	                                     search_equal_func, NULL, NULL);
 
 	gtk_widget_show (treeview);
 }
