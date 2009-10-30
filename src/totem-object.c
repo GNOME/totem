@@ -899,17 +899,6 @@ totem_action_exit (Totem *totem)
 		gdk_display_sync (display);
 
 	if (totem->bvw) {
-		int vol;
-
-		if (totem->muted != FALSE)
-			vol = totem->prev_volume * 100.0 + 0.5;
-		else
-			vol = bacon_video_widget_get_volume (totem->bvw) * 100.0 + 0.5;
-		/* FIXME move the volume to the static file? */
-		gconf_client_set_int (totem->gc,
-				GCONF_PREFIX"/volume",
-				CLAMP (vol, 0, 100),
-				NULL);
 		totem_action_save_size (totem);
 		totem_save_position (totem);
 	}
@@ -4131,9 +4120,6 @@ video_widget_create (Totem *totem)
 
 	totem_preferences_visuals_setup (totem);
 
-	bacon_video_widget_set_volume (totem->bvw,
-			((double) gconf_client_get_int (totem->gc,
-				GCONF_PREFIX"/volume", NULL)) / 100.0);
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
 			G_CALLBACK (property_notify_cb_volume), totem);
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::logo-mode",
