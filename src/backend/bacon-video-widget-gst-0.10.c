@@ -192,7 +192,6 @@ struct BaconVideoWidgetPrivate
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
   gboolean                     uses_audio_fakesink;
-  GstElement                  *pulse_audio_sink;
   gdouble                      volume;
   gboolean                     is_menu;
   
@@ -2243,11 +2242,6 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
 
-  if (bvw->priv->pulse_audio_sink) {
-    g_object_unref (bvw->priv->pulse_audio_sink);
-    bvw->priv->pulse_audio_sink = NULL;
-  }
-
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
     bvw->priv->vis_plugins_list = NULL;
@@ -3871,6 +3865,70 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
   return !bvw->priv->uses_audio_fakesink;
 }
 
+static gboolean
+is_pulsesink (GstElement *element)
+{
+  GstPluginFeature *feature;
+
+  feature = GST_PLUGIN_FEATURE_CAST (GST_ELEMENT_GET_CLASS (element)->elementfactory);
+  return (feature && strcmp (gst_plugin_feature_get_name (feature), "pulsesink") == 0);  
+}
+
+static gboolean
+has_pulse_audio_sink (GstElement *playbin)
+{
+  GstElement *audiosink;
+  GstIterator *it;
+  gboolean ret = FALSE, done = FALSE;
+  GstState old_state;
+
+  g_object_get (playbin, "audio-sink", &audiosink, NULL);
+  if (!audiosink)
+    return FALSE;
+
+  if (is_pulsesink (audiosink)) {
+    gst_object_unref (audiosink);
+    return TRUE;
+  } else if (!GST_IS_BIN (audiosink)) {
+    gst_object_unref (audiosink);
+    return FALSE;
+  }
+
+  if ((old_state = GST_STATE (audiosink)) < GST_STATE_PAUSED)
+    gst_element_set_state (audiosink, GST_STATE_PAUSED);
+
+  it = gst_bin_iterate_recurse (GST_BIN (audiosink));
+
+  while (!done && !ret) {
+    gpointer item;
+    GstElement *element;
+
+    switch (gst_iterator_next (it, &item)) {
+      case GST_ITERATOR_OK:
+        element = GST_ELEMENT (item);
+        if (is_pulsesink (element)) {
+          ret = TRUE;
+          done = TRUE;
+        }
+        gst_object_unref (element);
+        break;        
+      case GST_ITERATOR_RESYNC:
+        gst_iterator_resync (it);
+        break;
+      case GST_ITERATOR_ERROR:
+      case GST_ITERATOR_DONE:
+        done = TRUE;
+        break;
+    }
+  }
+  gst_iterator_free (it);
+  
+  gst_element_set_state (audiosink, old_state);
+  gst_object_unref (audiosink);
+
+  return ret;
+}
+
 /**
  * bacon_video_widget_set_volume:
  * @bvw: a #BaconVideoWidget
@@ -3886,33 +3944,16 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (bvw->priv->volume < 0.0 && bvw->priv->pulse_audio_sink != NULL) {
+  if (bvw->priv->volume < 0.0 && has_pulse_audio_sink (bvw->priv->play)) {
     bvw->priv->volume = volume;
     return;
   }
 
-  if (bacon_video_widget_can_set_volume (bvw) != FALSE)
-  {
+  if (bacon_video_widget_can_set_volume (bvw) != FALSE) {
     volume = CLAMP (volume, 0.0, 1.0);
-    if (bvw->priv->pulse_audio_sink) {
-      GstState cur_state;
-
-      gst_element_get_state (bvw->priv->pulse_audio_sink, &cur_state, NULL, 0);
-      if (cur_state == GST_STATE_READY || cur_state == GST_STATE_PLAYING)
-      {
-	if (gst_element_implements_interface (bvw->priv->pulse_audio_sink,
-					      GST_TYPE_STREAM_VOLUME)) {
-	  gst_stream_volume_set_volume (GST_STREAM_VOLUME (bvw->priv->pulse_audio_sink),
-					GST_STREAM_VOLUME_FORMAT_CUBIC,
-					volume);
-	} else {
-	  g_object_set (bvw->priv->pulse_audio_sink, "volume", volume, NULL);
-	}
-      }
-    } else {
-      g_object_set (bvw->priv->play, "volume",
-		    (gdouble) volume, NULL);
-    }
+    gst_stream_volume_set_volume (GST_STREAM_VOLUME (bvw->priv->play),
+                                  GST_STREAM_VOLUME_FORMAT_CUBIC,
+                                  volume);
 
     bvw->priv->volume = volume;
     g_object_notify (G_OBJECT (bvw), "volume");
@@ -4638,13 +4679,9 @@ notify_volume_idle_cb (BaconVideoWidget *bvw)
 {
   gdouble vol;
 
-  if (gst_element_implements_interface (bvw->priv->pulse_audio_sink,
-					GST_TYPE_STREAM_VOLUME)) {
-    vol = gst_stream_volume_get_volume (GST_STREAM_VOLUME (bvw->priv->pulse_audio_sink),
-					GST_STREAM_VOLUME_FORMAT_CUBIC);
-  } else {
-    g_object_get (G_OBJECT (bvw->priv->pulse_audio_sink), "volume", &vol, NULL);
-  }
+  vol = gst_stream_volume_get_volume (GST_STREAM_VOLUME (bvw->priv->play),
+                                      GST_STREAM_VOLUME_FORMAT_CUBIC);
+
   bvw->priv->volume = vol;
 
   g_object_notify (G_OBJECT (bvw), "volume");
@@ -6215,18 +6252,15 @@ bacon_video_widget_new (int width, int height,
       cb_gconf, bvw, NULL, NULL);
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
-    audio_sink = gst_element_factory_make ("pulsesink", "audio-sink");
+    audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
     if (audio_sink == NULL) {
-      audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
-      if (audio_sink == NULL) {
-	g_warning ("Could not create element 'gconfaudiosink'");
-	/* Try to fallback on autoaudiosink */
-	audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
-      } else {
-	/* set the profile property on the gconfaudiosink to "music and movies" */
-	if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "profile"))
-	  g_object_set (G_OBJECT (audio_sink), "profile", 1, NULL);
-      }
+      g_warning ("Could not create element 'gconfaudiosink'");
+      /* Try to fallback on autoaudiosink */
+      audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+    } else {
+      /* set the profile property on the gconfaudiosink to "music and movies" */
+      if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "profile"))
+        g_object_set (G_OBJECT (audio_sink), "profile", 1, NULL);
     }
   } else {
     audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
@@ -6376,14 +6410,6 @@ bacon_video_widget_new (int width, int height,
       bvw->priv->uses_audio_fakesink = TRUE;
     }
     gst_object_unref (bus);
-
-    /* If we're using a sink that has a volume property, then that's what
-     * we need to modify, not playbin's one */
-    if (g_object_class_find_property (G_OBJECT_GET_CLASS (audio_sink), "volume")) {
-      bvw->priv->pulse_audio_sink = g_object_ref (audio_sink);
-      g_signal_connect (G_OBJECT (bvw->priv->pulse_audio_sink), "notify::volume",
-			G_CALLBACK (notify_volume_cb), bvw);
-    }
   } else {
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "
@@ -6422,6 +6448,8 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->vis_plugins_list = NULL;
 
+  g_signal_connect (G_OBJECT (bvw->priv->play), "notify::volume",
+      G_CALLBACK (notify_volume_cb), bvw);
   g_signal_connect (bvw->priv->play, "notify::source",
       G_CALLBACK (playbin_source_notify_cb), bvw);
   g_signal_connect (bvw->priv->play, "video-changed",
