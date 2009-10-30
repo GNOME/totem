@@ -98,6 +98,8 @@
   (e->domain == GST_##d##_ERROR && \
    e->code == GST_##d##_ERROR_##c)
 
+#define I_(string) (g_intern_static_string (string))
+
 G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_EVENT_BOX)
 
 /* Signals */
@@ -1001,9 +1003,10 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * should take up no space.
    **/
   g_object_class_install_property (object_class, PROP_LOGO_MODE,
-                                   g_param_spec_boolean ("logo_mode", NULL,
+                                   g_param_spec_boolean ("logo-mode", NULL,
                                                          NULL, FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:position:
@@ -1013,7 +1016,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_POSITION,
                                    g_param_spec_double ("position", NULL, NULL,
 							0, 1.0, 0,
-							G_PARAM_READABLE));
+							G_PARAM_READABLE |
+                                                        G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:stream-length:
@@ -1023,7 +1027,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
 	                           g_param_spec_int64 ("stream-length", NULL,
                                                      NULL, 0, G_MAXINT64, 0,
-                                                     G_PARAM_READABLE));
+                                                     G_PARAM_READABLE |
+                                                     G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:playing:
@@ -1033,7 +1038,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_PLAYING,
                                    g_param_spec_boolean ("playing", NULL,
                                                          NULL, FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE |
+                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:seekable:
@@ -1043,7 +1049,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_SEEKABLE,
                                    g_param_spec_boolean ("seekable", NULL,
                                                          NULL, FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE |
+                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:volume:
@@ -1053,7 +1060,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_VOLUME,
 	                           g_param_spec_double ("volume", NULL, NULL,
 	                                                0.0, 1.0, 0.0,
-	                                                G_PARAM_READWRITE));
+	                                                G_PARAM_READWRITE |
+                                                        G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:show-cursor:
@@ -1064,7 +1072,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
                                    g_param_spec_boolean ("show-cursor", NULL,
                                                          NULL, FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:show-visuals:
@@ -1074,7 +1083,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
                                    g_param_spec_boolean ("show-visuals", NULL,
                                                          NULL, FALSE,
-                                                         G_PARAM_WRITABLE));
+                                                         G_PARAM_WRITABLE |
+                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:referrer:
@@ -1084,7 +1094,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_USER_AGENT,
                                    g_param_spec_string ("referrer", NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:user-agent:
@@ -1094,7 +1105,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_USER_AGENT,
                                    g_param_spec_string ("user-agent", NULL, NULL,
                                                         NULL,
-                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:download-filename:
@@ -1118,7 +1130,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * playback of this stream cannot be restarted.
    **/
   bvw_signals[SIGNAL_ERROR] =
-    g_signal_new ("error",
+    g_signal_new (I_("error"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
@@ -1133,7 +1145,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Emitted when the end of the current stream is reached.
    **/
   bvw_signals[SIGNAL_EOS] =
-    g_signal_new ("eos",
+    g_signal_new (I_("eos"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, eos),
@@ -1148,7 +1160,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Call bacon_video_widget_get_metadata() to query the updated metadata.
    **/
   bvw_signals[SIGNAL_GOT_METADATA] =
-    g_signal_new ("got-metadata",
+    g_signal_new (I_("got-metadata"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
@@ -1161,7 +1173,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Emitted when a redirect response is received from a stream's server.
    **/
   bvw_signals[SIGNAL_REDIRECT] =
-    g_signal_new ("got-redirect",
+    g_signal_new (I_("got-redirect"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, got_redirect),
@@ -1177,7 +1189,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Query the new list of audio languages with bacon_video_widget_get_languages().
    **/
   bvw_signals[SIGNAL_CHANNELS_CHANGE] =
-    g_signal_new ("channels-change",
+    g_signal_new (I_("channels-change"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, channels_change),
@@ -1193,7 +1205,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Emitted every time an important time event happens, or at regular intervals when playing a stream.
    **/
   bvw_signals[SIGNAL_TICK] =
-    g_signal_new ("tick",
+    g_signal_new (I_("tick"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
@@ -1210,7 +1222,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * progress.
    **/
   bvw_signals[SIGNAL_BUFFERING] =
-    g_signal_new ("buffering",
+    g_signal_new (I_("buffering"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, buffering),
@@ -1231,7 +1243,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Return value: %TRUE if the signal was handled and some action was taken, %FALSE otherwise
    **/
   bvw_signals[SIGNAL_MISSING_PLUGINS] =
-    g_signal_new ("missing-plugins",
+    g_signal_new (I_("missing-plugins"),
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   0, /* signal is enough, we don't need a vfunc */

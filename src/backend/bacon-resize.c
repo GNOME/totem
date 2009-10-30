@@ -86,13 +86,15 @@ bacon_resize_class_init (BaconResizeClass *klass)
 
 	g_object_class_install_property (object_class, PROP_HAVE_XVIDMODE,
 					 g_param_spec_boolean ("have-xvidmode", NULL, NULL,
-							       FALSE, G_PARAM_READABLE));
+							       FALSE, G_PARAM_READABLE |
+                                                               G_PARAM_STATIC_STRINGS));
 
 	g_object_class_install_property (object_class, PROP_VIDEO_WIDGET,
 					 g_param_spec_object ("video-widget", "video-widget",
 						 	      "The related video widget",
 							      GTK_TYPE_WIDGET,
-							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY |
+                                                              G_PARAM_STATIC_STRINGS));
 }
 
 static void
