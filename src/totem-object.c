@@ -2427,6 +2427,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 	/* Clear the seek if it's there, we only want to try and seek
 	 * the first file, even if it's not there */
 	totem->seek_to = 0;
+	totem->seek_to_start = 0;
 
 	if (playback_stopped)
 		play_pause_set_label (totem, STATE_STOPPED);
@@ -2477,12 +2478,19 @@ update_seekable (Totem *totem)
 	gtk_action_set_sensitive (action, seekable);
 
 	/* This is for the session restore to seek */
-	if (seekable != FALSE && totem->seek_to != 0) {
-		bacon_video_widget_seek_time (totem->bvw,
-				totem->seek_to, NULL);
-		totem_action_pause (totem);
+	if (seekable != FALSE) {
+		if (totem->seek_to != 0) {
+			bacon_video_widget_seek_time (totem->bvw,
+						      totem->seek_to, NULL);
+		}
+		if (totem->seek_to_start != 0) {
+			bacon_video_widget_seek_time (totem->bvw,
+						      totem->seek_to, NULL);
+			totem_action_pause (totem);
+		}
 	}
 	totem->seek_to = 0;
+	totem->seek_to_start = 0;
 
 	g_object_notify (G_OBJECT (totem), "seekable");
 }
