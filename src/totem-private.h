@@ -145,7 +145,7 @@ struct TotemObject {
 
 	/* session */
 	const char *argv0;
-	gint64 seek_to;
+	gint64 seek_to_start;
 	guint index;
 	gboolean session_restored;
 
@@ -155,6 +155,7 @@ struct TotemObject {
 
 	/* other */
 	char *mrl;
+	gint64 seek_to;
 	TotemPlaylist *playlist;
 	GConfClient *gc;
 	UniqueApp *app;

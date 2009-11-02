@@ -683,22 +683,19 @@ void
 totem_save_position (Totem *totem)
 {
 	gint64 stream_length, position;
-	char *mrl, *pos_str;
+	char *pos_str;
 	GFile *file;
 	GError *error = NULL;
 
 	if (totem->remember_position == FALSE)
 		return;
+	if (totem->mrl == NULL)
+		return;
 
 	stream_length = bacon_video_widget_get_stream_length (totem->bvw);
 	position = bacon_video_widget_get_current_time (totem->bvw);
-	mrl = totem_get_current_mrl (totem);
 
-	if (mrl == NULL)
-		return;
-
-	file = g_file_new_for_uri (mrl);
-	g_free (mrl);
+	file = g_file_new_for_uri (totem->mrl);
 
 	/* Don't save if it's:
 	 *  - a live stream

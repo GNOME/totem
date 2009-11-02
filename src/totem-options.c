@@ -79,7 +79,7 @@ totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
 	totem->index = options->playlistidx;
 
 	/* Handle --seek */
-	totem->seek_to = options->seek;
+	totem->seek_to_start = options->seek;
 }
 
 void
