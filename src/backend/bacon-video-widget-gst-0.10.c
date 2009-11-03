@@ -1764,6 +1764,41 @@ text_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
 }
 
 static void
+bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
+{
+  gint percent = 0;
+
+  gst_message_parse_buffering (message, &percent);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
+
+  if (percent >= 100) {
+    /* a 100% message means buffering is done */
+    bvw->priv->buffering = FALSE;
+    /* if the desired state is playing, go back */
+    if (bvw->priv->target_state == GST_STATE_PLAYING) {
+      GST_DEBUG ("Buffering done, setting pipeline back to PLAYING");
+      gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
+    } else {
+      GST_DEBUG ("Buffering done, keeping pipeline PAUSED");
+    }
+  } else if (bvw->priv->buffering == FALSE &&
+	     bvw->priv->target_state == GST_STATE_PLAYING) {
+    GstState cur_state;
+
+    gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+    if (cur_state == GST_STATE_PLAYING) {
+      GST_DEBUG ("Buffering ... temporarily pausing playback");
+      gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
+    } else {
+      GST_DEBUG ("Buffering ... prerolling, not doing anything");
+    }
+    bvw->priv->buffering = TRUE;
+  } else {
+    GST_LOG ("Buffering ... %d", percent);
+  }
+}
+
+static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
   BaconVideoWidget *bvw = (BaconVideoWidget *) data;
@@ -1827,39 +1862,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       if (bvw->priv->eos_id == 0)
         bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
       break;
-    case GST_MESSAGE_BUFFERING: {
-      gint percent = 0;
-
-      gst_message_parse_buffering (message, &percent);
-      g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
-
-      if (percent >= 100) {
-        /* a 100% message means buffering is done */
-        bvw->priv->buffering = FALSE;
-        /* if the desired state is playing, go back */
-        if (bvw->priv->target_state == GST_STATE_PLAYING) {
-          GST_DEBUG ("Buffering done, setting pipeline back to PLAYING");
-          gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
-        } else {
-          GST_DEBUG ("Buffering done, keeping pipeline PAUSED");
-        }
-      } else if (bvw->priv->buffering == FALSE &&
-          bvw->priv->target_state == GST_STATE_PLAYING) {
-        GstState cur_state;
-
-        gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
-        if (cur_state == GST_STATE_PLAYING) {
-          GST_DEBUG ("Buffering ... temporarily pausing playback");
-          gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
-        } else {
-          GST_DEBUG ("Buffering ... prerolling, not doing anything");
-        }
-        bvw->priv->buffering = TRUE;
-      } else {
-        GST_LOG ("Buffering ... %d", percent);
-      }
+    case GST_MESSAGE_BUFFERING:
+      bvw_handle_buffering_message (message, bvw);
       break;
-    }
     case GST_MESSAGE_APPLICATION: {
       bvw_handle_application_message (bvw, message);
       break;
