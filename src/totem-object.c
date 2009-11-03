@@ -1701,6 +1701,12 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		if (subtitle == NULL && totem->autoload_subs != FALSE)
 			autoload_sub = totem_uri_get_subtitle_uri (mrl);
 
+		/* HACK: Bad bad Apple */
+		if (g_str_has_prefix (mrl, "http://movies.apple.com") != FALSE)
+			bacon_video_widget_set_user_agent (totem->bvw, "Quicktime/7.2.0");
+		else
+			bacon_video_widget_set_user_agent (totem->bvw, NULL);
+
 		totem_gdk_window_set_waiting_cursor (totem->win->window);
 		totem_try_restore_position (totem, mrl);
 		retval = bacon_video_widget_open (totem->bvw, mrl, subtitle ? subtitle : autoload_sub, &err);
