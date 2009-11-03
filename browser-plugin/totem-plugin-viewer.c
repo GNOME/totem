@@ -190,6 +190,8 @@ void on_preferences1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_fullscreen1_activate (GtkMenuItem *menuitem, TotemEmbedded *emb);
 
+static void update_fill (TotemEmbedded *emb, gdouble level);
+
 enum {
 	BUTTON_PRESS,
 	START_STREAM,
@@ -694,6 +696,7 @@ totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 	totem_embedded_set_uri (emb, NULL, NULL, FALSE);
 
 	bacon_video_widget_close (emb->bvw);
+	update_fill (emb, -1.0);
 	totem_embedded_update_title (emb, NULL);
 
 	return TRUE;
@@ -829,6 +832,7 @@ totem_embedded_close_stream (TotemEmbedded *emb,
 
 	/* FIXME this enough? */
 	bacon_video_widget_close (emb->bvw);
+	update_fill (emb, -1.0);
 
 	return TRUE;
 }
@@ -861,6 +865,8 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			        FALSE);
 
 	bacon_video_widget_close (emb->bvw);
+	update_fill (emb, -1.0);
+
 	totem_embedded_update_title (emb, plitem->title);
 	if (totem_embedded_open_internal (emb, FALSE, NULL /* FIXME */)) {
 		if (plitem->starttime > 0) {
@@ -1294,6 +1300,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	g_message ("redirect: %s", mrl);
 
 	bacon_video_widget_close (emb->bvw);
+	update_fill (emb, -1.0);
 
 	/* If we don't have a relative URI */
 	if (strstr (mrl, "://") != NULL)
@@ -1448,6 +1455,7 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 			emb->num_items = 1;
 			emb->is_browser_stream = FALSE;
 			bacon_video_widget_close (emb->bvw);
+			update_fill (emb, -1.0);
 			totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);
 		} else {
 			/* FIXME: should find a way to enable playback of the stream again without re-requesting it */
@@ -1463,10 +1471,12 @@ on_eos_event (BaconVideoWidget *bvw, TotemEmbedded *emb)
 					totem_embedded_play (emb, NULL);
 			} else {
 				bacon_video_widget_close (emb->bvw);
+				update_fill (emb, -1.0);
 				totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);
 			}
 		} else {
 			bacon_video_widget_close (emb->bvw);
+			update_fill (emb, -1.0);
 			totem_embedded_open_internal (emb, start_play, NULL /* FIXME? */);
 		}
 	} else if (emb->current) {
@@ -1568,6 +1578,27 @@ static void
 on_buffering (BaconVideoWidget *bvw, guint percentage, TotemEmbedded *emb)
 {
 //	g_message ("Buffering: %d %%", percentage);
+}
+
+static void
+update_fill (TotemEmbedded *emb, gdouble level)
+{
+	if (level < 0.0) {
+		gtk_range_set_show_fill_level (GTK_RANGE (emb->seek), FALSE);
+		gtk_range_set_show_fill_level (GTK_RANGE (emb->fs->seek), FALSE);
+	} else {
+		gtk_range_set_fill_level (GTK_RANGE (emb->seek), level * 65535.0f);
+		gtk_range_set_show_fill_level (GTK_RANGE (emb->seek), TRUE);
+
+		gtk_range_set_fill_level (GTK_RANGE (emb->fs->seek), level * 65535.0f);
+		gtk_range_set_show_fill_level (GTK_RANGE (emb->fs->seek), TRUE);
+	}
+}
+
+static void
+on_download_buffering (BaconVideoWidget *bvw, gdouble level, TotemEmbedded *emb)
+{
+	update_fill (emb, level);
 }
 
 static void
@@ -1807,6 +1838,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 			G_CALLBACK (on_tick), emb);
 	g_signal_connect (G_OBJECT (emb->bvw), "buffering",
 			  G_CALLBACK (on_buffering), emb);
+	g_signal_connect (G_OBJECT (emb->bvw), "download-buffering",
+			  G_CALLBACK (on_download_buffering), emb);
 
 	g_signal_connect (G_OBJECT (emb->bvw), "notify::volume",
 			  G_CALLBACK (property_notify_cb_volume), emb);
