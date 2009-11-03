@@ -144,7 +144,8 @@ typedef enum {
   GST_PLAY_FLAGS_VIS          = 0x08,
   GST_PLAY_FLAGS_SOFT_VOLUME  = 0x10,
   GST_PLAY_FLAGS_NATIVE_AUDIO = 0x20,
-  GST_PLAY_FLAGS_NATIVE_VIDEO = 0x40
+  GST_PLAY_FLAGS_NATIVE_VIDEO = 0x40,
+  GST_PLAY_FLAGS_DOWNLOAD     = 0x80
 } GstPlayFlags;
 
 struct BaconVideoWidgetPrivate
@@ -6284,6 +6285,7 @@ bacon_video_widget_new (int width, int height,
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
+  GstPlayFlags flags;
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
@@ -6315,7 +6317,11 @@ bacon_video_widget_new (int width, int height,
   }
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
-  
+
+  /* Add the download flag, for streaming buffering */
+  g_object_get (bvw->priv->play, "flags", &flags, NULL);
+  g_object_set (bvw->priv->play, "flags", flags | GST_PLAY_FLAGS_DOWNLOAD, NULL);
+
   gst_bus_add_signal_watch (bvw->priv->bus);
 
   bvw->priv->sig_bus_async = 
