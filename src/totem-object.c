@@ -105,6 +105,7 @@ static const GtkTargetEntry target_table[] = {
 static gboolean totem_action_open_files_list (Totem *totem, GSList *list);
 static gboolean totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *device);
 static void update_buttons (Totem *totem);
+static void update_fill (Totem *totem, gdouble level);
 static void update_media_menu_items (Totem *totem);
 static void playlist_changed_cb (GtkWidget *playlist, Totem *totem);
 static void play_pause_set_label (Totem *totem, TotemStates state);
@@ -1656,6 +1657,7 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		bacon_video_widget_close (totem->bvw);
 		totem_file_closed (totem);
 		play_pause_set_label (totem, STATE_STOPPED);
+		update_fill (totem, -1.0);
 	}
 
 	if (mrl == NULL) {
@@ -2439,6 +2441,27 @@ static void
 on_buffering_event (BaconVideoWidget *bvw, int percentage, Totem *totem)
 {
 	totem_statusbar_push (TOTEM_STATUSBAR (totem->statusbar), percentage);
+}
+
+static void
+on_download_buffering_event (BaconVideoWidget *bvw, gdouble level, Totem *totem)
+{
+	update_fill (totem, level);
+}
+
+static void
+update_fill (Totem *totem, gdouble level)
+{
+	if (level < 0.0) {
+		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), FALSE);
+		gtk_range_set_show_fill_level (GTK_RANGE (totem->fs->seek), FALSE);
+	} else {
+		gtk_range_set_fill_level (GTK_RANGE (totem->seek), level * 65535.0f);
+		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), TRUE);
+
+		gtk_range_set_fill_level (GTK_RANGE (totem->fs->seek), level * 65535.0f);
+		gtk_range_set_show_fill_level (GTK_RANGE (totem->fs->seek), TRUE);
+	}
 }
 
 static void
@@ -4088,6 +4111,10 @@ video_widget_create (Totem *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"buffering",
 			G_CALLBACK (on_buffering_event),
+			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			"download-buffering",
+			G_CALLBACK (on_download_buffering_event),
 			totem);
 	g_signal_connect (G_OBJECT (totem->bvw),
 			"error",
