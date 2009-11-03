@@ -726,7 +726,7 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	g_assert (self->cancellable[data->tree_view] != NULL);
 
 	/* Add the entry to the tree view */
-	title = gdata_youtube_video_get_title (GDATA_YOUTUBE_VIDEO (entry));
+	title = gdata_entry_get_title (entry);
 	id = gdata_youtube_video_get_video_id (GDATA_YOUTUBE_VIDEO (entry));
 
 	gtk_list_store_append (self->list_store[data->tree_view], &iter);
@@ -851,7 +851,7 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		/* If this is the first query, compile the regex used to resolve the t param. Doing this here rather than when
 		 * activating the plugin means we don't waste cycles if the plugin's never used. It also means we don't waste
 		 * cycles repeatedly creating new regexes for each video whose t param we resolve. */
-		self->regex = g_regex_new ("swfArgs.*\"t\": \"([^\"]+)\"", G_REGEX_OPTIMIZE, 0, NULL);
+		self->regex = g_regex_new ("'SWF_ARGS'.*\"t\": \"([^\"]+)\"", G_REGEX_OPTIMIZE, 0, NULL);
 		g_assert (self->regex != NULL);
 
 		/* Set up the GData service (needed for the tree views' queries) */
