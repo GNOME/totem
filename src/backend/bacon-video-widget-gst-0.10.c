@@ -109,6 +109,7 @@ enum
   SIGNAL_GOT_METADATA,
   SIGNAL_BUFFERING,
   SIGNAL_MISSING_PLUGINS,
+  SIGNAL_DOWNLOAD_BUFFERING,
   LAST_SIGNAL
 };
 
@@ -165,6 +166,7 @@ struct BaconVideoWidgetPrivate
   GMutex                      *lock;
 
   guint                        update_id;
+  guint                        fill_id;
 
   GdkPixbuf                   *logo_pixbuf;
   GdkPixbuf                   *cover_pixbuf; /* stream-specific image */
@@ -1217,6 +1219,21 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   bvw_boolean_handled_accumulator, NULL,
                   baconvideowidget_marshal_BOOLEAN__BOXED_BOXED_BOOLEAN,
                   G_TYPE_BOOLEAN, 3, G_TYPE_STRV, G_TYPE_STRV, G_TYPE_BOOLEAN);
+
+  /**
+   * BaconVideoWidget::download-buffering:
+   * @percentage: the percentage of download buffering completed, between %0 and %1
+   *
+   * Emitted regularly when a network stream is being cached on disk, to provide status
+   *  updates on the buffering level of the stream.
+   **/
+  bvw_signals[SIGNAL_DOWNLOAD_BUFFERING] =
+    g_signal_new ("download-buffering",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (BaconVideoWidgetClass, download_buffering),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__DOUBLE, G_TYPE_NONE, 1, G_TYPE_DOUBLE);
 }
 
 static void
@@ -1258,6 +1275,7 @@ shrink_toplevel (BaconVideoWidget * bvw)
 }
 
 static gboolean bvw_query_timeout (BaconVideoWidget *bvw);
+static gboolean bvw_query_buffering_timeout (BaconVideoWidget *bvw);
 static void parse_stream_info (BaconVideoWidget *bvw);
 
 static void
@@ -1550,6 +1568,24 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
   }
 }
 
+static void
+bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs)
+{
+  if (bvw->priv->fill_id != 0 && msecs > 0)
+    return;
+
+  if (bvw->priv->fill_id != 0) {
+    GST_DEBUG ("removing fill timeout");
+    g_source_remove (bvw->priv->fill_id);
+    bvw->priv->fill_id = 0;
+  }
+  if (msecs > 0) {
+    GST_DEBUG ("adding fill timeout (at %ums)", msecs);
+    bvw->priv->fill_id =
+      g_timeout_add (msecs, (GSourceFunc) bvw_query_buffering_timeout, bvw);
+  }
+}
+
 /* returns TRUE if the error/signal has been handled and should be ignored */
 static gboolean
 bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
@@ -1767,8 +1803,17 @@ text_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
 static void
 bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 {
+  GstBufferingMode mode;
+  gint64 buffering_left;
   gint percent = 0;
 
+   gst_message_parse_buffering_stats (message, &mode, NULL, NULL, &buffering_left);
+   if (mode == GST_BUFFERING_DOWNLOAD) {
+     bvw_reconfigure_fill_timeout (bvw, 200);
+     return;
+   }
+
+   /* Live, timeshift and stream buffering modes */
   gst_message_parse_buffering (message, &percent);
   g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
 
@@ -2161,6 +2206,39 @@ bvw_query_timeout (BaconVideoWidget *bvw)
   } else {
     GST_DEBUG ("could not get position");
   }
+
+  return TRUE;
+}
+
+static gboolean
+bvw_query_buffering_timeout (BaconVideoWidget *bvw)
+{
+  GstQuery *query;
+
+  query = gst_query_new_buffering (GST_FORMAT_PERCENT);
+  if (gst_element_query (bvw->priv->play, query)) {
+    gint64 start, stop;
+    GstFormat format;
+    gdouble fill;
+    gboolean busy;
+    gint percent;
+
+    gst_query_parse_buffering_percent (query, &busy, &percent);
+    gst_query_parse_buffering_range (query, &format, &start, &stop, NULL);
+
+    GST_DEBUG ("start %" G_GINT64_FORMAT ", stop %" G_GINT64_FORMAT,
+	       start, stop);
+
+    if (stop != -1)
+      fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
+    else
+      fill = -1.0;
+
+    GST_DEBUG ("download buffer filled up to %f%%", fill * 100.0);
+
+    g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
+  }
+  gst_query_unref (query);
 
   return TRUE;
 }
@@ -3587,6 +3665,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->buffering = FALSE;
   bvw->priv->plugin_install_in_progress = FALSE;
   bvw->priv->ignore_messages_mask = 0;
+  bvw_reconfigure_fill_timeout (bvw, 0);
   if (bvw->priv->cover_pixbuf) {
     g_object_unref (bvw->priv->cover_pixbuf);
     bvw->priv->cover_pixbuf = NULL;
