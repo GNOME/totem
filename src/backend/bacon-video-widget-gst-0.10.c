@@ -1814,7 +1814,7 @@ bvw_buffering_done (BaconVideoWidget *bvw)
   if (bvw->priv->buffering_left < 0)
     return TRUE;
 
-  return (bvw->priv->buffering_left < bvw->priv->stream_length);
+  return (bvw->priv->buffering_left * 1.1 < bvw->priv->stream_length);
 }
 
 static void
