@@ -2237,6 +2237,13 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     GST_DEBUG ("download buffer filled up to %f%%", fill * 100.0);
 
     g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
+
+    /* Finished buffering, so don't run the timeout anymore */
+    if (fill == 1.0) {
+      bvw->priv->fill_id = 0;
+      gst_query_unref (query);
+      return FALSE;
+    }
   }
   gst_query_unref (query);
 
