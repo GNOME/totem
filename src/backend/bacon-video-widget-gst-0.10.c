@@ -1389,7 +1389,6 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
     gst_message_unref (msg);
     g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE, FALSE);
     g_error_free (err);
-    bacon_video_widget_play (bvw, NULL);
   }
 }
 
