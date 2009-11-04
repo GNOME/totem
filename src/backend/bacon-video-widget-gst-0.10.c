@@ -1373,7 +1373,8 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
   if (ret) {
 
     GST_DEBUG ("Mounting location '%s' successful", GST_STR_NULL (uri));
-    bacon_video_widget_play (bvw, NULL);
+    if (bvw->priv->target_state == GST_STATE_PLAYING)
+      bacon_video_widget_play (bvw, NULL);
   } else {
     GError *err = NULL;
     GstMessage *msg;
