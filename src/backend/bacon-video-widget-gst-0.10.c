@@ -3597,6 +3597,9 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   if (bvw->priv->mrl == NULL)
     return FALSE;
 
+  if (bvw->priv->download_buffering != FALSE)
+    return TRUE;
+
   /* (instant seeking only make sense with video,
    * hence no cdda:// here) */
   if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
