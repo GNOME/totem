@@ -293,14 +293,9 @@ totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 }
 
 static void
-totem_embedded_save_volume (TotemEmbedded *emb, double volume)
+totem_embedded_volume_changed (TotemEmbedded *emb, double volume)
 {
-	GConfClient *gc;
 	GValue value = { 0, };
-
-	gc = gconf_client_get_default ();
-	gconf_client_set_int (gc, GCONF_PREFIX"/volume", (int) (volume * 100.0), NULL);
-	g_object_unref (G_OBJECT (gc));
 
 	g_value_init (&value, G_TYPE_DOUBLE);
 	g_value_set_double (&value, volume);
@@ -581,7 +576,7 @@ totem_embedded_set_volume (TotemEmbedded *embedded,
 {
 	g_message ("totem_embedded_set_volume: %f", volume);
 	bacon_video_widget_set_volume (embedded->bvw, volume);
-	totem_embedded_save_volume (embedded, volume);
+	totem_embedded_volume_changed (embedded, volume);
 	return TRUE;
 }
 
@@ -1537,7 +1532,7 @@ static void
 cb_vol (GtkWidget *val, gdouble value, TotemEmbedded *emb)
 {
 	bacon_video_widget_set_volume (emb->bvw, value);
-	totem_embedded_save_volume (emb, value);
+	totem_embedded_volume_changed (emb, value);
 }
 
 static void
@@ -1612,7 +1607,7 @@ property_notify_cb_volume (BaconVideoWidget *bvw,
 	
 	g_signal_handlers_block_by_func (emb->volume, cb_vol, emb);
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (emb->volume), volume);
-	totem_embedded_save_volume (emb, volume);
+	totem_embedded_volume_changed (emb, volume);
 	g_signal_handlers_unblock_by_func (emb->volume, cb_vol, emb);
 }
 
@@ -1668,7 +1663,7 @@ totem_embedded_action_volume_relative (TotemEmbedded *emb, double off_pct)
 	
 	vol = bacon_video_widget_get_volume (emb->bvw);
 	bacon_video_widget_set_volume (emb->bvw, vol + off_pct);
-	totem_embedded_save_volume (emb, vol + off_pct);
+	totem_embedded_volume_changed (emb, vol + off_pct);
 }
 
 static gboolean
@@ -1895,7 +1890,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (G_OBJECT (emb->volume), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
 	bacon_video_widget_set_volume (emb->bvw, volume);
-	totem_embedded_save_volume (emb, volume);
+	totem_embedded_volume_changed (emb, volume);
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
