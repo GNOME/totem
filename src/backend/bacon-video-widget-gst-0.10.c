@@ -239,6 +239,10 @@ struct BaconVideoWidgetPrivate
    * which may change asynchronously or during buffering */
   GstState                     target_state;
   gboolean                     buffering;
+  gboolean                     download_buffering;
+  /* used to compute when the download buffer has gone far
+   * enough to start playback */
+  gint64                       buffering_left;
 
   /* for easy codec installation */
   GList                       *missing_plugins;   /* GList of GstMessages */
@@ -1800,6 +1804,19 @@ text_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
     bvw_update_tags_delayed (bvw, tags, "text");
 }
 
+static gboolean
+bvw_buffering_done (BaconVideoWidget *bvw)
+{
+  if (bvw->priv->stream_length <= 0)
+    return FALSE;
+  /* When queue2 doesn't implement buffering-left, always think
+   * it's ready to go */
+  if (bvw->priv->buffering_left < 0)
+    return TRUE;
+
+  return (bvw->priv->buffering_left < bvw->priv->stream_length);
+}
+
 static void
 bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 {
@@ -1809,7 +1826,24 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 
    gst_message_parse_buffering_stats (message, &mode, NULL, NULL, &buffering_left);
    if (mode == GST_BUFFERING_DOWNLOAD) {
-     bvw_reconfigure_fill_timeout (bvw, 200);
+     bvw->priv->buffering_left = buffering_left;
+
+     if (bvw->priv->download_buffering == FALSE) {
+       bvw->priv->download_buffering = TRUE;
+
+       /* We're not ready to play yet, so pause the stream */
+       GST_DEBUG ("Pausing because we're not ready to play the buffer yet");
+       gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
+
+       bvw_reconfigure_fill_timeout (bvw, 200);
+     }
+
+     /* Start playing when we've download enough */
+     if (bvw_buffering_done (bvw) != FALSE &&
+	 bvw->priv->target_state == GST_STATE_PLAYING) {
+       GST_DEBUG ("Starting playback because the download buffer is filled enough");
+       bacon_video_widget_play (bvw, NULL);
+     }
      return;
    }
 
@@ -3517,13 +3551,24 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     return TRUE;
   }
 
-  /* just lie and do nothing in this case */
+  /* Don't try to play if we're already doing that */
   gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+  if (cur_state == GST_STATE_PLAYING)
+    return TRUE;
+
+  /* Lie when trying to play a file whilst we're download buffering */
+  if (bvw->priv->download_buffering != FALSE &&
+      bvw_buffering_done (bvw) == FALSE) {
+    GST_DEBUG ("download buffering in progress, not playing");
+    return TRUE;
+  }
+
+  /* just lie and do nothing in this case */
   if (bvw->priv->plugin_install_in_progress && cur_state != GST_STATE_PAUSED) {
-    GST_DEBUG ("plugin install in progress and nothing to play, doing nothing");
+    GST_DEBUG ("plugin install in progress and nothing to play, not playing");
     return TRUE;
   } else if (bvw->priv->mount_in_progress) {
-    GST_DEBUG ("Mounting in progress, doing nothing");
+    GST_DEBUG ("Mounting in progress, not playing");
     return TRUE;
   }
 
@@ -3671,6 +3716,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->target_state = GST_STATE_NULL;
   bvw->priv->buffering = FALSE;
   bvw->priv->plugin_install_in_progress = FALSE;
+  bvw->priv->download_buffering = FALSE;
+  bvw->priv->buffering_left = -1;
   bvw->priv->ignore_messages_mask = 0;
   bvw_reconfigure_fill_timeout (bvw, 0);
   if (bvw->priv->cover_pixbuf) {
