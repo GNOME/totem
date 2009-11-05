@@ -1575,9 +1575,6 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
 static void
 bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs)
 {
-  if (bvw->priv->fill_id != 0 && msecs > 0)
-    return;
-
   if (bvw->priv->fill_id != 0) {
     GST_DEBUG ("removing fill timeout");
     g_source_remove (bvw->priv->fill_id);
@@ -1822,13 +1819,10 @@ static void
 bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 {
   GstBufferingMode mode;
-  gint64 buffering_left;
   gint percent = 0;
 
-   gst_message_parse_buffering_stats (message, &mode, NULL, NULL, &buffering_left);
+   gst_message_parse_buffering_stats (message, &mode, NULL, NULL, NULL);
    if (mode == GST_BUFFERING_DOWNLOAD) {
-     bvw->priv->buffering_left = buffering_left;
-
      if (bvw->priv->download_buffering == FALSE) {
        bvw->priv->download_buffering = TRUE;
 
@@ -1839,13 +1833,13 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
        bvw_reconfigure_fill_timeout (bvw, 200);
      }
 
-     /* Start playing when we've download enough */
-     if (bvw_buffering_done (bvw) != FALSE &&
-	 bvw->priv->target_state == GST_STATE_PLAYING) {
-       GST_DEBUG ("Starting playback because the download buffer is filled enough");
-       bacon_video_widget_play (bvw, NULL);
-     }
      return;
+   }
+
+   /* We switched from download mode to normal buffering */
+   if (bvw->priv->download_buffering != FALSE) {
+     bvw_reconfigure_fill_timeout (bvw, 0);
+     bvw->priv->download_buffering = FALSE;
    }
 
    /* Live, timeshift and stream buffering modes */
@@ -2258,6 +2252,7 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     gboolean busy;
     gint percent;
 
+    gst_query_parse_buffering_stats (query, NULL, NULL, NULL, &bvw->priv->buffering_left);
     gst_query_parse_buffering_percent (query, &busy, &percent);
     gst_query_parse_buffering_range (query, &format, &start, &stop, NULL);
 
@@ -2272,6 +2267,13 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     GST_DEBUG ("download buffer filled up to %f%%", fill * 100.0);
 
     g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
+
+     /* Start playing when we've download enough */
+     if (bvw_buffering_done (bvw) != FALSE &&
+	 bvw->priv->target_state == GST_STATE_PLAYING) {
+       GST_DEBUG ("Starting playback because the download buffer is filled enough");
+       bacon_video_widget_play (bvw, NULL);
+     }
 
     /* Finished buffering, so don't run the timeout anymore */
     if (fill == 1.0) {
