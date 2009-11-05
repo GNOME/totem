@@ -1702,7 +1702,8 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   }
 
   /* clean up */
-  gst_tag_list_free (tag_list);
+  if (tag_list)
+    gst_tag_list_free (tag_list);
 
   if (bvw->priv->use_type != BVW_USE_TYPE_METADATA)
     bvw_check_for_cover_pixbuf (bvw);
