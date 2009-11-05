@@ -55,12 +55,6 @@ on_got_metadata (BaconVideoWidget *bvw, gpointer data)
 }
 
 static void
-on_title_changed (BaconVideoWidget *bvw, const char *title, gpointer data)
-{
-	g_message ("Got title change signal: %s", title);
-}
-
-static void
 error_cb (GtkWidget *bvw, const char *message,
 		gboolean playback_stopped, gboolean fatal)
 {
@@ -95,10 +89,10 @@ int main
 
 	bvw = bacon_video_widget_new (width, height,
 			BVW_USE_TYPE_VIDEO, NULL);
+	bacon_video_widget_set_logo (BACON_VIDEO_WIDGET (bvw), "totem");
 
 	g_signal_connect (G_OBJECT (bvw), "eos", G_CALLBACK (on_eos_event), NULL);
 	g_signal_connect (G_OBJECT (bvw), "got-metadata", G_CALLBACK (on_got_metadata), NULL);
-	g_signal_connect (G_OBJECT (bvw), "title-change", G_CALLBACK (on_title_changed), NULL);
 	g_signal_connect (G_OBJECT (bvw), "got-redirect", G_CALLBACK (on_redirect), NULL);
 	g_signal_connect (G_OBJECT (bvw), "error", G_CALLBACK (error_cb), NULL);
 
