@@ -3354,9 +3354,10 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		return FALSE;
 	}
 
-	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE
-			&& totem_playlist_get_repeat (totem->playlist) == FALSE)
-	{
+	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE &&
+	    totem_playlist_get_repeat (totem->playlist) == FALSE &&
+	    (totem_playlist_get_last (totem->playlist) != 0 ||
+	     totem_is_seekable (totem) == FALSE)) {
 		char *mrl, *subtitle;
 
 		/* Set play button status */
@@ -3369,12 +3370,18 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		g_free (mrl);
 		g_free (subtitle);
 	} else {
-		if (totem_playlist_get_repeat (totem->playlist)
-				&& totem_playlist_get_last  (totem->playlist) == 0
-				&& totem_is_seekable (totem))
-			totem_action_seek_time (totem, 0);
-		else
+		if (totem_playlist_get_last (totem->playlist) == 0 &&
+		    totem_is_seekable (totem)) {
+			if (totem_playlist_get_repeat (totem->playlist) != FALSE) {
+				totem_action_seek_time (totem, 0);
+				totem_action_play (totem);
+			} else {
+				totem_action_pause (totem);
+				totem_action_seek_time (totem, 0);
+			}
+		} else {
 			totem_action_next (totem);
+		}
 	}
 
 	return FALSE;
