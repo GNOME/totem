@@ -36,6 +36,7 @@
 #include "totem-interface.h"
 #include "totem-time-label.h"
 #include "bacon-video-widget.h"
+#include "gsd-media-keys-window.h"
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
 
@@ -53,6 +54,7 @@ G_MODULE_EXPORT gboolean totem_fullscreen_motion_notify (GtkWidget *widget, GdkE
 struct _TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;
 	GtkWidget        *parent_window;
+	GtkWidget        *osd;
 
 	/* Fullscreen Popups */
 	GtkWidget        *exit_popup;
@@ -141,6 +143,20 @@ totem_fullscreen_theme_changed_cb (GtkIconTheme *icon_theme, TotemFullscreen *fs
 }
 
 static void
+totem_fullscreen_composited_changed_cb (GdkScreen *screen, TotemFullscreen *fs)
+{
+	if (gdk_screen_is_composited (screen)) {
+		if (fs->priv->osd == NULL)
+			fs->priv->osd = gsd_media_keys_window_new ();
+	} else {
+		if (fs->priv->osd != NULL) {
+			gtk_widget_destroy (fs->priv->osd);
+			fs->priv->osd = NULL;
+		}
+	}
+}
+
+static void
 totem_fullscreen_window_realize_cb (GtkWidget *widget, TotemFullscreen *fs)
 {
 	GdkScreen *screen;
@@ -148,9 +164,13 @@ totem_fullscreen_window_realize_cb (GtkWidget *widget, TotemFullscreen *fs)
 	screen = gtk_widget_get_screen (widget);
 	g_signal_connect (G_OBJECT (screen), "size-changed",
 			  G_CALLBACK (totem_fullscreen_size_changed_cb), fs);
+	g_signal_connect (G_OBJECT (screen), "composited-changed",
+			  G_CALLBACK (totem_fullscreen_composited_changed_cb), fs);
 	g_signal_connect (G_OBJECT (gtk_icon_theme_get_for_screen (screen)),
 			  "changed",
 			  G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
+
+	totem_fullscreen_composited_changed_cb (screen, fs);
 }
 
 static void
@@ -286,6 +306,39 @@ totem_fullscreen_show_popups (TotemFullscreen *fs, gboolean show_cursor)
 	totem_fullscreen_popup_timeout_add (fs);
 
 	fs->priv->popup_in_progress = FALSE;
+}
+
+void
+totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
+				     const char *icon_name,
+				     gboolean show_cursor)
+{
+	GtkAllocation allocation;
+	GdkScreen *screen;
+	GdkWindow *window;
+	GdkRectangle rect;
+	int monitor;
+
+	if (fs->priv->osd == NULL || icon_name == NULL) {
+		totem_fullscreen_show_popups (fs, show_cursor);
+		return;
+	}
+
+	gtk_widget_get_allocation (GTK_WIDGET (fs->priv->bvw), &allocation);
+	gtk_window_resize (GTK_WINDOW (fs->priv->osd),
+			   allocation.height / 8,
+			   allocation.height / 8);
+
+	window = gtk_widget_get_window (GTK_WIDGET (fs->priv->bvw));
+	screen = gtk_widget_get_screen (GTK_WIDGET (fs->priv->bvw));
+	monitor = gdk_screen_get_monitor_at_window (screen, window);
+	gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+	gtk_window_move (GTK_WINDOW (fs->priv->osd), rect.x + 8, rect.y + 8);
+
+	gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (fs->priv->osd),
+						 icon_name, FALSE);
+	gtk_widget_show (fs->priv->osd);
 }
 
 void

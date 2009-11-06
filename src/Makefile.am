@@ -14,6 +14,7 @@ common_defines = \
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\
+	-DGTKBUILDERDIR=\"""\"				\
 	$(DISABLE_DEPRECATED)
 
 modules_flags = -export_dynamic -avoid-version -module -no-undefined
@@ -27,6 +28,8 @@ libtotem_player_la_SOURCES = \
 	totem-interface.h	\
 	totem-fullscreen.c	\
 	totem-fullscreen.h	\
+	gsd-media-keys-window.c	\
+	gsd-media-keys-window.h	\
 	totem-time-label.c	\
 	totem-time-label.h
 

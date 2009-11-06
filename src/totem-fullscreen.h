@@ -74,6 +74,9 @@ void     totem_fullscreen_set_parent_window  (TotemFullscreen *fs,
 					      GtkWindow *parent_window);
 void     totem_fullscreen_show_popups        (TotemFullscreen *fs,
 					      gboolean show_cursor);
+void totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
+					  const char *icon_name,
+					  gboolean show_cursor);
 gboolean totem_fullscreen_is_fullscreen      (TotemFullscreen *fs);
 void     totem_fullscreen_set_fullscreen     (TotemFullscreen *fs,
 					      gboolean fullscreen);
