@@ -185,6 +185,7 @@ gboolean bacon_video_widget_seek_time		 (BaconVideoWidget *bvw,
 						  gint64 _time,
 						  GError **error);
 gboolean bacon_video_widget_step		 (BaconVideoWidget *bvw,
+						  gboolean forward,
 						  GError **error);
 gboolean bacon_video_widget_can_direct_seek	 (BaconVideoWidget *bvw);
 double bacon_video_widget_get_position           (BaconVideoWidget *bvw);

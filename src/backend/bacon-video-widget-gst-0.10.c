@@ -3684,14 +3684,58 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
 }
 
 gboolean
-bacon_video_widget_step (BaconVideoWidget *bvw, GError **error)
+bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error)
 {
-  GstEvent *event;
+  if (forward == TRUE) {
+    GstEvent *event;
 
-  event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
+    event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
 
-  gst_element_send_event (bvw->priv->play, event);
-  return TRUE;
+    return gst_element_send_event (bvw->priv->play, event);
+  } else {
+    GstEvent *event;
+    GstFormat fmt;
+    gint64 cur = 0;
+
+    fmt = GST_FORMAT_TIME;
+    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+      g_message ("playback direction to reverse (%"G_GINT64_FORMAT")", cur);
+      event = gst_event_new_seek (-1.0,
+				  fmt, GST_SEEK_FLAG_FLUSH, GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0), 
+				  GST_SEEK_TYPE_SET, cur);
+      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+	g_message ("failed to seek orig failed");
+      } else {
+	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+      }
+    } else {
+      g_message ("failed to query orig position");
+    }
+
+    event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
+    if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+      g_message ("step failed");
+    } else {
+      gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+    }
+    fmt = GST_FORMAT_TIME;
+    cur = 0;
+    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+      g_message ("playback direction to forward (%"G_GINT64_FORMAT")", cur);
+      event = gst_event_new_seek (1.0,
+				  fmt, GST_SEEK_FLAG_FLUSH, GST_SEEK_TYPE_SET, cur,
+				  GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
+      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+	g_message ("failed to seek back failed");
+      } else {
+	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+      }
+    } else {
+      g_message ("failed to query post position");
+    }
+  }
+
+  return FALSE;
 }
 
 static void
@@ -6019,7 +6063,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 
   /* when used as thumbnailer, wait for pending seeks to complete */
   if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
-    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
+    gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
   }
 
   /* no video info */
@@ -6454,6 +6498,7 @@ bacon_video_widget_new (int width, int height,
     g_object_unref (bvw);
     return NULL;
   }
+  g_object_set (bvw->priv->play, "flags", 0x00000015, NULL);
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
 
