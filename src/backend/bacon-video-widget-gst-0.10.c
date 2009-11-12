@@ -1363,7 +1363,7 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
 {
   BaconVideoWidget * bvw = user_data;
   gboolean ret;
-  const gchar *uri;
+  gchar *uri;
   GError *error = NULL;
 
   ret = g_file_mount_enclosing_volume_finish (G_FILE (obj), res, &error);
@@ -1395,6 +1395,8 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
     g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE, FALSE);
     g_error_free (err);
   }
+
+  g_free (uri);
 }
 
 static void
@@ -1446,7 +1448,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     GFile *file;
     GMountOperation *mount_op;
     GtkWidget *toplevel;
-    const gchar *uri;
+    gchar *uri;
 
     g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
 
@@ -1458,6 +1460,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     }
 
     GST_DEBUG ("Trying to mount location '%s'", GST_STR_NULL (uri));
+    g_free (uri);
     
     toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
     if (toplevel == GTK_WIDGET (bvw) || !GTK_IS_WINDOW (toplevel))
