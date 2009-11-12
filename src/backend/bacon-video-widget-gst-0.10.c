@@ -252,6 +252,10 @@ struct BaconVideoWidgetPrivate
   GCancellable                *mount_cancellable;
   gboolean                     mount_in_progress;
 
+  /* for auth */
+  GMountOperation             *auth_dialog;
+  GMountOperationResult        auth_last_result;
+
   /* Bacon resize */
   BaconResize                 *bacon_resize;
 };
@@ -1264,6 +1268,8 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   bvw->priv->mount_cancellable = NULL;
   bvw->priv->mount_in_progress = FALSE;
+  bvw->priv->auth_last_result = G_MOUNT_OPERATION_HANDLED;
+  bvw->priv->auth_dialog = NULL;
 
   bacon_video_widget_gst_missing_plugins_blacklist ();
 }
@@ -1620,6 +1626,100 @@ bvw_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
   return handled;
 }
 
+static void
+bvw_auth_reply_cb (GMountOperation      *op,
+		   GMountOperationResult result,
+		   BaconVideoWidget     *bvw)
+{
+  GST_DEBUG ("Got authentication reply %d", result);
+  bvw->priv->auth_last_result = result;
+
+  if (result == G_MOUNT_OPERATION_HANDLED) {
+    const char *username, *password;
+    char *new_mrl;
+
+    username = g_mount_operation_get_username (op);
+    password = g_mount_operation_get_password (op);
+
+    /* Crappy! */
+    new_mrl = g_strdup_printf ("rtsp://%s:%s@%s",
+			       username, password, bvw->priv->mrl + strlen ("rtsp://"));
+    g_object_set (bvw->priv->play, "uri", new_mrl, NULL);
+    GST_DEBUG ("Set new MRL for RTSP source '%s'!", new_mrl);
+    g_free (new_mrl);
+  }
+
+  g_object_unref (bvw->priv->auth_dialog);
+  bvw->priv->auth_dialog = NULL;
+
+  if (bvw->priv->target_state == GST_STATE_PLAYING) {
+    GST_DEBUG ("Starting deferred playback after authentication");
+    bacon_video_widget_play (bvw, NULL);
+  }
+}
+
+/* returns TRUE if the error should be ignored */
+static gboolean
+bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
+{
+  gboolean retval;
+
+  retval = FALSE;
+
+  if (bvw->priv->use_type != BVW_USE_TYPE_VIDEO ||
+      GTK_WIDGET_REALIZED (bvw) == FALSE)
+    return retval;
+
+  /* The user already tried, and we aborted */
+  if (bvw->priv->auth_last_result == G_MOUNT_OPERATION_ABORTED) {
+    GST_DEBUG ("Not authenticating, the user aborted the last auth attempt");
+    return retval;
+  }
+  /* There's already an auth on-going, ignore */
+  if (bvw->priv->auth_dialog != NULL) {
+    GST_DEBUG ("Ignoring error, we're doing authentication");
+    return TRUE;
+  }
+
+  /* RTSP source and auth problem? */
+  if (g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0) {
+    GError *err = NULL;
+    gchar *dbg = NULL;
+
+    gst_message_parse_error (err_msg, &err, &dbg);
+
+    if (err != NULL && dbg != NULL &&
+	is_error (err, RESOURCE, READ) &&
+	strstr (dbg, "401") != NULL) {
+      GtkWidget *toplevel;
+      GMountOperationClass *klass;
+
+      GST_DEBUG ("Trying to get auth for location '%s'", GST_STR_NULL (bvw->priv->mrl));
+
+      if (bvw->priv->auth_dialog == NULL) {
+	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+	bvw->priv->auth_dialog = gtk_mount_operation_new (GTK_WINDOW (toplevel));
+	g_signal_connect (G_OBJECT (bvw->priv->auth_dialog), "reply",
+			  G_CALLBACK (bvw_auth_reply_cb), bvw);
+      }
+
+      /* And popup the dialogue! */
+      klass = (GMountOperationClass *) G_OBJECT_GET_CLASS (bvw->priv->auth_dialog);
+      klass->ask_password (bvw->priv->auth_dialog,
+			   _("Password requested for RTSP server"),
+			   g_get_user_name (),
+			   NULL,
+			   G_ASK_PASSWORD_NEED_PASSWORD | G_ASK_PASSWORD_NEED_USERNAME);
+      retval = TRUE;
+    }
+    if (err != NULL)
+      g_error_free (err);
+    g_free (dbg);
+  }
+
+  return retval;
+}
+
 /* returns TRUE if the error has been handled and should be ignored */
 static gboolean
 bvw_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
@@ -1906,7 +2006,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_ERROR: {
       bvw_error_msg (bvw, message);
 
-      if (!bvw_check_missing_plugins_error (bvw, message)) {
+      if (!bvw_check_missing_plugins_error (bvw, message) &&
+	  !bvw_check_missing_auth (bvw, message)) {
         GError *error;
 
         error = bvw_error_from_gst_error (bvw, message);
@@ -3575,6 +3676,9 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     return TRUE;
   } else if (bvw->priv->mount_in_progress) {
     GST_DEBUG ("Mounting in progress, not playing");
+    return TRUE;
+  } else if (bvw->priv->auth_dialog != NULL) {
+    GST_DEBUG ("Authentication in progress, not playing");
     return TRUE;
   }
 
