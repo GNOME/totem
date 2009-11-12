@@ -258,6 +258,7 @@ struct BaconVideoWidgetPrivate
   /* for auth */
   GMountOperation             *auth_dialog;
   GMountOperationResult        auth_last_result;
+  char                        *user_id, *user_pw;
 
   /* for stepping */
   float                        rate;
@@ -1644,18 +1645,8 @@ bvw_auth_reply_cb (GMountOperation      *op,
   bvw->priv->auth_last_result = result;
 
   if (result == G_MOUNT_OPERATION_HANDLED) {
-    const char *username, *password;
-    char *new_mrl;
-
-    username = g_mount_operation_get_username (op);
-    password = g_mount_operation_get_password (op);
-
-    /* Crappy! */
-    new_mrl = g_strdup_printf ("rtsp://%s:%s@%s",
-			       username, password, bvw->priv->mrl + strlen ("rtsp://"));
-    g_object_set (bvw->priv->play, "uri", new_mrl, NULL);
-    GST_DEBUG ("Set new MRL for RTSP source '%s'!", new_mrl);
-    g_free (new_mrl);
+    bvw->priv->user_id = g_strdup (g_mount_operation_get_username (op));
+    bvw->priv->user_pw = g_strdup (g_mount_operation_get_password (op));
   }
 
   g_object_unref (bvw->priv->auth_dialog);
@@ -1690,13 +1681,15 @@ bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
     return TRUE;
   }
 
-  /* RTSP source and auth problem? */
-  if (g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0) {
+  /* RTSP source with user-id property ? */
+  if (g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0 &&
+      g_object_class_find_property (G_OBJECT_GET_CLASS (err_msg->src), "user-id") != NULL) {
     GError *err = NULL;
     gchar *dbg = NULL;
 
     gst_message_parse_error (err_msg, &err, &dbg);
 
+    /* Urgh! Check whether this is an auth error */
     if (err != NULL && dbg != NULL &&
 	is_error (err, RESOURCE, READ) &&
 	strstr (dbg, "401") != NULL) {
@@ -2254,6 +2247,28 @@ bvw_set_user_agent_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
+bvw_set_auth_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "user-id") == NULL)
+    return;
+  if (bvw->priv->auth_last_result != G_MOUNT_OPERATION_HANDLED)
+    return;
+  if (bvw->priv->user_id == NULL || bvw->priv->user_pw == NULL)
+    return;
+
+  GST_DEBUG ("Setting username and password");
+  g_object_set (element,
+		"user-id", bvw->priv->user_id,
+		"user-pw", bvw->priv->user_pw,
+		NULL);
+
+  g_free (bvw->priv->user_id);
+  bvw->priv->user_id = NULL;
+  g_free (bvw->priv->user_pw);
+  bvw->priv->user_pw = NULL;
+}
+
+static void
 bvw_set_referrer_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
   BaconVideoWidgetPrivate *priv = bvw->priv;
@@ -2305,6 +2320,7 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   bvw_set_device_on_element (bvw, source);
   bvw_set_user_agent_on_element (bvw, source);
   bvw_set_referrer_on_element (bvw, source);
+  bvw_set_auth_on_element (bvw, source);
 }
 
 static gboolean
@@ -3923,6 +3939,11 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
+  g_free (bvw->priv->user_id);
+  bvw->priv->user_id = NULL;
+  g_free (bvw->priv->user_pw);
+  bvw->priv->user_pw = NULL;
+
   bvw->priv->is_live = FALSE;
   bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
