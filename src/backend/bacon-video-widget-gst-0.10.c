@@ -2096,20 +2096,6 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   BaconVideoWidgetPrivate *priv = bvw->priv;
   GstElement *source = NULL;
 
-  /* CHECKME: do we really need these taglist frees here (tpm)? */
-  if (bvw->priv->tagcache) {
-    gst_tag_list_free (bvw->priv->tagcache);
-    bvw->priv->tagcache = NULL;
-  }
-  if (bvw->priv->audiotags) {
-    gst_tag_list_free (bvw->priv->audiotags);
-    bvw->priv->audiotags = NULL;
-  }
-  if (bvw->priv->videotags) {
-    gst_tag_list_free (bvw->priv->videotags);
-    bvw->priv->videotags = NULL;
-  }
-
   g_object_get (play, "source", &source, NULL);
 
   if (priv->source != NULL) {
@@ -2119,7 +2105,7 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   priv->source = source;
   if (source == NULL)
     return;
-    
+
   GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
   bvw_set_device_on_element (bvw, source);
   bvw_set_user_agent_on_element (bvw, source);
@@ -3630,6 +3616,19 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->mrl = NULL;
   bvw->priv->is_live = FALSE;
   bvw->priv->window_resized = FALSE;
+
+  if (bvw->priv->tagcache) {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
+  }
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
+  }
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
+  }
 
   g_object_notify (G_OBJECT (bvw), "seekable");
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
