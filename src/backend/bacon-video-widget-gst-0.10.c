@@ -85,6 +85,8 @@
 #include "gstscreenshot.h"
 #include "bacon-resize.h"
 
+#define FORWARD_RATE 1.0
+#define REVERSE_RATE -1.0
 #define DEFAULT_HEIGHT 420
 #define DEFAULT_WIDTH  315
 #define SMALL_STREAM_WIDTH 200
@@ -256,6 +258,9 @@ struct BaconVideoWidgetPrivate
   GMountOperation             *auth_dialog;
   GMountOperationResult        auth_last_result;
 
+  /* for stepping */
+  float                        rate;
+
   /* Bacon resize */
   BaconResize                 *bacon_resize;
 };
@@ -282,6 +287,7 @@ static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
 static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
+static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -1261,6 +1267,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->zoom = 1.0;
   priv->volume = -1.0;
   priv->movie_par_n = priv->movie_par_d = 1;
+  priv->rate = FORWARD_RATE;
 
   priv->lock = g_mutex_new ();
 
@@ -3669,6 +3676,12 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     return TRUE;
   }
 
+  /* Set direction to forward */
+  if (bvw_set_playback_direction (bvw, TRUE) == FALSE) {
+    GST_DEBUG ("Failed to reset direction back to forward to play");
+    return FALSE;
+  }
+
   GST_DEBUG ("play");
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
@@ -3737,11 +3750,15 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **erro
 
   /* Emit a time tick of where we are going, we are paused */
   got_time_tick (bvw->priv->play, _time * GST_MSECOND, bvw);
-  
-  gst_element_seek (bvw->priv->play, 1.0,
+
+  if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
+    return FALSE;
+
+  gst_element_seek (bvw->priv->play, FORWARD_RATE,
       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
       GST_SEEK_TYPE_SET, _time * GST_MSECOND,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+  bvw->priv->rate = FORWARD_RATE;
 
   gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
 
@@ -3780,56 +3797,14 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
 gboolean
 bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error)
 {
-  if (forward == TRUE) {
-    GstEvent *event;
+  GstEvent *event;
 
-    event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
+  if (bvw_set_playback_direction (bvw, forward) == FALSE)
+    return FALSE;
 
-    return gst_element_send_event (bvw->priv->play, event);
-  } else {
-    GstEvent *event;
-    GstFormat fmt;
-    gint64 cur = 0;
+  event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
 
-    fmt = GST_FORMAT_TIME;
-    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
-      g_message ("playback direction to reverse (%"G_GINT64_FORMAT")", cur);
-      event = gst_event_new_seek (-1.0,
-				  fmt, GST_SEEK_FLAG_FLUSH, GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0), 
-				  GST_SEEK_TYPE_SET, cur);
-      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
-	g_message ("failed to seek orig failed");
-      } else {
-	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-      }
-    } else {
-      g_message ("failed to query orig position");
-    }
-
-    event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
-    if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
-      g_message ("step failed");
-    } else {
-      gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-    }
-    fmt = GST_FORMAT_TIME;
-    cur = 0;
-    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
-      g_message ("playback direction to forward (%"G_GINT64_FORMAT")", cur);
-      event = gst_event_new_seek (1.0,
-				  fmt, GST_SEEK_FLAG_FLUSH, GST_SEEK_TYPE_SET, cur,
-				  GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
-      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
-	g_message ("failed to seek back failed");
-      } else {
-	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-      }
-    } else {
-      g_message ("failed to query post position");
-    }
-  }
-
-  return FALSE;
+  return gst_element_send_event (bvw->priv->play, event);
 }
 
 static void
@@ -3912,6 +3887,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->mrl = NULL;
   bvw->priv->is_live = FALSE;
   bvw->priv->window_resized = FALSE;
+  bvw->priv->rate = FORWARD_RATE;
 
   if (bvw->priv->tagcache) {
     gst_tag_list_free (bvw->priv->tagcache);
@@ -4021,13 +3997,16 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       else
         fmt_name = "angle";
 
+      bvw_set_playback_direction (bvw, TRUE);
+
       fmt = gst_format_get_by_nick (fmt_name);
       if (gst_element_query_position (bvw->priv->play, &fmt, &val)) {
         GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
         val += dir;
         GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, val);
-        gst_element_seek (bvw->priv->play, 1.0, fmt, GST_SEEK_FLAG_FLUSH,
+        gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
             GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, 0);
+	bvw->priv->rate = FORWARD_RATE;
       } else {
         GST_DEBUG ("failed to query position (%s)", fmt_name);
       }
@@ -6535,6 +6514,68 @@ bvw_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
     window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
     gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
   }
+}
+
+static gboolean
+bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
+{
+  gboolean is_forward;
+  gboolean retval;
+
+  is_forward = (bvw->priv->rate > 0.0);
+  if (forward == is_forward)
+    return TRUE;
+
+  retval = FALSE;
+
+  if (forward == FALSE) {
+    GstEvent *event;
+    GstFormat fmt;
+    gint64 cur = 0;
+
+    fmt = GST_FORMAT_TIME;
+    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+      GST_DEBUG ("Setting playback direction to reverse at %"G_GINT64_FORMAT"", cur);
+      event = gst_event_new_seek (REVERSE_RATE,
+				  fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				  GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0),
+				  GST_SEEK_TYPE_SET, cur);
+      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+	GST_WARNING ("Failed to set playback direction to reverse");
+      } else {
+	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+	bvw->priv->rate = REVERSE_RATE;
+	retval = TRUE;
+      }
+    } else {
+      GST_LOG ("Failed to query position to set playback to reverse");
+    }
+  } else {
+    GstEvent *event;
+    GstFormat fmt;
+    gint64 cur = 0;
+
+    fmt = GST_FORMAT_TIME;
+    cur = 0;
+    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+      GST_DEBUG ("Setting playback direction to forward at %"G_GINT64_FORMAT"", cur);
+      event = gst_event_new_seek (FORWARD_RATE,
+				  fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				  GST_SEEK_TYPE_SET, cur,
+				  GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
+      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+	GST_WARNING ("Failed to set playback direction to forward");
+      } else {
+	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+	bvw->priv->rate = FORWARD_RATE;
+	retval = TRUE;
+      }
+    } else {
+      GST_LOG ("Failed to query position to set playback to forward");
+    }
+  }
+
+  return retval;
 }
 
 static void
