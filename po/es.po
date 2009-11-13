@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-11-06 20:29+0000\n"
-"PO-Revision-Date: 2009-11-10 00:53+0100\n"
+"POT-Creation-Date: 2009-11-13 13:51+0000\n"
+"PO-Revision-Date: 2009-11-13 18:37+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -584,7 +584,7 @@ msgstr "Cuadrada"
 msgid "Start playing files from last position"
 msgstr "Reproducir archivos desde la última posición"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5631
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5783
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -1118,7 +1118,7 @@ msgstr "_Reproducir ahora"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/totem-fullscreen.c:484
+#: ../src/totem-fullscreen.c:537
 msgid "No File"
 msgstr "Ningún archivo"
 
@@ -1384,7 +1384,7 @@ msgstr "Introduzca otro disco para reproducir."
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem-object.c:1245 ../src/totem-object.c:4087
+#: ../src/totem-object.c:1245 ../src/totem-object.c:4129
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1411,27 +1411,27 @@ msgstr "Totem no pudo mostrar el contenido de la ayuda."
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:3351
+#: ../src/totem-object.c:3367
 msgid "TV signal lost"
 msgstr "Se perdió la señal de TV"
 
-#: ../src/totem-object.c:3352
+#: ../src/totem-object.c:3368
 msgid "Please verify your hardware setup."
 msgstr "Compruebe su configuración del hardware."
 
-#: ../src/totem-object.c:3945 ../src/totem-object.c:3947
+#: ../src/totem-object.c:3987 ../src/totem-object.c:3989
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:3953 ../src/totem-object.c:3955
+#: ../src/totem-object.c:3995 ../src/totem-object.c:3997
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:3962 ../src/totem-object.c:3964
+#: ../src/totem-object.c:4004 ../src/totem-object.c:4006
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
-#: ../src/totem-object.c:4087
+#: ../src/totem-object.c:4129
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
@@ -1883,19 +1883,23 @@ msgstr "Totem no pudo inicializar el motor de configuración."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2736
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2740
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1710
+msgid "Password requested for RTSP server"
+msgstr "Contraseña solicitada para el servidor RTSP"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2827
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2831
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2768
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2772
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2859
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2863
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3176
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3267
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1903,17 +1907,17 @@ msgstr ""
 "No se encontró la salida de sonido solicitada. Seleccione otra salida de "
 "sonido en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3181
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3272
 msgid "Location not found."
 msgstr "Dirección no encontrada."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3185
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3276
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la dirección; quizá no tiene permiso para abrir el archivo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3196
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3287
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1923,7 +1927,7 @@ msgstr ""
 "aplicaciones de vídeo o seleccione otra salida de vídeo en el selector de "
 "Sistemas Multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3202
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3293
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1934,15 +1938,15 @@ msgstr ""
 "un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3220
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3226
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3311
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3317
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "La reproducción de esta película requiere un complemento %s que no está "
 "instalado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3227
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3318
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1955,34 +1959,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3252
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3343
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3324
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3415
 msgid "Media file could not be played."
 msgstr "El archivo soporte no se pudo reproducir."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5627
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5779
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5629
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5781
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5976
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6128
 msgid "Too old version of GStreamer installed."
 msgstr "La versión de GStreamer que está instalada es demasiado antigua."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5983
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6135
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6451
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6603
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1990,8 +1994,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6582
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6715
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6734
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6867
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1999,7 +2003,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Quizá no esté disponible. Seleccione otra "
 "salida de vídeo en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6594
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6746
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -2009,7 +2013,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6629
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6781
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -2019,7 +2023,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6649
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6801
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
