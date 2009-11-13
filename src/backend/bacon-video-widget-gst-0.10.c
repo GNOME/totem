@@ -6606,7 +6606,6 @@ bacon_video_widget_new (int width, int height,
     g_object_unref (bvw);
     return NULL;
   }
-  g_object_set (bvw->priv->play, "flags", 0x00000015, NULL);
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
 
