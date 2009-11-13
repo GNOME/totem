@@ -1260,6 +1260,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->videotags = NULL;
   priv->zoom = 1.0;
   priv->volume = -1.0;
+  priv->movie_par_n = priv->movie_par_d = 1;
 
   priv->lock = g_mutex_new ();
 
@@ -3877,6 +3878,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->buffering_left = -1;
   bvw->priv->ignore_messages_mask = 0;
   bvw_reconfigure_fill_timeout (bvw, 0);
+  bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
   if (bvw->priv->cover_pixbuf) {
     g_object_unref (bvw->priv->cover_pixbuf);
     bvw->priv->cover_pixbuf = NULL;
