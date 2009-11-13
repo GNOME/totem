@@ -1,5 +1,22 @@
 New features and significant updates in version...
 
+2.28.3:
+* Movie Player:
+  - Fix position saving when skipping to the next item
+    in the playlist
+  - Allow playback of Apple trailers in the movie player
+  - Fix behaviour with only one item in the playlist and
+    its playback finishes
+
+* YouTube plugin:
+  - Fix for latest website changes
+
+* Gstreamer backend:
+  - Clean up volume handling
+  - Fix aspect ratio warnings with some streams
+  - Fix tags being associated with the wrong file when
+    an error occurs
+
 2.28.2:
 * Movie Player:
   - Fix possible crash on exit when using Python plugins
