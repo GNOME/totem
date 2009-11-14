@@ -169,6 +169,7 @@ struct BaconVideoWidgetPrivate
 
   guint                        update_id;
   guint                        fill_id;
+  guint                        ready_idle_id;
 
   GdkPixbuf                   *logo_pixbuf;
   GdkPixbuf                   *cover_pixbuf; /* stream-specific image */
@@ -2547,6 +2548,11 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->source = NULL;
   }
 
+  if (bvw->priv->ready_idle_id) {
+    g_source_remove (bvw->priv->ready_idle_id);
+    bvw->priv->ready_idle_id = 0;
+  }
+
   if (bvw->priv->play != NULL && GST_IS_ELEMENT (bvw->priv->play)) {
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
     gst_object_unref (bvw->priv->play);
@@ -3556,6 +3562,13 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
                 "suburi", subtitle_uri, NULL);
+  if (bvw->priv->ready_idle_id) {
+    g_source_remove (bvw->priv->ready_idle_id);
+    bvw->priv->ready_idle_id = 0;
+  }
+
+  bvw->priv->target_state = GST_STATE_READY;
+  gst_element_set_state (bvw->priv->play, GST_STATE_READY);
 
   bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
@@ -3641,6 +3654,11 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
   g_return_val_if_fail (bvw->priv->mrl != NULL, FALSE);
+
+  if (bvw->priv->ready_idle_id) {
+    g_source_remove (bvw->priv->ready_idle_id);
+    bvw->priv->ready_idle_id = 0;
+  }
 
   bvw->priv->target_state = GST_STATE_PLAYING;
 
@@ -3807,6 +3825,17 @@ bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error
   return gst_element_send_event (bvw->priv->play, event);
 }
 
+static gboolean
+_ready_idle_cb (gpointer data)
+{
+  GstElement *playbin = GST_ELEMENT (data);
+
+  GST_DEBUG ("setting playbin to NULL");
+  gst_element_set_state (playbin, GST_STATE_NULL);
+
+  return FALSE;
+}
+
 static void
 bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 {
@@ -3831,8 +3860,14 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     gst_object_unref (bus);
   }
 
-  gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
-  bvw->priv->target_state = GST_STATE_NULL;
+  /* Now in READY or lower */
+  if (bvw->priv->ready_idle_id) {
+    g_source_remove (bvw->priv->ready_idle_id);
+    bvw->priv->ready_idle_id = 0;
+  }
+  bvw->priv->ready_idle_id = g_timeout_add_seconds_full (G_PRIORITY_DEFAULT, 10, _ready_idle_cb, gst_object_ref (bvw->priv->play), (GDestroyNotify) gst_object_unref);
+
+  bvw->priv->target_state = GST_STATE_READY;
   bvw->priv->buffering = FALSE;
   bvw->priv->plugin_install_in_progress = FALSE;
   bvw->priv->download_buffering = FALSE;
@@ -4154,6 +4189,11 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
     GST_LOG ("Stopping because we have a live stream");
     bacon_video_widget_stop (bvw);
     return;
+  }
+
+  if (bvw->priv->ready_idle_id) {
+    g_source_remove (bvw->priv->ready_idle_id);
+    bvw->priv->ready_idle_id = 0;
   }
 
   GST_LOG ("Pausing");
