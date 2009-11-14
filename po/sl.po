@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2009-10-23 16:04+0000\n"
-"PO-Revision-Date: 2009-10-26 14:16+0100\n"
+"POT-Creation-Date: 2009-11-14 09:39+0000\n"
+"PO-Revision-Date: 2009-11-14 10:46+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -232,7 +232,7 @@ msgstr "Dodaj na seznam predvajanja"
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1
 #: ../data/totem.ui.h:50
-#: ../src/totem-object.c:1633
+#: ../src/totem-object.c:1623
 msgid "Movie Player"
 msgstr "Predvajalnik posnetkov"
 
@@ -615,7 +615,7 @@ msgid "Start playing files from last position"
 msgstr "Začni s predvajanjem od zadaj naprej"
 
 #: ../data/totem.ui.h:92
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5365
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5762
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -902,42 +902,34 @@ msgid "Shuffle mode"
 msgstr "Premešano predvajanje"
 
 #: ../data/totem.schemas.in.h:23
-msgid "Sound volume"
-msgstr "Glasnost zvoka"
-
-#: ../data/totem.schemas.in.h:24
-msgid "Sound volume, in percent, between 0 and 100"
-msgstr "Glasnost zvoka, odstotek med 0 in 100"
-
-#: ../data/totem.schemas.in.h:25
 msgid "Subtitle encoding"
 msgstr "kodiranje podnapisov"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:24
 msgid "Subtitle font"
 msgstr "Pisava podnapisov"
 
-#: ../data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:25
 msgid "The brightness of the video"
 msgstr "Svetlost slike"
 
-#: ../data/totem.schemas.in.h:28
+#: ../data/totem.schemas.in.h:26
 msgid "The contrast of the video"
 msgstr "Kontrast slike"
 
-#: ../data/totem.schemas.in.h:29
+#: ../data/totem.schemas.in.h:27
 msgid "The hue of the video"
 msgstr "Odtenek slike"
 
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:28
 msgid "The saturation of the video"
 msgstr "Zasičenost slike"
 
-#: ../data/totem.schemas.in.h:31
+#: ../data/totem.schemas.in.h:29
 msgid "Type of audio output to use"
 msgstr "Vrsta uporabljenega zvočnega odvoda"
 
-#: ../data/totem.schemas.in.h:32
+#: ../data/totem.schemas.in.h:30
 msgid "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 Passthrough."
 msgstr "Vrsta uporabljenega zvočnega odvoda: \"0\" za stereo odvod, \"1\" za 4-kanalni odvod, \"2\" za 5.0 kanalni odvod, \"3\" za 5.1 kanalni odvod, \"4\" za AC3 prehod."
 
@@ -945,35 +937,35 @@ msgstr "Vrsta uporabljenega zvočnega odvoda: \"0\" za stereo odvod, \"1\" za 4-
 #. character set. You can change this to be the most common
 #. encoding for fansub subtitles in your language. File a bug
 #. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:37
+#: ../data/totem.schemas.in.h:35
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: ../data/totem.schemas.in.h:38
+#: ../data/totem.schemas.in.h:36
 msgid "Visualization quality setting"
 msgstr "Nastavitev kakovosti predočenja"
 
-#: ../data/totem.schemas.in.h:39
+#: ../data/totem.schemas.in.h:37
 msgid "Whether the main window should stay on top"
 msgstr "Glavno okno je vedno na vrhu."
 
-#: ../data/totem.schemas.in.h:40
+#: ../data/totem.schemas.in.h:38
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "Glavno okno je vedno na vrhu vseh ostalih oken."
 
-#: ../data/totem.schemas.in.h:41
+#: ../data/totem.schemas.in.h:39
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Ali naj bodo podnapisi naloženi ob začetku predvajanja podnapisov"
 
-#: ../data/totem.schemas.in.h:42
+#: ../data/totem.schemas.in.h:40
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "Ali naj se onemogočijo vstavki v uporabnikovi domači mapi"
 
-#: ../data/totem.schemas.in.h:43
+#: ../data/totem.schemas.in.h:41
 msgid "Whether to enable debug for the playback engine"
 msgstr "Omogočeno delovanje razhroščevalnika za predvajalnik"
 
-#: ../data/totem.schemas.in.h:44
+#: ../data/totem.schemas.in.h:42
 msgid "Whether to remember the position of played audio/video files when pausing or closing them."
 msgstr "Izbrana možnost določa ali naj si program zapomni mesto predvajanja zvočnih in slikovnih posnetkov ob premoru ali ob zapiranju programskega okna."
 
@@ -1098,7 +1090,7 @@ msgstr "_Predvajaj"
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: ../src/totem-fullscreen.c:484
+#: ../src/totem-fullscreen.c:537
 msgid "No File"
 msgstr "Ni datoteke"
 
@@ -1192,7 +1184,7 @@ msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Avtorske pravice © 2002-2009 Bastien Nocera"
 
 #: ../src/totem-menu.c:1224
-#: ../browser-plugin/totem-plugin-viewer.c:1116
+#: ../browser-plugin/totem-plugin-viewer.c:1119
 msgid "translator-credits"
 msgstr ""
 "Matej Urbančič <mateju@svn.gnome.org>\n"
@@ -1210,166 +1202,165 @@ msgstr "Nastavitve vstavkov"
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Prevzemi razmerje 16:9 (anamorfno)"
 
-#: ../src/totem-object.c:971
-#: ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:961
+#: ../browser-plugin/totem-plugin-viewer.c:360
 msgid "Playing"
 msgstr "Predvajanje"
 
-#: ../src/totem-object.c:973
+#: ../src/totem-object.c:963
 #: ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pavza"
 
-#: ../src/totem-object.c:978
-#: ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:968
+#: ../browser-plugin/totem-plugin-viewer.c:356
 msgid "Paused"
 msgstr "Pavza"
 
 #. Translators: this refers to a media file
+#: ../src/totem-object.c:970
 #: ../src/totem-object.c:980
-#: ../src/totem-object.c:990
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "Predvajaj"
 
-#: ../src/totem-object.c:985
-#: ../src/totem-object.c:1625
+#: ../src/totem-object.c:975
+#: ../src/totem-object.c:1615
 #: ../src/totem-statusbar.c:100
-#: ../browser-plugin/totem-plugin-viewer.c:345
+#: ../browser-plugin/totem-plugin-viewer.c:344
 msgid "Stopped"
 msgstr "Prekinjen"
 
-#: ../src/totem-object.c:1066
-#: ../src/totem-object.c:1093
-#: ../src/totem-object.c:1747
-#: ../src/totem-object.c:1910
+#: ../src/totem-object.c:1056
+#: ../src/totem-object.c:1083
+#: ../src/totem-object.c:1744
+#: ../src/totem-object.c:1907
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ne more predvajati '%s'."
 
-#: ../src/totem-object.c:1178
+#: ../src/totem-object.c:1168
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "S programom Totem ni mogoče predvajati medija (%s), čeprav je vstavek pravilno naložen."
 
-#: ../src/totem-object.c:1179
+#: ../src/totem-object.c:1169
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Preverite, če je disk v pogonu in je pravilno nastavljen."
 
-#: ../src/totem-object.c:1187
+#: ../src/totem-object.c:1177
 msgid "More information about media plugins"
 msgstr "Več podrobnosti o vstavkih zapisov posnetkov"
 
-#: ../src/totem-object.c:1188
+#: ../src/totem-object.c:1178
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
-msgstr "Prosim, naložite zahtevane vstavke in ponovno zaženite program za predvajanje tega medija."
+msgstr "Naložite zahtevane vstavke in ponovno zaženite program za predvajanje tega medija."
 
-#: ../src/totem-object.c:1190
+#: ../src/totem-object.c:1180
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
 msgstr "Ni mogoče predvajati te vrste posnetka (%s), ker v niso nameščeni primerni vstavki za predvajanje."
 
-#: ../src/totem-object.c:1192
+#: ../src/totem-object.c:1182
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "Totem ne more predvajati te vrste medija (%s), ker nimate primernih vstavkov za njegovo delovanje."
 
-#: ../src/totem-object.c:1196
+#: ../src/totem-object.c:1186
 msgid "Totem cannot play TV, because no TV adapters are present or they are not supported."
 msgstr "Program Totem ne more predvajati televizijskih programov, ker ni na voljo podprtih TV vmesnikov."
 
-#: ../src/totem-object.c:1197
+#: ../src/totem-object.c:1187
 msgid "Please insert a supported TV adapter."
-msgstr "Prosim, vstavite podprt TV vmesnik."
+msgstr "Vstavite podprt TV vmesnik."
 
-#: ../src/totem-object.c:1207
+#: ../src/totem-object.c:1197
 msgid "More information about watching TV"
 msgstr "Več podrobnosti o gledanju televizije"
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1198
 msgid "Totem is missing a channels listing to be able to tune the receiver."
 msgstr "Programu Totem manjka seznam kanalov  za nastavljanje sprejemnika."
 
-#: ../src/totem-object.c:1209
+#: ../src/totem-object.c:1199
 msgid "Please follow the instructions provided in the link to create a channels listing."
-msgstr "Prosim, sledite navodilom za ustvarjanje seznamov kanalov."
+msgstr "Sledite navodilom za ustvarjanje seznamov kanalov."
 
-#: ../src/totem-object.c:1212
+#: ../src/totem-object.c:1202
 #, c-format
 msgid "Totem cannot play this type of media (%s) because the TV device is busy."
 msgstr "Program Totem ne more predvajati te vrste medija (%s), ker je TV naprava zasedena."
 
-#: ../src/totem-object.c:1213
+#: ../src/totem-object.c:1203
 msgid "Please try again later."
-msgstr "Prosim, poskusite kasneje."
+msgstr "Poskusite kasneje."
 
-#: ../src/totem-object.c:1218
+#: ../src/totem-object.c:1208
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "Program Totem ne more predvajati te vrste medija (%s), ker vrsta ni podprta."
 
-#: ../src/totem-object.c:1219
+#: ../src/totem-object.c:1209
 msgid "Please insert another disc to play back."
-msgstr "Prosim, vstavite nov disk za predvajanje."
+msgstr "Vstavite nov disk za predvajanje."
 
-#: ../src/totem-object.c:1254
+#: ../src/totem-object.c:1244
 msgid "Totem was not able to play this disc."
 msgstr "Ni mogoče predvajati diska."
 
-#: ../src/totem-object.c:1255
-#: ../src/totem-object.c:4054
-#: ../browser-plugin/totem-plugin-viewer.c:1749
+#: ../src/totem-object.c:1245
+#: ../src/totem-object.c:4129
 msgid "No reason."
 msgstr "Brez razloga."
 
-#: ../src/totem-object.c:1269
+#: ../src/totem-object.c:1259
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Program Totem ne podpira predvajanja zvočnih CD-jev"
 
-#: ../src/totem-object.c:1270
+#: ../src/totem-object.c:1260
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "Uporabite predvajalnik glasbe ali pa pretvorite zapis na zvočnem CD-ju."
 
-#: ../src/totem-object.c:1753
+#: ../src/totem-object.c:1750
 msgid "No error message"
 msgstr "Ni sporočil o napakah"
 
-#: ../src/totem-object.c:2107
+#: ../src/totem-object.c:2104
 msgid "Totem could not display the help contents."
 msgstr "Ni mogoče zagnati vsebine pomoči."
 
+#: ../src/totem-object.c:2433
 #: ../src/totem-object.c:2435
-#: ../src/totem-object.c:2437
-#: ../browser-plugin/totem-plugin-viewer.c:1404
+#: ../browser-plugin/totem-plugin-viewer.c:1408
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: ../src/totem-object.c:3325
+#: ../src/totem-object.c:3367
 msgid "TV signal lost"
 msgstr "TV signal je izgubljen"
 
-#: ../src/totem-object.c:3326
+#: ../src/totem-object.c:3368
 msgid "Please verify your hardware setup."
-msgstr "Prosim, preverite strojne nastavitve."
+msgstr "Preverite strojne nastavitve."
 
-#: ../src/totem-object.c:3912
-#: ../src/totem-object.c:3914
+#: ../src/totem-object.c:3987
+#: ../src/totem-object.c:3989
 msgid "Previous Chapter/Movie"
 msgstr "Prejšnje poglavje/film"
 
-#: ../src/totem-object.c:3920
-#: ../src/totem-object.c:3922
+#: ../src/totem-object.c:3995
+#: ../src/totem-object.c:3997
 msgid "Play / Pause"
 msgstr "Predvajaj / Premor"
 
-#: ../src/totem-object.c:3929
-#: ../src/totem-object.c:3931
+#: ../src/totem-object.c:4004
+#: ../src/totem-object.c:4006
 msgid "Next Chapter/Movie"
 msgstr "Naslednje poglavje/film"
 
-#: ../src/totem-object.c:4054
+#: ../src/totem-object.c:4129
 msgid "Totem could not startup."
 msgstr "Totem se ne more zagnati"
 
@@ -1749,7 +1740,7 @@ msgstr "Vietnamski"
 
 #: ../src/totem-video-list.c:305
 msgid "No video URI"
-msgstr "Ni slikovnega naslova URI"
+msgstr "Ni video naslova URI"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -1811,13 +1802,13 @@ msgstr "Ni bilo mogoče odprti povezave"
 
 #: ../src/totem.c:134
 #: ../src/totem.c:160
-#: ../browser-plugin/totem-plugin-viewer.c:664
-#: ../browser-plugin/totem-plugin-viewer.c:1758
+#: ../browser-plugin/totem-plugin-viewer.c:663
+#: ../browser-plugin/totem-plugin-viewer.c:1794
 msgid "Totem Movie Player"
 msgstr "Totem predvajalnik filmov"
 
 #: ../src/totem.c:135
-#: ../browser-plugin/totem-plugin-viewer.c:2210
+#: ../browser-plugin/totem-plugin-viewer.c:2250
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ni mogoče naložiti knjižnic varovanja niti."
 
@@ -1847,46 +1838,50 @@ msgstr "Program Totem ne more zagnati orodja za nastavljanje."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Prepričajte se, da je GNOME pravilno nameščen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2526
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2530
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1717
+msgid "Password requested for RTSP server"
+msgstr "Zahtevano je geslo za dostop do RTSP strežnika"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2834
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2838
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Zvočna sled #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2558
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2562
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2866
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2870
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Podnapis #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2966
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3274
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Zahtevanega odvoda zvoka ni mogoče najti. Izberite drug odvod zvoka med sistemskimi nastavitvami."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2971
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3279
 msgid "Location not found."
 msgstr "Mesta ni mogoče najti."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2975
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3283
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "Ni mogoče odpreti želenega mesta; morda nimate primernega dovoljenja."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2986
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3294
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Odvod slike uporablja drug program. Ustavite program, ki zaseda odvod, ali pa izberite nov odvod med nastavitvami sistema."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2992
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3300
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Odvod zvoka uporablja drug program. Ustavite program, ki zaseda izhod, ali pa izberite nov odvod med nastavitvami sistema. Razmislite o uporabi zvočnega strežnika."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3010
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3016
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3318
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3324
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "Predvajanje tega posnetka zahteva uporabo vstavka %s, ki pa ni nameščen."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3017
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3325
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not installed:\n"
@@ -1897,48 +1892,48 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3042
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3350
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Ni mogoče predvajanje preko omrežja. Poskusite prenesti datoteko na disk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3114
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3422
 msgid "Media file could not be played."
 msgstr "Posnetka ni mogoče predvajati."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5361
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5758
 msgid "Surround"
 msgstr "Surround sistem zvoka"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5363
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5760
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5710
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6107
 msgid "Too old version of GStreamer installed."
 msgstr "Naložena je prestara različica GStreamerja."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5717
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6114
 msgid "Media contains no supported video streams."
 msgstr "Posnetek ne vsebuje podprtih pretokov slike."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6184
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6644
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
-msgstr "Napaka med ustvarjanjem GStreamer predmeta predvajanja. Prosim, preverite nastavitve."
+msgstr "Napaka med ustvarjanjem GStreamer predmeta predvajanja. Preverite nastavitve."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6314
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6453
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6775
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6908
 msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
 msgstr "Napaka med odpiranjem odvoda slike. Morda ni na voljo. Izberite drug odvod med nastavitvami sistema."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6326
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6787
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
 msgstr "Ni mogoče najti odvoda slike. Naložiti je treba dodatne GStreamer vstavke ali pa izbrati drug odvod zvoka med sistemskimi nastavitvami"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6361
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6822
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Napaka med odpiranjem zvočnega odvoda. Morda nimate dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ne deluje. Prosim, izberite drug zvočni odvod v sistemskih nastavitvah."
+msgstr "Napaka med odpiranjem zvočnega odvoda. Morda nimate dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ne deluje. Izberite drug zvočni odvod v sistemskih nastavitvah."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6389
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6842
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Ni mogoče najti odvoda zvoka. Naložiti je treba dodatne GStreamer vstavke ali pa je treba izbrati drug odvod slike med sistemskimi nastavitvami."
 
@@ -2298,7 +2293,7 @@ msgstr "Trajanje: %s"
 
 #: ../src/plugins/jamendo/jamendo.py:339
 msgid "Fetching albums, please wait..."
-msgstr "Prenašanje albumov. Prosim, počakajte..."
+msgstr "Prenašanje albumov. Počakajte..."
 
 #: ../src/plugins/jamendo/jamendo.py:388
 msgid "An error occurred while fetching albums."
@@ -2576,7 +2571,7 @@ msgstr "Ni mogoče pridobiti zaslonske slike predvajanega posnetka."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
 msgid "This is not supposed to happen; please file a bug report."
-msgstr "Prišlo je do nepričakovane napake; prosim, pošljite poročilo o hrošču."
+msgstr "Prišlo je do nepričakovane napake; pošljite poročilo o hrošču."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take _Screenshot..."
@@ -2719,7 +2714,7 @@ msgstr "Napaka med iskanjem med posnetki ..."
 
 #: ../src/plugins/youtube/totem-youtube.c:695
 msgid "The response from the server could not be understood. Please check you are running the latest version of libgdata."
-msgstr "Odgovora strežnika ni mogoče razumeti. Prosim, preverite ali uporablja sistem zadnjo različico knjižnice libgdata."
+msgstr "Odgovora strežnika ni mogoče razumeti. Preverite ali uporablja sistem zadnjo različico knjižnice libgdata."
 
 #. Update the UI
 #: ../src/plugins/youtube/totem-youtube.c:841
@@ -2739,11 +2734,11 @@ msgstr "Napaka med odpiranjem posnetka v brskalniku"
 msgid "Fetching more videos…"
 msgstr "Pridobivanje več posnetkov ..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:420
+#: ../browser-plugin/totem-plugin-viewer.c:419
 msgid "No URI to play"
 msgstr "Ni naslova za predvajanje"
 
-#: ../browser-plugin/totem-plugin-viewer.c:446
+#: ../browser-plugin/totem-plugin-viewer.c:445
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Ni mogoče predvajati '%s'."
@@ -2751,35 +2746,29 @@ msgstr "Ni mogoče predvajati '%s'."
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1054
+#: ../browser-plugin/totem-plugin-viewer.c:1057
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Odpri z \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1105
+#: ../browser-plugin/totem-plugin-viewer.c:1108
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Vstavek brskanja uporablja %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1110
+#: ../browser-plugin/totem-plugin-viewer.c:1113
 msgid "Totem Browser Plugin"
 msgstr "Totem vstavek brskanja"
 
-#. FIXME!
-#. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1749
-msgid "The Totem plugin could not be started."
-msgstr "Vstavka programa Totem ni mogoče zagnati."
-
-#: ../browser-plugin/totem-plugin-viewer.c:2104
+#: ../browser-plugin/totem-plugin-viewer.c:2142
 msgid "No playlist or playlist empty"
 msgstr "Ni seznama predvajanja ali pa je ta prazen"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2194
+#: ../browser-plugin/totem-plugin-viewer.c:2234
 msgid "Movie browser plugin"
 msgstr "Vstavek brskanja filmov"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2210
+#: ../browser-plugin/totem-plugin-viewer.c:2250
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Preverite sistemske nastavitve. Vstavek predvajalnika Totem se bo izključil."
 
@@ -2828,6 +2817,12 @@ msgstr "Totem python konzola"
 msgid "After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in GConf, it will use the default password ('totem')."
 msgstr "Po sprejetju ukaza program počaka, da se povežete z winpdb ali rpdb2. V primeru, da nimate določenega gesla na razhroščevalniku v GConf, bo uporabljeno privzeto geslo ('totem')."
 
+#~ msgid "Sound volume"
+#~ msgstr "Glasnost zvoka"
+#~ msgid "Sound volume, in percent, between 0 and 100"
+#~ msgstr "Glasnost zvoka, odstotek med 0 in 100"
+#~ msgid "The Totem plugin could not be started."
+#~ msgstr "Vstavka programa Totem ni mogoče zagnati."
 #~ msgid "<b>Language</b>"
 #~ msgstr "<b>Jezik</b>"
 #~ msgid "_Allow the screensaver to activate even when audio-only is playing"
@@ -2850,8 +2845,8 @@ msgstr "Po sprejetju ukaza program počaka, da se povežete z winpdb ali rpdb2. 
 #~ "The TV adapter could not tune into the channel. Please check your "
 #~ "hardware setup and channel configuration."
 #~ msgstr ""
-#~ "Televizijskega kanala ni mogoče prilagoditi predvajanju. Prosim, "
-#~ "preverite strojne nastavitve in nastavitve kanalov."
+#~ "Televizijskega kanala ni mogoče prilagoditi predvajanju.Preverite strojne "
+#~ "nastavitve in nastavitve kanalov."
 #~ msgid "The server you are trying to connect to is not known."
 #~ msgstr "Strežnik, s katerim se skušate povezati, ni poznan."
 #~ msgid "The device name you specified (%s) seems to be invalid."
@@ -2984,8 +2979,6 @@ msgstr "Po sprejetju ukaza program počaka, da se povežete z winpdb ali rpdb2. 
 #~ msgstr "Naslov IP krajevnega MythTV strežnika"
 #~ msgid "Name of the database for the local MythTV server"
 #~ msgstr "Ime zbirke podatkov krajevnega MythTV strežnika"
-#~ msgid "Password to access the local MythTV server"
-#~ msgstr "Geslo za dostop do krajevnega MythTV strežnika"
 #~ msgid "Port to access the local MythTV server"
 #~ msgstr "Vrata za dostop do krajevnega MythTV strežnika"
 #~ msgid "Username to access the local MythTV server"
