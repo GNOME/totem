@@ -1015,7 +1015,7 @@ totem_action_eject (Totem *totem)
 	totem_file_closed (totem);
 
 	/* The volume monitoring will take care of removing the items */
-	g_mount_eject (mount, G_MOUNT_UNMOUNT_NONE, NULL, NULL, NULL);
+	g_mount_eject_with_operation (mount, G_MOUNT_UNMOUNT_NONE, NULL, NULL, NULL, NULL);
 	g_object_unref (mount);
 }
 

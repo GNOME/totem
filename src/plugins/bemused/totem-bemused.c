@@ -302,7 +302,7 @@ download_file (TotemBemusedPlugin *tp, GIOChannel *source)
 		return;
 	send_response_flush (tp, source, "DOWNACK", strlen ("DOWNACK"), FALSE);
 	send_response (tp, source, g_mapped_file_get_contents (file), g_mapped_file_get_length (file));
-	g_mapped_file_free (file);
+	g_mapped_file_unref (file);
 }
 
 #define STUFF4(x) {						\
