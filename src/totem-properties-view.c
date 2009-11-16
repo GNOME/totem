@@ -182,13 +182,6 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 			return;
 		}
 
-		if (bacon_video_widget_play (props->priv->bvw, &error) == FALSE) {
-			g_warning ("Couldn't play %s: %s", location, error->message);
-			g_error_free (error);
-			bacon_video_widget_close (props->priv->bvw);
-			return;
-		}
-
 		bacon_video_widget_close (props->priv->bvw);
 	} else {
 		if (props->priv->bvw != NULL)
