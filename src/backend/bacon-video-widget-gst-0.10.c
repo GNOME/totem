@@ -6746,6 +6746,15 @@ bacon_video_widget_new (int width, int height,
         video_sink = gst_element_factory_make ("ximagesink", "video-sink");
       }
     }
+
+    /* Set the display if the video sink supports it */
+    if (g_object_class_find_property (G_OBJECT_GET_CLASS (video_sink), "display")) {
+      const char *display;
+
+      display = gdk_get_display_arg_name();
+      if (display != NULL)
+	g_object_set (G_OBJECT (video_sink), "display", display, NULL);
+    }
 /* FIXME: April fool's day puzzle */
 #if 0
     if (video_sink) {
