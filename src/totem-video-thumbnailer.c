@@ -455,7 +455,7 @@ capture_frame_at_time(BaconVideoWidget *bvw,
 }
 
 static gboolean
-has_audio (BaconVideoWidget *bvw)
+has_video (BaconVideoWidget *bvw)
 {
 	GValue value = { 0, };
 	gboolean retval;
@@ -488,7 +488,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, callback_data *data)
 		g_object_unref (pixbuf);
 
 		exit (0);
-	} else if (has_audio (bvw) == FALSE) {
+	} else if (has_video (bvw) == FALSE) {
 		PROGRESS_DEBUG("No covers, and no video, exiting");
 		exit (0);
 	}
@@ -859,17 +859,6 @@ int main (int argc, char *argv[])
 	}
 
 	PROGRESS_DEBUG("Opened video file: '%s'", input);
-	PROGRESS_DEBUG("About to play file");
-	PRINT_PROGRESS (8.0);
-
-	bacon_video_widget_play (bvw, &err);
-	if (err != NULL) {
-		g_print ("totem-video-thumbnailer couldn't play file: '%s'\n"
-				"Reason: %s.\n", input, err->message);
-		g_error_free (err);
-		exit (1);
-	}
-	PROGRESS_DEBUG("Started playing file");
 	PRINT_PROGRESS (10.0);
 
 	if (gallery == -1) {
