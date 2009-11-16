@@ -6693,9 +6693,18 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
 
-  /* Add the download flag, for streaming buffering */
-  g_object_get (bvw->priv->play, "flags", &flags, NULL);
-  g_object_set (bvw->priv->play, "flags", flags | GST_PLAY_FLAGS_DOWNLOAD, NULL);
+  /* Add the download flag, for streaming buffering, for video only */
+  if (type == BVW_USE_TYPE_VIDEO) {
+    g_object_get (bvw->priv->play, "flags", &flags, NULL);
+    g_object_set (bvw->priv->play, "flags", flags | GST_PLAY_FLAGS_DOWNLOAD, NULL);
+  }
+
+  /* Disable video decoding in audio mode */
+  if (type == BVW_USE_TYPE_AUDIO) {
+    g_object_get (bvw->priv->play, "flags", &flags, NULL);
+    flags &= ~GST_PLAY_FLAGS_VIDEO;
+    g_object_set (bvw->priv->play, "flags", flags, NULL);
+  }
 
   gst_bus_add_signal_watch (bvw->priv->bus);
 
