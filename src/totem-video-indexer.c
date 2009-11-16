@@ -208,13 +208,11 @@ int main (int argc, char **argv)
 		g_print ("Can't open %s: %s\n", path, error->message);
 		return 1;
 	}
-	if (bacon_video_widget_play (bvw, &error) == FALSE) {
-		g_print ("Can't play %s: %s\n", path, error->message);
-		return 1;
-	}
-	totem_resources_monitor_stop ();
 
 	gtk_main ();
+
+	if (time_limit != FALSE)
+		totem_resources_monitor_stop ();
 
 	return 0;
 }
