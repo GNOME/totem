@@ -1287,7 +1287,7 @@ resolve_redirect (const char *old_mrl, const char *mrl)
 static void
 on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 {
-	char *new_uri;
+	char *new_uri = NULL;
 
 	g_message ("stream uri: %s", emb->stream_uri ? emb->stream_uri : "(null)");
 	g_message ("current uri: %s", emb->current_uri ? emb->current_uri : "(null)");
