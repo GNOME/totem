@@ -145,7 +145,7 @@ typedef struct {
 	TotemPlParserType type;
 } PlaylistSaveType;
 
-static PlaylistSaveType save_types [] = {
+static const PlaylistSaveType save_types [] = {
 	{ NULL, NULL, -1 }, /* By extension entry */
 	{ N_("MP3 ShoutCast playlist"), "pls", TOTEM_PL_PARSER_PLS },
 	{ N_("MP3 audio (streamed)"), "m3u", TOTEM_PL_PARSER_M3U },
