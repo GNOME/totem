@@ -1672,6 +1672,9 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
       bvw->priv->use_type == BVW_USE_TYPE_AUDIO)
     g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+  else if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE &&
+	   bvw->priv->cover_pixbuf != NULL)
+    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
 }
 
 typedef struct {
