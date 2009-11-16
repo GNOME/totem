@@ -1301,7 +1301,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	if (strstr (mrl, "://") != NULL)
 		new_uri = NULL;
 	/* We are using a local cache, so we resolve against the stream_uri */
-	if (emb->stream_uri)
+	else if (emb->stream_uri)
 		new_uri = resolve_redirect (emb->stream_uri, mrl);
 	/* We don't have a local cache, so resolve against the URI */
 	else if (emb->current_uri)
