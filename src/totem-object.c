@@ -3343,7 +3343,15 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		totem_action_fullscreen_toggle(totem);
 		return TRUE;
 	} else if (event->type == GDK_BUTTON_PRESS && event->button == 2) {
-		totem_action_play_pause(totem);
+		if (totem_is_fullscreen (totem) != FALSE) {
+			const char *icon_name;
+			if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
+				icon_name = "gtk-media-play";
+			else
+				icon_name = "gtk-media-pause";
+			totem_fullscreen_show_popups_or_osd (totem->fs, icon_name, FALSE);
+		}
+		totem_action_play_pause (totem);
 		return TRUE;
 	} else if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
 		totem_action_menu_popup (totem, event->button);
