@@ -784,7 +784,7 @@ int main (int argc, char *argv[])
 #ifndef THUMB_DEBUG
 	g_type_init ();
 #else
- 	g_option_context_add_group (context, gtk_get_option_group (FALSE));
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 #endif
 
 	if (g_option_context_parse (context, &argc, &argv, &err) == FALSE) {
