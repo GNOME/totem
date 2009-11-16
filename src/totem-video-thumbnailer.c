@@ -32,6 +32,7 @@
 #include <glib/gi18n.h>
 #include <cairo.h>
 
+#include <errno.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
@@ -774,11 +775,6 @@ int main (int argc, char *argv[])
 	const char *input, *output;
 	callback_data data;
 
-#ifdef G_OS_UNIX
-	if (nice (20) != 20)
-		g_warning ("Couldn't change nice value of process.");
-#endif
-
 	g_thread_init (NULL);
 
 	context = g_option_context_new ("Thumbnail movies");
@@ -796,6 +792,14 @@ int main (int argc, char *argv[])
 		g_error_free (err);
 		return 1;
 	}
+
+#ifdef G_OS_UNIX
+	if (time_limit != FALSE) {
+		errno = 0;
+		if (nice (20) != 20 && errno != 0)
+			g_warning ("Couldn't change nice value of process.");
+	}
+#endif
 
 	if (print_progress) {
 		fcntl (fileno (stdout), F_SETFL, O_NONBLOCK);
