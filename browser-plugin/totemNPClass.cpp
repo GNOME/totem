@@ -29,7 +29,9 @@ totemNPClass_base::totemNPClass_base (const char *aPropertNames[],
                                       uint32_t aMethodCount,
                                       const char *aDefaultMethodName) :
   mPropertyNameIdentifiers (GetIdentifiersForNames (aPropertNames, aPropertyCount)),
+  mPropertyNamesCount (aPropertyCount),
   mMethodNameIdentifiers (GetIdentifiersForNames (aMethodNames, aMethodCount)),
+  mMethodNamesCount (aMethodCount),
   mDefaultMethodIndex (aDefaultMethodName ? GetMethodIndex (NPN_GetStringIdentifier (aDefaultMethodName)) : -1)
 {
   structVersion  = NP_CLASS_STRUCT_VERSION_ENUM;
@@ -81,7 +83,7 @@ totemNPClass_base::GetPropertyIndex (NPIdentifier aName)
   if (!mPropertyNameIdentifiers)
     return -1;
 
-  for (int i = 0; mPropertyNameIdentifiers[i]; ++i) {
+  for (int i = 0; i < mPropertyNamesCount; ++i) {
     if (aName == mPropertyNameIdentifiers[i])
       return i;
   }
@@ -95,7 +97,7 @@ totemNPClass_base::GetMethodIndex (NPIdentifier aName)
   if (!mMethodNameIdentifiers)
     return -1;
 
-  for (int i = 0; mMethodNameIdentifiers[i]; ++i) {
+  for (int i = 0; i < mMethodNamesCount; ++i) {
     if (aName == mMethodNameIdentifiers[i])
       return i;
   }
