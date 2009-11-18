@@ -185,6 +185,29 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 					      G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
 }
 
+static gboolean
+totem_fullscreen_exit_popup_expose_cb (GtkWidget *widget,
+				       GdkEventExpose *event,
+				       TotemFullscreen *fs)
+{
+	GdkScreen *screen;
+	cairo_t *cr;
+
+	screen = gtk_widget_get_screen (widget);
+	if (gdk_screen_is_composited (screen) == FALSE)
+		return FALSE;
+
+	gtk_widget_set_app_paintable (widget, TRUE);
+
+	cr = gdk_cairo_create (gtk_widget_get_window (widget));
+	cairo_set_source_rgba (cr, 1., 1., 1., 0.);
+	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+	cairo_paint (cr);
+	cairo_destroy (cr);
+
+	return FALSE;
+}
+
 gboolean
 totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget,
 					 GdkEventButton *event,
@@ -334,7 +357,7 @@ totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
 	monitor = gdk_screen_get_monitor_at_window (screen, window);
 	gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-	if (gtk_widget_get_direction (fs->priv->bvw) == GTK_TEXT_DIR_RTL)
+	if (gtk_widget_get_direction (GTK_WIDGET (fs->priv->bvw)) == GTK_TEXT_DIR_RTL)
 		gtk_window_move (GTK_WINDOW (fs->priv->osd),
 				 rect.width - 8 - allocation.height / 8,
 				 rect.y + 8);
@@ -470,6 +493,8 @@ totem_fullscreen_init (TotemFullscreen *self)
 
 	self->priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_exit_fullscreen_window"));
+	g_signal_connect (G_OBJECT (self->priv->exit_popup), "expose-event",
+			  G_CALLBACK (totem_fullscreen_exit_popup_expose_cb), self);
 	self->priv->control_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_controls_window"));
 
