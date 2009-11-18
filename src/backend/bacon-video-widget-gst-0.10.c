@@ -1681,8 +1681,9 @@ bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
     return TRUE;
   }
 
-  /* RTSP source with user-id property ? */
-  if (g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0 &&
+  /* RTSP or HTTP source with user-id property ? */
+  if ((g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0 ||
+       g_strcmp0 ("GstSoupHTTPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0) &&
       g_object_class_find_property (G_OBJECT_GET_CLASS (err_msg->src), "user-id") != NULL) {
     GError *err = NULL;
     gchar *dbg = NULL;
