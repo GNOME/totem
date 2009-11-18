@@ -334,7 +334,12 @@ totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
 	monitor = gdk_screen_get_monitor_at_window (screen, window);
 	gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-	gtk_window_move (GTK_WINDOW (fs->priv->osd), rect.x + 8, rect.y + 8);
+	if (gtk_widget_get_direction (fs->priv->bvw) == GTK_TEXT_DIR_RTL)
+		gtk_window_move (GTK_WINDOW (fs->priv->osd),
+				 rect.width - 8 - allocation.height / 8,
+				 rect.y + 8);
+	else
+		gtk_window_move (GTK_WINDOW (fs->priv->osd), rect.x + 8, rect.y + 8);
 
 	gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (fs->priv->osd),
 						 icon_name, FALSE);
