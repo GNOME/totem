@@ -371,28 +371,45 @@ totemPlugin::ClearPlaylist ()
 }
 
 int32_t
-totemPlugin::AddItem (const NPString& aURI)
+totemPlugin::AddItem (const NPString& aURI,
+		      const NPString& aTitle,
+		      const char *aSubtitle)
 {
+	Dm ("AddItem");
+
         if (!aURI.UTF8Characters || !aURI.UTF8Length)
                 return -1;
 
         /* FIXMEchpe: resolve against mBaseURI or mSrcURI ?? */
 
 	/* FIXME: queue the action instead */
-	if (!mViewerReady)
+	if (!mViewerReady) {
+		Dm("Viewer not ready in AddItem");
 		return false;
+	}
 
 	assert (mViewerProxy);
 
         char *uri = g_strndup (aURI.UTF8Characters, aURI.UTF8Length);
-	D ("AddItem '%s'", uri);
+
+	char *title;
+	if (aTitle.UTF8Characters)
+		title = g_strndup (aTitle.UTF8Characters, aTitle.UTF8Length);
+	else
+		title = NULL;
+
+	D ("AddItem '%s' (title: '%s' sub: '%s')",
+	   uri, title ? title : "", aSubtitle ? aSubtitle : "");
 
         dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "AddItem",
 				    G_TYPE_STRING, uri,
+				    G_TYPE_STRING, title,
+				    G_TYPE_STRING, aSubtitle,
 				    G_TYPE_INVALID,
 				    G_TYPE_INVALID);
         g_free (uri);
+        g_free (title);
 
 	return 0;
 }
@@ -1411,7 +1428,8 @@ totemPlugin::SetRealMimeType (const char *mimetype)
 {
 	for (uint32_t i = 0; i < G_N_ELEMENTS (kMimeTypes); ++i) {
 		if (strcmp (kMimeTypes[i].mimetype, mimetype) == 0) {
-			if (kMimeTypes[i].mime_alias != NULL) {
+			if (kMimeTypes[i].mime_alias != NULL &&
+			    strchr (kMimeTypes[i].mime_alias, '/') != NULL) {
 				mMimeType = g_strdup (kMimeTypes[i].mime_alias);
 			} else {
 				mMimeType = g_strdup (mimetype);

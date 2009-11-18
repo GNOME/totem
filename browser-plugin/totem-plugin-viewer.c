@@ -94,6 +94,7 @@ typedef GObjectClass TotemEmbeddedClass;
 
 typedef struct {
 	char *uri;
+	char *subtitle;
 	char *title;
 	int duration;
 	int starttime;
@@ -675,7 +676,8 @@ totem_pl_item_free (gpointer data, gpointer user_data)
 		return;
 	g_free (item->uri);
 	g_free (item->title);
-	g_free (item);
+	g_free (item->subtitle);
+	g_slice_free (TotemPlItem, item);
 }
 
 static gboolean
@@ -698,14 +700,20 @@ totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 }
 
 static gboolean
-totem_embedded_add_item (TotemEmbedded *embedded, const char *uri, GError *error)
+totem_embedded_add_item (TotemEmbedded *embedded,
+			 const char *uri,
+			 const char *title,
+			 const char *subtitle,
+			 GError *error)
 {
 	TotemPlItem *item;
 
 	g_message ("totem_embedded_add_item: %s", uri);
 
-	item = g_new0 (TotemPlItem, 1);
+	item = g_slice_new0 (TotemPlItem);
 	item->uri = g_strdup (uri);
+	item->title = g_strdup (title);
+	item->subtitle = g_strdup (subtitle);
 	item->duration = -1;
 	item->starttime = -1;
 
@@ -862,6 +870,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 	bacon_video_widget_close (emb->bvw);
 	update_fill (emb, -1.0);
 
+	//FIXME set the title from the URI if possible
 	totem_embedded_update_title (emb, plitem->title);
 	if (totem_embedded_open_internal (emb, FALSE, NULL /* FIXME */)) {
 		if (plitem->starttime > 0) {
@@ -2083,7 +2092,7 @@ entry_parsed (TotemPlParser *parser,
 	if (duration == 0)
 		return;
 
-	item = g_new0 (TotemPlItem, 1);
+	item = g_slice_new0 (TotemPlItem);
 	item->uri = g_strdup (uri);
 	item->title = g_strdup (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE));
 	item->duration = duration;

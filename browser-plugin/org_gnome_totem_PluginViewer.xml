@@ -52,6 +52,8 @@
     <method name="ClearPlaylist" />
     <method name="AddItem">
       <arg type="s" name="URI" direction="in" />
+      <arg type="s" name="Title" direction="in" />
+      <arg type="s" name="Subtitle" direction="in" />
     </method>
     <method name="SetFullscreen">
       <arg type="b" name="FullscreenEnabled" direction="in" />

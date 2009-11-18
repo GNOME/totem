@@ -345,7 +345,7 @@ class totemPlugin {
 
     void Command (const char *aCommand);
     void ClearPlaylist ();
-    int32_t AddItem (const NPString&);
+    int32_t AddItem (const NPString&, const NPString&, const char *aSubtitle);
 
     void SetIsWindowless (bool enabled) { mIsWindowless = enabled; }
     bool IsWindowless () const { return mIsWindowless; }

@@ -79,7 +79,35 @@ totemConePlaylist::InvokeByIndex (int aIndex,
       if (!GetNPStringFromArguments (argv, argc, 0, mrl))
         return false;
 
-      Plugin()->AddItem (mrl);
+      NPString title;
+      GetNPStringFromArguments (argv, argc, 1, title);
+
+      NPString options;
+      GetNPStringFromArguments (argv, argc, 2, options);
+      //FIXME handle options as array
+      //http://wiki.videolan.org/Documentation:WebPlugin#Playlist_object
+      char *subtitle = NULL;
+      if (options.UTF8Characters && options.UTF8Length) {
+        char *str, **items;
+        guint i;
+
+        str = g_strndup (options.UTF8Characters, options.UTF8Length);
+        items = g_strsplit (str, " ", -1);
+
+        for (i = 0; items[i] != NULL; i++) {
+          if (g_str_has_prefix (items[i], ":sub-file=")) {
+            subtitle = g_strdup (items[i] + strlen (":sub-file="));
+            g_strfreev (items);
+            g_free (str);
+	    break;
+	  }
+	}
+	g_strfreev (items);
+	g_free (str);
+      }
+
+      Plugin()->AddItem (mrl, title, subtitle);
+      g_free (subtitle);
       return Int32Variant (_result, 0);
     }
 
