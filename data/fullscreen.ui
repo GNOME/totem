@@ -18,6 +18,8 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <signal name="motion-notify-event" handler="totem_fullscreen_motion_notify"/>
+  <signal name="enter-notify-event" handler="totem_fullscreen_control_enter_notify"/>
+  <signal name="leave-notify-event" handler="totem_fullscreen_control_leave_notify"/>
 
   <child>
     <object class="GtkButton" id="tefw_fs_exit_button">
@@ -109,6 +111,8 @@
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
   <signal name="motion-notify-event" handler="totem_fullscreen_motion_notify"/>
+  <signal name="enter-notify-event" handler="totem_fullscreen_control_enter_notify"/>
+  <signal name="leave-notify-event" handler="totem_fullscreen_control_leave_notify"/>
 
   <child>
     <object class="GtkHBox" id="tcw_hbox">
