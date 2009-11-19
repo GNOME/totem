@@ -50,6 +50,9 @@ G_MODULE_EXPORT gboolean totem_fullscreen_vol_slider_released_cb (GtkWidget *wid
 G_MODULE_EXPORT gboolean totem_fullscreen_seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 G_MODULE_EXPORT gboolean totem_fullscreen_seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemFullscreen *fs);
 G_MODULE_EXPORT gboolean totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_control_enter_notify (GtkWidget *widget, GdkEventCrossing *event, TotemFullscreen *fs);
+G_MODULE_EXPORT gboolean totem_fullscreen_control_leave_notify (GtkWidget *widget, GdkEventCrossing *event, TotemFullscreen *fs);
+
 
 struct _TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;
@@ -65,6 +68,7 @@ struct _TotemFullscreenPrivate {
 
 	guint             popup_timeout;
 	gboolean          popup_in_progress;
+	gboolean          pointer_on_control;
 	guint             motion_handler_id;
 
 	GtkBuilder       *xml;
@@ -288,7 +292,8 @@ G_MODULE_EXPORT gboolean
 totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 				TotemFullscreen *fs)
 {
-	totem_fullscreen_show_popups (fs, TRUE);
+	if (!fs->priv->pointer_on_control)
+		totem_fullscreen_show_popups (fs, TRUE);
 	return FALSE;
 }
 
@@ -367,6 +372,25 @@ totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
 	gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (fs->priv->osd),
 						 icon_name, FALSE);
 	gtk_widget_show (fs->priv->osd);
+}
+
+G_MODULE_EXPORT gboolean
+totem_fullscreen_control_enter_notify (GtkWidget *widget,
+			       GdkEventCrossing *event,
+			       TotemFullscreen *fs)
+{
+	fs->priv->pointer_on_control = TRUE;
+	totem_fullscreen_popup_timeout_remove (fs);
+	return TRUE;
+}
+
+G_MODULE_EXPORT gboolean
+totem_fullscreen_control_leave_notify (GtkWidget *widget,
+			       GdkEventCrossing *event,
+			       TotemFullscreen *fs)
+{
+	fs->priv->pointer_on_control = FALSE;
+	return TRUE;
 }
 
 void
@@ -490,6 +514,8 @@ totem_fullscreen_init (TotemFullscreen *self)
 
 	if (self->priv->xml == NULL)
 		return;
+
+	self->priv->pointer_on_control = FALSE;
 
 	self->priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_exit_fullscreen_window"));
