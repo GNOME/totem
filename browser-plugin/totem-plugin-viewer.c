@@ -974,7 +974,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 	}
 	src = g_file_new_for_path (path);
 	dst = g_file_new_for_path (tmpfile);
-	if (g_file_copy (src, dst, G_FILE_COPY_OVERWRITE, NULL, NULL, NULL, &err) == FALSE) {
+	if (g_file_copy (src, dst, G_FILE_COPY_OVERWRITE | G_FILE_COPY_TARGET_DEFAULT_PERMS, NULL, NULL, NULL, &err) == FALSE) {
 		g_warning ("Failed to copy playlist '%s' to '%s': %s",
 			   path, tmpfile, err->message);
 		g_error_free (err);
