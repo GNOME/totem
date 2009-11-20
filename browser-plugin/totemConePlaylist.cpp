@@ -95,22 +95,21 @@ totemConePlaylist::InvokeByIndex (int aIndex,
 
         str = g_strndup (options.UTF8Characters, options.UTF8Length);
         items = g_strsplit (str, " ", -1);
+        g_free (str);
 
         for (i = 0; items[i] != NULL; i++) {
           if (g_str_has_prefix (items[i], ":sub-file=")) {
             subtitle = g_strdup (items[i] + strlen (":sub-file="));
-            g_strfreev (items);
-            g_free (str);
 	    break;
 	  }
 	}
 	g_strfreev (items);
-	g_free (str);
       }
 
       Plugin()->AddItem (mrl, title, subtitle);
       g_free (subtitle);
-      return Int32Variant (_result, 0);
+      //FIXME we're supposed to return a unique number here
+      return Int32Variant (_result, 1);
     }
 
     case ePlay:
