@@ -35,7 +35,6 @@
 
 #include "totem-plugin-viewer-constants.h"
 
-#define TOTEM_COMPLEX_VERSION_BUILD "10.0"
 #define TOTEM_NARROWSPACE_VERSION   "7.2.0"
 #define TOTEM_MULLY_VERSION         "1.4.0.233"
 #define TOTEM_CONE_VERSION          "0.8.6"
@@ -48,7 +47,6 @@ typedef struct {
 } totemPluginMimeEntry;
 
 class totemBasicPlayer;
-class totemComplexPlayer;
 class totemConePlayer;
 class totemGMPControls;
 class totemGMPError;
@@ -287,31 +285,6 @@ class totemPlugin {
     char* mTarget;
     bool mAutoHref;
 #endif
-
-#if 0 //defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-  public:
-
-    bool SetConsole (const char* aConsole);
-
-  private:
-
-    totemPlugin* FindConsoleClassRepresentant ();
-    void TransferConsole ();
-
-    void UnownedViewerSetup ();
-    void UnownedViewerSetWindow ();
-    void UnownedViewerUnsetWindow ();
-
-    totemNPObjectWrapper mPluginOwnerDocument;
-    char* mConsole;
-    char* mControls;
-
-    /* nsnull if we're the representant ourself */
-    totemPlugin *mConsoleClassRepresentant;
-
-    static nsTArray<totemPlugin*> *sPlugins;
-
-#endif /* TOTEM_COMPLEX_PLUGIN */
 
   public:
 

@@ -64,8 +64,6 @@
 #include "totemGMPNetwork.h"
 #include "totemGMPPlayer.h"
 #include "totemGMPSettings.h"
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-#include "totemComplexPlugin.h"
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
 #include "totemNarrowSpacePlugin.h"
 #elif defined(TOTEM_MULLY_PLUGIN)
@@ -101,8 +99,6 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "application/x-ms-wmp", "wmp", "video/x-ms-wmv" },
   { "application/asx", "asx", "audio/x-ms-asx" },
   { "audio/x-ms-wma", "wma", NULL }
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-  { "audio/x-pn-realaudio-plugin", "rpm", "audio/vnd.rn-realaudio" },
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
   { "video/quicktime", "mov", NULL },
   { "video/mp4", "mp4", NULL },
@@ -140,8 +136,6 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 static const char kPluginDescription[] =
 #if defined(TOTEM_GMP_PLUGIN)
   "Windows Media Player Plug-in 10 (compatible; Totem)";
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-  "Helix DNA Plugin: RealPlayer G2 Plug-In Compatible (compatible; Totem)";
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
   "QuickTime Plug-in " TOTEM_NARROWSPACE_VERSION;
 #elif defined(TOTEM_MULLY_PLUGIN)
@@ -168,34 +162,6 @@ static const char kPluginUserAgent[] =
   "";
 #endif
 
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-nsTArray<totemPlugin*> *totemPlugin::sPlugins;
-
-/* Keep the same order as totemPlugin::Control enum! */
-static const char *kControl[] = {
-	"All",
-	"ControlPanel",
-	"FFCtrl",
-	"HomeCtrl",
-	"ImageWindow",
-	"InfoPanel",
-	"InfoVolumePanel",
-	"MuteCtrl",
-	"MuteVolume",
-	"PauseButton",
-	"PlayButton",
-	"PlayOnlyButton",
-	"PositionField",
-	"PositionSlider",
-	"RWCtrl",
-	"StatusBar",
-	"StatusField",
-	"StopButton",
-	"TACCtrl",
-	"VolumeSlider",
-};
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
 void*
 totemPlugin::operator new (size_t aSize) throw ()
 {
@@ -220,35 +186,15 @@ totemPlugin::totemPlugin (NPP aNPP)
 	mViewerFD (-1),
 	mWidth (-1),
 	mHeight (-1),
-#ifdef TOTEM_COMPLEX_PLUGIN
-	mAutoPlay (false),
-#else
 	mAutoPlay (true),
-#endif /* TOTEM_NARROWSPACE_PLUGIN */
 	mNeedViewer (true),
 	mState (TOTEM_STATE_STOPPED)
 {
         TOTEM_LOG_CTOR ();
-
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	/* Add |this| to the global plugins list */
-	assert (sPlugins->IndexOf (this) == NoIndex); //, "WTF?");
-	if (!sPlugins->AppendElement (this)) {
-		D ("Couldn't maintain plugin list!");
-	}
-#endif /* TOTEM_COMPLEX_PLUGIN */
 }
 
 totemPlugin::~totemPlugin ()
 {
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	/* Remove us from the plugins list */
-	NS_ASSERTION (sPlugins->IndexOf (this) != NoIndex, "WTF?");
-	sPlugins->RemoveElement (this);
-
-	TransferConsole ();
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
         /* FIXMEchpe invalidate the scriptable object, or is that done automatically? */
 
 	if (mBusProxy) {
@@ -491,12 +437,6 @@ totemPlugin::Rate () const
 NPError
 totemPlugin::ViewerFork ()
 {
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	/* Don't fork a viewer if we're going to use another one */
-	if (!mNeedViewer)
-		return NPERR_NO_ERROR;
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
 	const char *userAgent = kPluginUserAgent;
 
 	if (*kPluginUserAgent == '\0') {
@@ -540,8 +480,6 @@ totemPlugin::ViewerFork ()
 	g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_PLUGIN_TYPE));
 #if defined(TOTEM_GMP_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("gmp"));
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-	g_ptr_array_add (arr, g_strdup ("complex"));
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("narrowspace"));
 #elif defined(TOTEM_MULLY_PLUGIN)
@@ -735,17 +673,6 @@ totemPlugin::ViewerSetup ()
 	} else {
 		ViewerSetWindow ();
 	}
-
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	/* Notify all consoles */
-	uint32_t count = sPlugins->Length ();
-	for (uint32_t i = 0; i < count; ++i) {
-		totemPlugin *plugin = sPlugins->ElementAt (i);
-
-		if (plugin->mConsoleClassRepresentant == this)
-			plugin->UnownedViewerSetup ();
-	}
-#endif /* TOTEM_COMPLEX_PLUGIN */
 }
 
 
@@ -825,11 +752,7 @@ totemPlugin::ViewerSetWindow ()
 					 ViewerSetWindowCallback,
 					 reinterpret_cast<void*>(this),
 					 NULL,
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-					 G_TYPE_STRING, mControls.get (),
-#else
 					 G_TYPE_STRING, "All",
-#endif
 					 G_TYPE_UINT, (guint) mWindow,
 					 G_TYPE_INT, mWidth,
 					 G_TYPE_INT, mHeight,
@@ -1719,201 +1642,6 @@ totemPlugin::ParseURLExtensions (const char* str,
 
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-
-totemPlugin *
-totemPlugin::FindConsoleClassRepresentant ()
-{
-	/* FIXME: this treats "master" incorrectly */
-	if (!mSrcURI ||
-	    mConsole.IsEmpty () ||
-	    mConsole.Equals (NS_LITERAL_CSTRING ("_unique")) ||
-	    mConsole.Equals (NS_LITERAL_CSTRING ("_master"))) {
-		D ("We're the representant for the console class");
-		return NULL;
-	}
-
-	totemPlugin *representant = NULL;
-
-	/* Try to find a the representant of the console class */
-	uint32_t count = sPlugins->Length ();
-	for (uint32_t i = 0; i < count; ++i) {
-		totemPlugin *plugin = sPlugins->ElementAt (i);
-
-		bool equal = false;
-		/* FIXME: is this correct? Maybe we should use the toplevel document
-		 * to allow frames (and check the frames for same-origin, obviously) ?
-		 */
-		if (plugin != this &&
-		    plugin->mPluginOwnerDocument == mPluginOwnerDocument &&
-		    mConsole.Equals (plugin->mConsole) &&
-		    plugin->mSrcURI &&
-		    NS_SUCCEEDED (plugin->mSrcURI->Equals (mSrcURI, &equal)) &&
-		    equal) {
-			if (plugin->mConsoleClassRepresentant) {
-				representant = plugin->mConsoleClassRepresentant;
-			} else {
-				representant = plugin;
-			}
-			break;
-		}
-	}
-
-	D ("Representant for the console class is %p", (void*) representant);
-
-	return representant;
-}
-
-bool
-totemPlugin::SetConsole (const char * aConsole)
-{
-	/* Can't change console group */
-	if (mConsole) {
-// 		return NS_ERROR_ALREADY_INITIALIZED;
-          // FIXMEchpe set exception
-          return false;
-        }
-
-	/* FIXME: we might allow this, and kill the viewer instead.
-	 * Or maybe not spawn the viewer if we don't have a console yet?
-	 */
-	if (mViewerPID)
-		return false; // FIXMEchpe throw exception
-
-        mConsole = g_strdup (aConsole);
-
-// 	assert (mConsoleClassRepresentant == NULL, "Already have a representant");
-
-	mConsoleClassRepresentant = FindConsoleClassRepresentant ();
-	mNeedViewer = (NULL == mConsoleClassRepresentant);
-
-	return true;
-}
-
-void
-totemPlugin::TransferConsole ()
-{
-	/* Find replacement representant */
-	totemPlugin *representant = NULL;
-
-	uint32_t i, count = sPlugins->Length ();
-	for (i = 0; i < count; ++i) {
-		totemPlugin *plugin = sPlugins->ElementAt (i);
-
-		if (plugin->mConsoleClassRepresentant == this) {
-			representant = plugin;
-			break;
-		}
-	}
-
-	/* If there are no other elements in this console class, there's nothing to do */
-	if (!representant)
-		return;
-
-	D ("Transferring console from %p to %p", (void*) this, (void*) representant);
-
-	/* Store new representant in the plugins */
-	representant->mConsoleClassRepresentant = NULL;
-	/* We can start at i since we got out when we found the first one in the loop above */
-	for ( ; i < count; ++i) {
-		totemPlugin *plugin = sPlugins->ElementAt (i);
-
-		if (plugin->mConsoleClassRepresentant == this)
-			plugin->mConsoleClassRepresentant = representant;
-	}
-
-	/* Now transfer viewer ownership */
-#if 0
-	if (mScriptable) {
-		assert (!representant->mScriptable, "WTF");
-		representant->mScriptable = mScriptable;
-		mScriptable->SetPlugin (representant);
-		mScriptable = NULL;
-	}
-#endif
-
-	representant->mNeedViewer = true;
-
-	representant->mViewerPID = mViewerPID;
-	mViewerPID = 0;
-
-	representant->mViewerFD = mViewerFD;
-	mViewerFD = -1;
-
-	representant->mViewerBusAddress = g_strdup (mViewerBusAddress);
-	representant->mViewerServiceName = g_strdup (mViewerServiceName);
-
-	/* FIXME correct condition? */
-	if (mViewerSetUp)
-		representant->ViewerSetup ();
-}
-
-void
-totemPlugin::UnownedViewerSetup ()
-{
-	/* already set up */
-	if (mUnownedViewerSetUp)
-		return;
-
-	mUnownedViewerSetUp = true;
-
-	D ("UnownedViewerSetup");
-
-	assert (mConsoleClassRepresentant); /* We own the viewer!? */
-
-	UnownedViewerSetWindow ();
-}
-
-void
-totemPlugin::UnownedViewerSetWindow ()
-{
-	if (mWindowSet || mWindow == 0)
-		return;
-
-	if (!mUnownedViewerSetUp) {
-		D ("No unowned viewer yet, deferring SetWindow");
-		return;
-	}
-
-	assert (mConsoleClassRepresentant); /* We own the viewer! */
-
-	assert (mConsoleClassRepresentant->mViewerProxy);
-
-	/* FIXME: do we need a reply callback? */
-	dbus_g_proxy_call_no_reply (mConsoleClassRepresentant->mViewerProxy,
-				    "SetWindow",
-				    G_TYPE_STRING, mControls.get (),
-				    G_TYPE_UINT, (guint) mWindow,
-				    G_TYPE_INT, mWidth,
-				    G_TYPE_INT, mHeight,
-				    G_TYPE_INVALID);
-
-	mWindowSet = true;
-}
-
-void
-totemPlugin::UnownedViewerUnsetWindow ()
-{
-	if (!mWindowSet || mWindow == 0)
-		return;
-
-	if (!mUnownedViewerSetUp)
-		return;
-
-	assert (mConsoleClassRepresentant); /* We own the viewer! */
-
-	assert (mConsoleClassRepresentant->mViewerProxy);
-
-	dbus_g_proxy_call_no_reply (mConsoleClassRepresentant->mViewerProxy,
-				    "UnsetWindow",
-				    G_TYPE_UINT, (guint) mWindow,
-				    G_TYPE_INVALID);
-
-	mWindowSet = false;
-}
-
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
 /* Plugin glue functions */
 
 NPError
@@ -1940,18 +1668,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 		Dm ("Failed to get our DOM Element NPObject");
 		return NPERR_GENERIC_ERROR;
 	}
-
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-        /* FIXMEchpe untested; test this! */
-        if (!NPN_GetProperty (mNPP,
-                              mPluginElement,
-                              NPN_GetStringIdentifier ("ownerDocument"),
-                              getter_Retains (mPluginOwnerDocument)) ||
-            mPluginOwnerDocument.IsNull ()) {
-		Dm ("Failed to get the plugin element's ownerDocument");
-		return NPERR_GENERIC_ERROR;
-	}
-#endif /* TOTEM_COMPLEX_PLUGIN */
 
         /* FIXMEchpe: should use totemNPObjectWrapper + getter_Retains(),
          * but that causes a crash somehow, deep inside libxul...
@@ -2202,43 +1918,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 		mControllerHidden = true;
 #endif
 
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	value = (const char *) g_hash_table_lookup (args, "console");
-	if (value) {
-		rv = SetConsole (nsDependentCString (value));
-		if (NS_FAILED (rv))
-			return NPERR_GENERIC_ERROR;
-	}
-
-	const char *kControls[] = {
-		"All",
-		"ControlPanel",
-		"FFCtrl",
-		"HomeCtrl",
-		"ImageWindow",
-		"InfoPanel",
-		"InfoVolumePanel",
-		"MuteCtrl",
-		"MuteVolume",
-		"PauseButton",
-		"PlayButton",
-		"PlayOnlyButton",
-		"PositionField",
-		"PositionSlider",
-		"RWCtrl",
-		"StatusBar",
-		"StatusField",
-		"StopButton",
-		"TACCtrl",
-		"VolumeSlider",
-	};
-	uint32_t control = GetEnumIndex (args, "controls",
-				         kControls, G_N_ELEMENTS (kControls),
-					 0);
-	mControls = kControls[control];
-
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
 #ifdef TOTEM_GMP_PLUGIN
 	/* uimode is either invisible, none, mini, or full
 	 * http://windowssdk.msdn.microsoft.com/en-us/library/aa392439(VS.80).aspx */
@@ -2305,10 +1984,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 	D ("mHref: %s", mHref ? mHref : "");
 	D ("mTarget: %s", mTarget ? mTarget : "");
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	D ("mConsole: %s", mConsole.get ());
-	D ("mControls: %s", mControls.get ());
-#endif /* TOTEM_COMPLEX_PLUGIN */
 
 	g_hash_table_destroy (args);
 
@@ -2704,8 +2379,6 @@ totemPlugin::GetNPObject (ObjectEnum which)
     case eLastNPObject:
       g_assert_not_reached ();
   }
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-  npclass = totemComplexPluginNPClass::Instance();
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
   npclass = totemNarrowSpacePlayerNPClass::Instance();
 #elif defined(TOTEM_MULLY_PLUGIN)
@@ -2767,36 +2440,17 @@ totemPlugin::GetScriptableNPObject (void *_retval)
 /* static */ NPError
 totemPlugin::Initialise ()
 {
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	sPlugins = new nsTArray<totemPlugin*> (32);
-	if (!sPlugins)
-		return NPERR_OUT_OF_MEMORY_ERROR;
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
 	return NPERR_NO_ERROR;
 }
 
 /* static */ NPError
 totemPlugin::Shutdown ()
 {
-#if defined(TOTEM_COMPLEX_PLUGIN) && defined(HAVE_NSTARRAY_H)
-	if (sPlugins) {
-		if (!sPlugins->IsEmpty ()) {
-			D ("WARNING: sPlugins not empty on shutdown, count: %d", sPlugins->Length ());
-		}
-
-		delete sPlugins;
-		sPlugins = NULL;
-	}
-#endif /* TOTEM_COMPLEX_PLUGIN */
-
 #if defined(TOTEM_GMP_PLUGIN)
         totemGMPPlayerNPClass::Shutdown ();
         totemGMPControlsNPClass::Shutdown ();
         totemGMPNetworkNPClass::Shutdown ();
         totemGMPSettingsNPClass::Shutdown ();
-#elif defined(TOTEM_COMPLEX_PLUGIN)
-	totemComplexPluginNPClass::Shutdown ();
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
         totemNarrowSpacePlayerNPClass::Shutdown ();
 #elif defined(TOTEM_MULLY_PLUGIN)

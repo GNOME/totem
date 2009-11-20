@@ -76,7 +76,6 @@ char * totem_pl_parser_resolve_uri (GFile *base_gfile, const char *relative_uri)
 
 typedef enum {
 	TOTEM_PLUGIN_TYPE_GMP,
-	TOTEM_PLUGIN_TYPE_COMPLEX,
 	TOTEM_PLUGIN_TYPE_NARROWSPACE,
 	TOTEM_PLUGIN_TYPE_MULLY,
 	TOTEM_PLUGIN_TYPE_CONE,
@@ -1972,29 +1971,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 }
 
 static gboolean
-totem_embedded_construct_placeholder (TotemEmbedded *emb,
-			  GdkNativeWindow xid,
-			  int width,
-			  int height)
-{
-	GtkWidget *window, *label;
-
-	if (xid == 0)
-		return TRUE;
-
-	window = gtk_plug_new (xid);
-	/* FIXME why? */
-	gtk_widget_realize (window);
-
-	label = gtk_label_new ("Not yet supported");
-	gtk_container_add (GTK_CONTAINER (window), label);
-
-	gtk_widget_show_all (window);
-
-	return TRUE;
-}
-
-static gboolean
 totem_embedded_set_window (TotemEmbedded *embedded,
 			   const char *controls,
 			   guint window,
@@ -2004,22 +1980,13 @@ totem_embedded_set_window (TotemEmbedded *embedded,
 {
 	g_print ("Viewer: SetWindow XID %u size %d:%d\n", window, width, height);
 
-	if (embedded->type == TOTEM_PLUGIN_TYPE_COMPLEX) {
-		/* FIXME!!! */
-		if (strcmp (controls, "All") != 0 &&
-		    strcmp (controls, "ImageWindow") != 0) {
-			totem_embedded_construct_placeholder (embedded, (GdkNativeWindow) window, width, height);
-			return TRUE;
-		}
-	} else {
-		if (strcmp (controls, "All") != 0 &&
-		    strcmp (controls, "ImageWindow") != 0) {
-			g_set_error (error,
-				TOTEM_EMBEDDED_ERROR_QUARK,
-				TOTEM_EMBEDDED_SETWINDOW_UNSUPPORTED_CONTROLS,
-				"Unsupported controls '%s'", controls);
-			return FALSE;
-		}
+	if (strcmp (controls, "All") != 0 &&
+	    strcmp (controls, "ImageWindow") != 0) {
+		g_set_error (error,
+			     TOTEM_EMBEDDED_ERROR_QUARK,
+			     TOTEM_EMBEDDED_SETWINDOW_UNSUPPORTED_CONTROLS,
+			     "Unsupported controls '%s'", controls);
+		return FALSE;
 	}
 
 	if (embedded->window != NULL) {
@@ -2188,7 +2155,6 @@ parse_plugin_type (const gchar *option_name,
 {
 	const char types[TOTEM_PLUGIN_TYPE_LAST][12] = {
 		"gmp",
-		"complex",
 		"narrowspace",
 		"mully",
 		"cone"
