@@ -46,6 +46,28 @@ typedef struct {
   const char *mime_alias;
 } totemPluginMimeEntry;
 
+typedef enum {
+	TOTEM_QUEUE_TYPE_SET_VOLUME,
+	TOTEM_QUEUE_TYPE_CLEAR_PLAYLIST,
+	TOTEM_QUEUE_TYPE_ADD_ITEM,
+	TOTEM_QUEUE_TYPE_SET_BOOLEAN,
+	TOTEM_QUEUE_TYPE_SET_STRING
+} TotemQueueCommandType;
+
+typedef struct {
+	TotemQueueCommandType type;
+	union {
+		float volume;
+		struct {
+			char *uri;
+			char *title;
+			char *subtitle;
+		} add_item;
+		gboolean boolean;
+		char *string;
+	};
+} TotemQueueCommand;
+
 class totemBasicPlayer;
 class totemConePlayer;
 class totemGMPControls;
@@ -138,6 +160,7 @@ class totemPlugin {
     static void ViewerOpenURICallback (DBusGProxy *aProxy,
 						   DBusGProxyCall *aCall,
 						   void *aData);
+
 
     NPError ViewerFork ();
     void ViewerSetup ();
@@ -252,6 +275,8 @@ class totemPlugin {
 
     uint32_t mDuration;
     uint32_t mTime;
+
+    GQueue *mQueue;
 
 #ifdef TOTEM_GMP_PLUGIN
   public:
@@ -370,6 +395,8 @@ class totemPlugin {
 
     void SetRate (double rate);
     double Rate () const;
+
+    void QueueCommand (TotemQueueCommand *cmd);
 
     double Duration () const { return double (mDuration); }
 

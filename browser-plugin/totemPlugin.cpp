@@ -243,16 +243,30 @@ totemPlugin::~totemPlugin ()
         TOTEM_LOG_DTOR ();
 }
 
+/* static */ void
+totemPlugin::QueueCommand (TotemQueueCommand *cmd)
+{
+	assert (mQueue);
+
+	g_queue_push_tail (mQueue, cmd);
+}
+
 /* public functions */
 
 void
 totemPlugin::Command (const char *aCommand)
 {
-	D ("Command '%s'", aCommand);
-
-	/* FIXME: queue the action instead */
-	if (!mViewerReady)
+	if (!mViewerReady) {
+		D("Queuing command '%s'", aCommand);
+		TotemQueueCommand *cmd;
+		cmd = g_new0 (TotemQueueCommand, 1);
+		cmd->type = TOTEM_QUEUE_TYPE_SET_STRING;
+		cmd->string = g_strdup (aCommand);
+		QueueCommand (cmd);
 		return;
+	}
+
+	D ("Command '%s'", aCommand);
 
 	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
@@ -303,11 +317,16 @@ totemPlugin::SetFullscreen (bool enabled)
 void
 totemPlugin::ClearPlaylist ()
 {
-	Dm ("ClearPlaylist");
-
-	/* FIXME: queue the action instead */
-	if (!mViewerReady)
+	if (!mViewerReady) {
+		Dm ("Queuing ClearPlaylist");
+		TotemQueueCommand *cmd;
+		cmd = g_new0 (TotemQueueCommand, 1);
+		cmd->type = TOTEM_QUEUE_TYPE_CLEAR_PLAYLIST;
+		QueueCommand (cmd);
 		return;
+	}
+
+	Dm ("ClearPlaylist");
 
 	assert (mViewerProxy);
 	dbus_g_proxy_call_no_reply (mViewerProxy,
@@ -328,24 +347,33 @@ totemPlugin::AddItem (const NPString& aURI,
 
         /* FIXMEchpe: resolve against mBaseURI or mSrcURI ?? */
 
-	/* FIXME: queue the action instead */
-	if (!mViewerReady) {
-		Dm("Viewer not ready in AddItem");
-		return false;
-	}
-
-	assert (mViewerProxy);
-
         char *uri = g_strndup (aURI.UTF8Characters, aURI.UTF8Length);
 
 	char *title;
-	if (aTitle.UTF8Characters)
+	if (aTitle.UTF8Characters && aURI.UTF8Length)
 		title = g_strndup (aTitle.UTF8Characters, aTitle.UTF8Length);
 	else
 		title = NULL;
 
+	/* FIXME: resolve the subtitle URI against the URI itself */
+
+	if (!mViewerReady) {
+		D ("Queuing AddItem '%s' (title: '%s' sub: '%s')",
+		   uri, title ? title : "", aSubtitle ? aSubtitle : "");
+		TotemQueueCommand *cmd;
+		cmd = g_new0 (TotemQueueCommand, 1);
+		cmd->type = TOTEM_QUEUE_TYPE_ADD_ITEM;
+		cmd->add_item.uri = uri;
+		cmd->add_item.title = title;
+		cmd->add_item.subtitle = g_strdup (aSubtitle);
+		QueueCommand (cmd);
+		return 0;
+	}
+
 	D ("AddItem '%s' (title: '%s' sub: '%s')",
 	   uri, title ? title : "", aSubtitle ? aSubtitle : "");
+
+	assert (mViewerProxy);
 
         dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "AddItem",
@@ -589,6 +617,8 @@ totemPlugin::ViewerFork ()
 		return NPERR_GENERIC_ERROR;
 	}
 
+	mQueue = g_queue_new ();
+
 	/* Set mViewerFD nonblocking */
 	fcntl (mViewerFD, F_SETFL, O_NONBLOCK);
 
@@ -674,7 +704,6 @@ totemPlugin::ViewerSetup ()
 		ViewerSetWindow ();
 	}
 }
-
 
 void
 totemPlugin::ViewerCleanup ()
@@ -769,6 +798,55 @@ totemPlugin::ViewerReady ()
 	assert (!mViewerReady);
 
 	mViewerReady = true;
+
+	/* Unqueue any queued commands, before any
+	 * new ones come in */
+	TotemQueueCommand *cmd;
+
+	while ((cmd = (TotemQueueCommand *) g_queue_pop_head (mQueue)) != NULL) {
+		D("Popping command %d", cmd->type);
+		switch (cmd->type) {
+		case TOTEM_QUEUE_TYPE_CLEAR_PLAYLIST:
+			ClearPlaylist();
+			break;
+		case TOTEM_QUEUE_TYPE_ADD_ITEM:
+			assert (mViewerProxy);
+
+			D ("AddItem '%s' (title: '%s' sub: '%s')",
+			   cmd->add_item.uri,
+			   cmd->add_item.title ? cmd->add_item.title : "",
+			   cmd->add_item.subtitle ? cmd->add_item.subtitle : "");
+			dbus_g_proxy_call_no_reply (mViewerProxy,
+						    "AddItem",
+						    G_TYPE_STRING, cmd->add_item.uri,
+						    G_TYPE_STRING, cmd->add_item.title,
+						    G_TYPE_STRING, cmd->add_item.subtitle,
+						    G_TYPE_INVALID,
+						    G_TYPE_INVALID);
+			g_free (cmd->add_item.uri);
+			g_free (cmd->add_item.title);
+			g_free (cmd->add_item.subtitle);
+			break;
+		case TOTEM_QUEUE_TYPE_SET_STRING:
+			assert (cmd->string);
+
+			if (g_str_equal (cmd->string, TOTEM_COMMAND_PLAY) ||
+			    g_str_equal (cmd->string, TOTEM_COMMAND_PAUSE) ||
+			    g_str_equal (cmd->string, TOTEM_COMMAND_STOP)) {
+				Command(cmd->string);
+			} else {
+				D("Unhandled queued string '%s'", cmd->string);
+			}
+			g_free (cmd->string);
+			break;
+		default:
+			D("Unhandled queued command type %d", cmd->type);
+		}
+
+		g_free (cmd);
+	}
+	g_queue_free (mQueue);
+	mQueue = NULL;
 
 	if (mAutoPlay) {
 		RequestStream (false);
