@@ -80,11 +80,11 @@ totemConePlaylist::InvokeByIndex (int aIndex,
         return false;
 
       NPString title;
-      if (!GetNPStringFromArguments (argv, argc, 1, title))
+      if (argc != 3 || !GetNPStringFromArguments (argv, argc, 1, title))
         title.UTF8Characters = NULL;
 
       NPString options;
-      if (!GetNPStringFromArguments (argv, argc, 2, options))
+      if (argc != 3 || !GetNPStringFromArguments (argv, argc, 2, options))
         options.UTF8Characters = NULL;
       //FIXME handle options as array
       //http://wiki.videolan.org/Documentation:WebPlugin#Playlist_object
