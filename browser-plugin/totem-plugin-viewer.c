@@ -115,6 +115,7 @@ typedef struct _TotemEmbedded {
         char *referrer_uri;
 	char *base_uri;
 	char *current_uri;
+	char *current_subtitle_uri;
 	char *href_uri;
 	char *target;
 	char *stream_uri;
@@ -422,13 +423,14 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 		return FALSE;
 	}
 
-	g_message ("totem_embedded_open_internal '%s' is-browser-stream %d start-play %d", uri, emb->is_browser_stream, start_play);
+	g_message ("totem_embedded_open_internal '%s' subtitle '%s' is-browser-stream %d start-play %d",
+		   uri, emb->current_subtitle_uri, emb->is_browser_stream, start_play);
 
 	bacon_video_widget_set_logo_mode (emb->bvw, FALSE);
 
 	/* FIXME: remove |err| and rely on async on_error? */
 	g_message ("BEFORE _open");
-	retval = bacon_video_widget_open (emb->bvw, uri, NULL, &err);
+	retval = bacon_video_widget_open (emb->bvw, uri, emb->current_subtitle_uri, &err);
 	g_message ("AFTER _open (ret: %d)", retval);
 	if (retval == FALSE)
 	{
@@ -619,13 +621,15 @@ static void
 totem_embedded_set_uri (TotemEmbedded *emb,
 		        const char *uri,
 		        const char *base_uri,
+		        const char *subtitle,
 		        gboolean is_browser_stream)
 {
 	GFile *base_gfile;
-	char *old_uri, *old_base, *old_href;
+	char *old_uri, *old_base, *old_href, *old_subtitle;
 
 	base_gfile = NULL;
 	old_uri = emb->current_uri;
+	old_subtitle = emb->current_subtitle_uri;
 	old_base = emb->base_uri;
 	old_href = emb->href_uri;
 
@@ -633,13 +637,15 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	if (base_uri)
 		base_gfile = g_file_new_for_uri (base_uri);
 	emb->current_uri = totem_pl_parser_resolve_uri (base_gfile, uri);
+	emb->current_subtitle_uri = totem_pl_parser_resolve_uri (base_gfile, subtitle);
 	if (base_gfile)
 		g_object_unref (base_gfile);
 	emb->is_browser_stream = (is_browser_stream != FALSE);
 	emb->href_uri = NULL;
 
 	if (uri != NULL)
-		g_print ("totem_embedded_set_uri uri %s base %s => resolved %s\n", uri, base_uri, emb->current_uri);
+		g_print ("totem_embedded_set_uri uri %s base %s => resolved %s (subtitle %s => resolved %s)\n",
+			 uri, base_uri, emb->current_uri, subtitle, emb->current_subtitle_uri);
 	else
 		g_print ("Emptying current_uri\n");
 
@@ -652,6 +658,7 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	g_free (old_uri);
 	g_free (old_base);
 	g_free (old_href);
+	g_free (old_subtitle);
 	g_free (emb->stream_uri);
 	emb->stream_uri = NULL;
 }
@@ -689,7 +696,7 @@ totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 	emb->current = NULL;
 	emb->num_items = 0;
 
-	totem_embedded_set_uri (emb, NULL, NULL, FALSE);
+	totem_embedded_set_uri (emb, NULL, NULL, NULL, FALSE);
 
 	bacon_video_widget_close (emb->bvw);
 	update_fill (emb, -1.0);
@@ -724,6 +731,7 @@ totem_embedded_add_item (TotemEmbedded *embedded,
 		totem_embedded_set_uri (embedded,
 					(const char *) uri,
 					embedded->base_uri /* FIXME? */,
+					subtitle,
 					FALSE);
 		totem_embedded_open_internal (embedded, FALSE, NULL /* FIXME */);
 	}
@@ -797,7 +805,7 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 
 	totem_embedded_clear_playlist (emb, NULL);
 
-	totem_embedded_set_uri (emb, uri, base_uri, FALSE);
+	totem_embedded_set_uri (emb, uri, base_uri, NULL, FALSE);
 	/* We can only have one item in the "playlist" when
 	 * we open a particular URI like this */
 	emb->num_items = 1;
@@ -815,7 +823,7 @@ totem_embedded_open_stream (TotemEmbedded *emb,
 
 	totem_embedded_clear_playlist (emb, NULL);
 
-	totem_embedded_set_uri (emb, uri, base_uri, TRUE);
+	totem_embedded_set_uri (emb, uri, base_uri, NULL, TRUE);
 	/* We can only have one item in the "playlist" when
 	 * we open a browser stream */
 	emb->num_items = 1;
@@ -864,6 +872,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 	totem_embedded_set_uri (emb,
 				(const char *) plitem->uri,
 			        emb->base_uri /* FIXME? */,
+			        plitem->subtitle,
 			        FALSE);
 
 	bacon_video_widget_close (emb->bvw);
@@ -909,7 +918,7 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 		return FALSE;
 
 	/* FIXME what about |uri| param?!! */
-	totem_embedded_set_uri (emb, file_uri, base_uri, FALSE);
+	totem_embedded_set_uri (emb, file_uri, base_uri, emb->current_subtitle_uri, FALSE);
 	g_free (file_uri);
 
 	return totem_embedded_open_internal (emb, TRUE, error);
@@ -991,7 +1000,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 	g_object_unref (dst);
 	close (fd);
 
-	totem_embedded_set_uri (emb, file_uri, base_uri, FALSE);
+	totem_embedded_set_uri (emb, file_uri, base_uri, NULL, FALSE);
 	g_free (file_uri);
 
 	/* Schedule parsing on idle */
@@ -1323,7 +1332,7 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	/* FIXME: clear playlist? or replace current entry? or add a new entry? */
 	/* FIXME: use totem_embedded_open_uri? */
 
-	totem_embedded_set_uri (emb, new_uri ? new_uri : mrl , emb->base_uri /* FIXME? */, FALSE);
+	totem_embedded_set_uri (emb, new_uri ? new_uri : mrl , emb->base_uri /* FIXME? */, emb->current_subtitle_uri, FALSE);
 
 	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
