@@ -707,6 +707,7 @@ totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 
 static gboolean
 totem_embedded_add_item (TotemEmbedded *embedded,
+			 const char *base_uri,
 			 const char *uri,
 			 const char *title,
 			 const char *subtitle,
@@ -730,7 +731,7 @@ totem_embedded_add_item (TotemEmbedded *embedded,
 		embedded->current = embedded->playlist;
 		totem_embedded_set_uri (embedded,
 					(const char *) uri,
-					embedded->base_uri /* FIXME? */,
+					base_uri,
 					subtitle,
 					FALSE);
 		totem_embedded_open_internal (embedded, FALSE, NULL /* FIXME */);

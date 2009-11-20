@@ -345,8 +345,6 @@ totemPlugin::AddItem (const NPString& aURI,
         if (!aURI.UTF8Characters || !aURI.UTF8Length)
                 return -1;
 
-        /* FIXMEchpe: resolve against mBaseURI or mSrcURI ?? */
-
         char *uri = g_strndup (aURI.UTF8Characters, aURI.UTF8Length);
 
 	char *title;
@@ -354,8 +352,6 @@ totemPlugin::AddItem (const NPString& aURI,
 		title = g_strndup (aTitle.UTF8Characters, aTitle.UTF8Length);
 	else
 		title = NULL;
-
-	/* FIXME: resolve the subtitle URI against the URI itself */
 
 	if (!mViewerReady) {
 		D ("Queuing AddItem '%s' (title: '%s' sub: '%s')",
@@ -377,6 +373,7 @@ totemPlugin::AddItem (const NPString& aURI,
 
         dbus_g_proxy_call_no_reply (mViewerProxy,
 				    "AddItem",
+				    G_TYPE_STRING, mBaseURI,
 				    G_TYPE_STRING, uri,
 				    G_TYPE_STRING, title,
 				    G_TYPE_STRING, aSubtitle,
@@ -812,12 +809,13 @@ totemPlugin::ViewerReady ()
 		case TOTEM_QUEUE_TYPE_ADD_ITEM:
 			assert (mViewerProxy);
 
-			D ("AddItem '%s' (title: '%s' sub: '%s')",
-			   cmd->add_item.uri,
+			D ("AddItem '%s' (base: '%s' title: '%s' sub: '%s')",
+			   cmd->add_item.uri, mBaseURI,
 			   cmd->add_item.title ? cmd->add_item.title : "",
 			   cmd->add_item.subtitle ? cmd->add_item.subtitle : "");
 			dbus_g_proxy_call_no_reply (mViewerProxy,
 						    "AddItem",
+						    G_TYPE_STRING, mBaseURI,
 						    G_TYPE_STRING, cmd->add_item.uri,
 						    G_TYPE_STRING, cmd->add_item.title,
 						    G_TYPE_STRING, cmd->add_item.subtitle,
