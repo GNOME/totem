@@ -673,12 +673,13 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 	g_debug ("Search finished!");
 
 	feed = gdata_service_query_finish (GDATA_SERVICE (self->service), result, &error);
+
+	/* Stop the progress bar; a little hacky, but it works */
+	self->progress_bar_increment[data->tree_view] = 1.0;
+	increment_progress_bar_fraction (self, data->tree_view);
+
 	if (feed == NULL) {
 		GtkWindow *window;
-
-		/* Stop the progress bar; a little hacky, but it works */
-		self->progress_bar_increment[data->tree_view] = 1.0;
-		increment_progress_bar_fraction (self, data->tree_view);
 
 		/* Bail out if the operation was cancelled */
 		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
