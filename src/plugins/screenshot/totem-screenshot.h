@@ -54,7 +54,7 @@ struct TotemScreenshotClass {
 };
 
 GType totem_screenshot_get_type (void) G_GNUC_CONST;
-GtkWidget *totem_screenshot_new (TotemPlugin *screenshot_plugin, GdkPixbuf *screen_image) G_GNUC_WARN_UNUSED_RESULT;
+GtkWidget *totem_screenshot_new (Totem *totem, TotemPlugin *screenshot_plugin, GdkPixbuf *screen_image) G_GNUC_WARN_UNUSED_RESULT;
 
 G_END_DECLS
 

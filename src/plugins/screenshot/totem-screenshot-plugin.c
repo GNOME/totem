@@ -106,7 +106,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		return;
 	}
 
-	dialog = totem_screenshot_new (TOTEM_PLUGIN (self), pixbuf);
+	dialog = totem_screenshot_new (priv->totem, TOTEM_PLUGIN (self), pixbuf);
 
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
@@ -294,12 +294,12 @@ impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
 }
 
 static char *
-make_filename_for_dir (const char *directory, const char *format)
+make_filename_for_dir (const char *directory, const char *format, const char *movie_title)
 {
 	char *fullpath, *filename;
 	guint i = 1;
 
-	filename = g_strdup_printf (_(format), i);
+	filename = g_strdup_printf (_(format), movie_title, i);
 	fullpath = g_build_filename (directory, filename, NULL);
 
 	while (g_file_test (fullpath, G_FILE_TEST_EXISTS) != FALSE && i < G_MAXINT) {
@@ -307,7 +307,7 @@ make_filename_for_dir (const char *directory, const char *format)
 		g_free (filename);
 		g_free (fullpath);
 
-		filename = g_strdup_printf (_(format), i);
+		filename = g_strdup_printf (_(format), movie_title, i);
 		fullpath = g_build_filename (directory, filename, NULL);
 	}
 
@@ -317,7 +317,7 @@ make_filename_for_dir (const char *directory, const char *format)
 }
 
 gchar *
-totem_screenshot_plugin_setup_file_chooser (const char *filename_format)
+totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const char *movie_title)
 {
 	GConfClient *client;
 	char *path, *filename, *full, *uri;
@@ -337,7 +337,7 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format)
 			path = g_strdup (g_get_home_dir ());
 	}
 
-	filename = make_filename_for_dir (path, filename_format);
+	filename = make_filename_for_dir (path, filename_format, movie_title);
 
 	/* Build the URI */
 	full = g_build_filename (path, filename, NULL);

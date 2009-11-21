@@ -68,7 +68,7 @@ totem_gallery_new (Totem *totem, TotemPlugin *plugin)
 	TotemGallery *gallery;
 	GtkWidget *container;
 	GtkBuilder *builder;
-	gchar *uri, *suggested_name;
+	gchar *movie_title, *uri, *suggested_name;
 	GFile *file;
 
 	/* Create the gallery and its interface */
@@ -105,8 +105,15 @@ totem_gallery_new (Totem *totem, TotemPlugin *plugin)
 				"gallery_dialog_content"));
 	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (gallery), container);
 
-	/* Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg". */
-	uri = totem_screenshot_plugin_setup_file_chooser (N_("Screenshot%d.jpg"));
+	movie_title = totem_get_short_title (totem);
+
+	/* Translators: The first argument is the movie title. The second
+	 * argument is a number which is used to prevent overwriting files.
+	 * Just translate "Gallery", and not the ".jpg". Example:
+	 * "Galerie-%s-%d.jpg". */
+	uri = totem_screenshot_plugin_setup_file_chooser (N_("Gallery-%s-%d.jpg"), movie_title);
+	g_free (movie_title);
+
 	file = g_file_new_for_uri (uri);
 	/* We can use g_file_get_basename here and be sure that it's UTF-8
 	 * because we provided the name. */
