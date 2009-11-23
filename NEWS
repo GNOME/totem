@@ -1,5 +1,23 @@
 New features and significant updates in version...
 
+2.29.2 (changes since latest stable 2.28.4 release):
+* General:
+  - Add disk buffering for QuickTime and Flash video files,
+    and only start playing the file when it can be played
+    uninterrupted until the end
+  - Add support for authentication for HTTP and RTSP streams
+  - Make track switching faster
+  - Don't save the volume anymore, the sound system should
+
+* Movie Player:
+  - Add OSD when keyboard or remote keys are pressed
+  - Add support for reverse frame-stepping
+
+* Browser plugin:
+  - Use referrer information
+  - Add support for subtitles in the VideLAN API
+  - Remove "Complex" (RealMedia compatible) plugin
+
 2.28.0:
 * Use name from the playlist for the recent item
 * Set the stream volume using PulseAudio
