@@ -243,6 +243,7 @@ struct BaconVideoWidgetPrivate
   GstState                     target_state;
   gboolean                     buffering;
   gboolean                     download_buffering;
+  char                        *download_filename;
   /* used to compute when the download buffer has gone far
    * enough to start playback */
   gint64                       buffering_left;
@@ -1949,6 +1950,8 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
    if (bvw->priv->download_buffering != FALSE) {
      bvw_reconfigure_fill_timeout (bvw, 0);
      bvw->priv->download_buffering = FALSE;
+     g_free (bvw->priv->download_filename);
+     bvw->priv->download_filename = NULL;
    }
 
    /* Live, timeshift and stream buffering modes */
@@ -2324,6 +2327,22 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   bvw_set_auth_on_element (bvw, source);
 }
 
+static void
+playbin_deep_notify_cb (GstObject  *gstobject,
+			GstObject  *prop_object,
+			GParamSpec *prop,
+			BaconVideoWidget *bvw)
+{
+  if (g_str_equal (prop->name, "temp-location") == FALSE)
+    return;
+
+  g_free (bvw->priv->download_filename);
+  bvw->priv->download_filename = NULL;
+  g_object_get (G_OBJECT (prop_object),
+		"temp-location", &bvw->priv->download_filename,
+		NULL);
+}
+
 static gboolean
 bvw_query_timeout (BaconVideoWidget *bvw)
 {
@@ -2398,6 +2417,10 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     if (fill == 1.0) {
       bvw->priv->fill_id = 0;
       gst_query_unref (query);
+
+      //FIXME
+      g_message ("tell front-end about cache filename: %s", bvw->priv->download_filename);
+
       return FALSE;
     }
   }
@@ -3891,6 +3914,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->buffering = FALSE;
   bvw->priv->plugin_install_in_progress = FALSE;
   bvw->priv->download_buffering = FALSE;
+  g_free (bvw->priv->download_filename);
+  bvw->priv->download_filename = NULL;
   bvw->priv->buffering_left = -1;
   bvw->priv->ignore_messages_mask = 0;
   bvw_reconfigure_fill_timeout (bvw, 0);
@@ -6968,6 +6993,8 @@ bacon_video_widget_new (int width, int height,
       G_CALLBACK (playbin_stream_changed_cb), bvw);
   g_signal_connect (bvw->priv->play, "text-changed",
       G_CALLBACK (playbin_stream_changed_cb), bvw);
+  g_signal_connect (bvw->priv->play, "deep-notify::temp-location",
+      G_CALLBACK (playbin_deep_notify_cb), bvw);
 
   g_signal_connect (bvw->priv->play, "video-tags-changed",
       G_CALLBACK (video_tags_changed_cb), bvw);
