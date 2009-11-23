@@ -129,7 +129,8 @@ enum
   PROP_SHOW_CURSOR,
   PROP_SHOW_VISUALS,
   PROP_USER_AGENT,
-  PROP_VOLUME
+  PROP_VOLUME,
+  PROP_DOWNLOAD_FILENAME
 };
 
 static const gchar *video_props_str[4] = {
@@ -1102,6 +1103,17 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    **/
   g_object_class_install_property (object_class, PROP_USER_AGENT,
                                    g_param_spec_string ("user-agent", NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:download-filename:
+   *
+   * The filename of the fully downloaded stream when using
+   * download buffering.
+   **/
+  g_object_class_install_property (object_class, PROP_DOWNLOAD_FILENAME,
+                                   g_param_spec_string ("download-filename", NULL, NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
@@ -2418,8 +2430,8 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
       bvw->priv->fill_id = 0;
       gst_query_unref (query);
 
-      //FIXME
-      g_message ("tell front-end about cache filename: %s", bvw->priv->download_filename);
+      /* Tell the front-end about the downloaded file */
+      g_object_notify (G_OBJECT (bvw), "download-filename");
 
       return FALSE;
     }
@@ -2722,6 +2734,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_VOLUME:
       g_value_set_double (value, bvw->priv->volume);
+      break;
+    case PROP_DOWNLOAD_FILENAME:
+      g_value_set_string (value, bvw->priv->download_filename);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
