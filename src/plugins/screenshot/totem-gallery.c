@@ -68,7 +68,8 @@ totem_gallery_new (Totem *totem, TotemPlugin *plugin)
 	TotemGallery *gallery;
 	GtkWidget *container;
 	GtkBuilder *builder;
-	gchar *uri;
+	gchar *uri, *suggested_name;
+	GFile *file;
 
 	/* Create the gallery and its interface */
 	gallery = g_object_new (TOTEM_TYPE_GALLERY, NULL);
@@ -106,8 +107,16 @@ totem_gallery_new (Totem *totem, TotemPlugin *plugin)
 
 	/* Translators: the argument is a screenshot number, used to prevent overwriting files. Just translate "Screenshot", and not the ".jpg". */
 	uri = totem_screenshot_plugin_setup_file_chooser (N_("Screenshot%d.jpg"));
+	file = g_file_new_for_uri (uri);
+	/* We can use g_file_get_basename here and be sure that it's UTF-8
+	 * because we provided the name. */
+	suggested_name = g_file_get_basename (file);
+	g_object_unref (file);
+
 	gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (gallery), uri);
 	g_free (uri);
+	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (gallery), suggested_name);
+	g_free (suggested_name);
 
 	gtk_widget_show_all (GTK_WIDGET (gallery));
 

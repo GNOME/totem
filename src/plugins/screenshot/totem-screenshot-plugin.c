@@ -321,6 +321,7 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format)
 {
 	GConfClient *client;
 	char *path, *filename, *full, *uri;
+	GFile *file;
 
 	/* Set the default path */
 	client = gconf_client_get_default ();
@@ -343,8 +344,10 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format)
 	g_free (path);
 	g_free (filename);
 
-	uri = g_strconcat ("file://", full, NULL);
+	file = g_file_new_for_path (full);
+	uri = g_file_get_uri (file);
 	g_free (full);
+	g_object_unref (file);
 
 	return uri;
 }
