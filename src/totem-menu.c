@@ -902,6 +902,7 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 	for (i = volumes; i != NULL; i = i->next) {
 		GVolume *volume = i->data;
 		add_volume_to_menu (volume, drive, theme, position, totem);
+		g_object_unref (volume);
 	}
 
 	g_list_free (volumes);
@@ -918,14 +919,17 @@ update_drive_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 
 	drives = g_volume_monitor_get_connected_drives (totem->monitor);
 	for (i = drives; i != NULL; i = i->next) {
+		GDrive *drive = i->data;
+
 		/* FIXME: We used to explicitly check whether it was a CD/DVD drive
 		 * Use:
 		 * udi = g_volume_get_identifier (i->data, G_VOLUME_IDENTIFIER_KIND_HAL_UDI); */
-		if (g_drive_can_eject (i->data) == FALSE)
+		if (g_drive_can_eject (drive) == FALSE)
 			continue;
 
 		position++;
-		add_drive_to_menu (i->data, position, totem);
+		add_drive_to_menu (drive, position, totem);
+		g_object_unref (drive);
 	}
 	g_list_free (drives);
 
