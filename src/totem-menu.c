@@ -774,6 +774,172 @@ on_play_dvb_activate (GtkAction *action, Totem *totem)
 	g_free (str);
 }
 
+static const char *
+get_icon_name_for_gicon (GtkIconTheme *theme,
+			 GIcon *icon)
+{
+	const char * const *icon_names;
+	const char *icon_name;
+	guint j;
+
+	icon_name = NULL;
+
+	if (G_IS_EMBLEMED_ICON (icon) != FALSE) {
+		GIcon *new_icon;
+		new_icon = g_emblemed_icon_get_icon (G_EMBLEMED_ICON (icon));
+		g_object_unref (icon);
+		icon = g_object_ref (new_icon);
+	}
+
+	if (G_IS_THEMED_ICON (icon)) {
+		icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+
+		for (j = 0; icon_names[j] != NULL; j++) {
+			icon_name = icon_names[j];
+			if (gtk_icon_theme_has_icon (theme, icon_name) != FALSE)
+				break;
+		}
+	}
+
+	return icon_name;
+}
+
+static char *
+unescape_archive_name (GFile *root)
+{
+	char *uri;
+	guint len;
+	char *escape1, *escape2;
+
+	uri = g_file_get_uri (root);
+
+	/* Remove trailing slash */
+	len = strlen (uri);
+	if (uri[len - 1] == '/')
+		uri[len - 1] = '\0';
+
+	/* Unescape the path */
+	escape1 = g_uri_unescape_string (uri + strlen ("archive://"), NULL);
+	escape2 = g_uri_unescape_string (escape1, NULL);
+	g_free (escape1);
+	g_free (uri);
+
+	return escape2;
+}
+
+static void
+add_mount_to_menu (GMount *mount,
+		   GtkIconTheme *theme,
+		   guint position,
+		   Totem *totem)
+{
+	char *name, *escaped_name, *label;
+	GtkAction *action;
+	GIcon *icon;
+	const char *icon_name;
+	char *device_path;
+	GtkWidget *menu_item;
+	char *menu_item_path;
+
+	GVolume *volume;
+	GFile *root, *iso;
+	char **content_types;
+	gboolean has_content;
+	guint i;
+
+	/* Check whether we have an archive mount */
+	volume = g_mount_get_volume (mount);
+	if (volume != NULL) {
+		g_object_unref (volume);
+		return;
+	}
+
+	root = g_mount_get_root (mount);
+	if (g_file_has_uri_scheme (root, "archive") == FALSE) {
+		g_object_unref (root);
+		return;
+	}
+
+	/* Check whether it's a DVD or VCD image */
+	content_types = g_content_type_guess_for_tree (root);
+	if (content_types == NULL ||
+	    g_strv_length (content_types) == 0) {
+		g_strfreev (content_types);
+		g_object_unref (root);
+		return;
+	}
+
+	has_content = FALSE;
+	for (i = 0; content_types[i] != NULL; i++) {
+		/* XXX: Keep in sync with mime-type-list.txt */
+		if (g_str_equal (content_types[i], "x-content/video-dvd") ||
+		    g_str_equal (content_types[i], "x-content/video-vcd") ||
+		    g_str_equal (content_types[i], "x-content/video-svcd")) {
+			has_content = TRUE;
+			break;
+		}
+	}
+	g_strfreev (content_types);
+
+	if (has_content == FALSE) {
+		g_object_unref (root);
+		return;
+	}
+
+	device_path = unescape_archive_name (root);
+	g_object_unref (root);
+
+	/* And ensure it's a local path */
+	iso = g_file_new_for_uri (device_path);
+	g_free (device_path);
+	device_path = g_file_get_path (iso);
+	g_object_unref (iso);
+	g_message ("device path %s", device_path);
+
+	/* Work out an icon to display */
+	icon = g_mount_get_icon (mount);
+	icon_name = get_icon_name_for_gicon (theme, icon);
+
+	/* Get the mount's pretty name for the menu label */
+	name = g_mount_get_name (mount);
+	g_strstrip (name);
+	escaped_name = escape_label_for_menu (name);
+	g_free (name);
+	label = g_strdup_printf (_("Play Image '%s'"), escaped_name);
+	g_free (escaped_name);
+
+	name = g_strdup_printf (_("device%d"), position);
+
+	action = gtk_action_new (name, label, NULL, NULL);
+	g_object_set (G_OBJECT (action),
+		      "icon-name", icon_name, NULL);
+	gtk_action_group_add_action (totem->devices_action_group, action);
+	g_object_unref (action);
+
+	gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
+			       "/tmw-menubar/movie/devices-placeholder", name, name,
+			       GTK_UI_MANAGER_MENUITEM, FALSE);
+
+	/* TODO: This can be made cleaner once bug #589842 is fixed */
+	menu_item_path = g_strdup_printf ("/tmw-menubar/movie/devices-placeholder/%s", name);
+	menu_item = gtk_ui_manager_get_widget (totem->ui_manager, menu_item_path);
+	g_free (menu_item_path);
+
+	if (menu_item != NULL)
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menu_item), TRUE);
+
+	g_free (name);
+	g_free (label);
+	g_object_unref (icon);
+
+	g_object_set_data_full (G_OBJECT (action),
+				"device_path", device_path,
+				(GDestroyNotify) g_free);
+
+	g_signal_connect (G_OBJECT (action), "activate",
+			  G_CALLBACK (on_play_disc_activate), totem);
+}
+
 static void
 add_volume_to_menu (GVolume *volume,
 		    GDrive *drive,
@@ -785,9 +951,7 @@ add_volume_to_menu (GVolume *volume,
 	GtkAction *action;
 	gboolean disabled;
 	GIcon *icon;
-	const char * const *icon_names;
 	const char *icon_name;
-	guint j;
 	char *device_path;
 	GtkWidget *menu_item;
 	char *menu_item_path;
@@ -823,24 +987,7 @@ add_volume_to_menu (GVolume *volume,
 
 	/* Work out an icon to display */
 	icon = g_volume_get_icon (volume);
-	icon_name = NULL;
-
-	if (G_IS_EMBLEMED_ICON (icon) != FALSE) {
-		GIcon *new_icon;
-		new_icon = g_emblemed_icon_get_icon (G_EMBLEMED_ICON (icon));
-		g_object_unref (icon);
-		icon = g_object_ref (new_icon);
-	}
-
-	if (G_IS_THEMED_ICON (icon)) {
-		icon_names = g_themed_icon_get_names (G_THEMED_ICON (icon));
-
-		for (j = 0; icon_names[j] != NULL; j++) {
-			icon_name = icon_names[j];
-			if (gtk_icon_theme_has_icon (theme, icon_name) != FALSE)
-				break;
-		}
-	}
+	icon_name = get_icon_name_for_gicon (theme, icon);
 
 	/* Get the volume's pretty name for the menu label */
 	name = g_volume_get_name (volume);
@@ -889,12 +1036,18 @@ add_volume_to_menu (GVolume *volume,
 }
 
 static void
-add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
+add_drive_to_menu (GDrive *drive,
+		   GtkIconTheme *theme,
+		   guint position,
+		   Totem *totem)
 {
-	GtkIconTheme *theme;
 	GList *volumes, *i;
 
-	theme = gtk_icon_theme_get_default ();
+	/* FIXME: We used to explicitly check whether it was a CD/DVD drive
+	 * Use:
+	 * udi = g_volume_get_identifier (i->data, G_VOLUME_IDENTIFIER_KIND_HAL_UDI); */
+	if (g_drive_can_eject (drive) == FALSE)
+		return;
 
 	/* Repeat for all the drive's volumes */
 	volumes = g_drive_get_volumes (drive);
@@ -911,27 +1064,35 @@ add_drive_to_menu (GDrive *drive, guint position, Totem *totem)
 static void
 update_drive_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 {
-	GList *drives, *i;
+	GList *drives, *mounts, *i;
+	GtkIconTheme *theme;
 	guint position;
 
 	/* Add any suitable devices to the menu */
 	position = 0;
 
+	theme = gtk_icon_theme_get_default ();
+
 	drives = g_volume_monitor_get_connected_drives (totem->monitor);
 	for (i = drives; i != NULL; i = i->next) {
 		GDrive *drive = i->data;
 
-		/* FIXME: We used to explicitly check whether it was a CD/DVD drive
-		 * Use:
-		 * udi = g_volume_get_identifier (i->data, G_VOLUME_IDENTIFIER_KIND_HAL_UDI); */
-		if (g_drive_can_eject (drive) == FALSE)
-			continue;
-
 		position++;
-		add_drive_to_menu (drive, position, totem);
+		add_drive_to_menu (drive, theme, position, totem);
 		g_object_unref (drive);
 	}
 	g_list_free (drives);
+
+	/* Look for mounted archives */
+	mounts = g_volume_monitor_get_mounts (totem->monitor);
+	for (i = mounts; i != NULL; i = i->next) {
+		GMount *mount = i->data;
+
+		position++;
+		add_mount_to_menu (mount, theme, position, totem);
+		g_object_unref (mount);
+	}
+	g_list_free (mounts);
 
 	totem->drives_changed = FALSE;
 }
