@@ -637,7 +637,10 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	if (base_uri)
 		base_gfile = g_file_new_for_uri (base_uri);
 	emb->current_uri = totem_pl_parser_resolve_uri (base_gfile, uri);
-	emb->current_subtitle_uri = totem_pl_parser_resolve_uri (base_gfile, subtitle);
+	if (subtitle != NULL)
+		emb->current_subtitle_uri = totem_pl_parser_resolve_uri (base_gfile, subtitle);
+	else
+		emb->current_subtitle_uri = NULL;
 	if (base_gfile)
 		g_object_unref (base_gfile);
 	emb->is_browser_stream = (is_browser_stream != FALSE);
