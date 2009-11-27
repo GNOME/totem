@@ -721,21 +721,11 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       GdkPixbuf *logo = NULL;
       gint s_width, s_height, d_width, d_height;
       gfloat ratio;
-      GdkRegion *region;
-      GdkRectangle rect;
+      cairo_t *cr;
 
-      rect.x = rect.y = 0;
-      rect.width = widget->allocation.width;
-      rect.height = widget->allocation.height;
-      region = gdk_region_rectangle (&rect);
-
-      gdk_window_begin_paint_region (win, region);
-      gdk_region_destroy (region);
-
-      gdk_window_clear_area (win,
-			     0, 0,
-			     widget->allocation.width,
-			     widget->allocation.height);
+      cr = gdk_cairo_create (gtk_widget_get_window (widget));
+      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+      cairo_rectangle (cr, 0, 0, widget->allocation.width, widget->allocation.height);
 
       s_width = gdk_pixbuf_get_width (pixbuf);
       s_height = gdk_pixbuf_get_height (pixbuf);
@@ -758,7 +748,8 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       if (s_width <= 1 || s_height <= 1) {
         if (xoverlay != NULL)
 	  gst_object_unref (xoverlay);
-	gdk_window_end_paint (win);
+	cairo_paint (cr);
+	cairo_destroy (cr);
 	return TRUE;
       }
 
@@ -768,11 +759,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       else
         logo = g_object_ref (G_OBJECT (pixbuf));
 
-      gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
-          0, 0, (widget->allocation.width - s_width) / 2, (widget->allocation.height - s_height) / 2,
-          s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
+      gdk_cairo_set_source_pixbuf (cr, logo, (widget->allocation.width - s_width) / 2, (widget->allocation.height - s_height) / 2);
+      cairo_paint (cr);
+      cairo_destroy (cr);
 
-      gdk_window_end_paint (win);
       g_object_unref (logo);
     } else if (win) {
       /* No pixbuf, just draw a black background then */
