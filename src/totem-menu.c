@@ -710,7 +710,6 @@ recent_info_cb (GFile *file,
 		/* Bogus mime-type, we just want it added */
 		data.mime_type = g_strdup ("video/x-totem-stream");
 		groups[0] = (gchar*) "TotemStreams";
-		g_message ("no file info");
 	} else {
 		data.mime_type = g_strdup (g_file_info_get_content_type (file_info));
 		data.display_name = g_strdup (g_file_info_get_display_name (file_info));
@@ -722,8 +721,8 @@ recent_info_cb (GFile *file,
 	data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
 	data.groups = groups;
 	if (gtk_recent_manager_add_full (totem->recent_manager,
-				     uri, &data) == FALSE) {
-		g_message ("Couldn't add recent file for '%s'", uri);
+					 uri, &data) == FALSE) {
+		g_warning ("Couldn't add recent file for '%s'", uri);
 	}
 
 	g_free (data.display_name);
@@ -894,7 +893,6 @@ add_mount_to_menu (GMount *mount,
 	g_free (device_path);
 	device_path = g_file_get_path (iso);
 	g_object_unref (iso);
-	g_message ("device path %s", device_path);
 
 	/* Work out an icon to display */
 	icon = g_mount_get_icon (mount);
@@ -905,6 +903,9 @@ add_mount_to_menu (GMount *mount,
 	g_strstrip (name);
 	escaped_name = escape_label_for_menu (name);
 	g_free (name);
+	/* Translators:
+	 * This is not a JPEG image, but a disc image, for example,
+	 * an ISO file */
 	label = g_strdup_printf (_("Play Image '%s'"), escaped_name);
 	g_free (escaped_name);
 
