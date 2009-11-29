@@ -1,12 +1,12 @@
 # Chinese (China) translation of totem.
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
-# lyper <lyp069@gmail.com>, 2009.
+# Lyper Lai <lyp069@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"POT-Creation-Date: 2009-11-16 16:09+0000\n"
+"POT-Creation-Date: 2009-11-18 06:17+0000\n"
 "PO-Revision-Date: 2009-07-31 21:20+0000\n"
 "Last-Translator: Lyper Lai <lyp069@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
@@ -111,7 +111,8 @@ msgid ""
 msgstr ""
 "允许在 GNU 自由文档协议 (GFDL) 下复制、分发和(或)修改本文档，ver 1.1 或者由自"
 "由软件基金会发布的最新版本无不可更新的段落，无封面文字和无封底文字。您会在这"
-"个链接里找到 GFDL 协议的一份拷贝或者在这个手册的 COPYING-DOCS 中。"
+"个<ulink type=\"help\" url=\"ghelp:fdl\">链接</ulink>里找到 GFDL 协议的一份拷"
+"贝或者在这个手册的 COPYING-DOCS 中。"
 
 #: C/totem.xml:12(para)
 msgid ""
@@ -788,7 +789,7 @@ msgid ""
 "keycombo></shortcut><guimenu>View</guimenu><guimenuitem>Fit Window to Movie</"
 "guimenuitem></menuchoice> and choose a scale ratio."
 msgstr ""
-"更改电影原始尺寸或虚拟化效果，选择 "
+"更改电影原始尺寸或可视化效果，选择 "
 "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></"
 "keycombo></shortcut><guimenu>查看</guimenu><guimenuitem>窗口适应影片</"
 "guimenuitem></menuchoice> 并且选择缩放比例。"
@@ -850,7 +851,7 @@ msgstr ""
 "菜单<menuchoice><guimenu>编辑</guimenu><guimenuitem>插件</guimenuitem></"
 "menuchoice>。启用插件<guilabel>总是位于顶端</guilabel>。<application>Totem 电"
 "影播放器</application> 的窗口在播放电影时会一直在其它窗口的前面，但在播放音频"
-"或者虚拟化效果时不会这样。"
+"或者可视化效果时不会这样。"
 
 #: C/totem.xml:586(para)
 msgid ""
@@ -960,56 +961,69 @@ msgid ""
 "displayed; specify the filename as which you want to save the playlist, and "
 "click <guibutton>Save</guibutton>."
 msgstr ""
+"保存播放列表到文件，单击<guibutton>保存播放列表</guibutton>按钮。弹出"
+"<application>保存播放列表</application>对话框; 指定你想保存的播放列表文件名，"
+"单击<guibutton>保存</guibutton>按钮。"
 
 #: C/totem.xml:656(term)
 msgid "To move a track or movie up the playlist"
-msgstr ""
+msgstr "上移音轨或电影在播放列表的位置"
 
 #: C/totem.xml:658(para)
 msgid ""
 "To move a track or movie up the playlist, select the item from the playlist, "
 "then click on the <guibutton>Move Up</guibutton> button."
 msgstr ""
+"上移音轨或电影在播放列表的位置，选择播放列表中的项目，然后点击<guibutton>上移"
+"</guibutton>按钮。"
 
 #: C/totem.xml:664(term)
 msgid "To move a track or movie down the playlist"
-msgstr ""
+msgstr "下移音轨或电影在播放列表的位置"
 
 #: C/totem.xml:666(para)
 msgid ""
 "To move a track or movie down the playlist, select the item from the "
 "playlist, then click on the <guibutton>Move Down</guibutton> button."
 msgstr ""
+"下移音轨或电影在播放列表的位置，选择播放列表中的项目，然后点击<guibutton>下移"
+"</guibutton>按钮。"
 
 #: C/totem.xml:627(para)
 msgid ""
 "You can use the <application>Playlist</application> dialog to do the "
 "following: <placeholder-1/>"
 msgstr ""
+"你可以使用<application>播放列表</application>对话框如下following: "
+"<placeholder-1/>"
 
 #: C/totem.xml:675(title)
 msgid "To Select or Unselect Repeat Mode"
-msgstr ""
+msgstr "选择重复播放模式"
 
 #: C/totem.xml:676(para)
 msgid ""
 "To enable or disable repeat mode, choose <menuchoice><guimenu>Edit</"
 "guimenu><guimenuitem>Repeat Mode</guimenuitem></menuchoice>."
 msgstr ""
+"启用或停用重复播放模式，选择<menuchoice><guimenu>编辑</guimenu><guimenuitem>"
+"重复模式</guimenuitem></menuchoice>。"
 
 #: C/totem.xml:681(title)
 msgid "To Select or Unselect Shuffle Mode"
-msgstr ""
+msgstr "选择随机播放模式"
 
 #: C/totem.xml:682(para)
 msgid ""
 "To enable or disable shuffle mode, choose <menuchoice><guimenu>Edit</"
 "guimenu><guimenuitem>Shuffle Mode</guimenuitem></menuchoice>."
 msgstr ""
+"启用或停用随机播放模式，选择<menuchoice><guimenu>编辑</guimenu><guimenuitem>"
+"随机模式</guimenuitem></menuchoice>。"
 
 #: C/totem.xml:690(title)
 msgid "To Choose Subtitles"
-msgstr ""
+msgstr "选择字幕"
 
 #: C/totem.xml:691(para)
 msgid ""
@@ -1017,6 +1031,8 @@ msgid ""
 "guimenu><guisubmenu>Subtitles</guisubmenu></menuchoice> and choose the "
 "subtitle language you want to display."
 msgstr ""
+"选择字幕语言，选中<menuchoice><guimenu>查看</guimenu><guisubmenu>字幕</"
+"guisubmenu></menuchoice>选择需显示的字幕语言。"
 
 #: C/totem.xml:695(para)
 msgid ""
@@ -1024,12 +1040,16 @@ msgid ""
 "guimenu><guisubmenu>Subtitles</guisubmenu><guimenuitem>None</guimenuitem></"
 "menuchoice>."
 msgstr ""
+"停止显示字幕<menuchoice><guimenu>查看</guimenu><guisubmenu>字幕</"
+"guisubmenu><guimenuitem>无</guimenuitem></menuchoice>。"
 
 #: C/totem.xml:697(para)
 msgid ""
 "By default, <application>Totem Movie Player</application> will choose the "
 "same language for the subtitles as the one you normally use on your computer."
 msgstr ""
+"默认地，<application>Totem 电影播放器</application> 将选择与你计算机平时使用"
+"语言相同的字幕。"
 
 #: C/totem.xml:699(para)
 msgid ""
@@ -1041,6 +1061,13 @@ msgid ""
 "filename>, <filename class=\"extension\">smi</filename>, <filename class="
 "\"extension\">ssa</filename> or <filename class=\"extension\">ass</filename>."
 msgstr ""
+"如果找到的字幕文件与正在播放的视频文件名相同，<application>Totem 电影播放器</"
+"application> 会自动读取并显示字幕。字幕文件扩展名支持<filename class="
+"\"extension\">asc</filename>, <filename class=\"extension\">txt</filename>, "
+"<filename class=\"extension\">sub</filename>, <filename class=\"extension"
+"\">srt</filename>, <filename class=\"extension\">smi</filename>, <filename "
+"class=\"extension\">ssa</filename> or <filename class=\"extension\">ass</"
+"filename>."
 
 #: C/totem.xml:704(para)
 msgid ""
@@ -1051,6 +1078,11 @@ msgid ""
 "subtitles by choosing <menuchoice><guimenu>View</guimenu><guimenuitem>Select "
 "Text Subtitles</guimenuitem></menuchoice>."
 msgstr ""
+"如果文件包含的字幕文件与正在播放的视频不同名，你可以右击播放列表里的视频项目"
+"并从快捷菜单中选择<menuchoice><guimenuitem>选择文本字幕</guimenuitem></"
+"menuchoice> 读取正确的字幕文件。你也可以通过<menuchoice><guimenu>查看</"
+"guimenu><guimenuitem>选择文本字幕</guimenuitem></menuchoice>菜单找出要使用的"
+"字幕。"
 
 #: C/totem.xml:708(para)
 msgid ""
@@ -1058,10 +1090,12 @@ msgid ""
 "download subtitles from the OpenSubtitles service. See <xref linkend=\"totem-"
 "plugins-opensubtitles\"/> for more information."
 msgstr ""
+"使用<guilabel>字幕下载器</guilabel>插件，也可从 OpenSubtitle 服务下载字幕。参"
+"看<xref linkend=\"totem-plugins-opensubtitles\"/> 获得更多信息。"
 
 #: C/totem.xml:713(title)
 msgid "To Take a Screenshot"
-msgstr ""
+msgstr "截图"
 
 #: C/totem.xml:714(para)
 msgid ""
@@ -1072,6 +1106,10 @@ msgid ""
 "want to save the screenshot, then click on the <guibutton>Save</guibutton> "
 "button to save the screenshot."
 msgstr ""
+"截取正在播放的电影或可视化效果图像，选择<menuchoice><guimenu>编辑</"
+"guimenu><guimenuitem>截图</guimenuitem></menuchoice>。弹出<application>保存截"
+"图</application> 对话框。选择一个位置输入你要保存的截图文件名，单击"
+"<guibutton>保存</guibutton>按钮保存截图。"
 
 #: C/totem.xml:722(para)
 msgid ""
@@ -1079,10 +1117,12 @@ msgid ""
 "screenshot which is to be saved on the left-hand side of the "
 "<application>Save Screenshot</application> dialog."
 msgstr ""
+"<application>Totem 电影播放器</application>会在<application>保存截图</"
+"application>左侧显示将要保存的截图预览。"
 
 #: C/totem.xml:726(title)
 msgid "To Create a Screenshot Gallery"
-msgstr ""
+msgstr "创建截图画册"
 
 #: C/totem.xml:727(para)
 msgid ""
@@ -1093,6 +1133,10 @@ msgid ""
 "filename as which you want to save the gallery image, then click on the "
 "<guibutton>Save</guibutton> button to save the screenshot."
 msgstr ""
+"创建正在播放电影或可视化效果的截图画册，选择<menuchoice><guimenu>编辑</"
+"guimenu><guimenuitem>截图画册</guimenuitem></menuchoice>。 弹出<application>"
+"保存画册</application>对话框。输入你要保存截图画册的文件名，然后点击"
+"<guibutton>保存</guibutton>按钮保存截图。"
 
 #: C/totem.xml:735(para)
 msgid ""
@@ -1100,6 +1144,8 @@ msgid ""
 "the <guilabel>Screenshot width</guilabel> entry. The default width is 128 "
 "pixels."
 msgstr ""
+"你可能在<guilabel>截图宽度</guilabel>标签下指定自已画册的截图宽度，默认宽度"
+"是 128 像素。"
 
 #: C/totem.xml:737(para)
 msgid ""
@@ -1109,10 +1155,13 @@ msgid ""
 "screenshots</guilabel> checkbox and entering the new number in the "
 "<guilabel>Number of screenshots</guilabel> spin box."
 msgstr ""
+"你可能会指定画册里截图的数量。默认地，截图数量是基于电影长度估算而得；尽管通"
+"过取消选择<guilabel>估算截图数量</guilabel>复选框，这个数字可能被无视。在"
+"<guilabel>截图数量</guilabel>选值框处输入新的数字。"
 
 #: C/totem.xml:745(title)
 msgid "Plugins"
-msgstr ""
+msgstr "插件"
 
 #: C/totem.xml:746(para)
 msgid ""
@@ -1120,10 +1169,12 @@ msgid ""
 "present in the form of plugins — pieces of the software which are only "
 "loaded if necessary."
 msgstr ""
+"<application>Totem 电影播放器</application>有许多功能出现在插件形式中——软件模"
+"块若有必要则加载。"
 
 #: C/totem.xml:749(title)
 msgid "To Enable a Plugin"
-msgstr ""
+msgstr "启用插件"
 
 #: C/totem.xml:750(para)
 msgid ""
@@ -1135,6 +1186,10 @@ msgid ""
 "which can be changed will have a sensitive <guibutton>Configure</guibutton> "
 "button on the right."
 msgstr ""
+"查看已安装的插件列表，选择<menuchoice><guimenu>编辑</guimenu><guimenuitem>插"
+"件</guimenuitem></menuchoice>。弹出<application>配置插件</application>对话"
+"框。 左侧是所有已安装插件的列表，右侧是目前选中插件的具体描述。拥有配置选项的"
+"插件在右侧会有<guibutton>配置</guibutton>按钮。"
 
 #: C/totem.xml:754(para)
 msgid ""
@@ -1142,6 +1197,8 @@ msgid ""
 "the plugin list, and the plugin will be loaded immediately. If there is any "
 "error loading the plugin, an error dialog will also be displayed immediately."
 msgstr ""
+"启用一个插件, 选中插件列表中项目左边的复选框，插件会被立即载入。如果正在载入"
+"的插件有任何错误，错误对话框也会立即显示。"
 
 #: C/totem.xml:756(para)
 msgid ""
@@ -1149,10 +1206,12 @@ msgid ""
 "enabled or disabled as set even when <application>Totem Movie Player</"
 "application> is closed."
 msgstr ""
+"停用一个插件，取消选中的复选框，插件将会保持启用或者禁用至到 "
+"<application>Totem 电影播放器</application>关闭。"
 
 #: C/totem.xml:760(title)
 msgid "Always on Top"
-msgstr ""
+msgstr "总是位于顶部"
 
 #: C/totem.xml:761(para)
 msgid ""
@@ -1162,10 +1221,13 @@ msgid ""
 "visualizations are playing. To stop the window being on top, disable the "
 "plugin again."
 msgstr ""
+"当启用，<guilabel>总是位于顶部</guilabel>插件将会强制 <application>Totem 电影"
+"播放器</application>在播放电影时窗口始终位于所有其它窗口的前面，但这不不包含"
+"音频或可视化效果播放时的情况。停用窗口一直在前功能，只需停用插件即可。"
 
 #: C/totem.xml:766(title)
 msgid "Coherence DLNA/UPnP Client"
-msgstr ""
+msgstr "Coherence DLNA/UPnp 客户端"
 
 #: C/totem.xml:767(para)
 msgid ""
@@ -1173,6 +1235,9 @@ msgid ""
 "<application>Totem Movie Player</application> to play multimedia content "
 "from UPnP media servers (such as Coherence servers) on the local network."
 msgstr ""
+"<guilabel>Coherence DLNA/UPnP 客户端</guilabel>插件允许 <application>Totem 电"
+"影播放器</application> 在本地网络播放 UPnP 媒体服务器(如 Coherence 服务器)目"
+"录上的多媒体资源。"
 
 #: C/totem.xml:769(para)
 msgid ""
@@ -1184,6 +1249,12 @@ msgid ""
 "the top of the sidebar to display the <guilabel>Coherence DLNA/UPnP Client</"
 "guilabel> sidebar."
 msgstr ""
+"随着 <guilabel>Coherence DLNA/UPnP 客户端</guilabel>插件启用，选择 "
+"<menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>查看</"
+"guimenu><guimenuitem>侧边栏</guimenuitem></menuchoice> 或者点击<guibutton>侧"
+"边栏</guibutton>按钮显示侧边栏。从侧边栏顶部的下拉列表里选择 "
+"<guilabel>Coherence DLNA/UPnP 客户端</guilabel>即可显示 <guilabel>Coherence "
+"DLNA/UPnP 客户端</guilabel>侧边栏。"
 
 #: C/totem.xml:773(para)
 msgid ""
@@ -1196,6 +1267,12 @@ msgid ""
 "<menuchoice><guimenuitem>Enqueue</guimenuitem></menuchoice> to play the file "
 "immediately or add it to the playlist, respectively."
 msgstr ""
+"数形列表将显示所有可用的媒体服务器。点击服务器将展开显示该服务器提供服务的媒"
+"体格式，单击媒体文件夹会展开可用多媒体文件列表，双击媒体文件将会加入该文件到"
+"<application> Totem 电影播放器</application>的播放列表中并播放它。你可能有选"
+"择地右击一个文件并且选择<menuchoice><guimenuitem>播放</guimenuitem></"
+"menuchoice>或者<menuchoice><guimenuitem>队列</guimenuitem></menuchoice>菜单，"
+"立即播放文件或者分别把它加入到播放列表。"
 
 #: C/totem.xml:778(para)
 msgid ""
@@ -1203,10 +1280,12 @@ msgid ""
 "guimenuitem></menuchoice> from a file's context menu allows you to delete "
 "that file from the media server."
 msgstr ""
+"如果媒体服务器允许，那么从文件的右键快捷菜单中选择<menuchoice><guimenuitem>删"
+"除</guimenuitem></menuchoice>允许你删除媒体服务器上的文件。"
 
 #: C/totem.xml:782(title)
 msgid "Gromit Annotations"
-msgstr ""
+msgstr "屏幕涂鸦"
 
 #: C/totem.xml:783(para)
 msgid ""
@@ -1217,6 +1296,11 @@ msgid ""
 "enable the plugin — consult your operating system documentation for "
 "information on how to do this."
 msgstr ""
+"<guilabel>屏幕涂鸦</guilabel>插件允许你在播放电影时使用<ulink type=\"http\" "
+"url=\"http://www.home.unix-ag.org/simon/gromit/\"><application>Gromit</"
+"application></ulink> 程序在电影图像上面绘图。当然你必须启用插件之前安装 "
+"<application>Gromit</application> 程序 — 请查阅你的操作系统文档中有关如何安"
+"装 Gromit 的信息。"
 
 #: C/totem.xml:787(para)
 msgid ""
@@ -1228,6 +1312,12 @@ msgid ""
 "<keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> again to toggle "
 "<application>Gromit</application> off."
 msgstr ""
+"随着插件启用，按快捷键 <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></"
+"keycombo> 开关 <application>Gromit</application> 程序。当 "
+"<application>Gromit</application> 程序启用时，你的指针会变成十字。在屏幕上绘"
+"图，就要在你松开鼠标左键之前，一直按住你的鼠标并且拖拽你的指针。"
+"<keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> 开关关闭"
+"<application>Gromit</application> 。"
 
 #: C/totem.xml:791(para)
 msgid ""
@@ -1235,10 +1325,12 @@ msgid ""
 "keycap><keycap>E</keycap></keycombo>, or close <application>Totem Movie "
 "Player</application>."
 msgstr ""
+"要清理屏幕上的涂鸦，只需按下快捷键 <keycombo><keycap>Ctrl</keycap><keycap>E</"
+"keycap></keycombo>，或者关闭 <application>Totem 电影播放器</application>。"
 
 #: C/totem.xml:795(title)
 msgid "Jamendo"
-msgstr ""
+msgstr "Jamendo"
 
 #: C/totem.xml:796(para)
 msgid ""
@@ -1246,10 +1338,13 @@ msgid ""
 "collection of Creative Commons-licensed music on the <ulink type=\"http\" "
 "url=\"http://www.jamendo.com/en/\">Jamendo</ulink> service."
 msgstr ""
+"<guilabel>Jamendo</guilabel> 插件允许你收听在 <ulink type=\"http\" url="
+"\"http://www.jamendo.com/en/\">Jamendo</ulink> 服务上以创作共享协议下发布的音"
+"乐。"
 
 #: C/totem.xml:799(title) C/totem.xml:850(title)
 msgid "To Configure the Plugin"
-msgstr ""
+msgstr "配置插件"
 
 #: C/totem.xml:800(para)
 msgid ""
@@ -1261,14 +1356,18 @@ msgid ""
 "albums to retrieve when doing a search (choose more albums if you have a "
 "faster Internet connection)."
 msgstr ""
+"<guilabel>Jamendo</guilabel> 插件能够被配置。当插件启用时点击<guibutton>配置"
+"</guibutton>按钮，<application> Jamendo 插件配置</application>对话框将会显"
+"示。这里你能够选择是否下载 OGG 或者 MP3 格式歌曲(推荐开源格式 OGG )；搜索时检"
+"索到的唱片集数(要是你有更快的网络连接，你就选择更多的唱片集数量)。 "
 
 #: C/totem.xml:804(para)
 msgid "Once you're done, click <guibutton>OK</guibutton>."
-msgstr ""
+msgstr "一旦你确定了，点击<guibutton>确定</guibutton>按钮即可。"
 
 #: C/totem.xml:807(title)
 msgid "To Display the Jamendo Sidebar"
-msgstr ""
+msgstr "显示 Jamendo 侧边栏"
 
 #: C/totem.xml:808(para)
 msgid ""
@@ -1282,7 +1381,7 @@ msgstr ""
 
 #: C/totem.xml:814(title)
 msgid "To Search for Music"
-msgstr ""
+msgstr "音乐搜索"
 
 #: C/totem.xml:815(para)
 msgid ""
@@ -1313,7 +1412,7 @@ msgstr ""
 
 #: C/totem.xml:826(title)
 msgid "Popular Albums and Latest Releases"
-msgstr ""
+msgstr "流行专辑和最新发布"
 
 #: C/totem.xml:827(para)
 msgid ""
@@ -1326,7 +1425,7 @@ msgstr ""
 
 #: C/totem.xml:833(title)
 msgid "Local Search"
-msgstr ""
+msgstr "本地搜索"
 
 #: C/totem.xml:834(para)
 msgid ""
@@ -1359,7 +1458,7 @@ msgstr ""
 
 #: C/totem.xml:846(title)
 msgid "Publish Playlist"
-msgstr ""
+msgstr "发布播放列表"
 
 #: C/totem.xml:847(para)
 msgid ""
@@ -1370,7 +1469,7 @@ msgstr ""
 
 #: C/totem.xml:856(literal)
 msgid "%a"
-msgstr ""
+msgstr "%a"
 
 #: C/totem.xml:857(para)
 msgid ""
@@ -1380,7 +1479,7 @@ msgstr ""
 
 #: C/totem.xml:860(literal)
 msgid "%h"
-msgstr ""
+msgstr "%h"
 
 #: C/totem.xml:861(para)
 msgid "Replaced with your computer's host name."
@@ -1388,7 +1487,7 @@ msgstr ""
 
 #: C/totem.xml:864(literal)
 msgid "%u"
-msgstr ""
+msgstr "%u"
 
 #: C/totem.xml:865(para)
 msgid "Replaced with your username."
@@ -1396,7 +1495,7 @@ msgstr ""
 
 #: C/totem.xml:868(literal)
 msgid "%U"
-msgstr ""
+msgstr "%U"
 
 #: C/totem.xml:869(para)
 msgid "Replaced with your real name."
@@ -1404,7 +1503,7 @@ msgstr ""
 
 #: C/totem.xml:872(literal)
 msgid "%%"
-msgstr ""
+msgstr "%%"
 
 #: C/totem.xml:873(para)
 msgid "Replaced with a literal percent sign."
@@ -1432,7 +1531,7 @@ msgstr ""
 
 #: C/totem.xml:882(title)
 msgid "To Publish Playlists"
-msgstr ""
+msgstr "发布播放列表"
 
 #: C/totem.xml:883(para)
 msgid ""
@@ -1454,7 +1553,7 @@ msgstr ""
 
 #: C/totem.xml:894(title)
 msgid "Subtitle Downloader"
-msgstr ""
+msgstr "字幕下载器"
 
 #: C/totem.xml:895(para)
 msgid ""
@@ -1501,7 +1600,7 @@ msgstr ""
 
 #: C/totem.xml:910(title)
 msgid "Thumbnail"
-msgstr ""
+msgstr "缩略图"
 
 #: C/totem.xml:911(para)
 msgid ""
@@ -1519,7 +1618,7 @@ msgstr ""
 
 #: C/totem.xml:917(title)
 msgid "Video Disc Recorder"
-msgstr ""
+msgstr "视频光盘录制"
 
 #: C/totem.xml:918(para)
 msgid ""
@@ -1539,7 +1638,7 @@ msgstr ""
 
 #: C/totem.xml:924(title)
 msgid "YouTube Browser"
-msgstr ""
+msgstr "You Tube 浏览器"
 
 #: C/totem.xml:925(para)
 msgid ""
@@ -1581,7 +1680,7 @@ msgstr ""
 
 #: C/totem.xml:940(title)
 msgid "D-Bus Service"
-msgstr ""
+msgstr "D-Bus 服务"
 
 #: C/totem.xml:941(para)
 msgid ""
@@ -1595,7 +1694,7 @@ msgstr ""
 
 #: C/totem.xml:952(title)
 msgid "Preferences"
-msgstr ""
+msgstr "属性"
 
 #: C/totem.xml:953(para)
 msgid ""
@@ -1606,21 +1705,21 @@ msgstr ""
 
 #: C/totem.xml:960(title)
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: C/totem.xml:963(term)
 msgid "Networking"
-msgstr ""
+msgstr "网络"
 
 #: C/totem.xml:965(para)
 msgid ""
 "Select network connection speed from the <guilabel>Connection speed</"
 "guilabel> drop-down list."
-msgstr ""
+msgstr "从<guilabel>网络速度</guilabel>下接列表中选择网络连接速度。"
 
 #: C/totem.xml:971(term)
 msgid "Text Subtitles"
-msgstr ""
+msgstr "文本字幕"
 
 #: C/totem.xml:975(para)
 msgid ""
@@ -1633,17 +1732,17 @@ msgstr ""
 msgid ""
 "<guilabel>Font</guilabel>: select this option to change the font used to "
 "display subtitles."
-msgstr ""
+msgstr "<guilabel>字体</guilabel>：这个选项改变字幕显示所使用的字体。"
 
 #: C/totem.xml:983(para)
 msgid ""
 "<guilabel>Encoding</guilabel>: select this option to change the encoding "
 "used to display subtitles."
-msgstr ""
+msgstr "<guilabel>编码</guilabel>：这个选项改变字幕显示所使用的编码。"
 
 #: C/totem.xml:992(title) C/totem.xml:995(term)
 msgid "Display"
-msgstr ""
+msgstr "显示"
 
 #: C/totem.xml:999(para)
 msgid ""
@@ -1661,13 +1760,14 @@ msgstr ""
 
 #: C/totem.xml:1011(term)
 msgid "Visual Effects"
-msgstr ""
+msgstr "视觉效果"
 
 #: C/totem.xml:1015(para)
 msgid ""
 "<guilabel>Visual</guilabel>: select this option to show visual effects while "
 "an audio file is playing."
 msgstr ""
+"<guilabel>可视化</guilabel>：选取这个选项会在音频文件播放时显示视觉效果。"
 
 #: C/totem.xml:1020(para)
 msgid ""
@@ -1715,21 +1815,21 @@ msgstr ""
 
 #: C/totem.xml:1058(title)
 msgid "Audio"
-msgstr ""
+msgstr "音频"
 
 #: C/totem.xml:1061(term)
 msgid "Audio Output"
-msgstr ""
+msgstr "音频输出"
 
 #: C/totem.xml:1063(para)
 msgid ""
 "Select audio output type from the <guilabel>Audio output type</guilabel> "
 "drop-down list."
-msgstr ""
+msgstr "从<guilabel>音频输出类型</guilabel>下拉列表中选择音频输出类型。"
 
 #: C/totem.xml:1091(title)
 msgid "About <application>Totem Movie Player</application>"
-msgstr ""
+msgstr "关于 <application>Totem 电影播放器</application>"
 
 #: C/totem.xml:1092(para)
 msgid ""
@@ -1741,6 +1841,12 @@ msgid ""
 "gnome.org/totem/\" type=\"http\"><application>Totem Movie Player</"
 "application> website</ulink>."
 msgstr ""
+"<application>Totem 电影播放器</application>由 Bastien Nocera "
+"(<email>hadess@hadess.net</email>)编写，Julien Moutte (<email>julien@moutte."
+"net</email>) 和 Guenter Bartsch (<email>guenter@users.sourceforge.net</"
+"email>)编写 GStreamer 后端。 查询更多关于 <application>Totem 电影播放器</"
+"application>信息，请访问 <ulink url=\"http://projects.gnome.org/totem/\" "
+"type=\"http\"><application>Totem 电影播放器</application> 网站</ulink>。"
 
 #: C/totem.xml:1105(para)
 msgid ""
@@ -1750,8 +1856,12 @@ msgid ""
 "can be found at this <ulink url=\"ghelp:gpl\" type=\"help\">link</ulink>, or "
 "in the file COPYING included with the source code of this program."
 msgstr ""
+"这个程序在 GNU General Public license(GPL)协议下分发，由自由软件基金会发布。"
+"GPL 协议版本要么是第二版，要么是任何后续版本(由你选择)。协议副本可以在这个"
+"<ulink url=\"ghelp:gpl\" type=\"help\">链接</ulink>中，或者在程序源代码包中包"
+"含的 COPYING 文件中找到。"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/totem.xml:0(None)
 msgid "translator-credits"
-msgstr "lyper <lyp069@gmail.com>, 2009."
+msgstr "Lyper Lai <lyp069@gmail.com>, 2009."
