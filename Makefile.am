@@ -24,7 +24,7 @@ DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
 		 gnome-doc-utils.make
 
 DIST_SUBDIRS = $(SUBDIRS) browser-plugin
-DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --enable-gtk-doc
+DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --enable-gtk-doc --with-nautilusdir='$${libdir}/nautilus/extensions-2.0-distcheck'
 
 # Build ChangeLog from GIT history
 ChangeLog:
