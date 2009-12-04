@@ -62,19 +62,7 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   statusbar->time = 0;
   statusbar->length = -1;
 
-#if GTK_CHECK_VERSION (2, 19, 1)
   hbox = gtk_statusbar_get_message_area (gstatusbar);
-#else
-  hbox = gtk_hbox_new (FALSE, SPACING);
-
-  /* Widget surgery */
-  g_object_ref (gstatusbar->label);
-  gtk_container_remove (GTK_CONTAINER (gstatusbar->frame), gstatusbar->label);
-  gtk_box_pack_start (GTK_BOX (hbox), gstatusbar->label, FALSE, FALSE, 0);
-  g_object_unref (gstatusbar->label);
-  gtk_container_add (GTK_CONTAINER (gstatusbar->frame), hbox);
-  gtk_widget_show (hbox);
-#endif
 
   gtk_label_set_ellipsize (GTK_LABEL (gstatusbar->label), FALSE);
 
