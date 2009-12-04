@@ -837,8 +837,6 @@ add_mount_to_menu (GMount *mount,
 	GIcon *icon;
 	const char *icon_name;
 	char *device_path;
-	GtkWidget *menu_item;
-	char *menu_item_path;
 
 	GVolume *volume;
 	GFile *root, *iso;
@@ -914,20 +912,13 @@ add_mount_to_menu (GMount *mount,
 	action = gtk_action_new (name, label, NULL, NULL);
 	g_object_set (G_OBJECT (action),
 		      "icon-name", icon_name, NULL);
+	gtk_action_set_always_show_image (action, TRUE);
 	gtk_action_group_add_action (totem->devices_action_group, action);
 	g_object_unref (action);
 
 	gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
 			       "/tmw-menubar/movie/devices-placeholder", name, name,
 			       GTK_UI_MANAGER_MENUITEM, FALSE);
-
-	/* TODO: This can be made cleaner once bug #589842 is fixed */
-	menu_item_path = g_strdup_printf ("/tmw-menubar/movie/devices-placeholder/%s", name);
-	menu_item = gtk_ui_manager_get_widget (totem->ui_manager, menu_item_path);
-	g_free (menu_item_path);
-
-	if (menu_item != NULL)
-		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menu_item), TRUE);
 
 	g_free (name);
 	g_free (label);
