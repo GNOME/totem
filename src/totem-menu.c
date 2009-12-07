@@ -1572,16 +1572,6 @@ setup_menu_items (Totem *totem)
 	}
 }
 
-static const GtkActionEntry seek_entries_ltr[] = {
-	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Right", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
-	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, N_("Skip _Backwards"), "Left", N_("Skip backwards"), G_CALLBACK (skip_backwards_action_callback) }
-};
-
-static const GtkActionEntry seek_entries_rtl[] = {
-	{ "skip-forward", GTK_STOCK_MEDIA_FORWARD, N_("Skip _Forward"), "Left", N_("Skip forward"), G_CALLBACK (skip_forward_action_callback) },
-	{ "skip-backwards", GTK_STOCK_MEDIA_REWIND, N_("Skip _Backwards"), "Right", N_("Skip backwards"), G_CALLBACK (skip_backwards_action_callback) }
-};
-
 static const GtkToggleActionEntry toggle_entries[] = {
 	{ "repeat-mode", NULL, N_("_Repeat Mode"), NULL, N_("Set the repeat mode"), G_CALLBACK (repeat_mode_action_callback), FALSE },
 	{ "shuffle-mode", NULL, N_("Shuff_le Mode"), NULL, N_("Set the shuffle mode"), G_CALLBACK (shuffle_mode_action_callback), FALSE },
