@@ -1572,22 +1572,6 @@ setup_menu_items (Totem *totem)
 	}
 }
 
-static const GtkToggleActionEntry toggle_entries[] = {
-	{ "repeat-mode", NULL, N_("_Repeat Mode"), NULL, N_("Set the repeat mode"), G_CALLBACK (repeat_mode_action_callback), FALSE },
-	{ "shuffle-mode", NULL, N_("Shuff_le Mode"), NULL, N_("Set the shuffle mode"), G_CALLBACK (shuffle_mode_action_callback), FALSE },
-	{ "deinterlace", NULL, N_("_Deinterlace"), "I", N_("Deinterlace"), G_CALLBACK (deinterlace_action_callback), FALSE },
-	{ "show-controls", NULL, N_("Show _Controls"), "H", N_("Show controls"), G_CALLBACK (show_controls_action_callback), TRUE },
-	{ "sidebar", NULL, N_("S_idebar"), "F9", N_("Show or hide the sidebar"), G_CALLBACK (show_sidebar_action_callback), TRUE }
-};
-
-static const GtkRadioActionEntry aspect_ratio_entries[] = {
-	{ "aspect-ratio-auto", NULL, N_("Auto"), NULL, N_("Sets automatic aspect ratio"), BVW_RATIO_AUTO },
-	{ "aspect-ratio-square", NULL, N_("Square"), NULL, N_("Sets square aspect ratio"), BVW_RATIO_SQUARE },
-	{ "aspect-ratio-fbt", NULL, N_("4:3 (TV)"), NULL, N_("Sets 4:3 (TV) aspect ratio"), BVW_RATIO_FOURBYTHREE },
-	{ "aspect-ratio-anamorphic", NULL, N_("16:9 (Widescreen)"), NULL, N_("Sets 16:9 (Anamorphic) aspect ratio"), BVW_RATIO_ANAMORPHIC },
-	{ "aspect-ratio-dvb", NULL, N_("2.11:1 (DVB)"), NULL, N_("Sets 2.11:1 (DVB) aspect ratio"), BVW_RATIO_DVB }
-};
-
 void
 totem_ui_manager_setup (Totem *totem)
 {
