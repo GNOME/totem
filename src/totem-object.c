@@ -2284,10 +2284,13 @@ drop_video_cb (GtkWidget     *widget,
 	 guint               _time,
 	 Totem              *totem)
 {
+	GtkWidget *source_widget;
 	gboolean empty_pl;
 
+	source_widget = gtk_drag_get_source_widget (context);
+
 	/* Drop of video on itself */
-	if (context->source_window == totem->video_drag_source_window &&
+	if (source_widget && widget == source_widget &&
 	    context->action == GDK_ACTION_MOVE) {
 		gtk_drag_finish (context, FALSE, FALSE, _time);
 		return;
@@ -2400,8 +2403,6 @@ drag_video_cb (GtkWidget *widget,
 
 	gtk_selection_data_set (selection_data, selection_data->target,
 				8, (guchar *) text, len);
-
-	totem->video_drag_source_window = context->source_window;
 
 	g_free (text);
 }
