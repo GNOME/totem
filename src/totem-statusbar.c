@@ -64,6 +64,8 @@ totem_statusbar_init (TotemStatusbar *statusbar)
 
 #if GTK_CHECK_VERSION (2, 19, 1)
   hbox = gtk_statusbar_get_message_area (gstatusbar);
+  gtk_box_set_child_packing (GTK_BOX (hbox), gstatusbar->label,
+			     FALSE, FALSE, 0, GTK_PACK_START);
 #else
   hbox = gtk_hbox_new (FALSE, SPACING);
 
