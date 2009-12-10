@@ -64,6 +64,8 @@ totem_statusbar_init (TotemStatusbar *statusbar)
 
   hbox = gtk_statusbar_get_message_area (gstatusbar);
 
+  gtk_box_set_child_packing (GTK_BOX (hbox), gstatusbar->label,
+			     FALSE, FALSE, 0, GTK_PACK_START);
   gtk_label_set_ellipsize (GTK_LABEL (gstatusbar->label), FALSE);
 
   /* progressbar for network streams */
