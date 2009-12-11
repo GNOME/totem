@@ -2,7 +2,7 @@ AC_PREREQ(2.52)
 
 m4_define(totem_version_major, 2)
 m4_define(totem_version_minor, 28)
-m4_define(totem_version_micro, 4)
+m4_define(totem_version_micro, 5)
 
 AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
@@ -11,6 +11,7 @@ AC_INIT([totem],
 AC_CONFIG_SRCDIR([src/totem.c])
 AC_CONFIG_HEADERS([config.h])
 
+AM_MAINTAINER_MODE()
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip check-news subdir-objects])
 
 # Enable silent build when available (Automake 1.11)
