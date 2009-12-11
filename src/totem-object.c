@@ -528,7 +528,7 @@ totem_get_playlist_pos (Totem *totem)
 /**
  * totem_get_title_at_playlist_pos:
  * @totem: a #TotemObject
- * @index: the %0-based entry index
+ * @playlist_index: the %0-based entry index
  *
  * Gets the title of the playlist entry at @index.
  *
