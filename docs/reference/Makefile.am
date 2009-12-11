@@ -58,6 +58,7 @@ IGNORE_HFILES = \
 	eggsmclient.h			\
 	eggsmclient-private.h		\
 	gnome-screenshot-widget.h	\
+	gsd-media-keys-window.h		\
 	totemobject-marshal.h		\
 	totemplaylist-marshal.h		\
 	totemvideolist-marshal.h	\
