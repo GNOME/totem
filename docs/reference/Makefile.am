@@ -54,11 +54,15 @@ IGNORE_HFILES = \
 	ev-sidebar.h			\
 	eggdesktopfile.h		\
 	eggfileformatchooser.h		\
+	egg-macros.h			\
 	eggsmclient.h			\
 	eggsmclient-private.h		\
+	gnome-screenshot-widget.h	\
 	totemobject-marshal.h		\
 	totemplaylist-marshal.h		\
-	totemvideolist-marshal.h
+	totemvideolist-marshal.h	\
+	totem-profile.h			\
+	totem-sample-vala-plugin.h
 
 # Files we don't want exported to plugins
 IGNORE_HFILES += \

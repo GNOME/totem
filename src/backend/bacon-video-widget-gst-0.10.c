@@ -3472,15 +3472,15 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
  * Return value: %TRUE on success, %FALSE otherwise
  **/
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **error)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (_time * GST_MSECOND));
+  GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
 
-  if (_time > bvw->priv->stream_length
+  if (time > bvw->priv->stream_length
       && bvw->priv->stream_length > 0
       && !g_str_has_prefix (bvw->priv->mrl, "dvd:")
       && !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
@@ -3490,11 +3490,11 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **erro
   }
 
   /* Emit a time tick of where we are going, we are paused */
-  got_time_tick (bvw->priv->play, _time * GST_MSECOND, bvw);
+  got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
   
   gst_element_seek (bvw->priv->play, 1.0,
       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
-      GST_SEEK_TYPE_SET, _time * GST_MSECOND,
+      GST_SEEK_TYPE_SET, time * GST_MSECOND,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
   gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
@@ -3531,6 +3531,15 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
   return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, error);
 }
 
+/**
+ * bacon_video_widget_step:
+ * @bvw: a #BaconVideoWidget
+ * @error: a #GError, or %NULL
+ *
+ * Step one frame forward.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_step (BaconVideoWidget *bvw, GError **error)
 {
@@ -4819,6 +4828,15 @@ done:
   return ret;
 }
 
+/**
+ * bacon_video_widget_has_menus:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the widget is currently displaying a menu,
+ * such as a DVD menu.
+ *
+ * Return value: %TRUE if a menu is displyed, %FALSE otherwise
+ **/
 gboolean
 bacon_video_widget_has_menus (BaconVideoWidget *bvw)
 {
