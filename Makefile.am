@@ -1,4 +1,5 @@
-SUBDIRS = lib bindings po data help src docs
+NORMAL_SUBDIRS = lib bindings po data help src docs
+SUBDIRS = $(NORMAL_SUBDIRS)
 
 if ENABLE_BROWSER_PLUGINS
 SUBDIRS += browser-plugin
@@ -23,7 +24,7 @@ CLEANFILES = totem.spec
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
 		 gnome-doc-utils.make
 
-DIST_SUBDIRS = $(SUBDIRS) browser-plugin
+DIST_SUBDIRS = $(NORMAL_SUBDIRS) browser-plugin
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --enable-gtk-doc --with-nautilusdir='$${libdir}/nautilus/extensions-2.0-distcheck'
 
 # Build ChangeLog from GIT history
