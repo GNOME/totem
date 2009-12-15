@@ -182,6 +182,15 @@ impl_deactivate	(TotemPlugin *plugin,
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_stream_length);
+	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
+					      totem_movie_properties_plugin_metadata_updated,
+					      plugin);
+	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
+					      totem_movie_properties_plugin_file_opened,
+					      plugin);
+	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
+					      totem_movie_properties_plugin_file_closed,
+					      plugin);
 	pi->handler_id_stream_length = 0;
 	totem_remove_sidebar_page (totem, "properties");
 }
