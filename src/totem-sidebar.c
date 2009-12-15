@@ -95,10 +95,31 @@ totem_sidebar_is_visible (Totem *totem)
 	return totem->sidebar_shown;
 }
 
+static gboolean
+has_popup (void)
+{
+	GList *list, *l;
+	gboolean retval = FALSE;
+
+	list = gtk_window_list_toplevels ();
+	for (l = list; l != NULL; l = l->next) {
+		GtkWindow *window = GTK_WINDOW (l->data);
+		if (GTK_WIDGET_VISIBLE (window) && gtk_window_get_window_type (window) == GTK_WINDOW_POPUP) {
+			retval = TRUE;
+			break;
+		}
+	}
+	g_list_free (list);
+	return retval;
+}
+
 gboolean
-totem_sidebar_is_focused (Totem *totem)
+totem_sidebar_is_focused (Totem *totem, gboolean *handles_kbd)
 {
 	GtkWidget *focused;
+
+	if (handles_kbd != NULL)
+		*handles_kbd = has_popup ();
 
 	focused = gtk_window_get_focus (GTK_WINDOW (totem->win));
 	if (focused != NULL && gtk_widget_is_ancestor

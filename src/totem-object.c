@@ -3817,10 +3817,25 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 gboolean
 window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
-	if (totem_sidebar_is_focused (totem) != FALSE)
-		return FALSE;
+	gboolean sidebar_handles_kbd;
+
+	/* Shortcuts disabled? */
 	if (totem->disable_kbd_shortcuts != FALSE)
 		return FALSE;
+
+	/* Check whether the sidebar needs the key events */
+	if (event->type == GDK_KEY_PRESS) {
+		if (totem_sidebar_is_focused (totem, &sidebar_handles_kbd) != FALSE) {
+			/* Make Escape pass the focus to the video widget */
+			if (sidebar_handles_kbd == FALSE &&
+			    event->keyval == GDK_Escape)
+				gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
+			return FALSE;
+		}
+	} else {
+		if (totem_sidebar_is_focused (totem, NULL) != FALSE)
+			return FALSE;
+	}
 
 	/* Special case Eject, Open, Open URI and
 	 * seeking keyboard shortcuts */
