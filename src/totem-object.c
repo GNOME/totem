@@ -943,6 +943,7 @@ totem_action_exit (Totem *totem)
 	if (totem->bvw) {
 		totem_action_save_size (totem);
 		totem_save_position (totem);
+		bacon_video_widget_close (totem->bvw);
 	}
 
 	if (totem->app != NULL)
