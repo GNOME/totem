@@ -710,9 +710,11 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0, 0,
       widget->allocation.width, widget->allocation.height);
 
-  /* if there's only audio and no visualisation, draw the logo as well */
+  /* If there's only audio and no visualisation, draw the logo as well.
+   * If we have a cover image to display, we display it regardless of whether we're
+   * doing visualisations. */
   draw_logo = bvw->priv->media_has_audio &&
-      !bvw->priv->media_has_video && !bvw->priv->show_vfx;
+      !bvw->priv->media_has_video && (!bvw->priv->show_vfx || bvw->priv->cover_pixbuf);
 
   if (bvw->priv->logo_mode || draw_logo) {
     const GdkPixbuf *pixbuf;
@@ -4234,6 +4236,9 @@ bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw)
     g_value_unset (&value);
   }
 
+  if (bvw->priv->cover_pixbuf)
+    setup_vis (bvw);
+
   return (bvw->priv->cover_pixbuf != NULL);
 }
 
@@ -4618,7 +4623,7 @@ setup_vis (BaconVideoWidget * bvw)
   GST_DEBUG ("setup_vis called, show_vfx %d, vis element %s",
       bvw->priv->show_vfx, bvw->priv->vis_element_name);
   
-  if (bvw->priv->show_vfx && bvw->priv->vis_element_name) {
+  if (bvw->priv->show_vfx && !bvw->priv->cover_pixbuf && bvw->priv->vis_element_name) {
     GstElement *vis_element = NULL, *vis_capsfilter = NULL;
     GstPad *pad = NULL;
     GstCaps *caps = NULL;
@@ -4713,12 +4718,15 @@ setup_vis (BaconVideoWidget * bvw)
     }
   }
 
+  /* Check to see if we have an embedded cover image. If we do, don't show visualisations. */
+  bvw_check_for_cover_pixbuf (bvw);
+
   if (bvw->priv->media_has_audio &&
       !bvw->priv->media_has_video && bvw->priv->video_window) {
     gint flags;
 
     g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    if (bvw->priv->show_vfx) {
+    if (bvw->priv->show_vfx && !bvw->priv->cover_pixbuf) {
       gdk_window_show (bvw->priv->video_window);
       GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
       flags |= GST_PLAY_FLAGS_VIS;
