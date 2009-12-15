@@ -1,4 +1,4 @@
-BUILT_SOURCES = totem-sample-vala-plugin.c totem-sample-vala-plugin.h
+BUILT_SOURCES = totem-sample-vala-plugin.vala.stamp
 
 plugindir = $(PLUGINDIR)/sample-vala
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
@@ -13,9 +13,6 @@ plugin_LTLIBRARIES = libsample-vala.la
 # override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
 
-totem-sample-vala-plugin.c totem-sample-vala-plugin.h: totem-sample-vala-plugin.vala
-	$(VALAC) -C --vapidir=$(top_srcdir)/bindings/vala -X -I$(top_srcdir)/src/plugins -X -I$(top_srcdir)/src/ --pkg=totem -X "$(DEPENDENCY_CFLAGS)" $^
-
 common_defines = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
@@ -27,7 +24,13 @@ common_defines = \
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
-nodist_libsample_vala_la_SOURCES = $(BUILT_SOURCES)
+libsample_vala_la_VALASOURCES = \
+	totem-sample-vala-plugin.vala
+
+libsample_vala_la_SOURCES = \
+	totem-sample-vala-plugin.vala.stamp \
+	$(libsample_vala_la_VALASOURCES:.vala=.c)
+
 libsample_vala_la_LDFLAGS = $(modules_flags)
 libsample_vala_la_CPPFLAGS = $(common_defines)
 
@@ -41,9 +44,16 @@ libsample_vala_la_CFLAGS = \
 	-I$(top_srcdir)/src	\
 	-I$(top_srcdir)/src/plugins
 
+totem-sample-vala-plugin.vala.stamp: $(libsample_vala_la_VALASOURCES)
+	$(VALAC) $(VALAFLAGS) -C --vapidir=$(top_srcdir)/bindings/vala --pkg=totem $^
+	touch $@
+
 endif
 
-EXTRA_DIST = $(plugin_in_files) totem-sample-vala-plugin.vala
+EXTRA_DIST = $(plugin_in_files) $(libsample_vala_la_VALASOURCES) totem-sample-vala-plugin.vala.stamp
 
-CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
-DISTCLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
+MAINTAINERCLEANFILES = \
+	$(libsample_vala_la_VALASOURCES:.vala=.c)
+
+CLEANFILES = $(plugin_DATA)
+DISTCLEANFILES = $(plugin_DATA)
