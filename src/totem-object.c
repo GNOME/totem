@@ -3818,6 +3818,8 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, Totem *totem)
 {
 	if (totem_sidebar_is_focused (totem) != FALSE)
 		return FALSE;
+	if (totem->disable_kbd_shortcuts != FALSE)
+		return FALSE;
 
 	/* Special case Eject, Open, Open URI and
 	 * seeking keyboard shortcuts */

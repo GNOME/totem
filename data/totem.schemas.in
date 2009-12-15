@@ -292,7 +292,7 @@
       </schema>
 
       <schema>
-        <key>/schemas/apps/disable_user_plugins</key>
+        <key>/schemas/apps/totem/disable_user_plugins</key>
 	<applyto>/apps/totem/disable_user_plugins</applyto>
 	<owner>totem</owner>
 	<type>bool</type>
@@ -300,6 +300,18 @@
 	<locale name="C">
 	  <short>Whether to disable the plugins in the user's home directory</short>
 	  <long>Whether to disable the plugins in the user's home directory</long>
+	</locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/disable_keyboard_shortcuts</key>
+	<applyto>/apps/totem/disable_keyboard_shortcuts</applyto>
+	<owner>totem</owner>
+	<type>bool</type>
+	<default>false</default>
+	<locale name="C">
+	  <short>Whether to disable the keyboard shortcuts</short>
+	  <long>Whether to disable the keyboard shortcuts</long>
 	</locale>
       </schema>
 

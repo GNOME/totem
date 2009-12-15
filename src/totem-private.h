@@ -162,6 +162,7 @@ struct TotemObject {
 	TotemStates state;
 	TotemOpenLocation *open_location;
 	gboolean remember_position;
+	gboolean disable_kbd_shortcuts;
 
 	/* Stored source_window of GdkDragContext from a video drag,
 	 * used to detect when the video is dropped on itself. */

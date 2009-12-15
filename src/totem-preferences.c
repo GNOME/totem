@@ -285,6 +285,16 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
+disable_kbd_shortcuts_changed_cb (GConfClient *client,
+				  guint cnxn_id,
+				  GConfEntry *entry,
+				  Totem *totem)
+{
+	totem->disable_kbd_shortcuts = gconf_client_get_bool (totem->gc,
+							      GCONF_PREFIX"/disable_keyboard_shortcuts", NULL);
+}
+
+static void
 lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 				      GConfEntry *entry, Totem *totem)
 {
@@ -730,6 +740,12 @@ totem_setup_preferences (Totem *totem)
 			(GConfClientNotifyFunc) encoding_changed_cb,
 			totem, NULL, NULL);
 
+	/* Disable keyboard shortcuts */
+	totem->disable_kbd_shortcuts = gconf_client_get_bool (totem->gc,
+							      GCONF_PREFIX"/disable_keyboard_shortcuts", NULL);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/disable_keyboard_shortcuts",
+				 (GConfClientNotifyFunc) disable_kbd_shortcuts_changed_cb,
+				 totem, NULL, NULL);
 }
 
 void
