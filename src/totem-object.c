@@ -52,9 +52,6 @@
 /* X11 headers */
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
-#ifdef HAVE_XFREE
-#include <X11/XF86keysym.h>
-#endif
 #endif
 
 #include "totem.h"
@@ -3536,10 +3533,8 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_a:
 		totem_action_toggle_aspect_ratio (totem);
 		break;
-#ifdef HAVE_XFREE
-	case XF86XK_AudioPrev:
-	case XF86XK_Back:
-#endif /* HAVE_XFREE */
+	case GDK_AudioPrev:
+	case GDK_Back:
 	case GDK_B:
 	case GDK_b:
 		totem_action_previous (totem);
@@ -3579,33 +3574,25 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_m:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
 		break;
-#ifdef HAVE_XFREE
-	case XF86XK_AudioNext:
-	case XF86XK_Forward:
-#endif /* HAVE_XFREE */
+	case GDK_AudioNext:
+	case GDK_Forward:
 	case GDK_N:
 	case GDK_n:
 	case GDK_End:
 		totem_action_next (totem);
 		icon_name = "gtk-media-next";
 		break;
-#ifdef HAVE_XFREE
-	case XF86XK_OpenURL:
+	case GDK_OpenURL:
 		totem_action_fullscreen (totem, FALSE);
 		totem_action_open_location (totem);
 		break;
-#endif /* HAVE_XFREE */
 	case GDK_O:
 	case GDK_o:
-#ifdef HAVE_XFREE
-	case XF86XK_Open:
-#endif /* HAVE_XFREE */
+	case GDK_Open:
 		totem_action_fullscreen (totem, FALSE);
 		totem_action_open (totem);
 		break;
-#ifdef HAVE_XFREE
-	case XF86XK_AudioPlay:
-#endif /* HAVE_XFREE */
+	case GDK_AudioPlay:
 	case GDK_p:
 	case GDK_P:
 		if (event->state & GDK_CONTROL_MASK) {
@@ -3626,37 +3613,29 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		totem_action_pause (totem);
 		bacon_video_widget_step (totem->bvw, TRUE, NULL);
 		break;
-#ifdef HAVE_XFREE
-	case XF86XK_AudioPause:
-	case XF86XK_AudioStop:
+	case GDK_AudioPause:
+	case GDK_AudioStop:
 		totem_action_pause (totem);
 		icon_name = "gtk-media-pause";
 		break;
-#endif /* HAVE_XFREE */
 	case GDK_q:
 	case GDK_Q:
 		totem_action_exit (totem);
 		break;
 	case GDK_r:
 	case GDK_R:
-#ifdef HAVE_XFREE
-	case XF86XK_ZoomIn:
-#endif /* HAVE_XFREE */
+	case GDK_ZoomIn:
 		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
 		break;
 	case GDK_t:
 	case GDK_T:
-#ifdef HAVE_XFREE
-	case XF86XK_ZoomOut:
-#endif /* HAVE_XFREE */
+	case GDK_ZoomOut:
 		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
 		break;
-#ifdef HAVE_XFREE
-	case XF86XK_Eject:
+	case GDK_Eject:
 		totem_action_eject (totem);
 		icon_name = "media-eject";
 		break;
-#endif /* HAVE_XFREE */
 	case GDK_Escape:
 		if (event->state & GDK_SUPER_MASK)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
