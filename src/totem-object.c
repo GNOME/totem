@@ -61,7 +61,6 @@
 #include "ev-sidebar.h"
 #include "totem-playlist.h"
 #include "bacon-video-widget.h"
-#include "totem-dvb-setup.h"
 #include "totem-statusbar.h"
 #include "totem-time-label.h"
 #include "totem-sidebar.h"
@@ -1182,14 +1181,6 @@ totem_action_open_dialog (Totem *totem, const char *path, gboolean play)
 	return TRUE;
 }
 
-static void
-totem_dvb_setup_result (int result, const char *device, gpointer user_data)
-{
-	Totem *totem = (Totem *) user_data;
-
-	totem_action_play_media (totem, MEDIA_TYPE_DVB, device);
-}
-
 static gboolean
 totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *device)
 {
@@ -1219,29 +1210,6 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."), _(totem_cd_get_human_readable_name (type)));
 			else
 				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
-		/* Device doesn't exist */
-		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE) != FALSE) {
-			g_assert (type == MEDIA_TYPE_DVB);
-			totem_action_error (_("Totem cannot play TV, because no TV adapters are present or they are not supported."),
-					    _("Please insert a supported TV adapter."), totem);
-			return FALSE;
-		/* No channels.conf file */
-		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND) != FALSE) {
-			g_assert (type == MEDIA_TYPE_DVB);
-
-			if (totem_dvb_setup_device (device, GTK_WINDOW (totem->win), totem_dvb_setup_result, totem) == TOTEM_DVB_SETUP_STARTED_OK)
-				return FALSE;
-
-			link = "http://www.gnome.org/projects/totem/#dvb";
-			link_text = _("More information about watching TV");
-			msg = g_strdup (_("Totem is missing a channels listing to be able to tune the receiver."));
-			secondary = _("Please follow the instructions provided in the link to create a channels listing.");
-		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_DEVICE_BUSY) != FALSE) {
-			g_assert (type == MEDIA_TYPE_DVB);
-			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because the TV device is busy."), _(totem_cd_get_human_readable_name (type)));
-			totem_action_error (msg, _("Please try again later."), totem);
-			g_free (msg);
-			return FALSE;
 		/* Unsupported type (ie. CDDA) */
 		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_INVALID_LOCATION) != FALSE) {
 			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
@@ -2805,9 +2773,6 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 			} else if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
 				totem_playlist_add_mrl (totem->playlist, data, NULL);
 				changed = TRUE;
-			} else if (g_str_equal (filename, "dvb:") != FALSE) {
-				totem_action_load_media (totem, MEDIA_TYPE_DVB, "0");
-				changed = TRUE;
 			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
 				changed = TRUE;
 			}
@@ -3094,8 +3059,6 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		} else if (strcmp (url, "vcd:") == 0) {
 			/* FIXME b0rked */
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
-		} else if (g_str_has_prefix (url, "dvb:") != FALSE) {
-			totem_action_load_media (totem, MEDIA_TYPE_DVB, "0");
 		} else {
 			totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
 		}
@@ -3438,15 +3401,6 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 
 	if (bacon_video_widget_get_logo_mode (totem->bvw) != FALSE)
 		return FALSE;
-
-	/* EOS on DVB means that we lost the signal */
-	if (totem->mrl != NULL && g_str_has_prefix (totem->mrl, "dvb://") != FALSE) {
-		totem_action_stop (totem);
-		totem_action_error_and_exit (_("TV signal lost"),
-					     _("Please verify your hardware setup."),
-					     totem);
-		return FALSE;
-	}
 
 	if (totem_playlist_has_next_mrl (totem->playlist) == FALSE &&
 	    totem_playlist_get_repeat (totem->playlist) == FALSE &&

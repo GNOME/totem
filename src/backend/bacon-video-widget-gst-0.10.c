@@ -5388,146 +5388,6 @@ done:
   return res;
 }
 
-static char *
-bacon_video_widget_get_channels_file (void)
-{
-  gchar *filename;
-
-  filename = g_strdup(g_getenv("GST_DVB_CHANNELS_CONF"));
-  if (filename == NULL || g_file_test (filename, G_FILE_TEST_IS_REGULAR) == FALSE) {
-    gchar *directory;
-    guint major, minor, micro, nano;
-
-    g_free (filename);
-    gst_version(&major, &minor, &micro, &nano);
-    directory = g_strdup_printf (".gstreamer-%d.%d", major, minor);
-    filename = g_build_filename (g_get_home_dir (), directory, "dvb-channels.conf", NULL);
-    g_free (directory);
-
-    if (g_file_test (filename, G_FILE_TEST_IS_REGULAR) == FALSE) {
-      g_free (filename);
-      filename = g_build_filename (g_get_home_dir (), ".xine", "channels.conf", NULL);
-    }
-  }
-
-  return filename;
-}
-
-static char
-bacon_video_widget_dvb_get_adapter_type (const char *device)
-{
-  GstElement *dvbelement;
-  GstBus *dvbbus;
-  GstPipeline * pipeline;
-  char adapter_type;
-
-  adapter_type = 'U'; /* unknown */
-  /* let gstreamer know what adapter to use */
-  g_setenv("GST_DVB_ADAPTER", device, TRUE);
-
-  /* HACK: find out type of adapter so it filters out the channels
-   * based on the type of adapter. */
-  dvbelement = gst_element_factory_make ("dvbsrc", "test_dvbsrc");
-  g_object_set (G_OBJECT (dvbelement), "adapter", atoi (device), NULL);
-
-  pipeline = GST_PIPELINE (gst_pipeline_new (""));
-  gst_bin_add (GST_BIN (pipeline), dvbelement);
-  gst_element_set_state (GST_ELEMENT (pipeline), GST_STATE_READY);
-  gst_element_get_state (GST_ELEMENT (pipeline), NULL, NULL, GST_CLOCK_TIME_NONE);
-  dvbbus = gst_pipeline_get_bus (pipeline);
-
-  while (gst_bus_have_pending (dvbbus)) {
-    GstMessage* msg;
-
-    msg = gst_bus_pop (dvbbus);
-    if (msg->type == GST_MESSAGE_ELEMENT && msg->src == GST_OBJECT(dvbelement)) {
-      GstStructure *structure;
-
-      structure = msg->structure;
-
-      if (g_str_equal (gst_structure_get_name (structure), "dvb-adapter") != FALSE) {
-        const GValue* val;
-
-	val = gst_structure_get_value (structure, "type");
-	if (val) {
-	  if (g_str_equal (g_value_get_string (val), "DVB-T") != FALSE) {
-	    adapter_type = 'T';
-	  } else if (g_str_equal (g_value_get_string (val), "DVB-S") != FALSE) {
-	    adapter_type = 'S';
-	  } else if (g_str_equal (g_value_get_string (val), "DVB-C") != FALSE) {
-	    adapter_type = 'C';
-	  } else if (g_str_equal (g_value_get_string (val), "ATSC") != FALSE) {
-	    adapter_type = 'A';
-	  }
-	}
-	gst_message_unref (msg);
-	break;
-      }
-    }
-    gst_message_unref (msg);
-  }
-  g_object_unref (dvbbus);
-  gst_element_set_state (GST_ELEMENT(pipeline), GST_STATE_NULL);
-  g_object_unref (G_OBJECT(pipeline));
-
-  return adapter_type;
-}
-
-static gchar **
-bacon_video_widget_get_dvb_mrls (const char *device)
-{
-  gchar* filename;
-  gchar* contents;
-  GPtrArray *array;
-  gchar adapter_type;
-
-  adapter_type = bacon_video_widget_dvb_get_adapter_type (device);
-  filename = bacon_video_widget_get_channels_file ();
-
-  if (g_file_get_contents (filename, &contents, NULL, NULL) != FALSE) {
-    gchar **lines, *line;
-    guint i;
-
-    lines = g_strsplit (contents, "\n", 0);
-    array = g_ptr_array_new ();
-
-    for (i = 0; lines[i] != NULL; i++) {
-      line = lines[i];
-
-      if (line[0] != '#') {
-	gchar** fields = g_strsplit(line, ":", 0);
-	if ((g_strv_length (fields) == 13 && adapter_type == 'T') ||
-	    (g_strv_length (fields) == 8 && adapter_type == 'S') ||
-	    (g_strv_length (fields) == 9 && adapter_type == 'C') ||
-	    (g_strv_length (fields) == 6 && adapter_type == 'A')) {
-	  g_ptr_array_add (array, g_strdup_printf("dvb://%s", fields[0]));
-	} else if (g_strv_length (fields) == 0) {
-	  /* Empty line */
-	  g_strfreev (fields);
-	  continue;
-	} else {
-	  /* Exit if the channels.conf is in a format we don't understand */
-	  GST_DEBUG ("'%s' file has line %d with the wrong number of fields (%d) for adapter type %c",
-		     filename, i + 1, g_strv_length (fields), adapter_type);
-	  g_free (filename);
-	  g_ptr_array_free (array, TRUE);
-	  return (char **) NULL;
-	}
-	g_strfreev(fields);
-      }
-    }
-    g_free (filename);
-    g_strfreev(lines);
-  } else {
-    GST_DEBUG ("Couldn't get contents of file: '%s'", filename);
-    g_free (filename);
-    return NULL;
-  }
-  if (array->len >= 1)
-    g_ptr_array_add (array, NULL);
-  return (char **) g_ptr_array_free (array, FALSE);
-}
-
 /**
  * bacon_video_widget_get_mrls:
  * @bvw: a #BaconVideoWidget
@@ -5538,7 +5398,7 @@ bacon_video_widget_get_dvb_mrls (const char *device)
  * Returns an array of MRLs available for the given @device and media @type.
  *
  * @device should typically be the number of the device (e.g. %0 for the first
- * DVD drive, or the number of the DVB adapter).
+ * DVD drive.
  *
  * @type can be any value from #TotemDiscMediaType, but a %BVW_ERROR_INVALID_LOCATION error
  * will be returned if @type is %MEDIA_TYPE_CDDA, as CDDA support has been removed from
@@ -5547,10 +5407,6 @@ bacon_video_widget_get_dvb_mrls (const char *device)
  * A %BVW_ERROR_NO_PLUGIN_FOR_FILE error will be returned if the required GStreamer elements do
  * not exist for the given @type (for the GStreamer backend). *
  * If @device does not exist, a %BVW_ERROR_INVALID_DEVICE error will be returned.
- *
- * If @type is %MEDIA_TYPE_DVB and the DVB channels file (as given by
- * bacon_video_widget_get_channels_file() for the GStreamer backend)
- * does not exist, a %BVW_ERROR_FILE_NOT_FOUND error will be returned.
  *
  * Return value: a %NULL-terminated array of MRLs, or %NULL; free with g_strfreev()
  **/
@@ -5596,55 +5452,6 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
 	mrls = g_strdupv (uri);
 	g_free (uri[0]);
       }
-      break;
-    }
-    case MEDIA_TYPE_DVB: {
-      gchar *filename;
-
-      if (!gst_default_registry_check_feature_version ("dvbbasebin", 0, 10, 6) ||
-          !gst_default_registry_check_feature_version ("mpegtsparse", 0, 10, 6) ||
-          !gst_default_registry_check_feature_version ("dvbsrc", 0, 10, 6)) {
-        GST_DEBUG ("Missing one or all of: dvbsrc, dvbbasebin, mpegtsparse");
-	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-                             "XXX Do not use XXX");
-        return NULL;
-      }
-      if (!gst_default_registry_check_feature_version ("mpegpsdemux", 0, 10, 0) &&
-	  gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 0) &&
-      	  !gst_default_registry_check_feature_version ("flupsdemux", 0, 10, 15)) {
-        GST_DEBUG ("flupsdemux not new enough for DVB playback");
-	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE,
-                             "XXX Do not use XXX");
-	return NULL;
-      }
-
-      filename = g_strdup_printf ("/dev/dvb/adapter%s/frontend0", device);
-      if (!g_file_test (filename, G_FILE_TEST_EXISTS)) {
-	g_free (filename);
-	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-                             "XXX Do not use XXX");
-	return NULL;
-      }
-      g_free (filename);
-
-      filename = bacon_video_widget_get_channels_file ();
-      if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
-        mrls = bacon_video_widget_get_dvb_mrls (device);
-	if (mrls == NULL) {
-	  GST_DEBUG ("broken channels file '%s'", filename);
-	  g_free (filename);
-	  g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-			       "XXX Do not use XXX");
-	  return NULL;
-	}
-      } else {
-        GST_DEBUG ("no channels file '%s'", filename);
-	g_free (filename);
-	g_set_error_literal (error, BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-                             "XXX Do not use XXX");
-	return NULL;
-      }
-      g_free (filename);
       break;
     }
     case MEDIA_TYPE_CDDA:

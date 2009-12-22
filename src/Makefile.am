@@ -84,8 +84,6 @@ libtotem_main_la_SOURCES = \
 	ev-sidebar.h			\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\
-	totem-dvb-setup.c		\
-	totem-dvb-setup.h		\
 	totem-profile.h
 
 libtotem_main_la_CPPFLAGS = \

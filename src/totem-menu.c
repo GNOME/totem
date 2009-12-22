@@ -760,19 +760,6 @@ on_play_disc_activate (GtkAction *action, Totem *totem)
 	totem_action_play_media_device (totem, device_path);
 }
 
-/* Play DVB menu items */
-static void
-on_play_dvb_activate (GtkAction *action, Totem *totem)
-{
-	int adapter;
-	char *str;
-
-	adapter = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (action), "adapter"));
-	str = g_strdup_printf ("%d", adapter);
-	totem_action_play_media (totem, MEDIA_TYPE_DVB, str);
-	g_free (str);
-}
-
 static const char *
 get_icon_name_for_gicon (GtkIconTheme *theme,
 			 GIcon *icon)
@@ -1090,47 +1077,6 @@ update_drive_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 }
 
 static void
-update_dvb_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
-{
-	guint i;
-
-	for (i = 0 ; i < 8 ; i++) {
-		char *devicenode;
-
-		devicenode = g_strdup_printf("/dev/dvb/adapter%d/frontend0", i);
-
-		if (g_file_test (devicenode, G_FILE_TEST_EXISTS) != FALSE) {
-			char* label, *name, *adapter_name;
-			GtkAction* action;
-
-			/* translators: the index of the adapter
-			 * DVB Adapter 1 */
-			adapter_name = g_strdup_printf (_("DVB Adapter %u"), i);
-			/* translators:
-			 * Watch TV on 'DVB Adapter 1'
-			 * or
-			 * Watch TV on 'Hauppauge Nova-T Stick' */
-			label = g_strdup_printf (_("Watch TV on \'%s\'"), adapter_name);
-			g_free (adapter_name);
-			name = g_strdup_printf ("dvbdevice%d", i);
-			action = gtk_action_new (name, label, NULL, NULL);
-
-			g_object_set (G_OBJECT(action), "icon-name", "totem-tv", "sensitive", TRUE, NULL);
-			gtk_action_group_add_action (totem->devices_action_group, action);
-			g_object_unref (action);
-			gtk_ui_manager_add_ui (totem->ui_manager, totem->devices_ui_id,
-					       "/tmw-menubar/movie/devices-placeholder", name, name,
-					       GTK_UI_MANAGER_MENUITEM, FALSE);
-			g_object_set_data_full (G_OBJECT (action),
-						"adapter", GINT_TO_POINTER (i), NULL);
-			g_signal_connect (G_OBJECT (action), "activate",
-					  G_CALLBACK (on_play_dvb_activate), totem);
-		}
-		g_free (devicenode);
-	}
-}
-
-static void
 on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 {
 	//FIXME we should check whether there's new DVB items
@@ -1152,10 +1098,6 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 			totem->devices_action_group, -1);
 
 	update_drive_menu_items (movie_menuitem, totem);
-
-	/* Check for DVB */
-	/* FIXME we should only update if we have an updated as per HAL */
-	update_dvb_menu_items (movie_menuitem, totem);
 
 	gtk_ui_manager_ensure_update (totem->ui_manager);
 }
