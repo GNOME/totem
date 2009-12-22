@@ -1079,10 +1079,9 @@ update_drive_menu_items (GtkMenuItem *movie_menuitem, Totem *totem)
 static void
 on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 {
-	//FIXME we should check whether there's new DVB items
-/*	if (totem->drives_changed == FALSE)
+	if (totem->drives_changed == FALSE)
 		return;
-*/
+
 	/* Remove old UI */
 	gtk_ui_manager_remove_ui (totem->ui_manager, totem->devices_ui_id);
 	gtk_ui_manager_ensure_update (totem->ui_manager);
