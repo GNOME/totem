@@ -397,16 +397,33 @@ totem_playlist_update_save_button (TotemPlaylist *playlist)
 	gtk_widget_set_sensitive (button, state);
 }
 
-static void
-totem_playlist_save_get_iter_func (GtkTreeModel *model,
-		GtkTreeIter *iter, char **uri, char **title,
-		gboolean *custom_title, gpointer user_data)
+static gboolean
+totem_playlist_save_iter_foreach (GtkTreeModel *model,
+				  GtkTreePath  *path,
+				  GtkTreeIter  *iter,
+				  gpointer      user_data)
 {
+	TotemPlPlaylist *playlist = user_data;
+	TotemPlPlaylistIter pl_iter;
+	gchar *uri, *title;
+	gboolean custom_title;
+
 	gtk_tree_model_get (model, iter,
-			URI_COL, uri,
-			FILENAME_COL, title,
-			TITLE_CUSTOM_COL, custom_title,
-			-1);
+			    URI_COL, &uri,
+			    FILENAME_COL, &title,
+			    TITLE_CUSTOM_COL, &custom_title,
+			    -1);
+
+	totem_pl_playlist_append (playlist, &pl_iter);
+	totem_pl_playlist_set (playlist, &pl_iter,
+			       TOTEM_PL_PARSER_FIELD_URI, uri,
+			       TOTEM_PL_PARSER_FIELD_TITLE, (custom_title) ? title : NULL,
+			       NULL);
+
+	g_free (uri);
+	g_free (title);
+
+	return FALSE;
 }
 
 void
@@ -418,13 +435,22 @@ totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *outpu
 void
 totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist, const char *output, TotemPlParserType type)
 {
+	TotemPlPlaylist *pl_playlist;
 	GError *error = NULL;
+	GFile *output_file;
 	gboolean retval;
 
-	retval = totem_pl_parser_write (playlist->priv->parser,
-			playlist->priv->model,
-                        totem_playlist_save_get_iter_func,
-			output, type, NULL, &error);
+	pl_playlist = totem_pl_playlist_new ();
+	output_file = g_file_new_for_commandline_arg (output);
+
+	gtk_tree_model_foreach (playlist->priv->model,
+				totem_playlist_save_iter_foreach,
+				pl_playlist);
+
+	retval = totem_pl_parser_save (playlist->priv->parser,
+				       pl_playlist,
+				       output_file,
+				       NULL, type, &error);
 
 	if (retval == FALSE)
 	{
@@ -432,6 +458,9 @@ totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist, const char *o
 				error->message, playlist);
 		g_error_free (error);
 	}
+
+	g_object_unref (pl_playlist);
+	g_object_unref (output_file);
 }
 
 static void
