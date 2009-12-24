@@ -347,7 +347,6 @@ totem_playlist_set_current_subtitle (TotemPlaylist *playlist, const char *subtit
 static char *
 totem_playlist_mrl_to_title (const gchar *mrl)
 {
-	GFile *file;
 	char *filename_for_display, *unescaped;
 
 	if (g_str_has_prefix (mrl, "dvd://") != FALSE) {
@@ -356,12 +355,14 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 		return g_strdup_printf (_("Title %d"), (int) g_strtod (mrl + 6, NULL));
 	} else if (g_str_has_prefix (mrl, "dvb://") != FALSE) {
 		/* This is "BBC ONE(BBC)" for "dvb://BBC ONE(BBC)" */
-		return g_strdup (mrl + 6);
-	}
+		unescaped = g_strdup (mrl + 6);
+	} else {
+		GFile *file;
 
-	file = g_file_new_for_uri (mrl);
-	unescaped = g_file_get_basename (file);
-	g_object_unref (file);
+		file = g_file_new_for_uri (mrl);
+		unescaped = g_file_get_basename (file);
+		g_object_unref (file);
+	}
 
 	filename_for_display = g_filename_to_utf8 (unescaped,
 			-1,             /* length */
@@ -369,8 +370,7 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 			NULL,           /* bytes_written */
 			NULL);          /* error */
 
-	if (filename_for_display == NULL)
-	{
+	if (filename_for_display == NULL) {
 		filename_for_display = g_locale_to_utf8 (unescaped,
 				-1, NULL, NULL, NULL);
 		if (filename_for_display == NULL) {
