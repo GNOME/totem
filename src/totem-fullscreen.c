@@ -39,6 +39,8 @@
 #include "gsd-media-keys-window.h"
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
+#define FULLSCREEN_MOTION_TIME 200 /* in milliseconds */
+#define FULLSCREEN_MOTION_NUM_EVENTS 30
 
 static void totem_fullscreen_dispose (GObject *object);
 static void totem_fullscreen_finalize (GObject *object);
@@ -70,6 +72,8 @@ struct _TotemFullscreenPrivate {
 	gboolean          popup_in_progress;
 	gboolean          pointer_on_control;
 	guint             motion_handler_id;
+	guint             motion_start_time;
+	guint             motion_num_events;
 
 	GtkBuilder       *xml;
 };
@@ -294,7 +298,25 @@ G_MODULE_EXPORT gboolean
 totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 				TotemFullscreen *fs)
 {
-	if (!fs->priv->pointer_on_control)
+	guint motion_delay;
+
+	/* Only after FULLSCREEN_MOTION_NUM_EVENTS motion events,
+	   in FULLSCREEN_MOTION_TIME milliseconds will we show
+	   the popups */
+	motion_delay = event->time - fs->priv->motion_start_time;
+
+	if (fs->priv->motion_start_time == 0 ||
+	    motion_delay < 0 ||
+	    motion_delay > FULLSCREEN_MOTION_SEQUENCE_WINDOW_MS) {
+		fs->priv->motion_start_time = event->time;
+		fs->priv->motion_num_events = 0;
+		return FALSE;
+	}
+
+	fs->priv->motion_num_events++;
+
+	if (!fs->priv->pointer_on_control &&
+	    fs->priv->motion_num_events > FULLSCREEN_MOTION_NUM_EVENTS)
 		totem_fullscreen_show_popups (fs, TRUE);
 	return FALSE;
 }
