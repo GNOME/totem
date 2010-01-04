@@ -113,6 +113,23 @@ about_email_hook (GtkAboutDialog *about,
 	g_free (uri);
 }
 
+/* Debug log message handler: discards debug messages unless Totem is run with TOTEM_DEBUG=1.
+ * If we're building in the source tree, enable debug messages by default. */
+static void
+debug_handler (const char *log_domain,
+               GLogLevelFlags log_level,
+               const char *message,
+               GConfClient *gc)
+{
+	static int debug = -1;
+
+	if (debug < 0)
+		debug = gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL);
+
+	if (debug)
+		g_log_default_handler (log_domain, log_level, message, NULL);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -169,6 +186,10 @@ main (int argc, char **argv)
 		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
 	}
 
+	/* Debug log handling */
+	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, gc);
+
+	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
 	totem->gc = gc;
 

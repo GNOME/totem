@@ -34,9 +34,10 @@ libtotem_player_la_SOURCES = \
 	totem-time-label.h
 
 libtotem_player_la_CPPFLAGS = \
-	-I$(srcdir)/backend	\
-	-I$(top_srcdir)/	\
-	$(common_defines)	\
+	-I$(srcdir)/backend		\
+	-I$(top_srcdir)/		\
+	$(common_defines)		\
+	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
 libtotem_player_la_CFLAGS = \
@@ -92,6 +93,7 @@ libtotem_main_la_CPPFLAGS = \
 	-I$(srcdir)/plugins		\
 	-I$(top_builddir)/data		\
 	$(common_defines)		\
+	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
 libtotem_main_la_CFLAGS = \
@@ -173,6 +175,7 @@ totem_CPPFLAGS =			\
 	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
 	$(common_defines)		\
+	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
 totem_CFLAGS =				\
@@ -199,9 +202,10 @@ totem_video_thumbnailer_SOURCES =	\
 	totem-resources.h
 
 totem_video_thumbnailer_CPPFLAGS = \
-	-I$(top_srcdir)/	\
-	-I$(srcdir)/backend	\
-	$(common_defines)	\
+	-I$(top_srcdir)/				\
+	-I$(srcdir)/backend				\
+	$(common_defines)				\
+	-DG_LOG_DOMAIN=\""TotemVideoThumbnailer"\"	\
 	$(AM_CPPFLAGS)
 
 totem_video_thumbnailer_CFLAGS = \
@@ -238,6 +242,7 @@ libtotem_properties_page_la_CPPFLAGS =		\
 	-I$(srcdir)/plugins/properties		\
 	-I$(top_builddir)/data			\
 	$(common_defines)			\
+	-DG_LOG_DOMAIN=\""TotemPropertiesPage"\"\
 	$(AM_CPPFLAGS)
 
 libtotem_properties_page_la_CFLAGS = \
@@ -305,10 +310,11 @@ totem_video_indexer_SOURCES =		\
 	totem-resources.h
 
 totem_video_indexer_CPPFLAGS = \
-	-I$(top_srcdir)/	\
-	-I$(srcdir)/backend	\
-	-I$(top_builddir)/data	\
-	$(common_defines)	\
+	-I$(top_srcdir)/			\
+	-I$(srcdir)/backend			\
+	-I$(top_builddir)/data			\
+	$(common_defines)			\
+	-DG_LOG_DOMAIN=\""TotemVideoIndexer"\"	\
 	$(AM_CPPFLAGS)
 
 totem_video_indexer_CFLAGS = \
@@ -334,10 +340,11 @@ totem_audio_preview_SOURCES =		\
 	totem-resources.h
 
 totem_audio_preview_CPPFLAGS =	\
-	-I$(top_srcdir)/	\
-	-I$(srcdir)/backend	\
-	-I$(top_builddir)/data	\
-	$(common_defines)	\
+	-I$(top_srcdir)/			\
+	-I$(srcdir)/backend			\
+	-I$(top_builddir)/data			\
+	$(common_defines)			\
+	-DG_LOG_DOMAIN=\""TotemAudioPreview"\"	\
 	$(AM_CPPFLAGS)
 
 totem_audio_preview_CFLAGS = \

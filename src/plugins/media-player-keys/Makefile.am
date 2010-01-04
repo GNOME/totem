@@ -18,6 +18,7 @@ common_defines = \
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
+	-DG_LOG_DOMAIN=\""Totem"\"			\
 	$(DISABLE_DEPRECATED)
 
 libmedia_player_keys_la_SOURCES = totem-media-player-keys.c $(BUILT_SOURCES)

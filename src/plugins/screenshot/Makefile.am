@@ -20,6 +20,7 @@ common_defines = \
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
+	-DG_LOG_DOMAIN=\""Totem"\"			\
 	$(DISABLE_DEPRECATED)
 
 libscreenshot_la_SOURCES = \

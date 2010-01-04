@@ -18,6 +18,7 @@ common_defines = \
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
+	-DG_LOG_DOMAIN=\""Totem"\"			\
 	$(DISABLE_DEPRECATED)
 
 libtracker_la_SOURCES = totem-tracker.c totem-tracker-widget.h totem-tracker-widget.c
