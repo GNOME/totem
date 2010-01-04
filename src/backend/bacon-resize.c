@@ -47,9 +47,11 @@ static void bacon_resize_finalize	(GObject *object);
 
 static void set_video_widget		(BaconResize *resize,
 					 GtkWidget *video_widget);
+#ifdef HAVE_XVIDMODE
 static void screen_changed_cb		(GtkWidget *video_widget,
 					 GdkScreen *previous_screen,
 					 BaconResize *resize);
+#endif /* HAVE_XVIDMODE */
 
 struct BaconResizePrivate {
 	gboolean have_xvidmode;
@@ -200,15 +202,15 @@ bail:
 #endif /* HAVE_XVIDMODE */
 }
 
+#ifdef HAVE_XVIDMODE
 static void screen_changed_cb (GtkWidget *video_widget, GdkScreen *previous_screen, BaconResize *resize)
 {
-#ifdef HAVE_XVIDMODE
 	if (resize->priv->resized == TRUE)
 		bacon_resize_resize (resize);
 	else
 		bacon_resize_restore (resize);
-#endif /* HAVE_XVIDMODE */
 }
+#endif /* HAVE_XVIDMODE */
 
 void
 bacon_resize_resize (BaconResize *resize)
