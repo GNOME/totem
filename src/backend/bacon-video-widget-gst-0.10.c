@@ -3569,8 +3569,12 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
-  /* Only use the URI when FUSE isn't available for a file */
-  path = g_file_get_path (file);
+  /* Only use the URI when FUSE isn't available for a file
+   * or we're trying to read from an archive */
+  if (g_file_has_uri_scheme (file, "archive") != FALSE)
+    path = NULL;
+  else
+    path = g_file_get_path (file);
   if (path) {
     bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
     g_free (path);
