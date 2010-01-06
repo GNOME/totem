@@ -6,16 +6,15 @@
 # Ricardo Mones Lastra <mones@users.sourceforge.net>, 2002.
 # Baltasar Perez Diaz <baltasar.perez@hispalinux.es>, 2002.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
-# Jorge González <jorgegonz@svn.gnome.org>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-12-15 20:01+0000\n"
-"PO-Revision-Date: 2009-12-19 14:30+0100\n"
+"POT-Creation-Date: 2010-01-06 15:28+0000\n"
+"PO-Revision-Date: 2010-01-06 17:15+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,7 +225,7 @@ msgstr "_Añadir a la lista de reproducción"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1665
+#: ../src/totem-object.c:1630
 msgid "Movie Player"
 msgstr "Reproductor de películas"
 
@@ -584,7 +583,7 @@ msgstr "Cuadrada"
 msgid "Start playing files from last position"
 msgstr "Reproducir archivos desde la última posición"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5896
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5703
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -971,7 +970,6 @@ msgstr ""
 "automáticamente al cargar una película"
 
 #: ../data/totem.schemas.in.h:40
-#| msgid "Whether to disable the plugins in the user's home directory"
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Indica si se deben desactivar las combinaciones de teclas"
 
@@ -1203,49 +1201,33 @@ msgstr "Ninguno"
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:907
+#: ../src/totem-menu.c:894
 #, c-format
 msgid "Play Image '%s'"
 msgstr "Reproducir imagen «%s»"
 
-#: ../src/totem-menu.c:910 ../src/totem-menu.c:992
+#: ../src/totem-menu.c:897 ../src/totem-menu.c:979
 #, c-format
 msgid "device%d"
 msgstr "dispositivo%d"
 
-#: ../src/totem-menu.c:989
+#: ../src/totem-menu.c:976
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Reproducir disco «%s»"
 
-#. translators: the index of the adapter
-#. * DVB Adapter 1
-#: ../src/totem-menu.c:1108
-#, c-format
-msgid "DVB Adapter %u"
-msgstr "Adaptador DVB %u"
-
-#. translators:
-#. * Watch TV on 'DVB Adapter 1'
-#. * or
-#. * Watch TV on 'Hauppauge Nova-T Stick'
-#: ../src/totem-menu.c:1113
-#, c-format
-msgid "Watch TV on '%s'"
-msgstr "Ver la televisión en el «%s»"
-
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1386
+#: ../src/totem-menu.c:1327
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Reproductor de películas que usa %s"
 
-#: ../src/totem-menu.c:1390
+#: ../src/totem-menu.c:1331
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1395 ../browser-plugin/totem-plugin-viewer.c:1140
+#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1140
 msgid "translator-credits"
 msgstr ""
 "Jorge González <jorgegonz@svn.gnome.org>\n"
@@ -1255,52 +1237,51 @@ msgstr ""
 "Baltasar Pérez Díaz <baltasar.perez@hispalinux.es>\n"
 "Germán Poo Caamaño <gpoo@ubiobio.cl>"
 
-#: ../src/totem-menu.c:1399
+#: ../src/totem-menu.c:1340
 msgid "Totem Website"
 msgstr "Página web de Totem"
 
-#: ../src/totem-menu.c:1434
+#: ../src/totem-menu.c:1375
 msgid "Configure Plugins"
 msgstr "Configurar complementos"
 
-#: ../src/totem-object.c:434
+#: ../src/totem-object.c:430
 #, c-format
-#| msgid "Totem Website"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1003 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:361
 msgid "Playing"
 msgstr "Reproduciendo"
 
-#: ../src/totem-object.c:1005 ../src/totem-options.c:51
+#: ../src/totem-object.c:1001 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1010 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:357
 msgid "Paused"
 msgstr "Pausa"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1012 ../src/totem-object.c:1022
+#: ../src/totem-object.c:1008 ../src/totem-object.c:1018
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1017 ../src/totem-object.c:1657
+#: ../src/totem-object.c:1013 ../src/totem-object.c:1622
 #: ../src/totem-statusbar.c:94 ../browser-plugin/totem-plugin-viewer.c:345
 msgid "Stopped"
 msgstr "Detenido"
 
-#: ../src/totem-object.c:1098 ../src/totem-object.c:1125
-#: ../src/totem-object.c:1786 ../src/totem-object.c:1949
+#: ../src/totem-object.c:1094 ../src/totem-object.c:1121
+#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:1210
+#: ../src/totem-object.c:1198
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1309,7 +1290,7 @@ msgstr ""
 "Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
 "instalado que puede manipularlo."
 
-#: ../src/totem-object.c:1211
+#: ../src/totem-object.c:1199
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1317,11 +1298,11 @@ msgstr ""
 "Compruebe que haya un disco en la unidad y que esté correctamente "
 "configurada."
 
-#: ../src/totem-object.c:1219
+#: ../src/totem-object.c:1207
 msgid "More information about media plugins"
 msgstr "Más información acerca de los complementos de soportes"
 
-#: ../src/totem-object.c:1220
+#: ../src/totem-object.c:1208
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1329,7 +1310,7 @@ msgstr ""
 "Por favor, instale los complementos necesarios y reinicie Totem para poder "
 "reproducir este soporte."
 
-#: ../src/totem-object.c:1222
+#: ../src/totem-object.c:1210
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1338,7 +1319,7 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos apropiados para leer del disco."
 
-#: ../src/totem-object.c:1224
+#: ../src/totem-object.c:1212
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1347,106 +1328,65 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos apropiados para manejarlo."
 
-#: ../src/totem-object.c:1228
-msgid ""
-"Totem cannot play TV, because no TV adapters are present or they are not "
-"supported."
-msgstr ""
-"Totem no puede reproducir TV porque no hay ningún adaptador de TV presente o "
-"no están soportados."
-
-#: ../src/totem-object.c:1229
-msgid "Please insert a supported TV adapter."
-msgstr "Introduzca un adaptador de TV soportado."
-
-#: ../src/totem-object.c:1239
-msgid "More information about watching TV"
-msgstr "Más información acerca de ver televisión"
-
-#: ../src/totem-object.c:1240
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "Totem no tiene una lista de canales para poder sintonizar el receptor."
-
-#: ../src/totem-object.c:1241
-msgid ""
-"Please follow the instructions provided in the link to create a channels "
-"listing."
-msgstr "Siga las instrucciones en el enlace para crear una lista de canales."
-
-#: ../src/totem-object.c:1244
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr ""
-"Totem no puede reproducir este tipo de soporte (%s) porque el dispositivo de "
-"TV está ocupado."
-
-#: ../src/totem-object.c:1245
-msgid "Please try again later."
-msgstr "Inténtelo de nuevo más tarde."
-
-#: ../src/totem-object.c:1250
+#: ../src/totem-object.c:1215
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no está soportado."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1216
 msgid "Please insert another disc to play back."
 msgstr "Introduzca otro disco para reproducir."
 
-#: ../src/totem-object.c:1286
+#: ../src/totem-object.c:1251
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem-object.c:1287 ../src/totem-object.c:4227
+#: ../src/totem-object.c:1252 ../src/totem-object.c:4177
 msgid "No reason."
 msgstr "No hay razón."
 
-#: ../src/totem-object.c:1301
+#: ../src/totem-object.c:1266
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem no soporta la reproducción de CD de sonido"
 
-#: ../src/totem-object.c:1302
+#: ../src/totem-object.c:1267
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Considere usar un reproductor de música o un extractor de CD para reproducir "
 "este CD"
 
-#: ../src/totem-object.c:1792
+#: ../src/totem-object.c:1757
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem-object.c:2176
+#: ../src/totem-object.c:2141
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:2506 ../src/totem-object.c:2508
+#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
 #: ../browser-plugin/totem-plugin-viewer.c:1429
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:3448
-msgid "TV signal lost"
-msgstr "Se perdió la señal de TV"
-
-#: ../src/totem-object.c:3449
-msgid "Please verify your hardware setup."
-msgstr "Compruebe su configuración del hardware."
-
-#: ../src/totem-object.c:4085 ../src/totem-object.c:4087
+#: ../src/totem-object.c:4019 ../src/totem-object.c:4021
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:4093 ../src/totem-object.c:4095
+#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:4102 ../src/totem-object.c:4104
+#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
-#: ../src/totem-object.c:4227
+#: ../src/totem-object.c:4052 ../src/totem-object.c:4054
+#| msgid "_Fullscreen"
+msgid "Fullscreen"
+msgstr "Pantalla completa"
+
+#: ../src/totem-object.c:4177
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
@@ -1985,23 +1925,23 @@ msgstr ""
 msgid "Media file could not be played."
 msgstr "El archivo soporte no se pudo reproducir."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5892
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5699
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5894
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5701
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6241
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6048
 msgid "Too old version of GStreamer installed."
 msgstr "La versión de GStreamer que está instalada es demasiado antigua."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6248
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6055
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6778
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6585
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -2009,8 +1949,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6927
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7062
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6734
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6869
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -2018,7 +1958,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Quizá no esté disponible. Seleccione otra "
 "salida de vídeo en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6939
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6746
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -2028,7 +1968,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6974
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6781
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -2038,7 +1978,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6994
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6801
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2226,9 +2166,6 @@ msgid "D-Bus Service"
 msgstr "Servicio D-Bus"
 
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
-#| msgid ""
-#| "Plugin for sending notifications of currently-playing movies to the D-Bus "
-#| "subsystem."
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
@@ -2957,6 +2894,50 @@ msgstr ""
 "Después de que pulse Aceptar, Totem esperará a que se conecte con winpdb o "
 "rpdb2. Si no ha establecido una contraseña para el depurador en GConf, se "
 "usará la contraseña predeterminada («totem»)."
+
+#~ msgid "DVB Adapter %u"
+#~ msgstr "Adaptador DVB %u"
+
+#~ msgid "Watch TV on '%s'"
+#~ msgstr "Ver la televisión en el «%s»"
+
+#~ msgid ""
+#~ "Totem cannot play TV, because no TV adapters are present or they are not "
+#~ "supported."
+#~ msgstr ""
+#~ "Totem no puede reproducir TV porque no hay ningún adaptador de TV "
+#~ "presente o no están soportados."
+
+#~ msgid "Please insert a supported TV adapter."
+#~ msgstr "Introduzca un adaptador de TV soportado."
+
+#~ msgid "More information about watching TV"
+#~ msgstr "Más información acerca de ver televisión"
+
+#~ msgid "Totem is missing a channels listing to be able to tune the receiver."
+#~ msgstr ""
+#~ "Totem no tiene una lista de canales para poder sintonizar el receptor."
+
+#~ msgid ""
+#~ "Please follow the instructions provided in the link to create a channels "
+#~ "listing."
+#~ msgstr ""
+#~ "Siga las instrucciones en el enlace para crear una lista de canales."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because the TV device is busy."
+#~ msgstr ""
+#~ "Totem no puede reproducir este tipo de soporte (%s) porque el dispositivo "
+#~ "de TV está ocupado."
+
+#~ msgid "Please try again later."
+#~ msgstr "Inténtelo de nuevo más tarde."
+
+#~ msgid "TV signal lost"
+#~ msgstr "Se perdió la señal de TV"
+
+#~ msgid "Please verify your hardware setup."
+#~ msgstr "Compruebe su configuración del hardware."
 
 #~ msgid "Sets 16:9 (Anamorphic) aspect ratio"
 #~ msgstr "Establece la proporción a 16:9 (anamórfica)"
