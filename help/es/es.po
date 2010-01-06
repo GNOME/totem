@@ -1,11 +1,11 @@
 # translation of totem.help.HEAD.po to Español
 # Spanish translation for totem manual
-# Jorge González <jorgegonz@svn.gnome.org>, 2007, 200, 2009.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 200, 200, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.help.HEAD\n"
-"POT-Creation-Date: 2009-04-21 13:54+0000\n"
-"PO-Revision-Date: 2009-04-21 21:32+0200\n"
+"POT-Creation-Date: 2010-01-06 15:36+0000\n"
+"PO-Revision-Date: 2010-01-06 21:09+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
+"Report-Msgid-Bugs-To: \n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -279,9 +280,6 @@ msgid "Philip Withnall <email>philip@tecnocode.co.uk</email>"
 msgstr "Philip Withnall <email>philip@tecnocode.co.uk</email>"
 
 #: C/totem.xml:132(releaseinfo)
-#| msgid ""
-#| "This manual describes version 2.26 of <application>Totem Movie Player</"
-#| "application>."
 msgid "This manual describes version 2.26 of Totem Movie Player."
 msgstr ""
 "Este manual describe la versión 2.26 del Reproductor de películas Totem."
@@ -1185,13 +1183,6 @@ msgstr ""
 "usando en su equipo."
 
 #: C/totem.xml:699(para)
-#| msgid ""
-#| "<application>Totem Movie Player</application> will automatically load and "
-#| "display subtitles for a video if it finds a subtitle file with the same "
-#| "name as the video being played, and the extension <filename>asc</"
-#| "filename>, <filename>txt</filename>, <filename>sub</filename>, "
-#| "<filename>srt</filename>, <filename>smi</filename>, <filename>ssa</"
-#| "filename> or <filename>ass</filename>."
 msgid ""
 "<application>Totem Movie Player</application> will automatically load and "
 "display subtitles for a video if it finds a subtitle file with the same name "
@@ -1228,10 +1219,6 @@ msgstr ""
 "subtítulos de texto...</guimenuitem></menuchoice>."
 
 #: C/totem.xml:708(para)
-#| msgid ""
-#| "Using the <guilabel>Subtitles downloader</guilabel> plugin, you can also "
-#| "download subtitles from the OpenSubtitles service. See <xref linkend="
-#| "\"totem-plugins-opensubtitles\"/> for more information."
 msgid ""
 "Using the <guilabel>Subtitle Downloader</guilabel> plugin, you can also "
 "download subtitles from the OpenSubtitles service. See <xref linkend=\"totem-"
@@ -1812,15 +1799,10 @@ msgstr ""
 "reproducción para cargarla y reproducirla en su equipo."
 
 #: C/totem.xml:894(title)
-#| msgid "Subtitles downloader"
 msgid "Subtitle Downloader"
 msgstr "Descargador de subtítulos"
 
 #: C/totem.xml:895(para)
-#| msgid ""
-#| "The <guilabel>Subtitles downloader</guilabel> plugin allows you to find "
-#| "and download subtitle files from the <ulink type=\"http\" url=\"http://"
-#| "www.opensubtitles.org/en\">OpenSubtitles</ulink> service."
 msgid ""
 "The <guilabel>Subtitle Downloader</guilabel> plugin allows you to find and "
 "download subtitle files from the <ulink type=\"http\" url=\"http://www."
@@ -1861,13 +1843,6 @@ msgstr ""
 "lugar del nombre de archivo o de etiquetas."
 
 #: C/totem.xml:903(para)
-#| msgid ""
-#| "Search results are listed in the tree view in the middle of the dialog. "
-#| "Currently, subtitles can only be used with a movie by "
-#| "<emphasis>reloading</emphasis> the movie with the subtitles, so after "
-#| "selecting the subtitle file you wish to download, click on the "
-#| "<guibutton>Play with Subtitle</guibutton> button to download the "
-#| "subtitles reload the movie."
 msgid ""
 "Search results are listed in the tree view in the middle of the dialog. "
 "Currently, subtitles can only be used with a movie by <emphasis>reloading</"
@@ -1883,13 +1858,19 @@ msgstr ""
 "descargar los subtítulos y recargar la película."
 
 #: C/totem.xml:906(para)
+#| msgid ""
+#| "Downloaded subtitle files are cached so that they do not need to be "
+#| "downloaded again when playing the movie again. When downloading new "
+#| "subtitles for a movie, any previously downloaded subtitles for that movie "
+#| "are deleted."
 msgid ""
-"Downloaded subtitle files are cached so that they do not need to be "
-"downloaded again when playing the movie again. When downloading new "
-"subtitles for a movie, any previously downloaded subtitles for that movie "
-"are deleted."
+"Downloaded subtitle files are cached (in <filename>~/.cache/totem/subtitles</"
+"filename>, by default) so that they do not need to be downloaded again when "
+"playing the movie again. When downloading new subtitles for a movie, any "
+"previously downloaded subtitles for that movie are deleted."
 msgstr ""
-"Los archivos de subtítulos descargados se cachean, así no se necesitan "
+"Los archivos de subtítulos descargados se cachean (de forma predeterminada "
+"en <filename>~/.cache/totem/subtitles</filename>), así no se necesitan "
 "descargar de nuevo al reproducir la película otra vez. Al descargar los "
 "subtítulos para una película, se borrará cualquier otro subtítulo descargado "
 "para esa película."
@@ -1950,21 +1931,10 @@ msgstr ""
 "\">Documentación de Brasero</ulink>."
 
 #: C/totem.xml:924(title)
-#| msgid "YouTube browser"
 msgid "YouTube Browser"
 msgstr "Examinador de YouTube"
 
 #: C/totem.xml:925(para)
-#| msgid ""
-#| "The <guilabel>YouTube browser</guilabel> plugin allows you to search and "
-#| "browse <ulink type=\"http\" url=\"http://www.youtube.com/\">YouTube</"
-#| "ulink>, and play YouTube videos directly in <application>Totem Movie "
-#| "Player</application>. With the plugin enabled, choose "
-#| "<menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</"
-#| "guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the "
-#| "<guibutton>Sidebar</guibutton> button to show the sidebar. Select "
-#| "<guilabel>YouTube</guilabel> from the drop-down list at the top of the "
-#| "sidebar to display the <guilabel>YouTube</guilabel> sidebar."
 msgid ""
 "The <guilabel>YouTube Browser</guilabel> plugin allows you to search and "
 "browse <ulink type=\"http\" url=\"http://www.youtube.com/\">YouTube</ulink>, "
@@ -2197,9 +2167,6 @@ msgstr ""
 "<guilabel>Tono</guilabel>: use el selector para especificar el nivel de tono."
 
 #: C/totem.xml:1051(para)
-#| msgid ""
-#| "You may use the <guilabel>Reset To Defaults</guilabel> button to reset "
-#| "the color balance controls to their default positions."
 msgid ""
 "You may use the <guilabel>Reset to Defaults</guilabel> button to reset the "
 "color balance controls to their default positions."
@@ -2262,7 +2229,7 @@ msgstr ""
 "type=\"help\">enlace</ulink>, o en el archivo COPYING incluido con el código "
 "fuente de este programa."
 
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/totem.xml:0(None)
 msgid "translator-credits"
 msgstr ""
