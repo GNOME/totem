@@ -4011,6 +4011,7 @@ totem_callback_connect (Totem *totem)
 	/* Controls */
 	box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_buttons_hbox"));
 
+	/* Previous */
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"previous-chapter");
 	item = gtk_action_create_tool_item (action);
@@ -4020,6 +4021,7 @@ totem_callback_connect (Totem *totem)
 			_("Previous Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
+	/* Play/Pause */
 	action = gtk_action_group_get_action (totem->main_action_group, "play");
 	item = gtk_action_create_tool_item (action);
 	atk_object_set_name (gtk_widget_get_accessible (item),
@@ -4028,6 +4030,7 @@ totem_callback_connect (Totem *totem)
  					_("Play / Pause"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
+	/* Next */
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"next-chapter");
 	item = gtk_action_create_tool_item (action);
@@ -4035,6 +4038,20 @@ totem_callback_connect (Totem *totem)
 					_("Next Chapter/Movie"));
 	atk_object_set_name (gtk_widget_get_accessible (item),
 			_("Next Chapter/Movie"));
+	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
+
+	/* Separator */
+	item = GTK_WIDGET(gtk_separator_tool_item_new ());
+	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
+
+	/* Fullscreen button */
+	action = gtk_action_group_get_action (totem->main_action_group,
+			"fullscreen");
+	item = gtk_action_create_tool_item (action);
+	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item),
+					_("Fullscreen"));
+	atk_object_set_name (gtk_widget_get_accessible (item),
+			_("Fullscreen"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Sidebar button (Drag'n'Drop) */
