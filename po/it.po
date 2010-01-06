@@ -2,18 +2,18 @@
 # Copyright (C) 2002-2009 Free Software Foundation, Inc.
 # Pier Luigi Fiorini <plfiorini@supereva.it>, 2002.
 # Davide Patti <dpatti@diit.unict.it>, 2008.
-# Gianvito Cavasoli <janvitus@ubuntu-it.org>, 2008, 2009.
 #
 #
+# Gianvito Cavasoli <janvitus@ubuntu-it.org>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.26\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-11-05 15:01+0000\n"
-"PO-Revision-Date: 2009-11-05 15:44+0100\n"
+"POT-Creation-Date: 2009-12-24 13:56+0000\n"
+"PO-Revision-Date: 2010-01-06 02:08+0100\n"
 "Last-Translator: Gianvito Cavasoli <janvitus@ubuntu-it.org>\n"
-"Language-Team: Italian <tp@lists.linux.it>\n"
+"Language-Team: Italiana <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -618,7 +618,7 @@ msgstr "Quadrato"
 msgid "Start playing files from last position"
 msgstr "Avviare la riproduzione dei file dall'ultima posizione"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5402
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5577
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -1153,7 +1153,7 @@ msgstr "_Riproduci ora"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: ../src/totem-fullscreen.c:484
+#: ../src/totem-fullscreen.c:510
 msgid "No File"
 msgstr "Nessun file"
 
@@ -1267,7 +1267,7 @@ msgstr "Il riproduttore multimediale utilizza %s"
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1224 ../browser-plugin/totem-plugin-viewer.c:1116
+#: ../src/totem-menu.c:1224 ../browser-plugin/totem-plugin-viewer.c:1117
 msgid "translator-credits"
 msgstr ""
 "Pier Luigi Fiorini <plfiorini@supereva.it>\n"
@@ -1286,7 +1286,7 @@ msgstr "Configura i plugin"
 msgid "Sets 16:9 (Anamorphic) aspect ratio"
 msgstr "Imposta il rapporto d'aspetto a 16:9 (anamorfico)"
 
-#: ../src/totem-object.c:971 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:971 ../browser-plugin/totem-plugin-viewer.c:362
 msgid "Playing"
 msgstr "Riproduzione in corso"
 
@@ -1294,7 +1294,7 @@ msgstr "Riproduzione in corso"
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:978 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:978 ../browser-plugin/totem-plugin-viewer.c:358
 msgid "Paused"
 msgstr "In pausa"
 
@@ -1307,7 +1307,7 @@ msgid "Play"
 msgstr "Riproduci"
 
 #: ../src/totem-object.c:985 ../src/totem-object.c:1625
-#: ../src/totem-statusbar.c:100 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-statusbar.c:106 ../browser-plugin/totem-plugin-viewer.c:346
 msgid "Stopped"
 msgstr "Interrotto"
 
@@ -1420,7 +1420,6 @@ msgid "Totem was not able to play this disc."
 msgstr "Impossibile riuscire a riprodurre il disco."
 
 #: ../src/totem-object.c:1255 ../src/totem-object.c:4075
-#: ../browser-plugin/totem-plugin-viewer.c:1749
 msgid "No reason."
 msgstr "Motivo sconosciuto."
 
@@ -1443,7 +1442,7 @@ msgid "Totem could not display the help contents."
 msgstr "Impossibile visualizzare il sommario della guida."
 
 #: ../src/totem-object.c:2442 ../src/totem-object.c:2444
-#: ../browser-plugin/totem-plugin-viewer.c:1404
+#: ../browser-plugin/totem-plugin-viewer.c:1405
 msgid "An error occurred"
 msgstr "Si è verificato un errore"
 
@@ -1569,7 +1568,7 @@ msgstr "Scaletta XML condivisibile"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:356
+#: ../src/totem-playlist.c:355
 #, c-format
 msgid "Title %d"
 msgstr "Titolo %d"
@@ -1637,45 +1636,45 @@ msgstr "Seleziona il carattere per i sottotitoli"
 msgid "Audio/Video"
 msgstr "Audio/Video"
 
-#: ../src/totem-statusbar.c:95
+#: ../src/totem-statusbar.c:101
 msgid "0:00 / 0:00"
 msgstr "0.00 / 0.00"
 
-#: ../src/totem-statusbar.c:117
+#: ../src/totem-statusbar.c:123
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (Flusso)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:124 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:130 ../src/totem-time-label.c:65
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:127 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:133 ../src/totem-time-label.c:68
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Salta a %s / %s"
 
-#: ../src/totem-statusbar.c:221
+#: ../src/totem-statusbar.c:227
 msgid "Buffering"
 msgstr "Riempimento buffer"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:232
+#: ../src/totem-statusbar.c:238
 #, c-format
 msgid "%d %%"
 msgstr "%d%%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:301
+#: ../src/totem-statusbar.c:307
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:306
+#: ../src/totem-statusbar.c:312
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d%%"
@@ -1828,7 +1827,7 @@ msgstr "Nessun URI video"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:667
+#: ../src/totem-video-thumbnailer.c:668
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1839,15 +1838,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:669
 msgid "Filename"
 msgstr "Nome file"
 
-#: ../src/totem-video-thumbnailer.c:670
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../src/totem-video-thumbnailer.c:673
+#: ../src/totem-video-thumbnailer.c:674
 msgid "Duration"
 msgstr "Durata"
 
@@ -1884,12 +1883,12 @@ msgid "Could not open link"
 msgstr "Impossibile aprire il collegamento"
 
 #: ../src/totem.c:134 ../src/totem.c:160
-#: ../browser-plugin/totem-plugin-viewer.c:664
-#: ../browser-plugin/totem-plugin-viewer.c:1758
+#: ../browser-plugin/totem-plugin-viewer.c:665
+#: ../browser-plugin/totem-plugin-viewer.c:1757
 msgid "Totem Movie Player"
 msgstr "Riproduttore multimediale Totem"
 
-#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2210
+#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2209
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Impossibile inizializzare le librerie thread-safe."
 
@@ -1920,19 +1919,19 @@ msgstr "Impossibile inizializzare il motore di configurazione."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Assicurarsi che GNOME sia installato correttamente."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2520
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2524
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2598
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2602
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Traccia audio #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2552
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2556
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2630
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2634
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Sottotitolo #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2960
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3038
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1940,18 +1939,18 @@ msgstr ""
 "L'uscita audio richiesta non è disponibile. Selezionarne un'altra nel "
 "Selettore di sistemi multimediali di GNOME."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2965
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3043
 msgid "Location not found."
 msgstr "Posizione non trovata."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2969
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3047
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Impossibile aprire la posizione; controllare di avere i permessi necessari "
 "per aprire il file."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2980
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3058
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1961,7 +1960,7 @@ msgstr ""
 "altre applicazioni video oppure selezionarne un'altra dal Selettore dei "
 "sistemi multimediali di GNOME."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2986
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3064
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1972,14 +1971,14 @@ msgstr ""
 "l'utilizzo di un server sonoro."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3004
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3010
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3082
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3088
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Per riprodurre questo filmato è necessario un plugin %s che non è installato."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3011
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3089
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1992,34 +1991,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3036
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3114
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Impossibile riprodurre il filmato da remoto. Provare prima a scaricarlo su "
 "disco."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3108
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3186
 msgid "Media file could not be played."
 msgstr "Impossibile riprodurre il multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5398
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5573
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5400
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5575
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5747
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5922
 msgid "Too old version of GStreamer installed."
 msgstr "La versione di GStreamer installata è troppo vecchia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5754
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5929
 msgid "Media contains no supported video streams."
 msgstr "Il multimedia non contiene alcun flusso video supportato."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6221
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6396
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -2027,8 +2026,8 @@ msgstr ""
 "Creazione di un oggetto play di GStreamer non riuscita. Controllare "
 "l'installazione di GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6348
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6481
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6523
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6656
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -2036,7 +2035,7 @@ msgstr ""
 "Apertura dell'uscita video non riuscita. Potrebbe essere non disponibile. "
 "Selezionarne un'altra dal Selettore di sistemi multimediali di GNOME."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6360
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6535
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -2046,7 +2045,7 @@ msgstr ""
 "di GStreamer oppure selezionarne un'altra dal Selettore di sistemi "
 "multimediali di GNOME."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6395
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6570
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -2057,7 +2056,7 @@ msgstr ""
 "in esecuzione. Selezionarne un'altra dal Selettore di sistemi multimediali "
 "di GNOME."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6415
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6590
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2699,7 +2698,7 @@ msgstr "Salvataggio galleria come «%s»"
 
 #: ../src/plugins/screenshot/totem-screenshot.c:112
 msgid "There was an error saving the screenshot."
-msgstr "Si è verificato un errore durante nel salvare la schermata."
+msgstr "Si è verificato un errore nel salvataggio della schermata."
 
 #: ../src/plugins/screenshot/totem-screenshot.c:139
 msgid "Save Screenshot"
@@ -2849,12 +2848,12 @@ msgstr "Errore nel caricareo l'URI video"
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:694
-#: ../src/plugins/youtube/totem-youtube.c:699
+#: ../src/plugins/youtube/totem-youtube.c:695
+#: ../src/plugins/youtube/totem-youtube.c:700
 msgid "Error Searching for Videos"
 msgstr "Errore nel cercare i video"
 
-#: ../src/plugins/youtube/totem-youtube.c:695
+#: ../src/plugins/youtube/totem-youtube.c:696
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2863,28 +2862,28 @@ msgstr ""
 "esecuzione l'ultima versione di libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:841
+#: ../src/plugins/youtube/totem-youtube.c:842
 msgid "Fetching search results…"
 msgstr "Recupero risultati della ricerca..."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:892
+#: ../src/plugins/youtube/totem-youtube.c:893
 msgid "Fetching related videos…"
 msgstr "Recupero video correlati..."
 
-#: ../src/plugins/youtube/totem-youtube.c:943
+#: ../src/plugins/youtube/totem-youtube.c:944
 msgid "Error Opening Video in Web Browser"
 msgstr "Errore nell'aprire il video nel browser web"
 
-#: ../src/plugins/youtube/totem-youtube.c:963
+#: ../src/plugins/youtube/totem-youtube.c:964
 msgid "Fetching more videos…"
 msgstr "Recupero video aggiuntivi..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:420
+#: ../browser-plugin/totem-plugin-viewer.c:421
 msgid "No URI to play"
 msgstr "Nessun URI da riprodurre"
 
-#: ../browser-plugin/totem-plugin-viewer.c:446
+#: ../browser-plugin/totem-plugin-viewer.c:447
 #, c-format
 msgid "Totem could not play '%s'"
 msgstr "Impossibile riprodurre «%s»"
@@ -2892,35 +2891,29 @@ msgstr "Impossibile riprodurre «%s»"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1054
+#: ../browser-plugin/totem-plugin-viewer.c:1055
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "A_pri con «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1105
+#: ../browser-plugin/totem-plugin-viewer.c:1106
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Plugin per il browser basato su %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1110
+#: ../browser-plugin/totem-plugin-viewer.c:1111
 msgid "Totem Browser Plugin"
 msgstr "Plugin per il browser Totem"
 
-#. FIXME!
-#. FIXME construct and show error message
-#: ../browser-plugin/totem-plugin-viewer.c:1749
-msgid "The Totem plugin could not be started."
-msgstr "Impossibile avviare il plugin."
-
-#: ../browser-plugin/totem-plugin-viewer.c:2104
+#: ../browser-plugin/totem-plugin-viewer.c:2103
 msgid "No playlist or playlist empty"
 msgstr "Nessuna scaletta o scaletta vuota"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2194
+#: ../browser-plugin/totem-plugin-viewer.c:2193
 msgid "Movie browser plugin"
 msgstr "Plugin esploratore di filmati"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2210
+#: ../browser-plugin/totem-plugin-viewer.c:2209
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Verificare l'installazione del sistema. Il plugin verrà arrestato."
 
@@ -2970,3 +2963,6 @@ msgstr ""
 "Dopo aver premuto OK, l'applicazione attenderà di connettersi con winpdb "
 "oppure rpdb2. Se non è stata impostata una password per il debugger in "
 "GConf, verrà usata quella predefinita («totem»)."
+
+#~ msgid "The Totem plugin could not be started."
+#~ msgstr "Impossibile avviare il plugin."
