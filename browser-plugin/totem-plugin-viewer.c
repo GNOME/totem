@@ -1284,6 +1284,16 @@ on_popup_button_button_pressed (GtkToggleButton *button,
 	return FALSE;
 }
 
+static void
+on_popup_menu_unmap (GtkWidget *menu,
+		     TotemEmbedded *emb)
+{
+	GtkWidget *button;
+
+	button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+}
+
 static char *
 resolve_redirect (const char *old_mrl, const char *mrl)
 {
@@ -1752,6 +1762,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 {
 	GtkWidget *child, *container, *image;
 	GtkWidget *popup_button;
+	GtkWidget *menu;
 	BvwUseType type;
 	GError *err = NULL;
 	GConfClient *gc;
@@ -1897,6 +1908,9 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (on_popup_button_toggled), emb);
 	g_signal_connect (G_OBJECT (popup_button), "button-press-event",
 			  G_CALLBACK (on_popup_button_button_pressed), emb);
+	menu = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "menu"));
+	g_signal_connect (G_OBJECT (menu), "unmap",
+			  G_CALLBACK (on_popup_menu_unmap), emb);
 
 	gc = gconf_client_get_default ();
 	volume = ((double) gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL)) / 100.0;
