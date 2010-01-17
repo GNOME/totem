@@ -3626,8 +3626,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     setup_vis (bvw);
   }
 
-  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
-                "suburi", subtitle_uri, NULL);
   if (bvw->priv->ready_idle_id) {
     g_source_remove (bvw->priv->ready_idle_id);
     bvw->priv->ready_idle_id = 0;
@@ -3635,6 +3633,9 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   bvw->priv->target_state = GST_STATE_READY;
   gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+
+  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
+                "suburi", subtitle_uri, NULL);
 
   bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
