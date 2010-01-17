@@ -3322,6 +3322,9 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     setup_vis (bvw);
   }
 
+  bvw->priv->target_state = GST_STATE_READY;
+  gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+
   g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
                 "suburi", subtitle_uri, NULL);
 
