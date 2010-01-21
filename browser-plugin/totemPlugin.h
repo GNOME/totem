@@ -267,6 +267,7 @@ class totemPlugin {
   public:
     bool SetQtsrc (const char* aURL);
     bool SetHref (const char* aURL);
+    void SetURL (const NPString&);
 
     const char* QtSrc () const { return mQtsrcURI; }
     const char* Href () const { return mHref; }

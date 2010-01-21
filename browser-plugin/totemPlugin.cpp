@@ -1590,6 +1590,30 @@ totemPlugin::SetURL (const char* aURL)
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 
+void
+totemPlugin::SetURL (const NPString& aURL)
+{
+        g_free (mSrcURI);
+
+	/* If |src| is empty, don't resolve the URI! Otherwise we may
+	 * try to load an (probably iframe) html document as our video stream.
+	 */
+	if (!aURL.UTF8Characters || !aURL.UTF8Length) {
+              mSrcURI = NULL;
+              return;
+        }
+
+        mSrcURI = g_strndup (aURL.UTF8Characters, aURL.UTF8Length);
+
+        UnsetStream ();
+
+        if (mAutoPlay) {
+                RequestStream (true); //FIXME
+        } else {
+                mWaitingForButtonPress = true;
+        }
+}
+
 bool
 totemPlugin::SetQtsrc (const char* aURL)
 {
