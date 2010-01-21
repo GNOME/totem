@@ -855,6 +855,7 @@ totemPlugin::ViewerReady ()
 #ifdef TOTEM_NARROWSPACE_PLUGIN
 	/* Tell the viewer it has an href */
 	if (mHref) {
+		Dm("SetHref in ViewerReady");
 		dbus_g_proxy_call_no_reply (mViewerProxy,
 					    "SetHref",
 					    G_TYPE_STRING, mHref,
@@ -2392,6 +2393,7 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	gboolean retval = TRUE;
 	GError *error = NULL;
 	if (mIsPlaylist) {
+		Dm("Calling SetPlaylist in StreamAsFile");
 		retval = dbus_g_proxy_call (mViewerProxy,
 					    "SetPlaylist",
 					    &error,
@@ -2406,6 +2408,7 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	 * completely in the cache.)
 	 */
 	else if (mBytesStreamed == 0) {
+		Dm("Calling SetLocalFile from ViewerReady");
 		retval = dbus_g_proxy_call (mViewerProxy,
 					    "SetLocalFile",
 					    &error,
@@ -2454,7 +2457,13 @@ totemPlugin::URLNotify (const char *url,
 		        NPReason reason,
 		        void *notifyData)
 {
-	D ("URLNotify URL '%s' reason %d", url ? url : "", reason);
+	const char *reasons[] = {
+		"Base (undefined)",
+		"Done",
+		"Network error",
+		"User break"
+	};
+	D ("URLNotify URL '%s' reason %d (%s)", url ? url : "", reason, reasons[reason]);
 
 	/* If we get called when we expect a stream,
 	 * it means that the stream failed.
