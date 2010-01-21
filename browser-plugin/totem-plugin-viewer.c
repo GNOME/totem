@@ -527,6 +527,8 @@ totem_embedded_do_command (TotemEmbedded *embedded,
 {
 	g_return_val_if_fail (command != NULL, FALSE);
 
+	g_message ("totem_embedded_do_command: %s", command);
+
 	if (strcmp (command, TOTEM_COMMAND_PLAY) == 0) {
 		return totem_embedded_play (embedded, error);
 	}
@@ -550,6 +552,9 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 			 const char *target,
 			 GError *error)
 {
+	g_message ("totem_embedded_set_href %s (target: %s)",
+		   href_uri, target);
+
 	g_free (embedded->href_uri);
 	g_free (embedded->target);
 
@@ -683,6 +688,8 @@ totem_pl_item_free (gpointer data, gpointer user_data)
 static gboolean
 totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 {
+	g_message ("totem_embedded_clear_playlist");
+
 	g_list_foreach (emb->playlist, (GFunc) totem_pl_item_free, NULL);
 	g_list_free (emb->playlist);
 
@@ -703,7 +710,8 @@ totem_embedded_add_item (TotemEmbedded *embedded, const char *uri, GError *error
 {
 	TotemPlItem *item;
 
-	g_message ("totem_embedded_add_item: %s", uri);
+	g_message ("totem_embedded_add_item: %s (base: %s title: %s subtitle: %s)",
+		   uri, base_uri, title, subtitle);
 
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);
@@ -823,6 +831,8 @@ static gboolean
 totem_embedded_close_stream (TotemEmbedded *emb,
 			     GError *error)
 {
+	g_message ("totem_embedded_close_stream");
+
 	if (!emb->is_browser_stream)
 		return TRUE;
 
@@ -890,7 +900,8 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 {
 	char *file_uri;
 
-	g_message ("Setting the current path to %s", path);
+	g_message ("Setting the current path to %s (uri: %s base: %s)",
+		   path, uri, base_uri);
 
 	totem_embedded_clear_playlist (emb, NULL);
 
@@ -911,6 +922,8 @@ totem_embedded_set_local_cache (TotemEmbedded *emb,
 				GError **error)
 {
 	int fd;
+
+	g_message ("totem_embedded_set_local_cache: %s", path);
 
 	/* FIXME Should also handle playlists */
 	if (!emb->is_browser_stream)
@@ -944,8 +957,8 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 	GFile *src, *dst;
 	int fd;
 
-	g_message ("Setting the current playlist to %s (base: %s)",
-		   path, base_uri);
+	g_message ("Setting the current playlist to %s (uri: %s base: %s)",
+		   path, uri, base_uri);
 
 	totem_embedded_clear_playlist (emb, NULL);
 
