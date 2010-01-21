@@ -1243,6 +1243,27 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 		}
 	}
 #endif /* TOTEM_GMP_PLUGIN */
+
+#ifdef TOTEM_NARROWSPACE_PLUGIN
+        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+                totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
+                switch (plugin->mState) {
+		case TOTEM_STATE_PLAYING:
+		case TOTEM_STATE_PAUSED:
+			scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
+			break;
+		case TOTEM_STATE_STOPPED:
+			if (scriptable->mPluginState == totemNarrowSpacePlayer::eState_Playable)
+				scriptable->mPluginState = totemNarrowSpacePlayer::eState_Complete;
+			else
+				scriptable->mPluginState = totemNarrowSpacePlayer::eState_Waiting;
+			break;
+		default:
+			scriptable->mPluginState = totemNarrowSpacePlayer::eState_Waiting;
+		}
+	}
+#endif /* TOTEM_NARROWSPACE_PLUGIN */
 }
 
 /* static */ void
