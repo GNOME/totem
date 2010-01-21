@@ -402,7 +402,6 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 			      gboolean start_play,
 			      GError **error)
 {
-	GError *err = NULL;
 	gboolean retval;
 	const char *uri;
 
@@ -428,37 +427,12 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 	bacon_video_widget_set_logo_mode (emb->bvw, FALSE);
 
-	/* FIXME: remove |err| and rely on async on_error? */
-	g_message ("BEFORE _open");
-	retval = bacon_video_widget_open (emb->bvw, uri, emb->current_subtitle_uri, &err);
-	g_message ("AFTER _open (ret: %d)", retval);
-	if (retval == FALSE)
-	{
-		GError *errint;
-
-		/* FIXME we haven't even started sending yet! */
-		//g_signal_emit (emb, signals[STOP_STREAM], 0);
-
-		totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
-		totem_embedded_set_error_logo (emb, NULL);
-
-		errint = g_error_new (TOTEM_EMBEDDED_ERROR_QUARK,
-				      TOTEM_EMBEDDED_OPEN_FAILED,
-				      _("Totem could not play '%s'"),
-				     emb->current_uri);
-
-		totem_embedded_set_error (emb, err->code, err->message);;
-
-		g_propagate_error (error, err);
-
-		totem_embedded_set_pp_state (emb, FALSE);
-	} else {
-		/* FIXME we shouldn't even do that here */
-		if (start_play)
-			totem_embedded_play (emb, NULL);
-		else
-			totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), TRUE);
-	}
+	retval = bacon_video_widget_open (emb->bvw, uri, emb->current_subtitle_uri, NULL);
+	/* FIXME we shouldn't even do that here */
+	if (start_play)
+		totem_embedded_play (emb, NULL);
+	else
+		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), TRUE);
 
 	totem_embedded_update_menu (emb);
 	if (emb->href_uri != NULL)
