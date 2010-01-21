@@ -523,8 +523,15 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
       /* void SetTime (in unsigned long time); */
     case eSetTrackEnabled:
       /* void SetTrackEnabled (in unsigned long index, in boolean enabled); */
-    case eSetURL:
+    case eSetURL: {
       /* void SetURL (in AUTF8String url); */
+      NPString url;
+      if (!GetNPStringFromArguments (argv, argc, 0, url))
+        return false;
+
+      Plugin()->SetURL (url);
+      return true;
+    }
     case eStep:
       /* void Step (in long count); */
     case eShowDefaultView:
