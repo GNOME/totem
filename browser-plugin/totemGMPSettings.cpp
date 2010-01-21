@@ -46,7 +46,7 @@ static const char *methodNames[] = {
   "getMode",
   "isAvailable",
   "requestMediaAccessRights",
-  "setMode",
+  "setMode"
 };
 
 TOTEM_IMPLEMENT_NPCLASS (totemGMPSettings,
