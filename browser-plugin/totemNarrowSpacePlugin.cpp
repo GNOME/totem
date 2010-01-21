@@ -69,7 +69,7 @@ static const char *methodNames[] = {
   "GetTiltAngle",
   "GetTime",
   "GetTimeScale",
-  "GetTrackCount"
+  "GetTrackCount",
   "GetTrackEnabled",
   "GetTrackName",
   "GetTrackType",
