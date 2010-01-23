@@ -3552,6 +3552,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   GFile *file;
   gboolean ret;
   char *path;
+  GstBus *bus;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (mrl != NULL, FALSE);
@@ -3631,8 +3632,17 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     bvw->priv->ready_idle_id = 0;
   }
 
+  /* Flush the bus to make sure we don't get any messages
+   * from the previous URI, see bug #607224.
+   */
+  bus = gst_element_get_bus (bvw->priv->play);
+  gst_bus_set_flushing (bus, TRUE);
+
   bvw->priv->target_state = GST_STATE_READY;
   gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+
+  gst_bus_set_flushing (bus, FALSE);
+  gst_object_unref (bus);
 
   g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
                 "suburi", subtitle_uri, NULL);
