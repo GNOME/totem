@@ -1,5 +1,30 @@
 New features and significant updates in version...
 
+2.29.3:
+* Movie Player:
+  - Add GConf key to disable all the keyboard shortcuts
+  - Implement type-ahead search
+  - Display embedded cover images in audio streams
+  - Add "fullscreen" button in the main video UI
+  - Fix for new TotemPlParser API
+  - Fix the time elapsed not showing up in the status bar
+    with newer GTK+
+  - Fix translation of skip menu items in RTL languages
+  - Make "Esc" passing the keyboard focus to the video canvas
+  - Close RTSP streams, and clean up temporary buffer files on exit
+
+* Web browser plugin:
+  - Fix a number of Javascript functions not working in the QuickTime plugin
+  - Implement SetURL for QuickTime
+
+* Plugins:
+  - Remove built-in DVB support, and rely on gnome-dvb-daemon instead
+  - Convert D-Bus plugin to MPRIS plugin
+
+* GStreamer backend:
+  - Fix playback of files from archives
+  - Make track switching faster
+
 2.29.2 (changes since latest stable 2.28.4 release):
 * General:
   - Add disk buffering for QuickTime and Flash video files,
