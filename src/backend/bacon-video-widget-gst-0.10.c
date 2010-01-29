@@ -2152,10 +2152,15 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     }
 
+    /* FIXME: at some point we might want to handle CLOCK_LOST and set the
+     * pipeline back to PAUSED and then PLAYING again to select a different
+     * clock (this seems to trip up rtspsrc though so has to wait until
+     * rtspsrc gets fixed) */
     case GST_MESSAGE_CLOCK_PROVIDE:
     case GST_MESSAGE_CLOCK_LOST:
     case GST_MESSAGE_NEW_CLOCK:
     case GST_MESSAGE_STATE_DIRTY:
+    case GST_MESSAGE_STREAM_STATUS:
       break;
 
     default:
