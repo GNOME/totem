@@ -266,10 +266,13 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 {
 	GdkPixbuf *pixbuf = NULL;
 	gboolean free_pixbuf = FALSE;
+	GtkStyle *style;
+
+	style = gtk_widget_get_style (drawing_area);
 
 	/* Stolen from GtkImage.  I really should just make the drawing area an
 	 * image some day (TODO) */
-	if (GTK_WIDGET_STATE (drawing_area) != GTK_STATE_NORMAL) {
+	if (gtk_widget_get_state (drawing_area) != GTK_STATE_NORMAL) {
 		GtkIconSource *source;
 
 		source = gtk_icon_source_new ();
@@ -277,7 +280,8 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 		gtk_icon_source_set_size (source, GTK_ICON_SIZE_SMALL_TOOLBAR);
 		gtk_icon_source_set_size_wildcarded (source, FALSE);
 
-		pixbuf = gtk_style_render_icon (drawing_area->style, source, gtk_widget_get_direction (drawing_area), GTK_WIDGET_STATE (drawing_area),
+		pixbuf = gtk_style_render_icon (style, source,
+						gtk_widget_get_direction (drawing_area), gtk_widget_get_state (drawing_area),
 						(GtkIconSize) -1, drawing_area, "gtk-image");
 		free_pixbuf = TRUE;
 		gtk_icon_source_free (source);
@@ -286,7 +290,7 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 	}
 
 	/* FIXME: Draw it insensitive in that case */
-	gdk_draw_pixbuf (drawing_area->window, drawing_area->style->white_gc, pixbuf, event->area.x, event->area.y, event->area.x, event->area.y,
+	gdk_draw_pixbuf (gtk_widget_get_window (drawing_area), style->white_gc, pixbuf, event->area.x, event->area.y, event->area.x, event->area.y,
 			 event->area.width, event->area.height, GDK_RGB_DITHER_NORMAL, 0, 0);
 
 	g_object_unref (pixbuf);

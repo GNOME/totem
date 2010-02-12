@@ -187,10 +187,12 @@ cursor_changed_cb (GtkTreeSelection *selection,
 		/* rescale icon to fit header if needed */
 		GdkPixbuf *icon_scaled;
 		gint width, height, header_height;
+		GtkAllocation allocation;
 
 		width = gdk_pixbuf_get_width (icon);
 		height = gdk_pixbuf_get_height (icon);
-		header_height = pm->priv->header_hbox->allocation.height;
+		gtk_widget_get_allocation (pm->priv->header_hbox, &allocation);
+		header_height = allocation.height;
 		if (height > header_height) {
 			icon_scaled = gdk_pixbuf_scale_simple (icon, 
 							       (gfloat)width/height*header_height, header_height,

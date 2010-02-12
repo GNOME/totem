@@ -1716,11 +1716,11 @@ totem_action_set_mrl_with_warning (Totem *totem,
 		else
 			bacon_video_widget_set_user_agent (totem->bvw, NULL);
 
-		totem_gdk_window_set_waiting_cursor (totem->win->window);
+		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 		totem_try_restore_position (totem, mrl);
 		retval = bacon_video_widget_open (totem->bvw, mrl, subtitle ? subtitle : autoload_sub, &err);
 		g_free (autoload_sub);
-		gdk_window_set_cursor (totem->win->window, NULL);
+		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
@@ -2152,7 +2152,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	GList *p, *file_list;
 	gboolean cleared = FALSE;
 
-	list = g_uri_list_extract_uris ((const char *)data->data);
+	list = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (data));
 	file_list = NULL;
 
 	for (i = 0; list[i] != NULL; i++) {
@@ -2170,7 +2170,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	if (file_list == NULL)
 		return FALSE;
 
-	totem_gdk_window_set_waiting_cursor (totem->win->window);
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 
 	if (drop_type != 1)
 		file_list = g_list_sort (file_list, (GCompareFunc) strcmp);
@@ -2221,7 +2221,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 bail:
 	g_list_foreach (file_list, (GFunc) g_free, NULL);
 	g_list_free (file_list);
-	gdk_window_set_cursor (totem->win->window, NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 
 	/* ... and reconnect because we're nice people */
 	if (cleared != FALSE)
@@ -2288,7 +2288,7 @@ drag_motion_video_cb (GtkWidget      *widget,
 {
 	GdkModifierType mask;
 
-	gdk_window_get_pointer (widget->window, NULL, NULL, &mask);
+	gdk_window_get_pointer (gtk_widget_get_window (widget), NULL, NULL, &mask);
 	if (mask & GDK_CONTROL_MASK) {
 		gdk_drag_status (context, GDK_ACTION_COPY, _time);
 	} else if (mask & GDK_MOD1_MASK || context->suggested_action == GDK_ACTION_ASK) {
@@ -2334,7 +2334,7 @@ drag_motion_playlist_cb (GtkWidget      *widget,
 {
 	GdkModifierType mask;
 
-	gdk_window_get_pointer (widget->window, NULL, NULL, &mask);
+	gdk_window_get_pointer (gtk_widget_get_window (widget), NULL, NULL, &mask);
 
 	if (mask & GDK_MOD1_MASK || context->suggested_action == GDK_ACTION_ASK) {
 		gdk_drag_status (context, GDK_ACTION_ASK, _time);
@@ -2367,7 +2367,7 @@ drag_video_cb (GtkWidget *widget,
 
 	len = strlen (text);
 
-	gtk_selection_data_set (selection_data, selection_data->target,
+	gtk_selection_data_set (selection_data, gtk_selection_data_get_target (selection_data),
 				8, (guchar *) text, len);
 
 	g_free (text);
@@ -2401,10 +2401,10 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, Totem *totem)
 
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
-	totem_gdk_window_set_waiting_cursor (totem->win->window);
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL, NULL);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
-	gdk_window_set_cursor (totem->win->window, NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 	bacon_video_widget_play (bvw, NULL);
 	g_free (new_mrl);
 }
@@ -2727,7 +2727,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 	if (list == NULL)
 		return changed;
 
-	totem_gdk_window_set_waiting_cursor (totem->win->window);
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 
 	for (l = list ; l != NULL; l = l->next)
 	{
@@ -2781,7 +2781,7 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 		g_free (filename);
 	}
 
-	gdk_window_set_cursor (totem->win->window, NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 
 	/* ... and reconnect because we're nice people */
 	if (cleared != FALSE)
@@ -2799,6 +2799,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 {
 	GtkAction *action;
 	GtkWidget *menubar, *controlbar, *statusbar, *bvw_box, *widget;
+	GtkAllocation allocation;
 	int width = 0, height = 0;
 
 	if (totem->bvw == NULL)
@@ -2812,11 +2813,12 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 
 	action = gtk_action_group_get_action (totem->main_action_group, "show-controls");
 	gtk_action_set_sensitive (action, !totem_is_fullscreen (totem));
+	gtk_widget_get_allocation (widget, &allocation);
 
 	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
 		if (was_fullscreen == FALSE) {
-			height = widget->allocation.height;
-			width =	widget->allocation.width;
+			height = allocation.height;
+			width =	allocation.width;
 		}
 
 		gtk_widget_set_sensitive (menubar, TRUE);
@@ -2830,6 +2832,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			   */
 			GValue value = { 0, };
 			GtkWidget *pane;
+			GtkAllocation allocation_sidebar;
 			int handle_size;
 
 			g_value_init (&value, G_TYPE_INT);
@@ -2841,8 +2844,8 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			g_value_unset (&value);
 			
 			gtk_widget_show (totem->sidebar);
-			width += totem->sidebar->allocation.width
-				+ handle_size;
+			gtk_widget_get_allocation (totem->sidebar, &allocation_sidebar);
+			width += allocation_sidebar.width + handle_size;
 		} else {
 			gtk_widget_hide (totem->sidebar);
 		}
@@ -2851,9 +2854,16 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 				BVW_VBOX_BORDER_WIDTH);
 
 		if (was_fullscreen == FALSE) {
-			height += menubar->allocation.height
-				+ controlbar->allocation.height
-				+ statusbar->allocation.height
+			GtkAllocation allocation_menubar;
+			GtkAllocation allocation_controlbar;
+			GtkAllocation allocation_statusbar;
+
+			gtk_widget_get_allocation (menubar, &allocation_menubar);
+			gtk_widget_get_allocation (controlbar, &allocation_controlbar);
+			gtk_widget_get_allocation (statusbar, &allocation_statusbar);
+			height += allocation.height
+				+ allocation.height
+				+ allocation.height
 				+ 2 * BVW_VBOX_BORDER_WIDTH;
 			width += 2 * BVW_VBOX_BORDER_WIDTH;
 			gtk_window_resize (GTK_WINDOW(totem->win),
@@ -2861,8 +2871,8 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 		}
 	} else {
 		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
-			width = widget->allocation.width;
-			height = widget->allocation.height;
+			width = allocation.width;
+			height = allocation.height;
 		}
 
 		/* Hide and make the menubar unsensitive */
@@ -3889,7 +3899,7 @@ main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, Totem
 {
 	gulong handler_id;
 
-	if (!totem->maximised || GTK_WIDGET_MAPPED (totem->win)) {
+	if (!totem->maximised || gtk_widget_get_mapped (totem->win)) {
 		handler_id = g_signal_handler_find (main_pane, 
 				G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA,
 				0, 0, NULL,

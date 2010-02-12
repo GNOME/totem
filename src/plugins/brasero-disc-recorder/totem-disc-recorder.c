@@ -108,7 +108,7 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 
 	main_window = totem_get_main_window (pi->totem);
 	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
-	xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (GTK_WIDGET (main_window)->window));
+	xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (gtk_widget_get_window (GTK_WIDGET (main_window))));
 	xid_str = g_strdup_printf ("%d", xid);
 	g_ptr_array_add (array, (gpointer) "-x");
 	g_ptr_array_add (array, xid_str);

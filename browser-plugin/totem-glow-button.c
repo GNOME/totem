@@ -67,25 +67,28 @@ totem_glow_button_do_expose (TotemGlowButton *button)
 {
 	GdkRectangle area;
 	GtkWidget *buttonw;
+	GtkAllocation allocation;
 
 	buttonw = GTK_WIDGET (button);
-	if (buttonw->window == NULL)
+	if (gtk_widget_get_window (buttonw) == NULL)
 		return;
 
-	area.x = buttonw->allocation.x;
-	area.y = buttonw->allocation.y;
-	area.width = buttonw->allocation.width;
-	area.height = buttonw->allocation.height;
+	gtk_widget_get_allocation (buttonw, &allocation);
+	area.x = allocation.x;
+	area.y = allocation.y;
+	area.width = allocation.width;
+	area.height = allocation.height;
 
 	/* Send a fake expose event */
-	gdk_window_invalidate_rect (buttonw->window, &area, TRUE);
-	gdk_window_process_updates (buttonw->window, TRUE);
+	gdk_window_invalidate_rect (gtk_widget_get_window (buttonw), &area, TRUE);
+	gdk_window_process_updates (gtk_widget_get_window (buttonw), TRUE);
 }
 
 static gboolean
 totem_glow_button_glow (TotemGlowButton *button)
 { 
 	GtkWidget *buttonw;
+	GtkAllocation allocation;
 	GTimeVal tv;
 	gdouble glow_factor, now;
 	gfloat fade_opacity, loop_time;
@@ -93,7 +96,7 @@ totem_glow_button_glow (TotemGlowButton *button)
 
 	buttonw = GTK_WIDGET (button);
 
-	if (GTK_WIDGET_REALIZED (buttonw) == FALSE)
+	if (gtk_widget_get_realized (buttonw) == FALSE)
 		return TRUE;
 
 	if (button->screenshot == NULL) {
@@ -141,12 +144,13 @@ totem_glow_button_glow (TotemGlowButton *button)
 		glow_factor = FADE_OPACITY_DEFAULT * 0.5;
 	}
 
-	gdk_window_begin_paint_rect (buttonw->window,
-				     &buttonw->allocation);
+	gtk_widget_get_allocation (buttonw, &allocation);
+	gdk_window_begin_paint_rect (gtk_widget_get_window (buttonw),
+				     &allocation);
 
-	cr = gdk_cairo_create (buttonw->window);
-	gdk_cairo_rectangle (cr, &buttonw->allocation);
-	cairo_translate (cr, buttonw->allocation.x, buttonw->allocation.y);
+	cr = gdk_cairo_create (gtk_widget_get_window (buttonw));
+	gdk_cairo_rectangle (cr, &allocation);
+	cairo_translate (cr, allocation.x, allocation.y);
 	cairo_clip (cr);
 
 	cairo_save (cr);
@@ -163,7 +167,7 @@ totem_glow_button_glow (TotemGlowButton *button)
 
 	cairo_destroy (cr);
 
-	gdk_window_end_paint (buttonw->window);
+	gdk_window_end_paint (gtk_widget_get_window (buttonw));
 
 	if (button->anim_finished != FALSE)
 		totem_glow_button_set_timeout (button, FALSE);
@@ -196,6 +200,7 @@ fake_expose_widget (GtkWidget *widget,
 		    gint       x,
 		    gint       y)
 {
+	GtkAllocation allocation;
 	GdkWindow *tmp_window;
 	GdkEventExpose event;
 
@@ -205,41 +210,51 @@ fake_expose_widget (GtkWidget *widget,
 	event.region = NULL;
 	event.count = 0;
 
-	tmp_window = widget->window;
-	widget->window = pixmap;
-	widget->allocation.x += x;
-	widget->allocation.y += y;
+	tmp_window = gtk_widget_get_window (widget);
+	gtk_widget_set_window (widget, pixmap);
+	gtk_widget_get_allocation (widget, &allocation);
+	allocation.x += x;
+	allocation.y += y;
+	gtk_widget_set_allocation (widget, &allocation);
 
-	event.area = widget->allocation;
+	event.area = allocation;
 
 	gtk_widget_send_expose (widget, (GdkEvent *) &event);
 
-	widget->window = tmp_window;
-	widget->allocation.x -= x;
-	widget->allocation.y -= y;
+	gtk_widget_set_window (widget, tmp_window);
+	gtk_widget_get_allocation (widget, &allocation);
+	allocation.x -= x;
+	allocation.y -= y;
+	gtk_widget_set_allocation (widget, &allocation);
 }
 
 static GdkPixmap *
 take_screenshot (TotemGlowButton *button)
 {
 	GtkWidget *buttonw;
+	GtkAllocation allocation;
+	GtkStyle *style;
 	GdkPixmap *pixmap;
 	gint width, height;
 
 	buttonw = GTK_WIDGET (button);
+	gtk_widget_get_allocation (buttonw, &allocation);
 
-	width = buttonw->allocation.width;
-	height = buttonw->allocation.height;
+	width = allocation.width;
+	height = allocation.height;
 
-	pixmap = gdk_pixmap_new (buttonw->window, width, height, -1);
+	pixmap = gdk_pixmap_new (gtk_widget_get_window (buttonw),
+				 width, height, -1);
 
 	/* Draw a rectangle with bg[SELECTED] */
-	gdk_draw_rectangle (pixmap, buttonw->style->bg_gc[GTK_STATE_SELECTED],
+	style = gtk_widget_get_style (buttonw);
+	gdk_draw_rectangle (pixmap,
+			    style->bg_gc[GTK_STATE_SELECTED],
 			    TRUE, 0, 0, width + 1, height + 1);
 
 	/* then the image */
 	fake_expose_widget (gtk_button_get_image (GTK_BUTTON(button)), pixmap,
-			    -buttonw->allocation.x, -buttonw->allocation.y);
+			    -allocation.x, -allocation.y);
 
 	return pixmap;
 }
@@ -248,17 +263,22 @@ static GdkPixmap *
 copy_pixmap (GtkWidget *widget)
 {
 	GdkPixmap *pixmap;
+	GtkAllocation allocation;
+	GtkStyle *style;
 
-	pixmap = gdk_pixmap_new (widget->window,
-				 widget->allocation.width,
-				 widget->allocation.height, -1);
+	gtk_widget_get_allocation (widget, &allocation);
 
+	pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
+				 allocation.width,
+				 allocation.height, -1);
+
+	style = gtk_widget_get_style (widget);
 	gdk_draw_drawable (pixmap,
-			   widget->style->bg_gc[GTK_STATE_NORMAL],
-			   widget->window,
-			   widget->allocation.x, widget->allocation.y,
+			   style->bg_gc[GTK_STATE_NORMAL],
+			   gtk_widget_get_window (widget),
+			   allocation.x, allocation.y,
 			   0, 0,
-			   widget->allocation.width, widget->allocation.height);
+			   allocation.width, allocation.height);
 
 	return pixmap;
 }
@@ -423,7 +443,7 @@ totem_glow_button_set_glow (TotemGlowButton *button, gboolean glow)
 
 	g_return_if_fail (TOTEM_IS_GLOW_BUTTON (button));
 
-	if (GTK_WIDGET_MAPPED (GTK_WIDGET (button)) == FALSE
+	if (gtk_widget_get_mapped (GTK_WIDGET (button)) == FALSE
 	    && glow != FALSE) {
 		button->glow = glow;
 		return;

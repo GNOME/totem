@@ -167,7 +167,7 @@ set_video_widget (BaconResize *resize, GtkWidget *video_widget)
 	int event_basep, error_basep;
 	XRRScreenConfiguration *xr_screen_conf;
 #endif
-	g_return_if_fail (GTK_WIDGET_REALIZED (video_widget));
+	g_return_if_fail (gtk_widget_get_realized (video_widget));
 
 	resize->priv->video_widget = video_widget;
 

@@ -243,13 +243,25 @@ get_size (GtkCellRenderer *cell,
 	  GdkRectangle *thumbnail_area)
 {
 	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO (cell)->priv;
+	GtkStyle *style;
 	guint pixbuf_width = 0;
 	guint pixbuf_height = 0;
 	guint title_width, title_height;
 	guint calc_width, calc_height;
+	gint cell_width;
+	guint cell_xpad, cell_ypad;
+	gfloat cell_xalign, cell_yalign;
 	PangoContext *context;
 	PangoFontMetrics *metrics;
 	PangoFontDescription *font_desc;
+
+	g_object_get (cell,
+		      "width", &cell_width,
+		      "xpad", &cell_xpad,
+		      "ypad", &cell_ypad,
+		      "xalign", &cell_xalign,
+		      "yalign", &cell_yalign,
+		      NULL);
 
 	/* Calculate thumbnail dimensions */
 	if (priv->thumbnail != NULL) {
@@ -262,13 +274,14 @@ get_size (GtkCellRenderer *cell,
 			pixbuf_width = width;
 			pixbuf_height = height;
 		} else {
-			pixbuf_width = cell->width;
-			pixbuf_height = cell->width;
+			pixbuf_width = cell_width;
+			pixbuf_height = cell_width;
 		}
 	}
 
 	/* Calculate title dimensions */
-	font_desc = pango_font_description_copy_static (widget->style->font_desc);
+	style = gtk_widget_get_style (widget);
+	font_desc = pango_font_description_copy_static (style->font_desc);
 	if (priv->thumbnail != NULL)
 		pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 	context = gtk_widget_get_pango_context (widget);
@@ -276,8 +289,8 @@ get_size (GtkCellRenderer *cell,
 
 	if (cell_area)
 		title_width = cell_area->width;
-	else if (cell->width != -1)
-		title_width = cell->width;
+	else if (cell_width != -1)
+		title_width = cell_width;
 	else
 		title_width = pixbuf_width;
 
@@ -287,23 +300,23 @@ get_size (GtkCellRenderer *cell,
 	pango_font_description_free (font_desc);
 
 	/* Calculate the total final size */
-	calc_width = cell->xpad * 2 + MAX (pixbuf_width, title_width);
-	calc_height = cell->ypad * 3 + pixbuf_height + title_height;
+	calc_width = cell_xpad * 2 + MAX (pixbuf_width, title_width);
+	calc_height = cell_ypad * 3 + pixbuf_height + title_height;
 
 	if (draw_area) {
 		if (cell_area && calc_width > 0 && calc_height > 0) {
 			draw_area->x = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-				(1.0 - cell->xalign) : cell->xalign) * (cell_area->width - calc_width));
+				(1.0 - cell_xalign) : cell_xalign) * (cell_area->width - calc_width));
 			draw_area->x = MAX (draw_area->x, 0);
-			draw_area->y = (cell->yalign * (cell_area->height - calc_height));
+			draw_area->y = (cell_yalign * (cell_area->height - calc_height));
 			draw_area->y = MAX (draw_area->y, 0);
 		} else {
 			draw_area->x = 0;
 			draw_area->y = 0;
 		}
 
-		draw_area->x += cell->xpad;
-		draw_area->y += cell->ypad;
+		draw_area->x += cell_xpad;
+		draw_area->y += cell_ypad;
 		draw_area->width = calc_width;
 		draw_area->height = calc_height;
 
@@ -318,18 +331,18 @@ get_size (GtkCellRenderer *cell,
 
 			title_area->height = title_height;
 			if (pixbuf_height > 0)
-				title_area->y = draw_area->y + pixbuf_height + cell->ypad;
+				title_area->y = draw_area->y + pixbuf_height + cell_ypad;
 			else
 				title_area->y = draw_area->y;
 		}
 
 		if (pixbuf_height > 0 && thumbnail_area) {
 			thumbnail_area->x = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-				(1.0 - cell->xalign) : cell->xalign) * 
+				(1.0 - cell_xalign) : cell_xalign) *
 				(cell_area->width - pixbuf_width));
 			thumbnail_area->x = MAX (thumbnail_area->x, 0);
 			thumbnail_area->y = draw_area->y;
-			thumbnail_area->width = cell->xpad * 2 + pixbuf_width;
+			thumbnail_area->width = cell_xpad * 2 + pixbuf_width;
 			thumbnail_area->height = pixbuf_height;
 		}
 	}
@@ -376,13 +389,22 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	cairo_t *cr;
 	PangoLayout *layout;
 	GtkStateType state;
+	GtkStyle *style;
+	guint cell_xpad, cell_ypad;
+	gboolean cell_is_expander;
+
+	g_object_get (cell,
+		      "xpad", &cell_xpad,
+		      "ypad", &cell_ypad,
+		      "is_expander", cell_is_expander,
+		      NULL);
 
 	get_size (cell, widget, cell_area, &draw_area, &title_area, &thumbnail_area);
 
 	draw_area.x += cell_area->x;
 	draw_area.y += cell_area->y;
-	draw_area.width -= cell->xpad * 2;
-	draw_area.height -= cell->ypad * 2;
+	draw_area.width -= cell_xpad * 2;
+	draw_area.height -= cell_ypad * 2;
 
 	if (!gdk_rectangle_intersect (cell_area, &draw_area, &draw_rect) ||
 	    !gdk_rectangle_intersect (expose_area, &draw_rect, &draw_rect))
@@ -396,31 +418,32 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	else
 		pixbuf = NULL;
 
-	if (cell->is_expander)
+	if (cell_is_expander)
 		return;
 
 	/* Sort out the title */
-	if (!cell->sensitive) {
+	if (!gtk_cell_renderer_get_sensitive (cell)) {
 		state = GTK_STATE_INSENSITIVE;
 	} else if ((flags & GTK_CELL_RENDERER_SELECTED) == GTK_CELL_RENDERER_SELECTED) {
-		if (GTK_WIDGET_HAS_FOCUS (widget))
+		if (gtk_widget_has_focus (widget))
 			state = GTK_STATE_SELECTED;
 		else
 			state = GTK_STATE_ACTIVE;
 	} else if ((flags & GTK_CELL_RENDERER_PRELIT) == GTK_CELL_RENDERER_PRELIT &&
-				GTK_WIDGET_STATE (widget) == GTK_STATE_PRELIGHT) {
+				gtk_widget_get_state (widget) == GTK_STATE_PRELIGHT) {
 		state = GTK_STATE_PRELIGHT;
 	} else {
-		if (GTK_WIDGET_STATE (widget) == GTK_STATE_INSENSITIVE)
+		if (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE)
 			state = GTK_STATE_INSENSITIVE;
 		else
 			state = GTK_STATE_NORMAL;
 	}
 
 	/* Draw the title */
+	style = gtk_widget_get_style (widget);
 	layout = gtk_widget_create_pango_layout (widget, priv->title);
 	if (pixbuf != NULL) {
-		PangoFontDescription *desc = pango_font_description_copy_static (widget->style->font_desc);
+		PangoFontDescription *desc = pango_font_description_copy_static (style->font_desc);
 		pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
 		pango_layout_set_font_description (layout, desc);
 		pango_font_description_free (desc);
@@ -430,7 +453,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	pango_layout_set_width (layout, title_area.width * PANGO_SCALE);
 	pango_layout_set_alignment (layout, priv->alignment);
 
-	gtk_paint_layout (widget->style, window, state, TRUE, expose_area, widget, "cellrenderervideotitle",
+	gtk_paint_layout (style, window, state, TRUE, expose_area, widget, "cellrenderervideotitle",
 			  cell_area->x + title_area.x,
 			  cell_area->y + title_area.y,
 			  layout);

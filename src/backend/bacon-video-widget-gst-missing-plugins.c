@@ -98,7 +98,7 @@ bacon_video_widget_gst_get_toplevel (GtkWidget *widget)
 	if (GTK_IS_PLUG (parent))
 		return bacon_video_widget_gtk_plug_get_toplevel (GTK_PLUG (parent));
 	else
-		return GDK_WINDOW_XID(parent->window);
+		return GDK_WINDOW_XID(gtk_widget_get_window (parent));
 }
 #endif
 
@@ -272,7 +272,7 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **d
 	install_ctx = gst_install_plugins_context_new ();
 
 #ifdef GDK_WINDOWING_X11
-	if (GTK_WIDGET (bvw)->window != NULL && GTK_WIDGET_REALIZED (bvw))
+	if (gtk_widget_get_window (GTK_WIDGET (bvw)) != NULL && gtk_widget_get_realized (GTK_WIDGET (bvw)))
 	{
 		gulong xid = 0;
 

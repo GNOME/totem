@@ -183,7 +183,7 @@ totem_interface_error_with_link (const char *title, const char *reason,
 
 	hbox = gtk_hbox_new (TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), link_button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_dialog)->vbox), hbox, TRUE, FALSE, 0); 
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (error_dialog))), hbox, TRUE, FALSE, 0);
 	gtk_widget_show_all (hbox);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog), GTK_RESPONSE_OK);
@@ -338,7 +338,7 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 		toplevel = totem_gtk_plug_get_toplevel (GTK_PLUG (parent));
 		if (toplevel != NULL) {
 			gdk_window_set_transient_for
-				(GTK_WIDGET (window)->window, toplevel);
+				(gtk_widget_get_window (GTK_WIDGET (window)), toplevel);
 			g_object_unref (toplevel);
 		}
 	} else {

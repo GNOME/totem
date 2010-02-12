@@ -182,7 +182,7 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 	container = GTK_WIDGET (gtk_builder_get_object (skipto->priv->xml,
 				"tstw_skip_vbox"));
 	gtk_container_set_border_width (GTK_CONTAINER (skipto), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (skipto)->vbox),
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (skipto))),
 			    container,
 			    TRUE,       /* expand */
 			    TRUE,       /* fill */

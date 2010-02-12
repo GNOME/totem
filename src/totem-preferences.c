@@ -502,7 +502,7 @@ encoding_changed_cb (GConfClient *client, guint cnxn_id,
 void
 totem_setup_preferences (Totem *totem)
 {
-	GtkWidget *menu;
+	GtkWidget *menu, *content_area;
 	GtkAction *action;
 	gboolean show_visuals, auto_resize, is_local, deinterlace, lock_screensaver_on_audio;
 	int connection_speed;
@@ -547,9 +547,10 @@ totem_setup_preferences (Totem *totem)
 			NULL);
 	gtk_dialog_set_has_separator (GTK_DIALOG (totem->prefs), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (totem->prefs)->vbox), 2);
-	gtk_widget_reparent (GTK_WIDGET (item), GTK_DIALOG (totem->prefs)->vbox);
-	gtk_widget_show_all (GTK_DIALOG (totem->prefs)->vbox);
+	content_area = gtk_dialog_get_content_area (GTK_DIALOG (totem->prefs));
+	gtk_box_set_spacing (GTK_BOX (content_area), 2);
+	gtk_widget_reparent (GTK_WIDGET (item), content_area);
+	gtk_widget_show_all (content_area);
 	item = gtk_builder_get_object (totem->xml, "totem_preferences_window");
 	gtk_widget_destroy (GTK_WIDGET (item));
 

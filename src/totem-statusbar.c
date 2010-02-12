@@ -57,16 +57,19 @@ static void
 totem_statusbar_init (TotemStatusbar *statusbar)
 {
   GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
-  GtkWidget *packer, *hbox, *vbox;
+  GtkWidget *packer, *hbox, *vbox, *label;
+  GList *children_list;
 
   statusbar->time = 0;
   statusbar->length = -1;
 
   hbox = gtk_statusbar_get_message_area (gstatusbar);
+  children_list = gtk_container_get_children (GTK_CONTAINER (hbox));
+  label = children_list->data;
 
-  gtk_box_set_child_packing (GTK_BOX (hbox), gstatusbar->label,
+  gtk_box_set_child_packing (GTK_BOX (hbox), label,
 			     FALSE, FALSE, 0, GTK_PACK_START);
-  gtk_label_set_ellipsize (GTK_LABEL (gstatusbar->label), FALSE);
+  gtk_label_set_ellipsize (GTK_LABEL (label), FALSE);
 
   /* progressbar for network streams */
   vbox = gtk_vbox_new (FALSE, 0);
@@ -286,19 +289,25 @@ totem_statusbar_set_seeking (TotemStatusbar *statusbar,
 static void
 totem_statusbar_sync_description (TotemStatusbar *statusbar)
 {
+  GtkWidget *message_area, *label;
   AtkObject *obj;
+  GList *children_list;
   char *text;
+
+  message_area = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
+  children_list = gtk_container_get_children (GTK_CONTAINER (message_area));
+  label = children_list->data;
 
   obj = gtk_widget_get_accessible (GTK_WIDGET (statusbar));
   if (statusbar->pushed == FALSE) {
     /* eg: Paused, 0:32 / 1:05 */
     text = g_strdup_printf (_("%s, %s"),
-	gtk_label_get_text (GTK_LABEL (GTK_STATUSBAR (statusbar)->label)),
+	gtk_label_get_text (GTK_LABEL (label)),
 	gtk_label_get_text (GTK_LABEL (statusbar->time_label)));
   } else {
     /* eg: Buffering, 75 % */
     text = g_strdup_printf (_("%s, %d %%"),
-	gtk_label_get_text (GTK_LABEL (GTK_STATUSBAR (statusbar)->label)),
+	gtk_label_get_text (GTK_LABEL (label)),
 	statusbar->percentage);
   }
 

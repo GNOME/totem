@@ -35,10 +35,12 @@ cb_resize (Totem * totem)
 	GValue gvalue_size = { 0, };
 	gint handle_size;
 	GtkWidget *pane;
+	GtkAllocation allocation;
 	int w, h;
 
-	w = totem->win->allocation.width;
-	h = totem->win->allocation.height;
+	gtk_widget_get_allocation (totem->win, &allocation);
+	w = allocation.width;
+	h = allocation.height;
 
 	g_value_init (&gvalue_size, G_TYPE_INT);
 	pane = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
@@ -46,10 +48,11 @@ cb_resize (Totem * totem)
 	handle_size = g_value_get_int (&gvalue_size);
 	g_value_unset (&gvalue_size);
 	
+	gtk_widget_get_allocation (totem->sidebar, &allocation);
 	if (totem->sidebar_shown) {
-		w += totem->sidebar->allocation.width + handle_size;
+		w += allocation.width + handle_size;
 	} else {
-		w -= totem->sidebar->allocation.width + handle_size;
+		w -= allocation.width + handle_size;
 	}
 
 	if (w > 0 && h > 0)
@@ -62,7 +65,7 @@ totem_sidebar_toggle (Totem *totem, gboolean state)
 	GtkAction *action;
 	GtkWidget *box, *arrow;
 
-	if (GTK_WIDGET_VISIBLE (GTK_WIDGET (totem->sidebar)) == state)
+	if (gtk_widget_get_visible (GTK_WIDGET (totem->sidebar)) == state)
 		return;
 
 	if (state != FALSE)
@@ -104,7 +107,7 @@ has_popup (void)
 	list = gtk_window_list_toplevels ();
 	for (l = list; l != NULL; l = l->next) {
 		GtkWindow *window = GTK_WINDOW (l->data);
-		if (GTK_WIDGET_VISIBLE (window) && gtk_window_get_window_type (window) == GTK_WINDOW_POPUP) {
+		if (gtk_widget_get_visible (GTK_WIDGET (window)) && gtk_window_get_window_type (window) == GTK_WINDOW_POPUP) {
 			retval = TRUE;
 			break;
 		}

@@ -524,7 +524,7 @@ connect_proxy_cb (GtkActionGroup *action_group,
         if (!GTK_IS_MENU_ITEM (proxy))
                 return;
 
-        label = GTK_LABEL (GTK_BIN (proxy)->child);
+        label = GTK_LABEL (gtk_bin_get_child (GTK_BIN (proxy)));
 
         gtk_label_set_ellipsize (label, PANGO_ELLIPSIZE_MIDDLE);
         gtk_label_set_max_width_chars (label,TOTEM_MAX_RECENT_ITEM_LEN);
@@ -1379,7 +1379,7 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 							      GTK_RESPONSE_CLOSE,
 							      NULL);
 		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
-		gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (totem->plugins)->vbox), 2);
+		gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))), 2);
 		gtk_dialog_set_has_separator (GTK_DIALOG (totem->plugins), FALSE);
 
 		g_signal_connect_object (G_OBJECT (totem->plugins),
@@ -1393,7 +1393,7 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 
 		manager = totem_plugin_manager_new ();
 		gtk_widget_show_all (GTK_WIDGET (manager));
-		gtk_container_add (GTK_CONTAINER (GTK_DIALOG (totem->plugins)->vbox),
+		gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
 				   manager);
 	}
 

@@ -231,13 +231,13 @@ totem_open_location_new (Totem *totem)
 
 	container = GTK_WIDGET (gtk_builder_get_object (open_location->priv->xml,
 				"open_uri_dialog_content"));
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (open_location)->vbox),
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (open_location))),
 				container,
 				TRUE,       /* expand */
 				TRUE,       /* fill */
 				0);         /* padding */
 
-	gtk_widget_show_all (GTK_DIALOG (open_location)->vbox);
+	gtk_widget_show_all (gtk_dialog_get_content_area (GTK_DIALOG (open_location)));
 
 	return GTK_WIDGET (open_location);
 }

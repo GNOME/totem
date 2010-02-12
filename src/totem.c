@@ -244,7 +244,7 @@ main (int argc, char **argv)
 	 * we have so far */
 	if (optionstate.fullscreen == FALSE) {
 		gtk_widget_show (totem->win);
-		totem_gdk_window_set_waiting_cursor (totem->win->window);
+		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 		long_action ();
 	} else {
 		gtk_widget_realize (totem->win);
@@ -289,7 +289,7 @@ main (int argc, char **argv)
 	bacon_video_widget_set_logo (totem->bvw, "totem");
 
 	if (optionstate.fullscreen == FALSE)
-		gdk_window_set_cursor (totem->win->window, NULL);
+		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 
 	if (totem->app != NULL) {
 		g_signal_connect (totem->app, "message-received",

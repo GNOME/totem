@@ -348,7 +348,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 			(TOTEM_TIME_LABEL (emb->fs->time_label), 0, 0);
 		if (emb->href_uri != NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
-				(GTK_WIDGET (emb->bvw)->window,
+				(gtk_widget_get_window (GTK_WIDGET (emb->bvw)),
 				 emb->cursor);
 		}
 		break;
@@ -361,7 +361,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		totem_statusbar_set_text (emb->statusbar, _("Playing"));
 		if (emb->href_uri == NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
-				(GTK_WIDGET (emb->bvw)->window,
+				(gtk_widget_get_window (GTK_WIDGET (emb->bvw)),
 				 NULL);
 		}
 		break;
@@ -538,7 +538,7 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 		g_free (embedded->href_uri);
 		embedded->href_uri = NULL;
 		gdk_window_set_cursor
-			(GTK_WIDGET (embedded->bvw)->window, NULL);
+			(gtk_widget_get_window (GTK_WIDGET (embedded->bvw)), NULL);
 	}
 
 	if (target != NULL) {
@@ -758,7 +758,7 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 		/* Move the fullscreen window to the screen where the
 		 * video widget currently is */
 		monitor = gdk_screen_get_monitor_at_window (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
-							    GTK_WIDGET (emb->bvw)->window);
+							    gtk_widget_get_window (GTK_WIDGET (emb->bvw)));
 		gdk_screen_get_monitor_geometry (gtk_widget_get_screen (GTK_WIDGET (emb->bvw)),
 						 monitor, &rect);
 		gtk_window_move (GTK_WINDOW (emb->fs_window), rect.x, rect.y);
@@ -1200,19 +1200,21 @@ popup_menu_position_func (GtkMenu *menu, gint *x, gint *y, gboolean *push_in, Gt
 	GtkWidget *widget = GTK_WIDGET (button);
 	GtkRequisition menu_req;
 	GtkTextDirection direction;
+	GtkAllocation allocation;
 
 	gtk_widget_size_request (GTK_WIDGET (menu), &menu_req);
 
 	direction = gtk_widget_get_direction (widget);
 
-	gdk_window_get_origin (widget->window, x, y);
-	*x += widget->allocation.x;
-	*y += widget->allocation.y;
+	gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
+	gtk_widget_get_allocation (widget, &allocation);
+	*x += allocation.x;
+	*y += allocation.y;
 
 	if (direction == GTK_TEXT_DIR_LTR)
-		*x += MAX (widget->allocation.width - menu_req.width, 0);
-	else if (menu_req.width > widget->allocation.width)
-		*x -= menu_req.width - widget->allocation.width;
+		*x += MAX (allocation.width - menu_req.width, 0);
+	else if (menu_req.width > allocation.width)
+		*x -= menu_req.width - allocation.width;
 
 	/* This might not work properly if the popup button is right at the
 	 * top of the screen, but really, what are the chances */
@@ -1240,7 +1242,7 @@ on_popup_button_toggled (GtkToggleButton *button, TotemEmbedded *emb)
 
 	menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
 
-	if (gtk_toggle_button_get_active (button) && !GTK_WIDGET_VISIBLE (menu)) {
+	if (gtk_toggle_button_get_active (button) && !gtk_widget_get_visible (GTK_WIDGET (menu))) {
 		/* we get here only when the menu is activated by a key
 		 * press, so that we can select the first menu item */
 		popup_menu_over_arrow (button, menu, NULL);
@@ -1257,7 +1259,7 @@ on_popup_button_button_pressed (GtkToggleButton *button,
 		GtkMenu *menu;
 
 		menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
-		if (!GTK_WIDGET_VISIBLE (menu)) {
+		if (!gtk_widget_get_visible (GTK_WIDGET (menu))) {
 			popup_menu_over_arrow (button, menu, event);
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 		} else {
@@ -1426,7 +1428,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 			totem_interface_error (_("An error occurred"), emb->error->message, (GtkWindow *) (emb->window));
 			g_error_free (emb->error);
 			emb->error = NULL;
-		} else if (!GTK_WIDGET_VISIBLE (menu)) {
+		} else if (!gtk_widget_get_visible (GTK_WIDGET (menu))) {
 			g_message ("emitting signal");
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 				       event->time,

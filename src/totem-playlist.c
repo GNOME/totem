@@ -221,7 +221,7 @@ totem_playlist_set_waiting_cursor (TotemPlaylist *playlist)
 	GtkWidget *parent;
 
 	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
-	totem_gdk_window_set_waiting_cursor (parent->window);
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (parent));
 }
 
 static void
@@ -230,7 +230,7 @@ totem_playlist_unset_waiting_cursor (TotemPlaylist *playlist)
 	GtkWidget *parent;
 
 	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
-	gdk_window_set_cursor (parent->window, NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (parent), NULL);
 }
 
 static void
@@ -510,7 +510,7 @@ drop_cb (GtkWidget        *widget,
 	if (context->action == GDK_ACTION_MOVE)
 		totem_playlist_clear (playlist);
 
-	list = g_uri_list_extract_uris ((char *)data->data);
+	list = g_uri_list_extract_uris ((char *) gtk_selection_data_get_data (data));
 	file_list = NULL;
 
 	for (i = 0; list[i] != NULL; i++) {
