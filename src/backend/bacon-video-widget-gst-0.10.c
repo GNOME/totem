@@ -3903,13 +3903,19 @@ gboolean
 bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error)
 {
   GstEvent *event;
+  gboolean retval;
 
   if (bvw_set_playback_direction (bvw, forward) == FALSE)
     return FALSE;
 
   event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
 
-  return gst_element_send_event (bvw->priv->play, event);
+  retval = gst_element_send_event (bvw->priv->play, event);
+
+  if (retval != FALSE)
+    bvw_query_timeout (bvw);
+
+  return retval;
 }
 
 static gboolean
