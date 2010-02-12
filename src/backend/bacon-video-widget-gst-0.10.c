@@ -3551,11 +3551,16 @@ gboolean
 bacon_video_widget_step (BaconVideoWidget *bvw, GError **error)
 {
   GstEvent *event;
+  gboolean retval;
 
   event = gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE);
 
-  gst_element_send_event (bvw->priv->play, event);
-  return TRUE;
+  retval = gst_element_send_event (bvw->priv->play, event);
+
+  if (retval != FALSE)
+    bvw_query_timeout (bvw);
+
+  return retval;
 }
 
 static void
