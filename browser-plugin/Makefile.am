@@ -55,7 +55,7 @@ test_glow_button_SOURCES = \
 
 test_glow_button_LDADD = \
 	libtotembrowserplugin_helper.la		\
-	$(DEPENDENCY_LIBS)
+	$(DEPENDENCY_LIBS) -lm
 
 test_glow_button_CFLAGS =	\
 	$(DEPENDENCY_CFLAGS)	\
