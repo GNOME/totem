@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-13 18:50+0100\n"
-"PO-Revision-Date: 2010-01-13 18:55+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
+"POT-Creation-Date: 2010-02-12 18:26+0000\n"
+"PO-Revision-Date: 2010-02-16 19:23+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -577,7 +577,7 @@ msgstr "Laukia"
 msgid "Start playing files from last position"
 msgstr "Hasi fitxategiak azken posiziotik erreproduzitzen"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5707
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5724
 msgid "Stereo"
 msgstr "Estereoa"
 
@@ -1211,7 +1211,7 @@ msgstr "Film-erreproduzitzailea %s erabiltzen ari da"
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright-a © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1140
+#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1127
 msgid "translator-credits"
 msgstr ""
 "Hizkuntza Politikarako Sailburuordetza <hizkpol@ej-gv.es>\n"
@@ -1344,7 +1344,7 @@ msgid "Totem could not display the help contents."
 msgstr "Totem-ek ezin du laguntzako edukia bistaratu."
 
 #: ../src/totem-object.c:2471 ../src/totem-object.c:2473
-#: ../browser-plugin/totem-plugin-viewer.c:1429
+#: ../browser-plugin/totem-plugin-viewer.c:1426
 msgid "An error occurred"
 msgstr "Errorea gertatu da"
 
@@ -1779,12 +1779,12 @@ msgid "Could not open link"
 msgstr "Ezin izan da esteka ireki"
 
 #: ../src/totem.c:151 ../src/totem.c:177
-#: ../browser-plugin/totem-plugin-viewer.c:673
-#: ../browser-plugin/totem-plugin-viewer.c:1815
+#: ../browser-plugin/totem-plugin-viewer.c:652
+#: ../browser-plugin/totem-plugin-viewer.c:1813
 msgid "Totem Movie Player"
 msgstr "Totem film-erreproduzitzailea"
 
-#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2239
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Ezin izan dira hari seguruko liburutegiak abiarazi."
 
@@ -1895,23 +1895,23 @@ msgstr ""
 msgid "Media file could not be played."
 msgstr "Multimediako fitxategia ezin izan da irakurri."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5703
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5720
 msgid "Surround"
 msgstr "Ingurakaria"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5705
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5722
 msgid "Mono"
 msgstr "Monoa"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6052
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6069
 msgid "Too old version of GStreamer installed."
 msgstr "GStreamer-en bertsio zaharregia dago instalatuta."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6059
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6076
 msgid "Media contains no supported video streams."
 msgstr "Euskarriak onartzen ez den bideo-korrontea dauka."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6589
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6606
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1919,8 +1919,8 @@ msgstr ""
 "Huts egin du GStreamer-ern erreprodukzio-objektua sortzean. Egiaztatu "
 "GStreamer-en instalazioa."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6738
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6873
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6755
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6890
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1928,7 +1928,7 @@ msgstr ""
 "Huts egin du bideo-irteera irekitzean. Ez dago erabilgarri. Hautatu beste "
 "bideo-irteera Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6750
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6767
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1938,7 +1938,7 @@ msgstr ""
 "gehigarri batzuk instalatu beharko dira, edo hautatu beste bideo-irteera "
 "Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6785
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6802
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1948,7 +1948,7 @@ msgstr ""
 "gailua irekitzeko, edo soinuaren zerbitzaria ez da exekutatzen ari. Hautatu "
 "beste audio-irteera Multimedia-sistemako hautatzailean."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6805
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6822
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1956,6 +1956,30 @@ msgid ""
 msgstr ""
 "Ezin izan da audio-irteera aurkitu. Hautatu beste audio-irteera Multimedia-"
 "sistemako hautatzailean."
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/backend/video-utils.c:91 ../src/backend/video-utils.c:108
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d"
+msgstr "%d:%02d:%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/backend/video-utils.c:100
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d"
+msgstr "%d:%02d"
 
 #: ../src/backend/video-utils.c:138
 #, c-format
@@ -2739,41 +2763,36 @@ msgstr "Errorea bideoa web arakatzailean irekitzean"
 msgid "Fetching more videos…"
 msgstr "Bideo gehiago eskuratzen..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:420
+#: ../browser-plugin/totem-plugin-viewer.c:419
 msgid "No URI to play"
 msgstr "Ez dago URIrik erreproduzitzeko"
-
-#: ../browser-plugin/totem-plugin-viewer.c:447
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "Totem-ek ezin izan du '%s' erreproduzitu"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1078
+#: ../browser-plugin/totem-plugin-viewer.c:1065
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Ireki honekin: %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1116
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Arakatzaile plugina %s erabiltzen ari da"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1134
+#: ../browser-plugin/totem-plugin-viewer.c:1121
 msgid "Totem Browser Plugin"
 msgstr "Totem-en arakatzaile plugina"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2131
+#: ../browser-plugin/totem-plugin-viewer.c:2132
 msgid "No playlist or playlist empty"
 msgstr "Ez dago erreprodukzio-zerrendarik, edo hutsik dago"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../browser-plugin/totem-plugin-viewer.c:2223
 msgid "Movie browser plugin"
 msgstr "Filmen arakatzaile plugina"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../browser-plugin/totem-plugin-viewer.c:2239
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Egiaztatu sistemaren instalazioa. Totem plugina itxi egingo da orain."
 
