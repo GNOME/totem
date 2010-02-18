@@ -396,7 +396,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	g_object_get (cell,
 		      "xpad", &cell_xpad,
 		      "ypad", &cell_ypad,
-		      "is_expander", cell_is_expander,
+		      "is_expander", &cell_is_expander,
 		      NULL);
 
 	get_size (cell, widget, cell_area, &draw_area, &title_area, &thumbnail_area);

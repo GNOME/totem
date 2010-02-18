@@ -41,7 +41,6 @@ libtotemmodule_la_CFLAGS = \
 	-I$(top_builddir)/lib 				\
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
-	-I$(top_srcdir)/src/plparse			\
 	-I$(top_srcdir)/src/plugins
 
 libtotemmodule_la_LDFLAGS = \

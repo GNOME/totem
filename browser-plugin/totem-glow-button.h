@@ -41,7 +41,7 @@ typedef struct _TotemGlowButtonClass {
   gpointer __bla[4];
 } TotemGlowButtonClass;
 
-GType		totem_glow_button_get_type	(void);
+GType		totem_glow_button_get_type	(void) G_GNUC_CONST;
 
 GtkWidget *	totem_glow_button_new		(void);
 void		totem_glow_button_set_glow	(TotemGlowButton *button, gboolean glow);

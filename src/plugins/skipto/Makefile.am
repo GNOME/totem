@@ -33,8 +33,7 @@ libskipto_la_SOURCES = \
 libskipto_la_LDFLAGS = $(modules_flags)
 libskipto_la_CPPFLAGS = \
 	$(common_defines)		\
-	-I$(top_srcdir)/src/backend	\
-	-I$(top_srcdir)/plparse
+	-I$(top_srcdir)/src/backend
 
 libskipto_la_CFLAGS = 			\
 	$(DEPENDENCY_CFLAGS)		\

@@ -53,14 +53,12 @@ struct _TotemGlowButton {
 	guint anim_finished :1;
 };
 
-static void	totem_glow_button_class_init	(TotemGlowButtonClass * klass);
-static void	totem_glow_button_init		(TotemGlowButton      * button);
 static void	totem_glow_button_set_timeout	(TotemGlowButton *button,
 						 gboolean set_timeout);
 
 static GtkButtonClass *parent_class;
 
-G_DEFINE_TYPE(TotemGlowButton, totem_glow_button, GTK_TYPE_BUTTON);
+G_DEFINE_TYPE (TotemGlowButton, totem_glow_button, GTK_TYPE_BUTTON);
 
 static void
 totem_glow_button_do_expose (TotemGlowButton *button)
@@ -327,7 +325,7 @@ totem_glow_button_unmap (GtkWidget *buttonw)
 
 	button = TOTEM_GLOW_BUTTON (buttonw);
 
-	if (button->button_glow >= 0) {
+	if (button->button_glow > 0) {
 		g_source_remove (button->button_glow);
 		button->button_glow = 0;
 	}

@@ -37,8 +37,7 @@ libscreenshot_la_SOURCES = \
 libscreenshot_la_LDFLAGS = $(modules_flags)
 libscreenshot_la_CPPFLAGS = \
 	$(common_defines)		\
-	-I$(top_srcdir)/src/backend	\
-	-I$(top_srcdir)/plparse
+	-I$(top_srcdir)/src/backend
 
 libscreenshot_la_CFLAGS = 		\
 	$(DEPENDENCY_CFLAGS)		\

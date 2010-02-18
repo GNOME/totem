@@ -61,7 +61,7 @@ struct _TotemStatusbar
 
 typedef GtkStatusbarClass TotemStatusbarClass;
 
-GType      totem_statusbar_get_type     	(void) G_GNUC_CONST;
+G_MODULE_EXPORT GType totem_statusbar_get_type  (void) G_GNUC_CONST;
 GtkWidget* totem_statusbar_new          	(void);
 
 void       totem_statusbar_set_time		(TotemStatusbar *statusbar,

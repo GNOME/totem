@@ -330,7 +330,7 @@ static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
 	GtkWidget *image;
-	gchar *id;
+	const gchar *id;
 
 	if (state == emb->state)
 		return;
@@ -949,7 +949,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 			     GError **error)
 {
 	char *file_uri;
-	char *tmpfile;
+	char *tmp_file;
 	GError *err = NULL;
 	GFile *src, *dst;
 	int fd;
@@ -963,7 +963,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 	 * parse from memory or 
 	 * https://bugzilla.gnome.org/show_bug.cgi?id=598702 is fixed */
 	fd = g_file_open_tmp ("totem-browser-plugin-playlist-XXXXXX",
-			      &tmpfile,
+			      &tmp_file,
 			      &err);
 	if (fd < 0) {
 		g_warning ("Couldn't open temporary file for playlist: %s",
@@ -972,18 +972,18 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 		return TRUE;
 	}
 	src = g_file_new_for_path (path);
-	dst = g_file_new_for_path (tmpfile);
+	dst = g_file_new_for_path (tmp_file);
 	if (g_file_copy (src, dst, G_FILE_COPY_OVERWRITE | G_FILE_COPY_TARGET_DEFAULT_PERMS, NULL, NULL, NULL, &err) == FALSE) {
 		g_warning ("Failed to copy playlist '%s' to '%s': %s",
-			   path, tmpfile, err->message);
+			   path, tmp_file, err->message);
 		g_error_free (err);
 		g_object_unref (src);
 		g_object_unref (dst);
-		g_free (tmpfile);
+		g_free (tmp_file);
 		close (fd);
 		return TRUE;
 	}
-	g_free (tmpfile);
+	g_free (tmp_file);
 
 	file_uri = g_file_get_uri (dst);
 

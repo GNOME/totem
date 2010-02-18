@@ -3835,15 +3835,15 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
  * Return value: %TRUE on success, %FALSE otherwise
  **/
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **error)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
+  GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (_time * GST_MSECOND));
 
-  if (time > bvw->priv->stream_length
+  if (_time > bvw->priv->stream_length
       && bvw->priv->stream_length > 0
       && !g_str_has_prefix (bvw->priv->mrl, "dvd:")
       && !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
@@ -3853,14 +3853,14 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, GError **error
   }
 
   /* Emit a time tick of where we are going, we are paused */
-  got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
+  got_time_tick (bvw->priv->play, _time * GST_MSECOND, bvw);
 
   if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
     return FALSE;
 
   gst_element_seek (bvw->priv->play, FORWARD_RATE,
       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
-      GST_SEEK_TYPE_SET, time * GST_MSECOND,
+      GST_SEEK_TYPE_SET, _time * GST_MSECOND,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   bvw->priv->rate = FORWARD_RATE;
 

@@ -11,7 +11,6 @@ struct _TotemTimeLabelPrivate {
 	gboolean seeking;
 };
 
-G_MODULE_EXPORT GType totem_time_label_get_type (void);
 G_DEFINE_TYPE (TotemTimeLabel, totem_time_label, GTK_TYPE_LABEL)
 #define TOTEM_TIME_LABEL_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_TIME_LABEL, TotemTimeLabelPrivate))
 
