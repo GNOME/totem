@@ -152,8 +152,8 @@ GQuark totem_disc_media_type_quark	(void);
  *
  * All the fields in the #TotemObject structure are private and should never be accessed directly.
  **/
-typedef struct TotemObject Totem;
-typedef struct TotemObject TotemObject;
+typedef struct _TotemObject Totem;
+typedef struct _TotemObject TotemObject;
 
 /**
  * TotemObjectClass:

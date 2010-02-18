@@ -3827,7 +3827,7 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 /**
  * bacon_video_widget_seek_time:
  * @bvw: a #BaconVideoWidget
- * @time: the time to which to seek, in milliseconds
+ * @_time: the time to which to seek, in milliseconds
  * @error: a #GError, or %NULL
  *
  * Seeks the currently-playing stream to the absolute position @time, in milliseconds.

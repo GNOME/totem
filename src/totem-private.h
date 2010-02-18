@@ -69,7 +69,7 @@ typedef enum {
 	STATE_STOPPED
 } TotemStates;
 
-struct TotemObject {
+struct _TotemObject {
 	GObject parent;
 
 	/* Control window */

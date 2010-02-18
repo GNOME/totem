@@ -30,6 +30,7 @@ totem_action_remote_get_setting
 totem_action_remote_set_setting
 totem_action_seek_time
 totem_action_seek_relative
+totem_action_volume
 totem_action_volume_relative
 totem_action_volume_toggle_mute
 totem_action_toggle_aspect_ratio
@@ -54,6 +55,8 @@ totem_get_playlist_length
 totem_get_playlist_pos
 totem_get_title_at_playlist_pos
 totem_get_short_title
+totem_get_volume
+totem_get_version
 totem_add_sidebar_page
 totem_remove_sidebar_page
 <SUBSECTION Standard>
@@ -71,6 +74,10 @@ TOTEM_TYPE_DISC_MEDIA_TYPE
 TOTEM_TYPE_REMOTE_COMMAND
 totem_remote_command_get_type
 totem_remote_command_quark
+TOTEM_REMOTE_SETTING
+TOTEM_TYPE_REMOTE_SETTING
+totem_remote_setting_get_type
+totem_remote_setting_quark
 <SUBSECTION Private>
 totem_action_set_mrl
 totem_action_set_mrl_and_play
@@ -121,7 +128,6 @@ TOTEM_PLUGIN_CLASS
 TOTEM_IS_PLUGIN_CLASS
 TOTEM_PLUGIN_CONST
 TOTEM_PLUGIN_ERROR
-register_totem_plugin
 totem_plugin_error_get_type
 totem_plugin_error_quark
 TOTEM_TYPE_PLUGIN_ERROR
