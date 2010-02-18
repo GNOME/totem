@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem-help.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-14 21:15+0000\n"
+"POT-Creation-Date: 2010-02-18 15:53+0100\n"
 "PO-Revision-Date: 2009-06-15 23:12+0200\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -109,7 +109,7 @@ msgid "GNOME Documentation Project"
 msgstr "Projet de documentation GNOME"
 
 # Mentions légales
-#: C/totem.xml:2(para)
+#: C/totem.xml:2(para) C/legal.xml:2(para)
 msgid ""
 "Permission is granted to copy, distribute and/or modify this document under "
 "the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any "
@@ -126,7 +126,7 @@ msgstr ""
 "ce <ulink type=\"help\" url=\"ghelp:fdl\">lien</ulink> ou dans le fichier "
 "COPYING-DOCS fourni avec le présent manuel."
 
-#: C/totem.xml:12(para)
+#: C/totem.xml:12(para) C/legal.xml:12(para)
 msgid ""
 "This manual is part of a collection of GNOME manuals distributed under the "
 "GFDL. If you want to distribute this manual separately from the collection, "
@@ -139,7 +139,7 @@ msgstr ""
 "exemplaire de la licence au document, comme indiqué dans la section 6 de "
 "celle-ci."
 
-#: C/totem.xml:19(para)
+#: C/totem.xml:19(para) C/legal.xml:19(para)
 msgid ""
 "Many of the names used by companies to distinguish their products and "
 "services are claimed as trademarks. Where those names appear in any GNOME "
@@ -153,7 +153,7 @@ msgstr ""
 "Documentation GNOME sont informés de l'existence de ces marques déposées, "
 "soit ces noms entiers, soit leur première lettre est en majuscule."
 
-#: C/totem.xml:35(para)
+#: C/totem.xml:35(para) C/legal.xml:35(para)
 msgid ""
 "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, "
 "EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT "
@@ -180,7 +180,7 @@ msgstr ""
 "SA VERSION MODIFIÉE N'EST AUTORISÉE AUX TERMES DU PRÉSENT ACCORD, EXCEPTÉ "
 "SOUS CETTE DÉNÉGATION DE RESPONSABILITÉ ; "
 
-#: C/totem.xml:55(para)
+#: C/totem.xml:55(para) C/legal.xml:55(para)
 msgid ""
 "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING "
 "NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY "
@@ -205,7 +205,7 @@ msgstr ""
 "VERSIONS MODIFIÉES, MÊME SI LADITE PARTIE A ÉTÉ INFORMÉE DE L'ÉVENTUALITÉ DE "
 "TELS DOMMAGES."
 
-#: C/totem.xml:28(para)
+#: C/totem.xml:28(para) C/legal.xml:28(para)
 msgid ""
 "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS "
 "OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: "
@@ -329,7 +329,7 @@ msgid ""
 "<application>Totem Movie Player</application> provides the following "
 "features:"
 msgstr ""
-"<application>Totem</application> possède les fonctionalités suivantes :"
+"<application>Totem</application> possède les fonctionnalités suivantes :"
 
 #: C/totem.xml:163(para)
 msgid "Support for a variety of video and audio files."
@@ -1068,7 +1068,7 @@ msgid ""
 msgstr ""
 "Pour enlever une piste ou un film de la liste de lecture, sélectionnez dans "
 "la liste les éléments que vous voulez enlever, puis cliquez sur le bouton "
-"<guibutton>Enlever</guibutton>"
+"<guibutton>Enlever</guibutton>."
 
 #: C/totem.xml:647(term)
 msgid "To save the playlist to a file"
@@ -1191,10 +1191,12 @@ msgid ""
 msgstr ""
 "<application>Totem</application> charge et affiche automatiquement les sous-"
 "titres d'une vidéo si le fichier qui les contient possède le même nom que le "
-"fichier vidéo en cours de lecture, et que son extension est <filename class=\"extension\">asc</"
-"filename>, <filename class=\"extension\">txt</filename>, <filename class=\"extension\">sub</filename>, "
-"<filename class=\"extension\">srt</filename>, <filename class=\"extension\">smi</filename>, <filename class=\"extension\">ssa</filename> "
-"ou <filename class=\"extension\">ass</filename>."
+"fichier vidéo en cours de lecture, et que son extension est <filename class="
+"\"extension\">asc</filename>, <filename class=\"extension\">txt</filename>, "
+"<filename class=\"extension\">sub</filename>, <filename class=\"extension"
+"\">srt</filename>, <filename class=\"extension\">smi</filename>, <filename "
+"class=\"extension\">ssa</filename> ou <filename class=\"extension\">ass</"
+"filename>."
 
 #: C/totem.xml:704(para)
 msgid ""
@@ -1731,7 +1733,7 @@ msgstr "%%"
 
 #: C/totem.xml:873(para)
 msgid "Replaced with a literal percent sign."
-msgstr "Remplacé par un signe pourcent."
+msgstr "Remplacé par un signe pour cent."
 
 #: C/totem.xml:851(para)
 msgid ""
@@ -1856,16 +1858,17 @@ msgstr ""
 
 #: C/totem.xml:906(para)
 msgid ""
-"Downloaded subtitle files are cached so that they do not need to be "
-"downloaded again when playing the movie again. When downloading new "
-"subtitles for a movie, any previously downloaded subtitles for that movie "
-"are deleted."
+"Downloaded subtitle files are cached (in <filename>~/.cache/totem/subtitles</"
+"filename>, by default) so that they do not need to be downloaded again when "
+"playing the movie again. When downloading new subtitles for a movie, any "
+"previously downloaded subtitles for that movie are deleted."
 msgstr ""
 "Les fichiers de sous-titrage téléchargés sont enregistrés dans un endroit "
-"temporaire afin qu'ils ne doivent pas être téléchargés à nouveau lorsque "
-"vous regardez le film une nouvelle fois. Si vous téléchargez de nouveaux "
-"sous-titres pour un film, tout fichier de sous-titres précédemment "
-"téléchargé pour ce film sera supprimé."
+"temporaire (dans <filename>~/.cache/totem/subtitles</filename>, par défaut) "
+"afin qu'ils ne soient pas téléchargés à nouveau lorsque vous regardez "
+"le film une nouvelle fois. Si vous téléchargez de nouveaux sous-titres pour "
+"un film, tout fichier de sous-titres précédemment téléchargé pour ce film "
+"sera supprimé."
 
 #: C/totem.xml:910(title)
 msgid "Thumbnail"
@@ -2222,8 +2225,8 @@ msgstr ""
 "ulink>, ou bien dans le fichier COPYING inclus dans le code source de ce "
 "programme."
 
-#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
-#: C/totem.xml:0(None)
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: C/legal.xml:0(None)
 msgid "translator-credits"
 msgstr ""
 "Christophe Bliard <christophe.bliard@trux.info>, 2006\n"
