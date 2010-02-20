@@ -427,6 +427,7 @@ totem_get_video_widget_backend_name (Totem *totem)
 char *
 totem_get_version (void)
 {
+	/* Translators: %s is the totem version number */
 	return g_strdup_printf (_("Totem %s"), VERSION);
 }
 

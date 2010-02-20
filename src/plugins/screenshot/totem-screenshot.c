@@ -156,6 +156,7 @@ totem_screenshot_new (Totem *totem, TotemPlugin *screenshot_plugin, GdkPixbuf *s
 	movie_title = totem_get_short_title (totem);
 
 	/* Create the screenshot widget */
+	/* Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique */
 	initial_uri = totem_screenshot_plugin_setup_file_chooser (N_("Screenshot-%s-%d.png"), movie_title);
 	g_free (movie_title);
 	interface_path = totem_plugin_find_file (screenshot_plugin, "gnome-screenshot.ui");
