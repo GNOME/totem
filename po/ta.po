@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.master.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-18 10:16+0530\n"
-"PO-Revision-Date: 2010-02-18 10:23+0530\n"
+"POT-Creation-Date: 2010-02-21 14:22+0530\n"
+"PO-Revision-Date: 2010-02-21 14:27+0530\n"
 "Last-Translator: Dr,T,Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>>\n"
 "MIME-Version: 1.0\n"
@@ -228,7 +228,7 @@ msgstr "_A பாடல் பட்டியலில் சேர் "
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1630
+#: ../src/totem-object.c:1631
 msgid "Movie Player"
 msgstr "திரைப்பட இயக்கி"
 
@@ -584,7 +584,7 @@ msgstr "சதுரம்"
 msgid "Start playing files from last position"
 msgstr "கோப்புகளை இசைத்தலை கடைசி நிலையில் இருந்து துவங்கு"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5732
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5733
 msgid "Stereo"
 msgstr "ஸ்டீரியோ"
 
@@ -1179,7 +1179,8 @@ msgstr "எதுவுமில்லை"
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:894, c-format
+#: ../src/totem-menu.c:894
+#, c-format
 msgid "Play Image '%s'"
 msgstr "'%s' பிம்பத்தை இயக்கவும்"
 
@@ -1216,65 +1217,66 @@ msgstr "டோடம் வலைத்தளம்"
 msgid "Configure Plugins"
 msgstr "சொருகுபொருள்களை வடிவமை"
 
-#: ../src/totem-object.c:430, c-format
+#. Translators: %s is the totem version number
+#: ../src/totem-object.c:431, c-format
 msgid "Totem %s"
-msgstr "டோடம் %"
+msgstr "டோடம் %s"
 
-#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:1000 ../browser-plugin/totem-plugin-viewer.c:361
 msgid "Playing"
 msgstr "இயங்குகிறது"
 
-#: ../src/totem-object.c:1001 ../src/totem-options.c:51
+#: ../src/totem-object.c:1002 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "ஒட்டு"
 
-#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:1007 ../browser-plugin/totem-plugin-viewer.c:357
 msgid "Paused"
 msgstr "தற்காலிகமாக நிறுத்தத்தப்பட்டுள்ளது"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1008 ../src/totem-object.c:1018
+#: ../src/totem-object.c:1009 ../src/totem-object.c:1019
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "இயக்கு"
 
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1622
-#: ../src/totem-statusbar.c:97 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-object.c:1014 ../src/totem-object.c:1623
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:345
 msgid "Stopped"
 msgstr "நிறுத்துங்கள்"
 
-#: ../src/totem-object.c:1094 ../src/totem-object.c:1121
-#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
+#: ../src/totem-object.c:1095 ../src/totem-object.c:1122
+#: ../src/totem-object.c:1752 ../src/totem-object.c:1915
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem '%s' ஐ இயக்க முடியவில்லை."
 
-#: ../src/totem-object.c:1198
+#: ../src/totem-object.c:1199
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "சொருகி இருப்பினும், டோடம் இந்த (%s) வகை ஊடகத்தை கையாளமுடியவில்லை. "
 
-#: ../src/totem-object.c:1199
+#: ../src/totem-object.c:1200
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "இயக்கியில் ஒரு வட்டு உள்ளதா அது சரியாக வடிவமைக்கப்பட்டு உள்ளதா என சோதிக்கலாம் "
 
-#: ../src/totem-object.c:1207
+#: ../src/totem-object.c:1208
 msgid "More information about media plugins"
 msgstr "ஊடக சொருகி பற்றி மேலும் தகவல்"
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1209
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "இந்த வகை ஊடகத்தை இயக்க தேவையான சொருகிகளை நிறுவி பின் டோடமை மீள் துவக்கம் செய்க."
 
-#: ../src/totem-object.c:1210
+#: ../src/totem-object.c:1211
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1283,70 +1285,70 @@ msgstr ""
 "டோடம் இந்த (%s) வகை ஊடகத்தை கையாளமுடியாது. ஏனெனில் வட்டிலிருந்து படிக்க அதற்கான "
 "சொருகி இல்லை."
 
-#: ../src/totem-object.c:1212
+#: ../src/totem-object.c:1213
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr "டோடம் இந்த (%s) வகை ஊடகத்தை கையாளமுடியாது. ஏனெனில் அதற்கான சொருகி இல்லை."
 
-#: ../src/totem-object.c:1215
+#: ../src/totem-object.c:1216
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "டோடம் இந்த (%s) வகை ஊடகத்தை கையாளமுடியாது. ஏனெனில் அதற்கான ஆதரவு இல்லை."
 
-#: ../src/totem-object.c:1216
+#: ../src/totem-object.c:1217
 msgid "Please insert another disc to play back."
 msgstr "தயவு செய்து இசைக்க மற்றொரு வட்டை உள்ளிடுக."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1252
 msgid "Totem was not able to play this disc."
 msgstr "டோடமல் இந்த வட்டை இயக்க முடியவில்லை."
 
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4187
+#: ../src/totem-object.c:1253 ../src/totem-object.c:4188
 msgid "No reason."
 msgstr "காரணம் இல்லை."
 
-#: ../src/totem-object.c:1266
+#: ../src/totem-object.c:1267
 msgid "Totem does not support playback of Audio CDs"
 msgstr "டோடம் ஒலி குறுவட்டுக்களை கையாளமுடியாது. ஏனெனில் அதற்கான ஆதரவு இல்லை."
 
-#: ../src/totem-object.c:1267
+#: ../src/totem-object.c:1268
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "தயவு செய்து ஒரு இசை இசைப்பி அல்லது ஒரு குறுந்தட்டு பிரிப்பி ஐ பயன்படுத்தி இந்த "
 "குறுவட்டை இயக்கவும்."
 
-#: ../src/totem-object.c:1757
+#: ../src/totem-object.c:1758
 msgid "No error message"
 msgstr "பிழை செய்தி இல்லை"
 
-#: ../src/totem-object.c:2141
+#: ../src/totem-object.c:2142
 msgid "Totem could not display the help contents."
 msgstr "டோடம் உதவி அடக்கத்தை காட்ட இயலவில்லை"
 
-#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
+#: ../src/totem-object.c:2472 ../src/totem-object.c:2474
 #: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "An error occurred"
 msgstr "பிழை ஏற்பட்டுள்ளது"
 
-#: ../src/totem-object.c:4029 ../src/totem-object.c:4031
+#: ../src/totem-object.c:4030 ../src/totem-object.c:4032
 msgid "Previous Chapter/Movie"
 msgstr "முந்தைய அத்தியாயம்/திரைப்படம்"
 
-#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
+#: ../src/totem-object.c:4039 ../src/totem-object.c:4041
 msgid "Play / Pause"
 msgstr "இயக்கு/தாமதி"
 
-#: ../src/totem-object.c:4048 ../src/totem-object.c:4050
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Next Chapter/Movie"
 msgstr "அடுத்த அத்தியாயம்/திரைப்படம்"
 
-#: ../src/totem-object.c:4062 ../src/totem-object.c:4064
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
 msgid "Fullscreen"
 msgstr "முழுத்திரை"
 
-#: ../src/totem-object.c:4187
+#: ../src/totem-object.c:4188
 msgid "Totem could not startup."
 msgstr "டோடம் துவங்க முடியவில்லை"
 
@@ -1512,45 +1514,45 @@ msgstr "உப தலைப்பு எழுத்துருவை தேர
 msgid "Audio/Video"
 msgstr "கேட்பொலி/வீடியோ"
 
-#: ../src/totem-statusbar.c:92
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:114
+#: ../src/totem-statusbar.c:113
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (ஓடையாக்கம்)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:121 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:124 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "இதை நாடு %s / %s"
 
-#: ../src/totem-statusbar.c:218
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "இடையகப்படுத்தல்"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:229
+#: ../src/totem-statusbar.c:228
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:304
+#: ../src/totem-statusbar.c:303
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:309
+#: ../src/totem-statusbar.c:308
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1873,30 +1875,30 @@ msgstr "இந்த கோப்பை பிணையத்தில் இய
 msgid "Media file could not be played."
 msgstr "ஊடக கோப்பு இயக்கப்பட முடியவில்லை."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5728
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5729
 msgid "Surround"
 msgstr "சூழும்)"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5730
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5731
 msgid "Mono"
 msgstr "தனி(மோனோ)"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6077
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6078
 msgid "Too old version of GStreamer installed."
 msgstr "மிகப்பழைய பதிப்பு ஜிஸ்ட்ரீமர் நிறுவப்பட்டுள்ளது."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6084
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6085
 msgid "Media contains no supported video streams."
 msgstr "ஊடகத்தில் விடியோ ஓடைகளுக்கு ஆதரவு இல்லை."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6614
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6615
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "ஜிஸ்ட்ரீமர் இயக்க பொருளை உருவாக்க இயலவில்லை. ஜிஸ்ட்ரீமர்  நிறுவலை சோதிக்கவும்."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6763
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6898
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6764
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6899
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1904,7 +1906,7 @@ msgstr ""
 "விடியோ வெளியீடு தோல்வியுற்றது. அது கிடைக்காமல் இருக்கலாம். பல்லூடக தேர்வியில் வேறு "
 "விடியோ வெளியீட்டை தேர்ந்தெடுக்கவும்."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6775
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6776
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1913,7 +1915,7 @@ msgstr ""
 "விடியோ வெளியீட்டை கண்டு பிடிக்க முடியவில்லை. கூடுதல் ஜிஸ்ட்ரீமர் சொருகிகளை நீங்கள் நிறுவ "
 "வேண்யிடிருக்கலாம். அல்லது பல்லூடக தேர்வியில் வேறு விடியோ வெளியீட்டை தேர்ந்தெடுக்கவும்."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6810
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6811
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1923,7 +1925,7 @@ msgstr ""
 "இருக்கலாம். அல்லது ஒலி சேவையகம் இயங்காமல் இருக்கலாம். பல்லூடக தேர்வியில் வேறு ஒலி "
 "வெளியீட்டை தேர்ந்தெடுக்கவும்."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6830
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6831
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2560,7 +2562,9 @@ msgid "Save Screenshot"
 msgstr "திரைப்பிடிப்பினை சேமி"
 
 #. Create the screenshot widget
-#: ../src/plugins/screenshot/totem-screenshot.c:159, c-format
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
+#: ../src/plugins/screenshot/totem-screenshot.c:160
+#, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "திரைப்பிடிப்பு-%s-%d.png"
 
