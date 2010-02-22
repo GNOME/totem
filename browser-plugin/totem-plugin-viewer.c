@@ -1873,9 +1873,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (on_popup_button_toggled), emb);
 	g_signal_connect (G_OBJECT (popup_button), "button-press-event",
 			  G_CALLBACK (on_popup_button_button_pressed), emb);
-	menu = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "menu"));
-	g_signal_connect (G_OBJECT (menu), "unmap",
-			  G_CALLBACK (on_popup_menu_unmap), emb);
 
 	gc = gconf_client_get_default ();
 	volume = ((double) gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL)) / 100.0;
@@ -1947,6 +1944,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 	emb->menuxml = totem_interface_load ("mozilla-viewer.ui", TRUE,
 					     GTK_WINDOW (emb->window), emb);
 	g_assert (emb->menuxml);
+
+	menu = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "menu"));
+	g_signal_connect (G_OBJECT (menu), "unmap",
+			  G_CALLBACK (on_popup_menu_unmap), emb);
 
 	/* Set the logo and the button glow */
 	if (!emb->hidden && emb->autostart == FALSE) {
