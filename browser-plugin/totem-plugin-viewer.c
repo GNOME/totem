@@ -1761,7 +1761,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 					 GTK_WINDOW (emb->window), emb);
 	g_assert (emb->xml);
 
-
 	if (xid != 0) {
 		g_assert (!emb->hidden);
 
@@ -2249,18 +2248,16 @@ int main (int argc, char **argv)
 
 		env = g_getenv ("TOTEM_EMBEDDED_GDB");
 		if (env && g_ascii_strtoull (env, NULL, 10) == 1) {
-			char *gdbargv[6];
-			char pid[32];
+			char *gdbargv[4];
+			char *gdb;
 			GError *gdberr = NULL;
 			int gdbargc = 0;
 
-			g_snprintf (pid, sizeof (pid), "%d", getpid ());
+			gdb = g_strdup_printf ("gdb %s %d", argv[0], getpid ());
 
-			gdbargv[gdbargc++] = "/usr/bin/xterm";
+			gdbargv[gdbargc++] = "/usr/bin/gnome-terminal";
 			gdbargv[gdbargc++] = "-e";
-			gdbargv[gdbargc++] = "gdb";
-			gdbargv[gdbargc++] = argv[0];
-			gdbargv[gdbargc++] = pid;
+			gdbargv[gdbargc++] = gdb;
 			gdbargv[gdbargc++] = NULL;
 
 			if (!g_spawn_async (NULL,
