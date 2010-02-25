@@ -3947,11 +3947,12 @@ static void
 bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 {
   GstState cur_state;
+  GstBus *bus;
 
+  bus = gst_element_get_bus (bvw->priv->play);
   gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
   if (cur_state > GST_STATE_READY) {
     GstMessage *msg;
-    GstBus *bus;
 
     GST_DEBUG ("stopping");
     gst_element_set_state (bvw->priv->play, GST_STATE_READY);
@@ -3959,13 +3960,15 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     /* process all remaining state-change messages so everything gets
      * cleaned up properly (before the state change to NULL flushes them) */
     GST_DEBUG ("processing pending state-change messages");
-    bus = gst_element_get_bus (bvw->priv->play);
     while ((msg = gst_bus_poll (bus, GST_MESSAGE_STATE_CHANGED, 0))) {
       gst_bus_async_signal_func (bus, msg, NULL);
       gst_message_unref (msg);
     }
-    gst_object_unref (bus);
   }
+
+  /* and now drop all following messages until we start again */
+  gst_bus_set_flushing (bus, TRUE);
+  gst_object_unref (bus);
 
   /* Now in READY or lower */
   if (bvw->priv->ready_idle_id) {
