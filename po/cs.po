@@ -13,16 +13,16 @@
 # Petr Kovar <pknbe@volny.cz>, 2008.
 # Pavel Šefránek <ps@pjoul.cz>, 2008.
 # Martin Picek <picek.martin@gnome-cesko.cz>, 2009.
-# Marek Černocký <marek@manet.cz>, 2009.
 # Lucas Lommer <llommer@svn.gnome.org>, 2009. (just fixes)
+# Marek Černocký <marek@manet.cz>, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem gnome-2-28\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2009-12-22 15:16+0000\n"
-"PO-Revision-Date: 2009-11-15 18:41+0100\n"
+"POT-Creation-Date: 2010-02-27 21:30+0000\n"
+"PO-Revision-Date: 2010-03-02 10:35+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgstr "Přid_at do seznamu stop"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1630
+#: ../src/totem-object.c:1631
 msgid "Movie Player"
 msgstr "Přehrávač filmů"
 
@@ -593,7 +593,7 @@ msgstr "Čtvercový"
 msgid "Start playing files from last position"
 msgstr "Spustit přehrávání souborů od poslední pozice"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5703
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5743
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -970,10 +970,8 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Zda automaticky nahrávat soubory s titulky, když je nahrán film"
 
 #: ../data/totem.schemas.in.h:40
-#, fuzzy
-#| msgid "Whether to disable the plugins in the user's home directory"
 msgid "Whether to disable the keyboard shortcuts"
-msgstr "Zda zakázat zásuvné moduly v uživatelově domovské složce"
+msgstr "Zda zakázat klávesové zkratky"
 
 #: ../data/totem.schemas.in.h:41
 msgid "Whether to disable the plugins in the user's home directory"
@@ -1070,7 +1068,7 @@ msgstr "Formát souboru"
 msgid "Extension(s)"
 msgstr "Přípona (přípony)"
 
-#: ../src/eggfileformatchooser.c:645
+#: ../src/eggfileformatchooser.c:651
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `%"
@@ -1081,7 +1079,7 @@ msgstr ""
 "Ujistěte se prosím, že používáte známou příponu souboru, případně ručně "
 "vyberte formát souboru v následujícím seznamu."
 
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:658
 msgid "File format not recognized"
 msgstr "Formát souboru nebyl rozpoznán"
 
@@ -1138,7 +1136,7 @@ msgstr "_Přehrát hned"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: ../src/totem-fullscreen.c:593
+#: ../src/totem-fullscreen.c:595
 msgid "No File"
 msgstr "Žádný soubor"
 
@@ -1217,10 +1215,9 @@ msgstr "Žádný"
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
 #: ../src/totem-menu.c:894
-#, fuzzy, c-format
-#| msgid "Play Disc '%s'"
+#, c-format
 msgid "Play Image '%s'"
-msgstr "Přehrát disk „%s“"
+msgstr "Přehrát obraz „%s“"
 
 #: ../src/totem-menu.c:897 ../src/totem-menu.c:979
 #, c-format
@@ -1244,7 +1241,7 @@ msgstr "Přehrávač filmů používající %s"
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002–2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1140
+#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1127
 msgid "translator-credits"
 msgstr ""
 "Martin Picek <picek.martin@gnome-cesko.cz>\n"
@@ -1266,44 +1263,44 @@ msgstr "Stránka Totemu"
 msgid "Configure Plugins"
 msgstr "Nastavit zásuvné moduly"
 
-#: ../src/totem-object.c:430
-#, fuzzy, c-format
-#| msgid "Totem Website"
+#. Translators: %s is the totem version number
+#: ../src/totem-object.c:431
+#, c-format
 msgid "Totem %s"
-msgstr "Stránka Totemu"
+msgstr "Totem %s"
 
-#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:1000 ../browser-plugin/totem-plugin-viewer.c:361
 msgid "Playing"
 msgstr "Přehrává se"
 
-#: ../src/totem-object.c:1001 ../src/totem-options.c:51
+#: ../src/totem-object.c:1002 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:1007 ../browser-plugin/totem-plugin-viewer.c:357
 msgid "Paused"
 msgstr "Pozastaveno"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1008 ../src/totem-object.c:1018
+#: ../src/totem-object.c:1009 ../src/totem-object.c:1019
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "Přehrát"
 
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1622
-#: ../src/totem-statusbar.c:94 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-object.c:1014 ../src/totem-object.c:1623
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:345
 msgid "Stopped"
 msgstr "Zastaveno"
 
-#: ../src/totem-object.c:1094 ../src/totem-object.c:1121
-#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
+#: ../src/totem-object.c:1095 ../src/totem-object.c:1122
+#: ../src/totem-object.c:1752 ../src/totem-object.c:1915
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nemohl přehrát „%s“."
 
-#: ../src/totem-object.c:1198
+#: ../src/totem-object.c:1199
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1312,7 +1309,7 @@ msgstr ""
 "Totem nemohl přehrát tento typ médií (%s), přestože je nainstalován zásuvný "
 "modul, který umí tento typ médií zpracovat."
 
-#: ../src/totem-object.c:1199
+#: ../src/totem-object.c:1200
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1320,11 +1317,11 @@ msgstr ""
 "Zkuste zkontrolovat, zda je v zařízení přítomen disk a zda je zařízení "
 "správně nastaveno."
 
-#: ../src/totem-object.c:1207
+#: ../src/totem-object.c:1208
 msgid "More information about media plugins"
 msgstr "Více informací o multimediálních zásuvných modulech"
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1209
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1332,7 +1329,7 @@ msgstr ""
 "Aby Totem mohl tento typ médií přehrávat, nainstalujte odpovídající zásuvné "
 "moduly a poté spusťte Totem znovu."
 
-#: ../src/totem-object.c:1210
+#: ../src/totem-object.c:1211
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1341,7 +1338,7 @@ msgstr ""
 "Totem nemůže přehrát tento typ média (%s), protože nemá vhodný zásuvný "
 "modul, který by umožnil čtení z disku."
 
-#: ../src/totem-object.c:1212
+#: ../src/totem-object.c:1213
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1350,60 +1347,64 @@ msgstr ""
 "Totem nemůže přehrávat tento typ médií (%s), protože nemáte zásuvné moduly "
 "potřebné k jeho zpracování."
 
-#: ../src/totem-object.c:1215
+#: ../src/totem-object.c:1216
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "Totem nemůže přehrávat tento typ médií (%s), protože není podporován."
 
-#: ../src/totem-object.c:1216
+#: ../src/totem-object.c:1217
 msgid "Please insert another disc to play back."
 msgstr "Vložte další disk, který chcete přehrát."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1252
 msgid "Totem was not able to play this disc."
 msgstr "Totem nemohl přehrát tento disk."
 
 # :-)
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4160
+#: ../src/totem-object.c:1253 ../src/totem-object.c:4188
 msgid "No reason."
 msgstr "Žádný důvod."
 
-#: ../src/totem-object.c:1266
+#: ../src/totem-object.c:1267
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem nepodporuje přehrávání hudebních CD"
 
-#: ../src/totem-object.c:1267
+#: ../src/totem-object.c:1268
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Zvažte použití hudebního přehrávače nebo extraktoru CD pro přehrání tohoto "
 "hudebního disku"
 
-#: ../src/totem-object.c:1757
+#: ../src/totem-object.c:1758
 msgid "No error message"
 msgstr "Žádná zpráva o chybě"
 
-#: ../src/totem-object.c:2141
+#: ../src/totem-object.c:2142
 msgid "Totem could not display the help contents."
 msgstr "Totem nemohl zobrazit obsah nápovědy."
 
-#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
-#: ../browser-plugin/totem-plugin-viewer.c:1429
+#: ../src/totem-object.c:2472 ../src/totem-object.c:2474
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "An error occurred"
 msgstr "Došlo k chybě"
 
-#: ../src/totem-object.c:4018 ../src/totem-object.c:4020
+#: ../src/totem-object.c:4030 ../src/totem-object.c:4032
 msgid "Previous Chapter/Movie"
 msgstr "Předchozí kapitola/film"
 
-#: ../src/totem-object.c:4026 ../src/totem-object.c:4028
+#: ../src/totem-object.c:4039 ../src/totem-object.c:4041
 msgid "Play / Pause"
 msgstr "Přehrát / pozastavit"
 
-#: ../src/totem-object.c:4035 ../src/totem-object.c:4037
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Next Chapter/Movie"
 msgstr "Následující kapitola/film"
 
-#: ../src/totem-object.c:4160
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
+msgid "Fullscreen"
+msgstr "Celá obrazovka"
+
+#: ../src/totem-object.c:4188
 msgid "Totem could not startup."
 msgstr "Totem se nemohl spustit."
 
@@ -1516,26 +1517,26 @@ msgstr "XML Shareable Playlist"
 msgid "Title %d"
 msgstr "Titul %d"
 
-#: ../src/totem-playlist.c:431
+#: ../src/totem-playlist.c:457
 msgid "Could not save the playlist"
 msgstr "Nelze uložit seznam stop"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:1030
 msgid "Save Playlist"
 msgstr "Uložit seznam stop"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1013 ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1042 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Seznam stop"
 
-#: ../src/totem-playlist.c:1825
+#: ../src/totem-playlist.c:1854
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Seznam stop „%s“ nelze zpracovat, možná je poškozen."
 
-#: ../src/totem-playlist.c:1826
+#: ../src/totem-playlist.c:1855
 msgid "Playlist error"
 msgstr "Chyba seznamu stop"
 
@@ -1565,7 +1566,7 @@ msgstr "Změna výstupu zvuku se projeví až po restartu Totemu."
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: ../src/totem-preferences.c:702
+#: ../src/totem-preferences.c:703
 msgid "Select Subtitle Font"
 msgstr "Zvolte písmo titulků"
 
@@ -1575,45 +1576,45 @@ msgstr "Zvolte písmo titulků"
 msgid "Audio/Video"
 msgstr "Zvuk/video"
 
-#: ../src/totem-statusbar.c:89
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111
+#: ../src/totem-statusbar.c:113
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (proudové vysílání)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:118 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:121 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Přeskočit na %s / %s"
 
-#: ../src/totem-statusbar.c:215
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "Ukládá se do vyrovnávací paměti"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:226
+#: ../src/totem-statusbar.c:228
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:295
+#: ../src/totem-statusbar.c:303
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:300
+#: ../src/totem-statusbar.c:308
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1828,26 +1829,26 @@ msgstr "Zvolte filmy nebo seznamy stop"
 msgid "Could not open link"
 msgstr "Nepodařilo se otevřít odkaz"
 
-#: ../src/totem.c:134 ../src/totem.c:160
-#: ../browser-plugin/totem-plugin-viewer.c:673
-#: ../browser-plugin/totem-plugin-viewer.c:1815
+#: ../src/totem.c:151 ../src/totem.c:177
+#: ../browser-plugin/totem-plugin-viewer.c:652
+#: ../browser-plugin/totem-plugin-viewer.c:1814
 msgid "Totem Movie Player"
 msgstr "Přehrávač filmů Totem"
 
-#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nelze inicializovat knihovny podporující vlákna."
 
-#: ../src/totem.c:135
+#: ../src/totem.c:152
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Zkontrolujte svou instalaci systému. Totem nyní skončí."
 
 #. Handle command line arguments
-#: ../src/totem.c:143
+#: ../src/totem.c:160
 msgid "- Play movies and songs"
 msgstr "- přehrává filmy a písničky"
 
-#: ../src/totem.c:152
+#: ../src/totem.c:169
 #, c-format
 msgid ""
 "%s\n"
@@ -1856,32 +1857,32 @@ msgstr ""
 "%s\n"
 "Seznam všech dostupných možností získáte příkazem „%s --help“.\n"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1729
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1735
 msgid "Password requested for RTSP server"
 msgstr "Heslo vyžadované pro server RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2902
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2906
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2913
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2917
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Zvuková stopa #%d"
 
 # TEST
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2934
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2945
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2949
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Titulek #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3342
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3353
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1889,16 +1890,16 @@ msgstr ""
 "Požadovaný výstup zvuku nebyl nalezen. Zvolte jiný výstup zvuku ve Výběru "
 "systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3347
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
 msgid "Location not found."
 msgstr "Umístění nenalezeno."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3351
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "Nelze otevřít umístění; možná nemáte oprávnění otevřít tento soubor."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3373
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1907,7 +1908,7 @@ msgstr ""
 "Výstup videa používá jiná aplikace. Zavřete jiné aplikace videa, nebo zvolte "
 "jiný výstup videa ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3379
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1917,14 +1918,14 @@ msgstr ""
 "systému multimédií. Možná by bylo vhodné použít zvukový server."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3386
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3392
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3397
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3403
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Přehrání tohoto filmu vyžaduje zásuvný modul %s, který není nainstalován."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3404
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1937,33 +1938,33 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3418
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3429
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Tento soubor nelze přehrávat po síti. Zkuste jej nejdřív stáhnout na disk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3501
 msgid "Media file could not be played."
 msgstr "Soubor médií nelze přehrát."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5699
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5739
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5701
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5741
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6048
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6088
 msgid "Too old version of GStreamer installed."
 msgstr "Nainstalována příliš stará verze systému GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6055
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6095
 msgid "Media contains no supported video streams."
 msgstr "Médium neobsahuje žádný podporovaný proud videa."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6625
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1971,8 +1972,8 @@ msgstr ""
 "Nelze vytvořit přehrávací objekt GStreamer. Zkontrolujte svou instalaci "
 "systému GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6734
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6869
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6774
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6909
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1980,7 +1981,7 @@ msgstr ""
 "Nelze otevřít výstup videa. Možná není k dispozici. Zvolte jiný výstup videa "
 "ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6746
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6786
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1989,7 +1990,7 @@ msgstr ""
 "Nelze najít výstup videa. Možná bude nutné nainstalovat další zásuvné moduly "
 "GStreamer, nebo vybrat jiný výstup videa ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6781
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6821
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1999,7 +2000,7 @@ msgstr ""
 "zařízení, nebo neběží zvukový server. Zvolte jiný zvukový výstup ve Výběru "
 "systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6801
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6841
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2205,15 +2206,11 @@ msgid "D-Bus Service"
 msgstr "Služba D-Bus"
 
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
-#, fuzzy
-#| msgid ""
-#| "Plugin for sending notifications of currently-playing movies to the D-Bus "
-#| "subsystem."
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
 msgstr ""
-"Zásuvný modul pro zasílání informací o právě přehrávaných filmech do "
+"Zásuvný modul pro zasílání oznámení o právě přehrávaných filmech do "
 "subsystému D-Bus."
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
@@ -2670,10 +2667,10 @@ msgid "_Name:"
 msgstr "_Název:"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:379
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
-msgstr "Obrazovka.png"
+msgstr "Snímek.png"
 
 # TEST
 #: ../src/plugins/screenshot/totem-gallery.c:90
@@ -2687,7 +2684,7 @@ msgstr "Uložit galerii"
 #: ../src/plugins/screenshot/totem-gallery.c:114
 #, c-format
 msgid "Gallery-%s-%d.jpg"
-msgstr ""
+msgstr "Galerie - %s (%d).jpg"
 
 # TEST
 #. Set up the window
@@ -2708,20 +2705,20 @@ msgstr "Při ukládání obrazovky došlo k chybě."
 
 #: ../src/plugins/screenshot/totem-screenshot.c:139
 msgid "Save Screenshot"
-msgstr "Snímek obrazovky"
+msgstr "Uložení snímku"
 
 #. Create the screenshot widget
-#: ../src/plugins/screenshot/totem-screenshot.c:159
-#, fuzzy, c-format
-#| msgid "Screenshot%d.png"
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
+#: ../src/plugins/screenshot/totem-screenshot.c:160
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "Obrazovka%d.png"
+msgstr "Snímek - %s (%d).png"
 
 # TEST
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:98
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
 msgid "Totem could not get a screenshot of the video."
-msgstr "Aplikaci Totem se nepodařilo zachytit obrazovku s tímto filmem."
+msgstr "Aplikaci Totem se nepodařilo zachytit snímek z tohoto videa."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
 msgid "This is not supposed to happen; please file a bug report."
@@ -2729,21 +2726,21 @@ msgstr "Tato situace by neměla nikdy nastat; ohlaste chybu vývojářům progra
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take _Screenshot..."
-msgstr "_Sejmout obrazovku…"
+msgstr "Vytvořit _snímek…"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
 msgid "Take a screenshot"
-msgstr "Sejmout obrazovku"
+msgstr "Vytvořit snímek z přehrávání"
 
 # TEST
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
 msgid "Create Screenshot _Gallery..."
-msgstr "Vytvořit _galerii snímků obrazovek…"
+msgstr "Vytvořit _galerii snímků…"
 
 # TEST
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
 msgid "Create a gallery of screenshots"
-msgstr "Vytvořit galerii snímků obrazovek"
+msgstr "Vytvořit galerii snímků z přehrávání"
 
 #: ../src/plugins/skipto/totem-skipto.c:171
 msgid "Skip to"
@@ -2894,41 +2891,36 @@ msgstr "Chyba při otevírání videa ve webovém prohlížeči"
 msgid "Fetching more videos…"
 msgstr "Získávají se další videa…"
 
-#: ../browser-plugin/totem-plugin-viewer.c:420
+#: ../browser-plugin/totem-plugin-viewer.c:419
 msgid "No URI to play"
 msgstr "Žádné URI k přehrání"
-
-#: ../browser-plugin/totem-plugin-viewer.c:447
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "Totem nemohl přehrát „%s“"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1078
+#: ../browser-plugin/totem-plugin-viewer.c:1065
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Otevřít s „%s“"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1116
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Zásuvný modul prohlížeče používající %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1134
+#: ../browser-plugin/totem-plugin-viewer.c:1121
 msgid "Totem Browser Plugin"
 msgstr "Totem - zásuvný modul prohlížeče"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2131
+#: ../browser-plugin/totem-plugin-viewer.c:2134
 msgid "No playlist or playlist empty"
 msgstr "Žádný nebo prázdný seznam stop"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../browser-plugin/totem-plugin-viewer.c:2225
 msgid "Movie browser plugin"
 msgstr "Zásuvný modul prohlížeče na přehrávání filmů"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Zkontrolujte svou instalaci systému. Zásuvný modul programu Totem bude nyní "
