@@ -5,14 +5,15 @@
 # Eskild Hustvedt <eskildh@gnome.org>, 2008.
 # Torstein Adolf Winterseth <kvikende@yahoo.no>, 2009.
 # Eirik U. Birkeland <eirbir@gmail.com>, 2009.
+# Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2009-12-16 12:52+0000\n"
-"PO-Revision-Date: 2009-12-19 01:51+0100\n"
-"Last-Translator: Eirik U. Birkeland <eirbir@gmail.com>\n"
+"POT-Creation-Date: 2010-02-27 12:02+0000\n"
+"PO-Revision-Date: 2010-03-13 20:20+0100\n"
+"Last-Translator: Torstein Adolf Winterseth <kvikende@fsfe.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -240,7 +241,7 @@ msgstr "_Legg til i speleliste"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1662
+#: ../src/totem-object.c:1631
 msgid "Movie Player"
 msgstr "Filmspelar"
 
@@ -635,7 +636,7 @@ msgid "Start playing files from last position"
 msgstr "Spel av filer frå den sist brukte plasseringa"
 
 #
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5896
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5743
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -866,19 +867,6 @@ msgstr ""
 "vert vist (i sekund)"
 
 #: ../data/totem.schemas.in.h:4
-#| msgid ""
-#| "14.4 Kbps Modem\n"
-#| "19.2 Kbps Modem\n"
-#| "28.8 Kbps Modem\n"
-#| "33.6 Kbps Modem\n"
-#| "34.4 Kbps Modem\n"
-#| "56 Kbps Modem/ISDN\n"
-#| "112 Kbps Dual ISDN/DSL\n"
-#| "256 Kbps DSL/Cable\n"
-#| "384 Kbps DSL/Cable\n"
-#| "512 Kbps DSL/Cable\n"
-#| "1.5 Mbps T1/Intranet/LAN\n"
-#| "Intranet/LAN"
 msgid ""
 "Approximate network connection speed, used to select quality on media over "
 "the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
@@ -888,13 +876,11 @@ msgid ""
 "\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
 msgstr ""
 "Omtrentleg fart på nettverkstilkopling (vert brukt for å velja kvalitet på "
-"nettverksmedium): «0» for 14,4 Kb/s-modem, «1» for 19,2 Kb/s-modem, "
-"«2» for 28,8 Kb/s-modem, «3» for 33,6 Kb/s-modem, «4» for 34,4 Kb/s-modem, "
-"«5» for 56 Kb/s-modem/ISDN, «6» for 112 Kb/s-dobbel ISDN/DSL, «7» for 256 "
-"Kb/s-"
-"DSL/kabel, «8» for 384 Kb/s-DSL/kabel, «9» for 512 Kb/s-DSL/kabel, «10» for "
-"1,5 "
-"Mb/s-T1/Intranett/LAN, «11» for Intranett/LAN."
+"nettverksmedium): «0» for 14,4 Kb/s-modem, «1» for 19,2 Kb/s-modem, «2» for "
+"28,8 Kb/s-modem, «3» for 33,6 Kb/s-modem, «4» for 34,4 Kb/s-modem, «5» for 56 "
+"Kb/s-modem/ISDN, «6» for 112 Kb/s-dobbel ISDN/DSL, «7» for 256 Kb/s-DSL/kabel, "
+"«8» for 384 Kb/s-DSL/kabel, «9» for 512 Kb/s-DSL/kabel, «10» for 1,5 Mb/s-T1/"
+"Intranett/LAN, «11» for Intranett/LAN."
 
 #: ../data/totem.schemas.in.h:5
 msgid "Buffer size"
@@ -948,7 +934,6 @@ msgid "Network buffering threshold"
 msgstr "Terskel for nettverksmellomlagring"
 
 #: ../data/totem.schemas.in.h:15
-#| msgid "Connection _speed:"
 msgid "Network connection speed"
 msgstr "Fart på nettverkstilkopling"
 
@@ -961,8 +946,8 @@ msgid ""
 "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 "normal, \"2\" for large, \"3\" for extra large."
 msgstr ""
-"Kvalitetsinnstillingar for lydvisualisering. «0» for liten, «1» for "
-"normal, «2» for stor og «3» for ekstra stor."
+"Kvalitetsinnstillingar for lydvisualisering. «0» for liten, «1» for normal, «2» "
+"for stor og «3» for ekstra stor."
 
 #: ../data/totem.schemas.in.h:18
 msgid "Repeat mode"
@@ -1019,8 +1004,8 @@ msgid ""
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
 "Passthrough."
 msgstr ""
-"Lydutdatatype som skal brukast. «0» for stereo, «1» for 4-kanals lyd, "
-"«2» for 5.0-kanals lyd, «3» for 5.1-kanals lyd, «4» for å senda lyd til AC3."
+"Lydutdatatype som skal brukast. «0» for stereo, «1» for 4-kanals lyd, «2» for "
+"5.0-kanals lyd, «3» for 5.1-kanals lyd, «4» for å senda lyd til AC3."
 
 #
 #. Translators: This is default subtitle encoding
@@ -1049,7 +1034,6 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Om undertekstfiler skal opnast automatisk når filmar vert opna"
 
 #: ../data/totem.schemas.in.h:40
-#| msgid "Whether to disable the plugins in the user's home directory"
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Om snøggtastane skal slåast av"
 
@@ -1068,8 +1052,7 @@ msgid ""
 "closing them."
 msgstr ""
 "Om posisjonen i avspela lyd- og filmfiler skal verta hugsa når du set dei på "
-"pause "
-"eller lukkar dei."
+"pause eller lukkar dei."
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1143,7 +1126,7 @@ msgstr "Filformat"
 msgid "Extension(s)"
 msgstr "Filetternamn"
 
-#: ../src/eggfileformatchooser.c:645
+#: ../src/eggfileformatchooser.c:651
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `%"
@@ -1153,7 +1136,7 @@ msgstr ""
 "Klarte ikkje å finna ut kva for filformat du ville bruka for «%s». Bruk eit "
 "kjent filformat, eller vel eit filformat frå lista nedanfor."
 
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:658
 msgid "File format not recognized"
 msgstr "Ukjent filformat"
 
@@ -1204,7 +1187,7 @@ msgstr "_Spel no"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../src/totem-fullscreen.c:593
+#: ../src/totem-fullscreen.c:595
 msgid "No File"
 msgstr "Inga fil"
 
@@ -1245,8 +1228,8 @@ msgid ""
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
 msgstr ""
-"Totem er fri programvare. Du kan fritt endra og distribuera henne vidare, "
-"så lenge du følgjer vilkåra i GNU General Public License, utgjeven av Free "
+"Totem er fri programvare. Du kan fritt endra og distribuera henne vidare, så "
+"lenge du følgjer vilkåra i GNU General Public License, utgjeven av Free "
 "Software Foundation – anten versjon 2 av lisensen, eller (viss du ønskjer "
 "det) ein seinare versjon."
 
@@ -1258,9 +1241,9 @@ msgid ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 msgstr ""
-"Totem vert distribuert i håp om at programmet er nyttig, men utan NOKA "
-"FORM FOR GARANTI, ikkje eingong ein implisitt garanti om at det er SALBART "
-"eller PASSAR TIL EIT VISST FORMÅL. Sjå GNU General Public License for fleire "
+"Totem vert distribuert i håp om at programmet er nyttig, men utan NOKA FORM "
+"FOR GARANTI, ikkje eingong ein implisitt garanti om at det er SALBART eller "
+"PASSAR TIL EIT VISST FORMÅL. Sjå GNU General Public License for fleire "
 "detaljar."
 
 #
@@ -1270,9 +1253,9 @@ msgid ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
-"Du skal ha fått ein kopi av GNU General Public License saman med Totem. "
-"Viss dette ikkje er tilfelle, kan du skriva til Free Software Foundation, "
-"Inc. 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA."
+"Du skal ha fått ein kopi av GNU General Public License saman med Totem. Viss "
+"dette ikkje er tilfelle, kan du skriva til Free Software Foundation, Inc. 59 "
+"Temple Place, Suite 330, Boston, MA 02111-1307 USA."
 
 #
 #: ../src/totem-interface.c:365
@@ -1290,50 +1273,34 @@ msgstr "Ingen"
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:907, c-format
-#| msgid "Play Disc '%s'"
+#: ../src/totem-menu.c:894
+#, c-format
 msgid "Play Image '%s'"
 msgstr "Spel av biletet «%s»"
 
-#: ../src/totem-menu.c:910 ../src/totem-menu.c:992
+#: ../src/totem-menu.c:897 ../src/totem-menu.c:979
 #, c-format
 msgid "device%d"
 msgstr "eining%d"
 
-#: ../src/totem-menu.c:989
+#: ../src/totem-menu.c:976
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Spel av plata «%s»"
 
-#. translators: the index of the adapter
-#. * DVB Adapter 1
-#: ../src/totem-menu.c:1108
-#, c-format
-msgid "DVB Adapter %u"
-msgstr "DVD-eining %u"
-
-#. translators:
-#. * Watch TV on 'DVB Adapter 1'
-#. * or
-#. * Watch TV on 'Hauppauge Nova-T Stick'
-#: ../src/totem-menu.c:1113
-#, c-format
-msgid "Watch TV on '%s'"
-msgstr "Sjå TV på «%s»"
-
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1386
+#: ../src/totem-menu.c:1327
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Filmavspelar brukar %s"
 
 #
-#: ../src/totem-menu.c:1390
+#: ../src/totem-menu.c:1331
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "© 2002–2009 Bastigen Nocera"
 
-#: ../src/totem-menu.c:1395 ../browser-plugin/totem-plugin-viewer.c:1140
+#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1127
 msgid "translator-credits"
 msgstr ""
 "Åsmund Skjæveland <aasmunds@fys.uio.no>\n"
@@ -1345,17 +1312,18 @@ msgstr ""
 "Send feilmeldingar og kommentarar til <i18n-nn@lister.ping.uio.no>"
 
 #
-#: ../src/totem-menu.c:1399
+#: ../src/totem-menu.c:1340
 msgid "Totem Website"
 msgstr "Nettstaden til Totem"
 
 #
-#: ../src/totem-menu.c:1434
+#: ../src/totem-menu.c:1375
 msgid "Configure Plugins"
 msgstr "Set opp tillegg"
 
-#: ../src/totem-object.c:431, c-format
-#| msgid "Totem"
+#. Translators: %s is the totem version number
+#: ../src/totem-object.c:431
+#, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
@@ -1379,27 +1347,27 @@ msgstr "Sett på pause"
 msgid "Play"
 msgstr "Spel av"
 
-#: ../src/totem-object.c:1014 ../src/totem-object.c:1654
-#: ../src/totem-statusbar.c:94 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-object.c:1014 ../src/totem-object.c:1623
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:345
 msgid "Stopped"
 msgstr "Stoppa"
 
 #: ../src/totem-object.c:1095 ../src/totem-object.c:1122
-#: ../src/totem-object.c:1783 ../src/totem-object.c:1946
+#: ../src/totem-object.c:1752 ../src/totem-object.c:1915
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem klarte ikkje spela «%s»."
 
-#: ../src/totem-object.c:1207
+#: ../src/totem-object.c:1199
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr ""
-"Totem klarte ikkje spela av dette mediet (%s), sjølv om det finst eit tillegg "
-"til det."
+"Totem klarte ikkje spela av dette mediet (%s), sjølv om det finst eit "
+"tillegg til det."
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1200
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1407,19 +1375,19 @@ msgstr ""
 "Du bør sjå til at det står ei plate i stasjonen og at han er rett sett opp."
 
 #
-#: ../src/totem-object.c:1216
+#: ../src/totem-object.c:1208
 msgid "More information about media plugins"
 msgstr "Meir informasjon om medietillegg"
 
-#: ../src/totem-object.c:1217
+#: ../src/totem-object.c:1209
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"Installer dei nødvendige tillegga og start Totem på nytt for å spela av dette "
-"mediet."
+"Installer dei nødvendige tillegga og start Totem på nytt for å spela av "
+"dette mediet."
 
-#: ../src/totem-object.c:1219
+#: ../src/totem-object.c:1211
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1428,7 +1396,7 @@ msgstr ""
 "Totem kan ikkje spela av denne typen medium (%s) fordi du ikkje har dei "
 "tillegga som er påkravde for å lesa frå plata."
 
-#: ../src/totem-object.c:1221
+#: ../src/totem-object.c:1213
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1437,117 +1405,71 @@ msgstr ""
 "Totem kan ikkje spela av denne typen medium (%s) fordi du ikkje har dei "
 "tillegga som er påkravde."
 
-#: ../src/totem-object.c:1225
-#| msgid ""
-#| "Totem cannot play this type of media (%s) because it is not supported."
-msgid ""
-"Totem cannot play TV, because no TV adapters are present or they are not "
-"supported."
-msgstr ""
-"Totem kan ikkje spela av TV, anten fordi ingen TV-einingar er kopla til, "
-"eller "
-"fordi eininga ikkje er støtta."
-
-#
-#: ../src/totem-object.c:1226
-msgid "Please insert a supported TV adapter."
-msgstr "Kopla til ei støtta TV-eining."
-
-#
-#: ../src/totem-object.c:1236
-msgid "More information about watching TV"
-msgstr "Meir informasjon om å sjå på TV"
-
-#
-#: ../src/totem-object.c:1237
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "Totem manglar ei liste over kanalar for å kunne stilla inn mottakaren."
-
-#
-#: ../src/totem-object.c:1238
-msgid ""
-"Please follow the instructions provided in the link to create a channels "
-"listing."
-msgstr "Følg rettleiinga på lenkjemålet for å oppretta ei kanalliste."
-
-#: ../src/totem-object.c:1241
-#, c-format
-msgid "Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr ""
-"Totem kan ikkje spela av denne typen media (%s) fordi TV-eininga er oppteken."
-
-#: ../src/totem-object.c:1242
-msgid "Please try again later."
-msgstr "Prøv om att seinare."
-
-#: ../src/totem-object.c:1247
+#: ../src/totem-object.c:1216
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "Totem kan ikkje spela av denne typen medium (%s) fordi det ikkje er støtta."
 
 #
-#: ../src/totem-object.c:1248
+#: ../src/totem-object.c:1217
 msgid "Please insert another disc to play back."
 msgstr "Set inn ei anna plate som skal spelast av."
 
-#: ../src/totem-object.c:1283
+#: ../src/totem-object.c:1252
 msgid "Totem was not able to play this disc."
 msgstr "Totem klarte ikkje spela denne plata."
 
-#: ../src/totem-object.c:1284 ../src/totem-object.c:4206
+#: ../src/totem-object.c:1253 ../src/totem-object.c:4188
 msgid "No reason."
 msgstr "Ingen grunn."
 
 #
-#: ../src/totem-object.c:1298
+#: ../src/totem-object.c:1267
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem støttar ikkje avspeling av lyd-CD-ar"
 
 #
-#: ../src/totem-object.c:1299
+#: ../src/totem-object.c:1268
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
-"Vurder å bruka eit musikkavspelingsprogram eller eit CD-rippeprogram "
-"til å spela av denne CD-en."
+"Vurder å bruka eit musikkavspelingsprogram eller eit CD-rippeprogram til å "
+"spela av denne CD-en."
 
-#: ../src/totem-object.c:1789
+#: ../src/totem-object.c:1758
 msgid "No error message"
 msgstr "Inga feilmelding."
 
-#: ../src/totem-object.c:2173
+#: ../src/totem-object.c:2142
 msgid "Totem could not display the help contents."
 msgstr "Totem klarte ikkje visa hjelpa."
 
-#: ../src/totem-object.c:2503 ../src/totem-object.c:2505
-#: ../browser-plugin/totem-plugin-viewer.c:1429
+#: ../src/totem-object.c:2472 ../src/totem-object.c:2474
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "An error occurred"
 msgstr "Ein feil oppstod."
 
-#: ../src/totem-object.c:3445
-msgid "TV signal lost"
-msgstr "Mista TV-signal"
-
-#: ../src/totem-object.c:3446
-msgid "Please verify your hardware setup."
-msgstr "Kontroller maskinvareoppsettet ditt."
-
 #
-#: ../src/totem-object.c:4064 ../src/totem-object.c:4066
+#: ../src/totem-object.c:4030 ../src/totem-object.c:4032
 msgid "Previous Chapter/Movie"
 msgstr "Førre kapittel/film"
 
 #
-#: ../src/totem-object.c:4072 ../src/totem-object.c:4074
+#: ../src/totem-object.c:4039 ../src/totem-object.c:4041
 msgid "Play / Pause"
 msgstr "Spel av / pause"
 
 #
-#: ../src/totem-object.c:4081 ../src/totem-object.c:4083
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem-object.c:4206
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
+#| msgid "_Fullscreen"
+msgid "Fullscreen"
+msgstr "Fullskjerm"
+
+#: ../src/totem-object.c:4188
 msgid "Totem could not startup."
 msgstr "Totem klarte ikkje starta."
 
@@ -1649,37 +1571,36 @@ msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3-lyd (i straum og DOS-format)"
 
 #: ../src/totem-playlist.c:153
-#| msgid "Save Playlist"
 msgid "XML Shareable Playlist"
 msgstr "Delbar XML-speleliste"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:356, c-format
-#| msgid "Untitled %d"
+#: ../src/totem-playlist.c:356
+#, c-format
 msgid "Title %d"
 msgstr "Tittel %d"
 
-#: ../src/totem-playlist.c:431
+#: ../src/totem-playlist.c:457
 msgid "Could not save the playlist"
 msgstr "Klarte ikkje lagra spelelista"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:1030
 msgid "Save Playlist"
 msgstr "Lagra speleliste"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1013 ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1042 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Speleliste"
 
-#: ../src/totem-playlist.c:1825
+#: ../src/totem-playlist.c:1854
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr "Klarte ikkje tolka spelelista «%s». Ho kan vera øydelagd."
 
-#: ../src/totem-playlist.c:1826
+#: ../src/totem-playlist.c:1855
 msgid "Playlist error"
 msgstr "Feil i spelelista"
 
@@ -1710,7 +1631,7 @@ msgstr "Endring av lydutdatatype krev omstart av Totem for å tre i kraft."
 msgid "Preferences"
 msgstr "Innstillingar"
 
-#: ../src/totem-preferences.c:702
+#: ../src/totem-preferences.c:703
 msgid "Select Subtitle Font"
 msgstr "Vel skrifttype for undertekst"
 
@@ -1720,45 +1641,45 @@ msgstr "Vel skrifttype for undertekst"
 msgid "Audio/Video"
 msgstr "Lyd/bilete"
 
-#: ../src/totem-statusbar.c:89
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111
+#: ../src/totem-statusbar.c:113
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (straum)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:118 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:121 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Søk til %s / %s"
 
-#: ../src/totem-statusbar.c:215
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "Mellomlagrar"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:226
+#: ../src/totem-statusbar.c:228
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:295
+#: ../src/totem-statusbar.c:303
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:300
+#: ../src/totem-statusbar.c:308
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -2002,27 +1923,27 @@ msgstr "Vel filmar eller spelelister"
 msgid "Could not open link"
 msgstr "Klarte ikkje opna lenkje"
 
-#: ../src/totem.c:134 ../src/totem.c:160
-#: ../browser-plugin/totem-plugin-viewer.c:673
-#: ../browser-plugin/totem-plugin-viewer.c:1815
+#: ../src/totem.c:151 ../src/totem.c:177
+#: ../browser-plugin/totem-plugin-viewer.c:652
+#: ../browser-plugin/totem-plugin-viewer.c:1814
 msgid "Totem Movie Player"
 msgstr "Totem – filmspelar"
 
-#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Klarte ikkje starta trådsikre bibliotek."
 
-#: ../src/totem.c:135
+#: ../src/totem.c:152
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kontroller systeminstallasjonen din. Totem vert avslutta no."
 
 #
 #. Handle command line arguments
-#: ../src/totem.c:143
+#: ../src/totem.c:160
 msgid "- Play movies and songs"
 msgstr "– Spel av filmar og songar"
 
-#: ../src/totem.c:152
+#: ../src/totem.c:169
 #, c-format
 msgid ""
 "%s\n"
@@ -2032,32 +1953,32 @@ msgstr ""
 "Køyr «%s --help» for å sjå ei fullstendig liste over tilgjengelege "
 "kommandolinjeval.\n"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem klarte ikkje starta oppsettsmotoren."
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Make sure that GNOME is properly installed."
 msgstr "Kontroller at GNOME er ordentleg installert."
 
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1729
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1735
 msgid "Password requested for RTSP server"
 msgstr "Etterspurnad etter passord for RTSP-tenar"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2902
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2906
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2913
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2917
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Lydspor %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2934
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2938, c-format
-#| msgid "S_ubtitles"
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2945
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2949
+#, c-format
 msgid "Subtitle #%d"
 msgstr "Undertekst %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3342
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3353
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -2065,16 +1986,16 @@ msgstr ""
 "Det ønskte lydutdatasystemet vart ikkje funne. Vel eit anna lydutdatasystem "
 "under val av multimediesystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3347
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
 msgid "Location not found."
 msgstr "Fann ikkje adressa."
 
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3351
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "Klarte ikkje opna adressa. Du har kanskje ikkje løyve til å opna fila."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3373
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -2083,25 +2004,25 @@ msgstr ""
 "Videoutdatasystemet er i bruk av eit anna program. Lukk andre videoprogram, "
 "eller vel eit anna videoutdatasystem under val av multimediesystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3379
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Lydutdatasystemet er i bruk av eit anna program. Vel eit anna lydutdatasystem "
-"under "
-"val av multimediesystem. Det kan henda du bør vurdera å bruka ein lydtenar."
+"Lydutdatasystemet er i bruk av eit anna program. Vel eit anna "
+"lydutdatasystem under val av multimediesystem. Det kan henda du bør vurdera "
+"å bruka ein lydtenar."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3386
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3392
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3397
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3403
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Avspeling av denne filmen krev eit %s-tillegg, og dette er ikkje installert."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3404
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -2113,44 +2034,42 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3418
-msgid ""
-"Cannot play this file over the network. Try downloading it to disk first."
-msgstr ""
-"Kan ikkje spela denne fila over nettverket. Prøv å lasta henne ned først."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3429
+msgid "Cannot play this file over the network. Try downloading it to disk first."
+msgstr "Kan ikkje spela denne fila over nettverket. Prøv å lasta henne ned først."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3501
 msgid "Media file could not be played."
 msgstr "Klarte ikkje spela av mediefila."
 
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5892
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5739
 msgid "Surround"
 msgstr "Surround"
 
 #
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5894
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5741
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6241
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6088
 msgid "Too old version of GStreamer installed."
 msgstr "Den installerte versjonen av GStreamer er for gammal."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6248
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6095
 msgid "Media contains no supported video streams."
 msgstr "Mediet inneheld ikkje nokon støtta videostraumar."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6778
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6625
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"Klarte ikkje laga eit GStreamer-avspelingsobjekt. Sjå til at GStreamer "
-"er rett installert."
+"Klarte ikkje laga eit GStreamer-avspelingsobjekt. Sjå til at GStreamer er "
+"rett installert."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6927
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7062
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6774
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6909
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -2158,7 +2077,7 @@ msgstr ""
 "Klarte ikkje opna videoutdatasystemet. Det er kanskje ikkje tilgjengeleg. "
 "Vel eit anna videoutdatasystem under val av multimediesystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6939
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6786
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -2168,7 +2087,7 @@ msgstr ""
 "GStreamer-tillegg eller velja eit anna videoutdatasystem under val av "
 "multimediesystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6974
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6821
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -2178,15 +2097,15 @@ msgstr ""
 "lydeininga, eller det kan henda lydtenaren ikkje er starta. Vel eit anna "
 "lydutdatasystem under val av multimediesystem."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6994
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6841
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector."
 msgstr ""
 "Klarte ikkje finna lydutdatasystemet. Du må kanskje installera fleire "
-"GStreamer-"
-"tillegg eller velja eit anna lydutdatasystem under val av multimediesystem."
+"GStreamer-tillegg eller velja eit anna lydutdatasystem under val av "
+"multimediesystem."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -2374,9 +2293,6 @@ msgid "D-Bus Service"
 msgstr "D-Bus-teneste"
 
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
-#| msgid ""
-#| "Plugin for sending notifications of currently-playing movies to the D-Bus "
-#| "subsystem."
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
@@ -2392,8 +2308,7 @@ msgstr "Status for lynmeldingsklient"
 #
 #: ../src/plugins/galago/galago.totem-plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr ""
-"Set statusen i lynmeldingsklienten til «Vekke» når ein film vert spela av"
+msgstr "Set statusen i lynmeldingsklienten til «Vekke» når ein film vert spela av"
 
 #: ../src/plugins/galago/totem-galago.c:171
 msgid "Could not connect to the Galago daemon."
@@ -2433,9 +2348,8 @@ msgid ""
 "There was an unknown error getting the list of television channels available "
 "on BBC iPlayer."
 msgstr ""
-"Ein ukjend feil oppstod då lista over TV-kanalar som er tilgjengelege via BBC "
-"sin "
-"iPlayer skulle verta henta."
+"Ein ukjend feil oppstod då lista over TV-kanalar som er tilgjengelege via "
+"BBC sin iPlayer skulle verta henta."
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
@@ -2559,13 +2473,13 @@ msgstr "Lisens: %s"
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:280, python-format
-#| msgid "Album:"
+#: ../src/plugins/jamendo/jamendo.py:280
+#, python-format
 msgid "Album: %s"
 msgstr "Album: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:282, python-format
-#| msgid "Duration:"
+#: ../src/plugins/jamendo/jamendo.py:282
+#, python-format
 msgid "Duration: %s"
 msgstr "Lengd: %s"
 
@@ -2818,7 +2732,7 @@ msgid "_Name:"
 msgstr "_Namn:"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:379
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
 msgstr "Skjermbilete.png"
@@ -2856,7 +2770,8 @@ msgid "Save Screenshot"
 msgstr "Lagra skjermbilete"
 
 #. Create the screenshot widget
-#: ../src/plugins/screenshot/totem-screenshot.c:159
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
+#: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Skjermbilete-%s-%d.png"
@@ -3024,8 +2939,8 @@ msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
 msgstr ""
-"Klarte ikkje forstå svaret frå tenaren. Sjekk om «libgdata» er oppdatert "
-"til nyaste versjon."
+"Klarte ikkje forstå svaret frå tenaren. Sjekk om «libgdata» er oppdatert til "
+"nyaste versjon."
 
 #
 #. Update the UI
@@ -3047,48 +2962,42 @@ msgstr "Klarte ikkje opna filmen i nettlesaren"
 msgid "Fetching more videos…"
 msgstr "Hentar fleire filmar …"
 
-#: ../browser-plugin/totem-plugin-viewer.c:420
+#: ../browser-plugin/totem-plugin-viewer.c:419
 msgid "No URI to play"
 msgstr "Ingen URI å spela av"
-
-#: ../browser-plugin/totem-plugin-viewer.c:447
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "Totem klarte ikkje spela av «%s»"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1078
+#: ../browser-plugin/totem-plugin-viewer.c:1065
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Opna med «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1116
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Nettlesartillegget brukar %s"
 
 #
-#: ../browser-plugin/totem-plugin-viewer.c:1134
+#: ../browser-plugin/totem-plugin-viewer.c:1121
 msgid "Totem Browser Plugin"
 msgstr "Nettlesartillegg til Totem"
 
 #
-#: ../browser-plugin/totem-plugin-viewer.c:2131
+#: ../browser-plugin/totem-plugin-viewer.c:2134
 msgid "No playlist or playlist empty"
 msgstr "Anten finst det inga speleliste, eller så er ho tom"
 
 #
-#: ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../browser-plugin/totem-plugin-viewer.c:2225
 msgid "Movie browser plugin"
 msgstr "Nettlesartillegg for avspeling av film"
 
 #
-#: ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Verify your system installation. The Totem plugin will now exit."
-msgstr ""
-"Sjå til at systemet er rett installert. Totem-tillegget vert avslutta no."
+msgstr "Sjå til at systemet er rett installert. Totem-tillegget vert avslutta no."
 
 #: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
 msgid "Interactive Python console."
@@ -3136,6 +3045,58 @@ msgstr ""
 "Etter at du har trykt «OK», vil Totem venta til du koplar til med «winpdb» "
 "eller «rpdb2». Viss du ikkje har valt noko feilsøkingspassord i GConf, vil "
 "standardpassordet «totem» verta brukt."
+
+#~ msgid "DVB Adapter %u"
+#~ msgstr "DVD-eining %u"
+
+#~ msgid "Watch TV on '%s'"
+#~ msgstr "Sjå TV på «%s»"
+
+#~| msgid ""
+#~| "Totem cannot play this type of media (%s) because it is not supported."
+#~ msgid ""
+#~ "Totem cannot play TV, because no TV adapters are present or they are not "
+#~ "supported."
+#~ msgstr ""
+#~ "Totem kan ikkje spela av TV, anten fordi ingen TV-einingar er kopla til, "
+#~ "eller fordi eininga ikkje er støtta."
+
+#
+#~ msgid "Please insert a supported TV adapter."
+#~ msgstr "Kopla til ei støtta TV-eining."
+
+#
+#~ msgid "More information about watching TV"
+#~ msgstr "Meir informasjon om å sjå på TV"
+
+#
+#~ msgid "Totem is missing a channels listing to be able to tune the receiver."
+#~ msgstr ""
+#~ "Totem manglar ei liste over kanalar for å kunne stilla inn mottakaren."
+
+#
+#~ msgid ""
+#~ "Please follow the instructions provided in the link to create a channels "
+#~ "listing."
+#~ msgstr "Følg rettleiinga på lenkjemålet for å oppretta ei kanalliste."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because the TV device is busy."
+#~ msgstr ""
+#~ "Totem kan ikkje spela av denne typen media (%s) fordi TV-eininga er "
+#~ "oppteken."
+
+#~ msgid "Please try again later."
+#~ msgstr "Prøv om att seinare."
+
+#~ msgid "TV signal lost"
+#~ msgstr "Mista TV-signal"
+
+#~ msgid "Please verify your hardware setup."
+#~ msgstr "Kontroller maskinvareoppsettet ditt."
+
+#~ msgid "Totem could not play '%s'"
+#~ msgstr "Totem klarte ikkje spela av «%s»"
 
 #~ msgid "Sets 16:9 (Anamorphic) aspect ratio"
 #~ msgstr "Vel 16:9 (anamorf) aspektrate"
