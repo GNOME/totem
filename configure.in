@@ -547,10 +547,8 @@ for plugin in ${used_plugins}; do
 				AC_MSG_RESULT([yes])
 			else
 				AC_MSG_RESULT([no])
-				AC_MSG_ERROR([
-					Cannot find required GStreamer-0.10 plugin 'souphttpsrc'.
-					It should be part of gst-plugins-good. Please install it.
-				])
+				plugin_error_or_ignore "you need souphttpsrc from gst-plugins-good installed for the YouTube plugin"
+				add_plugin="0"
 			fi
 		;;
 	esac
