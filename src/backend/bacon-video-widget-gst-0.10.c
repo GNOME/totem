@@ -93,6 +93,8 @@
 #define SMALL_STREAM_HEIGHT 120
 /* Maximum size of the logo */
 #define LOGO_SIZE 256
+#define NANOSECS_IN_SEC 1000000000
+#define SEEK_TIMEOUT NANOSECS_IN_SEC / 10
 
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
@@ -241,6 +243,12 @@ struct BaconVideoWidgetPrivate
 
   gint                         eos_id;
 
+  /* When seeking, queue up the seeks if they happen before
+   * the previous one finished */
+  GMutex                      *seek_mutex;
+  GstClock                    *clock;
+  GstClockTime                 seek_req_time;
+  gint64                       seek_time;
   /* state we want to be in, as opposed to actual pipeline state
    * which may change asynchronously or during buffering */
   GstState                     target_state;
@@ -295,6 +303,7 @@ static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
 static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
 static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
+static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GError **error);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -1297,6 +1306,11 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   priv->lock = g_mutex_new ();
 
+  priv->seek_mutex = g_mutex_new ();
+  priv->clock = gst_system_clock_obtain ();
+  priv->seek_req_time = GST_CLOCK_TIME_NONE;
+  priv->seek_time = -1;
+
   bvw->priv->missing_plugins = NULL;
   bvw->priv->plugin_install_in_progress = FALSE;
 
@@ -2178,6 +2192,24 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     }
 
+    case GST_MESSAGE_ASYNC_DONE: {
+	gint64 _time;
+	/* When a seek has finished, set the playing state again */
+	g_mutex_lock (bvw->priv->seek_mutex);
+
+	bvw->priv->seek_req_time = gst_clock_get_internal_time (bvw->priv->clock);
+	_time = bvw->priv->seek_time;
+	bvw->priv->seek_time = -1;
+
+	g_mutex_unlock (bvw->priv->seek_mutex);
+
+	if (_time >= 0) {
+	  GST_DEBUG ("Have an old seek to schedule, doing it now");
+	  bacon_video_widget_seek_time_no_lock (bvw, _time, NULL);
+	}
+      break;
+    }
+
     /* FIXME: at some point we might want to handle CLOCK_LOST and set the
      * pipeline back to PAUSED and then PLAYING again to select a different
      * clock (this seems to trip up rtspsrc though so has to wait until
@@ -2649,6 +2681,11 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
 
+  if (bvw->priv->clock) {
+    g_object_unref (bvw->priv->clock);
+    bvw->priv->clock = NULL;
+  }
+
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
     bvw->priv->vis_plugins_list = NULL;
@@ -2708,6 +2745,7 @@ bacon_video_widget_finalize (GObject * object)
   }
 
   g_mutex_free (bvw->priv->lock);
+  g_mutex_free (bvw->priv->seek_mutex);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -3871,6 +3909,23 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
   return FALSE;
 }
 
+static gboolean
+bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GError **error)
+{
+  if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
+    return FALSE;
+
+  bvw->priv->seek_time = -1;
+  bvw->priv->rate = FORWARD_RATE;
+
+  gst_element_seek (bvw->priv->play, FORWARD_RATE,
+      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
+      GST_SEEK_TYPE_SET, _time * GST_MSECOND,
+      GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+
+  return TRUE;
+}
+
 /**
  * bacon_video_widget_seek_time:
  * @bvw: a #BaconVideoWidget
@@ -3884,6 +3939,8 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **error)
 {
+  GstClockTime cur_time;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
@@ -3902,16 +3959,24 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **erro
   /* Emit a time tick of where we are going, we are paused */
   got_time_tick (bvw->priv->play, _time * GST_MSECOND, bvw);
 
-  if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
-    return FALSE;
+  /* Is there a pending seek? */
+  g_mutex_lock (bvw->priv->seek_mutex);
+  /* If there's no pending seek, or
+   * it's been too long since the seek */
+  cur_time = gst_clock_get_internal_time (bvw->priv->clock);
+  if (bvw->priv->seek_req_time == GST_CLOCK_TIME_NONE ||
+      cur_time > bvw->priv->seek_req_time + SEEK_TIMEOUT) {
+    bvw->priv->seek_time = -1;
+    bvw->priv->seek_req_time = cur_time;
+    g_mutex_unlock (bvw->priv->seek_mutex);
+  } else {
+    GST_LOG ("Not long enough since last seek, queuing it");
+    bvw->priv->seek_time = _time;
+    g_mutex_unlock (bvw->priv->seek_mutex);
+    return TRUE;
+  }
 
-  gst_element_seek (bvw->priv->play, FORWARD_RATE,
-      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
-      GST_SEEK_TYPE_SET, _time * GST_MSECOND,
-      GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
-  bvw->priv->rate = FORWARD_RATE;
-
-  gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
+  bacon_video_widget_seek_time_no_lock (bvw, _time, error);
 
   return TRUE;
 }
@@ -4088,6 +4153,9 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->is_live = FALSE;
   bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
+
+  bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
+  bvw->priv->seek_time = -1;
 
   if (bvw->priv->tagcache) {
     gst_tag_list_free (bvw->priv->tagcache);
@@ -4374,8 +4442,8 @@ bacon_video_widget_pause (BaconVideoWidget * bvw)
   }
 
   GST_LOG ("Pausing");
-  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
   bvw->priv->target_state = GST_STATE_PAUSED;
+  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
 }
 
 /**
