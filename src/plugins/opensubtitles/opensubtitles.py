@@ -316,7 +316,7 @@ class OpenSubtitles(totem.Plugin):
         self.totem.connect('file-closed', self.on_totem__file_closed)
 
 	# Obtain the ServerProxy and init the model
-        server = xmlrpclib.Server('http://www.opensubtitles.org/xml-rpc')
+        server = xmlrpclib.Server('http://api.opensubtitles.org/xml-rpc')
         self.model = OpenSubtitlesModel(server)
 
     def deactivate(self, totem):
