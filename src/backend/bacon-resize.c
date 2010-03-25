@@ -225,7 +225,7 @@ bacon_resize_resize (BaconResize *resize)
 	Display *xdisplay;
 
 	g_return_if_fail (GTK_IS_WIDGET (resize->priv->video_widget));
-	g_return_if_fail (GTK_WIDGET_REALIZED (resize->priv->video_widget));
+	g_return_if_fail (gtk_widget_get_realized (resize->priv->video_widget));
 
 	xdisplay = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
 	if (xdisplay == NULL)
@@ -301,7 +301,7 @@ bacon_resize_restore (BaconResize *resize)
 	Display *xdisplay;
 
 	g_return_if_fail (GTK_IS_WIDGET (resize->priv->video_widget));
-	g_return_if_fail (GTK_WIDGET_REALIZED (resize->priv->video_widget));
+	g_return_if_fail (gtk_widget_get_realized (resize->priv->video_widget));
 
 	/* We haven't called bacon_resize_resize before, or it exited
 	 * as we didn't need a resize. */
