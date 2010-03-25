@@ -246,6 +246,7 @@ struct BaconVideoWidgetPrivate
   GstState                     target_state;
   gboolean                     buffering;
   gboolean                     download_buffering;
+  GstElement                  *download_buffering_element;
   char                        *download_filename;
   /* used to compute when the download buffer has gone far
    * enough to start playback */
@@ -1937,6 +1938,9 @@ text_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
 static gboolean
 bvw_buffering_done (BaconVideoWidget *bvw)
 {
+  /* When we set buffering left to 0, that means it's ready to play */
+  if (bvw->priv->buffering_left == 0)
+    return TRUE;
   if (bvw->priv->stream_length <= 0)
     return FALSE;
   /* When queue2 doesn't implement buffering-left, always think
@@ -1964,6 +1968,7 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 
        bvw_reconfigure_fill_timeout (bvw, 200);
      }
+     bvw->priv->download_buffering_element = g_object_ref (message->src);
 
      return;
    }
@@ -2110,6 +2115,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (bvw->priv->play),
             GST_DEBUG_GRAPH_SHOW_ALL ^ GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS,
             "totem-prerolled");
+	bacon_video_widget_get_stream_length (bvw);
         bvw_update_stream_info (bvw);
         if (!bvw_check_missing_plugins_on_preroll (bvw)) {
           /* show a non-fatal warning message if we can't decode the video */
@@ -2408,9 +2414,14 @@ static gboolean
 bvw_query_buffering_timeout (BaconVideoWidget *bvw)
 {
   GstQuery *query;
+  GstElement *element;
+
+  element = bvw->priv->download_buffering_element;
+  if (element == NULL)
+    element = bvw->priv->play;
 
   query = gst_query_new_buffering (GST_FORMAT_PERCENT);
-  if (gst_element_query (bvw->priv->play, query)) {
+  if (gst_element_query (element, query)) {
     gint64 start, stop;
     GstFormat format;
     gdouble fill;
@@ -2433,17 +2444,25 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
 
     g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
 
-     /* Start playing when we've download enough */
-     if (bvw_buffering_done (bvw) != FALSE &&
-	 bvw->priv->target_state == GST_STATE_PLAYING) {
-       GST_DEBUG ("Starting playback because the download buffer is filled enough");
-       bacon_video_widget_play (bvw, NULL);
-     }
+    /* Nothing left to buffer when fill is 100% */
+    if (fill == 1.0)
+      bvw->priv->buffering_left = 0;
+
+    /* Start playing when we've downloaded enough */
+    if (bvw_buffering_done (bvw) != FALSE &&
+	bvw->priv->target_state == GST_STATE_PLAYING) {
+      GST_DEBUG ("Starting playback because the download buffer is filled enough");
+      bacon_video_widget_play (bvw, NULL);
+    }
 
     /* Finished buffering, so don't run the timeout anymore */
     if (fill == 1.0) {
       bvw->priv->fill_id = 0;
       gst_query_unref (query);
+      if (bvw->priv->download_buffering_element != NULL) {
+	g_object_unref (bvw->priv->download_buffering_element);
+	bvw->priv->download_buffering_element = NULL;
+      }
 
       /* Tell the front-end about the downloaded file */
       g_object_notify (G_OBJECT (bvw), "download-filename");
@@ -3986,6 +4005,10 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   g_free (bvw->priv->download_filename);
   bvw->priv->download_filename = NULL;
   bvw->priv->buffering_left = -1;
+  if (bvw->priv->download_buffering_element != NULL) {
+    g_object_unref (bvw->priv->download_buffering_element);
+    bvw->priv->download_buffering_element = NULL;
+  }
   bvw->priv->ignore_messages_mask = 0;
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
