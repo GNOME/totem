@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-05 12:10+0200\n"
-"PO-Revision-Date: 2010-01-05 00:11+0300\n"
+"POT-Creation-Date: 2010-03-26 14:30+0200\n"
+"PO-Revision-Date: 2010-03-26 00:11+0300\n"
 "Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
-"Language-Team: Ukrainian <uk@li.org>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -220,7 +220,7 @@ msgstr "_Додати до списку програвання"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1630
+#: ../src/totem-object.c:1631
 msgid "Movie Player"
 msgstr "Відеопрогравач"
 
@@ -576,7 +576,7 @@ msgstr "Квадрат"
 msgid "Start playing files from last position"
 msgstr "Запустити відтворення файлів з останньої позиції"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5703
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5743
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -1044,7 +1044,7 @@ msgstr "Формат файлу"
 msgid "Extension(s)"
 msgstr "Розширення"
 
-#: ../src/eggfileformatchooser.c:645
+#: ../src/eggfileformatchooser.c:651
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `%"
@@ -1054,7 +1054,7 @@ msgstr ""
 "Програма не може визначити формат файлу для «%s». Перевірте, чи ви знаєте "
 "розширення цього файлу або вручну вкажіть формат файлу зі списку."
 
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:658
 msgid "File format not recognized"
 msgstr "Невідомий формат файлу"
 
@@ -1102,7 +1102,7 @@ msgstr "_Відтворити"
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../src/totem-fullscreen.c:593
+#: ../src/totem-fullscreen.c:595
 msgid "No File"
 msgstr "Немає файлу"
 
@@ -1206,7 +1206,7 @@ msgstr "Мультимедійний програвач використовує
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Авторські права © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1140
+#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1127
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота <rasta@cvs.gnome.org>\n"
@@ -1220,44 +1220,45 @@ msgstr "Веб-сайт Totem"
 msgid "Configure Plugins"
 msgstr "Налаштовування модулів"
 
-#: ../src/totem-object.c:430
+#. Translators: %s is the totem version number
+#: ../src/totem-object.c:431
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:1000 ../browser-plugin/totem-plugin-viewer.c:361
 msgid "Playing"
 msgstr "Відтворення"
 
-#: ../src/totem-object.c:1001 ../src/totem-options.c:51
+#: ../src/totem-object.c:1002 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:1007 ../browser-plugin/totem-plugin-viewer.c:357
 msgid "Paused"
 msgstr "Призупинено"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1008 ../src/totem-object.c:1018
+#: ../src/totem-object.c:1009 ../src/totem-object.c:1019
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "Відтворення"
 
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1622
-#: ../src/totem-statusbar.c:94 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-object.c:1014 ../src/totem-object.c:1623
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:345
 msgid "Stopped"
 msgstr "Зупинено"
 
 # c-format
-#: ../src/totem-object.c:1094 ../src/totem-object.c:1121
-#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
+#: ../src/totem-object.c:1095 ../src/totem-object.c:1122
+#: ../src/totem-object.c:1752 ../src/totem-object.c:1915
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Не вдається відтворити \"%s\"."
 
-#: ../src/totem-object.c:1198
+#: ../src/totem-object.c:1199
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1266,7 +1267,7 @@ msgstr ""
 "Програма \"Тотем\" не може відтворити цей тип носія (%s), хоча модуль, який "
 "може його обробляти, встановлений."
 
-#: ../src/totem-object.c:1199
+#: ../src/totem-object.c:1200
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1274,17 +1275,17 @@ msgstr ""
 "Можливо, слід перевірити, чи знаходиться диск у пристрої, та чи коректно "
 "налаштовано пристрій."
 
-#: ../src/totem-object.c:1207
+#: ../src/totem-object.c:1208
 msgid "More information about media plugins"
 msgstr "Докладніша інформація про мультимедійні модулі"
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1209
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "Встановіть потрібні модулі та перезапустіть \"Тотем\"."
 
-#: ../src/totem-object.c:1210
+#: ../src/totem-object.c:1211
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1293,7 +1294,7 @@ msgstr ""
 "Програма \"Тотем\" не може відтворити цей тип носія (%s), через відсутність "
 "модуля, який може читати дані з нього."
 
-#: ../src/totem-object.c:1212
+#: ../src/totem-object.c:1213
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1302,61 +1303,65 @@ msgstr ""
 "Програма \"Тотем\" не може відтворити цей тип носія (%s), через відсутність "
 "модуля, який може його обробляти."
 
-#: ../src/totem-object.c:1215
+#: ../src/totem-object.c:1216
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "Програма \"Тотем\" не може відтворити цей тип носія (%s), оскільки він не "
 "підтримується."
 
-#: ../src/totem-object.c:1216
+#: ../src/totem-object.c:1217
 msgid "Please insert another disc to play back."
 msgstr "Будь ласка, вставте інший носій."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1252
 msgid "Totem was not able to play this disc."
 msgstr "Totem не може відтворити цей диск."
 
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4160
+#: ../src/totem-object.c:1253 ../src/totem-object.c:4188
 msgid "No reason."
 msgstr "Причина невідома."
 
-#: ../src/totem-object.c:1266
+#: ../src/totem-object.c:1267
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem не підтримує відтворення звукових компакт-дисків"
 
-#: ../src/totem-object.c:1267
+#: ../src/totem-object.c:1268
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Для відтворення цього диску користуйтесь музичним програвачем або програмою "
 "копіювання звуку із звукових дисків"
 
-#: ../src/totem-object.c:1757
+#: ../src/totem-object.c:1758
 msgid "No error message"
 msgstr "Повідомлення про помилку відсутнє"
 
-#: ../src/totem-object.c:2141
+#: ../src/totem-object.c:2142
 msgid "Totem could not display the help contents."
 msgstr "Неможливо відобразити зміст довідки."
 
-#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
-#: ../browser-plugin/totem-plugin-viewer.c:1429
+#: ../src/totem-object.c:2472 ../src/totem-object.c:2474
+#: ../browser-plugin/totem-plugin-viewer.c:1428
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: ../src/totem-object.c:4018 ../src/totem-object.c:4020
+#: ../src/totem-object.c:4030 ../src/totem-object.c:4032
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: ../src/totem-object.c:4026 ../src/totem-object.c:4028
+#: ../src/totem-object.c:4039 ../src/totem-object.c:4041
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: ../src/totem-object.c:4035 ../src/totem-object.c:4037
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
-#: ../src/totem-object.c:4160
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
+msgid "Fullscreen"
+msgstr "На весь екран"
+
+#: ../src/totem-object.c:4188
 msgid "Totem could not startup."
 msgstr "Не вдається запустити програму \"Totem\"."
 
@@ -1463,27 +1468,27 @@ msgstr "Список відтворення XML Shareable"
 msgid "Title %d"
 msgstr "Заголовок %d"
 
-#: ../src/totem-playlist.c:431
+#: ../src/totem-playlist.c:457
 msgid "Could not save the playlist"
 msgstr "Не вдається зберегти список програвання"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:1030
 msgid "Save Playlist"
 msgstr "Збереження списку програвання"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1013 ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1042 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Список програвання"
 
-#: ../src/totem-playlist.c:1825
+#: ../src/totem-playlist.c:1854
 #, c-format
 msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgstr ""
 "Список програвання \"%s\" неможливо проаналізувати, можливо, він пошкоджений."
 
-#: ../src/totem-playlist.c:1826
+#: ../src/totem-playlist.c:1855
 msgid "Playlist error"
 msgstr "Помилка списку програвання"
 
@@ -1515,7 +1520,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "Параметри"
 
-#: ../src/totem-preferences.c:702
+#: ../src/totem-preferences.c:703
 msgid "Select Subtitle Font"
 msgstr "Вибір шрифту субтитрів"
 
@@ -1525,45 +1530,45 @@ msgstr "Вибір шрифту субтитрів"
 msgid "Audio/Video"
 msgstr "Звук/Відео"
 
-#: ../src/totem-statusbar.c:89
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111
+#: ../src/totem-statusbar.c:113
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (встановлення потоку)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:118 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:121 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Перехід до %s / %s"
 
-#: ../src/totem-statusbar.c:215
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "Буферизація"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:226
+#: ../src/totem-statusbar.c:228
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:295
+#: ../src/totem-statusbar.c:303
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:300
+#: ../src/totem-statusbar.c:308
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1771,26 +1776,26 @@ msgstr "Вибір відео-файлів чи списків програва�
 msgid "Could not open link"
 msgstr "Не вдається відкрити посилання"
 
-#: ../src/totem.c:134 ../src/totem.c:160
-#: ../browser-plugin/totem-plugin-viewer.c:673
-#: ../browser-plugin/totem-plugin-viewer.c:1815
+#: ../src/totem.c:151 ../src/totem.c:177
+#: ../browser-plugin/totem-plugin-viewer.c:652
+#: ../browser-plugin/totem-plugin-viewer.c:1814
 msgid "Totem Movie Player"
 msgstr "Мультимедійний програвач \"Тотем\""
 
-#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Неможливо ініціалізувати безпечну бібліотеку потоків виконання."
 
-#: ../src/totem.c:135
+#: ../src/totem.c:152
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Перевірте систему. Тотем завершується."
 
 #. Handle command line arguments
-#: ../src/totem.c:143
+#: ../src/totem.c:160
 msgid "- Play movies and songs"
 msgstr "- відтворює відеофільми та звукозаписи"
 
-#: ../src/totem.c:152
+#: ../src/totem.c:169
 #, c-format
 msgid ""
 "%s\n"
@@ -1800,31 +1805,31 @@ msgstr ""
 "Запустіть '%s --help' для перегляду списку доступних параметрів командного "
 "рядка.\n"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Totem could not initialize the configuration engine."
 msgstr "Не вдається ініціалізувати конфігураційний механізм."
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Make sure that GNOME is properly installed."
 msgstr "Переконайтесь, що GNOME встановлено коректно."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1729
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1735
 msgid "Password requested for RTSP server"
 msgstr "Запит паролю для сервера RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2902
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2906
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2913
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2917
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Аудіо доріжка #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2934
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2945
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2949
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Субтитри №%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3342
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3353
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1832,16 +1837,16 @@ msgstr ""
 "Не знайдено необхідну систему виводу звуку. Виберіть іншу систему виводу "
 "звуку в параметрах робочого середовища."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3347
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
 msgid "Location not found."
 msgstr "Адресу не знайдено."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3351
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "Не вдається відкрити адресу; у немає прав на відкривання цього файлу."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3373
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1850,7 +1855,7 @@ msgstr ""
 "Вивід відео використовується іншою програмою. Закрийте іншу відео-програму, "
 "або виберіть інший вивід відео у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3379
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1861,15 +1866,15 @@ msgstr ""
 "використовуйте звуковий сервер."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3386
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3392
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3397
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3403
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Для відтворення цього відео вимагається модуль %s, який не встановлений у "
 "системі."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3404
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1882,34 +1887,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3418
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3429
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Неможливо відтворити цей файл по мережі. Спробуйте спочатку скачати його на "
 "локальний диск."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3501
 msgid "Media file could not be played."
 msgstr "Цей кліп неможливо відтворити."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5699
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5739
 msgid "Surround"
 msgstr "Об'ємний"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5701
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5741
 msgid "Mono"
 msgstr "Моно"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6048
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6088
 msgid "Too old version of GStreamer installed."
 msgstr "Встановлено надто стару версію GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6055
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6095
 msgid "Media contains no supported video streams."
 msgstr "Не знайдено підтримуваних потоків відео."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6625
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1917,8 +1922,8 @@ msgstr ""
 "Не вдається створити об'єкт відтворення GStreamer. Перевірте встановлення "
 "GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6734
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6869
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6774
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6909
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1926,7 +1931,7 @@ msgstr ""
 "Не вдається відкрити вивід відео. Можливо, він недоступний. Виберіть інший "
 "вивід відео у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6746
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6786
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1935,7 +1940,7 @@ msgstr ""
 "Не вдається відкрити систему виводу відео. Можливо, вона недоступна. "
 "Виберіть іншу систему виводу відео у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6781
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6821
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1945,7 +1950,7 @@ msgstr ""
 "звукового пристрою, або звуковий сервер не запущений. Виберіть інший вивід "
 "звуку у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6801
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6841
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2553,7 +2558,7 @@ msgid "_Name:"
 msgstr "_Назва:"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:379
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
 msgstr "Знімок.png"
@@ -2591,7 +2596,8 @@ msgid "Save Screenshot"
 msgstr "Знімок вікна"
 
 #. Create the screenshot widget
-#: ../src/plugins/screenshot/totem-screenshot.c:159
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
+#: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Знімок-%s-%d.png"
@@ -2770,42 +2776,36 @@ msgstr "_Відкрити у веб-оглядачі"
 msgid "Fetching more videos…"
 msgstr "Отримання інших відеозаписів..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:420
+#: ../browser-plugin/totem-plugin-viewer.c:419
 msgid "No URI to play"
 msgstr "Відсутній URI для відтворення"
-
-# c-format
-#: ../browser-plugin/totem-plugin-viewer.c:447
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "Totem не може відтворити «%s»"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1078
+#: ../browser-plugin/totem-plugin-viewer.c:1065
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "Відкрити _у програмі «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1129
+#: ../browser-plugin/totem-plugin-viewer.c:1116
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Модуль веб-переглядача використовує %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1134
+#: ../browser-plugin/totem-plugin-viewer.c:1121
 msgid "Totem Browser Plugin"
 msgstr "Модуль Totem для веб-переглядача"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2131
+#: ../browser-plugin/totem-plugin-viewer.c:2134
 msgid "No playlist or playlist empty"
 msgstr "Немає списку відтворення або список відтворення порожній"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../browser-plugin/totem-plugin-viewer.c:2225
 msgid "Movie browser plugin"
 msgstr "Модуль перегляду відео"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Перевірте встановлення системи. Тотем завершується."
 
@@ -2856,76 +2856,5 @@ msgstr ""
 "rpdb2. Якщо ви не встановили пароль налагоджувача у GConf, буде використано "
 "типовий пароль ('totem')."
 
-#~ msgid "Sound volume"
-#~ msgstr "Гучність звуку"
+# c-format
 
-#~ msgid "Sound volume, in percent, between 0 and 100"
-#~ msgstr "Гучність звуку у відсотках, між 0 та 100"
-
-#~ msgid "DVB Adapter %u"
-#~ msgstr "Адаптер DVB %u"
-
-#~ msgid "Watch TV on '%s'"
-#~ msgstr "Перегляд TV на '%s'"
-
-#~ msgid "Sets 16:9 (Anamorphic) aspect ratio"
-#~ msgstr "Встановлює відношення сторін 16:9 (анаморфічне)"
-
-#~ msgid ""
-#~ "Totem cannot play TV, because no TV adapters are present or they are not "
-#~ "supported."
-#~ msgstr ""
-#~ "Програма \"Тотем\" не може відтворювати телебачення, оскільки TV-адаптери "
-#~ "відсутні або не підтримуються."
-
-#~ msgid "Please insert a supported TV adapter."
-#~ msgstr "Вставте підтримуваний TV-адаптер."
-
-#~ msgid "More information about watching TV"
-#~ msgstr "Докладніша інформація про перегляд TV"
-
-#~ msgid "Totem is missing a channels listing to be able to tune the receiver."
-#~ msgstr "У Totem відсутній список каналів для налаштовування приймача."
-
-#~ msgid ""
-#~ "Please follow the instructions provided in the link to create a channels "
-#~ "listing."
-#~ msgstr ""
-#~ "Для створення списку каналів дійте за інструкціями, що наведені за "
-#~ "посиланням."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because the TV device is busy."
-#~ msgstr ""
-#~ "Програма \"Тотем\" не може відтворити цей тип носія (%s), оскільки TV-"
-#~ "адаптер зайнятий."
-
-#~ msgid "Please try again later."
-#~ msgstr "Спробуйте пізніше."
-
-#~ msgid "TV signal lost"
-#~ msgstr "Телевізійний сигнал втрачено"
-
-#~ msgid "Please verify your hardware setup."
-#~ msgstr "Перевірте параметри обладнання."
-
-#~ msgid "<b>Language</b>"
-#~ msgstr "<b>Мова</b>"
-
-#~ msgid "Screenshot%d.jpg"
-#~ msgstr "Знімок%d.jpg"
-
-#~ msgid "The Totem plugin could not be started."
-#~ msgstr "Не вдається запустити модуль Totem."
-
-#~ msgid "_Allow the screensaver to activate even when audio-only is playing"
-#~ msgstr "_Дозволяти зберігання екрану при відтворенні лише аудіо"
-
-#~ msgid "Failed to retrieve working directory"
-#~ msgstr "Не вдається отримати робочий каталог"
-
-#~ msgid "Error Loading Video Thumbnail"
-#~ msgstr "Помилка при завантаженні мініатюри відеоролика"
-
-#~ msgid "Could not initialise the thread-safe libraries."
-#~ msgstr "Неможливо ініціалізувати безпечну бібліотеку потоків виконання."
