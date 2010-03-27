@@ -1712,7 +1712,8 @@ totem_action_set_mrl_with_warning (Totem *totem,
 			autoload_sub = totem_uri_get_subtitle_uri (mrl);
 
 		/* HACK: Bad bad Apple */
-		if (g_str_has_prefix (mrl, "http://movies.apple.com") != FALSE)
+		if (g_str_has_prefix (mrl, "http://movies.apple.com")
+				|| g_str_has_prefix (mrl, "http://trailers.apple.com"))
 			bacon_video_widget_set_user_agent (totem->bvw, "Quicktime/7.2.0");
 		else
 			bacon_video_widget_set_user_agent (totem->bvw, NULL);
