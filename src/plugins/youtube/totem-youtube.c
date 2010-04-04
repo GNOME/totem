@@ -852,7 +852,9 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		/* If this is the first query, compile the regex used to resolve the t param. Doing this here rather than when
 		 * activating the plugin means we don't waste cycles if the plugin's never used. It also means we don't waste
 		 * cycles repeatedly creating new regexes for each video whose t param we resolve. */
-		self->regex = g_regex_new ("'SWF_ARGS'.*\"t\": \"([^\"]+)\"", G_REGEX_OPTIMIZE, 0, NULL);
+		/* We're looking for a line of the form:
+		 * var swfHTML = (isIE) ? "<object...econds=194&t=vjVQa1PpcFP36LLlIaDqZIG1w6e30b-7WVBgsQLLA3s%3D&rv.6.id=OzLjC6Pm... */
+		self->regex = g_regex_new ("swfHTML = .*&t=([^&]+)&", G_REGEX_OPTIMIZE, 0, NULL);
 		g_assert (self->regex != NULL);
 
 		/* Set up the GData service (needed for the tree views' queries) */
