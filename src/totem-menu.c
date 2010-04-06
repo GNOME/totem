@@ -24,6 +24,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gst/tag/tag.h>
 #include <string.h>
 
 #include "totem-menu.h"
@@ -93,157 +94,6 @@ escape_label_for_menu (const char *name)
 	return new;
 }
 
-/* ISO-639 helpers */
-static GHashTable *lang_table;
-
-static void
-totem_lang_table_free (void)
-{
-	g_hash_table_destroy (lang_table);
-	lang_table = NULL;
-}
-
-static void
-totem_lang_table_parse_start_tag (GMarkupParseContext *ctx,
-		const gchar         *element_name,
-		const gchar        **attr_names,
-		const gchar        **attr_values,
-		gpointer             data,
-		GError             **error)
-{
-	const char *ccode_longB, *ccode_longT, *ccode, *lang_name;
-
-	if (!g_str_equal (element_name, "iso_639_entry")
-			|| attr_names == NULL
-			|| attr_values == NULL)
-		return;
-
-	ccode = NULL;
-	ccode_longB = NULL;
-	ccode_longT = NULL;
-	lang_name = NULL;
-
-	while (*attr_names && *attr_values)
-	{
-		if (g_str_equal (*attr_names, "iso_639_1_code"))
-		{
-			/* skip if empty */
-			if (**attr_values)
-			{
-				g_return_if_fail (strlen (*attr_values) == 2);
-				ccode = *attr_values;
-			}
-		} else if (g_str_equal (*attr_names, "iso_639_2B_code")) {
-			/* skip if empty */
-			if (**attr_values)
-			{
-				g_return_if_fail (strlen (*attr_values) == 3 || strcmp (*attr_values, "qaa-qtz") == 0);
-				ccode_longB = *attr_values;
-			}
-		} else if (g_str_equal (*attr_names, "iso_639_2T_code")) {
-			/* skip if empty */
-			if (**attr_values)
-			{
-				g_return_if_fail (strlen (*attr_values) == 3 || strcmp (*attr_values, "qaa-qtz") == 0);
-				ccode_longT = *attr_values;
-			}
-		} else if (g_str_equal (*attr_names, "name")) {
-			lang_name = *attr_values;
-		}
-
-		++attr_names;
-		++attr_values;
-	}
-
-	if (lang_name == NULL)
-		return;
-
-	if (ccode != NULL)
-	{
-		g_hash_table_insert (lang_table,
-				g_strdup (ccode),
-				g_strdup (lang_name));
-	}
-	if (ccode_longB != NULL)
-	{
-		g_hash_table_insert (lang_table,
-				g_strdup (ccode_longB),
-				g_strdup (lang_name));
-	}
-	if (ccode_longT != NULL)
-	{
-		g_hash_table_insert (lang_table,
-				g_strdup (ccode_longT),
-				g_strdup (lang_name));
-	}
-}
-
-#define ISO_CODES_DATADIR ISO_CODES_PREFIX"/share/xml/iso-codes"
-#define ISO_CODES_LOCALESDIR ISO_CODES_PREFIX"/share/locale"
-
-static void
-totem_lang_table_init (void)
-{
-	GError *err = NULL;
-	char *buf;
-	gsize buf_len;
-
-	lang_table = g_hash_table_new_full
-		(g_str_hash, g_str_equal, g_free, g_free);
-
-	g_atexit (totem_lang_table_free);
-
-	bindtextdomain ("iso_639", ISO_CODES_LOCALESDIR);
-	bind_textdomain_codeset ("iso_639", "UTF-8");
-
-	if (g_file_get_contents (ISO_CODES_DATADIR "/iso_639.xml",
-				&buf, &buf_len, &err))
-	{
-		GMarkupParseContext *ctx;
-		GMarkupParser parser =
-		{ totem_lang_table_parse_start_tag, NULL, NULL, NULL, NULL };
-
-		ctx = g_markup_parse_context_new (&parser, 0, NULL, NULL);
-
-		if (!g_markup_parse_context_parse (ctx, buf, buf_len, &err))
-		{
-			g_warning ("Failed to parse '%s': %s\n",
-					ISO_CODES_DATADIR"/iso_639.xml",
-					err->message);
-			g_error_free (err);
-		}
-
-		g_markup_parse_context_free (ctx);
-		g_free (buf);
-	} else {
-		g_warning ("Failed to load '%s': %s\n",
-				ISO_CODES_DATADIR"/iso_639.xml", err->message);
-		g_error_free (err);
-	}
-}
-
-static const char *
-totem_lang_get_full (const char *lang)
-{
-	const char *lang_name;
-	int len;
-
-	g_return_val_if_fail (lang != NULL, NULL);
-
-	len = strlen (lang);
-	if (len != 2 && len != 3)
-		return NULL;
-	if (lang_table == NULL)
-		totem_lang_table_init ();
-
-	lang_name = (const gchar*) g_hash_table_lookup (lang_table, lang);
-
-	if (lang_name)
-		return dgettext ("iso_639", lang_name);
-
-	return NULL;
-}
-
 /* Subtitle and language menus */
 static void
 totem_g_list_deep_free (GList *list)
@@ -289,7 +139,7 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 	GtkAction *action;
 	guint i;
 
-	full_lang = totem_lang_get_full (lang);
+	full_lang = gst_tag_get_language_name (lang);
 
 	if (lang_index > 1) {
 		char *num_lang;
