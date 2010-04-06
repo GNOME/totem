@@ -395,7 +395,7 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 	/* Insert the result list and initialize the viewport */
 	scroll = GTK_SCROLLED_WINDOW (gtk_scrolled_window_new (NULL, NULL));
 	gtk_scrolled_window_set_policy (scroll, GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-	gtk_scrolled_window_add_with_viewport (scroll, GTK_WIDGET (widget->priv->result_list));
+	gtk_container_add (GTK_CONTAINER (scroll), GTK_WIDGET (widget->priv->result_list));
 	gtk_container_add (GTK_CONTAINER (v_box), GTK_WIDGET (scroll));
 
 	/* Initialise the pager box */
