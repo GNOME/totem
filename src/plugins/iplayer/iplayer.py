@@ -54,7 +54,7 @@ class IplayerPlugin (totem.Plugin):
 	def _populate_channel_list_cb (self, tree_store, parent_path, values):
 		# Callback from PopulateChannelsThread to add stuff to the tree store
 		if values == None:
-			self.totem.action_error (_('Error Listing Channel Categories'), _('There was an unknown error getting the list of television channels available on BBC iPlayer.'))
+			self.totem.action_error (_('Error listing channel categories'), _('There was an unknown error getting the list of television channels available on BBC iPlayer.'))
 			return False
 
 		parent_iter = tree_store.get_iter (parent_path)
@@ -103,7 +103,7 @@ class IplayerPlugin (totem.Plugin):
 	def _populate_programme_list_cb (self, tree_store, category_path, values, remove_placeholder):
 		# Callback from PopulateProgrammesThread to add stuff to the tree store
 		if values == None:
-			self.totem.action_error (_('Error getting programme feed'), _('There was an unknown error getting the list of programmes for this channel and category combination.'))
+			self.totem.action_error (_('Error getting programme feed'), _('There was an error getting the list of programmes for this channel and category combination.'))
 			return False
 
 		category_iter = tree_store.get_iter (category_path)
