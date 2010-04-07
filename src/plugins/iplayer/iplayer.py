@@ -49,7 +49,7 @@ class IplayerPlugin (totem.Plugin):
 		# Add the channels' categories in a thread, since they each require a network request
 		parent_path = tree_store.get_path (parent_iter)
 		thread = PopulateChannelsThread (self, parent_path, feed, tree_store)
-        	thread.start ()
+		thread.start ()
 
 	def _populate_channel_list_cb (self, tree_store, parent_path, values):
 		# Callback from PopulateChannelsThread to add stuff to the tree store
@@ -103,7 +103,7 @@ class IplayerPlugin (totem.Plugin):
 	def _populate_programme_list_cb (self, tree_store, category_path, values, remove_placeholder):
 		# Callback from PopulateProgrammesThread to add stuff to the tree store
 		if values == None:
-			totem.action_error (_('Error getting programme feed'), _('There was an unknown error getting the list of programmes for this channel and category combination.'))
+			self.totem.action_error (_('Error getting programme feed'), _('There was an unknown error getting the list of programmes for this channel and category combination.'))
 			return False
 
 		category_iter = tree_store.get_iter (category_path)
@@ -135,6 +135,7 @@ class PopulateChannelsThread (threading.Thread):
 		threading.Thread.__init__ (self)
 
 	def run (self):
+		shown_error = False
 		tree_iter = self.tree_model.get_iter_first ()
 		while (tree_iter != None):
 			channel_id = self.tree_model.get_value (tree_iter, 1)
@@ -148,7 +149,10 @@ class PopulateChannelsThread (threading.Thread):
 					category_id = category_name_to_id (name)
 					gobject.idle_add (self.plugin._populate_channel_list_cb, self.tree_model, parent_path, [name, category_id, None])
 			except:
-				gobject.idle_add (self.plugin._populate_channel_list_cb, self.tree_model, parent_path, None)
+				# Only show the error once, rather than for each channel (it gets a bit grating)
+				if not shown_error:
+					gobject.idle_add (self.plugin._populate_channel_list_cb, self.tree_model, parent_path, None)
+					shown_error = True
 
 			tree_iter = self.tree_model.iter_next (tree_iter)
 
@@ -171,7 +175,7 @@ class PopulateProgrammesThread (threading.Thread):
 		# Retrieve the programmes and return them
 		feed = self.feed.get (channel_id).get (category_id)
 		if feed == None:
-			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None)
+			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None, False)
 			self.plugin.programme_download_lock.release ()
 			return
 
@@ -179,7 +183,7 @@ class PopulateProgrammesThread (threading.Thread):
 		try:
 			programmes = feed.list ()
 		except:
-			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None)
+			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None, False)
 			self.plugin.programme_download_lock.release ()
 			return
 
