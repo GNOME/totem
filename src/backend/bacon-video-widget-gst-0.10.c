@@ -3604,7 +3604,8 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   /* Only use the URI when FUSE isn't available for a file
    * or we're trying to read from an archive or ObexFTP */
   if (g_file_has_uri_scheme (file, "archive") != FALSE ||
-      g_file_has_uri_scheme (file, "obex") != FALSE)
+      g_file_has_uri_scheme (file, "obex") != FALSE ||
+      g_file_has_uri_scheme (file, "ftp") != FALSE)
     path = NULL;
   else
     path = g_file_get_path (file);
