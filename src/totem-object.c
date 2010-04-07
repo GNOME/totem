@@ -2535,7 +2535,8 @@ update_seekable (Totem *totem)
 	action = gtk_action_group_get_action (action_group, "skip-backwards");
 	gtk_action_set_sensitive (action, seekable);
 
-	/* This is for the session restore to seek */
+	/* This is for the session restore and the position saving
+	 * to seek to the saved time */
 	if (seekable != FALSE) {
 		if (totem->seek_to != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
@@ -2543,7 +2544,7 @@ update_seekable (Totem *totem)
 		}
 		if (totem->seek_to_start != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
-						      totem->seek_to, NULL);
+						      totem->seek_to_start, NULL);
 			totem_action_pause (totem);
 		}
 	}
