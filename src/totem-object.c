@@ -1204,7 +1204,7 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 
 		/* No plugin for the media type */
 		if (g_error_matches (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE) != FALSE) {
-			link = "http://www.gnome.org/projects/totem/#codecs";
+			link = "http://projects.gnome.org/totem/#codecs";
 			link_text = _("More information about media plugins");
 			secondary = _("Please install the necessary plugins and restart Totem to be able to play this media.");
 			if (type == MEDIA_TYPE_DVD || type == MEDIA_TYPE_VCD)
