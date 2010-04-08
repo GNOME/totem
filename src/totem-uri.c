@@ -138,12 +138,44 @@ totem_get_mount_for_uri (const char *path)
 	return mount;
 }
 
-static char *
-totem_get_mountpoint_for_dvd (const char *uri)
+static GMount *
+totem_get_mount_for_dvd (const char *uri)
 {
-	if (g_str_has_prefix (uri, "dvd://") == FALSE)
-		return NULL;
-	return g_strdup (uri + strlen ("dvd://"));
+	GMount *mount;
+	char *path;
+
+	mount = NULL;
+	path = g_strdup (uri + strlen ("dvd://"));
+
+	/* If it's a device, we need to find the volume that corresponds to it,
+	 * and then the mount for the volume */
+	if (g_str_has_prefix (path, "/dev/")) {
+		GVolumeMonitor *volume_monitor;
+		GList *volumes, *l;
+
+		volume_monitor = g_volume_monitor_get ();
+		volumes = g_volume_monitor_get_volumes (volume_monitor);
+		g_object_unref (volume_monitor);
+
+		for (l = volumes; l != NULL; l = l->next) {
+			char *id;
+
+			id = g_volume_get_identifier (l->data, G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
+			if (g_strcmp0 (id, path) == 0) {
+				g_free (id);
+				mount = g_volume_get_mount (l->data);
+				break;
+			}
+			g_free (id);
+		}
+		g_list_foreach (volumes, (GFunc) g_object_unref, NULL);
+		g_list_free (volumes);
+	} else {
+		mount = totem_get_mount_for_uri (path);
+		g_free (path);
+	}
+	/* We have a path to the file itself */
+	return mount;
 }
 
 static char *
@@ -164,7 +196,7 @@ totem_get_mount_for_media (const char *uri)
 	mount_path = NULL;
 
 	if (g_str_has_prefix (uri, "dvd://") != FALSE)
-		mount_path = totem_get_mountpoint_for_dvd (uri);
+		return totem_get_mount_for_dvd (uri);
 	else if (g_str_has_prefix (uri, "vcd:") != FALSE)
 		mount_path = totem_get_mountpoint_for_vcd (uri);
 	else if (g_str_has_prefix (uri, "file:") != FALSE)
