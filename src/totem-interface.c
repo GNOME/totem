@@ -122,40 +122,6 @@ totem_interface_error_blocking (const char *title, const char *reason,
 	gtk_widget_destroy (error_dialog);
 }
 
-static void
-link_button_clicked_cb (GtkWidget *widget, Totem *totem)
-{
-	const char *uri;
-	char *command, *browser, *escaped_uri;
-	GError *error = NULL;
-
-	uri = gtk_link_button_get_uri (GTK_LINK_BUTTON (widget));
-	escaped_uri = g_shell_quote (uri);
-	browser = gconf_client_get_string (totem->gc, "/desktop/gnome/url-handlers/http/command", NULL);
-
-	if (browser == NULL || browser[0] == '\0') {
-		char *message;
-
-		message = g_strdup_printf(_("Could not launch URL \"%s\": %s"), uri, _("Default browser not configured"));
-		totem_interface_error (_("Error launching URI"), message, GTK_WINDOW (totem->win));
-		g_free (message);
-	} else {
-		char *message;
-
-		command = g_strdup_printf (browser, escaped_uri);
-		if (g_spawn_command_line_async ((const char*) command, &error) == FALSE) {
-			message = g_strdup_printf(_("Could not launch URL \"%s\": %s"), uri, error->message);
-			totem_interface_error (_("Error launching URI"), message, GTK_WINDOW (totem->win));
-			g_free (message);
-			g_error_free (error);
-		}
-		g_free (command);
-	}
-
-	g_free (escaped_uri);
-	g_free (browser);
-}
-
 /**
  * totem_interface_error_with_link:
  * @title: the error title
@@ -179,7 +145,6 @@ totem_interface_error_with_link (const char *title, const char *reason,
 
 	error_dialog = totem_interface_error_dialog (title, reason, parent);
 	link_button = gtk_link_button_new_with_label (uri, label);
-	g_signal_connect (G_OBJECT (link_button), "clicked", G_CALLBACK (link_button_clicked_cb), totem);
 
 	hbox = gtk_hbox_new (TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), link_button, FALSE, FALSE, 0);
