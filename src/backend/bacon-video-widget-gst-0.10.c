@@ -1567,7 +1567,11 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
               is_menu |= (cmd == GST_NAVIGATION_COMMAND_DOWN);
             }
           }
-          bvw->priv->is_menu = is_menu;
+	  /* Are we in a menu now? */
+	  if (bvw->priv->is_menu != is_menu) {
+	    bvw->priv->is_menu = is_menu;
+	    g_object_notify (G_OBJECT (bvw), "seekable");
+	  }
         }
 
         gst_query_unref (cmds_q);
@@ -5417,6 +5421,9 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
     return FALSE;
 
   old_seekable = bvw->priv->seekable;
+
+  if (bvw->priv->is_menu != FALSE)
+    return FALSE;
 
   if (bvw->priv->seekable == -1) {
     GstQuery *query;
