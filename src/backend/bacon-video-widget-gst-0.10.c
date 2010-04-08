@@ -564,6 +564,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   window = gtk_widget_get_window (widget);
+  gdk_window_ensure_native (window);
 
   /* Creating our video window */
   attributes.window_type = GDK_WINDOW_CHILD;
@@ -582,6 +583,7 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   bvw->priv->video_window = gdk_window_new (window,
       &attributes, attributes_mask);
+  gdk_window_ensure_native (bvw->priv->video_window);
   gdk_window_set_user_data (bvw->priv->video_window, widget);
 
   gdk_color_parse ("black", &colour);
