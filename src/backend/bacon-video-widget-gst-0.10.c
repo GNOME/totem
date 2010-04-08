@@ -2446,7 +2446,8 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     else
       fill = -1.0;
 
-    GST_DEBUG ("download buffer filled up to %f%%", fill * 100.0);
+    GST_DEBUG ("download buffer filled up to %f%% (element: %s)", fill * 100.0,
+	       G_OBJECT_TYPE_NAME (element));
 
     g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
 
