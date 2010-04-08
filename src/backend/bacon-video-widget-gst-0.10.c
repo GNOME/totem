@@ -1908,6 +1908,10 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
           /* show a non-fatal warning message if we can't decode the video */
           bvw_check_if_video_decoder_is_missing (bvw);
         }
+	/* Now that we have the length, check whether we wanted
+	 * to pause or to stop the pipeline */
+        if (bvw->priv->target_state == GST_STATE_PAUSED)
+	  bacon_video_widget_pause (bvw);
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->priv->media_has_video = FALSE;
         bvw->priv->media_has_audio = FALSE;
@@ -3900,12 +3904,21 @@ bvw_get_logo_pixbuf (BaconVideoWidget * bvw)
 void
 bacon_video_widget_pause (BaconVideoWidget * bvw)
 {
+  GstStateChangeReturn ret;
+  GstState state;
+
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
   g_return_if_fail (bvw->priv->mrl != NULL);
 
-  if (bvw->priv->is_live != FALSE) {
+  /* Get the current state */
+  ret = gst_element_get_state (GST_ELEMENT (bvw->priv->play), &state, NULL, 0);
+
+  if (bvw->priv->is_live != FALSE &&
+      ret != GST_STATE_CHANGE_NO_PREROLL &&
+      ret != GST_STATE_CHANGE_SUCCESS &&
+      state > GST_STATE_READY) {
     GST_LOG ("Stopping because we have a live stream");
     bacon_video_widget_stop (bvw);
     return;
