@@ -2487,14 +2487,13 @@ update_seekable (Totem *totem)
 	/* This is for the session restore and the position saving
 	 * to seek to the saved time */
 	if (seekable != FALSE) {
-		if (totem->seek_to != 0) {
-			bacon_video_widget_seek_time (totem->bvw,
-						      totem->seek_to, NULL);
-		}
 		if (totem->seek_to_start != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
 						      totem->seek_to_start, NULL);
 			totem_action_pause (totem);
+		} else if (totem->seek_to != 0) {
+			bacon_video_widget_seek_time (totem->bvw,
+						      totem->seek_to, NULL);
 		}
 	}
 	totem->seek_to = 0;
