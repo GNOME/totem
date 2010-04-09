@@ -14,9 +14,12 @@
     <method name="UnsetWindow">
       <arg type="u" name="XID" direction="in" />
     </method>
-    <method name="OpenStream">
+    <method name="SetupStream">
       <arg type="s" name="URI" direction="in" />
       <arg type="s" name="BaseURI" direction="in" />
+    </method>
+    <method name="OpenStream">
+      <arg type="x" name="Size" direction="in" />
     </method>
     <method name="CloseStream" />
     <method name="OpenURI">

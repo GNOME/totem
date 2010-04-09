@@ -119,6 +119,7 @@ typedef struct _TotemEmbedded {
 	char *href_uri;
 	char *target;
 	char *stream_uri;
+	gint64 size; /* the size of the streamed file for fd://0 */
 	BaconVideoWidget *bvw;
 	TotemStates state;
 	GdkCursor *cursor;
@@ -403,14 +404,18 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 			      GError **error)
 {
 	gboolean retval;
-	const char *uri;
+	char *uri;
 
 	/* FIXME: stop previous content, or is that automatic ? */
 
-	if (emb->is_browser_stream)
-		uri = "fd://0";
-	else
-		uri = emb->current_uri;
+	if (emb->is_browser_stream) {
+		if (emb->size > 0)
+			uri = g_strdup_printf ("fd://0?size=%"G_GINT64_FORMAT, emb->size);
+		else
+			uri = g_strdup ("fd://0");
+	} else {
+		uri = g_strdup (emb->current_uri);
+	}
 
 	if (!uri) {
 		g_set_error_literal (error,
@@ -428,6 +433,8 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 	bacon_video_widget_set_logo_mode (emb->bvw, FALSE);
 
 	retval = bacon_video_widget_open (emb->bvw, uri, emb->current_subtitle_uri, NULL);
+	g_free (uri);
+
 	/* FIXME we shouldn't even do that here */
 	if (start_play)
 		totem_embedded_play (emb, NULL);
@@ -800,12 +807,12 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 }
 
 static gboolean
-totem_embedded_open_stream (TotemEmbedded *emb,
-			    const char *uri,
-			    const char *base_uri,
-			    GError **error)
+totem_embedded_setup_stream (TotemEmbedded *emb,
+			     const char *uri,
+			     const char *base_uri,
+			     GError **error)
 {
-	g_message ("totem_embedded_open_stream called: uri %s, base_uri: %s", uri, base_uri);
+	g_message ("totem_embedded_setup_stream called: uri %s, base_uri: %s", uri, base_uri);
 
 	totem_embedded_clear_playlist (emb, NULL);
 
@@ -815,6 +822,18 @@ totem_embedded_open_stream (TotemEmbedded *emb,
 	emb->num_items = 1;
 
 	/* FIXME: consume any remaining input from stdin */
+
+	return TRUE;
+}
+
+static gboolean
+totem_embedded_open_stream (TotemEmbedded *emb,
+			    gint64 size,
+			    GError **error)
+{
+	g_message ("totem_embedded_open_stream called: with size %"G_GINT64_FORMAT, size);
+
+	emb->size = size;
 
 	return totem_embedded_open_internal (emb, TRUE, error);
 }

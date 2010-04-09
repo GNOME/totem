@@ -1064,7 +1064,7 @@ totemPlugin::RequestStream (bool aForceViewer)
         mRequestBaseURI = g_strdup (baseURI);
 
 	/* If the URL is supported and the caller isn't asking us to make
-	 * the viewer open the stream, we call OpenStream, and
+	 * the viewer open the stream, we call SetupStream, and
 	 * otherwise OpenURI. */
 	if (!aForceViewer && IsSchemeSupported (requestURI, baseURI)) {
 		/* This will fail for the 2nd stream, but we shouldn't
@@ -1072,8 +1072,8 @@ totemPlugin::RequestStream (bool aForceViewer)
 
 		mViewerPendingCall =
 			dbus_g_proxy_begin_call (mViewerProxy,
-						 "OpenStream",
-						 ViewerOpenStreamCallback,
+						 "SetupStream",
+						 ViewerSetupStreamCallback,
 						 reinterpret_cast<void*>(this),
 						 NULL,
 						 G_TYPE_STRING, requestURI,
@@ -1340,6 +1340,29 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 	if (plugin->mHidden &&
 	    plugin->mAutoPlay) {
 		plugin->Command (TOTEM_COMMAND_PLAY);
+	}
+}
+
+/* static */ void
+totemPlugin::ViewerSetupStreamCallback (DBusGProxy *aProxy,
+					DBusGProxyCall *aCall,
+					void *aData)
+{
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+
+	g_debug ("SetupStream reply");
+
+// 	assert (aCall == plugin->mViewerPendingCall, "OpenStream not the current call");
+        if (aCall != plugin->mViewerPendingCall)
+          return;
+
+	plugin->mViewerPendingCall = NULL;
+
+	GError *error = NULL;
+	if (!dbus_g_proxy_end_call (aProxy, aCall, &error, G_TYPE_INVALID)) {
+		g_warning ("SetupStream failed: %s", error->message);
+		g_error_free (error);
+		return;
 	}
 
 	assert (!plugin->mExpectingStream); /* Already expecting a stream */
@@ -2234,6 +2257,16 @@ totemPlugin::NewStream (NPMIMEType type,
 	/* To track how many data we get from ::Write */
 	mBytesStreamed = 0;
 	mBytesLength = stream->end;
+
+	gint64 length = mBytesLength;
+	mViewerPendingCall =
+		dbus_g_proxy_begin_call (mViewerProxy,
+					 "OpenStream",
+					 ViewerOpenStreamCallback,
+					 reinterpret_cast<void*>(this),
+					 NULL,
+					 G_TYPE_INT64, length,
+					 G_TYPE_INVALID);
 
 	return NPERR_NO_ERROR;
 }

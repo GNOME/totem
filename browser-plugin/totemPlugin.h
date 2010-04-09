@@ -157,6 +157,9 @@ class totemPlugin {
     static void ViewerOpenStreamCallback (DBusGProxy *aProxy,
 						      DBusGProxyCall *aCall,
 						      void *aData);
+    static void ViewerSetupStreamCallback (DBusGProxy *aProxy,
+						      DBusGProxyCall *aCall,
+						      void *aData);
     static void ViewerOpenURICallback (DBusGProxy *aProxy,
 						   DBusGProxyCall *aCall,
 						   void *aData);
