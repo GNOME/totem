@@ -1012,6 +1012,9 @@ totemPlugin::RequestStream (bool aForceViewer)
 		requestURL = href;
 	}
 #endif
+
+       /* We should be following QTSRCDONTUSEBROWSER instead */
+	aForceViewer = true;
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
 #if defined (TOTEM_MULLY_PLUGIN) || defined (TOTEM_CONE_PLUGIN)
