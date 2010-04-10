@@ -306,7 +306,7 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
     case eGetTime:
       /* unsigned long GetTime (); */
-      return Int32Variant (_result, Plugin()->Time());
+      return Int32Variant (_result, Plugin()->GetTime());
 
     case eGetEndTime:
       /* unsigned long GetEndTime (); */
@@ -315,7 +315,7 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
     case eGetTimeScale:
       /* unsigned long GetTimeScale (); */
-      return Int32Variant (_result, 1000); /* FIXME? */
+      return Int32Variant (_result, 1000); /* TimeScale is in milli-seconds */
 
     case eGetRate:
       /* float GetRate (); */
@@ -519,10 +519,20 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
       /* void SetTarget (in AUTF8String target); */
     case eSetTiltAngle:
       /* void SetTiltAngle (in float angle); */
+      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemNarrowSpacePlayer);
+      return VoidVariant (_result);
     case eSetTime:
       /* void SetTime (in unsigned long time); */
+      int32_t time;
+      if (!GetInt32FromArguments (argv, argc, 0, time))
+        return false;
+
+      Plugin()->SetTime (time);
+      return true;
     case eSetTrackEnabled:
       /* void SetTrackEnabled (in unsigned long index, in boolean enabled); */
+      TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemNarrowSpacePlayer);
+      return VoidVariant (_result);
     case eSetURL: {
       /* void SetURL (in AUTF8String url); */
       NPString url;

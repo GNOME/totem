@@ -789,6 +789,18 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 }
 
 static gboolean
+totem_embedded_set_time (TotemEmbedded *emb,
+			 guint64 time,
+			 GError **error)
+{
+	g_message ("totem_embedded_set_time: %"G_GUINT64_FORMAT, time);
+
+	bacon_video_widget_seek_time (emb->bvw, time, NULL);
+
+	return TRUE;
+}
+
+static gboolean
 totem_embedded_open_uri (TotemEmbedded *emb,
 			 const char *uri,
 			 const char *base_uri,

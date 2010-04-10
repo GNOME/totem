@@ -150,7 +150,7 @@ totemGMPControls::GetPropertyByIndex (int aIndex,
   switch (Properties (aIndex)) {
     case eCurrentPosition:
       /* attribute double currentPosition; */
-      return DoubleVariant (_result, double (Plugin()->Time()) / 1000.0);
+      return DoubleVariant (_result, double (Plugin()->GetTime()) / 1000.0);
 
     case eCurrentItem:
       /* attribute totemIGMPMedia currentItem; */

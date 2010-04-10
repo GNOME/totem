@@ -408,7 +408,8 @@ class totemPlugin {
 
     int32_t BytesLength () const { return mBytesLength; }
 
-    uint32_t Time () const { return mTime; }
+    uint64_t GetTime () const { return mTime; }
+    void SetTime (uint64_t aTime);
 
     TotemStates State () const { return mState; }
 

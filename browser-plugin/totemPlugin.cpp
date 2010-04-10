@@ -277,6 +277,25 @@ totemPlugin::Command (const char *aCommand)
 }
 
 void
+totemPlugin::SetTime (guint64 aTime)
+{
+	D ("SetTime '%lu'", aTime);
+
+	/* FIXME: queue the action instead */
+	if (!mViewerReady)
+		return;
+
+	mTime = aTime;
+
+	assert (mViewerProxy);
+	dbus_g_proxy_call_no_reply (mViewerProxy,
+				    "SetTime",
+				    G_TYPE_UINT64, GetTime(),
+				    G_TYPE_INVALID,
+				    G_TYPE_INVALID);
+}
+
+void
 totemPlugin::SetVolume (double aVolume)
 {
 	D ("SetVolume '%f'", aVolume);
