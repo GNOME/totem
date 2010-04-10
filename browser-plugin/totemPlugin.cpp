@@ -1014,9 +1014,9 @@ totemPlugin::RequestStream (bool aForceViewer)
 #endif
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
-#ifdef TOTEM_MULLY_PLUGIN
+#if defined (TOTEM_MULLY_PLUGIN) || defined (TOTEM_CONE_PLUGIN)
 	aForceViewer = true;
-#endif /* TOTEM_MULLY_PLUGIN */
+#endif /* TOTEM_MULLY_PLUGIN || TOTEM_CONE_PLUGIN */
 
 	/* Fallback */
 	if (!requestURI)
