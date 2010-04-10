@@ -35,7 +35,7 @@
 
 #include "totem-plugin-viewer-constants.h"
 
-#define TOTEM_NARROWSPACE_VERSION   "7.2.0"
+#define TOTEM_NARROWSPACE_VERSION   "7.6.6"
 #define TOTEM_MULLY_VERSION         "1.4.0.233"
 #define TOTEM_CONE_VERSION          "0.8.6"
 #define TOTEM_GMP_VERSION_BUILD     "11.0.0.1024"
