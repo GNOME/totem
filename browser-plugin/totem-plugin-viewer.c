@@ -1185,7 +1185,9 @@ on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb)
 	GtkClipboard *clip;
 	const char *uri;
 
-	if (emb->href_uri != NULL) {
+	if (emb->stream_uri != NULL) {
+		uri = emb->stream_uri;
+	} else if (emb->href_uri != NULL) {
 		uri = emb->href_uri;
 	} else {
 		uri = emb->current_uri;
