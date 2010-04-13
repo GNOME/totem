@@ -1,8 +1,9 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 8; tab-width: 8 -*-
  *
  * The _get_result_count method taken from the tracker-client.h file from libtracker
- * Copyright (C) 2006, Mr Jamie McCracken (jamiemcc@gnome.org)
- * Copyright (C) 2007 Javier Goday <jgoday@gmail.com>
+ * Copyright (C) 2006, Jamie McCracken <jamiemcc@gnome.org>
+ * Copyright (C) 2007, Javier Goday <jgoday@gmail.com>
+ * Copyright (C) 2010, Martyn Russell <martyn@lanedo.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -19,7 +20,9 @@
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA  02110-1301, USA.
  *
- * Author : Javier Goday <jgoday@gmail.com>
+ * Author: Jamie McCracken <jamiemcc@gnome.org>
+ *         Javier Goday <jgoday@gmail.com>
+ *         Martyn Russell <martyn@lanedo.com>
  */
 
 #include "config.h"
@@ -31,7 +34,7 @@
 #include <glib/gi18n-lib.h>
 #include <gio/gio.h>
 #include <dbus/dbus.h>
-#include <libtracker-client/tracker.h>
+#include <libtracker-client/tracker-client.h>
 
 #include "totem-tracker-widget.h"
 #include "totem-cell-renderer-video.h"
@@ -188,7 +191,7 @@ search_results_new (TotemTrackerWidget *widget,
 		return NULL;
 	}
 
-	client = tracker_connect (TRUE, G_MAXINT);
+	client = tracker_client_new (TRACKER_CLIENT_ENABLE_WARNINGS, G_MAXINT);
 	if (!client) {
 		return NULL;
 	}
@@ -209,12 +212,16 @@ search_results_free (SearchResultsData *srd)
 		return;
 	}
 
+	if (srd->cookie != 0) {
+		tracker_cancel_call (srd->client, srd->cookie);
+	}
+
 	if (srd->widget) {
 		g_object_unref (srd->widget);
 	}
 
 	if (srd->client) {
-		tracker_disconnect (srd->client);
+		g_object_unref (srd->client);
 	}
 
 	g_free (srd->search_text);
@@ -339,6 +346,9 @@ do_search (TotemTrackerWidget *widget)
 	gchar *fts, *query;
 	guint offset;
 
+	/* Cancel previous searches */
+	/* tracker_cancel_call (widget->priv->cookie_id); */
+
 	/* Clear the list store */
 	gtk_list_store_clear (GTK_LIST_STORE (widget->priv->result_store));
 
@@ -376,18 +386,18 @@ do_search (TotemTrackerWidget *widget)
 	 * music or some other specialised content.
 	 */
 	if (fts) {
-		query = g_strdup_printf ("SELECT COUNT(?urn) AS items "
+		query = g_strdup_printf ("SELECT COUNT(?urn) "
 					 "WHERE {"
-					 "  ?urn a ?type ."
-					 "  ?urn fts:match \"%s\" "
-					 "  FILTER (?type = nmm:Video) "
+					 "  ?urn a nmm:Video ;"
+					 "  fts:match \"%s\" ;"
+					 "  tracker:available true . "
 					 "}",
 					 fts);
 	} else {
-		query = g_strdup_printf ("SELECT COUNT(?urn) AS items "
+		query = g_strdup_printf ("SELECT COUNT(?urn) "
 					 "WHERE {"
-					 "  ?urn a ?type ."
-					 "  FILTER (?type = nmm:Video) "
+					 "  ?urn a nmm:Video ;"
+					 "  tracker:available true . "
 					 "}");
 	}
 
@@ -408,25 +418,25 @@ do_search (TotemTrackerWidget *widget)
 	}
 
 	if (fts) {
-		query = g_strdup_printf ("SELECT ?urn "
+		query = g_strdup_printf ("SELECT nie:url(?urn) "
 					 "WHERE {"
-					 "  ?urn a ?type ."
-					 "  ?urn fts:match \"%s\" "
-					 "  FILTER (?type = nmm:Video) "
+					 "  ?urn a nmm:Video ;"
+					 "  fts:match \"%s\" ;"
+					 "  tracker:available true . "
 					 "} "
-					 "ORDER BY ASC(?urn) "
+					 "ORDER BY DESC(fts:rank(?urn)) ASC(nie:url(?urn)) "
 					 "OFFSET %d "
 					 "LIMIT %d",
 					 fts,
 					 offset,
 					 TOTEM_TRACKER_MAX_RESULTS_SIZE);
 	} else {
-		query = g_strdup_printf ("SELECT ?urn "
+		query = g_strdup_printf ("SELECT nie:url(?urn) "
 					 "WHERE {"
-					 "  ?urn a ?type ."
-					 "  FILTER (?type = nmm:Video) "
+					 "  ?urn a nmm:Video ; "
+					 "  tracker:available true . "
 					 "} "
-					 "ORDER BY ASC(?urn) "
+					 "ORDER BY DESC(fts:rank(?urn)) ASC(nie:url(?urn)) "
 					 "OFFSET %d "
 					 "LIMIT %d",
 					 offset,

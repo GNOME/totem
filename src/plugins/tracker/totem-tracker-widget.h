@@ -25,7 +25,7 @@
 #include "totem.h"
 
 #include <gtk/gtk.h>
-#include <libtracker-client/tracker.h>
+#include <libtracker-client/tracker-client.h>
 
 #define TOTEM_TYPE_TRACKER_WIDGET               (totem_tracker_widget_get_type ())
 #define TOTEM_TRACKER_WIDGET(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_TRACKER_WIDGET, TotemTrackerWidget))
