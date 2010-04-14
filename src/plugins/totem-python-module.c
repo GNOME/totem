@@ -64,6 +64,10 @@ enum
 	PROP_MODULE
 };
 
+/* indicates whether all initializations in
+ * totem_python_module_init_python were successful */
+gboolean python_initialized = FALSE;
+
 #ifndef PYGOBJECT_CAN_MARSHAL_GVALUE
 static PyObject *
 pyg_value_g_value_as_pyobject (const GValue *value)
@@ -150,7 +154,7 @@ totem_python_module_init_python (void)
 	/* pygtk.require("2.8") */
 	pygtk = PyImport_ImportModule ("pygtk");
 	if (pygtk == NULL) {
-		g_warning ("Could not import pygtk");
+		g_warning ("Could not import pygtk, check your installation");
 		PyErr_Print();
 		return;
 	}
@@ -186,7 +190,7 @@ totem_python_module_init_python (void)
 	pygtk_version = PyDict_GetItemString (mdict, "pygtk_version");
 	pygtk_required_version = Py_BuildValue ("(iii)", 2, 12, 0);
 	if (PyObject_Compare (pygtk_version, pygtk_required_version) == -1) {
-		g_warning("PyGTK %s required, but %s found.",
+		g_warning("PyGTK %s required, but %s found, check your installation.",
 				  PyString_AsString (PyObject_Repr (pygtk_required_version)),
 				  PyString_AsString (PyObject_Repr (pygtk_version)));
 		Py_DECREF (pygtk_required_version);
@@ -212,7 +216,7 @@ totem_python_module_init_python (void)
 	totem = PyImport_ImportModule ("totem");
 
 	if (totem == NULL) {
-		g_warning ("Could not import Python module 'totem'");
+		g_warning ("Could not import Python module 'totem', check your installation");
 		PyErr_Print ();
 		return;
 	}
@@ -264,6 +268,10 @@ totem_python_module_init_python (void)
 	 * restore the state in a class_finalize or so, but since totem doesn't
 	 * do any clean-up at this point, we'll just skip this as well */
 	PyEval_SaveThread();
+
+	/* Python and the supporting libraries were initialised
+	 * successfully */
+	python_initialized = TRUE;
 }
 
 static gboolean
@@ -277,6 +285,8 @@ totem_python_module_load (GTypeModule *gmodule)
 	gboolean res = FALSE;
 
 	g_return_val_if_fail (Py_IsInitialized (), FALSE);
+	if (python_initialized == FALSE)
+		return FALSE;
 
 	state = pyg_gil_state_ensure();
 
