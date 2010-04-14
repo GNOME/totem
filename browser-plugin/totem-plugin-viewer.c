@@ -102,6 +102,7 @@ typedef struct {
 typedef struct _TotemEmbedded {
 	GObject parent;
 
+	DBusGConnection *conn;
 	GtkWidget *window;
 	GtkBuilder *menuxml, *xml;
 	GtkWidget *about;
@@ -288,6 +289,12 @@ totem_embedded_exit (TotemEmbedded *emb)
 static void
 totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 {
+	/* Avoid any more contacts, so drop off the bus */
+	if (emb->conn != NULL) {
+		dbus_g_connection_unregister_g_object(emb->conn, G_OBJECT (emb));
+		emb->conn = NULL;
+	}
+
 	/* FIXME send a signal to the plugin with the error message instead! */
 	totem_interface_error_blocking (title, reason,
 			GTK_WINDOW (emb->window));
@@ -2390,8 +2397,10 @@ int main (int argc, char **argv)
         emb->referrer_uri = arg_referrer;
 
 	/* FIXME: register this BEFORE requesting the service name? */
-	dbus_g_connection_register_g_object
-	(conn, TOTEM_PLUGIN_VIEWER_DBUS_PATH, G_OBJECT (emb));
+	dbus_g_connection_register_g_object (conn,
+					     TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+					     G_OBJECT (emb));
+	emb->conn = conn;
 
 	/* If we're hidden, construct a hidden window;
 	 * else wait to be plugged in.
