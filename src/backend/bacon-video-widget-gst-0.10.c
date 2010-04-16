@@ -1945,16 +1945,26 @@ static gboolean
 bvw_buffering_done (BaconVideoWidget *bvw)
 {
   /* When we set buffering left to 0, that means it's ready to play */
-  if (bvw->priv->buffering_left == 0)
+  if (bvw->priv->buffering_left == 0) {
+    GST_DEBUG ("Buffering left is 0, so buffering done");
     return TRUE;
+  }
   if (bvw->priv->stream_length <= 0)
     return FALSE;
   /* When queue2 doesn't implement buffering-left, always think
    * it's ready to go */
-  if (bvw->priv->buffering_left < 0)
+  if (bvw->priv->buffering_left < 0) {
+    GST_DEBUG ("Buffering left not implemented, so buffering done");
     return TRUE;
+  }
 
-  return (bvw->priv->buffering_left * 1.1 < bvw->priv->stream_length);
+  if (bvw->priv->buffering_left * 1.1 < bvw->priv->stream_length) {
+    GST_DEBUG ("Buffering left: %lld * 1.1 = %lld < %lld",
+	       bvw->priv->buffering_left, bvw->priv->buffering_left * 1.1,
+	       bvw->priv->stream_length);
+    return TRUE;
+  }
+  return FALSE;
 }
 
 static void
@@ -2442,8 +2452,9 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     gst_query_parse_buffering_percent (query, &busy, &percent);
     gst_query_parse_buffering_range (query, &format, &start, &stop, NULL);
 
-    GST_DEBUG ("start %" G_GINT64_FORMAT ", stop %" G_GINT64_FORMAT,
-	       start, stop);
+    GST_DEBUG ("start %" G_GINT64_FORMAT ", stop %" G_GINT64_FORMAT
+	       ", buffering left %" G_GINT64_FORMAT ", percent %d%%",
+	       start, stop, bvw->priv->buffering_left, percent);
 
     if (stop != -1)
       fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
