@@ -860,6 +860,12 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		/* Set up the GData service (needed for the tree views' queries) */
 		self->service = gdata_youtube_service_new (DEVELOPER_KEY, CLIENT_ID);
 
+		/* Set up network timeouts, if they're supported by our version of libgdata.
+		 * This will return from queries with %GDATA_SERVICE_ERROR_NETWORK_ERROR if network operations take longer than 30 seconds. */
+#ifdef HAVE_LIBGDATA_0_7
+		gdata_service_set_timeout (GDATA_SERVICE (self->service), 30);
+#endif /* HAVE_LIBGDATA_0_7 */
+
 		/* Set up the queries */
 		self->query[SEARCH_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
 		self->query[RELATED_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
