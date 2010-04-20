@@ -1282,7 +1282,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   BaconVideoWidgetPrivate *priv;
 
   gtk_widget_set_can_focus (GTK_WIDGET (bvw), TRUE);
-  gtk_widget_set_double_buffered (GTK_WIDGET (bvw), TRUE);
+  gtk_widget_set_double_buffered (GTK_WIDGET (bvw), FALSE);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
 
