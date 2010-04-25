@@ -445,6 +445,45 @@ totem_get_current_time (Totem *totem)
 	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
+typedef struct {
+	Totem *totem;
+	gchar *uri;
+	gchar *display_name;
+	gboolean add_to_recent;
+} AddToPlaylistData;
+
+static void
+add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result, AddToPlaylistData *data)
+{
+	int end;
+	gboolean playlist_changed;
+
+	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
+
+	if (data->add_to_recent != FALSE)
+		gtk_recent_manager_add_item (data->totem->recent_manager, data->uri);
+	end = totem_playlist_get_last (playlist);
+
+	totem_signal_unblock_by_data (playlist, data->totem);
+
+	if (playlist_changed && end != -1) {
+		char *mrl, *subtitle;
+
+		subtitle = NULL;
+		totem_playlist_set_current (playlist, end);
+		mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
+		totem_action_set_mrl_and_play (data->totem, mrl, subtitle);
+		g_free (mrl);
+		g_free (subtitle);
+	}
+
+	/* Free the closure data */
+	g_object_unref (data->totem);
+	g_free (data->uri);
+	g_free (data->display_name);
+	g_slice_free (AddToPlaylistData, data);
+}
+
 /**
  * totem_add_to_playlist_and_play:
  * @totem: a #TotemObject
@@ -460,28 +499,21 @@ totem_add_to_playlist_and_play (Totem *totem,
 				const char *display_name,
 				gboolean add_to_recent)
 {
-	gboolean playlist_changed;
-	int end;
+	AddToPlaylistData *data;
 
+	/* Block all signals from the playlist until we're finished. They're unblocked in the callback, add_to_playlist_and_play_cb.
+	 * There are no concurrency issues here, since blocking the signals multiple times should require them to be unblocked the
+	 * same number of times before they fire again. */
 	totem_signal_block_by_data (totem->playlist, totem);
 
-	playlist_changed = totem_playlist_add_mrl_with_cursor (totem->playlist, uri, display_name);
-	if (add_to_recent != FALSE)
-		gtk_recent_manager_add_item (totem->recent_manager, uri);
-	end = totem_playlist_get_last (totem->playlist);
+	data = g_slice_new (AddToPlaylistData);
+	data->totem = g_object_ref (totem);
+	data->uri = g_strdup (uri);
+	data->display_name = g_strdup (display_name);
+	data->add_to_recent = add_to_recent;
 
-	totem_signal_unblock_by_data (totem->playlist, totem);
-
-	if (playlist_changed && end != -1) {
-		char *mrl, *subtitle;
-
-		subtitle = NULL;
-		totem_playlist_set_current (totem->playlist, end);
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		totem_action_set_mrl_and_play (totem, mrl, subtitle);
-		g_free (mrl);
-		g_free (subtitle);
-	}
+	totem_playlist_add_mrl (totem->playlist, uri, display_name, TRUE,
+	                        NULL, (GAsyncReadyCallback) add_to_playlist_and_play_cb, data);
 }
 
 /**
@@ -2215,7 +2247,7 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 			}
 		}
 
-		totem_playlist_add_mrl (totem->playlist, filename, title);
+		totem_playlist_add_mrl (totem->playlist, filename, title, FALSE, NULL, NULL, NULL);
 	}
 
 bail:
@@ -2771,9 +2803,10 @@ totem_action_open_files_list (Totem *totem, GSList *list)
 				totem_action_load_media_device (totem, data);
 				changed = TRUE;
 			} else if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
-				totem_playlist_add_mrl (totem->playlist, data, NULL);
+				totem_playlist_add_mrl (totem->playlist, data, NULL, FALSE, NULL, NULL, NULL);
 				changed = TRUE;
-			} else if (totem_playlist_add_mrl (totem->playlist, filename, NULL) != FALSE) {
+			} else {
+				totem_playlist_add_mrl (totem->playlist, filename, NULL, FALSE, NULL, NULL, NULL);
 				changed = TRUE;
 			}
 		}
@@ -3048,7 +3081,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		break;
 	case TOTEM_REMOTE_COMMAND_ENQUEUE:
 		g_assert (url != NULL);
-		totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
+		totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
 		break;
 	case TOTEM_REMOTE_COMMAND_REPLACE:
 		totem_playlist_clear (totem->playlist);
@@ -3065,7 +3098,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			/* FIXME b0rked */
 			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
 		} else {
-			totem_playlist_add_mrl_with_cursor (totem->playlist, url, NULL);
+			totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:

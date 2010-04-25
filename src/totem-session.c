@@ -147,7 +147,9 @@ totem_session_restore (Totem *totem, char **filenames)
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
-	if (totem_playlist_add_mrl_with_cursor (totem->playlist, uri, NULL) == FALSE) {
+	/* Possibly the only place in Totem where it makes sense to add an MRL to the playlist synchronously, since we haven't yet entered
+	 * the GTK+ main loop, and thus can't freeze the application. */
+	if (totem_playlist_add_mrl_sync (totem->playlist, uri, NULL) == FALSE) {
 		totem_signal_unblock_by_data (totem->playlist, totem);
 		totem_action_set_mrl (totem, NULL, NULL);
 		g_free (uri);
