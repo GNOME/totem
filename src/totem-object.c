@@ -90,8 +90,6 @@
 
 #define VOLUME_EPSILON (1e-10)
 
-#define BVW_VBOX_BORDER_WIDTH 1
-
 /* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
 	{ (gchar*) "text/uri-list", 0, 0 },
@@ -2820,7 +2818,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
 		if (was_fullscreen == FALSE) {
 			height = allocation.height;
-			width =	allocation.width;
+			width = allocation.width;
 		}
 
 		gtk_widget_set_sensitive (menubar, TRUE);
@@ -2844,16 +2842,13 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 					&value);
 			handle_size = g_value_get_int (&value);
 			g_value_unset (&value);
-			
+
 			gtk_widget_show (totem->sidebar);
 			gtk_widget_get_allocation (totem->sidebar, &allocation_sidebar);
 			width += allocation_sidebar.width + handle_size;
 		} else {
 			gtk_widget_hide (totem->sidebar);
 		}
-
-		gtk_container_set_border_width (GTK_CONTAINER (bvw_box),
-				BVW_VBOX_BORDER_WIDTH);
 
 		if (was_fullscreen == FALSE) {
 			GtkAllocation allocation_menubar;
@@ -2865,9 +2860,7 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			gtk_widget_get_allocation (statusbar, &allocation_statusbar);
 			height += allocation_menubar.height
 				+ allocation_controls.height
-				+ allocation_statusbar.height
-				+ 2 * BVW_VBOX_BORDER_WIDTH;
-			width += 2 * BVW_VBOX_BORDER_WIDTH;
+				+ allocation_statusbar.height;
 			gtk_window_resize (GTK_WINDOW(totem->win),
 					width, height);
 		}
