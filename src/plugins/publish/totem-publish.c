@@ -434,7 +434,7 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 			g_free (key);
 
 			if (mrl)
-				totem_playlist_add_mrl (self->totem->playlist, mrl, title, FALSE, NULL, NULL, NULL);
+				totem_playlist_add_mrl (self->totem->playlist, mrl, title);
 
 			g_free (title);
 			g_free (mrl);

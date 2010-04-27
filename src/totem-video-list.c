@@ -482,7 +482,7 @@ add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self)
 			continue;
 		}
 
-		totem_playlist_add_mrl (playlist, mrl, display_name, TRUE, NULL, NULL, NULL);
+		totem_playlist_add_mrl_with_cursor (playlist, mrl, display_name);
 
 		g_free (mrl);
 		g_free (display_name);

@@ -95,9 +95,6 @@ struct TotemPlaylistPrivate
 	GtkTreePath *tree_path;
 	GtkTreeViewDropPosition drop_pos;
 
-	/* Cursor ref: 0 if the cursor is unbusy; positive numbers indicate the number of nested calls to set_waiting_cursor() */
-	guint cursor_ref;
-
 	/* This is a scratch list for when we're removing files */
 	GList *list;
 	guint current_to_be_removed : 1;
@@ -219,17 +216,21 @@ totem_playlist_get_toplevel (TotemPlaylist *playlist)
 }
 
 static void
-set_waiting_cursor (TotemPlaylist *playlist)
+totem_playlist_set_waiting_cursor (TotemPlaylist *playlist)
 {
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))));
-	playlist->priv->cursor_ref++;
+	GtkWidget *parent;
+
+	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (parent));
 }
 
 static void
-unset_waiting_cursor (TotemPlaylist *playlist)
+totem_playlist_unset_waiting_cursor (TotemPlaylist *playlist)
 {
-	if (--playlist->priv->cursor_ref < 1)
-		gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))), NULL);
+	GtkWidget *parent;
+
+	parent = GTK_WIDGET (totem_playlist_get_toplevel (playlist));
+	gdk_window_set_cursor (gtk_widget_get_window (parent), NULL);
 }
 
 static void
@@ -485,15 +486,6 @@ gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 }
 
 static void
-drop_finished_cb (TotemPlaylist *playlist, GAsyncResult *result, gpointer user_data)
-{
-	/* Emit the "changed" signal once the last dropped MRL has been added to the playlist */
-	g_signal_emit (G_OBJECT (playlist),
-	               totem_playlist_table_signals[CHANGED], 0,
-	               NULL);
-}
-
-static void
 drop_cb (GtkWidget        *widget,
          GdkDragContext   *context, 
 	 gint              x,
@@ -533,6 +525,8 @@ drop_cb (GtkWidget        *widget,
 		return;
 	}
 
+	totem_playlist_set_waiting_cursor (playlist);
+
 	playlist->priv->tree_path = gtk_tree_path_new ();
 	gtk_tree_view_get_dest_row_at_pos (GTK_TREE_VIEW (playlist->priv->treeview),
 					   x, y,
@@ -565,12 +559,7 @@ drop_cb (GtkWidget        *widget,
 			}
 		}
 
-		/* Add the MRL to the playlist asynchronously. If it's the last MRL, emit the "changed"
-		 * signal once we're done adding it */
-		if (p->next == NULL)
-			totem_playlist_add_mrl (playlist, filename, title, TRUE, NULL, (GAsyncReadyCallback) drop_finished_cb, NULL);
-		else
-			totem_playlist_add_mrl (playlist, filename, title, TRUE, NULL, NULL, NULL);
+		totem_playlist_add_mrl (playlist, filename, title);
 
 		g_free (filename);
 	}
@@ -580,6 +569,12 @@ drop_cb (GtkWidget        *widget,
 	gtk_drag_finish (context, TRUE, FALSE, _time);
 	gtk_tree_path_free (playlist->priv->tree_path);
 	playlist->priv->tree_path = NULL;
+
+	totem_playlist_unset_waiting_cursor (playlist);
+
+	g_signal_emit (G_OBJECT (playlist),
+			totem_playlist_table_signals[CHANGED], 0,
+			NULL);
 }
 
 void
@@ -856,18 +851,22 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	GSList *filenames, *l;
 
-	filenames = totem_add_files (totem_playlist_get_toplevel (playlist), NULL);
+	filenames = totem_add_files (totem_playlist_get_toplevel (playlist),
+			NULL);
 	if (filenames == NULL)
 		return;
+
+	totem_playlist_set_waiting_cursor (playlist);
 
 	for (l = filenames; l != NULL; l = l->next) {
 		char *mrl;
 
 		mrl = l->data;
-		totem_playlist_add_mrl (playlist, mrl, NULL, TRUE, NULL, NULL, NULL);
+		totem_playlist_add_mrl (playlist, mrl, NULL);
 		g_free (mrl);
 	}
 
+	totem_playlist_unset_waiting_cursor (playlist);
 	g_slist_free (filenames);
 }
 
@@ -1823,115 +1822,44 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 	return TRUE;
 }
 
-typedef struct {
-	GAsyncReadyCallback callback;
-	gpointer user_data;
-	gboolean cursor;
-	TotemPlaylist *playlist;
-	gchar *mrl;
-	gchar *display_name;
-} AddMrlData;
-
-static void
-add_mrl_data_free (AddMrlData *data)
+gboolean
+totem_playlist_add_mrl_with_cursor (TotemPlaylist *playlist, const char *mrl,
+				    const char *display_name)
 {
-	g_object_unref (data->playlist);
-	g_free (data->mrl);
-	g_free (data->display_name);
-	g_slice_free (AddMrlData, data);
+	gboolean retval;
+
+	totem_playlist_set_waiting_cursor (playlist);
+	retval = totem_playlist_add_mrl (playlist, mrl, display_name);
+	totem_playlist_unset_waiting_cursor (playlist);
+
+	return retval;
 }
 
-static gboolean
-handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gchar *mrl, const gchar *display_name)
+gboolean
+totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl,
+			const char *display_name)
 {
+	TotemPlParserResult res;
+
+	g_return_val_if_fail (mrl != NULL, FALSE);
+
+	res = totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE);
+
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
-	if (res == TOTEM_PL_PARSER_RESULT_ERROR) {
+	if (res == TOTEM_PL_PARSER_RESULT_ERROR)
+	{
 		char *msg;
 
-		msg = g_strdup_printf (_("The playlist '%s' could not be parsed. It might be damaged."), display_name ? display_name : mrl);
+		msg = g_strdup_printf (_("The playlist '%s' could not be parsed, it might be damaged."), display_name ? display_name : mrl);
 		totem_playlist_error (_("Playlist error"), msg, playlist);
 		g_free (msg);
-
 		return FALSE;
 	}
 	if (res == TOTEM_PL_PARSER_RESULT_IGNORED)
 		return FALSE;
 
 	return TRUE;
-}
-
-static void
-add_mrl_cb (TotemPlParser *parser, GAsyncResult *result, AddMrlData *data)
-{
-	TotemPlParserResult res;
-	GSimpleAsyncResult *async_result;
-	GError *error = NULL;
-
-	/* Finish parsing the playlist */
-	res = totem_pl_parser_parse_finish (parser, result, &error);
-
-	/* Remove the cursor, if one was set */
-	if (data->cursor)
-		unset_waiting_cursor (data->playlist);
-
-	/* Create an async result which will return the result to the code which called totem_playlist_add_mrl() */
-	if (error != NULL)
-		async_result = g_simple_async_result_new_from_error (G_OBJECT (data->playlist), data->callback, data->user_data, error);
-	else
-		async_result = g_simple_async_result_new (G_OBJECT (data->playlist), data->callback, data->user_data, totem_playlist_add_mrl);
-
-	/* Handle the various return cases from the playlist parser */
-	g_simple_async_result_set_op_res_gboolean (async_result, handle_parse_result (res, data->playlist, data->mrl, data->display_name));
-
-	/* Free the closure's data, now that we're finished with it */
-	add_mrl_data_free (data);
-
-	/* Synchronously call the calling code's callback function (i.e. what was passed to totem_playlist_add_mrl()'s @callback parameter)
-	 * in the main thread to return the result */
-	g_simple_async_result_complete (async_result);
-}
-
-void
-totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl, const char *display_name, gboolean cursor,
-                        GCancellable *cancellable, GAsyncReadyCallback callback, gpointer user_data)
-{
-	AddMrlData *data;
-
-	g_return_if_fail (mrl != NULL);
-
-	/* Display a waiting cursor if required */
-	if (cursor)
-		set_waiting_cursor (playlist);
-
-	/* Build the data struct to pass to the callback function */
-	data = g_slice_new (AddMrlData);
-	data->callback = callback;
-	data->user_data = user_data;
-	data->cursor = cursor;
-	data->playlist = g_object_ref (playlist);
-	data->mrl = g_strdup (mrl);
-	data->display_name = g_strdup (display_name);
-
-	/* Start parsing the playlist. Once this is complete, add_mrl_cb() is called, which will interpret the results and call @callback to
-	 * finish the process. */
-	totem_pl_parser_parse_async (playlist->priv->parser, mrl, FALSE, cancellable, (GAsyncReadyCallback) add_mrl_cb, data);
-}
-
-gboolean
-totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result)
-{
-	g_assert (g_simple_async_result_get_source_tag (G_SIMPLE_ASYNC_RESULT (result)) == totem_playlist_add_mrl);
-
-	return g_simple_async_result_get_op_res_gboolean (G_SIMPLE_ASYNC_RESULT (result));
-}
-
-gboolean
-totem_playlist_add_mrl_sync (TotemPlaylist *playlist, const char *mrl, const char *display_name)
-{
-	g_return_val_if_fail (mrl != NULL, FALSE);
-
-	return handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, display_name);
 }
 
 static gboolean

@@ -87,18 +87,12 @@ GtkWidget *totem_playlist_new      (void);
  * @display_name is if you have a preferred display string for the mrl,
  * NULL otherwise
  */
-void totem_playlist_add_mrl (TotemPlaylist *playlist,
-                             const char *mrl,
-                             const char *display_name,
-                             gboolean cursor,
-                             GCancellable *cancellable,
-                             GAsyncReadyCallback callback,
-                             gpointer user_data);
-gboolean totem_playlist_add_mrl_finish (TotemPlaylist *playlist,
-                                        GAsyncResult *result);
-gboolean totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
-                                      const char *mrl,
-                                      const char *display_name);
+gboolean totem_playlist_add_mrl  (TotemPlaylist *playlist,
+				  const char *mrl,
+				  const char *display_name);
+gboolean totem_playlist_add_mrl_with_cursor (TotemPlaylist *playlist,
+					     const char *mrl,
+					     const char *display_name);
 
 void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
 					   const char *output);
