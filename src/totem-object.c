@@ -2863,9 +2863,9 @@ show_controls (Totem *totem, gboolean was_fullscreen)
 			gtk_widget_get_allocation (menubar, &allocation_menubar);
 			gtk_widget_get_allocation (controlbar, &allocation_controlbar);
 			gtk_widget_get_allocation (statusbar, &allocation_statusbar);
-			height += allocation.height
-				+ allocation.height
-				+ allocation.height
+			height += allocation_menubar.height
+				+ allocation_controls.height
+				+ allocation_statusbar.height
 				+ 2 * BVW_VBOX_BORDER_WIDTH;
 			width += 2 * BVW_VBOX_BORDER_WIDTH;
 			gtk_window_resize (GTK_WINDOW(totem->win),
