@@ -146,14 +146,16 @@ static const gchar *video_props_str[4] = {
 
 /* GstPlayFlags flags from playbin2 */
 typedef enum {
-  GST_PLAY_FLAGS_VIDEO        = 0x01,
-  GST_PLAY_FLAGS_AUDIO        = 0x02,
-  GST_PLAY_FLAGS_TEXT         = 0x04,
-  GST_PLAY_FLAGS_VIS          = 0x08,
-  GST_PLAY_FLAGS_SOFT_VOLUME  = 0x10,
-  GST_PLAY_FLAGS_NATIVE_AUDIO = 0x20,
-  GST_PLAY_FLAGS_NATIVE_VIDEO = 0x40,
-  GST_PLAY_FLAGS_DOWNLOAD     = 0x80
+  GST_PLAY_FLAG_VIDEO         = (1 << 0),
+  GST_PLAY_FLAG_AUDIO         = (1 << 1),
+  GST_PLAY_FLAG_TEXT          = (1 << 2),
+  GST_PLAY_FLAG_VIS           = (1 << 3),
+  GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
+  GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
+  GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
+  GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
+  GST_PLAY_FLAG_BUFFERING     = (1 << 8),
+  GST_PLAY_FLAG_DEINTERLACE   = (1 << 9)
 } GstPlayFlags;
 
 struct BaconVideoWidgetPrivate
@@ -2602,11 +2604,11 @@ parse_stream_info (BaconVideoWidget *bvw)
       if (bvw->priv->show_vfx) {
         gdk_window_show (bvw->priv->video_window);
 	gtk_widget_set_double_buffered (GTK_WIDGET (bvw), FALSE);
-	flags |= GST_PLAY_FLAGS_VIS;
+	flags |= GST_PLAY_FLAG_VIS;
       } else {
         gdk_window_hide (bvw->priv->video_window);
 	gtk_widget_set_double_buffered (GTK_WIDGET (bvw), TRUE);
-	flags &= ~GST_PLAY_FLAGS_VIS;
+	flags &= ~GST_PLAY_FLAG_VIS;
       }
       g_object_set (bvw->priv->play, "flags", flags, NULL);
     }
@@ -2878,7 +2880,7 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 
   g_object_get (bvw->priv->play, "flags", &flags, NULL);
 
-  if ((flags & GST_PLAY_FLAGS_TEXT) == 0)
+  if ((flags & GST_PLAY_FLAG_TEXT) == 0)
     return -2;
 
   g_object_get (G_OBJECT (bvw->priv->play), "current-text", &subtitle, NULL);
@@ -2907,15 +2909,15 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   g_object_get (bvw->priv->play, "flags", &flags, NULL);
 
   if (subtitle == -2) {
-    flags &= ~GST_PLAY_FLAGS_TEXT;
+    flags &= ~GST_PLAY_FLAG_TEXT;
     subtitle = -1;
   } else {
-    flags |= GST_PLAY_FLAGS_TEXT;
+    flags |= GST_PLAY_FLAG_TEXT;
   }
   
   g_object_set (bvw->priv->play, "flags", flags, "current-text", subtitle, NULL);
   
-  if (flags & GST_PLAY_FLAGS_TEXT) {
+  if (flags & GST_PLAY_FLAG_TEXT) {
     g_object_get (bvw->priv->play, "current-text", &subtitle, NULL);
 
     g_signal_emit_by_name (G_OBJECT (bvw->priv->play), "get-text-tags", subtitle, &tags);
@@ -3210,31 +3212,28 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 }
 
 /**
- * bacon_video_widget_can_deinterlace:
- * @bvw: a #BaconVideoWidget
- *
- * Returns whether the widget can deinterlace videos.
- *
- * Return value: %TRUE if deinterlacing is supported, %FALSE otherwise
- **/
-gboolean
-bacon_video_widget_can_deinterlace (BaconVideoWidget *bvw)
-{
-  return FALSE;
-}
-
-/**
  * bacon_video_widget_set_deinterlacing:
  * @bvw: a #BaconVideoWidget
  * @deinterlace: %TRUE if videos should be deinterlaced, %FALSE otherwise
  *
- * Sets whether the widget should deinterlace videos. This is a no-op if
- * bacon_video_widget_can_deinterlace() returns %FALSE.
+ * Sets whether the widget should deinterlace videos.
  **/
 void
 bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
                                       gboolean deinterlace)
 {
+  gint flags;
+
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  g_object_get (bvw->priv->play, "flags", &flags, NULL);
+  if (deinterlace)
+    flags |= GST_PLAY_FLAG_DEINTERLACE;
+  else
+    flags &= ~GST_PLAY_FLAG_DEINTERLACE;
+  g_object_set (bvw->priv->play, "flags", flags, NULL);
 }
 
 /**
@@ -3248,7 +3247,15 @@ bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
 gboolean
 bacon_video_widget_get_deinterlacing (BaconVideoWidget * bvw)
 {
-  return FALSE;
+  gint flags;
+
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  g_object_get (bvw->priv->play, "flags", &flags, NULL);
+
+  return !!(flags & GST_PLAY_FLAG_DEINTERLACE);
 }
 
 static gint
@@ -4895,11 +4902,11 @@ setup_vis (BaconVideoWidget * bvw)
     if (bvw->priv->show_vfx && !bvw->priv->cover_pixbuf) {
       gdk_window_show (bvw->priv->video_window);
       gtk_widget_set_double_buffered (GTK_WIDGET (bvw), FALSE);
-      flags |= GST_PLAY_FLAGS_VIS;
+      flags |= GST_PLAY_FLAG_VIS;
     } else {
       gdk_window_hide (bvw->priv->video_window);
       gtk_widget_set_double_buffered (GTK_WIDGET (bvw), TRUE);
-      flags &= ~GST_PLAY_FLAGS_VIS;
+      flags &= ~GST_PLAY_FLAG_VIS;
     }
     g_object_set (bvw->priv->play, "flags", flags, NULL);
 
@@ -6761,13 +6768,13 @@ bacon_video_widget_new (int width, int height,
   /* Add the download flag, for streaming buffering, for video only */
   if (type == BVW_USE_TYPE_VIDEO) {
     g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    g_object_set (bvw->priv->play, "flags", flags | GST_PLAY_FLAGS_DOWNLOAD, NULL);
+    g_object_set (bvw->priv->play, "flags", flags | GST_PLAY_FLAG_DOWNLOAD, NULL);
   }
 
   /* Disable video decoding in audio mode */
   if (type == BVW_USE_TYPE_AUDIO) {
     g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    flags &= ~GST_PLAY_FLAGS_VIDEO;
+    flags &= ~GST_PLAY_FLAG_VIDEO;
     g_object_set (bvw->priv->play, "flags", flags, NULL);
   }
 
