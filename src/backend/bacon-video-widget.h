@@ -357,7 +357,6 @@ typedef enum {
 	BVW_RATIO_DVB = 4
 } BvwAspectRatio;
 
-gboolean bacon_video_widget_can_deinterlace	 (BaconVideoWidget *bvw);
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
 						  gboolean deinterlace);
 gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
