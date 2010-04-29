@@ -366,10 +366,6 @@ connect_proxy_cb (GtkActionGroup *action_group,
                   gpointer data)
 {
         GtkLabel *label;
-        GtkRecentInfo *recent_info;
-        GdkPixbuf *icon;
-        GtkWidget *image = NULL;
-        gint w, h;
 
         if (!GTK_IS_MENU_ITEM (proxy))
                 return;
@@ -378,23 +374,6 @@ connect_proxy_cb (GtkActionGroup *action_group,
 
         gtk_label_set_ellipsize (label, PANGO_ELLIPSIZE_MIDDLE);
         gtk_label_set_max_width_chars (label,TOTEM_MAX_RECENT_ITEM_LEN);
-
-        if (!GTK_IS_IMAGE_MENU_ITEM (proxy))
-                return;
-
-        recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
-        g_assert (recent_info != NULL);
-
-        gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &w, &h);
-
-        icon = gtk_recent_info_get_icon (recent_info, w);
-        if (icon != NULL) {
-                image = gtk_image_new_from_pixbuf (icon);
-                g_object_unref (icon);
-        }
-
-        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), image);
-        gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy), TRUE);
 }
 
 static void
@@ -484,6 +463,9 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
                 const char    *display_name;
                 char          *label;
                 char          *escaped_label;
+                const gchar   *mime_type;
+                gchar         *content_type;
+                GIcon         *icon = NULL;
 
                 info = (GtkRecentInfo *) l->data;
 
@@ -505,6 +487,18 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
                 g_signal_connect (G_OBJECT (action), "activate",
                                   G_CALLBACK (on_recent_file_item_activated),
                                   totem);
+
+                mime_type = gtk_recent_info_get_mime_type (info);
+                content_type = g_content_type_from_mime_type (mime_type);
+                if (content_type != NULL) {
+                        icon = g_content_type_get_icon (content_type);
+                        g_free (content_type);
+                }
+                if (icon != NULL) {
+                        gtk_action_set_gicon (action, icon);
+                        gtk_action_set_always_show_image (action, TRUE);
+                        g_object_unref (icon);
+                }
 
                 gtk_action_group_add_action (totem->recent_action_group,
                                             action);
