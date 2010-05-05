@@ -692,6 +692,7 @@
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">2</property>
+      <property name="orientation">vertical</property>
 
       <child internal-child="action_area">
 	<object class="GtkHButtonBox" id="tpw_dialog_action_area">
@@ -736,12 +737,14 @@
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
+              <property name="orientation">vertical</property>
 
 	      <child>
 		<object class="GtkVBox" id="vbox2">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkLabel" id="tpw_playback_label">
@@ -815,6 +818,7 @@
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkLabel" id="tpw_network_label">
@@ -930,6 +934,7 @@
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkLabel" id="tpw_text_subtitles_label">
@@ -1147,12 +1152,14 @@
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
+              <property name="orientation">vertical</property>
 
 	      <child>
 		<object class="GtkVBox" id="tpw_visuals_display_vbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkLabel" id="tpw_display_label">
@@ -1261,6 +1268,7 @@
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkLabel" id="tpw_visuals_label">
@@ -1307,6 +1315,7 @@
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">6</property>
+                          <property name="orientation">vertical</property>
 
 			  <child>
 			    <object class="GtkCheckButton" id="tpw_visuals_checkbutton">
@@ -1470,6 +1479,7 @@
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkHBox" id="hbox14">
@@ -1818,18 +1828,21 @@
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">18</property>
+              <property name="orientation">vertical</property>
 
 	      <child>
 		<object class="GtkVBox" id="vbox13">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkVBox" id="vbox22">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
+                      <property name="orientation">vertical</property>
 
 		      <child>
 			<object class="GtkLabel" id="tpw_audio_output_label">
@@ -2011,12 +2024,14 @@
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
+      <property name="orientation">vertical</property>
 
       <child>
 	<object class="GtkVBox" id="tmw_menubar_box">
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
 	  <property name="spacing">0</property>
+          <property name="orientation">vertical</property>
 
 	  <child>
 	    <object class="GtkMenuBar" id="tmw-menubar" constructor="totem-ui-manager"/>
@@ -2046,6 +2061,7 @@
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
+              <property name="orientation">vertical</property>
 
 	      <child>
 	        <object class="GtkEventBox" id="tmw_bvw_box">
@@ -2069,6 +2085,7 @@
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">6</property>
+                  <property name="orientation">vertical</property>
 
 		  <child>
 		    <object class="GtkHBox" id="tmw_seek_hbox">
