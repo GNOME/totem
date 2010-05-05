@@ -3179,7 +3179,7 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 /**
  * bacon_video_widget_set_deinterlacing:
  * @bvw: a #BaconVideoWidget
- * @deinterlace: %TRUE if videos should be deinterlaced, %FALSE otherwise
+ * @deinterlace: %TRUE if videos should be automatically deinterlaced, %FALSE otherwise
  *
  * Sets whether the widget should deinterlace videos.
  **/
@@ -3207,7 +3207,7 @@ bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
  *
  * Returns whether deinterlacing of videos is enabled for this widget.
  *
- * Return value: %TRUE if deinterlacing is enabled, %FALSE otherwise
+ * Return value: %TRUE if automatic deinterlacing is enabled, %FALSE otherwise
  **/
 gboolean
 bacon_video_widget_get_deinterlacing (BaconVideoWidget * bvw)
@@ -6693,10 +6693,12 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
 
-  /* Add the download flag, for streaming buffering, for video only */
+  /* Add the download flag, for streaming buffering,
+   * and the deinterlace flag, for video only */
   if (type == BVW_USE_TYPE_VIDEO) {
     g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    g_object_set (bvw->priv->play, "flags", flags | GST_PLAY_FLAG_DOWNLOAD, NULL);
+    g_object_set (bvw->priv->play, "flags",
+		  flags | GST_PLAY_FLAG_DOWNLOAD | GST_PLAY_FLAG_DEINTERLACE, NULL);
   }
 
   /* Disable video decoding in audio mode */
