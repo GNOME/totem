@@ -48,7 +48,7 @@
 G_MODULE_EXPORT void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-G_MODULE_EXPORT void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void no_deinterlace_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
@@ -187,15 +187,15 @@ checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 void
-checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
 
 	gconf_client_set_bool (totem->gc,
-			       GCONF_PREFIX"/lock_screensaver_on_audio", 
-			       !value, NULL);
+			       GCONF_PREFIX"/lock_screensaver_on_audio",
+			       value, NULL);
 }
 
 void
@@ -316,18 +316,24 @@ static void
 lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 				      GConfEntry *entry, Totem *totem)
 {
-	GObject *item;
+	GObject *item, *radio;
+	gboolean value;
 
-	item = gtk_builder_get_object (totem->xml, "tpw_screensaver_checkbutton");
+	item = gtk_builder_get_object (totem->xml, "tpw_audio_toggle_button");
 	g_signal_handlers_disconnect_by_func (item,
-					      checkbutton4_toggled_cb, totem);
+					      audio_screensaver_button_toggled_cb, totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-				      !gconf_client_get_bool (totem->gc,
-							      GCONF_PREFIX"/lock_screensaver_on_audio", NULL));
+	value = gconf_client_get_bool (totem->gc,
+				       GCONF_PREFIX"/lock_screensaver_on_audio", NULL);
+	if (value != FALSE) {
+		radio = gtk_builder_get_object (totem->xml, "tpw_audio_toggle_button");
+	} else {
+		radio = gtk_builder_get_object (totem->xml, "tpw_video_toggle_button");
+	}
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
 
 	g_signal_connect (item, "toggled",
-			  G_CALLBACK (checkbutton4_toggled_cb), totem);
+			  G_CALLBACK (audio_screensaver_button_toggled_cb), totem);
 }
 
 static void
@@ -598,8 +604,11 @@ totem_setup_preferences (Totem *totem)
 	/* Screensaver audio locking */
 	lock_screensaver_on_audio = gconf_client_get_bool (totem->gc,
 							   GCONF_PREFIX"/lock_screensaver_on_audio", NULL);
-	item = gtk_builder_get_object (totem->xml, "tpw_screensaver_checkbutton");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), !lock_screensaver_on_audio);
+	if (lock_screensaver_on_audio != FALSE)
+		item = gtk_builder_get_object (totem->xml, "tpw_audio_toggle_button");
+	else
+		item = gtk_builder_get_object (totem->xml, "tpw_video_toggle_button");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/lock_screensaver_on_audio",
 				 (GConfClientNotifyFunc) lock_screensaver_on_audio_changed_cb,
 				 totem, NULL, NULL);
