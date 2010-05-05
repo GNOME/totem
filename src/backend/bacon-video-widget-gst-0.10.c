@@ -6351,20 +6351,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   return pixbuf;
 }
 
-static void
-cb_gconf (GConfClient * client,
-          guint connection_id,
-          GConfEntry * entry,
-          gpointer data)
-{
-  BaconVideoWidget *bvw = data;
-
-  if (!strcmp (entry->key, "/apps/totem/network-buffer-threshold")) {
-    g_object_set (bvw->priv->play, "queue-threshold",
-        (guint64) (GST_SECOND * gconf_value_get_float (entry->value)), NULL);
-  }
-}
-
 /* =========================================== */
 /*                                             */
 /*          Widget typing & Creation           */
@@ -6801,8 +6787,6 @@ bacon_video_widget_new (int width, int height,
 
   /* gconf setting in backend */
   bvw->priv->gc = gconf_client_get_default ();
-  gconf_client_notify_add (bvw->priv->gc, "/apps/totem",
-      cb_gconf, bvw, NULL, NULL);
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
@@ -6841,43 +6825,6 @@ bacon_video_widget_new (int width, int height,
       if (display != NULL)
 	g_object_set (G_OBJECT (video_sink), "display", display, NULL);
     }
-/* FIXME: April fool's day puzzle */
-#if 0
-    if (video_sink) {
-      GDate d;
-
-      g_date_clear (&d, 1);
-      g_date_set_time_t (&d, time (NULL));
-      if (g_date_day (&d) == 1 && g_date_month (&d) == G_DATE_APRIL) {
-        confvalue = gconf_client_get_without_default (bvw->priv->gc,
-            GCONF_PREFIX"/puzzle_year", NULL);
-
-        if (!confvalue ||
-            gconf_value_get_int (confvalue) != g_date_year (&d)) {
-          GstElement *puzzle;
-
-          gconf_client_set_int (bvw->priv->gc, GCONF_PREFIX"/puzzle_year",
-              g_date_year (&d), NULL);
-
-          puzzle = gst_element_factory_make ("puzzle", NULL);
-          if (puzzle) {
-            GstElement *bin = gst_bin_new ("videosinkbin");
-            GstPad *pad;
-
-            gst_bin_add_many (GST_BIN (bin), puzzle, video_sink, NULL);
-            gst_element_link_pads (puzzle, "src", video_sink, "sink");
-            pad = gst_element_get_pad (puzzle, "sink");
-            gst_element_add_pad (bin, gst_ghost_pad_new ("sink", pad));
-            gst_object_unref (pad);
-            video_sink = bin;
-          }
-        }
-
-        if (confvalue)
-          gconf_value_free (confvalue);
-      }
-    }
-#endif
   } else {
     video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
     if (video_sink)
@@ -7093,15 +7040,6 @@ bacon_video_widget_new (int width, int height,
   } else {
     bacon_video_widget_set_connection_speed (bvw,
     	bvw->priv->connection_speed);
-  }
-
-  /* those are private to us, i.e. not Xine-compatible */
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX "/network-buffer-threshold", NULL);
-  if (confvalue != NULL) {
-    g_object_set (bvw->priv->play, "queue-threshold",
-        (guint64) (GST_SECOND * gconf_value_get_float (confvalue)), NULL);
-    gconf_value_free (confvalue);
   }
 
   return GTK_WIDGET (bvw);
