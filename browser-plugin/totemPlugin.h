@@ -257,6 +257,7 @@ class totemPlugin {
 #ifdef TOTEM_GMP_PLUGIN
   public:
     void SetURL (const char* aURL);
+    void SetBaseURL (const char* aBaseURL);
     const char* URL() const { return mURLURI; }
 
   private:

@@ -996,7 +996,6 @@ totemPlugin::RequestStream (bool aForceViewer)
 	/* Prefer filename over src */
 	if (mURLURI) {
 		requestURI = mURLURI;
-		baseURI = mSrcURI; /* FIXME: that correct? */
 	}
 #endif /* TOTEM_GMP_PLUGIN */
 
@@ -1585,7 +1584,23 @@ totemPlugin::SetURL (const char* aURL)
 
         mURLURI = g_strdup (aURL);
 
-	/* FIXME: what is the correct base for the URL param? mSrcURI or mBaseURI? */
+	/* FIXME: security checks? */
+        /* FIXMEchpe: resolve the URI here? */
+}
+
+void
+totemPlugin::SetBaseURL (const char *aBaseURL)
+{
+        g_free (mBaseURI);
+
+	/* Don't allow empty URL */
+        if (!aBaseURL || !aBaseURL[0]) {
+                mBaseURI = NULL;
+		return;
+        }
+
+        mBaseURI = g_strdup (aBaseURL);
+
 	/* FIXME: security checks? */
         /* FIXMEchpe: resolve the URI here? */
 }
@@ -2116,6 +2131,12 @@ totemPlugin::Init (NPMIMEType mimetype,
         if (filename) {
                 SetURL (filename);
         }
+
+        /* http://msdn.microsoft.com/en-us/library/dd564090(v=VS.85).aspx */
+        const char *base = (const char *) g_hash_table_lookup (args, "baseurl");
+        if (base)
+		SetBaseURL (base);
+
 #endif /* TOTEM_GMP_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
@@ -2288,6 +2309,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 	/* Dump some disagnostics */
 	D ("mSrcURI: %s", mSrcURI ? mSrcURI : "");
+	D ("mBaseURI: %s", mBaseURI ? mBaseURI : "");
 	D ("mCache: %d", mCache);
 	D ("mControllerHidden: %d", mControllerHidden);
 	D ("mShowStatusbar: %d", mShowStatusbar);
