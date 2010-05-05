@@ -276,15 +276,6 @@
             </object>
          </child>
          <child>
-            <object class="GtkToggleAction" id="deinterlace">
-               <property name="label" translatable="yes">_Deinterlace</property>
-               <property name="tooltip" translatable="yes">Deinterlace</property>
-               <property name="active">False</property>
-               <signal name="activate" handler="deinterlace_action_callback"/>
-            </object>
-            <accelerator key="I" modifiers="GDK_CONTROL_MASK"/>
-         </child>
-         <child>
             <object class="GtkToggleAction" id="show-controls">
                <property name="label" translatable="yes">Show _Controls</property>
                <property name="tooltip" translatable="yes">Show controls</property>
@@ -470,7 +461,6 @@
                <menuitem name="aspect-ratio-anamorphic" action="aspect-ratio-anamorphic"/>
                <menuitem name="aspect-ratio-dvb" action="aspect-ratio-dvb"/>
             </menu>
-            <menuitem name="deinterlace" action="deinterlace"/>
             <menuitem name="next-angle" action="next-angle"/>
 	    <menuitem name="show-controls" action="show-controls"/>
             <separator/>
@@ -1254,6 +1244,29 @@
 		      <property name="expand">False</property>
 		      <property name="fill">False</property>
 		    </packing>
+		  </child>
+		  <child>
+			  <object class="GtkAlignment" id="alignment9">
+				  <property name="visible">True</property>
+				  <property name="left_padding">12</property>
+				  <child>
+					  <object class="GtkCheckButton" id="tpw_no_deinterlace_checkbutton">
+						  <property name="label" translatable="yes">Disable _deinterlacing of interlaced videos</property>
+						  <property name="visible">True</property>
+						  <property name="can_focus">False</property>
+						  <property name="receives_default">False</property>
+						  <property name="use_action_appearance">False</property>
+						  <property name="use_underline">True</property>
+						  <property name="draw_indicator">True</property>
+						  <signal name="toggled" handler="no_deinterlace_toggled_cb"/>
+					  </object>
+				  </child>
+			  </object>
+			  <packing>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				  <property name="position">3</property>
+			  </packing>
 		  </child>
 
 		</object>
