@@ -1804,8 +1804,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 	GtkWidget *menu;
 	BvwUseType type;
 	GError *err = NULL;
-	GConfClient *gc;
-	double volume;
 
 	emb->xml = totem_interface_load ("mozilla-viewer.ui", TRUE,
 					 GTK_WINDOW (emb->window), emb);
@@ -1947,20 +1945,13 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (G_OBJECT (popup_button), "button-press-event",
 			  G_CALLBACK (on_popup_button_button_pressed), emb);
 
-	gc = gconf_client_get_default ();
-	volume = ((double) gconf_client_get_int (gc, GCONF_PREFIX"/volume", NULL)) / 100.0;
-	g_object_unref (G_OBJECT (gc));
-
 	emb->volume = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
 	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (emb->fs->volume),
 					 gtk_scale_button_get_adjustment 
 					 (GTK_SCALE_BUTTON (emb->volume)));
 	gtk_button_set_focus_on_click (GTK_BUTTON (emb->volume), FALSE);
-	gtk_scale_button_set_value (GTK_SCALE_BUTTON (emb->volume), volume);
 	g_signal_connect (G_OBJECT (emb->volume), "value-changed",
 			  G_CALLBACK (cb_vol), emb);
-	bacon_video_widget_set_volume (emb->bvw, volume);
-	totem_embedded_volume_changed (emb, volume);
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
