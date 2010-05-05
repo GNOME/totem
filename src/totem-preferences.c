@@ -49,6 +49,7 @@ G_MODULE_EXPORT void checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Tot
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void no_deinterlace_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void connection_combobox_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
@@ -198,6 +199,43 @@ checkbutton4_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 }
 
 void
+no_deinterlace_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+
+	bacon_video_widget_set_deinterlacing (totem->bvw, !value);
+	gconf_client_set_bool (totem->gc,
+			       GCONF_PREFIX"/disable_deinterlacing",
+			       value, NULL);
+}
+
+static void
+no_deinterlace_changed_cb (GConfClient *client,
+			   guint cnxn_id,
+			   GConfEntry *entry,
+			   Totem *totem)
+{
+	GObject *button;
+	gboolean value;
+
+	button = gtk_builder_get_object (totem->xml, "tpw_no_deinterlace_checkbutton");
+
+	g_signal_handlers_block_matched (button,
+					 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
+
+	value = gconf_client_get_bool (totem->gc,
+				       GCONF_PREFIX"/disable_deinterlacing", NULL);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
+	bacon_video_widget_set_deinterlacing (totem->bvw, !value);
+
+	g_signal_handlers_unblock_matched (button,
+					   G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
+}
+
+void
 remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
 	gboolean value;
@@ -208,26 +246,6 @@ remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *
 			       GCONF_PREFIX"/remember_position",
 			       value, NULL);
 	totem->remember_position = value;
-}
-
-static void
-deinterlace_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, Totem *totem)
-{
-	GtkAction *action;
-
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"deinterlace");
-
-	g_signal_handlers_block_matched (G_OBJECT (action),
-			G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
-
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/deinterlace", NULL));
-
-	g_signal_handlers_unblock_matched (G_OBJECT (action),
-			G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
 }
 
 static void
@@ -503,8 +521,7 @@ void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *menu, *content_area;
-	GtkAction *action;
-	gboolean show_visuals, auto_resize, is_local, deinterlace, lock_screensaver_on_audio;
+	gboolean show_visuals, auto_resize, is_local, no_deinterlace, lock_screensaver_on_audio;
 	int connection_speed;
 	guint i, hidden;
 	char *visual, *font, *encoding;
@@ -585,6 +602,16 @@ totem_setup_preferences (Totem *totem)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), !lock_screensaver_on_audio);
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/lock_screensaver_on_audio",
 				 (GConfClientNotifyFunc) lock_screensaver_on_audio_changed_cb,
+				 totem, NULL, NULL);
+
+	/* Disable deinterlacing */
+	item = gtk_builder_get_object (totem->xml, "tpw_no_deinterlace_checkbutton");
+	no_deinterlace = gconf_client_get_bool (totem->gc,
+						GCONF_PREFIX"/disable_deinterlacing", NULL);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), no_deinterlace);
+	bacon_video_widget_set_deinterlacing (totem->bvw, !no_deinterlace);
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/disable_deinterlacing",
+				 (GConfClientNotifyFunc) no_deinterlace_changed_cb,
 				 totem, NULL, NULL);
 
 	/* Connection Speed */
@@ -683,19 +710,6 @@ totem_setup_preferences (Totem *totem)
 	item = gtk_builder_get_object (totem->xml, "tpw_sound_output_combobox");
 	audio_out = bacon_video_widget_get_audio_out_type (totem->bvw);
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), audio_out);
-
-	/* This one is for the deinterlacing menu, not really our dialog
-	 * but we do it anyway */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"deinterlace");
-	deinterlace = gconf_client_get_bool (totem->gc,
-			GCONF_PREFIX"/deinterlace", NULL);
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-			deinterlace);
-	bacon_video_widget_set_deinterlacing (totem->bvw, deinterlace);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/deinterlace",
-			(GConfClientNotifyFunc) deinterlace_changed_cb,
-			totem, NULL, NULL);
 
 	/* Subtitle font selection */
 	item = gtk_builder_get_object (totem->xml, "font_sel_button");

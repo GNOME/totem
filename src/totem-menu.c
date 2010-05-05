@@ -73,7 +73,6 @@ G_MODULE_EXPORT void about_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void plugins_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void repeat_mode_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void shuffle_mode_action_callback (GtkToggleAction *action, Totem *totem);
-G_MODULE_EXPORT void deinterlace_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void show_controls_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
@@ -1256,17 +1255,6 @@ shuffle_mode_action_callback (GtkToggleAction *action, Totem *totem)
 {
 	totem_playlist_set_shuffle (totem->playlist,
 			gtk_toggle_action_get_active (action));
-}
-
-void
-deinterlace_action_callback (GtkToggleAction *action, Totem *totem)
-{
-	gboolean value;
-
-	value = gtk_toggle_action_get_active (action);
-	bacon_video_widget_set_deinterlacing (totem->bvw, value);
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/deinterlace",
-			value, NULL);
 }
 
 void

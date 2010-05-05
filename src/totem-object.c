@@ -3550,18 +3550,6 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_H:
 		totem_action_toggle_controls (totem);
 		break;
-	case GDK_i:
-	case GDK_I: {
-			GtkToggleAction *action;
-			gboolean state;
-
-			action = GTK_TOGGLE_ACTION (gtk_action_group_get_action
-					(totem->main_action_group,
-					 "deinterlace"));
-			state = gtk_toggle_action_get_active (action);
-			gtk_toggle_action_set_active (action, !state);
-		}
-		break;
 	case GDK_M:
 	case GDK_m:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
