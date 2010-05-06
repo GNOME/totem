@@ -1944,7 +1944,7 @@ text_tags_changed_cb (GstElement *playbin2, gint stream_id, gpointer user_data)
 }
 
 static gboolean
-bvw_buffering_done (BaconVideoWidget *bvw)
+bvw_download_buffering_done (BaconVideoWidget *bvw)
 {
   /* When we set buffering left to 0, that means it's ready to play */
   if (bvw->priv->buffering_left == 0) {
@@ -2009,20 +2009,17 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
     /* if the desired state is playing, go back */
     if (bvw->priv->target_state == GST_STATE_PLAYING) {
       GST_DEBUG ("Buffering done, setting pipeline back to PLAYING");
-      gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
+      bacon_video_widget_play (bvw, NULL);
     } else {
       GST_DEBUG ("Buffering done, keeping pipeline PAUSED");
     }
-  } else if (bvw->priv->buffering == FALSE &&
-	     bvw->priv->target_state == GST_STATE_PLAYING) {
+  } else if (bvw->priv->target_state == GST_STATE_PLAYING) {
     GstState cur_state;
 
     gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
-    if (cur_state == GST_STATE_PLAYING) {
+    if (cur_state != GST_STATE_PAUSED) {
       GST_DEBUG ("Buffering ... temporarily pausing playback");
       gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
-    } else {
-      GST_DEBUG ("Buffering ... prerolling, not doing anything");
     }
     bvw->priv->buffering = TRUE;
   } else {
@@ -2473,7 +2470,7 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
       bvw->priv->buffering_left = 0;
 
     /* Start playing when we've downloaded enough */
-    if (bvw_buffering_done (bvw) != FALSE &&
+    if (bvw_download_buffering_done (bvw) != FALSE &&
 	bvw->priv->target_state == GST_STATE_PLAYING) {
       GST_DEBUG ("Starting playback because the download buffer is filled enough");
       bacon_video_widget_play (bvw, NULL);
@@ -3817,8 +3814,14 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
 
   /* Lie when trying to play a file whilst we're download buffering */
   if (bvw->priv->download_buffering != FALSE &&
-      bvw_buffering_done (bvw) == FALSE) {
+      bvw_download_buffering_done (bvw) == FALSE) {
     GST_DEBUG ("download buffering in progress, not playing");
+    return TRUE;
+  }
+
+  /* Or when we're buffering */
+  if (bvw->priv->buffering != FALSE) {
+    GST_DEBUG ("buffering in progress, not playing");
     return TRUE;
   }
 
