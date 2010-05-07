@@ -357,21 +357,8 @@ load_pixbuf (GsdMediaKeysWindow *window,
         pixbuf = gtk_icon_theme_load_icon (theme,
                                            name,
                                            icon_size,
-                                           GTK_ICON_LOOKUP_FORCE_SVG,
+                                           GTK_ICON_LOOKUP_FORCE_SIZE,
                                            NULL);
-
-        /* make sure the pixbuf is close to the requested size
-         * this is necessary because GTK_ICON_LOOKUP_FORCE_SVG
-         * seems to be broken */
-        if (pixbuf != NULL) {
-                int width;
-
-                width = gdk_pixbuf_get_width (pixbuf);
-                if (width < (float)icon_size * 0.75) {
-                        g_object_unref (pixbuf);
-                        pixbuf = NULL;
-                }
-        }
 
         return pixbuf;
 }
