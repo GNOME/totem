@@ -151,7 +151,7 @@ totem_python_module_init_python (void)
 
 	PySys_SetArgv (1, argv);
 
-	/* pygtk.require("2.8") */
+	/* pygtk.require("2.0") */
 	pygtk = PyImport_ImportModule ("pygtk");
 	if (pygtk == NULL) {
 		g_warning ("Could not import pygtk, check your installation");
@@ -161,7 +161,12 @@ totem_python_module_init_python (void)
 
 	mdict = PyModule_GetDict (pygtk);
 	require = PyDict_GetItemString (mdict, "require");
-	PyObject_CallObject (require, Py_BuildValue ("(S)", PyString_FromString ("2.8")));
+	PyObject_CallObject (require, Py_BuildValue ("(S)", PyString_FromString ("2.0")));
+	if (PyErr_Occurred ()) {
+		g_warning ("Could not get required pygtk version, check your installation");
+		PyErr_Print();
+		return;
+	}
 
 	/* import gobject */
 	init_pygobject ();
