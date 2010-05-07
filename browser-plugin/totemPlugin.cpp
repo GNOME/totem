@@ -1230,9 +1230,12 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 			scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
 			break;
 		case TOTEM_STATE_STOPPED:
-			if (scriptable->mPluginState == totemNarrowSpacePlayer::eState_Playable)
+			if (scriptable->mPluginState == totemNarrowSpacePlayer::eState_Playable) {
 				scriptable->mPluginState = totemNarrowSpacePlayer::eState_Complete;
-			else
+				/* The QuickTime plugin expects the duration to be the
+				 * length of the file on EOS */
+				plugin->mTime = plugin->mDuration;
+			} else
 				scriptable->mPluginState = totemNarrowSpacePlayer::eState_Waiting;
 			break;
 		default:
