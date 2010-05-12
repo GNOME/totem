@@ -4,15 +4,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2009-11-06 19:17+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
+"POT-Creation-Date: 2010-05-10 01:33+0000\n"
+"PO-Revision-Date: 2010-05-12 18:38 -0400\n"
 "Last-Translator: Thomas Thurman <tthurman@gnome.org>\n"
-"Language-Team: Shavian <ubuntu-l10n-en-shaw@lists.launchpad.net>\n"
+"Language-Team: Shavian <ubuntu-l10n-en-shaw@launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:98
+#, fuzzy
+#: ../data/fullscreen.ui.h:1
+msgid "Leave Fullscreen"
+msgstr "𐑤𐑰𐑝 Fullscreen"
+
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:96
 msgid "Time:"
 msgstr "𐑑𐑲𐑥:"
 
@@ -44,7 +51,7 @@ msgstr "𐑮𐑦𐑥𐑵𐑝 𐑓𐑲𐑤 𐑓𐑮𐑪𐑥 𐑐𐑤𐑱𐑤𐑦�
 msgid "Save Playlist..."
 msgstr "𐑕𐑱𐑝 𐑐𐑤𐑱𐑤𐑦𐑕𐑑..."
 
-#: ../data/playlist.ui.h:8 ../data/totem.ui.h:73
+#: ../data/playlist.ui.h:8 ../data/totem.ui.h:71
 msgid "Select a file to use for text subtitles"
 msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑩 𐑓𐑲𐑤 𐑑 𐑿𐑕 𐑓𐑹 𐑑𐑧𐑒𐑕𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟"
 
@@ -56,13 +63,18 @@ msgstr "_𐑒𐑪𐑐𐑦 𐑤𐑴𐑒𐑱𐑖𐑩𐑯"
 msgid "_Remove"
 msgstr "_𐑮𐑦𐑥𐑵𐑝"
 
-#: ../data/playlist.ui.h:11 ../data/totem.ui.h:138
+#: ../data/playlist.ui.h:11 ../data/totem.ui.h:139
 msgid "_Select Text Subtitles..."
 msgstr "_𐑕𐑩𐑤𐑧𐑒𐑑 𐑑𐑧𐑒𐑕𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟..."
 
 #: ../data/plugins.ui.h:1
 msgid "Author:"
 msgstr "𐑷𐑔𐑼:"
+
+#, fuzzy
+#: ../data/plugins.ui.h:2
+msgid "C_onfigure..."
+msgstr "C_onfigure..."
 
 #: ../data/plugins.ui.h:3
 msgid "Copyright:"
@@ -82,9 +94,21 @@ msgstr "𐑕𐑲𐑑:"
 msgid "0 Channels"
 msgstr "0 𐑗𐑨𐑯𐑩𐑤𐑟"
 
+#. Sample rate
+#, fuzzy
+#: ../data/properties.ui.h:2
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+msgid "0 Hz"
+msgstr "0 Hz"
+
 #: ../data/properties.ui.h:3
 msgid "0 frames per second"
 msgstr "0 𐑓𐑮𐑱𐑥𐑟 𐑐𐑻 𐑕𐑧𐑒𐑩𐑯𐑛"
+
+#, fuzzy
+#: ../data/properties.ui.h:4
+msgid "0 kbps"
+msgstr "0 kbps"
 
 #. 0 seconds
 #: ../data/properties.ui.h:5 ../src/backend/video-utils.c:158
@@ -103,7 +127,7 @@ msgstr "𐑨𐑤𐑚𐑳𐑥:"
 msgid "Artist:"
 msgstr "𐑭𐑑𐑦𐑕𐑑:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:22
 #: ../src/totem-properties-view.c:89
 msgid "Audio"
 msgstr "𐑷𐑛𐑦𐑴"
@@ -132,7 +156,12 @@ msgstr "𐑛𐑲𐑥𐑧𐑯𐑖𐑪𐑯𐑟:"
 msgid "Duration:"
 msgstr "𐑛𐑫𐑮𐑱𐑖𐑩𐑯:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:40
+#, fuzzy
+#: ../data/properties.ui.h:16
+msgid "Framerate:"
+msgstr "Framerate:"
+
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:38
 msgid "General"
 msgstr "𐑡𐑧𐑯𐑼𐑩𐑤"
 
@@ -173,7 +202,8 @@ msgstr "𐑑𐑲𐑑𐑩𐑤:"
 msgid "Unknown"
 msgstr "𐑳𐑯𐑴𐑯"
 
-#: ../data/properties.ui.h:22 ../src/totem-properties-view.c:85
+#: ../data/properties.ui.h:22 ../data/totem.ui.h:98
+#: ../src/totem-properties-view.c:85
 msgid "Video"
 msgstr "𐑝𐑦𐑛𐑦𐑴"
 
@@ -191,14 +221,69 @@ msgid "_Add to Playlist"
 msgstr "_𐑨𐑛 𐑑 𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1633
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:48
+#: ../src/totem-object.c:1661
 msgid "Movie Player"
 msgstr "𐑥𐑵𐑝𐑰 𐑐𐑤𐑱𐑼"
 
 #: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies and songs"
 msgstr "𐑐𐑤𐑱 𐑥𐑵𐑝𐑰𐑟 𐑯 𐑕𐑪𐑙𐑟"
+
+#, fuzzy
+#: ../data/totem.ui.h:1
+msgid "1.5 Mbps T1/Intranet/LAN"
+msgstr "1.5 Mbps T1/Intranet/𐑤𐑨𐑯"
+
+#, fuzzy
+#: ../data/totem.ui.h:2
+msgid "112 Kbps Dual ISDN/DSL"
+msgstr "112 Kbps 𐑛𐑵𐑩𐑤 ISDN/DSL"
+
+#, fuzzy
+#: ../data/totem.ui.h:3
+msgid "14.4 Kbps Modem"
+msgstr "14.4 Kbps 𐑥𐑴𐑛𐑧𐑥"
+
+#, fuzzy
+#: ../data/totem.ui.h:4
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (Widescreen)"
+
+#, fuzzy
+#: ../data/totem.ui.h:5
+msgid "19.2 Kbps Modem"
+msgstr "19.2 Kbps 𐑥𐑴𐑛𐑧𐑥"
+
+#, fuzzy
+#: ../data/totem.ui.h:6
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#, fuzzy
+#: ../data/totem.ui.h:7
+msgid "256 Kbps DSL/Cable"
+msgstr "256 Kbps DSL/𐑒𐑱𐑚𐑩𐑤"
+
+#, fuzzy
+#: ../data/totem.ui.h:8
+msgid "28.8 Kbps Modem"
+msgstr "28.8 Kbps 𐑥𐑴𐑛𐑧𐑥"
+
+#, fuzzy
+#: ../data/totem.ui.h:9
+msgid "33.6 Kbps Modem"
+msgstr "33.6 Kbps 𐑥𐑴𐑛𐑧𐑥"
+
+#, fuzzy
+#: ../data/totem.ui.h:10
+msgid "34.4 Kbps Modem"
+msgstr "34.4 Kbps 𐑥𐑴𐑛𐑧𐑥"
+
+#, fuzzy
+#: ../data/totem.ui.h:11
+msgid "384 Kbps DSL/Cable"
+msgstr "384 Kbps DSL/𐑒𐑱𐑚𐑩𐑤"
 
 #: ../data/totem.ui.h:12
 msgid "4-channel"
@@ -208,7 +293,7 @@ msgstr "4-𐑗𐑨𐑯𐑩𐑤"
 msgid "4.1-channel"
 msgstr "4.1-𐑗𐑨𐑯𐑩𐑤"
 
-#: ../data/totem.ui.h:14 ../src/totem-menu.c:1425
+#: ../data/totem.ui.h:14
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
@@ -220,249 +305,332 @@ msgstr "5.0-𐑗𐑨𐑯𐑩𐑤"
 msgid "5.1-channel"
 msgstr "5.1-𐑗𐑨𐑯𐑩𐑤"
 
+#, fuzzy
+#: ../data/totem.ui.h:17
+msgid "512 Kbps DSL/Cable"
+msgstr "512 Kbps DSL/𐑒𐑱𐑚𐑩𐑤"
+
+#, fuzzy
+#: ../data/totem.ui.h:18
+msgid "56 Kbps Modem/ISDN"
+msgstr "56 Kbps 𐑥𐑴𐑛𐑧𐑥/ISDN"
+
+#, fuzzy
+#: ../data/totem.ui.h:19
+msgid "AC3 Passthrough"
+msgstr "AC3 Passthrough"
+
+#, fuzzy
+#: ../data/totem.ui.h:20
+msgid "A_udio Menu"
+msgstr "A_udio 𐑥𐑧𐑯𐑿"
+
 #: ../data/totem.ui.h:21
 msgid "About this application"
 msgstr "𐑩𐑚𐑬𐑑 𐑞𐑦𐑕 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯"
 
-#: ../data/totem.ui.h:22
-msgid "Also disable the screensaver when playing _audio"
-msgstr "𐑷𐑤𐑕𐑴 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑞 𐑕𐑒𐑮𐑰𐑯𐑕𐑱𐑝𐑼 𐑢𐑧𐑯 𐑐𐑤𐑱𐑦𐑙 _𐑷𐑛𐑦𐑴"
-
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:23
 msgid "Audio Output"
 msgstr "𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑"
 
-#: ../data/totem.ui.h:25 ../src/totem-menu.c:346 ../src/totem-menu.c:1423
+#: ../data/totem.ui.h:24 ../src/totem-menu.c:195
 msgid "Auto"
 msgstr "𐑷𐑑𐑴"
 
-#: ../data/totem.ui.h:26
-msgid "Automatically _load subtitle files when movie is loaded"
-msgstr "𐑷𐑑𐑩𐑥𐑨𐑑𐑦𐑒𐑤𐑦 _𐑤𐑴𐑛 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑲𐑤𐑟 𐑢𐑧𐑯 𐑥𐑵𐑝𐑰 𐑦𐑟 𐑤𐑴𐑛𐑩𐑛"
-
-#: ../data/totem.ui.h:27
-msgid "Automatically _resize the window when a new video is loaded"
-msgstr "𐑷𐑑𐑩𐑥𐑨𐑑𐑦𐑒𐑤𐑦 _𐑮𐑰𐑕𐑲𐑟 𐑞 𐑢𐑦𐑯𐑛𐑴 𐑢𐑧𐑯 𐑩 𐑯𐑿 𐑝𐑦𐑛𐑦𐑴 𐑦𐑟 𐑤𐑴𐑛𐑩𐑛"
-
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:25
 msgid "Clear the playlist"
 msgstr "𐑒𐑤𐑽 𐑞 𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
 
-#: ../data/totem.ui.h:30
+#, fuzzy
+#: ../data/totem.ui.h:26
+msgid "Co_ntrast:"
+msgstr "Co_ntrast:"
+
+#: ../data/totem.ui.h:27
 msgid "Color Balance"
 msgstr "𐑒𐑳𐑤𐑼 𐑚𐑨𐑤𐑩𐑯𐑕"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:28
 msgid "Configure plugins to extend the application"
 msgstr "𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼 𐑐𐑤𐑳𐑜𐑦𐑯𐑟 𐑑 𐑦𐑒𐑕𐑑𐑧𐑯𐑛 𐑞 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:29
 msgid "Configure the application"
 msgstr "𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼 𐑞 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:30
 msgid "Connection _speed:"
 msgstr "𐑒𐑩𐑯𐑧𐑒𐑖𐑩𐑯 _𐑕𐑐𐑰𐑛:"
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:31
 msgid "Decrease volume"
 msgstr "𐑛𐑦𐑒𐑮𐑰𐑕 𐑝𐑪𐑤𐑿𐑥"
 
-#: ../data/totem.ui.h:36
+#, fuzzy
+#: ../data/totem.ui.h:32
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "𐑛𐑦𐑕𐑱𐑚𐑩𐑤 _deinterlacing 𐑝 𐑦𐑯𐑑𐑻𐑤𐑱𐑕𐑑 𐑝𐑦𐑛𐑰𐑴𐑟"
+
+#, fuzzy
+#: ../data/totem.ui.h:33
+msgid "Disable screensaver when playing "
+msgstr "𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑕𐑒𐑮𐑰𐑯𐑕𐑱𐑝𐑼 𐑢𐑧𐑯 𐑐𐑤𐑱𐑦𐑙 "
+
+#: ../data/totem.ui.h:34
 msgid "Display"
 msgstr "𐑛𐑩𐑕𐑐𐑤𐑱"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:35
 msgid "Eject the current disc"
 msgstr "𐑦𐑡𐑧𐑒𐑑 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑛𐑦𐑕𐑒"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:36
 msgid "Extra Large"
 msgstr "𐑧𐑒𐑕𐑑𐑮𐑩 𐑤𐑸𐑡"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:37
 msgid "Fit Window to Movie"
 msgstr "𐑓𐑦𐑑 𐑢𐑦𐑯𐑛𐑴 𐑑 𐑥𐑵𐑝𐑰"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:39
 msgid "Go to the DVD menu"
 msgstr "𐑜𐑴 𐑑 𐑞 DVD 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:40
 msgid "Go to the angle menu"
 msgstr "𐑜𐑴 𐑑 𐑞 𐑨𐑙𐑜𐑤 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:41
 msgid "Go to the audio menu"
 msgstr "𐑜𐑴 𐑑 𐑞 𐑷𐑛𐑦𐑴 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:42
 msgid "Go to the chapter menu"
 msgstr "𐑜𐑴 𐑑 𐑞 𐑗𐑨𐑐𐑑𐑼 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:45
+#: ../data/totem.ui.h:43
 msgid "Go to the title menu"
 msgstr "𐑜𐑴 𐑑 𐑞 𐑑𐑲𐑑𐑩𐑤 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:46
+#: ../data/totem.ui.h:44
 msgid "Help contents"
 msgstr "𐑣𐑧𐑤𐑐 𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:45
 msgid "Increase volume"
 msgstr "𐑦𐑯𐑒𐑮𐑰𐑕 𐑝𐑪𐑤𐑿𐑥"
 
-#: ../data/totem.ui.h:49
+#, fuzzy
+#: ../data/totem.ui.h:46
+msgid "Intranet/LAN"
+msgstr "Intranet/𐑤𐑨𐑯"
+
+#: ../data/totem.ui.h:47
 msgid "Large"
 msgstr "𐑤𐑸𐑡"
 
-#: ../data/totem.ui.h:51
+#: ../data/totem.ui.h:49
 msgid "Networking"
 msgstr "𐑯𐑧𐑑𐑢𐑻𐑒𐑦𐑙"
 
-#: ../data/totem.ui.h:52
+#: ../data/totem.ui.h:50
 msgid "Next chapter or movie"
 msgstr "𐑯𐑧𐑒𐑕𐑑 𐑗𐑨𐑐𐑑𐑼 𐑹 𐑥𐑵𐑝𐑰"
 
-#: ../data/totem.ui.h:53
+#: ../data/totem.ui.h:51
 msgid "Normal"
 msgstr "𐑯𐑹𐑥𐑩𐑤"
 
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:52
 msgid "Open _Location..."
 msgstr "𐑴𐑐𐑩𐑯 _𐑤𐑴𐑒𐑱𐑖𐑩𐑯..."
 
-#: ../data/totem.ui.h:55
+#: ../data/totem.ui.h:53
 msgid "Open a file"
 msgstr "𐑴𐑐𐑩𐑯 𐑩 𐑓𐑲𐑤"
 
-#: ../data/totem.ui.h:56
+#: ../data/totem.ui.h:54
 msgid "Open a non-local file"
 msgstr "𐑴𐑐𐑩𐑯 𐑩 𐑯𐑪𐑯-𐑤𐑴𐑒𐑩𐑤 𐑓𐑲𐑤"
 
-#: ../data/totem.ui.h:58
+#, fuzzy
+#: ../data/totem.ui.h:55
+msgid "Play / P_ause"
+msgstr "𐑐𐑤𐑱 / P_ause"
+
+#: ../data/totem.ui.h:56
 msgid "Play or pause the movie"
 msgstr "𐑐𐑤𐑱 𐑹 𐑐𐑷𐑟 𐑞 𐑥𐑵𐑝𐑰"
 
-#: ../data/totem.ui.h:59
+#: ../data/totem.ui.h:57
 msgid "Playback"
 msgstr "𐑐𐑤𐑱𐑚𐑨𐑒"
 
-#: ../data/totem.ui.h:60
+#: ../data/totem.ui.h:58
 msgid "Plugins..."
 msgstr "𐑐𐑤𐑳𐑜𐑦𐑯𐑟..."
 
-#: ../data/totem.ui.h:62
+#, fuzzy
+#: ../data/totem.ui.h:59
+msgid "Prefere_nces"
+msgstr "Prefere_nces"
+
+#: ../data/totem.ui.h:60
 msgid "Previous chapter or movie"
 msgstr "𐑐𐑮𐑰𐑝𐑦𐑩𐑕 𐑗𐑨𐑐𐑑𐑼 𐑹 𐑥𐑵𐑝𐑰"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:61
 msgid "Quit the program"
 msgstr "𐑒𐑢𐑦𐑑 𐑞 𐑐𐑮𐑴𐑜𐑮𐑨𐑥"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:62
 msgid "Reset to _Defaults"
 msgstr "𐑮𐑰𐑕𐑧𐑑 𐑑 _𐑛𐑦𐑓𐑷𐑤𐑑𐑕"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:63
 msgid "Resize _1:1"
 msgstr "𐑮𐑰𐑕𐑲𐑟 _1:1"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:64
 msgid "Resize _2:1"
 msgstr "𐑮𐑰𐑕𐑲𐑟 _2:1"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:65
 msgid "Resize to double the original video size"
 msgstr "𐑮𐑰𐑕𐑲𐑟 𐑑 𐑛𐑳𐑚𐑩𐑤 𐑞 𐑼𐑦𐑡𐑩𐑯𐑩𐑤 𐑝𐑦𐑛𐑦𐑴 𐑕𐑲𐑟"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:66
 msgid "Resize to half the original video size"
 msgstr "𐑮𐑰𐑕𐑲𐑟 𐑑 𐑣𐑭𐑓 𐑞 𐑼𐑦𐑡𐑩𐑯𐑩𐑤 𐑝𐑦𐑛𐑦𐑴 𐑕𐑲𐑟"
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:67
 msgid "Resize to the original video size"
 msgstr "𐑮𐑰𐑕𐑲𐑟 𐑑 𐑞 𐑼𐑦𐑡𐑩𐑯𐑩𐑤 𐑝𐑦𐑛𐑦𐑴 𐑕𐑲𐑟"
 
-#: ../data/totem.ui.h:74 ../src/totem-menu.c:1415
+#, fuzzy
+#: ../data/totem.ui.h:68
+msgid "S_idebar"
+msgstr "S_idebar"
+
+#, fuzzy
+#: ../data/totem.ui.h:69
+msgid "S_ubtitles"
+msgstr "S_ubtitles"
+
+#, fuzzy
+#: ../data/totem.ui.h:70
+msgid "Sat_uration:"
+msgstr "Sat_uration:"
+
+#: ../data/totem.ui.h:72
 msgid "Set the repeat mode"
 msgstr "𐑕𐑧𐑑 𐑞 𐑮𐑦𐑐𐑰𐑑 𐑥𐑴𐑛"
 
-#: ../data/totem.ui.h:75 ../src/totem-menu.c:1416
+#: ../data/totem.ui.h:73
 msgid "Set the shuffle mode"
 msgstr "𐑕𐑧𐑑 𐑞 𐑖𐑩𐑓𐑩𐑤 𐑥𐑴𐑛"
 
-#: ../data/totem.ui.h:78 ../src/totem-menu.c:1425
+#, fuzzy
+#: ../data/totem.ui.h:74
+msgid "Sets 16:9 (widescreen) aspect ratio"
+msgstr "𐑕𐑧𐑑𐑕 16:9 (widescreen) 𐑨𐑕𐑐𐑧𐑒𐑑 𐑮𐑱𐑖𐑦𐑴"
+
+#, fuzzy
+#: ../data/totem.ui.h:75
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "𐑕𐑧𐑑𐑕 2.11:1 (DVB) 𐑨𐑕𐑐𐑧𐑒𐑑 𐑮𐑱𐑖𐑦𐑴"
+
+#: ../data/totem.ui.h:76
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "𐑕𐑧𐑑𐑕 4:3 (TV) 𐑨𐑕𐑐𐑧𐑒𐑑 𐑮𐑱𐑖𐑦𐑴"
 
-#: ../data/totem.ui.h:79 ../src/totem-menu.c:1423
+#: ../data/totem.ui.h:77
 msgid "Sets automatic aspect ratio"
 msgstr "𐑕𐑧𐑑𐑕 𐑷𐑑𐑴𐑥𐑨𐑑𐑦𐑒 𐑨𐑕𐑐𐑧𐑒𐑑 𐑮𐑱𐑖𐑦𐑴"
 
-#: ../data/totem.ui.h:80 ../src/totem-menu.c:1424
+#: ../data/totem.ui.h:78
 msgid "Sets square aspect ratio"
 msgstr "𐑕𐑧𐑑𐑕 𐑕𐑒𐑢𐑺 𐑨𐑕𐑐𐑧𐑒𐑑 𐑮𐑱𐑖𐑦𐑴"
 
-#: ../data/totem.ui.h:81 ../src/totem-menu.c:1418
+#: ../data/totem.ui.h:79
 msgid "Show _Controls"
 msgstr "𐑖𐑴 _𐑒𐑩𐑯𐑑𐑮𐑴𐑤𐑟"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:80
 msgid "Show _visual effects when an audio file is played"
 msgstr "𐑖𐑴 _𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕 𐑢𐑧𐑯 𐑩𐑯 𐑷𐑛𐑦𐑴 𐑓𐑲𐑤 𐑦𐑟 𐑐𐑤𐑱𐑛"
 
-#: ../data/totem.ui.h:83 ../src/totem-menu.c:1418
+#: ../data/totem.ui.h:81
 msgid "Show controls"
 msgstr "𐑖𐑴 𐑒𐑩𐑯𐑑𐑮𐑴𐑤𐑟"
 
-#: ../data/totem.ui.h:84 ../src/totem-menu.c:1419
+#: ../data/totem.ui.h:82
 msgid "Show or hide the sidebar"
 msgstr "𐑖𐑴 𐑹 𐑣𐑲𐑛 𐑞 𐑕𐑲𐑛𐑚𐑭𐑮"
 
-#: ../data/totem.ui.h:86 ../src/totem-menu.c:1406 ../src/totem-menu.c:1411
+#, fuzzy
+#: ../data/totem.ui.h:83
+msgid "Shuff_le Mode"
+msgstr "Shuff_le 𐑥𐑴𐑛"
+
+#: ../data/totem.ui.h:84
 msgid "Skip _Backwards"
 msgstr "𐑕𐑒𐑦𐑐 _𐑚𐑨𐑒𐑢𐑼𐑛𐑟"
 
-#: ../data/totem.ui.h:87 ../src/totem-menu.c:1405 ../src/totem-menu.c:1410
+#: ../data/totem.ui.h:85
 msgid "Skip _Forward"
 msgstr "𐑕𐑒𐑦𐑐 _𐑓𐑹𐑢𐑼𐑛"
 
-#: ../data/totem.ui.h:88 ../src/totem-menu.c:1406 ../src/totem-menu.c:1411
+#: ../data/totem.ui.h:86
 msgid "Skip backwards"
 msgstr "𐑕𐑒𐑦𐑐 𐑚𐑨𐑒𐑢𐑼𐑛𐑟"
 
-#: ../data/totem.ui.h:89 ../src/totem-menu.c:1405 ../src/totem-menu.c:1410
+#: ../data/totem.ui.h:87
 msgid "Skip forward"
 msgstr "𐑕𐑒𐑦𐑐 𐑓𐑹𐑢𐑼𐑛"
 
-#: ../data/totem.ui.h:90 ../src/totem-menu.c:1424
+#: ../data/totem.ui.h:88
 msgid "Square"
 msgstr "𐑕𐑒𐑢𐑺"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:89
 msgid "Start playing files from last position"
 msgstr "𐑕𐑑𐑸𐑑 𐑐𐑤𐑱𐑦𐑙 𐑓𐑲𐑤𐑟 𐑓𐑮𐑪𐑥 𐑤𐑭𐑕𐑑 𐑐𐑩𐑟𐑦𐑖𐑩𐑯"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5518
+#: ../data/totem.ui.h:90 ../src/backend/bacon-video-widget-gst-0.10.c:5811
 msgid "Stereo"
 msgstr "𐑕𐑑𐑧𐑮𐑰𐑴"
 
-#: ../data/totem.ui.h:94
+#, fuzzy
+#: ../data/totem.ui.h:91
+msgid "Switch An_gles"
+msgstr "𐑕𐑢𐑦𐑗 An_gles"
+
+#: ../data/totem.ui.h:92
 msgid "Switch camera angles"
 msgstr "𐑕𐑢𐑦𐑗 𐑒𐑨𐑥𐑻𐑩 𐑨𐑙𐑜𐑤𐑟"
 
-#: ../data/totem.ui.h:96
+#, fuzzy
+#: ../data/totem.ui.h:93
+msgid "Switch to fullscreen"
+msgstr "𐑕𐑢𐑦𐑗 𐑑 fullscreen"
+
+#: ../data/totem.ui.h:94
 msgid "Text Subtitles"
 msgstr "𐑑𐑧𐑒𐑕𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:95
 msgid "Time seek bar"
 msgstr "𐑑𐑲𐑥 𐑕𐑰𐑒 𐑚𐑸"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:97
 msgid "Totem Preferences"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑐𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑩𐑟"
+
+#, fuzzy
+#: ../data/totem.ui.h:99
+msgid "Video or Audio"
+msgstr "𐑝𐑦𐑛𐑦𐑴 𐑹 𐑷𐑛𐑦𐑴"
 
 #: ../data/totem.ui.h:100
 msgid "View the properties of the current stream"
@@ -544,37 +712,47 @@ msgstr "_𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕"
 msgid "_DVD Menu"
 msgstr "_DVD 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:121
+#: ../data/totem.ui.h:120
 msgid "_Edit"
 msgstr "_𐑧𐑛𐑦𐑑"
 
-#: ../data/totem.ui.h:122
+#: ../data/totem.ui.h:121
 msgid "_Eject"
 msgstr "_𐑦𐑡𐑧𐑒𐑑"
 
-#: ../data/totem.ui.h:123
+#: ../data/totem.ui.h:122
 msgid "_Encoding:"
 msgstr "_𐑧𐑯𐑒𐑴𐑛𐑦𐑙:"
 
-#: ../data/totem.ui.h:124
+#: ../data/totem.ui.h:123
 msgid "_Font:"
 msgstr "_𐑓𐑪𐑯𐑑:"
 
-#: ../data/totem.ui.h:126
+#, fuzzy
+#: ../data/totem.ui.h:124
+msgid "_Fullscreen"
+msgstr "_Fullscreen"
+
+#: ../data/totem.ui.h:125
 msgid "_Go"
 msgstr "_𐑜𐑴"
 
-#: ../data/totem.ui.h:127
+#: ../data/totem.ui.h:126
 msgid "_Help"
 msgstr "_𐑣𐑧𐑤𐑐"
 
-#: ../data/totem.ui.h:128
+#: ../data/totem.ui.h:127
 msgid "_Hue:"
 msgstr "_𐑣𐑿:"
 
-#: ../data/totem.ui.h:129
+#: ../data/totem.ui.h:128
 msgid "_Languages"
 msgstr "_𐑤𐑨𐑙𐑜𐑢𐑩𐑡𐑩𐑟"
+
+#, fuzzy
+#: ../data/totem.ui.h:129
+msgid "_Load subtitle files when movie is loaded"
+msgstr "_Load 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑲𐑤𐑟 𐑢𐑧𐑯 𐑥𐑵𐑝𐑰 𐑦𐑟 𐑤𐑴𐑛𐑩𐑛"
 
 #: ../data/totem.ui.h:130
 msgid "_Movie"
@@ -600,7 +778,7 @@ msgstr "_𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟"
 msgid "_Quit"
 msgstr "_𐑒𐑢𐑦𐑑"
 
-#: ../data/totem.ui.h:136 ../src/totem-menu.c:1415
+#: ../data/totem.ui.h:136
 msgid "_Repeat Mode"
 msgstr "_𐑮𐑦𐑐𐑰𐑑 𐑥𐑴𐑛"
 
@@ -608,19 +786,24 @@ msgstr "_𐑮𐑦𐑐𐑰𐑑 𐑥𐑴𐑛"
 msgid "_Resize 1:2"
 msgstr "_𐑮𐑰𐑕𐑲𐑟 1:2"
 
-#: ../data/totem.ui.h:139
+#, fuzzy
+#: ../data/totem.ui.h:138
+msgid "_Resize the window when a new video is loaded"
+msgstr "_Resize 𐑞 𐑢𐑦𐑯𐑛𐑴 𐑢𐑧𐑯 𐑩 𐑯𐑿 𐑝𐑦𐑛𐑦𐑴 𐑦𐑟 𐑤𐑴𐑛𐑩𐑛"
+
+#: ../data/totem.ui.h:140
 msgid "_Sound"
 msgstr "_𐑕𐑬𐑯𐑛"
 
-#: ../data/totem.ui.h:140
+#: ../data/totem.ui.h:141
 msgid "_Title Menu"
 msgstr "_𐑑𐑲𐑑𐑩𐑤 𐑥𐑧𐑯𐑿"
 
-#: ../data/totem.ui.h:141
+#: ../data/totem.ui.h:142
 msgid "_Type of visualization:"
 msgstr "_𐑑𐑲𐑐 𐑝 𐑝𐑦𐑠𐑢𐑩𐑤𐑩𐑟𐑱𐑖𐑩𐑯:"
 
-#: ../data/totem.ui.h:142
+#: ../data/totem.ui.h:143
 msgid "_View"
 msgstr "_𐑝𐑿"
 
@@ -633,48 +816,77 @@ msgid ""
 "Allow the screensaver to activate when playing audio. Disable if you have "
 "monitor-powered speakers."
 msgstr ""
-"𐑩𐑤𐑬 𐑞 𐑕𐑒𐑮𐑰𐑯𐑕𐑱𐑝𐑼 𐑑 𐑨𐑒𐑑𐑦𐑝𐑱𐑑 𐑢𐑧𐑯 𐑐𐑤𐑱𐑦𐑙 𐑷𐑛𐑦𐑴. 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑦𐑓 𐑿 𐑣𐑨𐑝 𐑥𐑪𐑯𐑦𐑑𐑼-𐑐𐑬𐑼𐑛 "
-"𐑕𐑐𐑰𐑒𐑻𐑟."
+"𐑩𐑤𐑬 𐑞 𐑕𐑒𐑮𐑰𐑯𐑕𐑱𐑝𐑼 𐑑 𐑨𐑒𐑑𐑦𐑝𐑱𐑑 𐑢𐑧𐑯 𐑐𐑤𐑱𐑦𐑙 𐑷𐑛𐑦𐑴. 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑦𐑓 𐑿 𐑣𐑨𐑝 𐑥𐑪𐑯𐑦𐑑𐑼-𐑐𐑬𐑼𐑛 𐑕𐑐𐑰𐑒𐑻𐑟."
 
 #: ../data/totem.schemas.in.h:3
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)"
 msgstr ""
-"𐑩𐑥𐑬𐑯𐑑 𐑝 𐑛𐑱𐑑𐑩 𐑑 𐑚𐑳𐑓𐑼 𐑓𐑹 𐑯𐑧𐑑𐑢𐑻𐑒 𐑕𐑑𐑮𐑰𐑥𐑟 𐑚𐑦𐑓𐑹 𐑕𐑑𐑸𐑑𐑦𐑙 𐑑 𐑛𐑦𐑕𐑐𐑤𐑱 𐑞 𐑕𐑑𐑮𐑰𐑥 (𐑦𐑯 "
-"𐑕𐑧𐑒𐑩𐑯𐑛𐑟)"
+"𐑩𐑥𐑬𐑯𐑑 𐑝 𐑛𐑱𐑑𐑩 𐑑 𐑚𐑳𐑓𐑼 𐑓𐑹 𐑯𐑧𐑑𐑢𐑻𐑒 𐑕𐑑𐑮𐑰𐑥𐑟 𐑚𐑦𐑓𐑹 𐑕𐑑𐑸𐑑𐑦𐑙 𐑑 𐑛𐑦𐑕𐑐𐑤𐑱 𐑞 𐑕𐑑𐑮𐑰𐑥 (𐑦𐑯 𐑕𐑧𐑒𐑩𐑯𐑛𐑟)"
+
+#, fuzzy
+#: ../data/totem.schemas.in.h:4
+msgid ""
+"Approximate network connection speed, used to select quality on media over "
+"the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
+"28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
+"for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
+"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10\" "
+"for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+msgstr ""
+"𐑩𐑐𐑮𐑪𐑒𐑕𐑦𐑥𐑱𐑑 𐑯𐑧𐑑𐑢𐑻𐑒 𐑒𐑩𐑯𐑧𐑒𐑖𐑩𐑯 𐑕𐑐𐑰𐑛, 𐑿𐑕𐑑 𐑑 𐑕𐑩𐑤𐑧𐑒𐑑 𐑒𐑢𐑪𐑤𐑦𐑑𐑰 𐑪𐑯 𐑥𐑰𐑛𐑦𐑩 𐑴𐑝𐑼 𐑞 𐑯𐑧𐑑𐑢𐑻𐑒: "
+"\"0\" 𐑓𐑹 14.4 Kbps 𐑥𐑴𐑛𐑧𐑥, \"1\" 𐑓𐑹 19.2 Kbps 𐑥𐑴𐑛𐑧𐑥, \"2\" 𐑓𐑹 28.8 Kbps 𐑥𐑴𐑛𐑧𐑥, "
+"\"3\" 𐑓𐑹 33.6 Kbps 𐑥𐑴𐑛𐑧𐑥, \"4\" 𐑓𐑹 34.4 Kbps 𐑥𐑴𐑛𐑧𐑥, \"5\" 𐑓𐑹 56 Kbps "
+"𐑥𐑴𐑛𐑧𐑥/ISDN, \"6\" 𐑓𐑹 112 Kbps 𐑛𐑵𐑩𐑤 ISDN/DSL, \"7\" 𐑓𐑹 256 Kbps DSL/𐑒𐑱𐑚𐑩𐑤, "
+"\"8\" 𐑓𐑹 384 Kbps DSL/𐑒𐑱𐑚𐑩𐑤, \"9\" 𐑓𐑹 512 Kbps DSL/𐑒𐑱𐑚𐑩𐑤, \"10\" 𐑓𐑹 1.5 Mbps "
+"T1/Intranet/𐑤𐑨𐑯, \"11\" 𐑓𐑹 Intranet/𐑤𐑨𐑯."
 
 #: ../data/totem.schemas.in.h:5
-msgid "Buffer size"
-msgstr "𐑚𐑳𐑓𐑼 𐑕𐑲𐑟"
-
-#: ../data/totem.schemas.in.h:6
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "𐑛𐑦𐑓𐑷𐑤𐑑 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑓𐑹 𐑞 \"𐑴𐑐𐑩𐑯...\" 𐑛𐑲𐑩𐑤𐑪𐑜𐑟"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:6
 msgid ""
-"Default location for the \"Open...\" dialogs, default is the current "
-"directory"
+"Default location for the \"Open...\" dialogs, default is the current directory"
 msgstr "𐑛𐑦𐑓𐑷𐑤𐑑 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑓𐑹 𐑞 \"𐑴𐑐𐑩𐑯...\" 𐑛𐑲𐑩𐑤𐑪𐑜𐑟, 𐑛𐑦𐑓𐑷𐑤𐑑 𐑦𐑟 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦"
 
-#: ../data/totem.schemas.in.h:12
-msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "𐑥𐑨𐑒𐑕𐑦𐑥𐑩𐑥 𐑩𐑥𐑬𐑯𐑑 𐑝 𐑛𐑱𐑑𐑩 𐑑 𐑛𐑰𐑒𐑴𐑛 𐑩𐑣𐑧𐑛 𐑝 𐑛𐑦𐑕𐑐𐑤𐑱 (𐑦𐑯 𐑕𐑧𐑒𐑩𐑯𐑛𐑟)"
+#, fuzzy
+#: ../data/totem.schemas.in.h:7
+msgid "Default location for the \"Take Screenshot\" dialogs"
+msgstr "𐑛𐑦𐑓𐑷𐑤𐑑 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑓𐑹 𐑞 \"𐑑𐑱𐑒 Screenshot\" 𐑛𐑲𐑩𐑤𐑪𐑜𐑟"
 
-#: ../data/totem.schemas.in.h:13
+#, fuzzy
+#: ../data/totem.schemas.in.h:8
+msgid ""
+"Default location for the \"Take Screenshot\" dialogs, default is the Pictures "
+"directory"
+msgstr ""
+"𐑛𐑦𐑓𐑷𐑤𐑑 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑓𐑹 𐑞 \"𐑑𐑱𐑒 Screenshot\" 𐑛𐑲𐑩𐑤𐑪𐑜𐑟, 𐑛𐑦𐑓𐑷𐑤𐑑 𐑦𐑟 𐑞 𐑐𐑦𐑒𐑑𐑘𐑼𐑟 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦"
+
+#, fuzzy
+#: ../data/totem.schemas.in.h:9
+msgid "Encoding charset for subtitle"
+msgstr "𐑧𐑯𐑒𐑴𐑛𐑦𐑙 charset 𐑓𐑹 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤"
+
+#: ../data/totem.schemas.in.h:10
 msgid "Name of the visual effects plugins"
 msgstr "𐑯𐑱𐑥 𐑝 𐑞 𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕 𐑐𐑤𐑳𐑜𐑦𐑯𐑟"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:11
 msgid "Network buffering threshold"
 msgstr "𐑯𐑧𐑑𐑢𐑻𐑒 𐑚𐑳𐑓𐑼𐑦𐑙 𐑔𐑮𐑧𐑖𐑴𐑤𐑛"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:12
 msgid "Network connection speed"
 msgstr "𐑯𐑧𐑑𐑢𐑻𐑒 𐑒𐑩𐑯𐑧𐑒𐑖𐑩𐑯 𐑕𐑐𐑰𐑛"
 
-#: ../data/totem.schemas.in.h:17
+#, fuzzy
+#: ../data/totem.schemas.in.h:13
+msgid "Pango font description for subtitle rendering"
+msgstr "Pango 𐑓𐑪𐑯𐑑 𐑛𐑦𐑕𐑒𐑮𐑦𐑐𐑖𐑩𐑯 𐑓𐑹 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑮𐑧𐑯𐑛𐑻𐑦𐑙"
+
+#: ../data/totem.schemas.in.h:14
 msgid ""
 "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 "normal, \"2\" for large, \"3\" for extra large."
@@ -682,83 +894,109 @@ msgstr ""
 "𐑒𐑢𐑪𐑤𐑦𐑑𐑰 𐑕𐑧𐑑𐑦𐑙𐑟 𐑓𐑹 𐑞 𐑷𐑛𐑦𐑴 𐑝𐑦𐑠𐑢𐑩𐑤𐑩𐑟𐑱𐑖𐑩𐑯: \"0\" 𐑓𐑹 𐑕𐑥𐑷𐑤, \"1\" 𐑓𐑹 𐑯𐑹𐑥𐑩𐑤, \"2\" "
 "𐑓𐑹 𐑤𐑸𐑡, \"3\" 𐑓𐑹 𐑧𐑒𐑕𐑑𐑮𐑩 𐑤𐑸𐑡."
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:15
 msgid "Repeat mode"
 msgstr "𐑮𐑦𐑐𐑰𐑑 𐑥𐑴𐑛"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:16
 msgid "Resize the canvas automatically on file load"
 msgstr "𐑮𐑰𐑕𐑲𐑟 𐑞 𐑒𐑨𐑯𐑝𐑩𐑕 𐑷𐑑𐑩𐑥𐑨𐑑𐑦𐑒𐑤𐑦 𐑪𐑯 𐑓𐑲𐑤 𐑤𐑴𐑛"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:17
 msgid "Show visual effects when no video is displayed"
 msgstr "𐑖𐑴 𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕 𐑢𐑧𐑯 𐑯𐑴 𐑝𐑦𐑛𐑦𐑴 𐑦𐑟 𐑛𐑩𐑕𐑐𐑤𐑱𐑛"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:18
 msgid "Show visual effects when playing an audio only file."
 msgstr "𐑖𐑴 𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕 𐑢𐑧𐑯 𐑐𐑤𐑱𐑦𐑙 𐑩𐑯 𐑷𐑛𐑦𐑴 𐑴𐑯𐑤𐑦 𐑓𐑲𐑤."
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:19
 msgid "Shuffle mode"
 msgstr "𐑖𐑩𐑓𐑩𐑤 𐑥𐑴𐑛"
 
-#: ../data/totem.schemas.in.h:23
-msgid "Sound volume"
-msgstr "𐑕𐑬𐑯𐑛 𐑝𐑪𐑤𐑿𐑥"
-
-#: ../data/totem.schemas.in.h:24
-msgid "Sound volume, in percent, between 0 and 100"
-msgstr "𐑕𐑬𐑯𐑛 𐑝𐑪𐑤𐑿𐑥, 𐑦𐑯 𐑐𐑻𐑕𐑧𐑯𐑑, 𐑚𐑦𐑑𐑢𐑰𐑯 0 𐑯 100"
-
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:20
 msgid "Subtitle encoding"
 msgstr "𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑧𐑯𐑒𐑴𐑛𐑦𐑙"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:21
 msgid "Subtitle font"
 msgstr "𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑪𐑯𐑑"
 
-#: ../data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:22
 msgid "The brightness of the video"
 msgstr "𐑞 𐑚𐑮𐑲𐑑𐑯𐑩𐑕 𐑝 𐑞 𐑝𐑦𐑛𐑦𐑴"
 
-#: ../data/totem.schemas.in.h:28
+#: ../data/totem.schemas.in.h:23
 msgid "The contrast of the video"
 msgstr "𐑞 𐑒𐑪𐑯𐑑𐑮𐑭𐑕𐑑 𐑝 𐑞 𐑝𐑦𐑛𐑦𐑴"
 
-#: ../data/totem.schemas.in.h:29
+#: ../data/totem.schemas.in.h:24
 msgid "The hue of the video"
 msgstr "𐑞 𐑣𐑿 𐑝 𐑞 𐑝𐑦𐑛𐑦𐑴"
 
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:25
 msgid "The saturation of the video"
 msgstr "𐑞 𐑕𐑨𐑗𐑻𐑱𐑖𐑩𐑯 𐑝 𐑞 𐑝𐑦𐑛𐑦𐑴"
 
-#: ../data/totem.schemas.in.h:31
+#: ../data/totem.schemas.in.h:26
 msgid "Type of audio output to use"
 msgstr "𐑑𐑲𐑐 𐑝 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑑 𐑿𐑕"
 
-#: ../data/totem.schemas.in.h:38
+#, fuzzy
+#: ../data/totem.schemas.in.h:27
+msgid ""
+"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
+"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
+"Passthrough."
+msgstr ""
+"𐑑𐑲𐑐 𐑝 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑑 𐑿𐑕: \"0\" 𐑓𐑹 𐑕𐑑𐑧𐑮𐑰𐑴, \"1\" 𐑓𐑹 4-𐑗𐑨𐑯𐑩𐑤 𐑬𐑑𐑐𐑫𐑑, \"2\" 𐑓𐑹 5.0 "
+"𐑗𐑨𐑯𐑩𐑤 𐑬𐑑𐑐𐑫𐑑, \"3\" 𐑓𐑹 5.1 𐑗𐑨𐑯𐑩𐑤 𐑬𐑑𐑐𐑫𐑑, \"4\" 𐑓𐑹 AC3 Passthrough."
+
+#. Translators: This is default subtitle encoding
+#. character set. You can change this to be the most common
+#. encoding for fansub subtitles in your language. File a bug
+#. against Totem, and leave UTF-8 as the default if in doubt.
+#, fuzzy
+#: ../data/totem.schemas.in.h:32
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: ../data/totem.schemas.in.h:33
 msgid "Visualization quality setting"
 msgstr "𐑝𐑦𐑠𐑢𐑩𐑤𐑩𐑟𐑱𐑖𐑩𐑯 𐑒𐑢𐑪𐑤𐑦𐑑𐑰 𐑕𐑧𐑑𐑦𐑙"
 
-#: ../data/totem.schemas.in.h:39
+#: ../data/totem.schemas.in.h:34
 msgid "Whether the main window should stay on top"
 msgstr "𐑢𐑧𐑞𐑼 𐑞 𐑥𐑱𐑯 𐑢𐑦𐑯𐑛𐑴 𐑖𐑫𐑛 𐑕𐑑𐑱 𐑪𐑯 𐑑𐑪𐑐"
 
-#: ../data/totem.schemas.in.h:40
+#: ../data/totem.schemas.in.h:35
 msgid "Whether the main window should stay on top of the other ones"
 msgstr "𐑢𐑧𐑞𐑼 𐑞 𐑥𐑱𐑯 𐑢𐑦𐑯𐑛𐑴 𐑖𐑫𐑛 𐑕𐑑𐑱 𐑪𐑯 𐑑𐑪𐑐 𐑝 𐑞 𐑳𐑞𐑼 𐑢𐑳𐑯𐑟"
 
-#: ../data/totem.schemas.in.h:42
+#, fuzzy
+#: ../data/totem.schemas.in.h:36
+msgid "Whether to autoload text subtitle files when a movie is loaded"
+msgstr "𐑢𐑧𐑞𐑼 𐑑 autoload 𐑑𐑧𐑒𐑕𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑲𐑤𐑟 𐑢𐑧𐑯 𐑩 𐑥𐑵𐑝𐑰 𐑦𐑟 𐑤𐑴𐑛𐑩𐑛"
+
+#, fuzzy
+#: ../data/totem.schemas.in.h:37
+msgid "Whether to disable deinterlacing for interlaced movies"
+msgstr "𐑢𐑧𐑞𐑼 𐑑 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 deinterlacing 𐑓𐑹 𐑦𐑯𐑑𐑻𐑤𐑱𐑕𐑑 𐑥𐑵𐑝𐑰𐑟"
+
+#, fuzzy
+#: ../data/totem.schemas.in.h:38
+msgid "Whether to disable the keyboard shortcuts"
+msgstr "𐑢𐑧𐑞𐑼 𐑑 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑞 𐑒𐑰𐑚𐑪𐑮𐑛 𐑖𐑹𐑑𐑒𐑳𐑑𐑕"
+
+#: ../data/totem.schemas.in.h:39
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "𐑢𐑧𐑞𐑼 𐑑 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑞 𐑐𐑤𐑳𐑜𐑦𐑯𐑟 𐑦𐑯 𐑞 𐑿𐑟𐑼'𐑕 𐑣𐑴𐑥 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦"
 
-#: ../data/totem.schemas.in.h:43
+#: ../data/totem.schemas.in.h:40
 msgid "Whether to enable debug for the playback engine"
 msgstr "𐑢𐑧𐑞𐑼 𐑑 𐑦𐑯𐑱𐑚𐑩𐑤 𐑛𐑰𐑚𐑳𐑜 𐑓𐑹 𐑞 𐑐𐑤𐑱𐑚𐑨𐑒 𐑧𐑯𐑡𐑦𐑯"
 
-#: ../data/totem.schemas.in.h:44
+#: ../data/totem.schemas.in.h:41
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
 "closing them."
@@ -773,33 +1011,45 @@ msgstr "𐑧𐑯𐑑𐑼 𐑞 _𐑩𐑛𐑮𐑧𐑕 𐑝 𐑞 𐑓𐑲𐑤 𐑿 
 msgid "Playing a movie"
 msgstr "𐑐𐑤𐑱𐑦𐑙 𐑩 𐑥𐑵𐑝𐑰"
 
-#: ../src/eggdesktopfile.c:165
 #, c-format
+#: ../src/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
 msgstr "𐑓𐑲𐑤 𐑦𐑟 𐑯𐑪𐑑 𐑩 𐑝𐑨𐑤𐑦𐑛 .desktop 𐑓𐑲𐑤"
 
-#: ../src/eggdesktopfile.c:188
 #, c-format
+#: ../src/eggdesktopfile.c:188
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "𐑩𐑯𐑮𐑧𐑒𐑩𐑜𐑯𐑲𐑟𐑛 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑓𐑲𐑤 𐑝𐑻𐑠𐑩𐑯 '%s'"
 
-#: ../src/eggdesktopfile.c:958
 #, c-format
+#: ../src/eggdesktopfile.c:958
 msgid "Starting %s"
 msgstr "𐑕𐑑𐑸𐑑𐑦𐑙 %s"
 
-#: ../src/eggdesktopfile.c:1100
 #, c-format
+#: ../src/eggdesktopfile.c:1100
 msgid "Application does not accept documents on command line"
 msgstr "𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑨𐑒𐑕𐑧𐑐𐑑 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑𐑕 𐑪𐑯 𐑒𐑩𐑥𐑭𐑯𐑛 𐑤𐑲𐑯"
 
-#: ../src/eggdesktopfile.c:1168
 #, c-format
+#: ../src/eggdesktopfile.c:1168
 msgid "Unrecognized launch option: %d"
 msgstr "𐑩𐑯𐑮𐑧𐑒𐑩𐑜𐑯𐑲𐑟𐑛 𐑤𐑷𐑯𐑗 𐑪𐑐𐑖𐑩𐑯: %d"
 
-#: ../src/eggfileformatchooser.c:235
 #, c-format
+#, fuzzy
+#: ../src/eggdesktopfile.c:1373
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "𐑒𐑭𐑯𐑑 𐑐𐑭𐑕 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑 URIs 𐑑 𐑩 '𐑑𐑲𐑐=𐑤𐑦𐑙𐑒' 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑧𐑯𐑑𐑮𐑦"
+
+#, c-format
+#, fuzzy
+#: ../src/eggdesktopfile.c:1394
+msgid "Not a launchable item"
+msgstr "𐑯𐑪𐑑 𐑩 launchable 𐑲𐑑𐑩𐑥"
+
+#, c-format
+#: ../src/eggfileformatchooser.c:235
 msgid "File _Format: %s"
 msgstr "𐑓𐑲𐑤 _𐑓𐑹𐑥𐑨𐑑: %s"
 
@@ -823,18 +1073,18 @@ msgstr "𐑓𐑲𐑤 𐑓𐑹𐑥𐑨𐑑"
 msgid "Extension(s)"
 msgstr "𐑩𐑒𐑕𐑑𐑧𐑯𐑖𐑩𐑯(𐑕)"
 
-#: ../src/eggfileformatchooser.c:645
 #, c-format
+#: ../src/eggfileformatchooser.c:651
 msgid ""
-"The program was not able to find out the file format you want to use for `%"
-"s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for "
+"`%s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "𐑞 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑢𐑪𐑟 𐑯𐑪𐑑 𐑱𐑚𐑩𐑤 𐑑 𐑓𐑲𐑯𐑛 𐑬𐑑 𐑞 𐑓𐑲𐑤 𐑓𐑹𐑥𐑨𐑑 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑿𐑕 𐑓𐑹 `%s'. 𐑐𐑤𐑰𐑟 𐑥𐑱𐑒 "
 "𐑖𐑫𐑼 𐑑 𐑿𐑕 𐑩 𐑯𐑴𐑯 𐑩𐑒𐑕𐑑𐑧𐑯𐑖𐑩𐑯 𐑓𐑹 𐑞𐑨𐑑 𐑓𐑲𐑤 𐑹 𐑥𐑨𐑯𐑘𐑫𐑩𐑤𐑦 𐑗𐑵𐑟 𐑩 𐑓𐑲𐑤 𐑓𐑹𐑥𐑨𐑑 𐑓𐑮𐑪𐑥 𐑞 𐑤𐑦𐑕𐑑 "
 "𐑚𐑩𐑤𐑴."
 
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:658
 msgid "File format not recognized"
 msgstr "𐑓𐑲𐑤 𐑓𐑹𐑥𐑨𐑑 𐑯𐑪𐑑 𐑮𐑧𐑒𐑪𐑜𐑯𐑲𐑟𐑛"
 
@@ -882,33 +1132,25 @@ msgstr "_𐑐𐑤𐑱 𐑯𐑬"
 msgid "Cancel"
 msgstr "𐑒𐑨𐑯𐑕𐑩𐑤"
 
-#: ../src/totem-fullscreen.c:484
+#: ../src/totem-fullscreen.c:595
 msgid "No File"
 msgstr "𐑯𐑴 𐑓𐑲𐑤"
 
-#: ../src/totem-interface.c:139 ../src/totem-interface.c:147
-#, c-format
-msgid "Could not launch URL \"%s\": %s"
-msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑤𐑷𐑯𐑗 URL \"%s\": %s"
+#, fuzzy, c-format
+#: ../src/totem-interface.c:172 ../src/totem-interface.c:204
+msgid "Couldn't load the '%s' interface. %s"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑤𐑴𐑛 𐑞 \"𐑕𐑒𐑦𐑐 𐑑\" 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑯𐑑𐑼𐑓𐑱𐑕."
 
-#: ../src/totem-interface.c:139
-msgid "Default browser not configured"
-msgstr "𐑛𐑦𐑓𐑷𐑤𐑑 𐑚𐑮𐑬𐑟𐑼 𐑯𐑪𐑑 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑛"
-
-#: ../src/totem-interface.c:140 ../src/totem-interface.c:148
-msgid "Error launching URI"
-msgstr "𐑻𐑼 𐑤𐑷𐑯𐑗𐑦𐑙 URI"
-
-#: ../src/totem-interface.c:207
+#: ../src/totem-interface.c:172
 msgid "The file does not exist."
 msgstr "𐑞 𐑓𐑲𐑤 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑧𐑒𐑟𐑦𐑕𐑑."
 
-#: ../src/totem-interface.c:209 ../src/totem-interface.c:211
-#: ../src/totem-interface.c:241 ../src/totem-interface.c:243
+#: ../src/totem-interface.c:174 ../src/totem-interface.c:176
+#: ../src/totem-interface.c:206 ../src/totem-interface.c:208
 msgid "Make sure that Totem is properly installed."
 msgstr "𐑥𐑱𐑒 𐑖𐑫𐑼 𐑞𐑨𐑑 ·𐑑𐑴𐑑𐑩𐑥 𐑦𐑟 𐑐𐑮𐑪𐑐𐑼𐑤𐑦 𐑦𐑯𐑕𐑑𐑷𐑤𐑛."
 
-#: ../src/totem-interface.c:354
+#: ../src/totem-interface.c:319
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -919,7 +1161,18 @@ msgstr ""
 "𐑡𐑧𐑯𐑼𐑩𐑤 𐑐𐑳𐑚𐑤𐑦𐑒 𐑤𐑲𐑕𐑩𐑯𐑕 𐑨𐑟 𐑐𐑳𐑚𐑤𐑦𐑖𐑑 𐑚𐑲 𐑞 𐑓𐑮𐑰 𐑕𐑪𐑓𐑑𐑢𐑺 𐑓𐑬𐑯𐑛𐑱𐑖𐑩𐑯; 𐑲𐑞𐑼 𐑝𐑻𐑠𐑩𐑯 2 𐑝 𐑞 "
 "𐑤𐑲𐑕𐑩𐑯𐑕, 𐑹 (𐑨𐑑 𐑿𐑼 𐑪𐑐𐑖𐑩𐑯) 𐑧𐑯𐑦 𐑤𐑱𐑑𐑼 𐑝𐑻𐑠𐑩𐑯."
 
-#: ../src/totem-interface.c:362
+#, fuzzy
+#: ../src/totem-interface.c:323
+msgid ""
+"Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR "
+"A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr ""
+"𐑑𐑴𐑑𐑩𐑥 𐑦𐑟 𐑛𐑦𐑕𐑑𐑮𐑦𐑚𐑿𐑑𐑩𐑛 𐑦𐑯 𐑞 𐑣𐑴𐑐 𐑞𐑨𐑑 𐑦𐑑 𐑢𐑦𐑤 𐑚𐑰 𐑿𐑕𐑓𐑩𐑤, 𐑚𐑳𐑑 𐑢𐑦𐑞𐑬𐑑 𐑧𐑯𐑦 𐑢𐑪𐑮𐑩𐑯𐑑𐑰; "
+"𐑢𐑦𐑞𐑬𐑑 𐑰𐑝𐑩𐑯 𐑞 𐑦𐑥𐑐𐑤𐑲𐑛 𐑢𐑪𐑮𐑩𐑯𐑑𐑰 𐑝 MERCHANTABILITY 𐑹 𐑓𐑦𐑑𐑯𐑩𐑕 𐑓𐑹 𐑩 𐑐𐑼𐑑𐑦𐑒𐑿𐑤𐑼 𐑐𐑻𐑐𐑩𐑕.  "
+"𐑕𐑰 𐑞 ·𐑜𐑯𐑿 𐑡𐑧𐑯𐑼𐑩𐑤 𐑐𐑳𐑚𐑤𐑦𐑒 𐑤𐑲𐑕𐑩𐑯𐑕 𐑓𐑹 𐑥𐑹 𐑛𐑰𐑑𐑱𐑤𐑟."
+
+#: ../src/totem-interface.c:327
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -929,91 +1182,103 @@ msgstr ""
 "𐑯𐑪𐑑, 𐑮𐑲𐑑 𐑑 𐑞 𐑓𐑮𐑰 𐑕𐑪𐑓𐑑𐑢𐑺 𐑓𐑬𐑯𐑛𐑱𐑖𐑩𐑯, 𐑦𐑙𐑒., 59 𐑑𐑧𐑥𐑐𐑩𐑤 𐑐𐑤𐑱𐑕, 𐑕𐑢𐑰𐑑 330, ·𐑚𐑪𐑕𐑑𐑩𐑯, "
 "𐑥𐑶  02111-1307  𐑘𐑵𐑧𐑕𐑱"
 
-#: ../src/totem-menu.c:342
+#, fuzzy
+#: ../src/totem-interface.c:330
+msgid ""
+"Totem contains an exception to allow the use of proprietary GStreamer plugins."
+msgstr "𐑑𐑴𐑑𐑩𐑥 𐑒𐑩𐑯𐑑𐑱𐑯𐑟 𐑩𐑯 𐑦𐑒𐑕𐑧𐑐𐑖𐑩𐑯 𐑑 𐑩𐑤𐑬 𐑞 𐑿𐑕 𐑝 𐑐𐑮𐑩𐑐𐑮𐑲𐑩𐑑𐑧𐑮𐑰 GStreamer 𐑐𐑤𐑳𐑜𐑦𐑯𐑟."
+
+#: ../src/totem-menu.c:191
 msgid "None"
 msgstr "𐑯𐑳𐑯"
 
-#: ../src/totem-menu.c:852
-#, c-format
-msgid "Play Disc '%s'"
+#. Translators:
+#. * This is not a JPEG image, but a disc image, for example,
+#. * an ISO file
+#, fuzzy, c-format
+#: ../src/totem-menu.c:737
+msgid "Play Image '%s'"
 msgstr "𐑐𐑤𐑱 𐑛𐑦𐑕𐑒 '%s'"
 
-#: ../src/totem-menu.c:855
 #, c-format
+#: ../src/totem-menu.c:740 ../src/totem-menu.c:822
 msgid "device%d"
 msgstr "𐑛𐑦𐑝𐑲𐑕%d"
 
-#. translators:
-#. * Watch TV on 'DVB Adapter 1'
-#. * or
-#. * Watch TV on 'Hauppauge Nova-T Stick'
-#: ../src/totem-menu.c:942
 #, c-format
-msgid "Watch TV on '%s'"
-msgstr "𐑢𐑪𐑗 TV 𐑪𐑯 '%s'"
+#: ../src/totem-menu.c:819
+msgid "Play Disc '%s'"
+msgstr "𐑐𐑤𐑱 𐑛𐑦𐑕𐑒 '%s'"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1215
 #, c-format
+#: ../src/totem-menu.c:1170
 msgid "Movie Player using %s"
 msgstr "𐑥𐑵𐑝𐑰 𐑐𐑤𐑱𐑼 𐑿𐑟𐑦𐑙 %s"
 
-#: ../src/totem-menu.c:1219
+#: ../src/totem-menu.c:1174
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "𐑒𐑪𐑐𐑦𐑮𐑲𐑑 © 2002-2009 ·𐑚𐑨𐑕𐑑𐑩𐑯 ·𐑯𐑴𐑗𐑧𐑮𐑩"
 
-#: ../src/totem-menu.c:1224 ../browser-plugin/totem-plugin-viewer.c:1118
+#: ../src/totem-menu.c:1179 ../browser-plugin/totem-plugin-viewer.c:1165
 msgid "translator-credits"
 msgstr "·𐑑𐑪𐑥𐑩𐑕 ·𐑔𐑻𐑥𐑩𐑯"
 
-#: ../src/totem-menu.c:1228
+#: ../src/totem-menu.c:1183
 msgid "Totem Website"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑢𐑧𐑚𐑕𐑲𐑑"
 
-#: ../src/totem-menu.c:1263
+#: ../src/totem-menu.c:1218
 msgid "Configure Plugins"
 msgstr "𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼 𐑐𐑤𐑳𐑜𐑦𐑯𐑟"
 
-#: ../src/totem-object.c:971 ../browser-plugin/totem-plugin-viewer.c:363
+#. Translators: %s is the totem version number
+#, fuzzy, c-format
+#: ../src/totem-object.c:429
+msgid "Totem %s"
+msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑢𐑧𐑚𐑕𐑲𐑑"
+
+#: ../src/totem-object.c:1030 ../browser-plugin/totem-plugin-viewer.c:369
 msgid "Playing"
 msgstr "𐑐𐑤𐑱𐑦𐑙"
 
-#: ../src/totem-object.c:973 ../src/totem-options.c:51
+#: ../src/totem-object.c:1032 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "𐑐𐑷𐑟"
 
-#: ../src/totem-object.c:978 ../browser-plugin/totem-plugin-viewer.c:359
+#: ../src/totem-object.c:1037 ../browser-plugin/totem-plugin-viewer.c:365
 msgid "Paused"
 msgstr "𐑐𐑷𐑟𐑛"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:980 ../src/totem-object.c:990
+#: ../src/totem-object.c:1039 ../src/totem-object.c:1049
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "𐑐𐑤𐑱"
 
-#: ../src/totem-object.c:985 ../src/totem-object.c:1625
-#: ../src/totem-statusbar.c:100 ../browser-plugin/totem-plugin-viewer.c:347
+#: ../src/totem-object.c:1044 ../src/totem-object.c:1653
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:353
 msgid "Stopped"
 msgstr "𐑕𐑑𐑪𐑐𐑑"
 
-#: ../src/totem-object.c:1066 ../src/totem-object.c:1093
-#: ../src/totem-object.c:1747 ../src/totem-object.c:1910
 #, c-format
+#: ../src/totem-object.c:1125 ../src/totem-object.c:1152
+#: ../src/totem-object.c:1783 ../src/totem-object.c:1946
 msgid "Totem could not play '%s'."
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑐𐑤𐑱 '%s'."
 
-#: ../src/totem-object.c:1178
 #, c-format
+#: ../src/totem-object.c:1229
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
-msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑥𐑰𐑛𐑦𐑩 (%s) 𐑷𐑤𐑞𐑴 𐑩 𐑐𐑤𐑳𐑜𐑦𐑯 𐑦𐑟 𐑐𐑮𐑩𐑟𐑧𐑯𐑑 𐑑 𐑣𐑨𐑯𐑛𐑩𐑤 𐑦𐑑."
+msgstr ""
+"·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑥𐑰𐑛𐑦𐑩 (%s) 𐑷𐑤𐑞𐑴 𐑩 𐑐𐑤𐑳𐑜𐑦𐑯 𐑦𐑟 𐑐𐑮𐑩𐑟𐑧𐑯𐑑 𐑑 𐑣𐑨𐑯𐑛𐑩𐑤 𐑦𐑑."
 
-#: ../src/totem-object.c:1179
+#: ../src/totem-object.c:1230
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1021,19 +1286,19 @@ msgstr ""
 "𐑿 𐑥𐑲𐑑 𐑢𐑪𐑯𐑑 𐑑 𐑗𐑧𐑒 𐑞𐑨𐑑 𐑩 𐑛𐑦𐑕𐑒 𐑦𐑟 𐑐𐑮𐑩𐑟𐑧𐑯𐑑 𐑦𐑯 𐑞 𐑛𐑮𐑲𐑝 𐑯 𐑞𐑨𐑑 𐑦𐑑 𐑦𐑟 𐑒𐑼𐑧𐑒𐑑𐑤𐑦 "
 "𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑛."
 
-#: ../src/totem-object.c:1187
+#: ../src/totem-object.c:1238
 msgid "More information about media plugins"
 msgstr "𐑥𐑹 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯 𐑩𐑚𐑬𐑑 𐑥𐑰𐑛𐑦𐑩 𐑐𐑤𐑳𐑜𐑦𐑯𐑟"
 
-#: ../src/totem-object.c:1188
+#: ../src/totem-object.c:1239
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
 "𐑐𐑤𐑰𐑟 𐑦𐑯𐑕𐑑𐑷𐑤 𐑞 𐑯𐑧𐑕𐑩𐑕𐑼𐑦 𐑐𐑤𐑳𐑜𐑦𐑯𐑟 𐑯 𐑮𐑰𐑕𐑑𐑸𐑑 ·𐑑𐑴𐑑𐑩𐑥 𐑑 𐑚𐑰 𐑱𐑚𐑩𐑤 𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑥𐑰𐑛𐑦𐑩."
 
-#: ../src/totem-object.c:1190
 #, c-format
+#: ../src/totem-object.c:1241
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
 "appropriate plugins to be able to read from the disc."
@@ -1041,8 +1306,8 @@ msgstr ""
 "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑨𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑑𐑲𐑐 𐑝 𐑥𐑰𐑛𐑦𐑩 (%s) 𐑚𐑦𐑒𐑪𐑟 𐑦𐑑 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑣𐑨𐑝 𐑞 𐑩𐑐𐑮𐑴𐑐𐑮𐑦𐑩𐑑 "
 "𐑐𐑤𐑳𐑜𐑦𐑯𐑟 𐑑 𐑚𐑰 𐑱𐑚𐑩𐑤 𐑑 𐑮𐑰𐑛 𐑓𐑮𐑪𐑥 𐑞 𐑛𐑦𐑕𐑒."
 
-#: ../src/totem-object.c:1192
 #, c-format
+#: ../src/totem-object.c:1243
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
@@ -1050,96 +1315,63 @@ msgstr ""
 "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑨𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑑𐑲𐑐 𐑝 𐑥𐑰𐑛𐑦𐑩 (%s) 𐑚𐑦𐑒𐑪𐑟 𐑿 𐑛𐑵 𐑯𐑪𐑑 𐑣𐑨𐑝 𐑞 𐑩𐑐𐑮𐑴𐑐𐑮𐑦𐑩𐑑 𐑐𐑤𐑳𐑜𐑦𐑯𐑟 "
 "𐑑 𐑣𐑨𐑯𐑛𐑩𐑤 𐑦𐑑."
 
-#: ../src/totem-object.c:1196
-msgid ""
-"Totem cannot play TV, because no TV adapters are present or they are not "
-"supported."
-msgstr ""
-"·𐑑𐑴𐑑𐑩𐑥 𐑒𐑨𐑯𐑪𐑑 𐑐𐑤𐑱 TV, 𐑚𐑦𐑒𐑪𐑟 𐑯𐑴 TV 𐑩𐑛𐑨𐑐𐑑𐑻𐑟 𐑸 𐑐𐑮𐑩𐑟𐑧𐑯𐑑 𐑹 𐑞𐑱 𐑸 𐑯𐑪𐑑 𐑕𐑩𐑐𐑹𐑑𐑩𐑛."
-
-#: ../src/totem-object.c:1197
-msgid "Please insert a supported TV adapter."
-msgstr "𐑐𐑤𐑰𐑟 𐑦𐑯𐑕𐑻𐑑 𐑩 𐑕𐑩𐑐𐑹𐑑𐑩𐑛 TV 𐑩𐑛𐑨𐑐𐑑𐑻."
-
-#: ../src/totem-object.c:1207
-msgid "More information about watching TV"
-msgstr "𐑥𐑹 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯 𐑩𐑚𐑬𐑑 𐑢𐑪𐑗𐑦𐑙 TV"
-
-#: ../src/totem-object.c:1208
-msgid "Totem is missing a channels listing to be able to tune the receiver."
-msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑦𐑟 𐑥𐑦𐑕𐑦𐑙 𐑩 𐑗𐑨𐑯𐑩𐑤𐑟 𐑤𐑦𐑕𐑑𐑦𐑙 𐑑 𐑚𐑰 𐑱𐑚𐑩𐑤 𐑑 𐑑𐑿𐑯 𐑞 𐑮𐑦𐑕𐑰𐑝𐑼."
-
-#: ../src/totem-object.c:1209
-msgid ""
-"Please follow the instructions provided in the link to create a channels "
-"listing."
-msgstr "𐑐𐑤𐑰𐑟 𐑓𐑪𐑤𐑴 𐑞 𐑦𐑯𐑕𐑑𐑮𐑳𐑒𐑖𐑩𐑯𐑟 𐑐𐑮𐑩𐑝𐑲𐑛𐑩𐑛 𐑦𐑯 𐑞 𐑤𐑦𐑙𐑒 𐑑 𐑒𐑮𐑦𐑱𐑑 𐑩 𐑗𐑨𐑯𐑩𐑤𐑟 𐑤𐑦𐑕𐑑𐑦𐑙."
-
-#: ../src/totem-object.c:1212
 #, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because the TV device is busy."
-msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑨𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑑𐑲𐑐 𐑝 𐑥𐑰𐑛𐑦𐑩 (%s) 𐑚𐑦𐑒𐑪𐑟 𐑞 TV 𐑛𐑦𐑝𐑲𐑕 𐑦𐑟 𐑚𐑦𐑟𐑰."
-
-#: ../src/totem-object.c:1213
-msgid "Please try again later."
-msgstr "𐑐𐑤𐑰𐑟 𐑑𐑮𐑲 𐑩𐑜𐑱𐑯 𐑤𐑱𐑑𐑼."
-
-#: ../src/totem-object.c:1218
-#, c-format
+#: ../src/totem-object.c:1246
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑨𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑑𐑲𐑐 𐑝 𐑥𐑰𐑛𐑦𐑩 (%s) 𐑚𐑦𐑒𐑪𐑟 𐑦𐑑 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑩𐑐𐑹𐑑𐑩𐑛."
 
-#: ../src/totem-object.c:1219
+#: ../src/totem-object.c:1247
 msgid "Please insert another disc to play back."
 msgstr "𐑐𐑤𐑰𐑟 𐑦𐑯𐑕𐑻𐑑 𐑩𐑯𐑳𐑞𐑼 𐑛𐑦𐑕𐑒 𐑑 𐑐𐑤𐑱 𐑚𐑨𐑒."
 
-#: ../src/totem-object.c:1254
+#: ../src/totem-object.c:1282
 msgid "Totem was not able to play this disc."
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑢𐑪𐑟 𐑯𐑪𐑑 𐑱𐑚𐑩𐑤 𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑛𐑦𐑕𐑒."
 
-#: ../src/totem-object.c:1255 ../src/totem-object.c:4054
+#: ../src/totem-object.c:1283 ../src/totem-object.c:4200
 msgid "No reason."
 msgstr "𐑯𐑴 𐑮𐑰𐑟𐑩𐑯."
 
-#: ../src/totem-object.c:1269
+#: ../src/totem-object.c:1297
 msgid "Totem does not support playback of Audio CDs"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑕𐑩𐑐𐑹𐑑 𐑐𐑤𐑱𐑚𐑨𐑒 𐑝 𐑷𐑛𐑦𐑴 ·𐑒·𐑛𐑟"
 
-#: ../src/totem-object.c:1753
+#, fuzzy
+#: ../src/totem-object.c:1298
+msgid "Please consider using a music player or a CD extractor to play this CD"
+msgstr "𐑐𐑤𐑰𐑟 𐑒𐑩𐑯𐑕𐑦𐑛𐑼 𐑿𐑟𐑦𐑙 𐑩 𐑥𐑿𐑟𐑦𐑒 𐑐𐑤𐑱𐑼 𐑹 𐑩 ·𐑒·𐑛 extractor 𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 ·𐑒·𐑛"
+
+#: ../src/totem-object.c:1789
 msgid "No error message"
 msgstr "𐑯𐑴 𐑻𐑼 𐑥𐑧𐑕𐑦𐑡"
 
-#: ../src/totem-object.c:2107
+#: ../src/totem-object.c:2173
 msgid "Totem could not display the help contents."
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑛𐑩𐑕𐑐𐑤𐑱 𐑞 𐑣𐑧𐑤𐑐 𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕."
 
-#: ../src/totem-object.c:2435 ../src/totem-object.c:2437
-#: ../browser-plugin/totem-plugin-viewer.c:1406
+#: ../src/totem-object.c:2503 ../src/totem-object.c:2505
+#: ../browser-plugin/totem-plugin-viewer.c:1468
 msgid "An error occurred"
 msgstr "𐑩𐑯 𐑻𐑼 𐑪𐑒𐑻𐑛"
 
-#: ../src/totem-object.c:3325
-msgid "TV signal lost"
-msgstr "TV 𐑕𐑦𐑜𐑯𐑩𐑤 𐑤𐑪𐑕𐑑"
-
-#: ../src/totem-object.c:3326
-msgid "Please verify your hardware setup."
-msgstr "𐑐𐑤𐑰𐑟 𐑝𐑧𐑮𐑦𐑓𐑲 𐑿𐑼 𐑣𐑭𐑮𐑛𐑢𐑧𐑮 𐑕𐑧𐑑𐑳𐑐."
-
-#: ../src/totem-object.c:3912 ../src/totem-object.c:3914
+#: ../src/totem-object.c:4042 ../src/totem-object.c:4044
 msgid "Previous Chapter/Movie"
 msgstr "𐑐𐑮𐑰𐑝𐑦𐑩𐑕 𐑗𐑨𐑐𐑑𐑼/𐑥𐑵𐑝𐑰"
 
-#: ../src/totem-object.c:3920 ../src/totem-object.c:3922
+#: ../src/totem-object.c:4051 ../src/totem-object.c:4053
 msgid "Play / Pause"
 msgstr "𐑐𐑤𐑱 / 𐑐𐑷𐑟"
 
-#: ../src/totem-object.c:3929 ../src/totem-object.c:3931
+#: ../src/totem-object.c:4061 ../src/totem-object.c:4063
 msgid "Next Chapter/Movie"
 msgstr "𐑯𐑧𐑒𐑕𐑑 𐑗𐑨𐑐𐑑𐑼/𐑥𐑵𐑝𐑰"
 
-#: ../src/totem-object.c:4054
+#, fuzzy
+#: ../src/totem-object.c:4075 ../src/totem-object.c:4077
+msgid "Fullscreen"
+msgstr "Fullscreen"
+
+#: ../src/totem-object.c:4200
 msgid "Totem could not startup."
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑑𐑸𐑑𐑳𐑐."
 
@@ -1183,6 +1415,11 @@ msgstr "𐑝𐑪𐑤𐑿𐑥 𐑛𐑬𐑯"
 msgid "Mute sound"
 msgstr "𐑥𐑿𐑑 𐑕𐑬𐑯𐑛"
 
+#, fuzzy
+#: ../src/totem-options.c:59
+msgid "Toggle Fullscreen"
+msgstr "𐑑𐑪𐑜𐑩𐑤 Fullscreen"
+
 #: ../src/totem-options.c:60
 msgid "Show/Hide Controls"
 msgstr "𐑖𐑴/𐑣𐑲𐑛 𐑒𐑩𐑯𐑑𐑮𐑴𐑤𐑟"
@@ -1190,6 +1427,14 @@ msgstr "𐑖𐑴/𐑣𐑲𐑛 𐑒𐑩𐑯𐑑𐑮𐑴𐑤𐑟"
 #: ../src/totem-options.c:61
 msgid "Quit"
 msgstr "𐑒𐑢𐑦𐑑"
+
+#. Translators: this refers to a media file
+#, fuzzy
+#: ../src/totem-options.c:62
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
+msgid "Enqueue"
+msgstr "Enqueue"
 
 #: ../src/totem-options.c:63
 msgid "Replace"
@@ -1211,71 +1456,81 @@ msgstr "𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑦𐑯𐑛𐑧𐑒𐑕"
 msgid "Movies to play"
 msgstr "𐑥𐑵𐑝𐑰𐑟 𐑑 𐑐𐑤𐑱"
 
-#: ../src/totem-playlist.c:151
+#. By extension entry
+#, fuzzy
+#: ../src/totem-playlist.c:153
+msgid "MP3 ShoutCast playlist"
+msgstr "MP3 ShoutCast 𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
+
+#: ../src/totem-playlist.c:154
 msgid "MP3 audio (streamed)"
 msgstr "MP3 𐑷𐑛𐑦𐑴 (𐑕𐑑𐑮𐑰𐑥𐑛)"
 
-#: ../src/totem-playlist.c:152
+#: ../src/totem-playlist.c:155
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 𐑷𐑛𐑦𐑴 (𐑕𐑑𐑮𐑰𐑥𐑛, DOS 𐑓𐑹𐑥𐑨𐑑)"
 
+#, fuzzy
+#: ../src/totem-playlist.c:156
+msgid "XML Shareable Playlist"
+msgstr "·𐑦·𐑥·𐑤 Shareable 𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
+
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:356
 #, c-format
+#: ../src/totem-playlist.c:355
 msgid "Title %d"
 msgstr "𐑑𐑲𐑑𐑩𐑤 %d"
 
-#: ../src/totem-playlist.c:431
+#: ../src/totem-playlist.c:456
 msgid "Could not save the playlist"
 msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑱𐑝 𐑞 𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:1031
 msgid "Save Playlist"
 msgstr "𐑕𐑱𐑝 𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1013 ../src/totem-sidebar.c:121
+#: ../src/totem-playlist.c:1043 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "𐑐𐑤𐑱𐑤𐑦𐑕𐑑"
 
-#: ../src/totem-playlist.c:1776
-#, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
+#, fuzzy, c-format
+#: ../src/totem-playlist.c:1852
+msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "𐑞 𐑐𐑤𐑱𐑤𐑦𐑕𐑑 '%s' 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑚𐑰 𐑐𐑸𐑕𐑑, 𐑦𐑑 𐑥𐑲𐑑 𐑚𐑰 𐑛𐑨𐑥𐑦𐑡𐑛."
 
-#: ../src/totem-playlist.c:1777
+#: ../src/totem-playlist.c:1853
 msgid "Playlist error"
 msgstr "𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑻𐑼"
 
-#: ../src/totem-preferences.c:106
+#: ../src/totem-preferences.c:107
 msgid "Enable visual effects?"
 msgstr "𐑦𐑯𐑱𐑚𐑩𐑤 𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕?"
 
-#: ../src/totem-preferences.c:108
+#: ../src/totem-preferences.c:109
 msgid ""
-"It seems you are running Totem remotely.\n"
-"Are you sure you want to enable the visual effects?"
+"It seems you are running Totem remotely.\nAre you sure you want to enable the "
+"visual effects?"
 msgstr ""
-"𐑦𐑑 𐑕𐑰𐑥𐑟 𐑿 𐑸 𐑮𐑳𐑯𐑦𐑙 ·𐑑𐑴𐑑𐑩𐑥 𐑮𐑦𐑥𐑴𐑑𐑤𐑦.\n"
-"𐑸 𐑿 𐑖𐑫𐑼 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑦𐑯𐑱𐑚𐑩𐑤 𐑞 𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕?"
+"𐑦𐑑 𐑕𐑰𐑥𐑟 𐑿 𐑸 𐑮𐑳𐑯𐑦𐑙 ·𐑑𐑴𐑑𐑩𐑥 𐑮𐑦𐑥𐑴𐑑𐑤𐑦.\n𐑸 𐑿 𐑖𐑫𐑼 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑦𐑯𐑱𐑚𐑩𐑤 𐑞 𐑝𐑦𐑠𐑩𐑢𐑩𐑤 𐑦𐑓𐑧𐑒𐑑𐑕?"
 
-#: ../src/totem-preferences.c:353
-msgid "Changing the visuals effect type will require a restart to take effect."
+#: ../src/totem-preferences.c:387
+msgid ""
+"Changing the visuals effect type will require a restart to take effect."
 msgstr "𐑗𐑱𐑯𐑡𐑦𐑙 𐑞 𐑝𐑦𐑠𐑢𐑩𐑤𐑟 𐑦𐑓𐑧𐑒𐑑 𐑑𐑲𐑐 𐑢𐑦𐑤 𐑮𐑦𐑒𐑢𐑲𐑼 𐑩 𐑮𐑰𐑕𐑑𐑸𐑑 𐑑 𐑑𐑱𐑒 𐑦𐑓𐑧𐑒𐑑."
 
-#: ../src/totem-preferences.c:437
+#: ../src/totem-preferences.c:471
 msgid ""
-"The change of audio output type will only take effect when Totem is "
-"restarted."
+"The change of audio output type will only take effect when Totem is restarted."
 msgstr "𐑞 𐑗𐑱𐑯𐑡 𐑝 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑑𐑲𐑐 𐑢𐑦𐑤 𐑴𐑯𐑤𐑦 𐑑𐑱𐑒 𐑦𐑓𐑧𐑒𐑑 𐑢𐑧𐑯 ·𐑑𐑴𐑑𐑩𐑥 𐑦𐑟 𐑮𐑰𐑕𐑑𐑸𐑑𐑩𐑛."
 
-#: ../src/totem-preferences.c:532
+#: ../src/totem-preferences.c:565
 msgid "Preferences"
 msgstr "𐑐𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑩𐑟"
 
-#: ../src/totem-preferences.c:692
+#: ../src/totem-preferences.c:726
 msgid "Select Subtitle Font"
 msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑪𐑯𐑑"
 
@@ -1285,46 +1540,46 @@ msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑪𐑯�
 msgid "Audio/Video"
 msgstr "𐑷𐑛𐑦𐑴/𐑝𐑦𐑛𐑦𐑴"
 
-#: ../src/totem-statusbar.c:95
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:117
 #, c-format
+#: ../src/totem-statusbar.c:113
 msgid "%s (Streaming)"
 msgstr "%s (𐑕𐑑𐑮𐑰𐑥𐑦𐑙)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:124 ../src/totem-time-label.c:65
 #, c-format
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:127 ../src/totem-time-label.c:68
 #, c-format
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 msgid "Seek to %s / %s"
 msgstr "𐑕𐑰𐑒 𐑑 %s / %s"
 
-#: ../src/totem-statusbar.c:221
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "𐑚𐑳𐑓𐑼𐑦𐑙"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:232
 #, c-format
+#: ../src/totem-statusbar.c:228
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:301
 #, c-format
+#: ../src/totem-statusbar.c:303
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:306
 #, c-format
+#: ../src/totem-statusbar.c:308
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
 
@@ -1391,6 +1646,16 @@ msgstr "𐑡𐑪𐑮𐑡𐑩𐑯"
 #: ../src/totem-subtitle-encoding.c:237
 msgid "Greek"
 msgstr "𐑜𐑮𐑰𐑒"
+
+#, fuzzy
+#: ../src/totem-subtitle-encoding.c:240
+msgid "Gujarati"
+msgstr "Gujarati"
+
+#, fuzzy
+#: ../src/totem-subtitle-encoding.c:243
+msgid "Gurmukhi"
+msgstr "Gurmukhi"
 
 #: ../src/totem-subtitle-encoding.c:246 ../src/totem-subtitle-encoding.c:248
 #: ../src/totem-subtitle-encoding.c:250 ../src/totem-subtitle-encoding.c:252
@@ -1468,54 +1733,48 @@ msgstr "𐑯𐑴 𐑝𐑦𐑛𐑦𐑴 𐑘𐑻𐑰"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:667
 #, c-format
-msgid ""
-"<b>%s</b>: %s\n"
-"<b>%s</b>: %d×%d\n"
-"<b>%s</b>: %s"
-msgstr ""
-"<b>%s</b>: %s\n"
-"<b>%s</b>: %d×%d\n"
-"<b>%s</b>: %s"
-
 #: ../src/totem-video-thumbnailer.c:668
+msgid "<b>%s</b>: %s\n<b>%s</b>: %d×%d\n<b>%s</b>: %s"
+msgstr "<b>%s</b>: %s\n<b>%s</b>: %d×%d\n<b>%s</b>: %s"
+
+#: ../src/totem-video-thumbnailer.c:669
 msgid "Filename"
 msgstr "𐑓𐑲𐑤𐑯𐑱𐑥"
 
-#: ../src/totem-video-thumbnailer.c:670
+#: ../src/totem-video-thumbnailer.c:671
 msgid "Resolution"
 msgstr "𐑮𐑧𐑟𐑩𐑤𐑵𐑖𐑩𐑯"
 
-#: ../src/totem-video-thumbnailer.c:673
+#: ../src/totem-video-thumbnailer.c:674
 msgid "Duration"
 msgstr "𐑛𐑫𐑮𐑱𐑖𐑩𐑯"
 
-#: ../src/totem-uri.c:468
+#: ../src/totem-uri.c:500
 msgid "All files"
 msgstr "𐑷𐑤 𐑓𐑲𐑤𐑟"
 
-#: ../src/totem-uri.c:473
+#: ../src/totem-uri.c:505
 msgid "Supported files"
 msgstr "𐑕𐑩𐑐𐑹𐑑𐑩𐑛 𐑓𐑲𐑤𐑟"
 
-#: ../src/totem-uri.c:485
+#: ../src/totem-uri.c:517
 msgid "Audio files"
 msgstr "𐑷𐑛𐑦𐑴 𐑓𐑲𐑤𐑟"
 
-#: ../src/totem-uri.c:493
+#: ../src/totem-uri.c:525
 msgid "Video files"
 msgstr "𐑝𐑦𐑛𐑦𐑴 𐑓𐑲𐑤𐑟"
 
-#: ../src/totem-uri.c:503
+#: ../src/totem-uri.c:535
 msgid "Subtitle files"
 msgstr "𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑓𐑲𐑤𐑟"
 
-#: ../src/totem-uri.c:555
+#: ../src/totem-uri.c:587
 msgid "Select Text Subtitles"
 msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑑𐑧𐑒𐑕𐑑 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟"
 
-#: ../src/totem-uri.c:617
+#: ../src/totem-uri.c:649
 msgid "Select Movies or Playlists"
 msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑥𐑵𐑝𐑰𐑟 𐑹 𐑐𐑤𐑱𐑤𐑦𐑕𐑑𐑕"
 
@@ -1523,102 +1782,181 @@ msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑥𐑵𐑝𐑰𐑟 𐑹 𐑐𐑤𐑱𐑤𐑦�
 msgid "Could not open link"
 msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑴𐑐𐑩𐑯 𐑤𐑦𐑙𐑒"
 
-#: ../src/totem.c:134 ../src/totem.c:160
+#: ../src/totem.c:151 ../src/totem.c:177
 #: ../browser-plugin/totem-plugin-viewer.c:666
-#: ../browser-plugin/totem-plugin-viewer.c:1768
+#: ../browser-plugin/totem-plugin-viewer.c:1862
 msgid "Totem Movie Player"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑥𐑵𐑝𐑰 𐑐𐑤𐑱𐑼"
 
-#: ../src/totem.c:135 ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2282
 msgid "Could not initialize the thread-safe libraries."
 msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑦𐑯𐑦𐑖𐑩𐑤𐑲𐑟 𐑞 𐑔𐑮𐑧𐑛-𐑕𐑱𐑓 𐑤𐑲𐑚𐑮𐑼𐑦𐑟."
 
-#: ../src/totem.c:135
+#: ../src/totem.c:152
 msgid "Verify your system installation. Totem will now exit."
 msgstr "𐑝𐑧𐑮𐑦𐑓𐑲 𐑿𐑼 𐑕𐑦𐑕𐑑𐑩𐑥 𐑦𐑯𐑕𐑑𐑩𐑤𐑱𐑖𐑩𐑯. ·𐑑𐑴𐑑𐑩𐑥 𐑢𐑦𐑤 𐑯𐑬 𐑧𐑜𐑟𐑦𐑑."
 
 #. Handle command line arguments
-#: ../src/totem.c:143
+#: ../src/totem.c:160
 msgid "- Play movies and songs"
 msgstr "- 𐑐𐑤𐑱 𐑥𐑵𐑝𐑰𐑟 𐑯 𐑕𐑪𐑙𐑟"
 
-#: ../src/totem.c:152
 #, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"𐑮𐑳𐑯 '%s --help' 𐑑 𐑕𐑰 𐑩 𐑓𐑫𐑤 𐑤𐑦𐑕𐑑 𐑝 𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤 𐑒𐑩𐑥𐑭𐑯𐑛 𐑤𐑲𐑯 𐑪𐑐𐑖𐑩𐑯𐑟.\n"
-
 #: ../src/totem.c:169
+msgid ""
+"%s\nRun '%s --help' to see a full list of available command line options.\n"
+msgstr "%s\n𐑮𐑳𐑯 '%s --help' 𐑑 𐑕𐑰 𐑩 𐑓𐑫𐑤 𐑤𐑦𐑕𐑑 𐑝 𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤 𐑒𐑩𐑥𐑭𐑯𐑛 𐑤𐑲𐑯 𐑪𐑐𐑖𐑩𐑯𐑟.\n"
+
+#: ../src/totem.c:186
 msgid "Totem could not initialize the configuration engine."
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑦𐑯𐑦𐑖𐑩𐑤𐑲𐑟 𐑞 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯 𐑧𐑯𐑡𐑦𐑯."
 
-#: ../src/totem.c:169
+#: ../src/totem.c:186
 msgid "Make sure that GNOME is properly installed."
 msgstr "𐑥𐑱𐑒 𐑖𐑫𐑼 𐑞𐑨𐑑 ·𐑜𐑯𐑴𐑥 𐑦𐑟 𐑐𐑮𐑪𐑐𐑼𐑤𐑦 𐑦𐑯𐑕𐑑𐑷𐑤𐑛."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2614
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2618
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1744
+msgid "Password requested for RTSP server"
+msgstr "𐑐𐑭𐑕𐑢𐑼𐑛 𐑮𐑦𐑒𐑢𐑧𐑕𐑑𐑩𐑛 𐑓𐑹 RTSP 𐑕𐑻𐑝𐑼"
+
 #, c-format
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2953
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2957
 msgid "Audio Track #%d"
 msgstr "𐑷𐑛𐑦𐑴 𐑑𐑮𐑨𐑒 #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2646
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2650
 #, c-format
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2985
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2989
 msgid "Subtitle #%d"
 msgstr "𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3059
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3398
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+"𐑞 𐑮𐑦𐑒𐑢𐑧𐑕𐑑𐑩𐑛 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑢𐑪𐑟 𐑯𐑪𐑑 𐑓𐑬𐑯𐑛. 𐑐𐑤𐑰𐑟 𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑯 𐑞 "
+"𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 Selector."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3403
 msgid "Location not found."
 msgstr "𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑯𐑪𐑑 𐑓𐑬𐑯𐑛."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3063
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3407
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑴𐑐𐑩𐑯 𐑤𐑴𐑒𐑱𐑖𐑩𐑯; 𐑿 𐑥𐑲𐑑 𐑯𐑪𐑑 𐑣𐑨𐑝 𐑐𐑻𐑥𐑦𐑖𐑪𐑯 𐑑 𐑴𐑐𐑩𐑯 𐑞 𐑓𐑲𐑤."
 
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3418
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"𐑞 𐑝𐑦𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑟 𐑦𐑯 𐑿𐑕 𐑚𐑲 𐑩𐑯𐑳𐑞𐑼 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯. 𐑐𐑤𐑰𐑟 𐑒𐑤𐑴𐑟 𐑳𐑞𐑼 𐑝𐑦𐑛𐑦𐑴 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟, 𐑹 "
+"𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑝𐑦𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑯 𐑞 𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 Selector."
+
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3424
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+"𐑞 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑟 𐑦𐑯 𐑿𐑕 𐑚𐑲 𐑩𐑯𐑳𐑞𐑼 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯. 𐑐𐑤𐑰𐑟 𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑯 𐑞 "
+"𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 Selector. 𐑿 𐑥𐑱 𐑢𐑪𐑯𐑑 𐑑 𐑒𐑩𐑯𐑕𐑦𐑛𐑼 𐑿𐑟𐑦𐑙 𐑩 𐑕𐑬𐑯𐑛 𐑕𐑻𐑝𐑼."
+
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3098
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3104
 #, c-format
-msgid "The playback of this movie requires a %s plugin which is not installed."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3448
+msgid ""
+"The playback of this movie requires a %s plugin which is not installed."
 msgstr "𐑞 𐑐𐑤𐑱𐑚𐑨𐑒 𐑝 𐑞𐑦𐑕 𐑥𐑵𐑝𐑰 𐑮𐑦𐑒𐑢𐑲𐑼𐑟 𐑩 %s 𐑐𐑤𐑳𐑜𐑦𐑯 𐑢𐑦𐑗 𐑦𐑟 𐑯𐑪𐑑 𐑦𐑯𐑕𐑑𐑷𐑤𐑛."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3105
 #, c-format
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3449
 msgid ""
 "The playback of this movie requires the following decoders which are not "
-"installed:\n"
-"\n"
-"%s"
-msgstr ""
-"𐑞 𐑐𐑤𐑱𐑚𐑨𐑒 𐑝 𐑞𐑦𐑕 𐑥𐑵𐑝𐑰 𐑮𐑦𐑒𐑢𐑲𐑼𐑟 𐑞 𐑓𐑪𐑤𐑴𐑦𐑙 𐑛𐑰𐑒𐑴𐑛𐑼𐑟 𐑢𐑦𐑗 𐑸 𐑯𐑪𐑑 𐑦𐑯𐑕𐑑𐑷𐑤𐑛:\n"
-"\n"
-"%s"
+"installed:\n\n%s"
+msgstr "𐑞 𐑐𐑤𐑱𐑚𐑨𐑒 𐑝 𐑞𐑦𐑕 𐑥𐑵𐑝𐑰 𐑮𐑦𐑒𐑢𐑲𐑼𐑟 𐑞 𐑓𐑪𐑤𐑴𐑦𐑙 𐑛𐑰𐑒𐑴𐑛𐑼𐑟 𐑢𐑦𐑗 𐑸 𐑯𐑪𐑑 𐑦𐑯𐑕𐑑𐑷𐑤𐑛:\n\n%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3130
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3474
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "𐑒𐑨𐑯𐑪𐑑 𐑐𐑤𐑱 𐑞𐑦𐑕 𐑓𐑲𐑤 𐑴𐑝𐑼 𐑞 𐑯𐑧𐑑𐑢𐑻𐑒. 𐑑𐑮𐑲 𐑛𐑬𐑯𐑤𐑴𐑛𐑦𐑙 𐑦𐑑 𐑑 𐑛𐑦𐑕𐑒 𐑓𐑻𐑕𐑑."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3202
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3546
 msgid "Media file could not be played."
 msgstr "𐑥𐑰𐑛𐑦𐑩 𐑓𐑲𐑤 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑚𐑰 𐑐𐑤𐑱𐑛."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5514
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5807
 msgid "Surround"
 msgstr "𐑕𐑼𐑬𐑯𐑛"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5516
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5809
 msgid "Mono"
 msgstr "𐑥𐑴𐑯𐑴"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5870
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6156
+msgid "Too old version of GStreamer installed."
+msgstr "𐑑𐑵 𐑴𐑤𐑛 𐑝𐑻𐑠𐑩𐑯 𐑝 GStreamer 𐑦𐑯𐑕𐑑𐑷𐑤𐑛."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6163
 msgid "Media contains no supported video streams."
 msgstr "𐑥𐑰𐑛𐑦𐑩 𐑒𐑩𐑯𐑑𐑱𐑯𐑟 𐑯𐑴 𐑕𐑩𐑐𐑹𐑑𐑩𐑛 𐑝𐑦𐑛𐑦𐑴 𐑕𐑑𐑮𐑰𐑥𐑟."
+
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6676
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"𐑓𐑱𐑤𐑛 𐑑 𐑒𐑮𐑦𐑱𐑑 𐑩 GStreamer 𐑐𐑤𐑱 𐑩𐑚𐑡𐑧𐑒𐑑. 𐑐𐑤𐑰𐑟 𐑗𐑧𐑒 𐑿𐑼 GStreamer 𐑦𐑯𐑕𐑑𐑩𐑤𐑱𐑖𐑩𐑯."
+
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6788
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6923
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"𐑓𐑱𐑤𐑛 𐑑 𐑴𐑐𐑩𐑯 𐑝𐑦𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑. 𐑦𐑑 𐑥𐑱 𐑯𐑪𐑑 𐑚𐑰 𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤. 𐑐𐑤𐑰𐑟 𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑝𐑦𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 "
+"𐑦𐑯 𐑞 𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 Selector."
+
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6800
+msgid ""
+"Could not find the video output. You may need to install additional GStreamer "
+"plugins, or select another video output in the Multimedia Systems Selector."
+msgstr ""
+"𐑒𐑫𐑛 𐑯𐑪𐑑 𐑓𐑲𐑯𐑛 𐑞 𐑝𐑦𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑. 𐑿 𐑥𐑱 𐑯𐑰𐑛 𐑑 𐑦𐑯𐑕𐑑𐑷𐑤 𐑩𐑛𐑦𐑖𐑩𐑯𐑩𐑤 GStreamer 𐑐𐑤𐑳𐑜𐑦𐑯𐑟, 𐑹 "
+"𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑝𐑦𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑯 𐑞 𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 Selector."
+
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6835
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+"𐑓𐑱𐑤𐑛 𐑑 𐑴𐑐𐑩𐑯 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑. 𐑿 𐑥𐑱 𐑯𐑪𐑑 𐑣𐑨𐑝 𐑐𐑻𐑥𐑦𐑖𐑪𐑯 𐑑 𐑴𐑐𐑩𐑯 𐑞 𐑕𐑬𐑯𐑛 𐑛𐑦𐑝𐑲𐑕, 𐑹 𐑞 𐑕𐑬𐑯𐑛 "
+"𐑕𐑻𐑝𐑼 𐑥𐑱 𐑯𐑪𐑑 𐑚𐑰 𐑮𐑳𐑯𐑦𐑙. 𐑐𐑤𐑰𐑟 𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑯 𐑞 𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 "
+"Selector."
+
+#, fuzzy
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6855
+msgid ""
+"Could not find the audio output. You may need to install additional GStreamer "
+"plugins, or select another audio output in the Multimedia Systems Selector."
+msgstr ""
+"𐑒𐑫𐑛 𐑯𐑪𐑑 𐑓𐑲𐑯𐑛 𐑞 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑. 𐑿 𐑥𐑱 𐑯𐑰𐑛 𐑑 𐑦𐑯𐑕𐑑𐑷𐑤 𐑩𐑛𐑦𐑖𐑩𐑯𐑩𐑤 GStreamer 𐑐𐑤𐑳𐑜𐑦𐑯𐑟, 𐑹 "
+"𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯𐑳𐑞𐑼 𐑷𐑛𐑦𐑴 𐑬𐑑𐑐𐑫𐑑 𐑦𐑯 𐑞 𐑥𐑩𐑤𐑑𐑰𐑥𐑰𐑛𐑰𐑩 𐑕𐑦𐑕𐑑𐑩𐑥𐑟 Selector."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1626,8 +1964,8 @@ msgstr "𐑥𐑰𐑛𐑦𐑩 𐑒𐑩𐑯𐑑𐑱𐑯𐑟 𐑯𐑴 𐑕𐑩𐑐�
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/backend/video-utils.c:91 ../src/backend/video-utils.c:108
 #, c-format
+#: ../src/backend/video-utils.c:91 ../src/backend/video-utils.c:108
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
 msgstr "%d:%02d:%02d"
@@ -1638,27 +1976,50 @@ msgstr "%d:%02d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/backend/video-utils.c:100
 #, c-format
+#: ../src/backend/video-utils.c:100
 msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#. hour:minutes:seconds
-#: ../src/backend/video-utils.c:149
 #, c-format
+#, fuzzy
+#: ../src/backend/video-utils.c:138
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d 𐑬𐑼"
+msgstr[1] "%d 𐑬𐑼𐑟"
+
+#, c-format
+#, fuzzy
+#: ../src/backend/video-utils.c:140
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d 𐑥𐑦𐑯𐑩𐑑"
+msgstr[1] "%d 𐑥𐑦𐑯𐑦𐑑𐑕"
+
+#, fuzzy, c-format
+#: ../src/backend/video-utils.c:143
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "0 𐑕𐑧𐑒𐑩𐑯𐑛𐑟"
+msgstr[1] "0 𐑕𐑧𐑒𐑩𐑯𐑛𐑟"
+
+#. hour:minutes:seconds
+#, c-format
+#: ../src/backend/video-utils.c:149
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:152
 #, c-format
+#: ../src/backend/video-utils.c:152
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:155
 #, c-format
+#: ../src/backend/video-utils.c:155
 msgid "%s"
 msgstr "%s"
 
@@ -1670,17 +2031,13 @@ msgstr "𐑐𐑤𐑳𐑜𐑦𐑯"
 msgid "Enabled"
 msgstr "𐑦𐑯𐑱𐑚𐑩𐑤𐑛"
 
+#, c-format
 #: ../src/plugins/totem-plugins-engine.c:603
-#, c-format
-msgid ""
-"Unable to activate plugin %s.\n"
-"%s"
-msgstr ""
-"𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑨𐑒𐑑𐑦𐑝𐑱𐑑 𐑐𐑤𐑳𐑜𐑦𐑯 %s.\n"
-"%s"
+msgid "Unable to activate plugin %s.\n%s"
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑨𐑒𐑑𐑦𐑝𐑱𐑑 𐑐𐑤𐑳𐑜𐑦𐑯 %s.\n%s"
 
-#: ../src/plugins/totem-plugins-engine.c:606
 #, c-format
+#: ../src/plugins/totem-plugins-engine.c:606
 msgid "Unable to activate plugin %s"
 msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑨𐑒𐑑𐑦𐑝𐑱𐑑 𐑐𐑤𐑳𐑜𐑦𐑯 %s"
 
@@ -1696,6 +2053,11 @@ msgstr "𐑚𐑦𐑥𐑘𐑵𐑟𐑛"
 msgid "Control Totem through a mobile phone with a Bemused client"
 msgstr "𐑒𐑩𐑯𐑑𐑮𐑴𐑤 ·𐑑𐑴𐑑𐑩𐑥 𐑔𐑮𐑵 𐑩 𐑥𐑴𐑚𐑲𐑤 𐑓𐑴𐑯 𐑢𐑦𐑞 𐑩 𐑚𐑦𐑥𐑘𐑵𐑟𐑛 𐑒𐑤𐑲𐑩𐑯𐑑"
 
+#, fuzzy, c-format
+#: ../src/plugins/bemused/totem-bemused.c:185
+msgid "Untitled %d"
+msgstr "𐑑𐑲𐑑𐑩𐑤 %d"
+
 #: ../src/plugins/bemused/totem-bemused.c:607
 msgid "Totem Bemused Server"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑚𐑦𐑥𐑘𐑵𐑟𐑛 𐑕𐑻𐑝𐑼"
@@ -1709,9 +2071,29 @@ msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑚𐑦𐑥𐑘𐑵𐑟𐑛 𐑕𐑻𐑝𐑼 �
 msgid "_Create Video Disc..."
 msgstr "_𐑒𐑮𐑦𐑱𐑑 𐑝𐑦𐑛𐑦𐑴 𐑛𐑦𐑕𐑒..."
 
+#, fuzzy
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
+msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+msgstr "𐑒𐑮𐑦𐑱𐑑 𐑩 𐑝𐑦𐑛𐑦𐑴 ·𐑛·𐑝·𐑛 𐑹 𐑩 (𐑕)VCD 𐑓𐑮𐑪𐑥 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦 𐑴𐑐𐑩𐑯𐑛 𐑥𐑵𐑝𐑰"
+
+#, fuzzy
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
+msgid "Copy Vide_o DVD..."
+msgstr "𐑒𐑪𐑐𐑦 Vide_o ·𐑛·𐑝·𐑛..."
+
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
 msgid "Copy the currently playing video DVD"
 msgstr "𐑒𐑪𐑐𐑦 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦 𐑐𐑤𐑱𐑦𐑙 𐑝𐑦𐑛𐑦𐑴 DVD"
+
+#, fuzzy
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+msgid "Copy (S)VCD..."
+msgstr "𐑒𐑪𐑐𐑦 (𐑕)VCD..."
+
+#, fuzzy
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:84
+msgid "Copy the currently playing (S)VCD"
+msgstr "𐑒𐑪𐑐𐑦 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦 𐑐𐑤𐑱𐑦𐑙 (𐑕)VCD"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
 msgid "The video disc could not be duplicated."
@@ -1728,6 +2110,11 @@ msgstr "𐑞 𐑥𐑵𐑝𐑰 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑚𐑰 𐑮𐑩𐑒�
 msgid "Unable to write a project."
 msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑮𐑲𐑑 𐑩 𐑐𐑮𐑪𐑡𐑧𐑒𐑑."
 
+#, fuzzy
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+msgid "Records (S)VCDs or video DVDs"
+msgstr "𐑮𐑩𐑒𐑹𐑛𐑟 (𐑕)VCDs 𐑹 𐑝𐑦𐑛𐑦𐑴 DVDs"
+
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
 msgid "Video Disc Recorder"
 msgstr "𐑝𐑦𐑛𐑦𐑴 𐑛𐑦𐑕𐑒 𐑮𐑦𐑒𐑪𐑮𐑛𐑻"
@@ -1737,16 +2124,28 @@ msgstr "𐑝𐑦𐑛𐑦𐑴 𐑛𐑦𐑕𐑒 𐑮𐑦𐑒𐑪𐑮𐑛𐑻"
 msgid "Delete"
 msgstr "𐑛𐑦𐑤𐑰𐑑"
 
+#, fuzzy
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:108
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+msgid "Coherence DLNA/UPnP Client"
+msgstr "𐑒𐑴𐑣𐑦𐑮𐑩𐑯𐑕 DLNA/UPnP 𐑒𐑤𐑲𐑩𐑯𐑑"
+
+#, fuzzy
+#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+msgid "A DLNA/UPnP client for Totem powered by Coherence"
+msgstr "𐑩 DLNA/UPnP 𐑒𐑤𐑲𐑩𐑯𐑑 𐑓𐑹 𐑑𐑴𐑑𐑩𐑥 𐑐𐑬𐑼𐑛 𐑚𐑲 𐑒𐑴𐑣𐑦𐑮𐑩𐑯𐑕"
+
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:1
 msgid "D-Bus Service"
 msgstr "D-Bus 𐑕𐑻𐑝𐑦𐑕"
 
+#, fuzzy
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
 msgid ""
-"Plugin for sending notifications of currently-playing movies to the D-Bus "
+"Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
 msgstr ""
-"𐑐𐑤𐑳𐑜𐑦𐑯 𐑓𐑹 𐑕𐑧𐑯𐑛𐑦𐑙 𐑯𐑴𐑑𐑩𐑓𐑩𐑒𐑱𐑖𐑩𐑯𐑟 𐑝 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦-𐑐𐑤𐑱𐑦𐑙 𐑥𐑵𐑝𐑰𐑟 𐑑 𐑞 D-Bus 𐑕𐑩𐑚𐑕𐑦𐑕𐑑𐑩𐑥."
+"𐑐𐑤𐑳𐑜𐑦𐑯 𐑓𐑹 𐑕𐑧𐑯𐑛𐑦𐑙 𐑯𐑴𐑑𐑩𐑓𐑩𐑒𐑱𐑖𐑩𐑯𐑟 𐑝 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦 𐑐𐑤𐑱𐑦𐑙 𐑥𐑵𐑝𐑰𐑟 𐑑 𐑞 𐑛𐑰-𐑚𐑳𐑕 𐑕𐑩𐑚𐑕𐑦𐑕𐑑𐑩𐑥."
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
@@ -1756,13 +2155,49 @@ msgstr "𐑦𐑯𐑕𐑑𐑩𐑯𐑑 𐑥𐑧𐑕𐑩𐑯𐑡𐑼 𐑕𐑑𐑱�
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "𐑕𐑧𐑑 𐑿𐑼 𐑦𐑯𐑕𐑑𐑩𐑯𐑑 𐑥𐑧𐑕𐑩𐑯𐑡𐑼 𐑕𐑑𐑱𐑑𐑫𐑕 𐑑 𐑩𐑢𐑱 𐑢𐑧𐑯 𐑩 𐑥𐑵𐑝𐑰 𐑦𐑟 𐑐𐑤𐑱𐑦𐑙"
 
+#, fuzzy
+#: ../src/plugins/galago/totem-galago.c:171
+msgid "Could not connect to the Galago daemon."
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 𐑞 Galago 𐑛𐑰𐑥𐑩𐑯."
+
+#, fuzzy
+#: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
+msgid "Gromit Annotations"
+msgstr "Gromit 𐑨𐑯𐑩𐑑𐑱𐑖𐑩𐑯𐑟"
+
 #: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
 msgstr "𐑐𐑮𐑧𐑟𐑩𐑯𐑑𐑱𐑖𐑩𐑯 𐑣𐑧𐑤𐑐𐑼 𐑑 𐑥𐑱𐑒 𐑨𐑯𐑩𐑑𐑱𐑖𐑩𐑯𐑟 𐑪𐑯 𐑕𐑒𐑮𐑰𐑯"
 
+#, fuzzy
+#: ../src/plugins/gromit/totem-gromit.c:272
+msgid "The gromit binary was not found."
+msgstr "𐑞 gromit 𐑚𐑲𐑯𐑼𐑦 𐑢𐑪𐑟 𐑯𐑪𐑑 𐑓𐑬𐑯𐑛."
+
+#. Add the interface to Totem's sidebar
+#, fuzzy
+#: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:1
+#: ../src/plugins/iplayer/iplayer.py:32
+msgid "BBC iPlayer"
+msgstr "𐑚𐑰𐑚𐑰𐑕𐑰 iPlayer"
+
+#, fuzzy
+#: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:2
+msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
+msgstr "𐑕𐑑𐑮𐑰𐑥 𐑚𐑰𐑚𐑰𐑕𐑰 𐑐𐑮𐑴𐑜𐑮𐑨𐑥𐑟 𐑓𐑮𐑪𐑥 𐑞 𐑤𐑭𐑕𐑑 7 𐑛𐑱𐑟 𐑓𐑮𐑪𐑥 𐑞 𐑚𐑰𐑚𐑰𐑕𐑰 iPlayer 𐑕𐑻𐑝𐑦𐑕."
+
+#, fuzzy
 #: ../src/plugins/iplayer/iplayer.py:57
-msgid "Error Listing Channel Categories"
+msgid "Error listing channel categories"
 msgstr "𐑻𐑼 𐑤𐑦𐑕𐑑𐑦𐑙 𐑗𐑨𐑯𐑩𐑤 𐑒𐑨𐑑𐑩𐑜𐑪𐑮𐑰𐑟"
+
+#, fuzzy
+#: ../src/plugins/iplayer/iplayer.py:57
+msgid ""
+"There was an unknown error getting the list of television channels available "
+"on BBC iPlayer."
+msgstr ""
+"𐑞𐑺 𐑢𐑪𐑟 𐑩𐑯 𐑳𐑯𐑴𐑯 𐑻𐑼 𐑜𐑧𐑑𐑦𐑙 𐑞 𐑤𐑦𐑕𐑑 𐑝 𐑑𐑧𐑤𐑩𐑝𐑦𐑠𐑩𐑯 𐑗𐑨𐑯𐑩𐑤𐑟 𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤 𐑪𐑯 𐑚𐑰𐑚𐑰𐑕𐑰 iPlayer."
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
@@ -1774,8 +2209,16 @@ msgstr "𐑤𐑴𐑛𐑦𐑙…"
 msgid "Error getting programme feed"
 msgstr "𐑻𐑼 𐑜𐑧𐑑𐑦𐑙 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑓𐑰𐑛"
 
-#: ../src/plugins/iplayer/iplayer2.py:295
+#, fuzzy
+#: ../src/plugins/iplayer/iplayer.py:106
+msgid ""
+"There was an error getting the list of programmes for this channel and "
+"category combination."
+msgstr ""
+"𐑞𐑺 𐑢𐑪𐑟 𐑩𐑯 𐑻𐑼 𐑜𐑧𐑑𐑦𐑙 𐑞 𐑤𐑦𐑕𐑑 𐑝 programmes 𐑓𐑹 𐑞𐑦𐑕 𐑗𐑨𐑯𐑩𐑤 𐑯 𐑒𐑨𐑑𐑧𐑜𐑹𐑰 𐑒𐑪𐑥𐑚𐑦𐑯𐑱𐑖𐑩𐑯."
+
 #, python-format
+#: ../src/plugins/iplayer/iplayer2.py:295
 msgid "Programme unavailable (\"%s\")"
 msgstr "𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑩𐑯𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤 (\"%s\")"
 
@@ -1786,6 +2229,16 @@ msgstr "𐑚𐑲 𐑭𐑑𐑦𐑕𐑑"
 #: ../src/plugins/jamendo/jamendo.ui.h:2
 msgid "By tag"
 msgstr "𐑚𐑲 𐑑𐑨𐑜"
+
+#, fuzzy
+#: ../src/plugins/jamendo/jamendo.ui.h:3
+msgid "Jamendo Album Page"
+msgstr "Jamendo 𐑨𐑤𐑚𐑳𐑥 𐑐𐑱𐑡"
+
+#, fuzzy
+#: ../src/plugins/jamendo/jamendo.ui.h:4
+msgid "Jamendo Plugin Configuration"
+msgstr "Jamendo 𐑐𐑤𐑳𐑜𐑦𐑯 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:5
 msgid "Latest Releases"
@@ -1804,14 +2257,36 @@ msgid "Preferred audio _format:"
 msgstr "𐑐𐑮𐑦𐑓𐑻𐑛 𐑷𐑛𐑦𐑴 _𐑓𐑹𐑥𐑨𐑑:"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:9
-#: ../src/plugins/tracker/totem-tracker-widget.c:511
+#: ../src/plugins/tracker/totem-tracker-widget.c:521
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "𐑕𐑻𐑗 𐑮𐑦𐑟𐑳𐑤𐑑𐑕"
 
+#, fuzzy
+#: ../src/plugins/jamendo/jamendo.ui.h:11
+msgid "_Open Jamendo Album Page in Browser"
+msgstr "_Open Jamendo 𐑨𐑤𐑚𐑳𐑥 𐑐𐑱𐑡 𐑦𐑯 𐑚𐑮𐑬𐑟𐑼"
+
+#, fuzzy
+#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
+#: ../src/plugins/jamendo/jamendo.py:127
+msgid "Jamendo"
+msgstr "Jamendo"
+
+#, fuzzy
+#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
+msgid ""
+"Listen to the large collection of Creative Commons licensed music on Jamendo."
+msgstr "𐑤𐑦𐑕𐑩𐑯 𐑑 𐑞 𐑤𐑸𐑡 𐑒𐑩𐑤𐑧𐑒𐑖𐑩𐑯 𐑝 𐑒𐑮𐑦𐑱𐑑𐑦𐑝 𐑒𐑪𐑥𐑩𐑯𐑟 𐑤𐑲𐑕𐑩𐑯𐑕𐑑 𐑥𐑿𐑟𐑦𐑒 𐑪𐑯 Jamendo."
+
+#, fuzzy
+#: ../src/plugins/jamendo/jamendo.py:55
+msgid "You need to install the Python simplejson module."
+msgstr "𐑿 𐑯𐑰𐑛 𐑑 𐑦𐑯𐑕𐑑𐑷𐑤 𐑞 𐑐𐑲𐑔𐑭𐑯 simplejson 𐑥𐑪𐑛𐑿𐑤."
+
+#, python-format
 #: ../src/plugins/jamendo/jamendo.py:245 ../src/plugins/jamendo/jamendo.py:258
 #: ../src/plugins/jamendo/jamendo.py:281
-#, python-format
 msgid "Artist: %s"
 msgstr "𐑭𐑑𐑦𐑕𐑑: %s"
 
@@ -1821,41 +2296,41 @@ msgid "%Y-%m-%d"
 msgstr "%Y-%m-%d"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:253
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:253
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:259
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:259
 msgid "Genre: %s"
 msgstr "𐑠𐑪𐑯𐑮𐑩: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:260
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:260
 msgid "Released on: %s"
 msgstr "𐑮𐑦𐑤𐑰𐑕𐑑 𐑪𐑯: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:261
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:261
 msgid "License: %s"
 msgstr "𐑤𐑲𐑕𐑩𐑯𐑕: %s"
 
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:273
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:273
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:280
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:280
 msgid "Album: %s"
 msgstr "𐑨𐑤𐑚𐑳𐑥: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:282
 #, python-format
+#: ../src/plugins/jamendo/jamendo.py:282
 msgid "Duration: %s"
 msgstr "𐑛𐑫𐑮𐑱𐑖𐑩𐑯: %s"
 
@@ -1866,6 +2341,18 @@ msgstr "𐑓𐑧𐑗𐑦𐑙 𐑨𐑤𐑚𐑳𐑥𐑟, 𐑐𐑤𐑰𐑟 𐑢𐑱
 #: ../src/plugins/jamendo/jamendo.py:388
 msgid "An error occurred while fetching albums."
 msgstr "𐑩𐑯 𐑻𐑼 𐑪𐑒𐑻𐑛 𐑢𐑲𐑤 𐑓𐑧𐑗𐑦𐑙 𐑨𐑤𐑚𐑳𐑥𐑟."
+
+#, fuzzy
+#, python-format
+#: ../src/plugins/jamendo/jamendo.py:400
+msgid "Failed to connect to Jamendo server.\n%s."
+msgstr "𐑓𐑱𐑤𐑛 𐑑 𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 Jamendo 𐑕𐑻𐑝𐑼.\n%s."
+
+#, fuzzy
+#, python-format
+#: ../src/plugins/jamendo/jamendo.py:402
+msgid "The Jamendo server returned code %s."
+msgstr "𐑞 Jamendo 𐑕𐑻𐑝𐑼 𐑮𐑦𐑑𐑻𐑯𐑛 𐑒𐑴𐑛 %s."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
@@ -1898,9 +2385,29 @@ msgstr "𐑦𐑯𐑓𐑮𐑻𐑧𐑛 𐑮𐑦𐑥𐑴𐑑 𐑒𐑩𐑯𐑑𐑮�
 msgid "Support infrared remote control"
 msgstr "𐑕𐑩𐑐𐑹𐑑 𐑦𐑯𐑓𐑮𐑻𐑧𐑛 𐑮𐑦𐑥𐑴𐑑 𐑒𐑩𐑯𐑑𐑮𐑴𐑤"
 
+#, fuzzy
+#: ../src/plugins/lirc/totem-lirc.c:281
+msgid "Couldn't initialize lirc."
+msgstr "𐑒𐑫𐑛𐑯𐑑 𐑦𐑯𐑦𐑖𐑩𐑤𐑲𐑟 lirc."
+
+#, fuzzy
+#: ../src/plugins/lirc/totem-lirc.c:290
+msgid "Couldn't read lirc configuration."
+msgstr "𐑒𐑫𐑛𐑯𐑑 𐑮𐑰𐑛 lirc 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯."
+
 #: ../src/plugins/mythtv/totem-mythtv.c:200
 msgid "Recordings"
 msgstr "𐑮𐑦𐑒𐑹𐑛𐑦𐑙𐑟"
+
+#, fuzzy
+#: ../src/plugins/mythtv/totem-mythtv.c:523
+msgid "MythTV Recordings"
+msgstr "MythTV 𐑮𐑦𐑒𐑹𐑛𐑦𐑙𐑟"
+
+#, fuzzy
+#: ../src/plugins/mythtv/totem-mythtv.c:524
+msgid "MythTV LiveTV"
+msgstr "MythTV LiveTV"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
 msgid "Download Movie Subtitles"
@@ -1926,6 +2433,19 @@ msgstr "𐑤𐑫𐑒 𐑓𐑹 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟 𐑓𐑹 𐑞
 msgid "Subtitle Downloader"
 msgstr "𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤 𐑛𐑬𐑯𐑤𐑴𐑛𐑼"
 
+#, fuzzy
+#: ../src/plugins/opensubtitles/opensubtitles.py:35
+msgid "Brasilian Portuguese"
+msgstr "Brasilian 𐑐𐑪𐑮𐑗𐑩𐑜𐑰𐑟"
+
+#, fuzzy
+#: ../src/plugins/opensubtitles/opensubtitles.py:238
+#: ../src/plugins/opensubtitles/opensubtitles.py:254
+#: ../src/plugins/opensubtitles/opensubtitles.py:271
+#: ../src/plugins/opensubtitles/opensubtitles.py:277
+msgid "Could not contact the OpenSubtitles website"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑒𐑪𐑯𐑑𐑨𐑒𐑑 𐑞 OpenSubtitles 𐑢𐑧𐑚𐑕𐑲𐑑"
+
 #: ../src/plugins/opensubtitles/opensubtitles.py:259
 msgid "No results found"
 msgstr "𐑯𐑴 𐑮𐑦𐑟𐑳𐑤𐑑𐑕 𐑓𐑬𐑯𐑛"
@@ -1950,6 +2470,11 @@ msgstr "𐑮𐑱𐑑𐑦𐑙"
 msgid "_Download Movie Subtitles..."
 msgstr "_𐑛𐑬𐑯𐑤𐑴𐑛 𐑥𐑵𐑝𐑰 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟..."
 
+#, fuzzy
+#: ../src/plugins/opensubtitles/opensubtitles.py:421
+msgid "Download movie subtitles from OpenSubtitles"
+msgstr "𐑛𐑬𐑯𐑤𐑴𐑛 𐑥𐑵𐑝𐑰 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟 𐑓𐑮𐑪𐑥 OpenSubtitles"
+
 #: ../src/plugins/opensubtitles/opensubtitles.py:480
 msgid "Searching subtitles..."
 msgstr "𐑕𐑻𐑗𐑦𐑙 𐑕𐑩𐑚𐑑𐑲𐑑𐑩𐑤𐑟..."
@@ -1970,15 +2495,27 @@ msgstr "𐑒𐑰𐑐 𐑞 𐑥𐑱𐑯 𐑢𐑦𐑯𐑛𐑴 𐑪𐑯 𐑑𐑪�
 msgid "Properties"
 msgstr "𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:235
 #, c-format
+#: ../src/plugins/properties/bacon-video-widget-properties.c:235
 msgid "%d x %d"
 msgstr "%d 𐑧𐑒𐑕 %d"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:238
 #, c-format
+#: ../src/plugins/properties/bacon-video-widget-properties.c:238
 msgid "%d frames per second"
 msgstr "%d 𐑓𐑮𐑱𐑥𐑟 𐑐𐑻 𐑕𐑧𐑒𐑩𐑯𐑛"
+
+#, c-format
+#, fuzzy
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#: ../src/plugins/properties/bacon-video-widget-properties.c:257
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#, fuzzy, c-format
+#: ../src/plugins/properties/bacon-video-widget-properties.c:260
+msgid "%d Hz"
+msgstr "%d %%"
 
 #: ../src/plugins/publish/totem-publish.c:588
 msgid "Neighbors"
@@ -1996,16 +2533,36 @@ msgstr "𐑖𐑺 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑝
 msgid "Service _Name:"
 msgstr "𐑕𐑻𐑝𐑦𐑕 _𐑯𐑱𐑥:"
 
-#: ../src/plugins/publish/publish-plugin.ui.h:3
 #, no-c-format
+#: ../src/plugins/publish/publish-plugin.ui.h:3
 msgid ""
-"The name used for announcing the playlist service on the network.\n"
-"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-"and <b>%h</b> will be replaced by your computer's host name."
+"The name used for announcing the playlist service on the network.\nAll "
+"occurrences of the string <b>%u</b> will be replaced by your name,\nand "
+"<b>%h</b> will be replaced by your computer's host name."
 msgstr ""
-"𐑞 𐑯𐑱𐑥 𐑿𐑟𐑛 𐑓𐑹 𐑩𐑯𐑬𐑯𐑕𐑦𐑙 𐑞 𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑕𐑻𐑝𐑦𐑕 𐑪𐑯 𐑞 𐑯𐑧𐑑𐑢𐑻𐑒.\n"
-"𐑷𐑤 𐑩𐑒𐑻𐑩𐑯𐑕𐑦𐑟 𐑝 𐑞 𐑕𐑑𐑮𐑦𐑙 <b>%u</b> 𐑢𐑦𐑤 𐑚𐑰 𐑮𐑦𐑐𐑤𐑱𐑕𐑑 𐑚𐑲 𐑿𐑼 𐑯𐑱𐑥,\n"
-"𐑯 <b>%h</b> 𐑢𐑦𐑤 𐑚𐑰 𐑮𐑦𐑐𐑤𐑱𐑕𐑑 𐑚𐑲 𐑿𐑼 𐑒𐑩𐑥𐑐𐑿𐑑𐑼'𐑕 𐑣𐑴𐑕𐑑 𐑯𐑱𐑥."
+"𐑞 𐑯𐑱𐑥 𐑿𐑟𐑛 𐑓𐑹 𐑩𐑯𐑬𐑯𐑕𐑦𐑙 𐑞 𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑕𐑻𐑝𐑦𐑕 𐑪𐑯 𐑞 𐑯𐑧𐑑𐑢𐑻𐑒.\n𐑷𐑤 𐑩𐑒𐑻𐑩𐑯𐑕𐑦𐑟 𐑝 𐑞 𐑕𐑑𐑮𐑦𐑙 "
+"<b>%u</b> 𐑢𐑦𐑤 𐑚𐑰 𐑮𐑦𐑐𐑤𐑱𐑕𐑑 𐑚𐑲 𐑿𐑼 𐑯𐑱𐑥,\n𐑯 <b>%h</b> 𐑢𐑦𐑤 𐑚𐑰 𐑮𐑦𐑐𐑤𐑱𐑕𐑑 𐑚𐑲 𐑿𐑼 "
+"𐑒𐑩𐑥𐑐𐑿𐑑𐑼'𐑕 𐑣𐑴𐑕𐑑 𐑯𐑱𐑥."
+
+#, fuzzy
+#: ../src/plugins/publish/publish-plugin.ui.h:6
+msgid "Use _encrypted transport protocol (HTTPS)"
+msgstr "𐑿𐑟 _encrypted 𐑑𐑮𐑩𐑯𐑕𐑐𐑹𐑑 𐑐𐑮𐑴𐑑𐑩𐑒𐑪𐑤 (HTTPS)"
+
+#, fuzzy
+#: ../src/plugins/screenshot/gallery.ui.h:1
+msgid "Calculate the number of screenshots"
+msgstr "𐑒𐑨𐑤𐑒𐑿𐑤𐑱𐑑 𐑞 𐑯𐑳𐑥𐑚𐑼 𐑝 screenshots"
+
+#, fuzzy
+#: ../src/plugins/screenshot/gallery.ui.h:2
+msgid "Number of screenshots:"
+msgstr "𐑯𐑳𐑥𐑚𐑼 𐑝 screenshots:"
+
+#, fuzzy
+#: ../src/plugins/screenshot/gallery.ui.h:3
+msgid "Screenshot width (in pixels):"
+msgstr "Screenshot 𐑢𐑦𐑛𐑔 (𐑦𐑯 𐑐𐑦𐑒𐑕𐑩𐑤𐑟):"
 
 #: ../src/plugins/screenshot/gnome-screenshot.ui.h:1
 msgid "Save in _folder:"
@@ -2019,9 +2576,26 @@ msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑩 𐑓𐑴𐑤𐑛𐑼"
 msgid "_Name:"
 msgstr "_𐑯𐑱𐑥:"
 
-#: ../src/plugins/screenshot/totem-gallery.c:89
+#. Write the screenshot to the temporary file
+#, fuzzy
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
+#: ../src/plugins/screenshot/totem-screenshot.c:63
+msgid "Screenshot.png"
+msgstr "Screenshot.·𐑐·𐑯·𐑜"
+
+#: ../src/plugins/screenshot/totem-gallery.c:90
 msgid "Save Gallery"
 msgstr "𐑕𐑱𐑝 𐑜𐑨𐑤𐑼𐑦"
+
+#. Translators: The first argument is the movie title. The second
+#. * argument is a number which is used to prevent overwriting files.
+#. * Just translate "Gallery", and not the ".jpg". Example:
+#. * "Galerie-%s-%d.jpg".
+#, c-format
+#, fuzzy
+#: ../src/plugins/screenshot/totem-gallery.c:114
+msgid "Gallery-%s-%d.jpg"
+msgstr "𐑜𐑨𐑤𐑼𐑦-%s-%d.jpg"
 
 #. Set up the window
 #: ../src/plugins/screenshot/totem-gallery-progress.c:101
@@ -2029,14 +2603,58 @@ msgid "Creating Gallery..."
 msgstr "𐑒𐑮𐑦𐑱𐑑𐑦𐑙 𐑜𐑨𐑤𐑼𐑦..."
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:108
 #, c-format
+#: ../src/plugins/screenshot/totem-gallery-progress.c:108
 msgid "Saving gallery as \"%s\""
 msgstr "𐑕𐑱𐑝𐑦𐑙 𐑜𐑨𐑤𐑼𐑦 𐑨𐑟 \"%s\""
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot.c:112
+msgid "There was an error saving the screenshot."
+msgstr "𐑞𐑺 𐑢𐑪𐑟 𐑩𐑯 𐑻𐑼 𐑕𐑱𐑝𐑦𐑙 𐑞 screenshot."
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot.c:139
+msgid "Save Screenshot"
+msgstr "𐑕𐑱𐑝 Screenshot"
+
+#. Create the screenshot widget
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
+#, c-format
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot.c:160
+msgid "Screenshot-%s-%d.png"
+msgstr "Screenshot-%s-%d.·𐑐·𐑯·𐑜"
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:98
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
+msgid "Totem could not get a screenshot of the video."
+msgstr "𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑜𐑧𐑑 𐑩 screenshot 𐑝 𐑞 𐑝𐑦𐑛𐑦𐑴."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "𐑞𐑦𐑕 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑩𐑐𐑴𐑟𐑛 𐑑 𐑣𐑨𐑐𐑩𐑯; 𐑐𐑤𐑰𐑟 𐑓𐑲𐑤 𐑩 𐑚𐑳𐑜 𐑮𐑩𐑐𐑹𐑑."
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
+msgid "Take _Screenshot..."
+msgstr "𐑑𐑱𐑒 _Screenshot..."
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
+msgid "Take a screenshot"
+msgstr "𐑑𐑱𐑒 𐑩 screenshot"
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
+msgid "Create Screenshot _Gallery..."
+msgstr "𐑒𐑮𐑦𐑱𐑑 Screenshot _Gallery..."
+
+#, fuzzy
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
+msgid "Create a gallery of screenshots"
+msgstr "𐑒𐑮𐑦𐑱𐑑 𐑩 𐑜𐑨𐑤𐑼𐑦 𐑝 screenshots"
 
 #: ../src/plugins/skipto/totem-skipto.c:171
 msgid "Skip to"
@@ -2063,25 +2681,38 @@ msgid "seconds"
 msgstr "𐑕𐑧𐑒𐑩𐑯𐑛𐑟"
 
 #. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:170
 #, c-format
+#: ../src/plugins/tracker/totem-tracker-widget.c:173
 msgid "Could not get name and thumbnail for %s: %s"
 msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑜𐑧𐑑 𐑯𐑱𐑥 𐑯 𐑔𐑳𐑥𐑯𐑱𐑤 𐑓𐑹 %s: %s"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:171
+#: ../src/plugins/tracker/totem-tracker-widget.c:174
 msgid "File Error"
 msgstr "𐑓𐑲𐑤 𐑻𐑼"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:244
-#: ../src/plugins/tracker/totem-tracker-widget.c:358
+#: ../src/plugins/tracker/totem-tracker-widget.c:251
+#: ../src/plugins/tracker/totem-tracker-widget.c:368
 msgid "Could not connect to Tracker"
 msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 𐑑𐑮𐑨𐑒𐑼"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:251
+#: ../src/plugins/tracker/totem-tracker-widget.c:258
 msgid "No results"
 msgstr "𐑯𐑴 𐑮𐑦𐑟𐑳𐑤𐑑𐑕"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:571
+#. Translators:
+#. * This is used to show which items are listed in the list view, for example:
+#. * Showing 10-20 of 128 matches
+#. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
+#. * Personalized Results 1 - 10 of about 4,130,000 for foobar
+#, c-format
+#, fuzzy
+#: ../src/plugins/tracker/totem-tracker-widget.c:283
+msgid "Showing %i - %i of %i match"
+msgid_plural "Showing %i - %i of %i matches"
+msgstr[0] "𐑖𐑴𐑦𐑙 %i - %i 𐑝 %i 𐑥𐑨𐑗"
+msgstr[1] "𐑖𐑴𐑦𐑙 %i - %i 𐑝 %i 𐑥𐑨𐑗𐑩𐑟"
+
+#: ../src/plugins/tracker/totem-tracker-widget.c:581
 msgid "Page"
 msgstr "𐑐𐑱𐑡"
 
@@ -2102,6 +2733,16 @@ msgstr "𐑔𐑳𐑥𐑯𐑱𐑤"
 msgid "Search for local videos using Tracker"
 msgstr "𐑕𐑻𐑗 𐑓𐑹 𐑤𐑴𐑒𐑩𐑤 𐑝𐑦𐑛𐑰𐑴𐑟 𐑿𐑟𐑦𐑙 𐑑𐑮𐑨𐑒𐑼"
 
+#, fuzzy
+#: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
+msgid "A plugin to let you browse YouTube videos."
+msgstr "𐑩 𐑐𐑤𐑳𐑜𐑦𐑯 𐑑 𐑤𐑧𐑑 𐑿 𐑚𐑮𐑬𐑟 YouTube 𐑝𐑦𐑛𐑰𐑴𐑟."
+
+#, fuzzy
+#: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
+msgid "YouTube Browser"
+msgstr "YouTube 𐑚𐑮𐑬𐑟𐑼"
+
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "𐑮𐑦𐑤𐑱𐑑𐑩𐑛 𐑝𐑦𐑛𐑰𐑴𐑟"
@@ -2118,6 +2759,12 @@ msgstr "_𐑴𐑐𐑩𐑯 𐑦𐑯 𐑢𐑧𐑚 𐑚𐑮𐑬𐑟𐑼"
 msgid "Open the video in your web browser"
 msgstr "𐑴𐑐𐑩𐑯 𐑞 𐑝𐑦𐑛𐑦𐑴 𐑦𐑯 𐑿𐑼 𐑢𐑧𐑚 𐑚𐑮𐑬𐑟𐑼"
 
+#. Add the sidebar page
+#, fuzzy
+#: ../src/plugins/youtube/totem-youtube.c:364
+msgid "YouTube"
+msgstr "YouTube"
+
 #: ../src/plugins/youtube/totem-youtube.c:456
 msgid "Cancelling query…"
 msgstr "𐑒𐑨𐑯𐑕𐑩𐑤𐑦𐑙 𐑒𐑢𐑽𐑦…"
@@ -2129,64 +2776,68 @@ msgstr "𐑻𐑼 𐑤𐑫𐑒𐑦𐑙 𐑳𐑐 𐑝𐑦𐑛𐑦𐑴 URI"
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:694
-#: ../src/plugins/youtube/totem-youtube.c:699
+#: ../src/plugins/youtube/totem-youtube.c:695
+#: ../src/plugins/youtube/totem-youtube.c:700
 msgid "Error Searching for Videos"
 msgstr "𐑻𐑼 𐑕𐑻𐑗𐑦𐑙 𐑓𐑹 𐑝𐑦𐑛𐑰𐑴𐑟"
 
+#, fuzzy
+#: ../src/plugins/youtube/totem-youtube.c:696
+msgid ""
+"The response from the server could not be understood. Please check you are "
+"running the latest version of libgdata."
+msgstr ""
+"𐑞 𐑮𐑦𐑕𐑐𐑪𐑯𐑕 𐑓𐑮𐑪𐑥 𐑞 𐑕𐑻𐑝𐑼 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑚𐑰 𐑳𐑯𐑛𐑼𐑕𐑑𐑫𐑛. 𐑐𐑤𐑰𐑟 𐑗𐑧𐑒 𐑿 𐑸 𐑮𐑳𐑯𐑦𐑙 𐑞 𐑤𐑱𐑑𐑩𐑕𐑑 𐑝𐑻𐑠𐑩𐑯 "
+"𐑝 libgdata."
+
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:841
+#: ../src/plugins/youtube/totem-youtube.c:842
 msgid "Fetching search results…"
 msgstr "𐑓𐑧𐑗𐑦𐑙 𐑕𐑻𐑗 𐑮𐑦𐑟𐑳𐑤𐑑𐑕…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:892
+#: ../src/plugins/youtube/totem-youtube.c:901
 msgid "Fetching related videos…"
 msgstr "𐑓𐑧𐑗𐑦𐑙 𐑮𐑦𐑤𐑱𐑑𐑩𐑛 𐑝𐑦𐑛𐑰𐑴𐑟…"
 
-#: ../src/plugins/youtube/totem-youtube.c:943
+#: ../src/plugins/youtube/totem-youtube.c:952
 msgid "Error Opening Video in Web Browser"
 msgstr "𐑻𐑼 𐑴𐑐𐑩𐑯𐑦𐑙 𐑝𐑦𐑛𐑦𐑴 𐑦𐑯 𐑢𐑧𐑚 𐑚𐑮𐑬𐑟𐑼"
 
-#: ../src/plugins/youtube/totem-youtube.c:963
+#: ../src/plugins/youtube/totem-youtube.c:972
 msgid "Fetching more videos…"
 msgstr "𐑓𐑧𐑗𐑦𐑙 𐑥𐑹 𐑝𐑦𐑛𐑰𐑴𐑟…"
 
-#: ../browser-plugin/totem-plugin-viewer.c:422
+#: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
 msgstr "𐑯𐑴 𐑘𐑻𐑰 𐑑 𐑐𐑤𐑱"
-
-#: ../browser-plugin/totem-plugin-viewer.c:448
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑒𐑫𐑛 𐑯𐑪𐑑 𐑐𐑤𐑱 '%s'"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1056
 #, c-format
+#: ../browser-plugin/totem-plugin-viewer.c:1103
 msgid "_Open with \"%s\""
 msgstr "_𐑴𐑐𐑩𐑯 𐑢𐑦𐑞 \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1107
 #, c-format
+#: ../browser-plugin/totem-plugin-viewer.c:1154
 msgid "Browser Plugin using %s"
 msgstr "𐑚𐑮𐑬𐑟𐑼 𐑐𐑤𐑳𐑜𐑦𐑯 𐑿𐑟𐑦𐑙 %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1112
+#: ../browser-plugin/totem-plugin-viewer.c:1159
 msgid "Totem Browser Plugin"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 𐑚𐑮𐑬𐑟𐑼 𐑐𐑤𐑳𐑜𐑦𐑯"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2114
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "𐑯𐑴 𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑹 𐑐𐑤𐑱𐑤𐑦𐑕𐑑 𐑧𐑥𐑐𐑑𐑦"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2206
+#: ../browser-plugin/totem-plugin-viewer.c:2266
 msgid "Movie browser plugin"
 msgstr "𐑥𐑵𐑝𐑰 𐑚𐑮𐑬𐑟𐑼 𐑐𐑤𐑳𐑜𐑦𐑯"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../browser-plugin/totem-plugin-viewer.c:2282
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "𐑝𐑧𐑮𐑦𐑓𐑲 𐑿𐑼 𐑕𐑦𐑕𐑑𐑩𐑥 𐑦𐑯𐑕𐑑𐑩𐑤𐑱𐑖𐑩𐑯. 𐑞 ·𐑑𐑴𐑑𐑩𐑥 𐑐𐑤𐑳𐑜𐑦𐑯 𐑢𐑦𐑤 𐑯𐑬 𐑧𐑜𐑟𐑦𐑑."
 
@@ -2218,11 +2869,22 @@ msgstr "·𐑐𐑲𐑑𐑪𐑯 𐑛𐑰𐑚𐑳𐑜𐑼"
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "𐑦𐑯𐑱𐑚𐑩𐑤 𐑮𐑦𐑥𐑴𐑑 ·𐑐𐑲𐑑𐑪𐑯 𐑛𐑰𐑚𐑳𐑜𐑦𐑙 𐑢𐑦𐑞 rpdb2"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:106
 #, python-format
+#: ../src/plugins/pythonconsole/pythonconsole.py:106
 msgid "You can access the totem object through 'totem_object' :\\n%s"
 msgstr "𐑿 𐑒𐑨𐑯 𐑨𐑒𐑕𐑧𐑕 𐑞 ·𐑑𐑴𐑑𐑩𐑥 𐑩𐑚𐑡𐑧𐑒𐑑 𐑔𐑮𐑵 'totem_object' :\\𐑧𐑯%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:111
 msgid "Totem Python Console"
 msgstr "·𐑑𐑴𐑑𐑩𐑥 ·𐑐𐑲𐑑𐑪𐑯 𐑒𐑩𐑯𐑕𐑴𐑤"
+
+#, fuzzy
+#: ../src/plugins/pythonconsole/pythonconsole.py:120
+msgid ""
+"After you press OK, Totem will wait until you connect to it with winpdb or "
+"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"default password ('totem')."
+msgstr ""
+"𐑭𐑓𐑑𐑼 𐑿 𐑐𐑮𐑧𐑕 𐑴𐑒𐑱, 𐑑𐑴𐑑𐑩𐑥 𐑢𐑦𐑤 𐑢𐑱𐑑 𐑳𐑯𐑑𐑦𐑤 𐑿 𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 𐑦𐑑 𐑢𐑦𐑞 winpdb 𐑹 rpdb2. 𐑦𐑓 𐑿 "
+"𐑣𐑨𐑝 𐑯𐑪𐑑 𐑕𐑧𐑑 𐑩 𐑛𐑰𐑚𐑳𐑜𐑼 𐑐𐑭𐑕𐑢𐑼𐑛 𐑦𐑯 GConf, 𐑦𐑑 𐑢𐑦𐑤 𐑿𐑕 𐑞 𐑛𐑦𐑓𐑷𐑤𐑑 𐑐𐑭𐑕𐑢𐑼𐑛 ('𐑑𐑴𐑑𐑩𐑥')."
+
