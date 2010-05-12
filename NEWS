@@ -1,5 +1,31 @@
 New features and significant updates in version...
 
+2.28.6:
+* Movie Player:
+  - Fix slight resize when showing the sidebar for the first time
+  - Fix possible crash when loading PytGTK
+  - Fix possible crash when DVB channels aren't in UTF-8
+  - Update status bar's time when stepping
+  - Work-around problems playing back from trailers.apple.com
+  - Fix Eject menu item not working for DVDs
+
+* Plugins:
+  - Fix YouTube plugin for web site changes
+  - Update OpenSubtitles plugin for latest API
+
+* Browser Plugin:
+  - Fix use of URL parameter for the Window Media Player
+    compatibility plugin
+  - Add support for SetURL, and player states in QuickTime
+    compatibility plugin
+  - Fix position on End-Of-Stream when using the QuickTime
+    compatibility plugin
+
+* GStreamer backend:
+  - Fix playback from archives and FTP servers
+  - Fix possible playback problems when a file had an error
+  - Fix problems pausing a video before its headers have been parsed
+
 2.28.5:
 * YouTube plugin:
   - Fix progress bar when search returns no results

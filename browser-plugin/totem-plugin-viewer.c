@@ -710,8 +710,7 @@ totem_embedded_add_item (TotemEmbedded *embedded, const char *uri, GError *error
 {
 	TotemPlItem *item;
 
-	g_message ("totem_embedded_add_item: %s (base: %s title: %s subtitle: %s)",
-		   uri, base_uri, title, subtitle);
+	g_message ("totem_embedded_add_item: %s", uri);
 
 	item = g_new0 (TotemPlItem, 1);
 	item->uri = g_strdup (uri);

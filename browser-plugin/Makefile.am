@@ -55,7 +55,8 @@ test_glow_button_SOURCES = \
 
 test_glow_button_LDADD = \
 	libtotembrowserplugin_helper.la		\
-	$(DEPENDENCY_LIBS)
+	$(DEPENDENCY_LIBS)			\
+	-lm
 
 test_glow_button_CFLAGS =	\
 	$(DEPENDENCY_CFLAGS)	\
@@ -112,10 +113,11 @@ totem_plugin_viewer_LDADD =						\
 	libtotembrowserplugin_helper.la					\
 	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
-	$(XVIDMODE_LIBS) 	\
+	$(XVIDMODE_LIBS)	\
 	$(DBUS_LIBS)		\
 	$(XTEST_LIBS)		\
-	$(X_LIBS)
+	$(X_LIBS)		\
+	-lm
 
 BUILT_SOURCES += \
 	totem-plugin-viewer-interface.h
