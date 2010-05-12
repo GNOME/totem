@@ -91,7 +91,7 @@ totem_drag_ask (gboolean show_add_to)
 
 	menu = gtk_menu_new ();
 
-	drag_append_drop_action_menu_item (menu, _("_Play Now"), "gtk-media-play", GDK_ACTION_MOVE, &dt);
+	drag_append_drop_action_menu_item (menu, _("_Play Now"), "media-playback-start-symbolic", GDK_ACTION_MOVE, &dt);
 
 	if (show_add_to != FALSE)
 		drag_append_drop_action_menu_item (menu, _("_Add to Playlist"), "gtk-add", GDK_ACTION_COPY, &dt);

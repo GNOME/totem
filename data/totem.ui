@@ -32,7 +32,7 @@
          <child>
             <object class="GtkAction" id="eject">
                <property name="label" translatable="yes">_Eject</property>
-               <property name="icon-name">media-eject</property>
+               <property name="icon-name">media-eject-symbolic</property>
                <property name="tooltip" translatable="yes">Eject the current disc</property>
                <signal name="activate" handler="eject_action_callback"/>
             </object>
@@ -50,7 +50,7 @@
          <child>
             <object class="GtkAction" id="play">
                <property name="label" translatable="yes">Play / P_ause</property>
-               <property name="stock-id">gtk-media-play</property>
+               <property name="icon-name">media-playback-start-symbolic</property>
                <property name="tooltip" translatable="yes">Play or pause the movie</property>
                <signal name="activate" handler="play_action_callback"/>
             </object>
@@ -103,7 +103,7 @@
          <child>
             <object class="GtkAction" id="fullscreen">
                <property name="label" translatable="yes">_Fullscreen</property>
-               <property name="stock-id">gtk-fullscreen</property>
+               <property name="icon-name">view-fullscreen-symbolic</property>
                <property name="tooltip" translatable="yes">Switch to fullscreen</property>
                <signal name="activate" handler="fullscreen_action_callback"/>
             </object>
@@ -196,7 +196,7 @@
          <child>
             <object class="GtkAction" id="next-chapter">
                <property name="label" translatable="yes">_Next Chapter/Movie</property>
-               <property name="stock-id">gtk-media-next</property>
+               <property name="icon-name">media-skip-forward-symbolic</property>
                <property name="tooltip" translatable="yes">Next chapter or movie</property>
                <signal name="activate" handler="next_chapter_action_callback"/>
             </object>
@@ -205,7 +205,7 @@
          <child>
             <object class="GtkAction" id="previous-chapter">
                <property name="label" translatable="yes">_Previous Chapter/Movie</property>
-               <property name="stock-id">gtk-media-previous</property>
+               <property name="icon-name">media-skip-backward-symbolic</property>
                <property name="tooltip" translatable="yes">Previous chapter or movie</property>
                <signal name="activate" handler="previous_chapter_action_callback"/>
             </object>
@@ -220,7 +220,7 @@
          <child>
             <object class="GtkAction" id="volume-up">
                <property name="label" translatable="yes">Volume _Up</property>
-               <property name="icon-name">audio-volume-high</property>
+               <property name="icon-name">audio-volume-high-symbolic</property>
                <property name="tooltip" translatable="yes">Increase volume</property>
                <signal name="activate" handler="volume_up_action_callback"/>
             </object>
@@ -229,7 +229,7 @@
          <child>
             <object class="GtkAction" id="volume-down">
                <property name="label" translatable="yes">Volume _Down</property>
-               <property name="icon-name">audio-volume-low</property>
+               <property name="icon-name">audio-volume-low-symbolic</property>
                <property name="tooltip" translatable="yes">Decrease volume</property>
                <signal name="activate" handler="volume_down_action_callback"/>
             </object>
@@ -286,9 +286,9 @@
          </child>
          <child>
             <object class="GtkToggleAction" id="sidebar">
-               <property name="label" translatable="yes">S_idebar</property>
                <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
-               <property name="active">TRUE</property>
+	       <property name="active">TRUE</property>
+	       <property name="icon-name">format-justify-fill</property>
                <signal name="activate" handler="show_sidebar_action_callback"/>
             </object>
             <accelerator key="F9"/>
@@ -400,7 +400,7 @@
             <object class="GtkAction" id="skip-forward">
                <property name="label" translatable="yes">Skip _Forward</property>
                <property name="tooltip" translatable="yes">Skip forward</property>
-               <property name="stock-id">gtk-media-forward</property>
+               <property name="icon-name">media-seek-forward-symbolic</property>
                <signal name="activate" handler="skip_forward_action_callback"/>
             </object>
             <accelerator key="Right"/>
@@ -409,7 +409,7 @@
             <object class="GtkAction" id="skip-backwards">
                <property name="label" translatable="yes">Skip _Backwards</property>
                <property name="tooltip" translatable="yes">Skip backwards</property>
-               <property name="stock-id">gtk-media-rewind</property>
+               <property name="icon-name">media-seek-backward-symbolic</property>
                <signal name="activate" handler="skip_backwards_action_callback"/>
             </object>
             <accelerator key="Left"/>

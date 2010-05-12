@@ -38,7 +38,7 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
 # Requirements
 GLIB_REQS=2.25.4
-GTK_REQS=2.19.5
+GTK_REQS=2.90.2
 TOTEM_PLPARSER_REQS=2.29.1
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.61
@@ -148,7 +148,7 @@ do
 done
 
 dnl Check the smclient backend
-GDK_TARGET="$($PKG_CONFIG --variable target gdk-2.0)"
+GDK_TARGET="$($PKG_CONFIG --variable target gdk-3.0)"
 
 SMCLIENT_PKGS=
 AC_MSG_CHECKING([which smclient backend to use])
@@ -177,7 +177,7 @@ dnl Pkg-config checks
 PKG_CHECK_MODULES([DEPENDENCY],[
   glib-2.0 >= $GLIB_REQS
   gio-2.0
-  gtk+-2.0 >= $GTK_REQS
+  gtk+-3.0 >= $GTK_REQS
   gmodule-2.0
   gconf-2.0
   totem-plparser >= $TOTEM_PLPARSER_REQS
@@ -186,7 +186,7 @@ PKG_CHECK_MODULES([DEPENDENCY],[
 
 PKG_CHECK_MODULES(MM, $MM)
 
-PKG_CHECK_MODULES([GTK],[gtk+-2.0 gthread-2.0])
+PKG_CHECK_MODULES([GTK],[gtk+-3.0 gthread-2.0])
 GTK_LIBS="$GTK_LIBS $EXTRA_BACKEND_LIBS"
 AC_SUBST(GTK_LIBS)
 
@@ -196,13 +196,13 @@ PKG_CHECK_EXISTS([
   $ISO_CODES
   gnome-icon-theme >= $GNOMEICON_REQS])
 
-PKG_CHECK_MODULES([UNIQUE], unique-1.0)
+PKG_CHECK_MODULES([UNIQUE], unique-3.0)
 
 dnl *************************
 dnl X11 related functionality
 dnl *************************
 have_x11=no
-if test x$(pkg-config --variable=target gtk+-2.0) = xx11; then
+if test x$(pkg-config --variable=target gtk+-3.0) = xx11; then
 	AC_PATH_X
 
 	have_x11=yes
@@ -531,10 +531,10 @@ for plugin in ${used_plugins}; do
 		;;
 		brasero-disc-recorder)
 			dnl this is only needed to use brasero icons
-			PKG_CHECK_MODULES(DISC_RECORDER, libxml-2.0 >= 2.6.0 gtk+-x11-2.0,
+			PKG_CHECK_MODULES(DISC_RECORDER, libxml-2.0 >= 2.6.0 gtk+-x11-3.0,
 					[BUILD_RECORDER=yes], [BUILD_RECORDER=no])
 			if test "${BUILD_RECORDER}" != "yes" ; then
-				plugin_error_or_ignore "you need libxml-2.0 >= 2.6.0 and gtk+-x11-2.0 to use the brasero-disc-recorder plugin"
+				plugin_error_or_ignore "you need libxml-2.0 >= 2.6.0 and gtk+-x11-3.0 to use the brasero-disc-recorder plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -694,7 +694,7 @@ AC_ARG_ENABLE(nautilus,
 	[ENABLE_NAUTILUS=yes]) dnl Default value
 
 if test x$ENABLE_NAUTILUS = "xyes" ; then
-	PKG_CHECK_MODULES(NAUTILUS, gtk+-2.0 gthread-2.0 libnautilus-extension,
+	PKG_CHECK_MODULES(NAUTILUS, gtk+-3.0 gthread-2.0 libnautilus-extension,
 			[HAVE_NAUTILUS=yes], [HAVE_NAUTILUS=no])
 fi
 

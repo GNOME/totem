@@ -138,6 +138,7 @@ main (int argc, char **argv)
 	GError *error = NULL;
 	GOptionContext *context;
 	GOptionGroup *baconoptiongroup;
+	GtkSettings *settings;
 	char *sidebar_pageid;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -179,6 +180,9 @@ main (int argc, char **argv)
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
 	gtk_about_dialog_set_url_hook (about_url_hook, NULL, NULL);
 	gtk_about_dialog_set_email_hook (about_email_hook, NULL, NULL);
+
+	settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	gc = gconf_client_get_default ();
 	if (gc == NULL)

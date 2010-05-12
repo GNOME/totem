@@ -1028,14 +1028,14 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	case STATE_PLAYING:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Playing"));
-		id = GTK_STOCK_MEDIA_PAUSE;
+		id = "media-playback-pause-symbolic";
 		tip = N_("Pause");
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 		break;
 	case STATE_PAUSED:
 		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
 				_("Paused"));
-		id = GTK_STOCK_MEDIA_PLAY;
+		id = "media-playback-start-symbolic";
 		tip = N_("Play");
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 		break;
@@ -1044,7 +1044,7 @@ play_pause_set_label (Totem *totem, TotemStates state)
 				_("Stopped"));
 		totem_statusbar_set_time_and_length
 			(TOTEM_STATUSBAR (totem->statusbar), 0, 0);
-		id = GTK_STOCK_MEDIA_PLAY;
+		id = "media-playback-start-symbolic";
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_NONE);
 		tip = N_("Play");
 		break;
@@ -1056,7 +1056,7 @@ play_pause_set_label (Totem *totem, TotemStates state)
 	action = gtk_action_group_get_action (totem->main_action_group, "play");
 	g_object_set (G_OBJECT (action),
 			"tooltip", _(tip),
-			"stock-id", id, NULL);
+			"icon-name", id, NULL);
 
 	proxies = gtk_action_get_proxies (action);
 	for (l = proxies; l != NULL; l = l->next) {
@@ -2997,18 +2997,18 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 	switch (cmd) {
 	case TOTEM_REMOTE_COMMAND_PLAY:
 		totem_action_play (totem);
-		icon_name = "gtk-media-play";
+		icon_name = "media-playback-start-symbolic";
 		break;
 	case TOTEM_REMOTE_COMMAND_PLAYPAUSE:
 		if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
-			icon_name = "gtk-media-play";
+			icon_name = "media-playback-start-symbolic";
 		else
-			icon_name = "gtk-media-pause";
+			icon_name = "media-playback-pause-symbolic";
 		totem_action_play_pause (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_PAUSE:
 		totem_action_pause (totem);
-		icon_name = "gtk-media-pause";
+		icon_name = "media-playback-pause-symbolic";
 		break;
 	case TOTEM_REMOTE_COMMAND_STOP: {
 		char *mrl, *subtitle;
@@ -3023,7 +3023,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			g_free (mrl);
 			g_free (subtitle);
 		}
-		icon_name = "gtk-media-stop";
+		icon_name = "media-playback-stop-symbolic";
 		break;
 	};
 	case TOTEM_REMOTE_COMMAND_SEEK_FORWARD: {
@@ -3036,7 +3036,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		} else {
 			totem_action_seek_relative (totem, offset * 1000, FALSE);
 		}
-		icon_name = "gtk-media-forward";
+		icon_name = "media-seek-forward-symbolic";
 		break;
 	}
 	case TOTEM_REMOTE_COMMAND_SEEK_BACKWARD: {
@@ -3048,7 +3048,7 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 			totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
 		else
 			totem_action_seek_relative (totem,  - (offset * 1000), FALSE);
-		icon_name = "gtk-media-rewind";
+		icon_name = "media-seek-backward-symbolic";
 		break;
 	}
 	case TOTEM_REMOTE_COMMAND_VOLUME_UP:
@@ -3059,11 +3059,11 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		break;
 	case TOTEM_REMOTE_COMMAND_NEXT:
 		totem_action_next (totem);
-		icon_name = "gtk-media-next";
+		icon_name = "media-skip-forward-symbolic";
 		break;
 	case TOTEM_REMOTE_COMMAND_PREVIOUS:
 		totem_action_previous (totem);
-		icon_name = "gtk-media-previous";
+		icon_name = "media-skip-backward-symbolic";
 		break;
 	case TOTEM_REMOTE_COMMAND_FULLSCREEN:
 		totem_action_fullscreen_toggle (totem);
@@ -3409,9 +3409,9 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		if (totem_is_fullscreen (totem) != FALSE) {
 			const char *icon_name;
 			if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
-				icon_name = "gtk-media-play";
+				icon_name = "media-playback-start-symbolic";
 			else
-				icon_name = "gtk-media-pause";
+				icon_name = "media-playback-pause-symbolic";
 			totem_fullscreen_show_popups_or_osd (totem->fs, icon_name, FALSE);
 		}
 		totem_action_play_pause (totem);
@@ -3522,7 +3522,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_B:
 	case GDK_b:
 		totem_action_previous (totem);
-		icon_name = "gtk-media-previous";
+		icon_name = "media-skip-backward-symbolic";
 		break;
 	case GDK_C:
 	case GDK_c:
@@ -3552,7 +3552,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_n:
 	case GDK_End:
 		totem_action_next (totem);
-		icon_name = "gtk-media-next";
+		icon_name = "media-skip-forward-symbolic";
 		break;
 	case GDK_OpenURL:
 		totem_action_fullscreen (totem, FALSE);
@@ -3571,9 +3571,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			totem_action_show_properties (totem);
 		} else {
 			if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
-				icon_name = "gtk-media-play";
+				icon_name = "media-playback-start-symbolic";
 			else
-				icon_name = "gtk-media-pause";
+				icon_name = "media-playback-pause-symbolic";
 			totem_action_play_pause (totem);
 		}
 		break;
@@ -3588,7 +3588,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 	case GDK_AudioPause:
 	case GDK_AudioStop:
 		totem_action_pause (totem);
-		icon_name = "gtk-media-pause";
+		icon_name = "media-playback-pause-symbolic";
 		break;
 	case GDK_q:
 	case GDK_Q:
@@ -3622,9 +3622,9 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek) {
 				if (event->keyval == GDK_space) {
 					if (bacon_video_widget_is_playing (totem->bvw) == FALSE)
-						icon_name = "gtk-media-play";
+						icon_name = "media-playback-start-symbolic";
 					else
-						icon_name = "gtk-media-pause";
+						icon_name = "media-playback-pause-symbolic";
 					totem_action_play_pause (totem);
 				} else if (bacon_video_widget_has_menus (totem->bvw) != FALSE) {
 					bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_SELECT);
@@ -3642,7 +3642,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 			/* Switch direction in RTL environment */
 			if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 				is_forward = !is_forward;
-			icon_name = is_forward ? "gtk-media-forward" : "gtk-media-rewind";
+			icon_name = is_forward ? "media-seek-forward-symbolic" : "media-seek-backward-symbolic";
 
 			totem_action_handle_seek (totem, event, is_forward);
 		} else {
@@ -3654,7 +3654,7 @@ totem_action_handle_key_press (Totem *totem, GdkEventKey *event)
 		break;
 	case GDK_Home:
 		totem_action_seek (totem, 0);
-		icon_name = "gtk-media-rewind";
+		icon_name = "media-seek-backward-symbolic";
 		break;
 	case GDK_Up:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)

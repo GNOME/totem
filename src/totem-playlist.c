@@ -1243,22 +1243,22 @@ set_playing_icon (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
 		  GtkTreeModel *model, GtkTreeIter *iter, TotemPlaylist *playlist)
 {
 	TotemPlaylistStatus playing;
-	const char *stock_id;
+	const char *icon_name;
 
 	gtk_tree_model_get (model, iter, PLAYING_COL, &playing, -1);
 
 	switch (playing) {
 		case TOTEM_PLAYLIST_STATUS_PLAYING:
-			stock_id = GTK_STOCK_MEDIA_PLAY;
+			icon_name = "media-playback-start-symbolic";
 			break;
 		case TOTEM_PLAYLIST_STATUS_PAUSED:
-			stock_id = GTK_STOCK_MEDIA_PAUSE;
+			icon_name = "media-playback-pause-symbolic";
 			break;
 		default:
-			stock_id = NULL;
+			icon_name = NULL;
 	}
 
-	g_object_set (renderer, "stock-id", stock_id, NULL);
+	g_object_set (renderer, "icon-name", icon_name, NULL);
 }
 
 static void
