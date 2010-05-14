@@ -573,6 +573,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   attributes.x = 0;
   attributes.y = 0;
   gtk_widget_get_allocation (widget, &allocation);
+  attributes.colormap = gdk_screen_get_system_colormap (gtk_widget_get_screen (widget));
   attributes.width = allocation.width;
   attributes.height = allocation.height;
   attributes.wclass = GDK_INPUT_OUTPUT;
@@ -581,7 +582,7 @@ bacon_video_widget_realize (GtkWidget * widget)
                            GDK_POINTER_MOTION_MASK |
                            GDK_BUTTON_PRESS_MASK |
                            GDK_KEY_PRESS_MASK;
-  attributes_mask = GDK_WA_X | GDK_WA_Y;
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_COLORMAP;
 
   bvw->priv->video_window = gdk_window_new (window,
       &attributes, attributes_mask);
