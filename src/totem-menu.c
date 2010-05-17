@@ -1119,13 +1119,13 @@ previous_chapter_action_callback (GtkAction *action, Totem *totem)
 void
 skip_forward_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
+	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000, FALSE);
 }
 
 void
 skip_backwards_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000);
+	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
 }
 
 void

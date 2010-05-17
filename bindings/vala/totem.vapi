@@ -33,9 +33,9 @@ namespace Totem {
 		[CCode (cname = "totem_action_previous")]
 		public void action_previous ();
 		[CCode (cname = "totem_action_seek_time")]
-		public void action_seek_time (int64 sec);
+		public void action_seek_time (int64 msec, bool accurate);
 		[CCode (cname = "totem_action_seek_relative")]
-		public void action_seek_relative (int64 offset);
+		public void action_seek_relative (int64 offset, bool accurate);
 
 		[CCode (cname = "totem_get_volume")]
 		public double get_volume ();

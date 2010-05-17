@@ -144,7 +144,8 @@ skip_to_response_callback (GtkDialog *dialog, gint response, TotemSkiptoPlugin *
 	gtk_widget_hide (GTK_WIDGET (dialog));
 
 	totem_action_seek_time (plugin->totem,
-				totem_skipto_get_range (plugin->priv->st));
+				totem_skipto_get_range (plugin->priv->st),
+				TRUE);
 	destroy_dialog (plugin);
 }
 

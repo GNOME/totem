@@ -429,7 +429,7 @@ capture_frame_at_time(BaconVideoWidget *bvw,
 {
 	GError *err = NULL;
 
-	if (bacon_video_widget_seek_time (bvw, seconds * 1000, &err) == FALSE) {
+	if (bacon_video_widget_seek_time (bvw, seconds * 1000, TRUE, &err) == FALSE) {
 		g_print ("totem-video-thumbnailer: could not seek to %d seconds in '%s'\n"
 			 "Reason: %s\n",
 			 (int) seconds, input, err ? err->message : "programming error");

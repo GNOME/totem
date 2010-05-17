@@ -3886,6 +3886,7 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
  * bacon_video_widget_seek_time:
  * @bvw: a #BaconVideoWidget
  * @_time: the time to which to seek, in milliseconds
+ * @accurate: whether to use accurate seek, an accurate seek might be slower for some formats (see GStreamer docs)
  * @error: a #GError, or %NULL
  *
  * Seeks the currently-playing stream to the absolute position @time, in milliseconds.
@@ -3893,8 +3894,10 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
  * Return value: %TRUE on success, %FALSE otherwise
  **/
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **error)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, gboolean accurate, GError **error)
 {
+  GstSeekFlags  flag;
+
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
@@ -3916,8 +3919,10 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **erro
   if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
     return FALSE;
 
+  flag = (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_KEY_UNIT);
   gst_element_seek (bvw->priv->play, FORWARD_RATE,
-      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
+      GST_FORMAT_TIME,
+      GST_SEEK_FLAG_FLUSH | flag,
       GST_SEEK_TYPE_SET, _time * GST_MSECOND,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   bvw->priv->rate = FORWARD_RATE;
@@ -3953,7 +3958,7 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
   GST_LOG ("Seeking to %3.2f%% %" GST_TIME_FORMAT, position,
       GST_TIME_ARGS (seek_time));
 
-  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, error);
+  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, FALSE, error);
 }
 
 /**
