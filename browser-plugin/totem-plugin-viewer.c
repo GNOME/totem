@@ -802,7 +802,7 @@ totem_embedded_set_time (TotemEmbedded *emb,
 {
 	g_message ("totem_embedded_set_time: %"G_GUINT64_FORMAT, time);
 
-	bacon_video_widget_seek_time (emb->bvw, time, NULL);
+	bacon_video_widget_seek_time (emb->bvw, time, FALSE, NULL);
 
 	return TRUE;
 }
@@ -913,6 +913,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 			g_message ("Seeking to %d seconds for starttime", plitem->starttime);
 			retval = bacon_video_widget_seek_time (emb->bvw,
 							       plitem->starttime * 1000,
+							       FALSE,
 							       NULL /* FIXME */);
 			if (!retval)
 				return TRUE;

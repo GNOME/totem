@@ -305,7 +305,7 @@ static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
 static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
 static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
-static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GError **error);
+static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GstSeekFlags flag, GError **error);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -2205,7 +2205,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
 	if (_time >= 0) {
 	  GST_DEBUG ("Have an old seek to schedule, doing it now");
-	  bacon_video_widget_seek_time_no_lock (bvw, _time, NULL);
+	  bacon_video_widget_seek_time_no_lock (bvw, _time, 0, NULL);
 	}
       break;
     }
@@ -3921,7 +3921,10 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 }
 
 static gboolean
-bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GError **error)
+bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
+				      gint64 _time,
+				      GstSeekFlags flag,
+				      GError **error)
 {
   if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
     return FALSE;
@@ -3930,7 +3933,7 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GErro
   bvw->priv->rate = FORWARD_RATE;
 
   gst_element_seek (bvw->priv->play, FORWARD_RATE,
-      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
+      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | flag,
       GST_SEEK_TYPE_SET, _time * GST_MSECOND,
       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
@@ -3941,6 +3944,7 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GErro
  * bacon_video_widget_seek_time:
  * @bvw: a #BaconVideoWidget
  * @_time: the time to which to seek, in milliseconds
+ * @accurate: whether to use accurate seek, an accurate seek might be slower for some formats (see GStreamer docs)
  * @error: a #GError, or %NULL
  *
  * Seeks the currently-playing stream to the absolute position @time, in milliseconds.
@@ -3948,9 +3952,10 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GErro
  * Return value: %TRUE on success, %FALSE otherwise
  **/
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **error)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, gboolean accurate, GError **error)
 {
   GstClockTime cur_time;
+  GstSeekFlags  flag;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -3973,10 +3978,12 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **erro
   /* Is there a pending seek? */
   g_mutex_lock (bvw->priv->seek_mutex);
   /* If there's no pending seek, or
-   * it's been too long since the seek */
+   * it's been too long since the seek,
+   * or we don't have an accurate seek requested */
   cur_time = gst_clock_get_internal_time (bvw->priv->clock);
   if (bvw->priv->seek_req_time == GST_CLOCK_TIME_NONE ||
-      cur_time > bvw->priv->seek_req_time + SEEK_TIMEOUT) {
+      cur_time > bvw->priv->seek_req_time + SEEK_TIMEOUT ||
+      accurate) {
     bvw->priv->seek_time = -1;
     bvw->priv->seek_req_time = cur_time;
     g_mutex_unlock (bvw->priv->seek_mutex);
@@ -3987,7 +3994,11 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, GError **erro
     return TRUE;
   }
 
-  bacon_video_widget_seek_time_no_lock (bvw, _time, error);
+  if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
+    return FALSE;
+
+  flag = (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_KEY_UNIT);
+  bacon_video_widget_seek_time_no_lock (bvw, _time, flag, error);
 
   return TRUE;
 }
@@ -4018,7 +4029,7 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, double position, GError **error)
   GST_LOG ("Seeking to %3.2f%% %" GST_TIME_FORMAT, position,
       GST_TIME_ARGS (seek_time));
 
-  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, error);
+  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, FALSE, error);
 }
 
 /**

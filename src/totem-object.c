@@ -1871,7 +1871,7 @@ totem_action_next (Totem *totem)
 }
 
 static void
-totem_seek_time_rel (Totem *totem, gint64 _time, gboolean relative)
+totem_seek_time_rel (Totem *totem, gint64 _time, gboolean relative, gboolean accurate)
 {
 	GError *err = NULL;
 	gint64 sec;
@@ -1892,7 +1892,7 @@ totem_seek_time_rel (Totem *totem, gint64 _time, gboolean relative)
 		sec = _time;
 	}
 
-	bacon_video_widget_seek_time (totem->bvw, sec, &err);
+	bacon_video_widget_seek_time (totem->bvw, sec, accurate, &err);
 
 	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
 	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
@@ -1916,28 +1916,30 @@ totem_seek_time_rel (Totem *totem, gint64 _time, gboolean relative)
  * totem_action_seek_relative:
  * @totem: a #TotemObject
  * @offset: the time offset to seek to
+ * @accurate: whether to use accurate seek, an accurate seek might be slower for some formats (see GStreamer docs)
  *
  * Seeks to an @offset from the current position in the stream,
  * or displays an error dialog if that's not possible.
  **/
 void
-totem_action_seek_relative (Totem *totem, gint64 offset)
+totem_action_seek_relative (Totem *totem, gint64 offset, gboolean accurate)
 {
-	totem_seek_time_rel (totem, offset, TRUE);
+	totem_seek_time_rel (totem, offset, TRUE, accurate);
 }
 
 /**
  * totem_action_seek_time:
  * @totem: a #TotemObject
- * @sec: the time to seek to
+ * @msec: the time to seek to
+ * @accurate: whether to use accurate seek, an accurate seek might be slower for some formats (see GStreamer docs)
  *
  * Seeks to an absolute time in the stream, or displays an
  * error dialog if that's not possible.
  **/
 void
-totem_action_seek_time (Totem *totem, gint64 sec)
+totem_action_seek_time (Totem *totem, gint64 msec, gboolean accurate)
 {
-	totem_seek_time_rel (totem, sec, FALSE);
+	totem_seek_time_rel (totem, msec, FALSE, accurate);
 }
 
 static void
@@ -2554,11 +2556,11 @@ update_seekable (Totem *totem)
 	if (seekable != FALSE) {
 		if (totem->seek_to_start != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
-						      totem->seek_to_start, NULL);
+						      totem->seek_to_start, FALSE, NULL);
 			totem_action_pause (totem);
 		} else if (totem->seek_to != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
-						      totem->seek_to, NULL);
+						      totem->seek_to, FALSE, NULL);
 		}
 	}
 	totem->seek_to = 0;
@@ -3024,9 +3026,9 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		if (url != NULL)
 			offset = g_ascii_strtod (url, NULL);
 		if (offset == 0) {
-			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000, FALSE);
 		} else {
-			totem_action_seek_relative (totem, offset * 1000);
+			totem_action_seek_relative (totem, offset * 1000, FALSE);
 		}
 		icon_name = "gtk-media-forward";
 		break;
@@ -3037,9 +3039,9 @@ totem_action_remote (Totem *totem, TotemRemoteCommand cmd, const char *url)
 		if (url != NULL)
 			offset = g_ascii_strtod (url, NULL);
 		if (offset == 0)
-			totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
 		else
-			totem_action_seek_relative (totem,  - (offset * 1000));
+			totem_action_seek_relative (totem,  - (offset * 1000), FALSE);
 		icon_name = "gtk-media-rewind";
 		break;
 	}
@@ -3443,11 +3445,11 @@ on_eos_event (GtkWidget *widget, Totem *totem)
 		if (totem_playlist_get_last (totem->playlist) == 0 &&
 		    totem_is_seekable (totem)) {
 			if (totem_playlist_get_repeat (totem->playlist) != FALSE) {
-				totem_action_seek_time (totem, 0);
+				totem_action_seek_time (totem, 0, FALSE);
 				totem_action_play (totem);
 			} else {
 				totem_action_pause (totem);
-				totem_action_seek_time (totem, 0);
+				totem_action_seek_time (totem, 0, FALSE);
 			}
 		} else {
 			totem_action_next (totem);
@@ -3480,18 +3482,18 @@ totem_action_handle_seek (Totem *totem, GdkEventKey *event, gboolean is_forward)
 {
 	if (is_forward != FALSE) {
 		if (event->state & GDK_SHIFT_MASK)
-			totem_action_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET * 1000, FALSE);
 		else if (event->state & GDK_CONTROL_MASK)
-			totem_action_seek_relative (totem, SEEK_FORWARD_LONG_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_FORWARD_LONG_OFFSET * 1000, FALSE);
 		else
-			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000, FALSE);
 	} else {
 		if (event->state & GDK_SHIFT_MASK)
-			totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000, FALSE);
 		else if (event->state & GDK_CONTROL_MASK)
-			totem_action_seek_relative (totem, SEEK_BACKWARD_LONG_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_BACKWARD_LONG_OFFSET * 1000, FALSE);
 		else
-			totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000);
+			totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
 	}
 }
 
@@ -3746,10 +3748,10 @@ totem_action_handle_scroll (Totem *totem, GdkScrollDirection direction)
 
 	switch (direction) {
 	case GDK_SCROLL_UP:
-		totem_action_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET * 1000);
+		totem_action_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET * 1000, FALSE);
 		break;
 	case GDK_SCROLL_DOWN:
-		totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000);
+		totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000, FALSE);
 		break;
 	default:
 		retval = FALSE;

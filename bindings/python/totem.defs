@@ -266,7 +266,8 @@
   (c-name "totem_action_seek_time")
   (return-type "none")
   (parameters
-    '("gint64" "sec")
+    '("gint64" "msec")
+    '("gboolean" "accurate")
   )
 )
 
@@ -275,7 +276,8 @@
   (c-name "totem_action_seek_relative")
   (return-type "none")
   (parameters
-    '("int" "off_sec")
+    '("int" "off_msec")
+    '("gboolean" "accurate")
   )
 )
 

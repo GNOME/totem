@@ -251,7 +251,7 @@ seek_to_pos (TotemBemusedPlugin *tp, GIOChannel *source)
 	time += buf[2] << 8;
 	time += buf[3];
 
-	totem_action_seek_time (tp->totem, (gint64) time * 1000);
+	totem_action_seek_time (tp->totem, (gint64) time * 1000, FALSE);
 }
 
 static void
