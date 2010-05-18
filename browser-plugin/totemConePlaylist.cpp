@@ -120,11 +120,18 @@ totemConePlaylist::InvokeByIndex (int aIndex,
       Plugin()->Command (TOTEM_COMMAND_STOP);
       return VoidVariant (_result);
 
+    case eTogglePause:
+      if (Plugin()->State() == TOTEM_STATE_PLAYING) {
+	Plugin()->Command (TOTEM_COMMAND_PAUSE);
+      } else if (Plugin()->State() == TOTEM_STATE_PAUSED) {
+	Plugin()->Command (TOTEM_COMMAND_PLAY);
+      }
+      return VoidVariant (_result);
+
     case eNext:
     case ePlayItem:
     case ePrev:
     case eRemoveItem:
-    case eTogglePause:
       TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemConePlaylist);
       return VoidVariant (_result);
   }
