@@ -2102,11 +2102,21 @@ totemPlugin::Init (NPMIMEType mimetype,
 
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
 
-/* VLC plugin defaults to have its controller hidden
- * But we don't want to hide it if VLC wasn't explicitely
- * requested */
 #ifdef TOTEM_CONE_PLUGIN
-	if (strstr ((const char *) mimetype, "vlc") != NULL)
+	/* VLC plugin defaults to have its controller hidden.
+	 * But we don't want to hide it if VLC wasn't explicitely requested.
+	 * VLC plugin checks for toolbar argument in vlcplugin.cpp: VlcPlugin::init()
+	 * If the argument is missing or not set to "true" the toolbar is hidden.
+	 * We use a different approach:
+	 * - If there is no toolbar argument or it is not set to "false"
+	 *   the  controller is visible (otherwise it is hidden)
+	 * - If VLC is requested explicitely (via mimetype) and
+	 *   the toolbar argument is not set to "true",
+	 *   the controller is hidden (otherwise it is visible)
+	 */
+	if (!GetBooleanValue (args, "toolbar", true) ||
+	    (!GetBooleanValue (args, "toolbar", false) &&
+	     strstr ((const char *) mimetype, "vlc") != NULL))
 		mControllerHidden = true;
 #endif
 
