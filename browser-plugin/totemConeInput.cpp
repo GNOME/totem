@@ -86,12 +86,13 @@ totemConeInput::GetPropertyByIndex (int aIndex,
 
     case eLength:
       return DoubleVariant (_result, Plugin()->Duration());
+    case eTime:
+      return DoubleVariant (_result, double (Plugin()->GetTime()));
 
     case eFps:
     case eHasVout:
     case ePosition:
     case eRate:
-    case eTime:
       TOTEM_WARN_GETTER_UNIMPLEMENTED (aIndex, _result);
       return VoidVariant (_result);
   }
@@ -106,10 +107,17 @@ totemConeInput::SetPropertyByIndex (int aIndex,
   TOTEM_LOG_SETTER (aIndex, totemConeInput);
 
   switch (Properties (aIndex)) {
+    case eTime:
+      int32_t time;
+      if (!GetInt32FromArguments (aValue, 1, 0, time))
+	return false;
+
+      Plugin()->SetTime(time);
+      return true;
+
     case ePosition:
     case eRate:
     case eState:
-    case eTime:
       TOTEM_WARN_SETTER_UNIMPLEMENTED (aIndex, _result);
       return true;
 
