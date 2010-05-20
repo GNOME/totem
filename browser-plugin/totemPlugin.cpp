@@ -130,6 +130,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "audio/mpeg", "mp3", NULL },
   { "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
   { "video/flv", "flv", "application/x-flash-video" },
+  { "video/webm", "webm", NULL },
   { "application/x-totem-plugin", "", "Totem Multimedia plugin" },
   { "audio/midi", "mid, midi", NULL },
 #else
