@@ -15,9 +15,9 @@ msgstr ""
 "Project-Id-Version: totem MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-01-08 14:04+0000\n"
-"PO-Revision-Date: 2010-01-28 16:02+0300\n"
-"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"POT-Creation-Date: 2010-05-22 11:56+0000\n"
+"PO-Revision-Date: 2010-05-26 18:59+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,20 +233,11 @@ msgstr "_Helimenüü"
 msgid "About this application"
 msgstr "Lähem teave selle rakenduse kohta"
 
-msgid "Also disable the screensaver when playing _audio"
-msgstr "Ekraanisäästja on keelatud ka _audioesituse ajal"
-
 msgid "Audio Output"
 msgstr "Heliväljund"
 
 msgid "Auto"
 msgstr "Automaatne"
-
-msgid "Automatically _load subtitle files when movie is loaded"
-msgstr "_Video avamisel laaditakse subtiitrid automaatselt"
-
-msgid "Automatically _resize the window when a new video is loaded"
-msgstr "_Uue video avamisel sobitatakse akna suurus"
 
 msgid "Clear the playlist"
 msgstr "Esitusnimekirja puhastamine"
@@ -269,8 +260,11 @@ msgstr "Ühenduse kii_rus:"
 msgid "Decrease volume"
 msgstr "Heli vaiksemaks"
 
-msgid "Deinterlace"
-msgstr "Ülerealaotuse eemaldamine"
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "Üle_realaotusega videotelt ülerealaotuse eemaldamine"
+
+msgid "Disable screensaver when playing "
+msgstr "Ekraanisäästja keelamine esituse ajaks"
 
 msgid "Display"
 msgstr "Kuva"
@@ -452,6 +446,9 @@ msgstr "Kerimisriba"
 msgid "Totem Preferences"
 msgstr "Totem'i eelistused"
 
+msgid "Video or Audio"
+msgstr "Video või audio"
+
 msgid "View the properties of the current stream"
 msgstr "Praeguse andmevoo omaduste vaatamine"
 
@@ -512,9 +509,6 @@ msgstr "_Sisukord"
 msgid "_DVD Menu"
 msgstr "_DVD menüü"
 
-msgid "_Deinterlace"
-msgstr "_Eemalda ülerealaotus"
-
 msgid "_Edit"
 msgstr "_Redaktor"
 
@@ -542,6 +536,9 @@ msgstr "_Toon:"
 msgid "_Languages"
 msgstr "_Keeled"
 
+msgid "_Load subtitle files when movie is loaded"
+msgstr "_Video avamisel laaditakse subtiitrid"
+
 msgid "_Movie"
 msgstr "_Film"
 
@@ -565,6 +562,9 @@ msgstr "_Kordav režiim"
 
 msgid "_Resize 1:2"
 msgstr "_Suurus 1:2"
+
+msgid "_Resize the window when a new video is loaded"
+msgstr "_Uue video avamisel sobitatakse akna suurus"
 
 msgid "_Sound"
 msgstr "_Heli"
@@ -600,18 +600,15 @@ msgid ""
 "the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
 "28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
 "for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
-"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, "
+"\"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
 msgstr ""
 "Arvestuslik võrguühenduse kiirus, mille järgi valitakse üle võrgu esitatava "
 "voo kvaliteet: \"0\" on 14.4 kb/s modem, \"1\" on 19.2 kb/s modem, \"2\" on "
 "28.8 kb/s modem, \"3\" on 33.6 kb/s modem, \"4\" on 34.4 kb/s modem, \"5\" "
 "on 56 kb/s modem/ISDN, \"6\" on 112 kb/s topelt-ISDN/DSL, \"7\" on 256 kb/s "
-"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, \"10"
-"\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
-
-msgid "Buffer size"
-msgstr "Puhvri suurus"
+"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, "
+"\"10\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
 
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Vaikimisi asukoht \"Ava...\" dialoogidele"
@@ -633,14 +630,8 @@ msgstr ""
 "Vaikimisi asukoht \"Võta kuvatõmmis\" dialoogidele, vaikimisi on selleks "
 "piltide kataloog"
 
-msgid "Enable deinterlacing"
-msgstr "Ülerealaotuse eemaldamine"
-
 msgid "Encoding charset for subtitle"
 msgstr "Subtriitrite kodeeringutabel"
-
-msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Maksimaalne eeldekodeeritav andmehulk kuvamiseks (sekundites)"
 
 msgid "Name of the visual effects plugins"
 msgstr "Visuaalefektide plugina nimi"
@@ -726,6 +717,10 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Kas subtiitrid laaditakse pärast filmi laadimist automaatselt või mitte"
 
+msgid "Whether to disable deinterlacing for interlaced movies"
+msgstr ""
+"Kas ülerealaotusega videote puhul tuleb ülerealaotus eemaldada või mitte"
+
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Kas kiirklahvid on keelatud või mitte"
 
@@ -798,8 +793,8 @@ msgstr "Laiendi(d)"
 
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `%"
-"s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `"
+"%s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "Programmil pole võimalik `%s' jaoks failivormingut leida. Palun veendu, et "
@@ -844,16 +839,6 @@ msgstr "Tühista"
 
 msgid "No File"
 msgstr "Fail puudub"
-
-#, c-format
-msgid "Could not launch URL \"%s\": %s"
-msgstr "URL-i \"%s\" pole võimalik avada: %s"
-
-msgid "Default browser not configured"
-msgstr "Vaikimisi sirvija pole seadistatud"
-
-msgid "Error launching URI"
-msgstr "Viga URI avamisel"
 
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
@@ -943,6 +928,7 @@ msgstr "Totemi veebisait"
 msgid "Configure Plugins"
 msgstr "Pluginate seadistamine"
 
+#. Translators: %s is the totem version number
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
@@ -1143,7 +1129,7 @@ msgid "Playlist"
 msgstr "Esitusnimekiri"
 
 #, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Esitusnimekirja '%s' pole võimalik parsida, see võib olla rikutud."
 
 msgid "Playlist error"
@@ -1679,7 +1665,7 @@ msgstr "BBC iPlayer"
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "BBC programmi viimase 7 päeva voog BBC IPlayer'i teenusest."
 
-msgid "Error Listing Channel Categories"
+msgid "Error listing channel categories"
 msgstr "Viga kanalite kategooriate loendi kuvamisel"
 
 msgid ""
@@ -1695,14 +1681,14 @@ msgid "Loading…"
 msgstr "Laadimine…"
 
 msgid "Error getting programme feed"
-msgstr "Viga saatevoo hankimisel"
+msgstr "Viga saatekava voo hankimisel"
 
 msgid ""
-"There was an unknown error getting the list of programmes for this channel "
-"and category combination."
+"There was an error getting the list of programmes for this channel and "
+"category combination."
 msgstr ""
-"Selle kanali ja kategooria kombinatsioonile vastavate saadete loendi "
-"hankimisel esines tundmatu viga."
+"Selle kanali ja kategooria kombinatsioonile vastava saatekava hankimisel "
+"tekkis viga."
 
 #, python-format
 msgid "Programme unavailable (\"%s\")"
@@ -1999,6 +1985,7 @@ msgid "Save Screenshot"
 msgstr "Kuvatõmmise salvestamine"
 
 #. Create the screenshot widget
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Kuvatõmmis-%s-%d.png"
@@ -2137,10 +2124,6 @@ msgstr "Lisavideote hankimine…"
 msgid "No URI to play"
 msgstr "Esitamiseks puudub URI"
 
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "Totem ei saa '%s' esitada"
-
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
@@ -2200,3 +2183,30 @@ msgstr ""
 "Pärast \"Olgu\" vajutamist ootab Totem winpdb või rpdb2 abil loodud "
 "ühendust. Kui GConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
+
+#~ msgid "Deinterlace"
+#~ msgstr "Ülerealaotuse eemaldamine"
+
+#~ msgid "_Deinterlace"
+#~ msgstr "_Eemalda ülerealaotus"
+
+#~ msgid "Buffer size"
+#~ msgstr "Puhvri suurus"
+
+#~ msgid "Enable deinterlacing"
+#~ msgstr "Ülerealaotuse eemaldamine"
+
+#~ msgid "Maximum amount of data to decode ahead of display (in seconds)"
+#~ msgstr "Maksimaalne eeldekodeeritav andmehulk kuvamiseks (sekundites)"
+
+#~ msgid "Could not launch URL \"%s\": %s"
+#~ msgstr "URL-i \"%s\" pole võimalik avada: %s"
+
+#~ msgid "Default browser not configured"
+#~ msgstr "Vaikimisi sirvija pole seadistatud"
+
+#~ msgid "Error launching URI"
+#~ msgstr "Viga URI avamisel"
+
+#~ msgid "Totem could not play '%s'"
+#~ msgstr "Totem ei saa '%s' esitada"
