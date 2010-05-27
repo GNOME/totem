@@ -12,12 +12,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem MASTER\n"
+"Project-Id-Version: totem 2.30\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-01-08 14:04+0000\n"
-"PO-Revision-Date: 2010-01-28 16:02+0300\n"
-"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"POT-Creation-Date: 2010-05-14 10:35+0000\n"
+"PO-Revision-Date: 2010-05-26 18:59+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -600,18 +600,15 @@ msgid ""
 "the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
 "28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
 "for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
-"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, "
+"\"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
 msgstr ""
 "Arvestuslik võrguühenduse kiirus, mille järgi valitakse üle võrgu esitatava "
 "voo kvaliteet: \"0\" on 14.4 kb/s modem, \"1\" on 19.2 kb/s modem, \"2\" on "
 "28.8 kb/s modem, \"3\" on 33.6 kb/s modem, \"4\" on 34.4 kb/s modem, \"5\" "
 "on 56 kb/s modem/ISDN, \"6\" on 112 kb/s topelt-ISDN/DSL, \"7\" on 256 kb/s "
-"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, \"10"
-"\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
-
-msgid "Buffer size"
-msgstr "Puhvri suurus"
+"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, "
+"\"10\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
 
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Vaikimisi asukoht \"Ava...\" dialoogidele"
@@ -638,9 +635,6 @@ msgstr "Ülerealaotuse eemaldamine"
 
 msgid "Encoding charset for subtitle"
 msgstr "Subtriitrite kodeeringutabel"
-
-msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "Maksimaalne eeldekodeeritav andmehulk kuvamiseks (sekundites)"
 
 msgid "Name of the visual effects plugins"
 msgstr "Visuaalefektide plugina nimi"
@@ -798,8 +792,8 @@ msgstr "Laiendi(d)"
 
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `%"
-"s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `"
+"%s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "Programmil pole võimalik `%s' jaoks failivormingut leida. Palun veendu, et "
@@ -844,16 +838,6 @@ msgstr "Tühista"
 
 msgid "No File"
 msgstr "Fail puudub"
-
-#, c-format
-msgid "Could not launch URL \"%s\": %s"
-msgstr "URL-i \"%s\" pole võimalik avada: %s"
-
-msgid "Default browser not configured"
-msgstr "Vaikimisi sirvija pole seadistatud"
-
-msgid "Error launching URI"
-msgstr "Viga URI avamisel"
 
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
@@ -943,6 +927,7 @@ msgstr "Totemi veebisait"
 msgid "Configure Plugins"
 msgstr "Pluginate seadistamine"
 
+#. Translators: %s is the totem version number
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
@@ -1695,7 +1680,7 @@ msgid "Loading…"
 msgstr "Laadimine…"
 
 msgid "Error getting programme feed"
-msgstr "Viga saatevoo hankimisel"
+msgstr "Viga saatekava voo hankimisel"
 
 msgid ""
 "There was an unknown error getting the list of programmes for this channel "
@@ -1999,6 +1984,7 @@ msgid "Save Screenshot"
 msgstr "Kuvatõmmise salvestamine"
 
 #. Create the screenshot widget
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Kuvatõmmis-%s-%d.png"
@@ -2136,10 +2122,6 @@ msgstr "Lisavideote hankimine…"
 
 msgid "No URI to play"
 msgstr "Esitamiseks puudub URI"
-
-#, c-format
-msgid "Totem could not play '%s'"
-msgstr "Totem ei saa '%s' esitada"
 
 #. translators: this is:
 #. * Open With ApplicationName
