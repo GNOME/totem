@@ -64,7 +64,7 @@ totem_open_location_class_init (TotemOpenLocationClass *klass)
 static void
 totem_open_location_init (TotemOpenLocation *self)
 {
-	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_OPEN_LOCATION, TotemOpenLocationPrivate);
+	self->priv = TOTEM_OPEN_LOCATION_GET_PRIVATE (self);
 
 	self->priv->xml = totem_interface_load ("uri.ui", FALSE, NULL, self);
 	self->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (self->priv->xml, "uri"));
@@ -176,9 +176,6 @@ totem_open_location_new (Totem *totem)
 			NULL);
 	gtk_container_set_border_width (GTK_CONTAINER (open_location), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (open_location), GTK_RESPONSE_OK);
-
-	g_signal_connect (G_OBJECT (open_location), "delete-event",
-			G_CALLBACK (gtk_widget_destroy), open_location);
 
 	/* Get item from clipboard to fill GtkEntry */
 	clipboard_location = totem_open_location_set_from_clipboard (open_location);

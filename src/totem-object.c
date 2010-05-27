@@ -1518,22 +1518,12 @@ totem_action_open (Totem *totem)
 }
 
 static void
-totem_open_location_destroy (Totem *totem)
-{
-	if (totem->open_location != NULL) {
-		g_object_remove_weak_pointer (G_OBJECT (totem->open_location), (gpointer *)&(totem->open_location));
-		gtk_widget_destroy (GTK_WIDGET (totem->open_location));
-		totem->open_location = NULL;
-	}
-}
-
-static void
 totem_open_location_response_cb (GtkDialog *dialog, gint response, Totem *totem)
 {
 	char *uri;
 
 	if (response != GTK_RESPONSE_OK) {
-		totem_open_location_destroy (totem);
+		gtk_widget_destroy (totem->open_location);
 		return;
 	}
 
@@ -1558,7 +1548,7 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, Totem *totem)
 	}
  	g_free (uri);
 
-	totem_open_location_destroy (totem);
+	gtk_widget_destroy (totem->open_location);
 }
 
 void
