@@ -6692,8 +6692,10 @@ bacon_video_widget_new (int width, int height,
    * and the deinterlace flag, for video only */
   if (type == BVW_USE_TYPE_VIDEO) {
     g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    g_object_set (bvw->priv->play, "flags",
-		  flags | GST_PLAY_FLAG_DOWNLOAD | GST_PLAY_FLAG_DEINTERLACE, NULL);
+    flags |= GST_PLAY_FLAG_DOWNLOAD;
+    g_object_set (bvw->priv->play, "flags", flags, NULL);
+    flags |= GST_PLAY_FLAG_DEINTERLACE;
+    g_object_set (bvw->priv->play, "flags", flags, NULL);
   }
 
   /* Disable video decoding in audio mode */
