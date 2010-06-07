@@ -5474,6 +5474,7 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
     query = gst_query_new_seeking (GST_FORMAT_TIME);
     if (gst_element_query (bvw->priv->play, query)) {
       gst_query_parse_seeking (query, NULL, &res, NULL, NULL);
+      GST_DEBUG ("seeking query says the stream is%s seekable", (res) ? "" : " not");
       bvw->priv->seekable = (res) ? 1 : 0;
     } else {
       GST_DEBUG ("seeking query failed");
