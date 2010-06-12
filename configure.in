@@ -37,7 +37,7 @@ AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
 # Requirements
-GLIB_REQS=2.25.4
+GLIB_REQS=2.25.8
 GTK_REQS=2.90.2
 TOTEM_PLPARSER_REQS=2.29.1
 GNOMEICON_REQS=2.15.90
@@ -732,6 +732,7 @@ if test "x$with_dbus" != "xno"; then
 	fi
         if test "x$enable_dbus" = xyes; then
 		AC_DEFINE(WITH_DBUS, 1, [Define if D-BUS is enabled])
+		AC_DEFINE(ENABLE_DBUS, 1, [Define if D-BUS is enabled])
 	fi
 fi
 AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
