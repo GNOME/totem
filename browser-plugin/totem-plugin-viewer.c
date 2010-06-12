@@ -1959,6 +1959,9 @@ totem_embedded_construct (TotemEmbedded *emb,
 	if (!emb->hidden) {
 		gtk_widget_set_size_request (emb->window, width, height);
 		emb->scrsaver = totem_scrsaver_new ();
+		g_object_set (emb->scrsaver,
+			      "reason", _("Playing a movie"),
+			      NULL);
 	}
 
 #ifdef GNOME_ENABLE_DEBUG

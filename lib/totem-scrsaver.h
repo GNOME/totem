@@ -19,15 +19,18 @@
    Author: Bastien Nocera <hadess@hadess.net>
  */
 
-#include <glib.h>
+#ifndef TOTEM_SCRSAVER_H
+#define TOTEM_SCRSAVER_H
+
 #include <glib-object.h>
+
+G_BEGIN_DECLS
 
 #define TOTEM_TYPE_SCRSAVER		(totem_scrsaver_get_type ())
 #define TOTEM_SCRSAVER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TOTEM_TYPE_SCRSAVER, TotemScrsaver))
 #define TOTEM_SCRSAVER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), TOTEM_TYPE_SCRSAVER, TotemScrsaverClass))
 #define TOTEM_IS_SCRSAVER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TOTEM_TYPE_SCRSAVER))
 #define TOTEM_IS_SCRSAVER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_SCRSAVER))
-
 
 typedef struct TotemScrsaver TotemScrsaver;
 typedef struct TotemScrsaverClass TotemScrsaverClass;
@@ -39,13 +42,16 @@ struct TotemScrsaver {
 };
 
 struct TotemScrsaverClass {
-	GObjectClass parent_class; 
+	GObjectClass parent_class;
 };
 
-GType totem_scrsaver_get_type		(void);
-TotemScrsaver *totem_scrsaver_new	(void);
+GType totem_scrsaver_get_type		(void) G_GNUC_CONST;
+TotemScrsaver *totem_scrsaver_new       (void);
 void totem_scrsaver_enable		(TotemScrsaver *scr);
 void totem_scrsaver_disable		(TotemScrsaver *scr);
 void totem_scrsaver_set_state		(TotemScrsaver *scr,
 					 gboolean enable);
 
+G_END_DECLS
+
+#endif /* !TOTEM_SCRSAVER_H */

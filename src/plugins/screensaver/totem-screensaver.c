@@ -90,6 +90,9 @@ static void
 totem_screensaver_plugin_init (TotemScreensaverPlugin *plugin)
 {
 	plugin->scr = totem_scrsaver_new ();
+	g_object_set (plugin->scr,
+		      "reason", _("Playing a movie"),
+		      NULL);
 }
 
 static void
