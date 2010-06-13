@@ -268,6 +268,10 @@ AC_ARG_ENABLE([python],
 	[enable_python=autodetect have_python=yes])
 AC_MSG_RESULT([$enable_python])
 
+# FIXME
+# Disabling Python support until we get PyGTK for GTK3
+have_python=no
+
 if test "x$have_python" != "xyes"; then
 	if test "x$enable_python" = "xyes"; then
 		AC_MSG_ERROR([Python not found])
