@@ -1492,7 +1492,7 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, Totem *totem)
 	char *uri;
 
 	if (response != GTK_RESPONSE_OK) {
-		gtk_widget_destroy (totem->open_location);
+		gtk_widget_destroy (GTK_WIDGET (totem->open_location));
 		return;
 	}
 
@@ -1517,7 +1517,7 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, Totem *totem)
 	}
  	g_free (uri);
 
-	gtk_widget_destroy (totem->open_location);
+	gtk_widget_destroy (GTK_WIDGET (totem->open_location));
 }
 
 void
