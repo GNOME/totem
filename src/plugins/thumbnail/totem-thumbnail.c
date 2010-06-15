@@ -30,10 +30,12 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
+#include <libpeas/peas-activatable.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
 #include <gmodule.h>
 #include <string.h>
 
-#include "totem-plugin.h"
 #include "totem.h"
 
 #define TOTEM_TYPE_THUMBNAIL_PLUGIN		(totem_thumbnail_plugin_get_type ())
@@ -53,32 +55,33 @@ typedef struct
 
 typedef struct
 {
-	TotemPlugin parent;
+	PeasExtensionBase parent;
 	TotemThumbnailPluginPrivate *priv;
 } TotemThumbnailPlugin;
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemThumbnailPluginClass;
 
-G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types	(PeasObjectModule *module);
 GType totem_thumbnail_plugin_get_type		(void) G_GNUC_CONST;
 
-static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
+static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
+static void impl_activate			(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate			(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER (TotemThumbnailPlugin, totem_thumbnail_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemThumbnailPlugin,
+				totem_thumbnail_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
 
 static void
 totem_thumbnail_plugin_class_init (TotemThumbnailPluginClass *klass)
 {
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
 	g_type_class_add_private (klass, sizeof (TotemThumbnailPluginPrivate));
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
@@ -87,6 +90,18 @@ totem_thumbnail_plugin_init (TotemThumbnailPlugin *plugin)
 	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
 						    TOTEM_TYPE_THUMBNAIL_PLUGIN,
 						    TotemThumbnailPluginPrivate);
+}
+
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
+}
+
+static void
+totem_thumbnail_plugin_class_finalize (TotemThumbnailPluginClass *klass)
+{
 }
 
 static void
@@ -174,12 +189,12 @@ file_closed_cb (TotemObject *totem,
 	update_from_state (pi->priv, totem, NULL);
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemThumbnailPlugin *pi = TOTEM_THUMBNAIL_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	char *mrl;
 
 	pi->priv->window = totem_get_main_window (totem);
@@ -199,15 +214,14 @@ impl_activate (TotemPlugin *plugin,
 	update_from_state (pi->priv, totem, mrl);
 
 	g_free (mrl);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate (TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemThumbnailPlugin *pi = TOTEM_THUMBNAIL_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 
 	g_signal_handler_disconnect (totem, pi->priv->file_opened_handler_id);
 	g_signal_handler_disconnect (totem, pi->priv->file_closed_handler_id);
@@ -215,3 +229,12 @@ impl_deactivate (TotemPlugin *plugin,
 	set_icon_to_default (totem);
 }
 
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_thumbnail_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_THUMBNAIL_PLUGIN);
+}
