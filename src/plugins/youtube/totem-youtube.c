@@ -28,10 +28,14 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 #include <gdata/gdata.h>
 
 #include "totem-plugin.h"
 #include "totem.h"
+#include "totem-dirs.h"
 #include "totem-video-list.h"
 #include "totem-interface.h"
 #include "backend/bacon-video-widget.h"
@@ -58,7 +62,7 @@ enum {
 #define TOTEM_YOUTUBE_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePluginClass))
 
 typedef struct {
-	TotemPlugin parent;
+	PeasExtensionBase parent;
 	Totem *totem;
 	GDataYouTubeService *service;
 	BaconVideoWidget *bvw;
@@ -83,14 +87,11 @@ typedef struct {
 } TotemYouTubePlugin;
 
 typedef struct {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemYouTubePluginClass;
 
-G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType totem_youtube_plugin_get_type		(void) G_GNUC_CONST;
-
-static void impl_activate			(TotemPlugin *plugin, TotemObject *totem);
-static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
+static void totem_youtube_plugin_class_init	(TotemYouTubePluginClass *klass);
 
 /* GtkBuilder callbacks */
 void notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, TotemYouTubePlugin *self);
@@ -103,27 +104,22 @@ void open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *sel
 void value_changed_cb (GtkAdjustment *adjustment, TotemYouTubePlugin *self);
 gboolean starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePlugin *self);
 
-TOTEM_PLUGIN_REGISTER (TotemYouTubePlugin, totem_youtube_plugin)
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePlugin, totem_youtube_plugin);
 
 static void
 totem_youtube_plugin_class_init (TotemYouTubePluginClass *klass)
 {
-	PeasPluginClass *plugin_class = PEAS_PLUGIN_CLASS (klass);
-
-	plugin_class->activate = (PeasFunc) impl_activate;
-	plugin_class->deactivate = (PeasFunc) impl_deactivate;
 }
 
 static void
 totem_youtube_plugin_init (TotemYouTubePlugin *plugin)
 {
-	/* Nothing to see here; move along */
 }
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* Copied from http://bugzilla.gnome.org/show_bug.cgi?id=575900 while waiting for them to be committed to gdk-pixbuf */
 
-typedef	struct {
+typedef struct {
 	gint width;
 	gint height;
 	gboolean preserve_aspect_ratio;
@@ -333,9 +329,10 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 }
 
 static void
-impl_activate (TotemPlugin *plugin, TotemObject *totem)
+impl_activate (PeasActivatable *plugin, GObject *object)
 {
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *main_window;
 	GtkBuilder *builder;
 	guint i;
@@ -345,7 +342,7 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem)
 
 	/* Set up the interface */
 	main_window = totem_get_main_window (totem);
-	builder = totem_plugin_load_interface (plugin, "youtube.ui", TRUE, main_window, self);
+	builder = totem_plugin_load_interface ("youtube", "youtube.ui", TRUE, main_window, self);
 	g_object_unref (main_window);
 
 	self->search_entry = GTK_ENTRY (gtk_builder_get_object (builder, "yt_search_entry"));
@@ -366,7 +363,7 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem)
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin, GObject *totem)
 {
 	guint i;
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
@@ -1009,3 +1006,4 @@ starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePl
 
 	return TRUE;
 }
+
