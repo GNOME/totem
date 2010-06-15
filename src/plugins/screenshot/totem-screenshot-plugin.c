@@ -31,6 +31,7 @@
 #include <gmodule.h>
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
+#include <libpeas/peas-activatable.h>
 #include <gconf/gconf-client.h>
 
 #ifdef HAVE_XFREE
@@ -58,26 +59,41 @@ struct TotemScreenshotPluginPrivate {
 	GtkActionGroup *action_group;
 };
 
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
+static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
+static void impl_activate				(PeasActivatable *plugin, GObject *totem);
+static void impl_deactivate				(PeasActivatable *plugin, GObject *totem);
 
-TOTEM_PLUGIN_REGISTER (TotemScreenshotPlugin, totem_screenshot_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemScreenshotPlugin,
+				totem_screenshot_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
 
 static void
 totem_screenshot_plugin_class_init (TotemScreenshotPluginClass *klass)
 {
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
 	g_type_class_add_private (klass, sizeof (TotemScreenshotPluginPrivate));
+}
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
 }
 
 static void
 totem_screenshot_plugin_init (TotemScreenshotPlugin *plugin)
 {
-	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin, TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPluginPrivate);
+	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
+						    TOTEM_TYPE_SCREENSHOT_PLUGIN,
+						    TotemScreenshotPluginPrivate);
+}
+
+static void
+totem_screenshot_plugin_class_finalize (TotemScreenshotPluginClass *klass)
+{
 }
 
 static void
@@ -106,7 +122,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		return;
 	}
 
-	dialog = totem_screenshot_new (priv->totem, TOTEM_PLUGIN (self), pixbuf);
+	dialog = totem_screenshot_new (priv->totem, self, pixbuf);
 
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
@@ -131,7 +147,7 @@ take_gallery_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 	if (bacon_video_widget_get_logo_mode (self->priv->bvw) != FALSE)
 		return;
 
-	dialog = GTK_DIALOG (totem_gallery_new (totem, TOTEM_PLUGIN (self)));
+	dialog = GTK_DIALOG (totem_gallery_new (totem, self));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (take_gallery_response_cb), self);
@@ -196,8 +212,9 @@ disable_save_to_disk_changed_cb (GConfClient *client, guint connection_id, GConf
 	self->priv->save_to_disk = !gconf_client_get_bool (client, "/desktop/gnome/lockdown/disable_save_to_disk", NULL);
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *totem)
 {
 	GtkWindow *window;
 	GtkUIManager *manager;
@@ -209,8 +226,8 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 		{ "take-gallery", NULL, N_("Create Screenshot _Gallery..."), NULL, N_("Create a gallery of screenshots"), G_CALLBACK (take_gallery_action_cb) }
 	};
 
-	priv->totem = totem;
-	priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+	priv->totem = TOTEM_OBJECT (totem);
+	priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (priv->totem));
 	priv->got_metadata_signal = g_signal_connect (G_OBJECT (priv->bvw),
 						      "got-metadata",
 						      G_CALLBACK (got_metadata_cb),
@@ -221,7 +238,7 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 							  self);
 
 	/* Key press handler */
-	window = totem_get_main_window (totem);
+	window = totem_get_main_window (priv->totem);
 	priv->key_press_event_signal = g_signal_connect (G_OBJECT (window),
 							 "key-press-event", 
 							 G_CALLBACK (window_key_press_event_cb),
@@ -234,7 +251,7 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 	gtk_action_group_add_actions (priv->action_group, menu_entries,
 				      G_N_ELEMENTS (menu_entries), self);
 
-	manager = totem_get_ui_manager (totem);
+	manager = totem_get_ui_manager (priv->totem);
 
 	gtk_ui_manager_insert_action_group (manager, priv->action_group, -1);
 	g_object_unref (priv->action_group);
@@ -260,12 +277,11 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 
 	/* Update the menu entries' states */
 	update_state (self);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin,
+		 GObject *totem)
 {
 	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
 	GtkWindow *window;
@@ -276,7 +292,7 @@ impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->notify_logo_mode_signal);
 
-	window = totem_get_main_window (totem);
+	window = totem_get_main_window (priv->totem);
 	g_signal_handler_disconnect (G_OBJECT (window), priv->key_press_event_signal);
 	g_object_unref (window);
 
@@ -286,7 +302,7 @@ impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
 	g_object_unref (client);
 
 	/* Remove the menu */
-	manager = totem_get_ui_manager (totem);
+	manager = totem_get_ui_manager (priv->totem);
 	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (manager, priv->action_group);
 
@@ -372,3 +388,14 @@ totem_screenshot_plugin_update_file_chooser (const char *uri)
 				 dir, NULL);
 	g_free (dir);
 }
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_screenshot_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_SCREENSHOT_PLUGIN);
+}
+

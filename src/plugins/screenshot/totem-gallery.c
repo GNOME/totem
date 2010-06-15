@@ -31,6 +31,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
 
+#include "totem-dirs.h"
 #include "totem-gallery.h"
 #include "totem-gallery-progress.h"
 #include "totem-screenshot-plugin.h"
@@ -63,7 +64,7 @@ totem_gallery_init (TotemGallery *self)
 }
 
 TotemGallery *
-totem_gallery_new (Totem *totem, TotemPlugin *plugin)
+totem_gallery_new (Totem *totem, TotemScreenshotPlugin *plugin)
 {
 	TotemGallery *gallery;
 	GtkWidget *container;
@@ -74,7 +75,7 @@ totem_gallery_new (Totem *totem, TotemPlugin *plugin)
 	/* Create the gallery and its interface */
 	gallery = g_object_new (TOTEM_TYPE_GALLERY, NULL);
 
-	builder = totem_plugin_load_interface (plugin, "gallery.ui", TRUE, NULL, gallery);
+	builder = totem_plugin_load_interface ("screenshot", "gallery.ui", TRUE, NULL, gallery);
 	if (builder == NULL) {
 		g_object_unref (gallery);
 		return NULL;

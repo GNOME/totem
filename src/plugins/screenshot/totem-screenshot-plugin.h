@@ -31,7 +31,8 @@
 #include <glib.h>
 
 #include "totem.h"
-#include "totem-plugin.h"
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
 
 G_BEGIN_DECLS
 
@@ -45,16 +46,16 @@ G_BEGIN_DECLS
 typedef struct TotemScreenshotPluginPrivate	TotemScreenshotPluginPrivate;
 
 typedef struct {
-	TotemPlugin parent;
+	PeasExtensionBase parent;
 	TotemScreenshotPluginPrivate *priv;
 } TotemScreenshotPlugin;
 
 typedef struct {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemScreenshotPluginClass;
 
 GType totem_screenshot_plugin_get_type (void) G_GNUC_CONST;
-G_MODULE_EXPORT GType register_totem_plugin (GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);
 
 gchar *totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const char *movie_name) G_GNUC_WARN_UNUSED_RESULT;
 void totem_screenshot_plugin_update_file_chooser (const char *filename);

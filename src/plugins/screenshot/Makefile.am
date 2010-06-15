@@ -41,6 +41,7 @@ libscreenshot_la_CPPFLAGS = \
 
 libscreenshot_la_CFLAGS = 		\
 	$(DEPENDENCY_CFLAGS)		\
+	$(PEAS_CFLAGS)			\
 	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)			\
 	-I$(top_srcdir)/		\

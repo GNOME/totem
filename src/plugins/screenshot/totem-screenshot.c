@@ -35,6 +35,7 @@
 #include <gtk/gtk.h>
 #include <unistd.h>
 
+#include "totem-dirs.h"
 #include "totem-interface.h"
 #include "totem-screenshot-plugin.h"
 #include "gnome-screenshot-widget.h"
@@ -145,7 +146,7 @@ totem_screenshot_init (TotemScreenshot *screenshot)
 }
 
 GtkWidget *
-totem_screenshot_new (Totem *totem, TotemPlugin *screenshot_plugin, GdkPixbuf *screen_image)
+totem_screenshot_new (Totem *totem, TotemScreenshotPlugin *screenshot_plugin, GdkPixbuf *screen_image)
 {
 	TotemScreenshot *screenshot;
 	GtkContainer *content_area;
@@ -159,7 +160,7 @@ totem_screenshot_new (Totem *totem, TotemPlugin *screenshot_plugin, GdkPixbuf *s
 	/* Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique */
 	initial_uri = totem_screenshot_plugin_setup_file_chooser (N_("Screenshot-%s-%d.png"), movie_title);
 	g_free (movie_title);
-	interface_path = totem_plugin_find_file (screenshot_plugin, "gnome-screenshot.ui");
+	interface_path = totem_plugin_find_file ("screenshot", "gnome-screenshot.ui");
 	screenshot->priv->widget = GNOME_SCREENSHOT_WIDGET (gnome_screenshot_widget_new (interface_path, screen_image, initial_uri));
 	g_free (interface_path);
 	g_free (initial_uri);
