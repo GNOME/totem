@@ -1,10 +1,9 @@
 SUBDIRS = plugins backend
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
+lib_LTLIBRARIES = libtotem_main.la
 libexec_PROGRAMS =
-noinst_LTLIBRARIES =				\
-	libtotem_player.la			\
-	libtotem_main.la
+noinst_LTLIBRARIES = libtotem_player.la
 
 common_defines = \
 	-D_REENTRANT					\
@@ -102,9 +101,11 @@ libtotem_main_la_CFLAGS = \
 	$(DBUS_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
 	$(UNIQUE_CFLAGS)		\
+	$(PEASUI_CFLAGS)		\
 	$(AM_CFLAGS)
 
-libtotem_main_la_LDFLAGS = \
+libtotem_main_la_LDFLAGS =		\
+	-export_dynamic			\
 	$(AM_LDFLAGS)
 
 libtotem_main_la_LIBADD = \
@@ -112,6 +113,8 @@ libtotem_main_la_LIBADD = \
 	backend/libbaconvideowidget.la	\
 	plugins/libtotemmodule.la	\
 	$(UNIQUE_LIBS)			\
+	$(PEASUI_LIBS)			\
+	$(DEPENDENCY_LIBS)		\
 	$(DBUS_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(XTEST_LIBS)			\
@@ -141,12 +144,6 @@ libtotem_main_la_SOURCES += eggsmclient-osx.c
 endif
 endif
 
-if ENABLE_PYTHON
-libtotem_main_la_LIBADD += \
-	$(PYTHON_LIBS)						\
-	$(top_builddir)/bindings/python/totem-python.la
-endif
-
 # Totem
 
 TOTEMMARSHALFILES = 						\
@@ -174,17 +171,19 @@ totem_SOURCES = totem.c
 totem_CPPFLAGS =			\
 	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
+	-I$(srcdir)/plugins		\
 	$(common_defines)		\
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
 totem_CFLAGS =				\
 	$(UNIQUE_CFLAGS)		\
+	$(PEAS_CFLAGS)			\
 	$(WARN_CFLAGS)			\
 	$(DEPENDENCY_CFLAGS)		\
 	$(AM_CFLAGS)
 
-totem_LDFLAGS = \
+totem_LDFLAGS =				\
 	$(AM_LDFLAGS)
 
 totem_LDADD =						\

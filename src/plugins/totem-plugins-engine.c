@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
  * Plugin engine for Totem, heavily based on the code from Rhythmbox,
- * which is based heavily on the code from gedit.
+ * which is based heavily on the code from totem.
  *
  * Copyright (C) 2002-2005 Paolo Maggi
  *               2006 James Livingston  <jrl@ids.org.au>
@@ -36,744 +36,275 @@
 #include <glib/gi18n.h>
 #include <glib.h>
 #include <gconf/gconf-client.h>
+#include <girepository.h>
+#include <libpeas/peas-activatable.h>
+#include <libpeas/peas-extension-set.h>
 
-#include "totem-plugin.h"
-
-#include "totem-module.h"
-#include "totem-interface.h"
-
-#ifdef ENABLE_PYTHON
-#include "totem-python-module.h"
-#endif
-
+#include "totem-dirs.h"
 #include "totem-plugins-engine.h"
 
-#define PLUGIN_EXT	".totem-plugin"
 #define GCONF_PREFIX_PLUGINS GCONF_PREFIX"/plugins"
 #define GCONF_PREFIX_PLUGIN GCONF_PREFIX"/plugins/%s"
 #define GCONF_PLUGIN_ACTIVE GCONF_PREFIX_PLUGINS"/%s/active"
 #define GCONF_PLUGIN_HIDDEN GCONF_PREFIX_PLUGINS"/%s/hidden"
 
-typedef enum
-{
-	TOTEM_PLUGIN_LOADER_C,
-	TOTEM_PLUGIN_LOADER_PY
-} TotemPluginLang;
+typedef struct _TotemPluginsEnginePrivate{
+	PeasExtensionSet *activatable_extensions;
+	TotemObject *totem;
+	GConfClient *client;
+	guint notification_id;
+	guint garbage_collect_id;
+} _TotemPluginsEnginePrivate;
 
-struct _TotemPluginInfo
-{
-	gchar        *file;
+G_DEFINE_TYPE(TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
 
-	gchar        *location;
-	TotemPluginLang lang;
-	GTypeModule  *module;
-
-	gchar        *name;
-	gchar        *desc;
-	gchar        **authors;
-	gchar        *copyright;
-	gchar        *website;
-
-	gchar        *icon_name;
-	GdkPixbuf    *icon_pixbuf;
-
-	TotemPlugin     *plugin;
-
-	gboolean     builtin;
-	gboolean     active;
-	gboolean     visible;
-	guint        active_notification_id;
-	guint        visible_notification_id;
-};
-
-static void totem_plugin_info_free (TotemPluginInfo *info);
-static void totem_plugins_engine_plugin_active_cb (GConfClient *client,
-						guint cnxn_id,
-						GConfEntry *entry,
-						TotemPluginInfo *info);
-static void totem_plugins_engine_plugin_visible_cb (GConfClient *client,
-						 guint cnxn_id,
-						 GConfEntry *entry,
-						 TotemPluginInfo *info);
-static gboolean totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info,
-							TotemObject *totem,
-							GError **error);
-static void totem_plugins_engine_deactivate_plugin_real (TotemPluginInfo *info,
-						      TotemObject *totem);
-
-static GHashTable *totem_plugins = NULL;
-guint garbage_collect_id = 0;
-TotemObject *totem_plugins_object = NULL;
-static GConfClient *client = NULL;
-
-static TotemPluginInfo *
-totem_plugins_engine_load (const gchar *file)
-{
-	TotemPluginInfo *info;
-	GKeyFile *plugin_file = NULL;
-	GError *err = NULL;
-	gchar *str;
-
-	g_return_val_if_fail (file != NULL, NULL);
-
-	info = g_new0 (TotemPluginInfo, 1);
-	info->file = g_strdup (file);
-
-	plugin_file = g_key_file_new ();
-	if (!g_key_file_load_from_file (plugin_file, file, G_KEY_FILE_NONE, NULL)) {
-		g_warning ("Bad plugin file: %s", file);
-		goto error;
-	}
-
-	if (!g_key_file_has_key (plugin_file,
-			   	 "Totem Plugin",
-				 "IAge",
-				 NULL))	{
-		goto error;
-	}
-
-	/* Check IAge=1 */
-	if (g_key_file_get_integer (plugin_file,
-				    "Totem Plugin",
-				    "IAge",
-				    NULL) != 1)	{
-		goto error;
-	}
-
-	/* Get Location */
-	str = g_key_file_get_string (plugin_file,
-				     "Totem Plugin",
-				     "Module",
-				     NULL);
-	if (str) {
-		info->location = str;
-	} else {
-		g_warning ("Could not find 'Module' in %s", file);
-		goto error;
-	}
-
-	/* Get the loader for this plugin */
-	str = g_key_file_get_string (plugin_file,
-				     "Totem Plugin",
-				     "Loader",
-				     NULL);
-	if (str && strcmp(str, "python") == 0) {
-		info->lang = TOTEM_PLUGIN_LOADER_PY;
-#ifndef ENABLE_PYTHON
-		g_warning ("Cannot load Python extension '%s', Totem was not compiled with Python support", file);
-		g_free (str);
-		goto error;
-#endif
-	} else {
-		info->lang = TOTEM_PLUGIN_LOADER_C;
-	}
-	g_free (str);
-
-	/* Get Name */
-	str = g_key_file_get_locale_string (plugin_file,
-					    "Totem Plugin",
-					    "Name",
-					    NULL, NULL);
-	if (str) {
-		info->name = str;
-	} else {
-		g_warning ("Could not find 'Name' in %s", file);
-		goto error;
-	}
-
-	/* Get Description */
-	str = g_key_file_get_locale_string (plugin_file,
-					    "Totem Plugin",
-					    "Description",
-					    NULL, NULL);
-	if (str) {
-		info->desc = str;
-	} else {
-		info->desc = g_strdup ("");
-	}
-
-	/* Get icon name */
-	str = g_key_file_get_string (plugin_file,
-				     "Totem Plugin",
-				     "Icon",
-				     NULL);
-	if (str) {
-		info->icon_name = str;
-	} else {
-		info->icon_name = g_strdup ("");
-	}
-
-	/* Get Authors */
-	info->authors = g_key_file_get_string_list (plugin_file,
-						    "Totem Plugin",
-						    "Authors",
-						    NULL, NULL);
-
-	/* Get Copyright */
-	str = g_key_file_get_string (plugin_file,
-				     "Totem Plugin",
-				     "Copyright",
-				     NULL);
-	if (str) {
-		info->copyright = str;
-	} else {
-		info->copyright = g_strdup ("");
-	}
-
-	/* Get Copyright */
-	str = g_key_file_get_string (plugin_file,
-				     "Totem Plugin",
-				     "Website",
-				     NULL);
-	if (str) {
-		info->website = str;
-	} else {
-		info->website = g_strdup ("");
-	
-	}
-
-	/* Get Builtin */
-	info->builtin = g_key_file_get_boolean (plugin_file,
-						"Totem Plugin",
-						"Builtin",
-						&err);
-	if (err != NULL) {
-		info->builtin = FALSE;
-		g_error_free (err);
-	}
-
-	g_key_file_free (plugin_file);
-
-	return info;
-
-error:
-	g_warning ("Failed to load plugin file: %s", file);
-	g_free (info->file);
-	g_free (info->location);
-	g_free (info->name);
-	g_free (info);
-	g_key_file_free (plugin_file);
-
-	return NULL;
-}
-
-static void
-totem_plugins_engine_load_file (const char *plugin_file)
-{
-	TotemPluginInfo *info;
-	char *key_name;
-	GConfValue *activate_value;
-	gboolean activate;
-
-	if (g_str_has_suffix (plugin_file, PLUGIN_EXT) == FALSE)
-		return;
-
-	info = totem_plugins_engine_load (plugin_file);
-	if (info == NULL)
-		return;
-
-	if (g_hash_table_lookup (totem_plugins, info->location)) {
-		totem_plugin_info_free (info);
-		return;
-	}
-
-	g_hash_table_insert (totem_plugins, info->location, info);
-
-	key_name = g_strdup_printf (GCONF_PREFIX_PLUGIN, info->location);
-	gconf_client_add_dir (client, key_name, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	g_free (key_name);
-
-	key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
-	info->active_notification_id = gconf_client_notify_add (client,
-								key_name,
-								(GConfClientNotifyFunc)totem_plugins_engine_plugin_active_cb,
-								info,
-								NULL,
-								NULL);
-	activate_value = gconf_client_get (client, key_name, NULL);
-	g_free (key_name);
-
-	if (activate_value == NULL) {
-		/* Builtin plugins are activated by default; other plugins aren't */
-		activate = info->builtin;
-	} else {
-		activate = gconf_value_get_bool (activate_value);
-		gconf_value_free (activate_value);
-	}
-
-	if (info->builtin == FALSE) {
-		/* Builtin plugins are *always* invisible */
-		key_name = g_strdup_printf (GCONF_PLUGIN_HIDDEN, info->location);
-		info->visible_notification_id = gconf_client_notify_add (client,
-									 key_name,
-									 (GConfClientNotifyFunc)totem_plugins_engine_plugin_visible_cb,
-									 info,
-									 NULL,
-									 NULL);
-		info->visible = !gconf_client_get_bool (client, key_name, NULL);
-		g_free (key_name);
-	}
-
-	if (activate)
-		totem_plugins_engine_activate_plugin (info);
-}
-
-static void
-totem_plugins_engine_load_dir (const gchar *path)
-{
-	GDir *dir;
-	const char *name;
-
-	dir = g_dir_open (path, 0, NULL);
-	if (dir == NULL)
-		return;
-
-	while ((name = g_dir_read_name (dir)) != NULL) {
-		char *filename;
-
-		filename = g_build_filename (path, name, NULL);
-		if (g_file_test (filename, G_FILE_TEST_IS_DIR) != FALSE) {
-			totem_plugins_engine_load_dir (filename);
-		} else {
-			totem_plugins_engine_load_file (filename);
-		}
-		g_free (filename);
-	}
-	g_dir_close (dir);
-}
-
-static void
-totem_plugins_engine_load_all (void)
-{
-	GList *paths;
-
-	paths = totem_get_plugin_paths ();
-	while (paths != NULL) {
-		totem_plugins_engine_load_dir (paths->data);
-		g_free (paths->data);
-		paths = g_list_delete_link (paths, paths);
-	}
-}
-
+static void totem_plugins_engine_finalize (GObject *object);
+static void totem_plugins_engine_gconf_cb (GConfClient *gconf_client,
+					   guint cnxn_id,
+					   GConfEntry *entry,
+					   TotemPluginsEngine *engine);
 #if 0
-#ifdef ENABLE_PYTHON
+static void totem_plugins_engine_activate_plugin (PeasEngine     *engine,
+						  PeasPluginInfo *info);
+static void totem_plugins_engine_deactivate_plugin (PeasEngine     *engine,
+						    PeasPluginInfo *info);
+#endif
 static gboolean
 garbage_collect_cb (gpointer data)
 {
-	/* Commented out due to line 387 being commented out. More's commented out in totem-python-module.c. */
-	totem_plugins_engine_garbage_collect ();
+	TotemPluginsEngine *engine = (TotemPluginsEngine *) data;
+	peas_engine_garbage_collect (PEAS_ENGINE (engine));
 	return TRUE;
-}
-#endif
-#endif
-
-gboolean
-totem_plugins_engine_init (TotemObject *totem)
-{
-	g_return_val_if_fail (totem_plugins == NULL, FALSE);
-
-	if (!g_module_supported ())
-	{
-		g_warning ("Totem is not able to initialize the plugins engine.");
-		return FALSE;
-	}
-	totem_plugins = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, (GDestroyNotify)totem_plugin_info_free);
-
-	totem_plugins_object = totem;
-	g_object_ref (G_OBJECT (totem_plugins_object));
-
-	client = gconf_client_get_default ();
-
-	totem_plugins_engine_load_all ();
-
-#if 0
-#ifdef ENABLE_PYTHON
-	/* Commented out because it's a no-op. A further section is commented out below, and more's commented out
-	 * in totem-python-module.c. */
-	garbage_collect_id = g_timeout_add_seconds_full (G_PRIORITY_LOW, 20, garbage_collect_cb, NULL, NULL);
-#endif
-#endif
-
-	return TRUE;
-}
-
-void
-totem_plugins_engine_garbage_collect (void)
-{
-#ifdef ENABLE_PYTHON
-	totem_python_garbage_collect ();
-#endif
 }
 
 static void
-totem_plugin_info_free (TotemPluginInfo *info)
+totem_plugins_engine_class_init (TotemPluginsEngineClass *klass)
 {
-	if (info->active)
-		totem_plugins_engine_deactivate_plugin_real (info, totem_plugins_object);
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	if (info->plugin != NULL) {
-		g_object_unref (info->plugin);
-
-		/* info->module must not be unref since it is not possible to finalize
-		 * a type module */
-	}
-
-	if (info->active_notification_id > 0)
-		gconf_client_notify_remove (client, info->active_notification_id);
-	if (info->visible_notification_id > 0)
-		gconf_client_notify_remove (client, info->visible_notification_id);
-
-	g_free (info->file);
-	g_free (info->location);
-	g_free (info->name);
-	g_free (info->desc);
-	g_free (info->website);
-	g_free (info->copyright);
-	g_free (info->icon_name);
-
-	if (info->icon_pixbuf)
-		g_object_unref (info->icon_pixbuf);
-	g_strfreev (info->authors);
-
-	g_free (info);
+	object_class->finalize = totem_plugins_engine_finalize;
+	g_type_class_add_private (klass, sizeof (TotemPluginsEnginePrivate));
 }
 
-void
-totem_plugins_engine_shutdown (void)
+static gboolean
+plugin_is_builtin (PeasPluginInfo *info)
 {
-	if (totem_plugins != NULL)
-		g_hash_table_destroy (totem_plugins);
-	totem_plugins = NULL;
+	const GHashTable *keys;
+	const GValue *value;
+	gboolean builtin;
 
-	if (totem_plugins_object != NULL)
-		g_object_unref (totem_plugins_object);
-	totem_plugins_object = NULL;
+	keys = peas_plugin_info_get_keys (info);
+	if (keys == NULL)
+		return FALSE;
+	value = g_hash_table_lookup ((GHashTable *) keys, "Builtin");
+	if (value == NULL)
+		return FALSE;
 
-#if 0
-#ifdef ENABLE_PYTHON
-	if (garbage_collect_id > 0)
-		g_source_remove (garbage_collect_id);
-	totem_plugins_engine_garbage_collect ();
-#endif
-#endif
+	builtin = g_value_get_boolean (value);
+	if (builtin != FALSE)
+		peas_plugin_info_set_visible (info, FALSE);
 
-	if (client != NULL)
-		g_object_unref (client);
-	client = NULL;
-
-#ifdef ENABLE_PYTHON
-	totem_python_shutdown ();
-#endif
+	return builtin;
 }
 
 static void
-collate_values_cb (gpointer key, gpointer value, GList **list)
+totem_plugins_engine_load_all (TotemPluginsEngine *engine)
 {
-	*list = g_list_prepend (*list, value);
-}
+	const GList *list, *l;
+	GPtrArray *activate;
 
-GList *
-totem_plugins_engine_get_plugins_list (void)
-{
-	GList *list = NULL;
+	g_message ("totem_plugins_engine_load_all");
 
-	if (totem_plugins == NULL)
-		return NULL;
-
-	g_hash_table_foreach (totem_plugins, (GHFunc)collate_values_cb, &list);
-	list = g_list_reverse (list);
-
-	return list;
-}
-
-static gboolean
-load_plugin_module (TotemPluginInfo *info)
-{
-	gchar *path;
-	gchar *dirname;
-
-	g_return_val_if_fail (info != NULL, FALSE);
-	g_return_val_if_fail (info->file != NULL, FALSE);
-	g_return_val_if_fail (info->location != NULL, FALSE);
-	g_return_val_if_fail (info->plugin == NULL, FALSE);
-
-	switch (info->lang) {
-		case TOTEM_PLUGIN_LOADER_C:
-			dirname = g_path_get_dirname (info->file);
-			g_return_val_if_fail (dirname != NULL, FALSE);
-
-			path = g_module_build_path (dirname, info->location);
-#ifdef TOTEM_RUN_IN_SOURCE_TREE
-			if (!g_file_test (path, G_FILE_TEST_EXISTS)) {
-				char *temp;
-
-				g_free (path);
-				temp = g_build_filename (dirname, ".libs", NULL);
-
-				path = g_module_build_path (temp, info->location);
-				g_free (temp);
-			}
-#endif
-
-			g_free (dirname);
-			g_return_val_if_fail (path != NULL, FALSE);
-
-			info->module = G_TYPE_MODULE (totem_module_new (path, info->location));
-			g_free (path);
-			break;
-		case TOTEM_PLUGIN_LOADER_PY:
-#ifdef ENABLE_PYTHON
-			info->module = G_TYPE_MODULE (totem_python_module_new (info->file, info->location));
-#else
-			g_warning ("Cannot load plugin %s, Python plugin support is disabled", info->location);
-#endif
-			break;
-		default:
-			g_assert_not_reached ();
-	}
-
-	if (g_type_module_use (info->module) == FALSE) {
-		g_warning ("Could not load plugin %s\n", info->location);
-
-		g_object_unref (G_OBJECT (info->module));
-		info->module = NULL;
-
-		return FALSE;
-	}
-
-	switch (info->lang) {
-		case TOTEM_PLUGIN_LOADER_C:
-			info->plugin = TOTEM_PLUGIN (totem_module_new_object (TOTEM_MODULE (info->module)));
-			break;
-		case TOTEM_PLUGIN_LOADER_PY:
-#ifdef ENABLE_PYTHON
-			info->plugin = TOTEM_PLUGIN (totem_python_module_new_object (TOTEM_PYTHON_MODULE (info->module)));
-#endif
-			break;
-		default:
-			g_assert_not_reached ();
-	}
-
-	return TRUE;
-}
-
-static gboolean
-totem_plugins_engine_activate_plugin_real (TotemPluginInfo *info, TotemObject *totem, GError **error)
-{
-	gboolean res = TRUE;
-
-	if (info->plugin == NULL)
-		res = load_plugin_module (info);
-
-	if (res)
-		res = totem_plugin_activate (info->plugin, totem, error);
-	else
-		g_warning ("Error, impossible to activate plugin '%s'", info->name);
-
-	return res;
-}
-
-gboolean
-totem_plugins_engine_activate_plugin (TotemPluginInfo *info)
-{
-	char *msg;
-	GError *error = NULL;
-	gboolean ret;
-
-	g_return_val_if_fail (info != NULL, FALSE);
-
-	if (info->active)
-		return TRUE;
-
-	ret = totem_plugins_engine_activate_plugin_real (info, totem_plugins_object, &error);
-	if (info->visible != FALSE || ret != FALSE) {
+	activate = g_ptr_array_new ();
+	list = peas_engine_get_plugin_list (PEAS_ENGINE (engine));
+	for (l = list; l != NULL; l = l->next) {
+		PeasPluginInfo *info = l->data;
 		char *key_name;
 
-		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
-		gconf_client_set_bool (client, key_name, ret, NULL);
+		g_message ("checking peas_plugin_info_get_module_name (info) %s", peas_plugin_info_get_module_name (info));
+
+		/* Builtin plugins are activated by default; other plugins aren't */
+		if (plugin_is_builtin (info)) {
+			g_ptr_array_add (activate, (gpointer) peas_plugin_info_get_module_name (info));
+			g_message ("peas_plugin_info_get_module_name (info) %s, to activate", peas_plugin_info_get_module_name (info));
+			continue;
+		}
+		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, peas_plugin_info_get_module_name (info));
+		if (gconf_client_get_bool (engine->priv->client, key_name, NULL) != FALSE) {
+			g_message ("peas_plugin_info_get_module_name (info) %s, to activate", peas_plugin_info_get_module_name (info));
+			g_ptr_array_add (activate, (gpointer) peas_plugin_info_get_module_name (info));
+		}
+		g_free (key_name);
+
+		key_name = g_strdup_printf (GCONF_PLUGIN_HIDDEN, peas_plugin_info_get_module_name (info));
+		if (gconf_client_get_bool (engine->priv->client, key_name, NULL) != FALSE)
+			peas_plugin_info_set_visible (info, FALSE);
 		g_free (key_name);
 	}
+	g_ptr_array_add (activate, NULL);
 
-	info->active = ret;
-
-	if (ret != FALSE)
-		return TRUE;
-
-	if (error != NULL) {
-		msg = g_strdup_printf (_("Unable to activate plugin %s.\n%s"), info->name, error->message);
-		g_error_free (error);
-	} else {
-		msg = g_strdup_printf (_("Unable to activate plugin %s"), info->name);
-	}
-	totem_interface_error (_("Plugin Error"), msg, NULL);
-	g_free (msg);
-
-	return FALSE;
+	peas_engine_set_active_plugins (PEAS_ENGINE (engine), (const char **) activate->pdata);
+	g_ptr_array_free (activate, TRUE);
 }
 
 static void
-totem_plugins_engine_deactivate_plugin_real (TotemPluginInfo *info, TotemObject *totem)
+totem_plugins_engine_monitor (TotemPluginsEngine *engine)
 {
-	totem_plugin_deactivate (info->plugin, totem_plugins_object);
-}
-
-gboolean
-totem_plugins_engine_deactivate_plugin (TotemPluginInfo *info)
-{
-	char *key_name;
-
-	g_return_val_if_fail (info != NULL, FALSE);
-
-	if (!info->active)
-		return TRUE;
-
-	totem_plugins_engine_deactivate_plugin_real (info, totem_plugins_object);
-
-	/* Update plugin state */
-	info->active = FALSE;
-
-	key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE, info->location);
-	gconf_client_set_bool (client, key_name, FALSE, NULL);
-	g_free (key_name);
-
-	return TRUE;
-}
-
-gboolean
-totem_plugins_engine_plugin_is_active (TotemPluginInfo *info)
-{
-	g_return_val_if_fail (info != NULL, FALSE);
-
-	return info->active;
-}
-
-gboolean
-totem_plugins_engine_plugin_is_visible (TotemPluginInfo *info)
-{
-	g_return_val_if_fail (info != NULL, FALSE);
-
-	return info->visible;
-}
-
-gboolean
-totem_plugins_engine_plugin_is_configurable (TotemPluginInfo *info)
-{
-	g_return_val_if_fail (info != NULL, FALSE);
-
-	if ((info->plugin == NULL) || !info->active)
-		return FALSE;
-
-	return totem_plugin_is_configurable (info->plugin);
-}
-
-void
-totem_plugins_engine_configure_plugin (TotemPluginInfo *info,
-				       GtkWindow       *parent)
-{
-	GtkWidget *conf_dlg;
-
-	GtkWindowGroup *wg;
-
-	g_return_if_fail (info != NULL);
-
-	conf_dlg = totem_plugin_create_configure_dialog (info->plugin);
-	g_return_if_fail (conf_dlg != NULL);
-	gtk_window_set_transient_for (GTK_WINDOW (conf_dlg),
-				      parent);
-
-	wg = gtk_window_get_group (parent);
-	if (wg == NULL)
-	{
-		wg = gtk_window_group_new ();
-		gtk_window_group_add_window (wg, parent);
-	}
-
-	gtk_window_group_add_window (wg,
-				     GTK_WINDOW (conf_dlg));
-
-	gtk_window_set_modal (GTK_WINDOW (conf_dlg), TRUE);
-	gtk_widget_show (conf_dlg);
+	engine->priv->notification_id = gconf_client_notify_add (engine->priv->client,
+								GCONF_PREFIX_PLUGINS,
+								(GConfClientNotifyFunc)totem_plugins_engine_gconf_cb,
+								engine,
+								NULL,
+								NULL);
 }
 
 static void
-totem_plugins_engine_plugin_active_cb (GConfClient *gconf_client,
-				       guint cnxn_id,
-				       GConfEntry *entry,
-				       TotemPluginInfo *info)
+on_activatable_extension_added (PeasExtensionSet *set,
+				PeasPluginInfo   *info,
+				PeasExtension    *exten,
+				TotemPluginsEngine *engine)
 {
-	if (gconf_value_get_bool (entry->value)) {
-		totem_plugins_engine_activate_plugin (info);
-	} else {
-		totem_plugins_engine_deactivate_plugin (info);
-	}
+	g_message ("on_activatable_extension_added");
+	peas_extension_call (exten, "activate", engine->priv->totem);
 }
 
 static void
-totem_plugins_engine_plugin_visible_cb (GConfClient *gconf_client,
-					guint cnxn_id,
-					GConfEntry *entry,
-					TotemPluginInfo *info)
+on_activatable_extension_removed (PeasExtensionSet *set,
+				  PeasPluginInfo   *info,
+				  PeasExtension    *exten,
+				  TotemPluginsEngine *engine)
 {
-	info->visible = !gconf_value_get_bool (entry->value);
+	g_message ("on_activatable_extension_removed");
+	peas_extension_call (exten, "deactivate", engine->priv->totem);
 }
 
-const gchar *
-totem_plugins_engine_get_plugin_name (TotemPluginInfo *info)
+TotemPluginsEngine *
+totem_plugins_engine_get_default (TotemObject *totem)
 {
-	g_return_val_if_fail (info != NULL, NULL);
+	static TotemPluginsEngine *engine = NULL;
+	char **paths;
+	GPtrArray *array;
+	guint i;
 
-	return info->name;
+	if (G_LIKELY (engine != NULL))
+		return engine;
+
+	g_return_val_if_fail (totem != NULL, NULL);
+
+	g_irepository_require (g_irepository_get_default (), "Peas", "1.0", 0, NULL);
+
+	paths = totem_get_plugin_paths ();
+
+	/* Totem uses the libdir even for noarch data */
+	array = g_ptr_array_new ();
+	for (i = 0; paths[i] != NULL; i++) {
+		g_ptr_array_add (array, paths[i]);
+		g_ptr_array_add (array, paths[i]);
+	}
+	g_ptr_array_add (array, NULL);
+
+	engine = TOTEM_PLUGINS_ENGINE (g_object_new (TOTEM_TYPE_PLUGINS_ENGINE,
+						     "app-name", "Totem",
+						     "search-paths", array->pdata,
+						     "base-module-dir", TOTEM_PLUGIN_DIR,
+						     NULL));
+	g_strfreev (paths);
+	g_ptr_array_free (array, TRUE);
+
+	g_object_add_weak_pointer (G_OBJECT (engine),
+				   (gpointer) &engine);
+
+	engine->priv->totem = g_object_ref (totem);
+
+	engine->priv->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
+								       PEAS_TYPE_ACTIVATABLE);
+	totem_plugins_engine_load_all (engine);
+	totem_plugins_engine_monitor (engine);
+
+	peas_extension_set_call (engine->priv->activatable_extensions, "activate", engine->priv->totem);
+
+	g_signal_connect (engine->priv->activatable_extensions, "extension-added",
+			  G_CALLBACK (on_activatable_extension_added), engine);
+	g_signal_connect (engine->priv->activatable_extensions, "extension-removed",
+			  G_CALLBACK (on_activatable_extension_removed), engine);
+
+	return engine;
 }
 
-const gchar *
-totem_plugins_engine_get_plugin_description (TotemPluginInfo *info)
+static void
+totem_plugins_engine_init (TotemPluginsEngine *engine)
 {
-	g_return_val_if_fail (info != NULL, NULL);
+	engine->priv = G_TYPE_INSTANCE_GET_PRIVATE (engine,
+						    TOTEM_TYPE_PLUGINS_ENGINE,
+						    TotemPluginsEnginePrivate);
+	engine->priv->client = gconf_client_get_default ();
+	gconf_client_add_dir (engine->priv->client, GCONF_PREFIX_PLUGINS, GCONF_CLIENT_PRELOAD_RECURSIVE, NULL);
 
-	return info->desc;
+	/* Commented out because it's a no-op. A further section is commented out below, and more's commented out
+	 * in totem-python-module.c. */
+	engine->priv->garbage_collect_id = g_timeout_add_seconds_full (G_PRIORITY_LOW, 20, garbage_collect_cb, engine, NULL);
 }
 
-const gchar **
-totem_plugins_engine_get_plugin_authors (TotemPluginInfo *info)
+static void
+totem_plugins_engine_finalize (GObject *object)
 {
-	g_return_val_if_fail (info != NULL, (const gchar **)NULL);
+	TotemPluginsEngine *engine = TOTEM_PLUGINS_ENGINE (object);
 
-	return (const gchar **)info->authors;
-}
+	if (engine->priv->totem) {
+		peas_extension_set_call (engine->priv->activatable_extensions,
+					 "deactivate", engine->priv->totem);
 
-const gchar *
-totem_plugins_engine_get_plugin_website (TotemPluginInfo *info)
-{
-	g_return_val_if_fail (info != NULL, NULL);
-
-	return info->website;
-}
-
-const gchar *
-totem_plugins_engine_get_plugin_copyright (TotemPluginInfo *info)
-{
-	g_return_val_if_fail (info != NULL, NULL);
-
-	return info->copyright;
-}
-
-GdkPixbuf *
-totem_plugins_engine_get_plugin_icon (TotemPluginInfo *info)
-{
-	if (info->icon_name == NULL)
-		return NULL;
-
-	if (info->icon_pixbuf == NULL) {
-		char *filename = NULL;
-		char *dirname;
-
-		dirname = g_path_get_dirname (info->file);
-		filename = g_build_filename (dirname, info->icon_name, NULL);
-		g_free (dirname);
-
-		info->icon_pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-		g_free (filename);
+		g_object_unref (engine->priv->totem);
+		engine->priv->totem = NULL;
 	}
 
-	return info->icon_pixbuf;
+	if (engine->priv->garbage_collect_id > 0)
+		g_source_remove (engine->priv->garbage_collect_id);
+	engine->priv->garbage_collect_id = 0;
+	peas_engine_garbage_collect (PEAS_ENGINE (engine));
+
+	if (engine->priv->notification_id > 0)
+		gconf_client_notify_remove (engine->priv->client,
+					    engine->priv->notification_id);
+	engine->priv->notification_id = 0;
+
+	if (engine->priv->client != NULL)
+		g_object_unref (engine->priv->client);
+	engine->priv->client = NULL;
+
+	G_OBJECT_CLASS (totem_plugins_engine_parent_class)->finalize (object);
 }
+
+static void
+totem_plugins_engine_gconf_cb (GConfClient *gconf_client,
+			       guint cnxn_id,
+			       GConfEntry *entry,
+			       TotemPluginsEngine *engine)
+{
+	char *plugin_name;
+	char *action_name;
+	PeasPluginInfo *info;
+
+	plugin_name = g_path_get_dirname (gconf_entry_get_key (entry));
+	info = peas_engine_get_plugin_info (PEAS_ENGINE (engine), plugin_name);
+	g_free (plugin_name);
+
+	if (info == NULL)
+		return;
+
+	action_name = g_path_get_basename (gconf_entry_get_key (entry));
+       //FIXME do some checks here
+
+	if (g_str_equal (action_name, "active") != FALSE) {
+		if (gconf_value_get_bool (entry->value)) {
+			peas_engine_activate_plugin (PEAS_ENGINE (engine), info);
+		} else {
+			peas_engine_deactivate_plugin (PEAS_ENGINE (engine), info);
+		}
+	} else if (g_str_equal (action_name, "hidden") != FALSE) {
+		peas_plugin_info_set_visible (info, !gconf_value_get_bool (entry->value));
+	}
+
+	g_free (action_name);
+}
+

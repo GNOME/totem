@@ -37,20 +37,11 @@ import gtk.Window as PyGtkWindow_Type
 import gtk.gdk.Pixbuf as PyGdkPixbuf_Type
 import gtk.ComboBox as PyGtkComboBox_Type
 import gtk.CellRenderer as PyGtkCellRenderer_Type
+import libpeas.Plugin as PyPeasPlugin_Type
 %%
 ignore-glob
   *_get_type
   *_quark
-%%
-override totem_object_plugins_shutdown noargs
-static PyObject *
-_wrap_totem_object_plugins_shutdown (PyGObject *self)
-{
-	totem_object_plugins_shutdown ();
-
-	Py_INCREF (Py_None);
-	return Py_None;
-}
 %%
 override totem_action_error kwargs
 static PyObject *
@@ -79,7 +70,7 @@ _wrap_totem_interface_error_with_link (PyGObject *self, PyObject *args, PyObject
 	if (!PyArg_ParseTupleAndKeywords (args, kwargs, "ssssO!:TotemObject.interface_error_with_link", kwlist, &title, &reason, &uri, &label, &PyGtkWindow_Type, &parent))
 		return NULL;
     
-	totem_interface_error_with_link (title, reason, uri, label, GTK_WINDOW(parent->obj), TOTEM_OBJECT(self->obj));
+	totem_interface_error_with_link (title, reason, uri, label, GTK_WINDOW(parent->obj));
     
 	Py_INCREF (Py_None);
 	return Py_None;
@@ -89,26 +80,26 @@ override totem_plugin_load_interface kwargs
 static PyObject *
 _wrap_totem_plugin_load_interface (PyGObject *self, PyObject *args, PyObject *kwargs)
 {
-	static char *kwlist[] = { "name", "fatal", "parent", "user_data", NULL };
-	char *name;
-	gboolean fatal;
-	GtkWindow *parent;
-	gpointer user_data;
-	GtkBuilder *builder;
-	PyObject *py_parent;
+       static char *kwlist[] = { "name", "fatal", "parent", "user_data", NULL };
+       char *name;
+       gboolean fatal;
+       GtkWindow *parent;
+       gpointer user_data;
+       GtkBuilder *builder;
+       PyObject *py_parent;
 
-	if (!PyArg_ParseTupleAndKeywords (args, kwargs,"sbOO:TotemPlugin.load_interface", kwlist, &name, &fatal, &py_parent, &user_data))
-		return NULL;
-	if (pygobject_check (py_parent, &PyGtkWindow_Type)) {
-		parent = GTK_WINDOW (pygobject_get (py_parent));
-	} else {
-		PyErr_SetString (PyExc_TypeError, "parent should be a GtkWindow");
-		return NULL;
-	}
+       if (!PyArg_ParseTupleAndKeywords (args, kwargs,"sbOO:TotemPlugin.load_interface", kwlist, &name, &fatal, &py_parent, &user_data))
+               return NULL;
+       if (pygobject_check (py_parent, &PyGtkWindow_Type)) {
+               parent = GTK_WINDOW (pygobject_get (py_parent));
+       } else {
+               PyErr_SetString (PyExc_TypeError, "parent should be a GtkWindow");
+               return NULL;
+       }
     
-	builder = totem_plugin_load_interface (TOTEM_PLUGIN (self->obj), name, fatal, parent, user_data);
+       builder = totem_plugin_load_interface (TOTEM_PLUGIN (self->obj), name, fatal, parent, user_data);
     
-	return pygobject_new ((GObject *)builder);
+       return pygobject_new ((GObject *)builder);
 }
 %%
 override totem_get_version noargs

@@ -48,8 +48,7 @@ void		 totem_interface_error_with_link (const char *title,
 						  const char *reason,
 						  const char *uri,
 						  const char *label,
-						  GtkWindow *parent,
-						  Totem *totem);
+						  GtkWindow *parent);
 void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
 char *		 totem_interface_get_license	(void);

@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
  * Plugin engine for Totem, heavily based on the code from Rhythmbox,
- * which is based heavily on the code from gedit.
+ * which is based heavily on the code from totem.
  *
  * Copyright (C) 2002-2005 Paolo Maggi
  *               2006 James Livingston  <jrl@ids.org.au>
@@ -31,35 +31,37 @@
 #define __TOTEM_PLUGINS_ENGINE_H__
 
 #include <glib.h>
+#include <libpeas/peas-engine.h>
 #include <totem.h>
 
-typedef struct _TotemPluginInfo TotemPluginInfo;
+G_BEGIN_DECLS
 
-gboolean	 totem_plugins_engine_init 		(TotemObject *totem);
-void		 totem_plugins_engine_shutdown 		(void);
+#define TOTEM_TYPE_PLUGINS_ENGINE              (totem_plugins_engine_get_type ())
+#define TOTEM_PLUGINS_ENGINE(obj)              (G_TYPE_CHECK_INSTANCE_CAST((obj), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngine))
+#define TOTEM_PLUGINS_ENGINE_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST((klass), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngineClass))
+#define TOTEM_IS_PLUGINS_ENGINE(obj)           (G_TYPE_CHECK_INSTANCE_TYPE((obj), TOTEM_TYPE_PLUGINS_ENGINE))
+#define TOTEM_IS_PLUGINS_ENGINE_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_PLUGINS_ENGINE))
+#define TOTEM_PLUGINS_ENGINE_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS((obj), TOTEM_TYPE_PLUGINS_ENGINE, TotemPluginsEngineClass))
 
-void		 totem_plugins_engine_garbage_collect	(void);
+typedef struct _TotemPluginsEngine		TotemPluginsEngine;
+typedef struct _TotemPluginsEnginePrivate	TotemPluginsEnginePrivate;
+typedef struct _TotemPluginsEngineClass		TotemPluginsEngineClass;
 
-GList*		totem_plugins_engine_get_plugins_list 	(void);
+struct _TotemPluginsEngine
+{
+	PeasEngine parent;
+	TotemPluginsEnginePrivate *priv;
+};
 
-gboolean 	 totem_plugins_engine_activate_plugin 	(TotemPluginInfo *info);
-gboolean 	 totem_plugins_engine_deactivate_plugin	(TotemPluginInfo *info);
-gboolean 	 totem_plugins_engine_plugin_is_active 	(TotemPluginInfo *info);
-gboolean 	 totem_plugins_engine_plugin_is_visible (TotemPluginInfo *info);
+struct _TotemPluginsEngineClass
+{
+	PeasEngineClass parent_class;
+};
 
-gboolean	 totem_plugins_engine_plugin_is_configurable
-							(TotemPluginInfo *info);
-void	 	 totem_plugins_engine_configure_plugin	(TotemPluginInfo *info,
-							 GtkWindow *parent);
+GType			totem_plugins_engine_get_type			(void) G_GNUC_CONST;
+TotemPluginsEngine	*totem_plugins_engine_get_default		(TotemObject *totem);
 
-const gchar*	totem_plugins_engine_get_plugin_name	(TotemPluginInfo *info);
-const gchar*	totem_plugins_engine_get_plugin_description
-							(TotemPluginInfo *info);
-
-const gchar**	totem_plugins_engine_get_plugin_authors	(TotemPluginInfo *info);
-const gchar*	totem_plugins_engine_get_plugin_website	(TotemPluginInfo *info);
-const gchar*	totem_plugins_engine_get_plugin_copyright
-							(TotemPluginInfo *info);
-GdkPixbuf *	totem_plugins_engine_get_plugin_icon	(TotemPluginInfo *info);
+G_END_DECLS
 
 #endif  /* __TOTEM_PLUGINS_ENGINE_H__ */
+

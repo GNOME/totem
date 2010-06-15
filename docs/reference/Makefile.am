@@ -138,7 +138,8 @@ GTKDOC_CFLAGS = \
 	-I$(top_srcdir)/src		\
 	-I$(top_srcdir)/src/backend	\
 	-I$(top_srcdir)/src/plugins	\
-	$(DEPENDENCY_CFLAGS)
+	$(DEPENDENCY_CFLAGS)		\
+	$(PEAS_CFLAGS)
 GTKDOC_LIBS = \
 	$(top_builddir)/src/libtotem_main.la	\
 	$(DEPENDENCY_LIBS)

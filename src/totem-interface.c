@@ -47,7 +47,6 @@
 #include <gconf/gconf-client.h>
 
 #include "totem-interface.h"
-#include "totem-private.h"
 
 static GtkWidget *
 totem_interface_error_dialog (const char *title, const char *reason,
@@ -129,14 +128,13 @@ totem_interface_error_blocking (const char *title, const char *reason,
  * @uri: the URI to open
  * @label: a label for the URI's button, or %NULL to use @uri as the label
  * @parent: the error dialogue's parent #GtkWindow
- * @totem: a #TotemObject
  *
  * Display a modal error dialogue like totem_interface_error(),
  * but add a button which will open @uri in a browser window.
  **/
 void
 totem_interface_error_with_link (const char *title, const char *reason,
-				 const char *uri, const char *label, GtkWindow *parent, Totem *totem)
+				 const char *uri, const char *label, GtkWindow *parent)
 {
 	GtkWidget *error_dialog, *link_button, *hbox;
 

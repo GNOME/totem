@@ -89,7 +89,7 @@ typedef struct {
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType totem_youtube_plugin_get_type		(void) G_GNUC_CONST;
 
-static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
+static void impl_activate			(TotemPlugin *plugin, TotemObject *totem);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
 /* GtkBuilder callbacks */
@@ -108,10 +108,10 @@ TOTEM_PLUGIN_REGISTER (TotemYouTubePlugin, totem_youtube_plugin)
 static void
 totem_youtube_plugin_class_init (TotemYouTubePluginClass *klass)
 {
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
+	PeasPluginClass *plugin_class = PEAS_PLUGIN_CLASS (klass);
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+	plugin_class->activate = (PeasFunc) impl_activate;
+	plugin_class->deactivate = (PeasFunc) impl_deactivate;
 }
 
 static void
@@ -332,8 +332,8 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	self->cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "yt_cancel_button"));
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
+static void
+impl_activate (TotemPlugin *plugin, TotemObject *totem)
 {
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
 	GtkWindow *main_window;
@@ -363,8 +363,6 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 	/* Add the sidebar page */
 	totem_add_sidebar_page (totem, "youtube", _("YouTube"), self->vbox);
 	g_object_unref (builder);
-
-	return TRUE;
 }
 
 static void

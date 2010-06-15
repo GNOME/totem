@@ -102,7 +102,7 @@ namespace Totem {
 	}
 
 	[CCode (cheader_filename = "totem-plugin.h")]
-	public abstract class Plugin : GLib.Object {
+	public abstract class Plugin :Peas.Plugin {
 		[CCode (has_construct_function = false)]
 		protected Plugin ();
 

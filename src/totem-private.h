@@ -37,6 +37,7 @@
 #include "bacon-video-widget.h"
 #include "totem-open-location.h"
 #include "totem-fullscreen.h"
+#include "totem-plugins-engine.h"
 
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
 #define totem_signal_unblock_by_data(obj, data) (g_signal_handlers_unblock_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
@@ -95,6 +96,7 @@ struct _TotemObject {
 
 	/* Plugins */
 	GtkWidget *plugins;
+	TotemPluginsEngine *engine;
 
 	/* Sidebar */
 	GtkWidget *sidebar;

@@ -258,6 +258,13 @@ fi
 AM_CONDITIONAL(HAVE_XVIDMODE, [test x$have_xvidmode = xyes])
 
 dnl ================================================================
+dnl Plugins support
+dnl ================================================================
+
+PKG_CHECK_MODULES(PEAS, libpeas-1.0)
+PKG_CHECK_MODULES(PEASUI, libpeasui-1.0)
+
+dnl ================================================================
 dnl Python plugins
 dnl ================================================================
 
@@ -346,10 +353,6 @@ if test "x$have_python" != "xno"; then
 	AC_SUBST([PYGTK_CODEGEN])
 	AC_SUBST([PYGTK_H2DEF])
 
-dnl	uncomment when http://bugzilla.gnome.org/show_bug.cgi?id=351072 fixed
-dnl	PKG_CHECK_EXISTS([pygobject-2.0 >= X.XX.X],
-dnl			 AC_DEFINE([PYGOBJECT_CAN_MARSHAL_GVALUE]))
-
 	dnl Check for -fno-strict-aliasing
 	FLAGS="-fno-strict-aliasing"
 	save_CFLAGS="$CFLAGS"
@@ -377,8 +380,8 @@ dnl ================================================================
 AC_MSG_CHECKING([whether Vala plugin support is requested])
 AC_ARG_ENABLE([vala],
 	AS_HELP_STRING([--enable-vala],[Enable Vala plugin support]),
-	[enable_vala=$enableval have_vala=$enableval],
-	[enable_vala=autodetect have_vala=yes])
+	[enable_vala=$enableval],
+	[enable_vala=no])
 AC_MSG_RESULT([$enable_vala])
 if test "x$enable_vala" != "xno"; then
 	AM_PROG_VALAC([$VALA_REQS])
@@ -502,7 +505,8 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		publish)
-			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 >= 0.3.0, [HAVE_LIBEPC=yes], [HAVE_LIBEPC=no])
+			# FIXME
+			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 >= 0.3.0, [HAVE_LIBEPC=no], [HAVE_LIBEPC=no])
 			if test "${HAVE_LIBEPC}" != "yes" ; then
 				plugin_error_or_ignore "you need the easy-publish-and-consume library installed for the publish plugin"
 				add_plugin="0"
@@ -821,7 +825,6 @@ src/plugins/skipto/Makefile
 src/plugins/sample-python/Makefile
 src/plugins/sample-vala/Makefile
 src/plugins/thumbnail/Makefile
-src/plugins/totem/Makefile
 src/plugins/tracker/Makefile
 src/plugins/youtube/Makefile
 src/plugins/pythonconsole/Makefile

@@ -333,7 +333,8 @@ totem_object_get_property (GObject *object,
 void
 totem_object_plugins_init (TotemObject *totem)
 {
-	totem_plugins_engine_init (totem);
+	if (totem->engine == NULL)
+		totem->engine = totem_plugins_engine_get_default (totem);
 }
 
 /**
@@ -343,9 +344,12 @@ totem_object_plugins_init (TotemObject *totem)
  * plugins.
  **/
 void
-totem_object_plugins_shutdown (void)
+totem_object_plugins_shutdown (TotemObject *totem)
 {
-	totem_plugins_engine_shutdown ();
+	if (totem->engine != NULL) {
+		g_object_unref (totem->engine);
+		totem->engine = NULL;
+	}
 }
 
 /**
@@ -962,7 +966,7 @@ totem_action_exit (Totem *totem)
 	/* Save the page ID before we close the plugins, otherwise
 	 * we'll never save it properly */
 	page_id = totem_sidebar_get_current_page (totem);
-	totem_object_plugins_shutdown ();
+	totem_object_plugins_shutdown (totem);
 
 	if (display != NULL)
 		gdk_display_sync (display);
@@ -1251,7 +1255,7 @@ totem_action_load_media (Totem *totem, TotemDiscMediaType type, const char *devi
 			g_assert_not_reached ();
 		}
 
-		totem_interface_error_with_link (msg, secondary, link, link_text, GTK_WINDOW (totem->win), totem);
+		totem_interface_error_with_link (msg, secondary, link, link_text, GTK_WINDOW (totem->win));
 		g_free (msg);
 		return FALSE;
 	}

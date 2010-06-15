@@ -1,33 +1,41 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = totem-python.la
+plugindir = $(PLUGINDIR)/python/totem
+plugin_PYTHON = __init__.py
 
-nodist_totem_python_la_SOURCES = totem.c
+pymoduledir = $(libdir)/totem/plugins/python/totem
+pymodule_LTLIBRARIES = _totem.la
 
-totem_python_la_SOURCES = override_common.c override_common.h
+nodist__totem_la_SOURCES = totem.c
 
-totem_python_la_LDFLAGS = \
-	-module -avoid-version
+_totem_la_SOURCES = override_common.c override_common.h totemmodule.c
 
-totem_python_la_LIBADD = \
+_totem_la_LDFLAGS = \
+	-module -avoid-version \
+	-export-symbol-regex init_totem
+
+_totem_la_LIBADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(PYTHON_LIBS)		\
 	$(PYTHON_EXTRA_LIBS)	\
 	$(PYGTK_LIBS)
 
-totem_python_la_CFLAGS = \
+_totem_la_CFLAGS = \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/src		\
 	-I$(top_srcdir)/src/plugins	\
 	$(DEPENDENCY_CFLAGS)		\
+	$(PEAS_CFLAGS)			\
 	$(PYGTK_CFLAGS)			\
 	$(PYTHON_CFLAGS)		\
 	$(AM_CFLAGS)			\
-	$(WNOERROR_CFLAGS)
+	$(WNOERROR_CFLAGS)		\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"
 
 totem.c: totem.defs totem.override
 	( cd $(srcdir) && $(PYGTK_CODEGEN) \
 		--register $(PYGTK_DEFSDIR)/gtk-types.defs \
+		--register $(PYGTK_DEFSDIR)/libpeas.defs \
 		--override $*.override \
 		--prefix py$* $(<F) ) > $@ 
 

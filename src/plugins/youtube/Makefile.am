@@ -31,6 +31,7 @@ libyoutube_la_CPPFLAGS = $(common_defines)
 
 libyoutube_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(LIBGDATA_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\

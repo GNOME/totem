@@ -3,9 +3,19 @@
 
 (define-object Plugin
   (in-module "Totem")
-  (parent "GObject")
+  (parent "PeasPlugin")
   (c-name "TotemPlugin")
   (gtype-id "TOTEM_TYPE_PLUGIN")
+)
+
+(define-virtual is_configurable
+  (of-object "TotemPlugin")
+  (return-type "gboolean")
+)
+
+(define-virtual create_configure_dialog
+  (of-object "TotemPlugin")
+  (return-type "GtkWidget*")
 )
 
 (define-object Object
@@ -42,15 +52,6 @@
     '("vcd" "MEDIA_TYPE_VCD")
     '("dvd" "MEDIA_TYPE_DVD")
     '("num-types" "MEDIA_TYPE_NUM_TYPES")
-  )
-)
-
-(define-enum PluginError
-  (in-module "Totem")
-  (c-name "TotemPluginError")
-  (gtype-id "TOTEM_TYPE_PLUGIN_ERROR")
-  (values
-    '("n" "TOTEM_PLUGIN_ERROR_ACTIVATION")
   )
 )
 
@@ -105,49 +106,9 @@
 
 ;; From totem-plugin.h
 
-(define-function totem_plugin_error_quark
-  (c-name "totem_plugin_error_quark")
-  (return-type "GQuark")
-)
-
-(define-method activate
-  (of-object "TotemPlugin")
-  (c-name "totem_plugin_activate")
-  (return-type "gboolean")
-  (parameters
-    '("TotemObject*" "totem")
-    '("GError**" "error")
-  )
-)
-
-(define-method deactivate
-  (of-object "TotemPlugin")
-  (c-name "totem_plugin_deactivate")
-  (return-type "none")
-  (parameters
-    '("TotemObject*" "totem")
-  )
-)
-
-(define-method is_configurable
-  (of-object "TotemPlugin")
-  (c-name "totem_plugin_is_configurable")
-  (return-type "gboolean")
-)
-
-(define-method create_configure_dialog
-  (of-object "TotemPlugin")
-  (c-name "totem_plugin_create_configure_dialog")
-  (return-type "GtkWidget*")
-)
-
-(define-method find_file
-  (of-object "TotemPlugin")
-  (c-name "totem_plugin_find_file")
-  (return-type "char*")
-  (parameters
-    '("const-char*" "file")
-  )
+(define-function totem_plugin_get_type
+  (c-name "totem_plugin_get_type")
+  (return-type "GType")
 )
 
 (define-method load_interface
@@ -161,7 +122,6 @@
     '("gpointer" "user_data")
   )
 )
-
 
 ;; From totem.h
 
@@ -553,7 +513,7 @@
     '("const-char*" "reason")
     '("const-char*" "uri")
     '("const-char*" "label")
-    '("GtkWindow" "parent")
+    '("GtkWindow*" "parent")
   )
 )
 

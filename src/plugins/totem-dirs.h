@@ -1,9 +1,9 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Heavily based on code from Rhythmbox and Gedit.
+ * heavily based on code from Rhythmbox and Gedit
  *
- * Copyright (C) 2005 Raphael Slinckx
- * Copyright (C) 2007 Philip Withnall
+ * Copyright (C) 2002-2005 Paolo Maggi
+ * Copyright (C) 2007 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,33 +20,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor,
  * Boston, MA 02110-1301  USA.
  *
- * Saturday 19th May 2007: Philip Withnall: Add exception clause.
+ * Sunday 13th May 2007: Bastien Nocera: Add exception clause.
  * See license_change file for details.
+ *
  */
 
-#ifndef TOTEM_PYTHON_OBJECT_H
-#define TOTEM_PYTHON_OBJECT_H
+#include <glib.h>
+#include <gtk/gtk.h>
 
-#include <Python.h>
-#include <glib-object.h>
-#include "totem-plugin.h"
+char ** totem_get_plugin_paths (void);
+char * totem_plugin_find_file (const char *plugin_name,
+			       const char *file);
+GtkBuilder * totem_plugin_load_interface (const char *plugin_name,
+					  const char *name,
+					  gboolean fatal,
+					  GtkWindow *parent,
+					  gpointer user_data);
 
-G_BEGIN_DECLS
-
-typedef struct
-{
-	TotemPlugin parent_slot;
-	PyObject *instance;
-} TotemPythonObject;
-
-typedef struct
-{
-	TotemPluginClass parent_slot;
-	PyObject *type;
-} TotemPythonObjectClass;
-
-GType totem_python_object_get_type (GTypeModule *module, PyObject *type);
-
-G_END_DECLS
-
-#endif

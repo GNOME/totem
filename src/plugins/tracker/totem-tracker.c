@@ -60,7 +60,7 @@ typedef struct
 G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_tracker_plugin_get_type			(void) G_GNUC_CONST;
 
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
+static void impl_activate				(TotemPlugin *plugin, TotemObject *totem);
 static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
 TOTEM_PLUGIN_REGISTER (TotemTrackerPlugin, totem_tracker_plugin)
@@ -68,10 +68,10 @@ TOTEM_PLUGIN_REGISTER (TotemTrackerPlugin, totem_tracker_plugin)
 static void
 totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
 {
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
+	PeasPluginClass *plugin_class = PEAS_PLUGIN_CLASS (klass);
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+	plugin_class->activate = (PeasFunc) impl_activate;
+	plugin_class->deactivate = (PeasFunc) impl_deactivate;
 }
 
 static void
@@ -79,18 +79,15 @@ totem_tracker_plugin_init (TotemTrackerPlugin *plugin)
 {
 }
 
-static gboolean
+static void
 impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+	       TotemObject *totem)
 {
 	GtkWidget *widget;
 
 	widget = totem_tracker_widget_new (totem);
 	gtk_widget_show (widget);
 	totem_add_sidebar_page (totem, "tracker", _("Local Search"), widget);
-
-	return TRUE;
 }
 
 static void
