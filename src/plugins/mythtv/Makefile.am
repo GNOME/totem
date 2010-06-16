@@ -37,6 +37,7 @@ libtotem_mythtv_la_LIBADD = $(GMYTH_LIBS)
 
 libtotem_mythtv_la_CFLAGS =	\
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(GMYTH_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\

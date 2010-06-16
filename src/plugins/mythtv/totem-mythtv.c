@@ -71,7 +71,7 @@ enum {
 
 typedef struct
 {
-	TotemPlugin parent;
+	PeasExtensionBase parent;
 
 	GList *lst_b_info;
 	GMythUPnP *upnp;
@@ -85,19 +85,16 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemMythtvPluginClass;
 
 
-G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType	totem_mythtv_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_mythtv_plugin_init		(TotemMythtvPlugin *plugin);
 static void totem_mythtv_plugin_finalize	(GObject *object);
-static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
-TOTEM_PLUGIN_REGISTER(TotemMythtvPlugin, totem_mythtv_plugin)
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin, totem_mythtv_plugin)
 
 #define MAX_THUMB_SIZE 500 * 1024 * 1024
 #define THUMB_HEIGHT 32
@@ -344,12 +341,8 @@ static void
 totem_mythtv_plugin_class_init (TotemMythtvPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	object_class->finalize = totem_mythtv_plugin_finalize;
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
@@ -511,12 +504,12 @@ add_sidebar (TotemMythtvPlugin *tm, const char *name, const char *label)
 	return g_object_ref (box);
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 
 	tm->totem = g_object_ref (totem);
 
@@ -532,17 +525,16 @@ impl_activate (TotemPlugin *plugin,
 	totem_mythtv_list_livetv (TOTEM_MYTHTV_PLUGIN(plugin));
 	gdk_window_set_cursor (box->window, NULL);
 #endif
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
 
-	totem_remove_sidebar_page (totem, MYTHTV_SIDEBAR_RECORDINGS);
-	totem_remove_sidebar_page (totem, MYTHTV_SIDEBAR_LIVETV);
+	totem_remove_sidebar_page (tm->totem, MYTHTV_SIDEBAR_RECORDINGS);
+	totem_remove_sidebar_page (tm->totem, MYTHTV_SIDEBAR_LIVETV);
 
 	if (tm->lst_b_info != NULL) {
 		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
@@ -565,6 +557,6 @@ impl_deactivate	(TotemPlugin *plugin,
 		gtk_widget_destroy (tm->sidebar_livetv);
 		tm->sidebar_livetv = NULL;
 	}
-	g_object_unref (totem);
+	g_object_unref (tm->totem);
 }
 
