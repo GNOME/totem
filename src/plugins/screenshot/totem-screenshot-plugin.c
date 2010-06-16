@@ -38,6 +38,7 @@
 #include <X11/XF86keysym.h>
 #endif
 
+#include "totem-plugin.h"
 #include "totem-screenshot-plugin.h"
 #include "totem-screenshot.h"
 #include "totem-gallery.h"
@@ -59,16 +60,9 @@ struct TotemScreenshotPluginPrivate {
 	GtkActionGroup *action_group;
 };
 
-static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
-static void impl_activate				(PeasActivatable *plugin, GObject *totem);
-static void impl_deactivate				(PeasActivatable *plugin, GObject *totem);
-
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemScreenshotPlugin,
-				totem_screenshot_plugin,
-				PEAS_TYPE_EXTENSION_BASE,
-				0,
-				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
-							       peas_activatable_iface_init))
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSHOT_PLUGIN,
+		      TotemScreenshotPlugin,
+		      totem_screenshot_plugin)
 
 static void
 totem_screenshot_plugin_class_init (TotemScreenshotPluginClass *klass)
@@ -77,23 +71,11 @@ totem_screenshot_plugin_class_init (TotemScreenshotPluginClass *klass)
 }
 
 static void
-peas_activatable_iface_init (PeasActivatableInterface *iface)
-{
-	iface->activate = impl_activate;
-	iface->deactivate = impl_deactivate;
-}
-
-static void
 totem_screenshot_plugin_init (TotemScreenshotPlugin *plugin)
 {
 	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
 						    TOTEM_TYPE_SCREENSHOT_PLUGIN,
 						    TotemScreenshotPluginPrivate);
-}
-
-static void
-totem_screenshot_plugin_class_finalize (TotemScreenshotPluginClass *klass)
-{
 }
 
 static void
@@ -387,15 +369,5 @@ totem_screenshot_plugin_update_file_chooser (const char *uri)
 				 "/apps/totem/screenshot_save_path",
 				 dir, NULL);
 	g_free (dir);
-}
-
-G_MODULE_EXPORT void
-peas_register_types (PeasObjectModule *module)
-{
-	totem_screenshot_plugin_register_type (G_TYPE_MODULE (module));
-
-	peas_object_module_register_extension_type (module,
-						    PEAS_TYPE_ACTIVATABLE,
-						    TOTEM_TYPE_SCREENSHOT_PLUGIN);
 }
 

@@ -55,7 +55,6 @@ typedef struct {
 } TotemScreenshotPluginClass;
 
 GType totem_screenshot_plugin_get_type (void) G_GNUC_CONST;
-G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);
 
 gchar *totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const char *movie_name) G_GNUC_WARN_UNUSED_RESULT;
 void totem_screenshot_plugin_update_file_chooser (const char *filename);
