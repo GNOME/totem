@@ -1,6 +1,5 @@
-SUBDIRS = screenshot
-#SUBDIRS = $(PLUGINS)
-#DIST_SUBDIRS = $(ALL_PLUGINS)
+SUBDIRS = $(PLUGINS)
+DIST_SUBDIRS = $(ALL_PLUGINS)
 
 noinst_LTLIBRARIES = libtotemmodule.la
 
