@@ -30,6 +30,7 @@ libmovie_properties_la_CPPFLAGS = $(common_defines)
 
 libmovie_properties_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

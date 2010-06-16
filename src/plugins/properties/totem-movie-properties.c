@@ -32,9 +32,11 @@
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <string.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 #include <bacon-video-widget-properties.h>
 
-#include "totem-plugin.h"
 #include "totem.h"
 
 #define TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN		(totem_movie_properties_plugin_get_type ())
@@ -46,7 +48,7 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	PeasExtensionBase parent;
 
 	GtkWidget    *props;
 	guint         handler_id_stream_length;
@@ -54,25 +56,40 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemMoviePropertiesPluginClass;
 
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 GType	totem_movie_properties_plugin_get_type		(void) G_GNUC_CONST;
 
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
+static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
+static void impl_activate				(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER(TotemMoviePropertiesPlugin, totem_movie_properties_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemMoviePropertiesPlugin,
+				totem_movie_properties_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
+
 
 static void
 totem_movie_properties_plugin_class_init (TotemMoviePropertiesPluginClass *klass)
 {
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
+}
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+static void
+totem_movie_properties_plugin_class_finalize (TotemMoviePropertiesPluginClass *klass)
+{
+}
+
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
 }
 
 static void
@@ -136,14 +153,15 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 	g_object_unref (bvw);
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemMoviePropertiesPlugin *pi;
+	TotemObject *totem;
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
+	totem = TOTEM_OBJECT (object);
 
 	pi->props = bacon_video_widget_properties_new ();
 	gtk_widget_show (pi->props);
@@ -169,15 +187,14 @@ impl_activate (TotemPlugin *plugin,
 							 "notify::stream-length",
 							 G_CALLBACK (stream_length_notify_cb),
 							 plugin);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemMoviePropertiesPlugin *pi;
+	TotemObject *totem = TOTEM_OBJECT (object);
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 
@@ -193,5 +210,15 @@ impl_deactivate	(TotemPlugin *plugin,
 					      plugin);
 	pi->handler_id_stream_length = 0;
 	totem_remove_sidebar_page (totem, "properties");
+}
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_movie_properties_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN);
 }
 
