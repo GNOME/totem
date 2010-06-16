@@ -40,6 +40,7 @@
 #include <unistd.h>
 #include <lirc/lirc_client.h>
 
+#include "totem-plugin.h"
 #include "totem.h"
 #include "totem-dirs.h"
 
@@ -95,51 +96,20 @@ typedef struct
 #define TOTEM_IR_SETTING_TOGGLE_REPEAT "setting_repeat"
 #define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
 
-static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
-G_MODULE_EXPORT void peas_register_types	(PeasObjectModule *module);
 GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_lirc_plugin_init		(TotemLircPlugin *plugin);
-static void totem_lirc_plugin_finalize		(GObject *object);
-static void impl_activate			(PeasActivatable *plugin, GObject *object);
-static void impl_deactivate			(PeasActivatable *plugin, GObject *object);
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemLircPlugin,
-				totem_lirc_plugin,
-				PEAS_TYPE_EXTENSION_BASE,
-				0,
-				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
-							       peas_activatable_iface_init))
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin)
 
 static void
 totem_lirc_plugin_class_init (TotemLircPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->finalize = totem_lirc_plugin_finalize;
-}
-
-static void
-totem_lirc_plugin_class_finalize (TotemLircPluginClass *klass)
-{
-}
-
-static void
-peas_activatable_iface_init (PeasActivatableInterface *iface)
-{
-	iface->activate = impl_activate;
-	iface->deactivate = impl_deactivate;
 }
 
 static void
 totem_lirc_plugin_init (TotemLircPlugin *plugin)
 {
-}
-
-static void
-totem_lirc_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_lirc_plugin_parent_class)->finalize (object);
 }
 
 static char *
@@ -352,15 +322,5 @@ impl_deactivate (PeasActivatable *plugin,
 		g_object_unref (pi->totem);
 		pi->totem = NULL;
 	}
-}
-
-G_MODULE_EXPORT void
-peas_register_types (PeasObjectModule *module)
-{
-	totem_lirc_plugin_register_type (G_TYPE_MODULE (module));
-
-	peas_object_module_register_extension_type (module,
-						    PEAS_TYPE_ACTIVATABLE,
-						    TOTEM_TYPE_LIRC_PLUGIN);
 }
 
