@@ -34,6 +34,7 @@
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
 
+#include "totem-plugin.h"
 #include "totem.h"
 #include "backend/bacon-video-widget.h"
 
@@ -64,36 +65,14 @@ typedef struct
 	PeasExtensionBaseClass parent_class;
 } TotemOntopPluginClass;
 
-G_MODULE_EXPORT void peas_register_types	(PeasObjectModule *module);
 GType totem_ontop_plugin_get_type		(void) G_GNUC_CONST;
-static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
 
-static void impl_activate			(PeasActivatable *plugin, GObject *object);
-static void impl_deactivate			(PeasActivatable *plugin, GObject *object);
-
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemOntopPlugin,
-				totem_ontop_plugin,
-				PEAS_TYPE_EXTENSION_BASE,
-				0,
-				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
-							       peas_activatable_iface_init))
-
-static void
-peas_activatable_iface_init (PeasActivatableInterface *iface)
-{
-	iface->activate = impl_activate;
-	iface->deactivate = impl_deactivate;
-}
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPlugin, totem_ontop_plugin)
 
 static void
 totem_ontop_plugin_class_init (TotemOntopPluginClass *klass)
 {
 	g_type_class_add_private (klass, sizeof (TotemOntopPluginPrivate));
-}
-
-static void
-totem_ontop_plugin_class_finalize (TotemOntopPluginClass *klass)
-{
 }
 
 static void
@@ -168,15 +147,5 @@ impl_deactivate (PeasActivatable *plugin,
 	 * no way to find the old state */
 	gtk_window_set_keep_above (pi->priv->window, FALSE);
 	g_object_unref (pi->priv->window);
-}
-
-G_MODULE_EXPORT void
-peas_register_types (PeasObjectModule *module)
-{
-	totem_ontop_plugin_register_type (G_TYPE_MODULE (module));
-
-	peas_object_module_register_extension_type (module,
-						    PEAS_TYPE_ACTIVATABLE,
-						    TOTEM_TYPE_ONTOP_PLUGIN);
 }
 
