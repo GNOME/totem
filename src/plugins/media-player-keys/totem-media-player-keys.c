@@ -37,6 +37,7 @@
 #include <libpeas/peas-activatable.h>
 #include <string.h>
 
+#include "totem-plugin.h"
 #include "totem-marshal.h"
 #include "totem.h"
 
@@ -61,51 +62,20 @@ typedef struct
 	PeasExtensionBaseClass parent_class;
 } TotemMediaPlayerKeysPluginClass;
 
-G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 GType	totem_media_player_keys_plugin_get_type		(void) G_GNUC_CONST;
 
-static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
-static void totem_media_player_keys_plugin_finalize	(GObject *object);
-static void impl_activate				(PeasActivatable *plugin, GObject *object);
-static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
-
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemMediaPlayerKeysPlugin,
-				totem_media_player_keys_plugin,
-				PEAS_TYPE_EXTENSION_BASE,
-				0,
-				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
-							       peas_activatable_iface_init))
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN,
+		      TotemMediaPlayerKeysPlugin,
+		      totem_media_player_keys_plugin);
 
 static void
 totem_media_player_keys_plugin_class_init (TotemMediaPlayerKeysPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->finalize = totem_media_player_keys_plugin_finalize;
-}
-
-static void
-totem_media_player_keys_plugin_class_finalize (TotemMediaPlayerKeysPluginClass *klass)
-{
-}
-
-
-static void
-peas_activatable_iface_init (PeasActivatableInterface *iface)
-{
-	iface->activate = impl_activate;
-	iface->deactivate = impl_deactivate;
 }
 
 static void
 totem_media_player_keys_plugin_init (TotemMediaPlayerKeysPlugin *plugin)
 {
-}
-
-static void
-totem_media_player_keys_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_media_player_keys_plugin_parent_class)->finalize (object);
 }
 
 static void
@@ -238,15 +208,5 @@ impl_deactivate	(PeasActivatable *plugin,
 
 		g_object_unref (window);
 	}
-}
-
-G_MODULE_EXPORT void
-peas_register_types (PeasObjectModule *module)
-{
-	totem_media_player_keys_plugin_register_type (G_TYPE_MODULE (module));
-
-	peas_object_module_register_extension_type (module,
-						    PEAS_TYPE_ACTIVATABLE,
-						    TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN);
 }
 
