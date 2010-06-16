@@ -34,10 +34,9 @@
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
-
-#include <gmodule.h>
 #include <string.h>
 
+#include "totem-plugin.h"
 #include "totem.h"
 #include "totem-scrsaver.h"
 #include "backend/bacon-video-widget.h"
@@ -67,28 +66,13 @@ typedef struct
 } TotemScreensaverPluginClass;
 
 
-G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 GType	totem_screensaver_plugin_get_type		(void) G_GNUC_CONST;
-static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
 
 static void totem_screensaver_plugin_finalize		(GObject *object);
-static void impl_activate				(PeasActivatable *plugin, GObject *object);
-static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemScreensaverPlugin,
-				totem_screensaver_plugin,
-				PEAS_TYPE_EXTENSION_BASE,
-				0,
-				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
-							       peas_activatable_iface_init))
-
-static void
-peas_activatable_iface_init (PeasActivatableInterface *iface)
-{
-	iface->activate = impl_activate;
-	iface->deactivate = impl_deactivate;
-}
-
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
+		      TotemScreensaverPlugin,
+		      totem_screensaver_plugin)
 
 static void
 totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
@@ -96,11 +80,6 @@ totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->finalize = totem_screensaver_plugin_finalize;
-}
-
-static void
-totem_screensaver_plugin_class_finalize (TotemScreensaverPluginClass *klass)
-{
 }
 
 static void
@@ -227,15 +206,5 @@ impl_deactivate	(PeasActivatable *plugin,
 	g_object_unref (pi->bvw);
 
 	totem_scrsaver_enable (pi->scr);
-}
-
-G_MODULE_EXPORT void
-peas_register_types (PeasObjectModule *module)
-{
-	totem_screensaver_plugin_register_type (G_TYPE_MODULE (module));
-
-	peas_object_module_register_extension_type (module,
-						    PEAS_TYPE_ACTIVATABLE,
-						    TOTEM_TYPE_SCREENSAVER_PLUGIN);
 }
 
