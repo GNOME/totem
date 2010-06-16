@@ -315,6 +315,8 @@ NP_GetMIMEDescription (void)
 	if (mime_list != NULL)
 		return mime_list;
 
+	g_type_init ();
+
 	list = g_string_new (NULL);
 
 	/* Load the configuration files for the enabled plugins */
@@ -395,6 +397,8 @@ NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 	       NPPluginFuncs *aPluginVTable)
 {
 	g_debug ("NP_Initialize");
+
+	g_type_init ();
 
 	if (aMozillaVTable == NULL || aPluginVTable == NULL)
 		return NPERR_INVALID_FUNCTABLE_ERROR;
