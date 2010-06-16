@@ -32,11 +32,12 @@
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <dbus/dbus-glib.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 #include <string.h>
 
 #include "totem-marshal.h"
-
-#include "totem-plugin.h"
 #include "totem.h"
 
 #define TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN		(totem_media_player_keys_plugin_get_type ())
@@ -48,7 +49,7 @@
 
 typedef struct
 {
-	TotemPlugin    parent;
+	PeasExtensionBase parent;
 
 	DBusGProxy    *media_player_keys_proxy;
 
@@ -57,29 +58,43 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemMediaPlayerKeysPluginClass;
 
-
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 GType	totem_media_player_keys_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_media_player_keys_plugin_finalize		(GObject *object);
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
+static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
+static void totem_media_player_keys_plugin_finalize	(GObject *object);
+static void impl_activate				(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER(TotemMediaPlayerKeysPlugin, totem_media_player_keys_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemMediaPlayerKeysPlugin,
+				totem_media_player_keys_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
 
 static void
 totem_media_player_keys_plugin_class_init (TotemMediaPlayerKeysPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	object_class->finalize = totem_media_player_keys_plugin_finalize;
+}
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+static void
+totem_media_player_keys_plugin_class_finalize (TotemMediaPlayerKeysPluginClass *klass)
+{
+}
+
+
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
 }
 
 static void
@@ -128,12 +143,12 @@ proxy_destroy (DBusGProxy *proxy,
 	plugin->media_player_keys_proxy = NULL;
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	DBusGConnection *connection;
 	GError *err = NULL;
 	GtkWindow *window;
@@ -141,7 +156,7 @@ impl_activate (TotemPlugin *plugin,
 	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &err);
 	if (connection == NULL) {
 		g_warning ("Error connecting to D-Bus: %s", err->message);
-		return FALSE;
+		return;
 	}
 
 	/* Try the gnome-settings-daemon version,
@@ -161,6 +176,7 @@ impl_activate (TotemPlugin *plugin,
 
 	dbus_g_connection_unref (connection);
 	if (err != NULL) {
+#if 0
 		gboolean daemon_not_running;
 		g_warning ("Failed to create dbus proxy for org.gnome.SettingsDaemon: %s",
 			   err->message);
@@ -169,6 +185,8 @@ impl_activate (TotemPlugin *plugin,
 		/* don't popup error if settings-daemon is not running,
  		 * ie when starting totem not under GNOME desktop */
 		return daemon_not_running;
+#endif
+		return;
 	} else {
 		g_signal_connect_object (pi->media_player_keys_proxy,
 					 "destroy",
@@ -193,15 +211,14 @@ impl_activate (TotemPlugin *plugin,
 			G_CALLBACK (on_window_focus_in_event), pi);
 
 	g_object_unref (G_OBJECT (window));
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *window;
 
 	if (pi->media_player_keys_proxy != NULL) {
@@ -221,5 +238,15 @@ impl_deactivate	(TotemPlugin *plugin,
 
 		g_object_unref (window);
 	}
+}
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_media_player_keys_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN);
 }
 

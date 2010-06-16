@@ -28,6 +28,7 @@ libmedia_player_keys_la_CPPFLAGS = $(common_defines)
 
 libmedia_player_keys_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(MEDIA_PLAYER_KEYS_CFLAGS) \
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
