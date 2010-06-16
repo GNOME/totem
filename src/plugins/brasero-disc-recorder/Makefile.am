@@ -28,6 +28,7 @@ libbrasero_disc_recorder_la_CPPFLAGS = $(common_defines)
 
 libbrasero_disc_recorder_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

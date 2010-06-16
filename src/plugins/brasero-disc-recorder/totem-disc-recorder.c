@@ -27,6 +27,9 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 #include <gdk/gdkx.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 
 #include <libxml/xmlerror.h>
 #include <libxml/xmlwriter.h>
@@ -48,7 +51,7 @@ typedef struct TotemDiscRecorderPluginPrivate         TotemDiscRecorderPluginPri
 
 typedef struct
 {
-	TotemPlugin parent;
+	PeasExtensionBase parent;
 
 	TotemObject *totem;
 
@@ -60,13 +63,14 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemDiscRecorderPluginClass;
 
-G_MODULE_EXPORT GType register_totem_plugin (GTypeModule *module);
-GType totem_disc_recorder_plugin_get_type (void) G_GNUC_CONST;
+GType totem_disc_recorder_plugin_get_type	(void) G_GNUC_CONST;
 
-TOTEM_PLUGIN_REGISTER (TotemDiscRecorderPlugin, totem_disc_recorder_plugin)
+static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
+
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_DISC_RECORDER_PLUGIN, TotemDiscRecorderPlugin, totem_disc_recorder_plugin)
 
 static void totem_disc_recorder_plugin_burn (GtkAction *action,
 					     TotemDiscRecorderPlugin *pi);
@@ -363,10 +367,11 @@ totem_disc_recorder_file_opened (TotemObject *totem,
 	}
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
+static void
+impl_activate (PeasActivatable *plugin, GObject *object)
 {
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkUIManager *uimanager = NULL;
 	GtkAction *action;
 	char *path;
@@ -374,7 +379,7 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 	/* make sure brasero is in the path */
 	path = g_find_program_in_path ("brasero");
 	if (!path)
-		return FALSE;
+		return;
 	g_free (path);
 
 	//FIXME this shouldn't be necessary
@@ -469,14 +474,13 @@ impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error)
 		totem_disc_recorder_file_opened (totem, mrl, pi);
 		g_free (mrl);
 	}
-
-	return TRUE;
 }
 
 static void
-impl_deactivate (TotemPlugin *plugin, TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin, GObject *object)
 {
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkUIManager *uimanager = NULL;
 
 	pi->enabled = FALSE;
@@ -492,21 +496,8 @@ impl_deactivate (TotemPlugin *plugin, TotemObject *totem)
 }
 
 static void
-totem_disc_recorder_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_disc_recorder_plugin_parent_class)->finalize (object);
-}
-
-static void
 totem_disc_recorder_plugin_class_init (TotemDiscRecorderPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
-	object_class->finalize = totem_disc_recorder_plugin_finalize;
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
