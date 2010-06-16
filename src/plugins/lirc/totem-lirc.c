@@ -33,14 +33,15 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
-#include <gmodule.h>
 #include <string.h>
-
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 #include <unistd.h>
 #include <lirc/lirc_client.h>
 
-#include "totem-plugin.h"
 #include "totem.h"
+#include "totem-dirs.h"
 
 #define TOTEM_TYPE_LIRC_PLUGIN		(totem_lirc_plugin_get_type ())
 #define TOTEM_LIRC_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin))
@@ -51,7 +52,7 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	PeasExtensionBase parent;
 
 	GIOChannel *lirc_channel;
 	struct lirc_config *lirc_config;
@@ -61,7 +62,7 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemLircPluginClass;
 
 /* strings that we recognize as commands from lirc */
@@ -94,26 +95,40 @@ typedef struct
 #define TOTEM_IR_SETTING_TOGGLE_REPEAT "setting_repeat"
 #define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
 
-G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
+static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
+G_MODULE_EXPORT void peas_register_types	(PeasObjectModule *module);
 GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_lirc_plugin_init		(TotemLircPlugin *plugin);
 static void totem_lirc_plugin_finalize		(GObject *object);
-static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
+static void impl_activate			(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate			(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER(TotemLircPlugin, totem_lirc_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemLircPlugin,
+				totem_lirc_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
 
 static void
 totem_lirc_plugin_class_init (TotemLircPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	object_class->finalize = totem_lirc_plugin_finalize;
+}
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+static void
+totem_lirc_plugin_class_finalize (TotemLircPluginClass *klass)
+{
+}
+
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
 }
 
 static void
@@ -264,12 +279,12 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 	return TRUE;
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	char *path;
 	int fd;
 
@@ -277,19 +292,25 @@ impl_activate (TotemPlugin *plugin,
 
 	fd = lirc_init ("Totem", 0);
 	if (fd < 0) {
+		//FIXME
+#if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
                                      _("Couldn't initialize lirc."));
 		return FALSE;
+#endif
 	}
 
 	/* Load the default Totem setup */
-	path = totem_plugin_find_file (plugin, "totem_lirc_default");
+	path = totem_plugin_find_file ("lirc", "totem_lirc_default");
 	if (path == NULL || lirc_readconfig (path, &pi->lirc_config, NULL) == -1) {
 		g_free (path);
+		//FIXME
+#if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
                                      _("Couldn't read lirc configuration."));
+#endif
 		close (fd);
-		return FALSE;
+		return;
 	}
 	g_free (path);
 
@@ -301,13 +322,11 @@ impl_activate (TotemPlugin *plugin,
 	g_io_channel_set_buffered (pi->lirc_channel, FALSE);
 	g_io_add_watch (pi->lirc_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
 			(GIOFunc) totem_lirc_read_code, pi);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
 	GError *error = NULL;
@@ -334,3 +353,14 @@ impl_deactivate	(TotemPlugin *plugin,
 		pi->totem = NULL;
 	}
 }
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_lirc_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_LIRC_PLUGIN);
+}
+
