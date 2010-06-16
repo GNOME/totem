@@ -28,6 +28,7 @@ libbemused_la_LIBADD = $(BEMUSED_LIBS)
 
 libbemused_la_CFLAGS =			\
 	$(DEPENDENCY_CFLAGS)		\
+	$(PEAS_CFLAGS)			\
 	$(WARN_CFLAGS)			\
 	$(BEMUSED_CFLAGS)		\
 	$(AM_CFLAGS)			\

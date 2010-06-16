@@ -58,7 +58,7 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	PeasExtensionBase parent;
 
 	TotemObject *totem;
 	BaconVideoWidget *bvw;
@@ -70,18 +70,14 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemBemusedPluginClass;
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_bemused_plugin_get_type		(void) G_GNUC_CONST;
 
 static void totem_bemused_plugin_init		(TotemBemusedPlugin *plugin);
-static void totem_bemused_plugin_finalize		(GObject *object);
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
 
-TOTEM_PLUGIN_REGISTER(TotemBemusedPlugin, totem_bemused_plugin)
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_BEMUSED_PLUGIN, TotemBemusedPlugin, totem_bemused_plugin)
 
 /* Bluetooth functions */
 
@@ -688,13 +684,6 @@ sdp_svc_del (sdp_session_t *session)
 static void
 totem_bemused_plugin_class_init (TotemBemusedPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
-	object_class->finalize = totem_bemused_plugin_finalize;
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
@@ -703,17 +692,11 @@ totem_bemused_plugin_init (TotemBemusedPlugin *plugin)
 }
 
 static void
-totem_bemused_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_bemused_plugin_parent_class)->finalize (object);
-}
-
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemBemusedPlugin *tp = TOTEM_BEMUSED_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	int fd, channel;
 	struct sockaddr_rc addr;
 
@@ -723,7 +706,7 @@ impl_activate (TotemPlugin *plugin,
 	if (fd < 0) {
 		g_message ("couldn't create socket");
 		//FIXME set error
-		return FALSE;
+		return;
 	}
 
 	g_message ("socket created");
@@ -737,7 +720,7 @@ impl_activate (TotemPlugin *plugin,
 	if (tp->sdp_session == NULL) {
 		close (fd);
 		g_message ("registering service failed");
-		return FALSE;
+		return;
 	}
 
 	addr.rc_family = AF_BLUETOOTH;
@@ -748,7 +731,7 @@ impl_activate (TotemPlugin *plugin,
 		//FIXME
 		sdp_svc_del (tp->sdp_session);
 		g_message ("couldn't bind");
-		return FALSE;
+		return;
 	}
 
 	g_message ("bind launched");
@@ -757,7 +740,7 @@ impl_activate (TotemPlugin *plugin,
 		//FIXME
 		g_message ("couldn't listen");
 		sdp_svc_del (tp->sdp_session);
-		return FALSE;
+		return;
 	}
 
 	g_message ("listen launched");
@@ -773,15 +756,12 @@ impl_activate (TotemPlugin *plugin,
 	g_message ("io chan set");
 
 	//FIXME
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin,
+		 GObject *object)
 {
-	totem_remove_sidebar_page (totem, "sidebar-test");
-	g_message ("Just removed a test sidebar");
+	//FIXME
 }
 
