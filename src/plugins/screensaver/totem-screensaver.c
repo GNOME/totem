@@ -31,11 +31,13 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gconf/gconf-client.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 
 #include <gmodule.h>
 #include <string.h>
 
-#include "totem-plugin.h"
 #include "totem.h"
 #include "totem-scrsaver.h"
 #include "backend/bacon-video-widget.h"
@@ -49,8 +51,8 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
-	TotemObject  *totem;
+	PeasExtensionBase parent;
+	TotemObject *totem;
 	BaconVideoWidget *bvw;
 
 	TotemScrsaver *scr;
@@ -61,29 +63,44 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemScreensaverPluginClass;
 
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 GType	totem_screensaver_plugin_get_type		(void) G_GNUC_CONST;
+static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
 
 static void totem_screensaver_plugin_finalize		(GObject *object);
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
+static void impl_activate				(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER(TotemScreensaverPlugin, totem_screensaver_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemScreensaverPlugin,
+				totem_screensaver_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
+
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
+}
+
 
 static void
 totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	object_class->finalize = totem_screensaver_plugin_finalize;
+}
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+static void
+totem_screensaver_plugin_class_finalize (TotemScreensaverPluginClass *klass)
+{
 }
 
 static void
@@ -152,12 +169,12 @@ lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 	totem_screensaver_update_from_state (pi->totem, pi);
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GConfClient *gc;
 
 	pi->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
@@ -183,15 +200,14 @@ impl_activate (TotemPlugin *plugin,
 
 	/* Force setting the current status */
 	totem_screensaver_update_from_state (totem, pi);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GConfClient *gc;
 
 	gc = gconf_client_get_default ();
@@ -211,5 +227,15 @@ impl_deactivate	(TotemPlugin *plugin,
 	g_object_unref (pi->bvw);
 
 	totem_scrsaver_enable (pi->scr);
+}
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_screensaver_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_SCREENSAVER_PLUGIN);
 }
 
