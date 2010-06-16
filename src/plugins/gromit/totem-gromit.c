@@ -33,7 +33,9 @@
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <string.h>
-
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 #include <sys/types.h>
 #include <signal.h>
 #include <fcntl.h>
@@ -41,7 +43,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include "totem-plugin.h"
 #include "totem.h"
 
 #include "totem-interface.h"
@@ -55,7 +56,7 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	PeasExtensionBase parent;
 
 	char *path;
 	int id;
@@ -66,7 +67,7 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemGromitPluginClass;
 
 #define INTERVAL 10 /* seconds */
@@ -93,25 +94,39 @@ static const char *visibility_cmd[] =	{ NULL, "-v", NULL };
 \"Core Pointer\"[Button3] = \"Eraser\";					\n\
 \n"
 
-G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types	(PeasObjectModule *module);
 GType	totem_gromit_plugin_get_type		(void) G_GNUC_CONST;
 
+static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
 static void totem_gromit_plugin_finalize		(GObject *object);
-static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
+static void impl_activate			(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate			(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER(TotemGromitPlugin, totem_gromit_plugin)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemGromitPlugin,
+				totem_gromit_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
 
 static void
 totem_gromit_plugin_class_init (TotemGromitPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	object_class->finalize = totem_gromit_plugin_finalize;
+}
 
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
+}
+
+static void
+totem_gromit_plugin_class_finalize (TotemGromitPluginClass *klass)
+{
 }
 
 static void
@@ -259,34 +274,36 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemGromitPlu
 	return TRUE;
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *window;
 
 	if (!totem_gromit_available (pi)) {
+		//FIXME
+#if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
                                      _("The gromit binary was not found."));
 
 		return FALSE;
+#endif
 	}
 
 	window = totem_get_main_window (totem);
 	pi->handler_id = g_signal_connect (G_OBJECT(window), "key-press-event", 
 			G_CALLBACK (on_window_key_press_event), plugin);
 	g_object_unref (window);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *window;
 
 	if (pi->handler_id != 0) {
@@ -298,3 +315,14 @@ impl_deactivate	(TotemPlugin *plugin,
 
 	totem_gromit_clear (pi, TRUE);
 }
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_gromit_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_GROMIT_PLUGIN);
+}
+
