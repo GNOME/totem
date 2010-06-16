@@ -35,7 +35,6 @@
 #include <libpeas/peas-object-module.h>
 
 #include "totem.h"
-#include "totem-plugin.h"
 
 G_BEGIN_DECLS
 
@@ -62,7 +61,6 @@ typedef struct
 } TotemSkiptoPluginClass;
 
 GType totem_skipto_plugin_get_type			(void) G_GNUC_CONST;
-G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 
 G_END_DECLS
 

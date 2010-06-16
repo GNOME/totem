@@ -35,7 +35,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <libpeas/peas-activatable.h>
 
-
+#include "totem-plugin.h"
 #include "totem-skipto-plugin.h"
 #include "totem-skipto.h"
 
@@ -49,20 +49,9 @@ struct TotemSkiptoPluginPrivate
 	GtkActionGroup	*action_group;
 };
 
-G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
-static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
+static void totem_skipto_plugin_finalize (GObject *object);
 
-static void totem_skipto_plugin_finalize		(GObject *object);
-static void impl_activate				(PeasActivatable *plugin, GObject *object);
-static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
-
-G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemSkiptoPlugin,
-				totem_skipto_plugin,
-				PEAS_TYPE_EXTENSION_BASE,
-				0,
-				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
-							       peas_activatable_iface_init))
-
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
 
 static void
 totem_skipto_plugin_class_init (TotemSkiptoPluginClass *klass)
@@ -74,24 +63,12 @@ totem_skipto_plugin_class_init (TotemSkiptoPluginClass *klass)
 	object_class->finalize = totem_skipto_plugin_finalize;
 }
 static void
-peas_activatable_iface_init (PeasActivatableInterface *iface)
-{
-	iface->activate = impl_activate;
-	iface->deactivate = impl_deactivate;
-}
-
-static void
 totem_skipto_plugin_init (TotemSkiptoPlugin *plugin)
 {
 	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
 						    TOTEM_TYPE_SKIPTO_PLUGIN,
 						    TotemSkiptoPluginPrivate);
 	plugin->priv->st = NULL;
-}
-
-static void
-totem_skipto_plugin_class_finalize (TotemSkiptoPluginClass *klass)
-{
 }
 
 static void
@@ -294,15 +271,5 @@ impl_deactivate	(PeasActivatable *plugin,
 	manager = totem_get_ui_manager (totem);
 	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (manager, priv->action_group);
-}
-
-G_MODULE_EXPORT void
-peas_register_types (PeasObjectModule *module)
-{
-	totem_skipto_plugin_register_type (G_TYPE_MODULE (module));
-
-	peas_object_module_register_extension_type (module,
-						    PEAS_TYPE_ACTIVATABLE,
-						    TOTEM_TYPE_SKIPTO_PLUGIN);
 }
 
