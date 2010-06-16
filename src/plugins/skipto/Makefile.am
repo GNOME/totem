@@ -37,6 +37,7 @@ libskipto_la_CPPFLAGS = \
 
 libskipto_la_CFLAGS = 			\
 	$(DEPENDENCY_CFLAGS)		\
+	$(PEAS_CFLAGS)			\
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(AM_CFLAGS)			\

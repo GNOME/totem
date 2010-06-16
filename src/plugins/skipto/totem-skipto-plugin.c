@@ -33,6 +33,8 @@
 #include <gmodule.h>
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
+#include <libpeas/peas-activatable.h>
+
 
 #include "totem-skipto-plugin.h"
 #include "totem-skipto.h"
@@ -47,26 +49,35 @@ struct TotemSkiptoPluginPrivate
 	GtkActionGroup	*action_group;
 };
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
+G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
+static void peas_activatable_iface_init			(PeasActivatableInterface *iface);
 
 static void totem_skipto_plugin_finalize		(GObject *object);
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
+static void impl_activate				(PeasActivatable *plugin, GObject *object);
+static void impl_deactivate				(PeasActivatable *plugin, GObject *object);
 
-TOTEM_PLUGIN_REGISTER_EXTENDED(TotemSkiptoPlugin, totem_skipto_plugin, TOTEM_PLUGIN_REGISTER_TYPE(totem_skipto))
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (TotemSkiptoPlugin,
+				totem_skipto_plugin,
+				PEAS_TYPE_EXTENSION_BASE,
+				0,
+				G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE,
+							       peas_activatable_iface_init))
+
 
 static void
 totem_skipto_plugin_class_init (TotemSkiptoPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	g_type_class_add_private (klass, sizeof (TotemSkiptoPluginPrivate));
 
 	object_class->finalize = totem_skipto_plugin_finalize;
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
+}
+static void
+peas_activatable_iface_init (PeasActivatableInterface *iface)
+{
+	iface->activate = impl_activate;
+	iface->deactivate = impl_deactivate;
 }
 
 static void
@@ -76,6 +87,11 @@ totem_skipto_plugin_init (TotemSkiptoPlugin *plugin)
 						    TOTEM_TYPE_SKIPTO_PLUGIN,
 						    TotemSkiptoPluginPrivate);
 	plugin->priv->st = NULL;
+}
+
+static void
+totem_skipto_plugin_class_finalize (TotemSkiptoPluginClass *klass)
+{
 }
 
 static void
@@ -201,28 +217,19 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemSkiptoPlu
 	return TRUE;
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	GtkWindow *window;
 	GtkUIManager *manager;
 	TotemSkiptoPlugin *pi = TOTEM_SKIPTO_PLUGIN (plugin);
 	TotemSkiptoPluginPrivate *priv = pi->priv;
+	TotemObject *totem = TOTEM_OBJECT (object);
 
-	char *builder_path;
 	const GtkActionEntry menu_entries[] = {
 		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "<Control>K", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
 	};
-
-	builder_path = totem_plugin_find_file (TOTEM_PLUGIN (plugin), "skipto.ui");
-	if (builder_path == NULL) {
-		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-                                     _("Could not load the \"Skip to\" dialog interface."));
-		return FALSE;
-	}
-	g_free (builder_path);
 
 	pi->totem = totem;
 	priv->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),
@@ -237,7 +244,7 @@ impl_activate (TotemPlugin *plugin,
 	/* Key press handler */
 	window = totem_get_main_window (totem);
 	priv->handler_id_key_press = g_signal_connect (G_OBJECT(window),
-				"key-press-event", 
+				"key-press-event",
 				G_CALLBACK (on_window_key_press_event),
 				pi);
 	g_object_unref (window);
@@ -259,16 +266,15 @@ impl_activate (TotemPlugin *plugin,
 			       "skip-to", GTK_UI_MANAGER_AUTO, TRUE);
 
 	totem_skipto_update_from_state (totem, pi);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
 	GtkWindow *window;
 	GtkUIManager *manager;
+	TotemObject *totem = TOTEM_OBJECT (object);
 	TotemSkiptoPluginPrivate *priv = TOTEM_SKIPTO_PLUGIN (plugin)->priv;
 
 	g_signal_handler_disconnect (G_OBJECT (totem),
@@ -289,3 +295,14 @@ impl_deactivate	(TotemPlugin *plugin,
 	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (manager, priv->action_group);
 }
+
+G_MODULE_EXPORT void
+peas_register_types (PeasObjectModule *module)
+{
+	totem_skipto_plugin_register_type (G_TYPE_MODULE (module));
+
+	peas_object_module_register_extension_type (module,
+						    PEAS_TYPE_ACTIVATABLE,
+						    TOTEM_TYPE_SKIPTO_PLUGIN);
+}
+

@@ -36,6 +36,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+#include "totem-dirs.h"
 #include "totem-skipto.h"
 #include "totem-skipto-plugin.h"
 #include "totem-uri.h"
@@ -54,7 +55,7 @@ struct TotemSkiptoPrivate {
 	Totem *totem;
 };
 
-TOTEM_PLUGIN_DEFINE_TYPE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (TotemSkipto, totem_skipto, GTK_TYPE_DIALOG)
 #define TOTEM_SKIPTO_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_SKIPTO, TotemSkiptoPrivate))
 
 static void
@@ -157,7 +158,7 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
 
 	skipto->priv->totem = plugin->totem;
-	skipto->priv->xml = totem_plugin_load_interface (TOTEM_PLUGIN (plugin),
+	skipto->priv->xml = totem_plugin_load_interface ("skipto",
 							 "skipto.ui", TRUE,
 							 NULL, skipto);
 

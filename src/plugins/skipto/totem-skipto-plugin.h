@@ -31,6 +31,8 @@
 #define TOTEM_SKIPTO_PLUGIN_H
 
 #include <glib.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
 
 #include "totem.h"
 #include "totem-plugin.h"
@@ -48,7 +50,7 @@ typedef struct TotemSkiptoPluginPrivate         TotemSkiptoPluginPrivate;
 
 typedef struct
 {
-	TotemPlugin	          parent;
+	PeasExtensionBase         parent;
 
 	TotemObject              *totem;
 	TotemSkiptoPluginPrivate *priv;
@@ -56,10 +58,11 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemSkiptoPluginClass;
 
 GType totem_skipto_plugin_get_type			(void) G_GNUC_CONST;
+G_MODULE_EXPORT void peas_register_types		(PeasObjectModule *module);
 
 G_END_DECLS
 
