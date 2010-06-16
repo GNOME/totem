@@ -230,6 +230,10 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	g_object_add_weak_pointer (G_OBJECT (engine),
 				   (gpointer) &engine);
 
+	/* FIXME
+	 * Disable python loader for now */
+	peas_engine_disable_loader (PEAS_ENGINE (engine), "python");
+
 	engine->priv->totem = g_object_ref (totem);
 
 	engine->priv->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
