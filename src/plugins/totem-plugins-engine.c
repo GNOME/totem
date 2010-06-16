@@ -165,7 +165,15 @@ on_activatable_extension_added (PeasExtensionSet *set,
 				TotemPluginsEngine *engine)
 {
 	g_message ("on_activatable_extension_added");
-	peas_extension_call (exten, "activate", engine->priv->totem);
+	if (peas_extension_call (exten, "activate", engine->priv->totem)) {
+		if (peas_plugin_info_get_visible (info)) {
+			char *key_name;
+
+			key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE,
+						    peas_plugin_info_get_module_name (info));
+			gconf_client_set_bool (engine->priv->client, key_name, TRUE, NULL);
+		}
+	}
 }
 
 static void
@@ -176,6 +184,14 @@ on_activatable_extension_removed (PeasExtensionSet *set,
 {
 	g_message ("on_activatable_extension_removed");
 	peas_extension_call (exten, "deactivate", engine->priv->totem);
+
+	if (peas_plugin_info_get_visible (info)) {
+		char *key_name;
+
+		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE,
+					    peas_plugin_info_get_module_name (info));
+		gconf_client_set_bool (engine->priv->client, key_name, FALSE, NULL);
+	}
 }
 
 TotemPluginsEngine *
@@ -250,6 +266,11 @@ totem_plugins_engine_finalize (GObject *object)
 {
 	TotemPluginsEngine *engine = TOTEM_PLUGINS_ENGINE (object);
 
+	g_signal_handlers_disconnect_by_func (engine->priv->activatable_extensions,
+					      G_CALLBACK (on_activatable_extension_added), engine);
+	g_signal_handlers_disconnect_by_func (engine->priv->activatable_extensions,
+					      G_CALLBACK (on_activatable_extension_removed), engine);
+
 	if (engine->priv->totem) {
 		peas_extension_set_call (engine->priv->activatable_extensions,
 					 "deactivate", engine->priv->totem);
@@ -281,11 +302,15 @@ totem_plugins_engine_gconf_cb (GConfClient *gconf_client,
 			       GConfEntry *entry,
 			       TotemPluginsEngine *engine)
 {
+	char *dirname;
 	char *plugin_name;
 	char *action_name;
 	PeasPluginInfo *info;
 
-	plugin_name = g_path_get_dirname (gconf_entry_get_key (entry));
+	dirname = g_path_get_dirname (gconf_entry_get_key (entry));
+	plugin_name = g_path_get_basename (dirname);
+	g_free (dirname);
+
 	info = peas_engine_get_plugin_info (PEAS_ENGINE (engine), plugin_name);
 	g_free (plugin_name);
 
@@ -293,7 +318,8 @@ totem_plugins_engine_gconf_cb (GConfClient *gconf_client,
 		return;
 
 	action_name = g_path_get_basename (gconf_entry_get_key (entry));
-       //FIXME do some checks here
+	if (action_name == NULL)
+		return;
 
 	if (g_str_equal (action_name, "active") != FALSE) {
 		if (gconf_value_get_bool (entry->value)) {
