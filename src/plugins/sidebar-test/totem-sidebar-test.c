@@ -45,34 +45,22 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	PeasExtensionBase parent;
 } TotemSidebarTestPlugin;
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemSidebarTestPluginClass;
 
 
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_sidebar_test_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_sidebar_test_plugin_finalize		(GObject *object);
-static gboolean impl_activate				(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
-
-TOTEM_PLUGIN_REGISTER(TotemSidebarTestPlugin, totem_sidebar_test_plugin)
+TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SIDEBAR_TEST_PLUGIN, TotemSidebarTestPlugin, totem_sidebar_test_plugin)
 
 static void
 totem_sidebar_test_plugin_class_init (TotemSidebarTestPluginClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
-	object_class->finalize = totem_sidebar_test_plugin_finalize;
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
@@ -81,17 +69,11 @@ totem_sidebar_test_plugin_init (TotemSidebarTestPlugin *plugin)
 }
 
 static void
-totem_sidebar_test_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_sidebar_test_plugin_parent_class)->finalize (object);
-}
-
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+impl_activate (PeasActivatable *plugin,
+	       GObject *object)
 {
 	GtkWidget *label;
+	TotemObject *totem = TOTEM_OBJECT (object);
 
 	label = gtk_label_new ("This is a test sidebar main widget");
 	gtk_widget_show (label);
@@ -100,14 +82,14 @@ impl_activate (TotemPlugin *plugin,
 				"Sidebar Test",
 				label);
 	g_message ("Just added a test sidebar");
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate	(PeasActivatable *plugin,
+		 GObject *object)
 {
+	TotemObject *totem = TOTEM_OBJECT (object);
+
 	totem_remove_sidebar_page (totem, "sidebar-test");
 	g_message ("Just removed a test sidebar");
 }

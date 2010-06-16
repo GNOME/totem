@@ -29,6 +29,7 @@ libsidebar_test_la_CPPFLAGS = $(common_defines)
 
 libsidebar_test_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\
