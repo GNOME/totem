@@ -41,7 +41,6 @@
 #include "totem-interface.h"
 #include "video-utils.h"
 #include "totem-subtitle-encoding.h"
-#include "totem-plugin.h"
 #include "totem-plugins-engine.h"
 
 /* Callback functions for GtkBuilder */
