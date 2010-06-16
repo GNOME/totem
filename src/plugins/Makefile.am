@@ -18,6 +18,7 @@ common_defines =					\
 modules_flags = -export_dynamic -avoid-version -module
 
 libtotemmodule_la_SOURCES =		\
+	totem-plugin.h			\
 	totem-plugins-engine.c		\
 	totem-plugins-engine.h		\
 	totem-dirs.c			\
