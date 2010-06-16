@@ -143,7 +143,7 @@ totem_plugins_engine_load_all (TotemPluginsEngine *engine)
 	}
 	g_ptr_array_add (activate, NULL);
 
-	peas_engine_set_active_plugins (PEAS_ENGINE (engine), (const char **) activate->pdata);
+	peas_engine_set_loaded_plugins (PEAS_ENGINE (engine), (const char **) activate->pdata);
 	g_ptr_array_free (activate, TRUE);
 }
 
@@ -327,9 +327,9 @@ totem_plugins_engine_gconf_cb (GConfClient *gconf_client,
 
 	if (g_str_equal (action_name, "active") != FALSE) {
 		if (gconf_value_get_bool (entry->value)) {
-			peas_engine_activate_plugin (PEAS_ENGINE (engine), info);
+			peas_engine_load_plugin (PEAS_ENGINE (engine), info);
 		} else {
-			peas_engine_deactivate_plugin (PEAS_ENGINE (engine), info);
+			peas_engine_unload_plugin (PEAS_ENGINE (engine), info);
 		}
 	} else if (g_str_equal (action_name, "hidden") != FALSE) {
 		peas_plugin_info_set_visible (info, !gconf_value_get_bool (entry->value));
