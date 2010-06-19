@@ -394,6 +394,10 @@ if test "x$enable_vala" != "xno"; then
 		with_vala=yes
 	fi
 fi
+
+# FIXME: Disable Vala plugin support for now, since libpeas doesn't support Vala yet
+with_vala=no
+
 AM_CONDITIONAL(ENABLE_VALA, test "x$with_vala" = "xyes")
 
 # ********************
