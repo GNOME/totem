@@ -1,5 +1,28 @@
 New features and significant updates in version...
 
+2.90.0:
+* Movie Player:
+  - Fix some strings in the BBC iPlayer plugin
+  - Support async loading of playlists
+  - Fix window resizing when showing/hiding the controls and sidebar
+  - Add deinterlacing to the preferences
+  - Add support for accurate seeking
+  - Add WebM support
+  - Port to GDBus
+  - Port to libpeas for plugin handling (porting the C plugins, but disabling the Python and Vala ones)
+
+* Browser plugin:
+  - Fix URL parameter usage in the GMP plugin
+  - Fix the position when the QT plugin gets to the EOS
+  - Add support for the input.time and togglePause VLC JavaScript API
+  - Add support for the VLC toolbar argument
+  - Initialise GType support when called into
+
+* GStreamer backend:
+  - Implement deinterlacing support and turn on automatic deinterlacing by default
+  - Fix constant buffering when playing live streams
+  - Ensure the widget uses the system colourmap
+
 2.30.1:
 * Movie Player:
   - Fix artifacts and flashing or black screen when paused
