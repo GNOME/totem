@@ -339,6 +339,7 @@ totem_object_plugins_init (TotemObject *totem)
 
 /**
  * totem_object_plugins_shutdown:
+ * @totem: a #TotemObject
  *
  * Shuts down the plugin engine and deactivates all the
  * plugins.
@@ -2026,7 +2027,7 @@ totem_action_zoom_reset (Totem *totem)
 }
 
 /**
- * totem_action_get_volume:
+ * totem_get_volume:
  * @totem: a #TotemObject
  *
  * Gets the current volume level, as a value between %0.0 and %1.0.

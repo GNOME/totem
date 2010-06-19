@@ -36,6 +36,15 @@
 
 G_BEGIN_DECLS
 
+/**
+ * TOTEM_PLUGIN_REGISTER:
+ * @TYPE_NAME: the name of the plugin type, in UPPER_CASE
+ * @TypeName: the name of the plugin type, in CamelCase
+ * @type_name: the name of the plugin type, in lower_case
+ *
+ * Registers a plugin with the Totem plugin system, including registering the type specified in the parameters and declaring its activate and
+ * deactivate functions.
+ **/
 #define TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name)			\
 	static void impl_activate (PeasActivatable *plugin, GObject *totem);	\
 	static void impl_deactivate (PeasActivatable *plugin, GObject *totem);	\

@@ -49,6 +49,15 @@
 
 #define UNINSTALLED_PLUGINS_LOCATION "plugins"
 
+/**
+ * totem_get_plugin_paths:
+ *
+ * Return a %NULL-terminated array of paths to directories which can contain Totem plugins. This respects the GConf disable_user_plugins setting.
+ *
+ * Return value: a %NULL-terminated array of paths to plugin directories
+ *
+ * Since: 2.90.0
+ **/
 char **
 totem_get_plugin_paths (void)
 {
