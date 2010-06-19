@@ -2171,12 +2171,40 @@ totem_action_show_help (Totem *totem)
 	}
 }
 
+typedef struct {
+	gint add_mrl_complete;
+	Totem *totem;
+} DropFilesData;
+
+/* This is called in the main thread */
+static void
+totem_action_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result, DropFilesData *data)
+{
+	/* When add_mrl_complete reaches 0, this is the last callback to occur and we can safely reconnect the playlist's changed signal (which was
+	 * disconnected below in totem_action_drop_files(). We can also free the data struct and generally clean up. */
+	if (g_atomic_int_dec_and_test (&(data->add_mrl_complete)) == TRUE) {
+		char *mrl, *subtitle;
+
+		/* Reconnect the signal */
+		g_signal_connect (G_OBJECT (playlist), "changed", G_CALLBACK (playlist_changed_cb), data->totem);
+		mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
+		totem_action_set_mrl_and_play (data->totem, mrl, subtitle);
+		g_free (mrl);
+		g_free (subtitle);
+
+		/* Free the data struct */
+		g_object_unref (data->totem);
+		g_slice_free (DropFilesData, data);
+	}
+}
+
 static gboolean
 totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		int drop_type, gboolean empty_pl)
 {
 	char **list;
 	guint i, len;
+	DropFilesData *drop_files_data = NULL /* shut up gcc */;
 	GList *p, *file_list;
 	gboolean cleared = FALSE;
 
@@ -2198,8 +2226,6 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 	if (file_list == NULL)
 		return FALSE;
 
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-
 	if (drop_type != 1)
 		file_list = g_list_sort (file_list, (GCompareFunc) strcmp);
 	else
@@ -2214,23 +2240,26 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 		}
 	}
 
+	if (empty_pl != FALSE) {
+		/* The function that calls us knows better if we should be doing something with the changed playlist... */
+		g_signal_handlers_disconnect_by_func (G_OBJECT (totem->playlist), playlist_changed_cb, totem);
+		totem_playlist_clear (totem->playlist);
+		cleared = TRUE;
+
+		/* Allocate some shared memory to count how many add_mrl operations have completed (see the comment below).
+		 * It's freed in totem_action_drop_files_cb() once all add_mrl operations have finished. */
+		drop_files_data = g_slice_new (DropFilesData);
+		drop_files_data->add_mrl_complete = len;
+		drop_files_data->totem = g_object_ref (totem);
+	}
+
+	/* Add each MRL to the playlist asynchronously */
 	for (p = file_list; p != NULL; p = p->next) {
 		const char *filename;
 		char *title;
 
 		filename = p->data;
 		title = NULL;
-
-		if (empty_pl != FALSE && cleared == FALSE) {
-			/* The function that calls us knows better
-			 * if we should be doing something with the 
-			 * changed playlist ... */
-			g_signal_handlers_disconnect_by_func
-				(G_OBJECT (totem->playlist),
-				 playlist_changed_cb, totem);
-			totem_playlist_clear (totem->playlist);
-			cleared = TRUE;
-		}
 
 		/* Super _NETSCAPE_URL trick */
 		if (drop_type == 1) {
@@ -2243,27 +2272,20 @@ totem_action_drop_files (Totem *totem, GtkSelectionData *data,
 			}
 		}
 
-		totem_playlist_add_mrl (totem->playlist, filename, title, FALSE, NULL, NULL, NULL);
+		/* Add the MRL to the playlist. We need to reconnect playlist's "changed" signal once all of the add_mrl operations have completed,
+		 * so we use a piece of allocated memory shared between the async operations to count how many have completed.
+		 * If we haven't cleared the playlist, there's no need to do this. */
+		if (cleared == TRUE) {
+			totem_playlist_add_mrl (totem->playlist, filename, title, TRUE, NULL,
+			                        (GAsyncReadyCallback) totem_action_drop_files_finished, drop_files_data);
+		} else {
+			totem_playlist_add_mrl (totem->playlist, filename, title, TRUE, NULL, NULL, NULL);
+		}
 	}
 
 bail:
 	g_list_foreach (file_list, (GFunc) g_free, NULL);
 	g_list_free (file_list);
-	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
-
-	/* ... and reconnect because we're nice people */
-	if (cleared != FALSE)
-	{
-		char *mrl, *subtitle;
-
-		g_signal_connect (G_OBJECT (totem->playlist),
-				"changed", G_CALLBACK (playlist_changed_cb),
-				totem);
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		totem_action_set_mrl_and_play (totem, mrl, subtitle);
-		g_free (mrl);
-		g_free (subtitle);
-	}
 
 	return TRUE;
 }
