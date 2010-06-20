@@ -28,6 +28,7 @@
 
 #include "config.h"
 
+#include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -57,25 +58,38 @@ long_action (void)
 		gtk_main_iteration ();
 }
 
-static UniqueResponse
-totem_message_received_cb (UniqueApp         *app,
-			   int                command,
-			   UniqueMessageData *message_data,
-			   guint              time_,
-			   Totem             *totem)
+static void
+totem_action_handler (GApplication      *app,
+		      gchar             *name,
+		      GVariant          *platform_data,
+		      gpointer           user_data)
 {
-	char *url;
+	GEnumClass *klass;
+	GEnumValue *value;
+	const gchar *url = NULL;
+	TotemRemoteCommand command;
 
-	if (message_data != NULL)
-		url = unique_message_data_get_text (message_data);
-	else
-		url = NULL;
+	/* GApplication requires the platform_data to be of type a{sv}. */
+	if (platform_data) {
+		GVariantIter iter;
+		GVariant *value;
+		gchar *key;
 
-	totem_action_remote (totem, command, url);
+		g_variant_iter_init (&iter, platform_data);
+		if (g_variant_iter_next (&iter, "{sv}", &key, &value))
+			url = g_variant_get_string (value, NULL);
+	}
 
-	g_free (url);
+	klass = g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
 
-	return UNIQUE_RESPONSE_OK;
+	value = g_enum_get_value_by_name (klass, name);
+	if (! value)
+		return;
+	command = value->value;
+
+	g_type_class_unref (klass);
+
+	totem_action_remote (TOTEM_OBJECT (user_data), command, url);
 }
 
 static void
@@ -130,6 +144,26 @@ debug_handler (const char *log_domain,
 		g_log_default_handler (log_domain, log_level, message, NULL);
 }
 
+static GVariant *
+variant_from_argv (int    argc,
+		   char **argv)
+{
+	GVariantBuilder builder;
+	int i;
+
+	g_variant_builder_init (&builder, G_VARIANT_TYPE("aay"));
+
+	for (i = 1; i < argc; i++) {
+		guint8 *argv_bytes;
+
+		argv_bytes = (guint8 *) argv[i];
+		g_variant_builder_add_value (&builder,
+					     g_variant_new_byte_array (argv_bytes, -1));
+	}
+
+	return g_variant_builder_end (&builder);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -181,9 +215,9 @@ main (int argc, char **argv)
 	gtk_about_dialog_set_email_hook (about_email_hook, NULL, NULL);
 
 	gc = gconf_client_get_default ();
-	if (gc == NULL)
-	{
-		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."), _("Make sure that GNOME is properly installed."), NULL);
+	if (gc == NULL) {
+		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."),
+					     _("Make sure that GNOME is properly installed."), NULL);
 	}
 
 	/* Debug log handling */
@@ -195,13 +229,23 @@ main (int argc, char **argv)
 
 	/* IPC stuff */
 	if (optionstate.notconnectexistingsession == FALSE) {
-		totem->app = unique_app_new ("org.gnome.Totem", NULL);
-		totem_options_register_remote_commands (totem);
-		if (unique_app_is_running (totem->app) != FALSE) {
-			totem_options_process_for_server (totem->app, &optionstate);
+		GError *error = NULL;
+
+		/* FIXME should be GtkApplication */
+		totem->app = g_initable_new (G_TYPE_APPLICATION,
+					     NULL,
+					     &error,
+					     "application-id", "org.gnome.Totem",
+					     "argv", variant_from_argv (argc, argv),
+					     "default-quit", FALSE,
+					     NULL);
+
+		if (g_application_is_remote (G_APPLICATION (totem->app))) {
+			totem_options_process_for_server (G_APPLICATION (totem->app), &optionstate);
 			gdk_notify_startup_complete ();
 			totem_action_exit (totem);
 		} else {
+			totem_options_register_remote_commands (totem);
 			totem_options_process_early (totem, &optionstate);
 		}
 	} else {
@@ -214,6 +258,8 @@ main (int argc, char **argv)
 		totem_action_exit (NULL);
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
+	/* FIXME should be enabled
+	gtk_application_add_window (totem->app, GTK_WINDOW (totem->win)); */
 
 	/* Menubar */
 	totem_ui_manager_setup (totem);
@@ -292,8 +338,8 @@ main (int argc, char **argv)
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 
 	if (totem->app != NULL) {
-		g_signal_connect (totem->app, "message-received",
-				  G_CALLBACK (totem_message_received_cb), totem);
+		g_signal_connect (G_APPLICATION (totem->app), "action-with-data",
+				  G_CALLBACK (totem_action_handler), totem);
 	}
 
 	gtk_main ();

@@ -43,7 +43,6 @@ libtotem_player_la_CPPFLAGS = \
 libtotem_player_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
-	$(UNIQUE_CFLAGS)	\
 	$(AM_CFLAGS)
 
 libtotem_player_la_LDFLAGS = \
@@ -101,7 +100,6 @@ libtotem_main_la_CFLAGS = \
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
-	$(UNIQUE_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_main_la_LDFLAGS = \
@@ -111,7 +109,7 @@ libtotem_main_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
 	plugins/libtotemmodule.la	\
-	$(UNIQUE_LIBS)			\
+	$(DEPENDENCY_LIBS)		\
 	$(DBUS_LIBS)			\
 	$(XVIDMODE_LIBS)		\
 	$(XTEST_LIBS)			\
@@ -179,7 +177,6 @@ totem_CPPFLAGS =			\
 	$(AM_CPPFLAGS)
 
 totem_CFLAGS =				\
-	$(UNIQUE_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(DEPENDENCY_CFLAGS)		\
 	$(AM_CFLAGS)
