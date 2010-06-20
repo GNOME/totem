@@ -38,7 +38,7 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
 # Requirements
 GLIB_REQS=2.25.9
-GTK_REQS=2.90.2
+GTK_REQS=2.90.3
 TOTEM_PLPARSER_REQS=2.29.1
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.61
@@ -195,8 +195,6 @@ AC_SUBST([EXTRA_BACKEND_LIBS])
 PKG_CHECK_EXISTS([
   $ISO_CODES
   gnome-icon-theme >= $GNOMEICON_REQS])
-
-PKG_CHECK_MODULES([UNIQUE], unique-3.0)
 
 dnl *************************
 dnl X11 related functionality

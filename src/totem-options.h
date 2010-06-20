@@ -24,7 +24,7 @@
 #define TOTEM_OPTIONS_H
 
 #include <gconf/gconf-client.h>
-#include <unique/uniqueapp.h>
+#include <gtk/gtk.h>
 
 #include "totem.h"
 
@@ -62,7 +62,7 @@ void totem_options_process_early (Totem *totem,
 				  const TotemCmdLineOptions* options);
 void totem_options_process_late (Totem *totem, 
 				 const TotemCmdLineOptions* options);
-void totem_options_process_for_server (UniqueApp *app,
+void totem_options_process_for_server (GApplication *app,
 				       const TotemCmdLineOptions* options);
 
 G_END_DECLS
