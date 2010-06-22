@@ -68,8 +68,6 @@ typedef struct {
 
 struct TotemPlaylistPrivate
 {
-	GtkBuilder *xml;
-
 	GtkWidget *treeview;
 	GtkTreeModel *model;
 	GtkTreePath *current;
@@ -78,6 +76,12 @@ struct TotemPlaylistPrivate
 
 	GtkActionGroup *action_group;
 	GtkUIManager *ui_manager;
+
+	/* Widgets */
+	GtkWidget *save_button;
+	GtkWidget *remove_button;
+	GtkWidget *up_button;
+	GtkWidget *down_button;
 
 	/* These is the current paths for the file selectors */
 	char *path;
@@ -388,12 +392,10 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 static void
 totem_playlist_update_save_button (TotemPlaylist *playlist)
 {
-	GtkWidget *button;
 	gboolean state;
 
-	button = GTK_WIDGET (gtk_builder_get_object (playlist->priv->xml, "save_button"));
 	state = (!playlist->priv->disable_save_to_disk) && (PL_LEN != 0);
-	gtk_widget_set_sensitive (button, state);
+	gtk_widget_set_sensitive (playlist->priv->save_button, state);
 }
 
 static gboolean
@@ -802,23 +804,16 @@ drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 static void
 selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 {
-	GtkWidget *remove_button, *up_button, *down_button;
 	gboolean sensitivity;
-
-	remove_button = GTK_WIDGET (gtk_builder_get_object (playlist->priv->xml,
-			"remove_button"));
-	up_button = GTK_WIDGET (gtk_builder_get_object (playlist->priv->xml, "up_button"));
-	down_button = GTK_WIDGET (gtk_builder_get_object (playlist->priv->xml,
-			"down_button"));
 
 	if (gtk_tree_selection_has_selected (treeselection))
 		sensitivity = TRUE;
 	else
 		sensitivity = FALSE;
 
-	gtk_widget_set_sensitive (remove_button, sensitivity);
-	gtk_widget_set_sensitive (up_button, sensitivity);
-	gtk_widget_set_sensitive (down_button, sensitivity);
+	gtk_widget_set_sensitive (playlist->priv->remove_button, sensitivity);
+	gtk_widget_set_sensitive (playlist->priv->up_button, sensitivity);
+	gtk_widget_set_sensitive (playlist->priv->down_button, sensitivity);
 }
 
 /* This function checks if the current item is NULL, and try to update it
@@ -1634,17 +1629,20 @@ totem_playlist_dispose (GObject *object)
 {
 	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
 
-	if (playlist->priv->parser == NULL)
-		return;
+	if (playlist->priv->parser != NULL) {
+		g_object_unref (playlist->priv->parser);
+		playlist->priv->parser = NULL;
+	}
 
-	g_object_unref (playlist->priv->parser);
-	playlist->priv->parser = NULL;
-
-	if (playlist->priv->ui_manager != NULL)
+	if (playlist->priv->ui_manager != NULL) {
 		g_object_unref (G_OBJECT (playlist->priv->ui_manager));
+		playlist->priv->ui_manager = NULL;
+	}
 
-	if (playlist->priv->action_group != NULL)
+	if (playlist->priv->action_group != NULL) {
 		g_object_unref (G_OBJECT (playlist->priv->action_group));
+		playlist->priv->action_group = NULL;
+	}
 
 	G_OBJECT_CLASS (totem_playlist_parent_class)->dispose (object);
 }
@@ -1664,6 +1662,7 @@ static void
 totem_playlist_init (TotemPlaylist *playlist)
 {
 	GtkWidget *container;
+	GtkBuilder *xml;
 
 	playlist->priv = G_TYPE_INSTANCE_GET_PRIVATE (playlist, TOTEM_TYPE_PLAYLIST, TotemPlaylistPrivate);
 	playlist->priv->parser = totem_pl_parser_new ();
@@ -1680,21 +1679,29 @@ totem_playlist_init (TotemPlaylist *playlist)
 			G_CALLBACK (totem_playlist_entry_parsed),
 			playlist);
 
-	playlist->priv->xml = totem_interface_load ("playlist.ui", TRUE, NULL, playlist);
+	xml = totem_interface_load ("playlist.ui", TRUE, NULL, playlist);
 
-	if (playlist->priv->xml == NULL)
+	if (xml == NULL)
 		return;
 
 	/* popup menu */
-	playlist->priv->action_group = GTK_ACTION_GROUP (gtk_builder_get_object (playlist->priv->xml, "playlist-action-group"));
-	playlist->priv->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (playlist->priv->xml, "totem-playlist-ui-manager"));
-	
+	playlist->priv->action_group = GTK_ACTION_GROUP (gtk_builder_get_object (xml, "playlist-action-group"));
+	g_object_ref (playlist->priv->action_group);
+	playlist->priv->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (xml, "totem-playlist-ui-manager"));
+	g_object_ref (playlist->priv->ui_manager);
+
 	gtk_widget_add_events (GTK_WIDGET (playlist), GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (playlist), "key_press_event",
 			  G_CALLBACK (totem_playlist_key_press), playlist);
 
+	/* Buttons */
+	playlist->priv->save_button = GTK_WIDGET (gtk_builder_get_object (xml, "save_button"));;
+	playlist->priv->remove_button = GTK_WIDGET (gtk_builder_get_object (xml, "remove_button"));
+	playlist->priv->up_button = GTK_WIDGET (gtk_builder_get_object (xml, "up_button"));
+	playlist->priv->down_button = GTK_WIDGET (gtk_builder_get_object (xml, "down_button"));
+
 	/* Reparent the vbox */
-	container = GTK_WIDGET (gtk_builder_get_object (playlist->priv->xml, "vbox4"));
+	container = GTK_WIDGET (gtk_builder_get_object (xml, "vbox4"));
 	g_object_ref (container);
 	gtk_box_pack_start (GTK_BOX (playlist),
 			container,
@@ -1703,8 +1710,7 @@ totem_playlist_init (TotemPlaylist *playlist)
 			0);         /* padding */
 	g_object_unref (container);
 
-	playlist->priv->treeview = GTK_WIDGET (gtk_builder_get_object
-		(playlist->priv->xml, "treeview1"));
+	playlist->priv->treeview = GTK_WIDGET (gtk_builder_get_object (xml, "treeview1"));
 	init_treeview (playlist->priv->treeview, playlist);
 	playlist->priv->model = gtk_tree_view_get_model
 		(GTK_TREE_VIEW (playlist->priv->treeview));
@@ -1717,6 +1723,8 @@ totem_playlist_init (TotemPlaylist *playlist)
 	init_config (playlist);
 
 	gtk_widget_show_all (GTK_WIDGET (playlist));
+
+	g_object_unref (xml);
 }
 
 GtkWidget*
@@ -1725,7 +1733,7 @@ totem_playlist_new (void)
 	TotemPlaylist *playlist;
 
 	playlist = TOTEM_PLAYLIST (g_object_new (TOTEM_TYPE_PLAYLIST, NULL));
-	if (playlist->priv->xml == NULL || playlist->priv->ui_manager == NULL) {
+	if (playlist->priv->ui_manager == NULL) {
 		g_object_unref (playlist);
 		return NULL;
 	}
