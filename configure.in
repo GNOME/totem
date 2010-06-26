@@ -4,6 +4,10 @@ m4_define(totem_version_major, 2)
 m4_define(totem_version_minor, 90)
 m4_define(totem_version_micro, 0)
 
+# The version of the API exposed to plugins
+m4_define(totem_api_version_major, 1)
+m4_define(totem_api_version_minor, 0)
+
 AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=totem])
@@ -45,12 +49,19 @@ GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.61
 VALA_REQS=0.7.5
 
+AC_SUBST(GLIB_REQS)
+AC_SUBST(GTK_REQS)
+AC_SUBST(TOTEM_PLPARSER_REQS)
+
 TOTEM_VERSION_MAJOR=totem_version_major
 TOTEM_VERSION_MINOR=totem_version_minor
 TOTEM_VERSION_MICRO=totem_version_micro
 AC_SUBST(TOTEM_VERSION_MAJOR)
 AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
+
+TOTEM_API_VERSION=totem_api_version_major.totem_api_version_minor
+AC_SUBST(TOTEM_API_VERSION)
 
 # The full list of plugins
 allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot brasero-disc-recorder coherence_upnp dbus-service iplayer"
@@ -838,6 +849,7 @@ src/backend/Makefile
 browser-plugin/Makefile
 data/Makefile
 data/totem.desktop.in.in
+data/totem.pc
 data/icons/Makefile
 data/icons/16x16/Makefile
 data/icons/22x22/Makefile

@@ -29,6 +29,9 @@ INST_H_FILES = \
 	plugins/totem-plugin.h		\
 	plugins/totem-dirs.h
 
+headerdir = $(includedir)/totem/$(TOTEM_API_VERSION)
+header_DATA = $(INST_H_FILES)
+
 # Totem UI ltlibrary (used by browser plugins)
 
 libtotem_player_la_SOURCES = \
@@ -394,6 +397,7 @@ if HAVE_INTROSPECTION
 
 introspection_sources = $(INST_H_FILES) $(filter %.c,$(libtotem_player_la_SOURCES) $(libtotem_la_SOURCES))
 
+# NOTE: This should change with $(TOTEM_API_VERSION)
 Totem-1.0.gir: libtotem.la
 Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
 Totem_1_0_gir_CFLAGS = $(DEPENDENCY_CFLAGS)		\
