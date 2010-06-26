@@ -371,10 +371,10 @@ impl_deactivate (PeasActivatable *plugin, GObject *totem)
 	totem_remove_sidebar_page (self->totem, "youtube");
 
 	for (i = 0; i < NUM_TREE_VIEWS; i++) {
-		if (self->cancellable[i] != NULL) {
+		/* Cancel any queries which are still underway */
+		if (self->cancellable[i] != NULL)
 			g_cancellable_cancel (self->cancellable[i]);
-			g_object_unref (self->cancellable[i]);
-		}
+
 		if (self->query[i] != NULL)
 			g_object_unref (self->query[i]);
 	}
@@ -456,22 +456,13 @@ increment_progress_bar_fraction (TotemYouTubePlugin *self, guint tree_view)
 		gdk_window_set_cursor (gtk_widget_get_window (self->vbox), NULL);
 		gtk_progress_bar_set_text (self->progress_bar[tree_view], "");
 		gtk_progress_bar_set_fraction (self->progress_bar[tree_view], 0.0);
-
-		/* Disable the "Cancel" button, if it applies to the current tree view */
-		if (self->current_tree_view == tree_view)
-			gtk_widget_set_sensitive (self->cancel_button, FALSE);
-
-		/* Unref cancellable */
-		if (self->cancellable[tree_view] != NULL)
-			g_object_unref (self->cancellable[tree_view]);
-		self->cancellable[tree_view] = NULL;
 	}
 }
 
 typedef struct {
 	TotemYouTubePlugin *plugin;
 	GDataEntry *entry;
-	GtkTreeIter iter;
+	GtkTreePath *path;
 	guint tree_view;
 } TParamData;
 
@@ -483,6 +474,7 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 	gsize length;
 	GMatchInfo *match_info;
 	GError *error = NULL;
+	GtkTreeIter iter;
 	TotemYouTubePlugin *self = data->plugin;
 
 	/* Finish loading the page */
@@ -547,8 +539,10 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 	g_free (contents);
 
 	/* Update the tree view with the new MRL */
-	gtk_list_store_set (self->list_store[data->tree_view], &(data->iter), 2, video_uri, -1);
-	g_debug ("Updated list store with new video URI (\"%s\") for entry %s", video_uri, video_id);
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter, data->path) == TRUE) {
+		gtk_list_store_set (self->list_store[data->tree_view], &iter, 2, video_uri, -1);
+		g_debug ("Updated list store with new video URI (\"%s\") for entry %s", video_uri, video_id);
+	}
 
 	g_free (video_uri);
 
@@ -558,11 +552,12 @@ free_data:
 
 	g_object_unref (data->plugin);
 	g_object_unref (data->entry);
+	gtk_tree_path_free (data->path);
 	g_slice_free (TParamData, data);
 }
 
 static void
-resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter, guint tree_view)
+resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter, guint tree_view, GCancellable *cancellable)
 {
 	GDataLink *link;
 	GFile *video_page;
@@ -575,18 +570,19 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	data = g_slice_new (TParamData);
 	data->plugin = g_object_ref (self);
 	data->entry = g_object_ref (entry);
-	data->iter = *iter;
+	data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->list_store[tree_view]), iter);
 	data->tree_view = tree_view;
 
 	video_page = g_file_new_for_uri (gdata_link_get_uri (link));
-	g_file_load_contents_async (video_page, self->cancellable[tree_view], (GAsyncReadyCallback) resolve_t_param_cb, data);
+	g_file_load_contents_async (video_page, cancellable, (GAsyncReadyCallback) resolve_t_param_cb, data);
 	g_object_unref (video_page);
 }
 
 typedef struct {
 	TotemYouTubePlugin *plugin;
-	GtkTreeIter iter;
+	GtkTreePath *path;
 	guint tree_view;
+	GCancellable *cancellable;
 } ThumbnailData;
 
 static void
@@ -594,6 +590,7 @@ thumbnail_loaded_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 {
 	GdkPixbuf *thumbnail;
 	GError *error = NULL;
+	GtkTreeIter iter;
 	TotemYouTubePlugin *self = data->plugin;
 
 	/* Finish loading the thumbnail */
@@ -615,8 +612,10 @@ thumbnail_loaded_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	g_debug ("Finished creating thumbnail from stream");
 
 	/* Update the tree view */
-	gtk_list_store_set (self->list_store[data->tree_view], &(data->iter), 0, thumbnail, -1);
-	g_debug ("Updated list store with new thumbnail");
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter, data->path) == TRUE) {
+		gtk_list_store_set (self->list_store[data->tree_view], &iter, 0, thumbnail, -1);
+		g_debug ("Updated list store with new thumbnail");
+	}
 
 	g_object_unref (thumbnail);
 
@@ -625,6 +624,8 @@ free_data:
 	increment_progress_bar_fraction (self, data->tree_view);
 
 	g_object_unref (data->plugin);
+	g_object_unref (data->cancellable);
+	gtk_tree_path_free (data->path);
 	g_slice_free (ThumbnailData, data);
 }
 
@@ -634,7 +635,6 @@ thumbnail_opened_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	GFile *thumbnail_file;
 	GFileInputStream *input_stream;
 	GError *error = NULL;
-	TotemYouTubePlugin *self = data->plugin;
 
 	/* Finish opening the thumbnail */
 	thumbnail_file = G_FILE (source_object);
@@ -647,20 +647,40 @@ thumbnail_opened_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 		return;
 	}
 
+	/* NOTE: There's no need to reset the cancellable before using it again, as we'll have bailed before now if it was ever cancelled. */
+
 	g_debug ("Creating thumbnail from stream");
 	totem_gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (input_stream), THUMBNAIL_WIDTH, -1, TRUE,
-							 self->cancellable[data->tree_view], (GAsyncReadyCallback) thumbnail_loaded_cb, data);
+							 data->cancellable, (GAsyncReadyCallback) thumbnail_loaded_cb, data);
 	g_object_unref (input_stream);
 }
 
 typedef struct {
 	TotemYouTubePlugin *plugin;
 	guint tree_view;
+	GCancellable *query_cancellable;
+	GCancellable *t_param_cancellable;
+	GCancellable *thumbnail_cancellable;
 } QueryData;
+
+static void
+query_data_free (QueryData *data)
+{
+	if (data->thumbnail_cancellable != NULL)
+		g_object_unref (data->thumbnail_cancellable);
+	if (data->t_param_cancellable != NULL)
+		g_object_unref (data->t_param_cancellable);
+
+	g_object_unref (data->query_cancellable);
+	g_object_unref (data->plugin);
+
+	g_slice_free (QueryData, data);
+}
 
 static void
 query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data)
 {
+	GtkWindow *window;
 	GDataFeed *feed;
 	GError *error = NULL;
 	TotemYouTubePlugin *self = data->plugin;
@@ -673,38 +693,45 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 	self->progress_bar_increment[data->tree_view] = 1.0;
 	increment_progress_bar_fraction (self, data->tree_view);
 
-	if (feed == NULL) {
-		GtkWindow *window;
+	if (feed != NULL) {
+		/* Success! */
+		g_object_unref (feed);
+		query_data_free (data);
 
-		/* Bail out if the operation was cancelled */
-		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
-			g_error_free (error);
-			goto free_data;
-		}
-
-		/* Error! */
-		window = totem_get_main_window (data->plugin->totem);
-		if (g_error_matches (error, GDATA_SERVICE_ERROR, GDATA_SERVICE_ERROR_PROTOCOL_ERROR) == TRUE) {
-			/* Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
-			 * if we're receiving a protocol error). */
-			totem_interface_error (_("Error Searching for Videos"),
-					       _("The response from the server could not be understood. "
-					         "Please check you are running the latest version of libgdata."), window);
-		} else {
-			/* Spew out the error message as provided */
-			totem_interface_error (_("Error Searching for Videos"), error->message, window);
-		}
-
-		g_object_unref (window);
-		g_error_free (error);
-		goto free_data;
+		return;
 	}
 
-	g_object_unref (feed);
+	/* Bail out if the operation was cancelled */
+	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
+		/* Cancel the t-param and thumbnail threads, if applicable */
+		if (data->t_param_cancellable != NULL)
+			g_cancellable_cancel (data->t_param_cancellable);
+		if (data->thumbnail_cancellable != NULL)
+			g_cancellable_cancel (data->thumbnail_cancellable);
 
-free_data:
-	g_object_unref (data->plugin);
-	g_slice_free (QueryData, data);
+		goto finish;
+	}
+
+	/* Error! */
+	window = totem_get_main_window (data->plugin->totem);
+	if (g_error_matches (error, GDATA_SERVICE_ERROR, GDATA_SERVICE_ERROR_PROTOCOL_ERROR) == TRUE) {
+		/* Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
+		 * if we're receiving a protocol error). */
+		totem_interface_error (_("Error Searching for Videos"),
+				       _("The response from the server could not be understood. "
+				         "Please check you are running the latest version of libgdata."), window);
+	} else {
+		/* Spew out the error message as provided */
+		totem_interface_error (_("Error Searching for Videos"), error->message, window);
+	}
+
+	g_object_unref (window);
+
+finish:
+	g_error_free (error);
+	query_data_free (data);
+
+	return;
 }
 
 static void
@@ -717,9 +744,6 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	const gchar *title, *id;
 	GtkProgressBar *progress_bar;
 	TotemYouTubePlugin *self = data->plugin;
-
-	/* Check this query hasn't finished */
-	g_assert (self->cancellable[data->tree_view] != NULL);
 
 	/* Add the entry to the tree view */
 	title = gdata_entry_get_title (entry);
@@ -742,7 +766,9 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	gtk_progress_bar_set_fraction (progress_bar, gtk_progress_bar_get_fraction (progress_bar) + self->progress_bar_increment[data->tree_view]);
 
 	/* Resolve the t parameter for the video, which is required before it can be played */
-	resolve_t_param (self, entry, &iter, data->tree_view);
+	/* This will be cancelled if the main query is cancelled, in query_finished_cb() */
+	data->t_param_cancellable = g_cancellable_new ();
+	resolve_t_param (self, entry, &iter, data->tree_view, data->t_param_cancellable);
 
 	/* Download the entry's thumbnail, ready for adding it to the tree view.
 	 * Find the thumbnail size which is closest to the wanted size (THUMBNAIL_WIDTH), so that we:
@@ -774,15 +800,53 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 
 		t_data = g_slice_new (ThumbnailData);
 		t_data->plugin = g_object_ref (self);
-		t_data->iter = iter;
+		t_data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter);
 		t_data->tree_view = data->tree_view;
+
+		/* We can use the same cancellable for reading the file and making a pixbuf out of it, as they're consecutive operations */
+		/* This will be cancelled if the main query is cancelled, in query_finished_cb() */
+		data->thumbnail_cancellable = g_cancellable_new ();
+		t_data->cancellable = g_object_ref (data->thumbnail_cancellable);
 
 		g_debug ("Starting thumbnail download for entry %s", id);
 		thumbnail_file = g_file_new_for_uri (gdata_media_thumbnail_get_uri (thumbnail));
-		g_file_read_async (thumbnail_file, G_PRIORITY_DEFAULT, self->cancellable[data->tree_view],
+		g_file_read_async (thumbnail_file, G_PRIORITY_DEFAULT, data->thumbnail_cancellable,
 				   (GAsyncReadyCallback) thumbnail_opened_cb, t_data);
 		g_object_unref (thumbnail_file);
 	}
+}
+
+/* Called when self->cancellable[tree_view] is destroyed (for either tree view) */
+static void
+cancellable_notify_cb (TotemYouTubePlugin *self, GCancellable *old_cancellable)
+{
+	guint i;
+
+	/* Disable the "Cancel" button, if it applies to the current tree view */
+	if (self->cancellable[self->current_tree_view] == old_cancellable)
+		gtk_widget_set_sensitive (self->cancel_button, FALSE);
+
+	/* NULLify the cancellable */
+	for (i = 0; i < NUM_TREE_VIEWS; i++) {
+		if (self->cancellable[i] == old_cancellable)
+			self->cancellable[i] = NULL;
+	}
+}
+
+static void
+set_current_operation (TotemYouTubePlugin *self, guint tree_view, GCancellable *cancellable)
+{
+	/* Cancel previous searches on this tree view */
+	if (self->cancellable[tree_view] != NULL)
+		g_cancellable_cancel (self->cancellable[tree_view]);
+
+	/* Make this the current cancellable action for the given tab */
+	g_object_weak_ref (G_OBJECT (cancellable), (GWeakNotify) cancellable_notify_cb, self);
+	self->cancellable[tree_view] = cancellable;
+
+	/* Enable the "Cancel" button if it applies to the current tree view */
+	if (self->current_tree_view == tree_view)
+		gtk_widget_set_sensitive (self->cancel_button, TRUE);
 }
 
 static void
@@ -790,36 +854,30 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 {
 	QueryData *data;
 
-	/* Cancel previous searches on this tree view */
-	if (self->cancellable[tree_view] != NULL) {
-		g_cancellable_cancel (self->cancellable[tree_view]);
-		g_object_unref (self->cancellable[tree_view]);
-	}
+	/* Set up the query */
+	data = g_slice_new (QueryData);
+	data->plugin = g_object_ref (self);
+	data->tree_view = tree_view;
+	data->query_cancellable = g_cancellable_new ();
+	data->t_param_cancellable = NULL;
+	data->thumbnail_cancellable = NULL;
+
+	/* Make this the current cancellable action for the given tab */
+	set_current_operation (self, tree_view, data->query_cancellable);
 
 	/* Clear the tree views */
 	if (clear_tree_view == TRUE)
 		gtk_list_store_clear (self->list_store[tree_view]);
 
-	/* Do the query */
-	self->cancellable[tree_view] = g_cancellable_new ();
-
-	data = g_slice_new (QueryData);
-	data->plugin = g_object_ref (self);
-	data->tree_view = tree_view;
-
 	if (tree_view == SEARCH_TREE_VIEW) {
-		gdata_youtube_service_query_videos_async (self->service, self->query[tree_view], self->cancellable[tree_view],
+		gdata_youtube_service_query_videos_async (self->service, self->query[tree_view], data->query_cancellable,
 							  (GDataQueryProgressCallback) query_progress_cb, data,
 							  (GAsyncReadyCallback) query_finished_cb, data);
 	} else {
-		gdata_youtube_service_query_related_async (self->service, self->playing_video, self->query[tree_view], self->cancellable[tree_view],
+		gdata_youtube_service_query_related_async (self->service, self->playing_video, self->query[tree_view], data->query_cancellable,
 							   (GDataQueryProgressCallback) query_progress_cb, data,
 							   (GAsyncReadyCallback) query_finished_cb, data);
 	}
-
-	/* Enable the "Cancel" button if it applies to the current tree view */
-	if (self->current_tree_view == tree_view)
-		gtk_widget_set_sensitive (self->cancel_button, TRUE);
 }
 
 void
@@ -874,7 +932,10 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 void
 cancel_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 {
-	g_assert (self->cancellable[self->current_tree_view] != NULL);
+	/* It's possible for the operation to finish (and consequently the cancellable to disappear) while the GtkButton is deciding whether the
+	 * user is actually pressing it (in its timeout). */
+	if (self->cancellable[self->current_tree_view] == NULL)
+		return;
 
 	g_debug ("Cancelling search");
 	g_cancellable_cancel (self->cancellable[self->current_tree_view]);
