@@ -12,6 +12,7 @@ common_defines = \
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
+	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	-DBINDIR=\""$(bindir)"\"			\
 	-DGTKBUILDERDIR=\"""\"				\
 	$(DISABLE_DEPRECATED)
@@ -83,7 +84,12 @@ libtotem_main_la_SOURCES = \
 	ev-sidebar.h			\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\
-	totem-profile.h
+	totem-profile.h			\
+	plugins/totem-plugin.h		\
+	plugins/totem-plugins-engine.c	\
+	plugins/totem-plugins-engine.h	\
+	plugins/totem-dirs.c		\
+	plugins/totem-dirs.h
 
 libtotem_main_la_CPPFLAGS = \
 	-I$(top_srcdir)/		\
@@ -99,6 +105,7 @@ libtotem_main_la_CFLAGS = \
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
+	$(PEAS_CFLAGS)			\
 	$(PEASUI_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -109,7 +116,6 @@ libtotem_main_la_LDFLAGS =		\
 libtotem_main_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
-	plugins/libtotemmodule.la	\
 	$(PEASUI_LIBS)			\
 	$(DEPENDENCY_LIBS)		\
 	$(DBUS_LIBS)			\
