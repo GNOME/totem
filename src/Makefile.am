@@ -19,13 +19,23 @@ common_defines = \
 
 modules_flags = -export_dynamic -avoid-version -module -no-undefined
 
+# Header files installed for use by plugins (and consequently introspected using gobject-introspection; see the bottom of the Makefile)
+
+INST_H_FILES = \
+	totem.h				\
+	totem-video-list.h		\
+	totem-cell-renderer-video.h	\
+	totem-interface.h		\
+	plugins/totem-plugin.h		\
+	plugins/totem-dirs.h
+
 # Totem UI ltlibrary (used by browser plugins)
 
 libtotem_player_la_SOURCES = \
+	$(INST_H_FILES)		\
 	totem-statusbar.c	\
 	totem-statusbar.h	\
 	totem-interface.c	\
-	totem-interface.h	\
 	totem-fullscreen.c	\
 	totem-fullscreen.h	\
 	gsd-media-keys-window.c	\
@@ -52,13 +62,11 @@ libtotem_player_la_LDFLAGS = \
 
 libtotem_la_SOURCES = \
 	$(TOTEMMARSHALFILES)		\
+	$(INST_H_FILES)			\
 	totem-object.c			\
-	totem.h				\
 	totem-private.h			\
 	totem-cell-renderer-video.c	\
-	totem-cell-renderer-video.h	\
 	totem-video-list.c		\
-	totem-video-list.h		\
 	totem-preferences.c		\
 	totem-preferences.h		\
 	totem-dnd-menu.c		\
@@ -85,11 +93,9 @@ libtotem_la_SOURCES = \
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\
 	totem-profile.h			\
-	plugins/totem-plugin.h		\
 	plugins/totem-plugins-engine.c	\
 	plugins/totem-plugins-engine.h	\
-	plugins/totem-dirs.c		\
-	plugins/totem-dirs.h
+	plugins/totem-dirs.c
 
 libtotem_la_CPPFLAGS = \
 	-I$(top_srcdir)/		\
@@ -377,3 +383,34 @@ EXTRA_DIST = 				\
 	totemvideolist-marshal.list	\
 	totemplaylist-marshal.list
 
+# Introspection
+-include $(INTROSPECTION_MAKEFILE)
+
+INTROSPECTION_GIRS =
+INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
+INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
+
+if HAVE_INTROSPECTION
+
+introspection_sources = $(INST_H_FILES) $(filter %.c,$(libtotem_player_la_SOURCES) $(libtotem_la_SOURCES))
+
+Totem-1.0.gir: libtotem.la
+Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
+Totem_1_0_gir_CFLAGS = $(DEPENDENCY_CFLAGS)		\
+	$(DBUS_CFLAGS)			\
+	$(MISSING_PLUGINS_CFLAGS)	\
+	$(PEASUI_CFLAGS)		\
+	$(AM_CFLAGS)	$(libtotem_la_CPPFLAGS)
+Totem_1_0_gir_LIBS = libtotem.la
+Totem_1_0_gir_FILES = $(introspection_sources)
+INTROSPECTION_GIRS += Totem-1.0.gir
+
+girdir = $(datadir)/gir-1.0
+gir_DATA = $(INTROSPECTION_GIRS)
+
+typelibdir = $(libdir)/girepository-1.0
+typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
+
+CLEANFILES += $(gir_DATA) $(typelib_DATA)
+
+endif
