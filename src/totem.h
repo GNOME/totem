@@ -130,11 +130,6 @@ GQuark totem_remote_setting_quark	(void);
 #define TOTEM_TYPE_REMOTE_SETTING	(totem_remote_setting_get_type())
 #define TOTEM_REMOTE_SETTING		totem_remote_setting_quark ()
 
-GType totem_disc_media_type_get_type	(void);
-GQuark totem_disc_media_type_quark	(void);
-#define TOTEM_TYPE_DISC_MEDIA_TYPE	(totem_disc_media_type_get_type())
-#define TOTEM_DISC_MEDIA_TYPE		totem_disc_media_type_quark ()
-
 #define TOTEM_TYPE_OBJECT              (totem_object_get_type ())
 #define TOTEM_OBJECT(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), totem_object_get_type (), TotemObject))
 #define TOTEM_OBJECT_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), totem_object_get_type (), TotemObjectClass))
