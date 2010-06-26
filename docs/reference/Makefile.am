@@ -141,7 +141,7 @@ GTKDOC_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
 	$(PEAS_CFLAGS)
 GTKDOC_LIBS = \
-	$(top_builddir)/src/libtotem_main.la	\
+	$(top_builddir)/src/libtotem.la	\
 	$(DEPENDENCY_LIBS)
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.

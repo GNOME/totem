@@ -1,7 +1,7 @@
 SUBDIRS = plugins backend
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
-lib_LTLIBRARIES = libtotem_main.la
+lib_LTLIBRARIES = libtotem.la
 libexec_PROGRAMS =
 noinst_LTLIBRARIES = libtotem_player.la
 
@@ -50,7 +50,7 @@ libtotem_player_la_LDFLAGS = \
 
 # Totem main library (used for main player; separate to allow gtk-doc to be used)
 
-libtotem_main_la_SOURCES = \
+libtotem_la_SOURCES = \
 	$(TOTEMMARSHALFILES)		\
 	totem-object.c			\
 	totem.h				\
@@ -91,7 +91,7 @@ libtotem_main_la_SOURCES = \
 	plugins/totem-dirs.c		\
 	plugins/totem-dirs.h
 
-libtotem_main_la_CPPFLAGS = \
+libtotem_la_CPPFLAGS = \
 	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
 	-I$(srcdir)/plugins		\
@@ -100,7 +100,7 @@ libtotem_main_la_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
-libtotem_main_la_CFLAGS = \
+libtotem_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
@@ -109,11 +109,11 @@ libtotem_main_la_CFLAGS = \
 	$(PEASUI_CFLAGS)		\
 	$(AM_CFLAGS)
 
-libtotem_main_la_LDFLAGS =		\
+libtotem_la_LDFLAGS =		\
 	-export_dynamic			\
 	$(AM_LDFLAGS)
 
-libtotem_main_la_LIBADD = \
+libtotem_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
 	$(PEASUI_LIBS)			\
@@ -124,26 +124,26 @@ libtotem_main_la_LIBADD = \
 	$(X_LIBS)
 
 if WITH_SMCLIENT
-libtotem_main_la_SOURCES += \
+libtotem_la_SOURCES += \
 	eggsmclient.c \
 	eggsmclient.h \
 	eggsmclient-private.h \
 	$(NULL)
-libtotem_main_la_CFLAGS += $(SMCLIENT_CFLAGS)
-libtotem_main_la_LIBADD += $(SMCLIENT_LIBS)
+libtotem_la_CFLAGS += $(SMCLIENT_CFLAGS)
+libtotem_la_LIBADD += $(SMCLIENT_LIBS)
 
 if WITH_SMCLIENT_XSMP
-libtotem_main_la_SOURCES += \
+libtotem_la_SOURCES += \
 	eggdesktopfile.c \
 	eggdesktopfile.h \
 	eggsmclient-xsmp.c
-libtotem_main_la_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
+libtotem_la_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
 endif
 if WITH_SMCLIENT_WIN32
-libtotem_main_la_SOURCES += eggsmclient-win32.c
+libtotem_la_SOURCES += eggsmclient-win32.c
 endif
 if WITH_SMCLIENT_QUARTZ
-libtotem_main_la_SOURCES += eggsmclient-osx.c
+libtotem_la_SOURCES += eggsmclient-osx.c
 endif
 endif
 
@@ -189,7 +189,7 @@ totem_LDFLAGS =				\
 	$(AM_LDFLAGS)
 
 totem_LDADD =						\
-	libtotem_main.la				\
+	libtotem.la					\
 	$(DEPENDENCY_LIBS)				\
 	$(XVIDMODE_LIBS)				\
 	$(XTEST_LIBS)					\
@@ -376,4 +376,4 @@ EXTRA_DIST = 				\
 	totemobject-marshal.list	\
 	totemvideolist-marshal.list	\
 	totemplaylist-marshal.list
-		
+
