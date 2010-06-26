@@ -324,57 +324,6 @@ if test "x$have_python" != "xno"; then
 	AC_SUBST([PYTHON_LIB_LOC])
 	AC_SUBST([PYTHON_CFLAGS])
 	AC_SUBST([PYTHON_EXTRA_LIBS])
-
-	PYGTK_REQUIRED=2.12.0
-
-	PKG_CHECK_MODULES([PYGTK], [
-		pygtk-2.0 >= $PYGTK_REQUIRED
-		totem-plparser >= $TOTEM_PLPARSER_REQS],
-		[],
-		[
-		have_python=no
-		if test "x$enable_python" = "xyes"; then
-			AC_MSG_ERROR([$PYGTK_PKG_ERRORS])
-		elif test "x$enable_python" = "xautodetect"; then
-			enable_python=no
-			AC_MSG_WARN([$PYGTK_PKG_ERRORS])
-			AC_MSG_WARN([Disabling python support])
-		fi
-		])
-
-	AC_SUBST([PYGTK_CFLAGS])
-	AC_SUBST([PYGTK_LIBS])
-fi
-
-if test "x$have_python" != "xno"; then
-	AC_MSG_CHECKING([for pygtk defs])
-	PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-	AC_MSG_RESULT([$PYGTK_DEFSDIR])
-
-	AC_MSG_CHECKING([for pygtk codegen])
-	PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.py"
-	AC_MSG_RESULT([$PYGTK_CODEGEN])
-
-	AC_MSG_CHECKING([for pygtk h2def])
-	PYGTK_H2DEF="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/h2def.py"
-	AC_MSG_RESULT([$PYGTK_H2DEF])
-
-	AC_SUBST([PYGTK_DEFSDIR])
-	AC_SUBST([PYGTK_CODEGEN])
-	AC_SUBST([PYGTK_H2DEF])
-
-	dnl Check for -fno-strict-aliasing
-	FLAGS="-fno-strict-aliasing"
-	save_CFLAGS="$CFLAGS"
-	CFLAGS="$CFLAGS $FLAGS"
-	AC_MSG_CHECKING([whether [$]CC understands $FLAGS])
-	AC_TRY_COMPILE([], [], [compiler_has_option=yes], [compiler_has_option=no])
-	CFLAGS="$save_CFLAGS"
-	AC_MSG_RESULT($compiler_has_option)
-	if test $compiler_has_option = yes; then
-		NO_STRICT_ALIASING_CFLAGS="$FLAGS"
-	fi
-	AC_SUBST([NO_STRICT_ALIASING_CFLAGS])
 fi
 
 if test "x$have_python" != "xno" -a "x$enable_python" != "xno"; then
@@ -859,9 +808,6 @@ data/icons/48x48/Makefile
 data/icons/scalable/Makefile
 po/Makefile.in
 help/Makefile
-bindings/Makefile
-bindings/python/Makefile
-bindings/vala/Makefile
 docs/Makefile
 docs/reference/Makefile
 docs/reference/version.xml
@@ -875,14 +821,14 @@ else
 	AC_MSG_NOTICE([   Easy codec installation support disabled])
 fi
 if test x$enable_python = xyes ; then
-	AC_MSG_NOTICE([** Python binding support enabled])
+	AC_MSG_NOTICE([** Python plugin support enabled])
 else
-	AC_MSG_NOTICE([   Python binding support disabled])
+	AC_MSG_NOTICE([   Python plugin support disabled])
 fi
 if test x$with_vala = xyes ; then
-	AC_MSG_NOTICE([** Vala binding support enabled])
+	AC_MSG_NOTICE([** Vala plugin support enabled])
 else
-	AC_MSG_NOTICE([   Vala binding support disabled])
+	AC_MSG_NOTICE([   Vala plugin support disabled])
 fi
 if test "x${PLUGINS}" != "x" ; then
 	for allowed_plugin in ${ALL_PLUGINS}; do

@@ -1,4 +1,4 @@
-NORMAL_SUBDIRS = lib bindings po data help src docs
+NORMAL_SUBDIRS = lib po data help src docs
 SUBDIRS = $(NORMAL_SUBDIRS)
 
 if ENABLE_BROWSER_PLUGINS
