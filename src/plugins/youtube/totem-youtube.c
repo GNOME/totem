@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* 
- * Copyright (C) 2009 Philip Withnall <philip@tecnocode.co.uk>
+/*
+ * Copyright (C) 2009–2010 Philip Withnall <philip@tecnocode.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,8 +90,7 @@ typedef struct {
 	PeasExtensionBaseClass parent_class;
 } TotemYouTubePluginClass;
 
-GType totem_youtube_plugin_get_type		(void) G_GNUC_CONST;
-static void totem_youtube_plugin_class_init	(TotemYouTubePluginClass *klass);
+GType totem_youtube_plugin_get_type (void) G_GNUC_CONST;
 
 /* GtkBuilder callbacks */
 void notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, TotemYouTubePlugin *self);
@@ -104,7 +103,7 @@ void open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *sel
 void value_changed_cb (GtkAdjustment *adjustment, TotemYouTubePlugin *self);
 gboolean starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePlugin *self);
 
-TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePlugin, totem_youtube_plugin);
+TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePlugin, totem_youtube_plugin);
 
 static void
 totem_youtube_plugin_class_init (TotemYouTubePluginClass *klass)
@@ -127,8 +126,8 @@ typedef struct {
 
 static void
 new_from_stream_thread (GSimpleAsyncResult *result,
-			GInputStream       *stream,
-			GCancellable       *cancellable)
+                        GInputStream       *stream,
+                        GCancellable       *cancellable)
 {
 	GdkPixbuf *pixbuf;
 	AtScaleData *data;
@@ -160,9 +159,9 @@ new_from_stream_thread (GSimpleAsyncResult *result,
  * @preserve_aspect_ratio: %TRUE to preserve the image's aspect ratio
  * @cancellable: optional #GCancellable object, %NULL to ignore
  * @callback: a #GAsyncReadyCallback to call when the the pixbuf is loaded
- * @user_data: the data to pass to the callback function 
+ * @user_data: the data to pass to the callback function
  *
- * Creates a new pixbuf by asynchronously loading an image from an input stream.  
+ * Creates a new pixbuf by asynchronously loading an image from an input stream.
  *
  * For more details see gdk_pixbuf_new_from_stream_at_scale(), which is the synchronous
  * version of this function.
@@ -174,12 +173,12 @@ new_from_stream_thread (GSimpleAsyncResult *result,
  **/
 static void
 totem_gdk_pixbuf_new_from_stream_at_scale_async (GInputStream        *stream,
-					   gint                 width,
-					   gint                 height,
-					   gboolean             preserve_aspect_ratio,
-					   GCancellable        *cancellable,
-					   GAsyncReadyCallback  callback,
-					   gpointer             user_data)
+                                                 gint                 width,
+                                                 gint                 height,
+                                                 gboolean             preserve_aspect_ratio,
+                                                 GCancellable        *cancellable,
+                                                 GAsyncReadyCallback  callback,
+                                                 gpointer             user_data)
 {
 	GSimpleAsyncResult *result;
 	AtScaleData *data;
@@ -203,9 +202,9 @@ totem_gdk_pixbuf_new_from_stream_at_scale_async (GInputStream        *stream,
  * @stream: a #GInputStream from which to load the pixbuf
  * @cancellable: optional #GCancellable object, %NULL to ignore
  * @callback: a #GAsyncReadyCallback to call when the the pixbuf is loaded
- * @user_data: the data to pass to the callback function 
+ * @user_data: the data to pass to the callback function
  *
- * Creates a new pixbuf by asynchronously loading an image from an input stream.  
+ * Creates a new pixbuf by asynchronously loading an image from an input stream.
  *
  * For more details see gdk_pixbuf_new_from_stream(), which is the synchronous
  * version of this function.
@@ -217,9 +216,9 @@ totem_gdk_pixbuf_new_from_stream_at_scale_async (GInputStream        *stream,
  **/
 static void
 totem_gdk_pixbuf_new_from_stream_async (GInputStream        *stream,
-				  GCancellable        *cancellable,
-				  GAsyncReadyCallback  callback,
-				  gpointer             user_data)
+                                        GCancellable        *cancellable,
+                                        GAsyncReadyCallback  callback,
+                                        gpointer             user_data)
 {
 	GSimpleAsyncResult *result;
 
@@ -246,14 +245,14 @@ totem_gdk_pixbuf_new_from_stream_async (GInputStream        *stream,
  **/
 static GdkPixbuf *
 totem_gdk_pixbuf_new_from_stream_finish (GAsyncResult  *async_result,
-				   GError       **error)
+                                         GError       **error)
 {
 	GdkPixbuf *pixbuf;
 	GSimpleAsyncResult *result = G_SIMPLE_ASYNC_RESULT (async_result);
 
 	g_return_val_if_fail (G_IS_ASYNC_RESULT (async_result), NULL);
 	g_warn_if_fail (g_simple_async_result_get_source_tag (result) == totem_gdk_pixbuf_new_from_stream_async ||
-			g_simple_async_result_get_source_tag (result) == totem_gdk_pixbuf_new_from_stream_at_scale_async);
+	                g_simple_async_result_get_source_tag (result) == totem_gdk_pixbuf_new_from_stream_at_scale_async);
 
 	if (g_simple_async_result_propagate_error (result, error))
 		return NULL;
@@ -280,8 +279,8 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	/* Add the cell renderer. This can't be done with GtkBuilder, because it unavoidably sets the expand parameter to FALSE */
 	/* TODO: Depends on bug #453692 */
 	renderer = GTK_CELL_RENDERER (totem_cell_renderer_video_new (TRUE));
-	column = GTK_TREE_VIEW_COLUMN (gtk_builder_get_object (builder,
-							       (key == SEARCH_TREE_VIEW) ? "yt_treeview_search_column" : "yt_treeview_related_column"));
+	column = GTK_TREE_VIEW_COLUMN (gtk_builder_get_object (builder, (key == SEARCH_TREE_VIEW) ? "yt_treeview_search_column"
+	                                                                                          : "yt_treeview_related_column"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
 	gtk_tree_view_column_set_attributes (column, renderer, "thumbnail", 0, "title", 1, NULL);
 
@@ -312,11 +311,11 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 
 	gtk_ui_manager_insert_action_group (ui_manager, action_group, 1);
 	gtk_ui_manager_add_ui (ui_manager, gtk_ui_manager_new_merge_id (ui_manager),
-			       "/ui/totem-video-list-popup/",
-			       "open-in-web-browser",
-			       "open-in-web-browser",
-			       GTK_UI_MANAGER_MENUITEM,
-			       FALSE);
+	                       "/ui/totem-video-list-popup/",
+	                       "open-in-web-browser",
+	                       "open-in-web-browser",
+	                       GTK_UI_MANAGER_MENUITEM,
+	                       FALSE);
 
 	menu_item = gtk_ui_manager_get_action (ui_manager, "/ui/totem-video-list-popup/open-in-web-browser");
 	g_signal_connect (menu_item, "activate", G_CALLBACK (open_in_web_browser_activate_cb), self);
@@ -525,7 +524,7 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 
 		/* We don't have a match, which is odd; fall back to the FLV URI as advertised by the YouTube API */
 		content = GDATA_MEDIA_CONTENT (gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (data->entry),
-										    "application/x-shockwave-flash"));
+		                                                                    "application/x-shockwave-flash"));
 		if (content != NULL) {
 			video_uri = g_strdup (gdata_media_content_get_uri (content));
 			g_debug ("Couldn't find the t param of entry %s; falling back to its FLV URI (\"%s\")", video_id, video_uri);
@@ -559,13 +558,13 @@ free_data:
 static void
 resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter, guint tree_view, GCancellable *cancellable)
 {
-	GDataLink *link;
+	GDataLink *page_link;
 	GFile *video_page;
 	TParamData *data;
 
 	/* We have to get the t parameter from the actual HTML video page, since Google changed how their URIs work */
-	link = gdata_entry_look_up_link (entry, GDATA_LINK_ALTERNATE);
-	g_assert (link != NULL);
+	page_link = gdata_entry_look_up_link (entry, GDATA_LINK_ALTERNATE);
+	g_assert (page_link != NULL);
 
 	data = g_slice_new (TParamData);
 	data->plugin = g_object_ref (self);
@@ -573,7 +572,7 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->list_store[tree_view]), iter);
 	data->tree_view = tree_view;
 
-	video_page = g_file_new_for_uri (gdata_link_get_uri (link));
+	video_page = g_file_new_for_uri (gdata_link_get_uri (page_link));
 	g_file_load_contents_async (video_page, cancellable, (GAsyncReadyCallback) resolve_t_param_cb, data);
 	g_object_unref (video_page);
 }
@@ -651,7 +650,7 @@ thumbnail_opened_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 
 	g_debug ("Creating thumbnail from stream");
 	totem_gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (input_stream), THUMBNAIL_WIDTH, -1, TRUE,
-							 data->cancellable, (GAsyncReadyCallback) thumbnail_loaded_cb, data);
+	                                                 data->cancellable, (GAsyncReadyCallback) thumbnail_loaded_cb, data);
 	g_object_unref (input_stream);
 }
 
@@ -718,8 +717,8 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 		/* Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 		 * if we're receiving a protocol error). */
 		totem_interface_error (_("Error Searching for Videos"),
-				       _("The response from the server could not be understood. "
-				         "Please check you are running the latest version of libgdata."), window);
+		                       _("The response from the server could not be understood. "
+		                         "Please check you are running the latest version of libgdata."), window);
 	} else {
 		/* Spew out the error message as provided */
 		totem_interface_error (_("Error Searching for Videos"), error->message, window);
@@ -751,11 +750,11 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 
 	gtk_list_store_append (self->list_store[data->tree_view], &iter);
 	gtk_list_store_set (self->list_store[data->tree_view], &iter,
-			    0, NULL, /* the thumbnail will be downloaded asynchronously and added to the tree view later */
-			    1, title,
-			    2, NULL, /* the video URI will be resolved asynchronously and added to the tree view later */
-			    3, entry,
-			    -1);
+	                    0, NULL, /* the thumbnail will be downloaded asynchronously and added to the tree view later */
+	                    1, title,
+	                    2, NULL, /* the video URI will be resolved asynchronously and added to the tree view later */
+	                    3, entry,
+	                    -1);
 	g_debug ("Added entry %s to tree view (title: \"%s\")", id, title);
 
 	/* Update the progress bar; we have three steps for each entry in the results: the entry, its thumbnail, and its t parameter */
@@ -785,12 +784,12 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 		if (delta == 0) {
 			break;
 		} else if ((delta == G_MININT) ||
-			   (delta < 0 && new_delta > delta) ||
-			   (delta > 0 && new_delta > 0 && new_delta < delta)) {
+		           (delta < 0 && new_delta > delta) ||
+		           (delta > 0 && new_delta > 0 && new_delta < delta)) {
 			delta = new_delta;
 			thumbnail = current_thumb;
 			g_debug ("Choosing a %u pixel wide thumbnail (delta: %i) for entry %s",
-				 gdata_media_thumbnail_get_width (current_thumb), new_delta, id);
+			         gdata_media_thumbnail_get_width (current_thumb), new_delta, id);
 		}
 	}
 
@@ -811,7 +810,7 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 		g_debug ("Starting thumbnail download for entry %s", id);
 		thumbnail_file = g_file_new_for_uri (gdata_media_thumbnail_get_uri (thumbnail));
 		g_file_read_async (thumbnail_file, G_PRIORITY_DEFAULT, data->thumbnail_cancellable,
-				   (GAsyncReadyCallback) thumbnail_opened_cb, t_data);
+		                   (GAsyncReadyCallback) thumbnail_opened_cb, t_data);
 		g_object_unref (thumbnail_file);
 	}
 }
@@ -871,12 +870,12 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 
 	if (tree_view == SEARCH_TREE_VIEW) {
 		gdata_youtube_service_query_videos_async (self->service, self->query[tree_view], data->query_cancellable,
-							  (GDataQueryProgressCallback) query_progress_cb, data,
-							  (GAsyncReadyCallback) query_finished_cb, data);
+		                                          (GDataQueryProgressCallback) query_progress_cb, data,
+		                                          (GAsyncReadyCallback) query_finished_cb, data);
 	} else {
 		gdata_youtube_service_query_related_async (self->service, self->playing_video, self->query[tree_view], data->query_cancellable,
-							   (GDataQueryProgressCallback) query_progress_cb, data,
-							   (GAsyncReadyCallback) query_finished_cb, data);
+		                                           (GDataQueryProgressCallback) query_progress_cb, data,
+		                                           (GAsyncReadyCallback) query_finished_cb, data);
 	}
 }
 
@@ -991,7 +990,7 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 	for (path = paths; path != NULL; path = path->next) {
 		GtkTreeIter iter;
 		GDataYouTubeVideo *video;
-		GDataLink *link;
+		GDataLink *page_link;
 		GError *error = NULL;
 
 		if (gtk_tree_model_get_iter (model, &iter, (GtkTreePath*) (path->data)) == FALSE)
@@ -999,11 +998,12 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 
 		/* Get the HTML page for the video; its <link rel="alternate" ... /> */
 		gtk_tree_model_get (model, &iter, 3, &video, -1);
-		link = gdata_entry_look_up_link (GDATA_ENTRY (video), GDATA_LINK_ALTERNATE);
+		page_link = gdata_entry_look_up_link (GDATA_ENTRY (video), GDATA_LINK_ALTERNATE);
 		g_object_unref (video);
 
 		/* Display the page */
-		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->bvw)), gdata_link_get_uri (link), GDK_CURRENT_TIME, &error) == FALSE) {
+		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->bvw)), gdata_link_get_uri (page_link),
+		                  GDK_CURRENT_TIME, &error) == FALSE) {
 			GtkWindow *window = totem_get_main_window (self->totem);
 			totem_interface_error (_("Error Opening Video in Web Browser"), error->message, window);
 			g_object_unref (window);
