@@ -794,37 +794,6 @@ totem_remote_setting_get_type (void)
 	return etype;
 }
 
-GQuark
-totem_disc_media_type_quark (void)
-{
-	static GQuark quark = 0;
-	if (!quark)
-		quark = g_quark_from_static_string ("totem_disc_media_type");
-
-	return quark;
-}
-
-GType
-totem_disc_media_type_get_type (void)
-{
-	static GType etype = 0;
-
-	if (etype == 0)	{
-		static const GEnumValue values[] = {
-			ENUM_ENTRY (MEDIA_TYPE_ERROR, "Media type error"),
-			ENUM_ENTRY (MEDIA_TYPE_DATA, "Data disc"),
-			ENUM_ENTRY (MEDIA_TYPE_CDDA, "CDDA disc"),
-			ENUM_ENTRY (MEDIA_TYPE_VCD, "VCD"),
-			ENUM_ENTRY (MEDIA_TYPE_DVD, "DVD"),
-			{ 0, NULL, NULL }
-		};
-
-		etype = g_enum_register_static ("TotemDiscMediaType", values);
-	}
-
-	return etype;
-}
-
 static void
 reset_seek_status (Totem *totem)
 {
