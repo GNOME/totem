@@ -235,9 +235,9 @@ void	totem_action_next_angle			(TotemObject *totem);
 
 void	totem_action_set_scale_ratio		(TotemObject *totem, gfloat ratio);
 #define totem_action_error totem_object_action_error
-void    totem_object_action_error               (const char *title,
-						 const char *reason,
-						 TotemObject *totem);
+void    totem_object_action_error               (TotemObject *totem,
+						 const char *title,
+						 const char *reason);
 void    totem_action_play_media_device		(TotemObject *totem,
 						 const char *device);
 

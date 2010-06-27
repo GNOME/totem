@@ -816,15 +816,15 @@ reset_seek_status (TotemObject *totem)
 
 /**
  * totem_object_action_error:
+ * @totem: a #TotemObject
  * @title: the error dialog title
  * @reason: the error dialog text
- * @totem: a #TotemObject
  *
  * Displays a non-blocking error dialog with the
  * given @title and @reason.
  **/
 void
-totem_object_action_error (const char *title, const char *reason, TotemObject *totem)
+totem_object_action_error (TotemObject *totem, const char *title, const char *reason)
 {
 	reset_seek_status (totem);
 	totem_interface_error (title, reason,
@@ -1099,7 +1099,7 @@ totem_object_action_play (TotemObject *totem)
 	msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 	g_free (disp);
 
-	totem_action_error (msg, err->message, totem);
+	totem_action_error (totem, msg, err->message);
 	totem_action_stop (totem);
 	g_free (msg);
 	g_error_free (err);
@@ -1128,7 +1128,7 @@ totem_action_seek (TotemObject *totem, double pos)
 
 		reset_seek_status (totem);
 
-		totem_action_error (msg, err->message, totem);
+		totem_action_error (totem, msg, err->message);
 		g_free (msg);
 		g_error_free (err);
 	}
@@ -1201,7 +1201,7 @@ totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char
 		/* No errors? Weird */
 		if (error == NULL) {
 			msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
-			totem_action_error (msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."), totem);
+			totem_action_error (totem, msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."));
 			g_free (msg);
 			return FALSE;
 		}
@@ -1218,7 +1218,7 @@ totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char
 		/* Unsupported type (ie. CDDA) */
 		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_INVALID_LOCATION) != FALSE) {
 			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
-			totem_action_error (msg, _("Please insert another disc to play back."), totem);
+			totem_action_error (totem, msg, _("Please insert another disc to play back."));
 			g_free (msg);
 			return FALSE;
 		} else {
@@ -1253,9 +1253,9 @@ totem_action_load_media_device (TotemObject *totem, const char *device)
 
 	switch (type) {
 		case MEDIA_TYPE_ERROR:
-			totem_action_error (_("Totem was not able to play this disc."),
-					    error ? error->message : _("No reason."),
-					    totem);
+			totem_action_error (totem,
+					    _("Totem was not able to play this disc."),
+					    error ? error->message : _("No reason."));
 			retval = FALSE;
 			break;
 		case MEDIA_TYPE_DATA:
@@ -1268,9 +1268,9 @@ totem_action_load_media_device (TotemObject *totem, const char *device)
 			retval = totem_action_load_media (totem, type, device_path);
 			break;
 		case MEDIA_TYPE_CDDA:
-			totem_action_error (_("Totem does not support playback of Audio CDs"),
-					    _("Please consider using a music player or a CD extractor to play this CD"),
-					    totem);
+			totem_action_error (totem,
+					    _("Totem does not support playback of Audio CDs"),
+					    _("Please consider using a music player or a CD extractor to play this CD"));
 			retval = FALSE;
 			break;
 		default:
@@ -1747,10 +1747,10 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
 			g_free (disp);
 			if (err && err->message) {
-				totem_action_error (msg, err->message, totem);
+				totem_action_error (totem, msg, err->message);
 			}
 			else {
-				totem_action_error (msg, _("No error message"), totem);
+				totem_action_error (totem, msg, _("No error message"));
 			}
 			g_free (msg);
 		}
@@ -1911,7 +1911,7 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 		g_free (disp);
 
 		totem_action_stop (totem);
-		totem_action_error (msg, err->message, totem);
+		totem_action_error (totem, msg, err->message);
 		g_free (msg);
 		g_error_free (err);
 	}
@@ -2136,7 +2136,7 @@ totem_action_show_help (TotemObject *totem)
 	GError *error = NULL;
 
 	if (gtk_show_uri (gtk_widget_get_screen (totem->win), "ghelp:totem", gtk_get_current_event_time (), &error) == FALSE) {
-		totem_action_error (_("Totem could not display the help contents."), error->message, totem);
+		totem_action_error (totem, _("Totem could not display the help contents."), error->message);
 		g_error_free (error);
 	}
 }
@@ -2491,7 +2491,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 		play_pause_set_label (totem, STATE_STOPPED);
 
 	if (fatal == FALSE) {
-		totem_action_error (_("An error occurred"), message, totem);
+		totem_action_error (totem, _("An error occurred"), message);
 	} else {
 		totem_action_error_and_exit (_("An error occurred"),
 				message, totem);
