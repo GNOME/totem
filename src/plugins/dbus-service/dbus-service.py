@@ -20,16 +20,17 @@
 ## Sunday 13th May 2007: Bastien Nocera: Add exception clause.
 ## See license_change file for details.
 
-import totem
-import gobject, gtk
+import gobject
+from gi.repository import Peas
+from gi.repository import Gtk
+from gi.repository import Totem
 import dbus, dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 
-class dbusservice(totem.Plugin):
-	def __init__(self):
-		totem.Plugin.__init__(self)
+class dbusservice(gobject.GObject, Peas.Activatable):
+	__gtype_name__ = 'dbusservice'
 
-	def activate(self, totem):
+	def do_activate(self, totem):
 		DBusGMainLoop(set_as_default = True)
 
 		name = dbus.service.BusName ('org.mpris.Totem', bus = dbus.SessionBus ())
@@ -37,7 +38,7 @@ class dbusservice(totem.Plugin):
 		self.player = Player (name, totem)
 		self.track_list = TrackList (name, totem)
 
-	def deactivate(self, totem):
+	def do_deactivate(self, totem):
 		self.root.disconnect() # ensure we don't leak our paths on the bus
 		self.player.disconnect()
 		self.track_list.disconnect()
@@ -115,21 +116,21 @@ class Player(dbus.service.Object):
 		else:
 			playing_status = 2
 
-		if self.totem.action_remote_get_setting(totem.REMOTE_SETTING_SHUFFLE):
+		if self.totem.action_remote_get_setting(Totem.RemoteSetting.SHUFFLE):
 			shuffle_status = 1
 		else:
 			shuffle_status = 0
 
-		if self.totem.action_remote_get_setting(totem.REMOTE_SETTING_REPEAT):
+		if self.totem.action_remote_get_setting(Totem.RemoteSetting.REPEAT):
 			repeat_status = 1
 		else:
 			repeat_status = 0
 
 		return (
 			dbus.Int32(playing_status), # 0 = Playing, 1 = Paused, 2 = Stopped
-			dbus.Int32(self.totem.action_remote_get_setting(totem.REMOTE_SETTING_SHUFFLE)), # 0 = Playing linearly , 1 = Playing randomly
+			dbus.Int32(self.totem.action_remote_get_setting(Totem.RemoteSetting.SHUFFLE)), # 0 = Playing linearly , 1 = Playing randomly
 			dbus.Int32(0), # 0 = Go to the next element once the current has finished playing , 1 = Repeat the current element 
-			dbus.Int32(self.totem.action_remote_get_setting(totem.REMOTE_SETTING_REPEAT)) # 0 = Stop playing once the last element has been played, 1 = Never give up playing 
+			dbus.Int32(self.totem.action_remote_get_setting(Totem.RemoteSetting.REPEAT)) # 0 = Stop playing once the last element has been played, 1 = Never give up playing 
 		)
 
 	def calculate_caps(self):
@@ -202,7 +203,7 @@ class Player(dbus.service.Object):
 	def Play(self):
 		# If playing : rewind to the beginning of current track, else : start playing. 
 		if self.totem.is_playing():
-			self.totem.action_seek_time(0)
+			self.totem.action_seek_time(0, False)
 		else:
 			self.totem.action_play()
 
@@ -236,7 +237,7 @@ class Player(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='i', out_signature='')
 	def PositionSet(self, position):
-		self.totem.action_seek_time(position)
+		self.totem.action_seek_time(position, False)
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='i')
 	def PositionGet(self):
@@ -271,7 +272,7 @@ class TrackList(dbus.service.Object):
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='sb', out_signature='i')
 	def AddTrack(self, uri, play_immediately):
 		# We can't currently support !play_immediately
-		self.totem.add_to_playlist_and_play(uri, '', True)
+		self.totem.add_to_playlist_and_play(str(uri), '', True)
 		return 0
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='i', out_signature='')
@@ -281,8 +282,8 @@ class TrackList(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='b', out_signature='')
 	def SetLoop(self, loop):
-		self.totem.action_remote_set_setting(totem.REMOTE_SETTING_REPEAT, loop)
+		self.totem.action_remote_set_setting(Totem.RemoteSetting.REPEAT, loop)
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='b', out_signature='')
 	def SetRandom(self, random):
-		self.totem.action_remote_set_setting(totem.REMOTE_SETTING_SHUFFLE, random)
+		self.totem.action_remote_set_setting(Totem.RemoteSetting.SHUFFLE, random)
