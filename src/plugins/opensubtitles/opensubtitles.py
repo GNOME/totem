@@ -1,16 +1,24 @@
-import totem
-import gobject, gtk, gio, gconf
+from gi.repository import Peas
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import Gio
+from gi.repository import GConf
+from gi.repository import Pango
+from gi.repository import Totem
+import gobject
 gobject.threads_init()
 import xmlrpclib
 import threading
 import xdg.BaseDirectory
 from os import sep, path, mkdir
 import gettext
-import pango
 
 from hash import hashFile
 
+gettext.textdomain("totem")
+
 D_ = gettext.dgettext
+_ = gettext.gettext
 
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
@@ -286,18 +294,18 @@ class OpenSubtitlesModel(object):
 
         return None
 
+class OpenSubtitles(gobject.GObject, Peas.Activatable):
+    __gtype_name__ = 'OpenSubtitles'
 
-class OpenSubtitles(totem.Plugin):
     def __init__(self):
-        totem.Plugin.__init__(self)
         self.dialog = None
-        self.gconf_client = gconf.client_get_default()
+        self.gconf_client = GConf.Client.get_default()
         self.GCONF_BASE_DIR = "/apps/totem/plugins/opensubtitles/"
         self.GCONF_LANGUAGE = "language"
 
     # totem.Plugin methods
 
-    def activate(self, totem_object):
+    def do_activate(self, totem_object):
         """
         Called when the plugin is activated.
         Here the sidebar page is initialized(set up the treeview, connect 
@@ -319,7 +327,7 @@ class OpenSubtitles(totem.Plugin):
         server = xmlrpclib.Server('http://api.opensubtitles.org/xml-rpc')
         self.model = OpenSubtitlesModel(server)
 
-    def deactivate(self, totem):
+    def do_deactivate(self, totem):
         if self.dialog:
             self.dialog.destroy()
 	    self.dialog = None
@@ -329,10 +337,7 @@ class OpenSubtitles(totem.Plugin):
     # UI related code
 
     def os_build_dialog(self, action, totem_object):
-        builder = self.load_interface("opensubtitles.ui", 
-                                       True, 
-                                       self.totem.get_main_window(), 
-                                       self)
+        builder = Totem.plugin_load_interface ("opensubtitles", "opensubtitles.ui", True, totem_object.get_main_window (), self)
 
         # Obtain all the widgets we need to initialize
         combobox =       builder.get_object('language_combobox')
@@ -346,9 +351,9 @@ class OpenSubtitles(totem.Plugin):
 	self.close_button = builder.get_object('close_button')
 
         # Set up and populate the languages combobox
-        renderer = gtk.CellRendererText()
-        sorted_languages = gtk.TreeModelSort(languages)
-        sorted_languages.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        renderer = Gtk.CellRendererText()
+        sorted_languages = Gtk.TreeModelSort.new_with_model(languages)
+        sorted_languages.set_sort_column_id(0, Gtk.SortType.ASCENDING)
         combobox.set_model(sorted_languages)
         combobox.pack_start(renderer, True)
         combobox.add_attribute(renderer, 'text', 0)
@@ -357,26 +362,26 @@ class OpenSubtitles(totem.Plugin):
         for lang in LANGUAGES_STR:
             it = languages.append(lang)
             if LANGUAGES[lang[1]] == self.model.lang:
-                parentit = sorted_languages.convert_child_iter_to_iter (None, it)
+                parentit = sorted_languages.convert_child_iter_to_iter (it)
                 combobox.set_active_iter(parentit)
 
         # Set up the results treeview 
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self.treeview.set_model(self.liststore)
         self.treeview.set_headers_visible(False)
-        renderer.set_property('ellipsize', pango.ELLIPSIZE_END)
-        column = gtk.TreeViewColumn(_("Subtitles"), renderer, text=0)
+        renderer.set_property('ellipsize', Pango.EllipsizeMode.END)
+        column = Gtk.TreeViewColumn(_("Subtitles"), renderer, text=0)
         column.set_resizable(True)
         column.set_expand(True)
         self.treeview.append_column(column)
 	# translators comment:
 	# This is the file-type of the subtitle file detected
-        column = gtk.TreeViewColumn(_("Format"), renderer, text=1)
+        column = Gtk.TreeViewColumn(_("Format"), renderer, text=1)
         column.set_resizable(False)
         self.treeview.append_column(column)
 	# translators comment:
 	# This is a rating of the quality of the subtitle
-        column = gtk.TreeViewColumn(_("Rating"), renderer, text=2)
+        column = Gtk.TreeViewColumn(_("Rating"), renderer, text=2)
         column.set_resizable(False)
         self.treeview.append_column(column)
 
@@ -391,7 +396,7 @@ class OpenSubtitles(totem.Plugin):
         combobox_changed_id = combobox.connect('changed', self.on_combobox__changed)
 	self.dialog.connect ('delete-event', self.dialog.hide_on_delete)
 	self.dialog.set_transient_for (self.totem.get_main_window())
-	self.dialog.set_position (gtk.WIN_POS_CENTER_ON_PARENT)
+	self.dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
 
 	# Connect the callbacks
 	self.dialog.connect ('key-press-event', self.on_window__key_press_event)
@@ -414,12 +419,11 @@ class OpenSubtitles(totem.Plugin):
         """
         """
 	
-        self.os_action_group = gtk.ActionGroup('OpenSubtitles')
+        self.os_action_group = Gtk.ActionGroup(name='OpenSubtitles')
 
-        self.action = gtk.Action('opensubtitles',
-                             _('_Download Movie Subtitles...'),
-                             _("Download movie subtitles from OpenSubtitles"),
-                             '')
+        self.action = Gtk.Action(name='opensubtitles',
+                                 label=_('_Download Movie Subtitles...'),
+                                 tooltip=_("Download movie subtitles from OpenSubtitles"))
 
         self.os_action_group.add_action(self.action)
 
@@ -430,7 +434,7 @@ class OpenSubtitles(totem.Plugin):
                              '/tmw-menubar/view/subtitles/subtitle-download-placeholder',
                              'opensubtitles',
                              'opensubtitles',
-                             gtk.UI_MANAGER_MENUITEM,
+                             Gtk.UIManagerItemType.MENUITEM,
                              False
                             )
         self.action.set_visible(True)
@@ -444,7 +448,7 @@ class OpenSubtitles(totem.Plugin):
                                   not self.os_check_is_audio())
 
     def os_check_allowed_scheme(self):
-        scheme = gio.File(self.totem.get_current_mrl()).get_uri_scheme()
+        scheme = Gio.file_new_for_uri(self.totem.get_current_mrl()).get_uri_scheme()
         if scheme == 'dvd' or scheme == 'http' or scheme == 'dvb' or scheme == 'vcd':
             return False
         return True
@@ -454,7 +458,7 @@ class OpenSubtitles(totem.Plugin):
         # I think we must use video widget metadata but I don't found a way 
 	# to get this info from python
         filename = self.totem.get_current_mrl()
-        if gio.content_type_guess(filename).split('/')[0] == 'audio':
+        if Gio.content_type_guess(filename, '', 0)[0].split('/')[0] == 'audio':
             return True
         return False
 
@@ -471,7 +475,7 @@ class OpenSubtitles(totem.Plugin):
         self.apply_button.set_sensitive(False)
 	self.find_button.set_sensitive(False)        
 
-        self.dialog.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+        self.dialog.window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.WATCH))
 
         thread = SearchThread(self.model)
         thread.start()
@@ -505,7 +509,7 @@ class OpenSubtitles(totem.Plugin):
     def os_save_selected_subtitle(self, filename=None):
         """
         """
-        self.dialog.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+        self.dialog.window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.WATCH))
 
         model, rows = self.treeview.get_selection().get_selected_rows()
         if rows:
@@ -516,8 +520,8 @@ class OpenSubtitles(totem.Plugin):
             gfile = None
 
             if not filename:
-                directory = gio.File(xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep) 
-                if not directory.query_exists():
+                directory = Gio.file_new_for_path(xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep) 
+                if not directory.query_exists(None):
                     if not path.exists (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep):
                         mkdir (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep)
                     if not path.exists (xdg.BaseDirectory.xdg_cache_home + sep + 'totem' + sep + 'subtitles' + sep):
@@ -525,7 +529,7 @@ class OpenSubtitles(totem.Plugin):
                     # FIXME: We can't use this function until we depend on GLib (PyGObject) 2.18
                     # directory.make_directory_with_parents()
 
-                file = gio.File(self.filename)
+                file = Gio.file_new_for_path(self.filename)
                 movie_name = file.get_basename().rpartition('.')[0]
                 filename = directory.get_uri() + sep + movie_name + '.' + subtitle_format
 
@@ -548,11 +552,11 @@ class OpenSubtitles(totem.Plugin):
         if self.model.subtitles:
             # Delete all previous cached subtitle for this file 
             for ext in SUBTITLES_EXT:
-		fp = gio.File(filename[:-3] + ext)
-		if fp.query_exists():
-                    fp.delete()
+		fp = Gio.file_new_for_path(filename[:-3] + ext)
+		if fp.query_exists(None):
+                    fp.delete(None)
 
-            fp = gio.File(filename)
+            fp = Gio.file_new_for_path(filename)
             suburi = fp.get_uri ()
 
             subFile  = fp.replace('', False)
@@ -595,7 +599,7 @@ class OpenSubtitles(totem.Plugin):
     # Callbacks
 
     def on_window__key_press_event(self, widget, event):
-        if event.keyval == gtk.keysyms.Escape:
+        if event.keyval == Gdk.Escape:
             self.dialog.destroy()
             self.dialog = None
             return True
