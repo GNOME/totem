@@ -65,31 +65,38 @@ totem_action_handler (GApplication      *app,
 		      gpointer           user_data)
 {
 	GEnumClass *klass;
-	GEnumValue *value;
-	const gchar *url = NULL;
+	GEnumValue *enum_value;
+	char *url = NULL;
 	TotemRemoteCommand command;
 
 	/* GApplication requires the platform_data to be of type a{sv}. */
 	if (platform_data) {
 		GVariantIter iter;
 		GVariant *value;
-		gchar *key;
+		const char *key;
 
 		g_variant_iter_init (&iter, platform_data);
-		if (g_variant_iter_next (&iter, "{sv}", &key, &value))
-			url = g_variant_get_string (value, NULL);
+		while (g_variant_iter_next (&iter, "{&sv}", &key, &value)) {
+			if (g_strcmp0 (key, "url") == 0) {
+				url = g_variant_dup_string (value, NULL);
+				g_variant_unref (value);
+				break;
+			}
+			g_variant_unref (value);
+		}
 	}
 
 	klass = g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
 
-	value = g_enum_get_value_by_name (klass, name);
-	if (! value)
+	enum_value = g_enum_get_value_by_name (klass, name);
+	if (!enum_value)
 		return;
-	command = value->value;
+	command = enum_value->value;
 
 	g_type_class_unref (klass);
 
 	totem_action_remote (TOTEM_OBJECT (user_data), command, url);
+	g_free (url);
 }
 
 static void
