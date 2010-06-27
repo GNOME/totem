@@ -52,7 +52,7 @@ except ImportError:
         import simplejson as json
     except ImportError:
         dlg = Gtk.MessageDialog(
-            type=Gtk.MessageType.ERROR,
+            message_type=Gtk.MessageType.ERROR,
             buttons=Gtk.ButtonsType.OK
         )
         dlg.set_markup(_('You need to install the Python simplejson module.'))
@@ -227,15 +227,15 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
 
 
     def add_treeview_item(self, treeview, album):
-        if not isinstance(album['image'], Gdk.Pixbuf):
+        if not isinstance(album['image'], GdkPixbuf.Pixbuf):
             # album image pixbuf is not yet built
             try:
-                pb = Gdk.Pixbuf.new_from_file(album['image'])
+                pb = GdkPixbuf.Pixbuf.new_from_file(album['image'])
                 os.unlink(album['image'])
                 album['image'] = pb
             except:
                 # do not fail for this, just display a dummy pixbuf
-                album['image'] = GdkPixbuf.Pixbuf(GdkPixbuf.Colorspace.RGB, True,
+                album['image'] = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True,
                     8, 1, 1)
         # format title
         title  = '<b>%s</b>\n' % self._format_str(album['name'])
@@ -262,7 +262,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
             [album, album['image'], title, dur, tip]
         )
         # append track rows
-        icon = GdkPixbuf.Pixbuf(GdkPixbuf.Colorspace.RGB, True, 8, 1, 1)
+        icon = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, 1, 1)
         for i, track in enumerate(album['tracks']):
             # track title
             # Translators: this is the title of a track in Python format
@@ -377,13 +377,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         self.progressbars[pindex].set_fraction(0.0)
         self.progressbars[pindex].hide()
         self.running_threads[pindex] = False
-        dlg = Gtk.MessageDialog(
-            type=Gtk.MessageType.ERROR,
-            buttons=Gtk.ButtonsType.OK
-        )
-        dlg.set_markup(
-            '<b>%s</b>' % _('An error occurred while fetching albums.')
-        )
+
         # managing exceptions with urllib is a real PITA... :(
         if hasattr(exc, 'reason'):
             try:
@@ -399,9 +393,8 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
             msg = _('The Jamendo server returned code %s.') % exc.code
         else:
             msg = str(exc)
-        dlg.format_secondary_text(msg)
-        dlg.run()
-        dlg.destroy()
+
+        self.totem.action_error(_('An error occurred while fetching albums.'), msg)
 
     def on_search_entry_activate(self, *args):
         """
