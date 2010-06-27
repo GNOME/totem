@@ -3,19 +3,22 @@
 
 # Copyright 2008, Frank Scholz <coherence@beebits.net>
 
-import pygtk
-pygtk.require("2.0")
-import gtk
+from gi.repository import Peas
+from gi.repository import Gtk
+from gi.repository import Totem
 
 from coherence.ui.av_widgets import TreeWidget
 from coherence.ui.av_widgets import UDN_COLUMN,UPNP_CLASS_COLUMN,SERVICE_COLUMN
 
-import totem
+gettext.textdomain("totem")
 
-class UPnPClient(totem.Plugin):
+D_ = gettext.dgettext
+_ = gettext.gettext
+
+class UPnPClient(gobject.GObject, Peas.Activatable):
+    __gtype_name__ = 'UPnPClient'
 
     def __init__ (self):
-        totem.Plugin.__init__(self)
         self.ui = TreeWidget()
         self.ui.window.set_shadow_type(gtk.SHADOW_IN)
         self.ui.cb_item_right_click = self.button_pressed
@@ -104,7 +107,7 @@ class UPnPClient(totem.Plugin):
         else:
             self.context = self.context_no_delete
 
-    def activate (self, totem_object):
+    def do_activate (self, totem_object):
         totem_object.add_sidebar_page ("upnp-coherence", _("Coherence DLNA/UPnP Client"), self.ui.window)
         self.totem_object = totem_object
 
@@ -113,5 +116,5 @@ class UPnPClient(totem.Plugin):
 
         self.ui.cb_item_dbl_click = load_and_play
 
-    def deactivate (self, totem_object):
+    def do_deactivate (self, totem_object):
         totem_object.remove_sidebar_page ("upnp-coherence")

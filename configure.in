@@ -410,6 +410,11 @@ for plugin in ${used_plugins}; do
 	add_plugin="1"
 
 	case ${plugin} in
+		coherence_upnp)
+			# The Coherence framework still uses PyGTK, and thus conflicts with the new pygobject introspected bindings
+			plugin_error_or_ignore "the coherence_upnp plugin uses PyGTK and conflicts with the new pygobject bindings"
+			add_plugin="0"
+		;;
 		screensaver)
 			PKG_CHECK_MODULES(SCREENSAVER, gconf-2.0)
 		;;
