@@ -1,16 +1,15 @@
 # From code by James Livingston
 
-import totem
-import gobject, gtk
+import gobject
+from gi.repository import Peas
+from gi.repository import Totem
 
-class SamplePython(totem.Plugin):
+class SamplePython(gobject.GObject, Peas.Activatable):
+	__gtype_name__ = 'SamplePython'
 
-	def __init__(self):
-		totem.Plugin.__init__(self)
-			
-	def activate(self, totem):
+	def do_activate(self, totem):
 		print "Activating sample Python plugin"
 		totem.action_fullscreen_toggle()
 	
-	def deactivate(self, totem):
+	def do_deactivate(self, totem):
 		print "Deactivating sample Python plugin"
