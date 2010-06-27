@@ -7,14 +7,18 @@ import urllib2
 #from pprint import pformat
 from socket import timeout as SocketTimeoutError
 #from time import time
-
-import totem
+import gettext
 
 # external libs
 import httplib2
 import feedparser
 import listparser
 from BeautifulSoup import BeautifulStoneSoup
+
+gettext.textdomain("totem")
+
+D_ = gettext.dgettext
+_ = gettext.gettext
 
 IMG_DIR = os.path.join(os.getcwd(), 'resources', 'media')
 
