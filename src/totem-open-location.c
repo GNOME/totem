@@ -40,11 +40,9 @@
 #include "totem-open-location.h"
 #include "totem-interface.h"
 
-static void totem_open_location_dispose		(GObject *object);
-
 struct TotemOpenLocationPrivate
 {
-	GtkBuilder *xml;
+	GtkWidget *uri_container;
 	GtkEntry *uri_entry;
 };
 
@@ -55,32 +53,26 @@ G_DEFINE_TYPE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
 static void
 totem_open_location_class_init (TotemOpenLocationClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
 	g_type_class_add_private (klass, sizeof (TotemOpenLocationPrivate));
-	object_class->dispose = totem_open_location_dispose;
 }
 
 static void
 totem_open_location_init (TotemOpenLocation *self)
 {
+	GtkBuilder *builder;
+
 	self->priv = TOTEM_OPEN_LOCATION_GET_PRIVATE (self);
+	builder = totem_interface_load ("uri.ui", FALSE, NULL, self);
 
-	self->priv->xml = totem_interface_load ("uri.ui", FALSE, NULL, self);
-	self->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (self->priv->xml, "uri"));
-}
+	if (builder == NULL)
+		return;
 
-static void
-totem_open_location_dispose (GObject *object)
-{
-	TotemOpenLocationPrivate *priv = TOTEM_OPEN_LOCATION_GET_PRIVATE (object);
+	self->priv->uri_container = GTK_WIDGET (gtk_builder_get_object (builder, "open_uri_dialog_content"));
+	g_object_ref (self->priv->uri_container);
 
-	if (priv->xml != NULL) {
-		g_object_unref (priv->xml);
-		priv->xml = NULL;
-	}
+	self->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (builder, "uri"));
 
-	G_OBJECT_CLASS (totem_open_location_parent_class)->dispose (object);
+	g_object_unref (builder);
 }
 
 static gboolean
@@ -159,11 +151,10 @@ totem_open_location_new (Totem *totem)
 	GtkEntryCompletion *completion;
 	GtkTreeModel *model;
 	GList *recent_items, *streams_recent_items = NULL;
-	GtkWidget *container;
 
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
 
-	if (open_location->priv->xml == NULL) {
+	if (open_location->priv->uri_container == NULL) {
 		g_object_unref (open_location);
 		return NULL;
 	}
@@ -226,10 +217,8 @@ totem_open_location_new (Totem *totem)
 	gtk_entry_completion_set_text_column (completion, 0);
 	gtk_entry_completion_set_match_func (completion, (GtkEntryCompletionMatchFunc) totem_open_location_match, model, NULL);
 
-	container = GTK_WIDGET (gtk_builder_get_object (open_location->priv->xml,
-				"open_uri_dialog_content"));
 	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (open_location))),
-				container,
+				open_location->priv->uri_container,
 				TRUE,       /* expand */
 				TRUE,       /* fill */
 				0);         /* padding */
