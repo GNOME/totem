@@ -36,15 +36,22 @@ from console import PythonConsole
 
 __all__ = ('PythonConsole', 'OutFile')
 
-import gtk
-import totem
-import gconf
+from gi.repository import Peas
+from gi.repository import Gtk
+from gi.repository import Totem
+from gi.repository import GConf
 import gobject
 try:
 	import rpdb2
 	have_rpdb2 = True
 except:
 	have_rpdb2 = False
+
+import gettext
+gettext.textdomain("totem")
+
+D_ = gettext.dgettext
+_ = gettext.gettext
 
 ui_str = """
 <ui>
@@ -59,30 +66,30 @@ ui_str = """
 </ui>
 """
 
-class PythonConsolePlugin(totem.Plugin):
+class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
+	__gtype_name__ = 'PythonConsolePlugin'
+
 	def __init__(self):
-		totem.Plugin.__init__(self)
 		self.window = None
 	
-	def activate(self, totem_object):
+	def do_activate(self, totem_object):
 
 		data = dict()
 		manager = totem_object.get_ui_manager()
 
-		data['action_group'] = gtk.ActionGroup('Python')
+		data['action_group'] = Gtk.ActionGroup(name = 'Python')
 		
-		action = gtk.Action('Python', 'Python', _('Python Console Menu'), None)
+		action = Gtk.Action(name = 'Python', label = 'Python', tooltip = _('Python Console Menu'))
 		data['action_group'].add_action(action)
 
-		action = gtk.Action('PythonConsole', _('_Python Console'),
-		                    _("Show Totem's Python console"),
-		                    'gnome-mime-text-x-python')
+		action = Gtk.Action(name = 'PythonConsole', label = _('_Python Console'),
+		                    tooltip = _("Show Totem's Python console"),
+		                    stock_id = 'gnome-mime-text-x-python')
 		action.connect('activate', self.show_console, totem_object)
 		data['action_group'].add_action(action)
 
-		action = gtk.Action('PythonDebugger', _('Python Debugger'),
-				    _("Enable remote Python debugging with rpdb2"),
-				    None)
+		action = Gtk.Action(name = 'PythonDebugger', label = _('Python Debugger'),
+				    tooltip = _("Enable remote Python debugging with rpdb2"))
 		if have_rpdb2:
 			action.connect('activate', self.enable_debugging, totem_object)
 		else:
@@ -98,16 +105,15 @@ class PythonConsolePlugin(totem.Plugin):
 	def show_console(self, action, totem_object):
 		if not self.window:
 			console = PythonConsole(namespace = {'__builtins__' : __builtins__,
-		        	                             'totem' : totem,
+			                                     'Totem' : Totem,
                                		                     'totem_object' : totem_object},
 						             destroy_cb = self.destroy_console)
 
 			console.set_size_request(600, 400)
-			console.eval('print "%s" %% totem_object' % _("You can access the totem object through " \
+			console.eval('print "%s" %% totem_object' % _("You can access the Totem.Object through " \
 				     "\'totem_object\' :\\n%s"), False)
 
-	
-			self.window = gtk.Window()
+			self.window = Gtk.Window()
 			self.window.set_title(_('Totem Python Console'))
 			self.window.add(console)
 			self.window.connect('destroy', self.destroy_console)
@@ -118,9 +124,9 @@ class PythonConsolePlugin(totem.Plugin):
 
 	def enable_debugging(self, action, totem_object):
 		msg = _("After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in GConf, it will use the default password ('totem').")
-		dialog = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK_CANCEL, msg)
-		if dialog.run() == gtk.RESPONSE_OK:
-			gconfclient = gconf.client_get_default()
+		dialog = Gtk.MessageDialog(None, 0, Gtk.MessageType.INFO, Gtk.ButtonType.OK_CANCEL, msg)
+		if dialog.run() == Gtk.ResponseType.OK:
+			gconfclient = GConf.Client.get_default()
 			password = gconfclient.get_string('/apps/totem/plugins/pythonconsole/rpdb2_password') or "totem"
 			def start_debugger(password):
 				rpdb2.start_embedded_debugger(password)
@@ -133,7 +139,7 @@ class PythonConsolePlugin(totem.Plugin):
 		self.window.destroy()
 		self.window = None
 
-	def deactivate(self, totem_object):
+	def do_deactivate(self, totem_object):
 		data = totem_object.get_data('PythonConsolePluginInfo')
 
 		manager = totem_object.get_ui_manager()

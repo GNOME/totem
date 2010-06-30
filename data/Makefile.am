@@ -83,6 +83,10 @@ if GCONF_SCHEMAS_INSTALL
 	fi
 endif
 
+# pkg-config file for the plugin API
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = totem.pc
+
 EXTRA_DIST = \
 	$(man_MANS)			\
 	$(stuff_DATA)			\

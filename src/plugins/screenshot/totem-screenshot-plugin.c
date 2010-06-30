@@ -93,14 +93,14 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		if (err == NULL)
 			return;
 
-		totem_action_error (_("Totem could not get a screenshot of the video."), err->message, priv->totem);
+		totem_action_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message);
 		g_error_free (err);
 		return;
 	}
 
 	pixbuf = bacon_video_widget_get_current_frame (priv->bvw);
 	if (pixbuf == NULL) {
-		totem_action_error (_("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."), priv->totem);
+		totem_action_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
 		return;
 	}
 

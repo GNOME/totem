@@ -31,11 +31,14 @@ TODO:
 """
 
 import os
-import totem
-import gconf
 import gobject
-import gtk
-import pango
+from gi.repository import GConf
+from gi.repository import Peas
+from gi.repository import PeasUI
+from gi.repository import Gtk
+from gi.repository import GdkPixbuf
+from gi.repository import Totem
+from gi.repository import Pango
 import socket
 import threading
 import time
@@ -48,9 +51,9 @@ except ImportError:
     try:
         import simplejson as json
     except ImportError:
-        dlg = gtk.MessageDialog(
-            type=gtk.MESSAGE_ERROR,
-            buttons=gtk.BUTTONS_OK
+        dlg = Gtk.MessageDialog(
+            message_type=Gtk.MessageType.ERROR,
+            buttons=Gtk.ButtonsType.OK
         )
         dlg.set_markup(_('You need to install the Python simplejson module.'))
         dlg.run()
@@ -61,8 +64,9 @@ socket.setdefaulttimeout(30)
 gobject.threads_init()
 gconf_key = '/apps/totem/plugins/jamendo'
 
+class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
+    __gtype_name__ = 'JamendoPlugin'
 
-class JamendoPlugin(totem.Plugin):
     """
     Jamendo totem plugin GUI.
     """
@@ -73,20 +77,18 @@ class JamendoPlugin(totem.Plugin):
     TAB_LATEST      = 2
 
     def __init__(self):
-        totem.Plugin.__init__(self)
         self.debug = True
         self.gstreamer_plugins_present = True
         self.totem = None
-        self.gconf = gconf.client_get_default()
+        self.gconf = GConf.Client.get_default()
         self.init_settings()
 
-    def activate(self, totem_object):
+    def do_activate(self, totem_object):
         """
         Plugin activation.
         """
         # Initialise the interface
-        self.builder = self.load_interface("jamendo.ui", True,
-            totem_object.get_main_window(), self)
+        self.builder = Totem.plugin_load_interface ("jamendo", "jamendo.ui", True, totem_object.get_main_window (), self)
         self.config_dialog = self.builder.get_object('config_dialog')
         self.popup = self.builder.get_object('popup_menu')
         container = self.builder.get_object('container')
@@ -126,13 +128,13 @@ class JamendoPlugin(totem.Plugin):
         container.show_all()
         self.totem.add_sidebar_page("jamendo", _("Jamendo"), container)
 
-    def deactivate(self, totem_object):
+    def do_deactivate(self, totem_object):
         """
         Plugin deactivation.
         """
         totem_object.remove_sidebar_page("jamendo")
 
-    def create_configure_dialog(self, *args):
+    def do_create_configure_dialog(self):
         """
         Plugin config dialog.
         """
@@ -142,7 +144,7 @@ class JamendoPlugin(totem.Plugin):
         combo.set_active(self.AUDIO_FORMATS.index(format))
         spinbutton = self.builder.get_object('album_num_spinbutton')
         spinbutton.set_value(num_per_page)
-        self.config_dialog.set_default_response(gtk.RESPONSE_OK)
+        self.config_dialog.set_default_response(Gtk.ResponseType.OK)
         return self.config_dialog
 
     def reset(self):
@@ -190,33 +192,28 @@ class JamendoPlugin(totem.Plugin):
         """
         self.current_treeview = self.treeviews[0]
         for w in self.treeviews:
-            w.get_selection().set_mode(gtk.SELECTION_MULTIPLE)
+            w.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
 
             # build pixbuf column
-            cell = gtk.CellRendererPixbuf()
-            col = gtk.TreeViewColumn()
-            col.pack_start(cell, True)
-            col.set_attributes(cell, pixbuf=1)
+            cell = Gtk.CellRendererPixbuf()
+            col = Gtk.TreeViewColumn(cell_renderer=cell, pixbuf=1)
+
             w.append_column(col)
 
             # build description column
-            cell = gtk.CellRendererText()
-            cell.set_property('wrap-mode', pango.WRAP_WORD)
+            cell = Gtk.CellRendererText()
+            cell.set_property('wrap-mode', Pango.WrapMode.WORD)
             cell.set_property('wrap-width', 30)
-            col = gtk.TreeViewColumn()
-            col.pack_start(cell, True)
-            col.set_attributes(cell, markup=2)
+            col = Gtk.TreeViewColumn(cell_renderer=cell, markup=2)
             col.set_expand(True)
             w.append_column(col)
             w.connect_after('size-allocate', self.on_treeview_size_allocate, col, cell)
 
             # duration column
-            cell = gtk.CellRendererText()
+            cell = Gtk.CellRendererText()
             cell.set_property('xalign', 1.0)
             cell.set_property('size-points', 8)
-            col = gtk.TreeViewColumn()
-            col.pack_start(cell, True)
-            col.set_attributes(cell, markup=3)
+            col = Gtk.TreeViewColumn(cell_renderer=cell, markup=3)
             col.set_alignment(1.0)
             w.append_column(col)
 
@@ -230,15 +227,15 @@ class JamendoPlugin(totem.Plugin):
 
 
     def add_treeview_item(self, treeview, album):
-        if not isinstance(album['image'], gtk.gdk.Pixbuf):
+        if not isinstance(album['image'], GdkPixbuf.Pixbuf):
             # album image pixbuf is not yet built
             try:
-                pb = gtk.gdk.pixbuf_new_from_file(album['image'])
+                pb = GdkPixbuf.Pixbuf.new_from_file(album['image'])
                 os.unlink(album['image'])
                 album['image'] = pb
             except:
                 # do not fail for this, just display a dummy pixbuf
-                album['image'] = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True,
+                album['image'] = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True,
                     8, 1, 1)
         # format title
         title  = '<b>%s</b>\n' % self._format_str(album['name'])
@@ -265,7 +262,7 @@ class JamendoPlugin(totem.Plugin):
             [album, album['image'], title, dur, tip]
         )
         # append track rows
-        icon = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, 1, 1)
+        icon = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, 1, 1)
         for i, track in enumerate(album['tracks']):
             # track title
             # Translators: this is the title of a track in Python format
@@ -309,9 +306,9 @@ class JamendoPlugin(totem.Plugin):
         enqueue_and_play.
         """
         if mode == 'replace':
-            self.totem.action_remote(totem.REMOTE_COMMAND_REPLACE, t['stream'])
+            self.totem.action_remote(Totem.RemoteCommand.REPLACE, t['stream'])
         elif mode == 'enqueue':
-            self.totem.action_remote(totem.REMOTE_COMMAND_ENQUEUE, t['stream'])
+            self.totem.action_remote(Totem.RemoteCommand.ENQUEUE, t['stream'])
 
     def fetch_albums(self, pn=1):
         """
@@ -380,13 +377,7 @@ class JamendoPlugin(totem.Plugin):
         self.progressbars[pindex].set_fraction(0.0)
         self.progressbars[pindex].hide()
         self.running_threads[pindex] = False
-        dlg = gtk.MessageDialog(
-            type=gtk.MESSAGE_ERROR,
-            buttons=gtk.BUTTONS_OK
-        )
-        dlg.set_markup(
-            '<b>%s</b>' % _('An error occurred while fetching albums.')
-        )
+
         # managing exceptions with urllib is a real PITA... :(
         if hasattr(exc, 'reason'):
             try:
@@ -402,9 +393,8 @@ class JamendoPlugin(totem.Plugin):
             msg = _('The Jamendo server returned code %s.') % exc.code
         else:
             msg = str(exc)
-        dlg.format_secondary_text(msg)
-        dlg.run()
-        dlg.destroy()
+
+        self.totem.action_error(_('An error occurred while fetching albums.'), msg)
 
     def on_search_entry_activate(self, *args):
         """
@@ -465,7 +455,7 @@ class JamendoPlugin(totem.Plugin):
             if evt.button == 3:
                 path = tv.get_path_at_pos(int(evt.x), int(evt.y))
                 sel  = tv.get_selection()
-                rows = sel.get_selected_rows()
+                rows = sel.get_selected_rows(None)
                 if path[0] not in rows[1]:
                     sel.unselect_all()
                     sel.select_path(path[0])
@@ -584,7 +574,8 @@ class JamendoPlugin(totem.Plugin):
         """
         ret = []
         sel = self.current_treeview.get_selection()
-        model, rows = sel.get_selected_rows()
+        model = self.current_treeview.get_model()
+        rows = sel.get_selected_rows(None)
         for row in rows:
             if root:
                 it = model.get_iter((row[0],))
@@ -600,7 +591,8 @@ class JamendoPlugin(totem.Plugin):
         Update the state of the previous and next buttons.
         """
         sel = self.current_treeview.get_selection()
-        model, rows = sel.get_selected_rows()
+        model = self.current_treeview.get_model()
+        rows = sel.get_selected_rows(None)
         try:
             it = model.get_iter(rows[0])
         except:

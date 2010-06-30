@@ -1,7 +1,7 @@
 SUBDIRS = plugins backend
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
-lib_LTLIBRARIES = libtotem_main.la
+lib_LTLIBRARIES = libtotem.la
 libexec_PROGRAMS =
 noinst_LTLIBRARIES = libtotem_player.la
 
@@ -12,19 +12,33 @@ common_defines = \
 	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
+	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	-DBINDIR=\""$(bindir)"\"			\
 	-DGTKBUILDERDIR=\"""\"				\
 	$(DISABLE_DEPRECATED)
 
 modules_flags = -export_dynamic -avoid-version -module -no-undefined
 
+# Header files installed for use by plugins (and consequently introspected using gobject-introspection; see the bottom of the Makefile)
+
+INST_H_FILES = \
+	totem.h				\
+	totem-video-list.h		\
+	totem-cell-renderer-video.h	\
+	totem-interface.h		\
+	plugins/totem-plugin.h		\
+	plugins/totem-dirs.h
+
+headerdir = $(includedir)/totem/$(TOTEM_API_VERSION)
+header_DATA = $(INST_H_FILES)
+
 # Totem UI ltlibrary (used by browser plugins)
 
 libtotem_player_la_SOURCES = \
+	$(INST_H_FILES)		\
 	totem-statusbar.c	\
 	totem-statusbar.h	\
 	totem-interface.c	\
-	totem-interface.h	\
 	totem-fullscreen.c	\
 	totem-fullscreen.h	\
 	gsd-media-keys-window.c	\
@@ -49,15 +63,13 @@ libtotem_player_la_LDFLAGS = \
 
 # Totem main library (used for main player; separate to allow gtk-doc to be used)
 
-libtotem_main_la_SOURCES = \
+libtotem_la_SOURCES = \
 	$(TOTEMMARSHALFILES)		\
+	$(INST_H_FILES)			\
 	totem-object.c			\
-	totem.h				\
 	totem-private.h			\
 	totem-cell-renderer-video.c	\
-	totem-cell-renderer-video.h	\
 	totem-video-list.c		\
-	totem-video-list.h		\
 	totem-preferences.c		\
 	totem-preferences.h		\
 	totem-dnd-menu.c		\
@@ -83,9 +95,12 @@ libtotem_main_la_SOURCES = \
 	ev-sidebar.h			\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\
-	totem-profile.h
+	totem-profile.h			\
+	plugins/totem-plugins-engine.c	\
+	plugins/totem-plugins-engine.h	\
+	plugins/totem-dirs.c
 
-libtotem_main_la_CPPFLAGS = \
+libtotem_la_CPPFLAGS = \
 	-I$(top_srcdir)/		\
 	-I$(srcdir)/backend		\
 	-I$(srcdir)/plugins		\
@@ -94,22 +109,22 @@ libtotem_main_la_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
-libtotem_main_la_CFLAGS = \
+libtotem_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
+	$(PEAS_CFLAGS)			\
 	$(PEASUI_CFLAGS)		\
 	$(AM_CFLAGS)
 
-libtotem_main_la_LDFLAGS =		\
+libtotem_la_LDFLAGS =		\
 	-export_dynamic			\
 	$(AM_LDFLAGS)
 
-libtotem_main_la_LIBADD = \
+libtotem_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
-	plugins/libtotemmodule.la	\
 	$(PEASUI_LIBS)			\
 	$(DEPENDENCY_LIBS)		\
 	$(DBUS_LIBS)			\
@@ -118,26 +133,26 @@ libtotem_main_la_LIBADD = \
 	$(X_LIBS)
 
 if WITH_SMCLIENT
-libtotem_main_la_SOURCES += \
+libtotem_la_SOURCES += \
 	eggsmclient.c \
 	eggsmclient.h \
 	eggsmclient-private.h \
 	$(NULL)
-libtotem_main_la_CFLAGS += $(SMCLIENT_CFLAGS)
-libtotem_main_la_LIBADD += $(SMCLIENT_LIBS)
+libtotem_la_CFLAGS += $(SMCLIENT_CFLAGS)
+libtotem_la_LIBADD += $(SMCLIENT_LIBS)
 
 if WITH_SMCLIENT_XSMP
-libtotem_main_la_SOURCES += \
+libtotem_la_SOURCES += \
 	eggdesktopfile.c \
 	eggdesktopfile.h \
 	eggsmclient-xsmp.c
-libtotem_main_la_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
+libtotem_la_CPPFLAGS += -DEGG_SM_CLIENT_BACKEND_XSMP
 endif
 if WITH_SMCLIENT_WIN32
-libtotem_main_la_SOURCES += eggsmclient-win32.c
+libtotem_la_SOURCES += eggsmclient-win32.c
 endif
 if WITH_SMCLIENT_QUARTZ
-libtotem_main_la_SOURCES += eggsmclient-osx.c
+libtotem_la_SOURCES += eggsmclient-osx.c
 endif
 endif
 
@@ -183,7 +198,7 @@ totem_LDFLAGS =				\
 	$(AM_LDFLAGS)
 
 totem_LDADD =						\
-	libtotem_main.la				\
+	libtotem.la					\
 	$(DEPENDENCY_LIBS)				\
 	$(XVIDMODE_LIBS)				\
 	$(XTEST_LIBS)					\
@@ -370,4 +385,36 @@ EXTRA_DIST = 				\
 	totemobject-marshal.list	\
 	totemvideolist-marshal.list	\
 	totemplaylist-marshal.list
-		
+
+# Introspection
+-include $(INTROSPECTION_MAKEFILE)
+
+INTROSPECTION_GIRS =
+INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
+INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
+
+if HAVE_INTROSPECTION
+
+introspection_sources = $(INST_H_FILES) $(filter %.c,$(libtotem_player_la_SOURCES) $(libtotem_la_SOURCES))
+
+# NOTE: This should change with $(TOTEM_API_VERSION)
+Totem-1.0.gir: libtotem.la
+Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
+Totem_1_0_gir_CFLAGS = $(DEPENDENCY_CFLAGS)		\
+	$(DBUS_CFLAGS)			\
+	$(MISSING_PLUGINS_CFLAGS)	\
+	$(PEASUI_CFLAGS)		\
+	$(AM_CFLAGS)	$(libtotem_la_CPPFLAGS)
+Totem_1_0_gir_LIBS = libtotem.la
+Totem_1_0_gir_FILES = $(introspection_sources)
+INTROSPECTION_GIRS += Totem-1.0.gir
+
+girdir = $(datadir)/gir-1.0
+gir_DATA = $(INTROSPECTION_GIRS)
+
+typelibdir = $(libdir)/girepository-1.0
+typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
+
+CLEANFILES += $(gir_DATA) $(typelib_DATA)
+
+endif

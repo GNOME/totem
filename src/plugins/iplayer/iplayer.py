@@ -1,21 +1,29 @@
 # -*- coding: utf-8 -*-
 
-import totem
+import gettext
 import gobject
-import gtk
+from gi.repository import Peas
+from gi.repository import Gtk
+from gi.repository import Totem
 import iplayer2
 import threading
 
-class IplayerPlugin (totem.Plugin):
+gettext.textdomain("totem")
+
+D_ = gettext.dgettext
+_ = gettext.gettext
+
+class IplayerPlugin (gobject.GObject, Peas.Activatable):
+	__gtype_name__ = 'IplayerPlugin'
+
 	def __init__ (self):
-		totem.Plugin.__init__ (self)
 		self.debug = False
 		self.totem = None
 		self.programme_download_lock = threading.Lock ()
 
-	def activate (self, totem_object):
+	def do_activate (self, totem_object):
 		# Build the interface
-		builder = self.load_interface ("iplayer.ui", True, totem_object.get_main_window (), self)
+		builder = Totem.plugin_load_interface ("iplayer", "iplayer.ui", True, totem_object.get_main_window (), self)
 		container = builder.get_object ('iplayer_vbox')
 
 		self.tv_tree_store = builder.get_object ('iplayer_programme_store')
@@ -34,7 +42,7 @@ class IplayerPlugin (totem.Plugin):
 		# Get the channel category listings
 		self.populate_channel_list (self.tv, self.tv_tree_store)
 
-	def deactivate (self, totem_object):
+	def do_deactivate (self, totem_object):
 		totem_object.remove_sidebar_page ("iplayer")
 
 	def populate_channel_list (self, feed, tree_store):
@@ -44,7 +52,7 @@ class IplayerPlugin (totem.Plugin):
 		# Add all the channels as top-level rows in the tree store
 		channels = feed.channels ()
 		for channel_id, title in channels.items ():
-			parent_iter = tree_store.append (None, [title, channel_id, None])
+			parent_iter = tree_store.append (None, (title, channel_id, None))
 
 		# Add the channels' categories in a thread, since they each require a network request
 		parent_path = tree_store.get_path (parent_iter)

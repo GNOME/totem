@@ -508,16 +508,19 @@ drop_cb (GtkWidget        *widget,
 	char **list;
 	GList *p, *file_list;
 	guint i;
+	GdkDragAction action;
 
-	if (context->suggested_action == GDK_ACTION_ASK) {
-		context->action = totem_drag_ask (PL_LEN != 0);
-		if (context->action == GDK_ACTION_DEFAULT) {
+	if (gdk_drag_context_get_suggested_action (context) == GDK_ACTION_ASK) {
+		action = totem_drag_ask (PL_LEN != 0);
+		gdk_drag_status (context, action, GDK_CURRENT_TIME);
+		if (action == GDK_ACTION_DEFAULT) {
 			gtk_drag_finish (context, FALSE, FALSE, _time);
 			return;
 		}
 	}
 
-	if (context->action == GDK_ACTION_MOVE)
+	action = gdk_drag_context_get_selected_action (context);
+	if (action == GDK_ACTION_MOVE)
 		totem_playlist_clear (playlist);
 
 	list = g_uri_list_extract_uris ((char *) gtk_selection_data_get_data (data));
