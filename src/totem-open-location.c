@@ -84,6 +84,9 @@ totem_open_location_match (GtkEntryCompletion *completion, const gchar *key, Gtk
 	/* Substring-match key against URI */
 	char *uri, *match;
 
+	g_return_val_if_fail (GTK_IS_TREE_MODEL (user_data), FALSE);
+	g_return_val_if_fail (iter != NULL, FALSE);
+
 	g_return_val_if_fail (key != NULL, FALSE);
 	gtk_tree_model_get (user_data, iter, 0, &uri, -1);
 	g_return_val_if_fail (uri != NULL, FALSE);
@@ -109,6 +112,8 @@ totem_open_location_get_uri (TotemOpenLocation *open_location)
 {
 	char *uri;
 
+	g_return_val_if_fail (TOTEM_IS_OPEN_LOCATION (open_location), NULL);
+
 	uri = g_strdup (gtk_entry_get_text (open_location->priv->uri_entry));
 
 	if (strcmp (uri, "") == 0)
@@ -130,6 +135,8 @@ totem_open_location_set_from_clipboard (TotemOpenLocation *open_location)
 {
 	GtkClipboard *clipboard;
 	gchar *clipboard_content;
+
+	g_return_val_if_fail (TOTEM_IS_OPEN_LOCATION (open_location), NULL);
 
 	/* Initialize the clipboard and get its content */
 	clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (GTK_WIDGET (open_location)), GDK_SELECTION_CLIPBOARD);
@@ -161,6 +168,8 @@ totem_open_location_new (Totem *totem)
 	GtkEntryCompletion *completion;
 	GtkTreeModel *model;
 	GList *recent_items, *streams_recent_items = NULL;
+
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
 
