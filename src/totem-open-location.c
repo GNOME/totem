@@ -50,6 +50,9 @@ struct TotemOpenLocationPrivate
 
 G_DEFINE_TYPE (TotemOpenLocation, totem_open_location, GTK_TYPE_DIALOG)
 
+/* GtkBuilder callbacks */
+G_MODULE_EXPORT void uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog);
+
 static void
 totem_open_location_class_init (TotemOpenLocationClass *klass)
 {
@@ -143,6 +146,13 @@ totem_open_location_set_from_clipboard (TotemOpenLocation *open_location)
 	return NULL;
 }
 
+void
+uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog)
+{
+	gboolean sensitive = (gtk_entry_get_text_length (GTK_ENTRY (entry)) > 0);
+	gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, sensitive);
+}
+
 GtkWidget*
 totem_open_location_new (Totem *totem)
 {
@@ -165,6 +175,7 @@ totem_open_location_new (Totem *totem)
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OPEN, GTK_RESPONSE_OK,
 			NULL);
+	gtk_dialog_set_response_sensitive (GTK_DIALOG (open_location), GTK_RESPONSE_OK, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (open_location), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (open_location), GTK_RESPONSE_OK);
 

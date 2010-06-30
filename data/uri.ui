@@ -25,6 +25,7 @@
     <object class="GtkEntry" id="uri">
       <property name="visible">True</property>
       <property name="activates_default">True</property>
+      <signal name="changed" handler="uri_entry_changed_cb"/>
     </object>
     <packing>
       <property name="position">1</property>
