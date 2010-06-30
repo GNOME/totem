@@ -35,6 +35,8 @@
  *
  * #TotemVideoList is a #GtkTreeView designed for listing videos by their thumbnails using #TotemCellRendererVideo.
  * It supports tooltips, loading the videos by activating tree view rows, and #GtkUIManager actions in the popup menu.
+ *
+ * Note that it requires #TotemVideoList:totem to be set to an instance of #TotemObject to work.
  **/
 
 #include "config.h"
