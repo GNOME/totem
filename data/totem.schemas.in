@@ -304,6 +304,20 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/totem/autoload_chapters</key>
+	<applyto>/apps/totem/autoload_chapters</applyto>
+	<owner>totem</owner>
+	<type>bool</type>
+	<default>true</default>
+	<locale name="C">
+	  <short>Whether to autoload external chapter files when a movie is loaded</short>
+	  <long>
+	    Whether to autoload external chapter files when a movie is loaded.
+	  </long>
+	</locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/totem/remember_position</key>
 	<applyto>/apps/totem/remember_position</applyto>
 	<owner>totem</owner>

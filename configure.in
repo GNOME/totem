@@ -52,7 +52,7 @@ AC_SUBST(TOTEM_VERSION_MINOR)
 AC_SUBST(TOTEM_VERSION_MICRO)
 
 # The full list of plugins
-allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot brasero-disc-recorder coherence_upnp dbus-service iplayer"
+allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot brasero-disc-recorder coherence_upnp dbus-service iplayer chapters"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -561,6 +561,14 @@ for plugin in ${used_plugins}; do
 				add_plugin="0"
 			fi
 		;;
+		chapters)
+			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= 2.6.0 gtk+-3.0 glib-2.0 >= 2.15.0,
+				[BUILD_CHAPTERS=yes], [BUILD_CHAPTERS=no])
+			if test "${BUILD_CHAPTERS}" != "yes" ; then
+				plugin_error_or_ignore "you need gtk+-3.0, glib-2.0 >= 2.15.0 and libxml-2.0 >= 2.6.0 to use the chapters plugin"
+				add_plugin="0"
+			fi
+		;;
 	esac
 
 	# Add the specified plugin
@@ -822,6 +830,7 @@ src/plugins/pythonconsole/Makefile
 src/plugins/publish/Makefile
 src/plugins/jamendo/Makefile
 src/plugins/brasero-disc-recorder/Makefile
+src/plugins/chapters/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
 data/Makefile
