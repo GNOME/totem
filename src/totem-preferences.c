@@ -63,6 +63,7 @@ G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
 G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
 G_MODULE_EXPORT void font_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
 G_MODULE_EXPORT void encoding_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
+G_MODULE_EXPORT void auto_chapters_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 
 static void
 totem_action_info (char *reason, Totem *totem)
@@ -353,6 +354,23 @@ autoload_subtitles_changed_cb (GConfClient *client, guint cnxn_id,
 			G_CALLBACK (checkbutton3_toggled_cb), totem);
 }
 
+static void
+autoload_chapters_changed_cb (GConfClient *client, guint cnxn_id,
+			      GConfEntry *entry, Totem *totem)
+{
+	GObject *item;
+
+	item = gtk_builder_get_object (totem->xml, "tpw_auto_chapters_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+					      auto_chapters_toggled_cb, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
+				      gconf_client_get_bool (totem->gc, GCONF_PREFIX"/autoload_chapters", NULL));
+
+	g_signal_connect (item, "toggled",
+			  G_CALLBACK (auto_chapters_toggled_cb), totem);
+}
+
 void
 connection_combobox_changed (GtkComboBox *combobox, Totem *totem)
 {
@@ -523,10 +541,20 @@ encoding_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 void
+auto_chapters_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+
+	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/autoload_chapters", value, NULL);
+}
+
+void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *menu, *content_area;
-	gboolean show_visuals, auto_resize, is_local, no_deinterlace, lock_screensaver_on_audio;
+	gboolean show_visuals, auto_resize, is_local, no_deinterlace, lock_screensaver_on_audio, auto_chapters;
 	int connection_speed;
 	guint i, hidden;
 	char *visual, *font, *encoding;
@@ -655,6 +683,19 @@ totem_setup_preferences (Totem *totem)
 
 	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/autoload_subtitles",
 				 (GConfClientNotifyFunc) autoload_subtitles_changed_cb,
+				 totem, NULL, NULL);
+
+	/* Auto-load external chapters */
+	item = gtk_builder_get_object (totem->xml, "tpw_auto_chapters_checkbutton");
+	auto_chapters = gconf_client_get_bool (totem->gc,
+					       GCONF_PREFIX"/autoload_chapters", NULL);
+
+	g_signal_handlers_disconnect_by_func (item, auto_chapters_toggled_cb, totem);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_chapters);
+	g_signal_connect (item, "toggled", G_CALLBACK (auto_chapters_toggled_cb), totem);
+
+	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/autoload_chapters",
+				 (GConfClientNotifyFunc) autoload_chapters_changed_cb,
 				 totem, NULL, NULL);
 
 	/* Visuals list */
