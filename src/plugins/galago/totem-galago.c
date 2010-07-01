@@ -30,12 +30,15 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
-#include <gmodule.h>
 #include <string.h>
 #include <libgalago/galago.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
 
-#include "totem-plugin.h"
 #include "totem.h"
+#include "totem-interface.h"
+#include "totem-plugin.h"
 
 #define TOTEM_TYPE_GALAGO_PLUGIN		(totem_galago_plugin_get_type ())
 #define TOTEM_GALAGO_PLUGIN(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPlugin))
@@ -44,9 +47,8 @@
 #define TOTEM_IS_GALAGO_PLUGIN_CLASS(k)		(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_GALAGO_PLUGIN))
 #define TOTEM_GALAGO_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPluginClass))
 
-typedef struct
-{
-	TotemPlugin	parent;
+typedef struct {
+	PeasExtensionBase parent;
 
 	guint		handler_id_fullscreen;
 	guint		handler_id_playing;
@@ -54,34 +56,24 @@ typedef struct
 	GalagoPerson	*me; /* Me! */
 } TotemGalagoPlugin;
 
-typedef struct
-{
-	TotemPluginClass parent_class;
+typedef struct {
+	PeasExtensionBaseClass parent_class;
 } TotemGalagoPluginClass;
 
-
-G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType totem_galago_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_galago_plugin_init		(TotemGalagoPlugin *plugin);
 static void totem_galago_plugin_dispose		(GObject *object);
 static void totem_galago_plugin_finalize	(GObject *object);
-static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
-static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
-TOTEM_PLUGIN_REGISTER(TotemGalagoPlugin, totem_galago_plugin)
+TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPlugin, totem_galago_plugin);
 
 static void
 totem_galago_plugin_class_init (TotemGalagoPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	object_class->dispose = totem_galago_plugin_dispose;
 	object_class->finalize = totem_galago_plugin_finalize;
-
-	plugin_class->activate = impl_activate;
-	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
@@ -159,17 +151,18 @@ property_notify_cb (TotemObject *totem,
 	totem_galago_update_from_state (totem, plugin);
 }
 
-static gboolean
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem,
-	       GError **error)
+static void
+impl_activate (PeasActivatable *plugin, GObject *object)
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 
 	if (!galago_is_connected ()) {
-		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-                                     _("Could not connect to the Galago daemon."));
-		return FALSE;
+		GtkWindow *window = totem_get_main_window (totem);
+		totem_interface_error (_("Error loading Galago plugin"), _("Could not connect to the Galago daemon."), window);
+		g_object_unref (window);
+
+		return;
 	}
 
 	pi->handler_id_fullscreen = g_signal_connect (G_OBJECT (totem),
@@ -183,19 +176,20 @@ impl_activate (TotemPlugin *plugin,
 
 	/* Force setting the current status */
 	totem_galago_update_from_state (totem, pi);
-
-	return TRUE;
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin, GObject *object)
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
+
+	/* Failed to initialise */
+	if (!galago_is_connected ())
+		return;
 
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_fullscreen);
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
 
 	totem_galago_set_idleness (pi, FALSE);
 }
-
