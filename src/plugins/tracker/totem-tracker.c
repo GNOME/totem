@@ -48,30 +48,22 @@
 
 typedef struct
 {
-	TotemPlugin   parent;
+	PeasExtensionBase parent;
 } TotemTrackerPlugin;
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemTrackerPluginClass;
-
 
 G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
 GType	totem_tracker_plugin_get_type			(void) G_GNUC_CONST;
 
-static void impl_activate				(TotemPlugin *plugin, TotemObject *totem);
-static void impl_deactivate				(TotemPlugin *plugin, TotemObject *totem);
-
-TOTEM_PLUGIN_REGISTER (TotemTrackerPlugin, totem_tracker_plugin)
+TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_TRACKER_PLUGIN, TotemTrackerPlugin, totem_tracker_plugin);
 
 static void
 totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
 {
-	PeasPluginClass *plugin_class = PEAS_PLUGIN_CLASS (klass);
-
-	plugin_class->activate = (PeasFunc) impl_activate;
-	plugin_class->deactivate = (PeasFunc) impl_deactivate;
 }
 
 static void
@@ -80,10 +72,10 @@ totem_tracker_plugin_init (TotemTrackerPlugin *plugin)
 }
 
 static void
-impl_activate (TotemPlugin *plugin,
-	       TotemObject *totem)
+impl_activate (PeasActivatable *plugin, GObject *object)
 {
 	GtkWidget *widget;
+	TotemObject *totem = TOTEM_OBJECT (object);
 
 	widget = totem_tracker_widget_new (totem);
 	gtk_widget_show (widget);
@@ -91,9 +83,8 @@ impl_activate (TotemPlugin *plugin,
 }
 
 static void
-impl_deactivate	(TotemPlugin *plugin,
-		 TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin, GObject *object)
 {
-	totem_remove_sidebar_page (totem, "tracker");
+	totem_remove_sidebar_page (TOTEM_OBJECT (object), "tracker");
 }
 

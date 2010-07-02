@@ -35,11 +35,10 @@ libtracker_la_CFLAGS = \
 	$(AM_CFLAGS)		\
 	-I$(top_srcdir)/	\
 	-I$(top_srcdir)/src	\
-	-I$(srcdir)/		\
 	-I$(top_srcdir)/src/plugins
 
 EXTRA_DIST = $(plugin_in_files)
 
-CLEANFILES = $(noinst_DATA) $(BUILT_SOURCES)
+CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)
 
