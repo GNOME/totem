@@ -160,16 +160,14 @@ uri_entry_changed_cb (GtkEditable *entry, GtkDialog *dialog)
 	gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, sensitive);
 }
 
-GtkWidget*
-totem_open_location_new (Totem *totem)
+GtkWidget *
+totem_open_location_new (void)
 {
 	TotemOpenLocation *open_location;
 	char *clipboard_location;
 	GtkEntryCompletion *completion;
 	GtkTreeModel *model;
 	GList *recent_items, *streams_recent_items = NULL;
-
-	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
 	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
 

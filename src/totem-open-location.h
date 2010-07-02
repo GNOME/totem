@@ -54,7 +54,7 @@ struct TotemOpenLocationClass {
 };
 
 GType totem_open_location_get_type		(void);
-GtkWidget *totem_open_location_new		(Totem *totem);
+GtkWidget *totem_open_location_new		(void);
 char *totem_open_location_get_uri		(TotemOpenLocation *open_location);
 
 G_END_DECLS

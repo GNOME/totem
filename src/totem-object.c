@@ -1528,7 +1528,7 @@ totem_action_open_location (Totem *totem)
 		return;
 	}
 
-	totem->open_location = TOTEM_OPEN_LOCATION (totem_open_location_new (totem));
+	totem->open_location = TOTEM_OPEN_LOCATION (totem_open_location_new ());
 
 	g_signal_connect (G_OBJECT (totem->open_location), "delete-event",
 			G_CALLBACK (gtk_widget_destroy), NULL);
