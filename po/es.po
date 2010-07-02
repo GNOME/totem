@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-06-30 18:25+0000\n"
-"PO-Revision-Date: 2010-07-01 08:53+0200\n"
+"POT-Creation-Date: 2010-07-01 22:49+0000\n"
+"PO-Revision-Date: 2010-07-02 08:51+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2127,7 +2127,12 @@ msgstr ""
 "Establecer el estado de su programa de mensajería instantánea a ausente "
 "cuando se está reproduciendo una película"
 
-#: ../src/plugins/galago/totem-galago.c:171
+#: ../src/plugins/galago/totem-galago.c:162
+#| msgid "Error Loading Video Thumbnail"
+msgid "Error loading Galago plugin"
+msgstr "Error al cargar el complemento Galago"
+
+#: ../src/plugins/galago/totem-galago.c:162
 msgid "Could not connect to the Galago daemon."
 msgstr "No se pudo conectar con el demonio Galago."
 
@@ -2819,7 +2824,6 @@ msgstr "Activar la depuración remota Python con rpdb2"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:113
 #, python-format
-#| msgid "You can access the totem object through 'totem_object' :\\n%s"
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "Puede acceder al objeto de Totem a través de «totem_object»: \\n%s"
 
@@ -2961,9 +2965,6 @@ msgstr ""
 
 #~ msgid "Failed to retrieve working directory"
 #~ msgstr "Falló al obtener un directorio de trabajo"
-
-#~ msgid "Error Loading Video Thumbnail"
-#~ msgstr "Error al cargar la miniatura del vídeo"
 
 #~ msgid "_Allow the screensaver to activate even when audio-only is playing"
 #~ msgstr ""
