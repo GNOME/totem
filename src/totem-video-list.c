@@ -328,7 +328,7 @@ static void
 row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *column, gpointer user_data)
 {
 	GtkTreeIter iter;
-	gchar *mrl, *display_name;
+	gchar *mrl, *display_name = NULL;
 	gboolean play_video = TRUE;
 	TotemVideoList *self = TOTEM_VIDEO_LIST (tree_view);
 	GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
