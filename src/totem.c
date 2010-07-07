@@ -165,7 +165,7 @@ variant_from_argv (int    argc,
 
 		argv_bytes = (guint8 *) argv[i];
 		g_variant_builder_add_value (&builder,
-					     g_variant_new_byte_array (argv_bytes, -1));
+					     g_variant_new_bytestring_array (argv_bytes, -1));
 	}
 
 	return g_variant_builder_end (&builder);
