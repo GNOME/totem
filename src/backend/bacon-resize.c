@@ -227,7 +227,7 @@ bacon_resize_resize (BaconResize *resize)
 	g_return_if_fail (GTK_IS_WIDGET (resize->priv->video_widget));
 	g_return_if_fail (gtk_widget_get_realized (resize->priv->video_widget));
 
-	xdisplay = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
+	xdisplay = GDK_DRAWABLE_XDISPLAY (gtk_widget_get_window (GTK_WIDGET (resize->priv->video_widget)));
 	if (xdisplay == NULL)
 		return;
 
@@ -308,7 +308,7 @@ bacon_resize_restore (BaconResize *resize)
 	if (resize->priv->xr_screen_conf == NULL)
 		return;
 
-	xdisplay = GDK_DRAWABLE_XDISPLAY (resize->priv->video_widget->window);
+	xdisplay = GDK_DRAWABLE_XDISPLAY (gtk_widget_get_window (GTK_WIDGET (resize->priv->video_widget)));
 	if (xdisplay == NULL)
 		return;
 
