@@ -87,9 +87,11 @@ totemConeInput::GetPropertyByIndex (int aIndex,
     case eTime:
       return DoubleVariant (_result, double (Plugin()->GetTime()));
 
+    case eLength:
+      return DoubleVariant (_result, Plugin()->Duration());
+
     case eFps:
     case eHasVout:
-    case eLength:
     case ePosition:
     case eRate:
       TOTEM_WARN_GETTER_UNIMPLEMENTED (aIndex, _result);
