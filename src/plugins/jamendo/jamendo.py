@@ -455,7 +455,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
             if evt.button == 3:
                 path = tv.get_path_at_pos(int(evt.x), int(evt.y))
                 sel  = tv.get_selection()
-                rows = sel.get_selected_rows(None)
+                (rows, _) = sel.get_selected_rows()
                 if path[0] not in rows[1]:
                     sel.unselect_all()
                     sel.select_path(path[0])
@@ -574,8 +574,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         """
         ret = []
         sel = self.current_treeview.get_selection()
-        model = self.current_treeview.get_model()
-        rows = sel.get_selected_rows(None)
+        (rows, model) = sel.get_selected_rows()
         for row in rows:
             if root:
                 it = model.get_iter((row[0],))
@@ -591,8 +590,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         Update the state of the previous and next buttons.
         """
         sel = self.current_treeview.get_selection()
-        model = self.current_treeview.get_model()
-        rows = sel.get_selected_rows(None)
+        (rows, model) = sel.get_selected_rows()
         try:
             it = model.get_iter(rows[0])
         except:
