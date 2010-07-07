@@ -84,9 +84,11 @@ totemConeInput::GetPropertyByIndex (int aIndex,
       return Int32Variant (_result, state);
     }
 
+    case eLength:
+      return DoubleVariant (_result, Plugin()->Duration());
+
     case eFps:
     case eHasVout:
-    case eLength:
     case ePosition:
     case eRate:
     case eTime:
