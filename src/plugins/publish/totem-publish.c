@@ -135,25 +135,27 @@ void
 totem_publish_plugin_service_name_entry_changed_cb (GtkEntry *entry,
 						    gpointer  data)
 {
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
-
-	gconf_client_set_string (self->client,
+	GConfClient *client = gconf_client_get_default ();
+	gconf_client_set_string (client,
 				 TOTEM_PUBLISH_CONFIG_NAME,
 				 gtk_entry_get_text (entry),
 				 NULL);
+	g_object_unref (client);
 }
 
 void
 totem_publish_plugin_encryption_button_toggled_cb (GtkToggleButton *button,
 						   gpointer         data)
 {
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
+	GConfClient *client;
 	gboolean encryption = gtk_toggle_button_get_active (button);
 
-	gconf_client_set_string (self->client,
+	client = gconf_client_get_default ();
+	gconf_client_set_string (client,
 				 TOTEM_PUBLISH_CONFIG_PROTOCOL,
 				 encryption ? "https" : "http",
 				 NULL);
+	g_object_unref (client);
 }
 
 static void
@@ -482,14 +484,14 @@ totem_publish_plugin_scanning_cb (gpointer data)
 }
 
 static GtkWidget*
-totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self)
+totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self, GtkBuilder *builder)
 {
 	GtkWidget *page, *list;
 
-	page = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-page"));
-	list = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-list"));
+	page = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-page"));
+	list = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-list"));
 
-	self->scanning = GTK_WIDGET (gtk_builder_get_object (self->ui, "neighbours-scanning"));
+	self->scanning = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-scanning"));
 	self->scanning_id = g_timeout_add (100, totem_publish_plugin_scanning_cb, self->scanning);
 
 	g_signal_connect_swapped (self->monitor, "service-found",
@@ -525,6 +527,7 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 	TotemObject *totem = TOTEM_OBJECT (object);
 	EpcProtocol protocol = EPC_PROTOCOL_HTTPS;
 	GtkWindow *window;
+	GtkBuilder *builder;
 	GError *internal_error = NULL;
 
 	gchar *protocol_name;
@@ -540,7 +543,7 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 	self->totem = g_object_ref (totem);
 
 	window = totem_get_main_window (self->totem);
-	self->ui = totem_plugin_load_interface ("publish", "publish-plugin.ui", TRUE, window, self);
+	builder = totem_plugin_load_interface ("publish", "publish-plugin.ui", TRUE, window, self);
 	epc_progress_window_install (window);
 	g_object_unref (window);
 
@@ -588,7 +591,8 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 	epc_service_monitor_set_skip_our_own (self->monitor, TRUE);
 
 	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbors"),
-			     totem_publish_plugin_create_neigbours_page (self));
+			     totem_publish_plugin_create_neigbours_page (self, builder));
+	g_object_unref (builder);
 
 	self->publisher = epc_publisher_new (service_name, "totem", NULL);
 	epc_publisher_set_protocol (self->publisher, protocol);
@@ -673,11 +677,6 @@ impl_deactivate (PeasActivatable *plugin, GObject *totem)
 		self->settings = NULL;
 	}
 
-	if (self->ui) {
-		g_object_unref (self->ui);
-		self->ui = NULL;
-	}
-
 	if (self->playlist) {
 		g_slist_foreach (self->playlist, (GFunc) g_free, NULL);
 		g_slist_free (self->playlist);
@@ -693,25 +692,32 @@ static GtkWidget *
 impl_create_configure_widget (PeasUIConfigurable *configurable)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (configurable);
+	gchar *service_name, *protocol_name;
+	GtkBuilder *builder;
+	GtkWidget *widget;
+	EpcProtocol protocol;
+	GConfClient *client;
 
-	if (NULL == self->settings && GTK_IS_BUILDER (self->ui)) {
-		gchar *service_name = gconf_client_get_string (self->client, TOTEM_PUBLISH_CONFIG_NAME, NULL);
-		EpcProtocol protocol = epc_publisher_get_protocol (self->publisher);
-		GtkWidget *widget;
+	/* This function has to be independent of the rest of the plugin, as it's executed under a different plugin instance.
+	 * FIXME: bgo#624073 */
+	builder = totem_plugin_load_interface ("publish", "publish-plugin.ui", TRUE, NULL, self);
 
-		self->settings = g_object_ref (gtk_builder_get_object (self->ui, "publish-settings-vbox"));
+	client = gconf_client_get_default ();
+	service_name = gconf_client_get_string (client, TOTEM_PUBLISH_CONFIG_NAME, NULL);
+	protocol_name = gconf_client_get_string (client, TOTEM_PUBLISH_CONFIG_PROTOCOL, NULL);
+	g_object_unref (client);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (self->ui, "service-name-entry"));
-		gtk_entry_set_text (GTK_ENTRY (widget), service_name);
+	protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
+	g_free (protocol_name);
 
-		widget = GTK_WIDGET (gtk_builder_get_object (self->ui, "encryption-button"));
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-					      EPC_PROTOCOL_HTTPS == protocol);
+	widget = g_object_ref (gtk_builder_get_object (builder, "publish-settings-vbox"));
 
-		g_free (service_name);
-	}
+	gtk_entry_set_text (GTK_ENTRY (gtk_builder_get_object (builder, "service-name-entry")), service_name);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gtk_builder_get_object (builder, "encryption-button")), EPC_PROTOCOL_HTTPS == protocol);
 
-	return self->settings;
+	g_free (service_name);
+
+	return widget;
 }
 
 static void
