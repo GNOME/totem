@@ -91,8 +91,6 @@ typedef struct
 
 G_MODULE_EXPORT GType register_totem_plugin	(GTypeModule *module);
 GType	totem_mythtv_plugin_get_type		(void) G_GNUC_CONST;
-
-static void totem_mythtv_plugin_init		(TotemMythtvPlugin *plugin);
 static void totem_mythtv_plugin_finalize	(GObject *object);
 static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError **error);
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
@@ -432,8 +430,8 @@ refresh_cb (GtkWidget *button, TotemMythtvPlugin *tm)
 	GtkTreeModel *model;
 
 	gtk_widget_set_sensitive (button, FALSE);
-	totem_gdk_window_set_waiting_cursor (tm->sidebar_recordings->window);
-	totem_gdk_window_set_waiting_cursor (tm->sidebar_livetv->window);
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (tm->sidebar_recordings));
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (tm->sidebar_livetv));
 
 	model = g_object_get_data (G_OBJECT (tm->sidebar_recordings), "model");
 	gtk_list_store_clear (GTK_LIST_STORE (model));
@@ -442,8 +440,8 @@ refresh_cb (GtkWidget *button, TotemMythtvPlugin *tm)
 
 	totem_mythtv_update_binfo (tm);
 
-	gdk_window_set_cursor (tm->sidebar_recordings->window, NULL);
-	gdk_window_set_cursor (tm->sidebar_livetv->window, NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (tm->sidebar_recordings), NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (tm->sidebar_livetv), NULL);
 	gtk_widget_set_sensitive (button, TRUE);
 }
 
@@ -527,10 +525,10 @@ impl_activate (TotemPlugin *plugin,
 
 	/* FIXME we should only do that if it will be done in the background */
 #if 0
-	totem_gdk_window_set_waiting_cursor (box->window);
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (box);
 	totem_mythtv_list_recordings (TOTEM_MYTHTV_PLUGIN(plugin));
 	totem_mythtv_list_livetv (TOTEM_MYTHTV_PLUGIN(plugin));
-	gdk_window_set_cursor (box->window, NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (box), NULL);
 #endif
 	return TRUE;
 }
