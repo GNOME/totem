@@ -75,6 +75,57 @@ G_BEGIN_DECLS
 							    TYPE_NAME);		\
 	}
 
+/**
+ * TOTEM_PLUGIN_REGISTER_CONFIGURABLE:
+ * @TYPE_NAME: the name of the plugin type, in UPPER_CASE
+ * @TypeName: the name of the plugin type, in CamelCase
+ * @type_name: the name of the plugin type, in lower_case
+ *
+ * Registers a configurable plugin with the Totem plugin system, including registering the type specified in the parameters and declaring its activate
+ * and deactivate and widget creation functions.
+ **/
+#define TOTEM_PLUGIN_REGISTER_CONFIGURABLE(TYPE_NAME, TypeName, type_name)	\
+	static void impl_activate (PeasActivatable *plugin, GObject *totem);	\
+	static void impl_deactivate (PeasActivatable *plugin, GObject *totem);	\
+	static GtkWidget *impl_create_configure_widget (PeasUIConfigurable *configurable); \
+	G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);	\
+	static void peas_activatable_iface_init (PeasActivatableInterface *iface); \
+	static void peas_ui_configurable_iface_init (PeasUIConfigurableInterface *iface); \
+	G_DEFINE_DYNAMIC_TYPE_EXTENDED (TypeName,				\
+					type_name,				\
+					PEAS_TYPE_EXTENSION_BASE,		\
+					0,					\
+					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE, \
+								       peas_activatable_iface_init) \
+					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_UI_TYPE_CONFIGURABLE, \
+								       peas_ui_configurable_iface_init)) \
+	static void								\
+	peas_activatable_iface_init (PeasActivatableInterface *iface)		\
+	{									\
+		iface->activate = impl_activate;				\
+		iface->deactivate = impl_deactivate;				\
+	}									\
+	static void								\
+	peas_ui_configurable_iface_init (PeasUIConfigurableInterface *iface)	\
+	{									\
+		iface->create_configure_widget = impl_create_configure_widget;	\
+	}									\
+	static void								\
+	type_name##_class_finalize (TypeName##Class *klass)			\
+	{									\
+	}									\
+	G_MODULE_EXPORT void							\
+	peas_register_types (PeasObjectModule *module)				\
+	{									\
+		type_name##_register_type (G_TYPE_MODULE (module));		\
+		peas_object_module_register_extension_type (module,		\
+							    PEAS_TYPE_ACTIVATABLE, \
+							    TYPE_NAME);		\
+		peas_object_module_register_extension_type (module,		\
+							    PEAS_UI_TYPE_CONFIGURABLE, \
+							    TYPE_NAME);		\
+	}
+
 G_END_DECLS
 
 #endif  /* __TOTEM_PLUGIN_H__ */
