@@ -33,19 +33,23 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gconf/gconf-client.h>
+#include <gio/gio.h>
 
 #include <libepc/consumer.h>
 #include <libepc/enums.h>
 #include <libepc/publisher.h>
 #include <libepc/service-monitor.h>
-
 #include <libepc-ui/progress-window.h>
-#include <gio/gio.h>
+
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
+#include <libpeas/peas-activatable.h>
+#include <libpeasui/peas-ui-configurable.h>
 
 #include "ev-sidebar.h"
 #include "totem-plugin.h"
-#include "totem-interface.h"
 #include "totem-private.h"
+#include "totem-dirs.h"
 #include "totem.h"
 
 #define TOTEM_TYPE_PUBLISH_PLUGIN		(totem_publish_plugin_get_type ())
@@ -68,7 +72,7 @@ enum
 
 typedef struct
 {
-	TotemPlugin parent;
+	PeasExtensionBase parent;
 
 	TotemObject       *totem;
 	GConfClient       *client;
@@ -92,11 +96,10 @@ typedef struct
 
 typedef struct
 {
-	TotemPluginClass parent_class;
+	PeasExtensionBaseClass parent_class;
 } TotemPublishPluginClass;
 
-G_MODULE_EXPORT GType register_totem_plugin		   (GTypeModule     *module);
-static GType totem_publish_plugin_get_type		   (void);
+GType totem_publish_plugin_get_type (void) G_GNUC_CONST;
 
 void totem_publish_plugin_service_name_entry_changed_cb	   (GtkEntry        *entry,
 							    gpointer         data);
@@ -111,7 +114,7 @@ void totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *v
 							    gpointer           data);
 
 G_LOCK_DEFINE_STATIC(totem_publish_plugin_lock);
-TOTEM_PLUGIN_REGISTER(TotemPublishPlugin, totem_publish_plugin);
+TOTEM_PLUGIN_REGISTER_CONFIGURABLE (TOTEM_TYPE_PUBLISH_PLUGIN, TotemPublishPlugin, totem_publish_plugin);
 
 static void
 totem_publish_plugin_name_changed_cb (GConfClient *client,
@@ -515,12 +518,11 @@ totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self)
 	return page;
 }
 
-static gboolean
-totem_publish_plugin_activate (TotemPlugin  *plugin,
-			       TotemObject  *totem,
-			       GError      **error)
+static void
+impl_activate (PeasActivatable *plugin, GObject *object)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
+	TotemObject *totem = TOTEM_OBJECT (object);
 	EpcProtocol protocol = EPC_PROTOCOL_HTTPS;
 	GtkWindow *window;
 	GError *internal_error = NULL;
@@ -530,15 +532,15 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	gchar *service_pattern;
 	gchar *service_name;
 
-	g_return_val_if_fail (NULL == self->publisher, FALSE);
-	g_return_val_if_fail (NULL == self->totem, FALSE);
+	g_return_if_fail (NULL == self->publisher);
+	g_return_if_fail (NULL == self->totem);
 
 	G_LOCK (totem_publish_plugin_lock);
 
 	self->totem = g_object_ref (totem);
-	self->ui = totem_plugin_load_interface (plugin, "publish-plugin.ui", TRUE, NULL, self);
 
 	window = totem_get_main_window (self->totem);
+	self->ui = totem_plugin_load_interface ("publish", "publish-plugin.ui", TRUE, window, self);
 	epc_progress_window_install (window);
 	g_object_unref (window);
 
@@ -613,12 +615,13 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 
 	totem_publish_plugin_playlist_changed_cb (self->totem->playlist, self);
 
-	return epc_publisher_run_async (self->publisher, error);
+	epc_publisher_run_async (self->publisher, NULL);
+
+	return;
 }
 
 static void
-totem_publish_plugin_deactivate (TotemPlugin *plugin,
-				 TotemObject *totem)
+impl_deactivate (PeasActivatable *plugin, GObject *totem)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 	TotemPlaylist *playlist = NULL;
@@ -686,26 +689,17 @@ totem_publish_plugin_deactivate (TotemPlugin *plugin,
 	self->scanning = NULL;
 }
 
-void
-totem_publish_plugin_dialog_response_cb (GtkDialog *dialog,
-					 gint       response,
-					 gpointer   data G_GNUC_UNUSED)
+static GtkWidget *
+impl_create_configure_widget (PeasUIConfigurable *configurable)
 {
-	if (response)
-		gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
-static GtkWidget*
-totem_publish_plugin_create_configure_dialog (TotemPlugin *plugin)
-{
-	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
+	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (configurable);
 
 	if (NULL == self->settings && GTK_IS_BUILDER (self->ui)) {
 		gchar *service_name = gconf_client_get_string (self->client, TOTEM_PUBLISH_CONFIG_NAME, NULL);
 		EpcProtocol protocol = epc_publisher_get_protocol (self->publisher);
 		GtkWidget *widget;
 
-		self->settings = g_object_ref (gtk_builder_get_object (self->ui, "publish-settings-dialog"));
+		self->settings = g_object_ref (gtk_builder_get_object (self->ui, "publish-settings-vbox"));
 
 		widget = GTK_WIDGET (gtk_builder_get_object (self->ui, "service-name-entry"));
 		gtk_entry_set_text (GTK_ENTRY (widget), service_name);
@@ -735,7 +729,7 @@ totem_publish_plugin_dispose (GObject *object)
 		g_object_unref (self->client);
 		self->client = NULL;
 	}
-	totem_publish_plugin_deactivate (TOTEM_PLUGIN (object), NULL);
+
 	G_OBJECT_CLASS (totem_publish_plugin_parent_class)->dispose (object);
 }
 
@@ -743,12 +737,6 @@ static void
 totem_publish_plugin_class_init (TotemPublishPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
-
 	object_class->dispose = totem_publish_plugin_dispose;
-
-	plugin_class->activate = totem_publish_plugin_activate;
-	plugin_class->deactivate = totem_publish_plugin_deactivate;
-	plugin_class->create_configure_dialog = totem_publish_plugin_create_configure_dialog;
 }
 

@@ -3,14 +3,14 @@ modules_flags = -export_dynamic -avoid-version -module
 plugindir = $(PLUGINDIR)/publish
 plugin_LTLIBRARIES = libpublish.la
 
+uidir = $(PLUGINDIR)/publish
+ui_DATA = publish-plugin.ui
+
 plugin_in_files = publish.totem-plugin.in
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
-
-uidir = $(PLUGINDIR)/publish
-ui_DATA = publish-plugin.ui
 
 common_defines = \
 	-D_REENTRANT					\
@@ -31,14 +31,14 @@ libpublish_la_CPPFLAGS = $(common_defines)
 
 libpublish_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
+	$(LIBEPC_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
-	$(LIBEPC_CFLAGS)	\
 	$(AM_CFLAGS)		\
 	-I$(top_srcdir)/	\
-	-I$(top_srcdir)/lib	\
 	-I$(top_srcdir)/src	\
-	-I$(top_srcdir)/src/backend \
+	-I$(top_srcdir)/src/backend	\
 	-I$(top_srcdir)/src/plugins
 
 EXTRA_DIST = $(plugin_in_files) $(ui_DATA)
