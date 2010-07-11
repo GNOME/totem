@@ -160,7 +160,7 @@ totem_plugin_find_file (const char *plugin_name,
  * @plugin_name: the plugin name
  * @name: interface filename
  * @fatal: %TRUE if it's a fatal error if the interface can't be loaded
- * @parent: the interface's parent #GtkWindow
+ * @parent: (allow-none): the interface's parent #GtkWindow
  * @user_data: a pointer to be passed to each signal handler in the interface when they're called
  *
  * Loads an interface file (GtkBuilder UI file) for a plugin, given its filename and
