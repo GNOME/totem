@@ -88,40 +88,37 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         Plugin activation.
         """
         # Initialise the interface
-        self.builder = Totem.plugin_load_interface ("jamendo", "jamendo.ui", True, totem_object.get_main_window (), self)
-        self.config_dialog = self.builder.get_object('config_dialog')
-        self.popup = self.builder.get_object('popup_menu')
-        container = self.builder.get_object('container')
-        self.notebook = self.builder.get_object('notebook')
-        self.search_entry = self.builder.get_object('search_entry')
-        self.search_combo = self.builder.get_object('search_combo')
+        builder = Totem.plugin_load_interface ("jamendo", "jamendo.ui", True, totem_object.get_main_window (), self)
+        self.popup = builder.get_object('popup_menu')
+        container = builder.get_object('container')
+        self.notebook = builder.get_object('notebook')
+        self.search_entry = builder.get_object('search_entry')
+        self.search_combo = builder.get_object('search_combo')
         self.search_combo.set_active(0)
-        self.album_button = self.builder.get_object('album_button')
-        self.previous_button = self.builder.get_object('previous_button')
-        self.next_button = self.builder.get_object('next_button')
+        self.album_button = builder.get_object('album_button')
+        self.previous_button = builder.get_object('previous_button')
+        self.next_button = builder.get_object('next_button')
         self.progressbars = [
-            self.builder.get_object('results_progressbar'),
-            self.builder.get_object('popular_progressbar'),
-            self.builder.get_object('latest_progressbar'),
+            builder.get_object('results_progressbar'),
+            builder.get_object('popular_progressbar'),
+            builder.get_object('latest_progressbar'),
         ]
         self.treeviews = [
-            self.builder.get_object('results_treeview'),
-            self.builder.get_object('popular_treeview'),
-            self.builder.get_object('latest_treeview'),
+            builder.get_object('results_treeview'),
+            builder.get_object('popular_treeview'),
+            builder.get_object('latest_treeview'),
         ]
         self.setup_treeviews()
 
         # Set up signals
-        self.builder.get_object('search_button').connect('clicked', self.on_search_button_clicked)
+        builder.get_object('search_button').connect('clicked', self.on_search_button_clicked)
         self.search_entry.connect('activate', self.on_search_entry_activate)
         self.notebook.connect('switch-page', self.on_notebook_switch_page)
         self.previous_button.connect('clicked', self.on_previous_button_clicked)
         self.next_button.connect('clicked', self.on_next_button_clicked)
         self.album_button.connect('clicked', self.on_album_button_clicked)
-        self.builder.get_object('cancel_button').connect('clicked', self.on_cancel_button_clicked)
-        self.builder.get_object('ok_button').connect('clicked', self.on_ok_button_clicked)
-        self.builder.get_object('add_to_playlist').connect('activate', self.on_add_to_playlist_activate)
-        self.builder.get_object('jamendo_album_page').connect('activate', self.on_open_jamendo_album_page_activate)
+        builder.get_object('add_to_playlist').connect('activate', self.on_add_to_playlist_activate)
+        builder.get_object('jamendo_album_page').connect('activate', self.on_open_jamendo_album_page_activate)
 
         self.totem = totem_object
         self.reset()
@@ -134,18 +131,56 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         """
         totem_object.remove_sidebar_page("jamendo")
 
-    def do_create_configure_dialog(self):
+    def do_create_configure_widget(self):
         """
-        Plugin config dialog.
+        Plugin config widget.
+        This code must be independent from the rest of the plugin. FIXME: bgo#624073
         """
-        format = self.gconf.get_string('%s/format' % gconf_key)
-        num_per_page = self.gconf.get_int('%s/num_per_page' % gconf_key)
-        combo = self.builder.get_object('preferred_format_combo')
+        builder = Totem.plugin_load_interface ('jamendo', 'jamendo.ui', True, None, self)
+        print builder
+        gconf = GConf.Client.get_default()
+        config_widget = builder.get_object ('config_widget')
+        config_widget.connect ('destroy', self.on_config_widget_destroy)
+        print config_widget
+        format = gconf.get_string('%s/format' % gconf_key)
+        num_per_page = gconf.get_int('%s/num_per_page' % gconf_key)
+
+        combo = builder.get_object('preferred_format_combo')
         combo.set_active(self.AUDIO_FORMATS.index(format))
-        spinbutton = self.builder.get_object('album_num_spinbutton')
+        combo.connect ('changed', self.on_preferred_format_combo_changed)
+
+        spinbutton = builder.get_object('album_num_spinbutton')
         spinbutton.set_value(num_per_page)
-        self.config_dialog.set_default_response(Gtk.ResponseType.OK)
-        return self.config_dialog
+        spinbutton.connect ('value-changed', self.on_album_num_spinbutton_value_changed)
+
+        return config_widget
+
+    def on_preferred_format_combo_changed (self, combo):
+        """
+        Called when the preferred audio format combo box is changed in the configuration dialogue
+        """
+        gconf = GConf.Client.get_default()
+        format = self.AUDIO_FORMATS[combo.get_active()]
+        gconf.set_string('%s/format' % gconf_key, format)
+
+    def on_album_num_spinbutton_value_changed (self, spinbutton):
+        """
+        Called when the number-of-albums spinbutton is changed in the configuration dialogue
+        """
+        gconf = GConf.Client.get_default()
+        num_per_page = int(spinbutton.get_value())
+        gconf.set_int('%s/num_per_page' % gconf_key, num_per_page)
+
+    def on_config_widget_destroy (self, widget):
+        """
+        FIXME: The GConf stuff should be refactored so that it listens to notifications and doesn't update manually.
+        This function is hacky and should go away.
+        """
+        self.init_settings()
+        try:
+            self.reset()
+        except:
+            pass
 
     def reset(self):
         """
@@ -521,29 +556,6 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         try:
             url = self._get_selection(True)[0]['url']
             os.spawnlp(os.P_NOWAIT, "xdg-open", "xdg-open", url)
-        except:
-            pass
-
-    def on_cancel_button_clicked(self, *args):
-        """
-        Called when the user clicked cancel in the config dialog.
-        """
-        self.config_dialog.hide()
-
-    def on_ok_button_clicked(self, *args):
-        """
-        Called when the user clicked ok in the config dialog.
-        """
-        combo = self.builder.get_object('preferred_format_combo')
-        spinbutton = self.builder.get_object('album_num_spinbutton')
-        format = self.AUDIO_FORMATS[combo.get_active()]
-        self.gconf.set_string('%s/format' % gconf_key, format)
-        num_per_page = int(spinbutton.get_value())
-        self.gconf.set_int('%s/num_per_page' % gconf_key, num_per_page)
-        self.init_settings()
-        self.config_dialog.hide()
-        try:
-            self.reset()
         except:
             pass
 
