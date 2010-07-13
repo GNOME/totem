@@ -638,7 +638,7 @@ totem_object_add_sidebar_page (TotemObject *totem,
 }
 
 /**
- * totem_remove_sidebar_page:
+ * totem_object_remove_sidebar_page:
  * @totem: a #TotemObject
  * @page_id: a string used to identify the page
  *
@@ -647,7 +647,7 @@ totem_object_add_sidebar_page (TotemObject *totem,
  * nothing.
  **/
 void
-totem_remove_sidebar_page (TotemObject *totem,
+totem_object_remove_sidebar_page (TotemObject *totem,
 			   const char *page_id)
 {
 	ev_sidebar_remove_page (EV_SIDEBAR (totem->sidebar),
