@@ -1,5 +1,20 @@
 New features and significant updates in version...
 
+2.90.5:
+* Movie Player:
+  - Port from libunique to GApplication
+  - Rework cancellation in the YouTube plugin to remove races
+  - Reorganise the core code into an installed library, libtotem.so
+  - Add gobject-introspection support to this library
+  - Make it possible to build plugins out of tree by installing a few header files
+  - Remove the old Python and Vala bindings in favour of introspection
+  - Port the Python plugins to libpeas and the new bindings (note that they aren't re-enabled yet due to being too unstable)
+  - Tidy up the "Open Location" dialogue
+  - Port to the updated PeasUIConfigurable interface in libpeas 0.5.2
+
+* Browser plugin:
+  - Add support for the VLC input.length property
+
 2.90.0:
 * Movie Player:
   - Fix some strings in the BBC iPlayer plugin
