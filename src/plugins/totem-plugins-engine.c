@@ -46,7 +46,6 @@
 #define GCONF_PREFIX_PLUGINS GCONF_PREFIX"/plugins"
 #define GCONF_PREFIX_PLUGIN GCONF_PREFIX"/plugins/%s"
 #define GCONF_PLUGIN_ACTIVE GCONF_PREFIX_PLUGINS"/%s/active"
-#define GCONF_PLUGIN_HIDDEN GCONF_PREFIX_PLUGINS"/%s/hidden"
 
 typedef struct _TotemPluginsEnginePrivate{
 	PeasExtensionSet *activatable_extensions;
@@ -86,27 +85,6 @@ totem_plugins_engine_class_init (TotemPluginsEngineClass *klass)
 	g_type_class_add_private (klass, sizeof (TotemPluginsEnginePrivate));
 }
 
-static gboolean
-plugin_is_builtin (PeasPluginInfo *info)
-{
-	const GHashTable *keys;
-	const GValue *value;
-	gboolean builtin;
-
-	keys = peas_plugin_info_get_keys (info);
-	if (keys == NULL)
-		return FALSE;
-	value = g_hash_table_lookup ((GHashTable *) keys, "Builtin");
-	if (value == NULL)
-		return FALSE;
-
-	builtin = g_value_get_boolean (value);
-	if (builtin != FALSE)
-		peas_plugin_info_set_visible (info, FALSE);
-
-	return builtin;
-}
-
 static void
 totem_plugins_engine_load_all (TotemPluginsEngine *engine)
 {
@@ -124,7 +102,7 @@ totem_plugins_engine_load_all (TotemPluginsEngine *engine)
 		g_message ("checking peas_plugin_info_get_module_name (info) %s", peas_plugin_info_get_module_name (info));
 
 		/* Builtin plugins are activated by default; other plugins aren't */
-		if (plugin_is_builtin (info)) {
+		if (peas_plugin_info_is_builtin (info)) {
 			g_ptr_array_add (activate, (gpointer) peas_plugin_info_get_module_name (info));
 			g_message ("peas_plugin_info_get_module_name (info) %s, to activate", peas_plugin_info_get_module_name (info));
 			continue;
@@ -134,11 +112,6 @@ totem_plugins_engine_load_all (TotemPluginsEngine *engine)
 			g_message ("peas_plugin_info_get_module_name (info) %s, to activate", peas_plugin_info_get_module_name (info));
 			g_ptr_array_add (activate, (gpointer) peas_plugin_info_get_module_name (info));
 		}
-		g_free (key_name);
-
-		key_name = g_strdup_printf (GCONF_PLUGIN_HIDDEN, peas_plugin_info_get_module_name (info));
-		if (gconf_client_get_bool (engine->priv->client, key_name, NULL) != FALSE)
-			peas_plugin_info_set_visible (info, FALSE);
 		g_free (key_name);
 	}
 	g_ptr_array_add (activate, NULL);
@@ -166,7 +139,7 @@ on_activatable_extension_added (PeasExtensionSet *set,
 {
 	g_message ("on_activatable_extension_added");
 	if (peas_extension_call (exten, "activate", engine->priv->totem)) {
-		if (peas_plugin_info_get_visible (info)) {
+		if (peas_plugin_info_is_builtin (info) == FALSE) {
 			char *key_name;
 
 			key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE,
@@ -185,7 +158,7 @@ on_activatable_extension_removed (PeasExtensionSet *set,
 	g_message ("on_activatable_extension_removed");
 	peas_extension_call (exten, "deactivate", engine->priv->totem);
 
-	if (peas_plugin_info_get_visible (info)) {
+	if (peas_plugin_info_is_builtin (info) == FALSE) {
 		char *key_name;
 
 		key_name = g_strdup_printf (GCONF_PLUGIN_ACTIVE,
@@ -329,8 +302,6 @@ totem_plugins_engine_gconf_cb (GConfClient *gconf_client,
 		} else {
 			peas_engine_unload_plugin (PEAS_ENGINE (engine), info);
 		}
-	} else if (g_str_equal (action_name, "hidden") != FALSE) {
-		peas_plugin_info_set_visible (info, !gconf_value_get_bool (entry->value));
 	}
 
 	g_free (action_name);
