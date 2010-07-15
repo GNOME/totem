@@ -373,6 +373,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 				 NULL);
 		}
 		break;
+	case TOTEM_STATE_INVALID:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -797,12 +798,12 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 
 static gboolean
 totem_embedded_set_time (TotemEmbedded *emb,
-			 guint64 time,
+			 guint64 _time,
 			 GError **error)
 {
-	g_message ("totem_embedded_set_time: %"G_GUINT64_FORMAT, time);
+	g_message ("totem_embedded_set_time: %"G_GUINT64_FORMAT, _time);
 
-	bacon_video_widget_seek_time (emb->bvw, time, FALSE, NULL);
+	bacon_video_widget_seek_time (emb->bvw, _time, FALSE, NULL);
 
 	return TRUE;
 }
@@ -1762,10 +1763,9 @@ totem_embedded_handle_key_press (TotemEmbedded *emb, GdkEventKey *event)
 	case GDK_Left:
 	case GDK_Right:
 		/* FIXME: */
-		break;
+	default:
+		return FALSE;
 	}
-
-	return FALSE;
 }
 
 static gboolean
@@ -1781,6 +1781,8 @@ totem_embedded_key_press_event (GtkWidget *widget, GdkEventKey *event,
 		case GDK_Left:
 		case GDK_Right:
 			return totem_embedded_handle_key_press (emb, event);
+		default:
+			break;
 		}
 	}
 
@@ -2154,22 +2156,26 @@ totem_embedded_push_parser (gpointer data)
 	g_file_delete (file, NULL, NULL);
 	g_object_unref (file);
 
-	if (res != TOTEM_PL_PARSER_RESULT_SUCCESS) {
-		//FIXME show a proper error message
-		switch (res) {
-		case TOTEM_PL_PARSER_RESULT_UNHANDLED:
-			g_print ("url '%s' unhandled\n", emb->current_uri);
-			break;
-		case TOTEM_PL_PARSER_RESULT_ERROR:
-			g_print ("error handling url '%s'\n", emb->current_uri);
-			break;
-		case TOTEM_PL_PARSER_RESULT_IGNORED:
-			g_print ("ignored url '%s'\n", emb->current_uri);
-			break;
-		default:
-			g_assert_not_reached ();
-			;;
-		}
+	/* FIXME: show a proper error message */
+	switch (res) {
+	case TOTEM_PL_PARSER_RESULT_SUCCESS:
+		/* Success! */
+		break;
+	case TOTEM_PL_PARSER_RESULT_UNHANDLED:
+		g_print ("url '%s' unhandled\n", emb->current_uri);
+		break;
+	case TOTEM_PL_PARSER_RESULT_ERROR:
+		g_print ("error handling url '%s'\n", emb->current_uri);
+		break;
+	case TOTEM_PL_PARSER_RESULT_IGNORED:
+		g_print ("ignored url '%s'\n", emb->current_uri);
+		break;
+	case TOTEM_PL_PARSER_RESULT_CANCELLED:
+		g_print ("cancelled url '%s'\n", emb->current_uri);
+		break;
+	default:
+		g_assert_not_reached ();
+		;;
 	}
 
 	/* Check if we have anything in the playlist now */
@@ -2294,7 +2300,7 @@ int main (int argc, char **argv)
 
 		env = g_getenv ("TOTEM_EMBEDDED_GDB");
 		if (env && g_ascii_strtoull (env, NULL, 10) == 1) {
-			char *gdbargv[4];
+			const char *gdbargv[4];
 			char *gdb;
 			GError *gdberr = NULL;
 			int gdbargc = 0;
@@ -2307,7 +2313,7 @@ int main (int argc, char **argv)
 			gdbargv[gdbargc++] = NULL;
 
 			if (!g_spawn_async (NULL,
-					    gdbargv,
+					    (gchar**) gdbargv,
 					    NULL /* env */,
 					    0,
 					    NULL, NULL,
@@ -2319,6 +2325,8 @@ int main (int argc, char **argv)
 				g_print ("Sleeping....\n");
 				g_usleep (10* 1000 * 1000); /* 10s */
 			}
+
+			g_free (gdb);
 		}
 	}
 #endif
