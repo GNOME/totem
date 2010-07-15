@@ -425,14 +425,14 @@ static GdkPixbuf *
 capture_frame_at_time(BaconVideoWidget *bvw,
 		      const char *input,
 		      const char *output,
-		      gint64 seconds) 
+		      gint64 milliseconds)
 {
 	GError *err = NULL;
 
-	if (bacon_video_widget_seek_time (bvw, seconds * 1000, TRUE, &err) == FALSE) {
-		g_print ("totem-video-thumbnailer: could not seek to %d seconds in '%s'\n"
+	if (bacon_video_widget_seek_time (bvw, milliseconds, TRUE, &err) == FALSE) {
+		g_print ("totem-video-thumbnailer: could not seek to %d milliseconds in '%s'\n"
 			 "Reason: %s\n",
-			 (int) seconds, input, err ? err->message : "programming error");
+			 (int) milliseconds, input, err ? err->message : "programming error");
 		bacon_video_widget_close (bvw);
 		gtk_widget_destroy (GTK_WIDGET (bvw));
 		g_error_free (err);
@@ -545,12 +545,12 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	gchar *header_text, *duration_text, *filename;
 
 	/* Calculate how many screenshots we're going to take */
-	stream_length = bacon_video_widget_get_stream_length (bvw) / 1000;
+	stream_length = bacon_video_widget_get_stream_length (bvw);
 
 	/* As a default, we have one screenshot per minute of stream,
 	 * but adjusted so we don't have any gaps in the resulting gallery. */
 	if (gallery == 0) {
-		gallery = stream_length / 60;
+		gallery = stream_length / 60000;
 
 		while (gallery % 3 != 0 &&
 		       gallery % 4 != 0 &&
@@ -565,7 +565,11 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 		gallery = GALLERY_MAX;
 	screenshot_interval = stream_length / gallery;
 
-	PROGRESS_DEBUG ("Producing gallery of %u screenshots, taken at %" G_GINT64_FORMAT " second intervals throughout a %" G_GINT64_FORMAT " second-long stream.",
+	/* Put a lower bound on the screenshot interval so we can't enter an infinite loop below */
+	if (screenshot_interval == 0)
+		screenshot_interval = 1;
+
+	PROGRESS_DEBUG ("Producing gallery of %u screenshots, taken at %" G_GINT64_FORMAT " millisecond intervals throughout a %" G_GINT64_FORMAT " millisecond-long stream.",
 			gallery, screenshot_interval, stream_length);
 
 	/* Calculate how to arrange the screenshots so we don't get ones orphaned on the last row.
@@ -619,7 +623,7 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 				      GDK_INTERP_BILINEAR, 255);
 		g_object_unref (screenshot);
 
-		PROGRESS_DEBUG ("Composited screenshot from %" G_GINT64_FORMAT " seconds (address %u) at (%u,%u).",
+		PROGRESS_DEBUG ("Composited screenshot from %" G_GINT64_FORMAT " milliseconds (address %u) at (%u,%u).",
 				pos, GPOINTER_TO_UINT (screenshot), x, y);
 
 		/* We print progress in the range 10% (MIN_PROGRESS) to 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0 */
@@ -651,7 +655,7 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	g_object_unref (pixbuf);
 
 	/* Build the header information */
-	duration_text = totem_time_to_string (stream_length * 1000);
+	duration_text = totem_time_to_string (stream_length);
 	filename = NULL;
 	if (strstr (input, "://")) {
 		char *local;
@@ -706,7 +710,7 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 		gchar *timestamp_text;
 		gint layout_width, layout_height;
 
-		timestamp_text = totem_time_to_string (pos * 1000);
+		timestamp_text = totem_time_to_string (pos);
 
 		pango_layout_set_text (layout, timestamp_text, -1);
 		pango_layout_get_pixel_size (layout, &layout_width, &layout_height);
