@@ -93,7 +93,7 @@ static gboolean impl_activate			(TotemPlugin *plugin, TotemObject *totem, GError
 static void impl_deactivate			(TotemPlugin *plugin, TotemObject *totem);
 
 /* GtkBuilder callbacks */
-void notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, TotemYouTubePlugin *self);
+void notebook_switch_page_cb (GtkNotebook *notebook, gpointer *page, guint page_num, TotemYouTubePlugin *self);
 void search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self);
 void cancel_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self);
 void search_entry_activate_cb (GtkEntry *entry, TotemYouTubePlugin *self);
@@ -962,7 +962,7 @@ load_related_videos (TotemYouTubePlugin *self)
 }
 
 void
-notebook_switch_page_cb (GtkNotebook *notebook, GtkNotebookPage *page, guint page_num, TotemYouTubePlugin *self)
+notebook_switch_page_cb (GtkNotebook *notebook, gpointer *page, guint page_num, TotemYouTubePlugin *self)
 {
 	/* Change the tree view */
 	self->current_tree_view = page_num;
