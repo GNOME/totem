@@ -65,7 +65,7 @@ totem_action_handler (GApplication      *app,
 		      gpointer           user_data)
 {
 	GEnumClass *klass;
-	GEnumValue *enum_value;
+	const GEnumValue *enum_value;
 	char *url = NULL;
 	TotemRemoteCommand command;
 
@@ -101,13 +101,13 @@ totem_action_handler (GApplication      *app,
 
 static void
 about_url_hook (GtkAboutDialog *about,
-	        const char *link,
+	        const char *uri,
 	        gpointer user_data)
 {
 	GError *error = NULL;
 
 	if (!gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (about)),
-	                   link,
+	                   uri,
 	                   gtk_get_current_event_time (),
 	                   &error))
 	{
@@ -149,26 +149,6 @@ debug_handler (const char *log_domain,
 
 	if (debug)
 		g_log_default_handler (log_domain, log_level, message, NULL);
-}
-
-static GVariant *
-variant_from_argv (int    argc,
-		   char **argv)
-{
-	GVariantBuilder builder;
-	int i;
-
-	g_variant_builder_init (&builder, G_VARIANT_TYPE("aay"));
-
-	for (i = 1; i < argc; i++) {
-		guint8 *argv_bytes;
-
-		argv_bytes = (guint8 *) argv[i];
-		g_variant_builder_add_value (&builder,
-					     g_variant_new_bytestring_array (argv_bytes, -1));
-	}
-
-	return g_variant_builder_end (&builder);
 }
 
 int
@@ -240,14 +220,12 @@ main (int argc, char **argv)
 
 	/* IPC stuff */
 	if (optionstate.notconnectexistingsession == FALSE) {
-		GError *error = NULL;
-
 		/* FIXME should be GtkApplication */
 		totem->app = g_initable_new (G_TYPE_APPLICATION,
 					     NULL,
-					     &error,
+					     NULL,
 					     "application-id", "org.gnome.Totem",
-					     "argv", variant_from_argv (argc, argv),
+					     "argv", g_variant_new_bytestring_array ((const gchar * const*) argv, argc),
 					     "default-quit", FALSE,
 					     NULL);
 

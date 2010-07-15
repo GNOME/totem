@@ -1191,7 +1191,7 @@ totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char
 {
 	char **mrls;
 	GError *error = NULL;
-	const char *link, *link_text, *secondary;
+	const char *uri, *link_text, *secondary;
 	gboolean retval;
 
 	mrls = bacon_video_widget_get_mrls (totem->bvw, type, device, &error);
@@ -1208,7 +1208,7 @@ totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char
 
 		/* No plugin for the media type */
 		if (g_error_matches (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE) != FALSE) {
-			link = "http://projects.gnome.org/totem/#codecs";
+			uri = "http://projects.gnome.org/totem/#codecs";
 			link_text = _("More information about media plugins");
 			secondary = _("Please install the necessary plugins and restart Totem to be able to play this media.");
 			if (type == MEDIA_TYPE_DVD || type == MEDIA_TYPE_VCD)
@@ -1225,7 +1225,7 @@ totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char
 			g_assert_not_reached ();
 		}
 
-		totem_interface_error_with_link (msg, secondary, link, link_text, GTK_WINDOW (totem->win));
+		totem_interface_error_with_link (msg, secondary, uri, link_text, GTK_WINDOW (totem->win));
 		g_free (msg);
 		return FALSE;
 	}
@@ -1273,6 +1273,7 @@ totem_action_load_media_device (TotemObject *totem, const char *device)
 					    _("Please consider using a music player or a CD extractor to play this CD"));
 			retval = FALSE;
 			break;
+		case MEDIA_TYPE_DVB:
 		default:
 			g_assert_not_reached ();
 	}
@@ -3758,6 +3759,8 @@ totem_action_handle_scroll (TotemObject *totem, GdkScrollDirection direction)
 	case GDK_SCROLL_DOWN:
 		totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000, FALSE);
 		break;
+	case GDK_SCROLL_LEFT:
+	case GDK_SCROLL_RIGHT:
 	default:
 		retval = FALSE;
 	}

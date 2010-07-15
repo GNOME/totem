@@ -91,7 +91,7 @@ totem_options_register_remote_commands (Totem *totem)
 
 	klass = (GEnumClass *) g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
 	for (i = TOTEM_REMOTE_COMMAND_UNKNOWN + 1; i < klass->n_values; i++) {
-		GEnumValue *val = g_enum_get_value (klass, i);
+		const GEnumValue *val = g_enum_get_value (klass, i);
 		g_application_add_action (G_APPLICATION (totem->app), val->value_name, val->value_nick);
 	}
 	g_type_class_unref (klass);
