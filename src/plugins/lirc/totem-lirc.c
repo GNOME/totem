@@ -98,8 +98,6 @@ typedef struct
 
 GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_lirc_plugin_init		(TotemLircPlugin *plugin);
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin)
 
 static void
@@ -125,7 +123,7 @@ totem_lirc_get_url (const char *str)
 	return g_strdup (s + 1);
 }
 
-static TotemRemoteSetting
+static gint
 totem_lirc_to_setting (const gchar *str, char **url)
 {
 	if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_REPEAT) == 0)
@@ -228,9 +226,7 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 		}
 
 		if (g_str_has_prefix (str, TOTEM_IR_SETTING) != FALSE) {
-			TotemRemoteSetting setting;
-
-			setting = totem_lirc_to_setting (str, &url);
+			gint setting = totem_lirc_to_setting (str, &url);
 			if (setting >= 0) {
 				gboolean value;
 
@@ -260,7 +256,7 @@ impl_activate (PeasActivatable *plugin,
 
 	pi->totem = g_object_ref (totem);
 
-	fd = lirc_init ("Totem", 0);
+	fd = lirc_init ((char*) "Totem", 0);
 	if (fd < 0) {
 		//FIXME
 #if 0

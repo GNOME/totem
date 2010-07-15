@@ -75,8 +75,6 @@ typedef struct
 
 GType	totem_bemused_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_bemused_plugin_init		(TotemBemusedPlugin *plugin);
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_BEMUSED_PLUGIN, TotemBemusedPlugin, totem_bemused_plugin)
 
 /* Bluetooth functions */
@@ -95,7 +93,7 @@ flush_response (TotemBemusedPlugin *tp, GIOChannel *source)
 }
 
 static void
-send_response_flush (TotemBemusedPlugin *tp, GIOChannel *source, const char *resp, gssize len, gboolean flush)
+send_response_flush (TotemBemusedPlugin *tp, GIOChannel *source, const char *resp, gsize len, gboolean flush)
 {
 	GError *error = NULL;
 	gsize written = 0;
@@ -109,26 +107,26 @@ send_response_flush (TotemBemusedPlugin *tp, GIOChannel *source, const char *res
 		flush_response (tp, source);
 
 	if (len != written)
-		g_message ("sent response: %d chars but len %d chars", (int) written, (int) len);
+		g_message ("sent response: %"G_GSIZE_FORMAT" chars but len %"G_GSIZE_FORMAT" chars", written, len);
 }
 
 static void
-send_response (TotemBemusedPlugin *tp, GIOChannel *source, const char *resp, gssize len)
+send_response (TotemBemusedPlugin *tp, GIOChannel *source, const char *resp, gsize len)
 {
 	send_response_flush (tp, source, resp, len, TRUE);
 }
 
 static void
-read_response (TotemBemusedPlugin *tp, GIOChannel *source, char *buf, gssize len)
+read_response (TotemBemusedPlugin *tp, GIOChannel *source, char *buf, gsize len)
 {
 	GError *error = NULL;
-	gsize read;
+	gsize num_read;
 
-	if (g_io_channel_read_chars (source, buf, len, &read, &error) != G_IO_STATUS_NORMAL) {
+	if (g_io_channel_read_chars (source, buf, len, &num_read, &error) != G_IO_STATUS_NORMAL) {
 		g_message ("error reading response: %s", error->message);
 		g_error_free (error);
-	} else if (len != read) {
-		g_message ("read %d chars but len %d chars", (int) read, (int) len);
+	} else if (len != num_read) {
+		g_message ("read %"G_GSIZE_FORMAT" chars but len %"G_GSIZE_FORMAT" chars", num_read, len);
 	}
 }
 
@@ -136,7 +134,7 @@ static char *
 read_filename (TotemBemusedPlugin *tp, GIOChannel *source)
 {
 	char namelenbuf[2], *filename;
-	int namelen;
+	guint namelen;
 
 	/* Read length */
 	read_response (tp, source, namelenbuf, 2);
@@ -239,15 +237,15 @@ static void
 seek_to_pos (TotemBemusedPlugin *tp, GIOChannel *source)
 {
 	char buf[4];
-	int time;
+	int _time;
 
 	read_response (tp, source, buf, 4);
-	time = buf[0] << 24;
-	time += buf[1] << 16;
-	time += buf[2] << 8;
-	time += buf[3];
+	_time = buf[0] << 24;
+	_time += buf[1] << 16;
+	_time += buf[2] << 8;
+	_time += buf[3];
 
-	totem_action_seek_time (tp->totem, (gint64) time * 1000, FALSE);
+	totem_action_seek_time (tp->totem, (gint64) _time * 1000, FALSE);
 }
 
 static void
@@ -392,11 +390,11 @@ static void
 set_playlist_at_pos (TotemBemusedPlugin *tp, GIOChannel *source)
 {
 	char buf[2];
-	int index;
+	int idx;
 
 	read_response (tp, source, buf, 2);
-	index = (buf[0] << 8) + buf[1];
-	totem_action_set_playlist_index (tp->totem, index);
+	idx = (buf[0] << 8) + buf[1];
+	totem_action_set_playlist_index (tp->totem, idx);
 }
 
 #if 0
@@ -521,13 +519,13 @@ client_watch_func (GIOChannel *source, GIOCondition condition, gpointer data)
 
 	if (condition & G_IO_IN || condition & G_IO_PRI) {
 		char buf[5];
-		gsize read;
+		gsize num_read;
 
 		status = G_IO_STATUS_NORMAL;
 
 		while (status == G_IO_STATUS_NORMAL) {
 			memset(buf, 0, 5);
-			status = g_io_channel_read_chars (source, buf, 4, &read, NULL);
+			status = g_io_channel_read_chars (source, buf, 4, &num_read, NULL);
 
 			if (status == G_IO_STATUS_NORMAL)
 				handle_command (tp, source, buf);

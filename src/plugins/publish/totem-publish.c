@@ -427,14 +427,14 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 		ev_sidebar_set_current_page (EV_SIDEBAR (self->totem->sidebar), "playlist");
 		totem_playlist_clear (self->totem->playlist);
 
-		for (i = 1; i <= n_entries; ++i) {
+		for (i = 0; i < n_entries; ++i) {
 			gchar *key, *mrl, *title;
 
-			key = g_strdup_printf ("File%d", i);
+			key = g_strdup_printf ("File%d", i + 1);
 			mrl = g_key_file_get_string (keyfile, "playlist", key, NULL);
 			g_free (key);
 
-			key = g_strdup_printf ("Title%d", i);
+			key = g_strdup_printf ("Title%d", i + 1);
 			title = g_key_file_get_string (keyfile, "playlist", key, NULL);
 			g_free (key);
 

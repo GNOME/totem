@@ -68,8 +68,6 @@ typedef struct
 
 GType totem_disc_recorder_plugin_get_type	(void) G_GNUC_CONST;
 
-static void peas_activatable_iface_init		(PeasActivatableInterface *iface);
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_DISC_RECORDER_PLUGIN, TotemDiscRecorderPlugin, totem_disc_recorder_plugin)
 
 static void totem_disc_recorder_plugin_burn (GtkAction *action,
