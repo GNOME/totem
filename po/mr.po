@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2010-04-13 14:23+0000\n"
-"PO-Revision-Date: 2010-04-13 20:02+0530\n"
+"POT-Creation-Date: 2010-07-21 09:21+0000\n"
+"PO-Revision-Date: 2010-07-22 15:17+0530\n"
 "Last-Translator: Sandeep Shedmake <sshedmak@redhat.com>\n"
-"Language-Team: Marathi <maajhe-sanganak@freelists.org>\n"
+"Language-Team: Marathi <fedora-trans-mr@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -222,7 +222,7 @@ msgstr "वादकयादी मध्ये जोडा (_A)"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1631
+#: ../src/totem-object.c:1629
 msgid "Movie Player"
 msgstr "चित्रपट वादक"
 
@@ -578,7 +578,7 @@ msgstr "चौरस"
 msgid "Start playing files from last position"
 msgstr "शेवटच्या ठिकाणापासून फाइल्स् चालवायला सुरू करा"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5790
+#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5873
 msgid "Stereo"
 msgstr "स्टिरीओ"
 
@@ -943,8 +943,9 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "चित्रपट दाखल केल्यावर पाठ्य उपशिर्षक आपोआप दाखल करायचे का"
 
 #: ../data/totem.schemas.in.h:38
+#, fuzzy
 msgid "Whether to disable the keyboard shortcuts"
-msgstr "कळफलकाचे शार्टकटस् बंद करायचे"
+msgstr "वापरकर्त्याची मुख्य संचयीकातील प्लगइन अकार्यान्वीत करायचे का"
 
 #: ../data/totem.schemas.in.h:39
 msgid "Whether to disable the plugins in the user's home directory"
@@ -1152,9 +1153,9 @@ msgstr "काहीच नाही"
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
 #: ../src/totem-menu.c:744
-#, c-format
+#, fuzzy, c-format
 msgid "Play Image '%s'"
-msgstr "प्रतिमा '%s' चालवा"
+msgstr "डिस्क '%s' चालवा"
 
 #: ../src/totem-menu.c:747 ../src/totem-menu.c:829
 #, c-format
@@ -1177,9 +1178,11 @@ msgstr "%s सह Movie Player वापरा"
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "सर्वहक्काधिकार © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1186 ../browser-plugin/totem-plugin-viewer.c:1158
+#: ../src/totem-menu.c:1186 ../browser-plugin/totem-plugin-viewer.c:1165
 msgid "translator-credits"
-msgstr "संदिप शेडमाके <sandeep.shedmake@gmail.com>, 2008; संदिप शेडमाके <sshedmak@redhat.com>, 2009, 2010."
+msgstr ""
+"संदिप शेडमाके <sandeep.shedmake@gmail.com>, 2008; संदिप शेडमाके <sshedmak@redhat."
+"com>, 2009, 2010."
 
 #: ../src/totem-menu.c:1190
 msgid "Totem Website"
@@ -1190,43 +1193,43 @@ msgid "Configure Plugins"
 msgstr "प्लगइन संयोजीत करा"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:431
-#, c-format
+#: ../src/totem-object.c:429
+#, fuzzy, c-format
 msgid "Totem %s"
-msgstr "टोटेम %s"
+msgstr "टोटेम संकेतस्थळ"
 
-#: ../src/totem-object.c:1000 ../browser-plugin/totem-plugin-viewer.c:362
+#: ../src/totem-object.c:998 ../browser-plugin/totem-plugin-viewer.c:369
 msgid "Playing"
 msgstr "चालवित आहे"
 
-#: ../src/totem-object.c:1002 ../src/totem-options.c:51
+#: ../src/totem-object.c:1000 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "स्तब्ध करा"
 
-#: ../src/totem-object.c:1007 ../browser-plugin/totem-plugin-viewer.c:358
+#: ../src/totem-object.c:1005 ../browser-plugin/totem-plugin-viewer.c:365
 msgid "Paused"
 msgstr "स्तब्ध"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1009 ../src/totem-object.c:1019
+#: ../src/totem-object.c:1007 ../src/totem-object.c:1017
 #: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "चालवा"
 
-#: ../src/totem-object.c:1014 ../src/totem-object.c:1623
-#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:346
+#: ../src/totem-object.c:1012 ../src/totem-object.c:1621
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:353
 msgid "Stopped"
 msgstr "थांबले आहे"
 
-#: ../src/totem-object.c:1095 ../src/totem-object.c:1122
-#: ../src/totem-object.c:1753 ../src/totem-object.c:1916
+#: ../src/totem-object.c:1093 ../src/totem-object.c:1120
+#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "टोटेम '%1$s' चालवू शकले नाही."
 
-#: ../src/totem-object.c:1199
+#: ../src/totem-object.c:1197
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1235,7 +1238,7 @@ msgstr ""
 "मिडीया हाताळणी करीता योग्य प्लगइन उपलब्ध असल्यावरही टोटेम या प्रकारची मिडीया (%s) "
 "चालवू शकत नाही."
 
-#: ../src/totem-object.c:1200
+#: ../src/totem-object.c:1198
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1243,17 +1246,17 @@ msgstr ""
 "तुम्हाला बहुदा ड्राइव्ह मध्ये डिस्क आहे का याची तपासणी घ्याची असावी व ते सुस्थितरित्या "
 "संयोजीत आहे का याची तपासणीही घ्याची असेल."
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1206
 msgid "More information about media plugins"
 msgstr "मिडीया प्लगइन विषयी अधिक माहिती"
 
-#: ../src/totem-object.c:1209
+#: ../src/totem-object.c:1207
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "कृपया आवश्यक प्लगइन प्रतिष्ठापीत करा व ही मिडीया चालविण्याकरीता टोटेम पुनःसुरू करा."
 
-#: ../src/totem-object.c:1211
+#: ../src/totem-object.c:1209
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1262,7 +1265,7 @@ msgstr ""
 "टोटेम या प्रकारची मिडीया (%s) चालवू शकत नाही कारण त्याकडे डीस्क पासून वाचण्याकरीताचे "
 "योग्य प्लगइन नाही."
 
-#: ../src/totem-object.c:1213
+#: ../src/totem-object.c:1211
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1271,61 +1274,61 @@ msgstr ""
 "टोटेम या प्रकारची मिडीया (%s) चालवू शकत नाही कारण त्याकडे हाताळण्याकरीताचे योग्य "
 "प्लगइन नाही."
 
-#: ../src/totem-object.c:1216
+#: ../src/totem-object.c:1214
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "टोटेम या प्रकारची मिडीया (%s) चालवू शकत नाही कराण प्रकार समर्थीत नाही."
 
-#: ../src/totem-object.c:1217
+#: ../src/totem-object.c:1215
 msgid "Please insert another disc to play back."
 msgstr "चालविण्याकरीता कृपया आणखी डीस्क अंतर्भूत करा."
 
-#: ../src/totem-object.c:1252
+#: ../src/totem-object.c:1250
 msgid "Totem was not able to play this disc."
 msgstr "टोटेम ही डिस्क चालवू शकले नाही."
 
-#: ../src/totem-object.c:1253 ../src/totem-object.c:4189
+#: ../src/totem-object.c:1251 ../src/totem-object.c:4182
 msgid "No reason."
 msgstr "कारण नाही."
 
-#: ../src/totem-object.c:1267
+#: ../src/totem-object.c:1265
 msgid "Totem does not support playback of Audio CDs"
 msgstr "टोटेम ऑडिओ CD चे गायन करीता समर्थन करीत नाही"
 
-#: ../src/totem-object.c:1268
+#: ../src/totem-object.c:1266
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "ही CD चालविण्याकरीता संगीत वादक किंवा CD एक्सट्रॅक्टरचा वापर करणे आवश्यक आहे"
 
-#: ../src/totem-object.c:1759
+#: ../src/totem-object.c:1757
 msgid "No error message"
 msgstr "त्रुटी संदेश नाही"
 
-#: ../src/totem-object.c:2143
+#: ../src/totem-object.c:2141
 msgid "Totem could not display the help contents."
 msgstr "टोटेम मदत अनुक्रम दर्शवू शकले नाही."
 
-#: ../src/totem-object.c:2473 ../src/totem-object.c:2475
-#: ../browser-plugin/totem-plugin-viewer.c:1461
+#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
+#: ../browser-plugin/totem-plugin-viewer.c:1468
 msgid "An error occurred"
 msgstr "त्रुटी निर्माण झाली"
 
-#: ../src/totem-object.c:4031 ../src/totem-object.c:4033
+#: ../src/totem-object.c:4024 ../src/totem-object.c:4026
 msgid "Previous Chapter/Movie"
 msgstr "पूर्वीचे पाठ/चित्रपट"
 
-#: ../src/totem-object.c:4040 ../src/totem-object.c:4042
+#: ../src/totem-object.c:4033 ../src/totem-object.c:4035
 msgid "Play / Pause"
 msgstr "चालवा / स्तब्ध"
 
-#: ../src/totem-object.c:4050 ../src/totem-object.c:4052
+#: ../src/totem-object.c:4043 ../src/totem-object.c:4045
 msgid "Next Chapter/Movie"
 msgstr "पुढचाचे पाठ/चित्रपट"
 
-#: ../src/totem-object.c:4064 ../src/totem-object.c:4066
+#: ../src/totem-object.c:4057 ../src/totem-object.c:4059
 msgid "Fullscreen"
 msgstr "पडदाभर"
 
-#: ../src/totem-object.c:4189
+#: ../src/totem-object.c:4182
 msgid "Totem could not startup."
 msgstr "टोटेम सुरू होऊ शकले नाही."
 
@@ -1738,12 +1741,12 @@ msgid "Could not open link"
 msgstr "दुवा उघडा"
 
 #: ../src/totem.c:151 ../src/totem.c:177
-#: ../browser-plugin/totem-plugin-viewer.c:659
-#: ../browser-plugin/totem-plugin-viewer.c:1857
+#: ../browser-plugin/totem-plugin-viewer.c:666
+#: ../browser-plugin/totem-plugin-viewer.c:1862
 msgid "Totem Movie Player"
 msgstr "टोटेम चित्रपट वादक"
 
-#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2284
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2282
 msgid "Could not initialize the thread-safe libraries."
 msgstr "थ्रेड-सेफ लायब्ररी प्रारंभ करू शकले नाही."
 
@@ -1773,23 +1776,23 @@ msgstr "संयोजना इंजिन टोटेम प्रारं
 msgid "Make sure that GNOME is properly installed."
 msgstr "जिनोम व्यवस्थित स्थापीत आहे याची खात्री करा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1742
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1756
 msgid "Password requested for RTSP server"
-msgstr "RTSP सर्व्हरकरीता पासवर्डची विनंती केली"
+msgstr ""
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2943
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2947
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2989
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2993
 #, c-format
 msgid "Audio Track #%d"
 msgstr "ऑडिओ ट्रॅक #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2975
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2979
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3021
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3025
 #, c-format
 msgid "Subtitle #%d"
 msgstr "उपशिर्षक #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3383
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3429
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1797,15 +1800,15 @@ msgstr ""
 "विनंतीकृत ऑडिओ आउटपुट आढळले नाही. कृपया मल्टिमिडीया प्रणाली निवडक मधिल अन्य ऑडिओ "
 "ऑउटपुट निवडा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3388
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3434
 msgid "Location not found."
 msgstr "ठिकाण सापडले नाही."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3392
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3438
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "स्थान उघडू शकले नाही; तुमच्याकडे फाइल उघडण्याची परवानगी कदाचीत नसावी."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3403
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3449
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1814,7 +1817,7 @@ msgstr ""
 "व्हिडिओ आउटपुट अन्य अनुप्रयोग द्वारे वापरले जात आहे. कृपया अन्य व्हिडीओ अनुप्रयोग बंद करा, "
 "किंवा मल्टिमिडीया प्रणाली निवडक मधिल अन्य ऑडिओ ऑउटपुट निवडा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3409
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3455
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1824,13 +1827,13 @@ msgstr ""
 "अन्य ऑडिओ ऑउटपुट निवडा. तुम्हच्याकडे अन्य श्राव्य सर्वर वापराचे पर्याय आहे."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3427
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3433
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3473
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3479
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "या चित्रपट चालविण्याकरीता %s प्लगइनची आवश्यकता आहे जी प्रतिष्ठापीत नाही."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3434
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3480
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1842,31 +1845,31 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3459
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3505
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "नेटवर्कवरील फाइल वापरता येत नाही. चकतीवर प्रथ उतरवून घेण्याचा प्रयत्न करा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3531
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3577
 msgid "Media file could not be played."
 msgstr "मिडिया फाइल वापरता आली नाही."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5786
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5869
 msgid "Surround"
 msgstr "भोवती"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5788
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5871
 msgid "Mono"
 msgstr "एकसंख्यी"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6135
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6218
 msgid "Too old version of GStreamer installed."
 msgstr "जीस्टीमरची अगोदरची जुनी आवृती स्थापित झाली आहे."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6142
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6225
 msgid "Media contains no supported video streams."
 msgstr "मिडिया मध्ये समर्थीत व्हिडियो प्रव्हा समाविष्टीत नाही."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6669
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6752
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1874,8 +1877,8 @@ msgstr ""
 "GStreamer चालविण्याकरती घटक निर्माण करण्यास अपयशी. कृपया GStreamer प्रतिष्ठापना "
 "तपासून पहा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6818
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6953
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6901
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7036
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1883,7 +1886,7 @@ msgstr ""
 "व्हिडिओ आउपुट उघडण्यास अपयशी. ते उपलब्ध नसावे. कृपया मल्टिमिडीया प्रणाली निवडक मधिल "
 "अन्य ऑडिओ ऑउटपुट निवडा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6830
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6913
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1892,7 +1895,7 @@ msgstr ""
 "व्हिडीओ आउपुट आढळले नाही. तुम्हाला अगाऊ GStreamer प्लगइन प्रतिष्ठापीत करायची आवश्यकता "
 "आहे, किंवा मल्टिमिडीया प्रणाली निवडक मधिल अन्य ऑडिओ ऑउटपुट निवडा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6865
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6948
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1902,7 +1905,7 @@ msgstr ""
 "नाही, किंवा आवाज सर्वर कार्यरत नसावे. कृपया मल्टिमिडीया प्रणाली निवडक मधिल अन्य ऑडिओ "
 "ऑउटपुट निवडा."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6885
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6968
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2088,10 +2091,11 @@ msgid "D-Bus Service"
 msgstr "D-Bus सेवा"
 
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
+#, fuzzy
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
-msgstr "सध्या चालवत असलेल्या चलचित्रांचे D-Bus उपप्रणालीकरीता सूचना पाटवण्यासाठीचे प्लगइन."
+msgstr "D-Bus उपप्रणालीसाठी सध्याचे-चालू असलेल्या चित्रपटांसाठी सूचना पाठवण्यासाठी प्लगइन."
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
@@ -2181,16 +2185,18 @@ msgid "Latest Releases"
 msgstr "अलिकडील प्रकाशन"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:6
+#, fuzzy
 msgid "Number of albums to _retrieve:"
-msgstr "पुनःप्राप्यजोगी अल्बमची संख्या (_r):"
+msgstr "पुनःप्राप्य करण्याजोगी अल्बमची संख्या (_r)"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:7
 msgid "Popular"
 msgstr "प्रतिष्ठीत"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:8
+#, fuzzy
 msgid "Preferred audio _format:"
-msgstr "पसंतीचे ऑडिओ रूपण (_f):"
+msgstr "पसंतीचे ऑडिओ रूपण (_f)"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:9
 #: ../src/plugins/tracker/totem-tracker-widget.c:521
@@ -2343,8 +2349,9 @@ msgid "Download Movie Subtitles"
 msgstr "चित्रपटाचे उपशिर्षक डाउनलोड करा"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
+#, fuzzy
 msgid "Language"
-msgstr "भाषा"
+msgstr "भाषा (_L)"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:3
 msgid "Subtitle _language:"
@@ -2459,15 +2466,15 @@ msgid "Service _Name:"
 msgstr "सेवाचे नाव (_N):"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:3
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
 "The name used for announcing the playlist service on the network.\n"
 "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
 "and <b>%h</b> will be replaced by your computer's host name."
 msgstr ""
-"नेवर्क वरील वादकयादी सेवा घोषीत करण्यासाठी वापरले गेलेले नाव.\n"
+"<small>नेवर्क वरील वादकयादी सेवा घोषीत करण्यासाठी वापरले गेलेले नाव.\n"
 "<b>%u</b> चे सर्व घटनाक्रम तुमच्या नावाद्वारे बदलविले जाईल,\n"
-"व <b>%h</b> तुमच्या संगणकीय यजमान नावाशी बदलवले जाईल."
+"व <b>%h</b> तुमच्या संगणकीय यजमान नावाशी बदलविले जाईल.</small>"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:6
 msgid "Use _encrypted transport protocol (HTTPS)"
@@ -2514,7 +2521,7 @@ msgstr "कलादालन साठवा"
 #: ../src/plugins/screenshot/totem-gallery.c:114
 #, c-format
 msgid "Gallery-%s-%d.jpg"
-msgstr "गॅलरी-%s-%d.jpg"
+msgstr ""
 
 #. Set up the window
 #: ../src/plugins/screenshot/totem-gallery-progress.c:101
@@ -2538,9 +2545,9 @@ msgstr "स्क्रीनशॉट साठवा"
 #. Create the screenshot widget
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
 #: ../src/plugins/screenshot/totem-screenshot.c:160
-#, c-format
+#, fuzzy, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "स्क्रीनशॉट-%s-%d.png"
+msgstr "स्क्रीनशॉट%d.png"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:98
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
@@ -2593,9 +2600,9 @@ msgstr "सेकंद"
 
 #. Display an error
 #: ../src/plugins/tracker/totem-tracker-widget.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "Could not get name and thumbnail for %s: %s"
-msgstr "%s करीता नाव व थंबनेल प्राप्त करणे अशक्य: %s"
+msgstr "फाइल %s करीता मेटाडेटा प्राप्त करू शकत नाही: %s"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:174
 msgid "File Error"
@@ -2603,8 +2610,9 @@ msgstr "फाइल त्रुटी"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:251
 #: ../src/plugins/tracker/totem-tracker-widget.c:368
+#, fuzzy
 msgid "Could not connect to Tracker"
-msgstr "ट्रॅकरशी जोडणी करण्यास अशक्य"
+msgstr "Galago डीमनशी जुळवणी करू शकले नाही."
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:258
 msgid "No results"
@@ -2702,48 +2710,48 @@ msgid "Fetching search results…"
 msgstr "शोध परिणाम प्राप्त करत आहे…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:895
+#: ../src/plugins/youtube/totem-youtube.c:901
 msgid "Fetching related videos…"
 msgstr "संबंधित विडीओ प्राप्त करत आहे…"
 
-#: ../src/plugins/youtube/totem-youtube.c:946
+#: ../src/plugins/youtube/totem-youtube.c:952
 msgid "Error Opening Video in Web Browser"
 msgstr "वेब ब्राऊजर मध्ये व्हिडीओ उघडतेवेळी त्रुटी"
 
-#: ../src/plugins/youtube/totem-youtube.c:966
+#: ../src/plugins/youtube/totem-youtube.c:972
 msgid "Fetching more videos…"
 msgstr "आणखी व्हिडीओज् प्राप्त करत आहे…"
 
-#: ../browser-plugin/totem-plugin-viewer.c:424
+#: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
 msgstr "चालविण्याकरीता URI उपलब्ध नाही"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1096
+#: ../browser-plugin/totem-plugin-viewer.c:1103
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" सह उघडा (_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1147
+#: ../browser-plugin/totem-plugin-viewer.c:1154
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s चा वापर करणारे ब्राऊजर प्लगइन"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1152
+#: ../browser-plugin/totem-plugin-viewer.c:1159
 msgid "Totem Browser Plugin"
 msgstr "टोटेम ब्राऊजर प्लगइन"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2177
+#: ../browser-plugin/totem-plugin-viewer.c:2175
 msgid "No playlist or playlist empty"
 msgstr "वादकयादी उपलब्ध नाही किंवा वादकयादी रिकामी नाही"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2268
+#: ../browser-plugin/totem-plugin-viewer.c:2266
 msgid "Movie browser plugin"
 msgstr "चलचित्र ब्राऊजर प्लगइन"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2284
+#: ../browser-plugin/totem-plugin-viewer.c:2282
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "तुमचे प्रणाली प्रतिष्ठपना तपासून पहा. टोटेम प्लगइन आता बाहेर पडेल."
 
