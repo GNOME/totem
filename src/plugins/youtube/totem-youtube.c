@@ -394,14 +394,6 @@ impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
 		g_regex_unref (self->regex);
 }
 
-static const gchar *
-get_fmt_param (TotemYouTubePlugin *self)
-{
-	if (bacon_video_widget_get_connection_speed (self->bvw) >= 10)
-		return "&fmt=18";
-	return "";
-}
-
 typedef struct {
 	TotemYouTubePlugin *plugin;
 	guint tree_view;
@@ -510,29 +502,32 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 
 	video_id = gdata_youtube_video_get_video_id (GDATA_YOUTUBE_VIDEO (data->entry));
 
-	/* Check for the t parameter, which is now in a JavaScript array on the video page */
+	/* Check for the fmt_url_map parameter */
 	g_regex_match (self->regex, contents, 0, &match_info);
 	if (g_match_info_matches (match_info) == TRUE) {
-		gchar *t_param, *s;
-		const gchar *fmt_param;
-		GString *video_uri_string;
+		gchar *fmt_url_map_escaped, *fmt_url_map;
+		gchar **mappings, **i;
 
 		/* We have a match */
-		s = g_match_info_fetch (match_info, 1);
-		t_param = g_uri_unescape_string (s, NULL);
-		if (t_param == NULL)
-			t_param = s;
-		else
-			g_free (s);
-		fmt_param = get_fmt_param (self);
+		fmt_url_map_escaped = g_match_info_fetch (match_info, 1);
+		fmt_url_map = g_uri_unescape_string (fmt_url_map_escaped, NULL);
+		g_free (fmt_url_map_escaped);
 
-		video_uri_string = g_string_new ("http://www.youtube.com/get_video?video_id=");
-		g_string_append_uri_escaped (video_uri_string, video_id, NULL, TRUE);
-		g_string_append (video_uri_string, "&t=");
-		g_string_append_uri_escaped (video_uri_string, t_param, NULL, TRUE);
-		g_string_append (video_uri_string, fmt_param);
+		/* The fmt_url_map parameter is in the following format:
+		 *   fmt1|uri1,fmt2|uri2,fmt3|uri3,...
+		 * where fmtN is an identifier for the audio and video encoding and resolution as described here:
+		 * (http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs) and uriN is the playback URI for that format. */
+		mappings = g_strsplit (fmt_url_map, ",", 0);
 
-		video_uri = g_string_free (video_uri_string, FALSE);
+		for (i = mappings; *i != NULL; i++) {
+			/* For the moment we just take the first format we get */
+			gchar **mapping = g_strsplit (*i, "|", 2);
+			video_uri = g_strdup (mapping[1]);
+			g_strfreev (mapping);
+			break;
+		}
+
+		g_strfreev (mappings);
 	} else {
 		GDataMediaContent *content;
 
@@ -854,7 +849,7 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		 * cycles repeatedly creating new regexes for each video whose t param we resolve. */
 		/* We're looking for a line of the form:
 		 * var swfHTML = (isIE) ? "<object...econds=194&t=vjVQa1PpcFP36LLlIaDqZIG1w6e30b-7WVBgsQLLA3s%3D&rv.6.id=OzLjC6Pm... */
-		self->regex = g_regex_new ("swfHTML = .*&t=([^&]+)&", G_REGEX_OPTIMIZE, 0, NULL);
+		self->regex = g_regex_new ("swfHTML = .*&fmt_url_map=([^&]+)&", G_REGEX_OPTIMIZE, 0, NULL);
 		g_assert (self->regex != NULL);
 
 		/* Set up the GData service (needed for the tree views' queries) */
