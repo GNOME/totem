@@ -516,6 +516,11 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         """
         Hack to autowrap text of the title colum.
         """
+        # Further hack to run away if we're using GTK+ 3, where GtkAllocation
+        # disappeared.
+        if not hasattr(allocation, 'width'):
+            return
+
         cols = (c for c in tv.get_columns() if c != col)
         w = allocation.width - sum(c.get_width() for c in cols)
         if cell.props.wrap_width == w or w <= 0:
