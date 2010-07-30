@@ -294,8 +294,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         ])
         # append album row
         parent = treeview.get_model().append(None,
-            [album, album['image'], title, dur, tip]
+            [DictWrapper(album), album['image'], title, dur, tip]
         )
+
         # append track rows
         icon = GdkPixbuf.Pixbuf.new(GdkPixbuf.Colorspace.RGB, True, 8, 1, 1)
         for i, track in enumerate(album['tracks']):
@@ -314,7 +315,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
                 _('Duration: %s') % td,
             ])
             # append track
-            treeview.get_model().append(parent, [track, icon, tt, td, tip])
+            treeview.get_model().append(parent, [DictWrapper(track), icon, tt, td, tip])
         # update current album count
         pindex = self.treeviews.index(treeview)
         self.album_count[pindex] += 1
@@ -324,6 +325,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         Add an album to the playlist, mode can be: replace, enqueue or
         enqueue_and_play.
         """
+        if album is DictWrapper:
+            album = album.dictionary
+
         for i, track in enumerate(album['tracks']):
             if mode in ('replace', 'enqueue_and_play'):
                 if i == 0:
@@ -478,9 +482,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         except:
             return
         if len(path) == 1:
-            self.add_album_to_playlist('replace', item)
+            self.add_album_to_playlist('replace', item.dictionary)
         else:
-            self.add_track_to_playlist('replace', item)
+            self.add_track_to_playlist('replace', item.dictionary)
 
     def on_treeview_row_clicked(self, tv, evt):
         """
@@ -702,3 +706,11 @@ class JamendoService(threading.Thread):
         handle.close()
         return data
 
+# Hack to work around bgo#622987; we need to wrap dicts in a GObject so that
+# we can insert them into the GtkTreeStore
+class DictWrapper(gobject.GObject):
+    __gtype_name__ = 'DictWrapper'
+
+    def __init__(self, dictionary):
+        self.dictionary = dictionary
+        gobject.GObject.__init__(self)
