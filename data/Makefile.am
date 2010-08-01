@@ -13,7 +13,6 @@ stuff_DATA =				\
 	totem.ui			\
 	fullscreen.ui			\
 	playlist.ui			\
-	plugins.ui			\
 	mozilla-viewer.ui		\
 	properties.ui			\
 	uri.ui				\
