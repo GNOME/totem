@@ -463,6 +463,23 @@ typedef struct {
 	guint tree_view;
 } TParamData;
 
+/* Ranked list of formats to prefer, from http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs */
+static const guint fmt_preferences[] = {
+	17, /* least preferred (lowest connection speed needed) */
+	5,
+	18,
+	18,
+	34,
+	35,
+	43,
+	43,
+	22,
+	45,
+	45,
+	37,
+	38 /* most preferred (highest connection speed needed) */
+};
+
 static void
 resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *data)
 {
@@ -499,6 +516,8 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 	if (g_match_info_matches (match_info) == TRUE) {
 		gchar *fmt_url_map_escaped, *fmt_url_map;
 		gchar **mappings, **i;
+		GHashTable *fmt_table;
+		gint connection_speed;
 
 		/* We have a match */
 		fmt_url_map_escaped = g_match_info_fetch (match_info, 1);
@@ -508,19 +527,58 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 		/* The fmt_url_map parameter is in the following format:
 		 *   fmt1|uri1,fmt2|uri2,fmt3|uri3,...
 		 * where fmtN is an identifier for the audio and video encoding and resolution as described here:
-		 * (http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs) and uriN is the playback URI for that format. */
+		 * (http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs) and uriN is the playback URI for that format.
+		 *
+		 * We parse it into a hash table from format to URI, and use that against a ranked list of preferred formats (based on the user's
+		 * connection speed) to determine the URI to use. */
+		fmt_table = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, g_free);
 		mappings = g_strsplit (fmt_url_map, ",", 0);
 
 		for (i = mappings; *i != NULL; i++) {
 			/* For the moment we just take the first format we get */
-			gchar **mapping = g_strsplit (*i, "|", 2);
-			video_uri = g_strdup (mapping[1]);
+			gchar **mapping;
+			gint fmt;
+
+			mapping = g_strsplit (*i, "|", 2);
+
+			if (mapping[0] == NULL || mapping[1] == NULL) {
+				g_warning ("Bad format-URI mapping: %s", *i);
+				g_strfreev (mapping);
+				continue;
+			}
+
+			fmt = atoi (mapping[0]);
+
+			if (fmt < 1) {
+				g_warning ("Badly-formed format: %s", mapping[0]);
+				g_strfreev (mapping);
+				continue;
+			}
+
+			g_hash_table_insert (fmt_table, GUINT_TO_POINTER ((guint) fmt), g_strdup (mapping[1]));
 			g_strfreev (mapping);
-			break;
 		}
 
 		g_strfreev (mappings);
-	} else {
+
+		/* Starting with the highest connection speed we support, look for video URIs matching our connection speed. */
+		connection_speed = MIN (bacon_video_widget_get_connection_speed (self->bvw), (gint) G_N_ELEMENTS (fmt_preferences) - 1);
+		for (; connection_speed >= 0; connection_speed--) {
+			guint idx = (guint) connection_speed;
+			video_uri = g_strdup (g_hash_table_lookup (fmt_table, GUINT_TO_POINTER (fmt_preferences [idx])));
+
+			/* Have we found a match yet? */
+			if (video_uri != NULL) {
+				g_debug ("Using video URI for format %u (connection speed %u)", fmt_preferences[idx], idx);
+				break;
+			}
+		}
+
+		g_hash_table_destroy (fmt_table);
+	}
+
+	/* Fallback */
+	if (video_uri == NULL) {
 		GDataMediaContent *content;
 
 		/* We don't have a match, which is odd; fall back to the FLV URI as advertised by the YouTube API */
@@ -535,6 +593,7 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 			video_uri = NULL;
 		}
 	}
+
 	g_match_info_free (match_info);
 	g_free (contents);
 
