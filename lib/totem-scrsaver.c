@@ -115,6 +115,7 @@ on_inhibit_cb (GObject      *source_object,
 			g_warning ("Problem inhibiting the screensaver: %s", error->message);
 		}
 		g_error_free (error);
+		g_object_unref (scr);
 
 		return;
 	}
@@ -125,6 +126,8 @@ on_inhibit_cb (GObject      *source_object,
 	else
 		scr->priv->cookie = 0;
 	g_variant_unref (value);
+
+	g_object_unref (scr);
 }
 
 static void
@@ -155,6 +158,7 @@ on_uninhibit_cb (GObject      *source_object,
 			g_warning ("Problem uninhibiting the screensaver: %s", error->message);
 		}
 		g_error_free (error);
+		g_object_unref (scr);
 
 		return;
 	}
@@ -162,6 +166,8 @@ on_uninhibit_cb (GObject      *source_object,
 	/* clear the cookie */
 	scr->priv->cookie = 0;
 	g_variant_unref (value);
+
+	g_object_unref (scr);
 }
 
 static void
@@ -174,6 +180,7 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
                 return;
 
 	scr->priv->old_dbus_api = FALSE;
+	g_object_ref (scr);
 
 	if (inhibit) {
 		g_return_if_fail (scr->priv->reason != NULL);
