@@ -67,6 +67,12 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSHOT_PLUGIN,
 static void
 totem_screenshot_plugin_class_init (TotemScreenshotPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 	g_type_class_add_private (klass, sizeof (TotemScreenshotPluginPrivate));
 }
 
@@ -195,8 +201,7 @@ disable_save_to_disk_changed_cb (GConfClient *client, guint connection_id, GConf
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *totem)
+impl_activate (PeasActivatable *plugin)
 {
 	GtkWindow *window;
 	GtkUIManager *manager;
@@ -208,7 +213,7 @@ impl_activate (PeasActivatable *plugin,
 		{ "take-gallery", NULL, N_("Create Screenshot _Gallery..."), NULL, N_("Create a gallery of screenshots"), G_CALLBACK (take_gallery_action_cb) }
 	};
 
-	priv->totem = TOTEM_OBJECT (totem);
+	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (priv->totem));
 	priv->got_metadata_signal = g_signal_connect (G_OBJECT (priv->bvw),
 						      "got-metadata",
@@ -262,8 +267,7 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin,
-		 GObject *totem)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
 	GtkWindow *window;

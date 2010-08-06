@@ -72,6 +72,13 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_THUMBNAIL_PLUGIN, TotemThumbnailPlugin, totem_t
 static void
 totem_thumbnail_plugin_class_init (TotemThumbnailPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
+
 	g_type_class_add_private (klass, sizeof (TotemThumbnailPluginPrivate));
 }
 
@@ -169,42 +176,38 @@ file_closed_cb (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemThumbnailPlugin *pi = TOTEM_THUMBNAIL_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	char *mrl;
 
-	pi->priv->window = totem_get_main_window (totem);
-	pi->priv->totem = totem;
+	pi->priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->priv->window = totem_get_main_window (pi->priv->totem);
 
-	pi->priv->file_opened_handler_id = g_signal_connect (G_OBJECT (totem),
+	pi->priv->file_opened_handler_id = g_signal_connect (G_OBJECT (pi->priv->totem),
 							     "file-opened",
 							     G_CALLBACK (file_opened_cb),
 							     pi);
-	pi->priv->file_closed_handler_id = g_signal_connect (G_OBJECT (totem),
+	pi->priv->file_closed_handler_id = g_signal_connect (G_OBJECT (pi->priv->totem),
 							     "file-closed",
 							     G_CALLBACK (file_closed_cb),
 							     pi);
 
-	g_object_get (totem, "current-mrl", &mrl, NULL);
+	g_object_get (pi->priv->totem, "current-mrl", &mrl, NULL);
 
-	update_from_state (pi->priv, totem, mrl);
+	update_from_state (pi->priv, pi->priv->totem, mrl);
 
 	g_free (mrl);
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemThumbnailPlugin *pi = TOTEM_THUMBNAIL_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 
-	g_signal_handler_disconnect (totem, pi->priv->file_opened_handler_id);
-	g_signal_handler_disconnect (totem, pi->priv->file_closed_handler_id);
+	g_signal_handler_disconnect (pi->priv->totem, pi->priv->file_opened_handler_id);
+	g_signal_handler_disconnect (pi->priv->totem, pi->priv->file_closed_handler_id);
 
-	set_icon_to_default (totem);
+	set_icon_to_default (pi->priv->totem);
 }
 

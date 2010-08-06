@@ -69,6 +69,12 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 static void
 totem_movie_properties_plugin_class_init (TotemMoviePropertiesPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -133,14 +139,13 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
-	totem = TOTEM_OBJECT (object);
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	pi->props = bacon_video_widget_properties_new ();
 	gtk_widget_show (pi->props);
@@ -169,13 +174,13 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate	(PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_stream_length);
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),

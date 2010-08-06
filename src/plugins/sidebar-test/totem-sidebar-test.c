@@ -61,6 +61,12 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SIDEBAR_TEST_PLUGIN, TotemSidebarTestPlugin, to
 static void
 totem_sidebar_test_plugin_class_init (TotemSidebarTestPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -69,15 +75,13 @@ totem_sidebar_test_plugin_init (TotemSidebarTestPlugin *plugin)
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	GtkWidget *label;
-	TotemObject *totem = TOTEM_OBJECT (object);
 
 	label = gtk_label_new ("This is a test sidebar main widget");
 	gtk_widget_show (label);
-	totem_add_sidebar_page (totem,
+	totem_add_sidebar_page (g_object_get_data (G_OBJECT (plugin), "object"),
 				"sidebar-test",
 				"Sidebar Test",
 				label);
@@ -85,11 +89,11 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate	(PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
 
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	totem_remove_sidebar_page (totem, "sidebar-test");
 	g_message ("Just removed a test sidebar");
 }

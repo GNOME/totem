@@ -105,7 +105,11 @@ totem_gromit_plugin_class_init (TotemGromitPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
 	object_class->finalize = totem_gromit_plugin_finalize;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -254,11 +258,9 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemGromitPlu
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *window;
 
 	if (!totem_gromit_available (pi)) {
@@ -271,22 +273,20 @@ impl_activate (PeasActivatable *plugin,
 #endif
 	}
 
-	window = totem_get_main_window (totem);
+	window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
 	pi->handler_id = g_signal_connect (G_OBJECT(window), "key-press-event", 
 			G_CALLBACK (on_window_key_press_event), plugin);
 	g_object_unref (window);
 }
 
 static void
-impl_deactivate	(PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *window;
 
 	if (pi->handler_id != 0) {
-		window = totem_get_main_window (totem);
+		window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
 		g_signal_handler_disconnect (G_OBJECT(window), pi->handler_id);
 		pi->handler_id = 0;
 		g_object_unref (window);

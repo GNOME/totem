@@ -340,7 +340,11 @@ totem_mythtv_plugin_class_init (TotemMythtvPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
 	object_class->finalize = totem_mythtv_plugin_finalize;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -503,13 +507,11 @@ add_sidebar (TotemMythtvPlugin *tm, const char *name, const char *label)
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 
-	tm->totem = g_object_ref (totem);
+	tm->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 
 	tm->sidebar_recordings = add_sidebar (tm, "mythtv-recordings", _("MythTV Recordings"));
 	tm->sidebar_livetv = add_sidebar (tm, "mythtv-livetv", _("MythTV LiveTV"));
@@ -526,8 +528,7 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate	(PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate	(PeasActivatable *plugin)
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
 

@@ -72,7 +72,14 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPlugin, totem_ontop_plu
 static void
 totem_ontop_plugin_class_init (TotemOntopPluginClass *klass)
 {
-	g_type_class_add_private (klass, sizeof (TotemOntopPluginPrivate));
+       GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+       object_class->set_property = set_property;
+       object_class->get_property = get_property;
+
+       g_object_class_override_property (object_class, PROP_OBJECT, "object");
+
+       g_type_class_add_private (klass, sizeof (TotemOntopPluginPrivate));
 }
 
 static void
@@ -109,17 +116,15 @@ property_notify_cb (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 
-	pi->priv->window = totem_get_main_window (totem);
-	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
-	pi->priv->totem = totem;
+	pi->priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	pi->priv->window = totem_get_main_window (pi->priv->totem);
+	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (pi->priv->totem));
 
-	pi->priv->handler_id = g_signal_connect (G_OBJECT (totem),
+	pi->priv->handler_id = g_signal_connect (G_OBJECT (pi->priv->totem),
 					   "notify::playing",
 					   G_CALLBACK (property_notify_cb),
 					   pi);
@@ -132,13 +137,11 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id);
+	g_signal_handler_disconnect (G_OBJECT (pi->priv->totem), pi->priv->handler_id);
 	g_signal_handler_disconnect (G_OBJECT (pi->priv->bvw), pi->priv->handler_id_metadata);
 
 	g_object_unref (pi->priv->bvw);

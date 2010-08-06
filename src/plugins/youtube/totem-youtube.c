@@ -108,6 +108,12 @@ TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePlugin, totem_yout
 static void
 totem_youtube_plugin_class_init (TotemYouTubePluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -328,19 +334,18 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 }
 
 static void
-impl_activate (PeasActivatable *plugin, GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *main_window;
 	GtkBuilder *builder;
 	guint i;
 
-	self->totem = g_object_ref (totem);
-	self->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+	self->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	self->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (self->totem));
 
 	/* Set up the interface */
-	main_window = totem_get_main_window (totem);
+	main_window = totem_get_main_window (self->totem);
 	builder = totem_plugin_load_interface ("youtube", "youtube.ui", TRUE, main_window, self);
 	g_object_unref (main_window);
 
@@ -357,12 +362,12 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 	gtk_widget_show_all (self->vbox);
 
 	/* Add the sidebar page */
-	totem_add_sidebar_page (totem, "youtube", _("YouTube"), self->vbox);
+	totem_add_sidebar_page (self->totem, "youtube", _("YouTube"), self->vbox);
 	g_object_unref (builder);
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin, GObject *totem)
+impl_deactivate (PeasActivatable *plugin)
 {
 	guint i;
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);

@@ -79,7 +79,11 @@ totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
 	object_class->finalize = totem_screensaver_plugin_finalize;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -149,13 +153,13 @@ lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
 	GConfClient *gc;
 
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	pi->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
 
 	gc = gconf_client_get_default ();
@@ -182,11 +186,9 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate	(PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate	(PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GConfClient *gc;
 
 	gc = gconf_client_get_default ();
@@ -194,6 +196,8 @@ impl_deactivate	(PeasActivatable *plugin,
 	g_object_unref (gc);
 
 	if (pi->handler_id_playing != 0) {
+		TotemObject *totem;
+		totem = g_object_get_data (G_OBJECT (plugin), "object");
 		g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
 		pi->handler_id_playing = 0;
 	}

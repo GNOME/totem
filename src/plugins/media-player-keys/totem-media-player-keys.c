@@ -71,6 +71,12 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN,
 static void
 totem_media_player_keys_plugin_class_init (TotemMediaPlayerKeysPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -114,11 +120,10 @@ proxy_destroy (DBusGProxy *proxy,
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
 	DBusGConnection *connection;
 	GError *err = NULL;
 	GtkWindow *window;
@@ -169,6 +174,8 @@ impl_activate (PeasActivatable *plugin,
 			   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
 			   G_TYPE_INVALID);
 
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
+
 	dbus_g_object_register_marshaller (totem_marshal_VOID__STRING_STRING,
 			G_TYPE_NONE, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
 	dbus_g_proxy_add_signal (pi->media_player_keys_proxy, "MediaPlayerKeyPressed",
@@ -184,11 +191,9 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate	(PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkWindow *window;
 
 	if (pi->media_player_keys_proxy != NULL) {
@@ -200,6 +205,9 @@ impl_deactivate	(PeasActivatable *plugin,
 	}
 
 	if (pi->handler_id != 0) {
+		TotemObject *totem;
+
+		totem = g_object_get_data (G_OBJECT (plugin), "object");
 		window = totem_get_main_window (totem);
 		if (window == NULL)
 			return;

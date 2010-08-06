@@ -103,6 +103,12 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin
 static void
 totem_lirc_plugin_class_init (TotemLircPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -246,15 +252,13 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	char *path;
 	int fd;
 
-	pi->totem = g_object_ref (totem);
+	pi->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 
 	fd = lirc_init ((char*) "Totem", 0);
 	if (fd < 0) {
@@ -291,8 +295,7 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
 	GError *error = NULL;

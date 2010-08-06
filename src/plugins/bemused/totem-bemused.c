@@ -682,6 +682,12 @@ sdp_svc_del (sdp_session_t *session)
 static void
 totem_bemused_plugin_class_init (TotemBemusedPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -690,15 +696,13 @@ totem_bemused_plugin_init (TotemBemusedPlugin *plugin)
 }
 
 static void
-impl_activate (PeasActivatable *plugin,
-	       GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemBemusedPlugin *tp = TOTEM_BEMUSED_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	int fd, channel;
 	struct sockaddr_rc addr;
 
-	tp->totem = totem;
+	tp->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	fd = socket (PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 	if (fd < 0) {
@@ -757,8 +761,7 @@ impl_activate (PeasActivatable *plugin,
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin,
-		 GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	//FIXME
 }

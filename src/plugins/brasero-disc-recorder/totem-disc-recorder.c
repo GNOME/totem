@@ -366,10 +366,9 @@ totem_disc_recorder_file_opened (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin, GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkUIManager *uimanager = NULL;
 	GtkAction *action;
 	char *path;
@@ -388,13 +387,13 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 	g_free (path);
 #endif
 
-	pi->totem = totem;
+	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	g_signal_connect (totem,
+	g_signal_connect (pi->totem,
 			  "file-opened",
 			  G_CALLBACK (totem_disc_recorder_file_opened),
 			  plugin);
-	g_signal_connect (totem,
+	g_signal_connect (pi->totem,
 			  "file-closed",
 			  G_CALLBACK (totem_disc_recorder_file_closed),
 			  plugin);
@@ -407,7 +406,7 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 				      G_N_ELEMENTS (totem_disc_recorder_plugin_actions),
 				      pi);
 
-	uimanager = totem_get_ui_manager (totem);
+	uimanager = totem_get_ui_manager (pi->totem);
 	gtk_ui_manager_insert_action_group (uimanager, pi->action_group, -1);
 	g_object_unref (pi->action_group);
 
@@ -458,7 +457,7 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 
-	if (!totem_is_paused (totem) && !totem_is_playing (totem)) {
+	if (!totem_is_paused (pi->totem) && !totem_is_playing (pi->totem)) {
 		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
 		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
@@ -468,25 +467,24 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 	else {
 		char *mrl;
 
-		mrl = totem_get_current_mrl (totem);
-		totem_disc_recorder_file_opened (totem, mrl, pi);
+		mrl = totem_get_current_mrl (pi->totem);
+		totem_disc_recorder_file_opened (pi->totem, mrl, pi);
 		g_free (mrl);
 	}
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin, GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	GtkUIManager *uimanager = NULL;
 
 	pi->enabled = FALSE;
 
-	g_signal_handlers_disconnect_by_func (totem, totem_disc_recorder_file_opened, plugin);
-	g_signal_handlers_disconnect_by_func (totem, totem_disc_recorder_file_closed, plugin);
+	g_signal_handlers_disconnect_by_func (pi->totem, totem_disc_recorder_file_opened, plugin);
+	g_signal_handlers_disconnect_by_func (pi->totem, totem_disc_recorder_file_closed, plugin);
 
-	uimanager = totem_get_ui_manager (totem);
+	uimanager = totem_get_ui_manager (pi->totem);
 	gtk_ui_manager_remove_ui (uimanager, pi->ui_merge_id);
 	gtk_ui_manager_remove_action_group (uimanager, pi->action_group);
 
@@ -496,6 +494,12 @@ impl_deactivate (PeasActivatable *plugin, GObject *object)
 static void
 totem_disc_recorder_plugin_class_init (TotemDiscRecorderPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void

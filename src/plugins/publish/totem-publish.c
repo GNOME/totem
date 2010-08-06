@@ -521,10 +521,9 @@ totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self, GtkBuilder
 }
 
 static void
-impl_activate (PeasActivatable *plugin, GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
 	EpcProtocol protocol = EPC_PROTOCOL_HTTPS;
 	GtkWindow *window;
 	GtkBuilder *builder;
@@ -540,7 +539,7 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 
 	G_LOCK (totem_publish_plugin_lock);
 
-	self->totem = g_object_ref (totem);
+	self->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 
 	window = totem_get_main_window (self->totem);
 	builder = totem_plugin_load_interface ("publish", "publish-plugin.ui", TRUE, window, self);
@@ -625,7 +624,7 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin, GObject *totem)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
 	TotemPlaylist *playlist = NULL;
@@ -743,6 +742,11 @@ static void
 totem_publish_plugin_class_init (TotemPublishPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
 	object_class->dispose = totem_publish_plugin_dispose;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
