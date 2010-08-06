@@ -46,10 +46,14 @@ G_BEGIN_DECLS
  * deactivate functions.
  **/
 #define TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name)			\
-	static void impl_activate (PeasActivatable *plugin, GObject *totem);	\
-	static void impl_deactivate (PeasActivatable *plugin, GObject *totem);	\
+	static void impl_activate (PeasActivatable *plugin);			\
+	static void impl_deactivate (PeasActivatable *plugin);			\
 	G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);	\
 	static void peas_activatable_iface_init (PeasActivatableInterface *iface); \
+	enum {									\
+		PROP_0,								\
+		PROP_OBJECT							\
+	};									\
 	G_DEFINE_DYNAMIC_TYPE_EXTENDED (TypeName,				\
 					type_name,				\
 					PEAS_TYPE_EXTENSION_BASE,		\
@@ -61,6 +65,38 @@ G_BEGIN_DECLS
 	{									\
 		iface->activate = impl_activate;				\
 		iface->deactivate = impl_deactivate;				\
+	}									\
+	static void								\
+	set_property (GObject      *object,					\
+		      guint         prop_id,					\
+		      const GValue *value,					\
+		      GParamSpec   *pspec)					\
+	{									\
+		switch (prop_id) {						\
+		case PROP_OBJECT:						\
+			g_object_set_data_full (object, "object",		\
+						g_value_dup_object (value),	\
+						g_object_unref);		\
+			break;							\
+		default:							\
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec); \
+			break;							\
+		}								\
+	}									\
+	static void								\
+	get_property (GObject    *object,					\
+		      guint       prop_id,					\
+		      GValue     *value,					\
+		      GParamSpec *pspec)					\
+	{									\
+		switch (prop_id) {						\
+		case PROP_OBJECT:						\
+			g_value_set_object (value, g_object_get_data (object, "object")); \
+			break;							\
+		default:							\
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec); \
+			break;							\
+		}								\
 	}									\
 	static void								\
 	type_name##_class_finalize (TypeName##Class *klass)		\
@@ -85,12 +121,16 @@ G_BEGIN_DECLS
  * and deactivate and widget creation functions.
  **/
 #define TOTEM_PLUGIN_REGISTER_CONFIGURABLE(TYPE_NAME, TypeName, type_name)	\
-	static void impl_activate (PeasActivatable *plugin, GObject *totem);	\
-	static void impl_deactivate (PeasActivatable *plugin, GObject *totem);	\
+	static void impl_activate (PeasActivatable *plugin);			\
+	static void impl_deactivate (PeasActivatable *plugin);			\
 	static GtkWidget *impl_create_configure_widget (PeasUIConfigurable *configurable); \
 	G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);	\
 	static void peas_activatable_iface_init (PeasActivatableInterface *iface); \
 	static void peas_ui_configurable_iface_init (PeasUIConfigurableInterface *iface); \
+	enum {									\
+		PROP_0,								\
+		PROP_OBJECT							\
+	};									\
 	G_DEFINE_DYNAMIC_TYPE_EXTENDED (TypeName,				\
 					type_name,				\
 					PEAS_TYPE_EXTENSION_BASE,		\
@@ -109,6 +149,38 @@ G_BEGIN_DECLS
 	peas_ui_configurable_iface_init (PeasUIConfigurableInterface *iface)	\
 	{									\
 		iface->create_configure_widget = impl_create_configure_widget;	\
+	}									\
+	static void								\
+	set_property (GObject      *object,					\
+		      guint         prop_id,					\
+		      const GValue *value,					\
+		      GParamSpec   *pspec)					\
+	{									\
+		switch (prop_id) {						\
+		case PROP_OBJECT:						\
+			g_object_set_data_full (object, "object",		\
+						g_value_dup_object (value),	\
+						g_object_unref);		\
+			break;							\
+		default:							\
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec); \
+			break;							\
+		}								\
+	}									\
+	static void								\
+	get_property (GObject    *object,					\
+		      guint       prop_id,					\
+		      GValue     *value,					\
+		      GParamSpec *pspec)					\
+	{									\
+		switch (prop_id) {						\
+		case PROP_OBJECT:						\
+			g_value_set_object (value, g_object_get_data (object, "object")); \
+			break;							\
+		default:							\
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec); \
+			break;							\
+		}								\
 	}									\
 	static void								\
 	type_name##_class_finalize (TypeName##Class *klass)			\

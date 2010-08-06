@@ -208,7 +208,9 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	engine->priv->totem = g_object_ref (totem);
 
 	engine->priv->activatable_extensions = peas_extension_set_new (PEAS_ENGINE (engine),
-								       PEAS_TYPE_ACTIVATABLE);
+								       PEAS_TYPE_ACTIVATABLE,
+								       "object", totem,
+								       NULL);
 	totem_plugins_engine_load_all (engine);
 	totem_plugins_engine_monitor (engine);
 
