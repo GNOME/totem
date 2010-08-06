@@ -1,5 +1,28 @@
 New features and significant updates in version...
 
+2.31.6:
+* Add support for Web-M to browser, movie player, and YouTube plugin
+
+* Movie Player:
+  - Add deinterlacing support, automatically used for interlaced content
+  - Do not block when loading playlists
+  - Remove libunique dependency
+  - Make auto-resize use half-scale or 2x if the player would
+    fit on the screen
+  - Make screensaver preference clearer
+  - Support running with RGBA (semi-transparent) GTK+ themes
+
+* Plugins:
+  - Update for YouTube website changes
+
+* Browser plugin:
+  - Fix running browser plugin in non-GTK+ front-ends
+
+* VLC-compatible browser plugin:
+  - Support input.time and input.length property
+  - Support togglePause function
+  - Support toolbar plugin argument
+
 2.30.2:
 * Movie Player:
   - Fix huge window height when hiding then showing controls again
