@@ -305,7 +305,10 @@ static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
 static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
 static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
-static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GError **error);
+static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
+						      gint64 _time,
+						      GstSeekFlags flag,
+						      GError **error);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -2205,7 +2208,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
 	if (_time >= 0) {
 	  GST_DEBUG ("Have an old seek to schedule, doing it now");
-	  bacon_video_widget_seek_time_no_lock (bvw, _time, NULL);
+	  bacon_video_widget_seek_time_no_lock (bvw, _time, 0, NULL);
 	}
       break;
     }
@@ -3921,7 +3924,10 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 }
 
 static gboolean
-bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GError **error)
+bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
+				      gint64 _time,
+				      GstSeekFlags flag,
+				      GError **error)
 {
   if (bvw_set_playback_direction (bvw, TRUE) == FALSE)
     return FALSE;
@@ -3930,9 +3936,9 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GErro
   bvw->priv->rate = FORWARD_RATE;
 
   gst_element_seek (bvw->priv->play, FORWARD_RATE,
-      GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
-      GST_SEEK_TYPE_SET, _time * GST_MSECOND,
-      GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | flag,
+		    GST_SEEK_TYPE_SET, _time * GST_MSECOND,
+		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
   return TRUE;
 }
