@@ -297,24 +297,23 @@ class OpenSubtitlesModel(object):
 class OpenSubtitles(gobject.GObject, Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
 
+    object = gobject.property(type = gobject.GObject)
+
     def __init__(self):
         self.dialog = None
+        self.totem = self.object
         self.gconf_client = GConf.Client.get_default()
         self.GCONF_BASE_DIR = "/apps/totem/plugins/opensubtitles/"
         self.GCONF_LANGUAGE = "language"
 
     # totem.Plugin methods
 
-    def do_activate(self, totem_object):
+    def do_activate(self):
         """
         Called when the plugin is activated.
         Here the sidebar page is initialized(set up the treeview, connect 
         the callbacks, ...) and added to totem.
-
-        @param totem_object:
-        @type  totem_object: {totem.TotemObject}
         """
-        self.totem = totem_object
 	self.filename = None
 
         self.manager = self.totem.get_ui_manager()
@@ -327,7 +326,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         server = xmlrpclib.Server('http://api.opensubtitles.org/xml-rpc')
         self.model = OpenSubtitlesModel(server)
 
-    def do_deactivate(self, totem):
+    def do_deactivate(self):
         if self.dialog:
             self.dialog.destroy()
 	    self.dialog = None
@@ -336,8 +335,8 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
     # UI related code
 
-    def os_build_dialog(self, action, totem_object):
-        builder = Totem.plugin_load_interface ("opensubtitles", "opensubtitles.ui", True, totem_object.get_main_window (), self)
+    def os_build_dialog(self, action):
+        builder = Totem.plugin_load_interface ("opensubtitles", "opensubtitles.ui", True, self.totem.get_main_window (), self)
 
         # Obtain all the widgets we need to initialize
         combobox =       builder.get_object('language_combobox')
@@ -403,9 +402,9 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.treeview.get_selection().connect('changed', self.on_treeview__row_change)
         self.treeview.connect('row-activated', self.on_treeview__row_activate)
 
-    def os_show_dialog(self, action, totem_object):
+    def os_show_dialog(self, action):
         if not self.dialog:
-            self.os_build_dialog(action, totem_object)
+            self.os_build_dialog(action)
 
         filename = self.totem.get_current_mrl()
         if not self.model.results or filename != self.filename:

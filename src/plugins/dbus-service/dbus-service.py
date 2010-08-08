@@ -30,15 +30,17 @@ from dbus.mainloop.glib import DBusGMainLoop
 class dbusservice(gobject.GObject, Peas.Activatable):
 	__gtype_name__ = 'dbusservice'
 
-	def do_activate(self, totem):
+	object = gobject.property(type = gobject.GObject)
+
+	def do_activate(self):
 		DBusGMainLoop(set_as_default = True)
 
 		name = dbus.service.BusName ('org.mpris.Totem', bus = dbus.SessionBus ())
-		self.root = Root (name, totem)
-		self.player = Player (name, totem)
-		self.track_list = TrackList (name, totem)
+		self.root = Root (name, self.object)
+		self.player = Player (name, self.object)
+		self.track_list = TrackList (name, self.object)
 
-	def do_deactivate(self, totem):
+	def do_deactivate(self):
 		self.root.disconnect() # ensure we don't leak our paths on the bus
 		self.player.disconnect()
 		self.track_list.disconnect()

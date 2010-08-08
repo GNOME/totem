@@ -18,7 +18,10 @@ _ = gettext.gettext
 class UPnPClient(gobject.GObject, Peas.Activatable):
     __gtype_name__ = 'UPnPClient'
 
+    object = gobject.property(type = gobject.GObject)
+
     def __init__ (self):
+        self.totem_object = self.object
         self.ui = TreeWidget()
         self.ui.window.set_shadow_type(gtk.SHADOW_IN)
         self.ui.cb_item_right_click = self.button_pressed
@@ -107,14 +110,13 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
         else:
             self.context = self.context_no_delete
 
-    def do_activate (self, totem_object):
-        totem_object.add_sidebar_page ("upnp-coherence", _("Coherence DLNA/UPnP Client"), self.ui.window)
-        self.totem_object = totem_object
+    def do_activate (self):
+        self.totem_object.add_sidebar_page ("upnp-coherence", _("Coherence DLNA/UPnP Client"), self.ui.window)
 
         def load_and_play(url):
-            totem_object.add_to_playlist_and_play (url, '', True)
+            self.totem_object.add_to_playlist_and_play (url, '', True)
 
         self.ui.cb_item_dbl_click = load_and_play
 
-    def do_deactivate (self, totem_object):
-        totem_object.remove_sidebar_page ("upnp-coherence")
+    def do_deactivate (self):
+        self.totem_object.remove_sidebar_page ("upnp-coherence")

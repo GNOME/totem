@@ -67,6 +67,8 @@ gconf_key = '/apps/totem/plugins/jamendo'
 class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
     __gtype_name__ = 'JamendoPlugin'
 
+    object = gobject.property(type = gobject.GObject)
+
     """
     Jamendo totem plugin GUI.
     """
@@ -79,16 +81,16 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
     def __init__(self):
         self.debug = True
         self.gstreamer_plugins_present = True
-        self.totem = None
+        self.totem = self.object
         self.gconf = GConf.Client.get_default()
         self.init_settings()
 
-    def do_activate(self, totem_object):
+    def do_activate(self):
         """
         Plugin activation.
         """
         # Initialise the interface
-        builder = Totem.plugin_load_interface ("jamendo", "jamendo.ui", True, totem_object.get_main_window (), self)
+        builder = Totem.plugin_load_interface ("jamendo", "jamendo.ui", True, self.totem.get_main_window (), self)
         self.popup = builder.get_object('popup_menu')
         container = builder.get_object('container')
         self.notebook = builder.get_object('notebook')
@@ -120,16 +122,15 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         builder.get_object('add_to_playlist').connect('activate', self.on_add_to_playlist_activate)
         builder.get_object('jamendo_album_page').connect('activate', self.on_open_jamendo_album_page_activate)
 
-        self.totem = totem_object
         self.reset()
         container.show_all()
         self.totem.add_sidebar_page("jamendo", _("Jamendo"), container)
 
-    def do_deactivate(self, totem_object):
+    def do_deactivate(self):
         """
         Plugin deactivation.
         """
-        totem_object.remove_sidebar_page("jamendo")
+        self.totem.remove_sidebar_page("jamendo")
 
     def do_create_configure_widget(self):
         """

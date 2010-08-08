@@ -69,13 +69,16 @@ ui_str = """
 class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 	__gtype_name__ = 'PythonConsolePlugin'
 
+	object = gobject.property(type = gobject.GObject)
+
 	def __init__(self):
+		self.totem = self.object
 		self.window = None
 	
-	def do_activate(self, totem_object):
+	def do_activate(self):
 
 		data = dict()
-		manager = totem_object.get_ui_manager()
+		manager = self.totem.get_ui_manager()
 
 		data['action_group'] = Gtk.ActionGroup(name = 'Python')
 		
@@ -85,13 +88,13 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 		action = Gtk.Action(name = 'PythonConsole', label = _('_Python Console'),
 		                    tooltip = _("Show Totem's Python console"),
 		                    stock_id = 'gnome-mime-text-x-python')
-		action.connect('activate', self.show_console, totem_object)
+		action.connect('activate', self.show_console)
 		data['action_group'].add_action(action)
 
 		action = Gtk.Action(name = 'PythonDebugger', label = _('Python Debugger'),
 				    tooltip = _("Enable remote Python debugging with rpdb2"))
 		if have_rpdb2:
-			action.connect('activate', self.enable_debugging, totem_object)
+			action.connect('activate', self.enable_debugging)
 		else:
 			action.set_visible(False)
 		data['action_group'].add_action(action)
@@ -100,14 +103,14 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 		data['ui_id'] = manager.add_ui_from_string(ui_str)
 		manager.ensure_update()
 		
-		totem_object.set_data('PythonConsolePluginInfo', data)
+		self.totem.set_data('PythonConsolePluginInfo', data)
 	
-	def show_console(self, action, totem_object):
+	def show_console(self, action):
 		if not self.window:
 			console = PythonConsole(namespace = {'__builtins__' : __builtins__,
 			                                     'Totem' : Totem,
-                               		                     'totem_object' : totem_object},
-						             destroy_cb = self.destroy_console)
+			                                     'totem_object' : self.totem},
+			                                     destroy_cb = self.destroy_console)
 
 			console.set_size_request(600, 400)
 			console.eval('print "%s" %% totem_object' % _("You can access the Totem.Object through " \
@@ -122,7 +125,7 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 			self.window.show_all()
 			self.window.grab_focus()
 
-	def enable_debugging(self, action, totem_object):
+	def enable_debugging(self, action):
 		msg = _("After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in GConf, it will use the default password ('totem').")
 		dialog = Gtk.MessageDialog(None, 0, Gtk.MessageType.INFO, Gtk.ButtonType.OK_CANCEL, msg)
 		if dialog.run() == Gtk.ResponseType.OK:
@@ -139,15 +142,15 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 		self.window.destroy()
 		self.window = None
 
-	def do_deactivate(self, totem_object):
-		data = totem_object.get_data('PythonConsolePluginInfo')
+	def do_deactivate(self):
+		data = self.totem.get_data('PythonConsolePluginInfo')
 
-		manager = totem_object.get_ui_manager()
+		manager = self.totem.get_ui_manager()
 		manager.remove_ui(data['ui_id'])
 		manager.remove_action_group(data['action_group'])
 		manager.ensure_update()
 
-		totem_object.set_data('PythonConsolePluginInfo', None)
+		self.totem.set_data('PythonConsolePluginInfo', None)
 		
 		if self.window is not None:
 			self.window.destroy()

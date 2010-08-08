@@ -16,14 +16,16 @@ _ = gettext.gettext
 class IplayerPlugin (gobject.GObject, Peas.Activatable):
 	__gtype_name__ = 'IplayerPlugin'
 
+	object = gobject.property(type = gobject.GObject)
+
 	def __init__ (self):
 		self.debug = False
-		self.totem = None
+		self.totem = self.object
 		self.programme_download_lock = threading.Lock ()
 
-	def do_activate (self, totem_object):
+	def do_activate (self):
 		# Build the interface
-		builder = Totem.plugin_load_interface ("iplayer", "iplayer.ui", True, totem_object.get_main_window (), self)
+		builder = Totem.plugin_load_interface ("iplayer", "iplayer.ui", True, self.totem.get_main_window (), self)
 		container = builder.get_object ('iplayer_vbox')
 
 		self.tv_tree_store = builder.get_object ('iplayer_programme_store')
@@ -31,7 +33,6 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 		programme_list.connect ('row-expanded', self._row_expanded_cb)
 		programme_list.connect ('row-activated', self._row_activated_cb)
 
-		self.totem = totem_object
 		container.show_all ()
 
 		self.tv = iplayer2.feed ('tv')
@@ -42,8 +43,8 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 		# Get the channel category listings
 		self.populate_channel_list (self.tv, self.tv_tree_store)
 
-	def do_deactivate (self, totem_object):
-		totem_object.remove_sidebar_page ("iplayer")
+	def do_deactivate (self):
+		self.totem.remove_sidebar_page ("iplayer")
 
 	def populate_channel_list (self, feed, tree_store):
 		if self.debug:
