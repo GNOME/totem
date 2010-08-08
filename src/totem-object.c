@@ -406,21 +406,6 @@ totem_get_video_widget (TotemObject *totem)
 }
 
 /**
- * totem_get_video_widget_backend_name:
- * @totem: a #TotemObject
- *
- * Gets the name string of the backend video widget, typically the video library's
- * version string (e.g. what's returned by gst_version_string()). Free with g_free().
- *
- * Return value: a newly-allocated string of the name of the backend video widget
- **/
-char *
-totem_get_video_widget_backend_name (TotemObject *totem)
-{
-	return bacon_video_widget_get_backend_name (totem->bvw);
-}
-
-/**
  * totem_object_get_version:
  *
  * Gets the application name and version (e.g. "Totem 2.28.0").
