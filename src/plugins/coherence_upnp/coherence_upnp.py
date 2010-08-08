@@ -68,13 +68,13 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
                 row_path = selected_rows.pop(0)
                 iter = self.ui.store.get_iter(row_path)
                 url, = self.ui.store.get(iter,SERVICE_COLUMN)
-                self.totem_object.action_remote(totem.REMOTE_COMMAND_REPLACE,url)
-                self.totem_object.action_remote(totem.REMOTE_COMMAND_PLAY,url)
+                self.totem_object.remote(totem.REMOTE_COMMAND_REPLACE,url)
+                self.totem_object.remote(totem.REMOTE_COMMAND_PLAY,url)
             for row_path in selected_rows:
                 iter = self.ui.store.get_iter(row_path)
                 url, = self.ui.store.get(iter,SERVICE_COLUMN)
-                self.totem_object.action_remote(totem.REMOTE_COMMAND_ENQUEUE,url)
-                self.totem_object.action_remote(totem.REMOTE_COMMAND_PLAY,url)
+                self.totem_object.remote(totem.REMOTE_COMMAND_ENQUEUE,url)
+                self.totem_object.remote(totem.REMOTE_COMMAND_PLAY,url)
 
         if not hasattr(self, 'context_no_delete'):
             self.context_no_delete = gtk.Menu()

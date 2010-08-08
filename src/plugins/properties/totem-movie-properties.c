@@ -105,7 +105,7 @@ totem_movie_properties_plugin_file_opened (TotemObject *totem,
 {
 	GtkWidget *bvw;
 
-	bvw = totem_get_video_widget (totem);
+	bvw = totem_object_get_video_widget (totem);
 	bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
 	g_object_unref (bvw);
@@ -132,7 +132,7 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 {
 	GtkWidget *bvw;
 
-	bvw = totem_get_video_widget (totem);
+	bvw = totem_object_get_video_widget (totem);
 	bacon_video_widget_properties_update
 		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
 	g_object_unref (bvw);
@@ -149,7 +149,7 @@ impl_activate (PeasActivatable *plugin)
 
 	pi->props = bacon_video_widget_properties_new ();
 	gtk_widget_show (pi->props);
-	totem_add_sidebar_page (totem,
+	totem_object_add_sidebar_page (totem,
 				"properties",
 				_("Properties"),
 				pi->props);
@@ -193,6 +193,6 @@ impl_deactivate (PeasActivatable *plugin)
 					      totem_movie_properties_plugin_file_closed,
 					      plugin);
 	pi->handler_id_stream_length = 0;
-	totem_remove_sidebar_page (totem, "properties");
+	totem_object_remove_sidebar_page (totem, "properties");
 }
 

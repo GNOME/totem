@@ -105,7 +105,7 @@ G_GNUC_NORETURN static void
 totem_quit_cb (EggSMClient *client,
 	       Totem *totem)
 {
-	totem_action_exit (totem);
+	totem_object_exit (totem);
 }
 
 void
@@ -151,7 +151,7 @@ totem_session_restore (Totem *totem, char **filenames)
 	 * the GTK+ main loop, and thus can't freeze the application. */
 	if (totem_playlist_add_mrl_sync (totem->playlist, uri, NULL) == FALSE) {
 		totem_signal_unblock_by_data (totem->playlist, totem);
-		totem_action_set_mrl (totem, NULL, NULL);
+		totem_object_set_mrl (totem, NULL, NULL);
 		g_free (uri);
 		return;
 	}
@@ -162,7 +162,7 @@ totem_session_restore (Totem *totem, char **filenames)
 		totem_playlist_set_current (totem->playlist, totem->index);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
-	totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
+	totem_object_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
 
 	/* We do the seeking after being told that the stream is seekable,
 	 * not straight away */

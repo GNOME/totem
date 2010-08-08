@@ -273,7 +273,7 @@ impl_activate (PeasActivatable *plugin)
 #endif
 	}
 
-	window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
+	window = totem_object_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
 	pi->handler_id = g_signal_connect (G_OBJECT(window), "key-press-event", 
 			G_CALLBACK (on_window_key_press_event), plugin);
 	g_object_unref (window);
@@ -286,7 +286,7 @@ impl_deactivate (PeasActivatable *plugin)
 	GtkWindow *window;
 
 	if (pi->handler_id != 0) {
-		window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
+		window = totem_object_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
 		g_signal_handler_disconnect (G_OBJECT(window), pi->handler_id);
 		pi->handler_id = 0;
 		g_object_unref (window);

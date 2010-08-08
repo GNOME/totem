@@ -342,10 +342,10 @@ impl_activate (PeasActivatable *plugin)
 	guint i;
 
 	self->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	self->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (self->totem));
+	self->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (self->totem));
 
 	/* Set up the interface */
-	main_window = totem_get_main_window (self->totem);
+	main_window = totem_object_get_main_window (self->totem);
 	builder = totem_plugin_load_interface ("youtube", "youtube.ui", TRUE, main_window, self);
 	g_object_unref (main_window);
 
@@ -362,7 +362,7 @@ impl_activate (PeasActivatable *plugin)
 	gtk_widget_show_all (self->vbox);
 
 	/* Add the sidebar page */
-	totem_add_sidebar_page (self->totem, "youtube", _("YouTube"), self->vbox);
+	totem_object_add_sidebar_page (self->totem, "youtube", _("YouTube"), self->vbox);
 	g_object_unref (builder);
 }
 
@@ -372,7 +372,7 @@ impl_deactivate (PeasActivatable *plugin)
 	guint i;
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
 
-	totem_remove_sidebar_page (self->totem, "youtube");
+	totem_object_remove_sidebar_page (self->totem, "youtube");
 
 	for (i = 0; i < NUM_TREE_VIEWS; i++) {
 		/* Cancel any queries which are still underway */
@@ -501,7 +501,7 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 		}
 
 		/* Couldn't load the page contents; error */
-		window = totem_get_main_window (data->plugin->totem);
+		window = totem_object_get_main_window (data->plugin->totem);
 		totem_interface_error (_("Error Looking Up Video URI"), error->message, window);
 		g_object_unref (window);
 		g_error_free (error);
@@ -771,7 +771,7 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 	}
 
 	/* Error! */
-	window = totem_get_main_window (data->plugin->totem);
+	window = totem_object_get_main_window (data->plugin->totem);
 	if (g_error_matches (error, GDATA_SERVICE_ERROR, GDATA_SERVICE_ERROR_PROTOCOL_ERROR) == TRUE) {
 		/* Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 		 * if we're receiving a protocol error). */
@@ -1063,7 +1063,7 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 		/* Display the page */
 		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->bvw)), gdata_link_get_uri (page_link),
 		                  GDK_CURRENT_TIME, &error) == FALSE) {
-			GtkWindow *window = totem_get_main_window (self->totem);
+			GtkWindow *window = totem_object_get_main_window (self->totem);
 			totem_interface_error (_("Error Opening Video in Web Browser"), error->message, window);
 			g_object_unref (window);
 			g_error_free (error);

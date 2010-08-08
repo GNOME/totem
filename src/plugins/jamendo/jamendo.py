@@ -346,9 +346,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         enqueue_and_play.
         """
         if mode == 'replace':
-            self.totem.action_remote(Totem.RemoteCommand.REPLACE, t['stream'])
+            self.totem.remote(Totem.RemoteCommand.REPLACE, t['stream'])
         elif mode == 'enqueue':
-            self.totem.action_remote(Totem.RemoteCommand.ENQUEUE, t['stream'])
+            self.totem.remote(Totem.RemoteCommand.ENQUEUE, t['stream'])
 
     def fetch_albums(self, pn=1):
         """
@@ -434,7 +434,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         else:
             msg = str(exc)
 
-        self.totem.action_error(_('An error occurred while fetching albums.'), msg)
+        self.totem.error(_('An error occurred while fetching albums.'), msg)
 
     def on_search_entry_activate(self, *args):
         """

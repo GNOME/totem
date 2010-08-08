@@ -113,7 +113,7 @@ totem_screensaver_update_from_state (TotemObject *totem,
 	BaconVideoWidget *bvw;
 	GConfClient *gc;
 
-	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget ((Totem *)(totem)));
+	bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget ((Totem *)(totem)));
 	gc = gconf_client_get_default ();
 
 	lock_screensaver_on_audio = gconf_client_get_bool (gc, 
@@ -121,9 +121,9 @@ totem_screensaver_update_from_state (TotemObject *totem,
 							   NULL);
 	can_get_frames = bacon_video_widget_can_get_frames (bvw, NULL);
 
-	if (totem_is_playing (totem) != FALSE && can_get_frames)
+	if (totem_object_is_playing (totem) != FALSE && can_get_frames)
 		totem_scrsaver_disable (pi->scr);
-	else if (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)
+	else if (totem_object_is_playing (totem) != FALSE && !lock_screensaver_on_audio)
 		totem_scrsaver_disable (pi->scr);
 	else
 		totem_scrsaver_enable (pi->scr);
@@ -160,7 +160,7 @@ impl_activate (PeasActivatable *plugin)
 	GConfClient *gc;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+	pi->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (totem));
 
 	gc = gconf_client_get_default ();
 	gconf_client_add_dir (gc, GCONF_PREFIX,

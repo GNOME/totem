@@ -106,7 +106,7 @@ totem_gallery_new (Totem *totem, TotemScreenshotPlugin *plugin)
 				"gallery_dialog_content"));
 	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (gallery), container);
 
-	movie_title = totem_get_short_title (totem);
+	movie_title = totem_object_get_short_title (totem);
 
 	/* Translators: The first argument is the movie title. The second
 	 * argument is a number which is used to prevent overwriting files.
@@ -165,7 +165,7 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 		screenshot_count = gtk_spin_button_get_value_as_int (self->priv->screenshot_count);
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self));
-	video_mrl = totem_get_current_mrl (self->priv->totem);
+	video_mrl = totem_object_get_current_mrl (self->priv->totem);
 	totem_screenshot_plugin_update_file_chooser (filename);
 
 	/* Build the command and arguments to pass it */

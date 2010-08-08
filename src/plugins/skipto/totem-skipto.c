@@ -190,7 +190,7 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 			    0);         /* padding */
 
 	gtk_window_set_transient_for (GTK_WINDOW (skipto),
-				      totem_get_main_window (plugin->totem));
+				      totem_object_get_main_window (plugin->totem));
 
 	gtk_widget_show_all (GTK_WIDGET (skipto));
 

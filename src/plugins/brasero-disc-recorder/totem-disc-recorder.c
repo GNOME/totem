@@ -108,7 +108,7 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 		g_ptr_array_add (array, (gpointer) "-r");
 	g_ptr_array_add (array, (gpointer) path);
 
-	main_window = totem_get_main_window (pi->totem);
+	main_window = totem_object_get_main_window (pi->totem);
 	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
 	xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (gtk_widget_get_window (GTK_WIDGET (main_window))));
 	xid_str = g_strdup_printf ("%d", xid);
@@ -125,11 +125,11 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 		if (copy != FALSE) {
 			totem_interface_error (_("The video disc could not be duplicated."),
 					       error->message,
-					       totem_get_main_window (pi->totem));
+					       totem_object_get_main_window (pi->totem));
 		} else {
 			totem_interface_error (_("The movie could not be recorded."),
 					       error->message,
-					       totem_get_main_window (pi->totem));
+					       totem_object_get_main_window (pi->totem));
 		}
 		ret = FALSE;
 		g_error_free (error);
@@ -194,7 +194,7 @@ totem_disc_recorder_plugin_write_video_project (TotemDiscRecorderPlugin *pi,
 	if (success < 0)
 		goto error;
 
-	title = totem_get_short_title (pi->totem);
+	title = totem_object_get_short_title (pi->totem);
 	if (title) {
 		success = xmlTextWriterWriteElement (project,
 						     (xmlChar *) "label",
@@ -213,7 +213,7 @@ totem_disc_recorder_plugin_write_video_project (TotemDiscRecorderPlugin *pi,
 	if (success < 0)
 		goto error;
 
-	uri = totem_get_current_mrl (pi->totem);
+	uri = totem_object_get_current_mrl (pi->totem);
 	escaped = (unsigned char *) g_uri_escape_string (uri, NULL, FALSE);
 	g_free (uri);
 
@@ -280,7 +280,7 @@ totem_disc_recorder_plugin_burn (GtkAction *action,
 	if (!path) {
 		totem_interface_error (_("The movie could not be recorded."),
 				       error,
-				       totem_get_main_window (pi->totem));
+				       totem_object_get_main_window (pi->totem));
 		g_free (error);
 		return;
 	}
@@ -297,7 +297,7 @@ totem_disc_recorder_plugin_copy (GtkAction *action,
 {
 	char *mrl;
 
-	mrl = totem_get_current_mrl (pi->totem);
+	mrl = totem_object_get_current_mrl (pi->totem);
 	if (!g_str_has_prefix (mrl, "dvd:") && !g_str_has_prefix (mrl, "vcd:")) {
 		g_free (mrl);
 		g_assert_not_reached ();
@@ -406,7 +406,7 @@ impl_activate (PeasActivatable *plugin)
 				      G_N_ELEMENTS (totem_disc_recorder_plugin_actions),
 				      pi);
 
-	uimanager = totem_get_ui_manager (pi->totem);
+	uimanager = totem_object_get_ui_manager (pi->totem);
 	gtk_ui_manager_insert_action_group (uimanager, pi->action_group, -1);
 	g_object_unref (pi->action_group);
 
@@ -457,7 +457,7 @@ impl_activate (PeasActivatable *plugin)
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 
-	if (!totem_is_paused (pi->totem) && !totem_is_playing (pi->totem)) {
+	if (!totem_object_is_paused (pi->totem) && !totem_object_is_playing (pi->totem)) {
 		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
 		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
@@ -467,7 +467,7 @@ impl_activate (PeasActivatable *plugin)
 	else {
 		char *mrl;
 
-		mrl = totem_get_current_mrl (pi->totem);
+		mrl = totem_object_get_current_mrl (pi->totem);
 		totem_disc_recorder_file_opened (pi->totem, mrl, pi);
 		g_free (mrl);
 	}
@@ -484,7 +484,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (pi->totem, totem_disc_recorder_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (pi->totem, totem_disc_recorder_file_closed, plugin);
 
-	uimanager = totem_get_ui_manager (pi->totem);
+	uimanager = totem_object_get_ui_manager (pi->totem);
 	gtk_ui_manager_remove_ui (uimanager, pi->ui_merge_id);
 	gtk_ui_manager_remove_action_group (uimanager, pi->action_group);
 

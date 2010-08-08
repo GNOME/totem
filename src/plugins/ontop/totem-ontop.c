@@ -96,7 +96,7 @@ update_from_state (TotemOntopPluginPrivate *priv)
 	bacon_video_widget_get_metadata (priv->bvw, BVW_INFO_HAS_VIDEO, &has_video);
 
 	gtk_window_set_keep_above (priv->window,
-				   (totem_is_playing (priv->totem) != FALSE &&
+				   (totem_object_is_playing (priv->totem) != FALSE &&
 				    g_value_get_boolean (&has_video) != FALSE));
 	g_value_unset (&has_video);
 }
@@ -121,8 +121,8 @@ impl_activate (PeasActivatable *plugin)
 	TotemOntopPlugin *pi = TOTEM_ONTOP_PLUGIN (plugin);
 
 	pi->priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->priv->window = totem_get_main_window (pi->priv->totem);
-	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (pi->priv->totem));
+	pi->priv->window = totem_object_get_main_window (pi->priv->totem);
+	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (pi->priv->totem));
 
 	pi->priv->handler_id = g_signal_connect (G_OBJECT (pi->priv->totem),
 					   "notify::playing",

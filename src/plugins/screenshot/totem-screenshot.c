@@ -154,7 +154,7 @@ totem_screenshot_new (Totem *totem, TotemScreenshotPlugin *screenshot_plugin, Gd
 
 	screenshot = TOTEM_SCREENSHOT (g_object_new (TOTEM_TYPE_SCREENSHOT, NULL));
 
-	movie_title = totem_get_short_title (totem);
+	movie_title = totem_object_get_short_title (totem);
 
 	/* Create the screenshot widget */
 	/* Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique */

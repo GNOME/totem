@@ -177,15 +177,15 @@ GtkWidget *totem_volume_create (void);
 #define ZOOM_IN_OFFSET 0.01
 #define ZOOM_OUT_OFFSET -0.01
 
-void	totem_action_open			(Totem *totem);
-void	totem_action_open_location		(Totem *totem);
-void	totem_action_eject			(Totem *totem);
-void	totem_action_zoom_relative		(Totem *totem, double off_pct);
-void	totem_action_zoom_reset			(Totem *totem);
-void	totem_action_show_help			(Totem *totem);
-void	totem_action_show_properties		(Totem *totem);
-gboolean totem_action_open_files		(Totem *totem, char **list);
-G_GNUC_NORETURN void totem_action_error_and_exit (const char *title, const char *reason, Totem *totem);
+void	totem_object_open			(Totem *totem);
+void	totem_object_open_location		(Totem *totem);
+void	totem_object_eject			(Totem *totem);
+void	totem_object_zoom_relative		(Totem *totem, double off_pct);
+void	totem_object_zoom_reset			(Totem *totem);
+void	totem_object_show_help			(Totem *totem);
+void	totem_object_show_properties		(Totem *totem);
+gboolean totem_object_open_files		(Totem *totem, char **list);
+G_GNUC_NORETURN void totem_object_error_and_exit (const char *title, const char *reason, Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
 

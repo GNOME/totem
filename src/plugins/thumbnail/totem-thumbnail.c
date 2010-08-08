@@ -96,7 +96,7 @@ set_icon_to_default (TotemObject *totem)
 	GtkWindow *window = NULL;
 	g_return_if_fail (TOTEM_IS_OBJECT (totem));
 
-	window = totem_get_main_window (totem);
+	window = totem_object_get_main_window (totem);
 	gtk_window_set_icon (window, NULL);
 	gtk_window_set_icon_name (window, "totem");
 }
@@ -112,7 +112,7 @@ update_from_state (TotemThumbnailPluginPrivate *priv,
 	GError *err = NULL;
 
 	g_return_if_fail (TOTEM_IS_OBJECT (totem));
-	window = totem_get_main_window (totem);
+	window = totem_object_get_main_window (totem);
 
 	if (mrl == NULL) {
 		set_icon_to_default (totem);
@@ -182,7 +182,7 @@ impl_activate (PeasActivatable *plugin)
 	char *mrl;
 
 	pi->priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->priv->window = totem_get_main_window (pi->priv->totem);
+	pi->priv->window = totem_object_get_main_window (pi->priv->totem);
 
 	pi->priv->file_opened_handler_id = g_signal_connect (G_OBJECT (pi->priv->totem),
 							     "file-opened",

@@ -59,7 +59,7 @@ long_action (void)
 }
 
 static void
-totem_action_handler (GApplication      *app,
+totem_object_handler (GApplication      *app,
 		      gchar             *name,
 		      GVariant          *platform_data,
 		      gpointer           user_data)
@@ -95,7 +95,7 @@ totem_action_handler (GApplication      *app,
 
 	g_type_class_unref (klass);
 
-	totem_action_remote (TOTEM_OBJECT (user_data), command, url);
+	totem_object_remote (TOTEM_OBJECT (user_data), command, url);
 	g_free (url);
 }
 
@@ -171,7 +171,7 @@ main (int argc, char **argv)
 	{
 		gtk_init (&argc, &argv);
 		g_set_application_name (_("Totem Movie Player"));
-		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
+		totem_object_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
 #endif
 
@@ -192,7 +192,7 @@ main (int argc, char **argv)
 				error->message, argv[0]);
 		g_error_free (error);
 	        g_option_context_free (context);
-		totem_action_exit (NULL);
+		totem_object_exit (NULL);
 	}
 	g_option_context_free (context);
 
@@ -207,7 +207,7 @@ main (int argc, char **argv)
 
 	gc = gconf_client_get_default ();
 	if (gc == NULL) {
-		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."),
+		totem_object_error_and_exit (_("Totem could not initialize the configuration engine."),
 					     _("Make sure that GNOME is properly installed."), NULL);
 	}
 
@@ -232,7 +232,7 @@ main (int argc, char **argv)
 		if (g_application_is_remote (G_APPLICATION (totem->app))) {
 			totem_options_process_for_server (G_APPLICATION (totem->app), &optionstate);
 			gdk_notify_startup_complete ();
-			totem_action_exit (totem);
+			totem_object_exit (totem);
 		} else {
 			totem_options_register_remote_commands (totem);
 			totem_options_process_early (totem, &optionstate);
@@ -244,7 +244,7 @@ main (int argc, char **argv)
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
-		totem_action_exit (NULL);
+		totem_object_exit (NULL);
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	/* FIXME should be enabled
@@ -295,7 +295,7 @@ main (int argc, char **argv)
 	if (optionstate.fullscreen != FALSE) {
 		gtk_widget_show (totem->win);
 		gdk_flush ();
-		totem_action_fullscreen (totem, TRUE);
+		totem_object_fullscreen (totem, TRUE);
 	}
 
 	/* The prefs after the video widget is connected */
@@ -314,10 +314,10 @@ main (int argc, char **argv)
 
 	if (totem->session_restored != FALSE) {
 		totem_session_restore (totem, optionstate.filenames);
-	} else if (optionstate.filenames != NULL && totem_action_open_files (totem, optionstate.filenames)) {
-		totem_action_play_pause (totem);
+	} else if (optionstate.filenames != NULL && totem_object_open_files (totem, optionstate.filenames)) {
+		totem_object_play_pause (totem);
 	} else {
-		totem_action_set_mrl (totem, NULL, NULL);
+		totem_object_set_mrl (totem, NULL, NULL);
 	}
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
@@ -328,7 +328,7 @@ main (int argc, char **argv)
 
 	if (totem->app != NULL) {
 		g_signal_connect (G_APPLICATION (totem->app), "action-with-data",
-				  G_CALLBACK (totem_action_handler), totem);
+				  G_CALLBACK (totem_object_handler), totem);
 	}
 
 	gtk_main ();

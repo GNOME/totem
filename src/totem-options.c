@@ -74,7 +74,7 @@ void
 totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
 {
 	if (options->togglecontrols) 
-		totem_action_toggle_controls (totem);
+		totem_object_toggle_controls (totem);
 
 	/* Handle --playlist-idx */
 	totem->index = options->playlistidx;

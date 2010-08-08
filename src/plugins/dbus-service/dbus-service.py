@@ -59,7 +59,7 @@ class Root (dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='')
 	def Quit(self):
-		self.totem.action_exit()
+		self.totem.exit()
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='(qq)')
 	def MprisVersion(self):
@@ -118,21 +118,21 @@ class Player(dbus.service.Object):
 		else:
 			playing_status = 2
 
-		if self.totem.action_remote_get_setting(Totem.RemoteSetting.SHUFFLE):
+		if self.totem.remote_get_setting(Totem.RemoteSetting.SHUFFLE):
 			shuffle_status = 1
 		else:
 			shuffle_status = 0
 
-		if self.totem.action_remote_get_setting(Totem.RemoteSetting.REPEAT):
+		if self.totem.remote_get_setting(Totem.RemoteSetting.REPEAT):
 			repeat_status = 1
 		else:
 			repeat_status = 0
 
 		return (
 			dbus.Int32(playing_status), # 0 = Playing, 1 = Paused, 2 = Stopped
-			dbus.Int32(self.totem.action_remote_get_setting(Totem.RemoteSetting.SHUFFLE)), # 0 = Playing linearly , 1 = Playing randomly
+			dbus.Int32(self.totem.remote_get_setting(Totem.RemoteSetting.SHUFFLE)), # 0 = Playing linearly , 1 = Playing randomly
 			dbus.Int32(0), # 0 = Go to the next element once the current has finished playing , 1 = Repeat the current element 
-			dbus.Int32(self.totem.action_remote_get_setting(Totem.RemoteSetting.REPEAT)) # 0 = Stop playing once the last element has been played, 1 = Never give up playing 
+			dbus.Int32(self.totem.remote_get_setting(Totem.RemoteSetting.REPEAT)) # 0 = Stop playing once the last element has been played, 1 = Never give up playing 
 		)
 
 	def calculate_caps(self):
@@ -187,27 +187,27 @@ class Player(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='')
 	def Next(self):
-		self.totem.action_next()
+		self.totem.next()
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='')
 	def Prev(self):
-		self.totem.action_previous()
+		self.totem.previous()
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='')
 	def Pause(self):
-		self.totem.action_play_pause()
+		self.totem.play_pause()
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='')
 	def Stop(self):
-		self.totem.action_stop()
+		self.totem.stop()
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='')
 	def Play(self):
 		# If playing : rewind to the beginning of current track, else : start playing. 
 		if self.totem.is_playing():
-			self.totem.action_seek_time(0, False)
+			self.totem.seek_time(0, False)
 		else:
-			self.totem.action_play()
+			self.totem.play()
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='b', out_signature='')
 	def Repeat(self, value):
@@ -231,7 +231,7 @@ class Player(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='i', out_signature='')
 	def VolumeSet(self, volume):
-		self.totem.action_volume(volume / 100.0)
+		self.totem.volume(volume / 100.0)
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='i')
 	def VolumeGet(self):
@@ -239,7 +239,7 @@ class Player(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='i', out_signature='')
 	def PositionSet(self, position):
-		self.totem.action_seek_time(position, False)
+		self.totem.seek_time(position, False)
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='', out_signature='i')
 	def PositionGet(self):
@@ -284,8 +284,8 @@ class TrackList(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='b', out_signature='')
 	def SetLoop(self, loop):
-		self.totem.action_remote_set_setting(Totem.RemoteSetting.REPEAT, loop)
+		self.totem.remote_set_setting(Totem.RemoteSetting.REPEAT, loop)
 
 	@dbus.service.method(dbus_interface='org.freedesktop.MediaPlayer', in_signature='b', out_signature='')
 	def SetRandom(self, random):
-		self.totem.action_remote_set_setting(Totem.RemoteSetting.SHUFFLE, random)
+		self.totem.remote_set_setting(Totem.RemoteSetting.SHUFFLE, random)

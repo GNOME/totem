@@ -385,7 +385,7 @@ on_recent_file_item_activated (GtkAction *action,
 	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
 	uri = gtk_recent_info_get_uri (recent_info);
 
-	totem_add_to_playlist_and_play (totem, uri, NULL, FALSE);
+	totem_object_add_to_playlist_and_play (totem, uri, NULL, FALSE);
 }
 
 static gint
@@ -577,7 +577,7 @@ recent_info_cb (GFile *file,
 }
 
 void
-totem_action_add_recent (Totem *totem, const char *uri, const char *display_name)
+totem_add_recent (Totem *totem, const char *uri, const char *display_name)
 {
 	GFile *file;
 
@@ -600,7 +600,7 @@ on_play_disc_activate (GtkAction *action, Totem *totem)
 	char *device_path;
 
 	device_path = g_object_get_data (G_OBJECT (action), "device_path");
-	totem_action_play_media_device (totem, device_path);
+	totem_object_play_media_device (totem, device_path);
 }
 
 static const char *
@@ -980,37 +980,37 @@ totem_setup_play_disc (Totem *totem)
 void
 open_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_open (totem);
+	totem_object_open (totem);
 }
 
 void
 open_location_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_open_location (totem);
+	totem_object_open_location (totem);
 }
 
 void
 eject_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_eject (totem);
+	totem_object_eject (totem);
 }
 
 void
 properties_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_show_properties (totem);
+	totem_object_show_properties (totem);
 }
 
 void
 play_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_play_pause (totem);
+	totem_object_play_pause (totem);
 }
 
 G_GNUC_NORETURN void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_exit (totem);
+	totem_object_exit (totem);
 }
 
 void
@@ -1022,43 +1022,43 @@ preferences_action_callback (GtkAction *action, Totem *totem)
 void
 fullscreen_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_fullscreen_toggle (totem);
+	totem_object_fullscreen_toggle (totem);
 }
 
 void
 zoom_1_2_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_set_scale_ratio (totem, 0.5); 
+	totem_object_set_scale_ratio (totem, 0.5); 
 }
 
 void
 zoom_1_1_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_set_scale_ratio (totem, 1);
+	totem_object_set_scale_ratio (totem, 1);
 }
 
 void
 zoom_2_1_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_set_scale_ratio (totem, 2);
+	totem_object_set_scale_ratio (totem, 2);
 }
 
 void
 zoom_in_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+	totem_object_zoom_relative (totem, ZOOM_IN_OFFSET);
 }
 
 void
 zoom_reset_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_zoom_reset (totem);
+	totem_object_zoom_reset (totem);
 }
 
 void
 zoom_out_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+	totem_object_zoom_relative (totem, ZOOM_OUT_OFFSET);
 }
 
 void
@@ -1071,7 +1071,7 @@ select_subtitle_action_callback (GtkAction *action, Totem *totem)
 void
 next_angle_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_next_angle (totem);
+	totem_object_next_angle (totem);
 }
 
 void
@@ -1107,43 +1107,43 @@ dvd_chapter_menu_action_callback (GtkAction *action, Totem *totem)
 void
 next_chapter_action_callback (GtkAction *action, Totem *totem)
 {
-	TOTEM_PROFILE (totem_action_next (totem));
+	TOTEM_PROFILE (totem_object_next (totem));
 }
 
 void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
-	TOTEM_PROFILE (totem_action_previous (totem));
+	TOTEM_PROFILE (totem_object_previous (totem));
 }
 
 void
 skip_forward_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000, FALSE);
+	totem_object_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000, FALSE);
 }
 
 void
 skip_backwards_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
+	totem_object_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
 }
 
 void
 volume_up_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
+	totem_object_volume_relative (totem, VOLUME_UP_OFFSET);
 }
 
 void
 volume_down_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
+	totem_object_volume_relative (totem, VOLUME_DOWN_OFFSET);
 }
 
 void
 contents_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_show_help (totem);
+	totem_object_show_help (totem);
 }
 
 void
@@ -1276,7 +1276,7 @@ show_controls_action_callback (GtkToggleAction *action, Totem *totem)
 void
 show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 {
-	if (totem_is_fullscreen (totem))
+	if (totem_object_is_fullscreen (totem))
 		return;
 
 	totem_sidebar_toggle (totem, gtk_toggle_action_get_active (action));
@@ -1285,14 +1285,14 @@ show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 void
 aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem)
 {
-	totem_action_set_aspect_ratio (totem, gtk_radio_action_get_current_value (current));
+	totem_object_set_aspect_ratio (totem, gtk_radio_action_get_current_value (current));
 }
 
 void
 clear_playlist_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_playlist_clear (totem->playlist);
-	totem_action_set_mrl (totem, NULL, NULL);
+	totem_object_set_mrl (totem, NULL, NULL);
 }
 
 /* Show help in status bar when selecting (hovering over) a menu item. */

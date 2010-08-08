@@ -89,13 +89,13 @@ on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const 
 {
 	if (strcmp ("Totem", application) == 0) {
 		if (strcmp ("Play", key) == 0)
-			totem_action_play_pause (totem);
+			totem_object_play_pause (totem);
 		else if (strcmp ("Previous", key) == 0)
-			totem_action_previous (totem);
+			totem_object_previous (totem);
 		else if (strcmp ("Next", key) == 0)
-			totem_action_next (totem);
+			totem_object_next (totem);
 		else if (strcmp ("Stop", key) == 0)
-			totem_action_pause (totem);
+			totem_object_pause (totem);
 	}
 }
 
@@ -183,7 +183,7 @@ impl_activate (PeasActivatable *plugin)
 	dbus_g_proxy_connect_signal (pi->media_player_keys_proxy, "MediaPlayerKeyPressed",
 			G_CALLBACK (on_media_player_key_pressed), totem, NULL);
 
-	window = totem_get_main_window (totem);
+	window = totem_object_get_main_window (totem);
 	pi->handler_id = g_signal_connect (G_OBJECT (window), "focus-in-event",
 			G_CALLBACK (on_window_focus_in_event), pi);
 
@@ -208,7 +208,7 @@ impl_deactivate (PeasActivatable *plugin)
 		TotemObject *totem;
 
 		totem = g_object_get_data (G_OBJECT (plugin), "object");
-		window = totem_get_main_window (totem);
+		window = totem_object_get_main_window (totem);
 		if (window == NULL)
 			return;
 
