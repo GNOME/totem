@@ -177,14 +177,6 @@ typedef struct {
 GType	totem_object_get_type			(void);
 void    totem_object_plugins_init		(TotemObject *totem);
 void    totem_object_plugins_shutdown		(TotemObject *totem);
-void	totem_file_opened			(TotemObject *totem,
-						 const char *mrl);
-void	totem_file_closed			(TotemObject *totem);
-void	totem_metadata_updated			(TotemObject *totem,
-						 const char *artist,
-						 const char *title,
-						 const char *album,
-						 guint track_num);
 
 #define totem_action_exit totem_object_action_exit
 void	totem_object_action_exit		(TotemObject *totem) G_GNUC_NORETURN;
