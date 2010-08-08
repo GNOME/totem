@@ -12,11 +12,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 2.30\n"
+"Project-Id-Version: totem 2.32\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-05-14 10:35+0000\n"
-"PO-Revision-Date: 2010-05-26 18:59+0300\n"
+"POT-Creation-Date: 2010-08-05 13:05+0000\n"
+"PO-Revision-Date: 2010-07-02 10:40+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -233,20 +233,11 @@ msgstr "_Helimenüü"
 msgid "About this application"
 msgstr "Lähem teave selle rakenduse kohta"
 
-msgid "Also disable the screensaver when playing _audio"
-msgstr "Ekraanisäästja on keelatud ka _audioesituse ajal"
-
 msgid "Audio Output"
 msgstr "Heliväljund"
 
 msgid "Auto"
 msgstr "Automaatne"
-
-msgid "Automatically _load subtitle files when movie is loaded"
-msgstr "_Video avamisel laaditakse subtiitrid automaatselt"
-
-msgid "Automatically _resize the window when a new video is loaded"
-msgstr "_Uue video avamisel sobitatakse akna suurus"
 
 msgid "Clear the playlist"
 msgstr "Esitusnimekirja puhastamine"
@@ -269,8 +260,11 @@ msgstr "Ühenduse kii_rus:"
 msgid "Decrease volume"
 msgstr "Heli vaiksemaks"
 
-msgid "Deinterlace"
-msgstr "Ülerealaotuse eemaldamine"
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "Üle_realaotusega videotelt ülerealaotuse eemaldamine"
+
+msgid "Disable screensaver when playing "
+msgstr "Ekraanisäästja keelamine esituse ajaks"
 
 msgid "Display"
 msgstr "Kuva"
@@ -452,6 +446,9 @@ msgstr "Kerimisriba"
 msgid "Totem Preferences"
 msgstr "Totem'i eelistused"
 
+msgid "Video or Audio"
+msgstr "Video või audio"
+
 msgid "View the properties of the current stream"
 msgstr "Praeguse andmevoo omaduste vaatamine"
 
@@ -512,9 +509,6 @@ msgstr "_Sisukord"
 msgid "_DVD Menu"
 msgstr "_DVD menüü"
 
-msgid "_Deinterlace"
-msgstr "_Eemalda ülerealaotus"
-
 msgid "_Edit"
 msgstr "_Redaktor"
 
@@ -542,6 +536,9 @@ msgstr "_Toon:"
 msgid "_Languages"
 msgstr "_Keeled"
 
+msgid "_Load subtitle files when movie is loaded"
+msgstr "_Video avamisel laaditakse subtiitrid"
+
 msgid "_Movie"
 msgstr "_Film"
 
@@ -565,6 +562,9 @@ msgstr "_Kordav režiim"
 
 msgid "_Resize 1:2"
 msgstr "_Suurus 1:2"
+
+msgid "_Resize the window when a new video is loaded"
+msgstr "_Uue video avamisel sobitatakse akna suurus"
 
 msgid "_Sound"
 msgstr "_Heli"
@@ -600,15 +600,15 @@ msgid ""
 "the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
 "28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
 "for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, "
-"\"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
+"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
 msgstr ""
 "Arvestuslik võrguühenduse kiirus, mille järgi valitakse üle võrgu esitatava "
 "voo kvaliteet: \"0\" on 14.4 kb/s modem, \"1\" on 19.2 kb/s modem, \"2\" on "
 "28.8 kb/s modem, \"3\" on 33.6 kb/s modem, \"4\" on 34.4 kb/s modem, \"5\" "
 "on 56 kb/s modem/ISDN, \"6\" on 112 kb/s topelt-ISDN/DSL, \"7\" on 256 kb/s "
-"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, "
-"\"10\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
+"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, \"10"
+"\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
 
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Vaikimisi asukoht \"Ava...\" dialoogidele"
@@ -629,9 +629,6 @@ msgid ""
 msgstr ""
 "Vaikimisi asukoht \"Võta kuvatõmmis\" dialoogidele, vaikimisi on selleks "
 "piltide kataloog"
-
-msgid "Enable deinterlacing"
-msgstr "Ülerealaotuse eemaldamine"
 
 msgid "Encoding charset for subtitle"
 msgstr "Subtriitrite kodeeringutabel"
@@ -710,15 +707,14 @@ msgstr "UTF-8"
 msgid "Visualization quality setting"
 msgstr "Visualisee_rimise kvaliteet"
 
-msgid "Whether the main window should stay on top"
-msgstr "Kas peaaken peab olema kõige pealmine"
-
-msgid "Whether the main window should stay on top of the other ones"
-msgstr "Kas peaaken peab olema teistest akendest pealpool"
-
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Kas subtiitrid laaditakse pärast filmi laadimist automaatselt või mitte"
+
+#| msgid "Whether to enable debug for the playback engine"
+msgid "Whether to disable deinterlacing for interlaced movies"
+msgstr ""
+"Kas ülerealaotusega videote puhul tuleb ülerealaotus eemaldada või mitte"
 
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Kas kiirklahvid on keelatud või mitte"
@@ -738,9 +734,6 @@ msgstr ""
 
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Sisesta faili _aadress, mida sa soovid avada:"
-
-msgid "Playing a movie"
-msgstr "Filmi esitamine"
 
 #, c-format
 msgid "File is not a valid .desktop file"
@@ -792,8 +785,8 @@ msgstr "Laiendi(d)"
 
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "Programmil pole võimalik `%s' jaoks failivormingut leida. Palun veendu, et "
@@ -1128,7 +1121,7 @@ msgid "Playlist"
 msgstr "Esitusnimekiri"
 
 #, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Esitusnimekirja '%s' pole võimalik parsida, see võib olla rikutud."
 
 msgid "Playlist error"
@@ -1664,7 +1657,7 @@ msgstr "BBC iPlayer"
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "BBC programmi viimase 7 päeva voog BBC IPlayer'i teenusest."
 
-msgid "Error Listing Channel Categories"
+msgid "Error listing channel categories"
 msgstr "Viga kanalite kategooriate loendi kuvamisel"
 
 msgid ""
@@ -1682,12 +1675,15 @@ msgstr "Laadimine…"
 msgid "Error getting programme feed"
 msgstr "Viga saatekava voo hankimisel"
 
+#| msgid ""
+#| "There was an unknown error getting the list of programmes for this "
+#| "channel and category combination."
 msgid ""
-"There was an unknown error getting the list of programmes for this channel "
-"and category combination."
+"There was an error getting the list of programmes for this channel and "
+"category combination."
 msgstr ""
-"Selle kanali ja kategooria kombinatsioonile vastavate saadete loendi "
-"hankimisel esines tundmatu viga."
+"Selle kanali ja kategooria kombinatsioonile vastava saatekava hankimisel "
+"tekkis viga."
 
 #, python-format
 msgid "Programme unavailable (\"%s\")"
@@ -1934,6 +1930,9 @@ msgstr ""
 
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "_Kasutatakse krüptitud transpordiprotokolli (HTTPS)"
+
+msgid "Playing a movie"
+msgstr "Filmi esitamine"
 
 msgid "Calculate the number of screenshots"
 msgstr "Kuvatõmmiste arv arvutatakse"
