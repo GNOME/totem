@@ -199,15 +199,7 @@ void	totem_object_set_main_page		(TotemObject *totem,
 const char * totem_object_get_main_page		(Totem *totem);
 
 /* Signal emission */
-void	totem_file_opened			(TotemObject *totem,
-						 const char *mrl);
 void	totem_file_has_played			(TotemObject *totem,
 						 const char *mrl);
-void	totem_file_closed			(TotemObject *totem);
-void	totem_metadata_updated			(TotemObject *totem,
-						 const char *artist,
-						 const char *title,
-						 const char *album,
-						 guint track_num);
 
 #endif /* __TOTEM_PRIVATE_H__ */

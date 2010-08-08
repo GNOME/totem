@@ -882,16 +882,16 @@ totem_object_get_main_page (Totem *totem)
 	return gtk_stack_get_visible_child_name (GTK_STACK (totem->stack));
 }
 
-/**
- * totem_file_opened:
+/*
+ * emit_file_opened:
  * @totem: a #TotemObject
  * @mrl: the MRL opened
  *
  * Emits the #TotemObject::file-opened signal on @totem, with the
  * specified @mrl.
  **/
-void
-totem_file_opened (TotemObject *totem,
+static void
+emit_file_opened (TotemObject *totem,
 		   const char *mrl)
 {
 	g_signal_emit (G_OBJECT (totem),
@@ -899,19 +899,18 @@ totem_file_opened (TotemObject *totem,
 		       0, mrl);
 }
 
-/**
- * totem_file_closed:
+/*
+ * emit_file_closed:
  * @totem: a #TotemObject
  *
  * Emits the #TotemObject::file-closed signal on @totem.
  **/
-void
-totem_file_closed (TotemObject *totem)
+static void
+emit_file_closed (TotemObject *totem)
 {
 	g_signal_emit (G_OBJECT (totem),
 		       totem_table_signals[FILE_CLOSED],
 		       0);
-
 }
 
 /**
@@ -929,8 +928,8 @@ totem_file_has_played (TotemObject *totem,
 		       0, mrl);
 }
 
-/**
- * totem_metadata_updated:
+/*
+ * emit_metadata_updated:
  * @totem: a #TotemObject
  * @artist: the stream's artist, or %NULL
  * @title: the stream's title, or %NULL
@@ -940,8 +939,8 @@ totem_file_has_played (TotemObject *totem,
  * Emits the #TotemObject::metadata-updated signal on @totem,
  * with the specified stream data.
  **/
-void
-totem_metadata_updated (TotemObject *totem,
+static void
+emit_metadata_updated (TotemObject *totem,
 			const char *artist,
 			const char *title,
 			const char *album,
@@ -1271,7 +1270,7 @@ totem_action_eject (TotemObject *totem)
 
 	g_clear_pointer (&totem->mrl, g_free);
 	bacon_video_widget_close (totem->bvw);
-	totem_file_closed (totem);
+	emit_file_closed (totem);
 	totem->has_played_emitted = FALSE;
 
 	/* The volume monitoring will take care of removing the items */
@@ -1617,11 +1616,11 @@ totem_get_nice_name_for_stream (TotemObject *totem)
 	tracknum = g_value_get_int (&value);
 	g_value_unset (&value);
 
-	totem_metadata_updated (totem,
-				g_value_get_string (&artist_value),
-				g_value_get_string (&title_value),
-				g_value_get_string (&album_value),
-				tracknum);
+	emit_metadata_updated (totem,
+	                       g_value_get_string (&artist_value),
+	                       g_value_get_string (&title_value),
+	                       g_value_get_string (&album_value),
+	                       tracknum);
 
 	if (g_value_get_string (&title_value) == NULL) {
 		retval = NULL;
@@ -1694,7 +1693,7 @@ totem_action_set_mrl (TotemObject *totem,
 
 		g_clear_pointer (&totem->mrl, g_free);
 		bacon_video_widget_close (totem->bvw);
-		totem_file_closed (totem);
+		emit_file_closed (totem);
 		totem->has_played_emitted = FALSE;
 		play_pause_set_label (totem, STATE_STOPPED);
 		update_fill (totem, -1.0);
@@ -1767,7 +1766,7 @@ totem_action_set_mrl (TotemObject *totem,
 			{ (gchar*) "text/uri-list", 0, 0 }
 		};
 
-		totem_file_opened (totem, totem->mrl);
+		emit_file_opened (totem, totem->mrl);
 
 		/* Set the drag source */
 		gtk_drag_source_set (GTK_WIDGET (totem->bvw),
@@ -2299,11 +2298,11 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 	}
 
 	bacon_video_widget_close (totem->bvw);
-	totem_file_closed (totem);
+	emit_file_closed (totem);
 	totem->has_played_emitted = FALSE;
 	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl);
-	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
+	emit_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 	if (bacon_video_widget_play (bvw, NULL) != FALSE) {
 		totem_file_has_played (totem, totem->mrl);
@@ -2630,7 +2629,7 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 					 playlist_changed_cb, totem);
 				changed = totem_playlist_clear (totem->playlist);
 				bacon_video_widget_close (totem->bvw);
-				totem_file_closed (totem);
+				emit_file_closed (totem);
 				totem->has_played_emitted = FALSE;
 				cleared = TRUE;
 			}
@@ -2803,7 +2802,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		totem_playlist_clear (totem->playlist);
 		if (url == NULL) {
 			bacon_video_widget_close (totem->bvw);
-			totem_file_closed (totem);
+			emit_file_closed (totem);
 			totem->has_played_emitted = FALSE;
 			totem_action_set_mrl (totem, NULL, NULL);
 			break;
