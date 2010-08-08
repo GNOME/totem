@@ -66,7 +66,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="thumbnail screensaver ontop galago gromit lirc media-player-keys mythtv properties sidebar-test skipto sample-python sample-vala bemused youtube publish tracker pythonconsole jamendo opensubtitles screenshot brasero-disc-recorder coherence_upnp dbus-service iplayer"
+allowed_plugins="bemused brasero-disc-recorder coherence_upnp dbus-service galago gromit iplayer jamendo lirc media-player-keys mythtv ontop opensubtitles properties publish pythonconsole sample-python sample-vala screensaver screenshot sidebar-test skipto thumbnail tracker youtube"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
