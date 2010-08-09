@@ -46,10 +46,12 @@ static void totem_skipto_dispose	(GObject *object);
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto);
+G_MODULE_EXPORT void tstw_adjustment_value_changed_cb (GtkAdjustment *adjustment, TotemSkipto *skipto);
 
 struct TotemSkiptoPrivate {
 	GtkBuilder *xml;
 	GtkWidget *time_entry;
+	GtkLabel *seconds_label;
 	gint64 time;
 	Totem *totem;
 };
@@ -148,6 +150,14 @@ time_entry_activate_cb (GtkEntry *entry, TotemSkipto *skipto)
 	gtk_dialog_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 }
 
+void
+tstw_adjustment_value_changed_cb (GtkAdjustment *adjustment, TotemSkipto *skipto)
+{
+	/* Update the "seconds" label so that it always has the correct singular/plural form */
+	/* Translators: label for the seconds selector in the "Skip to" dialogue */
+	gtk_label_set_label (skipto->priv->seconds_label, ngettext ("second", "seconds", (int) gtk_adjustment_get_value (adjustment)));
+}
+
 GtkWidget *
 totem_skipto_new (TotemSkiptoPlugin *plugin)
 {
@@ -167,6 +177,15 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 	}
 	skipto->priv->time_entry = GTK_WIDGET (gtk_builder_get_object
 		(skipto->priv->xml, "tstw_skip_time_entry"));
+	skipto->priv->seconds_label = GTK_LABEL (gtk_builder_get_object
+		(skipto->priv->xml, "tstw_seconds_label"));
+
+	/* Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value */
+	gtk_label_set_width_chars (skipto->priv->seconds_label, MAX (strlen (_("second")), strlen (_("seconds"))));
+
+	/* Set the initial "seconds" label */
+	tstw_adjustment_value_changed_cb (GTK_ADJUSTMENT (gtk_builder_get_object
+		(skipto->priv->xml, "tstw_skip_adjustment")), skipto);
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip to"));
 	gtk_dialog_set_has_separator (GTK_DIALOG (skipto), FALSE);
