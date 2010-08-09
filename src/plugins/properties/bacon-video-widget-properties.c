@@ -58,6 +58,21 @@
 		g_value_unset (&value); \
 	} while (0)
 
+#define UPDATE_FROM_INT_PLURAL(type, name, format_s, format_p, empty) \
+	do { \
+		char *temp; \
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
+						 type, &value); \
+		if (g_value_get_int (&value) != 0) \
+			temp = g_strdup_printf (ngettext (format_s, format_p, g_value_get_int (&value)), \
+					g_value_get_int (&value)); \
+		else \
+			temp = g_strdup (empty); \
+		bacon_video_widget_properties_set_label (props, name, temp); \
+		g_free (temp); \
+		g_value_unset (&value); \
+	} while (0)
+
 #define UPDATE_FROM_INT2(type1, type2, name, format) \
 	do { \
 		int x, y; \
@@ -234,8 +249,8 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 		UPDATE_FROM_INT2 (BVW_INFO_DIMENSION_X, BVW_INFO_DIMENSION_Y,
 				  "dimensions", N_("%d x %d"));
 		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
-		UPDATE_FROM_INT (BVW_INFO_FPS, "framerate",
-				 N_("%d frames per second"), _("N/A"));
+		UPDATE_FROM_INT_PLURAL (BVW_INFO_FPS, "framerate",
+		                        N_("%d frame per second"), N_("%d frames per second"), _("N/A"));
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
 				 N_("%d kbps"), _("N/A"));
 		gtk_widget_show (item);
@@ -263,6 +278,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 
 #undef UPDATE_FROM_STRING
 #undef UPDATE_FROM_INT
+#undef UPDATE_FROM_INT_PLURAL
 #undef UPDATE_FROM_INT2
 }
 
