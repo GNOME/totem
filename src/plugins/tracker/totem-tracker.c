@@ -72,19 +72,27 @@ totem_tracker_plugin_init (TotemTrackerPlugin *plugin)
 }
 
 static void
-impl_activate (PeasActivatable *plugin, GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	GtkWidget *widget;
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
+
+	g_object_get (plugin, "object", &totem, NULL);
 
 	widget = totem_tracker_widget_new (totem);
 	gtk_widget_show (widget);
 	totem_add_sidebar_page (totem, "tracker", _("Local Search"), widget);
+
+	g_object_unref (totem);
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin, GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
-	totem_remove_sidebar_page (TOTEM_OBJECT (object), "tracker");
+	TotemObject *totem;
+
+	g_object_get (plugin, "object", &totem, NULL);
+	totem_remove_sidebar_page (totem, "tracker");
+	g_object_unref (totem);
 }
 

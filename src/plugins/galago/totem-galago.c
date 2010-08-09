@@ -152,15 +152,18 @@ property_notify_cb (TotemObject *totem,
 }
 
 static void
-impl_activate (PeasActivatable *plugin, GObject *object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
+
+	g_object_get (plugin, "object", &totem, NULL);
 
 	if (!galago_is_connected ()) {
 		GtkWindow *window = totem_get_main_window (totem);
 		totem_interface_error (_("Error loading Galago plugin"), _("Could not connect to the Galago daemon."), window);
 		g_object_unref (window);
+		g_object_unref (totem);
 
 		return;
 	}
@@ -176,20 +179,26 @@ impl_activate (PeasActivatable *plugin, GObject *object)
 
 	/* Force setting the current status */
 	totem_galago_update_from_state (totem, pi);
+
+	g_object_unref (totem);
 }
 
 static void
-impl_deactivate (PeasActivatable *plugin, GObject *object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
-	TotemObject *totem = TOTEM_OBJECT (object);
+	TotemObject *totem;
 
 	/* Failed to initialise */
 	if (!galago_is_connected ())
 		return;
 
+	g_object_get (plugin, "object", &totem, NULL);
+
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_fullscreen);
 	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+
+	g_object_unref (totem);
 
 	totem_galago_set_idleness (pi, FALSE);
 }
