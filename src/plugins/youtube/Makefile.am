@@ -26,12 +26,15 @@ common_defines = \
 
 libyoutube_la_SOURCES = totem-youtube.c
 libyoutube_la_LDFLAGS = $(modules_flags)
-libyoutube_la_LIBADD = $(LIBGDATA_LIBS)
+libyoutube_la_LIBADD = \
+	$(LIBGDATA_LIBS)	\
+	$(LIBSOUP_LIBS)
 libyoutube_la_CPPFLAGS = $(common_defines)
 
 libyoutube_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(LIBGDATA_CFLAGS)	\
+	$(LIBSOUP_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(DBUS_CFLAGS)		\
 	$(AM_CFLAGS)		\

@@ -29,6 +29,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gdata/gdata.h>
+#include <libsoup/soup.h>
 
 #include "totem-plugin.h"
 #include "totem.h"
@@ -61,6 +62,7 @@ typedef struct {
 	TotemPlugin parent;
 	Totem *totem;
 	GDataYouTubeService *service;
+	SoupSession *session;
 	BaconVideoWidget *bvw;
 
 	guint current_tree_view;
@@ -388,6 +390,8 @@ impl_deactivate	(TotemPlugin *plugin, TotemObject *totem)
 		g_object_unref (self->playing_video);
 	if (self->service != NULL)
 		g_object_unref (self->service);
+	if (self->session != NULL)
+		g_object_unref (self->session);
 	g_object_unref (self->bvw);
 	g_object_unref (self->totem);
 	if (self->regex != NULL)
@@ -461,6 +465,9 @@ typedef struct {
 	GDataEntry *entry;
 	GtkTreePath *path;
 	guint tree_view;
+	SoupMessage *message;
+	gulong cancelled_id;
+	GCancellable *cancellable;
 } TParamData;
 
 /* Ranked list of formats to prefer, from http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs */
@@ -481,33 +488,35 @@ static const guint fmt_preferences[] = {
 };
 
 static void
-resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *data)
+resolve_t_param_cb (SoupSession *session, SoupMessage *message, TParamData *data)
 {
-	gchar *contents, *video_uri = NULL;
-	const gchar *video_id;
+	gchar *video_uri = NULL;
+	const gchar *video_id, *contents;
 	gsize length;
 	GMatchInfo *match_info;
-	GError *error = NULL;
 	GtkTreeIter iter;
 	TotemYouTubePlugin *self = data->plugin;
 
+	/* Prevent cancellation */
+	g_cancellable_disconnect (data->cancellable, data->cancelled_id);
+
 	/* Finish loading the page */
-	if (g_file_load_contents_finish (G_FILE (source_object), result, &contents, &length, NULL, &error) == FALSE) {
+	if (message->status_code != SOUP_STATUS_OK) {
 		GtkWindow *window;
 
 		/* Bail out if the operation was cancelled */
-		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
-			g_error_free (error);
+		if (message->status_code == SOUP_STATUS_CANCELLED)
 			goto free_data;
-		}
 
 		/* Couldn't load the page contents; error */
 		window = totem_get_main_window (data->plugin->totem);
-		totem_interface_error (_("Error Looking Up Video URI"), error->message, window);
+		totem_interface_error (_("Error Looking Up Video URI"), message->response_body->data, window);
 		g_object_unref (window);
-		g_error_free (error);
 		goto free_data;
 	}
+
+	contents = message->response_body->data;
+	length = message->response_body->length;
 
 	video_id = gdata_youtube_video_get_video_id (GDATA_YOUTUBE_VIDEO (data->entry));
 
@@ -595,7 +604,6 @@ resolve_t_param_cb (GObject *source_object, GAsyncResult *result, TParamData *da
 	}
 
 	g_match_info_free (match_info);
-	g_free (contents);
 
 	/* Update the tree view with the new MRL */
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter, data->path) == TRUE) {
@@ -609,6 +617,7 @@ free_data:
 	/* Update the progress bar */
 	increment_progress_bar_fraction (self, data->tree_view);
 
+	g_object_unref (data->cancellable);
 	g_object_unref (data->plugin);
 	g_object_unref (data->entry);
 	gtk_tree_path_free (data->path);
@@ -616,25 +625,34 @@ free_data:
 }
 
 static void
+resolve_t_param_cancelled_cb (GCancellable *cancellable, TParamData *data)
+{
+	/* This will cause resolve_t_param_cb() to be called, which will free the data */
+	soup_session_cancel_message (data->plugin->session, data->message, SOUP_STATUS_CANCELLED);
+}
+
+static void
 resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter, guint tree_view, GCancellable *cancellable)
 {
-	GDataLink *link;
-	GFile *video_page;
+	GDataLink *page_link;
 	TParamData *data;
 
 	/* We have to get the t parameter from the actual HTML video page, since Google changed how their URIs work */
-	link = gdata_entry_look_up_link (entry, GDATA_LINK_ALTERNATE);
-	g_assert (link != NULL);
+	page_link = gdata_entry_look_up_link (entry, GDATA_LINK_ALTERNATE);
+	g_assert (page_link != NULL);
 
 	data = g_slice_new (TParamData);
 	data->plugin = g_object_ref (self);
 	data->entry = g_object_ref (entry);
 	data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->list_store[tree_view]), iter);
 	data->tree_view = tree_view;
+	data->cancellable = g_object_ref (cancellable);
 
-	video_page = g_file_new_for_uri (gdata_link_get_uri (link));
-	g_file_load_contents_async (video_page, cancellable, (GAsyncReadyCallback) resolve_t_param_cb, data);
-	g_object_unref (video_page);
+	data->message = soup_message_new (SOUP_METHOD_GET, gdata_link_get_uri (page_link));
+	data->cancelled_id = g_cancellable_connect (cancellable, (GCallback) resolve_t_param_cancelled_cb, data, NULL);
+
+	/* Send the message. Consumes a reference to data->message after resolve_t_param_cb() finishes */
+	soup_session_queue_message (self->session, data->message, (SoupSessionCallback) resolve_t_param_cb, data);
 }
 
 typedef struct {
@@ -981,6 +999,9 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		/* Set up the queries */
 		self->query[SEARCH_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
 		self->query[RELATED_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
+
+		/* Lazily create the SoupSession used in resolve_t_param() */
+		self->session = soup_session_async_new ();
 	}
 
 	/* Do the query */
