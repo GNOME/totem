@@ -35,6 +35,7 @@
 
 #include "totem.h"
 #include "totem-interface.h"
+#include "totem-plugin.h"
 #include "totem-edit-chapter.h"
 #include <string.h>
 
@@ -57,13 +58,71 @@ totem_edit_chapter_class_init (TotemEditChapterClass *klass)
 	g_type_class_add_private (klass, sizeof (TotemEditChapterPrivate));
 }
 
+static char *
+find_file (const char *name,
+	   const char *file)
+{
+	GList *paths;
+	GList *l;
+	char *ret = NULL;
+
+	paths = totem_get_plugin_paths ();
+
+	for (l = paths; l != NULL; l = l->next) {
+		if (ret == NULL && name) {
+			char *tmp;
+
+			tmp = g_build_filename (l->data, name, file, NULL);
+
+			if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
+				ret = tmp;
+				break;
+			}
+			g_free (tmp);
+		}
+	}
+
+	g_list_foreach (paths, (GFunc)g_free, NULL);
+	g_list_free (paths);
+
+	/* global data files */
+	if (ret == NULL)
+		ret = totem_interface_get_full_path (file);
+
+	/* ensure it's an absolute path, so doesn't confuse rb_glade_new et al */
+	if (ret && ret[0] != '/') {
+		char *pwd = g_get_current_dir ();
+		char *path = g_strconcat (pwd, G_DIR_SEPARATOR_S, ret, NULL);
+		g_free (ret);
+		g_free (pwd);
+		ret = path;
+	}
+	return ret;
+}
+
+static GtkBuilder *
+load_interface (const char *pname, const char *name,
+		gboolean fatal, GtkWindow *parent,
+		gpointer user_data)
+{
+	GtkBuilder *builder = NULL;
+	char *filename;
+
+	filename = find_file (pname, name);
+	builder = totem_interface_load_with_full_path (filename, fatal, parent,
+						       user_data);
+	g_free (filename);
+
+	return builder;
+}
+
 static void
 totem_edit_chapter_init (TotemEditChapter *self)
 {
 	GtkBuilder	*builder;
 
 	self->priv = TOTEM_EDIT_CHAPTER_GET_PRIVATE (self);
-	builder = totem_interface_load ("chapters-edit.ui", FALSE, NULL, self);
+	builder = load_interface ("chapters", "chapters-edit.ui", FALSE, NULL, self);
 
 	if (builder == NULL) {
 		self->priv->container = NULL;

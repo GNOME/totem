@@ -134,7 +134,7 @@ totem_cmml_clip_insert_img_attr (TotemCmmlClip	*clip,
 	GdkPixdata	*pixdata;
 	GdkPixbuf	*pixbuf;
 	guchar		*base64_dec;
-	guint		st_len;
+	gsize		st_len;
 	GError		*error = NULL;
 
 	g_return_if_fail (clip != NULL);

@@ -562,10 +562,10 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		chapters)
-			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= 2.6.0 gtk+-3.0 glib-2.0 >= 2.15.0,
+			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= 2.6.0 gtk+-2.0 glib-2.0 >= 2.15.0,
 				[BUILD_CHAPTERS=yes], [BUILD_CHAPTERS=no])
 			if test "${BUILD_CHAPTERS}" != "yes" ; then
-				plugin_error_or_ignore "you need gtk+-3.0, glib-2.0 >= 2.15.0 and libxml-2.0 >= 2.6.0 to use the chapters plugin"
+				plugin_error_or_ignore "you need gtk+-2.0, glib-2.0 >= 2.15.0 and libxml-2.0 >= 2.6.0 to use the chapters plugin"
 				add_plugin="0"
 			fi
 		;;

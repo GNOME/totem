@@ -85,14 +85,14 @@ typedef struct {
 } TotemChaptersPluginPrivate;
 
 typedef struct {
-	PeasExtensionBase		parent;
+	TotemPlugin			 parent;
 	TotemObject			*totem;
 	TotemEditChapter		*edit_chapter;
 	TotemChaptersPluginPrivate	*priv;
 } TotemChaptersPlugin;
 
 typedef struct {
-	PeasExtensionBaseClass		parent_class;
+	TotemPluginClass		parent_class;
 } TotemChaptersPluginClass;
 
 enum {
@@ -106,6 +106,8 @@ enum {
 
 G_MODULE_EXPORT GType register_totem_plugin (GTypeModule *module);
 GType totem_chapters_plugin_get_type (void) G_GNUC_CONST;
+static gboolean impl_activate (TotemPlugin *plugin, TotemObject *totem, GError **error);
+static void impl_deactivate (TotemPlugin *plugin, TotemObject *totem);
 static void totem_chapters_plugin_finalize (GObject *object);
 static void totem_file_opened_async_cb (TotemObject *totem, const gchar *uri, TotemChaptersPlugin *plugin);
 static void totem_file_opened_result_cb (gpointer data, gpointer user_data);
@@ -140,16 +142,20 @@ void popup_goto_action_cb (GtkAction *action, TotemChaptersPlugin *plugin);
 void load_button_clicked_cb (GtkButton *button, TotemChaptersPlugin *plugin);
 void continue_button_clicked_cb (GtkButton *button, TotemChaptersPlugin *plugin);
 
-TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_CHAPTERS_PLUGIN, TotemChaptersPlugin, totem_chapters_plugin)
+TOTEM_PLUGIN_REGISTER (TotemChaptersPlugin, totem_chapters_plugin)
 
 static void
 totem_chapters_plugin_class_init (TotemChaptersPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	TotemPluginClass *plugin_class = TOTEM_PLUGIN_CLASS (klass);
 
 	g_type_class_add_private (klass, sizeof (TotemChaptersPluginPrivate));
 
 	object_class->finalize = totem_chapters_plugin_finalize;
+
+	plugin_class->activate = impl_activate;
+	plugin_class->deactivate = impl_deactivate;
 }
 
 static void
@@ -250,13 +256,13 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 			     const gchar		*title,
 			     gint64			time)
 {
-	GdkPixbuf		*pixbuf;
-	GtkTreeIter		iter, cur_iter, res_iter;
-	GtkTreeModel		*store;
-	gchar 			*text, *start, *tip;
-	gboolean		valid;
-	gint64			cur_time, prev_time = 0;
-	gint			iter_count = 0;
+	GdkPixbuf	*pixbuf;
+	GtkTreeIter	iter, cur_iter, res_iter;
+	GtkTreeModel	*store;
+	gchar		*text, *start, *tip;
+	gboolean	valid;
+	gint64		cur_time, prev_time = 0;
+	gint		iter_count = 0;
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 	g_return_if_fail (title != NULL);
@@ -361,8 +367,8 @@ totem_file_opened_result_cb (gpointer	data,
 			g_free (adata);
 			return;
 		} else
-			totem_action_error (plugin->totem, _("Error while reading file with chapters"),
-					    adata->error);
+			totem_action_error (_("Error while reading file with chapters"),
+					    adata->error, plugin->totem);
 	}
 
 	if (adata->is_exists && adata->from_dialog) {
@@ -751,8 +757,8 @@ save_chapters_result_cb (gpointer	data,
 	plugin = TOTEM_CHAPTERS_PLUGIN (adata->user_data);
 
 	if (G_UNLIKELY (!adata->successful && !g_cancellable_is_cancelled (adata->cancellable))) {
-		totem_action_error (plugin->totem, _("Error while writing file with chapters"),
-				    adata->error);
+		totem_action_error (_("Error while writing file with chapters"),
+				    adata->error, plugin->totem);
 		gtk_widget_set_sensitive (plugin->priv->save_button, TRUE);
 	}
 
@@ -876,8 +882,8 @@ save_button_clicked_cb (GtkButton		*button,
 				   (gpointer *) &(plugin->priv->cancellable[1]));
 
 	if (G_UNLIKELY (totem_cmml_write_file_async (data) < 0)) {
-		totem_action_error (plugin->totem, _("Error occurred while saving chapters"),
-				    _("Please check you rights and free space"));
+		totem_action_error (_("Error occurred while saving chapters"),
+				    _("Please check you rights and free space"), plugin->totem);
 		g_free (data);
 		g_object_unref (plugin->priv->cancellable);
 	} else
@@ -1091,11 +1097,11 @@ goto_button_clicked_cb (GtkButton		*button,
 	g_list_free (list);
 }
 
-static void
-impl_activate (PeasActivatable	*plugin,
-	       GObject		*object)
+static gboolean
+impl_activate (TotemPlugin *plugin,
+	       TotemObject *totem,
+	       GError **error)
 {
-	TotemObject		*totem;
 	GtkWindow		*main_window;
 	GConfClient		*gconf;
 	GtkBuilder		*builder;
@@ -1106,19 +1112,19 @@ impl_activate (PeasActivatable	*plugin,
 	GtkTreeViewColumn	*column;
 	gchar			*mrl;
 
-	g_return_if_fail (TOTEM_IS_OBJECT (object));
-	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
+	g_return_val_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin), FALSE);
 
 	cplugin = TOTEM_CHAPTERS_PLUGIN (plugin);
-	totem = TOTEM_OBJECT (object);
 	main_window = totem_get_main_window (totem);
 
-	builder = totem_interface_load ("chapters-list.ui", TRUE,
-					main_window, cplugin);
+	builder = totem_plugin_load_interface (plugin, "chapters-list.ui", TRUE,
+					       main_window, cplugin);
 	g_object_unref (main_window);
 
-	if (builder == NULL)
-		return;
+	if (builder == NULL) {
+		//FIXME set error
+		return FALSE;
+	}
 
 	gconf = gconf_client_get_default ();
 	if (G_LIKELY (gconf != NULL)) {
@@ -1205,19 +1211,18 @@ impl_activate (PeasActivatable	*plugin,
 
 	g_object_unref (builder);
 	g_free (mrl);
+
+	return TRUE;
 }
 
 static void
-impl_deactivate (PeasActivatable	*plugin,
-		 GObject		*object)
+impl_deactivate (TotemPlugin *plugin,
+		 TotemObject *totem)
 {
-	TotemObject		*totem;
 	TotemChaptersPlugin	*cplugin;
 
-	g_return_if_fail (TOTEM_IS_OBJECT (object));
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
-	totem = TOTEM_OBJECT (object);
 	cplugin = TOTEM_CHAPTERS_PLUGIN (plugin);
 
 	/* FIXME: do not cancel async operation if any */
