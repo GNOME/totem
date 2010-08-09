@@ -63,7 +63,7 @@ totem_edit_chapter_init (TotemEditChapter *self)
 	GtkBuilder	*builder;
 
 	self->priv = TOTEM_EDIT_CHAPTER_GET_PRIVATE (self);
-	builder = totem_interface_load ("chapters-edit.ui", FALSE, NULL, self);
+	builder = totem_plugin_load_interface ("chapters", "chapters-edit.ui", FALSE, NULL, self);
 
 	if (builder == NULL) {
 		self->priv->container = NULL;

@@ -38,6 +38,7 @@
 
 #include "bacon-video-widget.h"
 #include "totem-plugin.h"
+#include "totem-dirs.h"
 #include "totem-interface.h"
 #include "totem.h"
 #include "totem-cmml-parser.h"
@@ -149,7 +150,11 @@ totem_chapters_plugin_class_init (TotemChaptersPluginClass *klass)
 
 	g_type_class_add_private (klass, sizeof (TotemChaptersPluginPrivate));
 
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
 	object_class->finalize = totem_chapters_plugin_finalize;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
@@ -250,13 +255,13 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 			     const gchar		*title,
 			     gint64			time)
 {
-	GdkPixbuf		*pixbuf;
-	GtkTreeIter		iter, cur_iter, res_iter;
-	GtkTreeModel		*store;
-	gchar 			*text, *start, *tip;
-	gboolean		valid;
-	gint64			cur_time, prev_time = 0;
-	gint			iter_count = 0;
+	GdkPixbuf	*pixbuf;
+	GtkTreeIter	iter, cur_iter, res_iter;
+	GtkTreeModel	*store;
+	gchar		*text, *start, *tip;
+	gboolean	valid;
+	gint64		cur_time, prev_time = 0;
+	gint		iter_count = 0;
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 	g_return_if_fail (title != NULL);
@@ -1092,8 +1097,7 @@ goto_button_clicked_cb (GtkButton		*button,
 }
 
 static void
-impl_activate (PeasActivatable	*plugin,
-	       GObject		*object)
+impl_activate (PeasActivatable *plugin)
 {
 	TotemObject		*totem;
 	GtkWindow		*main_window;
@@ -1106,15 +1110,14 @@ impl_activate (PeasActivatable	*plugin,
 	GtkTreeViewColumn	*column;
 	gchar			*mrl;
 
-	g_return_if_fail (TOTEM_IS_OBJECT (object));
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
 	cplugin = TOTEM_CHAPTERS_PLUGIN (plugin);
-	totem = TOTEM_OBJECT (object);
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	main_window = totem_get_main_window (totem);
 
-	builder = totem_interface_load ("chapters-list.ui", TRUE,
-					main_window, cplugin);
+	builder = totem_plugin_load_interface ("chapters", "chapters-list.ui", TRUE,
+					       main_window, cplugin);
 	g_object_unref (main_window);
 
 	if (builder == NULL)
@@ -1208,16 +1211,14 @@ impl_activate (PeasActivatable	*plugin,
 }
 
 static void
-impl_deactivate (PeasActivatable	*plugin,
-		 GObject		*object)
+impl_deactivate (PeasActivatable *plugin)
 {
 	TotemObject		*totem;
 	TotemChaptersPlugin	*cplugin;
 
-	g_return_if_fail (TOTEM_IS_OBJECT (object));
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
-	totem = TOTEM_OBJECT (object);
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	cplugin = TOTEM_CHAPTERS_PLUGIN (plugin);
 
 	/* FIXME: do not cancel async operation if any */
