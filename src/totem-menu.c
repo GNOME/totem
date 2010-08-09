@@ -188,10 +188,12 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 
 	if (is_lang == FALSE) {
 		add_lang_action (totem, action_group, ui_id, paths, prefix,
+		                /* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
 				_("None"), -2, 0, &group);
 	}
 
 	action = add_lang_action (totem, action_group, ui_id, paths, prefix,
+	               /* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
 			_("Auto"), -1, 0, &group);
 
 	i = 0;

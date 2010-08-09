@@ -648,6 +648,7 @@ chooser_response_cb (GtkDialog *dialog,
         {
 
           message = g_strdup_printf (
+            /* Translators: the parameter is a filename */
             _("The program was not able to find out the file format "
               "you want to use for `%s'. Please make sure to use a "
               "known extension for that file or manually choose a "
