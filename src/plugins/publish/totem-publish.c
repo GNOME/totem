@@ -585,6 +585,7 @@ totem_publish_plugin_activate (TotemPlugin  *plugin,
 	self->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
 	epc_service_monitor_set_skip_our_own (self->monitor, TRUE);
 
+	/* Translators: computers on the local network which are publishing their playlists over the network */
 	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbors"),
 			     totem_publish_plugin_create_neigbours_page (self));
 

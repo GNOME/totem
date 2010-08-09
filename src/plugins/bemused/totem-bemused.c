@@ -181,8 +181,10 @@ write_playlist (TotemBemusedPlugin *tp, GIOChannel *source)
 		char *title;
 
 		title = totem_get_title_at_playlist_pos (tp->totem, i);
-		if (title == NULL)
+		if (title == NULL) {
+			/* Translators: the parameter is a number used to identify this playlist entry */
 			title = g_strdup_printf (_("Untitled %d"), i);
+		}
 		g_message ("pushing entry %s", title);
 		send_response_flush (tp, source, title, strlen (title), FALSE);
 		g_free (title);
