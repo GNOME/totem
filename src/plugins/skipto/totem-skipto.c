@@ -82,7 +82,7 @@ totem_skipto_response_cb (GtkDialog *dialog, gint response_id, gpointer data)
 static void
 totem_skipto_init (TotemSkipto *skipto)
 {
-	skipto->priv = G_TYPE_INSTANCE_GET_PRIVATE (skipto, TOTEM_TYPE_SKIPTO, TotemSkiptoPrivate);
+	skipto->priv = TOTEM_SKIPTO_GET_PRIVATE (skipto);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (skipto), GTK_RESPONSE_OK);
 	g_signal_connect (skipto, "response",
@@ -92,11 +92,12 @@ totem_skipto_init (TotemSkipto *skipto)
 static void
 totem_skipto_dispose (GObject *object)
 {
-	TotemSkiptoPrivate *priv = TOTEM_SKIPTO_GET_PRIVATE (object);
+	TotemSkipto *skipto;
 
-	if (priv->xml != NULL) {
-		g_object_unref (priv->xml);
-		priv->xml = NULL;
+	skipto = TOTEM_SKIPTO (object);
+	if (skipto->priv && skipto->priv->xml != NULL) {
+		g_object_unref (skipto->priv->xml);
+		skipto->priv->xml = NULL;
 	}
 
 	G_OBJECT_CLASS (totem_skipto_parent_class)->dispose (object);
