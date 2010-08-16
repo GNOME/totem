@@ -10,10 +10,10 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2010-01-21 20:16+0000\n"
-"PO-Revision-Date: 2010-03-15 07:47+0530\n"
+"POT-Creation-Date: 2010-08-11 15:59+0000\n"
+"PO-Revision-Date: 2010-08-16 07:23+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
-"Language-Team: Punjabi/Panjabi <kde-i18n-doc@kde.org>\n"
+"Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Leave Fullscreen"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ ਛੱਡੋ"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:98
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:102
 msgid "Time:"
 msgstr "ਟਾਈਮ:"
 
-#: ../data/playlist.ui.h:1
+#: ../data/playlist.ui.h:1 ../src/plugins/chapters/chapters-list.ui.h:1
 msgid "Add..."
 msgstr "ਸ਼ਾਮਲ..."
 
@@ -45,7 +45,7 @@ msgstr "ਹੇਠਾਂ"
 msgid "Move Up"
 msgstr "ਉੱਤੇ"
 
-#: ../data/playlist.ui.h:5
+#: ../data/playlist.ui.h:5 ../src/plugins/chapters/chapters-list.ui.h:8
 msgid "Remove"
 msgstr "ਹਟਾਓ"
 
@@ -57,7 +57,7 @@ msgstr "ਫਾਇਲ ਪਲੇਅ-ਲਿਸਟ 'ਚੋਂ ਹਟਾਓ"
 msgid "Save Playlist..."
 msgstr "ਪਲੇਅ-ਲਿਸਟ ਸੰਭਾਲੋ..."
 
-#: ../data/playlist.ui.h:8 ../data/totem.ui.h:73
+#: ../data/playlist.ui.h:8 ../data/totem.ui.h:77
 msgid "Select a file to use for text subtitles"
 msgstr "ਟੈਕਸਟ ਸਬ-ਟਾਇਟਲ ਵਰਤਣ ਵਾਸਤੇ ਇੱਕ ਫਾਇਲ ਚੁਣੋ"
 
@@ -65,11 +65,11 @@ msgstr "ਟੈਕਸਟ ਸਬ-ਟਾਇਟਲ ਵਰਤਣ ਵਾਸਤੇ ਇ�
 msgid "_Copy Location"
 msgstr "ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_C)"
 
-#: ../data/playlist.ui.h:10
+#: ../data/playlist.ui.h:10 ../src/plugins/chapters/chapters-list.ui.h:12
 msgid "_Remove"
 msgstr "ਹਟਾਓ(_R)"
 
-#: ../data/playlist.ui.h:11 ../data/totem.ui.h:138
+#: ../data/playlist.ui.h:11 ../data/totem.ui.h:145
 msgid "_Select Text Subtitles..."
 msgstr "ਟੈਕਸਟ ਸਬ-ਟਾਇਟਲ ਚੁਣੋ(_S)..."
 
@@ -130,7 +130,7 @@ msgstr "ਐਲਬਮ:"
 msgid "Artist:"
 msgstr "ਕਲਾਕਾਰ:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:22
 #: ../src/totem-properties-view.c:89
 msgid "Audio"
 msgstr "ਆਡੀਓ"
@@ -163,7 +163,7 @@ msgstr "ਅੰਤਰਾਲ:"
 msgid "Framerate:"
 msgstr "ਫਰੇਮਰੇਟ:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:40
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:41
 msgid "General"
 msgstr "ਸਧਾਰਨ"
 
@@ -178,9 +178,9 @@ msgstr "ਸਧਾਰਨ"
 #: ../src/plugins/properties/bacon-video-widget-properties.c:167
 #: ../src/plugins/properties/bacon-video-widget-properties.c:169
 #: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:257
-#: ../src/plugins/properties/bacon-video-widget-properties.c:260
+#: ../src/plugins/properties/bacon-video-widget-properties.c:248
+#: ../src/plugins/properties/bacon-video-widget-properties.c:271
+#: ../src/plugins/properties/bacon-video-widget-properties.c:274
 msgid "N/A"
 msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
 
@@ -204,7 +204,8 @@ msgstr "ਟਾਇਟਲ:"
 msgid "Unknown"
 msgstr "ਅਣਜਾਣ"
 
-#: ../data/properties.ui.h:22 ../src/totem-properties-view.c:85
+#: ../data/properties.ui.h:22 ../data/totem.ui.h:104
+#: ../src/totem-properties-view.c:85
 msgid "Video"
 msgstr "ਵਿਡੀਓ"
 
@@ -222,8 +223,8 @@ msgid "_Add to Playlist"
 msgstr "ਪਲੇਅਲਿਸਟ 'ਚ ਸ਼ਾਮਲ(_A)"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1630
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
+#: ../src/totem-object.c:1620
 msgid "Movie Player"
 msgstr "ਮੂਵੀ ਪਲੇਅਰ"
 
@@ -315,463 +316,480 @@ msgstr "ਆਡੀਓ ਮੇਨੂ(_u)"
 msgid "About this application"
 msgstr "ਇਸ ਕਾਰਜ ਬਾਰੇ"
 
-#: ../data/totem.ui.h:22
-msgid "Also disable the screensaver when playing _audio"
-msgstr "ਜਦੋਂ ਆਡੀਓ ਚੱਲਦੀ ਹੋਵੇ ਤਾਂ ਸਕਰੀਨ-ਸੇਵਰ ਬੰਦ ਰੱਖੋ(_a)"
-
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:23
 msgid "Audio Output"
 msgstr "ਆਡੀਓ ਆਉਟਪੁੱਟ"
 
-#: ../data/totem.ui.h:25 ../src/totem-menu.c:346
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../data/totem.ui.h:24 ../src/totem-menu.c:197
 msgid "Auto"
 msgstr "ਆਟੋ"
 
-#: ../data/totem.ui.h:26
-msgid "Automatically _load subtitle files when movie is loaded"
-msgstr "ਮੂਵੀ ਲੋਡ ਕਰਨ ਦੌਰਾਨ ਸਬ-ਟਾਇਟਲ ਫਾਇਲਾਂ ਆਟੋਮੈਟਿਕ ਹੀ ਲੋਡ ਕਰੋ(_l)"
-
-#: ../data/totem.ui.h:27
-msgid "Automatically _resize the window when a new video is loaded"
-msgstr "ਨਵੀਂ ਵੀਡਿਓ ਚਲਾਉਣ ਅਤੇ ਆਟੋ ਹੀ ਵਿੰਡੋ ਮੁੜ-ਅਕਾਰ ਕਰੋ(_r)"
-
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:25
 msgid "Clear the playlist"
 msgstr "ਪਲੇਅਲਿਸਟ ਸਾਫ਼ ਕਰੋ"
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:26
 msgid "Co_ntrast:"
 msgstr "ਭਿੰਨਤਾ(_n):"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:27
 msgid "Color Balance"
 msgstr "ਰੰਗ ਸੰਤੁਲਨ"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:28
 msgid "Configure plugins to extend the application"
 msgstr "ਐਪਲੀਕੇਸ਼ਨ ਫੈਲਾਉਣ ਲਈ ਪਲੱਗਇਨ ਸੰਰਚਨਾ"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:29
 msgid "Configure the application"
 msgstr "ਐਪਲੀਕੇਸ਼ਨ ਸੰਰਚਨਾ"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:30
 msgid "Connection _speed:"
 msgstr "ਕੁਨੈਕਸ਼ਨ ਗਤੀ(_s):"
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:31
 msgid "Decrease volume"
 msgstr "ਵਾਲੀਅਮ ਘਟਾਓ"
 
-#: ../data/totem.ui.h:35
-msgid "Deinterlace"
-msgstr "ਡੀਇੰਟਰਲੇਸਿੰਗ"
+#: ../data/totem.ui.h:32
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "ਇੰਟਰਲੇਸ ਵਿਡੀਓ ਲਈ ਡਿ-ਇੰਟਰਲੇਸ ਕਰਨਾ ਬੰਦ(_d)"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:33
+#| msgid "Also disable the screensaver when playing _audio"
+msgid "Disable screensaver when playing "
+msgstr "ਜਦੋਂ ਚੱਲਦਾ ਹੋਵੇ ਤਾਂ ਸਕਰੀਨ-ਸੇਵਰ ਬੰਦ ਰਹੇ"
+
+#. Tab label in the Preferences dialogue
+#: ../data/totem.ui.h:35
 msgid "Display"
 msgstr "ਡਿਸਪਲੇਅ"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:36
 msgid "Eject the current disc"
 msgstr "ਮੌਜੂਦਾ ਡਿਸਕ ਬਾਹਰ ਕੱਢੋ"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:37
+msgid "External Chapters"
+msgstr "ਬਾਹਰੀ ਚੈਪਟਰ"
+
+#. Audio visualization dimensions
+#: ../data/totem.ui.h:39
 msgid "Extra Large"
 msgstr "ਬਹੁਤ ਵੱਡਾ"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:40
 msgid "Fit Window to Movie"
 msgstr "ਫਿਲਮ ਵਿੰਡੋ ਉੱਤੇ ਫਿੱਟ"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:42
 msgid "Go to the DVD menu"
 msgstr "DVD ਮੇਨੂ 'ਤੇ ਜਾਓ"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:43
 msgid "Go to the angle menu"
 msgstr "ਕੋਣ ਮੇਨੂ 'ਤੇ ਜਾਓ"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:44
 msgid "Go to the audio menu"
 msgstr "ਧੁਨੀ ਮੇਨੂ 'ਤੇ ਜਾਓ"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:45
 msgid "Go to the chapter menu"
 msgstr "ਚੈਪਟਰ ਮੇਨੂ 'ਤੇ ਜਾਓ"
 
-#: ../data/totem.ui.h:45
+#: ../data/totem.ui.h:46
 msgid "Go to the title menu"
 msgstr "ਟਾਈਟਲ ਮੇਨੂ 'ਤੇ ਜਾਓ"
 
-#: ../data/totem.ui.h:46
+#: ../data/totem.ui.h:47
 msgid "Help contents"
 msgstr "ਮੱਦਦ ਸਮੱਗਰੀ"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:48
 msgid "Increase volume"
 msgstr "ਵਾਲੀਅਮ ਵਧਾਓ"
 
-#: ../data/totem.ui.h:48
+#: ../data/totem.ui.h:49
 msgid "Intranet/LAN"
 msgstr "ਇੰਟਰਾਨੈੱਟ/LAN"
 
-#: ../data/totem.ui.h:49
+#. Audio visualization dimensions
+#: ../data/totem.ui.h:51
 msgid "Large"
 msgstr "ਵੱਡਾ"
 
-#: ../data/totem.ui.h:51
+#: ../data/totem.ui.h:52
+#| msgid "Automatically _load subtitle files when movie is loaded"
+msgid "Load _chapter files when movie is loaded"
+msgstr "ਜਦਂ ਮੂਵੀ ਲੋਡ ਹੋਵੇ ਤਾਂ ਚੈਪਟਰ ਫਾਇਲਾਂ ਆਟੋਮੈਟਿਕ ਹੀ ਲੋਡ ਕਰੋ(_c)"
+
+#: ../data/totem.ui.h:54
 msgid "Networking"
 msgstr "ਨੈੱਟਵਰਕਿੰਗ"
 
-#: ../data/totem.ui.h:52
+#: ../data/totem.ui.h:55
 msgid "Next chapter or movie"
 msgstr "ਅੱਗੇ ਚੈਪਟਰ ਜਾਂ ਫਿਲਮ"
 
-#: ../data/totem.ui.h:53
+#. Audio visualization dimensions
+#: ../data/totem.ui.h:57
 msgid "Normal"
 msgstr "ਸਧਾਰਨ"
 
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:58
 msgid "Open _Location..."
 msgstr "ਟਿਕਾਣਾ ਖੋਲ੍ਹੋ(_L)..."
 
-#: ../data/totem.ui.h:55
+#: ../data/totem.ui.h:59
 msgid "Open a file"
 msgstr "ਇੱਕ ਫਾਇਲ ਖੋਲ੍ਹੋ"
 
-#: ../data/totem.ui.h:56
+#: ../data/totem.ui.h:60
 msgid "Open a non-local file"
 msgstr "ਨਾ-ਲੋਕਲ ਫਾਇਲ ਖੋਲ੍ਹੋ"
 
-#: ../data/totem.ui.h:57
+#: ../data/totem.ui.h:61
 msgid "Play / P_ause"
 msgstr "ਚਲਾਓ / ਵਿਰਾਮ(_a)"
 
-#: ../data/totem.ui.h:58
+#: ../data/totem.ui.h:62
 msgid "Play or pause the movie"
 msgstr "ਫਿਲਮ ਨੂੰ ਚਲਾਓ ਜਾਂ ਰੋਕੋ"
 
-#: ../data/totem.ui.h:59
+#: ../data/totem.ui.h:63
 msgid "Playback"
 msgstr "ਪਲੇਅਬੈਕ"
 
-#: ../data/totem.ui.h:60
+#: ../data/totem.ui.h:64
 msgid "Plugins..."
 msgstr "ਪਲੱਗਇਨ..."
 
-#: ../data/totem.ui.h:61
+#: ../data/totem.ui.h:65
 msgid "Prefere_nces"
 msgstr "ਮੇਰੀ ਪਸੰਦ(_n)"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:66
 msgid "Previous chapter or movie"
 msgstr "ਚੈਪਟਰ ਜਾਂ ਫਿਲਮ ਪਿੱਛੇ"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:67
 msgid "Quit the program"
 msgstr "ਪਰੋਗਰਾਮ ਬੰਦ ਕਰੋ"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:68
 msgid "Reset to _Defaults"
 msgstr "ਡਿਫਾਲਟ ਮੁਡ਼-ਸੈੱਟ(_D)"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:69
 msgid "Resize _1:1"
 msgstr "ਮੁੜ-ਅਕਾਰ _1:1"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:70
 msgid "Resize _2:1"
 msgstr "ਮੁੜ-ਅਕਾਰ _2:1"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:71
 msgid "Resize to double the original video size"
-msgstr "ਅਸਲੀ ਵੀਡਿਓ ਸਾਈਜ਼ ਤੋਂ ਡਬਲ ਕਰੋ"
+msgstr "ਅਸਲੀ ਵਿਡੀਓ ਸਾਈਜ਼ ਤੋਂ ਡਬਲ ਕਰੋ"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:72
 msgid "Resize to half the original video size"
-msgstr "ਅਸਲੀ ਵੀਡਿਓ ਅਕਾਰ ਅੱਧਾ ਕਰੋ"
+msgstr "ਅਸਲੀ ਵਿਡੀਓ ਅਕਾਰ ਅੱਧਾ ਕਰੋ"
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:73
 msgid "Resize to the original video size"
-msgstr "ਅਸਲੀ ਵੀਡਿਓ ਸਾਈਜ਼ ਕਰੋ"
+msgstr "ਅਸਲੀ ਵਿਡੀਓ ਸਾਈਜ਼ ਕਰੋ"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:74
 msgid "S_idebar"
 msgstr "ਬਾਹੀ(_i)"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:75
 msgid "S_ubtitles"
 msgstr "ਸਬ-ਟਾਈਟਲ(_u)"
 
-#: ../data/totem.ui.h:72
+#: ../data/totem.ui.h:76
 msgid "Sat_uration:"
 msgstr "ਸੰਤ੍ਰਿਪਤ(_u):"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:78
 msgid "Set the repeat mode"
 msgstr "ਦੁਹਰਾਓ ਢੰਗ ਸੈੱਟ"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:79
 msgid "Set the shuffle mode"
 msgstr "ਰਲਵਾਂ ਢੰਗ ਸੈੱਟ"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:80
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "16:9 (ਵਾਇਡਸਕਰੀਨ) ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:81
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "2.11:1 (DVB) ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:82
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "4:3 (TV) ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:83
 msgid "Sets automatic aspect ratio"
 msgstr "ਆਟੋਮੈਟਿਕ ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:84
 msgid "Sets square aspect ratio"
 msgstr "ਅਕਾਰ ਅਨੁਪਾਤ ਵਰਗ ਦਿਓ"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:85
 msgid "Show _Controls"
 msgstr "ਕੰਟਰੋਲ ਵੇਖਾਓ(_C)"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:86
 msgid "Show _visual effects when an audio file is played"
 msgstr "ਆਡੀਓ ਫਾਇਲ ਚਲਾਉਣ ਦੌਰਾਨ ਦਿੱਖ ਪਰਭਾਵ ਚਲਾਓ(_v)"
 
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:87
 msgid "Show controls"
 msgstr "ਕੰਟਰੋਲ ਵੇਖਾਓ"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:88
 msgid "Show or hide the sidebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ"
 
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:89
 msgid "Shuff_le Mode"
 msgstr "ਰਲਵਾਂ ਢੰਗ(_l)"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:90
 msgid "Skip _Backwards"
 msgstr "ਪਿੱਛੇ ਛੱਡੋ(_B)"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:91
 msgid "Skip _Forward"
 msgstr "ਅੱਗੇ ਛੱਡੋ(_F)"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:92
 msgid "Skip backwards"
 msgstr "ਪਿੱਛੇ ਛੱਡੋ"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:93
 msgid "Skip forward"
 msgstr "ਅੱਗੇ ਛੱਡੋ"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:94
 msgid "Square"
 msgstr "ਵਰਗ"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:95
 msgid "Start playing files from last position"
 msgstr "ਫਾਇਲਾਂ ਆਖਰੀ ਸਥਿਤੀ ਤੋਂ ਚਲਾਉਣਾ ਸ਼ੁਰੂ ਕਰੋ"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5708
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5892
 msgid "Stereo"
 msgstr "ਸਟੀਰਿਓ"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:97
 msgid "Switch An_gles"
 msgstr "ਕੋਣ ਤਬਦੀਲ(_g)"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:98
 msgid "Switch camera angles"
 msgstr "ਕੈਮਰਾ ਕੋਣ ਬਦਲੋ"
 
-#: ../data/totem.ui.h:95
+#: ../data/totem.ui.h:99
 msgid "Switch to fullscreen"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ 'ਤੇ ਤਬਦੀਲ"
 
-#: ../data/totem.ui.h:96
+#: ../data/totem.ui.h:100
 msgid "Text Subtitles"
 msgstr "ਟੈਕਸਟ ਸਬ-ਟਾਇਟਲ"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:101
 msgid "Time seek bar"
 msgstr "ਸਮਾਂ ਪ੍ਰਾਪਤੀ ਪੱਟੀ"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:103
 msgid "Totem Preferences"
 msgstr "ਟੋਟੇਮ ਪਸੰਦ"
 
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:105
+msgid "Video or Audio"
+msgstr "ਵਿਡੀਓ ਜਾਂ ਆਡੀਓ"
+
+#: ../data/totem.ui.h:106
 msgid "View the properties of the current stream"
 msgstr "ਮੌਜੂਦਾ ਸਟਰੀਮ ਦੀ ਵਿਸ਼ੇਸ਼ਤਾ ਵੇਖੋ"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:107
 msgid "Visual Effects"
 msgstr "ਦਿੱਖ ਪਰਭਾਵ"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:108
 msgid "Visualization _size:"
 msgstr "ਦਿੱਖ ਅਕਾਰ(_s):"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:109
 msgid "Volume _Down"
 msgstr "ਆਵਾਜ਼ ਘਟਾਓ(_D)"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:110
 msgid "Volume _Up"
 msgstr "ਆਵਾਜ਼ ਵਧਾਓ(_U)"
 
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:111
 msgid "Zoom In"
 msgstr "ਜ਼ੂਮ ਅੰਦਰ"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:112
 msgid "Zoom Out"
 msgstr "ਜ਼ੂਮ ਬਾਹਰ"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:113
 msgid "Zoom Reset"
 msgstr "ਜ਼ੂਮ ਮੁੜ-ਸੈਟ"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:114
 msgid "Zoom in"
 msgstr "ਜ਼ੂਮ ਅੰਦਰ"
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:115
 msgid "Zoom out"
 msgstr "ਜ਼ੂਮ ਬਾਹਰ"
 
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:116
 msgid "Zoom reset"
 msgstr "ਜ਼ੂਮ ਮੁੜ-ਸੈਟ"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:117
 msgid "_About"
 msgstr "ਇਸ ਬਾਰੇ(_A)"
 
-#: ../data/totem.ui.h:112
+#: ../data/totem.ui.h:118
 msgid "_Angle Menu"
 msgstr "ਕੋਣ ਮੇਨੂ(_A)"
 
-#: ../data/totem.ui.h:113
+#: ../data/totem.ui.h:119
 msgid "_Aspect Ratio"
 msgstr "ਆਕਾਰ ਅਨੁਪਾਤ(_A)"
 
-#: ../data/totem.ui.h:114
+#: ../data/totem.ui.h:120
 msgid "_Audio output type:"
 msgstr "ਆਡੀਓ ਆਉਟਪੁੱਟ ਕਿਸਮ(_A):"
 
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:121
 msgid "_Brightness:"
 msgstr "ਚਮਕ(_B):"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:122
 msgid "_Chapter Menu"
 msgstr "ਚੈਪਟਰ ਮੇਨੂ(_C)"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:123
 msgid "_Clear Playlist"
 msgstr "ਪਲੇਅ-ਲਿਸਟ ਸਾਫ਼ ਕਰੋ(_C)"
 
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:124
 msgid "_Contents"
 msgstr "ਸਮੱਗਰੀ(_C)"
 
-#: ../data/totem.ui.h:119
+#: ../data/totem.ui.h:125
 msgid "_DVD Menu"
 msgstr "_DVD ਮੇਨੂ"
 
-#: ../data/totem.ui.h:120
-msgid "_Deinterlace"
-msgstr "ਡੀਇੰਟਰਲੇਸਿੰਗ(_D)"
-
-#: ../data/totem.ui.h:121
+#: ../data/totem.ui.h:126
 msgid "_Edit"
 msgstr "ਸੋਧ(_E)"
 
-#: ../data/totem.ui.h:122
+#: ../data/totem.ui.h:127
 msgid "_Eject"
 msgstr "ਬਾਹਰ ਕੱਢੋ(_E)"
 
-#: ../data/totem.ui.h:123
+#: ../data/totem.ui.h:128
 msgid "_Encoding:"
 msgstr "ਇੰਕੋਡਿੰਗ(_E):"
 
-#: ../data/totem.ui.h:124
+#: ../data/totem.ui.h:129
 msgid "_Font:"
 msgstr "ਫੋਂਟ(_F):"
 
-#: ../data/totem.ui.h:125
+#: ../data/totem.ui.h:130
 msgid "_Fullscreen"
 msgstr "ਪੂਰਾ ਪਰਦਾ(_F)"
 
-#: ../data/totem.ui.h:126
+#: ../data/totem.ui.h:131
 msgid "_Go"
 msgstr "ਜਾਓ(_G)"
 
-#: ../data/totem.ui.h:127
+#: ../data/totem.ui.h:132
 msgid "_Help"
 msgstr "ਮੱਦਦ(_H)"
 
-#: ../data/totem.ui.h:128
+#: ../data/totem.ui.h:133
 msgid "_Hue:"
 msgstr "ਆਭਾ(_H):"
 
-#: ../data/totem.ui.h:129
+#: ../data/totem.ui.h:134
 msgid "_Languages"
 msgstr "ਭਾਸ਼ਾ(_L)"
 
-#: ../data/totem.ui.h:130
+#: ../data/totem.ui.h:135
+#| msgid "Automatically _load subtitle files when movie is loaded"
+msgid "_Load subtitle files when movie is loaded"
+msgstr "ਜਦੋਂ ਮੂਵੀ ਲੋਡ ਹੋਵੇ ਤਾਂ ਸਬ-ਟਾਇਟਲ ਫਾਇਲਾਂ ਆਟੋਮੈਟਿਕ ਹੀ ਲੋਡ ਕਰੋ(_l)"
+
+#: ../data/totem.ui.h:136
 msgid "_Movie"
 msgstr "ਮੂਵੀ(_M)"
 
-#: ../data/totem.ui.h:131
+#: ../data/totem.ui.h:137
 msgid "_Next Chapter/Movie"
 msgstr "ਅੱਗੇ ਚੈਪਟਰ/ਫਿਲਮ(_N)"
 
-#: ../data/totem.ui.h:132
+#: ../data/totem.ui.h:138
 msgid "_Open..."
 msgstr "ਖੋਲ੍ਹੋ(_O)..."
 
-#: ../data/totem.ui.h:133
+#: ../data/totem.ui.h:139
 msgid "_Previous Chapter/Movie"
 msgstr "ਪਿੱਛੇ ਚੈਪਟਰ/ਫਿਲਮ(_P)"
 
-#: ../data/totem.ui.h:134
+#: ../data/totem.ui.h:140
 msgid "_Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ(_P)"
 
-#: ../data/totem.ui.h:135
+#: ../data/totem.ui.h:141
 msgid "_Quit"
 msgstr "ਬੰਦ ਕਰੋ(_Q)"
 
-#: ../data/totem.ui.h:136
+#: ../data/totem.ui.h:142
 msgid "_Repeat Mode"
 msgstr "ਦੁਹਰਾਓ ਢੰਗ(_R)"
 
-#: ../data/totem.ui.h:137
+#: ../data/totem.ui.h:143
 msgid "_Resize 1:2"
 msgstr "ਮੁੜ ਅਕਾਰ(_R) 1:2"
 
-#: ../data/totem.ui.h:139
+#: ../data/totem.ui.h:144
+#| msgid "Automatically _resize the window when a new video is loaded"
+msgid "_Resize the window when a new video is loaded"
+msgstr "ਜਦੋਂ ਨਵੀਂ ਵਿਡੀਓ ਲੋਡ ਕੀਤੀ ਜਾਵੇ ਤਾਂ ਵਿੰਡੋ ਮੁੜ-ਆਕਾਰ ਕਰੋ(_R)"
+
+#: ../data/totem.ui.h:146
 msgid "_Sound"
 msgstr "ਧੁਨੀ(_S)"
 
-#: ../data/totem.ui.h:140
+#: ../data/totem.ui.h:147
 msgid "_Title Menu"
 msgstr "ਸਿਰਲੇਖ ਮੇਨੂ(_T)"
 
-#: ../data/totem.ui.h:141
+#: ../data/totem.ui.h:148
 msgid "_Type of visualization:"
 msgstr "ਦਿੱਖ ਦੀ ਕਿਸਮ(_T):"
 
-#: ../data/totem.ui.h:142
+#: ../data/totem.ui.h:149
 msgid "_View"
 msgstr "ਵੇਖੋ(_V)"
 
@@ -811,58 +829,46 @@ msgstr ""
 "Kbps DSL/ਕੇਬਲ ਲਈ \"9\", ੧.੫ Mbps T1/ਇੰਟਰਾਨੈੱਟ/ਲਾਨ ਲਈ \"10\",ਇੰਟਰਨੈੱਟ/ਲਾਨ ਲਈ \"11\"।"
 
 #: ../data/totem.schemas.in.h:5
-msgid "Buffer size"
-msgstr "ਬਫ਼ਰ ਅਕਾਰ"
-
-#: ../data/totem.schemas.in.h:6
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "\"ਖੋਲ੍ਹੋ...\" ਡਾਈਲਾਗ ਲਈ ਮੂਲ ਟਿਕਾਣਾ"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:6
 msgid ""
 "Default location for the \"Open...\" dialogs, default is the current "
 "directory"
 msgstr "\"ਖੋਲ੍ਹੋ...\" ਡਾਈਲਾਗ ਲਈ ਮੂਲ ਟਿਕਾਣਾ, ਮੂਲ ਰੂਪ 'ਚ ਇਹ ਮੌਜੂਦਾ ਡਾਇਰੈਕਟਰੀ ਹੈ"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:7
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "\"ਸਕਰੀਨਸ਼ਾਟ ਲਵੋ\" ਡਾਈਲਾਗ ਲਈ ਡਿਫਾਲਟ ਟਿਕਾਣਾ"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:8
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs, default is the "
 "Pictures directory"
 msgstr "\"ਸਕਰੀਨਸ਼ਾਟ ਲਵੋ\" ਲਈ ਡਿਫਾਲਟ ਟਿਕਾਣਾ, ਡਿਫਾਲਟ ਤਸਵੀਰਾਂ ਡਾਇਰੈਕਟਰੀ ਹੈ"
 
-#: ../data/totem.schemas.in.h:10
-msgid "Enable deinterlacing"
-msgstr "ਡੀਇੰਟਰਲੇਸਿੰਗ ਯੋਗ"
-
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:9
 msgid "Encoding charset for subtitle"
 msgstr "ਸਬ-ਟਾਇਟਲ ਲਈ ਇੰਕੋਡਿੰਗ ਕੈਰ-ਸੈੱਟ"
 
-#: ../data/totem.schemas.in.h:12
-msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr "ਵਿਖਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਡੀ-ਕੋਡ ਕੀਤੇ ਜਾਣ ਵਾਲੇ ਡਾਟੇ ਦੀ ਵੱਧ ਤੋਂ ਵੱਧ ਮਾਤਰਾ (ਸਕਿੰਟਾਂ 'ਚ)"
-
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:10
 msgid "Name of the visual effects plugins"
 msgstr "ਦਿੱਖ ਪਰਭਾਵੀ ਪਲੱਗਇਨ ਦਾ ਨਾਂ"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:11
 msgid "Network buffering threshold"
 msgstr "ਨੈੱਟਵਰਕ ਬਫ਼ਰਿੰਗ ਥਰੈਂਸ਼ਹੋਲਡ"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:12
 msgid "Network connection speed"
 msgstr "ਨੈੱਟਵਰਕ ਕੁਨੈਕਸ਼ਨ ਗਤੀ"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:13
 msgid "Pango font description for subtitle rendering"
 msgstr "ਸਬ-ਟਾਇਟਲ ਰੈਂਡਰਿੰਗ ਲਈ ਪੈਂਗੋ ਫੋਂਟ ਵੇਰਵਾ"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:14
 msgid ""
 "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 "normal, \"2\" for large, \"3\" for extra large."
@@ -870,55 +876,55 @@ msgstr ""
 "ਆਡੀਓ ਦਿੱਖ ਲਈ ਕੁਆਲਟੀ ਸਥਾਪਨ: ਛੋਟੇ ਲਈ \"0\", ਸਧਾਰਨ ਲਈ \"1\", ਵੱਡੇ ਲਈ \"2\", ਬਹੁਤ ਵੱਡੇ ਲਈ "
 "\"3\""
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:15
 msgid "Repeat mode"
 msgstr "ਦੁਹਰਾਓ ਢੰਗ"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:16
 msgid "Resize the canvas automatically on file load"
 msgstr "ਫਾਇਲ ਲੋਡ ਕਰਨ ਤੇ ਪਰਦਾ ਦਾ ਅਕਾਰ ਖੁਦ ਹੀ ਮੁੜ-ਅਕਾਰ ਕਰੋ"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:17
 msgid "Show visual effects when no video is displayed"
-msgstr "ਆਡੀਓ ਫਾਇਲ ਚਲਾਉਣ ਸਮੇਂ, ਕੋਈ ਵੀਡਿਓ ਨਾ ਵੇਖਾਓ"
+msgstr "ਆਡੀਓ ਫਾਇਲ ਚਲਾਉਣ ਸਮੇਂ, ਕੋਈ ਵਿਡੀਓ ਨਾ ਵੇਖਾਓ"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:18
 msgid "Show visual effects when playing an audio only file."
 msgstr "ਆਡੀਓ ਫਾਇਲ ਚਲਾਉਣ ਸਮੇਂ, ਦਿੱਖ ਪਰਭਾਵ ਵੇਖਾਓ।"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:19
 msgid "Shuffle mode"
 msgstr "ਰਲਵੀਂ ਢੰਗ"
 
-#: ../data/totem.schemas.in.h:23
+#: ../data/totem.schemas.in.h:20
 msgid "Subtitle encoding"
 msgstr "ਸਬ-ਟਾਇਟਲ ਇੰਕੋਡਿੰਗ"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:21
 msgid "Subtitle font"
 msgstr "ਸਬ-ਟਾਇਟਲ ਫੋਂਟ"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:22
 msgid "The brightness of the video"
-msgstr "ਵੀਡਿਓ ਦੀ ਚਮਕ"
+msgstr "ਵਿਡੀਓ ਦੀ ਚਮਕ"
+
+#: ../data/totem.schemas.in.h:23
+msgid "The contrast of the video"
+msgstr "ਵਿਡੀਓ ਦੀ ਕੰਟਰੈਂਸਟ"
+
+#: ../data/totem.schemas.in.h:24
+msgid "The hue of the video"
+msgstr "ਵਿਡੀਓ ਦੀ ਆਭਾ"
+
+#: ../data/totem.schemas.in.h:25
+msgid "The saturation of the video"
+msgstr "ਵਿਡੀਓ ਦਾ ਸੰਤੁਲਨ"
 
 #: ../data/totem.schemas.in.h:26
-msgid "The contrast of the video"
-msgstr "ਵੀਡਿਓ ਦੀ ਕੰਟਰੈਂਸਟ"
-
-#: ../data/totem.schemas.in.h:27
-msgid "The hue of the video"
-msgstr "ਵੀਡਿਓ ਆਭਾ"
-
-#: ../data/totem.schemas.in.h:28
-msgid "The saturation of the video"
-msgstr "ਵੀਡਿਓ ਸੰਤੁਲਨ"
-
-#: ../data/totem.schemas.in.h:29
 msgid "Type of audio output to use"
 msgstr "ਵਰਤਣ ਲਈ ਆਡੀਓ ਆਉਟਪੁੱਟ ਕਿਸਮ"
 
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:27
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -931,40 +937,46 @@ msgstr ""
 #. character set. You can change this to be the most common
 #. encoding for fansub subtitles in your language. File a bug
 #. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:35
+#: ../data/totem.schemas.in.h:32
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: ../data/totem.schemas.in.h:36
+#: ../data/totem.schemas.in.h:33
 msgid "Visualization quality setting"
 msgstr "ਦਿੱਖ ਕੁਆਲਟੀ ਸਥਾਪਨ"
 
-#: ../data/totem.schemas.in.h:37
-msgid "Whether the main window should stay on top"
-msgstr "ਕੀ ਮੁੱਖ ਵਿੰਡੋ ਹੋਰਾਂ ਤੋਂ ਉੱਤੇ ਰਹੇ"
+#: ../data/totem.schemas.in.h:34
+#| msgid "Whether to autoload text subtitle files when a movie is loaded"
+msgid "Whether to autoload external chapter files when a movie is loaded"
+msgstr "ਕੀ ਇੱਕ ਮੂਵੀ ਲੋਡ ਕਰਨ ਦੌਰਾਨ ਟੈਕਸਟ ਸਬ-ਟਾਇਟਲ ਫਾਇਲਾਂ ਨੂੰ ਆਟੋ-ਲੋਡ ਕਰਨਾ ਹੈ"
 
-#: ../data/totem.schemas.in.h:38
-msgid "Whether the main window should stay on top of the other ones"
-msgstr "ਕੀ ਮੁੱਖ ਵਿੰਡੋ ਹੋਰਾਂ ਤੋਂ ਉੱਤੇ ਰਹਿਣਾ ਚਾਹੀਦਾ ਹੈ।"
+#: ../data/totem.schemas.in.h:35
+#| msgid "Whether to autoload text subtitle files when a movie is loaded"
+msgid "Whether to autoload external chapter files when a movie is loaded."
+msgstr "ਕੀ ਇੱਕ ਮੂਵੀ ਲੋਡ ਕਰਨ ਦੌਰਾਨ ਬਾਹਰੀ ਚੈਪਟਰ ਫਾਇਲਾਂ ਨੂੰ ਆਟੋ-ਲੋਡ ਕਰਨਾ ਹੈ।"
 
-#: ../data/totem.schemas.in.h:39
+#: ../data/totem.schemas.in.h:36
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "ਕੀ ਇੱਕ ਮੂਵੀ ਲੋਡ ਕਰਨ ਦੌਰਾਨ ਟੈਕਸਟ ਸਬ-ਟਾਇਟਲ ਫਾਇਲਾਂ ਨੂੰ ਆਟੋ-ਲੋਡ ਕਰਨਾ ਹੈ"
 
-#: ../data/totem.schemas.in.h:40
-#| msgid "Whether to disable the plugins in the user's home directory"
+#: ../data/totem.schemas.in.h:37
+#| msgid "Whether to enable debug for the playback engine"
+msgid "Whether to disable deinterlacing for interlaced movies"
+msgstr "ਕੀ ਇੰਟਰਲੇਸ ਮੂਵੀ ਲਈ ਡਿ-ਇੰਟਰਲੇਸ ਨੂੰ ਬੰਦ ਕਰਨਾ ਹੈ"
+
+#: ../data/totem.schemas.in.h:38
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "ਕੀ ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਬੰਦ ਕਰਨੇ ਹਨ"
 
-#: ../data/totem.schemas.in.h:41
+#: ../data/totem.schemas.in.h:39
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "ਯੂਜ਼ਰ ਦੀ ਘਰ ਡਾਇਰੈਕਟਰੀ ਵਿੱਚ ਪਲੱਗਇਨਾਂ ਨੂੰ ਆਯੋਗ ਕਰਨਾ ਹੈ"
 
-#: ../data/totem.schemas.in.h:42
+#: ../data/totem.schemas.in.h:40
 msgid "Whether to enable debug for the playback engine"
 msgstr "ਕੀ ਪਲੇਅ-ਲਿਸਟ ਇੰਜਣ ਲਈ ਡੀਬੱਗ ਯੋਗ ਕਰਨਾ ਹੈ"
 
-#: ../data/totem.schemas.in.h:43
+#: ../data/totem.schemas.in.h:41
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
 "closing them."
@@ -974,10 +986,6 @@ msgstr ""
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "ਫਾਇਲ ਦੀ ਫਾਇਲ ਦਾ ਟਿਕਾਣਾ ਦਿਉ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਖੋਲ੍ਹਣਾ ਹੈ(_a):"
-
-#: ../lib/totem-scrsaver.c:115
-msgid "Playing a movie"
-msgstr "ਇੱਕ ਮੂਵੀ ਚੱਲਦੀ ਏ"
 
 #: ../src/eggdesktopfile.c:165
 #, c-format
@@ -1039,7 +1047,8 @@ msgstr "ਫਾਇਲ ਫਾਰਮੈਟ"
 msgid "Extension(s)"
 msgstr "ਇਕਸਟੈਨਸ਼ਨ"
 
-#: ../src/eggfileformatchooser.c:645
+#. Translators: the parameter is a filename
+#: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `%"
@@ -1049,7 +1058,7 @@ msgstr ""
 "ਪਰੋਗਰਾਮ ਫਾਇਲ ਫਾਰਮੈਟ ਲੱਭਣ ਲਈ ਅਸਮਰੱਥ ਹੈ, ਜੋ ਤੁਸੀਂ `%s' ਲਈ ਵਰਤਣਾ ਚਾਹੁੰਦੇ ਹੋ। ਯਕੀਨੀ ਬਣਾਉ ਕਿ "
 "ਉਸ ਫਾਇਲ ਲਈ ਜਾਣੀ-ਪਛਾਣੀ ਇਕਸਟੈਨਸ਼ਨ ਵਰਤੋਂ ਜਾਂ ਲਿਸਟ ਵਿੱਚੋਂ ਫਾਇਲ ਫਾਰਮੈਟ ਦੀ ਖੁਦ ਚੋਣ ਕਰੋ।"
 
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:659
 msgid "File format not recognized"
 msgstr "ਫਾਇਲ ਫਾਰਮੈਟ ਦੀ ਪਛਾਣ ਨਹੀਂ ਹੋਈ"
 
@@ -1087,7 +1096,7 @@ msgstr "ਆਡੀਓ ਝਲਕ"
 
 #: ../src/totem-cell-renderer-video.c:126
 msgid "Unknown video"
-msgstr "ਅਣਜਾਣ ਵੀਡਿਓ"
+msgstr "ਅਣਜਾਣ ਵਿਡੀਓ"
 
 #: ../src/totem-dnd-menu.c:94
 msgid "_Play Now"
@@ -1097,38 +1106,25 @@ msgstr "ਹੁਣੇ ਚਲਾਓ(_P)"
 msgid "Cancel"
 msgstr "ਰੱਦ ਕਰੋ"
 
-#: ../src/totem-fullscreen.c:593
+#: ../src/totem-fullscreen.c:595
 msgid "No File"
 msgstr "ਕੋਈ ਫਾਇਲ ਨਹੀਂ"
 
-#: ../src/totem-interface.c:139 ../src/totem-interface.c:147
-#, c-format
-msgid "Could not launch URL \"%s\": %s"
-msgstr "URL \"%s\" ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
-
-#: ../src/totem-interface.c:139
-msgid "Default browser not configured"
-msgstr "ਡਿਫਾਲਟ ਬਰਾਊਜ਼ਰ ਸੰਰਚਿਤ ਨਹੀਂ ਹੈ"
-
-#: ../src/totem-interface.c:140 ../src/totem-interface.c:148
-msgid "Error launching URI"
-msgstr "URI ਚਲਾਉਣ ਦੌਰਾਨ ਗਲਤੀ"
-
-#: ../src/totem-interface.c:207 ../src/totem-interface.c:239
+#: ../src/totem-interface.c:172 ../src/totem-interface.c:204
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "ਇੰਟਰਫੇਸ '%s' ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। %s"
 
-#: ../src/totem-interface.c:207
+#: ../src/totem-interface.c:172
 msgid "The file does not exist."
 msgstr "ਫਾਇਲ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
-#: ../src/totem-interface.c:209 ../src/totem-interface.c:211
-#: ../src/totem-interface.c:241 ../src/totem-interface.c:243
+#: ../src/totem-interface.c:174 ../src/totem-interface.c:176
+#: ../src/totem-interface.c:206 ../src/totem-interface.c:208
 msgid "Make sure that Totem is properly installed."
 msgstr "ਪੜਤਾਲ ਕਰੋ ਕਿ ਟੋਟੇਮ ਠੀਕ ਤਰਾਂ ਇੰਸਟਾਲ ਹੈ।"
 
-#: ../src/totem-interface.c:354
+#: ../src/totem-interface.c:319
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1139,7 +1135,7 @@ msgstr ""
 "ਫਾਊਨਡੇਸ਼ਨ ਨੇ ਤਿਆਰ ਕੀਤਾ ਹੈ, ਦੇ ਵਰਜਨ 2 ਜਾਂ ਨਵੇਂ ਦੀਆਂਸ਼ਰਤਾਂ (ਉਹ ਤੁਹਾਡੀ ਆਪਣੀ ਮਰਜ਼ੀ ਹੈ) ਅਧੀਨ ਵੰਡ "
 "ਅਤੇ/ਜਾਂ ਸੋਧ ਸਕਦੇ ਹੋ।"
 
-#: ../src/totem-interface.c:358
+#: ../src/totem-interface.c:323
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1150,7 +1146,7 @@ msgstr ""
 "ਰਹੀ ਹੈ, ਕਿਸੇ ਖਾਸ ਕੰਮ ਲਈ ਅਨੁਕੂਲ ਹੋਣ ਜਾਂਠੀਕ ਤਰ੍ਹਾਂ ਕੰਮ ਕਰਨ ਦੀ ਵੀ ਕੋਈ ਗਾਰੰਟੀ ਨਹੀਂ ਹੈ।  ਹੋਰ ਵੇਰਵੇ "
 "ਲਈ ਗਨੂ ਜਰਨਲਪਬਲਿਕ ਲਾਇਸੈਂਸ ਨੂੰ ਪੜ੍ਹੋ।"
 
-#: ../src/totem-interface.c:362
+#: ../src/totem-interface.c:327
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1160,94 +1156,94 @@ msgstr ""
 "ਸਾਫਟਵੇਅਰ ਫਾਊਨਡੇਸ਼ਨ, 51 ਫਰਾਕਲਿੰਨ ਸਟਰੀਟ, ਪੰਜਵੀਂ ਮੰਜ਼ਲ, ਬੋਸਟਨ, ਐਮ ਏ 02110-1301, ਅਮਰੀਕਾ ਨੂੰ "
 "ਲਿਖੋ।"
 
-#: ../src/totem-interface.c:365
+#: ../src/totem-interface.c:330
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
 msgstr "ਟੋਟੇਮ 'ਚ ਇੱਕ ਅਪਵਾਦ ਹੈ, ਜੋ ਕਿ ਪ੍ਰੋਪ੍ਰੀਟਰੇ ਜੀਸਟਰੀਮਰ ਪਲੱਗਇਨਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਸਹਾਇਕ ਹੈ।"
 
-#: ../src/totem-menu.c:342
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../src/totem-menu.c:192
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:894
+#: ../src/totem-menu.c:739
 #, c-format
-#| msgid "Play Disc '%s'"
 msgid "Play Image '%s'"
 msgstr "ਈਮੇਜ਼ '%s' ਚਲਾਓ"
 
-#: ../src/totem-menu.c:897 ../src/totem-menu.c:979
+#: ../src/totem-menu.c:742 ../src/totem-menu.c:824
 #, c-format
 msgid "device%d"
 msgstr "ਜੰਤਰ%d"
 
-#: ../src/totem-menu.c:976
+#: ../src/totem-menu.c:821
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "ਡਿਸਕ '%s' ਚਲਾਓ"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1327
+#: ../src/totem-menu.c:1172
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s ਨਾਲ ਮੂਵੀ ਪਲੇਅਰ"
 
-#: ../src/totem-menu.c:1331
+#: ../src/totem-menu.c:1176
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1114
+#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1166
 msgid "translator-credits"
 msgstr ""
 "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ\n"
 "aalam@users.sf.netPunjab Open Source Team\n"
 "http://www.satluj.com"
 
-#: ../src/totem-menu.c:1340
+#: ../src/totem-menu.c:1185
 msgid "Totem Website"
 msgstr "ਟੋਟੇਮ ਵੈੱਬਸਾਈਟ"
 
-#: ../src/totem-menu.c:1375
+#: ../src/totem-menu.c:1220
 msgid "Configure Plugins"
 msgstr "ਪਲੱਗਇਨ ਸੰਰਚਨਾ"
 
-#: ../src/totem-object.c:430
+#. Translators: %s is the totem version number
+#: ../src/totem-object.c:429
 #, c-format
-#| msgid "Totem Website"
 msgid "Totem %s"
 msgstr "ਟੋਟੇਮ %s"
 
-#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:369
 msgid "Playing"
 msgstr "ਚੱਲ ਰਿਹਾ ਹੈ"
 
-#: ../src/totem-object.c:1001 ../src/totem-options.c:51
+#: ../src/totem-object.c:1001 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "ਰੁਕਿਆ"
 
-#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:365
 msgid "Paused"
 msgstr "ਰੁਕਿਆ"
 
 #. Translators: this refers to a media file
 #: ../src/totem-object.c:1008 ../src/totem-object.c:1018
-#: ../src/totem-options.c:50
+#: ../src/totem-options.c:51
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
 msgstr "ਚੱਲ ਰਿਹਾ ਹੈ"
 
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1622
-#: ../src/totem-statusbar.c:94 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-object.c:1013 ../src/totem-object.c:1612
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:353
 msgid "Stopped"
 msgstr "ਰੁਕਿਆ"
 
 #: ../src/totem-object.c:1094 ../src/totem-object.c:1121
-#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
+#: ../src/totem-object.c:1742 ../src/totem-object.c:1905
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "ਟੋਟੇਮ '%s' ਨੂੰ ਚਲਾ ਨਹੀਂ ਸਕਦਾ ਹੈ।"
@@ -1306,7 +1302,7 @@ msgstr "ਪਲੇਅਬੈਕ ਲਈ ਹੋਰ ਡਿਸਕ ਪਾਓ ਜੀ।"
 msgid "Totem was not able to play this disc."
 msgstr "ਟੋਟੇਮ ਇਹ ਡਿਸਕ ਚਲਾਉਣ ਦੇ ਯੋਗ ਨਹੀਂ ਹੈ।"
 
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4177
+#: ../src/totem-object.c:1252 ../src/totem-object.c:4186
 msgid "No reason."
 msgstr "ਕੋਈ ਕਾਰਨ ਨਹੀਂ ਹੈ।"
 
@@ -1318,171 +1314,172 @@ msgstr "ਟੋਟੇਮ ਆਡੀਓ CD ਚਲਾਉਣ ਵਾਸਤੇ ਸਹ�
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "ਇੱਕ ਸੰਗੀਤ ਪਲੇਅਰ ਜਾਂ ਇੱਕ CD ਐਕਸਟਾਕਟਰ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇਹ CD ਚਲਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ"
 
-#: ../src/totem-object.c:1757
+#: ../src/totem-object.c:1748
 msgid "No error message"
 msgstr "ਕੋਈ ਗਲਤੀ ਸੁਨੇਹਾ ਨਹੀਂ"
 
-#: ../src/totem-object.c:2141
+#: ../src/totem-object.c:2134
 msgid "Totem could not display the help contents."
 msgstr "ਟੋਟੇਮ ਸਹਾਇਤਾ ਅੰਸ਼ ਨਹੀਂ ਵੇਖਾ ਸਕਦਾ ਹੈ।"
 
-#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
-#: ../browser-plugin/totem-plugin-viewer.c:1413
+#: ../src/totem-object.c:2489 ../src/totem-object.c:2491
+#: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "ਇੱਕ ਗਲਤੀ ਆਈ ਹੈ"
 
-#: ../src/totem-object.c:4019 ../src/totem-object.c:4021
+#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
 msgid "Previous Chapter/Movie"
 msgstr "ਪਿਛਲਾ ਚੈਪਟਰ/ਮੂਵੀ"
 
-#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
+#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
 msgid "Play / Pause"
 msgstr "ਚਲਾਓ / ਵਿਰਾਮ"
 
-#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
+#: ../src/totem-object.c:4047 ../src/totem-object.c:4049
 msgid "Next Chapter/Movie"
 msgstr "ਅੱਗੇ ਚੈਪਟਰ/ਮੂਵੀ"
 
-#: ../src/totem-object.c:4052 ../src/totem-object.c:4054
-#| msgid "_Fullscreen"
+#: ../src/totem-object.c:4061 ../src/totem-object.c:4063
 msgid "Fullscreen"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ"
 
-#: ../src/totem-object.c:4177
+#: ../src/totem-object.c:4186
 msgid "Totem could not startup."
 msgstr "ਟੋਟੇਮ ਸ਼ੁਰੂ ਨਹੀਂ ਹੋ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem-open-location.c:171
+#: ../src/totem-open-location.c:179
 msgid "Open Location..."
 msgstr "ਟਿਕਾਣਾ ਖੋਲ੍ਹੋ..."
 
-#: ../src/totem-options.c:48
+#: ../src/totem-options.c:49
 msgid "Enable debug"
 msgstr "ਡੀਬੱਗ ਯੋਗ"
 
-#: ../src/totem-options.c:49
+#: ../src/totem-options.c:50
 msgid "Play/Pause"
 msgstr "ਚਲਾਓ/ਰੋਕੋ"
 
-#: ../src/totem-options.c:52
+#: ../src/totem-options.c:53
 msgid "Next"
 msgstr "ਅੱਗੇ"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:54
 msgid "Previous"
 msgstr "ਪਿੱਛੇ"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Seek Forwards"
 msgstr "ਅੱਗੇ ਖੋਜ"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Seek Backwards"
 msgstr "ਪਿੱਛੇ ਖੋਜ"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:57
 msgid "Volume Up"
 msgstr "ਆਵਾਜ਼ ਵਧਾਓ"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:58
 msgid "Volume Down"
 msgstr "ਆਵਾਜ਼ ਘਟਾਓ"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:59
 msgid "Mute sound"
 msgstr "ਆਵਾਜ਼ ਚੁੱਪ"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:60
 msgid "Toggle Fullscreen"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ ਲਈ ਬਦਲੋ"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:61
 msgid "Show/Hide Controls"
 msgstr "ਕੰਟਰੋਲ ਵੇਖੋ/ਓਹਲੇ"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:62
 msgid "Quit"
 msgstr "ਬੰਦ ਕਰੋ"
 
 #. Translators: this refers to a media file
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:63
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:79
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Enqueue"
 msgstr "ਸੰਤੁਲਨ"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:64
 msgid "Replace"
 msgstr "ਤਬਦੀਲ"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:65
 msgid "Don't connect to an already-running instance"
 msgstr "ਪਹਿਲਾਂ ਚੱਲਦੇ ਹੋਏ ਟੋਟੇਮ ਨਾਲ ਨਾ ਕੁਨੈਕਟ ਕਰੋ"
 
-#: ../src/totem-options.c:65
+#: ../src/totem-options.c:66
 msgid "Seek"
 msgstr "ਲਵੋ"
 
-#: ../src/totem-options.c:66
+#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
+#: ../src/totem-options.c:68
 msgid "Playlist index"
 msgstr "ਪਲੇਅ-ਲਿਸਟ ਇੰਡੈਕਸ"
 
-#: ../src/totem-options.c:68
+#: ../src/totem-options.c:70
 msgid "Movies to play"
 msgstr "ਚਲਾਉਣ ਲਈ ਮੂਵੀ"
 
 #. By extension entry
-#: ../src/totem-playlist.c:150
+#: ../src/totem-playlist.c:157
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ਸਾਊਂਟਕਾਸਟ ਪਲੇਅਲਿਸਟ"
 
-#: ../src/totem-playlist.c:151
+#: ../src/totem-playlist.c:158
 msgid "MP3 audio (streamed)"
 msgstr "MP3 ਆਡੀਓ (ਸਟਰੀਮ)"
 
-#: ../src/totem-playlist.c:152
+#: ../src/totem-playlist.c:159
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 ਆਡੀਓ (ਸਟਰੀਮ, DOS ਫਾਰਮੈਟ)"
 
-#: ../src/totem-playlist.c:153
+#: ../src/totem-playlist.c:160
 msgid "XML Shareable Playlist"
 msgstr "XML ਸਾਂਝੀ ਕਰਨ ਯੋਗ ਪਲੇਅ-ਲਿਸਟ"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:356
+#: ../src/totem-playlist.c:359
 #, c-format
 msgid "Title %d"
 msgstr "ਟਾਈਟਲ %d"
 
-#: ../src/totem-playlist.c:457
+#: ../src/totem-playlist.c:458
 msgid "Could not save the playlist"
 msgstr "ਪਲੇਅ-ਲਿਸਟ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ"
 
-#: ../src/totem-playlist.c:1030
+#: ../src/totem-playlist.c:1029
 msgid "Save Playlist"
 msgstr "ਪਲੇਅ-ਲਿਸਟ ਸੰਭਾਲੋ"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1042 ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "ਪਲੇਅ-ਲਿਸਟ"
 
-#: ../src/totem-playlist.c:1854
+#: ../src/totem-playlist.c:1863
 #, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
-msgstr "ਸੰਗੀਤ-ਸ਼ੈਲੀ '%s' ਨੂੰ ਪਾਰਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ, ਇਹ ਖਰਾਬ ਹੋ ਗਈ ਹੈ।"
+#| msgid "The playlist '%s' could not be parsed, it might be damaged."
+msgid "The playlist '%s' could not be parsed. It might be damaged."
+msgstr "ਪਲੇਅਲਿਸਟ '%s' ਨੂੰ ਪਾਰਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ, ਇਹ ਖਰਾਬ ਹੋ ਗਈ ਹੋ ਸਕਦੀ ਹੈ।"
 
-#: ../src/totem-playlist.c:1855
+#: ../src/totem-playlist.c:1864
 msgid "Playlist error"
 msgstr "ਪਲੇਅ-ਲਿਸਟ ਗਲਤੀ"
 
-#: ../src/totem-preferences.c:106
+#: ../src/totem-preferences.c:108
 msgid "Enable visual effects?"
 msgstr "ਕੀ ਦਰਿਸ਼ ਪਰਭਾਵ ਯੋਗ?"
 
-#: ../src/totem-preferences.c:108
+#: ../src/totem-preferences.c:110
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1490,21 +1487,21 @@ msgstr ""
 "ਇੰਜ ਜਾਪਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਟੋਟੇਮ ਨੂੰ ਰਿਮੋਟ ਤੋਂ ਚਲਾ ਰਹੇ ਹੋ।\n"
 "ਕੀ ਤੁਸੀਂ ਦਿੱਖ ਪਰਭਾਵ ਨੂੰ ਯੋਗ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ?"
 
-#: ../src/totem-preferences.c:363
+#: ../src/totem-preferences.c:405
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr "ਦਿੱਖ ਪਰਭਾਵ ਕਿਸਮ ਤਬਦੀਲ ਕਰਨ ਨੂੰ ਪਰਭਾਵੀ ਹੋਣ ਲਈ ਮੁੜ-ਚਾਲੂ ਕਰਨਾ ਲਾਜ਼ਮੀ ਹੈ।"
 
-#: ../src/totem-preferences.c:447
+#: ../src/totem-preferences.c:489
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
 msgstr "ਇਹ ਤਬਦੀਲੀਆਂ ਅਗਲੀ ਫਿਲਮ ਜਾਂ ਟੋਟੇਮ ਦੇ ਮੁੜ ਚਾਲੂ ਹੋਣ ਤੇ ਹੀ ਪਰਭਾਵੀ ਹੋ ਸਕਦੀਆਂ ਹਨ।"
 
-#: ../src/totem-preferences.c:542
+#: ../src/totem-preferences.c:593
 msgid "Preferences"
 msgstr "ਮੇਰੀ ਪਸੰਦ"
 
-#: ../src/totem-preferences.c:702
+#: ../src/totem-preferences.c:767
 msgid "Select Subtitle Font"
 msgstr "ਸਬ-ਟਾਇਟਲ ਫੋਂਟ ਚੁਣੋ"
 
@@ -1512,47 +1509,47 @@ msgstr "ਸਬ-ਟਾਇਟਲ ਫੋਂਟ ਚੁਣੋ"
 #: ../src/totem-properties-main.c:114 ../src/totem-properties-view.c:83
 #: ../src/totem-properties-view.c:91
 msgid "Audio/Video"
-msgstr "ਆਡੀਓ/ਵੀਡਿਓ"
+msgstr "ਆਡੀਓ/ਵਿਡੀਓ"
 
-#: ../src/totem-statusbar.c:89
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:111
+#: ../src/totem-statusbar.c:113
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (ਸਟਰੀਮਿੰਗ)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:118 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:121 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "%s / %s ਖੋਜ"
 
-#: ../src/totem-statusbar.c:215
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "ਬਫ਼ਰ ਕੀਤਾ ਜਾਂਦਾ"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:226
+#: ../src/totem-statusbar.c:228
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:295
+#: ../src/totem-statusbar.c:303
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:300
+#: ../src/totem-statusbar.c:308
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1700,12 +1697,12 @@ msgstr "ਵੀਅਤਨਾਮੀ"
 
 #: ../src/totem-video-list.c:305
 msgid "No video URI"
-msgstr "ਕੋਈ ਵੀਡਿਓ URI ਨਹੀਂ"
+msgstr "ਕੋਈ ਵਿਡੀਓ URI ਨਹੀਂ"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:672
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1716,70 +1713,70 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:669
+#: ../src/totem-video-thumbnailer.c:673
 msgid "Filename"
 msgstr "ਫਾਇਲ-ਨਾਂ"
 
-#: ../src/totem-video-thumbnailer.c:671
+#: ../src/totem-video-thumbnailer.c:675
 msgid "Resolution"
 msgstr "ਰੈਜ਼ੋਲੂਸ਼ਨ"
 
-#: ../src/totem-video-thumbnailer.c:674
+#: ../src/totem-video-thumbnailer.c:678
 msgid "Duration"
 msgstr "ਅੰਤਰਾਲ"
 
-#: ../src/totem-uri.c:468
+#: ../src/totem-uri.c:500 ../src/plugins/chapters/totem-chapters.c:1042
 msgid "All files"
 msgstr "ਸਭ ਫਾਇਲਾਂ"
 
-#: ../src/totem-uri.c:473
+#: ../src/totem-uri.c:505 ../src/plugins/chapters/totem-chapters.c:1039
 msgid "Supported files"
 msgstr "ਸਹਾਇਕ ਫਾਇਲਾਂ"
 
-#: ../src/totem-uri.c:485
+#: ../src/totem-uri.c:517
 msgid "Audio files"
 msgstr "ਆਡੀਓ ਫਾਇਲਾਂ"
 
-#: ../src/totem-uri.c:493
+#: ../src/totem-uri.c:525
 msgid "Video files"
-msgstr "ਵੀਡਿਓ ਫਾਇਲਾਂ"
+msgstr "ਵਿਡੀਓ ਫਾਇਲਾਂ"
 
-#: ../src/totem-uri.c:503
+#: ../src/totem-uri.c:535
 msgid "Subtitle files"
 msgstr "ਸਬ-ਟਾਈਟਲ ਫਾਇਲਾਂ"
 
-#: ../src/totem-uri.c:555
+#: ../src/totem-uri.c:587
 msgid "Select Text Subtitles"
 msgstr "ਟੈਕਸਟ ਸਬ-ਟਾਈਟਲ ਚੁਣੋ"
 
-#: ../src/totem-uri.c:617
+#: ../src/totem-uri.c:649
 msgid "Select Movies or Playlists"
 msgstr "ਮੂਵੀ ਜਾਂ ਪਲੇਅ-ਲਿਸਟ ਚੁਣੋ"
 
-#: ../src/totem.c:93
+#: ../src/totem.c:114
 msgid "Could not open link"
 msgstr "ਲਿੰਕ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
 
-#: ../src/totem.c:151 ../src/totem.c:177
-#: ../browser-plugin/totem-plugin-viewer.c:647
-#: ../browser-plugin/totem-plugin-viewer.c:1800
+#: ../src/totem.c:192 ../src/totem.c:218
+#: ../browser-plugin/totem-plugin-viewer.c:666
+#: ../browser-plugin/totem-plugin-viewer.c:1863
 msgid "Totem Movie Player"
 msgstr "ਟੋਟੇਮ ਮੂਵੀ ਪਲੇਅਰ"
 
-#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2226
+#: ../src/totem.c:193 ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Could not initialize the thread-safe libraries."
 msgstr "ਥਰਿੱਡ-ਸੁਰੱਖਿਆ ਲਾਇਬਰੇਰੀ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ ਹੈ।"
 
-#: ../src/totem.c:152
+#: ../src/totem.c:193
 msgid "Verify your system installation. Totem will now exit."
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਦੀ ਇੰਸਟਾਲ ਦੀ ਪੜਤਾਲ ਹੈ। ਟੋਟੇਮ ਹੁਣ ਬੰਦ ਹੋ ਰਿਹਾ ਹੈ।"
 
 #. Handle command line arguments
-#: ../src/totem.c:160
+#: ../src/totem.c:201
 msgid "- Play movies and songs"
 msgstr " - ਮੂਵੀ ਅਤੇ ਗਾਣੇ ਚਲਾਓ"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:210
 #, c-format
 msgid ""
 "%s\n"
@@ -1788,31 +1785,31 @@ msgstr ""
 "%s\n"
 "ਪੂਰੀਆਂ ਕਮਾਂਡ ਲਾਈਨ ਚੋਣਂ ਦੀ ਲਿਸਟ ਵੇਖਣ ਵਾਸਤੇ '%s --help' ਚਲਾਉ।\n"
 
-#: ../src/totem.c:186
+#: ../src/totem.c:226
 msgid "Totem could not initialize the configuration engine."
 msgstr "ਟੋਟੇਮ ਸੰਰਚਨਾ ਇੰਜਣ ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕਰ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem.c:186
+#: ../src/totem.c:227
 msgid "Make sure that GNOME is properly installed."
 msgstr "ਇਹ ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਗਨੋਮ ਠੀਕ ਤਰਾਂ ਇੰਸਟਾਲ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1729
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1759
 msgid "Password requested for RTSP server"
 msgstr "RTSP ਸਰਵਰ ਵਲੋਂ ਪਾਸਵਰਡ ਮੰਗਿਆ ਗਿਆ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2902
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2906
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2992
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2996
 #, c-format
 msgid "Audio Track #%d"
 msgstr "ਆਡੀਓ ਟਰੈਕ #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2934
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3024
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3028
 #, c-format
 msgid "Subtitle #%d"
 msgstr "ਸਬਟਾਈਟਲ #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3342
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3437
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1820,24 +1817,24 @@ msgstr ""
 "ਲੋੜੀਦੀਂ ਆਡੀਓ ਆਉਟਪੁੱਟ ਨਹੀਂ ਲੱਭੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ ਵਿੱਚ ਹੋਰ ਆਡੀਓ ਆਉਟਪੁੱਟ ਦੀ "
 "ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3347
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3442
 msgid "Location not found."
 msgstr "ਟਿਕਾਣਾ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3351
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3446
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "ਟਿਕਾਣਾ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਹੈ; ਤੁਹਾਨੂੰ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ ਅਧਿਕਾਰ ਨਹੀਂ ਹੋ ਸਕਦੇ ਹਨ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3362
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3457
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਨੂੰ ਹੋਰ ਕਾਰਜ ਰਾਹੀਂ ਵਰਤਿਆ ਜਾ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਹੋਰ ਵੀਡਿਓ ਕਾਰਜ ਬੰਦ ਕਰੋ ਜਾਂ "
-"ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਵੀਡਿਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
+"ਵਿਡੀਓ ਆਉਟਪੁੱਟ ਨੂੰ ਹੋਰ ਕਾਰਜ ਰਾਹੀਂ ਵਰਤਿਆ ਜਾ ਰਿਹਾ ਹੈ। ਹੋਰ ਵਿਡੀਓ ਕਾਰਜ ਨੂੰ ਬੰਦ ਕਰੋ ਜਾਂ "
+"ਮਲਟੀਮੀਡਿਆ ਸਿਸਟਮ ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਵਿਡੀਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3463
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1847,13 +1844,13 @@ msgstr ""
 "ਆਡੀਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ। ਤੁਸੀਂ ਇੱਕ ਸਾਊਂਡ ਸਰਵਰ ਦੀ ਵਰਤੋਂ ਵੀ ਕਰ ਸਕਦੇ ਹੋ।"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3386
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3392
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3481
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3487
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "ਇਹ ਮੂਵੀ ਨੂੰ ਚਲਾਉਣ ਲਈ %s ਪਲੱਗਇਨ ਦੀ ਲੋੜ ਹੈ, ਜੋ ਕਿ ਇੰਸਟਾਲ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3393
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3488
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1865,33 +1862,33 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3418
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3513
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "ਇਹ ਫਾਇਲ ਨੂੰ ਨੈੱਟਵਰਕ ਉੱਤੇ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਇਹ ਨੂੰ ਪਹਿਲਾਂ ਡਿਸਕ ਉੱਤੇ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ "
 "ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
 msgid "Media file could not be played."
 msgstr "ਮੀਡਿਆ ਫਾਇਲ ਚਲਾਈ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5704
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5888
 msgid "Surround"
 msgstr "ਸਰਾਊਂਡਿੰਗ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5706
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5890
 msgid "Mono"
 msgstr "ਮੋਨੋ"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6053
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6237
 msgid "Too old version of GStreamer installed."
 msgstr "ਜੀ-ਸਟੀਰਮਰ ਦਾ ਬਹੁਤ ਹੀ ਪੁਰਾਣਾ ਵਰਜਨ ਇੰਸਟਾਲ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6060
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6244
 msgid "Media contains no supported video streams."
-msgstr "ਮੀਡਿਆ ਵੀਡਿਓ ਸਟਰੀਮ ਲਈ ਕੋਈ ਸਹਿਯੋਗ ਨਹੀਂ ਹੈ।"
+msgstr "ਮੀਡਿਆ ਵਿਡੀਓ ਸਟਰੀਮ ਲਈ ਕੋਈ ਸਹਿਯੋਗ ਨਹੀਂ ਹੈ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6590
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6757
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1899,25 +1896,25 @@ msgstr ""
 "GStreamer ਚੱਲਣ ਇਕਾਈ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ਹੈ। ਕਿਰਪਾ ਆਪਣੀ ਜੀ-ਸਟਰੀਮਰ ਇੰਸਟਰਫੇਸ ਇੰਸਟਾਲੇਸ਼ਨ ਦੀ "
 "ਜਾਂਚ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6739
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6874
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6871
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7006
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
-"ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਖੋਲਣ ਲਈ ਫੇਲ ਹੋਇਆ। ਇਹ ਉਪਲੱਬਧ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ "
-"ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਵੀਡਿਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
+"ਵਿਡੀਓ ਆਉਟਪੁੱਟ ਖੋਲ੍ਹਣ ਲਈ ਫੇਲ੍ਹ ਹੈ। ਇਹ ਉਪਲੱਬਧ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ। ਮਲਟੀਮੀਡਿਆ ਸਿਸਟਮ "
+"ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਵਿਡੀਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6751
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6883
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕੀ ਹੈ। ਤੁਹਾਨੂੰ ਹੋਰ ਜੀ-ਸਟਰੀਮਰ ਪਲੱਗਇਨ ਦੀ ਚੋਣ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ਜਾਂ "
-"ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ ਵਿੱਚ ਹੋਰ ਵੀਡਿਓ ਆਉਟਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
+"ਵਿਡੀਓ ਆਉਟਪੁੱਟ ਨਹੀਂ ਲੱਭੀ ਜਾ ਸਕੀ ਹੈ। ਤੁਹਾਨੂੰ ਹੋਰ ਜੀ-ਸਟਰੀਮਰ ਪਲੱਗਇਨ ਦੀ ਚੋਣ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ਜਾਂ "
+"ਮਲਟੀਮੀਡਿਆ ਸਿਸਟਮ ਚੋਣਕਾਰ ਵਿੱਚ ਹੋਰ ਵਿਡੀਓ ਆਉਟਪੁੱਟ ਦੀ ਚੋਣ ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6786
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6918
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1927,7 +1924,7 @@ msgstr ""
 "ਸਰਵਰ ਚੱਲਦਾ ਨਹੀਂ ਹੋ ਸਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਹੁ-ਰੰਗ ਸਿਸਟਮ ਚੋਣਕਾਰ 'ਚੋਂ ਹੋਰ ਆਡੀਓ ਆਉਟ-ਪੁੱਟ ਦੀ ਚੋਣ "
 "ਕਰੋ।"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6806
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6938
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2031,35 +2028,36 @@ msgstr "ਬੀਮੂਜਡ"
 msgid "Control Totem through a mobile phone with a Bemused client"
 msgstr "ਇੱਕ ਬੀਮੂਜਡ ਕਲਾਇਟ ਰਾਹੀਂ ਇੱਕ ਮੋਬਾਇਲ ਫੋਨ ਰਾਹੀਂ ਟੋਟੇਮ ਕੰਟਰੋਲ ਕਰੋ"
 
-#: ../src/plugins/bemused/totem-bemused.c:185
+#. Translators: the parameter is a number used to identify this playlist entry
+#: ../src/plugins/bemused/totem-bemused.c:186
 #, c-format
 msgid "Untitled %d"
 msgstr "ਬਿਨਾਂ-ਟਾਈਟਲ %d"
 
-#: ../src/plugins/bemused/totem-bemused.c:607
+#: ../src/plugins/bemused/totem-bemused.c:609
 msgid "Totem Bemused Server"
 msgstr "ਟੋਟੇਮ ਬੀਮੂਜਡ ਸਰਵਰ"
 
 #. FIXME version
-#: ../src/plugins/bemused/totem-bemused.c:609
+#: ../src/plugins/bemused/totem-bemused.c:611
 msgid "Totem Bemused Server version 1.0"
 msgstr "ਟੋਟੇਮ ਬੀਮੂਜਡ ਸਰਵਰ ਵਰਜਨ 1.0"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:77
 msgid "_Create Video Disc..."
-msgstr "ਵੀਡਿਓ ਡਿਸਕ ਬਣਾਓ(_C)..."
+msgstr "ਵਿਡੀਓ ਡਿਸਕ ਬਣਾਓ(_C)..."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
 msgid "Create a video DVD or a (S)VCD from the currently opened movie"
-msgstr "ਆਪਣੀ ਮੌਜੂਦਾ ਖੁੱਲ੍ਹੀ ਮੂਵੀ ਤੋਂ ਵੀਡਿਓ DVD ਜਾਂ (S)VCD ਬਣਾਓ"
+msgstr "ਆਪਣੀ ਮੌਜੂਦਾ ਖੁੱਲ੍ਹੀ ਮੂਵੀ ਤੋਂ ਵਿਡੀਓ DVD ਜਾਂ (S)VCD ਬਣਾਓ"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
 msgid "Copy Vide_o DVD..."
-msgstr "ਵੀਡਿਓ DVD ਕਾਪੀ ਕਰੋ(_o)..."
+msgstr "ਵਿਡੀਓ DVD ਕਾਪੀ ਕਰੋ(_o)..."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
 msgid "Copy the currently playing video DVD"
-msgstr "ਹੁਣ ਚੱਲ ਰਹੀ ਵੀਡਿਓ DVD ਕਾਪੀ ਕਰੋ"
+msgstr "ਹੁਣ ਚੱਲ ਰਹੀ ਵਿਡੀਓ DVD ਕਾਪੀ ਕਰੋ"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
 msgid "Copy (S)VCD..."
@@ -2071,7 +2069,7 @@ msgstr "ਚੱਲ ਰਹੀ (S)VCD ਕਾਪੀ ਕਰੋ"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
 msgid "The video disc could not be duplicated."
-msgstr "ਵੀਡਿਓ ਡਿਸਕ ਡੁਪਲੀਕੇਟ ਨਹੀਂ ਬਣਾਈ ਜਾ ਸਕੀ।"
+msgstr "ਵਿਡੀਓ ਡਿਸਕ ਡੁਪਲੀਕੇਟ ਨਹੀਂ ਬਣਾਈ ਜਾ ਸਕੀ।"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:128
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:279
@@ -2086,11 +2084,109 @@ msgstr "ਇੱਕ ਪਰੋਜੈਕਟ ਲਿਖਣ ਲਈ ਅਸਮਰੱਥ �
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
 msgid "Records (S)VCDs or video DVDs"
-msgstr "(S)VCD ਜਾਂ ਵੀਡਿਓ DVD ਰਿਕਾਰਡ ਕਰੋ"
+msgstr "(S)VCD ਜਾਂ ਵਿਡੀਓ DVD ਰਿਕਾਰਡ ਕਰੋ"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
 msgid "Video Disc Recorder"
-msgstr "ਵੀਡਿਓ ਡਿਸਕ ਰਿਕਾਰਡ"
+msgstr "ਵਿਡੀਓ ਡਿਸਕ ਰਿਕਾਰਡ"
+
+#: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
+#: ../src/plugins/chapters/totem-chapters.c:1190
+#| msgid "_Chapter Menu"
+msgid "Chapters"
+msgstr "ਚੈਪਟਰ"
+
+#: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
+#| msgid "_Chapter Menu"
+msgid "Chapters support"
+msgstr "ਚੈਪਟਰ ਸਹਿਯੋਗ"
+
+#: ../src/plugins/chapters/chapters-edit.ui.h:1
+msgid "Enter new name for a chapter:"
+msgstr "ਚੈਪਟਰ ਲਈ ਨਵਾਂ ਨਾਂ ਦਿਓ:"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:2
+msgid "Continue to watch movie without loaded chapters"
+msgstr "ਬਿਨਾਂ ਲੋਡ ਕੀਤੇ ਚੈਪਟਰਾਂ ਦੇ ਮੂਵੀ ਵੇਖਣੀ ਜਾਰੀ ਰੱਖੋ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:3
+msgid "Continue without"
+msgstr "ਬਿਨਾਂ ਜਾਰੀ ਰੱਖੋ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:4
+#| msgid "Go to the chapter menu"
+msgid "Go to chapter"
+msgstr "ਚੈਪਟਰ ਉੱਤੇ ਜਾਓ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:5
+msgid "Load chapters from external file"
+msgstr "ਬਾਹਰੀ ਫਾਇਲ ਤੋਂ ਚੈਪਟਰ ਲੋਡ ਕਰੋ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:6
+msgid "Load chapters..."
+msgstr "ਚੈਪਟਰ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ..."
+
+#: ../src/plugins/chapters/chapters-list.ui.h:7
+msgid "No chapters data"
+msgstr "ਕੋਈ ਚੈਪਟਰ ਡਾਟਾ ਨਹੀਂ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:9
+#| msgid "Remove file from playlist"
+msgid "Remove chapter from the list"
+msgstr "ਲਿਸਟ 'ਚੋਂ ਚੈਪਟਰ ਹਟਾਓ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:10
+#| msgid "0 Channels"
+msgid "Save Changes"
+msgstr "ਬਦਲਾਅ ਸੰਭਾਲੋ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
+#| msgid "_Go"
+msgid "_Go to"
+msgstr "ਜਾਓ(_G)"
+
+#: ../src/plugins/chapters/totem-chapters.c:56
+#, c-format
+msgid ""
+"<b>Title: </b>%s\n"
+"<b>Start time: </b>%s"
+msgstr ""
+"<b>ਟਾਈਟਲ: </b>%s\n"
+"<b>ਸ਼ੁਰੂ ਸਮਾਂ: </b>%s"
+
+#: ../src/plugins/chapters/totem-chapters.c:370
+msgid "Error while reading file with chapters"
+msgstr "ਚੈਪਟਰ ਵਾਲੀ ਫਾਇਲ ਪੜ੍ਹਨ ਦੌਰਾਨ ਗਲਤੀ"
+
+#: ../src/plugins/chapters/totem-chapters.c:582
+msgid "Chapter with the same time already exists"
+msgstr "ਇਸੇ ਸਮੇਂ ਨਾਲ ਚੈਪਟਰ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ"
+
+#: ../src/plugins/chapters/totem-chapters.c:583
+msgid "Try another name or remove an existing chapter"
+msgstr "ਵੱਖਰੇ ਨਾਂ ਨਾਲ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜਾਂ ਮੌਜੂਦਾ ਚੈਪਟਰ ਹਟਾਓ"
+
+#: ../src/plugins/chapters/totem-chapters.c:760
+msgid "Error while writing file with chapters"
+msgstr "ਚੈਪਟਰਾਂ ਨਾਲ ਫਾਇਲ ਲਿਖਣ ਦੌਰਾਨ ਗਲਤੀ"
+
+#: ../src/plugins/chapters/totem-chapters.c:885
+#| msgid "An error occurred while fetching albums."
+msgid "Error occurred while saving chapters"
+msgstr "ਚੈਪਟਰ ਸੰਭਾਲਣ ਦੌਰਾਨ ਗਲਤੀ"
+
+#: ../src/plugins/chapters/totem-chapters.c:886
+msgid "Please check you rights and free space"
+msgstr "ਆਪਣੇ ਅਧਿਕਾਰ ਤੇ ਖਾਲੀ ਥਾਂ ਚੈੱਕ ਕਰੋ ਜੀ"
+
+#: ../src/plugins/chapters/totem-chapters.c:1020
+#| msgid "Open a file"
+msgid "Open Chapters File"
+msgstr "ਚੈਪਟਰ ਫਾਇਲਾਂ ਖੋਲ੍ਹੋ"
+
+#: ../src/plugins/chapters/totem-cmml-parser.c:558
+msgid "Failed to parse CMML file"
+msgstr "CMML ਫਾਇਲ ਪਾਰਸ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
 
 #. Translators: this refers to a media file
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:97
@@ -2111,9 +2207,6 @@ msgid "D-Bus Service"
 msgstr "D-ਬੱਸ ਸਰਵਿਸ"
 
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
-#| msgid ""
-#| "Plugin for sending notifications of currently-playing movies to the D-Bus "
-#| "subsystem."
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
@@ -2154,8 +2247,9 @@ msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "BBC iPlayer ਸਰਵਿਸ ਤੋਂ ਪਿਛਲੇ ੭ ਦਿਨਾਂ ਤੋਂ BBC ਪਰੋਗਰਾਮ ਸਟਰੀਮ ਕਰੋ।"
 
 #: ../src/plugins/iplayer/iplayer.py:57
-msgid "Error Listing Channel Categories"
-msgstr "ਚੈਨਲ ਕੈਟਾਗਰੀ ਲੈਣ ਦੌਰਾਨ ਗਲਤੀ"
+#| msgid "Error Listing Channel Categories"
+msgid "Error listing channel categories"
+msgstr "ਚੈਨਲ ਕੈਟਾਗਰੀਆਂ ਲਿਸਟ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../src/plugins/iplayer/iplayer.py:57
 msgid ""
@@ -2174,10 +2268,13 @@ msgid "Error getting programme feed"
 msgstr "ਪਰੋਗਰਾਮ ਫੀਡ ਲੈਣ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../src/plugins/iplayer/iplayer.py:106
+#| msgid ""
+#| "There was an unknown error getting the list of programmes for this "
+#| "channel and category combination."
 msgid ""
-"There was an unknown error getting the list of programmes for this channel "
-"and category combination."
-msgstr "ਇਸ ਚੈਨਲ ਅਤੇ ਕੈਟਾਗਰੀ ਸਬੰਧ ਲਈ ਪਰੋਗਰਾਮਾਂ ਦੀ ਲਿਸਟ ਲੈਣ ਦੌਰਾਨ ਅਣਜਾਣ ਗਲਤੀ ਆਈ ਹੈ।"
+"There was an error getting the list of programmes for this channel and "
+"category combination."
+msgstr "ਇਸ ਚੈਨਲ ਅਤੇ ਕੈਟਾਗਰੀ ਸਬੰਧ ਲਈ ਪਰੋਗਰਾਮਾਂ ਦੀ ਲਿਸਟ ਲੈਣ ਦੌਰਾਨ ਗਲਤੀ ਆਈ ਹੈ।"
 
 #: ../src/plugins/iplayer/iplayer2.py:295
 #, python-format
@@ -2205,7 +2302,6 @@ msgid "Latest Releases"
 msgstr "ਤਾਜ਼ਾ ਰੀਲਿਜ਼"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:6
-#| msgid "Number of albums to _retrieve"
 msgid "Number of albums to _retrieve:"
 msgstr "ਲੈਣ ਲਈ ਐਲਬਮਾਂ ਦੀ ਗਿਣਤੀ(_r):"
 
@@ -2214,12 +2310,11 @@ msgid "Popular"
 msgstr "ਪਾਪੂਲਰ"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:8
-#| msgid "Preferred audio _format"
 msgid "Preferred audio _format:"
 msgstr "ਪਸੰਦੀਦਾ ਆਡੀਓ ਫਾਰਮੈਟ(_f):"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:9
-#: ../src/plugins/tracker/totem-tracker-widget.c:511
+#: ../src/plugins/tracker/totem-tracker-widget.c:521
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "ਖੋਜ ਨਤੀਜੇ"
@@ -2352,15 +2447,15 @@ msgstr "lirc ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ।"
 msgid "Couldn't read lirc configuration."
 msgstr "lirc ਸੰਰਚਨਾ ਪੜ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:200
+#: ../src/plugins/mythtv/totem-mythtv.c:198
 msgid "Recordings"
 msgstr "ਰਿਕਾਰਡਿੰਗ"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:523
+#: ../src/plugins/mythtv/totem-mythtv.c:521
 msgid "MythTV Recordings"
 msgstr "MythTV ਰਿਕਾਰਡਿੰਗ"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:524
+#: ../src/plugins/mythtv/totem-mythtv.c:522
 msgid "MythTV LiveTV"
 msgstr "MythTV LiveTV"
 
@@ -2369,7 +2464,6 @@ msgid "Download Movie Subtitles"
 msgstr "ਮੂਵੀ ਸਬ-ਟਾਈਟਲ ਡਾਊਨਲੋਡ"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
-#| msgid "_Languages"
 msgid "Language"
 msgstr "ਭਾਸ਼ਾ"
 
@@ -2454,22 +2548,26 @@ msgid "%d x %d"
 msgstr "%d x %d"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#, c-format
-msgid "%d frames per second"
-msgstr "%d ਫਰੇਮ ਪ੍ਰਤੀ ਸਕਿੰਟ"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:257
+#: ../src/plugins/properties/bacon-video-widget-properties.c:271
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:260
+#: ../src/plugins/properties/bacon-video-widget-properties.c:245
+#, c-format
+#| msgid "%d frames per second"
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d ਫਰੇਮ ਪ੍ਰਤੀ ਸਕਿੰਟ"
+msgstr[1] "%d ਫਰੇਮ ਪ੍ਰਤੀ ਸਕਿੰਟ"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:274
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/publish/totem-publish.c:588
+#. Translators: computers on the local network which are publishing their playlists over the network
+#: ../src/plugins/publish/totem-publish.c:589
 msgid "Neighbors"
 msgstr "ਗੁਆਂਢੀ"
 
@@ -2487,10 +2585,6 @@ msgstr "ਸਰਵਿਸ ਨਾਂ(_N):"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:3
 #, no-c-format
-#| msgid ""
-#| "<small>The name used for announcing the playlist service on the network.\n"
-#| "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-#| "and <b>%h</b> will be replaced by your computer's host name.</small>"
 msgid ""
 "The name used for announcing the playlist service on the network.\n"
 "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
@@ -2503,6 +2597,11 @@ msgstr ""
 #: ../src/plugins/publish/publish-plugin.ui.h:6
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "ਇੰਕ੍ਰਿਪਟਡ ਟਰਾਂਸਪੋਰਟ ਪਰੋਟੋਕਾਲ ਵਰਤੋਂ (_e)(HTTPS)"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:94
+#: ../browser-plugin/totem-plugin-viewer.c:1964
+msgid "Playing a movie"
+msgstr "ਇੱਕ ਮੂਵੀ ਚੱਲਦੀ ਏ"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Calculate the number of screenshots"
@@ -2529,7 +2628,7 @@ msgid "_Name:"
 msgstr "ਨਾਂ(_N):"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:379
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
 msgstr "Screenshot.png"
@@ -2567,9 +2666,9 @@ msgid "Save Screenshot"
 msgstr "ਸਕਰੀਨ-ਸ਼ਾਟ ਸੰਭਾਲੋ"
 
 #. Create the screenshot widget
-#: ../src/plugins/screenshot/totem-screenshot.c:159
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
+#: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
-#| msgid "Screenshot%d.png"
 msgid "Screenshot-%s-%d.png"
 msgstr "ਸਕਰੀਨਸ਼ਾਟ-%s-%d.png"
 
@@ -2598,19 +2697,34 @@ msgstr "ਸਕਰੀਨ-ਸ਼ਾਟ ਗੈਲਰੀ ਬਣਾਓ(_G)..."
 msgid "Create a gallery of screenshots"
 msgstr "ਸਕਰੀਨਸ਼ਾਟ ਲਈ ਗੈਲਰੀ ਬਣਾਓ"
 
-#: ../src/plugins/skipto/totem-skipto.c:171
+#. Update the "seconds" label so that it always has the correct singular/plural form
+#. Translators: label for the seconds selector in the "Skip to" dialogue
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#: ../src/plugins/skipto/totem-skipto.c:158
+#: ../src/plugins/skipto/totem-skipto.c:184
+#| msgid "seconds"
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "ਸਕਿੰਟ"
+msgstr[1] "ਸਕਿੰਟ"
+
+#: ../src/plugins/skipto/totem-skipto.c:184
+msgid "seconds"
+msgstr "ਸਕਿੰਟ"
+
+#: ../src/plugins/skipto/totem-skipto.c:190
 msgid "Skip to"
 msgstr "ਇੱਥੇ ਜਾਓ"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:215
+#: ../src/plugins/skipto/totem-skipto-plugin.c:216
 msgid "_Skip to..."
 msgstr "ਛੱਡੋ(_S)..."
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:215
+#: ../src/plugins/skipto/totem-skipto-plugin.c:216
 msgid "Skip to a specific time"
 msgstr "ਖਾਸ ਸਮਾਂ ਛੱਡੋ"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:221
+#: ../src/plugins/skipto/totem-skipto-plugin.c:222
 msgid "Could not load the \"Skip to\" dialog interface."
 msgstr "\"ਛੱਡੋ\" ਡਾਈਲਾਗ ਇੰਟਰਫੇਸ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।"
 
@@ -2618,28 +2732,22 @@ msgstr "\"ਛੱਡੋ\" ਡਾਈਲਾਗ ਇੰਟਰਫੇਸ ਲੋਡ ਨ�
 msgid "_Skip to:"
 msgstr "ਛੱਡੋ(_S):"
 
-#: ../src/plugins/skipto/skipto.ui.h:2
-msgid "seconds"
-msgstr "ਸਕਿੰਟ"
-
 #. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:170
+#: ../src/plugins/tracker/totem-tracker-widget.c:173
 #, c-format
-#| msgid "Could not get metadata for file %s: %s"
 msgid "Could not get name and thumbnail for %s: %s"
 msgstr "%s ਲਈ ਨਾਂ ਅਤੇ ਥੰਮਨੇਲ ਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:171
+#: ../src/plugins/tracker/totem-tracker-widget.c:174
 msgid "File Error"
 msgstr "ਫਾਇਲ ਗਲਤੀ"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:244
-#: ../src/plugins/tracker/totem-tracker-widget.c:358
-#| msgid "Could not connect to the Galago daemon."
+#: ../src/plugins/tracker/totem-tracker-widget.c:251
+#: ../src/plugins/tracker/totem-tracker-widget.c:368
 msgid "Could not connect to Tracker"
 msgstr "ਟਰੈਕਰ ਨਾਲ ਕੁਨੈਕਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:251
+#: ../src/plugins/tracker/totem-tracker-widget.c:258
 msgid "No results"
 msgstr "ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ"
 
@@ -2648,14 +2756,14 @@ msgstr "ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ"
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:276
+#: ../src/plugins/tracker/totem-tracker-widget.c:283
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "%i - %i ਮੇਲ %i ਵਿੱਚੋਂ ਵੇਖ ਰਹੇ ਹੋ।"
 msgstr[1] "%i - %i ਮੇਲ %i ਵਿੱਚੋਂ ਵੇਖ ਰਹੇ ਹੋ।"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:571
+#: ../src/plugins/tracker/totem-tracker-widget.c:581
 msgid "Page"
 msgstr "ਪੇਜ਼"
 
@@ -2674,11 +2782,11 @@ msgstr "ਥੰਮਨੇਲ"
 
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
 msgid "Search for local videos using Tracker"
-msgstr "ਟਰੈਕਰ ਰਾਹੀਂ ਲੋਕਲ ਵੀਡਿਓ ਖੋਜ"
+msgstr "ਟਰੈਕਰ ਰਾਹੀਂ ਲੋਕਲ ਵਿਡੀਓ ਖੋਜ"
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
-msgstr "ਤੁਹਾਨੂੰ ਯੂ-ਟਿਊਬ ਵੀਡਿਓ ਦੀ ਝਲਕ ਲੈਣ ਲਈ ਇੱਕ ਪਲੱਗਇਨ ਹੈ।"
+msgstr "ਤੁਹਾਨੂੰ ਯੂ-ਟਿਊਬ ਵਿਡੀਓ ਦੀ ਝਲਕ ਲੈਣ ਲਈ ਇੱਕ ਪਲੱਗਇਨ ਹੈ।"
 
 #: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
 msgid "YouTube Browser"
@@ -2686,42 +2794,42 @@ msgstr "ਯੂ-ਟਿਊਬ ਬਰਾਊਜ਼ਰ"
 
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
-msgstr "ਸਬੰਧਿਤ ਵੀਡਿਓ"
+msgstr "ਸਬੰਧਿਤ ਵਿਡੀਓ"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
 msgid "Videos"
-msgstr "ਵੀਡਿਓ"
+msgstr "ਵਿਡੀਓ"
 
-#: ../src/plugins/youtube/totem-youtube.c:314
+#: ../src/plugins/youtube/totem-youtube.c:316
 msgid "_Open in Web Browser"
 msgstr "ਵੈੱਬ ਬਰਾਊਜ਼ਰ ਖੋਲ੍ਹੋ(_O)"
 
-#: ../src/plugins/youtube/totem-youtube.c:314
+#: ../src/plugins/youtube/totem-youtube.c:316
 msgid "Open the video in your web browser"
 msgstr "ਵੀਡਿਆ ਆਪਣੇ ਵੈੱਬ ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
 #. Add the sidebar page
-#: ../src/plugins/youtube/totem-youtube.c:364
+#: ../src/plugins/youtube/totem-youtube.c:366
 msgid "YouTube"
 msgstr "ਯੂ-ਟਿਊਬ"
 
-#: ../src/plugins/youtube/totem-youtube.c:456
+#: ../src/plugins/youtube/totem-youtube.c:452
 msgid "Cancelling query…"
 msgstr "ਕਿਊਰੀ ਰੱਦ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ..."
 
-#: ../src/plugins/youtube/totem-youtube.c:505
+#: ../src/plugins/youtube/totem-youtube.c:513
 msgid "Error Looking Up Video URI"
-msgstr "ਵੀਡਿਓ URI ਖੋਜ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ"
+msgstr "ਵਿਡੀਓ URI ਖੋਜ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:695
-#: ../src/plugins/youtube/totem-youtube.c:700
+#: ../src/plugins/youtube/totem-youtube.c:797
+#: ../src/plugins/youtube/totem-youtube.c:802
 msgid "Error Searching for Videos"
-msgstr "ਵੀਡਿਓ ਲਈ ਖੋਜ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ"
+msgstr "ਵਿਡੀਓ ਲਈ ਖੋਜ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ"
 
-#: ../src/plugins/youtube/totem-youtube.c:696
+#: ../src/plugins/youtube/totem-youtube.c:798
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2730,53 +2838,53 @@ msgstr ""
 "ਵਰਜਨ ਵਰਤ ਰਹੇ ਹੋ।"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:842
+#: ../src/plugins/youtube/totem-youtube.c:972
 msgid "Fetching search results…"
 msgstr "ਖੋਜ ਨਤੀਜੇ ਲਏ ਜਾ ਰਹੇ ਹਨ..."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:893
+#: ../src/plugins/youtube/totem-youtube.c:1037
 msgid "Fetching related videos…"
-msgstr "ਸਬੰਧਿਤ ਵੀਡਿਓ ਲਈਆਂ ਜਾ ਰਹੀਆਂ ਹਨ..."
+msgstr "ਸਬੰਧਿਤ ਵਿਡੀਓ ਲਈਆਂ ਜਾ ਰਹੀਆਂ ਹਨ..."
 
-#: ../src/plugins/youtube/totem-youtube.c:944
+#: ../src/plugins/youtube/totem-youtube.c:1088
 msgid "Error Opening Video in Web Browser"
-msgstr "ਵੈੱਬ ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਵੀਡਿਓ ਖੋਲ੍ਹਣ ਦੌਰਾਨ ਗਲਤੀ"
+msgstr "ਵੈੱਬ ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਵਿਡੀਓ ਖੋਲ੍ਹਣ ਦੌਰਾਨ ਗਲਤੀ"
 
-#: ../src/plugins/youtube/totem-youtube.c:964
+#: ../src/plugins/youtube/totem-youtube.c:1108
 msgid "Fetching more videos…"
-msgstr "ਹੋਰ ਵੀਡਿਓ ਲਈਆਂ ਜਾ ਰਹੀਆਂ ਹਨ..."
+msgstr "ਹੋਰ ਵਿਡੀਓ ਲਈਆਂ ਜਾ ਰਹੀਆਂ ਹਨ..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:419
+#: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
 msgstr "ਚਲਾਉਣ ਲਈ URI ਨਹੀਂ"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1052
+#: ../browser-plugin/totem-plugin-viewer.c:1104
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" ਨਾਲ ਖੋਲ੍ਹੋ(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1103
+#: ../browser-plugin/totem-plugin-viewer.c:1155
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s ਵਾਸਤੇ ਪਲੱਗਇਨ ਬਰਾਊਜ਼ਰ"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1108
+#: ../browser-plugin/totem-plugin-viewer.c:1160
 msgid "Totem Browser Plugin"
 msgstr "ਟੋਟੇਮ ਝਲਕਾਰਾ ਪਲੱਗਇਨ"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2119
+#: ../browser-plugin/totem-plugin-viewer.c:2179
 msgid "No playlist or playlist empty"
 msgstr "ਕੋਈ ਪਲੇਅ-ਲਿਸਟ ਨਹੀਂ ਜਾਂ ਖਾਲੀ ਹੈ"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2210
+#: ../browser-plugin/totem-plugin-viewer.c:2270
 msgid "Movie browser plugin"
 msgstr "ਮੂਵੀ ਬਰਾਊਜ਼ਰ ਪਲੱਗਇਨ"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2226
+#: ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "ਤੁਹਾਡੇ ਸਿਸਟਮ ਇੰਸਟਾਲ  ਪੜਤਾਲ ਹੋਈ। ਟੋਟੇਮ ਪਲੱਗਇਨ ਹੁਣ ਬੰਦ ਹੋਵੇਗੀ।"
 
@@ -2826,6 +2934,36 @@ msgstr ""
 "ਜਦੋਂ ਤੁਸੀਂ ਠੀਕ ਹੈ ਦੱਬੋਗੇ ਤਾਂ ਟੋਟੇਮ ਤੁਹਾਡੇ ਵਲੋਂ ਇਸ ਨੂੰ winpdb ਜਾਂ rpdb2 ਨਾਲ ਕੁਨੈਕਟ ਕਰਨ ਦੀ ਉਡੀਕ "
 "ਕਰੇਗਾ। ਜੇ ਤੁਸੀਂ GConf ਵੱਚ ਡੀਬੱਗਰ ਲਈ ਪਾਸਵਰਡ ਨਾ ਸੈੱਟ ਕੀਤਾ ਹੋਇਆ ਤਾਂ ਇਹ ਡਿਫਾਲਟ ਪਾਸਵਰਡ "
 "('totem') ਵਰਤੇਗਾ।"
+
+#~ msgid "Deinterlace"
+#~ msgstr "ਡੀਇੰਟਰਲੇਸਿੰਗ"
+
+#~ msgid "_Deinterlace"
+#~ msgstr "ਡੀਇੰਟਰਲੇਸਿੰਗ(_D)"
+
+#~ msgid "Buffer size"
+#~ msgstr "ਬਫ਼ਰ ਅਕਾਰ"
+
+#~ msgid "Enable deinterlacing"
+#~ msgstr "ਡੀਇੰਟਰਲੇਸਿੰਗ ਯੋਗ"
+
+#~ msgid "Maximum amount of data to decode ahead of display (in seconds)"
+#~ msgstr "ਵਿਖਾਉਣ ਤੋਂ ਪਹਿਲਾਂ ਡੀ-ਕੋਡ ਕੀਤੇ ਜਾਣ ਵਾਲੇ ਡਾਟੇ ਦੀ ਵੱਧ ਤੋਂ ਵੱਧ ਮਾਤਰਾ (ਸਕਿੰਟਾਂ 'ਚ)"
+
+#~ msgid "Whether the main window should stay on top"
+#~ msgstr "ਕੀ ਮੁੱਖ ਵਿੰਡੋ ਹੋਰਾਂ ਤੋਂ ਉੱਤੇ ਰਹੇ"
+
+#~ msgid "Whether the main window should stay on top of the other ones"
+#~ msgstr "ਕੀ ਮੁੱਖ ਵਿੰਡੋ ਹੋਰਾਂ ਤੋਂ ਉੱਤੇ ਰਹਿਣਾ ਚਾਹੀਦਾ ਹੈ।"
+
+#~ msgid "Could not launch URL \"%s\": %s"
+#~ msgstr "URL \"%s\" ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
+
+#~ msgid "Default browser not configured"
+#~ msgstr "ਡਿਫਾਲਟ ਬਰਾਊਜ਼ਰ ਸੰਰਚਿਤ ਨਹੀਂ ਹੈ"
+
+#~ msgid "Error launching URI"
+#~ msgstr "URI ਚਲਾਉਣ ਦੌਰਾਨ ਗਲਤੀ"
 
 #~ msgid "Sound volume"
 #~ msgstr "ਧੁਨੀ ਆਵਾਜ਼"
