@@ -123,7 +123,8 @@ enum {
 	PROP_STREAM_LENGTH,
 	PROP_SEEKABLE,
 	PROP_CURRENT_TIME,
-	PROP_CURRENT_MRL
+	PROP_CURRENT_MRL,
+	PROP_AUTOLOAD_SUBTITLES
 };
 
 enum {
@@ -215,6 +216,15 @@ totem_object_class_init (TotemObjectClass *klass)
 							      NULL, G_PARAM_READABLE));
 
 	/**
+	 * TotemObject:autoload-subtitles:
+	 *
+	 * If %TRUE, Totem will automatically load any subtitle files it finds for each newly opened video.
+	 **/
+	g_object_class_install_property (object_class, PROP_AUTOLOAD_SUBTITLES,
+					 g_param_spec_boolean ("autoload-subtitles", NULL, NULL,
+							       FALSE, G_PARAM_READWRITE));
+
+	/**
 	 * TotemObject::file-opened:
 	 * @totem: the #TotemObject which received the signal
 	 * @mrl: the MRL of the opened stream
@@ -285,7 +295,16 @@ totem_object_set_property (GObject *object,
 			   const GValue *value,
 			   GParamSpec *pspec)
 {
-	G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+	TotemObject *totem = TOTEM_OBJECT (object);
+
+	switch (property_id) {
+		case PROP_AUTOLOAD_SUBTITLES:
+			totem->autoload_subs = g_value_get_boolean (value);
+			g_object_notify (object, "autoload-subtitles");
+			break;
+		default:
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+	}
 }
 
 static void
@@ -317,6 +336,9 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_CURRENT_MRL:
 		g_value_set_string (value, totem->mrl);
+		break;
+	case PROP_AUTOLOAD_SUBTITLES:
+		g_value_set_boolean (value, totem->autoload_subs);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
