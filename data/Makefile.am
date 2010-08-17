@@ -54,33 +54,32 @@ nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functi
 	$(AM_V_GEN) $(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt	\
 	> $@
 
-update-gconf.sh: totem-video-thumbnail.schemas.in
+update-gsettings.sh: org.gnome.desktop.thumbnailers.gschema.xml.in
 
-totem-video-thumbnail.schemas.in: schemas.sh mime-type-list.txt mime-functions.sh
+org.gnome.desktop.thumbnailers.gschema.xml.in: schemas.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
 	> $@								\
-	3> update-gconf.sh
+	3> update-gsettings.sh
 
-totem-handlers.schemas.in: handlers.sh
+org.gnome.desktop.url-handlers.gschema.xml.in: handlers.sh
 	$(AM_V_GEN) $(srcdir)/handlers.sh > $@
 
-generated_schema_in_files = totem-video-thumbnail.schemas.in totem-handlers.schemas.in
-schema_in_files = totem.schemas.in $(generated_schema_in_files)
-schemadir = $(GCONF_SCHEMA_FILE_DIR)
-schema_DATA = $(schema_in_files:.schemas.in=.schemas)
-@INTLTOOL_SCHEMAS_RULE@
+generated_schema_files = org.gnome.desktop.thumbnailers.gschema.xml org.gnome.desktop.url-handlers.gschema.xml
 
+gsettings_ENUM_NAMESPACE = org.gnome.totem
+gsettings_ENUM_FILES = $(top_srcdir)/src/*.h $(top_srcdir)/src/backend/*.h
+gsettings_SCHEMAS = org.gnome.totem.gschema.xml $(generated_schema_files)
+
+@INTLTOOL_XML_NOMERGE_RULE@
+
+@GSETTINGS_RULES@
+
+convertdir = $(datadir)/GConf/gsettings
+convert_DATA = totem.convert
+
+# Man pages
 totem-video-thumbnailer.1: totem-video-thumbnailer.pod
 	$(AM_V_GEN) pod2man -c "" -s 1 -q none -n totem-video-thumbnailer -r GNOME $< > $@
-
-install-data-local: $(schema_DATA)
-if GCONF_SCHEMAS_INSTALL
-	if test -z "$(DESTDIR)" ; then \
-	for p in $^ ; do \
-		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $$p 2>&1 > /dev/null; \
-	done \
-	fi
-endif
 
 # pkg-config file for the plugin API
 pkgconfigdir = $(libdir)/pkgconfig
@@ -96,7 +95,8 @@ EXTRA_DIST = \
 	mime-type-list.txt		\
 	schemas.sh			\
 	mime-functions.sh		\
-	totem.schemas.in		\
+	org.gnome.totem.gschema.xml.in.in	\
+	totem.convert			\
 	totem-video-thumbnailer.1	\
 	totem-video-thumbnailer.pod
 
@@ -104,12 +104,13 @@ CLEANFILES = \
 	*.bak *.uip core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
-	$(generated_schema_in_files)	\
-	$(schema_DATA)			\
-	totem-handlers.schemas.in 	\
+	$(generated_schema_files)	\
+	$(gsettings_SCHEMAS)		\
+	totem-handlers.gschema.xml.in 	\
 	totem-mime-types.h		\
-	totem-video-thumbnail.schemas.in\
 	nautilus-audio-mime-types.h	\
-	update-gconf.sh
+	update-gsettings.sh
 
-DISTCLEANFILES =
+DISTCLEANFILES = $(gsettings_SCHEMAS)
+
+MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)

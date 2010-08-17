@@ -1,30 +1,19 @@
 #!/bin/sh
 
-OWNER=totem
 COMMAND="$2/totem-video-thumbnailer -s %s %u %o"
 
 . `dirname $0`/mime-functions.sh
 
 upd_schema()
 {
-	echo "gconftool-2 --set --type $TYPE /desktop/gnome/thumbnailers/$NAME \"$DEFAULT\"" 1>&3
+	echo "gsettings set org.gnome.desktop.thumbnailers.$DIR $NAME \"$DEFAULT\"" 1>&3
 }
 
 schema()
 {
-	echo ;
-	echo "        <schema>";
-	echo "            <key>/schemas/desktop/gnome/thumbnailers/$NAME</key>";
-	echo "            <applyto>/desktop/gnome/thumbnailers/$NAME</applyto>";
-	echo "            <owner>$OWNER</owner>";
-	echo "            <type>$TYPE</type>";
-	echo "            <default>$DEFAULT</default>";
-	echo "            <locale name=\"C\">";
-	echo "                <short></short>";
-	echo "                <long></long>";
-	echo "            </locale>";
-	echo "        </schema>";
-	echo;
+	echo "		<key name='$NAME' type='$TYPE'>";
+	echo "			<default>$DEFAULT</default>";
+	echo "		</key>";
 
 	upd_schema;
 }
@@ -32,39 +21,54 @@ schema()
 
 get_video_mimetypes $1;
 
-echo "<gconfschemafile>";
-echo "    <schemalist>";
+echo "<schemalist>";
+
+echo "	<schema id='org.gnome.desktop.thumbnailers' path='/desktop/gnome/thumbnailers/'>";
 
 for i in $MIMETYPES ; do
-	DIR=`echo $i | sed 's,/,@,' | sed 's,+,@,'`
+	NAME=`echo $i | sed 's,/,-,' | sed 's,+,-,' | sed 's,\.,-,'`
+	echo "		<child name='$NAME' schema='org.gnome.desktop.thumbnailers.$NAME'/>";
+done
 
-	NAME="$DIR/enable";
-	TYPE="bool";
+echo "	</schema>";
+
+for i in $MIMETYPES ; do
+	DIR=`echo $i | sed 's,/,-,' | sed 's,+,-,' | sed 's,\.,-,'`
+
+	echo "	<schema id='org.gnome.desktop.thumbnailers.$DIR' path='/desktop/gnome/thumbnailers/$DIR/'>";
+
+	NAME="enable";
+	TYPE="b";
 	DEFAULT="true";
 	schema;
 
-	NAME="$DIR/command";
-	TYPE="string";
-	DEFAULT="$COMMAND";
+	NAME="command";
+	TYPE="s";
+	DEFAULT="'$COMMAND'";
 	schema;
+
+	echo "	</schema>";
 done
 
 get_audio_mimetypes $1;
 
 for i in $MIMETYPES ; do
-	DIR=`echo $i | sed 's,/,@,' | sed 's,+,@,'`
+	DIR=`echo $i | sed 's,/,-,' | sed 's,+,-,' | sed 's,\.,-,'`
 
-	NAME="$DIR/enable";
-	TYPE="bool";
+	echo "	<schema id='org.gnome.desktop.thumbnailers.$DIR' path='/desktop/gnome/thumbnailers/$DIR/'>";
+
+	NAME="enable";
+	TYPE="b";
 	DEFAULT="false";
 	schema;
 
-	NAME="$DIR/command";
-	TYPE="string";
-	DEFAULT="$COMMAND";
+	NAME="command";
+	TYPE="s";
+	DEFAULT="'$COMMAND'";
 	schema;
+
+	echo "	</schema>";
 done
 
-echo "    </schemalist>";
-echo "</gconfschemafile>"
+echo "</schemalist>"
 

@@ -61,8 +61,6 @@ G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem
 G_MODULE_EXPORT void audio_out_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
 G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
-G_MODULE_EXPORT void font_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
-G_MODULE_EXPORT void encoding_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
 G_MODULE_EXPORT void auto_chapters_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 
 static gboolean
@@ -96,8 +94,7 @@ checkbutton1_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/auto_resize",
-			value, NULL);
+	g_settings_set_boolean (totem->settings, "auto-resize", value);
 	bacon_video_widget_set_auto_resize
 		(BACON_VIDEO_WIDGET (totem->bvw), value);
 }
@@ -107,8 +104,7 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value)
 {
 	GtkWidget *item;
 
-	gconf_client_set_bool (totem->gc,
-			GCONF_PREFIX"/show_vfx", value, NULL);
+	g_settings_set_boolean (totem->settings, "show-vfx", value);
 
 	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tpw_visuals_type_label"));
 	gtk_widget_set_sensitive (item, value);
@@ -136,8 +132,7 @@ checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	{
 		if (ask_show_visuals (totem) == FALSE)
 		{
-			gconf_client_set_bool (totem->gc,
-					GCONF_PREFIX"/show_vfx", FALSE, NULL);
+			g_settings_set_boolean (totem->settings, "show-vfx", FALSE);
 			gtk_toggle_button_set_active (togglebutton, FALSE);
 			return;
 		}
@@ -152,9 +147,7 @@ checkbutton3_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-
-	gconf_client_set_bool (totem->gc,
-			       GCONF_PREFIX"/autoload_subtitles", value, NULL);
+	g_settings_set_boolean (totem->settings, "autoload-subtitles", value);
 	totem->autoload_subs = value;
 }
 
@@ -164,10 +157,7 @@ audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-
-	gconf_client_set_bool (totem->gc,
-			       GCONF_PREFIX"/lock_screensaver_on_audio",
-			       value, NULL);
+	g_settings_set_boolean (totem->settings, "lock-screensaver-on-audio", value);
 }
 
 void
@@ -178,16 +168,11 @@ no_deinterlace_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	value = gtk_toggle_button_get_active (togglebutton);
 
 	bacon_video_widget_set_deinterlacing (totem->bvw, !value);
-	gconf_client_set_bool (totem->gc,
-			       GCONF_PREFIX"/disable_deinterlacing",
-			       value, NULL);
+	g_settings_set_boolean (totem->settings, "disable-deinterlacing", value);
 }
 
 static void
-no_deinterlace_changed_cb (GConfClient *client,
-			   guint cnxn_id,
-			   GConfEntry *entry,
-			   Totem *totem)
+no_deinterlace_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *button;
 	gboolean value;
@@ -197,8 +182,7 @@ no_deinterlace_changed_cb (GConfClient *client,
 	g_signal_handlers_block_matched (button,
 					 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, totem);
 
-	value = gconf_client_get_bool (totem->gc,
-				       GCONF_PREFIX"/disable_deinterlacing", NULL);
+	value = g_settings_get_boolean (totem->settings, "disable-deinterlacing");
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
 	bacon_video_widget_set_deinterlacing (totem->bvw, !value);
@@ -214,15 +198,12 @@ remember_position_checkbutton_toggled_cb (GtkToggleButton *togglebutton, Totem *
 
 	value = gtk_toggle_button_get_active (togglebutton);
 
-	gconf_client_set_bool (totem->gc,
-			       GCONF_PREFIX"/remember_position",
-			       value, NULL);
+	g_settings_set_boolean (totem->settings, "remember-position", value);
 	totem->remember_position = value;
 }
 
 static void
-remember_position_changed_cb (GConfClient *client, guint cnxn_id,
-                              GConfEntry *entry, Totem *totem)
+remember_position_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item;
 
@@ -230,17 +211,14 @@ remember_position_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_block_by_func (item, remember_position_checkbutton_toggled_cb,
 					 totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-				      gconf_client_get_bool (totem->gc,
-							     GCONF_PREFIX"/remember_position", NULL));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (settings, "remember-position"));
 
 	g_signal_handlers_unblock_by_func (item, remember_position_checkbutton_toggled_cb,
 					   totem);
 }
 
 static void
-auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, Totem *totem)
+auto_resize_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item;
 
@@ -248,17 +226,14 @@ auto_resize_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_disconnect_by_func (item,
 			checkbutton1_toggled_cb, totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/auto_resize", NULL));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (settings, "auto-resize"));
 
 	g_signal_connect (item, "toggled",
 			G_CALLBACK (checkbutton1_toggled_cb), totem);
 }
 
 static void
-show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
-		     GConfEntry *entry, Totem *totem)
+show_vfx_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item;
 
@@ -266,27 +241,20 @@ show_vfx_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_disconnect_by_func (item,
 			checkbutton2_toggled_cb, totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/show_vfx", NULL));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "show-vfx"));
 
 	g_signal_connect (item, "toggled",
 			G_CALLBACK (checkbutton2_toggled_cb), totem);
 }
 
 static void
-disable_kbd_shortcuts_changed_cb (GConfClient *client,
-				  guint cnxn_id,
-				  GConfEntry *entry,
-				  Totem *totem)
+disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
-	totem->disable_kbd_shortcuts = gconf_client_get_bool (totem->gc,
-							      GCONF_PREFIX"/disable_keyboard_shortcuts", NULL);
+	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
 }
 
 static void
-lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
-				      GConfEntry *entry, Totem *totem)
+lock_screensaver_on_audio_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item, *radio;
 	gboolean value;
@@ -295,8 +263,7 @@ lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_disconnect_by_func (item,
 					      audio_screensaver_button_toggled_cb, totem);
 
-	value = gconf_client_get_bool (totem->gc,
-				       GCONF_PREFIX"/lock_screensaver_on_audio", NULL);
+	value = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
 	if (value != FALSE) {
 		radio = gtk_builder_get_object (totem->xml, "tpw_audio_toggle_button");
 	} else {
@@ -309,8 +276,7 @@ lock_screensaver_on_audio_changed_cb (GConfClient *client, guint cnxn_id,
 }
 
 static void
-autoload_subtitles_changed_cb (GConfClient *client, guint cnxn_id,
-			       GConfEntry *entry, Totem *totem)
+autoload_subtitles_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item;
 
@@ -318,17 +284,14 @@ autoload_subtitles_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_disconnect_by_func (item,
 			checkbutton3_toggled_cb, totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-			gconf_client_get_bool (totem->gc,
-				GCONF_PREFIX"/autoload_subtitles", NULL));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "autoload-subtitles"));
 
 	g_signal_connect (item, "toggled",
 			G_CALLBACK (checkbutton3_toggled_cb), totem);
 }
 
 static void
-autoload_chapters_changed_cb (GConfClient *client, guint cnxn_id,
-			      GConfEntry *entry, Totem *totem)
+autoload_chapters_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item;
 
@@ -336,8 +299,7 @@ autoload_chapters_changed_cb (GConfClient *client, guint cnxn_id,
 	g_signal_handlers_disconnect_by_func (item,
 					      auto_chapters_toggled_cb, totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item),
-				      gconf_client_get_bool (totem->gc, GCONF_PREFIX"/autoload_chapters", NULL));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "autoload-chapters"));
 
 	g_signal_connect (item, "toggled",
 			  G_CALLBACK (auto_chapters_toggled_cb), totem);
@@ -364,13 +326,11 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 	list = bacon_video_widget_get_visualization_list (totem->bvw);
 	name = g_list_nth_data (list, i);
 
-	old_name = gconf_client_get_string (totem->gc,
-			GCONF_PREFIX"/visual", NULL);
+	old_name = g_settings_get_string (totem->settings, "visual");
 
 	if (old_name == NULL || strcmp (old_name, name) != 0)
 	{
-		gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
-				name, NULL);
+		g_settings_set_string (totem->settings, "visual", name);
 
 		bacon_video_widget_set_visualization (totem->bvw, name);
 	}
@@ -384,8 +344,7 @@ visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem)
 	int i;
 
 	i = gtk_combo_box_get_active (combobox);
-	gconf_client_set_int (totem->gc,
-			GCONF_PREFIX"/visual_quality", i, NULL);
+	g_settings_set_int (totem->settings, "visual-quality", i);
 	bacon_video_widget_set_visualization_quality (totem->bvw, i);
 }
 
@@ -462,8 +421,7 @@ font_set_cb (GtkFontButton * fb, Totem * totem)
 	const gchar *font;
 
 	font = gtk_font_button_get_font_name (fb);
-	gconf_client_set_string (totem->gc, GCONF_PREFIX"/subtitle_font",
-				 font, NULL);
+	g_settings_set_string (totem->settings, "subtitle-font", font);
 }
 
 void
@@ -473,45 +431,39 @@ encoding_set_cb (GtkComboBox *cb, Totem *totem)
 
 	encoding = totem_subtitle_encoding_get_selected (cb);
 	if (encoding)
-		gconf_client_set_string (totem->gc,
-				GCONF_PREFIX"/subtitle_encoding",
-				encoding, NULL);
+		g_settings_set_string (totem->settings, "subtitle-encoding", encoding);
 }
 
-void
-font_changed_cb (GConfClient *client, guint cnxn_id,
-		 GConfEntry *entry, Totem *totem)
+static void
+font_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
-	const gchar *font;
+	gchar *font;
 	GtkFontButton *item;
 
 	item = GTK_FONT_BUTTON (gtk_builder_get_object (totem->xml, "font_sel_button"));
-	font = gconf_value_get_string (entry->value);
+	font = g_settings_get_string (settings, "subtitle-font");
 	gtk_font_button_set_font_name (item, font);
 	bacon_video_widget_set_subtitle_font (totem->bvw, font);
+	g_free (font);
 }
 
-void
-encoding_changed_cb (GConfClient *client, guint cnxn_id,
-		 GConfEntry *entry, Totem *totem)
+static void
+encoding_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
-	const gchar *encoding;
+	gchar *encoding;
 	GtkComboBox *item;
 
 	item = GTK_COMBO_BOX (gtk_builder_get_object (totem->xml, "subtitle_encoding_combo"));
-	encoding = gconf_value_get_string (entry->value);
+	encoding = g_settings_get_string (settings, "subtitle-encoding");
 	totem_subtitle_encoding_set (item, encoding);
 	bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
+	g_free (encoding);
 }
 
 void
 auto_chapters_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 {
-	gboolean value;
-
-	value = gtk_toggle_button_get_active (togglebutton);
-
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/autoload_chapters", value, NULL);
+	g_settings_set_boolean (totem->settings, "autoload-chapters", gtk_toggle_button_get_active (togglebutton));
 }
 
 void
@@ -524,7 +476,6 @@ totem_setup_preferences (Totem *totem)
 	char *visual, *font, *encoding;
 	GList *list, *l;
 	BvwAudioOutType audio_out;
-	GConfValue *value;
 	GObject *item;
 
 	static struct {
@@ -538,17 +489,11 @@ totem_setup_preferences (Totem *totem)
 		{ "tpw_hue_scale", BVW_VIDEO_HUE, "tpw_hue_label" }
 	};
 
-	g_return_if_fail (totem->gc != NULL);
+	g_return_if_fail (totem->settings != NULL);
 
 	is_local = totem_display_is_local ();
 
-	gconf_client_add_dir (totem->gc, GCONF_PREFIX,
-			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/auto_resize",
-			(GConfClientNotifyFunc) auto_resize_changed_cb,
-			totem, NULL, NULL);
-	gconf_client_add_dir (totem->gc, "/desktop/gnome/lockdown",
-			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+	g_signal_connect (totem->settings, "changed::auto-resize", (GCallback) auto_resize_changed_cb, totem);
 
 	/* Work-around builder dialogue not parenting properly for
 	 * On top windows */
@@ -576,43 +521,33 @@ totem_setup_preferences (Totem *totem)
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
 	/* Remember position */
-	totem->remember_position = gconf_client_get_bool (totem->gc,
-			GCONF_PREFIX"/remember_position", NULL);
+	totem->remember_position = g_settings_get_boolean (totem->settings, "remember-position");
 	item = gtk_builder_get_object (totem->xml, "tpw_remember_position_checkbutton");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), totem->remember_position);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/remember_position",
-	                         (GConfClientNotifyFunc) remember_position_changed_cb,
-	                         totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::remember-position", (GCallback) remember_position_changed_cb, totem);
 
 	/* Auto-resize */
-	auto_resize = gconf_client_get_bool (totem->gc,
-			GCONF_PREFIX"/auto_resize", NULL);
+	auto_resize = g_settings_get_boolean (totem->settings, "auto-resize");
 	item = gtk_builder_get_object (totem->xml, "tpw_display_checkbutton");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_resize);
 	bacon_video_widget_set_auto_resize
 		(BACON_VIDEO_WIDGET (totem->bvw), auto_resize);
 
 	/* Screensaver audio locking */
-	lock_screensaver_on_audio = gconf_client_get_bool (totem->gc,
-							   GCONF_PREFIX"/lock_screensaver_on_audio", NULL);
+	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
 	if (lock_screensaver_on_audio != FALSE)
 		item = gtk_builder_get_object (totem->xml, "tpw_audio_toggle_button");
 	else
 		item = gtk_builder_get_object (totem->xml, "tpw_video_toggle_button");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/lock_screensaver_on_audio",
-				 (GConfClientNotifyFunc) lock_screensaver_on_audio_changed_cb,
-				 totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, totem);
 
 	/* Disable deinterlacing */
 	item = gtk_builder_get_object (totem->xml, "tpw_no_deinterlace_checkbutton");
-	no_deinterlace = gconf_client_get_bool (totem->gc,
-						GCONF_PREFIX"/disable_deinterlacing", NULL);
+	no_deinterlace = g_settings_get_boolean (totem->settings, "disable-deinterlacing");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), no_deinterlace);
 	bacon_video_widget_set_deinterlacing (totem->bvw, !no_deinterlace);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/disable_deinterlacing",
-				 (GConfClientNotifyFunc) no_deinterlace_changed_cb,
-				 totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::disable-deinterlacing", (GCallback) no_deinterlace_changed_cb, totem);
 
 	/* Connection Speed */
 	connection_speed = bacon_video_widget_get_connection_speed (totem->bvw);
@@ -621,8 +556,7 @@ totem_setup_preferences (Totem *totem)
 
 	/* Enable visuals */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_checkbutton");
-	show_visuals = gconf_client_get_bool (totem->gc,
-			GCONF_PREFIX"/show_vfx", NULL);
+	show_visuals = g_settings_get_boolean (totem->settings, "show-vfx");
 	if (is_local == FALSE && show_visuals != FALSE)
 		show_visuals = ask_show_visuals (totem);
 
@@ -632,43 +566,34 @@ totem_setup_preferences (Totem *totem)
 	totem_prefs_set_show_visuals (totem, show_visuals);
 	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton2_toggled_cb), totem);
 
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/show_vfx",
-			(GConfClientNotifyFunc) show_vfx_changed_cb,
-			totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::show-vfx", (GCallback) show_vfx_changed_cb, totem);
 
 	/* Auto-load subtitles */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_subtitles_checkbutton");
-	totem->autoload_subs = gconf_client_get_bool (totem->gc,
-					      GCONF_PREFIX"/autoload_subtitles", NULL);
+	totem->autoload_subs = g_settings_get_boolean (totem->settings, "autoload-subtitles");
 
 	g_signal_handlers_disconnect_by_func (item, checkbutton3_toggled_cb, totem);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), totem->autoload_subs);
 	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton3_toggled_cb), totem);
 
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/autoload_subtitles",
-				 (GConfClientNotifyFunc) autoload_subtitles_changed_cb,
-				 totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::autoload-subtitles", (GCallback) autoload_subtitles_changed_cb, totem);
 
 	/* Auto-load external chapters */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_chapters_checkbutton");
-	auto_chapters = gconf_client_get_bool (totem->gc,
-					       GCONF_PREFIX"/autoload_chapters", NULL);
+	auto_chapters = g_settings_get_boolean (totem->settings, "autoload-chapters");
 
 	g_signal_handlers_disconnect_by_func (item, auto_chapters_toggled_cb, totem);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), auto_chapters);
 	g_signal_connect (item, "toggled", G_CALLBACK (auto_chapters_toggled_cb), totem);
 
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/autoload_chapters",
-				 (GConfClientNotifyFunc) autoload_chapters_changed_cb,
-				 totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::autoload-chapters", (GCallback) autoload_chapters_changed_cb, totem);
 
 	/* Visuals list */
 	list = bacon_video_widget_get_visualization_list (totem->bvw);
 	menu = gtk_menu_new ();
 	gtk_widget_show (menu);
 
-	visual = gconf_client_get_string (totem->gc,
-			GCONF_PREFIX"/visual", NULL);
+	visual = g_settings_get_string (totem->settings, "visual");
 	if (visual == NULL || strcmp (visual, "") == 0) {
 		g_free (visual);
 		visual = g_strdup ("goom");
@@ -690,8 +615,7 @@ totem_setup_preferences (Totem *totem)
 	g_free (visual);
 
 	/* Visualisation quality */
-	i = gconf_client_get_int (totem->gc,
-			GCONF_PREFIX"/visual_quality", NULL);
+	i = g_settings_get_int (totem->settings, "visual-quality");
 	bacon_video_widget_set_visualization_quality (totem->bvw, i);
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
@@ -728,35 +652,21 @@ totem_setup_preferences (Totem *totem)
 	item = gtk_builder_get_object (totem->xml, "font_sel_button");
 	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
 				   _("Select Subtitle Font"));
-	font = gconf_client_get_string (totem->gc,
-		GCONF_PREFIX"/subtitle_font", NULL);
+	font = g_settings_get_string (totem->settings, "subtitle-font");
 	if (font && strcmp (font, "") != 0) {
 		gtk_font_button_set_font_name (GTK_FONT_BUTTON (item), font);
 		bacon_video_widget_set_subtitle_font (totem->bvw, font);
 	}
 	g_free (font);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/subtitle_font",
-			(GConfClientNotifyFunc) font_changed_cb,
-			totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::subtitle-font", (GCallback) font_changed_cb, totem);
 
 	/* Subtitle encoding selection */
 	item = gtk_builder_get_object (totem->xml, "subtitle_encoding_combo");
 	totem_subtitle_encoding_init (GTK_COMBO_BOX (item));
-	value = gconf_client_get_without_default (totem->gc,
-			GCONF_PREFIX"/subtitle_encoding", NULL);
+	encoding = g_settings_get_string (totem->settings, "subtitle-encoding");
 	/* Make sure the default is UTF-8 */
-	if (value != NULL) {
-		if (gconf_value_get_string (value) == NULL) {
-			encoding = g_strdup ("UTF-8");
-		} else {
-			encoding = g_strdup (gconf_value_get_string (value));
-			if (encoding[0] == '\0') {
-				g_free (encoding);
-				encoding = g_strdup ("UTF-8");
-			}
-		}
-		gconf_value_free (value);
-	} else {
+	if (encoding == NULL || *encoding == '\0') {
+		g_free (encoding);
 		encoding = g_strdup ("UTF-8");
 	}
 	totem_subtitle_encoding_set (GTK_COMBO_BOX(item), encoding);
@@ -764,16 +674,11 @@ totem_setup_preferences (Totem *totem)
 		bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
 	}
 	g_free (encoding);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/subtitle_encoding",
-			(GConfClientNotifyFunc) encoding_changed_cb,
-			totem, NULL, NULL);
+	g_signal_connect (totem->settings, "changed::subtitle-encoding", (GCallback) encoding_changed_cb, totem);
 
 	/* Disable keyboard shortcuts */
-	totem->disable_kbd_shortcuts = gconf_client_get_bool (totem->gc,
-							      GCONF_PREFIX"/disable_keyboard_shortcuts", NULL);
-	gconf_client_notify_add (totem->gc, GCONF_PREFIX"/disable_keyboard_shortcuts",
-				 (GConfClientNotifyFunc) disable_kbd_shortcuts_changed_cb,
-				 totem, NULL, NULL);
+	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
+	g_signal_connect (totem->settings, "changed::disable-keyboard-shortcuts", (GCallback) disable_kbd_shortcuts_changed_cb, totem);
 }
 
 void
@@ -781,8 +686,7 @@ totem_preferences_visuals_setup (Totem *totem)
 {
 	char *visual;
 
-	visual = gconf_client_get_string (totem->gc,
-			GCONF_PREFIX"/visual", NULL);
+	visual = g_settings_get_string (totem->settings, "visual");
 	if (visual == NULL || strcmp (visual, "") == 0) {
 		g_free (visual);
 		visual = g_strdup ("goom");

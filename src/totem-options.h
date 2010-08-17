@@ -23,7 +23,6 @@
 #ifndef TOTEM_OPTIONS_H
 #define TOTEM_OPTIONS_H
 
-#include <gconf/gconf-client.h>
 #include <gtk/gtk.h>
 
 #include "totem.h"

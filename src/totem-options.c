@@ -107,8 +107,7 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 		exit (0);
 	}
 
-	gconf_client_set_bool (totem->gc, GCONF_PREFIX"/debug",
-			       options->debug, NULL);
+	g_settings_set_boolean (totem->settings, "debug", options->debug);
 }
 
 static char *

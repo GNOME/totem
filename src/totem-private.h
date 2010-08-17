@@ -28,7 +28,6 @@
 #ifndef __TOTEM_PRIVATE_H__
 #define __TOTEM_PRIVATE_H__
 
-#include <gconf/gconf-client.h>
 #include <gtk/gtk.h>
 #include <gio/gio.h>
 
@@ -158,7 +157,7 @@ struct _TotemObject {
 	char *mrl;
 	gint64 seek_to;
 	TotemPlaylist *playlist;
-	GConfClient *gc;
+	GSettings *settings;
 	GApplication *app;
 	TotemStates state;
 	TotemOpenLocation *open_location;

@@ -35,7 +35,6 @@
 #include <gio/gio.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
-#include <gconf/gconf-client.h>
 
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>

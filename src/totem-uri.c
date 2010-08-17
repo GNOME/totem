@@ -581,7 +581,7 @@ char *
 totem_add_subtitle (GtkWindow *parent, const char *uri)
 {
 	GtkWidget *fs;
-	GConfClient *conf;
+	GSettings *settings;
 	char *new_path;
 	char *subtitle = NULL;
 	gboolean folder_set;
@@ -598,7 +598,7 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 
-	conf = gconf_client_get_default ();
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 	folder_set = FALSE;
 
 	/* Add the subtitles cache dir as a shortcut */
@@ -610,7 +610,7 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	g_free (new_path);
 
 	/* Add the last open path as a shortcut */
-	new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
+	new_path = g_settings_get_string (settings, "open-path");
 	if (new_path != NULL && *new_path != '\0') {
 		gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), new_path, NULL);
 	}
@@ -635,6 +635,8 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	}
 
 	gtk_widget_destroy (fs);
+	g_object_unref (settings);
+
 	return subtitle;
 }
 
@@ -645,7 +647,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 	int response;
 	GSList *filenames;
 	char *mrl, *new_path;
-	GConfClient *conf;
+	GSettings *settings;
 	gboolean set_folder;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
@@ -663,13 +665,13 @@ totem_add_files (GtkWindow *parent, const char *path)
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
 
-	conf = gconf_client_get_default ();
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 	set_folder = TRUE;
 	if (path != NULL) {
 		set_folder = gtk_file_chooser_set_current_folder_uri
 			(GTK_FILE_CHOOSER (fs), path);
 	} else {
-		new_path = gconf_client_get_string (conf, "/apps/totem/open_path", NULL);
+		new_path = g_settings_get_string (settings, "open-path");
 		if (new_path != NULL && *new_path != '\0') {
 			set_folder = gtk_file_chooser_set_current_folder_uri
 				(GTK_FILE_CHOOSER (fs), new_path);
@@ -688,14 +690,14 @@ totem_add_files (GtkWindow *parent, const char *path)
 
 	if (response != GTK_RESPONSE_ACCEPT) {
 		gtk_widget_destroy (fs);
-		g_object_unref (conf);
+		g_object_unref (settings);
 		return NULL;
 	}
 
 	filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
 	if (filenames == NULL) {
 		gtk_widget_destroy (fs);
-		g_object_unref (conf);
+		g_object_unref (settings);
 		return NULL;
 	}
 	gtk_widget_destroy (fs);
@@ -703,12 +705,11 @@ totem_add_files (GtkWindow *parent, const char *path)
 	mrl = filenames->data;
 	if (mrl != NULL) {
 		new_path = g_path_get_dirname (mrl);
-		gconf_client_set_string (conf, "/apps/totem/open_path",
-				new_path, NULL);
+		g_settings_set_string (settings, "open-path", new_path);
 		g_free (new_path);
 	}
 
-	g_object_unref (conf);
+	g_object_unref (settings);
 
 	return filenames;
 }

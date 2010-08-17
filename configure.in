@@ -43,6 +43,7 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
 # Requirements
 GLIB_REQS=2.25.11
+GIO_REQS=2.25.0
 GTK_REQS=2.90.3
 TOTEM_PLPARSER_REQS=2.29.1
 GNOMEICON_REQS=2.15.90
@@ -109,7 +110,7 @@ if test "x$enable_easy_codec_installation" != "xno"; then
 	])
 fi
 
-MM="gstreamer-0.10 >= $GST_REQS gstreamer-base-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gstreamer-tag-0.10 >= $GSTPLUG_REQS gconf-2.0"
+MM="gstreamer-0.10 >= $GST_REQS gstreamer-base-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gstreamer-tag-0.10 >= $GSTPLUG_REQS"
 PKG_CHECK_MODULES(GST, $MM)
 GST_LIBS="$GST_LIBS -lgstbase-$GST_MAJORMINOR -lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR -lgstpbutils-$GST_MAJORMINOR -lgsttag-$GST_MAJORMINOR"
 AC_SUBST(GST_LIBS)
@@ -190,10 +191,9 @@ dnl Pkg-config checks
 
 PKG_CHECK_MODULES([DEPENDENCY],[
   glib-2.0 >= $GLIB_REQS
-  gio-2.0
+  gio-2.0 >= $GIO_REQS
   gtk+-3.0 >= $GTK_REQS
   gmodule-2.0
-  gconf-2.0
   totem-plparser >= $TOTEM_PLPARSER_REQS
   gstreamer-tag-0.10 >= 0.10.26
   cairo])
@@ -726,8 +726,9 @@ if test "x$with_dbus" != "xno"; then
 fi
 AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
 
-AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AM_GCONF_SOURCE_2
+
+GLIB_GSETTINGS
 
 GNOME_COMMON_INIT
 GNOME_DEBUG_CHECK
@@ -816,6 +817,7 @@ src/plugins/chapters/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
 data/Makefile
+data/org.gnome.totem.gschema.xml.in
 data/totem.desktop.in.in
 data/totem.pc
 data/icons/Makefile

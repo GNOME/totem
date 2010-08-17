@@ -28,7 +28,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <gconf/gconf-client.h>
 #include <gio/gio.h>
 #include <string.h>
 
@@ -93,7 +92,8 @@ struct TotemPlaylistPrivate
 	int *shuffled;
 	int current_shuffled, shuffle_len;
 
-	GConfClient *gc;
+	GSettings *settings;
+	GSettings *lockdown_settings;
 
 	/* Used to know the position for drops */
 	GtkTreePath *tree_path;
@@ -1422,20 +1422,16 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 }
 
 static void
-update_repeat_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, TotemPlaylist *playlist)
+update_repeat_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
 {
-	gboolean repeat;
-
-	repeat = gconf_value_get_bool (entry->value);
-	playlist->priv->repeat = (repeat != FALSE);
+	playlist->priv->repeat = g_settings_get_boolean (settings, "repeat");
 
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[REPEAT_TOGGLED], 0,
-			repeat, NULL);
+			playlist->priv->repeat, NULL);
 }
 
 typedef struct {
@@ -1511,14 +1507,11 @@ ensure_shuffled (TotemPlaylist *playlist)
 }
 
 static void
-update_shuffle_cb (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, TotemPlaylist *playlist)
+update_shuffle_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
 {
-	gboolean shuffle;
+	playlist->priv->shuffle = g_settings_get_boolean (settings, "shuffle");
 
-	shuffle = gconf_value_get_bool (entry->value);
-	playlist->priv->shuffle = shuffle;
-	if (shuffle == FALSE) {
+	if (playlist->priv->shuffle == FALSE) {
 		g_free (playlist->priv->shuffled);
 		playlist->priv->shuffled = NULL;
 		playlist->priv->shuffle_len = 0;
@@ -1531,49 +1524,32 @@ update_shuffle_cb (GConfClient *client, guint cnxn_id,
 			NULL);
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[SHUFFLE_TOGGLED], 0,
-			shuffle, NULL);
+			playlist->priv->shuffle, NULL);
 }
 
 static void
-update_lockdown (GConfClient *client, guint cnxn_id,
-		GConfEntry *entry, TotemPlaylist *playlist)
+update_lockdown_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
 {
-	playlist->priv->disable_save_to_disk = gconf_client_get_bool
-			(playlist->priv->gc,
-			"/desktop/gnome/lockdown/disable_save_to_disk", NULL) != FALSE;
+	playlist->priv->disable_save_to_disk = g_settings_get_boolean (settings, "disable-save-to-disk");
 	totem_playlist_update_save_button (playlist);
 }
 
 static void
 init_config (TotemPlaylist *playlist)
 {
-	playlist->priv->gc = gconf_client_get_default ();
+	playlist->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	playlist->priv->lockdown_settings = g_settings_new ("org.gnome.desktop.lockdown");
 
-	playlist->priv->disable_save_to_disk = gconf_client_get_bool
-	       		(playlist->priv->gc,
-			"/desktop/gnome/lockdown/disable_save_to_disk", NULL) != FALSE;
+	playlist->priv->disable_save_to_disk = g_settings_get_boolean (playlist->priv->lockdown_settings, "disable-save-to-disk");
 	totem_playlist_update_save_button (playlist);
 
-	gconf_client_add_dir (playlist->priv->gc, GCONF_PREFIX,
-			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (playlist->priv->gc, GCONF_PREFIX"/repeat",
-			(GConfClientNotifyFunc) update_repeat_cb,
-			playlist, NULL, NULL);
-	gconf_client_notify_add (playlist->priv->gc, GCONF_PREFIX"/shuffle",
-			(GConfClientNotifyFunc) update_shuffle_cb,
-			playlist, NULL, NULL);
+	g_signal_connect (playlist->priv->lockdown_settings, "changed::disable-save-to-disk", (GCallback) update_lockdown_cb, playlist);
 
-	gconf_client_add_dir (playlist->priv->gc, "/desktop/gnome/lockdown",
-			GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	gconf_client_notify_add (playlist->priv->gc,
-			"/desktop/gnome/lockdown/disable_save_to_disk",
-			(GConfClientNotifyFunc) update_lockdown,
-			playlist, NULL, NULL);
+	playlist->priv->repeat = g_settings_get_boolean (playlist->priv->settings, "repeat");
+	playlist->priv->shuffle = g_settings_get_boolean (playlist->priv->settings, "shuffle");
 
-	playlist->priv->repeat = gconf_client_get_bool (playlist->priv->gc,
-			GCONF_PREFIX"/repeat", NULL) != FALSE;
-	playlist->priv->shuffle = gconf_client_get_bool (playlist->priv->gc,
-			GCONF_PREFIX"/shuffle", NULL) != FALSE;
+	g_signal_connect (playlist->priv->settings, "changed::repeat", (GCallback) update_repeat_cb, playlist);
+	g_signal_connect (playlist->priv->settings, "changed::shuffle", (GCallback) update_shuffle_cb, playlist);
 }
 
 static void
@@ -1647,6 +1623,14 @@ totem_playlist_dispose (GObject *object)
 		g_object_unref (G_OBJECT (playlist->priv->action_group));
 		playlist->priv->action_group = NULL;
 	}
+
+	if (playlist->priv->settings != NULL)
+		g_object_unref (playlist->priv->settings);
+	playlist->priv->settings = NULL;
+
+	if (playlist->priv->lockdown_settings != NULL)
+		g_object_unref (playlist->priv->lockdown_settings);
+	playlist->priv->lockdown_settings = NULL;
 
 	G_OBJECT_CLASS (totem_playlist_parent_class)->dispose (object);
 }
@@ -2527,8 +2511,7 @@ totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat)
 {
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
 
-	gconf_client_set_bool (playlist->priv->gc, GCONF_PREFIX"/repeat",
-			repeat, NULL);
+	g_settings_set_boolean (playlist->priv->settings, "repeat", repeat);
 }
 
 gboolean
@@ -2544,8 +2527,7 @@ totem_playlist_set_shuffle (TotemPlaylist *playlist, gboolean shuffle)
 {
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
 
-	gconf_client_set_bool (playlist->priv->gc, GCONF_PREFIX"/shuffle",
-			shuffle, NULL);
+	g_settings_set_boolean (playlist->priv->settings, "shuffle", shuffle);
 }
 
 void

@@ -76,7 +76,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
-#include <gconf/gconf-client.h>
 
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
@@ -143,10 +142,10 @@ enum
 };
 
 static const gchar *video_props_str[4] = {
-  GCONF_PREFIX "/brightness",
-  GCONF_PREFIX "/contrast",
-  GCONF_PREFIX "/saturation",
-  GCONF_PREFIX "/hue"
+  "brightness",
+  "contrast",
+  "saturation",
+  "hue"
 };
 
 /* GstPlayFlags flags from playbin2 */
@@ -240,7 +239,7 @@ struct BaconVideoWidgetPrivate
 
   GstMessageType               ignore_messages_mask;
 
-  GConfClient                 *gc;
+  GSettings                   *settings;
 
   GstBus                      *bus;
   gulong                       sig_bus_sync;
@@ -3277,8 +3276,7 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 
   if (bvw->priv->connection_speed != speed) {
     bvw->priv->connection_speed = speed;
-    gconf_client_set_int (bvw->priv->gc,
-         GCONF_PREFIX"/connection_speed", speed, NULL);
+    g_settings_set_int (bvw->priv->settings, "connection-speed", speed);
     g_object_notify (G_OBJECT (bvw), "connection-speed");
   }
 
@@ -3457,7 +3455,7 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
  * @type: the new audio output type
  *
  * Sets the audio output type (number of speaker channels) in the video widget,
- * and stores it in GConf.
+ * and stores it in GSettings.
  **/
 void
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
@@ -3472,8 +3470,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
     return;
 
   bvw->priv->speakersetup = type;
-  gconf_client_set_int (bvw->priv->gc,
-      GCONF_PREFIX"/audio_output_type", type, NULL);
+  g_settings_set_int (bvw->priv->settings, "audio-output-type", type);
 
   set_audio_filter (bvw);
 }
@@ -4865,8 +4862,8 @@ setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
 
     /* set to long name as key so that the preferences dialog gets it right */
     if (f && strcmp (vis_name, GST_PLUGIN_FEATURE_NAME (f)) == 0) {
-      gconf_client_set_string (bvw->priv->gc, GCONF_PREFIX "/visual",
-          gst_element_factory_get_longname (f), NULL);
+      g_settings_set_string (bvw->priv->settings, "visual",
+          gst_element_factory_get_longname (f));
       fac = f;
       goto done;
     }
@@ -5395,11 +5392,11 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
       }
     }
 
-  /* value wasn't found, get from gconf */
+  /* value wasn't found, get from GSettings */
   if (ret == 0)
-    ret = gconf_client_get_int (bvw->priv->gc, video_props_str[type], NULL);
+    ret = g_settings_get_int (bvw->priv->settings, video_props_str[type]);
 
-  GST_DEBUG ("nothing found for type %d, returning value %d from gconf key %s",
+  GST_DEBUG ("nothing found for type %d, returning value %d from GSettings key %s",
       type, ret, video_props_str[type]);
 
 done:
@@ -5501,10 +5498,10 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
         }
     }
 
-  /* save in gconf */
-  gconf_client_set_int (bvw->priv->gc, video_props_str[type], value, NULL);
+  /* save in GSettings */
+  g_settings_set_int (bvw->priv->settings, video_props_str[type], value);
 
-  GST_DEBUG ("setting value %d on gconf key %s", value, video_props_str[type]);
+  GST_DEBUG ("setting value %d on GSettings key %s", value, video_props_str[type]);
 }
 
 /**
@@ -6520,23 +6517,18 @@ find_colorbalance_element (GstElement *element, GValue * ret, GstElement **cb)
 }
 
 static void
-bvw_update_brightness_and_contrast_from_gconf (BaconVideoWidget * bvw)
+bvw_update_brightness_and_contrast_from_gsettings (BaconVideoWidget * bvw)
 {
-  GConfValue *confvalue;
   guint i;
 
   g_return_if_fail (g_thread_self() == gui_thread);
 
   /* Setup brightness and contrast */
-  GST_LOG ("updating brightness and contrast from GConf settings");
+  GST_LOG ("updating brightness and contrast from GSettings settings");
   for (i = 0; i < G_N_ELEMENTS (video_props_str); i++) {
-    confvalue = gconf_client_get_without_default (bvw->priv->gc,
-        video_props_str[i], NULL);
-    if (confvalue != NULL) {
-      bacon_video_widget_set_video_property (bvw, i,
-        gconf_value_get_int (confvalue));
-      gconf_value_free (confvalue);
-    }
+    gint value = g_settings_get_int (bvw->priv->settings, video_props_str[i]);
+    if (value > 0)
+      bacon_video_widget_set_video_property (bvw, i, value);
   }
 }
 
@@ -6657,10 +6649,10 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
   }
 
   /* Setup brightness and contrast from configured values (do it delayed if
-   * we're within a streaming thread, otherwise gconf/orbit/whatever may
+   * we're within a streaming thread, otherwise GSettings/orbit/whatever may
    * iterate or otherwise mess with the default main context and cause all
    * kinds of nasty issues) */
-  bvw_update_brightness_and_contrast_from_gconf (bvw);
+  bvw_update_brightness_and_contrast_from_gsettings (bvw);
 
   if (old_xoverlay)
     gst_object_unref (GST_OBJECT (old_xoverlay));
@@ -6802,11 +6794,11 @@ GtkWidget *
 bacon_video_widget_new (int width, int height,
                         BvwUseType type, GError ** error)
 {
-  GConfValue *confvalue;
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
+  gint value;
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
@@ -6875,8 +6867,8 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->logo_mode = FALSE;
   bvw->priv->auto_resize = FALSE;
 
-  /* gconf setting in backend */
-  bvw->priv->gc = gconf_client_get_default ();
+  /* GSettings setting in backend */
+  bvw->priv->settings = g_settings_new ("org.gnome.totem");
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
@@ -7105,13 +7097,11 @@ bacon_video_widget_new (int width, int height,
   }
 
   /* audio out, if any */
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX"/audio_output_type", NULL);
-  if (confvalue != NULL &&
+  value = g_settings_get_int (bvw->priv->settings, "audio-output-type");
+  if (value > 0 &&
       (type != BVW_USE_TYPE_METADATA && type != BVW_USE_TYPE_CAPTURE)) {
-    bvw->priv->speakersetup = gconf_value_get_int (confvalue);
+    bvw->priv->speakersetup = value;
     bacon_video_widget_set_audio_out_type (bvw, bvw->priv->speakersetup);
-    gconf_value_free (confvalue);
   } else if (type == BVW_USE_TYPE_METADATA || type == BVW_USE_TYPE_CAPTURE) {
     bvw->priv->speakersetup = -1;
     /* don't set up a filter for the speaker setup, anything is fine */
@@ -7121,12 +7111,9 @@ bacon_video_widget_new (int width, int height,
   }
 
   /* tv/conn (not used yet) */
-  confvalue = gconf_client_get_without_default (bvw->priv->gc,
-      GCONF_PREFIX "/connection_speed", NULL);
-  if (confvalue != NULL) {
-    bacon_video_widget_set_connection_speed (bvw,
-        gconf_value_get_int (confvalue)); 
-    gconf_value_free (confvalue);
+  value = g_settings_get_int (bvw->priv->settings, "connection-speed");
+  if (value > 0) {
+    bacon_video_widget_set_connection_speed (bvw, value);
   } else {
     bacon_video_widget_set_connection_speed (bvw,
     	bvw->priv->connection_speed);

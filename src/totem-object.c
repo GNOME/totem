@@ -994,8 +994,8 @@ totem_object_action_exit (TotemObject *totem)
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
 
-	if (totem->gc)
-		g_object_unref (G_OBJECT (totem->gc));
+	if (totem->settings)
+		g_object_unref (totem->settings);
 
 	if (totem->fs)
 		g_object_unref (totem->fs);

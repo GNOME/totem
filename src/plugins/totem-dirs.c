@@ -40,7 +40,6 @@
 #endif
 
 #include <glib.h>
-#include <gconf/gconf-client.h>
 
 #include "totem-dirs.h"
 #include "totem-plugins-engine.h"
@@ -52,7 +51,7 @@
 /**
  * totem_get_plugin_paths:
  *
- * Return a %NULL-terminated array of paths to directories which can contain Totem plugins. This respects the GConf disable_user_plugins setting.
+ * Return a %NULL-terminated array of paths to directories which can contain Totem plugins. This respects the GSettings disable_user_plugins setting.
  *
  * Return value: a %NULL-terminated array of paths to plugin directories
  *
@@ -63,7 +62,7 @@ totem_get_plugin_paths (void)
 {
 	GPtrArray *paths;
 	char  *path;
-	GConfClient *client;
+	GSettings *settings;
 	gboolean uninstalled;
 
 	paths = g_ptr_array_new ();
@@ -77,11 +76,13 @@ totem_get_plugin_paths (void)
 	}
 #endif
 
-	client = gconf_client_get_default ();
-	if (gconf_client_get_bool (client, GCONF_PREFIX"/disable_user_plugins", NULL) == FALSE) {
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	if (g_settings_get_boolean (settings, "disable-user-plugins") == FALSE) {
 		path = g_build_filename (totem_data_dot_dir (), "plugins", NULL);
 		g_ptr_array_add (paths, path);
 	}
+
+	g_object_unref (settings);
 
 	if (uninstalled == FALSE) {
 		path = g_strdup (TOTEM_PLUGIN_DIR);

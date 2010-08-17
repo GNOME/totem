@@ -140,12 +140,12 @@ static void
 debug_handler (const char *log_domain,
                GLogLevelFlags log_level,
                const char *message,
-               GConfClient *gc)
+               GSettings *settings)
 {
 	static int debug = -1;
 
 	if (debug < 0)
-		debug = gconf_client_get_bool (gc, GCONF_PREFIX"/debug", NULL);
+		debug = g_settings_get_boolean (settings, "debug");
 
 	if (debug)
 		g_log_default_handler (log_domain, log_level, message, NULL);
@@ -155,11 +155,11 @@ int
 main (int argc, char **argv)
 {
 	Totem *totem;
-	GConfClient *gc;
+	GSettings *settings;
 	GError *error = NULL;
 	GOptionContext *context;
 	GOptionGroup *baconoptiongroup;
-	GtkSettings *settings;
+	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -202,21 +202,21 @@ main (int argc, char **argv)
 	gtk_about_dialog_set_url_hook (about_url_hook, NULL, NULL);
 	gtk_about_dialog_set_email_hook (about_email_hook, NULL, NULL);
 
-	settings = gtk_settings_get_default ();
-	g_object_set (G_OBJECT (settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+	gtk_settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
-	gc = gconf_client_get_default ();
-	if (gc == NULL) {
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	if (settings == NULL) {
 		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."),
 					     _("Make sure that GNOME is properly installed."), NULL);
 	}
 
 	/* Debug log handling */
-	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, gc);
+	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, settings);
 
 	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
-	totem->gc = gc;
+	totem->settings = settings;
 
 	/* IPC stuff */
 	if (optionstate.notconnectexistingsession == FALSE) {

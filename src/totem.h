@@ -34,11 +34,11 @@
 #include "totem-playlist.h"
 
 /**
- * TOTEM_GCONF_PREFIX:
+ * TOTEM_GSETTINGS_SCHEMA:
  *
- * The GConf prefix under which all Totem GConf keys are stored.
+ * The GSettings schema under which all Totem settings are stored.
  **/
-#define TOTEM_GCONF_PREFIX "/apps/totem"
+#define TOTEM_GSETTINGS_SCHEMA "org.gnome.totem"
 
 G_BEGIN_DECLS
 
