@@ -63,7 +63,6 @@ libbaconvideowidget_la_SOURCES = \
 
 libbaconvideowidget_la_CPPFLAGS =		\
 	-D_REENTRANT				\
-	-DGCONF_PREFIX=\""/apps/totem"\"	\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 

@@ -789,7 +789,6 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
-			      <signal name="toggled" handler="remember_position_checkbutton_toggled_cb" />
 		        </object>
 		      </child>
 		    </object>
@@ -890,7 +889,6 @@
 			      <property name="model">tpw_speed_liststore</property>
 			      <property name="add_tearoffs">False</property>
 			      <property name="focus_on_click">True</property>
-			      <signal name="changed" handler="connection_combobox_changed"/>
 			      <child>
 			        <object class="GtkCellRendererText" id="tpw_speed_cell"/>
 			        <attributes>
@@ -988,7 +986,6 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
-			      <signal name="toggled" handler="checkbutton3_toggled_cb"/>
 		            </object>
 			    <packing>
 			      <property name="left_attach">0</property>
@@ -1178,7 +1175,6 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
-			      <signal name="toggled" handler="auto_chapters_toggled_cb"/>
 		            </object>
 			    <packing>
 			      <property name="left_attach">0</property>
@@ -1299,7 +1295,6 @@
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
-			  <signal name="toggled" handler="checkbutton1_toggled_cb"/>
 			</object>
 		      </child>
 		    </object>
@@ -1322,7 +1317,6 @@
 						  <property name="use_action_appearance">False</property>
 						  <property name="use_underline">True</property>
 						  <property name="draw_indicator">True</property>
-						  <signal name="toggled" handler="no_deinterlace_toggled_cb"/>
 					  </object>
 				  </child>
 			  </object>
@@ -1543,7 +1537,6 @@
 				  <property name="model">tpw_visuals_size_liststore</property>
 				  <property name="add_tearoffs">False</property>
 				  <property name="focus_on_click">True</property>
-				  <signal name="changed" handler="visual_quality_menu_changed"/>
 				  <child>
 				    <object class="GtkCellRendererText" id="tpw_visuals_size_cell"/>
 				    <attributes>

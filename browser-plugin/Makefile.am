@@ -89,7 +89,6 @@ totem_plugin_viewer_CPPFLAGS = \
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DGCONF_PREFIX="\"/apps/totem\""		\
 	-DDATADIR="\"$(datadir)\""			\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	-DSHAREDIR="\"$(pkgdatadir)\""			\
