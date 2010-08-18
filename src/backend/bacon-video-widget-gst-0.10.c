@@ -135,7 +135,8 @@ enum
   PROP_USER_AGENT,
   PROP_VOLUME,
   PROP_DOWNLOAD_FILENAME,
-  PROP_AUTO_RESIZE
+  PROP_AUTO_RESIZE,
+  PROP_DEINTERLACING
 };
 
 static const gchar *video_props_str[4] = {
@@ -1151,6 +1152,17 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    **/
   g_object_class_install_property (object_class, PROP_AUTO_RESIZE,
                                    g_param_spec_boolean ("auto-resize", NULL,
+                                                         NULL, FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:deinterlacing:
+   *
+   * Whether to automatically deinterlace videos.
+   **/
+  g_object_class_install_property (object_class, PROP_DEINTERLACING,
+                                   g_param_spec_boolean ("deinterlacing", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
@@ -2800,6 +2812,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_AUTO_RESIZE:
       bacon_video_widget_set_auto_resize (bvw, g_value_get_boolean (value));
       break;
+    case PROP_DEINTERLACING:
+      bacon_video_widget_set_deinterlacing (bvw, g_value_get_boolean (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2852,6 +2867,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_AUTO_RESIZE:
       g_value_set_boolean (value, bvw->priv->auto_resize);
+      break;
+    case PROP_DEINTERLACING:
+      g_value_set_boolean (value, bacon_video_widget_get_deinterlacing (bvw));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3256,6 +3274,8 @@ bacon_video_widget_set_deinterlacing (BaconVideoWidget * bvw,
   else
     flags &= ~GST_PLAY_FLAG_DEINTERLACE;
   g_object_set (bvw->priv->play, "flags", flags, NULL);
+
+  g_object_notify (G_OBJECT (bvw), "deinterlacing");
 }
 
 /**
