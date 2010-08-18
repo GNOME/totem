@@ -319,7 +319,7 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const c
 
 	/* Set the default path */
 	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-	path = g_settings_get_string (settings, "screenshot-save-path");
+	path = g_settings_get_string (settings, "screenshot-save-uri");
 	g_object_unref (settings);
 
 	/* Default to the Pictures directory */
@@ -361,7 +361,7 @@ totem_screenshot_plugin_update_file_chooser (const char *uri)
 	g_object_unref (parent);
 
 	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-	g_settings_set_string (settings, "screenshot-save-path", dir);
+	g_settings_set_string (settings, "screenshot-save-uri", dir);
 	g_object_unref (settings);
 	g_free (dir);
 }
