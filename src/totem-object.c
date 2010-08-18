@@ -4012,7 +4012,8 @@ totem_setup_window (TotemObject *totem)
 void
 totem_callback_connect (TotemObject *totem)
 {
-	GtkWidget *item, *arrow;
+	GtkWidget *item, *image, *label;
+	GIcon *icon;
 	GtkAction *action;
 	GtkActionGroup *action_group;
 	GtkBox *box;
@@ -4076,10 +4077,17 @@ totem_callback_connect (TotemObject *totem)
 	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
 	item = gtk_toggle_button_new ();
 	gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
-	arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
-	g_object_set_data (G_OBJECT (box), "arrow", arrow);
-	gtk_button_set_image_position (GTK_BUTTON (item), GTK_POS_RIGHT);
-	gtk_button_set_image (GTK_BUTTON (item), arrow);
+
+	/* Remove the label */
+	label = gtk_bin_get_child (GTK_BIN (item));
+	gtk_widget_destroy (label);
+
+	/* Force add an icon, so it doesn't follow the
+	 * gtk-button-images setting */
+	icon = g_themed_icon_new_with_default_fallbacks ("view-sidebar-symbolic");
+	image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_BUTTON);
+	gtk_widget_show (image);
+	gtk_container_add (GTK_CONTAINER (item), image);
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
