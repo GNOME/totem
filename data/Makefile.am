@@ -54,21 +54,9 @@ nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functi
 	$(AM_V_GEN) $(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt	\
 	> $@
 
-update-gsettings.sh: org.gnome.desktop.thumbnailers.gschema.xml.in
-
-org.gnome.desktop.thumbnailers.gschema.xml.in: schemas.sh mime-type-list.txt mime-functions.sh
-	$(AM_V_GEN) $(srcdir)/schemas.sh $(srcdir)/mime-type-list.txt $(bindir)	\
-	> $@								\
-	3> update-gsettings.sh
-
-org.gnome.desktop.url-handlers.gschema.xml.in: handlers.sh
-	$(AM_V_GEN) $(srcdir)/handlers.sh > $@
-
-generated_schema_files = org.gnome.desktop.thumbnailers.gschema.xml org.gnome.desktop.url-handlers.gschema.xml
-
 gsettings_ENUM_NAMESPACE = org.gnome.totem
 gsettings_ENUM_FILES = $(top_srcdir)/src/*.h $(top_srcdir)/src/backend/*.h
-gsettings_SCHEMAS = org.gnome.totem.gschema.xml $(generated_schema_files)
+gsettings_SCHEMAS = org.gnome.totem.gschema.xml
 
 @INTLTOOL_XML_NOMERGE_RULE@
 
@@ -90,10 +78,8 @@ EXTRA_DIST = \
 	$(stuff_DATA)			\
 	$(bugreport_SCRIPTS)		\
 	desktop.sh			\
-	handlers.sh			\
 	mime-type-include.sh		\
 	mime-type-list.txt		\
-	schemas.sh			\
 	mime-functions.sh		\
 	org.gnome.totem.gschema.xml.in.in	\
 	totem.convert			\
@@ -104,12 +90,9 @@ CLEANFILES = \
 	*.bak *.uip core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
-	$(generated_schema_files)	\
 	$(gsettings_SCHEMAS)		\
-	totem-handlers.gschema.xml.in 	\
 	totem-mime-types.h		\
-	nautilus-audio-mime-types.h	\
-	update-gsettings.sh
+	nautilus-audio-mime-types.h
 
 DISTCLEANFILES = $(gsettings_SCHEMAS)
 
