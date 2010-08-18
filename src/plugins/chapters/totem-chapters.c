@@ -32,7 +32,6 @@
 #include <gmodule.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <gdk/gdkkeysyms.h>
-#include <gconf/gconf-client.h>
 #include <unistd.h>
 #include <math.h>
 
@@ -81,7 +80,7 @@ typedef struct {
 	gchar		*cmml_mrl;
 	gboolean	autoload;
 	GCancellable	*cancellable[2];
-	GConfClient	*gconf;
+	GSettings	*settings;
 	guint		autoload_handle_id;
 } TotemChaptersPluginPrivate;
 
@@ -123,7 +122,7 @@ static void show_chapter_edit_dialog (TotemChaptersPlugin *plugin);
 static void save_chapters_result_cb (gpointer data, gpointer user_data);
 static GList * get_chapters_list (TotemChaptersPlugin *plugin);
 static gboolean show_popup_menu (TotemChaptersPlugin *plugin, GdkEventButton *event);
-static void gconf_autoload_changed_cb (GConfClient *gconf, guint cnx_id, GConfEntry *entry, TotemChaptersPlugin	*plugin);
+static void autoload_changed_cb (GSettings *settigs, const gchar *key, TotemChaptersPlugin *plugin);
 static void load_chapters_from_file (const gchar *uri, gboolean from_dialog, TotemChaptersPlugin *plugin);
 static void set_no_data_visible (gboolean visible, gboolean show_buttons, TotemChaptersPlugin *plugin);
 
@@ -632,19 +631,15 @@ chapter_selection_changed_cb (GtkTreeSelection		*tree_selection,
 }
 
 static void
-gconf_autoload_changed_cb (GConfClient		*gconf,
-			   guint		cnx_id,
-			   GConfEntry		*entry,
-			   TotemChaptersPlugin	*plugin)
+autoload_changed_cb (GSettings			*settings,
+		     const gchar		*key,
+		     TotemChaptersPlugin	*plugin)
 {
-	g_return_if_fail (GCONF_IS_CLIENT (gconf));
-	g_return_if_fail (entry != NULL);
+	g_return_if_fail (G_IS_SETTINGS (settings));
+	g_return_if_fail (key != NULL);
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
-	if (G_LIKELY (entry->value != NULL))
-		plugin->priv->autoload = gconf_value_get_bool (entry->value);
-	else
-		plugin->priv->autoload = TRUE;
+	plugin->priv->autoload = g_settings_get_boolean (settings, key);
 }
 
 static void
@@ -1104,7 +1099,6 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemObject		*totem;
 	GtkWindow		*main_window;
-	GConfClient		*gconf;
 	GtkBuilder		*builder;
 	GtkWidget		*main_box;
 	GtkTreeSelection	*selection;
@@ -1126,15 +1120,9 @@ impl_activate (PeasActivatable *plugin)
 	if (builder == NULL)
 		return;
 
-	gconf = gconf_client_get_default ();
-	if (G_LIKELY (gconf != NULL)) {
-		cplugin->priv->autoload = gconf_client_get_bool (gconf, GCONF_PREFIX"/autoload_chapters", NULL);
-		cplugin->priv->autoload_handle_id = gconf_client_notify_add (gconf, GCONF_PREFIX"/autoload_chapters",
-									     (GConfClientNotifyFunc) gconf_autoload_changed_cb,
-									      cplugin, NULL, NULL);
-	} else
-		cplugin->priv->autoload = TRUE;
-	cplugin->priv->gconf = gconf;
+	cplugin->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	cplugin->priv->autoload = g_settings_get_boolean (cplugin->priv->settings, "autoload-chapters");
+	g_signal_connect (cplugin->priv->settings, "changed::autoload-chapters", (GCallback) autoload_changed_cb, cplugin);
 
 	cplugin->priv->tree = GTK_WIDGET (gtk_builder_get_object (builder, "chapters_tree_view"));
 	cplugin->priv->action_group = GTK_ACTION_GROUP (gtk_builder_get_object (builder, "chapters-action-group"));
@@ -1232,10 +1220,8 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
 					      totem_file_closed_cb,
 					      plugin);
-	if (cplugin->priv->gconf != NULL) {
-		gconf_client_notify_remove (cplugin->priv->gconf, cplugin->priv->autoload_handle_id);
-		g_object_unref (cplugin->priv->gconf);
-	}
+	if (cplugin->priv->settings != NULL)
+		g_object_unref (cplugin->priv->settings);
 
 	if (G_UNLIKELY (cplugin->priv->last_frame != NULL))
 		g_object_unref (G_OBJECT (cplugin->priv->last_frame));

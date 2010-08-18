@@ -416,9 +416,6 @@ for plugin in ${used_plugins}; do
 			plugin_error_or_ignore "the coherence_upnp plugin uses PyGTK and conflicts with the new pygobject bindings"
 			add_plugin="0"
 		;;
-		screensaver)
-			PKG_CHECK_MODULES(SCREENSAVER, gconf-2.0)
-		;;
 		galago)
 			PKG_CHECK_MODULES(LIBGALAGO, libgalago >= 0.5.2,
 				[HAVE_LIBGALAGO=yes], [HAVE_LIBGALAGO=no])
@@ -456,7 +453,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		mythtv)
-			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7.1 gmyth-upnp >= 0.7.1 gconf-2.0,
+			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7.1 gmyth-upnp >= 0.7.1,
 					  [HAVE_GMYTH=yes], [HAVE_GMYTH=no])
 			if test "${HAVE_GMYTH}" != "yes"; then
 				plugin_error_or_ignore "you need GMyth >= 0.7 installed for the MythTV plugin"
@@ -811,6 +808,7 @@ src/plugins/tracker/Makefile
 src/plugins/youtube/Makefile
 src/plugins/pythonconsole/Makefile
 src/plugins/publish/Makefile
+src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in
 src/plugins/jamendo/Makefile
 src/plugins/brasero-disc-recorder/Makefile
 src/plugins/chapters/Makefile

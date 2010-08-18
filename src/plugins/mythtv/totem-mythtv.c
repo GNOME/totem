@@ -30,7 +30,6 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
-#include <gconf/gconf-client.h>
 #include <gmodule.h>
 #include <string.h>
 
@@ -77,7 +76,6 @@ typedef struct
 	GMythUPnP *upnp;
 
 	TotemObject *totem;
-	GConfClient *client;
 
 	GtkWidget *sidebar_recordings;
 	GtkWidget *sidebar_livetv;
@@ -458,10 +456,6 @@ totem_mythtv_plugin_finalize (GObject *object)
 		g_list_free (tm->lst_b_info);
 		tm->lst_b_info = NULL;
 	}
-	if (tm->client != NULL) {
-		g_object_unref (tm->client);
-		tm->client = NULL;
-	}
 	if (tm->upnp != NULL) {
 		g_object_unref (tm->upnp);
 		tm->upnp = NULL;
@@ -539,10 +533,6 @@ impl_deactivate	(PeasActivatable *plugin)
 		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
 		g_list_free (tm->lst_b_info);
 		tm->lst_b_info = NULL;
-	}
-	if (tm->client != NULL) {
-		g_object_unref (tm->client);
-		tm->client = NULL;
 	}
 	if (tm->upnp != NULL) {
 		g_object_unref (tm->upnp);

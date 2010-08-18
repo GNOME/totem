@@ -17,7 +17,6 @@ common_defines = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\

@@ -16,7 +16,6 @@ common_defines = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGCONF_PREFIX=\""/apps/totem"\"		\
 	-DDATADIR=\""$(datadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
 	-DBINDIR=\""$(bindir)"\"			\
@@ -41,8 +40,16 @@ libpublish_la_CFLAGS = \
 	-I$(top_srcdir)/src/backend	\
 	-I$(top_srcdir)/src/plugins
 
-EXTRA_DIST = $(plugin_in_files) $(ui_DATA)
+gsettings_SCHEMAS = org.gnome.totem.plugins.publish.gschema.xml
 
-CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
-DISTCLEANFILES = $(plugin_DATA)
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
 
+convertdir = $(datadir)/GConf/gsettings
+convert_DATA = publish.convert
+
+EXTRA_DIST = $(plugin_in_files) $(ui_DATA) org.gnome.totem.plugins.publish.gschema.xml.in.in publish.convert
+
+CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)

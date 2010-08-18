@@ -32,7 +32,6 @@
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 #include <libpeas/peas-activatable.h>
-#include <gconf/gconf-client.h>
 
 #ifdef HAVE_XFREE
 #include <X11/XF86keysym.h>
@@ -53,7 +52,7 @@ struct TotemScreenshotPluginPrivate {
 	gulong notify_logo_mode_signal;
 	gulong key_press_event_signal;
 
-	guint gconf_id;
+	GSettings *settings;
 	gboolean save_to_disk;
 
 	guint ui_merge_id;
@@ -195,9 +194,9 @@ notify_logo_mode_cb (GObject *object, GParamSpec *pspec, TotemScreenshotPlugin *
 }
 
 static void
-disable_save_to_disk_changed_cb (GConfClient *client, guint connection_id, GConfEntry *entry, TotemScreenshotPlugin *self)
+disable_save_to_disk_changed_cb (GSettings *settings, const gchar *key, TotemScreenshotPlugin *self)
 {
-	self->priv->save_to_disk = !gconf_client_get_bool (client, "/desktop/gnome/lockdown/disable_save_to_disk", NULL);
+	self->priv->save_to_disk = !g_settings_get_boolean (settings, "disable-save-to-disk");
 }
 
 static void
@@ -205,7 +204,6 @@ impl_activate (PeasActivatable *plugin)
 {
 	GtkWindow *window;
 	GtkUIManager *manager;
-	GConfClient *client;
 	TotemScreenshotPlugin *self = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	const GtkActionEntry menu_entries[] = {
@@ -254,13 +252,10 @@ impl_activate (PeasActivatable *plugin)
 			       "/ui/tmw-menubar/edit/repeat-mode", NULL,
 			       NULL, GTK_UI_MANAGER_SEPARATOR, TRUE);
 
-	/* Set up a GConf watch for lockdown keys */
-	client = gconf_client_get_default ();
-	priv->gconf_id = gconf_client_notify_add (client, "/desktop/gnome/lockdown/disable_save_to_disk",
-						  (GConfClientNotifyFunc) disable_save_to_disk_changed_cb,
-						  self, NULL, NULL);
-	disable_save_to_disk_changed_cb (client, priv->gconf_id, NULL, self);
-	g_object_unref (client);
+	/* Set up a GSettings watch for lockdown keys */
+	priv->settings = g_settings_new ("org.gnome.desktop.lockdown");
+	g_signal_connect (priv->settings, "changed::disable-save-to-disk", (GCallback) disable_save_to_disk_changed_cb, self);
+	disable_save_to_disk_changed_cb (priv->settings, "disable-save-to-disk", self);
 
 	/* Update the menu entries' states */
 	update_state (self);
@@ -272,7 +267,6 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
 	GtkWindow *window;
 	GtkUIManager *manager;
-	GConfClient *client;
 
 	/* Disconnect signal handlers */
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
@@ -282,10 +276,8 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handler_disconnect (G_OBJECT (window), priv->key_press_event_signal);
 	g_object_unref (window);
 
-	/* Disconnect from GConf */
-	client = gconf_client_get_default ();
-	gconf_client_notify_remove (client, priv->gconf_id);
-	g_object_unref (client);
+	/* Disconnect from GSettings */
+	g_object_unref (priv->settings);
 
 	/* Remove the menu */
 	manager = totem_get_ui_manager (priv->totem);
@@ -321,14 +313,14 @@ make_filename_for_dir (const char *directory, const char *format, const char *mo
 gchar *
 totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const char *movie_title)
 {
-	GConfClient *client;
+	GSettings *settings;
 	char *path, *filename, *full, *uri;
 	GFile *file;
 
 	/* Set the default path */
-	client = gconf_client_get_default ();
-	path = gconf_client_get_string (client, "/apps/totem/screenshot_save_path", NULL);
-	g_object_unref (client);
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	path = g_settings_get_string (settings, "screenshot-save-path");
+	g_object_unref (settings);
 
 	/* Default to the Pictures directory */
 	if (path == NULL || path[0] == '\0') {
@@ -357,7 +349,7 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const c
 void
 totem_screenshot_plugin_update_file_chooser (const char *uri)
 {
-	GConfClient *client;
+	GSettings *settings;
 	char *dir;
 	GFile *file, *parent;
 
@@ -368,10 +360,9 @@ totem_screenshot_plugin_update_file_chooser (const char *uri)
 	dir = g_file_get_path (parent);
 	g_object_unref (parent);
 
-	client = gconf_client_get_default ();
-	gconf_client_set_string (client,
-				 "/apps/totem/screenshot_save_path",
-				 dir, NULL);
+	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	g_settings_set_string (settings, "screenshot-save-path", dir);
+	g_object_unref (settings);
 	g_free (dir);
 }
 
