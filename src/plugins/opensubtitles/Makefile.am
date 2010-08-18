@@ -9,7 +9,16 @@ plugin_in_files = opensubtitles.totem-plugin.in
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 ui_DATA = opensubtitles.ui
 
-EXTRA_DIST = $(plugin_in_files) $(ui_DATA) opensubtitles.py hash.py
+gsettings_SCHEMAS = org.gnome.totem.plugins.opensubtitles.gschema.xml
 
-CLEANFILES = $(plugin_DATA)
-DISTCLEANFILES = $(plugin_DATA) 
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
+
+convertdir = $(datadir)/GConf/gsettings
+convert_DATA = opensubtitles.convert
+
+EXTRA_DIST = $(plugin_in_files) $(ui_DATA) opensubtitles.py hash.py org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in opensubtitles.convert
+
+CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)

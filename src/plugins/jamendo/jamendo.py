@@ -32,7 +32,7 @@ TODO:
 
 import os
 import gobject
-from gi.repository import GConf
+from gi.repository import Gio
 from gi.repository import Peas
 from gi.repository import PeasUI
 from gi.repository import Gtk
@@ -62,7 +62,6 @@ except ImportError:
 
 socket.setdefaulttimeout(30)
 gobject.threads_init()
-gconf_key = '/apps/totem/plugins/jamendo'
 
 class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
     __gtype_name__ = 'JamendoPlugin'
@@ -82,8 +81,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         self.debug = True
         self.gstreamer_plugins_present = True
         self.totem = self.object
-        self.gconf = GConf.Client.get_default()
-        self.init_settings()
+        self.settings = Gio.Settings.new ('org.gnome.totem.plugins.jamendo')
+        self.settings.connect ('changed::format', self.on_format_changed)
+        self.settings.connect ('changed::num-per-page', self.on_num_per_page_changed)
 
     def do_activate(self):
         """
@@ -139,45 +139,29 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         """
         builder = Totem.plugin_load_interface ('jamendo', 'jamendo.ui', True, None, self)
         print builder
-        gconf = GConf.Client.get_default()
         config_widget = builder.get_object ('config_widget')
         config_widget.connect ('destroy', self.on_config_widget_destroy)
         print config_widget
-        format = gconf.get_string('%s/format' % gconf_key)
-        num_per_page = gconf.get_int('%s/num_per_page' % gconf_key)
+        format = self.settings.get_enum ('format')
+        num_per_page = self.settings.get_int ('num-per-page')
 
         combo = builder.get_object('preferred_format_combo')
-        combo.set_active(self.AUDIO_FORMATS.index(format))
-        combo.connect ('changed', self.on_preferred_format_combo_changed)
+        combo.set_active(format)
+        self.settings.bind ('format', combo, 'active', Gio.SettingsBindFlags.DEFAULT)
 
         spinbutton = builder.get_object('album_num_spinbutton')
         spinbutton.set_value(num_per_page)
-        spinbutton.connect ('value-changed', self.on_album_num_spinbutton_value_changed)
+        self.settings.bind ('num-per-page', spinbutton, 'value', Gio.SettingsBindFlags.DEFAULT)
 
         return config_widget
 
-    def on_preferred_format_combo_changed (self, combo):
-        """
-        Called when the preferred audio format combo box is changed in the configuration dialogue
-        """
-        gconf = GConf.Client.get_default()
-        format = self.AUDIO_FORMATS[combo.get_active()]
-        gconf.set_string('%s/format' % gconf_key, format)
+    def on_format_changed (self, settings, key)
+        JamendoService.AUDIO_FORMAT = self.settings.get_enum ('format')
 
-    def on_album_num_spinbutton_value_changed (self, spinbutton):
-        """
-        Called when the number-of-albums spinbutton is changed in the configuration dialogue
-        """
-        gconf = GConf.Client.get_default()
-        num_per_page = int(spinbutton.get_value())
-        gconf.set_int('%s/num_per_page' % gconf_key, num_per_page)
+    def on_num_per_page_changed (self, settings, key)
+        JamendoService.NUM_PER_PAGE = self.settings.get_int ('num-per-page')
 
     def on_config_widget_destroy (self, widget):
-        """
-        FIXME: The GConf stuff should be refactored so that it listens to notifications and doesn't update manually.
-        This function is hacky and should go away.
-        """
-        self.init_settings()
         try:
             self.reset()
         except:
@@ -206,21 +190,6 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
         for tv in self.treeviews:
             tv.get_model().clear()
         self._update_buttons_state()
-
-    def init_settings(self):
-        """
-        Initialize plugin settings.
-        """
-        format = self.gconf.get_string('%s/format' % gconf_key)
-        if not format:
-            format = 'ogg2'
-            self.gconf.set_string('%s/format' % gconf_key, format)
-        num_per_page = self.gconf.get_int('%s/num_per_page' % gconf_key)
-        if not num_per_page:
-            num_per_page = 10
-            self.gconf.set_int('%s/num_per_page' % gconf_key, num_per_page)
-        JamendoService.AUDIO_FORMAT = format
-        JamendoService.NUM_PER_PAGE = num_per_page
 
     def setup_treeviews(self):
         """

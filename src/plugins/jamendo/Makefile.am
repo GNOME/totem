@@ -8,7 +8,16 @@ plugin_in_files = jamendo.totem-plugin.in
 plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 ui_DATA = jamendo.ui
 
-EXTRA_DIST = $(plugin_in_files) $(ui_DATA) jamendo.py
+gsettings_SCHEMAS = org.gnome.totem.plugins.jamendo.gschema.xml
 
-CLEANFILES = $(plugin_DATA)
-DISTCLEANFILES = $(plugin_DATA)
+@INTLTOOL_XML_NOMERGE_RULE@
+@GSETTINGS_RULES@
+
+convertdir = $(datadir)/GConf/gsettings
+convert_DATA = jamendo.convert
+
+EXTRA_DIST = $(plugin_in_files) $(ui_DATA) jamendo.py org.gnome.totem.plugins.jamendo.gschema.xml.in.in jamendo.convert
+
+CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)

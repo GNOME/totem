@@ -2,7 +2,6 @@ from gi.repository import Peas
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Gio
-from gi.repository import GConf
 from gi.repository import Pango
 from gi.repository import Totem
 import gobject
@@ -302,9 +301,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
     def __init__(self):
         self.dialog = None
         self.totem = self.object
-        self.gconf_client = GConf.Client.get_default()
-        self.GCONF_BASE_DIR = "/apps/totem/plugins/opensubtitles/"
-        self.GCONF_LANGUAGE = "language"
+        self.settings = Gio.Settings.new ('org.gnome.totem.plugins.opensubtitles')
 
     # totem.Plugin methods
 
@@ -357,7 +354,10 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         combobox.pack_start(renderer, True)
         combobox.add_attribute(renderer, 'text', 0)
 
-        self.model.lang = self.gconf_get_str (self.GCONF_BASE_DIR + self.GCONF_LANGUAGE, self.model.lang)
+        lang = self.settings.get_string ('language')
+        if lang is not None:
+            self.model.lang = lang
+
         for lang in LANGUAGES_STR:
             it = languages.append(lang)
             if LANGUAGES[lang[1]] == self.model.lang:
@@ -643,8 +643,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
     def on_combobox__changed(self, combobox):
         iter = combobox.get_active_iter()
         self.model.lang = LANGUAGES[combobox.get_model().get_value(iter, 1)]
-        self.gconf_set_str(self.GCONF_BASE_DIR + self.GCONF_LANGUAGE,
-                           self.model.lang)
+        self.settings.set_string('language', self.model.lang)
 
     def on_close_clicked(self, data):
         self.dialog.destroy()
@@ -660,15 +659,4 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.model.hash , self.model.size = hashFile(self.filename)
 
         self.os_get_results()
-
-    def gconf_get_str(self, key, default = ""):
-        val = self.gconf_client.get(key)
-        
-        if val is not None and val.type == gconf.VALUE_STRING:
-            return val.get_string()
-        else:
-            return default
-
-    def gconf_set_str(self, key, val):
-        self.gconf_client.set_string(key, val)
 
