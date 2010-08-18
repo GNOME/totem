@@ -124,7 +124,8 @@ enum {
 	PROP_SEEKABLE,
 	PROP_CURRENT_TIME,
 	PROP_CURRENT_MRL,
-	PROP_AUTOLOAD_SUBTITLES
+	PROP_AUTOLOAD_SUBTITLES,
+	PROP_REMEMBER_POSITION
 };
 
 enum {
@@ -225,6 +226,15 @@ totem_object_class_init (TotemObjectClass *klass)
 							       FALSE, G_PARAM_READWRITE));
 
 	/**
+	 * TotemObject:remember-position:
+	 *
+	 * If %TRUE, Totem will remember the position it was at last time a given file was opened.
+	 **/
+	g_object_class_install_property (object_class, PROP_REMEMBER_POSITION,
+					 g_param_spec_boolean ("remember-position", NULL, NULL,
+							       FALSE, G_PARAM_READWRITE));
+
+	/**
 	 * TotemObject::file-opened:
 	 * @totem: the #TotemObject which received the signal
 	 * @mrl: the MRL of the opened stream
@@ -302,6 +312,10 @@ totem_object_set_property (GObject *object,
 			totem->autoload_subs = g_value_get_boolean (value);
 			g_object_notify (object, "autoload-subtitles");
 			break;
+		case PROP_REMEMBER_POSITION:
+			totem->remember_position = g_value_get_boolean (value);
+			g_object_notify (object, "remember-position");
+			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -339,6 +353,9 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_AUTOLOAD_SUBTITLES:
 		g_value_set_boolean (value, totem->autoload_subs);
+		break;
+	case PROP_REMEMBER_POSITION:
+		g_value_set_boolean (value, totem->remember_position);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
