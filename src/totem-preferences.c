@@ -121,7 +121,7 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value)
 			"tpw_visuals_size_combobox"));
 	gtk_widget_set_sensitive (item, value);
 
-	bacon_video_widget_set_show_visuals
+	bacon_video_widget_set_show_visualizations
 		(BACON_VIDEO_WIDGET (totem->bvw), value);
 }
 
@@ -361,7 +361,7 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 	int i;
 
 	i = gtk_combo_box_get_active (combobox);
-	list = bacon_video_widget_get_visuals_list (totem->bvw);
+	list = bacon_video_widget_get_visualization_list (totem->bvw);
 	name = g_list_nth_data (list, i);
 
 	old_name = gconf_client_get_string (totem->gc,
@@ -372,7 +372,7 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
 				name, NULL);
 
-		bacon_video_widget_set_visuals (totem->bvw, name);
+		bacon_video_widget_set_visualization (totem->bvw, name);
 	}
 
 	g_free (old_name);
@@ -386,7 +386,7 @@ visual_quality_menu_changed (GtkComboBox *combobox, Totem *totem)
 	i = gtk_combo_box_get_active (combobox);
 	gconf_client_set_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", i, NULL);
-	bacon_video_widget_set_visuals_quality (totem->bvw, i);
+	bacon_video_widget_set_visualization_quality (totem->bvw, i);
 }
 
 void
@@ -663,7 +663,7 @@ totem_setup_preferences (Totem *totem)
 				 totem, NULL, NULL);
 
 	/* Visuals list */
-	list = bacon_video_widget_get_visuals_list (totem->bvw);
+	list = bacon_video_widget_get_visualization_list (totem->bvw);
 	menu = gtk_menu_new ();
 	gtk_widget_show (menu);
 
@@ -692,7 +692,7 @@ totem_setup_preferences (Totem *totem)
 	/* Visualisation quality */
 	i = gconf_client_get_int (totem->gc,
 			GCONF_PREFIX"/visual_quality", NULL);
-	bacon_video_widget_set_visuals_quality (totem->bvw, i);
+	bacon_video_widget_set_visualization_quality (totem->bvw, i);
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
 	gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
 
@@ -788,6 +788,6 @@ totem_preferences_visuals_setup (Totem *totem)
 		visual = g_strdup ("goom");
 	}
 
-	bacon_video_widget_set_visuals (totem->bvw, visual);
+	bacon_video_widget_set_visualization (totem->bvw, visual);
 	g_free (visual);
 }

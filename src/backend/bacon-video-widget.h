@@ -327,31 +327,29 @@ void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 
 /* Visualisation functions */
 /**
- * BvwVisualsQuality:
- * @VISUAL_SMALL: small size (240×15)
- * @VISUAL_NORMAL: normal size (320×25)
- * @VISUAL_LARGE: large size (480×25)
- * @VISUAL_EXTRA_LARGE: extra large size (600×30)
- * @NUM_VISUAL_QUALITIES: the number of visual qualities available
+ * BvwVisualizationQuality:
+ * @BVW_VISUALIZATION_SMALL: small size (240×15)
+ * @BVW_VISUALIZATION_NORMAL: normal size (320×25)
+ * @BVW_VISUALIZATION_LARGE: large size (480×25)
+ * @BVW_VISUALIZATION_EXTRA_LARGE: extra large size (600×30)
  *
  * The different visualisation sizes or qualities available for use
- * with bacon_video_widget_set_visuals_quality().
+ * with bacon_video_widget_set_visualization_quality().
  **/
 typedef enum {
-	VISUAL_SMALL = 0,
-	VISUAL_NORMAL,
-	VISUAL_LARGE,
-	VISUAL_EXTRA_LARGE,
-	NUM_VISUAL_QUALITIES
-} BvwVisualsQuality;
+	BVW_VISUALIZATION_SMALL = 0,
+	BVW_VISUALIZATION_NORMAL,
+	BVW_VISUALIZATION_LARGE,
+	BVW_VISUALIZATION_EXTRA_LARGE
+} BvwVisualizationQuality;
 
-void bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
-						   gboolean show_visuals);
-GList *bacon_video_widget_get_visuals_list	  (BaconVideoWidget *bvw);
-void bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
+void bacon_video_widget_set_show_visualizations	  (BaconVideoWidget *bvw,
+						   gboolean show_visualizations);
+GList *bacon_video_widget_get_visualization_list  (BaconVideoWidget *bvw);
+void bacon_video_widget_set_visualization	  (BaconVideoWidget *bvw,
 						   const char *name);
-void bacon_video_widget_set_visuals_quality	  (BaconVideoWidget *bvw,
-						   BvwVisualsQuality quality);
+void bacon_video_widget_set_visualization_quality (BaconVideoWidget *bvw,
+						   BvwVisualizationQuality quality);
 
 /* Picture settings */
 /**

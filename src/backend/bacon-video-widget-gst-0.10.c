@@ -132,14 +132,14 @@ enum
   PROP_REFERRER,
   PROP_SEEKABLE,
   PROP_SHOW_CURSOR,
-  PROP_SHOW_VISUALS,
+  PROP_SHOW_VISUALIZATIONS,
   PROP_USER_AGENT,
   PROP_VOLUME,
   PROP_DOWNLOAD_FILENAME,
   PROP_AUTO_RESIZE,
   PROP_DEINTERLACING,
   PROP_CONNECTION_SPEED,
-  PROP_VISUALS_QUALITY
+  PROP_VISUALIZATION_QUALITY
 };
 
 static const gchar *video_props_str[4] = {
@@ -207,7 +207,7 @@ struct BaconVideoWidgetPrivate
   GList                       *vis_plugins_list;
   gboolean                     show_vfx;
   gboolean                     vis_changed;
-  BvwVisualsQuality            visq;
+  BvwVisualizationQuality      visq;
   gchar                       *vis_element_name;
   GstElement                  *audio_capsfilter;
 
@@ -1105,12 +1105,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                          G_PARAM_STATIC_STRINGS));
 
   /**
-   * BaconVideoWidget:show-visuals:
+   * BaconVideoWidget:show-visualizations:
    *
    * Whether visualisations should be shown for audio-only streams.
    **/
-  g_object_class_install_property (object_class, PROP_SHOW_VISUALS,
-                                   g_param_spec_boolean ("show-visuals", NULL,
+  g_object_class_install_property (object_class, PROP_SHOW_VISUALIZATIONS,
+                                   g_param_spec_boolean ("show-visualizations", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_WRITABLE |
                                                          G_PARAM_STATIC_STRINGS));
@@ -1183,14 +1183,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                       G_PARAM_STATIC_STRINGS));
 
   /**
-   * BaconVideoWidget:visuals-quality:
+   * BaconVideoWidget:visualization-quality:
    *
    * The size of the visualizations to display when playing audio.
    **/
-  g_object_class_install_property (object_class, PROP_VISUALS_QUALITY,
-                                   g_param_spec_enum ("visuals-quality", NULL,
-                                                      NULL, BVW_TYPE_VISUALS_QUALITY,
-                                                      VISUAL_SMALL,
+  g_object_class_install_property (object_class, PROP_VISUALIZATION_QUALITY,
+                                   g_param_spec_enum ("visualization-quality", NULL,
+                                                      NULL, BVW_TYPE_VISUALIZATION_QUALITY,
+                                                      BVW_VISUALIZATION_SMALL,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -2825,8 +2825,8 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_show_cursor (bvw,
       g_value_get_boolean (value));
       break;
-    case PROP_SHOW_VISUALS:
-      bacon_video_widget_set_show_visuals (bvw,
+    case PROP_SHOW_VISUALIZATIONS:
+      bacon_video_widget_set_show_visualizations (bvw,
       g_value_get_boolean (value));
       break;
     case PROP_USER_AGENT:
@@ -2845,8 +2845,8 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_CONNECTION_SPEED:
       bacon_video_widget_set_connection_speed (bvw, g_value_get_enum (value));
       break;
-    case PROP_VISUALS_QUALITY:
-      bacon_video_widget_set_visuals_quality (bvw, g_value_get_enum (value));
+    case PROP_VISUALIZATION_QUALITY:
+      bacon_video_widget_set_visualization_quality (bvw, g_value_get_enum (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2907,7 +2907,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_CONNECTION_SPEED:
       g_value_set_enum (value, bvw->priv->connection_speed);
       break;
-    case PROP_VISUALS_QUALITY:
+    case PROP_VISUALIZATION_QUALITY:
       g_value_set_enum (value, bvw->priv->visq);
       break;
     default:
@@ -4810,10 +4810,10 @@ static struct {
 	int height;
 	int fps;
 } const vis_qualities[] = {
-	{ 240, 15 }, /* VISUAL_SMALL */
-	{ 320, 25 }, /* VISUAL_NORMAL */
-	{ 480, 25 }, /* VISUAL_LARGE */
-	{ 600, 30 }  /* VISUAL_EXTRA_LARGE */
+	{ 240, 15 }, /* BVW_VISUALIZATION_SMALL */
+	{ 320, 25 }, /* BVW_VISUALIZATION_NORMAL */
+	{ 480, 25 }, /* BVW_VISUALIZATION_LARGE */
+	{ 600, 30 }  /* BVW_VISUALIZATION_EXTRA_LARGE */
 };
 
 static void
@@ -5013,24 +5013,24 @@ beach:
 }
 
 /**
- * bacon_video_widget_set_show_visuals:
+ * bacon_video_widget_set_show_visualizations:
  * @bvw: a #BaconVideoWidget
- * @show_visuals: %TRUE to show visualisations, %FALSE otherwise
+ * @show_visualizations: %TRUE to show visualisations, %FALSE otherwise
  *
  * Sets whether to show visualisations when playing audio-only streams.
  **/
 void
-bacon_video_widget_set_show_visuals (BaconVideoWidget * bvw,
-                                     gboolean show_visuals)
+bacon_video_widget_set_show_visualizations (BaconVideoWidget * bvw,
+                                     gboolean show_visualizations)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (show_visuals == bvw->priv->show_vfx)
+  if (show_visualizations == bvw->priv->show_vfx)
     return;
 
-  bvw->priv->show_vfx = show_visuals;
+  bvw->priv->show_vfx = show_visualizations;
   setup_vis (bvw);
 }
 
@@ -5062,7 +5062,7 @@ add_longname (GstElementFactory *f, GList ** to)
 }
 
 /**
- * bacon_video_widget_get_visuals_list:
+ * bacon_video_widget_get_visualization_list:
  * @bvw: a #BaconVideoWidget
  *
  * Returns a list of the visualisations available when playing audio-only streams.
@@ -5070,7 +5070,7 @@ add_longname (GstElementFactory *f, GList ** to)
  * Return value: a #GList of visualisation names; owned by @bvw
  **/
 GList *
-bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
+bacon_video_widget_get_visualization_list (BaconVideoWidget * bvw)
 {
   GList *features, *names = NULL;
 
@@ -5091,17 +5091,17 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
 }
 
 /**
- * bacon_video_widget_set_visuals:
+ * bacon_video_widget_set_visualization:
  * @bvw: a #BaconVideoWidget
  * @name: the visualisation's name, or %NULL
  *
  * Sets the visualisation to display when playing audio-only streams.
  *
  * If @name is %NULL, visualisations will be disabled. Otherwise, @name
- * should be from the list returned by bacon_video_widget_get_visuals_list().
+ * should be from the list returned by bacon_video_widget_get_visualization_list().
  **/
 void
-bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
+bacon_video_widget_set_visualization (BaconVideoWidget * bvw, const char *name)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -5124,15 +5124,15 @@ bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 }
 
 /**
- * bacon_video_widget_set_visuals_quality:
+ * bacon_video_widget_set_visualization_quality:
  * @bvw: a #BaconVideoWidget
  * @quality: the visualisation quality
  *
  * Sets the quality/size of displayed visualisations.
  **/
 void
-bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
-                                        BvwVisualsQuality quality)
+bacon_video_widget_set_visualization_quality (BaconVideoWidget * bvw,
+                                        BvwVisualizationQuality quality)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -5145,7 +5145,7 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
   
   setup_vis (bvw);
 
-  g_object_notify (G_OBJECT (bvw), "visuals-quality");
+  g_object_notify (G_OBJECT (bvw), "visualization-quality");
 }
 
 /**
@@ -6865,7 +6865,7 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
   bvw->priv->media_device = g_strdup ("/dev/dvd");
-  bvw->priv->visq = VISUAL_SMALL;
+  bvw->priv->visq = BVW_VISUALIZATION_SMALL;
   bvw->priv->show_vfx = FALSE;
   bvw->priv->vis_element_name = g_strdup ("goom");
   bvw->priv->connection_speed = 11;

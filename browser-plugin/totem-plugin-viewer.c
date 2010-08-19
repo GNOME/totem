@@ -1721,7 +1721,7 @@ video_widget_size_allocate_cb (GtkWidget *controls,
 			       GtkAllocation *allocation,
 			       BaconVideoWidget *bvw)
 {
-	bacon_video_widget_set_show_visuals (bvw, allocation->height > MINIMUM_VIDEO_SIZE);
+	bacon_video_widget_set_show_visualizations (bvw, allocation->height > MINIMUM_VIDEO_SIZE);
 	g_signal_handlers_disconnect_by_func (controls, G_CALLBACK (video_widget_size_allocate_cb), NULL);
 }
 
