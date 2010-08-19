@@ -44,7 +44,7 @@
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
-#include <libpeasui/peas-ui-configurable.h>
+#include <libpeas-gtk/peas-gtk-configurable.h>
 
 #include "ev-sidebar.h"
 #include "totem-plugin.h"
@@ -689,7 +689,7 @@ impl_deactivate (PeasActivatable *plugin)
 }
 
 static GtkWidget *
-impl_create_configure_widget (PeasUIConfigurable *configurable)
+impl_create_configure_widget (PeasGtkConfigurable *configurable)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (configurable);
 	gchar *service_name, *protocol_name;

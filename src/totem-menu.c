@@ -26,7 +26,7 @@
 #include <glib/gi18n.h>
 #include <gst/tag/tag.h>
 #include <string.h>
-#include <libpeasui/peas-ui-plugin-manager.h>
+#include <libpeas-gtk/peas-gtk-plugin-manager.h>
 
 #include "totem-menu.h"
 #include "totem.h"
@@ -1236,7 +1236,7 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 					 G_CALLBACK (totem_plugins_response_cb),
 					 NULL, 0);
 
-		manager = peas_ui_plugin_manager_new (PEAS_ENGINE (totem->engine));
+		manager = peas_gtk_plugin_manager_new (PEAS_ENGINE (totem->engine));
 		gtk_widget_show_all (GTK_WIDGET (manager));
 		gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
 				   manager);

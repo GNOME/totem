@@ -123,10 +123,10 @@ G_BEGIN_DECLS
 #define TOTEM_PLUGIN_REGISTER_CONFIGURABLE(TYPE_NAME, TypeName, type_name)	\
 	static void impl_activate (PeasActivatable *plugin);			\
 	static void impl_deactivate (PeasActivatable *plugin);			\
-	static GtkWidget *impl_create_configure_widget (PeasUIConfigurable *configurable); \
+	static GtkWidget *impl_create_configure_widget (PeasGtkConfigurable *configurable); \
 	G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);	\
 	static void peas_activatable_iface_init (PeasActivatableInterface *iface); \
-	static void peas_ui_configurable_iface_init (PeasUIConfigurableInterface *iface); \
+	static void peas_gtk_configurable_iface_init (PeasGtkConfigurableInterface *iface); \
 	enum {									\
 		PROP_0,								\
 		PROP_OBJECT							\
@@ -137,8 +137,8 @@ G_BEGIN_DECLS
 					0,					\
 					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_TYPE_ACTIVATABLE, \
 								       peas_activatable_iface_init) \
-					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_UI_TYPE_CONFIGURABLE, \
-								       peas_ui_configurable_iface_init)) \
+					G_IMPLEMENT_INTERFACE_DYNAMIC (PEAS_GTK_TYPE_CONFIGURABLE, \
+								       peas_gtk_configurable_iface_init)) \
 	static void								\
 	peas_activatable_iface_init (PeasActivatableInterface *iface)		\
 	{									\
@@ -146,7 +146,7 @@ G_BEGIN_DECLS
 		iface->deactivate = impl_deactivate;				\
 	}									\
 	static void								\
-	peas_ui_configurable_iface_init (PeasUIConfigurableInterface *iface)	\
+	peas_gtk_configurable_iface_init (PeasGtkConfigurableInterface *iface)	\
 	{									\
 		iface->create_configure_widget = impl_create_configure_widget;	\
 	}									\
@@ -194,7 +194,7 @@ G_BEGIN_DECLS
 							    PEAS_TYPE_ACTIVATABLE, \
 							    TYPE_NAME);		\
 		peas_object_module_register_extension_type (module,		\
-							    PEAS_UI_TYPE_CONFIGURABLE, \
+							    PEAS_GTK_TYPE_CONFIGURABLE, \
 							    TYPE_NAME);		\
 	}
 
