@@ -51,6 +51,8 @@ struct _TotemGlowButton {
 	/* Set when we don't want to play animation
 	 * anymore in pointer entered mode */
 	guint anim_finished :1;
+
+	guint in_expose : 1;
 };
 
 static void	totem_glow_button_set_timeout	(TotemGlowButton *button,
@@ -234,6 +236,7 @@ take_screenshot (TotemGlowButton *button)
 	GtkStyle *style;
 	GdkPixmap *pixmap;
 	gint width, height;
+	cairo_t *cr;
 
 	buttonw = GTK_WIDGET (button);
 	gtk_widget_get_allocation (buttonw, &allocation);
@@ -243,40 +246,19 @@ take_screenshot (TotemGlowButton *button)
 
 	pixmap = gdk_pixmap_new (gtk_widget_get_window (buttonw),
 				 width, height, -1);
+	cr = gdk_cairo_create (pixmap);
 
 	/* Draw a rectangle with bg[SELECTED] */
 	style = gtk_widget_get_style (buttonw);
-	gdk_draw_rectangle (pixmap,
-			    style->bg_gc[GTK_STATE_SELECTED],
-			    TRUE, 0, 0, width + 1, height + 1);
+	gdk_cairo_set_source_color (cr, &(style->bg[GTK_STATE_SELECTED]));
+	cairo_rectangle (cr, 0.0, 0.0, width + 1.0, height + 1.0);
+	cairo_fill (cr);
 
 	/* then the image */
-	fake_expose_widget (gtk_button_get_image (GTK_BUTTON(button)), pixmap,
+	fake_expose_widget (gtk_button_get_image (GTK_BUTTON (button)), pixmap,
 			    -allocation.x, -allocation.y);
 
-	return pixmap;
-}
-
-static GdkPixmap *
-copy_pixmap (GtkWidget *widget)
-{
-	GdkPixmap *pixmap;
-	GtkAllocation allocation;
-	GtkStyle *style;
-
-	gtk_widget_get_allocation (widget, &allocation);
-
-	pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
-				 allocation.width,
-				 allocation.height, -1);
-
-	style = gtk_widget_get_style (widget);
-	gdk_draw_drawable (pixmap,
-			   style->bg_gc[GTK_STATE_NORMAL],
-			   gtk_widget_get_window (widget),
-			   allocation.x, allocation.y,
-			   0, 0,
-			   allocation.width, allocation.height);
+	cairo_destroy (cr);
 
 	return pixmap;
 }
@@ -291,14 +273,17 @@ totem_glow_button_expose (GtkWidget        *buttonw,
 
 	(* GTK_WIDGET_CLASS (parent_class)->expose_event) (buttonw, event);
 
-	if (button->glow != FALSE && button->screenshot == NULL &&
+	if (button->glow != FALSE && button->screenshot == NULL && button->in_expose == FALSE &&
 	    /* Don't take screenshots if we finished playing animation after
-	       pointer entered */
+	       pointer entered, or if we're already in an expose event. */
 	    (button->pointer_entered != FALSE && 
 	     button->anim_finished != FALSE) == FALSE) {
-	     	button->screenshot = copy_pixmap (buttonw);
+		button->in_expose = TRUE;
+
+		button->screenshot = gtk_widget_get_snapshot (buttonw, NULL);;
 		button->screenshot_faded = take_screenshot (button);
-		return FALSE;
+
+		button->in_expose = FALSE;
 	}
 
 	return FALSE;
