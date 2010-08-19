@@ -479,8 +479,10 @@ totem_setup_preferences (Totem *totem)
 
 	/* Visualisation quality */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
-	g_settings_bind (totem->settings, "visual-quality", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "visual-quality", bvw, "visualization-quality", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind_with_mapping (totem->settings, "visual-quality", item, "active", G_SETTINGS_BIND_DEFAULT,
+	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
+	                              g_type_class_ref (BVW_TYPE_VISUALIZATION_QUALITY), (GDestroyNotify) g_type_class_unref);
 
 	/* Brightness and all */
 	hidden = 0;

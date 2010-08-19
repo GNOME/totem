@@ -60,10 +60,10 @@
 			<default>'stereo'</default>
 			<_summary>Type of audio output to use</_summary>
 		</key>
-		<key name="visual-quality" type="i">
-			<default>0</default>
+		<key name="visual-quality" enum="org.gnome.totem.BvwVisualsQuality">
+			<default>'small'</default>
 			<_summary>Visualization quality setting</_summary>
-			<_description>Quality settings for the audio visualization: "0" for small, "1" for normal, "2" for large, "3" for extra large.</_description>
+			<_description>Quality settings for the audio visualization.</_description>
 		</key>
 		<key name="network-buffer-threshold" type="d">
 			<default>2</default>
