@@ -35,10 +35,10 @@
 			<default>false</default>
 			<_summary>Resize the canvas automatically on file load</_summary>
 		</key>
-		<key name="connection-speed" type="i">
-			<default>11</default>
+		<key name="connection-speed" enum="org.gnome.totem.BvwConnectionSpeed">
+			<default>'lan'</default>
 			<_summary>Network connection speed</_summary>
-			<_description>Approximate network connection speed, used to select quality on media over the network: "0" for 14.4 Kbps Modem, "1" for 19.2 Kbps Modem, "2" for 28.8 Kbps Modem, "3" for 33.6 Kbps Modem, "4" for 34.4 Kbps Modem, "5" for 56 Kbps Modem/ISDN, "6" for 112 Kbps Dual ISDN/DSL, "7" for 256 Kbps DSL/Cable, "8" for 384 Kbps DSL/Cable, "9" for 512 Kbps DSL/Cable, "10" for 1.5 Mbps T1/Intranet/LAN, "11" for Intranet/LAN.</_description>
+			<_description>Approximate network connection speed, used to select quality on media over the network.</_description>
 		</key>
 		<key name="repeat" type="b">
 			<default>false</default>

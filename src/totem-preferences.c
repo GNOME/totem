@@ -35,6 +35,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include "bacon-video-widget-enums.h"
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
@@ -310,6 +311,40 @@ encoding_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 	g_free (encoding);
 }
 
+static gboolean
+int_enum_get_mapping (GValue *value, GVariant *variant, GEnumClass *enum_class)
+{
+	GEnumValue *enum_value;
+	const gchar *nick;
+
+	g_return_val_if_fail (G_IS_ENUM_CLASS (enum_class), FALSE);
+
+	nick = g_variant_get_string (variant, NULL);
+	enum_value = g_enum_get_value_by_nick (enum_class, nick);
+
+	if (enum_value == NULL)
+		return FALSE;
+
+	g_value_set_int (value, enum_value->value);
+
+	return TRUE;
+}
+
+static GVariant *
+int_enum_set_mapping (const GValue *value, const GVariantType *expected_type, GEnumClass *enum_class)
+{
+	GEnumValue *enum_value;
+
+	g_return_val_if_fail (G_IS_ENUM_CLASS (enum_class), NULL);
+
+	enum_value = g_enum_get_value (enum_class, g_value_get_int (value));
+
+	if (enum_value == NULL)
+		return NULL;
+
+	return g_variant_new_string (enum_value->value_nick);
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
@@ -388,8 +423,10 @@ totem_setup_preferences (Totem *totem)
 
 	/* Connection Speed */
 	item = gtk_builder_get_object (totem->xml, "tpw_speed_combobox");
-	g_settings_bind (totem->settings, "connection-speed", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "connection-speed", bvw, "connection-speed", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind_with_mapping (totem->settings, "connection-speed", item, "active", G_SETTINGS_BIND_DEFAULT,
+	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
+	                              g_type_class_ref (BVW_TYPE_CONNECTION_SPEED), (GDestroyNotify) g_type_class_unref);
 
 	/* Enable visuals */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_checkbutton");

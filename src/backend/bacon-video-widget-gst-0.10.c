@@ -3276,7 +3276,7 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 
   if (bvw->priv->connection_speed != speed) {
     bvw->priv->connection_speed = speed;
-    g_settings_set_int (bvw->priv->settings, "connection-speed", speed);
+    g_settings_set_enum (bvw->priv->settings, "connection-speed", speed);
     g_object_notify (G_OBJECT (bvw), "connection-speed");
   }
 
@@ -7111,7 +7111,7 @@ bacon_video_widget_new (int width, int height,
   }
 
   /* tv/conn (not used yet) */
-  value = g_settings_get_int (bvw->priv->settings, "connection-speed");
+  value = g_settings_get_enum (bvw->priv->settings, "connection-speed");
   if (value > 0) {
     bacon_video_widget_set_connection_speed (bvw, value);
   } else {
