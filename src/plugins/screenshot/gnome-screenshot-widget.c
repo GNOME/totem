@@ -267,6 +267,7 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 	GdkPixbuf *pixbuf = NULL;
 	gboolean free_pixbuf = FALSE;
 	GtkStyle *style;
+	cairo_t *cr;
 
 	style = gtk_widget_get_style (drawing_area);
 
@@ -289,10 +290,15 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 		pixbuf = g_object_ref (self->priv->preview_image);
 	}
 
-	/* FIXME: Draw it insensitive in that case */
-	gdk_draw_pixbuf (gtk_widget_get_window (drawing_area), style->white_gc, pixbuf, event->area.x, event->area.y, event->area.x, event->area.y,
-			 event->area.width, event->area.height, GDK_RGB_DITHER_NORMAL, 0, 0);
+	cr = gdk_cairo_create (gtk_widget_get_window (drawing_area));
 
+	/* FIXME: Draw it insensitive in that case */
+	gdk_cairo_rectangle (cr, &(event->area));
+	cairo_clip (cr);
+	gdk_cairo_set_source_pixbuf (cr, pixbuf, 0.0, 0.0);
+	cairo_paint (cr);
+
+	cairo_destroy (cr);
 	g_object_unref (pixbuf);
 }
 

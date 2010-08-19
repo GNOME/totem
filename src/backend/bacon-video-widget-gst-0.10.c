@@ -706,6 +706,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   XID window;
   GdkWindow *win;
   GtkAllocation allocation;
+  cairo_t *cr;
 
   if (event && event->count > 0)
     return TRUE;
@@ -729,8 +730,11 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   /* Start with a nice black canvas */
   win = gtk_widget_get_window (widget);
   gtk_widget_get_allocation (widget, &allocation);
-  gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0, 0,
-      allocation.width, allocation.height);
+
+  cr = gdk_cairo_create (win);
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+  cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
+  cairo_paint (cr);
 
   /* If there's only audio and no visualisation, draw the logo as well.
    * If we have a cover image to display, we display it regardless of whether we're
@@ -747,11 +751,6 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       GdkPixbuf *logo = NULL;
       gint s_width, s_height, d_width, d_height;
       gfloat ratio;
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-      cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
 
       s_width = gdk_pixbuf_get_width (pixbuf);
       s_height = gdk_pixbuf_get_height (pixbuf);
@@ -787,7 +786,6 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
       gdk_cairo_set_source_pixbuf (cr, logo, (allocation.width - s_width) / 2, (allocation.height - s_height) / 2);
       cairo_paint (cr);
-      cairo_destroy (cr);
 
       g_object_unref (logo);
     } else if (win) {
@@ -811,6 +809,8 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   }
   if (xoverlay != NULL)
     gst_object_unref (xoverlay);
+
+  cairo_destroy (cr);
 
   return TRUE;
 }
