@@ -81,6 +81,7 @@
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "baconvideowidget-marshal.h"
+#include "bacon-video-widget-enums.h"
 #include "video-utils.h"
 #include "gstscreenshot.h"
 #include "bacon-resize.h"
@@ -136,7 +137,8 @@ enum
   PROP_VOLUME,
   PROP_DOWNLOAD_FILENAME,
   PROP_AUTO_RESIZE,
-  PROP_DEINTERLACING
+  PROP_DEINTERLACING,
+  PROP_CONNECTION_SPEED
 };
 
 static const gchar *video_props_str[4] = {
@@ -1166,6 +1168,18 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:connection-speed:
+   *
+   * The connection speed to use when calculating how much of a network stream to buffer.
+   **/
+  g_object_class_install_property (object_class, PROP_CONNECTION_SPEED,
+                                   g_param_spec_enum ("connection-speed", NULL,
+                                                      NULL, BVW_TYPE_CONNECTION_SPEED,
+                                                      BVW_SPEED_LAN,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
 
   /* Signals */
   /**
@@ -2815,6 +2829,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_DEINTERLACING:
       bacon_video_widget_set_deinterlacing (bvw, g_value_get_boolean (value));
       break;
+    case PROP_CONNECTION_SPEED:
+      bacon_video_widget_set_connection_speed (bvw, g_value_get_enum (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2870,6 +2887,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_DEINTERLACING:
       g_value_set_boolean (value, bacon_video_widget_get_deinterlacing (bvw));
+      break;
+    case PROP_CONNECTION_SPEED:
+      g_value_set_enum (value, bvw->priv->connection_speed);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3240,6 +3260,7 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
     bvw->priv->connection_speed = speed;
     gconf_client_set_int (bvw->priv->gc,
          GCONF_PREFIX"/connection_speed", speed, NULL);
+    g_object_notify (G_OBJECT (bvw), "connection-speed");
   }
 
   if (bvw->priv->play != NULL &&
