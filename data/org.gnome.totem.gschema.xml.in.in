@@ -56,10 +56,9 @@
 			<default>false</default>
 			<_summary>Whether to enable debug for the playback engine</_summary>
 		</key>
-		<key name="audio-output-type" type="i">
-			<default>0</default>
+		<key name="audio-output-type" enum="org.gnome.totem.BvwAudioOutType">
+			<default>'stereo'</default>
 			<_summary>Type of audio output to use</_summary>
-			<_description>Type of audio output to use: "0" for stereo, "1" for 4-channel output,  "2" for 5.0 channel output, "3" for 5.1 channel output, "4" for AC3 Passthrough.</_description>
 		</key>
 		<key name="visual-quality" type="i">
 			<default>0</default>

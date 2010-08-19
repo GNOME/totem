@@ -3470,7 +3470,7 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
     return;
 
   bvw->priv->speakersetup = type;
-  g_settings_set_int (bvw->priv->settings, "audio-output-type", type);
+  g_settings_set_enum (bvw->priv->settings, "audio-output-type", type);
 
   set_audio_filter (bvw);
 }
@@ -7097,7 +7097,7 @@ bacon_video_widget_new (int width, int height,
   }
 
   /* audio out, if any */
-  value = g_settings_get_int (bvw->priv->settings, "audio-output-type");
+  value = g_settings_get_enum (bvw->priv->settings, "audio-output-type");
   if (value > 0 &&
       (type != BVW_USE_TYPE_METADATA && type != BVW_USE_TYPE_CAPTURE)) {
     bvw->priv->speakersetup = value;
