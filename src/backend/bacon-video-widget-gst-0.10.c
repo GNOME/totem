@@ -138,7 +138,8 @@ enum
   PROP_DOWNLOAD_FILENAME,
   PROP_AUTO_RESIZE,
   PROP_DEINTERLACING,
-  PROP_CONNECTION_SPEED
+  PROP_CONNECTION_SPEED,
+  PROP_VISUALS_QUALITY
 };
 
 static const gchar *video_props_str[4] = {
@@ -1178,6 +1179,18 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_enum ("connection-speed", NULL,
                                                       NULL, BVW_TYPE_CONNECTION_SPEED,
                                                       BVW_SPEED_LAN,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:visuals-quality:
+   *
+   * The size of the visualizations to display when playing audio.
+   **/
+  g_object_class_install_property (object_class, PROP_VISUALS_QUALITY,
+                                   g_param_spec_enum ("visuals-quality", NULL,
+                                                      NULL, BVW_TYPE_VISUALS_QUALITY,
+                                                      VISUAL_SMALL,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -2832,6 +2845,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_CONNECTION_SPEED:
       bacon_video_widget_set_connection_speed (bvw, g_value_get_enum (value));
       break;
+    case PROP_VISUALS_QUALITY:
+      bacon_video_widget_set_visuals_quality (bvw, g_value_get_enum (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2890,6 +2906,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_CONNECTION_SPEED:
       g_value_set_enum (value, bvw->priv->connection_speed);
+      break;
+    case PROP_VISUALS_QUALITY:
+      g_value_set_enum (value, bvw->priv->visq);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -5125,6 +5144,8 @@ bacon_video_widget_set_visuals_quality (BaconVideoWidget * bvw,
   bvw->priv->visq = quality;
   
   setup_vis (bvw);
+
+  g_object_notify (G_OBJECT (bvw), "visuals-quality");
 }
 
 /**
