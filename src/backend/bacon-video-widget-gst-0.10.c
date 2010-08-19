@@ -4862,7 +4862,7 @@ setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
 
     /* set to long name as key so that the preferences dialog gets it right */
     if (f && strcmp (vis_name, GST_PLUGIN_FEATURE_NAME (f)) == 0) {
-      g_settings_set_string (bvw->priv->settings, "visual",
+      g_settings_set_string (bvw->priv->settings, "visualization-name",
           gst_element_factory_get_longname (f));
       fac = f;
       goto done;

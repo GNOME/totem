@@ -6,14 +6,14 @@
 			<_summary>Allow the screensaver to activate when playing audio</_summary>
 			<_description>Allow the screensaver to activate when playing audio. Disable if you have monitor-powered speakers.</_description>
 		</key>
-		<key name="show-vfx" type="b">
+		<key name="show-visualizations" type="b">
 			<default>true</default>
 			<_summary>Show visual effects when no video is displayed</_summary>
 			<_description>Show visual effects when playing an audio only file.</_description>
 		</key>
-		<key name="visual" type="s">
+		<key name="visualization-name" type="s">
 			<default>'goom'</default>
-			<_summary>Name of the visual effects plugins</_summary>
+			<_summary>Name of the visual effects plugin</_summary>
 		</key>
 		<key name="brightness" type="i">
 			<default>32767</default>
@@ -60,10 +60,10 @@
 			<default>'stereo'</default>
 			<_summary>Type of audio output to use</_summary>
 		</key>
-		<key name="visual-quality" enum="org.gnome.totem.BvwVisualsQuality">
+		<key name="visualization-quality" enum="org.gnome.totem.BvwVisualizationQuality">
 			<default>'small'</default>
 			<_summary>Visualization quality setting</_summary>
-			<_description>Quality settings for the audio visualization.</_description>
+			<_description>Quality setting for the audio visualization.</_description>
 		</key>
 		<key name="network-buffer-threshold" type="d">
 			<default>2</default>

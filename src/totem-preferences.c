@@ -87,7 +87,7 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value)
 {
 	GtkWidget *item;
 
-	g_settings_set_boolean (totem->settings, "show-vfx", value);
+	g_settings_set_boolean (totem->settings, "show-visualizations", value);
 
 	item = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tpw_visuals_type_label"));
 	gtk_widget_set_sensitive (item, value);
@@ -115,7 +115,7 @@ checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	{
 		if (ask_show_visuals (totem) == FALSE)
 		{
-			g_settings_set_boolean (totem->settings, "show-vfx", FALSE);
+			g_settings_set_boolean (totem->settings, "show-visualizations", FALSE);
 			gtk_toggle_button_set_active (togglebutton, FALSE);
 			return;
 		}
@@ -142,7 +142,7 @@ show_vfx_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 	g_signal_handlers_disconnect_by_func (item,
 			checkbutton2_toggled_cb, totem);
 
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "show-vfx"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "show-visualizations"));
 
 	g_signal_connect (item, "toggled",
 			G_CALLBACK (checkbutton2_toggled_cb), totem);
@@ -187,11 +187,11 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 	list = bacon_video_widget_get_visualization_list (totem->bvw);
 	name = g_list_nth_data (list, i);
 
-	old_name = g_settings_get_string (totem->settings, "visual");
+	old_name = g_settings_get_string (totem->settings, "visualization-name");
 
 	if (old_name == NULL || strcmp (old_name, name) != 0)
 	{
-		g_settings_set_string (totem->settings, "visual", name);
+		g_settings_set_string (totem->settings, "visualization-name", name);
 
 		bacon_video_widget_set_visualization (totem->bvw, name);
 	}
@@ -430,7 +430,7 @@ totem_setup_preferences (Totem *totem)
 
 	/* Enable visuals */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_checkbutton");
-	show_visuals = g_settings_get_boolean (totem->settings, "show-vfx");
+	show_visuals = g_settings_get_boolean (totem->settings, "show-visualizations");
 	if (is_local == FALSE && show_visuals != FALSE)
 		show_visuals = ask_show_visuals (totem);
 
@@ -440,7 +440,7 @@ totem_setup_preferences (Totem *totem)
 	totem_prefs_set_show_visuals (totem, show_visuals);
 	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton2_toggled_cb), totem);
 
-	g_signal_connect (totem->settings, "changed::show-vfx", (GCallback) show_vfx_changed_cb, totem);
+	g_signal_connect (totem->settings, "changed::show-visualizations", (GCallback) show_vfx_changed_cb, totem);
 
 	/* Auto-load subtitles */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_subtitles_checkbutton");
@@ -456,7 +456,7 @@ totem_setup_preferences (Totem *totem)
 	menu = gtk_menu_new ();
 	gtk_widget_show (menu);
 
-	visual = g_settings_get_string (totem->settings, "visual");
+	visual = g_settings_get_string (totem->settings, "visualization-name");
 	if (visual == NULL || strcmp (visual, "") == 0) {
 		g_free (visual);
 		visual = g_strdup ("goom");
@@ -479,8 +479,8 @@ totem_setup_preferences (Totem *totem)
 
 	/* Visualisation quality */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
-	g_settings_bind (totem->settings, "visual-quality", bvw, "visualization-quality", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind_with_mapping (totem->settings, "visual-quality", item, "active", G_SETTINGS_BIND_DEFAULT,
+	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active", G_SETTINGS_BIND_DEFAULT,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
 	                              g_type_class_ref (BVW_TYPE_VISUALIZATION_QUALITY), (GDestroyNotify) g_type_class_unref);
 
@@ -552,7 +552,7 @@ totem_preferences_visuals_setup (Totem *totem)
 {
 	char *visual;
 
-	visual = g_settings_get_string (totem->settings, "visual");
+	visual = g_settings_get_string (totem->settings, "visualization-name");
 	if (visual == NULL || strcmp (visual, "") == 0) {
 		g_free (visual);
 		visual = g_strdup ("goom");
