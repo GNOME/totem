@@ -197,7 +197,6 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	engine = TOTEM_PLUGINS_ENGINE (g_object_new (TOTEM_TYPE_PLUGINS_ENGINE,
 						     "app-name", "Totem",
 						     "search-paths", array->pdata,
-						     "base-module-dir", TOTEM_PLUGIN_DIR,
 						     NULL));
 	g_strfreev (paths);
 	g_ptr_array_free (array, TRUE);
