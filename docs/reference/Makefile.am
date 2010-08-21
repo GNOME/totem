@@ -63,7 +63,10 @@ IGNORE_HFILES = \
 	totemplaylist-marshal.h		\
 	totemvideolist-marshal.h	\
 	totem-profile.h			\
-	totem-sample-vala-plugin.h
+	totem-sample-vala-plugin.h	\
+	totem-chapters-utils.h		\
+	totem-cmml-parser.h		\
+	totem-edit-chapter.h
 
 # Files we don't want exported to plugins
 IGNORE_HFILES += \
