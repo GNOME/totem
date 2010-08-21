@@ -723,8 +723,6 @@ if test "x$with_dbus" != "xno"; then
 fi
 AM_CONDITIONAL(WITH_DBUS, test "x$enable_dbus" = "xyes")
 
-AM_GCONF_SOURCE_2
-
 GLIB_GSETTINGS
 
 GNOME_COMMON_INIT
