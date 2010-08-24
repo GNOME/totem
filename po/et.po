@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem 2.32\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-08-05 13:05+0000\n"
-"PO-Revision-Date: 2010-07-02 10:40+0300\n"
+"POT-Creation-Date: 2010-08-22 11:45+0000\n"
+"PO-Revision-Date: 2010-08-24 10:54+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -236,6 +236,7 @@ msgstr "Lähem teave selle rakenduse kohta"
 msgid "Audio Output"
 msgstr "Heliväljund"
 
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 msgid "Auto"
 msgstr "Automaatne"
 
@@ -266,12 +267,17 @@ msgstr "Üle_realaotusega videotelt ülerealaotuse eemaldamine"
 msgid "Disable screensaver when playing "
 msgstr "Ekraanisäästja keelamine esituse ajaks"
 
+#. Tab label in the Preferences dialogue
 msgid "Display"
 msgstr "Kuva"
 
 msgid "Eject the current disc"
 msgstr "Praeguse plaadi väljastamine"
 
+msgid "External Chapters"
+msgstr "Välised peatükid"
+
+#. Audio visualization dimensions
 msgid "Extra Large"
 msgstr "Eriti suur"
 
@@ -302,8 +308,12 @@ msgstr "Heli valjemaks"
 msgid "Intranet/LAN"
 msgstr "Intranet/kohtvõrk"
 
+#. Audio visualization dimensions
 msgid "Large"
 msgstr "Suur"
+
+msgid "Load _chapter files when movie is loaded"
+msgstr "_Peatükid laaditakse koos filmiga"
 
 msgid "Networking"
 msgstr "Võrk"
@@ -311,6 +321,7 @@ msgstr "Võrk"
 msgid "Next chapter or movie"
 msgstr "Järgmisele filmilõigule või filmile lülitumine"
 
+#. Audio visualization dimensions
 msgid "Normal"
 msgstr "Tavaline"
 
@@ -707,11 +718,16 @@ msgstr "UTF-8"
 msgid "Visualization quality setting"
 msgstr "Visualisee_rimise kvaliteet"
 
+msgid "Whether to autoload external chapter files when a movie is loaded"
+msgstr "Kas filmiga koos laaditakse automaatselt ka välised peatükifailid"
+
+msgid "Whether to autoload external chapter files when a movie is loaded."
+msgstr "Kas filmiga koos laaditakse automaatselt ka välised peatükifailid."
+
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Kas subtiitrid laaditakse pärast filmi laadimist automaatselt või mitte"
 
-#| msgid "Whether to enable debug for the playback engine"
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr ""
 "Kas ülerealaotusega videote puhul tuleb ülerealaotus eemaldada või mitte"
@@ -783,6 +799,7 @@ msgstr "Faili vorming"
 msgid "Extension(s)"
 msgstr "Laiendi(d)"
 
+#. Translators: the parameter is a filename
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `%"
@@ -880,6 +897,7 @@ msgstr ""
 "Totem sisaldab erandit, mis võimaldab kasutada omandiõigustega kaitstud "
 "GStreamer'i pluginaid."
 
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 msgid "None"
 msgstr "Puudub"
 
@@ -1084,6 +1102,7 @@ msgstr "Ära ühendu juba töötava protsessiga"
 msgid "Seek"
 msgstr "Kerimine"
 
+#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
 msgid "Playlist index"
 msgstr "Esitusnimekirja indeks"
 
@@ -1568,6 +1587,7 @@ msgstr "Bemused"
 msgid "Control Totem through a mobile phone with a Bemused client"
 msgstr "Totemi juhtimine mobiiltelefoni kaudu Bemused kliendi abil"
 
+#. Translators: the parameter is a number used to identify this playlist entry
 #, c-format
 msgid "Untitled %d"
 msgstr "Pealkirjata %d"
@@ -1611,6 +1631,74 @@ msgstr "(S)VCD'de või video-DVD'de lindistamine"
 
 msgid "Video Disc Recorder"
 msgstr "Videoplaadi lindistaja"
+
+msgid "Chapters"
+msgstr "Peatükid"
+
+msgid "Chapters support"
+msgstr "Peatükkide tugi"
+
+msgid "Enter new name for a chapter:"
+msgstr "Sisesta peatükile uus nimi:"
+
+msgid "Continue to watch movie without loaded chapters"
+msgstr "Vaatamise jätkamine ilma peatükke laadimata"
+
+msgid "Continue without"
+msgstr "Jätka ilma"
+
+msgid "Go to chapter"
+msgstr "Liikumine peatükile"
+
+msgid "Load chapters from external file"
+msgstr "Peatükkide laadimine välisest failist"
+
+msgid "Load chapters..."
+msgstr "Peatükkide laadimine"
+
+msgid "No chapters data"
+msgstr "Peatükkide andmed puuduvad"
+
+msgid "Remove chapter from the list"
+msgstr "Peatüki eemaldamine esitusnimekirjast"
+
+msgid "Save Changes"
+msgstr "Muutuste salvestamine"
+
+msgid "_Go to"
+msgstr "_Liikumine"
+
+#, c-format
+msgid ""
+"<b>Title: </b>%s\n"
+"<b>Start time: </b>%s"
+msgstr ""
+"<b>Pealkiri: </b>%s\n"
+"<b>Algusaeg: </b>%s"
+
+msgid "Error while reading file with chapters"
+msgstr "Viga peatükkide faili laadimisel"
+
+msgid "Chapter with the same time already exists"
+msgstr "Sama ajaga peatükk on juba olemas"
+
+msgid "Try another name or remove an existing chapter"
+msgstr "Proovi mõnda muud nime või eemalda olemasolev peatükk"
+
+msgid "Error while writing file with chapters"
+msgstr "Viga peatükkide faili kirjutamisel"
+
+msgid "Error occurred while saving chapters"
+msgstr "Viga peatükkide salvestamisel"
+
+msgid "Please check you rights and free space"
+msgstr "Palun kontrolli oma pääsuõigusi ja ketta vaba ruumi"
+
+msgid "Open Chapters File"
+msgstr "Peatükkide faili avamine"
+
+msgid "Failed to parse CMML file"
+msgstr "Tõrge CMML-faili parsimisel"
 
 #. Translators: this refers to a media file
 msgid "Delete"
@@ -1675,9 +1763,6 @@ msgstr "Laadimine…"
 msgid "Error getting programme feed"
 msgstr "Viga saatekava voo hankimisel"
 
-#| msgid ""
-#| "There was an unknown error getting the list of programmes for this "
-#| "channel and category combination."
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -1895,17 +1980,20 @@ msgid "%d x %d"
 msgstr "%d x %d"
 
 #, c-format
-msgid "%d frames per second"
-msgstr "%d kaadrit sekundis"
-
-#, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
+
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d kaader sekundis"
+msgstr[1] "%d kaadrit sekundis"
 
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
+#. Translators: computers on the local network which are publishing their playlists over the network
 msgid "Neighbors"
 msgstr "Naabrid"
 
@@ -2006,6 +2094,17 @@ msgstr "Loo kuvatõmmiste _galerii..."
 msgid "Create a gallery of screenshots"
 msgstr "Kuvatõmmiste galerii loomine"
 
+#. Update the "seconds" label so that it always has the correct singular/plural form
+#. Translators: label for the seconds selector in the "Skip to" dialogue
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "sekund"
+msgstr[1] "sekundit"
+
+msgid "seconds"
+msgstr "sekundit"
+
 msgid "Skip to"
 msgstr "Asukoha vahetamine"
 
@@ -2020,9 +2119,6 @@ msgstr "\"Asukoha vahetamine\" dialoogi liidest pole võimalik laadida."
 
 msgid "_Skip to:"
 msgstr "_Liikumine asukohale:"
-
-msgid "seconds"
-msgstr "sekundit"
 
 #. Display an error
 #, c-format
