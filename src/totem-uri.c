@@ -444,7 +444,9 @@ totem_uri_get_subtitle_uri (const char *uri)
 	GFile *file;
 	char *subtitle;
 
-	if (g_str_has_prefix (uri, "http") != FALSE)
+	if (g_str_has_prefix (uri, "http") != FALSE ||
+	    g_str_has_prefix (uri, "rtsp") != FALSE ||
+	    g_str_has_prefix (uri, "rtmp") != FALSE)
 		return NULL;
 
 	/* Has the user specified a subtitle file manually? */
