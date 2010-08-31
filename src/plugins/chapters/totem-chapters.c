@@ -52,7 +52,7 @@
 #define TOTEM_IS_CHAPTERS_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_CHAPTERS_PLUGIN))
 #define TOTEM_CHAPTERS_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_CHAPTERS_PLUGIN, TotemChaptersPluginClass))
 
-#define TOTEM_CHAPTERS_PLUGIN_GET_PRIVATE(obj) 	(G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_CHAPTERS_PLUGIN, TotemChaptersPluginPrivate))
+#define TOTEM_CHAPTERS_PLUGIN_GET_PRIVATE(obj)	(G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_CHAPTERS_PLUGIN, TotemChaptersPluginPrivate))
 
 #define CHAPTER_TOOLTIP(title, start) g_strdup_printf	( _("<b>Title: </b>%s\n<b>Start time: </b>%s"),	\
 							 ( title ), ( start ) )
@@ -389,8 +389,8 @@ totem_file_opened_result_cb (gpointer	data,
 }
 
 static void
-totem_file_opened_async_cb (TotemObject 		*totem,
-			    const gchar 		*uri,
+totem_file_opened_async_cb (TotemObject			*totem,
+			    const gchar			*uri,
 			    TotemChaptersPlugin		*plugin)
 {
 	gchar	*cmml_file;
@@ -398,6 +398,11 @@ totem_file_opened_async_cb (TotemObject 		*totem,
 	g_return_if_fail (TOTEM_IS_OBJECT (totem));
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 	g_return_if_fail (uri != NULL);
+
+	if (g_str_has_prefix (uri, "http") != FALSE ||
+	    g_str_has_prefix (uri, "rtsp") != FALSE ||
+	    g_str_has_prefix (uri, "rtmp") != FALSE)
+		return;
 
 	cmml_file = totem_change_file_extension (uri, "cmml");
 	/* if file has no extension - append it */
