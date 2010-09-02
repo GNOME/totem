@@ -307,7 +307,7 @@ totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 
 	if (fs->priv->motion_start_time == 0 ||
 	    motion_delay < 0 ||
-	    motion_delay > FULLSCREEN_MOTION_SEQUENCE_WINDOW_MS) {
+	    motion_delay > FULLSCREEN_MOTION_TIME) {
 		fs->priv->motion_start_time = event->time;
 		fs->priv->motion_num_events = 0;
 		return FALSE;
