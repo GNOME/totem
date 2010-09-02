@@ -3385,8 +3385,8 @@ void
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BvwAudioOutType type)
 {
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   if (type == bvw->priv->speakersetup)
     return;
@@ -5025,9 +5025,9 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
 void
 bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 {
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   if (bvw->priv->vis_element_name) {
     if (strcmp (bvw->priv->vis_element_name, name) == 0) {

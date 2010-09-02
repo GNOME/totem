@@ -65,34 +65,6 @@ G_MODULE_EXPORT void font_changed_cb (GConfClient *client, guint cnxn_id, GConfE
 G_MODULE_EXPORT void encoding_changed_cb (GConfClient *client, guint cnxn_id, GConfEntry *entry, Totem *totem);
 G_MODULE_EXPORT void auto_chapters_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 
-static void
-totem_action_info (char *reason, Totem *totem)
-{
-	GtkWidget *parent, *error_dialog;
-
-	if (totem == NULL)
-		parent = NULL;
-	else
-		parent = totem->prefs;
-
-	error_dialog =
-		gtk_message_dialog_new (GTK_WINDOW (parent),
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_INFO,
-				GTK_BUTTONS_OK,
-				"%s", reason);
-	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
-			GTK_RESPONSE_OK);
-	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
-
-	gtk_widget_show (error_dialog);
-}
-
 static gboolean
 ask_show_visuals (Totem *totem)
 {
