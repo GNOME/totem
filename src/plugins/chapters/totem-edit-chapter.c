@@ -35,6 +35,7 @@
 
 #include "totem.h"
 #include "totem-interface.h"
+#include "totem-dirs.h"
 #include "totem-edit-chapter.h"
 #include <string.h>
 
