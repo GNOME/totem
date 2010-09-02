@@ -33,6 +33,7 @@
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
+#include <libpeas-gtk/peas-gtk-configurable.h>
 
 G_BEGIN_DECLS
 
