@@ -3380,10 +3380,8 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
  *
  * Sets the audio output type (number of speaker channels) in the video widget,
  * and stores it in GConf.
- *
- * Return value: %TRUE on success, %FALSE otherwise
  **/
-gboolean
+void
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
                                        BvwAudioOutType type)
 {
@@ -3391,17 +3389,15 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   if (type == bvw->priv->speakersetup)
-    return FALSE;
+    return;
   else if (type == BVW_AUDIO_SOUND_AC3PASSTHRU)
-    return FALSE;
+    return;
 
   bvw->priv->speakersetup = type;
   gconf_client_set_int (bvw->priv->gc,
       GCONF_PREFIX"/audio_output_type", type, NULL);
 
   set_audio_filter (bvw);
-
-  return FALSE;
 }
 
 /* =========================================== */
@@ -5025,32 +5021,28 @@ bacon_video_widget_get_visuals_list (BaconVideoWidget * bvw)
  *
  * If @name is %NULL, visualisations will be disabled. Otherwise, @name
  * should be from the list returned by bacon_video_widget_get_visuals_list().
- *
- * Return value: %TRUE on success, %FALSE otherwise
  **/
-gboolean
+void
 bacon_video_widget_set_visuals (BaconVideoWidget * bvw, const char *name)
 {
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-  
+
   if (bvw->priv->vis_element_name) {
     if (strcmp (bvw->priv->vis_element_name, name) == 0) {
-      return FALSE;
+      return;
     }
     else {
       g_free (bvw->priv->vis_element_name);
     }
   }
-  
+
   bvw->priv->vis_element_name = g_strdup (name);
 
   GST_DEBUG ("new visualisation element name = '%s'", GST_STR_NULL (name));
-  
+
   setup_vis (bvw);
-  
-  return FALSE;
 }
 
 /**

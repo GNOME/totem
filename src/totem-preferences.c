@@ -400,8 +400,7 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 		gconf_client_set_string (totem->gc, GCONF_PREFIX"/visual",
 				name, NULL);
 
-		if (bacon_video_widget_set_visuals (totem->bvw, name) != FALSE)
-			totem_action_info (_("Changing the visuals effect type will require a restart to take effect."), totem);
+		bacon_video_widget_set_visuals (totem->bvw, name);
 	}
 
 	g_free (old_name);
@@ -480,16 +479,9 @@ void
 audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	BvwAudioOutType audio_out;
-	gboolean need_restart;
 
 	audio_out = gtk_combo_box_get_active (combobox);
-	need_restart = bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
-	if (need_restart != FALSE) {
-		totem_action_info (_("The change of audio output type will "
-					"only take effect when Totem is "
-					"restarted."),
-				totem);
-	}
+	bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
 }
 
 void

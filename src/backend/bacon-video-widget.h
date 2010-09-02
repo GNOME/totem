@@ -316,7 +316,7 @@ typedef enum {
 void bacon_video_widget_set_show_visuals	  (BaconVideoWidget *bvw,
 						   gboolean show_visuals);
 GList *bacon_video_widget_get_visuals_list	  (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
+void bacon_video_widget_set_visuals		  (BaconVideoWidget *bvw,
 						   const char *name);
 void bacon_video_widget_set_visuals_quality	  (BaconVideoWidget *bvw,
 						   BvwVisualsQuality quality);
@@ -469,7 +469,7 @@ typedef enum {
 
 BvwAudioOutType bacon_video_widget_get_audio_out_type
 						 (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_set_audio_out_type   (BaconVideoWidget *bvw,
+void bacon_video_widget_set_audio_out_type       (BaconVideoWidget *bvw,
 						  BvwAudioOutType type);
 
 G_END_DECLS
