@@ -193,6 +193,9 @@ struct BaconVideoWidgetPrivate
   GstTagList                  *audiotags;
   GstTagList                  *videotags;
 
+  GAsyncQueue                 *tag_update_queue;
+  guint                        tag_update_id;
+
   gboolean                     got_redirect;
 
   GdkWindow                   *video_window;
@@ -306,6 +309,13 @@ static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
 static const GdkPixbuf * bvw_get_logo_pixbuf (BaconVideoWidget * bvw);
 static gboolean bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward);
 static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw, gint64 _time, GstSeekFlags flag, GError **error);
+
+typedef struct {
+  GstTagList *tags;
+  const gchar *type;
+} UpdateTagsDelayedData;
+
+static void update_tags_delayed_data_destroy (UpdateTagsDelayedData *data);
 
 static GtkWidgetClass *parent_class = NULL;
 
@@ -1307,6 +1317,9 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->movie_par_n = priv->movie_par_d = 1;
   priv->rate = FORWARD_RATE;
 
+  priv->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
+  priv->tag_update_id = 0;
+
   priv->lock = g_mutex_new ();
 
   priv->seek_mutex = g_mutex_new ();
@@ -1868,22 +1881,27 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
     g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
 }
 
-typedef struct {
-  BaconVideoWidget *bvw;
-  GstTagList *tags;
-  const gchar *type;
-} UpdateTagsDelayedData;
+static void
+update_tags_delayed_data_destroy (UpdateTagsDelayedData *data)
+{
+  g_slice_free (UpdateTagsDelayedData, data);
+}
 
 static gboolean
-bvw_update_tags_dispatcher (gpointer user_data)
+bvw_update_tags_dispatcher (BaconVideoWidget *self)
 {
-  UpdateTagsDelayedData *data = user_data;
+  UpdateTagsDelayedData *data;
 
-  bvw_update_tags (data->bvw, data->tags, data->type);
+  /* If we take the queue's lock for the entire function call, we can use it to protect tag_update_id too */
+  g_async_queue_lock (self->priv->tag_update_queue);
 
-  g_object_unref (G_OBJECT (data->bvw));
+  while ((data = g_async_queue_try_pop_unlocked (self->priv->tag_update_queue)) != NULL) {
+    bvw_update_tags (self, data->tags, data->type);
+    update_tags_delayed_data_destroy (data);
+  }
 
-  g_slice_free (UpdateTagsDelayedData, data);
+  self->priv->tag_update_id = 0;
+  g_async_queue_unlock (self->priv->tag_update_queue);
 
   return FALSE;
 }
@@ -1894,11 +1912,16 @@ static void
 bvw_update_tags_delayed (BaconVideoWidget *bvw, GstTagList *tags, const gchar *type) {
   UpdateTagsDelayedData *data = g_slice_new0 (UpdateTagsDelayedData);
 
-  data->bvw = g_object_ref (G_OBJECT (bvw));
   data->tags = tags;
   data->type = type;
 
-  g_idle_add (bvw_update_tags_dispatcher, data);
+  g_async_queue_lock (bvw->priv->tag_update_queue);
+  g_async_queue_push_unlocked (bvw->priv->tag_update_queue, data);
+
+  if (bvw->priv->tag_update_id == 0)
+    bvw->priv->tag_update_id = g_idle_add ((GSourceFunc) bvw_update_tags_dispatcher, bvw);
+
+  g_async_queue_unlock (bvw->priv->tag_update_queue);
 }
 
 static void
@@ -2729,6 +2752,10 @@ bacon_video_widget_finalize (GObject * object)
     gst_tag_list_free (bvw->priv->videotags);
     bvw->priv->videotags = NULL;
   }
+
+  if (bvw->priv->tag_update_id != 0)
+    g_source_remove (bvw->priv->tag_update_id);
+  g_async_queue_unref (bvw->priv->tag_update_queue);
 
   if (bvw->priv->eos_id != 0)
     g_source_remove (bvw->priv->eos_id);
