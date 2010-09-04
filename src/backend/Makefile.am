@@ -12,21 +12,21 @@ bvw_test_CPPFLAGS = \
 
 bvw_test_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
-	$(AM_CFLAGS)		\
-	-I$(top_srcdir)/
+	$(AM_CFLAGS)
 
 bvw_test_LDADD = \
-	libbaconvideowidget.la \
-	$(DEPENDENCY_LIBS) $(XVIDMODE_LIBS) $(XTEST_LIBS)
+	libbaconvideowidget.la	\
+	$(DEPENDENCY_LIBS)	\
+	$(XVIDMODE_LIBS)	\
+	$(XTEST_LIBS)
 
-BVWMARSHALFILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
-GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
-BUILT_SOURCES = $(BVWMARSHALFILES)
+# Marshallers
+BVW_MARSHAL_FILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
 
 baconvideowidget-marshal.h: baconvideowidget-marshal.list
-	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --header > baconvideowidget-marshal.h )
-baconvideowidget-marshal.c: baconvideowidget-marshal.h
-	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > baconvideowidget-marshal.c )
+	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --header > $@)
+baconvideowidget-marshal.c: baconvideowidget-marshal.h baconvideowidget-marshal.list
+	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > $@)
 
 # Enums
 BVW_ENUM_FILES = bacon-video-widget-enums.c bacon-video-widget-enums.h
@@ -47,34 +47,30 @@ bacon-video-widget-enums.c: bacon-video-widget.h Makefile bacon-video-widget-enu
 			--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
 		$(srcdir)/bacon-video-widget.h > $@)
 
-BUILT_SOURCES += $(BVW_ENUM_FILES)
-
 libbaconvideowidget_la_SOURCES = \
-	$(BVWMARSHALFILES) 		\
-	$(BVW_ENUM_FILES)		\
-	bacon-video-widget.h		\
-	bacon-resize.h bacon-resize.c 	\
-	video-utils.c video-utils.h 	\
+	$(BVW_MARSHAL_FILES)				\
+	$(BVW_ENUM_FILES)				\
+	bacon-video-widget.h				\
+	bacon-resize.h bacon-resize.c			\
+	video-utils.c video-utils.h			\
 	bacon-video-widget-gst-0.10.c			\
 	bacon-video-widget-gst-missing-plugins.c	\
 	bacon-video-widget-gst-missing-plugins.h	\
 	gstscreenshot.c					\
 	gstscreenshot.h
 
-libbaconvideowidget_la_CPPFLAGS =		\
+libbaconvideowidget_la_CPPFLAGS = \
 	-D_REENTRANT				\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
-libbaconvideowidget_la_CFLAGS =		\
+libbaconvideowidget_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
 	$(MM_CFLAGS)			\
 	$(MISSING_PLUGINS_CFLAGS)	\
-	$(AM_CFLAGS)			\
-	-I$(top_srcdir)/
+	$(AM_CFLAGS)
 
-
-libbaconvideowidget_la_LIBADD =	\
+libbaconvideowidget_la_LIBADD = \
 	$(XVIDMODE_LIBS)	\
 	$(MM_LIBS)		\
 	$(GST_LIBS)		\
@@ -83,10 +79,12 @@ libbaconvideowidget_la_LIBADD =	\
 	$(MISSING_PLUGINS_LIBS)	\
 	-lm
 
-libbaconvideowidget_la_LDFLAGS=	\
+libbaconvideowidget_la_LDFLAGS= \
 	-no-undefined
 
-CLEANFILES = $(BUILT_SOURCES)
+CLEANFILES = \
+	$(BVW_MARSHAL_FILES)	\
+	$(BVW_ENUM_FILES)
 
 EXTRA_DIST = \
 	baconvideowidget-marshal.list
