@@ -399,9 +399,7 @@ totem_file_opened_async_cb (TotemObject			*totem,
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 	g_return_if_fail (uri != NULL);
 
-	if (g_str_has_prefix (uri, "http") != FALSE ||
-	    g_str_has_prefix (uri, "rtsp") != FALSE ||
-	    g_str_has_prefix (uri, "rtmp") != FALSE)
+	if (g_str_has_prefix (uri, "http") != FALSE)
 		return;
 
 	cmml_file = totem_change_file_extension (uri, "cmml");
