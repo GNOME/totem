@@ -323,7 +323,7 @@ totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const c
 	g_object_unref (settings);
 
 	/* Default to the Pictures directory */
-	if (path == NULL || path[0] == '\0') {
+	if (*path == '\0') {
 		g_free (path);
 		path = totem_pictures_dir ();
 		/* No pictures dir, then it's the home dir */

@@ -180,23 +180,15 @@ void
 visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 {
 	GList *list;
-	char *old_name, *name;
+	const gchar *name;
 	int i;
 
 	i = gtk_combo_box_get_active (combobox);
 	list = bacon_video_widget_get_visualization_list (totem->bvw);
 	name = g_list_nth_data (list, i);
 
-	old_name = g_settings_get_string (totem->settings, "visualization-name");
-
-	if (old_name == NULL || strcmp (old_name, name) != 0)
-	{
-		g_settings_set_string (totem->settings, "visualization-name", name);
-
-		bacon_video_widget_set_visualization (totem->bvw, name);
-	}
-
-	g_free (old_name);
+	g_settings_set_string (totem->settings, "visualization-name", name);
+	bacon_video_widget_set_visualization (totem->bvw, name);
 }
 
 void
@@ -457,7 +449,7 @@ totem_setup_preferences (Totem *totem)
 	gtk_widget_show (menu);
 
 	visual = g_settings_get_string (totem->settings, "visualization-name");
-	if (visual == NULL || strcmp (visual, "") == 0) {
+	if (*visual == '\0') {
 		g_free (visual);
 		visual = g_strdup ("goom");
 	}
@@ -517,7 +509,7 @@ totem_setup_preferences (Totem *totem)
 	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
 				   _("Select Subtitle Font"));
 	font = g_settings_get_string (totem->settings, "subtitle-font");
-	if (font && strcmp (font, "") != 0) {
+	if (*font != '\0') {
 		gtk_font_button_set_font_name (GTK_FONT_BUTTON (item), font);
 		bacon_video_widget_set_subtitle_font (totem->bvw, font);
 	}
@@ -529,7 +521,7 @@ totem_setup_preferences (Totem *totem)
 	totem_subtitle_encoding_init (GTK_COMBO_BOX (item));
 	encoding = g_settings_get_string (totem->settings, "subtitle-encoding");
 	/* Make sure the default is UTF-8 */
-	if (encoding == NULL || *encoding == '\0') {
+	if (*encoding == '\0') {
 		g_free (encoding);
 		encoding = g_strdup ("UTF-8");
 	}
@@ -553,7 +545,7 @@ totem_preferences_visuals_setup (Totem *totem)
 	char *visual;
 
 	visual = g_settings_get_string (totem->settings, "visualization-name");
-	if (visual == NULL || strcmp (visual, "") == 0) {
+	if (*visual == '\0') {
 		g_free (visual);
 		visual = g_strdup ("goom");
 	}

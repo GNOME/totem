@@ -611,9 +611,8 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 
 	/* Add the last open path as a shortcut */
 	new_path = g_settings_get_string (settings, "open-uri");
-	if (new_path != NULL && *new_path != '\0') {
+	if (*new_path != '\0')
 		gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (fs), new_path, NULL);
-	}
 	g_free (new_path);
 
 	/* Try to set the passed path as the current folder */
@@ -672,7 +671,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 			(GTK_FILE_CHOOSER (fs), path);
 	} else {
 		new_path = g_settings_get_string (settings, "open-uri");
-		if (new_path != NULL && *new_path != '\0') {
+		if (*new_path != '\0') {
 			set_folder = gtk_file_chooser_set_current_folder_uri
 				(GTK_FILE_CHOOSER (fs), new_path);
 		}

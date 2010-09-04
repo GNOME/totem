@@ -526,12 +526,12 @@ impl_activate (PeasActivatable *plugin)
 	protocol_name = g_settings_get_string (self->gsettings, "protocol");
 	service_pattern = g_settings_get_string (self->gsettings, "name-format");
 
-	if (!protocol_name) {
+	if (*protocol_name == '\0') {
 		protocol_name = g_strdup ("http");
 		g_settings_set_string (self->gsettings, "protocol", protocol_name);
 	}
 
-	if (!service_pattern) {
+	if (*service_pattern == '\0') {
 		service_pattern = g_strdup ("%a of %u on %h");
 		g_settings_set_string (self->gsettings, "name-format", service_pattern);
 	}
