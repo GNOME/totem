@@ -106,7 +106,6 @@ enum {
 
 G_MODULE_EXPORT GType register_totem_plugin (GTypeModule *module);
 GType totem_chapters_plugin_get_type (void) G_GNUC_CONST;
-static void totem_chapters_plugin_finalize (GObject *object);
 static void totem_file_opened_async_cb (TotemObject *totem, const gchar *uri, TotemChaptersPlugin *plugin);
 static void totem_file_opened_result_cb (gpointer data, gpointer user_data);
 static void totem_file_closed_cb (TotemObject *totem, TotemChaptersPlugin *plugin);
@@ -151,7 +150,6 @@ totem_chapters_plugin_class_init (TotemChaptersPluginClass *klass)
 
 	object_class->set_property = set_property;
 	object_class->get_property = get_property;
-	object_class->finalize = totem_chapters_plugin_finalize;
 
 	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
@@ -160,12 +158,6 @@ static void
 totem_chapters_plugin_init (TotemChaptersPlugin *plugin)
 {
 	plugin->priv = TOTEM_CHAPTERS_PLUGIN_GET_PRIVATE (plugin);
-}
-
-static void
-totem_chapters_plugin_finalize (GObject *object)
-{
-	G_OBJECT_CLASS (totem_chapters_plugin_parent_class)->finalize (object);
 }
 
 static GdkPixbuf *
