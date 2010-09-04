@@ -64,6 +64,12 @@ TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_TRACKER_PLUGIN, TotemTrackerPlugin, totem_trac
 static void
 totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void

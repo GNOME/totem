@@ -72,8 +72,12 @@ totem_galago_plugin_class_init (TotemGalagoPluginClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+	object_class->set_property = set_property;
+	object_class->get_property = get_property;
 	object_class->dispose = totem_galago_plugin_dispose;
 	object_class->finalize = totem_galago_plugin_finalize;
+
+	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
 
 static void
