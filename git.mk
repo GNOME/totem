@@ -40,7 +40,7 @@
 # build dir.
 #
 # This file knows how to handle autoconf, automake, libtool, gtk-doc,
-# gnome-doc-utils, intltool.
+# gnome-doc-utils, intltool, GSettings.
 #
 #
 # KNOWN ISSUES:
@@ -101,8 +101,16 @@ $(srcdir)/.gitignore: Makefile.am $(top_srcdir)/git.mk
 				$(_DOC_DSK_ALL) \
 				$(_DOC_HTML_ALL) \
 				$(_DOC_POFILES) \
+				$(_DOC_MOFILES) \
+				$(DOC_H_FILE) \
 				"*/.xml2po.mo" \
 				"*/*.omf.out" \
+			; do echo /$$x; done; \
+		fi; \
+		if test "x$(gsettings_SCHEMAS)" = x; then :; else \
+			for x in \
+				$(gsettings_SCHEMAS:.xml=.valid) \
+				$(gsettings__enum_file) \
 			; do echo /$$x; done; \
 		fi; \
 		if test -f $(srcdir)/po/Makefile.in.in; then \
@@ -159,6 +167,7 @@ $(srcdir)/.gitignore: Makefile.am $(top_srcdir)/git.mk
 			"*.bak" \
 			"*~" \
 			".*.sw[nop]" \
+			".dirstamp" \
 		; do echo /$$x; done; \
 	} | \
 	sed "s@^/`echo "$(srcdir)" | sed 's/\(.\)/[\1]/g'`/@/@" | \
