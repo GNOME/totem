@@ -90,12 +90,9 @@ CLEANFILES = \
 	*.bak *.uip core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
-	$(gsettings_SCHEMAS)		\
+	org.gnome.totem.gschema.xml	\
+	org.gnome.totem.gschema.xml.in	\
 	totem-mime-types.h		\
 	nautilus-audio-mime-types.h
-
-DISTCLEANFILES = $(gsettings_SCHEMAS)
-
-MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
 
 -include $(top_srcdir)/git.mk

@@ -16,9 +16,33 @@ EXTRA_DIST =			\
 	totem.spec		\
 	omf.make		\
 	xmldocs.make		\
-	gnome-doc-utils.make
+	gnome-doc-utils.make	\
+	ChangeLog.pre-gitlog	\
+	MAINTAINERS		\
+	totem.doap
 
 CLEANFILES = totem.spec
+
+MAINTAINERCLEANFILES = \
+	$(srcdir)/INSTALL \
+	$(srcdir)/aclocal.m4 \
+	$(srcdir)/autoscan.log \
+	$(srcdir)/compile \
+	$(srcdir)/config.guess \
+	$(srcdir)/config.h.in \
+	$(srcdir)/config.sub \
+	$(srcdir)/configure.scan \
+	$(srcdir)/depcomp \
+	$(srcdir)/install-sh \
+	$(srcdir)/ltmain.sh \
+	$(srcdir)/missing \
+	$(srcdir)/mkinstalldirs \
+	$(srcdir)/omf.make \
+	$(srcdir)/py-compile \
+	$(srcdir)/xmldocs.make \
+	$(srcdir)/gtk-doc.make \
+	$(srcdir)/ChangeLog \
+	`find "$(srcdir)" -type f -name Makefile.in -print`
 
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
 		 gnome-doc-utils.make
