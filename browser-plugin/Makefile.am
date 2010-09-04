@@ -383,3 +383,5 @@ libtotem_cone_plugin_la_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 endif
+
+-include $(top_srcdir)/git.mk

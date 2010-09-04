@@ -29,3 +29,4 @@ libtotemscrsaver_la_LIBADD =				\
 	$(DBUS_LIBS)					\
 	$(XTEST_LIBS)
 
+-include $(top_srcdir)/git.mk

@@ -22,3 +22,5 @@ EXTRA_DIST = $(plugin_in_files) $(ui_DATA) opensubtitles.py hash.py org.gnome.to
 CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
 DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
+
+-include $(top_srcdir)/git.mk

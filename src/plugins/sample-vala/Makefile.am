@@ -56,3 +56,5 @@ MAINTAINERCLEANFILES = \
 
 CLEANFILES = $(plugin_DATA)
 DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk

@@ -8,3 +8,5 @@ sidebaricondir = $(datadir)/icons/hicolor/scalable/actions/
 sidebaricon_DATA = view-sidebar-symbolic.svg
 
 EXTRA_DIST = $(icon_DATA) $(tvicon_DATA) $(sidebaricon_DATA)
+
+-include $(top_srcdir)/git.mk

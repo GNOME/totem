@@ -44,3 +44,4 @@ EXTRA_DIST = $(plugin_in_files) $(config_DATA)
 CLEANFILES = $(plugin_DATA) $(BUILT_SOURCES)
 DISTCLEANFILES = $(plugin_DATA)
 
+-include $(top_srcdir)/git.mk

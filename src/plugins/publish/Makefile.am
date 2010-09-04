@@ -53,3 +53,5 @@ EXTRA_DIST = $(plugin_in_files) $(ui_DATA) org.gnome.totem.plugins.publish.gsche
 CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
 DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
+
+-include $(top_srcdir)/git.mk

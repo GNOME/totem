@@ -90,3 +90,5 @@ CLEANFILES = $(BUILT_SOURCES)
 
 EXTRA_DIST = \
 	baconvideowidget-marshal.list
+
+-include $(top_srcdir)/git.mk

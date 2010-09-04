@@ -20,3 +20,5 @@ EXTRA_DIST = $(plugin_in_files) pythonconsole.py console.py org.gnome.totem.plug
 CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
 DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
+
+-include $(top_srcdir)/git.mk

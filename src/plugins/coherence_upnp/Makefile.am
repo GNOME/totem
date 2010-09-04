@@ -12,3 +12,5 @@ EXTRA_DIST = $(plugin_in_files) coherence_upnp.py
 
 CLEANFILES = $(plugin_DATA)
 DISTCLEANFILES = $(plugin_DATA)
+
+-include $(top_srcdir)/git.mk
