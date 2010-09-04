@@ -298,7 +298,7 @@ G_MODULE_EXPORT gboolean
 totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 				TotemFullscreen *fs)
 {
-	guint motion_delay;
+	gint motion_delay;
 
 	/* Only after FULLSCREEN_MOTION_NUM_EVENTS motion events,
 	   in FULLSCREEN_MOTION_TIME milliseconds will we show

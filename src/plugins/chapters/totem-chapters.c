@@ -252,7 +252,7 @@ add_chapter_to_the_list (gpointer	data,
 static void
 add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 			     const gchar		*title,
-			     gint64			time)
+			     gint64			_time)
 {
 	GdkPixbuf	*pixbuf;
 	GtkTreeIter	iter, cur_iter, res_iter;
@@ -264,7 +264,7 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 	g_return_if_fail (title != NULL);
-	g_return_if_fail (time >= 0);
+	g_return_if_fail (_time >= 0);
 
 	store = gtk_tree_view_get_model (GTK_TREE_VIEW (plugin->priv->tree));
 	valid = gtk_tree_model_get_iter_first (store, &cur_iter);
@@ -274,7 +274,7 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 				    CHAPTERS_TIME_PRIV_COLUMN, &cur_time,
 				    -1);
 
-		if (time < cur_time && time > prev_time)
+		if (_time < cur_time && _time > prev_time)
 			break;
 
 		iter_count += 1;
@@ -285,7 +285,7 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 	}
 
 	/* prepare tooltip data */
-	start = totem_cmml_convert_msecs_to_str (time);
+	start = totem_cmml_convert_msecs_to_str (_time);
 	tip = CHAPTER_TOOLTIP (title, start);
 
 	/* insert clip into the sidebar list at proper position */
@@ -302,7 +302,7 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 			    CHAPTERS_TOOLTIP_COLUMN, tip,
 			    CHAPTERS_PIXBUF_COLUMN, pixbuf,
 			    CHAPTERS_TITLE_PRIV_COLUMN, title,
-			    CHAPTERS_TIME_PRIV_COLUMN, time,
+			    CHAPTERS_TIME_PRIV_COLUMN, _time,
 			    -1);
 
 	g_object_unref (pixbuf);
@@ -313,7 +313,7 @@ add_chapter_to_the_list_new (TotemChaptersPlugin	*plugin,
 
 static gboolean
 check_available_time (TotemChaptersPlugin	*plugin,
-		      gint64			time)
+		      gint64			_time)
 {
 	GtkTreeModel	*store;
 	GtkTreeIter	iter;
@@ -330,10 +330,10 @@ check_available_time (TotemChaptersPlugin	*plugin,
 				    CHAPTERS_TIME_PRIV_COLUMN, &cur_time,
 				    -1);
 
-		if (cur_time == time)
+		if (cur_time == _time)
 			return FALSE;
 
-		if (cur_time > time)
+		if (cur_time > _time)
 			return TRUE;
 
 		valid = gtk_tree_model_iter_next (store, &iter);
@@ -519,7 +519,7 @@ finish_chapter_edit (GtkCellRendererText	*renderer,
 	GtkTreeModel		*store;
 	GtkTreeIter		iter;
 	gchar			*time_str, *tip, *new_title, *old_title;
-	gint64			time;
+	gint64			_time;
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (user_data));
 	g_return_if_fail (new_text != NULL);
@@ -532,7 +532,7 @@ finish_chapter_edit (GtkCellRendererText	*renderer,
 		return;
 
 	gtk_tree_model_get (store, &iter,
-			    CHAPTERS_TIME_PRIV_COLUMN, &time,
+			    CHAPTERS_TIME_PRIV_COLUMN, &_time,
 			    CHAPTERS_TITLE_PRIV_COLUMN, &old_title,
 			    -1);
 
@@ -541,7 +541,7 @@ finish_chapter_edit (GtkCellRendererText	*renderer,
 		return;
 	}
 
-	time_str = totem_cmml_convert_msecs_to_str (time);
+	time_str = totem_cmml_convert_msecs_to_str (_time);
 	new_title = CHAPTER_TITLE (new_text, time_str);
 	tip = CHAPTER_TOOLTIP (new_text, time_str);
 
@@ -564,7 +564,7 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 {
 	GtkWindow		*main_window;
 	BaconVideoWidget	*bvw;
-	gint64			time;
+	gint64			_time;
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
@@ -578,8 +578,8 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 	totem_action_pause (plugin->totem);
 
 	/* adding a new one, check if it's time available */
-	g_object_get (G_OBJECT (plugin->totem), "current-time", &time, NULL);
-	if (G_UNLIKELY (!check_available_time (plugin, time))) {
+	g_object_get (G_OBJECT (plugin->totem), "current-time", &_time, NULL);
+	if (G_UNLIKELY (!check_available_time (plugin, _time))) {
 		totem_interface_error_blocking (_("Chapter with the same time already exists"),
 						_("Try another name or remove an existing chapter"),
 						main_window);
@@ -588,7 +588,7 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 			totem_action_play (plugin->totem);
 		return;
 	}
-	plugin->priv->last_time = time;
+	plugin->priv->last_time = _time;
 
 	/* capture frame */
 	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (plugin->totem));
@@ -774,7 +774,7 @@ get_chapters_list (TotemChaptersPlugin	*plugin)
 	GtkTreeModel	*store;
 	GtkTreeIter	iter;
 	gchar		*title;
-	gint64		time;
+	gint64		_time;
 	GdkPixbuf	*pixbuf;
 	gboolean	valid;
 
@@ -786,10 +786,10 @@ get_chapters_list (TotemChaptersPlugin	*plugin)
 	while (valid) {
 		gtk_tree_model_get (store, &iter,
 				    CHAPTERS_TITLE_PRIV_COLUMN, &title,
-				    CHAPTERS_TIME_PRIV_COLUMN, &time,
+				    CHAPTERS_TIME_PRIV_COLUMN, &_time,
 				    CHAPTERS_PIXBUF_COLUMN, &pixbuf,
 				    -1);
-		clip = totem_cmml_clip_new (title, NULL, time, pixbuf);
+		clip = totem_cmml_clip_new (title, NULL, _time, pixbuf);
 		list = g_list_prepend (list, clip);
 
 		g_free (title);
@@ -896,7 +896,7 @@ tree_view_row_activated_cb (GtkTreeView			*tree_view,
 	GtkTreeModel	*store;
 	GtkTreeIter	iter;
 	gboolean	seekable;
-	gint64		time;
+	gint64		_time;
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 	g_return_if_fail (GTK_IS_TREE_VIEW (tree_view));
@@ -910,9 +910,9 @@ tree_view_row_activated_cb (GtkTreeView			*tree_view,
 	}
 
 	gtk_tree_model_get_iter (store, &iter, path);
-	gtk_tree_model_get (store, &iter, CHAPTERS_TIME_PRIV_COLUMN, &time, -1);
+	gtk_tree_model_get (store, &iter, CHAPTERS_TIME_PRIV_COLUMN, &_time, -1);
 
-	totem_action_seek_time (plugin->totem, time, TRUE);
+	totem_action_seek_time (plugin->totem, _time, TRUE);
 }
 
 gboolean

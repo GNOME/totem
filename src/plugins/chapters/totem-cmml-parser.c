@@ -354,7 +354,7 @@ totem_cmml_parse_end (TotemCmmlContext	*context,
 		totem_cmml_clip_free (context->clip);
 		context->clip = NULL;
 		return;
-	} else if (g_strcmp0 ((const gchar *) tag, "img") == 0);
+	}
 }
 
 static void
