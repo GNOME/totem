@@ -536,7 +536,8 @@ totem_cmml_read_file_result (GObject		*source_object,
 
 	if (G_UNLIKELY (error != NULL)) {
 		g_warning ("chapters: failed to load CMML file %s: %s", data->file, error->message);
-		if (g_error_matches (error, g_io_error_quark(), G_IO_ERROR_NOT_FOUND)) {
+		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND) ||
+		    g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED)) {
 			/* it's ok if file doesn't exist */
 			data->successful = TRUE;
 			data->is_exists = FALSE;
