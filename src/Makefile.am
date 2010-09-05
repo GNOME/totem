@@ -310,6 +310,7 @@ Totem-1.0.gir: libtotem.la
 Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
 Totem_1_0_gir_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
 	$(libtotem_la_CPPFLAGS)
 Totem_1_0_gir_LIBS = libtotem.la
 Totem_1_0_gir_FILES = $(introspection_sources)
