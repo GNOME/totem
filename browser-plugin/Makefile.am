@@ -17,6 +17,12 @@ AM_CPPFLAGS = \
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	$(DISABLE_DEPRECATED)
 
+plugin_ldflags = \
+	-avoid-version					\
+	-export-symbols $(srcdir)/plugin.symbols	\
+	-module						\
+	$(AM_LDFLAGS)
+
 # Marshaller
 MARSHAL_FILES = \
 	marshal.h	\
@@ -153,11 +159,7 @@ libtotem_gmp_plugin_la_LIBADD = \
 	$(DBUS_LIBS)			\
 	$(BROWSER_PLUGIN_LIBS)
 
-libtotem_gmp_plugin_la_LDFLAGS = \
-	-avoid-version	\
-	-export-symbols $(srcdir)/plugin.symbols \
-	-module		\
-	$(AM_LDFLAGS)
+libtotem_gmp_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
 # Totem NarrowSpace Plugin
@@ -201,11 +203,7 @@ libtotem_narrowspace_plugin_la_LIBADD = \
 	$(DBUS_LIBS)			\
 	$(BROWSER_PLUGIN_LIBS)
 
-libtotem_narrowspace_plugin_la_LDFLAGS = \
-	-avoid-version	\
-	-export-symbols $(srcdir)/plugin.symbols \
-	-module		\
-	$(AM_LDFLAGS)
+libtotem_narrowspace_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
 # Totem MULLY Plugin
@@ -249,11 +247,7 @@ libtotem_mully_plugin_la_LIBADD = \
 	$(DBUS_LIBS)			\
 	$(BROWSER_PLUGIN_LIBS)
 
-libtotem_mully_plugin_la_LDFLAGS = \
-	-avoid-version	\
-	-export-symbols $(srcdir)/plugin.symbols \
-	-module		\
-	$(AM_LDFLAGS)
+libtotem_mully_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
 # Totem Cone Plugin
@@ -307,11 +301,7 @@ libtotem_cone_plugin_la_LIBADD = \
 	$(DBUS_LIBS)			\
 	$(BROWSER_PLUGIN_LIBS)
 
-libtotem_cone_plugin_la_LDFLAGS = \
-	-avoid-version	\
-	-export-symbols $(srcdir)/plugin.symbols \
-	-module		\
-	$(AM_LDFLAGS)
+libtotem_cone_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
 -include $(top_srcdir)/git.mk
