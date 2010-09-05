@@ -5,7 +5,7 @@ lib_LTLIBRARIES = libtotem.la
 libexec_PROGRAMS =
 noinst_LTLIBRARIES = libtotem_player.la
 
-common_defines = \
+AM_CPPFLAGS = \
 	-D_REENTRANT					\
 	-DDBUS_API_SUBJECT_TO_CHANGE			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
@@ -14,7 +14,10 @@ common_defines = \
 	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	-DBINDIR=\""$(bindir)"\"			\
 	-DGTKBUILDERDIR=\"""\"				\
-	$(DISABLE_DEPRECATED)
+	$(DISABLE_DEPRECATED)				\
+	-I$(top_srcdir)/				\
+	-I$(top_srcdir)/src/backend			\
+	-I$(srcdir)/plugins
 
 modules_flags = -export_dynamic -avoid-version -module -no-undefined
 
@@ -46,9 +49,6 @@ libtotem_player_la_SOURCES = \
 	totem-time-label.h
 
 libtotem_player_la_CPPFLAGS = \
-	-I$(srcdir)/backend		\
-	-I$(top_srcdir)/		\
-	$(common_defines)		\
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
@@ -100,11 +100,7 @@ libtotem_la_SOURCES = \
 	plugins/totem-dirs.c
 
 libtotem_la_CPPFLAGS = \
-	-I$(top_srcdir)/		\
-	-I$(srcdir)/backend		\
-	-I$(srcdir)/plugins		\
 	-I$(top_builddir)/data		\
-	$(common_defines)		\
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
@@ -180,10 +176,6 @@ totemvideolist-marshal.c: totemvideolist-marshal.h Makefile
 totem_SOURCES = totem.c
 
 totem_CPPFLAGS =			\
-	-I$(top_srcdir)/		\
-	-I$(srcdir)/backend		\
-	-I$(srcdir)/plugins		\
-	$(common_defines)		\
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
@@ -211,9 +203,6 @@ totem_video_thumbnailer_SOURCES =	\
 	totem-resources.h
 
 totem_video_thumbnailer_CPPFLAGS = \
-	-I$(top_srcdir)/				\
-	-I$(srcdir)/backend				\
-	$(common_defines)				\
 	-DG_LOG_DOMAIN=\""TotemVideoThumbnailer"\"	\
 	$(AM_CPPFLAGS)
 
@@ -246,11 +235,8 @@ libtotem_properties_page_la_SOURCES = 	\
 	totem-properties-view.h
 
 libtotem_properties_page_la_CPPFLAGS =		\
-	-I$(srcdir)/backend			\
-	-I$(top_srcdir)/			\
 	-I$(srcdir)/plugins/properties		\
 	-I$(top_builddir)/data			\
-	$(common_defines)			\
 	-DG_LOG_DOMAIN=\""TotemPropertiesPage"\"\
 	$(AM_CPPFLAGS)
 
@@ -283,11 +269,8 @@ test_properties_page_SOURCES =		\
 	test-properties-page.c
 
 test_properties_page_CPPFLAGS = 		\
-	-I$(srcdir)/backend			\
-	-I$(top_srcdir)/			\
 	-I$(top_builddir)/data			\
 	-I$(srcdir)/plugins/properties		\
-	$(common_defines)			\
 	$(AM_CPPFLAGS)
 
 test_properties_page_CFLAGS = \
@@ -319,10 +302,7 @@ totem_video_indexer_SOURCES =		\
 	totem-resources.h
 
 totem_video_indexer_CPPFLAGS = \
-	-I$(top_srcdir)/			\
-	-I$(srcdir)/backend			\
 	-I$(top_builddir)/data			\
-	$(common_defines)			\
 	-DG_LOG_DOMAIN=\""TotemVideoIndexer"\"	\
 	$(AM_CPPFLAGS)
 
@@ -349,10 +329,7 @@ totem_audio_preview_SOURCES =		\
 	totem-resources.h
 
 totem_audio_preview_CPPFLAGS =	\
-	-I$(top_srcdir)/			\
-	-I$(srcdir)/backend			\
 	-I$(top_builddir)/data			\
-	$(common_defines)			\
 	-DG_LOG_DOMAIN=\""TotemAudioPreview"\"	\
 	$(AM_CPPFLAGS)
 
