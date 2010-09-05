@@ -51,15 +51,12 @@
 #define TOTEM_IS_LIRC_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_LIRC_PLUGIN))
 #define TOTEM_LIRC_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_LIRC_PLUGIN, TotemLircPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	GIOChannel *lirc_channel;
 	struct lirc_config *lirc_config;
 
 	TotemObject *totem;
-} TotemLircPlugin;
+} TotemLircPluginPrivate;
 
 /* strings that we recognize as commands from lirc */
 #define TOTEM_IR_COMMAND_PLAY "play"
@@ -92,22 +89,6 @@ typedef struct
 #define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin)
-
-static void
-totem_lirc_plugin_class_init (TotemLircPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_lirc_plugin_init (TotemLircPlugin *plugin)
-{
-}
 
 static char *
 totem_lirc_get_url (const char *str)
@@ -212,7 +193,7 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 	}
 
 	do {
-		ok = lirc_code2char (pi->lirc_config, code, &str);
+		ok = lirc_code2char (pi->priv->lirc_config, code, &str);
 
 		if (ok != 0) {
 			/* Couldn't convert lirc code to string. */
@@ -229,12 +210,12 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 			if (setting >= 0) {
 				gboolean value;
 
-				value = totem_action_remote_get_setting (pi->totem, setting);
-				totem_action_remote_set_setting (pi->totem, setting, !value);
+				value = totem_action_remote_get_setting (pi->priv->totem, setting);
+				totem_action_remote_set_setting (pi->priv->totem, setting, !value);
 			}
 		} else {
 			cmd = totem_lirc_to_command (str, &url);
-			totem_action_remote (pi->totem, cmd, url);
+			totem_action_remote (pi->priv->totem, cmd, url);
 		}
 		g_free (url);
 	} while (TRUE);
@@ -251,7 +232,7 @@ impl_activate (PeasActivatable *plugin)
 	char *path;
 	int fd;
 
-	pi->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	pi->priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 
 	fd = lirc_init ((char*) "Totem", 0);
 	if (fd < 0) {
@@ -265,7 +246,7 @@ impl_activate (PeasActivatable *plugin)
 
 	/* Load the default Totem setup */
 	path = totem_plugin_find_file ("lirc", "totem_lirc_default");
-	if (path == NULL || lirc_readconfig (path, &pi->lirc_config, NULL) == -1) {
+	if (path == NULL || lirc_readconfig (path, &pi->priv->lirc_config, NULL) == -1) {
 		g_free (path);
 		//FIXME
 #if 0
@@ -278,12 +259,12 @@ impl_activate (PeasActivatable *plugin)
 	g_free (path);
 
 	/* Load the user config, doesn't matter if it's not there */
-	lirc_readconfig (NULL, &pi->lirc_config, NULL);
+	lirc_readconfig (NULL, &pi->priv->lirc_config, NULL);
 
-	pi->lirc_channel = g_io_channel_unix_new (fd);
-	g_io_channel_set_encoding (pi->lirc_channel, NULL, NULL);
-	g_io_channel_set_buffered (pi->lirc_channel, FALSE);
-	g_io_add_watch (pi->lirc_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
+	pi->priv->lirc_channel = g_io_channel_unix_new (fd);
+	g_io_channel_set_encoding (pi->priv->lirc_channel, NULL, NULL);
+	g_io_channel_set_buffered (pi->priv->lirc_channel, FALSE);
+	g_io_add_watch (pi->priv->lirc_channel, G_IO_IN | G_IO_ERR | G_IO_HUP,
 			(GIOFunc) totem_lirc_read_code, pi);
 }
 
@@ -293,26 +274,26 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemLircPlugin *pi = TOTEM_LIRC_PLUGIN (plugin);
 	GError *error = NULL;
 
-	if (pi->lirc_channel) {
-		g_io_channel_shutdown (pi->lirc_channel, FALSE, &error);
+	if (pi->priv->lirc_channel) {
+		g_io_channel_shutdown (pi->priv->lirc_channel, FALSE, &error);
 		if (error != NULL) {
 			g_warning ("Couldn't destroy lirc connection: %s",
 				   error->message);
 			g_error_free (error);
 		}
-		pi->lirc_channel = NULL;
+		pi->priv->lirc_channel = NULL;
 	}
 
-	if (pi->lirc_config) {
-		lirc_freeconfig (pi->lirc_config);
-		pi->lirc_config = NULL;
+	if (pi->priv->lirc_config) {
+		lirc_freeconfig (pi->priv->lirc_config);
+		pi->priv->lirc_config = NULL;
 
 		lirc_deinit ();
 	}
 
-	if (pi->totem) {
-		g_object_unref (pi->totem);
-		pi->totem = NULL;
+	if (pi->priv->totem) {
+		g_object_unref (pi->priv->totem);
+		pi->priv->totem = NULL;
 	}
 }
 

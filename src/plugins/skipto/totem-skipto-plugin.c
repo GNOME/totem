@@ -46,6 +46,7 @@
 #define TOTEM_SKIPTO_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPluginClass))
 
 typedef struct {
+	TotemObject	*totem;
 	TotemSkipto	*st;
 	guint		handler_id_stream_length;
 	guint		handler_id_seekable;
@@ -54,33 +55,7 @@ typedef struct {
 	GtkActionGroup	*action_group;
 } TotemSkiptoPluginPrivate;
 
-typedef struct {
-	PeasExtensionBase parent;
-
-	TotemObject *totem;
-	TotemSkiptoPluginPrivate *priv;
-} TotemSkiptoPlugin;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
-
-static void
-totem_skipto_plugin_class_init (TotemSkiptoPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_type_class_add_private (klass, sizeof (TotemSkiptoPluginPrivate));
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-static void
-totem_skipto_plugin_init (TotemSkiptoPlugin *plugin)
-{
-	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
-						    TOTEM_TYPE_SKIPTO_PLUGIN,
-						    TotemSkiptoPluginPrivate);
-}
 
 static void
 destroy_dialog (TotemSkiptoPlugin *plugin)
@@ -137,7 +112,7 @@ skip_to_response_callback (GtkDialog *dialog, gint response, TotemSkiptoPlugin *
 
 	gtk_widget_hide (GTK_WIDGET (dialog));
 
-	totem_action_seek_time (plugin->totem,
+	totem_action_seek_time (plugin->priv->totem,
 				totem_skipto_get_range (plugin->priv->st),
 				TRUE);
 	destroy_dialog (plugin);
@@ -148,26 +123,26 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 {
 	TotemSkiptoPluginPrivate *priv = plugin->priv;
 
-	if (totem_is_seekable (plugin->totem) == FALSE)
+	if (totem_is_seekable (priv->totem) == FALSE)
 		return;
 
 	if (priv->st != NULL) {
 		gtk_window_present (GTK_WINDOW (priv->st));
 		totem_skipto_set_current (priv->st, totem_get_current_time
-					  (plugin->totem));
+					  (priv->totem));
 		return;
 	}
 
-	priv->st = TOTEM_SKIPTO (totem_skipto_new (plugin->totem));
+	priv->st = TOTEM_SKIPTO (totem_skipto_new (priv->totem));
 	g_signal_connect (G_OBJECT (priv->st), "delete-event",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
 	g_signal_connect (G_OBJECT (priv->st), "response",
 			  G_CALLBACK (skip_to_response_callback), plugin);
 	g_object_add_weak_pointer (G_OBJECT (priv->st),
 				   (gpointer *)&(priv->st));
-	totem_skipto_update_from_state (plugin->totem, plugin);
+	totem_skipto_update_from_state (priv->totem, plugin);
 	totem_skipto_set_current (priv->st,
-				  totem_get_current_time (plugin->totem));
+				  totem_get_current_time (priv->totem));
 }
 
 static void
@@ -207,18 +182,18 @@ impl_activate (PeasActivatable *plugin)
 		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "<Control>K", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
 	};
 
-	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	priv->handler_id_stream_length = g_signal_connect (G_OBJECT (pi->totem),
+	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	priv->handler_id_stream_length = g_signal_connect (G_OBJECT (priv->totem),
 				"notify::stream-length",
 				G_CALLBACK (property_notify_cb),
 				pi);
-	priv->handler_id_seekable = g_signal_connect (G_OBJECT (pi->totem),
+	priv->handler_id_seekable = g_signal_connect (G_OBJECT (priv->totem),
 				"notify::seekable",
 				G_CALLBACK (property_notify_cb),
 				pi);
 
 	/* Key press handler */
-	window = totem_get_main_window (pi->totem);
+	window = totem_get_main_window (priv->totem);
 	priv->handler_id_key_press = g_signal_connect (G_OBJECT(window),
 				"key-press-event",
 				G_CALLBACK (on_window_key_press_event),
@@ -231,7 +206,7 @@ impl_activate (PeasActivatable *plugin)
 	gtk_action_group_add_actions (priv->action_group, menu_entries,
 				G_N_ELEMENTS (menu_entries), pi);
 
-	manager = totem_get_ui_manager (pi->totem);
+	manager = totem_get_ui_manager (priv->totem);
 
 	gtk_ui_manager_insert_action_group (manager, priv->action_group, -1);
 	g_object_unref (priv->action_group);
@@ -241,7 +216,7 @@ impl_activate (PeasActivatable *plugin)
 			       "/ui/tmw-menubar/go/skip-forward", "skip-to",
 			       "skip-to", GTK_UI_MANAGER_AUTO, TRUE);
 
-	totem_skipto_update_from_state (pi->totem, pi);
+	totem_skipto_update_from_state (priv->totem, pi);
 }
 
 static void

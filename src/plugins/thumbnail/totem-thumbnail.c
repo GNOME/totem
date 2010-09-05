@@ -54,34 +54,7 @@ typedef struct
 	TotemObject *totem;
 } TotemThumbnailPluginPrivate;
 
-typedef struct
-{
-	PeasExtensionBase parent;
-	TotemThumbnailPluginPrivate *priv;
-} TotemThumbnailPlugin;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_THUMBNAIL_PLUGIN, TotemThumbnailPlugin, totem_thumbnail_plugin)
-
-static void
-totem_thumbnail_plugin_class_init (TotemThumbnailPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-
-	g_type_class_add_private (klass, sizeof (TotemThumbnailPluginPrivate));
-}
-
-static void
-totem_thumbnail_plugin_init (TotemThumbnailPlugin *plugin)
-{
-	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
-						    TOTEM_TYPE_THUMBNAIL_PLUGIN,
-						    TotemThumbnailPluginPrivate);
-}
 
 static void
 set_icon_to_default (TotemObject *totem)

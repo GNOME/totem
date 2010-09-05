@@ -32,7 +32,6 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "totem-screenshot-plugin.h"
 #include "totem.h"
 
 G_BEGIN_DECLS
@@ -56,7 +55,7 @@ typedef struct {
 } TotemGalleryClass;
 
 GType totem_gallery_get_type (void);
-TotemGallery *totem_gallery_new (Totem *totem, TotemScreenshotPlugin *plugin);
+TotemGallery *totem_gallery_new (Totem *totem);
 
 G_END_DECLS
 

@@ -54,16 +54,13 @@
 #define TOTEM_IS_GROMIT_PLUGIN_CLASS(k)		(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_GROMIT_PLUGIN))
 #define TOTEM_GROMIT_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_GROMIT_PLUGIN, TotemGromitPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	char *path;
 	int id;
 	GPid pid;
 
 	gulong handler_id;
-} TotemGromitPlugin;
+} TotemGromitPluginPrivate;
 
 #define INTERVAL 10 /* seconds */
 
@@ -92,22 +89,6 @@ static const char *visibility_cmd[] =	{ NULL, "-v", NULL };
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_GROMIT_PLUGIN, TotemGromitPlugin, totem_gromit_plugin)
 
 static void
-totem_gromit_plugin_class_init (TotemGromitPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_gromit_plugin_init (TotemGromitPlugin *plugin)
-{
-}
-
-static void
 totem_gromit_ensure_config_file (void)
 {
 	char *path;
@@ -131,13 +112,13 @@ totem_gromit_ensure_config_file (void)
 static gboolean
 totem_gromit_available (TotemGromitPlugin *plugin)
 {
-	plugin->path = g_find_program_in_path ("gromit");
+	plugin->priv->path = g_find_program_in_path ("gromit");
 
-	if (plugin->path == NULL) {
+	if (plugin->priv->path == NULL) {
 		return FALSE;
 	}
 
-	start_cmd[0] = toggle_cmd[0] = clear_cmd[0] = visibility_cmd[0] = plugin->path;
+	start_cmd[0] = toggle_cmd[0] = clear_cmd[0] = visibility_cmd[0] = plugin->priv->path;
 	totem_gromit_ensure_config_file ();
 
 	return TRUE;
@@ -154,16 +135,16 @@ static void
 totem_gromit_exit (TotemGromitPlugin *plugin)
 {
 	/* Nothing to do */
-	if (plugin->pid == -1) {
-		if (plugin->id != -1) {
-			g_source_remove (plugin->id);
-			plugin->id = -1;
+	if (plugin->priv->pid == -1) {
+		if (plugin->priv->id != -1) {
+			g_source_remove (plugin->priv->id);
+			plugin->priv->id = -1;
 		}
 		return;
 	}
 
-	kill ((pid_t) plugin->pid, SIGKILL);
-	plugin->pid = -1;
+	kill ((pid_t) plugin->priv->pid, SIGKILL);
+	plugin->priv->pid = -1;
 }
 
 static gboolean
@@ -171,7 +152,7 @@ totem_gromit_timeout_cb (gpointer data)
 {
 	TotemGromitPlugin *plugin = TOTEM_GROMIT_PLUGIN (data);
 
-	plugin->id = -1;
+	plugin->priv->id = -1;
 	totem_gromit_exit (plugin);
 	return FALSE;
 }
@@ -180,21 +161,21 @@ static void
 totem_gromit_toggle (TotemGromitPlugin *plugin)
 {
 	/* Not started */
-	if (plugin->pid == -1) {
+	if (plugin->priv->pid == -1) {
 		if (g_spawn_async (NULL,
 				(char **)start_cmd, NULL, 0, NULL, NULL,
-				&plugin->pid, NULL) == FALSE) {
+				&plugin->priv->pid, NULL) == FALSE) {
 			g_printerr ("Couldn't start gromit");
 			return;
 		}
-	} else if (plugin->id == -1) { /* Started but disabled */
-		g_source_remove (plugin->id);
-		plugin->id = -1;
+	} else if (plugin->priv->id == -1) { /* Started but disabled */
+		g_source_remove (plugin->priv->id);
+		plugin->priv->id = -1;
 		launch (toggle_cmd);
 	} else {
 		/* Started and visible */
-		g_source_remove (plugin->id);
-		plugin->id = -1;
+		g_source_remove (plugin->priv->id);
+		plugin->priv->id = -1;
 		launch (toggle_cmd);
 	}
 }
@@ -209,7 +190,7 @@ totem_gromit_clear (TotemGromitPlugin *plugin, gboolean now)
 
 	launch (visibility_cmd);
 	launch (clear_cmd);
-	plugin->id = g_timeout_add_seconds (INTERVAL, totem_gromit_timeout_cb, plugin);
+	plugin->priv->id = g_timeout_add_seconds (INTERVAL, totem_gromit_timeout_cb, plugin);
 }
 
 static gboolean
@@ -240,8 +221,8 @@ impl_activate (PeasActivatable *plugin)
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
 	GtkWindow *window;
 
-	pi->id = -1;
-	pi->pid = -1;
+	pi->priv->id = -1;
+	pi->priv->pid = -1;
 
 	if (!totem_gromit_available (pi)) {
 		//FIXME
@@ -254,7 +235,7 @@ impl_activate (PeasActivatable *plugin)
 	}
 
 	window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
-	pi->handler_id = g_signal_connect (G_OBJECT(window), "key-press-event", 
+	pi->priv->handler_id = g_signal_connect (G_OBJECT(window), "key-press-event", 
 			G_CALLBACK (on_window_key_press_event), plugin);
 	g_object_unref (window);
 }
@@ -265,16 +246,16 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
 	GtkWindow *window;
 
-	if (pi->handler_id != 0) {
+	if (pi->priv->handler_id != 0) {
 		window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
-		g_signal_handler_disconnect (G_OBJECT(window), pi->handler_id);
-		pi->handler_id = 0;
+		g_signal_handler_disconnect (G_OBJECT(window), pi->priv->handler_id);
+		pi->priv->handler_id = 0;
 		g_object_unref (window);
 	}
 
 	totem_gromit_clear (pi, TRUE);
 
-	g_free (pi->path);
-	pi->path = NULL;
+	g_free (pi->priv->path);
+	pi->priv->path = NULL;
 }
 

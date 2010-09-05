@@ -47,19 +47,14 @@
 #define TOTEM_IS_DISC_RECORDER_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_DISC_RECORDER_PLUGIN))
 #define TOTEM_DISC_RECORDER_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_DISC_RECORDER_PLUGIN, TotemDiscRecorderPluginClass))
 
-typedef struct TotemDiscRecorderPluginPrivate         TotemDiscRecorderPluginPrivate;
-
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	TotemObject *totem;
 
 	GtkActionGroup *action_group;
 	guint ui_merge_id;
 
 	gboolean enabled;
-} TotemDiscRecorderPlugin;
+} TotemDiscRecorderPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_DISC_RECORDER_PLUGIN, TotemDiscRecorderPlugin, totem_disc_recorder_plugin)
 
@@ -101,7 +96,7 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 		g_ptr_array_add (array, (gpointer) "-r");
 	g_ptr_array_add (array, (gpointer) path);
 
-	main_window = totem_get_main_window (pi->totem);
+	main_window = totem_get_main_window (pi->priv->totem);
 	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
 	xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (gtk_widget_get_window (GTK_WIDGET (main_window))));
 	xid_str = g_strdup_printf ("%d", xid);
@@ -118,11 +113,11 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 		if (copy != FALSE) {
 			totem_interface_error (_("The video disc could not be duplicated."),
 					       error->message,
-					       totem_get_main_window (pi->totem));
+					       totem_get_main_window (pi->priv->totem));
 		} else {
 			totem_interface_error (_("The movie could not be recorded."),
 					       error->message,
-					       totem_get_main_window (pi->totem));
+					       totem_get_main_window (pi->priv->totem));
 		}
 		ret = FALSE;
 		g_error_free (error);
@@ -187,7 +182,7 @@ totem_disc_recorder_plugin_write_video_project (TotemDiscRecorderPlugin *pi,
 	if (success < 0)
 		goto error;
 
-	title = totem_get_short_title (pi->totem);
+	title = totem_get_short_title (pi->priv->totem);
 	if (title) {
 		success = xmlTextWriterWriteElement (project,
 						     (xmlChar *) "label",
@@ -206,7 +201,7 @@ totem_disc_recorder_plugin_write_video_project (TotemDiscRecorderPlugin *pi,
 	if (success < 0)
 		goto error;
 
-	uri = totem_get_current_mrl (pi->totem);
+	uri = totem_get_current_mrl (pi->priv->totem);
 	escaped = (unsigned char *) g_uri_escape_string (uri, NULL, FALSE);
 	g_free (uri);
 
@@ -273,7 +268,7 @@ totem_disc_recorder_plugin_burn (GtkAction *action,
 	if (!path) {
 		totem_interface_error (_("The movie could not be recorded."),
 				       error,
-				       totem_get_main_window (pi->totem));
+				       totem_get_main_window (pi->priv->totem));
 		g_free (error);
 		return;
 	}
@@ -290,7 +285,7 @@ totem_disc_recorder_plugin_copy (GtkAction *action,
 {
 	char *mrl;
 
-	mrl = totem_get_current_mrl (pi->totem);
+	mrl = totem_get_current_mrl (pi->priv->totem);
 	if (!g_str_has_prefix (mrl, "dvd:") && !g_str_has_prefix (mrl, "vcd:")) {
 		g_free (mrl);
 		g_assert_not_reached ();
@@ -306,11 +301,11 @@ totem_disc_recorder_file_closed (TotemObject *totem,
 {
 	GtkAction *action;
 
-	action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
+	action = gtk_action_group_get_action (pi->priv->action_group, "VideoBurnToDisc");
 	gtk_action_set_visible (action, FALSE);
-	action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
+	action = gtk_action_group_get_action (pi->priv->action_group, "VideoDVDCopy");
 	gtk_action_set_visible (action, FALSE);
-	action = gtk_action_group_get_action (pi->action_group, "VideoVCDCopy");
+	action = gtk_action_group_get_action (pi->priv->action_group, "VideoVCDCopy");
 	gtk_action_set_visible (action, FALSE);
 }
 
@@ -319,41 +314,42 @@ totem_disc_recorder_file_opened (TotemObject *totem,
 				 const char *mrl,
 				 TotemDiscRecorderPlugin *pi)
 {
+	TotemDiscRecorderPluginPrivate *priv = pi->priv;
 	GtkAction *action;
 
 	/* Check if that stream is supported by brasero */
 	if (g_str_has_prefix (mrl, "file:")) {
 		/* If the file is supported we can always burn, even if there
 		 * aren't any burner since we can still create an image. */
-		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
+		action = gtk_action_group_get_action (priv->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, TRUE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoDVDCopy");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoVCDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoVCDCopy");
 		gtk_action_set_visible (action, FALSE);
 	}
 	else if (g_str_has_prefix (mrl, "dvd:")) {
-		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
+		action = gtk_action_group_get_action (priv->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoDVDCopy");
 		gtk_action_set_visible (action, TRUE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoVCDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoVCDCopy");
 		gtk_action_set_visible (action, FALSE);
 	}
 	else if (g_str_has_prefix (mrl, "vcd:")) {
-		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
+		action = gtk_action_group_get_action (priv->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoDVDCopy");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoVCDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoVCDCopy");
 		gtk_action_set_visible (action, TRUE);
 	}
 	else {
-		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
+		action = gtk_action_group_get_action (priv->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoDVDCopy");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoVCDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoVCDCopy");
 		gtk_action_set_visible (action, FALSE);
 	}
 }
@@ -362,6 +358,7 @@ static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
+	TotemDiscRecorderPluginPrivate *priv = pi->priv;
 	GtkUIManager *uimanager = NULL;
 	GtkAction *action;
 	char *path;
@@ -380,40 +377,40 @@ impl_activate (PeasActivatable *plugin)
 	g_free (path);
 #endif
 
-	pi->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	g_signal_connect (pi->totem,
+	g_signal_connect (priv->totem,
 			  "file-opened",
 			  G_CALLBACK (totem_disc_recorder_file_opened),
 			  plugin);
-	g_signal_connect (pi->totem,
+	g_signal_connect (priv->totem,
 			  "file-closed",
 			  G_CALLBACK (totem_disc_recorder_file_closed),
 			  plugin);
 
 	/* add UI */
-	pi->action_group = gtk_action_group_new ("DiscRecorderActions");
-	gtk_action_group_set_translation_domain (pi->action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (pi->action_group,
+	priv->action_group = gtk_action_group_new ("DiscRecorderActions");
+	gtk_action_group_set_translation_domain (priv->action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (priv->action_group,
 				      totem_disc_recorder_plugin_actions,
 				      G_N_ELEMENTS (totem_disc_recorder_plugin_actions),
 				      pi);
 
-	uimanager = totem_get_ui_manager (pi->totem);
-	gtk_ui_manager_insert_action_group (uimanager, pi->action_group, -1);
-	g_object_unref (pi->action_group);
+	uimanager = totem_get_ui_manager (priv->totem);
+	gtk_ui_manager_insert_action_group (uimanager, priv->action_group, -1);
+	g_object_unref (priv->action_group);
 
-	pi->ui_merge_id = gtk_ui_manager_new_merge_id (uimanager);
+	priv->ui_merge_id = gtk_ui_manager_new_merge_id (uimanager);
 
 	gtk_ui_manager_add_ui (uimanager,
-			       pi->ui_merge_id,
+			       priv->ui_merge_id,
 			       "/ui/tmw-menubar/movie/burn-placeholder",
 			       "VideoBurnToDisc",
 			       "VideoBurnToDisc",
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 	gtk_ui_manager_add_ui (uimanager,
-			       pi->ui_merge_id,
+			       priv->ui_merge_id,
 			       "/ui/totem-main-popup/burn-placeholder",
 			       "VideoBurnToDisc",
 			       "VideoBurnToDisc",
@@ -421,14 +418,14 @@ impl_activate (PeasActivatable *plugin)
 			       TRUE);
 
 	gtk_ui_manager_add_ui (uimanager,
-			       pi->ui_merge_id,
+			       priv->ui_merge_id,
 			       "/ui/tmw-menubar/movie/burn-placeholder",
 			       "VideoDVDCopy",
 			       "VideoDVDCopy",
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 	gtk_ui_manager_add_ui (uimanager,
-			       pi->ui_merge_id,
+			       priv->ui_merge_id,
 			       "/ui/totem-main-popup/burn-placeholder",
 			       "VideoDVDCopy",
 			       "VideoDVDCopy",
@@ -436,32 +433,32 @@ impl_activate (PeasActivatable *plugin)
 			       TRUE);
 
 	gtk_ui_manager_add_ui (uimanager,
-			       pi->ui_merge_id,
+			       priv->ui_merge_id,
 			       "/ui/tmw-menubar/movie/burn-placeholder",
 			       "VideoVCDCopy",
 			       "VideoVCDCopy",
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 	gtk_ui_manager_add_ui (uimanager,
-			       pi->ui_merge_id,
+			       priv->ui_merge_id,
 			       "/ui/totem-main-popup/burn-placeholder",
 			       "VideoVCDCopy",
 			       "VideoVCDCopy",
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 
-	if (!totem_is_paused (pi->totem) && !totem_is_playing (pi->totem)) {
-		action = gtk_action_group_get_action (pi->action_group, "VideoBurnToDisc");
+	if (!totem_is_paused (priv->totem) && !totem_is_playing (priv->totem)) {
+		action = gtk_action_group_get_action (priv->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoDVDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoDVDCopy");
 		gtk_action_set_visible (action, FALSE);
-		action = gtk_action_group_get_action (pi->action_group, "VideoVCDCopy");
+		action = gtk_action_group_get_action (priv->action_group, "VideoVCDCopy");
 		gtk_action_set_visible (action, FALSE);	}
 	else {
 		char *mrl;
 
-		mrl = totem_get_current_mrl (pi->totem);
-		totem_disc_recorder_file_opened (pi->totem, mrl, pi);
+		mrl = totem_get_current_mrl (priv->totem);
+		totem_disc_recorder_file_opened (priv->totem, mrl, pi);
 		g_free (mrl);
 	}
 }
@@ -470,33 +467,17 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
+	TotemDiscRecorderPluginPrivate *priv = pi->priv;
 	GtkUIManager *uimanager = NULL;
 
-	pi->enabled = FALSE;
+	priv->enabled = FALSE;
 
-	g_signal_handlers_disconnect_by_func (pi->totem, totem_disc_recorder_file_opened, plugin);
-	g_signal_handlers_disconnect_by_func (pi->totem, totem_disc_recorder_file_closed, plugin);
+	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_opened, plugin);
+	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_closed, plugin);
 
-	uimanager = totem_get_ui_manager (pi->totem);
-	gtk_ui_manager_remove_ui (uimanager, pi->ui_merge_id);
-	gtk_ui_manager_remove_action_group (uimanager, pi->action_group);
+	uimanager = totem_get_ui_manager (priv->totem);
+	gtk_ui_manager_remove_ui (uimanager, priv->ui_merge_id);
+	gtk_ui_manager_remove_action_group (uimanager, priv->action_group);
 
-	pi->totem = NULL;
+	priv->totem = NULL;
 }
-
-static void
-totem_disc_recorder_plugin_class_init (TotemDiscRecorderPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_disc_recorder_plugin_init (TotemDiscRecorderPlugin *pi)
-{
-}
-

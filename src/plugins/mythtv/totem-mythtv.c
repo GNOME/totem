@@ -68,10 +68,7 @@ enum {
 	NUM_COLS
 };
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	GList *lst_b_info;
 	GMythUPnP *upnp;
 
@@ -79,7 +76,7 @@ typedef struct
 
 	GtkWidget *sidebar_recordings;
 	GtkWidget *sidebar_livetv;
-} TotemMythtvPlugin;
+} TotemMythtvPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin, totem_mythtv_plugin)
 
@@ -171,7 +168,7 @@ create_treeview (TotemMythtvPlugin *plugin)
 						    G_TYPE_STRING));
 
 	treeview = GTK_WIDGET (g_object_new (TOTEM_TYPE_VIDEO_LIST,
-					     "totem", plugin->totem,
+					     "totem", plugin->priv->totem,
 					     "mrl-column", URI_COL,
 					     "tooltip-column", DESCRIPTION_COL,
 					     NULL));
@@ -220,7 +217,7 @@ totem_mythtv_list_recordings (TotemMythtvPlugin *tm,
 	gmyth_scheduler_disconnect (scheduler);
 	g_object_unref (scheduler);
 
-	model = g_object_get_data (G_OBJECT (tm->sidebar_recordings), "model");
+	model = g_object_get_data (G_OBJECT (tm->priv->sidebar_recordings), "model");
 
 	for (l = list; l != NULL; l = l->next) {
 		RecordedInfo *recorded_info = (RecordedInfo *) l->data;
@@ -294,7 +291,7 @@ totem_mythtv_list_livetv (TotemMythtvPlugin *tm,
 	gmyth_epg_disconnect (epg);
 	g_object_unref (epg);
 
-	model = g_object_get_data (G_OBJECT (tm->sidebar_livetv), "model");
+	model = g_object_get_data (G_OBJECT (tm->priv->sidebar_livetv), "model");
 	clist = g_list_sort (clist, (GCompareFunc) sort_channels);
 
 	for (ch = clist; ch != NULL; ch = ch->next) {
@@ -325,23 +322,12 @@ totem_mythtv_list_livetv (TotemMythtvPlugin *tm,
 }
 
 static void
-totem_mythtv_plugin_class_init (TotemMythtvPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
 device_found_cb (GMythUPnP *upnp,
 		 GMythBackendInfo *b_info,
 		 TotemMythtvPlugin *plugin)
 {
-	if (!g_list_find (plugin->lst_b_info, b_info)) {
-		plugin->lst_b_info = g_list_append (plugin->lst_b_info,
+	if (!g_list_find (plugin->priv->lst_b_info, b_info)) {
+		plugin->priv->lst_b_info = g_list_append (plugin->priv->lst_b_info,
 				g_object_ref (b_info));
 		totem_mythtv_list_recordings (plugin, b_info);
 		totem_mythtv_list_livetv (plugin, b_info);
@@ -356,10 +342,10 @@ device_lost_cb (GMythUPnP *upnp,
 	GList *elem;
 	GMythBackendInfo *b_info;
 
-	elem = g_list_find (plugin->lst_b_info, info);
+	elem = g_list_find (plugin->priv->lst_b_info, info);
 	if (elem && elem->data) {
 		b_info = elem->data;
-		plugin->lst_b_info = g_list_remove (plugin->lst_b_info,
+		plugin->priv->lst_b_info = g_list_remove (plugin->priv->lst_b_info,
 				b_info);
 		g_object_unref (b_info);
 	}
@@ -373,40 +359,40 @@ totem_mythtv_update_binfo (TotemMythtvPlugin *plugin)
 	GList *w;
 
 	/* Clear old b_info */
-	if (plugin->lst_b_info != NULL) {
-		g_list_foreach (plugin->lst_b_info, (GFunc) g_object_unref, NULL);
-		g_list_free (plugin->lst_b_info);
-		plugin->lst_b_info = NULL;
+	if (plugin->priv->lst_b_info != NULL) {
+		g_list_foreach (plugin->priv->lst_b_info, (GFunc) g_object_unref, NULL);
+		g_list_free (plugin->priv->lst_b_info);
+		plugin->priv->lst_b_info = NULL;
 	}
 
 
 	/* Using GMythUPnP to search for avaliable servers */
-	if (plugin->upnp == NULL) {
-		plugin->upnp = gmyth_upnp_get_instance ();
-		g_signal_connect (G_OBJECT (plugin->upnp),
+	if (plugin->priv->upnp == NULL) {
+		plugin->priv->upnp = gmyth_upnp_get_instance ();
+		g_signal_connect (G_OBJECT (plugin->priv->upnp),
 						  "device-found",
 						  G_CALLBACK (device_found_cb),
 						  plugin);
-		plugin->upnp = gmyth_upnp_get_instance ();
-		g_signal_connect (G_OBJECT (plugin->upnp),
+		plugin->priv->upnp = gmyth_upnp_get_instance ();
+		g_signal_connect (G_OBJECT (plugin->priv->upnp),
 						  "device-lost",
 						  G_CALLBACK (device_lost_cb),
 						  plugin);
 	}
 
 	/* Load current servers */
-	lst = gmyth_upnp_get_devices (plugin->upnp);
+	lst = gmyth_upnp_get_devices (plugin->priv->upnp);
 	for (w = lst; w != NULL; w = w->next) {
 		GMythBackendInfo *b_info;
 
 		b_info = (GMythBackendInfo *) w->data;
-		plugin->lst_b_info = g_list_append (plugin->lst_b_info,
+		plugin->priv->lst_b_info = g_list_append (plugin->priv->lst_b_info,
 				b_info);
 		totem_mythtv_list_recordings (plugin, b_info);
 		totem_mythtv_list_livetv (plugin, b_info);
 	}
 	g_list_free (lst);
-	gmyth_upnp_search (plugin->upnp);
+	gmyth_upnp_search (plugin->priv->upnp);
 }
 
 static void
@@ -415,24 +401,19 @@ refresh_cb (GtkWidget *button, TotemMythtvPlugin *tm)
 	GtkTreeModel *model;
 
 	gtk_widget_set_sensitive (button, FALSE);
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (tm->sidebar_recordings));
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (tm->sidebar_livetv));
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (tm->priv->sidebar_recordings));
+	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (tm->priv->sidebar_livetv));
 
-	model = g_object_get_data (G_OBJECT (tm->sidebar_recordings), "model");
+	model = g_object_get_data (G_OBJECT (tm->priv->sidebar_recordings), "model");
 	gtk_list_store_clear (GTK_LIST_STORE (model));
-	model = g_object_get_data (G_OBJECT (tm->sidebar_livetv), "model");
+	model = g_object_get_data (G_OBJECT (tm->priv->sidebar_livetv), "model");
 	gtk_list_store_clear (GTK_LIST_STORE (model));
 
 	totem_mythtv_update_binfo (tm);
 
-	gdk_window_set_cursor (gtk_widget_get_window (tm->sidebar_recordings), NULL);
-	gdk_window_set_cursor (gtk_widget_get_window (tm->sidebar_livetv), NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (tm->priv->sidebar_recordings), NULL);
+	gdk_window_set_cursor (gtk_widget_get_window (tm->priv->sidebar_livetv), NULL);
 	gtk_widget_set_sensitive (button, TRUE);
-}
-
-static void
-totem_mythtv_plugin_init (TotemMythtvPlugin *plugin)
-{
 }
 
 static GtkWidget *
@@ -454,7 +435,7 @@ add_sidebar (TotemMythtvPlugin *tm, const char *name, const char *label)
 	gtk_container_add (GTK_CONTAINER (box), scrolled);
 	gtk_box_pack_end (GTK_BOX (box), button, FALSE, FALSE, 0);
 	gtk_widget_show_all (box);
-	totem_add_sidebar_page (tm->totem, name, label, box);
+	totem_add_sidebar_page (tm->priv->totem, name, label, box);
 
 	g_object_set_data (G_OBJECT (box), "treeview", treeview);
 	g_object_set_data (G_OBJECT (box), "model",
@@ -468,10 +449,10 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
 
-	tm->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	tm->priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 
-	tm->sidebar_recordings = add_sidebar (tm, "mythtv-recordings", _("MythTV Recordings"));
-	tm->sidebar_livetv = add_sidebar (tm, "mythtv-livetv", _("MythTV LiveTV"));
+	tm->priv->sidebar_recordings = add_sidebar (tm, "mythtv-recordings", _("MythTV Recordings"));
+	tm->priv->sidebar_livetv = add_sidebar (tm, "mythtv-livetv", _("MythTV LiveTV"));
 
 	totem_mythtv_update_binfo (TOTEM_MYTHTV_PLUGIN(plugin));
 
@@ -489,26 +470,26 @@ impl_deactivate	(PeasActivatable *plugin)
 {
 	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(plugin);
 
-	totem_remove_sidebar_page (tm->totem, MYTHTV_SIDEBAR_RECORDINGS);
-	totem_remove_sidebar_page (tm->totem, MYTHTV_SIDEBAR_LIVETV);
+	totem_remove_sidebar_page (tm->priv->totem, MYTHTV_SIDEBAR_RECORDINGS);
+	totem_remove_sidebar_page (tm->priv->totem, MYTHTV_SIDEBAR_LIVETV);
 
-	if (tm->lst_b_info != NULL) {
-		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
-		g_list_free (tm->lst_b_info);
-		tm->lst_b_info = NULL;
+	if (tm->priv->lst_b_info != NULL) {
+		g_list_foreach (tm->priv->lst_b_info, (GFunc ) g_object_unref, NULL);
+		g_list_free (tm->priv->lst_b_info);
+		tm->priv->lst_b_info = NULL;
 	}
-	if (tm->upnp != NULL) {
-		g_object_unref (tm->upnp);
-		tm->upnp = NULL;
+	if (tm->priv->upnp != NULL) {
+		g_object_unref (tm->priv->upnp);
+		tm->priv->upnp = NULL;
 	}
-	if (tm->sidebar_recordings != NULL) {
-		gtk_widget_destroy (tm->sidebar_recordings);
-		tm->sidebar_recordings = NULL;
+	if (tm->priv->sidebar_recordings != NULL) {
+		gtk_widget_destroy (tm->priv->sidebar_recordings);
+		tm->priv->sidebar_recordings = NULL;
 	}
-	if (tm->sidebar_livetv != NULL) {
-		gtk_widget_destroy (tm->sidebar_livetv);
-		tm->sidebar_livetv = NULL;
+	if (tm->priv->sidebar_livetv != NULL) {
+		gtk_widget_destroy (tm->priv->sidebar_livetv);
+		tm->priv->sidebar_livetv = NULL;
 	}
-	g_object_unref (tm->totem);
+	g_object_unref (tm->priv->totem);
 }
 

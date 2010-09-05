@@ -146,7 +146,7 @@ totem_screenshot_init (TotemScreenshot *screenshot)
 }
 
 GtkWidget *
-totem_screenshot_new (Totem *totem, TotemScreenshotPlugin *screenshot_plugin, GdkPixbuf *screen_image)
+totem_screenshot_new (Totem *totem, GdkPixbuf *screen_image)
 {
 	TotemScreenshot *screenshot;
 	GtkContainer *content_area;

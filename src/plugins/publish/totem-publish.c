@@ -67,10 +67,7 @@ enum
 	LAST_COLUMN
 };
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	TotemObject       *totem;
 	GSettings         *gsettings;
 	GtkWidget         *settings;
@@ -86,7 +83,9 @@ typedef struct
 
 	gulong item_added_id;
 	gulong item_removed_id;
-} TotemPublishPlugin;
+} TotemPublishPluginPrivate;
+
+TOTEM_PLUGIN_REGISTER_CONFIGURABLE (TOTEM_TYPE_PUBLISH_PLUGIN, TotemPublishPlugin, totem_publish_plugin);
 
 void totem_publish_plugin_service_name_entry_changed_cb	   (GtkEntry        *entry,
 							    TotemPublishPlugin *self);
@@ -101,7 +100,6 @@ void totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *v
 							    gpointer           data);
 
 G_LOCK_DEFINE_STATIC(totem_publish_plugin_lock);
-TOTEM_PLUGIN_REGISTER_CONFIGURABLE (TOTEM_TYPE_PUBLISH_PLUGIN, TotemPublishPlugin, totem_publish_plugin);
 
 static void
 totem_publish_plugin_name_changed_cb (GSettings *settings, const gchar *key, TotemPublishPlugin *self)
@@ -112,7 +110,7 @@ totem_publish_plugin_name_changed_cb (GSettings *settings, const gchar *key, Tot
 	name = epc_publisher_expand_name (pattern, NULL);
 	g_free (pattern);
 
-	epc_publisher_set_service_name (self->publisher, name);
+	epc_publisher_set_service_name (self->priv->publisher, name);
 
 	g_free (name);
 }
@@ -120,13 +118,13 @@ totem_publish_plugin_name_changed_cb (GSettings *settings, const gchar *key, Tot
 void
 totem_publish_plugin_service_name_entry_changed_cb (GtkEntry *entry, TotemPublishPlugin *self)
 {
-	g_settings_set_string (self->gsettings, "name-format", gtk_entry_get_text (entry));
+	g_settings_set_string (self->priv->gsettings, "name-format", gtk_entry_get_text (entry));
 }
 
 void
 totem_publish_plugin_encryption_button_toggled_cb (GtkToggleButton *button, TotemPublishPlugin *self)
 {
-	g_settings_set_string (self->gsettings, "protocol", gtk_toggle_button_get_active (button) ? "https" : "http");
+	g_settings_set_string (self->priv->gsettings, "protocol", gtk_toggle_button_get_active (button) ? "https" : "http");
 }
 
 static void
@@ -140,9 +138,9 @@ totem_publish_plugin_protocol_changed_cb (GSettings *settings, const gchar *key,
 	protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
 	g_free (protocol_name);
 
-	epc_publisher_quit (self->publisher);
-	epc_publisher_set_protocol (self->publisher, protocol);
-	epc_publisher_run_async (self->publisher, &error);
+	epc_publisher_quit (self->priv->publisher);
+	epc_publisher_set_protocol (self->priv->publisher, protocol);
+	epc_publisher_run_async (self->priv->publisher, &error);
 
 	if (error) {
 		g_warning ("%s: %s", G_STRFUNC, error->message);
@@ -171,9 +169,9 @@ totem_publish_plugin_playlist_cb (EpcPublisher *publisher,
 
 	g_string_append_printf (buffer,
 				"[playlist]\nNumberOfEntries=%d\n",
-				g_slist_length (self->playlist));
+				g_slist_length (self->priv->playlist));
 
-	for (iter = self->playlist, i = 1; iter; iter = iter->next, ++i) {
+	for (iter = self->priv->playlist, i = 1; iter; iter = iter->next, ++i) {
 		gchar *file_key = iter->data;
 		gchar *uri;
 
@@ -257,7 +255,7 @@ totem_publish_plugin_rebuild_playlist_cb (TotemPlaylist *playlist,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	gchar *key = totem_publish_plugin_build_key (filename);
-	self->playlist = g_slist_prepend (self->playlist, key);
+	self->priv->playlist = g_slist_prepend (self->priv->playlist, key);
 }
 
 static void
@@ -268,15 +266,15 @@ totem_publish_plugin_playlist_changed_cb (TotemPlaylist *playlist,
 
 	G_LOCK (totem_publish_plugin_lock);
 
-	g_slist_foreach (self->playlist, (GFunc) g_free, NULL);
-	g_slist_free (self->playlist);
-	self->playlist = NULL;
+	g_slist_foreach (self->priv->playlist, (GFunc) g_free, NULL);
+	g_slist_free (self->priv->playlist);
+	self->priv->playlist = NULL;
 
 	totem_playlist_foreach (playlist,
 				totem_publish_plugin_rebuild_playlist_cb,
 				self);
 
-	self->playlist = g_slist_reverse (self->playlist);
+	self->priv->playlist = g_slist_reverse (self->priv->playlist);
 
 	G_UNLOCK (totem_publish_plugin_lock);
 }
@@ -290,7 +288,7 @@ totem_publish_plugin_playlist_item_added_cb (TotemPlaylist *playlist,
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	gchar *key = totem_publish_plugin_build_key (filename);
 
-	epc_publisher_add_handler (self->publisher, key,
+	epc_publisher_add_handler (self->priv->publisher, key,
 				   totem_publish_plugin_media_cb,
 				   g_strdup (url), g_free);
 
@@ -306,7 +304,7 @@ totem_publish_plugin_playlist_item_removed_cb (TotemPlaylist *playlist,
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (data);
 	gchar *key = totem_publish_plugin_build_key (filename);
-	epc_publisher_remove (self->publisher, key);
+	epc_publisher_remove (self->priv->publisher, key);
 	g_free (key);
 }
 
@@ -317,8 +315,8 @@ totem_publish_plugin_service_found_cb (TotemPublishPlugin *self,
 {
 	GtkTreeIter iter;
 
-	gtk_list_store_append (self->neighbours, &iter);
-	gtk_list_store_set (self->neighbours, &iter, NAME_COLUMN, name,
+	gtk_list_store_append (self->priv->neighbours, &iter);
+	gtk_list_store_set (self->priv->neighbours, &iter, NAME_COLUMN, name,
 						     INFO_COLUMN, info,
 						     -1);
 }
@@ -328,7 +326,7 @@ totem_publish_plugin_service_removed_cb (TotemPublishPlugin *self,
 					 const gchar        *name,
 					 const gchar        *type)
 {
-	GtkTreeModel *model = GTK_TREE_MODEL (self->neighbours);
+	GtkTreeModel *model = GTK_TREE_MODEL (self->priv->neighbours);
 	GtkTreeIter iter;
 
 	if (gtk_tree_model_get_iter_first (model, &iter)) {
@@ -349,7 +347,7 @@ totem_publish_plugin_service_removed_cb (TotemPublishPlugin *self,
 			path = path_iter->data;
 
 			if (gtk_tree_model_get_iter (model, &iter, path))
-				gtk_list_store_remove (self->neighbours, &iter);
+				gtk_list_store_remove (self->priv->neighbours, &iter);
 
 			gtk_tree_path_free (path);
 		}
@@ -362,13 +360,13 @@ static void
 totem_publish_plugin_scanning_done_cb (TotemPublishPlugin *self,
 				       const gchar        *type)
 {
-	if (self->scanning_id) {
-		g_source_remove (self->scanning_id);
-		self->scanning_id = 0;
+	if (self->priv->scanning_id) {
+		g_source_remove (self->priv->scanning_id);
+		self->priv->scanning_id = 0;
 	}
 
-	if (self->scanning)
-		gtk_widget_hide (self->scanning);
+	if (self->priv->scanning)
+		gtk_widget_hide (self->priv->scanning);
 }
 
 static void
@@ -392,8 +390,8 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 		if (error)
 			goto out;
 
-		ev_sidebar_set_current_page (EV_SIDEBAR (self->totem->sidebar), "playlist");
-		totem_playlist_clear (self->totem->playlist);
+		ev_sidebar_set_current_page (EV_SIDEBAR (self->priv->totem->sidebar), "playlist");
+		totem_playlist_clear (self->priv->totem->playlist);
 
 		for (i = 0; i < n_entries; ++i) {
 			gchar *key, *mrl, *title;
@@ -407,7 +405,7 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 			g_free (key);
 
 			if (mrl)
-				totem_playlist_add_mrl (self->totem->playlist, mrl, title, FALSE, NULL, NULL, NULL);
+				totem_playlist_add_mrl (self->priv->totem->playlist, mrl, title, FALSE, NULL, NULL, NULL);
 
 			g_free (title);
 			g_free (mrl);
@@ -436,8 +434,8 @@ totem_publish_plugin_neighbours_list_row_activated_cb (GtkTreeView       *view,
 	EpcServiceInfo *info = NULL;
 	GtkTreeIter iter;
 
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->neighbours), &iter, path)) {
-		gtk_tree_model_get (GTK_TREE_MODEL (self->neighbours),
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->priv->neighbours), &iter, path)) {
+		gtk_tree_model_get (GTK_TREE_MODEL (self->priv->neighbours),
 				    &iter, INFO_COLUMN, &info, -1);
 		totem_publish_plugin_load_playlist (self, info);
 		epc_service_info_unref (info);
@@ -459,23 +457,23 @@ totem_publish_plugin_create_neigbours_page (TotemPublishPlugin *self, GtkBuilder
 	page = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-page"));
 	list = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-list"));
 
-	self->scanning = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-scanning"));
-	self->scanning_id = g_timeout_add (100, totem_publish_plugin_scanning_cb, self->scanning);
+	self->priv->scanning = GTK_WIDGET (gtk_builder_get_object (builder, "neighbours-scanning"));
+	self->priv->scanning_id = g_timeout_add (100, totem_publish_plugin_scanning_cb, self->priv->scanning);
 
-	g_signal_connect_swapped (self->monitor, "service-found",
+	g_signal_connect_swapped (self->priv->monitor, "service-found",
 				  G_CALLBACK (totem_publish_plugin_service_found_cb),
 				  self);
-	g_signal_connect_swapped (self->monitor, "service-removed",
+	g_signal_connect_swapped (self->priv->monitor, "service-removed",
 				  G_CALLBACK (totem_publish_plugin_service_removed_cb),
 				  self);
-	g_signal_connect_swapped (self->monitor, "scanning-done",
+	g_signal_connect_swapped (self->priv->monitor, "scanning-done",
 				  G_CALLBACK (totem_publish_plugin_scanning_done_cb),
 				  self);
 
-	self->neighbours = gtk_list_store_new (LAST_COLUMN, G_TYPE_STRING, EPC_TYPE_SERVICE_INFO);
+	self->priv->neighbours = gtk_list_store_new (LAST_COLUMN, G_TYPE_STRING, EPC_TYPE_SERVICE_INFO);
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (list),
-				 GTK_TREE_MODEL (self->neighbours));
+				 GTK_TREE_MODEL (self->priv->neighbours));
 
 	gtk_tree_view_append_column (GTK_TREE_VIEW (list),
 		gtk_tree_view_column_new_with_attributes (
@@ -492,6 +490,7 @@ static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
+	TotemPublishPluginPrivate *priv = self->priv;
 	EpcProtocol protocol = EPC_PROTOCOL_HTTPS;
 	GtkWindow *window;
 	GtkBuilder *builder;
@@ -502,35 +501,35 @@ impl_activate (PeasActivatable *plugin)
 	gchar *service_pattern;
 	gchar *service_name;
 
-	g_return_if_fail (NULL == self->publisher);
-	g_return_if_fail (NULL == self->totem);
+	g_return_if_fail (NULL == priv->publisher);
+	g_return_if_fail (NULL == priv->totem);
 
 	G_LOCK (totem_publish_plugin_lock);
 
-	self->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 
-	window = totem_get_main_window (self->totem);
+	window = totem_get_main_window (priv->totem);
 	builder = totem_plugin_load_interface ("publish", "publish-plugin.ui", TRUE, window, self);
 	epc_progress_window_install (window);
 	g_object_unref (window);
 
-	self->gsettings = g_settings_new (TOTEM_PUBLISH_SCHEMA);
+	priv->gsettings = g_settings_new (TOTEM_PUBLISH_SCHEMA);
 
-	protocol_name = g_settings_get_string (self->gsettings, "protocol");
-	service_pattern = g_settings_get_string (self->gsettings, "name-format");
+	protocol_name = g_settings_get_string (priv->gsettings, "protocol");
+	service_pattern = g_settings_get_string (priv->gsettings, "name-format");
 
 	if (*protocol_name == '\0') {
 		protocol_name = g_strdup ("http");
-		g_settings_set_string (self->gsettings, "protocol", protocol_name);
+		g_settings_set_string (priv->gsettings, "protocol", protocol_name);
 	}
 
 	if (*service_pattern == '\0') {
 		service_pattern = g_strdup ("%a of %u on %h");
-		g_settings_set_string (self->gsettings, "name-format", service_pattern);
+		g_settings_set_string (priv->gsettings, "name-format", service_pattern);
 	}
 
-	g_signal_connect (self->gsettings, "changed::name", (GCallback) totem_publish_plugin_name_changed_cb, self);
-	g_signal_connect (self->gsettings, "changed::protocol", (GCallback) totem_publish_plugin_protocol_changed_cb, self);
+	g_signal_connect (priv->gsettings, "changed::name", (GCallback) totem_publish_plugin_name_changed_cb, self);
+	g_signal_connect (priv->gsettings, "changed::protocol", (GCallback) totem_publish_plugin_protocol_changed_cb, self);
 
 	protocol = epc_protocol_from_name (protocol_name, EPC_PROTOCOL_HTTPS);
 	service_name = epc_publisher_expand_name (service_pattern, &internal_error);
@@ -541,40 +540,40 @@ impl_activate (PeasActivatable *plugin)
 		g_clear_error (&internal_error);
 	}
 
-	self->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
-	epc_service_monitor_set_skip_our_own (self->monitor, TRUE);
+	priv->monitor = epc_service_monitor_new ("totem", NULL, EPC_PROTOCOL_UNKNOWN);
+	epc_service_monitor_set_skip_our_own (priv->monitor, TRUE);
 
 	/* Translators: computers on the local network which are publishing their playlists over the network */
-	ev_sidebar_add_page (EV_SIDEBAR (self->totem->sidebar), "neighbours", _("Neighbors"),
+	ev_sidebar_add_page (EV_SIDEBAR (priv->totem->sidebar), "neighbours", _("Neighbors"),
 			     totem_publish_plugin_create_neigbours_page (self, builder));
 	g_object_unref (builder);
 
-	self->publisher = epc_publisher_new (service_name, "totem", NULL);
-	epc_publisher_set_protocol (self->publisher, protocol);
+	priv->publisher = epc_publisher_new (service_name, "totem", NULL);
+	epc_publisher_set_protocol (priv->publisher, protocol);
 
 	g_free (protocol_name);
 	g_free (service_name);
 
-	epc_publisher_add_handler (self->publisher, "playlist.pls",
+	epc_publisher_add_handler (priv->publisher, "playlist.pls",
 				   totem_publish_plugin_playlist_cb,
 				   self, NULL);
-	epc_publisher_add_bookmark (self->publisher, "playlist.pls", NULL);
+	epc_publisher_add_bookmark (priv->publisher, "playlist.pls", NULL);
 
-	self->item_added_id = g_signal_connect (self->totem->playlist, "changed",
+	priv->item_added_id = g_signal_connect (priv->totem->playlist, "changed",
 		G_CALLBACK (totem_publish_plugin_playlist_changed_cb), self);
-	self->item_added_id = g_signal_connect (self->totem->playlist, "item-added",
+	priv->item_added_id = g_signal_connect (priv->totem->playlist, "item-added",
 		G_CALLBACK (totem_publish_plugin_playlist_item_added_cb), self);
-	self->item_removed_id = g_signal_connect (self->totem->playlist, "item-removed",
+	priv->item_removed_id = g_signal_connect (priv->totem->playlist, "item-removed",
 		G_CALLBACK (totem_publish_plugin_playlist_item_removed_cb), self);
 
 	G_UNLOCK (totem_publish_plugin_lock);
 
-	totem_playlist_foreach (self->totem->playlist,
+	totem_playlist_foreach (priv->totem->playlist,
 				totem_publish_plugin_playlist_item_added_cb, self);
 
-	totem_publish_plugin_playlist_changed_cb (self->totem->playlist, self);
+	totem_publish_plugin_playlist_changed_cb (priv->totem->playlist, self);
 
-	epc_publisher_run_async (self->publisher, NULL);
+	epc_publisher_run_async (priv->publisher, NULL);
 
 	return;
 }
@@ -583,64 +582,65 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemPublishPlugin *self = TOTEM_PUBLISH_PLUGIN (plugin);
+	TotemPublishPluginPrivate *priv = self->priv;
 	TotemPlaylist *playlist = NULL;
 
 	G_LOCK (totem_publish_plugin_lock);
 
-	if (self->totem)
-		playlist = self->totem->playlist;
+	if (priv->totem)
+		playlist = priv->totem->playlist;
 
-	if (self->scanning_id) {
-		g_source_remove (self->scanning_id);
-		self->scanning_id = 0;
+	if (priv->scanning_id) {
+		g_source_remove (priv->scanning_id);
+		priv->scanning_id = 0;
 	}
 
-	if (playlist && self->item_added_id) {
-		g_signal_handler_disconnect (playlist, self->item_added_id);
-		self->item_added_id = 0;
+	if (playlist && priv->item_added_id) {
+		g_signal_handler_disconnect (playlist, priv->item_added_id);
+		priv->item_added_id = 0;
 	}
 
-	if (playlist && self->item_removed_id) {
-		g_signal_handler_disconnect (playlist, self->item_removed_id);
-		self->item_removed_id = 0;
+	if (playlist && priv->item_removed_id) {
+		g_signal_handler_disconnect (playlist, priv->item_removed_id);
+		priv->item_removed_id = 0;
 	}
 
-	if (self->monitor) {
-		g_object_unref (self->monitor);
-		self->monitor = NULL;
+	if (priv->monitor) {
+		g_object_unref (priv->monitor);
+		priv->monitor = NULL;
 	}
 
-	if (self->publisher) {
-		epc_publisher_quit (self->publisher);
-		g_object_unref (self->publisher);
-		self->publisher = NULL;
+	if (priv->publisher) {
+		epc_publisher_quit (priv->publisher);
+		g_object_unref (priv->publisher);
+		priv->publisher = NULL;
 	}
 
-	if (self->gsettings != NULL)
-		g_object_unref (self->gsettings);
-	self->gsettings = NULL;
+	if (priv->gsettings != NULL)
+		g_object_unref (priv->gsettings);
+	priv->gsettings = NULL;
 
-	if (self->totem) {
-		ev_sidebar_remove_page (EV_SIDEBAR (self->totem->sidebar), "neighbours");
+	if (priv->totem) {
+		ev_sidebar_remove_page (EV_SIDEBAR (priv->totem->sidebar), "neighbours");
 
-		g_object_unref (self->totem);
-		self->totem = NULL;
+		g_object_unref (priv->totem);
+		priv->totem = NULL;
 	}
 
-	if (self->settings) {
-		gtk_widget_destroy (self->settings);
-		self->settings = NULL;
+	if (priv->settings) {
+		gtk_widget_destroy (priv->settings);
+		priv->settings = NULL;
 	}
 
-	if (self->playlist) {
-		g_slist_foreach (self->playlist, (GFunc) g_free, NULL);
-		g_slist_free (self->playlist);
-		self->playlist = NULL;
+	if (priv->playlist) {
+		g_slist_foreach (priv->playlist, (GFunc) g_free, NULL);
+		g_slist_free (priv->playlist);
+		priv->playlist = NULL;
 	}
 
 	G_UNLOCK (totem_publish_plugin_lock);
 
-	self->scanning = NULL;
+	priv->scanning = NULL;
 }
 
 static GtkWidget *
@@ -674,20 +674,3 @@ impl_create_configure_widget (PeasGtkConfigurable *configurable)
 
 	return widget;
 }
-
-static void
-totem_publish_plugin_init (TotemPublishPlugin *self)
-{
-}
-
-static void
-totem_publish_plugin_class_init (TotemPublishPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-

@@ -63,7 +63,6 @@ enum {
 #define TOTEM_YOUTUBE_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePluginClass))
 
 typedef struct {
-	PeasExtensionBase parent;
 	Totem *totem;
 	GDataYouTubeService *service;
 	SoupSession *session;
@@ -86,7 +85,9 @@ typedef struct {
 	GtkListStore *list_store[NUM_TREE_VIEWS];
 	GtkTreeView *tree_view[NUM_TREE_VIEWS];
 	GtkWidget *cancel_button;
-} TotemYouTubePlugin;
+} TotemYouTubePluginPrivate;
+
+TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePlugin, totem_youtube_plugin);
 
 /* GtkBuilder callbacks */
 void notebook_switch_page_cb (GtkNotebook *notebook, gpointer *page, guint page_num, TotemYouTubePlugin *self);
@@ -98,24 +99,6 @@ gboolean button_release_event_cb (GtkWidget *widget, GdkEventButton *event, Tote
 void open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self);
 void value_changed_cb (GtkAdjustment *adjustment, TotemYouTubePlugin *self);
 gboolean starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePlugin *self);
-
-TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_YOUTUBE_PLUGIN, TotemYouTubePlugin, totem_youtube_plugin);
-
-static void
-totem_youtube_plugin_class_init (TotemYouTubePluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_youtube_plugin_init (TotemYouTubePlugin *plugin)
-{
-}
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 /* Copied from http://bugzilla.gnome.org/show_bug.cgi?id=575900 while waiting for them to be committed to gdk-pixbuf */
@@ -271,6 +254,7 @@ totem_gdk_pixbuf_new_from_stream_finish (GAsyncResult  *async_result,
 static void
 set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 {
+	TotemYouTubePluginPrivate *priv = self->priv;
 	GtkUIManager *ui_manager;
 	GtkActionGroup *action_group;
 	GtkAction *action, *menu_item;
@@ -290,17 +274,17 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	if (key == SEARCH_TREE_VIEW) {
 		tree_view = GTK_WIDGET (gtk_builder_get_object (builder, "yt_treeview_search"));
 		vscroll = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "yt_scrolled_window_search")));
-		self->list_store[key] = GTK_LIST_STORE (gtk_builder_get_object (builder, "yt_list_store_search"));
-		self->tree_view[key] = GTK_TREE_VIEW (tree_view);
-		self->progress_bar[key] = GTK_PROGRESS_BAR (gtk_builder_get_object (builder, "yt_progress_bar_search"));
+		priv->list_store[key] = GTK_LIST_STORE (gtk_builder_get_object (builder, "yt_list_store_search"));
+		priv->tree_view[key] = GTK_TREE_VIEW (tree_view);
+		priv->progress_bar[key] = GTK_PROGRESS_BAR (gtk_builder_get_object (builder, "yt_progress_bar_search"));
 	} else {
 		tree_view = GTK_WIDGET (gtk_builder_get_object (builder, "yt_treeview_related"));
 		vscroll = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "yt_scrolled_window_related")));
-		self->list_store[key] = GTK_LIST_STORE (gtk_builder_get_object (builder, "yt_list_store_related"));
-		self->tree_view[key] = GTK_TREE_VIEW (tree_view);
-		self->progress_bar[key] = GTK_PROGRESS_BAR (gtk_builder_get_object (builder, "yt_progress_bar_related"));
+		priv->list_store[key] = GTK_LIST_STORE (gtk_builder_get_object (builder, "yt_list_store_related"));
+		priv->tree_view[key] = GTK_TREE_VIEW (tree_view);
+		priv->progress_bar[key] = GTK_PROGRESS_BAR (gtk_builder_get_object (builder, "yt_progress_bar_related"));
 	}
-	g_object_set (tree_view, "totem", self->totem, NULL);
+	g_object_set (tree_view, "totem", priv->totem, NULL);
 	g_signal_connect (vscroll, "button-press-event", G_CALLBACK (button_press_event_cb), self);
 	g_signal_connect (vscroll, "button-release-event", G_CALLBACK (button_release_event_cb), self);
 
@@ -323,42 +307,43 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	g_signal_connect (menu_item, "activate", G_CALLBACK (open_in_web_browser_activate_cb), self);
 
 	/* Connect to more scroll events */
-	self->vadjust[key] = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (tree_view));
-	g_signal_connect (self->vadjust[key], "value-changed", G_CALLBACK (value_changed_cb), self);
+	priv->vadjust[key] = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (tree_view));
+	g_signal_connect (priv->vadjust[key], "value-changed", G_CALLBACK (value_changed_cb), self);
 
-	self->cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "yt_cancel_button"));
+	priv->cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "yt_cancel_button"));
 }
 
 static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
+	TotemYouTubePluginPrivate *priv = self->priv;
 	GtkWindow *main_window;
 	GtkBuilder *builder;
 	guint i;
 
-	self->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	self->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (self->totem));
+	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
+	priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (priv->totem));
 
 	/* Set up the interface */
-	main_window = totem_get_main_window (self->totem);
+	main_window = totem_get_main_window (priv->totem);
 	builder = totem_plugin_load_interface ("youtube", "youtube.ui", TRUE, main_window, self);
 	g_object_unref (main_window);
 
-	self->search_entry = GTK_ENTRY (gtk_builder_get_object (builder, "yt_search_entry"));
-	self->search_button = GTK_BUTTON (gtk_builder_get_object (builder, "yt_search_button"));
-	self->notebook = GTK_NOTEBOOK (gtk_builder_get_object (builder, "yt_notebook"));
+	priv->search_entry = GTK_ENTRY (gtk_builder_get_object (builder, "yt_search_entry"));
+	priv->search_button = GTK_BUTTON (gtk_builder_get_object (builder, "yt_search_button"));
+	priv->notebook = GTK_NOTEBOOK (gtk_builder_get_object (builder, "yt_notebook"));
 
 	/* Set up the tree view pages */
 	for (i = 0; i < NUM_TREE_VIEWS; i++)
 		set_up_tree_view (self, builder, i);
-	self->current_tree_view = SEARCH_TREE_VIEW;
+	priv->current_tree_view = SEARCH_TREE_VIEW;
 
-	self->vbox = GTK_WIDGET (gtk_builder_get_object (builder, "yt_vbox"));
-	gtk_widget_show_all (self->vbox);
+	priv->vbox = GTK_WIDGET (gtk_builder_get_object (builder, "yt_vbox"));
+	gtk_widget_show_all (priv->vbox);
 
 	/* Add the sidebar page */
-	totem_add_sidebar_page (self->totem, "youtube", _("YouTube"), self->vbox);
+	totem_add_sidebar_page (priv->totem, "youtube", _("YouTube"), priv->vbox);
 	g_object_unref (builder);
 }
 
@@ -367,28 +352,29 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	guint i;
 	TotemYouTubePlugin *self = TOTEM_YOUTUBE_PLUGIN (plugin);
+	TotemYouTubePluginPrivate *priv = self->priv;
 
-	totem_remove_sidebar_page (self->totem, "youtube");
+	totem_remove_sidebar_page (priv->totem, "youtube");
 
 	for (i = 0; i < NUM_TREE_VIEWS; i++) {
 		/* Cancel any queries which are still underway */
-		if (self->cancellable[i] != NULL)
-			g_cancellable_cancel (self->cancellable[i]);
+		if (priv->cancellable[i] != NULL)
+			g_cancellable_cancel (priv->cancellable[i]);
 
-		if (self->query[i] != NULL)
-			g_object_unref (self->query[i]);
+		if (priv->query[i] != NULL)
+			g_object_unref (priv->query[i]);
 	}
 
-	if (self->playing_video != NULL)
-		g_object_unref (self->playing_video);
-	if (self->service != NULL)
-		g_object_unref (self->service);
-	if (self->session != NULL)
-		g_object_unref (self->session);
-	g_object_unref (self->bvw);
-	g_object_unref (self->totem);
-	if (self->regex != NULL)
-		g_regex_unref (self->regex);
+	if (priv->playing_video != NULL)
+		g_object_unref (priv->playing_video);
+	if (priv->service != NULL)
+		g_object_unref (priv->service);
+	if (priv->session != NULL)
+		g_object_unref (priv->session);
+	g_object_unref (priv->bvw);
+	g_object_unref (priv->totem);
+	if (priv->regex != NULL)
+		g_regex_unref (priv->regex);
 }
 
 typedef struct {
@@ -401,12 +387,12 @@ progress_bar_pulse_cb (ProgressBarData *data)
 {
 	TotemYouTubePlugin *self = data->plugin;
 
-	if (self->progress_bar_increment[data->tree_view] != 0.0) {
+	if (self->priv->progress_bar_increment[data->tree_view] != 0.0) {
 		g_slice_free (ProgressBarData, data);
 		return FALSE; /* The first entry has been retrieved */
 	}
 
-	gtk_progress_bar_pulse (self->progress_bar[data->tree_view]);
+	gtk_progress_bar_pulse (self->priv->progress_bar[data->tree_view]);
 	return TRUE;
 }
 
@@ -418,7 +404,7 @@ set_progress_bar_text (TotemYouTubePlugin *self, const gchar *text, guint tree_v
 
 	/* Set the cursor to a watch */
 	cursor = gdk_cursor_new (GDK_WATCH);
-	gdk_window_set_cursor (gtk_widget_get_window (self->vbox), cursor);
+	gdk_window_set_cursor (gtk_widget_get_window (self->priv->vbox), cursor);
 	gdk_cursor_unref (cursor);
 
 	/* Call the pulse method */
@@ -426,30 +412,31 @@ set_progress_bar_text (TotemYouTubePlugin *self, const gchar *text, guint tree_v
 	data->plugin = self;
 	data->tree_view = tree_view;
 
-	gtk_progress_bar_set_text (self->progress_bar[tree_view], text);
-	gtk_progress_bar_set_fraction (self->progress_bar[tree_view], 0.0);
-	self->progress_bar_increment[tree_view] = 0.0;
+	gtk_progress_bar_set_text (self->priv->progress_bar[tree_view], text);
+	gtk_progress_bar_set_fraction (self->priv->progress_bar[tree_view], 0.0);
+	self->priv->progress_bar_increment[tree_view] = 0.0;
 	g_timeout_add (PULSE_INTERVAL, (GSourceFunc) progress_bar_pulse_cb, data);
 }
 
 static void
 increment_progress_bar_fraction (TotemYouTubePlugin *self, guint tree_view)
 {
-	gdouble new_value = MIN (gtk_progress_bar_get_fraction (self->progress_bar[tree_view]) + self->progress_bar_increment[tree_view], 1.0);
+	TotemYouTubePluginPrivate *priv = self->priv;
+	gdouble new_value = MIN (gtk_progress_bar_get_fraction (priv->progress_bar[tree_view]) + priv->progress_bar_increment[tree_view], 1.0);
 
-	g_debug ("Incrementing progress bar by %f (new value: %f)", self->progress_bar_increment[tree_view], new_value);
-	gtk_progress_bar_set_fraction (self->progress_bar[tree_view], new_value);
+	g_debug ("Incrementing progress bar by %f (new value: %f)", priv->progress_bar_increment[tree_view], new_value);
+	gtk_progress_bar_set_fraction (priv->progress_bar[tree_view], new_value);
 
 	/* Change the text if the operation's been cancelled */
-	if (self->cancellable[tree_view] == NULL || g_cancellable_is_cancelled (self->cancellable[tree_view]) == TRUE)
-		gtk_progress_bar_set_text (self->progress_bar[tree_view], _("Cancelling query…"));
+	if (priv->cancellable[tree_view] == NULL || g_cancellable_is_cancelled (priv->cancellable[tree_view]) == TRUE)
+		gtk_progress_bar_set_text (priv->progress_bar[tree_view], _("Cancelling query…"));
 
 	/* Update the UI */
-	if (gtk_progress_bar_get_fraction (self->progress_bar[tree_view]) == 1.0) {
+	if (gtk_progress_bar_get_fraction (priv->progress_bar[tree_view]) == 1.0) {
 		/* The entire search process (including loading thumbnails and t params) is finished, so update the progress bar */
-		gdk_window_set_cursor (gtk_widget_get_window (self->vbox), NULL);
-		gtk_progress_bar_set_text (self->progress_bar[tree_view], "");
-		gtk_progress_bar_set_fraction (self->progress_bar[tree_view], 0.0);
+		gdk_window_set_cursor (gtk_widget_get_window (priv->vbox), NULL);
+		gtk_progress_bar_set_text (priv->progress_bar[tree_view], "");
+		gtk_progress_bar_set_fraction (priv->progress_bar[tree_view], 0.0);
 	}
 }
 
@@ -502,7 +489,7 @@ resolve_t_param_cb (SoupSession *session, SoupMessage *message, TParamData *data
 			goto free_data;
 
 		/* Couldn't load the page contents; error */
-		window = totem_get_main_window (data->plugin->totem);
+		window = totem_get_main_window (self->priv->totem);
 		totem_interface_error (_("Error Looking Up Video URI"), message->response_body->data, window);
 		g_object_unref (window);
 		goto free_data;
@@ -514,7 +501,7 @@ resolve_t_param_cb (SoupSession *session, SoupMessage *message, TParamData *data
 	video_id = gdata_youtube_video_get_video_id (GDATA_YOUTUBE_VIDEO (data->entry));
 
 	/* Check for the fmt_url_map parameter */
-	g_regex_match (self->regex, contents, 0, &match_info);
+	g_regex_match (self->priv->regex, contents, 0, &match_info);
 	if (g_match_info_matches (match_info) == TRUE) {
 		gchar *fmt_url_map_escaped, *fmt_url_map;
 		gchar **mappings, **i;
@@ -564,7 +551,7 @@ resolve_t_param_cb (SoupSession *session, SoupMessage *message, TParamData *data
 		g_strfreev (mappings);
 
 		/* Starting with the highest connection speed we support, look for video URIs matching our connection speed. */
-		connection_speed = MIN (bacon_video_widget_get_connection_speed (self->bvw), (gint) G_N_ELEMENTS (fmt_preferences) - 1);
+		connection_speed = MIN (bacon_video_widget_get_connection_speed (self->priv->bvw), (gint) G_N_ELEMENTS (fmt_preferences) - 1);
 		for (; connection_speed >= 0; connection_speed--) {
 			guint idx = (guint) connection_speed;
 			video_uri = g_strdup (g_hash_table_lookup (fmt_table, GUINT_TO_POINTER (fmt_preferences [idx])));
@@ -599,8 +586,8 @@ resolve_t_param_cb (SoupSession *session, SoupMessage *message, TParamData *data
 	g_match_info_free (match_info);
 
 	/* Update the tree view with the new MRL */
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter, data->path) == TRUE) {
-		gtk_list_store_set (self->list_store[data->tree_view], &iter, 2, video_uri, -1);
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->priv->list_store[data->tree_view]), &iter, data->path) == TRUE) {
+		gtk_list_store_set (self->priv->list_store[data->tree_view], &iter, 2, video_uri, -1);
 		g_debug ("Updated list store with new video URI (\"%s\") for entry %s", video_uri, video_id);
 	}
 
@@ -621,7 +608,7 @@ static void
 resolve_t_param_cancelled_cb (GCancellable *cancellable, TParamData *data)
 {
 	/* This will cause resolve_t_param_cb() to be called, which will free the data */
-	soup_session_cancel_message (data->plugin->session, data->message, SOUP_STATUS_CANCELLED);
+	soup_session_cancel_message (data->plugin->priv->session, data->message, SOUP_STATUS_CANCELLED);
 }
 
 static void
@@ -637,7 +624,7 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	data = g_slice_new (TParamData);
 	data->plugin = g_object_ref (self);
 	data->entry = g_object_ref (entry);
-	data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->list_store[tree_view]), iter);
+	data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->priv->list_store[tree_view]), iter);
 	data->tree_view = tree_view;
 	data->cancellable = g_object_ref (cancellable);
 
@@ -645,7 +632,7 @@ resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter,
 	data->cancelled_id = g_cancellable_connect (cancellable, (GCallback) resolve_t_param_cancelled_cb, data, NULL);
 
 	/* Send the message. Consumes a reference to data->message after resolve_t_param_cb() finishes */
-	soup_session_queue_message (self->session, data->message, (SoupSessionCallback) resolve_t_param_cb, data);
+	soup_session_queue_message (self->priv->session, data->message, (SoupSessionCallback) resolve_t_param_cb, data);
 }
 
 typedef struct {
@@ -682,8 +669,8 @@ thumbnail_loaded_cb (GObject *source_object, GAsyncResult *result, ThumbnailData
 	g_debug ("Finished creating thumbnail from stream");
 
 	/* Update the tree view */
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter, data->path) == TRUE) {
-		gtk_list_store_set (self->list_store[data->tree_view], &iter, 0, thumbnail, -1);
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->priv->list_store[data->tree_view]), &iter, data->path) == TRUE) {
+		gtk_list_store_set (self->priv->list_store[data->tree_view], &iter, 0, thumbnail, -1);
 		g_debug ("Updated list store with new thumbnail");
 	}
 
@@ -757,10 +744,10 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 
 	g_debug ("Search finished!");
 
-	feed = gdata_service_query_finish (GDATA_SERVICE (self->service), result, &error);
+	feed = gdata_service_query_finish (GDATA_SERVICE (self->priv->service), result, &error);
 
 	/* Stop the progress bar; a little hacky, but it works */
-	self->progress_bar_increment[data->tree_view] = 1.0;
+	self->priv->progress_bar_increment[data->tree_view] = 1.0;
 	increment_progress_bar_fraction (self, data->tree_view);
 
 	if (feed != NULL) {
@@ -783,7 +770,7 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 	}
 
 	/* Error! */
-	window = totem_get_main_window (data->plugin->totem);
+	window = totem_get_main_window (self->priv->totem);
 	if (g_error_matches (error, GDATA_SERVICE_ERROR, GDATA_SERVICE_ERROR_PROTOCOL_ERROR) == TRUE) {
 		/* Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 		 * if we're receiving a protocol error). */
@@ -819,8 +806,8 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	title = gdata_entry_get_title (entry);
 	id = gdata_youtube_video_get_video_id (GDATA_YOUTUBE_VIDEO (entry));
 
-	gtk_list_store_append (self->list_store[data->tree_view], &iter);
-	gtk_list_store_set (self->list_store[data->tree_view], &iter,
+	gtk_list_store_append (self->priv->list_store[data->tree_view], &iter);
+	gtk_list_store_set (self->priv->list_store[data->tree_view], &iter,
 	                    0, NULL, /* the thumbnail will be downloaded asynchronously and added to the tree view later */
 	                    1, title,
 	                    2, NULL, /* the video URI will be resolved asynchronously and added to the tree view later */
@@ -830,10 +817,11 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 
 	/* Update the progress bar; we have three steps for each entry in the results: the entry, its thumbnail, and its t parameter */
 	g_assert (entry_count > 0);
-	progress_bar = self->progress_bar[data->tree_view];
-	self->progress_bar_increment[data->tree_view] = 1.0 / (entry_count * 3.0);
-	g_debug ("Setting progress_bar_increment to 1.0 / (%u * 3.0) = %f", entry_count, self->progress_bar_increment[data->tree_view]);
-	gtk_progress_bar_set_fraction (progress_bar, gtk_progress_bar_get_fraction (progress_bar) + self->progress_bar_increment[data->tree_view]);
+	progress_bar = self->priv->progress_bar[data->tree_view];
+	self->priv->progress_bar_increment[data->tree_view] = 1.0 / (entry_count * 3.0);
+	g_debug ("Setting progress_bar_increment to 1.0 / (%u * 3.0) = %f", entry_count, self->priv->progress_bar_increment[data->tree_view]);
+	gtk_progress_bar_set_fraction (progress_bar,
+	                               gtk_progress_bar_get_fraction (progress_bar) + self->priv->progress_bar_increment[data->tree_view]);
 
 	/* Resolve the t parameter for the video, which is required before it can be played */
 	/* This will be cancelled if the main query is cancelled, in query_finished_cb() */
@@ -870,7 +858,7 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 
 		t_data = g_slice_new (ThumbnailData);
 		t_data->plugin = g_object_ref (self);
-		t_data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->list_store[data->tree_view]), &iter);
+		t_data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->priv->list_store[data->tree_view]), &iter);
 		t_data->tree_view = data->tree_view;
 
 		/* We can use the same cancellable for reading the file and making a pixbuf out of it, as they're consecutive operations */
@@ -886,20 +874,20 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	}
 }
 
-/* Called when self->cancellable[tree_view] is destroyed (for either tree view) */
+/* Called when self->priv->cancellable[tree_view] is destroyed (for either tree view) */
 static void
 cancellable_notify_cb (TotemYouTubePlugin *self, GCancellable *old_cancellable)
 {
 	guint i;
 
 	/* Disable the "Cancel" button, if it applies to the current tree view */
-	if (self->cancellable[self->current_tree_view] == old_cancellable)
-		gtk_widget_set_sensitive (self->cancel_button, FALSE);
+	if (self->priv->cancellable[self->priv->current_tree_view] == old_cancellable)
+		gtk_widget_set_sensitive (self->priv->cancel_button, FALSE);
 
 	/* NULLify the cancellable */
 	for (i = 0; i < NUM_TREE_VIEWS; i++) {
-		if (self->cancellable[i] == old_cancellable)
-			self->cancellable[i] = NULL;
+		if (self->priv->cancellable[i] == old_cancellable)
+			self->priv->cancellable[i] = NULL;
 	}
 }
 
@@ -907,16 +895,16 @@ static void
 set_current_operation (TotemYouTubePlugin *self, guint tree_view, GCancellable *cancellable)
 {
 	/* Cancel previous searches on this tree view */
-	if (self->cancellable[tree_view] != NULL)
-		g_cancellable_cancel (self->cancellable[tree_view]);
+	if (self->priv->cancellable[tree_view] != NULL)
+		g_cancellable_cancel (self->priv->cancellable[tree_view]);
 
 	/* Make this the current cancellable action for the given tab */
 	g_object_weak_ref (G_OBJECT (cancellable), (GWeakNotify) cancellable_notify_cb, self);
-	self->cancellable[tree_view] = cancellable;
+	self->priv->cancellable[tree_view] = cancellable;
 
 	/* Enable the "Cancel" button if it applies to the current tree view */
-	if (self->current_tree_view == tree_view)
-		gtk_widget_set_sensitive (self->cancel_button, TRUE);
+	if (self->priv->current_tree_view == tree_view)
+		gtk_widget_set_sensitive (self->priv->cancel_button, TRUE);
 }
 
 static void
@@ -937,15 +925,15 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 
 	/* Clear the tree views */
 	if (clear_tree_view == TRUE)
-		gtk_list_store_clear (self->list_store[tree_view]);
+		gtk_list_store_clear (self->priv->list_store[tree_view]);
 
 	if (tree_view == SEARCH_TREE_VIEW) {
-		gdata_youtube_service_query_videos_async (self->service, self->query[tree_view], data->query_cancellable,
+		gdata_youtube_service_query_videos_async (self->priv->service, self->priv->query[tree_view], data->query_cancellable,
 		                                          (GDataQueryProgressCallback) query_progress_cb, data,
 		                                          (GAsyncReadyCallback) query_finished_cb, data);
 	} else {
-		gdata_youtube_service_query_related_async (self->service, self->playing_video, self->query[tree_view], data->query_cancellable,
-		                                           (GDataQueryProgressCallback) query_progress_cb, data,
+		gdata_youtube_service_query_related_async (self->priv->service, self->priv->playing_video, self->priv->query[tree_view],
+		                                           data->query_cancellable, (GDataQueryProgressCallback) query_progress_cb, data,
 		                                           (GAsyncReadyCallback) query_finished_cb, data);
 	}
 }
@@ -953,52 +941,53 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 void
 search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 {
+	TotemYouTubePluginPrivate *priv = self->priv;
 	const gchar *search_terms;
 
-	search_terms = gtk_entry_get_text (self->search_entry);
+	search_terms = gtk_entry_get_text (priv->search_entry);
 	g_debug ("Searching for \"%s\"", search_terms);
 
 	/* Focus the "Search" page */
-	gtk_notebook_set_current_page (self->notebook, SEARCH_TREE_VIEW);
+	gtk_notebook_set_current_page (priv->notebook, SEARCH_TREE_VIEW);
 
 	/* Update the UI */
 	set_progress_bar_text (self, _("Fetching search results…"), SEARCH_TREE_VIEW);
 
 	/* Clear details pertaining to related videos, since we're doing a new search */
-	gtk_list_store_clear (self->list_store[RELATED_TREE_VIEW]);
-	if (self->playing_video != NULL)
-		g_object_unref (self->playing_video);
-	self->playing_video = NULL;
+	gtk_list_store_clear (priv->list_store[RELATED_TREE_VIEW]);
+	if (priv->playing_video != NULL)
+		g_object_unref (priv->playing_video);
+	priv->playing_video = NULL;
 
 	/* If this is the first query, set up some stuff which we didn't do before to save memory */
-	if (self->query[SEARCH_TREE_VIEW] == NULL) {
+	if (priv->query[SEARCH_TREE_VIEW] == NULL) {
 		/* If this is the first query, compile the regex used to resolve the t param. Doing this here rather than when
 		 * activating the plugin means we don't waste cycles if the plugin's never used. It also means we don't waste
 		 * cycles repeatedly creating new regexes for each video whose t param we resolve. */
 		/* We're looking for a line of the form:
 		 * var swfHTML = (isIE) ? "<object...econds=194&t=vjVQa1PpcFP36LLlIaDqZIG1w6e30b-7WVBgsQLLA3s%3D&rv.6.id=OzLjC6Pm... */
-		self->regex = g_regex_new ("swfHTML = .*&fmt_url_map=([^&]+)&", G_REGEX_OPTIMIZE, 0, NULL);
-		g_assert (self->regex != NULL);
+		priv->regex = g_regex_new ("swfHTML = .*&fmt_url_map=([^&]+)&", G_REGEX_OPTIMIZE, 0, NULL);
+		g_assert (priv->regex != NULL);
 
 		/* Set up the GData service (needed for the tree views' queries) */
-		self->service = gdata_youtube_service_new (DEVELOPER_KEY, CLIENT_ID);
+		priv->service = gdata_youtube_service_new (DEVELOPER_KEY, CLIENT_ID);
 
 		/* Set up network timeouts, if they're supported by our version of libgdata.
 		 * This will return from queries with %GDATA_SERVICE_ERROR_NETWORK_ERROR if network operations take longer than 30 seconds. */
 #ifdef HAVE_LIBGDATA_0_7
-		gdata_service_set_timeout (GDATA_SERVICE (self->service), 30);
+		gdata_service_set_timeout (GDATA_SERVICE (priv->service), 30);
 #endif /* HAVE_LIBGDATA_0_7 */
 
 		/* Set up the queries */
-		self->query[SEARCH_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
-		self->query[RELATED_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
+		priv->query[SEARCH_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
+		priv->query[RELATED_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
 
 		/* Lazily create the SoupSession used in resolve_t_param() */
-		self->session = soup_session_async_new ();
+		priv->session = soup_session_async_new ();
 	}
 
 	/* Do the query */
-	gdata_query_set_q (self->query[SEARCH_TREE_VIEW], search_terms);
+	gdata_query_set_q (priv->query[SEARCH_TREE_VIEW], search_terms);
 	execute_query (self, SEARCH_TREE_VIEW, TRUE);
 }
 
@@ -1007,30 +996,30 @@ cancel_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 {
 	/* It's possible for the operation to finish (and consequently the cancellable to disappear) while the GtkButton is deciding whether the
 	 * user is actually pressing it (in its timeout). */
-	if (self->cancellable[self->current_tree_view] == NULL)
+	if (self->priv->cancellable[self->priv->current_tree_view] == NULL)
 		return;
 
 	g_debug ("Cancelling search");
-	g_cancellable_cancel (self->cancellable[self->current_tree_view]);
+	g_cancellable_cancel (self->priv->cancellable[self->priv->current_tree_view]);
 }
 
 void
 search_entry_activate_cb (GtkEntry *entry, TotemYouTubePlugin *self)
 {
-	search_button_clicked_cb (self->search_button, self);
+	search_button_clicked_cb (self->priv->search_button, self);
 }
 
 static void
 load_related_videos (TotemYouTubePlugin *self)
 {
-	g_assert (self->playing_video != NULL);
-	g_debug ("Loading related videos for %s", gdata_youtube_video_get_video_id (self->playing_video));
+	g_assert (self->priv->playing_video != NULL);
+	g_debug ("Loading related videos for %s", gdata_youtube_video_get_video_id (self->priv->playing_video));
 
 	/* Update the UI */
 	set_progress_bar_text (self, _("Fetching related videos…"), RELATED_TREE_VIEW);
 
 	/* Clear the existing results and do the query */
-	gtk_list_store_clear (self->list_store[RELATED_TREE_VIEW]);
+	gtk_list_store_clear (self->priv->list_store[RELATED_TREE_VIEW]);
 	execute_query (self, RELATED_TREE_VIEW, FALSE);
 }
 
@@ -1038,15 +1027,15 @@ void
 notebook_switch_page_cb (GtkNotebook *notebook, gpointer *page, guint page_num, TotemYouTubePlugin *self)
 {
 	/* Change the tree view */
-	self->current_tree_view = page_num;
+	self->priv->current_tree_view = page_num;
 
 	/* Sort out the "Cancel" button's sensitivity */
-	gtk_widget_set_sensitive (self->cancel_button, (self->cancellable[page_num] != NULL) ? TRUE : FALSE);
+	gtk_widget_set_sensitive (self->priv->cancel_button, (self->priv->cancellable[page_num] != NULL) ? TRUE : FALSE);
 
 	/* If we're changing to the "Related Videos" tree view and have played a video, load
 	 * the related videos for that video; but only if the related tree view's empty first */
-	if (page_num == RELATED_TREE_VIEW && self->playing_video != NULL &&
-	    gtk_tree_model_iter_n_children (GTK_TREE_MODEL (self->list_store[RELATED_TREE_VIEW]), NULL) == 0) {
+	if (page_num == RELATED_TREE_VIEW && self->priv->playing_video != NULL &&
+	    gtk_tree_model_iter_n_children (GTK_TREE_MODEL (self->priv->list_store[RELATED_TREE_VIEW]), NULL) == 0) {
 		load_related_videos (self);
 	}
 }
@@ -1058,7 +1047,7 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 	GtkTreeModel *model;
 	GList *paths, *path;
 
-	selection = gtk_tree_view_get_selection (self->tree_view[self->current_tree_view]);
+	selection = gtk_tree_view_get_selection (self->priv->tree_view[self->priv->current_tree_view]);
 	paths = gtk_tree_selection_get_selected_rows (selection, &model);
 
 	for (path = paths; path != NULL; path = path->next) {
@@ -1076,9 +1065,9 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 		g_object_unref (video);
 
 		/* Display the page */
-		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->bvw)), gdata_link_get_uri (page_link),
+		if (gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (self->priv->bvw)), gdata_link_get_uri (page_link),
 		                  GDK_CURRENT_TIME, &error) == FALSE) {
-			GtkWindow *window = totem_get_main_window (self->totem);
+			GtkWindow *window = totem_get_main_window (self->priv->totem);
 			totem_interface_error (_("Error Opening Video in Web Browser"), error->message, window);
 			g_object_unref (window);
 			g_error_free (error);
@@ -1092,31 +1081,31 @@ open_in_web_browser_activate_cb (GtkAction *action, TotemYouTubePlugin *self)
 void
 value_changed_cb (GtkAdjustment *adjustment, TotemYouTubePlugin *self)
 {
-	if (self->button_down == FALSE &&
-	    gtk_tree_model_iter_n_children (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), NULL) >= MAX_RESULTS &&
+	if (self->priv->button_down == FALSE &&
+	    gtk_tree_model_iter_n_children (GTK_TREE_MODEL (self->priv->list_store[self->priv->current_tree_view]), NULL) >= MAX_RESULTS &&
 	    (gtk_adjustment_get_value (adjustment) + gtk_adjustment_get_page_size (adjustment)) / gtk_adjustment_get_upper (adjustment) > 0.8) {
 		/* Only load more results if we're not already querying */
-		if (self->cancellable[self->current_tree_view] != NULL)
+		if (self->priv->cancellable[self->priv->current_tree_view] != NULL)
 			return;
 
-		set_progress_bar_text (self, _("Fetching more videos…"), self->current_tree_view);
-		gdata_query_next_page (self->query[self->current_tree_view]);
-		execute_query (self, self->current_tree_view, FALSE);
+		set_progress_bar_text (self, _("Fetching more videos…"), self->priv->current_tree_view);
+		gdata_query_next_page (self->priv->query[self->priv->current_tree_view]);
+		execute_query (self, self->priv->current_tree_view, FALSE);
 	}
 }
 
 gboolean
 button_press_event_cb (GtkWidget *widget, GdkEventButton *event, TotemYouTubePlugin *self)
 {
-	self->button_down = TRUE;
+	self->priv->button_down = TRUE;
 	return FALSE;
 }
 
 gboolean
 button_release_event_cb (GtkWidget *widget, GdkEventButton *event, TotemYouTubePlugin *self)
 {
-	self->button_down = FALSE;
-	value_changed_cb (self->vadjust[self->current_tree_view], self);
+	self->priv->button_down = FALSE;
+	value_changed_cb (self->priv->vadjust[self->priv->current_tree_view], self);
 	return FALSE;
 }
 
@@ -1127,16 +1116,16 @@ starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePl
 	GDataYouTubeVideo *video_entry;
 
 	/* Store the current entry */
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, path) == FALSE)
+	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->priv->list_store[self->priv->current_tree_view]), &iter, path) == FALSE)
 		return FALSE;
-	gtk_tree_model_get (GTK_TREE_MODEL (self->list_store[self->current_tree_view]), &iter, 3, &video_entry, -1);
+	gtk_tree_model_get (GTK_TREE_MODEL (self->priv->list_store[self->priv->current_tree_view]), &iter, 3, &video_entry, -1);
 
-	if (self->playing_video != NULL)
-		g_object_unref (self->playing_video);
-	self->playing_video = g_object_ref (video_entry);
+	if (self->priv->playing_video != NULL)
+		g_object_unref (self->priv->playing_video);
+	self->priv->playing_video = g_object_ref (video_entry);
 
 	/* If we're currently viewing the related videos page, load the new related videos */
-	if (self->current_tree_view == RELATED_TREE_VIEW)
+	if (self->priv->current_tree_view == RELATED_TREE_VIEW)
 		load_related_videos (self);
 
 	return TRUE;

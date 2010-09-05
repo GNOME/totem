@@ -48,34 +48,14 @@
 #define TOTEM_IS_MEDIA_PLAYER_KEYS_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN))
 #define TOTEM_MEDIA_PLAYER_KEYS_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN, TotemMediaPlayerKeysPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	DBusGProxy    *media_player_keys_proxy;
-
 	guint          handler_id;
-} TotemMediaPlayerKeysPlugin;
+} TotemMediaPlayerKeysPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN,
 		      TotemMediaPlayerKeysPlugin,
 		      totem_media_player_keys_plugin);
-
-static void
-totem_media_player_keys_plugin_class_init (TotemMediaPlayerKeysPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_media_player_keys_plugin_init (TotemMediaPlayerKeysPlugin *plugin)
-{
-}
 
 static void
 on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const gchar *key, TotemObject *totem)
@@ -95,8 +75,8 @@ on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const 
 static gboolean
 on_window_focus_in_event (GtkWidget *window, GdkEventFocus *event, TotemMediaPlayerKeysPlugin *pi)
 {
-	if (pi->media_player_keys_proxy != NULL) {
-		dbus_g_proxy_call (pi->media_player_keys_proxy,
+	if (pi->priv->media_player_keys_proxy != NULL) {
+		dbus_g_proxy_call (pi->priv->media_player_keys_proxy,
 				   "GrabMediaPlayerKeys", NULL,
 				   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
 				   G_TYPE_INVALID);
@@ -109,7 +89,7 @@ static void
 proxy_destroy (DBusGProxy *proxy,
 		  TotemMediaPlayerKeysPlugin* plugin)
 {
-	plugin->media_player_keys_proxy = NULL;
+	plugin->priv->media_player_keys_proxy = NULL;
 }
 
 static void
@@ -129,13 +109,13 @@ impl_activate (PeasActivatable *plugin)
 
 	/* Try the gnome-settings-daemon version,
 	 * then the gnome-control-center version of things */
-	pi->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
+	pi->priv->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
 								       "org.gnome.SettingsDaemon",
 								       "/org/gnome/SettingsDaemon/MediaKeys",
 								       "org.gnome.SettingsDaemon.MediaKeys",
 								       NULL);
-	if (pi->media_player_keys_proxy == NULL) {
-		pi->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
+	if (pi->priv->media_player_keys_proxy == NULL) {
+		pi->priv->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
 									       "org.gnome.SettingsDaemon",
 									       "/org/gnome/SettingsDaemon",
 									       "org.gnome.SettingsDaemon",
@@ -156,13 +136,13 @@ impl_activate (PeasActivatable *plugin)
 #endif
 		return;
 	} else {
-		g_signal_connect_object (pi->media_player_keys_proxy,
+		g_signal_connect_object (pi->priv->media_player_keys_proxy,
 					 "destroy",
 					 G_CALLBACK (proxy_destroy),
 					 pi, 0);
 	}
 
-	dbus_g_proxy_call (pi->media_player_keys_proxy,
+	dbus_g_proxy_call (pi->priv->media_player_keys_proxy,
 			   "GrabMediaPlayerKeys", NULL,
 			   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
 			   G_TYPE_INVALID);
@@ -171,13 +151,13 @@ impl_activate (PeasActivatable *plugin)
 
 	dbus_g_object_register_marshaller (totem_marshal_VOID__STRING_STRING,
 			G_TYPE_NONE, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal (pi->media_player_keys_proxy, "MediaPlayerKeyPressed",
+	dbus_g_proxy_add_signal (pi->priv->media_player_keys_proxy, "MediaPlayerKeyPressed",
 			G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (pi->media_player_keys_proxy, "MediaPlayerKeyPressed",
+	dbus_g_proxy_connect_signal (pi->priv->media_player_keys_proxy, "MediaPlayerKeyPressed",
 			G_CALLBACK (on_media_player_key_pressed), totem, NULL);
 
 	window = totem_get_main_window (totem);
-	pi->handler_id = g_signal_connect (G_OBJECT (window), "focus-in-event",
+	pi->priv->handler_id = g_signal_connect (G_OBJECT (window), "focus-in-event",
 			G_CALLBACK (on_window_focus_in_event), pi);
 
 	g_object_unref (G_OBJECT (window));
@@ -189,15 +169,15 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
 	GtkWindow *window;
 
-	if (pi->media_player_keys_proxy != NULL) {
-		dbus_g_proxy_call (pi->media_player_keys_proxy,
+	if (pi->priv->media_player_keys_proxy != NULL) {
+		dbus_g_proxy_call (pi->priv->media_player_keys_proxy,
 				   "ReleaseMediaPlayerKeys", NULL,
 				   G_TYPE_STRING, "Totem", G_TYPE_INVALID, G_TYPE_INVALID);
-		g_object_unref (pi->media_player_keys_proxy);
-		pi->media_player_keys_proxy = NULL;
+		g_object_unref (pi->priv->media_player_keys_proxy);
+		pi->priv->media_player_keys_proxy = NULL;
 	}
 
-	if (pi->handler_id != 0) {
+	if (pi->priv->handler_id != 0) {
 		TotemObject *totem;
 
 		totem = g_object_get_data (G_OBJECT (plugin), "object");
@@ -205,7 +185,7 @@ impl_deactivate (PeasActivatable *plugin)
 		if (window == NULL)
 			return;
 
-		g_signal_handler_disconnect (G_OBJECT (window), pi->handler_id);
+		g_signal_handler_disconnect (G_OBJECT (window), pi->priv->handler_id);
 
 		g_object_unref (window);
 	}

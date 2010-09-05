@@ -43,28 +43,11 @@
 #define TOTEM_IS_SIDEBAR_TEST_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_SIDEBAR_TEST_PLUGIN))
 #define TOTEM_SIDEBAR_TEST_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_SIDEBAR_TEST_PLUGIN, TotemSidebarTestPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-} TotemSidebarTestPlugin;
+typedef struct {
+	gpointer unused;
+} TotemSidebarTestPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SIDEBAR_TEST_PLUGIN, TotemSidebarTestPlugin, totem_sidebar_test_plugin)
-
-static void
-totem_sidebar_test_plugin_class_init (TotemSidebarTestPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_sidebar_test_plugin_init (TotemSidebarTestPlugin *plugin)
-{
-}
 
 static void
 impl_activate (PeasActivatable *plugin)

@@ -54,32 +54,7 @@ typedef struct
 	TotemObject *totem;
 } TotemOntopPluginPrivate;
 
-typedef struct
-{
-	PeasExtensionBase parent;
-	TotemOntopPluginPrivate *priv;
-} TotemOntopPlugin;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPlugin, totem_ontop_plugin)
-
-static void
-totem_ontop_plugin_class_init (TotemOntopPluginClass *klass)
-{
-       GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-       object_class->set_property = set_property;
-       object_class->get_property = get_property;
-
-       g_object_class_override_property (object_class, PROP_OBJECT, "object");
-
-       g_type_class_add_private (klass, sizeof (TotemOntopPluginPrivate));
-}
-
-static void
-totem_ontop_plugin_init (TotemOntopPlugin *plugin)
-{
-	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin, TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPluginPrivate);
-}
 
 static void
 update_from_state (TotemOntopPluginPrivate *priv)

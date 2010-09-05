@@ -47,33 +47,14 @@
 #define TOTEM_IS_MOVIE_PROPERTIES_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN))
 #define TOTEM_MOVIE_PROPERTIES_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN, TotemMoviePropertiesPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	GtkWidget    *props;
 	guint         handler_id_stream_length;
-} TotemMoviePropertiesPlugin;
+} TotemMoviePropertiesPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 		      TotemMoviePropertiesPlugin,
 		      totem_movie_properties_plugin)
-
-static void
-totem_movie_properties_plugin_class_init (TotemMoviePropertiesPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_movie_properties_plugin_init (TotemMoviePropertiesPlugin *plugin)
-{
-}
 
 static void
 stream_length_notify_cb (TotemObject *totem,
@@ -87,7 +68,7 @@ stream_length_notify_cb (TotemObject *totem,
 		      NULL);
 
 	bacon_video_widget_properties_from_time
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props),
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props),
 		 stream_length);
 }
 
@@ -100,9 +81,9 @@ totem_movie_properties_plugin_file_opened (TotemObject *totem,
 
 	bvw = totem_get_video_widget (totem);
 	bacon_video_widget_properties_update
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props), bvw);
 	g_object_unref (bvw);
-	gtk_widget_set_sensitive (plugin->props, TRUE);
+	gtk_widget_set_sensitive (plugin->priv->props, TRUE);
 }
 
 static void
@@ -111,8 +92,8 @@ totem_movie_properties_plugin_file_closed (TotemObject *totem,
 {
         /* Reset the properties and wait for the signal*/
         bacon_video_widget_properties_reset
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props));
-	gtk_widget_set_sensitive (plugin->props, FALSE);
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props));
+	gtk_widget_set_sensitive (plugin->priv->props, FALSE);
 }
 
 static void
@@ -127,7 +108,7 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 
 	bvw = totem_get_video_widget (totem);
 	bacon_video_widget_properties_update
-		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->props), bvw);
+		(BACON_VIDEO_WIDGET_PROPERTIES (plugin->priv->props), bvw);
 	g_object_unref (bvw);
 }
 
@@ -140,13 +121,13 @@ impl_activate (PeasActivatable *plugin)
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	pi->props = bacon_video_widget_properties_new ();
-	gtk_widget_show (pi->props);
+	pi->priv->props = bacon_video_widget_properties_new ();
+	gtk_widget_show (pi->priv->props);
 	totem_add_sidebar_page (totem,
 				"properties",
 				_("Properties"),
-				pi->props);
-	gtk_widget_set_sensitive (pi->props, FALSE);
+				pi->priv->props);
+	gtk_widget_set_sensitive (pi->priv->props, FALSE);
 
 	g_signal_connect (G_OBJECT (totem),
 			  "file-opened",
@@ -160,7 +141,7 @@ impl_activate (PeasActivatable *plugin)
 			  "metadata-updated",
 			  G_CALLBACK (totem_movie_properties_plugin_metadata_updated),
 			  plugin);
-	pi->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),
+	pi->priv->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),
 							 "notify::stream-length",
 							 G_CALLBACK (stream_length_notify_cb),
 							 plugin);
@@ -175,7 +156,7 @@ impl_deactivate (PeasActivatable *plugin)
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_stream_length);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_stream_length);
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
 					      totem_movie_properties_plugin_metadata_updated,
 					      plugin);
@@ -185,7 +166,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
 					      totem_movie_properties_plugin_file_closed,
 					      plugin);
-	pi->handler_id_stream_length = 0;
+	pi->priv->handler_id_stream_length = 0;
 	totem_remove_sidebar_page (totem, "properties");
 }
 

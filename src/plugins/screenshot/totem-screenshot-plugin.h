@@ -36,20 +36,6 @@
 
 G_BEGIN_DECLS
 
-#define TOTEM_TYPE_SCREENSHOT_PLUGIN		(totem_screenshot_plugin_get_type ())
-#define TOTEM_SCREENSHOT_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPlugin))
-#define TOTEM_SCREENSHOT_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPluginClass))
-#define TOTEM_IS_SCREENSHOT_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN))
-#define TOTEM_IS_SCREENSHOT_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_SCREENSHOT_PLUGIN))
-#define TOTEM_SCREENSHOT_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPluginClass))
-
-typedef struct TotemScreenshotPluginPrivate	TotemScreenshotPluginPrivate;
-
-typedef struct {
-	PeasExtensionBase parent;
-	TotemScreenshotPluginPrivate *priv;
-} TotemScreenshotPlugin;
-
 gchar *totem_screenshot_plugin_setup_file_chooser (const char *filename_format, const char *movie_name) G_GNUC_WARN_UNUSED_RESULT;
 void totem_screenshot_plugin_update_file_chooser (const char *filename);
 

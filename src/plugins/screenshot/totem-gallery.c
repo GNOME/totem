@@ -64,7 +64,7 @@ totem_gallery_init (TotemGallery *self)
 }
 
 TotemGallery *
-totem_gallery_new (Totem *totem, TotemScreenshotPlugin *plugin)
+totem_gallery_new (Totem *totem)
 {
 	TotemGallery *gallery;
 	GtkWidget *container;

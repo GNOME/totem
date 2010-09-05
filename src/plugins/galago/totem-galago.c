@@ -48,31 +48,13 @@
 #define TOTEM_GALAGO_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPluginClass))
 
 typedef struct {
-	PeasExtensionBase parent;
-
 	guint		handler_id_fullscreen;
 	guint		handler_id_playing;
 	gboolean	idle; /* Whether we're idle */
 	GalagoPerson	*me; /* Me! */
-} TotemGalagoPlugin;
+} TotemGalagoPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPlugin, totem_galago_plugin);
-
-static void
-totem_galago_plugin_class_init (TotemGalagoPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_galago_plugin_init (TotemGalagoPlugin *plugin)
-{
-}
 
 static void
 totem_galago_set_idleness (TotemGalagoPlugin *plugin, gboolean idle)
@@ -83,11 +65,11 @@ totem_galago_set_idleness (TotemGalagoPlugin *plugin, gboolean idle)
 	if (galago_is_connected () == FALSE)
 		return;
 
-	if (plugin->idle == idle)
+	if (plugin->priv->idle == idle)
 		return;
 
-	plugin->idle = idle;
-	for (account = galago_person_get_accounts (plugin->me, TRUE); account != NULL; account = g_list_next (account)) {
+	plugin->priv->idle = idle;
+	for (account = galago_person_get_accounts (plugin->priv->me, TRUE); account != NULL; account = g_list_next (account)) {
 		presence = galago_account_get_presence ((GalagoAccount *)account->data, TRUE);
 		if (presence != NULL)
 			galago_presence_set_idle (presence, idle, time (NULL));
@@ -126,7 +108,7 @@ impl_activate (PeasActivatable *plugin)
 	}
 
 	/* Get "me" and list accounts */
-	pi->me = galago_get_me (GALAGO_REMOTE, TRUE);
+	pi->priv->me = galago_get_me (GALAGO_REMOTE, TRUE);
 
 	g_object_get (plugin, "object", &totem, NULL);
 
@@ -139,11 +121,11 @@ impl_activate (PeasActivatable *plugin)
 		return;
 	}
 
-	pi->handler_id_fullscreen = g_signal_connect (G_OBJECT (totem),
+	pi->priv->handler_id_fullscreen = g_signal_connect (G_OBJECT (totem),
 				"notify::fullscreen",
 				G_CALLBACK (property_notify_cb),
 				pi);
-	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
+	pi->priv->handler_id_playing = g_signal_connect (G_OBJECT (totem),
 				"notify::playing",
 				G_CALLBACK (property_notify_cb),
 				pi);
@@ -166,15 +148,15 @@ impl_deactivate (PeasActivatable *plugin)
 
 	g_object_get (plugin, "object", &totem, NULL);
 
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_fullscreen);
-	g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_fullscreen);
+	g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_playing);
 
 	g_object_unref (totem);
 
 	totem_galago_set_idleness (pi, FALSE);
 
-	if (pi->me != NULL)
-		g_object_unref (pi->me);
+	if (pi->priv->me != NULL)
+		g_object_unref (pi->priv->me);
 
 	galago_uninit ();
 }

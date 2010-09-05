@@ -44,7 +44,14 @@
 #include "totem-uri.h"
 #include "backend/bacon-video-widget.h"
 
-struct TotemScreenshotPluginPrivate {
+#define TOTEM_TYPE_SCREENSHOT_PLUGIN		(totem_screenshot_plugin_get_type ())
+#define TOTEM_SCREENSHOT_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPlugin))
+#define TOTEM_SCREENSHOT_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPluginClass))
+#define TOTEM_IS_SCREENSHOT_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN))
+#define TOTEM_IS_SCREENSHOT_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_SCREENSHOT_PLUGIN))
+#define TOTEM_SCREENSHOT_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_SCREENSHOT_PLUGIN, TotemScreenshotPluginClass))
+
+typedef struct {
 	Totem *totem;
 	BaconVideoWidget *bvw;
 
@@ -57,31 +64,11 @@ struct TotemScreenshotPluginPrivate {
 
 	guint ui_merge_id;
 	GtkActionGroup *action_group;
-};
+} TotemScreenshotPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSHOT_PLUGIN,
 		      TotemScreenshotPlugin,
 		      totem_screenshot_plugin)
-
-static void
-totem_screenshot_plugin_class_init (TotemScreenshotPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-	g_type_class_add_private (klass, sizeof (TotemScreenshotPluginPrivate));
-}
-
-static void
-totem_screenshot_plugin_init (TotemScreenshotPlugin *plugin)
-{
-	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
-						    TOTEM_TYPE_SCREENSHOT_PLUGIN,
-						    TotemScreenshotPluginPrivate);
-}
 
 static void
 take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
@@ -109,7 +96,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		return;
 	}
 
-	dialog = totem_screenshot_new (priv->totem, self, pixbuf);
+	dialog = totem_screenshot_new (priv->totem, pixbuf);
 
 	gtk_dialog_run (GTK_DIALOG (dialog));
 	gtk_widget_destroy (dialog);
@@ -134,7 +121,7 @@ take_gallery_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 	if (bacon_video_widget_get_logo_mode (self->priv->bvw) != FALSE)
 		return;
 
-	dialog = GTK_DIALOG (totem_gallery_new (totem, self));
+	dialog = GTK_DIALOG (totem_gallery_new (totem));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (take_gallery_response_cb), self);

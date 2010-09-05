@@ -56,17 +56,14 @@
 #define TOTEM_IS_BEMUSED_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_BEMUSED_PLUGIN))
 #define TOTEM_BEMUSED_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_BEMUSED_PLUGIN, TotemBemusedPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-
+typedef struct {
 	TotemObject *totem;
 	BaconVideoWidget *bvw;
 	guint server_watch_id;
 	guint client_watch_id;
 	GIOChannel *server_iochan, *client_iochan;
 	sdp_session_t *sdp_session;
-} TotemBemusedPlugin;
+} TotemBemusedPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_BEMUSED_PLUGIN, TotemBemusedPlugin, totem_bemused_plugin)
 
@@ -146,11 +143,12 @@ read_filename (TotemBemusedPlugin *tp, GIOChannel *source)
 static void
 write_playlist (TotemBemusedPlugin *tp, GIOChannel *source)
 {
+	TotemBemusedPluginPrivate *priv = tp->priv;
 	char buf[11];
 	int playlist_pos, playlist_len, i;
 
-	playlist_pos = totem_get_playlist_pos (tp->totem);
-	playlist_len = totem_get_playlist_length (tp->totem);
+	playlist_pos = totem_get_playlist_pos (priv->totem);
+	playlist_len = totem_get_playlist_length (priv->totem);
 
 	strncpy(buf, "PLSTACK", strlen ("PLSTACK"));
 	if (playlist_len == 0) {
@@ -167,7 +165,7 @@ write_playlist (TotemBemusedPlugin *tp, GIOChannel *source)
 	for (i = 0; i < playlist_len; i++) {
 		char *title;
 
-		title = totem_get_title_at_playlist_pos (tp->totem, i);
+		title = totem_get_title_at_playlist_pos (priv->totem, i);
 		if (title == NULL) {
 			/* Translators: the parameter is a number used to identify this playlist entry */
 			title = g_strdup_printf (_("Untitled %d"), i);
@@ -188,7 +186,7 @@ write_current_volume (TotemBemusedPlugin *tp, GIOChannel *source)
 	char buf[8];
 
 	strncpy(buf, "GVOLACK", strlen ("GVOLACK"));
-	volume = bacon_video_widget_get_volume (tp->bvw);
+	volume = bacon_video_widget_get_volume (tp->priv->bvw);
 	if (volume >= 1.0)
 		buf[7] = (unsigned char) 255;
 	else
@@ -204,7 +202,7 @@ set_volume (TotemBemusedPlugin *tp, GIOChannel *source)
 
 	read_response (tp, source, &buf, 1);
 	volume = (double) buf / (double) 256;
-	bacon_video_widget_set_volume (tp->bvw, volume);
+	bacon_video_widget_set_volume (tp->priv->bvw, volume);
 }
 
 static void
@@ -225,7 +223,7 @@ set_setting (TotemBemusedPlugin *tp, GIOChannel *source, TotemRemoteSetting sett
 	char buf;
 
 	read_response (tp, source, &buf, 1);
-	totem_action_remote_set_setting (tp->totem, setting, buf != 0);
+	totem_action_remote_set_setting (tp->priv->totem, setting, buf != 0);
 }
 
 static void
@@ -240,7 +238,7 @@ seek_to_pos (TotemBemusedPlugin *tp, GIOChannel *source)
 	_time += buf[2] << 8;
 	_time += buf[3];
 
-	totem_action_seek_time (tp->totem, (gint64) _time * 1000, FALSE);
+	totem_action_seek_time (tp->priv->totem, (gint64) _time * 1000, FALSE);
 }
 
 static void
@@ -249,7 +247,7 @@ write_playlist_length (TotemBemusedPlugin *tp, GIOChannel *source)
 	char buf[2];
 	int len;
 
-	len = totem_get_playlist_length (tp->totem);
+	len = totem_get_playlist_length (tp->priv->totem);
 
 	buf[0] = (len >> 8) & 0xFF;
 	buf[1] = len & 0xFF;
@@ -343,6 +341,7 @@ write_detailed_file_info (TotemBemusedPlugin *tp, GIOChannel *source)
 static void
 write_song_info (TotemBemusedPlugin *tp, GIOChannel *source, gboolean send_null)
 {
+	TotemBemusedPluginPrivate *priv = tp->priv;
 	char *title;
 	char status;
 
@@ -352,22 +351,22 @@ write_song_info (TotemBemusedPlugin *tp, GIOChannel *source, gboolean send_null)
 		send_response_flush (tp, source, "INFOACK", strlen ("INFOACK"), FALSE);
 	else
 		send_response_flush (tp, source, "INF2ACK", strlen ("INF2ACK"), FALSE);
-	if (totem_is_playing (tp->totem) != FALSE)
+	if (totem_is_playing (priv->totem) != FALSE)
 		status = 1;
-	else if (totem_is_paused (tp->totem) != FALSE)
+	else if (totem_is_paused (priv->totem) != FALSE)
 		status = 2;
 	else
 		status = 0;
 
 	send_response_flush (tp, source, &status, 1, FALSE);
-	STUFF4((int) bacon_video_widget_get_stream_length (tp->bvw) / 1000);
-	STUFF4((int) bacon_video_widget_get_current_time (tp->bvw) / 1000);
-	status = totem_action_remote_get_setting (tp->totem, TOTEM_REMOTE_SETTING_SHUFFLE);
+	STUFF4((int) bacon_video_widget_get_stream_length (priv->bvw) / 1000);
+	STUFF4((int) bacon_video_widget_get_current_time (priv->bvw) / 1000);
+	status = totem_action_remote_get_setting (priv->totem, TOTEM_REMOTE_SETTING_SHUFFLE);
 	send_response_flush (tp, source, &status, 1, FALSE);
-	status = totem_action_remote_get_setting (tp->totem, TOTEM_REMOTE_SETTING_REPEAT);
+	status = totem_action_remote_get_setting (priv->totem, TOTEM_REMOTE_SETTING_REPEAT);
 	send_response_flush (tp, source, &status, 1, FALSE);
 
-	title = totem_get_short_title (tp->totem);
+	title = totem_get_short_title (priv->totem);
 	g_message ("written info for %s", title);
 	if (title == NULL) {
 		flush_response (tp, source);
@@ -389,7 +388,7 @@ set_playlist_at_pos (TotemBemusedPlugin *tp, GIOChannel *source)
 
 	read_response (tp, source, buf, 2);
 	idx = (buf[0] << 8) + buf[1];
-	totem_action_set_playlist_index (tp->totem, idx);
+	totem_action_set_playlist_index (tp->priv->totem, idx);
 }
 
 #if 0
@@ -437,6 +436,8 @@ endoflist:
 static void
 handle_command (TotemBemusedPlugin *tp, GIOChannel *source, const char *cmd)
 {
+	TotemBemusedPluginPrivate *priv = tp->priv;
+
 	g_message ("cmd: %s", cmd);
 
 	CMD_IS("CHCK") {
@@ -450,7 +451,7 @@ handle_command (TotemBemusedPlugin *tp, GIOChannel *source, const char *cmd)
 	} else CMD_IS("FADE") {
 		//stop
 	} else CMD_IS("FFWD") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
 	} else CMD_IS("FINF") {
 		write_detailed_file_info (tp, source);
 	} else CMD_IS("GVOL") {
@@ -464,9 +465,9 @@ handle_command (TotemBemusedPlugin *tp, GIOChannel *source, const char *cmd)
 	} else CMD_IS("LIST") {
 		write_directory_listing (tp, source, TRUE);
 	} else CMD_IS("NEXT") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_NEXT, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_NEXT, NULL);
 	} else CMD_IS("PAUS") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_PAUSE, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_PAUSE, NULL);
 	} else CMD_IS("PLAY") {
 		add_or_enqueue (tp, source, TOTEM_REMOTE_COMMAND_REPLACE);
 	} else CMD_IS("PLEN") {
@@ -474,19 +475,19 @@ handle_command (TotemBemusedPlugin *tp, GIOChannel *source, const char *cmd)
 	} else CMD_IS("PLST") {
 		write_playlist (tp, source);
 	} else CMD_IS("PREV") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_PREVIOUS, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_PREVIOUS, NULL);
 	} else CMD_IS("REPT") {
 		set_setting (tp, source, TOTEM_REMOTE_SETTING_REPEAT);
 	} else CMD_IS("RMAL") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_REPLACE, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_REPLACE, NULL);
 	} else CMD_IS("RWND") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
 	} else CMD_IS("SHFL") {
 		set_setting (tp, source, TOTEM_REMOTE_SETTING_SHUFFLE);
 	} else CMD_IS("SEEK") {
 		seek_to_pos (tp, source);
 	} else CMD_IS("SHUT") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 	} else CMD_IS("STEN") {
 		//stop at end of track
 	} else CMD_IS("SLCT") {
@@ -494,7 +495,7 @@ handle_command (TotemBemusedPlugin *tp, GIOChannel *source, const char *cmd)
 	} else CMD_IS("STOP") {
 		//stop
 	} else CMD_IS("STRT") {
-		totem_action_remote (tp->totem, TOTEM_REMOTE_COMMAND_PLAY, NULL);
+		totem_action_remote (priv->totem, TOTEM_REMOTE_COMMAND_PLAY, NULL);
 	} else CMD_IS("VOLM") {
 		set_volume (tp, source);
 	} else CMD_IS("VERS") {
@@ -541,9 +542,9 @@ client_watch_func (GIOChannel *source, GIOCondition condition, gpointer data)
 }
 
 static gboolean
-server_watch_func (GIOChannel *source, GIOCondition condition, gpointer data)
+server_watch_func (GIOChannel *source, GIOCondition condition, TotemBemusedPlugin *tp)
 {
-	TotemBemusedPlugin *tp = (TotemBemusedPlugin *) data;
+	TotemBemusedPluginPrivate *priv = tp->priv;
 
 	g_message ("server_watch_func");
 
@@ -568,21 +569,21 @@ server_watch_func (GIOChannel *source, GIOCondition condition, gpointer data)
 			//FIXME check batostr(&ba) is our expected client
 			g_message ("connected from %s", batostr(&ba));
 
-			if (tp->bvw != NULL)
-				g_object_unref (G_OBJECT (tp->bvw));
-			tp->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (tp->totem));
+			if (priv->bvw != NULL)
+				g_object_unref (G_OBJECT (priv->bvw));
+			priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (priv->totem));
 
-			tp->client_iochan = g_io_channel_unix_new (client_fd);
-			g_io_channel_set_encoding (tp->client_iochan, NULL, NULL);
-			g_io_channel_set_buffered (tp->client_iochan, FALSE);
-			g_io_channel_set_flags (tp->client_iochan,
-						g_io_channel_get_flags (tp->client_iochan) | G_IO_FLAG_NONBLOCK,
+			priv->client_iochan = g_io_channel_unix_new (client_fd);
+			g_io_channel_set_encoding (priv->client_iochan, NULL, NULL);
+			g_io_channel_set_buffered (priv->client_iochan, FALSE);
+			g_io_channel_set_flags (priv->client_iochan,
+						g_io_channel_get_flags (priv->client_iochan) | G_IO_FLAG_NONBLOCK,
 						NULL);
-			tp->client_watch_id = g_io_add_watch (tp->client_iochan,
+			priv->client_watch_id = g_io_add_watch (priv->client_iochan,
 						       G_IO_IN | G_IO_PRI | G_IO_HUP | G_IO_ERR | G_IO_NVAL,
 						       client_watch_func,
 						       tp);
-			g_io_channel_unref (tp->client_iochan);
+			g_io_channel_unref (priv->client_iochan);
 		}
 	}
 
@@ -673,31 +674,15 @@ sdp_svc_del (sdp_session_t *session)
 }
 
 /* Object functions */
-
-static void
-totem_bemused_plugin_class_init (TotemBemusedPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_bemused_plugin_init (TotemBemusedPlugin *plugin)
-{
-}
-
 static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemBemusedPlugin *tp = TOTEM_BEMUSED_PLUGIN (plugin);
+	TotemBemusedPluginPrivate *priv = tp->priv;
 	int fd, channel;
 	struct sockaddr_rc addr;
 
-	tp->totem = g_object_get_data (G_OBJECT (plugin), "object");
+	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	fd = socket (PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 	if (fd < 0) {
@@ -709,12 +694,12 @@ impl_activate (PeasActivatable *plugin)
 	g_message ("socket created");
 
 	channel = 1;
-	tp->sdp_session = sdp_svc_add_spp (channel,
+	priv->sdp_session = sdp_svc_add_spp (channel,
 					   BEMUSED_SVC_NAME,
 					   BEMUSED_SVC_DESC,
 					   BEMUSED_SVC_PROV,
 					   BEMUSED_SVC_UUID);
-	if (tp->sdp_session == NULL) {
+	if (priv->sdp_session == NULL) {
 		close (fd);
 		g_message ("registering service failed");
 		return;
@@ -726,7 +711,7 @@ impl_activate (PeasActivatable *plugin)
 
 	if (bind(fd, (struct sockaddr*) &addr, sizeof(addr)) < 0) {
 		//FIXME
-		sdp_svc_del (tp->sdp_session);
+		sdp_svc_del (priv->sdp_session);
 		g_message ("couldn't bind");
 		return;
 	}
@@ -736,19 +721,19 @@ impl_activate (PeasActivatable *plugin)
 	if (listen (fd, 10) < 0) {
 		//FIXME
 		g_message ("couldn't listen");
-		sdp_svc_del (tp->sdp_session);
+		sdp_svc_del (priv->sdp_session);
 		return;
 	}
 
 	g_message ("listen launched");
 
-	tp->server_iochan = g_io_channel_unix_new (fd);
-	g_io_channel_set_encoding (tp->server_iochan, NULL, NULL);
-	tp->server_watch_id = g_io_add_watch (tp->server_iochan,
+	priv->server_iochan = g_io_channel_unix_new (fd);
+	g_io_channel_set_encoding (priv->server_iochan, NULL, NULL);
+	priv->server_watch_id = g_io_add_watch (priv->server_iochan,
 					      G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_NVAL,
-					      server_watch_func,
+					      (GIOFunc) server_watch_func,
 					      plugin);
-	g_io_channel_unref (tp->server_iochan);
+	g_io_channel_unref (priv->server_iochan);
 
 	g_message ("io chan set");
 

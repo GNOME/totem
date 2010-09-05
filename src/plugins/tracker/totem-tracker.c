@@ -46,28 +46,11 @@
 #define TOTEM_IS_TRACKER_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_TRACKER_PLUGIN))
 #define TOTEM_TRACKER_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_TRACKER_PLUGIN, TotemTrackerPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
-} TotemTrackerPlugin;
+typedef struct {
+	gpointer unused;
+} TotemTrackerPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_TRACKER_PLUGIN, TotemTrackerPlugin, totem_tracker_plugin);
-
-static void
-totem_tracker_plugin_class_init (TotemTrackerPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_tracker_plugin_init (TotemTrackerPlugin *plugin)
-{
-}
 
 static void
 impl_activate (PeasActivatable *plugin)

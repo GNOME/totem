@@ -47,9 +47,7 @@
 #define TOTEM_IS_SCREENSAVER_PLUGIN_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_SCREENSAVER_PLUGIN))
 #define TOTEM_SCREENSAVER_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_SCREENSAVER_PLUGIN, TotemScreensaverPluginClass))
 
-typedef struct
-{
-	PeasExtensionBase parent;
+typedef struct {
 	TotemObject *totem;
 	BaconVideoWidget *bvw;
 	GSettings *settings;
@@ -57,27 +55,11 @@ typedef struct
 	TotemScrsaver *scr;
 	guint          handler_id_playing;
 	guint          handler_id_metadata;
-} TotemScreensaverPlugin;
+} TotemScreensaverPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
 		      TotemScreensaverPlugin,
 		      totem_screensaver_plugin)
-
-static void
-totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
-{
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	object_class->set_property = set_property;
-	object_class->get_property = get_property;
-
-	g_object_class_override_property (object_class, PROP_OBJECT, "object");
-}
-
-static void
-totem_screensaver_plugin_init (TotemScreensaverPlugin *plugin)
-{
-}
 
 static void
 totem_screensaver_update_from_state (TotemObject *totem,
@@ -88,15 +70,15 @@ totem_screensaver_update_from_state (TotemObject *totem,
 
 	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget ((Totem *)(totem)));
 
-	lock_screensaver_on_audio = g_settings_get_boolean (pi->settings, "lock-screensaver-on-audio");
+	lock_screensaver_on_audio = g_settings_get_boolean (pi->priv->settings, "lock-screensaver-on-audio");
 	can_get_frames = bacon_video_widget_can_get_frames (bvw, NULL);
 
 	if (totem_is_playing (totem) != FALSE && can_get_frames)
-		totem_scrsaver_disable (pi->scr);
+		totem_scrsaver_disable (pi->priv->scr);
 	else if (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)
-		totem_scrsaver_disable (pi->scr);
+		totem_scrsaver_disable (pi->priv->scr);
 	else
-		totem_scrsaver_enable (pi->scr);
+		totem_scrsaver_enable (pi->priv->scr);
 }
 
 static void
@@ -110,13 +92,13 @@ property_notify_cb (TotemObject *totem,
 static void
 got_metadata_cb (BaconVideoWidget *bvw, TotemScreensaverPlugin *pi)
 {
-	totem_screensaver_update_from_state (pi->totem, pi);
+	totem_screensaver_update_from_state (pi->priv->totem, pi);
 }
 
 static void
 lock_screensaver_on_audio_changed_cb (GSettings *settings, const gchar *key, TotemScreensaverPlugin *pi)
 {
-	totem_screensaver_update_from_state (pi->totem, pi);
+	totem_screensaver_update_from_state (pi->priv->totem, pi);
 }
 
 static void
@@ -125,27 +107,27 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
 
-	pi->scr = totem_scrsaver_new ();
-	g_object_set (pi->scr,
+	pi->priv->scr = totem_scrsaver_new ();
+	g_object_set (pi->priv->scr,
 	              "reason", _("Playing a movie"),
 	              NULL);
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
 
-	pi->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-	g_signal_connect (pi->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, plugin);
+	pi->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
+	g_signal_connect (pi->priv->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, plugin);
 
-	pi->handler_id_playing = g_signal_connect (G_OBJECT (totem),
+	pi->priv->handler_id_playing = g_signal_connect (G_OBJECT (totem),
 						   "notify::playing",
 						   G_CALLBACK (property_notify_cb),
 						   pi);
-	pi->handler_id_metadata = g_signal_connect (G_OBJECT (pi->bvw),
+	pi->priv->handler_id_metadata = g_signal_connect (G_OBJECT (pi->priv->bvw),
 						    "got-metadata",
 						    G_CALLBACK (got_metadata_cb),
 						    pi);
 
-	pi->totem = g_object_ref (totem);
+	pi->priv->totem = g_object_ref (totem);
 
 	/* Force setting the current status */
 	totem_screensaver_update_from_state (totem, pi);
@@ -156,24 +138,24 @@ impl_deactivate	(PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 
-	g_object_unref (pi->settings);
+	g_object_unref (pi->priv->settings);
 
-	if (pi->handler_id_playing != 0) {
+	if (pi->priv->handler_id_playing != 0) {
 		TotemObject *totem;
 		totem = g_object_get_data (G_OBJECT (plugin), "object");
-		g_signal_handler_disconnect (G_OBJECT (totem), pi->handler_id_playing);
-		pi->handler_id_playing = 0;
+		g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_playing);
+		pi->priv->handler_id_playing = 0;
 	}
-	if (pi->handler_id_metadata != 0) {
-		g_signal_handler_disconnect (G_OBJECT (pi->bvw), pi->handler_id_metadata);
-		pi->handler_id_metadata = 0;
+	if (pi->priv->handler_id_metadata != 0) {
+		g_signal_handler_disconnect (G_OBJECT (pi->priv->bvw), pi->priv->handler_id_metadata);
+		pi->priv->handler_id_metadata = 0;
 	}
 
-	g_object_unref (pi->totem);
-	g_object_unref (pi->bvw);
+	g_object_unref (pi->priv->totem);
+	g_object_unref (pi->priv->bvw);
 
-	totem_scrsaver_enable (pi->scr);
+	totem_scrsaver_enable (pi->priv->scr);
 
-	g_object_unref (pi->scr);
+	g_object_unref (pi->priv->scr);
 }
 

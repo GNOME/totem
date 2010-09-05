@@ -52,6 +52,10 @@ G_BEGIN_DECLS
 	typedef struct {							\
 		PeasExtensionBaseClass parent_class;				\
 	} TypeName##Class;							\
+	typedef struct {							\
+		PeasExtensionBase parent;					\
+		TypeName##Private *priv;					\
+	} TypeName;								\
 	GType type_name##_get_type (void) G_GNUC_CONST;				\
 	static void impl_activate (PeasActivatable *plugin);			\
 	static void impl_deactivate (PeasActivatable *plugin);			\
@@ -107,8 +111,24 @@ G_BEGIN_DECLS
 		}								\
 	}									\
 	static void								\
-	type_name##_class_finalize (TypeName##Class *klass)		\
+	type_name##_class_init (TypeName##Class *klass)				\
 	{									\
+		GObjectClass *object_class = G_OBJECT_CLASS (klass);		\
+										\
+		object_class->set_property = set_property;			\
+		object_class->get_property = get_property;			\
+										\
+		g_object_class_override_property (object_class, PROP_OBJECT, "object"); \
+		g_type_class_add_private (klass, sizeof (TypeName##Private));	\
+	}									\
+	static void								\
+	type_name##_class_finalize (TypeName##Class *klass)			\
+	{									\
+	}									\
+	static void								\
+	type_name##_init (TypeName *plugin)					\
+	{									\
+		plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin, TYPE_NAME, TypeName##Private); \
 	}									\
 	G_MODULE_EXPORT void							\
 	peas_register_types (PeasObjectModule *module)				\
