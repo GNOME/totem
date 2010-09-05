@@ -2,7 +2,6 @@ SUBDIRS = plugins backend
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
 lib_LTLIBRARIES = libtotem.la
-libexec_PROGRAMS =
 noinst_LTLIBRARIES = libtotem_player.la
 
 AM_CPPFLAGS = \
@@ -22,7 +21,6 @@ AM_CPPFLAGS = \
 AM_CFLAGS = $(WARN_CFLAGS)
 
 # Header files installed for use by plugins (and consequently introspected using gobject-introspection; see the bottom of the Makefile)
-
 INST_H_FILES = \
 	totem.h				\
 	totem-video-list.h		\
@@ -35,7 +33,6 @@ headerdir = $(includedir)/totem/$(TOTEM_API_VERSION)
 header_DATA = $(INST_H_FILES)
 
 # Totem UI ltlibrary (used by browser plugins)
-
 libtotem_player_la_SOURCES = \
 	$(INST_H_FILES)		\
 	totem-statusbar.c	\
@@ -58,9 +55,8 @@ libtotem_player_la_CFLAGS = \
 	$(AM_CFLAGS)
 
 # Totem main library (used for main player; separate to allow gtk-doc to be used)
-
 libtotem_la_SOURCES = \
-	$(TOTEMMARSHALFILES)		\
+	$(TOTEM_MARSHAL_FILES)		\
 	$(INST_H_FILES)			\
 	totem-object.c			\
 	totem-private.h			\
@@ -69,7 +65,7 @@ libtotem_la_SOURCES = \
 	totem-preferences.c		\
 	totem-preferences.h		\
 	totem-dnd-menu.c		\
-	totem-dnd-menu.h 		\
+	totem-dnd-menu.h		\
 	totem-options.c			\
 	totem-options.h			\
 	totem-playlist.c		\
@@ -80,9 +76,9 @@ libtotem_la_SOURCES = \
 	totem-session.c			\
 	totem-session.h			\
 	totem-sidebar.c			\
-	totem-sidebar.h 		\
+	totem-sidebar.h			\
 	totem-open-location.c		\
-	totem-open-location.h 		\
+	totem-open-location.h		\
 	totem-menu.c			\
 	totem-menu.h			\
 	totem-uri.c			\
@@ -142,31 +138,35 @@ libtotem_la_SOURCES += eggsmclient-osx.c
 endif
 endif
 
-# Totem
-
-TOTEMMARSHALFILES = 						\
+# Marshal files
+TOTEM_MARSHAL_FILES = \
 	totemobject-marshal.c totemobject-marshal.h		\
 	totemplaylist-marshal.c totemplaylist-marshal.h		\
 	totemvideolist-marshal.c totemvideolist-marshal.h
-GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
-BUILT_SOURCES = $(TOTEMMARSHALFILES)
 
-totemobject-marshal.h: totemobject-marshal.list Makefile
-	$(AM_V_GEN) ( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header > totemobject-marshal.h )
-totemobject-marshal.c: totemobject-marshal.h Makefile
-	$(AM_V_GEN) ( $(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header --body > totemobject-marshal.c )
-totemplaylist-marshal.h: totemplaylist-marshal.list Makefile
-	$(AM_V_GEN) ( $(GLIB_GENMARSHAL) --prefix=totemplaylist_marshal $(srcdir)/totemplaylist-marshal.list --header > totemplaylist-marshal.h )
-totemplaylist-marshal.c: totemplaylist-marshal.h Makefile
-	$(AM_V_GEN) ( $(GLIB_GENMARSHAL) --prefix=totemplaylist_marshal $(srcdir)/totemplaylist-marshal.list --header --body > totemplaylist-marshal.c )
-totemvideolist-marshal.h: totemvideolist-marshal.list Makefile
-	$(AM_V_GEN) ( $(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header > totemvideolist-marshal.h )
-totemvideolist-marshal.c: totemvideolist-marshal.h Makefile
-	$(AM_V_GEN) ( $(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header --body > totemvideolist-marshal.c )
+totemobject-marshal.h: totemobject-marshal.list
+	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header > $@)
+totemobject-marshal.c: totemobject-marshal.h totemobject-marshal.list
+	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header --body > $@)
+totemplaylist-marshal.h: totemplaylist-marshal.list
+	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemplaylist_marshal $(srcdir)/totemplaylist-marshal.list --header > $@)
+totemplaylist-marshal.c: totemplaylist-marshal.h totemobject-marshal.list
+	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemplaylist_marshal $(srcdir)/totemplaylist-marshal.list --header --body > $@)
+totemvideolist-marshal.h: totemvideolist-marshal.list
+	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header > $@)
+totemvideolist-marshal.c: totemvideolist-marshal.h totemobject-marshal.list
+	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header --body > $@)
 
+EXTRA_DIST = \
+	totemobject-marshal.list	\
+	totemvideolist-marshal.list	\
+	totemplaylist-marshal.list
+CLEANFILES = $(TOTEM_MARSHAL_FILES)
+
+# Totem
 totem_SOURCES = totem.c
 
-totem_CPPFLAGS =			\
+totem_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
@@ -181,8 +181,7 @@ totem_LDADD = \
 	$(PEAS_LIBS)
 
 # Totem video thumbnailer
-
-totem_video_thumbnailer_SOURCES =	\
+totem_video_thumbnailer_SOURCES = \
 	totem-video-thumbnailer.c	\
 	totem-resources.c		\
 	totem-resources.h
@@ -195,23 +194,21 @@ totem_video_thumbnailer_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
-totem_video_thumbnailer_LDADD =			\
+totem_video_thumbnailer_LDADD = \
 	backend/libbaconvideowidget.la		\
 	$(DEPENDENCY_LIBS)
 
 # Nautilus Property Page
-
 if HAVE_NAUTILUS
-
 nautilusdir = $(NAUTILUSDIR)
 nautilus_LTLIBRARIES = libtotem-properties-page.la
 
-libtotem_properties_page_la_SOURCES = 	\
+libtotem_properties_page_la_SOURCES = \
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h
 
-libtotem_properties_page_la_CPPFLAGS =		\
+libtotem_properties_page_la_CPPFLAGS = \
 	-I$(srcdir)/plugins/properties		\
 	-I$(top_builddir)/data			\
 	-DG_LOG_DOMAIN=\""TotemPropertiesPage"\"\
@@ -226,7 +223,7 @@ libtotem_properties_page_la_LDFLAGS = \
 	-export_dynamic -avoid-version -module -no-undefined	\
 	$(AM_LDFLAGS)
 
-libtotem_properties_page_la_LIBADD =				\
+libtotem_properties_page_la_LIBADD = \
 	backend/libbaconvideowidget.la				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
 	libtotem_player.la					\
@@ -235,13 +232,13 @@ libtotem_properties_page_la_LIBADD =				\
 
 noinst_PROGRAMS = test-properties-page
 
-test_properties_page_SOURCES =		\
+test_properties_page_SOURCES = \
 	totem-properties-main.c		\
 	totem-properties-view.c		\
 	totem-properties-view.h		\
 	test-properties-page.c
 
-test_properties_page_CPPFLAGS = 		\
+test_properties_page_CPPFLAGS = \
 	-I$(top_builddir)/data			\
 	-I$(srcdir)/plugins/properties		\
 	$(AM_CPPFLAGS)
@@ -251,18 +248,16 @@ test_properties_page_CFLAGS = \
 	$(NAUTILUS_CFLAGS)	\
 	$(AM_CFLAGS)
 
-test_properties_page_LDADD = 					\
+test_properties_page_LDADD = \
 	backend/libbaconvideowidget.la				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)
-
 endif # HAVE_NAUTILUS
 
 # Totem Video Indexer
-
-totem_video_indexer_SOURCES =		\
+totem_video_indexer_SOURCES = \
 	totem-video-indexer.c		\
 	totem-resources.c		\
 	totem-resources.h
@@ -280,13 +275,13 @@ totem_video_indexer_LDADD = \
 	backend/libbaconvideowidget.la	\
 	$(DEPENDENCY_LIBS)
 
-# Totem Audio Preview for nautilus
-totem_audio_preview_SOURCES =		\
+# Totem Audio Preview for Nautilus
+totem_audio_preview_SOURCES = \
 	totem-audio-preview.c		\
 	totem-resources.c		\
 	totem-resources.h
 
-totem_audio_preview_CPPFLAGS =	\
+totem_audio_preview_CPPFLAGS = \
 	-I$(top_builddir)/data			\
 	-DG_LOG_DOMAIN=\""TotemAudioPreview"\"	\
 	$(AM_CPPFLAGS)
@@ -298,19 +293,6 @@ totem_audio_preview_CFLAGS = \
 totem_audio_preview_LDADD = \
 	backend/libbaconvideowidget.la	\
 	$(DEPENDENCY_LIBS)
-
-CLEANFILES =			\
-	*.bak			\
-	core*			\
-	*.orig			\
-	*~			\
-	$(desktop_DATA)		\
-	$(BUILT_SOURCES)
-
-EXTRA_DIST = 				\
-	totemobject-marshal.list	\
-	totemvideolist-marshal.list	\
-	totemplaylist-marshal.list
 
 # Introspection
 -include $(INTROSPECTION_MAKEFILE)
