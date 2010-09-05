@@ -652,7 +652,7 @@ class JamendoService(threading.Thread):
                 album['image'] = fname
                 album['tracks'] = json.loads(self._request(
                     '%s/id+name+duration+stream/track/json/?album_id=%s'\
-                    '&order=numalbum_asc' % (self.API_URL, album['id'])
+                    '&order=numalbum_asc&streamencoding=%s' % (self.API_URL, album['id'], self.AUDIO_FORMAT)
                 ))
                 album['license'] = json.loads(self._request(
                     '%s/name/license/json/album_license/?album_id=%s'\
