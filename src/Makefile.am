@@ -19,6 +19,8 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/src/backend			\
 	-I$(srcdir)/plugins
 
+AM_CFLAGS = $(WARN_CFLAGS)
+
 modules_flags = -export_dynamic -avoid-version -module -no-undefined
 
 # Header files installed for use by plugins (and consequently introspected using gobject-introspection; see the bottom of the Makefile)
@@ -52,9 +54,9 @@ libtotem_player_la_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
+libtotem_player_la_LIBADD = $(DEPENDENCY_LIBS)
 libtotem_player_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
-	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_player_la_LDFLAGS = \
@@ -106,9 +108,6 @@ libtotem_la_CPPFLAGS = \
 
 libtotem_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
-	$(WARN_CFLAGS)			\
-	$(DBUS_CFLAGS)			\
-	$(MISSING_PLUGINS_CFLAGS)	\
 	$(PEAS_CFLAGS)			\
 	$(PEASUI_CFLAGS)		\
 	$(AM_CFLAGS)
@@ -120,12 +119,9 @@ libtotem_la_LDFLAGS =		\
 libtotem_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
+	$(PEAS_LIBS)			\
 	$(PEASUI_LIBS)			\
-	$(DEPENDENCY_LIBS)		\
-	$(DBUS_LIBS)			\
-	$(XVIDMODE_LIBS)		\
-	$(XTEST_LIBS)			\
-	$(X_LIBS)
+	$(DEPENDENCY_LIBS)
 
 if WITH_SMCLIENT
 libtotem_la_SOURCES += \
@@ -179,21 +175,18 @@ totem_CPPFLAGS =			\
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
-totem_CFLAGS =				\
-	$(PEAS_CFLAGS)			\
-	$(WARN_CFLAGS)			\
-	$(DEPENDENCY_CFLAGS)		\
+totem_CFLAGS = \
+	$(PEAS_CFLAGS)		\
+	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
 totem_LDFLAGS =				\
 	$(AM_LDFLAGS)
 
-totem_LDADD =						\
-	libtotem.la					\
-	$(DEPENDENCY_LIBS)				\
-	$(XVIDMODE_LIBS)				\
-	$(XTEST_LIBS)					\
-	$(X_LIBS)
+totem_LDADD = \
+	libtotem.la		\
+	$(DEPENDENCY_LIBS)	\
+	$(PEAS_LIBS)
 
 # Totem video thumbnailer
 
@@ -208,7 +201,6 @@ totem_video_thumbnailer_CPPFLAGS = \
 
 totem_video_thumbnailer_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
-	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
 totem_video_thumbnailer_LDFLAGS = \
@@ -216,11 +208,7 @@ totem_video_thumbnailer_LDFLAGS = \
 
 totem_video_thumbnailer_LDADD =			\
 	backend/libbaconvideowidget.la		\
-	$(DEPENDENCY_LIBS)			\
-	$(EXTRA_BACKEND_LIBS) 			\
-	$(XTEST_LIBS)				\
-	$(XVIDMODE_LIBS)			\
-	$(X_LIBS)
+	$(DEPENDENCY_LIBS)
 
 # Nautilus Property Page
 
@@ -241,7 +229,6 @@ libtotem_properties_page_la_CPPFLAGS =		\
 	$(AM_CPPFLAGS)
 
 libtotem_properties_page_la_CFLAGS = \
-	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
 	$(NAUTILUS_CFLAGS)	\
 	$(AM_CFLAGS)
@@ -255,10 +242,7 @@ libtotem_properties_page_la_LIBADD =				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
-	$(NAUTILUS_LIBS)					\
-	$(XTEST_LIBS)						\
-	$(XVIDMODE_LIBS)					\
-	$(X_LIBS)
+	$(NAUTILUS_LIBS)
 
 noinst_PROGRAMS = test-properties-page
 
@@ -274,7 +258,6 @@ test_properties_page_CPPFLAGS = 		\
 	$(AM_CPPFLAGS)
 
 test_properties_page_CFLAGS = \
-	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
 	$(NAUTILUS_CFLAGS)	\
 	$(AM_CFLAGS)
@@ -287,10 +270,7 @@ test_properties_page_LDADD = 					\
 	plugins/properties/libbaconvideowidgetproperties.la	\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
-	$(NAUTILUS_LIBS)					\
-	$(XTEST_LIBS)						\
-	$(XVIDMODE_LIBS)					\
-	$(X_LIBS)
+	$(NAUTILUS_LIBS)
 
 endif # HAVE_NAUTILUS
 
@@ -307,7 +287,6 @@ totem_video_indexer_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 totem_video_indexer_CFLAGS = \
-	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
@@ -316,11 +295,7 @@ totem_video_indexer_LDFLAGS = \
 
 totem_video_indexer_LDADD = \
 	backend/libbaconvideowidget.la	\
-	$(DEPENDENCY_LIBS)		\
-	$(EXTRA_BACKEND_LIBS)		\
-	$(XTEST_LIBS)			\
-	$(XVIDMODE_LIBS)		\
-	$(X_LIBS)
+	$(DEPENDENCY_LIBS)
 
 # Totem Audio Preview for nautilus
 totem_audio_preview_SOURCES =		\
@@ -334,7 +309,6 @@ totem_audio_preview_CPPFLAGS =	\
 	$(AM_CPPFLAGS)
 
 totem_audio_preview_CFLAGS = \
-	$(WARN_CFLAGS)		\
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
@@ -343,11 +317,7 @@ totem_audio_preview_LDFLAGS = \
 
 totem_audio_preview_LDADD = \
 	backend/libbaconvideowidget.la	\
-	$(DEPENDENCY_LIBS)		\
-	$(EXTRA_BACKEND_LIBS)		\
-	$(XTEST_LIBS)			\
-	$(XVIDMODE_LIBS)		\
-	$(X_LIBS)
+	$(DEPENDENCY_LIBS)
 
 CLEANFILES =			\
 	*.bak			\
@@ -376,11 +346,9 @@ introspection_sources = $(INST_H_FILES) $(filter %.c,$(libtotem_player_la_SOURCE
 # NOTE: This should change with $(TOTEM_API_VERSION)
 Totem-1.0.gir: libtotem.la
 Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
-Totem_1_0_gir_CFLAGS = $(DEPENDENCY_CFLAGS)		\
-	$(DBUS_CFLAGS)			\
-	$(MISSING_PLUGINS_CFLAGS)	\
-	$(PEASUI_CFLAGS)		\
-	$(AM_CFLAGS)	$(libtotem_la_CPPFLAGS)
+Totem_1_0_gir_CFLAGS = \
+	$(DEPENDENCY_CFLAGS)	\
+	$(libtotem_la_CPPFLAGS)
 Totem_1_0_gir_LIBS = libtotem.la
 Totem_1_0_gir_FILES = $(introspection_sources)
 INTROSPECTION_GIRS += Totem-1.0.gir
