@@ -4,18 +4,19 @@ plugindir = $(PLUGINDIR)/mythtv
 plugin_LTLIBRARIES = libtotem_mythtv.la
 
 plugin_in_files = mythtv.totem-plugin.in
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
 %.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
-
-common_defines = \
-	-DG_LOG_DOMAIN=\""Totem"\"			\
-	$(DISABLE_DEPRECATED)
-
 libtotem_mythtv_la_SOURCES = totem-mythtv.c
 libtotem_mythtv_la_LDFLAGS = $(modules_flags)
-libtotem_mythtv_la_CPPFLAGS = $(common_defines)
+libtotem_mythtv_la_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\""Totem"\"	\
+	$(DISABLE_DEPRECATED)		\
+	-I$(top_srcdir)/		\
+	-I$(top_srcdir)/src		\
+	-I$(top_srcdir)/src/backend	\
+	-I$(top_srcdir)/src/plugins
 libtotem_mythtv_la_LIBADD = $(GMYTH_LIBS)
 
 libtotem_mythtv_la_CFLAGS =	\
@@ -23,16 +24,11 @@ libtotem_mythtv_la_CFLAGS =	\
 	$(PEAS_CFLAGS)		\
 	$(GMYTH_CFLAGS)		\
 	$(WARN_CFLAGS)		\
-	$(DBUS_CFLAGS)		\
-	$(AM_CFLAGS)		\
-	-I$(top_srcdir)/	\
-	-I$(top_srcdir)/src	\
-	-I$(top_srcdir)/src/backend \
-	-I$(top_srcdir)/src/plugins
+	$(DBUS_CFLAGS)
 
 EXTRA_DIST = $(plugin_in_files)
 
-CLEANFILES = $(noinst_DATA) $(BUILT_SOURCES)
+CLEANFILES = $(noinst_DATA)
 DISTCLEANFILES = $(plugin_DATA)
 
 -include $(top_srcdir)/git.mk

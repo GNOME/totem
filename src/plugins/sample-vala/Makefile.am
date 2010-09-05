@@ -13,9 +13,6 @@ plugin_LTLIBRARIES = libsample-vala.la
 # override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
 
-common_defines = \
-	$(DISABLE_DEPRECATED)
-
 libsample_vala_la_VALASOURCES = \
 	totem-sample-vala-plugin.vala
 
@@ -24,17 +21,17 @@ libsample_vala_la_SOURCES = \
 	$(libsample_vala_la_VALASOURCES:.vala=.c)
 
 libsample_vala_la_LDFLAGS = $(modules_flags)
-libsample_vala_la_CPPFLAGS = $(common_defines)
+libsample_vala_la_CPPFLAGS = \
+	$(DISABLE_DEPRECATED)		\
+	-I$(top_srcdir)/		\
+	-I$(top_srcdir)/lib		\
+	-I$(top_srcdir)/src		\
+	-I$(top_srcdir)/src/plugins
 
 libsample_vala_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
-	$(DBUS_CFLAGS)		\
-	$(AM_CFLAGS)		\
-	-I$(top_srcdir)/	\
-	-I$(top_srcdir)/lib	\
-	-I$(top_srcdir)/src	\
-	-I$(top_srcdir)/src/plugins
+	$(DBUS_CFLAGS)
 
 totem-sample-vala-plugin.vala.stamp: $(libsample_vala_la_VALASOURCES)
 	$(VALAC) $(VALAFLAGS) -C --vapidir=$(top_srcdir)/bindings/vala --pkg=totem $^
