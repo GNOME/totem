@@ -36,18 +36,36 @@
 #include <libpeas/peas-activatable.h>
 
 #include "totem-plugin.h"
-#include "totem-skipto-plugin.h"
 #include "totem-skipto.h"
 
-struct TotemSkiptoPluginPrivate
-{
+#define TOTEM_TYPE_SKIPTO_PLUGIN		(totem_skipto_plugin_get_type ())
+#define TOTEM_SKIPTO_PLUGIN(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin))
+#define TOTEM_SKIPTO_PLUGIN_CLASS(k)		(G_TYPE_CHECK_CLASS_CAST((k), TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPluginClass))
+#define TOTEM_IS_SKIPTO_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), TOTEM_TYPE_SKIPTO_PLUGIN))
+#define TOTEM_IS_SKIPTO_PLUGIN_CLASS(k)		(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_SKIPTO_PLUGIN))
+#define TOTEM_SKIPTO_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPluginClass))
+
+typedef struct {
 	TotemSkipto	*st;
 	guint		handler_id_stream_length;
 	guint		handler_id_seekable;
 	guint		handler_id_key_press;
 	guint		ui_merge_id;
 	GtkActionGroup	*action_group;
-};
+} TotemSkiptoPluginPrivate;
+
+typedef struct {
+	PeasExtensionBase parent;
+
+	TotemObject *totem;
+	TotemSkiptoPluginPrivate *priv;
+} TotemSkiptoPlugin;
+
+typedef struct {
+	PeasExtensionBaseClass parent_class;
+} TotemSkiptoPluginClass;
+
+GType totem_skipto_plugin_get_type (void) G_GNUC_CONST;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
 
@@ -146,7 +164,7 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 		return;
 	}
 
-	priv->st = TOTEM_SKIPTO (totem_skipto_new (plugin));
+	priv->st = TOTEM_SKIPTO (totem_skipto_new (plugin->totem));
 	g_signal_connect (G_OBJECT (priv->st), "delete-event",
 			  G_CALLBACK (gtk_widget_destroy), NULL);
 	g_signal_connect (G_OBJECT (priv->st), "response",

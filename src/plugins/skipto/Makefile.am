@@ -24,7 +24,6 @@ common_defines = \
 
 libskipto_la_SOURCES = \
 	totem-skipto-plugin.c	\
-	totem-skipto-plugin.h	\
 	totem-time-entry.c	\
 	totem-time-entry.h	\
 	totem-skipto.c		\

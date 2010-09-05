@@ -38,7 +38,6 @@
 
 #include "totem-dirs.h"
 #include "totem-skipto.h"
-#include "totem-skipto-plugin.h"
 #include "totem-uri.h"
 #include "video-utils.h"
 #include "bacon-video-widget.h"
@@ -161,14 +160,14 @@ tstw_adjustment_value_changed_cb (GtkAdjustment *adjustment, TotemSkipto *skipto
 }
 
 GtkWidget *
-totem_skipto_new (TotemSkiptoPlugin *plugin)
+totem_skipto_new (TotemObject *totem)
 {
 	TotemSkipto *skipto;
 	GtkWidget *container;
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
 
-	skipto->priv->totem = plugin->totem;
+	skipto->priv->totem = totem;
 	skipto->priv->xml = totem_plugin_load_interface ("skipto",
 							 "skipto.ui", TRUE,
 							 NULL, skipto);
@@ -210,7 +209,7 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 			    0);         /* padding */
 
 	gtk_window_set_transient_for (GTK_WINDOW (skipto),
-				      totem_get_main_window (plugin->totem));
+				      totem_get_main_window (totem));
 
 	gtk_widget_show_all (GTK_WIDGET (skipto));
 
