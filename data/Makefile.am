@@ -59,7 +59,6 @@ gsettings_ENUM_FILES = $(top_srcdir)/src/*.h $(top_srcdir)/src/backend/*.h
 gsettings_SCHEMAS = org.gnome.totem.gschema.xml
 
 @INTLTOOL_XML_NOMERGE_RULE@
-
 @GSETTINGS_RULES@
 
 convertdir = $(datadir)/GConf/gsettings
@@ -81,7 +80,6 @@ EXTRA_DIST = \
 	mime-type-include.sh		\
 	mime-type-list.txt		\
 	mime-functions.sh		\
-	org.gnome.totem.gschema.xml.in.in	\
 	totem.convert			\
 	totem-video-thumbnailer.1	\
 	totem-video-thumbnailer.pod
@@ -90,8 +88,7 @@ CLEANFILES = \
 	*.bak *.uip core* *.orig *~ 	\
 	$(desktop_in_files)		\
 	$(desktop_DATA)			\
-	org.gnome.totem.gschema.xml	\
-	org.gnome.totem.gschema.xml.in	\
+	$(gsettings_SCHEMAS)		\
 	totem-mime-types.h		\
 	nautilus-audio-mime-types.h
 

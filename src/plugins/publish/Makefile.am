@@ -16,18 +16,14 @@ libpublish_la_CFLAGS = \
 	$(plugin_cflags)	\
 	$(LIBEPC_CFLAGS)
 
-gsettings_SCHEMAS = org.gnome.totem.plugins.publish.gschema.xml
-
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
+gsettings_SCHEMAS = org.gnome.totem.plugins.publish.gschema.xml
+CLEANFILES += $(gsettings_SCHEMAS)
+
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = publish.convert
-
-EXTRA_DIST += org.gnome.totem.plugins.publish.gschema.xml.in.in publish.convert
-
-CLEANFILES += $(gsettings_SCHEMAS)
-DISTCLEANFILES += $(gsettings_SCHEMAS)
-MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
+EXTRA_DIST += publish.convert
 
 -include $(top_srcdir)/git.mk

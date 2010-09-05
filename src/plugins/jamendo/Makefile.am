@@ -9,18 +9,14 @@ uidir = $(plugindir)
 ui_DATA = jamendo.ui
 EXTRA_DIST += $(ui_DATA)
 
-gsettings_SCHEMAS = org.gnome.totem.plugins.jamendo.gschema.xml
-
 @INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
+gsettings_SCHEMAS = org.gnome.totem.plugins.jamendo.gschema.xml
+CLEANFILES += $(gsettings_SCHEMAS)
+
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = jamendo.convert
-
-EXTRA_DIST += jamendo.py org.gnome.totem.plugins.jamendo.gschema.xml.in.in jamendo.convert
-
-CLEANFILES += $(gsettings_SCHEMAS)
-DISTCLEANFILES += $(gsettings_SCHEMAS)
-MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
+EXTRA_DIST += jamendo.py jamendo.convert
 
 -include $(top_srcdir)/git.mk
