@@ -1,11 +1,9 @@
+include $(top_srcdir)/src/plugins/Makefile.plugins
+
 plugindir = $(PLUGINDIR)/pythonconsole
 plugin_PYTHON = pythonconsole.py console.py
 
 plugin_in_files = pythonconsole.totem-plugin.in
-
-%.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
-
-plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
 gsettings_SCHEMAS = org.gnome.totem.plugins.pythonconsole.gschema.xml
 
@@ -15,10 +13,10 @@ gsettings_SCHEMAS = org.gnome.totem.plugins.pythonconsole.gschema.xml
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = pythonconsole.convert
 
-EXTRA_DIST = $(plugin_in_files) pythonconsole.py console.py org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in pythonconsole.convert
+EXTRA_DIST += pythonconsole.py console.py org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in pythonconsole.convert
 
-CLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
-DISTCLEANFILES = $(plugin_DATA) $(gsettings_SCHEMAS)
+CLEANFILES += $(gsettings_SCHEMAS)
+DISTCLEANFILES += $(gsettings_SCHEMAS)
 MAINTAINERCLEANFILES = $(gsettings_SCHEMAS:.xml=.valid)
 
 -include $(top_srcdir)/git.mk

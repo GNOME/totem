@@ -1,14 +1,10 @@
+include $(top_srcdir)/src/plugins/Makefile.plugins
+
 plugindir = $(PLUGINDIR)/coherence_upnp
 plugin_PYTHON = coherence_upnp.py
 
 plugin_in_files = coherence_upnp.totem-plugin.in
-plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 
-%.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
-
-EXTRA_DIST = $(plugin_in_files) coherence_upnp.py
-
-CLEANFILES = $(plugin_DATA)
-DISTCLEANFILES = $(plugin_DATA)
+EXTRA_DIST += coherence_upnp.py
 
 -include $(top_srcdir)/git.mk

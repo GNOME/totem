@@ -1,0 +1,24 @@
+%.totem-plugin: %.totem-plugin.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; $(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
+
+CLEANFILES = $(plugin_DATA)
+DISTCLEANFILES = $(plugin_DATA)
+EXTRA_DIST = $(plugin_in_files)
+
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\""Totem"\"	\
+	$(DISABLE_DEPRECATED)		\
+	-I$(top_srcdir)/		\
+	-I$(top_srcdir)/src		\
+	-I$(top_srcdir)/src/plugins
+
+plugin_cflags = \
+	$(DEPENDENCY_CFLAGS)	\
+	$(PEAS_CFLAGS)		\
+	$(WARN_CFLAGS)
+
+plugin_ldflags = \
+	-export_dynamic \
+	-avoid-version \
+	-module
