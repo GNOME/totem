@@ -21,8 +21,6 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-modules_flags = -export_dynamic -avoid-version -module -no-undefined
-
 # Header files installed for use by plugins (and consequently introspected using gobject-introspection; see the bottom of the Makefile)
 
 INST_H_FILES = \
@@ -58,9 +56,6 @@ libtotem_player_la_LIBADD = $(DEPENDENCY_LIBS)
 libtotem_player_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
-
-libtotem_player_la_LDFLAGS = \
-	$(AM_LDFLAGS) 
 
 # Totem main library (used for main player; separate to allow gtk-doc to be used)
 
@@ -112,8 +107,8 @@ libtotem_la_CFLAGS = \
 	$(PEASUI_CFLAGS)		\
 	$(AM_CFLAGS)
 
-libtotem_la_LDFLAGS =		\
-	-export_dynamic			\
+libtotem_la_LDFLAGS = \
+	-export_dynamic	\
 	$(AM_LDFLAGS)
 
 libtotem_la_LIBADD = \
@@ -180,9 +175,6 @@ totem_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
-totem_LDFLAGS =				\
-	$(AM_LDFLAGS)
-
 totem_LDADD = \
 	libtotem.la		\
 	$(DEPENDENCY_LIBS)	\
@@ -202,9 +194,6 @@ totem_video_thumbnailer_CPPFLAGS = \
 totem_video_thumbnailer_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
-
-totem_video_thumbnailer_LDFLAGS = \
-	$(AM_LDFLAGS)
 
 totem_video_thumbnailer_LDADD =			\
 	backend/libbaconvideowidget.la		\
@@ -234,7 +223,7 @@ libtotem_properties_page_la_CFLAGS = \
 	$(AM_CFLAGS)
 
 libtotem_properties_page_la_LDFLAGS = \
-	$(modules_flags)	\
+	-export_dynamic -avoid-version -module -no-undefined	\
 	$(AM_LDFLAGS)
 
 libtotem_properties_page_la_LIBADD =				\
@@ -262,9 +251,6 @@ test_properties_page_CFLAGS = \
 	$(NAUTILUS_CFLAGS)	\
 	$(AM_CFLAGS)
 
-test_properties_page_LDFLAGS = \
-	$(AM_LDFLAGS)
-
 test_properties_page_LDADD = 					\
 	backend/libbaconvideowidget.la				\
 	plugins/properties/libbaconvideowidgetproperties.la	\
@@ -290,9 +276,6 @@ totem_video_indexer_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
-totem_video_indexer_LDFLAGS = \
-	$(AM_LDFLAGS)
-
 totem_video_indexer_LDADD = \
 	backend/libbaconvideowidget.la	\
 	$(DEPENDENCY_LIBS)
@@ -311,9 +294,6 @@ totem_audio_preview_CPPFLAGS =	\
 totem_audio_preview_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
-
-totem_audio_preview_LDFLAGS = \
-	$(AM_LDFLAGS)
 
 totem_audio_preview_LDADD = \
 	backend/libbaconvideowidget.la	\
