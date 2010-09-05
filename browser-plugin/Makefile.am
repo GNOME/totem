@@ -11,6 +11,17 @@ BUILT_SOURCES =
 
 CLEANFILES = $(BUILT_SOURCES)
 
+AM_CPPFLAGS = \
+	-I$(top_srcdir)					\
+	-I$(top_srcdir)/lib				\
+	-I$(top_srcdir)/src				\
+	-I$(top_srcdir)/src/backend			\
+	-I$(top_builddir)/src				\
+	-I$(top_builddir)/src/backend			\
+	-DSYSCONFDIR="\"$(sysconfdir)\""		\
+	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	$(DISABLE_DEPRECATED)
+
 # Marshaller
 
 BUILT_SOURCES += \
@@ -25,14 +36,7 @@ marshal.c: marshal.list
 
 noinst_LTLIBRARIES = libtotembrowserplugin_helper.la
 
-libtotembrowserplugin_helper_la_SOURCES = \
-	marshal.h \
-	marshal.c \
-	$(NULL)
-
-libtotembrowserplugin_helper_la_CPPFLAGS =	\
-	$(DISABLE_DEPRECATED)			\
-	$(AM_CPPFLAGS)
+libtotembrowserplugin_helper_la_SOURCES = $(MARSHAL_FILES)
 
 libtotembrowserplugin_helper_la_CFLAGS =	\
 	$(DEPENDENCY_CFLAGS)		\
@@ -62,10 +66,6 @@ test_glow_button_CFLAGS =	\
 	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
-test_glow_button_CPPFLAGS =	\
-	$(DISABLE_DEPRECATED)	\
-	$(AM_CPPFLAGS)
-
 # Totem Plugin Viewer
 
 libexec_PROGRAMS = totem-plugin-viewer
@@ -80,21 +80,8 @@ totem_plugin_viewer_SOURCES = \
 	$(NULL)
 
 totem_plugin_viewer_CPPFLAGS = \
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-I$(top_srcdir)					\
-	-I$(top_srcdir)/lib				\
-	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/backend			\
-	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/backend			\
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
-	-DDATADIR="\"$(datadir)\""			\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DSHAREDIR="\"$(pkgdatadir)\""			\
-	-DLOGO_NAME="\"totem_logo.png\""		\
 	-DG_LOG_DOMAIN=\""TotemEmbedded\""		\
-	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 totem_plugin_viewer_CFLAGS = \
@@ -159,19 +146,10 @@ libtotem_gmp_plugin_la_SOURCES =	\
 	totem-plugin-viewer-constants.h
 
 libtotem_gmp_plugin_la_CPPFLAGS = \
-	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/backend			\
-	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/backend			\
 	-DXP_UNIX					\
 	-DMOZ_X11					\
 	-DTOTEM_GMP_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_gmp_plugin_la_CXXFLAGS = \
@@ -219,19 +197,10 @@ libtotem_narrowspace_plugin_la_SOURCES = \
 	totem-plugin-viewer-constants.h
 
 libtotem_narrowspace_plugin_la_CPPFLAGS = \
-	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/backend			\
-	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/backend			\
 	-DXP_UNIX					\
 	-DMOZ_X11					\
 	-DTOTEM_NARROWSPACE_PLUGIN			\
 	-DTOTEM_PL_PARSER_MINI				\
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_narrowspace_plugin_la_CXXFLAGS = \
@@ -279,19 +248,10 @@ libtotem_mully_plugin_la_SOURCES =	\
 	totem-plugin-viewer-constants.h
 
 libtotem_mully_plugin_la_CPPFLAGS = \
-	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/backend			\
-	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/backend			\
 	-DXP_UNIX					\
 	-DMOZ_X11					\
 	-DTOTEM_MULLY_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_mully_plugin_la_CXXFLAGS = \
@@ -349,19 +309,10 @@ libtotem_cone_plugin_la_SOURCES =	\
 	totem-plugin-viewer-constants.h
 
 libtotem_cone_plugin_la_CPPFLAGS = \
-	-I$(top_srcdir)/src				\
-	-I$(top_srcdir)/src/backend			\
-	-I$(top_builddir)/src				\
-	-I$(top_builddir)/src/backend			\
 	-DXP_UNIX					\
 	-DMOZ_X11					\
 	-DTOTEM_CONE_PLUGIN				\
 	-DTOTEM_PL_PARSER_MINI				\
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)
 
 libtotem_cone_plugin_la_CXXFLAGS = \
