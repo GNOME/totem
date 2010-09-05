@@ -1,15 +1,10 @@
 plugindir = $(BROWSER_PLUGIN_DIR)
 plugin_LTLIBRARIES =
 
-EXTRA_DIST =		\
+EXTRA_DIST = \
 	plugin.symbols	\
-	marshal.list	\
 	TODO		\
 	README.browser-plugin
-
-BUILT_SOURCES =
-
-CLEANFILES = $(BUILT_SOURCES)
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)					\
@@ -23,51 +18,51 @@ AM_CPPFLAGS = \
 	$(DISABLE_DEPRECATED)
 
 # Marshaller
-
-BUILT_SOURCES += \
-	marshal.h \
-	marshal.c \
-	$(NULL)
+MARSHAL_FILES = \
+	marshal.h	\
+	marshal.c
 
 marshal.h: marshal.list
-	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --header $< > $@
+	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --header $< > $@)
 marshal.c: marshal.list
-	$(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --body --header $< > $@
+	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --body --header $< > $@)
+
+CLEANFILES = $(MARSHAL_FILES)
+EXTRA_DIST += marshal.list
 
 noinst_LTLIBRARIES = libtotembrowserplugin_helper.la
 
 libtotembrowserplugin_helper_la_SOURCES = $(MARSHAL_FILES)
 
-libtotembrowserplugin_helper_la_CFLAGS =	\
+libtotembrowserplugin_helper_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
 	$(WARN_CFLAGS)			\
 	$(AM_CFLAGS)
 
-libtotembrowserplugin_helper_la_LIBADD = 	\
+libtotembrowserplugin_helper_la_LIBADD = \
 	$(DEPENDENCY_CFLAGS)			\
 	$(WARN_CFLAGS)				\
 	$(AM_CFLAGS)
 
 # The Glow button test program
-
 noinst_PROGRAMS = test-glow-button
 
 test_glow_button_SOURCES = \
-	totem-glow-button.c \
-	totem-glow-button.h \
+	totem-glow-button.c	\
+	totem-glow-button.h	\
 	test-glow-button.c
 
 test_glow_button_LDADD = \
 	libtotembrowserplugin_helper.la		\
-	$(DEPENDENCY_LIBS) -lm
+	$(DEPENDENCY_LIBS)			\
+	-lm
 
-test_glow_button_CFLAGS =	\
+test_glow_button_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
 # Totem Plugin Viewer
-
 libexec_PROGRAMS = totem-plugin-viewer
 
 totem_plugin_viewer_SOURCES = \
@@ -76,8 +71,7 @@ totem_plugin_viewer_SOURCES = \
 	totem-plugin-viewer.c		\
 	totem-plugin-viewer-interface.h	\
 	totem-plugin-viewer-constants.h	\
-	totem-plugin-viewer-options.h	\
-	$(NULL)
+	totem-plugin-viewer-options.h
 
 totem_plugin_viewer_CPPFLAGS = \
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
@@ -91,34 +85,29 @@ totem_plugin_viewer_CFLAGS = \
 	$(SN_CFLAGS)		\
 	$(AM_CFLAGS)
 
-totem_plugin_viewer_LDADD =						\
+totem_plugin_viewer_LDADD = \
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/lib/libtotemscrsaver.la				\
 	libtotembrowserplugin_helper.la					\
 	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
-	$(XVIDMODE_LIBS) 	\
+	$(XVIDMODE_LIBS)	\
 	$(DBUS_LIBS)		\
 	$(XTEST_LIBS)		\
 	$(X_LIBS)
 
-BUILT_SOURCES += \
-	totem-plugin-viewer-interface.h
-
 totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@
 
-EXTRA_DIST += \
-	org_gnome_totem_PluginViewer.xml
+CLEANFILES += totem-plugin-viewer-interface.h
+EXTRA_DIST += org_gnome_totem_PluginViewer.xml
 
 # Totem GMP Plugin
-
 if ENABLE_GMP_PLUGIN
-
 plugin_LTLIBRARIES += libtotem-gmp-plugin.la
 
-libtotem_gmp_plugin_la_SOURCES =	\
+libtotem_gmp_plugin_la_SOURCES = \
 	npapi.h				\
 	npruntime.h			\
 	npupp.h				\
@@ -169,13 +158,10 @@ libtotem_gmp_plugin_la_LDFLAGS = \
 	-export-symbols $(srcdir)/plugin.symbols \
 	-module		\
 	$(AM_LDFLAGS)
-
 endif
 
 # Totem NarrowSpace Plugin
-
 if ENABLE_NARROWSPACE_PLUGIN
-
 plugin_LTLIBRARIES += libtotem-narrowspace-plugin.la
 
 libtotem_narrowspace_plugin_la_SOURCES = \
@@ -220,16 +206,13 @@ libtotem_narrowspace_plugin_la_LDFLAGS = \
 	-export-symbols $(srcdir)/plugin.symbols \
 	-module		\
 	$(AM_LDFLAGS)
-
 endif
 
 # Totem MULLY Plugin
-
 if ENABLE_MULLY_PLUGIN
-
 plugin_LTLIBRARIES += libtotem-mully-plugin.la
 
-libtotem_mully_plugin_la_SOURCES =	\
+libtotem_mully_plugin_la_SOURCES = \
 	npapi.h				\
 	npruntime.h			\
 	npupp.h				\
@@ -271,16 +254,13 @@ libtotem_mully_plugin_la_LDFLAGS = \
 	-export-symbols $(srcdir)/plugin.symbols \
 	-module		\
 	$(AM_LDFLAGS)
-
 endif
 
 # Totem Cone Plugin
-
 if ENABLE_CONE_PLUGIN
-
 plugin_LTLIBRARIES += libtotem-cone-plugin.la
 
-libtotem_cone_plugin_la_SOURCES =	\
+libtotem_cone_plugin_la_SOURCES = \
 	npapi.h				\
 	npruntime.h			\
 	npupp.h				\
@@ -332,7 +312,6 @@ libtotem_cone_plugin_la_LDFLAGS = \
 	-export-symbols $(srcdir)/plugin.symbols \
 	-module		\
 	$(AM_LDFLAGS)
-
 endif
 
 -include $(top_srcdir)/git.mk
