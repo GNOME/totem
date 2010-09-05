@@ -17,6 +17,22 @@ AM_CPPFLAGS = \
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	$(DISABLE_DEPRECATED)
 
+plugin_sources = \
+	npapi.h				\
+	npruntime.h			\
+	npupp.h				\
+	totemNPNGlue.cpp		\
+	totemNPClass.cpp		\
+	totemNPClass.h			\
+	totemNPObject.cpp		\
+	totemNPObject.h			\
+	totemNPObjectWrapper.h		\
+	totemNPVariantWrapper.h		\
+	totemPluginGlue.cpp		\
+	totemPlugin.cpp			\
+	totemPlugin.h			\
+	totem-plugin-viewer-constants.h
+
 plugin_cxxflags = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
 	$(DBUS_CFLAGS)			\
@@ -126,15 +142,7 @@ if ENABLE_GMP_PLUGIN
 plugin_LTLIBRARIES += libtotem-gmp-plugin.la
 
 libtotem_gmp_plugin_la_SOURCES = \
-	npapi.h				\
-	npruntime.h			\
-	npupp.h				\
-	totemNPNGlue.cpp		\
-	totemNPClass.cpp		\
-	totemNPClass.h			\
-	totemNPObject.cpp		\
-	totemNPObject.h			\
-	totemNPObjectWrapper.h		\
+	$(plugin_sources)		\
 	totemGMPControls.cpp		\
 	totemGMPControls.h		\
 	totemGMPError.cpp		\
@@ -146,11 +154,7 @@ libtotem_gmp_plugin_la_SOURCES = \
 	totemGMPPlaylist.cpp		\
 	totemGMPPlaylist.h		\
 	totemGMPSettings.cpp		\
-	totemGMPSettings.h		\
-	totemPluginGlue.cpp		\
-	totemPlugin.cpp			\
-	totemPlugin.h			\
-	totem-plugin-viewer-constants.h
+	totemGMPSettings.h
 
 libtotem_gmp_plugin_la_CPPFLAGS = \
 	-DXP_UNIX					\
@@ -169,22 +173,9 @@ if ENABLE_NARROWSPACE_PLUGIN
 plugin_LTLIBRARIES += libtotem-narrowspace-plugin.la
 
 libtotem_narrowspace_plugin_la_SOURCES = \
-	npapi.h				\
-	npruntime.h			\
-	npupp.h				\
-	totemNPNGlue.cpp		\
-	totemNPClass.cpp		\
-	totemNPClass.h			\
-	totemNPObject.cpp		\
-	totemNPObject.h			\
-	totemNPObjectWrapper.h		\
-	totemNPVariantWrapper.h		\
-	totemPluginGlue.cpp		\
-	totemPlugin.cpp			\
-	totemPlugin.h			\
+	$(plugin_sources)		\
 	totemNarrowSpacePlugin.cpp	\
-	totemNarrowSpacePlugin.h	\
-	totem-plugin-viewer-constants.h
+	totemNarrowSpacePlugin.h
 
 libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-DXP_UNIX					\
@@ -203,22 +194,9 @@ if ENABLE_MULLY_PLUGIN
 plugin_LTLIBRARIES += libtotem-mully-plugin.la
 
 libtotem_mully_plugin_la_SOURCES = \
-	npapi.h				\
-	npruntime.h			\
-	npupp.h				\
-	totemNPNGlue.cpp		\
-	totemNPClass.cpp		\
-	totemNPClass.h			\
-	totemNPObject.cpp		\
-	totemNPObject.h			\
-	totemNPObjectWrapper.h		\
-	totemNPVariantWrapper.h		\
-	totemPluginGlue.cpp		\
-	totemPlugin.cpp			\
-	totemPlugin.h			\
+	$(plugin_sources)		\
 	totemMullYPlugin.cpp		\
-	totemMullYPlugin.h		\
-	totem-plugin-viewer-constants.h
+	totemMullYPlugin.h
 
 libtotem_mully_plugin_la_CPPFLAGS = \
 	-DXP_UNIX					\
@@ -237,16 +215,7 @@ if ENABLE_CONE_PLUGIN
 plugin_LTLIBRARIES += libtotem-cone-plugin.la
 
 libtotem_cone_plugin_la_SOURCES = \
-	npapi.h				\
-	npruntime.h			\
-	npupp.h				\
-	totemNPNGlue.cpp		\
-	totemNPClass.cpp		\
-	totemNPClass.h			\
-	totemNPObject.cpp		\
-	totemNPObject.h			\
-	totemNPObjectWrapper.h		\
-	totemNPVariantWrapper.h		\
+	$(plugin_sources)		\
 	totemConeAudio.cpp		\
 	totemConeAudio.h		\
 	totemCone.cpp			\
@@ -258,11 +227,7 @@ libtotem_cone_plugin_la_SOURCES = \
 	totemConePlaylistItems.cpp	\
 	totemConePlaylistItems.h	\
 	totemConeVideo.cpp		\
-	totemConeVideo.h		\
-	totemPluginGlue.cpp		\
-	totemPlugin.cpp			\
-	totemPlugin.h			\
-	totem-plugin-viewer-constants.h
+	totemConeVideo.h
 
 libtotem_cone_plugin_la_CPPFLAGS = \
 	-DXP_UNIX					\
