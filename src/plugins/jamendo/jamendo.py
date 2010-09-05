@@ -155,10 +155,10 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
 
         return config_widget
 
-    def on_format_changed (self, settings, key)
+    def on_format_changed (self, settings, key):
         JamendoService.AUDIO_FORMAT = self.settings.get_enum ('format')
 
-    def on_num_per_page_changed (self, settings, key)
+    def on_num_per_page_changed (self, settings, key):
         JamendoService.NUM_PER_PAGE = self.settings.get_int ('num-per-page')
 
     def on_config_widget_destroy (self, widget):
