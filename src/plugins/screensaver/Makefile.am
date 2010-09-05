@@ -7,7 +7,9 @@ plugin_in_files = screensaver.totem-plugin.in
 
 libscreensaver_la_SOURCES = totem-screensaver.c
 libscreensaver_la_LDFLAGS = $(plugin_ldflags)
-libscreensaver_la_LIBADD = $(top_builddir)/lib/libtotemscrsaver.la
+libscreensaver_la_LIBADD = \
+	$(top_builddir)/lib/libtotemscrsaver.la	\
+	$(SCREENSAVER_LIBS)
 libscreensaver_la_CPPFLAGS = \
 	$(AM_CPPFLAGS)		\
 	-I$(top_srcdir)/lib
