@@ -1,8 +1,6 @@
 include $(top_srcdir)/src/plugins/Makefile.plugins
 
 plugindir = $(PLUGINDIR)/sample-vala
-
-if ENABLE_VALA
 plugin_LTLIBRARIES = libsample-vala.la
 
 plugin_in_files = sample-vala.totem-plugin.in
@@ -14,7 +12,6 @@ VALAFLAGS = \
 libsample_vala_la_SOURCES = totem-sample-vala-plugin.vala
 libsample_vala_la_LDFLAGS = $(plugin_ldflags)
 libsample_vala_la_CFLAGS = $(plugin_cflags)
-endif
 
 # Override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
