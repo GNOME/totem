@@ -39,8 +39,8 @@
 #include "totem-dirs.h"
 #include "totem-skipto.h"
 #include "totem-uri.h"
-#include "video-utils.h"
-#include "bacon-video-widget.h"
+#include "backend/video-utils.h"
+#include "backend/bacon-video-widget.h"
 
 static void totem_skipto_dispose	(GObject *object);
 

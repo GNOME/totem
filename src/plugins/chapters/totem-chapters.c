@@ -35,7 +35,7 @@
 #include <unistd.h>
 #include <math.h>
 
-#include "bacon-video-widget.h"
+#include "backend/bacon-video-widget.h"
 #include "totem-plugin.h"
 #include "totem-dirs.h"
 #include "totem-interface.h"

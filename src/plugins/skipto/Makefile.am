@@ -16,9 +16,6 @@ libskipto_la_SOURCES = \
 	totem-skipto.c		\
 	totem-skipto.h
 libskipto_la_LDFLAGS = $(plugin_ldflags)
-libskipto_la_CPPFLAGS = \
-	$(AM_CPPFLAGS)			\
-	-I$(top_srcdir)/src/backend
 libskipto_la_CFLAGS = $(plugin_cflags)
 
 -include $(top_srcdir)/git.mk

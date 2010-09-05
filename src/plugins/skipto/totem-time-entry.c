@@ -30,7 +30,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "video-utils.h"
+#include "backend/video-utils.h"
 #include "totem-time-entry.h"
 
 static gboolean output_cb (GtkSpinButton *self, gpointer user_data);

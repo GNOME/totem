@@ -32,7 +32,7 @@
 #include <gio/gio.h>
 
 #include "totem-playlist.h"
-#include "bacon-video-widget.h"
+#include "backend/bacon-video-widget.h"
 #include "totem-open-location.h"
 #include "totem-fullscreen.h"
 #include "totem-plugins-engine.h"

@@ -19,9 +19,6 @@ libchapters_la_SOURCES = \
 	totem-edit-chapter.h
 libchapters_la_LDFLAGS = $(plugin_ldflags)
 libchapters_la_LIBADD = $(CHAPTERS_LIBS)
-libchapters_la_CPPFLAGS = \
-	$(AM_CPPFLAGS)			\
-	-I$(top_srcdir)/src/backend
 libchapters_la_CFLAGS = \
 	$(plugin_cflags)	\
 	$(CHAPTERS_CFLAGS)

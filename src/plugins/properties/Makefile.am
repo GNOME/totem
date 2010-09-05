@@ -14,9 +14,6 @@ libmovie_properties_la_CFLAGS = $(plugin_cflags)
 libbaconvideowidgetproperties_la_SOURCES = \
 	bacon-video-widget-properties.c	\
 	bacon-video-widget-properties.h
-libbaconvideowidgetproperties_la_CPPFLAGS = \
-	$(AM_CPPFLAGS)			\
-	-I$(top_srcdir)/src/backend
 libbaconvideowidgetproperties_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(WARN_CFLAGS)

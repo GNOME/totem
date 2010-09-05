@@ -7,9 +7,6 @@ plugin_in_files = mythtv.totem-plugin.in
 
 libtotem_mythtv_la_SOURCES = totem-mythtv.c
 libtotem_mythtv_la_LDFLAGS = $(plugin_ldflags)
-libtotem_mythtv_la_CPPFLAGS = \
-	$(AM_CPPFLAGS)			\
-	-I$(top_srcdir)/src/backend
 libtotem_mythtv_la_LIBADD = $(GMYTH_LIBS)
 libtotem_mythtv_la_CFLAGS = \
 	$(plugin_cflags)	\

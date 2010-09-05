@@ -45,7 +45,7 @@
 #include <bluetooth/sdp_lib.h>
 
 //FIXME we shouldn't use the video widget directly
-#include "bacon-video-widget.h"
+#include "backend/bacon-video-widget.h"
 #include "totem-plugin.h"
 #include "totem.h"
 

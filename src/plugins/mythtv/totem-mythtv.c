@@ -33,12 +33,6 @@
 #include <gmodule.h>
 #include <string.h>
 
-#include "totem-video-list.h"
-#include "totem-cell-renderer-video.h"
-#include "video-utils.h"
-#include "totem-plugin.h"
-#include "totem.h"
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <gmyth/gmyth_backendinfo.h>
@@ -48,6 +42,11 @@
 #include <gmyth/gmyth_util.h>
 #include <gmyth_upnp.h>
 
+#include "totem-video-list.h"
+#include "totem-cell-renderer-video.h"
+#include "backend/video-utils.h"
+#include "totem-plugin.h"
+#include "totem.h"
 
 #define TOTEM_TYPE_MYTHTV_PLUGIN		(totem_mythtv_plugin_get_type ())
 #define TOTEM_MYTHTV_PLUGIN(o)		(G_TYPE_CHECK_INSTANCE_CAST ((o), TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin))

@@ -27,7 +27,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "bacon-video-widget.h"
+#include "backend/bacon-video-widget.h"
 
 #define TOTEM_TYPE_FULLSCREEN            (totem_fullscreen_get_type ())
 #define TOTEM_FULLSCREEN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), \

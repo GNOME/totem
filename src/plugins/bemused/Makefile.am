@@ -7,9 +7,6 @@ plugin_in_files = bemused.totem-plugin.in
 
 libbemused_la_SOURCES = totem-bemused.c
 libbemused_la_LDFLAGS = $(plugin_ldflags)
-libbemused_la_CPPFLAGS = \
-	$(AM_CPPFLAGS)			\
-	-I$(top_srcdir)/src/backend
 libbemused_la_LIBADD = $(BEMUSED_LIBS)
 libbemused_la_CFLAGS = \
 	$(plugin_cflags)	\

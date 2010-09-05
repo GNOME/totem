@@ -21,14 +21,16 @@
  */
 
 #include "config.h"
-#include "bacon-video-widget-properties.h"
-#include "bacon-video-widget.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <string.h>
-#include "video-utils.h"
+
+#include "backend/bacon-video-widget.h"
+#include "backend/video-utils.h"
 #include "totem-interface.h"
+
+#include "bacon-video-widget-properties.h"
 
 /* used in bacon_video_widget_properties_update() */
 #define UPDATE_FROM_STRING(type, name) \
