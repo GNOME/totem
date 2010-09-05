@@ -9,6 +9,4 @@ uidir = $(plugindir)
 ui_DATA = iplayer.ui
 EXTRA_DIST += $(ui_DATA)
 
-EXTRA_DIST += $(plugin_PYTHON)
-
 -include $(top_srcdir)/git.mk

@@ -17,6 +17,6 @@ CLEANFILES += $(gsettings_SCHEMAS)
 
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = opensubtitles.convert
-EXTRA_DIST += opensubtitles.py hash.py opensubtitles.convert
+EXTRA_DIST += opensubtitles.convert
 
 -include $(top_srcdir)/git.mk

@@ -13,6 +13,6 @@ CLEANFILES += $(gsettings_SCHEMAS)
 
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = pythonconsole.convert
-EXTRA_DIST += pythonconsole.py console.py pythonconsole.convert
+EXTRA_DIST += pythonconsole.convert
 
 -include $(top_srcdir)/git.mk

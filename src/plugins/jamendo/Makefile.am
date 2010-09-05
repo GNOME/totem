@@ -17,6 +17,6 @@ CLEANFILES += $(gsettings_SCHEMAS)
 
 convertdir = $(datadir)/GConf/gsettings
 convert_DATA = jamendo.convert
-EXTRA_DIST += jamendo.py jamendo.convert
+EXTRA_DIST += jamendo.convert
 
 -include $(top_srcdir)/git.mk
