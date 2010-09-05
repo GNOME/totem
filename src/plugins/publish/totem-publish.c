@@ -88,13 +88,6 @@ typedef struct
 	gulong item_removed_id;
 } TotemPublishPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemPublishPluginClass;
-
-GType totem_publish_plugin_get_type (void) G_GNUC_CONST;
-
 void totem_publish_plugin_service_name_entry_changed_cb	   (GtkEntry        *entry,
 							    TotemPublishPlugin *self);
 void totem_publish_plugin_encryption_button_toggled_cb	   (GtkToggleButton *button,

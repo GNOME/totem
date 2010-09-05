@@ -61,11 +61,6 @@ typedef struct
 	TotemObject *totem;
 } TotemLircPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemLircPluginClass;
-
 /* strings that we recognize as commands from lirc */
 #define TOTEM_IR_COMMAND_PLAY "play"
 #define TOTEM_IR_COMMAND_PAUSE "pause"
@@ -95,8 +90,6 @@ typedef struct
 #define TOTEM_IR_SETTING "setting_"
 #define TOTEM_IR_SETTING_TOGGLE_REPEAT "setting_repeat"
 #define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
-
-GType	totem_lirc_plugin_get_type		(void) G_GNUC_CONST;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin)
 

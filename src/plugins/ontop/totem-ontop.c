@@ -60,13 +60,6 @@ typedef struct
 	TotemOntopPluginPrivate *priv;
 } TotemOntopPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemOntopPluginClass;
-
-GType totem_ontop_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_ONTOP_PLUGIN, TotemOntopPlugin, totem_ontop_plugin)
 
 static void

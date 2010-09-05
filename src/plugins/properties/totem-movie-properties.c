@@ -55,13 +55,6 @@ typedef struct
 	guint         handler_id_stream_length;
 } TotemMoviePropertiesPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemMoviePropertiesPluginClass;
-
-GType	totem_movie_properties_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 		      TotemMoviePropertiesPlugin,
 		      totem_movie_properties_plugin)

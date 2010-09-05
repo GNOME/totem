@@ -60,13 +60,6 @@ typedef struct
 	TotemThumbnailPluginPrivate *priv;
 } TotemThumbnailPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemThumbnailPluginClass;
-
-GType totem_thumbnail_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_THUMBNAIL_PLUGIN, TotemThumbnailPlugin, totem_thumbnail_plugin)
 
 static void

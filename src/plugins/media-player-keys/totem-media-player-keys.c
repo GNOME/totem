@@ -57,13 +57,6 @@ typedef struct
 	guint          handler_id;
 } TotemMediaPlayerKeysPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemMediaPlayerKeysPluginClass;
-
-GType	totem_media_player_keys_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN,
 		      TotemMediaPlayerKeysPlugin,
 		      totem_media_player_keys_plugin);

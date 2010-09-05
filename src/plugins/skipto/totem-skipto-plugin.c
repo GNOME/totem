@@ -61,12 +61,6 @@ typedef struct {
 	TotemSkiptoPluginPrivate *priv;
 } TotemSkiptoPlugin;
 
-typedef struct {
-	PeasExtensionBaseClass parent_class;
-} TotemSkiptoPluginClass;
-
-GType totem_skipto_plugin_get_type (void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
 
 static void

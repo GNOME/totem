@@ -88,12 +88,6 @@ typedef struct {
 	GtkWidget *cancel_button;
 } TotemYouTubePlugin;
 
-typedef struct {
-	PeasExtensionBaseClass parent_class;
-} TotemYouTubePluginClass;
-
-GType totem_youtube_plugin_get_type (void) G_GNUC_CONST;
-
 /* GtkBuilder callbacks */
 void notebook_switch_page_cb (GtkNotebook *notebook, gpointer *page, guint page_num, TotemYouTubePlugin *self);
 void search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self);

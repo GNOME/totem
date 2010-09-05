@@ -48,14 +48,6 @@ typedef struct
 	PeasExtensionBase parent;
 } TotemSidebarTestPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemSidebarTestPluginClass;
-
-
-GType	totem_sidebar_test_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SIDEBAR_TEST_PLUGIN, TotemSidebarTestPlugin, totem_sidebar_test_plugin)
 
 static void

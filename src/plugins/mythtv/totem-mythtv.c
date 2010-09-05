@@ -81,14 +81,6 @@ typedef struct
 	GtkWidget *sidebar_livetv;
 } TotemMythtvPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemMythtvPluginClass;
-
-
-GType	totem_mythtv_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin, totem_mythtv_plugin)
 
 #define MAX_THUMB_SIZE 500 * 1024 * 1024

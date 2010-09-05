@@ -91,10 +91,6 @@ typedef struct {
 	TotemChaptersPluginPrivate	*priv;
 } TotemChaptersPlugin;
 
-typedef struct {
-	PeasExtensionBaseClass		parent_class;
-} TotemChaptersPluginClass;
-
 enum {
 	CHAPTERS_PIXBUF_COLUMN = 0,
 	CHAPTERS_TITLE_COLUMN,
@@ -104,8 +100,6 @@ enum {
 	CHAPTERS_N_COLUMNS
 };
 
-G_MODULE_EXPORT GType register_totem_plugin (GTypeModule *module);
-GType totem_chapters_plugin_get_type (void) G_GNUC_CONST;
 static void totem_file_opened_async_cb (TotemObject *totem, const gchar *uri, TotemChaptersPlugin *plugin);
 static void totem_file_opened_result_cb (gpointer data, gpointer user_data);
 static void totem_file_closed_cb (TotemObject *totem, TotemChaptersPlugin *plugin);

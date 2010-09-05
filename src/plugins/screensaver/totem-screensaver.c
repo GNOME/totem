@@ -59,14 +59,6 @@ typedef struct
 	guint          handler_id_metadata;
 } TotemScreensaverPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemScreensaverPluginClass;
-
-
-GType	totem_screensaver_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
 		      TotemScreensaverPlugin,
 		      totem_screensaver_plugin)

@@ -65,11 +65,6 @@ typedef struct
 	gulong handler_id;
 } TotemGromitPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemGromitPluginClass;
-
 #define INTERVAL 10 /* seconds */
 
 static const char *start_cmd[] =	{ NULL, "-a", "-k", "none", NULL };
@@ -93,8 +88,6 @@ static const char *visibility_cmd[] =	{ NULL, "-v", NULL };
 \"Core Pointer\"[2] = \"green Marker\";					\n\
 \"Core Pointer\"[Button3] = \"Eraser\";					\n\
 \n"
-
-GType	totem_gromit_plugin_get_type		(void) G_GNUC_CONST;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_GROMIT_PLUGIN, TotemGromitPlugin, totem_gromit_plugin)
 

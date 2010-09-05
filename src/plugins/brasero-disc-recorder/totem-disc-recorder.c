@@ -61,13 +61,6 @@ typedef struct
 	gboolean enabled;
 } TotemDiscRecorderPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemDiscRecorderPluginClass;
-
-GType totem_disc_recorder_plugin_get_type	(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_DISC_RECORDER_PLUGIN, TotemDiscRecorderPlugin, totem_disc_recorder_plugin)
 
 static void totem_disc_recorder_plugin_burn (GtkAction *action,

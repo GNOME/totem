@@ -49,6 +49,10 @@ G_BEGIN_DECLS
  * deactivate functions.
  **/
 #define _TOTEM_PLUGIN_REGISTER(TYPE_NAME, TypeName, type_name, TYPE_CODE, REGISTER_CODE)	\
+	typedef struct {							\
+		PeasExtensionBaseClass parent_class;				\
+	} TypeName##Class;							\
+	GType type_name##_get_type (void) G_GNUC_CONST;				\
 	static void impl_activate (PeasActivatable *plugin);			\
 	static void impl_deactivate (PeasActivatable *plugin);			\
 	G_MODULE_EXPORT void peas_register_types (PeasObjectModule *module);	\

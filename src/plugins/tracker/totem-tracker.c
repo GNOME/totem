@@ -51,14 +51,6 @@ typedef struct
 	PeasExtensionBase parent;
 } TotemTrackerPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemTrackerPluginClass;
-
-G_MODULE_EXPORT GType register_totem_plugin		(GTypeModule *module);
-GType	totem_tracker_plugin_get_type			(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_TRACKER_PLUGIN, TotemTrackerPlugin, totem_tracker_plugin);
 
 static void

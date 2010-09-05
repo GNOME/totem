@@ -56,12 +56,6 @@ typedef struct {
 	GalagoPerson	*me; /* Me! */
 } TotemGalagoPlugin;
 
-typedef struct {
-	PeasExtensionBaseClass parent_class;
-} TotemGalagoPluginClass;
-
-GType totem_galago_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPlugin, totem_galago_plugin);
 
 static void

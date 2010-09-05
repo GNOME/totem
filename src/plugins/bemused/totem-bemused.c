@@ -68,13 +68,6 @@ typedef struct
 	sdp_session_t *sdp_session;
 } TotemBemusedPlugin;
 
-typedef struct
-{
-	PeasExtensionBaseClass parent_class;
-} TotemBemusedPluginClass;
-
-GType	totem_bemused_plugin_get_type		(void) G_GNUC_CONST;
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_BEMUSED_PLUGIN, TotemBemusedPlugin, totem_bemused_plugin)
 
 /* Bluetooth functions */
