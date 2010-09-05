@@ -17,6 +17,11 @@ AM_CPPFLAGS = \
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	$(DISABLE_DEPRECATED)
 
+plugin_libadd = \
+	libtotembrowserplugin_helper.la	\
+	$(DBUS_LIBS)			\
+	$(BROWSER_PLUGIN_LIBS)
+
 plugin_ldflags = \
 	-avoid-version					\
 	-export-symbols $(srcdir)/plugin.symbols	\
@@ -154,11 +159,7 @@ libtotem_gmp_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_gmp_plugin_la_LIBADD = \
-	libtotembrowserplugin_helper.la	\
-	$(DBUS_LIBS)			\
-	$(BROWSER_PLUGIN_LIBS)
-
+libtotem_gmp_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_gmp_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
@@ -198,11 +199,7 @@ libtotem_narrowspace_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_narrowspace_plugin_la_LIBADD = \
-	libtotembrowserplugin_helper.la	\
-	$(DBUS_LIBS)			\
-	$(BROWSER_PLUGIN_LIBS)
-
+libtotem_narrowspace_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_narrowspace_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
@@ -242,11 +239,7 @@ libtotem_mully_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_mully_plugin_la_LIBADD = \
-	libtotembrowserplugin_helper.la	\
-	$(DBUS_LIBS)			\
-	$(BROWSER_PLUGIN_LIBS)
-
+libtotem_mully_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_mully_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
@@ -296,11 +289,7 @@ libtotem_cone_plugin_la_CXXFLAGS = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-libtotem_cone_plugin_la_LIBADD = \
-	libtotembrowserplugin_helper.la	\
-	$(DBUS_LIBS)			\
-	$(BROWSER_PLUGIN_LIBS)
-
+libtotem_cone_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_cone_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
