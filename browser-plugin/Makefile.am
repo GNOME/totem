@@ -17,6 +17,13 @@ AM_CPPFLAGS = \
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
 	$(DISABLE_DEPRECATED)
 
+plugin_cxxflags = \
+	$(BROWSER_PLUGIN_CFLAGS)	\
+	$(DBUS_CFLAGS)			\
+	$(WARN_CXXFLAGS)		\
+	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
+	$(AM_CXXFLAGS)
+
 plugin_libadd = \
 	libtotembrowserplugin_helper.la	\
 	$(DBUS_LIBS)			\
@@ -152,13 +159,7 @@ libtotem_gmp_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	$(AM_CPPFLAGS)
 
-libtotem_gmp_plugin_la_CXXFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CXXFLAGS)		\
-	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CXXFLAGS)
-
+libtotem_gmp_plugin_la_CXXFLAGS = $(plugin_cxxflags)
 libtotem_gmp_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_gmp_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
@@ -192,13 +193,7 @@ libtotem_narrowspace_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	$(AM_CPPFLAGS)
 
-libtotem_narrowspace_plugin_la_CXXFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CXXFLAGS)		\
-	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CXXFLAGS)
-
+libtotem_narrowspace_plugin_la_CXXFLAGS = $(plugin_cxxflags)
 libtotem_narrowspace_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_narrowspace_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
@@ -232,13 +227,7 @@ libtotem_mully_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	$(AM_CPPFLAGS)
 
-libtotem_mully_plugin_la_CXXFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CXXFLAGS)		\
-	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CXXFLAGS)
-
+libtotem_mully_plugin_la_CXXFLAGS = $(plugin_cxxflags)
 libtotem_mully_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_mully_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
@@ -282,13 +271,7 @@ libtotem_cone_plugin_la_CPPFLAGS = \
 	-DTOTEM_PL_PARSER_MINI				\
 	$(AM_CPPFLAGS)
 
-libtotem_cone_plugin_la_CXXFLAGS = \
-	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(DBUS_CFLAGS)			\
-	$(WARN_CXXFLAGS)		\
-	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
-	$(AM_CXXFLAGS)
-
+libtotem_cone_plugin_la_CXXFLAGS = $(plugin_cxxflags)
 libtotem_cone_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_cone_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
