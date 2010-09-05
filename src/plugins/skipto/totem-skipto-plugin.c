@@ -49,8 +49,6 @@ struct TotemSkiptoPluginPrivate
 	GtkActionGroup	*action_group;
 };
 
-static void totem_skipto_plugin_finalize (GObject *object);
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
 
 static void
@@ -60,7 +58,6 @@ totem_skipto_plugin_class_init (TotemSkiptoPluginClass *klass)
 
 	object_class->set_property = set_property;
 	object_class->get_property = get_property;
-	object_class->finalize = totem_skipto_plugin_finalize;
 
 	g_type_class_add_private (klass, sizeof (TotemSkiptoPluginPrivate));
 	g_object_class_override_property (object_class, PROP_OBJECT, "object");
@@ -71,7 +68,6 @@ totem_skipto_plugin_init (TotemSkiptoPlugin *plugin)
 	plugin->priv = G_TYPE_INSTANCE_GET_PRIVATE (plugin,
 						    TOTEM_TYPE_SKIPTO_PLUGIN,
 						    TotemSkiptoPluginPrivate);
-	plugin->priv->st = NULL;
 }
 
 static void
@@ -85,16 +81,6 @@ destroy_dialog (TotemSkiptoPlugin *plugin)
 		gtk_widget_destroy (GTK_WIDGET (priv->st));
 		priv->st = NULL;
 	}
-}
-
-static void
-totem_skipto_plugin_finalize (GObject *object)
-{
-	TotemSkiptoPlugin *plugin = TOTEM_SKIPTO_PLUGIN (object);
-
-	destroy_dialog (plugin);
-
-	G_OBJECT_CLASS (totem_skipto_plugin_parent_class)->finalize (object);
 }
 
 static void
@@ -273,5 +259,7 @@ impl_deactivate (PeasActivatable *plugin)
 	manager = totem_get_ui_manager (totem);
 	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (manager, priv->action_group);
+
+	destroy_dialog (TOTEM_SKIPTO_PLUGIN (plugin));
 }
 

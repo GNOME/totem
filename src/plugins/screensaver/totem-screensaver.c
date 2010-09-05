@@ -67,8 +67,6 @@ typedef struct
 
 GType	totem_screensaver_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_screensaver_plugin_finalize		(GObject *object);
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
 		      TotemScreensaverPlugin,
 		      totem_screensaver_plugin)
@@ -80,7 +78,6 @@ totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
 
 	object_class->set_property = set_property;
 	object_class->get_property = get_property;
-	object_class->finalize = totem_screensaver_plugin_finalize;
 
 	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
@@ -88,20 +85,6 @@ totem_screensaver_plugin_class_init (TotemScreensaverPluginClass *klass)
 static void
 totem_screensaver_plugin_init (TotemScreensaverPlugin *plugin)
 {
-	plugin->scr = totem_scrsaver_new ();
-	g_object_set (plugin->scr,
-		      "reason", _("Playing a movie"),
-		      NULL);
-}
-
-static void
-totem_screensaver_plugin_finalize (GObject *object)
-{
-	TotemScreensaverPlugin *plugin = TOTEM_SCREENSAVER_PLUGIN (object);
-
-	g_object_unref (plugin->scr);
-
-	G_OBJECT_CLASS (totem_screensaver_plugin_parent_class)->finalize (object);
 }
 
 static void
@@ -150,6 +133,11 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
 
+	pi->scr = totem_scrsaver_new ();
+	g_object_set (pi->scr,
+	              "reason", _("Playing a movie"),
+	              NULL);
+
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	pi->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
 
@@ -193,5 +181,7 @@ impl_deactivate	(PeasActivatable *plugin)
 	g_object_unref (pi->bvw);
 
 	totem_scrsaver_enable (pi->scr);
+
+	g_object_unref (pi->scr);
 }
 

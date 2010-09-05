@@ -88,7 +88,6 @@ typedef struct
 
 
 GType	totem_mythtv_plugin_get_type		(void) G_GNUC_CONST;
-static void totem_mythtv_plugin_finalize	(GObject *object);
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MYTHTV_PLUGIN, TotemMythtvPlugin, totem_mythtv_plugin)
 
@@ -340,7 +339,6 @@ totem_mythtv_plugin_class_init (TotemMythtvPluginClass *klass)
 
 	object_class->set_property = set_property;
 	object_class->get_property = get_property;
-	object_class->finalize = totem_mythtv_plugin_finalize;
 
 	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
@@ -443,33 +441,6 @@ refresh_cb (GtkWidget *button, TotemMythtvPlugin *tm)
 static void
 totem_mythtv_plugin_init (TotemMythtvPlugin *plugin)
 {
-	totem_mythtv_update_binfo (plugin);
-}
-
-static void
-totem_mythtv_plugin_finalize (GObject *object)
-{
-	TotemMythtvPlugin *tm = TOTEM_MYTHTV_PLUGIN(object);
-
-	if (tm->lst_b_info != NULL) {
-		g_list_foreach (tm->lst_b_info, (GFunc ) g_object_unref, NULL);
-		g_list_free (tm->lst_b_info);
-		tm->lst_b_info = NULL;
-	}
-	if (tm->upnp != NULL) {
-		g_object_unref (tm->upnp);
-		tm->upnp = NULL;
-	}
-	if (tm->sidebar_recordings != NULL) {
-		gtk_widget_destroy (tm->sidebar_recordings);
-		tm->sidebar_recordings = NULL;
-	}
-	if (tm->sidebar_livetv != NULL) {
-		gtk_widget_destroy (tm->sidebar_livetv);
-		tm->sidebar_livetv = NULL;
-	}
-
-	G_OBJECT_CLASS (totem_mythtv_plugin_parent_class)->finalize (object);
 }
 
 static GtkWidget *

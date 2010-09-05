@@ -62,9 +62,6 @@ typedef struct {
 
 GType totem_galago_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_galago_plugin_dispose		(GObject *object);
-static void totem_galago_plugin_finalize	(GObject *object);
-
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GALAGO_PLUGIN, TotemGalagoPlugin, totem_galago_plugin);
 
 static void
@@ -74,8 +71,6 @@ totem_galago_plugin_class_init (TotemGalagoPluginClass *klass)
 
 	object_class->set_property = set_property;
 	object_class->get_property = get_property;
-	object_class->dispose = totem_galago_plugin_dispose;
-	object_class->finalize = totem_galago_plugin_finalize;
 
 	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
@@ -83,36 +78,6 @@ totem_galago_plugin_class_init (TotemGalagoPluginClass *klass)
 static void
 totem_galago_plugin_init (TotemGalagoPlugin *plugin)
 {
-	if (galago_init (PACKAGE_NAME, GALAGO_INIT_FEED) == FALSE
-	    || galago_is_connected () == FALSE) {
-		g_warning ("Failed to initialise libgalago.");
-		return;
-	}
-
-	/* Get "me" and list accounts */
-	plugin->me = galago_get_me (GALAGO_REMOTE, TRUE);
-}
-
-static void
-totem_galago_plugin_dispose (GObject *object)
-{
-	TotemGalagoPlugin *plugin = TOTEM_GALAGO_PLUGIN (object);
-
-	if (plugin->me != NULL) {
-		g_object_unref (plugin->me);
-		plugin->me = NULL;
-	}
-
-	G_OBJECT_CLASS (totem_galago_plugin_parent_class)->dispose (object);
-}
-
-static void
-totem_galago_plugin_finalize (GObject *object)
-{
-	if (galago_is_connected ())
-		galago_uninit ();
-
-	G_OBJECT_CLASS (totem_galago_plugin_parent_class)->finalize (object);
 }
 
 static void
@@ -161,6 +126,14 @@ impl_activate (PeasActivatable *plugin)
 	TotemGalagoPlugin *pi = TOTEM_GALAGO_PLUGIN (plugin);
 	TotemObject *totem;
 
+	if (galago_init (PACKAGE_NAME, GALAGO_INIT_FEED) == FALSE || galago_is_connected () == FALSE) {
+		g_warning ("Failed to initialise libgalago.");
+		return;
+	}
+
+	/* Get "me" and list accounts */
+	pi->me = galago_get_me (GALAGO_REMOTE, TRUE);
+
 	g_object_get (plugin, "object", &totem, NULL);
 
 	if (!galago_is_connected ()) {
@@ -205,4 +178,9 @@ impl_deactivate (PeasActivatable *plugin)
 	g_object_unref (totem);
 
 	totem_galago_set_idleness (pi, FALSE);
+
+	if (pi->me != NULL)
+		g_object_unref (pi->me);
+
+	galago_uninit ();
 }

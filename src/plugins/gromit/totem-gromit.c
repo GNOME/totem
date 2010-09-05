@@ -96,8 +96,6 @@ static const char *visibility_cmd[] =	{ NULL, "-v", NULL };
 
 GType	totem_gromit_plugin_get_type		(void) G_GNUC_CONST;
 
-static void totem_gromit_plugin_finalize		(GObject *object);
-
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_GROMIT_PLUGIN, TotemGromitPlugin, totem_gromit_plugin)
 
 static void
@@ -107,7 +105,6 @@ totem_gromit_plugin_class_init (TotemGromitPluginClass *klass)
 
 	object_class->set_property = set_property;
 	object_class->get_property = get_property;
-	object_class->finalize = totem_gromit_plugin_finalize;
 
 	g_object_class_override_property (object_class, PROP_OBJECT, "object");
 }
@@ -115,19 +112,6 @@ totem_gromit_plugin_class_init (TotemGromitPluginClass *klass)
 static void
 totem_gromit_plugin_init (TotemGromitPlugin *plugin)
 {
-	plugin->id = -1;
-	plugin->pid = -1;
-}
-
-static void
-totem_gromit_plugin_finalize (GObject *object)
-{
-	TotemGromitPlugin *plugin = TOTEM_GROMIT_PLUGIN (object);
-
-	g_free (plugin->path);
-	plugin->path = NULL;
-
-	G_OBJECT_CLASS (totem_gromit_plugin_parent_class)->finalize (object);
 }
 
 static void
@@ -263,6 +247,9 @@ impl_activate (PeasActivatable *plugin)
 	TotemGromitPlugin *pi = TOTEM_GROMIT_PLUGIN (plugin);
 	GtkWindow *window;
 
+	pi->id = -1;
+	pi->pid = -1;
+
 	if (!totem_gromit_available (pi)) {
 		//FIXME
 #if 0
@@ -293,5 +280,8 @@ impl_deactivate (PeasActivatable *plugin)
 	}
 
 	totem_gromit_clear (pi, TRUE);
+
+	g_free (pi->path);
+	pi->path = NULL;
 }
 
