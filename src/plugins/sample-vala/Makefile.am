@@ -14,13 +14,6 @@ plugin_LTLIBRARIES = libsample-vala.la
 install-pluginLTLIBRARIES:
 
 common_defines = \
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DDATADIR=\""$(datadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
-	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
 libsample_vala_la_VALASOURCES = \

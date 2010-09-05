@@ -13,13 +13,6 @@ uidir = $(plugindir)
 ui_DATA = chapters-list.ui chapters-edit.ui
 
 common_defines = \
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DDATADIR=\""$(datadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
-	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	$(DISABLE_DEPRECATED)
 
 libchapters_la_SOURCES = totem-chapters.c totem-cmml-parser.c totem-cmml-parser.h totem-chapters-utils.c totem-chapters-utils.h totem-edit-chapter.c totem-edit-chapter.h

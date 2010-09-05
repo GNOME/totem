@@ -12,13 +12,6 @@ plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
 ui_DATA = skipto.ui
 
 common_defines = \
-	-D_REENTRANT					\
-	-DDBUS_API_SUBJECT_TO_CHANGE			\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DDATADIR=\""$(datadir)"\"			\
-	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DBINDIR=\""$(bindir)"\"			\
-	-DTOTEM_PLUGIN_DIR=\""$(libdir)/totem/plugins"\"\
 	-DG_LOG_DOMAIN=\""Totem"\"			\
 	$(DISABLE_DEPRECATED)
 
