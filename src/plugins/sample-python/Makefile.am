@@ -10,5 +10,7 @@ EXTRA_DIST += sample-python.py
 # Override to _not_ install the test plugins
 install-pluginPYTHON:
 install-pluginDATA:
+uninstall-pluginPYTHON:
+uninstall-pluginDATA:
 
 -include $(top_srcdir)/git.mk

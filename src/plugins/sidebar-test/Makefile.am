@@ -12,5 +12,7 @@ libsidebar_test_la_CFLAGS = $(plugin_cflags)
 # Override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
 install-pluginDATA:
+uninstall-pluginLTLIBRARIES:
+uninstall-pluginDATA:
 
 -include $(top_srcdir)/git.mk
