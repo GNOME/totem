@@ -1,5 +1,10 @@
 %.plugin: %.plugin.in
-	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+	$(AM_V_GEN)$(INTLTOOL_MERGE) $(INTLTOOL_MERGE_OPTIONS) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+
+# Quieten the intltool-merge process
+INTLTOOL_MERGE_OPTIONS = $(INTLTOOL_MERGE_OPTIONS_$(V))
+INTLTOOL_MERGE_OPTIONS_ = $(INTLTOOL_MERGE_OPTIONS_$(AM_DEFAULT_VERBOSITY))
+INTLTOOL_MERGE_OPTIONS_0 = -q
 
 plugin_DATA = $(plugin_in_files:.plugin.in=.plugin)
 
