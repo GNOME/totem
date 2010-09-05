@@ -34,7 +34,7 @@ import os
 import gobject
 from gi.repository import Gio
 from gi.repository import Peas
-from gi.repository import PeasUI
+from gi.repository import PeasGtk
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Totem
@@ -63,7 +63,7 @@ except ImportError:
 socket.setdefaulttimeout(30)
 gobject.threads_init()
 
-class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasUI.Configurable):
+class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
     __gtype_name__ = 'JamendoPlugin'
 
     object = gobject.property(type = gobject.GObject)
