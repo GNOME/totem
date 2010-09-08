@@ -39,7 +39,7 @@
 #define BUFFERING_CONTEXT "buffering"
 #define HELP_CONTEXT "help"
 
-static void totem_statusbar_dispose          (GObject             *object);
+static void totem_statusbar_finalize         (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
 
 struct _TotemStatusbarPrivate {
@@ -65,7 +65,7 @@ totem_statusbar_class_init (TotemStatusbarClass *klass)
 
   g_type_class_add_private (klass, sizeof (TotemStatusbarPrivate));
 
-  gobject_class->dispose = totem_statusbar_dispose;
+  gobject_class->finalize = totem_statusbar_finalize;
 }
 
 static void
@@ -337,16 +337,14 @@ totem_statusbar_sync_description (TotemStatusbar *statusbar)
 }
 
 static void
-totem_statusbar_dispose (GObject *object)
+totem_statusbar_finalize (GObject *object)
 {
   TotemStatusbarPrivate *priv = TOTEM_STATUSBAR (object)->priv;
 
-  if (priv->timeout != 0) {
+  if (priv->timeout != 0)
     g_source_remove (priv->timeout);
-    priv->timeout = 0;
-  }
 
-  G_OBJECT_CLASS (totem_statusbar_parent_class)->dispose (object);
+  G_OBJECT_CLASS (totem_statusbar_parent_class)->finalize (object);
 }
 
 /*
