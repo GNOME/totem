@@ -39,25 +39,13 @@ G_BEGIN_DECLS
 #define TOTEM_IS_STATUSBAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TOTEM_TYPE_STATUSBAR))
 #define TOTEM_STATUSBAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), TOTEM_TYPE_STATUSBAR, TotemStatusbarClass))
 
+typedef struct _TotemStatusbarPrivate TotemStatusbarPrivate;
 
-typedef struct _TotemStatusbar      TotemStatusbar;
-
-struct _TotemStatusbar
+typedef struct
 {
   GtkStatusbar parent_instance;
-
-  GtkWidget *progress;
-  GtkWidget *time_label;
-
-  gint time;
-  gint length;
-  guint timeout;
-  guint percentage;
-
-  guint pushed : 1;
-  guint seeking : 1;
-  guint timeout_ticks : 2;
-};
+  TotemStatusbarPrivate *priv;
+} TotemStatusbar;
 
 typedef GtkStatusbarClass TotemStatusbarClass;
 

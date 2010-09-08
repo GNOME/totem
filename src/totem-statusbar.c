@@ -42,6 +42,20 @@
 static void totem_statusbar_dispose          (GObject             *object);
 static void totem_statusbar_sync_description (TotemStatusbar      *statusbar);
 
+struct _TotemStatusbarPrivate {
+  GtkWidget *progress;
+  GtkWidget *time_label;
+
+  gint time;
+  gint length;
+  guint timeout;
+  guint percentage;
+
+  guint pushed : 1;
+  guint seeking : 1;
+  guint timeout_ticks : 2;
+};
+
 G_DEFINE_TYPE(TotemStatusbar, totem_statusbar, GTK_TYPE_STATUSBAR)
 
 static void
@@ -49,18 +63,23 @@ totem_statusbar_class_init (TotemStatusbarClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
+  g_type_class_add_private (klass, sizeof (TotemStatusbarPrivate));
+
   gobject_class->dispose = totem_statusbar_dispose;
 }
 
 static void
 totem_statusbar_init (TotemStatusbar *statusbar)
 {
+  TotemStatusbarPrivate *priv = G_TYPE_INSTANCE_GET_PRIVATE (statusbar, TOTEM_TYPE_STATUSBAR, TotemStatusbarPrivate);
   GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
   GtkWidget *packer, *hbox, *vbox, *label;
   GList *children_list;
 
-  statusbar->time = 0;
-  statusbar->length = -1;
+  statusbar->priv = priv;
+
+  priv->time = 0;
+  priv->length = -1;
 
   hbox = gtk_statusbar_get_message_area (gstatusbar);
   children_list = gtk_container_get_children (GTK_CONTAINER (hbox));
@@ -75,23 +94,23 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  statusbar->progress = gtk_progress_bar_new ();
-  gtk_progress_bar_set_inverted (GTK_PROGRESS_BAR (statusbar->progress), 
-				    gtk_widget_get_direction (statusbar->progress) == GTK_TEXT_DIR_LTR ?
+  priv->progress = gtk_progress_bar_new ();
+  gtk_progress_bar_set_inverted (GTK_PROGRESS_BAR (priv->progress), 
+				    gtk_widget_get_direction (priv->progress) == GTK_TEXT_DIR_LTR ?
 				    FALSE : TRUE);
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress), 0.);
-  gtk_box_pack_start (GTK_BOX (vbox), statusbar->progress, TRUE, TRUE, 1);
-  gtk_widget_set_size_request (statusbar->progress, 150, 10);
-  //gtk_widget_hide (statusbar->progress);
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress), 0.);
+  gtk_box_pack_start (GTK_BOX (vbox), priv->progress, TRUE, TRUE, 1);
+  gtk_widget_set_size_request (priv->progress, 150, 10);
+  //gtk_widget_hide (priv->progress);
 
   packer = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (hbox), packer, FALSE, FALSE, 0);
   gtk_widget_show (packer);
 
-  statusbar->time_label = gtk_label_new (_("0:00 / 0:00"));
-  gtk_misc_set_alignment (GTK_MISC (statusbar->time_label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), statusbar->time_label, FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->time_label);
+  priv->time_label = gtk_label_new (_("0:00 / 0:00"));
+  gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), priv->time_label, FALSE, FALSE, 0);
+  gtk_widget_show (priv->time_label);
 
   totem_statusbar_set_text (statusbar, _("Stopped"));
 }
@@ -105,17 +124,18 @@ totem_statusbar_new (void)
 static void
 totem_statusbar_update_time (TotemStatusbar *statusbar)
 {
+  TotemStatusbarPrivate *priv = statusbar->priv;
   char *time_string, *length, *label;
 
-  time_string = totem_time_to_string (statusbar->time * 1000);
+  time_string = totem_time_to_string (priv->time * 1000);
 
-  if (statusbar->length < 0) {
+  if (priv->length < 0) {
     label = g_strdup_printf (_("%s (Streaming)"), time_string);
   } else {
     length = totem_time_to_string
-	    (statusbar->length == -1 ? 0 : statusbar->length * 1000);
+	    (priv->length == -1 ? 0 : priv->length * 1000);
 
-    if (statusbar->seeking == FALSE)
+    if (priv->seeking == FALSE)
       /* Elapsed / Total Length */
       label = g_strdup_printf (_("%s / %s"), time_string, length);
     else
@@ -126,7 +146,7 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
   }
   g_free (time_string);
 
-  gtk_label_set_text (GTK_LABEL (statusbar->time_label), label);
+  gtk_label_set_text (GTK_LABEL (priv->time_label), label);
   g_free (label);
 
   totem_statusbar_sync_description (statusbar);
@@ -150,10 +170,10 @@ totem_statusbar_set_time (TotemStatusbar *statusbar, gint _time)
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  if (statusbar->time == _time)
+  if (statusbar->priv->time == _time)
     return;
 
-  statusbar->time = _time;
+  statusbar->priv->time = _time;
   totem_statusbar_update_time (statusbar);
 }
 
@@ -182,23 +202,24 @@ totem_statusbar_pop_help (TotemStatusbar *statusbar)
 static gboolean
 totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
 {
+  TotemStatusbarPrivate *priv = statusbar->priv;
   GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
 
-  if (--statusbar->timeout_ticks > 0)
+  if (--priv->timeout_ticks > 0)
     return TRUE;
 
-  statusbar->pushed = FALSE;
+  priv->pushed = FALSE;
 
   gtk_statusbar_pop (gstatusbar,
                      gtk_statusbar_get_context_id (gstatusbar, BUFFERING_CONTEXT));
 
-  gtk_widget_hide (statusbar->progress);
+  gtk_widget_hide (priv->progress);
 
   totem_statusbar_sync_description (statusbar);
 
-  statusbar->percentage = 101;
+  priv->percentage = 101;
 
-  statusbar->timeout = 0;
+  priv->timeout = 0;
 
   return FALSE;
 }
@@ -206,40 +227,41 @@ totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
 void
 totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 {
+  TotemStatusbarPrivate *priv = statusbar->priv;
   GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
   char *label;
   gboolean need_update = FALSE;
 
-  if (statusbar->pushed == FALSE)
+  if (priv->pushed == FALSE)
   {
     gtk_statusbar_push (gstatusbar,
                         gtk_statusbar_get_context_id (gstatusbar, BUFFERING_CONTEXT),
                         _("Buffering"));
-    statusbar->pushed = TRUE;
+    priv->pushed = TRUE;
 
     need_update = TRUE;
   }
 
-  if (statusbar->percentage != percentage)
+  if (priv->percentage != percentage)
   {
-    statusbar->percentage = percentage;
+    priv->percentage = percentage;
 
     /* eg: 75 % */
     label = g_strdup_printf (_("%d %%"), percentage);
-    gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progress), label);
+    gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), label);
     g_free (label);
-    gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress),
+    gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
                                   percentage / 100.);
-    gtk_widget_show (statusbar->progress);
+    gtk_widget_show (priv->progress);
 
     need_update = TRUE;
   }
 
-  statusbar->timeout_ticks = 3;
+  priv->timeout_ticks = 3;
 
-  if (statusbar->timeout == 0)
+  if (priv->timeout == 0)
   {
-    statusbar->timeout = g_timeout_add_seconds (1, (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
+    priv->timeout = g_timeout_add_seconds (1, (GSourceFunc) totem_statusbar_timeout_pop, statusbar);
   }
 
   if (need_update)
@@ -249,9 +271,9 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
 void
 totem_statusbar_pop (TotemStatusbar *statusbar)
 {
-  if (statusbar->pushed != FALSE)
+  if (statusbar->priv->pushed != FALSE)
   {
-    g_source_remove (statusbar->timeout);
+    g_source_remove (statusbar->priv->timeout);
     totem_statusbar_timeout_pop (statusbar);
   }
 }
@@ -262,10 +284,10 @@ totem_statusbar_set_time_and_length (TotemStatusbar *statusbar,
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  if (_time != statusbar->time ||
-      length != statusbar->length) {
-    statusbar->time = _time;
-    statusbar->length = length;
+  if (_time != statusbar->priv->time ||
+      length != statusbar->priv->length) {
+    statusbar->priv->time = _time;
+    statusbar->priv->length = length;
 
     totem_statusbar_update_time (statusbar);
   }
@@ -277,10 +299,10 @@ totem_statusbar_set_seeking (TotemStatusbar *statusbar,
 {
   g_return_if_fail (TOTEM_IS_STATUSBAR (statusbar));
 
-  if (statusbar->seeking == seeking)
+  if (statusbar->priv->seeking == seeking)
     return;
 
-  statusbar->seeking = seeking;
+  statusbar->priv->seeking = seeking;
 
   totem_statusbar_update_time (statusbar);
 }
@@ -298,16 +320,16 @@ totem_statusbar_sync_description (TotemStatusbar *statusbar)
   label = children_list->data;
 
   obj = gtk_widget_get_accessible (GTK_WIDGET (statusbar));
-  if (statusbar->pushed == FALSE) {
+  if (statusbar->priv->pushed == FALSE) {
     /* eg: Paused, 0:32 / 1:05 */
     text = g_strdup_printf (_("%s, %s"),
 	gtk_label_get_text (GTK_LABEL (label)),
-	gtk_label_get_text (GTK_LABEL (statusbar->time_label)));
+	gtk_label_get_text (GTK_LABEL (statusbar->priv->time_label)));
   } else {
     /* eg: Buffering, 75 % */
     text = g_strdup_printf (_("%s, %d %%"),
 	gtk_label_get_text (GTK_LABEL (label)),
-	statusbar->percentage);
+	statusbar->priv->percentage);
   }
 
   atk_object_set_name (obj, text);
@@ -317,11 +339,11 @@ totem_statusbar_sync_description (TotemStatusbar *statusbar)
 static void
 totem_statusbar_dispose (GObject *object)
 {
-  TotemStatusbar *statusbar = TOTEM_STATUSBAR (object);
+  TotemStatusbarPrivate *priv = TOTEM_STATUSBAR (object)->priv;
 
-  if (statusbar->timeout != 0) {
-    g_source_remove (statusbar->timeout);
-    statusbar->timeout = 0;
+  if (priv->timeout != 0) {
+    g_source_remove (priv->timeout);
+    priv->timeout = 0;
   }
 
   G_OBJECT_CLASS (totem_statusbar_parent_class)->dispose (object);
