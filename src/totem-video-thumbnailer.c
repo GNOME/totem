@@ -61,10 +61,11 @@
 #define GALLERY_MIN 3				/* minimum number of screenshots in a gallery */
 #define GALLERY_MAX 30				/* maximum number of screenshots in a gallery */
 #define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
+#define DEFAULT_OUTPUT_SIZE 128
 
 static gboolean jpeg_output = FALSE;
 static gboolean raw_output = FALSE;
-static gboolean output_size = 128;
+static int output_size = -1;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
 static gboolean print_progress = FALSE;
@@ -321,10 +322,12 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	height = gdk_pixbuf_get_height (pixbuf);
 	width = gdk_pixbuf_get_width (pixbuf);
 
-	/* If we're outputting a gallery or a raw image, don't scale the
-	 * pixbuf or add borders */
-	if (gallery != -1 || raw_output)
+	/* If we're outputting a gallery or a raw image without a size,
+	 * don't scale the pixbuf or add borders */
+	if (gallery != -1 || (raw_output != FALSE && size == -1))
 		with_holes = g_object_ref (pixbuf);
+	else if (raw_output != FALSE)
+		with_holes = scale_pixbuf (pixbuf, size, TRUE);
 	else
 		with_holes = scale_pixbuf (pixbuf, size, is_still);
 
@@ -817,6 +820,9 @@ int main (int argc, char *argv[])
 		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
 		g_log_set_always_fatal (fatal_mask);
 	}
+
+	if (raw_output == FALSE && output_size == -1)
+		output_size = DEFAULT_OUTPUT_SIZE;
 
 	if (filenames == NULL || g_strv_length (filenames) != 2 ||
 	    (second_index != -1 && gallery != -1) ||
