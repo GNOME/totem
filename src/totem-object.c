@@ -1991,7 +1991,7 @@ totem_action_zoom_reset (Totem *totem)
 }
 
 /**
- * totem_action_get_volume:
+ * totem_get_volume:
  * @totem: a #TotemObject
  *
  * Gets the current volume level, as a value between %0.0 and %1.0.
