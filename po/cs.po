@@ -4,6 +4,7 @@
 # Copyright (C) 2006 Lukas Novotny <lukasnov@cvs.gnome.org>.
 # Copyright (C) 2009 Martin Picek <picek.martin@gnome-cesko.cz>.
 # This file is distributed under the same license as the totem package.
+#
 # Michal Bukovjan <bukm@centrum.cz>, 2002, 2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2004, 2005, 2006.
 # Petr Tomeš <ptomes@gmail.com>, 2006.
@@ -18,10 +19,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem gnome-2-28\n"
+"Project-Id-Version: totem gnome-2-32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-25 20:24+0200\n"
-"PO-Revision-Date: 2010-08-05 20:32+0200\n"
+"POT-Creation-Date: 2010-09-15 17:39+0200\n"
+"PO-Revision-Date: 2010-09-05 07:58+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -385,7 +386,7 @@ msgstr "Vysunout právě požívaný disk"
 
 #: ../data/totem.ui.h:37
 msgid "External Chapters"
-msgstr ""
+msgstr "Externí kapitoly"
 
 #. Audio visualization dimensions
 #: ../data/totem.ui.h:39
@@ -434,9 +435,8 @@ msgid "Large"
 msgstr "Velká"
 
 #: ../data/totem.ui.h:52
-#, fuzzy
 msgid "Load _chapter files when movie is loaded"
-msgstr "Při nahrávání videa nahrát i soubory s titu_lky"
+msgstr "Po načtení filmu načíst soubory s _kapitolami"
 
 #: ../data/totem.ui.h:54
 msgid "Networking"
@@ -600,7 +600,7 @@ msgstr "Čtvercový"
 msgid "Start playing files from last position"
 msgstr "Spustit přehrávání souborů od poslední pozice"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5892
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5919
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -750,7 +750,7 @@ msgstr "_Jazyky"
 
 #: ../data/totem.ui.h:135
 msgid "_Load subtitle files when movie is loaded"
-msgstr "Při nahrávání videa nahrát i soubory s titu_lky"
+msgstr "Po načtení videa načíst soubory s titu_lky"
 
 #: ../data/totem.ui.h:136
 msgid "_Movie"
@@ -961,14 +961,14 @@ msgid "Visualization quality setting"
 msgstr "Kvalita vizualizace"
 
 #: ../data/totem.schemas.in.h:34
-#, fuzzy
 msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr "Zda automaticky nahrávat soubory s titulky, když je nahrán film"
+msgstr ""
+"Zda automaticky načíst externí soubor s kapitolami, když je načten film"
 
 #: ../data/totem.schemas.in.h:35
-#, fuzzy
 msgid "Whether to autoload external chapter files when a movie is loaded."
-msgstr "Zda automaticky nahrávat soubory s titulky, když je nahrán film"
+msgstr ""
+"Zda automaticky načíst externí soubor s kapitolami, když je načten film."
 
 #: ../data/totem.schemas.in.h:36
 msgid "Whether to autoload text subtitle files when a movie is loaded"
@@ -1764,7 +1764,7 @@ msgstr "Žádné URI videa"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:672
+#: ../src/totem-video-thumbnailer.c:675
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1776,46 +1776,46 @@ msgstr ""
 "<b>%s</b>: %s"
 
 # TEST
-#: ../src/totem-video-thumbnailer.c:673
+#: ../src/totem-video-thumbnailer.c:676
 msgid "Filename"
 msgstr "Název souboru"
 
 # TEST
-#: ../src/totem-video-thumbnailer.c:675
+#: ../src/totem-video-thumbnailer.c:678
 msgid "Resolution"
 msgstr "Rozlišení"
 
 # TEST
-#: ../src/totem-video-thumbnailer.c:678
+#: ../src/totem-video-thumbnailer.c:681
 msgid "Duration"
 msgstr "Délka"
 
-#: ../src/totem-uri.c:500 ../src/plugins/chapters/totem-chapters.c:1042
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1045
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../src/totem-uri.c:505 ../src/plugins/chapters/totem-chapters.c:1039
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:1042
 msgid "Supported files"
 msgstr "Podporované soubory"
 
-#: ../src/totem-uri.c:517
+#: ../src/totem-uri.c:519
 msgid "Audio files"
 msgstr "Hudební soubory"
 
-#: ../src/totem-uri.c:525
+#: ../src/totem-uri.c:527
 msgid "Video files"
 msgstr "Soubory videa"
 
-#: ../src/totem-uri.c:535
+#: ../src/totem-uri.c:537
 msgid "Subtitle files"
 msgstr "Soubory s titulky"
 
 # TEST
-#: ../src/totem-uri.c:587
+#: ../src/totem-uri.c:589
 msgid "Select Text Subtitles"
 msgstr "Zvolte titulky"
 
-#: ../src/totem-uri.c:649
+#: ../src/totem-uri.c:651
 msgid "Select Movies or Playlists"
 msgstr "Zvolte filmy nebo seznamy stop"
 
@@ -1860,24 +1860,24 @@ msgstr "Totem nemohl inicializovat rozhraní pro nastavení."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Ujistěte se, že je GNOME správně nainstalováno."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1759
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1772
 msgid "Password requested for RTSP server"
 msgstr "Heslo vyžadované pro server RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2992
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2996
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3019
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3023
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Zvuková stopa #%d"
 
 # TEST
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3024
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3028
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3051
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3055
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Titulek #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3437
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3464
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1885,16 +1885,16 @@ msgstr ""
 "Požadovaný výstup zvuku nebyl nalezen. Zvolte jiný výstup zvuku ve Výběru "
 "systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3469
 msgid "Location not found."
 msgstr "Umístění nenalezeno."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3446
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3473
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "Nelze otevřít umístění; možná nemáte oprávnění otevřít tento soubor."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3484
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1903,7 +1903,7 @@ msgstr ""
 "Výstup videa používá jiná aplikace. Zavřete jiné aplikace videa, nebo zvolte "
 "jiný výstup videa ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3463
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1913,14 +1913,14 @@ msgstr ""
 "systému multimédií. Možná by bylo vhodné použít zvukový server."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3481
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3508
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3514
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Přehrání tohoto filmu vyžaduje zásuvný modul %s, který není nainstalován."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3515
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1933,33 +1933,33 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3513
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3540
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Tento soubor nelze přehrávat po síti. Zkuste jej nejdřív stáhnout na disk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3612
 msgid "Media file could not be played."
 msgstr "Soubor médií nelze přehrát."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5888
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5915
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5890
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5917
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6237
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6264
 msgid "Too old version of GStreamer installed."
 msgstr "Nainstalována příliš stará verze systému GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6244
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6271
 msgid "Media contains no supported video streams."
 msgstr "Médium neobsahuje žádný podporovaný proud videa."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6757
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6784
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1967,8 +1967,8 @@ msgstr ""
 "Nelze vytvořit přehrávací objekt GStreamer. Zkontrolujte svou instalaci "
 "systému GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6871
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7006
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6898
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7033
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1976,7 +1976,7 @@ msgstr ""
 "Nelze otevřít výstup videa. Možná není k dispozici. Zvolte jiný výstup videa "
 "ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6883
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6910
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1985,7 +1985,7 @@ msgstr ""
 "Nelze najít výstup videa. Možná bude nutné nainstalovat další zásuvné moduly "
 "GStreamer, nebo vybrat jiný výstup videa ve Výběru systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6918
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6945
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1995,7 +1995,7 @@ msgstr ""
 "zařízení, nebo neběží zvukový server. Zvolte jiný zvukový výstup ve Výběru "
 "systému multimédií."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6965
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2181,58 +2181,53 @@ msgid "Video Disc Recorder"
 msgstr "Vypalování filmových disků"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1190
-#, fuzzy
+#: ../src/plugins/chapters/totem-chapters.c:1193
 msgid "Chapters"
-msgstr "Nabídka _kapitol"
+msgstr "Kapitoly"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
-#, fuzzy
 msgid "Chapters support"
-msgstr "Nabídka _kapitol"
+msgstr "Podpora kapitol"
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
 msgid "Enter new name for a chapter:"
-msgstr ""
+msgstr "Zadejte nový název pro kapitolu:"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:2
 msgid "Continue to watch movie without loaded chapters"
-msgstr ""
+msgstr "Pokračovat ve sledování filmu bez načtených kapitol"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:3
 msgid "Continue without"
-msgstr ""
+msgstr "Pokračovat bez"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-#, fuzzy
 msgid "Go to chapter"
-msgstr "Přejít na nabídku kapitol"
+msgstr "Přejít na kapitolu"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
 msgid "Load chapters from external file"
-msgstr ""
+msgstr "Načíst kapitoly z externího souboru"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
 msgid "Load chapters..."
-msgstr ""
+msgstr "Načíst kapitoly…"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:7
 msgid "No chapters data"
-msgstr ""
+msgstr "Žádné údaje o kapitolách"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-#, fuzzy
 msgid "Remove chapter from the list"
-msgstr "Odstranit soubor ze seznamu stop"
+msgstr "Odebrat kapitolu ze seznamu"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
-#, fuzzy
 msgid "Save Changes"
-msgstr "0 kanálů"
+msgstr "Uložit změny"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:11
 msgid "_Go to"
-msgstr ""
+msgstr "_Přejít na"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -2240,42 +2235,41 @@ msgid ""
 "<b>Title: </b>%s\n"
 "<b>Start time: </b>%s"
 msgstr ""
+"<b>Název: </b>%s\n"
+"<b>Čas začátku: </b>%s"
 
 #: ../src/plugins/chapters/totem-chapters.c:370
 msgid "Error while reading file with chapters"
-msgstr ""
+msgstr "Chyba při načítání souboru s kapitolami"
 
-#: ../src/plugins/chapters/totem-chapters.c:582
+#: ../src/plugins/chapters/totem-chapters.c:585
 msgid "Chapter with the same time already exists"
-msgstr ""
+msgstr "Kapitola se stejným názvem již existuje"
 
-#: ../src/plugins/chapters/totem-chapters.c:583
+#: ../src/plugins/chapters/totem-chapters.c:586
 msgid "Try another name or remove an existing chapter"
-msgstr ""
+msgstr "Zkuste jiný název nebo odeberte některou stávající kapitolu"
 
-#: ../src/plugins/chapters/totem-chapters.c:760
-#, fuzzy
+#: ../src/plugins/chapters/totem-chapters.c:763
 msgid "Error while writing file with chapters"
-msgstr "Chyba při vypisování kategorií kanálů"
+msgstr "Chyba při zápisu souboru s kapitolami"
 
 # TEST
-#: ../src/plugins/chapters/totem-chapters.c:885
-#, fuzzy
+#: ../src/plugins/chapters/totem-chapters.c:888
 msgid "Error occurred while saving chapters"
-msgstr "Při získávání alb se vyskytla chyba."
+msgstr "Vyskytla se chyba při ukládání kapitol"
 
-#: ../src/plugins/chapters/totem-chapters.c:886
+#: ../src/plugins/chapters/totem-chapters.c:889
 msgid "Please check you rights and free space"
-msgstr ""
+msgstr "Zkontrolujte prosím svá oprávnění a volné místo"
 
-#: ../src/plugins/chapters/totem-chapters.c:1020
-#, fuzzy
+#: ../src/plugins/chapters/totem-chapters.c:1023
 msgid "Open Chapters File"
-msgstr "Otevřít soubor"
+msgstr "Otevřít soubor s kapitolami"
 
-#: ../src/plugins/chapters/totem-cmml-parser.c:558
+#: ../src/plugins/chapters/totem-cmml-parser.c:559
 msgid "Failed to parse CMML file"
-msgstr ""
+msgstr "Selhalo zpracování souboru CMML"
 
 # TEST
 #. Translators: this refers to a media file
@@ -2691,11 +2685,11 @@ msgid "%d kbps"
 msgstr "%d kb/s"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
-msgstr[0] "%d snímků za sekundu"
-msgstr[1] "%d snímků za sekundu"
+msgstr[0] "%d snímek za sekundu"
+msgstr[1] "%d snímky za sekundu"
 msgstr[2] "%d snímků za sekundu"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:274
@@ -2849,11 +2843,10 @@ msgstr "Vytvořit galerii snímků z přehrávání"
 #. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
 #: ../src/plugins/skipto/totem-skipto.c:158
 #: ../src/plugins/skipto/totem-skipto.c:184
-#, fuzzy
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] "sekund"
-msgstr[1] "sekund"
+msgstr[0] "sekunda"
+msgstr[1] "sekundy"
 msgstr[2] "sekund"
 
 #: ../src/plugins/skipto/totem-skipto.c:184
