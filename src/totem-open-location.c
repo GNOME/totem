@@ -177,7 +177,6 @@ totem_open_location_new (void)
 	}
 
 	gtk_window_set_title (GTK_WINDOW (open_location), _("Open Location..."));
-	gtk_dialog_set_has_separator (GTK_DIALOG (open_location), FALSE);
 	gtk_dialog_add_buttons (GTK_DIALOG (open_location),
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OPEN, GTK_RESPONSE_OK,

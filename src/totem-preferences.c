@@ -596,7 +596,6 @@ totem_setup_preferences (Totem *totem)
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_ACCEPT,
 			NULL);
-	gtk_dialog_set_has_separator (GTK_DIALOG (totem->prefs), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
 	content_area = gtk_dialog_get_content_area (GTK_DIALOG (totem->prefs));
 	gtk_box_set_spacing (GTK_BOX (content_area), 2);

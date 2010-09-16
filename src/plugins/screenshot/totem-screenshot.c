@@ -135,7 +135,6 @@ totem_screenshot_init (TotemScreenshot *screenshot)
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
 				NULL);
-	gtk_dialog_set_has_separator (GTK_DIALOG (screenshot), FALSE);
 	gtk_window_set_title (GTK_WINDOW (screenshot), _("Save Screenshot"));
 	gtk_dialog_set_default_response (GTK_DIALOG (screenshot), GTK_RESPONSE_ACCEPT);
 	gtk_window_set_resizable (GTK_WINDOW (screenshot), FALSE);

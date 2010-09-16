@@ -188,7 +188,6 @@ totem_skipto_new (TotemSkiptoPlugin *plugin)
 		(skipto->priv->xml, "tstw_skip_adjustment")), skipto);
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip to"));
-	gtk_dialog_set_has_separator (GTK_DIALOG (skipto), FALSE);
 	gtk_dialog_add_buttons (GTK_DIALOG (skipto),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_OK, GTK_RESPONSE_OK,
