@@ -71,7 +71,7 @@ bacon_video_widget_gtk_plug_get_toplevel (GtkPlug *plug)
 	do
 	{
 		/* FIXME: multi-head */
-		if (XQueryTree (GDK_DISPLAY (), xid, &root,
+		if (XQueryTree (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), xid, &root,
 					&parent, &children, &nchildren) == 0)
 		{
 			g_warning ("Couldn't find window manager window");
