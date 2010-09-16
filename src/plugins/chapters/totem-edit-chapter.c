@@ -97,7 +97,6 @@ totem_edit_chapter_new (void)
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_OK, GTK_RESPONSE_OK,
 				NULL);
-	gtk_dialog_set_has_separator (GTK_DIALOG (edit_chapter), FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (edit_chapter), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (edit_chapter), GTK_RESPONSE_OK);
 	gtk_dialog_set_response_sensitive (GTK_DIALOG (edit_chapter), GTK_RESPONSE_OK, FALSE);

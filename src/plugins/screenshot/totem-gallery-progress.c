@@ -100,7 +100,6 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 	/* Set up the window */
 	gtk_window_set_title (GTK_WINDOW (self), _("Creating Gallery..."));
 	gtk_window_set_resizable (GTK_WINDOW (self), FALSE);
-	gtk_dialog_set_has_separator (GTK_DIALOG (self), FALSE);
 	gtk_dialog_add_button (GTK_DIALOG (self), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
 	gtk_dialog_set_default_response (GTK_DIALOG (self), GTK_RESPONSE_CANCEL);
 
