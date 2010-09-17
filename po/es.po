@@ -1,4 +1,4 @@
-# translation of totem.HEAD.po to Español
+# translation of totem.gnome-2-32.es.po to Español
 # Translation of totem to Spanish
 # Copyright © 2002, 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
@@ -11,11 +11,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem.master\n"
+"Project-Id-Version: totem.gnome-2-32\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-08-15 01:55+0000\n"
-"PO-Revision-Date: 2010-08-15 21:12+0200\n"
+"POT-Creation-Date: 2010-09-17 10:49+0000\n"
+"PO-Revision-Date: 2010-09-17 19:35+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -424,7 +424,6 @@ msgid "Large"
 msgstr "Grande"
 
 #: ../data/totem.ui.h:52
-#| msgid "_Load subtitle files when movie is loaded"
 msgid "Load _chapter files when movie is loaded"
 msgstr "Ca_rgar los archivos de capítulos al cargar la película"
 
@@ -589,7 +588,7 @@ msgstr "Cuadrada"
 msgid "Start playing files from last position"
 msgstr "Reproducir archivos desde la última posición"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5892
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5919
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -954,14 +953,12 @@ msgid "Visualization quality setting"
 msgstr "Ajuste de calidad de visualización"
 
 #: ../data/totem.schemas.in.h:34
-#| msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr ""
 "Indica si se deben cargar automáticamente los archivos de capítulos externos "
 "al cargar una película"
 
 #: ../data/totem.schemas.in.h:35
-#| msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgid "Whether to autoload external chapter files when a movie is loaded."
 msgstr ""
 "Indica si se deben cargar automáticamente los archivos de capítulos al "
@@ -1540,7 +1537,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: ../src/totem-preferences.c:767
+#: ../src/totem-preferences.c:766
 msgid "Select Subtitle Font"
 msgstr "Seleccionar la tipografía de los subtítulos"
 
@@ -1741,7 +1738,7 @@ msgstr "No existe el URI del vídeo"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:672
+#: ../src/totem-video-thumbnailer.c:675
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1752,43 +1749,43 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:673
+#: ../src/totem-video-thumbnailer.c:676
 msgid "Filename"
 msgstr "Nombre del archivo"
 
-#: ../src/totem-video-thumbnailer.c:675
+#: ../src/totem-video-thumbnailer.c:678
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../src/totem-video-thumbnailer.c:678
+#: ../src/totem-video-thumbnailer.c:681
 msgid "Duration"
 msgstr "Duración"
 
-#: ../src/totem-uri.c:500 ../src/plugins/chapters/totem-chapters.c:1042
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1045
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../src/totem-uri.c:505 ../src/plugins/chapters/totem-chapters.c:1039
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:1042
 msgid "Supported files"
 msgstr "Archivos soportados"
 
-#: ../src/totem-uri.c:517
+#: ../src/totem-uri.c:519
 msgid "Audio files"
 msgstr "Archivos de audio"
 
-#: ../src/totem-uri.c:525
+#: ../src/totem-uri.c:527
 msgid "Video files"
 msgstr "Archivos de vídeo"
 
-#: ../src/totem-uri.c:535
+#: ../src/totem-uri.c:537
 msgid "Subtitle files"
 msgstr "Archivos de subtítulos"
 
-#: ../src/totem-uri.c:587
+#: ../src/totem-uri.c:589
 msgid "Select Text Subtitles"
 msgstr "Seleccionar los subtítulos de texto"
 
-#: ../src/totem-uri.c:649
+#: ../src/totem-uri.c:651
 msgid "Select Movies or Playlists"
 msgstr "Seleccionar películas o listas de reproducción"
 
@@ -1833,23 +1830,23 @@ msgstr "Totem no pudo inicializar el motor de configuración."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Asegúrese de que GNOME está instalado correctamente."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1759
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1772
 msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2992
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2996
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3019
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3023
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3024
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3028
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3051
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3055
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3437
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3464
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1857,17 +1854,17 @@ msgstr ""
 "No se encontró la salida de sonido solicitada. Seleccione otra salida de "
 "sonido en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3469
 msgid "Location not found."
 msgstr "No se encontró la dirección."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3446
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3473
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la dirección; quizá no tiene permiso para abrir el archivo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3484
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1877,7 +1874,7 @@ msgstr ""
 "aplicaciones de vídeo o seleccione otra salida de vídeo en el selector de "
 "Sistemas Multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3463
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1888,15 +1885,15 @@ msgstr ""
 "un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3481
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3508
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3514
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "La reproducción de esta película requiere un complemento %s que no está "
 "instalado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3515
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1909,34 +1906,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3513
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3540
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3612
 msgid "Media file could not be played."
 msgstr "El archivo soporte no se pudo reproducir."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5888
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5915
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5890
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5917
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6237
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6264
 msgid "Too old version of GStreamer installed."
 msgstr "La versión de GStreamer que está instalada es demasiado antigua."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6244
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6271
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6757
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6784
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1944,8 +1941,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6871
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7006
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6898
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7033
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1953,7 +1950,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Quizá no esté disponible. Seleccione otra "
 "salida de vídeo en el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6883
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6910
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1963,7 +1960,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el «Selector de sistemas multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6918
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6945
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1973,7 +1970,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6965
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2144,13 +2141,11 @@ msgid "Video Disc Recorder"
 msgstr "Grabador de discos de vídeo"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1190
-#| msgid "_Chapter Menu"
+#: ../src/plugins/chapters/totem-chapters.c:1193
 msgid "Chapters"
 msgstr "Capítulos"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
-#| msgid "_Chapter Menu"
 msgid "Chapters support"
 msgstr "Soporte para capítulos"
 
@@ -2167,13 +2162,12 @@ msgid "Continue without"
 msgstr "Continuar sin"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-#| msgid "Go to the chapter menu"
 msgid "Go to chapter"
 msgstr "Ir al capítulo"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
 msgid "Load chapters from external file"
-msgstr "Cagar capítulos desde un archivo externo"
+msgstr "Cargar capítulos desde un archivo externo"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
 msgid "Load chapters..."
@@ -2184,17 +2178,14 @@ msgid "No chapters data"
 msgstr "No hay datos sobre capítulos"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-#| msgid "Remove file from playlist"
 msgid "Remove chapter from the list"
 msgstr "Quitar el capítulo de la lista"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
-#| msgid "0 Channels"
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:11
-#| msgid "_Go"
 msgid "_Go to"
 msgstr "_Ir a"
 
@@ -2211,34 +2202,31 @@ msgstr ""
 msgid "Error while reading file with chapters"
 msgstr "Error al intentar leer el archivo con capítulos"
 
-#: ../src/plugins/chapters/totem-chapters.c:582
+#: ../src/plugins/chapters/totem-chapters.c:585
 msgid "Chapter with the same time already exists"
 msgstr "Ya existe un capítulo con los mismos tiempos"
 
-#: ../src/plugins/chapters/totem-chapters.c:583
+#: ../src/plugins/chapters/totem-chapters.c:586
 msgid "Try another name or remove an existing chapter"
 msgstr "Intente usar otro nombre o quitar un capítulo existente"
 
-#: ../src/plugins/chapters/totem-chapters.c:760
-#| msgid "Error listing channel categories"
+#: ../src/plugins/chapters/totem-chapters.c:763
 msgid "Error while writing file with chapters"
 msgstr "Error al escribir el archivo con capítulos"
 
-#: ../src/plugins/chapters/totem-chapters.c:885
-#| msgid "An error occurred while fetching albums."
+#: ../src/plugins/chapters/totem-chapters.c:888
 msgid "Error occurred while saving chapters"
 msgstr "Ocurrió un error al guardar los capítulos"
 
-#: ../src/plugins/chapters/totem-chapters.c:886
+#: ../src/plugins/chapters/totem-chapters.c:889
 msgid "Please check you rights and free space"
 msgstr "Compruebe sus privilegios y el espacio libre"
 
-#: ../src/plugins/chapters/totem-chapters.c:1020
-#| msgid "Open a file"
+#: ../src/plugins/chapters/totem-chapters.c:1023
 msgid "Open Chapters File"
 msgstr "Abrir un archivo de capítulos"
 
-#: ../src/plugins/chapters/totem-cmml-parser.c:558
+#: ../src/plugins/chapters/totem-cmml-parser.c:559
 msgid "Failed to parse CMML file"
 msgstr "Falló al analizar el archivo CMML"
 
@@ -2621,7 +2609,6 @@ msgstr "%d Kbps"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:245
 #, c-format
-#| msgid "%d frames per second"
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
 msgstr[0] "%d fotograma por segundo"
@@ -2695,7 +2682,7 @@ msgid "_Name:"
 msgstr "_Nombre:"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:389
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
 msgstr "Pantallazo.png"
@@ -2719,7 +2706,7 @@ msgid "Creating Gallery..."
 msgstr "Creando galería…"
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:108
+#: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Guardando galería como «%s»"
@@ -2728,13 +2715,13 @@ msgstr "Guardando galería como «%s»"
 msgid "There was an error saving the screenshot."
 msgstr "Ha ocurrido un error al guardar la captura de pantalla."
 
-#: ../src/plugins/screenshot/totem-screenshot.c:139
+#: ../src/plugins/screenshot/totem-screenshot.c:138
 msgid "Save Screenshot"
 msgstr "Guardar la captura"
 
 #. Create the screenshot widget
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:160
+#: ../src/plugins/screenshot/totem-screenshot.c:159
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Captura-%s-%d.png"
@@ -2769,7 +2756,6 @@ msgstr "Crear una galería de capturas"
 #. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
 #: ../src/plugins/skipto/totem-skipto.c:158
 #: ../src/plugins/skipto/totem-skipto.c:184
-#| msgid "seconds"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
