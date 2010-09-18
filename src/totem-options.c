@@ -22,7 +22,6 @@
 
 #include "config.h"
 
-#include <glib.h>
 #include <glib/gi18n.h>
 #include <string.h>
 #include <stdlib.h>
@@ -92,8 +91,9 @@ totem_options_register_remote_commands (Totem *totem)
 
 	klass = (GEnumClass *) g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
 	for (i = TOTEM_REMOTE_COMMAND_UNKNOWN + 1; i < klass->n_values; i++) {
-		GEnumValue *val = g_enum_get_value (klass, i);
-		g_application_add_action (G_APPLICATION (totem->app), val->value_name, val->value_nick);
+		GEnumValue *val;
+		val = g_enum_get_value (klass, i);
+		unique_app_add_command (totem->app, val->value_name, i);
 	}
 	g_type_class_unref (klass);
 }
@@ -111,41 +111,19 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 			       options->debug, NULL);
 }
 
-static char *
-totem_get_action_for_command (const TotemRemoteCommand command)
-{
-	GEnumClass *klass;
-	char *name;
-
-	klass = g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
-	name = g_strdup (g_enum_get_value (klass, command)->value_name);
-	g_type_class_unref (klass);
-
-	return name;
-}
-
-#define UPDATE_ACTION(action, command)                                  \
-	do {                                                            \
-		g_free ((action));                                      \
-		(action) = totem_get_action_for_command ((command));    \
-	} while (0)
-
 void
-totem_options_process_for_server (GApplication *app,
+totem_options_process_for_server (UniqueApp *app,
 				  const TotemCmdLineOptions* options)
 {
-	gchar *action = NULL;
 	GList *commands, *l;
-	int i;
+	int default_action, i;
 
 	commands = NULL;
-	UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_REPLACE);
+	default_action = TOTEM_REMOTE_COMMAND_REPLACE;
 
 	/* Are we quitting ? */
 	if (options->quit) {
-		g_application_invoke_action (G_APPLICATION (app),
-					     totem_get_action_for_command (TOTEM_REMOTE_COMMAND_QUIT),
-					     NULL);
+		unique_app_send_message (app, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 		return;
 	}
 
@@ -154,113 +132,101 @@ totem_options_process_for_server (GApplication *app,
 		/* FIXME translate that */
 		g_warning ("Can't enqueue and replace at the same time");
 	} else if (options->replace) {
-		UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_REPLACE);
+		default_action = TOTEM_REMOTE_COMMAND_REPLACE;
 	} else if (options->enqueue) {
-		UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_ENQUEUE);
+		default_action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	}
 
 	/* Send the files to enqueue */
 	for (i = 0; options->filenames && options->filenames[i] != NULL; i++) {
-		GVariant *data;
+		UniqueMessageData *data;
 		char *full_path;
-		GVariantBuilder builder;
 
+		data = unique_message_data_new ();
+		full_path = totem_create_full_path (options->filenames[i]);
+		unique_message_data_set_text (data, full_path ? full_path : options->filenames[i], -1);
 		full_path = totem_create_full_path (options->filenames[i]);
 
-		g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
-		g_variant_builder_add (&builder, "{sv}",
-				       "url", g_variant_new_string (full_path ? full_path : options->filenames[i]));
-		data = g_variant_builder_end (&builder);
-
-		g_application_invoke_action (G_APPLICATION (app), action, data);
-
-		g_free (full_path);
-		g_variant_unref (data);
+		unique_app_send_message (app, default_action, data);
 
 		/* Even if the default action is replace, we only want to replace with the
 		   first file.  After that, we enqueue. */
-		if (i == 0) {
-			UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_ENQUEUE);
-		}
+		default_action = TOTEM_REMOTE_COMMAND_ENQUEUE;
+		unique_message_data_free (data);
+		g_free (full_path);
 	}
 
 	if (options->playpause) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PLAYPAUSE));
 	}
 
 	if (options->play) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PLAY));
 	}
 
 	if (options->pause) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PAUSE));
 	}
 
 	if (options->next) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_NEXT));
 	}
 
 	if (options->previous) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PREVIOUS));
 	}
 
 	if (options->seekfwd) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_SEEK_FORWARD));
 	}
 
 	if (options->seekbwd) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_SEEK_BACKWARD));
 	}
 
 	if (options->volumeup) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_VOLUME_UP));
 	}
 
 	if (options->volumedown) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_VOLUME_DOWN));
 	}
 
 	if (options->mute) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_MUTE));
 	}
 
 	if (options->fullscreen) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_FULLSCREEN));
 	}
 
 	if (options->togglecontrols) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS));
 	}
 
 	/* No commands, no files, show ourselves */
 	if (commands == NULL && options->filenames == NULL) {
-		g_application_invoke_action (G_APPLICATION (app),
-					     totem_get_action_for_command (TOTEM_REMOTE_COMMAND_SHOW),
-					     NULL);
+		unique_app_send_message (app, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
 
 	/* Send commands */
 	for (l = commands; l != NULL; l = l->next) {
-		g_application_invoke_action (G_APPLICATION (app), l->data, NULL);
+		int command = GPOINTER_TO_INT (l->data);
+		unique_app_send_message (app, command, NULL);
 	}
-
-	g_free (action);
-	g_list_foreach (commands, (GFunc) g_free, NULL);
 	g_list_free (commands);
 }
-
-#undef UPDATE_ACTION
 
