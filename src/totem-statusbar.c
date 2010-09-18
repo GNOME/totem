@@ -76,9 +76,9 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_widget_show (vbox);
 
   statusbar->progress = gtk_progress_bar_new ();
-  gtk_progress_bar_set_orientation (GTK_PROGRESS_BAR (statusbar->progress),
+  gtk_progress_bar_set_inverted (GTK_PROGRESS_BAR (statusbar->progress), 
 				    gtk_widget_get_direction (statusbar->progress) == GTK_TEXT_DIR_LTR ?
-				    GTK_PROGRESS_LEFT_TO_RIGHT : GTK_PROGRESS_RIGHT_TO_LEFT);
+				    FALSE : TRUE);
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (statusbar->progress), 0.);
   gtk_box_pack_start (GTK_BOX (vbox), statusbar->progress, TRUE, TRUE, 1);
   gtk_widget_set_size_request (statusbar->progress, 150, 10);
