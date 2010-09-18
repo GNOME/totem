@@ -58,6 +58,7 @@ struct _TotemVideoListPrivate {
 	GtkBuilder *xml;
 	GtkActionGroup *action_group;
 	GtkUIManager *ui_manager;
+	gboolean show_tooltip_uri;
 };
 
 #define TOTEM_VIDEO_LIST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), TOTEM_TYPE_VIDEO_LIST, TotemVideoListPrivate))
@@ -65,7 +66,8 @@ struct _TotemVideoListPrivate {
 enum {
 	PROP_TOOLTIP_COLUMN = 1,
 	PROP_MRL_COLUMN,
-	PROP_TOTEM
+	PROP_TOTEM,
+	PROP_SHOW_TOOLTIP_URI
 };
 
 enum {
@@ -156,6 +158,18 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 					TOTEM_TYPE_OBJECT, G_PARAM_READWRITE));
 
 	/**
+	 * TotemVideoList:show-tooltip-uri:
+	 *
+	 * If this is %TRUE, the URI of each video will be displayed in the tooltip for that video (or a message saying "No video URI" will be
+	 * displayed if the URI is unset); otherwise, the tooltip will only display the video name.
+	 *
+	 * Since: 2.90.6
+	 **/
+	g_object_class_install_property (object_class, PROP_SHOW_TOOLTIP_URI,
+				g_param_spec_boolean ("show-tooltip-uri", NULL, NULL,
+					TRUE, G_PARAM_READWRITE));
+
+	/**
 	 * TotemVideoList::starting-video:
 	 * @video_list: the #TotemVideoList which received the signal
 	 * @tree_path: the #GtkTreePath of the video row about to be played
@@ -184,6 +198,7 @@ totem_video_list_init (TotemVideoList *self)
 	self->priv->totem = NULL;
 	self->priv->tooltip_column = -1;
 	self->priv->mrl_column = -1;
+	self->priv->show_tooltip_uri = TRUE;
 
 	/* Get the interface */
 	self->priv->xml = totem_interface_load ("video-list.ui", TRUE, NULL, self);
@@ -246,6 +261,10 @@ totem_video_list_set_property (GObject *object, guint property_id, const GValue 
 			priv->totem = (Totem*) g_value_dup_object (value);
 			g_object_notify (object, "totem");
 			break;
+		case PROP_SHOW_TOOLTIP_URI:
+			priv->show_tooltip_uri = g_value_get_boolean (value);
+			g_object_notify (object, "show-tooltip-uri");
+			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 	}
@@ -266,6 +285,9 @@ totem_video_list_get_property (GObject *object, guint property_id, GValue *value
 			break;
 		case PROP_TOTEM:
 			g_value_set_object (value, G_OBJECT (priv->totem));
+			break;
+		case PROP_SHOW_TOOLTIP_URI:
+			g_value_set_boolean (value, priv->show_tooltip_uri);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -292,7 +314,7 @@ query_tooltip_cb (GtkWidget *widget, gint x, gint y, gboolean keyboard_mode, Gtk
 				&model, &path, &iter))
 		return FALSE;
 
-	if (self->priv->mrl_column == -1) {
+	if (self->priv->mrl_column == -1 || self->priv->show_tooltip_uri == FALSE) {
 		gtk_tree_model_get (model, &iter, self->priv->tooltip_column, &tooltip_text, -1);
 		gtk_tooltip_set_text (tooltip, tooltip_text);
 		g_free (tooltip_text);
