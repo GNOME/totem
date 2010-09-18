@@ -200,12 +200,12 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemGromitPlu
 		return FALSE;
 
 	switch (event->keyval) {
-		case GDK_D:
-		case GDK_d:
+		case GDK_KEY_D:
+		case GDK_KEY_d:
 			totem_gromit_toggle (plugin);
 			break;
-		case GDK_E:
-		case GDK_e:
+		case GDK_KEY_E:
+		case GDK_KEY_e:
 			totem_gromit_clear (plugin, FALSE);
 			break;
 		default:

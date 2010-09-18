@@ -1209,7 +1209,7 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 	/* Special case some shortcuts */
 	if (event->state != 0) {
 		if ((event->state & GDK_CONTROL_MASK)
-		    && event->keyval == GDK_a) {
+		    && event->keyval == GDK_KEY_a) {
 			gtk_tree_selection_select_all
 				(playlist->priv->selection);
 			return TRUE;
@@ -1227,7 +1227,7 @@ totem_playlist_key_press (GtkWidget *win, GdkEventKey *event, TotemPlaylist *pla
 			|| (event->state & GDK_MOD5_MASK)))
 		return FALSE;
 
-	if (event->keyval == GDK_Delete)
+	if (event->keyval == GDK_KEY_Delete)
 	{
 		playlist_remove_files (playlist);
 		return TRUE;

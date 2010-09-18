@@ -137,8 +137,8 @@ window_key_press_event_cb (GtkWidget *window, GdkEventKey *event, TotemScreensho
 		take_screenshot_action_cb (NULL, self);
 		break;
 #endif /* HAVE_XFREE */
-	case GDK_s:
-	case GDK_S:
+	case GDK_KEY_s:
+	case GDK_KEY_S:
 		if (event->state & GDK_CONTROL_MASK)
 			take_screenshot_action_cb (NULL, self);
 		else

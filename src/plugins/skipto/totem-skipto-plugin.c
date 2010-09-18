@@ -159,8 +159,8 @@ on_window_key_press_event (GtkWidget *window, GdkEventKey *event, TotemSkiptoPlu
 		return FALSE;
 
 	switch (event->keyval) {
-		case GDK_k:
-		case GDK_K:
+		case GDK_KEY_k:
+		case GDK_KEY_K:
 			run_skip_to_dialog (plugin);
 			break;
 		default:

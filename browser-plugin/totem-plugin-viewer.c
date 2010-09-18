@@ -1741,26 +1741,26 @@ static gboolean
 totem_embedded_handle_key_press (TotemEmbedded *emb, GdkEventKey *event)
 {
 	switch (event->keyval) {
-	case GDK_Escape:
+	case GDK_KEY_Escape:
 		if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
 			totem_embedded_toggle_fullscreen (emb);
 		return TRUE;
-	case GDK_F11:
-	case GDK_f:
-	case GDK_F:
+	case GDK_KEY_F11:
+	case GDK_KEY_f:
+	case GDK_KEY_F:
 		totem_embedded_toggle_fullscreen (emb);
 		return TRUE;
-	case GDK_space:
+	case GDK_KEY_space:
 		on_play_pause (NULL, emb);
 		return TRUE;
-	case GDK_Up:
+	case GDK_KEY_Up:
 		totem_embedded_action_volume_relative (emb, VOLUME_UP_OFFSET);
 		return TRUE;
-	case GDK_Down:
+	case GDK_KEY_Down:
 		totem_embedded_action_volume_relative (emb, VOLUME_DOWN_OFFSET);
 		return TRUE;
-	case GDK_Left:
-	case GDK_Right:
+	case GDK_KEY_Left:
+	case GDK_KEY_Right:
 		/* FIXME: */
 	default:
 		return FALSE;
@@ -1777,8 +1777,8 @@ totem_embedded_key_press_event (GtkWidget *widget, GdkEventKey *event,
 	if (event->state & GDK_CONTROL_MASK)
 	{
 		switch (event->keyval) {
-		case GDK_Left:
-		case GDK_Right:
+		case GDK_KEY_Left:
+		case GDK_KEY_Right:
 			return totem_embedded_handle_key_press (emb, event);
 		default:
 			break;

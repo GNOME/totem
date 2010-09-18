@@ -906,7 +906,7 @@ tree_view_key_press_cb (GtkTreeView		*tree_view,
 	/* Special case some shortcuts */
 	if (event->state != 0) {
 		if ((event->state & GDK_CONTROL_MASK) &&
-		    event->keyval == GDK_a) {
+		    event->keyval == GDK_KEY_a) {
 			gtk_tree_selection_select_all (selection);
 			return TRUE;
 		}
@@ -923,7 +923,7 @@ tree_view_key_press_cb (GtkTreeView		*tree_view,
 	    || (event->state & GDK_MOD5_MASK)))
 		return FALSE;
 
-	if (event->keyval == GDK_Delete) {
+	if (event->keyval == GDK_KEY_Delete) {
 		if (gtk_tree_selection_count_selected_rows (selection) > 0)
 			remove_button_clicked_cb (GTK_BUTTON (plugin->priv->remove_button), plugin);
 		return TRUE;

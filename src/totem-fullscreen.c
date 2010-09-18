@@ -270,7 +270,7 @@ totem_fullscreen_force_popup_hide (TotemFullscreen *fs)
 {
 	/* Popdown the volume button if it's visible */
 	if (totem_fullscreen_is_volume_popup_visible (fs))
-		gtk_bindings_activate (GTK_OBJECT (fs->volume), GDK_Escape, 0);
+		gtk_bindings_activate (GTK_OBJECT (fs->volume), GDK_KEY_Escape, 0);
 
 	gtk_widget_hide (fs->priv->exit_popup);
 	gtk_widget_hide (fs->priv->control_popup);
