@@ -87,6 +87,7 @@
 									<property name="tooltip-column">1</property>
 									<property name="mrl-column">2</property>
 									<property name="model">yt_list_store_search</property>
+									<property name="show-tooltip-uri">False</property>
 									<signal name="starting-video" handler="starting_video_cb"/>
 									<child>
 										<object class="GtkTreeViewColumn" id="yt_treeview_search_column">
@@ -133,6 +134,7 @@
 									<property name="tooltip-column">1</property>
 									<property name="mrl-column">2</property>
 									<property name="model">yt_list_store_related</property>
+									<property name="show-tooltip-uri">False</property>
 									<signal name="starting-video" handler="starting_video_cb"/>
 									<child>
 										<object class="GtkTreeViewColumn" id="yt_treeview_related_column">
