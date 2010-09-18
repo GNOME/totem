@@ -207,6 +207,7 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 				}
 			}
 			break;
+		case GST_INSTALL_PLUGINS_INVALID:
 		case GST_INSTALL_PLUGINS_ERROR:
 		case GST_INSTALL_PLUGINS_CRASHED:
 		default:
@@ -218,6 +219,14 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 					bacon_video_widget_play (ctx->bvw, NULL);
 				else
 					bacon_video_widget_stop (ctx->bvw);
+				break;
+			}
+		case GST_INSTALL_PLUGINS_STARTED_OK:
+		case GST_INSTALL_PLUGINS_INTERNAL_FAILURE:
+		case GST_INSTALL_PLUGINS_HELPER_MISSING:
+		case GST_INSTALL_PLUGINS_INSTALL_IN_PROGRESS:
+			{
+				g_assert_not_reached ();
 				break;
 			}
 	}
