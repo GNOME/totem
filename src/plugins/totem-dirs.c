@@ -53,7 +53,7 @@
  *
  * Return a %NULL-terminated array of paths to directories which can contain Totem plugins. This respects the GSettings disable_user_plugins setting.
  *
- * Return value: a %NULL-terminated array of paths to plugin directories
+ * Return value: (transfer full): a %NULL-terminated array of paths to plugin directories
  *
  * Since: 2.90.0
  **/
@@ -162,14 +162,14 @@ totem_plugin_find_file (const char *plugin_name,
  * @name: interface filename
  * @fatal: %TRUE if it's a fatal error if the interface can't be loaded
  * @parent: (allow-none): the interface's parent #GtkWindow
- * @user_data: a pointer to be passed to each signal handler in the interface when they're called
+ * @user_data: (allow-none): a pointer to be passed to each signal handler in the interface when they're called
  *
  * Loads an interface file (GtkBuilder UI file) for a plugin, given its filename and
  * assuming it's installed in the plugin's data directory.
  *
  * This should be used instead of attempting to load interfaces manually in plugins.
  *
- * Return value: the #GtkBuilder instance for the interface
+ * Return value: (transfer full): the #GtkBuilder instance for the interface
  **/
 GtkBuilder *
 totem_plugin_load_interface (const char *plugin_name,

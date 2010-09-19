@@ -560,7 +560,7 @@ error:
  *
  * Returns the #GtkUIManager in use by @self.
  *
- * Return value: @self's #GtkUIManager
+ * Return value: (transfer none): @self's #GtkUIManager
  **/
 GtkUIManager *
 totem_video_list_get_ui_manager (TotemVideoList *self)

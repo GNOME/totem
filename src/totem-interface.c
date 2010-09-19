@@ -156,6 +156,17 @@ totem_interface_error_with_link (const char *title, const char *reason,
 	gtk_window_present (GTK_WINDOW (error_dialog));
 }
 
+/**
+ * totem_interface_load:
+ * @name: the #GtkBuilder UI file to load
+ * @fatal: %TRUE if errors loading the file should be fatal, %FALSE otherwise
+ * @parent: (allow-none): the parent window to use when displaying error dialogues, or %NULL
+ * @user_data: (allow-none): the user data to pass to gtk_builder_connect_signals(), or %NULL
+ *
+ * Load a #GtkBuilder UI file with the given name and return the #GtkBuilder instance for it. If loading the file fails, an error dialogue is shown.
+ *
+ * Return value: (transfer full): the loaded #GtkBuilder object, or %NULL
+ */
 GtkBuilder *
 totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpointer user_data)
 {
@@ -183,6 +194,17 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
 	return builder;
 }
 
+/**
+ * totem_interface_load_with_full_path:
+ * @filename: the #GtkBuilder UI file path to load
+ * @fatal: %TRUE if errors loading the file should be fatal, %FALSE otherwise
+ * @parent: (allow-none): the parent window to use when displaying error dialogues, or %NULL
+ * @user_data: (allow-none): the user data to pass to gtk_builder_connect_signals(), or %NULL
+ *
+ * Load a #GtkBuilder UI file from the given path and return the #GtkBuilder instance for it. If loading the file fails, an error dialogue is shown.
+ *
+ * Return value: (transfer full): the loaded #GtkBuilder object, or %NULL
+ */
 GtkBuilder *
 totem_interface_load_with_full_path (const char *filename, gboolean fatal, 
 				     GtkWindow *parent, gpointer user_data)
@@ -215,6 +237,14 @@ totem_interface_load_with_full_path (const char *filename, gboolean fatal,
 	return builder;
 }
 
+/**
+ * totem_interface_load_pixbuf:
+ * @name: the image file name
+ *
+ * Load the image called @name in the directory given by totem_interface_get_full_path() into a #GdkPixbuf.
+ *
+ * Return value: (transfer full): the loaded pixbuf, or %NULL
+ */
 GdkPixbuf*
 totem_interface_load_pixbuf (const char *name)
 {

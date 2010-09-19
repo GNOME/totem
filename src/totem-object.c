@@ -398,7 +398,7 @@ totem_object_plugins_shutdown (TotemObject *totem)
  *
  * Gets Totem's main window and increments its reference count.
  *
- * Return value: Totem's main window
+ * Return value: (transfer full): Totem's main window
  **/
 GtkWindow *
 totem_object_get_main_window (TotemObject *totem)
@@ -432,7 +432,7 @@ totem_object_get_ui_manager (TotemObject *totem)
  *
  * Gets Totem's video widget and increments its reference count.
  *
- * Return value: Totem's video widget
+ * Return value: (transfer full): Totem's video widget
  **/
 GtkWidget *
 totem_get_video_widget (TotemObject *totem)
