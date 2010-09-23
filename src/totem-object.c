@@ -4105,10 +4105,10 @@ totem_callback_connect (TotemObject *totem)
 	action = gtk_action_group_get_action (totem->main_action_group,
 			"fullscreen");
 	item = gtk_action_create_tool_item (action);
-	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item),
-					_("Fullscreen"));
-	atk_object_set_name (gtk_widget_get_accessible (item),
-			_("Fullscreen"));
+	/* Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window. */
+	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), _("Fullscreen"));
+	/* Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window. */
+	atk_object_set_name (gtk_widget_get_accessible (item), _("Fullscreen"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Sidebar button (Drag'n'Drop) */
