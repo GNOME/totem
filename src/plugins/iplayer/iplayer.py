@@ -112,6 +112,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 	def _populate_programme_list_cb (self, tree_store, category_path, values, remove_placeholder):
 		# Callback from PopulateProgrammesThread to add stuff to the tree store
 		if values == None:
+			# Translators: the "programme feed" is the list of TV shows available to watch online
 			self.totem.action_error (_('Error getting programme feed'), _('There was an error getting the list of programmes for this channel and category combination.'))
 			return False
 
