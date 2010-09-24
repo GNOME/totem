@@ -155,20 +155,20 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_label (props, "comment", "");
 
 	/* Dimensions */
-	bacon_video_widget_properties_set_label (props, "dimensions", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "dimensions", C_("Dimensions", "N/A"));
 	/* Video Codec */
-	bacon_video_widget_properties_set_label (props, "vcodec", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "vcodec", C_("Video codec", "N/A"));
 	/* Video Bitrate */
 	bacon_video_widget_properties_set_label (props, "video_bitrate",
-			_("N/A"));
+			C_("Video bit rate", "N/A"));
 	/* Framerate */
 	bacon_video_widget_properties_set_label (props, "framerate",
-			_("N/A"));
+			C_("Frame rate", "N/A"));
 	/* Audio Bitrate */
 	bacon_video_widget_properties_set_label (props, "audio_bitrate",
-			_("N/A"));
+			C_("Audio bit rate", "N/A"));
 	/* Audio Codec */
-	bacon_video_widget_properties_set_label (props, "acodec", _("N/A"));
+	bacon_video_widget_properties_set_label (props, "acodec", C_("Audio codec", "N/A"));
 	/* Sample rate */
 	bacon_video_widget_properties_set_label (props, "samplerate", _("0 Hz"));
 	/* Channels */
@@ -237,7 +237,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 				  "dimensions", N_("%d x %d"));
 		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
-				 N_("%d kbps"), _("N/A"));
+				 N_("%d kbps"), C_("Video bit rate", "N/A"));
 
 		/* The FPS has to be done differently because it's a plural string */
 		{
@@ -247,7 +247,7 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 				temp = g_strdup_printf (ngettext ("%d frame per second", "%d frames per second", g_value_get_int (&value)),
 				                        g_value_get_int (&value));
 			} else {
-				temp = g_strdup (_("N/A"));
+				temp = g_strdup (C_("Frame rate", "N/A"));
 			}
 			bacon_video_widget_properties_set_label (props, "framerate", temp);
 			g_free (temp);
@@ -270,10 +270,10 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	if (has_type != FALSE)
 	{
 		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
-				 N_("%d kbps"), _("N/A"));
+				 N_("%d kbps"), C_("Audio bit rate", "N/A"));
 		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "acodec");
 		UPDATE_FROM_INT (BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate",
-				N_("%d Hz"), _("N/A"));
+				N_("%d Hz"), C_("Sample rate", "N/A"));
 		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CHANNELS, "channels");
 	}
 
