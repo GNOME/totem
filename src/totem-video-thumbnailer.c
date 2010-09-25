@@ -303,8 +303,12 @@ scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 			result = small;
 		}
 	} else {
-		result = add_holes_to_pixbuf_large (pixbuf, size);
-		g_return_val_if_fail (result != NULL, NULL);
+		if (is_still == FALSE) {
+			result = add_holes_to_pixbuf_large (pixbuf, size);
+			g_return_val_if_fail (result != NULL, NULL);
+		} else {
+			result = g_object_ref (pixbuf);
+		}
 	}
 
 	return result;
