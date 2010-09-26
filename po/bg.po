@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-26 17:16+0300\n"
-"PO-Revision-Date: 2010-09-26 17:15+0300\n"
+"POT-Creation-Date: 2010-09-26 17:37+0300\n"
+"PO-Revision-Date: 2010-09-26 17:38+0300\n"
 "Last-Translator: Damyan Ivanov <dam+gnome@ktnx.net>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -73,35 +73,15 @@ msgstr "П_ремахване"
 msgid "_Select Text Subtitles..."
 msgstr "_Шрифт за субтитрите…"
 
-#: ../data/plugins.ui.h:1
-msgid "Author:"
-msgstr "Автор:"
-
-#: ../data/plugins.ui.h:2
-msgid "C_onfigure..."
-msgstr "_Настройки…"
-
-#: ../data/plugins.ui.h:3
-msgid "Copyright:"
-msgstr "Авторски права:"
-
-#: ../data/plugins.ui.h:4
-msgid "Description:"
-msgstr "Описание:"
-
-#: ../data/plugins.ui.h:5
-msgid "Site:"
-msgstr "Сайт:"
-
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/plugins/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 канала"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/plugins/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -167,20 +147,7 @@ msgstr "Кадри/сек:"
 msgid "General"
 msgstr "Общи"
 
-#. Dimensions
-#. Video Codec
-#. Audio Codec
 #: ../data/properties.ui.h:18
-#: ../src/plugins/properties/bacon-video-widget-properties.c:156
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#: ../src/plugins/properties/bacon-video-widget-properties.c:161
-#: ../src/plugins/properties/bacon-video-widget-properties.c:164
-#: ../src/plugins/properties/bacon-video-widget-properties.c:167
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#: ../src/plugins/properties/bacon-video-widget-properties.c:248
-#: ../src/plugins/properties/bacon-video-widget-properties.c:271
-#: ../src/plugins/properties/bacon-video-widget-properties.c:274
 msgid "N/A"
 msgstr "Липсва"
 
@@ -197,10 +164,10 @@ msgstr "Заглавие:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:143
 #: ../src/plugins/properties/bacon-video-widget-properties.c:145
 #: ../src/plugins/properties/bacon-video-widget-properties.c:147
 #: ../src/plugins/properties/bacon-video-widget-properties.c:149
+#: ../src/plugins/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Непознат"
 
@@ -218,13 +185,13 @@ msgid "Add the video to the playlist"
 msgstr "Добавяне на видеото към списъка за изпълнение"
 
 #: ../data/video-list.ui.h:3 ../src/totem-dnd-menu.c:97
-#: ../src/plugins/jamendo/jamendo.ui.h:10
+#: ../src/plugins/jamendo/jamendo.ui.h:9
 msgid "_Add to Playlist"
 msgstr "_Добавяне към списъка за изпълнение"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1620
+#: ../src/totem-object.c:1665
 msgid "Movie Player"
 msgstr "Изпълнение на филми"
 
@@ -587,7 +554,7 @@ msgstr "Квадратно"
 msgid "Start playing files from last position"
 msgstr "При пускане да се продължава от мястото, докъдето се е стигнало"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5919
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5992
 msgid "Stereo"
 msgstr "стерео"
 
@@ -791,11 +758,22 @@ msgstr "_Избор на визуализация:"
 msgid "_View"
 msgstr "_Изглед"
 
-#: ../data/totem.schemas.in.h:1
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+msgid ""
+"A list of the names of the plugins which are currently active (loaded and "
+"running)."
+msgstr ""
+"Списък с имената на действащите в момента приставки (заредени и включени)."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+msgid "Active plugins list"
+msgstr "Списък на активните приставки"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
 msgid "Allow the screensaver to activate when playing audio"
 msgstr "Предпазителят на екрани да може да се включва, когато е пуснато аудио"
 
-#: ../data/totem.schemas.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
 msgid ""
 "Allow the screensaver to activate when playing audio. Disable if you have "
 "monitor-powered speakers."
@@ -803,186 +781,153 @@ msgstr ""
 "Предпазителят на екрани да може да се включва, когато е пуснато аудио. "
 "Изключете го, ако тонколоните се захранват от монитора."
 
-#: ../data/totem.schemas.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
-"stream (in seconds)"
+"stream (in seconds)."
 msgstr ""
 "Обем данни, идващи по мрежата, които да се сложат в междинен буфер, преди да "
 "започне визуализацията на потока (в секунди)"
 
-#: ../data/totem.schemas.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
 msgid ""
 "Approximate network connection speed, used to select quality on media over "
-"the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
-"28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
-"for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, "
-"\"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"the network."
 msgstr ""
-"Приблизителна скорост на мрежовата връзка за избиране на качеството на "
-"медията по мрежата: „0“ за 14.4 Kbps модем, „1“ за 19.2 Kbps модем, „2“ за "
-"28.8 Kbps модем, „3“ за 33.6 Kbps модем, „4“ за 34.4 Kbps модем, „5“ за 56 "
-"Kbps модем/ISDN, „6“ за 112 Kbps двоен ISDN/DSL, „7“ за 256 Kbps DSL/кабел, "
-"„8“ за 384 Kbps DSL/кабел, „9“ за 512 Kbps DSL/кабел, „10“ за 1.5 Mbps T1/"
-"Интранет/LAN, „11“ за Интранет/LAN."
+"Приблизителна скорост на мрежата. Използва се за избор на качеството на "
+"медията по мрежата."
 
-#: ../data/totem.schemas.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Стандартно местоположение за диалоговите прозорци „Отваряне…“"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
 msgid ""
-"Default location for the \"Open...\" dialogs, default is the current "
-"directory"
+"Default location for the \"Open...\" dialogs. Default is the current "
+"directory."
 msgstr ""
 "Стандартно местоположение използвано от диалоговите прозорци „Отваряне…“, "
 "стандартно е текущата папка."
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Стандартно местоположение за диалоговите прозорци „Снимане на кадър“"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs, default is the "
-"Pictures directory"
+"Default location for the \"Take Screenshot\" dialogs. Default is the "
+"Pictures directory."
 msgstr ""
 "Стандартно местоположение използвано от диалоговите прозорци „Снимане на "
 "кадър“, стандартно е папката „Изображения“."
 
-#: ../data/totem.schemas.in.h:9
-msgid "Encoding charset for subtitle"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+msgid "Encoding character set for subtitle."
 msgstr "Кодова таблица на субтитрите"
 
-#: ../data/totem.schemas.in.h:10
-msgid "Name of the visual effects plugins"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+msgid "Name of the visual effects plugin"
 msgstr "Име на приставките за визуални ефекти"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
 msgid "Network buffering threshold"
 msgstr "Праг на буфериране на мрежови данни"
 
-#: ../data/totem.schemas.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
 msgid "Network connection speed"
 msgstr "Скорост на връзката"
 
-#: ../data/totem.schemas.in.h:13
-msgid "Pango font description for subtitle rendering"
-msgstr "Описание на Pango на шрифта за субтитри"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+msgid "Pango font description for subtitle rendering."
+msgstr "Описание на Pango на шрифта за субтитри."
 
-#: ../data/totem.schemas.in.h:14
-msgid ""
-"Quality settings for the audio visualization: \"0\" for small, \"1\" for "
-"normal, \"2\" for large, \"3\" for extra large."
-msgstr ""
-"Настройка на качеството на визуализациите за аудиото: „0“ за малко, „1“ за "
-"нормално, „2“ за голямо и „3“ за много голямо."
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+msgid "Quality setting for the audio visualization."
+msgstr "Настройка на качеството за визуализациите към аудиото."
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
 msgid "Repeat mode"
 msgstr "Режим „Повторение“"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
 msgid "Resize the canvas automatically on file load"
 msgstr "Автоматично оразмеряване на прозореца на клипа при зареждане на файл"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
 msgid "Show visual effects when no video is displayed"
 msgstr "Показване на визуални ефекти при липса на видео изображение"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
 msgid "Show visual effects when playing an audio only file."
 msgstr "Показване на визуални ефекти при изпълнение на файлове само с аудио."
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
 msgid "Shuffle mode"
 msgstr "Режим „Разбъркано“"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
 msgid "Subtitle encoding"
 msgstr "Кодиране на субтитрите"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
 msgid "Subtitle font"
 msgstr "Шрифт за субтитрите"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
 msgid "The brightness of the video"
 msgstr "Яркостта на видеосигнала"
 
-#: ../data/totem.schemas.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
 msgid "The contrast of the video"
 msgstr "Контрастът на видеосигнала"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
 msgid "The hue of the video"
 msgstr "Нюанс на видеосигнала"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
 msgid "The saturation of the video"
 msgstr "Наситеност на видеосигнала"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
 msgid "Type of audio output to use"
 msgstr "Използван вид на изхода на звука"
 
-#: ../data/totem.schemas.in.h:27
-msgid ""
-"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
-"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
-"Passthrough."
-msgstr ""
-"Използван вид изход на звука: „0“ за стерео, „1“ за 4 канален изход, „2“ за "
-"5.0 канален изход, „3“ за 5.1 канален изход, „4“ за директен AC3."
-
-#. Translators: This is default subtitle encoding
-#. character set. You can change this to be the most common
-#. encoding for fansub subtitles in your language. File a bug
-#. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:32
-msgid "UTF-8"
-msgstr "CP1251"
-
-#: ../data/totem.schemas.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
 msgid "Visualization quality setting"
 msgstr "Качество на визуализацията"
 
-#: ../data/totem.schemas.in.h:34
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Дали външните глави да се зареждат автоматично с филма"
 
-#: ../data/totem.schemas.in.h:35
-msgid "Whether to autoload external chapter files when a movie is loaded."
-msgstr "Дали външните глави да се зареждат автоматично с филма."
-
-#: ../data/totem.schemas.in.h:36
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Дали субтитрите да се зареждат автоматично с филмите"
 
-#: ../data/totem.schemas.in.h:37
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Забраняване на корекцията на презредови филми"
 
-#: ../data/totem.schemas.in.h:38
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Дали да се изключат клавишните комбинации"
 
-#: ../data/totem.schemas.in.h:39
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:34
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "Дали да се изключат приставките в домашната директория на потребителя"
 
-#: ../data/totem.schemas.in.h:40
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:35
 msgid "Whether to enable debug for the playback engine"
 msgstr "Позволяване на откриване на грешки в ядрото за изпълнение"
 
-#: ../data/totem.schemas.in.h:41
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:36
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
-"closing them."
+"closing them"
 msgstr ""
 "Дали да се запомня положението, до което се е стигнало в пуснатото аудио/"
-"видео при пауза или затварянето им"
+"видео, при пауза или затварянето им"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1108,25 +1053,25 @@ msgstr "_Изпълнение"
 msgid "Cancel"
 msgstr "Отказ"
 
-#: ../src/totem-fullscreen.c:595
+#: ../src/totem-fullscreen.c:617
 msgid "No File"
 msgstr "Липсва файл"
 
-#: ../src/totem-interface.c:172 ../src/totem-interface.c:204
+#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Грешка при зареждането на интерфейса „%s“. %s"
 
-#: ../src/totem-interface.c:172
+#: ../src/totem-interface.c:180
 msgid "The file does not exist."
 msgstr "Файлът не съществува."
 
-#: ../src/totem-interface.c:174 ../src/totem-interface.c:176
-#: ../src/totem-interface.c:206 ../src/totem-interface.c:208
+#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
+#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
 msgid "Make sure that Totem is properly installed."
 msgstr "Проверете дали Totem е инсталиран правилно."
 
-#: ../src/totem-interface.c:319
+#: ../src/totem-interface.c:346
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1138,7 +1083,7 @@ msgstr ""
 "публикуван от Фондацията за свободен софтуер — версия 2 на лиценза или (по "
 "ваше решение) по-късна версия."
 
-#: ../src/totem-interface.c:323
+#: ../src/totem-interface.c:350
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1149,7 +1094,7 @@ msgstr ""
 "НИКАКВИ ГАРАНЦИИ, дори и косвените за ПРОДАЖБА или СЪОТВЕТСТВИЕ С КАКВАТО И "
 "ДА Е УПОТРЕБА. За подробности погледнете Общия публичен лиценз на GNU."
 
-#: ../src/totem-interface.c:327
+#: ../src/totem-interface.c:354
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1159,7 +1104,7 @@ msgstr ""
 "заедно с тази програма. Ако не сте, пишете до Free Software Foundation, "
 "Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../src/totem-interface.c:330
+#: ../src/totem-interface.c:357
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1222,43 +1167,43 @@ msgid "Configure Plugins"
 msgstr "Настройки на приставките"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:429
+#: ../src/totem-object.c:473
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:369
+#: ../src/totem-object.c:1043 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Изпълнява се"
 
-#: ../src/totem-object.c:1001 ../src/totem-options.c:51
+#: ../src/totem-object.c:1045 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:365
+#: ../src/totem-object.c:1050 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "На пауза"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1008 ../src/totem-object.c:1018
-#: ../src/totem-options.c:50
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:76
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:88
+#: ../src/totem-object.c:1052 ../src/totem-object.c:1062
+#: ../src/totem-options.c:51
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
 msgid "Play"
 msgstr "Изпълнение"
 
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1612
-#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:353
+#: ../src/totem-object.c:1057 ../src/totem-object.c:1657
+#: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Спрян"
 
-#: ../src/totem-object.c:1094 ../src/totem-object.c:1121
-#: ../src/totem-object.c:1742 ../src/totem-object.c:1905
+#: ../src/totem-object.c:1138 ../src/totem-object.c:1165
+#: ../src/totem-object.c:1787 ../src/totem-object.c:1950
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem не може да изпълни „%s“."
 
-#: ../src/totem-object.c:1198
+#: ../src/totem-object.c:1242
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1267,18 +1212,18 @@ msgstr ""
 "Totem не може да изпълни този вид медия (%s), въпреки наличието на подходяща "
 "приставка."
 
-#: ../src/totem-object.c:1199
+#: ../src/totem-object.c:1243
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr ""
 "Проверете има ли носител в устройството и дали то е настроено правилно."
 
-#: ../src/totem-object.c:1207
+#: ../src/totem-object.c:1251
 msgid "More information about media plugins"
 msgstr "Повече информация за медийните приставки"
 
-#: ../src/totem-object.c:1208
+#: ../src/totem-object.c:1252
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1287,7 +1232,7 @@ msgstr ""
 "този файл."
 
 # c-format
-#: ../src/totem-object.c:1210
+#: ../src/totem-object.c:1254
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1296,7 +1241,7 @@ msgstr ""
 "Totem не може да изпълни този вид медия (%s) поради липса на подходящи "
 "приставки за четене от диска."
 
-#: ../src/totem-object.c:1212
+#: ../src/totem-object.c:1256
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1305,64 +1250,66 @@ msgstr ""
 "Totem не може да изпълни този вид медия (%s) поради липса на подходящи "
 "приставки."
 
-#: ../src/totem-object.c:1215
+#: ../src/totem-object.c:1259
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "Totem не може да изпълни този вид медия (%s) поради липса на поддръжка."
 
-#: ../src/totem-object.c:1216
+#: ../src/totem-object.c:1260
 msgid "Please insert another disc to play back."
 msgstr "Поставете следващ диск, който да бъде изпълнен."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1296
 msgid "Totem was not able to play this disc."
 msgstr "Totem не успя да пусне диска за изпълнение."
 
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4186
+#: ../src/totem-object.c:1297 ../src/totem-object.c:4241
 msgid "No reason."
 msgstr "Няма причина."
 
-#: ../src/totem-object.c:1266
+#: ../src/totem-object.c:1311
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem не поддържа изпълнение на аудио CD-та."
 
-#: ../src/totem-object.c:1267
+#: ../src/totem-object.c:1312
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Пробвайте със съответна аудио програма или такава за извличане, за да "
 "пуснете CD-то."
 
-#: ../src/totem-object.c:1748
+#: ../src/totem-object.c:1793
 msgid "No error message"
 msgstr "Липсва съобщение за грешка"
 
-#: ../src/totem-object.c:2134
+#: ../src/totem-object.c:2179
 msgid "Totem could not display the help contents."
 msgstr "Ръководството не може да бъде показано."
 
-#: ../src/totem-object.c:2489 ../src/totem-object.c:2491
+#: ../src/totem-object.c:2534 ../src/totem-object.c:2536
 #: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "Получи се грешка"
 
-#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
+#: ../src/totem-object.c:4076 ../src/totem-object.c:4078
 msgid "Previous Chapter/Movie"
 msgstr "Предишна глава/филм"
 
-#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
+#: ../src/totem-object.c:4085 ../src/totem-object.c:4087
 msgid "Play / Pause"
 msgstr "Изпълнение/пауза"
 
-#: ../src/totem-object.c:4047 ../src/totem-object.c:4049
+#: ../src/totem-object.c:4095 ../src/totem-object.c:4097
 msgid "Next Chapter/Movie"
 msgstr "Следваща глава/филм"
 
-#: ../src/totem-object.c:4061 ../src/totem-object.c:4063
+#. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
+#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
+#: ../src/totem-object.c:4109 ../src/totem-object.c:4111
 msgid "Fullscreen"
 msgstr "На цял екран"
 
-#: ../src/totem-object.c:4186
+#: ../src/totem-object.c:4241
 msgid "Totem could not startup."
 msgstr "Totem не може да се стартира."
 
@@ -1370,79 +1317,79 @@ msgstr "Totem не може да се стартира."
 msgid "Open Location..."
 msgstr "Отваряне на местоположение…"
 
-#: ../src/totem-options.c:48
+#: ../src/totem-options.c:49
 msgid "Enable debug"
 msgstr "Включване на откриването на грешки"
 
-#: ../src/totem-options.c:49
+#: ../src/totem-options.c:50
 msgid "Play/Pause"
 msgstr "Изпълнение/пауза"
 
-#: ../src/totem-options.c:52
+#: ../src/totem-options.c:53
 msgid "Next"
 msgstr "Следващ"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:54
 msgid "Previous"
 msgstr "Предишен"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:55
 msgid "Seek Forwards"
 msgstr "Търсене напред"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:56
 msgid "Seek Backwards"
 msgstr "Търсене назад"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:57
 msgid "Volume Up"
 msgstr "Увеличаване на звука"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:58
 msgid "Volume Down"
 msgstr "Намаляване на звука"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:59
 msgid "Mute sound"
 msgstr "Заглушаване"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:60
 msgid "Toggle Fullscreen"
 msgstr "Превключване на цял екран"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:61
 msgid "Show/Hide Controls"
 msgstr "Показване/скриване на контролните бутони"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:62
 msgid "Quit"
 msgstr "Спиране на програмата"
 
 #. Translators: this refers to a media file
-#: ../src/totem-options.c:62
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:79
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:91
+#: ../src/totem-options.c:63
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:85
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
 msgid "Enqueue"
 msgstr "Добавяне"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:64
 msgid "Replace"
 msgstr "Заместване"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:65
 msgid "Don't connect to an already-running instance"
 msgstr "Без да се прави връзка към вече пуснат Totem"
 
-#: ../src/totem-options.c:65
+#: ../src/totem-options.c:66
 msgid "Seek"
 msgstr "Търсене"
 
-#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
-#: ../src/totem-options.c:67
+#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
+#: ../src/totem-options.c:68
 msgid "Playlist index"
 msgstr "Списък за изпълнение"
 
-#: ../src/totem-options.c:69
+#: ../src/totem-options.c:70
 msgid "Movies to play"
 msgstr "Филми за изпълнение"
 
@@ -1480,24 +1427,24 @@ msgstr "Запазване на списъка за изпълнение"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:145
+#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:140
 msgid "Playlist"
 msgstr "Списък"
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1848
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Списъкът „%s“ не може да бъде прочетен, възможно е да е повреден."
 
-#: ../src/totem-playlist.c:1864
+#: ../src/totem-playlist.c:1849
 msgid "Playlist error"
 msgstr "Грешка в списъка за изпълнение"
 
-#: ../src/totem-preferences.c:108
+#: ../src/totem-preferences.c:71
 msgid "Enable visual effects?"
 msgstr "Включване на визуалните ефекти?"
 
-#: ../src/totem-preferences.c:110
+#: ../src/totem-preferences.c:73
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1505,24 +1452,11 @@ msgstr ""
 "Изглежда използвате Totem отдалечено.\n"
 "Искате ли да разрешите визуалните ефекти?"
 
-#: ../src/totem-preferences.c:405
-msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr ""
-"Промените на визуалните ефекти изискват рестартиране, за да влязат в сила."
-
-#: ../src/totem-preferences.c:489
-msgid ""
-"The change of audio output type will only take effect when Totem is "
-"restarted."
-msgstr ""
-"Промените на вида на изхода на звука ще влязат в сила при рестартиране на "
-"Totem."
-
-#: ../src/totem-preferences.c:593
+#: ../src/totem-preferences.c:370
 msgid "Preferences"
 msgstr "Настройки"
 
-#: ../src/totem-preferences.c:766
+#: ../src/totem-preferences.c:509
 msgid "Select Subtitle Font"
 msgstr "Шрифт за субтитрите"
 
@@ -1532,45 +1466,45 @@ msgstr "Шрифт за субтитрите"
 msgid "Audio/Video"
 msgstr "Звук/видео"
 
-#: ../src/totem-statusbar.c:91
+#: ../src/totem-statusbar.c:110
 msgid "0:00 / 0:00"
 msgstr "0:00/0:00"
 
-#: ../src/totem-statusbar.c:113
+#: ../src/totem-statusbar.c:133
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (изпълнение на поток)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
+#: ../src/totem-statusbar.c:140 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s/%s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
+#: ../src/totem-statusbar.c:143 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Търсене до %s/%s"
 
-#: ../src/totem-statusbar.c:217
+#: ../src/totem-statusbar.c:239
 msgid "Buffering"
 msgstr "Буфериране"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:228
+#: ../src/totem-statusbar.c:250
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:303
+#: ../src/totem-statusbar.c:325
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:308
+#: ../src/totem-statusbar.c:330
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1716,7 +1650,7 @@ msgstr "западно"
 msgid "Vietnamese"
 msgstr "виетнамско"
 
-#: ../src/totem-video-list.c:305
+#: ../src/totem-video-list.c:329
 msgid "No video URI"
 msgstr "Липсва адрес на видео"
 
@@ -1746,11 +1680,11 @@ msgstr "Разделителна способност"
 msgid "Duration"
 msgstr "Продължителност"
 
-#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1045
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1001
 msgid "All files"
 msgstr "Всички файлове"
 
-#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:1042
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:998
 msgid "Supported files"
 msgstr "Поддържани файлове"
 
@@ -1770,35 +1704,35 @@ msgstr "Файлове със субтитри"
 msgid "Select Text Subtitles"
 msgstr "Шрифт за субтитрите"
 
-#: ../src/totem-uri.c:651
+#: ../src/totem-uri.c:652
 msgid "Select Movies or Playlists"
 msgstr "Избор на филми или списъци за изпълнение"
 
-#: ../src/totem.c:93
+#: ../src/totem.c:114
 msgid "Could not open link"
 msgstr "Връзката не може да бъде отворена"
 
-#: ../src/totem.c:151 ../src/totem.c:177
+#: ../src/totem.c:173 ../src/totem.c:199
 #: ../browser-plugin/totem-plugin-viewer.c:666
-#: ../browser-plugin/totem-plugin-viewer.c:1863
+#: ../browser-plugin/totem-plugin-viewer.c:1864
 msgid "Totem Movie Player"
 msgstr "Изпълнение на филми (Totem)"
 
-#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2286
+#: ../src/totem.c:174 ../browser-plugin/totem-plugin-viewer.c:2291
 msgid "Could not initialize the thread-safe libraries."
 msgstr ""
 "Библиотеките за безопасна работа с нишки не могат да бъдат инициализирани."
 
-#: ../src/totem.c:152
+#: ../src/totem.c:174
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверете системата си. Totem ще бъде спрян."
 
 #. Handle command line arguments
-#: ../src/totem.c:160
+#: ../src/totem.c:182
 msgid "- Play movies and songs"
 msgstr "— Гледане на филми и слушане на песни"
 
-#: ../src/totem.c:169
+#: ../src/totem.c:191
 #, c-format
 msgid ""
 "%s\n"
@@ -1808,31 +1742,31 @@ msgstr ""
 "Стартирайте „%s --help“, за да видите пълния списък с опции за командния "
 "ред.\n"
 
-#: ../src/totem.c:186
+#: ../src/totem.c:210
 msgid "Totem could not initialize the configuration engine."
 msgstr "Totem не може да инициализира ядрото за настройки."
 
-#: ../src/totem.c:186
+#: ../src/totem.c:211
 msgid "Make sure that GNOME is properly installed."
 msgstr "Проверете дали GNOME е инсталиран правилно."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1772
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1825
 msgid "Password requested for RTSP server"
 msgstr "Сървърът за RTSP изисква парола"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3019
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3023
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3096
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3100
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Аудио № %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3051
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3055
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3128
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3132
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Субтитри № %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3464
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3538
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1840,18 +1774,18 @@ msgstr ""
 "Необходимият изход на звука не е намерен. Изберете друг изход на звука в "
 "„Избор на мултимедийни системи“"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3469
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3543
 msgid "Location not found."
 msgstr "Местоположението не е намерено."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3473
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3547
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Местоположението не може да бъде отворено. Може да нямате права да отворите "
 "файла."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3484
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3558
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1860,7 +1794,7 @@ msgstr ""
 "Видео изходът се използва от друга програма. Затворете другите видео "
 "програми или изберете друг видео изход в „Избор на мултимедийни системи“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3564
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1871,14 +1805,14 @@ msgstr ""
 "сървър."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3508
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3514
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3582
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3588
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Изпълнението на този филм изисква приставката „%s“, която не е инсталирана."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3515
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3589
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1891,34 +1825,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3540
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3614
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Файлът не може да бъде изпълнен през мрежата. Опитайте да го изтеглите на "
 "локалния диск."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3612
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3686
 msgid "Media file could not be played."
 msgstr "Мултимедийният файл не може да бъде изпълнен."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5915
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5988
 msgid "Surround"
 msgstr "обемен звук"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5917
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5990
 msgid "Mono"
 msgstr "моно"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6264
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6337
 msgid "Too old version of GStreamer installed."
 msgstr "Инсталираната версия на GStreamer е твърде стара."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6271
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6344
 msgid "Media contains no supported video streams."
 msgstr "Медията съдържа неподдържани видео потоци."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6784
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6852
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1926,8 +1860,8 @@ msgstr ""
 "Неуспех при създаването на обект за изпълнение на GStreamer. Проверете "
 "инсталацията на GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6898
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7033
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6966
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7101
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1935,7 +1869,7 @@ msgstr ""
 "Неуспех при отварянето на видео изхода. Може да не е наличен. Изберете друг "
 "видео изход от „Избор на мултимедийни системи“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6910
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6978
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1945,7 +1879,7 @@ msgstr ""
 "допълнителни приставки на GStreamer или да изберете друг видео изход от "
 "„Избор на мултимедийни системи“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6945
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7013
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1955,7 +1889,7 @@ msgstr ""
 "отворите звуковата карта или е възможно звуковият сървър да не работи. "
 "Изберете друг звуков изход от „Избор на мултимедийни системи“."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6965
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7033
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2028,32 +1962,6 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plugins/totem-plugin-manager.c:51
-msgid "Plugin"
-msgstr "Приставка"
-
-#: ../src/plugins/totem-plugin-manager.c:52
-msgid "Enabled"
-msgstr "Включени"
-
-#: ../src/plugins/totem-plugins-engine.c:603
-#, c-format
-msgid ""
-"Unable to activate plugin %s.\n"
-"%s"
-msgstr ""
-"Неуспех при задействането на приставката „%s“.\n"
-"%s"
-
-#: ../src/plugins/totem-plugins-engine.c:606
-#, c-format
-msgid "Unable to activate plugin %s"
-msgstr "Неуспех при задействането на приставката „%s“"
-
-#: ../src/plugins/totem-plugins-engine.c:608
-msgid "Plugin Error"
-msgstr "Грешка в приставка"
-
 #: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
 msgid "Bemused"
 msgstr "Bemused"
@@ -2063,56 +1971,56 @@ msgid "Control Totem through a mobile phone with a Bemused client"
 msgstr "Управление на Totem с мобилен телефон чрез клиент за bemused"
 
 #. Translators: the parameter is a number used to identify this playlist entry
-#: ../src/plugins/bemused/totem-bemused.c:186
+#: ../src/plugins/bemused/totem-bemused.c:171
 #, c-format
 msgid "Untitled %d"
 msgstr "Без име %d"
 
-#: ../src/plugins/bemused/totem-bemused.c:609
+#: ../src/plugins/bemused/totem-bemused.c:597
 msgid "Totem Bemused Server"
 msgstr "Сървър за bemused за Totem"
 
 #. FIXME version
-#: ../src/plugins/bemused/totem-bemused.c:611
+#: ../src/plugins/bemused/totem-bemused.c:599
 msgid "Totem Bemused Server version 1.0"
 msgstr "Сървър за bemused за Totem, версия 1.0"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:77
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:67
 msgid "_Create Video Disc..."
 msgstr "_Създаване на видео диск…"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:78
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
 msgid "Create a video DVD or a (S)VCD from the currently opened movie"
 msgstr "Създаване на видео DVD или (S)VCD от текущо отворения филм"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:70
 msgid "Copy Vide_o DVD..."
 msgstr "Копиране на ви_део DVD…"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:81
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
 msgid "Copy the currently playing video DVD"
 msgstr "Копиране на текущо изпълняваното видео DVD"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:73
 msgid "Copy (S)VCD..."
 msgstr "Копиране на (S)VCD…"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:84
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:74
 msgid "Copy the currently playing (S)VCD"
 msgstr "Копиране на текущо изпълнявания (S)VCD"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:124
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:114
 msgid "The video disc could not be duplicated."
 msgstr "Видео дискът не може да бъде копиран."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:128
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:279
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:118
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:269
 msgid "The movie could not be recorded."
 msgstr "Филмът не може да бъде записан."
 
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:150
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:160
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:170
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:266
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:256
 msgid "Unable to write a project."
 msgstr "Проектът не може да бъде запазен."
 
@@ -2125,7 +2033,7 @@ msgid "Video Disc Recorder"
 msgstr "Записване на видео дискове"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1193
+#: ../src/plugins/chapters/totem-chapters.c:1140
 msgid "Chapters"
 msgstr "Глави"
 
@@ -2182,31 +2090,31 @@ msgstr ""
 "<b>Заглавие: </b>%s\n"
 "<b>Начален момент: </b>%s"
 
-#: ../src/plugins/chapters/totem-chapters.c:370
+#: ../src/plugins/chapters/totem-chapters.c:330
 msgid "Error while reading file with chapters"
 msgstr "Грешка при четене на файла с информация за главите"
 
-#: ../src/plugins/chapters/totem-chapters.c:585
+#: ../src/plugins/chapters/totem-chapters.c:545
 msgid "Chapter with the same time already exists"
 msgstr "Вече има глава по същото време"
 
-#: ../src/plugins/chapters/totem-chapters.c:586
+#: ../src/plugins/chapters/totem-chapters.c:546
 msgid "Try another name or remove an existing chapter"
 msgstr "Опитайте с друго име или премахнете съществуваща глава"
 
-#: ../src/plugins/chapters/totem-chapters.c:763
+#: ../src/plugins/chapters/totem-chapters.c:719
 msgid "Error while writing file with chapters"
 msgstr "Грешка при запис на файла с информация за главите"
 
-#: ../src/plugins/chapters/totem-chapters.c:888
+#: ../src/plugins/chapters/totem-chapters.c:844
 msgid "Error occurred while saving chapters"
 msgstr "Грешка при запазване на главите"
 
-#: ../src/plugins/chapters/totem-chapters.c:889
+#: ../src/plugins/chapters/totem-chapters.c:845
 msgid "Please check you rights and free space"
 msgstr "Проверете правата върху файловата система и свободното пространство"
 
-#: ../src/plugins/chapters/totem-chapters.c:1023
+#: ../src/plugins/chapters/totem-chapters.c:979
 msgid "Open Chapters File"
 msgstr "Отваряне на файл с информация за глави"
 
@@ -2215,11 +2123,11 @@ msgid "Failed to parse CMML file"
 msgstr "Грешка при прочитане на файл CMML"
 
 #. Translators: this refers to a media file
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:103
 msgid "Delete"
 msgstr "Изтриване"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:108
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:114
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Клиент за DLNA/UPnP чрез Coherence"
@@ -2250,7 +2158,11 @@ msgstr ""
 "Програмата за бързи съобщения да преминава в състояние „Отсъствам“ при "
 "изпълнението на филм"
 
-#: ../src/plugins/galago/totem-galago.c:171
+#: ../src/plugins/galago/totem-galago.c:117
+msgid "Error loading Galago plugin"
+msgstr "Грешка при зареждането на приставката Galago"
+
+#: ../src/plugins/galago/totem-galago.c:117
 msgid "Could not connect to the Galago daemon."
 msgstr "Неуспех при свързването с демона Galago"
 
@@ -2262,13 +2174,13 @@ msgstr "Бележки с Gromit"
 msgid "Presentation helper to make annotations on screen"
 msgstr "Помощник за презентации, с който се правят бележки върху екрана"
 
-#: ../src/plugins/gromit/totem-gromit.c:272
+#: ../src/plugins/gromit/totem-gromit.c:231
 msgid "The gromit binary was not found."
 msgstr "Изпълнимият файл на gromit не е открит."
 
 #. Add the interface to Totem's sidebar
 #: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:32
+#: ../src/plugins/iplayer/iplayer.py:41
 msgid "BBC iPlayer"
 msgstr "Материали от BBC"
 
@@ -2278,11 +2190,11 @@ msgstr ""
 "Пускане на потоци с програмата на BBC от последните 7 дни от тяхната услуга "
 "iPlayer."
 
-#: ../src/plugins/iplayer/iplayer.py:57
+#: ../src/plugins/iplayer/iplayer.py:66
 msgid "Error listing channel categories"
 msgstr "Грешка при изтеглянето на категориите канали"
 
-#: ../src/plugins/iplayer/iplayer.py:57
+#: ../src/plugins/iplayer/iplayer.py:66
 msgid ""
 "There was an unknown error getting the list of television channels available "
 "on BBC iPlayer."
@@ -2292,22 +2204,23 @@ msgstr ""
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
-#: ../src/plugins/iplayer/iplayer.py:65
+#: ../src/plugins/iplayer/iplayer.py:74
 msgid "Loading…"
 msgstr "Зареждане…"
 
-#: ../src/plugins/iplayer/iplayer.py:106
+#. Translators: the "programme feed" is the list of TV shows available to watch online
+#: ../src/plugins/iplayer/iplayer.py:116
 msgid "Error getting programme feed"
 msgstr "Грешка при изтеглянето на предаванията"
 
-#: ../src/plugins/iplayer/iplayer.py:106
+#: ../src/plugins/iplayer/iplayer.py:116
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
 msgstr ""
 "Грешка при изтеглянето на списъка с предавания от категорията в този канал."
 
-#: ../src/plugins/iplayer/iplayer2.py:295
+#: ../src/plugins/iplayer/iplayer2.py:299
 #, python-format
 msgid "Programme unavailable (\"%s\")"
 msgstr "Предаването е недостъпно („%s“)"
@@ -2325,32 +2238,28 @@ msgid "Jamendo Album Page"
 msgstr "Страница на албума в Jamendo"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:4
-msgid "Jamendo Plugin Configuration"
-msgstr "Настройки на приставката да Jamendo"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:5
 msgid "Latest Releases"
 msgstr "Най-новите албуми"
 
-#: ../src/plugins/jamendo/jamendo.ui.h:6
+#: ../src/plugins/jamendo/jamendo.ui.h:5
 msgid "Number of albums to _retrieve:"
 msgstr "_Брой албуми за изтегляне:"
 
-#: ../src/plugins/jamendo/jamendo.ui.h:7
+#: ../src/plugins/jamendo/jamendo.ui.h:6
 msgid "Popular"
 msgstr "Популярни"
 
-#: ../src/plugins/jamendo/jamendo.ui.h:8
+#: ../src/plugins/jamendo/jamendo.ui.h:7
 msgid "Preferred audio _format:"
 msgstr "_Предпочитан аудио формат:"
 
-#: ../src/plugins/jamendo/jamendo.ui.h:9
+#: ../src/plugins/jamendo/jamendo.ui.h:8
 #: ../src/plugins/tracker/totem-tracker-widget.c:521
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "Резултати от търсенето"
 
-#: ../src/plugins/jamendo/jamendo.ui.h:11
+#: ../src/plugins/jamendo/jamendo.ui.h:10
 msgid "_Open Jamendo Album Page in Browser"
 msgstr "_Отваряне на страницата на албум в Jamendo в уеб браузър"
 
@@ -2366,38 +2275,38 @@ msgstr ""
 "Слушане на огромна колекция от музика от Jamendo лицензирана по условия на "
 "Криейтив Комънс."
 
-#: ../src/plugins/jamendo/jamendo.py:55
+#: ../src/plugins/jamendo/jamendo.py:58
 msgid "You need to install the Python simplejson module."
 msgstr "Трябва да инсталирате модула на Питон simplejson."
 
-#: ../src/plugins/jamendo/jamendo.py:245 ../src/plugins/jamendo/jamendo.py:258
-#: ../src/plugins/jamendo/jamendo.py:281
+#: ../src/plugins/jamendo/jamendo.py:247 ../src/plugins/jamendo/jamendo.py:260
+#: ../src/plugins/jamendo/jamendo.py:284
 #, python-format
 msgid "Artist: %s"
 msgstr "Изпълнител: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:251
+#: ../src/plugins/jamendo/jamendo.py:253
 msgid "%Y-%m-%d"
 msgstr "%Y-%m-%d"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:253
+#: ../src/plugins/jamendo/jamendo.py:255
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:259
+#: ../src/plugins/jamendo/jamendo.py:261
 #, python-format
 msgid "Genre: %s"
 msgstr "Жанр: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:260
+#: ../src/plugins/jamendo/jamendo.py:262
 #, python-format
 msgid "Released on: %s"
 msgstr "Издаден на: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:261
+#: ../src/plugins/jamendo/jamendo.py:263
 #, python-format
 msgid "License: %s"
 msgstr "Лиценз: %s"
@@ -2405,28 +2314,24 @@ msgstr "Лиценз: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:273
+#: ../src/plugins/jamendo/jamendo.py:276
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:280
+#: ../src/plugins/jamendo/jamendo.py:283
 #, python-format
 msgid "Album: %s"
 msgstr "Албум: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:282
+#: ../src/plugins/jamendo/jamendo.py:285
 #, python-format
 msgid "Duration: %s"
 msgstr "Продължителност: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:339
+#: ../src/plugins/jamendo/jamendo.py:345
 msgid "Fetching albums, please wait..."
 msgstr "Изчакайте, теглят се албуми…"
-
-#: ../src/plugins/jamendo/jamendo.py:388
-msgid "An error occurred while fetching albums."
-msgstr "Грешка при изтеглянето на албуми."
 
 #: ../src/plugins/jamendo/jamendo.py:400
 #, python-format
@@ -2442,15 +2347,19 @@ msgstr ""
 msgid "The Jamendo server returned code %s."
 msgstr "Сървърът на Jamendo върна кода %s."
 
+#: ../src/plugins/jamendo/jamendo.py:406
+msgid "An error occurred while fetching albums."
+msgstr "Грешка при изтеглянето на албуми."
+
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:634
+#: ../src/plugins/jamendo/jamendo.py:615
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:637
+#: ../src/plugins/jamendo/jamendo.py:618
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2461,9 +2370,26 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:687
+#: ../src/plugins/jamendo/jamendo.py:668
 msgid "en"
 msgstr "en"
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:1
+msgid "Audio format to download from Jamendo"
+msgstr "Аудио формат при изтегляне от Jamendo"
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:2
+msgid "Number of results per page"
+msgstr "Брой резултати на страница"
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:3
+msgid ""
+"The number of Jamendo search results to display in each page of results."
+msgstr "Брой резултати от Jamendo на страница при търсене."
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:4
+msgid "The preferred audio format to download tracks from Jamendo in."
+msgstr "Предпочитаният аудио формат при теглене от Jamendo."
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -2473,23 +2399,23 @@ msgstr "Инфрачервено дистанционно управление"
 msgid "Support infrared remote control"
 msgstr "Поддръжка на инфрачервено дистанционно управление"
 
-#: ../src/plugins/lirc/totem-lirc.c:281
+#: ../src/plugins/lirc/totem-lirc.c:242
 msgid "Couldn't initialize lirc."
 msgstr "Системата lirc не могат да бъде инициализирана."
 
-#: ../src/plugins/lirc/totem-lirc.c:290
+#: ../src/plugins/lirc/totem-lirc.c:254
 msgid "Couldn't read lirc configuration."
 msgstr "Настройките на lirc не могат да бъдат прочетени."
 
-#: ../src/plugins/mythtv/totem-mythtv.c:198
+#: ../src/plugins/mythtv/totem-mythtv.c:180
 msgid "Recordings"
 msgstr "Записи"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:521
+#: ../src/plugins/mythtv/totem-mythtv.c:453
 msgid "MythTV Recordings"
 msgstr "Записи на MythTV"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:522
+#: ../src/plugins/mythtv/totem-mythtv.c:454
 msgid "MythTV LiveTV"
 msgstr "LiveTV на MythTV"
 
@@ -2517,52 +2443,60 @@ msgstr "Търсене на субтитри за текущо изпълняв�
 msgid "Subtitle Downloader"
 msgstr "Изтегляне на субтитри"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:35
+#: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brasilian Portuguese"
 msgstr "португалско (бразилско)"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:238
-#: ../src/plugins/opensubtitles/opensubtitles.py:254
-#: ../src/plugins/opensubtitles/opensubtitles.py:271
-#: ../src/plugins/opensubtitles/opensubtitles.py:277
+#: ../src/plugins/opensubtitles/opensubtitles.py:245
+#: ../src/plugins/opensubtitles/opensubtitles.py:261
+#: ../src/plugins/opensubtitles/opensubtitles.py:278
+#: ../src/plugins/opensubtitles/opensubtitles.py:284
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Няма връзка със сайта OpenSubtitles.org"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:259
+#: ../src/plugins/opensubtitles/opensubtitles.py:266
 msgid "No results found"
 msgstr "Няма резултати"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:368
+#: ../src/plugins/opensubtitles/opensubtitles.py:372
 msgid "Subtitles"
 msgstr "Субтитри"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:374
+#: ../src/plugins/opensubtitles/opensubtitles.py:378
 msgid "Format"
 msgstr "Формат"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:379
+#: ../src/plugins/opensubtitles/opensubtitles.py:383
 msgid "Rating"
 msgstr "Оценка"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:420
+#: ../src/plugins/opensubtitles/opensubtitles.py:424
 msgid "_Download Movie Subtitles..."
 msgstr "_Изтегляне на субтитри…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:421
+#: ../src/plugins/opensubtitles/opensubtitles.py:425
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Изтегляне на субтитри от OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:480
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Searching subtitles..."
 msgstr "Търсене на субтитри…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:538
+#: ../src/plugins/opensubtitles/opensubtitles.py:541
 msgid "Downloading the subtitles..."
 msgstr "Изтегляне на субтитри…"
+
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+msgid "Subtitle language"
+msgstr "Език на субтитрите"
+
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+msgid "The language to search for subtitles for movies in."
+msgstr "Езикът, за който да се търсят субтитри на филмите."
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
@@ -2572,35 +2506,107 @@ msgstr "Винаги най-отгоре"
 msgid "Keep the main window on top when playing a movie"
 msgstr "Главният прозорец да стои най-отгоре при изпълнение на филм."
 
-#: ../src/plugins/properties/totem-movie-properties.c:152
+#: ../src/plugins/properties/totem-movie-properties.c:128
 msgid "Properties"
 msgstr "Подробности"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:235
+#. Dimensions
+#: ../src/plugins/properties/bacon-video-widget-properties.c:158
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "Липсват"
+
+#. Video Codec
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "Липсва"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:163
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "Липсва"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:250
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "Липсва"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:273
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "Липсва"
+
+#. Audio Codec
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "Липсва"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:237
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#: ../src/plugins/properties/bacon-video-widget-properties.c:271
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#: ../src/plugins/properties/bacon-video-widget-properties.c:273
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:245
+#: ../src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
 msgstr[0] "%d кадър в секунда"
 msgstr[1] "%d кадъра в секунда"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:274
+#: ../src/plugins/properties/bacon-video-widget-properties.c:276
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
+#: ../src/plugins/properties/bacon-video-widget-properties.c:276
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "Липсва"
+
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
+#, no-c-format
+msgid ""
+"A format string used to build the network service name used when publishing "
+"playlists over the network. The following format placeholders can be used: • "
+"%a: the program name as returned by g_get_application_name() • %h: the "
+"machine's host name in title case • %u: the user's login name in title case "
+"• %U: the user's real name • %%: the percent sign"
+msgstr ""
+"Форматиращ низ за съставянето на име за мрежовата услуга при публикуване на "
+"списък за изпълнение по мрежата. Можете да използвате следните шаблонни "
+"изрази: • %a: името на програмата връщано от функцията g_get_application_name"
+"() • %h: името на машината с първи главни букви • %u: името на потребителя с "
+"първи главни букви • %U: истинското име на потребителя • %%: знакът за "
+"процент."
+
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
+msgid "Format for network service name"
+msgstr "Формат на името на мрежовата услуга"
+
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:4
+msgid "Publisher protocol to use"
+msgstr "Протоколът, който да се използва за публикуване"
+
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
+msgid ""
+"The transport protocol to use when publishing playlists over the network."
+msgstr ""
+"Транспортният протокол, който да се използва при публикуване на списъците за "
+"изпълнение по мрежата."
+
 #. Translators: computers on the local network which are publishing their playlists over the network
-#: ../src/plugins/publish/totem-publish.c:589
+#: ../src/plugins/publish/totem-publish.c:547
 msgid "Neighbors"
 msgstr "Съседи"
 
@@ -2631,8 +2637,20 @@ msgstr ""
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "Използване на _шифриран транспортен протокол (HTTPS)"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:94
-#: ../browser-plugin/totem-plugin-viewer.c:1964
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+msgid ""
+"A password to protect the rpdb2 server for debugging Totem from unauthorized "
+"remote access. If this is empty, a default of 'totem' will be used."
+msgstr ""
+"Парола за защита на сървъра за изчистване на грешки rpdb2 от неупълномощен "
+"достъп. Ако е празно, се използа стандартната парола „totem“.."
+
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+msgid "rpdb2 password"
+msgstr "Парола за rpdb2"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:112
+#: ../browser-plugin/totem-plugin-viewer.c:1965
 msgid "Playing a movie"
 msgstr "Изпълнение на филм"
 
@@ -2662,11 +2680,11 @@ msgstr "_Име:"
 
 #. Write the screenshot to the temporary file
 #: ../src/plugins/screenshot/gnome-screenshot-widget.c:389
-#: ../src/plugins/screenshot/totem-screenshot.c:63
+#: ../src/plugins/screenshot/totem-screenshot.c:64
 msgid "Screenshot.png"
 msgstr "Филмов_кадър.png"
 
-#: ../src/plugins/screenshot/totem-gallery.c:90
+#: ../src/plugins/screenshot/totem-gallery.c:91
 msgid "Save Gallery"
 msgstr "Запазване на галерията"
 
@@ -2674,7 +2692,7 @@ msgstr "Запазване на галерията"
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:114
+#: ../src/plugins/screenshot/totem-gallery.c:115
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Галерия-%s-%d.jpg"
@@ -2690,75 +2708,71 @@ msgstr "Създаване на галерия…"
 msgid "Saving gallery as \"%s\""
 msgstr "Запазване на галерията като „%s“"
 
-#: ../src/plugins/screenshot/totem-screenshot.c:112
+#: ../src/plugins/screenshot/totem-screenshot.c:113
 msgid "There was an error saving the screenshot."
 msgstr "Имаше грешка при запазването на кадъра."
 
-#: ../src/plugins/screenshot/totem-screenshot.c:138
+#: ../src/plugins/screenshot/totem-screenshot.c:139
 msgid "Save Screenshot"
 msgstr "Запазване на кадър"
 
 #. Create the screenshot widget
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:159
+#: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Филмов_кадър-%s-%d.png"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:98
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:88
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:95
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem не можа да заснеме кадър от този филм."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:105
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:95
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Това не трябва да се случва! Моля, подайте доклад за грешка."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:197
 msgid "Take _Screenshot..."
 msgstr "_Снимане на кадър…"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:208
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:197
 msgid "Take a screenshot"
 msgstr "Заснемане на текущия кадър"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:198
 msgid "Create Screenshot _Gallery..."
 msgstr "Заснемане на _галерия ат кадри…"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:209
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:198
 msgid "Create a gallery of screenshots"
 msgstr "Заснемане на галерия ат кадри"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
 #. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#: ../src/plugins/skipto/totem-skipto.c:158
-#: ../src/plugins/skipto/totem-skipto.c:184
+#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:185
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "секунда"
 msgstr[1] "секунди"
 
-#: ../src/plugins/skipto/totem-skipto.c:184
+#: ../src/plugins/skipto/totem-skipto.c:185
 msgid "seconds"
 msgstr "секунди"
 
-#: ../src/plugins/skipto/totem-skipto.c:190
+#: ../src/plugins/skipto/totem-skipto.c:191
 msgid "Skip to"
 msgstr "Прескачане до"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:216
+#: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "_Skip to..."
 msgstr "Прескачане _до…"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:216
+#: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Прескачане до зададено време"
-
-#: ../src/plugins/skipto/totem-skipto-plugin.c:222
-msgid "Could not load the \"Skip to\" dialog interface."
-msgstr "Неуспех при зареждането на интерфейса на прозореца за „Прескачане до“."
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
@@ -2799,7 +2813,7 @@ msgstr[1] "Показани са резултати %i÷%i от общо %i"
 msgid "Page"
 msgstr "Страница"
 
-#: ../src/plugins/tracker/totem-tracker.c:91
+#: ../src/plugins/tracker/totem-tracker.c:65
 #: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
 msgid "Local Search"
 msgstr "Локално търсене"
@@ -2832,36 +2846,36 @@ msgstr "Свързани видео клипове"
 msgid "Videos"
 msgstr "Видео клипове"
 
-#: ../src/plugins/youtube/totem-youtube.c:316
+#: ../src/plugins/youtube/totem-youtube.c:295
 msgid "_Open in Web Browser"
 msgstr "_Отваряне в уеб браузър"
 
-#: ../src/plugins/youtube/totem-youtube.c:316
+#: ../src/plugins/youtube/totem-youtube.c:295
 msgid "Open the video in your web browser"
 msgstr "Отваряне на видео в уеб браузър"
 
 #. Add the sidebar page
-#: ../src/plugins/youtube/totem-youtube.c:366
+#: ../src/plugins/youtube/totem-youtube.c:346
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:452
+#: ../src/plugins/youtube/totem-youtube.c:432
 msgid "Cancelling query…"
 msgstr "Отмяна на заявка…"
 
-#: ../src/plugins/youtube/totem-youtube.c:513
+#: ../src/plugins/youtube/totem-youtube.c:493
 msgid "Error Looking Up Video URI"
 msgstr "Грешка при търсенето на адреса на видео"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:797
-#: ../src/plugins/youtube/totem-youtube.c:802
+#: ../src/plugins/youtube/totem-youtube.c:777
+#: ../src/plugins/youtube/totem-youtube.c:782
 msgid "Error Searching for Videos"
 msgstr "Грешка при търсенето на видео клипове"
 
-#: ../src/plugins/youtube/totem-youtube.c:798
+#: ../src/plugins/youtube/totem-youtube.c:778
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2870,20 +2884,20 @@ msgstr ""
 "libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:972
+#: ../src/plugins/youtube/totem-youtube.c:954
 msgid "Fetching search results…"
 msgstr "Изтегляне на резултатите от търсенето…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:1037
+#: ../src/plugins/youtube/totem-youtube.c:1019
 msgid "Fetching related videos…"
 msgstr "Изтегляне на свързаните видео клипове…"
 
-#: ../src/plugins/youtube/totem-youtube.c:1088
+#: ../src/plugins/youtube/totem-youtube.c:1071
 msgid "Error Opening Video in Web Browser"
 msgstr "Грешка при отваряне в уеб браузър"
 
-#: ../src/plugins/youtube/totem-youtube.c:1108
+#: ../src/plugins/youtube/totem-youtube.c:1091
 msgid "Fetching more videos…"
 msgstr "Изтегляне на още видео клипове…"
 
@@ -2908,15 +2922,15 @@ msgstr "Приставка за браузъри, която използва %s
 msgid "Totem Browser Plugin"
 msgstr "Приставка на Totem за браузъри"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2179
+#: ../browser-plugin/totem-plugin-viewer.c:2184
 msgid "No playlist or playlist empty"
 msgstr "Или няма списък за изпълнение, или той е празен"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2270
+#: ../browser-plugin/totem-plugin-viewer.c:2275
 msgid "Movie browser plugin"
 msgstr "Приставка за филми за браузъри"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2286
+#: ../browser-plugin/totem-plugin-viewer.c:2291
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Проверете системата си. Приставката на Totem ще бъде спряна."
 
@@ -2928,39 +2942,39 @@ msgstr "Интерактивна конзола на Питон."
 msgid "Python Console"
 msgstr "Конзола на Питон"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:74
+#: ../src/plugins/pythonconsole/pythonconsole.py:85
 msgid "Python Console Menu"
 msgstr "Меню за конзолата на Питон"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:77
+#: ../src/plugins/pythonconsole/pythonconsole.py:88
 msgid "_Python Console"
 msgstr "_Конзола на Питон"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:78
+#: ../src/plugins/pythonconsole/pythonconsole.py:89
 msgid "Show Totem's Python console"
 msgstr "Показване на конзолата на Питон"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:83
+#: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Python Debugger"
 msgstr "Изчистване на грешки на Питон"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:84
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "Включване на отдалеченото изчистване на грешки на Питон с rpdb2"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:106
+#: ../src/plugins/pythonconsole/pythonconsole.py:116
 #, python-format
-msgid "You can access the totem object through 'totem_object' :\\n%s"
+msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "Обектът на Totem е достъпен като „totem_object“: \\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:111
+#: ../src/plugins/pythonconsole/pythonconsole.py:120
 msgid "Totem Python Console"
 msgstr "Конзола на Питон за Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:120
+#: ../src/plugins/pythonconsole/pythonconsole.py:129
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
-"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
 "След като натиснете „Добре“, Totem ще изчака да се свържете с него чрез "
