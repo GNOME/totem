@@ -5,32 +5,33 @@
 # Adi Roiban https://launchpad.net/~adiroiban, 2008, 2009.
 # Mișu Moldovan <dumol@gnome.ro>, 2009.
 # Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2009, 2010.
+# Daniel Șerbănescu <cyber19rider@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.ro\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-02-12 18:54+0000\n"
-"PO-Revision-Date: 2010-02-12 23:51+0300\n"
+"POT-Creation-Date: 2010-09-21 19:43+0000\n"
+"PO-Revision-Date: 2010-09-26 02:15+0300\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
-"Language-Team: Romanian GNOME Team <gnomero-list@lists.sourceforge.net>\n"
+"Language-Team: Romanian Gnome Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"X-Generator: Virtaal 0.5.2\n"
+"X-Generator: Virtaal 0.6.1\n"
 
 #: ../data/fullscreen.ui.h:1
 msgid "Leave Fullscreen"
 msgstr "Părăsește modul pe tot ecranul"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:98
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:102
 msgid "Time:"
 msgstr "Timp:"
 
-#: ../data/playlist.ui.h:1
+#: ../data/playlist.ui.h:1 ../src/plugins/chapters/chapters-list.ui.h:1
 msgid "Add..."
 msgstr "Adaugă..."
 
@@ -46,19 +47,19 @@ msgstr "Mută jos"
 msgid "Move Up"
 msgstr "Mută sus"
 
-#: ../data/playlist.ui.h:5
+#: ../data/playlist.ui.h:5 ../src/plugins/chapters/chapters-list.ui.h:8
 msgid "Remove"
-msgstr "Șterge"
+msgstr "Elimină"
 
 #: ../data/playlist.ui.h:6
 msgid "Remove file from playlist"
-msgstr "Șterge fiṣierul din lista de redare"
+msgstr "Elimină fișierul din lista de redare"
 
 #: ../data/playlist.ui.h:7
 msgid "Save Playlist..."
-msgstr "Salvează listă..."
+msgstr "Salvează lista de redare..."
 
-#: ../data/playlist.ui.h:8 ../data/totem.ui.h:73
+#: ../data/playlist.ui.h:8 ../data/totem.ui.h:77
 msgid "Select a file to use for text subtitles"
 msgstr "Alegeți un fișier pentru a fi folosit ca subtitrare"
 
@@ -66,11 +67,11 @@ msgstr "Alegeți un fișier pentru a fi folosit ca subtitrare"
 msgid "_Copy Location"
 msgstr "_Copiază locația"
 
-#: ../data/playlist.ui.h:10
+#: ../data/playlist.ui.h:10 ../src/plugins/chapters/chapters-list.ui.h:12
 msgid "_Remove"
 msgstr "_Elimină"
 
-#: ../data/playlist.ui.h:11 ../data/totem.ui.h:138
+#: ../data/playlist.ui.h:11 ../data/totem.ui.h:145
 msgid "_Select Text Subtitles..."
 msgstr "Alegeți textul _subtitrărilor..."
 
@@ -131,7 +132,7 @@ msgstr "Album:"
 msgid "Artist:"
 msgstr "Artist:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:22
 #: ../src/totem-properties-view.c:89
 msgid "Audio"
 msgstr "Sunet"
@@ -164,7 +165,7 @@ msgstr "Durată:"
 msgid "Framerate:"
 msgstr "Frecvență cadre:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:40
+#: ../data/properties.ui.h:17 ../data/totem.ui.h:41
 msgid "General"
 msgstr "General"
 
@@ -179,15 +180,15 @@ msgstr "General"
 #: ../src/plugins/properties/bacon-video-widget-properties.c:167
 #: ../src/plugins/properties/bacon-video-widget-properties.c:169
 #: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:257
-#: ../src/plugins/properties/bacon-video-widget-properties.c:260
+#: ../src/plugins/properties/bacon-video-widget-properties.c:248
+#: ../src/plugins/properties/bacon-video-widget-properties.c:271
+#: ../src/plugins/properties/bacon-video-widget-properties.c:274
 msgid "N/A"
 msgstr "N/A"
 
 #: ../data/properties.ui.h:19
 msgid "Sample rate:"
-msgstr "Eșantionare:"
+msgstr "Eșantion:"
 
 #: ../data/properties.ui.h:20
 msgid "Title:"
@@ -205,7 +206,8 @@ msgstr "Titlu:"
 msgid "Unknown"
 msgstr "Necunoscut"
 
-#: ../data/properties.ui.h:22 ../src/totem-properties-view.c:85
+#: ../data/properties.ui.h:22 ../data/totem.ui.h:104
+#: ../src/totem-properties-view.c:85
 msgid "Video"
 msgstr "Video"
 
@@ -215,16 +217,16 @@ msgstr "An:"
 
 #: ../data/video-list.ui.h:1
 msgid "Add the video to the playlist"
-msgstr "Adaugă fișierul video la listă"
+msgstr "Adaugă fișierul video la lista de redare"
 
 #: ../data/video-list.ui.h:3 ../src/totem-dnd-menu.c:97
 #: ../src/plugins/jamendo/jamendo.ui.h:10
 msgid "_Add to Playlist"
-msgstr "_Adaugă la listă"
+msgstr "_Adaugă la lista de redare"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:50
-#: ../src/totem-object.c:1630
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
+#: ../src/totem-object.c:1620
 msgid "Movie Player"
 msgstr "Player pentru filme"
 
@@ -316,463 +318,476 @@ msgstr "Meniu s_unet"
 msgid "About this application"
 msgstr "Despre această aplicație"
 
-#: ../data/totem.ui.h:22
-msgid "Also disable the screensaver when playing _audio"
-msgstr "Dezactivează economizorul de ecran și la redarea de fișiere _audio"
-
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:23
 msgid "Audio Output"
 msgstr "Ieșire audio"
 
-#: ../data/totem.ui.h:25 ../src/totem-menu.c:346
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../data/totem.ui.h:24 ../src/totem-menu.c:197
 msgid "Auto"
 msgstr "Auto"
 
-#: ../data/totem.ui.h:26
-msgid "Automatically _load subtitle files when movie is loaded"
-msgstr "Încarcă automat subtitrările _la încărcarea filmului"
-
-#: ../data/totem.ui.h:27
-msgid "Automatically _resize the window when a new video is loaded"
-msgstr "_Redimensionează automat fereastra la încărcarea unui nou fișier video"
-
-#: ../data/totem.ui.h:28
+#: ../data/totem.ui.h:25
 msgid "Clear the playlist"
 msgstr "Curăță lista de redare"
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:26
 msgid "Co_ntrast:"
 msgstr "Co_ntrast:"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:27
 msgid "Color Balance"
 msgstr "Balanță culori"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:28
 msgid "Configure plugins to extend the application"
 msgstr "Configurați module ce extind funcționalitățile aplicației"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:29
 msgid "Configure the application"
-msgstr "Configurare aplicație"
+msgstr "Configurați aplicația"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:30
 msgid "Connection _speed:"
 msgstr "_Viteză conexiune:"
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:31
 msgid "Decrease volume"
-msgstr "Scade volum"
+msgstr "Redu volumul"
 
+#: ../data/totem.ui.h:32
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "Dezactivează _deîntrețeserea videoclipurilor întrețesute"
+
+#: ../data/totem.ui.h:33
+msgid "Disable screensaver when playing "
+msgstr "Dezactivează economizorul de ecran în timpul redării "
+
+#. Tab label in the Preferences dialogue
 #: ../data/totem.ui.h:35
-msgid "Deinterlace"
-msgstr "Estompează întrețeserea"
-
-#: ../data/totem.ui.h:36
 msgid "Display"
 msgstr "Afișare"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:36
 msgid "Eject the current disc"
 msgstr "Scoate discul curent"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:37
+msgid "External Chapters"
+msgstr "Capitolele externe"
+
+#. Audio visualization dimensions
+#: ../data/totem.ui.h:39
 msgid "Extra Large"
 msgstr "Foarte mare"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:40
 msgid "Fit Window to Movie"
 msgstr "Potrivește fereastra la film"
 
-#: ../data/totem.ui.h:41
-msgid "Go to the DVD menu"
-msgstr "Mergi la meniul DVD"
-
 #: ../data/totem.ui.h:42
-msgid "Go to the angle menu"
-msgstr "Mergi la meniul unghiular"
+msgid "Go to the DVD menu"
+msgstr "Navighează la meniul DVD"
 
 #: ../data/totem.ui.h:43
-msgid "Go to the audio menu"
-msgstr "Mergi la meniul audio"
+msgid "Go to the angle menu"
+msgstr "Navighează la meniul unghiular"
 
 #: ../data/totem.ui.h:44
-msgid "Go to the chapter menu"
-msgstr "Mergi la meniul capitol"
+msgid "Go to the audio menu"
+msgstr "Navighează la meniul audio"
 
 #: ../data/totem.ui.h:45
-msgid "Go to the title menu"
-msgstr "Mergi la meniul titlu"
+msgid "Go to the chapter menu"
+msgstr "Navighează la meniul capitol"
 
 #: ../data/totem.ui.h:46
+msgid "Go to the title menu"
+msgstr "Navighează la meniul titlu"
+
+#: ../data/totem.ui.h:47
 msgid "Help contents"
 msgstr "Conținut ajutor"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:48
 msgid "Increase volume"
 msgstr "Crește volumul"
 
-#: ../data/totem.ui.h:48
+#: ../data/totem.ui.h:49
 msgid "Intranet/LAN"
 msgstr "Intranet/LAN"
 
-#: ../data/totem.ui.h:49
+#. Audio visualization dimensions
+#: ../data/totem.ui.h:51
 msgid "Large"
 msgstr "Mare"
 
-#: ../data/totem.ui.h:51
+#: ../data/totem.ui.h:52
+msgid "Load _chapter files when movie is loaded"
+msgstr "Încarcă automat fișierele _capitolului la încărcarea filmului"
+
+#: ../data/totem.ui.h:54
 msgid "Networking"
 msgstr "Rețea"
 
-#: ../data/totem.ui.h:52
+#: ../data/totem.ui.h:55
 msgid "Next chapter or movie"
 msgstr "Următorul capitol sau film"
 
-#: ../data/totem.ui.h:53
+#. Audio visualization dimensions
+#: ../data/totem.ui.h:57
 msgid "Normal"
 msgstr "Normală"
 
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:58
 msgid "Open _Location..."
 msgstr "Deschide o _locație..."
 
-#: ../data/totem.ui.h:55
+#: ../data/totem.ui.h:59
 msgid "Open a file"
 msgstr "Deschide un fișier"
 
-#: ../data/totem.ui.h:56
+#: ../data/totem.ui.h:60
 msgid "Open a non-local file"
 msgstr "Deschide un fișier la distanță"
 
-#: ../data/totem.ui.h:57
+#: ../data/totem.ui.h:61
 msgid "Play / P_ause"
 msgstr "Redă / P_auză"
 
-#: ../data/totem.ui.h:58
+#: ../data/totem.ui.h:62
 msgid "Play or pause the movie"
 msgstr "Redă sau întrerupe filmul"
 
-#: ../data/totem.ui.h:59
+#: ../data/totem.ui.h:63
 msgid "Playback"
 msgstr "Redare"
 
-#: ../data/totem.ui.h:60
+#: ../data/totem.ui.h:64
 msgid "Plugins..."
 msgstr "Module..."
 
-#: ../data/totem.ui.h:61
+#: ../data/totem.ui.h:65
 msgid "Prefere_nces"
 msgstr "Preferi_nțe"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:66
 msgid "Previous chapter or movie"
 msgstr "Precedentul capitol sau film"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:67
 msgid "Quit the program"
 msgstr "Închide aplicația"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:68
 msgid "Reset to _Defaults"
 msgstr "Revenire la _valori implicite"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:69
 msgid "Resize _1:1"
 msgstr "Redimensionează _1:1"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:70
 msgid "Resize _2:1"
 msgstr "Redimensionează _2:1"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:71
 msgid "Resize to double the original video size"
 msgstr "Redimensionează la dublul dimensiunii imaginii originale"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:72
 msgid "Resize to half the original video size"
 msgstr "Redimensionează la jumătate din dimensiunea originală"
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:73
 msgid "Resize to the original video size"
 msgstr "Redimensionează la dimensiunea originală"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:74
 msgid "S_idebar"
 msgstr "Bară _laterală"
 
-#: ../data/totem.ui.h:71
+#: ../data/totem.ui.h:75
 msgid "S_ubtitles"
 msgstr "S_ubtitrări"
 
-#: ../data/totem.ui.h:72
+#: ../data/totem.ui.h:76
 msgid "Sat_uration:"
 msgstr "Sat_urație:"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:78
 msgid "Set the repeat mode"
 msgstr "Definește modul de repetare"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:79
 msgid "Set the shuffle mode"
 msgstr "Definește modul aleator"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:80
 msgid "Sets 16:9 (widescreen) aspect ratio"
 msgstr "Definește la proporția 16:9 (ecran lat)"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:81
 msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgstr "Definește la proporția 2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:82
 msgid "Sets 4:3 (TV) aspect ratio"
 msgstr "Definește la proporția 4:3 (TV)"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:83
 msgid "Sets automatic aspect ratio"
 msgstr "Definește la proporția automat"
 
-#: ../data/totem.ui.h:80
+#: ../data/totem.ui.h:84
 msgid "Sets square aspect ratio"
 msgstr "Definește la proporția pătrată"
 
-#: ../data/totem.ui.h:81
+#: ../data/totem.ui.h:85
 msgid "Show _Controls"
 msgstr "Afișează _controale"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:86
 msgid "Show _visual effects when an audio file is played"
 msgstr "Afișează efecte vi_zuale la redarea unui fișier audio"
 
-#: ../data/totem.ui.h:83
+#: ../data/totem.ui.h:87
 msgid "Show controls"
 msgstr "Afișează controale"
 
-#: ../data/totem.ui.h:84
+#: ../data/totem.ui.h:88
 msgid "Show or hide the sidebar"
 msgstr "Afișează sau ascunde bara laterală"
 
-#: ../data/totem.ui.h:85
+#: ../data/totem.ui.h:89
 msgid "Shuff_le Mode"
 msgstr "Mod a_leator"
 
-#: ../data/totem.ui.h:86
+#: ../data/totem.ui.h:90
 msgid "Skip _Backwards"
 msgstr "Derulează î_napoi"
 
-#: ../data/totem.ui.h:87
+#: ../data/totem.ui.h:91
 msgid "Skip _Forward"
 msgstr "Derulează înain_te"
 
-#: ../data/totem.ui.h:88
+#: ../data/totem.ui.h:92
 msgid "Skip backwards"
 msgstr "Derulează înapoi"
 
-#: ../data/totem.ui.h:89
+#: ../data/totem.ui.h:93
 msgid "Skip forward"
 msgstr "Derulează înainte"
 
-#: ../data/totem.ui.h:90
+#: ../data/totem.ui.h:94
 msgid "Square"
 msgstr "Pătrat"
 
-#: ../data/totem.ui.h:91
+#: ../data/totem.ui.h:95
 msgid "Start playing files from last position"
 msgstr "Pornește redarea fișierelor de la ultima poziție"
 
-#: ../data/totem.ui.h:92 ../src/backend/bacon-video-widget-gst-0.10.c:5732
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5919
 msgid "Stereo"
 msgstr "Stereo"
 
-#: ../data/totem.ui.h:93
+#: ../data/totem.ui.h:97
 msgid "Switch An_gles"
 msgstr "Schimbă un_ghiul"
 
-#: ../data/totem.ui.h:94
+#: ../data/totem.ui.h:98
 msgid "Switch camera angles"
 msgstr "Schimbă unghiul camerei"
 
-#: ../data/totem.ui.h:95
+#: ../data/totem.ui.h:99
 msgid "Switch to fullscreen"
 msgstr "Afișează pe tot ecranul"
 
-#: ../data/totem.ui.h:96
+#: ../data/totem.ui.h:100
 msgid "Text Subtitles"
-msgstr "Text subtitrări"
+msgstr "Subtitrări text"
 
-#: ../data/totem.ui.h:97
+#: ../data/totem.ui.h:101
 msgid "Time seek bar"
 msgstr "Bară de derulare"
 
-#: ../data/totem.ui.h:99
+#: ../data/totem.ui.h:103
 msgid "Totem Preferences"
 msgstr "Preferințe Totem"
 
-#: ../data/totem.ui.h:100
+#: ../data/totem.ui.h:105
+msgid "Video or Audio"
+msgstr "Video sau audio"
+
+#: ../data/totem.ui.h:106
 msgid "View the properties of the current stream"
 msgstr "Arată proprietățile fluxului curent"
 
-#: ../data/totem.ui.h:101
+#: ../data/totem.ui.h:107
 msgid "Visual Effects"
 msgstr "Efecte vizuale"
 
-#: ../data/totem.ui.h:102
+#: ../data/totem.ui.h:108
 msgid "Visualization _size:"
-msgstr "_Mărime vizualizare:"
+msgstr "Mărime _vizualizare:"
 
-#: ../data/totem.ui.h:103
+#: ../data/totem.ui.h:109
 msgid "Volume _Down"
-msgstr "_Micșorare volum"
+msgstr "Re_du volumul"
 
-#: ../data/totem.ui.h:104
+#: ../data/totem.ui.h:110
 msgid "Volume _Up"
-msgstr "Mă_rire volum"
+msgstr "Crește vol_umul"
 
-#: ../data/totem.ui.h:105
+#: ../data/totem.ui.h:111
 msgid "Zoom In"
 msgstr "Mărește"
 
-#: ../data/totem.ui.h:106
+#: ../data/totem.ui.h:112
 msgid "Zoom Out"
 msgstr "Micșorează"
 
-#: ../data/totem.ui.h:107
+#: ../data/totem.ui.h:113
 msgid "Zoom Reset"
 msgstr "Mărime originală"
 
-#: ../data/totem.ui.h:108
+#: ../data/totem.ui.h:114
 msgid "Zoom in"
 msgstr "Mărește"
 
-#: ../data/totem.ui.h:109
+#: ../data/totem.ui.h:115
 msgid "Zoom out"
 msgstr "Micșorează"
 
-#: ../data/totem.ui.h:110
+#: ../data/totem.ui.h:116
 msgid "Zoom reset"
 msgstr "Mărime originală"
 
-#: ../data/totem.ui.h:111
+#: ../data/totem.ui.h:117
 msgid "_About"
 msgstr "_Despre"
 
-#: ../data/totem.ui.h:112
+#: ../data/totem.ui.h:118
 msgid "_Angle Menu"
 msgstr "Meniu _unghi"
 
-#: ../data/totem.ui.h:113
+#: ../data/totem.ui.h:119
 msgid "_Aspect Ratio"
 msgstr "_Proporție"
 
-#: ../data/totem.ui.h:114
+#: ../data/totem.ui.h:120
 msgid "_Audio output type:"
 msgstr "Tip de ieșire _audio:"
 
-#: ../data/totem.ui.h:115
+#: ../data/totem.ui.h:121
 msgid "_Brightness:"
 msgstr "_Luminozitate:"
 
-#: ../data/totem.ui.h:116
+#: ../data/totem.ui.h:122
 msgid "_Chapter Menu"
 msgstr "Meniu _capitol"
 
-#: ../data/totem.ui.h:117
+#: ../data/totem.ui.h:123
 msgid "_Clear Playlist"
 msgstr "Gol_ește lista"
 
-#: ../data/totem.ui.h:118
+#: ../data/totem.ui.h:124
 msgid "_Contents"
 msgstr "_Conținut"
 
-#: ../data/totem.ui.h:119
+#: ../data/totem.ui.h:125
 msgid "_DVD Menu"
 msgstr "Meniu _DVD"
 
-#: ../data/totem.ui.h:120
-msgid "_Deinterlace"
-msgstr "E_stompează întrețeserea"
-
-#: ../data/totem.ui.h:121
+#: ../data/totem.ui.h:126
 msgid "_Edit"
 msgstr "_Editare"
 
-#: ../data/totem.ui.h:122
+#: ../data/totem.ui.h:127
 msgid "_Eject"
 msgstr "_Ejectare"
 
-#: ../data/totem.ui.h:123
+#: ../data/totem.ui.h:128
 msgid "_Encoding:"
 msgstr "Codar_e:"
 
-#: ../data/totem.ui.h:124
+#: ../data/totem.ui.h:129
 msgid "_Font:"
 msgstr "_Font:"
 
-#: ../data/totem.ui.h:125
+#: ../data/totem.ui.h:130
 msgid "_Fullscreen"
 msgstr "_Pe tot ecranul"
 
-#: ../data/totem.ui.h:126
+#: ../data/totem.ui.h:131
 msgid "_Go"
 msgstr "_Navigare"
 
-#: ../data/totem.ui.h:127
+#: ../data/totem.ui.h:132
 msgid "_Help"
 msgstr "_Ajutor"
 
-#: ../data/totem.ui.h:128
+#: ../data/totem.ui.h:133
 msgid "_Hue:"
 msgstr "N_uanță:"
 
-#: ../data/totem.ui.h:129
+#: ../data/totem.ui.h:134
 msgid "_Languages"
 msgstr "_Limbi"
 
-#: ../data/totem.ui.h:130
+#: ../data/totem.ui.h:135
+msgid "_Load subtitle files when movie is loaded"
+msgstr "Încarcă automat subtitrările _la încărcarea filmului"
+
+#: ../data/totem.ui.h:136
 msgid "_Movie"
 msgstr "_Film"
 
-#: ../data/totem.ui.h:131
+#: ../data/totem.ui.h:137
 msgid "_Next Chapter/Movie"
 msgstr "_Următorul capitol/film"
 
-#: ../data/totem.ui.h:132
+#: ../data/totem.ui.h:138
 msgid "_Open..."
 msgstr "_Deschide..."
 
-#: ../data/totem.ui.h:133
+#: ../data/totem.ui.h:139
 msgid "_Previous Chapter/Movie"
 msgstr "_Precedentul capitol/film"
 
-#: ../data/totem.ui.h:134
+#: ../data/totem.ui.h:140
 msgid "_Properties"
 msgstr "_Proprietăți"
 
-#: ../data/totem.ui.h:135
+#: ../data/totem.ui.h:141
 msgid "_Quit"
 msgstr "_Ieșire"
 
-#: ../data/totem.ui.h:136
+#: ../data/totem.ui.h:142
 msgid "_Repeat Mode"
 msgstr "Mod _repetitiv"
 
-#: ../data/totem.ui.h:137
+#: ../data/totem.ui.h:143
 msgid "_Resize 1:2"
 msgstr "_Redimensionare 1:2"
 
-#: ../data/totem.ui.h:139
+#: ../data/totem.ui.h:144
+msgid "_Resize the window when a new video is loaded"
+msgstr "_Redimensionează automat fereastra la încărcarea unui nou fișier video"
+
+#: ../data/totem.ui.h:146
 msgid "_Sound"
 msgstr "_Sunet"
 
-#: ../data/totem.ui.h:140
+#: ../data/totem.ui.h:147
 msgid "_Title Menu"
 msgstr "Meniu _titlu"
 
-#: ../data/totem.ui.h:141
+#: ../data/totem.ui.h:148
 msgid "_Type of visualization:"
 msgstr "_Tip vizualizare:"
 
-#: ../data/totem.ui.h:142
+#: ../data/totem.ui.h:149
 msgid "_View"
 msgstr "_Afișare"
 
@@ -815,14 +830,10 @@ msgstr ""
 "DSL/Cable, „10” pentru T1/intranet/LAN de 1.5 Mbps, „11” pentru intranet/LAN."
 
 #: ../data/totem.schemas.in.h:5
-msgid "Buffer size"
-msgstr "Mărime memorie tampon"
-
-#: ../data/totem.schemas.in.h:6
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Locația implicită pentru dialogurile „Deschide...”"
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/totem.schemas.in.h:6
 msgid ""
 "Default location for the \"Open...\" dialogs, default is the current "
 "directory"
@@ -830,11 +841,11 @@ msgstr ""
 "Locația implicită pentru dialogurile „Deschide...”, implicit este dosarul "
 "curent"
 
-#: ../data/totem.schemas.in.h:8
+#: ../data/totem.schemas.in.h:7
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Locația implicită pentru dialogurile „Captură ecran”"
 
-#: ../data/totem.schemas.in.h:9
+#: ../data/totem.schemas.in.h:8
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs, default is the "
 "Pictures directory"
@@ -842,37 +853,27 @@ msgstr ""
 "Locația implicită pentru dialogurile „Captură ecran”, implicit este dosarul "
 "cu poze"
 
-#: ../data/totem.schemas.in.h:10
-msgid "Enable deinterlacing"
-msgstr "Activează estomparea întrețeserii"
-
-#: ../data/totem.schemas.in.h:11
+#: ../data/totem.schemas.in.h:9
 msgid "Encoding charset for subtitle"
-msgstr "Tip codare set de caractere pentru subtitrare"
+msgstr "Set codare caractere pentru subtitrare"
 
-#: ../data/totem.schemas.in.h:12
-msgid "Maximum amount of data to decode ahead of display (in seconds)"
-msgstr ""
-"Cantitatea maximă de date ce va fi decodată înainte de a începe redarea (în "
-"secunde)"
-
-#: ../data/totem.schemas.in.h:13
+#: ../data/totem.schemas.in.h:10
 msgid "Name of the visual effects plugins"
 msgstr "Numele modulelor pentru efectele vizuale"
 
-#: ../data/totem.schemas.in.h:14
+#: ../data/totem.schemas.in.h:11
 msgid "Network buffering threshold"
 msgstr "Prag memorie tampon pe rețea"
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/totem.schemas.in.h:12
 msgid "Network connection speed"
 msgstr "Viteză conexiune rețea"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/totem.schemas.in.h:13
 msgid "Pango font description for subtitle rendering"
 msgstr "Descrierea fontului pango pentru afișarea subtitrării"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/totem.schemas.in.h:14
 msgid ""
 "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 "normal, \"2\" for large, \"3\" for extra large."
@@ -880,55 +881,55 @@ msgstr ""
 "Configurarea calității vizualizării audio: „0” pentru mic, „1” pentru "
 "normal, „2” pentru mare, „3” pentru foarte mare."
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/totem.schemas.in.h:15
 msgid "Repeat mode"
 msgstr "Mod repetitiv"
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/totem.schemas.in.h:16
 msgid "Resize the canvas automatically on file load"
 msgstr "Redimensionează afișarea la încărcarea fișierelor"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/totem.schemas.in.h:17
 msgid "Show visual effects when no video is displayed"
 msgstr "Afișează efecte vizuale când nu este redată partea video"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/totem.schemas.in.h:18
 msgid "Show visual effects when playing an audio only file."
 msgstr "Afișează efecte vizuale când este redat un fișier audio."
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/totem.schemas.in.h:19
 msgid "Shuffle mode"
 msgstr "Mod aleator"
 
-#: ../data/totem.schemas.in.h:23
+#: ../data/totem.schemas.in.h:20
 msgid "Subtitle encoding"
 msgstr "Tip codare pentru subtitrare"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/totem.schemas.in.h:21
 msgid "Subtitle font"
 msgstr "Font subtitrare"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/totem.schemas.in.h:22
 msgid "The brightness of the video"
 msgstr "Luminozitatea filmului"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/totem.schemas.in.h:23
 msgid "The contrast of the video"
 msgstr "Contrastul video"
 
-#: ../data/totem.schemas.in.h:27
+#: ../data/totem.schemas.in.h:24
 msgid "The hue of the video"
 msgstr "Nuanța pentru video"
 
-#: ../data/totem.schemas.in.h:28
+#: ../data/totem.schemas.in.h:25
 msgid "The saturation of the video"
 msgstr "Saturația video"
 
-#: ../data/totem.schemas.in.h:29
+#: ../data/totem.schemas.in.h:26
 msgid "Type of audio output to use"
 msgstr "Tipul ieșirii audio de folosit"
 
-#: ../data/totem.schemas.in.h:30
+#: ../data/totem.schemas.in.h:27
 msgid ""
 "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
 "\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
@@ -941,40 +942,44 @@ msgstr ""
 #. character set. You can change this to be the most common
 #. encoding for fansub subtitles in your language. File a bug
 #. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:35
+#: ../data/totem.schemas.in.h:32
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: ../data/totem.schemas.in.h:36
+#: ../data/totem.schemas.in.h:33
 msgid "Visualization quality setting"
 msgstr "Configurare de calitate a vizualizării"
 
-#: ../data/totem.schemas.in.h:37
-msgid "Whether the main window should stay on top"
-msgstr "Dacă fereastra principală să rămână mereu deasupra"
+#: ../data/totem.schemas.in.h:34
+msgid "Whether to autoload external chapter files when a movie is loaded"
+msgstr "Dacă să se încarce automat fișierele capitolului la pornirea unui film"
 
-#: ../data/totem.schemas.in.h:38
-msgid "Whether the main window should stay on top of the other ones"
-msgstr "Dacă fereastra principală să rămână deasupra celorlalte"
+#: ../data/totem.schemas.in.h:35
+msgid "Whether to autoload external chapter files when a movie is loaded."
+msgstr "Dacă să se încarce automat fișierele capitolului la pornirea unui film"
 
-#: ../data/totem.schemas.in.h:39
+#: ../data/totem.schemas.in.h:36
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Dacă să se încarce automat fișierele de subtitrare la pornirea unui film"
 
-#: ../data/totem.schemas.in.h:40
+#: ../data/totem.schemas.in.h:37
+msgid "Whether to disable deinterlacing for interlaced movies"
+msgstr "Dacă să se dezactiveze deîntrețeserea filmelor întrețesute"
+
+#: ../data/totem.schemas.in.h:38
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Dacă se dezactivează combinațiile de taste"
 
-#: ../data/totem.schemas.in.h:41
+#: ../data/totem.schemas.in.h:39
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "Dacă se dezactivează modulele în dosarul personal al utilizatorului"
 
-#: ../data/totem.schemas.in.h:42
+#: ../data/totem.schemas.in.h:40
 msgid "Whether to enable debug for the playback engine"
 msgstr "Dacă să fie activată depanarea pentru motorul de redare"
 
-#: ../data/totem.schemas.in.h:43
+#: ../data/totem.schemas.in.h:41
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
 "closing them."
@@ -985,10 +990,6 @@ msgstr ""
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Introduceți _locația fișierului pe care doriți să-l deschideți:"
-
-#: ../lib/totem-scrsaver.c:115
-msgid "Playing a movie"
-msgstr "Rularea unui film"
 
 #: ../src/eggdesktopfile.c:165
 #, c-format
@@ -1019,12 +1020,12 @@ msgstr "Opțiune de lansare necunoscută: %d"
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
-"Nu s-a putut trimite URI-ul documentului unei intrări desktop „Type=Link”"
+"Nu se pot trimite URI-uri de documente unei intrări desktop „Type=Link”"
 
 #: ../src/eggdesktopfile.c:1394
 #, c-format
 msgid "Not a launchable item"
-msgstr "Nu e un element care să poată fi lansat"
+msgstr "Nu este un element lansabil"
 
 #: ../src/eggfileformatchooser.c:235
 #, c-format
@@ -1051,7 +1052,8 @@ msgstr "Format fișier"
 msgid "Extension(s)"
 msgstr "Extensii"
 
-#: ../src/eggfileformatchooser.c:645
+#. Translators: the parameter is a filename
+#: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `%"
@@ -1062,7 +1064,7 @@ msgstr ""
 "folosiți pentru „%s”. Asigurați-vă că folosiți o extensie cunoscută pentru "
 "acel fișier sau alegeți manual formatul din lista de mai jos."
 
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:659
 msgid "File format not recognized"
 msgstr "Format nerecunoscut de fișier"
 
@@ -1114,34 +1116,21 @@ msgstr "Renunță"
 msgid "No File"
 msgstr "Nici un fișier"
 
-#: ../src/totem-interface.c:139 ../src/totem-interface.c:147
-#, c-format
-msgid "Could not launch URL \"%s\": %s"
-msgstr "Nu s-a putut lansa URL-ul: \"%s\": %s"
-
-#: ../src/totem-interface.c:139
-msgid "Default browser not configured"
-msgstr "Navigatorul implicit nu este definit"
-
-#: ../src/totem-interface.c:140 ../src/totem-interface.c:148
-msgid "Error launching URI"
-msgstr "Eroare la lansarea URI-ului"
-
-#: ../src/totem-interface.c:207 ../src/totem-interface.c:239
+#: ../src/totem-interface.c:172 ../src/totem-interface.c:204
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Nu s-a putut încărca interfața „%s”. %s"
 
-#: ../src/totem-interface.c:207
+#: ../src/totem-interface.c:172
 msgid "The file does not exist."
 msgstr "Fișierul nu există."
 
-#: ../src/totem-interface.c:209 ../src/totem-interface.c:211
-#: ../src/totem-interface.c:241 ../src/totem-interface.c:243
+#: ../src/totem-interface.c:174 ../src/totem-interface.c:176
+#: ../src/totem-interface.c:206 ../src/totem-interface.c:208
 msgid "Make sure that Totem is properly installed."
 msgstr "Verificați dacă Totem este instalat corect."
 
-#: ../src/totem-interface.c:354
+#: ../src/totem-interface.c:319
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1152,7 +1141,7 @@ msgstr ""
 "termenii GNU General Public License aṣa cum a fost publicat de Free Software "
 "Foundation, versiunea 2 sau orice versiune ulterioară."
 
-#: ../src/totem-interface.c:358
+#: ../src/totem-interface.c:323
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1163,7 +1152,7 @@ msgstr ""
 "GARANȚIE, nici măcar garanție pentru VANDABILITATE sau FOLOSIRE ÎNTR-UN SCOP "
 "PARTICULAR. Vedeți licența GPL a GNU pentru mai multe detalii."
 
-#: ../src/totem-interface.c:362
+#: ../src/totem-interface.c:327
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1174,7 +1163,7 @@ msgstr ""
 "Foundation Inc. la adresa 59 Temple Place, Suite 330, Boston, MA 02111-1307 "
 "USA."
 
-#: ../src/totem-interface.c:365
+#: ../src/totem-interface.c:330
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1182,63 +1171,65 @@ msgstr ""
 "Totem conține o excepție pentru a permite folosirea modulelor proprietare "
 "GStreamer."
 
-#: ../src/totem-menu.c:342
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../src/totem-menu.c:192
 msgid "None"
 msgstr "Nici unul"
 
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:894
+#: ../src/totem-menu.c:739
 #, c-format
 msgid "Play Image '%s'"
 msgstr "Redare imagine „%s”"
 
-#: ../src/totem-menu.c:897 ../src/totem-menu.c:979
+#: ../src/totem-menu.c:742 ../src/totem-menu.c:824
 #, c-format
 msgid "device%d"
 msgstr "dispozitiv %d"
 
-#: ../src/totem-menu.c:976
+#: ../src/totem-menu.c:821
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Redare disc „%s”"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1327
+#: ../src/totem-menu.c:1172
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Player pentru filme folosind %s"
 
-#: ../src/totem-menu.c:1331
+#: ../src/totem-menu.c:1176
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Drepturi de autor © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1336 ../browser-plugin/totem-plugin-viewer.c:1127
+#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1166
 msgid "translator-credits"
 msgstr ""
 "Mugurel Tudor <mugurelu@gnome.ro>\n"
-"\n"
+"Șerbănescu Daniel <cyber19rider@gmail.com>\n"
 "Contribuții Launchpad:\n"
 "  Adi Roiban https://launchpad.net/~adiroiban\n"
 "  Alex Eftimie https://launchpad.net/~alexeftimie\n"
 "  Doru Horișco https://launchpad.net/~doruhushhush"
 
-#: ../src/totem-menu.c:1340
+#: ../src/totem-menu.c:1185
 msgid "Totem Website"
 msgstr "Pagina web Totem"
 
-#: ../src/totem-menu.c:1375
+#: ../src/totem-menu.c:1220
 msgid "Configure Plugins"
 msgstr "Configurare module"
 
-#: ../src/totem-object.c:430
+#. Translators: %s is the totem version number
+#: ../src/totem-object.c:429
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:361
+#: ../src/totem-object.c:999 ../browser-plugin/totem-plugin-viewer.c:369
 msgid "Playing"
 msgstr "Redare"
 
@@ -1246,7 +1237,7 @@ msgstr "Redare"
 msgid "Pause"
 msgstr "Pauză"
 
-#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:357
+#: ../src/totem-object.c:1006 ../browser-plugin/totem-plugin-viewer.c:365
 msgid "Paused"
 msgstr "Pauză"
 
@@ -1258,13 +1249,13 @@ msgstr "Pauză"
 msgid "Play"
 msgstr "Redare"
 
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1622
-#: ../src/totem-statusbar.c:97 ../browser-plugin/totem-plugin-viewer.c:345
+#: ../src/totem-object.c:1013 ../src/totem-object.c:1612
+#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:353
 msgid "Stopped"
 msgstr "Oprit"
 
 #: ../src/totem-object.c:1094 ../src/totem-object.c:1121
-#: ../src/totem-object.c:1751 ../src/totem-object.c:1914
+#: ../src/totem-object.c:1742 ../src/totem-object.c:1905
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem nu a putut reda „%s”."
@@ -1330,7 +1321,7 @@ msgstr "Introduceți alt disc de redat"
 msgid "Totem was not able to play this disc."
 msgstr "Totem nu a putut reda acest disc."
 
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4187
+#: ../src/totem-object.c:1252 ../src/totem-object.c:4186
 msgid "No reason."
 msgstr "Nici un motiv."
 
@@ -1344,40 +1335,40 @@ msgstr ""
 "Pentru a reda acest CD folosiți un player de muzică sau o unealtă de "
 "extragere CD"
 
-#: ../src/totem-object.c:1757
+#: ../src/totem-object.c:1748
 msgid "No error message"
 msgstr "Nici un mesaj de eroare"
 
-#: ../src/totem-object.c:2141
+#: ../src/totem-object.c:2134
 msgid "Totem could not display the help contents."
 msgstr "Totem nu a putut afișa conținutul ajutorului."
 
-#: ../src/totem-object.c:2471 ../src/totem-object.c:2473
-#: ../browser-plugin/totem-plugin-viewer.c:1428
+#: ../src/totem-object.c:2489 ../src/totem-object.c:2491
+#: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "A intervenit o eroare"
 
-#: ../src/totem-object.c:4029 ../src/totem-object.c:4031
+#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
 msgid "Previous Chapter/Movie"
 msgstr "Capitol/Film anterior"
 
-#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
+#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
 msgid "Play / Pause"
 msgstr "Redare / Pauză"
 
-#: ../src/totem-object.c:4048 ../src/totem-object.c:4050
+#: ../src/totem-object.c:4047 ../src/totem-object.c:4049
 msgid "Next Chapter/Movie"
 msgstr "Capitol/Film următor"
 
-#: ../src/totem-object.c:4062 ../src/totem-object.c:4064
+#: ../src/totem-object.c:4061 ../src/totem-object.c:4063
 msgid "Fullscreen"
 msgstr "Pe tot ecranul"
 
-#: ../src/totem-object.c:4187
+#: ../src/totem-object.c:4186
 msgid "Totem could not startup."
 msgstr "Totem nu a putut porni."
 
-#: ../src/totem-open-location.c:171
+#: ../src/totem-open-location.c:179
 msgid "Open Location..."
 msgstr "Deschide locația..."
 
@@ -1407,11 +1398,11 @@ msgstr "Derulează înapoi"
 
 #: ../src/totem-options.c:56
 msgid "Volume Up"
-msgstr "Crește volumul"
+msgstr "Mărește volumul"
 
 #: ../src/totem-options.c:57
 msgid "Volume Down"
-msgstr "Scade volum"
+msgstr "Micșorează volumul"
 
 #: ../src/totem-options.c:58
 msgid "Mute sound"
@@ -1442,72 +1433,73 @@ msgstr "Înlocuiește"
 
 #: ../src/totem-options.c:64
 msgid "Don't connect to an already-running instance"
-msgstr "Fără conectare la o instanță ce pornită deja"
+msgstr "Fără conectare la o instanță pornită deja"
 
 #: ../src/totem-options.c:65
 msgid "Seek"
-msgstr "Cautã"
+msgstr "Derulare"
 
-#: ../src/totem-options.c:66
+#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
+#: ../src/totem-options.c:67
 msgid "Playlist index"
 msgstr "Index listă"
 
-#: ../src/totem-options.c:68
+#: ../src/totem-options.c:69
 msgid "Movies to play"
 msgstr "Filme de redat"
 
 #. By extension entry
-#: ../src/totem-playlist.c:150
+#: ../src/totem-playlist.c:157
 msgid "MP3 ShoutCast playlist"
 msgstr "Listă MP3 ShoutCast"
 
-#: ../src/totem-playlist.c:151
+#: ../src/totem-playlist.c:158
 msgid "MP3 audio (streamed)"
 msgstr "MP3 audio (flux)"
 
-#: ../src/totem-playlist.c:152
+#: ../src/totem-playlist.c:159
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 audio (flux, format DOS)"
 
-#: ../src/totem-playlist.c:153
+#: ../src/totem-playlist.c:160
 msgid "XML Shareable Playlist"
 msgstr "Listă de redare partajabilă XML"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:356
+#: ../src/totem-playlist.c:359
 #, c-format
 msgid "Title %d"
 msgstr "Titlul %d"
 
-#: ../src/totem-playlist.c:457
+#: ../src/totem-playlist.c:458
 msgid "Could not save the playlist"
 msgstr "Nu s-a putut salva lista de redare"
 
-#: ../src/totem-playlist.c:1030
+#: ../src/totem-playlist.c:1029
 msgid "Save Playlist"
 msgstr "Salvează lista de redare"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1042 ../src/totem-sidebar.c:145
+#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Listă de redare"
 
-#: ../src/totem-playlist.c:1854
+#: ../src/totem-playlist.c:1863
 #, c-format
-msgid "The playlist '%s' could not be parsed, it might be damaged."
-msgstr "Lista de redare „%s” nu a putut fi procesată, ar putea fi coruptă."
+msgid "The playlist '%s' could not be parsed. It might be damaged."
+msgstr "Lista de redare „%s” nu a putut fi procesată, ar putea fi deteriorată."
 
-#: ../src/totem-playlist.c:1855
+#: ../src/totem-playlist.c:1864
 msgid "Playlist error"
 msgstr "Eroare listă de redare"
 
-#: ../src/totem-preferences.c:106
+#: ../src/totem-preferences.c:108
 msgid "Enable visual effects?"
 msgstr "Activați efectele vizuale?"
 
-#: ../src/totem-preferences.c:108
+#: ../src/totem-preferences.c:110
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1515,13 +1507,13 @@ msgstr ""
 "Se pare că rulați Totem la distanță.\n"
 "Sigur doriți să activați efectele vizuale?"
 
-#: ../src/totem-preferences.c:363
+#: ../src/totem-preferences.c:405
 msgid "Changing the visuals effect type will require a restart to take effect."
 msgstr ""
 "Schimbarea tipului de efecte vizuale va necesita repornirea aplicației "
 "pentru intrarea în acțiune."
 
-#: ../src/totem-preferences.c:447
+#: ../src/totem-preferences.c:489
 msgid ""
 "The change of audio output type will only take effect when Totem is "
 "restarted."
@@ -1529,11 +1521,11 @@ msgstr ""
 "Schimbarea ieșirii audio va avea efect pentru următorul film sau după ce "
 "reporniți Totem."
 
-#: ../src/totem-preferences.c:542
+#: ../src/totem-preferences.c:593
 msgid "Preferences"
 msgstr "Preferințe"
 
-#: ../src/totem-preferences.c:703
+#: ../src/totem-preferences.c:766
 msgid "Select Subtitle Font"
 msgstr "Alegeți fontul pentru subtitrări"
 
@@ -1543,45 +1535,45 @@ msgstr "Alegeți fontul pentru subtitrări"
 msgid "Audio/Video"
 msgstr "Audio/Video"
 
-#: ../src/totem-statusbar.c:92
+#: ../src/totem-statusbar.c:91
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:114
+#: ../src/totem-statusbar.c:113
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (în flux)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:121 ../src/totem-time-label.c:65
+#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:124 ../src/totem-time-label.c:68
+#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Derulare la %s / %s"
 
-#: ../src/totem-statusbar.c:218
+#: ../src/totem-statusbar.c:217
 msgid "Buffering"
 msgstr "Se creează memoria tampon"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:229
+#: ../src/totem-statusbar.c:228
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:304
+#: ../src/totem-statusbar.c:303
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:309
+#: ../src/totem-statusbar.c:308
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1734,7 +1726,7 @@ msgstr "Nici un URI video"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:668
+#: ../src/totem-video-thumbnailer.c:675
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1745,43 +1737,43 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:669
+#: ../src/totem-video-thumbnailer.c:676
 msgid "Filename"
 msgstr "Nume fișier"
 
-#: ../src/totem-video-thumbnailer.c:671
+#: ../src/totem-video-thumbnailer.c:678
 msgid "Resolution"
 msgstr "Rezoluție"
 
-#: ../src/totem-video-thumbnailer.c:674
+#: ../src/totem-video-thumbnailer.c:681
 msgid "Duration"
 msgstr "Durată"
 
-#: ../src/totem-uri.c:468
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1045
 msgid "All files"
 msgstr "Toate fișierele"
 
-#: ../src/totem-uri.c:473
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:1042
 msgid "Supported files"
 msgstr "Fișiere suportate"
 
-#: ../src/totem-uri.c:485
+#: ../src/totem-uri.c:519
 msgid "Audio files"
 msgstr "Fișiere audio"
 
-#: ../src/totem-uri.c:493
+#: ../src/totem-uri.c:527
 msgid "Video files"
 msgstr "Fișiere video"
 
-#: ../src/totem-uri.c:503
+#: ../src/totem-uri.c:537
 msgid "Subtitle files"
 msgstr "Fișiere subtitrări"
 
-#: ../src/totem-uri.c:555
+#: ../src/totem-uri.c:589
 msgid "Select Text Subtitles"
 msgstr "Alegeți textul subtitrărilor"
 
-#: ../src/totem-uri.c:617
+#: ../src/totem-uri.c:651
 msgid "Select Movies or Playlists"
 msgstr "Selectați filme sau liste de redare"
 
@@ -1790,12 +1782,12 @@ msgid "Could not open link"
 msgstr "Nu s-a putut deschide legătura"
 
 #: ../src/totem.c:151 ../src/totem.c:177
-#: ../browser-plugin/totem-plugin-viewer.c:652
-#: ../browser-plugin/totem-plugin-viewer.c:1815
+#: ../browser-plugin/totem-plugin-viewer.c:666
+#: ../browser-plugin/totem-plugin-viewer.c:1863
 msgid "Totem Movie Player"
 msgstr "Player multimedia Totem"
 
-#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2241
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nu s-au putut inițializa bibliotecile thread-safe."
 
@@ -1806,7 +1798,7 @@ msgstr "Verificați configurarea sistemului. Totem va ieși acum."
 #. Handle command line arguments
 #: ../src/totem.c:160
 msgid "- Play movies and songs"
-msgstr "- Redă fiṣiere video și audio"
+msgstr "- Redă filme și melodii"
 
 #: ../src/totem.c:169
 #, c-format
@@ -1825,23 +1817,23 @@ msgstr "Nu s-a putut inițializa motorul de configurare."
 msgid "Make sure that GNOME is properly installed."
 msgstr "Verificați dacă GNOME este instalat corect."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1735
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1772
 msgid "Password requested for RTSP server"
 msgstr "Parola necesară pentru serverul RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2908
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2912
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3019
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3023
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pistă audio #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2940
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2944
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3051
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3055
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtitrare #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3348
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3464
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1849,18 +1841,18 @@ msgstr ""
 "Ieșirea audio solicitată nu a fost găsită. Selectați o altă ieșire audio din "
 "selectorul GNOME pentru sisteme multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3353
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3469
 msgid "Location not found."
 msgstr "Locația nu a fost găsită."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3357
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3473
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
-"Nu s-a putut deschide locația: s-ar putea să nu aveți drepturi de deschidere "
-"a fișierului."
+"Nu s-a putut deschide locația: s-ar putea să nu aveți drepturi pentru a "
+"deschide fișierul."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3484
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1870,7 +1862,7 @@ msgstr ""
 "aplicații video sau selectați o altă ieșire video în selectorul GNOME pentru "
 "sisteme mltimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3374
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1881,14 +1873,14 @@ msgstr ""
 "considerare și folosirea unui server de sunet."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3392
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3398
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3508
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3514
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Vizualizarea acestui fișier video necesită un modul %s ce nu este instalat."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3399
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3515
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1901,34 +1893,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3424
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3540
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Nu s-a putut reda acest fișier de pe rețea. Încercați să îl transferați pe "
 "disc mai întâi."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3496
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3612
 msgid "Media file could not be played."
 msgstr "Fișierul media nu a putut fi redat."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5728
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5915
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5730
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5917
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6077
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6264
 msgid "Too old version of GStreamer installed."
 msgstr "O versiune prea veche de GStreamer este instalată."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6084
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6271
 msgid "Media contains no supported video streams."
 msgstr "Mediul nu conține vreun flux video suportat."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6614
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6784
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1936,8 +1928,8 @@ msgstr ""
 "Nu s-a putut crea un obiect de redare GStreamer. Verificați instalarea "
 "GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6763
 #: ../src/backend/bacon-video-widget-gst-0.10.c:6898
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7033
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1945,7 +1937,7 @@ msgstr ""
 "Eroare la deschiderea ieșirii video. S-ar putea să nu fie disponibilă. "
 "Selectați o altă ieșire video din selectorul GNOME de sisteme multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6775
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6910
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1955,7 +1947,7 @@ msgstr ""
 "GStreamer adiționale sau selectați o altă ieșire video din selectorul GNOME "
 "de sisteme multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6810
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6945
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1966,7 +1958,7 @@ msgstr ""
 "este pornit. Selectați o altă ieșire audio din selectorul GNOME pentru "
 "sisteme multimedia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6830
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6965
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2004,7 +1996,7 @@ msgstr "%d:%02d"
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d oră"
+msgstr[0] "o oră"
 msgstr[1] "%d ore"
 msgstr[2] "%d de ore"
 
@@ -2012,7 +2004,7 @@ msgstr[2] "%d de ore"
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minut"
+msgstr[0] "un minut"
 msgstr[1] "%d minute"
 msgstr[2] "%d de minute"
 
@@ -2020,7 +2012,7 @@ msgstr[2] "%d de minute"
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "%d secundă"
+msgstr[0] "o secundă"
 msgstr[1] "%d secunde"
 msgstr[2] "%d de secunde"
 
@@ -2048,7 +2040,7 @@ msgstr "Modul"
 
 #: ../src/plugins/totem-plugin-manager.c:52
 msgid "Enabled"
-msgstr "Activare"
+msgstr "Activat"
 
 #: ../src/plugins/totem-plugins-engine.c:603
 #, c-format
@@ -2076,17 +2068,18 @@ msgstr "Bemused"
 msgid "Control Totem through a mobile phone with a Bemused client"
 msgstr "Controlați Totem printr-un telefon mobil cu un client Bemused"
 
-#: ../src/plugins/bemused/totem-bemused.c:185
+#. Translators: the parameter is a number used to identify this playlist entry
+#: ../src/plugins/bemused/totem-bemused.c:186
 #, c-format
 msgid "Untitled %d"
 msgstr "Fără titlu %d"
 
-#: ../src/plugins/bemused/totem-bemused.c:607
+#: ../src/plugins/bemused/totem-bemused.c:609
 msgid "Totem Bemused Server"
 msgstr "Server Bemused Totem"
 
 #. FIXME version
-#: ../src/plugins/bemused/totem-bemused.c:609
+#: ../src/plugins/bemused/totem-bemused.c:611
 msgid "Totem Bemused Server version 1.0"
 msgstr "Server Bemused Totem versiunea 1.0"
 
@@ -2137,6 +2130,96 @@ msgstr "Înregistrează (S)VCD-uri sau DVD-uri video"
 msgid "Video Disc Recorder"
 msgstr "Înregistrare discuri video"
 
+#: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
+#: ../src/plugins/chapters/totem-chapters.c:1193
+msgid "Chapters"
+msgstr "Capitolele"
+
+#: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
+msgid "Chapters support"
+msgstr "Suport capitole"
+
+#: ../src/plugins/chapters/chapters-edit.ui.h:1
+msgid "Enter new name for a chapter:"
+msgstr "Introduceți un nume nou pentru un capitol:"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:2
+msgid "Continue to watch movie without loaded chapters"
+msgstr "Continuă vizualizarea filmului fără capitole încărcate"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:3
+msgid "Continue without"
+msgstr "Continuă fără"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:4
+msgid "Go to chapter"
+msgstr "Navighează la capitol"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:5
+msgid "Load chapters from external file"
+msgstr "Încarcă capitole dintr-un fișier extern"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:6
+msgid "Load chapters..."
+msgstr "Încarcă capitole..."
+
+#: ../src/plugins/chapters/chapters-list.ui.h:7
+msgid "No chapters data"
+msgstr "Nu există date de capitole"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:9
+msgid "Remove chapter from the list"
+msgstr "Elimină capitol din listă"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:10
+msgid "Save Changes"
+msgstr "Salvează modificările"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
+msgid "_Go to"
+msgstr "_Navigare"
+
+#: ../src/plugins/chapters/totem-chapters.c:56
+#, c-format
+msgid ""
+"<b>Title: </b>%s\n"
+"<b>Start time: </b>%s"
+msgstr ""
+"<b>Titlu: </b>%s\n"
+"<b>Începe la: </b>%s"
+
+#: ../src/plugins/chapters/totem-chapters.c:370
+msgid "Error while reading file with chapters"
+msgstr "Eroare la citirea fișierului cu capitole"
+
+#: ../src/plugins/chapters/totem-chapters.c:585
+msgid "Chapter with the same time already exists"
+msgstr "Un capitol cu același timp există deja"
+
+#: ../src/plugins/chapters/totem-chapters.c:586
+msgid "Try another name or remove an existing chapter"
+msgstr "Încercați un alt nume sau eliminați un capitol existent"
+
+#: ../src/plugins/chapters/totem-chapters.c:763
+msgid "Error while writing file with chapters"
+msgstr "Eroare în timpul scrierii fișierului cu capitole"
+
+#: ../src/plugins/chapters/totem-chapters.c:888
+msgid "Error occurred while saving chapters"
+msgstr "S-a produs o eroare la salvarea capitolelor."
+
+#: ../src/plugins/chapters/totem-chapters.c:889
+msgid "Please check you rights and free space"
+msgstr "Verificați-vă drepturile și spațiu liber"
+
+#: ../src/plugins/chapters/totem-chapters.c:1023
+msgid "Open Chapters File"
+msgstr "Deschide fișierul cu capitole"
+
+#: ../src/plugins/chapters/totem-cmml-parser.c:559
+msgid "Failed to parse CMML file"
+msgstr "Nu a reușit analizarea fișierului CMML"
+
 #. Translators: this refers to a media file
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:97
 msgid "Delete"
@@ -2149,7 +2232,7 @@ msgstr "Client DLNA/UPnP Coherence"
 
 #: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
 msgid "A DLNA/UPnP client for Totem powered by Coherence"
-msgstr "Un client DLNA/UPnP pentru Totem oferite de Coherence"
+msgstr "Un client DLNA/UPnP pentru Totem oferit de Coherence"
 
 #: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:1
 msgid "D-Bus Service"
@@ -2165,13 +2248,13 @@ msgstr ""
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:1
 msgid "Instant Messenger status"
-msgstr "Status mesagerie instant"
+msgstr "Mesaj de stare pentru mesageria instant"
 
 #: ../src/plugins/galago/galago.totem-plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
-"Definește statusul mesageriei instant ca „Absent” atunci când se rulează un "
-"film"
+"Stabilește mesajul de stare al mesageriei instant ca „Absent” atunci când se "
+"rulează un film"
 
 #: ../src/plugins/galago/totem-galago.c:171
 msgid "Could not connect to the Galago daemon."
@@ -2197,11 +2280,11 @@ msgstr "BBC iPlayer"
 
 #: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:2
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
-msgstr "Redă programe BBC din ultimele 7 zile prin serviciul iPlayer BBC."
+msgstr "Redă programele BBC din ultimele 7 zile prin serviciul iPlayer BBC."
 
 #: ../src/plugins/iplayer/iplayer.py:57
-msgid "Error Listing Channel Categories"
-msgstr "Eroare la afișarea categoriilor pentru canale"
+msgid "Error listing channel categories"
+msgstr "Eroare la listarea categoriilor canalelor"
 
 #: ../src/plugins/iplayer/iplayer.py:57
 msgid ""
@@ -2223,11 +2306,11 @@ msgstr "Eroare la obținerea fluxului de programe"
 
 #: ../src/plugins/iplayer/iplayer.py:106
 msgid ""
-"There was an unknown error getting the list of programmes for this channel "
-"and category combination."
+"There was an error getting the list of programmes for this channel and "
+"category combination."
 msgstr ""
-"S-a produs o eroare necunoscută la obținerea listei de programe pentru "
-"această combinație de canal și categorie."
+"S-a produs o eroare la obținerea listei de programe pentru această "
+"combinație de canal și categorie."
 
 #: ../src/plugins/iplayer/iplayer2.py:295
 #, python-format
@@ -2267,7 +2350,7 @@ msgid "Preferred audio _format:"
 msgstr "_Format audio preferat:"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:9
-#: ../src/plugins/tracker/totem-tracker-widget.c:511
+#: ../src/plugins/tracker/totem-tracker-widget.c:521
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "Rezultate căutare"
@@ -2401,15 +2484,15 @@ msgstr "Nu s-a putut inițializa lirc."
 msgid "Couldn't read lirc configuration."
 msgstr "Nu s-a putut citi configurația lirc."
 
-#: ../src/plugins/mythtv/totem-mythtv.c:200
+#: ../src/plugins/mythtv/totem-mythtv.c:198
 msgid "Recordings"
 msgstr "Înregistrări"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:523
+#: ../src/plugins/mythtv/totem-mythtv.c:521
 msgid "MythTV Recordings"
 msgstr "Înregistrări MythTV"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:524
+#: ../src/plugins/mythtv/totem-mythtv.c:522
 msgid "MythTV LiveTV"
 msgstr "MythTV LiveTV"
 
@@ -2504,22 +2587,26 @@ msgid "%d x %d"
 msgstr "%d x %d"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#, c-format
-msgid "%d frames per second"
-msgstr "%d de cadre pe secundă"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:257
+#: ../src/plugins/properties/bacon-video-widget-properties.c:271
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:260
+#: ../src/plugins/properties/bacon-video-widget-properties.c:245
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "un cadru pe secundă"
+msgstr[1] "%d cadre pe secundă"
+msgstr[2] "%d de cadre pe secundă"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:274
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/plugins/publish/totem-publish.c:588
+#. Translators: computers on the local network which are publishing their playlists over the network
+#: ../src/plugins/publish/totem-publish.c:589
 msgid "Neighbors"
 msgstr "Vecini"
 
@@ -2550,6 +2637,11 @@ msgstr ""
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "Folos_ește transport criptat (HTTPS)"
 
+#: ../src/plugins/screensaver/totem-screensaver.c:94
+#: ../browser-plugin/totem-plugin-viewer.c:1964
+msgid "Playing a movie"
+msgstr "Rularea unui film"
+
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Calculate the number of screenshots"
 msgstr "Calculează numărul capturilor de ecran"
@@ -2575,7 +2667,7 @@ msgid "_Name:"
 msgstr "_Nume"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:389
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
 msgstr "Captură_de_ecran.png"
@@ -2599,7 +2691,7 @@ msgid "Creating Gallery..."
 msgstr "Se creează galeria..."
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:108
+#: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Se salvează galeria ca „%s”"
@@ -2608,11 +2700,12 @@ msgstr "Se salvează galeria ca „%s”"
 msgid "There was an error saving the screenshot."
 msgstr "A intervenit o eroare la salvarea capturii de ecran."
 
-#: ../src/plugins/screenshot/totem-screenshot.c:139
+#: ../src/plugins/screenshot/totem-screenshot.c:138
 msgid "Save Screenshot"
 msgstr "Salvează captura de ecran"
 
 #. Create the screenshot widget
+#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
 #: ../src/plugins/screenshot/totem-screenshot.c:159
 #, c-format
 msgid "Screenshot-%s-%d.png"
@@ -2643,19 +2736,34 @@ msgstr "_Galerie cu capturi de ecran..."
 msgid "Create a gallery of screenshots"
 msgstr "Creează o galerie cu capturi de ecran"
 
-#: ../src/plugins/skipto/totem-skipto.c:171
+#. Update the "seconds" label so that it always has the correct singular/plural form
+#. Translators: label for the seconds selector in the "Skip to" dialogue
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#: ../src/plugins/skipto/totem-skipto.c:158
+#: ../src/plugins/skipto/totem-skipto.c:184
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "secundă"
+msgstr[1] "secunde"
+msgstr[2] "de secunde"
+
+#: ../src/plugins/skipto/totem-skipto.c:184
+msgid "seconds"
+msgstr "secunde"
+
+#: ../src/plugins/skipto/totem-skipto.c:190
 msgid "Skip to"
 msgstr "Derulează la"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:215
+#: ../src/plugins/skipto/totem-skipto-plugin.c:216
 msgid "_Skip to..."
 msgstr "D_erulează la..."
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:215
+#: ../src/plugins/skipto/totem-skipto-plugin.c:216
 msgid "Skip to a specific time"
 msgstr "Derulează la un moment specific de timp"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:221
+#: ../src/plugins/skipto/totem-skipto-plugin.c:222
 msgid "Could not load the \"Skip to\" dialog interface."
 msgstr "Nu s-a putut încărca interfața dialogului „Derulează la”."
 
@@ -2663,27 +2771,23 @@ msgstr "Nu s-a putut încărca interfața dialogului „Derulează la”."
 msgid "_Skip to:"
 msgstr "D_erulează la:"
 
-#: ../src/plugins/skipto/skipto.ui.h:2
-msgid "seconds"
-msgstr "secunde"
-
 #. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:170
+#: ../src/plugins/tracker/totem-tracker-widget.c:173
 #, c-format
 msgid "Could not get name and thumbnail for %s: %s"
 msgstr ""
 "Nu s-au putut obține numele și imaginea miniaturizată pentru fișierul %s: %s"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:171
+#: ../src/plugins/tracker/totem-tracker-widget.c:174
 msgid "File Error"
 msgstr "Eroare fișier"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:244
-#: ../src/plugins/tracker/totem-tracker-widget.c:358
+#: ../src/plugins/tracker/totem-tracker-widget.c:251
+#: ../src/plugins/tracker/totem-tracker-widget.c:368
 msgid "Could not connect to Tracker"
 msgstr "Nu s-a putut face conectarea la serviciul Tracker"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:251
+#: ../src/plugins/tracker/totem-tracker-widget.c:258
 msgid "No results"
 msgstr "Fără rezultate"
 
@@ -2692,7 +2796,7 @@ msgstr "Fără rezultate"
 #. * Showing 10-20 of 128 matches
 #. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
 #. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:276
+#: ../src/plugins/tracker/totem-tracker-widget.c:283
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
@@ -2700,7 +2804,7 @@ msgstr[0] "Sunt afișate %i - %i din %i rezultat"
 msgstr[1] "Sunt afișate %i - %i din %i rezultate"
 msgstr[2] "Sunt afișate %i - %i din %i de rezultate"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:571
+#: ../src/plugins/tracker/totem-tracker-widget.c:581
 msgid "Page"
 msgstr "Pagină"
 
@@ -2737,36 +2841,36 @@ msgstr "Filmulețe asemănătoare"
 msgid "Videos"
 msgstr "Filmulețe"
 
-#: ../src/plugins/youtube/totem-youtube.c:314
+#: ../src/plugins/youtube/totem-youtube.c:316
 msgid "_Open in Web Browser"
 msgstr "Deschide în navigat_orul web"
 
-#: ../src/plugins/youtube/totem-youtube.c:314
+#: ../src/plugins/youtube/totem-youtube.c:316
 msgid "Open the video in your web browser"
 msgstr "Deschide fișierul în navigatorul web"
 
 #. Add the sidebar page
-#: ../src/plugins/youtube/totem-youtube.c:364
+#: ../src/plugins/youtube/totem-youtube.c:366
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:456
+#: ../src/plugins/youtube/totem-youtube.c:452
 msgid "Cancelling query…"
 msgstr "Se anulează cererea..."
 
-#: ../src/plugins/youtube/totem-youtube.c:505
+#: ../src/plugins/youtube/totem-youtube.c:513
 msgid "Error Looking Up Video URI"
 msgstr "Eroare la verificarea URI-ului fișierului video"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:695
-#: ../src/plugins/youtube/totem-youtube.c:700
+#: ../src/plugins/youtube/totem-youtube.c:797
+#: ../src/plugins/youtube/totem-youtube.c:802
 msgid "Error Searching for Videos"
 msgstr "Eroare la căutarea fișierelor video"
 
-#: ../src/plugins/youtube/totem-youtube.c:696
+#: ../src/plugins/youtube/totem-youtube.c:798
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2775,53 +2879,53 @@ msgstr ""
 "ultima versiune de libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:842
+#: ../src/plugins/youtube/totem-youtube.c:972
 msgid "Fetching search results…"
 msgstr "Se obțin rezultatele căutării..."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:893
+#: ../src/plugins/youtube/totem-youtube.c:1037
 msgid "Fetching related videos…"
 msgstr "Se obțin fișierele video asemănătoare..."
 
-#: ../src/plugins/youtube/totem-youtube.c:944
+#: ../src/plugins/youtube/totem-youtube.c:1088
 msgid "Error Opening Video in Web Browser"
 msgstr "Eroare la deschiderea fișierului video în navigatorul web"
 
-#: ../src/plugins/youtube/totem-youtube.c:964
+#: ../src/plugins/youtube/totem-youtube.c:1108
 msgid "Fetching more videos…"
 msgstr "Se obțin mai multe filmulețe..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:419
+#: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
 msgstr "Nu există un URI de redat"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1065
+#: ../browser-plugin/totem-plugin-viewer.c:1104
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Deschide cu „%s”"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1116
+#: ../browser-plugin/totem-plugin-viewer.c:1155
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Modul navigator folosind %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1121
+#: ../browser-plugin/totem-plugin-viewer.c:1160
 msgid "Totem Browser Plugin"
 msgstr "Modul navigator Totem"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2134
+#: ../browser-plugin/totem-plugin-viewer.c:2179
 msgid "No playlist or playlist empty"
 msgstr "Nu existã o listã de redare sau aceasta este vidã"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2225
+#: ../browser-plugin/totem-plugin-viewer.c:2270
 msgid "Movie browser plugin"
 msgstr "Modul navigare filme"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2241
+#: ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Verificați configurarea sistemului. Modulul Totem va ieși acum."
 
@@ -2871,6 +2975,38 @@ msgstr ""
 "După ce apăsați OK, Totem va aștepta până ce vă veți conecta cu winpdb sau "
 "rpdb2. În cazul în care nu ați definit o parolă de depanare în GConf, se va "
 "folosi parola implicită: „totem”."
+
+#~ msgid "Deinterlace"
+#~ msgstr "Estompează întrețeserea"
+
+#~ msgid "_Deinterlace"
+#~ msgstr "E_stompează întrețeserea"
+
+#~ msgid "Buffer size"
+#~ msgstr "Mărime memorie tampon"
+
+#~ msgid "Enable deinterlacing"
+#~ msgstr "Activează estomparea întrețeserii"
+
+#~ msgid "Maximum amount of data to decode ahead of display (in seconds)"
+#~ msgstr ""
+#~ "Cantitatea maximă de date ce va fi decodată înainte de a începe redarea "
+#~ "(în secunde)"
+
+#~ msgid "Whether the main window should stay on top"
+#~ msgstr "Dacă fereastra principală să rămână mereu deasupra"
+
+#~ msgid "Whether the main window should stay on top of the other ones"
+#~ msgstr "Dacă fereastra principală să rămână deasupra celorlalte"
+
+#~ msgid "Could not launch URL \"%s\": %s"
+#~ msgstr "Nu s-a putut lansa URL-ul: \"%s\": %s"
+
+#~ msgid "Default browser not configured"
+#~ msgstr "Navigatorul implicit nu este definit"
+
+#~ msgid "Error launching URI"
+#~ msgstr "Eroare la lansarea URI-ului"
 
 #~ msgid "DVB Adapter %u"
 #~ msgstr "Adaptor DVB %u"
