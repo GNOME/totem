@@ -26,6 +26,8 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
+#include "gsd-osd-window.h"
+
 G_BEGIN_DECLS
 
 #define GSD_TYPE_MEDIA_KEYS_WINDOW            (gsd_media_keys_window_get_type ())
@@ -39,13 +41,13 @@ typedef struct GsdMediaKeysWindowClass              GsdMediaKeysWindowClass;
 typedef struct GsdMediaKeysWindowPrivate            GsdMediaKeysWindowPrivate;
 
 struct GsdMediaKeysWindow {
-        GtkWindow                   parent;
+        GsdOsdWindow parent;
 
         GsdMediaKeysWindowPrivate  *priv;
 };
 
 struct GsdMediaKeysWindowClass {
-        GtkWindowClass parent_class;
+        GsdOsdWindowClass parent_class;
 };
 
 typedef enum {

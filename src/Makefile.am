@@ -42,6 +42,8 @@ libtotem_player_la_SOURCES = \
 	totem-fullscreen.h	\
 	gsd-media-keys-window.c	\
 	gsd-media-keys-window.h	\
+	gsd-osd-window.c	\
+	gsd-osd-window.h	\
 	totem-time-label.c	\
 	totem-time-label.h
 
