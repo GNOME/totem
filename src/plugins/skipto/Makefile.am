@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/skipto
 plugin_LTLIBRARIES = libskipto.la
 
-plugin_in_files = skipto.totem-plugin.in
+plugin_in_files = skipto.plugin.in
 
 uidir = $(plugindir)
 ui_DATA = skipto.ui

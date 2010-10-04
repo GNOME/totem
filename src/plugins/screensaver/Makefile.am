@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/screensaver
 plugin_LTLIBRARIES = libscreensaver.la
 
-plugin_in_files = screensaver.totem-plugin.in
+plugin_in_files = screensaver.plugin.in
 
 libscreensaver_la_SOURCES = totem-screensaver.c
 libscreensaver_la_LDFLAGS = $(plugin_ldflags)

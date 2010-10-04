@@ -4,7 +4,7 @@ plugindir = $(PLUGINDIR)/properties
 plugin_LTLIBRARIES = libmovie-properties.la
 noinst_LTLIBRARIES = libbaconvideowidgetproperties.la
 
-plugin_in_files = movie-properties.totem-plugin.in
+plugin_in_files = movie-properties.plugin.in
 
 libmovie_properties_la_SOURCES = totem-movie-properties.c
 libmovie_properties_la_LDFLAGS = $(plugin_ldflags)

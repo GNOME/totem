@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/screenshot
 plugin_LTLIBRARIES = libscreenshot.la
 
-plugin_in_files = screenshot.totem-plugin.in
+plugin_in_files = screenshot.plugin.in
 
 uidir = $(plugindir)
 ui_DATA = gallery.ui gnome-screenshot.ui

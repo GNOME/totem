@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/lirc
 plugin_LTLIBRARIES = liblirc.la
 
-plugin_in_files = lirc.totem-plugin.in
+plugin_in_files = lirc.plugin.in
 
 configdir = $(PLUGINDIR)/lirc
 config_DATA = totem_lirc_default

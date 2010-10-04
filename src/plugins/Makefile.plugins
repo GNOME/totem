@@ -1,7 +1,7 @@
-%.totem-plugin: %.totem-plugin.in
+%.plugin: %.plugin.in
 	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
-plugin_DATA = $(plugin_in_files:.totem-plugin.in=.totem-plugin)
+plugin_DATA = $(plugin_in_files:.plugin.in=.plugin)
 
 CLEANFILES = $(plugin_DATA)
 DISTCLEANFILES = $(plugin_DATA)

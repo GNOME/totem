@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/media-player-keys
 plugin_LTLIBRARIES = libmedia_player_keys.la
 
-plugin_in_files = media-player-keys.totem-plugin.in
+plugin_in_files = media-player-keys.plugin.in
 
 # Marshal files
 marshal_files = \

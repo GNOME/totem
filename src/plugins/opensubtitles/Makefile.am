@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/opensubtitles
 plugin_PYTHON = opensubtitles.py hash.py
 
-plugin_in_files = opensubtitles.totem-plugin.in
+plugin_in_files = opensubtitles.plugin.in
 
 uidir = $(plugindir)
 ui_DATA = opensubtitles.ui

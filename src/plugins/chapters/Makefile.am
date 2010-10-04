@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/chapters
 plugin_LTLIBRARIES = libchapters.la
 
-plugin_in_files = chapters.totem-plugin.in
+plugin_in_files = chapters.plugin.in
 
 uidir = $(plugindir)
 ui_DATA = chapters-list.ui chapters-edit.ui

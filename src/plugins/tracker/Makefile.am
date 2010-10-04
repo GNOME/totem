@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/tracker
 plugin_LTLIBRARIES = libtracker.la
 
-plugin_in_files = tracker.totem-plugin.in
+plugin_in_files = tracker.plugin.in
 
 libtracker_la_SOURCES = totem-tracker.c totem-tracker-widget.h totem-tracker-widget.c
 libtracker_la_LDFLAGS = $(plugin_ldflags)

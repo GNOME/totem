@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/sample-vala
 plugin_LTLIBRARIES = libsample-vala.la
 
-plugin_in_files = sample-vala.totem-plugin.in
+plugin_in_files = sample-vala.plugin.in
 
 VALAFLAGS = \
 	--vapidir=$(top_srcdir)/bindings/vala	\

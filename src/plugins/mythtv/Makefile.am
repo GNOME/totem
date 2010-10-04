@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/mythtv
 plugin_LTLIBRARIES = libtotem_mythtv.la
 
-plugin_in_files = mythtv.totem-plugin.in
+plugin_in_files = mythtv.plugin.in
 
 libtotem_mythtv_la_SOURCES = totem-mythtv.c
 libtotem_mythtv_la_LDFLAGS = $(plugin_ldflags)

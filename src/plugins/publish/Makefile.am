@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/publish
 plugin_LTLIBRARIES = libpublish.la
 
-plugin_in_files = publish.totem-plugin.in
+plugin_in_files = publish.plugin.in
 
 uidir = $(PLUGINDIR)/publish
 ui_DATA = publish-plugin.ui

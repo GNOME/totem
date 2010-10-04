@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/bemused
 plugin_LTLIBRARIES = libbemused.la
 
-plugin_in_files = bemused.totem-plugin.in
+plugin_in_files = bemused.plugin.in
 
 libbemused_la_SOURCES = totem-bemused.c
 libbemused_la_LDFLAGS = $(plugin_ldflags)

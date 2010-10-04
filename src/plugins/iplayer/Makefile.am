@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/iplayer
 plugin_PYTHON = iplayer.py iplayer2.py listparser.py
 
-plugin_in_files = iplayer.totem-plugin.in
+plugin_in_files = iplayer.plugin.in
 
 uidir = $(plugindir)
 ui_DATA = iplayer.ui

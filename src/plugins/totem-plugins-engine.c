@@ -81,7 +81,6 @@ on_activatable_extension_added (PeasExtensionSet *set,
 				PeasExtension    *exten,
 				TotemPluginsEngine *engine)
 {
-	g_message ("on_activatable_extension_added");
 	peas_extension_call (exten, "activate");
 }
 
@@ -91,7 +90,6 @@ on_activatable_extension_removed (PeasExtensionSet *set,
 				  PeasExtension    *exten,
 				  TotemPluginsEngine *engine)
 {
-	g_message ("on_activatable_extension_removed");
 	peas_extension_call (exten, "deactivate");
 }
 

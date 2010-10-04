@@ -3,7 +3,7 @@ include $(top_srcdir)/src/plugins/Makefile.plugins
 plugindir = $(PLUGINDIR)/galago
 plugin_LTLIBRARIES = libtgp.la
 
-plugin_in_files = galago.totem-plugin.in
+plugin_in_files = galago.plugin.in
 
 libtgp_la_SOURCES = totem-galago.c
 libtgp_la_LDFLAGS = $(plugin_ldflags)
