@@ -99,41 +99,6 @@ totem_action_handler (GApplication      *app,
 	g_free (url);
 }
 
-static void
-about_url_hook (GtkAboutDialog *about,
-	        const char *uri,
-	        gpointer user_data)
-{
-	GError *error = NULL;
-
-	if (!gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (about)),
-	                   uri,
-	                   gtk_get_current_event_time (),
-	                   &error))
-	{
-	        totem_interface_error (_("Could not open link"),
-	                               error->message,
-	                               GTK_WINDOW (about));
-	        g_error_free (error);
-	}
-}
-
-
-static void
-about_email_hook (GtkAboutDialog *about,
-		  const char *email_address,
-		  gpointer user_data)
-{
-	char *escaped, *uri;
-
-	escaped = g_uri_escape_string (email_address, NULL, FALSE);
-	uri = g_strdup_printf ("mailto:%s", escaped);
-	g_free (escaped);
-
-	about_url_hook (about, uri, user_data);
-	g_free (uri);
-}
-
 /* Debug log message handler: discards debug messages unless Totem is run with TOTEM_DEBUG=1.
  * If we're building in the source tree, enable debug messages by default. */
 static void
@@ -199,8 +164,6 @@ main (int argc, char **argv)
 	g_set_application_name (_("Totem Movie Player"));
 	gtk_window_set_default_icon_name ("totem");
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
-	gtk_about_dialog_set_url_hook (about_url_hook, NULL, NULL);
-	gtk_about_dialog_set_email_hook (about_email_hook, NULL, NULL);
 
 	gtk_settings = gtk_settings_get_default ();
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
