@@ -100,7 +100,6 @@ totem_plugins_engine_get_default (TotemObject *totem)
 {
 	static TotemPluginsEngine *engine = NULL;
 	char **paths;
-	GPtrArray *array;
 	guint i;
 
 	if (G_LIKELY (engine != NULL))
@@ -114,20 +113,14 @@ totem_plugins_engine_get_default (TotemObject *totem)
 
 	paths = totem_get_plugin_paths ();
 
-	/* Totem uses the libdir even for noarch data */
-	array = g_ptr_array_new ();
-	for (i = 0; paths[i] != NULL; i++) {
-		g_ptr_array_add (array, paths[i]);
-		g_ptr_array_add (array, paths[i]);
-	}
-	g_ptr_array_add (array, NULL);
-
 	engine = TOTEM_PLUGINS_ENGINE (g_object_new (TOTEM_TYPE_PLUGINS_ENGINE,
-						     "app-name", "Totem",
-						     "search-paths", array->pdata,
 						     NULL));
+	for (i = 0; paths[i] != NULL; i++) {
+		/* Totem uses the libdir even for noarch data */
+		peas_engine_add_search_path (PEAS_ENGINE (engine),
+					     paths[i], paths[i]);
+	}
 	g_strfreev (paths);
-	g_ptr_array_free (array, TRUE);
 
 	g_object_add_weak_pointer (G_OBJECT (engine),
 				   (gpointer) &engine);
