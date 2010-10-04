@@ -40,7 +40,7 @@
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
 #define FULLSCREEN_MOTION_TIME 200 /* in milliseconds */
-#define FULLSCREEN_MOTION_NUM_EVENTS 30
+#define FULLSCREEN_MOTION_NUM_EVENTS 15
 
 static void totem_fullscreen_dispose (GObject *object);
 static void totem_fullscreen_finalize (GObject *object);
@@ -196,12 +196,11 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 }
 
 static gboolean
-totem_fullscreen_exit_popup_expose_cb (GtkWidget *widget,
-				       GdkEventExpose *event,
-				       TotemFullscreen *fs)
+totem_fullscreen_exit_popup_draw_cb (GtkWidget *widget,
+				     cairo_t *cr,
+				     TotemFullscreen *fs)
 {
 	GdkScreen *screen;
-	cairo_t *cr;
 
 	screen = gtk_widget_get_screen (widget);
 	if (gdk_screen_is_composited (screen) == FALSE)
@@ -209,11 +208,9 @@ totem_fullscreen_exit_popup_expose_cb (GtkWidget *widget,
 
 	gtk_widget_set_app_paintable (widget, TRUE);
 
-	cr = gdk_cairo_create (gtk_widget_get_window (widget));
 	cairo_set_source_rgba (cr, 1., 1., 1., 0.);
 	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 	cairo_paint (cr);
-	cairo_destroy (cr);
 
 	return FALSE;
 }
@@ -270,7 +267,7 @@ totem_fullscreen_force_popup_hide (TotemFullscreen *fs)
 {
 	/* Popdown the volume button if it's visible */
 	if (totem_fullscreen_is_volume_popup_visible (fs))
-		gtk_bindings_activate (GTK_OBJECT (fs->volume), GDK_KEY_Escape, 0);
+		gtk_bindings_activate (G_OBJECT (fs->volume), GDK_KEY_Escape, 0);
 
 	gtk_widget_hide (fs->priv->exit_popup);
 	gtk_widget_hide (fs->priv->control_popup);
@@ -295,10 +292,11 @@ totem_fullscreen_popup_hide (TotemFullscreen *fs)
 }
 
 G_MODULE_EXPORT gboolean
-totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
+totem_fullscreen_motion_notify (GtkWidget *widget,
+				GdkEventMotion *event,
 				TotemFullscreen *fs)
 {
-	gint motion_delay;
+	int motion_delay;
 
 	/* Only after FULLSCREEN_MOTION_NUM_EVENTS motion events,
 	   in FULLSCREEN_MOTION_TIME milliseconds will we show
@@ -316,8 +314,10 @@ totem_fullscreen_motion_notify (GtkWidget *widget, GdkEventMotion *event,
 	fs->priv->motion_num_events++;
 
 	if (!fs->priv->pointer_on_control &&
-	    fs->priv->motion_num_events > FULLSCREEN_MOTION_NUM_EVENTS)
+	    fs->priv->motion_num_events > FULLSCREEN_MOTION_NUM_EVENTS) {
 		totem_fullscreen_show_popups (fs, TRUE);
+	}
+
 	return FALSE;
 }
 
@@ -338,7 +338,7 @@ totem_fullscreen_show_popups (TotemFullscreen *fs, gboolean show_cursor)
 
 	totem_fullscreen_popup_timeout_remove (fs);
 
-	/* FIXME: is this really required while we are anyway going 
+	/* FIXME: is this really required while we are anyway going
 	   to do a show_all on its parent control_popup? */
 	item = GTK_WIDGET (gtk_builder_get_object (fs->priv->xml, "tcw_hbox"));
 	gtk_widget_show_all (item);
@@ -543,8 +543,8 @@ totem_fullscreen_init (TotemFullscreen *self)
 
 	self->priv->exit_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_exit_fullscreen_window"));
-	g_signal_connect (G_OBJECT (self->priv->exit_popup), "expose-event",
-			  G_CALLBACK (totem_fullscreen_exit_popup_expose_cb), self);
+	g_signal_connect (G_OBJECT (self->priv->exit_popup), "draw",
+			  G_CALLBACK (totem_fullscreen_exit_popup_draw_cb), self);
 	self->priv->control_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_controls_window"));
 
