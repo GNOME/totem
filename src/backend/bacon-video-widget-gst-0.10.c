@@ -599,7 +599,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   attributes.x = 0;
   attributes.y = 0;
   gtk_widget_get_allocation (widget, &allocation);
-  attributes.colormap = gdk_screen_get_system_colormap (gtk_widget_get_screen (widget));
+  attributes.visual = gdk_screen_get_system_visual (gtk_widget_get_screen (widget));
   attributes.width = allocation.width;
   attributes.height = allocation.height;
   attributes.wclass = GDK_INPUT_OUTPUT;
@@ -608,7 +608,7 @@ bacon_video_widget_realize (GtkWidget * widget)
                            GDK_POINTER_MOTION_MASK |
                            GDK_BUTTON_PRESS_MASK |
                            GDK_KEY_PRESS_MASK;
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_COLORMAP;
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
 
   bvw->priv->video_window = gdk_window_new (window,
       &attributes, attributes_mask);
@@ -616,8 +616,6 @@ bacon_video_widget_realize (GtkWidget * widget)
   gdk_window_set_user_data (bvw->priv->video_window, widget);
 
   gdk_color_parse ("black", &colour);
-  gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
-			    &colour, TRUE, TRUE);
   gdk_window_set_background (window, &colour);
   gtk_widget_set_style (widget,
       gtk_style_attach (gtk_widget_get_style (widget), window));
@@ -712,18 +710,13 @@ size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 }
 
 static gboolean
-bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
+bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GstXOverlay *xoverlay;
   gboolean draw_logo;
   XID window;
-  GdkWindow *win;
   GtkAllocation allocation;
-  cairo_t *cr;
-
-  if (event && event->count > 0)
-    return TRUE;
 
   g_mutex_lock (bvw->priv->lock);
   xoverlay = bvw->priv->xoverlay;
@@ -742,10 +735,8 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
     gst_x_overlay_set_xwindow_id (xoverlay, window);
 
   /* Start with a nice black canvas */
-  win = gtk_widget_get_window (widget);
   gtk_widget_get_allocation (widget, &allocation);
 
-  cr = gdk_cairo_create (win);
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
   cairo_paint (cr);
@@ -788,7 +779,6 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
         if (xoverlay != NULL)
 	  gst_object_unref (xoverlay);
 	cairo_paint (cr);
-	cairo_destroy (cr);
 	return TRUE;
       }
 
@@ -802,12 +792,10 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       cairo_paint (cr);
 
       g_object_unref (logo);
-    } else if (win) {
+    } else {
       /* No pixbuf, just draw a black background then */
-      gdk_window_clear_area (win,
-			     0, 0,
-			     allocation.width,
-			     allocation.height);
+      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+      cairo_fill (cr);
     }
   } else {
     /* no logo, pass the expose to gst */
@@ -815,16 +803,12 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       gst_x_overlay_expose (xoverlay);
     else {
       /* No xoverlay to expose yet */
-      gdk_window_clear_area (win,
-			     0, 0,
-			     allocation.width,
-			     allocation.height);
+      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+      cairo_fill (cr);
     }
   }
   if (xoverlay != NULL)
     gst_object_unref (xoverlay);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
@@ -1023,7 +1007,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->unrealize = bacon_video_widget_unrealize;
   widget_class->show = bacon_video_widget_show;
   widget_class->hide = bacon_video_widget_hide;
-  widget_class->expose_event = bacon_video_widget_expose_event;
+  widget_class->draw = bacon_video_widget_draw;
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
   widget_class->button_press_event = bacon_video_widget_button_press;
   widget_class->button_release_event = bacon_video_widget_button_release;
@@ -1423,7 +1407,6 @@ static void
 bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *msg_name;
-  GdkWindow *window;
   GtkAllocation allocation;
 
   msg_name = gst_structure_get_name (msg->structure);
@@ -1433,7 +1416,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 
   if (strcmp (msg_name, "stream-changed") == 0) {
     bvw_update_stream_info (bvw);
-  } 
+  }
   else if (strcmp (msg_name, "video-size") == 0) {
     /* if we're not interactive, we want to announce metadata
      * only later when we can be sure we got it all */
@@ -1443,24 +1426,13 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     }
 
     if (bvw->priv->auto_resize
-       	&& !bvw->priv->fullscreen_mode
+	&& !bvw->priv->fullscreen_mode
 	&& !bvw->priv->window_resized) {
       bacon_video_widget_set_scale_ratio (bvw, 0.0);
     } else {
       gtk_widget_get_allocation (GTK_WIDGET (bvw), &allocation);
       bacon_video_widget_size_allocate (GTK_WIDGET (bvw),
                                         &allocation);
-
-      /* Uhm, so this ugly hack here makes media loading work for
-       * weird laptops with NVIDIA graphics cards... Dunno what the
-       * bug is really, but hey, it works. :). */
-      window = gtk_widget_get_window (GTK_WIDGET (bvw));
-      if (window) {
-        gdk_window_hide (window);
-        gdk_window_show (window);
-
-        bacon_video_widget_expose_event (GTK_WIDGET (bvw), NULL);
-      }
     }
     bvw->priv->window_resized = TRUE;
   } else {
