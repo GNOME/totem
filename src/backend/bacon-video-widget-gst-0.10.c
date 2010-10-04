@@ -5279,16 +5279,16 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   }
 
   if (ratio == 0.0) {
-    if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 2.0))
+    if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 2.0))
       ratio = 2.0;
-    else if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 1.0))
+    else if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 1.0))
       ratio = 1.0;
-    else if (totem_ratio_fits_screen (bvw->priv->video_window, w, h, 0.5))
+    else if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 0.5))
       ratio = 0.5;
     else
       return;
   } else {
-    if (!totem_ratio_fits_screen (bvw->priv->video_window, w, h, ratio)) {
+    if (!totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, ratio)) {
       GST_DEBUG ("movie doesn't fit on screen @ %.1fx (%dx%d)", w, h, ratio);
       return;
     }
