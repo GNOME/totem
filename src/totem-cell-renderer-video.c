@@ -68,7 +68,7 @@ static void totem_cell_renderer_video_get_property (GObject *object, guint prope
 static void totem_cell_renderer_video_dispose (GObject *object);
 static void totem_cell_renderer_video_finalize (GObject *object);
 static void totem_cell_renderer_video_get_size (GtkCellRenderer *cell, GtkWidget *widget, GdkRectangle *cell_area, gint *x_offset, gint *y_offset, gint *width, gint *height);
-static void totem_cell_renderer_video_render (GtkCellRenderer *cell, GdkDrawable *window, GtkWidget *widget, GdkRectangle *background_area, GdkRectangle *cell_area, GdkRectangle *expose_area, GtkCellRendererState flags);
+static void totem_cell_renderer_video_render (GtkCellRenderer *cell, cairo_t *cr, GtkWidget *widget, const GdkRectangle *background_area, const GdkRectangle *cell_area, GtkCellRendererState flags);
 
 G_DEFINE_TYPE (TotemCellRendererVideo, totem_cell_renderer_video, GTK_TYPE_CELL_RENDERER)
 
@@ -88,7 +88,7 @@ totem_cell_renderer_video_new (gboolean use_placeholder)
 {
 	return g_object_new (TOTEM_TYPE_CELL_RENDERER_VIDEO,
 				"use-placeholder", use_placeholder,
-				NULL); 
+				NULL);
 }
 
 static void
@@ -237,7 +237,7 @@ totem_cell_renderer_video_get_property (GObject *object, guint property_id, GVal
 static void
 get_size (GtkCellRenderer *cell,
 	  GtkWidget *widget,
-	  GdkRectangle *cell_area,
+	  const GdkRectangle *cell_area,
 	  GdkRectangle *draw_area,
 	  GdkRectangle *title_area,
 	  GdkRectangle *thumbnail_area)
@@ -373,11 +373,10 @@ totem_cell_renderer_video_get_size (GtkCellRenderer *cell,
 
 static void
 totem_cell_renderer_video_render (GtkCellRenderer *cell,
-				  GdkDrawable *window,
+				  cairo_t *cr,
 				  GtkWidget *widget,
-				  GdkRectangle *background_area,
-				  GdkRectangle *cell_area,
-				  GdkRectangle *expose_area,
+				  const GdkRectangle *background_area,
+				  const GdkRectangle *cell_area,
 				  GtkCellRendererState flags)
 {
 	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO (cell)->priv;
@@ -386,7 +385,6 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	GdkRectangle draw_area;
 	GdkRectangle title_area;
 	GdkRectangle thumbnail_area;
-	cairo_t *cr;
 	PangoLayout *layout;
 	GtkStateType state;
 	GtkStyle *style;
@@ -406,8 +404,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	draw_area.width -= cell_xpad * 2;
 	draw_area.height -= cell_ypad * 2;
 
-	if (!gdk_rectangle_intersect (cell_area, &draw_area, &draw_rect) ||
-	    !gdk_rectangle_intersect (expose_area, &draw_rect, &draw_rect))
+	if (!gdk_rectangle_intersect (cell_area, &draw_area, &draw_rect))
 		return;
 
 	/* Sort out the thumbnail */
@@ -453,7 +450,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	pango_layout_set_width (layout, title_area.width * PANGO_SCALE);
 	pango_layout_set_alignment (layout, priv->alignment);
 
-	gtk_paint_layout (style, window, state, TRUE, expose_area, widget, "cellrenderervideotitle",
+	gtk_paint_layout (style, cr, state, TRUE, widget, "cellrenderervideotitle",
 			  cell_area->x + title_area.x,
 			  cell_area->y + title_area.y,
 			  layout);
@@ -462,12 +459,8 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 
 	/* Draw the thumbnail */
 	if (pixbuf != NULL) {
-		cr = gdk_cairo_create (window);
-
 		gdk_cairo_set_source_pixbuf (cr, pixbuf, cell_area->x + thumbnail_area.x, cell_area->y + thumbnail_area.y);
 		gdk_cairo_rectangle (cr, &draw_rect);
 		cairo_fill (cr);
-
-		cairo_destroy (cr);
 	}
 }
