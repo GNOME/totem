@@ -22,7 +22,7 @@ if [ x"$1" = "x--nautilus" ] ; then
 	exit 0
 fi
 
-MIMETYPES=`grep -v '^#' $1 | grep -v x-content/`
+MIMETYPES=`grep -v '^#' $1 | grep -v x-content/ | grep -v x-scheme-handler/`
 
 echo "/* generated with mime-types-include.sh, don't edit */"
 echo "const char *mime_types[] = {"
