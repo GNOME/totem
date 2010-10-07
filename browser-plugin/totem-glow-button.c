@@ -38,10 +38,8 @@
 struct _TotemGlowButton {
 	GtkButton parent;
 
-	GdkPixmap *screenshot;
-	GdkPixmap *screenshot_faded;
-
 	gdouble glow_start_time;
+	gdouble glow_factor;
 
 	guint button_glow;
 
@@ -51,63 +49,29 @@ struct _TotemGlowButton {
 	/* Set when we don't want to play animation
 	 * anymore in pointer entered mode */
 	guint anim_finished :1;
-
-	guint in_expose : 1;
 };
 
-static void	totem_glow_button_set_timeout	(TotemGlowButton *button,
-						 gboolean set_timeout);
+static void totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout);
 
 static GtkButtonClass *parent_class;
 
 G_DEFINE_TYPE (TotemGlowButton, totem_glow_button, GTK_TYPE_BUTTON);
 
-static void
-totem_glow_button_do_expose (TotemGlowButton *button)
-{
-	GdkRectangle area;
-	GtkWidget *buttonw;
-	GtkAllocation allocation;
-
-	buttonw = GTK_WIDGET (button);
-	if (gtk_widget_get_window (buttonw) == NULL)
-		return;
-
-	gtk_widget_get_allocation (buttonw, &allocation);
-	area.x = allocation.x;
-	area.y = allocation.y;
-	area.width = allocation.width;
-	area.height = allocation.height;
-
-	/* Send a fake expose event */
-	gdk_window_invalidate_rect (gtk_widget_get_window (buttonw), &area, TRUE);
-	gdk_window_process_updates (gtk_widget_get_window (buttonw), TRUE);
-}
-
 static gboolean
 totem_glow_button_glow (TotemGlowButton *button)
-{ 
+{
 	GtkWidget *buttonw;
-	GtkAllocation allocation;
 	GTimeVal tv;
-	gdouble glow_factor, now;
+	gdouble now;
 	gfloat fade_opacity, loop_time;
-	cairo_t *cr;
 
 	buttonw = GTK_WIDGET (button);
 
 	if (gtk_widget_get_realized (buttonw) == FALSE)
 		return TRUE;
 
-	if (button->screenshot == NULL) {
-		/* Send a fake expose event to get a screenshot */
-		totem_glow_button_do_expose (button);
-		if (button->screenshot == NULL)
-			return TRUE;
-	}
-
 	if (button->anim_enabled != FALSE) {
-		g_get_current_time (&tv); 
+		g_get_current_time (&tv);
 		now = (tv.tv_sec * (1.0 * G_USEC_PER_SEC) +
 		       tv.tv_usec) / G_USEC_PER_SEC;
 
@@ -136,38 +100,15 @@ totem_glow_button_glow (TotemGlowButton *button)
 		}
 		if ((now - button->glow_start_time) > loop_time * FADE_MAX_LOOPS) {
 			button->anim_finished = TRUE;
-			glow_factor = FADE_OPACITY_DEFAULT * 0.5;
+			button->glow_factor = FADE_OPACITY_DEFAULT * 0.5;
 		} else {
-			glow_factor = fade_opacity * (0.5 - 0.5 * cos ((now - button->glow_start_time) * M_PI * 2.0 / loop_time));
+			button->glow_factor = fade_opacity * (0.5 - 0.5 * cos ((now - button->glow_start_time) * M_PI * 2.0 / loop_time));
 		}
 	} else {
-		glow_factor = FADE_OPACITY_DEFAULT * 0.5;
+		button->glow_factor = FADE_OPACITY_DEFAULT * 0.5;
 	}
 
-	gtk_widget_get_allocation (buttonw, &allocation);
-	gdk_window_begin_paint_rect (gtk_widget_get_window (buttonw),
-				     &allocation);
-
-	cr = gdk_cairo_create (gtk_widget_get_window (buttonw));
-	gdk_cairo_rectangle (cr, &allocation);
-	cairo_translate (cr, allocation.x, allocation.y);
-	cairo_clip (cr);
-
-	cairo_save (cr);
-
-	gdk_cairo_set_source_pixmap (cr, button->screenshot, 0., 0.);
-	cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-	cairo_paint (cr);
-
-	cairo_restore (cr);
-
-	gdk_cairo_set_source_pixmap (cr, button->screenshot_faded, 0., 0.);
-	cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-	cairo_paint_with_alpha (cr, glow_factor);
-
-	cairo_destroy (cr);
-
-	gdk_window_end_paint (gtk_widget_get_window (buttonw));
+	gtk_widget_queue_draw (GTK_WIDGET (button));
 
 	if (button->anim_finished != FALSE)
 		totem_glow_button_set_timeout (button, FALSE);
@@ -177,114 +118,54 @@ totem_glow_button_glow (TotemGlowButton *button)
 
 static void
 totem_glow_button_clear_glow_start_timeout_id (TotemGlowButton *button)
-{ 
+{
 	button->button_glow = 0;
 }
 
-static void
-cleanup_screenshots (TotemGlowButton *button)
+static gboolean
+totem_glow_button_draw (GtkWidget *widget,
+			cairo_t   *cr,
+			gpointer   user_data)
 {
-	if (button->screenshot != NULL) {
-		g_object_unref (button->screenshot);
-		button->screenshot = NULL;
-	}
-	if (button->screenshot_faded != NULL) {
-		g_object_unref (button->screenshot_faded);
-		button->screenshot_faded = NULL;
-	}
-}
-
-static void
-fake_expose_widget (GtkWidget *widget,
-		    GdkPixmap *pixmap,
-		    gint       x,
-		    gint       y)
-{
-	GtkAllocation allocation;
-	GdkWindow *tmp_window;
-	GdkEventExpose event;
-
-	event.type = GDK_EXPOSE;
-	event.window = pixmap;
-	event.send_event = FALSE;
-	event.region = NULL;
-	event.count = 0;
-
-	tmp_window = gtk_widget_get_window (widget);
-	gtk_widget_set_window (widget, pixmap);
-	gtk_widget_get_allocation (widget, &allocation);
-	allocation.x += x;
-	allocation.y += y;
-	gtk_widget_set_allocation (widget, &allocation);
-
-	event.area = allocation;
-
-	gtk_widget_send_expose (widget, (GdkEvent *) &event);
-
-	gtk_widget_set_window (widget, tmp_window);
-	gtk_widget_get_allocation (widget, &allocation);
-	allocation.x -= x;
-	allocation.y -= y;
-	gtk_widget_set_allocation (widget, &allocation);
-}
-
-static GdkPixmap *
-take_screenshot (TotemGlowButton *button)
-{
-	GtkWidget *buttonw;
-	GtkAllocation allocation;
+	TotemGlowButton *button;
 	GtkStyle *style;
-	GdkPixmap *pixmap;
+	GtkAllocation allocation, child_allocation;
 	gint width, height;
-	cairo_t *cr;
+	GtkWidget *child;
 
-	buttonw = GTK_WIDGET (button);
-	gtk_widget_get_allocation (buttonw, &allocation);
+	button = TOTEM_GLOW_BUTTON (widget);
+
+	if (button->glow_factor == 0.0)
+		return FALSE;
+
+	/* push a translucent overlay to paint to, so we can blend later */
+	cairo_push_group_with_content (cr, CAIRO_CONTENT_COLOR_ALPHA);
+
+	gtk_widget_get_allocation (widget, &allocation);
 
 	width = allocation.width;
 	height = allocation.height;
 
-	pixmap = gdk_pixmap_new (gtk_widget_get_window (buttonw),
-				 width, height, -1);
-	cr = gdk_cairo_create (pixmap);
-
 	/* Draw a rectangle with bg[SELECTED] */
-	style = gtk_widget_get_style (buttonw);
+	style = gtk_widget_get_style (widget);
 	gdk_cairo_set_source_color (cr, &(style->bg[GTK_STATE_SELECTED]));
-	cairo_rectangle (cr, 0.0, 0.0, width + 1.0, height + 1.0);
-	cairo_fill (cr);
+	gtk_paint_box (style, cr, GTK_STATE_SELECTED,
+		       GTK_SHADOW_OUT, widget, "button",
+		       0, 0, height, width);
 
 	/* then the image */
-	fake_expose_widget (gtk_button_get_image (GTK_BUTTON (button)), pixmap,
-			    -allocation.x, -allocation.y);
+	cairo_save (cr);
+	child = gtk_bin_get_child (GTK_BIN (button));
+	gtk_widget_get_allocation (child, &child_allocation);
+	cairo_translate (cr,
+			 child_allocation.x - allocation.x,
+			 child_allocation.y - allocation.y);
+	gtk_widget_draw (gtk_bin_get_child (GTK_BIN (button)), cr);
+	cairo_restore (cr);
 
-	cairo_destroy (cr);
-
-	return pixmap;
-}
-
-static gboolean
-totem_glow_button_expose (GtkWidget        *buttonw,
-			  GdkEventExpose   *event)
-{
-	TotemGlowButton *button;
-
-	button = TOTEM_GLOW_BUTTON (buttonw);
-
-	(* GTK_WIDGET_CLASS (parent_class)->expose_event) (buttonw, event);
-
-	if (button->glow != FALSE && button->screenshot == NULL && button->in_expose == FALSE &&
-	    /* Don't take screenshots if we finished playing animation after
-	       pointer entered, or if we're already in an expose event. */
-	    (button->pointer_entered != FALSE && 
-	     button->anim_finished != FALSE) == FALSE) {
-		button->in_expose = TRUE;
-
-		button->screenshot = gtk_widget_get_snapshot (buttonw, NULL);;
-		button->screenshot_faded = take_screenshot (button);
-
-		button->in_expose = FALSE;
-	}
+	/* finally blend it */
+	cairo_pop_group_to_source (cr);
+	cairo_paint_with_alpha (cr, button->glow_factor);
 
 	return FALSE;
 }
@@ -315,8 +196,6 @@ totem_glow_button_unmap (GtkWidget *buttonw)
 		button->button_glow = 0;
 	}
 
-	cleanup_screenshots (button);
-
 	(* GTK_WIDGET_CLASS (parent_class)->unmap) (buttonw);
 }
 
@@ -328,7 +207,7 @@ totem_glow_button_enter (GtkButton *buttonw)
 	button = TOTEM_GLOW_BUTTON (buttonw);
 
 	(* GTK_BUTTON_CLASS (parent_class)->enter) (buttonw);
-	
+
 	button->pointer_entered = TRUE;
 	button->anim_finished = FALSE;
 	button->glow_start_time = G_MINDOUBLE;
@@ -356,7 +235,6 @@ totem_glow_button_finalize (GObject *object)
 	TotemGlowButton *button = TOTEM_GLOW_BUTTON (object);
 
 	totem_glow_button_set_glow (button, FALSE);
-	cleanup_screenshots (button);
 
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -371,7 +249,8 @@ totem_glow_button_class_init (TotemGlowButtonClass *klass)
 	parent_class = g_type_class_peek_parent (klass);
 
 	object_class->finalize = totem_glow_button_finalize;
-	widget_class->expose_event = totem_glow_button_expose;
+	/* Note that we don't use a draw here because we
+	 * want to modify what the button will draw by itself */
 	widget_class->map = totem_glow_button_map;
 	widget_class->unmap = totem_glow_button_unmap;
 	button_class->enter = totem_glow_button_enter;
@@ -383,8 +262,12 @@ totem_glow_button_init (TotemGlowButton *button)
 {
 	button->glow_start_time = 0.0;
 	button->button_glow = 0;
-	button->screenshot = NULL;
-	button->screenshot_faded = NULL;
+	button->glow_factor = 0.0;
+
+	g_signal_connect_object (button, "draw",
+				 G_CALLBACK (totem_glow_button_draw),
+				 G_OBJECT (button),
+				 G_CONNECT_AFTER);
 }
 
 GtkWidget *
@@ -400,7 +283,7 @@ totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout)
 		button->glow_start_time = 0.0;
 
 		/* The animation doesn't speed up or slow down based on the
-		 * timeout value, but instead will just appear smoother or 
+		 * timeout value, but instead will just appear smoother or
 		 * choppier.
 		 */
 		button->button_glow =
@@ -413,8 +296,7 @@ totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout)
 			g_source_remove (button->button_glow);
 			button->button_glow = 0;
 		}
-		cleanup_screenshots (button);
-		totem_glow_button_do_expose (button);
+		button->glow_factor = 0.0;
 	}
 }
 
