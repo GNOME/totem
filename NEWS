@@ -1,5 +1,27 @@
 New features and significant updates in version...
 
+2.90.6:
+* Movie Player:
+  - Re-enable Python plugins
+  - Update for libpeas and GTK+ 3.x changes
+  - Add chapters plugin
+  - Use icon for the sidebar
+  - Don't try to load subtitles, or chapters data for streams
+  - Only popup controls when the mouse moves a certain distance
+  - Port to GSettings
+
+* YouTube plugins:
+  - Fix playback again
+  - Support Web-M videos
+  - Hide URLs from the tooltips, they're not useful
+
+* GStreamer backend:
+  - Don't block main thread when seeking
+
+* Thumbnailer:
+  - Use msecs instead of seconds for seeking, which should fix black frames
+  - Make --raw work along with --size, so you can avoid adding borders
+
 2.90.5:
 * Movie Player:
   - Port from libunique to GApplication
