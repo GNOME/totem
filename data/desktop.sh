@@ -14,7 +14,7 @@ done
 SCHEMES="pnm mms net rtp rtsp mmsh uvox icy icyx"
 
 for i in $SCHEMES ; do
-	printf "x-scheme-handler/$i";
+	printf "x-scheme-handler/$i;"
 done
 
 echo ""
