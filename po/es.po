@@ -1,4 +1,4 @@
-# translation of totem.HEAD.po to Español
+# translation of totem.master.po to Español
 # Translation of totem to Spanish
 # Copyright © 2002, 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the totem package.
@@ -11,11 +11,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem.HEAD\n"
+"Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-09-16 10:52+0000\n"
-"PO-Revision-Date: 2010-09-18 11:29+0200\n"
+"POT-Creation-Date: 2010-09-27 12:30+0000\n"
+"PO-Revision-Date: 2010-10-09 14:23+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -119,54 +119,45 @@ msgstr "Artista:"
 msgid "Audio"
 msgstr "Sonido"
 
+#. Audio Codec
 #: ../data/properties.ui.h:10
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#| msgid "N/A"
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../data/properties.ui.h:11
 msgid "Bitrate:"
 msgstr "Tasa de bits:"
 
-#: ../data/properties.ui.h:11
+#: ../data/properties.ui.h:12
 msgid "Channels:"
 msgstr "Canales:"
 
-#: ../data/properties.ui.h:12
+#: ../data/properties.ui.h:13
 msgid "Codec:"
 msgstr "Códec:"
 
-#: ../data/properties.ui.h:13
+#: ../data/properties.ui.h:14
 msgid "Comment:"
 msgstr "Comentario:"
 
-#: ../data/properties.ui.h:14
+#: ../data/properties.ui.h:15
 msgid "Dimensions:"
 msgstr "Dimensiones:"
 
-#: ../data/properties.ui.h:15
+#: ../data/properties.ui.h:16
 msgid "Duration:"
 msgstr "Duración:"
 
-#: ../data/properties.ui.h:16
+#: ../data/properties.ui.h:17
 msgid "Framerate:"
 msgstr "Tasa de fotogramas:"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:41
+#: ../data/properties.ui.h:18 ../data/totem.ui.h:41
 msgid "General"
 msgstr "General"
-
-#. Dimensions
-#. Video Codec
-#. Audio Codec
-#: ../data/properties.ui.h:18
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-msgid "N/A"
-msgstr "N/D"
 
 #: ../data/properties.ui.h:19
 msgid "Sample rate:"
@@ -193,7 +184,15 @@ msgstr "Desconocido"
 msgid "Video"
 msgstr "Vídeo"
 
+#. Video Codec
 #: ../data/properties.ui.h:23
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#| msgid "N/A"
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../data/properties.ui.h:24
 msgid "Year:"
 msgstr "Año:"
 
@@ -1085,21 +1084,21 @@ msgstr "Cancelar"
 msgid "No File"
 msgstr "Ningún archivo"
 
-#: ../src/totem-interface.c:169 ../src/totem-interface.c:201
+#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "No se pudo cargar la interfaz «%s». %s"
 
-#: ../src/totem-interface.c:169
+#: ../src/totem-interface.c:180
 msgid "The file does not exist."
 msgstr "El archivo no existe."
 
-#: ../src/totem-interface.c:171 ../src/totem-interface.c:173
-#: ../src/totem-interface.c:203 ../src/totem-interface.c:205
+#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
+#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
 msgid "Make sure that Totem is properly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: ../src/totem-interface.c:316
+#: ../src/totem-interface.c:346
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1111,7 +1110,7 @@ msgstr ""
 "se publica por la Free Software Foundation; tanto en la versión 2de la "
 "Licencia, como a (su elección) cualquier versión posterior."
 
-#: ../src/totem-interface.c:320
+#: ../src/totem-interface.c:350
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1123,7 +1122,7 @@ msgstr ""
 "ADECUACIÓN PARA UN PROPÓSITO PARTICULAR. Vea la Licencia Publica General "
 "para más detalles."
 
-#: ../src/totem-interface.c:324
+#: ../src/totem-interface.c:354
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1133,7 +1132,7 @@ msgstr ""
 "con este programa. De lo contrario, escriba a la Free Software Foundation, "
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, EE. UU."
 
-#: ../src/totem-interface.c:327
+#: ../src/totem-interface.c:357
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1220,7 +1219,7 @@ msgid "Play"
 msgstr "Reproducir"
 
 #: ../src/totem-object.c:1057 ../src/totem-object.c:1657
-#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:352
+#: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Detenido"
 
@@ -1330,6 +1329,8 @@ msgstr "Reproducir / Pausar"
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
+#. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
+#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
 #: ../src/totem-object.c:4109 ../src/totem-object.c:4111
 msgid "Fullscreen"
 msgstr "Pantalla completa"
@@ -1409,7 +1410,7 @@ msgstr "No conectarse a una instancia en ejecución"
 msgid "Seek"
 msgstr "Saltar"
 
-#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
+#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
 #: ../src/totem-options.c:68
 msgid "Playlist index"
 msgstr "Índice de lista de reproducción"
@@ -1491,45 +1492,45 @@ msgstr "Seleccionar la tipografía de los subtítulos"
 msgid "Audio/Video"
 msgstr "Sonido / Vídeo"
 
-#: ../src/totem-statusbar.c:91
+#: ../src/totem-statusbar.c:110
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:113
+#: ../src/totem-statusbar.c:133
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (streaming)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
+#: ../src/totem-statusbar.c:140 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
+#: ../src/totem-statusbar.c:143 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Saltar a %s / %s"
 
-#: ../src/totem-statusbar.c:217
+#: ../src/totem-statusbar.c:239
 msgid "Buffering"
 msgstr "Almacenando en el búfer"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:228
+#: ../src/totem-statusbar.c:250
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:303
+#: ../src/totem-statusbar.c:325
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:308
+#: ../src/totem-statusbar.c:330
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1675,7 +1676,7 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: ../src/totem-video-list.c:307
+#: ../src/totem-video-list.c:329
 msgid "No video URI"
 msgstr "No existe el URI del vídeo"
 
@@ -2064,7 +2065,6 @@ msgid "Chapters"
 msgstr "Capítulos"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
-#| msgid "_Chapter Menu"
 msgid "Chapters support"
 msgstr "Soporte para capítulos"
 
@@ -2235,11 +2235,12 @@ msgstr ""
 msgid "Loading…"
 msgstr "Cargando…"
 
-#: ../src/plugins/iplayer/iplayer.py:115
+#. Translators: the "programme feed" is the list of TV shows available to watch online
+#: ../src/plugins/iplayer/iplayer.py:116
 msgid "Error getting programme feed"
 msgstr "Error al obtener el proveedor de la programación"
 
-#: ../src/plugins/iplayer/iplayer.py:115
+#: ../src/plugins/iplayer/iplayer.py:116
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2542,6 +2543,34 @@ msgstr ""
 msgid "Properties"
 msgstr "Propiedades"
 
+#. Dimensions
+#: ../src/plugins/properties/bacon-video-widget-properties.c:158
+#| msgid "N/A"
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:163
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+#| msgid "N/A"
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:250
+#| msgid "N/A"
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:273
+#| msgid "N/A"
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "N/D"
+
 #: ../src/plugins/properties/bacon-video-widget-properties.c:237
 #, c-format
 msgid "%d x %d"
@@ -2564,6 +2593,12 @@ msgstr[1] "%d fotogramas por segundo"
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:276
+#| msgid "N/A"
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "N/D"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
