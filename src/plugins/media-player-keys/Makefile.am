@@ -10,7 +10,7 @@ marshal_files = \
 	totem-marshal.h		\
 	totem-marshal.c
 
-totem-marshal.c: totem-marshal.list
+totem-marshal.c: totem-marshal.list totem-marshal.h
 	$(AM_V_GEN) @GLIB_GENMARSHAL@ --prefix=totem_marshal $< --header --body > $@
 
 totem-marshal.h: totem-marshal.list

@@ -58,7 +58,7 @@ MARSHAL_FILES = \
 
 marshal.h: marshal.list
 	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --header $< > $@)
-marshal.c: marshal.list
+marshal.c: marshal.list marshal.h
 	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --body --header $< > $@)
 
 CLEANFILES = $(MARSHAL_FILES)
@@ -99,11 +99,14 @@ test_glow_button_CFLAGS = \
 # Totem Plugin Viewer
 libexec_PROGRAMS = totem-plugin-viewer
 
+# Are we a bit thick, Mister?
+totem-plugin-viewer.c: totem-plugin-viewer-interface.h
+
 totem_plugin_viewer_SOURCES = \
 	totem-glow-button.c		\
 	totem-glow-button.h		\
-	totem-plugin-viewer.c		\
 	totem-plugin-viewer-interface.h	\
+	totem-plugin-viewer.c		\
 	totem-plugin-viewer-constants.h	\
 	totem-plugin-viewer-options.h
 
