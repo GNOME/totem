@@ -453,16 +453,23 @@ totem_setup_preferences (Totem *totem)
 		visual = g_strdup ("goom");
 	}
 
-	item = gtk_builder_get_object (totem->xml, "tpw_visuals_type_combobox");
+	item = gtk_builder_get_object (totem->xml, "tpw_visuals_type_liststore");
 
 	i = 0;
 	for (l = list; l != NULL; l = l->next) {
 		const char *name = l->data;
+		GtkTreeIter iter;
 
-		gtk_combo_box_append_text (GTK_COMBO_BOX (item), name);
+		gtk_list_store_append (GTK_LIST_STORE (item), &iter);
+		gtk_list_store_set (GTK_LIST_STORE (item), &iter,
+				    0, name, -1);
 
-		if (strcmp (name, visual) == 0)
-			gtk_combo_box_set_active (GTK_COMBO_BOX (item), i);
+		if (strcmp (name, visual) == 0) {
+			GObject *combobox;
+
+			combobox = gtk_builder_get_object (totem->xml, "tpw_visuals_type_combobox");
+			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), i);
+		}
 
 		i++;
 	}
