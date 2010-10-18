@@ -1956,7 +1956,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (cb_vol), emb);
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
-	gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (emb->statusbar), FALSE);
 
 	if (!emb->hidden) {
 		gtk_widget_set_size_request (emb->window, width, height);
