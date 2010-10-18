@@ -67,7 +67,7 @@ static void totem_cell_renderer_video_set_property (GObject *object, guint prope
 static void totem_cell_renderer_video_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec);
 static void totem_cell_renderer_video_dispose (GObject *object);
 static void totem_cell_renderer_video_finalize (GObject *object);
-static void totem_cell_renderer_video_get_size (GtkCellRenderer *cell, GtkWidget *widget, GdkRectangle *cell_area, gint *x_offset, gint *y_offset, gint *width, gint *height);
+static void totem_cell_renderer_video_get_size (GtkCellRenderer *cell, GtkWidget *widget, const GdkRectangle *cell_area, gint *x_offset, gint *y_offset, gint *width, gint *height);
 static void totem_cell_renderer_video_render (GtkCellRenderer *cell, cairo_t *cr, GtkWidget *widget, const GdkRectangle *background_area, const GdkRectangle *cell_area, GtkCellRendererState flags);
 
 G_DEFINE_TYPE (TotemCellRendererVideo, totem_cell_renderer_video, GTK_TYPE_CELL_RENDERER)
@@ -351,7 +351,7 @@ get_size (GtkCellRenderer *cell,
 static void
 totem_cell_renderer_video_get_size (GtkCellRenderer *cell,
 				    GtkWidget *widget,
-				    GdkRectangle *cell_area,
+				    const GdkRectangle *cell_area,
 				    gint *x_offset,
 				    gint *y_offset,
 				    gint *width,
