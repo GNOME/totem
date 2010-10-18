@@ -1243,7 +1243,7 @@ popup_menu_position_func (GtkMenu *menu, gint *x, gint *y, gboolean *push_in, Gt
 	GtkTextDirection direction;
 	GtkAllocation allocation;
 
-	gtk_widget_size_request (GTK_WIDGET (menu), &menu_req);
+	gtk_widget_get_preferred_size (GTK_WIDGET (menu), NULL, &menu_req);
 
 	direction = gtk_widget_get_direction (widget);
 
