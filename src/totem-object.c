@@ -1446,8 +1446,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 {
 	if (event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) {
 		totem->maximised = (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
-                gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (totem->statusbar),
-                                                   !totem->maximised);
 		totem_action_set_sensitivity ("zoom-1-2", !totem->maximised);
 		totem_action_set_sensitivity ("zoom-1-1", !totem->maximised);
 		totem_action_set_sensitivity ("zoom-2-1", !totem->maximised);
