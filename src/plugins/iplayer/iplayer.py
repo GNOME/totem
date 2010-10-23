@@ -223,7 +223,8 @@ class PopulateProgrammesThread (threading.Thread):
 				continue
 
 			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path,
-					  [programme.get_title (), programme.get_summary (), media.url], remove_placeholder)
+					  [programme.get_title ().encode ('utf-8'), programme.get_summary ().encode ('utf-8'), media.url],
+					  remove_placeholder)
 			remove_placeholder = False
 
 		self.plugin.programme_download_lock.release ()
