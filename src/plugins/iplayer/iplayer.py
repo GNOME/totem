@@ -66,7 +66,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 			self.totem.action_error (_('Error listing channel categories'), _('There was an unknown error getting the list of television channels available on BBC iPlayer.'))
 			return False
 
-		parent_iter = tree_store.get_iter (parent_path)
+		(b, parent_iter) = tree_store.get_iter (parent_path)
 		category_iter = tree_store.append (parent_iter, values)
 
 		# Append a dummy child row so that the expander's visible; we can
@@ -91,7 +91,10 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 
 	def _row_activated_cb (self, tree_view, path, view_column):
 		tree_store = tree_view.get_model ()
-		tree_iter = tree_store.get_iter (path)
+		(b, tree_iter) = tree_store.get_iter (path)
+		if b == False:
+			return
+
 		mrl = tree_store.get_value (tree_iter, 2)
 
 		# Only allow programme rows to be activated, not channel or category rows
@@ -116,20 +119,21 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 			self.totem.action_error (_('Error getting programme feed'), _('There was an error getting the list of programmes for this channel and category combination.'))
 			return False
 
-		category_iter = tree_store.get_iter (category_path)
-
+		(b, category_iter) = tree_store.get_iter (category_path)
 		tree_store.append (category_iter, values)
 
 		# Remove the placeholder row
-		if remove_placeholder:
-			tree_store.remove (tree_store.iter_children (category_iter))
+		(b, children) = tree_store.iter_children (category_iter)
+		if remove_placeholder and b:
+			tree_store.remove (children)
 
 		return False
 
 def get_iter_level (tree_model, tree_iter):
 	i = -1;
-	while (tree_iter != None):
-		tree_iter = tree_model.iter_parent (tree_iter)
+	valid = True
+	while valid == True:
+		(valid, tree_iter) = tree_model.iter_parent (tree_iter)
 		i += 1
 	return i
 
@@ -146,8 +150,8 @@ class PopulateChannelsThread (threading.Thread):
 
 	def run (self):
 		shown_error = False
-		tree_iter = self.tree_model.get_iter_first ()
-		while (tree_iter != None):
+		(valid, tree_iter) = self.tree_model.get_iter_first ()
+		while (valid == True):
 			channel_id = self.tree_model.get_value (tree_iter, 1)
 			parent_path = self.tree_model.get_path (tree_iter)
 
@@ -164,7 +168,7 @@ class PopulateChannelsThread (threading.Thread):
 					gobject.idle_add (self.plugin._populate_channel_list_cb, self.tree_model, parent_path, None)
 					shown_error = True
 
-			tree_iter = self.tree_model.iter_next (tree_iter)
+			valid = self.tree_model.iter_next (tree_iter)
 
 class PopulateProgrammesThread (threading.Thread):
 	# Class to populate the programme list for a channel/category combination from the Internet
@@ -178,9 +182,15 @@ class PopulateProgrammesThread (threading.Thread):
 	def run (self):
 		self.plugin.programme_download_lock.acquire ()
 
-		category_iter = self.tree_model.get_iter (self.category_path)
+		(b, category_iter) = self.tree_model.get_iter (self.category_path)
+		if b == False:
+			gobject.idle_add (self.plugin._populate_programme_list_cb, self.tree_model, self.category_path, None, False)
+			self.plugin.programme_download_lock.release ()
+			return
+
 		category_id = self.tree_model.get_value (category_iter, 1)
-		channel_id = self.tree_model.get_value (self.tree_model.iter_parent (category_iter), 1)
+		(v, parent_iter) = self.tree_model.iter_parent (category_iter)
+		channel_id = self.tree_model.get_value (parent_iter, 1)
 
 		# Retrieve the programmes and return them
 		feed = self.feed.get (channel_id).get (category_id)
