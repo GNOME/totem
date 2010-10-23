@@ -212,7 +212,6 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             col = Gtk.TreeViewColumn(cell_renderer=cell, markup=2)
             col.set_expand(True)
             w.append_column(col)
-            w.connect_after('size-allocate', self.on_treeview_size_allocate, col, cell)
 
             # duration column
             cell = Gtk.CellRendererText()
@@ -478,21 +477,6 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             self.album_button.set_sensitive(True)
         except:
             pass
-
-    def on_treeview_size_allocate(self, tv, allocation, col, cell):
-        """
-        Hack to autowrap text of the title colum.
-        """
-        # Further hack to run away if we're using GTK+ 3, where GtkAllocation
-        # disappeared.
-        if not hasattr(allocation, 'width'):
-            return
-
-        cols = (c for c in tv.get_columns() if c != col)
-        w = allocation.width - sum(c.get_width() for c in cols)
-        if cell.props.wrap_width == w or w <= 0:
-            return
-        cell.props.wrap_width = w
 
     def on_previous_button_clicked(self, *args):
         """
