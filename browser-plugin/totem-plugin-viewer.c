@@ -762,7 +762,7 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 
 		totem_fullscreen_set_fullscreen (emb->fs, FALSE);
 		gtk_widget_reparent (GTK_WIDGET (emb->bvw), container);
-		gtk_widget_hide_all (emb->fs_window);
+		gtk_widget_hide (emb->fs_window);
 
 		gtk_action_set_sensitive (fs_action, TRUE);
 	} else {
