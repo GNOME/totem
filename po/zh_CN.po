@@ -14,9 +14,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-15 15:43+0800\n"
-"PO-Revision-Date: 2010-09-15 15:45+0800\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=totem&component=general\n"
+"POT-Creation-Date: 2010-09-27 12:30+0000\n"
+"PO-Revision-Date: 2010-10-25 15:48+0800\n"
 "Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -119,54 +120,44 @@ msgstr "艺术家："
 msgid "Audio"
 msgstr "音频"
 
+#. Audio Codec
 #: ../data/properties.ui.h:10
+#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "不可用"
+
+#: ../data/properties.ui.h:11
 msgid "Bitrate:"
 msgstr "比特率："
 
-#: ../data/properties.ui.h:11
+#: ../data/properties.ui.h:12
 msgid "Channels:"
 msgstr "声道："
 
-#: ../data/properties.ui.h:12
+#: ../data/properties.ui.h:13
 msgid "Codec:"
 msgstr "编解码器："
 
-#: ../data/properties.ui.h:13
+#: ../data/properties.ui.h:14
 msgid "Comment:"
 msgstr "注释："
 
-#: ../data/properties.ui.h:14
+#: ../data/properties.ui.h:15
 msgid "Dimensions:"
 msgstr "尺寸："
 
-#: ../data/properties.ui.h:15
+#: ../data/properties.ui.h:16
 msgid "Duration:"
 msgstr "持续时间："
 
-#: ../data/properties.ui.h:16
+#: ../data/properties.ui.h:17
 msgid "Framerate:"
 msgstr "帧率："
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:41
+#: ../data/properties.ui.h:18 ../data/totem.ui.h:41
 msgid "General"
 msgstr "常规"
-
-#. Dimensions
-#. Video Codec
-#. Audio Codec
-#: ../data/properties.ui.h:18
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-msgid "N/A"
-msgstr "不可用"
 
 #: ../data/properties.ui.h:19
 msgid "Sample rate:"
@@ -193,7 +184,14 @@ msgstr "未知"
 msgid "Video"
 msgstr "视频"
 
+#. Video Codec
 #: ../data/properties.ui.h:23
+#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "不可用"
+
+#: ../data/properties.ui.h:24
 msgid "Year:"
 msgstr "年份："
 
@@ -777,7 +775,7 @@ msgstr "查看(_V)"
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
-msgstr ""
+msgstr "当前使用中的(已加载和运行中的)插件名称列表。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:2
 msgid "Active plugins list"
@@ -804,7 +802,7 @@ msgstr "网络流媒体开始显示之前要缓存的数据量(以秒计)。"
 msgid ""
 "Approximate network connection speed, used to select quality on media over "
 "the network."
-msgstr ""
+msgstr "大概的网速，用于选择网络媒体质量。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:7
 msgid "Default location for the \"Open...\" dialogs"
@@ -848,7 +846,7 @@ msgstr "字幕渲染所用的 Pango 字体描述。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:16
 msgid "Quality setting for the audio visualization."
-msgstr ""
+msgstr "音频可视化效果的质量设置。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:17
 msgid "Repeat mode"
@@ -1059,21 +1057,21 @@ msgstr "取消"
 msgid "No File"
 msgstr "无文件"
 
-#: ../src/totem-interface.c:169 ../src/totem-interface.c:201
+#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "无法装入“%s”界面。%s"
 
-#: ../src/totem-interface.c:169
+#: ../src/totem-interface.c:180
 msgid "The file does not exist."
 msgstr "文件不存在。"
 
-#: ../src/totem-interface.c:171 ../src/totem-interface.c:173
-#: ../src/totem-interface.c:203 ../src/totem-interface.c:205
+#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
+#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
 msgid "Make sure that Totem is properly installed."
 msgstr "请确保 Totem 已正确安装。"
 
-#: ../src/totem-interface.c:316
+#: ../src/totem-interface.c:346
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1083,7 +1081,7 @@ msgstr ""
 "Totem 是自由软件；您可以在自由软件基金会发布的 GNU 公共许可证的条目下重新发布"
 "或修改它；许可证应当是第二版或由您选择的更高版本。"
 
-#: ../src/totem-interface.c:320
+#: ../src/totem-interface.c:350
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1093,7 +1091,7 @@ msgstr ""
 "Totem 发布是希望它有用，但没有任何担保；即使是商业性应用或其它任何目的。参见 "
 "GNU 公共许可证以获得更多细节。"
 
-#: ../src/totem-interface.c:324
+#: ../src/totem-interface.c:354
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1103,7 +1101,7 @@ msgstr ""
 "软件基金会写信，地址是：59 Temple Place, Suite 330, Boston, MA  02111-1307  "
 "USA"
 
-#: ../src/totem-interface.c:327
+#: ../src/totem-interface.c:357
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1190,7 +1188,7 @@ msgid "Play"
 msgstr "播放"
 
 #: ../src/totem-object.c:1057 ../src/totem-object.c:1657
-#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:352
+#: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "已停止"
 
@@ -1287,6 +1285,8 @@ msgstr "播放/暂停"
 msgid "Next Chapter/Movie"
 msgstr "下一章/电影"
 
+#. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
+#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
 #: ../src/totem-object.c:4109 ../src/totem-object.c:4111
 msgid "Fullscreen"
 msgstr "全屏"
@@ -1366,7 +1366,7 @@ msgstr "不要连接正在运行的实例"
 msgid "Seek"
 msgstr "搜索"
 
-#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
+#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
 #: ../src/totem-options.c:68
 msgid "Playlist index"
 msgstr "播放列表索引"
@@ -1438,7 +1438,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../src/totem-preferences.c:510
+#: ../src/totem-preferences.c:509
 msgid "Select Subtitle Font"
 msgstr "选择字幕字体"
 
@@ -1448,45 +1448,45 @@ msgstr "选择字幕字体"
 msgid "Audio/Video"
 msgstr "音频/视频"
 
-#: ../src/totem-statusbar.c:91
+#: ../src/totem-statusbar.c:110
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:113
+#: ../src/totem-statusbar.c:133
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (流媒体)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
+#: ../src/totem-statusbar.c:140 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
+#: ../src/totem-statusbar.c:143 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "跳到 %s / %s"
 
-#: ../src/totem-statusbar.c:217
+#: ../src/totem-statusbar.c:239
 msgid "Buffering"
 msgstr "正在缓冲"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:228
+#: ../src/totem-statusbar.c:250
 #, c-format
 msgid "%d %%"
 msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:303
+#: ../src/totem-statusbar.c:325
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:308
+#: ../src/totem-statusbar.c:330
 #, c-format
 msgid "%s, %d %%"
 msgstr "%s, %d %%"
@@ -1632,7 +1632,7 @@ msgstr "西方"
 msgid "Vietnamese"
 msgstr "越南语"
 
-#: ../src/totem-video-list.c:307
+#: ../src/totem-video-list.c:329
 msgid "No video URI"
 msgstr "没有视频 URI"
 
@@ -2119,7 +2119,7 @@ msgstr "播放电影时将您的即时通讯软件状态设定为离开"
 
 #: ../src/plugins/galago/totem-galago.c:117
 msgid "Error loading Galago plugin"
-msgstr ""
+msgstr "加载 Galago 插件出错"
 
 #: ../src/plugins/galago/totem-galago.c:117
 msgid "Could not connect to the Galago daemon."
@@ -2163,11 +2163,12 @@ msgstr "接收 BBC iPlayer 可用的电视频道时出现未知错误"
 msgid "Loading…"
 msgstr "载入..."
 
-#: ../src/plugins/iplayer/iplayer.py:115
+#. Translators: the "programme feed" is the list of TV shows available to watch online
+#: ../src/plugins/iplayer/iplayer.py:116
 msgid "Error getting programme feed"
 msgstr "接收节目定阅单时出错"
 
-#: ../src/plugins/iplayer/iplayer.py:115
+#: ../src/plugins/iplayer/iplayer.py:116
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2336,11 +2337,11 @@ msgstr "每页结果数"
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:3
 msgid ""
 "The number of Jamendo search results to display in each page of results."
-msgstr ""
+msgstr "每页中显示 Jamendo 搜索结果的数量。"
 
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:4
 msgid "The preferred audio format to download tracks from Jamendo in."
-msgstr ""
+msgstr "从 Jamendo 中下载音频优先使用的音频格式。"
 
 #: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -2447,7 +2448,7 @@ msgstr "字幕语言"
 
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
 msgid "The language to search for subtitles for movies in."
-msgstr ""
+msgstr "搜索的影片字幕所使用的语言。"
 
 #: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
 msgid "Always On Top"
@@ -2460,6 +2461,30 @@ msgstr "播放电影时将主窗口置于顶端"
 #: ../src/plugins/properties/totem-movie-properties.c:128
 msgid "Properties"
 msgstr "属性"
+
+#. Dimensions
+#: ../src/plugins/properties/bacon-video-widget-properties.c:158
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "不可用"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:163
+#: ../src/plugins/properties/bacon-video-widget-properties.c:240
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "不可用"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:166
+#: ../src/plugins/properties/bacon-video-widget-properties.c:250
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "不可用"
+
+#: ../src/plugins/properties/bacon-video-widget-properties.c:169
+#: ../src/plugins/properties/bacon-video-widget-properties.c:273
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "不可用"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:237
 #, c-format
@@ -2483,6 +2508,11 @@ msgstr[0] "每秒 %d 帧"
 msgid "%d Hz"
 msgstr "%d Hz"
 
+#: ../src/plugins/properties/bacon-video-widget-properties.c:276
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "不可用"
+
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
 msgid ""
@@ -2492,19 +2522,23 @@ msgid ""
 "machine's host name in title case • %u: the user's login name in title case "
 "• %U: the user's real name • %%: the percent sign"
 msgstr ""
+"在网络发布播放列表时用于构建网络服务名称的格式字符串。可以使用以下格式占位"
+"符：• %a：g_get_application_name() 返回的程序名称 • %h：这台计算机的主机名，"
+"使用标题大写形式 • %u：用户的登录名，使用标题大写形式 • %U：用户的真实姓名 • "
+"%%：百分号"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
 msgid "Format for network service name"
-msgstr ""
+msgstr "网络服务名称格式"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:4
 msgid "Publisher protocol to use"
-msgstr ""
+msgstr "要使用的发布协议"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
 msgid ""
 "The transport protocol to use when publishing playlists over the network."
-msgstr ""
+msgstr "在通过网络发布播放列表时使用的传送协议。"
 
 #. Translators: computers on the local network which are publishing their playlists over the network
 #: ../src/plugins/publish/totem-publish.c:547
@@ -2543,10 +2577,12 @@ msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
 msgstr ""
+"一个防止调试 Totem 用的 rpdb2 服务器遭受未授权网络访问的密码。如果不设，将默"
+"认使用 totem 作为密码。"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid "rpdb2 password"
-msgstr ""
+msgstr "rpdb2 密码"
 
 #: ../src/plugins/screensaver/totem-screensaver.c:112
 #: ../browser-plugin/totem-plugin-viewer.c:1965
@@ -2602,7 +2638,7 @@ msgid "Creating Gallery..."
 msgstr "正在创建画册..."
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:108
+#: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "另存画册为“%s”"
@@ -2611,13 +2647,13 @@ msgstr "另存画册为“%s”"
 msgid "There was an error saving the screenshot."
 msgstr "保存屏幕快照出错。"
 
-#: ../src/plugins/screenshot/totem-screenshot.c:140
+#: ../src/plugins/screenshot/totem-screenshot.c:139
 msgid "Save Screenshot"
 msgstr "保存屏幕快照"
 
 #. Create the screenshot widget
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:161
+#: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "屏幕截图-%s-%d.png"
