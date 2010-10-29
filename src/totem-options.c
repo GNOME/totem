@@ -44,7 +44,7 @@ option_version_cb (const gchar *option_name,
 
 	exit (0);
 }
- 
+
 const GOptionEntry all_options[] = {
 	{"debug", '\0', 0, G_OPTION_ARG_NONE, &optionstate.debug, N_("Enable debug"), NULL},
 	{"play-pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.playpause, N_("Play/Pause"), NULL},
@@ -62,7 +62,6 @@ const GOptionEntry all_options[] = {
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
-	{"no-existing-session", '\0', 0, G_OPTION_ARG_NONE, &optionstate.notconnectexistingsession, N_("Don't connect to an already-running instance"), NULL},
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
 	/* Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading */
 	{"playlist-idx", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_DOUBLE, &optionstate.playlistidx, N_("Playlist index"), NULL},
@@ -74,7 +73,7 @@ const GOptionEntry all_options[] = {
 void
 totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
 {
-	if (options->togglecontrols) 
+	if (options->togglecontrols)
 		totem_action_toggle_controls (totem);
 
 	/* Handle --playlist-idx */
@@ -82,20 +81,6 @@ totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
 
 	/* Handle --seek */
 	totem->seek_to_start = options->seek;
-}
-
-void
-totem_options_register_remote_commands (Totem *totem)
-{
-	GEnumClass *klass;
-	guint i;
-
-	klass = (GEnumClass *) g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
-	for (i = TOTEM_REMOTE_COMMAND_UNKNOWN + 1; i < klass->n_values; i++) {
-		const GEnumValue *val = g_enum_get_value (klass, i);
-		g_application_add_action (G_APPLICATION (totem->app), val->value_name, val->value_nick);
-	}
-	g_type_class_unref (klass);
 }
 
 void
@@ -110,156 +95,126 @@ totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 	g_settings_set_boolean (totem->settings, "debug", options->debug);
 }
 
-static char *
-totem_get_action_for_command (const TotemRemoteCommand command)
-{
-	GEnumClass *klass;
-	char *name;
-
-	klass = g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
-	name = g_strdup (g_enum_get_value (klass, command)->value_name);
-	g_type_class_unref (klass);
-
-	return name;
-}
-
-#define UPDATE_ACTION(action, command)                                  \
-	do {                                                            \
-		g_free ((action));                                      \
-		(action) = totem_get_action_for_command ((command));    \
-	} while (0)
-
 void
-totem_options_process_for_server (GApplication *app,
-				  const TotemCmdLineOptions* options)
+totem_options_process_for_server (Totem                     *totem,
+				  const TotemCmdLineOptions *options)
 {
-	gchar *action = NULL;
+	TotemRemoteCommand action;
 	GList *commands, *l;
 	int i;
 
 	commands = NULL;
-	UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_REPLACE);
+	action = TOTEM_REMOTE_COMMAND_REPLACE;
 
 	/* Are we quitting ? */
 	if (options->quit) {
-		g_application_invoke_action (G_APPLICATION (app),
-					     totem_get_action_for_command (TOTEM_REMOTE_COMMAND_QUIT),
-					     NULL);
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 		return;
 	}
 
 	/* Then handle the things that modify the playlist */
 	if (options->replace && options->enqueue) {
-		/* FIXME translate that */
-		g_warning ("Can't enqueue and replace at the same time");
+		g_warning (_("Can't enqueue and replace at the same time"));
 	} else if (options->replace) {
-		UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_REPLACE);
+		action = TOTEM_REMOTE_COMMAND_REPLACE;
 	} else if (options->enqueue) {
-		UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_ENQUEUE);
+		action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	}
 
 	/* Send the files to enqueue */
 	for (i = 0; options->filenames && options->filenames[i] != NULL; i++) {
-		GVariant *data;
+		const char *filename;
 		char *full_path;
-		GVariantBuilder builder;
 
-		full_path = totem_create_full_path (options->filenames[i]);
+		filename = options->filenames[i];
+		full_path = totem_create_full_path (filename);
 
-		g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
-		g_variant_builder_add (&builder, "{sv}",
-				       "url", g_variant_new_string (full_path ? full_path : options->filenames[i]));
-		data = g_variant_builder_end (&builder);
+		g_message ("filename %s", filename);
+		g_message ("full_path %s", full_path);
 
-		g_application_invoke_action (G_APPLICATION (app), action, data);
+		totem_action_remote (totem, action, full_path ? full_path : filename);
 
 		g_free (full_path);
-		g_variant_unref (data);
 
 		/* Even if the default action is replace, we only want to replace with the
 		   first file.  After that, we enqueue. */
 		if (i == 0) {
-			UPDATE_ACTION (action, TOTEM_REMOTE_COMMAND_ENQUEUE);
+			action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 		}
 	}
 
 	if (options->playpause) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PLAYPAUSE));
 	}
 
 	if (options->play) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PLAY));
 	}
 
 	if (options->pause) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PAUSE));
 	}
 
 	if (options->next) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_NEXT));
 	}
 
 	if (options->previous) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_PREVIOUS));
 	}
 
 	if (options->seekfwd) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_SEEK_FORWARD));
 	}
 
 	if (options->seekbwd) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_SEEK_BACKWARD));
 	}
 
 	if (options->volumeup) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_VOLUME_UP));
 	}
 
 	if (options->volumedown) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_VOLUME_DOWN));
 	}
 
 	if (options->mute) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_MUTE));
 	}
 
 	if (options->fullscreen) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_FULLSCREEN));
 	}
 
 	if (options->togglecontrols) {
-		commands = g_list_append (commands, totem_get_action_for_command
+		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS));
 	}
 
 	/* No commands, no files, show ourselves */
 	if (commands == NULL && options->filenames == NULL) {
-		g_application_invoke_action (G_APPLICATION (app),
-					     totem_get_action_for_command (TOTEM_REMOTE_COMMAND_SHOW),
-					     NULL);
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
 
 	/* Send commands */
 	for (l = commands; l != NULL; l = l->next) {
-		g_application_invoke_action (G_APPLICATION (app), l->data, NULL);
+		totem_action_remote (totem, GPOINTER_TO_INT (l->data), NULL);
 	}
 
-	g_free (action);
 	g_list_foreach (commands, (GFunc) g_free, NULL);
 	g_list_free (commands);
 }
-
-#undef UPDATE_ACTION
 

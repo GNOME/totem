@@ -158,7 +158,7 @@ struct _TotemObject {
 	gint64 seek_to;
 	TotemPlaylist *playlist;
 	GSettings *settings;
-	GApplication *app;
+	GtkApplication *app;
 	TotemStates state;
 	TotemOpenLocation *open_location;
 	gboolean remember_position;

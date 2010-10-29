@@ -47,7 +47,6 @@ typedef struct {
 	gboolean quit;
 	gboolean enqueue;
 	gboolean replace;
-	gboolean notconnectexistingsession;
 	gdouble playlistidx;
 	gint64 seek;
 	gchar **filenames;
@@ -61,7 +60,7 @@ void totem_options_process_early (Totem *totem,
 				  const TotemCmdLineOptions* options);
 void totem_options_process_late (Totem *totem, 
 				 const TotemCmdLineOptions* options);
-void totem_options_process_for_server (GApplication *app,
+void totem_options_process_for_server (Totem *totem,
 				       const TotemCmdLineOptions* options);
 
 G_END_DECLS

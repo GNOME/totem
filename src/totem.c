@@ -51,52 +51,13 @@
 #include "totem-sidebar.h"
 #include "video-utils.h"
 
+static gboolean startup_called = FALSE;
+
 static void
 long_action (void)
 {
 	while (gtk_events_pending ())
 		gtk_main_iteration ();
-}
-
-static void
-totem_action_handler (GApplication      *app,
-		      gchar             *name,
-		      GVariant          *platform_data,
-		      gpointer           user_data)
-{
-	GEnumClass *klass;
-	const GEnumValue *enum_value;
-	char *url = NULL;
-	TotemRemoteCommand command;
-
-	/* GApplication requires the platform_data to be of type a{sv}. */
-	if (platform_data) {
-		GVariantIter iter;
-		GVariant *value;
-		const char *key;
-
-		g_variant_iter_init (&iter, platform_data);
-		while (g_variant_iter_next (&iter, "{&sv}", &key, &value)) {
-			if (g_strcmp0 (key, "url") == 0) {
-				url = g_variant_dup_string (value, NULL);
-				g_variant_unref (value);
-				break;
-			}
-			g_variant_unref (value);
-		}
-	}
-
-	klass = g_type_class_ref (TOTEM_TYPE_REMOTE_COMMAND);
-
-	enum_value = g_enum_get_value_by_name (klass, name);
-	if (!enum_value)
-		return;
-	command = enum_value->value;
-
-	g_type_class_unref (klass);
-
-	totem_action_remote (TOTEM_OBJECT (user_data), command, url);
-	g_free (url);
 }
 
 /* Debug log message handler: discards debug messages unless Totem is run with TOTEM_DEBUG=1.
@@ -116,93 +77,16 @@ debug_handler (const char *log_domain,
 		g_log_default_handler (log_domain, log_level, message, NULL);
 }
 
-int
-main (int argc, char **argv)
+static void
+app_init (Totem *totem, char **argv)
 {
-	Totem *totem;
-	GSettings *settings;
-	GError *error = NULL;
-	GOptionContext *context;
-	GOptionGroup *baconoptiongroup;
-	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
 
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
-
-#ifdef GDK_WINDOWING_X11
-	if (XInitThreads () == 0)
-	{
-		gtk_init (&argc, &argv);
-		g_set_application_name (_("Totem Movie Player"));
-		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
-	}
-#endif
-
-	g_thread_init (NULL);
-	g_type_init ();
-
-	/* Handle command line arguments */
-	context = g_option_context_new (N_("- Play movies and songs"));
-	baconoptiongroup = bacon_video_widget_get_option_group();
-	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
-	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
-	g_option_context_add_group (context, baconoptiongroup);
-
-	g_option_context_add_group (context, gtk_get_option_group (TRUE));
-	totem_session_add_options (context);
-	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
-		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
-				error->message, argv[0]);
-		g_error_free (error);
-	        g_option_context_free (context);
-		totem_action_exit (NULL);
-	}
-	g_option_context_free (context);
-
-	g_set_application_name (_("Totem Movie Player"));
-	gtk_window_set_default_icon_name ("totem");
-	g_setenv("PULSE_PROP_media.role", "video", TRUE);
-
-	gtk_settings = gtk_settings_get_default ();
-	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
-
-	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-	if (settings == NULL) {
-		totem_action_error_and_exit (_("Totem could not initialize the configuration engine."),
-					     _("Make sure that GNOME is properly installed."), NULL);
-	}
+	/* Settings */
+	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
 	/* Debug log handling */
-	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, settings);
-
-	/* Build the main Totem object */
-	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
-	totem->settings = settings;
-
-	/* IPC stuff */
-	if (optionstate.notconnectexistingsession == FALSE) {
-		/* FIXME should be GtkApplication */
-		totem->app = g_initable_new (G_TYPE_APPLICATION,
-					     NULL,
-					     NULL,
-					     "application-id", "org.gnome.Totem",
-					     "argv", g_variant_new_bytestring_array ((const gchar * const*) argv, argc),
-					     "default-quit", FALSE,
-					     NULL);
-
-		if (g_application_is_remote (G_APPLICATION (totem->app))) {
-			totem_options_process_for_server (G_APPLICATION (totem->app), &optionstate);
-			gdk_notify_startup_complete ();
-			totem_action_exit (totem);
-		} else {
-			totem_options_register_remote_commands (totem);
-			totem_options_process_early (totem, &optionstate);
-		}
-	} else {
-		totem_options_process_early (totem, &optionstate);
-	}
+	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, totem->settings);
 
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
@@ -210,8 +94,6 @@ main (int argc, char **argv)
 		totem_action_exit (NULL);
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
-	/* FIXME should be enabled
-	gtk_application_add_window (totem->app, GTK_WINDOW (totem->win)); */
 
 	/* Menubar */
 	totem_ui_manager_setup (totem);
@@ -289,12 +171,109 @@ main (int argc, char **argv)
 	if (optionstate.fullscreen == FALSE)
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 
-	if (totem->app != NULL) {
-		g_signal_connect (G_APPLICATION (totem->app), "action-with-data",
-				  G_CALLBACK (totem_action_handler), totem);
+	gtk_window_set_application (GTK_WINDOW (totem->win), totem->app);
+}
+
+static void
+app_startup (GApplication *application,
+		Totem        *totem)
+{
+	/* We don't do anything here, as we need to know the options
+	 * when we set everything up.
+	 * Note that this will break D-Bus activation of the application */
+	startup_called = TRUE;
+}
+
+static int
+app_command_line (GApplication             *app,
+		  GApplicationCommandLine  *command_line,
+		  Totem                    *totem)
+{
+	GOptionContext *context;
+	GOptionGroup *baconoptiongroup;
+	GError *error = NULL;
+	int argc;
+	char **argv;
+
+	argv = g_application_command_line_get_arguments (command_line, &argc);
+
+	/* Options parsing */
+	context = g_option_context_new (N_("- Play movies and songs"));
+	baconoptiongroup = bacon_video_widget_get_option_group();
+	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
+	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, baconoptiongroup);
+
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+	/* Only add session options to the server process */
+	if (startup_called != FALSE)
+		totem_session_add_options (context);
+	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
+		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
+				error->message, argv[0]);
+		g_error_free (error);
+	        g_option_context_free (context);
+	        return 1;
+	}
+	g_option_context_free (context);
+
+	/* Don't create another window if we're remote.
+	 * We can't use g_application_get_is_remote() because it's not registered yet */
+	if (startup_called != FALSE) {
+		app_init (totem, argv);
+		startup_called = FALSE;
+	} else {
+		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
 	}
 
-	gtk_main ();
+	/* Now do something with it */
+	totem_options_process_for_server (totem, &optionstate);
+
+	g_strfreev (argv);
+	return 0;
+}
+
+int
+main (int argc, char **argv)
+{
+	Totem *totem;
+	GtkSettings *gtk_settings;
+
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
+
+#ifdef GDK_WINDOWING_X11
+	if (XInitThreads () == 0)
+	{
+		gtk_init (&argc, &argv);
+		g_set_application_name (_("Totem Movie Player"));
+		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
+	}
+#endif
+
+	g_thread_init (NULL);
+	g_type_init ();
+	gtk_init (&argc, &argv);
+
+	g_set_application_name (_("Totem Movie Player"));
+	gtk_window_set_default_icon_name ("totem");
+	g_setenv("PULSE_PROP_media.role", "video", TRUE);
+
+	gtk_settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+
+
+	/* Build the main Totem object */
+	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
+
+	totem->app = gtk_application_new ("org.gnome.Totem", G_APPLICATION_HANDLES_COMMAND_LINE);
+	g_signal_connect (G_OBJECT (totem->app), "startup",
+			  G_CALLBACK (app_startup), totem);
+	g_signal_connect (G_OBJECT (totem->app), "command-line",
+			  G_CALLBACK (app_command_line), totem);
+
+	g_application_run (G_APPLICATION (totem->app), argc, argv);
 
 	return 0;
 }
