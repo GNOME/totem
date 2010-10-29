@@ -906,11 +906,19 @@ bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event)
 }
 
 static void
-bacon_video_widget_size_request (GtkWidget * widget,
-    GtkRequisition * requisition)
+bacon_video_widget_get_preferred_width (GtkWidget *widget,
+                                        gint      *minimum,
+                                        gint      *natural)
 {
-  requisition->width = 240;
-  requisition->height = 180;
+  *minimum = *natural = 240;
+}
+
+static void
+bacon_video_widget_get_preferred_height (GtkWidget *widget,
+                                         gint      *minimum,
+                                         gint      *natural)
+{
+  *minimum = *natural = 180;
 }
 
 static void
@@ -1001,7 +1009,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_type_class_add_private (object_class, sizeof (BaconVideoWidgetPrivate));
 
   /* GtkWidget */
-  widget_class->size_request = bacon_video_widget_size_request;
+  widget_class->get_preferred_width = bacon_video_widget_get_preferred_width;
+  widget_class->get_preferred_height = bacon_video_widget_get_preferred_height;
   widget_class->size_allocate = bacon_video_widget_size_allocate;
   widget_class->realize = bacon_video_widget_realize;
   widget_class->unrealize = bacon_video_widget_unrealize;

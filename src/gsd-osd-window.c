@@ -417,19 +417,37 @@ gsd_osd_window_style_set (GtkWidget *widget,
 }
 
 static void
-gsd_osd_window_size_request (GtkWidget      *widget,
-                             GtkRequisition *requisition)
+gsd_osd_window_get_preferred_width (GtkWidget *widget,
+                                    gint      *minimum,
+                                    gint      *natural)
 {
         GtkStyle *style;
 
-        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->size_request (widget, requisition);
+        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->get_preferred_width (widget, minimum, natural);
 
         /* See the comment in gsd_osd_window_style_set() for why we add the thickness here */
 
         style = gtk_widget_get_style (widget);
 
-        requisition->width  += style->xthickness;
-        requisition->height += style->ythickness;
+        *minimum += style->xthickness;
+        *natural += style->xthickness;
+}
+
+static void
+gsd_osd_window_get_preferred_height (GtkWidget *widget,
+                                     gint      *minimum,
+                                     gint      *natural)
+{
+        GtkStyle *style;
+
+        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->get_preferred_height (widget, minimum, natural);
+
+        /* See the comment in gsd_osd_window_style_set() for why we add the thickness here */
+
+        style = gtk_widget_get_style (widget);
+
+        *minimum += style->ythickness;
+        *natural += style->ythickness;
 }
 
 static GObject *
@@ -464,7 +482,8 @@ gsd_osd_window_class_init (GsdOsdWindowClass *klass)
         widget_class->hide = gsd_osd_window_real_hide;
         widget_class->realize = gsd_osd_window_real_realize;
         widget_class->style_set = gsd_osd_window_style_set;
-        widget_class->size_request = gsd_osd_window_size_request;
+        widget_class->get_preferred_width = gsd_osd_window_get_preferred_width;
+        widget_class->get_preferred_height = gsd_osd_window_get_preferred_height;
         widget_class->draw = gsd_osd_window_draw;
 
         signals[DRAW_WHEN_COMPOSITED] = g_signal_new ("draw-when-composited",
