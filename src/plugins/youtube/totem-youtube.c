@@ -307,7 +307,7 @@ set_up_tree_view (TotemYouTubePlugin *self, GtkBuilder *builder, guint key)
 	g_signal_connect (menu_item, "activate", G_CALLBACK (open_in_web_browser_activate_cb), self);
 
 	/* Connect to more scroll events */
-	priv->vadjust[key] = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (tree_view));
+	priv->vadjust[key] = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (tree_view));
 	g_signal_connect (priv->vadjust[key], "value-changed", G_CALLBACK (value_changed_cb), self);
 
 	priv->cancel_button = GTK_WIDGET (gtk_builder_get_object (builder, "yt_cancel_button"));
