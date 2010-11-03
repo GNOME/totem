@@ -67,7 +67,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters coherence_upnp dbus-service galago gromit iplayer jamendo lirc media-player-keys mythtv ontop opensubtitles properties publish pythonconsole sample-python screensaver screenshot sidebar-test skipto thumbnail tracker youtube"
+allowed_plugins="bemused brasero-disc-recorder chapters coherence_upnp dbus-service galago gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole sample-python screensaver screenshot sidebar-test skipto thumbnail tracker youtube"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -426,14 +426,6 @@ for plugin in ${used_plugins}; do
 				add_plugin="0"
 			fi
 		;;
-		mythtv)
-			PKG_CHECK_MODULES(GMYTH, gmyth >= 0.7.1 gmyth-upnp >= 0.7.1,
-					  [HAVE_GMYTH=yes], [HAVE_GMYTH=no])
-			if test "${HAVE_GMYTH}" != "yes"; then
-				plugin_error_or_ignore "you need GMyth >= 0.7 installed for the MythTV plugin"
-				add_plugin="0"
-			fi
-		;;
 		bemused)
 			PKG_CHECK_MODULES(BEMUSED, bluez, [HAVE_BLUEZ=yes], [HAVE_BLUEZ=no])
 			if test "${HAVE_BLUEZ}" != "yes" ; then
@@ -762,7 +754,6 @@ src/plugins/gromit/Makefile
 src/plugins/iplayer/Makefile
 src/plugins/lirc/Makefile
 src/plugins/media-player-keys/Makefile
-src/plugins/mythtv/Makefile
 src/plugins/opensubtitles/Makefile
 src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in
 src/plugins/properties/Makefile
