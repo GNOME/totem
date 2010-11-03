@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-08-21 17:30+0000\n"
-"PO-Revision-Date: 2010-09-16 20:38+0300\n"
+"POT-Creation-Date: 2010-11-02 23:50+0000\n"
+"PO-Revision-Date: 2010-11-03 18:49+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -93,6 +93,13 @@ msgstr "Esitaja:"
 msgid "Audio"
 msgstr "Audio"
 
+#. Audio Codec
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "Puudub"
+
 msgid "Bitrate:"
 msgstr "Bitikiirus:"
 
@@ -117,12 +124,6 @@ msgstr "Kaadrisagedus:"
 msgid "General"
 msgstr "Üldine"
 
-#. Dimensions
-#. Video Codec
-#. Audio Codec
-msgid "N/A"
-msgstr "Puudub"
-
 msgid "Sample rate:"
 msgstr "Diskreetimissagedus:"
 
@@ -138,6 +139,13 @@ msgstr "Tundmatu"
 
 msgid "Video"
 msgstr "Video"
+
+#. Video Codec
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "Puudub"
 
 msgid "Year:"
 msgstr "Aasta:"
@@ -574,6 +582,14 @@ msgstr "Visualiseerimise l_iik:"
 msgid "_View"
 msgstr "_Vaade"
 
+msgid ""
+"A list of the names of the plugins which are currently active (loaded and "
+"running)."
+msgstr ""
+
+msgid "Active plugins list"
+msgstr "Aktiivsete pluginate nimekiri"
+
 msgid "Allow the screensaver to activate when playing audio"
 msgstr "Ekraanisäästja aktiveerimise lubamine audoesituse ajal"
 
@@ -584,34 +600,32 @@ msgstr ""
 "Ekraanisäästja aktiveerimise lubamine isegi siis, kui esitatakse audiot. Kui "
 "kasutatad monitori sisseehitatud kõlareid, siis on mõistlik see keelata."
 
+#, fuzzy
+#| msgid ""
+#| "Amount of data to buffer for network streams before starting to display "
+#| "the stream (in seconds)"
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
-"stream (in seconds)"
+"stream (in seconds)."
 msgstr ""
 "Andmehulk, mida puhverdatakse enne kui võrgust tulevat striimi esitama "
 "hakatakse (sekundites)"
 
 msgid ""
 "Approximate network connection speed, used to select quality on media over "
-"the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
-"28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
-"for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
-"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"the network."
 msgstr ""
-"Arvestuslik võrguühenduse kiirus, mille järgi valitakse üle võrgu esitatava "
-"voo kvaliteet: \"0\" on 14.4 kb/s modem, \"1\" on 19.2 kb/s modem, \"2\" on "
-"28.8 kb/s modem, \"3\" on 33.6 kb/s modem, \"4\" on 34.4 kb/s modem, \"5\" "
-"on 56 kb/s modem/ISDN, \"6\" on 112 kb/s topelt-ISDN/DSL, \"7\" on 256 kb/s "
-"DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on 512 kb/s DSL/kaabel, \"10"
-"\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on Intranet/LAN."
 
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Vaikimisi asukoht \"Ava...\" dialoogidele"
 
+#, fuzzy
+#| msgid ""
+#| "Default location for the \"Open...\" dialogs, default is the current "
+#| "directory"
 msgid ""
-"Default location for the \"Open...\" dialogs, default is the current "
-"directory"
+"Default location for the \"Open...\" dialogs. Default is the current "
+"directory."
 msgstr ""
 "Vaikimisi asukoht \"Ava...\" dialoogidele, vaikimisi on selleks aktiivne "
 "kataloog"
@@ -619,17 +633,21 @@ msgstr ""
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Vaikimisi asukoht \"Võta kuvatõmmis\" dialoogidele"
 
+#, fuzzy
+#| msgid ""
+#| "Default location for the \"Take Screenshot\" dialogs, default is the "
+#| "Pictures directory"
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs, default is the "
-"Pictures directory"
+"Default location for the \"Take Screenshot\" dialogs. Default is the "
+"Pictures directory."
 msgstr ""
 "Vaikimisi asukoht \"Võta kuvatõmmis\" dialoogidele, vaikimisi on selleks "
 "piltide kataloog"
 
-msgid "Encoding charset for subtitle"
-msgstr "Subtriitrite kodeeringutabel"
+msgid "Encoding character set for subtitle."
+msgstr "Subtriitrite kooditabel."
 
-msgid "Name of the visual effects plugins"
+msgid "Name of the visual effects plugin"
 msgstr "Visuaalefektide plugina nimi"
 
 msgid "Network buffering threshold"
@@ -638,15 +656,11 @@ msgstr "Võrgupuhverdamise lävi"
 msgid "Network connection speed"
 msgstr "Võrguühenduse kiirus"
 
-msgid "Pango font description for subtitle rendering"
-msgstr "Pango kirjatüübikirjeldus subtiitrite esitamiseks"
+msgid "Pango font description for subtitle rendering."
+msgstr "Pango kirjatüübikirjeldus subtiitrite esitamiseks."
 
-msgid ""
-"Quality settings for the audio visualization: \"0\" for small, \"1\" for "
-"normal, \"2\" for large, \"3\" for extra large."
-msgstr ""
-"Audio visualiseerimise kvaliteedisätted: \"0\" on väike, \"1\" on keskmine, "
-"\"2\" on suur, \"3\" on eriti suur."
+msgid "Quality setting for the audio visualization."
+msgstr "Audio visualiseerimise kvaliteedisätted."
 
 msgid "Repeat mode"
 msgstr "Kordav režiim"
@@ -664,7 +678,7 @@ msgid "Shuffle mode"
 msgstr "Segatud režiim"
 
 msgid "Subtitle encoding"
-msgstr "Subtiitri kodeering"
+msgstr "Subtiitri kooditabel"
 
 msgid "Subtitle font"
 msgstr "Subtiitri kirjatüüp"
@@ -684,30 +698,11 @@ msgstr "Video küllastatus"
 msgid "Type of audio output to use"
 msgstr "Kasutatav heliväljund"
 
-msgid ""
-"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
-"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
-"Passthrough."
-msgstr ""
-"Audioväljund, mida kasutada: \"0\" stereo jaoks, \"1\" 4 kanali väljundile, "
-"\"2\" 5.0 kanali väljundile, \"3\" 5.1 kanali väljundile, \"4\" AC3 "
-"Passthrough jaoks."
-
-#. Translators: This is default subtitle encoding
-#. character set. You can change this to be the most common
-#. encoding for fansub subtitles in your language. File a bug
-#. against Totem, and leave UTF-8 as the default if in doubt.
-msgid "UTF-8"
-msgstr "UTF-8"
-
 msgid "Visualization quality setting"
 msgstr "Visualisee_rimise kvaliteet"
 
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Kas filmiga koos laaditakse automaatselt ka välised peatükifailid"
-
-msgid "Whether to autoload external chapter files when a movie is loaded."
-msgstr "Kas filmiga koos laaditakse automaatselt ka välised peatükifailid."
 
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
@@ -726,9 +721,13 @@ msgstr "Kas kasutaja kodukataloogis olevad pluginad on lubatud või mitte"
 msgid "Whether to enable debug for the playback engine"
 msgstr "Kas lubada silumisteabe väljastamist esitusmootori poolt"
 
+#, fuzzy
+#| msgid ""
+#| "Whether to remember the position of played audio/video files when pausing "
+#| "or closing them."
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
-"closing them."
+"closing them"
 msgstr ""
 "Kas audio- ja videofailide viimane asukoht tuleb esitamise pausimisel või "
 "faili sulgemisel meelde jätta või mitte."
@@ -787,8 +786,8 @@ msgstr "Laiendi(d)"
 #. Translators: the parameter is a filename
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `%"
-"s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `"
+"%s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "Programmil pole võimalik `%s' jaoks failivormingut leida. Palun veendu, et "
@@ -1029,6 +1028,8 @@ msgstr "Esita / pausi"
 msgid "Next Chapter/Movie"
 msgstr "Järgmine lõik/film"
 
+#. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
+#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
 msgid "Fullscreen"
 msgstr "Täisekraanvaade"
 
@@ -1081,18 +1082,18 @@ msgstr "Järjekorda panemine"
 msgid "Replace"
 msgstr "Asendamine"
 
-msgid "Don't connect to an already-running instance"
-msgstr "Ära ühendu juba töötava protsessiga"
-
 msgid "Seek"
 msgstr "Kerimine"
 
-#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
+#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
 msgid "Playlist index"
 msgstr "Esitusnimekirja indeks"
 
 msgid "Movies to play"
 msgstr "Esitatavad filmid"
+
+msgid "Can't enqueue and replace at the same time"
+msgstr ""
 
 #. By extension entry
 msgid "MP3 ShoutCast playlist"
@@ -1140,16 +1141,6 @@ msgid ""
 msgstr ""
 "Paistab, et sa käivitasid Totem'i üle võrgu.\n"
 "Kas visuaalsed efektid peavad olema lubatud?"
-
-msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr ""
-"Visuaalefektide liikide muutmisel tuleb muutuste rakendamiseks programm "
-"taaskäivitada."
-
-msgid ""
-"The change of audio output type will only take effect when Totem is "
-"restarted."
-msgstr "Audioväljundi muutus rakendub alles pärast Totem'i taaskäivitamist."
 
 msgid "Preferences"
 msgstr "Eelistused"
@@ -1335,19 +1326,7 @@ msgstr "Tekstisubtiitrite valimine"
 msgid "Select Movies or Playlists"
 msgstr "Filmide või esitusnimekirjade valimine"
 
-msgid "Could not open link"
-msgstr "Viita pole võimalik avada"
-
-msgid "Totem Movie Player"
-msgstr "Totem filmiesitaja"
-
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Thread-safe teeke pole võimalik lähtestada."
-
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Kontrolli oma süsteemi paigaldust. Totem lõpetab oma töö."
-
-#. Handle command line arguments
+#. Options parsing
 msgid "- Play movies and songs"
 msgstr "- Filmide ja muusika esitamine"
 
@@ -1359,11 +1338,14 @@ msgstr ""
 "%s\n"
 "Kõigi saadaolevate käsureavõtmete vaatamiseks käivita '%s --help'.\n"
 
-msgid "Totem could not initialize the configuration engine."
-msgstr "Totemil pole võimalik seadistusmootorit lähtestada."
+msgid "Totem Movie Player"
+msgstr "Totem filmiesitaja"
 
-msgid "Make sure that GNOME is properly installed."
-msgstr "Veendu, et GNOME on õigesti paigaldatud."
+msgid "Could not initialize the thread-safe libraries."
+msgstr "Thread-safe teeke pole võimalik lähtestada."
+
+msgid "Verify your system installation. Totem will now exit."
+msgstr "Kontrolli oma süsteemi paigaldust. Totem lõpetab oma töö."
 
 msgid "Password requested for RTSP server"
 msgstr "RTSP-serveri jaoks nõutav parool"
@@ -1727,6 +1709,7 @@ msgstr ""
 msgid "Loading…"
 msgstr "Laadimine…"
 
+#. Translators: the "programme feed" is the list of TV shows available to watch online
 msgid "Error getting programme feed"
 msgstr "Viga saatekava voo hankimisel"
 
@@ -1857,6 +1840,19 @@ msgstr "%M:%S"
 msgid "en"
 msgstr "en"
 
+msgid "Audio format to download from Jamendo"
+msgstr "Jamendost allalaaditava audio vorming"
+
+msgid "Number of results per page"
+msgstr "Tulemuste arv lehe kohta"
+
+msgid ""
+"The number of Jamendo search results to display in each page of results."
+msgstr "Mitu Jamendo otsingutulemust ühel tulemustelehel kuvatakse."
+
+msgid "The preferred audio format to download tracks from Jamendo in."
+msgstr "Eelistatav andmevorming Jamendost allalaaditavatele lugudele."
+
 msgid "Infrared Remote Control"
 msgstr "Infrapuna-kaugjuhtimine"
 
@@ -1930,6 +1926,12 @@ msgstr "Subtiitrite otsimine..."
 msgid "Downloading the subtitles..."
 msgstr "Subtriitrite allalaadimine..."
 
+msgid "Subtitle language"
+msgstr "Subtiitrite keel"
+
+msgid "The language to search for subtitles for movies in."
+msgstr "Filmides kasutatavate subtiitrite keel."
+
 msgid "Always On Top"
 msgstr "Alati pealmine"
 
@@ -1938,6 +1940,31 @@ msgstr "Filmi esitamise ajal hoitakse peaakent alati teiste akende peal"
 
 msgid "Properties"
 msgstr "Omadused"
+
+#. Dimensions
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "Puudub"
+
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "Puudub"
+
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "Puudub"
+
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "Puudub"
 
 #, c-format
 msgid "%d x %d"
@@ -1956,6 +1983,31 @@ msgstr[1] "%d kaadrit sekundis"
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
+
+#, fuzzy
+#| msgid "N/A"
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "Puudub"
+
+#, no-c-format
+msgid ""
+"A format string used to build the network service name used when publishing "
+"playlists over the network. The following format placeholders can be used: • "
+"%a: the program name as returned by g_get_application_name() • %h: the "
+"machine's host name in title case • %u: the user's login name in title case "
+"• %U: the user's real name • %%: the percent sign"
+msgstr ""
+
+msgid "Format for network service name"
+msgstr ""
+
+msgid "Publisher protocol to use"
+msgstr ""
+
+msgid ""
+"The transport protocol to use when publishing playlists over the network."
+msgstr ""
 
 #. Translators: computers on the local network which are publishing their playlists over the network
 msgid "Neighbors"
@@ -1982,6 +2034,14 @@ msgstr ""
 
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "_Kasutatakse krüptitud transpordiprotokolli (HTTPS)"
+
+msgid ""
+"A password to protect the rpdb2 server for debugging Totem from unauthorized "
+"remote access. If this is empty, a default of 'totem' will be used."
+msgstr ""
+
+msgid "rpdb2 password"
+msgstr ""
 
 msgid "Playing a movie"
 msgstr "Filmi esitamine"
@@ -2230,11 +2290,78 @@ msgstr "Totem.Object'i on võimalik kasutada 'totem_object' kaudu:\\n%s"
 msgid "Totem Python Console"
 msgstr "Totemi pythoni konsool"
 
+#, fuzzy
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in GConf, it will use "
+#| "the default password ('totem')."
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
-"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
 "Pärast \"Olgu\" vajutamist ootab Totem winpdb või rpdb2 abil loodud "
 "ühendust. Kui GConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
+
+#~ msgid ""
+#~ "Approximate network connection speed, used to select quality on media "
+#~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
+#~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
+#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
+#~ "LAN."
+#~ msgstr ""
+#~ "Arvestuslik võrguühenduse kiirus, mille järgi valitakse üle võrgu "
+#~ "esitatava voo kvaliteet: \"0\" on 14.4 kb/s modem, \"1\" on 19.2 kb/s "
+#~ "modem, \"2\" on 28.8 kb/s modem, \"3\" on 33.6 kb/s modem, \"4\" on 34.4 "
+#~ "kb/s modem, \"5\" on 56 kb/s modem/ISDN, \"6\" on 112 kb/s topelt-ISDN/"
+#~ "DSL, \"7\" on 256 kb/s DSL/kaabel, \"8\" on 384 kb/s DSL/kaabel, \"9\" on "
+#~ "512 kb/s DSL/kaabel, \"10\" on 1.5 mb/s T1/Intranet/LAN, \"11\" on "
+#~ "Intranet/LAN."
+
+#~ msgid ""
+#~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
+#~ "normal, \"2\" for large, \"3\" for extra large."
+#~ msgstr ""
+#~ "Audio visualiseerimise kvaliteedisätted: \"0\" on väike, \"1\" on "
+#~ "keskmine, \"2\" on suur, \"3\" on eriti suur."
+
+#~ msgid ""
+#~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
+#~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
+#~ "for AC3 Passthrough."
+#~ msgstr ""
+#~ "Audioväljund, mida kasutada: \"0\" stereo jaoks, \"1\" 4 kanali "
+#~ "väljundile, \"2\" 5.0 kanali väljundile, \"3\" 5.1 kanali väljundile, "
+#~ "\"4\" AC3 Passthrough jaoks."
+
+#~ msgid "UTF-8"
+#~ msgstr "UTF-8"
+
+#~ msgid "Whether to autoload external chapter files when a movie is loaded."
+#~ msgstr "Kas filmiga koos laaditakse automaatselt ka välised peatükifailid."
+
+#~ msgid "Don't connect to an already-running instance"
+#~ msgstr "Ära ühendu juba töötava protsessiga"
+
+#~ msgid ""
+#~ "Changing the visuals effect type will require a restart to take effect."
+#~ msgstr ""
+#~ "Visuaalefektide liikide muutmisel tuleb muutuste rakendamiseks programm "
+#~ "taaskäivitada."
+
+#~ msgid ""
+#~ "The change of audio output type will only take effect when Totem is "
+#~ "restarted."
+#~ msgstr "Audioväljundi muutus rakendub alles pärast Totem'i taaskäivitamist."
+
+#~ msgid "Could not open link"
+#~ msgstr "Viita pole võimalik avada"
+
+#~ msgid "Totem could not initialize the configuration engine."
+#~ msgstr "Totemil pole võimalik seadistusmootorit lähtestada."
+
+#~ msgid "Make sure that GNOME is properly installed."
+#~ msgstr "Veendu, et GNOME on õigesti paigaldatud."
