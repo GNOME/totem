@@ -7,10 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2010-09-27 12:30+0000\n"
-"PO-Revision-Date: 2010-10-26 08:47+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-03 09:01+0200\n"
+"PO-Revision-Date: 2010-11-03 09:06+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +115,6 @@ msgstr "שמע"
 #. Audio Codec
 #: ../data/properties.ui.h:10
 #: ../src/plugins/properties/bacon-video-widget-properties.c:171
-#| msgid "N/A"
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "לא זמין"
@@ -181,7 +179,6 @@ msgstr "וידאו"
 #. Video Codec
 #: ../data/properties.ui.h:23
 #: ../src/plugins/properties/bacon-video-widget-properties.c:160
-#| msgid "N/A"
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "לא זמין"
@@ -201,7 +198,7 @@ msgstr "ה_וספה לרשימת השמעה"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1665
+#: ../src/totem-object.c:1663
 msgid "Movie Player"
 msgstr "נגן סרטים"
 
@@ -398,7 +395,6 @@ msgid "Large"
 msgstr "גדול"
 
 #: ../data/totem.ui.h:52
-#| msgid "_Load subtitle files when movie is loaded"
 msgid "Load _chapter files when movie is loaded"
 msgstr "_טעינת קובצי פרקים אוטומטית עם טעינת הסרט"
 
@@ -563,7 +559,7 @@ msgstr "ריבוע"
 msgid "Start playing files from last position"
 msgstr "התחלת נגינת קבצים מהמיקום האחרון"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5992
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5973
 msgid "Stereo"
 msgstr "סטריאו"
 
@@ -792,9 +788,6 @@ msgstr ""
 "monitor-powered speakers."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:5
-#| msgid ""
-#| "Amount of data to buffer for network streams before starting to display "
-#| "the stream (in seconds)"
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -815,9 +808,6 @@ msgid "Default location for the \"Open...\" dialogs"
 msgstr "Default location for the \"Open...\" dialogs"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:8
-#| msgid ""
-#| "Default location for the \"Open...\" dialogs, default is the current "
-#| "directory"
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
@@ -830,9 +820,6 @@ msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Default location for the \"Take Screenshot\" dialogs"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:10
-#| msgid ""
-#| "Default location for the \"Take Screenshot\" dialogs, default is the "
-#| "Pictures directory"
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -841,12 +828,10 @@ msgstr ""
 "Pictures directory."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:11
-#| msgid "Encoding charset for subtitle"
 msgid "Encoding character set for subtitle."
 msgstr "Encoding character set for subtitle."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:12
-#| msgid "Name of the visual effects plugins"
 msgid "Name of the visual effects plugin"
 msgstr "Name of the visual effects plugin"
 
@@ -859,7 +844,6 @@ msgid "Network connection speed"
 msgstr "Network connection speed"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:15
-#| msgid "Pango font description for subtitle rendering"
 msgid "Pango font description for subtitle rendering."
 msgstr "Pango font description for subtitle rendering."
 
@@ -920,7 +904,6 @@ msgid "Visualization quality setting"
 msgstr "Visualisation quality setting"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:30
-#| msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Whether to autoload external chapter files when a movie is loaded"
 
@@ -945,9 +928,6 @@ msgid "Whether to enable debug for the playback engine"
 msgstr "Whether to enable debug for the playback engine"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:36
-#| msgid ""
-#| "Whether to remember the position of played audio/video files when pausing "
-#| "or closing them."
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
 "closing them"
@@ -1220,13 +1200,13 @@ msgstr "מושהה"
 msgid "Play"
 msgstr "נגינה"
 
-#: ../src/totem-object.c:1057 ../src/totem-object.c:1657
+#: ../src/totem-object.c:1057 ../src/totem-object.c:1655
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "בעצירה"
 
 #: ../src/totem-object.c:1138 ../src/totem-object.c:1165
-#: ../src/totem-object.c:1787 ../src/totem-object.c:1950
+#: ../src/totem-object.c:1785 ../src/totem-object.c:1948
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem אינו יכול לנגן את '%s'."
@@ -1287,7 +1267,7 @@ msgstr "נא להכניס דיסק אחר לניגון."
 msgid "Totem was not able to play this disc."
 msgstr "‏Totem לא הצליח לנגן את דיסק זה."
 
-#: ../src/totem-object.c:1297 ../src/totem-object.c:4241
+#: ../src/totem-object.c:1297 ../src/totem-object.c:4239
 msgid "No reason."
 msgstr "אין סיבה."
 
@@ -1299,38 +1279,38 @@ msgstr "‏Totem לא תומך בהשמעת תקליטורי CD"
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "אפשר להשתמש בנגן מוזיקה או מחלץ CD כדי לנגן CD זה"
 
-#: ../src/totem-object.c:1793
+#: ../src/totem-object.c:1791
 msgid "No error message"
 msgstr "אין הודעת שגיאה"
 
-#: ../src/totem-object.c:2179
+#: ../src/totem-object.c:2177
 msgid "Totem could not display the help contents."
 msgstr "Totem אינו יכול להציג את תוכן העזרה."
 
-#: ../src/totem-object.c:2534 ../src/totem-object.c:2536
+#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
 #: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "ארעה שגיאה"
 
-#: ../src/totem-object.c:4076 ../src/totem-object.c:4078
+#: ../src/totem-object.c:4074 ../src/totem-object.c:4076
 msgid "Previous Chapter/Movie"
 msgstr "הפרק/סרט הקודם"
 
-#: ../src/totem-object.c:4085 ../src/totem-object.c:4087
+#: ../src/totem-object.c:4083 ../src/totem-object.c:4085
 msgid "Play / Pause"
 msgstr "נגינה / השהיה"
 
-#: ../src/totem-object.c:4095 ../src/totem-object.c:4097
+#: ../src/totem-object.c:4093 ../src/totem-object.c:4095
 msgid "Next Chapter/Movie"
 msgstr "הפרק/סרט הבא"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4109 ../src/totem-object.c:4111
+#: ../src/totem-object.c:4107 ../src/totem-object.c:4109
 msgid "Fullscreen"
 msgstr "מסך מלא"
 
-#: ../src/totem-object.c:4241
+#: ../src/totem-object.c:4239
 msgid "Totem could not startup."
 msgstr "Totem לא יכול לעלות."
 
@@ -1398,21 +1378,21 @@ msgid "Replace"
 msgstr "Replace"
 
 #: ../src/totem-options.c:65
-msgid "Don't connect to an already-running instance"
-msgstr "Don't connect to an already-running instance"
-
-#: ../src/totem-options.c:66
 msgid "Seek"
 msgstr "Seek"
 
 #. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
-#: ../src/totem-options.c:68
+#: ../src/totem-options.c:67
 msgid "Playlist index"
 msgstr "Playlist index"
 
-#: ../src/totem-options.c:70
+#: ../src/totem-options.c:69
 msgid "Movies to play"
 msgstr "Movies to play"
+
+#: ../src/totem-options.c:117
+msgid "Can't enqueue and replace at the same time"
+msgstr "לא ניתן להוסיף לתור ולהחליף באותו הזמן"
 
 #. By extension entry
 #: ../src/totem-playlist.c:157
@@ -1477,7 +1457,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "העדפות"
 
-#: ../src/totem-preferences.c:509
+#: ../src/totem-preferences.c:516
 msgid "Select Subtitle Font"
 msgstr "בחירת גופן כתובית"
 
@@ -1678,7 +1658,7 @@ msgstr "אין כתובת לווידאו"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:675
+#: ../src/totem-video-thumbnailer.c:679
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1689,15 +1669,15 @@ msgstr ""
 "‏<b>%s</b>: ‏%d×%d‏\n"
 "‏<b>%s</b>: ‏%s"
 
-#: ../src/totem-video-thumbnailer.c:676
+#: ../src/totem-video-thumbnailer.c:680
 msgid "Filename"
 msgstr "שם קובץ"
 
-#: ../src/totem-video-thumbnailer.c:678
+#: ../src/totem-video-thumbnailer.c:682
 msgid "Resolution"
 msgstr "הפרדה"
 
-#: ../src/totem-video-thumbnailer.c:681
+#: ../src/totem-video-thumbnailer.c:685
 msgid "Duration"
 msgstr "משך"
 
@@ -1729,30 +1709,12 @@ msgstr "בחירת כתוביות"
 msgid "Select Movies or Playlists"
 msgstr "יש לבחור בסרטים או ברשימות השמעה"
 
-#: ../src/totem.c:114
-msgid "Could not open link"
-msgstr "לא ניתן לפתוח קישור"
-
-#: ../src/totem.c:173 ../src/totem.c:199
-#: ../browser-plugin/totem-plugin-viewer.c:666
-#: ../browser-plugin/totem-plugin-viewer.c:1864
-msgid "Totem Movie Player"
-msgstr "נגן הסרטים Totem"
-
-#: ../src/totem.c:174 ../browser-plugin/totem-plugin-viewer.c:2291
-msgid "Could not initialize the thread-safe libraries."
-msgstr "לא ניתן לאתחל את ספריות ה־thread-safe."
-
-#: ../src/totem.c:174
-msgid "Verify your system installation. Totem will now exit."
-msgstr "נא לוודא את התקנת המערכת שלך. Totem ייצא עכשיו."
-
-#. Handle command line arguments
-#: ../src/totem.c:182
+#. Options parsing
+#: ../src/totem.c:201
 msgid "- Play movies and songs"
 msgstr "- Play movies and songs"
 
-#: ../src/totem.c:191
+#: ../src/totem.c:212
 #, c-format
 msgid ""
 "%s\n"
@@ -1761,47 +1723,53 @@ msgstr ""
 "%s\n"
 "Run '%s --help' to see a full list of available command line options.\n"
 
-#: ../src/totem.c:210
-msgid "Totem could not initialize the configuration engine."
-msgstr "‏Totem אינו יכול לאתחל את מנוע ההגדרות."
+#: ../src/totem.c:250 ../src/totem.c:259
+#: ../browser-plugin/totem-plugin-viewer.c:666
+#: ../browser-plugin/totem-plugin-viewer.c:1864
+msgid "Totem Movie Player"
+msgstr "נגן הסרטים Totem"
 
-#: ../src/totem.c:211
-msgid "Make sure that GNOME is properly installed."
-msgstr "נא לוודא ש־GNOME מותקן כראוי."
+#: ../src/totem.c:251 ../browser-plugin/totem-plugin-viewer.c:2290
+msgid "Could not initialize the thread-safe libraries."
+msgstr "לא ניתן לאתחל את ספריות ה־thread-safe."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1825
+#: ../src/totem.c:251
+msgid "Verify your system installation. Totem will now exit."
+msgstr "נא לוודא את התקנת המערכת שלך. Totem ייצא עכשיו."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1806
 msgid "Password requested for RTSP server"
 msgstr "נדרשת סיסמה עבור שרת ה־RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3096
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3100
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3077
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3081
 #, c-format
 msgid "Audio Track #%d"
 msgstr "רצועת שמע מס' %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3128
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3132
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3109
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3113
 #, c-format
 msgid "Subtitle #%d"
 msgstr "כתובית מס' %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3538
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3519
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr ""
 "פלט השמע המבוקש לא נמצא. נא לבחור בפלט שמע אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3543
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3524
 msgid "Location not found."
 msgstr "המיקום לא נמצא."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3547
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3528
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "לא ניתן לפתוח את המיקום; כנראה שאין לך הרשאות לפתוח את הקובץ."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3558
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3539
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1810,7 +1778,7 @@ msgstr ""
 "פלט הווידאו נמצא בשימוש יישום אחר. נא לסגור את היישום האחר או לבחור בפלט "
 "וידאו אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3564
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3545
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1820,13 +1788,13 @@ msgstr ""
 "המולטימדיה. עליך לשקול שימוש בשרת קול."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3582
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3588
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3563
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "על מנת לצפות בסרט זה דרוש תוסף %s שאינו מותקן."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3589
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3570
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1838,46 +1806,46 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3614
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3595
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "לא ניתן לנגן קובץ זה מעל הרשת. כדאי לנסות לשמור אותו על הדיסק קודם."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3686
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3667
 msgid "Media file could not be played."
 msgstr "לא ניתן לקרוא את קובץ המדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5988
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5969
 msgid "Surround"
 msgstr "צליל היקפי"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5990
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5971
 msgid "Mono"
 msgstr "מונו"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6337
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6318
 msgid "Too old version of GStreamer installed."
 msgstr "מותקנת גרסה ישנה מדי של GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6344
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6325
 msgid "Media contains no supported video streams."
 msgstr "המדיה איננה כוללת זרמי וידאו נתמכים"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6852
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6833
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "ארע כשל ביצירת עצם GStreamer. נא לבדוק את התקנת ה־GStreamer שלך."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6966
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7101
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6947
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7082
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
 "ארע כשל בפתיחת פלט הווידאו. נא לבחור בפלט וידאו אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6978
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6959
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1886,7 +1854,7 @@ msgstr ""
 "פלט הווידאו לא נמצא. יש להתקין תוספי GStreamer נוספים, או לבחור בפלט וידאו "
 "אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7013
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6994
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1895,7 +1863,7 @@ msgstr ""
 "ארע כשל בפתיחת פלט השמע.  יתכן שאין לך הרשאות לפתוח את התקן השמע, או אולי "
 "שרת הקול לא מופעל. יש לבחור בפלט שמע אחר בבורר מערכות המולטימדיה."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7033
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7014
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1967,11 +1935,11 @@ msgstr "%s %s"
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
+#: ../src/plugins/bemused/bemused.plugin.in.h:1
 msgid "Bemused"
 msgstr "Bemused"
 
-#: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
+#: ../src/plugins/bemused/bemused.plugin.in.h:2
 msgid "Control Totem through a mobile phone with a Bemused client"
 msgstr "שלוט ב־Totem בעזרת סלולרי עם לקוח Bemused"
 
@@ -2029,22 +1997,20 @@ msgstr "לא ניתן להקליט את הסרט."
 msgid "Unable to write a project."
 msgstr "לא ניתן לכתוב פרויקט."
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Records (S)VCDs or video DVDs"
 msgstr "להקלטת וידאו ‎(S)VCD או DVD"
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Video Disc Recorder"
 msgstr "מקליט דיסק וידאו"
 
-#: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
+#: ../src/plugins/chapters/chapters.plugin.in.h:1
 #: ../src/plugins/chapters/totem-chapters.c:1140
-#| msgid "_Chapter Menu"
 msgid "Chapters"
 msgstr "פרקים"
 
-#: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
-#| msgid "_Chapter Menu"
+#: ../src/plugins/chapters/chapters.plugin.in.h:2
 msgid "Chapters support"
 msgstr "תמיכה בפרקים"
 
@@ -2061,7 +2027,6 @@ msgid "Continue without"
 msgstr "המשך ללא"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-#| msgid "Go to the chapter menu"
 msgid "Go to chapter"
 msgstr "מעבר לפרק"
 
@@ -2078,17 +2043,14 @@ msgid "No chapters data"
 msgstr "אין נתוני פרקים"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-#| msgid "Remove file from playlist"
 msgid "Remove chapter from the list"
 msgstr "הסרת פרק מהרשימה"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
-#| msgid "0 Channels"
 msgid "Save Changes"
 msgstr "שמירת השינויים"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:11
-#| msgid "_Go"
 msgid "_Go to"
 msgstr "מ_עבר אל"
 
@@ -2114,12 +2076,10 @@ msgid "Try another name or remove an existing chapter"
 msgstr "נא לנסות שם אחר או להסיר פרק קיים"
 
 #: ../src/plugins/chapters/totem-chapters.c:719
-#| msgid "Error listing channel categories"
 msgid "Error while writing file with chapters"
 msgstr "אירעה שגיאה בעת כתיבת קובץ עם פרקים"
 
 #: ../src/plugins/chapters/totem-chapters.c:844
-#| msgid "An error occurred while fetching albums."
 msgid "Error occurred while saving chapters"
 msgstr "אירעה שגיאה בעת שמירת הפרקים"
 
@@ -2128,7 +2088,6 @@ msgid "Please check you rights and free space"
 msgstr "נא לבדוק את ההרשאות ואת השטח הפנוי שנותר לך"
 
 #: ../src/plugins/chapters/totem-chapters.c:979
-#| msgid "Open a file"
 msgid "Open Chapters File"
 msgstr "פתיחת קובץ פרקים"
 
@@ -2142,29 +2101,29 @@ msgid "Delete"
 msgstr "מחיקה"
 
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:114
-#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+#: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "לקוח DLNA/UPNP של Coherence"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+#: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:1
 msgid "A DLNA/UPnP client for Totem powered by Coherence"
 msgstr "לקוח DLNA/UPNP עבור Totem מאת Coherence"
 
-#: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:1
+#: ../src/plugins/dbus-service/dbus-service.plugin.in.h:1
 msgid "D-Bus Service"
 msgstr "שירות D-Bus"
 
-#: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
+#: ../src/plugins/dbus-service/dbus-service.plugin.in.h:2
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
 msgstr "תוסף לשליחת התרעות על הסרטים המתנגנים כעת אל תת־מערכת ה־D-Bus."
 
-#: ../src/plugins/galago/galago.totem-plugin.in.h:1
+#: ../src/plugins/galago/galago.plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "מצב לתוכנות מסרים מידיים"
 
-#: ../src/plugins/galago/galago.totem-plugin.in.h:2
+#: ../src/plugins/galago/galago.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "הגדרת מצב תכנת המסרים המידיים למרוחק בעת נגינה"
 
@@ -2176,11 +2135,11 @@ msgstr "שגיאה בטעינת התוסף Galego"
 msgid "Could not connect to the Galago daemon."
 msgstr "ארע כשל בהתחברות אל סוכן Galago"
 
-#: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
+#: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
 msgstr "הסברי Gromit"
 
-#: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
+#: ../src/plugins/gromit/gromit.plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
 msgstr "עוזר הצגה להוספת הערות חזותיות על המסך"
 
@@ -2189,12 +2148,12 @@ msgid "The gromit binary was not found."
 msgstr "קובץ ההפעלה של gromit לא נמצא."
 
 #. Add the interface to Totem's sidebar
-#: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:1
+#: ../src/plugins/iplayer/iplayer.plugin.in.h:1
 #: ../src/plugins/iplayer/iplayer.py:41
 msgid "BBC iPlayer"
 msgstr "ה־iPlayer של ה־BBC"
 
-#: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:2
+#: ../src/plugins/iplayer/iplayer.plugin.in.h:2
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "הזרמת תכניות מה־BBC משבעת הימים האחרונים משירות ה־iPlayer של ה־BBC."
 
@@ -2215,11 +2174,11 @@ msgid "Loading…"
 msgstr "בטעינה..."
 
 #. Translators: the "programme feed" is the list of TV shows available to watch online
-#: ../src/plugins/iplayer/iplayer.py:116
+#: ../src/plugins/iplayer/iplayer.py:119
 msgid "Error getting programme feed"
 msgstr "שגיאה בקבלת הזנת התכניות"
 
-#: ../src/plugins/iplayer/iplayer.py:116
+#: ../src/plugins/iplayer/iplayer.py:119
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2268,12 +2227,12 @@ msgstr "תוצאות חיפוש"
 msgid "_Open Jamendo Album Page in Browser"
 msgstr "פתיחת עמוד האלבומים של _Jamendo בדפדפן"
 
-#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
+#: ../src/plugins/jamendo/jamendo.plugin.in.h:1
 #: ../src/plugins/jamendo/jamendo.py:127
 msgid "Jamendo"
 msgstr "Jamendo"
 
-#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
+#: ../src/plugins/jamendo/jamendo.plugin.in.h:2
 msgid ""
 "Listen to the large collection of Creative Commons licensed music on Jamendo."
 msgstr "האזנה לאוסף הרחב של מוזיקה ברישיון Creative Commons ב־Jamendo."
@@ -2282,34 +2241,34 @@ msgstr "האזנה לאוסף הרחב של מוזיקה ברישיון Creative
 msgid "You need to install the Python simplejson module."
 msgstr "עליך להתקין את מודול ה־Python ‏simplejson."
 
-#: ../src/plugins/jamendo/jamendo.py:247 ../src/plugins/jamendo/jamendo.py:260
-#: ../src/plugins/jamendo/jamendo.py:284
+#: ../src/plugins/jamendo/jamendo.py:246 ../src/plugins/jamendo/jamendo.py:259
+#: ../src/plugins/jamendo/jamendo.py:283
 #, python-format
 msgid "Artist: %s"
 msgstr "אמן: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:253
+#: ../src/plugins/jamendo/jamendo.py:252
 msgid "%Y-%m-%d"
 msgstr "%Y-%m-%d"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:255
+#: ../src/plugins/jamendo/jamendo.py:254
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:261
+#: ../src/plugins/jamendo/jamendo.py:260
 #, python-format
 msgid "Genre: %s"
 msgstr "סגנון: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:262
+#: ../src/plugins/jamendo/jamendo.py:261
 #, python-format
 msgid "Released on: %s"
 msgstr "שוחרר ב־: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:263
+#: ../src/plugins/jamendo/jamendo.py:262
 #, python-format
 msgid "License: %s"
 msgstr "רישיון: %s"
@@ -2317,26 +2276,26 @@ msgstr "רישיון: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:276
+#: ../src/plugins/jamendo/jamendo.py:275
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:283
+#: ../src/plugins/jamendo/jamendo.py:282
 #, python-format
 msgid "Album: %s"
 msgstr "אלבום: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:285
+#: ../src/plugins/jamendo/jamendo.py:284
 #, python-format
 msgid "Duration: %s"
 msgstr "משך: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:345
+#: ../src/plugins/jamendo/jamendo.py:341
 msgid "Fetching albums, please wait..."
 msgstr "האלבומים מתקבלים, נא להמתין..."
 
-#: ../src/plugins/jamendo/jamendo.py:400
+#: ../src/plugins/jamendo/jamendo.py:396
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2345,24 +2304,24 @@ msgstr ""
 "ארע כשל בהתחברות לשרת Jamendo.‏\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:402
+#: ../src/plugins/jamendo/jamendo.py:398
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "שרת ה־jamendo החזיר את הקוד %s."
 
-#: ../src/plugins/jamendo/jamendo.py:406
+#: ../src/plugins/jamendo/jamendo.py:402
 msgid "An error occurred while fetching albums."
 msgstr "ארעה שגיאה בזמן קבלת האלבומים."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:615
+#: ../src/plugins/jamendo/jamendo.py:596
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:618
+#: ../src/plugins/jamendo/jamendo.py:599
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2373,7 +2332,7 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:668
+#: ../src/plugins/jamendo/jamendo.py:649
 msgid "en"
 msgstr "en"
 
@@ -2382,7 +2341,6 @@ msgid "Audio format to download from Jamendo"
 msgstr "Audio format to download from Jamendo"
 
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:2
-#| msgid "Number of screenshots:"
 msgid "Number of results per page"
 msgstr "מספר התוצאות בעמוד"
 
@@ -2396,11 +2354,11 @@ msgstr ""
 msgid "The preferred audio format to download tracks from Jamendo in."
 msgstr "The preferred audio format to download tracks from Jamendo in."
 
-#: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
+#: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
 msgstr "שלט אינפרא אדום"
 
-#: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
+#: ../src/plugins/lirc/lirc.plugin.in.h:2
 msgid "Support infrared remote control"
 msgstr "תמיכה בשלט אינפרא אדום"
 
@@ -2440,11 +2398,11 @@ msgstr "שפת ה_כתוביות:"
 msgid "_Play with Subtitle"
 msgstr "נגינה עם כ_תוביות"
 
-#: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:1
+#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:1
 msgid "Look for subtitles for the currently playing movie."
 msgstr "חיפוש אחר כתוביות של הסרט המתנגן כעת."
 
-#: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:2
+#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
 msgid "Subtitle Downloader"
 msgstr "מוריד הכתוביות"
 
@@ -2496,7 +2454,6 @@ msgid "Downloading the subtitles..."
 msgstr "הכתוביות בהורדה..."
 
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
-#| msgid "Subtitle _language:"
 msgid "Subtitle language"
 msgstr "שפת הכתוביות"
 
@@ -2504,11 +2461,11 @@ msgstr "שפת הכתוביות"
 msgid "The language to search for subtitles for movies in."
 msgstr "The language to search for subtitles for movies in."
 
-#: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
+#: ../src/plugins/ontop/ontop.plugin.in.h:1
 msgid "Always On Top"
 msgstr "תמיד עליון"
 
-#: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
+#: ../src/plugins/ontop/ontop.plugin.in.h:2
 msgid "Keep the main window on top when playing a movie"
 msgstr "קיבוע החלון הראשי מעל חלונות אחרים בזמן נגינת סרט"
 
@@ -2518,28 +2475,24 @@ msgstr "מאפיינים"
 
 #. Dimensions
 #: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#| msgid "N/A"
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "לא זמין"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:163
 #: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#| msgid "N/A"
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "לא זמין"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:166
 #: ../src/plugins/properties/bacon-video-widget-properties.c:250
-#| msgid "N/A"
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "לא זמין"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:169
 #: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#| msgid "N/A"
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "לא זמין"
@@ -2557,7 +2510,6 @@ msgstr "%d ק\"ב לשנייה"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:247
 #, c-format
-#| msgid "%d frames per second"
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
 msgstr[0] "שקופית אחת לשנייה"
@@ -2569,7 +2521,6 @@ msgid "%d Hz"
 msgstr "%d הרץ"
 
 #: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#| msgid "N/A"
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "לא זמין"
@@ -2608,11 +2559,11 @@ msgstr ""
 msgid "Neighbors"
 msgstr "שכנים"
 
-#: ../src/plugins/publish/publish.totem-plugin.in.h:1
+#: ../src/plugins/publish/publish.plugin.in.h:1
 msgid "Publish Playlist"
 msgstr "פרסום רשימת השמעה"
 
-#: ../src/plugins/publish/publish.totem-plugin.in.h:2
+#: ../src/plugins/publish/publish.plugin.in.h:2
 msgid "Share the current playlist via HTTP"
 msgstr "שיתוף רשימת ההשמעה באמצעות HTTP"
 
@@ -2648,7 +2599,7 @@ msgid "rpdb2 password"
 msgstr "rpdb2 password"
 
 #: ../src/plugins/screensaver/totem-screensaver.c:112
-#: ../browser-plugin/totem-plugin-viewer.c:1965
+#: ../browser-plugin/totem-plugin-viewer.c:1964
 msgid "Playing a movie"
 msgstr "סרט מתנגן"
 
@@ -2751,7 +2702,6 @@ msgstr "יצירת גלריית תצלומי מסך"
 #. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
 #: ../src/plugins/skipto/totem-skipto.c:159
 #: ../src/plugins/skipto/totem-skipto.c:185
-#| msgid "seconds"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "שנייה"
@@ -2813,27 +2763,27 @@ msgid "Page"
 msgstr "עמוד"
 
 #: ../src/plugins/tracker/totem-tracker.c:65
-#: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
+#: ../src/plugins/tracker/tracker.plugin.in.h:1
 msgid "Local Search"
 msgstr "חיפוש מקומי"
 
-#: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:1
+#: ../src/plugins/thumbnail/thumbnail.plugin.in.h:1
 msgid "Set the window icon to the thumbnail of the playing movie"
 msgstr "הגדרת סמל החלון לדוגמית של הסרט המתנגן"
 
-#: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:2
+#: ../src/plugins/thumbnail/thumbnail.plugin.in.h:2
 msgid "Thumbnail"
 msgstr "דוגמית"
 
-#: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
+#: ../src/plugins/tracker/tracker.plugin.in.h:2
 msgid "Search for local videos using Tracker"
 msgstr "חיפוש סרטים מקומיים בעזרת Tracker"
 
-#: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
+#: ../src/plugins/youtube/youtube.plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
 msgstr "תוסף המאפשר צפייה בסרטוני YouTube."
 
-#: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
+#: ../src/plugins/youtube/youtube.plugin.in.h:2
 msgid "YouTube Browser"
 msgstr "דפדפן YouTube"
 
@@ -2920,23 +2870,23 @@ msgstr "תוסף דפדפן בשימוש %s"
 msgid "Totem Browser Plugin"
 msgstr "תוסף Totem לדפדן"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2184
+#: ../browser-plugin/totem-plugin-viewer.c:2183
 msgid "No playlist or playlist empty"
 msgstr "אין רשימת שמע או שרשימת ההשמעה ריקה"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2275
+#: ../browser-plugin/totem-plugin-viewer.c:2274
 msgid "Movie browser plugin"
 msgstr "תוסף סרטים לדפדן"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2291
+#: ../browser-plugin/totem-plugin-viewer.c:2290
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "נא לבדוק את התקנת המערכת שלך. תוסף Totem ייסגר כעת."
 
-#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
+#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Interactive Python console."
 msgstr "מסוף Python אינטראקטיבי."
 
-#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:2
+#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
 msgid "Python Console"
 msgstr "מסוף Python"
 
@@ -2970,10 +2920,6 @@ msgid "Totem Python Console"
 msgstr "מסוף Python של Totem"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:129
-#| msgid ""
-#| "After you press OK, Totem will wait until you connect to it with winpdb "
-#| "or rpdb2. If you have not set a debugger password in GConf, it will use "
-#| "the default password ('totem')."
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -2981,6 +2927,18 @@ msgid ""
 msgstr ""
 "לאחר לחיצה על אישור, Totem ימתין עד להתחברות אליו בעזרת winpdb או rpdb2. אם "
 "לא הוגדרה ססמת מנפה ב־DConf, ססמת ברירת המחדל ('totem') תהיה בשימוש."
+
+#~ msgid "Don't connect to an already-running instance"
+#~ msgstr "Don't connect to an already-running instance"
+
+#~ msgid "Could not open link"
+#~ msgstr "לא ניתן לפתוח קישור"
+
+#~ msgid "Totem could not initialize the configuration engine."
+#~ msgstr "‏Totem אינו יכול לאתחל את מנוע ההגדרות."
+
+#~ msgid "Make sure that GNOME is properly installed."
+#~ msgstr "נא לוודא ש־GNOME מותקן כראוי."
 
 #~ msgid ""
 #~ "Approximate network connection speed, used to select quality on media "
