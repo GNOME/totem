@@ -461,14 +461,14 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                 path = tv.get_path_at_pos(int(evt.x), int(evt.y))
                 sel  = tv.get_selection()
                 (rows, _) = sel.get_selected_rows()
-                if path[1] not in rows[1]:
+                if path[0] not in rows[1]:
                     sel.unselect_all()
-                    sel.select_path(path[1])
+                    sel.select_path(path[0])
                 tv.grab_focus()
                 self.popup.popup(None, None, None, evt.button, evt.time)
                 return True
             coords = evt.get_coords()
-            _, path, c, x, y = tv.get_path_at_pos(int(coords[0]), int(coords[1]))
+            path, c, x, y = tv.get_path_at_pos(int(coords[0]), int(coords[1]))
             if (path.get_depth() == 1):
                 if tv.row_expanded(path):
                     tv.collapse_row(path)
