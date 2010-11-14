@@ -348,7 +348,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
         # Set up and populate the languages combobox
         renderer = Gtk.CellRendererText()
-        sorted_languages = Gtk.TreeModelSort.new_with_model(languages)
+        sorted_languages = Gtk.TreeModelSort (model = languages)
         sorted_languages.set_sort_column_id(0, Gtk.SortType.ASCENDING)
         combobox.set_model(sorted_languages)
         combobox.pack_start(renderer, True)
@@ -440,7 +440,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
         self.manager.ensure_update()
 
-        self.action.connect('activate', self.os_show_dialog, self.totem)
+        self.action.connect('activate', self.os_show_dialog)
 
         self.action.set_sensitive(self.totem.is_playing() and
 				  self.os_check_allowed_scheme() and
@@ -457,7 +457,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         # I think we must use video widget metadata but I don't found a way 
 	# to get this info from python
         filename = self.totem.get_current_mrl()
-        if Gio.content_type_guess(filename, '', 0)[0].split('/')[0] == 'audio':
+        if Gio.content_type_guess(filename, '')[0].split('/')[0] == 'audio':
             return True
         return False
 
@@ -474,7 +474,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.apply_button.set_sensitive(False)
 	self.find_button.set_sensitive(False)        
 
-        self.dialog.window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.WATCH))
+        self.dialog.get_window().set_cursor(Gdk.Cursor.new(Gdk.CursorType.WATCH))
 
         thread = SearchThread(self.model)
         thread.start()
@@ -501,14 +501,14 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
         self.model.lock.release()
 
-        self.dialog.window.set_cursor(None)
+        self.dialog.get_window().set_cursor(None)
 
         return False
 
     def os_save_selected_subtitle(self, filename=None):
         """
         """
-        self.dialog.window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.WATCH))
+        self.dialog.get_window().set_cursor(Gdk.Cursor.new(Gdk.CursorType.WATCH))
 
         model, rows = self.treeview.get_selection().get_selected_rows()
         if rows:
@@ -564,7 +564,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
         self.model.lock.release()
 
-        self.dialog.window.set_cursor(None)
+        self.dialog.get_window().set_cursor(None)
 
         if suburi:
             self.totem.set_current_subtitle(suburi)
