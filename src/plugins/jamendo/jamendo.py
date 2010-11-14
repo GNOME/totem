@@ -311,9 +311,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         enqueue_and_play.
         """
         if mode == 'replace':
-            self.totem.action_remote(Totem.RemoteCommand.REPLACE, t['stream'])
+            self.totem.action_remote(Totem.RemoteCommand.REPLACE, t['stream'].encode ('UTF-8'))
         elif mode == 'enqueue':
-            self.totem.action_remote(Totem.RemoteCommand.ENQUEUE, t['stream'])
+            self.totem.action_remote(Totem.RemoteCommand.ENQUEUE, t['stream'].encode ('UTF-8'))
 
     def fetch_albums(self, pn=1):
         """
@@ -549,11 +549,15 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         sel = self.current_treeview.get_selection()
         (rows, model) = sel.get_selected_rows()
         for row in rows:
+            it = model.get_iter(row)
+
+            # Return the parent node if root == true
             if root:
-                it = model.get_iter((row[0],))
-            else:
-                it = model.get_iter(row)
-            elt = model.get(it, 0)[0]
+                parent_iter = model.iter_parent (it)
+                if parent_iter != None:
+                    it = parent_iter
+
+            elt = model.get_value(it, 0)
             if elt not in ret:
                 ret.append(elt)
         return ret
