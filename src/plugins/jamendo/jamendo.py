@@ -138,10 +138,8 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         This code must be independent from the rest of the plugin. FIXME: bgo#624073
         """
         builder = Totem.plugin_load_interface ('jamendo', 'jamendo.ui', True, None, self)
-        print builder
         config_widget = builder.get_object ('config_widget')
         config_widget.connect ('destroy', self.on_config_widget_destroy)
-        print config_widget
         format = self.settings.get_enum ('format')
         num_per_page = self.settings.get_int ('num-per-page')
 
@@ -197,7 +195,9 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         """
         self.current_treeview = self.treeviews[0]
         for w in self.treeviews:
-            w.get_selection().set_mode(Gtk.SelectionMode.MULTIPLE)
+            selection = w.get_selection ()
+            selection.set_mode(Gtk.SelectionMode.MULTIPLE)
+            selection.connect ('changed', self.on_treeview_selection_changed)
 
             # build pixbuf column
             cell = Gtk.CellRendererPixbuf()
@@ -475,9 +475,12 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                     tv.collapse_row(path)
                 else:
                     tv.expand_row(path, False)
-            self.album_button.set_sensitive(True)
         except:
             pass
+
+    def on_treeview_selection_changed (self, selection):
+        (rows, _) = selection.get_selected_rows ()
+        self.album_button.set_sensitive (len (rows) > 0)
 
     def on_previous_button_clicked(self, *args):
         """
