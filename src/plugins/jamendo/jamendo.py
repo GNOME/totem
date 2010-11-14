@@ -207,8 +207,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
 
             # build description column
             cell = Gtk.CellRendererText()
-            cell.set_property('wrap-mode', Pango.WrapMode.WORD)
-            cell.set_property('wrap-width', 30)
+            cell.set_property('ellipsize', Pango.EllipsizeMode.END)
             col = Gtk.TreeViewColumn(cell_renderer=cell, markup=2)
             col.set_expand(True)
             w.append_column(col)
