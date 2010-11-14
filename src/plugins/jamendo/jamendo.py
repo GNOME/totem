@@ -457,18 +457,19 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         Called when the user clicked on a treeview element.
         """
         try:
-            if evt.button == 3:
-                path = tv.get_path_at_pos(int(evt.x), int(evt.y))
+            if evt.button.button == 3:
+                (path, _, _, _) = tv.get_path_at_pos(int(evt.x), int(evt.y))
                 sel  = tv.get_selection()
                 (rows, _) = sel.get_selected_rows()
-                if path[0] not in rows[1]:
+                if path not in rows:
                     sel.unselect_all()
-                    sel.select_path(path[0])
+                    sel.select_path(path)
                 tv.grab_focus()
-                self.popup.popup(None, None, None, evt.button, evt.time)
+                self.popup.popup_for_device(None, None, None, None, None, evt.button.button, evt.time)
                 return True
-            coords = evt.get_coords()
-            path, c, x, y = tv.get_path_at_pos(int(coords[0]), int(coords[1]))
+
+            (_, event_x, event_y) = evt.get_coords()
+            path, c, x, y = tv.get_path_at_pos(int(event_x), int(event_y))
             if (path.get_depth() == 1):
                 if tv.row_expanded(path):
                     tv.collapse_row(path)
