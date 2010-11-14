@@ -503,7 +503,7 @@ class item(object):
         url = self.mediaselector_url
         #logging.info("Stream XML URL: %s", str(url))
         _, xml = http.request(url)
-        soup = BeautifulStoneSoup(xml)
+        soup = BeautifulStoneSoup(xml, convertEntities = BeautifulStoneSoup.XML_ENTITIES)
         medias = [media(self, m) for m in soup('media')]
         #logging.info('Found media: %s', pformat(medias, indent=8))
         self.medias = medias
@@ -562,15 +562,15 @@ class programme(object):
         #xml.replace('<summary/>', '<summary></summary>')
         #xml = fix_selfclosing(xml)
 
-        soup = BeautifulStoneSoup(xml, selfClosingTags=self_closing_tags)
+        soup = BeautifulStoneSoup(xml, selfClosingTags=self_closing_tags, convertEntities = BeautifulStoneSoup.XML_ENTITIES)
 
         self.meta = {}
         self._items = []
         self._related = []
 
         #logging.info('  Found programme: %s', soup.playlist.title.string)
-        self.meta['title'] = soup.playlist.title.string
-        self.meta['summary'] = soup.playlist.summary.string
+        self.meta['title'] = soup.playlist.title.string.encode ('utf-8')
+        self.meta['summary'] = soup.playlist.summary.string.encode ('utf-8')
         self.meta['updated'] = soup.playlist.updated.string
 
         if soup.playlist.noitems:
