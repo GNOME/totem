@@ -38,7 +38,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 		self.tv = iplayer2.feed ('tv')
 
 		# Add the interface to Totem's sidebar
-		self.totem.add_sidebar_page ("iplayer", _("BBC iPlayer"), container)
+		self.totem.add_sidebar_page ("iplayer", _(u"BBC iPlayer"), container)
 
 		# Get the channel category listings
 		self.populate_channel_list (self.tv, self.tv_tree_store)
@@ -63,7 +63,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 	def _populate_channel_list_cb (self, tree_store, parent_path, values):
 		# Callback from PopulateChannelsThread to add stuff to the tree store
 		if values == None:
-			self.totem.action_error (_('Error listing channel categories'), _('There was an unknown error getting the list of television channels available on BBC iPlayer.'))
+			self.totem.action_error (_(u'Error listing channel categories'), _(u'There was an unknown error getting the list of television channels available on BBC iPlayer.'))
 			return False
 
 		parent_iter = tree_store.get_iter (parent_path)
@@ -71,7 +71,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 
 		# Append a dummy child row so that the expander's visible; we can
 		# then queue off the expander to load the programme listing for this category
-		tree_store.append (category_iter, [_('Loading…'), None, None])
+		tree_store.append (category_iter, [_(u'Loading…'), None, None])
 
 		return False
 
@@ -116,7 +116,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 		# Callback from PopulateProgrammesThread to add stuff to the tree store
 		if values == None:
 			# Translators: the "programme feed" is the list of TV shows available to watch online
-			self.totem.action_error (_('Error getting programme feed'), _('There was an error getting the list of programmes for this channel and category combination.'))
+			self.totem.action_error (_(u'Error getting programme feed'), _(u'There was an error getting the list of programmes for this channel and category combination.'))
 			return False
 
 		category_iter = tree_store.get_iter (category_path)

@@ -82,17 +82,17 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 
 		data['action_group'] = Gtk.ActionGroup(name = 'Python')
 		
-		action = Gtk.Action(name = 'Python', label = 'Python', tooltip = _('Python Console Menu'))
+		action = Gtk.Action(name = 'Python', label = 'Python', tooltip = _(u'Python Console Menu'))
 		data['action_group'].add_action(action)
 
-		action = Gtk.Action(name = 'PythonConsole', label = _('_Python Console'),
-		                    tooltip = _("Show Totem's Python console"),
+		action = Gtk.Action(name = 'PythonConsole', label = _(u'_Python Console'),
+		                    tooltip = _(u"Show Totem's Python console"),
 		                    stock_id = 'gnome-mime-text-x-python')
 		action.connect('activate', self.show_console)
 		data['action_group'].add_action(action)
 
-		action = Gtk.Action(name = 'PythonDebugger', label = _('Python Debugger'),
-				    tooltip = _("Enable remote Python debugging with rpdb2"))
+		action = Gtk.Action(name = 'PythonDebugger', label = _(u'Python Debugger'),
+				    tooltip = _(u"Enable remote Python debugging with rpdb2"))
 		if have_rpdb2:
 			action.connect('activate', self.enable_debugging)
 		else:
@@ -113,11 +113,11 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 			                                     destroy_cb = self.destroy_console)
 
 			console.set_size_request(600, 400)
-			console.eval('print "%s" %% totem_object' % _("You can access the Totem.Object through " \
+			console.eval('print "%s" %% totem_object' % _(u"You can access the Totem.Object through " \
 				     "\'totem_object\' :\\n%s"), False)
 
 			self.window = Gtk.Window()
-			self.window.set_title(_('Totem Python Console'))
+			self.window.set_title(_(u'Totem Python Console'))
 			self.window.add(console)
 			self.window.connect('destroy', self.destroy_console)
 			self.window.show_all()
@@ -126,7 +126,7 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 			self.window.grab_focus()
 
 	def enable_debugging(self, action):
-		msg = _("After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in DConf, it will use the default password ('totem').")
+		msg = _(u"After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in DConf, it will use the default password ('totem').")
 		dialog = Gtk.MessageDialog(None, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK_CANCEL, msg)
 		if dialog.run() == Gtk.ResponseType.OK:
 			settings = Gio.Settings.new ('org.gnome.totem.plugins.pythonconsole')

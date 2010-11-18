@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Licensed under the MIT license
 # http://opensource.org/licenses/mit-license.php
 
@@ -79,10 +81,10 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
         if not hasattr(self, 'context_no_delete'):
             self.context_no_delete = gtk.Menu()
             # Translators: this refers to a media file
-            play_menu = gtk.MenuItem(_("Play"))
+            play_menu = gtk.MenuItem(_(u"Play"))
             play_menu.connect("activate", action, 'item.play')
             # Translators: this refers to a media file
-            enqueue_menu = gtk.MenuItem(_("Enqueue"))
+            enqueue_menu = gtk.MenuItem(_(u"Enqueue"))
             enqueue_menu.connect("activate", action, 'item.enqueue')
             self.context_no_delete.append(play_menu)
             self.context_no_delete.append(enqueue_menu)
@@ -91,16 +93,16 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
         if not hasattr(self, 'context_with_delete'):
             self.context_with_delete = gtk.Menu()
             # Translators: this refers to a media file
-            play_menu = gtk.MenuItem(_("Play"))
+            play_menu = gtk.MenuItem(_(u"Play"))
             play_menu.connect("activate", action, 'item.play')
             # Translators: this refers to a media file
-            enqueue_menu = gtk.MenuItem(_("Enqueue"))
+            enqueue_menu = gtk.MenuItem(_(u"Enqueue"))
             enqueue_menu.connect("activate", action, 'item.enqueue')
             self.context_with_delete.append(play_menu)
             self.context_with_delete.append(enqueue_menu)
             self.context_with_delete.append(gtk.SeparatorMenuItem())
             # Translators: this refers to a media file
-            menu = gtk.MenuItem(_("Delete"))
+            menu = gtk.MenuItem(_(u"Delete"))
             menu.connect("activate", action, 'item.delete')
             self.context_with_delete.append(menu)
             self.context_with_delete.show_all()
@@ -111,7 +113,7 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
             self.context = self.context_no_delete
 
     def do_activate (self):
-        self.totem_object.add_sidebar_page ("upnp-coherence", _("Coherence DLNA/UPnP Client"), self.ui.window)
+        self.totem_object.add_sidebar_page ("upnp-coherence", _(u"Coherence DLNA/UPnP Client"), self.ui.window)
 
         def load_and_play(url):
             self.totem_object.add_to_playlist_and_play (url, '', True)

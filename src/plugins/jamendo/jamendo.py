@@ -55,7 +55,7 @@ except ImportError:
             message_type=Gtk.MessageType.ERROR,
             buttons=Gtk.ButtonsType.OK
         )
-        dlg.set_markup(_('You need to install the Python simplejson module.'))
+        dlg.set_markup(_(u'You need to install the Python simplejson module.'))
         dlg.run()
         dlg.destroy()
         raise
@@ -124,7 +124,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
 
         self.reset()
         container.show_all()
-        self.totem.add_sidebar_page("jamendo", _("Jamendo"), container)
+        self.totem.add_sidebar_page("jamendo", _(u"Jamendo"), container)
 
     def do_deactivate(self):
         """
@@ -257,23 +257,23 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                     8, 1, 1)
         # format title
         title  = '<b>%s</b>\n' % self._format_str(album['name'])
-        title += _('Artist: %s') % self._format_str(album['artist_name'])
+        title += _(u'Artist: %s') % self._format_str(album['artist_name'])
         # format duration
         dur = self._format_duration(album['duration'])
         # format tooltip
         try:
             # Translators: this is the release date of an album in Python strptime format
-            release = time.strptime(album['dates']['release'][0:10], _('%Y-%m-%d'))
+            release = time.strptime(album['dates']['release'][0:10], _(u'%Y-%m-%d'))
             # Translators: this is the release time of an album in Python strftime format
-            release = time.strftime(_('%x'), release)
+            release = time.strftime(_(u'%x'), release)
         except:
             release = ''
         tip = '\n'.join([
             '<b>%s</b>' % self._format_str(album['name']),
-            _('Artist: %s') % self._format_str(album['artist_name']),
-            _('Genre: %s') % self._format_str(album['genre']),
-            _('Released on: %s') % release,
-            _('License: %s') % self._format_str(album['license'][0]),
+            _(u'Artist: %s') % self._format_str(album['artist_name']),
+            _(u'Genre: %s') % self._format_str(album['genre']),
+            _(u'Released on: %s') % release,
+            _(u'License: %s') % self._format_str(album['license'][0]),
         ])
         # append album row
         parent = treeview.get_model().append(None,
@@ -286,16 +286,16 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             # track title
             # Translators: this is the title of a track in Python format
             # (first argument is the track number, second is the track title)
-            tt = ('<small>%s</small>' % _('%02d. %s')) % \
+            tt = ('<small>%s</small>' % _(u'%02d. %s')) % \
                 (i+1, self._format_str(track['name']))
             # track duration
             td = self._format_duration(track['duration'])
             # track tooltip
             tip = '\n'.join([
                 '<b>%s</b>' %  self._format_str(track['name']),
-                _('Album: %s') % self._format_str(album['name']),
-                _('Artist: %s') % self._format_str(album['artist_name']),
-                _('Duration: %s') % td,
+                _(u'Album: %s') % self._format_str(album['name']),
+                _(u'Artist: %s') % self._format_str(album['artist_name']),
+                _(u'Duration: %s') % td,
             ])
             # append track
             treeview.get_model().append(parent, [track, icon, tt, td, tip])
@@ -352,7 +352,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         self.progressbars[tab_index].show()
         self.progressbars[tab_index].set_fraction(0.0)
         self.progressbars[tab_index].set_text(
-            _('Fetching albums, please wait...')
+            _(u'Fetching albums, please wait…')
         )
         lcb = (self.on_fetch_albums_loop, self.current_treeview)
         dcb = (self.on_fetch_albums_done, self.current_treeview)
@@ -407,13 +407,13 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                 except:
                     reason = str(exc)
             reason = reason.capitalize()
-            msg = _('Failed to connect to Jamendo server.\n%s.') % reason
+            msg = _(u'Failed to connect to Jamendo server.\n%s.') % reason
         elif hasattr(exc, 'code'):
-            msg = _('The Jamendo server returned code %s.') % exc.code
+            msg = _(u'The Jamendo server returned code %s.') % exc.code
         else:
             msg = str(exc)
 
-        self.totem.action_error(_('An error occurred while fetching albums.'), msg)
+        self.totem.action_error(_(u'An error occurred while fetching albums.'), msg)
 
     def on_search_entry_activate(self, *args):
         """
@@ -615,10 +615,10 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             if secs >= 3600:
                 # Translators: time formatting (in Python strftime format) for the Jamendo plugin
                 # for times longer than an hour
-                return time.strftime(_('%H:%M:%S'), time.gmtime(secs))
+                return time.strftime(_(u'%H:%M:%S'), time.gmtime(secs))
             # Translators: time formatting (in Python strftime format) for the Jamendo plugin
             # for times shorter than an hour
-            return time.strftime(_('%M:%S'), time.gmtime(secs))
+            return time.strftime(_(u'%M:%S'), time.gmtime(secs))
         except:
             return ''
 

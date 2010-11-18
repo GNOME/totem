@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from gi.repository import Peas
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -242,7 +244,7 @@ class OpenSubtitlesModel(object):
             if self.token:
                 return True
 
-        self.message = _('Could not contact the OpenSubtitles website')
+        self.message = _(u'Could not contact the OpenSubtitles website')
 
         return False
 
@@ -258,12 +260,12 @@ class OpenSubtitlesModel(object):
             try:
                 result = self.server.SearchSubtitles(self.token, [searchdata])
             except xmlrpclib.ProtocolError:
-                self.message = _('Could not contact the OpenSubtitles website')
+                self.message = _(u'Could not contact the OpenSubtitles website')
 
             if result.get('data'):
                 return result['data']
             else:
-                self.message = _('No results found')
+                self.message = _(u'No results found')
 
         return None
 
@@ -275,13 +277,13 @@ class OpenSubtitlesModel(object):
             try:
                 result = self.server.DownloadSubtitles(self.token, [subtitleId])
             except xmlrpclib.ProtocolError:
-                self.message = _('Could not contact the OpenSubtitles website')
+                self.message = _(u'Could not contact the OpenSubtitles website')
 
             if result and result.get('status') == OK200:
                 try:
                     subtitle64 = result['data'][0]['data']
                 except:
-                    self.message = _('Could not contact the OpenSubtitles website')
+                    self.message = _(u'Could not contact the OpenSubtitles website')
                     return None
 
                 import StringIO, gzip, base64
@@ -369,18 +371,18 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.treeview.set_model(self.liststore)
         self.treeview.set_headers_visible(False)
         renderer.set_property('ellipsize', Pango.EllipsizeMode.END)
-        column = Gtk.TreeViewColumn(_("Subtitles"), renderer, text=0)
+        column = Gtk.TreeViewColumn(_(u"Subtitles"), renderer, text=0)
         column.set_resizable(True)
         column.set_expand(True)
         self.treeview.append_column(column)
 	# translators comment:
 	# This is the file-type of the subtitle file detected
-        column = Gtk.TreeViewColumn(_("Format"), renderer, text=1)
+        column = Gtk.TreeViewColumn(_(u"Format"), renderer, text=1)
         column.set_resizable(False)
         self.treeview.append_column(column)
 	# translators comment:
 	# This is a rating of the quality of the subtitle
-        column = Gtk.TreeViewColumn(_("Rating"), renderer, text=2)
+        column = Gtk.TreeViewColumn(_(u"Rating"), renderer, text=2)
         column.set_resizable(False)
         self.treeview.append_column(column)
 
@@ -421,8 +423,8 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.os_action_group = Gtk.ActionGroup(name='OpenSubtitles')
 
         self.action = Gtk.Action(name='opensubtitles',
-                                 label=_('_Download Movie Subtitles...'),
-                                 tooltip=_("Download movie subtitles from OpenSubtitles"),
+                                 label=_(u'_Download Movie Subtitles…'),
+                                 tooltip=_(u"Download movie subtitles from OpenSubtitles"),
                                  stock_id=None)
 
         self.os_action_group.add_action(self.action)
@@ -481,7 +483,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         thread.start()
         gobject.idle_add(self.os_populate_treeview)
 
-        self.progress.set_text(_('Searching subtitles...'))
+        self.progress.set_text(_(u'Searching subtitles…'))
         gobject.timeout_add(350, self.os_progress_bar_increment, thread)
 
     def os_populate_treeview(self):
@@ -539,7 +541,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
             thread.start()
             gobject.idle_add(self.os_save_subtitles, filename)
 
-            self.progress.set_text(_('Downloading the subtitles...'))
+            self.progress.set_text(_(u'Downloading the subtitles…'))
             gobject.timeout_add(350, self.os_progress_bar_increment, thread)
         else:
             #warn user!

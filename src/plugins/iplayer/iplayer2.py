@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 # Python libs
 import re, os
@@ -295,8 +296,8 @@ class NoItemsError(Exception):
         self.reason = reason
 
     def __str__(self):
-        reason = self.reason or '<no reason given>'
-        return _('Programme unavailable ("%s")') % (reason)
+        reason = self.reason or _(u'<no reason given>')
+        return _(u'Programme unavailable ("%s")') % (reason)
 
 class memoize(object):
     def __init__(self, func):
