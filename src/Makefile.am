@@ -180,6 +180,7 @@ totem_CFLAGS = \
 totem_LDADD = \
 	libtotem.la		\
 	$(DEPENDENCY_LIBS)	\
+	$(X_LIBS)	\
 	$(PEAS_LIBS)
 
 # Totem video thumbnailer
