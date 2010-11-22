@@ -25,8 +25,6 @@ dnl Add the languages which your application supports to po/LINGUAS
 GETTEXT_PACKAGE=totem
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define to the Gettext package name])
 AC_SUBST(GETTEXT_PACKAGE)
-AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.17])
 IT_PROG_INTLTOOL([0.40.0])
 
 GNOME_DOC_INIT
