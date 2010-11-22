@@ -129,9 +129,6 @@ totem_options_process_for_server (Totem                     *totem,
 		filename = options->filenames[i];
 		full_path = totem_create_full_path (filename);
 
-		g_message ("filename %s", filename);
-		g_message ("full_path %s", full_path);
-
 		totem_action_remote (totem, action, full_path ? full_path : filename);
 
 		g_free (full_path);
