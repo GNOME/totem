@@ -259,7 +259,6 @@ struct BaconVideoWidgetPrivate
   GstState                     target_state;
   gboolean                     buffering;
   gboolean                     download_buffering;
-  GstElement                  *download_buffering_element;
   char                        *download_filename;
   /* used to compute when the download buffer has gone far
    * enough to start playback, not "amount of buffering time left
@@ -294,6 +293,7 @@ static void bacon_video_widget_get_property (GObject * object,
 
 static void bacon_video_widget_finalize (GObject * object);
 
+static void bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs);
 static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
@@ -1630,6 +1630,20 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 
     g_object_unref (mount_op);
     goto done;
+  } else if (strcmp (type_name, "GstCacheDownloadComplete") == 0) {
+    const gchar *location;
+
+    /* do query for the last time */
+    bvw_query_buffering_timeout (bvw);
+    /* Finished buffering the whole file, so don't run the timeout anymore */
+    bvw_reconfigure_fill_timeout (bvw, 0);
+
+    /* Tell the front-end about the downloaded file */
+    g_object_notify (G_OBJECT (bvw), "download-filename");
+
+    location = gst_structure_get_string (structure, "location");
+    GST_DEBUG ("Finished download of '%s'", GST_STR_NULL (location));
+    goto done;
   } else {
     GstNavigationMessageType nav_msg_type =
         gst_navigation_message_get_type (msg);
@@ -2159,7 +2173,6 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
        gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
 
        bvw_reconfigure_fill_timeout (bvw, 200);
-       bvw->priv->download_buffering_element = g_object_ref (message->src);
      }
 
      return;
@@ -2707,68 +2720,58 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
   GstQuery *query;
   GstElement *element;
 
-  element = bvw->priv->download_buffering_element;
-  if (element == NULL)
-    element = bvw->priv->play;
+  element = bvw->priv->play;
 
   query = gst_query_new_buffering (GST_FORMAT_PERCENT);
   if (gst_element_query (element, query)) {
-    gint64 start, stop;
-    GstFormat format;
+    gint64 stop, estimated_total;
     gdouble fill;
-    gboolean busy;
-    gint percent;
+    guint n_ranges, i, pos;
 
-    gst_query_parse_buffering_stats (query, NULL, NULL, NULL, &bvw->priv->buffering_left);
-    gst_query_parse_buffering_percent (query, &busy, &percent);
-    gst_query_parse_buffering_range (query, &format, &start, &stop, NULL);
+    gst_query_parse_buffering_range (query, NULL, NULL, &stop, &estimated_total);
 
-    GST_DEBUG ("start %" G_GINT64_FORMAT ", stop %" G_GINT64_FORMAT
-	       ", buffering left %" G_GINT64_FORMAT ", percent %d%%",
-	       start, stop, bvw->priv->buffering_left, percent);
+    /* stop expresses the last bit of data that we have from the currently downloading
+     * region and is a good value to use for the fill level if it is after our
+     * current position. */
+    pos = bvw->priv->current_position * GST_FORMAT_PERCENT_MAX;
+    if (stop < pos)
+      stop = -1;
 
-#if 0
-    guint i;
+    n_ranges = gst_query_get_n_buffering_ranges (query);
+
     for (i = 0; i < n_ranges; i++) {
       gint64 n_start, n_stop;
       gst_query_parse_nth_buffering_range (query, i, &n_start, &n_stop);
+
+      /* take first stop after current offset if not known */
+      if (stop == -1 && n_stop > pos)
+        stop = n_stop;
+
       GST_DEBUG ("%s range %d: start %" G_GINT64_FORMAT " stop %" G_GINT64_FORMAT,
 		 n_stop == stop ? "*" : " ",
 		 i, n_start, n_stop);
     }
-#endif
+    /* if no fill level, just take the current position */
+    if (stop == -1)
+      stop = pos;
 
-    if (stop != -1)
-      fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
-    else
-      fill = -1.0;
+    /* estimated_total is the amount of time it will take to download the
+     * remaining part of the file, from the current position to the end. */
+    bvw->priv->buffering_left = estimated_total;
+    GST_DEBUG ("stop %" G_GINT64_FORMAT ", buffering left %" G_GINT64_FORMAT,
+               stop, bvw->priv->buffering_left);
 
+    fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
     GST_DEBUG ("download buffer filled up to %f%% (element: %s)", fill * 100.0,
 	       G_OBJECT_TYPE_NAME (element));
 
     g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
-
-    /* Nothing left to buffer when fill is 100% */
-    if (fill == 1.0)
-      bvw->priv->buffering_left = 0;
 
     /* Start playing when we've downloaded enough */
     if (bvw_download_buffering_done (bvw) != FALSE &&
 	bvw->priv->target_state == GST_STATE_PLAYING) {
       GST_DEBUG ("Starting playback because the download buffer is filled enough");
       bacon_video_widget_play (bvw, NULL);
-    }
-
-    /* Finished buffering, so don't run the timeout anymore */
-    if (fill == 1.0) {
-      bvw->priv->fill_id = 0;
-      gst_query_unref (query);
-      g_clear_object (&bvw->priv->download_buffering_element);
-
-      /* Tell the front-end about the downloaded file */
-      g_object_notify (G_OBJECT (bvw), "download-filename");
-
-      return FALSE;
     }
   } else {
     g_debug ("Failed to query the source element for buffering info in percent");
@@ -4194,7 +4197,6 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->download_buffering = FALSE;
   g_clear_pointer (&bvw->priv->download_filename, g_free);
   bvw->priv->buffering_left = -1;
-  g_clear_object (&bvw->priv->download_buffering_element);
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
   g_clear_object (&bvw->priv->cover_pixbuf);
