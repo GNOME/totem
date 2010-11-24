@@ -2504,7 +2504,7 @@ static void
 on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
         char *name = NULL;
-	
+
 	name = totem_get_nice_name_for_stream (totem);
 
 	if (name != NULL) {
@@ -2512,7 +2512,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 			(TOTEM_PLAYLIST (totem->playlist), name, FALSE);
 		g_free (name);
 	}
-	
+
 	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }
 
@@ -2613,16 +2613,35 @@ update_seekable (TotemObject *totem)
 }
 
 static void
+update_slider_visibility (TotemObject *totem,
+			  gint64 stream_length)
+{
+	if (totem->stream_length == stream_length)
+		return;
+	if (totem->stream_length > 0 &&
+	    stream_length > 0)
+		return;
+	if (stream_length != 0) {
+		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 65535.);
+		gtk_range_set_range (GTK_RANGE (totem->fs->seek), 0., 65535.);
+	} else {
+		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 0.);
+		gtk_range_set_range (GTK_RANGE (totem->fs->seek), 0., 0.);
+	}
+}
+
+static void
 update_current_time (BaconVideoWidget *bvw,
 		gint64 current_time,
 		gint64 stream_length,
 		double current_position,
 		gboolean seekable, TotemObject *totem)
 {
-	if (totem->seek_lock == FALSE)
-	{
+	update_slider_visibility (totem, stream_length);
+
+	if (totem->seek_lock == FALSE) {
 		gtk_adjustment_set_value (totem->seekadj,
-				current_position * 65535);
+					  current_position * 65535);
 
 		if (stream_length == 0 && totem->mrl != NULL)
 		{
