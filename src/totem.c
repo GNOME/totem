@@ -221,6 +221,10 @@ app_command_line (GApplication             *app,
 	 * We can't use g_application_get_is_remote() because it's not registered yet */
 	if (startup_called != FALSE) {
 		app_init (totem, argv);
+
+		/* Don't add files again through totem_options_process_for_server() */
+		g_strfreev (optionstate.filenames);
+		optionstate.filenames = NULL;
 		startup_called = FALSE;
 	} else {
 		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
