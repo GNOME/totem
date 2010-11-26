@@ -535,7 +535,6 @@ totem_cmml_read_file_result (GObject		*source_object,
 	g_object_unref (source_object);
 
 	if (G_UNLIKELY (error != NULL)) {
-		g_warning ("chapters: failed to load CMML file %s: %s", data->file, error->message);
 		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND) ||
 		    g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED)) {
 			/* it's ok if file doesn't exist */
@@ -544,6 +543,7 @@ totem_cmml_read_file_result (GObject		*source_object,
 		} else {
 			data->successful = FALSE;
 			data->error = g_strdup (error->message);
+			g_warning ("chapters: failed to load CMML file %s: %s", data->file, error->message);
 		}
 		g_error_free (error);
 		(data->final) (data, NULL);
