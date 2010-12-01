@@ -51,8 +51,8 @@ print_mimetypes (void)
 {
 	guint i;
 
-	for (i =0; i < G_N_ELEMENTS (mime_types); i++) {
-		g_print ("%s\n", mime_types[i]);
+	for (i =0; i < G_N_ELEMENTS (audio_mime_types); i++) {
+		g_print ("%s\n", audio_mime_types[i]);
 	}
 }
 
