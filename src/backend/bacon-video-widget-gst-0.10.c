@@ -87,8 +87,6 @@
 
 #define FORWARD_RATE 1.0
 #define REVERSE_RATE -1.0
-#define DEFAULT_HEIGHT 420
-#define DEFAULT_WIDTH  315
 #define SMALL_STREAM_WIDTH 200
 #define SMALL_STREAM_HEIGHT 120
 /* Maximum size of the logo */
@@ -2283,35 +2281,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
   }
 }
-
-/* FIXME: how to recognise this in 0.9? */
-#if 0
-static void
-group_switch (GstElement *play, BaconVideoWidget *bvw)
-{
-  GstMessage *msg;
-
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  if (bvw->priv->tagcache) {
-    gst_tag_list_free (bvw->priv->tagcache);
-    bvw->priv->tagcache = NULL;
-  }
-  if (bvw->priv->audiotags) {
-    gst_tag_list_free (bvw->priv->audiotags);
-    bvw->priv->audiotags = NULL;
-  }
-  if (bvw->priv->videotags) {
-    gst_tag_list_free (bvw->priv->videotags);
-    bvw->priv->videotags = NULL;
-  }
-
-  msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
-      gst_structure_new ("notify-streaminfo", NULL));
-  gst_element_post_message (bvw->priv->play, msg);
-}
-#endif
 
 static void
 got_video_size (BaconVideoWidget * bvw)
