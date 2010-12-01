@@ -57,7 +57,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
 	$(AM_V_GEN) cat totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
-	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt >> $@
+	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt $(srcdir)/uri-schemes-list.txt >> $@
 
 EXTRA_DIST += desktop.sh
 CLEANFILES += \
@@ -74,6 +74,7 @@ nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functi
 EXTRA_DIST += \
 	mime-type-include.sh	\
 	mime-type-list.txt	\
+	uri-schemes-list.txt	\
 	mime-functions.sh
 CLEANFILES += \
 	totem-mime-types.h		\
