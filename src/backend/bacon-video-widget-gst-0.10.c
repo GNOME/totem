@@ -727,7 +727,7 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
 
   g_mutex_unlock (bvw->priv->lock);
 
-  window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
+  window = gdk_x11_window_get_xid (bvw->priv->video_window);
 
   if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
     gst_x_overlay_set_xwindow_id (xoverlay, window);
@@ -6669,7 +6669,7 @@ bvw_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
     g_return_if_fail (bvw->priv->xoverlay != NULL);
     g_return_if_fail (bvw->priv->video_window != NULL);
 
-    window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
+    window = gdk_x11_window_get_xid (bvw->priv->video_window);
     gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, window);
   }
 }
