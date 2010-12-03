@@ -738,8 +738,8 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
   gtk_widget_get_allocation (widget, &allocation);
 
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-  cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
-  cairo_paint (cr);
+  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+  cairo_fill (cr);
 
   /* If there's only audio and no visualisation, draw the logo as well.
    * If we have a cover image to display, we display it regardless of whether we're
@@ -756,6 +756,7 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
       GdkPixbuf *logo = NULL;
       gint s_width, s_height, d_width, d_height;
       gfloat ratio;
+
 
       s_width = gdk_pixbuf_get_width (pixbuf);
       s_height = gdk_pixbuf_get_height (pixbuf);
@@ -788,6 +789,7 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
       else
         logo = g_object_ref (G_OBJECT (pixbuf));
 
+      cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
       gdk_cairo_set_source_pixbuf (cr, logo, (allocation.width - s_width) / 2, (allocation.height - s_height) / 2);
       cairo_paint (cr);
 
