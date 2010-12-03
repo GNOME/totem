@@ -576,11 +576,12 @@ bacon_video_widget_realize (GtkWidget * widget)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkWindowAttr attributes;
-  gint attributes_mask, w, h;
+  gint attributes_mask;
   GdkColor colour;
   GdkWindow *window;
   GdkEventMask event_mask;
   GtkAllocation allocation;
+  GtkWidget *toplevel;
 
   event_mask = gtk_widget_get_events (widget)
     | GDK_POINTER_MOTION_MASK
@@ -628,9 +629,10 @@ bacon_video_widget_realize (GtkWidget * widget)
   g_signal_connect (G_OBJECT (gtk_widget_get_screen (widget)),
       "size-changed", G_CALLBACK (size_changed_cb), bvw);
 
-  /* nice hack to show the logo fullsize, while still being resizable */
-  get_media_size (BACON_VIDEO_WIDGET (widget), &w, &h);
-  totem_widget_set_preferred_size (widget, w, h);
+  /* setup the toplevel, ready to be resized */
+  toplevel = gtk_widget_get_toplevel (widget);
+  if (gtk_widget_is_toplevel (toplevel))
+    gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
 
@@ -1380,16 +1382,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->auth_dialog = NULL;
 
   bacon_video_widget_gst_missing_plugins_blacklist ();
-}
-
-static void
-shrink_toplevel (BaconVideoWidget * bvw)
-{
-  GtkWidget *toplevel, *widget;
-  widget = GTK_WIDGET (bvw);
-  toplevel = gtk_widget_get_toplevel (widget);
-  if (toplevel != widget && GTK_IS_WINDOW (toplevel) != FALSE)
-    gtk_window_resize (GTK_WINDOW (toplevel), 1, 1);
 }
 
 static gboolean bvw_query_timeout (BaconVideoWidget *bvw);
@@ -5211,6 +5203,7 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 void
 bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 {
+  GtkWidget *toplevel;
   gint w, h;
 
   g_return_if_fail (bvw != NULL);
@@ -5246,10 +5239,11 @@ bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
   w = (gfloat) w * ratio;
   h = (gfloat) h * ratio;
 
-  shrink_toplevel (bvw);
-
   GST_DEBUG ("setting preferred size %dx%d", w, h);
-  totem_widget_set_preferred_size (GTK_WIDGET (bvw), w, h);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+  if (gtk_widget_is_toplevel (toplevel))
+    gtk_window_resize_to_geometry (GTK_WINDOW (toplevel), w, h);
 }
 
 /**
