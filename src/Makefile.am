@@ -317,6 +317,7 @@ Totem_1_0_gir_CFLAGS = \
 	$(libtotem_la_CPPFLAGS)
 Totem_1_0_gir_LIBS = libtotem.la
 Totem_1_0_gir_FILES = $(introspection_sources)
+Totem_1_0_gir_EXPORT_PACKAGES = totem
 INTROSPECTION_GIRS += Totem-1.0.gir
 
 girdir = $(datadir)/gir-1.0
