@@ -421,7 +421,8 @@
       <menubar name="tmw-menubar">
          <menu name="movie" action="movie-menu">
             <menuitem name="open" action="open"/>
-            <menuitem name="open-location" action="open-location"/>
+	    <menuitem name="open-location" action="open-location"/>
+	    <placeholder name="save-placeholder"/>
             <placeholder name="devices-placeholder"/>
             <separator name="recent-separator"/>
             <placeholder name="recent-placeholder"/>
@@ -508,6 +509,8 @@
          <menuitem name="show-controls" action="show-controls"/>
          <menuitem name="fullscreen" action="fullscreen"/>
          <menuitem name="select-subtitle" action="select-subtitle"/>
+         <separator/>
+         <placeholder name="save-placeholder"/>
          <separator/>
          <menu name="popup-languages" action="languages-menu">
             <placeholder name="placeholder"/>
