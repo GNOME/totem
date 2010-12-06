@@ -86,8 +86,9 @@ void                  gsd_osd_window_draw_rounded_rectangle (cairo_t *cr,
                                                              gdouble  width,
                                                              gdouble  height);
 
-void                  gsd_osd_window_color_reverse          (const GdkColor *a,
-                                                             GdkColor       *b);
+void                  gsd_osd_window_color_reverse          (GdkRGBA *a);
+void                  gsd_osd_window_color_shade            (GdkRGBA *a,
+                                                             gdouble  k);
 
 G_END_DECLS
 

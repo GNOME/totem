@@ -192,9 +192,192 @@ gsd_osd_window_draw_rounded_rectangle (cairo_t* cr,
         cairo_close_path (cr);
 }
 
+static void
+rgb_to_hls (gdouble *r,
+            gdouble *g,
+            gdouble *b)
+{
+        gdouble min;
+        gdouble max;
+        gdouble red;
+        gdouble green;
+        gdouble blue;
+        gdouble h, l, s;
+        gdouble delta;
+
+        red = *r;
+        green = *g;
+        blue = *b;
+
+        if (red > green)
+        {
+                if (red > blue)
+                        max = red;
+                else
+                        max = blue;
+
+                if (green < blue)
+                        min = green;
+                else
+                        min = blue;
+        }
+        else
+        {
+                if (green > blue)
+                        max = green;
+                else
+                        max = blue;
+
+                if (red < blue)
+                        min = red;
+                else
+                        min = blue;
+        }
+
+        l = (max + min) / 2;
+        s = 0;
+        h = 0;
+
+        if (max != min)
+        {
+                if (l <= 0.5)
+                        s = (max - min) / (max + min);
+                else
+                        s = (max - min) / (2 - max - min);
+
+                delta = max -min;
+                if (red == max)
+                        h = (green - blue) / delta;
+                else if (green == max)
+                        h = 2 + (blue - red) / delta;
+                else if (blue == max)
+                        h = 4 + (red - green) / delta;
+
+                h *= 60;
+                if (h < 0.0)
+                        h += 360;
+        }
+
+        *r = h;
+        *g = l;
+        *b = s;
+}
+
+static void
+hls_to_rgb (gdouble *h,
+            gdouble *l,
+            gdouble *s)
+{
+        gdouble hue;
+        gdouble lightness;
+        gdouble saturation;
+        gdouble m1, m2;
+        gdouble r, g, b;
+
+        lightness = *l;
+        saturation = *s;
+
+        if (lightness <= 0.5)
+                m2 = lightness * (1 + saturation);
+        else
+                m2 = lightness + saturation - lightness * saturation;
+        m1 = 2 * lightness - m2;
+
+        if (saturation == 0)
+        {
+                *h = lightness;
+                *l = lightness;
+                *s = lightness;
+        }
+        else
+        {
+                hue = *h + 120;
+                while (hue > 360)
+                        hue -= 360;
+                while (hue < 0)
+                        hue += 360;
+
+                if (hue < 60)
+                        r = m1 + (m2 - m1) * hue / 60;
+                else if (hue < 180)
+                        r = m2;
+                else if (hue < 240)
+                        r = m1 + (m2 - m1) * (240 - hue) / 60;
+                else
+                        r = m1;
+
+                hue = *h;
+                while (hue > 360)
+                        hue -= 360;
+                while (hue < 0)
+                        hue += 360;
+
+                if (hue < 60)
+                        g = m1 + (m2 - m1) * hue / 60;
+                else if (hue < 180)
+                        g = m2;
+                else if (hue < 240)
+                        g = m1 + (m2 - m1) * (240 - hue) / 60;
+                else
+                        g = m1;
+
+                hue = *h - 120;
+                while (hue > 360)
+                        hue -= 360;
+                while (hue < 0)
+                        hue += 360;
+
+                if (hue < 60)
+                        b = m1 + (m2 - m1) * hue / 60;
+                else if (hue < 180)
+                        b = m2;
+                else if (hue < 240)
+                        b = m1 + (m2 - m1) * (240 - hue) / 60;
+                else
+                        b = m1;
+
+                *h = r;
+                *l = g;
+                *s = b;
+        }
+}
+
 void
-gsd_osd_window_color_reverse (const GdkColor *a,
-                              GdkColor       *b)
+gsd_osd_window_color_shade (GdkRGBA *a,
+                            gdouble   k)
+{
+        gdouble red;
+        gdouble green;
+        gdouble blue;
+
+        red = a->red;
+        green = a->green;
+        blue = a->blue;
+
+        rgb_to_hls (&red, &green, &blue);
+
+        green *= k;
+        if (green > 1.0)
+                green = 1.0;
+        else if (green < 0.0)
+                green = 0.0;
+
+        blue *= k;
+        if (blue > 1.0)
+                blue = 1.0;
+        else if (blue < 0.0)
+                blue = 0.0;
+
+        hls_to_rgb (&red, &green, &blue);
+
+        a->red = red;
+        a->green = green;
+        a->blue = blue;
+}
+
+
+void
+gsd_osd_window_color_reverse (GdkRGBA *a)
 {
         gdouble red;
         gdouble green;
@@ -203,9 +386,9 @@ gsd_osd_window_color_reverse (const GdkColor *a,
         gdouble s;
         gdouble v;
 
-        red = (gdouble) a->red / 65535.0;
-        green = (gdouble) a->green / 65535.0;
-        blue = (gdouble) a->blue / 65535.0;
+        red = a->red;
+        green = a->green;
+        blue = a->blue;
 
         gtk_rgb_to_hsv (red, green, blue, &h, &s, &v);
 
@@ -217,9 +400,9 @@ gsd_osd_window_color_reverse (const GdkColor *a,
 
         gtk_hsv_to_rgb (h, s, v, &red, &green, &blue);
 
-        b->red = red * 65535.0;
-        b->green = green * 65535.0;
-        b->blue = blue * 65535.0;
+        a->red = red;
+        a->green = green;
+        a->blue = blue;
 }
 
 /* This is our draw handler when the window is in a compositing manager.
@@ -227,24 +410,23 @@ gsd_osd_window_color_reverse (const GdkColor *a,
  * transparent/rounded look.
  */
 static void
-draw_when_composited (GtkWidget *widget, cairo_t *context)
+draw_when_composited (GtkWidget *widget, cairo_t *orig_cr)
 {
         GsdOsdWindow    *window;
         cairo_t         *cr;
         cairo_surface_t *surface;
         int              width;
         int              height;
-        GtkStyle        *style;
-        GdkColor         color;
-        double           r, g, b;
+        GtkStyleContext *context;
+        GdkRGBA          acolor;
 
         window = GSD_OSD_WINDOW (widget);
 
-        style = gtk_widget_get_style (widget);
-        cairo_set_operator (context, CAIRO_OPERATOR_SOURCE);
+        context = gtk_widget_get_style_context (widget);
+        cairo_set_operator (orig_cr, CAIRO_OPERATOR_SOURCE);
         gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
 
-        surface = cairo_surface_create_similar (cairo_get_target (context),
+        surface = cairo_surface_create_similar (cairo_get_target (orig_cr),
                                                 CAIRO_CONTENT_COLOR_ALPHA,
                                                 width,
                                                 height);
@@ -263,18 +445,17 @@ draw_when_composited (GtkWidget *widget, cairo_t *context)
 
         /* draw a box */
         gsd_osd_window_draw_rounded_rectangle (cr, 1.0, 0.5, 0.5, height / 10, width-1, height-1);
-        gsd_osd_window_color_reverse (&style->bg[GTK_STATE_NORMAL], &color);
-        r = (float)color.red / 65535.0;
-        g = (float)color.green / 65535.0;
-        b = (float)color.blue / 65535.0;
-        cairo_set_source_rgba (cr, r, g, b, BG_ALPHA);
+        gtk_style_context_get_background_color (context, GTK_STATE_NORMAL, &acolor);
+        gsd_osd_window_color_reverse (&acolor);
+        acolor.alpha = BG_ALPHA;
+        gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_fill_preserve (cr);
 
-        gsd_osd_window_color_reverse (&style->text_aa[GTK_STATE_NORMAL], &color);
-        r = (float)color.red / 65535.0;
-        g = (float)color.green / 65535.0;
-        b = (float)color.blue / 65535.0;
-        cairo_set_source_rgba (cr, r, g, b, BG_ALPHA / 2);
+        /* FIXME use &style->text_aa[GTK_STATE_NORMAL] instead? */
+        gtk_style_context_get_color (context, GTK_STATE_NORMAL, &acolor);
+        gsd_osd_window_color_reverse (&acolor);
+        acolor.alpha = BG_ALPHA / 2;
+        gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_set_line_width (cr, 1);
         cairo_stroke (cr);
 
@@ -283,12 +464,12 @@ draw_when_composited (GtkWidget *widget, cairo_t *context)
         cairo_destroy (cr);
 
         /* Make sure we have a transparent background */
-        cairo_rectangle (context, 0, 0, width, height);
-        cairo_set_source_rgba (context, 0.0, 0.0, 0.0, 0.0);
-        cairo_fill (context);
+        cairo_rectangle (orig_cr, 0, 0, width, height);
+        cairo_set_source_rgba (orig_cr, 0.0, 0.0, 0.0, 0.0);
+        cairo_fill (orig_cr);
 
-        cairo_set_source_surface (context, surface, 0, 0);
-        cairo_paint_with_alpha (context, window->priv->fade_out_alpha);
+        cairo_set_source_surface (orig_cr, surface, 0, 0);
+        cairo_paint_with_alpha (orig_cr, window->priv->fade_out_alpha);
 
  done:
         if (surface != NULL) {
@@ -306,6 +487,7 @@ static void
 draw_when_not_composited (GtkWidget *widget, cairo_t *cr)
 {
         GsdOsdWindow *window;
+        GtkStyleContext *context;
         int width;
         int height;
 
@@ -313,13 +495,11 @@ draw_when_not_composited (GtkWidget *widget, cairo_t *cr)
 
         width = gtk_widget_get_allocated_width (widget);
         height = gtk_widget_get_allocated_width (widget);
+        context = gtk_widget_get_style_context (widget);
 
-        gtk_paint_shadow (gtk_widget_get_style (widget),
+        gtk_style_context_set_state (context, GTK_STATE_FLAG_ACTIVE);
+        gtk_render_frame (context,
                           cr,
-                          gtk_widget_get_state (widget),
-                          GTK_SHADOW_OUT,
-                          widget,
-                          NULL, /* NULL detail -> themes should use the GsdOsdWindow widget name, probably */
                           0,
                           0,
                           width,
@@ -400,20 +580,21 @@ gsd_osd_window_real_realize (GtkWidget *widget)
 }
 
 static void
-gsd_osd_window_style_set (GtkWidget *widget,
-                          GtkStyle  *previous_style)
+gsd_osd_window_style_updated (GtkWidget *widget)
 {
-        GtkStyle *style;
+        GtkStyleContext *context;
+        GtkBorder padding;
 
-        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->style_set (widget, previous_style);
+        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->style_updated (widget);
 
         /* We set our border width to 12 (per the GNOME standard), plus the
          * thickness of the frame that we draw in our draw handler.  This will
          * make our child be 12 pixels away from the frame.
          */
 
-        style = gtk_widget_get_style (widget);
-        gtk_container_set_border_width (GTK_CONTAINER (widget), 12 + MAX (style->xthickness, style->ythickness));
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_get_padding (context, GTK_STATE_NORMAL, &padding);
+        gtk_container_set_border_width (GTK_CONTAINER (widget), 12 + MAX (padding.left, padding.top));
 }
 
 static void
@@ -421,16 +602,18 @@ gsd_osd_window_get_preferred_width (GtkWidget *widget,
                                     gint      *minimum,
                                     gint      *natural)
 {
-        GtkStyle *style;
+        GtkStyleContext *context;
+        GtkBorder padding;
 
         GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->get_preferred_width (widget, minimum, natural);
 
-        /* See the comment in gsd_osd_window_style_set() for why we add the thickness here */
+        /* See the comment in gsd_osd_window_style_updated() for why we add the padding here */
 
-        style = gtk_widget_get_style (widget);
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_get_padding (context, GTK_STATE_NORMAL, &padding);
 
-        *minimum += style->xthickness;
-        *natural += style->xthickness;
+        *minimum += padding.left;
+        *natural += padding.left;
 }
 
 static void
@@ -438,16 +621,18 @@ gsd_osd_window_get_preferred_height (GtkWidget *widget,
                                      gint      *minimum,
                                      gint      *natural)
 {
-        GtkStyle *style;
+        GtkStyleContext *context;
+        GtkBorder padding;
 
         GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->get_preferred_height (widget, minimum, natural);
 
-        /* See the comment in gsd_osd_window_style_set() for why we add the thickness here */
+        /* See the comment in gsd_osd_window_style_updated() for why we add the padding here */
 
-        style = gtk_widget_get_style (widget);
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_get_padding (context, GTK_STATE_NORMAL, &padding);
 
-        *minimum += style->ythickness;
-        *natural += style->ythickness;
+        *minimum += padding.top;
+        *natural += padding.top;
 }
 
 static GObject *
@@ -481,7 +666,7 @@ gsd_osd_window_class_init (GsdOsdWindowClass *klass)
         widget_class->show = gsd_osd_window_real_show;
         widget_class->hide = gsd_osd_window_real_hide;
         widget_class->realize = gsd_osd_window_real_realize;
-        widget_class->style_set = gsd_osd_window_style_set;
+        widget_class->style_updated = gsd_osd_window_style_updated;
         widget_class->get_preferred_width = gsd_osd_window_get_preferred_width;
         widget_class->get_preferred_height = gsd_osd_window_get_preferred_height;
         widget_class->draw = gsd_osd_window_draw;
