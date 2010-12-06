@@ -266,10 +266,10 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 {
 	GdkPixbuf *pixbuf = NULL;
 	gboolean free_pixbuf = FALSE;
-	GtkStyle *style;
+	GtkStyleContext *context;
 	cairo_t *cr;
 
-	style = gtk_widget_get_style (drawing_area);
+	context = gtk_widget_get_style_context (drawing_area);
 
 	/* Stolen from GtkImage.  I really should just make the drawing area an
 	 * image some day (TODO) */
@@ -281,9 +281,7 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 		gtk_icon_source_set_size (source, GTK_ICON_SIZE_SMALL_TOOLBAR);
 		gtk_icon_source_set_size_wildcarded (source, FALSE);
 
-		pixbuf = gtk_style_render_icon (style, source,
-						gtk_widget_get_direction (drawing_area), gtk_widget_get_state (drawing_area),
-						(GtkIconSize) -1, drawing_area, "gtk-image");
+		pixbuf = gtk_render_icon_pixbuf (context, source, (GtkIconSize) -1);
 		free_pixbuf = TRUE;
 		gtk_icon_source_free (source);
 	} else {
