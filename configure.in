@@ -444,7 +444,7 @@ for plugin in ${used_plugins}; do
 			if test "${HAVE_TRACKER}" != "yes" ; then
 			   	PKG_CHECK_MODULES(TRACKER, tracker-client-0.9 >= 0.9.0, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
 			fi
-				
+
 			if test "${HAVE_TRACKER}" != "yes" ; then
 				plugin_error_or_ignore "you need the tracker development headers installed for the tracker plugin"
 				add_plugin="0"
