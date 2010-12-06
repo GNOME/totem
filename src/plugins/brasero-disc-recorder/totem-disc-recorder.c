@@ -52,8 +52,6 @@ typedef struct {
 
 	GtkActionGroup *action_group;
 	guint ui_merge_id;
-
-	gboolean enabled;
 } TotemDiscRecorderPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_DISC_RECORDER_PLUGIN, TotemDiscRecorderPlugin, totem_disc_recorder_plugin)
@@ -448,8 +446,6 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemDiscRecorderPlugin *pi = TOTEM_DISC_RECORDER_PLUGIN (plugin);
 	TotemDiscRecorderPluginPrivate *priv = pi->priv;
 	GtkUIManager *uimanager = NULL;
-
-	priv->enabled = FALSE;
 
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_closed, plugin);
