@@ -577,7 +577,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkWindowAttr attributes;
   gint attributes_mask;
-  GdkColor colour;
+  GdkColor black = { 0, 0, 0 };
   GdkWindow *window;
   GdkEventMask event_mask;
   GtkAllocation allocation;
@@ -613,9 +613,9 @@ bacon_video_widget_realize (GtkWidget * widget)
       &attributes, attributes_mask);
   gdk_window_ensure_native (bvw->priv->video_window);
   gdk_window_set_user_data (bvw->priv->video_window, widget);
+  gdk_window_set_background (window, &black);
 
-  gdk_color_parse ("black", &colour);
-  gdk_window_set_background (window, &colour);
+  gdk_window_set_background (window, &black);
   gtk_widget_set_style (widget,
       gtk_style_attach (gtk_widget_get_style (widget), window));
 
@@ -737,10 +737,6 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
   /* Start with a nice black canvas */
   gtk_widget_get_allocation (widget, &allocation);
 
-  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-  cairo_fill (cr);
-
   /* If there's only audio and no visualisation, draw the logo as well.
    * If we have a cover image to display, we display it regardless of whether we're
    * doing visualisations. */
@@ -753,10 +749,8 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
     pixbuf = bvw_get_logo_pixbuf (bvw);
     if (pixbuf != NULL) {
       /* draw logo here */
-      GdkPixbuf *logo = NULL;
       gint s_width, s_height, d_width, d_height;
       gfloat ratio;
-
 
       s_width = gdk_pixbuf_get_width (pixbuf);
       s_height = gdk_pixbuf_get_height (pixbuf);
@@ -773,46 +767,41 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
         ratio = (gfloat) d_width / s_width;
       }
 
-      s_width *= ratio;
-      s_height *= ratio;
+      /* center the current point, then scale the context so the logo fills up
+       * all the space */
+      cairo_translate (cr, allocation.width / 2, allocation.height / 2);
+      cairo_scale (cr, ratio, ratio);
 
-      if (s_width <= 1 || s_height <= 1) {
-        if (xoverlay != NULL)
-	  gst_object_unref (xoverlay);
-	cairo_paint (cr);
-	return TRUE;
-      }
-
-      /* Only scale the logo if necessary */
-      if (d_width != LOGO_SIZE || d_height != LOGO_SIZE)
-        logo = gdk_pixbuf_scale_simple (pixbuf, s_width, s_height, GDK_INTERP_BILINEAR);
-      else
-        logo = g_object_ref (G_OBJECT (pixbuf));
-
-      cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-      gdk_cairo_set_source_pixbuf (cr, logo, (allocation.width - s_width) / 2, (allocation.height - s_height) / 2);
+      /* fill with black */
+      cairo_set_source_rgb (cr, 0, 0, 0);
       cairo_paint (cr);
 
-      g_object_unref (logo);
-    } else {
-      /* No pixbuf, just draw a black background then */
-      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-      cairo_fill (cr);
+      /* then draw logo on top */
+      gdk_cairo_set_source_pixbuf (cr, pixbuf, - s_width / 2, - s_height / 2);
+      cairo_paint (cr);
     }
-  } else {
-    /* no logo, pass the expose to gst */
-    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
+  } else if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
+    /* no logo, use gst */
+
+    /* Paint the non-video parts black */
+    if (gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget))) {
+      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+      cairo_paint (cr);
+    }
+
+    /* let gst paint the video */
+    if (gtk_cairo_should_draw_window (cr, bvw->priv->video_window))
       gst_x_overlay_expose (xoverlay);
-    else {
-      /* No xoverlay to expose yet */
-      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-      cairo_fill (cr);
-    }
+  } else {
+    /* if not even gst exists, just paint black */
+    cairo_set_source_rgb (cr, 0, 0, 0);
+    cairo_paint (cr);
   }
+
   if (xoverlay != NULL)
     gst_object_unref (xoverlay);
 
-  return TRUE;
+  return FALSE;
 }
 
 static GstNavigation *
