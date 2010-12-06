@@ -1362,13 +1362,13 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->seek_req_time = GST_CLOCK_TIME_NONE;
   priv->seek_time = -1;
 
-  bvw->priv->missing_plugins = NULL;
-  bvw->priv->plugin_install_in_progress = FALSE;
+  priv->missing_plugins = NULL;
+  priv->plugin_install_in_progress = FALSE;
 
-  bvw->priv->mount_cancellable = NULL;
-  bvw->priv->mount_in_progress = FALSE;
-  bvw->priv->auth_last_result = G_MOUNT_OPERATION_HANDLED;
-  bvw->priv->auth_dialog = NULL;
+  priv->mount_cancellable = NULL;
+  priv->mount_in_progress = FALSE;
+  priv->auth_last_result = G_MOUNT_OPERATION_HANDLED;
+  priv->auth_dialog = NULL;
 
   bacon_video_widget_gst_missing_plugins_blacklist ();
 }
