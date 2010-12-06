@@ -616,8 +616,6 @@ bacon_video_widget_realize (GtkWidget * widget)
   gdk_window_set_background (window, &black);
 
   gdk_window_set_background (window, &black);
-  gtk_widget_set_style (widget,
-      gtk_style_attach (gtk_widget_get_style (widget), window));
 
   gtk_widget_set_realized (widget, TRUE);
 
