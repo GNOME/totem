@@ -128,15 +128,18 @@ totem_glow_button_draw (GtkWidget *widget,
 			gpointer   user_data)
 {
 	TotemGlowButton *button;
-	GtkStyle *style;
+	GtkStyleContext *context;
 	GtkAllocation allocation, child_allocation;
 	gint width, height;
 	GtkWidget *child;
+	GdkRGBA acolor;
 
 	button = TOTEM_GLOW_BUTTON (widget);
 
 	if (button->glow_factor == 0.0)
 		return FALSE;
+
+	context = gtk_widget_get_style_context (widget);
 
 	/* push a translucent overlay to paint to, so we can blend later */
 	cairo_push_group_with_content (cr, CAIRO_CONTENT_COLOR_ALPHA);
@@ -147,11 +150,13 @@ totem_glow_button_draw (GtkWidget *widget,
 	height = allocation.height;
 
 	/* Draw a rectangle with bg[SELECTED] */
-	style = gtk_widget_get_style (widget);
-	gdk_cairo_set_source_color (cr, &(style->bg[GTK_STATE_SELECTED]));
-	gtk_paint_box (style, cr, GTK_STATE_SELECTED,
-		       GTK_SHADOW_OUT, widget, "button",
-		       0, 0, height, width);
+	gtk_style_context_save (context);
+	gtk_style_context_add_class (context, "button");
+	gtk_style_context_set_state (context, GTK_STATE_SELECTED);
+	gtk_style_context_get_background_color (context, GTK_STATE_SELECTED, &acolor);
+	gdk_cairo_set_source_rgba (cr, &acolor);
+	gtk_render_background (context, cr, 0, 0, width, height);
+	gtk_style_context_restore (context);
 
 	/* then the image */
 	cairo_save (cr);
