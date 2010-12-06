@@ -243,7 +243,7 @@ get_size (GtkCellRenderer *cell,
 	  GdkRectangle *thumbnail_area)
 {
 	TotemCellRendererVideoPrivate *priv = TOTEM_CELL_RENDERER_VIDEO (cell)->priv;
-	GtkStyle *style;
+	GtkStyleContext *style_context;
 	guint pixbuf_width = 0;
 	guint pixbuf_height = 0;
 	guint title_width, title_height;
@@ -280,8 +280,8 @@ get_size (GtkCellRenderer *cell,
 	}
 
 	/* Calculate title dimensions */
-	style = gtk_widget_get_style (widget);
-	font_desc = pango_font_description_copy_static (style->font_desc);
+	style_context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get (style_context, GTK_STATE_FLAG_ACTIVE, "font", &font_desc, NULL);
 	if (priv->thumbnail != NULL)
 		pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 	context = gtk_widget_get_pango_context (widget);
@@ -387,9 +387,9 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	GdkRectangle thumbnail_area;
 	PangoLayout *layout;
 	GtkStateType state;
-	GtkStyle *style;
 	guint cell_xpad, cell_ypad;
 	gboolean cell_is_expander;
+	GtkStyleContext *context;
 
 	g_object_get (cell,
 		      "xpad", &cell_xpad,
@@ -437,10 +437,11 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	}
 
 	/* Draw the title */
-	style = gtk_widget_get_style (widget);
+	context = gtk_widget_get_style_context (widget);
 	layout = gtk_widget_create_pango_layout (widget, priv->title);
 	if (pixbuf != NULL) {
-		PangoFontDescription *desc = pango_font_description_copy_static (style->font_desc);
+		PangoFontDescription *desc;
+		gtk_style_context_get (context, state, "font", &desc, NULL);
 		pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
 		pango_layout_set_font_description (layout, desc);
 		pango_font_description_free (desc);
@@ -450,10 +451,11 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	pango_layout_set_width (layout, title_area.width * PANGO_SCALE);
 	pango_layout_set_alignment (layout, priv->alignment);
 
-	gtk_paint_layout (style, cr, state, TRUE, widget, "cellrenderervideotitle",
-			  cell_area->x + title_area.x,
-			  cell_area->y + title_area.y,
-			  layout);
+	gtk_style_context_set_state (context, state);
+	gtk_render_layout (context, cr,
+			   cell_area->x + title_area.x,
+			   cell_area->y + title_area.y,
+			   layout);
 
 	g_object_unref (layout);
 
