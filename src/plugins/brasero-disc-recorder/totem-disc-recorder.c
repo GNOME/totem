@@ -409,13 +409,6 @@ impl_activate (PeasActivatable *plugin)
 			       "VideoBurnToDisc",
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
-	gtk_ui_manager_add_ui (uimanager,
-			       priv->ui_merge_id,
-			       "/ui/totem-main-popup/burn-placeholder",
-			       "VideoBurnToDisc",
-			       "VideoBurnToDisc",
-			       GTK_UI_MANAGER_MENUITEM,
-			       TRUE);
 
 	gtk_ui_manager_add_ui (uimanager,
 			       priv->ui_merge_id,
@@ -424,24 +417,10 @@ impl_activate (PeasActivatable *plugin)
 			       "VideoDVDCopy",
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
-	gtk_ui_manager_add_ui (uimanager,
-			       priv->ui_merge_id,
-			       "/ui/totem-main-popup/burn-placeholder",
-			       "VideoDVDCopy",
-			       "VideoDVDCopy",
-			       GTK_UI_MANAGER_MENUITEM,
-			       TRUE);
 
 	gtk_ui_manager_add_ui (uimanager,
 			       priv->ui_merge_id,
 			       "/ui/tmw-menubar/movie/burn-placeholder",
-			       "VideoVCDCopy",
-			       "VideoVCDCopy",
-			       GTK_UI_MANAGER_MENUITEM,
-			       TRUE);
-	gtk_ui_manager_add_ui (uimanager,
-			       priv->ui_merge_id,
-			       "/ui/totem-main-popup/burn-placeholder",
 			       "VideoVCDCopy",
 			       "VideoVCDCopy",
 			       GTK_UI_MANAGER_MENUITEM,
