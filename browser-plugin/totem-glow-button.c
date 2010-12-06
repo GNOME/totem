@@ -302,6 +302,7 @@ totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout)
 			button->button_glow = 0;
 		}
 		button->glow_factor = 0.0;
+		gtk_widget_queue_draw (GTK_WIDGET (button));
 	}
 }
 
