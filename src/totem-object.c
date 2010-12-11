@@ -2483,7 +2483,7 @@ on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 	if (name != NULL) {
 		update_mrl_label (totem, name);
 		totem_playlist_set_title
-			(TOTEM_PLAYLIST (totem->playlist), name, TRUE);
+			(TOTEM_PLAYLIST (totem->playlist), name);
 		g_free (name);
 	}
 }
@@ -2509,7 +2509,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 
 	if (name != NULL) {
 		totem_playlist_set_title
-			(TOTEM_PLAYLIST (totem->playlist), name, FALSE);
+			(TOTEM_PLAYLIST (totem->playlist), name);
 		g_free (name);
 	}
 

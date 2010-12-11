@@ -120,8 +120,7 @@ char      *totem_playlist_get_title (TotemPlaylist *playlist,
 				     guint title_index);
 
 gboolean   totem_playlist_set_title (TotemPlaylist *playlist,
-				     const char *title,
-				     gboolean force);
+				     const char *title);
 void       totem_playlist_set_current_subtitle (TotemPlaylist *playlist,
 						const char *subtitle_uri);
 
