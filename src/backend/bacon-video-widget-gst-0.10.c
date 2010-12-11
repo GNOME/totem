@@ -4325,7 +4325,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       if (gst_element_query_position (bvw->priv->play, &fmt, &val)) {
         GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
         val += dir;
-        GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, val);
+        GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
         gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
             GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, 0);
 	bvw->priv->rate = FORWARD_RATE;
