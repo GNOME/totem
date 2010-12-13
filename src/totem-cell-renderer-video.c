@@ -411,7 +411,7 @@ totem_cell_renderer_video_render (GtkCellRenderer *cell,
 	if (priv->thumbnail != NULL)
 		pixbuf = priv->thumbnail;
 	else if (priv->use_placeholder == TRUE)
-		pixbuf = gtk_widget_render_icon (widget, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG, NULL);
+		pixbuf = gtk_widget_render_icon_pixbuf (widget, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_DIALOG);
 	else
 		pixbuf = NULL;
 

@@ -3980,12 +3980,12 @@ char *
 totem_setup_window (TotemObject *totem)
 {
 	GKeyFile *keyfile;
-	int w, h, i;
+	int w, h;
 	gboolean show_sidebar;
 	char *filename, *page_id;
 	GError *err = NULL;
 	GtkWidget *vbox;
-	GdkColor black;
+	GdkRGBA black;
 
 	filename = g_build_filename (totem_dot_dir (), "state.ini", NULL);
 	keyfile = g_key_file_new ();
@@ -4057,9 +4057,8 @@ totem_setup_window (TotemObject *totem)
 
 	/* Set the vbox to be completely black */
 	vbox = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
-	gdk_color_parse ("Black", &black);
-	for (i = 0; i <= GTK_STATE_INSENSITIVE; i++)
-		gtk_widget_modify_bg (vbox, i, &black);
+	gdk_rgba_parse (&black, "Black");
+	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
 
 	totem_sidebar_setup (totem, show_sidebar, page_id);
 	return page_id;

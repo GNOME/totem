@@ -28,7 +28,8 @@ stuff_DATA =				\
 	mozilla-viewer.ui		\
 	properties.ui			\
 	uri.ui				\
-	video-list.ui
+	video-list.ui			\
+	mozilla-viewer.css
 EXTRA_DIST += $(stuff_DATA)
 
 # Icons

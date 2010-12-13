@@ -1981,19 +1981,34 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	/* Try to make controls smaller */
 	{
-        	GtkRcStyle *rcstyle;
+		GtkCssProvider *provider;
+		gchar *css_path;
+		GError *error = NULL;
 
-		rcstyle = gtk_rc_style_new ();
-		rcstyle->xthickness = rcstyle->ythickness = 0;
+		css_path = totem_interface_get_full_path ("mozilla-viewer.css");
+		provider = gtk_css_provider_new ();
+		gtk_css_provider_load_from_path (provider, css_path, &error);
+		g_free (css_path);
 
-		gtk_widget_modify_style (emb->pp_button, rcstyle);
-		
-		child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale"));
-		gtk_widget_modify_style (child, rcstyle);
+		if (error != NULL) {
+			/* Error loading the CSS */
+			g_warning ("Couldn't load the CSS file '%s' for the browser plugin. The interface might not be styled correctly.", css_path);
+			g_error_free (error);
+		} else {
+			/* Success! Apply the styling to various widgets */
+			GtkStyleContext *context;
 
-		gtk_widget_modify_style (emb->volume, rcstyle);
+			context = gtk_widget_get_style_context (emb->pp_button);
+			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-		g_object_unref (rcstyle);
+			context = gtk_widget_get_style_context (GTK_WIDGET (gtk_builder_get_object (emb->xml, "time_hscale")));
+			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+			context = gtk_widget_get_style_context (emb->volume);
+			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+		}
+
+		g_object_unref (provider);
 	}
 
 	/* Create the cursor before setting the state */
