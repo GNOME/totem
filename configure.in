@@ -47,7 +47,7 @@ GTK_REQS=2.91.6
 TOTEM_PLPARSER_REQS=2.29.1
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.82
-PEAS_REQS=0.7.0
+PEAS_REQS=0.7.1
 
 AC_SUBST(GLIB_REQS)
 AC_SUBST(GTK_REQS)
@@ -272,7 +272,7 @@ dnl Plugins support
 dnl ================================================================
 
 PKG_CHECK_MODULES(PEAS, libpeas-1.0 >= $PEAS_REQS)
-PKG_CHECK_MODULES(PEASUI, libpeas-gtk-1.0 >= $PEAS_REQS)
+PKG_CHECK_MODULES(PEASGTK, libpeas-gtk-1.0 >= $PEAS_REQS)
 
 dnl ================================================================
 dnl Python plugins

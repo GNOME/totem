@@ -106,7 +106,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	g_return_val_if_fail (totem != NULL, NULL);
 
 	g_irepository_require (g_irepository_get_default (), "Peas", "1.0", 0, NULL);
-	g_irepository_require (g_irepository_get_default (), "PeasUI", "1.0", 0, NULL);
+	g_irepository_require (g_irepository_get_default (), "PeasGtk", "1.0", 0, NULL);
 	g_irepository_require (g_irepository_get_default (), "Totem", TOTEM_API_VERSION, 0, NULL);
 
 	paths = totem_get_plugin_paths ();

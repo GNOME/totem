@@ -102,7 +102,7 @@ libtotem_la_CPPFLAGS = \
 libtotem_la_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)		\
 	$(PEAS_CFLAGS)			\
-	$(PEASUI_CFLAGS)		\
+	$(PEASGTK_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_la_LDFLAGS = \
@@ -113,7 +113,7 @@ libtotem_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
 	$(PEAS_LIBS)			\
-	$(PEASUI_LIBS)			\
+	$(PEASGTK_LIBS)			\
 	$(DEPENDENCY_LIBS)
 
 if WITH_SMCLIENT
