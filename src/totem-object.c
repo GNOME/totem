@@ -3748,6 +3748,14 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 
 		totem_action_menu_popup (totem, 0);
 		break;
+	case GDK_KEY_equal:
+		if (event->state & GDK_CONTROL_MASK)
+			totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		break;
+	case GDK_KEY_hyphen:
+		if (event->state & GDK_CONTROL_MASK)
+			totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+		break;
 	case GDK_KEY_plus:
 	case GDK_KEY_KP_Add:
 		if (!(event->state & GDK_CONTROL_MASK)) {
@@ -3847,8 +3855,8 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 			return FALSE;
 	}
 
-	/* Special case Eject, Open, Open URI and
-	 * seeking keyboard shortcuts */
+	/* Special case Eject, Open, Open URI,
+	 * seeking and zoom keyboard shortcuts */
 	if (event->state != 0
 			&& (event->state & GDK_CONTROL_MASK))
 	{
@@ -3870,6 +3878,8 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_minus:
 		case GDK_KEY_KP_Subtract:
 		case GDK_KEY_0:
+		case GDK_KEY_equal:
+		case GDK_KEY_hyphen:
 			if (event->type == GDK_KEY_PRESS)
 				return totem_action_handle_key_press (totem, event);
 			else
