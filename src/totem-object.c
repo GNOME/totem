@@ -1726,6 +1726,9 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		/* Subtitle selection */
 		totem_action_set_sensitivity ("select-subtitle", FALSE);
 
+		/* Fullscreen */
+		totem_action_set_sensitivity ("fullscreen", FALSE);
+
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		update_mrl_label (totem, NULL);
@@ -1736,6 +1739,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		gboolean caps;
 		gdouble volume;
 		char *autoload_sub = NULL;
+		GdkWindowState window_state;
 		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
@@ -1774,7 +1778,11 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 
 		/* Subtitle selection */
 		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl) && retval);
-	
+
+		/* Fullscreen */
+		window_state = gdk_window_get_state (gtk_widget_get_window (totem->win));
+		totem_action_set_sensitivity ("fullscreen", !(window_state & GDK_WINDOW_STATE_FULLSCREEN));
+
 		/* Set the playlist */
 		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
 
@@ -4209,6 +4217,7 @@ totem_callback_connect (TotemObject *totem)
 	 * and skip-* are back in the main action group. */
 	/*totem_action_set_sensitivity ("skip-forward", FALSE);
 	totem_action_set_sensitivity ("skip-backwards", FALSE);*/
+	totem_action_set_sensitivity ("fullscreen", FALSE);
 
 	action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
 
