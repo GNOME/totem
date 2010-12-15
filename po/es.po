@@ -7,17 +7,17 @@
 # Baltasar Perez Diaz <baltasar.perez@hispalinux.es>, 2002.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-12-08 12:26+0000\n"
-"PO-Revision-Date: 2010-12-08 17:54+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2010-12-15 16:57+0000\n"
+"PO-Revision-Date: 2010-12-15 21:39+0100\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -115,7 +115,7 @@ msgstr "Álbum:"
 msgid "Artist:"
 msgstr "Artista:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:22
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
 #: ../src/totem-properties-view.c:89
 msgid "Audio"
 msgstr "Sonido"
@@ -298,14 +298,15 @@ msgstr "Menú de s_onido"
 msgid "About this application"
 msgstr "Acerca de esta aplicación"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:22
+#| msgid "Auto"
+msgctxt "Aspect ratio"
+msgid "Auto"
+msgstr "Automática"
+
+#: ../data/totem.ui.h:24
 msgid "Audio Output"
 msgstr "Salida de sonido"
-
-#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../data/totem.ui.h:24 ../src/totem-menu.c:197
-msgid "Auto"
-msgstr "Automática"
 
 #: ../data/totem.ui.h:25
 msgid "Clear the playlist"
@@ -1023,12 +1024,12 @@ msgstr "Extensiones"
 #: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `%"
-"s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `"
+"%s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"El programa no pudo encontrar el formato de archivo que quiere usar para «%"
-"s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
+"El programa no pudo encontrar el formato de archivo que quiere usar para "
+"«%s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
 "manualmente un formato de archivo de la lista inferior."
 
 #: ../src/eggfileformatchooser.c:659
@@ -1144,6 +1145,13 @@ msgstr ""
 msgid "None"
 msgstr "Ninguno"
 
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../src/totem-menu.c:197
+#| msgid "Auto"
+msgctxt "Language"
+msgid "Auto"
+msgstr "Automático"
+
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
@@ -1224,7 +1232,7 @@ msgid "Stopped"
 msgstr "Detenido"
 
 #: ../src/totem-object.c:1138 ../src/totem-object.c:1165
-#: ../src/totem-object.c:1785 ../src/totem-object.c:1948
+#: ../src/totem-object.c:1793 ../src/totem-object.c:1956
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
@@ -1290,7 +1298,7 @@ msgstr "Introduzca otro disco para reproducir."
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem-object.c:1297 ../src/totem-object.c:4258
+#: ../src/totem-object.c:1297 ../src/totem-object.c:4276
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1304,38 +1312,38 @@ msgstr ""
 "Considere usar un reproductor de música o un extractor de CD para reproducir "
 "este CD"
 
-#: ../src/totem-object.c:1791
+#: ../src/totem-object.c:1799
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem-object.c:2177
+#: ../src/totem-object.c:2185
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
+#: ../src/totem-object.c:2540 ../src/totem-object.c:2542
 #: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:4093 ../src/totem-object.c:4095
+#: ../src/totem-object.c:4110 ../src/totem-object.c:4112
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:4102 ../src/totem-object.c:4104
+#: ../src/totem-object.c:4119 ../src/totem-object.c:4121
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:4112 ../src/totem-object.c:4114
+#: ../src/totem-object.c:4129 ../src/totem-object.c:4131
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4126 ../src/totem-object.c:4128
+#: ../src/totem-object.c:4143 ../src/totem-object.c:4145
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4258
+#: ../src/totem-object.c:4276
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
@@ -1755,7 +1763,7 @@ msgstr ""
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
-#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2290
+#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2305
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
@@ -1814,8 +1822,8 @@ msgid ""
 "using a sound server."
 msgstr ""
 "La salida de sonido la está usando otra aplicación. Seleccione otra salida "
-"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar usar "
-"un servidor de sonido."
+"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar "
+"usar un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3513
@@ -2869,36 +2877,36 @@ msgstr "Vídeos relacionados"
 msgid "Videos"
 msgstr "Vídeos"
 
-#: ../src/plugins/youtube/totem-youtube.c:295
+#: ../src/plugins/youtube/totem-youtube.c:144
 msgid "_Open in Web Browser"
 msgstr "Abrir en un navegador _web"
 
-#: ../src/plugins/youtube/totem-youtube.c:295
+#: ../src/plugins/youtube/totem-youtube.c:144
 msgid "Open the video in your web browser"
 msgstr "Abrir el vídeo en su navegador web"
 
 #. Add the sidebar page
-#: ../src/plugins/youtube/totem-youtube.c:346
+#: ../src/plugins/youtube/totem-youtube.c:195
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:432
+#: ../src/plugins/youtube/totem-youtube.c:281
 msgid "Cancelling query…"
 msgstr "Cancelar la consulta…"
 
-#: ../src/plugins/youtube/totem-youtube.c:493
+#: ../src/plugins/youtube/totem-youtube.c:342
 msgid "Error Looking Up Video URI"
 msgstr "Error al buscar el URI del vídeo"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:777
-#: ../src/plugins/youtube/totem-youtube.c:782
+#: ../src/plugins/youtube/totem-youtube.c:626
+#: ../src/plugins/youtube/totem-youtube.c:631
 msgid "Error Searching for Videos"
 msgstr "Error al buscar vídeos"
 
-#: ../src/plugins/youtube/totem-youtube.c:778
+#: ../src/plugins/youtube/totem-youtube.c:627
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2907,20 +2915,20 @@ msgstr ""
 "la última versión de libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:954
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "Fetching search results…"
 msgstr "Obteniendo los resultados de la búsqueda…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:1019
+#: ../src/plugins/youtube/totem-youtube.c:868
 msgid "Fetching related videos…"
 msgstr "Obteniendo vídeos relacionados…"
 
-#: ../src/plugins/youtube/totem-youtube.c:1071
+#: ../src/plugins/youtube/totem-youtube.c:920
 msgid "Error Opening Video in Web Browser"
 msgstr "Error al abrir el vídeo en el navegador web"
 
-#: ../src/plugins/youtube/totem-youtube.c:1091
+#: ../src/plugins/youtube/totem-youtube.c:940
 msgid "Fetching more videos…"
 msgstr "Obteniendo más vídeos…"
 
@@ -2945,15 +2953,15 @@ msgstr "Complemento de visualización usando %s"
 msgid "Totem Browser Plugin"
 msgstr "Complemento de visualización para Totem"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2183
+#: ../browser-plugin/totem-plugin-viewer.c:2198
 msgid "No playlist or playlist empty"
 msgstr "Ninguna lista o lista vacía"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2274
+#: ../browser-plugin/totem-plugin-viewer.c:2289
 msgid "Movie browser plugin"
 msgstr "Complemento de examinador de películas"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2290
+#: ../browser-plugin/totem-plugin-viewer.c:2305
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Verifique la instalación de su sistema. EL complemento de Totem ahora "
@@ -3046,33 +3054,33 @@ msgstr ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
-#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
+#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Velocidad aproximada de la red, usado para seleccionar la calidad para el "
 #~ "contenido multimedia sobre la red: «0» para módem de 14.4 Kbps, «1» para "
 #~ "módem de 19.2 Kbps, «2» para módem de 28.8 Kbps, «3» para módem de 33.6 "
-#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» para "
-#~ "RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para DSL/"
-#~ "cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/Intranet/"
-#~ "LAN de 1.5 Mbps, «11» para Intranet/LAN."
+#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» "
+#~ "para RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para "
+#~ "DSL/cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/"
+#~ "Intranet/LAN de 1.5 Mbps, «11» para Intranet/LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 #~ "normal, \"2\" for large, \"3\" for extra large."
 #~ msgstr ""
-#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, «1» "
-#~ "para normal, «2» para grande, «3» para extra grande."
+#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, "
+#~ "«1» para normal, «2» para grande, «3» para extra grande."
 
 #~ msgid ""
 #~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, «2» "
-#~ "para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
+#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, "
+#~ "«2» para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
