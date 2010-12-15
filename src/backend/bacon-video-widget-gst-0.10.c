@@ -211,7 +211,6 @@ struct BaconVideoWidgetPrivate
   /* Visual effects */
   GList                       *vis_plugins_list;
   gboolean                     show_vfx;
-  gboolean                     vis_changed;
   BvwVisualizationQuality      visq;
   gchar                       *vis_element_name;
   GstElement                  *audio_capsfilter;
@@ -3845,11 +3844,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
                             allocation.height);
   }
 
-  /* Visualization settings changed */
-  if (bvw->priv->vis_changed) {
-    setup_vis (bvw);
-  }
-
   if (bvw->priv->ready_idle_id) {
     g_source_remove (bvw->priv->ready_idle_id);
     bvw->priv->ready_idle_id = 0;
@@ -5047,9 +5041,7 @@ setup_vis (BaconVideoWidget * bvw)
 
     gtk_widget_queue_draw (GTK_WIDGET (bvw));
   }
-  
-  bvw->priv->vis_changed = FALSE;
-  
+
 beach:
   g_object_set (bvw->priv->play, "vis-plugin", vis_bin, NULL);
   if (vis_bin)
