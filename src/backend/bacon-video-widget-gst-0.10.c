@@ -5305,12 +5305,12 @@ bvw_get_color_balance_channel (GstColorBalance * color_balance,
  * @bvw: a #BaconVideoWidget
  * @type: the type of property
  *
- * Returns the given property of the video, such as its brightness or saturation.
+ * Returns the given property of the video display, such as its brightness or saturation.
  *
- * It is returned as a percentage in the full range of integer values; from %0
- * to %G_MAXINT, where %G_MAXINT/2 is the default.
+ * It is returned as a percentage in the full range of integer values; from <code class="literal">0</code>
+ * to <code class="literal">65535</code> (inclusive), where <code class="literal">32768</code> is the default.
  *
- * Return value: the property's value, in the range %0 to %G_MAXINT
+ * Return value: the property's value, in the range <code class="literal">0</code> to <code class="literal">65535</code>
  **/
 int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
@@ -5413,12 +5413,12 @@ notify_volume_cb (GObject             *object,
  * bacon_video_widget_set_video_property:
  * @bvw: a #BaconVideoWidget
  * @type: the type of property
- * @value: the property's value, in the range %0 to %G_MAXINT
+ * @value: the property's value, in the range <code class="literal">0</code> to <code class="literal">65535</code>
  *
- * Sets the given property of the video, such as its brightness or saturation.
+ * Sets the given property of the video display, such as its brightness or saturation.
  *
- * It should be given as a percentage in the full range of integer values; from %0
- * to %G_MAXINT, where %G_MAXINT/2 is the default.
+ * It should be given as a percentage in the full range of integer values; from <code class="literal">0</code>
+ * to <code class="literal">65535</code> (inclusive), where <code class="literal">32768</code> is the default.
  **/
 void
 bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
