@@ -245,8 +245,6 @@ struct BaconVideoWidgetPrivate
 
   GstMessageType               ignore_messages_mask;
 
-  GSettings                   *settings;
-
   GstBus                      *bus;
   gulong                       sig_bus_sync;
   gulong                       sig_bus_async;
@@ -3325,7 +3323,6 @@ bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
 
   if (bvw->priv->connection_speed != speed) {
     bvw->priv->connection_speed = speed;
-    g_settings_set_enum (bvw->priv->settings, "connection-speed", speed);
     g_object_notify (G_OBJECT (bvw), "connection-speed");
   }
 
@@ -4915,8 +4912,7 @@ setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
 
     /* set to long name as key so that the preferences dialog gets it right */
     if (f && strcmp (vis_name, GST_PLUGIN_FEATURE_NAME (f)) == 0) {
-      g_settings_set_string (bvw->priv->settings, "visualization-name",
-          gst_element_factory_get_longname (f));
+      bacon_video_widget_set_visualization (bvw, gst_element_factory_get_longname (f));
       fac = f;
       goto done;
     }
@@ -6826,7 +6822,6 @@ bacon_video_widget_new (int width, int height,
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
-  gint value;
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
@@ -6894,9 +6889,6 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = FALSE;
   bvw->priv->auto_resize = FALSE;
-
-  /* GSettings setting in backend */
-  bvw->priv->settings = g_settings_new ("org.gnome.totem");
 
   if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
@@ -7122,15 +7114,6 @@ bacon_video_widget_new (int width, int height,
      * (it sets all elements to NULL state before gst_bin_remove()ing them) */
     g_signal_connect (video_sink, "element-added",
                       G_CALLBACK (got_new_video_sink_bin_element), bvw);
-  }
-
-  /* tv/conn (not used yet) */
-  value = g_settings_get_enum (bvw->priv->settings, "connection-speed");
-  if (value > 0) {
-    bacon_video_widget_set_connection_speed (bvw, value);
-  } else {
-    bacon_video_widget_set_connection_speed (bvw,
-    	bvw->priv->connection_speed);
   }
 
   return GTK_WIDGET (bvw);
