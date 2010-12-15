@@ -412,6 +412,7 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 
 	if (contents && g_key_file_load_from_data (keyfile, contents, length, G_KEY_FILE_NONE, &error)) {
 		gint i, n_entries;
+		GList *mrl_list = NULL;
 
 		/* returns zero in case of errors */
 		n_entries = g_key_file_get_integer (keyfile, "playlist", "NumberOfEntries", &error);
@@ -434,11 +435,15 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 			g_free (key);
 
 			if (mrl)
-				totem_playlist_add_mrl (self->totem->playlist, mrl, title, FALSE, NULL, NULL, NULL);
+				mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (mrl, title));
 
 			g_free (title);
 			g_free (mrl);
 		}
+
+		/* Add the MRLs to the playlist asynchronously and in order */
+		if (mrl_list != NULL)
+			totem_playlist_add_mrls (self->priv->totem->playlist, g_list_reverse (mrl_list), FALSE, NULL, NULL, NULL);
 	}
 
 out:
