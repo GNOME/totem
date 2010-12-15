@@ -283,6 +283,21 @@ int_enum_set_mapping (const GValue *value, const GVariantType *expected_type, GE
 	return g_variant_new_string (enum_value->value_nick);
 }
 
+static void
+visualization_quality_writable_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
+{
+	gboolean writable, show_visualizations;
+
+	if (strcmp (key, "visualization-quality") != 0)
+		return;
+
+	writable = g_settings_is_writable (settings, key);
+	show_visualizations = g_settings_get_boolean (settings, "show-visualizations");
+
+	/* Only enable the size combobox if the visualization-quality setting is writable, and visualizations are enabled */
+	gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox")), writable && show_visualizations);
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
@@ -422,12 +437,15 @@ totem_setup_preferences (Totem *totem)
 	}
 	g_free (visual);
 
-	/* Visualisation quality */
+	/* Visualisation quality. We have to bind the writability separately, as the sensitivity of the size combobox is also affected by whether
+	 * visualizations are enabled. */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
 	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active", G_SETTINGS_BIND_DEFAULT,
+	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active",
+	                              G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
 	                              g_type_class_ref (BVW_TYPE_VISUALIZATION_QUALITY), (GDestroyNotify) g_type_class_unref);
+	g_signal_connect (totem->settings, "writable-changed::visualization-quality", (GCallback) visualization_quality_writable_changed_cb, totem);
 
 	/* Brightness and all */
 	hidden = 0;
