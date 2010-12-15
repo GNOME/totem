@@ -141,7 +141,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         config_widget = builder.get_object ('config_widget')
         config_widget.connect ('destroy', self.on_config_widget_destroy)
         format = self.settings.get_enum ('format')
-        num_per_page = self.settings.get_int ('num-per-page')
+        num_per_page = self.settings.get_value ('num-per-page').get_uint32 ()
 
         combo = builder.get_object('preferred_format_combo')
         combo.set_active(format)
