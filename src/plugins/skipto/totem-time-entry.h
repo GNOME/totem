@@ -43,8 +43,11 @@ G_BEGIN_DECLS
 #define TOTEM_IS_TIME_ENTRY_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_TIME_ENTRY))
 #define TOTEM_TIME_ENTRY_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_TIME_ENTRY, TotemTimeEntryClass))
 
+typedef struct TotemTimeEntryPrivate	TotemTimeEntryPrivate;
+
 typedef struct {
 	GtkSpinButton parent;
+	TotemTimeEntryPrivate *priv;
 } TotemTimeEntry;
 
 typedef struct {

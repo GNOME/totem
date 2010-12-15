@@ -27,29 +27,59 @@
  * Author: Philip Withnall <philip@tecnocode.co.uk>
  */
 
+#include <string.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 
 #include "backend/video-utils.h"
 #include "totem-time-entry.h"
 
+static void dispose (GObject *object);
 static gboolean output_cb (GtkSpinButton *self, gpointer user_data);
 static gint input_cb (GtkSpinButton *self, gdouble *new_value, gpointer user_data);
+static void notify_adjustment_cb (TotemTimeEntry *self, GParamSpec *pspec, gpointer user_data);
+static void changed_cb (GtkAdjustment *adjustment, TotemTimeEntry *self);
+
+struct TotemTimeEntryPrivate {
+	GtkAdjustment *adjustment;
+	gulong adjustment_changed_signal;
+};
 
 G_DEFINE_TYPE (TotemTimeEntry, totem_time_entry, GTK_TYPE_SPIN_BUTTON)
 
 static void
 totem_time_entry_class_init (TotemTimeEntryClass *klass)
 {
-	/* Nothing to see here; please move along */
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	g_type_class_add_private (klass, sizeof (TotemTimeEntryPrivate));
+
+	object_class->dispose = dispose;
 }
 
 static void
 totem_time_entry_init (TotemTimeEntry *self)
 {
+	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_TIME_ENTRY, TotemTimeEntryPrivate);
+
 	/* Connect to signals */
 	g_signal_connect (self, "output", G_CALLBACK (output_cb), NULL);
 	g_signal_connect (self, "input", G_CALLBACK (input_cb), NULL);
+	g_signal_connect (self, "notify::adjustment", G_CALLBACK (notify_adjustment_cb), NULL);
+}
+
+static void
+dispose (GObject *object)
+{
+	TotemTimeEntryPrivate *priv = TOTEM_TIME_ENTRY (object)->priv;
+
+	if (priv->adjustment != NULL) {
+		g_signal_handler_disconnect (priv->adjustment, priv->adjustment_changed_signal);
+		g_object_unref (priv->adjustment);
+	}
+	priv->adjustment = NULL;
+
+	G_OBJECT_CLASS (totem_time_entry_parent_class)->dispose (object);
 }
 
 GtkWidget *
@@ -86,4 +116,39 @@ input_cb (GtkSpinButton *self, gdouble *new_value, gpointer user_data)
 
 	*new_value = val / 1000;
 	return TRUE;
+}
+
+static void
+notify_adjustment_cb (TotemTimeEntry *self, GParamSpec *pspec, gpointer user_data)
+{
+	TotemTimeEntryPrivate *priv = self->priv;
+
+	if (priv->adjustment != NULL) {
+		g_signal_handler_disconnect (priv->adjustment, priv->adjustment_changed_signal);
+		g_object_unref (priv->adjustment);
+	}
+
+	priv->adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (self));
+	priv->adjustment_changed_signal = 0;
+
+	if (priv->adjustment != NULL) {
+		g_object_ref (priv->adjustment);
+		priv->adjustment_changed_signal = g_signal_connect (priv->adjustment, "changed", G_CALLBACK (changed_cb), self);
+	}
+}
+
+static void
+changed_cb (GtkAdjustment *adjustment, TotemTimeEntry *self)
+{
+	gchar *time_string;
+	guint upper, width;
+
+	/* Set the width of the entry according to the length of the longest string it'll now accept */
+	upper = (guint) gtk_adjustment_get_upper (adjustment); /* in seconds */
+
+	time_string = totem_time_to_string (((gint64) upper) * 1000);
+	width = strlen (time_string);
+	g_free (time_string);
+
+	gtk_entry_set_width_chars (GTK_ENTRY (self), width);
 }
