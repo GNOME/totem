@@ -478,7 +478,7 @@ GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 
 /* Audio-out functions */
 /**
- * BvwAudioOutType:
+ * BvwAudioOutputType:
  * @BVW_AUDIO_SOUND_STEREO: stereo output
  * @BVW_AUDIO_SOUND_4CHANNEL: 4-channel output
  * @BVW_AUDIO_SOUND_41CHANNEL: 4.1-channel output
@@ -486,7 +486,7 @@ GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
  * @BVW_AUDIO_SOUND_51CHANNEL: 5.1-channel output
  * @BVW_AUDIO_SOUND_AC3PASSTHRU: AC3 passthrough output
  *
- * The audio output types available for use with bacon_video_widget_set_audio_out_type().
+ * The audio output types available for use with bacon_video_widget_set_audio_output_type().
  **/
 typedef enum {
 	BVW_AUDIO_SOUND_STEREO,
@@ -495,12 +495,12 @@ typedef enum {
 	BVW_AUDIO_SOUND_5CHANNEL,
 	BVW_AUDIO_SOUND_51CHANNEL,
 	BVW_AUDIO_SOUND_AC3PASSTHRU
-} BvwAudioOutType;
+} BvwAudioOutputType;
 
-BvwAudioOutType bacon_video_widget_get_audio_out_type
+BvwAudioOutputType bacon_video_widget_get_audio_output_type
 						 (BaconVideoWidget *bvw);
-void bacon_video_widget_set_audio_out_type       (BaconVideoWidget *bvw,
-						  BvwAudioOutType type);
+void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
+						  BvwAudioOutputType type);
 
 G_END_DECLS
 

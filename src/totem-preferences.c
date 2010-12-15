@@ -463,7 +463,7 @@ totem_setup_preferences (Totem *totem)
 	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_SET | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "audio-output-type", item, "active", G_SETTINGS_BIND_DEFAULT,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
-	                              g_type_class_ref (BVW_TYPE_AUDIO_OUT_TYPE), (GDestroyNotify) g_type_class_unref);
+	                              g_type_class_ref (BVW_TYPE_AUDIO_OUTPUT_TYPE), (GDestroyNotify) g_type_class_unref);
 
 	/* Subtitle font selection */
 	item = gtk_builder_get_object (totem->xml, "font_sel_button");

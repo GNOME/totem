@@ -239,7 +239,7 @@ struct BaconVideoWidgetPrivate
   
   gchar                       *media_device;
 
-  BvwAudioOutType	       speakersetup;
+  BvwAudioOutputType           speakersetup;
   gint                         connection_speed;
 
   GstMessageType               ignore_messages_mask;
@@ -1238,7 +1238,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    **/
   g_object_class_install_property (object_class, PROP_AUDIO_OUTPUT_TYPE,
                                    g_param_spec_enum ("audio-output-type", NULL,
-                                                      NULL, BVW_TYPE_AUDIO_OUT_TYPE,
+                                                      NULL, BVW_TYPE_AUDIO_OUTPUT_TYPE,
                                                       BVW_AUDIO_SOUND_STEREO,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
@@ -2876,7 +2876,7 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_HUE, g_value_get_int (value));
       break;
     case PROP_AUDIO_OUTPUT_TYPE:
-      bacon_video_widget_set_audio_out_type (bvw, g_value_get_enum (value));
+      bacon_video_widget_set_audio_output_type (bvw, g_value_get_enum (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2953,7 +2953,7 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_HUE));
       break;
     case PROP_AUDIO_OUTPUT_TYPE:
-      g_value_set_enum (value, bacon_video_widget_get_audio_out_type (bvw));
+      g_value_set_enum (value, bacon_video_widget_get_audio_output_type (bvw));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3477,16 +3477,16 @@ set_audio_filter (BaconVideoWidget *bvw)
 }
 
 /**
- * bacon_video_widget_get_audio_out_type:
+ * bacon_video_widget_get_audio_output_type:
  * @bvw: a #BaconVideoWidget
  *
  * Returns the current audio output type (e.g. how many speaker channels)
- * from #BaconVideoWidgetAudioOutType.
+ * from #BaconVideoWidgetAudioOutputType.
  *
  * Return value: the audio output type, or %-1
  **/
-BvwAudioOutType
-bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
+BvwAudioOutputType
+bacon_video_widget_get_audio_output_type (BaconVideoWidget *bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
@@ -3495,15 +3495,15 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
 }
 
 /**
- * bacon_video_widget_set_audio_out_type:
+ * bacon_video_widget_set_audio_output_type:
  * @bvw: a #BaconVideoWidget
  * @type: the new audio output type
  *
  * Sets the audio output type (number of speaker channels) in the video widget.
  **/
 void
-bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
-                                       BvwAudioOutType type)
+bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
+                                          BvwAudioOutputType type)
 {
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
