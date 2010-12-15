@@ -100,6 +100,22 @@ gboolean totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
                                       const char *mrl,
                                       const char *display_name);
 
+typedef struct TotemPlaylistMrlData TotemPlaylistMrlData;
+
+TotemPlaylistMrlData *totem_playlist_mrl_data_new (const gchar *mrl,
+                                                   const gchar *display_name);
+void totem_playlist_mrl_data_free (TotemPlaylistMrlData *data);
+
+void totem_playlist_add_mrls (TotemPlaylist *self,
+                              GList *mrls,
+                              gboolean cursor,
+                              GCancellable *cancellable,
+                              GAsyncReadyCallback callback,
+                              gpointer user_data);
+gboolean totem_playlist_add_mrls_finish (TotemPlaylist *self,
+                                         GAsyncResult *result,
+                                         GError **error);
+
 void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
 					   const char *output);
 void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,

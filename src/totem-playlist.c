@@ -1930,6 +1930,257 @@ totem_playlist_add_mrl_sync (TotemPlaylist *playlist, const char *mrl, const cha
 	return handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, display_name);
 }
 
+typedef struct {
+	TotemPlaylist *playlist;
+	GList *mrls; /* list of TotemPlaylistMrlDatas */
+	gboolean cursor;
+	GAsyncReadyCallback callback;
+	gpointer user_data;
+
+	guint next_index_to_add;
+	GList *unadded_entries; /* list of TotemPlaylistMrlDatas */
+	volatile gint entries_remaining;
+} AddMrlsOperationData;
+
+static void
+add_mrls_operation_data_free (AddMrlsOperationData *data)
+{
+	/* Remove the cursor, if one was set */
+	if (data->cursor)
+		unset_waiting_cursor (data->playlist);
+
+	g_list_foreach (data->mrls, (GFunc) totem_playlist_mrl_data_free, NULL);
+	g_list_free (data->mrls);
+	g_object_unref (data->playlist);
+
+	g_slice_free (AddMrlsOperationData, data);
+}
+
+struct TotemPlaylistMrlData {
+	gchar *mrl;
+	gchar *display_name;
+
+	/* Implementation details */
+	AddMrlsOperationData *operation_data;
+	guint index;
+};
+
+/**
+ * totem_playlist_mrl_data_new:
+ * @mrl: a MRL
+ * @display_name: (allow-none): a human-readable display name for the MRL, or %NULL
+ *
+ * Create a new #TotemPlaylistMrlData struct storing the given @mrl and @display_name.
+ *
+ * This will typically be immediately appended to a #GList to be passed to totem_playlist_add_mrls().
+ *
+ * Return value: (transfer full): a new #TotemPlaylistMrlData; free with totem_playlist_mrl_data_free()
+ *
+ * Since: 3.0
+ */
+TotemPlaylistMrlData *
+totem_playlist_mrl_data_new (const gchar *mrl,
+                             const gchar *display_name)
+{
+	TotemPlaylistMrlData *data;
+
+	g_return_val_if_fail (mrl != NULL && *mrl != '\0', NULL);
+
+	data = g_slice_new (TotemPlaylistMrlData);
+	data->mrl = g_strdup (mrl);
+	data->display_name = g_strdup (display_name);
+
+	return data;
+}
+
+/**
+ * totem_playlist_mrl_data_free:
+ * @data: (transfer full): a #TotemPlaylistMrlData
+ *
+ * Free the given #TotemPlaylistMrlData struct. This should not generally be called by code outside #TotemPlaylist.
+ *
+ * Since: 3.0
+ */
+void
+totem_playlist_mrl_data_free (TotemPlaylistMrlData *data)
+{
+	g_return_if_fail (data != NULL);
+
+	/* NOTE: This doesn't call add_mrls_operation_data_free() on @data->operation_data, since it's shared with other instances of
+	 * TotemPlaylistMrlData, and not truly reference counted. */
+	g_free (data->display_name);
+	g_free (data->mrl);
+
+	g_slice_free (TotemPlaylistMrlData, data);
+}
+
+static void
+add_mrls_finish_operation (AddMrlsOperationData *operation_data)
+{
+	/* Check whether this is the final callback invocation; iff it is, we can call the user's callback for the entire operation and free the
+	 * operation data */
+	if (g_atomic_int_dec_and_test (&(operation_data->entries_remaining)) == TRUE) {
+		GSimpleAsyncResult *async_result;
+
+		async_result = g_simple_async_result_new (G_OBJECT (operation_data->playlist), operation_data->callback, operation_data->user_data,
+		                                          totem_playlist_add_mrls);
+		g_simple_async_result_complete (async_result);
+		g_object_unref (async_result);
+
+		add_mrls_operation_data_free (operation_data);
+	}
+}
+
+/* Called exactly once for each MRL in a totem_playlist_add_mrls() operation. Called in the thread running the main loop. If the MRL which has just
+ * been parsed is the next one in the sequence (of entries in @mrls as passed to totem_playlist_add_mrls()), it's added to the playlist proper.
+ * Otherwise, it's added to a sorted queue of MRLs which have had their callbacks called out of order.
+ * When a MRL is added to the playlist proper, any successor MRLs which are in the sorted queue are also added to the playlist proper.
+ * When add_mrls_cb() is called for the last time for a given call to totem_playlist_add_mrls(), it calls the user's callback for the operation
+ * (passed as @callback to totem_playlist_add_mrls()) and frees the #AddMrlsOperationData struct. This is handled by add_mrls_finish_operation().
+ * The #TotemPlaylistMrlData for each MRL is freed by add_mrls_operation_data_free() at the end of the entire operation. */
+static void
+add_mrls_cb (TotemPlParser *parser, GAsyncResult *result, TotemPlaylistMrlData *mrl_data)
+{
+	TotemPlParserResult res;
+	AddMrlsOperationData *operation_data = mrl_data->operation_data;
+
+	/* Finish parsing the playlist */
+	res = totem_pl_parser_parse_finish (parser, result, NULL);
+
+	g_assert (mrl_data->index >= operation_data->next_index_to_add);
+
+	if (mrl_data->index == operation_data->next_index_to_add) {
+		GList *i;
+
+		/* The entry is the next one in the order, so doesn't need to be added to the unadded list, and can be added to playlist proper */
+		operation_data->next_index_to_add++;
+		handle_parse_result (res, operation_data->playlist, mrl_data->mrl, mrl_data->display_name);
+
+		/* See if we can now add any other entries which have already been processed */
+		for (i = operation_data->unadded_entries;
+		     i != NULL && ((TotemPlaylistMrlData*) i->data)->index == operation_data->next_index_to_add;
+		     i = g_list_delete_link (i, i)) {
+			TotemPlaylistMrlData *_mrl_data = (TotemPlaylistMrlData*) i->data;
+
+			operation_data->next_index_to_add++;
+			handle_parse_result (res, operation_data->playlist, _mrl_data->mrl, _mrl_data->display_name);
+		}
+
+		operation_data->unadded_entries = i;
+	} else {
+		GList *i;
+
+		/* The entry has been parsed out of order, so needs to be added (in the correct position) to the unadded list for latter addition to
+		 * the playlist proper */
+		for (i = operation_data->unadded_entries; i != NULL && mrl_data->index > ((TotemPlaylistMrlData*) i->data)->index; i = i->next);
+		operation_data->unadded_entries = g_list_insert_before (operation_data->unadded_entries, i, mrl_data);
+	}
+
+	/* Check whether this is the last callback; call the user's callback for the entire operation and free the operation data if appropriate */
+	add_mrls_finish_operation (operation_data);
+}
+
+/**
+ * totem_playlist_add_mrls:
+ * @self: a #TotemPlaylist
+ * @mrls: (element-type TotemPlaylistMrlData) (transfer full): a list of #TotemPlaylistMrlData structs
+ * @cursor: %TRUE to set a waiting cursor on the playlist for the duration of the operation, %FALSE otherwise
+ * @cancellable: (allow-none): a #Cancellable, or %NULL
+ * @callback: (scope async) (allow-none): callback to call once all the MRLs have been added to the playlist, or %NULL
+ * @user_data: (closure) (allow-none): user data to pass to @callback, or %NULL
+ *
+ * Add the MRLs listed in @mrls to the playlist asynchronously, and ensuring that they're added to the playlist in the order they appear in the
+ * input #GList.
+ *
+ * @mrls should be a #GList of #TotemPlaylistMrlData structs, each created with totem_playlist_mrl_data_new(). This function takes ownership of both
+ * the list and its elements when called, so don't free either after calling totem_playlist_add_mrls().
+ *
+ * @callback will be called after all the MRLs in @mrls have been parsed and (if they were parsed successfully) added to the playlist. In the
+ * callback function, totem_playlist_add_mrls_finish() should be called to check for errors.
+ *
+ * Since: 3.0
+ */
+void
+totem_playlist_add_mrls (TotemPlaylist *self,
+                         GList *mrls,
+                         gboolean cursor,
+                         GCancellable *cancellable,
+                         GAsyncReadyCallback callback,
+                         gpointer user_data)
+{
+	AddMrlsOperationData *operation_data;
+	GList *i;
+	guint mrl_index = 0;
+
+	g_return_if_fail (TOTEM_IS_PLAYLIST (self));
+	g_return_if_fail (mrls != NULL);
+	g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
+
+	/* Build the data struct to pass to the callback function */
+	operation_data = g_slice_new (AddMrlsOperationData);
+	operation_data->playlist = g_object_ref (self);
+	operation_data->mrls = mrls;
+	operation_data->cursor = cursor;
+	operation_data->callback = callback;
+	operation_data->user_data = user_data;
+	operation_data->next_index_to_add = mrl_index;
+	operation_data->unadded_entries = NULL;
+	g_atomic_int_set (&(operation_data->entries_remaining), 1);
+
+	/* Display a waiting cursor if required */
+	if (cursor)
+		set_waiting_cursor (self);
+
+	for (i = mrls; i != NULL; i = i->next) {
+		TotemPlaylistMrlData *mrl_data = (TotemPlaylistMrlData*) i->data;
+
+		if (mrl_data == NULL)
+			continue;
+
+		/* Set the item's parsing index, so that it's inserted into the playlist in the position it appeared in @mrls */
+		mrl_data->operation_data = operation_data;
+		mrl_data->index = mrl_index++;
+
+		g_atomic_int_inc (&(operation_data->entries_remaining));
+
+		/* Start parsing the playlist. Once this is complete, add_mrls_cb() is called (i.e. it's called exactly once for each entry in
+		 * @mrls).
+		 * TODO: Cancellation is currently not supoprted, since no consumers of this API make use of it, and it needs careful thought when
+		 * being implemented, as a separate #GCancellable instance will have to be created for each parallel computation. */
+		totem_pl_parser_parse_async (self->priv->parser, mrl_data->mrl, FALSE, NULL, (GAsyncReadyCallback) add_mrls_cb, mrl_data);
+	}
+
+	/* Deal with the case that all async operations completed before we got to this point (since we've held a reference to the operation data so
+	 * that it doesn't get freed prematurely if all the scheduled async parse operations complete before we've finished scheduling the rest. */
+	add_mrls_finish_operation (operation_data);
+}
+
+/**
+ * totem_playlist_add_mrls_finish:
+ * @self: a #TotemPlaylist
+ * @result: the #GAsyncResult that was provided to the callback
+ * @error: (allow-none): a #GError for error reporting, or %NULL
+ *
+ * Finish an asynchronous batch MRL addition operation started by totem_playlist_add_mrls().
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ *
+ * Since: 3.0
+ */
+gboolean
+totem_playlist_add_mrls_finish (TotemPlaylist *self,
+                                GAsyncResult *result,
+                                GError **error)
+{
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (self), FALSE);
+	g_return_val_if_fail (G_IS_ASYNC_RESULT (result), FALSE);
+	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+	g_return_val_if_fail (g_simple_async_result_is_valid (result, G_OBJECT (self), totem_playlist_add_mrls), FALSE);
+
+	/* We don't have anything to return at the moment. */
+	return TRUE;
+}
+
 static gboolean
 totem_playlist_clear_cb (GtkTreeModel *model,
 			 GtkTreePath  *path,
