@@ -48,10 +48,6 @@
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
-G_MODULE_EXPORT void brightness_changed (GtkRange *range, Totem *totem);
-G_MODULE_EXPORT void contrast_changed (GtkRange *range, Totem *totem);
-G_MODULE_EXPORT void saturation_changed (GtkRange *range, Totem *totem);
-G_MODULE_EXPORT void hue_changed (GtkRange *range, Totem *totem);
 G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
 G_MODULE_EXPORT void audio_out_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
@@ -192,46 +188,6 @@ visual_menu_changed (GtkComboBox *combobox, Totem *totem)
 }
 
 void
-brightness_changed (GtkRange *range, Totem *totem)
-{
-	gdouble i;
-
-	i = gtk_range_get_value (range);
-	bacon_video_widget_set_video_property (totem->bvw,
-			BVW_VIDEO_BRIGHTNESS, (int) i);
-}
-
-void
-contrast_changed (GtkRange *range, Totem *totem)
-{
-	gdouble i;
-
-	i = gtk_range_get_value (range);
-	bacon_video_widget_set_video_property (totem->bvw,
-			BVW_VIDEO_CONTRAST, (int) i);
-}
-
-void
-saturation_changed (GtkRange *range, Totem *totem)
-{
-	gdouble i;
-
-	i = gtk_range_get_value (range);
-	bacon_video_widget_set_video_property (totem->bvw,
-			BVW_VIDEO_SATURATION, (int) i);
-}
-
-void
-hue_changed (GtkRange *range, Totem *totem)
-{
-	gdouble i;
-
-	i = gtk_range_get_value (range);
-	bacon_video_widget_set_video_property (totem->bvw,
-			BVW_VIDEO_HUE, (int) i);
-}
-
-void
 tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 {
 	guint i;
@@ -352,11 +308,13 @@ totem_setup_preferences (Totem *totem)
 		const char *name;
 		BvwVideoProperty prop;
 		const char *label;
+		const gchar *key;
+		const gchar *adjustment;
 	} props[4] = {
-		{ "tpw_contrast_scale", BVW_VIDEO_CONTRAST, "tpw_contrast_label" },
-		{ "tpw_saturation_scale", BVW_VIDEO_SATURATION, "tpw_saturation_label" },
-		{ "tpw_bright_scale", BVW_VIDEO_BRIGHTNESS, "tpw_brightness_label" },
-		{ "tpw_hue_scale", BVW_VIDEO_HUE, "tpw_hue_label" }
+		{ "tpw_contrast_scale", BVW_VIDEO_CONTRAST, "tpw_contrast_label", "contrast", "tpw_contrast_adjustment" },
+		{ "tpw_saturation_scale", BVW_VIDEO_SATURATION, "tpw_saturation_label", "saturation", "tpw_saturation_adjustment" },
+		{ "tpw_bright_scale", BVW_VIDEO_BRIGHTNESS, "tpw_brightness_label", "brightness", "tpw_bright_adjustment" },
+		{ "tpw_hue_scale", BVW_VIDEO_HUE, "tpw_hue_label", "hue", "tpw_hue_adjustment" }
 	};
 
 	g_return_if_fail (totem->settings != NULL);
@@ -486,12 +444,16 @@ totem_setup_preferences (Totem *totem)
 	hidden = 0;
 	for (i = 0; i < G_N_ELEMENTS (props); i++) {
 		int prop_value;
-		item = gtk_builder_get_object (totem->xml, props[i].name);
-		prop_value = bacon_video_widget_get_video_property (totem->bvw,
-							       props[i].prop);
-		if (prop_value >= 0)
-			gtk_range_set_value (GTK_RANGE (item), (gdouble) prop_value);
-		else {
+
+		item = gtk_builder_get_object (totem->xml, props[i].adjustment);
+		g_settings_bind (totem->settings, props[i].key, item, "value", G_SETTINGS_BIND_DEFAULT);
+		g_settings_bind (totem->settings, props[i].key, bvw, props[i].key,
+		                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_SET | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+		prop_value = bacon_video_widget_get_video_property (totem->bvw, props[i].prop);
+		if (prop_value < 0) {
+			/* The property's unsupported, so hide the widget and its label */
+			item = gtk_builder_get_object (totem->xml, props[i].name);
 			gtk_range_set_value (GTK_RANGE (item), (gdouble) 65535/2);
 			gtk_widget_hide (GTK_WIDGET (item));
 			item = gtk_builder_get_object (totem->xml, props[i].label);
@@ -500,6 +462,7 @@ totem_setup_preferences (Totem *totem)
 		}
 	}
 
+	/* If all the properties have been hidden, hide their section box */
 	if (hidden == G_N_ELEMENTS (props)) {
 		item = gtk_builder_get_object (totem->xml, "tpw_bright_contr_vbox");
 		gtk_widget_hide (GTK_WIDGET (item));

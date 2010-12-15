@@ -5424,12 +5424,7 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
       }
     }
 
-  /* value wasn't found, get from GSettings */
-  if (ret == 0)
-    ret = g_settings_get_int (bvw->priv->settings, video_props_str[type]);
-
-  GST_DEBUG ("nothing found for type %d, returning value %d from GSettings key %s",
-      type, ret, video_props_str[type]);
+  GST_DEBUG ("nothing found for type %d, returning value %d", type, ret);
 
 done:
 
@@ -5533,10 +5528,7 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
   /* Notify of the property change */
   g_object_notify (G_OBJECT (bvw), video_props_str[type]);
 
-  /* save in GSettings */
-  g_settings_set_int (bvw->priv->settings, video_props_str[type], value);
-
-  GST_DEBUG ("setting value %d on GSettings key %s", value, video_props_str[type]);
+  GST_DEBUG ("setting value %d", value);
 }
 
 /**
@@ -6551,22 +6543,6 @@ find_colorbalance_element (GstElement *element, GValue * ret, GstElement **cb)
   }
 }
 
-static void
-bvw_update_brightness_and_contrast_from_gsettings (BaconVideoWidget * bvw)
-{
-  guint i;
-
-  g_return_if_fail (g_thread_self() == gui_thread);
-
-  /* Setup brightness and contrast */
-  GST_LOG ("updating brightness and contrast from GSettings settings");
-  for (i = 0; i < G_N_ELEMENTS (video_props_str); i++) {
-    gint value = g_settings_get_int (bvw->priv->settings, video_props_str[i]);
-    if (value > 0)
-      bacon_video_widget_set_video_property (bvw, i, value);
-  }
-}
-
 static gboolean
 bvw_update_interfaces_delayed (BaconVideoWidget *bvw)
 {
@@ -6682,12 +6658,6 @@ bvw_update_interface_implementations (BaconVideoWidget *bvw)
     GST_DEBUG ("No colorbalance found");
     bvw->priv->balance = NULL;
   }
-
-  /* Setup brightness and contrast from configured values (do it delayed if
-   * we're within a streaming thread, otherwise GSettings/orbit/whatever may
-   * iterate or otherwise mess with the default main context and cause all
-   * kinds of nasty issues) */
-  bvw_update_brightness_and_contrast_from_gsettings (bvw);
 
   if (old_xoverlay)
     gst_object_unref (GST_OBJECT (old_xoverlay));
