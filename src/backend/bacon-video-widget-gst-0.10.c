@@ -3503,8 +3503,7 @@ bacon_video_widget_get_audio_out_type (BaconVideoWidget *bvw)
  * @bvw: a #BaconVideoWidget
  * @type: the new audio output type
  *
- * Sets the audio output type (number of speaker channels) in the video widget,
- * and stores it in GSettings.
+ * Sets the audio output type (number of speaker channels) in the video widget.
  **/
 void
 bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
@@ -3517,11 +3516,14 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
     return;
   else if (type == BVW_AUDIO_SOUND_AC3PASSTHRU)
     return;
+  else if (bvw->priv->use_type == BVW_USE_TYPE_METADATA || bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
+    /* don't set up a filter for the speaker setup, anything is fine */
+    bvw->priv->speakersetup = -1;
+    return;
+  }
 
   bvw->priv->speakersetup = type;
   g_object_notify (G_OBJECT (bvw), "audio-output-type");
-
-  g_settings_set_enum (bvw->priv->settings, "audio-output-type", type);
 
   set_audio_filter (bvw);
 }
@@ -7120,20 +7122,6 @@ bacon_video_widget_new (int width, int height,
      * (it sets all elements to NULL state before gst_bin_remove()ing them) */
     g_signal_connect (video_sink, "element-added",
                       G_CALLBACK (got_new_video_sink_bin_element), bvw);
-  }
-
-  /* audio out, if any */
-  value = g_settings_get_enum (bvw->priv->settings, "audio-output-type");
-  if (value > 0 &&
-      (type != BVW_USE_TYPE_METADATA && type != BVW_USE_TYPE_CAPTURE)) {
-    bvw->priv->speakersetup = value;
-    bacon_video_widget_set_audio_out_type (bvw, bvw->priv->speakersetup);
-  } else if (type == BVW_USE_TYPE_METADATA || type == BVW_USE_TYPE_CAPTURE) {
-    bvw->priv->speakersetup = -1;
-    /* don't set up a filter for the speaker setup, anything is fine */
-  } else {
-    bvw->priv->speakersetup = -1;
-    bacon_video_widget_set_audio_out_type (bvw, BVW_AUDIO_SOUND_STEREO);
   }
 
   /* tv/conn (not used yet) */

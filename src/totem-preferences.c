@@ -49,7 +49,6 @@ G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Tot
 G_MODULE_EXPORT void audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
-G_MODULE_EXPORT void audio_out_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
 G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
 
@@ -206,15 +205,6 @@ tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 }
 
 void
-audio_out_menu_changed (GtkComboBox *combobox, Totem *totem)
-{
-	BvwAudioOutType audio_out;
-
-	audio_out = gtk_combo_box_get_active (combobox);
-	bacon_video_widget_set_audio_out_type (totem->bvw, audio_out);
-}
-
-void
 font_set_cb (GtkFontButton * fb, Totem * totem)
 {
 	const gchar *font;
@@ -301,7 +291,6 @@ totem_setup_preferences (Totem *totem)
 	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
-	BvwAudioOutType audio_out;
 	GObject *item;
 
 	static struct {
@@ -470,8 +459,11 @@ totem_setup_preferences (Totem *totem)
 
 	/* Sound output type */
 	item = gtk_builder_get_object (totem->xml, "tpw_sound_output_combobox");
-	audio_out = bacon_video_widget_get_audio_out_type (totem->bvw);
-	gtk_combo_box_set_active (GTK_COMBO_BOX (item), audio_out);
+	g_settings_bind (totem->settings, "audio-output-type", bvw, "audio-output-type",
+	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_SET | G_SETTINGS_BIND_NO_SENSITIVITY);
+	g_settings_bind_with_mapping (totem->settings, "audio-output-type", item, "active", G_SETTINGS_BIND_DEFAULT,
+	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
+	                              g_type_class_ref (BVW_TYPE_AUDIO_OUT_TYPE), (GDestroyNotify) g_type_class_unref);
 
 	/* Subtitle font selection */
 	item = gtk_builder_get_object (totem->xml, "font_sel_button");
