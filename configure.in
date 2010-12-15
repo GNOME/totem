@@ -47,6 +47,7 @@ GTK_REQS=2.91.7
 TOTEM_PLPARSER_REQS=2.29.1
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.82
+VALA_REQS=0.11.1
 PEAS_REQS=0.7.0
 PYTHON_REQS=2.3
 PYGOBJECT_REQS=2.27.0
@@ -67,7 +68,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters coherence_upnp dbus-service galago gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file sample-python screensaver screenshot sidebar-test skipto thumbnail tracker youtube"
+allowed_plugins="bemused brasero-disc-recorder chapters coherence_upnp dbus-service galago gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file sample-python sample-vala screensaver screenshot sidebar-test skipto thumbnail tracker youtube"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -316,6 +317,29 @@ fi
 
 AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 
+dnl ================================================================
+dnl Vala plugins
+dnl ================================================================
+AC_MSG_CHECKING([whether Vala plugin support is requested])
+AC_ARG_ENABLE([vala],
+	AS_HELP_STRING([--enable-vala],[Enable Vala plugin support]),
+	[enable_vala=$enableval],
+	[enable_vala=auto])
+AC_MSG_RESULT([$enable_vala])
+if test "x$enable_vala" != "xno"; then
+	AM_PROG_VALAC([$VALA_REQS])
+	if test "x$VALAC" = "x"; then
+		if test "x$enable_vala" = "xyes"; then
+			AC_MSG_ERROR([Vala plugin support explicitly requested, but not found])
+		fi
+		with_vala=no
+	else
+		with_vala=yes
+	fi
+fi
+
+AM_CONDITIONAL(ENABLE_VALA, test "x$with_vala" = "xyes")
+
 # ********************
 # Movie player plugins
 # ********************
@@ -434,6 +458,12 @@ for plugin in ${used_plugins}; do
 
 			if test "${HAVE_TRACKER}" != "yes" ; then
 				plugin_error_or_ignore "you need the tracker development headers installed for the tracker plugin"
+				add_plugin="0"
+			fi
+		;;
+		sample-vala)
+			if test "${with_vala}" != "yes" ; then
+				plugin_error_or_ignore "you need vala installed to use the sample-vala plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -758,6 +788,7 @@ src/plugins/save-file/Makefile
 src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
 src/plugins/sample-python/Makefile
+src/plugins/sample-vala/Makefile
 src/plugins/thumbnail/Makefile
 src/plugins/tracker/Makefile
 src/plugins/youtube/Makefile
