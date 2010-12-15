@@ -805,11 +805,11 @@ bacon_video_widget_draw (GtkWidget *widget, cairo_t *cr)
 }
 
 static GstNavigation *
-bvw_get_navigation_iface (BaconVideoWidget *bvw)
+bvw_get_navigation_iface (BaconVideoWidget *bvw, gboolean update_interfaces)
 {
   GstNavigation *nav = NULL;
   g_mutex_lock (bvw->priv->lock);
-  if (bvw->priv->navigation == NULL)
+  if (bvw->priv->navigation == NULL && update_interfaces == TRUE)
     bvw_update_interface_implementations (bvw);
   if (bvw->priv->navigation)
     nav = gst_object_ref (GST_OBJECT (bvw->priv->navigation));
@@ -831,7 +831,7 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
   if (!bvw->priv->logo_mode) {
-    GstNavigation *nav = bvw_get_navigation_iface (bvw);
+    GstNavigation *nav = bvw_get_navigation_iface (bvw, FALSE);
     if (nav) {
       gst_navigation_send_mouse_event (nav, "mouse-move", 0, event->x, event->y);
       gst_object_unref (GST_OBJECT (nav));
@@ -853,7 +853,7 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
   if (!bvw->priv->logo_mode) {
-    GstNavigation *nav = bvw_get_navigation_iface (bvw);
+    GstNavigation *nav = bvw_get_navigation_iface (bvw, FALSE);
     if (nav) {
       gst_navigation_send_mouse_event (nav,
           "mouse-button-press", event->button, event->x, event->y);
@@ -880,7 +880,7 @@ bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event)
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
   if (!bvw->priv->logo_mode) {
-    GstNavigation *nav = bvw_get_navigation_iface (bvw);
+    GstNavigation *nav = bvw_get_navigation_iface (bvw, FALSE);
     if (nav) {
       gst_navigation_send_mouse_event (nav,
           "mouse-button-release", event->button, event->x, event->y);
@@ -1489,7 +1489,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 static gboolean
 bvw_do_navigation_query (BaconVideoWidget * bvw, GstQuery *query)
 {
-  GstNavigation *nav = bvw_get_navigation_iface (bvw);
+  GstNavigation *nav = bvw_get_navigation_iface (bvw, TRUE);
   gboolean res;
 
   if (G_UNLIKELY (nav == NULL || !GST_IS_ELEMENT (nav)))
@@ -4318,7 +4318,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 static void
 bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
 {
-  GstNavigation *nav = bvw_get_navigation_iface (bvw);
+  GstNavigation *nav = bvw_get_navigation_iface (bvw, TRUE);
   if (nav == NULL)
     return;
 
