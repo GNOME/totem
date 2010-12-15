@@ -489,6 +489,8 @@ gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 static void
 drop_finished_cb (TotemPlaylist *playlist, GAsyncResult *result, gpointer user_data)
 {
+	totem_playlist_add_mrls_finish (playlist, result, NULL);
+
 	/* Emit the "changed" signal once the last dropped MRL has been added to the playlist */
 	g_signal_emit (G_OBJECT (playlist),
 	               totem_playlist_table_signals[CHANGED], 0,
@@ -506,7 +508,7 @@ drop_cb (GtkWidget        *widget,
 	 TotemPlaylist    *playlist)
 {
 	char **list;
-	GList *p, *file_list;
+	GList *p, *file_list, *mrl_list = NULL;
 	guint i;
 	GdkDragAction action;
 
@@ -570,15 +572,15 @@ drop_cb (GtkWidget        *widget,
 			}
 		}
 
-		/* Add the MRL to the playlist asynchronously. If it's the last MRL, emit the "changed"
-		 * signal once we're done adding it */
-		if (p->next == NULL)
-			totem_playlist_add_mrl (playlist, filename, title, TRUE, NULL, (GAsyncReadyCallback) drop_finished_cb, NULL);
-		else
-			totem_playlist_add_mrl (playlist, filename, title, TRUE, NULL, NULL, NULL);
-
+		/* Add the MRL to the list of MRLs to be added to the playlist */
+		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (filename, title));
 		g_free (filename);
 	}
+
+	/* Add all the MRLs to the playlist asynchronously, emitting the "changed" signal once we're done.
+	 * Note that this takes ownership of @mrl_list. */
+	if (mrl_list != NULL)
+		totem_playlist_add_mrls (playlist, g_list_reverse (mrl_list), TRUE, NULL, (GAsyncReadyCallback) drop_finished_cb, NULL);
 
 	g_strfreev (list);
 	g_list_free (file_list);
@@ -853,20 +855,22 @@ void
 totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 {
 	GSList *filenames, *l;
+	GList *mrl_list = NULL;
 
 	filenames = totem_add_files (totem_playlist_get_toplevel (playlist), NULL);
 	if (filenames == NULL)
 		return;
 
 	for (l = filenames; l != NULL; l = l->next) {
-		char *mrl;
-
-		mrl = l->data;
-		totem_playlist_add_mrl (playlist, mrl, NULL, TRUE, NULL, NULL, NULL);
+		char *mrl = l->data;
+		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (mrl, NULL));
 		g_free (mrl);
 	}
 
 	g_slist_free (filenames);
+
+	if (mrl_list != NULL)
+		totem_playlist_add_mrls (playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
 }
 
 static void

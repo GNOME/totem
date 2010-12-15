@@ -2187,31 +2187,20 @@ totem_action_show_help (TotemObject *totem)
 	}
 }
 
-typedef struct {
-	gint add_mrl_complete;
-	TotemObject *totem;
-} DropFilesData;
-
 /* This is called in the main thread */
 static void
-totem_action_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result, DropFilesData *data)
+totem_action_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result, TotemObject *totem)
 {
-	/* When add_mrl_complete reaches 0, this is the last callback to occur and we can safely reconnect the playlist's changed signal (which was
-	 * disconnected below in totem_action_drop_files(). We can also free the data struct and generally clean up. */
-	if (g_atomic_int_dec_and_test (&(data->add_mrl_complete)) == TRUE) {
-		char *mrl, *subtitle;
+	char *mrl, *subtitle;
 
-		/* Reconnect the signal */
-		g_signal_connect (G_OBJECT (playlist), "changed", G_CALLBACK (playlist_changed_cb), data->totem);
-		mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
-		totem_action_set_mrl_and_play (data->totem, mrl, subtitle);
-		g_free (mrl);
-		g_free (subtitle);
+	/* Reconnect the playlist's changed signal (which was disconnected below in totem_action_drop_files(). */
+	g_signal_connect (G_OBJECT (playlist), "changed", G_CALLBACK (playlist_changed_cb), totem);
+	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
+	totem_action_set_mrl_and_play (totem, mrl, subtitle);
+	g_free (mrl);
+	g_free (subtitle);
 
-		/* Free the data struct */
-		g_object_unref (data->totem);
-		g_slice_free (DropFilesData, data);
-	}
+	g_object_unref (totem);
 }
 
 static gboolean
@@ -2220,8 +2209,7 @@ totem_action_drop_files (TotemObject *totem, GtkSelectionData *data,
 {
 	char **list;
 	guint i, len;
-	DropFilesData *drop_files_data = NULL /* shut up gcc */;
-	GList *p, *file_list;
+	GList *p, *file_list, *mrl_list = NULL;
 	gboolean cleared = FALSE;
 
 	list = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (data));
@@ -2261,18 +2249,11 @@ totem_action_drop_files (TotemObject *totem, GtkSelectionData *data,
 		g_signal_handlers_disconnect_by_func (G_OBJECT (totem->playlist), playlist_changed_cb, totem);
 		totem_playlist_clear (totem->playlist);
 		cleared = TRUE;
-
-		/* Allocate some shared memory to count how many add_mrl operations have completed (see the comment below).
-		 * It's freed in totem_action_drop_files_cb() once all add_mrl operations have finished. */
-		drop_files_data = g_slice_new (DropFilesData);
-		drop_files_data->add_mrl_complete = len;
-		drop_files_data->totem = g_object_ref (totem);
 	}
 
 	/* Add each MRL to the playlist asynchronously */
 	for (p = file_list; p != NULL; p = p->next) {
-		const char *filename;
-		char *title;
+		const char *filename, *title;
 
 		filename = p->data;
 		title = NULL;
@@ -2288,15 +2269,17 @@ totem_action_drop_files (TotemObject *totem, GtkSelectionData *data,
 			}
 		}
 
-		/* Add the MRL to the playlist. We need to reconnect playlist's "changed" signal once all of the add_mrl operations have completed,
-		 * so we use a piece of allocated memory shared between the async operations to count how many have completed.
-		 * If we haven't cleared the playlist, there's no need to do this. */
-		if (cleared == TRUE) {
-			totem_playlist_add_mrl (totem->playlist, filename, title, TRUE, NULL,
-			                        (GAsyncReadyCallback) totem_action_drop_files_finished, drop_files_data);
-		} else {
-			totem_playlist_add_mrl (totem->playlist, filename, title, TRUE, NULL, NULL, NULL);
-		}
+		/* Add the MRL data to the list of MRLs to add to the playlist */
+		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (filename, title));
+	}
+
+	/* Add the MRLs to the playlist asynchronously and in order. We need to reconnect playlist's "changed" signal once all of the add-MRL
+	 * operations have completed. If we haven't cleared the playlist, there's no need to do this. */
+	if (mrl_list != NULL && cleared == TRUE) {
+		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL,
+		                         (GAsyncReadyCallback) totem_action_drop_files_finished, g_object_ref (totem));
+	} else if (mrl_list != NULL) {
+		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
 	}
 
 bail:
@@ -2806,6 +2789,7 @@ static gboolean
 totem_action_open_files_list (TotemObject *totem, GSList *list)
 {
 	GSList *l;
+	GList *mrl_list = NULL;
 	gboolean changed;
 	gboolean cleared;
 
@@ -2859,16 +2843,20 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 				totem_action_load_media_device (totem, data);
 				changed = TRUE;
 			} else if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
-				totem_playlist_add_mrl (totem->playlist, data, NULL, FALSE, NULL, NULL, NULL);
+				mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (data, NULL));
 				changed = TRUE;
 			} else {
-				totem_playlist_add_mrl (totem->playlist, filename, NULL, FALSE, NULL, NULL, NULL);
+				mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (filename, NULL));
 				changed = TRUE;
 			}
 		}
 
 		g_free (filename);
 	}
+
+	/* Add the MRLs to the playlist asynchronously and in order */
+	if (mrl_list != NULL)
+		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), FALSE, NULL, NULL, NULL);
 
 	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 

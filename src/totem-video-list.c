@@ -485,6 +485,7 @@ add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self)
 	GtkTreePath *path;
 	GtkTreeIter iter;
 	gchar *mrl, *display_name;
+	GList *mrl_list = NULL;
 	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (self));
 	GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (self));
 	GList *l = gtk_tree_selection_get_selected_rows (selection, NULL);
@@ -506,7 +507,7 @@ add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self)
 			continue;
 		}
 
-		totem_playlist_add_mrl (playlist, mrl, display_name, TRUE, NULL, NULL, NULL);
+		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (mrl, display_name));
 
 		g_free (mrl);
 		g_free (display_name);
@@ -514,6 +515,10 @@ add_to_playlist_action_callback (GtkAction *action, TotemVideoList *self)
 
 	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
 	g_list_free (l);
+
+	/* Asynchronously add all the MRLs to the playlist in order */
+	if (mrl_list != NULL)
+		totem_playlist_add_mrls (playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
 }
 
 void
