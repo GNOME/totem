@@ -136,7 +136,11 @@ enum
   PROP_AUTO_RESIZE,
   PROP_DEINTERLACING,
   PROP_CONNECTION_SPEED,
-  PROP_VISUALIZATION_QUALITY
+  PROP_VISUALIZATION_QUALITY,
+  PROP_BRIGHTNESS,
+  PROP_CONTRAST,
+  PROP_SATURATION,
+  PROP_HUE
 };
 
 static const gchar *video_props_str[4] = {
@@ -1182,6 +1186,50 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_enum ("visualization-quality", NULL,
                                                       NULL, BVW_TYPE_VISUALIZATION_QUALITY,
                                                       BVW_VISUALIZATION_SMALL,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:brightness:
+   *
+   * The brightness of the video display.
+   **/
+  g_object_class_install_property (object_class, PROP_BRIGHTNESS,
+                                   g_param_spec_int ("brightness", NULL,
+                                                      NULL, 0, 65535, 32768,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:contrast:
+   *
+   * The contrast of the video display.
+   **/
+  g_object_class_install_property (object_class, PROP_CONTRAST,
+                                   g_param_spec_int ("contrast", NULL,
+                                                      NULL, 0, 65535, 32768,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:saturation:
+   *
+   * The saturation of the video display.
+   **/
+  g_object_class_install_property (object_class, PROP_SATURATION,
+                                   g_param_spec_int ("saturation", NULL,
+                                                      NULL, 0, 65535, 32768,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:hue:
+   *
+   * The hue of the video display.
+   **/
+  g_object_class_install_property (object_class, PROP_HUE,
+                                   g_param_spec_int ("hue", NULL,
+                                                      NULL, 0, 65535, 32768,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -2805,6 +2853,18 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_VISUALIZATION_QUALITY:
       bacon_video_widget_set_visualization_quality (bvw, g_value_get_enum (value));
       break;
+    case PROP_BRIGHTNESS:
+      bacon_video_widget_set_video_property (bvw, BVW_VIDEO_BRIGHTNESS, g_value_get_int (value));
+      break;
+    case PROP_CONTRAST:
+      bacon_video_widget_set_video_property (bvw, BVW_VIDEO_CONTRAST, g_value_get_int (value));
+      break;
+    case PROP_SATURATION:
+      bacon_video_widget_set_video_property (bvw, BVW_VIDEO_SATURATION, g_value_get_int (value));
+      break;
+    case PROP_HUE:
+      bacon_video_widget_set_video_property (bvw, BVW_VIDEO_HUE, g_value_get_int (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2866,6 +2926,18 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_VISUALIZATION_QUALITY:
       g_value_set_enum (value, bvw->priv->visq);
+      break;
+    case PROP_BRIGHTNESS:
+      g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_BRIGHTNESS));
+      break;
+    case PROP_CONTRAST:
+      g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_CONTRAST));
+      break;
+    case PROP_SATURATION:
+      g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_SATURATION));
+      break;
+    case PROP_HUE:
+      g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_HUE));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -5457,6 +5529,9 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
           g_object_unref (found_channel);
         }
     }
+
+  /* Notify of the property change */
+  g_object_notify (G_OBJECT (bvw), video_props_str[type]);
 
   /* save in GSettings */
   g_settings_set_int (bvw->priv->settings, video_props_str[type], value);
