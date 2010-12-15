@@ -135,7 +135,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	g_signal_connect (engine->priv->activatable_extensions, "extension-removed",
 			  G_CALLBACK (on_activatable_extension_removed), engine);
 
-	g_settings_bind (engine->priv->settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (engine->priv->settings, "active-plugins", engine, "loaded-plugins", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	return engine;
 }

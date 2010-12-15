@@ -353,12 +353,12 @@ totem_setup_preferences (Totem *totem)
 	/* Remember position */
 	item = gtk_builder_get_object (totem->xml, "tpw_remember_position_checkbutton");
 	g_settings_bind (totem->settings, "remember-position", item, "active", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind (totem->settings, "remember-position", totem, "remember-position", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "remember-position", totem, "remember-position", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Auto-resize */
 	item = gtk_builder_get_object (totem->xml, "tpw_display_checkbutton");
 	g_settings_bind (totem->settings, "auto-resize", item, "active", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind (totem->settings, "auto-resize", bvw, "auto-resize", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "auto-resize", bvw, "auto-resize", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Screensaver audio locking */
 	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
@@ -372,11 +372,12 @@ totem_setup_preferences (Totem *totem)
 	/* Disable deinterlacing */
 	item = gtk_builder_get_object (totem->xml, "tpw_no_deinterlace_checkbutton");
 	g_settings_bind (totem->settings, "disable-deinterlacing", item, "active", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_INVERT_BOOLEAN);
+	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
+	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
 
 	/* Connection Speed */
 	item = gtk_builder_get_object (totem->xml, "tpw_speed_combobox");
-	g_settings_bind (totem->settings, "connection-speed", bvw, "connection-speed", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "connection-speed", bvw, "connection-speed", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "connection-speed", item, "active", G_SETTINGS_BIND_DEFAULT,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
 	                              g_type_class_ref (BVW_TYPE_CONNECTION_SPEED), (GDestroyNotify) g_type_class_unref);
@@ -398,7 +399,7 @@ totem_setup_preferences (Totem *totem)
 	/* Auto-load subtitles */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_subtitles_checkbutton");
 	g_settings_bind (totem->settings, "autoload-subtitles", item, "active", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind (totem->settings, "autoload-subtitles", totem, "autoload-subtitles", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "autoload-subtitles", totem, "autoload-subtitles", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Auto-load external chapters */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_chapters_checkbutton");
@@ -440,7 +441,8 @@ totem_setup_preferences (Totem *totem)
 	/* Visualisation quality. We have to bind the writability separately, as the sensitivity of the size combobox is also affected by whether
 	 * visualizations are enabled. */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_size_combobox");
-	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality",
+	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active",
 	                              G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
@@ -454,8 +456,7 @@ totem_setup_preferences (Totem *totem)
 
 		item = gtk_builder_get_object (totem->xml, props[i].adjustment);
 		g_settings_bind (totem->settings, props[i].key, item, "value", G_SETTINGS_BIND_DEFAULT);
-		g_settings_bind (totem->settings, props[i].key, bvw, props[i].key,
-		                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_SET | G_SETTINGS_BIND_NO_SENSITIVITY);
+		g_settings_bind (totem->settings, props[i].key, bvw, props[i].key, G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 		prop_value = bacon_video_widget_get_video_property (totem->bvw, props[i].prop);
 		if (prop_value < 0) {
@@ -478,7 +479,7 @@ totem_setup_preferences (Totem *totem)
 	/* Sound output type */
 	item = gtk_builder_get_object (totem->xml, "tpw_sound_output_combobox");
 	g_settings_bind (totem->settings, "audio-output-type", bvw, "audio-output-type",
-	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_SET | G_SETTINGS_BIND_NO_SENSITIVITY);
+	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "audio-output-type", item, "active", G_SETTINGS_BIND_DEFAULT,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
 	                              g_type_class_ref (BVW_TYPE_AUDIO_OUTPUT_TYPE), (GDestroyNotify) g_type_class_unref);
