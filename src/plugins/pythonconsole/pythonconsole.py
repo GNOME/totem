@@ -127,7 +127,7 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 
 	def enable_debugging(self, action):
 		msg = _("After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in DConf, it will use the default password ('totem').")
-		dialog = Gtk.MessageDialog(None, 0, Gtk.MessageType.INFO, Gtk.ButtonType.OK_CANCEL, msg)
+		dialog = Gtk.MessageDialog(None, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK_CANCEL, msg)
 		if dialog.run() == Gtk.ResponseType.OK:
 			settings = Gio.Settings.new ('org.gnome.totem.plugins.pythonconsole')
 			password = settings.get_string('rpdb2-password') or "totem"
