@@ -140,7 +140,8 @@ enum
   PROP_BRIGHTNESS,
   PROP_CONTRAST,
   PROP_SATURATION,
-  PROP_HUE
+  PROP_HUE,
+  PROP_AUDIO_OUTPUT_TYPE
 };
 
 static const gchar *video_props_str[4] = {
@@ -1230,6 +1231,18 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   g_object_class_install_property (object_class, PROP_HUE,
                                    g_param_spec_int ("hue", NULL,
                                                       NULL, 0, 65535, 32768,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:audio-output-type:
+   *
+   * The type of audio output to use (e.g. the number of channels).
+   **/
+  g_object_class_install_property (object_class, PROP_AUDIO_OUTPUT_TYPE,
+                                   g_param_spec_enum ("audio-output-type", NULL,
+                                                      NULL, BVW_TYPE_AUDIO_OUT_TYPE,
+                                                      BVW_AUDIO_SOUND_STEREO,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -2865,6 +2878,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_HUE:
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_HUE, g_value_get_int (value));
       break;
+    case PROP_AUDIO_OUTPUT_TYPE:
+      bacon_video_widget_set_audio_out_type (bvw, g_value_get_enum (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2938,6 +2954,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_HUE:
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_HUE));
+      break;
+    case PROP_AUDIO_OUTPUT_TYPE:
+      g_value_set_enum (value, bacon_video_widget_get_audio_out_type (bvw));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3500,6 +3519,8 @@ bacon_video_widget_set_audio_out_type (BaconVideoWidget *bvw,
     return;
 
   bvw->priv->speakersetup = type;
+  g_object_notify (G_OBJECT (bvw), "audio-output-type");
+
   g_settings_set_enum (bvw->priv->settings, "audio-output-type", type);
 
   set_audio_filter (bvw);
