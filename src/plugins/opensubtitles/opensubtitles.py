@@ -422,7 +422,8 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
         self.action = Gtk.Action(name='opensubtitles',
                                  label=_('_Download Movie Subtitles...'),
-                                 tooltip=_("Download movie subtitles from OpenSubtitles"))
+                                 tooltip=_("Download movie subtitles from OpenSubtitles"),
+                                 stock_id=None)
 
         self.os_action_group.add_action(self.action)
 
