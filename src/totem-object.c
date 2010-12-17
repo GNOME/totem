@@ -1999,6 +1999,9 @@ totem_action_zoom (TotemObject *totem, double zoom)
 	GtkAction *action;
 	gboolean zoom_reset, zoom_in, zoom_out;
 
+	if (totem->bvw == NULL)
+		return;
+
 	if (zoom == ZOOM_ENABLE)
 		zoom = bacon_video_widget_get_zoom (totem->bvw);
 
@@ -2030,6 +2033,9 @@ void
 totem_action_zoom_relative (TotemObject *totem, double off_pct)
 {
 	double zoom;
+
+	if (totem->bvw == NULL)
+		return;
 
 	zoom = bacon_video_widget_get_zoom (totem->bvw);
 	totem_action_zoom (totem, zoom + off_pct);
