@@ -143,15 +143,30 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         format = self.settings.get_enum ('format')
         num_per_page = self.settings.get_value ('num-per-page').get_uint32 ()
 
+        # Set up the "format" combo box. We can't use g_settings_bind() here, as it won't automatically convert between enums and ints. To do so,
+        # we'd need to use g_settings_bind_with_mapping(), but that isn't introspectable. We have to handle the binding manually.
         combo = builder.get_object('preferred_format_combo')
         combo.set_active(format)
-        self.settings.bind ('format', combo, 'active', Gio.SettingsBindFlags.DEFAULT)
+        combo.connect ('changed', self.on_format_combo_changed)
+        self.settings.connect ('changed::format', self.on_format_setting_changed, combo)
 
         spinbutton = builder.get_object('album_num_spinbutton')
         spinbutton.set_value(num_per_page)
         self.settings.bind ('num-per-page', spinbutton, 'value', Gio.SettingsBindFlags.DEFAULT)
 
         return config_widget
+
+    def on_format_combo_changed (self, combo):
+        """
+        Called when the "format" preference combo box value is changed.
+        """
+        self.settings.set_enum ('format', combo.get_active ())
+
+    def on_format_setting_changed (self, settings, key, combo):
+        """
+        Called for the "format" preference combo box when the corresponding GSettings value is changed.
+        """
+        combo.set_active (self.settings.get_enum ('format'))
 
     def on_format_changed (self, settings, key):
         JamendoService.AUDIO_FORMAT = self.settings.get_enum ('format')
