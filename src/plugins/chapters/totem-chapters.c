@@ -1093,7 +1093,7 @@ impl_activate (PeasActivatable *plugin)
 	g_object_ref (cplugin->priv->ui_manager);
 
 	renderer = gtk_cell_renderer_pixbuf_new ();
-	column = gtk_tree_view_column_new_with_attributes ("Pixbuf", renderer, "pixbuf", CHAPTERS_PIXBUF_COLUMN, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Chapter Screenshot"), renderer, "pixbuf", CHAPTERS_PIXBUF_COLUMN, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (cplugin->priv->tree), column);
 
 	renderer = gtk_cell_renderer_text_new ();
@@ -1104,7 +1104,7 @@ impl_activate (PeasActivatable *plugin)
 	g_signal_connect (G_OBJECT (renderer), "edited",
 			  G_CALLBACK (finish_chapter_edit), cplugin);
 
-	column = gtk_tree_view_column_new_with_attributes ("Title", renderer,
+	column = gtk_tree_view_column_new_with_attributes (_("Chapter Title"), renderer,
 							   "markup", CHAPTERS_TITLE_COLUMN, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (cplugin->priv->tree), column);
 
