@@ -5,16 +5,16 @@
         <object class="GtkActionGroup" id="chapters-action-group">
            <child>
               <object class="GtkAction" id="remove">
-                 <property name="label" translatable="yes">_Remove</property>
-                 <property name="tooltip" translatable="yes">Remove chapter from the list</property>
+                 <property name="label" translatable="yes">_Remove Chapter</property>
+                 <property name="tooltip" translatable="yes">Remove the chapter from the list</property>
                  <property name="stock-id">gtk-remove</property>
                  <signal name="activate" handler="popup_remove_action_cb"/>
               </object>
            </child>
            <child>
               <object class="GtkAction" id="goto">
-                 <property name="label" translatable="yes">_Go to</property>
-                 <property name="tooltip" translatable="yes">Go to chapter</property>
+                 <property name="label" translatable="yes">_Go to Chapter</property>
+                 <property name="tooltip" translatable="yes">Go to the chapter in the movie</property>
                  <property name="stock-id">gtk-jump-to</property>
                  <signal name="activate" handler="popup_goto_action_cb"/>
               </object>
@@ -76,17 +76,16 @@
       </packing>
     </child>
     <child>
-      <object class="GtkHBox" id="hbox1">
+      <object class="GtkHButtonBox" id="hbox1">
         <property name="visible">True</property>
         <property name="spacing">6</property>
-        <property name="homogeneous">True</property>
         <child>
           <object class="GtkButton" id="add_button">
             <property name="visible">True</property>
             <property name="sensitive">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="tooltip_text" translatable="yes">Add...</property>
+            <property name="tooltip_text" translatable="yes">Add Chapter...</property>
             <property name="relief">none</property>
             <signal name="clicked" handler="add_button_clicked_cb"/>
             <child>
@@ -106,7 +105,7 @@
             <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="tooltip_text" translatable="yes">Remove</property>
+            <property name="tooltip_text" translatable="yes">Remove Chapter</property>
             <property name="relief">none</property>
             <signal name="clicked" handler="remove_button_clicked_cb"/>
             <child>
@@ -126,7 +125,7 @@
             <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="tooltip_text" translatable="yes">Go to chapter</property>
+            <property name="tooltip_text" translatable="yes">Go to Chapter</property>
             <property name="relief">none</property>
             <signal name="clicked" handler="goto_button_clicked_cb"/>
             <child>
@@ -181,7 +180,7 @@
         <child>
           <object class="GtkLabel" id="chapters_label">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">No chapters data</property>
+            <property name="label" translatable="yes">No chapter data</property>
           </object>
         </child>
       </object>
@@ -201,11 +200,11 @@
             <property name="spacing">6</property>
             <child>
               <object class="GtkButton" id="load_button">
-                <property name="label" translatable="yes">Load chapters...</property>
+                <property name="label" translatable="yes">Load Chapters...</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="tooltip_text" translatable="yes">Load chapters from external file</property>
+                <property name="tooltip_text" translatable="yes">Load chapters from an external CMML file</property>
                 <signal name="clicked" handler="load_button_clicked_cb"/>
               </object>
               <packing>
@@ -214,11 +213,11 @@
             </child>
             <child>
               <object class="GtkButton" id="continue_button">
-                <property name="label" translatable="yes">Continue without</property>
+                <property name="label" translatable="yes">Add New Chapters</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="tooltip_text" translatable="yes">Continue to watch movie without loaded chapters</property>
+                <property name="tooltip_text" translatable="yes">Create a new chapter list for the movie</property>
                 <signal name="clicked" handler="continue_button_clicked_cb"/>
               </object>
               <packing>

@@ -543,7 +543,7 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 	g_object_get (G_OBJECT (plugin->priv->totem), "current-time", &_time, NULL);
 	if (G_UNLIKELY (!check_available_time (plugin, _time))) {
 		totem_interface_error_blocking (_("Chapter with the same time already exists"),
-						_("Try another name or remove an existing chapter"),
+						_("Try another name or remove an existing chapter."),
 						main_window);
 		g_object_unref (main_window);
 		if (plugin->priv->was_played)
@@ -842,7 +842,7 @@ save_button_clicked_cb (GtkButton		*button,
 
 	if (G_UNLIKELY (totem_cmml_write_file_async (data) < 0)) {
 		totem_action_error (plugin->priv->totem, _("Error occurred while saving chapters"),
-				    _("Please check you rights and free space"));
+		                    _("Please check you have permission to write to the folder containing the movie."));
 		g_free (data);
 		g_object_unref (plugin->priv->cancellable);
 	} else
@@ -976,7 +976,7 @@ load_button_clicked_cb (GtkButton		*button,
 
 	mrl = totem_get_current_mrl (plugin->priv->totem);
 	main_window = totem_get_main_window (plugin->priv->totem);
-	dialog = gtk_file_chooser_dialog_new (_("Open Chapters File"), main_window, GTK_FILE_CHOOSER_ACTION_OPEN,
+	dialog = gtk_file_chooser_dialog_new (_("Open Chapter File"), main_window, GTK_FILE_CHOOSER_ACTION_OPEN,
 					      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 					      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 					      NULL);
