@@ -1173,6 +1173,37 @@ impl_deactivate (PeasActivatable *plugin)
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	cplugin = TOTEM_CHAPTERS_PLUGIN (plugin);
 
+	/* If there are unsaved changes to the chapter data, ask the user if they'd like to save them. */
+	if (gtk_widget_get_sensitive (cplugin->priv->save_button) == TRUE) {
+		GtkWidget *dialog;
+		GtkWindow *main_window;
+
+		main_window = totem_object_get_main_window (totem);
+		dialog = gtk_message_dialog_new (main_window, GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+		                                 GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+		                                 _("Save changes to chapter list before closing?"));
+		g_object_unref (main_window);
+
+		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+		                        /* Translators: close Totem without saving changes to the chapter list of the current movie. */
+		                        _("Close without Saving"), GTK_RESPONSE_CLOSE,
+		                        /* Translators: save changes to the chapter list of the current movie before closing Totem. */
+		                        _("Save"), GTK_RESPONSE_OK,
+		                        NULL);
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+		                                          _("If you don't save, changes to the chapter list will be lost."));
+
+		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK) {
+			/* Save the chapter list before closing */
+			save_button_clicked_cb (GTK_BUTTON (cplugin->priv->save_button), cplugin);
+
+			/* Prevent it being cancelled further down in this function */
+			cplugin->priv->cancellable[1] = NULL;
+		}
+
+		gtk_widget_destroy (dialog);
+	}
+
 	/* FIXME: do not cancel async operation if any */
 
 	g_signal_handlers_disconnect_by_func (G_OBJECT (totem),
