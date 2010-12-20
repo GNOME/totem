@@ -954,6 +954,9 @@ totem_object_action_exit (TotemObject *totem)
 	GdkDisplay *display = NULL;
 	char *page_id;
 
+	/* Shut down the plugins first, allowing them to display modal dialogues (etc.) without threat of being killed from another thread */
+	totem_plugins_engine_shut_down (totem->engine);
+
 	/* Exit forcefully if we can't do the shutdown in 10 seconds */
 	g_thread_create ((GThreadFunc) totem_action_wait_force_exit,
 			 NULL, FALSE, NULL);

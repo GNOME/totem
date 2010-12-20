@@ -51,7 +51,7 @@ typedef struct _TotemPluginsEnginePrivate{
 
 G_DEFINE_TYPE(TotemPluginsEngine, totem_plugins_engine, PEAS_TYPE_ENGINE)
 
-static void totem_plugins_engine_finalize (GObject *object);
+static void totem_plugins_engine_dispose (GObject *object);
 #if 0
 static void totem_plugins_engine_activate_plugin (PeasEngine     *engine,
 						  PeasPluginInfo *info);
@@ -71,7 +71,7 @@ totem_plugins_engine_class_init (TotemPluginsEngineClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	object_class->finalize = totem_plugins_engine_finalize;
+	object_class->dispose = totem_plugins_engine_dispose;
 	g_type_class_add_private (klass, sizeof (TotemPluginsEnginePrivate));
 }
 
@@ -140,6 +140,28 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	return engine;
 }
 
+/* Necessary to break the reference cycle between activatable_extensions and the engine itself. Also useful to allow the plugins to be shut down
+ * earlier than the rest of Totem, so that (for example) they can display modal save dialogues and the like. */
+void
+totem_plugins_engine_shut_down (TotemPluginsEngine *self)
+{
+	TotemPluginsEnginePrivate *priv = self->priv;
+
+	g_return_if_fail (TOTEM_IS_PLUGINS_ENGINE (self));
+	g_return_if_fail (priv->activatable_extensions != NULL);
+
+	/* Disconnect from the signal handlers in case unreffing activatable_extensions doesn't finalise the PeasExtensionSet. */
+	g_signal_handlers_disconnect_by_func (priv->activatable_extensions, (GCallback) on_activatable_extension_added, self);
+	g_signal_handlers_disconnect_by_func (priv->activatable_extensions, (GCallback) on_activatable_extension_removed, self);
+
+	/* We then explicitly deactivate all the extensions. Normally, this would be done extension-by-extension as they're unreffed when the
+	 * PeasExtensionSet is finalised, but we've just removed the signal handler which would do that (extension-removed). */
+	peas_extension_set_call (priv->activatable_extensions, "deactivate");
+
+	g_object_unref (priv->activatable_extensions);
+	priv->activatable_extensions = NULL;
+}
+
 static void
 totem_plugins_engine_init (TotemPluginsEngine *engine)
 {
@@ -155,30 +177,25 @@ totem_plugins_engine_init (TotemPluginsEngine *engine)
 }
 
 static void
-totem_plugins_engine_finalize (GObject *object)
+totem_plugins_engine_dispose (GObject *object)
 {
 	TotemPluginsEngine *engine = TOTEM_PLUGINS_ENGINE (object);
 
-	g_signal_handlers_disconnect_by_func (engine->priv->activatable_extensions,
-					      G_CALLBACK (on_activatable_extension_added), engine);
-	g_signal_handlers_disconnect_by_func (engine->priv->activatable_extensions,
-					      G_CALLBACK (on_activatable_extension_removed), engine);
-
-	if (engine->priv->totem) {
-		peas_extension_set_call (engine->priv->activatable_extensions, "deactivate");
-
-		g_object_unref (engine->priv->totem);
-		engine->priv->totem = NULL;
-	}
+	if (engine->priv->activatable_extensions != NULL)
+		totem_plugins_engine_shut_down (engine);
 
 	if (engine->priv->garbage_collect_id > 0)
 		g_source_remove (engine->priv->garbage_collect_id);
 	engine->priv->garbage_collect_id = 0;
 	peas_engine_garbage_collect (PEAS_ENGINE (engine));
 
+	if (engine->priv->totem)
+		g_object_unref (engine->priv->totem);
+	engine->priv->totem = NULL;
+
 	if (engine->priv->settings != NULL)
 		g_object_unref (engine->priv->settings);
 	engine->priv->settings = NULL;
 
-	G_OBJECT_CLASS (totem_plugins_engine_parent_class)->finalize (object);
+	G_OBJECT_CLASS (totem_plugins_engine_parent_class)->dispose (object);
 }
