@@ -7,17 +7,17 @@
 # Baltasar Perez Diaz <baltasar.perez@hispalinux.es>, 2002.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-12-17 20:39+0000\n"
-"PO-Revision-Date: 2010-12-18 18:30+0100\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2010-12-20 01:03+0000\n"
+"PO-Revision-Date: 2010-12-20 13:28+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +34,7 @@ msgstr "Salir de pantalla completa"
 msgid "Time:"
 msgstr "Tiempo:"
 
-#: ../data/playlist.ui.h:1 ../src/plugins/chapters/chapters-list.ui.h:1
+#: ../data/playlist.ui.h:1
 msgid "Add..."
 msgstr "Añadir…"
 
@@ -50,7 +50,7 @@ msgstr "Mover abajo"
 msgid "Move Up"
 msgstr "Mover arriba"
 
-#: ../data/playlist.ui.h:5 ../src/plugins/chapters/chapters-list.ui.h:8
+#: ../data/playlist.ui.h:5
 msgid "Remove"
 msgstr "Quitar"
 
@@ -70,7 +70,7 @@ msgstr "Seleccione un archivo que usar como subtítulos"
 msgid "_Copy Location"
 msgstr "_Copiar dirección"
 
-#: ../data/playlist.ui.h:10 ../src/plugins/chapters/chapters-list.ui.h:12
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "_Quitar"
 
@@ -206,7 +206,7 @@ msgstr "_Añadir a la lista de reproducción"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1663
+#: ../src/totem-object.c:1666
 msgid "Movie Player"
 msgstr "Reproductor de películas"
 
@@ -1023,12 +1023,12 @@ msgstr "Extensiones"
 #: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"El programa no pudo encontrar el formato de archivo que quiere usar para "
-"«%s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
+"El programa no pudo encontrar el formato de archivo que quiere usar para «%"
+"s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
 "manualmente un formato de archivo de la lista inferior."
 
 #: ../src/eggfileformatchooser.c:659
@@ -1204,38 +1204,38 @@ msgstr "Configurar complementos"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1043 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1046 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Reproduciendo"
 
-#: ../src/totem-object.c:1045 ../src/totem-options.c:52
+#: ../src/totem-object.c:1048 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1050 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1053 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "Pausa"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1052 ../src/totem-object.c:1062
+#: ../src/totem-object.c:1055 ../src/totem-object.c:1065
 #: ../src/totem-options.c:51
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:84
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:96
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1057 ../src/totem-object.c:1655
+#: ../src/totem-object.c:1060 ../src/totem-object.c:1658
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Detenido"
 
-#: ../src/totem-object.c:1138 ../src/totem-object.c:1165
-#: ../src/totem-object.c:1793 ../src/totem-object.c:1956
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1168
+#: ../src/totem-object.c:1796 ../src/totem-object.c:1959
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:1242
+#: ../src/totem-object.c:1245
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1244,7 +1244,7 @@ msgstr ""
 "Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
 "instalado que puede manipularlo."
 
-#: ../src/totem-object.c:1243
+#: ../src/totem-object.c:1246
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1252,11 +1252,11 @@ msgstr ""
 "Compruebe que haya un disco en la unidad y que esté correctamente "
 "configurada."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1254
 msgid "More information about media plugins"
 msgstr "Más información acerca de los complementos de soportes"
 
-#: ../src/totem-object.c:1252
+#: ../src/totem-object.c:1255
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1264,7 +1264,7 @@ msgstr ""
 "Por favor, instale los complementos necesarios y reinicie Totem para poder "
 "reproducir este soporte."
 
-#: ../src/totem-object.c:1254
+#: ../src/totem-object.c:1257
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1273,7 +1273,7 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos apropiados para leer del disco."
 
-#: ../src/totem-object.c:1256
+#: ../src/totem-object.c:1259
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1282,66 +1282,66 @@ msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
 "complementos apropiados para manejarlo."
 
-#: ../src/totem-object.c:1259
+#: ../src/totem-object.c:1262
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "Totem no puede reproducir este tipo de soporte (%s) porque no está soportado."
 
-#: ../src/totem-object.c:1260
+#: ../src/totem-object.c:1263
 msgid "Please insert another disc to play back."
 msgstr "Introduzca otro disco para reproducir."
 
-#: ../src/totem-object.c:1296
+#: ../src/totem-object.c:1299
 msgid "Totem was not able to play this disc."
 msgstr "No no fue capaz de reproducir este disco."
 
-#: ../src/totem-object.c:1297 ../src/totem-object.c:4270
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4273
 msgid "No reason."
 msgstr "No hay razón."
 
-#: ../src/totem-object.c:1311
+#: ../src/totem-object.c:1314
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem no soporta la reproducción de CD de sonido"
 
-#: ../src/totem-object.c:1312
+#: ../src/totem-object.c:1315
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Considere usar un reproductor de música o un extractor de CD para reproducir "
 "este CD"
 
-#: ../src/totem-object.c:1799
+#: ../src/totem-object.c:1802
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem-object.c:2191
+#: ../src/totem-object.c:2194
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:2529 ../src/totem-object.c:2531
+#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
 #: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:4104 ../src/totem-object.c:4106
+#: ../src/totem-object.c:4107 ../src/totem-object.c:4109
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:4113 ../src/totem-object.c:4115
+#: ../src/totem-object.c:4116 ../src/totem-object.c:4118
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:4123 ../src/totem-object.c:4125
+#: ../src/totem-object.c:4126 ../src/totem-object.c:4128
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4137 ../src/totem-object.c:4139
+#: ../src/totem-object.c:4140 ../src/totem-object.c:4142
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4270
+#: ../src/totem-object.c:4273
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
@@ -1712,11 +1712,11 @@ msgstr "Resolución"
 msgid "Duration"
 msgstr "Duración"
 
-#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1001
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1000
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:997
 msgid "Supported files"
 msgstr "Archivos soportados"
 
@@ -1820,8 +1820,8 @@ msgid ""
 "using a sound server."
 msgstr ""
 "La salida de sonido la está usando otra aplicación. Seleccione otra salida "
-"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar "
-"usar un servidor de sonido."
+"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar usar "
+"un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3604
@@ -2054,53 +2054,69 @@ msgid "Video Disc Recorder"
 msgstr "Grabador de discos de vídeo"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1140
+#: ../src/plugins/chapters/totem-chapters.c:1139
 msgid "Chapters"
 msgstr "Capítulos"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Chapters support"
-msgstr "Soporte para capítulos"
+msgid "Support chapter markers in movies."
+msgstr "Soporte de marcadores de capítulos en películas."
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Enter new name for a chapter:"
-msgstr "Introducir un nombre nuevo para el capítulo:"
+msgid "Name for new chapter:"
+msgstr "Nombre del capítulo nuevo:"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:1
+msgid "Add Chapter..."
+msgstr "Añadir capítulo…"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Continue to watch movie without loaded chapters"
-msgstr "Continuar viendo la película sin los capítulos cargados"
+msgid "Add New Chapters"
+msgstr "Añadir capítulos nuevos"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "Continue without"
-msgstr "Continuar sin"
+msgid "Create a new chapter list for the movie"
+msgstr "Crear una lista nueva de capítulos para la película"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to chapter"
+msgid "Go to Chapter"
 msgstr "Ir al capítulo"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Load chapters from external file"
-msgstr "Cargar capítulos desde un archivo externo"
+msgid "Go to the chapter in the movie"
+msgstr "Ir al capítulo en la película"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Load chapters..."
+msgid "Load Chapters..."
 msgstr "Cargar capítulos…"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "No chapters data"
-msgstr "No hay datos capítulos"
+msgid "Load chapters from an external CMML file"
+msgstr "Cargar capítulos desde un archivo CMML externo"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:8
+msgid "No chapter data"
+msgstr "No hay datos del capítulo"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "Remove chapter from the list"
-msgstr "Quitar el capítulo de la lista"
+msgid "Remove Chapter"
+msgstr "Quitar capítulo"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
+msgid "Remove the chapter from the list"
+msgstr "Quitar el capítulo de la lista"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "_Go to"
-msgstr "Ir a"
+#: ../src/plugins/chapters/chapters-list.ui.h:12
+msgid "_Go to Chapter"
+msgstr "_Ir al capítulo"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:13
+msgid "_Remove Chapter"
+msgstr "_Quitar capítulo"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -2120,8 +2136,8 @@ msgid "Chapter with the same time already exists"
 msgstr "Ya existe un capítulo con los mismos tiempos"
 
 #: ../src/plugins/chapters/totem-chapters.c:546
-msgid "Try another name or remove an existing chapter"
-msgstr "Intente usar otro nombre o quitar un capítulo existente"
+msgid "Try another name or remove an existing chapter."
+msgstr "Intente usar otro nombre o quite un capítulo existente."
 
 #: ../src/plugins/chapters/totem-chapters.c:719
 msgid "Error while writing file with chapters"
@@ -2132,12 +2148,41 @@ msgid "Error occurred while saving chapters"
 msgstr "Ocurrió un error al guardar los capítulos"
 
 #: ../src/plugins/chapters/totem-chapters.c:845
-msgid "Please check you rights and free space"
-msgstr "Compruebe sus privilegios y el espacio libre"
+msgid ""
+"Please check you have permission to write to the folder containing the movie."
+msgstr ""
+"Compruebe que tiene permisos para escribir en la carpeta que contiene la "
+"película."
 
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Open Chapters File"
-msgstr "Abrir un archivo de capítulos"
+#: ../src/plugins/chapters/totem-chapters.c:978
+msgid "Open Chapter File"
+msgstr "Abrir archivo de capítulo"
+
+#: ../src/plugins/chapters/totem-chapters.c:1095
+msgid "Chapter Screenshot"
+msgstr "Captura del capítulo"
+
+#: ../src/plugins/chapters/totem-chapters.c:1106
+msgid "Chapter Title"
+msgstr "Título del capítulo"
+
+#: ../src/plugins/chapters/totem-chapters.c:1184
+msgid "Save changes to chapter list before closing?"
+msgstr "¿Guardar los cambios de la lista de capítulos antes de cerrar?"
+
+#. Translators: close Totem without saving changes to the chapter list of the current movie.
+#: ../src/plugins/chapters/totem-chapters.c:1189
+msgid "Close without Saving"
+msgstr "Cerrar sin guardar"
+
+#. Translators: save changes to the chapter list of the current movie before closing Totem.
+#: ../src/plugins/chapters/totem-chapters.c:1191
+msgid "Save"
+msgstr "Guardar"
+
+#: ../src/plugins/chapters/totem-chapters.c:1194
+msgid "If you don't save, changes to the chapter list will be lost."
+msgstr "Si no guarda, se perderán los cambios en el capítulo."
 
 #: ../src/plugins/chapters/totem-cmml-parser.c:559
 msgid "Failed to parse CMML file"
@@ -2356,7 +2401,6 @@ msgid "Duration: %s"
 msgstr "Duración: %s"
 
 #: ../src/plugins/jamendo/jamendo.py:355
-#| msgid "Fetching albums, please wait..."
 msgid "Fetching albums, please wait…"
 msgstr "Obteniendo álbumes, espere…"
 
@@ -2493,7 +2537,6 @@ msgid "Rating"
 msgstr "Puntuación"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:426
-#| msgid "Download Movie Subtitles"
 msgid "_Download Movie Subtitles…"
 msgstr "_Descargar subtítulos para la película…"
 
@@ -2502,12 +2545,10 @@ msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Descargar subtítulos para la película desde OpenSubtitles"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:486
-#| msgid "Searching subtitles..."
 msgid "Searching subtitles…"
 msgstr "Buscando subtítulos…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:544
-#| msgid "Downloading the subtitles..."
 msgid "Downloading the subtitles…"
 msgstr "Descargando los subtítulos…"
 
@@ -3020,6 +3061,18 @@ msgstr ""
 "rpdb2. Si no ha establecido una contraseña para el depurador en DConf, se "
 "usará la contraseña predeterminada («totem»)."
 
+#~ msgid "Chapters support"
+#~ msgstr "Soporte para capítulos"
+
+#~ msgid "Continue to watch movie without loaded chapters"
+#~ msgstr "Continuar viendo la película sin los capítulos cargados"
+
+#~ msgid "_Go to"
+#~ msgstr "Ir a"
+
+#~ msgid "Please check you rights and free space"
+#~ msgstr "Compruebe sus privilegios y el espacio libre"
+
 #~ msgid "_Download Movie Subtitles..."
 #~ msgstr "_Descargar subtítulos para la película…"
 
@@ -3063,33 +3116,33 @@ msgstr ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
+#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Velocidad aproximada de la red, usado para seleccionar la calidad para el "
 #~ "contenido multimedia sobre la red: «0» para módem de 14.4 Kbps, «1» para "
 #~ "módem de 19.2 Kbps, «2» para módem de 28.8 Kbps, «3» para módem de 33.6 "
-#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» "
-#~ "para RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para "
-#~ "DSL/cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/"
-#~ "Intranet/LAN de 1.5 Mbps, «11» para Intranet/LAN."
+#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» para "
+#~ "RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para DSL/"
+#~ "cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/Intranet/"
+#~ "LAN de 1.5 Mbps, «11» para Intranet/LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 #~ "normal, \"2\" for large, \"3\" for extra large."
 #~ msgstr ""
-#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, "
-#~ "«1» para normal, «2» para grande, «3» para extra grande."
+#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, «1» "
+#~ "para normal, «2» para grande, «3» para extra grande."
 
 #~ msgid ""
 #~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, "
-#~ "«2» para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
+#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, «2» "
+#~ "para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
