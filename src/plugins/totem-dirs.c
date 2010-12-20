@@ -142,6 +142,8 @@ totem_plugin_find_file (const char *plugin_name,
 	if (ret == NULL)
 		ret = totem_interface_get_full_path (file);
 
+	g_object_unref (engine);
+
 	//FIXME
 #if 0
 	/* ensure it's an absolute path, so doesn't confuse rb_glade_new et al */

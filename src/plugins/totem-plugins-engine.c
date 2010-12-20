@@ -101,7 +101,7 @@ totem_plugins_engine_get_default (TotemObject *totem)
 	guint i;
 
 	if (G_LIKELY (engine != NULL))
-		return engine;
+		return g_object_ref (engine);
 
 	g_return_val_if_fail (totem != NULL, NULL);
 
