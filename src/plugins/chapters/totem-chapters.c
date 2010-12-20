@@ -844,7 +844,6 @@ save_button_clicked_cb (GtkButton		*button,
 		totem_action_error (plugin->priv->totem, _("Error occurred while saving chapters"),
 		                    _("Please check you have permission to write to the folder containing the movie."));
 		g_free (data);
-		g_object_unref (plugin->priv->cancellable);
 	} else
 		gtk_widget_set_sensitive (plugin->priv->save_button, FALSE);
 }
