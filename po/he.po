@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-19 01:02+0200\n"
-"PO-Revision-Date: 2010-12-19 01:03+0200\n"
+"POT-Creation-Date: 2010-12-21 12:51+0200\n"
+"PO-Revision-Date: 2010-12-21 12:53+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "יציאה ממסך מלא"
 msgid "Time:"
 msgstr "זמן:"
 
-#: ../data/playlist.ui.h:1 ../src/plugins/chapters/chapters-list.ui.h:1
+#: ../data/playlist.ui.h:1
 msgid "Add..."
 msgstr "הוספה..."
 
@@ -42,7 +42,7 @@ msgstr "הזזה למטה"
 msgid "Move Up"
 msgstr "הזזה למעלה"
 
-#: ../data/playlist.ui.h:5 ../src/plugins/chapters/chapters-list.ui.h:8
+#: ../data/playlist.ui.h:5
 msgid "Remove"
 msgstr "הסרה"
 
@@ -62,7 +62,7 @@ msgstr "בחירת קובץ כתוביות"
 msgid "_Copy Location"
 msgstr "ה_עתקת מיקום"
 
-#: ../data/playlist.ui.h:10 ../src/plugins/chapters/chapters-list.ui.h:12
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "ה_סרה"
 
@@ -198,7 +198,7 @@ msgstr "ה_וספה לרשימת השמעה"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1663
+#: ../src/totem-object.c:1666
 msgid "Movie Player"
 msgstr "נגן סרטים"
 
@@ -1186,55 +1186,55 @@ msgstr "הגדרות תוספים"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1043 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1046 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "בנגינה"
 
-#: ../src/totem-object.c:1045 ../src/totem-options.c:52
+#: ../src/totem-object.c:1048 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "השהיה"
 
-#: ../src/totem-object.c:1050 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1053 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "מושהה"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1052 ../src/totem-object.c:1062
+#: ../src/totem-object.c:1055 ../src/totem-object.c:1065
 #: ../src/totem-options.c:51
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:84
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:96
 msgid "Play"
 msgstr "נגינה"
 
-#: ../src/totem-object.c:1057 ../src/totem-object.c:1655
+#: ../src/totem-object.c:1060 ../src/totem-object.c:1658
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "בעצירה"
 
-#: ../src/totem-object.c:1138 ../src/totem-object.c:1165
-#: ../src/totem-object.c:1793 ../src/totem-object.c:1956
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1168
+#: ../src/totem-object.c:1796 ../src/totem-object.c:1959
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem אינו יכול לנגן את '%s'."
 
-#: ../src/totem-object.c:1242
+#: ../src/totem-object.c:1245
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr "Totem לא יכול לנגן מדיה זו (%s) למרות שקיים תוסף לטיפול בו."
 
-#: ../src/totem-object.c:1243
+#: ../src/totem-object.c:1246
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
 msgstr "כדאי לבדוק את שהדיסק נמצא בכונן ושהוא מוגדר כראוי."
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1254
 msgid "More information about media plugins"
 msgstr "מידע נוסף על תוספי מדיה"
 
-#: ../src/totem-object.c:1252
+#: ../src/totem-object.c:1255
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1242,7 +1242,7 @@ msgstr ""
 "נא להתקין את התוספים הדרושים ולהפעיל מחדש את Totem כדי שניתן יהיה לנגן מדיה "
 "זו."
 
-#: ../src/totem-object.c:1254
+#: ../src/totem-object.c:1257
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1251,7 +1251,7 @@ msgstr ""
 "‏Totem אינו יכול לנגן סוג מדיה זה (%s) מכיוון שאין לך את התוספים המתאימים "
 "לקריאה מהדיסק."
 
-#: ../src/totem-object.c:1256
+#: ../src/totem-object.c:1259
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1260,63 +1260,63 @@ msgstr ""
 "Totem אינו יכול לנגן סוג מדיה זה (%s) מכיוון שאין לך את התוספים המתאימים "
 "בכדי לטפל בו."
 
-#: ../src/totem-object.c:1259
+#: ../src/totem-object.c:1262
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "‏Totem אינו יכול לנגן סוג מדיה זה (%s) מכיוון שהוא לא נתמך"
 
-#: ../src/totem-object.c:1260
+#: ../src/totem-object.c:1263
 msgid "Please insert another disc to play back."
 msgstr "נא להכניס דיסק אחר לניגון."
 
-#: ../src/totem-object.c:1296
+#: ../src/totem-object.c:1299
 msgid "Totem was not able to play this disc."
 msgstr "‏Totem לא הצליח לנגן את דיסק זה."
 
-#: ../src/totem-object.c:1297 ../src/totem-object.c:4270
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4273
 msgid "No reason."
 msgstr "אין סיבה."
 
-#: ../src/totem-object.c:1311
+#: ../src/totem-object.c:1314
 msgid "Totem does not support playback of Audio CDs"
 msgstr "‏Totem לא תומך בהשמעת תקליטורי CD"
 
-#: ../src/totem-object.c:1312
+#: ../src/totem-object.c:1315
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "אפשר להשתמש בנגן מוזיקה או מחלץ CD כדי לנגן CD זה"
 
-#: ../src/totem-object.c:1799
+#: ../src/totem-object.c:1802
 msgid "No error message"
 msgstr "אין הודעת שגיאה"
 
-#: ../src/totem-object.c:2191
+#: ../src/totem-object.c:2194
 msgid "Totem could not display the help contents."
 msgstr "Totem אינו יכול להציג את תוכן העזרה."
 
-#: ../src/totem-object.c:2529 ../src/totem-object.c:2531
+#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
 #: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "ארעה שגיאה"
 
-#: ../src/totem-object.c:4104 ../src/totem-object.c:4106
+#: ../src/totem-object.c:4107 ../src/totem-object.c:4109
 msgid "Previous Chapter/Movie"
 msgstr "הפרק/סרט הקודם"
 
-#: ../src/totem-object.c:4113 ../src/totem-object.c:4115
+#: ../src/totem-object.c:4116 ../src/totem-object.c:4118
 msgid "Play / Pause"
 msgstr "נגינה / השהיה"
 
-#: ../src/totem-object.c:4123 ../src/totem-object.c:4125
+#: ../src/totem-object.c:4126 ../src/totem-object.c:4128
 msgid "Next Chapter/Movie"
 msgstr "הפרק/סרט הבא"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4137 ../src/totem-object.c:4139
+#: ../src/totem-object.c:4140 ../src/totem-object.c:4142
 msgid "Fullscreen"
 msgstr "מסך מלא"
 
-#: ../src/totem-object.c:4270
+#: ../src/totem-object.c:4273
 msgid "Totem could not startup."
 msgstr "Totem לא יכול לעלות."
 
@@ -1687,11 +1687,11 @@ msgstr "הפרדה"
 msgid "Duration"
 msgstr "משך"
 
-#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1001
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1000
 msgid "All files"
 msgstr "כל הקבצים"
 
-#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:997
 msgid "Supported files"
 msgstr "קבצים נתמכים"
 
@@ -2012,53 +2012,69 @@ msgid "Video Disc Recorder"
 msgstr "מקליט דיסק וידאו"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1140
+#: ../src/plugins/chapters/totem-chapters.c:1139
 msgid "Chapters"
 msgstr "פרקים"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Chapters support"
-msgstr "תמיכה בפרקים"
+msgid "Support chapter markers in movies."
+msgstr "תמיכה בסמני פרקים בסרטים."
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Enter new name for a chapter:"
-msgstr "נא להזין שם חדש לפרק:"
+msgid "Name for new chapter:"
+msgstr "שם הפרק החדש:"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:1
+msgid "Add Chapter..."
+msgstr "הוספת פרק..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Continue to watch movie without loaded chapters"
-msgstr "המשך צפייה בסרט ללא הפרקים שנטענו"
+msgid "Add New Chapters"
+msgstr "הוספת פרקים חדשים"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "Continue without"
-msgstr "המשך ללא"
+msgid "Create a new chapter list for the movie"
+msgstr "יצירת רשימת פרקים חדשים עבור הסרט"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to chapter"
+msgid "Go to Chapter"
 msgstr "מעבר לפרק"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Load chapters from external file"
-msgstr "טעינת פרקים מקובץ חיצוני"
+msgid "Go to the chapter in the movie"
+msgstr "מעבר לפרק בסרט"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Load chapters..."
+msgid "Load Chapters..."
 msgstr "טעינת פרקים..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "No chapters data"
+msgid "Load chapters from an external CMML file"
+msgstr "טעינת פרקים מקובץ CMML חיצוני"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:8
+msgid "No chapter data"
 msgstr "אין נתוני פרקים"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "Remove chapter from the list"
-msgstr "הסרת פרק מהרשימה"
+msgid "Remove Chapter"
+msgstr "הסרת פרק"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
+msgid "Remove the chapter from the list"
+msgstr "הסרת הפרק מהרשימה"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
 msgid "Save Changes"
 msgstr "שמירת השינויים"
 
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "_Go to"
-msgstr "מ_עבר אל"
+#: ../src/plugins/chapters/chapters-list.ui.h:12
+msgid "_Go to Chapter"
+msgstr "מ_עבר לפרק"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:13
+msgid "_Remove Chapter"
+msgstr "ה_סרת פרק"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -2078,8 +2094,8 @@ msgid "Chapter with the same time already exists"
 msgstr "פרק בשם זה כבר קיים"
 
 #: ../src/plugins/chapters/totem-chapters.c:546
-msgid "Try another name or remove an existing chapter"
-msgstr "נא לנסות שם אחר או להסיר פרק קיים"
+msgid "Try another name or remove an existing chapter."
+msgstr "נא לנסות שם אחר או להסיר פרק קיים."
 
 #: ../src/plugins/chapters/totem-chapters.c:719
 msgid "Error while writing file with chapters"
@@ -2090,12 +2106,39 @@ msgid "Error occurred while saving chapters"
 msgstr "אירעה שגיאה בעת שמירת הפרקים"
 
 #: ../src/plugins/chapters/totem-chapters.c:845
-msgid "Please check you rights and free space"
-msgstr "נא לבדוק את ההרשאות ואת השטח הפנוי שנותר לך"
+msgid ""
+"Please check you have permission to write to the folder containing the movie."
+msgstr "נא לבדוק שיש לך את ההרשאות המתאימות לכתיבה לתיקייה המכילה את הסרט."
 
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Open Chapters File"
+#: ../src/plugins/chapters/totem-chapters.c:978
+msgid "Open Chapter File"
 msgstr "פתיחת קובץ פרקים"
+
+#: ../src/plugins/chapters/totem-chapters.c:1095
+msgid "Chapter Screenshot"
+msgstr "צילום מסך של הפרק"
+
+#: ../src/plugins/chapters/totem-chapters.c:1106
+msgid "Chapter Title"
+msgstr "כותרת הפרק"
+
+#: ../src/plugins/chapters/totem-chapters.c:1184
+msgid "Save changes to chapter list before closing?"
+msgstr "האם לשמור את השינויים לרשימת הפרקים לפני הסגירה?"
+
+#. Translators: close Totem without saving changes to the chapter list of the current movie.
+#: ../src/plugins/chapters/totem-chapters.c:1189
+msgid "Close without Saving"
+msgstr "סגירה ללא שמירה"
+
+#. Translators: save changes to the chapter list of the current movie before closing Totem.
+#: ../src/plugins/chapters/totem-chapters.c:1191
+msgid "Save"
+msgstr "שמירה"
+
+#: ../src/plugins/chapters/totem-chapters.c:1194
+msgid "If you don't save, changes to the chapter list will be lost."
+msgstr "אם לא תתבצע שמירה, השינויים לרשימת הפרקים יאבדו."
 
 #: ../src/plugins/chapters/totem-cmml-parser.c:559
 msgid "Failed to parse CMML file"
@@ -2947,6 +2990,18 @@ msgid ""
 msgstr ""
 "לאחר לחיצה על אישור, Totem ימתין עד להתחברות אליו בעזרת winpdb או rpdb2. אם "
 "לא הוגדרה ססמת מנפה ב־DConf, ססמת ברירת המחדל ('totem') תהיה בשימוש."
+
+#~ msgid "Chapters support"
+#~ msgstr "תמיכה בפרקים"
+
+#~ msgid "Continue to watch movie without loaded chapters"
+#~ msgstr "המשך צפייה בסרט ללא הפרקים שנטענו"
+
+#~ msgid "_Go to"
+#~ msgstr "מ_עבר אל"
+
+#~ msgid "Please check you rights and free space"
+#~ msgstr "נא לבדוק את ההרשאות ואת השטח הפנוי שנותר לך"
 
 #~ msgid "_Download Movie Subtitles..."
 #~ msgstr "הור_דת כתוביות עבור הסרט..."
