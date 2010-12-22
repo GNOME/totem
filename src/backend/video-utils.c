@@ -19,7 +19,7 @@ totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 
 	cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
 	gdk_window_set_cursor (window, cursor);
-	gdk_cursor_unref (cursor);
+	g_object_unref (cursor);
 }
 
 void
@@ -29,7 +29,7 @@ totem_gdk_window_set_waiting_cursor (GdkWindow *window)
 
 	cursor = gdk_cursor_new (GDK_WATCH);
 	gdk_window_set_cursor (window, cursor);
-	gdk_cursor_unref (cursor);
+	g_object_unref (cursor);
 
 	gdk_flush ();
 }

@@ -311,7 +311,7 @@ totem_gtk_plug_get_toplevel (GtkPlug *plug)
 
 		if (root == parent) {
 			GdkWindow *toplevel;
-			toplevel = gdk_window_foreign_new (xid);
+			toplevel = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), xid);
 			return toplevel;
 		}
 

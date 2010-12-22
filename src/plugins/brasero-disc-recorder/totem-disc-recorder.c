@@ -80,51 +80,60 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 {
 	GtkWindow *main_window;
 	GdkScreen *screen;
-	GPtrArray *array;
-	char **args, *xid_str;
+	gchar *command_line;
+	GList *uris;
+	GAppInfo *info;
+	GdkAppLaunchContext *context;
 	GError *error = NULL;
-	gboolean ret;
 	int xid;
 
-	array = g_ptr_array_new ();
-	g_ptr_array_add (array, (gpointer) "brasero");
-	if (copy != FALSE)
-		g_ptr_array_add (array, (gpointer) "-c");
-	else
-		g_ptr_array_add (array, (gpointer) "-r");
-	g_ptr_array_add (array, (gpointer) path);
-
+	/* Build a command line to use */
 	main_window = totem_get_main_window (pi->priv->totem);
 	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
 	xid = gdk_x11_window_get_xid (gtk_widget_get_window (GTK_WIDGET (main_window)));
-	xid_str = g_strdup_printf ("%d", xid);
-	g_ptr_array_add (array, (gpointer) "-x");
-	g_ptr_array_add (array, xid_str);
+	g_object_unref (main_window);
 
-	g_ptr_array_add (array, NULL);
-	args = (char **) g_ptr_array_free (array, FALSE);
+	if (copy != FALSE)
+		command_line = g_strdup_printf ("brasero -c -x %d", xid);
+	else
+		command_line = g_strdup_printf ("brasero -r -x %d", xid);
 
-	ret = TRUE;
-	if (gdk_spawn_on_screen (screen, NULL, args, NULL,
-				 G_SPAWN_SEARCH_PATH | G_SPAWN_FILE_AND_ARGV_ZERO,
-				 NULL, NULL, NULL, &error) == FALSE) {
-		if (copy != FALSE) {
-			totem_interface_error (_("The video disc could not be duplicated."),
-					       error->message,
-					       totem_get_main_window (pi->priv->totem));
-		} else {
-			totem_interface_error (_("The movie could not be recorded."),
-					       error->message,
-					       totem_get_main_window (pi->priv->totem));
-		}
-		ret = FALSE;
-		g_error_free (error);
-	}
+	/* Build the app info */
+	info = g_app_info_create_from_commandline (command_line, NULL,
+	                                           G_APP_INFO_CREATE_SUPPORTS_URIS | G_APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION, &error);
+	g_free (command_line);
 
-	g_free (xid_str);
-	g_free (args);
+	if (error != NULL)
+		goto error;
 
-	return ret;
+	/* Create a launch context and launch it */
+	context = gdk_app_launch_context_new ();
+	gdk_app_launch_context_set_screen (context, screen);
+
+	uris = g_list_prepend (NULL, (gpointer) path);
+	g_app_info_launch_uris (info, uris, G_APP_LAUNCH_CONTEXT (context), &error);
+	g_list_free (uris);
+
+	g_object_unref (info);
+	g_object_unref (context);
+
+	if (error != NULL)
+		goto error;
+
+	return TRUE;
+
+error:
+	main_window = totem_get_main_window (pi->priv->totem);
+
+	if (copy != FALSE)
+		totem_interface_error (_("The video disc could not be duplicated."), error->message, main_window);
+	else
+		totem_interface_error (_("The movie could not be recorded."), error->message, main_window);
+
+	g_error_free (error);
+	g_object_unref (main_window);
+
+	return FALSE;
 }
 
 static char*

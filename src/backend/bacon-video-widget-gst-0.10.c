@@ -1642,7 +1642,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
           }
         } else {
           if (bvw->priv->cursor != NULL) {
-            gdk_cursor_unref (bvw->priv->cursor);
+            g_object_unref (bvw->priv->cursor);
             bvw->priv->cursor = NULL;
           }
         }
@@ -2803,7 +2803,7 @@ bacon_video_widget_finalize (GObject * object)
     g_source_remove (bvw->priv->eos_id);
 
   if (bvw->priv->cursor != NULL) {
-    gdk_cursor_unref (bvw->priv->cursor);
+    g_object_unref (bvw->priv->cursor);
     bvw->priv->cursor = NULL;
   }
 

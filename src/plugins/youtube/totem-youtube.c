@@ -254,7 +254,7 @@ set_progress_bar_text (TotemYouTubePlugin *self, const gchar *text, guint tree_v
 	/* Set the cursor to a watch */
 	cursor = gdk_cursor_new (GDK_WATCH);
 	gdk_window_set_cursor (gtk_widget_get_window (self->priv->vbox), cursor);
-	gdk_cursor_unref (cursor);
+	g_object_unref (cursor);
 
 	/* Call the pulse method */
 	data = g_slice_new (ProgressBarData);
