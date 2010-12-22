@@ -683,7 +683,7 @@ gsd_osd_window_class_init (GsdOsdWindowClass *klass)
         g_type_class_add_private (klass, sizeof (GsdOsdWindowPrivate));
 }
 
-/**
+/*
  * gsd_osd_window_is_composited:
  * @window: a #GsdOsdWindow
  *
@@ -695,7 +695,7 @@ gsd_osd_window_is_composited (GsdOsdWindow *window)
         return window->priv->is_composited;
 }
 
-/**
+/*
  * gsd_osd_window_is_valid:
  * @window: a #GsdOsdWindow
  *

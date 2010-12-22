@@ -116,7 +116,9 @@ IGNORE_HFILES += \
 	totem-skipto-plugin.h		\
 	totem-time-entry.h		\
 	totem-tracker-widget.h		\
-	totem-marshal.h
+	totem-marshal.h			\
+	gsd-media-keys-window.h		\
+	gsd-osd-window.h
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png
