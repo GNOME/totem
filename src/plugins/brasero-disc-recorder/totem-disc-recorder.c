@@ -94,9 +94,9 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 	g_object_unref (main_window);
 
 	if (copy != FALSE)
-		command_line = g_strdup_printf ("brasero -c -x %d", xid);
+		command_line = g_strdup_printf ("brasero -x %d -c", xid);
 	else
-		command_line = g_strdup_printf ("brasero -r -x %d", xid);
+		command_line = g_strdup_printf ("brasero -x %d -r", xid);
 
 	/* Build the app info */
 	info = g_app_info_create_from_commandline (command_line, NULL,
