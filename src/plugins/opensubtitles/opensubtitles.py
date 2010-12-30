@@ -597,6 +597,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.action.set_sensitive(False)
         self.treeview.set_sensitive(False)
         self.os_save_selected_subtitle()
+        self.on_close_clicked (None)
 
     # Callbacks
 
