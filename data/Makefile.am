@@ -65,6 +65,22 @@ CLEANFILES += \
 	$(desktop_in_files)	\
 	$(desktop_DATA)
 
+# Thumbnailer
+thumbnailerdir = $(datadir)/thumbnailers
+thumbnailer_in_files = totem.thumbnailer.in
+thumbnailer_DATA = $(thumbnailer_in_files:.thumbnailer.in=.thumbnailer)
+
+totem.thumbnailer: $(thumbnailer_in_files) mime-type-list.txt thumbnailer.sh
+	$(AM_V_GEN)sed -e "s|\@BINDIR\@|$(bindir)|" $< > $@ &&\
+	$(SHELL) $(srcdir)/thumbnailer.sh $(srcdir)/mime-type-list.txt >> $@
+
+EXTRA_DIST += \
+	$(thumbnailer_in_files) \
+	thumbnailer.sh
+
+CLEANFILES += \
+	$(thumbnailer_DATA)
+
 # Content type handling
 nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h
 totem-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
