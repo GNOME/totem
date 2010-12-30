@@ -568,6 +568,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.model.lock.release()
 
         self.dialog.get_window().set_cursor(None)
+        self.on_close_clicked (None)
 
         if suburi:
             self.totem.set_current_subtitle(suburi)
@@ -597,7 +598,6 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         self.action.set_sensitive(False)
         self.treeview.set_sensitive(False)
         self.os_save_selected_subtitle()
-        self.on_close_clicked (None)
 
     # Callbacks
 
