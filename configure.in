@@ -163,7 +163,7 @@ do
 done
 
 dnl Check the smclient backend
-GDK_TARGET="$($PKG_CONFIG --variable target gdk-3.0)"
+GDK_TARGET="$($PKG_CONFIG --variable targets gdk-3.0)"
 
 SMCLIENT_PKGS=
 AC_MSG_CHECKING([which smclient backend to use])
@@ -215,7 +215,7 @@ dnl *************************
 dnl X11 related functionality
 dnl *************************
 have_x11=no
-if test x$(pkg-config --variable=target gtk+-3.0) = xx11; then
+if test x$(pkg-config --variable=targets gtk+-3.0) = xx11; then
 	AC_PATH_X
 
 	have_x11=yes
