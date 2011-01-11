@@ -79,17 +79,14 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 					  gboolean copy)
 {
 	GtkWindow *main_window;
-	GdkScreen *screen;
 	gchar *command_line;
 	GList *uris;
 	GAppInfo *info;
-	GdkAppLaunchContext *context;
 	GError *error = NULL;
 	int xid;
 
 	/* Build a command line to use */
 	main_window = totem_get_main_window (pi->priv->totem);
-	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
 	xid = gdk_x11_window_get_xid (gtk_widget_get_window (GTK_WIDGET (main_window)));
 	g_object_unref (main_window);
 
@@ -106,16 +103,11 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 	if (error != NULL)
 		goto error;
 
-	/* Create a launch context and launch it */
-	context = gdk_app_launch_context_new ();
-	gdk_app_launch_context_set_screen (context, screen);
-
 	uris = g_list_prepend (NULL, (gpointer) path);
-	g_app_info_launch_uris (info, uris, G_APP_LAUNCH_CONTEXT (context), &error);
+	g_app_info_launch_uris (info, uris, NULL, &error);
 	g_list_free (uris);
 
 	g_object_unref (info);
-	g_object_unref (context);
 
 	if (error != NULL)
 		goto error;

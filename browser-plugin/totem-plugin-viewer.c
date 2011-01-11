@@ -580,8 +580,6 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
  			      guint32 user_time)
 {
 	GList *uris = NULL;
-	GdkScreen *screen;
-	GAppLaunchContext *ctx;
 	gboolean result;
 	const char *uri;
 
@@ -596,14 +594,7 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 		uri = embedded->current_uri;
 	}
 
-	ctx = G_APP_LAUNCH_CONTEXT (gdk_app_launch_context_new ());
-	screen = gtk_widget_get_screen (embedded->window);
-	gdk_app_launch_context_set_screen (GDK_APP_LAUNCH_CONTEXT (ctx), screen);
-
-	gdk_app_launch_context_set_timestamp (GDK_APP_LAUNCH_CONTEXT (ctx), user_time);
-	gdk_app_launch_context_set_icon (GDK_APP_LAUNCH_CONTEXT (ctx), g_app_info_get_icon (embedded->app));
-
-	result = g_app_info_launch_uris (embedded->app, uris, ctx, NULL);
+	result = g_app_info_launch_uris (embedded->app, uris, NULL, NULL);
 
 	g_list_free (uris);
 
