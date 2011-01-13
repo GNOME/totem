@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-21 12:51+0200\n"
-"PO-Revision-Date: 2010-12-21 12:53+0200\n"
+"POT-Creation-Date: 2011-01-13 23:17+0200\n"
+"PO-Revision-Date: 2011-01-13 23:20+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -949,27 +949,27 @@ msgstr "הקובץ אינו קובץ desktop. תקין"
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "גרסת קובץ ה־desktop. ‏'%s' אינה מוכרת"
 
-#: ../src/eggdesktopfile.c:958
+#: ../src/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "%s מופעל"
 
-#: ../src/eggdesktopfile.c:1100
+#: ../src/eggdesktopfile.c:1110
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "היישום לא מקבל מסמכים משורת הפקודה"
 
-#: ../src/eggdesktopfile.c:1168
+#: ../src/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "אפשרות שיגור לא מוכרת: %d"
 
-#: ../src/eggdesktopfile.c:1373
+#: ../src/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "לא ניתן להעביר כתובות מסמך לרשומת 'Type=Link'"
 
-#: ../src/eggdesktopfile.c:1394
+#: ../src/eggdesktopfile.c:1404
 #, c-format
 msgid "Not a launchable item"
 msgstr "הפריט לא ניתן לשיגור"
@@ -1015,31 +1015,31 @@ msgstr ""
 msgid "File format not recognized"
 msgstr "File format not recognized"
 
-#: ../src/eggsmclient.c:225
+#: ../src/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "Disable connection to session manager"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "Specify file containing saved configuration"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "FILE"
 msgstr "FILE"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "Specify session management ID"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "ID"
 msgstr "ID"
 
-#: ../src/eggsmclient.c:252
+#: ../src/eggsmclient.c:253
 msgid "Session management options:"
 msgstr "Session management options:"
 
-#: ../src/eggsmclient.c:253
+#: ../src/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Show session management options"
 
@@ -1988,18 +1988,18 @@ msgstr "העתקת וידאו ‎(S)VCD..."
 msgid "Copy the currently playing (S)VCD"
 msgstr "העתקת הווידאו ‎(S)VCD המתנגן"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:112
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
 msgid "The video disc could not be duplicated."
 msgstr "לא ניתן לשכפל את דיסק הווידאו."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:116
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:267
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:131
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:276
 msgid "The movie could not be recorded."
 msgstr "לא ניתן להקליט את הסרט."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:148
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:158
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:254
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:157
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:167
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:263
 msgid "Unable to write a project."
 msgstr "לא ניתן לכתוב פרויקט."
 
@@ -2762,25 +2762,28 @@ msgstr "יצירת גלריית תצלומי מסך"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#: ../src/plugins/skipto/totem-skipto.c:159
-#: ../src/plugins/skipto/totem-skipto.c:185
+#: ../src/plugins/skipto/totem-skipto.c:160
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "שנייה"
 msgstr[1] "שניות"
 
-#: ../src/plugins/skipto/totem-skipto.c:185
-msgid "seconds"
-msgstr "שניות"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:190
+msgctxt "Skip To label length"
+msgid "7"
+msgstr "5"
 
-#: ../src/plugins/skipto/totem-skipto.c:191
-msgid "Skip to"
+#: ../src/plugins/skipto/totem-skipto.c:197
+msgid "Skip To"
 msgstr "דילוג אל"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "_Skip to..."
-msgstr "_דילוג ל־..."
+msgid "_Skip To..."
+msgstr "_דילוג אל..."
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
@@ -2859,6 +2862,7 @@ msgid "Videos"
 msgstr "סרטונים"
 
 #: ../src/plugins/youtube/totem-youtube.c:144
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "_Open in Web Browser"
 msgstr "פתיחה ב_דפדפן"
 
@@ -2871,23 +2875,19 @@ msgstr "פתיחת הווידאו בדפדפן שלך"
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:281
+#: ../src/plugins/youtube/totem-youtube.c:279
 msgid "Cancelling query…"
 msgstr "השאילתה מבוטלת..."
-
-#: ../src/plugins/youtube/totem-youtube.c:342
-msgid "Error Looking Up Video URI"
-msgstr "שגיאה באיתור כתובת הווידאו"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:626
-#: ../src/plugins/youtube/totem-youtube.c:631
+#: ../src/plugins/youtube/totem-youtube.c:424
+#: ../src/plugins/youtube/totem-youtube.c:429
 msgid "Error Searching for Videos"
 msgstr "שגיאה בחיפוש אחר סרטונים"
 
-#: ../src/plugins/youtube/totem-youtube.c:627
+#: ../src/plugins/youtube/totem-youtube.c:425
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2895,22 +2895,34 @@ msgstr ""
 "לא ניתן לפענח את התגובה מהשרת. נא לבדוק האם ברשותך הגרסה האחרונה של libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:803
+#: ../src/plugins/youtube/totem-youtube.c:618
 msgid "Fetching search results…"
 msgstr "תוצאות החיפוש מתקבלות..."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:868
+#: ../src/plugins/youtube/totem-youtube.c:680
 msgid "Fetching related videos…"
 msgstr "מתקבלים סרטונים קשורים..."
 
-#: ../src/plugins/youtube/totem-youtube.c:920
+#: ../src/plugins/youtube/totem-youtube.c:732
 msgid "Error Opening Video in Web Browser"
 msgstr "שגיאה בפתיחת הווידאו בדפדפן האינטרנט"
 
-#: ../src/plugins/youtube/totem-youtube.c:940
+#: ../src/plugins/youtube/totem-youtube.c:752
 msgid "Fetching more videos…"
 msgstr "מתקבלים סרטונים נוספים..."
+
+#: ../src/plugins/youtube/totem-youtube.c:797
+msgid "Video Format Not Supported"
+msgstr "מבנה הווידאו אינו נתמך"
+
+#: ../src/plugins/youtube/totem-youtube.c:799
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
+"סרטון וידאו זה אינו זמין באף מבנה הנתמך על ידי Totem. האם ברצונך לפתוח אותו "
+"בדפדפן האינטרנט שלך במקום?"
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
@@ -2990,6 +3002,12 @@ msgid ""
 msgstr ""
 "לאחר לחיצה על אישור, Totem ימתין עד להתחברות אליו בעזרת winpdb או rpdb2. אם "
 "לא הוגדרה ססמת מנפה ב־DConf, ססמת ברירת המחדל ('totem') תהיה בשימוש."
+
+#~ msgid "seconds"
+#~ msgstr "שניות"
+
+#~ msgid "Error Looking Up Video URI"
+#~ msgstr "שגיאה באיתור כתובת הווידאו"
 
 #~ msgid "Chapters support"
 #~ msgstr "תמיכה בפרקים"
