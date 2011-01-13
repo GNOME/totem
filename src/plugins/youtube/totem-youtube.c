@@ -218,8 +218,6 @@ impl_deactivate (PeasActivatable *plugin)
 		g_object_unref (priv->playing_video);
 	if (priv->service != NULL)
 		g_object_unref (priv->service);
-	if (priv->session != NULL)
-		g_object_unref (priv->session);
 	g_object_unref (priv->bvw);
 	g_object_unref (priv->totem);
 	if (priv->regex != NULL)
@@ -282,206 +280,11 @@ increment_progress_bar_fraction (TotemYouTubePlugin *self, guint tree_view)
 
 	/* Update the UI */
 	if (gtk_progress_bar_get_fraction (priv->progress_bar[tree_view]) == 1.0) {
-		/* The entire search process (including loading thumbnails and t params) is finished, so update the progress bar */
+		/* The entire search process (including loading thumbnails) is finished, so update the progress bar */
 		gdk_window_set_cursor (gtk_widget_get_window (priv->vbox), NULL);
 		gtk_progress_bar_set_text (priv->progress_bar[tree_view], "");
 		gtk_progress_bar_set_fraction (priv->progress_bar[tree_view], 0.0);
 	}
-}
-
-typedef struct {
-	TotemYouTubePlugin *plugin;
-	GDataEntry *entry;
-	GtkTreePath *path;
-	guint tree_view;
-	SoupMessage *message;
-	gulong cancelled_id;
-	GCancellable *cancellable;
-} TParamData;
-
-/* Ranked list of formats to prefer, from http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs */
-static const guint fmt_preferences[] = {
-	17, /* least preferred (lowest connection speed needed) */
-	5,
-	18,
-	18,
-	34,
-	35,
-	43,
-	43,
-	22,
-	45,
-	45,
-	37,
-	38 /* most preferred (highest connection speed needed) */
-};
-
-static void
-resolve_t_param_cb (SoupSession *session, SoupMessage *message, TParamData *data)
-{
-	gchar *video_uri = NULL;
-	const gchar *video_id, *contents;
-	gsize length;
-	GMatchInfo *match_info;
-	GtkTreeIter iter;
-	TotemYouTubePlugin *self = data->plugin;
-
-	/* Prevent cancellation */
-	g_cancellable_disconnect (data->cancellable, data->cancelled_id);
-
-	/* Finish loading the page */
-	if (message->status_code != SOUP_STATUS_OK) {
-		GtkWindow *window;
-
-		/* Bail out if the operation was cancelled */
-		if (message->status_code == SOUP_STATUS_CANCELLED)
-			goto free_data;
-
-		/* Couldn't load the page contents; error */
-		window = totem_get_main_window (self->priv->totem);
-		totem_interface_error (_("Error Looking Up Video URI"), message->response_body->data, window);
-		g_object_unref (window);
-		goto free_data;
-	}
-
-	contents = message->response_body->data;
-	length = message->response_body->length;
-
-	video_id = gdata_youtube_video_get_video_id (GDATA_YOUTUBE_VIDEO (data->entry));
-
-	/* Check for the fmt_url_map parameter */
-	g_regex_match (self->priv->regex, contents, 0, &match_info);
-	if (g_match_info_matches (match_info) == TRUE) {
-		gchar *fmt_url_map_escaped, *fmt_url_map;
-		gchar **mappings, **i;
-		GHashTable *fmt_table;
-		gint connection_speed;
-
-		/* We have a match */
-		fmt_url_map_escaped = g_match_info_fetch (match_info, 1);
-		fmt_url_map = g_uri_unescape_string (fmt_url_map_escaped, NULL);
-		g_free (fmt_url_map_escaped);
-
-		/* The fmt_url_map parameter is in the following format:
-		 *   fmt1|uri1,fmt2|uri2,fmt3|uri3,...
-		 * where fmtN is an identifier for the audio and video encoding and resolution as described here:
-		 * (http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs) and uriN is the playback URI for that format.
-		 *
-		 * We parse it into a hash table from format to URI, and use that against a ranked list of preferred formats (based on the user's
-		 * connection speed) to determine the URI to use. */
-		fmt_table = g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL, g_free);
-		mappings = g_strsplit (fmt_url_map, ",", 0);
-
-		for (i = mappings; *i != NULL; i++) {
-			/* For the moment we just take the first format we get */
-			gchar **mapping;
-			gint fmt;
-
-			mapping = g_strsplit (*i, "|", 2);
-
-			if (mapping[0] == NULL || mapping[1] == NULL) {
-				g_warning ("Bad format-URI mapping: %s", *i);
-				g_strfreev (mapping);
-				continue;
-			}
-
-			fmt = atoi (mapping[0]);
-
-			if (fmt < 1) {
-				g_warning ("Badly-formed format: %s", mapping[0]);
-				g_strfreev (mapping);
-				continue;
-			}
-
-			g_hash_table_insert (fmt_table, GUINT_TO_POINTER ((guint) fmt), g_strdup (mapping[1]));
-			g_strfreev (mapping);
-		}
-
-		g_strfreev (mappings);
-
-		/* Starting with the highest connection speed we support, look for video URIs matching our connection speed. */
-		connection_speed = MIN (bacon_video_widget_get_connection_speed (self->priv->bvw), (gint) G_N_ELEMENTS (fmt_preferences) - 1);
-		for (; connection_speed >= 0; connection_speed--) {
-			guint idx = (guint) connection_speed;
-			video_uri = g_strdup (g_hash_table_lookup (fmt_table, GUINT_TO_POINTER (fmt_preferences [idx])));
-
-			/* Have we found a match yet? */
-			if (video_uri != NULL) {
-				g_debug ("Using video URI for format %u (connection speed %u)", fmt_preferences[idx], idx);
-				break;
-			}
-		}
-
-		g_hash_table_destroy (fmt_table);
-	}
-
-	/* Fallback */
-	if (video_uri == NULL) {
-		GDataMediaContent *content;
-
-		/* We don't have a match, which is odd; fall back to the FLV URI as advertised by the YouTube API */
-		content = GDATA_MEDIA_CONTENT (gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (data->entry),
-		                                                                    "application/x-shockwave-flash"));
-		if (content != NULL) {
-			video_uri = g_strdup (gdata_media_content_get_uri (content));
-			g_debug ("Couldn't find the t param of entry %s; falling back to its FLV URI (\"%s\")", video_id, video_uri);
-		} else {
-			/* Cop out */
-			g_warning ("Couldn't find the t param of entry %s or its FLV URI.", video_uri);
-			video_uri = NULL;
-		}
-	}
-
-	g_match_info_free (match_info);
-
-	/* Update the tree view with the new MRL */
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->priv->list_store[data->tree_view]), &iter, data->path) == TRUE) {
-		gtk_list_store_set (self->priv->list_store[data->tree_view], &iter, 2, video_uri, -1);
-		g_debug ("Updated list store with new video URI (\"%s\") for entry %s", video_uri, video_id);
-	}
-
-	g_free (video_uri);
-
-free_data:
-	/* Update the progress bar */
-	increment_progress_bar_fraction (self, data->tree_view);
-
-	g_object_unref (data->cancellable);
-	g_object_unref (data->plugin);
-	g_object_unref (data->entry);
-	gtk_tree_path_free (data->path);
-	g_slice_free (TParamData, data);
-}
-
-static void
-resolve_t_param_cancelled_cb (GCancellable *cancellable, TParamData *data)
-{
-	/* This will cause resolve_t_param_cb() to be called, which will free the data */
-	soup_session_cancel_message (data->plugin->priv->session, data->message, SOUP_STATUS_CANCELLED);
-}
-
-static void
-resolve_t_param (TotemYouTubePlugin *self, GDataEntry *entry, GtkTreeIter *iter, guint tree_view, GCancellable *cancellable)
-{
-	GDataLink *page_link;
-	TParamData *data;
-
-	/* We have to get the t parameter from the actual HTML video page, since Google changed how their URIs work */
-	page_link = gdata_entry_look_up_link (entry, GDATA_LINK_ALTERNATE);
-	g_assert (page_link != NULL);
-
-	data = g_slice_new (TParamData);
-	data->plugin = g_object_ref (self);
-	data->entry = g_object_ref (entry);
-	data->path = gtk_tree_model_get_path (GTK_TREE_MODEL (self->priv->list_store[tree_view]), iter);
-	data->tree_view = tree_view;
-	data->cancellable = g_object_ref (cancellable);
-
-	data->message = soup_message_new (SOUP_METHOD_GET, gdata_link_get_uri (page_link));
-	data->cancelled_id = g_cancellable_connect (cancellable, (GCallback) resolve_t_param_cancelled_cb, data, NULL);
-
-	/* Send the message. Consumes a reference to data->message after resolve_t_param_cb() finishes */
-	soup_session_queue_message (self->priv->session, data->message, (SoupSessionCallback) resolve_t_param_cb, data);
 }
 
 typedef struct {
@@ -565,7 +368,6 @@ typedef struct {
 	TotemYouTubePlugin *plugin;
 	guint tree_view;
 	GCancellable *query_cancellable;
-	GCancellable *t_param_cancellable;
 	GCancellable *thumbnail_cancellable;
 } QueryData;
 
@@ -574,8 +376,6 @@ query_data_free (QueryData *data)
 {
 	if (data->thumbnail_cancellable != NULL)
 		g_object_unref (data->thumbnail_cancellable);
-	if (data->t_param_cancellable != NULL)
-		g_object_unref (data->t_param_cancellable);
 
 	g_object_unref (data->query_cancellable);
 	g_object_unref (data->plugin);
@@ -609,9 +409,7 @@ query_finished_cb (GObject *source_object, GAsyncResult *result, QueryData *data
 
 	/* Bail out if the operation was cancelled */
 	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED) == TRUE) {
-		/* Cancel the t-param and thumbnail threads, if applicable */
-		if (data->t_param_cancellable != NULL)
-			g_cancellable_cancel (data->t_param_cancellable);
+		/* Cancel the thumbnail thread, if applicable */
 		if (data->thumbnail_cancellable != NULL)
 			g_cancellable_cancel (data->thumbnail_cancellable);
 
@@ -647,8 +445,9 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	GDataMediaThumbnail *thumbnail = NULL;
 	gint delta = G_MININT;
 	GtkTreeIter iter;
-	const gchar *title, *id;
+	const gchar *title, *id, *video_uri;
 	GtkProgressBar *progress_bar;
+	GDataMediaContent *content;
 	TotemYouTubePlugin *self = data->plugin;
 
 	/* Add the entry to the tree view */
@@ -664,7 +463,9 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	                    -1);
 	g_debug ("Added entry %s to tree view (title: \"%s\")", id, title);
 
-	/* Update the progress bar; we have three steps for each entry in the results: the entry, its thumbnail, and its t parameter */
+	/* Update the progress bar; we have three steps for each entry in the results: the entry, its thumbnail, and its t parameter.
+	 * Since we've dropped t-param resolution in favour of just using the listed content URIs in the video entry itself, the t-param step is
+	 * no longer asynchronous. However, for simplicity it's been kept in the progress bar's update lifecycle. */
 	g_assert (entry_count > 0);
 	progress_bar = self->priv->progress_bar[data->tree_view];
 	self->priv->progress_bar_increment[data->tree_view] = 1.0 / (entry_count * 3.0);
@@ -672,10 +473,25 @@ query_progress_cb (GDataEntry *entry, guint entry_key, guint entry_count, QueryD
 	gtk_progress_bar_set_fraction (progress_bar,
 	                               gtk_progress_bar_get_fraction (progress_bar) + self->priv->progress_bar_increment[data->tree_view]);
 
-	/* Resolve the t parameter for the video, which is required before it can be played */
-	/* This will be cancelled if the main query is cancelled, in query_finished_cb() */
-	data->t_param_cancellable = g_cancellable_new ();
-	resolve_t_param (self, entry, &iter, data->tree_view, data->t_param_cancellable);
+	/* Look up a playback URI for the video. We can only support video/3gpp first.
+	 * See: http://code.google.com/apis/youtube/2.0/reference.html#formatsp. */
+	content = GDATA_MEDIA_CONTENT (gdata_youtube_video_look_up_content (GDATA_YOUTUBE_VIDEO (entry), "video/3gpp"));
+
+	if (content != NULL) {
+		video_uri = gdata_media_content_get_uri (content);
+		g_debug ("Using video URI %s (content type: %s)", video_uri, gdata_media_content_get_content_type (content));
+	} else {
+		/* Cop out */
+		g_warning ("Couldn't find a playback URI for entry %s.", id);
+		video_uri = NULL;
+	}
+
+	/* Update the tree view with the new MRL */
+	gtk_list_store_set (self->priv->list_store[data->tree_view], &iter, 2, video_uri, -1);
+	g_debug ("Updated list store with new video URI (\"%s\") for entry %s", video_uri, id);
+
+	/* Update the progress bar */
+	increment_progress_bar_fraction (self, data->tree_view);
 
 	/* Download the entry's thumbnail, ready for adding it to the tree view.
 	 * Find the thumbnail size which is closest to the wanted size (THUMBNAIL_WIDTH), so that we:
@@ -766,7 +582,6 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 	data->plugin = g_object_ref (self);
 	data->tree_view = tree_view;
 	data->query_cancellable = g_cancellable_new ();
-	data->t_param_cancellable = NULL;
 	data->thumbnail_cancellable = NULL;
 
 	/* Make this the current cancellable action for the given tab */
@@ -830,9 +645,6 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		/* Set up the queries */
 		priv->query[SEARCH_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
 		priv->query[RELATED_TREE_VIEW] = gdata_query_new_with_limits (NULL, 0, MAX_RESULTS);
-
-		/* Lazily create the SoupSession used in resolve_t_param() */
-		priv->session = soup_session_async_new ();
 	}
 
 	/* Do the query */
