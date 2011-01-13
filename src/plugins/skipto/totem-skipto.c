@@ -194,7 +194,7 @@ totem_skipto_new (TotemObject *totem)
 	tstw_adjustment_value_changed_cb (GTK_ADJUSTMENT (gtk_builder_get_object
 		(skipto->priv->xml, "tstw_skip_adjustment")), skipto);
 
-	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip to"));
+	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip To"));
 	gtk_dialog_add_buttons (GTK_DIALOG (skipto),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_OK, GTK_RESPONSE_OK,

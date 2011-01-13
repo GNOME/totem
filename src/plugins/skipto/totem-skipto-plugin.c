@@ -179,7 +179,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemSkiptoPluginPrivate *priv = pi->priv;
 
 	const GtkActionEntry menu_entries[] = {
-		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip to..."), "<Control>K", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
+		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip To..."), "<Control>K", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
 	};
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
