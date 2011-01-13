@@ -775,11 +775,44 @@ starting_video_cb (TotemVideoList *video_list, GtkTreePath *path, TotemYouTubePl
 {
 	GtkTreeIter iter;
 	GDataYouTubeVideo *video_entry;
+	gchar *video_uri;
 
 	/* Store the current entry */
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (self->priv->list_store[self->priv->current_tree_view]), &iter, path) == FALSE)
 		return FALSE;
-	gtk_tree_model_get (GTK_TREE_MODEL (self->priv->list_store[self->priv->current_tree_view]), &iter, 3, &video_entry, -1);
+	gtk_tree_model_get (GTK_TREE_MODEL (self->priv->list_store[self->priv->current_tree_view]), &iter,
+	                    2, &video_uri,
+	                    3, &video_entry,
+	                    -1);
+
+	/* If there's no video URI set, display an error message and suggest that the user watch the video in their browser. This typically happens
+	 * because the video isn't offered in any format we support. */
+	if (video_uri == NULL) {
+		GtkDialog *dialog;
+		GtkWindow *main_window;
+
+		main_window = totem_get_main_window (self->priv->totem);
+		dialog = GTK_DIALOG (gtk_message_dialog_new (main_window,
+		                                             GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+		                                             _("Video Format Not Supported")));
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+		                                          _("This video is not available in any formats which Totem supports. Would you like to "
+		                                            "open it in your web browser instead?"));
+		gtk_dialog_add_buttons (dialog,
+		                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		                        _("_Open in Web Browser"), GTK_RESPONSE_OK,
+		                        NULL);
+		g_object_unref (main_window);
+
+		if (gtk_dialog_run (dialog) == GTK_RESPONSE_OK) {
+			/* Open the video in the user's web browser */
+			open_in_web_browser_activate_cb (NULL, self);
+		}
+
+		gtk_widget_destroy (GTK_WIDGET (dialog));
+	}
+
+	g_free (video_uri);
 
 	if (self->priv->playing_video != NULL)
 		g_object_unref (self->priv->playing_video);
