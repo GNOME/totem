@@ -35,6 +35,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 
 #include "totem-dirs.h"
 #include "totem-skipto.h"
@@ -164,6 +165,7 @@ totem_skipto_new (TotemObject *totem)
 {
 	TotemSkipto *skipto;
 	GtkWidget *container;
+	guint label_length;
 
 	skipto = TOTEM_SKIPTO (g_object_new (TOTEM_TYPE_SKIPTO, NULL));
 
@@ -182,7 +184,11 @@ totem_skipto_new (TotemObject *totem)
 		(skipto->priv->xml, "tstw_seconds_label"));
 
 	/* Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value */
-	gtk_label_set_width_chars (skipto->priv->seconds_label, MAX (strlen (_("second")), strlen (_("seconds"))));
+	/* Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+	 * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+	 * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398 */
+	label_length = strtoul (C_("Skip To label length", "7"), NULL, 10);
+	gtk_label_set_width_chars (skipto->priv->seconds_label, label_length);
 
 	/* Set the initial "seconds" label */
 	tstw_adjustment_value_changed_cb (GTK_ADJUSTMENT (gtk_builder_get_object
