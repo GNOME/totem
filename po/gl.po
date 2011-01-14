@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem-master-po-gl-55923\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-07 00:14+0100\n"
-"PO-Revision-Date: 2011-01-07 00:19+0100\n"
+"POT-Creation-Date: 2011-01-14 16:41+0100\n"
+"PO-Revision-Date: 2011-01-14 16:43+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome-gl-list@gnome.org>\n"
 "Language: gl\n"
@@ -2816,24 +2816,27 @@ msgstr "Crear unha galería coas capturas"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#: ../src/plugins/skipto/totem-skipto.c:159
-#: ../src/plugins/skipto/totem-skipto.c:185
+#: ../src/plugins/skipto/totem-skipto.c:160
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
 msgstr[1] "segundos"
 
-#: ../src/plugins/skipto/totem-skipto.c:185
-msgid "seconds"
-msgstr "segundos"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:190
+msgctxt "Skip To label length"
+msgid "7"
+msgstr "8"
 
-#: ../src/plugins/skipto/totem-skipto.c:191
-msgid "Skip to"
+#: ../src/plugins/skipto/totem-skipto.c:197
+msgid "Skip To"
 msgstr "Saltar a"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "_Skip to..."
+msgid "_Skip To..."
 msgstr "_Saltar a..."
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
@@ -2913,6 +2916,7 @@ msgid "Videos"
 msgstr "Vídeos"
 
 #: ../src/plugins/youtube/totem-youtube.c:144
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "_Open in Web Browser"
 msgstr "_Abrir no navegador web"
 
@@ -2925,23 +2929,19 @@ msgstr "Abre o vídeo no seu navegador web"
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:281
+#: ../src/plugins/youtube/totem-youtube.c:279
 msgid "Cancelling query…"
 msgstr "Cancelando a consulta…"
-
-#: ../src/plugins/youtube/totem-youtube.c:342
-msgid "Error Looking Up Video URI"
-msgstr "Produciuse un erro buscando o URI do vídeo"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:626
-#: ../src/plugins/youtube/totem-youtube.c:631
+#: ../src/plugins/youtube/totem-youtube.c:424
+#: ../src/plugins/youtube/totem-youtube.c:429
 msgid "Error Searching for Videos"
 msgstr "Produciuse un erro buscando os vídeos"
 
-#: ../src/plugins/youtube/totem-youtube.c:627
+#: ../src/plugins/youtube/totem-youtube.c:425
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2950,22 +2950,34 @@ msgstr ""
 "que está executando a última versión de libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:803
+#: ../src/plugins/youtube/totem-youtube.c:618
 msgid "Fetching search results…"
 msgstr "Obtendo os resultados da busca…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:868
+#: ../src/plugins/youtube/totem-youtube.c:680
 msgid "Fetching related videos…"
 msgstr "Obtendo os vídeos relacionados…"
 
-#: ../src/plugins/youtube/totem-youtube.c:920
+#: ../src/plugins/youtube/totem-youtube.c:732
 msgid "Error Opening Video in Web Browser"
 msgstr "Produciuse un erro ao abrir o vídeo no navegador web"
 
-#: ../src/plugins/youtube/totem-youtube.c:940
+#: ../src/plugins/youtube/totem-youtube.c:752
 msgid "Fetching more videos…"
 msgstr "Obtendo máis vídeos…"
+
+#: ../src/plugins/youtube/totem-youtube.c:797
+msgid "Video Format Not Supported"
+msgstr "O formato do vídeo non é compatíbel"
+
+#: ../src/plugins/youtube/totem-youtube.c:799
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
+"Este vídeo non está dispoñíbel en ningún dos formatos dos que Totem é "
+"compatíbel. Desexa abrilo no seu navegador web?"
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
@@ -3049,6 +3061,12 @@ msgstr ""
 "Despois de que prema Aceptar, Totem esperará até que se conecte con winpdb "
 "ou rpdb2. Se non estabeleceu un contrasinal para o depurador en DConf, "
 "usarase o contrasinal por omisión («totem»)."
+
+#~ msgid "seconds"
+#~ msgstr "segundos"
+
+#~ msgid "Error Looking Up Video URI"
+#~ msgstr "Produciuse un erro buscando o URI do vídeo"
 
 #~ msgid "Chapters support"
 #~ msgstr "Compatibilidade de capítulos"
