@@ -2,21 +2,21 @@
 # Estonian translation of Totem.
 #
 # Copyright (C) 2002, 2005, 2006 The Free Software Foundation
-# Copyright (C) 2007-2010 The GNOME Project.
+# Copyright (C) 2007–2011 The GNOME Project.
 # This file is distributed under the same license as the totem package.
 #
 # Ilmar Kerm <ikerm hot ee>, 2002.
-# Ivar Smolin <okul linux ee>, 2005-2010.
-# Priit Laes <amd store20 com>, 2005-2007, 2009.
-# Mattias Põldaru <mahfiaz gmail com>, 2008-2010.
+# Ivar Smolin <okul linux ee>, 2005–2011.
+# Priit Laes <amd store20 com>, 2005–2007, 2009.
+# Mattias Põldaru <mahfiaz gmail com>, 2008–2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-12-20 12:08+0000\n"
-"PO-Revision-Date: 2010-12-21 09:36+0200\n"
+"POT-Creation-Date: 2011-01-13 18:04+0000\n"
+"PO-Revision-Date: 2011-01-14 08:22+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -900,9 +900,9 @@ msgstr "Autoriõigused © 2002-2009 Bastien Nocera"
 msgid "translator-credits"
 msgstr ""
 "Ilmar Kerm <ikerm hot ee>, 2002.\n"
-"Ivar Smolin <okul linux ee>, 2005-2010.\n"
-"Priit Laes <amd store20 com>, 2005-2007.\n"
-"Mattias Põldaru <mahfiaz gmail com>, 2008-2010."
+"Ivar Smolin <okul linux ee>, 2005–2011.\n"
+"Priit Laes <amd store20 com>, 2005–2007.\n"
+"Mattias Põldaru <mahfiaz gmail com>, 2008–2010."
 
 msgid "Totem Website"
 msgstr "Totemi veebisait"
@@ -2151,19 +2151,23 @@ msgstr "Kuvatõmmiste galerii loomine"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekund"
 msgstr[1] "sekundit"
 
-msgid "seconds"
-msgstr "sekundit"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+msgctxt "Skip To label length"
+msgid "7"
+msgstr "8"
 
-msgid "Skip to"
+msgid "Skip To"
 msgstr "Asukoha vahetamine"
 
-msgid "_Skip to..."
+msgid "_Skip To..."
 msgstr "_Hüppa asukohale..."
 
 msgid "Skip to a specific time"
@@ -2237,9 +2241,6 @@ msgstr "YouTube"
 msgid "Cancelling query…"
 msgstr "Päringu tühistamine…"
 
-msgid "Error Looking Up Video URI"
-msgstr "Video-URI otsimisel esines viga"
-
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
@@ -2266,6 +2267,16 @@ msgstr "Viga video avamisel veebisirvijas"
 
 msgid "Fetching more videos…"
 msgstr "Lisavideote hankimine…"
+
+msgid "Video Format Not Supported"
+msgstr "Toetamata videovorming"
+
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
+"See video pole Totemi poolt toetatud vormingus. Kas soovid video hoopis "
+"veebisirvijaga avada?"
 
 msgid "No URI to play"
 msgstr "Esitamiseks puudub URI"
@@ -2330,6 +2341,12 @@ msgstr ""
 "ühendust. Kui DConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
 
+#~ msgid "seconds"
+#~ msgstr "sekundit"
+
+#~ msgid "Error Looking Up Video URI"
+#~ msgstr "Video-URI otsimisel esines viga"
+
 #~ msgid "Chapters support"
 #~ msgstr "Peatükkide tugi"
 
@@ -2374,3 +2391,6 @@ msgstr ""
 #~ "Audioväljund, mida kasutada: \"0\" stereo jaoks, \"1\" 4 kanali "
 #~ "väljundile, \"2\" 5.0 kanali väljundile, \"3\" 5.1 kanali väljundile, "
 #~ "\"4\" AC3 Passthrough jaoks."
+
+#~ msgid "Copyright © 2002-2011 Bastien Nocera"
+#~ msgstr "Autoriõigused © 2002-2011 Bastien Nocera"
