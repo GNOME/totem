@@ -8,15 +8,15 @@
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-12-20 01:03+0000\n"
-"PO-Revision-Date: 2010-12-20 13:28+0100\n"
+"POT-Creation-Date: 2011-01-13 18:04+0000\n"
+"PO-Revision-Date: 2011-01-14 10:49+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -968,28 +968,28 @@ msgstr "El archivo no es un archivo .desktop válido"
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "No se reconoce la versión «%s» del archivo desktop"
 
-#: ../src/eggdesktopfile.c:958
+#: ../src/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "Iniciando %s"
 
-#: ../src/eggdesktopfile.c:1100
+#: ../src/eggdesktopfile.c:1110
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "La aplicación no acepta documentos en la línea de comandos"
 
-#: ../src/eggdesktopfile.c:1168
+#: ../src/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Opción de lanzamiento no reconocida: %d"
 
-#: ../src/eggdesktopfile.c:1373
+#: ../src/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "No se pueden pasar los URI de documentos a entradas de escritorio «Type=Link»"
 
-#: ../src/eggdesktopfile.c:1394
+#: ../src/eggdesktopfile.c:1404
 #, c-format
 msgid "Not a launchable item"
 msgstr "No es un elemento lanzable"
@@ -1035,31 +1035,31 @@ msgstr ""
 msgid "File format not recognized"
 msgstr "Formato de archivo no reconocido"
 
-#: ../src/eggsmclient.c:225
+#: ../src/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "Desactivar la conexión con el gestor de sesiones"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "Especificar el archivo que contiene la configuración guardada"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "FILE"
 msgstr "ARCHIVO"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "Especifique el ID de gestión de la sesión"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "ID"
 msgstr "ID"
 
-#: ../src/eggsmclient.c:252
+#: ../src/eggsmclient.c:253
 msgid "Session management options:"
 msgstr "Opciones de gestión de la sesión:"
 
-#: ../src/eggsmclient.c:253
+#: ../src/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Mostrar las opciones de gestión de la sesión"
 
@@ -2030,18 +2030,18 @@ msgstr "Copiar (S)VCD…"
 msgid "Copy the currently playing (S)VCD"
 msgstr "Copiar el vídeo (S)VCD actualmente en reproducción"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:112
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
 msgid "The video disc could not be duplicated."
 msgstr "No se pudo duplicar el disco de vídeo."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:116
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:267
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:131
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:276
 msgid "The movie could not be recorded."
 msgstr "No se pudo grabar la película."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:148
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:158
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:254
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:157
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:167
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:263
 msgid "Unable to write a project."
 msgstr "No se pudo escribir un proyecto."
 
@@ -2826,24 +2826,29 @@ msgstr "Crear una galería de capturas"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#: ../src/plugins/skipto/totem-skipto.c:159
-#: ../src/plugins/skipto/totem-skipto.c:185
+#: ../src/plugins/skipto/totem-skipto.c:160
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
 msgstr[1] "segundos"
 
-#: ../src/plugins/skipto/totem-skipto.c:185
-msgid "seconds"
-msgstr "segundos"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:190
+msgctxt "Skip To label length"
+msgid "7"
+msgstr "7"
 
-#: ../src/plugins/skipto/totem-skipto.c:191
-msgid "Skip to"
+#: ../src/plugins/skipto/totem-skipto.c:197
+#| msgid "Skip to"
+msgid "Skip To"
 msgstr "Saltar a"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "_Skip to..."
+#| msgid "_Skip to..."
+msgid "_Skip To..."
 msgstr "Sa_ltar a…"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
@@ -2925,6 +2930,7 @@ msgid "Videos"
 msgstr "Vídeos"
 
 #: ../src/plugins/youtube/totem-youtube.c:144
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "_Open in Web Browser"
 msgstr "Abrir en un navegador _web"
 
@@ -2937,23 +2943,19 @@ msgstr "Abrir el vídeo en su navegador web"
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:281
+#: ../src/plugins/youtube/totem-youtube.c:279
 msgid "Cancelling query…"
 msgstr "Cancelar la consulta…"
-
-#: ../src/plugins/youtube/totem-youtube.c:342
-msgid "Error Looking Up Video URI"
-msgstr "Error al buscar el URI del vídeo"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:626
-#: ../src/plugins/youtube/totem-youtube.c:631
+#: ../src/plugins/youtube/totem-youtube.c:424
+#: ../src/plugins/youtube/totem-youtube.c:429
 msgid "Error Searching for Videos"
 msgstr "Error al buscar vídeos"
 
-#: ../src/plugins/youtube/totem-youtube.c:627
+#: ../src/plugins/youtube/totem-youtube.c:425
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2962,22 +2964,34 @@ msgstr ""
 "la última versión de libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:803
+#: ../src/plugins/youtube/totem-youtube.c:618
 msgid "Fetching search results…"
 msgstr "Obteniendo los resultados de la búsqueda…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:868
+#: ../src/plugins/youtube/totem-youtube.c:680
 msgid "Fetching related videos…"
 msgstr "Obteniendo vídeos relacionados…"
 
-#: ../src/plugins/youtube/totem-youtube.c:920
+#: ../src/plugins/youtube/totem-youtube.c:732
 msgid "Error Opening Video in Web Browser"
 msgstr "Error al abrir el vídeo en el navegador web"
 
-#: ../src/plugins/youtube/totem-youtube.c:940
+#: ../src/plugins/youtube/totem-youtube.c:752
 msgid "Fetching more videos…"
 msgstr "Obteniendo más vídeos…"
+
+#: ../src/plugins/youtube/totem-youtube.c:797
+msgid "Video Format Not Supported"
+msgstr "Formato de vídeo no soportado"
+
+#: ../src/plugins/youtube/totem-youtube.c:799
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
+"Este vídeo no está disponible en ninguno de los formatos que Totem soporta. "
+"¿Quiere abrirlo en su navegador web?"
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
@@ -3060,6 +3074,12 @@ msgstr ""
 "Después de que pulse Aceptar, Totem esperará a que se conecte con winpdb o "
 "rpdb2. Si no ha establecido una contraseña para el depurador en DConf, se "
 "usará la contraseña predeterminada («totem»)."
+
+#~ msgid "seconds"
+#~ msgstr "segundos"
+
+#~ msgid "Error Looking Up Video URI"
+#~ msgstr "Error al buscar el URI del vídeo"
 
 #~ msgid "Chapters support"
 #~ msgstr "Soporte para capítulos"
