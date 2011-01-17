@@ -209,7 +209,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 
 	gdk_pixbuf_scale (pixbuf, small, lw, 0,
 			d_width, d_height,
-			lw, 0, ratio, ratio, GDK_INTERP_NEAREST);
+			lw, 0, ratio, ratio, GDK_INTERP_BILINEAR);
 
 	/* Left side holes */
 	for (i = 0; i < canvas_h; i += lh)
@@ -293,7 +293,7 @@ scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 			d_width = size * width / height;
 		}
 
-		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_TILES);
+		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_BILINEAR);
 
 		if (is_still == FALSE) {
 			result = add_holes_to_pixbuf_small (small, d_width, d_height);
