@@ -451,11 +451,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		tracker)
-			PKG_CHECK_MODULES(TRACKER, tracker-client-0.8 >= 0.8.1, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
-			if test "${HAVE_TRACKER}" != "yes" ; then
-				PKG_CHECK_MODULES(TRACKER, tracker-client-0.9 >= 0.9.0, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
-			fi
-
+			PKG_CHECK_MODULES(TRACKER, tracker-sparql-0.10 >= 0.9.34, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
 			if test "${HAVE_TRACKER}" != "yes" ; then
 				plugin_error_or_ignore "you need the tracker development headers installed for the tracker plugin"
 				add_plugin="0"
