@@ -1206,8 +1206,7 @@ totem_plugins_response_cb (GtkDialog *dialog,
 			      int response_id,
 			      gpointer data)
 {
-	if (response_id == GTK_RESPONSE_CLOSE)
-		gtk_widget_hide (GTK_WIDGET (dialog));
+	gtk_widget_hide (GTK_WIDGET (dialog));
 }
 
 
@@ -1237,8 +1236,8 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 
 		manager = peas_gtk_plugin_manager_new ();
 		gtk_widget_show_all (GTK_WIDGET (manager));
-		gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
-				   manager);
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
+				    manager, TRUE, TRUE, 0);
 	}
 
 	gtk_window_present (GTK_WINDOW (totem->plugins));
