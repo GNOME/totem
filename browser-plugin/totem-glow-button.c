@@ -216,6 +216,7 @@ totem_glow_button_enter (GtkButton *buttonw)
 	button->pointer_entered = TRUE;
 	button->anim_finished = FALSE;
 	button->glow_start_time = G_MINDOUBLE;
+	totem_glow_button_set_timeout (button, FALSE);
 }
 
 static void
@@ -281,10 +282,14 @@ totem_glow_button_new (void)
 	return g_object_new (TOTEM_TYPE_GLOW_BUTTON, NULL);
 }
 
+/* We can only add a timeout once, we assert that, though
+ * calling it multiple times to disable the animation is fine */
 static void
 totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout)
 {
 	if (set_timeout != FALSE) {
+		g_assert (button->button_glow == 0);
+
 		button->glow_start_time = 0.0;
 
 		/* The animation doesn't speed up or slow down based on the
