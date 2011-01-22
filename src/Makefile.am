@@ -1,4 +1,4 @@
-SUBDIRS = backend . plugins
+SUBDIRS = backend properties . plugins
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
 lib_LTLIBRARIES = libtotem.la
@@ -212,7 +212,7 @@ libtotem_properties_page_la_SOURCES = \
 	totem-properties-view.h
 
 libtotem_properties_page_la_CPPFLAGS = \
-	-I$(srcdir)/plugins/properties		\
+	-I$(top_srcdir)/src/properties		\
 	-I$(top_builddir)/data			\
 	-DG_LOG_DOMAIN=\""TotemPropertiesPage"\"\
 	$(AM_CPPFLAGS)
@@ -228,7 +228,7 @@ libtotem_properties_page_la_LDFLAGS = \
 
 libtotem_properties_page_la_LIBADD = \
 	backend/libbaconvideowidget.la				\
-	plugins/properties/libbaconvideowidgetproperties.la	\
+	properties/libbaconvideowidgetproperties.la		\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)
@@ -243,7 +243,7 @@ test_properties_page_SOURCES = \
 
 test_properties_page_CPPFLAGS = \
 	-I$(top_builddir)/data			\
-	-I$(srcdir)/plugins/properties		\
+	-I$(top_srcdir)/src/properties		\
 	$(AM_CPPFLAGS)
 
 test_properties_page_CFLAGS = \
@@ -253,7 +253,7 @@ test_properties_page_CFLAGS = \
 
 test_properties_page_LDADD = \
 	backend/libbaconvideowidget.la				\
-	plugins/properties/libbaconvideowidgetproperties.la	\
+	properties/libbaconvideowidgetproperties.la		\
 	libtotem_player.la					\
 	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)
