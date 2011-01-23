@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-12 12:08+0200\n"
+"POT-Creation-Date: 2011-01-23 14:18+0200\n"
 "PO-Revision-Date: 2011-01-12 12:07+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -76,13 +76,13 @@ msgstr "ا_ختر ملف ترجمة نصيّ..."
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:175
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 قنوات"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 هرتز"
 
@@ -165,10 +165,10 @@ msgstr "العنوان:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:145
-#: ../src/plugins/properties/bacon-video-widget-properties.c:147
-#: ../src/plugins/properties/bacon-video-widget-properties.c:149
-#: ../src/plugins/properties/bacon-video-widget-properties.c:151
+#: ../src/properties/bacon-video-widget-properties.c:145
+#: ../src/properties/bacon-video-widget-properties.c:147
+#: ../src/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "مجهول"
 
@@ -1028,6 +1028,81 @@ msgstr "خيارات إدارة الجلسات:"
 msgid "Show session management options"
 msgstr "اعرض خيارات إدارة الجلسات"
 
+#. Dimensions
+#: ../src/properties/bacon-video-widget-properties.c:158
+#, fuzzy
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "غير متوفر"
+
+#. Video Codec
+#: ../src/properties/bacon-video-widget-properties.c:160
+#, fuzzy
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "غير متوفر"
+
+#: ../src/properties/bacon-video-widget-properties.c:163
+#: ../src/properties/bacon-video-widget-properties.c:240
+#, fuzzy
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "غير متوفر"
+
+#: ../src/properties/bacon-video-widget-properties.c:166
+#: ../src/properties/bacon-video-widget-properties.c:250
+#, fuzzy
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "غير متوفر"
+
+#: ../src/properties/bacon-video-widget-properties.c:169
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, fuzzy
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "غير متوفر"
+
+#. Audio Codec
+#: ../src/properties/bacon-video-widget-properties.c:171
+#, fuzzy
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "غير متوفر"
+
+#: ../src/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d x %d"
+msgstr "%Id × %Id"
+
+#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%Id ك.بتة/ث"
+
+#: ../src/properties/bacon-video-widget-properties.c:247
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%Id إطارًا في الثانية"
+msgstr[1] "إطار واحد في الثانية"
+msgstr[2] "إطارين في الثانية"
+msgstr[3] "%Id إطارات في الثانية"
+msgstr[4] "%Id إطارًا في الثانية"
+msgstr[5] "%Id إطار في الثانية"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, c-format
+msgid "%d Hz"
+msgstr "%Id هرتز"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, fuzzy
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "غير متوفر"
+
 #: ../src/totem-audio-preview.c:82
 msgid "Audio Preview"
 msgstr "معاينة الصوت"
@@ -1157,7 +1232,7 @@ msgstr ""
 msgid "Totem Website"
 msgstr "موقع توتم"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1219
 msgid "Configure Plugins"
 msgstr "اضبط الملحقات"
 
@@ -2538,81 +2613,6 @@ msgstr "أبقِ النافذة الرئيسية في القمة أثناء تش
 msgid "Properties"
 msgstr "الخصائص"
 
-#. Dimensions
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#, fuzzy
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "غير متوفر"
-
-#. Video Codec
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
-#, fuzzy
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "غير متوفر"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#, fuzzy
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "غير متوفر"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-#, fuzzy
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "غير متوفر"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, fuzzy
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "غير متوفر"
-
-#. Audio Codec
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
-#, fuzzy
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "غير متوفر"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#, c-format
-msgid "%d x %d"
-msgstr "%Id × %Id"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, c-format
-msgid "%d kbps"
-msgstr "%Id ك.بتة/ث"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:247
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%Id إطارًا في الثانية"
-msgstr[1] "إطار واحد في الثانية"
-msgstr[2] "إطارين في الثانية"
-msgstr[3] "%Id إطارات في الثانية"
-msgstr[4] "%Id إطارًا في الثانية"
-msgstr[5] "%Id إطار في الثانية"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, c-format
-msgid "%d Hz"
-msgstr "%Id هرتز"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, fuzzy
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "غير متوفر"
-
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
 msgid ""
@@ -2806,9 +2806,7 @@ msgstr "أنشئ معرضًا للقطات الشاشة"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#: ../src/plugins/skipto/totem-skipto.c:159
-#: ../src/plugins/skipto/totem-skipto.c:185
+#: ../src/plugins/skipto/totem-skipto.c:160
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "ثانية  "
@@ -2818,16 +2816,23 @@ msgstr[3] "ثوانِ   "
 msgstr[4] "ثانية  "
 msgstr[5] "ثانية  "
 
-#: ../src/plugins/skipto/totem-skipto.c:185
-msgid "seconds"
-msgstr "ثوانِ"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:190
+msgctxt "Skip To label length"
+msgid "7"
+msgstr ""
 
-#: ../src/plugins/skipto/totem-skipto.c:191
-msgid "Skip to"
+#: ../src/plugins/skipto/totem-skipto.c:197
+#, fuzzy
+msgid "Skip To"
 msgstr "تخطّ إلى"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "_Skip to..."
+#, fuzzy
+msgid "_Skip To..."
 msgstr "تخ_طَّ إلى..."
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
@@ -2911,6 +2916,7 @@ msgid "Videos"
 msgstr "فيديو"
 
 #: ../src/plugins/youtube/totem-youtube.c:144
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "_Open in Web Browser"
 msgstr "ا_فتح في متصفح الوب"
 
@@ -2923,23 +2929,19 @@ msgstr "افتح الفيديو في متصفح الوب"
 msgid "YouTube"
 msgstr "يوتيوب"
 
-#: ../src/plugins/youtube/totem-youtube.c:281
+#: ../src/plugins/youtube/totem-youtube.c:279
 msgid "Cancelling query…"
 msgstr "يُلغي الاستعلام…"
-
-#: ../src/plugins/youtube/totem-youtube.c:342
-msgid "Error Looking Up Video URI"
-msgstr "خطأ بحث عن مسار الفيديو"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:626
-#: ../src/plugins/youtube/totem-youtube.c:631
+#: ../src/plugins/youtube/totem-youtube.c:424
+#: ../src/plugins/youtube/totem-youtube.c:429
 msgid "Error Searching for Videos"
 msgstr "خطأ في البحث عن الفيديو"
 
-#: ../src/plugins/youtube/totem-youtube.c:627
+#: ../src/plugins/youtube/totem-youtube.c:425
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
@@ -2947,22 +2949,32 @@ msgstr ""
 "تعذّر فهم استجابة الخادوم. من فضلك تأكد من أنك تشغّل آخر نسخة من libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:803
+#: ../src/plugins/youtube/totem-youtube.c:618
 msgid "Fetching search results…"
 msgstr "يجلب نتائج البحث…"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:868
+#: ../src/plugins/youtube/totem-youtube.c:680
 msgid "Fetching related videos…"
 msgstr "يجلب الفيديو المتعلق…"
 
-#: ../src/plugins/youtube/totem-youtube.c:920
+#: ../src/plugins/youtube/totem-youtube.c:732
 msgid "Error Opening Video in Web Browser"
 msgstr "خطأ في فتح الفيديو في متصفح الوب"
 
-#: ../src/plugins/youtube/totem-youtube.c:940
+#: ../src/plugins/youtube/totem-youtube.c:752
 msgid "Fetching more videos…"
 msgstr "يجلب المزيد من الفيديو…"
+
+#: ../src/plugins/youtube/totem-youtube.c:797
+msgid "Video Format Not Supported"
+msgstr ""
+
+#: ../src/plugins/youtube/totem-youtube.c:799
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
@@ -3043,3 +3055,9 @@ msgid ""
 msgstr ""
 "بعد أن تضغط موافق سينتظر توتم حتى تتصل ب winpdb أو rpdb2. إذا كنت لم تحدد "
 "كلمة سر للتنقيح في GConf فسيستخدم كلمة السر المبدئية ('totem')."
+
+#~ msgid "seconds"
+#~ msgstr "ثوانِ"
+
+#~ msgid "Error Looking Up Video URI"
+#~ msgstr "خطأ بحث عن مسار الفيديو"
