@@ -1,14 +1,14 @@
 # Norwegian (bokmål) translation of totem.
 # Copyright (C) 2002-2005 Free Software Foundation, Inc.
-# Kjartan Maraas  <kmaraas@gnome.org>, 2002-2010.
+# Kjartan Maraas  <kmaraas@gnome.org>, 2002-2011.
 # Terance Edward Sola <terance@lyse.net>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.91.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-15 13:54+0100\n"
-"PO-Revision-Date: 2011-01-15 14:03+0100\n"
+"POT-Creation-Date: 2011-01-25 21:33+0100\n"
+"PO-Revision-Date: 2011-01-25 21:39+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -71,13 +71,13 @@ msgstr "_Velg undertittel …"
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:175
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 kanaler"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -113,7 +113,7 @@ msgstr "Lyd"
 
 #. Audio Codec
 #: ../data/properties.ui.h:10
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/properties/bacon-video-widget-properties.c:171
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "I/T"
@@ -163,10 +163,10 @@ msgstr "Tittel:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:145
-#: ../src/plugins/properties/bacon-video-widget-properties.c:147
-#: ../src/plugins/properties/bacon-video-widget-properties.c:149
-#: ../src/plugins/properties/bacon-video-widget-properties.c:151
+#: ../src/properties/bacon-video-widget-properties.c:145
+#: ../src/properties/bacon-video-widget-properties.c:147
+#: ../src/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -177,7 +177,7 @@ msgstr "Film"
 
 #. Video Codec
 #: ../data/properties.ui.h:23
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#: ../src/properties/bacon-video-widget-properties.c:160
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "I/T"
@@ -766,7 +766,7 @@ msgstr "_Vis"
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
-msgstr ""
+msgstr "En liste med navn på tillegg som er aktive (lastet og kjører)."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:2
 msgid "Active plugins list"
@@ -796,7 +796,7 @@ msgstr ""
 msgid ""
 "Approximate network connection speed, used to select quality on media over "
 "the network."
-msgstr ""
+msgstr "Omtrentlig tilkoblingshastighet for nettverk. Brukes til å velge kvalitet på media over nettverket."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:7
 msgid "Default location for the \"Open...\" dialogs"
@@ -842,7 +842,7 @@ msgstr "Pango skriftbeskrivelse for rendring av undertekst."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:16
 msgid "Quality setting for the audio visualization."
-msgstr ""
+msgstr "Kvalitetsinnstilling for lydvisualisering."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:17
 msgid "Repeat mode"
@@ -922,13 +922,10 @@ msgid "Whether to enable debug for the playback engine"
 msgstr "Om feilsøking skal aktiveres for avspillingsmotoren"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:36
-#, fuzzy
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
 "closing them"
-msgstr ""
-"Om posisjon i avspilte lyd/videofiler skal huskes når de settes på pause "
-"eller lukkes."
+msgstr "Om posisjon i avspilte lyd/videofiler skal huskes når de settes på pause eller lukkes"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1037,6 +1034,58 @@ msgstr "Alternativer for sesjonshåndtering:"
 #: ../src/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Vis alternativer for sesjonshåndtering"
+
+#. Dimensions
+#: ../src/properties/bacon-video-widget-properties.c:158
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "I/T"
+
+#: ../src/properties/bacon-video-widget-properties.c:163
+#: ../src/properties/bacon-video-widget-properties.c:240
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "I/T"
+
+#: ../src/properties/bacon-video-widget-properties.c:166
+#: ../src/properties/bacon-video-widget-properties.c:250
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "I/T"
+
+#: ../src/properties/bacon-video-widget-properties.c:169
+#: ../src/properties/bacon-video-widget-properties.c:273
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "I/T"
+
+#: ../src/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: ../src/properties/bacon-video-widget-properties.c:247
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d bilde per sekund"
+msgstr[1] "%d bilder per sekund"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "I/T"
 
 #: ../src/totem-audio-preview.c:82
 msgid "Audio Preview"
@@ -1163,7 +1212,7 @@ msgstr ""
 msgid "Totem Website"
 msgstr "Totem nettsted"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1219
 msgid "Configure Plugins"
 msgstr "Konfigurer tillegg"
 
@@ -2114,7 +2163,8 @@ msgstr "En feil oppsto under lagring av kapitler"
 #: ../src/plugins/chapters/totem-chapters.c:845
 msgid ""
 "Please check you have permission to write to the folder containing the movie."
-msgstr "Sjekk at du har rettigheter til å skrive til mappen som inneholder filmen."
+msgstr ""
+"Sjekk at du har rettigheter til å skrive til mappen som inneholder filmen."
 
 #: ../src/plugins/chapters/totem-chapters.c:978
 msgid "Open Chapter File"
@@ -2526,58 +2576,6 @@ msgstr "Behold hovedvinduet øverst når en film spilles av"
 msgid "Properties"
 msgstr "Egenskaper"
 
-#. Dimensions
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "I/T"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "I/T"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "I/T"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "I/T"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:247
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d bilde per sekund"
-msgstr[1] "%d bilder per sekund"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "I/T"
-
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
 msgid ""
@@ -2586,20 +2584,20 @@ msgid ""
 "%a: the program name as returned by g_get_application_name() • %h: the "
 "machine's host name in title case • %u: the user's login name in title case "
 "• %U: the user's real name • %%: the percent sign"
-msgstr ""
+msgstr "En formatstreng som brukes til å bygge tjenestenavn for nettverk som brukes ved publisering av spillelister over nettverket. Følgende plassholdere for format kan brukes: · %a: programnavnet som returneres av g_get_application_name() · %h: maskinens vertsnavn i tittelform · %u: brukernavn i tittelform · %U: brukers egentlige navn · %%: prosenttegnet"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
 msgid "Format for network service name"
-msgstr ""
+msgstr "Format for navn på nettverkstjeneste"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:4
 msgid "Publisher protocol to use"
-msgstr ""
+msgstr "Protokoll som skal brukes for publisering"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
 msgid ""
 "The transport protocol to use when publishing playlists over the network."
-msgstr ""
+msgstr "Protokoll som skal brukes for transport når spillelister publiseres over nettverket."
 
 #. Translators: computers on the local network which are publishing their playlists over the network
 #: ../src/plugins/publish/totem-publish.c:552
@@ -2637,7 +2635,7 @@ msgstr "Bruk krypt_ert transportprotokoll (HTTPS)"
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
-msgstr ""
+msgstr "Et passord som skal beskytte rpdb2-tjener for feilsøking av Totem fra uautorisert tilgang. Hvis dette er tomt vil forvalgt passord «totem» bli brukt."
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid "rpdb2 password"
@@ -2925,7 +2923,9 @@ msgstr "Videoformat ikke støttet"
 msgid ""
 "This video is not available in any formats which Totem supports. Would you "
 "like to open it in your web browser instead?"
-msgstr "Denne videoen er ikke tilgjengelig i et format som støttes av Totem. Vil du åpne den i nettleseren i stedet?"
+msgstr ""
+"Denne videoen er ikke tilgjengelig i et format som støttes av Totem. Vil du "
+"åpne den i nettleseren i stedet?"
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
