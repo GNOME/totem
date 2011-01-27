@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=general\n"
-"POT-Creation-Date: 2011-01-15 14:58+0000\n"
-"PO-Revision-Date: 2011-01-15 21:05+0100\n"
+"POT-Creation-Date: 2011-01-23 12:32+0000\n"
+"PO-Revision-Date: 2011-01-27 20:39+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -80,13 +80,13 @@ msgstr "_Izbor podnapisa ..."
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:175
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 kanalov"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -124,7 +124,7 @@ msgstr "Zvok"
 
 #. Audio Codec
 #: ../data/properties.ui.h:10
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/properties/bacon-video-widget-properties.c:171
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/A"
@@ -175,10 +175,10 @@ msgstr "Naslov:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:145
-#: ../src/plugins/properties/bacon-video-widget-properties.c:147
-#: ../src/plugins/properties/bacon-video-widget-properties.c:149
-#: ../src/plugins/properties/bacon-video-widget-properties.c:151
+#: ../src/properties/bacon-video-widget-properties.c:145
+#: ../src/properties/bacon-video-widget-properties.c:147
+#: ../src/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Neznano"
 
@@ -190,7 +190,7 @@ msgstr "Posnetek"
 
 #. Video Codec
 #: ../data/properties.ui.h:23
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#: ../src/properties/bacon-video-widget-properties.c:160
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/A"
@@ -1024,6 +1024,60 @@ msgstr "Možnosti upravljanja seje:"
 msgid "Show session management options"
 msgstr "Pokaži možnosti upravljanja seje"
 
+#. Dimensions
+#: ../src/properties/bacon-video-widget-properties.c:158
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "ni podatka"
+
+#: ../src/properties/bacon-video-widget-properties.c:163
+#: ../src/properties/bacon-video-widget-properties.c:240
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "ni podatka"
+
+#: ../src/properties/bacon-video-widget-properties.c:166
+#: ../src/properties/bacon-video-widget-properties.c:250
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "ni podatka"
+
+#: ../src/properties/bacon-video-widget-properties.c:169
+#: ../src/properties/bacon-video-widget-properties.c:273
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "ni podatka"
+
+#: ../src/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: ../src/properties/bacon-video-widget-properties.c:247
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d sličic na sekundo"
+msgstr[1] "%d sličica na sekundo"
+msgstr[2] "%d sličici na sekundo"
+msgstr[3] "%d sličice na sekundo"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "ni podatka"
+
 #: ../src/totem-audio-preview.c:82
 msgid "Audio Preview"
 msgstr "Poslušanje zvočne datoteke"
@@ -1129,7 +1183,7 @@ msgstr ""
 msgid "Totem Website"
 msgstr "Spletna stran Totem"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1219
 msgid "Configure Plugins"
 msgstr "Nastavitve vstavkov"
 
@@ -2461,64 +2515,10 @@ msgstr "Glavno okno je med predvajanjem vedno na vrhu."
 msgid "Properties"
 msgstr "Lastnosti"
 
-#. Dimensions
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "ni podatka"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:247
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d sličic na sekundo"
-msgstr[1] "%d sličica na sekundo"
-msgstr[2] "%d sličici na sekundo"
-msgstr[3] "%d sličice na sekundo"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "ni podatka"
-
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
 msgid "A format string used to build the network service name used when publishing playlists over the network. The following format placeholders can be used: • %a: the program name as returned by g_get_application_name() • %h: the machine's host name in title case • %u: the user's login name in title case • %U: the user's real name • %%: the percent sign"
-msgstr ""
+msgstr "Niz oblike zapisa, ki je uporabljen za izgradnjo imena omrežne storitve med objavljanjem seznama predvajanja preko omrežja. Uporabiti je mogoče naslednja držala: • %a: vrne ime programa kot je določen z možnostjo g_get_application_name() • %h: ime gostitelja računalnika • %u: prijavno ime uporabnika • %U: pravo ime uporabnika • %%: znak za odstotek"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
 msgid "Format for network service name"
@@ -2566,7 +2566,7 @@ msgstr "Uporabi _šifriran način prenosa (HTTPS)"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
 msgid "A password to protect the rpdb2 server for debugging Totem from unauthorized remote access. If this is empty, a default of 'totem' will be used."
-msgstr ""
+msgstr "Geslo za zaščito strežnika rpdb2 za razhroščevanje programa Totem pred nepooblaščenim oddaljenim dostopom. V kolikor je možnost prazna, bo uporabljena privzeta vrednost 'totem'."
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid "rpdb2 password"
@@ -2852,7 +2852,7 @@ msgstr "Video zapis ni podprt"
 
 #: ../src/plugins/youtube/totem-youtube.c:799
 msgid "This video is not available in any formats which Totem supports. Would you like to open it in your web browser instead?"
-msgstr ""
+msgstr "Video posnetek ni na voljo v nobenem podprtem zapisu. Ali želite odpreti video v brskalniku?"
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
