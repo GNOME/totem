@@ -288,7 +288,8 @@ static void
 totem_glow_button_set_timeout (TotemGlowButton *button, gboolean set_timeout)
 {
 	if (set_timeout != FALSE) {
-		g_assert (button->button_glow == 0);
+		if (button->button_glow > 0)
+			return;
 
 		button->glow_start_time = 0.0;
 

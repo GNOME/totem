@@ -2,7 +2,7 @@
 #include <gtk/gtk.h>
 #include "totem-glow-button.h"
 
-#if 0
+#if 1
 static gboolean
 idle_cb (gpointer data)
 {
@@ -44,8 +44,10 @@ int main (int argc, char **argv)
 
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (button), TRUE);
 
-//	g_timeout_add_seconds (1, idle_cb, button);
+	g_timeout_add_seconds (3, idle_cb, button);
 	g_timeout_add_seconds (5, idle_un_cb, button);
+
+	gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
 
 	gtk_widget_show_all (window);
 
