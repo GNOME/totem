@@ -441,6 +441,11 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
     if (pixbuf) {
       *width = gdk_pixbuf_get_width (pixbuf);
       *height = gdk_pixbuf_get_height (pixbuf);
+      if (*width == *height) {
+	/* The icons will be square, so lie so we get a 16:9
+	 * ratio */
+	*width = (int) ((float) *height / 9. * 16.);
+      }
     } else {
       *width = 0;
       *height = 0;
