@@ -69,6 +69,21 @@ on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const 
 			totem_action_next (totem);
 		else if (strcmp ("Stop", key) == 0)
 			totem_action_pause (totem);
+		else if (strcmp ("FastForward", key) == 0)
+			totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
+		else if (strcmp ("Rewind", key) == 0)
+			totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
+		else if (strcmp ("Repeat", key) == 0) {
+			gboolean value;
+
+			value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
+			totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
+		} else if (strcmp ("Shuffle", key) == 0) {
+			gboolean value;
+
+			value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
+			totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
+		}
 	}
 }
 
