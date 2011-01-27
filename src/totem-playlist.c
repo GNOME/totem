@@ -1655,6 +1655,8 @@ totem_playlist_init (TotemPlaylist *playlist)
 {
 	GtkWidget *container;
 	GtkBuilder *xml;
+	GtkWidget *widget;
+	GtkStyleContext *context;
 
 	playlist->priv = G_TYPE_INSTANCE_GET_PRIVATE (playlist, TOTEM_TYPE_PLAYLIST, TotemPlaylistPrivate);
 	playlist->priv->parser = totem_pl_parser_new ();
@@ -1691,6 +1693,14 @@ totem_playlist_init (TotemPlaylist *playlist)
 	playlist->priv->remove_button = GTK_WIDGET (gtk_builder_get_object (xml, "remove_button"));
 	playlist->priv->up_button = GTK_WIDGET (gtk_builder_get_object (xml, "up_button"));
 	playlist->priv->down_button = GTK_WIDGET (gtk_builder_get_object (xml, "down_button"));
+
+	/* Join treeview and buttons */
+	widget = GTK_WIDGET (gtk_builder_get_object (xml, ("scrolledwindow1")));
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
+	widget = GTK_WIDGET (gtk_builder_get_object (xml, ("toolbar1")));
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
 	/* Reparent the vbox */
 	container = GTK_WIDGET (gtk_builder_get_object (xml, "vbox4"));
