@@ -38,6 +38,14 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef GDK_WINDOWING_X11
+#include <X11/Xproto.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xatom.h>
+#include <gdk/gdkx.h>
+#endif /* GDK_WINDOWING_X11 */
+
 void
 totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 {
@@ -191,23 +199,17 @@ totem_time_to_string_text (gint64 msecs)
 	return string;
 }
 
-gboolean
-totem_ratio_fits_screen (GtkWidget *video_widget, int video_width,
-			 int video_height, gfloat ratio)
+static gboolean
+totem_ratio_fits_screen_generic (GtkWidget *video_widget,
+				 int new_w, int new_h,
+				 gfloat ratio)
 {
 	GdkRectangle fullscreen_rect;
-	int new_w, new_h;
 	GdkScreen *screen;
 	GdkWindow *window;
 
-	if (video_width <= 0 || video_height <= 0)
-		return TRUE;
-
 	window = gtk_widget_get_window (video_widget);
 	g_return_val_if_fail (window != NULL, FALSE);
-
-	new_w = video_width * ratio;
-	new_h = video_height * ratio;
 
 	screen = gtk_widget_get_screen (video_widget);
 	gdk_screen_get_monitor_geometry (screen,
@@ -220,5 +222,158 @@ totem_ratio_fits_screen (GtkWidget *video_widget, int video_width,
 	}
 
 	return TRUE;
+}
+
+#ifdef GDK_WINDOWING_X11
+static gboolean
+get_work_area (GdkScreen      *screen,
+	       GdkRectangle   *rect)
+{
+	Atom            workarea;
+	Atom            type;
+	Window          win;
+	int             format;
+	gulong          num;
+	gulong          leftovers;
+	gulong          max_len = 4 * 32;
+	guchar         *ret_workarea;
+	long           *workareas;
+	int             result;
+	int             disp_screen;
+	Display        *display;
+
+	display = GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen));
+	workarea = XInternAtom (display, "_NET_WORKAREA", True);
+
+	disp_screen = GDK_SCREEN_XNUMBER (screen);
+
+	/* Defaults in case of error */
+	rect->x = 0;
+	rect->y = 0;
+	rect->width = gdk_screen_get_width (screen);
+	rect->height = gdk_screen_get_height (screen);
+
+	if (workarea == None)
+		return FALSE;
+
+	win = XRootWindow (display, disp_screen);
+	result = XGetWindowProperty (display,
+				     win,
+				     workarea,
+				     0,
+				     max_len,
+				     False,
+				     AnyPropertyType,
+				     &type,
+				     &format,
+				     &num,
+				     &leftovers,
+				     &ret_workarea);
+
+	if (result != Success
+	    || type == None
+	    || format == 0
+	    || leftovers
+	    || num % 4) {
+		return FALSE;
+	}
+
+	workareas = (long *) ret_workarea;
+	rect->x = workareas[disp_screen * 4];
+	rect->y = workareas[disp_screen * 4 + 1];
+	rect->width = workareas[disp_screen * 4 + 2];
+	rect->height = workareas[disp_screen * 4 + 3];
+
+	XFree (ret_workarea);
+
+	return TRUE;
+}
+
+static gboolean
+totem_ratio_fits_screen_x11 (GtkWidget *video_widget,
+			     int new_w, int new_h,
+			     gfloat ratio)
+{
+	GdkScreen *screen;
+	GdkRectangle work_rect, mon_rect;
+	GdkWindow *window;
+
+	window = gtk_widget_get_window (video_widget);
+	g_return_val_if_fail (window != NULL, FALSE);
+
+	screen = gtk_widget_get_screen (video_widget);
+
+	/* Get the work area */
+	if (get_work_area (screen, &work_rect) == FALSE) {
+		return totem_ratio_fits_screen_generic (video_widget,
+							new_w,
+							new_h,
+							ratio);
+	}
+
+	gdk_screen_get_monitor_geometry (screen,
+					 gdk_screen_get_monitor_at_window (screen, window),
+					 &mon_rect);
+	gdk_rectangle_intersect (&mon_rect, &work_rect, &work_rect);
+
+	if (new_w > work_rect.width || new_h > work_rect.height)
+		return FALSE;
+
+	return TRUE;
+}
+#endif /* GDK_WINDOWING_X11 */
+
+static void
+get_window_size (GtkWidget *widget,
+		 int *width,
+		 int *height)
+{
+	GdkWindow *window;
+	GdkRectangle rect;
+
+	window = gtk_widget_get_window (widget);
+	gdk_window_get_frame_extents (window, &rect);
+	*width = rect.width;
+	*height = rect.height;
+}
+
+gboolean
+totem_ratio_fits_screen (GtkWidget *video_widget,
+			 int video_width, int video_height,
+			 gfloat ratio)
+{
+	GdkDisplay *display;
+	int new_w, new_h;
+	GtkWidget *window;
+
+	if (video_width <= 0 || video_height <= 0)
+		return TRUE;
+
+	new_w = video_width * ratio;
+	new_h = video_height * ratio;
+
+	/* Now add the width of the rest of the movie player UI */
+	window = gtk_widget_get_toplevel (video_widget);
+	if (gtk_widget_is_toplevel (window)) {
+		GdkWindow *video_win;
+		int win_w, win_h;
+
+		get_window_size (window, &win_w, &win_h);
+		video_win = gtk_widget_get_window (video_widget);
+
+		new_w += win_w - gdk_window_get_width (video_win);
+		new_h += win_h - gdk_window_get_height (video_win);
+	} else {
+		return totem_ratio_fits_screen_generic (video_widget, new_w, new_h, ratio);
+	}
+
+#ifdef GDK_WINDOWING_X11
+	display = gtk_widget_get_display (video_widget);
+
+	if (GDK_IS_X11_DISPLAY (display)) {
+		return totem_ratio_fits_screen_x11 (video_widget, new_w, new_h, ratio);
+	}
+#endif
+	return totem_ratio_fits_screen_generic (video_widget, new_w, new_h, ratio);
 }
 
