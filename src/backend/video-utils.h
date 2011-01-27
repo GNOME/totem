@@ -28,8 +28,6 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-#define TOTEM_OBJECT_HAS_SIGNAL(obj, name) (g_signal_lookup (name, g_type_from_name (G_OBJECT_TYPE_NAME (obj))) != 0)
-
 void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
 void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
 
