@@ -1,5 +1,32 @@
 New features and significant updates in version...
 
+2.91.5:
+* Build:
+  - Fix build with newer versions of GTK+ 3.x
+
+* Thumbnailer:
+  - Register thumbnailer with new scheme
+  - Always use the better looking resize method, even for
+    large thumbnails
+
+* Movie Player:
+  - Use new-style toolbar for playlist
+  - Fix look of plugins preferences
+  - Notice panels when automatically resizing the window
+
+* Plugins:
+  - Fix subtitles plugin not closing after download
+  - Downgrade YouTube plugin's abilities, see:
+  http://www.hadess.net/2011/01/youtube-playback-will-suck-again.html
+  - Offer to launch YouTube in browser if video is not
+    available in the requested format.
+  - Re-add support for Vala plugins and sample vala plugin
+  - Add support for additional multimedia keys
+  - Port tracker plugin to newest API
+
+* Browser plugin:
+  - Fix possible crasher in the glow button
+
 2.91.4:
 * Build:
   - Port to GtkStyleContext
