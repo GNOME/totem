@@ -443,7 +443,7 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 
 		/* Add the MRLs to the playlist asynchronously and in order */
 		if (mrl_list != NULL)
-			totem_playlist_add_mrls (self->priv->totem->playlist, g_list_reverse (mrl_list), FALSE, NULL, NULL, NULL);
+			totem_playlist_add_mrls (self->totem->playlist, g_list_reverse (mrl_list), FALSE, NULL, NULL, NULL);
 	}
 
 out:
