@@ -505,7 +505,7 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
 
 	if (data->add_to_recent != FALSE)
-		gtk_recent_manager_add_item (data->totem->recent_manager, data->uri);
+		totem_action_add_recent (data->totem, data->uri, data->display_name);
 	end = totem_playlist_get_last (playlist);
 
 	totem_signal_unblock_by_data (playlist, data->totem);
