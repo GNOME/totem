@@ -23,7 +23,9 @@ libmedia_player_keys_la_SOURCES = \
 	$(marshal_files)		\
 	totem-media-player-keys.c
 libmedia_player_keys_la_LDFLAGS = $(plugin_ldflags)
-libmedia_player_keys_la_LIBADD = $(MEDIA_PLAYER_KEYS_LIBS)
+libmedia_player_keys_la_LIBADD = \
+	$(plugin_libadd)		\
+	$(MEDIA_PLAYER_KEYS_LIBS)
 libmedia_player_keys_la_CFLAGS = \
 	$(plugin_cflags)		\
 	$(MEDIA_PLAYER_KEYS_CFLAGS)

@@ -8,5 +8,6 @@ plugin_in_files = thumbnail.plugin.in
 libthumbnail_la_SOURCES = totem-thumbnail.c
 libthumbnail_la_LDFLAGS = $(plugin_ldflags)
 libthumbnail_la_CFLAGS = $(plugin_cflags)
+libthumbnail_la_LIBADD = $(plugin_libadd)
 
 -include $(top_srcdir)/git.mk

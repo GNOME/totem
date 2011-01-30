@@ -12,7 +12,8 @@ EXTRA_DIST += $(ui_DATA)
 libyoutube_la_SOURCES = totem-youtube.c
 libyoutube_la_LDFLAGS = $(plugin_ldflags)
 libyoutube_la_LIBADD = \
-	$(LIBGDATA_LIBS)	\
+	$(plugin_libadd)		\
+	$(LIBGDATA_LIBS)		\
 	$(LIBSOUP_LIBS)
 libyoutube_la_CFLAGS = \
 	$(plugin_cflags)	\

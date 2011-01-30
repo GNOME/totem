@@ -8,6 +8,7 @@ plugin_in_files = tracker.plugin.in
 libtracker_la_SOURCES = totem-tracker.c totem-tracker-widget.h totem-tracker-widget.c
 libtracker_la_LDFLAGS = $(plugin_ldflags)
 libtracker_la_LIBADD = \
+	$(plugin_libadd)	\
 	$(TRACKER_LIBS)	\
 	$(DBUS_LIBS)
 libtracker_la_CFLAGS = \

@@ -11,7 +11,9 @@ EXTRA_DIST += $(ui_DATA)
 
 libpublish_la_SOURCES = totem-publish.c
 libpublish_la_LDFLAGS = $(plugin_ldflags)
-libpublish_la_LIBADD = $(LIBEPC_LIBS)
+libpublish_la_LIBADD = \
+	$(plugin_libadd)	\
+	$(LIBEPC_LIBS)
 libpublish_la_CFLAGS = \
 	$(plugin_cflags)	\
 	$(LIBEPC_CFLAGS)

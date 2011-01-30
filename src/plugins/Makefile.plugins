@@ -23,3 +23,6 @@ plugin_ldflags = \
 	-export_dynamic \
 	-avoid-version \
 	-module
+
+plugin_libadd = \
+	$(top_builddir)/src/libtotem.la

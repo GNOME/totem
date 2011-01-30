@@ -22,5 +22,6 @@ libscreenshot_la_SOURCES = \
 	totem-gallery-progress.h
 libscreenshot_la_LDFLAGS = $(plugin_ldflags)
 libscreenshot_la_CFLAGS = $(plugin_cflags)
+libscreenshot_la_LIBADD = $(plugin_libadd)
 
 -include $(top_srcdir)/git.mk
