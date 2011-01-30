@@ -43,7 +43,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
+#include <gtk/gtkx.h>
 
 #include "totem-interface.h"
 
@@ -293,7 +293,7 @@ totem_gtk_plug_get_toplevel (GtkPlug *plug)
 {
 	Window root, parent, *children;
 	guint nchildren;
-	GdkNativeWindow xid;
+	Window xid;
 
 	g_return_val_if_fail (GTK_IS_PLUG (plug), NULL);
 

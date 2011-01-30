@@ -35,7 +35,7 @@
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
+#include <gtk/gtkx.h>
 #endif
 
 #include <string.h>
@@ -57,12 +57,12 @@ TotemCodecInstallContext;
 
 #ifdef GDK_WINDOWING_X11
 /* Adapted from totem-interface.c */
-static GdkNativeWindow
+static Window
 bacon_video_widget_gtk_plug_get_toplevel (GtkPlug *plug)
 {
 	Window root, parent, *children;
 	guint nchildren;
-	GdkNativeWindow xid;
+	Window xid;
 
 	g_return_val_if_fail (GTK_IS_PLUG (plug), 0);
 
@@ -86,7 +86,7 @@ bacon_video_widget_gtk_plug_get_toplevel (GtkPlug *plug)
 	while (TRUE);
 }
 
-static GdkNativeWindow
+static Window
 bacon_video_widget_gst_get_toplevel (GtkWidget *widget)
 {
 	GtkWidget *parent;

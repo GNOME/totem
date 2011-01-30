@@ -33,7 +33,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
-#include <gdk/gdkx.h>
+#include <gtk/gtkx.h>
 #include <gtk/gtk.h>
 
 #include <gdk/gdk.h>
@@ -1797,7 +1797,7 @@ totem_embedded_key_press_event (GtkWidget *widget, GdkEventKey *event,
 
 static gboolean
 totem_embedded_construct (TotemEmbedded *emb,
-			  GdkNativeWindow xid,
+			  Window xid,
 			  int width,
 			  int height)
 {
@@ -2086,7 +2086,7 @@ totem_embedded_set_window (TotemEmbedded *embedded,
 	embedded->width = width;
 	embedded->height = height;
 
-	totem_embedded_construct (embedded, (GdkNativeWindow) window,
+	totem_embedded_construct (embedded, (Window) window,
 				  width, height);
 
 	return TRUE;
