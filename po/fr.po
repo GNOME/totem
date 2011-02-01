@@ -12,22 +12,23 @@
 # Robert-André Mauchin <zebob.m@pengzone.org>, 2006-2008.
 # Claude Paroz <claude@2xlibre.net>, 2006-2010.
 # Ivan Buresi <err747@free.fr>, 2007.
-# Bruno Brouard <annoa.b@gmail.com>, 2007, 2009.
+# Bruno Brouard <annoa.b@gmail.com>, 2007-2011.
 # Laurent Pomarede <laurent.pomarede+gnomefr@gmail.com>, 2008.
-# Nicolas Repentin <nicolas@shivaserv.fr>, 2009.
+# Nicolas Repentin <nicolas@shivaserv.fr>, 2009, 2010.
+# Gérard Baylard <Geodebay@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&component=general\n"
-"POT-Creation-Date: 2010-08-20 15:43+0000\n"
-"PO-Revision-Date: 2010-08-21 14:40+0200\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"POT-Creation-Date: 2011-01-28 17:54+0000\n"
+"PO-Revision-Date: 2011-01-25 10:49+0100\n"
+"Last-Translator: Gérard Baylard <Geodebay@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8 bits\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
 #: ../data/fullscreen.ui.h:1
@@ -36,9 +37,9 @@ msgstr "Quitter le mode plein écran"
 
 #: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:102
 msgid "Time:"
-msgstr "Temps :"
+msgstr "Minutage :"
 
-#: ../data/playlist.ui.h:1 ../src/plugins/chapters/chapters-list.ui.h:1
+#: ../data/playlist.ui.h:1
 msgid "Add..."
 msgstr "Ajouter..."
 
@@ -54,7 +55,7 @@ msgstr "Descendre"
 msgid "Move Up"
 msgstr "Monter"
 
-#: ../data/playlist.ui.h:5 ../src/plugins/chapters/chapters-list.ui.h:8
+#: ../data/playlist.ui.h:5
 msgid "Remove"
 msgstr "Enlever"
 
@@ -74,7 +75,7 @@ msgstr "Choisit un fichier de sous-titres à utiliser"
 msgid "_Copy Location"
 msgstr "_Copier l'emplacement"
 
-#: ../data/playlist.ui.h:10 ../src/plugins/chapters/chapters-list.ui.h:12
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "_Enlever"
 
@@ -84,13 +85,13 @@ msgstr "_Sélectionner les sous-titres..."
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 canal"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -100,10 +101,10 @@ msgstr "0 image par seconde"
 
 #: ../data/properties.ui.h:4
 msgid "0 kbps"
-msgstr "0 kbps"
+msgstr "0 kb/s"
 
 #. 0 seconds
-#: ../data/properties.ui.h:5 ../src/backend/video-utils.c:158
+#: ../data/properties.ui.h:5 ../src/backend/video-utils.c:192
 msgid "0 seconds"
 msgstr "0 seconde"
 
@@ -119,60 +120,50 @@ msgstr "Album :"
 msgid "Artist:"
 msgstr "Artiste :"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:22
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
 #: ../src/totem-properties-view.c:89
 msgid "Audio"
 msgstr "Audio"
 
-# Liste des propriétés => à conserver très court
+#. Audio Codec
 #: ../data/properties.ui.h:10
+#: ../src/properties/bacon-video-widget-properties.c:171
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "N/D"
+
+# Liste des propriétés => à conserver très court
+#: ../data/properties.ui.h:11
 msgid "Bitrate:"
 msgstr "Débit :"
 
-#: ../data/properties.ui.h:11
+#: ../data/properties.ui.h:12
 msgid "Channels:"
 msgstr "Canaux :"
 
-#: ../data/properties.ui.h:12
+#: ../data/properties.ui.h:13
 msgid "Codec:"
 msgstr "Codec :"
 
-#: ../data/properties.ui.h:13
+#: ../data/properties.ui.h:14
 msgid "Comment:"
 msgstr "Commentaire :"
 
-#: ../data/properties.ui.h:14
+#: ../data/properties.ui.h:15
 msgid "Dimensions:"
 msgstr "Dimensions :"
 
-#: ../data/properties.ui.h:15
+#: ../data/properties.ui.h:16
 msgid "Duration:"
 msgstr "Durée :"
 
-#: ../data/properties.ui.h:16
+#: ../data/properties.ui.h:17
 msgid "Framerate:"
 msgstr "Cadence :"
 
-#: ../data/properties.ui.h:17 ../data/totem.ui.h:41
+#: ../data/properties.ui.h:18 ../data/totem.ui.h:41
 msgid "General"
 msgstr "Général"
-
-#. Dimensions
-#. Video Codec
-#. Audio Codec
-#: ../data/properties.ui.h:18
-#: ../src/plugins/properties/bacon-video-widget-properties.c:156
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#: ../src/plugins/properties/bacon-video-widget-properties.c:161
-#: ../src/plugins/properties/bacon-video-widget-properties.c:164
-#: ../src/plugins/properties/bacon-video-widget-properties.c:167
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#: ../src/plugins/properties/bacon-video-widget-properties.c:248
-#: ../src/plugins/properties/bacon-video-widget-properties.c:271
-#: ../src/plugins/properties/bacon-video-widget-properties.c:274
-msgid "N/A"
-msgstr "N/D"
 
 #: ../data/properties.ui.h:19
 msgid "Sample rate:"
@@ -187,10 +178,10 @@ msgstr "Titre :"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:143
-#: ../src/plugins/properties/bacon-video-widget-properties.c:145
-#: ../src/plugins/properties/bacon-video-widget-properties.c:147
-#: ../src/plugins/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:145
+#: ../src/properties/bacon-video-widget-properties.c:147
+#: ../src/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "Inconnu"
 
@@ -199,7 +190,14 @@ msgstr "Inconnu"
 msgid "Video"
 msgstr "Vidéo"
 
+#. Video Codec
 #: ../data/properties.ui.h:23
+#: ../src/properties/bacon-video-widget-properties.c:160
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../data/properties.ui.h:24
 msgid "Year:"
 msgstr "Année :"
 
@@ -214,7 +212,7 @@ msgstr "_Ajouter à la liste de lecture"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1626
+#: ../src/totem-object.c:1666
 msgid "Movie Player"
 msgstr "Lecteur vidéo"
 
@@ -225,23 +223,23 @@ msgstr "Lire des films et de la musique"
 
 #: ../data/totem.ui.h:1
 msgid "1.5 Mbps T1/Intranet/LAN"
-msgstr "T1/Intranet/LAN 1,5 Mbps"
+msgstr "T1/Intranet/LAN 1,5 Mb/s"
 
 #: ../data/totem.ui.h:2
 msgid "112 Kbps Dual ISDN/DSL"
-msgstr "RNIS double/DSL 112 Kbps"
+msgstr "RNIS double/DSL 112 Kb/s"
 
 #: ../data/totem.ui.h:3
 msgid "14.4 Kbps Modem"
-msgstr "Modem 14,4 Kbps"
+msgstr "Modem 14,4 Kb/s"
 
 #: ../data/totem.ui.h:4
 msgid "16:9 (Widescreen)"
-msgstr "16:9 (écran large)"
+msgstr "16:9 (grand écran)"
 
 #: ../data/totem.ui.h:5
 msgid "19.2 Kbps Modem"
-msgstr "Modem 19,2 Kbps"
+msgstr "Modem 19,2 Kb/s"
 
 #: ../data/totem.ui.h:6
 msgid "2.11:1 (DVB)"
@@ -249,23 +247,23 @@ msgstr "2.11:1 (DVB)"
 
 #: ../data/totem.ui.h:7
 msgid "256 Kbps DSL/Cable"
-msgstr "DSL/Câble 256 Kbps"
+msgstr "DSL/Câble 256 Kb/s"
 
 #: ../data/totem.ui.h:8
 msgid "28.8 Kbps Modem"
-msgstr "Modem 28,8 Kbps"
+msgstr "Modem 28,8 Kb/s"
 
 #: ../data/totem.ui.h:9
 msgid "33.6 Kbps Modem"
-msgstr "Modem 33,6 Kbps"
+msgstr "Modem 33,6 Kb/s"
 
 #: ../data/totem.ui.h:10
 msgid "34.4 Kbps Modem"
-msgstr "Modem 34,4 Kbps"
+msgstr "Modem 34,4 Kb/s"
 
 #: ../data/totem.ui.h:11
 msgid "384 Kbps DSL/Cable"
-msgstr "DSL/Câble 384 Kbps"
+msgstr "DSL/Câble 384 Kb/s"
 
 #: ../data/totem.ui.h:12
 msgid "4-channel"
@@ -289,11 +287,11 @@ msgstr "5.1 canaux"
 
 #: ../data/totem.ui.h:17
 msgid "512 Kbps DSL/Cable"
-msgstr "DSL/Câble 512 Kbps"
+msgstr "DSL/Câble 512 Kb/s"
 
 #: ../data/totem.ui.h:18
 msgid "56 Kbps Modem/ISDN"
-msgstr "Modem/RNIS 56 Kbps"
+msgstr "Modem/RNIS 56 Kb/s"
 
 #: ../data/totem.ui.h:19
 msgid "AC3 Passthrough"
@@ -301,24 +299,24 @@ msgstr "Sortie directe AC3"
 
 #: ../data/totem.ui.h:20
 msgid "A_udio Menu"
-msgstr "Menu _audio"
+msgstr "Menu a_udio"
 
 #: ../data/totem.ui.h:21
 msgid "About this application"
 msgstr "À propos de cette application"
 
-#: ../data/totem.ui.h:23
-msgid "Audio Output"
-msgstr "Sortie audio"
-
-#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../data/totem.ui.h:24 ../src/totem-menu.c:197
+#: ../data/totem.ui.h:22
+msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Auto"
 
+#: ../data/totem.ui.h:24
+msgid "Audio Output"
+msgstr "Sortie audio"
+
 #: ../data/totem.ui.h:25
 msgid "Clear the playlist"
-msgstr "Efface la liste de lecture"
+msgstr "Effacer la liste de lecture"
 
 #: ../data/totem.ui.h:26
 msgid "Co_ntrast:"
@@ -342,16 +340,16 @@ msgstr "Vite_sse de la connexion :"
 
 #: ../data/totem.ui.h:31
 msgid "Decrease volume"
-msgstr "Baisse le volume"
+msgstr "Baisse le son"
 
 #: ../data/totem.ui.h:32
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Désactiver le _désentrelacement des vidéos entrelacées"
+msgstr "_Désactiver le désentrelacement des vidéos entrelacées"
 
 # Suivent deux boutons radio : Video / Video or Audio
 #: ../data/totem.ui.h:33
 msgid "Disable screensaver when playing "
-msgstr "Désactiver l'économiseur d'écran lors de lecture "
+msgstr "Désactiver l'économiseur d'écran pendant une lecture "
 
 #. Tab label in the Preferences dialogue
 #: ../data/totem.ui.h:35
@@ -360,7 +358,7 @@ msgstr "Affichage"
 
 #: ../data/totem.ui.h:36
 msgid "Eject the current disc"
-msgstr "Éjecte le disque actuel"
+msgstr "Éjecter le disque courant"
 
 #: ../data/totem.ui.h:37
 msgid "External Chapters"
@@ -377,23 +375,23 @@ msgstr "Adapter la fenêtre au film"
 
 #: ../data/totem.ui.h:42
 msgid "Go to the DVD menu"
-msgstr "Aller au menu DVD"
+msgstr "Va au menu DVD"
 
 #: ../data/totem.ui.h:43
 msgid "Go to the angle menu"
-msgstr "Aller au menu angle"
+msgstr "Va au menu angle"
 
 #: ../data/totem.ui.h:44
 msgid "Go to the audio menu"
-msgstr "Aller au menu audio"
+msgstr "Va au menu audio"
 
 #: ../data/totem.ui.h:45
 msgid "Go to the chapter menu"
-msgstr "Aller au menu chapitre"
+msgstr "Va au menu chapitres"
 
 #: ../data/totem.ui.h:46
 msgid "Go to the title menu"
-msgstr "Aller au menu titre"
+msgstr "Va au menu titre"
 
 #: ../data/totem.ui.h:47
 msgid "Help contents"
@@ -401,7 +399,7 @@ msgstr "Sommaire de l'aide"
 
 #: ../data/totem.ui.h:48
 msgid "Increase volume"
-msgstr "Augmente le volume"
+msgstr "Monte le son"
 
 #: ../data/totem.ui.h:49
 msgid "Intranet/LAN"
@@ -414,7 +412,7 @@ msgstr "Grande"
 
 #: ../data/totem.ui.h:52
 msgid "Load _chapter files when movie is loaded"
-msgstr "Ch_arger les fichiers de chapitres lors du chargement d'un film"
+msgstr "Ch_arger les fichiers de chapitrage au chargement d'un film"
 
 #: ../data/totem.ui.h:54
 msgid "Networking"
@@ -443,7 +441,7 @@ msgstr "Ouvre un fichier non-local"
 
 #: ../data/totem.ui.h:61
 msgid "Play / P_ause"
-msgstr "Lecture / P_ause"
+msgstr "Lecture / P_ause"
 
 #: ../data/totem.ui.h:62
 msgid "Play or pause the movie"
@@ -493,9 +491,10 @@ msgstr "Redimensionne à la moitié de la taille originale de la vidéo"
 msgid "Resize to the original video size"
 msgstr "Redimensionne à la taille originale de la vidéo"
 
+# _Plein écran dans le même sous menu
 #: ../data/totem.ui.h:74
 msgid "S_idebar"
-msgstr "_Panneau"
+msgstr "Panneau _latéral"
 
 #: ../data/totem.ui.h:75
 msgid "S_ubtitles"
@@ -577,7 +576,7 @@ msgstr "Carré"
 msgid "Start playing files from last position"
 msgstr "Démarre la lecture des fichiers à la dernière position connue"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5895
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6008
 msgid "Stereo"
 msgstr "Stéréo"
 
@@ -587,7 +586,7 @@ msgstr "Changer d'an_gle"
 
 #: ../data/totem.ui.h:98
 msgid "Switch camera angles"
-msgstr "Change d'angle de caméra"
+msgstr "Change l'angle de prise de vue"
 
 #: ../data/totem.ui.h:99
 msgid "Switch to fullscreen"
@@ -623,11 +622,11 @@ msgstr "Di_mension de visualisation :"
 
 #: ../data/totem.ui.h:109
 msgid "Volume _Down"
-msgstr "_Diminuer le volume"
+msgstr "_Baisser le son"
 
 #: ../data/totem.ui.h:110
 msgid "Volume _Up"
-msgstr "_Augmenter le volume"
+msgstr "_Monter le son"
 
 #: ../data/totem.ui.h:111
 msgid "Zoom In"
@@ -643,15 +642,15 @@ msgstr "Taille normale"
 
 #: ../data/totem.ui.h:114
 msgid "Zoom in"
-msgstr "Zoom en avant"
+msgstr "Zoom avant"
 
 #: ../data/totem.ui.h:115
 msgid "Zoom out"
-msgstr "Zoom en arrière"
+msgstr "Zoom arrière"
 
 #: ../data/totem.ui.h:116
 msgid "Zoom reset"
-msgstr "Zoom à la taille normale"
+msgstr "Zoom initial"
 
 #: ../data/totem.ui.h:117
 msgid "_About"
@@ -667,7 +666,7 @@ msgstr "Rapport d'_affichage"
 
 #: ../data/totem.ui.h:120
 msgid "_Audio output type:"
-msgstr "Type de sortie audio :"
+msgstr "Type de sortie _audio :"
 
 #: ../data/totem.ui.h:121
 msgid "_Brightness:"
@@ -727,7 +726,7 @@ msgstr "_Langues"
 
 #: ../data/totem.ui.h:135
 msgid "_Load subtitle files when movie is loaded"
-msgstr "C_harger les fichiers de sous-titres lors du chargement d'un film"
+msgstr "C_harger les fichiers de sous-titrage au chargement du film"
 
 #: ../data/totem.ui.h:136
 msgid "_Movie"
@@ -763,7 +762,7 @@ msgstr "_Ratio 1:2"
 
 #: ../data/totem.ui.h:144
 msgid "_Resize the window when a new video is loaded"
-msgstr "_Redimensionner la fenêtre lors du chargement d'une nouvelle vidéo"
+msgstr "_Redimensionner la fenêtre au chargement d'une nouvelle vidéo"
 
 #: ../data/totem.ui.h:146
 msgid "_Sound"
@@ -781,213 +780,188 @@ msgstr "Ty_pe de visualisation :"
 msgid "_View"
 msgstr "_Affichage"
 
-#: ../data/totem.schemas.in.h:1
-msgid "Allow the screensaver to activate when playing audio"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+msgid ""
+"A list of the names of the plugins which are currently active (loaded and "
+"running)."
 msgstr ""
-"Permettre à l'économiseur d'écran de se lancer lorsque seul de l'audio est lu"
+"Une liste des noms des greffons actuellement actifs (chargés et en cours "
+"d'exécution)."
 
-#: ../data/totem.schemas.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+msgid "Active plugins list"
+msgstr "Liste des greffons actifs"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+msgid "Allow the screensaver to activate when playing audio"
+msgstr "Autoriser l'économiseur d'écran lors des lectures audio"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
 msgid ""
 "Allow the screensaver to activate when playing audio. Disable if you have "
 "monitor-powered speakers."
 msgstr ""
-"Permettre à l'économiseur d'écran de se lancer lorsque seul de l'audio est "
-"lu. Désactivez ceci si vous disposez de haut-parleurs intégrés à l'écran."
+"Autorise l'activation de l'économiseur d'écran pendant une lecture audio. À "
+"désactiver si vous disposez de haut-parleurs intégrés à l'écran."
 
-#: ../data/totem.schemas.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
-"stream (in seconds)"
+"stream (in seconds)."
 msgstr ""
-"Quantité de données à recevoir des flux réseau avant de commencer leur "
-"affichage (en secondes)"
+"Quantité de données du flux réseau à mettre en tampon avant d'en débuter "
+"l'affichage (en secondes)."
 
-#: ../data/totem.schemas.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
 msgid ""
 "Approximate network connection speed, used to select quality on media over "
-"the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
-"28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
-"for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
-"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"the network."
 msgstr ""
-"Vitesse approximative de la connexion réseau, utilisée pour choisir la "
-"qualité des médias obtenus par le réseau : « 0 » pour modem 14,4 Kbps, « 1 » "
-"pour modem 19,2 Kbps, « 2 » pour modem 28,8 Kbps, « 3 » pour modem 36,6 Kbps, "
-"« 4 » pour modem 34,4 Kbps, « 5 » pour modem 56 Kbps/RNIS, « 6 » pour RNIS "
-"double/DSL 112 Kbps, « 7 » pour DSL/Câble 256 Kbps, « 8 » pour DSL/Câble 384 "
-"Kbps, « 9 » pour DSL/Câble 512 Kbps, « 10 » pour T1/Intranet/LAN 1,5 Mbps, "
-"« 11 » pour Intranet/LAN."
+"Vitesse approximative de la connexion réseau : utilisée pour choisir la "
+"qualité d'un média via le réseau."
 
-#: ../data/totem.schemas.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
 msgid "Default location for the \"Open...\" dialogs"
-msgstr "Emplacement par défaut pour les fenêtres « Ouvrir... »"
+msgstr "Emplacement par défaut de la boîte de dialogue « Ouvrir... »"
 
-#: ../data/totem.schemas.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
 msgid ""
-"Default location for the \"Open...\" dialogs, default is the current "
-"directory"
+"Default location for the \"Open...\" dialogs. Default is the current "
+"directory."
 msgstr ""
-"Emplacement par défaut pour les fenêtres « Ouvrir... », l'emplacement par "
-"défaut est le répertoire actuel."
+"Emplacement par défaut de la boîte de dialogue « Ouvrir... ». Par défaut, le "
+"répertoire actuel."
 
-#: ../data/totem.schemas.in.h:7
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
 msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr "Emplacement par défaut pour les fenêtres « Capture d'écran »"
+msgstr "Emplacement par défaut de la boîte de dialogue « Capturer une image »"
 
 # Lien avec xdg-user-dirs
-#: ../data/totem.schemas.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs, default is the "
-"Pictures directory"
+"Default location for the \"Take Screenshot\" dialogs. Default is the "
+"Pictures directory."
 msgstr ""
-"Emplacement par défaut pour les fenêtres « Capture d'écran », l'emplacement "
-"par défaut est le répertoire Images."
+"Emplacement par défaut pour les fichiers de capture d'écran, par défaut le "
+"répertoire Images."
 
-#: ../data/totem.schemas.in.h:9
-msgid "Encoding charset for subtitle"
-msgstr "Codage des caractères pour les sous-titres"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+msgid "Encoding character set for subtitle."
+msgstr "Codage des caractères pour les sous-titres."
 
-#: ../data/totem.schemas.in.h:10
-msgid "Name of the visual effects plugins"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+msgid "Name of the visual effects plugin"
 msgstr "Nom des greffons d'effets visuels"
 
-#: ../data/totem.schemas.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
 msgid "Network buffering threshold"
-msgstr "Seuil de tampon réseaux"
+msgstr "Seuil de tampon réseau"
 
-#: ../data/totem.schemas.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
 msgid "Network connection speed"
-msgstr "Vitesse de la connexion réseau"
+msgstr "Vitesse de la connexion réseau"
 
-#: ../data/totem.schemas.in.h:13
-msgid "Pango font description for subtitle rendering"
-msgstr "Description de la police Pango pour le rendu des sous-titres"
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+msgid "Pango font description for subtitle rendering."
+msgstr "Description de la police Pango pour le rendu des sous-titres."
 
-#: ../data/totem.schemas.in.h:14
-msgid ""
-"Quality settings for the audio visualization: \"0\" for small, \"1\" for "
-"normal, \"2\" for large, \"3\" for extra large."
-msgstr ""
-"Réglage de qualité pour la visualisation audio : « 0 » pour petite, « 1 » pour "
-"normale, « 2 » pour grande, « 3 » pour très grande."
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+msgid "Quality setting for the audio visualization."
+msgstr "Paramètre de qualité pour la visualisation audio."
 
-#: ../data/totem.schemas.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
 msgid "Repeat mode"
 msgstr "Lecture en boucle"
 
-#: ../data/totem.schemas.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
 msgid "Resize the canvas automatically on file load"
 msgstr ""
 "Redimensionner automatiquement le canevas lors du chargement du fichier"
 
-#: ../data/totem.schemas.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
 msgid "Show visual effects when no video is displayed"
-msgstr "Afficher des effets visuels lorsqu'aucune vidéo n'est lue"
+msgstr "Afficher les effets visuels si aucune vidéo n'est en cours de lecture"
 
-#: ../data/totem.schemas.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
 msgid "Show visual effects when playing an audio only file."
 msgstr ""
-"Afficher des effets visuels lors de la lecture d'un fichier son uniquement."
+"Affiche des effets visuels lors de la lecture d'un fichier ne contenant que "
+"du son."
 
-#: ../data/totem.schemas.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
 msgid "Shuffle mode"
 msgstr "Lecture aléatoire"
 
-#: ../data/totem.schemas.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
 msgid "Subtitle encoding"
 msgstr "Codage des sous-titres"
 
-#: ../data/totem.schemas.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
 msgid "Subtitle font"
 msgstr "Police des sous-titres"
 
-#: ../data/totem.schemas.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
 msgid "The brightness of the video"
 msgstr "La luminosité de la vidéo"
 
-#: ../data/totem.schemas.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
 msgid "The contrast of the video"
 msgstr "Le contraste de la vidéo"
 
-#: ../data/totem.schemas.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
 msgid "The hue of the video"
 msgstr "La teinte de la vidéo"
 
-#: ../data/totem.schemas.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
 msgid "The saturation of the video"
 msgstr "La saturation de la vidéo"
 
-#: ../data/totem.schemas.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
 msgid "Type of audio output to use"
 msgstr "Type de sortie audio à utiliser"
 
-#: ../data/totem.schemas.in.h:27
-msgid ""
-"Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel output, "
-"\"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" for AC3 "
-"Passthrough."
-msgstr ""
-"Type de sortie audio à utiliser : « 0 » pour la stéréo, « 1 », pour une sortie "
-"sur 4 canaux, « 2 » pour une sortie sur 5.0 canaux, « 3 » pour une sortie sur "
-"5.1 canaux, « 4 » pour une sortie directe AC3."
-
-#. Translators: This is default subtitle encoding
-#. character set. You can change this to be the most common
-#. encoding for fansub subtitles in your language. File a bug
-#. against Totem, and leave UTF-8 as the default if in doubt.
-#: ../data/totem.schemas.in.h:32
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: ../data/totem.schemas.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
 msgid "Visualization quality setting"
 msgstr "Réglage de la qualité de visualisation"
 
-#: ../data/totem.schemas.in.h:34
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr ""
-"Indique s'il faut charger automatiquement les fichiers de chapitres "
-"lorsqu'un film est chargé"
+"Indique s'il faut charger automatiquement les fichiers de chapitrage avec le "
+"film"
 
-#: ../data/totem.schemas.in.h:35
-msgid "Whether to autoload external chapter files when a movie is loaded."
-msgstr ""
-"Indique s'il faut charger automatiquement les fichiers de chapitres externes "
-"lorsqu'un film est chargé"
-
-#: ../data/totem.schemas.in.h:36
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
-"Indique s'il faut charger automatiquement les fichiers de sous-titres "
-"lorsqu'un film est chargé"
+"Indique s'il faut charger automatiquement les fichiers de sous-titrage avec "
+"le film"
 
-#: ../data/totem.schemas.in.h:37
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr ""
 "Indique s'il faut désactiver le désentrelacement pour les vidéos entrelacées"
 
-#: ../data/totem.schemas.in.h:38
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Indique s'il faut désactiver les raccourcis clavier"
 
-#: ../data/totem.schemas.in.h:39
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:34
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr ""
 "Indique s'il faut désactiver les greffons dans le répertoire personnel de "
 "l'utilisateur"
 
-#: ../data/totem.schemas.in.h:40
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:35
 msgid "Whether to enable debug for the playback engine"
 msgstr "Indique s'il faut activer le débogage pour le moteur de lecture"
 
-#: ../data/totem.schemas.in.h:41
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:36
 msgid ""
 "Whether to remember the position of played audio/video files when pausing or "
-"closing them."
+"closing them"
 msgstr ""
-"Indique s'il faut mémoriser la position dans les fichiers vidéo et audio lus "
-"lors de la mise en pause ou de leur fermeture."
+"Indique s'il faut mémoriser la position de lecture des fichiers vidéo et "
+"audio à la mise en pause ou à la fermeture"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -996,39 +970,39 @@ msgstr "Saisissez l'_emplacement du fichier que vous voulez ouvrir :"
 #: ../src/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr "Le fichier n'est pas un fichier .desktop valide"
+msgstr "Fichier .desktop non valide"
 
 #: ../src/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Version « %s » du fichier .desktop non reconnue"
 
-#: ../src/eggdesktopfile.c:958
+#: ../src/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "Démarrage de %s"
 
-#: ../src/eggdesktopfile.c:1100
+#: ../src/eggdesktopfile.c:1110
 #, c-format
 msgid "Application does not accept documents on command line"
-msgstr "Le programme n'accepte pas les documents sur la ligne de commande"
+msgstr "Le programme n'accepte pas de documents en ligne de commande"
 
-#: ../src/eggdesktopfile.c:1168
+#: ../src/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Option de lancement inconnue : %d"
 
-#: ../src/eggdesktopfile.c:1373
+#: ../src/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 "Impossible de transmettre des URI de documents à une entrée de bureau "
 "« Type=Link »"
 
-#: ../src/eggdesktopfile.c:1394
+#: ../src/eggdesktopfile.c:1404
 #, c-format
 msgid "Not a launchable item"
-msgstr "Impossible de lancer l'élément"
+msgstr "Élément impossible à lancer"
 
 #: ../src/eggfileformatchooser.c:235
 #, c-format
@@ -1063,46 +1037,98 @@ msgid ""
 "s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"Le programme n'a pas réussi à trouver le format de fichier que vous "
-"souhaitez utiliser pour « %s ». Prenez soin d'appliquer une extension connue "
-"à ce fichier ou choisissez manuellement un format de fichier dans la liste "
-"ci-dessous."
+"Le programme n'a pas réussi à trouver le format de fichier dont vous voulez "
+"vous servir pour « %s ». Assurez-vous d'utiliser une extension connue pour ce "
+"fichier ou choisissez manuellement un format de fichier dans la liste ci-"
+"dessous."
 
 #: ../src/eggfileformatchooser.c:659
 msgid "File format not recognized"
 msgstr "Format de fichier inconnu"
 
-#: ../src/eggsmclient.c:225
+#: ../src/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "Désactive la connexion au gestionnaire de sessions"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "Indique le fichier contenant la configuration enregistrée"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "FILE"
 msgstr "FICHIER"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "Indique l'ID de gestion de la session"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "ID"
 msgstr "ID"
 
-#: ../src/eggsmclient.c:252
+#: ../src/eggsmclient.c:253
 msgid "Session management options:"
 msgstr "Options de gestion de sessions :"
 
-#: ../src/eggsmclient.c:253
+#: ../src/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "Afficher les options de gestion de sessions"
+msgstr "Afficher les options de gestion de session"
+
+#. Dimensions
+#: ../src/properties/bacon-video-widget-properties.c:158
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/properties/bacon-video-widget-properties.c:163
+#: ../src/properties/bacon-video-widget-properties.c:240
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/properties/bacon-video-widget-properties.c:166
+#: ../src/properties/bacon-video-widget-properties.c:250
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/properties/bacon-video-widget-properties.c:169
+#: ../src/properties/bacon-video-widget-properties.c:273
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%d kb/s"
+
+#: ../src/properties/bacon-video-widget-properties.c:247
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d image par seconde"
+msgstr[1] "%d images par seconde"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "N/D"
 
 #: ../src/totem-audio-preview.c:82
 msgid "Audio Preview"
-msgstr "Préécoute sonore"
+msgstr "Pré-écoute audio"
 
 #: ../src/totem-cell-renderer-video.c:126
 msgid "Unknown video"
@@ -1116,25 +1142,25 @@ msgstr "_Lire maintenant"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ../src/totem-fullscreen.c:595
+#: ../src/totem-fullscreen.c:617
 msgid "No File"
 msgstr "Aucun fichier"
 
-#: ../src/totem-interface.c:170 ../src/totem-interface.c:202
+#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Impossible de charger l'interface « %s ». %s"
 
-#: ../src/totem-interface.c:170
+#: ../src/totem-interface.c:180
 msgid "The file does not exist."
 msgstr "Le fichier n'existe pas."
 
-#: ../src/totem-interface.c:172 ../src/totem-interface.c:174
-#: ../src/totem-interface.c:204 ../src/totem-interface.c:206
+#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
+#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
 msgid "Make sure that Totem is properly installed."
 msgstr "Veuillez vérifier que Totem est correctement installé."
 
-#: ../src/totem-interface.c:317
+#: ../src/totem-interface.c:346
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1146,7 +1172,7 @@ msgstr ""
 "la Free Software Foundation ; version 2 de la licence, ou (à votre "
 "discrétion) toute version ultérieure."
 
-#: ../src/totem-interface.c:321
+#: ../src/totem-interface.c:350
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1154,11 +1180,11 @@ msgid ""
 "details."
 msgstr ""
 "Totem est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE "
-"GARANTIE ; sans même la garantie implicite de VALEUR MARCHANDE ou "
-"D'ADÉQUATION À UN BESOIN PARTICULIER. Pour plus de détails, voir la Licence "
-"Publique Générale GNU."
+"GARANTIE ; sans même la garantie implicite de QUALITÉ LOYALE et MARCHANDE ou "
+"D'ADÉQUATION À UNE UTILISATION PARTICULIÈRE. Pour plus de détails, voir la "
+"Licence Publique Générale GNU."
 
-#: ../src/totem-interface.c:325
+#: ../src/totem-interface.c:354
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1168,7 +1194,7 @@ msgstr ""
 "Totem ; si ce n'est pas le cas, écrivez à la Free Software Foundation, Inc., "
 "59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:328
+#: ../src/totem-interface.c:357
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1180,6 +1206,12 @@ msgstr ""
 #: ../src/totem-menu.c:192
 msgid "None"
 msgstr "Aucun"
+
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../src/totem-menu.c:197
+msgctxt "Language"
+msgid "Auto"
+msgstr "Auto"
 
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
@@ -1210,7 +1242,7 @@ msgstr "Lecteur vidéo utilisant %s"
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1167
+#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1166
 msgid "translator-credits"
 msgstr ""
 "Christophe Fergeau <teuf@gnome.org>\n"
@@ -1221,54 +1253,56 @@ msgstr ""
 "Laurent Richard <laurent.richard@ael.be>\n"
 "Jonathan Ernst <jonathan@ernstfamily.ch>\n"
 "Robert-André Mauchin <zebob.m@pengzone.org>\n"
-"Claude Paroz <claude@2xlibre.net>"
+"Claude Paroz <claude@2xlibre.net>\n"
+"Nicolas Repentin <nicolas@shivaserv.fr>\n"
+"Gérard Baylard <géodebay@gmail.com>"
 
 #: ../src/totem-menu.c:1185
 msgid "Totem Website"
-msgstr "Site web de Totem"
+msgstr "Site Web de Totem"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1219
 msgid "Configure Plugins"
 msgstr "Configuration des greffons"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:434
+#: ../src/totem-object.c:473
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1004 ../browser-plugin/totem-plugin-viewer.c:369
+#: ../src/totem-object.c:1046 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Lecture en cours"
 
-#: ../src/totem-object.c:1006 ../src/totem-options.c:52
+#: ../src/totem-object.c:1048 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/totem-object.c:1011 ../browser-plugin/totem-plugin-viewer.c:365
+#: ../src/totem-object.c:1053 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "Suspendu"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1013 ../src/totem-object.c:1023
+#: ../src/totem-object.c:1055 ../src/totem-object.c:1065
 #: ../src/totem-options.c:51
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:84
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:96
 msgid "Play"
 msgstr "Lecture"
 
-#: ../src/totem-object.c:1018 ../src/totem-object.c:1618
-#: ../src/totem-statusbar.c:96 ../browser-plugin/totem-plugin-viewer.c:353
+#: ../src/totem-object.c:1060 ../src/totem-object.c:1658
+#: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Arrêté"
 
-#: ../src/totem-object.c:1099 ../src/totem-object.c:1126
-#: ../src/totem-object.c:1748 ../src/totem-object.c:1911
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1168
+#: ../src/totem-object.c:1796 ../src/totem-object.c:1959
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem n'a pas pu lire « %s »."
 
-#: ../src/totem-object.c:1203
+#: ../src/totem-object.c:1245
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1277,7 +1311,7 @@ msgstr ""
 "Totem n'a pas pu lire ce média (%s) bien qu'un greffon le prenant en charge "
 "soit installé."
 
-#: ../src/totem-object.c:1204
+#: ../src/totem-object.c:1246
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1285,94 +1319,96 @@ msgstr ""
 "Vous devriez vérifier qu'un disque est présent dans le lecteur et que celui-"
 "ci est correctement configuré."
 
-#: ../src/totem-object.c:1212
+#: ../src/totem-object.c:1254
 msgid "More information about media plugins"
 msgstr "Plus d'informations sur les greffons de média"
 
-#: ../src/totem-object.c:1213
+#: ../src/totem-object.c:1255
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr ""
-"Veuillez installer les greffons nécessaires et redémarrez Totem pour lire ce "
+"Veuillez installer les greffons nécessaires et redémarrer Totem pour lire ce "
 "média."
 
-#: ../src/totem-object.c:1215
+#: ../src/totem-object.c:1257
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
 "appropriate plugins to be able to read from the disc."
 msgstr ""
-"Totem ne peut pas lire ce type de média (%s) car vous n'avez pas le ou les "
-"greffons appropriés qui permettent de lire depuis le disque."
+"Totem ne peut pas lire ce type de média (%s) car il n'y a pas le ou les "
+"greffons appropriés lui permettant une lecture depuis le disque."
 
-#: ../src/totem-object.c:1217
+#: ../src/totem-object.c:1259
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr ""
-"Totem ne peut pas lire ce type de média (%s) car vous n'avez pas le ou les "
-"greffons appropriés."
+"Totem ne peut pas lire ce type de média (%s) car les greffons appropriés "
+"pour sa prise en charge ne sont pas installés."
 
-#: ../src/totem-object.c:1220
+#: ../src/totem-object.c:1262
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "Totem ne peut pas lire ce type de média (%s) car il n'est pas pris en charge."
 
-#: ../src/totem-object.c:1221
+#: ../src/totem-object.c:1263
 msgid "Please insert another disc to play back."
-msgstr "Veuillez insérer un autre disque pour le lire."
+msgstr "Veuillez insérer un autre disque à lire."
 
-#: ../src/totem-object.c:1257
+#: ../src/totem-object.c:1299
 msgid "Totem was not able to play this disc."
 msgstr "Totem n'a pas été capable de lire ce disque."
 
-#: ../src/totem-object.c:1258 ../src/totem-object.c:4202
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4273
 msgid "No reason."
 msgstr "Aucune raison."
 
-#: ../src/totem-object.c:1272
+#: ../src/totem-object.c:1314
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem ne prend pas en charge la lecture des CD audio"
 
-#: ../src/totem-object.c:1273
+#: ../src/totem-object.c:1315
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Veuillez utiliser un lecteur de musique ou un extracteur de CD pour lire ce "
 "CD"
 
-#: ../src/totem-object.c:1754
+#: ../src/totem-object.c:1802
 msgid "No error message"
 msgstr "Aucun message d'erreur"
 
-#: ../src/totem-object.c:2140
+#: ../src/totem-object.c:2194
 msgid "Totem could not display the help contents."
 msgstr "Totem ne peut afficher le contenu de l'aide."
 
-#: ../src/totem-object.c:2495 ../src/totem-object.c:2497
-#: ../browser-plugin/totem-plugin-viewer.c:1470
+#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
+#: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "Une erreur est survenue"
 
-#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
+#: ../src/totem-object.c:4107 ../src/totem-object.c:4109
 msgid "Previous Chapter/Movie"
 msgstr "Chapitre/Film précédent"
 
-#: ../src/totem-object.c:4046 ../src/totem-object.c:4048
+#: ../src/totem-object.c:4116 ../src/totem-object.c:4118
 msgid "Play / Pause"
 msgstr "Lecture / Pause"
 
-#: ../src/totem-object.c:4056 ../src/totem-object.c:4058
+#: ../src/totem-object.c:4126 ../src/totem-object.c:4128
 msgid "Next Chapter/Movie"
 msgstr "Chapitre/Film suivant"
 
-#: ../src/totem-object.c:4070 ../src/totem-object.c:4072
+#. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
+#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
+#: ../src/totem-object.c:4140 ../src/totem-object.c:4142
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: ../src/totem-object.c:4202
+#: ../src/totem-object.c:4273
 msgid "Totem could not startup."
 msgstr "Totem n'a pas pu démarrer."
 
@@ -1406,11 +1442,11 @@ msgstr "Retour rapide"
 
 #: ../src/totem-options.c:57
 msgid "Volume Up"
-msgstr "Augmenter le volume"
+msgstr "Monter le son"
 
 #: ../src/totem-options.c:58
 msgid "Volume Down"
-msgstr "Diminuer le volume"
+msgstr "Baisser le son"
 
 #: ../src/totem-options.c:59
 msgid "Mute sound"
@@ -1422,7 +1458,7 @@ msgstr "Basculer en mode plein écran"
 
 #: ../src/totem-options.c:61
 msgid "Show/Hide Controls"
-msgstr "Afficher/Masquer les contrôles"
+msgstr "Afficher/masquer les contrôles"
 
 #: ../src/totem-options.c:62
 msgid "Quit"
@@ -1430,8 +1466,8 @@ msgstr "Quitter"
 
 #. Translators: this refers to a media file
 #: ../src/totem-options.c:63
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:85
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:87
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:99
 msgid "Enqueue"
 msgstr "Mettre en attente"
 
@@ -1440,21 +1476,21 @@ msgid "Replace"
 msgstr "Remplacer"
 
 #: ../src/totem-options.c:65
-msgid "Don't connect to an already-running instance"
-msgstr "Ne pas se connecter à une instance déjà lancée"
-
-#: ../src/totem-options.c:66
 msgid "Seek"
 msgstr "Rechercher"
 
-#. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
-#: ../src/totem-options.c:68
+#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
+#: ../src/totem-options.c:67
 msgid "Playlist index"
 msgstr "Index de la liste de lecture"
 
-#: ../src/totem-options.c:70
+#: ../src/totem-options.c:69
 msgid "Movies to play"
 msgstr "Films à lire"
+
+#: ../src/totem-options.c:117
+msgid "Can't enqueue and replace at the same time"
+msgstr "Impossible de mettre en attente et remplacer en même temps"
 
 #. By extension entry
 #: ../src/totem-playlist.c:157
@@ -1484,31 +1520,31 @@ msgstr "Titre %d"
 msgid "Could not save the playlist"
 msgstr "Impossible d'enregistrer la liste de lecture"
 
-#: ../src/totem-playlist.c:1029
+#: ../src/totem-playlist.c:1033
 msgid "Save Playlist"
 msgstr "Enregistrer la liste de lecture"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:140
+#: ../src/totem-playlist.c:1045 ../src/totem-sidebar.c:140
 msgid "Playlist"
 msgstr "Liste de lecture"
 
-#: ../src/totem-playlist.c:1864
+#: ../src/totem-playlist.c:1862
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
-"La liste de lecture « %s » n'a pu être lue, elle est peut-être endommagée."
+"Impossible de lire la liste de lecture « %s ». Peut-être est-elle endommagée."
 
-#: ../src/totem-playlist.c:1865
+#: ../src/totem-playlist.c:1863
 msgid "Playlist error"
 msgstr "Erreur de liste de lecture"
 
-#: ../src/totem-preferences.c:107
+#: ../src/totem-preferences.c:66
 msgid "Enable visual effects?"
 msgstr "Activation des effets visuels"
 
-#: ../src/totem-preferences.c:109
+#: ../src/totem-preferences.c:68
 msgid ""
 "It seems you are running Totem remotely.\n"
 "Are you sure you want to enable the visual effects?"
@@ -1516,23 +1552,11 @@ msgstr ""
 "Il semble que vous utilisez Totem à distance.\n"
 "Voulez-vous vraiment activer les effets visuels ?"
 
-#: ../src/totem-preferences.c:404
-msgid "Changing the visuals effect type will require a restart to take effect."
-msgstr "Changer l'effet visuel nécessite un redémarrage pour prendre effet."
-
-#: ../src/totem-preferences.c:488
-msgid ""
-"The change of audio output type will only take effect when Totem is "
-"restarted."
-msgstr ""
-"La modification de ce paramètre audio ne prendra effet que lorsque Totem "
-"sera redémarré."
-
-#: ../src/totem-preferences.c:592
+#: ../src/totem-preferences.c:332
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../src/totem-preferences.c:766
+#: ../src/totem-preferences.c:490
 msgid "Select Subtitle Font"
 msgstr "Sélection des polices de sous-titres"
 
@@ -1542,52 +1566,52 @@ msgstr "Sélection des polices de sous-titres"
 msgid "Audio/Video"
 msgstr "Audio/Vidéo"
 
-#: ../src/totem-statusbar.c:91
+#: ../src/totem-statusbar.c:110
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
 
-#: ../src/totem-statusbar.c:113
+#: ../src/totem-statusbar.c:133
 #, c-format
 msgid "%s (Streaming)"
 msgstr "%s (flux)"
 
 #. Elapsed / Total Length
-#: ../src/totem-statusbar.c:120 ../src/totem-time-label.c:64
+#: ../src/totem-statusbar.c:140 ../src/totem-time-label.c:64
 #, c-format
 msgid "%s / %s"
 msgstr "%s / %s"
 
 #. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:123 ../src/totem-time-label.c:67
+#: ../src/totem-statusbar.c:143 ../src/totem-time-label.c:67
 #, c-format
 msgid "Seek to %s / %s"
 msgstr "Pointer vers %s / %s"
 
-#: ../src/totem-statusbar.c:217
+#: ../src/totem-statusbar.c:239
 msgid "Buffering"
 msgstr "Remplissage du tampon"
 
 #. eg: 75 %
-#: ../src/totem-statusbar.c:228
+#: ../src/totem-statusbar.c:250
 #, c-format
 msgid "%d %%"
-msgstr "%d %%"
+msgstr "%d %%"
 
 #. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:303
+#: ../src/totem-statusbar.c:325
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:308
+#: ../src/totem-statusbar.c:330
 #, c-format
 msgid "%s, %d %%"
-msgstr "%s, %d %%"
+msgstr "%s, %d %%"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
-msgstr "Locale courante"
+msgstr "Locale actuelle"
 
 #: ../src/totem-subtitle-encoding.c:159 ../src/totem-subtitle-encoding.c:161
 #: ../src/totem-subtitle-encoding.c:163 ../src/totem-subtitle-encoding.c:165
@@ -1726,14 +1750,14 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamien"
 
-#: ../src/totem-video-list.c:307
+#: ../src/totem-video-list.c:329
 msgid "No video URI"
 msgstr "Aucun URI de vidéo"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:672
+#: ../src/totem-video-thumbnailer.c:679
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1744,152 +1768,140 @@ msgstr ""
 "<b>%s</b> : %d×%d\n"
 "<b>%s</b> : %s"
 
-#: ../src/totem-video-thumbnailer.c:673
+#: ../src/totem-video-thumbnailer.c:680
 msgid "Filename"
-msgstr "Nom de fichier"
+msgstr "Nom du fichier"
 
-#: ../src/totem-video-thumbnailer.c:675
+#: ../src/totem-video-thumbnailer.c:682
 msgid "Resolution"
 msgstr "Résolution"
 
-#: ../src/totem-video-thumbnailer.c:678
+#: ../src/totem-video-thumbnailer.c:685
 msgid "Duration"
 msgstr "Durée"
 
-#: ../src/totem-uri.c:500 ../src/plugins/chapters/totem-chapters.c:1041
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1000
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: ../src/totem-uri.c:505 ../src/plugins/chapters/totem-chapters.c:1038
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:997
 msgid "Supported files"
 msgstr "Fichiers pris en charge"
 
-#: ../src/totem-uri.c:517
+#: ../src/totem-uri.c:519
 msgid "Audio files"
 msgstr "Fichiers audio"
 
-#: ../src/totem-uri.c:525
+#: ../src/totem-uri.c:527
 msgid "Video files"
 msgstr "Fichiers vidéo"
 
-#: ../src/totem-uri.c:535
+#: ../src/totem-uri.c:537
 msgid "Subtitle files"
 msgstr "Fichiers de sous-titres"
 
-#: ../src/totem-uri.c:587
+#: ../src/totem-uri.c:589
 msgid "Select Text Subtitles"
 msgstr "Sélection des sous-titres"
 
-#: ../src/totem-uri.c:649
+#: ../src/totem-uri.c:652
 msgid "Select Movies or Playlists"
 msgstr "Sélectionner les films ou les listes de lecture"
 
-#: ../src/totem.c:114
-msgid "Could not open link"
-msgstr "Impossible d'ouvrir le lien"
-
-#: ../src/totem.c:173 ../src/totem.c:199
-#: ../browser-plugin/totem-plugin-viewer.c:667
-#: ../browser-plugin/totem-plugin-viewer.c:1865
-msgid "Totem Movie Player"
-msgstr "Lecteur vidéo Totem"
-
-#: ../src/totem.c:174 ../browser-plugin/totem-plugin-viewer.c:2292
-msgid "Could not initialize the thread-safe libraries."
-msgstr "Impossible d'initialiser le support des bibliothèques thread-safe."
-
-#: ../src/totem.c:174
-msgid "Verify your system installation. Totem will now exit."
-msgstr ""
-"Vérifiez l'installation de votre système. Totem va maintenant s'arrêter."
-
-#. Handle command line arguments
-#: ../src/totem.c:182
+#. Options parsing
+#: ../src/totem.c:201
 msgid "- Play movies and songs"
-msgstr "- Lit vos films et vos musiques"
+msgstr "- Lit films et musiques"
 
-#: ../src/totem.c:191
+#: ../src/totem.c:212
 #, c-format
 msgid ""
 "%s\n"
 "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 "%s\n"
-"Saisissez « %s --help » pour afficher la liste complète des options "
-"disponibles en ligne de commande.\n"
+"Lancez « %s --help » pour afficher une liste complète des options disponibles "
+"en ligne de commande.\n"
 
-#: ../src/totem.c:210
-msgid "Totem could not initialize the configuration engine."
-msgstr "Impossible d'initialiser le moteur de configuration."
+#: ../src/totem.c:254 ../src/totem.c:263
+#: ../browser-plugin/totem-plugin-viewer.c:666
+#: ../browser-plugin/totem-plugin-viewer.c:1864
+msgid "Totem Movie Player"
+msgstr "Lecteur vidéo Totem"
 
-#: ../src/totem.c:211
-msgid "Make sure that GNOME is properly installed."
-msgstr "Vérifiez que GNOME est correctement installé."
+#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2305
+msgid "Could not initialize the thread-safe libraries."
+msgstr "Impossible d'initialiser les bibliothèques thread-safe."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1762
+#: ../src/totem.c:255
+msgid "Verify your system installation. Totem will now exit."
+msgstr ""
+"Vérifiez l'installation de votre système. Totem va maintenant s'arrêter."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1848
 msgid "Password requested for RTSP server"
 msgstr "Mot de passe demandé pour le serveur RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2995
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2999
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3120
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3124
 #, c-format
 msgid "Audio Track #%d"
-msgstr "Piste audio n°%d"
+msgstr "Piste audio n° %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3027
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3031
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3152
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3156
 #, c-format
 msgid "Subtitle #%d"
-msgstr "Sous-titre n°%d"
+msgstr "Sous-titre n° %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3565
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr ""
-"Impossible de trouver la sortie audio sélectionnée. Sélectionnez une autre "
+"Impossible de trouver la sortie audio demandée. Sélectionnez une autre "
 "sortie audio dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3445
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3570
 msgid "Location not found."
-msgstr "L'emplacement n'a pas été trouvé."
+msgstr "Emplacement introuvable."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3449
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Impossible d'ouvrir l'emplacement ; vous n'avez peut-être pas la permission "
 "d'ouvrir le fichier."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3460
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"La sortie vidéo est utilisée par une autre application. Pour résoudre ce "
-"problème, vous pouvez fermer les autres applications vidéo ou bien "
-"sélectionner une autre sortie vidéo dans le Sélecteur de systèmes multimédia."
+"La sortie vidéo est utilisée par une autre application. Fermez les autres "
+"applications vidéo ou sélectionnez une autre sortie vidéo dans le Sélecteur "
+"de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3466
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3591
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"La sortie audio est utilisée par une autre application. Sélectionnez une "
-"autre sortie audio dans le Sélecteur de systèmes multimédia ou envisagez "
-"l'utilisation d'un serveur audio."
+"La sortie audio est utilisée par une autre application. Choisissez une autre "
+"sortie audio dans le Sélecteur de systèmes multimédia. Vous pouvez aussi "
+"envisager l'utilisation d'un serveur audio."
 
 # Voir bug #403011
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3484
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3609
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3615
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "La lecture de ce film exige un greffon %s qui n'est pas installé."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3491
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3616
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1902,81 +1914,81 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3516
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3641
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
-"Impossible de lire ce fichier au travers du réseau. Essayer d'abord de le "
-"télécharger sur le disque."
+"Impossible de lire ce fichier via le réseau. Essayez de le télécharger sur "
+"disque au préalable."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3588
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3713
 msgid "Media file could not be played."
 msgstr "Le fichier vidéo ne peut être lu."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5891
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6004
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5893
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6006
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6240
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6353
 msgid "Too old version of GStreamer installed."
 msgstr "La version de GStreamer installée est trop ancienne."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6247
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6360
 msgid "Media contains no supported video streams."
 msgstr "Le média ne contient pas de flux vidéo pris en charge."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6760
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6845
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"La création d'un objet de lecture GStreamer a échoué. Vérifiez votre "
-"installation de GStreamer."
+"La création d'un objet de lecture GStreamer a échoué. Vérifiez "
+"l'installation de GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6874
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7009
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6956
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7091
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr ""
-"L'ouverture de la sortie vidéo a échoué, elle n'est certainement pas "
-"disponible. Sélectionnez une autre sortie vidéo dans le sélecteur de "
+"L'ouverture de la sortie vidéo a échoué. Elle n'est peut-être pas "
+"disponible. Sélectionnez une autre sortie vidéo dans le Sélecteur de "
 "systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6886
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6968
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Impossible de trouver la sortie vidéo. Vous pourriez avoir besoin "
-"d'installer des greffons GStreamer additionnels ou de sélectionner une autre "
-"sortie vidéo dans le sélecteur de systèmes multimédia."
+"Impossible de trouver la sortie vidéo. Vous avez peut-être besoin "
+"d'installer des greffons GStreamer supplémentaires ou de sélectionner une "
+"autre sortie vidéo dans le Sélecteur de systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6921
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7003
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
 msgstr ""
-"L'ouverture de la sortie audio a échoué. Vous ne disposez pas des "
-"permissions pour accéder au périphérique audio ou bien le serveur audio est "
-"arrêté. Sélectionnez une autre sortie audio dans le sélecteur de systèmes "
-"multimédia."
+"L'ouverture de la sortie audio a échoué. Vous n'avez peut-être pas la "
+"permission d'ouvrir le périphérique audio ou bien le serveur audio est "
+"arrêté. Veuillez choisir une autre sortie audio dans le Sélecteur de "
+"systèmes multimédia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6941
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7023
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector."
 msgstr ""
-"Impossible de trouver la sortie audio. Vous pourriez avoir besoin "
-"d'installer des greffons GStreamer additionnels ou de sélectionner une autre "
-"sortie audio dans le Sélecteur de systèmes multimédia."
+"Impossible de trouver la sortie audio. Vous avez peut-être besoin "
+"d'installer des greffons GStreamer supplémentaires ou de sélectionner une "
+"autre sortie audio dans le Sélecteur de systèmes multimédia."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1984,7 +1996,7 @@ msgstr ""
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/backend/video-utils.c:91 ../src/backend/video-utils.c:108
+#: ../src/backend/video-utils.c:125 ../src/backend/video-utils.c:142
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -1996,27 +2008,27 @@ msgstr "%d:%02d:%02d"
 #. * separator that your locale uses or use "%Id" instead of
 #. * "%d" if your locale uses localized digits.
 #.
-#: ../src/backend/video-utils.c:100
+#: ../src/backend/video-utils.c:134
 #, c-format
 msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
 
-#: ../src/backend/video-utils.c:138
+#: ../src/backend/video-utils.c:172
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d heure"
 msgstr[1] "%d heures"
 
-#: ../src/backend/video-utils.c:140
+#: ../src/backend/video-utils.c:174
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minute"
 msgstr[1] "%d minutes"
 
-#: ../src/backend/video-utils.c:143
+#: ../src/backend/video-utils.c:177
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -2024,143 +2036,159 @@ msgstr[0] "%d seconde"
 msgstr[1] "%d secondes"
 
 #. hour:minutes:seconds
-#: ../src/backend/video-utils.c:149
+#: ../src/backend/video-utils.c:183
 #, c-format
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
 #. minutes:seconds
-#: ../src/backend/video-utils.c:152
+#: ../src/backend/video-utils.c:186
 #, c-format
 msgid "%s %s"
 msgstr "%s %s"
 
 #. seconds
-#: ../src/backend/video-utils.c:155
+#: ../src/backend/video-utils.c:189
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: ../src/plugins/bemused/bemused.totem-plugin.in.h:1
+#: ../src/plugins/bemused/bemused.plugin.in.h:1
 msgid "Bemused"
 msgstr "Bemused"
 
-#: ../src/plugins/bemused/bemused.totem-plugin.in.h:2
+#: ../src/plugins/bemused/bemused.plugin.in.h:2
 msgid "Control Totem through a mobile phone with a Bemused client"
-msgstr "Contrôle Totem via un téléphone mobile grâce au client Bemused"
+msgstr "Contrôler Totem avec un téléphone mobile grâce au client Bemused"
 
 #. Translators: the parameter is a number used to identify this playlist entry
-#: ../src/plugins/bemused/totem-bemused.c:180
+#: ../src/plugins/bemused/totem-bemused.c:171
 #, c-format
 msgid "Untitled %d"
 msgstr "Sans titre %d"
 
-#: ../src/plugins/bemused/totem-bemused.c:603
+#: ../src/plugins/bemused/totem-bemused.c:597
 msgid "Totem Bemused Server"
 msgstr "Serveur Bemused de Totem"
 
 #. FIXME version
-#: ../src/plugins/bemused/totem-bemused.c:605
+#: ../src/plugins/bemused/totem-bemused.c:599
 msgid "Totem Bemused Server version 1.0"
 msgstr "Serveur Bemused de Totem version 1.0"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:79
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:65
 msgid "_Create Video Disc..."
 msgstr "_Créer un disque vidéo..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:80
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:66
 msgid "Create a video DVD or a (S)VCD from the currently opened movie"
 msgstr "Crée un DVD vidéo ou un (S)VCD à partir du film actuellement ouvert"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:82
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
 msgid "Copy Vide_o DVD..."
 msgstr "Copier le DVD vidé_o..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:83
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:69
 msgid "Copy the currently playing video DVD"
 msgstr "Copie le DVD vidéo en cours de lecture"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:85
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
 msgid "Copy (S)VCD..."
 msgstr "Copier le (S)VCD..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:86
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:72
 msgid "Copy the currently playing (S)VCD"
 msgstr "Copie le (S)VCD en cours de lecture"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:126
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
 msgid "The video disc could not be duplicated."
-msgstr "Le disque vidéo n'a pas pu être dupliqué."
+msgstr "Le disque vidéo n'a pas pu être copié."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:130
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:281
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:131
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:276
 msgid "The movie could not be recorded."
 msgstr "Le film n'a pas pu être enregistré."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:162
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:172
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:268
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:157
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:167
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:263
 msgid "Unable to write a project."
 msgstr "Impossible d'écrire un projet."
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:1
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Records (S)VCDs or video DVDs"
 msgstr "Enregistre les (S)VCD ou les DVD vidéos"
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.totem-plugin.in.h:2
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Video Disc Recorder"
 msgstr "Enregistreur de disque vidéo"
 
-#: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1187
+#: ../src/plugins/chapters/chapters.plugin.in.h:1
+#: ../src/plugins/chapters/totem-chapters.c:1139
 msgid "Chapters"
 msgstr "Chapitres"
 
-#: ../src/plugins/chapters/chapters.totem-plugin.in.h:2
-msgid "Chapters support"
-msgstr "Prise en charge des chapitres"
+#: ../src/plugins/chapters/chapters.plugin.in.h:2
+msgid "Support chapter markers in movies."
+msgstr "Prendre en charge les marqueurs de chapitres dans les films."
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Enter new name for a chapter:"
-msgstr "Saisissez un nouveau nom pour un chapitre :"
+msgid "Name for new chapter:"
+msgstr "Nom du nouveau chapitre :"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:1
+msgid "Add Chapter..."
+msgstr "Ajouter un chapitre..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Continue to watch movie without loaded chapters"
-msgstr "Continuer à regarder le film sans chapitre chargé"
+msgid "Add New Chapters"
+msgstr "Ajouter de nouveaux chapitres"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "Continue without"
-msgstr "Continuer sans"
+msgid "Create a new chapter list for the movie"
+msgstr "Créer une nouvelle liste de chapitres pour le film"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to chapter"
+msgid "Go to Chapter"
 msgstr "Aller au chapitre"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Load chapters from external file"
-msgstr "Charger les chapitres à partir d'un fichier externe"
+msgid "Go to the chapter in the movie"
+msgstr "Aller au chapitre du film"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Load chapters..."
-msgstr "Charger les chapitres..."
+msgid "Load Chapters..."
+msgstr "Charger le chapitrage..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "No chapters data"
-msgstr "Aucune donnée de chapitres"
+msgid "Load chapters from an external CMML file"
+msgstr "Charger le chapitrage à partir d'un fichier CMML externe"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:8
+msgid "No chapter data"
+msgstr "Aucune donnée de chapitrage"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "Remove chapter from the list"
-msgstr "Enlève le chapitre de la liste"
+msgid "Remove Chapter"
+msgstr "Supprimer le chapitre"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
+msgid "Remove the chapter from the list"
+msgstr "Enlève le chapitre de la liste"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
 msgid "Save Changes"
 msgstr "Enregistrer les modifications"
 
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "_Go to"
-msgstr "A_ller à"
+#: ../src/plugins/chapters/chapters-list.ui.h:12
+msgid "_Go to Chapter"
+msgstr "_Aller au chapitre"
 
-#: ../src/plugins/chapters/totem-chapters.c:57
+#: ../src/plugins/chapters/chapters-list.ui.h:13
+msgid "_Remove Chapter"
+msgstr "_Enlever le chapitre"
+
+#: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
 msgid ""
 "<b>Title: </b>%s\n"
@@ -2169,101 +2197,132 @@ msgstr ""
 "<b>Titre :</b> %s\n"
 "<b>Début :</b> %s"
 
-#: ../src/plugins/chapters/totem-chapters.c:369
+#: ../src/plugins/chapters/totem-chapters.c:330
 msgid "Error while reading file with chapters"
-msgstr "Erreur lors de la lecture du fichier contenant des chapitres"
+msgstr "Erreur lors de la lecture du fichier de chapitrage"
 
-#: ../src/plugins/chapters/totem-chapters.c:581
+#: ../src/plugins/chapters/totem-chapters.c:545
 msgid "Chapter with the same time already exists"
 msgstr "Il existe déjà un chapitre pour la même période"
 
-#: ../src/plugins/chapters/totem-chapters.c:582
-msgid "Try another name or remove an existing chapter"
-msgstr "Attribuez un autre nom ou enlevez un chapitre existant"
+#: ../src/plugins/chapters/totem-chapters.c:546
+msgid "Try another name or remove an existing chapter."
+msgstr "Attribuez un autre nom ou enlevez un chapitre existant."
 
-#: ../src/plugins/chapters/totem-chapters.c:759
+#: ../src/plugins/chapters/totem-chapters.c:719
 msgid "Error while writing file with chapters"
-msgstr "Erreur lors de l'écriture du fichier contenant des chapitres"
+msgstr "Erreur lors de l'écriture du fichier de chapitrage"
 
-#: ../src/plugins/chapters/totem-chapters.c:884
+#: ../src/plugins/chapters/totem-chapters.c:844
 msgid "Error occurred while saving chapters"
-msgstr "Une erreur est survenue lors de l'enregistrement des chapitres"
+msgstr "Une erreur est survenue lors de l'enregistrement du chapitrage"
 
-#: ../src/plugins/chapters/totem-chapters.c:885
-msgid "Please check you rights and free space"
-msgstr "Contrôlez les permissions et l'espace disponible"
+#: ../src/plugins/chapters/totem-chapters.c:845
+msgid ""
+"Please check you have permission to write to the folder containing the movie."
+msgstr ""
+"Vérifiez que vous possédez les droits d'écriture dans le dossier contenant "
+"la vidéo."
 
-#: ../src/plugins/chapters/totem-chapters.c:1019
-msgid "Open Chapters File"
-msgstr "Ouvrir un fichier de chapitres"
+#: ../src/plugins/chapters/totem-chapters.c:978
+msgid "Open Chapter File"
+msgstr "Ouvrir un fichier de chapitrage"
 
-#: ../src/plugins/chapters/totem-cmml-parser.c:558
+#: ../src/plugins/chapters/totem-chapters.c:1095
+msgid "Chapter Screenshot"
+msgstr "Capture du chapitre"
+
+#: ../src/plugins/chapters/totem-chapters.c:1106
+msgid "Chapter Title"
+msgstr "Titre du chapitre"
+
+#: ../src/plugins/chapters/totem-chapters.c:1184
+msgid "Save changes to chapter list before closing?"
+msgstr ""
+"Enregistrer les modifications de la liste des chapitres avant de fermer ?"
+
+#. Translators: close Totem without saving changes to the chapter list of the current movie.
+#: ../src/plugins/chapters/totem-chapters.c:1189
+msgid "Close without Saving"
+msgstr "Fermer sans enregistrer"
+
+#. Translators: save changes to the chapter list of the current movie before closing Totem.
+#: ../src/plugins/chapters/totem-chapters.c:1191
+msgid "Save"
+msgstr "Enregistrer"
+
+#: ../src/plugins/chapters/totem-chapters.c:1194
+msgid "If you don't save, changes to the chapter list will be lost."
+msgstr ""
+"Si vous n'enregistrez pas, les modifications de la liste des chapitres "
+"seront perdus."
+
+#: ../src/plugins/chapters/totem-cmml-parser.c:559
 msgid "Failed to parse CMML file"
-msgstr "Échec d'analyse du fichier CMML"
+msgstr "L'analyse du fichier CMML a échoué"
 
 #. Translators: this refers to a media file
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:103
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:105
 msgid "Delete"
 msgstr "Supprimer"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:114
-#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:2
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:116
+#: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
-msgstr "Client DLNA/UPnP Coherence"
+msgstr "Client Coherence DLNA/UPnP"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.totem-plugin.in.h:1
+#: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:1
 msgid "A DLNA/UPnP client for Totem powered by Coherence"
-msgstr "Un client DLNA/UPnP pour Totem basé sur Coherence"
+msgstr "Un client DLNA/UPnP pour Totem fondé sur Coherence"
 
-#: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:1
+#: ../src/plugins/dbus-service/dbus-service.plugin.in.h:1
 msgid "D-Bus Service"
 msgstr "Service D-Bus"
 
-#: ../src/plugins/dbus-service/dbus-service.totem-plugin.in.h:2
+#: ../src/plugins/dbus-service/dbus-service.plugin.in.h:2
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
 msgstr ""
-"Greffon pour l'envoi de notifications des films en cours de visionnement au "
-"sous-système D-Bus."
+"Greffon pour notifier au sous-système D-Bus les films en cours de visionnage."
 
-#: ../src/plugins/galago/galago.totem-plugin.in.h:1
+#: ../src/plugins/galago/galago.plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "État de la messagerie instantanée"
 
-#: ../src/plugins/galago/galago.totem-plugin.in.h:2
+#: ../src/plugins/galago/galago.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
-"Définit votre état de messagerie instantanée à « non disponible » quand un "
-"film est lu"
+"Paramètre l'état de la messagerie instantanée à « non disponible » quand un "
+"film est en cours de lecture"
 
-#: ../src/plugins/galago/totem-galago.c:164
+#: ../src/plugins/galago/totem-galago.c:117
 msgid "Error loading Galago plugin"
 msgstr "Erreur de chargement du greffon Galago"
 
-#: ../src/plugins/galago/totem-galago.c:164
+#: ../src/plugins/galago/totem-galago.c:117
 msgid "Could not connect to the Galago daemon."
-msgstr "Impossible de se connecter au service Galago."
+msgstr "Impossible de se connecter au démon Galago."
 
-#: ../src/plugins/gromit/gromit.totem-plugin.in.h:1
+#: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
 msgstr "Annotations Gromit"
 
-#: ../src/plugins/gromit/gromit.totem-plugin.in.h:2
+#: ../src/plugins/gromit/gromit.plugin.in.h:2
 msgid "Presentation helper to make annotations on screen"
-msgstr "Aide à la présentation en affichant des annotations sur l'écran"
+msgstr "Aide à la présentation pour faire des annotations à l'écran"
 
-#: ../src/plugins/gromit/totem-gromit.c:270
+#: ../src/plugins/gromit/totem-gromit.c:231
 msgid "The gromit binary was not found."
 msgstr "Le binaire Gromit n'a pas été trouvé."
 
 #. Add the interface to Totem's sidebar
-#: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:1
+#: ../src/plugins/iplayer/iplayer.plugin.in.h:1
 #: ../src/plugins/iplayer/iplayer.py:41
 msgid "BBC iPlayer"
 msgstr "iPlayer BBC"
 
-#: ../src/plugins/iplayer/iplayer.totem-plugin.in.h:2
+#: ../src/plugins/iplayer/iplayer.plugin.in.h:2
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr ""
 "Diffusion des programmes de la BBC des 7 derniers jours par le service BBC "
@@ -2271,7 +2330,7 @@ msgstr ""
 
 #: ../src/plugins/iplayer/iplayer.py:66
 msgid "Error listing channel categories"
-msgstr "Erreur d'obtention des catégories de canaux"
+msgstr "Erreur lors de l'obtention des catégories de canaux"
 
 #: ../src/plugins/iplayer/iplayer.py:66
 msgid ""
@@ -2287,19 +2346,24 @@ msgstr ""
 msgid "Loading…"
 msgstr "Chargement…"
 
-#: ../src/plugins/iplayer/iplayer.py:115
+#. Translators: the "programme feed" is the list of TV shows available to watch online
+#: ../src/plugins/iplayer/iplayer.py:119
 msgid "Error getting programme feed"
 msgstr "Erreur lors de l'obtention du flux du programme"
 
-#: ../src/plugins/iplayer/iplayer.py:115
+#: ../src/plugins/iplayer/iplayer.py:119
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
 msgstr ""
-"Une erreur s'est produite durant l'obtention de la liste des programmes pour "
-"la combinaison entre ce canal et cette catégorie."
+"Une erreur s'est produite lors de l'obtention de la liste des programmes "
+"avec cette combinaison canal/catégorie."
 
 #: ../src/plugins/iplayer/iplayer2.py:299
+msgid "<no reason given>"
+msgstr "<aucune raison fournie>"
+
+#: ../src/plugins/iplayer/iplayer2.py:300
 #, python-format
 msgid "Programme unavailable (\"%s\")"
 msgstr "Programme non disponible (« %s »)"
@@ -2333,21 +2397,21 @@ msgid "Preferred audio _format:"
 msgstr "_Format audio préféré :"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:8
-#: ../src/plugins/tracker/totem-tracker-widget.c:521
+#: ../src/plugins/tracker/totem-tracker-widget.c:761
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
-msgstr "Résultats de la recherche"
+msgstr "Résultats"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:10
 msgid "_Open Jamendo Album Page in Browser"
 msgstr "_Ouvrir la page d'album Jamendo dans le navigateur"
 
-#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:1
+#: ../src/plugins/jamendo/jamendo.plugin.in.h:1
 #: ../src/plugins/jamendo/jamendo.py:127
 msgid "Jamendo"
 msgstr "Jamendo"
 
-#: ../src/plugins/jamendo/jamendo.totem-plugin.in.h:2
+#: ../src/plugins/jamendo/jamendo.plugin.in.h:2
 msgid ""
 "Listen to the large collection of Creative Commons licensed music on Jamendo."
 msgstr ""
@@ -2358,34 +2422,34 @@ msgstr ""
 msgid "You need to install the Python simplejson module."
 msgstr "Vous devez installer le module Python simplejson."
 
-#: ../src/plugins/jamendo/jamendo.py:278 ../src/plugins/jamendo/jamendo.py:291
-#: ../src/plugins/jamendo/jamendo.py:315
+#: ../src/plugins/jamendo/jamendo.py:260 ../src/plugins/jamendo/jamendo.py:273
+#: ../src/plugins/jamendo/jamendo.py:297
 #, python-format
 msgid "Artist: %s"
 msgstr "Artiste : %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:284
+#: ../src/plugins/jamendo/jamendo.py:266
 msgid "%Y-%m-%d"
 msgstr "%d/%m/%Y"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:286
+#: ../src/plugins/jamendo/jamendo.py:268
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:292
+#: ../src/plugins/jamendo/jamendo.py:274
 #, python-format
 msgid "Genre: %s"
 msgstr "Genre : %s"
 
-#: ../src/plugins/jamendo/jamendo.py:293
+#: ../src/plugins/jamendo/jamendo.py:275
 #, python-format
 msgid "Released on: %s"
 msgstr "Publié le : %s"
 
-#: ../src/plugins/jamendo/jamendo.py:294
+#: ../src/plugins/jamendo/jamendo.py:276
 #, python-format
 msgid "License: %s"
 msgstr "Licence : %s"
@@ -2393,26 +2457,26 @@ msgstr "Licence : %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:307
+#: ../src/plugins/jamendo/jamendo.py:289
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:314
+#: ../src/plugins/jamendo/jamendo.py:296
 #, python-format
 msgid "Album: %s"
 msgstr "Album : %s"
 
-#: ../src/plugins/jamendo/jamendo.py:316
+#: ../src/plugins/jamendo/jamendo.py:298
 #, python-format
 msgid "Duration: %s"
 msgstr "Durée : %s"
 
-#: ../src/plugins/jamendo/jamendo.py:376
-msgid "Fetching albums, please wait..."
+#: ../src/plugins/jamendo/jamendo.py:355
+msgid "Fetching albums, please wait…"
 msgstr "Veuillez patienter pendant la récupération des albums..."
 
-#: ../src/plugins/jamendo/jamendo.py:431
+#: ../src/plugins/jamendo/jamendo.py:410
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2421,24 +2485,24 @@ msgstr ""
 "Impossible de se connecter au serveur Jamendo.\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:433
+#: ../src/plugins/jamendo/jamendo.py:412
 #, python-format
 msgid "The Jamendo server returned code %s."
-msgstr "Le serveur Jamendo a retourné le code %s."
+msgstr "Le serveur Jamendo a renvoyé le code %s."
 
-#: ../src/plugins/jamendo/jamendo.py:437
+#: ../src/plugins/jamendo/jamendo.py:416
 msgid "An error occurred while fetching albums."
-msgstr "Une erreur est apparue pendant la récupération des albums."
+msgstr "Une erreur est survenue pendant la récupération des albums."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:646
+#: ../src/plugins/jamendo/jamendo.py:618
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:649
+#: ../src/plugins/jamendo/jamendo.py:621
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2449,37 +2513,44 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:699
+#: ../src/plugins/jamendo/jamendo.py:671
 msgid "en"
 msgstr "fr"
 
-#: ../src/plugins/lirc/lirc.totem-plugin.in.h:1
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:1
+msgid "Audio format to download from Jamendo"
+msgstr "Format audio à télécharger depuis Jamendo"
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:2
+msgid "Number of results per page"
+msgstr "Nombre de résultats par page"
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:3
+msgid ""
+"The number of Jamendo search results to display in each page of results."
+msgstr ""
+"Nombre de résultats de recherche Jamendo à afficher dans chaque page de "
+"résultats."
+
+#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:4
+msgid "The preferred audio format to download tracks from Jamendo in."
+msgstr "Le format audio préféré pour les pistes à télécharger depuis Jamendo."
+
+#: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
 msgstr "Télécommande infrarouge"
 
-#: ../src/plugins/lirc/lirc.totem-plugin.in.h:2
+#: ../src/plugins/lirc/lirc.plugin.in.h:2
 msgid "Support infrared remote control"
 msgstr "Prise en charge de la télécommande infrarouge"
 
-#: ../src/plugins/lirc/totem-lirc.c:268
+#: ../src/plugins/lirc/totem-lirc.c:242
 msgid "Couldn't initialize lirc."
-msgstr "Impossible d'initialiser lirc"
+msgstr "Impossible d'initialiser lirc."
 
-#: ../src/plugins/lirc/totem-lirc.c:280
+#: ../src/plugins/lirc/totem-lirc.c:254
 msgid "Couldn't read lirc configuration."
-msgstr "Impossible de lire la configuration lirc"
-
-#: ../src/plugins/mythtv/totem-mythtv.c:195
-msgid "Recordings"
-msgstr "Enregistrements"
-
-#: ../src/plugins/mythtv/totem-mythtv.c:516
-msgid "MythTV Recordings"
-msgstr "Enregistrements MythTV"
-
-#: ../src/plugins/mythtv/totem-mythtv.c:517
-msgid "MythTV LiveTV"
-msgstr "TV en direct MythTV"
+msgstr "Impossible de lire la configuration lirc."
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
 msgid "Download Movie Subtitles"
@@ -2497,107 +2568,125 @@ msgstr "_Langue des sous-titres :"
 msgid "_Play with Subtitle"
 msgstr "L_ire avec les sous-titres"
 
-#: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:1
+#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:1
 msgid "Look for subtitles for the currently playing movie."
 msgstr "Recherche des sous-titres pour le film en cours de lecture."
 
-#: ../src/plugins/opensubtitles/opensubtitles.totem-plugin.in.h:2
+#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
 msgid "Subtitle Downloader"
 msgstr "Téléchargement de sous-titres"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:43
+#: ../src/plugins/opensubtitles/opensubtitles.py:44
 msgid "Brasilian Portuguese"
 msgstr "Portugais du Brésil"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:246
-#: ../src/plugins/opensubtitles/opensubtitles.py:262
-#: ../src/plugins/opensubtitles/opensubtitles.py:279
-#: ../src/plugins/opensubtitles/opensubtitles.py:285
+#: ../src/plugins/opensubtitles/opensubtitles.py:247
+#: ../src/plugins/opensubtitles/opensubtitles.py:263
+#: ../src/plugins/opensubtitles/opensubtitles.py:280
+#: ../src/plugins/opensubtitles/opensubtitles.py:286
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Impossible de contacter le site Web OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:267
+#: ../src/plugins/opensubtitles/opensubtitles.py:268
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:372
+#: ../src/plugins/opensubtitles/opensubtitles.py:374
 msgid "Subtitles"
 msgstr "Sous-titres"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:378
+#: ../src/plugins/opensubtitles/opensubtitles.py:380
 msgid "Format"
 msgstr "Format"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:383
+#: ../src/plugins/opensubtitles/opensubtitles.py:385
 msgid "Rating"
 msgstr "Appréciation"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:424
-msgid "_Download Movie Subtitles..."
-msgstr "_Télécharger les sous-titres du film..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:426
+msgid "_Download Movie Subtitles…"
+msgstr "_Télécharger les sous-titres du film…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:425
+#: ../src/plugins/opensubtitles/opensubtitles.py:427
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Télécharge les sous-titres d'un film à partir de OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
-msgid "Searching subtitles..."
-msgstr "Recherche en cours des sous-titres..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:486
+msgid "Searching subtitles…"
+msgstr "Recherche des sous-titres en cours…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:541
-msgid "Downloading the subtitles..."
-msgstr "Téléchargement en cours des sous-titres..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:544
+msgid "Downloading the subtitles…"
+msgstr "Téléchargement des sous-titres en cours…"
 
-#: ../src/plugins/ontop/ontop.totem-plugin.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+msgid "Subtitle language"
+msgstr "Langue des sous-titres"
+
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+msgid "The language to search for subtitles for movies in."
+msgstr "La langue à rechercher pour le sous-titrage des films."
+
+#: ../src/plugins/ontop/ontop.plugin.in.h:1
 msgid "Always On Top"
-msgstr "Toujours au-dessus"
+msgstr "Toujours au premier plan"
 
-#: ../src/plugins/ontop/ontop.totem-plugin.in.h:2
+#: ../src/plugins/ontop/ontop.plugin.in.h:2
 msgid "Keep the main window on top when playing a movie"
 msgstr ""
-"Conserve la fenêtre principale au premier plan pendant la lecture d'un film"
+"Conserver la fenêtre principale au premier plan pendant la lecture d'un film"
 
-#: ../src/plugins/properties/totem-movie-properties.c:154
+#: ../src/plugins/properties/totem-movie-properties.c:128
 msgid "Properties"
 msgstr "Propriétés"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:235
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+# vérifier les espaces insécables :s avec tous ces "•"
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
+#, no-c-format
+msgid ""
+"A format string used to build the network service name used when publishing "
+"playlists over the network. The following format placeholders can be used: • "
+"%a: the program name as returned by g_get_application_name() • %h: the "
+"machine's host name in title case • %u: the user's login name in title case "
+"• %U: the user's real name • %%: the percent sign"
+msgstr ""
+"Une chaîne de format servant à créer le nom du service réseau utilisé lors "
+"de la publication de listes de lecture sur le réseau. Les substituants "
+"suivants peuvent être utilisés dans la chaîne de format : • %a : le nom du "
+"programme renvoyé par g_get_application_name() • %h : le nom d'hôte de la "
+"machine dans la case titre • %u : le nom de connexion de l'utilisateur dans "
+"la case titre • %U : le véritable nom de l'utilisateur • %% : le signe "
+"pourcentage"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:238
-#: ../src/plugins/properties/bacon-video-widget-properties.c:271
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
+msgid "Format for network service name"
+msgstr "Format pour le nom du service réseau"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:245
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d image par seconde"
-msgstr[1] "%d images par seconde"
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:4
+msgid "Publisher protocol to use"
+msgstr "Protocole de publication à utiliser"
 
-#: ../src/plugins/properties/bacon-video-widget-properties.c:274
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
+#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
+msgid ""
+"The transport protocol to use when publishing playlists over the network."
+msgstr ""
+"Le protocole de transport à utiliser lors de la publication de listes de "
+"lecture sur le réseau."
 
 #. Translators: computers on the local network which are publishing their playlists over the network
-#: ../src/plugins/publish/totem-publish.c:593
+#: ../src/plugins/publish/totem-publish.c:552
 msgid "Neighbors"
 msgstr "Voisins"
 
-#: ../src/plugins/publish/publish.totem-plugin.in.h:1
+#: ../src/plugins/publish/publish.plugin.in.h:1
 msgid "Publish Playlist"
 msgstr "Publier la liste de lecture"
 
-#: ../src/plugins/publish/publish.totem-plugin.in.h:2
+#: ../src/plugins/publish/publish.plugin.in.h:2
 msgid "Share the current playlist via HTTP"
 msgstr "Partage la liste de lecture actuelle via HTTP"
 
@@ -2621,8 +2710,44 @@ msgstr ""
 msgid "Use _encrypted transport protocol (HTTPS)"
 msgstr "Utiliser un protocole de transfert _chiffré (HTTPS)"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:94
-#: ../browser-plugin/totem-plugin-viewer.c:1966
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+msgid ""
+"A password to protect the rpdb2 server for debugging Totem from unauthorized "
+"remote access. If this is empty, a default of 'totem' will be used."
+msgstr ""
+"Un mot de passe pour protéger d'un accès distant non autorisé, le serveur "
+"rpdb2 de débogage de Totem. Si vide, le mot de passe « totem » est utilisé "
+"par défaut."
+
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+msgid "rpdb2 password"
+msgstr "Mot de passe rpdb2"
+
+#: ../src/plugins/save-file/totem-save-file.c:63
+msgid "Save a Copy..."
+msgstr "Enregistrer une copie..."
+
+#: ../src/plugins/save-file/totem-save-file.c:64
+msgid "Save a copy of the movie"
+msgstr "Enregistrer une copie du film"
+
+# Titre de fenêtre
+#: ../src/plugins/save-file/totem-save-file.c:129
+msgid "Save a Copy"
+msgstr "Enregistrer une copie"
+
+#. translators: Movie is the default saved movie filename,
+#. * without the suffix
+#: ../src/plugins/save-file/totem-save-file.c:161
+msgid "Movie"
+msgstr "Film"
+
+#: ../src/plugins/save-file/totem-save-file.c:183
+msgid "Movie stream"
+msgstr "Flux de film"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:112
+#: ../browser-plugin/totem-plugin-viewer.c:1964
 msgid "Playing a movie"
 msgstr "Lecture d'un film"
 
@@ -2651,7 +2776,7 @@ msgid "_Name:"
 msgstr "_Nom :"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:387
 #: ../src/plugins/screenshot/totem-screenshot.c:64
 msgid "Screenshot.png"
 msgstr "Capture.png"
@@ -2676,141 +2801,142 @@ msgid "Creating Gallery..."
 msgstr "Création de la galerie..."
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:108
+#: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Enregistrement de la galerie sous « %s »"
 
 #: ../src/plugins/screenshot/totem-screenshot.c:113
 msgid "There was an error saving the screenshot."
-msgstr "Une erreur est survenue lors de l'enregistrement de l'image capturée."
+msgstr "Une erreur est survenue lors de l'enregistrement de la capture."
 
-#: ../src/plugins/screenshot/totem-screenshot.c:140
+#: ../src/plugins/screenshot/totem-screenshot.c:139
 msgid "Save Screenshot"
 msgstr "Enregistrement de l'image capturée"
 
 #. Create the screenshot widget
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:161
+#: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Capture-%s-%d.png"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:102
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:109
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:88
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:95
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem n'a pu prendre une capture d'écran de cette vidéo."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:109
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:95
 msgid "This is not supposed to happen; please file a bug report."
 msgstr ""
 "Ce problème n'est pas censé se produire, veuillez remplir un rapport "
 "d'anomalie."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:197
 msgid "Take _Screenshot..."
 msgstr "_Capturer une image..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:212
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:197
 msgid "Take a screenshot"
 msgstr "Capture une image de la vidéo en cours"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:213
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:198
 msgid "Create Screenshot _Gallery..."
 msgstr "Créer une _galerie de captures d'écran..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:213
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:198
 msgid "Create a gallery of screenshots"
 msgstr "Crée une galerie de captures d'écran"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
 #: ../src/plugins/skipto/totem-skipto.c:160
-#: ../src/plugins/skipto/totem-skipto.c:186
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "seconde"
 msgstr[1] "secondes"
 
-#: ../src/plugins/skipto/totem-skipto.c:186
-msgid "seconds"
-msgstr "secondes"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:190
+msgctxt "Skip To label length"
+msgid "7"
+msgstr "8"
 
-#: ../src/plugins/skipto/totem-skipto.c:192
-msgid "Skip to"
-msgstr "Sauter vers"
+#: ../src/plugins/skipto/totem-skipto.c:197
+msgid "Skip To"
+msgstr "Sauter à"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:209
-msgid "_Skip to..."
-msgstr "_Sauter vers..."
+#: ../src/plugins/skipto/totem-skipto-plugin.c:182
+msgid "_Skip To..."
+msgstr "_Sauter à..."
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:209
+#: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
-msgstr "Saute à une durée spécifique"
+msgstr "Se rendre à un minutage donné"
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
-msgstr "_Sauter vers :"
+msgstr "_Sauter à :"
 
-#. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:173
-#, c-format
-msgid "Could not get name and thumbnail for %s: %s"
-msgstr "Impossible d'obtenir le nom et la vignette pour %s : %s"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:174
-msgid "File Error"
-msgstr "Erreur de fichier"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:251
-#: ../src/plugins/tracker/totem-tracker-widget.c:368
+#: ../src/plugins/tracker/totem-tracker-widget.c:587
+#: ../src/plugins/tracker/totem-tracker-widget.c:676
 msgid "Could not connect to Tracker"
 msgstr "Impossible de se connecter à Tracker"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:258
+#: ../src/plugins/tracker/totem-tracker-widget.c:594
 msgid "No results"
 msgstr "Aucun résultat"
 
 #. Translators:
-#. * This is used to show which items are listed in the list view, for example:
-#. * Showing 10-20 of 128 matches
-#. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
-#. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:283
+#. * This is used to show which items are listed in the
+#. * list view, for example:
+#. *
+#. *   Showing 10-20 of 128 matches
+#. *
+#. * This is similar to what web searches use, eg.
+#. * Google on the top-right of their search results
+#. * page show:
+#. *
+#. *   Personalized Results 1 - 10 of about 4,130,000 for foobar
+#. *
+#.
+#: ../src/plugins/tracker/totem-tracker-widget.c:618
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "Affichage de %i à %i sur %i résultat"
 msgstr[1] "Affichage de %i à %i sur %i résultats"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:581
+#: ../src/plugins/tracker/totem-tracker-widget.c:823
 msgid "Page"
 msgstr "Page"
 
-#: ../src/plugins/tracker/totem-tracker.c:84
-#: ../src/plugins/tracker/tracker.totem-plugin.in.h:1
+#: ../src/plugins/tracker/totem-tracker.c:65
+#: ../src/plugins/tracker/tracker.plugin.in.h:1
 msgid "Local Search"
 msgstr "Recherche locale"
 
-#: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:1
+#: ../src/plugins/thumbnail/thumbnail.plugin.in.h:1
 msgid "Set the window icon to the thumbnail of the playing movie"
 msgstr ""
 "Utilise la vignette du film en cours de lecture comme icône de la fenêtre"
 
-#: ../src/plugins/thumbnail/thumbnail.totem-plugin.in.h:2
+#: ../src/plugins/thumbnail/thumbnail.plugin.in.h:2
 msgid "Thumbnail"
 msgstr "Vignette"
 
-#: ../src/plugins/tracker/tracker.totem-plugin.in.h:2
+#: ../src/plugins/tracker/tracker.plugin.in.h:2
 msgid "Search for local videos using Tracker"
 msgstr "Rechercher des vidéos locales avec Tracker"
 
-#: ../src/plugins/youtube/youtube.totem-plugin.in.h:1
+#: ../src/plugins/youtube/youtube.plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
 msgstr "Un greffon vous permettant de parcourir les vidéos YouTube."
 
-#: ../src/plugins/youtube/youtube.totem-plugin.in.h:2
+#: ../src/plugins/youtube/youtube.plugin.in.h:2
 msgid "YouTube Browser"
 msgstr "Navigateur YouTube"
 
@@ -2822,101 +2948,110 @@ msgstr "Vidéos associées"
 msgid "Videos"
 msgstr "Vidéos"
 
-#: ../src/plugins/youtube/totem-youtube.c:317
+#: ../src/plugins/youtube/totem-youtube.c:144
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "_Open in Web Browser"
 msgstr "_Ouvrir dans le navigateur Web"
 
-#: ../src/plugins/youtube/totem-youtube.c:317
+#: ../src/plugins/youtube/totem-youtube.c:144
 msgid "Open the video in your web browser"
 msgstr "Ouvre la vidéo dans votre navigateur Web"
 
 #. Add the sidebar page
-#: ../src/plugins/youtube/totem-youtube.c:367
+#: ../src/plugins/youtube/totem-youtube.c:195
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:451
+#: ../src/plugins/youtube/totem-youtube.c:279
 msgid "Cancelling query…"
 msgstr "Annulation de la recherche..."
-
-#: ../src/plugins/youtube/totem-youtube.c:512
-msgid "Error Looking Up Video URI"
-msgstr "Erreur lors de la consultation de l'URI de la vidéo"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:796
-#: ../src/plugins/youtube/totem-youtube.c:801
+#: ../src/plugins/youtube/totem-youtube.c:424
+#: ../src/plugins/youtube/totem-youtube.c:429
 msgid "Error Searching for Videos"
 msgstr "Erreur lors de la recherche de vidéos"
 
-#: ../src/plugins/youtube/totem-youtube.c:797
+#: ../src/plugins/youtube/totem-youtube.c:425
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
 msgstr ""
-"Impossible d'interpréter la réponse du serveur. Vérifiez que la version la "
-"plus récente de libgdata est installée."
+"Impossible d'interpréter la réponse du serveur. Vérifiez que vous utilisez "
+"la version la plus récente de libgdata."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:971
+#: ../src/plugins/youtube/totem-youtube.c:618
 msgid "Fetching search results…"
 msgstr "Obtention des résultats de la recherche..."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:1036
+#: ../src/plugins/youtube/totem-youtube.c:680
 msgid "Fetching related videos…"
 msgstr "Obtention des vidéos associées..."
 
-#: ../src/plugins/youtube/totem-youtube.c:1088
+#: ../src/plugins/youtube/totem-youtube.c:732
 msgid "Error Opening Video in Web Browser"
 msgstr "Erreur lors de l'ouverture de la vidéo dans le navigateur Web"
 
-#: ../src/plugins/youtube/totem-youtube.c:1108
+#: ../src/plugins/youtube/totem-youtube.c:752
 msgid "Fetching more videos…"
 msgstr "Obtention de plus de vidéos..."
 
-#: ../browser-plugin/totem-plugin-viewer.c:432
+#: ../src/plugins/youtube/totem-youtube.c:797
+msgid "Video Format Not Supported"
+msgstr "Format vidéo non pris en charge"
+
+#: ../src/plugins/youtube/totem-youtube.c:799
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
+"Cette vidéo n'est disponible dans aucun des formats pris en charge par "
+"Totem. Voulez-vous l'ouvrir dans votre navigateur Web à la place ?"
+
+#: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
 msgstr "Aucun URI à lire"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1105
+#: ../browser-plugin/totem-plugin-viewer.c:1104
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Ouvrir avec « %s »"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1156
+#: ../browser-plugin/totem-plugin-viewer.c:1155
 #, c-format
 msgid "Browser Plugin using %s"
-msgstr "Greffon de navigateur utilisant %s"
+msgstr "Greffon Navigateur utilisant %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1161
+#: ../browser-plugin/totem-plugin-viewer.c:1160
 msgid "Totem Browser Plugin"
-msgstr "Greffon de navigateur Totem"
+msgstr "Greffon Navigateur Totem"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2185
+#: ../browser-plugin/totem-plugin-viewer.c:2198
 msgid "No playlist or playlist empty"
 msgstr "Aucune liste de lecture ou liste vide"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2276
+#: ../browser-plugin/totem-plugin-viewer.c:2289
 msgid "Movie browser plugin"
-msgstr "Greffon de navigateur Totem"
+msgstr "Greffon Explorateur de films"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2292
+#: ../browser-plugin/totem-plugin-viewer.c:2305
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Vérifiez l'installation de votre système. Le greffon Totem va maintenant "
 "s'arrêter."
 
-#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:1
+#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Interactive Python console."
 msgstr "Console interactive Python."
 
-#: ../src/plugins/pythonconsole/pythonconsole.totem-plugin.in.h:2
+#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
 msgid "Python Console"
 msgstr "Console Python"
 
@@ -2938,12 +3073,12 @@ msgstr "Débogueur Python"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Enable remote Python debugging with rpdb2"
-msgstr "Active le débogage Python distant avec rpdb2"
+msgstr "Activer le débogage distant de Python avec rpdb2"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:116
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
-msgstr "Vous pouvez accéder à « Totem.Object » via « totem_object » :\\n%s"
+msgstr "Vous pouvez accéder à Totem.Object via « totem_object » :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:120
 msgid "Totem Python Console"
@@ -2952,9 +3087,9 @@ msgstr "Console Python de Totem"
 #: ../src/plugins/pythonconsole/pythonconsole.py:129
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
-"rpdb2. If you have not set a debugger password in GConf, it will use the "
+"rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
-"Après avoir appuyé sur Valider, Totem attendra que vous vous connectiez avec "
-"winpdb ou rpdb2. Si vous n'avez pas défini de mot de passe de débogage dans "
-"GConf, le mot de passe par défaut (« totem ») sera utilisé."
+"Après avoir validé, Totem attend que vous vous connectiez à lui avec winpdb "
+"ou rpdb2. Si vous n'avez pas défini de mot de passe de débogage dans GConf, "
+"utilisez le mot de passe par défaut (« totem »)."
