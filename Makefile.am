@@ -1,6 +1,8 @@
 NORMAL_SUBDIRS = lib po data help src docs
 SUBDIRS = $(NORMAL_SUBDIRS)
 
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
 if ENABLE_BROWSER_PLUGINS
 SUBDIRS += browser-plugin
 endif
