@@ -3720,12 +3720,16 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Up:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_UP);
+		else if (event->state & GDK_SHIFT_MASK)
+			totem_action_volume_relative (totem, VOLUME_UP_SHORT_OFFSET);
 		else
 			totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
 		break;
 	case GDK_KEY_Down:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_DOWN);
+		else if (event->state & GDK_SHIFT_MASK)
+			totem_action_volume_relative (totem, VOLUME_DOWN_SHORT_OFFSET);
 		else
 			totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;

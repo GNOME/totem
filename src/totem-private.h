@@ -173,6 +173,9 @@ GtkWidget *totem_volume_create (void);
 #define VOLUME_DOWN_OFFSET (-0.08)
 #define VOLUME_UP_OFFSET (0.08)
 
+#define VOLUME_DOWN_SHORT_OFFSET (-0.02)
+#define VOLUME_UP_SHORT_OFFSET (0.02)
+
 #define ZOOM_IN_OFFSET 0.01
 #define ZOOM_OUT_OFFSET -0.01
 
