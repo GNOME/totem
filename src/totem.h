@@ -31,7 +31,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <totem-disc.h>
-#include "totem-playlist.h"
+#include "totem-cell-renderer-video.h"
 
 /**
  * TOTEM_GSETTINGS_SCHEMA:
