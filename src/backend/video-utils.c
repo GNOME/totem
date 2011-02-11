@@ -225,6 +225,38 @@ totem_ratio_fits_screen_generic (GtkWidget *video_widget,
 }
 
 #ifdef GDK_WINDOWING_X11
+static int
+get_current_desktop (GdkScreen *screen)
+{
+        Display *display;
+        Window win;
+        Atom current_desktop, type;
+        int format;
+        unsigned long n_items, bytes_after;
+        unsigned char *data_return = NULL;
+        int workspace = 0;
+
+        display = GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen));
+        win = XRootWindow (display, GDK_SCREEN_XNUMBER (screen));
+
+        current_desktop = XInternAtom (display, "_NET_CURRENT_DESKTOP", True);
+
+        XGetWindowProperty (display,
+                            win,
+                            current_desktop,
+                            0, G_MAXLONG,
+                            False, XA_CARDINAL,
+                            &type, &format, &n_items, &bytes_after,
+                            &data_return);
+
+        if (type == XA_CARDINAL && format == 32 && n_items > 0)
+                workspace = (int) data_return[0];
+        if (data_return)
+                XFree (data_return);
+
+        return workspace;
+}
+
 static gboolean
 get_work_area (GdkScreen      *screen,
 	       GdkRectangle   *rect)
@@ -240,6 +272,7 @@ get_work_area (GdkScreen      *screen,
 	long           *workareas;
 	int             result;
 	int             disp_screen;
+	int             desktop;
 	Display        *display;
 
 	display = GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen));
@@ -278,11 +311,13 @@ get_work_area (GdkScreen      *screen,
 		return FALSE;
 	}
 
+	desktop = get_current_desktop (screen);
+
 	workareas = (long *) ret_workarea;
-	rect->x = workareas[disp_screen * 4];
-	rect->y = workareas[disp_screen * 4 + 1];
-	rect->width = workareas[disp_screen * 4 + 2];
-	rect->height = workareas[disp_screen * 4 + 3];
+	rect->x = workareas[desktop * 4];
+	rect->y = workareas[desktop * 4 + 1];
+	rect->width = workareas[desktop * 4 + 2];
+	rect->height = workareas[desktop * 4 + 3];
 
 	XFree (ret_workarea);
 
