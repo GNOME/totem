@@ -1234,7 +1234,7 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 					 G_CALLBACK (totem_plugins_response_cb),
 					 NULL, 0);
 
-		manager = peas_gtk_plugin_manager_new ();
+		manager = peas_gtk_plugin_manager_new (NULL);
 		gtk_widget_show_all (GTK_WIDGET (manager));
 		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
 				    manager, TRUE, TRUE, 0);
