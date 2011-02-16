@@ -1238,6 +1238,7 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 		gtk_widget_show_all (GTK_WIDGET (manager));
 		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
 				    manager, TRUE, TRUE, 0);
+		gtk_window_set_default_size (GTK_WINDOW (totem->plugins), 600, 400);
 	}
 
 	gtk_window_present (GTK_WINDOW (totem->plugins));
