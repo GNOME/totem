@@ -486,12 +486,9 @@ draw_when_composited (GtkWidget *widget, cairo_t *orig_cr)
 static void
 draw_when_not_composited (GtkWidget *widget, cairo_t *cr)
 {
-        GsdOsdWindow *window;
         GtkStyleContext *context;
         int width;
         int height;
-
-        window = GSD_OSD_WINDOW (widget);
 
         width = gtk_widget_get_allocated_width (widget);
         height = gtk_widget_get_allocated_width (widget);

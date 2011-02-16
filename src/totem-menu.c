@@ -781,6 +781,7 @@ add_volume_to_menu (GVolume *volume,
 	char *menu_item_path;
 
 	disabled = FALSE;
+	device_path = NULL;
 
 	/* Add devices with blank CDs and audio CDs in them, but disable them */
 	if (drive != NULL) {

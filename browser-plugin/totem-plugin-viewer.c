@@ -583,17 +583,14 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 	GdkScreen *screen;
 	GdkAppLaunchContext *ctx;
 	gboolean result;
-	const char *uri;
 
 	g_return_val_if_fail (embedded->app != NULL, FALSE);
 
 	if (embedded->type == TOTEM_PLUGIN_TYPE_NARROWSPACE
 		   && embedded->href_uri != NULL) {
 		uris = g_list_prepend (uris, embedded->href_uri);
-		uri = embedded->href_uri;
 	} else {
 		uris = g_list_prepend (uris, embedded->current_uri);
-		uri = embedded->current_uri;
 	}
 
 	ctx = gdk_display_get_app_launch_context (gtk_widget_get_display (embedded->window));

@@ -171,7 +171,6 @@ add_chapter_to_the_list (gpointer	data,
 	TotemChaptersPlugin	*plugin;
 	GdkPixbuf		*pixbuf;
 	GtkTreeIter		iter;
-	GtkWidget		*tree;
 	GtkTreeStore		*store;
 	TotemCmmlClip		*clip;
 	gchar			*text, *start, *tip;
@@ -180,7 +179,6 @@ add_chapter_to_the_list (gpointer	data,
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (user_data));
 
 	plugin = TOTEM_CHAPTERS_PLUGIN (user_data);
-	tree = plugin->priv->tree;
 	store = GTK_TREE_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (plugin->priv->tree)));
 	clip = ((TotemCmmlClip *) data);
 

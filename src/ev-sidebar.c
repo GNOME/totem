@@ -64,10 +64,8 @@ static void
 ev_sidebar_class_init (EvSidebarClass *ev_sidebar_class)
 {
 	GObjectClass *g_object_class;
-	GtkWidgetClass *widget_class;
  
 	g_object_class = G_OBJECT_CLASS (ev_sidebar_class);
-	widget_class = GTK_WIDGET_CLASS (ev_sidebar_class);
 	   
 	g_type_class_add_private (g_object_class, sizeof (EvSidebarPrivate));
 

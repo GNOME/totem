@@ -2598,9 +2598,6 @@ totem_playlist_set_title (TotemPlaylist *playlist, const char *title)
 			&iter,
 			playlist->priv->current);
 
-	if (&iter == NULL)
-		return FALSE;
-
 	escaped_title = g_markup_escape_text (title, -1);
 	gtk_list_store_set (store, &iter,
 			FILENAME_COL, title,
@@ -2631,8 +2628,6 @@ totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state)
 	gtk_tree_model_get_iter (playlist->priv->model,
 			&iter,
 			playlist->priv->current);
-
-	g_return_val_if_fail (&iter != NULL, FALSE);
 
 	gtk_list_store_set (store, &iter,
 			PLAYING_COL, state,
