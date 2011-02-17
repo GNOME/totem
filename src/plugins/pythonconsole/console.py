@@ -239,11 +239,12 @@ class PythonConsole(Gtk.ScrolledWindow):
 		return False
 
 	def write(self, text, tag = None):
-		buffer = self.view.get_buffer()
-		insertion_iter = buffer.get_end_iter()
-		buffer.insert(insertion_iter, text)
-		if tag is not None:
-			buffer.apply_tag(tag, insertion_iter, buffer.get_end_iter())
+		buf = self.view.get_buffer()
+		if tag is None:
+		    buf.insert(buf.get_end_iter(), text)
+		else:
+		    buf.insert_with_tags(buf.get_end_iter(), text, tag)
+
 		gobject.idle_add(self.scroll_to_end)
  	
  	def eval(self, command, display_command = False):
