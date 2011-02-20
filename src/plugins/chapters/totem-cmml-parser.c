@@ -179,16 +179,61 @@ totem_cmml_parse_smpte (const gchar	*str,
 {
 	gint		h = 0, m = 0, s = 0;
 	gfloat		frames;
+	const gchar	*endptr, *old_endptr;
 
 	if (G_UNLIKELY (str == NULL))
 		return -1.0;
 
-	/* all is according to specs */
-	if (sscanf (str, "%d:%d:%d:%f", &h, &m, &s, &frames) == 4);
-	/* this is slightly off the specs, but we can handle it */
-	else if (sscanf (str, "%d:%d:%f", &m, &s, &frames) == 3)
-		h = 0;
+	/* We expect something in the format %d:%d:%d:%f (hours:minutes:seconds:frames), but we can handle %d:%d:%f (minutes:seconds:frames) as well.
+	 * We can't use sscanf() as it's locale-dependent.
+	 *
+	 * Test cases (with framerate = 24):
+	 *   "1:2:3:12.5" -> 3723.520833333
+	 *   "1:2:3:12" -> 3723.5
+	 *   "1:1:3:12.5" -> 3663.520833333
+	 *   "1:2:3:-12.5" -> -1.0
+	 *   "1:2:3:12.0" -> 3723.5
+	 *   "0:2:3:12.5" -> 123.520833333
+	 *   "2:3:12.5" -> 123.520833333
+	 *   "2:3.6:12.5" -> -1.0
+	 *   "::" -> -1.0
+	 *   ":::" -> -1.0
+	 *   "asd" -> -1.0
+	 *   "" -> -1.0
+	 */
+	old_endptr = str;
+	h = g_ascii_strtoll (str, (gchar**) &endptr, 10);
+	if (*endptr != ':' || endptr == old_endptr)
+		return -1.0;
 	else
+		endptr++;
+
+	old_endptr = endptr;
+	m = g_ascii_strtoll (endptr, (gchar**) &endptr, 10);
+	if (*endptr != ':' || endptr == old_endptr)
+		return -1.0;
+	else
+		endptr++;
+
+	old_endptr = endptr;
+	s = g_ascii_strtoll (endptr, (gchar**) &endptr, 10);
+	if (*endptr == '\0' || endptr == old_endptr) {
+		return -1.0;
+	} else if (*endptr != ':') {
+		/* We've probably got the %d:%d:%f format; back up and try parsing a float */
+		endptr = old_endptr;
+
+		/* Shift all the previously-parsed parameters along */
+		s = m;
+		m = h;
+		h = 0;
+	} else {
+		endptr++;
+	}
+
+	old_endptr = endptr;
+	frames = g_ascii_strtod (endptr, (gchar**) &endptr);
+	if (*endptr != '\0' || endptr == old_endptr)
 		return -1.0;
 
 	/* check time and framerate bounds */
@@ -210,19 +255,59 @@ totem_cmml_parse_npt (const gchar *str)
 {
 	gint		h, m;
 	gfloat		s;
+	const gchar	*endptr, *old_endptr;
 
 	if (G_UNLIKELY (str == NULL))
 		return -1.0;
 
-	/* all is ok */
-	if (sscanf (str, "%d:%d:%f",  &h, &m, &s) == 3);
-	/* slightly off the spec */
-	else if (sscanf (str, "%d:%f",  &m, &s) == 2)
+	/* We expect something in the format %d:%d:%f (hours:minutes:seconds), but we can handle %d:%f (minutes:seconds) or %f (seconds) as well.
+	 * We can't use sscanf() as it's locale-dependent.
+	 *
+	 * Test cases:
+	 *   "1:2:0.5" -> 3720.5
+	 *   "1:2" -> 62.0
+	 *   "0:2:0.5" -> 120.5
+	 *   "2:0.5" -> 120.5
+	 *   "0:0:0.5" -> 0.5
+	 *   "0.5" -> 0.5
+	 *   "6" -> 6.0
+	 *   "::" -> -1.0
+	 *   ":" -> -1.0
+	 *   "asd" -> -1.0
+	 *   "" -> -1.0
+	 */
+	old_endptr = str;
+	h = g_ascii_strtoll (str, (gchar**) &endptr, 10);
+	if (endptr == old_endptr) {
+		return -1.0;
+	} else if (*endptr != ':') {
+		/* We've probably got the %f format */
+		endptr = old_endptr;
+
+		/* Zero the hours */
 		h = 0;
-	/* time in seconds, all is ok and we can return it now */
-	else if (G_LIKELY (sscanf (str, "%f", &s)))
-		return s;
-	else
+	} else {
+		endptr++;
+	}
+
+	old_endptr = endptr;
+	m = g_ascii_strtoll (endptr, (gchar**) &endptr, 10);
+	if (endptr == old_endptr) {
+		return -1.0;
+	} else if (*endptr != ':') {
+		/* We've probably got the %d:%f format */
+		endptr = old_endptr;
+
+		/* Shift all the previously-parsed parameters along */
+		m = h;
+		h = 0;
+	} else {
+		endptr++;
+	}
+
+	old_endptr = endptr;
+	s = g_ascii_strtod (endptr, (gchar**) &endptr);
+	if (*endptr != '\0' || endptr == old_endptr)
 		return -1.0;
 
 	if (G_UNLIKELY (h < 0))
@@ -239,37 +324,35 @@ totem_cmml_parse_npt (const gchar *str)
 static gdouble
 totem_cmml_parse_time_str (const gchar *str)
 {
-	gchar	timespec[16];
-
 	if (G_UNLIKELY (str == NULL))
 		return -1.0;
 
 	/* we need to choose parsing function to use */
-	if (sscanf (str, "npt:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "npt:"))
 		return totem_cmml_parse_npt (str + 4);
 
-	if (sscanf (str, "smpte-24:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-24:"))
 		return totem_cmml_parse_smpte (str + 9, 24.0);
 
-	if (sscanf (str, "smpte-24-drop:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-24-drop:"))
 		return totem_cmml_parse_smpte (str + 14, 23.976);
 
-	if (sscanf (str, "smpte-25:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-25:"))
 		return totem_cmml_parse_smpte (str + 9, 25.0);
 
-	if (sscanf (str, "smpte-30:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-30:"))
 		return totem_cmml_parse_smpte (str + 9, 30.0);
 
-	if (sscanf (str, "smpte-30-drop:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-30-drop:"))
 		return totem_cmml_parse_smpte (str + 14, 29.97);
 
-	if (sscanf (str, "smpte-50:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-50:"))
 		return totem_cmml_parse_smpte (str + 9, 50.0);
 
-	if (sscanf (str, "smpte-60:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-60:"))
 		return totem_cmml_parse_smpte (str + 9, 60);
 
-	if (sscanf (str, "smpte-60-drop:%16s", timespec) == 1)
+	if (g_str_has_prefix (str, "smpte-60-drop:"))
 		return totem_cmml_parse_smpte (str + 14, 59.94);
 
 	/* default is npt */
@@ -721,6 +804,7 @@ totem_cmml_write_file_async (TotemCmmlAsyncData *data)
 		guint		st_len;
 		guint8		*stream;
 		TotemCmmlClip	*clip;
+		gchar		start_buf[G_ASCII_DTOSTR_BUF_SIZE];
 
 		clip = (TotemCmmlClip *) cur_clip->data;
 		time_start = ((gdouble) clip->time_start) / 1000;
@@ -734,7 +818,8 @@ totem_cmml_write_file_async (TotemCmmlAsyncData *data)
 		if (G_UNLIKELY (res < 0))
 			break;
 
-		res = xmlTextWriterWriteFormatAttribute (writer, (const xmlChar *) "start", "%.3f", time_start);
+		res = xmlTextWriterWriteAttribute (writer, (const xmlChar *) "start",
+		                                   (const xmlChar *) g_ascii_dtostr (start_buf, sizeof (buf), time_start));
 		if (G_UNLIKELY (res < 0))
 			break;
 
