@@ -427,6 +427,8 @@ totem_fullscreen_set_fullscreen (TotemFullscreen *fs,
 
 	bacon_video_widget_set_fullscreen (fs->priv->bvw, fullscreen);
 	totem_fullscreen_set_cursor (fs, !fullscreen);
+	if (fullscreen == FALSE)
+		gtk_widget_hide (fs->priv->osd);
 
 	fs->is_fullscreen = fullscreen;
 
