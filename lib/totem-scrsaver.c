@@ -228,6 +228,9 @@ screensaver_update_dbus_presence (TotemScrsaver *scr)
 	if (name_owner) {
 		priv->have_screensaver_dbus = TRUE;
 		g_free (name_owner);
+
+		/* screensaver just appeared, or reappeared */
+		screensaver_disable_dbus (scr);
 	} else {
 		priv->have_screensaver_dbus = FALSE;
 	}
