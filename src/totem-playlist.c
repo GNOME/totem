@@ -1973,6 +1973,7 @@ add_mrls_operation_data_free (AddMrlsOperationData *data)
 struct TotemPlaylistMrlData {
 	gchar *mrl;
 	gchar *display_name;
+	TotemPlParserResult res;
 
 	/* Implementation details */
 	AddMrlsOperationData *operation_data;
@@ -2055,11 +2056,10 @@ add_mrls_finish_operation (AddMrlsOperationData *operation_data)
 static void
 add_mrls_cb (TotemPlParser *parser, GAsyncResult *result, TotemPlaylistMrlData *mrl_data)
 {
-	TotemPlParserResult res;
 	AddMrlsOperationData *operation_data = mrl_data->operation_data;
 
 	/* Finish parsing the playlist */
-	res = totem_pl_parser_parse_finish (parser, result, NULL);
+	mrl_data->res = totem_pl_parser_parse_finish (parser, result, NULL);
 
 	g_assert (mrl_data->index >= operation_data->next_index_to_add);
 
@@ -2068,7 +2068,7 @@ add_mrls_cb (TotemPlParser *parser, GAsyncResult *result, TotemPlaylistMrlData *
 
 		/* The entry is the next one in the order, so doesn't need to be added to the unadded list, and can be added to playlist proper */
 		operation_data->next_index_to_add++;
-		handle_parse_result (res, operation_data->playlist, mrl_data->mrl, mrl_data->display_name);
+		handle_parse_result (mrl_data->res, operation_data->playlist, mrl_data->mrl, mrl_data->display_name);
 
 		/* See if we can now add any other entries which have already been processed */
 		for (i = operation_data->unadded_entries;
@@ -2077,7 +2077,7 @@ add_mrls_cb (TotemPlParser *parser, GAsyncResult *result, TotemPlaylistMrlData *
 			TotemPlaylistMrlData *_mrl_data = (TotemPlaylistMrlData*) i->data;
 
 			operation_data->next_index_to_add++;
-			handle_parse_result (res, operation_data->playlist, _mrl_data->mrl, _mrl_data->display_name);
+			handle_parse_result (_mrl_data->res, operation_data->playlist, _mrl_data->mrl, _mrl_data->display_name);
 		}
 
 		operation_data->unadded_entries = i;
