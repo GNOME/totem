@@ -68,7 +68,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters coherence_upnp dbus-service galago gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file sample-python sample-vala screensaver screenshot sidebar-test skipto thumbnail tracker youtube zeitgeist-dp"
+allowed_plugins="bemused brasero-disc-recorder chapters coherence_upnp dbus-service im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file sample-python sample-vala screensaver screenshot sidebar-test skipto thumbnail tracker youtube zeitgeist-dp"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -398,14 +398,6 @@ for plugin in ${used_plugins}; do
 			# The Coherence framework still uses PyGTK, and thus conflicts with the new pygobject introspected bindings
 			plugin_error_or_ignore "the coherence_upnp plugin uses PyGTK and conflicts with the new pygobject bindings"
 			add_plugin="0"
-		;;
-		galago)
-			PKG_CHECK_MODULES(LIBGALAGO, libgalago >= 0.5.2,
-				[HAVE_LIBGALAGO=yes], [HAVE_LIBGALAGO=no])
-			if test "${HAVE_LIBGALAGO}" != "yes" ; then
-				plugin_error_or_ignore "you need libgalago >= 0.5.2 installed for the galago plugin"
-				add_plugin="0"
-			fi
 		;;
 		gromit)
 			if test "${have_x11}" != "yes" ; then
@@ -786,7 +778,7 @@ src/plugins/dbus-service/Makefile
 src/plugins/screensaver/Makefile
 src/plugins/screenshot/Makefile
 src/plugins/ontop/Makefile
-src/plugins/galago/Makefile
+src/plugins/im-status/Makefile
 src/plugins/gromit/Makefile
 src/plugins/iplayer/Makefile
 src/plugins/lirc/Makefile
