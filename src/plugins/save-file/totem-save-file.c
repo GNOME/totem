@@ -213,7 +213,12 @@ totem_save_file_file_opened (TotemObject *totem,
 	TotemSaveFilePluginPrivate *priv = pi->priv;
 	GtkAction *action;
 
-	g_assert (pi->priv->mrl == NULL);
+	if (pi->priv->mrl != NULL) {
+		g_free (pi->priv->mrl);
+		pi->priv->mrl = NULL;
+		g_free (pi->priv->name);
+		pi->priv->name = NULL;
+	}
 
 	if (mrl == NULL)
 		return;
