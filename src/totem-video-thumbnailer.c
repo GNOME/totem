@@ -277,11 +277,9 @@ scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 {
 	GdkPixbuf *result;
 	int width, height;
+	int d_width, d_height;
 
-	if (size <= 256) {
-		int d_width, d_height;
-		GdkPixbuf *small;
-
+	if (size != -1) {
 		height = gdk_pixbuf_get_height (pixbuf);
 		width = gdk_pixbuf_get_width (pixbuf);
 
@@ -292,6 +290,12 @@ scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 			d_height = size;
 			d_width = size * width / height;
 		}
+	} else {
+		d_width = d_height = -1;
+	}
+
+	if (size <= 256) {
+		GdkPixbuf *small;
 
 		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_BILINEAR);
 
@@ -307,7 +311,10 @@ scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 			result = add_holes_to_pixbuf_large (pixbuf, size);
 			g_return_val_if_fail (result != NULL, NULL);
 		} else {
-			result = g_object_ref (pixbuf);
+			if (size > 0)
+				result = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_BILINEAR);
+			else
+				result = g_object_ref (pixbuf);
 		}
 	}
 
