@@ -52,31 +52,6 @@ G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
 G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
 
-static gboolean
-ask_show_visuals (Totem *totem)
-{
-	GtkWidget *dialog;
-	int answer;
-
-	dialog =
-		gtk_message_dialog_new (NULL,
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_YES_NO,
-				_("Enable visual effects?"));
-	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-						  _("It seems you are running Totem remotely.\n"
-						    "Are you sure you want to enable the visual "
-						    "effects?"));
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-			GTK_RESPONSE_NO);
-	answer = gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_destroy (dialog);
-
-	return (answer == GTK_RESPONSE_YES ? TRUE : FALSE);
-}
-
 static void
 totem_prefs_set_show_visuals (Totem *totem, gboolean value)
 {
@@ -105,17 +80,6 @@ checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	gboolean value;
 
 	value = gtk_toggle_button_get_active (togglebutton);
-
-	if (value != FALSE && totem_display_is_local () == FALSE)
-	{
-		if (ask_show_visuals (totem) == FALSE)
-		{
-			g_settings_set_boolean (totem->settings, "show-visualizations", FALSE);
-			gtk_toggle_button_set_active (togglebutton, FALSE);
-			return;
-		}
-	}
-
 	totem_prefs_set_show_visuals (totem, value);
 }
 
@@ -302,7 +266,7 @@ void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *menu, *content_area, *bvw;
-	gboolean show_visuals, is_local, lock_screensaver_on_audio;
+	gboolean show_visuals, lock_screensaver_on_audio;
 	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
@@ -323,7 +287,6 @@ totem_setup_preferences (Totem *totem)
 
 	g_return_if_fail (totem->settings != NULL);
 
-	is_local = totem_display_is_local ();
 	bvw = totem_get_video_widget (totem);
 
 	/* Work-around builder dialogue not parenting properly for
@@ -385,8 +348,6 @@ totem_setup_preferences (Totem *totem)
 	/* Enable visuals */
 	item = gtk_builder_get_object (totem->xml, "tpw_visuals_checkbutton");
 	show_visuals = g_settings_get_boolean (totem->settings, "show-visualizations");
-	if (is_local == FALSE && show_visuals != FALSE)
-		show_visuals = ask_show_visuals (totem);
 
 	g_signal_handlers_disconnect_by_func (item, checkbutton2_toggled_cb, totem);
 	gtk_toggle_button_set_active
