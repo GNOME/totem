@@ -84,7 +84,6 @@
 #include "baconvideowidget-marshal.h"
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
-#include "gstscreenshot.h"
 
 #define DEFAULT_USER_AGENT "Totem/"VERSION
 
@@ -6086,22 +6085,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     return NULL;
   }
 
-  /* get frame */
-  g_object_get (bvw->priv->play, "frame", &buf, NULL);
-
-  if (!buf) {
-    GST_DEBUG ("Could not take screenshot: %s", "no last video frame");
-    g_warning ("Could not take screenshot: %s", "no last video frame");
-    return NULL;
-  }
-
-  if (GST_BUFFER_CAPS (buf) == NULL) {
-    GST_DEBUG ("Could not take screenshot: %s", "no caps on buffer");
-    g_warning ("Could not take screenshot: %s", "no caps on buffer");
-    return NULL;
-  }
-
-  /* convert to our desired format (RGB24) */
+  /* our desired output format (RGB24) */
   to_caps = gst_caps_new_simple ("video/x-raw-rgb",
       "bpp", G_TYPE_INT, 24,
       "depth", G_TYPE_INT, 24,
@@ -6118,17 +6102,15 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
       "blue_mask", G_TYPE_INT, 0x0000ff,
       NULL);
 
-  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
-  GST_DEBUG ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
-
-  /* bvw_frame_conv_convert () takes ownership of the buffer passed */
-  buf = bvw_frame_conv_convert (buf, to_caps);
-
+  /* get frame */
+  g_signal_emit_by_name (bvw->priv->play, "convert-frame", to_caps, &buf);
   gst_caps_unref (to_caps);
 
   if (!buf) {
-    GST_DEBUG ("Could not take screenshot: %s", "conversion failed");
-    g_warning ("Could not take screenshot: %s", "conversion failed");
+    GST_DEBUG ("Could not take screenshot: %s",
+        "failed to retrieve or convert video frame");
+    g_warning ("Could not take screenshot: %s",
+        "failed to retrieve or convert video frame");
     return NULL;
   }
 
@@ -6137,6 +6119,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
     g_warning ("Could not take screenshot: %s", "no caps on output buffer");
     return NULL;
   }
+
+  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
 
   s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
   gst_structure_get_int (s, "width", &outwidth);
