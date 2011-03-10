@@ -74,6 +74,9 @@ totem_open_location_init (TotemOpenLocation *self)
 	g_object_ref (self->priv->uri_container);
 
 	self->priv->uri_entry = GTK_ENTRY (gtk_builder_get_object (builder, "uri"));
+	gtk_entry_set_width_chars (self->priv->uri_entry, 50);
+
+	gtk_window_set_modal (GTK_WINDOW (self), TRUE);
 
 	g_object_unref (builder);
 }
