@@ -63,7 +63,6 @@ struct TotemScrsaverPrivate {
 	GDBusProxy *gs_proxy;
         gboolean have_screensaver_dbus;
 	guint32 cookie;
-	gboolean old_dbus_api;
 
 	/* To save the screensaver info */
 	int timeout;
@@ -97,24 +96,8 @@ on_inhibit_cb (GObject      *source_object,
 
 	value = g_dbus_proxy_call_finish (proxy, res, &error);
 	if (!value) {
-		if (!scr->priv->old_dbus_api &&
-		    g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_UNKNOWN_METHOD)) {
-			g_return_if_fail (scr->priv->reason != NULL);
-			/* try the old API */
-			scr->priv->old_dbus_api = TRUE;
-			g_dbus_proxy_call (proxy,
-					   "InhibitActivation",
-					   g_variant_new ("(s)",
-							  scr->priv->reason),
-					   G_DBUS_CALL_FLAGS_NO_AUTO_START,
-					   -1,
-					   NULL,
-					   on_inhibit_cb,
-					   scr);
-		} else {
-			g_warning ("Problem inhibiting the screensaver: %s", error->message);
-			g_object_unref (scr);
-		}
+		g_warning ("Problem inhibiting the screensaver: %s", error->message);
+		g_object_unref (scr);
 		g_error_free (error);
 
 		return;
@@ -142,22 +125,8 @@ on_uninhibit_cb (GObject      *source_object,
 
 	value = g_dbus_proxy_call_finish (proxy, res, &error);
 	if (!value) {
-		if (!scr->priv->old_dbus_api &&
-		    g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_UNKNOWN_METHOD)) {
-			/* try the old API */
-			scr->priv->old_dbus_api = TRUE;
-			g_dbus_proxy_call (proxy,
-					   "AllowActivation",
-					   g_variant_new ("()"),
-					   G_DBUS_CALL_FLAGS_NO_AUTO_START,
-					   -1,
-					   NULL,
-					   on_uninhibit_cb,
-					   scr);
-		} else {
-			g_warning ("Problem uninhibiting the screensaver: %s", error->message);
-			g_object_unref (scr);
-		}
+		g_warning ("Problem uninhibiting the screensaver: %s", error->message);
+		g_object_unref (scr);
 		g_error_free (error);
 
 		return;
@@ -179,7 +148,6 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
         if (!priv->have_screensaver_dbus)
                 return;
 
-	scr->priv->old_dbus_api = FALSE;
 	g_object_ref (scr);
 
 	if (inhibit) {
