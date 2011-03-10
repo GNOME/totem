@@ -107,12 +107,14 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
 
+	totem = g_object_get_data (G_OBJECT (plugin), "object");
+
 	pi->priv->scr = totem_scrsaver_new ();
 	g_object_set (pi->priv->scr,
 	              "reason", _("Playing a movie"),
+	              "window", totem_get_main_window (totem),
 	              NULL);
 
-	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
 
 	pi->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
