@@ -41,9 +41,11 @@
 
 #include "totem-scrsaver.h"
 
-#define GS_SERVICE   "org.gnome.ScreenSaver"
-#define GS_PATH      "/org/gnome/ScreenSaver"
-#define GS_INTERFACE "org.gnome.ScreenSaver"
+#define GS_SERVICE   "org.gnome.SessionManager"
+#define GS_PATH      "/org/gnome/SessionManager"
+#define GS_INTERFACE "org.gnome.SessionManager"
+/* From org.gnome.SessionManager.xml */
+#define GS_NO_IDLE_FLAG 8
 
 #define XSCREENSAVER_MIN_TIMEOUT 60
 
@@ -144,19 +146,23 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 			  gboolean	 inhibit)
 {
         TotemScrsaverPrivate *priv = scr->priv;
+        guint xid;
 
         if (!priv->have_screensaver_dbus)
                 return;
 
 	g_object_ref (scr);
 
+	xid = 0;
 	if (inhibit) {
 		g_return_if_fail (scr->priv->reason != NULL);
 		g_dbus_proxy_call (priv->gs_proxy,
 				   "Inhibit",
-				   g_variant_new ("(ss)",
+				   g_variant_new ("(susu)",
 						  g_get_application_name (),
-						  scr->priv->reason),
+						  xid,
+						  scr->priv->reason,
+						  GS_NO_IDLE_FLAG),
 				   G_DBUS_CALL_FLAGS_NO_AUTO_START,
 				   -1,
 				   NULL,
@@ -164,7 +170,7 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 				   scr);
 	} else {
                 g_dbus_proxy_call (priv->gs_proxy,
-				   "UnInhibit",
+				   "Uninhibit",
 				   g_variant_new ("(u)", priv->cookie),
 				   G_DBUS_CALL_FLAGS_NO_AUTO_START,
 				   -1,
