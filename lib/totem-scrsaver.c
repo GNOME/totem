@@ -113,9 +113,9 @@ on_inhibit_cb (GObject      *source_object,
 					   scr);
 		} else {
 			g_warning ("Problem inhibiting the screensaver: %s", error->message);
+			g_object_unref (scr);
 		}
 		g_error_free (error);
-		g_object_unref (scr);
 
 		return;
 	}
@@ -156,9 +156,9 @@ on_uninhibit_cb (GObject      *source_object,
 					   scr);
 		} else {
 			g_warning ("Problem uninhibiting the screensaver: %s", error->message);
+			g_object_unref (scr);
 		}
 		g_error_free (error);
-		g_object_unref (scr);
 
 		return;
 	}
