@@ -76,7 +76,7 @@ totem_im_status_set_idleness (TotemImStatusPlugin *pi,
 	pi->priv->idle = idle;
 	variant = g_dbus_proxy_call_sync (pi->priv->proxy,
 					  "SetStatus",
-					  g_variant_new ("(u)", idle ? STATUS_IDLE : STATUS_AVAILABLE),
+					  g_variant_new ("(u)", idle ? STATUS_BUSY : STATUS_AVAILABLE),
 					  G_DBUS_CALL_FLAGS_NONE,
 					  -1,
 					  NULL,
