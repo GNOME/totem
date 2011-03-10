@@ -106,14 +106,17 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
+	GtkWindow *window;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
+	window = totem_get_main_window (totem);
 
 	pi->priv->scr = totem_scrsaver_new ();
 	g_object_set (pi->priv->scr,
 	              "reason", _("Playing a movie"),
-	              "window", totem_get_main_window (totem),
+	              "window", window,
 	              NULL);
+	g_object_unref (window);
 
 	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
 
