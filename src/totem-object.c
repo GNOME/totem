@@ -1739,6 +1739,8 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 
 		/* Unset the drag */
 		gtk_drag_source_unset (GTK_WIDGET (totem->bvw));
+
+		g_object_notify (G_OBJECT (totem), "playing");
 	} else {
 		gboolean caps;
 		gdouble volume;
