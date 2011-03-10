@@ -181,14 +181,16 @@ screensaver_inhibit_dbus (TotemScrsaver *scr,
 				   on_inhibit_cb,
 				   scr);
 	} else {
-                g_dbus_proxy_call (priv->gs_proxy,
-				   "Uninhibit",
-				   g_variant_new ("(u)", priv->cookie),
-				   G_DBUS_CALL_FLAGS_NO_AUTO_START,
-				   -1,
-				   NULL,
-				   on_uninhibit_cb,
-				   scr);
+		if (priv->cookie > 0) {
+			g_dbus_proxy_call (priv->gs_proxy,
+					   "Uninhibit",
+					   g_variant_new ("(u)", priv->cookie),
+					   G_DBUS_CALL_FLAGS_NO_AUTO_START,
+					   -1,
+					   NULL,
+					   on_uninhibit_cb,
+					   scr);
+		}
 	}
 }
 
