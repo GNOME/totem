@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-06 23:01+0100\n"
-"PO-Revision-Date: 2011-03-06 23:06+0100\n"
+"POT-Creation-Date: 2011-03-11 19:14+0100\n"
+"PO-Revision-Date: 2011-03-11 19:20+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1224,8 +1224,8 @@ msgstr "Stoppad"
 
 #: ../src/totem-object.c:1142
 #: ../src/totem-object.c:1169
-#: ../src/totem-object.c:1797
-#: ../src/totem-object.c:1960
+#: ../src/totem-object.c:1799
+#: ../src/totem-object.c:1962
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunde inte spela upp \"%s\"."
@@ -1271,7 +1271,7 @@ msgid "Totem was not able to play this disc."
 msgstr "Totem kunde inte spela upp den här skivan."
 
 #: ../src/totem-object.c:1301
-#: ../src/totem-object.c:4278
+#: ../src/totem-object.c:4280
 msgid "No reason."
 msgstr "Ingen orsak."
 
@@ -1283,47 +1283,47 @@ msgstr "Totem saknar stöd för uppspelning av ljud-cd-skivor"
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "Överväg att använda en musikspelare eller en cd-extraherare för att spela upp denna skiva"
 
-#: ../src/totem-object.c:1803
+#: ../src/totem-object.c:1805
 msgid "No error message"
 msgstr "Inget felmeddelande"
 
-#: ../src/totem-object.c:2195
+#: ../src/totem-object.c:2197
 msgid "Totem could not display the help contents."
 msgstr "Totem kunde inte visa hjälpinnehållet."
 
-#: ../src/totem-object.c:2533
 #: ../src/totem-object.c:2535
+#: ../src/totem-object.c:2537
 #: ../browser-plugin/totem-plugin-viewer.c:1466
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: ../src/totem-object.c:4112
 #: ../src/totem-object.c:4114
+#: ../src/totem-object.c:4116
 msgid "Previous Chapter/Movie"
 msgstr "Föregående kapitel/film"
 
-#: ../src/totem-object.c:4121
 #: ../src/totem-object.c:4123
+#: ../src/totem-object.c:4125
 msgid "Play / Pause"
 msgstr "Spela upp / Gör paus"
 
-#: ../src/totem-object.c:4131
 #: ../src/totem-object.c:4133
+#: ../src/totem-object.c:4135
 msgid "Next Chapter/Movie"
 msgstr "Nästa kapitel/film"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4145
 #: ../src/totem-object.c:4147
+#: ../src/totem-object.c:4149
 msgid "Fullscreen"
 msgstr "Helskärm"
 
-#: ../src/totem-object.c:4278
+#: ../src/totem-object.c:4280
 msgid "Totem could not startup."
 msgstr "Totem kunde inte starta."
 
-#: ../src/totem-open-location.c:179
+#: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "Öppna plats..."
 
@@ -2381,7 +2381,7 @@ msgstr "Antal resultat per sida"
 
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:3
 msgid "The number of Jamendo search results to display in each page of results."
-msgstr ""
+msgstr "Antalet Jamendo-sökresultat att visa i varje resultatsida."
 
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:4
 msgid "The preferred audio format to download tracks from Jamendo in."
@@ -2497,7 +2497,7 @@ msgstr "Egenskaper"
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
 msgid "A format string used to build the network service name used when publishing playlists over the network. The following format placeholders can be used: • %a: the program name as returned by g_get_application_name() • %h: the machine's host name in title case • %u: the user's login name in title case • %U: the user's real name • %%: the percent sign"
-msgstr ""
+msgstr "En formatsträng som används för att bygga nätverkstjänstnamnet som används vid publicering av spellistor över nätverket. Följande formatplatshållare kan användas: • %a: programnamnet som returneras av g_get_application_name() • %h: maskinens värdnamn med inledande versal • %u: användarens inloggningsnamn med inledande versal • %U: användarens riktiga namn • %%: procenttecknet"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
 msgid "Format for network service name"
@@ -2505,11 +2505,11 @@ msgstr "Format för nätverkstjänstnamn"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:4
 msgid "Publisher protocol to use"
-msgstr ""
+msgstr "Publiceringsprotokoll att använda"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
 msgid "The transport protocol to use when publishing playlists over the network."
-msgstr ""
+msgstr "Transportprotokollet att använda när spellistor publiceras över nätverket."
 
 #. Translators: computers on the local network which are publishing their playlists over the network
 #: ../src/plugins/publish/totem-publish.c:552
@@ -2545,7 +2545,7 @@ msgstr "Använd _krypterat transportprotokoll (HTTPS)"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
 msgid "A password to protect the rpdb2 server for debugging Totem from unauthorized remote access. If this is empty, a default of 'totem' will be used."
-msgstr ""
+msgstr "Ett lösenord för att skydda rpdb2-servern för felsökning av Totem från oauktoriserad fjärråtkomst. Om denna är tom så kommer standardvärdet \"totem\" att användas."
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid "rpdb2 password"
@@ -2573,7 +2573,7 @@ msgstr "Film"
 msgid "Movie stream"
 msgstr "Filmström"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:112
+#: ../src/plugins/screensaver/totem-screensaver.c:116
 #: ../browser-plugin/totem-plugin-viewer.c:1961
 msgid "Playing a movie"
 msgstr "Spelar upp en film"
@@ -2902,9 +2902,8 @@ msgid "Totem Python Console"
 msgstr "Totem Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:129
-#, fuzzy
 msgid "After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in DConf, it will use the default password ('totem')."
-msgstr "Efter att du har tryckt på OK så kommer Totem att vänta tills du ansluter till den med winpdb eller rpdb2. Om du inte har ställt in ett felsökningslösenord i GConf så kommer den att använda standardlösenordet (\"totem\")."
+msgstr "Efter att du har tryckt på OK så kommer Totem att vänta tills du ansluter till den med winpdb eller rpdb2. Om du inte har ställt in ett felsökningslösenord i DConf så kommer den att använda standardlösenordet (\"totem\")."
 
 #~ msgid "Enable visual effects?"
 #~ msgstr "Aktivera visuella effekter?"
