@@ -1,13 +1,30 @@
 <script language="javascript">
 function print_plugins () {
-	document.write('<ul>');
-        for(var i=0; i<navigator.plugins.length; i++) {
-		var name = navigator.plugins[i].name;
-		document.write('<li> \'' + name + '\'<br>');
-	}
-	document.write('</ul>');
+	document.write("There are <b>" + navigator.plugins.length + "</b> plug-ins installed.<p>");
+	document.write("<table border=1 width='100%' cellpadding=5>" +
+		"<tr valign='top'>" +
+		"<td bgcolor='Aqua' width='25%'>Name</td>" +
+		"<td bgcolor='Aqua' width='25%'>Description</td>" +
+		"<td bgcolor='Aqua' width='25%'>Filename</td>" +
+		"<td bgcolor='Aqua' width='15%'>Suffixes / MIME " +
+			"type</td>" +
+		"</tr>");
+		// Scan through each plug-in:
+		for (n=0; n < navigator.plugins.length; n++) {
+			document.write("<tr valign='top'>" +
+				"<td><b>" + navigator.plugins[n].name + "</b></td>" + "<td>" + navigator.plugins[n].description + "</td>" +
+				"<td>" + navigator.plugins[n].filename +
+				"</td><td>");
+				// Scan through this plug-inís suffixes array:
+				for (m=0; m < navigator.plugins[n].length; m++) {
+					document.write(navigator.plugins[n][m].suffixes + " = " +
+					navigator.plugins[n][m].type +
+					"<br>");
+				}
+				document.write("</td></tr>");
+		}
+	document.write("</table>");
 }
-
 </script>
 
 
