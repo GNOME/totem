@@ -40,7 +40,10 @@
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->priv->model, NULL))
 
 static void ensure_shuffled (TotemPlaylist *playlist);
-static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist, const char *mrl, const char *display_name);
+static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist,
+					    const char    *mrl,
+					    const char    *display_name,
+					    const char    *content_type);
 
 typedef gboolean (*ClearComparisonFunc) (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data);
 
@@ -143,6 +146,7 @@ enum {
 	TITLE_CUSTOM_COL,
 	SUBTITLE_URI_COL,
 	FILE_MONITOR_COL,
+	MIME_TYPE_COL,
 	NUM_COLS
 };
 
@@ -1562,7 +1566,7 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 			     GHashTable *metadata,
 			     TotemPlaylist *playlist)
 {
-	const char *title;
+	const char *title, *content_type;
 	gint64 duration;
 
 	/* We ignore 0-length items in playlists, they're usually just banners */
@@ -1571,7 +1575,8 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	if (duration == 0)
 		return;
 	title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
-	totem_playlist_add_one_mrl (playlist, uri, title);
+	content_type = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_CONTENT_TYPE);
+	totem_playlist_add_one_mrl (playlist, uri, title, content_type);
 }
 
 static gboolean
@@ -1746,7 +1751,8 @@ totem_playlist_new (void)
 static gboolean
 totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 			    const char *mrl,
-			    const char *display_name)
+			    const char *display_name,
+			    const char *content_type)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -1803,6 +1809,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 			URI_COL, uri ? uri : mrl,
 			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 			FILE_MONITOR_COL, monitor,
+			MIME_TYPE_COL, content_type,
 			-1);
 	g_free (escaped_filename);
 
@@ -1855,7 +1862,7 @@ static gboolean
 handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gchar *mrl, const gchar *display_name)
 {
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
-		return totem_playlist_add_one_mrl (playlist, mrl, display_name);
+		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR) {
 		char *msg;
 
@@ -2470,7 +2477,7 @@ totem_playlist_get_current_mrl (TotemPlaylist *playlist, char **subtitle)
 }
 
 char *
-totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
+totem_playlist_get_current_title (TotemPlaylist *playlist, char **content_type)
 {
 	GtkTreeIter iter;
 	char *path;
@@ -2484,11 +2491,11 @@ totem_playlist_get_current_title (TotemPlaylist *playlist, gboolean *custom)
 			&iter,
 			playlist->priv->current);
 
-	if (custom != NULL) {
+	if (content_type != NULL) {
 		gtk_tree_model_get (playlist->priv->model,
 				    &iter,
 				    FILENAME_COL, &path,
-				    TITLE_CUSTOM_COL, custom,
+				    MIME_TYPE_COL, content_type,
 				    -1);
 	} else {
 		gtk_tree_model_get (playlist->priv->model,

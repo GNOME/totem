@@ -382,12 +382,13 @@ on_recent_file_item_activated (GtkAction *action,
                                Totem *totem)
 {
 	GtkRecentInfo *recent_info;
-	const gchar *uri;
+	const gchar *uri, *display_name;
 
 	recent_info = g_object_get_data (G_OBJECT (action), "recent-info");
 	uri = gtk_recent_info_get_uri (recent_info);
+	display_name = gtk_recent_info_get_display_name (recent_info);
 
-	totem_add_to_playlist_and_play (totem, uri, NULL, FALSE);
+	totem_add_to_playlist_and_play (totem, uri, display_name, FALSE);
 }
 
 static gint
@@ -579,12 +580,39 @@ recent_info_cb (GFile *file,
 }
 
 void
-totem_action_add_recent (Totem *totem, const char *uri, const char *display_name)
+totem_action_add_recent (Totem      *totem,
+			 const char *uri,
+			 const char *display_name,
+			 const char *content_type)
 {
 	GFile *file;
 
 	if (totem_is_special_mrl (uri) != FALSE)
 		return;
+
+	/* If we already have a content-type, the display_name is
+	 * probably decent as well */
+	if (content_type != NULL) {
+		GtkRecentData data;
+		char *groups[] = { NULL, NULL };
+
+		memset (&data, 0, sizeof (data));
+
+		data.mime_type = (char *) content_type;
+		data.display_name = (char *) display_name;
+		groups[0] = (char*) "Totem";
+		data.app_name = (char *) g_get_application_name ();
+		data.app_exec = g_strjoin (" ", g_get_prgname (), "%u", NULL);
+		data.groups = groups;
+
+		if (gtk_recent_manager_add_full (totem->recent_manager,
+						 uri, &data) == FALSE) {
+			g_warning ("Couldn't add recent file for '%s'", uri);
+		}
+		g_free (data.app_exec);
+
+		return;
+	}
 
 	file = g_file_new_for_uri (uri);
 	g_object_set_data_full (G_OBJECT (file), "uri", g_strdup (uri), g_free);

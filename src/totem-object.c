@@ -505,7 +505,7 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
 
 	if (data->add_to_recent != FALSE)
-		totem_action_add_recent (data->totem, data->uri, data->display_name);
+		totem_action_add_recent (data->totem, data->uri, data->display_name, NULL);
 	end = totem_playlist_get_last (playlist);
 
 	totem_signal_unblock_by_data (playlist, data->totem);
@@ -635,8 +635,7 @@ totem_object_get_title_at_playlist_pos (TotemObject *totem, guint playlist_index
 char *
 totem_get_short_title (TotemObject *totem)
 {
-	gboolean custom;
-	return totem_playlist_get_current_title (totem->playlist, &custom);
+	return totem_playlist_get_current_title (totem->playlist, NULL);
 }
 
 /**
@@ -1688,7 +1687,7 @@ update_mrl_label (TotemObject *totem, const char *name)
  **/
 gboolean
 totem_action_set_mrl_with_warning (TotemObject *totem,
-				   const char *mrl, 
+				   const char *mrl,
 				   const char *subtitle,
 				   gboolean warn)
 {
@@ -1814,7 +1813,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 			totem->mrl = NULL;
 			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		} else {
-			char *display_name;
+			char *display_name, *content_type;
 			/* cast is to shut gcc up */
 			const GtkTargetEntry source_table[] = {
 				{ (gchar*) "text/uri-list", 0, 0 }
@@ -1828,9 +1827,10 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 					     source_table, G_N_ELEMENTS (source_table),
 					     GDK_ACTION_COPY);
 
-			display_name = totem_playlist_get_current_title (totem->playlist, NULL);
-			totem_action_add_recent (totem, totem->mrl, display_name);
+			display_name = totem_playlist_get_current_title (totem->playlist, &content_type);
+			totem_action_add_recent (totem, totem->mrl, display_name, content_type);
 			g_free (display_name);
+			g_free (content_type);
 		}
 	}
 	update_buttons (totem);
