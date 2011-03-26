@@ -23,7 +23,7 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
     object = gobject.property(type = gobject.GObject)
 
     def __init__ (self):
-        self.totem_object = self.object
+        self.totem_object = None
         self.ui = TreeWidget()
         self.ui.window.set_shadow_type(gtk.SHADOW_IN)
         self.ui.cb_item_right_click = self.button_pressed
@@ -113,6 +113,7 @@ class UPnPClient(gobject.GObject, Peas.Activatable):
             self.context = self.context_no_delete
 
     def do_activate (self):
+        self.totem_object = self.object
         self.totem_object.add_sidebar_page ("upnp-coherence", _(u"Coherence DLNA/UPnP Client"), self.ui.window)
 
         def load_and_play(url):

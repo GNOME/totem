@@ -80,7 +80,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
     def __init__(self):
         self.debug = True
         self.gstreamer_plugins_present = True
-        self.totem = self.object
+        self.totem = None
         self.settings = Gio.Settings.new ('org.gnome.totem.plugins.jamendo')
         self.settings.connect ('changed::format', self.on_format_changed)
         self.settings.connect ('changed::num-per-page', self.on_num_per_page_changed)
@@ -89,6 +89,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         """
         Plugin activation.
         """
+        self.totem = self.object
         # Initialise the interface
         builder = Totem.plugin_load_interface ("jamendo", "jamendo.ui", True, self.totem.get_main_window (), self)
         self.popup = builder.get_object('popup_menu')

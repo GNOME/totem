@@ -72,10 +72,11 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 	object = gobject.property(type = gobject.GObject)
 
 	def __init__(self):
-		self.totem = self.object
+		self.totem = None
 		self.window = None
 	
 	def do_activate(self):
+		self.totem = self.object
 
 		data = dict()
 		manager = self.totem.get_ui_manager()

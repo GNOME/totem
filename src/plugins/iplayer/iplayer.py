@@ -20,10 +20,11 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 
 	def __init__ (self):
 		self.debug = False
-		self.totem = self.object
+		self.totem = None
 		self.programme_download_lock = threading.Lock ()
 
 	def do_activate (self):
+		self.totem = self.object
 		# Build the interface
 		builder = Totem.plugin_load_interface ("iplayer", "iplayer.ui", True, self.totem.get_main_window (), self)
 		container = builder.get_object ('iplayer_vbox')

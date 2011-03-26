@@ -302,7 +302,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 
     def __init__(self):
         self.dialog = None
-        self.totem = self.object
+        self.totem = None
         self.settings = Gio.Settings.new ('org.gnome.totem.plugins.opensubtitles')
 
     # totem.Plugin methods
@@ -313,6 +313,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         Here the sidebar page is initialized(set up the treeview, connect 
         the callbacks, ...) and added to totem.
         """
+        self.totem = self.object
 	self.filename = None
 
         self.manager = self.totem.get_ui_manager()
