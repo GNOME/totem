@@ -83,7 +83,7 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 
 		data['action_group'] = Gtk.ActionGroup(name = 'Python')
 		
-		action = Gtk.Action(name = 'Python', label = 'Python', tooltip = _(u'Python Console Menu'))
+		action = Gtk.Action(name = 'Python', label = 'Python', tooltip = _(u'Python Console Menu'), stock_id = None)
 		data['action_group'].add_action(action)
 
 		action = Gtk.Action(name = 'PythonConsole', label = _(u'_Python Console'),
@@ -93,7 +93,7 @@ class PythonConsolePlugin(gobject.GObject, Peas.Activatable):
 		data['action_group'].add_action(action)
 
 		action = Gtk.Action(name = 'PythonDebugger', label = _(u'Python Debugger'),
-				    tooltip = _(u"Enable remote Python debugging with rpdb2"))
+				    tooltip = _(u"Enable remote Python debugging with rpdb2"), stock_id = None)
 		if have_rpdb2:
 			action.connect('activate', self.enable_debugging)
 		else:
