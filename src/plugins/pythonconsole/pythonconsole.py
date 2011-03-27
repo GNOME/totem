@@ -44,9 +44,9 @@ from gi.repository import Gio
 import gobject
 try:
     import rpdb2
-    have_rpdb2 = True
+    HAVE_RPDB2 = True
 except:
-    have_rpdb2 = False
+    HAVE_RPDB2 = False
 
 import gettext
 gettext.textdomain ("totem")
@@ -54,7 +54,7 @@ gettext.textdomain ("totem")
 D_ = gettext.dgettext
 _ = gettext.gettext
 
-ui_str = """
+UI_STR = """
 <ui>
   <menubar name="tmw-menubar">
     <menu name="Python" action="Python">
@@ -101,14 +101,14 @@ class PythonConsolePlugin (gobject.GObject, Peas.Activatable):
                              tooltip = _(u"Enable remote Python debugging "\
                                           "with rpdb2"),
                              stock_id = None)
-        if have_rpdb2:
+        if HAVE_RPDB2:
             action.connect ('activate', self.enable_debugging)
         else:
             action.set_visible (False)
         data['action_group'].add_action (action)
 
         manager.insert_action_group (data['action_group'], 0)
-        data['ui_id'] = manager.add_ui_from_string (ui_str)
+        data['ui_id'] = manager.add_ui_from_string (UI_STR)
         manager.ensure_update ()
 
         self.totem.set_data ('PythonConsolePluginInfo', data)

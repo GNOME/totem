@@ -10,43 +10,44 @@ def xmlunescape (data):
     data = data.replace ('&lt;', '<')
     return data
 
-class listentry (object):
-    def __init__ (self, title = None, id = None, updated = None, summary = None,
-                  categories = None):
+class ListEntry (object):
+    def __init__ (self, title = None, identifier = None, updated = None,
+                  summary = None, categories = None):
         self.title = title
-        self.id = id
+        self.identifier = identifier
         self.updated = updated
         self.summary = summary
         self.categories = categories
 
-class listentries (object):
+class ListEntries (object):
     def __init__ (self):
         self.entries = []
 
-def parse (xmlSource):
+def parse (xml_source):
     try:
         regexp = "<\?xml version=\"[^\"]*\" encoding=\" ([^\"]*)\"\?>"
-        encoding = re.findall (regexp, xmlSource)[0]
+        encoding = re.findall (regexp, xml_source)[0]
     except:
         return None
 
-    elist = listentries ()
+    elist = ListEntries ()
     # gather all list entries
-    entriesSrc = re.findall ("<entry> (.*?)</entry>", xmlSource, re.DOTALL)
+    entries_src = re.findall ("<entry> (.*?)</entry>", xml_source, re.DOTALL)
     datematch = re.compile (':\s+ ([0-9]+)/ ([0-9]+)/ ([0-9]{4})')
 
     # enumerate thru the element list and gather info
-    for entrySrc in entriesSrc:
+    for entry_src in entries_src:
         entry = {}
         title = re.findall ("<title[^>]*> (.*?)</title>",
-                            entrySrc, re.DOTALL)[0]
-        id = re.findall ("<id[^>]*> (.*?)</id>", entrySrc, re.DOTALL)[0]
+                            entry_src, re.DOTALL)[0]
+        identifier = re.findall ("<id[^>]*> (.*?)</id>",
+                                 entry_src, re.DOTALL)[0]
         updated = re.findall ("<updated[^>]*> (.*?)</updated>",
-                              entrySrc, re.DOTALL)[0]
+                              entry_src, re.DOTALL)[0]
         summary = re.findall ("<content[^>]*> (.*?)</content>",
-                              entrySrc, re.DOTALL)[0].splitlines ()[-3]
+                              entry_src, re.DOTALL)[0].splitlines ()[-3]
         categories = re.findall ("<category[^>]*term=\" (.*?)\"[^>]*>",
-                                 entrySrc, re.DOTALL)
+                                 entry_src, re.DOTALL)
 
         match = datematch.search (title)
         if match:
@@ -56,9 +57,10 @@ def parse (xmlSource):
                                     match.group (1))
 
         e_categories = []
-        for c in categories:
-            e_categories.append (xmlunescape (c))
-        elist.entries.append (listentry (xmlunescape (title), xmlunescape (id),
+        for category in categories:
+            e_categories.append (xmlunescape (category))
+        elist.entries.append (ListEntry (xmlunescape (title),
+                                         xmlunescape (identifier),
                                          xmlunescape (updated),
                                          xmlunescape (summary), e_categories))
 

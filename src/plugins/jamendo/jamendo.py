@@ -60,13 +60,13 @@ except ImportError:
     try:
         import simplejson as json
     except ImportError:
-        dlg = Gtk.MessageDialog (
+        DLG = Gtk.MessageDialog (
             message_type=Gtk.MessageType.ERROR,
             buttons=Gtk.ButtonsType.OK
         )
-        dlg.set_markup (_(u'You need to install the Python simplejson module.'))
-        dlg.run ()
-        dlg.destroy ()
+        DLG.set_markup (_(u'You need to install the Python simplejson module.'))
+        DLG.run ()
+        DLG.destroy ()
         raise
 
 socket.setdefaulttimeout (30)
@@ -137,8 +137,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         add_to_playlist = builder.get_object ('add_to_playlist')
         add_to_playlist.connect ('activate', self.on_add_to_playlist_activate)
         album_page_button = builder.get_object ('jamendo_album_page')
-        album_page_button.connect ('activate',
-                                   self.on_open_jamendo_album_page_activate)
+        album_page_button.connect ('activate', self.on_open_album_page_activate)
 
         self.reset ()
         container.show_all ()
@@ -160,7 +159,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                                                None, self)
         config_widget = builder.get_object ('config_widget')
         config_widget.connect ('destroy', self.on_config_widget_destroy)
-        format = self.settings.get_enum ('format')
+        audio_format = self.settings.get_enum ('format')
         num_per_page = self.settings.get_value ('num-per-page').get_uint32 ()
 
         # Set up the "format" combo box. We can't use g_settings_bind () here,
@@ -168,7 +167,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         # we'd need to use g_settings_bind_with_mapping (), but that isn't
         # introspectable. We have to handle the binding manually.
         combo = builder.get_object ('preferred_format_combo')
-        combo.set_active (format)
+        combo.set_active (audio_format)
         combo.connect ('changed', self.on_format_combo_changed)
         self.settings.connect ('changed::format',
                                self.on_format_setting_changed, combo)
@@ -225,8 +224,8 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             self.TAB_LATEST : []
         }
         self.album_count = [0, 0, 0]
-        for tv in self.treeviews:
-            tv.get_model ().clear ()
+        for tree_view in self.treeviews:
+            tree_view.get_model ().clear ()
         self._update_buttons_state ()
 
     def setup_treeviews (self):
@@ -234,8 +233,8 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         Setup the 3 treeview: result, popular and latest
         """
         self.current_treeview = self.treeviews[0]
-        for w in self.treeviews:
-            selection = w.get_selection ()
+        for tree_view in self.treeviews:
+            selection = tree_view.get_selection ()
             selection.set_mode (Gtk.SelectionMode.MULTIPLE)
             selection.connect ('changed', self.on_treeview_selection_changed)
 
@@ -243,14 +242,14 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             cell = Gtk.CellRendererPixbuf ()
             col = Gtk.TreeViewColumn (cell_renderer=cell, pixbuf=1)
 
-            w.append_column (col)
+            tree_view.append_column (col)
 
             # build description column
             cell = Gtk.CellRendererText ()
             cell.set_property ('ellipsize', Pango.EllipsizeMode.END)
             col = Gtk.TreeViewColumn (cell_renderer=cell, markup=2)
             col.set_expand (True)
-            w.append_column (col)
+            tree_view.append_column (col)
 
             # duration column
             cell = Gtk.CellRendererText ()
@@ -258,24 +257,26 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             cell.set_property ('size-points', 8)
             col = Gtk.TreeViewColumn (cell_renderer=cell, markup=3)
             col.set_alignment (1.0)
-            w.append_column (col)
+            tree_view.append_column (col)
 
             # configure the treeview
-            w.set_show_expanders (False) # we manage internally expand/collapse
-            w.set_tooltip_column (4)     # set the tooltip column
+            # we manage internally expand/collapse
+            tree_view.set_show_expanders (False)
+            tree_view.set_tooltip_column (4) # set the tooltip column
 
             # Connect signals
-            w.connect ("button-press-event", self.on_treeview_row_clicked)
-            w.connect ("row-activated", self.on_treeview_row_activated)
+            tree_view.connect ("button-press-event",
+                               self.on_treeview_row_clicked)
+            tree_view.connect ("row-activated", self.on_treeview_row_activated)
 
 
     def add_treeview_item (self, treeview, album):
         if not isinstance (album['image'], GdkPixbuf.Pixbuf):
             # album image pixbuf is not yet built
             try:
-                pb = GdkPixbuf.Pixbuf.new_from_file (album['image'])
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file (album['image'])
                 os.unlink (album['image'])
-                album['image'] = pb
+                album['image'] = pixbuf
             except:
                 # do not fail for this, just display a dummy pixbuf
                 album['image'] = GdkPixbuf.Pixbuf.new (GdkPixbuf.Colorspace.RGB,
@@ -314,19 +315,21 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             # track title
             # Translators: this is the title of a track in Python format
             # (first argument is the track number, second is the track title)
-            tt = (u'<small>%s</small>' % _(u'%02d. %s')) % \
-                (i+1, self._format_str (track['name']))
+            track_title = (u'<small>%s</small>' % _(u'%02d. %s')) % \
+                           (i+1, self._format_str (track['name']))
             # track duration
-            td = self._format_duration (track['duration'])
+            track_duration = self._format_duration (track['duration'])
             # track tooltip
             tip = '\n'.join ([
                 '<b>%s</b>' %  self._format_str (track['name']),
                 _(u'Album: %s') % self._format_str (album['name']),
                 _(u'Artist: %s') % self._format_str (album['artist_name']),
-                _(u'Duration: %s') % td,
+                _(u'Duration: %s') % track_duration,
             ])
             # append track
-            treeview.get_model ().append (parent, [track, icon, tt, td, tip])
+            treeview.get_model ().append (parent,
+                                          [track, icon, track_title,
+                                           track_duration, tip])
         # update current album count
         pindex = self.treeviews.index (treeview)
         self.album_count[pindex] += 1
@@ -347,19 +350,19 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             else:
                 self.add_track_to_playlist ('enqueue', track)
 
-    def add_track_to_playlist (self, mode, t):
+    def add_track_to_playlist (self, mode, track):
         """
         Add a track to the playlist, mode can be: replace, enqueue or
         enqueue_and_play.
         """
         if mode == 'replace':
             self.totem.action_remote (Totem.RemoteCommand.REPLACE,
-                                      t['stream'].encode ('UTF-8'))
+                                      track['stream'].encode ('UTF-8'))
         elif mode == 'enqueue':
             self.totem.action_remote (Totem.RemoteCommand.ENQUEUE,
-                                      t['stream'].encode ('UTF-8'))
+                                      track['stream'].encode ('UTF-8'))
 
-    def fetch_albums (self, pn=1):
+    def fetch_albums (self, page_number = 1):
         """
         Initialize the fetch thread.
         """
@@ -374,7 +377,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                 return
             prop = self.SEARCH_CRITERIA[self.search_combo.get_active ()]
             params = {'order': 'date_desc', prop: value}
-        params['pn'] = pn
+        params['pn'] = page_number
         self.current_treeview.get_model ().clear ()
         self.previous_button.set_sensitive (False)
         self.next_button.set_sensitive (False)
@@ -465,8 +468,8 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         else:
             self.on_notebook_switch_page (new_search=True)
 
-    def on_notebook_switch_page (self, nb=None, tab=None, tab_num=0,
-        new_search=False):
+    def on_notebook_switch_page (self, page_number = None, tab = None,
+                                 tab_num = 0, new_search = False):
         """
         Called when the changed a notebook page.
         """
@@ -485,7 +488,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         model.clear ()
         self.fetch_albums ()
 
-    def on_treeview_row_activated (self, tv, path, column):
+    def on_treeview_row_activated (self, tree_view, path, column):
         """
         Called when the user double-clicked on a treeview element.
         """
@@ -499,35 +502,41 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         else:
             self.add_track_to_playlist ('replace', item)
 
-    def on_treeview_row_clicked (self, tv, evt):
+    def on_treeview_row_clicked (self, tree_view, evt):
         """
         Called when the user clicked on a treeview element.
         """
         try:
             if evt.button == 3:
-                (path, _, _, _) = tv.get_path_at_pos (int (evt.x), int (evt.y))
-                sel  = tv.get_selection ()
-                (_, rows) = sel.get_selected_rows ()
+                (path, _col, _cell_x, _cell_y) = tree_view.get_path_at_pos (
+                    int (evt.x),
+                    int (evt.y)
+                )
+                sel  = tree_view.get_selection ()
+                (_model, rows) = sel.get_selected_rows ()
                 if path not in rows:
                     sel.unselect_all ()
                     sel.select_path (path)
-                tv.grab_focus ()
+                tree_view.grab_focus ()
                 self.popup.popup_for_device (None, None, None, None, None,
                                              evt.button, evt.time)
                 return True
 
             (event_x, event_y) = evt.get_coords ()
-            (path, c, x, y) = tv.get_path_at_pos (int (event_x), int (event_y))
+            (path, _col, _cell_x, _cell_y) = tree_view.get_path_at_pos (
+                int (event_x),
+                int (event_y)
+            )
             if path.get_depth () == 1:
-                if tv.row_expanded (path):
-                    tv.collapse_row (path)
+                if tree_view.row_expanded (path):
+                    tree_view.collapse_row (path)
                 else:
-                    tv.expand_row (path, False)
+                    tree_view.expand_row (path, False)
         except:
             pass
 
     def on_treeview_selection_changed (self, selection):
-        (_, rows) = selection.get_selected_rows ()
+        (_model, rows) = selection.get_selected_rows ()
         self.album_button.set_sensitive (len (rows) > 0)
 
     def on_previous_button_clicked (self, *args):
@@ -585,7 +594,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                 # we have a track
                 self.add_track_to_playlist ('enqueue', item)
 
-    def on_open_jamendo_album_page_activate (self, *args):
+    def on_open_album_page_activate (self, *args):
         """
         Called when the user clicked on the jamendo album page button of the
         popup menu.
@@ -600,15 +609,15 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         sel = self.current_treeview.get_selection ()
         (model, rows) = sel.get_selected_rows ()
         for row in rows:
-            it = model.get_iter (row)
+            itera = model.get_iter (row)
 
             # Return the parent node if root == true
             if root:
-                parent_iter = model.iter_parent (it)
+                parent_iter = model.iter_parent (itera)
                 if parent_iter != None:
-                    it = parent_iter
+                    itera = parent_iter
 
-            elt = model.get_value (it, 0)
+            elt = model.get_value (itera, 0)
             if elt not in ret:
                 ret.append (elt)
         return ret
@@ -620,26 +629,26 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         sel = self.current_treeview.get_selection ()
         (model, rows) = sel.get_selected_rows ()
         try:
-            it = model.get_iter (rows[0])
+            itera = model.get_iter (rows[0])
         except:
-            it = None
+            itera = None
         pindex = self.treeviews.index (self.current_treeview)
         self.previous_button.set_sensitive (self.current_page[pindex] > 1)
         more_results = len (model) == JamendoService.NUM_PER_PAGE
         self.next_button.set_sensitive (more_results)
-        self.album_button.set_sensitive (it is not None)
+        self.album_button.set_sensitive (itera is not None)
 
 
-    def _format_str (self, st, truncate=False):
+    def _format_str (self, string, truncate=False):
         """
         Escape entities for pango markup and force the string to utf-8.
         """
-        if not st:
+        if not string:
             return ''
         try:
-            return escape (unicode (st))
+            return escape (unicode (string))
         except:
-            return st
+            return string
 
     def _format_duration (self, secs):
         """

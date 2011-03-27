@@ -14,7 +14,7 @@ import xdg.BaseDirectory
 from os import sep, path, mkdir
 import gettext
 
-from hash import hashFile
+from hash import hash_file
 
 gettext.textdomain ("totem")
 
@@ -274,7 +274,7 @@ class OpenSubtitlesModel (object):
 
         return None
 
-    def os_download_subtitles (self, subtitleId):
+    def os_download_subtitles (self, subtitle_id):
         """
         """
         self.message = ''
@@ -283,7 +283,7 @@ class OpenSubtitlesModel (object):
         if self.os_login ():
             try:
                 result = self.server.DownloadSubtitles (self.token,
-                                                        [subtitleId])
+                                                        [subtitle_id])
             except xmlrpclib.ProtocolError:
                 self.message = error_message
 
@@ -295,11 +295,11 @@ class OpenSubtitlesModel (object):
                     return None
 
                 import StringIO, gzip, base64
-                subtitleDecoded = base64.decodestring (subtitle64)
-                subtitleGzipped = StringIO.StringIO (subtitleDecoded)
-                subtitleGzippedFile = gzip.GzipFile (fileobj=subtitleGzipped)
+                subtitle_decoded = base64.decodestring (subtitle64)
+                subtitle_gzipped = StringIO.StringIO (subtitle_decoded)
+                subtitle_gzipped_file = gzip.GzipFile (fileobj=subtitle_gzipped)
 
-                return subtitleGzippedFile.read ()
+                return subtitle_gzipped_file.read ()
 
         return None
 
@@ -374,10 +374,10 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
             self.model.lang = lang
 
         for lang in LANGUAGES_STR:
-            it = languages.append (lang)
+            itera = languages.append (lang)
             if LANGUAGES[lang[1]] == self.model.lang:
                 (success,
-                 parentit) = sorted_languages.convert_child_iter_to_iter (it)
+                 parentit) = sorted_languages.convert_child_iter_to_iter (itera)
                 if success:
                     combobox.set_active_iter (parentit)
 
@@ -450,9 +450,9 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         self.manager.insert_action_group (self.os_action_group, 0)
 
         self.menu_id = self.manager.new_merge_id ()
-        path = '/tmw-menubar/view/subtitles/subtitle-download-placeholder'
+        merge_path = '/tmw-menubar/view/subtitles/subtitle-download-placeholder'
         self.manager.add_ui (self.menu_id,
-                             path,
+                             merge_path,
                              'opensubtitles',
                              'opensubtitles',
                              Gtk.UIManagerItemType.MENUITEM,
@@ -518,13 +518,13 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
         if self.model.results:
             self.apply_button.set_sensitive (True)
-            for subData in self.model.results:
-                if not SUBTITLES_EXT.count (subData['SubFormat']):
+            for sub_data in self.model.results:
+                if not SUBTITLES_EXT.count (sub_data['SubFormat']):
                     continue
-                self.liststore.append ([subData['SubFileName'],
-                                        subData['SubFormat'],
-                                        subData['SubRating'],
-                                        subData['IDSubtitleFile'],])
+                self.liststore.append ([sub_data['SubFileName'],
+                                        sub_data['SubFormat'],
+                                        sub_data['SubRating'],
+                                        sub_data['IDSubtitleFile'],])
                 self.treeview.set_headers_visible (True)
         else:
             self.apply_button.set_sensitive (False)
@@ -543,9 +543,9 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
         model, rows = self.treeview.get_selection ().get_selected_rows ()
         if rows:
-            iter = model.get_iter (rows[0])
-            subtitle_id = model.get_value (iter, 3)
-            subtitle_format = model.get_value (iter, 1)
+            subtitle_iter = model.get_iter (rows[0])
+            subtitle_id = model.get_value (subtitle_iter, 3)
+            subtitle_format = model.get_value (subtitle_iter, 1)
 
             gfile = None
 
@@ -564,8 +564,8 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
                     # GLib (PyGObject) 2.18
                     # directory.make_directory_with_parents ()
 
-                file = Gio.file_new_for_path (self.filename)
-                movie_name = file.get_basename ().rpartition ('.')[0]
+                subtitle_file = Gio.file_new_for_path (self.filename)
+                movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
 
                 filename = directory.get_uri () + sep
                 filename += movie_name + '.' + subtitle_format
@@ -589,16 +589,16 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         if self.model.subtitles:
             # Delete all previous cached subtitle for this file
             for ext in SUBTITLES_EXT:
-                fp = Gio.file_new_for_path (filename[:-3] + ext)
-                if fp.query_exists (None):
-                    fp.delete (None)
+                subtitle_file = Gio.file_new_for_path (filename[:-3] + ext)
+                if subtitle_file.query_exists (None):
+                    subtitle_file.delete (None)
 
-            fp = Gio.file_new_for_uri (filename)
-            suburi = fp.get_uri ()
+            subtitle_file = Gio.file_new_for_uri (filename)
+            suburi = subtitle_file.get_uri ()
 
-            subFile = fp.replace ('', False)
-            subFile.write (self.model.subtitles)
-            subFile.close ()
+            sub_file = subtitle_file.replace ('', False)
+            sub_file.write (self.model.subtitles)
+            sub_file.close ()
 
         self.model.lock.release ()
 
@@ -648,7 +648,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         else:
             self.apply_button.set_sensitive (False)
 
-    def on_treeview__row_activate (self, path, column, data):
+    def on_treeview__row_activate (self, tree_path, column, data):
         self.os_download_and_apply ()
 
     def on_totem__file_opened (self, totem, filename):
@@ -679,8 +679,9 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
             self.find_button.set_sensitive (False)
 
     def on_combobox__changed (self, combobox):
-        iter = combobox.get_active_iter ()
-        self.model.lang = LANGUAGES[combobox.get_model ().get_value (iter, 1)]
+        combo_iter = combobox.get_active_iter ()
+        combo_model = combobox.get_model ()
+        self.model.lang = LANGUAGES[combo_model.get_value (combo_iter, 1)]
         self.settings.set_string ('language', self.model.lang)
 
     def on_close_clicked (self, data):
@@ -694,7 +695,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         self.apply_button.set_sensitive (False)
         self.find_button.set_sensitive (False)
         self.filename = self.totem.get_current_mrl ()
-        self.model.hash , self.model.size = hashFile (self.filename)
+        self.model.hash , self.model.size = hash_file (self.filename)
 
         self.os_get_results ()
 

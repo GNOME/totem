@@ -46,25 +46,25 @@ def any (iterable):
 
 # http://colinm.org/blog/on-demand-loading-of-flickr-photo-metadata
 # returns immediately for all previously-called functions
-def call_once (fn):
+def call_once (function):
     called_by = {}
     def result (self):
         if self in called_by:
             return
         called_by[self] = True
-        fn (self)
+        function (self)
     return result
 
 # runs loader before decorated function
 def loaded_by (loader):
-    def decorator (fn):
+    def decorator (function):
         def result (self, *args, **kwargs):
             loader (self)
-            return fn (self, *args, **kwargs)
+            return function (self, *args, **kwargs)
         return result
     return decorator
 
-channels_tv_list = [
+CHANNELS_TV_LIST = [
     ('bbc_one', 'BBC One'),
     ('bbc_two', 'BBC Two'),
     ('bbc_three', 'BBC Three'),
@@ -76,8 +76,8 @@ channels_tv_list = [
     ('bbc_hd', 'BBC HD'),
     ('bbc_alba', 'BBC Alba'),
 ]
-channels_tv = dict (channels_tv_list)
-channels_national_radio_list = [
+CHANNELS_TV = dict (CHANNELS_TV_LIST)
+CHANNELS_NATIONAL_RADIO_LIST = [
     ('bbc_radio_one', 'Radio 1'),
     ('bbc_1xtra', '1 Xtra'),
     ('bbc_radio_two', 'Radio 2'),
@@ -96,7 +96,7 @@ channels_national_radio_list = [
     ('bbc_world_service', 'World Service'),
     ('bbc_radio_nan_gaidheal', 'BBC nan Gaidheal')
 ]
-channels_local_radio_list = [
+CHANNELS_LOCAL_RADIO_LIST = [
     ('bbc_radio_cumbria', 'BBC Cumbria'),
     ('bbc_radio_newcastle', 'BBC Newcastle'),
     ('bbc_tees', 'BBC Tees'),
@@ -140,7 +140,7 @@ channels_local_radio_list = [
 ]
 
 LOGO_URI = 'http://www.bbc.co.uk/englandcms/'
-channels_logos = {
+CHANNELS_LOGOS = {
     'bbc_radio_cumbria': LOGO_URI + 'localradio/images/cumbria.gif',
     'bbc_radio_newcastle': LOGO_URI + 'localradio/images/newcastle.gif',
     'bbc_tees': LOGO_URI + 'localradio/images/tees.gif',
@@ -190,13 +190,13 @@ channels_logos = {
 }
 
 
-channels_national_radio = dict (channels_national_radio_list)
-channels_local_radio = dict (channels_local_radio_list)
-channels_radio_list = channels_national_radio_list + channels_local_radio_list
-channels_radio = dict (channels_radio_list)
+CHANNELS_NATIONAL_RADIO = dict (CHANNELS_NATIONAL_RADIO_LIST)
+CHANNELS_LOCAL_RADIO = dict (CHANNELS_LOCAL_RADIO_LIST)
+CHANNELS_RADIO_LIST = CHANNELS_NATIONAL_RADIO_LIST + CHANNELS_LOCAL_RADIO_LIST
+CHANNELS_RADIO = dict (CHANNELS_RADIO_LIST)
 
-channels = dict (channels_tv_list + channels_radio_list)
-categories_list = [
+CHANNELS = dict (CHANNELS_TV_LIST + CHANNELS_RADIO_LIST)
+CATEGORIES_LIST = [
     ('childrens', 'Children\'s'),
     ('comedy', 'Comedy'),
     ('drama', 'Drama'),
@@ -212,10 +212,10 @@ categories_list = [
     ('scotland', 'Scotland'),
     ('wales', 'Wales')
 ]
-categories = dict (categories_list)
+CATEGORIES = dict (CATEGORIES_LIST)
 
 ENGLAND_RADIO_URI = 'http://www.bbc.co.uk/england/'
-live_radio_stations = {
+LIVE_RADIO_STATIONS = {
     'Radio 1': 'http://www.bbc.co.uk/radio1/wm_asx/aod/radio1_hi.asx',
     '1 Xtra':  'http://www.bbc.co.uk/1xtra/realmedia/1xtra_hi.asx',
     'Radio 2': 'http://www.bbc.co.uk/radio2/wm_asx/aod/radio2_hi.asx',
@@ -282,7 +282,7 @@ live_radio_stations = {
     'BBC Tees': ENGLAND_RADIO_URI + 'cleveland.ram',
 }
 
-live_webcams = {
+LIVE_WEBCAMS = {
     'Radio 1': 'http://www.bbc.co.uk/radio1/webcam/images/live/webcam.jpg',
     '1 Xtra':  'http://www.bbc.co.uk/1xtra/webcam/live/1xtraa.jpg',
     'Radio 2': 'http://www.bbc.co.uk/radio2/webcam/live/radio2.jpg',
@@ -291,23 +291,23 @@ live_webcams = {
     'Asian Network': 'http://www.bbc.co.uk/asiannetwork/webcams/birmingham.jpg'
 }
 
-rss_cache = {}
+RSS_CACHE = {}
 
-self_closing_tags = ['alternate', 'mediator']
+SELF_CLOSING_TAGS = ['alternate', 'mediator']
 
-http = httplib2.Http ()
+HTTP_OBJECT = httplib2.Http ()
 
-re_selfclose = re.compile ('< ([a-zA-Z0-9]+) ( ?.*)/>', re.M | re.S)
+RE_SELF_CLOSE = re.compile ('< ([a-zA-Z0-9]+) ( ?.*)/>', re.M | re.S)
 
 def fix_selfclosing (xml):
-    return re_selfclose.sub ('<\\1\\2></\\1>', xml)
+    return RE_SELF_CLOSE.sub ('<\\1\\2></\\1>', xml)
 
-def set_http_cache_dir (d):
-    fc = httplib2.FileCache (d)
-    http.cache = fc
+def set_http_cache_dir (directory):
+    file_cache = httplib2.FileCache (directory)
+    HTTP_OBJECT.cache = file_cache
 
-def set_http_cache (c):
-    http.cache = c
+def set_http_cache (cache):
+    HTTP_OBJECT.cache = cache
 
 class NoItemsError (Exception):
     def __init__ (self, reason=None):
@@ -317,7 +317,7 @@ class NoItemsError (Exception):
         reason = self.reason or _(u'<no reason given>')
         return _(u'Programme unavailable ("%s")') % (reason)
 
-class memoize (object):
+class Memoize (object):
     def __init__ (self, func):
         self.func = func
         self._cache = {}
@@ -333,24 +333,24 @@ class memoize (object):
         return result
 
 def httpretrieve (url, filename):
-    _, data = http.request (url, 'GET')
-    f = open (filename, 'wb')
-    f.write (data)
-    f.close ()
+    _response, data = HTTP_OBJECT.request (url, 'GET')
+    data_file = open (filename, 'wb')
+    data_file.write (data)
+    data_file.close ()
 
 def httpget (url):
-    resp, data = http.request (url, 'GET')
+    resp, data = HTTP_OBJECT.request (url, 'GET')
     return data
 
 def parse_entry_id (entry_id):
     # tag:bbc.co.uk,2008:PIPS:b00808sc
-    r = re.compile ('PIPS: ([0-9a-z]{8})')
-    matches = r.findall (entry_id)
+    regexp = re.compile ('PIPS: ([0-9a-z]{8})')
+    matches = regexp.findall (entry_id)
     if not matches:
         return None
     return matches[0]
 
-class media (object):
+class Media (object):
     def __init__ (self, item, media_node):
         self.item = item
         self.href = None
@@ -386,8 +386,9 @@ class media (object):
         tep['video', 'video/mpeg', 'h264', 'http'] = 'mobile'
         tep['audio', 'audio/mpeg', 'mp3', 'rtmp'] = 'mp3'
         tep['audio', 'audio/real', 'real', 'http'] = 'real'
-        me = (self.kind, self.mimetype, self.encoding, self.connection_protocol)
-        return tep.get (me, None)
+        media = (self.kind, self.mimetype, self.encoding,
+                 self.connection_protocol)
+        return tep.get (media, None)
 
     def read_media_node (self, media, resolve=False):
         """
@@ -445,7 +446,7 @@ class media (object):
     def programme (self):
         return self.item.programme
 
-class item (object):
+class Item (object):
     """
     Represents an iPlayer programme item. Most programmes consist of 2 such
     items, (1) the ident, and (2) the actual programme. The item specifies the
@@ -531,10 +532,10 @@ class item (object):
             return self.medias
         url = self.mediaselector_url
         #logging.info ("Stream XML URL: %s", str (url))
-        _, xml = http.request (url)
+        _response, xml = HTTP_OBJECT.request (url)
         entities = BeautifulStoneSoup.XML_ENTITIES
         soup = BeautifulStoneSoup (xml, convertEntities = entities)
-        medias = [media (self, m) for m in soup ('media')]
+        medias = [Media (self, m) for m in soup ('media')]
         #logging.info ('Found media: %s', pformat (medias, indent=8))
         self.medias = medias
         return medias
@@ -553,12 +554,12 @@ class item (object):
         Returns a dictionary of media objects for the given application types.
         """
         medias = [m for m in self.media if m.application in applications]
-        d = {}.fromkeys (applications)
-        for m in medias:
-            d[m.application] = m
-        return d
+        dictionary = {}.fromkeys (applications)
+        for media in medias:
+            dictionary[media.application] = media
+        return dictionary
 
-class programme (object):
+class Programme (object):
     """
     Represents an individual iPlayer programme, as identified by an 8-letter
     PID, and contains the programme title, subtitle, broadcast time and list of
@@ -581,7 +582,7 @@ class programme (object):
         try:
             url = self.playlist_url
             #logging.info ("Getting XML playlist at URL: %s", url)
-            r, xml = http.request (url, 'GET')
+            _response, xml = HTTP_OBJECT.request (url, 'GET')
             return xml
         except SocketTimeoutError:
             #logging.error ("Timed out trying to download programme XML")
@@ -593,7 +594,7 @@ class programme (object):
         #xml = fix_selfclosing (xml)
 
         entities = BeautifulStoneSoup.XML_ENTITIES
-        soup = BeautifulStoneSoup (xml, selfClosingTags=self_closing_tags,
+        soup = BeautifulStoneSoup (xml, selfClosingTags = SELF_CLOSING_TAGS,
                                    convertEntities = entities)
 
         self.meta = {}
@@ -610,18 +611,18 @@ class programme (object):
             #              soup.playlist.noitems.get ('reason'))
             self.meta['reason'] = soup.playlist.noitems.get ('reason')
 
-        self._items = [item (self, i) for i in soup ('item')]
+        self._items = [Item (self, i) for i in soup ('item')]
         #for i in self._items:
         #    print i, i.alternate , " ",
         #print
 
-        rId = re.compile ('concept_pid: ([a-z0-9]{8})')
+        id_regexp = re.compile ('concept_pid: ([a-z0-9]{8})')
         for link in soup ('relatedlink'):
             i = {}
             i['title'] = link.title.string
             #i['summary'] = item.summary # FIXME looks like a bug in BSS
-            i['pid'] = (rId.findall (link.id.string) or [None])[0]
-            i['programme'] = programme (i['pid'])
+            i['pid'] = (id_regexp.findall (link.id.string) or [None])[0]
+            i['programme'] = Programme (i['pid'])
             self._related.append (i)
 
     def get_thumbnail (self, size='large', tvradio='tv'):
@@ -692,10 +693,10 @@ class programme (object):
     related = property (get_related)
     items = property (get_items)
 
-#programme = memoize (programme)
+#programme = Memoize (programme)
 
 
-class programme_simple (object):
+class ProgrammeSimple (object):
     """
     Represents an individual iPlayer programme, as identified by an 8-letter
     PID, and contains the programme pid, title, subtitle etc
@@ -708,9 +709,9 @@ class programme_simple (object):
         self.meta['summary'] = entry.summary
         self.meta['updated'] = entry.updated
         self.categories = []
-        for c in entry.categories:
-            if c != 'TV':
-                self.categories.append (c.rstrip ())
+        for category in entry.categories:
+            if category != 'TV':
+                self.categories.append (category.rstrip ())
         self._items = []
         self._related = []
 
@@ -793,7 +794,7 @@ class programme_simple (object):
     items = property (get_items)
 
 
-class feed (object):
+class Feed (object):
     def __init__ (self, tvradio = None, channel = None, category = None,
                   subcategory = None, atoz = None, searchterm = None):
         """
@@ -809,9 +810,9 @@ class feed (object):
             if not channel and not searchterm:
                 raise Exception, "Must specify channel or searchterm when "\
                                  "using 'auto'"
-            elif channel in channels_tv:
+            elif channel in CHANNELS_TV:
                 self.tvradio = 'tv'
-            elif channel in channels_radio:
+            elif channel in CHANNELS_RADIO:
                 self.tvradio = 'radio'
             else:
                 raise Exception, "TV channel '%s' not "\
@@ -875,13 +876,13 @@ class feed (object):
         # TODO: This is not i18n-friendly whatsoever
         # if got a channel, don't need tv/radio distinction
         if self.channel:
-            assert (self.channel in channels_tv or
-                    self.channel in channels_radio), 'Unknown channel'
+            assert (self.channel in CHANNELS_TV or
+                    self.channel in CHANNELS_RADIO), 'Unknown channel'
             #print self.tvradio
             if self.tvradio == 'tv':
-                path.append (channels_tv.get (self.channel, ' (TV)'))
+                path.append (CHANNELS_TV.get (self.channel, ' (TV)'))
             else:
-                path.append (channels_radio.get (self.channel, ' (Radio)'))
+                path.append (CHANNELS_RADIO.get (self.channel, ' (Radio)'))
         elif self.tvradio:
             # no channel
             medium = 'TV'
@@ -893,8 +894,8 @@ class feed (object):
             path += ['Search results for %s' % self.searchterm]
 
         if self.category:
-            assert self.category in categories, 'Unknown category'
-            path.append (categories.get (self.category, ' (Category)'))
+            assert self.category in CATEGORIES, 'Unknown category'
+            path.append (CATEGORIES.get (self.category, ' (Category)'))
 
         if self.atoz:
             path.append ("beginning with %s" % self.atoz.upper ())
@@ -911,9 +912,9 @@ class feed (object):
         if self.channel:
             return None
         if self.tvradio == 'tv':
-            return channels_tv
+            return CHANNELS_TV
         if self.tvradio == 'radio':
-            return channels_radio
+            return CHANNELS_RADIO
         return None
 
     def channels_feed (self):
@@ -924,11 +925,11 @@ class feed (object):
             #logging.warning ("%s doesn\'t have any channels!", self.channel)
             return None
         if self.tvradio == 'tv':
-            return [feed ('tv', channel = ch)
-                    for (ch, title) in channels_tv_list]
+            return [Feed ('tv', channel = ch)
+                    for (ch, title) in CHANNELS_TV_LIST]
         if self.tvradio == 'radio':
-            return [feed ('radio', channel = ch)
-                    for (ch, title) in channels_radio_list]
+            return [Feed ('radio', channel = ch)
+                    for (ch, title) in CHANNELS_RADIO_LIST]
         return None
 
     def subcategories (self):
@@ -949,14 +950,14 @@ class feed (object):
         >>> feed.is_atoz ('big british castle'), feed.is_atoz ('')
         (False, False)
         """
-        l = letter.lower ()
-        if len (l) != 1 and l != '0-9':
+        letter = letter.lower ()
+        if len (letter) != 1 and letter != '0-9':
             return False
-        if l in '0123456789':
-            l = "0-9"
-        if l not in 'abcdefghijklmnopqrstuvwxyz0-9':
+        if letter in '0123456789':
+            letter = "0-9"
+        if letter not in 'abcdefghijklmnopqrstuvwxyz0-9':
             return False
-        return l
+        return letter
 
     def sub (self, *args, **kwargs):
         """
@@ -971,9 +972,9 @@ class feed (object):
         >>> feed ('tv', channel='bbc_one').sub (channel=None).channel
         >>>
         """
-        d = self.__dict__.copy ()
-        d.update (kwargs)
-        return feed (**d)
+        dictionary = self.__dict__.copy ()
+        dictionary.update (kwargs)
+        return Feed (**dictionary)
 
     def get (self, subfeed):
         """
@@ -988,32 +989,32 @@ class feed (object):
         elif self.is_atoz (subfeed):
             return self.sub (atoz=self.is_atoz (subfeed))
         else:
-            if subfeed in channels_tv:
-                return feed ('tv', channel = subfeed)
-            if subfeed in channels_radio:
-                return feed ('radio', channel = subfeed)
+            if subfeed in CHANNELS_TV:
+                return Feed ('tv', channel = subfeed)
+            if subfeed in CHANNELS_RADIO:
+                return Feed ('radio', channel = subfeed)
         # TODO handle properly oh pants
         return None
 
     @classmethod
     def read_rss (self, url):
         #logging.info ('Read RSS: %s', url)
-        if url not in rss_cache:
+        if url not in RSS_CACHE:
             #logging.info ('Feed URL not in cache, requesting...')
             xml = httpget (url)
             progs = listparser.parse (xml)
             if not progs:
                 return []
-            d = []
+            cached_programmes = []
             for entry in progs.entries:
                 pid = parse_entry_id (entry.id)
-                p = programme (pid)
-                d.append (p)
+                programme = Programme (pid)
+                cached_programmes.append (programme)
             #logging.info ('Found %d entries', len (d))
-            rss_cache[url] = d
+            RSS_CACHE[url] = cached_programmes
         #else:
         #    logging.info ('RSS found in cache')
-        return rss_cache[url]
+        return RSS_CACHE[url]
 
     def popular (self):
         return self.read_rss (self.create_url ('popular'))
@@ -1026,24 +1027,24 @@ class feed (object):
 
     def categories (self):
         # quick and dirty category extraction and count
-        xmlURL = self.create_url ('list')
-        xml = httpget (xmlURL)
+        xml_url = self.create_url ('list')
+        xml = httpget (xml_url)
         cat = re.findall ("<category .*term=\" (.*?)\"", xml)
         categories = {}
-        for c in cat:
-            if c != 'TV':
-                if not categories.has_key (c):
-                    categories[c] = 0
-                categories[c] += 1
+        for category in cat:
+            if category != 'TV':
+                if not categories.has_key (category):
+                    categories[category] = 0
+                categories[category] += 1
         alist = []
-        k = categories.keys ()
-        k.sort ()
-        for c in k:
-            n = categories[c]
-            c = c.replace ('&amp;', '&')
-            c = c.replace ('&gt;', '>')
-            c = c.replace ('&lt;', '<')
-            alist.append ( (c, n))
+        category_keys = categories.keys ()
+        category_keys.sort ()
+        for category in category_keys:
+            name = categories[category]
+            category = category.replace ('&amp;', '&')
+            category = category.replace ('&gt;', '>')
+            category = category.replace ('&lt;', '<')
+            alist.append ((category, name))
         return alist
 
     @property
@@ -1059,21 +1060,21 @@ class feed (object):
     name = property (get_name)
 
 
-tv = feed ('tv')
-radio = feed ('radio')
+TV = Feed ('tv')
+RADIO = Feed ('radio')
 
 def test ():
-    tv = feed ('tv')
-    print tv.popular ()
-    print tv.channels ()
-    print tv.get ('bbc_one')
-    print tv.get ('bbc_one').list ()
-    for c in tv.get ('bbc_one').categories ():
-        print c
-    #print tv.get ('bbc_one').channels ()
-    #print tv.categories ()
-    #print tv.get ('drama').list ()
-    #print tv.get ('drama').get_subcategory ('period').list ()
+    tv_feed = Feed ('tv')
+    print tv_feed.popular ()
+    print tv_feed.channels ()
+    print tv_feed.get ('bbc_one')
+    print tv_feed.get ('bbc_one').list ()
+    for category in tv_feed.get ('bbc_one').categories ():
+        print category
+    #print tv_feed.get ('bbc_one').channels ()
+    #print tv_feed.categories ()
+    #print tv_feed.get ('drama').list ()
+    #print tv_feed.get ('drama').get_subcategory ('period').list ()
 
 if __name__ == '__main__':
     test ()

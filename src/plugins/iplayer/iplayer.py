@@ -37,13 +37,13 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
 
         container.show_all ()
 
-        self.tv = iplayer2.feed ('tv')
+        self.tv_feed = iplayer2.Feed ('tv')
 
         # Add the interface to Totem's sidebar
         self.totem.add_sidebar_page ("iplayer", _(u"BBC iPlayer"), container)
 
         # Get the channel category listings
-        self.populate_channel_list (self.tv, self.tv_tree_store)
+        self.populate_channel_list (self.tv_feed, self.tv_tree_store)
 
     def do_deactivate (self):
         self.totem.remove_sidebar_page ("iplayer")
@@ -95,7 +95,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
             return
 
         # Populate it with programmes asynchronously
-        self.populate_programme_list (self.tv, tree_model, row_iter)
+        self.populate_programme_list (self.tv_feed, tree_model, row_iter)
 
     def _row_activated_cb (self, tree_view, path, view_column):
         tree_store = tree_view.get_model ()

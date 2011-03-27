@@ -28,34 +28,35 @@ class UPnPClient (gobject.GObject, Peas.Activatable):
 
     def __init__ (self):
         self.totem_object = None
-        self.ui = TreeWidget ()
-        self.ui.window.set_shadow_type (gtk.SHADOW_IN)
-        self.ui.cb_item_right_click = self.button_pressed
-        self.ui.window.show_all ()
-        selection = self.ui.treeview.get_selection ()
+        self.uiw = TreeWidget ()
+        self.uiw.window.set_shadow_type (gtk.SHADOW_IN)
+        self.uiw.cb_item_right_click = self.button_pressed
+        self.uiw.window.show_all ()
+        selection = self.uiw.treeview.get_selection ()
         selection.set_mode (gtk.SELECTION_MULTIPLE)
 
     def button_pressed (self, widget, event):
         if event.button == 3:
-            x = int (event.x)
-            y = int (event.y)
+            event_x = int (event.x)
+            event_y = int (event.y)
             try:
-                row_path, column, _, _ = self.ui.treeview.get_path_at_pos (x, y)
-                selection = self.ui.treeview.get_selection ()
+                row_path, column, _cell_x, _cell_y = \
+                    self.uiw.treeview.get_path_at_pos (event_x, event_y)
+                selection = self.uiw.treeview.get_selection ()
                 if not selection.path_is_selected (row_path):
-                    self.ui.treeview.set_cursor (row_path, column, False)
+                    self.uiw.treeview.set_cursor (row_path, column, False)
                 print "button_pressed", row_path, (row_path[0],)
-                iter = self.ui.store.get_iter ((row_path[0],))
-                udn, = self.ui.store.get (iter, UDN_COLUMN)
-                iter = self.ui.store.get_iter (row_path)
-                upnp_class, url = self.ui.store.get (iter, UPNP_CLASS_COLUMN,
-                                                     SERVICE_COLUMN)
+                itera = self.uiw.store.get_iter ((row_path[0],))
+                udn, = self.uiw.store.get (itera, UDN_COLUMN)
+                itera = self.uiw.store.get_iter (row_path)
+                upnp_class, url = self.uiw.store.get (itera, UPNP_CLASS_COLUMN,
+                                                      SERVICE_COLUMN)
                 print udn, upnp_class, url
                 if (not upnp_class.startswith ('object.container') and
                     not upnp_class == 'root'):
-                    has_delete = self.ui.device_has_action (udn,
-                                                            'ContentDirectory',
-                                                            'DestroyObject')
+                    has_delete = self.uiw.device_has_action (udn,
+                                                             'ContentDirectory',
+                                                             'DestroyObject')
                     self.create_item_context (has_delete = has_delete)
                     self.context.popup (None, None, None, event.button,
                                         event.time)
@@ -68,22 +69,22 @@ class UPnPClient (gobject.GObject, Peas.Activatable):
         """ create context menu for right click in treeview item"""
 
         def action (menu, text):
-            selection = self.ui.treeview.get_selection ()
+            selection = self.uiw.treeview.get_selection ()
             model, selected_rows = selection.get_selected_rows ()
             if text == 'item.delete':
                 for row_path in selected_rows:
-                    self.ui.destroy_object (row_path)
+                    self.uiw.destroy_object (row_path)
                 return
             if (len (selected_rows) > 0 and text ==' item.play'):
                 row_path = selected_rows.pop (0)
-                iter = self.ui.store.get_iter (row_path)
-                url, = self.ui.store.get (iter, SERVICE_COLUMN)
+                itera = self.uiw.store.get_iter (row_path)
+                url, = self.uiw.store.get (itera, SERVICE_COLUMN)
                 self.totem_object.action_remote (totem.REMOTE_COMMAND_REPLACE,
                                                  url)
                 self.totem_object.action_remote (totem.REMOTE_COMMAND_PLAY, url)
             for row_path in selected_rows:
-                iter = self.ui.store.get_iter (row_path)
-                url, = self.ui.store.get (iter, SERVICE_COLUMN)
+                itera = self.uiw.store.get_iter (row_path)
+                url, = self.uiw.store.get (itera, SERVICE_COLUMN)
                 self.totem_object.action_remote (totem.REMOTE_COMMAND_ENQUEUE,
                                                  url)
                 self.totem_object.action_remote (totem.REMOTE_COMMAND_PLAY, url)
@@ -126,12 +127,12 @@ class UPnPClient (gobject.GObject, Peas.Activatable):
         self.totem_object = self.object
         self.totem_object.add_sidebar_page ("upnp-coherence",
                                             _(u"Coherence DLNA/UPnP Client"),
-                                            self.ui.window)
+                                            self.uiw.window)
 
         def load_and_play (url):
             self.totem_object.add_to_playlist_and_play (url, '', True)
 
-        self.ui.cb_item_dbl_click = load_and_play
+        self.uiw.cb_item_dbl_click = load_and_play
 
     def do_deactivate (self):
         self.totem_object.remove_sidebar_page ("upnp-coherence")

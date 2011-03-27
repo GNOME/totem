@@ -26,8 +26,8 @@ from gi.repository import Totem
 import dbus, dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 
-class dbusservice (gobject.GObject, Peas.Activatable):
-    __gtype_name__ = 'dbusservice'
+class DbusService (gobject.GObject, Peas.Activatable):
+    __gtype_name__ = 'DbusService'
 
     object = gobject.property (type = gobject.GObject)
 
@@ -54,17 +54,20 @@ class Root (dbus.service.Object):
         self.remove_from_connection (None, None)
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 's')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 's')
     def Identity (self):
         return self.totem.get_version ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Quit (self):
         self.totem.action_exit ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '(qq)')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '(qq)')
     def MprisVersion (self):
         return dbus.Struct ((dbus.UInt16 (1), dbus.UInt16 (0)),
                             signature = '(qq)')
@@ -187,42 +190,47 @@ class Player (dbus.service.Object):
         self.remove_from_connection (None, None)
 
     @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = 'a{sv}')
+                          signature = 'a{sv}') # pylint: disable-msg=C0103
     def TrackChange (self, metadata):
         pass
 
     @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = '(iiii)')
+                          signature = '(iiii)') # pylint: disable-msg=C0103
     def StatusChange (self, status):
         pass
 
     @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = 'i')
+                          signature = 'i') # pylint: disable-msg=C0103
     def CapsChange (self, caps):
         pass
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Next (self):
         self.totem.action_next ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Prev (self):
         self.totem.action_previous ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Pause (self):
         self.totem.action_play_pause ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Stop (self):
         self.totem.action_stop ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Play (self):
         # If playing : rewind to the beginning of current track,
         # else : start playing.
@@ -232,46 +240,54 @@ class Player (dbus.service.Object):
             self.totem.action_play ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'b', out_signature = '')
+                          in_signature = 'b', # pylint: disable-msg=C0103
+                          out_signature = '')
     def Repeat (self, value):
         pass # we don't support repeating individual tracks
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = '(iiii)')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '(iiii)')
     def GetStatus (self):
         status = self.calculate_status ()
         self.old_status = status
         return dbus.Struct (status, signature = '(iiii)')
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 'a{sv}')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 'a{sv}')
     def GetMetadata (self):
         return self.current_metadata
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 'i')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 'i')
     def GetCaps (self):
         caps = self.calculate_caps ()
         self.old_caps = caps
         return caps
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', out_signature = '')
+                          in_signature = 'i', # pylint: disable-msg=C0103
+                          out_signature = '')
     def VolumeSet (self, volume):
         self.totem.action_volume (volume / 100.0)
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 'i')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 'i')
     def VolumeGet (self):
         return dbus.Int32 (self.totem.get_volume () * 100)
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', out_signature = '')
+                          in_signature = 'i', # pylint: disable-msg=C0103
+                          out_signature = '')
     def PositionSet (self, position):
         self.totem.action_seek_time (position, False)
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 'i')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 'i')
     def PositionGet (self):
         return dbus.Int32 (self.totem.props.current_time)
 
@@ -284,49 +300,56 @@ class TrackList (dbus.service.Object):
         self.remove_from_connection (None, None)
 
     @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = 'i')
+                          signature = 'i') # pylint: disable-msg=C0103
     def TrackListChange (self, length):
         # TODO: we can't implement this until TotemPlaylist is exposed in the
         # Python API
         pass
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', out_signature = 'a{sv}')
+                          in_signature = 'i', # pylint: disable-msg=C0103
+                          out_signature = 'a{sv}')
     def GetMetadata (self, pos):
         # Since the API doesn't currently exist in Totem to get the rest of the
         # metadata, we can only return the title
         return { "title" : self.totem.get_title_at_playlist_pos (pos) }
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 'i')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 'i')
     def GetCurrentTrack (self):
         return self.totem.get_playlist_pos ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', out_signature = 'i')
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = 'i')
     def GetLength (self):
         return self.totem.get_playlist_length ()
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'sb', out_signature = 'i')
+                          in_signature = 'sb', # pylint: disable-msg=C0103
+                          out_signature = 'i')
     def AddTrack (self, uri, play_immediately):
         # We can't currently support !play_immediately
         self.totem.add_to_playlist_and_play (str (uri), '', True)
         return 0
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', out_signature = '')
+                          in_signature = 'i', # pylint: disable-msg=C0103
+                          out_signature = '')
     def DelTrack (self, pos):
         # TODO: we need TotemPlaylist exposed by the Python API for this
         pass
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'b', out_signature = '')
+                          in_signature = 'b', # pylint: disable-msg=C0103
+                          out_signature = '')
     def SetLoop (self, loop):
         self.totem.action_remote_set_setting (Totem.RemoteSetting.REPEAT, loop)
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'b', out_signature = '')
+                          in_signature = 'b', # pylint: disable-msg=C0103
+                          out_signature = '')
     def SetRandom (self, random):
         self.totem.action_remote_set_setting (Totem.RemoteSetting.SHUFFLE,
                                               random)
