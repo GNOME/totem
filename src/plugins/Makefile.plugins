@@ -26,3 +26,22 @@ plugin_ldflags = \
 
 plugin_libadd = \
 	$(top_builddir)/src/libtotem.la
+
+# Checking rules for Python plugins
+# Execute pylint on all the requisite files individually, returning non-zero
+# iff any of the calls to pylint returned non-zero.
+check-pylint: $(plugin_PYTHON)
+	@exitstatus=0; \
+	for py in $^; do \
+		pylint -i y $$py; \
+		\
+		newexitstatus=$$?; \
+		if [ $$exitstatus == 0 ]; then \
+			exitstatus=$$newexitstatus; \
+		fi; \
+	done; \
+	exit $$exitstatus
+
+check: check-pylint
+
+.PHONY: check-pylint
