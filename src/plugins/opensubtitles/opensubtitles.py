@@ -314,6 +314,23 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         schema = 'org.gnome.totem.plugins.opensubtitles'
         self.settings = Gio.Settings.new (schema)
 
+        self.manager = None
+        self.menu_id = None
+        self.action_group = None
+        self.action = None
+
+        self.find_button = None
+        self.apply_button = None
+        self.close_button = None
+
+        self.liststore = None
+        self.model = None
+        self.treeview = None
+
+        self.results = None
+        self.filename = None
+        self.progress = None
+
     # totem.Plugin methods
 
     def do_activate (self):
@@ -436,7 +453,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         """
         """
 
-        self.os_action_group = Gtk.ActionGroup (name='OpenSubtitles')
+        self.action_group = Gtk.ActionGroup (name='OpenSubtitles')
 
         tooltip_text = _(u"Download movie subtitles from OpenSubtitles")
         self.action = Gtk.Action (name='opensubtitles',
@@ -444,9 +461,9 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
                                  tooltip=tooltip_text,
                                  stock_id=None)
 
-        self.os_action_group.add_action (self.action)
+        self.action_group.add_action (self.action)
 
-        self.manager.insert_action_group (self.os_action_group, 0)
+        self.manager.insert_action_group (self.action_group, 0)
 
         self.menu_id = self.manager.new_merge_id ()
         merge_path = '/tmw-menubar/view/subtitles/subtitle-download-placeholder'
@@ -487,7 +504,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         return False
 
     def os_delete_menu (self):
-        self.manager.remove_action_group (self.os_action_group)
+        self.manager.remove_action_group (self.action_group)
         self.manager.remove_ui (self.menu_id)
 
     def os_get_results (self):

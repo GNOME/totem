@@ -31,6 +31,11 @@ class DbusService (gobject.GObject, Peas.Activatable):
 
     object = gobject.property (type = gobject.GObject)
 
+    def __init__ (self):
+        self.root = None
+        self.player = None
+        self.track_list = None
+
     def do_activate (self):
         DBusGMainLoop (set_as_default = True)
 

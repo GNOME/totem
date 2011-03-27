@@ -22,6 +22,9 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
         self.totem = None
         self.programme_download_lock = threading.Lock ()
 
+        self.tv_feed = None
+        self.tv_tree_store = None
+
     def do_activate (self):
         self.totem = self.object
         # Build the interface

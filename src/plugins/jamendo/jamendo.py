@@ -95,6 +95,24 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         self.settings.connect ('changed::num-per-page',
                                self.on_num_per_page_changed)
 
+        self.search_entry = None
+        self.search_combo = None
+        self.next_button = None
+        self.previous_button = None
+        self.album_button = None
+
+        self.treeviews = None
+        self.current_treeview = None
+        self.popup = None
+
+        self.notebook = None
+        self.pages = None
+        self.current_page = None
+        self.progressbars = None
+
+        self.album_count = None
+        self.running_threads = None
+
     def do_activate (self):
         """
         Plugin activation.

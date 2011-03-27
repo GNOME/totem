@@ -359,6 +359,15 @@ class Media (object):
         self.width, self.height = None, None
         self.read_media_node (media_node)
 
+        self.mimetype = None
+        self.encoding = None
+        self.live = False
+        self.connection_href = None
+        self.connection_protocol = None
+        self.connection_method = None
+        self.connection_kind = None
+        self.connection_live = False
+
     @property
     def url (self):
         if self.connection_method == 'resolve':
@@ -467,6 +476,9 @@ class Item (object):
         self.alternate = None
         self.duration = ''
         self.medias = None
+        self.group = None
+        self.kind = None
+        self.live = False
         self.read_item_node (item_node)
 
     def read_item_node (self, node):
@@ -816,8 +828,7 @@ class Feed (object):
                 self.tvradio = 'radio'
             else:
                 raise Exception, "TV channel '%s' not "\
-                                 "recognised." % self.channel
-
+                                 "recognised." % channel
         elif tvradio in ['tv', 'radio']:
             self.tvradio = tvradio
         else:
