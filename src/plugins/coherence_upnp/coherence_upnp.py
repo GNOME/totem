@@ -5,6 +5,9 @@
 
 # Copyright 2008, Frank Scholz <coherence@beebits.net>
 
+import gettext
+
+import gobject
 from gi.repository import Peas
 from gi.repository import Gtk
 from gi.repository import Totem

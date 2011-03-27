@@ -22,7 +22,6 @@
 
 import gobject
 from gi.repository import Peas
-from gi.repository import Gtk
 from gi.repository import Totem
 import dbus, dbus.service
 from dbus.mainloop.glib import DBusGMainLoop

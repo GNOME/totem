@@ -12,7 +12,6 @@ import gettext
 
 # external libs
 import httplib2
-import feedparser
 import listparser
 from BeautifulSoup import BeautifulStoneSoup
 

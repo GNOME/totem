@@ -1,5 +1,4 @@
 import struct
-import os
 import gio
 
 SIZE_ERROR = -1

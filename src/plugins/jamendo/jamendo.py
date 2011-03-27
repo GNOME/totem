@@ -31,6 +31,8 @@ TODO:
 """
 
 import os
+import gettext
+
 import gobject
 from gi.repository import Gio
 from gi.repository import Peas
@@ -39,12 +41,19 @@ from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Totem
 from gi.repository import Pango
+
 import socket
 import threading
 import time
 import urllib
 import urllib2
 from xml.sax.saxutils import escape
+
+gettext.textdomain ("totem")
+
+D_ = gettext.dgettext
+_ = gettext.gettext
+
 try:
     import json
 except ImportError:
