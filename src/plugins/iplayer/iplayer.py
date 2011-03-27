@@ -60,7 +60,7 @@ class IplayerPlugin (gobject.GObject, Peas.Activatable):
         # Add the channels' categories in a thread, since they each require a
         # network request
         parent_path = tree_store.get_path (parent_iter)
-        thread = PopulateChannelsThread (self, parent_path, feed, tree_store)
+        thread = PopulateChannelsThread (self, feed, tree_store)
         thread.start ()
 
     def _populate_channel_list_cb (self, tree_store, parent_path, values):
@@ -160,7 +160,7 @@ def category_name_to_id (category_name):
 
 class PopulateChannelsThread (threading.Thread):
     # Class to populate the channel list from the Internet
-    def __init__ (self, plugin, parent_path, feed, tree_model):
+    def __init__ (self, plugin, feed, tree_model):
         self.plugin = plugin
         self.feed = feed
         self.tree_model = tree_model
@@ -178,7 +178,7 @@ class PopulateChannelsThread (threading.Thread):
                 # We have to pass a path because the model could theoretically
                 # be modified while the idle function is waiting in the queue,
                 # invalidating an iter
-                for name, count in self.feed.get (channel_id).categories ():
+                for name, _count in self.feed.get (channel_id).categories ():
                     category_id = category_name_to_id (name)
                     gobject.idle_add (self.plugin._populate_channel_list_cb,
                                       self.tree_model, parent_path,

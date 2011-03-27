@@ -339,7 +339,7 @@ def httpretrieve (url, filename):
     data_file.close ()
 
 def httpget (url):
-    resp, data = HTTP_OBJECT.request (url, 'GET')
+    _response, data = HTTP_OBJECT.request (url, 'GET')
     return data
 
 def parse_entry_id (entry_id):
@@ -367,7 +367,7 @@ class Media (object):
             page.close ()
             url = page.geturl ()
             #logging.info ("URL resolved to %s", url)
-            return page.geturl ()
+            return url
         else:
             return self.connection_href
 
@@ -390,7 +390,7 @@ class Media (object):
                  self.connection_protocol)
         return tep.get (media, None)
 
-    def read_media_node (self, media, resolve=False):
+    def read_media_node (self, media):
         """
         Reads media info from a media XML node
         media: media node from BeautifulStoneSoup
@@ -926,10 +926,10 @@ class Feed (object):
             return None
         if self.tvradio == 'tv':
             return [Feed ('tv', channel = ch)
-                    for (ch, title) in CHANNELS_TV_LIST]
+                    for (ch, _title) in CHANNELS_TV_LIST]
         if self.tvradio == 'radio':
             return [Feed ('radio', channel = ch)
-                    for (ch, title) in CHANNELS_RADIO_LIST]
+                    for (ch, _title) in CHANNELS_RADIO_LIST]
         return None
 
     def subcategories (self):
@@ -959,7 +959,7 @@ class Feed (object):
             return False
         return letter
 
-    def sub (self, *args, **kwargs):
+    def sub (self, *_args, **kwargs):
         """
         Clones this feed, altering the specified parameters.
 

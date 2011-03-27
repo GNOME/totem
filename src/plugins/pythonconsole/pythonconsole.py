@@ -113,7 +113,7 @@ class PythonConsolePlugin (gobject.GObject, Peas.Activatable):
 
         self.totem.set_data ('PythonConsolePluginInfo', data)
 
-    def show_console (self, action):
+    def show_console (self, _action):
         if not self.window:
             console = PythonConsole (namespace = {
                 '__builtins__' : __builtins__,
@@ -134,7 +134,7 @@ class PythonConsolePlugin (gobject.GObject, Peas.Activatable):
             self.window.show_all ()
             self.window.grab_focus ()
 
-    def enable_debugging (self, action):
+    def enable_debugging (self, _action):
         msg = _(u"After you press OK, Totem will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
@@ -152,7 +152,7 @@ class PythonConsolePlugin (gobject.GObject, Peas.Activatable):
             gobject.idle_add (start_debugger, password)
         dialog.destroy ()
 
-    def destroy_console (self, *args):
+    def destroy_console (self, *_args):
         self.window.destroy ()
         self.window = None
 

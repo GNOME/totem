@@ -24,11 +24,11 @@ class ListEntries (object):
         self.entries = []
 
 def parse (xml_source):
-    try:
-        regexp = "<\?xml version=\"[^\"]*\" encoding=\" ([^\"]*)\"\?>"
-        encoding = re.findall (regexp, xml_source)[0]
-    except:
-        return None
+    #try:
+    #    regexp = "<\?xml version=\"[^\"]*\" encoding=\" ([^\"]*)\"\?>"
+    #    encoding = re.findall (regexp, xml_source)[0]
+    #except:
+    #    return None
 
     elist = ListEntries ()
     # gather all list entries
@@ -37,7 +37,6 @@ def parse (xml_source):
 
     # enumerate thru the element list and gather info
     for entry_src in entries_src:
-        entry = {}
         title = re.findall ("<title[^>]*> (.*?)</title>",
                             entry_src, re.DOTALL)[0]
         identifier = re.findall ("<id[^>]*> (.*?)</id>",

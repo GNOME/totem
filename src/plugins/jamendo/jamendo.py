@@ -185,20 +185,20 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         """
         self.settings.set_enum ('format', combo.get_active ())
 
-    def on_format_setting_changed (self, settings, key, combo):
+    def on_format_setting_changed (self, _settings, _key, combo):
         """
         Called for the "format" preference combo box when the corresponding
         GSettings value is changed.
         """
         combo.set_active (self.settings.get_enum ('format'))
 
-    def on_format_changed (self, settings, key):
+    def on_format_changed (self, _settings, _key):
         JamendoService.AUDIO_FORMAT = self.settings.get_enum ('format')
 
-    def on_num_per_page_changed (self, settings, key):
+    def on_num_per_page_changed (self, _settings, _key):
         JamendoService.NUM_PER_PAGE = self.settings.get_int ('num-per-page')
 
-    def on_config_widget_destroy (self, widget):
+    def on_config_widget_destroy (self, _widget):
         try:
             self.reset ()
         except:
@@ -411,7 +411,6 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         Called when the thread finished fetching albums.
         """
         pindex = self.treeviews.index (treeview)
-        model = treeview.get_model ()
         if save_state and len (albums):
             self.pages[pindex].append (albums)
             self.current_page[pindex] = len (self.pages[pindex])
@@ -450,13 +449,13 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         self.totem.action_error (_(u'An error occurred while fetching albums.'),
                                  msg)
 
-    def on_search_entry_activate (self, *args):
+    def on_search_entry_activate (self, *_args):
         """
         Called when the user typed <enter> in the search entry.
         """
         return self.on_search_button_clicked ()
 
-    def on_search_button_clicked (self, *args):
+    def on_search_button_clicked (self, *_args):
         """
         Called when the user clicked on the search button.
         """
@@ -468,7 +467,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         else:
             self.on_notebook_switch_page (new_search=True)
 
-    def on_notebook_switch_page (self, page_number = None, tab = None,
+    def on_notebook_switch_page (self, _page_number = None, _tab = None,
                                  tab_num = 0, new_search = False):
         """
         Called when the changed a notebook page.
@@ -488,7 +487,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         model.clear ()
         self.fetch_albums ()
 
-    def on_treeview_row_activated (self, tree_view, path, column):
+    def on_treeview_row_activated (self, _tree_view, path, _column):
         """
         Called when the user double-clicked on a treeview element.
         """
@@ -539,7 +538,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         (_model, rows) = selection.get_selected_rows ()
         self.album_button.set_sensitive (len (rows) > 0)
 
-    def on_previous_button_clicked (self, *args):
+    def on_previous_button_clicked (self, *_args):
         """
         Called when the user clicked the previous button.
         """
@@ -553,7 +552,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             self.add_treeview_item (self.current_treeview, album)
         self.on_fetch_albums_done (self.current_treeview, albums, False)
 
-    def on_next_button_clicked (self, *args):
+    def on_next_button_clicked (self, *_args):
         """
         Called when the user clicked the next button.
         """
@@ -570,7 +569,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                 self.add_treeview_item (self.current_treeview, album)
             self.on_fetch_albums_done (self.current_treeview, albums, False)
 
-    def on_album_button_clicked (self, *args):
+    def on_album_button_clicked (self, *_args):
         """
         Called when the user clicked on the album button.
         """
@@ -580,7 +579,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         except:
             pass
 
-    def on_add_to_playlist_activate (self, *args):
+    def on_add_to_playlist_activate (self, *_args):
         """
         Called when the user clicked on the add to playlist button of the
         popup menu.
@@ -594,7 +593,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
                 # we have a track
                 self.add_track_to_playlist ('enqueue', item)
 
-    def on_open_album_page_activate (self, *args):
+    def on_open_album_page_activate (self, *_args):
         """
         Called when the user clicked on the jamendo album page button of the
         popup menu.
@@ -639,7 +638,7 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         self.album_button.set_sensitive (itera is not None)
 
 
-    def _format_str (self, string, truncate=False):
+    def _format_str (self, string):
         """
         Escape entities for pango markup and force the string to utf-8.
         """
@@ -693,9 +692,8 @@ class JamendoService (threading.Thread):
         try:
             self.lock.acquire ()
             albums = json.loads (self._request (url))
-            ret = []
-            for i, album in enumerate (albums):
-                fname, headers = urllib.urlretrieve (album['image'])
+            for _pos, album in enumerate (albums):
+                fname, _headers = urllib.urlretrieve (album['image'])
                 album['image'] = fname
                 album['tracks'] = json.loads (self._request (
                     '%s/id+name+duration+stream/track/json/?album_id=%s'\

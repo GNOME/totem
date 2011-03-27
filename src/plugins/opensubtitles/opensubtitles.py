@@ -344,7 +344,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
     # UI related code
 
-    def os_build_dialog (self, action):
+    def os_build_dialog (self):
         builder = Totem.plugin_load_interface ("opensubtitles",
                                                "opensubtitles.ui", True,
                                                self.totem.get_main_window (),
@@ -409,8 +409,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
         # Set up signals
 
-        combobox_changed_id = combobox.connect ('changed',
-                                                self.on_combobox__changed)
+        combobox.connect ('changed', self.on_combobox__changed)
         self.dialog.connect ('delete-event', self.dialog.hide_on_delete)
         self.dialog.set_transient_for (self.totem.get_main_window ())
         self.dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
@@ -421,9 +420,9 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
                                                 self.on_treeview__row_change)
         self.treeview.connect ('row-activated', self.on_treeview__row_activate)
 
-    def os_show_dialog (self, action):
+    def os_show_dialog (self, _action):
         if not self.dialog:
-            self.os_build_dialog (action)
+            self.os_build_dialog ()
 
         filename = self.totem.get_current_mrl ()
         if not self.model.results or filename != self.filename:
@@ -547,8 +546,6 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
             subtitle_id = model.get_value (subtitle_iter, 3)
             subtitle_format = model.get_value (subtitle_iter, 1)
 
-            gfile = None
-
             if not filename:
                 bpath = xdg.BaseDirectory.xdg_cache_home + sep
                 bpath += 'totem' + sep
@@ -635,7 +632,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
     # Callbacks
 
-    def on_window__key_press_event (self, widget, event):
+    def on_window__key_press_event (self, _widget, event):
         if event.keyval == Gdk.KEY_Escape:
             self.dialog.destroy ()
             self.dialog = None
@@ -648,10 +645,10 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         else:
             self.apply_button.set_sensitive (False)
 
-    def on_treeview__row_activate (self, tree_path, column, data):
+    def on_treeview__row_activate (self, _tree_path, _column, _data):
         self.os_download_and_apply ()
 
-    def on_totem__file_opened (self, totem, filename):
+    def on_totem__file_opened (self, _totem, _filename):
         """
         """
         # Check if allows subtitles
@@ -672,7 +669,7 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
                 self.apply_button.set_sensitive (False)
                 self.find_button.set_sensitive (False)
 
-    def on_totem__file_closed (self, totem):
+    def on_totem__file_closed (self, _totem):
         self.action.set_sensitive (False)
         if self.dialog:
             self.apply_button.set_sensitive (False)
@@ -684,14 +681,14 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
         self.model.lang = LANGUAGES[combo_model.get_value (combo_iter, 1)]
         self.settings.set_string ('language', self.model.lang)
 
-    def on_close_clicked (self, data):
+    def on_close_clicked (self, _data):
         self.dialog.destroy ()
         self.dialog = None
 
-    def on_apply_clicked (self, data):
+    def on_apply_clicked (self, _data):
         self.os_download_and_apply ()
 
-    def on_find_clicked (self, data):
+    def on_find_clicked (self, _data):
         self.apply_button.set_sensitive (False)
         self.find_button.set_sensitive (False)
         self.filename = self.totem.get_current_mrl ()

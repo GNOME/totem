@@ -35,7 +35,7 @@ class UPnPClient (gobject.GObject, Peas.Activatable):
         selection = self.uiw.treeview.get_selection ()
         selection.set_mode (gtk.SELECTION_MULTIPLE)
 
-    def button_pressed (self, widget, event):
+    def button_pressed (self, _widget, event):
         if event.button == 3:
             event_x = int (event.x)
             event_y = int (event.y)
@@ -68,9 +68,9 @@ class UPnPClient (gobject.GObject, Peas.Activatable):
     def create_item_context (self, has_delete = False):
         """ create context menu for right click in treeview item"""
 
-        def action (menu, text):
+        def action (_menu, text):
             selection = self.uiw.treeview.get_selection ()
-            model, selected_rows = selection.get_selected_rows ()
+            _model, selected_rows = selection.get_selected_rows ()
             if text == 'item.delete':
                 for row_path in selected_rows:
                     self.uiw.destroy_object (row_path)
