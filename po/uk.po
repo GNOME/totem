@@ -8,16 +8,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2011-03-08 12:34+0000\n"
-"PO-Revision-Date: 2011-03-28 18:55+0300\n"
-"Last-Translator: Yury Bulka <yurkobb@gmail.com>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-28 21:01+0300\n"
+"PO-Revision-Date: 2011-03-28 21:03+0300\n"
+"Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Virtaal 0.6.1\n"
@@ -202,7 +201,7 @@ msgstr "_Додати до списку відтворення"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1667
+#: ../src/totem-object.c:1666
 msgid "Movie Player"
 msgstr "Відеопрогравач"
 
@@ -563,7 +562,7 @@ msgstr "Квадрат"
 msgid "Start playing files from last position"
 msgstr "Запустити відтворення файлів з останньої позиції"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6008
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6012
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -787,8 +786,8 @@ msgid ""
 "Allow the screensaver to activate when playing audio. Disable if you have "
 "monitor-powered speakers."
 msgstr ""
-"Дозволяти запуск збереження екрану при відтворенні аудіо. Слід вимкнути, якщо використовуються "
-"динаміки, що живляться від монітора."
+"Дозволяти запуск збереження екрану при відтворенні аудіо. Слід вимкнути, "
+"якщо використовуються динаміки, що живляться від монітора."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:5
 msgid ""
@@ -1003,12 +1002,12 @@ msgstr "Розширення"
 #: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `%"
-"s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `"
+"%s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"Програма не може визначити формат файла для «%s». Вкажіть відоме розширення в "
-"назві файла, або вручну вкажіть формат файла зі списку."
+"Програма не може визначити формат файла для «%s». Вкажіть відоме розширення "
+"в назві файла, або вручну вкажіть формат файла зі списку."
 
 #: ../src/eggfileformatchooser.c:659
 msgid "File format not recognized"
@@ -1157,16 +1156,15 @@ msgid ""
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
 "Ви мали б отримати копію ліцензії GNU General Public License разом з "
-"програмою; якщо у Вас її все ж немає, напишіть до Free Software Foundation, Inc., 59 Temple "
-"Place, Suite 330, Boston, MA  02111-1307  USA"
+"програмою; якщо у Вас її все ж немає, напишіть до Free Software Foundation, "
+"Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 
 #: ../src/totem-interface.c:357
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
 msgstr ""
-"Тотем містить виняток, що дозволяє використовувати закриті додатки "
-"GStreamer."
+"Тотем містить виняток, що дозволяє використовувати закриті додатки GStreamer."
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 #: ../src/totem-menu.c:192
@@ -1182,46 +1180,44 @@ msgstr "Автоматично"
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:739
+#: ../src/totem-menu.c:767
 #, c-format
 msgid "Play Image '%s'"
 msgstr "Відтворити образ «%s»"
 
-#: ../src/totem-menu.c:742 ../src/totem-menu.c:825
+#: ../src/totem-menu.c:770 ../src/totem-menu.c:853
 #, c-format
 msgid "device%d"
 msgstr "пристрій%d"
 
-#: ../src/totem-menu.c:822
+#: ../src/totem-menu.c:850
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Відтворити диск «%s»"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1173
+#: ../src/totem-menu.c:1201
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Мультимедійний програвач використовує %s"
 
-#: ../src/totem-menu.c:1177
+#: ../src/totem-menu.c:1205
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Авторські права © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1182 ../browser-plugin/totem-plugin-viewer.c:1163
+#: ../src/totem-menu.c:1210 ../browser-plugin/totem-plugin-viewer.c:1163
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота <rasta@cvs.gnome.org>\n"
-"Максим Дзюманенко <dziumanenko@gmail.com>"
-"Daniel Korostil <ted.korostiled@gmail.com>"
-"Юрій Булка <yurkobb@gmail.com>"
+"Максим Дзюманенко <dziumanenko@gmail.com>Daniel Korostil <ted."
+"korostiled@gmail.com>Юрій Булка <yurkobb@gmail.com>"
 
-
-#: ../src/totem-menu.c:1186
+#: ../src/totem-menu.c:1214
 msgid "Totem Website"
 msgstr "Сайт Totem"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1248
 msgid "Configure Plugins"
 msgstr "Налаштувати додатки"
 
@@ -1231,48 +1227,48 @@ msgstr "Налаштувати додатки"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1047 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1046 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Відтворення"
 
-#: ../src/totem-object.c:1049 ../src/totem-options.c:52
+#: ../src/totem-object.c:1048 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/totem-object.c:1054 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1053 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "Призупинено"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1056 ../src/totem-object.c:1066
+#: ../src/totem-object.c:1055 ../src/totem-object.c:1065
 #: ../src/totem-options.c:51
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:84
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:96
 msgid "Play"
 msgstr "Відтворення"
 
-#: ../src/totem-object.c:1061 ../src/totem-object.c:1659
+#: ../src/totem-object.c:1060 ../src/totem-object.c:1658
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Зупинено"
 
 # c-format
-#: ../src/totem-object.c:1142 ../src/totem-object.c:1169
-#: ../src/totem-object.c:1797 ../src/totem-object.c:1960
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1168
+#: ../src/totem-object.c:1798 ../src/totem-object.c:1962
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Не вдалось відтворити «%s»."
 
-#: ../src/totem-object.c:1246
+#: ../src/totem-object.c:1245
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
 "it."
 msgstr ""
-"Totem не може відтворити цей тип носія (%s), хоча додаток, який "
-"повинен його обробляти, встановлено."
+"Totem не може відтворити цей тип носія (%s), хоча додаток, який повинен його "
+"обробляти, встановлено."
 
-#: ../src/totem-object.c:1247
+#: ../src/totem-object.c:1246
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1280,99 +1276,98 @@ msgstr ""
 "Можливо, слід перевірити, чи знаходиться диск у пристрої, та чи коректно "
 "налаштовано пристрій."
 
-#: ../src/totem-object.c:1255
+#: ../src/totem-object.c:1254
 msgid "More information about media plugins"
 msgstr "Докладніша інформація про мультимедійні модулі"
 
-#: ../src/totem-object.c:1256
+#: ../src/totem-object.c:1255
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
 msgstr "Встановіть потрібні модулі та перезапустіть Totem."
 
-#: ../src/totem-object.c:1258
+#: ../src/totem-object.c:1257
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
 "appropriate plugins to be able to read from the disc."
 msgstr ""
-"Totem не може відтворити цей тип носія (%s), через відсутність "
-"модуля, який може читати дані з нього."
+"Totem не може відтворити цей тип носія (%s), через відсутність модуля, який "
+"може читати дані з нього."
 
-#: ../src/totem-object.c:1260
+#: ../src/totem-object.c:1259
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
 "appropriate plugins to handle it."
 msgstr ""
-"Totem не може відтворити цей тип носія (%s), через відсутність "
-"модуля, який може його обробляти."
+"Totem не може відтворити цей тип носія (%s), через відсутність модуля, який "
+"може його обробляти."
 
-#: ../src/totem-object.c:1263
+#: ../src/totem-object.c:1262
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
-"Totem не може відтворити цей тип носія (%s), оскільки він не "
-"підтримується."
+"Totem не може відтворити цей тип носія (%s), оскільки він не підтримується."
 
-#: ../src/totem-object.c:1264
+#: ../src/totem-object.c:1263
 msgid "Please insert another disc to play back."
 msgstr "Будь ласка, вставте інший носій."
 
-#: ../src/totem-object.c:1300
+#: ../src/totem-object.c:1299
 msgid "Totem was not able to play this disc."
 msgstr "Totem не може відтворити цей диск."
 
-#: ../src/totem-object.c:1301 ../src/totem-object.c:4278
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4280
 msgid "No reason."
 msgstr "Причина невідома."
 
-#: ../src/totem-object.c:1315
+#: ../src/totem-object.c:1314
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem не підтримує відтворення звукових компакт-дисків"
 
-#: ../src/totem-object.c:1316
+#: ../src/totem-object.c:1315
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "Для відтворення цього диску користуйтесь музичним програвачем або програмою "
 "копіювання звуку із звукових дисків"
 
-#: ../src/totem-object.c:1803
+#: ../src/totem-object.c:1804
 msgid "No error message"
 msgstr "Повідомлення про помилку відсутнє"
 
-#: ../src/totem-object.c:2195
+#: ../src/totem-object.c:2197
 msgid "Totem could not display the help contents."
 msgstr "Неможливо показати вміст довідки."
 
-#: ../src/totem-object.c:2533 ../src/totem-object.c:2535
+#: ../src/totem-object.c:2535 ../src/totem-object.c:2537
 #: ../browser-plugin/totem-plugin-viewer.c:1466
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
-#: ../src/totem-object.c:4112 ../src/totem-object.c:4114
+#: ../src/totem-object.c:4114 ../src/totem-object.c:4116
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: ../src/totem-object.c:4121 ../src/totem-object.c:4123
+#: ../src/totem-object.c:4123 ../src/totem-object.c:4125
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: ../src/totem-object.c:4131 ../src/totem-object.c:4133
+#: ../src/totem-object.c:4133 ../src/totem-object.c:4135
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4145 ../src/totem-object.c:4147
+#: ../src/totem-object.c:4147 ../src/totem-object.c:4149
 msgid "Fullscreen"
 msgstr "На весь екран"
 
-#: ../src/totem-object.c:4278
+#: ../src/totem-object.c:4280
 msgid "Totem could not startup."
 msgstr "Не вдалось запустити Totem."
 
-#: ../src/totem-open-location.c:179
+#: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "Відкрити адресу..."
 
@@ -1453,50 +1448,50 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Неможливо поставити в чергу і замінити одночасно"
 
 #. By extension entry
-#: ../src/totem-playlist.c:157
+#: ../src/totem-playlist.c:161
 msgid "MP3 ShoutCast playlist"
 msgstr "Список відтворення MP3 ShoutCast"
 
-#: ../src/totem-playlist.c:158
+#: ../src/totem-playlist.c:162
 msgid "MP3 audio (streamed)"
 msgstr "MP3 аудіо (потік)"
 
-#: ../src/totem-playlist.c:159
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 аудіо (потік, формат DOS)"
 
-#: ../src/totem-playlist.c:160
+#: ../src/totem-playlist.c:164
 msgid "XML Shareable Playlist"
 msgstr "Список відтворення XML Shareable"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:359
+#: ../src/totem-playlist.c:363
 #, c-format
 msgid "Title %d"
 msgstr "Заголовок %d"
 
-#: ../src/totem-playlist.c:458
+#: ../src/totem-playlist.c:462
 msgid "Could not save the playlist"
 msgstr "Не вдалось зберегти список відтворення"
 
-#: ../src/totem-playlist.c:1033
+#: ../src/totem-playlist.c:1037
 msgid "Save Playlist"
 msgstr "Збереження списку відтворення"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1045 ../src/totem-sidebar.c:140
+#: ../src/totem-playlist.c:1049 ../src/totem-sidebar.c:140
 msgid "Playlist"
 msgstr "Список відтворення"
 
-#: ../src/totem-playlist.c:1862
+#: ../src/totem-playlist.c:1869
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Список відтворення «%s» неможливо проаналізувати. Можливо, його пошкоджено."
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1870
 msgid "Playlist error"
 msgstr "Помилка списку відтворення"
 
@@ -1785,23 +1780,23 @@ msgstr "Неможливо ініціалізувати безпечну біб�
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Перевірте систему. Totem завершується."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1848
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1850
 msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3120
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3124
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3128
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Аудіо доріжка #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3152
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3156
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3160
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Субтитри №%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3565
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1809,16 +1804,17 @@ msgstr ""
 "Не знайдено необхідну систему виводу звуку. Виберіть іншу систему виводу "
 "звуку в параметрах робочого середовища."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3570
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
 msgid "Location not found."
 msgstr "Адресу не знайдено."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3578
 msgid ""
 "Could not open location; you might not have permission to open the file."
-msgstr "Не вдалось відкрити адресу; можливо, немає прав на відкривання цього файла."
+msgstr ""
+"Не вдалось відкрити адресу; можливо, немає прав на відкривання цього файла."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3589
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1827,27 +1823,27 @@ msgstr ""
 "Вивід відео використовується іншою програмою. Закрийте іншу відеопрограму, "
 "або виберіть інший вивід відео у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3591
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3595
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Вивід звуку використовується іншою програмою. "
-"Ви можете закрити ту програму, або вибрати інший вивід звуку у селекторі мультимедійних систем. "
-"Якщо Вам потрібно використовувати кілька звукових програм одночасно, рекомендується"
-"використовувати звуковий сервер."
+"Вивід звуку використовується іншою програмою. Ви можете закрити ту програму, "
+"або вибрати інший вивід звуку у селекторі мультимедійних систем. Якщо Вам "
+"потрібно використовувати кілька звукових програм одночасно, "
+"рекомендуєтьсявикористовувати звуковий сервер."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3609
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3615
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3613
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3619
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Для відтворення цього відео необхідний модуль %s, який не встановлений у "
 "системі."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3616
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3620
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1855,39 +1851,39 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Для відтворення цього відео необхідні наступні декодери, які не "
-"встановлені у системі:\n"
+"Для відтворення цього відео необхідні наступні декодери, які не встановлені "
+"у системі:\n"
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3641
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3645
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Неможливо відтворити цей файл з мережі. Спробуйте спочатку звантажити його "
 "на локальний диск."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3713
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3717
 msgid "Media file could not be played."
 msgstr "Цей кліп неможливо відтворити."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6004
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6008
 msgid "Surround"
 msgstr "Об'ємний"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6006
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6010
 msgid "Mono"
 msgstr "Моно"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6353
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6357
 msgid "Too old version of GStreamer installed."
 msgstr "Встановлено надто стару версію GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6360
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6364
 msgid "Media contains no supported video streams."
 msgstr "Не знайдено підтримуваних потоків відео."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6843
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6847
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1895,8 +1891,8 @@ msgstr ""
 "Не вдалось створити об'єкт відтворення GStreamer. Перевірте встановлення "
 "GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6954
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7089
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6958
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7093
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1904,16 +1900,17 @@ msgstr ""
 "Не вдалось відкрити вивід відео. Можливо, він недоступний. Виберіть інший "
 "вивід відео у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6966
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6970
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
 "Не вдалось відкрити систему виводу відео. Можливо, необхідно встановити "
-"додаткові втулки GStreamer. Також можна вибрати іншу систему виводу відео у селекторі мультимедійних систем."
+"додаткові втулки GStreamer. Також можна вибрати іншу систему виводу відео у "
+"селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7001
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7005
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1923,14 +1920,15 @@ msgstr ""
 "звукового пристрою, або звуковий сервер не запущений. Виберіть інший вивід "
 "звуку у селекторі мультимедійних систем."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7021
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7025
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
 "Selector."
 msgstr ""
 "Не вдалось відкрити систему виводу звуку. Можливо, необхідно встановити "
-"додаткові втулки GStreamer. Також можна вибрати іншу систему виводу звуку у селекторі мультимедійних систем."
+"додаткові втулки GStreamer. Також можна вибрати іншу систему виводу звуку у "
+"селекторі мультимедійних систем."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -2207,7 +2205,7 @@ msgstr "Не вдалось проаналізувати файл CMML"
 msgid "Delete"
 msgstr "Видалити"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:116
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:117
 #: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "DLNA/UPnP клієнт, оснований на Coherence"
@@ -2252,7 +2250,7 @@ msgstr "Виконуваний файл gromit не знайдено."
 
 #. Add the interface to Totem's sidebar
 #: ../src/plugins/iplayer/iplayer.plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:41
+#: ../src/plugins/iplayer/iplayer.py:42
 msgid "BBC iPlayer"
 msgstr "BBC iPlayer"
 
@@ -2260,30 +2258,30 @@ msgstr "BBC iPlayer"
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "Потокова доставка програм BBC за останні 7 днів з сервісу BBC iPlayer."
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid "Error listing channel categories"
 msgstr "Помилка при переліченні категорій каналів"
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid ""
 "There was an unknown error getting the list of television channels available "
 "on BBC iPlayer."
 msgstr ""
-"Невідома помилка при отриманні списку телевізійних каналів, доступних на "
-"BBC iPlayer."
+"Невідома помилка при отриманні списку телевізійних каналів, доступних на BBC "
+"iPlayer."
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
-#: ../src/plugins/iplayer/iplayer.py:74
+#: ../src/plugins/iplayer/iplayer.py:75
 msgid "Loading…"
 msgstr "Завантаження"
 
 #. Translators: the "programme feed" is the list of TV shows available to watch online
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid "Error getting programme feed"
 msgstr "Помилка при отриманні списку програм каналу"
 
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2339,7 +2337,7 @@ msgid "_Open Jamendo Album Page in Browser"
 msgstr "_Відкрити сторінку альбому Jamendo в оглядачі"
 
 #: ../src/plugins/jamendo/jamendo.plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:127
+#: ../src/plugins/jamendo/jamendo.py:128
 msgid "Jamendo"
 msgstr "Jamendo"
 
@@ -2354,34 +2352,34 @@ msgstr ""
 msgid "You need to install the Python simplejson module."
 msgstr "Необхідно встановити модуль simplejson для python"
 
-#: ../src/plugins/jamendo/jamendo.py:260 ../src/plugins/jamendo/jamendo.py:273
-#: ../src/plugins/jamendo/jamendo.py:297
+#: ../src/plugins/jamendo/jamendo.py:261 ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:298
 #, python-format
 msgid "Artist: %s"
 msgstr "Виконавець: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:266
+#: ../src/plugins/jamendo/jamendo.py:267
 msgid "%Y-%m-%d"
 msgstr "%d-%m-%Y"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:268
+#: ../src/plugins/jamendo/jamendo.py:269
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:275
 #, python-format
 msgid "Genre: %s"
 msgstr "Жанр: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:275
+#: ../src/plugins/jamendo/jamendo.py:276
 #, python-format
 msgid "Released on: %s"
 msgstr "Випущено: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:276
+#: ../src/plugins/jamendo/jamendo.py:277
 #, python-format
 msgid "License: %s"
 msgstr "Ліцензія: %s"
@@ -2389,52 +2387,52 @@ msgstr "Ліцензія: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:289
+#: ../src/plugins/jamendo/jamendo.py:290
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:296
+#: ../src/plugins/jamendo/jamendo.py:297
 #, python-format
 msgid "Album: %s"
 msgstr "Альбом: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:298
+#: ../src/plugins/jamendo/jamendo.py:299
 #, python-format
 msgid "Duration: %s"
 msgstr "Тривалість: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:355
+#: ../src/plugins/jamendo/jamendo.py:356
 msgid "Fetching albums, please wait…"
 msgstr "Отримання альбомів, будь ласка, зачекайте…"
 
-#: ../src/plugins/jamendo/jamendo.py:410
+#: ../src/plugins/jamendo/jamendo.py:411
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
 "%s."
 msgstr ""
-"Не вдалось приєднатися до сервера Jamendo.\n"
+"Не вдалось з'єднатись з сервером Jamendo.\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:412
+#: ../src/plugins/jamendo/jamendo.py:413
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "Сервер Jamendo повернув код %s."
 
-#: ../src/plugins/jamendo/jamendo.py:416
+#: ../src/plugins/jamendo/jamendo.py:417
 msgid "An error occurred while fetching albums."
 msgstr "У процесі отримання альбомів виникла помилка."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:618
+#: ../src/plugins/jamendo/jamendo.py:619
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:621
+#: ../src/plugins/jamendo/jamendo.py:622
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2445,9 +2443,9 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:671
+#: ../src/plugins/jamendo/jamendo.py:672
 msgid "en"
-msgstr ""
+msgstr "en"
 
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:1
 msgid "Audio format to download from Jamendo"
@@ -2522,35 +2520,35 @@ msgstr "Не вдалось з'єднатися із сервером OpenSubtit
 msgid "No results found"
 msgstr "Нічого не знайдено"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:374
+#: ../src/plugins/opensubtitles/opensubtitles.py:375
 msgid "Subtitles"
 msgstr "Субтитри"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:380
+#: ../src/plugins/opensubtitles/opensubtitles.py:381
 msgid "Format"
 msgstr "Формат"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:385
+#: ../src/plugins/opensubtitles/opensubtitles.py:386
 msgid "Rating"
 msgstr "Оцінка"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:426
+#: ../src/plugins/opensubtitles/opensubtitles.py:427
 msgid "_Download Movie Subtitles…"
 msgstr "_Завантажити субтитри до фільму…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:427
+#: ../src/plugins/opensubtitles/opensubtitles.py:428
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Звантажити субтитри до фільму з OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:486
+#: ../src/plugins/opensubtitles/opensubtitles.py:487
 msgid "Searching subtitles…"
 msgstr "Пошук субтитрів…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:544
+#: ../src/plugins/opensubtitles/opensubtitles.py:545
 msgid "Downloading the subtitles…"
 msgstr "Звантаження субтитрів…"
 
@@ -2668,7 +2666,7 @@ msgstr "В_ідео"
 msgid "Movie stream"
 msgstr "Потік відео"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:112
+#: ../src/plugins/screensaver/totem-screensaver.c:116
 #: ../browser-plugin/totem-plugin-viewer.c:1961
 msgid "Playing a movie"
 msgstr "Відтворення відео"
@@ -2974,44 +2972,44 @@ msgstr "Інтерактивна консоль Python."
 msgid "Python Console"
 msgstr "Консоль Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:85
+#: ../src/plugins/pythonconsole/pythonconsole.py:86
 msgid "Python Console Menu"
 msgstr "Меню консолі Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
+#: ../src/plugins/pythonconsole/pythonconsole.py:89
 msgid "_Python Console"
 msgstr "_Консоль Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:89
+#: ../src/plugins/pythonconsole/pythonconsole.py:90
 msgid "Show Totem's Python console"
 msgstr "Показати консоль Python програвача Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Python Debugger"
 msgstr "Зневадження Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:95
+#: ../src/plugins/pythonconsole/pythonconsole.py:96
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "Увімкнути віддалене налагодження Python за допомогою rpdb2"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:116
+#: ../src/plugins/pythonconsole/pythonconsole.py:117
 #, python-format
-msgid "You can access the Totem. Object through 'totem_object' :\\n%s"
-msgstr "Можна отримати доступ до Totem.Object через 'totem_object' :\\n%s"
+msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
+msgstr "Можна отримати доступ до Totem.Object через «totem_object» :\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:120
+#: ../src/plugins/pythonconsole/pythonconsole.py:121
 msgid "Totem Python Console"
 msgstr "Консоль Python програвача Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:129
+#: ../src/plugins/pythonconsole/pythonconsole.py:130
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
-"Після того, як ви натиснете Гаразд, Totem чекатиме на з’єднання від winpdb або "
-"rpdb2. Якщо пароль налагоджувача у GConf не вказано, буде використано типовий "
-"пароль ('totem')."
+"Після того, як ви натиснете Гаразд, Totem чекатиме на з’єднання від winpdb "
+"або rpdb2. Якщо пароль налагоджувача у GConf не вказано, буде використано "
+"типовий пароль ('totem')."
 
 #~ msgid "Enable visual effects?"
 #~ msgstr "Увімкнути візуальні ефекти?"
@@ -3054,8 +3052,8 @@ msgstr ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
-#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
+#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
