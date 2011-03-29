@@ -31,7 +31,6 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
-#include <dbus/dbus-glib.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
@@ -49,8 +48,11 @@
 #define TOTEM_MEDIA_PLAYER_KEYS_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN, TotemMediaPlayerKeysPluginClass))
 
 typedef struct {
-	DBusGProxy    *media_player_keys_proxy;
+	GDBusProxy    *proxy;
 	guint          handler_id;
+	guint          watch_id;
+	GCancellable  *cancellable_init;
+	GCancellable  *cancellable;
 } TotemMediaPlayerKeysPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN,
@@ -58,53 +60,163 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN,
 		      totem_media_player_keys_plugin);
 
 static void
-on_media_player_key_pressed (DBusGProxy *proxy, const gchar *application, const gchar *key, TotemObject *totem)
+on_media_player_key_pressed (TotemObject *totem,
+			     const gchar *key)
 {
-	if (strcmp ("Totem", application) == 0) {
-		if (strcmp ("Play", key) == 0)
-			totem_action_play_pause (totem);
-		else if (strcmp ("Previous", key) == 0)
-			totem_action_previous (totem);
-		else if (strcmp ("Next", key) == 0)
-			totem_action_next (totem);
-		else if (strcmp ("Stop", key) == 0)
-			totem_action_pause (totem);
-		else if (strcmp ("FastForward", key) == 0)
-			totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
-		else if (strcmp ("Rewind", key) == 0)
-			totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
-		else if (strcmp ("Repeat", key) == 0) {
-			gboolean value;
+	if (strcmp ("Play", key) == 0)
+		totem_action_play_pause (totem);
+	else if (strcmp ("Previous", key) == 0)
+		totem_action_previous (totem);
+	else if (strcmp ("Next", key) == 0)
+		totem_action_next (totem);
+	else if (strcmp ("Stop", key) == 0)
+		totem_action_pause (totem);
+	else if (strcmp ("FastForward", key) == 0)
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
+	else if (strcmp ("Rewind", key) == 0)
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
+	else if (strcmp ("Repeat", key) == 0) {
+		gboolean value;
 
-			value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
-			totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
-		} else if (strcmp ("Shuffle", key) == 0) {
-			gboolean value;
+		value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
+		totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
+	} else if (strcmp ("Shuffle", key) == 0) {
+		gboolean value;
 
-			value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
-			totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
-		}
+		value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
+		totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
 	}
 }
 
-static gboolean
-on_window_focus_in_event (GtkWidget *window, GdkEventFocus *event, TotemMediaPlayerKeysPlugin *pi)
+static void
+grab_media_player_keys_cb (GDBusProxy                 *proxy,
+			   GAsyncResult               *res,
+			   TotemMediaPlayerKeysPlugin *pi)
 {
-	if (pi->priv->media_player_keys_proxy != NULL) {
-		dbus_g_proxy_call (pi->priv->media_player_keys_proxy,
-				   "GrabMediaPlayerKeys", NULL,
-				   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
-				   G_TYPE_INVALID);
+	GVariant *variant;
+	GError *error = NULL;
+
+	variant = g_dbus_proxy_call_finish (proxy, res, &error);
+	if (variant == NULL) {
+		g_warning ("Failed to call \"GrabMediaPlayerKeys\": %s", error->message);
+		g_error_free (error);
+		return;
 	}
+	g_variant_unref (variant);
+}
+
+static void
+grab_media_player_keys (TotemMediaPlayerKeysPlugin *pi)
+{
+	if (pi->priv->proxy == NULL)
+		return;
+
+	if (pi->priv->cancellable) {
+		g_cancellable_cancel (pi->priv->cancellable);
+		g_object_unref (pi->priv->cancellable);
+		pi->priv->cancellable = NULL;
+	}
+	pi->priv->cancellable = g_cancellable_new ();
+
+	g_dbus_proxy_call (pi->priv->proxy,
+					  "GrabMediaPlayerKeys",
+					  g_variant_new ("(su)", "Totem", 0),
+					  G_DBUS_CALL_FLAGS_NONE,
+					  -1, pi->priv->cancellable,
+					  (GAsyncReadyCallback) grab_media_player_keys_cb,
+					  pi);
+}
+
+static gboolean
+on_window_focus_in_event (GtkWidget                  *window,
+			  GdkEventFocus              *event,
+			  TotemMediaPlayerKeysPlugin *pi)
+{
+	grab_media_player_keys (pi);
 
 	return FALSE;
 }
 
 static void
-proxy_destroy (DBusGProxy *proxy,
-		  TotemMediaPlayerKeysPlugin* plugin)
+key_pressed (GDBusProxy                 *proxy,
+	     gchar                      *sender_name,
+	     gchar                      *signal_name,
+	     GVariant                   *parameters,
+	     TotemMediaPlayerKeysPlugin *pi)
 {
-	plugin->priv->media_player_keys_proxy = NULL;
+	char *app, *cmd;
+
+	if (g_strcmp0 (signal_name, "MediaPlayerKeyPressed") != 0)
+		return;
+	g_variant_get (parameters, "(ss)", &app, &cmd);
+	if (g_strcmp0 (app, "Totem") == 0) {
+		TotemObject *totem;
+
+		totem = g_object_get_data (G_OBJECT (pi), "object");
+		on_media_player_key_pressed (totem, cmd);
+	}
+	g_free (app);
+	g_free (cmd);
+}
+
+static void
+got_proxy_cb (GObject                    *source_object,
+	      GAsyncResult               *res,
+	      TotemMediaPlayerKeysPlugin *pi)
+{
+	GError *error = NULL;
+
+	g_object_unref (pi->priv->cancellable_init);
+	pi->priv->cancellable_init = NULL;
+
+	pi->priv->proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
+
+	if (pi->priv->proxy == NULL) {
+		g_warning ("Failed to contact settings daemon: %s", error->message);
+		g_error_free (error);
+		return;
+	}
+
+	grab_media_player_keys (pi);
+
+	g_signal_connect (G_OBJECT (pi->priv->proxy), "g-signal",
+			  G_CALLBACK (key_pressed), pi);
+}
+
+static void
+name_appeared_cb (GDBusConnection            *connection,
+		  const gchar                *name,
+		  const gchar                *name_owner,
+		  TotemMediaPlayerKeysPlugin *pi)
+{
+	pi->priv->cancellable_init = g_cancellable_new ();
+
+	g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
+				  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
+				  G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+				  NULL,
+				  "org.gnome.SettingsDaemon",
+				  "/org/gnome/SettingsDaemon/MediaKeys",
+				  "org.gnome.SettingsDaemon.MediaKeys",
+				  pi->priv->cancellable_init,
+				  (GAsyncReadyCallback) got_proxy_cb,
+				  pi);
+}
+
+static void
+name_vanished_cb (GDBusConnection            *connection,
+		  const gchar                *name,
+		  TotemMediaPlayerKeysPlugin *pi)
+{
+	if (pi->priv->proxy != NULL) {
+		g_object_unref (pi->priv->proxy);
+		pi->priv->proxy = NULL;
+	}
+	if (pi->priv->cancellable) {
+		g_cancellable_cancel (pi->priv->cancellable);
+		g_object_unref (pi->priv->cancellable);
+		pi->priv->cancellable = NULL;
+	}
 }
 
 static void
@@ -112,68 +224,19 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
 	TotemObject *totem;
-	DBusGConnection *connection;
-	GError *err = NULL;
 	GtkWindow *window;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &err);
-	if (connection == NULL) {
-		g_warning ("Error connecting to D-Bus: %s", err->message);
-		return;
-	}
-
-	/* Try the gnome-settings-daemon version,
-	 * then the gnome-control-center version of things */
-	pi->priv->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
-								       "org.gnome.SettingsDaemon",
-								       "/org/gnome/SettingsDaemon/MediaKeys",
-								       "org.gnome.SettingsDaemon.MediaKeys",
-								       NULL);
-	if (pi->priv->media_player_keys_proxy == NULL) {
-		pi->priv->media_player_keys_proxy = dbus_g_proxy_new_for_name_owner (connection,
-									       "org.gnome.SettingsDaemon",
-									       "/org/gnome/SettingsDaemon",
-									       "org.gnome.SettingsDaemon",
-									       &err);
-	}
-
-	dbus_g_connection_unref (connection);
-	if (err != NULL) {
-#if 0
-		gboolean daemon_not_running;
-		g_warning ("Failed to create dbus proxy for org.gnome.SettingsDaemon: %s",
-			   err->message);
-		daemon_not_running = (err->code == DBUS_GERROR_NAME_HAS_NO_OWNER);
-		g_error_free (err);
-		/* don't popup error if settings-daemon is not running,
- 		 * ie when starting totem not under GNOME desktop */
-		return daemon_not_running;
-#endif
-		return;
-	} else {
-		g_signal_connect_object (pi->priv->media_player_keys_proxy,
-					 "destroy",
-					 G_CALLBACK (proxy_destroy),
-					 pi, 0);
-	}
-
-	dbus_g_proxy_call (pi->priv->media_player_keys_proxy,
-			   "GrabMediaPlayerKeys", NULL,
-			   G_TYPE_STRING, "Totem", G_TYPE_UINT, 0, G_TYPE_INVALID,
-			   G_TYPE_INVALID);
+	pi->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
+					       "org.gnome.SettingsDaemon",
+					       G_BUS_NAME_WATCHER_FLAGS_NONE,
+					       (GBusNameAppearedCallback) name_appeared_cb,
+					       (GBusNameVanishedCallback) name_vanished_cb,
+					       pi, NULL);
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-
-	dbus_g_object_register_marshaller (totem_marshal_VOID__STRING_STRING,
-			G_TYPE_NONE, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal (pi->priv->media_player_keys_proxy, "MediaPlayerKeyPressed",
-			G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (pi->priv->media_player_keys_proxy, "MediaPlayerKeyPressed",
-			G_CALLBACK (on_media_player_key_pressed), totem, NULL);
-
 	window = totem_get_main_window (totem);
 	pi->priv->handler_id = g_signal_connect (G_OBJECT (window), "focus-in-event",
-			G_CALLBACK (on_window_focus_in_event), pi);
+						 G_CALLBACK (on_window_focus_in_event), pi);
 
 	g_object_unref (G_OBJECT (window));
 }
@@ -184,12 +247,20 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
 	GtkWindow *window;
 
-	if (pi->priv->media_player_keys_proxy != NULL) {
-		dbus_g_proxy_call (pi->priv->media_player_keys_proxy,
-				   "ReleaseMediaPlayerKeys", NULL,
-				   G_TYPE_STRING, "Totem", G_TYPE_INVALID, G_TYPE_INVALID);
-		g_object_unref (pi->priv->media_player_keys_proxy);
-		pi->priv->media_player_keys_proxy = NULL;
+	if (pi->priv->cancellable) {
+		g_cancellable_cancel (pi->priv->cancellable);
+		g_object_unref (pi->priv->cancellable);
+		pi->priv->cancellable = NULL;
+	}
+	if (pi->priv->cancellable_init) {
+		g_cancellable_cancel (pi->priv->cancellable_init);
+		g_object_unref (pi->priv->cancellable_init);
+		pi->priv->cancellable_init = NULL;
+	}
+
+	if (pi->priv->proxy != NULL) {
+		g_object_unref (pi->priv->proxy);
+		pi->priv->proxy = NULL;
 	}
 
 	if (pi->priv->handler_id != 0) {
@@ -203,6 +274,11 @@ impl_deactivate (PeasActivatable *plugin)
 		g_signal_handler_disconnect (G_OBJECT (window), pi->priv->handler_id);
 
 		g_object_unref (window);
+		pi->priv->handler_id = 0;
+	}
+	if (pi->priv->watch_id != 0) {
+		g_bus_unwatch_name (pi->priv->watch_id);
+		pi->priv->watch_id = 0;
 	}
 }
 

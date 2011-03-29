@@ -400,7 +400,7 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		media-player-keys)
-			PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, gio-2.0 >= 2.24 dbus-glib-1,
+			PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, gio-2.0 >= 2.24,
 				[HAVE_MEDIA_PLAYER_KEYS=yes], [HAVE_MEDIA_PLAYER_KEYS=no])
 			if test "${HAVE_MEDIA_PLAYER_KEYS}" != "yes" ; then
 				plugin_error_or_ignore "you need gio >= 2.24 installed for the media-player-keys plugin"
