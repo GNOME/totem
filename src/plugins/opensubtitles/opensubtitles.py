@@ -560,7 +560,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
 		if fp.query_exists(None):
                     fp.delete(None)
 
-            fp = Gio.file_new_for_path(filename)
+            fp = Gio.file_new_for_uri (filename)
             suburi = fp.get_uri ()
 
             subFile  = fp.replace('', False)
