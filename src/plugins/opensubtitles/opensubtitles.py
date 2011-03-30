@@ -604,7 +604,7 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
     # Callbacks
 
     def on_window__key_press_event(self, widget, event):
-        if event.keyval == Gdk.Escape:
+        if event.keyval == Gdk.KEY_Escape:
             self.dialog.destroy()
             self.dialog = None
             return True
