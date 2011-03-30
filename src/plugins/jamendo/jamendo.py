@@ -287,7 +287,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             # track title
             # Translators: this is the title of a track in Python format
             # (first argument is the track number, second is the track title)
-            tt = ('<small>%s</small>' % _(u'%02d. %s')) % \
+            tt = (u'<small>%s</small>' % _(u'%02d. %s')) % \
                 (i+1, self._format_str(track['name']))
             # track duration
             td = self._format_duration(track['duration'])
@@ -603,7 +603,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         if not st:
             return ''
         try:
-            return escape(st.encode('utf8'))
+            return escape (unicode (st))
         except:
             return st
 
