@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 2.91.4\n"
+"Project-Id-Version: totem 2.91.93\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-20 22:56+0800\n"
-"PO-Revision-Date: 2011-01-20 22:56+0800\n"
+"POT-Creation-Date: 2011-03-30 21:37+0800\n"
+"PO-Revision-Date: 2011-03-30 21:38+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
@@ -76,13 +76,13 @@ msgstr "選擇文字字幕(_S)…"
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:175
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 頻道"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 赫茲"
 
@@ -118,7 +118,7 @@ msgstr "音效"
 
 #. Audio Codec
 #: ../data/properties.ui.h:10
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/properties/bacon-video-widget-properties.c:171
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "N/A"
@@ -168,10 +168,10 @@ msgstr "標題："
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:145
-#: ../src/plugins/properties/bacon-video-widget-properties.c:147
-#: ../src/plugins/properties/bacon-video-widget-properties.c:149
-#: ../src/plugins/properties/bacon-video-widget-properties.c:151
+#: ../src/properties/bacon-video-widget-properties.c:145
+#: ../src/properties/bacon-video-widget-properties.c:147
+#: ../src/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "不明"
 
@@ -182,7 +182,7 @@ msgstr "影片"
 
 #. Video Codec
 #: ../data/properties.ui.h:23
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#: ../src/properties/bacon-video-widget-properties.c:160
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/A"
@@ -564,7 +564,7 @@ msgstr "正方形"
 msgid "Start playing files from last position"
 msgstr "從上次位置開始播放檔案"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6003
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6012
 msgid "Stereo"
 msgstr "立體聲"
 
@@ -1033,6 +1033,57 @@ msgstr "作業階段管理選項:"
 msgid "Show session management options"
 msgstr "顯示作業階段管理選項"
 
+#. Dimensions
+#: ../src/properties/bacon-video-widget-properties.c:158
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:163
+#: ../src/properties/bacon-video-widget-properties.c:240
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:166
+#: ../src/properties/bacon-video-widget-properties.c:250
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:169
+#: ../src/properties/bacon-video-widget-properties.c:273
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%d kbps"
+
+#: ../src/properties/bacon-video-widget-properties.c:247
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "每秒 %d 格"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "N/A"
+
 #: ../src/totem-audio-preview.c:82
 msgid "Audio Preview"
 msgstr "音樂試聽"
@@ -1049,7 +1100,7 @@ msgstr "立即播放(_P)"
 msgid "Cancel"
 msgstr "取消"
 
-#: ../src/totem-fullscreen.c:617
+#: ../src/totem-fullscreen.c:619
 msgid "No File"
 msgstr "沒有檔案"
 
@@ -1110,33 +1161,33 @@ msgstr "自動"
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:739
+#: ../src/totem-menu.c:767
 #, c-format
 msgid "Play Image '%s'"
 msgstr "播放映像檔「%s」"
 
-#: ../src/totem-menu.c:742 ../src/totem-menu.c:824
+#: ../src/totem-menu.c:770 ../src/totem-menu.c:853
 #, c-format
 msgid "device%d"
 msgstr "裝置%d"
 
-#: ../src/totem-menu.c:821
+#: ../src/totem-menu.c:850
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "播放碟片‘%s’"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1172
+#: ../src/totem-menu.c:1201
 #, c-format
 msgid "Movie Player using %s"
 msgstr "使用 %s 的影片播放器"
 
-#: ../src/totem-menu.c:1176
+#: ../src/totem-menu.c:1205
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "版權所有 © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1166
+#: ../src/totem-menu.c:1210 ../browser-plugin/totem-plugin-viewer.c:1163
 msgid "translator-credits"
 msgstr ""
 "如對翻譯有任何意見，請送一封電子郵件給\n"
@@ -1148,11 +1199,11 @@ msgstr ""
 "Woodman Tuen <wmtuen@gmail.com>, 2004-07\n"
 "Abel Cheung <abel@oaka.org>, 2003"
 
-#: ../src/totem-menu.c:1185
+#: ../src/totem-menu.c:1214
 msgid "Totem Website"
 msgstr "Totem 網站"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1248
 msgid "Configure Plugins"
 msgstr "設定外掛程式"
 
@@ -1188,7 +1239,7 @@ msgid "Stopped"
 msgstr "已停止"
 
 #: ../src/totem-object.c:1141 ../src/totem-object.c:1168
-#: ../src/totem-object.c:1796 ../src/totem-object.c:1959
+#: ../src/totem-object.c:1798 ../src/totem-object.c:1962
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem 無法播放‘%s’。"
@@ -1243,7 +1294,7 @@ msgstr "請插入另一個光碟片以播放。"
 msgid "Totem was not able to play this disc."
 msgstr "Totem 無法播放此碟片。"
 
-#: ../src/totem-object.c:1300 ../src/totem-object.c:4273
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4280
 msgid "No reason."
 msgstr "沒有原因。"
 
@@ -1255,42 +1306,42 @@ msgstr "Totem 不支援播放音樂 CD"
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "請改用音樂播放程式或 CD 擷取程式來播放這張 CD"
 
-#: ../src/totem-object.c:1802
+#: ../src/totem-object.c:1804
 msgid "No error message"
 msgstr "沒有錯誤訊息"
 
-#: ../src/totem-object.c:2194
+#: ../src/totem-object.c:2197
 msgid "Totem could not display the help contents."
 msgstr "Totem 無法顯示求助內容。"
 
-#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
-#: ../browser-plugin/totem-plugin-viewer.c:1469
+#: ../src/totem-object.c:2535 ../src/totem-object.c:2537
+#: ../browser-plugin/totem-plugin-viewer.c:1466
 msgid "An error occurred"
 msgstr "發生錯誤"
 
-#: ../src/totem-object.c:4107 ../src/totem-object.c:4109
+#: ../src/totem-object.c:4114 ../src/totem-object.c:4116
 msgid "Previous Chapter/Movie"
 msgstr "上一章/上一齣影片"
 
-#: ../src/totem-object.c:4116 ../src/totem-object.c:4118
+#: ../src/totem-object.c:4123 ../src/totem-object.c:4125
 msgid "Play / Pause"
 msgstr "播放/暫停"
 
-#: ../src/totem-object.c:4126 ../src/totem-object.c:4128
+#: ../src/totem-object.c:4133 ../src/totem-object.c:4135
 msgid "Next Chapter/Movie"
 msgstr "下一章/下一齣影片"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4140 ../src/totem-object.c:4142
+#: ../src/totem-object.c:4147 ../src/totem-object.c:4149
 msgid "Fullscreen"
 msgstr "全螢幕"
 
-#: ../src/totem-object.c:4273
+#: ../src/totem-object.c:4280
 msgid "Totem could not startup."
 msgstr "Totem 無法啟動"
 
-#: ../src/totem-open-location.c:179
+#: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "開啟位置…"
 
@@ -1368,72 +1419,60 @@ msgstr "要播放的影片"
 
 #: ../src/totem-options.c:117
 msgid "Can't enqueue and replace at the same time"
-msgstr ""
+msgstr "不能同時加入佇列和取代"
 
 #. By extension entry
-#: ../src/totem-playlist.c:157
+#: ../src/totem-playlist.c:161
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast 播放清單"
 
-#: ../src/totem-playlist.c:158
+#: ../src/totem-playlist.c:162
 msgid "MP3 audio (streamed)"
 msgstr "MP3 音樂 (串流)"
 
-#: ../src/totem-playlist.c:159
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 音樂（串流式，DOS 格式）"
 
-#: ../src/totem-playlist.c:160
+#: ../src/totem-playlist.c:164
 msgid "XML Shareable Playlist"
 msgstr "XML 共享式播放清單"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:359
+#: ../src/totem-playlist.c:363
 #, c-format
 msgid "Title %d"
 msgstr "影片 %d"
 
-#: ../src/totem-playlist.c:458
+#: ../src/totem-playlist.c:462
 msgid "Could not save the playlist"
 msgstr "無法儲存播放清單"
 
-#: ../src/totem-playlist.c:1033
+#: ../src/totem-playlist.c:1037
 msgid "Save Playlist"
 msgstr "儲存播放清單"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1045 ../src/totem-sidebar.c:140
+#: ../src/totem-playlist.c:1049 ../src/totem-sidebar.c:140
 msgid "Playlist"
 msgstr "播放清單"
 
-#: ../src/totem-playlist.c:1852
+#: ../src/totem-playlist.c:1869
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "無法解析播放清單「%s」。它可能已經損壞。"
 
-#: ../src/totem-playlist.c:1853
+#: ../src/totem-playlist.c:1870
 msgid "Playlist error"
 msgstr "播放清單錯誤"
 
-#: ../src/totem-preferences.c:66
-msgid "Enable visual effects?"
-msgstr "啟用視覺效果？"
-
-#: ../src/totem-preferences.c:68
-msgid ""
-"It seems you are running Totem remotely.\n"
-"Are you sure you want to enable the visual effects?"
-msgstr ""
-"似乎你是在遠端執行 Totem。\n"
-"你是否確定要啟用視覺效果？"
-
-#: ../src/totem-preferences.c:332
+#: ../src/totem-preferences.c:295
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: ../src/totem-preferences.c:490
+#: ../src/totem-preferences.c:451
 msgid "Select Subtitle Font"
 msgstr "選取字幕字型"
 
@@ -1634,7 +1673,7 @@ msgstr "沒有影片 URI"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:679
+#: ../src/totem-video-thumbnailer.c:686
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1645,23 +1684,23 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:680
+#: ../src/totem-video-thumbnailer.c:687
 msgid "Filename"
 msgstr "檔案名稱"
 
-#: ../src/totem-video-thumbnailer.c:682
+#: ../src/totem-video-thumbnailer.c:689
 msgid "Resolution"
 msgstr "解像度"
 
-#: ../src/totem-video-thumbnailer.c:685
+#: ../src/totem-video-thumbnailer.c:692
 msgid "Duration"
 msgstr "持續時間"
 
-#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1000
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:998
 msgid "All files"
 msgstr "所有檔案"
 
-#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:997
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:995
 msgid "Supported files"
 msgstr "支援的檔案"
 
@@ -1700,12 +1739,12 @@ msgstr ""
 "執行「%s --help」可列出命令列中可用的完整選項。\n"
 
 #: ../src/totem.c:254 ../src/totem.c:263
-#: ../browser-plugin/totem-plugin-viewer.c:666
-#: ../browser-plugin/totem-plugin-viewer.c:1864
+#: ../browser-plugin/totem-plugin-viewer.c:663
+#: ../browser-plugin/totem-plugin-viewer.c:1861
 msgid "Totem Movie Player"
 msgstr "Totem 影片播放器"
 
-#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2305
+#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2302
 msgid "Could not initialize the thread-safe libraries."
 msgstr "無法起動 thread-safe libraries。"
 
@@ -1713,45 +1752,45 @@ msgstr "無法起動 thread-safe libraries。"
 msgid "Verify your system installation. Totem will now exit."
 msgstr "請先確認安裝時有沒有問題。Totem 會立刻結束。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1843
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1850
 msgid "Password requested for RTSP server"
 msgstr "RTSP 伺服器要求的密碼 "
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3115
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3119
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3124
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3128
 #, c-format
 msgid "Audio Track #%d"
 msgstr "音樂音軌 #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3147
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3151
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3156
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3160
 #, c-format
 msgid "Subtitle #%d"
 msgstr "字幕 #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3560
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
 msgstr "找不到所要求的音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3565
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
 msgid "Location not found."
 msgstr "找不到位置。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3578
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "無法開啟位置，可能你沒有開啟該檔案的權限。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3580
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3589
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr "其它的應用程式正在使用視像輸出。請關閉其它的視像輸出，或是在多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3586
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3595
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1759,13 +1798,13 @@ msgid ""
 msgstr "其它的應用程式正在使用音效輸出。請在多媒體系統選取程式中選擇其它的音效輸出。或者你要考慮一下使用音效伺服器。"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3604
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3610
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3613
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3619
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "播放此影片需要外掛程式 %s，但其並沒有安裝。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3611
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3620
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1777,59 +1816,59 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3636
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3645
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "無法透過網絡播放此檔案。先下載到磁碟後再試。。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3708
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3717
 msgid "Media file could not be played."
 msgstr "媒體檔無法播放。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5999
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6008
 msgid "Surround"
 msgstr "環繞"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6001
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6010
 msgid "Mono"
 msgstr "單聲道"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6348
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6357
 msgid "Too old version of GStreamer installed."
 msgstr "已安裝的 GStreamer 版本太舊。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6355
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6364
 msgid "Media contains no supported video streams."
 msgstr "媒體包含不支援的視像串流。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6840
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6847
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr "無法建立 GStreamer 播放對像。請檢查 GStreamer 的安裝是否正確。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6951
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7086
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6958
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7093
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
 msgstr "無法開啟視像輸出。可能它不存在。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6963
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6970
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr "無法找到視像輸出。你可能需要安裝附加的 GStreamer 外掛程式，或在多媒體系統選取程式中選擇其它的視像輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6998
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7005
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
 "output in the Multimedia Systems Selector."
 msgstr "無法開啟音效輸出。你沒有足夠的權限開啟音效裝置，或是音效伺服器沒有執行。請在多媒體系統選取程式中選擇其它的音效輸出。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7018
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7025
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1967,7 +2006,7 @@ msgid "Video Disc Recorder"
 msgstr "影片光碟燒錄程式"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1139
+#: ../src/plugins/chapters/totem-chapters.c:1137
 msgid "Chapters"
 msgstr "章節"
 
@@ -2040,62 +2079,62 @@ msgstr ""
 "<b>片名：</b>%s\n"
 "<b>開始時刻：</b>%s"
 
-#: ../src/plugins/chapters/totem-chapters.c:330
+#: ../src/plugins/chapters/totem-chapters.c:328
 msgid "Error while reading file with chapters"
 msgstr "讀取有章節的檔案時發生錯誤"
 
-#: ../src/plugins/chapters/totem-chapters.c:545
+#: ../src/plugins/chapters/totem-chapters.c:543
 msgid "Chapter with the same time already exists"
 msgstr "相同名稱的章節已經存在"
 
-#: ../src/plugins/chapters/totem-chapters.c:546
+#: ../src/plugins/chapters/totem-chapters.c:544
 msgid "Try another name or remove an existing chapter."
 msgstr "嘗試另一個名稱或移除現有的章節。"
 
-#: ../src/plugins/chapters/totem-chapters.c:719
+#: ../src/plugins/chapters/totem-chapters.c:717
 msgid "Error while writing file with chapters"
 msgstr "寫入有章節的檔案時發生錯誤"
 
-#: ../src/plugins/chapters/totem-chapters.c:844
+#: ../src/plugins/chapters/totem-chapters.c:842
 msgid "Error occurred while saving chapters"
 msgstr "當儲存章節時發生錯誤"
 
-#: ../src/plugins/chapters/totem-chapters.c:845
+#: ../src/plugins/chapters/totem-chapters.c:843
 msgid ""
 "Please check you have permission to write to the folder containing the movie."
 msgstr "請檢查你是否有寫入包含影片的資料夾的權限。"
 
-#: ../src/plugins/chapters/totem-chapters.c:978
+#: ../src/plugins/chapters/totem-chapters.c:976
 msgid "Open Chapter File"
 msgstr "開啟章節檔案"
 
-#: ../src/plugins/chapters/totem-chapters.c:1095
+#: ../src/plugins/chapters/totem-chapters.c:1093
 msgid "Chapter Screenshot"
 msgstr "章節螢幕截圖"
 
-#: ../src/plugins/chapters/totem-chapters.c:1106
+#: ../src/plugins/chapters/totem-chapters.c:1104
 msgid "Chapter Title"
 msgstr "章節標題"
 
-#: ../src/plugins/chapters/totem-chapters.c:1184
+#: ../src/plugins/chapters/totem-chapters.c:1182
 msgid "Save changes to chapter list before closing?"
 msgstr "在關閉前將更改儲存到章節清單？"
 
 #. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1189
+#: ../src/plugins/chapters/totem-chapters.c:1187
 msgid "Close without Saving"
 msgstr "關閉但不儲存"
 
 #. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1191
+#: ../src/plugins/chapters/totem-chapters.c:1189
 msgid "Save"
 msgstr "儲存"
 
-#: ../src/plugins/chapters/totem-chapters.c:1194
+#: ../src/plugins/chapters/totem-chapters.c:1192
 msgid "If you don't save, changes to the chapter list will be lost."
 msgstr "如果你不儲存，所有對章節清單做的更改都會消失。"
 
-#: ../src/plugins/chapters/totem-cmml-parser.c:559
+#: ../src/plugins/chapters/totem-cmml-parser.c:642
 msgid "Failed to parse CMML file"
 msgstr "無法解析 CMML 檔案"
 
@@ -2104,7 +2143,7 @@ msgstr "無法解析 CMML 檔案"
 msgid "Delete"
 msgstr "刪除"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:116
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:117
 #: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Coherence DLNA/UPnP 客戶端"
@@ -2123,21 +2162,13 @@ msgid ""
 "subsystem."
 msgstr "將目前播放影片的通知傳送到 D-Bus 子系統的外掛程式。"
 
-#: ../src/plugins/galago/galago.plugin.in.h:1
+#: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "即時通訊狀態"
 
-#: ../src/plugins/galago/galago.plugin.in.h:2
+#: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "當電影播放時設定你的即時通訊狀態為離開"
-
-#: ../src/plugins/galago/totem-galago.c:117
-msgid "Error loading Galago plugin"
-msgstr "載入 Galago 外掛程式發生錯誤"
-
-#: ../src/plugins/galago/totem-galago.c:117
-msgid "Could not connect to the Galago daemon."
-msgstr "無法連接 Galago 服務程式"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -2153,7 +2184,7 @@ msgstr "找不到 Gromit 的二進位檔。"
 
 #. Add the interface to Totem's sidebar
 #: ../src/plugins/iplayer/iplayer.plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:41
+#: ../src/plugins/iplayer/iplayer.py:42
 msgid "BBC iPlayer"
 msgstr "BBC iPlayer"
 
@@ -2161,11 +2192,11 @@ msgstr "BBC iPlayer"
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "從 BBC iPlayer 服務最新 7 天的串流 BBC 節目。"
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid "Error listing channel categories"
 msgstr "列出頻道分類時發生錯誤"
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid ""
 "There was an unknown error getting the list of television channels available "
 "on BBC iPlayer."
@@ -2173,16 +2204,16 @@ msgstr "從 BBC iPlayer 取得可用的電視頻道清單時發生不明的錯�
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
-#: ../src/plugins/iplayer/iplayer.py:74
+#: ../src/plugins/iplayer/iplayer.py:75
 msgid "Loading…"
 msgstr "載入中…"
 
 #. Translators: the "programme feed" is the list of TV shows available to watch online
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid "Error getting programme feed"
 msgstr "取得節目表餵送時發生錯誤"
 
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2226,7 +2257,7 @@ msgid "Preferred audio _format:"
 msgstr "偏好的音樂格式(_F):"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:8
-#: ../src/plugins/tracker/totem-tracker-widget.c:521
+#: ../src/plugins/tracker/totem-tracker-widget.c:761
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "搜尋結果"
@@ -2236,7 +2267,7 @@ msgid "_Open Jamendo Album Page in Browser"
 msgstr "在網頁瀏覽器中開啟 Jamend_o 專輯頁面"
 
 #: ../src/plugins/jamendo/jamendo.plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:127
+#: ../src/plugins/jamendo/jamendo.py:128
 msgid "Jamendo"
 msgstr "Jamendo"
 
@@ -2249,34 +2280,34 @@ msgstr "聆聽 Jamendo 上許許多多以創用 CC 授權的音樂。"
 msgid "You need to install the Python simplejson module."
 msgstr "你需要安裝 Python simplejson 模組。"
 
-#: ../src/plugins/jamendo/jamendo.py:260 ../src/plugins/jamendo/jamendo.py:273
-#: ../src/plugins/jamendo/jamendo.py:297
+#: ../src/plugins/jamendo/jamendo.py:261 ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:298
 #, python-format
 msgid "Artist: %s"
 msgstr "演出者：%s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:266
+#: ../src/plugins/jamendo/jamendo.py:267
 msgid "%Y-%m-%d"
 msgstr "%Y-%m-%d"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:268
+#: ../src/plugins/jamendo/jamendo.py:269
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:275
 #, python-format
 msgid "Genre: %s"
 msgstr "樂曲分類：%s"
 
-#: ../src/plugins/jamendo/jamendo.py:275
+#: ../src/plugins/jamendo/jamendo.py:276
 #, python-format
 msgid "Released on: %s"
 msgstr "推出時間：%s"
 
-#: ../src/plugins/jamendo/jamendo.py:276
+#: ../src/plugins/jamendo/jamendo.py:277
 #, python-format
 msgid "License: %s"
 msgstr "授權條款：%s"
@@ -2284,26 +2315,26 @@ msgstr "授權條款：%s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:289
+#: ../src/plugins/jamendo/jamendo.py:290
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:296
+#: ../src/plugins/jamendo/jamendo.py:297
 #, python-format
 msgid "Album: %s"
 msgstr "專輯：%s"
 
-#: ../src/plugins/jamendo/jamendo.py:298
+#: ../src/plugins/jamendo/jamendo.py:299
 #, python-format
 msgid "Duration: %s"
 msgstr "持續時間：%s"
 
-#: ../src/plugins/jamendo/jamendo.py:355
+#: ../src/plugins/jamendo/jamendo.py:356
 msgid "Fetching albums, please wait…"
 msgstr "正在取回專輯，請稍候…"
 
-#: ../src/plugins/jamendo/jamendo.py:410
+#: ../src/plugins/jamendo/jamendo.py:411
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2312,24 +2343,24 @@ msgstr ""
 "無法連線至 Jamendo 伺服器。\n"
 "%s。"
 
-#: ../src/plugins/jamendo/jamendo.py:412
+#: ../src/plugins/jamendo/jamendo.py:413
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "Jamendo 伺服器傳回代碼 %s。"
 
-#: ../src/plugins/jamendo/jamendo.py:416
+#: ../src/plugins/jamendo/jamendo.py:417
 msgid "An error occurred while fetching albums."
 msgstr "當取回專輯時發生錯誤。"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:618
+#: ../src/plugins/jamendo/jamendo.py:619
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:621
+#: ../src/plugins/jamendo/jamendo.py:622
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2340,7 +2371,7 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:671
+#: ../src/plugins/jamendo/jamendo.py:672
 msgid "en"
 msgstr "en"
 
@@ -2416,35 +2447,35 @@ msgstr "無法連接 OpenSubtitles 網站"
 msgid "No results found"
 msgstr "沒有結果"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:374
+#: ../src/plugins/opensubtitles/opensubtitles.py:375
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:380
+#: ../src/plugins/opensubtitles/opensubtitles.py:381
 msgid "Format"
 msgstr "格式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:385
+#: ../src/plugins/opensubtitles/opensubtitles.py:386
 msgid "Rating"
 msgstr "評價"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:426
+#: ../src/plugins/opensubtitles/opensubtitles.py:427
 msgid "_Download Movie Subtitles…"
 msgstr "下載影片字幕(_D)…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:427
+#: ../src/plugins/opensubtitles/opensubtitles.py:428
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "從 OpenSubtitles 下載影片字幕"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:486
+#: ../src/plugins/opensubtitles/opensubtitles.py:487
 msgid "Searching subtitles…"
 msgstr "正在搜尋字幕…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:544
+#: ../src/plugins/opensubtitles/opensubtitles.py:545
 msgid "Downloading the subtitles…"
 msgstr "正在下載字幕…"
 
@@ -2468,57 +2499,6 @@ msgstr "播放電影時將主視窗維持在最上層"
 msgid "Properties"
 msgstr "屬性"
 
-#. Dimensions
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, c-format
-msgid "%d kbps"
-msgstr "%d kbps"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:247
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "每秒 %d 格"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "N/A"
-
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
 msgid ""
@@ -2527,7 +2507,7 @@ msgid ""
 "%a: the program name as returned by g_get_application_name() • %h: the "
 "machine's host name in title case • %u: the user's login name in title case "
 "• %U: the user's real name • %%: the percent sign"
-msgstr ""
+msgstr "用來建立透過網絡發布播放清單時使用的網絡服務名稱的格式字串。可以使用下列格式佔位符：• %a：由 g_get_application_name() 傳回的程式名稱• %h：電腦的大寫主機名稱• %u：使用者的大寫登入名稱 • %U：使用者的真實姓名 • %%：百分比符號"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
 msgid "Format for network service name"
@@ -2608,8 +2588,8 @@ msgstr "Movie"
 msgid "Movie stream"
 msgstr "影片串流"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:112
-#: ../browser-plugin/totem-plugin-viewer.c:1964
+#: ../src/plugins/screensaver/totem-screensaver.c:116
+#: ../browser-plugin/totem-plugin-viewer.c:1961
 msgid "Playing a movie"
 msgstr "播放影片"
 
@@ -2719,7 +2699,6 @@ msgstr[0] "秒"
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
 #: ../src/plugins/skipto/totem-skipto.c:190
-#, fuzzy
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
@@ -2740,37 +2719,35 @@ msgstr "跳往指定時間"
 msgid "_Skip to:"
 msgstr "跳至(_S):"
 
-#. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:173
-#, c-format
-msgid "Could not get name and thumbnail for %s: %s"
-msgstr "無法取得 %s 的名稱與縮圖：%s"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:174
-msgid "File Error"
-msgstr "檔案錯誤"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:251
-#: ../src/plugins/tracker/totem-tracker-widget.c:368
+#: ../src/plugins/tracker/totem-tracker-widget.c:587
+#: ../src/plugins/tracker/totem-tracker-widget.c:676
 msgid "Could not connect to Tracker"
 msgstr "無法連接到追蹤器"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:258
+#: ../src/plugins/tracker/totem-tracker-widget.c:594
 msgid "No results"
 msgstr "沒有結果"
 
 #. Translators:
-#. * This is used to show which items are listed in the list view, for example:
-#. * Showing 10-20 of 128 matches
-#. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
-#. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:283
+#. * This is used to show which items are listed in the
+#. * list view, for example:
+#. *
+#. *   Showing 10-20 of 128 matches
+#. *
+#. * This is similar to what web searches use, eg.
+#. * Google on the top-right of their search results
+#. * page show:
+#. *
+#. *   Personalized Results 1 - 10 of about 4,130,000 for foobar
+#. *
+#.
+#: ../src/plugins/tracker/totem-tracker-widget.c:618
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "顯示 %3$i 項符合中的第 %1$i - %2$i 項"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:581
+#: ../src/plugins/tracker/totem-tracker-widget.c:823
 msgid "Page"
 msgstr "頁"
 
@@ -2874,29 +2851,29 @@ msgstr "沒有要播放的 URI"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1104
+#: ../browser-plugin/totem-plugin-viewer.c:1101
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "以「%s」開啟(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1155
+#: ../browser-plugin/totem-plugin-viewer.c:1152
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "Totem 瀏覽器外掛程式使用 %s"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1160
+#: ../browser-plugin/totem-plugin-viewer.c:1157
 msgid "Totem Browser Plugin"
 msgstr "Totem 瀏覽器外掛程式"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2198
+#: ../browser-plugin/totem-plugin-viewer.c:2195
 msgid "No playlist or playlist empty"
 msgstr "沒有播放清單或清單空白"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2289
+#: ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Movie browser plugin"
 msgstr "影片瀏覽器外掛程式"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2305
+#: ../browser-plugin/totem-plugin-viewer.c:2302
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "請檢查安裝時有沒有問題。Totem 會立刻結束。"
 
@@ -2908,43 +2885,65 @@ msgstr "互動式 Python 主控臺。"
 msgid "Python Console"
 msgstr "Python 主控臺"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:85
+#: ../src/plugins/pythonconsole/pythonconsole.py:86
 msgid "Python Console Menu"
 msgstr "Python 主控臺選單"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
+#: ../src/plugins/pythonconsole/pythonconsole.py:89
 msgid "_Python Console"
 msgstr "_Python 主控臺"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:89
+#: ../src/plugins/pythonconsole/pythonconsole.py:90
 msgid "Show Totem's Python console"
 msgstr "顯示 Totem 的 Python 主控臺"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Python Debugger"
 msgstr "Python 除錯器"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:95
+#: ../src/plugins/pythonconsole/pythonconsole.py:96
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "啟用使用 rpdb2 的遠端 Python 除錯"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:116
+#: ../src/plugins/pythonconsole/pythonconsole.py:117
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr ""
 "你可以透過「totem_object」存取 Totem 物件：\\n"
 "%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:120
+#: ../src/plugins/pythonconsole/pythonconsole.py:121
 msgid "Totem Python Console"
 msgstr "Totem Python 主控臺"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:129
+#: ../src/plugins/pythonconsole/pythonconsole.py:130
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr "在你按下確定後，Totem 會等待你以 winpdb 或 rpdb2 連線。如果你尚未在 GConf 中設定除錯器密碼，它會使用預設的密碼('totem')。"
+
+#~ msgid "Enable visual effects?"
+#~ msgstr "啟用視覺效果？"
+
+#~ msgid ""
+#~ "It seems you are running Totem remotely.\n"
+#~ "Are you sure you want to enable the visual effects?"
+#~ msgstr ""
+#~ "似乎您是在遠端執行 Totem。\n"
+#~ "您是否確定要啟用視覺效果？"
+
+#~ msgid "Error loading Galago plugin"
+#~ msgstr "載入 Galago 外掛程式發生錯誤"
+
+#~ msgid "Could not connect to the Galago daemon."
+#~ msgstr "無法連接 Galago 服務程式"
+
+#~ msgid "Could not get name and thumbnail for %s: %s"
+#~ msgstr "無法取得 %s 的名稱與縮圖：%s"
+
+#~ msgid "File Error"
+#~ msgstr "檔案錯誤"
 
 #~ msgid "Don't connect to an already-running instance"
 #~ msgstr "不要連線至已經在執行的實體"
