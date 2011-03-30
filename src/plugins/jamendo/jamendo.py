@@ -462,7 +462,8 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             item = self._get_selection()[0] # first item selected
         except:
             return
-        if len(path) == 1:
+
+        if path.get_depth () == 1:
             self.add_album_to_playlist('replace', item)
         else:
             self.add_track_to_playlist('replace', item)
@@ -472,19 +473,19 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         Called when the user clicked on a treeview element.
         """
         try:
-            if evt.button.button == 3:
+            if evt.button == 3:
                 (path, _, _, _) = tv.get_path_at_pos(int(evt.x), int(evt.y))
                 sel  = tv.get_selection()
-                (rows, _) = sel.get_selected_rows()
+                (_, rows) = sel.get_selected_rows()
                 if path not in rows:
                     sel.unselect_all()
                     sel.select_path(path)
                 tv.grab_focus()
-                self.popup.popup_for_device(None, None, None, None, None, evt.button.button, evt.time)
+                self.popup.popup_for_device(None, None, None, None, None, evt.button, evt.time)
                 return True
 
-            (_, event_x, event_y) = evt.get_coords()
-            path, c, x, y = tv.get_path_at_pos(int(event_x), int(event_y))
+            (event_x, event_y) = evt.get_coords()
+            (path, c, x, y) = tv.get_path_at_pos(int(event_x), int(event_y))
             if (path.get_depth() == 1):
                 if tv.row_expanded(path):
                     tv.collapse_row(path)
@@ -494,7 +495,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
             pass
 
     def on_treeview_selection_changed (self, selection):
-        (rows, _) = selection.get_selected_rows ()
+        (_, rows) = selection.get_selected_rows ()
         self.album_button.set_sensitive (len (rows) > 0)
 
     def on_previous_button_clicked(self, *args):
@@ -565,7 +566,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         """
         ret = []
         sel = self.current_treeview.get_selection()
-        (rows, model) = sel.get_selected_rows()
+        (model, rows) = sel.get_selected_rows()
         for row in rows:
             it = model.get_iter(row)
 
@@ -585,7 +586,7 @@ class JamendoPlugin(gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
         Update the state of the previous and next buttons.
         """
         sel = self.current_treeview.get_selection()
-        (rows, model) = sel.get_selected_rows()
+        (model, rows) = sel.get_selected_rows()
         try:
             it = model.get_iter(rows[0])
         except:
