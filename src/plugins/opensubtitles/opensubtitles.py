@@ -364,8 +364,9 @@ class OpenSubtitles(gobject.GObject, Peas.Activatable):
         for lang in LANGUAGES_STR:
             it = languages.append(lang)
             if LANGUAGES[lang[1]] == self.model.lang:
-                parentit = sorted_languages.convert_child_iter_to_iter (it)
-                combobox.set_active_iter(parentit)
+                (success, parentit) = sorted_languages.convert_child_iter_to_iter (it)
+                if success:
+                    combobox.set_active_iter (parentit)
 
         # Set up the results treeview 
         renderer = Gtk.CellRendererText()
