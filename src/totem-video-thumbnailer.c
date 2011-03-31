@@ -850,7 +850,7 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Initialised libraries, about to create video widget");
 	PRINT_PROGRESS (2.0);
 
-	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (-1, -1, BVW_USE_TYPE_CAPTURE, &err));
+	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (BVW_USE_TYPE_CAPTURE, &err));
 	if (err != NULL) {
 		g_print ("totem-video-thumbnailer couldn't create the video "
 				"widget.\nReason: %s.\n", err->message);

@@ -79,12 +79,6 @@
 #define SEEK_FORWARD_LONG_OFFSET 10*60
 #define SEEK_BACKWARD_LONG_OFFSET -3*60
 
-#define ZOOM_UPPER 2.0
-#define ZOOM_RESET 1.0
-#define ZOOM_LOWER 0.1
-#define ZOOM_DISABLE (ZOOM_LOWER - 1)
-#define ZOOM_ENABLE (ZOOM_UPPER + 1)
-
 #define DEFAULT_WINDOW_W 650
 #define DEFAULT_WINDOW_H 500
 
@@ -1999,58 +1993,14 @@ totem_object_action_seek_time (TotemObject *totem, gint64 msec, gboolean accurat
 	totem_seek_time_rel (totem, msec, FALSE, accurate);
 }
 
-static void
-totem_action_zoom (TotemObject *totem, double zoom)
+void
+totem_action_set_zoom (TotemObject *totem,
+		       gboolean     zoom)
 {
 	GtkAction *action;
-	gboolean zoom_reset, zoom_in, zoom_out;
 
-	if (totem->bvw == NULL)
-		return;
-
-	if (zoom == ZOOM_ENABLE)
-		zoom = bacon_video_widget_get_zoom (totem->bvw);
-
-	if (zoom == ZOOM_DISABLE) {
-		zoom_reset = zoom_in = zoom_out = FALSE;
-	} else if (zoom < ZOOM_LOWER || zoom > ZOOM_UPPER) {
-		return;
-	} else {
-		bacon_video_widget_set_zoom (totem->bvw, zoom);
-		zoom_reset = (zoom != ZOOM_RESET);
-		zoom_out = zoom != ZOOM_LOWER;
-		zoom_in = zoom != ZOOM_UPPER;
-	}
-
-	action = gtk_action_group_get_action (totem->zoom_action_group,
-			"zoom-in");
-	gtk_action_set_sensitive (action, zoom_in);
-
-	action = gtk_action_group_get_action (totem->zoom_action_group,
-			"zoom-out");
-	gtk_action_set_sensitive (action, zoom_out);
-
-	action = gtk_action_group_get_action (totem->zoom_action_group,
-			"zoom-reset");
-	gtk_action_set_sensitive (action, zoom_reset);
-}
-
-void
-totem_action_zoom_relative (TotemObject *totem, double off_pct)
-{
-	double zoom;
-
-	if (totem->bvw == NULL)
-		return;
-
-	zoom = bacon_video_widget_get_zoom (totem->bvw);
-	totem_action_zoom (totem, zoom + off_pct);
-}
-
-void
-totem_action_zoom_reset (TotemObject *totem)
-{
-	totem_action_zoom (totem, ZOOM_RESET);
+	action = gtk_action_group_get_action (totem->main_action_group, "zoom-toggle");
+	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), zoom);
 }
 
 /**
@@ -2702,14 +2652,6 @@ property_notify_cb_volume (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject 
 }
 
 static void
-property_notify_cb_logo_mode (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
-{
-	gboolean enabled;
-	enabled = bacon_video_widget_get_logo_mode (totem->bvw);
-	totem_action_zoom (totem, enabled ? ZOOM_DISABLE : ZOOM_ENABLE);
-}
-
-static void
 property_notify_cb_seekable (BaconVideoWidget *bvw, GParamSpec *spec, TotemObject *totem)
 {
 	update_seekable (totem);
@@ -3198,10 +3140,10 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 				BVW_DVD_ROOT_MENU);
 		break;
 	case TOTEM_REMOTE_COMMAND_ZOOM_UP:
-		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		totem_action_set_zoom (totem, TRUE);
 		break;
 	case TOTEM_REMOTE_COMMAND_ZOOM_DOWN:
-		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+		totem_action_set_zoom (totem, FALSE);
 		break;
 	case TOTEM_REMOTE_COMMAND_EJECT:
 		totem_action_eject (totem);
@@ -3661,12 +3603,12 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_r:
 	case GDK_KEY_R:
 	case GDK_KEY_ZoomIn:
-		totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+		totem_action_set_zoom (totem, TRUE);
 		break;
 	case GDK_KEY_t:
 	case GDK_KEY_T:
 	case GDK_KEY_ZoomOut:
-		totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+		totem_action_set_zoom (totem, FALSE);
 		break;
 	case GDK_KEY_Eject:
 		totem_action_eject (totem);
@@ -3738,7 +3680,7 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_0:
 		if (event->state & GDK_CONTROL_MASK)
-			totem_action_zoom_reset (totem);
+			totem_action_set_zoom (totem, FALSE);
 		else
 			totem_action_set_scale_ratio (totem, 0.5);
 		break;
@@ -3762,18 +3704,18 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_equal:
 		if (event->state & GDK_CONTROL_MASK)
-			totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+			totem_action_set_zoom (totem, TRUE);
 		break;
 	case GDK_KEY_hyphen:
 		if (event->state & GDK_CONTROL_MASK)
-			totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+			totem_action_set_zoom (totem, FALSE);
 		break;
 	case GDK_KEY_plus:
 	case GDK_KEY_KP_Add:
 		if (!(event->state & GDK_CONTROL_MASK)) {
 			totem_action_next (totem);
 		} else {
-			totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
+			totem_action_set_zoom (totem, TRUE);
 		}
 		break;
 	case GDK_KEY_minus:
@@ -3781,7 +3723,7 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		if (!(event->state & GDK_CONTROL_MASK)) {
 			totem_action_previous (totem);
 		} else {
-			totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+			totem_action_set_zoom (totem, FALSE);
 		}
 		break;
 	case GDK_KEY_KP_Up:
@@ -4274,15 +4216,13 @@ video_widget_create (TotemObject *totem)
 	BaconVideoWidget **bvw;
 
 	totem->bvw = BACON_VIDEO_WIDGET
-		(bacon_video_widget_new (-1, -1, BVW_USE_TYPE_VIDEO, &err));
+		(bacon_video_widget_new (BVW_USE_TYPE_VIDEO, &err));
 
 	if (totem->bvw == NULL) {
 		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);
 		if (err != NULL)
 			g_error_free (err);
 	}
-
-	totem_action_zoom (totem, ZOOM_RESET);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
 			"button-press-event",
@@ -4355,8 +4295,6 @@ video_widget_create (TotemObject *totem)
 
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
 			G_CALLBACK (property_notify_cb_volume), totem);
-	g_signal_connect (G_OBJECT (totem->bvw), "notify::logo-mode",
-			G_CALLBACK (property_notify_cb_logo_mode), totem);
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
 			G_CALLBACK (property_notify_cb_seekable), totem);
 	update_volume_sliders (totem);

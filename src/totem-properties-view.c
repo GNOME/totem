@@ -106,7 +106,7 @@ totem_properties_view_init (TotemPropertiesView *props)
 	props->priv = g_new0 (TotemPropertiesViewPriv, 1);
 
 	props->priv->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-			(-1, -1, BVW_USE_TYPE_METADATA, &err));
+			(BVW_USE_TYPE_METADATA, &err));
 
 	if (props->priv->bvw != NULL)
 	{

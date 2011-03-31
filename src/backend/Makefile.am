@@ -12,6 +12,7 @@ bvw_test_CPPFLAGS = \
 
 bvw_test_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
+	$(MM_CFLAGS)		\
 	$(AM_CFLAGS)
 
 bvw_test_LDADD = \

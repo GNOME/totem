@@ -190,7 +190,7 @@ int main (int argc, char **argv)
 		return 1;
 	}
 
-	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_METADATA, &error);
+	widget = bacon_video_widget_new (BVW_USE_TYPE_METADATA, &error);
 	if (widget == NULL) {
 		g_print ("error creating the video widget: %s\n", error->message);
 		g_error_free (error);

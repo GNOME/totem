@@ -117,7 +117,7 @@ int main (int argc, char **argv)
 	}
 	path = filenames ? filenames[0] : "fd://0";
 
-	widget = bacon_video_widget_new (-1, -1, BVW_USE_TYPE_AUDIO, &error);
+	widget = bacon_video_widget_new (BVW_USE_TYPE_AUDIO, &error);
 	if (widget == NULL) {
 		g_print ("error creating the video widget: %s\n", error->message);
 		g_error_free (error);

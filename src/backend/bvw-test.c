@@ -66,8 +66,6 @@ int main
 (int argc, char **argv)
 {
 	GtkWidget *win, *bvw;
-	guint32 height = 500;
-	guint32 width = 500;
 
 	if (argc > 2) {
 		g_warning ("Usage: %s <file>", argv[0]);
@@ -83,13 +81,13 @@ int main
 	gdk_threads_init ();
 
 	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_default_size (GTK_WINDOW (win), width, height);
+	gtk_window_set_default_size (GTK_WINDOW (win), 500, 500);
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 
-	bvw = bacon_video_widget_new (width, height,
-			BVW_USE_TYPE_VIDEO, NULL);
+	bvw = bacon_video_widget_new (BVW_USE_TYPE_VIDEO, NULL);
 	bacon_video_widget_set_logo (BACON_VIDEO_WIDGET (bvw), "totem");
+	bacon_video_widget_set_show_visualizations (BACON_VIDEO_WIDGET (bvw), TRUE);
 
 	g_signal_connect (G_OBJECT (bvw), "eos", G_CALLBACK (on_eos_event), NULL);
 	g_signal_connect (G_OBJECT (bvw), "got-metadata", G_CALLBACK (on_got_metadata), NULL);
@@ -104,10 +102,14 @@ int main
 	gtk_widget_show (win);
 	gtk_widget_show (bvw);
 
-	mrl = NULL;
-	test_bvw_set_mrl (bvw, argv[1] ? argv[1] : LOGO_PATH);
-	argument = g_strdup (argv[1] ? argv[1] : LOGO_PATH);
-	bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
+	if (argv[1]) {
+		test_bvw_set_mrl (bvw, argv[1]);
+		argument = g_strdup (argv[1]);
+		bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
+	} else {
+		bacon_video_widget_set_logo_mode (BACON_VIDEO_WIDGET (bvw), TRUE);
+	}
+
 	gtk_main ();
 
 	return 0;

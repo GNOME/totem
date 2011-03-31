@@ -80,7 +80,6 @@ struct _TotemObject {
 
 	/* UI manager */
 	GtkActionGroup *main_action_group;
-	GtkActionGroup *zoom_action_group;
 	GtkUIManager *ui_manager;
 
 	GtkActionGroup *devices_action_group;
@@ -182,8 +181,7 @@ GtkWidget *totem_volume_create (void);
 void	totem_action_open			(Totem *totem);
 void	totem_action_open_location		(Totem *totem);
 void	totem_action_eject			(Totem *totem);
-void	totem_action_zoom_relative		(Totem *totem, double off_pct);
-void	totem_action_zoom_reset			(Totem *totem);
+void	totem_action_set_zoom			(Totem *totem, gboolean zoom);
 void	totem_action_show_help			(Totem *totem);
 void	totem_action_show_properties		(Totem *totem);
 gboolean totem_action_open_files		(Totem *totem, char **list);

@@ -362,36 +362,15 @@
                <property name="hide-if-empty">False</property>
             </object>
          </child>
-      </object>
-   </child>
-   <child>
-      <object class="GtkActionGroup" id="zoom-action-group">
+
          <child>
-            <object class="GtkAction" id="zoom-in">
+            <object class="GtkToggleAction" id="zoom-toggle">
                <property name="label" translatable="yes">Zoom In</property>
                <property name="stock-id">gtk-zoom-in</property>
                <property name="tooltip" translatable="yes">Zoom in</property>
-               <signal name="activate" handler="zoom_in_action_callback"/>
+               <signal name="activate" handler="zoom_toggle_action_callback"/>
             </object>
-            <accelerator key="R" modifiers="GDK_CONTROL_MASK"/>
-         </child>
-         <child>
-            <object class="GtkAction" id="zoom-reset">
-               <property name="label" translatable="yes">Zoom Reset</property>
-               <property name="stock-id">gtk-zoom-100</property>
-               <property name="tooltip" translatable="yes">Zoom reset</property>
-               <signal name="activate" handler="zoom_reset_action_callback"/>
-            </object>
-            <accelerator key="0" modifiers="GDK_CONTROL_MASK"/>
-         </child>
-         <child>
-            <object class="GtkAction" id="zoom-out">
-               <property name="label" translatable="yes">Zoom Out</property>
-               <property name="stock-id">gtk-zoom-out</property>
-               <property name="tooltip" translatable="yes">Zoom out</property>
-               <signal name="activate" handler="zoom_out_action_callback"/>
-            </object>
-            <accelerator key="T" modifiers="GDK_CONTROL_MASK"/>
+            <accelerator key="Z" modifiers="GDK_CONTROL_MASK"/>
          </child>
       </object>
    </child>
@@ -452,9 +431,7 @@
                <menuitem name="zoom-1-1" action="zoom-1-1"/>
                <menuitem name="zoom-2-1" action="zoom-2-1"/>
             </menu>
-            <menuitem name="zoom-in" action="zoom-in"/>
-            <menuitem name="zoom-reset" action="zoom-reset"/>
-            <menuitem name="zoom-out" action="zoom-out"/>
+            <menuitem name="zoom-toggle" action="zoom-toggle"/>
             <separator/>
             <menu name="aspect-ratio" action="aspect-ratio-menu">
                <menuitem name="aspect-ratio-auto" action="aspect-ratio-auto"/>

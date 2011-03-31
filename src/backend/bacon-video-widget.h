@@ -28,7 +28,7 @@
 #ifndef HAVE_BACON_VIDEO_WIDGET_H
 #define HAVE_BACON_VIDEO_WIDGET_H
 
-#include <gtk/gtk.h>
+#include <clutter-gtk/clutter-gtk.h>
 /* for optical disc enumeration type */
 #include <totem-disc.h>
 
@@ -51,7 +51,7 @@ typedef struct BaconVideoWidgetCommon BaconVideoWidgetCommon;
  **/
 typedef struct {
 	/*< private >*/
-	GtkEventBox parent;
+	GtkClutterEmbed parent;
 	BaconVideoWidgetPrivate *priv;
 } BaconVideoWidget;
 
@@ -62,7 +62,7 @@ typedef struct {
  **/
 typedef struct {
 	/*< private >*/
-	GtkEventBoxClass parent_class;
+	GtkClutterEmbedClass parent_class;
 
 	void (*error) (GtkWidget *bvw, const char *message,
                        gboolean playback_stopped, gboolean fatal);
@@ -160,8 +160,7 @@ typedef enum {
 	BVW_USE_TYPE_METADATA
 } BvwUseType;
 
-GtkWidget *bacon_video_widget_new		 (int width, int height,
-						  BvwUseType type,
+GtkWidget *bacon_video_widget_new		 (BvwUseType type,
 						  GError **error);
 
 char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
@@ -388,6 +387,19 @@ typedef enum {
 	BVW_RATIO_DVB = 4
 } BvwAspectRatio;
 
+/**
+ * BvwZoomMode:
+ * @BVW_ZOOM_NONE: No video zooming/cropping
+ * @BVW_ZOOM_EXPAND: Fill area with video, and crop the excess
+ *
+ * The zoom mode used by the video widget, as set by
+ * bacon_video_widget_set_zoom().
+ **/
+typedef enum {
+	BVW_ZOOM_NONE = 0,
+	BVW_ZOOM_EXPAND = 1
+} BvwZoomMode;
+
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
 						  gboolean deinterlace);
 gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
@@ -401,8 +413,8 @@ void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 						  float ratio);
 
 void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
-						  double zoom);
-double bacon_video_widget_get_zoom		 (BaconVideoWidget *bvw);
+						  BvwZoomMode       mode);
+BvwZoomMode bacon_video_widget_get_zoom		 (BaconVideoWidget *bvw);
 
 int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
 						  BvwVideoProperty type);

@@ -53,9 +53,7 @@ G_MODULE_EXPORT void fullscreen_action_callback (GtkAction *action, Totem *totem
 G_MODULE_EXPORT void zoom_1_2_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_1_1_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_2_1_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_in_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_reset_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_out_action_callback (GtkAction *action, Totem *totem);
+G_MODULE_EXPORT void zoom_toggle_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void next_angle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void dvd_root_menu_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void dvd_title_menu_action_callback (GtkAction *action, Totem *totem);
@@ -1075,21 +1073,11 @@ zoom_2_1_action_callback (GtkAction *action, Totem *totem)
 }
 
 void
-zoom_in_action_callback (GtkAction *action, Totem *totem)
+zoom_toggle_action_callback (GtkToggleAction *action,
+			     Totem           *totem)
 {
-	totem_action_zoom_relative (totem, ZOOM_IN_OFFSET);
-}
-
-void
-zoom_reset_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_zoom_reset (totem);
-}
-
-void
-zoom_out_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_zoom_relative (totem, ZOOM_OUT_OFFSET);
+	bacon_video_widget_set_zoom (totem->bvw,
+				     gtk_toggle_action_get_active (action) ? BVW_ZOOM_EXPAND : BVW_ZOOM_NONE);
 }
 
 void
@@ -1379,7 +1367,6 @@ void
 totem_ui_manager_setup (Totem *totem)
 {
 	totem->main_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "main-action-group"));
-	totem->zoom_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "zoom-action-group"));
 
 	/* FIXME: Moving these to GtkBuilder depends on bug #457631 */
 	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL) {
