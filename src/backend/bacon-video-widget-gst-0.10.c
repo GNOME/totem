@@ -5562,6 +5562,12 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
                                              GST_TAG_ALBUM, 0, &string);
       }
       break;
+    case BVW_INFO_CONTAINER:
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+                                             GST_TAG_CONTAINER_FORMAT, 0, &string);
+      }
+      break;
     case BVW_INFO_VIDEO_CODEC: {
       GstTagList *tags;
 
@@ -5843,6 +5849,7 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_YEAR:
     case BVW_INFO_COMMENT:
     case BVW_INFO_ALBUM:
+    case BVW_INFO_CONTAINER:
     case BVW_INFO_VIDEO_CODEC:
     case BVW_INFO_AUDIO_CODEC:
     case BVW_INFO_AUDIO_CHANNELS:

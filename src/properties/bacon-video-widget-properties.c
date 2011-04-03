@@ -113,6 +113,8 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	bacon_video_widget_properties_set_duration (props, 0);
 	/* Comment */
 	bacon_video_widget_properties_set_label (props, "comment", "");
+	/* Container */
+	bacon_video_widget_properties_set_label (props, "container", _("Unknown"));
 
 	/* Dimensions */
 	bacon_video_widget_properties_set_label (props, "dimensions", C_("Dimensions", "N/A"));
@@ -204,7 +206,7 @@ bacon_video_widget_properties_new (void)
 	GtkWidget *vbox;
 	GtkSizeGroup *group;
 	const char *labels[] = { "title_label", "artist_label", "album_label",
-			"year_label", "duration_label", "comment_label",
+			"year_label", "duration_label", "comment_label", "container_label",
 			"dimensions_label", "vcodec_label", "framerate_label",
 			"vbitrate_label", "abitrate_label", "acodec_label",
 			"samplerate_label", "channels_label" };

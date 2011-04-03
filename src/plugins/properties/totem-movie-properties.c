@@ -121,6 +121,7 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 	UPDATE_FROM_STRING (BVW_INFO_ALBUM, "album");
 	UPDATE_FROM_STRING (BVW_INFO_YEAR, "year");
 	UPDATE_FROM_STRING (BVW_INFO_COMMENT, "comment");
+	UPDATE_FROM_STRING (BVW_INFO_CONTAINER, "container");
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
 					 BVW_INFO_DURATION, &value);

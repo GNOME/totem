@@ -106,6 +106,17 @@ set_codec (TotemPropertiesView     *props,
 	   const char              *widget)
 {
 	GstCaps *caps;
+	const char *nick;
+
+	nick = gst_discoverer_stream_info_get_stream_type_nick (info);
+	if (g_str_equal (nick, "audio") == FALSE &&
+	    g_str_equal (nick, "video") == FALSE &&
+	    g_str_equal (nick, "container") == FALSE) {
+		bacon_video_widget_properties_set_label (props->priv->props,
+							 widget,
+							 _("N/A"));
+		return;
+	}
 
 	caps = gst_discoverer_stream_info_get_caps (info);
 	if (caps) {
@@ -223,6 +234,7 @@ discovered_cb (GstDiscoverer       *discoverer,
 	gboolean has_audio, has_video;
 	const char *label;
         GstClockTime duration;
+        GstDiscovererStreamInfo *sinfo;
 
 	if (error) {
 		g_warning ("Couldn't get information about '%s': %s",
@@ -253,6 +265,12 @@ discovered_cb (GstDiscoverer       *discoverer,
 	/* General */
         duration = gst_discoverer_info_get_duration (info);
         bacon_video_widget_properties_set_duration (props->priv->props, duration / GST_SECOND * 1000);
+
+        sinfo = gst_discoverer_info_get_stream_info (info);
+        if (sinfo) {
+		set_codec (props, sinfo, "container");
+		gst_discoverer_stream_info_unref (sinfo);
+	}
 
 	taglist = gst_discoverer_info_get_tags (info);
 	update_general (props, taglist);
