@@ -5401,39 +5401,19 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
   return mrls;
 }
 
-static struct _metadata_map_info {
-  BvwMetadataType type;
-  const gchar *str;
-} metadata_str_map[] = {
-  { BVW_INFO_TITLE, "title" },
-  { BVW_INFO_ARTIST, "artist" },
-  { BVW_INFO_YEAR, "year" },
-  { BVW_INFO_COMMENT, "comment" },
-  { BVW_INFO_ALBUM, "album" },
-  { BVW_INFO_DURATION, "duration" },
-  { BVW_INFO_TRACK_NUMBER, "track-number" },
-  { BVW_INFO_HAS_VIDEO, "has-video" },
-  { BVW_INFO_DIMENSION_X, "dimension-x" },
-  { BVW_INFO_DIMENSION_Y, "dimension-y" },
-  { BVW_INFO_VIDEO_BITRATE, "video-bitrate" },
-  { BVW_INFO_VIDEO_CODEC, "video-codec" },
-  { BVW_INFO_FPS, "fps" },
-  { BVW_INFO_HAS_AUDIO, "has-audio" },
-  { BVW_INFO_AUDIO_BITRATE, "audio-bitrate" },
-  { BVW_INFO_AUDIO_CODEC, "audio-codec" },
-  { BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate" },
-  { BVW_INFO_AUDIO_CHANNELS, "channels" }
-};
-
 static const gchar *
 get_metadata_type_name (BvwMetadataType type)
 {
-  guint i;
-  for (i = 0; i < G_N_ELEMENTS (metadata_str_map); ++i) {
-    if (metadata_str_map[i].type == type)
-      return metadata_str_map[i].str;
-  }
-  return "unknown";
+  GEnumClass *eclass;
+  GEnumValue *value;
+
+  eclass = G_ENUM_CLASS (g_type_class_peek (BVW_TYPE_METADATA_TYPE));
+  value = g_enum_get_value (eclass, type);
+
+  if (value == NULL)
+    return "unknown";
+
+  return value->value_nick;
 }
 
 static gint
