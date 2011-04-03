@@ -146,7 +146,6 @@ void bacon_video_widget_init_backend		 (int *argc, char ***argv);
  * BvwUseType:
  * @BVW_USE_TYPE_VIDEO: fully-featured with video, audio, capture and metadata support
  * @BVW_USE_TYPE_CAPTURE: capture support only
- * @BVW_USE_TYPE_METADATA: metadata support only
  *
  * The purpose for which a #BaconVideoWidget will be used, as specified to
  * bacon_video_widget_new(). This determines which features will be enabled
@@ -155,7 +154,6 @@ void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 typedef enum {
 	BVW_USE_TYPE_VIDEO,
 	BVW_USE_TYPE_CAPTURE,
-	BVW_USE_TYPE_METADATA
 } BvwUseType;
 
 GtkWidget *bacon_video_widget_new		 (BvwUseType type,

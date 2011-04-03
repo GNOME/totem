@@ -287,7 +287,6 @@ static void bacon_video_widget_finalize (GObject * object);
 static void setup_vis (BaconVideoWidget * bvw);
 static GList * get_visualization_features (void);
 static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
-static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 static gboolean bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw);
@@ -1658,8 +1657,7 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   if (tag_list)
     gst_tag_list_free (tag_list);
 
-  if (bvw->priv->use_type != BVW_USE_TYPE_METADATA)
-    bvw_check_for_cover_pixbuf (bvw);
+  bvw_check_for_cover_pixbuf (bvw);
 
   /* if we're not interactive, we want to announce metadata
    * only later when we can be sure we got it all */
@@ -3213,7 +3211,7 @@ bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
     return;
   else if (type == BVW_AUDIO_SOUND_AC3PASSTHRU)
     return;
-  else if (bvw->priv->use_type == BVW_USE_TYPE_METADATA || bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
+  else if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
     /* don't set up a filter for the speaker setup, anything is fine */
     bvw->priv->speakersetup = -1;
     return;
@@ -3567,16 +3565,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   ret = poll_for_state_change_full (bvw, bvw->priv->play,
 				    GST_STATE_PAUSED, &err_msg, -1);
 
-  if (bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
-    bvw_process_pending_tag_messages (bvw);
-    bacon_video_widget_get_stream_length (bvw);
-    GST_DEBUG ("stream length = %u", bvw->priv->stream_length);
-
-    /* even in case of an error (e.g. no decoders installed) we might still
-     * have useful metadata (like codec types, duration, etc.) */
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-  }
-
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
@@ -3640,8 +3628,7 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   /* no need to actually go into PLAYING in capture/metadata mode (esp.
    * not with sinks that don't sync to the clock), we'll get everything
    * we need by prerolling the pipeline, and that is done in _open() */
-  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE ||
-      bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
     return TRUE;
   }
 
@@ -5775,25 +5762,9 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
   {
     case BVW_INFO_HAS_VIDEO:
       boolean = bvw->priv->media_has_video;
-      /* if properties dialog, show the metadata we
-       * have even if we cannot decode the stream */
-      if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
-          bvw->priv->tagcache != NULL &&
-          gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
-                                   GST_TAG_VIDEO_CODEC)) {
-        boolean = TRUE;
-      }
       break;
     case BVW_INFO_HAS_AUDIO:
       boolean = bvw->priv->media_has_audio;
-      /* if properties dialog, show the metadata we
-       * have even if we cannot decode the stream */
-      if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
-          bvw->priv->tagcache != NULL &&
-          gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
-                                   GST_TAG_AUDIO_CODEC)) {
-        boolean = TRUE;
-      }
       break;
     default:
       g_assert_not_reached ();
@@ -5803,25 +5774,6 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
   GST_DEBUG ("%s = %s", get_metadata_type_name (type), (boolean) ? "yes" : "no");
 
   return;
-}
-
-static void
-bvw_process_pending_tag_messages (BaconVideoWidget * bvw)
-{
-  GstMessageType events;
-  GstMessage *msg;
-  GstBus *bus;
-    
-  /* process any pending tag messages on the bus NOW, so we can get to
-   * the information without/before giving control back to the main loop */
-
-  /* application message is for stream-info */
-  events = GST_MESSAGE_TAG | GST_MESSAGE_DURATION | GST_MESSAGE_APPLICATION;
-  bus = gst_element_get_bus (bvw->priv->play);
-  while ((msg = gst_bus_poll (bus, events, 0))) {
-    gst_bus_async_signal_func (bus, msg, NULL);
-  }
-  gst_object_unref (bus);
 }
 
 static GdkPixbuf *
