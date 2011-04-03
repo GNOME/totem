@@ -145,7 +145,6 @@ void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 /**
  * BvwUseType:
  * @BVW_USE_TYPE_VIDEO: fully-featured with video, audio, capture and metadata support
- * @BVW_USE_TYPE_AUDIO: audio and metadata support
  * @BVW_USE_TYPE_CAPTURE: capture support only
  * @BVW_USE_TYPE_METADATA: metadata support only
  *
@@ -155,7 +154,6 @@ void bacon_video_widget_init_backend		 (int *argc, char ***argv);
  **/
 typedef enum {
 	BVW_USE_TYPE_VIDEO,
-	BVW_USE_TYPE_AUDIO,
 	BVW_USE_TYPE_CAPTURE,
 	BVW_USE_TYPE_METADATA
 } BvwUseType;

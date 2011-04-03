@@ -1227,8 +1227,7 @@ bvw_update_stream_info (BaconVideoWidget *bvw)
 
   /* if we're not interactive, we want to announce metadata
    * only later when we can be sure we got it all */
-  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
-      bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   }
@@ -1250,8 +1249,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
   else if (strcmp (msg_name, "video-size") == 0) {
     /* if we're not interactive, we want to announce metadata
      * only later when we can be sure we got it all */
-    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
-        bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
       g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
     }
 
@@ -1721,8 +1719,7 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
 
   /* if we're not interactive, we want to announce metadata
    * only later when we can be sure we got it all */
-  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
-      bvw->priv->use_type == BVW_USE_TYPE_AUDIO)
+  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO)
     g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
   else if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE &&
 	   bvw->priv->cover_pixbuf != NULL)
@@ -2278,21 +2275,12 @@ static gboolean
 bvw_query_timeout (BaconVideoWidget *bvw)
 {
   GstFormat fmt = GST_FORMAT_TIME;
-  gint64 prev_len = -1;
   gint64 pos = -1, len = -1;
   
   /* check length/pos of stream */
-  prev_len = bvw->priv->stream_length;
   if (gst_element_query_duration (bvw->priv->play, &fmt, &len)) {
-    if (len != -1 && fmt == GST_FORMAT_TIME) {
+    if (len != -1 && fmt == GST_FORMAT_TIME)
       bvw->priv->stream_length = len / GST_MSECOND;
-      if (bvw->priv->stream_length != prev_len) {
-	 if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
-	     bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
-	   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-	 }
-      }
-    }
   } else {
     GST_DEBUG ("could not get duration");
   }
@@ -3628,29 +3616,23 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
-      bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
-    GST_DEBUG ("normal playback, handling all errors asynchroneously");
-    ret = TRUE;
-  } else {
-    /* used as thumbnailer or metadata extractor for properties dialog. In
-     * this case, wait for any state change to really finish and process any
-     * pending tag messages, so that the information is available right away */
-    GST_DEBUG ("waiting for state changed to PAUSED to complete");
-    ret = poll_for_state_change_full (bvw, bvw->priv->play,
-        GST_STATE_PAUSED, &err_msg, -1);
+  /* used as thumbnailer or metadata extractor for properties dialog. In
+   * this case, wait for any state change to really finish and process any
+   * pending tag messages, so that the information is available right away */
+  GST_DEBUG ("waiting for state changed to PAUSED to complete");
+  ret = poll_for_state_change_full (bvw, bvw->priv->play,
+				    GST_STATE_PAUSED, &err_msg, -1);
 
-    if (bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
-      bvw_process_pending_tag_messages (bvw);
-      bacon_video_widget_get_stream_length (bvw);
-      GST_DEBUG ("stream length = %u", bvw->priv->stream_length);
+  if (bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
+    bvw_process_pending_tag_messages (bvw);
+    bacon_video_widget_get_stream_length (bvw);
+    GST_DEBUG ("stream length = %u", bvw->priv->stream_length);
 
-      /* even in case of an error (e.g. no decoders installed) we might still
-       * have useful metadata (like codec types, duration, etc.) */
-      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-    }
+    /* even in case of an error (e.g. no decoders installed) we might still
+     * have useful metadata (like codec types, duration, etc.) */
+    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
   }
-  
+
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
@@ -6397,13 +6379,6 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
     g_object_set (bvw->priv->play, "flags", flags, NULL);
   }
 
-  /* Disable video decoding in audio mode */
-  if (type == BVW_USE_TYPE_AUDIO) {
-    g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    flags &= ~GST_PLAY_FLAG_VIDEO;
-    g_object_set (bvw->priv->play, "flags", flags, NULL);
-  }
-
   gst_bus_add_signal_watch (bvw->priv->bus);
 
   bvw->priv->sig_bus_async = 
@@ -6423,7 +6398,7 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
   bvw->priv->logo_mode = FALSE;
   bvw->priv->auto_resize = FALSE;
 
-  if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
+  if (type == BVW_USE_TYPE_VIDEO) {
     audio_sink = gst_element_factory_make ("gconfaudiosink", "audio-sink");
     if (audio_sink == NULL) {
       g_warning ("Could not create element 'gconfaudiosink'");
@@ -6518,10 +6493,8 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
       /* doesn't work, drop this audio sink */
       gst_element_set_state (audio_sink, GST_STATE_NULL);
       gst_object_unref (audio_sink);
-      audio_sink = NULL;
       /* Hopefully, fakesink should always work */
-      if (type != BVW_USE_TYPE_AUDIO)
-        audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
+      audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
       if (audio_sink == NULL) {
         GstMessage *err_msg;
 
