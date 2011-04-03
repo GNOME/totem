@@ -85,7 +85,6 @@
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
 #include "gstscreenshot.h"
-#include "bacon-resize.h"
 
 #define DEFAULT_USER_AGENT "Totem/"VERSION
 
@@ -286,9 +285,6 @@ struct BaconVideoWidgetPrivate
 
   /* for stepping */
   float                        rate;
-
-  /* Bacon resize */
-  BaconResize                 *bacon_resize;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -621,18 +617,6 @@ bacon_video_widget_realize (GtkWidget * widget)
     gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
-
-  bvw->priv->bacon_resize = bacon_resize_new (widget);
-}
-
-static void
-bacon_video_widget_unrealize (GtkWidget *widget)
-{
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-
-  g_object_unref (bvw->priv->bacon_resize);
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void
@@ -796,7 +780,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->get_preferred_width = bacon_video_widget_get_preferred_width;
   widget_class->get_preferred_height = bacon_video_widget_get_preferred_height;
   widget_class->realize = bacon_video_widget_realize;
-  widget_class->unrealize = bacon_video_widget_unrealize;
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
   widget_class->button_press_event = bacon_video_widget_button_press;
   widget_class->button_release_event = bacon_video_widget_button_release;
@@ -4495,34 +4478,15 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
  * @fullscreen: %TRUE to go fullscreen, %FALSE otherwise
  *
  * Sets whether the widget renders the stream in fullscreen mode.
- *
- * Fullscreen rendering is done only when possible, as xvidmode is required.
  **/
 void
 bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
                                    gboolean fullscreen)
 {
-  gboolean have_xvidmode;
-
   g_return_if_fail (bvw != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  g_object_get (G_OBJECT (bvw->priv->bacon_resize),
-        "have-xvidmode", &have_xvidmode,
-        NULL);
-
-  if (have_xvidmode == FALSE)
-    return;
-
   bvw->priv->fullscreen_mode = fullscreen;
-
-  if (fullscreen == FALSE)
-  {
-    bacon_resize_restore (bvw->priv->bacon_resize);
-    /* Turn fullscreen on when we have xvidmode */
-  } else if (have_xvidmode != FALSE) {
-    bacon_resize_resize (bvw->priv->bacon_resize);
-  }
 }
 
 /**

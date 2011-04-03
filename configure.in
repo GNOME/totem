@@ -242,13 +242,6 @@ if test x$(pkg-config --variable=targets gtk+-3.0) = xx11; then
 		$X_LIBRARIES)
 	AC_SUBST(XTEST_LIBS)
 
-	PKG_CHECK_MODULES(XVIDMODE, xrandr >= 1.1.1 xxf86vm >= 1.0.1,
-		have_xvidmode=yes, have_xvidmode=no)
-
-	if test x$have_xvidmode = xyes; then
-		AC_DEFINE(HAVE_XVIDMODE,, [Define this if you have the XVidMode and XRandR extension installed])
-	fi
-
 	X_LIBS=""
 
 	dnl Explicitely link against libX11 to avoid problems with crappy linkers
@@ -271,7 +264,6 @@ if test x$(pkg-config --variable=targets gtk+-3.0) = xx11; then
 		AC_DEFINE(HAVE_XFREE, 1, [defined if you have X11/XF86keysym.h])
 	fi
 fi
-AM_CONDITIONAL(HAVE_XVIDMODE, [test x$have_xvidmode = xyes])
 
 dnl ================================================================
 dnl Plugins support
@@ -898,11 +890,6 @@ if test x$enable_dbus = xyes ; then
 	AC_MSG_NOTICE([** D-Bus (gnome-screensaver) support enabled])
 else
 	AC_MSG_NOTICE([   D-Bus (gnome-screensaver) support disabled])
-fi
-if test x$have_xvidmode = xyes ; then
-	AC_MSG_NOTICE([** XVidmode support enabled])
-else
-	AC_MSG_NOTICE([   XVidmode support disabled])
 fi
 if test x$have_xfree = xyes ; then
 	AC_MSG_NOTICE([** XFree86 multimedia keys support enabled])

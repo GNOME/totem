@@ -52,7 +52,6 @@ libbaconvideowidget_la_SOURCES = \
 	$(BVW_MARSHAL_FILES)				\
 	$(BVW_ENUM_FILES)				\
 	bacon-video-widget.h				\
-	bacon-resize.h bacon-resize.c			\
 	video-utils.c video-utils.h			\
 	bacon-video-widget-gst-0.10.c			\
 	bacon-video-widget-gst-missing-plugins.c	\
