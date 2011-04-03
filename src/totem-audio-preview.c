@@ -30,13 +30,12 @@
 #include "config.h"
 #endif
 
-#include <gtk/gtk.h>
-
 #include <glib.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include "totem-gst-helpers.h"
 #include "totem-resources.h"
@@ -64,11 +63,14 @@ static const GOptionEntry entries[] = {
 };
 
 static void
-setup_audio_sink (GstElement *play)
+setup_play (GstElement *play)
 {
 	GstElement *audio_sink;
 	audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
-	g_object_set (play, "audio-sink", audio_sink, NULL);
+	g_object_set (play,
+		      "audio-sink", audio_sink,
+		      "flags", GST_PLAY_FLAG_SOFT_VOLUME | GST_PLAY_FLAG_AUDIO,
+		      NULL);
 }
 
 static GstBusSyncReply
@@ -120,17 +122,12 @@ setup_filename (GstElement *play)
 	}
 }
 
-static void
-setup_flags (GstElement *play)
-{
-	g_object_set (play, "flags", GST_PLAY_FLAG_SOFT_VOLUME | GST_PLAY_FLAG_AUDIO, NULL);
-}
-
 int main (int argc, char **argv)
 {
 	GOptionGroup *options;
 	GOptionContext *context;
 	GError *error = NULL;
+	GMainLoop *loop;
 	GstElement *play;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -138,10 +135,9 @@ int main (int argc, char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 	g_thread_init (NULL);
-	gdk_threads_init ();
 
 	g_set_application_name (_("Audio Preview"));
-	gtk_window_set_default_icon_name ("totem");
+	g_setenv("PULSE_PROP_application.icon_name", "totem", TRUE);
 	g_setenv("PULSE_PROP_media.role", "music", TRUE);
 
 	context = g_option_context_new ("Plays audio passed on the standard input or the filename passed on the command-line");
@@ -178,14 +174,14 @@ int main (int argc, char **argv)
 	}
 
 	play = gst_element_factory_make ("playbin2", "play");
-	setup_audio_sink (play);
-	setup_flags (play);
+	setup_play (play);
 	setup_filename (play);
 	setup_errors (play);
 	totem_resources_monitor_start (NULL, -1);
 	gst_element_set_state (play, GST_STATE_PLAYING);
 
-	gtk_main ();
+	loop = g_main_loop_new (NULL, TRUE);
+	g_main_loop_run (loop);
 
 	return 0;
 }
