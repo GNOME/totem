@@ -630,6 +630,9 @@ set_current_actor (BaconVideoWidget *bvw)
 {
   gboolean draw_logo;
 
+  if (bvw->priv->stage == NULL)
+    return;
+
   /* If there's only audio and no visualisation, draw the logo as well.
    * If we have a cover image to display, we display it regardless of whether we're
    * doing visualisations. */
