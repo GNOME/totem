@@ -129,7 +129,6 @@ totem_plugin_viewer_LDADD = \
 	libtotembrowserplugin_helper.la					\
 	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
-	$(XVIDMODE_LIBS)	\
 	$(DBUS_LIBS)		\
 	$(XTEST_LIBS)		\
 	$(X_LIBS)

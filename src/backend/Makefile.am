@@ -18,7 +18,6 @@ bvw_test_CFLAGS = \
 bvw_test_LDADD = \
 	libbaconvideowidget.la	\
 	$(DEPENDENCY_LIBS)	\
-	$(XVIDMODE_LIBS)	\
 	$(XTEST_LIBS)
 
 # Marshallers
@@ -69,7 +68,6 @@ libbaconvideowidget_la_CFLAGS = \
 	$(AM_CFLAGS)
 
 libbaconvideowidget_la_LIBADD = \
-	$(XVIDMODE_LIBS)	\
 	$(MM_LIBS)		\
 	$(GST_LIBS)		\
 	$(EXTRA_BACKEND_LIBS)	\
