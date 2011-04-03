@@ -27,26 +27,20 @@
 
 #include <config.h>
 #include <string.h>
+#include <gst/gst.h>
 #include <glib/gi18n-lib.h>
 #include "totem-properties-view.h"
-#include "bacon-video-widget.h"
 
-static int i;
 static GtkWidget *window, *props, *label;
-
-static gboolean
-main_loop_exit (gpointer data)
-{
-	g_print ("Finishing %d\n", i);
-	gtk_main_quit ();
-	return FALSE;
-}
 
 static void
 create_props (const char *url)
 {
 	label = gtk_label_new ("Audio/Video");
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	g_signal_connect (G_OBJECT (window), "destroy",
+			  G_CALLBACK (gtk_main_quit), NULL);
+	gtk_window_set_default_size (GTK_WINDOW (window), 450, 550);
 	props = totem_properties_view_new (url, label);
 	gtk_container_add (GTK_CONTAINER (window), props);
 
@@ -56,50 +50,37 @@ create_props (const char *url)
 static void
 destroy_props (void)
 {
-	gtk_widget_destroy (window);
 	gtk_widget_destroy (label);
 }
 
 int main (int argc, char **argv)
 {
-	int times = 10;
+	GFile *file;
+	char *url;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
 	g_thread_init (NULL);
+	gst_init (&argc, &argv);
 	gtk_init (&argc, &argv);
 
-	if (argc < 2) {
+	if (argc != 2) {
 		g_print ("Usage: %s [URI]\n", argv[0]);
 		return 1;
 	}
 
-	bacon_video_widget_init_backend (NULL, NULL);
-#if 0
-	create_props (argv[1]);
-#endif
-	
-	if (argc == 3) {
-		times = g_strtod (argv[2], NULL);
-	}
+	file = g_file_new_for_commandline_arg (argv[1]);
+	url = g_file_get_uri (file);
+	g_object_unref (file);
 
-	for (i = 0; i < times; i++) {
-		g_print ("Setting %d\n", i);
-#if 0
-		totem_properties_view_set_location (TOTEM_PROPERTIES_VIEW (props), argv[1]);
-#else
-		create_props (argv[1]);
-#endif
-		g_timeout_add_seconds (4, main_loop_exit, NULL);
-		gtk_main ();
-#if 1
-		destroy_props ();
-#endif
-	}
+	create_props (url);
+	g_free (url);
 
-//	gtk_main ();
+	gtk_main ();
+
+	destroy_props ();
 
 	return 0;
 }

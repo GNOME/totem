@@ -48,8 +48,6 @@ GType bacon_video_widget_properties_get_type		(void);
 GtkWidget *bacon_video_widget_properties_new		(void);
 
 void bacon_video_widget_properties_reset		(BaconVideoWidgetProperties *props);
-void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
-							 GtkWidget                  *bvw);
 void bacon_video_widget_properties_set_label		(BaconVideoWidgetProperties *props,
 							 const char                 *name,
 							 const char                 *text);

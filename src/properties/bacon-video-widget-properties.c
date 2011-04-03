@@ -26,56 +26,10 @@
 #include <glib/gi18n.h>
 #include <string.h>
 
-#include "backend/bacon-video-widget.h"
 #include "backend/video-utils.h"
 #include "totem-interface.h"
 
 #include "bacon-video-widget-properties.h"
-
-/* used in bacon_video_widget_properties_update() */
-#define UPDATE_FROM_STRING(type, name) \
-	do { \
-		const char *temp; \
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
-						 type, &value); \
-		if ((temp = g_value_get_string (&value)) != NULL) { \
-			bacon_video_widget_properties_set_label (props, name, \
-								 temp); \
-		} \
-		g_value_unset (&value); \
-	} while (0)
-
-#define UPDATE_FROM_INT(type, name, format, empty) \
-	do { \
-		char *temp; \
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
-						 type, &value); \
-		if (g_value_get_int (&value) != 0) \
-			temp = g_strdup_printf (gettext (format), \
-					g_value_get_int (&value)); \
-		else \
-			temp = g_strdup (empty); \
-		bacon_video_widget_properties_set_label (props, name, temp); \
-		g_free (temp); \
-		g_value_unset (&value); \
-	} while (0)
-
-#define UPDATE_FROM_INT2(type1, type2, name, format) \
-	do { \
-		int x, y; \
-		char *temp; \
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
-						 type1, &value); \
-		x = g_value_get_int (&value); \
-		g_value_unset (&value); \
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), \
-						 type2, &value); \
-		y = g_value_get_int (&value); \
-		g_value_unset (&value); \
-		temp = g_strdup_printf (gettext (format), x, y); \
-		bacon_video_widget_properties_set_label (props, name, temp); \
-		g_free (temp); \
-	} while (0)
 
 static void bacon_video_widget_properties_dispose (GObject *object);
 
@@ -240,75 +194,6 @@ bacon_video_widget_properties_set_framerate (BaconVideoWidgetProperties *props,
 	}
 	bacon_video_widget_properties_set_label (props, "framerate", temp);
 	g_free (temp);
-}
-
-void
-bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
-				      GtkWidget *widget)
-{
-	GValue value = { 0, };
-	gboolean has_video, has_audio;
-	BaconVideoWidget *bvw;
-
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
-	g_return_if_fail (BACON_IS_VIDEO_WIDGET (widget));
-
-	bvw = BACON_VIDEO_WIDGET (widget);
-
-	/* General */
-	UPDATE_FROM_STRING (BVW_INFO_TITLE, "title");
-	UPDATE_FROM_STRING (BVW_INFO_ARTIST, "artist");
-	UPDATE_FROM_STRING (BVW_INFO_ALBUM, "album");
-	UPDATE_FROM_STRING (BVW_INFO_YEAR, "year");
-	UPDATE_FROM_STRING (BVW_INFO_COMMENT, "comment");
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-					 BVW_INFO_DURATION, &value);
-	bacon_video_widget_properties_set_duration (props,
-						    g_value_get_int (&value) * 1000);
-	g_value_unset (&value);
-
-	/* Types */
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-					 BVW_INFO_HAS_VIDEO, &value);
-	has_video = g_value_get_boolean (&value);
-	g_value_unset (&value);
-
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-					 BVW_INFO_HAS_AUDIO, &value);
-	has_audio = g_value_get_boolean (&value);
-	g_value_unset (&value);
-
-	bacon_video_widget_properties_set_has_type (props, has_video, has_audio);
-
-	/* Video */
-	if (has_video != FALSE)
-	{
-		UPDATE_FROM_INT2 (BVW_INFO_DIMENSION_X, BVW_INFO_DIMENSION_Y,
-				  "dimensions", N_("%d x %d"));
-		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
-		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
-				 N_("%d kbps"), C_("Video bit rate", "N/A"));
-
-		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_FPS, &value);
-		bacon_video_widget_properties_set_framerate (props, g_value_get_int (&value));
-		g_value_unset (&value);
-	}
-
-	/* Audio */
-	if (has_audio != FALSE)
-	{
-		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
-				 N_("%d kbps"), C_("Audio bit rate", "N/A"));
-		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CODEC, "acodec");
-		UPDATE_FROM_INT (BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate",
-				N_("%d Hz"), C_("Sample rate", "N/A"));
-		UPDATE_FROM_STRING (BVW_INFO_AUDIO_CHANNELS, "channels");
-	}
-
-#undef UPDATE_FROM_STRING
-#undef UPDATE_FROM_INT
-#undef UPDATE_FROM_INT2
 }
 
 GtkWidget*

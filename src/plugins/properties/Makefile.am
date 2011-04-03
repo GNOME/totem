@@ -13,6 +13,7 @@ libmovie_properties_la_LIBADD = \
 libmovie_properties_la_CFLAGS = $(plugin_cflags)
 libmovie_properties_la_CPPFLAGS = \
 	-I$(top_srcdir)/src/properties/ \
+	-I$(top_srcdir)/src/backend/ \
 	$(AM_CPPFLAGS)
 
 -include $(top_srcdir)/git.mk
