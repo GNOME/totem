@@ -116,13 +116,19 @@ bacon_video_widget_properties_dispose (GObject *object)
 	G_OBJECT_CLASS (bacon_video_widget_properties_parent_class)->dispose (object);
 }
 
-static void
+void
 bacon_video_widget_properties_set_label (BaconVideoWidgetProperties *props,
-			       const char *name, const char *text)
+					 const char                 *name,
+					 const char                 *text)
 {
 	GtkLabel *item;
 
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
+	g_return_if_fail (name != NULL);
+
 	item = GTK_LABEL (gtk_builder_get_object (props->priv->xml, name));
+	g_return_if_fail (item != NULL);
 	gtk_label_set_text (item, text);
 }
 
@@ -150,7 +156,7 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	/* Year */
 	bacon_video_widget_properties_set_label (props, "year", _("Unknown"));
 	/* Duration */
-	bacon_video_widget_properties_from_time (props, 0);
+	bacon_video_widget_properties_set_duration (props, 0);
 	/* Comment */
 	bacon_video_widget_properties_set_label (props, "comment", "");
 
@@ -164,6 +170,7 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 	/* Framerate */
 	bacon_video_widget_properties_set_label (props, "framerate",
 			C_("Frame rate", "N/A"));
+
 	/* Audio Bitrate */
 	bacon_video_widget_properties_set_label (props, "audio_bitrate",
 			C_("Audio bit rate", "N/A"));
@@ -176,8 +183,8 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 }
 
 void
-bacon_video_widget_properties_from_time (BaconVideoWidgetProperties *props,
-					 int _time)
+bacon_video_widget_properties_set_duration (BaconVideoWidgetProperties *props,
+					    int _time)
 {
 	char *string;
 
@@ -195,12 +202,52 @@ bacon_video_widget_properties_from_time (BaconVideoWidgetProperties *props,
 }
 
 void
+bacon_video_widget_properties_set_has_type (BaconVideoWidgetProperties *props,
+					    gboolean                    has_video,
+					    gboolean                    has_audio)
+{
+	GtkWidget *item;
+
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
+
+	/* Video */
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video"));
+	gtk_widget_set_sensitive (item, has_video);
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video_vbox"));
+	gtk_widget_set_visible (item, has_video);
+
+	/* Audio */
+	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "audio"));
+	gtk_widget_set_sensitive (item, has_audio);
+}
+
+void
+bacon_video_widget_properties_set_framerate (BaconVideoWidgetProperties *props,
+					     int                         framerate)
+{
+	gchar *temp;
+
+	g_return_if_fail (props != NULL);
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
+
+	/* The FPS has to be done differently because it's a plural string */
+	if (framerate != 0) {
+		temp = g_strdup_printf (ngettext ("%d frame per second", "%d frames per second", framerate),
+					framerate);
+	} else {
+		temp = g_strdup (C_("Frame rate", "N/A"));
+	}
+	bacon_video_widget_properties_set_label (props, "framerate", temp);
+	g_free (temp);
+}
+
+void
 bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 				      GtkWidget *widget)
 {
-	GtkWidget *item;
 	GValue value = { 0, };
-	gboolean has_type;
+	gboolean has_video, has_audio;
 	BaconVideoWidget *bvw;
 
 	g_return_if_fail (BACON_IS_VIDEO_WIDGET_PROPERTIES (props));
@@ -216,22 +263,26 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 	UPDATE_FROM_STRING (BVW_INFO_COMMENT, "comment");
 
 	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_DURATION, &value);
-	bacon_video_widget_properties_from_time (props,
-			g_value_get_int (&value) * 1000);
+					 BVW_INFO_DURATION, &value);
+	bacon_video_widget_properties_set_duration (props,
+						    g_value_get_int (&value) * 1000);
 	g_value_unset (&value);
+
+	/* Types */
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+					 BVW_INFO_HAS_VIDEO, &value);
+	has_video = g_value_get_boolean (&value);
+	g_value_unset (&value);
+
+	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
+					 BVW_INFO_HAS_AUDIO, &value);
+	has_audio = g_value_get_boolean (&value);
+	g_value_unset (&value);
+
+	bacon_video_widget_properties_set_has_type (props, has_video, has_audio);
 
 	/* Video */
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video"));
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_HAS_VIDEO, &value);
-	has_type = g_value_get_boolean (&value);
-	gtk_widget_set_sensitive (item, has_type);
-	g_value_unset (&value);
-
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "video_vbox"));
-
-	if (has_type != FALSE)
+	if (has_video != FALSE)
 	{
 		UPDATE_FROM_INT2 (BVW_INFO_DIMENSION_X, BVW_INFO_DIMENSION_Y,
 				  "dimensions", N_("%d x %d"));
@@ -239,35 +290,13 @@ bacon_video_widget_properties_update (BaconVideoWidgetProperties *props,
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
 				 N_("%d kbps"), C_("Video bit rate", "N/A"));
 
-		/* The FPS has to be done differently because it's a plural string */
-		{
-			gchar *temp;
-			bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_FPS, &value);
-			if (g_value_get_int (&value) != 0) {
-				temp = g_strdup_printf (ngettext ("%d frame per second", "%d frames per second", g_value_get_int (&value)),
-				                        g_value_get_int (&value));
-			} else {
-				temp = g_strdup (C_("Frame rate", "N/A"));
-			}
-			bacon_video_widget_properties_set_label (props, "framerate", temp);
-			g_free (temp);
-			g_value_unset (&value);
-		}
-
-		gtk_widget_show (item);
-	} else {
-		gtk_widget_hide (item);
+		bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw), BVW_INFO_FPS, &value);
+		bacon_video_widget_properties_set_framerate (props, g_value_get_int (&value));
+		g_value_unset (&value);
 	}
 
 	/* Audio */
-	item = GTK_WIDGET (gtk_builder_get_object (props->priv->xml, "audio"));
-	bacon_video_widget_get_metadata (BACON_VIDEO_WIDGET (bvw),
-			BVW_INFO_HAS_AUDIO, &value);
-	has_type = g_value_get_boolean (&value);
-	gtk_widget_set_sensitive (item, has_type);
-	g_value_unset (&value);
-
-	if (has_type != FALSE)
+	if (has_audio != FALSE)
 	{
 		UPDATE_FROM_INT (BVW_INFO_AUDIO_BITRATE, "audio_bitrate",
 				 N_("%d kbps"), C_("Audio bit rate", "N/A"));

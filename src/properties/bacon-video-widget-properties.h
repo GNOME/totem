@@ -49,8 +49,16 @@ GtkWidget *bacon_video_widget_properties_new		(void);
 
 void bacon_video_widget_properties_reset		(BaconVideoWidgetProperties *props);
 void bacon_video_widget_properties_update		(BaconVideoWidgetProperties *props,
-							 GtkWidget *bvw);
-void bacon_video_widget_properties_from_time		(BaconVideoWidgetProperties *props,
-							 int _time);
+							 GtkWidget                  *bvw);
+void bacon_video_widget_properties_set_label		(BaconVideoWidgetProperties *props,
+							 const char                 *name,
+							 const char                 *text);
+void bacon_video_widget_properties_set_duration		(BaconVideoWidgetProperties *props,
+							 int                         duration);
+void bacon_video_widget_properties_set_has_type		(BaconVideoWidgetProperties *props,
+							 gboolean                    has_video,
+							 gboolean                    has_audio);
+void bacon_video_widget_properties_set_framerate	(BaconVideoWidgetProperties *props,
+							 int                         framerate);
 
 #endif /* BACON_VIDEO_WIDGET_PROPERTIES_H */
