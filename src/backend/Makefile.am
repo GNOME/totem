@@ -58,6 +58,7 @@ libbaconvideowidget_la_SOURCES = \
 
 libbaconvideowidget_la_CPPFLAGS = \
 	-D_REENTRANT				\
+	-I$(top_srcdir)/src/gst/		\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
@@ -67,12 +68,13 @@ libbaconvideowidget_la_CFLAGS = \
 	$(MISSING_PLUGINS_CFLAGS)	\
 	$(AM_CFLAGS)
 
-libbaconvideowidget_la_LIBADD = \
-	$(MM_LIBS)		\
-	$(GST_LIBS)		\
-	$(EXTRA_BACKEND_LIBS)	\
-	$(X_LIBS)		\
-	$(MISSING_PLUGINS_LIBS)	\
+libbaconvideowidget_la_LIBADD =				\
+	$(top_builddir)/src/gst/libtotemgsthelpers.la	\
+	$(MM_LIBS)					\
+	$(GST_LIBS)					\
+	$(EXTRA_BACKEND_LIBS)				\
+	$(X_LIBS)					\
+	$(MISSING_PLUGINS_LIBS)				\
 	-lm
 
 libbaconvideowidget_la_LDFLAGS= \

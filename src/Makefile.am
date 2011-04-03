@@ -1,4 +1,4 @@
-SUBDIRS = backend properties . plugins
+SUBDIRS = gst backend properties . plugins
 
 bin_PROGRAMS = totem totem-video-thumbnailer totem-audio-preview
 lib_LTLIBRARIES = libtotem.la
@@ -267,6 +267,7 @@ totem_audio_preview_SOURCES = \
 
 totem_audio_preview_CPPFLAGS = \
 	-I$(top_builddir)/data			\
+	-I$(top_srcdir)/src/gst			\
 	-DG_LOG_DOMAIN=\""TotemAudioPreview"\"	\
 	$(AM_CPPFLAGS)
 
@@ -274,8 +275,9 @@ totem_audio_preview_CFLAGS = \
 	$(DEPENDENCY_CFLAGS)	\
 	$(AM_CFLAGS)
 
-totem_audio_preview_LDADD = \
-	backend/libbaconvideowidget.la	\
+totem_audio_preview_LDADD =			\
+	gst/libtotemgsthelpers.la		\
+	backend/libbaconvideowidget.la		\
 	$(DEPENDENCY_LIBS)
 
 # Introspection

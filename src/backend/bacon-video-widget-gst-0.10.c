@@ -79,6 +79,7 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
+#include "totem-gst-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "baconvideowidget-marshal.h"
@@ -150,20 +151,6 @@ static const gchar *video_props_str[4] = {
   "saturation",
   "hue"
 };
-
-/* GstPlayFlags flags from playbin2 */
-typedef enum {
-  GST_PLAY_FLAG_VIDEO         = (1 << 0),
-  GST_PLAY_FLAG_AUDIO         = (1 << 1),
-  GST_PLAY_FLAG_TEXT          = (1 << 2),
-  GST_PLAY_FLAG_VIS           = (1 << 3),
-  GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
-  GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
-  GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
-  GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
-  GST_PLAY_FLAG_BUFFERING     = (1 << 8),
-  GST_PLAY_FLAG_DEINTERLACE   = (1 << 9)
-} GstPlayFlags;
 
 struct BaconVideoWidgetPrivate
 {
@@ -395,34 +382,6 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
       g_free (d);
     }
   }
-}
-
-static void
-bvw_error_msg (BaconVideoWidget * bvw, GstMessage * msg)
-{
-  GError *err = NULL;
-  gchar *dbg = NULL;
-
-  GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (bvw->priv->play),
-      GST_DEBUG_GRAPH_SHOW_ALL ^ GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS,
-      "totem-error");
-
-  gst_message_parse_error (msg, &err, &dbg);
-  if (err) {
-    GST_ERROR ("message = %s", GST_STR_NULL (err->message));
-    GST_ERROR ("domain  = %d (%s)", err->domain,
-        GST_STR_NULL (g_quark_to_string (err->domain)));
-    GST_ERROR ("code    = %d", err->code);
-    GST_ERROR ("debug   = %s", GST_STR_NULL (dbg));
-    GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
-    GST_ERROR ("uri     = %s", GST_STR_NULL (bvw->priv->mrl));
-
-    g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
-        GST_STR_NULL (dbg));
-
-    g_error_free (err);
-  }
-  g_free (dbg);
 }
 
 static void
@@ -1925,7 +1884,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
   switch (msg_type) {
     case GST_MESSAGE_ERROR: {
-      bvw_error_msg (bvw, message);
+      totem_gst_message_print (message, bvw->priv->play, "totem-error");
 
       if (!bvw_check_missing_plugins_error (bvw, message) &&
 	  !bvw_check_missing_auth (bvw, message)) {
@@ -3436,7 +3395,7 @@ poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
       break;
     }
     case GST_MESSAGE_ERROR: {
-      bvw_error_msg (bvw, message);
+      totem_gst_message_print (message, bvw->priv->play, "totem-error");
       *err_msg = message;
       message = NULL;
       goto error;

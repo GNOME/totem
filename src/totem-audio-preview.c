@@ -32,23 +32,19 @@
 
 #include <gtk/gtk.h>
 
-#include <gst/gst.h>
 #include <glib.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
 
+#include "totem-gst-helpers.h"
 #include "totem-resources.h"
 #include "totem-mime-types.h"
 
 static gboolean show_mimetype = FALSE;
 static gboolean g_fatal_warnings = FALSE;
 static char **filenames = NULL;
-
-/* GstPlayFlags flags from playbin2 */
-#define GST_PLAY_FLAG_AUDIO         (1 << 1)
-#define GST_PLAY_FLAG_SOFT_VOLUME   (1 << 4)
 
 static void
 print_mimetypes (void)
@@ -68,29 +64,6 @@ static const GOptionEntry entries[] = {
 };
 
 static void
-error_msg (GstMessage * msg)
-{
-	GError *err = NULL;
-	gchar *dbg = NULL;
-
-	gst_message_parse_error (msg, &err, &dbg);
-	if (err) {
-		GST_ERROR ("message = %s", GST_STR_NULL (err->message));
-		GST_ERROR ("domain  = %d (%s)", err->domain,
-			   GST_STR_NULL (g_quark_to_string (err->domain)));
-		GST_ERROR ("code    = %d", err->code);
-		GST_ERROR ("debug   = %s", GST_STR_NULL (dbg));
-		GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
-
-		g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
-			   GST_STR_NULL (dbg));
-
-		g_error_free (err);
-	}
-	g_free (dbg);
-}
-
-static void
 setup_audio_sink (GstElement *play)
 {
 	GstElement *audio_sink;
@@ -108,7 +81,7 @@ error_handler (GstBus *bus,
 	msg_type = GST_MESSAGE_TYPE (message);
 	switch (msg_type) {
 	case GST_MESSAGE_ERROR:
-		error_msg (message);
+		totem_gst_message_print (message, play, "totem-audio-preview-error");
 		exit (1);
 	case GST_MESSAGE_EOS:
 		exit (0);
