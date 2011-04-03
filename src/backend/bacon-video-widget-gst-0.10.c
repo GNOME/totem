@@ -3595,9 +3595,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
       bvw->priv->mrl = NULL;
     }
   }
-  
-  /* When opening a new media we want to redraw ourselves */
-  gtk_widget_queue_draw (GTK_WIDGET (bvw));
 
   if (err_msg != NULL) {
     if (error) {
