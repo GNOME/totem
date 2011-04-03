@@ -47,18 +47,8 @@ static gboolean g_fatal_warnings = FALSE;
 static char **filenames = NULL;
 
 /* GstPlayFlags flags from playbin2 */
-typedef enum {
-	GST_PLAY_FLAG_VIDEO         = (1 << 0),
-	GST_PLAY_FLAG_AUDIO         = (1 << 1),
-	GST_PLAY_FLAG_TEXT          = (1 << 2),
-	GST_PLAY_FLAG_VIS           = (1 << 3),
-	GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
-	GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
-	GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
-	GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
-	GST_PLAY_FLAG_BUFFERING     = (1 << 8),
-	GST_PLAY_FLAG_DEINTERLACE   = (1 << 9)
-} GstPlayFlags;
+#define GST_PLAY_FLAG_AUDIO         (1 << 1)
+#define GST_PLAY_FLAG_SOFT_VOLUME   (1 << 4)
 
 static void
 print_mimetypes (void)
@@ -160,10 +150,7 @@ setup_filename (GstElement *play)
 static void
 setup_flags (GstElement *play)
 {
-	gint flags;
-	g_object_get (play, "flags", &flags, NULL);
-	flags &= ~ (GST_PLAY_FLAG_VIDEO | GST_PLAY_FLAG_TEXT);
-	g_object_set (play, "flags", flags, NULL);
+	g_object_set (play, "flags", GST_PLAY_FLAG_SOFT_VOLUME | GST_PLAY_FLAG_AUDIO, NULL);
 }
 
 int main (int argc, char **argv)
