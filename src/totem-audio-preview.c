@@ -32,7 +32,7 @@
 
 #include <gtk/gtk.h>
 
-#include <bacon-video-widget.h>
+#include <gst/gst.h>
 #include <glib.h>
 #include <string.h>
 #include <unistd.h>
@@ -45,6 +45,20 @@
 static gboolean show_mimetype = FALSE;
 static gboolean g_fatal_warnings = FALSE;
 static char **filenames = NULL;
+
+/* GstPlayFlags flags from playbin2 */
+typedef enum {
+	GST_PLAY_FLAG_VIDEO         = (1 << 0),
+	GST_PLAY_FLAG_AUDIO         = (1 << 1),
+	GST_PLAY_FLAG_TEXT          = (1 << 2),
+	GST_PLAY_FLAG_VIS           = (1 << 3),
+	GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
+	GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
+	GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
+	GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
+	GST_PLAY_FLAG_BUFFERING     = (1 << 8),
+	GST_PLAY_FLAG_DEINTERLACE   = (1 << 9)
+} GstPlayFlags;
 
 static void
 print_mimetypes (void)
@@ -63,14 +77,101 @@ static const GOptionEntry entries[] = {
 	{NULL}
 };
 
+static void
+error_msg (GstMessage * msg)
+{
+	GError *err = NULL;
+	gchar *dbg = NULL;
+
+	gst_message_parse_error (msg, &err, &dbg);
+	if (err) {
+		GST_ERROR ("message = %s", GST_STR_NULL (err->message));
+		GST_ERROR ("domain  = %d (%s)", err->domain,
+			   GST_STR_NULL (g_quark_to_string (err->domain)));
+		GST_ERROR ("code    = %d", err->code);
+		GST_ERROR ("debug   = %s", GST_STR_NULL (dbg));
+		GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
+
+		g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
+			   GST_STR_NULL (dbg));
+
+		g_error_free (err);
+	}
+	g_free (dbg);
+}
+
+static void
+setup_audio_sink (GstElement *play)
+{
+	GstElement *audio_sink;
+	audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+	g_object_set (play, "audio-sink", audio_sink, NULL);
+}
+
+static GstBusSyncReply
+error_handler (GstBus *bus,
+	       GstMessage *message,
+	       GstElement *play)
+{
+	GstMessageType msg_type;
+
+	msg_type = GST_MESSAGE_TYPE (message);
+	switch (msg_type) {
+	case GST_MESSAGE_ERROR:
+		error_msg (message);
+		exit (1);
+	case GST_MESSAGE_EOS:
+		exit (0);
+	default:
+		/* Ignored */
+		;;
+	}
+
+	return GST_BUS_PASS;
+}
+
+static void
+setup_errors (GstElement *play)
+{
+	GstBus *bus;
+
+	bus = gst_element_get_bus (play);
+	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, play);
+}
+
+static void
+setup_filename (GstElement *play)
+{
+	if (filenames != NULL) {
+		GFile *file;
+		char *uri;
+
+		file = g_file_new_for_commandline_arg (filenames[0]);
+		uri = g_file_get_uri (file);
+		g_object_unref (file);
+
+		g_object_set (play, "uri", uri, NULL);
+		g_free (uri);
+	} else {
+		g_object_set (play, "uri", "fd://0", NULL);
+	}
+}
+
+static void
+setup_flags (GstElement *play)
+{
+	gint flags;
+	g_object_get (play, "flags", &flags, NULL);
+	flags &= ~ (GST_PLAY_FLAG_VIDEO | GST_PLAY_FLAG_TEXT);
+	g_object_set (play, "flags", flags, NULL);
+}
+
 int main (int argc, char **argv)
 {
 	GOptionGroup *options;
 	GOptionContext *context;
-	GtkWidget *widget;
-	BaconVideoWidget *bvw;
 	GError *error = NULL;
-	const char *path;
+	GstElement *play;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -84,7 +185,7 @@ int main (int argc, char **argv)
 	g_setenv("PULSE_PROP_media.role", "music", TRUE);
 
 	context = g_option_context_new ("Plays audio passed on the standard input or the filename passed on the command-line");
-	options = bacon_video_widget_get_option_group ();
+	options = gst_init_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
 	g_type_init ();
@@ -115,25 +216,14 @@ int main (int argc, char **argv)
 		g_free (help);
 		return 1;
 	}
-	path = filenames ? filenames[0] : "fd://0";
 
-	widget = bacon_video_widget_new (BVW_USE_TYPE_AUDIO, &error);
-	if (widget == NULL) {
-		g_print ("error creating the video widget: %s\n", error->message);
-		g_error_free (error);
-		return 1;
-	}
-	bvw = BACON_VIDEO_WIDGET (widget);
-
+	play = gst_element_factory_make ("playbin2", "play");
+	setup_audio_sink (play);
+	setup_flags (play);
+	setup_filename (play);
+	setup_errors (play);
 	totem_resources_monitor_start (NULL, -1);
-	if (bacon_video_widget_open (bvw, path, NULL, &error) == FALSE) {
-		g_print ("Can't open %s: %s\n", path, error->message);
-		return 1;
-	}
-	if (bacon_video_widget_play (bvw, &error) == FALSE) {
-		g_print ("Can't play %s: %s\n", path, error->message);
-		return 1;
-	}
+	gst_element_set_state (play, GST_STATE_PLAYING);
 
 	gtk_main ();
 
