@@ -1,6 +1,6 @@
 SUBDIRS = backend properties . plugins
 
-bin_PROGRAMS = totem totem-video-thumbnailer totem-video-indexer totem-audio-preview
+bin_PROGRAMS = totem totem-video-thumbnailer totem-audio-preview
 lib_LTLIBRARIES = libtotem.la
 noinst_LTLIBRARIES = libtotem_player.la
 
@@ -258,25 +258,6 @@ test_properties_page_LDADD = \
 	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)
 endif # HAVE_NAUTILUS
-
-# Totem Video Indexer
-totem_video_indexer_SOURCES = \
-	totem-video-indexer.c		\
-	totem-resources.c		\
-	totem-resources.h
-
-totem_video_indexer_CPPFLAGS = \
-	-I$(top_builddir)/data			\
-	-DG_LOG_DOMAIN=\""TotemVideoIndexer"\"	\
-	$(AM_CPPFLAGS)
-
-totem_video_indexer_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
-	$(AM_CFLAGS)
-
-totem_video_indexer_LDADD = \
-	backend/libbaconvideowidget.la	\
-	$(DEPENDENCY_LIBS)
 
 # Totem Audio Preview for Nautilus
 totem_audio_preview_SOURCES = \
