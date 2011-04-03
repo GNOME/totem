@@ -1713,15 +1713,6 @@ controls_size_allocate_cb (GtkWidget *controls,
 #endif
 
 static void
-video_widget_size_allocate_cb (GtkWidget *controls,
-			       GtkAllocation *allocation,
-			       BaconVideoWidget *bvw)
-{
-	bacon_video_widget_set_show_visualizations (bvw, allocation->height > MINIMUM_VIDEO_SIZE);
-	g_signal_handlers_disconnect_by_func (controls, G_CALLBACK (video_widget_size_allocate_cb), NULL);
-}
-
-static void
 totem_embedded_action_volume_relative (TotemEmbedded *emb, double off_pct)
 {
 	double vol;
@@ -1801,7 +1792,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 	GtkWidget *child, *container, *image;
 	GtkWidget *popup_button;
 	GtkWidget *menu;
-	BvwUseType type;
 	GError *err = NULL;
 
 	emb->xml = totem_interface_load ("mozilla-viewer.ui", TRUE,
@@ -1824,18 +1814,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 		emb->window = GTK_WIDGET (gtk_builder_get_object (emb->xml, "window"));
 	}
 
-	if (emb->hidden || emb->audioonly != FALSE)
-		type = BVW_USE_TYPE_AUDIO;
-	else
-		type = BVW_USE_TYPE_VIDEO;
-
-	if (type == BVW_USE_TYPE_VIDEO && emb->controller_hidden != FALSE) {
-		emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-					       (width, height, BVW_USE_TYPE_VIDEO, &err));
-	} else {
-		emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-					       (-1, -1, type, &err));
-	}
+	/* if (emb->hidden || emb->audioonly != FALSE)
+	 * FIXME disable video decoding */
+	emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
+				       (BVW_USE_TYPE_VIDEO, &err));
 
 	/* FIXME: check the UA strings of the legacy plugins themselves */
 	/* FIXME: at least hxplayer seems to send different UAs depending on the protocol!? */
@@ -1907,16 +1889,14 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (property_notify_cb_volume), emb);
 
 	container = GTK_WIDGET (gtk_builder_get_object (emb->xml, "video_box"));
-	if (type == BVW_USE_TYPE_VIDEO) {
-		gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
-		/* FIXME: why can't this wait until the whole window is realised? */
-		gtk_widget_realize (GTK_WIDGET (emb->bvw));
-		gtk_widget_show (GTK_WIDGET (emb->bvw));
 
-		/* Let us know when the size has been allocated for the video widget */
-		g_signal_connect_after (G_OBJECT (emb->bvw), "size-allocate",
-					G_CALLBACK (video_widget_size_allocate_cb), emb->bvw);
-	} else if (emb->audioonly != FALSE) {
+	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
+	/* FIXME: why can't this wait until the whole window is realised? */
+	gtk_widget_realize (GTK_WIDGET (emb->bvw));
+	gtk_widget_show (GTK_WIDGET (emb->bvw));
+
+	/* FIXME disable video decoding when hidden */
+	if (emb->audioonly != FALSE) {
 		gtk_widget_hide (container);
 	}
 
