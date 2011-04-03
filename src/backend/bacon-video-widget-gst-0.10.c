@@ -5923,14 +5923,6 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  /* check for version */
-  if (!g_object_class_find_property (
-           G_OBJECT_GET_CLASS (bvw->priv->play), "frame")) {
-    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
-                         _("Too old version of GStreamer installed."));
-    return FALSE;
-  }
-
   /* check for video */
   if (!bvw->priv->media_has_video && !bvw->priv->show_vfx) {
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
