@@ -88,9 +88,9 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         self.gstreamer_plugins_present = True
         self.totem = None
         self.settings = Gio.Settings.new ('org.gnome.totem.plugins.jamendo')
-        self.settings.connect ('changed::format', self.on_format_changed)
+        self.settings.connect ('changed::format', self.__on_format_changed)
         self.settings.connect ('changed::num-per-page',
-                               self.on_num_per_page_changed)
+                               self.__on_num_per_page_changed)
 
         self.search_entry = None
         self.search_combo = None
@@ -138,23 +138,24 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             builder.get_object ('popular_treeview'),
             builder.get_object ('latest_treeview'),
         ]
-        self.setup_treeviews ()
+        self.__setup_treeviews ()
 
         # Set up signals
         search_button = builder.get_object ('search_button')
-        search_button.connect ('clicked', self.on_search_button_clicked)
-        self.search_entry.connect ('activate', self.on_search_entry_activate)
-        self.notebook.connect ('switch-page', self.on_notebook_switch_page)
+        search_button.connect ('clicked', self.__on_search_button_clicked)
+        self.search_entry.connect ('activate', self.__on_search_entry_activate)
+        self.notebook.connect ('switch-page', self.__on_notebook_switch_page)
         self.previous_button.connect ('clicked',
-                                      self.on_previous_button_clicked)
-        self.next_button.connect ('clicked', self.on_next_button_clicked)
-        self.album_button.connect ('clicked', self.on_album_button_clicked)
+                                      self.__on_previous_button_clicked)
+        self.next_button.connect ('clicked', self.__on_next_button_clicked)
+        self.album_button.connect ('clicked', self.__on_album_button_clicked)
         add_to_playlist = builder.get_object ('add_to_playlist')
-        add_to_playlist.connect ('activate', self.on_add_to_playlist_activate)
+        add_to_playlist.connect ('activate', self.__on_add_to_playlist_activate)
         album_page_button = builder.get_object ('jamendo_album_page')
-        album_page_button.connect ('activate', self.on_open_album_page_activate)
+        album_page_button.connect ('activate',
+                                   self.__on_open_album_page_activate)
 
-        self.reset ()
+        self._reset ()
         container.show_all ()
         self.totem.add_sidebar_page ("jamendo", _(u"Jamendo"), container)
 
@@ -173,7 +174,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         builder = Totem.plugin_load_interface ('jamendo', 'jamendo.ui', True,
                                                None, self)
         config_widget = builder.get_object ('config_widget')
-        config_widget.connect ('destroy', self.on_config_widget_destroy)
+        config_widget.connect ('destroy', self.__on_config_widget_destroy)
         audio_format = self.settings.get_enum ('format')
         num_per_page = self.settings.get_value ('num-per-page').get_uint32 ()
 
@@ -183,9 +184,9 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         # introspectable. We have to handle the binding manually.
         combo = builder.get_object ('preferred_format_combo')
         combo.set_active (audio_format)
-        combo.connect ('changed', self.on_format_combo_changed)
+        combo.connect ('changed', self.__on_format_combo_changed)
         self.settings.connect ('changed::format',
-                               self.on_format_setting_changed, combo)
+                               self.__on_format_setting_changed, combo)
 
         spinbutton = builder.get_object ('album_num_spinbutton')
         spinbutton.set_value (num_per_page)
@@ -194,32 +195,32 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
 
         return config_widget
 
-    def on_format_combo_changed (self, combo):
+    def __on_format_combo_changed (self, combo):
         """
         Called when the "format" preference combo box value is changed.
         """
         self.settings.set_enum ('format', combo.get_active ())
 
-    def on_format_setting_changed (self, _settings, _key, combo):
+    def __on_format_setting_changed (self, _settings, _key, combo):
         """
         Called for the "format" preference combo box when the corresponding
         GSettings value is changed.
         """
         combo.set_active (self.settings.get_enum ('format'))
 
-    def on_format_changed (self, _settings, _key):
+    def __on_format_changed (self, _settings, _key):
         JamendoService.AUDIO_FORMAT = self.settings.get_enum ('format')
 
-    def on_num_per_page_changed (self, _settings, _key):
+    def __on_num_per_page_changed (self, _settings, _key):
         JamendoService.NUM_PER_PAGE = self.settings.get_int ('num-per-page')
 
-    def on_config_widget_destroy (self, _widget):
+    def __on_config_widget_destroy (self, _widget):
         try:
-            self.reset ()
+            self._reset ()
         except:
             pass
 
-    def reset (self):
+    def _reset (self):
         """
         XXX this will be refactored asap.
         """
@@ -243,7 +244,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             tree_view.get_model ().clear ()
         self._update_buttons_state ()
 
-    def setup_treeviews (self):
+    def __setup_treeviews (self):
         """
         Setup the 3 treeview: result, popular and latest
         """
@@ -251,7 +252,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         for tree_view in self.treeviews:
             selection = tree_view.get_selection ()
             selection.set_mode (Gtk.SelectionMode.MULTIPLE)
-            selection.connect ('changed', self.on_treeview_selection_changed)
+            selection.connect ('changed', self.__on_treeview_selection_changed)
 
             # build pixbuf column
             cell = Gtk.CellRendererPixbuf ()
@@ -281,11 +282,12 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
 
             # Connect signals
             tree_view.connect ("button-press-event",
-                               self.on_treeview_row_clicked)
-            tree_view.connect ("row-activated", self.on_treeview_row_activated)
+                               self.__on_treeview_row_clicked)
+            tree_view.connect ("row-activated",
+                               self.__on_treeview_row_activated)
 
 
-    def add_treeview_item (self, treeview, album):
+    def _add_treeview_item (self, treeview, album):
         if not isinstance (album['image'], GdkPixbuf.Pixbuf):
             # album image pixbuf is not yet built
             try:
@@ -349,7 +351,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         pindex = self.treeviews.index (treeview)
         self.album_count[pindex] += 1
 
-    def add_album_to_playlist (self, mode, album):
+    def _add_album_to_playlist (self, mode, album):
         """
         Add an album to the playlist, mode can be: replace, enqueue or
         enqueue_and_play.
@@ -358,14 +360,14 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             if mode in ('replace', 'enqueue_and_play'):
                 if i == 0:
                     # play first track
-                    self.add_track_to_playlist (mode, track)
+                    self._add_track_to_playlist (mode, track)
                 else:
                     # and enqueue other tracks
-                    self.add_track_to_playlist ('enqueue', track)
+                    self._add_track_to_playlist ('enqueue', track)
             else:
-                self.add_track_to_playlist ('enqueue', track)
+                self._add_track_to_playlist ('enqueue', track)
 
-    def add_track_to_playlist (self, mode, track):
+    def _add_track_to_playlist (self, mode, track):
         """
         Add a track to the playlist, mode can be: replace, enqueue or
         enqueue_and_play.
@@ -377,7 +379,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             self.totem.action_remote (Totem.RemoteCommand.ENQUEUE,
                                       track['stream'].encode ('UTF-8'))
 
-    def fetch_albums (self, page_number = 1):
+    def _fetch_albums (self, page_number = 1):
         """
         Initialize the fetch thread.
         """
@@ -402,18 +404,18 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         self.progressbars[tab_index].set_text (
             _(u'Fetching albums, please wait…')
         )
-        lcb = (self.on_fetch_albums_loop, self.current_treeview)
-        dcb = (self.on_fetch_albums_done, self.current_treeview)
-        ecb = (self.on_fetch_albums_error, self.current_treeview)
+        lcb = (self.__on_fetch_albums_loop, self.current_treeview)
+        dcb = (self.__on_fetch_albums_done, self.current_treeview)
+        ecb = (self.__on_fetch_albums_error, self.current_treeview)
         thread = JamendoService (params, lcb, dcb, ecb)
         thread.start ()
         self.running_threads[tab_index] = True
 
-    def on_fetch_albums_loop (self, treeview, album):
+    def __on_fetch_albums_loop (self, treeview, album):
         """
         Add an album item and its tracks to the current treeview.
         """
-        self.add_treeview_item (treeview, album)
+        self._add_treeview_item (treeview, album)
         # pulse progressbar
         pindex = self.treeviews.index (treeview)
         album_count = self.album_count[pindex]
@@ -421,7 +423,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             float (album_count) / float (JamendoService.NUM_PER_PAGE)
         )
 
-    def on_fetch_albums_done (self, treeview, albums, save_state=True):
+    def __on_fetch_albums_done (self, treeview, albums, save_state=True):
         """
         Called when the thread finished fetching albums.
         """
@@ -435,11 +437,11 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         self.album_count[pindex] = 0
         self.running_threads[pindex] = False
 
-    def on_fetch_albums_error (self, treeview, exc):
+    def __on_fetch_albums_error (self, treeview, exc):
         """
         Called when an error occured in the thread.
         """
-        self.reset ()
+        self._reset ()
         pindex = self.treeviews.index (treeview)
         self.progressbars[pindex].set_fraction (0.0)
         self.progressbars[pindex].hide ()
@@ -464,13 +466,13 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         self.totem.action_error (_(u'An error occurred while fetching albums.'),
                                  msg)
 
-    def on_search_entry_activate (self, *_args):
+    def __on_search_entry_activate (self, *_args):
         """
         Called when the user typed <enter> in the search entry.
         """
-        return self.on_search_button_clicked ()
+        return self.__on_search_button_clicked ()
 
-    def on_search_button_clicked (self, *_args):
+    def __on_search_button_clicked (self, *_args):
         """
         Called when the user clicked on the search button.
         """
@@ -480,10 +482,10 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             self.current_treeview = self.treeviews[self.TAB_RESULTS]
             self.notebook.set_current_page (self.TAB_RESULTS)
         else:
-            self.on_notebook_switch_page (new_search=True)
+            self.__on_notebook_switch_page (new_search=True)
 
-    def on_notebook_switch_page (self, _page_number = None, _tab = None,
-                                 tab_num = 0, new_search = False):
+    def __on_notebook_switch_page (self, _page_number = None, _tab = None,
+                                   tab_num = 0, new_search = False):
         """
         Called when the changed a notebook page.
         """
@@ -500,9 +502,9 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             self.album_count[self.TAB_RESULTS] = 0
             self._update_buttons_state ()
         model.clear ()
-        self.fetch_albums ()
+        self._fetch_albums ()
 
-    def on_treeview_row_activated (self, _tree_view, path, _column):
+    def __on_treeview_row_activated (self, _tree_view, path, _column):
         """
         Called when the user double-clicked on a treeview element.
         """
@@ -512,11 +514,11 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             return
 
         if path.get_depth () == 1:
-            self.add_album_to_playlist ('replace', item)
+            self._add_album_to_playlist ('replace', item)
         else:
-            self.add_track_to_playlist ('replace', item)
+            self._add_track_to_playlist ('replace', item)
 
-    def on_treeview_row_clicked (self, tree_view, evt):
+    def __on_treeview_row_clicked (self, tree_view, evt):
         """
         Called when the user clicked on a treeview element.
         """
@@ -549,11 +551,11 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         except:
             pass
 
-    def on_treeview_selection_changed (self, selection):
+    def __on_treeview_selection_changed (self, selection):
         (_model, rows) = selection.get_selected_rows ()
         self.album_button.set_sensitive (len (rows) > 0)
 
-    def on_previous_button_clicked (self, *_args):
+    def __on_previous_button_clicked (self, *_args):
         """
         Called when the user clicked the previous button.
         """
@@ -564,10 +566,10 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         self.current_page[pindex] -= 1
         albums = self.pages[pindex][self.current_page[pindex]-1]
         for album in albums:
-            self.add_treeview_item (self.current_treeview, album)
-        self.on_fetch_albums_done (self.current_treeview, albums, False)
+            self._add_treeview_item (self.current_treeview, album)
+        self.__on_fetch_albums_done (self.current_treeview, albums, False)
 
-    def on_next_button_clicked (self, *_args):
+    def __on_next_button_clicked (self, *_args):
         """
         Called when the user clicked the next button.
         """
@@ -576,15 +578,15 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         model.clear ()
         pindex = self.treeviews.index (self.current_treeview)
         if self.current_page[pindex] == len (self.pages[pindex]):
-            self.fetch_albums (self.current_page[pindex]+1)
+            self._fetch_albums (self.current_page[pindex]+1)
         else:
             self.current_page[pindex] += 1
             albums = self.pages[pindex][self.current_page[pindex]-1]
             for album in albums:
-                self.add_treeview_item (self.current_treeview, album)
-            self.on_fetch_albums_done (self.current_treeview, albums, False)
+                self._add_treeview_item (self.current_treeview, album)
+            self.__on_fetch_albums_done (self.current_treeview, albums, False)
 
-    def on_album_button_clicked (self, *_args):
+    def __on_album_button_clicked (self, *_args):
         """
         Called when the user clicked on the album button.
         """
@@ -594,7 +596,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         except:
             pass
 
-    def on_add_to_playlist_activate (self, *_args):
+    def __on_add_to_playlist_activate (self, *_args):
         """
         Called when the user clicked on the add to playlist button of the
         popup menu.
@@ -603,17 +605,17 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         for item in items:
             if 'tracks' in item:
                 # we have an album
-                self.add_album_to_playlist ('enqueue', item)
+                self._add_album_to_playlist ('enqueue', item)
             else:
                 # we have a track
-                self.add_track_to_playlist ('enqueue', item)
+                self._add_track_to_playlist ('enqueue', item)
 
-    def on_open_album_page_activate (self, *_args):
+    def __on_open_album_page_activate (self, *_args):
         """
         Called when the user clicked on the jamendo album page button of the
         popup menu.
         """
-        return self.on_album_button_clicked ()
+        return self.__on_album_button_clicked ()
 
     def _get_selection (self, root=False):
         """
@@ -652,8 +654,8 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         self.next_button.set_sensitive (more_results)
         self.album_button.set_sensitive (itera is not None)
 
-
-    def _format_str (self, string):
+    @classmethod
+    def _format_str (cls, string):
         """
         Escape entities for pango markup and force the string to utf-8.
         """
@@ -664,7 +666,8 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         except:
             return string
 
-    def _format_duration (self, secs):
+    @classmethod
+    def _format_duration (cls, secs):
         """
         Format the given number of seconds to a human readable duration.
         """
@@ -739,7 +742,8 @@ class JamendoService (threading.Thread):
         finally:
             self.lock.release ()
 
-    def _request (self, url):
+    @classmethod
+    def _request (cls, url):
         opener = urllib2.build_opener ()
         opener.addheaders = [ ('User-agent', 'Totem Jamendo plugin')]
         handle = opener.open (url)
