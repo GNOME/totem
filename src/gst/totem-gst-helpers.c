@@ -72,6 +72,81 @@ totem_gst_message_print (GstMessage *msg,
   g_free (dbg);
 }
 
+static void
+destroy_pixbuf (guchar *pix, gpointer data)
+{
+  gst_buffer_unref (GST_BUFFER (data));
+}
+
+GdkPixbuf *
+totem_gst_playbin_get_frame (GstElement *play)
+{
+  GstStructure *s;
+  GstBuffer *buf = NULL;
+  GdkPixbuf *pixbuf;
+  GstCaps *to_caps;
+  gint outwidth = 0;
+  gint outheight = 0;
+
+  g_return_val_if_fail (play != NULL, NULL);
+  g_return_val_if_fail (GST_IS_ELEMENT (play), NULL);
+
+  /* our desired output format (RGB24) */
+  to_caps = gst_caps_new_simple ("video/x-raw-rgb",
+      "bpp", G_TYPE_INT, 24,
+      "depth", G_TYPE_INT, 24,
+      /* Note: we don't ask for a specific width/height here, so that
+       * videoscale can adjust dimensions from a non-1/1 pixel aspect
+       * ratio to a 1/1 pixel-aspect-ratio. We also don't ask for a
+       * specific framerate, because the input framerate won't
+       * necessarily match the output framerate if there's a deinterlacer
+       * in the pipeline. */
+      "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
+      "endianness", G_TYPE_INT, G_BIG_ENDIAN,
+      "red_mask", G_TYPE_INT, 0xff0000,
+      "green_mask", G_TYPE_INT, 0x00ff00,
+      "blue_mask", G_TYPE_INT, 0x0000ff,
+      NULL);
+
+  /* get frame */
+  g_signal_emit_by_name (play, "convert-frame", to_caps, &buf);
+  gst_caps_unref (to_caps);
+
+  if (!buf) {
+    GST_DEBUG ("Could not take screenshot: %s",
+        "failed to retrieve or convert video frame");
+    g_warning ("Could not take screenshot: %s",
+        "failed to retrieve or convert video frame");
+    return NULL;
+  }
+
+  if (!GST_BUFFER_CAPS (buf)) {
+    GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
+    g_warning ("Could not take screenshot: %s", "no caps on output buffer");
+    return NULL;
+  }
+
+  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
+
+  s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
+  gst_structure_get_int (s, "width", &outwidth);
+  gst_structure_get_int (s, "height", &outheight);
+  g_return_val_if_fail (outwidth > 0 && outheight > 0, NULL);
+
+  /* create pixbuf from that - use our own destroy function */
+  pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
+      GDK_COLORSPACE_RGB, FALSE, 8, outwidth, outheight,
+      GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, buf);
+
+  if (!pixbuf) {
+    GST_DEBUG ("Could not take screenshot: %s", "could not create pixbuf");
+    g_warning ("Could not take screenshot: %s", "could not create pixbuf");
+    gst_buffer_unref (buf);
+  }
+
+  return pixbuf;
+}
+
 /*
  * vim: sw=2 ts=8 cindent noai bs=2
  */

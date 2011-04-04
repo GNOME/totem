@@ -29,6 +29,7 @@
 #define HAVE_TOTEM_GST_HELPERS_H
 
 #include <gst/gst.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 G_BEGIN_DECLS
 
@@ -49,6 +50,8 @@ typedef enum {
 void totem_gst_message_print (GstMessage *msg,
 			      GstElement *play,
 			      const char *filename);
+
+GdkPixbuf * totem_gst_playbin_get_frame (GstElement *play);
 
 G_END_DECLS
 
