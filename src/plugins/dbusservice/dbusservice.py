@@ -92,12 +92,12 @@ class Player (dbus.service.Object):
         self.old_caps = 64 # at startup, we can only support a playlist
         self.old_status = (2, 0, 0, 0) # startup state
 
-        totem.connect ("metadata-updated", self.do_update_metadata)
-        totem.connect ("notify::playing", self.do_notify)
-        totem.connect ("notify::seekable", self.do_notify)
-        totem.connect ("notify::current-mrl", self.do_notify)
+        totem.connect ("metadata-updated", self.__do_update_metadata)
+        totem.connect ("notify::playing", self.__do_notify)
+        totem.connect ("notify::seekable", self.__do_notify)
+        totem.connect ("notify::current-mrl", self.__do_notify)
 
-    def do_update_metadata (self, totem, artist, title, album, num):
+    def __do_update_metadata (self, totem, artist, title, album, num):
         self.current_metadata = self.null_metadata.copy ()
         if title:
             self.current_metadata["title"] = title
@@ -109,23 +109,23 @@ class Player (dbus.service.Object):
             self.current_metadata["tracknumber"] = num
 
         if totem.is_playing ():
-            self.track_change (self.current_metadata)
+            self.__track_change (self.current_metadata)
 
-    def do_notify (self, totem, status):
+    def __do_notify (self, totem, status):
         if totem.is_playing ():
-            self.track_change (self.current_metadata)
+            self.__track_change (self.current_metadata)
         else:
-            self.track_change (self.null_metadata)
+            self.__track_change (self.null_metadata)
 
-        status = self.calculate_status ()
+        status = self.__calculate_status ()
         if status != self.old_status:
-            self.status_change (status)
+            self.__status_change (status)
 
-        caps = self.calculate_caps ()
+        caps = self.__calculate_caps ()
         if caps != self.old_caps:
-            self.caps_change (caps)
+            self.__caps_change (caps)
 
-    def calculate_status (self):
+    def __calculate_status (self):
         if self.totem.is_playing ():
             playing_status = 0
         elif self.totem.is_paused ():
@@ -156,7 +156,7 @@ class Player (dbus.service.Object):
             dbus.Int32 (repeat_status)
         )
 
-    def calculate_caps (self):
+    def __calculate_caps (self):
         caps = 64 # we can always have a playlist
         playlist_length = self.totem.get_playlist_length ()
         playlist_pos = self.totem.get_playlist_pos ()
@@ -175,17 +175,17 @@ class Player (dbus.service.Object):
 
         return caps
 
-    def track_change (self, metadata):
+    def __track_change (self, metadata):
         if self.old_metadata != metadata:
             self.old_metadata = metadata.copy ()
             self.TrackChange (metadata)
 
-    def status_change (self, status):
+    def __status_change (self, status):
         if self.old_status != status:
             self.old_status = status
             self.StatusChange (status)
 
-    def caps_change (self, caps):
+    def __caps_change (self, caps):
         if self.old_caps != caps:
             self.old_caps = caps
             self.CapsChange (caps)
@@ -254,7 +254,7 @@ class Player (dbus.service.Object):
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '(iiii)')
     def GetStatus (self):
-        status = self.calculate_status ()
+        status = self.__calculate_status ()
         self.old_status = status
         return dbus.Struct (status, signature = '(iiii)')
 
@@ -268,7 +268,7 @@ class Player (dbus.service.Object):
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = 'i')
     def GetCaps (self):
-        caps = self.calculate_caps ()
+        caps = self.__calculate_caps ()
         self.old_caps = caps
         return caps
 
