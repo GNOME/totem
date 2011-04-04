@@ -72,9 +72,6 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
 
     object = GObject.property (type = GObject.Object)
 
-    """
-    Jamendo totem plugin GUI.
-    """
     SEARCH_CRITERIA = ['artist_name', 'tag_idstr']
     AUDIO_FORMATS   = ['ogg2', 'mp31']
     TAB_RESULTS     = 0
