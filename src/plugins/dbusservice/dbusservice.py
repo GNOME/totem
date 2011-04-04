@@ -50,7 +50,7 @@ class DbusService (GObject.Object, Peas.Activatable):
         self.player.disconnect ()
         self.track_list.disconnect ()
 
-class Root (dbus.service.Object):
+class Root (dbus.service.Object): # pylint: disable-msg=R0923
     def __init__ (self, name, totem):
         dbus.service.Object.__init__ (self, name, '/')
         self.totem = totem
@@ -77,7 +77,7 @@ class Root (dbus.service.Object):
         return dbus.Struct ((dbus.UInt16 (1), dbus.UInt16 (0)),
                             signature = '(qq)')
 
-class Player (dbus.service.Object):
+class Player (dbus.service.Object): # pylint: disable-msg=R0923,R0904
     def __init__ (self, name, totem):
         dbus.service.Object.__init__ (self, name, '/Player')
         self.totem = totem
@@ -97,7 +97,8 @@ class Player (dbus.service.Object):
         totem.connect ("notify::seekable", self.__do_notify)
         totem.connect ("notify::current-mrl", self.__do_notify)
 
-    def __do_update_metadata (self, totem, artist, title, album, num):
+    def __do_update_metadata (self, totem, artist, # pylint: disable-msg=R0913
+                              title, album, num):
         self.current_metadata = self.null_metadata.copy ()
         if title:
             self.current_metadata["title"] = title
@@ -296,7 +297,7 @@ class Player (dbus.service.Object):
     def PositionGet (self):
         return dbus.Int32 (self.totem.props.current_time)
 
-class TrackList (dbus.service.Object):
+class TrackList (dbus.service.Object): # pylint: disable-msg=R0923
     def __init__ (self, name, totem):
         dbus.service.Object.__init__ (self, name, '/TrackList')
         self.totem = totem
