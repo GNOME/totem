@@ -121,7 +121,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
                 'totem_object' : self.totem
             }, destroy_cb = self._destroy_console)
 
-            console.set_size_request (600, 400)
+            console.set_size_request (600, 400) # pylint: disable-msg=E1101
             console.eval ('print "%s" %% totem_object' % _(u"You can access "\
                 "the Totem.Object through \'totem_object\' :\\n%s"), False)
 
