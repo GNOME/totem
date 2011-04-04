@@ -65,6 +65,7 @@
 
 #include <clutter-gst/clutter-gst.h>
 #include <mx/mx.h>
+#include "totem-aspect-frame.h"
 
 /* system */
 #include <unistd.h>
@@ -4969,7 +4970,7 @@ bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
   if (bvw->priv->frame == NULL)
     return;
 
-  mx_aspect_frame_set_expand (MX_ASPECT_FRAME (bvw->priv->frame),
+  totem_aspect_frame_set_expand (TOTEM_ASPECT_FRAME (bvw->priv->frame),
 			      (mode == BVW_ZOOM_EXPAND));
 }
 
@@ -4989,7 +4990,7 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
   g_return_val_if_fail (bvw != NULL, 1.0);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 1.0);
 
-  expand = mx_aspect_frame_get_expand (MX_ASPECT_FRAME (bvw->priv->frame));
+  expand = totem_aspect_frame_get_expand (TOTEM_ASPECT_FRAME (bvw->priv->frame));
   return expand ? BVW_ZOOM_EXPAND : BVW_ZOOM_NONE;
 }
 
@@ -6263,7 +6264,7 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
       g_critical ("Could not create Clutter video sink");
 
     /* The logo */
-    bvw->priv->logo_frame = mx_aspect_frame_new ();
+    bvw->priv->logo_frame = totem_aspect_frame_new ();
     bvw->priv->logo = clutter_texture_new ();
     mx_bin_set_child (MX_BIN (bvw->priv->logo_frame), bvw->priv->logo);
     clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->logo_frame);
@@ -6275,7 +6276,7 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
     clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
 
     /* The video */
-    bvw->priv->frame = mx_aspect_frame_new ();
+    bvw->priv->frame = totem_aspect_frame_new ();
     mx_bin_set_child (MX_BIN (bvw->priv->frame), bvw->priv->texture);
 
     clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->frame);
