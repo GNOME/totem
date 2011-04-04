@@ -290,6 +290,7 @@ HTTP_OBJECT = httplib2.Http ()
 
 class NoItemsError (Exception):
     def __init__ (self, reason=None):
+        Exception.__init__ (self)
         self.reason = reason
 
     def __str__ (self):

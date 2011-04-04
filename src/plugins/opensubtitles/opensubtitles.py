@@ -206,8 +206,9 @@ class OpenSubtitlesModel (object):
         try:
             import locale
             self.lang = LANGUAGES[locale.getlocale ()[0].split ('_')[0]]
-        except:
+        except (ImportError, IndexError):
             self.lang = 'eng'
+
         self.hash = None
         self.size = 0
 
@@ -232,14 +233,14 @@ class OpenSubtitlesModel (object):
             # We have already logged-in before, check the connection
             try:
                 result = self._server.NoOperation (self._token)
-            except:
+            except (xmlrpclib.Fault, xmlrpclib.ProtocolError):
                 pass
             if result and result['status'] != OK200:
                 return True
         try:
             result = self._server.LogIn (username, password, self.lang,
                                          USER_AGENT)
-        except:
+        except (xmlrpclib.Fault, xmlrpclib.ProtocolError):
             pass
         if result and result.get ('status') == OK200:
             self._token = result.get ('token')
@@ -283,7 +284,7 @@ class OpenSubtitlesModel (object):
             if result and result.get ('status') == OK200:
                 try:
                     subtitle64 = result['data'][0]['data']
-                except:
+                except LookupError:
                     self.message = error_message
                     return None
 

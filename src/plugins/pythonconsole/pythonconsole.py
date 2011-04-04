@@ -43,7 +43,7 @@ from gi.repository import Gio # pylint: disable-msg=E0611
 try:
     import rpdb2
     HAVE_RPDB2 = True
-except:
+except ImportError:
     HAVE_RPDB2 = False
 
 import gettext

@@ -187,7 +187,7 @@ class PopulateChannelsThread (threading.Thread):
                     GObject.idle_add (self.callback,
                                       self.tree_model, parent_path,
                                       [name, category_id, None])
-            except:
+            except StandardError:
                 # Only show the error once, rather than for each channel
                 # (it gets a bit grating)
                 if not shown_error:
@@ -234,7 +234,7 @@ class PopulateProgrammesThread (threading.Thread):
         # Get the programmes
         try:
             programmes = feed.list ()
-        except:
+        except StandardError:
             GObject.idle_add (self.callback,
                               self.tree_model, self.category_path, None, False)
             self.download_lock.release ()

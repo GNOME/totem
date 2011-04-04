@@ -215,10 +215,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         JamendoService.NUM_PER_PAGE = self.settings.get_int ('num-per-page')
 
     def __on_config_widget_destroy (self, _widget):
-        try:
-            self._reset ()
-        except:
-            pass
+        self._reset ()
 
     def _reset (self):
         """
@@ -294,10 +291,14 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file (album['image'])
                 os.unlink (album['image'])
                 album['image'] = pixbuf
-            except:
+            except GObject.GError:
                 # do not fail for this, just display a dummy pixbuf
                 album['image'] = GdkPixbuf.Pixbuf.new (GdkPixbuf.Colorspace.RGB,
                                                        True, 8, 1, 1)
+            except OSError:
+                # Ignore if we fail to delete the temporary file
+                pass
+
         # format title
         title  = '<b>%s</b>\n' % self._format_str (album['name'])
         title += _(u'Artist: %s') % self._format_str (album['artist_name'])
@@ -312,8 +313,9 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             # Translators: this is the release time of an album in Python
             # strftime format
             release = time.strftime (_(u'%x'), release)
-        except:
+        except (LookupError, ValueError):
             release = ''
+
         tip = '\n'.join ([
             '<b>%s</b>' % self._format_str (album['name']),
             _(u'Artist: %s') % self._format_str (album['artist_name']),
@@ -451,10 +453,10 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         if hasattr (exc, 'reason'):
             try:
                 reason = exc.reason[1]
-            except:
+            except IndexError:
                 try:
                     reason = exc.reason[0]
-                except:
+                except IndexError:
                     reason = str (exc)
             reason = reason.capitalize ()
             msg = _(u'Failed to connect to Jamendo server.\n%s.') % reason
@@ -510,7 +512,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         """
         try:
             item = self._get_selection ()[0] # first item selected
-        except:
+        except IndexError:
             return
 
         if path.get_depth () == 1:
@@ -522,34 +524,31 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         """
         Called when the user clicked on a treeview element.
         """
-        try:
-            if evt.button == 3:
-                (path, _col, _cell_x, _cell_y) = tree_view.get_path_at_pos (
-                    int (evt.x),
-                    int (evt.y)
-                )
-                sel  = tree_view.get_selection ()
-                (_model, rows) = sel.get_selected_rows ()
-                if path not in rows:
-                    sel.unselect_all ()
-                    sel.select_path (path)
-                tree_view.grab_focus ()
-                self.popup.popup_for_device (None, None, None, None, None,
-                                             evt.button, evt.time)
-                return True
-
-            (event_x, event_y) = evt.get_coords ()
+        if evt.button == 3:
             (path, _col, _cell_x, _cell_y) = tree_view.get_path_at_pos (
-                int (event_x),
-                int (event_y)
+                int (evt.x),
+                int (evt.y)
             )
-            if path.get_depth () == 1:
-                if tree_view.row_expanded (path):
-                    tree_view.collapse_row (path)
-                else:
-                    tree_view.expand_row (path, False)
-        except:
-            pass
+            sel  = tree_view.get_selection ()
+            (_model, rows) = sel.get_selected_rows ()
+            if path not in rows:
+                sel.unselect_all ()
+                sel.select_path (path)
+            tree_view.grab_focus ()
+            self.popup.popup_for_device (None, None, None, None, None,
+                                         evt.button, evt.time)
+            return True
+
+        (event_x, event_y) = evt.get_coords ()
+        (path, _col, _cell_x, _cell_y) = tree_view.get_path_at_pos (
+            int (event_x),
+            int (event_y)
+        )
+        if path.get_depth () == 1:
+            if tree_view.row_expanded (path):
+                tree_view.collapse_row (path)
+            else:
+                tree_view.expand_row (path, False)
 
     def __on_treeview_selection_changed (self, selection):
         (_model, rows) = selection.get_selected_rows ()
@@ -593,7 +592,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         try:
             url = self._get_selection (True)[0]['url']
             os.spawnlp (os.P_NOWAIT, "xdg-open", "xdg-open", url)
-        except:
+        except IndexError:
             pass
 
     def __on_add_to_playlist_activate (self, *_args):
@@ -646,7 +645,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
         (model, rows) = sel.get_selected_rows ()
         try:
             itera = model.get_iter (rows[0])
-        except:
+        except IndexError:
             itera = None
         pindex = self.treeviews.index (self.current_treeview)
         self.previous_button.set_sensitive (self.current_page[pindex] > 1)
@@ -663,7 +662,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             return ''
         try:
             return escape (unicode (string))
-        except:
+        except ValueError:
             return string
 
     @classmethod
@@ -680,7 +679,7 @@ class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
             # Translators: time formatting (in Python strftime format) for the
             # Jamendo plugin for times shorter than an hour
             return time.strftime (_(u'%M:%S'), time.gmtime (secs))
-        except:
+        except (LookupError, ValueError):
             return ''
 
 
@@ -737,7 +736,7 @@ class JamendoService (threading.Thread):
                 album['url'] = url.replace ('/en/', '/' + _('en') + '/')
                 GObject.idle_add (self.loop_cb[0], self.loop_cb[1], album)
             GObject.idle_add (self.done_cb[0], self.done_cb[1], albums)
-        except Exception as exc:
+        except Exception as exc: # pylint: disable-msg=W0703
             GObject.idle_add (self.error_cb[0], self.error_cb[1], exc)
         finally:
             self.lock.release ()
