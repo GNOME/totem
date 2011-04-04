@@ -939,7 +939,7 @@ class Feed (object):
         """
         dictionary = self.__dict__.copy ()
         dictionary.update (kwargs)
-        return Feed (**dictionary)
+        return Feed (**dictionary) # pylint: disable-msg=W0142
 
     def get (self, subfeed):
         """
