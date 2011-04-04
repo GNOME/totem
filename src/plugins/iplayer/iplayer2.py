@@ -317,7 +317,7 @@ class Media (object):
         self.kind = None
         self.method = None
         self.width, self.height = None, None
-        self.read_media_node (media_node)
+        self.__read_media_node (media_node)
 
         self.mimetype = None
         self.encoding = None
@@ -359,7 +359,7 @@ class Media (object):
                  self.connection_protocol)
         return tep.get (media, None)
 
-    def read_media_node (self, media):
+    def __read_media_node (self, media):
         """
         Reads media info from a media XML node
         media: media node from BeautifulStoneSoup
@@ -439,9 +439,9 @@ class Item (object):
         self.group = None
         self.kind = None
         self.live = False
-        self.read_item_node (item_node)
+        self.__read_item_node (item_node)
 
-    def read_item_node (self, node):
+    def __read_item_node (self, node):
         """
         Reads the specified XML &lt;item&gt; node and sets this instance's
         properties.
@@ -545,9 +545,9 @@ class Programme (object):
         self._related = []
 
     @call_once
-    def read_playlist (self):
+    def __read_playlist (self):
         #logging.info ('Read playlist for %s...', self.pid)
-        self.parse_playlist (self.playlist)
+        self.__parse_playlist (self.playlist)
 
     def get_playlist_xml (self):
         """ Downloads and returns the XML for a PID from the iPlayer site. """
@@ -560,7 +560,7 @@ class Programme (object):
             #logging.error ("Timed out trying to download programme XML")
             raise
 
-    def parse_playlist (self, xml):
+    def __parse_playlist (self, xml):
         #logging.info ('Parsing playlist XML... %s', xml)
 
         entities = BeautifulStoneSoup.XML_ENTITIES
@@ -631,19 +631,19 @@ class Programme (object):
     def get_updated (self):
         return self.meta['updated']
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_title (self):
         return self.meta['title']
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_summary (self):
         return self.meta['summary']
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_related (self):
         return self._related
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_items (self):
         if not self._items:
             raise NoItemsError (self.meta['reason'])
@@ -683,13 +683,13 @@ class ProgrammeSimple (object):
         self._related = []
 
     @call_once
-    def read_playlist (self):
+    def __read_playlist (self):
         pass
 
     def get_playlist_xml (self):
         pass
 
-    def parse_playlist (self, xml):
+    def __parse_playlist (self, xml):
         pass
 
     def get_thumbnail (self, size='large', tvradio='tv'):
@@ -728,19 +728,19 @@ class ProgrammeSimple (object):
     def get_updated (self):
         return self.meta['updated']
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_title (self):
         return self.meta['title']
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_summary (self):
         return self.meta['summary']
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_related (self):
         return self._related
 
-    @loaded_by (read_playlist)
+    @loaded_by (__read_playlist)
     def get_items (self):
         if not self._items:
             raise NoItemsError (self.meta['reason'])
@@ -794,7 +794,7 @@ class Feed (object):
         self.atoz = atoz
         self.searchterm = searchterm
 
-    def create_url (self, listing):
+    def __create_url (self, listing):
         """
         <channel>/['list'|'popular'|'highlights']
         'categories'/<category> (/<subcategory>) \
@@ -902,18 +902,18 @@ class Feed (object):
         raise NotImplementedError ('Sub-categories not yet supported')
 
     @classmethod
-    def is_atoz (cls, letter):
+    def __is_atoz (cls, letter):
         """
         Return False if specified letter is not a valid 'A to Z' directory
         entry. Otherwise returns the directory name.
 
-        >>> feed.is_atoz ('a'), feed.is_atoz ('z')
+        >>> feed.__is_atoz ('a'), feed.__is_atoz ('z')
         ('a', 'z')
-        >>> feed.is_atoz ('0'), feed.is_atoz ('9')
+        >>> feed.__is_atoz ('0'), feed.__is_atoz ('9')
         ('0-9', '0-9')
-        >>> feed.is_atoz ('123'), feed.is_atoz ('abc')
+        >>> feed.__is_atoz ('123'), feed.__is_atoz ('abc')
         (False, False)
-        >>> feed.is_atoz ('big british castle'), feed.is_atoz ('')
+        >>> feed.__is_atoz ('big british castle'), feed.__is_atoz ('')
         (False, False)
         """
         letter = letter.lower ()
@@ -952,8 +952,8 @@ class Feed (object):
         elif self.category:
             # no children: TODO support subcategories
             return None
-        elif self.is_atoz (subfeed):
-            return self.sub (atoz=self.is_atoz (subfeed))
+        elif self.__is_atoz (subfeed):
+            return self.sub (atoz=self.__is_atoz (subfeed))
         else:
             if subfeed in CHANNELS_TV:
                 return Feed ('tv', channel = subfeed)
@@ -963,7 +963,7 @@ class Feed (object):
         return None
 
     @classmethod
-    def read_rss (cls, url):
+    def __read_rss (cls, url):
         #logging.info ('Read RSS: %s', url)
         if url not in RSS_CACHE:
             #logging.info ('Feed URL not in cache, requesting...')
@@ -983,17 +983,17 @@ class Feed (object):
         return RSS_CACHE[url]
 
     def popular (self):
-        return self.read_rss (self.create_url ('popular'))
+        return self.__read_rss (self.__create_url ('popular'))
 
     def highlights (self):
-        return self.read_rss (self.create_url ('highlights'))
+        return self.__read_rss (self.__create_url ('highlights'))
 
     def list (self):
-        return self.read_rss (self.create_url ('list'))
+        return self.__read_rss (self.__create_url ('list'))
 
     def categories (self):
         # quick and dirty category extraction and count
-        xml_url = self.create_url ('list')
+        xml_url = self.__create_url ('list')
         xml = httpget (xml_url)
         cat = re.findall ("<category .*term=\" (.*?)\"", xml)
         categories = {}
