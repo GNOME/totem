@@ -93,7 +93,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
                              label = _(u'_Python Console'),
                              tooltip = _(u"Show Totem's Python console"),
                              stock_id = 'gnome-mime-text-x-python')
-        action.connect ('activate', self.show_console)
+        action.connect ('activate', self._show_console)
         data['action_group'].add_action (action)
 
         action = Gtk.Action (name = 'PythonDebugger',
@@ -102,7 +102,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
                                           "with rpdb2"),
                              stock_id = None)
         if HAVE_RPDB2:
-            action.connect ('activate', self.enable_debugging)
+            action.connect ('activate', self._enable_debugging)
         else:
             action.set_visible (False)
         data['action_group'].add_action (action)
@@ -113,13 +113,13 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
 
         self.totem.set_data ('PythonConsolePluginInfo', data)
 
-    def show_console (self, _action):
+    def _show_console (self, _action):
         if not self.window:
             console = PythonConsole (namespace = {
                 '__builtins__' : __builtins__,
                 'Totem' : Totem,
                 'totem_object' : self.totem
-            }, destroy_cb = self.destroy_console)
+            }, destroy_cb = self._destroy_console)
 
             console.set_size_request (600, 400)
             console.eval ('print "%s" %% totem_object' % _(u"You can access "\
@@ -128,13 +128,14 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             self.window = Gtk.Window ()
             self.window.set_title (_(u'Totem Python Console'))
             self.window.add (console)
-            self.window.connect ('destroy', self.destroy_console)
+            self.window.connect ('destroy', self._destroy_console)
             self.window.show_all ()
         else:
             self.window.show_all ()
             self.window.grab_focus ()
 
-    def enable_debugging (self, _action):
+    @classmethod
+    def _enable_debugging (cls, _action):
         msg = _(u"After you press OK, Totem will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
@@ -152,7 +153,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             GObject.idle_add (start_debugger, password)
         dialog.destroy ()
 
-    def destroy_console (self, *_args):
+    def _destroy_console (self, *_args):
         self.window.destroy ()
         self.window = None
 
