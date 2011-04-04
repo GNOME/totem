@@ -902,7 +902,7 @@ class Feed (object):
         raise NotImplementedError ('Sub-categories not yet supported')
 
     @classmethod
-    def is_atoz (self, letter):
+    def is_atoz (cls, letter):
         """
         Return False if specified letter is not a valid 'A to Z' directory
         entry. Otherwise returns the directory name.
@@ -963,7 +963,7 @@ class Feed (object):
         return None
 
     @classmethod
-    def read_rss (self, url):
+    def read_rss (cls, url):
         #logging.info ('Read RSS: %s', url)
         if url not in RSS_CACHE:
             #logging.info ('Feed URL not in cache, requesting...')
