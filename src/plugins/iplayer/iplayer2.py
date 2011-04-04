@@ -36,13 +36,6 @@ IMG_DIR = os.path.join (os.getcwd (), 'resources', 'media')
 #        level=logging.DEBUG,
 #        format='iplayer2.py: %(asctime)s %(levelname)4s %(message)s',
 #    )
-# me want 2.5!!!
-def any (iterable):
-    for element in iterable:
-        if element:
-            return True
-    return False
-
 
 # http://colinm.org/blog/on-demand-loading-of-flickr-photo-metadata
 # returns immediately for all previously-called functions
@@ -297,18 +290,6 @@ SELF_CLOSING_TAGS = ['alternate', 'mediator']
 
 HTTP_OBJECT = httplib2.Http ()
 
-RE_SELF_CLOSE = re.compile ('< ([a-zA-Z0-9]+) ( ?.*)/>', re.M | re.S)
-
-def fix_selfclosing (xml):
-    return RE_SELF_CLOSE.sub ('<\\1\\2></\\1>', xml)
-
-def set_http_cache_dir (directory):
-    file_cache = httplib2.FileCache (directory)
-    HTTP_OBJECT.cache = file_cache
-
-def set_http_cache (cache):
-    HTTP_OBJECT.cache = cache
-
 class NoItemsError (Exception):
     def __init__ (self, reason=None):
         self.reason = reason
@@ -316,27 +297,6 @@ class NoItemsError (Exception):
     def __str__ (self):
         reason = self.reason or _(u'<no reason given>')
         return _(u'Programme unavailable ("%s")') % (reason)
-
-class Memoize (object):
-    def __init__ (self, func):
-        self.func = func
-        self._cache = {}
-    def __call__ (self, *args, **kwds):
-        key = args
-        if kwds:
-            items = kwds.items ()
-            items.sort ()
-            key = key + tuple (items)
-        if key in self._cache:
-            return self._cache[key]
-        self._cache[key] = result = self.func (*args, **kwds)
-        return result
-
-def httpretrieve (url, filename):
-    _response, data = HTTP_OBJECT.request (url, 'GET')
-    data_file = open (filename, 'wb')
-    data_file.write (data)
-    data_file.close ()
 
 def httpget (url):
     _response, data = HTTP_OBJECT.request (url, 'GET')
@@ -602,8 +562,6 @@ class Programme (object):
 
     def parse_playlist (self, xml):
         #logging.info ('Parsing playlist XML... %s', xml)
-        #xml.replace ('<summary/>', '<summary></summary>')
-        #xml = fix_selfclosing (xml)
 
         entities = BeautifulStoneSoup.XML_ENTITIES
         soup = BeautifulStoneSoup (xml, selfClosingTags = SELF_CLOSING_TAGS,
@@ -704,9 +662,6 @@ class Programme (object):
     thumbnail = property (get_thumbnail)
     related = property (get_related)
     items = property (get_items)
-
-#programme = Memoize (programme)
-
 
 class ProgrammeSimple (object):
     """
@@ -1069,10 +1024,6 @@ class Feed (object):
         return self.tvradio == 'tv'
 
     name = property (get_name)
-
-
-TV = Feed ('tv')
-RADIO = Feed ('radio')
 
 def test ():
     tv_feed = Feed ('tv')

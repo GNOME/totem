@@ -58,11 +58,10 @@ class IplayerPlugin (GObject.Object, Peas.Activatable):
         # Add all the channels as top-level rows in the tree store
         channels = feed.channels ()
         for channel_id, title in channels.items ():
-            parent_iter = tree_store.append (None, (title, channel_id, None))
+            tree_store.append (None, (title, channel_id, None))
 
         # Add the channels' categories in a thread, since they each require a
         # network request
-        parent_path = tree_store.get_path (parent_iter)
         thread = PopulateChannelsThread (self, feed, tree_store)
         thread.start ()
 
