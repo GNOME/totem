@@ -1,13 +1,11 @@
 # From code by James Livingston
 
-import gobject
-from gi.repository import Peas
-from gi.repository import Totem
+from gi.repository import GObject, Peas, Totem # pylint: disable-msg=E0611
 
-class SamplePython (gobject.GObject, Peas.Activatable):
+class SamplePython (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'SamplePython'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     def do_activate (self):
         print "Activating sample Python plugin"

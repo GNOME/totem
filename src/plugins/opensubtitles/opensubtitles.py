@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from gi.repository import Peas
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import Gio
-from gi.repository import Pango
-from gi.repository import Totem
-import gobject
-gobject.threads_init ()
+from gi.repository import GObject, Peas, Gtk, Gdk # pylint: disable-msg=E0611
+from gi.repository import Gio, Pango, Totem # pylint: disable-msg=E0611
+
 import xmlrpclib
 import threading
 import xdg.BaseDirectory
@@ -20,6 +15,8 @@ gettext.textdomain ("totem")
 
 D_ = gettext.dgettext
 _ = gettext.gettext
+
+GObject.threads_init ()
 
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
@@ -303,12 +300,14 @@ class OpenSubtitlesModel (object):
 
         return None
 
-class OpenSubtitles (gobject.GObject, Peas.Activatable):
+class OpenSubtitles (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     def __init__ (self):
+        GObject.Object.__init__ (self)
+
         self.dialog = None
         self.totem = None
         schema = 'org.gnome.totem.plugins.opensubtitles'
@@ -521,10 +520,10 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
         thread = SearchThread (self.model)
         thread.start ()
-        gobject.idle_add (self.os_populate_treeview)
+        GObject.idle_add (self.os_populate_treeview)
 
         self.progress.set_text (_(u'Searching subtitles…'))
-        gobject.timeout_add (350, self.os_progress_bar_increment, thread)
+        GObject.timeout_add (350, self.os_progress_bar_increment, thread)
 
     def os_populate_treeview (self):
         """
@@ -588,10 +587,10 @@ class OpenSubtitles (gobject.GObject, Peas.Activatable):
 
             thread = DownloadThread (self.model, subtitle_id)
             thread.start ()
-            gobject.idle_add (self.os_save_subtitles, filename)
+            GObject.idle_add (self.os_save_subtitles, filename)
 
             self.progress.set_text (_(u'Downloading the subtitles…'))
-            gobject.timeout_add (350, self.os_progress_bar_increment, thread)
+            GObject.timeout_add (350, self.os_progress_bar_increment, thread)
         else:
             #warn user!
             pass

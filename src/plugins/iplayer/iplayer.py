@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import gettext
-import gobject
-from gi.repository import Peas
-from gi.repository import Totem
+from gi.repository import GObject, Peas, Totem # pylint: disable-msg=E0611
 import iplayer2
 import threading
 
@@ -12,12 +10,14 @@ gettext.textdomain ("totem")
 D_ = gettext.dgettext
 _ = gettext.gettext
 
-class IplayerPlugin (gobject.GObject, Peas.Activatable):
+class IplayerPlugin (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'IplayerPlugin'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     def __init__ (self):
+        GObject.Object.__init__ (self)
+
         self.debug = False
         self.totem = None
         self.programme_download_lock = threading.Lock ()
@@ -183,14 +183,14 @@ class PopulateChannelsThread (threading.Thread):
                 # invalidating an iter
                 for name, _count in self.feed.get (channel_id).categories ():
                     category_id = category_name_to_id (name)
-                    gobject.idle_add (self.plugin._populate_channel_list_cb,
+                    GObject.idle_add (self.plugin._populate_channel_list_cb,
                                       self.tree_model, parent_path,
                                       [name, category_id, None])
             except:
                 # Only show the error once, rather than for each channel
                 # (it gets a bit grating)
                 if not shown_error:
-                    gobject.idle_add (self.plugin._populate_channel_list_cb,
+                    GObject.idle_add (self.plugin._populate_channel_list_cb,
                                       self.tree_model, parent_path, None)
                     shown_error = True
 
@@ -211,7 +211,7 @@ class PopulateProgrammesThread (threading.Thread):
 
         category_iter = self.tree_model.get_iter (self.category_path)
         if category_iter == None:
-            gobject.idle_add (self.plugin._populate_programme_list_cb,
+            GObject.idle_add (self.plugin._populate_programme_list_cb,
                               self.tree_model, self.category_path, None, False)
             self.plugin.programme_download_lock.release ()
             return
@@ -223,7 +223,7 @@ class PopulateProgrammesThread (threading.Thread):
         # Retrieve the programmes and return them
         feed = self.feed.get (channel_id).get (category_id)
         if feed == None:
-            gobject.idle_add (self.plugin._populate_programme_list_cb,
+            GObject.idle_add (self.plugin._populate_programme_list_cb,
                               self.tree_model, self.category_path, None, False)
             self.plugin.programme_download_lock.release ()
             return
@@ -232,7 +232,7 @@ class PopulateProgrammesThread (threading.Thread):
         try:
             programmes = feed.list ()
         except:
-            gobject.idle_add (self.plugin._populate_programme_list_cb,
+            GObject.idle_add (self.plugin._populate_programme_list_cb,
                               self.tree_model, self.category_path, None, False)
             self.plugin.programme_download_lock.release ()
             return
@@ -253,7 +253,7 @@ class PopulateProgrammesThread (threading.Thread):
                 print "Programme has no HTTP streams"
                 continue
 
-            gobject.idle_add (self.plugin._populate_programme_list_cb,
+            GObject.idle_add (self.plugin._populate_programme_list_cb,
                               self.tree_model, self.category_path,
                               [programme.get_title (), programme.get_summary (),
                                media.url],

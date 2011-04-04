@@ -20,18 +20,18 @@
 ## Sunday 13th May 2007: Bastien Nocera: Add exception clause.
 ## See license_change file for details.
 
-import gobject
-from gi.repository import Peas
-from gi.repository import Totem
+from gi.repository import GObject, Peas, Totem # pylint: disable-msg=E0611
 import dbus, dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 
-class DbusService (gobject.GObject, Peas.Activatable):
+class DbusService (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'DbusService'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     def __init__ (self):
+        GObject.Object.__init__ (self)
+
         self.root = None
         self.player = None
         self.track_list = None

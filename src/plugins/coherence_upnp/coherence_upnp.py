@@ -7,10 +7,7 @@
 
 import gettext
 
-import gobject
-from gi.repository import Peas
-from gi.repository import Gtk
-from gi.repository import Totem
+from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable-msg=E0611
 
 from coherence.ui.av_widgets import TreeWidget
 from coherence.ui.av_widgets import UDN_COLUMN, UPNP_CLASS_COLUMN
@@ -21,12 +18,14 @@ gettext.textdomain ("totem")
 D_ = gettext.dgettext
 _ = gettext.gettext
 
-class UPnPClient (gobject.GObject, Peas.Activatable):
+class UPnPClient (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'UPnPClient'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     def __init__ (self):
+        GObject.Object.__init__ (self)
+
         self.totem_object = None
         self.uiw = TreeWidget ()
         self.uiw.window.set_shadow_type (gtk.SHADOW_IN)

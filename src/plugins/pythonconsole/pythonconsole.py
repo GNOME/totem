@@ -37,11 +37,9 @@ from console import PythonConsole
 
 __all__ = ('PythonConsole', 'OutFile')
 
-from gi.repository import Peas
-from gi.repository import Gtk
-from gi.repository import Totem
-from gi.repository import Gio
-import gobject
+from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable-msg=E0611
+from gi.repository import Gio # pylint: disable-msg=E0611
+
 try:
     import rpdb2
     HAVE_RPDB2 = True
@@ -67,12 +65,14 @@ UI_STR = """
 </ui>
 """
 
-class PythonConsolePlugin (gobject.GObject, Peas.Activatable):
+class PythonConsolePlugin (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'PythonConsolePlugin'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     def __init__ (self):
+        GObject.Object.__init__ (self)
+
         self.totem = None
         self.window = None
 
@@ -149,7 +149,7 @@ class PythonConsolePlugin (gobject.GObject, Peas.Activatable):
                 rpdb2.start_embedded_debugger (password)
                 return False
 
-            gobject.idle_add (start_debugger, password)
+            GObject.idle_add (start_debugger, password)
         dialog.destroy ()
 
     def destroy_console (self, *_args):

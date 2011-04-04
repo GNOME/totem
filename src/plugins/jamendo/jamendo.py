@@ -33,14 +33,9 @@ TODO:
 import os
 import gettext
 
-import gobject
-from gi.repository import Gio
-from gi.repository import Peas
-from gi.repository import PeasGtk
-from gi.repository import Gtk
-from gi.repository import GdkPixbuf
-from gi.repository import Totem
-from gi.repository import Pango
+from gi.repository import GObject # pylint: disable-msg=E0611
+from gi.repository import Gio, Peas, PeasGtk, Gtk # pylint: disable-msg=E0611
+from gi.repository import GdkPixbuf, Totem, Pango # pylint: disable-msg=E0611
 
 import socket
 import threading
@@ -70,12 +65,12 @@ except ImportError:
         raise
 
 socket.setdefaulttimeout (30)
-gobject.threads_init ()
+GObject.threads_init ()
 
-class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
+class JamendoPlugin (GObject.Object, Peas.Activatable, PeasGtk.Configurable):
     __gtype_name__ = 'JamendoPlugin'
 
-    object = gobject.property (type = gobject.GObject)
+    object = GObject.property (type = GObject.Object)
 
     """
     Jamendo totem plugin GUI.
@@ -87,6 +82,8 @@ class JamendoPlugin (gobject.GObject, Peas.Activatable, PeasGtk.Configurable):
     TAB_LATEST      = 2
 
     def __init__ (self):
+        GObject.Object.__init__ (self)
+
         self.debug = True
         self.gstreamer_plugins_present = True
         self.totem = None
@@ -735,10 +732,10 @@ class JamendoService (threading.Thread):
                 # If Jamendo doesn't support your language, *do not translate
                 # this string*!
                 album['url'] = url.replace ('/en/', '/' + _('en') + '/')
-                gobject.idle_add (self.loop_cb[0], self.loop_cb[1], album)
-            gobject.idle_add (self.done_cb[0], self.done_cb[1], albums)
+                GObject.idle_add (self.loop_cb[0], self.loop_cb[1], album)
+            GObject.idle_add (self.done_cb[0], self.done_cb[1], albums)
         except Exception as exc:
-            gobject.idle_add (self.error_cb[0], self.error_cb[1], exc)
+            GObject.idle_add (self.error_cb[0], self.error_cb[1], exc)
         finally:
             self.lock.release ()
 
