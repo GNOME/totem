@@ -224,8 +224,6 @@ LIVE_RADIO_STATIONS = {
                       'radioscotland.ram',
     'World Service': 'http://www.bbc.co.uk/worldservice/meta/tx/nb/'\
                      'live_eneuk_au_nb.asx',
-    'BBC nan Gaidheal': 'http://www.bbc.co.uk/scotland/alba/media/live/'\
-                        'radio_ng.ram',
     'BBC London': ENGLAND_RADIO_URI + 'london.ram',
     'BBC Berkshire': ENGLAND_RADIO_URI + 'radioberkshire.ram',
     'BBC Bristol': ENGLAND_RADIO_URI + 'bristol.ram',
