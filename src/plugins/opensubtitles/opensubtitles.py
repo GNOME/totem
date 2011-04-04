@@ -146,15 +146,15 @@ class SearchThread (threading.Thread):
     This is the thread started when the dialog is searching for subtitles
     """
     def __init__ (self, model):
-        self.model = model
+        self._model = model
         self._done = False
         self._lock = threading.Lock ()
         threading.Thread.__init__ (self)
 
     def run (self):
-        self.model.lock.acquire (True)
-        self.model.results = self.model.search_subtitles ()
-        self.model.lock.release ()
+        self._model.lock.acquire (True)
+        self._model.results = self._model.search_subtitles ()
+        self._model.lock.release ()
         self._done = True
 
     @property
@@ -170,17 +170,17 @@ class DownloadThread (threading.Thread):
     This is the thread started when the dialog is downloading the subtitles.
     """
     def __init__ (self, model, subtitle_id):
-        self.model = model
-        self.subtitle_id = subtitle_id
+        self._model = model
+        self._subtitle_id = subtitle_id
         self._done = False
         self._lock = threading.Lock ()
         threading.Thread.__init__ (self)
 
     def run (self):
-        model = self.model
+        model = self._model
 
         model.lock.acquire (True)
-        model.subtitles = model.download_subtitles (self.subtitle_id)
+        model.subtitles = model.download_subtitles (self._subtitle_id)
         model.lock.release ()
 
         self._done = True
@@ -200,8 +200,8 @@ class OpenSubtitlesModel (object):
     This contains the logic of the opensubtitles service.
     """
     def __init__ (self, server):
-        self.server = server
-        self.token = None
+        self._server = server
+        self._token = None
 
         try:
             import locale
@@ -228,22 +228,22 @@ class OpenSubtitlesModel (object):
         result = None
         self.message = ''
 
-        if self.token:
+        if self._token:
             # We have already logged-in before, check the connection
             try:
-                result = self.server.NoOperation (self.token)
+                result = self._server.NoOperation (self._token)
             except:
                 pass
             if result and result['status'] != OK200:
                 return True
         try:
-            result = self.server.LogIn (username, password, self.lang,
-                                        USER_AGENT)
+            result = self._server.LogIn (username, password, self.lang,
+                                         USER_AGENT)
         except:
             pass
         if result and result.get ('status') == OK200:
-            self.token = result.get ('token')
-            if self.token:
+            self._token = result.get ('token')
+            if self._token:
                 return True
 
         self.message = _(u'Could not contact the OpenSubtitles website')
@@ -257,7 +257,8 @@ class OpenSubtitlesModel (object):
                           'moviehash'    : self.hash,
                           'moviebytesize': str (self.size)}
             try:
-                result = self.server.SearchSubtitles (self.token, [searchdata])
+                result = self._server.SearchSubtitles (self._token,
+                                                       [searchdata])
             except xmlrpclib.ProtocolError:
                 self.message = _(u'Could not contact the OpenSubtitles website')
 
@@ -274,8 +275,8 @@ class OpenSubtitlesModel (object):
 
         if self.log_in ():
             try:
-                result = self.server.DownloadSubtitles (self.token,
-                                                        [subtitle_id])
+                result = self._server.DownloadSubtitles (self._token,
+                                                         [subtitle_id])
             except xmlrpclib.ProtocolError:
                 self.message = error_message
 
@@ -303,27 +304,26 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
     def __init__ (self):
         GObject.Object.__init__ (self)
 
-        self.dialog = None
-        self.totem = None
+        self._dialog = None
+        self._totem = None
         schema = 'org.gnome.totem.plugins.opensubtitles'
-        self.settings = Gio.Settings.new (schema)
+        self._settings = Gio.Settings.new (schema)
 
-        self.manager = None
-        self.menu_id = None
-        self.action_group = None
-        self.action = None
+        self._manager = None
+        self._menu_id = None
+        self._action_group = None
+        self._action = None
 
-        self.find_button = None
-        self.apply_button = None
-        self.close_button = None
+        self._find_button = None
+        self._apply_button = None
+        self._close_button = None
 
-        self.liststore = None
-        self.model = None
-        self.treeview = None
+        self._list_store = None
+        self._model = None
+        self._tree_view = None
 
-        self.results = None
-        self.filename = None
-        self.progress = None
+        self._filename = None
+        self._progress = None
 
     # totem.Plugin methods
 
@@ -333,23 +333,23 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         Here the sidebar page is initialized (set up the treeview, connect
         the callbacks, ...) and added to totem.
         """
-        self.totem = self.object
-        self.filename = None
+        self._totem = self.object
+        self._filename = None
 
-        self.manager = self.totem.get_ui_manager ()
+        self._manager = self._totem.get_ui_manager ()
         self._append_menu ()
 
-        self.totem.connect ('file-opened', self.__on_totem__file_opened)
-        self.totem.connect ('file-closed', self.__on_totem__file_closed)
+        self._totem.connect ('file-opened', self.__on_totem__file_opened)
+        self._totem.connect ('file-closed', self.__on_totem__file_closed)
 
         # Obtain the ServerProxy and init the model
         server = xmlrpclib.Server ('http://api.opensubtitles.org/xml-rpc')
-        self.model = OpenSubtitlesModel (server)
+        self._model = OpenSubtitlesModel (server)
 
     def do_deactivate (self):
-        if self.dialog:
-            self.dialog.destroy ()
-        self.dialog = None
+        if self._dialog:
+            self._dialog.destroy ()
+        self._dialog = None
 
         self._delete_menu ()
 
@@ -358,19 +358,19 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
     def _build_dialog (self):
         builder = Totem.plugin_load_interface ("opensubtitles",
                                                "opensubtitles.ui", True,
-                                               self.totem.get_main_window (),
+                                               self._totem.get_main_window (),
                                                self)
 
         # Obtain all the widgets we need to initialize
         combobox = builder.get_object ('language_combobox')
         languages = builder.get_object ('language_model')
-        self.progress = builder.get_object ('progress_bar')
-        self.treeview = builder.get_object ('subtitle_treeview')
-        self.liststore = builder.get_object ('subtitle_model')
-        self.dialog = builder.get_object ('subtitles_dialog')
-        self.find_button = builder.get_object ('find_button')
-        self.apply_button = builder.get_object ('apply_button')
-        self.close_button = builder.get_object ('close_button')
+        self._progress = builder.get_object ('progress_bar')
+        self._tree_view = builder.get_object ('subtitle_treeview')
+        self._list_store = builder.get_object ('subtitle_model')
+        self._dialog = builder.get_object ('subtitles_dialog')
+        self._find_button = builder.get_object ('find_button')
+        self._apply_button = builder.get_object ('apply_button')
+        self._close_button = builder.get_object ('close_button')
 
         # Set up and populate the languages combobox
         renderer = Gtk.CellRendererText ()
@@ -380,13 +380,13 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         combobox.pack_start (renderer, True)
         combobox.add_attribute (renderer, 'text', 0)
 
-        lang = self.settings.get_string ('language')
+        lang = self._settings.get_string ('language')
         if lang is not None:
-            self.model.lang = lang
+            self._model.lang = lang
 
         for lang in LANGUAGES_STR:
             itera = languages.append (lang)
-            if LANGUAGES[lang[1]] == self.model.lang:
+            if LANGUAGES[lang[1]] == self._model.lang:
                 (success,
                  parentit) = sorted_languages.convert_child_iter_to_iter (itera)
                 if success:
@@ -394,91 +394,91 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
 
         # Set up the results treeview
         renderer = Gtk.CellRendererText ()
-        self.treeview.set_model (self.liststore)
-        self.treeview.set_headers_visible (False)
+        self._tree_view.set_model (self._list_store)
+        self._tree_view.set_headers_visible (False)
         renderer.set_property ('ellipsize', Pango.EllipsizeMode.END)
         column = Gtk.TreeViewColumn (_(u"Subtitles"), renderer, text=0)
         column.set_resizable (True)
         column.set_expand (True)
-        self.treeview.append_column (column)
+        self._tree_view.append_column (column)
         # translators comment:
         # This is the file-type of the subtitle file detected
         column = Gtk.TreeViewColumn (_(u"Format"), renderer, text=1)
         column.set_resizable (False)
-        self.treeview.append_column (column)
+        self._tree_view.append_column (column)
         # translators comment:
         # This is a rating of the quality of the subtitle
         column = Gtk.TreeViewColumn (_(u"Rating"), renderer, text=2)
         column.set_resizable (False)
-        self.treeview.append_column (column)
+        self._tree_view.append_column (column)
 
-        self.apply_button.set_sensitive (False)
+        self._apply_button.set_sensitive (False)
 
-        self.apply_button.connect ('clicked', self.__on_apply_clicked)
-        self.find_button.connect ('clicked', self.__on_find_clicked)
-        self.close_button.connect ('clicked', self.__on_close_clicked)
+        self._apply_button.connect ('clicked', self.__on_apply_clicked)
+        self._find_button.connect ('clicked', self.__on_find_clicked)
+        self._close_button.connect ('clicked', self.__on_close_clicked)
 
         # Set up signals
 
         combobox.connect ('changed', self.__on_combobox__changed)
-        self.dialog.connect ('delete-event', self.dialog.hide_on_delete)
-        self.dialog.set_transient_for (self.totem.get_main_window ())
-        self.dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
+        self._dialog.connect ('delete-event', self._dialog.hide_on_delete)
+        self._dialog.set_transient_for (self._totem.get_main_window ())
+        self._dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
 
         # Connect the callbacks
-        self.dialog.connect ('key-press-event',
+        self._dialog.connect ('key-press-event',
                              self.__on_window__key_press_event)
-        self.treeview.get_selection ().connect ('changed',
+        self._tree_view.get_selection ().connect ('changed',
                                                 self.__on_treeview__row_change)
-        self.treeview.connect ('row-activated',
+        self._tree_view.connect ('row-activated',
                                self.__on_treeview__row_activate)
 
     def _show_dialog (self, _action):
-        if not self.dialog:
+        if not self._dialog:
             self._build_dialog ()
 
-        filename = self.totem.get_current_mrl ()
-        if not self.model.results or filename != self.filename:
-            self.filename = filename
+        filename = self._totem.get_current_mrl ()
+        if not self._model.results or filename != self._filename:
+            self._filename = filename
 
-        self.dialog.show_all ()
+        self._dialog.show_all ()
 
-        self.progress.set_fraction (0.0)
+        self._progress.set_fraction (0.0)
 
     def _append_menu (self):
-        self.action_group = Gtk.ActionGroup (name='OpenSubtitles')
+        self._action_group = Gtk.ActionGroup (name='OpenSubtitles')
 
         tooltip_text = _(u"Download movie subtitles from OpenSubtitles")
-        self.action = Gtk.Action (name='opensubtitles',
+        self._action = Gtk.Action (name='opensubtitles',
                                  label=_(u'_Download Movie Subtitles…'),
                                  tooltip=tooltip_text,
                                  stock_id=None)
 
-        self.action_group.add_action (self.action)
+        self._action_group.add_action (self._action)
 
-        self.manager.insert_action_group (self.action_group, 0)
+        self._manager.insert_action_group (self._action_group, 0)
 
-        self.menu_id = self.manager.new_merge_id ()
+        self._menu_id = self._manager.new_merge_id ()
         merge_path = '/tmw-menubar/view/subtitles/subtitle-download-placeholder'
-        self.manager.add_ui (self.menu_id,
+        self._manager.add_ui (self._menu_id,
                              merge_path,
                              'opensubtitles',
                              'opensubtitles',
                              Gtk.UIManagerItemType.MENUITEM,
                              False
                             )
-        self.action.set_visible (True)
+        self._action.set_visible (True)
 
-        self.manager.ensure_update ()
+        self._manager.ensure_update ()
 
-        self.action.connect ('activate', self._show_dialog)
+        self._action.connect ('activate', self._show_dialog)
 
-        self.action.set_sensitive (self.totem.is_playing () and
+        self._action.set_sensitive (self._totem.is_playing () and
                   self._check_allowed_scheme () and
                                   not self._check_is_audio ())
 
     def _check_allowed_scheme (self):
-        current_file = Gio.file_new_for_uri (self.totem.get_current_mrl ())
+        current_file = Gio.file_new_for_uri (self._totem.get_current_mrl ())
         scheme = current_file.get_uri_scheme ()
 
         if (scheme == 'dvd' or scheme == 'http' or
@@ -491,60 +491,60 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         # FIXME need to use something else here
         # I think we must use video widget metadata but I don't found a way
         # to get this info from python
-        filename = self.totem.get_current_mrl ()
+        filename = self._totem.get_current_mrl ()
         if Gio.content_type_guess (filename, '')[0].split ('/')[0] == 'audio':
             return True
         return False
 
     def _delete_menu (self):
-        self.manager.remove_action_group (self.action_group)
-        self.manager.remove_ui (self.menu_id)
+        self._manager.remove_action_group (self._action_group)
+        self._manager.remove_ui (self._menu_id)
 
     def _get_results (self):
-        self.liststore.clear ()
-        self.treeview.set_headers_visible (False)
-        self.model.results = []
-        self.apply_button.set_sensitive (False)
-        self.find_button.set_sensitive (False)
+        self._list_store.clear ()
+        self._tree_view.set_headers_visible (False)
+        self._model.results = []
+        self._apply_button.set_sensitive (False)
+        self._find_button.set_sensitive (False)
 
         cursor = Gdk.Cursor.new (Gdk.CursorType.WATCH)
-        self.dialog.get_window ().set_cursor (cursor)
+        self._dialog.get_window ().set_cursor (cursor)
 
-        thread = SearchThread (self.model)
+        thread = SearchThread (self._model)
         thread.start ()
         GObject.idle_add (self._populate_treeview)
 
-        self.progress.set_text (_(u'Searching subtitles…'))
+        self._progress.set_text (_(u'Searching subtitles…'))
         GObject.timeout_add (350, self._progress_bar_increment, thread)
 
     def _populate_treeview (self):
-        if self.model.lock.acquire (False) == False:
+        if self._model.lock.acquire (False) == False:
             return True
 
-        if self.model.results:
-            self.apply_button.set_sensitive (True)
-            for sub_data in self.model.results:
+        if self._model.results:
+            self._apply_button.set_sensitive (True)
+            for sub_data in self._model.results:
                 if not SUBTITLES_EXT.count (sub_data['SubFormat']):
                     continue
-                self.liststore.append ([sub_data['SubFileName'],
+                self._list_store.append ([sub_data['SubFileName'],
                                         sub_data['SubFormat'],
                                         sub_data['SubRating'],
                                         sub_data['IDSubtitleFile'],])
-                self.treeview.set_headers_visible (True)
+                self._tree_view.set_headers_visible (True)
         else:
-            self.apply_button.set_sensitive (False)
+            self._apply_button.set_sensitive (False)
 
-        self.model.lock.release ()
+        self._model.lock.release ()
 
-        self.dialog.get_window ().set_cursor (None)
+        self._dialog.get_window ().set_cursor (None)
 
         return False
 
     def _save_selected_subtitle (self, filename=None):
         cursor = Gdk.Cursor.new (Gdk.CursorType.WATCH)
-        self.dialog.get_window ().set_cursor (cursor)
+        self._dialog.get_window ().set_cursor (cursor)
 
-        model, rows = self.treeview.get_selection ().get_selected_rows ()
+        model, rows = self._tree_view.get_selection ().get_selected_rows ()
         if rows:
             subtitle_iter = model.get_iter (rows[0])
             subtitle_id = model.get_value (subtitle_iter, 3)
@@ -565,29 +565,29 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
                     # GLib (PyGObject) 2.18
                     # directory.make_directory_with_parents ()
 
-                subtitle_file = Gio.file_new_for_path (self.filename)
+                subtitle_file = Gio.file_new_for_path (self._filename)
                 movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
 
                 filename = directory.get_uri () + sep
                 filename += movie_name + '.' + subtitle_format
 
-            self.model.subtitles = ''
+            self._model.subtitles = ''
 
-            thread = DownloadThread (self.model, subtitle_id)
+            thread = DownloadThread (self._model, subtitle_id)
             thread.start ()
             GObject.idle_add (self._save_subtitles, filename)
 
-            self.progress.set_text (_(u'Downloading the subtitles…'))
+            self._progress.set_text (_(u'Downloading the subtitles…'))
             GObject.timeout_add (350, self._progress_bar_increment, thread)
         else:
             #warn user!
             pass
 
     def _save_subtitles (self, filename):
-        if self.model.lock.acquire (False) == False:
+        if self._model.lock.acquire (False) == False:
             return True
 
-        if self.model.subtitles:
+        if self._model.subtitles:
             # Delete all previous cached subtitle for this file
             for ext in SUBTITLES_EXT:
                 subtitle_file = Gio.file_new_for_path (filename[:-3] + ext)
@@ -598,56 +598,56 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             suburi = subtitle_file.get_uri ()
 
             sub_file = subtitle_file.replace ('', False)
-            sub_file.write (self.model.subtitles)
+            sub_file.write (self._model.subtitles)
             sub_file.close ()
 
-        self.model.lock.release ()
+        self._model.lock.release ()
 
-        self.dialog.get_window ().set_cursor (None)
+        self._dialog.get_window ().set_cursor (None)
         self.__on_close_clicked (None)
 
         if suburi:
-            self.totem.set_current_subtitle (suburi)
+            self._totem.set_current_subtitle (suburi)
 
         return False
 
     def _progress_bar_increment (self, thread):
         if not thread.done:
-            self.progress.pulse ()
+            self._progress.pulse ()
             return True
 
-        if self.model.message:
-            self.progress.set_text (self.model.message)
+        if self._model.message:
+            self._progress.set_text (self._model.message)
         else:
-            self.progress.set_text ('')
+            self._progress.set_text ('')
 
-        self.progress.set_fraction (0.0)
-        self.find_button.set_sensitive (True)
-        self.apply_button.set_sensitive (False)
-        self.treeview.set_sensitive (True)
+        self._progress.set_fraction (0.0)
+        self._find_button.set_sensitive (True)
+        self._apply_button.set_sensitive (False)
+        self._tree_view.set_sensitive (True)
         return False
 
     def _download_and_apply (self):
-        self.apply_button.set_sensitive (False)
-        self.find_button.set_sensitive (False)
-        self.action.set_sensitive (False)
-        self.treeview.set_sensitive (False)
+        self._apply_button.set_sensitive (False)
+        self._find_button.set_sensitive (False)
+        self._action.set_sensitive (False)
+        self._tree_view.set_sensitive (False)
         self._save_selected_subtitle ()
 
     # Callbacks
 
     def __on_window__key_press_event (self, _widget, event):
         if event.keyval == Gdk.KEY_Escape:
-            self.dialog.destroy ()
-            self.dialog = None
+            self._dialog.destroy ()
+            self._dialog = None
             return True
         return False
 
     def __on_treeview__row_change (self, selection):
         if selection.count_selected_rows () > 0:
-            self.apply_button.set_sensitive (True)
+            self._apply_button.set_sensitive (True)
         else:
-            self.apply_button.set_sensitive (False)
+            self._apply_button.set_sensitive (False)
 
     def __on_treeview__row_activate (self, _tree_path, _column, _data):
         self._download_and_apply ()
@@ -655,46 +655,45 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
     def __on_totem__file_opened (self, _totem, _filename):
         # Check if allows subtitles
         if self._check_allowed_scheme () and not self._check_is_audio ():
-            self.action.set_sensitive (True)
-            if self.dialog:
-                self.find_button.set_sensitive (True)
-                self.filename = self.totem.get_current_mrl ()
-                self.liststore.clear ()
-                self.treeview.set_headers_visible (False)
-                self.apply_button.set_sensitive (False)
-                self.results = []
+            self._action.set_sensitive (True)
+            if self._dialog:
+                self._find_button.set_sensitive (True)
+                self._filename = self._totem.get_current_mrl ()
+                self._list_store.clear ()
+                self._tree_view.set_headers_visible (False)
+                self._apply_button.set_sensitive (False)
         else:
-            self.action.set_sensitive (False)
-            if self.dialog and self.dialog.is_active ():
-                self.liststore.clear ()
-                self.treeview.set_headers_visible (False)
-                self.apply_button.set_sensitive (False)
-                self.find_button.set_sensitive (False)
+            self._action.set_sensitive (False)
+            if self._dialog and self._dialog.is_active ():
+                self._list_store.clear ()
+                self._tree_view.set_headers_visible (False)
+                self._apply_button.set_sensitive (False)
+                self._find_button.set_sensitive (False)
 
     def __on_totem__file_closed (self, _totem):
-        self.action.set_sensitive (False)
-        if self.dialog:
-            self.apply_button.set_sensitive (False)
-            self.find_button.set_sensitive (False)
+        self._action.set_sensitive (False)
+        if self._dialog:
+            self._apply_button.set_sensitive (False)
+            self._find_button.set_sensitive (False)
 
     def __on_combobox__changed (self, combobox):
         combo_iter = combobox.get_active_iter ()
         combo_model = combobox.get_model ()
-        self.model.lang = LANGUAGES[combo_model.get_value (combo_iter, 1)]
-        self.settings.set_string ('language', self.model.lang)
+        self._model.lang = LANGUAGES[combo_model.get_value (combo_iter, 1)]
+        self._settings.set_string ('language', self._model.lang)
 
     def __on_close_clicked (self, _data):
-        self.dialog.destroy ()
-        self.dialog = None
+        self._dialog.destroy ()
+        self._dialog = None
 
     def __on_apply_clicked (self, _data):
         self._download_and_apply ()
 
     def __on_find_clicked (self, _data):
-        self.apply_button.set_sensitive (False)
-        self.find_button.set_sensitive (False)
-        self.filename = self.totem.get_current_mrl ()
-        self.model.hash , self.model.size = hash_file (self.filename)
+        self._apply_button.set_sensitive (False)
+        self._find_button.set_sensitive (False)
+        self._filename = self._totem.get_current_mrl ()
+        self._model.hash , self._model.size = hash_file (self._filename)
 
         self._get_results ()
 
