@@ -251,9 +251,6 @@ class OpenSubtitlesModel (object):
         return False
 
     def search_subtitles (self):
-        """
-
-        """
         self.message = ''
         if self.log_in ():
             searchdata = {'sublanguageid': self.lang,
@@ -272,8 +269,6 @@ class OpenSubtitlesModel (object):
         return None
 
     def download_subtitles (self, subtitle_id):
-        """
-        """
         self.message = ''
         error_message = _(u'Could not contact the OpenSubtitles website')
 
@@ -451,9 +446,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self.progress.set_fraction (0.0)
 
     def _append_menu (self):
-        """
-        """
-
         self.action_group = Gtk.ActionGroup (name='OpenSubtitles')
 
         tooltip_text = _(u"Download movie subtitles from OpenSubtitles")
@@ -509,8 +501,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self.manager.remove_ui (self.menu_id)
 
     def _get_results (self):
-        """
-        """
         self.liststore.clear ()
         self.treeview.set_headers_visible (False)
         self.model.results = []
@@ -528,8 +518,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         GObject.timeout_add (350, self._progress_bar_increment, thread)
 
     def _populate_treeview (self):
-        """
-        """
         if self.model.lock.acquire (False) == False:
             return True
 
@@ -553,8 +541,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         return False
 
     def _save_selected_subtitle (self, filename=None):
-        """
-        """
         cursor = Gdk.Cursor.new (Gdk.CursorType.WATCH)
         self.dialog.get_window ().set_cursor (cursor)
 
@@ -667,8 +653,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self._download_and_apply ()
 
     def __on_totem__file_opened (self, _totem, _filename):
-        """
-        """
         # Check if allows subtitles
         if self._check_allowed_scheme () and not self._check_is_audio ():
             self.action.set_sensitive (True)
