@@ -309,8 +309,6 @@ static GtkWidgetClass *parent_class = NULL;
 
 static int bvw_signals[LAST_SIGNAL] = { 0 };
 
-static GThread *gui_thread;
-
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
 
@@ -6342,9 +6340,6 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
       G_CALLBACK (audio_tags_changed_cb), bvw);
   g_signal_connect (bvw->priv->play, "text-tags-changed",
       G_CALLBACK (text_tags_changed_cb), bvw);
-
-  /* assume we're always called from the main Gtk+ GUI thread */
-  gui_thread = g_thread_self();
 
   if (type == BVW_USE_TYPE_VIDEO) {
     GstStateChangeReturn ret;
