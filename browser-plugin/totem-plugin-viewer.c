@@ -1816,8 +1816,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	/* if (emb->hidden || emb->audioonly != FALSE)
 	 * FIXME disable video decoding */
-	emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new
-				       (BVW_USE_TYPE_VIDEO, &err));
+	emb->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
 	/* FIXME: check the UA strings of the legacy plugins themselves */
 	/* FIXME: at least hxplayer seems to send different UAs depending on the protocol!? */

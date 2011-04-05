@@ -142,22 +142,7 @@ GOptionGroup* bacon_video_widget_get_option_group (void);
 /* This can be used if the app does not use popt */
 void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 
-/**
- * BvwUseType:
- * @BVW_USE_TYPE_VIDEO: fully-featured with video, audio, capture and metadata support
- * @BVW_USE_TYPE_CAPTURE: capture support only
- *
- * The purpose for which a #BaconVideoWidget will be used, as specified to
- * bacon_video_widget_new(). This determines which features will be enabled
- * in the created widget.
- **/
-typedef enum {
-	BVW_USE_TYPE_VIDEO,
-	BVW_USE_TYPE_CAPTURE,
-} BvwUseType;
-
-GtkWidget *bacon_video_widget_new		 (BvwUseType type,
-						  GError **error);
+GtkWidget *bacon_video_widget_new		 (GError **error);
 
 char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 

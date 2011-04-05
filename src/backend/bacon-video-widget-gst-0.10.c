@@ -236,8 +236,6 @@ struct BaconVideoWidgetPrivate
   GstBus                      *bus;
   gulong                       sig_bus_async;
 
-  BvwUseType                   use_type;
-
   gint                         eos_id;
 
   /* When seeking, queue up the seeks if they happen before
@@ -1167,12 +1165,8 @@ bvw_update_stream_info (BaconVideoWidget *bvw)
 {
   parse_stream_info (bvw);
 
-  /* if we're not interactive, we want to announce metadata
-   * only later when we can be sure we got it all */
-  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-  }
+  g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
 static void
@@ -1189,20 +1183,14 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     bvw_update_stream_info (bvw);
   }
   else if (strcmp (msg_name, "video-size") == 0) {
-    /* if we're not interactive, we want to announce metadata
-     * only later when we can be sure we got it all */
-    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
-      g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
-    }
+    int w, h;
+
+    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
 
     /* This is necessary for the pixel-aspect-ratio of the
-     * display to be taken into account.
-     * If we wanted to ignore it, we could get rid of that */
-    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
-      int w, h;
-      get_media_size (bvw, &w, &h);
-      clutter_actor_set_size (bvw->priv->texture, w, h);
-    }
+     * display to be taken into account. */
+    get_media_size (bvw, &w, &h);
+    clutter_actor_set_size (bvw->priv->texture, w, h);
 
     if (bvw->priv->auto_resize
 	&& !bvw->priv->fullscreen_mode
@@ -1514,8 +1502,7 @@ bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
 
   retval = FALSE;
 
-  if (bvw->priv->use_type != BVW_USE_TYPE_VIDEO ||
-      gtk_widget_get_realized (GTK_WIDGET (bvw)) == FALSE)
+  if (gtk_widget_get_realized (GTK_WIDGET (bvw)) == FALSE)
     return retval;
 
   /* The user already tried, and we aborted */
@@ -1658,13 +1645,7 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
 
   bvw_check_for_cover_pixbuf (bvw);
 
-  /* if we're not interactive, we want to announce metadata
-   * only later when we can be sure we got it all */
-  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO)
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
-  else if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE &&
-	   bvw->priv->cover_pixbuf != NULL)
-    g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
 
   set_current_actor (bvw);
 }
@@ -3210,11 +3191,6 @@ bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
     return;
   else if (type == BVW_AUDIO_SOUND_AC3PASSTHRU)
     return;
-  else if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
-    /* don't set up a filter for the speaker setup, anything is fine */
-    bvw->priv->speakersetup = -1;
-    return;
-  }
 
   bvw->priv->speakersetup = type;
   g_object_notify (G_OBJECT (bvw), "audio-output-type");
@@ -3344,103 +3320,6 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   return ret;
 }
 
-static gboolean
-poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
-    GstState state, GstMessage ** err_msg, gint64 timeout)
-{
-  GstBus *bus;
-  GstMessageType events, saved_events;
-
-  g_assert (err_msg != NULL);
-
-  bus = gst_element_get_bus (element);
-
-  events = GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS;
-
-  saved_events = bvw->priv->ignore_messages_mask;
-
-  if (element != NULL && element == bvw->priv->play) {
-    /* we do want the main handler to process state changed messages for
-     * playbin as well, otherwise it won't hook up the timeout etc. */
-    bvw->priv->ignore_messages_mask |= (events ^ GST_MESSAGE_STATE_CHANGED);
-  } else {
-    bvw->priv->ignore_messages_mask |= events;
-  }
-
-  while (TRUE) {
-    GstMessage *message;
-    GstElement *src;
-
-    message = gst_bus_poll (bus, events, timeout);
-    
-    if (!message)
-      goto timed_out;
-    
-    src = (GstElement*)GST_MESSAGE_SRC (message);
-
-    switch (GST_MESSAGE_TYPE (message)) {
-    case GST_MESSAGE_STATE_CHANGED: {
-      GstState old, new, pending;
-
-      if (src == element) {
-        gst_message_parse_state_changed (message, &old, &new, &pending);
-        if (new == state) {
-          gst_message_unref (message);
-          goto success;
-        }
-      }
-      break;
-    }
-    case GST_MESSAGE_ERROR: {
-      totem_gst_message_print (message, bvw->priv->play, "totem-error");
-      *err_msg = message;
-      message = NULL;
-      goto error;
-      break;
-    }
-    case GST_MESSAGE_EOS: {
-      GError *e = NULL;
-
-      gst_message_unref (message);
-      e = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
-          _("Media file could not be played."));
-      *err_msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), e, NULL);
-      g_error_free (e);
-      goto error;
-      break;
-    }
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
-    gst_message_unref (message);
-  }
-    
-  g_assert_not_reached ();
-
-success:
-  /* state change succeeded */
-  GST_DEBUG ("state change to %s succeeded", gst_element_state_get_name (state));
-  bvw->priv->ignore_messages_mask = saved_events;
-  return TRUE;
-
-timed_out:
-  /* it's taking a long time to open -- just tell totem it was ok, this allows
-   * the user to stop the loading process with the normal stop button */
-  GST_DEBUG ("state change to %s timed out, returning success and handling "
-      "errors asynchronously", gst_element_state_get_name (state));
-  bvw->priv->ignore_messages_mask = saved_events;
-  return TRUE;
-
-error:
-  GST_DEBUG ("error while waiting for state change to %s: %" GST_PTR_FORMAT,
-      gst_element_state_get_name (state), *err_msg);
-  /* already set *err_msg */
-  bvw->priv->ignore_messages_mask = saved_events;
-  return FALSE;
-}
-
 /**
  * bacon_video_widget_open:
  * @bvw: a #BaconVideoWidget
@@ -3464,9 +3343,7 @@ gboolean
 bacon_video_widget_open (BaconVideoWidget * bvw,
                          const gchar * mrl, const gchar *subtitle_uri, GError ** error)
 {
-  GstMessage *err_msg = NULL;
   GFile *file;
-  gboolean ret;
   char *path;
   GstBus *bus;
 
@@ -3557,50 +3434,9 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE)
-    {
-    /* used as thumbnailer or metadata extractor for properties dialog. In
-     * this case, wait for any state change to really finish and process any
-     * pending tag messages, so that the information is available right away */
-    GST_DEBUG ("waiting for state changed to PAUSED to complete");
-    ret = poll_for_state_change_full (bvw, bvw->priv->play,
-				      GST_STATE_PAUSED, &err_msg, -1);
-    }
-  else
-    {
-      GST_DEBUG ("normal playback, handling all errors asynchroneously");
-      ret = TRUE;
-    }
+  g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 
-  if (ret) {
-    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-  } else {
-    GST_DEBUG ("Error on open: %" GST_PTR_FORMAT, err_msg);
-    if (bvw_check_missing_plugins_error (bvw, err_msg)) {
-      /* totem will try to start playing, so ignore all messages on the bus */
-      bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
-      GST_LOG ("missing plugins handled, ignoring error and returning TRUE");
-      gst_message_unref (err_msg);
-      err_msg = NULL;
-      ret = TRUE;
-    } else {
-      bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
-      bvw_stop_play_pipeline (bvw);
-      g_free (bvw->priv->mrl);
-      bvw->priv->mrl = NULL;
-    }
-  }
-
-  if (err_msg != NULL) {
-    if (error) {
-      *error = bvw_error_from_gst_error (bvw, err_msg);
-    } else {
-      GST_WARNING ("Got error, but caller is not collecting error details!");
-    }
-    gst_message_unref (err_msg);
-  }
-
-  return ret;
+  return TRUE;
 }
 
 /**
@@ -3631,13 +3467,6 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
   }
 
   bvw->priv->target_state = GST_STATE_PLAYING;
-
-  /* no need to actually go into PLAYING in capture/metadata mode (esp.
-   * not with sinks that don't sync to the clock), we'll get everything
-   * we need by prerolling the pipeline, and that is done in _open() */
-  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
-    return TRUE;
-  }
 
   /* Don't try to play if we're already doing that */
   gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
@@ -5883,11 +5712,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
-  /* when used as thumbnailer, wait for pending seeks to complete */
-  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
-    gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-  }
-
   /* no video info */
   if (!bvw->priv->video_width || !bvw->priv->video_height) {
     GST_DEBUG ("Could not take screenshot: %s", "no video info");
@@ -6018,14 +5842,9 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
 
 /**
  * bacon_video_widget_new:
- * @type: the widget's use type
  * @error: a #GError, or %NULL
  *
- * Creates a new #BaconVideoWidget for the purpose specified in @type.
- *
- * If @type is %BVW_USE_TYPE_VIDEO, the #BaconVideoWidget will be fully-featured; other
- * values of @type will enable less functionality on the widget, which will come with
- * corresponding decreases in the size of its memory footprint.
+ * Creates a new #BaconVideoWidget.
  *
  * @width and @height give the initial or expected video height. Set them to %-1 if the
  * video size is unknown. For small videos, #BaconVideoWidget will be configured differently.
@@ -6035,13 +5854,16 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
  * Return value: a new #BaconVideoWidget, or %NULL; destroy with gtk_widget_destroy()
  **/
 GtkWidget *
-bacon_video_widget_new (BvwUseType type, GError ** error)
+bacon_video_widget_new (GError ** error)
 {
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
   ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
+  ClutterConstraint *constraint;
+  GstElement *balance, *sink, *bin;
+  GstPad *pad, *ghostpad;
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
@@ -6059,9 +5881,6 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
   bvw = BACON_VIDEO_WIDGET (g_object_new
                             (bacon_video_widget_get_type (), NULL));
 
-  bvw->priv->use_type = type;
-  GST_DEBUG ("use_type = %d", type);
-
   bvw->priv->play = gst_element_factory_make ("playbin2", "play");
   if (!bvw->priv->play) {
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
@@ -6076,13 +5895,11 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
 
   /* Add the download flag, for streaming buffering,
    * and the deinterlace flag, for video only */
-  if (type == BVW_USE_TYPE_VIDEO) {
-    g_object_get (bvw->priv->play, "flags", &flags, NULL);
-    flags |= GST_PLAY_FLAG_DOWNLOAD;
-    g_object_set (bvw->priv->play, "flags", flags, NULL);
-    flags |= GST_PLAY_FLAG_DEINTERLACE;
-    g_object_set (bvw->priv->play, "flags", flags, NULL);
-  }
+  g_object_get (bvw->priv->play, "flags", &flags, NULL);
+  flags |= GST_PLAY_FLAG_DOWNLOAD;
+  g_object_set (bvw->priv->play, "flags", flags, NULL);
+  flags |= GST_PLAY_FLAG_DEINTERLACE;
+  g_object_set (bvw->priv->play, "flags", flags, NULL);
 
   gst_bus_add_signal_watch (bvw->priv->bus);
 
@@ -6103,74 +5920,61 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
   bvw->priv->logo_mode = FALSE;
   bvw->priv->auto_resize = FALSE;
 
-  if (type == BVW_USE_TYPE_VIDEO) {
-    audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
-  } else {
-    audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
-  }
+  audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
 
-  if (type == BVW_USE_TYPE_VIDEO) {
-    ClutterConstraint *constraint;
-    GstElement *balance, *sink, *bin;
-    GstPad *pad, *ghostpad;
 
-    bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
-    clutter_stage_set_color (CLUTTER_STAGE (bvw->priv->stage), &black);
+  bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
+  clutter_stage_set_color (CLUTTER_STAGE (bvw->priv->stage), &black);
 
-    /* Bin */
-    bin = gst_bin_new ("video_sink_bin");
+  /* Bin */
+  bin = gst_bin_new ("video_sink_bin");
 
-    /* Video sink, with aspect frame */
-    bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
-				       "disable-slicing", TRUE,
-				       NULL);
-    sink = clutter_gst_video_sink_new (CLUTTER_TEXTURE (bvw->priv->texture));
-    bvw->priv->navigation = GST_NAVIGATION (sink);
-    if (sink == NULL)
-      g_critical ("Could not create Clutter video sink");
+  /* Video sink, with aspect frame */
+  bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
+				     "disable-slicing", TRUE,
+				     NULL);
+  sink = clutter_gst_video_sink_new (CLUTTER_TEXTURE (bvw->priv->texture));
+  bvw->priv->navigation = GST_NAVIGATION (sink);
+  if (sink == NULL)
+    g_critical ("Could not create Clutter video sink");
 
-    /* The logo */
-    bvw->priv->logo_frame = totem_aspect_frame_new ();
-    bvw->priv->logo = clutter_texture_new ();
-    mx_bin_set_child (MX_BIN (bvw->priv->logo_frame), bvw->priv->logo);
-    clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->logo_frame);
-    mx_bin_set_fill (MX_BIN (bvw->priv->logo_frame), FALSE, FALSE);
-    mx_bin_set_alignment (MX_BIN (bvw->priv->logo_frame), MX_ALIGN_MIDDLE, MX_ALIGN_MIDDLE);
-    clutter_actor_set_size (bvw->priv->logo, LOGO_SIZE, LOGO_SIZE);
-    constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
-    clutter_actor_add_constraint_with_name (bvw->priv->logo_frame, "size", constraint);
-    clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
+  /* The logo */
+  bvw->priv->logo_frame = totem_aspect_frame_new ();
+  bvw->priv->logo = clutter_texture_new ();
+  mx_bin_set_child (MX_BIN (bvw->priv->logo_frame), bvw->priv->logo);
+  clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->logo_frame);
+  mx_bin_set_fill (MX_BIN (bvw->priv->logo_frame), FALSE, FALSE);
+  mx_bin_set_alignment (MX_BIN (bvw->priv->logo_frame), MX_ALIGN_MIDDLE, MX_ALIGN_MIDDLE);
+  clutter_actor_set_size (bvw->priv->logo, LOGO_SIZE, LOGO_SIZE);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (bvw->priv->logo_frame, "size", constraint);
+  clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
 
-    /* The video */
-    bvw->priv->frame = totem_aspect_frame_new ();
-    mx_bin_set_child (MX_BIN (bvw->priv->frame), bvw->priv->texture);
+  /* The video */
+  bvw->priv->frame = totem_aspect_frame_new ();
+  mx_bin_set_child (MX_BIN (bvw->priv->frame), bvw->priv->texture);
 
-    clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->frame);
-    constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
-    clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
+  clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->frame);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
 
-    clutter_actor_raise (CLUTTER_ACTOR (bvw->priv->frame),
-			 CLUTTER_ACTOR (bvw->priv->logo_frame));
+  clutter_actor_raise (CLUTTER_ACTOR (bvw->priv->frame),
+		       CLUTTER_ACTOR (bvw->priv->logo_frame));
 
-    gst_bin_add (GST_BIN (bin), sink);
+  gst_bin_add (GST_BIN (bin), sink);
 
-    /* Add video balance */
-    balance = gst_element_factory_make ("videobalance", "video_balance");
-    gst_bin_add (GST_BIN (bin), balance);
-    bvw->priv->balance = GST_COLOR_BALANCE (balance);
-    pad = gst_element_get_static_pad (balance, "sink");
-    ghostpad = gst_ghost_pad_new ("sink", pad);
-    gst_element_add_pad (bin, ghostpad);
+  /* Add video balance */
+  balance = gst_element_factory_make ("videobalance", "video_balance");
+  gst_bin_add (GST_BIN (bin), balance);
+  bvw->priv->balance = GST_COLOR_BALANCE (balance);
+  pad = gst_element_get_static_pad (balance, "sink");
+  ghostpad = gst_ghost_pad_new ("sink", pad);
+  gst_element_add_pad (bin, ghostpad);
 
-    gst_element_link (balance, sink);
+  gst_element_link (balance, sink);
 
-    video_sink = bin;
-    gst_element_set_state (video_sink, GST_STATE_READY);
-  } else {
-    video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
-    if (video_sink)
-      g_object_set (video_sink, "sync", TRUE, NULL);
-  }
+  video_sink = bin;
+  gst_element_set_state (video_sink, GST_STATE_READY);
 
   if (audio_sink) {
     GstStateChangeReturn ret;
@@ -6274,21 +6078,6 @@ bacon_video_widget_new (BvwUseType type, GError ** error)
       G_CALLBACK (audio_tags_changed_cb), bvw);
   g_signal_connect (bvw->priv->play, "text-tags-changed",
       G_CALLBACK (text_tags_changed_cb), bvw);
-
-  if (type == BVW_USE_TYPE_VIDEO) {
-    GstStateChangeReturn ret;
-
-    /* wait for video sink to finish changing to READY state, 
-     * otherwise we won't be able to detect the colorbalance interface */
-    ret = gst_element_get_state (video_sink, NULL, NULL, 5 * GST_SECOND);
-    if (ret != GST_STATE_CHANGE_SUCCESS) {
-      GST_WARNING ("Timeout setting videosink to READY");
-      g_set_error_literal (error, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
-          _("Failed to open video output. It may not be available. "
-          "Please select another video output in the Multimedia Systems Selector."));
-      return NULL;
-    }
-  }
 
   return GTK_WIDGET (bvw);
 

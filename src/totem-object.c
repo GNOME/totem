@@ -4215,8 +4215,7 @@ video_widget_create (TotemObject *totem)
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
 
-	totem->bvw = BACON_VIDEO_WIDGET
-		(bacon_video_widget_new (BVW_USE_TYPE_VIDEO, &err));
+	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
 	if (totem->bvw == NULL) {
 		totem_action_error_and_exit (_("Totem could not startup."), err != NULL ? err->message : _("No reason."), totem);

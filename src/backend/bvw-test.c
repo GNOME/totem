@@ -85,7 +85,7 @@ int main
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 
-	bvw = bacon_video_widget_new (BVW_USE_TYPE_VIDEO, NULL);
+	bvw = bacon_video_widget_new (NULL);
 	bacon_video_widget_set_logo (BACON_VIDEO_WIDGET (bvw), "totem");
 	bacon_video_widget_set_show_visualizations (BACON_VIDEO_WIDGET (bvw), TRUE);
 
