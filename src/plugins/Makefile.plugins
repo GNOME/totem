@@ -33,7 +33,7 @@ plugin_libadd = \
 check-pylint: $(plugin_PYTHON)
 	@exitstatus=0; \
 	for py in $^; do \
-		pylint -i y $$py; \
+		pylint -i y -d C0111 -d W0511 $$py; \
 		\
 		newexitstatus=$$?; \
 		if [ $$exitstatus == 0 ]; then \
