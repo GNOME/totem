@@ -53,6 +53,8 @@ void totem_gst_message_print (GstMessage *msg,
 
 GdkPixbuf * totem_gst_playbin_get_frame (GstElement *play);
 
+GdkPixbuf * totem_gst_tag_list_get_cover (GstTagList *tag_list);
+
 G_END_DECLS
 
 #endif				/* HAVE_TOTEM_GST_HELPERS_H */

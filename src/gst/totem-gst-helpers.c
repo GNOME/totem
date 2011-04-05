@@ -30,6 +30,7 @@
  *
  */
 
+#include <gst/tag/tag.h>
 #include "totem-gst-helpers.h"
 
 void
@@ -145,6 +146,93 @@ totem_gst_playbin_get_frame (GstElement *play)
   }
 
   return pixbuf;
+}
+
+static GdkPixbuf *
+totem_gst_buffer_to_pixbuf (GstBuffer *buffer)
+{
+  GdkPixbufLoader *loader;
+  GdkPixbuf *pixbuf = NULL;
+  GError *err = NULL;
+
+  loader = gdk_pixbuf_loader_new ();
+
+  if (gdk_pixbuf_loader_write (loader, buffer->data, buffer->size, &err) &&
+      gdk_pixbuf_loader_close (loader, &err)) {
+    pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+    if (pixbuf)
+      g_object_ref (pixbuf);
+  } else {
+    GST_WARNING("could not convert tag image to pixbuf: %s", err->message);
+    g_error_free (err);
+  }
+
+  g_object_unref (loader);
+  return pixbuf;
+}
+
+static const GValue *
+totem_gst_tag_list_get_cover_real (GstTagList *tag_list)
+{
+  const GValue *cover_value = NULL;
+  guint i;
+
+  for (i = 0; ; i++) {
+    const GValue *value;
+    GstBuffer *buffer;
+    GstStructure *caps_struct;
+    int type;
+
+    value = gst_tag_list_get_value_index (tag_list,
+					  GST_TAG_IMAGE,
+					  i);
+    if (value == NULL)
+      break;
+
+    buffer = gst_value_get_buffer (value);
+
+    caps_struct = gst_caps_get_structure (buffer->caps, 0);
+    gst_structure_get_enum (caps_struct,
+			    "image-type",
+			    GST_TYPE_TAG_IMAGE_TYPE,
+			    &type);
+    if (type == GST_TAG_IMAGE_TYPE_UNDEFINED) {
+      if (cover_value == NULL)
+        cover_value = value;
+    } else if (type == GST_TAG_IMAGE_TYPE_FRONT_COVER) {
+      cover_value = value;
+      break;
+    }
+  }
+
+  return cover_value;
+}
+
+GdkPixbuf *
+totem_gst_tag_list_get_cover (GstTagList *tag_list)
+{
+  const GValue *cover_value;
+
+  g_return_val_if_fail (tag_list != NULL, FALSE);
+
+  cover_value = totem_gst_tag_list_get_cover_real (tag_list);
+  /* Fallback to preview */
+  if (!cover_value) {
+    cover_value = gst_tag_list_get_value_index (tag_list,
+						GST_TAG_PREVIEW_IMAGE,
+						0);
+  }
+
+  if (cover_value) {
+    GstBuffer *buffer;
+    GdkPixbuf *pixbuf;
+
+    buffer = gst_value_get_buffer (cover_value);
+    pixbuf = totem_gst_buffer_to_pixbuf (buffer);
+    return pixbuf;
+  }
+
+  return NULL;
 }
 
 /*
