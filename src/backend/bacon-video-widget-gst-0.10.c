@@ -5769,67 +5769,6 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
   return;
 }
 
-static GdkPixbuf *
-bacon_video_widget_get_metadata_pixbuf (BaconVideoWidget * bvw,
-					GstBuffer *buffer)
-{
-  GdkPixbufLoader *loader;
-  GdkPixbuf *pixbuf = NULL;
-  GError *err = NULL;
-
-  loader = gdk_pixbuf_loader_new ();
-
-  if (gdk_pixbuf_loader_write (loader, buffer->data, buffer->size, &err) &&
-      gdk_pixbuf_loader_close (loader, &err)) {
-    pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-    if (pixbuf)
-      g_object_ref (pixbuf);
-  } else {
-    GST_WARNING("could not convert tag image to pixbuf: %s", err->message);
-    g_error_free (err);
-  }
-
-  g_object_unref (loader);
-  return pixbuf;
-}
-
-static const GValue *
-bacon_video_widget_get_best_image (BaconVideoWidget *bvw)
-{
-  const GValue *cover_value = NULL;
-  guint i;
-
-  for (i = 0; ; i++) {
-    const GValue *value;
-    GstBuffer *buffer;
-    GstStructure *caps_struct;
-    int type;
-
-    value = gst_tag_list_get_value_index (bvw->priv->tagcache,
-					  GST_TAG_IMAGE,
-					  i);
-    if (value == NULL)
-      break;
-
-    buffer = gst_value_get_buffer (value);
-
-    caps_struct = gst_caps_get_structure (buffer->caps, 0);
-    gst_structure_get_enum (caps_struct,
-			    "image-type",
-			    GST_TYPE_TAG_IMAGE_TYPE,
-			    &type);
-    if (type == GST_TAG_IMAGE_TYPE_UNDEFINED) {
-      if (cover_value == NULL)
-        cover_value = value;
-    } else if (type == GST_TAG_IMAGE_TYPE_FRONT_COVER) {
-      cover_value = value;
-      break;
-    }
-  }
-
-  return cover_value;
-}
-
 /**
  * bacon_video_widget_get_metadata:
  * @bvw: a #BaconVideoWidget
@@ -5878,27 +5817,14 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
       break;
     case BVW_INFO_COVER:
       {
-        const GValue *cover_value;
+	GdkPixbuf *pixbuf;
 
-	g_value_init (value, G_TYPE_OBJECT);
+	if (!bvw->priv->tagcache)
+	  break;
 
-        if (bvw->priv->tagcache == NULL)
-          break;
-        cover_value = bacon_video_widget_get_best_image (bvw);
-	if (!cover_value) {
-	  cover_value = gst_tag_list_get_value_index (bvw->priv->tagcache,
-						      GST_TAG_PREVIEW_IMAGE,
-						      0);
-	}
-	if (cover_value) {
-	  GstBuffer *buffer;
-	  GdkPixbuf *pixbuf;
-
-	  buffer = gst_value_get_buffer (cover_value);
-	  pixbuf = bacon_video_widget_get_metadata_pixbuf (bvw, buffer);
-	  if (pixbuf)
-	    g_value_take_object (value, pixbuf);
-	}
+	pixbuf = totem_gst_tag_list_get_cover (bvw->priv->tagcache);
+	if (pixbuf)
+	  g_value_take_object (value, pixbuf);
       }
       break;
     default:
