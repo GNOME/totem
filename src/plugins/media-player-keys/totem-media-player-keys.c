@@ -97,6 +97,8 @@ grab_media_player_keys_cb (GDBusProxy                 *proxy,
 	GError *error = NULL;
 
 	variant = g_dbus_proxy_call_finish (proxy, res, &error);
+	pi->priv->cancellable = NULL;
+
 	if (variant == NULL) {
 		g_warning ("Failed to call \"GrabMediaPlayerKeys\": %s", error->message);
 		g_error_free (error);
@@ -108,23 +110,29 @@ grab_media_player_keys_cb (GDBusProxy                 *proxy,
 static void
 grab_media_player_keys (TotemMediaPlayerKeysPlugin *pi)
 {
+	GCancellable *cancellable;
+
 	if (pi->priv->proxy == NULL)
 		return;
 
+	/* Only allow one key grab operation to happen concurrently */
 	if (pi->priv->cancellable) {
 		g_cancellable_cancel (pi->priv->cancellable);
-		g_object_unref (pi->priv->cancellable);
-		pi->priv->cancellable = NULL;
 	}
-	pi->priv->cancellable = g_cancellable_new ();
+
+	cancellable = g_cancellable_new ();
+	pi->priv->cancellable = cancellable;
 
 	g_dbus_proxy_call (pi->priv->proxy,
 					  "GrabMediaPlayerKeys",
 					  g_variant_new ("(su)", "Totem", 0),
 					  G_DBUS_CALL_FLAGS_NONE,
-					  -1, pi->priv->cancellable,
+					  -1, cancellable,
 					  (GAsyncReadyCallback) grab_media_player_keys_cb,
 					  pi);
+
+	/* GDBus keeps a reference throughout the async call */
+	g_object_unref (cancellable);
 }
 
 static gboolean
@@ -166,10 +174,8 @@ got_proxy_cb (GObject                    *source_object,
 {
 	GError *error = NULL;
 
-	g_object_unref (pi->priv->cancellable_init);
-	pi->priv->cancellable_init = NULL;
-
 	pi->priv->proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
+	pi->priv->cancellable_init = NULL;
 
 	if (pi->priv->proxy == NULL) {
 		g_warning ("Failed to contact settings daemon: %s", error->message);
@@ -189,7 +195,10 @@ name_appeared_cb (GDBusConnection            *connection,
 		  const gchar                *name_owner,
 		  TotemMediaPlayerKeysPlugin *pi)
 {
-	pi->priv->cancellable_init = g_cancellable_new ();
+	GCancellable *cancellable;
+
+	cancellable = g_cancellable_new ();
+	pi->priv->cancellable_init = cancellable;
 
 	g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
 				  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
@@ -198,9 +207,12 @@ name_appeared_cb (GDBusConnection            *connection,
 				  "org.gnome.SettingsDaemon",
 				  "/org/gnome/SettingsDaemon/MediaKeys",
 				  "org.gnome.SettingsDaemon.MediaKeys",
-				  pi->priv->cancellable_init,
+				  cancellable,
 				  (GAsyncReadyCallback) got_proxy_cb,
 				  pi);
+
+	/* GDBus keeps a reference throughout the async call */
+	g_object_unref (cancellable);
 }
 
 static void
@@ -212,10 +224,9 @@ name_vanished_cb (GDBusConnection            *connection,
 		g_object_unref (pi->priv->proxy);
 		pi->priv->proxy = NULL;
 	}
+
 	if (pi->priv->cancellable) {
 		g_cancellable_cancel (pi->priv->cancellable);
-		g_object_unref (pi->priv->cancellable);
-		pi->priv->cancellable = NULL;
 	}
 }
 
@@ -247,15 +258,12 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemMediaPlayerKeysPlugin *pi = TOTEM_MEDIA_PLAYER_KEYS_PLUGIN (plugin);
 	GtkWindow *window;
 
-	if (pi->priv->cancellable) {
-		g_cancellable_cancel (pi->priv->cancellable);
-		g_object_unref (pi->priv->cancellable);
-		pi->priv->cancellable = NULL;
-	}
 	if (pi->priv->cancellable_init) {
 		g_cancellable_cancel (pi->priv->cancellable_init);
-		g_object_unref (pi->priv->cancellable_init);
-		pi->priv->cancellable_init = NULL;
+	}
+
+	if (pi->priv->cancellable) {
+		g_cancellable_cancel (pi->priv->cancellable);
 	}
 
 	if (pi->priv->proxy != NULL) {
