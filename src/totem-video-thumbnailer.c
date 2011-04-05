@@ -31,6 +31,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <cairo.h>
+#include <gst/gst.h>
 
 #include <errno.h>
 #include <unistd.h>
@@ -40,11 +41,10 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "bacon-video-widget.h"
+
+#include "gst/totem-gst-helpers.h"
 #include "video-utils.h"
 #include "totem-resources.h"
-
-/* #define THUMB_DEBUG */
 
 #ifdef G_HAVE_ISO_VARARGS
 #define PROGRESS_DEBUG(...) { if (verbose != FALSE) g_message (__VA_ARGS__); }
@@ -77,24 +77,194 @@ static char **filenames = NULL;
 typedef struct {
 	const char *output;
 	const char *input;
-} callback_data;
+	GstElement *play;
+	gint64      duration;
+} ThumbApp;
 
-#ifdef THUMB_DEBUG
+static void save_pixbuf (GdkPixbuf *pixbuf, const char *path,
+			 const char *video_path, int size, gboolean is_still);
+
 static void
-show_pixbuf (GdkPixbuf *pix)
+thumb_app_set_filename (ThumbApp *app)
 {
-	GtkWidget *win, *img;
+	GFile *file;
+	char *uri;
 
-	img = gtk_image_new_from_pixbuf (pix);
-	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	file = g_file_new_for_commandline_arg (app->input);
+	uri = g_file_get_uri (file);
+	g_object_unref (file);
 
-	gtk_container_add (GTK_CONTAINER (win), img);
-	gtk_widget_show_all (win);
-
-	/* Display and crash baby crash */
-	gtk_main ();
+	g_object_set (app->play, "uri", uri, NULL);
+	g_free (uri);
 }
-#endif
+
+static GstBusSyncReply
+error_handler (GstBus *bus,
+	       GstMessage *message,
+	       GstElement *play)
+{
+	GstMessageType msg_type;
+
+	msg_type = GST_MESSAGE_TYPE (message);
+	switch (msg_type) {
+	case GST_MESSAGE_ERROR:
+		totem_gst_message_print (message, play, "totem-audio-preview-error");
+		exit (1);
+	case GST_MESSAGE_EOS:
+		exit (0);
+	default:
+		/* Ignored */
+		;;
+	}
+
+	return GST_BUS_PASS;
+}
+
+static void
+thumb_app_cleanup (ThumbApp *app)
+{
+	gst_element_set_state (app->play, GST_STATE_NULL);
+	g_object_unref (app->play);
+	app->play = NULL;
+}
+
+static void
+thumb_app_set_error_handler (ThumbApp *app)
+{
+	GstBus *bus;
+
+	bus = gst_element_get_bus (app->play);
+	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, app->play);
+}
+
+static void
+check_cover_for_stream (ThumbApp   *app,
+			const char *signal_name)
+{
+	GdkPixbuf *pixbuf;
+	GstTagList *tags = NULL;
+
+	g_signal_emit_by_name (G_OBJECT (app->play), signal_name, 0, &tags);
+
+	if (!tags)
+		return;
+
+	pixbuf = totem_gst_tag_list_get_cover (tags);
+	if (!pixbuf) {
+		gst_tag_list_free (tags);
+		return;
+	}
+
+	PROGRESS_DEBUG("Saving cover image");
+	thumb_app_cleanup (app);
+	save_pixbuf (pixbuf, app->output, app->input, output_size, TRUE);
+	g_object_unref (pixbuf);
+
+	exit (0);
+}
+
+static void
+thumb_app_check_for_cover (ThumbApp *app)
+{
+	check_cover_for_stream (app, "get-audio-tags");
+	check_cover_for_stream (app, "get-video-tags");
+}
+
+static gboolean
+thumb_app_set_duration (ThumbApp *app)
+{
+	GstFormat fmt = GST_FORMAT_TIME;
+	gint64 len = -1;
+
+	if (gst_element_query_duration (app->play, &fmt, &len) && len != -1) {
+		app->duration = len / GST_MSECOND;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static gboolean
+thumb_app_get_has_video (ThumbApp *app)
+{
+	guint n_video;
+	g_object_get (app->play, "n-video", &n_video, NULL);
+	return n_video > 0;
+}
+
+static gboolean
+thumb_app_start (ThumbApp *app)
+{
+	GstBus *bus;
+	GstMessageType events;
+
+	gst_element_set_state (app->play, GST_STATE_PAUSED);
+	bus = gst_element_get_bus (app->play);
+	events = GST_MESSAGE_ASYNC_DONE | GST_MESSAGE_ERROR;
+
+	while (TRUE) {
+		GstMessage *message;
+		GstElement *src;
+
+		message = gst_bus_poll (bus, events, -1);
+
+		src = (GstElement*)GST_MESSAGE_SRC (message);
+
+		switch (GST_MESSAGE_TYPE (message)) {
+		case GST_MESSAGE_ASYNC_DONE:
+			if (src == app->play) {
+				gst_message_unref (message);
+				goto success;
+			}
+			break;
+		case GST_MESSAGE_ERROR:
+			totem_gst_message_print (message, app->play, "totem-video-thumbnailer-error");
+			break;
+		default:
+			g_assert_not_reached ();
+		}
+
+		gst_message_unref (message);
+	}
+
+	g_assert_not_reached ();
+
+success:
+	/* state change succeeded */
+	GST_DEBUG ("state change to %s succeeded", gst_element_state_get_name (GST_STATE_PAUSED));
+	return TRUE;
+}
+
+static void
+thumb_app_setup_play (ThumbApp *app)
+{
+	GstElement *play;
+	GstElement *audio_sink, *video_sink;
+
+	play = gst_element_factory_make ("playbin2", "play");
+	audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
+	video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
+	g_object_set (video_sink, "sync", TRUE, NULL);
+
+	g_object_set (play,
+		      "audio-sink", audio_sink,
+		      "video-sink", video_sink,
+		      "flags", GST_PLAY_FLAG_VIDEO | GST_PLAY_FLAG_AUDIO,
+		      NULL);
+
+	app->play = play;
+}
+
+static void
+thumb_app_seek (ThumbApp *app,
+		gint64    _time)
+{
+	gst_element_seek (app->play, 1.0,
+			  GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
+			  GST_SEEK_TYPE_SET, _time * GST_MSECOND,
+			  GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+	/* And wait for this seek to complete */
+	gst_element_get_state (app->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+}
 
 static GdkPixbuf *
 add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
@@ -158,8 +328,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 	left = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
-	if (left == NULL)
-	{
+	if (left == NULL) {
 		g_object_ref (pixbuf);
 		return pixbuf;
 	}
@@ -169,8 +338,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 	right = gdk_pixbuf_new_from_file (filename, NULL);
 	g_free (filename);
 
-	if (right == NULL)
-	{
+	if (right == NULL) {
 		g_object_unref (left);
 		g_object_ref (pixbuf);
 		return pixbuf;
@@ -189,8 +357,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 		height = gdk_pixbuf_get_height (pixbuf);
 		width = gdk_pixbuf_get_width (pixbuf);
 
-		if (width > height)
-		{
+		if (width > height) {
 			d_width = size - lw - lw;
 			d_height = d_width * height / width;
 		} else {
@@ -212,8 +379,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 			lw, 0, ratio, ratio, GDK_INTERP_BILINEAR);
 
 	/* Left side holes */
-	for (i = 0; i < canvas_h; i += lh)
-	{
+	for (i = 0; i < canvas_h; i += lh) {
 		gdk_pixbuf_composite (left, small, 0, i,
 				MIN (canvas_w, lw),
 				MIN (canvas_h - i, lh),
@@ -221,8 +387,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 	}
 
 	/* Right side holes */
-	for (i = 0; i < canvas_h; i += rh)
-	{
+	for (i = 0; i < canvas_h; i += rh) {
 		gdk_pixbuf_composite (right, small,
 				canvas_w - rw, i,
 				MIN (canvas_w, rw),
@@ -236,7 +401,7 @@ add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
 	return small;
 }
 
-/* This function attempts to detect images that are mostly solid images 
+/* This function attempts to detect images that are mostly solid images
  * It does this by calculating the statistical variance of the
  * black-and-white image */
 static gboolean
@@ -369,21 +534,14 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 		return;
 	}
 
-#ifdef THUMB_DEBUG
-	show_pixbuf (with_holes);
-#endif
-
 	g_object_unref (with_holes);
 }
 
 static GdkPixbuf *
-capture_interesting_frame (BaconVideoWidget *bvw,
-			   const char *input,
-			   const char *output) 
+capture_interesting_frame (ThumbApp *app)
 {
 	GdkPixbuf* pixbuf;
 	guint current;
-	GError *err = NULL;
 	const double frame_locations[] = {
 		1.0 / 3.0,
 		2.0 / 3.0,
@@ -392,31 +550,16 @@ capture_interesting_frame (BaconVideoWidget *bvw,
 		0.5
 	};
 
-	/* Test at multiple points in the file to see if we can get an 
+	/* Test at multiple points in the file to see if we can get an
 	 * interesting frame */
 	for (current = 0; current < G_N_ELEMENTS(frame_locations); current++)
 	{
 		PROGRESS_DEBUG("About to seek to %f", frame_locations[current]);
-		if (bacon_video_widget_seek (bvw, frame_locations[current], NULL) == FALSE) {
-			PROGRESS_DEBUG("Couldn't seek to %f", frame_locations[current]);
-			bacon_video_widget_play (bvw, NULL);
-		}
-
-		if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
-		{
-			g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
-				 "Reason: %s\n",
-				 input, err ? err->message : "programming error");
-			bacon_video_widget_close (bvw);
-			gtk_widget_destroy (GTK_WIDGET (bvw));
-			g_error_free (err);
-
-			exit (1);
-		}
+		thumb_app_seek (app, frame_locations[current] * app->duration);
 
 		/* Pull the frame, if it's interesting we bail early */
 		PROGRESS_DEBUG("About to get frame for iter %d", current);
-		pixbuf = bacon_video_widget_get_current_frame (bvw);
+		pixbuf = totem_gst_playbin_get_frame (app->play);
 		if (pixbuf != NULL && is_image_interesting (pixbuf) != FALSE) {
 			PROGRESS_DEBUG("Frame for iter %d is interesting", current);
 			break;
@@ -436,76 +579,12 @@ capture_interesting_frame (BaconVideoWidget *bvw,
 }
 
 static GdkPixbuf *
-capture_frame_at_time(BaconVideoWidget *bvw,
-		      const char *input,
-		      const char *output,
-		      gint64 milliseconds)
+capture_frame_at_time (ThumbApp   *app,
+		       gint64 milliseconds)
 {
-	GError *err = NULL;
+	thumb_app_seek (app, milliseconds);
 
-	if (bacon_video_widget_seek_time (bvw, milliseconds, TRUE, &err) == FALSE) {
-		g_print ("totem-video-thumbnailer: could not seek to %d milliseconds in '%s'\n"
-			 "Reason: %s\n",
-			 (int) milliseconds, input, err ? err->message : "programming error");
-		bacon_video_widget_close (bvw);
-		gtk_widget_destroy (GTK_WIDGET (bvw));
-		g_error_free (err);
-
-		exit (1);
-	}
-	if (bacon_video_widget_can_get_frames (bvw, &err) == FALSE)
-	{
-		g_print ("totem-video-thumbnailer: '%s' isn't thumbnailable\n"
-			 "Reason: %s\n",
-			 input, err ? err->message : "programming error");
-		bacon_video_widget_close (bvw);
-		gtk_widget_destroy (GTK_WIDGET (bvw));
-		g_error_free (err);
-
-		exit (1);
-	}
-
-	return bacon_video_widget_get_current_frame (bvw);
-}
-
-static gboolean
-has_video (BaconVideoWidget *bvw)
-{
-	GValue value = { 0, };
-	gboolean retval;
-
-	bacon_video_widget_get_metadata (bvw, BVW_INFO_HAS_VIDEO, &value);
-	retval = g_value_get_boolean (&value);
-	g_value_unset (&value);
-	return retval;
-}
-
-static void
-on_got_metadata_event (BaconVideoWidget *bvw, callback_data *data)
-{
-	GValue value = { 0, };
-	GdkPixbuf *pixbuf;
-
-	PROGRESS_DEBUG("Got metadata, checking if we have a cover");
-	bacon_video_widget_get_metadata (bvw, BVW_INFO_COVER, &value);
-	pixbuf = g_value_dup_object (&value);
-	g_value_unset (&value);
-
-	if (pixbuf) {
-		PROGRESS_DEBUG("Saving cover image");
-
-		bacon_video_widget_close (bvw);
-		totem_resources_monitor_stop ();
-		gtk_widget_destroy (GTK_WIDGET (bvw));
-
-		save_pixbuf (pixbuf, data->output, data->input, output_size, TRUE);
-		g_object_unref (pixbuf);
-
-		exit (0);
-	} else if (has_video (bvw) == FALSE) {
-		PROGRESS_DEBUG("No covers, and no video, exiting");
-		exit (0);
-	}
+	return totem_gst_playbin_get_frame (app->play);
 }
 
 static GdkPixbuf *
@@ -545,7 +624,7 @@ cairo_surface_to_pixbuf (cairo_surface_t *surface)
 
 
 static GdkPixbuf *
-create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
+create_gallery (ThumbApp *app)
 {
 	GdkPixbuf *screenshot, *pixbuf = NULL;
 	cairo_t *cr;
@@ -559,7 +638,7 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	gchar *header_text, *duration_text, *filename;
 
 	/* Calculate how many screenshots we're going to take */
-	stream_length = bacon_video_widget_get_stream_length (bvw);
+	stream_length = app->duration;
 
 	/* As a default, we have one screenshot per minute of stream,
 	 * but adjusted so we don't have any gaps in the resulting gallery. */
@@ -607,7 +686,7 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	/* Take the screenshots and composite them into a pixbuf */
 	current_column = current_row = x = y = 0;
 	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
-		screenshot = capture_frame_at_time (bvw, input, output, pos);
+		screenshot = capture_frame_at_time (app, pos);
 
 		if (pixbuf == NULL) {
 			screenshot_width = gdk_pixbuf_get_width (screenshot);
@@ -671,14 +750,14 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	/* Build the header information */
 	duration_text = totem_time_to_string (stream_length);
 	filename = NULL;
-	if (strstr (input, "://")) {
+	if (strstr (app->input, "://")) {
 		char *local;
-		local = g_filename_from_uri (input, NULL, NULL);
+		local = g_filename_from_uri (app->input, NULL, NULL);
 		filename = g_path_get_basename (local);
 		g_free (local);
 	}
 	if (filename == NULL)
-		filename = g_path_get_basename (input);
+		filename = g_path_get_basename (app->input);
 
 	/* Translators: The first string is "Filename" (as translated); the second is an actual filename.
 			The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -788,22 +867,17 @@ int main (int argc, char *argv[])
 	GOptionGroup *options;
 	GOptionContext *context;
 	GError *err = NULL;
-	BaconVideoWidget *bvw;
 	GdkPixbuf *pixbuf;
 	const char *input, *output;
-	callback_data data;
+	ThumbApp app;
 
 	g_thread_init (NULL);
 
 	context = g_option_context_new ("Thumbnail movies");
-	options = bacon_video_widget_get_option_group ();
+	options = gst_init_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
-#ifndef THUMB_DEBUG
-	g_type_init ();
-#else
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
-#endif
 
 	if (g_option_context_parse (context, &argc, &argv, &err) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", err->message);
@@ -850,18 +924,11 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Initialised libraries, about to create video widget");
 	PRINT_PROGRESS (2.0);
 
-	bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (BVW_USE_TYPE_CAPTURE, &err));
-	if (err != NULL) {
-		g_print ("totem-video-thumbnailer couldn't create the video "
-				"widget.\nReason: %s.\n", err->message);
-		g_error_free (err);
-		exit (1);
-	}
-	data.input = input;
-	data.output = output;
-	g_signal_connect (G_OBJECT (bvw), "got-metadata",
-			  G_CALLBACK (on_got_metadata_event),
-			  &data);
+	app.input = input;
+	app.output = output;
+
+	thumb_app_setup_play (&app);
+	thumb_app_set_filename (&app);
 
 	PROGRESS_DEBUG("Video widget created");
 	PRINT_PROGRESS (6.0);
@@ -871,11 +938,21 @@ int main (int argc, char *argv[])
 
 	PROGRESS_DEBUG("About to open video file");
 
-	if (bacon_video_widget_open (bvw, input, NULL, &err) == FALSE) {
-		g_print ("totem-video-thumbnailer couldn't open file '%s'\n"
-				"Reason: %s.\n",
-				input, err->message);
-		g_error_free (err);
+	if (thumb_app_start (&app) == FALSE) {
+		g_print ("totem-video-thumbnailer couldn't open file '%s'\n", input);
+		exit (1);
+	}
+	thumb_app_set_error_handler (&app);
+
+	/* We don't need covers when we're in gallery mode */
+	if (gallery == -1)
+		thumb_app_check_for_cover (&app);
+	if (thumb_app_get_has_video (&app) == FALSE) {
+		g_print ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
+		exit (1);
+	}
+	if (thumb_app_set_duration (&app) == FALSE) {
+		g_print ("totem-video-thumbnailer couldn't get the duration of file '%s'\n", input);
 		exit (1);
 	}
 
@@ -883,28 +960,26 @@ int main (int argc, char *argv[])
 	PRINT_PROGRESS (10.0);
 
 	if (gallery == -1) {
-		/* If the user has told us to use a frame at a specific second 
+		/* If the user has told us to use a frame at a specific second
 		 * into the video, just use that frame no matter how boring it
 		 * is */
 		if (second_index != -1)
-			pixbuf = capture_frame_at_time (bvw, input, output, second_index);
+			pixbuf = capture_frame_at_time (&app, second_index);
 		else
-			pixbuf = capture_interesting_frame (bvw, input, output);
+			pixbuf = capture_interesting_frame (&app);
 		PRINT_PROGRESS (90.0);
 	} else {
 		/* We're producing a gallery of screenshots from throughout the file */
-		pixbuf = create_gallery (bvw, input, output);
+		pixbuf = create_gallery (&app);
 	}
 
 	/* Cleanup */
-	bacon_video_widget_close (bvw);
 	totem_resources_monitor_stop ();
-	gtk_widget_destroy (GTK_WIDGET (bvw));
+	thumb_app_cleanup (&app);
 	PRINT_PROGRESS (92.0);
 
 	if (pixbuf == NULL) {
-		g_print ("totem-video-thumbnailer couldn't get a picture from "
-					"'%s'\n", input);
+		g_print ("totem-video-thumbnailer couldn't get a picture from '%s'\n", input);
 		exit (1);
 	}
 
