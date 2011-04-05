@@ -686,7 +686,10 @@ create_gallery (ThumbApp *app)
 	/* Take the screenshots and composite them into a pixbuf */
 	current_column = current_row = x = y = 0;
 	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
-		screenshot = capture_frame_at_time (app, pos);
+		if (pos == stream_length)
+			screenshot = capture_frame_at_time (app, pos - 1);
+		else
+			screenshot = capture_frame_at_time (app, pos);
 
 		if (pixbuf == NULL) {
 			screenshot_width = gdk_pixbuf_get_width (screenshot);
