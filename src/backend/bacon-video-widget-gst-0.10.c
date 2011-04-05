@@ -2217,7 +2217,7 @@ bvw_query_timeout (BaconVideoWidget *bvw)
 {
   GstFormat fmt = GST_FORMAT_TIME;
   gint64 pos = -1, len = -1;
-  
+
   /* check length/pos of stream */
   if (gst_element_query_duration (bvw->priv->play, &fmt, &len)) {
     if (len != -1 && fmt == GST_FORMAT_TIME)
@@ -3557,12 +3557,20 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  /* used as thumbnailer or metadata extractor for properties dialog. In
-   * this case, wait for any state change to really finish and process any
-   * pending tag messages, so that the information is available right away */
-  GST_DEBUG ("waiting for state changed to PAUSED to complete");
-  ret = poll_for_state_change_full (bvw, bvw->priv->play,
-				    GST_STATE_PAUSED, &err_msg, -1);
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE)
+    {
+    /* used as thumbnailer or metadata extractor for properties dialog. In
+     * this case, wait for any state change to really finish and process any
+     * pending tag messages, so that the information is available right away */
+    GST_DEBUG ("waiting for state changed to PAUSED to complete");
+    ret = poll_for_state_change_full (bvw, bvw->priv->play,
+				      GST_STATE_PAUSED, &err_msg, -1);
+    }
+  else
+    {
+      GST_DEBUG ("normal playback, handling all errors asynchroneously");
+      ret = TRUE;
+    }
 
   if (ret) {
     g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
