@@ -231,8 +231,6 @@ struct BaconVideoWidgetPrivate
   BvwAudioOutputType           speakersetup;
   gint                         connection_speed;
 
-  GstMessageType               ignore_messages_mask;
-
   GstBus                      *bus;
   gulong                       sig_bus_async;
 
@@ -1845,14 +1843,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
   msg_type = GST_MESSAGE_TYPE (message);
 
-  /* somebody else is handling the message, probably in poll_for_state_change */
-  if (bvw->priv->ignore_messages_mask & msg_type) {
-    GST_LOG ("Ignoring %s message from element %" GST_PTR_FORMAT
-        " as requested: %" GST_PTR_FORMAT, GST_MESSAGE_TYPE_NAME (message),
-        message->src, message);
-    return;
-  }
-
   if (msg_type != GST_MESSAGE_STATE_CHANGED) {
     gchar *src_name = gst_object_get_name (message->src);
     GST_LOG ("Handling %s message from element %s",
@@ -3406,7 +3396,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   bvw->priv->media_has_video = FALSE;
   bvw->priv->media_has_audio = FALSE;
   bvw->priv->stream_length = 0;
-  bvw->priv->ignore_messages_mask = 0;
 
   if (bvw->priv->ready_idle_id) {
     g_source_remove (bvw->priv->ready_idle_id);
@@ -3741,7 +3730,6 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     g_object_unref (bvw->priv->download_buffering_element);
     bvw->priv->download_buffering_element = NULL;
   }
-  bvw->priv->ignore_messages_mask = 0;
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
   if (bvw->priv->cover_pixbuf) {
