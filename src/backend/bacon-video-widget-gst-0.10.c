@@ -310,6 +310,21 @@ GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 
 typedef gchar * (* MsgToStrFunc) (GstMessage * msg);
 
+static const gchar *
+get_type_name (GType class_type, int type)
+{
+  GEnumClass *eclass;
+  GEnumValue *value;
+
+  eclass = G_ENUM_CLASS (g_type_class_peek (class_type));
+  value = g_enum_get_value (eclass, type);
+
+  if (value == NULL)
+    return "unknown";
+
+  return value->value_nick;
+}
+
 static gchar **
 bvw_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
 {
@@ -1126,6 +1141,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   gtk_widget_set_can_focus (GTK_WIDGET (bvw), TRUE);
 
   g_type_class_ref (BVW_TYPE_METADATA_TYPE);
+  g_type_class_ref (BVW_TYPE_DVD_EVENT);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
 
@@ -2397,6 +2413,7 @@ bacon_video_widget_finalize (GObject * object)
   GST_DEBUG ("finalizing");
 
   g_type_class_unref (g_type_class_peek (BVW_TYPE_METADATA_TYPE));
+  g_type_class_unref (g_type_class_peek (BVW_TYPE_DVD_EVENT));
 
   if (bvw->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
@@ -3835,6 +3852,8 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
+  GST_DEBUG ("Sending event '%s'", get_type_name (BVW_TYPE_DVD_EVENT, type));
+
   switch (type) {
     case BVW_DVD_ROOT_MENU:
       bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_MENU);
@@ -5229,21 +5248,6 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
   return mrls;
 }
 
-static const gchar *
-get_metadata_type_name (BvwMetadataType type)
-{
-  GEnumClass *eclass;
-  GEnumValue *value;
-
-  eclass = G_ENUM_CLASS (g_type_class_peek (BVW_TYPE_METADATA_TYPE));
-  value = g_enum_get_value (eclass, type);
-
-  if (value == NULL)
-    return "unknown";
-
-  return value->value_nick;
-}
-
 static gint
 bvw_get_current_stream_num (BaconVideoWidget * bvw,
     const gchar *stream_type)
@@ -5463,7 +5467,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
 
   if (res && string && g_utf8_validate (string, -1, NULL)) {
     g_value_take_string (value, string);
-    GST_DEBUG ("%s = '%s'", get_metadata_type_name (type), string);
+    GST_DEBUG ("%s = '%s'", get_type_name (BVW_TYPE_METADATA_TYPE, type), string);
   } else {
     g_value_set_string (value, NULL);
     g_free (string);
@@ -5549,7 +5553,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
     }
 
   g_value_set_int (value, integer);
-  GST_DEBUG ("%s = %d", get_metadata_type_name (type), integer);
+  GST_DEBUG ("%s = %d", get_type_name (BVW_TYPE_METADATA_TYPE, type), integer);
 
   return;
 }
@@ -5585,7 +5589,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
   }
 
   g_value_set_boolean (value, boolean);
-  GST_DEBUG ("%s = %s", get_metadata_type_name (type), (boolean) ? "yes" : "no");
+  GST_DEBUG ("%s = %s", get_type_name (BVW_TYPE_METADATA_TYPE, type), (boolean) ? "yes" : "no");
 
   return;
 }
