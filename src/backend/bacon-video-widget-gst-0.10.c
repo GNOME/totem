@@ -214,6 +214,7 @@ struct BaconVideoWidgetPrivate
   gboolean                     uses_audio_fakesink;
   gdouble                      volume;
   gboolean                     is_menu;
+  gboolean                     has_angles;
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
@@ -1377,6 +1378,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 
         if (res) {
           gboolean is_menu = FALSE;
+	  gboolean has_angles = FALSE;
           guint i, n;
 
           if (gst_navigation_query_parse_commands_length (cmds_q, &n)) {
@@ -1389,12 +1391,20 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
               is_menu |= (cmd == GST_NAVIGATION_COMMAND_RIGHT);
               is_menu |= (cmd == GST_NAVIGATION_COMMAND_UP);
               is_menu |= (cmd == GST_NAVIGATION_COMMAND_DOWN);
+
+	      has_angles |= (cmd == GST_NAVIGATION_COMMAND_PREV_ANGLE);
+	      has_angles |= (cmd == GST_NAVIGATION_COMMAND_NEXT_ANGLE);
             }
           }
 	  /* Are we in a menu now? */
 	  if (bvw->priv->is_menu != is_menu) {
 	    bvw->priv->is_menu = is_menu;
 	    g_object_notify (G_OBJECT (bvw), "seekable");
+	  }
+	  /* Do we have angle switching now? */
+	  if (bvw->priv->has_angles != has_angles) {
+	    bvw->priv->has_angles = has_angles;
+	    g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
 	  }
         }
 
@@ -3804,6 +3814,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->user_pw = NULL;
 
   bvw->priv->is_live = FALSE;
+  bvw->priv->is_menu = FALSE;
+  bvw->priv->has_angles = FALSE;
   bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
 
@@ -3872,12 +3884,6 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       break;
     case BVW_DVD_CHAPTER_MENU:
       bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_DVD_CHAPTER_MENU);
-      break;
-    case BVW_DVD_NEXT_ANGLE:
-      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_NEXT_ANGLE);
-      break;
-    case BVW_DVD_PREV_ANGLE:
-      bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_PREV_ANGLE);
       break;
     case BVW_DVD_ROOT_MENU_UP:
       bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_UP);
@@ -4939,6 +4945,76 @@ bacon_video_widget_has_menus (BaconVideoWidget *bvw)
         return FALSE;
 
     return bvw->priv->is_menu;
+}
+
+/**
+ * bacon_video_widget_has_angles:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the widget is currently playing a stream with
+ * multiple angles.
+ *
+ * Return value: %TRUE if the current video stream has multiple
+ * angles, %FALSE otherwise
+ **/
+gboolean
+bacon_video_widget_has_angles (BaconVideoWidget *bvw)
+{
+    guint n_video;
+
+    g_return_val_if_fail (bvw != NULL, FALSE);
+    g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+    if (bacon_video_widget_is_playing (bvw) == FALSE)
+        return FALSE;
+
+    if (bvw->priv->has_angles)
+        return TRUE;
+
+    g_object_get (G_OBJECT (bvw->priv->play), "n-video", &n_video, NULL);
+
+    return n_video > 1;
+}
+
+/**
+ * bacon_video_widget_set_next_angle:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Select the next angle, or video track in the playing stream.
+ **/
+void
+bacon_video_widget_set_next_angle (BaconVideoWidget *bvw)
+{
+    guint n_video, current_video;
+
+    g_return_if_fail (bvw != NULL);
+    g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+    if (bacon_video_widget_is_playing (bvw) == FALSE)
+        return;
+
+    if (bvw->priv->has_angles) {
+        GST_DEBUG ("Sending event 'next-angle'");
+        bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_NEXT_ANGLE);
+        return;
+    }
+
+    g_object_get (G_OBJECT (bvw->priv->play),
+		  "current-video", &current_video,
+		  "n-video", &n_video,
+		  NULL);
+
+    if (n_video <= 1) {
+        GST_DEBUG ("Not setting next video stream, we have %d video streams", n_video);
+	return;
+    }
+
+    current_video++;
+    if (current_video == n_video)
+      current_video = 0;
+
+    GST_DEBUG ("Setting current-video to %d/%d", current_video, n_video);
+    g_object_set (G_OBJECT (bvw->priv->play), "current-video", current_video, NULL);
 }
 
 static gboolean

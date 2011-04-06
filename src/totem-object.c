@@ -2429,6 +2429,7 @@ on_channels_change_event (BaconVideoWidget *bvw, TotemObject *totem)
 	gchar *name;
 
 	totem_sublang_update (totem);
+	update_media_menu_items (totem);
 
 	/* updated stream info (new song) */
 	name = totem_get_nice_name_for_stream (totem);
@@ -2951,8 +2952,7 @@ totem_action_toggle_controls (TotemObject *totem)
 void
 totem_action_next_angle (TotemObject *totem)
 {
-	if (totem_playing_dvd (totem->mrl) != FALSE)
-		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_NEXT_ANGLE);
+	bacon_video_widget_set_next_angle (totem->bvw);
 }
 
 /**
@@ -3893,8 +3893,9 @@ update_media_menu_items (TotemObject *totem)
 	totem_action_set_sensitivity ("dvd-audio-menu", playing);
 	totem_action_set_sensitivity ("dvd-angle-menu", playing);
 	totem_action_set_sensitivity ("dvd-chapter-menu", playing);
-	/* FIXME we should only show that if we have multiple angles */
-	totem_action_set_sensitivity ("next-angle", playing);
+
+	totem_action_set_sensitivity ("next-angle",
+				      bacon_video_widget_has_angles (totem->bvw));
 
 	mount = totem_get_mount_for_media (totem->mrl);
 	totem_action_set_sensitivity ("eject", mount != NULL);

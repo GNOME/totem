@@ -404,7 +404,10 @@ void bacon_video_widget_set_video_property       (BaconVideoWidget *bvw,
 						  BvwVideoProperty type,
 						  int value);
 
+void bacon_video_widget_set_next_angle           (BaconVideoWidget *bvw);
+
 gboolean bacon_video_widget_has_menus            (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_has_angles           (BaconVideoWidget *bvw);
 
 /* DVD functions */
 /**
@@ -419,8 +422,6 @@ gboolean bacon_video_widget_has_menus            (BaconVideoWidget *bvw);
  * @BVW_DVD_PREV_CHAPTER: the previous chapter
  * @BVW_DVD_NEXT_TITLE: the next title in the current chapter
  * @BVW_DVD_PREV_TITLE: the previous title in the current chapter
- * @BVW_DVD_NEXT_ANGLE: the next angle
- * @BVW_DVD_PREV_ANGLE: the previous angle
  * @BVW_DVD_ROOT_MENU_UP: go up in the menu
  * @BVW_DVD_ROOT_MENU_DOWN: go down in the menu
  * @BVW_DVD_ROOT_MENU_LEFT: go left in the menu
@@ -441,8 +442,6 @@ typedef enum {
 	BVW_DVD_PREV_CHAPTER,
 	BVW_DVD_NEXT_TITLE,
 	BVW_DVD_PREV_TITLE,
-	BVW_DVD_NEXT_ANGLE,
-	BVW_DVD_PREV_ANGLE,
 	BVW_DVD_ROOT_MENU_UP,
 	BVW_DVD_ROOT_MENU_DOWN,
 	BVW_DVD_ROOT_MENU_LEFT,
