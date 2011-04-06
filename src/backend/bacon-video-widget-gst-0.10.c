@@ -1125,6 +1125,8 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   gtk_widget_set_can_focus (GTK_WIDGET (bvw), TRUE);
 
+  g_type_class_ref (BVW_TYPE_METADATA_TYPE);
+
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
 
   priv->update_id = 0;
@@ -2393,6 +2395,8 @@ bacon_video_widget_finalize (GObject * object)
   BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
   GST_DEBUG ("finalizing");
+
+  g_type_class_unref (g_type_class_peek (BVW_TYPE_METADATA_TYPE));
 
   if (bvw->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
