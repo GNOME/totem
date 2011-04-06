@@ -79,6 +79,7 @@ GST_MAJORMINOR=0.10
 GST_REQS=0.10.30
 GSTPLUG_REQS=0.10.30
 CLUTTER_REQS=1.6.8
+CLUTTER_GST_REQS=1.3.9
 
 HAVE_GSTREAMER=no
 
@@ -112,7 +113,7 @@ if test "x$enable_easy_codec_installation" != "xno"; then
 	])
 fi
 
-MM="gstreamer-0.10 >= $GST_REQS gstreamer-base-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gstreamer-tag-0.10 >= $GSTPLUG_REQS clutter-1.0 >= $CLUTTER_REQS clutter-gst-1.0 clutter-gtk-1.0 mx-1.0"
+MM="gstreamer-0.10 >= $GST_REQS gstreamer-base-0.10 >= $GST_REQS gstreamer-plugins-base-0.10 >= $GSTPLUG_REQS gstreamer-tag-0.10 >= $GSTPLUG_REQS clutter-1.0 >= $CLUTTER_REQS clutter-gst-1.0 >= $CLUTTER_GST_REQS clutter-gtk-1.0 mx-1.0"
 PKG_CHECK_MODULES(GST, $MM)
 GST_LIBS="$GST_LIBS -lgstbase-$GST_MAJORMINOR -lgstinterfaces-$GST_MAJORMINOR -lgstvideo-$GST_MAJORMINOR -lgstaudio-$GST_MAJORMINOR -lgstpbutils-$GST_MAJORMINOR -lgsttag-$GST_MAJORMINOR"
 AC_SUBST(GST_LIBS)
