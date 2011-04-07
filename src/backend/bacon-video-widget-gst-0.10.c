@@ -751,6 +751,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->get_preferred_width = bacon_video_widget_get_preferred_width;
   widget_class->get_preferred_height = bacon_video_widget_get_preferred_height;
   widget_class->realize = bacon_video_widget_realize;
+
+  /* FIXME: Remove those when GtkClutterEmbedded passes on GDK XI 1.2
+   * events properly */
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
   widget_class->button_press_event = bacon_video_widget_button_press;
   widget_class->button_release_event = bacon_video_widget_button_release;
