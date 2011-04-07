@@ -4933,7 +4933,7 @@ bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
  * Returns whether the widget is currently displaying a menu,
  * such as a DVD menu.
  *
- * Return value: %TRUE if a menu is displyed, %FALSE otherwise
+ * Return value: %TRUE if a menu is displayed, %FALSE otherwise
  **/
 gboolean
 bacon_video_widget_has_menus (BaconVideoWidget *bvw)
