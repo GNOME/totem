@@ -100,7 +100,8 @@ grab_media_player_keys_cb (GDBusProxy                 *proxy,
 	pi->priv->cancellable = NULL;
 
 	if (variant == NULL) {
-		g_warning ("Failed to call \"GrabMediaPlayerKeys\": %s", error->message);
+		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+			g_warning ("Failed to call \"GrabMediaPlayerKeys\": %s", error->message);
 		g_error_free (error);
 		return;
 	}
@@ -178,7 +179,8 @@ got_proxy_cb (GObject                    *source_object,
 	pi->priv->cancellable_init = NULL;
 
 	if (pi->priv->proxy == NULL) {
-		g_warning ("Failed to contact settings daemon: %s", error->message);
+		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+			g_warning ("Failed to contact settings daemon: %s", error->message);
 		g_error_free (error);
 		return;
 	}
