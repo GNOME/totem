@@ -32,6 +32,7 @@
 #include <glib/gi18n.h>
 #include <cairo.h>
 #include <gst/gst.h>
+#include <totem-disc.h>
 
 #include <errno.h>
 #include <unistd.h>
@@ -84,15 +85,63 @@ typedef struct {
 static void save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 			 const char *video_path, int size, gboolean is_still);
 
+static char *
+get_special_url (GFile *file)
+{
+	char *path, *uri, *mime_type;
+	TotemDiscMediaType type;
+
+	path = g_file_get_path (file);
+
+	mime_type = g_content_type_guess (path, NULL, 0, NULL);
+	if (g_strcmp0 (mime_type, "application/x-cd-image") != 0) {
+		g_free (path);
+		g_free (mime_type);
+		return NULL;
+	}
+	g_free (mime_type);
+
+	uri = NULL;
+	type = totem_cd_detect_type_with_url (path, &uri, NULL);
+	g_free (path);
+
+	if (type == MEDIA_TYPE_DVD ||
+	    type == MEDIA_TYPE_VCD)
+		return uri;
+
+	g_free (uri);
+
+	return NULL;
+}
+
+static gboolean
+is_special_uri (const char *uri)
+{
+	if (g_str_has_prefix (uri, "dvd://") ||
+	    g_str_has_prefix (uri, "vcd://"))
+		return TRUE;
+
+	return FALSE;
+}
+
 static void
 thumb_app_set_filename (ThumbApp *app)
 {
 	GFile *file;
 	char *uri;
 
+	if (is_special_uri (app->input)) {
+		g_object_set (app->play, "uri", app->input, NULL);
+		return;
+	}
+
 	file = g_file_new_for_commandline_arg (app->input);
-	uri = g_file_get_uri (file);
+	uri = get_special_url (file);
+	if (uri == NULL)
+		uri = g_file_get_uri (file);
 	g_object_unref (file);
+
+	g_message ("setting URI %s", uri);
 
 	g_object_set (app->play, "uri", uri, NULL);
 	g_free (uri);
