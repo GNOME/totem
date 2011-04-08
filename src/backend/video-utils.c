@@ -100,49 +100,6 @@ totem_time_to_string (gint64 msecs)
 	return g_strdup_printf (C_("short time format", "%d:%02d"), min, sec);
 }
 
-char *
-totem_time_to_string_text (gint64 msecs)
-{
-	char *secs, *mins, *hours, *string;
-	int sec, min, hour, _time;
-
-	_time = (int) (msecs / 1000);
-	sec = _time % 60;
-	_time = _time - sec;
-	min = (_time % (60*60)) / 60;
-	_time = _time - (min * 60);
-	hour = _time / (60*60);
-
-	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
-
-	mins = g_strdup_printf (ngettext ("%d minute",
-					  "%d minutes", min), min);
-
-	secs = g_strdup_printf (ngettext ("%d second",
-					  "%d seconds", sec), sec);
-
-	if (hour > 0)
-	{
-		/* hour:minutes:seconds */
-		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
-	} else if (min > 0) {
-		/* minutes:seconds */
-		string = g_strdup_printf (_("%s %s"), mins, secs);
-	} else if (sec > 0) {
-		/* seconds */
-		string = g_strdup_printf (_("%s"), secs);
-	} else {
-		/* 0 seconds */
-		string = g_strdup (_("0 seconds"));
-	}
-
-	g_free (hours);
-	g_free (mins);
-	g_free (secs);
-
-	return string;
-}
-
 static gboolean
 totem_ratio_fits_screen_generic (GtkWidget *video_widget,
 				 int new_w, int new_h,

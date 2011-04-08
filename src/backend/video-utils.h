@@ -32,7 +32,6 @@ void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
 void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
 
 char *totem_time_to_string (gint64 msecs);
-char *totem_time_to_string_text (gint64 msecs);
 
 gboolean totem_ratio_fits_screen (GtkWidget *widget,
 				  int video_width,
