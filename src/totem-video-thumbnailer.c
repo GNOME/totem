@@ -608,9 +608,9 @@ create_gallery (BaconVideoWidget *bvw, const char *input, const char *output)
 	current_column = current_row = x = y = 0;
 	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
 		if (pos == stream_length)
-			screenshot = capture_frame_at_time (app, input, output, pos - 1);
+			screenshot = capture_frame_at_time (bvw, input, output, pos - 1);
 		else
-			screenshot = capture_frame_at_time (app, input, output, pos);
+			screenshot = capture_frame_at_time (bvw, input, output, pos);
 
 		if (pixbuf == NULL) {
 			screenshot_width = gdk_pixbuf_get_width (screenshot);
