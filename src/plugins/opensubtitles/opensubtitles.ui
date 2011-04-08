@@ -22,11 +22,6 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkImage" id="image_apply">
-    <property name="visible">True</property>
-    <property name="stock">gtk-media-play</property>
-    <property name="icon-size">4</property>
-  </object>
   <object class="GtkWindow" id="subtitles_dialog">
     <property name="border_width">12</property>
     <property name="title" translatable="yes">Download Movie Subtitles</property>
@@ -36,83 +31,48 @@
     <property name="type_hint">dialog</property>
     <child>
       <object class="GtkVBox" id="vbox1">
+        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkFrame" id="frame1">
-            <property name="visible">True</property>
-            <property name="label_xalign">0</property>
-            <property name="shadow_type">none</property>
+          <object class="GtkHBox" id="hbox2">
+            <property name="spacing">6</property>
             <child>
-              <object class="GtkAlignment" id="alignment1">
+              <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
-                <property name="left_padding">12</property>
-                <child>
-                  <object class="GtkVBox" id="vbox3">
-                    <child>
-                      <object class="GtkHBox" id="hbox2">
-                        <child>
-                          <object class="GtkLabel" id="label3">
-                            <property name="visible">True</property>
-                            <property name="use-underline">True</property>
-                            <property name="mnemonic-widget">language_combobox</property>
-                            <property name="label" translatable="yes">Subtitle _language:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="padding">6</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="language_combobox">
-                            <property name="visible">True</property>
-                          </object>
-                          <packing>
-                            <property name="padding">6</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="find_button">
-                            <property name="label">gtk-find</property>
-                            <property name="use-stock">True</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="padding">6</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
+                <property name="label" translatable="yes">Subtitle _language:</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">language_combobox</property>
               </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
             </child>
-            <child type="label">
-              <object class="GtkLabel" id="label1">
+            <child>
+              <object class="GtkComboBox" id="language_combobox">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Language</property>
-                <property name="use_markup">True</property>
-                <attributes>
-                  <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-                </attributes>
               </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="find_button">
+                <property name="label">gtk-find</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">2</property>
+              </packing>
             </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="padding">6</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -143,7 +103,7 @@
         </child>
         <child>
           <object class="GtkAlignment" id="alignment2">
-            <property name="top_padding">12</property>
+            <property name="top_padding">6</property>
             <child>
               <object class="GtkHButtonBox" id="hbbox1">
                 <property name="visible">True</property>
@@ -156,7 +116,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="image">image_apply</property>
-                    <property name="use-underline">True</property>
+                    <property name="use_underline">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -167,12 +127,12 @@
                 <child>
                   <object class="GtkButton" id="close_button">
                     <property name="label">gtk-close</property>
-                    <property name="use-stock">True</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
                     <property name="can_default">True</property>
                     <property name="has_default">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -192,5 +152,9 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="image_apply">
+    <property name="visible">True</property>
+    <property name="stock">gtk-media-play</property>
   </object>
 </interface>
