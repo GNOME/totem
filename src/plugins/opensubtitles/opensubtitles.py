@@ -336,6 +336,9 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         the callbacks, ...) and added to totem.
         """
         self._totem = self.object
+
+        # Name of the movie file which the subtitles currently in
+        # self._model.results are related to.
         self._filename = None
 
         self._manager = self._totem.get_ui_manager ()
@@ -438,10 +441,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
     def _show_dialog (self, _action):
         if not self._dialog:
             self._build_dialog ()
-
-        filename = self._totem.get_current_mrl ()
-        if not self._model.results or filename != self._filename:
-            self._filename = filename
 
         self._dialog.show_all ()
 
@@ -637,8 +636,10 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self._save_selected_subtitle ()
 
     def _close_dialog (self):
-        self._dialog.destroy ()
-        self._dialog = None
+        # We hide the dialogue instead of closing it so that we still have the
+        # last set of search results up if we re-open the dialogue without
+        # changing the movie
+        self._dialog.hide ()
 
     # Callbacks
 
@@ -657,19 +658,24 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
     def __on_treeview__row_activate (self, _tree_path, _column, _data):
         self._download_and_apply ()
 
-    def __on_totem__file_opened (self, _totem, _filename):
+    def __on_totem__file_opened (self, _totem, new_mrl):
         # Check if allows subtitles
         if self._check_allowed_scheme () and not self._check_is_audio ():
             self._action.set_sensitive (True)
             if self._dialog:
                 self._find_button.set_sensitive (True)
-                self._filename = self._totem.get_current_mrl ()
-                self._list_store.clear ()
-                self._tree_view.set_headers_visible (False)
-                self._apply_button.set_sensitive (False)
+                # Check we're not re-opening the same file; if we are, don't
+                # clear anything. This happens when we re-load the file with a
+                # new set of subtitles, for example
+                if self._filename != new_mrl:
+                    self._filename = new_mrl
+                    self._list_store.clear ()
+                    self._tree_view.set_headers_visible (False)
+                    self._apply_button.set_sensitive (False)
         else:
             self._action.set_sensitive (False)
             if self._dialog and self._dialog.is_active ():
+                self._filename = None
                 self._list_store.clear ()
                 self._tree_view.set_headers_visible (False)
                 self._apply_button.set_sensitive (False)
