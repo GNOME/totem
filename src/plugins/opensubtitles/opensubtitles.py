@@ -606,7 +606,7 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self._model.lock.release ()
 
         self._dialog.get_window ().set_cursor (None)
-        self.__on_close_clicked (None)
+        self._close_dialog ()
 
         if suburi:
             self._totem.set_current_subtitle (suburi)
@@ -636,12 +636,15 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self._tree_view.set_sensitive (False)
         self._save_selected_subtitle ()
 
+    def _close_dialog (self):
+        self._dialog.destroy ()
+        self._dialog = None
+
     # Callbacks
 
     def __on_window__key_press_event (self, _widget, event):
         if event.keyval == Gdk.KEY_Escape:
-            self._dialog.destroy ()
-            self._dialog = None
+            self._close_dialog ()
             return True
         return False
 
@@ -685,8 +688,7 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         self._settings.set_string ('language', self._model.lang)
 
     def __on_close_clicked (self, _data):
-        self._dialog.destroy ()
-        self._dialog = None
+        self._close_dialog ()
 
     def __on_apply_clicked (self, _data):
         self._download_and_apply ()
