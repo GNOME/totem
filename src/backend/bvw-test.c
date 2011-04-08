@@ -8,7 +8,9 @@
 #include <X11/Xlib.h>
 #endif
 
-static char *mrl, *argument;
+static char **filenames;
+static const char *argument;
+static char *mrl;
 
 static void
 test_bvw_set_mrl (GtkWidget *bvw, const char *path)
@@ -62,23 +64,45 @@ error_cb (GtkWidget *bvw, const char *message,
 			message, playback_stopped, fatal);
 }
 
+static GOptionEntry option_entries [] = {
+	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY /* STRING? */, &filenames, NULL },
+	{ NULL }
+};
+
 int main
 (int argc, char **argv)
 {
+	GOptionContext *context;
+	GOptionGroup *baconoptiongroup;
+	GError *error = NULL;
 	GtkWidget *win, *bvw;
-
-	if (argc > 2) {
-		g_warning ("Usage: %s <file>", argv[0]);
-		return 1;
-	}
 
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
 #endif
 	g_thread_init (NULL);
-	gtk_init (&argc, &argv);
-	bacon_video_widget_init_backend (NULL, NULL);
 	gdk_threads_init ();
+
+	context = g_option_context_new ("- Play audio and video inside a web browser");
+	baconoptiongroup = bacon_video_widget_get_option_group();
+	g_option_context_add_main_entries (context, option_entries, GETTEXT_PACKAGE);
+	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, baconoptiongroup);
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+
+	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
+		g_print ("Failed to parse options: %s\n", error->message);
+		g_error_free (error);
+		return 1;
+	}
+	if (filenames != NULL &&
+	    g_strv_length (filenames) > 1) {
+		char *help;
+		help = g_option_context_get_help (context, TRUE, NULL);
+		g_print (help);
+		g_free (help);
+		return 1;
+	}
 
 	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_default_size (GTK_WINDOW (win), 500, 500);
@@ -102,9 +126,9 @@ int main
 	gtk_widget_show (win);
 	gtk_widget_show (bvw);
 
-	if (argv[1]) {
-		test_bvw_set_mrl (bvw, argv[1]);
-		argument = g_strdup (argv[1]);
+	if (filenames && filenames[0]) {
+		test_bvw_set_mrl (bvw, filenames[0]);
+		argument = g_strdup (filenames[0]);
 		bacon_video_widget_play (BACON_VIDEO_WIDGET (bvw), NULL);
 	} else {
 		bacon_video_widget_set_logo_mode (BACON_VIDEO_WIDGET (bvw), TRUE);
