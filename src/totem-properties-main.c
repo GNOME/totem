@@ -27,8 +27,9 @@
 #include <config.h>
 #include <string.h>
 #include <glib/gi18n-lib.h>
+#include <gst/gst.h>
+
 #include "totem-properties-view.h"
-#include "bacon-video-widget.h"
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
 
@@ -107,7 +108,7 @@ totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 
 	/* okay, make the page, init'ing the backend first if necessary */
 	if (backend_inited == FALSE) {
-		bacon_video_widget_init_backend (NULL, NULL);
+		gst_init (NULL, NULL);
 		backend_inited = TRUE;
 	}
 	uri = nautilus_file_info_get_uri (file);
