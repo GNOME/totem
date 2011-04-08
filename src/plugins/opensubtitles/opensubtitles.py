@@ -205,8 +205,9 @@ class OpenSubtitlesModel (object):
 
         try:
             import locale
-            self.lang = LANGUAGES[locale.getlocale ()[0].split ('_')[0]]
-        except (ImportError, IndexError):
+            (language_code, _encoding) = locale.getlocale ()
+            self.lang = LANGUAGES[language_code.split ('_')[0]]
+        except (ImportError, IndexError, AttributeError):
             self.lang = 'eng'
 
         self.hash = None
