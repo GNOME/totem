@@ -106,6 +106,8 @@ grab_media_player_keys_cb (GDBusProxy                 *proxy,
 		return;
 	}
 	g_variant_unref (variant);
+
+	g_object_unref (pi);
 }
 
 static void
@@ -130,7 +132,7 @@ grab_media_player_keys (TotemMediaPlayerKeysPlugin *pi)
 					  G_DBUS_CALL_FLAGS_NONE,
 					  -1, cancellable,
 					  (GAsyncReadyCallback) grab_media_player_keys_cb,
-					  pi);
+					  g_object_ref (pi));
 
 	/* GDBus keeps a reference throughout the async call */
 	g_object_unref (cancellable);
@@ -189,6 +191,8 @@ got_proxy_cb (GObject                    *source_object,
 
 	g_signal_connect (G_OBJECT (pi->priv->proxy), "g-signal",
 			  G_CALLBACK (key_pressed), pi);
+
+	g_object_unref (pi);
 }
 
 static void
@@ -211,7 +215,7 @@ name_appeared_cb (GDBusConnection            *connection,
 				  "org.gnome.SettingsDaemon.MediaKeys",
 				  cancellable,
 				  (GAsyncReadyCallback) got_proxy_cb,
-				  pi);
+				  g_object_ref (pi));
 
 	/* GDBus keeps a reference throughout the async call */
 	g_object_unref (cancellable);
@@ -244,7 +248,7 @@ impl_activate (PeasActivatable *plugin)
 					       G_BUS_NAME_WATCHER_FLAGS_NONE,
 					       (GBusNameAppearedCallback) name_appeared_cb,
 					       (GBusNameVanishedCallback) name_vanished_cb,
-					       pi, NULL);
+					       g_object_ref (pi), (GDestroyNotify) g_object_unref);
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	window = totem_get_main_window (totem);
