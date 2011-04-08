@@ -2249,6 +2249,8 @@ static GOptionEntry option_entries [] =
 
 int main (int argc, char **argv)
 {
+	GOptionContext *context;
+	GOptionGroup *baconoptiongroup;
 	TotemEmbedded *emb;
 	DBusGProxy *proxy;
 	DBusGConnection *conn;
@@ -2320,9 +2322,15 @@ int main (int argc, char **argv)
 	}
 #endif
 
-	if (!gtk_init_with_args (&argc, &argv, NULL, option_entries, GETTEXT_PACKAGE, &e))
-	{
-		g_print ("%s\n", e->message);
+	context = g_option_context_new ("- Play audio and video inside a web browser");
+	baconoptiongroup = bacon_video_widget_get_option_group();
+	g_option_context_add_main_entries (context, option_entries, GETTEXT_PACKAGE);
+	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, baconoptiongroup);
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+
+	if (g_option_context_parse (context, &argc, &argv, &e) == FALSE) {
+		g_print ("Failed to parse options: %s\n", e->message);
 		g_error_free (e);
 		exit (1);
 	}
@@ -2337,8 +2345,6 @@ int main (int argc, char **argv)
 		g_warning ("Plugin type is required\n");
 		exit (1);
 	}
-
-	bacon_video_widget_init_backend (NULL, NULL);
 
 	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
 					 &dbus_glib_totem_embedded_object_info);
