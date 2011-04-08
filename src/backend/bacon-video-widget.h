@@ -139,8 +139,6 @@ typedef enum {
 GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
 GOptionGroup* bacon_video_widget_get_option_group (void);
-/* This can be used if the app does not use popt */
-void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 
 GtkWidget *bacon_video_widget_new		 (GError **error);
 

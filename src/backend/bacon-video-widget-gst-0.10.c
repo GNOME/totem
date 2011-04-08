@@ -5803,9 +5803,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 /*                                             */
 /* =========================================== */
 
-/* applications must use exactly one of bacon_video_widget_get_option_group()
- * OR bacon_video_widget_init_backend(), but not both */
-
 /**
  * bacon_video_widget_get_option_group:
  *
@@ -5822,24 +5819,6 @@ bacon_video_widget_get_option_group (void)
 {
   gtk_clutter_init (NULL, NULL);
   return gst_init_get_option_group ();
-}
-
-/**
- * bacon_video_widget_init_backend:
- * @argc: pointer to application's argc
- * @argv: pointer to application's argv
- *
- * Initialises #BaconVideoWidget's GStreamer backend. If this fails
- * for the GStreamer backend, your application will be terminated.
- *
- * Applications must call either this or bacon_video_widget_get_option_group() exactly
- * once; but not both.
- **/
-void
-bacon_video_widget_init_backend (int *argc, char ***argv)
-{
-  gtk_clutter_init (argc, argv);
-  gst_init (argc, argv);
 }
 
 GQuark
