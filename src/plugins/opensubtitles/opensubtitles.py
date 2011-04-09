@@ -150,11 +150,12 @@ class SearchThread (threading.Thread):
         self._done = False
         self._results = []
         self._lock = threading.Lock ()
+        self._message = ''
         threading.Thread.__init__ (self)
 
     def run (self):
         self._lock.acquire (True)
-        self._results = self._model.search_subtitles ()
+        (self._results, self._message) = self._model.search_subtitles ()
         self._done = True
         self._lock.release ()
 
@@ -167,6 +168,16 @@ class SearchThread (threading.Thread):
         self._lock.release ()
 
         return results
+
+    def get_message (self):
+        message = ''
+
+        self._lock.acquire (True)
+        if self._done:
+            message = self._message
+        self._lock.release ()
+
+        return message
 
     @property
     def done (self):
@@ -186,11 +197,13 @@ class DownloadThread (threading.Thread):
         self._done = False
         self._lock = threading.Lock ()
         self._subtitles = ''
+        self._message = ''
         threading.Thread.__init__ (self)
 
     def run (self):
         self._lock.acquire (True)
-        self._subtitles = self._model.download_subtitles (self._subtitle_id)
+        (self._subtitles,
+         self._message) = self._model.download_subtitles (self._subtitle_id)
         self._done = True
         self._lock.release ()
 
@@ -203,6 +216,16 @@ class DownloadThread (threading.Thread):
         self._lock.release ()
 
         return subtitles
+
+    def get_message (self):
+        message = ''
+
+        self._lock.acquire (True)
+        if self._done:
+            message = self._message
+        self._lock.release ()
+
+        return message
 
     @property
     def done (self):
@@ -234,17 +257,14 @@ class OpenSubtitlesModel (object):
 
         self._lock = threading.Lock ()
 
-        self.message = ''
-
     def _log_in (self, username='', password=''):
         """
         Non-locked version of log_in() for internal use only.
 
-        @rtype : bool
+        @rtype : (bool, string)
         """
 
         result = None
-        self.message = ''
 
         if self._token:
             # We have already logged-in before, check the connection
@@ -253,28 +273,29 @@ class OpenSubtitlesModel (object):
             except (xmlrpclib.Fault, xmlrpclib.ProtocolError):
                 pass
             if result and result['status'] != OK200:
-                return True
+                return (True, '')
+
         try:
             result = self._server.LogIn (username, password, self.lang,
                                          USER_AGENT)
         except (xmlrpclib.Fault, xmlrpclib.ProtocolError):
             pass
+
         if result and result.get ('status') == OK200:
             self._token = result.get ('token')
             if self._token:
-                return True
+                return (True, '')
 
-        self.message = _(u'Could not contact the OpenSubtitles website')
-
-        return False
+        return (False, _(u'Could not contact the OpenSubtitles website'))
 
     def log_in (self, username='', password=''):
         """
         Logs into the opensubtitles web service and gets a valid token for
         the comming comunications. If we are already logged it only checks
-        the if the token is still valid.
+        the if the token is still valid. It returns a tuple of success boolean
+        and error message (if appropriate).
 
-        @rtype : bool
+        @rtype : (bool, string)
         """
 
         self._lock.acquire (True)
@@ -286,8 +307,11 @@ class OpenSubtitlesModel (object):
     def search_subtitles (self):
         self._lock.acquire (True)
 
-        self.message = ''
-        if self._log_in ():
+        message = ''
+
+        (log_in_success, log_in_message) = self._log_in ()
+
+        if log_in_success:
             searchdata = {'sublanguageid': self.lang,
                           'moviehash'    : self.hash,
                           'moviebytesize': str (self.size)}
@@ -295,38 +319,41 @@ class OpenSubtitlesModel (object):
                 result = self._server.SearchSubtitles (self._token,
                                                        [searchdata])
             except xmlrpclib.ProtocolError:
-                self.message = _(u'Could not contact the OpenSubtitles website')
+                message = _(u'Could not contact the OpenSubtitles website')
 
             if result.get ('data'):
                 self._lock.release ()
-                return result['data']
+                return (result['data'], message)
             else:
-                self.message = _(u'No results found')
+                message = _(u'No results found')
+        else:
+            message = log_in_message
 
         self._lock.release ()
 
-        return None
+        return (None, message)
 
     def download_subtitles (self, subtitle_id):
         self._lock.acquire (True)
 
-        self.message = ''
+        message = ''
         error_message = _(u'Could not contact the OpenSubtitles website')
 
-        if self._log_in ():
+        (log_in_success, log_in_message) = self._log_in ()
+
+        if log_in_success:
             try:
                 result = self._server.DownloadSubtitles (self._token,
                                                          [subtitle_id])
             except xmlrpclib.ProtocolError:
-                self.message = error_message
+                message = error_message
 
             if result and result.get ('status') == OK200:
                 try:
                     subtitle64 = result['data'][0]['data']
                 except LookupError:
-                    self.message = error_message
                     self._lock.release ()
-                    return None
+                    return (None, error_message)
 
                 import StringIO, gzip, base64
                 subtitle_decoded = base64.decodestring (subtitle64)
@@ -335,11 +362,13 @@ class OpenSubtitlesModel (object):
 
                 self._lock.release ()
 
-                return subtitle_gzipped_file.read ()
+                return (subtitle_gzipped_file.read (), message)
+        else:
+            message = log_in_message
 
         self._lock.release ()
 
-        return None
+        return (None, message)
 
 class OpenSubtitles (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
@@ -655,8 +684,9 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             self._progress.pulse ()
             return True
 
-        if self._model.message:
-            self._progress.set_text (self._model.message)
+        message = thread.get_message ()
+        if message:
+            self._progress.set_text (message)
         else:
             self._progress.set_text ('')
 
