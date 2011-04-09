@@ -148,14 +148,27 @@ class SearchThread (threading.Thread):
     def __init__ (self, model):
         self._model = model
         self._done = False
+        self._results = []
         self._lock = threading.Lock ()
         threading.Thread.__init__ (self)
 
     def run (self):
+        self._lock.acquire (True)
         self._model.lock.acquire (True)
-        self._model.results = self._model.search_subtitles ()
+        self._results = self._model.search_subtitles ()
         self._model.lock.release ()
         self._done = True
+        self._lock.release ()
+
+    def get_results (self):
+        results = []
+
+        self._lock.acquire (True)
+        if self._done:
+            results = self._results
+        self._lock.release ()
+
+        return results
 
     @property
     def done (self):
@@ -174,16 +187,26 @@ class DownloadThread (threading.Thread):
         self._subtitle_id = subtitle_id
         self._done = False
         self._lock = threading.Lock ()
+        self._subtitles = ''
         threading.Thread.__init__ (self)
 
     def run (self):
-        model = self._model
-
-        model.lock.acquire (True)
-        model.subtitles = model.download_subtitles (self._subtitle_id)
-        model.lock.release ()
-
+        self._lock.acquire (True)
+        self._model.lock.acquire (True)
+        self._subtitles = self._model.download_subtitles (self._subtitle_id)
+        self._model.lock.release ()
         self._done = True
+        self._lock.release ()
+
+    def get_subtitles (self):
+        subtitles = ''
+
+        self._lock.acquire (True)
+        if self._done:
+            subtitles = self._subtitles
+        self._lock.release ()
+
+        return subtitles
 
     @property
     def done (self):
@@ -214,8 +237,6 @@ class OpenSubtitlesModel (object):
         self.size = 0
 
         self.lock = threading.Lock ()
-        self.results = []
-        self.subtitles = ''
 
         self.message = ''
 
@@ -337,8 +358,8 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         """
         self._totem = self.object
 
-        # Name of the movie file which the subtitles currently in
-        # self._model.results are related to.
+        # Name of the movie file which the most-recently-downloaded subtitles
+        # are related to.
         self._filename = None
 
         self._manager = self._totem.get_ui_manager ()
@@ -504,7 +525,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
     def _get_results (self):
         self._list_store.clear ()
         self._tree_view.set_headers_visible (False)
-        self._model.results = []
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
 
@@ -513,18 +533,19 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
 
         thread = SearchThread (self._model)
         thread.start ()
-        GObject.idle_add (self._populate_treeview)
+        GObject.idle_add (self._populate_treeview, thread)
 
         self._progress.set_text (_(u'Searching subtitles…'))
         GObject.timeout_add (350, self._progress_bar_increment, thread)
 
-    def _populate_treeview (self):
+    def _populate_treeview (self, search_thread):
         if self._model.lock.acquire (False) == False:
             return True
 
-        if self._model.results:
+        results = search_thread.get_results ()
+        if results:
             self._apply_button.set_sensitive (True)
-            for sub_data in self._model.results:
+            for sub_data in results:
                 if not SUBTITLES_EXT.count (sub_data['SubFormat']):
                     continue
                 self._list_store.append ([sub_data['SubFileName'],
@@ -572,11 +593,9 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
                 filename = directory.get_uri () + sep
                 filename += movie_name + '.' + subtitle_format
 
-            self._model.subtitles = ''
-
             thread = DownloadThread (self._model, subtitle_id)
             thread.start ()
-            GObject.idle_add (self._save_subtitles, filename)
+            GObject.idle_add (self._save_subtitles, thread, filename)
 
             self._progress.set_text (_(u'Downloading the subtitles…'))
             GObject.timeout_add (350, self._progress_bar_increment, thread)
@@ -584,11 +603,12 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             #warn user!
             pass
 
-    def _save_subtitles (self, filename):
+    def _save_subtitles (self, download_thread, filename):
         if self._model.lock.acquire (False) == False:
             return True
 
-        if self._model.subtitles:
+        subtitles = download_thread.get_subtitles ()
+        if subtitles:
             # Delete all previous cached subtitle for this file
             for ext in SUBTITLES_EXT:
                 subtitle_file = Gio.file_new_for_path (filename[:-3] + ext)
@@ -599,7 +619,7 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             suburi = subtitle_file.get_uri ()
 
             sub_file = subtitle_file.replace ('', False)
-            sub_file.write (self._model.subtitles)
+            sub_file.write (subtitles)
             sub_file.close ()
 
         self._model.lock.release ()
