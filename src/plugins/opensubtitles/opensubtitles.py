@@ -154,9 +154,7 @@ class SearchThread (threading.Thread):
 
     def run (self):
         self._lock.acquire (True)
-        self._model.lock.acquire (True)
         self._results = self._model.search_subtitles ()
-        self._model.lock.release ()
         self._done = True
         self._lock.release ()
 
@@ -192,9 +190,7 @@ class DownloadThread (threading.Thread):
 
     def run (self):
         self._lock.acquire (True)
-        self._model.lock.acquire (True)
         self._subtitles = self._model.download_subtitles (self._subtitle_id)
-        self._model.lock.release ()
         self._done = True
         self._lock.release ()
 
@@ -236,18 +232,17 @@ class OpenSubtitlesModel (object):
         self.hash = None
         self.size = 0
 
-        self.lock = threading.Lock ()
+        self._lock = threading.Lock ()
 
         self.message = ''
 
-    def log_in (self, username='', password=''):
+    def _log_in (self, username='', password=''):
         """
-        Logs into the opensubtitles web service and gets a valid token for
-        the comming comunications. If we are already logged it only checks
-        the if the token is still valid.
+        Non-locked version of log_in() for internal use only.
 
         @rtype : bool
         """
+
         result = None
         self.message = ''
 
@@ -273,9 +268,26 @@ class OpenSubtitlesModel (object):
 
         return False
 
+    def log_in (self, username='', password=''):
+        """
+        Logs into the opensubtitles web service and gets a valid token for
+        the comming comunications. If we are already logged it only checks
+        the if the token is still valid.
+
+        @rtype : bool
+        """
+
+        self._lock.acquire (True)
+        result = self._log_in (username, password)
+        self._lock.release ()
+
+        return result
+
     def search_subtitles (self):
+        self._lock.acquire (True)
+
         self.message = ''
-        if self.log_in ():
+        if self._log_in ():
             searchdata = {'sublanguageid': self.lang,
                           'moviehash'    : self.hash,
                           'moviebytesize': str (self.size)}
@@ -286,17 +298,22 @@ class OpenSubtitlesModel (object):
                 self.message = _(u'Could not contact the OpenSubtitles website')
 
             if result.get ('data'):
+                self._lock.release ()
                 return result['data']
             else:
                 self.message = _(u'No results found')
 
+        self._lock.release ()
+
         return None
 
     def download_subtitles (self, subtitle_id):
+        self._lock.acquire (True)
+
         self.message = ''
         error_message = _(u'Could not contact the OpenSubtitles website')
 
-        if self.log_in ():
+        if self._log_in ():
             try:
                 result = self._server.DownloadSubtitles (self._token,
                                                          [subtitle_id])
@@ -308,6 +325,7 @@ class OpenSubtitlesModel (object):
                     subtitle64 = result['data'][0]['data']
                 except LookupError:
                     self.message = error_message
+                    self._lock.release ()
                     return None
 
                 import StringIO, gzip, base64
@@ -315,7 +333,11 @@ class OpenSubtitlesModel (object):
                 subtitle_gzipped = StringIO.StringIO (subtitle_decoded)
                 subtitle_gzipped_file = gzip.GzipFile (fileobj=subtitle_gzipped)
 
+                self._lock.release ()
+
                 return subtitle_gzipped_file.read ()
+
+        self._lock.release ()
 
         return None
 
@@ -539,7 +561,7 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         GObject.timeout_add (350, self._progress_bar_increment, thread)
 
     def _populate_treeview (self, search_thread):
-        if self._model.lock.acquire (False) == False:
+        if not search_thread.done:
             return True
 
         results = search_thread.get_results ()
@@ -555,8 +577,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
                 self._tree_view.set_headers_visible (True)
         else:
             self._apply_button.set_sensitive (False)
-
-        self._model.lock.release ()
 
         self._dialog.get_window ().set_cursor (None)
 
@@ -604,7 +624,7 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             pass
 
     def _save_subtitles (self, download_thread, filename):
-        if self._model.lock.acquire (False) == False:
+        if not download_thread.done:
             return True
 
         subtitles = download_thread.get_subtitles ()
@@ -621,8 +641,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             sub_file = subtitle_file.replace ('', False)
             sub_file.write (subtitles)
             sub_file.close ()
-
-        self._model.lock.release ()
 
         self._dialog.get_window ().set_cursor (None)
         self._close_dialog ()
