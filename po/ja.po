@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2010-11-02 22:23+0000\n"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-04-08 11:08+0000\n"
 "PO-Revision-Date: 2010-10-31 23:49+0900\n"
 "Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -31,7 +31,7 @@ msgstr "フルスクリーンの解除"
 msgid "Time:"
 msgstr "時間:"
 
-#: ../data/playlist.ui.h:1 ../src/plugins/chapters/chapters-list.ui.h:1
+#: ../data/playlist.ui.h:1
 msgid "Add..."
 msgstr "追加..."
 
@@ -47,7 +47,7 @@ msgstr "下へに移動します"
 msgid "Move Up"
 msgstr "上へ移動します"
 
-#: ../data/playlist.ui.h:5 ../src/plugins/chapters/chapters-list.ui.h:8
+#: ../data/playlist.ui.h:5
 msgid "Remove"
 msgstr "削除します"
 
@@ -67,7 +67,7 @@ msgstr "字幕で使用するファイルを選択してください"
 msgid "_Copy Location"
 msgstr "場所のコピー(_C)"
 
-#: ../data/playlist.ui.h:10 ../src/plugins/chapters/chapters-list.ui.h:12
+#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "削除(_R)"
 
@@ -77,13 +77,13 @@ msgstr "字幕の選択(_S)..."
 
 #. Channels
 #: ../data/properties.ui.h:1
-#: ../src/plugins/properties/bacon-video-widget-properties.c:175
+#: ../src/properties/bacon-video-widget-properties.c:175
 msgid "0 Channels"
 msgstr "0 チャンネル"
 
 #. Sample rate
 #: ../data/properties.ui.h:2
-#: ../src/plugins/properties/bacon-video-widget-properties.c:173
+#: ../src/properties/bacon-video-widget-properties.c:173
 msgid "0 Hz"
 msgstr "0 Hz"
 
@@ -112,14 +112,14 @@ msgstr "アルバム名:"
 msgid "Artist:"
 msgstr "演奏者:"
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:22
+#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
 #: ../src/totem-properties-view.c:89
 msgid "Audio"
 msgstr "音声"
 
 #. Audio Codec
 #: ../data/properties.ui.h:10
-#: ../src/plugins/properties/bacon-video-widget-properties.c:171
+#: ../src/properties/bacon-video-widget-properties.c:171
 #, fuzzy
 msgctxt "Audio codec"
 msgid "N/A"
@@ -170,10 +170,10 @@ msgstr "タイトル:"
 #. Album
 #. Year
 #: ../data/properties.ui.h:21
-#: ../src/plugins/properties/bacon-video-widget-properties.c:145
-#: ../src/plugins/properties/bacon-video-widget-properties.c:147
-#: ../src/plugins/properties/bacon-video-widget-properties.c:149
-#: ../src/plugins/properties/bacon-video-widget-properties.c:151
+#: ../src/properties/bacon-video-widget-properties.c:145
+#: ../src/properties/bacon-video-widget-properties.c:147
+#: ../src/properties/bacon-video-widget-properties.c:149
+#: ../src/properties/bacon-video-widget-properties.c:151
 msgid "Unknown"
 msgstr "不明"
 
@@ -184,7 +184,7 @@ msgstr "動画"
 
 #. Video Codec
 #: ../data/properties.ui.h:23
-#: ../src/plugins/properties/bacon-video-widget-properties.c:160
+#: ../src/properties/bacon-video-widget-properties.c:160
 #, fuzzy
 msgctxt "Video codec"
 msgid "N/A"
@@ -205,7 +205,7 @@ msgstr "プレイリストに追加する(_A)"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1663
+#: ../src/totem-object.c:1666
 msgid "Movie Player"
 msgstr "動画プレイヤー"
 
@@ -297,14 +297,15 @@ msgstr "音声メニュー(_U)"
 msgid "About this application"
 msgstr "このアプリケーションについて"
 
-#: ../data/totem.ui.h:23
-msgid "Audio Output"
-msgstr "音声の出力"
-
-#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../data/totem.ui.h:24 ../src/totem-menu.c:197
+#: ../data/totem.ui.h:22
+#, fuzzy
+msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "自動"
+
+#: ../data/totem.ui.h:24
+msgid "Audio Output"
+msgstr "音声の出力"
 
 #: ../data/totem.ui.h:25
 msgid "Clear the playlist"
@@ -520,7 +521,7 @@ msgstr "アスペクト比を自動調節します"
 
 #: ../data/totem.ui.h:84
 msgid "Sets square aspect ratio"
-msgstr "アスペクト比を倍にします"
+msgstr "アスペクト比を正方形にします"
 
 #: ../data/totem.ui.h:85
 msgid "Show _Controls"
@@ -560,13 +561,13 @@ msgstr "前方へスキップ"
 
 #: ../data/totem.ui.h:94
 msgid "Square"
-msgstr "矩形"
+msgstr "正方形"
 
 #: ../data/totem.ui.h:95
 msgid "Start playing files from last position"
 msgstr "ファイルを最後の位置から再生開始"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5973
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6012
 msgid "Stereo"
 msgstr "ステレオ"
 
@@ -836,7 +837,7 @@ msgstr ""
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:11
 #, fuzzy
 msgid "Encoding character set for subtitle."
-msgstr "サブタイトルをエンコーディングする際の文字集合です。"
+msgstr "字幕をエンコーディングする際の文字集合です。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:12
 #, fuzzy
@@ -854,7 +855,7 @@ msgstr "ネットワークの接続スピード"
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:15
 #, fuzzy
 msgid "Pango font description for subtitle rendering."
-msgstr "サブタイトルを描画する際に使用するフォント (Pango 形式の記述) です。"
+msgstr "字幕を描画する際に使用するフォント (Pango 形式の記述) です。"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:16
 msgid "Quality setting for the audio visualization."
@@ -882,11 +883,11 @@ msgstr "シャッフル・モードにするかどうか"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:22
 msgid "Subtitle encoding"
-msgstr "サブタイトルのエンコーディング"
+msgstr "字幕のエンコーディング"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:23
 msgid "Subtitle font"
-msgstr "サブタイトルのフォント"
+msgstr "字幕のフォント"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:24
 msgid "The brightness of the video"
@@ -957,58 +958,58 @@ msgstr "妥当な .desktop ファイルではありません"
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "バージョン '%s' の .desktop ファイルはサポートしていません"
 
-#: ../src/eggdesktopfile.c:958
+#: ../src/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "%sの起動中です"
 
-#: ../src/eggdesktopfile.c:1100
+#: ../src/eggdesktopfile.c:1110
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "コマンドラインからドキュメントにはアクセスできません"
 
-#: ../src/eggdesktopfile.c:1168
+#: ../src/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "不明な起動オプションです: %d"
 
-#: ../src/eggdesktopfile.c:1373
+#: ../src/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "ドキュメントの URI を 'Type=Link' な .desktop エントリには渡せません"
 
-#: ../src/eggdesktopfile.c:1394
+#: ../src/eggdesktopfile.c:1404
 #, c-format
 msgid "Not a launchable item"
 msgstr "起動可能なアイテムではありません"
 
-#: ../src/eggfileformatchooser.c:235
+#: ../src/eggfileformatchooser.c:240
 #, c-format
 msgid "File _Format: %s"
 msgstr "ファイルの形式(_F): %s"
 
-#: ../src/eggfileformatchooser.c:374
+#: ../src/eggfileformatchooser.c:379
 msgid "All Files"
 msgstr "すべてのファイル"
 
-#: ../src/eggfileformatchooser.c:375
+#: ../src/eggfileformatchooser.c:380
 msgid "All Supported Files"
 msgstr "すべてのサポートしているファイル"
 
-#: ../src/eggfileformatchooser.c:384
+#: ../src/eggfileformatchooser.c:389
 msgid "By Extension"
 msgstr "拡張子順"
 
-#: ../src/eggfileformatchooser.c:399
+#: ../src/eggfileformatchooser.c:404
 msgid "File Format"
 msgstr "ファイルの形式"
 
-#: ../src/eggfileformatchooser.c:417
+#: ../src/eggfileformatchooser.c:422
 msgid "Extension(s)"
 msgstr "拡張子順"
 
 #. Translators: the parameter is a filename
-#: ../src/eggfileformatchooser.c:652
+#: ../src/eggfileformatchooser.c:657
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `"
@@ -1018,37 +1019,93 @@ msgstr ""
 "`%s' のファイル形式がわかりませんでした。良く知られている拡張子を使うようにす"
 "るか、下のリストからファイル形式を選択してください。"
 
-#: ../src/eggfileformatchooser.c:659
+#: ../src/eggfileformatchooser.c:664
 msgid "File format not recognized"
 msgstr "ファイル形式を認識できませんでした"
 
-#: ../src/eggsmclient.c:225
+#: ../src/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "セッション・マネージャに接続しない"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "設定を保存したファイルを指定する"
 
-#: ../src/eggsmclient.c:228
+#: ../src/eggsmclient.c:229
 msgid "FILE"
 msgstr "FILE"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "セッション管理の ID を指定する"
 
-#: ../src/eggsmclient.c:231
+#: ../src/eggsmclient.c:232
 msgid "ID"
 msgstr "ID"
 
-#: ../src/eggsmclient.c:252
+#: ../src/eggsmclient.c:253
 msgid "Session management options:"
 msgstr "セッション管理のオプション:"
 
-#: ../src/eggsmclient.c:253
+#: ../src/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "セッション管理のオプションを表示する"
+
+#. Dimensions
+#: ../src/properties/bacon-video-widget-properties.c:158
+#, fuzzy
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:163
+#: ../src/properties/bacon-video-widget-properties.c:240
+#, fuzzy
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:166
+#: ../src/properties/bacon-video-widget-properties.c:250
+#, fuzzy
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:169
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, fuzzy
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/properties/bacon-video-widget-properties.c:237
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: ../src/properties/bacon-video-widget-properties.c:240
+#: ../src/properties/bacon-video-widget-properties.c:273
+#, c-format
+msgid "%d kbps"
+msgstr "%d Kビット/秒"
+
+#: ../src/properties/bacon-video-widget-properties.c:247
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d フレーム/秒"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: ../src/properties/bacon-video-widget-properties.c:276
+#, fuzzy
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "N/A"
 
 #: ../src/totem-audio-preview.c:82
 msgid "Audio Preview"
@@ -1066,7 +1123,7 @@ msgstr "今すぐ再生する(_P)"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../src/totem-fullscreen.c:617
+#: ../src/totem-fullscreen.c:619
 msgid "No File"
 msgstr "ファイルなし"
 
@@ -1113,8 +1170,8 @@ msgid ""
 "Suite 330, Boston, MA  02111-1307  USA"
 msgstr ""
 "あなたは本プログラムと一緒に GNU 一般公衆利用許諾契約書の写しを受け取っている"
-"はずです。そうでない場合は、Free Software Foundation, Inc.,51 Franklin "
-"Street, Fifth Floor, Boston, MA 02110-1301, USA まで連絡してください。"
+"はずです。そうでない場合は、Free Software Foundation, Inc., 59 Temple Place, "
+"Suite 330, Boston, MA  02111-1307  USA まで連絡してください。"
 
 #: ../src/totem-interface.c:357
 msgid ""
@@ -1129,36 +1186,43 @@ msgstr ""
 msgid "None"
 msgstr "なし"
 
+#. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
+#: ../src/totem-menu.c:197
+#, fuzzy
+msgctxt "Language"
+msgid "Auto"
+msgstr "自動"
+
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:739
+#: ../src/totem-menu.c:767
 #, c-format
 msgid "Play Image '%s'"
 msgstr "イメージファイル '%s' の再生"
 
-#: ../src/totem-menu.c:742 ../src/totem-menu.c:824
+#: ../src/totem-menu.c:770 ../src/totem-menu.c:853
 #, c-format
 msgid "device%d"
 msgstr "デバイス %d"
 
-#: ../src/totem-menu.c:821
+#: ../src/totem-menu.c:850
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "ディスク '%s' の再生"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1172
+#: ../src/totem-menu.c:1201
 #, c-format
 msgid "Movie Player using %s"
 msgstr "%s を使った動画プレイヤーです。"
 
-#: ../src/totem-menu.c:1176
+#: ../src/totem-menu.c:1205
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1181 ../browser-plugin/totem-plugin-viewer.c:1166
+#: ../src/totem-menu.c:1210 ../browser-plugin/totem-plugin-viewer.c:1163
 msgid "translator-credits"
 msgstr ""
 "草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
@@ -1169,11 +1233,11 @@ msgstr ""
 "やまね ひでき <henrich@debian.or.jp>\n"
 "日本GNOMEユーザー会 http://www.gnome.gr.jp/"
 
-#: ../src/totem-menu.c:1185
+#: ../src/totem-menu.c:1214
 msgid "Totem Website"
 msgstr "Totem のウェブサイト"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1248
 msgid "Configure Plugins"
 msgstr "プラグインの設定"
 
@@ -1183,38 +1247,38 @@ msgstr "プラグインの設定"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1043 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1046 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "再生中"
 
-#: ../src/totem-object.c:1045 ../src/totem-options.c:52
+#: ../src/totem-object.c:1048 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "一時停止する"
 
-#: ../src/totem-object.c:1050 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1053 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "一時停止中"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1052 ../src/totem-object.c:1062
+#: ../src/totem-object.c:1055 ../src/totem-object.c:1065
 #: ../src/totem-options.c:51
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:82
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:94
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:84
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:96
 msgid "Play"
 msgstr "再生する"
 
-#: ../src/totem-object.c:1057 ../src/totem-object.c:1655
+#: ../src/totem-object.c:1060 ../src/totem-object.c:1658
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "停止中"
 
-#: ../src/totem-object.c:1138 ../src/totem-object.c:1165
-#: ../src/totem-object.c:1785 ../src/totem-object.c:1948
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1168
+#: ../src/totem-object.c:1798 ../src/totem-object.c:1962
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem は '%s' を再生できませんでした。"
 
-#: ../src/totem-object.c:1242
+#: ../src/totem-object.c:1245
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1223,7 +1287,7 @@ msgstr ""
 "このメディア (%s) を操作するプラグインはありますが、Totem はそのメディアを再"
 "生できませんでした。"
 
-#: ../src/totem-object.c:1243
+#: ../src/totem-object.c:1246
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1231,11 +1295,11 @@ msgstr ""
 "ドライブの中にディスクがあるか確認して、そのドライブが正しく設定されているこ"
 "とを確認してください。"
 
-#: ../src/totem-object.c:1251
+#: ../src/totem-object.c:1254
 msgid "More information about media plugins"
 msgstr "メディア・プラグインの詳細情報"
 
-#: ../src/totem-object.c:1252
+#: ../src/totem-object.c:1255
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1243,7 +1307,7 @@ msgstr ""
 "必要なプラグインをインストールして Totem を再起動すると、このメディアを再生で"
 "きます。"
 
-#: ../src/totem-object.c:1254
+#: ../src/totem-object.c:1257
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1252,7 +1316,7 @@ msgstr ""
 "この種類のメディア (%s) を読み取るプラグインがないため、そのメディアを再生で"
 "きません。"
 
-#: ../src/totem-object.c:1256
+#: ../src/totem-object.c:1259
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1261,71 +1325,71 @@ msgstr ""
 "この種類のメディア (%s) を操作する適切なプラグインがないため、そのメディアを"
 "再生できません。"
 
-#: ../src/totem-object.c:1259
+#: ../src/totem-object.c:1262
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr ""
 "この種類のメディア (%s) はサポートしていないため、そのメディアを再生できませ"
 "ん。"
 
-#: ../src/totem-object.c:1260
+#: ../src/totem-object.c:1263
 msgid "Please insert another disc to play back."
 msgstr "他のディスクを挿入してください。"
 
-#: ../src/totem-object.c:1296
+#: ../src/totem-object.c:1299
 msgid "Totem was not able to play this disc."
 msgstr "このディスクを再生できませんでした。"
 
-#: ../src/totem-object.c:1297 ../src/totem-object.c:4239
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4280
 msgid "No reason."
 msgstr "原因は不明です。"
 
-#: ../src/totem-object.c:1311
+#: ../src/totem-object.c:1314
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem では音楽 CD の再生をサポートしていません"
 
-#: ../src/totem-object.c:1312
+#: ../src/totem-object.c:1315
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr ""
 "この CD を再生できる楽曲プレイヤーまたは CD 取り込みツールを利用してみてくだ"
 "さい。"
 
-#: ../src/totem-object.c:1791
+#: ../src/totem-object.c:1804
 msgid "No error message"
 msgstr "エラー・メッセージなし"
 
-#: ../src/totem-object.c:2177
+#: ../src/totem-object.c:2197
 msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
-#: ../src/totem-object.c:2532 ../src/totem-object.c:2534
-#: ../browser-plugin/totem-plugin-viewer.c:1469
+#: ../src/totem-object.c:2535 ../src/totem-object.c:2537
+#: ../browser-plugin/totem-plugin-viewer.c:1466
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: ../src/totem-object.c:4074 ../src/totem-object.c:4076
+#: ../src/totem-object.c:4114 ../src/totem-object.c:4116
 msgid "Previous Chapter/Movie"
 msgstr "前のチャプター/動画に移動します"
 
-#: ../src/totem-object.c:4083 ../src/totem-object.c:4085
+#: ../src/totem-object.c:4123 ../src/totem-object.c:4125
 msgid "Play / Pause"
 msgstr "再生/一時停止します"
 
-#: ../src/totem-object.c:4093 ../src/totem-object.c:4095
+#: ../src/totem-object.c:4133 ../src/totem-object.c:4135
 msgid "Next Chapter/Movie"
 msgstr "次のチャプター/動画に移動します"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4107 ../src/totem-object.c:4109
+#: ../src/totem-object.c:4147 ../src/totem-object.c:4149
 msgid "Fullscreen"
 msgstr "フルスクリーン"
 
-#: ../src/totem-object.c:4239
+#: ../src/totem-object.c:4280
 msgid "Totem could not startup."
 msgstr "Totem を起動できませんでした。"
 
-#: ../src/totem-open-location.c:179
+#: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "場所を開く..."
 
@@ -1379,8 +1443,8 @@ msgstr "終了する"
 
 #. Translators: this refers to a media file
 #: ../src/totem-options.c:63
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:85
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:97
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:87
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:99
 msgid "Enqueue"
 msgstr "キューに追加する"
 
@@ -1406,69 +1470,57 @@ msgid "Can't enqueue and replace at the same time"
 msgstr ""
 
 #. By extension entry
-#: ../src/totem-playlist.c:157
+#: ../src/totem-playlist.c:161
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast 形式の演奏一覧"
 
-#: ../src/totem-playlist.c:158
+#: ../src/totem-playlist.c:162
 msgid "MP3 audio (streamed)"
 msgstr "MP3 オーディオ (ストリーム)"
 
-#: ../src/totem-playlist.c:159
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 オーディオ (ストリーム、DOS 形式)"
 
-#: ../src/totem-playlist.c:160
+#: ../src/totem-playlist.c:164
 msgid "XML Shareable Playlist"
 msgstr "XML Shareable 形式の演奏一覧"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:359
+#: ../src/totem-playlist.c:363
 #, c-format
 msgid "Title %d"
 msgstr "タイトル %d"
 
-#: ../src/totem-playlist.c:458
+#: ../src/totem-playlist.c:462
 msgid "Could not save the playlist"
 msgstr "プレイリストを保存できませんでした"
 
-#: ../src/totem-playlist.c:1029
+#: ../src/totem-playlist.c:1037
 msgid "Save Playlist"
 msgstr "プレイリストの保存"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:140
+#: ../src/totem-playlist.c:1049 ../src/totem-sidebar.c:140
 msgid "Playlist"
 msgstr "プレイリスト"
 
-#: ../src/totem-playlist.c:1848
+#: ../src/totem-playlist.c:1869
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "プレイリスト '%s' を解析できませんでした。おそらく壊れています。"
 
-#: ../src/totem-playlist.c:1849
+#: ../src/totem-playlist.c:1870
 msgid "Playlist error"
 msgstr "プレイリストのエラー"
 
-#: ../src/totem-preferences.c:71
-msgid "Enable visual effects?"
-msgstr "視覚効果を有効にしますか?"
-
-#: ../src/totem-preferences.c:73
-msgid ""
-"It seems you are running Totem remotely.\n"
-"Are you sure you want to enable the visual effects?"
-msgstr ""
-"リモートから Totem を実行しているようです。\n"
-"視覚効果を有効にしますか?"
-
-#: ../src/totem-preferences.c:370
+#: ../src/totem-preferences.c:295
 msgid "Preferences"
 msgstr "設定"
 
-#: ../src/totem-preferences.c:516
+#: ../src/totem-preferences.c:451
 msgid "Select Subtitle Font"
 msgstr "字幕で使用するフォントの選択"
 
@@ -1669,7 +1721,7 @@ msgstr "ビデオのURI無し"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:679
+#: ../src/totem-video-thumbnailer.c:689
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1680,43 +1732,43 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:680
+#: ../src/totem-video-thumbnailer.c:690
 msgid "Filename"
 msgstr "ファイル名"
 
-#: ../src/totem-video-thumbnailer.c:682
+#: ../src/totem-video-thumbnailer.c:692
 msgid "Resolution"
 msgstr "解像度"
 
-#: ../src/totem-video-thumbnailer.c:685
+#: ../src/totem-video-thumbnailer.c:695
 msgid "Duration"
 msgstr "再生時間"
 
-#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1001
+#: ../src/totem-uri.c:504 ../src/plugins/chapters/totem-chapters.c:998
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:509 ../src/plugins/chapters/totem-chapters.c:995
 msgid "Supported files"
 msgstr "サポートしているファイル"
 
-#: ../src/totem-uri.c:519
+#: ../src/totem-uri.c:521
 msgid "Audio files"
 msgstr "楽曲ファイル"
 
-#: ../src/totem-uri.c:527
+#: ../src/totem-uri.c:529
 msgid "Video files"
 msgstr "動画ファイル"
 
-#: ../src/totem-uri.c:537
+#: ../src/totem-uri.c:539
 msgid "Subtitle files"
 msgstr "字幕のファイル"
 
-#: ../src/totem-uri.c:589
+#: ../src/totem-uri.c:591
 msgid "Select Text Subtitles"
 msgstr "字幕の選択"
 
-#: ../src/totem-uri.c:652
+#: ../src/totem-uri.c:654
 msgid "Select Movies or Playlists"
 msgstr "動画またはプレイリストの選択"
 
@@ -1735,38 +1787,38 @@ msgstr ""
 "コマンドライン・オプションの一覧を表示する場合は '%s --help' を実行してくださ"
 "い\n"
 
-#: ../src/totem.c:250 ../src/totem.c:259
-#: ../browser-plugin/totem-plugin-viewer.c:666
-#: ../browser-plugin/totem-plugin-viewer.c:1864
+#: ../src/totem.c:254 ../src/totem.c:263
+#: ../browser-plugin/totem-plugin-viewer.c:663
+#: ../browser-plugin/totem-plugin-viewer.c:1861
 msgid "Totem Movie Player"
 msgstr "Totem 動画プレイヤー"
 
-#: ../src/totem.c:251 ../browser-plugin/totem-plugin-viewer.c:2290
+#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2302
 msgid "Could not initialize the thread-safe libraries."
-msgstr "スレッドセーフなライグラリを初期化できませんでした。"
+msgstr "スレッドセーフなライブラリを初期化できませんでした。"
 
-#: ../src/totem.c:251
+#: ../src/totem.c:255
 msgid "Verify your system installation. Totem will now exit."
 msgstr "システムのインストールを確認してください。Totem を終了します。"
 
 # FIXME: 画面が見たい
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1806
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1850
 msgid "Password requested for RTSP server"
 msgstr "RTSP サーバから要求されたパスワード"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3077
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3081
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3124
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3128
 #, c-format
 msgid "Audio Track #%d"
 msgstr "音声トラック #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3109
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3113
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3156
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3160
 #, c-format
 msgid "Subtitle #%d"
 msgstr "サブタイトル #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3519
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1774,16 +1826,16 @@ msgstr ""
 "指定した音声出力デバイスが見つかりませんでした。[マルチメディア・システム・セ"
 "レクタ] から別のデバイスを選択してみてください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3524
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
 msgid "Location not found."
 msgstr "指定した場所が見つかりません。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3528
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3578
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "場所を開けませんでした (そのファイルを開く権限がありません)。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3539
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3589
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1793,26 +1845,26 @@ msgstr ""
 "を終了するか、[マルチメディア・システム・セレクタ] から別のデバイスを選択して"
 "みてください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3545
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3595
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
 "他のアプリケーションが音声出力デバイスを使用しています。[マルチメディア・シス"
-"テム・セレクタ] から別のデバイスを選択してみてください (サウンド・サーバを利"
+"テム・セレクタ] から別のデバイスを選択してみてください (サウンド・サーバの利"
 "用を考慮した方が良いかもしれません)。"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3563
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3613
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3619
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "この動画を再生するには %s という未だインストールされていないプラグインが必要"
 "です。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3570
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3620
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1825,34 +1877,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3595
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3645
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "このファイルをネットワーク越しに再生することはできません。ダウンロードして直"
 "接再生してみてください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3667
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3717
 msgid "Media file could not be played."
 msgstr "メディア・ファイルを再生/演奏できませんでした。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5969
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6008
 msgid "Surround"
 msgstr "サラウンド"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5971
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6010
 msgid "Mono"
 msgstr "モノラル"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6318
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6357
 msgid "Too old version of GStreamer installed."
 msgstr "ご利用の GStreamer のバージョンが古すぎます。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6325
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6364
 msgid "Media contains no supported video streams."
 msgstr "このメディアには映像ストリームが含まれていません。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6833
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6847
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1860,8 +1912,8 @@ msgstr ""
 "GStreamer 演奏オブジェクトの生成に失敗しました。GStreamer が正しくインストー"
 "ルされているか確認してください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6947
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7082
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6958
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7093
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1869,7 +1921,7 @@ msgstr ""
 "映像出力デバイスを開けませんでした。おそらく利用可能な状態ではありません。[マ"
 "ルチメディア・システム・セレクタ] から別のデバイスを選択してみてください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6959
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6970
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1879,7 +1931,7 @@ msgstr ""
 "ルするか、あるいは [マルチメディア・システム・セレクタ] から別のデバイスを選"
 "択してみてください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6994
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7005
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1889,7 +1941,7 @@ msgstr ""
 "るいはサウンド・サーバが起動されていないかもしれません。[マルチメディア・シス"
 "テム・セレクタ] から別のデバイスを選択してみてください。"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7014
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7025
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -1982,42 +2034,42 @@ msgstr "Totem Bemused サーバ"
 msgid "Totem Bemused Server version 1.0"
 msgstr "Totem Bemused サーバのバージョン 1.0"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:67
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:65
 msgid "_Create Video Disc..."
 msgstr "ビデオ・ディスクの作成(_C)..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:66
 msgid "Create a video DVD or a (S)VCD from the currently opened movie"
 msgstr "現在開いている動画から VIDEO-DVD または (S)VCD を作成します"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:70
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
 msgid "Copy Vide_o DVD..."
 msgstr "VIDEO-DVD のコピー(_O)..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:69
 msgid "Copy the currently playing video DVD"
 msgstr "現在再生中の VIDEO-DVD の複製を作成します"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:73
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
 msgid "Copy (S)VCD..."
 msgstr "(S)VCD のコピー..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:74
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:72
 msgid "Copy the currently playing (S)VCD"
 msgstr "現在再生中の (S)VCD の複製を作成します"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:114
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
 msgid "The video disc could not be duplicated."
 msgstr "動画ディスクの複製を作成できませんでした"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:118
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:269
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:131
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:276
 msgid "The movie could not be recorded."
 msgstr "動画を保存できませんでした"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:150
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:160
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:256
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:157
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:167
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:263
 msgid "Unable to write a project."
 msgstr "プロジェクトを書き込めません"
 
@@ -2030,53 +2082,83 @@ msgid "Video Disc Recorder"
 msgstr "動画ディスク・レコーダ"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1140
+#: ../src/plugins/chapters/totem-chapters.c:1137
 msgid "Chapters"
 msgstr "チャプター"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Chapters support"
-msgstr "チャプターのサポート"
+#, fuzzy
+msgid "Support chapter markers in movies."
+msgstr "次のチャプターまたは動画に進みます"
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Enter new name for a chapter:"
+#, fuzzy
+msgid "Name for new chapter:"
 msgstr "チャプターの新しい名前を入力してください:"
 
+#: ../src/plugins/chapters/chapters-list.ui.h:1
+#, fuzzy
+msgid "Add Chapter..."
+msgstr "チャプターを読みこむ..."
+
 #: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Continue to watch movie without loaded chapters"
-msgstr "チャプター無しで動画を見続ける"
+#, fuzzy
+msgid "Add New Chapters"
+msgstr "チャプター"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "Continue without"
-msgstr "続行"
+#, fuzzy
+msgid "Create a new chapter list for the movie"
+msgstr "次のチャプターまたは動画に進みます"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to chapter"
+#, fuzzy
+msgid "Go to Chapter"
 msgstr "チャプターへ移動"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Load chapters from external file"
-msgstr "チャプターをファイルから読みこむ"
+#, fuzzy
+msgid "Go to the chapter in the movie"
+msgstr "チャプター・メニューへ移動します"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Load chapters..."
+#, fuzzy
+msgid "Load Chapters..."
 msgstr "チャプターを読みこむ..."
 
 #: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "No chapters data"
+#, fuzzy
+msgid "Load chapters from an external CMML file"
+msgstr "チャプターをファイルから読みこむ"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:8
+#, fuzzy
+msgid "No chapter data"
 msgstr "チャプターがありません"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "Remove chapter from the list"
-msgstr "一覧からチャプターを削除"
+#, fuzzy
+msgid "Remove Chapter"
+msgstr "チャプター"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
+#, fuzzy
+msgid "Remove the chapter from the list"
+msgstr "一覧からチャプターを削除"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
 msgid "Save Changes"
 msgstr "変更を保存"
 
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "_Go to"
-msgstr "移動(_G)"
+#: ../src/plugins/chapters/chapters-list.ui.h:12
+#, fuzzy
+msgid "_Go to Chapter"
+msgstr "チャプターへ移動"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:13
+#, fuzzy
+msgid "_Remove Chapter"
+msgstr "削除(_R)"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -2087,44 +2169,77 @@ msgstr ""
 "<b>タイトル: </b>%s\n"
 "<b>開始時間: </b>%s"
 
-#: ../src/plugins/chapters/totem-chapters.c:330
+#: ../src/plugins/chapters/totem-chapters.c:328
 msgid "Error while reading file with chapters"
 msgstr "チャプターのファイルを読み込もうとしてエラー"
 
-#: ../src/plugins/chapters/totem-chapters.c:545
+#: ../src/plugins/chapters/totem-chapters.c:543
 msgid "Chapter with the same time already exists"
 msgstr "同じ時間のチャプターが既に存在します"
 
-#: ../src/plugins/chapters/totem-chapters.c:546
-msgid "Try another name or remove an existing chapter"
+#: ../src/plugins/chapters/totem-chapters.c:544
+#, fuzzy
+msgid "Try another name or remove an existing chapter."
 msgstr "他の名前にするか既存のチャプターを削除してみてください"
 
-#: ../src/plugins/chapters/totem-chapters.c:719
+#: ../src/plugins/chapters/totem-chapters.c:717
 msgid "Error while writing file with chapters"
 msgstr "チャプターのファイルを書き込もうとしてエラー"
 
-#: ../src/plugins/chapters/totem-chapters.c:844
+#: ../src/plugins/chapters/totem-chapters.c:842
 msgid "Error occurred while saving chapters"
 msgstr "チャプターを保存する際にエラーが発生しました"
 
-#: ../src/plugins/chapters/totem-chapters.c:845
-msgid "Please check you rights and free space"
-msgstr "アクセス権限と空き領域を確認してください"
+#: ../src/plugins/chapters/totem-chapters.c:843
+msgid ""
+"Please check you have permission to write to the folder containing the movie."
+msgstr ""
 
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Open Chapters File"
+#: ../src/plugins/chapters/totem-chapters.c:976
+#, fuzzy
+msgid "Open Chapter File"
 msgstr "チャプターファイルを開く"
 
-#: ../src/plugins/chapters/totem-cmml-parser.c:559
+#: ../src/plugins/chapters/totem-chapters.c:1093
+#, fuzzy
+msgid "Chapter Screenshot"
+msgstr "スクリーンショットの保存"
+
+#: ../src/plugins/chapters/totem-chapters.c:1104
+#, fuzzy
+msgid "Chapter Title"
+msgstr "チャプターファイルを開く"
+
+#: ../src/plugins/chapters/totem-chapters.c:1182
+msgid "Save changes to chapter list before closing?"
+msgstr ""
+
+#. Translators: close Totem without saving changes to the chapter list of the current movie.
+#: ../src/plugins/chapters/totem-chapters.c:1187
+#, fuzzy
+msgid "Close without Saving"
+msgstr "続行"
+
+#. Translators: save changes to the chapter list of the current movie before closing Totem.
+#: ../src/plugins/chapters/totem-chapters.c:1189
+#, fuzzy
+msgid "Save"
+msgstr "矩形"
+
+#: ../src/plugins/chapters/totem-chapters.c:1192
+msgid "If you don't save, changes to the chapter list will be lost."
+msgstr ""
+
+#: ../src/plugins/chapters/totem-cmml-parser.c:642
 msgid "Failed to parse CMML file"
 msgstr "CMML ファイルの解析に失敗しました"
 
 #. Translators: this refers to a media file
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:103
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:105
 msgid "Delete"
 msgstr "削除"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:114
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:117
 #: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "コヒーレンス DLNA/UPnP クライアント"
@@ -2143,23 +2258,15 @@ msgid ""
 "subsystem."
 msgstr "現在再生中の動画を D-Bus サブシステムで通知するプラグインです。"
 
-#: ../src/plugins/galago/galago.plugin.in.h:1
+#: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
 msgid "Instant Messenger status"
 msgstr "インスタント・メッセンジャーの状態"
 
-#: ../src/plugins/galago/galago.plugin.in.h:2
+#: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "動画を再生している時は、お使いのインスタント・メッセンジャーを離席状態にセッ"
 "トします"
-
-#: ../src/plugins/galago/totem-galago.c:117
-msgid "Error loading Galago plugin"
-msgstr "Galago プラグインを読みこむ際にエラー"
-
-#: ../src/plugins/galago/totem-galago.c:117
-msgid "Could not connect to the Galago daemon."
-msgstr "Galago デーモンに接続できませんでした。"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -2175,7 +2282,7 @@ msgstr "Gromit のバイナリが見つかりませんでした。"
 
 #. Add the interface to Totem's sidebar
 #: ../src/plugins/iplayer/iplayer.plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:41
+#: ../src/plugins/iplayer/iplayer.py:42
 msgid "BBC iPlayer"
 msgstr "BBC iPlayer"
 
@@ -2183,11 +2290,11 @@ msgstr "BBC iPlayer"
 msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr "BBC iPlayer サービスの最新7日分から BBC の番組をストリーミング"
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid "Error listing channel categories"
 msgstr "チャンネルのカテゴリの一覧の表示中にエラー"
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid ""
 "There was an unknown error getting the list of television channels available "
 "on BBC iPlayer."
@@ -2197,16 +2304,16 @@ msgstr ""
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
-#: ../src/plugins/iplayer/iplayer.py:74
+#: ../src/plugins/iplayer/iplayer.py:75
 msgid "Loading…"
 msgstr "読み込み中..."
 
 #. Translators: the "programme feed" is the list of TV shows available to watch online
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid "Error getting programme feed"
 msgstr "番組フィードの取得中にエラー"
 
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2215,6 +2322,10 @@ msgstr ""
 "た。"
 
 #: ../src/plugins/iplayer/iplayer2.py:299
+msgid "<no reason given>"
+msgstr ""
+
+#: ../src/plugins/iplayer/iplayer2.py:300
 #, python-format
 msgid "Programme unavailable (\"%s\")"
 msgstr "番組が利用できません (\"%s\")"
@@ -2248,7 +2359,7 @@ msgid "Preferred audio _format:"
 msgstr "優先するオーディオの形式(_F):"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:8
-#: ../src/plugins/tracker/totem-tracker-widget.c:521
+#: ../src/plugins/tracker/totem-tracker-widget.c:761
 #: ../src/plugins/youtube/youtube.ui.h:2
 msgid "Search Results"
 msgstr "検索結果"
@@ -2258,7 +2369,7 @@ msgid "_Open Jamendo Album Page in Browser"
 msgstr "ブラウザで開く(_O)"
 
 #: ../src/plugins/jamendo/jamendo.plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:127
+#: ../src/plugins/jamendo/jamendo.py:128
 msgid "Jamendo"
 msgstr "Jamendo"
 
@@ -2273,34 +2384,34 @@ msgstr ""
 msgid "You need to install the Python simplejson module."
 msgstr "Python の simplejson というモジュールをインストールしてください。"
 
-#: ../src/plugins/jamendo/jamendo.py:246 ../src/plugins/jamendo/jamendo.py:259
-#: ../src/plugins/jamendo/jamendo.py:283
+#: ../src/plugins/jamendo/jamendo.py:261 ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:298
 #, python-format
 msgid "Artist: %s"
 msgstr "演奏者: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:252
+#: ../src/plugins/jamendo/jamendo.py:267
 msgid "%Y-%m-%d"
 msgstr "%Y-%m-%d"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:254
+#: ../src/plugins/jamendo/jamendo.py:269
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:260
+#: ../src/plugins/jamendo/jamendo.py:275
 #, python-format
 msgid "Genre: %s"
 msgstr "ジャンル: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:261
+#: ../src/plugins/jamendo/jamendo.py:276
 #, python-format
 msgid "Released on: %s"
 msgstr "リリース: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:262
+#: ../src/plugins/jamendo/jamendo.py:277
 #, python-format
 msgid "License: %s"
 msgstr "ライセンス: %s"
@@ -2308,26 +2419,27 @@ msgstr "ライセンス: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:275
+#: ../src/plugins/jamendo/jamendo.py:290
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:282
+#: ../src/plugins/jamendo/jamendo.py:297
 #, python-format
 msgid "Album: %s"
 msgstr "アルバム名: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:284
+#: ../src/plugins/jamendo/jamendo.py:299
 #, python-format
 msgid "Duration: %s"
 msgstr "再生時間: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:341
-msgid "Fetching albums, please wait..."
+#: ../src/plugins/jamendo/jamendo.py:356
+#, fuzzy
+msgid "Fetching albums, please wait…"
 msgstr "アルバムの取得中..."
 
-#: ../src/plugins/jamendo/jamendo.py:396
+#: ../src/plugins/jamendo/jamendo.py:411
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2336,24 +2448,24 @@ msgstr ""
 "Jamendo のサーバに接続できません:\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:398
+#: ../src/plugins/jamendo/jamendo.py:413
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "Jamendo のサーバが返した値: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:402
+#: ../src/plugins/jamendo/jamendo.py:417
 msgid "An error occurred while fetching albums."
 msgstr "アルバムを取得する際にエラーが発生しました。"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:596
+#: ../src/plugins/jamendo/jamendo.py:620
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:599
+#: ../src/plugins/jamendo/jamendo.py:623
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2364,7 +2476,7 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:649
+#: ../src/plugins/jamendo/jamendo.py:673
 msgid "en"
 msgstr "en"
 
@@ -2402,18 +2514,6 @@ msgstr "lirc を初期化できませんでした。"
 msgid "Couldn't read lirc configuration."
 msgstr "lirc の設定を読み込めませんでした。"
 
-#: ../src/plugins/mythtv/totem-mythtv.c:180
-msgid "Recordings"
-msgstr "記録"
-
-#: ../src/plugins/mythtv/totem-mythtv.c:453
-msgid "MythTV Recordings"
-msgstr "MythTV の記録"
-
-#: ../src/plugins/mythtv/totem-mythtv.c:454
-msgid "MythTV LiveTV"
-msgstr "MythTV LiveTV"
-
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
 msgid "Download Movie Subtitles"
 msgstr "動画の字幕のダウンロード"
@@ -2438,51 +2538,54 @@ msgstr "現在再生している動画の字幕を探します。"
 msgid "Subtitle Downloader"
 msgstr "字幕ダウンローダー"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:44
 msgid "Brasilian Portuguese"
 msgstr "ブラジル系ポルトガル語"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:245
-#: ../src/plugins/opensubtitles/opensubtitles.py:261
-#: ../src/plugins/opensubtitles/opensubtitles.py:278
-#: ../src/plugins/opensubtitles/opensubtitles.py:284
+#: ../src/plugins/opensubtitles/opensubtitles.py:247
+#: ../src/plugins/opensubtitles/opensubtitles.py:263
+#: ../src/plugins/opensubtitles/opensubtitles.py:280
+#: ../src/plugins/opensubtitles/opensubtitles.py:286
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles のウェブサイトにアクセスできませんでした"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:266
+#: ../src/plugins/opensubtitles/opensubtitles.py:268
 msgid "No results found"
 msgstr "見つかりませんでした"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:372
+#: ../src/plugins/opensubtitles/opensubtitles.py:376
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:378
+#: ../src/plugins/opensubtitles/opensubtitles.py:382
 msgid "Format"
 msgstr "形式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:383
+#: ../src/plugins/opensubtitles/opensubtitles.py:387
 msgid "Rating"
 msgstr "評価"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:424
-msgid "_Download Movie Subtitles..."
-msgstr "字幕のダウンロード(_D)..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:428
+#, fuzzy
+msgid "_Download Movie Subtitles…"
+msgstr "動画の字幕のダウンロード"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:425
+#: ../src/plugins/opensubtitles/opensubtitles.py:429
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "OpenSubtitles から動画の字幕をダウンロードします"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
-msgid "Searching subtitles..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
+#, fuzzy
+msgid "Searching subtitles…"
 msgstr "問い合わせ中..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:541
-msgid "Downloading the subtitles..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:546
+#, fuzzy
+msgid "Downloading the subtitles…"
 msgstr "ダウンロード中..."
 
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
@@ -2505,62 +2608,6 @@ msgstr "動画を再生している時はメイン・ウィンドウを常に前
 #: ../src/plugins/properties/totem-movie-properties.c:128
 msgid "Properties"
 msgstr "プロパティ"
-
-#. Dimensions
-#: ../src/plugins/properties/bacon-video-widget-properties.c:158
-#, fuzzy
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:163
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#, fuzzy
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:166
-#: ../src/plugins/properties/bacon-video-widget-properties.c:250
-#, fuzzy
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:169
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, fuzzy
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:237
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:240
-#: ../src/plugins/properties/bacon-video-widget-properties.c:273
-#, c-format
-msgid "%d kbps"
-msgstr "%d Kビット/秒"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:247
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d フレーム/秒"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-#: ../src/plugins/properties/bacon-video-widget-properties.c:276
-#, fuzzy
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "N/A"
 
 #: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
 #, no-c-format
@@ -2586,7 +2633,7 @@ msgid ""
 msgstr ""
 
 #. Translators: computers on the local network which are publishing their playlists over the network
-#: ../src/plugins/publish/totem-publish.c:547
+#: ../src/plugins/publish/totem-publish.c:552
 msgid "Neighbors"
 msgstr "近隣"
 
@@ -2627,8 +2674,35 @@ msgstr ""
 msgid "rpdb2 password"
 msgstr ""
 
-#: ../src/plugins/screensaver/totem-screensaver.c:112
-#: ../browser-plugin/totem-plugin-viewer.c:1964
+#: ../src/plugins/save-file/totem-save-file.c:63
+#, fuzzy
+msgid "Save a Copy..."
+msgstr "プレイリストを保存します"
+
+#: ../src/plugins/save-file/totem-save-file.c:64
+#, fuzzy
+msgid "Save a copy of the movie"
+msgstr "映像のコントラスト"
+
+#: ../src/plugins/save-file/totem-save-file.c:129
+#, fuzzy
+msgid "Save a Copy"
+msgstr "ギャラリーの保存"
+
+#. translators: Movie is the default saved movie filename,
+#. * without the suffix
+#: ../src/plugins/save-file/totem-save-file.c:161
+#, fuzzy
+msgid "Movie"
+msgstr "動画(_M)"
+
+#: ../src/plugins/save-file/totem-save-file.c:183
+#, fuzzy
+msgid "Movie stream"
+msgstr "再生する動画"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:116
+#: ../browser-plugin/totem-plugin-viewer.c:1961
 msgid "Playing a movie"
 msgstr "動画を再生する"
 
@@ -2657,7 +2731,7 @@ msgid "_Name:"
 msgstr "名前(_N):"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:389
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:387
 #: ../src/plugins/screenshot/totem-screenshot.c:64
 msgid "Screenshot.png"
 msgstr "Screenshot.png"
@@ -2728,23 +2802,28 @@ msgstr "いろいろなスクリーンショットを集めたギャラリーを
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#: ../src/plugins/skipto/totem-skipto.c:159
-#: ../src/plugins/skipto/totem-skipto.c:185
+#: ../src/plugins/skipto/totem-skipto.c:160
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "秒"
 
-#: ../src/plugins/skipto/totem-skipto.c:185
-msgid "seconds"
-msgstr "秒"
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:190
+msgctxt "Skip To label length"
+msgid "7"
+msgstr ""
 
-#: ../src/plugins/skipto/totem-skipto.c:191
-msgid "Skip to"
+#: ../src/plugins/skipto/totem-skipto.c:197
+#, fuzzy
+msgid "Skip To"
 msgstr "スキップ"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "_Skip to..."
+#, fuzzy
+msgid "_Skip To..."
 msgstr "スキップ(_S)..."
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
@@ -2755,37 +2834,35 @@ msgstr "指定した時間までスキップします"
 msgid "_Skip to:"
 msgstr "スキップ先(_S):"
 
-#. Display an error
-#: ../src/plugins/tracker/totem-tracker-widget.c:173
-#, c-format
-msgid "Could not get name and thumbnail for %s: %s"
-msgstr "%s の名前とサムネイルを取得できませんでした: %s"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:174
-msgid "File Error"
-msgstr "ファイルのエラー"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:251
-#: ../src/plugins/tracker/totem-tracker-widget.c:368
+#: ../src/plugins/tracker/totem-tracker-widget.c:587
+#: ../src/plugins/tracker/totem-tracker-widget.c:676
 msgid "Could not connect to Tracker"
 msgstr "トラッカーに接続できませんでした"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:258
+#: ../src/plugins/tracker/totem-tracker-widget.c:594
 msgid "No results"
 msgstr "マッチするものはありません"
 
 #. Translators:
-#. * This is used to show which items are listed in the list view, for example:
-#. * Showing 10-20 of 128 matches
-#. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
-#. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#: ../src/plugins/tracker/totem-tracker-widget.c:283
+#. * This is used to show which items are listed in the
+#. * list view, for example:
+#. *
+#. *   Showing 10-20 of 128 matches
+#. *
+#. * This is similar to what web searches use, eg.
+#. * Google on the top-right of their search results
+#. * page show:
+#. *
+#. *   Personalized Results 1 - 10 of about 4,130,000 for foobar
+#. *
+#.
+#: ../src/plugins/tracker/totem-tracker-widget.c:618
 #, c-format
 msgid "Showing %i - %i of %i match"
 msgid_plural "Showing %i - %i of %i matches"
 msgstr[0] "検索条件にマッチした %i - %i / %i を表示します"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:581
+#: ../src/plugins/tracker/totem-tracker-widget.c:823
 msgid "Page"
 msgstr "ページ"
 
@@ -2823,60 +2900,67 @@ msgstr "関連する動画"
 msgid "Videos"
 msgstr "動画"
 
-#: ../src/plugins/youtube/totem-youtube.c:295
+#: ../src/plugins/youtube/totem-youtube.c:144
+#: ../src/plugins/youtube/totem-youtube.c:803
 msgid "_Open in Web Browser"
 msgstr "ブラウザで開く(_O)"
 
-#: ../src/plugins/youtube/totem-youtube.c:295
+#: ../src/plugins/youtube/totem-youtube.c:144
 msgid "Open the video in your web browser"
 msgstr "ウェブ・ブラウザで動画を開きます"
 
 #. Add the sidebar page
-#: ../src/plugins/youtube/totem-youtube.c:346
+#: ../src/plugins/youtube/totem-youtube.c:195
 msgid "YouTube"
 msgstr "YouTube"
 
-#: ../src/plugins/youtube/totem-youtube.c:432
+#: ../src/plugins/youtube/totem-youtube.c:279
 msgid "Cancelling query…"
 msgstr "問い合わせを中断..."
-
-#: ../src/plugins/youtube/totem-youtube.c:493
-msgid "Error Looking Up Video URI"
-msgstr "動画のURIの検索中にエラー"
 
 #. Hide the ugly technical message libgdata gives behind a nice one telling them it's out of date (which it likely is
 #. * if we're receiving a protocol error).
 #. Spew out the error message as provided
-#: ../src/plugins/youtube/totem-youtube.c:777
-#: ../src/plugins/youtube/totem-youtube.c:782
+#: ../src/plugins/youtube/totem-youtube.c:424
+#: ../src/plugins/youtube/totem-youtube.c:429
 msgid "Error Searching for Videos"
 msgstr "動画の検索中にエラー"
 
-#: ../src/plugins/youtube/totem-youtube.c:778
+#: ../src/plugins/youtube/totem-youtube.c:425
 msgid ""
 "The response from the server could not be understood. Please check you are "
 "running the latest version of libgdata."
 msgstr ""
 "サーバからの応答を理解することができませんでした。最新の libgdata を使ってい"
-"ることかどうかチェックしてください。"
+"るかどうかチェックしてください。"
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:954
+#: ../src/plugins/youtube/totem-youtube.c:618
 msgid "Fetching search results…"
 msgstr "検索結果の取得中..."
 
 #. Update the UI
-#: ../src/plugins/youtube/totem-youtube.c:1019
+#: ../src/plugins/youtube/totem-youtube.c:680
 msgid "Fetching related videos…"
 msgstr "関連する動画の取得中..."
 
-#: ../src/plugins/youtube/totem-youtube.c:1071
+#: ../src/plugins/youtube/totem-youtube.c:732
 msgid "Error Opening Video in Web Browser"
 msgstr "動画をブラウザで開く際にエラー"
 
-#: ../src/plugins/youtube/totem-youtube.c:1091
+#: ../src/plugins/youtube/totem-youtube.c:752
 msgid "Fetching more videos…"
 msgstr "他の動画の取得中..."
+
+#: ../src/plugins/youtube/totem-youtube.c:797
+msgid "Video Format Not Supported"
+msgstr ""
+
+#: ../src/plugins/youtube/totem-youtube.c:799
+msgid ""
+"This video is not available in any formats which Totem supports. Would you "
+"like to open it in your web browser instead?"
+msgstr ""
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
@@ -2885,29 +2969,29 @@ msgstr "再生する URI を指定してください"
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1104
+#: ../browser-plugin/totem-plugin-viewer.c:1101
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" で開く(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1155
+#: ../browser-plugin/totem-plugin-viewer.c:1152
 #, c-format
 msgid "Browser Plugin using %s"
 msgstr "%s を使ったブラウザ用プラグイン"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1160
+#: ../browser-plugin/totem-plugin-viewer.c:1157
 msgid "Totem Browser Plugin"
 msgstr "Totem のブラウザ用プラグインです"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2183
+#: ../browser-plugin/totem-plugin-viewer.c:2195
 msgid "No playlist or playlist empty"
 msgstr "プレイリストが存在しないか空です"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2274
+#: ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Movie browser plugin"
 msgstr "動画ブラウザー プラグイン"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2290
+#: ../browser-plugin/totem-plugin-viewer.c:2302
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "システムのインストールを確認してください。Totem のプラグインを終了します。"
@@ -2920,36 +3004,36 @@ msgstr "対話式の Python 端末です"
 msgid "Python Console"
 msgstr "Python 端末"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:85
+#: ../src/plugins/pythonconsole/pythonconsole.py:86
 msgid "Python Console Menu"
 msgstr "Python 端末のメニュー"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
+#: ../src/plugins/pythonconsole/pythonconsole.py:89
 msgid "_Python Console"
 msgstr "Python 端末(_P)"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:89
+#: ../src/plugins/pythonconsole/pythonconsole.py:90
 msgid "Show Totem's Python console"
 msgstr "Totem 用の Python 端末を開きます"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Python Debugger"
 msgstr "Python デバッガ"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:95
+#: ../src/plugins/pythonconsole/pythonconsole.py:96
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "rpdb2 を使ったリモートの Python デバッグを利用できるようにします"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:116
+#: ../src/plugins/pythonconsole/pythonconsole.py:117
 #, fuzzy, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "'totem_object' を使って totem のオブジェクトにアクセスできます:\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:120
+#: ../src/plugins/pythonconsole/pythonconsole.py:121
 msgid "Totem Python Console"
 msgstr "Totem の Python 端末"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:129
+#: ../src/plugins/pythonconsole/pythonconsole.py:130
 #, fuzzy
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
@@ -2959,6 +3043,58 @@ msgstr ""
 "OK をクリックした後、winpdb または rpdb2 に接続するまで Totem は待ちの状態に"
 "入ります。GConf の設定でデバッガのパスワードを指定していない場合、デフォルト"
 "のパスワード ('totem') を使用してください。"
+
+#~ msgid "Enable visual effects?"
+#~ msgstr "視覚効果を有効にしますか?"
+
+#~ msgid ""
+#~ "It seems you are running Totem remotely.\n"
+#~ "Are you sure you want to enable the visual effects?"
+#~ msgstr ""
+#~ "リモートから Totem を実行しているようです。\n"
+#~ "視覚効果を有効にしますか?"
+
+#~ msgid "Chapters support"
+#~ msgstr "チャプターのサポート"
+
+#~ msgid "Continue to watch movie without loaded chapters"
+#~ msgstr "チャプター無しで動画を見続ける"
+
+#~ msgid "_Go to"
+#~ msgstr "移動(_G)"
+
+#~ msgid "Please check you rights and free space"
+#~ msgstr "アクセス権限と空き領域を確認してください"
+
+#~ msgid "Error loading Galago plugin"
+#~ msgstr "Galago プラグインを読みこむ際にエラー"
+
+#~ msgid "Could not connect to the Galago daemon."
+#~ msgstr "Galago デーモンに接続できませんでした。"
+
+#~ msgid "Recordings"
+#~ msgstr "記録"
+
+#~ msgid "MythTV Recordings"
+#~ msgstr "MythTV の記録"
+
+#~ msgid "MythTV LiveTV"
+#~ msgstr "MythTV LiveTV"
+
+#~ msgid "_Download Movie Subtitles..."
+#~ msgstr "字幕のダウンロード(_D)..."
+
+#~ msgid "seconds"
+#~ msgstr "秒"
+
+#~ msgid "Could not get name and thumbnail for %s: %s"
+#~ msgstr "%s の名前とサムネイルを取得できませんでした: %s"
+
+#~ msgid "File Error"
+#~ msgstr "ファイルのエラー"
+
+#~ msgid "Error Looking Up Video URI"
+#~ msgstr "動画のURIの検索中にエラー"
 
 #~ msgid "Author:"
 #~ msgstr "作者:"
