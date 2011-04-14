@@ -314,7 +314,14 @@ totem_cmml_parse_npt (const gchar *str)
 		return -1;
 	if (G_UNLIKELY (m > 59 || m < 0))
 		return -1;
-	if (G_UNLIKELY (s >= 60.0 || s < 0.0))
+
+	/* We break slightly with the specifications here and allow seconds-only values greater than 60 seconds.
+	 * (i.e. we allow "90" to be successfully parsed as 1.5 minutes and returned as 90 seconds, rather than
+	 * returning an error because it's > 60). This is because Totem previously (incorrectly) wrote out timestamps
+	 * in this (seconds only, potentially > 60) format; so for compatibility with CMML files written by older
+	 * versions of Totem, we have to allow such formats.
+	 * However, if either h or m is non-zero, we error out as before. */
+	if (G_UNLIKELY ((h != 0 || m != 0) && (s >= 60.0 || s < 0.0)))
 		return -1;
 
 	return (h * 3600.0) + (m * 60.0) + s;
