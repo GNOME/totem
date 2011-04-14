@@ -805,6 +805,9 @@ totem_cmml_write_file_async (TotemCmmlAsyncData *data)
 		guint8		*stream;
 		TotemCmmlClip	*clip;
 		gchar		start_buf[G_ASCII_DTOSTR_BUF_SIZE];
+		gchar		*start_string;
+		gint		hours, minutes;
+		gdouble		seconds;
 
 		clip = (TotemCmmlClip *) cur_clip->data;
 		time_start = ((gdouble) clip->time_start) / 1000;
@@ -818,8 +821,13 @@ totem_cmml_write_file_async (TotemCmmlAsyncData *data)
 		if (G_UNLIKELY (res < 0))
 			break;
 
-		res = xmlTextWriterWriteAttribute (writer, (const xmlChar *) "start",
-		                                   (const xmlChar *) g_ascii_dtostr (start_buf, sizeof (buf), time_start));
+		/* Format the time in NPT format (npt:%d:%d:%f) */
+		hours = ((glong) time_start) / 3600;
+		minutes = ((glong) time_start % 3600) / 60;
+		seconds = time_start - ((glong) hours * 3600) - ((glong) minutes * 60);
+		start_string = g_strdup_printf ("npt:%d:%d:%s", hours, minutes, g_ascii_dtostr (start_buf, sizeof (buf), seconds));
+		res = xmlTextWriterWriteAttribute (writer, (const xmlChar *) "start", (const xmlChar *) start_string);
+		g_free (start_string);
 		if (G_UNLIKELY (res < 0))
 			break;
 
