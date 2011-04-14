@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem TRUNK\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2011-02-26 01:56+0000\n"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-04-04 14:22+0000\n"
 "PO-Revision-Date: 2011-03-27 15:07+0700\n"
 "Last-Translator: Le Kien Truc <afterlastangel@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
@@ -117,7 +117,6 @@ msgstr "Âm thanh"
 #. Audio Codec
 #: ../data/properties.ui.h:10
 #: ../src/properties/bacon-video-widget-properties.c:171
-#| msgid "N/A"
 msgctxt "Audio codec"
 msgid "N/A"
 msgstr "Không có"
@@ -182,7 +181,6 @@ msgstr "Phim"
 #. Video Codec
 #: ../data/properties.ui.h:23
 #: ../src/properties/bacon-video-widget-properties.c:160
-#| msgid "N/A"
 msgctxt "Video codec"
 msgid "N/A"
 msgstr "Không có"
@@ -202,7 +200,7 @@ msgstr "Thê_m vào danh sách phát"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1667
+#: ../src/totem-object.c:1666
 msgid "Movie Player"
 msgstr "Bộ phát phim"
 
@@ -295,7 +293,6 @@ msgid "About this application"
 msgstr "Giới thiệu ứng dụng này"
 
 #: ../data/totem.ui.h:22
-#| msgid "Auto"
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Tự động"
@@ -321,7 +318,6 @@ msgid "Configure plugins to extend the application"
 msgstr "Cấu hình phần bổ sung để mở rộng tính năng ứng dụng"
 
 #: ../data/totem.ui.h:29
-#| msgid "Configure Plugins"
 msgid "Configure the application"
 msgstr "Cấu hình ứng dụng"
 
@@ -401,7 +397,6 @@ msgid "Large"
 msgstr "Lớn"
 
 #: ../data/totem.ui.h:52
-#| msgid "Automatically _load subtitle files when movie is loaded"
 msgid "Load _chapter files when movie is loaded"
 msgstr "_Nạp tập tin mục lục phim  khi nạp phim"
 
@@ -439,7 +434,6 @@ msgid "Play or pause the movie"
 msgstr "Phát hoặc tạm dừng phim"
 
 #: ../data/totem.ui.h:63
-#| msgid "Play"
 msgid "Playback"
 msgstr "Phát"
 
@@ -460,7 +454,6 @@ msgid "Quit the program"
 msgstr "Thoát chương trình"
 
 #: ../data/totem.ui.h:68
-#| msgid "Reset To _Defaults"
 msgid "Reset to _Defaults"
 msgstr "Phục hồi _mặc định"
 
@@ -568,7 +561,7 @@ msgstr "Vuông"
 msgid "Start playing files from last position"
 msgstr "Bắt đầu phát từ vị trí cuối cùng"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6008
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:6012
 msgid "Stereo"
 msgstr "Âm lập thể"
 
@@ -717,7 +710,6 @@ msgid "_Languages"
 msgstr "_Ngôn ngữ"
 
 #: ../data/totem.ui.h:135
-#| msgid "Automatically _load subtitle files when movie is loaded"
 msgid "_Load subtitle files when movie is loaded"
 msgstr "Tự động _nạp các tập tin phụ đề khi nạp phim"
 
@@ -754,7 +746,6 @@ msgid "_Resize 1:2"
 msgstr "Đổ_i cỡ 1:2"
 
 #: ../data/totem.ui.h:144
-#| msgid "Automatically _resize the window when a new video is loaded"
 msgid "_Resize the window when a new video is loaded"
 msgstr "Tự động _thay đổi kích thước cửa sổ khi nạp phim mới"
 
@@ -785,14 +776,10 @@ msgid "Active plugins list"
 msgstr "Danh mục phần bổ sung hoạt động"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:3
-#| msgid "Allow the screensaver to activate even when audio-only is playing"
 msgid "Allow the screensaver to activate when playing audio"
 msgstr "Cho phép kích hoạt chương trình bảo vệ màn hình khi đang phát nhạc"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:4
-#| msgid ""
-#| "Allow the screensaver to activate even when audio-only is playing. This "
-#| "is useful for monitor-powered speakers."
 msgid ""
 "Allow the screensaver to activate when playing audio. Disable if you have "
 "monitor-powered speakers."
@@ -801,9 +788,6 @@ msgstr ""
 "bạn dùng loa màn hình."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:5
-#| msgid ""
-#| "Amount of data to buffer for network streams before starting to display "
-#| "the stream (in seconds)"
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -822,9 +806,6 @@ msgid "Default location for the \"Open...\" dialogs"
 msgstr "Vị trí mặc định cho hộp thoại \"Mở...\""
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:8
-#| msgid ""
-#| "Default location for the \"Open...\" dialogs, default is the current "
-#| "directory"
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
@@ -835,9 +816,6 @@ msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Vị trí mặc định cho hộp thoại \"Chụp ảnh màn hình\""
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:10
-#| msgid ""
-#| "Default location for the \"Take Screenshot\" dialogs, default is the "
-#| "Pictures directory"
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -846,12 +824,10 @@ msgstr ""
 "Pictures (hình ảnh)."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:11
-#| msgid "Encoding charset for subtitle"
 msgid "Encoding character set for subtitle."
 msgstr "Bảng mã ký tự cho phụ đề."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:12
-#| msgid "Name of the visual effects plugins"
 msgid "Name of the visual effects plugin"
 msgstr "Tên của phần bổ sung hiệu ứng hình ảnh"
 
@@ -864,7 +840,6 @@ msgid "Network connection speed"
 msgstr "Tốc độ kết nối mạng"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:15
-#| msgid "Pango font description for subtitle rendering"
 msgid "Pango font description for subtitle rendering."
 msgstr "Mô tả về phông chữ Pango được dùng để hiện phụ đề."
 
@@ -925,7 +900,6 @@ msgid "Visualization quality setting"
 msgstr "Thiết lập chất lượng hiển thị"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:30
-#| msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Có nên tự động nạp tập tin mục lục phim bên ngoài khi nạp phim không"
 
@@ -934,12 +908,10 @@ msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Có nên tự động nạp các tập tin phụ đề hay không khi nạp phim"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:32
-#| msgid "Whether to enable debug for the playback engine"
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr ""
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:33
-#| msgid "Whether to disable the plugins in the user's home directory"
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Có tắt phím tắt không"
 
@@ -1001,17 +973,14 @@ msgstr "Là một mục không thể chạy được"
 
 #: ../src/eggfileformatchooser.c:235
 #, c-format
-#| msgid "File Format: %s"
 msgid "File _Format: %s"
 msgstr "Định _dạng tập tin: %s"
 
 #: ../src/eggfileformatchooser.c:374
-#| msgid "All files"
 msgid "All Files"
 msgstr "Mọi tập tin"
 
 #: ../src/eggfileformatchooser.c:375
-#| msgid "Supported files"
 msgid "All Supported Files"
 msgstr "Mọi tập tin hỗ trợ"
 
@@ -1031,8 +1000,8 @@ msgstr "Phần mở rộng"
 #: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "Chương trình không thể nhận ra định dạng tập tin cho %s. Nhớ dùng phần mở "
@@ -1072,28 +1041,24 @@ msgstr "Hiển thị các tùy chọn về cách quản lý phiên chạy"
 
 #. Dimensions
 #: ../src/properties/bacon-video-widget-properties.c:158
-#| msgid "N/A"
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "Không có"
 
 #: ../src/properties/bacon-video-widget-properties.c:163
 #: ../src/properties/bacon-video-widget-properties.c:240
-#| msgid "N/A"
 msgctxt "Video bit rate"
 msgid "N/A"
 msgstr "Không có"
 
 #: ../src/properties/bacon-video-widget-properties.c:166
 #: ../src/properties/bacon-video-widget-properties.c:250
-#| msgid "N/A"
 msgctxt "Frame rate"
 msgid "N/A"
 msgstr "Không có"
 
 #: ../src/properties/bacon-video-widget-properties.c:169
 #: ../src/properties/bacon-video-widget-properties.c:273
-#| msgid "N/A"
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "Không có"
@@ -1113,7 +1078,6 @@ msgstr "%d Kb/giây"
 
 #: ../src/properties/bacon-video-widget-properties.c:247
 #, c-format
-#| msgid "%d frames per second"
 msgid "%d frame per second"
 msgid_plural "%d frames per second"
 msgstr[0] "%d khung / giây"
@@ -1124,13 +1088,11 @@ msgid "%d Hz"
 msgstr "%d Hz"
 
 #: ../src/properties/bacon-video-widget-properties.c:276
-#| msgid "N/A"
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Không có"
 
 #: ../src/totem-audio-preview.c:82
-#| msgid "Audio files"
 msgid "Audio Preview"
 msgstr "Nghe thử"
 
@@ -1214,7 +1176,6 @@ msgstr "Không"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 #: ../src/totem-menu.c:197
-#| msgid "Auto"
 msgctxt "Language"
 msgid "Auto"
 msgstr "Tự động"
@@ -1222,86 +1183,84 @@ msgstr "Tự động"
 #. Translators:
 #. * This is not a JPEG image, but a disc image, for example,
 #. * an ISO file
-#: ../src/totem-menu.c:739
+#: ../src/totem-menu.c:767
 #, c-format
-#| msgid "Play Disc '%s'"
 msgid "Play Image '%s'"
 msgstr "Phát ảnh '%s'"
 
-#: ../src/totem-menu.c:742 ../src/totem-menu.c:825
+#: ../src/totem-menu.c:770 ../src/totem-menu.c:853
 #, c-format
 msgid "device%d"
 msgstr "thiết-bị%d"
 
-#: ../src/totem-menu.c:822
+#: ../src/totem-menu.c:850
 #, c-format
 msgid "Play Disc '%s'"
 msgstr "Phát đĩa '%s'"
 
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1173
+#: ../src/totem-menu.c:1201
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Bộ phát phim dùng %s"
 
-#: ../src/totem-menu.c:1177
+#: ../src/totem-menu.c:1205
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Tác quyền © năm 2002-2009 của Bastien Nocera"
 
-#: ../src/totem-menu.c:1182 ../browser-plugin/totem-plugin-viewer.c:1163
+#: ../src/totem-menu.c:1210 ../browser-plugin/totem-plugin-viewer.c:1163
 msgid "translator-credits"
 msgstr ""
 "Nhóm Việt hóa GNOME <http://live.gnome.org/GnomeVi> \n"
 "Dự án MOST <http://du-an-most.hanoilug.org>"
 
-#: ../src/totem-menu.c:1186
+#: ../src/totem-menu.c:1214
 msgid "Totem Website"
 msgstr "Website của Totem"
 
-#: ../src/totem-menu.c:1220
+#: ../src/totem-menu.c:1248
 msgid "Configure Plugins"
 msgstr "Cấu hình phần bổ sung"
 
 #. Translators: %s is the totem version number
 #: ../src/totem-object.c:473
 #, c-format
-#| msgid "Totem Website"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1047 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1046 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Đang phát"
 
-#: ../src/totem-object.c:1049 ../src/totem-options.c:52
+#: ../src/totem-object.c:1048 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Tạm dừng"
 
-#: ../src/totem-object.c:1054 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1053 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "Bị tạm dừng"
 
 #. Translators: this refers to a media file
-#: ../src/totem-object.c:1056 ../src/totem-object.c:1066
+#: ../src/totem-object.c:1055 ../src/totem-object.c:1065
 #: ../src/totem-options.c:51
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:84
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:96
 msgid "Play"
 msgstr "Phát"
 
-#: ../src/totem-object.c:1061 ../src/totem-object.c:1659
+#: ../src/totem-object.c:1060 ../src/totem-object.c:1658
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Bị dừng"
 
-#: ../src/totem-object.c:1142 ../src/totem-object.c:1169
-#: ../src/totem-object.c:1797 ../src/totem-object.c:1960
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1168
+#: ../src/totem-object.c:1798 ../src/totem-object.c:1962
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem không thể phát '%s'."
 
-#: ../src/totem-object.c:1246
+#: ../src/totem-object.c:1245
 #, c-format
 msgid ""
 "Totem could not play this media (%s) although a plugin is present to handle "
@@ -1310,7 +1269,7 @@ msgstr ""
 "Totem không thể phát từ thiết bị lưu trữ này (%s) mặc dù đã có phần bổ sung "
 "để xử lý."
 
-#: ../src/totem-object.c:1247
+#: ../src/totem-object.c:1246
 msgid ""
 "You might want to check that a disc is present in the drive and that it is "
 "correctly configured."
@@ -1318,11 +1277,11 @@ msgstr ""
 "Có thể bạn cần kiểm tra là đang có đĩa trong ổ và đã được cấu hình đúng hay "
 "chưa."
 
-#: ../src/totem-object.c:1255
+#: ../src/totem-object.c:1254
 msgid "More information about media plugins"
 msgstr "Thông tin thêm về phần bổ sung phương tiện"
 
-#: ../src/totem-object.c:1256
+#: ../src/totem-object.c:1255
 msgid ""
 "Please install the necessary plugins and restart Totem to be able to play "
 "this media."
@@ -1330,7 +1289,7 @@ msgstr ""
 "Hãy cài đặt các phần bổ sung cần thiết và khởi động lại Totem để có thể phát "
 "được từ phương tiện này."
 
-#: ../src/totem-object.c:1258
+#: ../src/totem-object.c:1257
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because it does not have the "
@@ -1339,7 +1298,7 @@ msgstr ""
 "Totem không thể phát từ kiểu phương tiện (%s) vì không có phần bổ sung thích "
 "hợp để đọc từ đĩa."
 
-#: ../src/totem-object.c:1260
+#: ../src/totem-object.c:1259
 #, c-format
 msgid ""
 "Totem cannot play this type of media (%s) because you do not have the "
@@ -1348,68 +1307,67 @@ msgstr ""
 "Totem không thể phát từ kiểu phương tiện (%s) vì không có phần bổ sung thích "
 "hợp để xử lý."
 
-#: ../src/totem-object.c:1263
+#: ../src/totem-object.c:1262
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "Totem không thể phát từ kiểu phương tiện (%s) vì không được hỗ trợ."
 
-#: ../src/totem-object.c:1264
+#: ../src/totem-object.c:1263
 msgid "Please insert another disc to play back."
 msgstr "Vui lòng đưa đĩa khác vào để phát tiếp."
 
-#: ../src/totem-object.c:1300
+#: ../src/totem-object.c:1299
 msgid "Totem was not able to play this disc."
 msgstr "Totem không thể phát đĩa này."
 
-#: ../src/totem-object.c:1301 ../src/totem-object.c:4278
+#: ../src/totem-object.c:1300 ../src/totem-object.c:4280
 msgid "No reason."
 msgstr "Không lý do."
 
-#: ../src/totem-object.c:1315
+#: ../src/totem-object.c:1314
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Totem không hỗ trợ chức năng phát lại đĩa CD âm thanh"
 
-#: ../src/totem-object.c:1316
+#: ../src/totem-object.c:1315
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "Bạn hãy sử dụng bộ phát nhạc hay bộ trích đĩa CD, để phát đĩa CD này"
 
-#: ../src/totem-object.c:1803
+#: ../src/totem-object.c:1804
 msgid "No error message"
 msgstr "Không có thông điệp lỗi"
 
-#: ../src/totem-object.c:2195
+#: ../src/totem-object.c:2197
 msgid "Totem could not display the help contents."
 msgstr "Totem không thể hiển thị nội dung trợ giúp."
 
-#: ../src/totem-object.c:2533 ../src/totem-object.c:2535
+#: ../src/totem-object.c:2535 ../src/totem-object.c:2537
 #: ../browser-plugin/totem-plugin-viewer.c:1466
 msgid "An error occurred"
 msgstr "Gặp lỗi"
 
-#: ../src/totem-object.c:4112 ../src/totem-object.c:4114
+#: ../src/totem-object.c:4114 ../src/totem-object.c:4116
 msgid "Previous Chapter/Movie"
 msgstr "Chương/Phim trước"
 
-#: ../src/totem-object.c:4121 ../src/totem-object.c:4123
+#: ../src/totem-object.c:4123 ../src/totem-object.c:4125
 msgid "Play / Pause"
 msgstr "Phát / Tạm dừng"
 
-#: ../src/totem-object.c:4131 ../src/totem-object.c:4133
+#: ../src/totem-object.c:4133 ../src/totem-object.c:4135
 msgid "Next Chapter/Movie"
 msgstr "Chương/Phim kế"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4145 ../src/totem-object.c:4147
-#| msgid "_Fullscreen"
+#: ../src/totem-object.c:4147 ../src/totem-object.c:4149
 msgid "Fullscreen"
 msgstr "Toàn màn hình"
 
-#: ../src/totem-object.c:4278
+#: ../src/totem-object.c:4280
 msgid "Totem could not startup."
 msgstr "Totem không thể khởi động."
 
-#: ../src/totem-open-location.c:179
+#: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "Mở địa chỉ..."
 
@@ -1490,50 +1448,49 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Không thể thêm vào và thay thế hàng đợi cùng lúc"
 
 #. By extension entry
-#: ../src/totem-playlist.c:157
+#: ../src/totem-playlist.c:161
 msgid "MP3 ShoutCast playlist"
 msgstr "Danh sách phát ShoutCast MP3"
 
-#: ../src/totem-playlist.c:158
+#: ../src/totem-playlist.c:162
 msgid "MP3 audio (streamed)"
 msgstr "Nhạc MP3 (phát từ mạng)"
 
-#: ../src/totem-playlist.c:159
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "Nhạc MP3 (phát từ mạng, định dạng DOS)"
 
-#: ../src/totem-playlist.c:160
+#: ../src/totem-playlist.c:164
 msgid "XML Shareable Playlist"
 msgstr "Danh sách phát có thể chia sẻ XML "
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:359
+#: ../src/totem-playlist.c:363
 #, c-format
 msgid "Title %d"
 msgstr "Tựa đề %d"
 
-#: ../src/totem-playlist.c:458
+#: ../src/totem-playlist.c:462
 msgid "Could not save the playlist"
 msgstr "Không lưu được danh sách phát."
 
-#: ../src/totem-playlist.c:1033
+#: ../src/totem-playlist.c:1037
 msgid "Save Playlist"
 msgstr "Lưu danh sách phát"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1045 ../src/totem-sidebar.c:140
+#: ../src/totem-playlist.c:1049 ../src/totem-sidebar.c:140
 msgid "Playlist"
 msgstr "Danh sách phát"
 
-#: ../src/totem-playlist.c:1862
+#: ../src/totem-playlist.c:1869
 #, c-format
-#| msgid "The playlist '%s' could not be parsed, it might be damaged."
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Không thể phân tích danh sách phát '%s', có lẽ bị hỏng."
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1870
 msgid "Playlist error"
 msgstr "Lỗi danh sách phát"
 
@@ -1829,23 +1786,23 @@ msgstr "Không thể khởi động thư viện \"thread-safe\" (mạch an toàn
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Hãy kiểm tra lại bản cài đặt hệ thống. Totem sẽ thoát ra ngay bây giờ."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1848
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1850
 msgid "Password requested for RTSP server"
 msgstr "Cần mật khẩu cho máy chủ RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3120
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3124
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3128
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Bản nhạc #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3152
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3156
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3160
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Phụ đề #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3565
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3569
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1853,16 +1810,16 @@ msgstr ""
 "Không tìm thấy ngõ xuất tín hiệu âm thanh đã yêu cầu. Vui lòng chọn một ngõ "
 "xuất tín hiệu âm thanh khác trong Bộ chọn hệ thống đa phương tiện."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3570
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
 msgid "Location not found."
 msgstr "Không tìm thấy địa điểm"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3574
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3578
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "Không thể mở địa điểm; có lẽ bạn không có quyền mở tập tin đó."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3589
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1872,7 +1829,7 @@ msgstr ""
 "lòng đóng các ứng dụng phim khác, hoặc chọn ngõ xuất tín hiệu hình ảnh khác "
 "trong Bộ chọn hệ thống đa phương tiện."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3591
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3595
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1883,13 +1840,13 @@ msgstr ""
 "phương tiện. Có lẽ bạn cũng nên dùng một trình phục vụ âm thanh."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3609
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3615
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3613
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3619
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr "Để phát phim này cần có phần bổ sung '%s', nhưng chưa được cài đặt."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3616
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3620
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1901,32 +1858,32 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3641
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3645
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Không thể phát tập tin trên mạng này. Hãy thử tải về đĩa trước."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3713
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3717
 msgid "Media file could not be played."
 msgstr "Không thể phát tập tin đa phương tiện."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6004
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6008
 msgid "Surround"
 msgstr "Âm thanh vòm"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6006
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6010
 msgid "Mono"
 msgstr "Âm đơn"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6353
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6357
 msgid "Too old version of GStreamer installed."
 msgstr "Phiên bản GStreamer đã cài đặt quá cũ."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6360
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6364
 msgid "Media contains no supported video streams."
 msgstr "Thiết bị lưu trữ không hỗ trợ phát phim."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6845
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6847
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1934,8 +1891,8 @@ msgstr ""
 "Không thể tạo đối tượng phát GStreamer. Vui lòng kiểm tra lại bản cài đặt "
 "GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6956
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7091
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6958
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7093
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1944,7 +1901,7 @@ msgstr ""
 "chọn một ngõ xuất tín hiệu hình ảnh khác trong Bộ chọn hệ thống đa phương "
 "tiện."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6968
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6970
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1954,7 +1911,7 @@ msgstr ""
 "phần bổ sung GStreamer, hoặc chọn một ngõ xuất tín hiệu hình ảnh khác trong "
 "Bộ chọn hệ thống đa phương tiện."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7003
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7005
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1964,7 +1921,7 @@ msgstr ""
 "bị âm thanh, hoặc trình phục vụ âm thanh không đang chạy. Vui lòng chọn một "
 "ngõ xuất tín hiệu âm thanh khác trong Bộ chọn hệ thống đa phương tiện."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7023
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7025
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2109,12 +2066,10 @@ msgstr "Bộ thu đĩa phim"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
 #: ../src/plugins/chapters/totem-chapters.c:1137
-#| msgid "_Chapter Menu"
 msgid "Chapters"
 msgstr "Đoạn phim"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-#| msgid "Next chapter or movie"
 msgid "Support chapter markers in movies."
 msgstr "Hỗ trợ đánh dấu đoạn phim."
 
@@ -2123,7 +2078,6 @@ msgid "Name for new chapter:"
 msgstr "Tên đoạn phim mới:"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:1
-#| msgid "Add..."
 msgid "Add Chapter..."
 msgstr "Thêm đoạn phim..."
 
@@ -2132,17 +2086,14 @@ msgid "Add New Chapters"
 msgstr "Thêm đoạn phim mới"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:3
-#| msgid "Next chapter or movie"
 msgid "Create a new chapter list for the movie"
 msgstr "Tạo mục lục phim"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:4
-#| msgid "Go to the chapter menu"
 msgid "Go to Chapter"
 msgstr "Nhảy đến đoạn phim"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:5
-#| msgid "Go to the chapter menu"
 msgid "Go to the chapter in the movie"
 msgstr "Xem đoạn phim"
 
@@ -2159,27 +2110,22 @@ msgid "No chapter data"
 msgstr "Không có mục lục phim"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:9
-#| msgid "Remove"
 msgid "Remove Chapter"
 msgstr "Bỏ đoạn phim"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:10
-#| msgid "Remove file from playlist"
 msgid "Remove the chapter from the list"
 msgstr "Bỏ đoạn phim khỏi danh mục"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:11
-#| msgid "0 Channels"
 msgid "Save Changes"
 msgstr "Lưu thay đổi"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:12
-#| msgid "Go to the chapter menu"
 msgid "_Go to Chapter"
 msgstr "_Nhảy đến đoạn phim"
 
 #: ../src/plugins/chapters/chapters-list.ui.h:13
-#| msgid "_Remove"
 msgid "_Remove Chapter"
 msgstr "_Bỏ đoạn phim"
 
@@ -2209,7 +2155,6 @@ msgid "Error while writing file with chapters"
 msgstr "Lỗi ghi tập tin mục lục phim"
 
 #: ../src/plugins/chapters/totem-chapters.c:842
-#| msgid "An error occurred while fetching albums."
 msgid "Error occurred while saving chapters"
 msgstr "Lỗi khi lưu mục lục phim"
 
@@ -2219,17 +2164,14 @@ msgid ""
 msgstr "Hãy kiểm tra quyền ghi vào thư mục chứa phim."
 
 #: ../src/plugins/chapters/totem-chapters.c:976
-#| msgid "Open a file"
 msgid "Open Chapter File"
 msgstr "Mở tập tin mục lục phim"
 
 #: ../src/plugins/chapters/totem-chapters.c:1093
-#| msgid "Save Screenshot"
 msgid "Chapter Screenshot"
 msgstr "Chụp ảnh đoạn phim"
 
 #: ../src/plugins/chapters/totem-chapters.c:1104
-#| msgid "_Chapter Menu"
 msgid "Chapter Title"
 msgstr "Tựa đoạn phim"
 
@@ -2244,7 +2186,6 @@ msgstr "Đóng không lưu"
 
 #. Translators: save changes to the chapter list of the current movie before closing Totem.
 #: ../src/plugins/chapters/totem-chapters.c:1189
-#| msgid "Square"
 msgid "Save"
 msgstr "Lưu"
 
@@ -2261,7 +2202,7 @@ msgstr "Lỗi phân tích tập tin CMML"
 msgid "Delete"
 msgstr "Xóa"
 
-#: ../src/plugins/coherence_upnp/coherence_upnp.py:116
+#: ../src/plugins/coherence_upnp/coherence_upnp.py:117
 #: ../src/plugins/coherence_upnp/coherence_upnp.plugin.in.h:2
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Ứng dụng khách DLNA/UPnP Coherence"
@@ -2275,9 +2216,6 @@ msgid "D-Bus Service"
 msgstr "Dịch vụ D-BUS"
 
 #: ../src/plugins/dbus-service/dbus-service.plugin.in.h:2
-#| msgid ""
-#| "Plugin for sending notifications of currently-playing movies to the D-Bus "
-#| "subsystem."
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
@@ -2305,7 +2243,7 @@ msgstr "Không tìm thấy tập tin nhị phân gromit."
 
 #. Add the interface to Totem's sidebar
 #: ../src/plugins/iplayer/iplayer.plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:41
+#: ../src/plugins/iplayer/iplayer.py:42
 msgid "BBC iPlayer"
 msgstr "Bộ phát phim BBC iPlayer"
 
@@ -2314,12 +2252,11 @@ msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
 msgstr ""
 "Phát chương trình BBC trong vòng bảy ngày gần nhất từ dịch vụ BBC iPlayer"
 
-#: ../src/plugins/iplayer/iplayer.py:66
-#| msgid "Error Listing Channel Categories"
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid "Error listing channel categories"
 msgstr "Lỗi khi liệt kê phân loại kênh"
 
-#: ../src/plugins/iplayer/iplayer.py:66
+#: ../src/plugins/iplayer/iplayer.py:67
 msgid ""
 "There was an unknown error getting the list of television channels available "
 "on BBC iPlayer."
@@ -2329,19 +2266,16 @@ msgstr ""
 
 #. Append a dummy child row so that the expander's visible; we can
 #. then queue off the expander to load the programme listing for this category
-#: ../src/plugins/iplayer/iplayer.py:74
+#: ../src/plugins/iplayer/iplayer.py:75
 msgid "Loading…"
 msgstr "Đang tải…"
 
 #. Translators: the "programme feed" is the list of TV shows available to watch online
-#: ../src/plugins/iplayer/iplayer.py:119
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid "Error getting programme feed"
 msgstr "Lỗi khi lấy chương trình từ nguồn."
 
-#: ../src/plugins/iplayer/iplayer.py:119
-#| msgid ""
-#| "There was an unknown error getting the list of programmes for this "
-#| "channel and category combination."
+#: ../src/plugins/iplayer/iplayer.py:120
 msgid ""
 "There was an error getting the list of programmes for this channel and "
 "category combination."
@@ -2375,7 +2309,6 @@ msgid "Latest Releases"
 msgstr "Bản phát hành mới nhất"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:5
-#| msgid "Number of albums to _retrieve"
 msgid "Number of albums to _retrieve:"
 msgstr "Số tập nhạc cần _lấy:"
 
@@ -2384,7 +2317,6 @@ msgid "Popular"
 msgstr "Phổ biến"
 
 #: ../src/plugins/jamendo/jamendo.ui.h:7
-#| msgid "Preferred audio _format"
 msgid "Preferred audio _format:"
 msgstr "Định _dạng âm thanh ưa thích:"
 
@@ -2399,7 +2331,7 @@ msgid "_Open Jamendo Album Page in Browser"
 msgstr "_Mở Trang tập nhạc Jamendo trong trình duyệt Web"
 
 #: ../src/plugins/jamendo/jamendo.plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:127
+#: ../src/plugins/jamendo/jamendo.py:128
 msgid "Jamendo"
 msgstr "Jamendo"
 
@@ -2414,34 +2346,34 @@ msgstr ""
 msgid "You need to install the Python simplejson module."
 msgstr "Người dùng cần phải cài đặt mô-đun Python tên simplejson."
 
-#: ../src/plugins/jamendo/jamendo.py:260 ../src/plugins/jamendo/jamendo.py:273
-#: ../src/plugins/jamendo/jamendo.py:297
+#: ../src/plugins/jamendo/jamendo.py:261 ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:298
 #, python-format
 msgid "Artist: %s"
 msgstr "Nghệ sĩ: %s"
 
 #. Translators: this is the release date of an album in Python strptime format
-#: ../src/plugins/jamendo/jamendo.py:266
+#: ../src/plugins/jamendo/jamendo.py:267
 msgid "%Y-%m-%d"
 msgstr "%Y-%m-%d"
 
 #. Translators: this is the release time of an album in Python strftime format
-#: ../src/plugins/jamendo/jamendo.py:268
+#: ../src/plugins/jamendo/jamendo.py:269
 #, python-format
 msgid "%x"
 msgstr "%x"
 
-#: ../src/plugins/jamendo/jamendo.py:274
+#: ../src/plugins/jamendo/jamendo.py:275
 #, python-format
 msgid "Genre: %s"
 msgstr "Thể loại: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:275
+#: ../src/plugins/jamendo/jamendo.py:276
 #, python-format
 msgid "Released on: %s"
 msgstr "Phát hành vào : %s"
 
-#: ../src/plugins/jamendo/jamendo.py:276
+#: ../src/plugins/jamendo/jamendo.py:277
 #, python-format
 msgid "License: %s"
 msgstr "Giấy phép: %s"
@@ -2451,27 +2383,26 @@ msgstr "Giấy phép: %s"
 #. track title
 #. Translators: this is the title of a track in Python format
 #. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:289
+#: ../src/plugins/jamendo/jamendo.py:290
 #, python-format
 msgid "%02d. %s"
 msgstr "%02d. %s"
 
-#: ../src/plugins/jamendo/jamendo.py:296
+#: ../src/plugins/jamendo/jamendo.py:297
 #, python-format
 msgid "Album: %s"
 msgstr "Tập nhạc: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:298
+#: ../src/plugins/jamendo/jamendo.py:299
 #, python-format
 msgid "Duration: %s"
 msgstr "Thời gian: %s"
 
-#: ../src/plugins/jamendo/jamendo.py:355
-#| msgid "Fetching albums, please wait..."
+#: ../src/plugins/jamendo/jamendo.py:356
 msgid "Fetching albums, please wait…"
 msgstr "Đang lấy các tập nhạc, hãy đợi…"
 
-#: ../src/plugins/jamendo/jamendo.py:410
+#: ../src/plugins/jamendo/jamendo.py:411
 #, python-format
 msgid ""
 "Failed to connect to Jamendo server.\n"
@@ -2480,24 +2411,24 @@ msgstr ""
 "Lỗi kết nối tới máy phục vụ Jamendo.\n"
 "%s."
 
-#: ../src/plugins/jamendo/jamendo.py:412
+#: ../src/plugins/jamendo/jamendo.py:413
 #, python-format
 msgid "The Jamendo server returned code %s."
 msgstr "Máy phục vụ Jamendo trả lại mã %s."
 
-#: ../src/plugins/jamendo/jamendo.py:416
+#: ../src/plugins/jamendo/jamendo.py:417
 msgid "An error occurred while fetching albums."
 msgstr "Đã có lỗi phát sinh trong khi lấy tập nhạc."
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:618
+#: ../src/plugins/jamendo/jamendo.py:620
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #. Translators: time formatting (in Python strftime format) for the Jamendo plugin
 #. for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:621
+#: ../src/plugins/jamendo/jamendo.py:623
 msgid "%M:%S"
 msgstr "%M:%S"
 
@@ -2508,7 +2439,7 @@ msgstr "%M:%S"
 #. Compared to:
 #. http://www.jamendo.com/en/album/4818
 #. If Jamendo doesn't support your language, *do not translate this string*!
-#: ../src/plugins/jamendo/jamendo.py:671
+#: ../src/plugins/jamendo/jamendo.py:673
 msgid "en"
 msgstr "en"
 
@@ -2517,7 +2448,6 @@ msgid "Audio format to download from Jamendo"
 msgstr "Định dạng âm thanh tải về từ Jamendo"
 
 #: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:2
-#| msgid "Number of screenshots:"
 msgid "Number of results per page"
 msgstr "Số kết quả mỗi trang:"
 
@@ -2551,7 +2481,6 @@ msgid "Download Movie Subtitles"
 msgstr "Tải phụ đề phim về"
 
 #: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
-#| msgid "_Languages"
 msgid "Language"
 msgstr "Ngôn ngữ"
 
@@ -2586,43 +2515,39 @@ msgstr "Không thể liên lạc với website OpenSubtitles (Phụ đề Mở)"
 msgid "No results found"
 msgstr "Không tìm thấy"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:374
+#: ../src/plugins/opensubtitles/opensubtitles.py:376
 msgid "Subtitles"
 msgstr "Phụ đề"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:380
+#: ../src/plugins/opensubtitles/opensubtitles.py:382
 msgid "Format"
 msgstr "Định dạng"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:385
+#: ../src/plugins/opensubtitles/opensubtitles.py:387
 msgid "Rating"
 msgstr "Đánh giá"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:426
-#| msgid "Download Movie Subtitles"
+#: ../src/plugins/opensubtitles/opensubtitles.py:428
 msgid "_Download Movie Subtitles…"
 msgstr "_Tải phụ đề phim về…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:427
+#: ../src/plugins/opensubtitles/opensubtitles.py:429
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Tải phụ đề phim từ OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:486
-#| msgid "Searching subtitles..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Searching subtitles…"
 msgstr "Đang tìm phụ đề…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:544
-#| msgid "Downloading the subtitles..."
+#: ../src/plugins/opensubtitles/opensubtitles.py:546
 msgid "Downloading the subtitles…"
 msgstr "Đang tải phụ đề về…"
 
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
-#| msgid "Subtitle _language:"
 msgid "Subtitle language"
 msgstr "Ngôn ngữ phụ đề"
 
@@ -2671,7 +2596,6 @@ msgstr "Giao thức vận chuyển được dùng khi công bố danh mục phá
 
 #. Translators: computers on the local network which are publishing their playlists over the network
 #: ../src/plugins/publish/totem-publish.c:552
-#| msgid "Neighbours"
 msgid "Neighbors"
 msgstr "Hàng xóm"
 
@@ -2689,10 +2613,6 @@ msgstr "Tê_n dịch vụ :"
 
 #: ../src/plugins/publish/publish-plugin.ui.h:3
 #, no-c-format
-#| msgid ""
-#| "<small>The name used for announcing the playlist service on the network.\n"
-#| "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-#| "and <b>%h</b> will be replaced by your computer's host name.</small>"
 msgid ""
 "The name used for announcing the playlist service on the network.\n"
 "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
@@ -2710,40 +2630,37 @@ msgstr "Dùng giao thức truyền được _mã hóa (HTTPS)"
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
-msgstr "Mật khẩu bảo vệ máy chủ rpdb2 để gỡ lỗi Totem bằng truy cập không được phép từ xa. Nếu rỗng, 'totem' sẽ được dùng."
+msgstr ""
+"Mật khẩu bảo vệ máy chủ rpdb2 để gỡ lỗi Totem bằng truy cập không được phép "
+"từ xa. Nếu rỗng, 'totem' sẽ được dùng."
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid "rpdb2 password"
 msgstr "mật khẩu rpdb2"
 
 #: ../src/plugins/save-file/totem-save-file.c:63
-#| msgid "Save Playlist..."
 msgid "Save a Copy..."
 msgstr "Lưu bản sao..."
 
 #: ../src/plugins/save-file/totem-save-file.c:64
-#| msgid "The contrast of the video"
 msgid "Save a copy of the movie"
 msgstr "Lưu bản sao của phim"
 
 #: ../src/plugins/save-file/totem-save-file.c:129
-#| msgid "Save Gallery"
 msgid "Save a Copy"
 msgstr "Lưu bản sao"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
 #: ../src/plugins/save-file/totem-save-file.c:161
-#| msgid "_Movie"
 msgid "Movie"
 msgstr "Phim"
 
 #: ../src/plugins/save-file/totem-save-file.c:183
-#| msgid "Movies to play"
 msgid "Movie stream"
 msgstr "Luồng phim"
 
-#: ../src/plugins/screensaver/totem-screensaver.c:112
+#: ../src/plugins/screensaver/totem-screensaver.c:116
 #: ../browser-plugin/totem-plugin-viewer.c:1961
 msgid "Playing a movie"
 msgstr "Đang phát phim"
@@ -2769,7 +2686,6 @@ msgid "Select a folder"
 msgstr "Chọn thư mục"
 
 #: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
-#| msgid "Service _Name:"
 msgid "_Name:"
 msgstr "Tê_n:"
 
@@ -2815,7 +2731,6 @@ msgstr "Lưu ảnh chụp màn hình"
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
 #: ../src/plugins/screenshot/totem-screenshot.c:160
 #, c-format
-#| msgid "Screenshot%d.png"
 msgid "Screenshot-%s-%d.png"
 msgstr "AnhChup-%s-%d.png"
 
@@ -2847,7 +2762,6 @@ msgstr "Tạo một thư viện chứa các ảnh chụp màn hình"
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
 #: ../src/plugins/skipto/totem-skipto.c:160
-#| msgid "seconds"
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "giây"
@@ -2862,12 +2776,10 @@ msgid "7"
 msgstr "7"
 
 #: ../src/plugins/skipto/totem-skipto.c:197
-#| msgid "Skip to"
 msgid "Skip To"
 msgstr "Nhảy tới"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
-#| msgid "_Skip to..."
 msgid "_Skip To..."
 msgstr "_Nhảy tới..."
 
@@ -2881,7 +2793,6 @@ msgstr "Nhảy _tới:"
 
 #: ../src/plugins/tracker/totem-tracker-widget.c:587
 #: ../src/plugins/tracker/totem-tracker-widget.c:676
-#| msgid "Could not connect to the Galago daemon."
 msgid "Could not connect to Tracker"
 msgstr "Không thể kết nối Tracker"
 
@@ -2934,7 +2845,6 @@ msgid "A plugin to let you browse YouTube videos."
 msgstr "Phần bổ sung cho bạn có khả năng duyệt qua các phim YouTube."
 
 #: ../src/plugins/youtube/youtube.plugin.in.h:2
-#| msgid "YouTube browser"
 msgid "YouTube Browser"
 msgstr "Bộ duyệt YouTube"
 
@@ -2983,13 +2893,11 @@ msgstr ""
 
 #. Update the UI
 #: ../src/plugins/youtube/totem-youtube.c:618
-#| msgid "Fetching search results..."
 msgid "Fetching search results…"
 msgstr "Đang lấy kết quả tìm kiếm…"
 
 #. Update the UI
 #: ../src/plugins/youtube/totem-youtube.c:680
-#| msgid "Fetching related videos..."
 msgid "Fetching related videos…"
 msgstr "Đang lấy phim liên quan…"
 
@@ -3009,7 +2917,9 @@ msgstr "Định dạnh phim không hỗ trợ"
 msgid ""
 "This video is not available in any formats which Totem supports. Would you "
 "like to open it in your web browser instead?"
-msgstr "Phim này không có trong định dạng phim Totem hỗ trợ. Bạn có muốn mở nó bằng trình duyệt web không?"
+msgstr ""
+"Phim này không có trong định dạng phim Totem hỗ trợ. Bạn có muốn mở nó bằng "
+"trình duyệt web không?"
 
 #: ../browser-plugin/totem-plugin-viewer.c:431
 msgid "No URI to play"
@@ -3037,7 +2947,6 @@ msgid "No playlist or playlist empty"
 msgstr "Không có danh sách phát hoặc danh sách phát rỗng"
 
 #: ../browser-plugin/totem-plugin-viewer.c:2286
-#| msgid "Totem Browser Plugin"
 msgid "Movie browser plugin"
 msgstr "Phần bổ sung trình duyệt phim"
 
@@ -3055,41 +2964,36 @@ msgstr "Dòng lệnh giao tiếp Python tương tác."
 msgid "Python Console"
 msgstr "Dòng lệnh giao tiếp Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:85
+#: ../src/plugins/pythonconsole/pythonconsole.py:86
 msgid "Python Console Menu"
 msgstr "Trình đơn dòng lệnh giao tiếp Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
+#: ../src/plugins/pythonconsole/pythonconsole.py:89
 msgid "_Python Console"
 msgstr "Dòng lệnh giao tiếp _Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:89
+#: ../src/plugins/pythonconsole/pythonconsole.py:90
 msgid "Show Totem's Python console"
 msgstr "Hiển thị dòng lệnh giao tiếp Python của Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Python Debugger"
 msgstr "Bộ gỡ lỗi Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:95
+#: ../src/plugins/pythonconsole/pythonconsole.py:96
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "Bật chức năng gỡ lỗi Python từ xa dùng rpdb2"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:116
+#: ../src/plugins/pythonconsole/pythonconsole.py:117
 #, python-format
-#| msgid "You can access the totem object through 'totem_object' :\\n%s"
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "Bạn có thể truy cập Totem.Object thông qua 'totem_object' :\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:120
+#: ../src/plugins/pythonconsole/pythonconsole.py:121
 msgid "Totem Python Console"
 msgstr "Cửa sổ giao tiếp Python Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:129
-#| msgid ""
-#| "After you press OK, Totem will wait until you connect to it with winpdb "
-#| "or rpdb2. If you have not set a debugger password in GConf, it will use "
-#| "the default password ('totem')."
+#: ../src/plugins/pythonconsole/pythonconsole.py:130
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -3130,8 +3034,8 @@ msgstr ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
+#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
