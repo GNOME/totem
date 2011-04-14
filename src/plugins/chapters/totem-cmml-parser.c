@@ -488,11 +488,13 @@ totem_cmml_read_clip_cb (TotemCmmlClip	*clip,
 
 	new_clip = totem_cmml_clip_copy (clip);
 
-	if (G_LIKELY (new_clip != NULL && new_clip->time_start >= 0))
+	if (G_LIKELY (new_clip != NULL && new_clip->time_start >= 0)) {
 		* ( (GList **) user_data) = g_list_append ( * ( (GList **) user_data), new_clip);
 	/* clip with -1 start time is bad one, remove it */
-	else
+	} else if (new_clip != NULL) {
+		g_warning ("Ignoring clip '%s' due to having an invalid start time: %" G_GINT64_FORMAT, new_clip->title, new_clip->time_start);
 		totem_cmml_clip_free (new_clip);
+	}
 }
 
 /**
