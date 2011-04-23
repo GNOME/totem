@@ -350,7 +350,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_free (priv->mrl);
 	priv->mrl = NULL;
 	g_free (priv->name);
-	priv->mrl = NULL;
+	priv->name = NULL;
 	g_free (priv->save_uri);
 	priv->save_uri = NULL;
 }
