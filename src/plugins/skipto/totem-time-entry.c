@@ -27,8 +27,10 @@
  * Author: Philip Withnall <philip@tecnocode.co.uk>
  */
 
+#include "config.h"
 #include <string.h>
 #include <glib.h>
+#include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
 #include "backend/video-utils.h"
