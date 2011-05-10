@@ -1,5 +1,30 @@
 New features and significant updates in version...
 
+3.1.0:
+* Use clutter-gst to draw the video, the
+  only major related change is simpler zoom modes
+* Use GStreamer API directly for audio preview
+  utility (used in nautilus), thumbnailer and
+  nautilus properties window
+* Show container format in the properties
+* Add ability to switch video tracks
+* Add ability to "thumbnail" DVD ISOs
+* Advertise support for audio/x-stm and audio/x-s3m
+* Fix possible dropped chapters in chapter plugin
+
+* Code:
+  - Port media-player-keys plugin to GDBus
+  - Add pylint support for all Python plugins, and fix
+    errors from it, and port all of the plugins to
+    GObject Introspection
+  - Simplify screenshot code
+
+* Removed:
+  - Remove XVidMode support in backend
+  - Remove video indexer, it wasn't used
+  - Remove thumbnail plugin which doesn't serve a purpose
+    under GNOME 3
+
 3.0.0:
 * Fix packing and spacing in the properties
 * Fix subtitle downloader and jamendo plugins
