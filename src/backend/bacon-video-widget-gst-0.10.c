@@ -3113,7 +3113,7 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
         gchar *lc = NULL, *cd = NULL;
 
 	gst_tag_list_get_string (tags, GST_TAG_LANGUAGE_CODE, &lc);
-	gst_tag_list_get_string (tags, GST_TAG_CODEC, &lc);
+	gst_tag_list_get_string (tags, GST_TAG_CODEC, &cd);
 
         if (lc) {
 	  ret = g_list_prepend (ret, lc);
@@ -3145,7 +3145,7 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
         gchar *lc = NULL, *cd = NULL;
 
 	gst_tag_list_get_string (tags, GST_TAG_LANGUAGE_CODE, &lc);
-	gst_tag_list_get_string (tags, GST_TAG_CODEC, &lc);
+	gst_tag_list_get_string (tags, GST_TAG_CODEC, &cd);
 
         if (lc) {
 	  ret = g_list_prepend (ret, lc);
