@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-05-04 12:32+0000\n"
+"POT-Creation-Date: 2011-05-16 16:25+0000\n"
 "PO-Revision-Date: 2011-05-04 19:54+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -1015,12 +1015,12 @@ msgstr "Extensiones"
 #: ../src/eggfileformatchooser.c:657
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"El programa no pudo encontrar el formato de archivo que quiere usar para "
-"«%s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
+"El programa no pudo encontrar el formato de archivo que quiere usar para «%"
+"s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
 "manualmente un formato de archivo de la lista inferior."
 
 #: ../src/eggfileformatchooser.c:664
@@ -1917,8 +1917,8 @@ msgid ""
 "using a sound server."
 msgstr ""
 "La salida de sonido la está usando otra aplicación. Seleccione otra salida "
-"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar "
-"usar un servidor de sonido."
+"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar usar "
+"un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3302
@@ -1987,7 +1987,7 @@ msgstr ""
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../src/backend/video-utils.c:91
+#: ../src/backend/video-utils.c:91 ../src/plugins/skipto/totem-time-entry.c:57
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -2070,7 +2070,7 @@ msgstr "No se pudo escribir un proyecto."
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Records (S)VCDs or video DVDs"
-msgstr "Grar (S)VCD o DVD de vídeo"
+msgstr "Grabar (S)VCD o DVD de vídeo"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Video Disc Recorder"
@@ -2510,7 +2510,6 @@ msgid "Subtitle Downloader"
 msgstr "Descargador de subtítulos"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
-#| msgid "Brasilian Portuguese"
 msgid "Brazilian Portuguese"
 msgstr "Portugués de Brasil"
 
@@ -3152,33 +3151,33 @@ msgstr ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
+#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Velocidad aproximada de la red, usado para seleccionar la calidad para el "
 #~ "contenido multimedia sobre la red: «0» para módem de 14.4 Kbps, «1» para "
 #~ "módem de 19.2 Kbps, «2» para módem de 28.8 Kbps, «3» para módem de 33.6 "
-#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» "
-#~ "para RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para "
-#~ "DSL/cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/"
-#~ "Intranet/LAN de 1.5 Mbps, «11» para Intranet/LAN."
+#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» para "
+#~ "RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para DSL/"
+#~ "cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/Intranet/"
+#~ "LAN de 1.5 Mbps, «11» para Intranet/LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 #~ "normal, \"2\" for large, \"3\" for extra large."
 #~ msgstr ""
-#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, "
-#~ "«1» para normal, «2» para grande, «3» para extra grande."
+#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, «1» "
+#~ "para normal, «2» para grande, «3» para extra grande."
 
 #~ msgid ""
 #~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, "
-#~ "«2» para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
+#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, «2» "
+#~ "para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
