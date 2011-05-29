@@ -655,7 +655,8 @@ sdp_svc_add_spp(u_int8_t port,
 
 	/* Connect to the local SDP server, register the service record */
 	session = sdp_connect (BDADDR_ANY, BDADDR_LOCAL, 0);
-	sdp_record_register (session, &record, 0);
+	if (session != NULL)	
+		sdp_record_register (session, &record, 0);
 
 	/* Cleanup */
 	sdp_data_free (channel);
