@@ -85,8 +85,6 @@ libtotem_la_SOURCES = \
 	totem-menu.h			\
 	totem-uri.c			\
 	totem-uri.h			\
-	ev-sidebar.c			\
-	ev-sidebar.h			\
 	totem-subtitle-encoding.c	\
 	totem-subtitle-encoding.h	\
 	totem-profile.h			\

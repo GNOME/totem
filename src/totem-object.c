@@ -58,7 +58,6 @@
 #include "totemobject-marshal.h"
 #include "totem-private.h"
 #include "totem-plugins-engine.h"
-#include "ev-sidebar.h"
 #include "totem-playlist.h"
 #include "bacon-video-widget.h"
 #include "totem-statusbar.h"
@@ -659,14 +658,15 @@ totem_object_set_current_subtitle (TotemObject *totem, const char *subtitle_uri)
  **/
 void
 totem_object_add_sidebar_page (TotemObject *totem,
-			const char *page_id,
-			const char *title,
-			GtkWidget *main_widget)
+			       const char *page_id,
+			       const char *title,
+			       GtkWidget *main_widget)
 {
-	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
-			     page_id,
-			     title,
-			     main_widget);
+	totem_sidebar_add_page (totem,
+				page_id,
+				title,
+				NULL,
+				main_widget);
 }
 
 /**
@@ -682,8 +682,7 @@ void
 totem_object_remove_sidebar_page (TotemObject *totem,
 			   const char *page_id)
 {
-	ev_sidebar_remove_page (EV_SIDEBAR (totem->sidebar),
-				page_id);
+	totem_sidebar_remove_page (totem, page_id);
 }
 
 /**
@@ -3823,8 +3822,8 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_l:
 		case GDK_KEY_q:
 		case GDK_KEY_Q:
-		case GDK_KEY_S:
-		case GDK_KEY_s:
+//		case GDK_KEY_S:
+//		case GDK_KEY_s:
 		case GDK_KEY_Right:
 		case GDK_KEY_Left:
 		case GDK_KEY_plus:

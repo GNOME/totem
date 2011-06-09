@@ -25,16 +25,28 @@
 
 G_BEGIN_DECLS
 
-void totem_sidebar_setup (Totem *totem, gboolean visible,
+void totem_sidebar_setup (Totem *totem,
+			  gboolean visible,
 			  const char *page_id);
+
 void totem_sidebar_toggle (Totem *totem, gboolean state);
 void totem_sidebar_set_visibility (Totem *totem, gboolean visible);
 gboolean totem_sidebar_is_visible (Totem *totem);
+
 gboolean totem_sidebar_is_focused (Totem *totem, gboolean *handles_kbd);
+
 char *totem_sidebar_get_current_page (Totem *totem);
 void totem_sidebar_set_current_page (Totem *totem,
-				     const char *name,
+				     const char *page_id,
 				     gboolean force_visible);
+
+void totem_sidebar_add_page (Totem *totem,
+			     const char *page_id,
+			     const char *label,
+			     const char *accelerator,
+			     GtkWidget *main_widget);
+void totem_sidebar_remove_page (Totem *totem,
+				const char *page_id);
 
 G_END_DECLS
 

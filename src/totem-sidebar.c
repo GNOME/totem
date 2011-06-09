@@ -27,7 +27,6 @@
 #include "totem.h"
 #include "totem-sidebar.h"
 #include "totem-private.h"
-#include "ev-sidebar.h"
 
 static void
 cb_resize (Totem * totem)
@@ -47,7 +46,7 @@ cb_resize (Totem * totem)
 	gtk_widget_style_get_property (pane, "handle-size", &gvalue_size);
 	handle_size = g_value_get_int (&gvalue_size);
 	g_value_unset (&gvalue_size);
-	
+
 	gtk_widget_get_allocation (totem->sidebar, &allocation);
 	if (totem->sidebar_shown) {
 		w += allocation.width + handle_size;
@@ -79,12 +78,6 @@ totem_sidebar_toggle (Totem *totem, gboolean state)
 
 	totem->sidebar_shown = state;
 	cb_resize(totem);
-}
-
-static void
-toggle_sidebar_from_sidebar (GtkWidget *playlist, Totem *totem)
-{
-	totem_sidebar_toggle (totem, FALSE);
 }
 
 gboolean
@@ -133,56 +126,175 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 {
 	GtkPaned *item;
 	GtkAction *action;
+	GtkUIManager *uimanager;
+	GtkActionGroup *action_group;
 
 	item = GTK_PANED (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
-	totem->sidebar = ev_sidebar_new ();
-	ev_sidebar_add_page (EV_SIDEBAR (totem->sidebar),
-			"playlist", _("Playlist"),
-			GTK_WIDGET (totem->playlist));
-	if (page_id != NULL) {
-		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
-				page_id);
-	} else {
-		ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar),
-				"playlist");
-	}
+	totem->sidebar = gtk_notebook_new ();
+	gtk_notebook_set_show_border (GTK_NOTEBOOK (totem->sidebar), FALSE);
+	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (totem->sidebar), FALSE);
+
+	action_group = gtk_action_group_new ("SidebarActions");
+	uimanager = totem_get_ui_manager (totem);
+	gtk_ui_manager_insert_action_group (uimanager, action_group, -1);
+	g_object_set_data (G_OBJECT (totem->sidebar), "sidebar-action-group", action_group);
+
+	totem_sidebar_add_page (totem, "playlist", _("Playlist"), NULL, GTK_WIDGET (totem->playlist));
 	gtk_paned_pack2 (item, totem->sidebar, FALSE, FALSE);
 
 	totem->sidebar_shown = visible;
-
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"sidebar");
-
+	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), visible);
-
-	/* Signals */
-	g_signal_connect (G_OBJECT (totem->sidebar), "closed",
-			G_CALLBACK (toggle_sidebar_from_sidebar), totem);
 
 	gtk_widget_show_all (totem->sidebar);
 	gtk_widget_realize (totem->sidebar);
+
+	totem_sidebar_set_current_page (totem,
+					page_id ? page_id : "playlist",
+					visible);
+
 
 	if (!visible)
 		gtk_widget_hide (totem->sidebar);
 }
 
+void
+totem_sidebar_add_page (Totem *totem,
+			const char *page_id,
+			const char *label,
+			const char *accelerator,
+			GtkWidget *main_widget)
+{
+	GtkAction *action;
+	GtkActionGroup *action_group;
+	GtkUIManager *uimanager;
+	guint merge_id;
+
+	g_return_if_fail (page_id != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (main_widget));
+
+	g_object_set_data_full (G_OBJECT (main_widget), "sidebar-name",
+				g_strdup (page_id), g_free);
+
+	gtk_notebook_append_page (GTK_NOTEBOOK (totem->sidebar),
+				  main_widget,
+				  NULL);
+
+	/* The properties page already has a menu item in "Movie" */
+	if (g_str_equal (page_id, "properties"))
+		return;
+
+	action = gtk_action_new (page_id,
+				 label,
+				 NULL,
+				 NULL);
+
+	uimanager = totem_get_ui_manager (totem);
+	merge_id = gtk_ui_manager_new_merge_id (uimanager);
+
+	action_group = g_object_get_data (G_OBJECT (totem->sidebar), "sidebar-action-group");
+	gtk_action_group_add_action_with_accel (action_group, action, accelerator);
+	gtk_ui_manager_add_ui (uimanager,
+			       merge_id,
+			       "/ui/tmw-menubar/view/sidebars-placeholder",
+			       page_id,
+			       page_id,
+			       GTK_UI_MANAGER_MENUITEM,
+			       FALSE);
+	g_object_set_data (G_OBJECT (main_widget), "sidebar-menu-merge-id",
+			   GUINT_TO_POINTER (merge_id));
+}
+
+static int
+get_page_num_for_name (Totem *totem,
+		       const char *page_id)
+{
+	int num_pages, i;
+
+	if (page_id == NULL)
+		return -1;
+
+	num_pages = gtk_notebook_get_n_pages (GTK_NOTEBOOK (totem->sidebar));
+	for (i = 0; i < num_pages; i++) {
+		GtkWidget *widget;
+		const char *name;
+
+		widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (totem->sidebar), i);
+
+		name = g_object_get_data (G_OBJECT (widget), "sidebar-name");
+		if (g_strcmp0 (name, page_id) == 0)
+			return i;
+	}
+
+	return -1;
+}
+
+void
+totem_sidebar_remove_page (Totem *totem,
+			   const char *page_id)
+{
+	GtkUIManager *uimanager;
+	GtkAction *action;
+	GtkActionGroup *action_group;
+	GtkWidget *main_widget;
+	int page_num;
+	guint merge_id;
+	gpointer data;
+
+	page_num = get_page_num_for_name (totem, page_id);
+
+	if (page_num == -1) {
+		g_warning ("Tried to remove sidebar page '%s' but it does not exist", page_id);
+		return;
+	}
+
+	main_widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (totem->sidebar), page_num);
+	data = g_object_get_data (G_OBJECT (main_widget), "sidebar-menu-merge-id");
+	merge_id = GPOINTER_TO_UINT (data);
+
+	gtk_notebook_remove_page (GTK_NOTEBOOK (totem->sidebar), page_num);
+
+	if (data == NULL)
+		return;
+
+	action_group = g_object_get_data (G_OBJECT (totem->sidebar), "sidebar-action-group");
+	uimanager = totem_get_ui_manager (totem);
+	gtk_ui_manager_remove_ui (uimanager, merge_id);
+	action = gtk_action_group_get_action (action_group, page_id);
+	gtk_action_group_remove_action (action_group, action);
+}
+
 char *
 totem_sidebar_get_current_page (Totem *totem)
 {
+	int current_page;
+	GtkWidget *widget;
+
 	if (totem->sidebar == NULL)
 		return NULL;
-	return ev_sidebar_get_current_page (EV_SIDEBAR (totem->sidebar));
+
+	current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (totem->sidebar));
+	widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (totem->sidebar), current_page);
+
+	return g_strdup (g_object_get_data (G_OBJECT (widget), "sidebar-name"));
 }
 
 void
 totem_sidebar_set_current_page (Totem *totem,
-				const char *name,
+				const char *page_id,
 				gboolean force_visible)
 {
-	if (name == NULL)
-		return;
+	int page_num;
 
-	ev_sidebar_set_current_page (EV_SIDEBAR (totem->sidebar), name);
+	page_num = get_page_num_for_name (totem, page_id);
+
+	if (page_num == -1) {
+		g_warning ("Tried to set sidebar page '%s' but it does not exist", page_id);
+		return;
+	}
+
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (totem->sidebar), page_num);
+
 	if (force_visible != FALSE)
 		totem_sidebar_toggle (totem, TRUE);
 }

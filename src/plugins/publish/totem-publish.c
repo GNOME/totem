@@ -45,7 +45,6 @@
 #include <libpeas/peas-activatable.h>
 #include <libpeas-gtk/peas-gtk-configurable.h>
 
-#include "ev-sidebar.h"
 #include "totem-plugin.h"
 #include "totem-private.h"
 #include "totem-dirs.h"
@@ -391,7 +390,8 @@ totem_publish_plugin_load_playlist (TotemPublishPlugin   *self,
 		if (error)
 			goto out;
 
-		ev_sidebar_set_current_page (EV_SIDEBAR (self->priv->totem->sidebar), "playlist");
+		/* FIXME
+		ev_sidebar_set_current_page (EV_SIDEBAR (self->priv->totem->sidebar), "playlist"); */
 		totem_playlist_clear (self->priv->totem->playlist);
 
 		for (i = 0; i < n_entries; ++i) {
@@ -549,8 +549,8 @@ impl_activate (PeasActivatable *plugin)
 	epc_service_monitor_set_skip_our_own (priv->monitor, TRUE);
 
 	/* Translators: computers on the local network which are publishing their playlists over the network */
-	ev_sidebar_add_page (EV_SIDEBAR (priv->totem->sidebar), "neighbours", _("Neighbors"),
-			     totem_publish_plugin_create_neigbours_page (self, builder));
+	totem_add_sidebar_page (priv->totem, "neighbours", _("Neighbors"),
+				totem_publish_plugin_create_neigbours_page (self, builder));
 	g_object_unref (builder);
 
 	priv->publisher = epc_publisher_new (service_name, "totem", NULL);
@@ -626,7 +626,7 @@ impl_deactivate (PeasActivatable *plugin)
 	priv->gsettings = NULL;
 
 	if (priv->totem) {
-		ev_sidebar_remove_page (EV_SIDEBAR (priv->totem->sidebar), "neighbours");
+		totem_remove_sidebar_page (priv->totem, "neighbours");
 
 		g_object_unref (priv->totem);
 		priv->totem = NULL;
