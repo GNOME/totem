@@ -1131,6 +1131,7 @@ impl_activate (PeasActivatable *plugin)
 	main_box = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (main_box), cplugin->priv->list_box, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (main_box), cplugin->priv->load_box, TRUE, TRUE, 0);
+	gtk_widget_show_all (main_box);
 
 	set_no_data_visible (TRUE, FALSE, cplugin);
 
