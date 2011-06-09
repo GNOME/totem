@@ -158,6 +158,15 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 		gtk_widget_hide (totem->sidebar);
 }
 
+static void
+action_activated (GtkAction *action,
+		  Totem     *totem)
+{
+	totem_sidebar_set_current_page (totem,
+					gtk_action_get_name (action),
+					TRUE);
+}
+
 void
 totem_sidebar_add_page (Totem *totem,
 			const char *page_id,
@@ -188,6 +197,8 @@ totem_sidebar_add_page (Totem *totem,
 				 label,
 				 NULL,
 				 NULL);
+	g_signal_connect (G_OBJECT (action), "activate",
+			  G_CALLBACK (action_activated), totem);
 
 	uimanager = totem_get_ui_manager (totem);
 	merge_id = gtk_ui_manager_new_merge_id (uimanager);
