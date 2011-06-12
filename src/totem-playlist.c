@@ -180,22 +180,6 @@ G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_VBOX)
 
 /* Helper functions */
 static gboolean
-totem_playlist_gtk_tree_model_iter_previous (GtkTreeModel *tree_model,
-		GtkTreeIter *iter)
-{
-	GtkTreePath *path;
-	gboolean ret;
-
-	path = gtk_tree_model_get_path (tree_model, iter);
-	ret = gtk_tree_path_prev (path);
-	if (ret != FALSE)
-		gtk_tree_model_get_iter (tree_model, iter, path);
-
-	gtk_tree_path_free (path);
-	return ret;
-}
-
-static gboolean
 totem_playlist_gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
 {
 	char *str1, *str2;
@@ -2550,8 +2534,7 @@ totem_playlist_has_previous_mrl (TotemPlaylist *playlist)
 				&iter,
 				playlist->priv->current);
 
-		return totem_playlist_gtk_tree_model_iter_previous
-			(playlist->priv->model, &iter);
+		return gtk_tree_model_iter_previous (playlist->priv->model, &iter);
 	} else {
 		if (playlist->priv->current_shuffled == 0)
 			return FALSE;
@@ -2700,8 +2683,7 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 				&iter,
 				playlist->priv->current);
 
-		totem_playlist_gtk_tree_model_iter_previous
-			(playlist->priv->model, &iter);
+		gtk_tree_model_iter_previous (playlist->priv->model, &iter);
 		gtk_tree_path_free (playlist->priv->current);
 		playlist->priv->current = gtk_tree_model_get_path
 			(playlist->priv->model, &iter);
