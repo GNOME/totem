@@ -176,7 +176,7 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 
 #define totem_playlist_unset_playing(x) totem_playlist_set_playing(x, TOTEM_PLAYLIST_STATUS_NONE)
 
-G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
 
 /* Helper functions */
 static gboolean
@@ -1647,6 +1647,9 @@ totem_playlist_init (TotemPlaylist *playlist)
 	GtkBuilder *xml;
 	GtkWidget *widget;
 	GtkStyleContext *context;
+
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (playlist),
+					GTK_ORIENTATION_VERTICAL);
 
 	playlist->priv = G_TYPE_INSTANCE_GET_PRIVATE (playlist, TOTEM_TYPE_PLAYLIST, TotemPlaylistPrivate);
 	playlist->priv->parser = totem_pl_parser_new ();

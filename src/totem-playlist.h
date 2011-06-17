@@ -62,12 +62,12 @@ typedef void (*TotemPlaylistForeachFunc) (TotemPlaylist *playlist,
 					  gpointer       user_data);
 
 struct TotemPlaylist {
-	GtkVBox parent;
+	GtkBox parent;
 	TotemPlaylistPrivate *priv;
 };
 
 struct TotemPlaylistClass {
-	GtkVBoxClass parent_class;
+	GtkBoxClass parent_class;
 
 	void (*changed) (TotemPlaylist *playlist);
 	void (*item_activated) (TotemPlaylist *playlist);
