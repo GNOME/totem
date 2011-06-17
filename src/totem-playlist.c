@@ -1271,7 +1271,8 @@ init_columns (GtkTreeView *treeview, TotemPlaylist *playlist)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
 	gtk_tree_view_column_set_attributes (column, renderer,
-			"text", FILENAME_COL, NULL);
+			"text", FILENAME_COL,
+			"title", _("Playlist"), NULL);
 }
 
 static void
