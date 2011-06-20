@@ -40,6 +40,10 @@ PKG_PROG_PKG_CONFIG
 AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
+CONFDIR=`eval echo $sysconfdir`
+AC_DEFINE_UNQUOTED(CONFDIR, "$CONFDIR", [Directory containing default config])
+AC_SUBST(CONFDIR)
+
 # Requirements
 GLIB_REQS=2.27.92
 GIO_REQS=2.27.92
@@ -68,7 +72,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto tracker youtube zeitgeist-dp"
+allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto tracker youtube zeitgeist-dp grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -526,6 +530,14 @@ for plugin in ${used_plugins}; do
 				fi
 			fi
 		;;
+		grilo)
+			PKG_CHECK_MODULES(LIBGRILO, grilo-0.1 >= 0.1.14,
+				[HAVE_LIBGRILO=yes], [HAVE_LIBGRILO=no])
+			if test "${HAVE_LIBGRILO}" != "yes" ; then
+				plugin_error_or_ignore "you need libgrilo >= 0.1.14 installed for the Grilo plugin"
+				add_plugin="0"
+			fi
+		;;
 	esac
 
 	# Add the specified plugin
@@ -772,6 +784,7 @@ src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in
 src/plugins/brasero-disc-recorder/Makefile
 src/plugins/chapters/Makefile
 src/plugins/zeitgeist-dp/Makefile
+src/plugins/grilo/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
 data/Makefile
