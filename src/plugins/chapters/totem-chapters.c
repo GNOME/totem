@@ -1128,7 +1128,8 @@ impl_activate (PeasActivatable *plugin)
 	cplugin->priv->list_box = GTK_WIDGET (gtk_builder_get_object (builder, "main_vbox"));
 	cplugin->priv->load_box = GTK_WIDGET (gtk_builder_get_object (builder, "load_vbox"));
 
-	main_box = gtk_vbox_new (FALSE, 6);
+	main_box = gtk_box_new (FALSE, 6);
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (main_box), GTK_ORIENTATION_VERTICAL);
 	gtk_box_pack_start (GTK_BOX (main_box), cplugin->priv->list_box, TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (main_box), cplugin->priv->load_box, TRUE, TRUE, 0);
 	gtk_widget_show_all (main_box);
