@@ -36,12 +36,12 @@ typedef struct BaconVideoWidgetPropertiesClass		BaconVideoWidgetPropertiesClass;
 typedef struct BaconVideoWidgetPropertiesPrivate	BaconVideoWidgetPropertiesPrivate;
 
 struct BaconVideoWidgetProperties {
-	GtkVBox parent;
+	GtkBox parent;
 	BaconVideoWidgetPropertiesPrivate *priv;
 };
 
 struct BaconVideoWidgetPropertiesClass {
-	GtkVBoxClass parent_class;
+	GtkBoxClass parent_class;
 };
 
 GType bacon_video_widget_properties_get_type		(void);

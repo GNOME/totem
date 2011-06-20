@@ -40,7 +40,7 @@ struct BaconVideoWidgetPropertiesPrivate {
 
 #define BACON_VIDEO_WIDGET_PROPERTIES_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetPropertiesPrivate))
 
-G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (BaconVideoWidgetProperties, bacon_video_widget_properties, GTK_TYPE_BOX)
 
 static void
 bacon_video_widget_properties_class_init (BaconVideoWidgetPropertiesClass *klass)
@@ -56,6 +56,8 @@ static void
 bacon_video_widget_properties_init (BaconVideoWidgetProperties *props)
 {
 	props->priv = G_TYPE_INSTANCE_GET_PRIVATE (props, BACON_TYPE_VIDEO_WIDGET_PROPERTIES, BaconVideoWidgetPropertiesPrivate);
+
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (props), GTK_ORIENTATION_VERTICAL);
 }
 
 static void
