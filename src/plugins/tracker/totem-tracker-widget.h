@@ -38,14 +38,14 @@
 typedef struct TotemTrackerWidgetPrivate  TotemTrackerWidgetPrivate;
 
 typedef struct TotemTrackerWidget {
-	GtkEventBox parent;
+	GtkBox parent;
 	
 	TotemObject *totem;
 	TotemTrackerWidgetPrivate *priv;
 } TotemTrackerWidget;
 
 typedef struct {
-	GtkEventBoxClass parent_class;
+	GtkBoxClass parent_class;
 } TotemTrackerWidgetClass;
 
 GType       totem_tracker_widget_get_type   (void);

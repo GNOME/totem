@@ -46,7 +46,7 @@
 
 #define TOTEM_TRACKER_MAX_RESULTS_SIZE	20
 
-G_DEFINE_TYPE (TotemTrackerWidget, totem_tracker_widget, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (TotemTrackerWidget, totem_tracker_widget, GTK_TYPE_BOX)
 
 struct TotemTrackerWidgetPrivate {
 	GtkWidget *search_entry;
@@ -786,12 +786,16 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 	GdkScreen *screen;
 	GtkIconTheme *theme;
 
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (widget), GTK_ORIENTATION_VERTICAL);
+
 	widget->priv = G_TYPE_INSTANCE_GET_PRIVATE (widget, TOTEM_TYPE_TRACKER_WIDGET, TotemTrackerWidgetPrivate);
 
 	init_result_list (widget);
 
-	v_box = gtk_vbox_new (FALSE, 6);
-	h_box = gtk_hbox_new (FALSE, 6);
+	v_box = gtk_box_new (FALSE, 6);
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (v_box), GTK_ORIENTATION_VERTICAL);
+
+	h_box = gtk_box_new (FALSE, 6);
 
 	/* Search entry */
 	widget->priv->search_entry = gtk_entry_new ();
@@ -814,7 +818,7 @@ totem_tracker_widget_init (TotemTrackerWidget *widget)
 	gtk_box_pack_start (GTK_BOX (v_box), widget->priv->status_label, FALSE, TRUE, 2);
 
 	/* Initialise the pager box */
-	pager_box = gtk_hbox_new (FALSE, 6);
+	pager_box = gtk_box_new (FALSE, 6);
 	widget->priv->next_button = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
 	widget->priv->previous_button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
 	adjust = GTK_ADJUSTMENT (gtk_adjustment_new (1, 1, 1, 1, 5, 0));
