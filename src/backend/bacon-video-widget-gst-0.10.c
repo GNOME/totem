@@ -77,7 +77,7 @@
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gio/gio.h>
 
 #include "totem-gst-helpers.h"
@@ -3305,10 +3305,10 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
         gchar *desc_list;
 
         desc_list = g_strjoinv ("\n", descs);
-        msg = g_strdup_printf (ngettext (_("The playback of this movie "
-            "requires a %s plugin which is not installed."), _("The playback "
+        msg = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "The playback of this movie "
+            "requires a %s plugin which is not installed.", "The playback "
             "of this movie requires the following decoders which are not "
-            "installed:\n\n%s"), num), (num == 1) ? descs[0] : desc_list);
+            "installed:\n\n%s", num), (num == 1) ? descs[0] : desc_list);
         g_free (desc_list);
       }
       ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, msg);

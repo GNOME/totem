@@ -23,7 +23,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <string.h>
 
 #include "backend/video-utils.h"
@@ -153,12 +153,12 @@ totem_time_to_string_text (gint64 msecs)
 	_time = _time - (min * 60);
 	hour = _time / (60*60);
 
-	hours = g_strdup_printf (ngettext ("%d hour", "%d hours", hour), hour);
+	hours = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d hour", "%d hours", hour), hour);
 
-	mins = g_strdup_printf (ngettext ("%d minute",
+	mins = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d minute",
 					  "%d minutes", min), min);
 
-	secs = g_strdup_printf (ngettext ("%d second",
+	secs = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d second",
 					  "%d seconds", sec), sec);
 
 	if (hour > 0)
@@ -234,7 +234,7 @@ bacon_video_widget_properties_set_framerate (BaconVideoWidgetProperties *props,
 
 	/* The FPS has to be done differently because it's a plural string */
 	if (framerate != 0) {
-		temp = g_strdup_printf (ngettext ("%d frame per second", "%d frames per second", framerate),
+		temp = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d frame per second", "%d frames per second", framerate),
 					framerate);
 	} else {
 		temp = g_strdup (C_("Frame rate", "N/A"));

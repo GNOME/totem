@@ -29,7 +29,7 @@
 
 #include "video-utils.h"
 
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <libintl.h>
 
 #include <gdk/gdk.h>
