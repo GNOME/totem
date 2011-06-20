@@ -481,6 +481,13 @@ for plugin in ${used_plugins}; do
 				AC_DEFINE([HAVE_LIBGDATA_0_7],[1],[Define if libgdata >= 0.7.0 is available])
 			fi
 
+			# For the API breaks in libgdata 0.9. Remove this once we depend on libgdata >= 0.9.1
+			PKG_CHECK_MODULES(LIBGDATA_0_9, libgdata >= 0.9.1,
+				[HAVE_LIBGDATA_0_9=yes], [HAVE_LIBGDATA_0_9=no])
+			if test "${HAVE_LIBGDATA_0_9}" = "yes" ; then
+				AC_DEFINE([HAVE_LIBGDATA_0_9],[1],[Define if libgdata >= 0.9.1 is available])
+			fi
+
 			PKG_CHECK_MODULES(LIBSOUP, libsoup-2.4,
 				[HAVE_LIBSOUP=yes], [HAVE_LIBSOUP=no])
 			if test "${HAVE_LIBSOUP}" != "yes" ; then

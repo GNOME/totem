@@ -591,6 +591,17 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 	if (clear_tree_view == TRUE)
 		gtk_list_store_clear (self->priv->list_store[tree_view]);
 
+#ifdef HAVE_LIBGDATA_0_9
+	if (tree_view == SEARCH_TREE_VIEW) {
+		gdata_youtube_service_query_videos_async (self->priv->service, self->priv->query[tree_view], data->query_cancellable,
+		                                          (GDataQueryProgressCallback) query_progress_cb, data, NULL,
+		                                          (GAsyncReadyCallback) query_finished_cb, data);
+	} else {
+		gdata_youtube_service_query_related_async (self->priv->service, self->priv->playing_video, self->priv->query[tree_view],
+		                                           data->query_cancellable, (GDataQueryProgressCallback) query_progress_cb, data, NULL,
+		                                           (GAsyncReadyCallback) query_finished_cb, data);
+	}
+#else
 	if (tree_view == SEARCH_TREE_VIEW) {
 		gdata_youtube_service_query_videos_async (self->priv->service, self->priv->query[tree_view], data->query_cancellable,
 		                                          (GDataQueryProgressCallback) query_progress_cb, data,
@@ -600,6 +611,7 @@ execute_query (TotemYouTubePlugin *self, guint tree_view, gboolean clear_tree_vi
 		                                           data->query_cancellable, (GDataQueryProgressCallback) query_progress_cb, data,
 		                                           (GAsyncReadyCallback) query_finished_cb, data);
 	}
+#endif /* !HAVE_LIBGDATA_0_9 */
 }
 
 void
@@ -634,7 +646,11 @@ search_button_clicked_cb (GtkButton *button, TotemYouTubePlugin *self)
 		g_assert (priv->regex != NULL);
 
 		/* Set up the GData service (needed for the tree views' queries) */
+#ifdef HAVE_LIBGDATA_0_9
+		priv->service = gdata_youtube_service_new (DEVELOPER_KEY, NULL);
+#else
 		priv->service = gdata_youtube_service_new (DEVELOPER_KEY, CLIENT_ID);
+#endif /* !HAVE_LIBGDATA_0_9 */
 
 		/* Set up network timeouts, if they're supported by our version of libgdata.
 		 * This will return from queries with %GDATA_SERVICE_ERROR_NETWORK_ERROR if network operations take longer than 30 seconds. */
