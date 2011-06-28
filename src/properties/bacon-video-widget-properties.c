@@ -163,14 +163,14 @@ totem_time_to_string_text (gint64 msecs)
 
 	if (hour > 0)
 	{
-		/* hour:minutes:seconds */
-		string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
+		/* 5 hours 2 minutes 12 seconds */
+		string = g_strdup_printf (C_("time", "%s %s %s"), hours, mins, secs);
 	} else if (min > 0) {
-		/* minutes:seconds */
-		string = g_strdup_printf (_("%s %s"), mins, secs);
+		/* 2 minutes 12 seconds */
+		string = g_strdup_printf (C_("time", "%s %s"), mins, secs);
 	} else if (sec > 0) {
-		/* seconds */
-		string = g_strdup_printf (_("%s"), secs);
+		/* 10 seconds */
+		string = g_strdup_printf (secs);
 	} else {
 		/* 0 seconds */
 		string = g_strdup (_("0 seconds"));
