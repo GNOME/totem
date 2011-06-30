@@ -491,6 +491,7 @@ browse_cb (GrlMediaSource *source,
 
 			path = gtk_tree_model_get_path (self->priv->browser_model, &parent);
 			gtk_tree_view_expand_row (GTK_TREE_VIEW (self->priv->browser), path, FALSE);
+			gtk_tree_view_columns_autosize (GTK_TREE_VIEW (self->priv->browser));
 			gtk_tree_path_free (path);
 		}
 
@@ -743,6 +744,7 @@ browser_activated_cb (GtkTreeView *tree_view,
 	if (gtk_tree_model_iter_has_child (model, &iter)) {
 		if (gtk_tree_view_row_expanded (tree_view, path)) {
 			gtk_tree_view_collapse_row (tree_view, path);
+			gtk_tree_view_columns_autosize (GTK_TREE_VIEW (self->priv->browser));
 		} else {
 			gtk_tree_view_expand_row (tree_view, path, FALSE);
 		}
