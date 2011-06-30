@@ -46,7 +46,6 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="model">gw_browse_store_results</property>
-        <property name="headers_visible">False</property>
         <property name="enable_search">False</property>
         <property name="search_column">2</property>
         <child internal-child="selection">
@@ -54,30 +53,19 @@
         </child>
         <child>
           <object class="GtkTreeViewColumn" id="gw_browse_col_pix">
-            <property name="title">column</property>
+            <property name="title" translatable="yes">Browse</property>
             <child>
               <object class="GtkCellRendererPixbuf" id="gw_browse_col_render_pix"/>
               <attributes>
                 <attribute name="pixbuf">2</attribute>
               </attributes>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkTreeViewColumn" id="gw_browse_col_desc">
-            <property name="min_width">6</property>
-            <property name="title">column</property>
             <child>
               <object class="GtkCellRendererText" id="gw_browse_col_render_desc"/>
               <attributes>
                 <attribute name="markup">4</attribute>
               </attributes>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkTreeViewColumn" id="gw_browse_col_dur">
-            <property name="title">column</property>
             <child>
               <object class="GtkCellRendererText" id="gw_browse_col_render_dur"/>
               <attributes>
