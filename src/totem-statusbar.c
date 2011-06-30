@@ -90,7 +90,7 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_label_set_ellipsize (GTK_LABEL (label), FALSE);
 
   /* progressbar for network streams */
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -103,7 +103,7 @@ totem_statusbar_init (TotemStatusbar *statusbar)
   gtk_widget_set_size_request (priv->progress, 150, 10);
   //gtk_widget_hide (priv->progress);
 
-  packer = gtk_vseparator_new ();
+  packer = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (hbox), packer, FALSE, FALSE, 0);
   gtk_widget_show (packer);
 

@@ -143,7 +143,8 @@ totem_interface_error_with_link (const char *title, const char *reason,
 	error_dialog = totem_interface_error_dialog (title, reason, parent);
 	link_button = gtk_link_button_new_with_label (uri, label);
 
-	hbox = gtk_hbox_new (TRUE, 0);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
 	gtk_box_pack_start (GTK_BOX (hbox), link_button, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (error_dialog))), hbox, TRUE, FALSE, 0);
 	gtk_widget_show_all (hbox);
