@@ -265,7 +265,6 @@ void
 on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeScreenshotWidget *self)
 {
 	GdkPixbuf *pixbuf = NULL;
-	gboolean free_pixbuf = FALSE;
 	GtkStyleContext *context;
 	cairo_t *cr;
 
@@ -282,7 +281,6 @@ on_preview_expose_event (GtkWidget *drawing_area, GdkEventExpose *event, GnomeSc
 		gtk_icon_source_set_size_wildcarded (source, FALSE);
 
 		pixbuf = gtk_render_icon_pixbuf (context, source, (GtkIconSize) -1);
-		free_pixbuf = TRUE;
 		gtk_icon_source_free (source);
 	} else {
 		pixbuf = g_object_ref (self->priv->preview_image);
