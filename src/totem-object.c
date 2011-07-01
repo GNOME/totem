@@ -953,9 +953,13 @@ totem_object_action_exit (TotemObject *totem)
 	GdkDisplay *display = NULL;
 	char *page_id;
 
+	/* Save the page ID before we close the plugins, otherwise
+	 * we'll never save it properly */
+	page_id = totem_sidebar_get_current_page (totem);
+
 	/* Shut down the plugins first, allowing them to display modal dialogues (etc.) without threat of being killed from another thread */
 	if (totem != NULL && totem->engine != NULL)
-		totem_plugins_engine_shut_down (totem->engine);
+		totem_object_plugins_shutdown (totem);
 
 	/* Exit forcefully if we can't do the shutdown in 10 seconds */
 	g_thread_create ((GThreadFunc) totem_action_wait_force_exit,
@@ -974,11 +978,6 @@ totem_object_action_exit (TotemObject *totem)
 
 	if (totem->prefs != NULL)
 		gtk_widget_hide (totem->prefs);
-
-	/* Save the page ID before we close the plugins, otherwise
-	 * we'll never save it properly */
-	page_id = totem_sidebar_get_current_page (totem);
-	totem_object_plugins_shutdown (totem);
 
 	if (display != NULL)
 		gdk_display_sync (display);
