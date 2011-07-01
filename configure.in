@@ -72,7 +72,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto tracker youtube zeitgeist-dp grilo"
+allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto youtube zeitgeist-dp grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -436,13 +436,6 @@ for plugin in ${used_plugins}; do
 				add_plugin="0"
 			fi
 		;;
-		tracker)
-			PKG_CHECK_MODULES(TRACKER, tracker-sparql-0.10 >= 0.9.34, [HAVE_TRACKER=yes], [HAVE_TRACKER=no])
-			if test "${HAVE_TRACKER}" != "yes" ; then
-				plugin_error_or_ignore "you need the tracker development headers installed for the tracker plugin"
-				add_plugin="0"
-			fi
-		;;
 		sample-vala)
 			if test "${with_vala}" != "yes" ; then
 				plugin_error_or_ignore "you need vala installed to use the sample-vala plugin"
@@ -773,7 +766,6 @@ src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
 src/plugins/samplepython/Makefile
 src/plugins/sample-vala/Makefile
-src/plugins/tracker/Makefile
 src/plugins/youtube/Makefile
 src/plugins/pythonconsole/Makefile
 src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
