@@ -7,23 +7,23 @@
 # Baltasar Perez Diaz <baltasar.perez@hispalinux.es>, 2002.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Juanje Ojeda Croissier <jojeda@emergya.es>, 2008.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-20 17:35+0000\n"
-"PO-Revision-Date: 2011-06-20 19:45+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-06-30 13:53+0000\n"
+"PO-Revision-Date: 2011-06-30 16:42+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 1.9.3\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Spanish\n"
 
 #: ../data/fullscreen.ui.h:1
@@ -1015,12 +1015,12 @@ msgstr "Extensiones"
 #: ../src/eggfileformatchooser.c:657
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"El programa no pudo encontrar el formato de archivo que quiere usar para "
-"«%s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
+"El programa no pudo encontrar el formato de archivo que quiere usar para «%"
+"s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
 "manualmente un formato de archivo de la lista inferior."
 
 #: ../src/eggfileformatchooser.c:664
@@ -1098,23 +1098,21 @@ msgid_plural "%d seconds"
 msgstr[0] "%d segundo"
 msgstr[1] "%d segundos"
 
-#. hour:minutes:seconds
+#. 5 hours 2 minutes 12 seconds
 #: ../src/properties/bacon-video-widget-properties.c:167
 #, c-format
+#| msgid "%s %s %s"
+msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s:%s:%s"
 
-#. minutes:seconds
+#. 2 minutes 12 seconds
 #: ../src/properties/bacon-video-widget-properties.c:170
 #, c-format
+#| msgid "%s %s"
+msgctxt "time"
 msgid "%s %s"
 msgstr "%s:%s"
-
-#. seconds
-#: ../src/properties/bacon-video-widget-properties.c:173
-#, c-format
-msgid "%s"
-msgstr "%s"
 
 #: ../src/properties/bacon-video-widget-properties.c:237
 #, c-format
@@ -1143,21 +1141,21 @@ msgstr "Cancelar"
 msgid "No File"
 msgstr "Ningún archivo"
 
-#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
+#: ../src/totem-interface.c:181 ../src/totem-interface.c:224
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "No se pudo cargar la interfaz «%s». %s"
 
-#: ../src/totem-interface.c:180
+#: ../src/totem-interface.c:181
 msgid "The file does not exist."
 msgstr "El archivo no existe."
 
-#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
-#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
+#: ../src/totem-interface.c:183 ../src/totem-interface.c:185
+#: ../src/totem-interface.c:226 ../src/totem-interface.c:228
 msgid "Make sure that Totem is properly installed."
 msgstr "Asegúrese de que Totem está instalado correctamente."
 
-#: ../src/totem-interface.c:346
+#: ../src/totem-interface.c:347
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1169,7 +1167,7 @@ msgstr ""
 "se publica por la Free Software Foundation; tanto en la versión 2de la "
 "Licencia, como a (su elección) cualquier versión posterior."
 
-#: ../src/totem-interface.c:350
+#: ../src/totem-interface.c:351
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1181,7 +1179,7 @@ msgstr ""
 "ADECUACIÓN PARA UN PROPÓSITO PARTICULAR. Vea la Licencia Publica General "
 "para más detalles."
 
-#: ../src/totem-interface.c:354
+#: ../src/totem-interface.c:355
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1191,7 +1189,7 @@ msgstr ""
 "con este programa. De lo contrario, escriba a la Free Software Foundation, "
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, EE. UU."
 
-#: ../src/totem-interface.c:357
+#: ../src/totem-interface.c:358
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1912,15 +1910,13 @@ msgid ""
 "using a sound server."
 msgstr ""
 "La salida de sonido la está usando otra aplicación. Seleccione otra salida "
-"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar "
-"usar un servidor de sonido."
+"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar usar "
+"un servidor de sonido."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3302
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3308
 #, c-format
-#| msgid ""
-#| "The playback of this movie requires a %s plugin which is not installed."
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following decoders which are not "
@@ -2698,7 +2694,7 @@ msgid "_Name:"
 msgstr "_Nombre:"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:387
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:385
 #: ../src/plugins/screenshot/totem-screenshot.c:64
 msgid "Screenshot.png"
 msgstr "Pantallazo.png"
@@ -3005,6 +3001,40 @@ msgstr ""
 "rpdb2. Si no ha establecido una contraseña para el depurador en DConf, se "
 "usará la contraseña predeterminada («totem»)."
 
+#: ../src/plugins/grilo/grilo.plugin.in.h:1
+#| msgid "A plugin to let you browse YouTube videos."
+msgid "A plugin to let you browse media content from various sources."
+msgstr ""
+"Un complemento que le permite examinar contenido multimedia desde varias "
+"fuentes."
+
+#: ../src/plugins/grilo/grilo.plugin.in.h:2
+#| msgid "YouTube Browser"
+msgid "Grilo Browser"
+msgstr "Examinador Grilo"
+
+#: ../src/plugins/grilo/totem-grilo.c:452
+#| msgid "File Error"
+msgid "Browse Error"
+msgstr "Error al explorar"
+
+#: ../src/plugins/grilo/totem-grilo.c:598
+#| msgid "Generic Error."
+msgid "Search Error"
+msgstr "Error al buscar"
+
+#: ../src/plugins/grilo/totem-grilo.c:1206
+msgid "Browse"
+msgstr "Examinar"
+
+#: ../src/plugins/grilo/totem-grilo.c:1268
+#| msgid "_Search"
+msgid "Search"
+msgstr "Buscar"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
 #~ msgid ""
 #~ "The playback of this movie requires the following decoders which are not "
 #~ "installed:\n"
@@ -3081,9 +3111,6 @@ msgstr ""
 #~ msgid "Could not get name and thumbnail for %s: %s"
 #~ msgstr "No se pudo obtener el nombre y la miniatura para %s: %s"
 
-#~ msgid "File Error"
-#~ msgstr "Error de archivo"
-
 #~ msgid "Set the window icon to the thumbnail of the playing movie"
 #~ msgstr ""
 #~ "Establecer el icono de la ventana a la miniatura de la película en "
@@ -3153,33 +3180,33 @@ msgstr ""
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
+#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Velocidad aproximada de la red, usado para seleccionar la calidad para el "
 #~ "contenido multimedia sobre la red: «0» para módem de 14.4 Kbps, «1» para "
 #~ "módem de 19.2 Kbps, «2» para módem de 28.8 Kbps, «3» para módem de 33.6 "
-#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» "
-#~ "para RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para "
-#~ "DSL/cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/"
-#~ "Intranet/LAN de 1.5 Mbps, «11» para Intranet/LAN."
+#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» para "
+#~ "RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para DSL/"
+#~ "cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/Intranet/"
+#~ "LAN de 1.5 Mbps, «11» para Intranet/LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 #~ "normal, \"2\" for large, \"3\" for extra large."
 #~ msgstr ""
-#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, "
-#~ "«1» para normal, «2» para grande, «3» para extra grande."
+#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, «1» "
+#~ "para normal, «2» para grande, «3» para extra grande."
 
 #~ msgid ""
 #~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, "
-#~ "«2» para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
+#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, «2» "
+#~ "para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
@@ -3430,9 +3457,6 @@ msgstr ""
 #~ msgid "This movie could not be opened."
 #~ msgstr "Esta película no pudo abrirse."
 
-#~ msgid "Generic Error."
-#~ msgstr "Error genérico."
-
 #~ msgid ""
 #~ "Video codec '%s' is not handled. You might need to install additional "
 #~ "plugins to be able to play some types of movies"
@@ -3499,9 +3523,6 @@ msgstr ""
 
 #~ msgid "Close"
 #~ msgstr "Cerrar"
-
-#~ msgid "_Search"
-#~ msgstr "_Buscar"
 
 #~ msgid "TV-Out"
 #~ msgstr "Salida de TV"
