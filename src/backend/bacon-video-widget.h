@@ -260,6 +260,7 @@ void bacon_video_widget_set_referrer             (BaconVideoWidget *bvw,
  * @BVW_INFO_DURATION: the stream's duration, in seconds
  * @BVW_INFO_TRACK_NUMBER: the track number of the work on the album
  * @BVW_INFO_COVER: a #GdkPixbuf of the cover artwork
+ * @BVW_INFO_CONTAINER: the type of stream container
  * @BVW_INFO_HAS_VIDEO: whether the stream has video
  * @BVW_INFO_DIMENSION_X: the video's width, in pixels
  * @BVW_INFO_DIMENSION_Y: the video's height, in pixels
