@@ -769,6 +769,18 @@ browser_activated_cb (GtkTreeView *tree_view,
 }
 
 static void
+search_source_changed_cb (GtkComboBox *combo,
+			  TotemGriloPlugin *self)
+{
+	if (self->priv->search_id > 0) {
+		grl_metadata_source_cancel (GRL_METADATA_SOURCE (self->priv->search_source),
+					    self->priv->search_id);
+		self->priv->search_id = 0;
+	}
+	gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
+}
+
+static void
 search_activated_cb (GtkIconView *icon_view,
                      GtkTreePath *path,
                      gpointer user_data)
@@ -1224,6 +1236,10 @@ setup_sidebar_search (TotemGriloPlugin *self,
 	                                      GTK_SORT_ASCENDING);
 
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
+
+	g_signal_connect (self->priv->search_sources_list,
+			  "changed",
+			  G_CALLBACK (search_source_changed_cb), self);
 
 	g_signal_connect (self->priv->search_results_view,
 	                  "item-activated",
