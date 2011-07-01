@@ -72,7 +72,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer jamendo lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto youtube zeitgeist-dp grilo"
+allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto youtube zeitgeist-dp grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -771,8 +771,6 @@ src/plugins/pythonconsole/Makefile
 src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
 src/plugins/publish/Makefile
 src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in
-src/plugins/jamendo/Makefile
-src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in
 src/plugins/brasero-disc-recorder/Makefile
 src/plugins/chapters/Makefile
 src/plugins/zeitgeist-dp/Makefile
