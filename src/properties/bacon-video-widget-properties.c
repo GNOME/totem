@@ -170,7 +170,7 @@ totem_time_to_string_text (gint64 msecs)
 		string = g_strdup_printf (C_("time", "%s %s"), mins, secs);
 	} else if (sec > 0) {
 		/* 10 seconds */
-		string = g_strdup_printf (secs);
+		string = g_strdup (secs);
 	} else {
 		/* 0 seconds */
 		string = g_strdup (_("0 seconds"));
