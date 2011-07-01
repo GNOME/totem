@@ -297,6 +297,9 @@ totem_sidebar_set_current_page (Totem *totem,
 {
 	int page_num;
 
+	if (page_id == NULL)
+		return;
+
 	page_num = get_page_num_for_name (totem, page_id);
 
 	if (page_num == -1) {
