@@ -99,7 +99,7 @@ int main
 	    g_strv_length (filenames) > 1) {
 		char *help;
 		help = g_option_context_get_help (context, TRUE, NULL);
-		g_print (help);
+		g_print ("%s", help);
 		g_free (help);
 		return 1;
 	}

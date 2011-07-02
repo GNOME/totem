@@ -408,7 +408,7 @@ set_display_pixel_aspect_ratio (GdkScreen *screen,
     {4, 3}                      /*  800x600 on 16:9 display */
   };
   guint i;
-  gint index;
+  gint par_index;
   gdouble ratio;
   gdouble delta;
 
@@ -422,20 +422,20 @@ set_display_pixel_aspect_ratio (GdkScreen *screen,
   GST_DEBUG ("calculated pixel aspect ratio: %f", ratio);
   /* now find the one from par[][2] with the lowest delta to the real one */
   delta = DELTA (0);
-  index = 0;
+  par_index = 0;
 
   for (i = 1; i < sizeof (par) / (sizeof (gint) * 2); ++i) {
     gdouble this_delta = DELTA (i);
 
     if (this_delta < delta) {
-      index = i;
+      par_index = i;
       delta = this_delta;
     }
   }
 
-  GST_DEBUG ("Decided on index %d (%d/%d)", index,
-	     par[index][0], par[index][1]);
-  gst_value_set_fraction (value, par[index][0], par[index][1]);
+  GST_DEBUG ("Decided on index %d (%d/%d)", par_index,
+	     par[par_index][0], par[par_index][1]);
+  gst_value_set_fraction (value, par[par_index][0], par[par_index][1]);
 }
 
 static void
@@ -1414,6 +1414,9 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
         gst_query_unref (cmds_q);
         goto done;
       }
+      case GST_NAVIGATION_MESSAGE_ANGLES_CHANGED:
+      case GST_NAVIGATION_MESSAGE_INVALID:
+        goto unhandled;
       default:
         break;
     }
@@ -2036,6 +2039,19 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_STREAM_STATUS:
       break;
 
+    case GST_MESSAGE_UNKNOWN:
+    case GST_MESSAGE_INFO:
+    case GST_MESSAGE_STEP_DONE:
+    case GST_MESSAGE_STRUCTURE_CHANGE:
+    case GST_MESSAGE_SEGMENT_START:
+    case GST_MESSAGE_SEGMENT_DONE:
+    case GST_MESSAGE_LATENCY:
+    case GST_MESSAGE_ASYNC_START:
+    case GST_MESSAGE_REQUEST_STATE:
+    case GST_MESSAGE_STEP_START:
+    case GST_MESSAGE_QOS:
+    case GST_MESSAGE_PROGRESS:
+    case GST_MESSAGE_ANY:
     default:
       GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
       break;
@@ -5316,8 +5332,11 @@ bacon_video_widget_get_mrls (BaconVideoWidget * bvw,
       g_set_error_literal (error, BVW_ERROR, BVW_ERROR_INVALID_LOCATION,
                            "XXX Do not use XXX");
       return NULL;
+    case MEDIA_TYPE_DATA:
+    case MEDIA_TYPE_DVB:
+    case MEDIA_TYPE_ERROR:
     default:
-      g_assert_not_reached();
+      g_assert_not_reached ();
   }
 
   if (mrls == NULL)
@@ -5538,6 +5557,19 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       }
       break;
     }
+
+    case BVW_INFO_DURATION:
+    case BVW_INFO_TRACK_NUMBER:
+    case BVW_INFO_COVER:
+    case BVW_INFO_HAS_VIDEO:
+    case BVW_INFO_DIMENSION_X:
+    case BVW_INFO_DIMENSION_Y:
+    case BVW_INFO_VIDEO_BITRATE:
+    case BVW_INFO_FPS:
+    case BVW_INFO_HAS_AUDIO:
+    case BVW_INFO_AUDIO_BITRATE:
+    case BVW_INFO_AUDIO_SAMPLE_RATE:
+      /* Not strings */
     default:
       g_assert_not_reached ();
     }
@@ -5629,6 +5661,20 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
       }
       break;
     }
+
+    case BVW_INFO_TITLE:
+    case BVW_INFO_ARTIST:
+    case BVW_INFO_YEAR:
+    case BVW_INFO_COMMENT:
+    case BVW_INFO_ALBUM:
+    case BVW_INFO_COVER:
+    case BVW_INFO_CONTAINER:
+    case BVW_INFO_HAS_VIDEO:
+    case BVW_INFO_VIDEO_CODEC:
+    case BVW_INFO_HAS_AUDIO:
+    case BVW_INFO_AUDIO_CODEC:
+    case BVW_INFO_AUDIO_CHANNELS:
+      /* Not ints */
     default:
       g_assert_not_reached ();
     }
@@ -5665,6 +5711,26 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
     case BVW_INFO_HAS_AUDIO:
       boolean = bvw->priv->media_has_audio;
       break;
+
+    case BVW_INFO_TITLE:
+    case BVW_INFO_ARTIST:
+    case BVW_INFO_YEAR:
+    case BVW_INFO_COMMENT:
+    case BVW_INFO_ALBUM:
+    case BVW_INFO_DURATION:
+    case BVW_INFO_TRACK_NUMBER:
+    case BVW_INFO_COVER:
+    case BVW_INFO_CONTAINER:
+    case BVW_INFO_DIMENSION_X:
+    case BVW_INFO_DIMENSION_Y:
+    case BVW_INFO_VIDEO_BITRATE:
+    case BVW_INFO_VIDEO_CODEC:
+    case BVW_INFO_FPS:
+    case BVW_INFO_AUDIO_BITRATE:
+    case BVW_INFO_AUDIO_CODEC:
+    case BVW_INFO_AUDIO_SAMPLE_RATE:
+    case BVW_INFO_AUDIO_CHANNELS:
+      /* Not bools */
     default:
       g_assert_not_reached ();
   }
@@ -6091,22 +6157,22 @@ bacon_video_widget_new (GError ** error)
   gst_element_set_state (audio_sink, GST_STATE_NULL);
 
   do {
-    GstElement *bin;
-    GstPad *pad;
+    GstElement *audio_bin;
+    GstPad *audio_pad;
 
     bvw->priv->audio_capsfilter =
         gst_element_factory_make ("capsfilter", "audiofilter");
-    bin = gst_bin_new ("audiosinkbin");
-    gst_bin_add_many (GST_BIN (bin), bvw->priv->audio_capsfilter,
+    audio_bin = gst_bin_new ("audiosinkbin");
+    gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
         audio_sink, NULL);
     gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
         audio_sink, "sink");
 
-    pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
-    gst_element_add_pad (bin, gst_ghost_pad_new ("sink", pad));
-    gst_object_unref (pad);
+    audio_pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
+    gst_element_add_pad (audio_bin, gst_ghost_pad_new ("sink", audio_pad));
+    gst_object_unref (audio_pad);
 
-    audio_sink = bin;
+    audio_sink = audio_bin;
   } while (0);
 
   /* now tell playbin */
