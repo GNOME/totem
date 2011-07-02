@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-06-20 17:46+0000\n"
-"PO-Revision-Date: 2011-06-21 12:03+0100\n"
+"POT-Creation-Date: 2011-07-02 12:30+0000\n"
+"PO-Revision-Date: 2011-07-02 20:27+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-Country: SLOVENIA\n"
@@ -211,14 +211,13 @@ msgstr "Dodaj posnetek na seznam predvajanja"
 
 #: ../data/video-list.ui.h:3
 #: ../src/totem-dnd-menu.c:97
-#: ../src/plugins/jamendo/jamendo.ui.h:9
 msgid "_Add to Playlist"
 msgstr "_Dodaj na seznam predvajanja"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1
 #: ../data/totem.ui.h:53
-#: ../src/totem-object.c:1659
+#: ../src/totem-object.c:1658
 msgid "Movie Player"
 msgstr "Predvajalnik posnetkov"
 
@@ -581,7 +580,7 @@ msgstr "Začni s predvajanjem od zadaj naprej"
 
 #: ../data/totem.ui.h:96
 #: ../src/totem-properties-view.c:214
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5530
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5551
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -1064,23 +1063,19 @@ msgstr[1] "%d sekunda"
 msgstr[2] "%d sekundi"
 msgstr[3] "%d sekunde"
 
-#. hour:minutes:seconds
+#. 5 hours 2 minutes 12 seconds
 #: ../src/properties/bacon-video-widget-properties.c:167
 #, c-format
+msgctxt "time"
 msgid "%s %s %s"
 msgstr "%s %s %s"
 
-#. minutes:seconds
+#. 2 minutes 12 seconds
 #: ../src/properties/bacon-video-widget-properties.c:170
 #, c-format
+msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
-
-#. seconds
-#: ../src/properties/bacon-video-widget-properties.c:173
-#, c-format
-msgid "%s"
-msgstr "%s"
 
 #: ../src/properties/bacon-video-widget-properties.c:237
 #, c-format
@@ -1091,7 +1086,7 @@ msgstr[1] "%d sličica na sekundo"
 msgstr[2] "%d sličici na sekundo"
 msgstr[3] "%d sličice na sekundo"
 
-#: ../src/totem-audio-preview.c:139
+#: ../src/totem-audio-preview.c:166
 msgid "Audio Preview"
 msgstr "Poslušanje zvočne datoteke"
 
@@ -1111,36 +1106,36 @@ msgstr "Prekliči"
 msgid "No File"
 msgstr "Ni datoteke"
 
-#: ../src/totem-interface.c:180
-#: ../src/totem-interface.c:223
+#: ../src/totem-interface.c:181
+#: ../src/totem-interface.c:224
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Ni mogoče naložiti vmesnika '%s'. %s"
 
-#: ../src/totem-interface.c:180
+#: ../src/totem-interface.c:181
 msgid "The file does not exist."
 msgstr "Datoteka ne obstaja."
 
-#: ../src/totem-interface.c:182
-#: ../src/totem-interface.c:184
-#: ../src/totem-interface.c:225
-#: ../src/totem-interface.c:227
+#: ../src/totem-interface.c:183
+#: ../src/totem-interface.c:185
+#: ../src/totem-interface.c:226
+#: ../src/totem-interface.c:228
 msgid "Make sure that Totem is properly installed."
 msgstr "Prepričajte se, da je totem pravilno nameščen."
 
-#: ../src/totem-interface.c:346
+#: ../src/totem-interface.c:347
 msgid "Totem is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version."
 msgstr "Totem je prosta programska oprema; lahko ga širite in spreminjati pod pogoji GNU Splošnega javnega dovoljenja kot to določa Free Software Foundation; različica 2  ali kasnejše različice."
 
-#: ../src/totem-interface.c:350
+#: ../src/totem-interface.c:351
 msgid "Totem is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
 msgstr "Totem se lahko razširja prosto, vendar brez kakršnekoli garancije. Za več podrobnosti si poglejte GNU Splošno javno dovoljenje."
 
-#: ../src/totem-interface.c:354
+#: ../src/totem-interface.c:355
 msgid "You should have received a copy of the GNU General Public License along with Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 msgstr "S programom bi morali dobiti tudi kopijo GNU splošnega javnega dovoljenja; če ga niste, pišite na Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:357
+#: ../src/totem-interface.c:358
 msgid "Totem contains an exception to allow the use of proprietary GStreamer plugins."
 msgstr "Program Totem ima dovoljenje za uporabo zaščitenih GStreamer vstavkov."
 
@@ -1206,132 +1201,132 @@ msgstr "Nastavitve vstavkov"
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1039
+#: ../src/totem-object.c:1038
 #: ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Predvajanje"
 
-#: ../src/totem-object.c:1041
+#: ../src/totem-object.c:1040
 #: ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Premor"
 
-#: ../src/totem-object.c:1046
+#: ../src/totem-object.c:1045
 #: ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "V premoru"
 
-#: ../src/totem-object.c:1048
-#: ../src/totem-object.c:1058
+#: ../src/totem-object.c:1047
+#: ../src/totem-object.c:1057
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Predvajaj"
 
-#: ../src/totem-object.c:1053
-#: ../src/totem-object.c:1651
+#: ../src/totem-object.c:1052
+#: ../src/totem-object.c:1650
 #: ../src/totem-statusbar.c:115
 #: ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Zaustavljeno"
 
-#: ../src/totem-object.c:1134
-#: ../src/totem-object.c:1161
-#: ../src/totem-object.c:1791
-#: ../src/totem-object.c:1955
+#: ../src/totem-object.c:1133
+#: ../src/totem-object.c:1160
+#: ../src/totem-object.c:1790
+#: ../src/totem-object.c:1954
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "S programom totem ni mogoče predvajati '%s'."
 
-#: ../src/totem-object.c:1238
+#: ../src/totem-object.c:1237
 #, c-format
 msgid "Totem could not play this media (%s) although a plugin is present to handle it."
 msgstr "S programom Totem ni mogoče predvajati te vrste posnetka (%s), čeprav je vstavek pravilno naložen."
 
-#: ../src/totem-object.c:1239
+#: ../src/totem-object.c:1238
 msgid "You might want to check that a disc is present in the drive and that it is correctly configured."
 msgstr "Preverite, da je disk v pogonu in ali je pogon pravilno nastavljen."
 
-#: ../src/totem-object.c:1247
+#: ../src/totem-object.c:1246
 msgid "More information about media plugins"
 msgstr "Več podrobnosti o vstavkih zapisov posnetkov"
 
-#: ../src/totem-object.c:1248
+#: ../src/totem-object.c:1247
 msgid "Please install the necessary plugins and restart Totem to be able to play this media."
 msgstr "Naložite zahtevane vstavke in ponovno zaženite program za predvajanje tega vrste posnetka."
 
-#: ../src/totem-object.c:1250
+#: ../src/totem-object.c:1249
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."
 msgstr "S programom Totem ni mogoče predvajati te vrste posnetka (%s), ker ni nameščenih ustreznih vstavkov za predvajanje."
 
-#: ../src/totem-object.c:1252
+#: ../src/totem-object.c:1251
 #, c-format
 msgid "Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."
 msgstr "S programom Totem ni mogoče predvajati te vrste posnetka (%s), ker ni ustreznih vstavkov za predvajanje."
 
-#: ../src/totem-object.c:1255
+#: ../src/totem-object.c:1254
 #, c-format
 msgid "Totem cannot play this type of media (%s) because it is not supported."
 msgstr "S programom Totem ni mogoče predvajati te vrste posnetka (%s), ker ta vrsta ni podprta."
 
-#: ../src/totem-object.c:1256
+#: ../src/totem-object.c:1255
 msgid "Please insert another disc to play back."
 msgstr "Vstavite nov disk za predvajanje."
 
-#: ../src/totem-object.c:1292
+#: ../src/totem-object.c:1291
 msgid "Totem was not able to play this disc."
 msgstr "Ni mogoče predvajati diska."
 
-#: ../src/totem-object.c:1293
-#: ../src/totem-object.c:4221
+#: ../src/totem-object.c:1292
+#: ../src/totem-object.c:4220
 msgid "No reason."
 msgstr "Brez razloga."
 
-#: ../src/totem-object.c:1307
+#: ../src/totem-object.c:1306
 msgid "Totem does not support playback of Audio CDs"
 msgstr "Program Totem ne podpira predvajanja zvočnih CD-jev"
 
-#: ../src/totem-object.c:1308
+#: ../src/totem-object.c:1307
 msgid "Please consider using a music player or a CD extractor to play this CD"
 msgstr "Uporabite predvajalnik glasbe ali pa pretvorite zapis na zvočnem CD-ju."
 
-#: ../src/totem-object.c:1797
+#: ../src/totem-object.c:1796
 msgid "No error message"
 msgstr "Ni sporočil o napakah"
 
-#: ../src/totem-object.c:2146
+#: ../src/totem-object.c:2145
 msgid "Totem could not display the help contents."
 msgstr "Ni mogoče zagnati vsebine pomoči."
 
-#: ../src/totem-object.c:2485
-#: ../src/totem-object.c:2487
+#: ../src/totem-object.c:2484
+#: ../src/totem-object.c:2486
 #: ../browser-plugin/totem-plugin-viewer.c:1466
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: ../src/totem-object.c:4056
-#: ../src/totem-object.c:4058
+#: ../src/totem-object.c:4055
+#: ../src/totem-object.c:4057
 msgid "Previous Chapter/Movie"
 msgstr "Predhodno poglavje/film"
 
-#: ../src/totem-object.c:4065
-#: ../src/totem-object.c:4067
+#: ../src/totem-object.c:4064
+#: ../src/totem-object.c:4066
 msgid "Play / Pause"
 msgstr "Predvajaj / Premor"
 
-#: ../src/totem-object.c:4075
-#: ../src/totem-object.c:4077
+#: ../src/totem-object.c:4074
+#: ../src/totem-object.c:4076
 msgid "Next Chapter/Movie"
 msgstr "Naslednje poglavje/film"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4089
-#: ../src/totem-object.c:4091
+#: ../src/totem-object.c:4088
+#: ../src/totem-object.c:4090
 msgid "Fullscreen"
 msgstr "Celozaslonski način"
 
-#: ../src/totem-object.c:4221
+#: ../src/totem-object.c:4220
 msgid "Totem could not startup."
 msgstr "Programa Totem ni mogoče zagnati"
 
@@ -1511,12 +1506,12 @@ msgid "N/A"
 msgstr "ni podatka"
 
 #: ../src/totem-properties-view.c:210
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5526
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5547
 msgid "Surround"
 msgstr "Surround sistem zvoka"
 
 #: ../src/totem-properties-view.c:212
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5528
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5549
 msgid "Mono"
 msgstr "Mono"
 
@@ -1744,7 +1739,7 @@ msgstr "Ni video naslova URI"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:817
+#: ../src/totem-video-thumbnailer.c:872
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1755,15 +1750,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:818
+#: ../src/totem-video-thumbnailer.c:873
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: ../src/totem-video-thumbnailer.c:820
+#: ../src/totem-video-thumbnailer.c:875
 msgid "Resolution"
 msgstr "Ločljivost"
 
-#: ../src/totem-video-thumbnailer.c:823
+#: ../src/totem-video-thumbnailer.c:878
 msgid "Duration"
 msgstr "Trajanje"
 
@@ -1827,45 +1822,45 @@ msgstr "Ni mogoče naložiti knjižnic varovanja niti."
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Preverite sistemske nastavitve. Totem bo končan."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1576
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1579
 msgid "Password requested for RTSP server"
 msgstr "Zahtevano je geslo za dostop do RTSP strežnika"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2818
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2822
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2836
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2840
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Zvočna sled #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2850
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2854
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2868
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2872
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Podnapis #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3258
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3276
 msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Zahtevanega odvoda zvoka ni mogoče najti. Izberite drug odvod zvoka med sistemskimi nastavitvami."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3263
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3281
 msgid "Location not found."
 msgstr "Mesta ni mogoče najti."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3267
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3285
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "Ni mogoče odpreti želenega mesta; morda nimate ustreznih dovoljenj."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3278
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3296
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
 msgstr "Odvod slike uporablja drug program. Ustavite program, ki zaseda odvod, ali pa izberite nov odvod med nastavitvami sistema."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3284
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3302
 msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
 msgstr "Odvod zvoka uporablja drug program. Ustavite program, ki zaseda izhod, ali pa izberite nov odvod med nastavitvami sistema. Razmislite o uporabi zvočnega strežnika."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3302
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3308
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3320
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3326
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -1886,23 +1881,23 @@ msgstr[3] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3334
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3352
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Ni mogoče predvajanje preko omrežja. Poskusite prenesti datoteko na disk."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5766
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5834
 msgid "Media contains no supported video streams."
 msgstr "Posnetek ne vsebuje podprtih pretokov slike."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5941
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6009
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Napaka med ustvarjanjem GStreamer predmeta predvajanja. Preverite nastavitve."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6059
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6127
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Napaka med odpiranjem zvočnega odvoda. Morda ni ustreznih sistemskih dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ne deluje. Izberite drug zvočni odvod v sistemskih nastavitvah."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6079
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6147
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
 msgstr "Ni mogoče najti odvoda zvoka. Naložiti je treba dodatne GStreamer vstavke ali pa je treba izbrati drug odvod slike med sistemskimi nastavitvami."
 
@@ -2205,172 +2200,6 @@ msgstr "<ni določenega razloga>"
 msgid "Programme unavailable (\"%s\")"
 msgstr "Program ni na voljo (\"%s\")"
 
-#: ../src/plugins/jamendo/jamendo.ui.h:1
-msgid "By artist"
-msgstr "po izvajalcu"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:2
-msgid "By tag"
-msgstr "po oznaki"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:3
-msgid "Jamendo Album Page"
-msgstr "Jamendo stran albuma"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:4
-msgid "Latest Releases"
-msgstr "Najnovejše objave"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:5
-msgid "Number of albums to _retrieve:"
-msgstr "_Zahtevano število albumov:"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:6
-msgid "Popular"
-msgstr "Priljubljeno"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:7
-msgid "Preferred audio _format:"
-msgstr "Prednostni _zapis zvoka:"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:8
-#: ../src/plugins/tracker/totem-tracker-widget.c:761
-#: ../src/plugins/youtube/youtube.ui.h:2
-msgid "Search Results"
-msgstr "Rezultati iskanja"
-
-#: ../src/plugins/jamendo/jamendo.ui.h:10
-msgid "_Open Jamendo Album Page in Browser"
-msgstr "_Odpri Jamendo stran albuma v brskalniku"
-
-#: ../src/plugins/jamendo/jamendo.plugin.in.h:1
-#: ../src/plugins/jamendo/jamendo.py:157
-msgid "Jamendo"
-msgstr "Jamendo"
-
-#: ../src/plugins/jamendo/jamendo.plugin.in.h:2
-msgid "Listen to the large collection of Creative Commons licensed music on Jamendo."
-msgstr "Poslušajte glasbo z velike zbirke Creative Commons na Jamendo strežnikih."
-
-#: ../src/plugins/jamendo/jamendo.py:62
-msgid "You need to install the Python simplejson module."
-msgstr "Namestiti morate modul python simplejson."
-
-#: ../src/plugins/jamendo/jamendo.py:301
-#: ../src/plugins/jamendo/jamendo.py:318
-#: ../src/plugins/jamendo/jamendo.py:342
-#, python-format
-msgid "Artist: %s"
-msgstr "Izvajalec: %s"
-
-#: ../src/plugins/jamendo/jamendo.py:309
-msgid "%Y-%m-%d"
-msgstr "%d.%m.%Y"
-
-#. Translators: this is the release time of an album in Python
-#. strftime format
-#: ../src/plugins/jamendo/jamendo.py:312
-#, python-format
-msgid "%x"
-msgstr "%x"
-
-#: ../src/plugins/jamendo/jamendo.py:319
-#, python-format
-msgid "Genre: %s"
-msgstr "Zvrst: %s"
-
-#: ../src/plugins/jamendo/jamendo.py:320
-#, python-format
-msgid "Released on: %s"
-msgstr "Izdano dne: %s"
-
-#: ../src/plugins/jamendo/jamendo.py:321
-#, python-format
-msgid "License: %s"
-msgstr "Dovoljenje: %s"
-
-#. track title
-#. Translators: this is the title of a track in Python format
-#. (first argument is the track number, second is the track title)
-#: ../src/plugins/jamendo/jamendo.py:334
-#, python-format
-msgid "%02d. %s"
-msgstr "%02d. %s"
-
-#: ../src/plugins/jamendo/jamendo.py:341
-#, python-format
-msgid "Album: %s"
-msgstr "Album: %s"
-
-#: ../src/plugins/jamendo/jamendo.py:343
-#, python-format
-msgid "Duration: %s"
-msgstr "Trajanje: %s"
-
-#: ../src/plugins/jamendo/jamendo.py:404
-msgid "Fetching albums, please wait…"
-msgstr "Prejemanje podatkov albumov ..."
-
-#: ../src/plugins/jamendo/jamendo.py:459
-#, python-format
-msgid ""
-"Failed to connect to Jamendo server.\n"
-"%s."
-msgstr ""
-"Napaka med povezovanjem s strežnikom Jamendo.\n"
-"%s."
-
-#: ../src/plugins/jamendo/jamendo.py:461
-#, python-format
-msgid "The Jamendo server returned code %s."
-msgstr "Strežnik Jamendo je odgovoril s kodo %s."
-
-#: ../src/plugins/jamendo/jamendo.py:465
-msgid "An error occurred while fetching albums."
-msgstr "Prišlo je do napake med pridobivanjem podatkov albuma."
-
-#. Translators: time formatting (in Python strftime format) for
-#. the Jamendo plugin for times longer than an hour
-#: ../src/plugins/jamendo/jamendo.py:675
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#. Translators: time formatting (in Python strftime format) for the
-#. Jamendo plugin for times shorter than an hour
-#: ../src/plugins/jamendo/jamendo.py:678
-msgid "%M:%S"
-msgstr "%M:%S"
-
-#. Translators: If Jamendo supports your language, replace "en"
-#. with the language code, enclosed in slashes, used to view
-#. pages in your language on the Jamendo website. e.g. For
-#. French, "en" would be translated to "fr", as Jamendo uses that
-#. in its URLs:
-#. http://www.jamendo.com/fr/album/4818
-#. Compared to:
-#. http://www.jamendo.com/en/album/4818
-#. If Jamendo doesn't support your language, *do not translate
-#. this string*!
-#: ../src/plugins/jamendo/jamendo.py:733
-msgid "en"
-msgstr "en"
-
-#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:1
-msgid "Audio format to download from Jamendo"
-msgstr "Zvočni zapis prejet preko spletišča Jamendo,"
-
-#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:2
-msgid "Number of results per page"
-msgstr "Število zadetkov na stran"
-
-#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:3
-msgid "The number of Jamendo search results to display in each page of results."
-msgstr "Število prikazanih rezultatov iskanja po strežniku Jamendo na posamezni strani."
-
-#: ../src/plugins/jamendo/org.gnome.totem.plugins.jamendo.gschema.xml.in.in.h:4
-msgid "The preferred audio format to download tracks from Jamendo in."
-msgstr "Prednostno uporabljeni zvočni zapis za prejemanje skladb preko strežnika Jamendo."
-
 #: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
 msgstr "Infrardeči daljinski upravljalnik"
@@ -2582,7 +2411,7 @@ msgid "_Name:"
 msgstr "_Ime:"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:387
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:385
 #: ../src/plugins/screenshot/totem-screenshot.c:64
 msgid "Screenshot.png"
 msgstr "slika.png"
@@ -2686,50 +2515,6 @@ msgstr "Preskoči na določen čas"
 msgid "_Skip to:"
 msgstr "Pre_skoči na:"
 
-#: ../src/plugins/tracker/totem-tracker-widget.c:587
-#: ../src/plugins/tracker/totem-tracker-widget.c:676
-msgid "Could not connect to Tracker"
-msgstr "Ni se mogoče povezati s programom Tracker."
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:594
-msgid "No results"
-msgstr "Ni rezultatov"
-
-#. Translators:
-#. * This is used to show which items are listed in the
-#. * list view, for example:
-#. *
-#. *   Showing 10-20 of 128 matches
-#. *
-#. * This is similar to what web searches use, eg.
-#. * Google on the top-right of their search results
-#. * page show:
-#. *
-#. *   Personalized Results 1 - 10 of about 4,130,000 for foobar
-#. *
-#.
-#: ../src/plugins/tracker/totem-tracker-widget.c:618
-#, c-format
-msgid "Showing %i - %i of %i match"
-msgid_plural "Showing %i - %i of %i matches"
-msgstr[0] "Prikazovanje %i - %i od %i zadetkov"
-msgstr[1] "Prikazovanje %i - %i od %i zadetka"
-msgstr[2] "Prikazovanje %i - %i od %i zadetkov"
-msgstr[3] "Prikazovanje %i - %i od %i zadetkov"
-
-#: ../src/plugins/tracker/totem-tracker-widget.c:827
-msgid "Page"
-msgstr "Stran"
-
-#: ../src/plugins/tracker/totem-tracker.c:65
-#: ../src/plugins/tracker/tracker.plugin.in.h:1
-msgid "Local Search"
-msgstr "Krajevno iskanje"
-
-#: ../src/plugins/tracker/tracker.plugin.in.h:2
-msgid "Search for local videos using Tracker"
-msgstr "Iskanje krajevnih posnetkov s pomočjo programa Tracker"
-
 #: ../src/plugins/youtube/youtube.plugin.in.h:1
 msgid "A plugin to let you browse YouTube videos."
 msgstr "Vstavek za brskanje med posnetki na spletišču YouTube."
@@ -2741,6 +2526,10 @@ msgstr "Brskalnik YouTube"
 #: ../src/plugins/youtube/youtube.ui.h:1
 msgid "Related Videos"
 msgstr "Sorodni posnetki"
+
+#: ../src/plugins/youtube/youtube.ui.h:2
+msgid "Search Results"
+msgstr "Rezultati iskanja"
 
 #: ../src/plugins/youtube/youtube.ui.h:3
 msgid "Videos"
@@ -2881,6 +2670,160 @@ msgstr "Totem python konzola"
 msgid "After you press OK, Totem will wait until you connect to it with winpdb or rpdb2. If you have not set a debugger password in DConf, it will use the default password ('totem')."
 msgstr "Po potrditvi ukaza, program počaka na povezavo preko winpdb ali rpdb2. V primeru, da ni določenega gesla v razhroščevalniku v DConf, bo uporabljeno privzeto geslo ('totem')."
 
+#: ../src/plugins/grilo/grilo.plugin.in.h:1
+msgid "A plugin to let you browse media content from various sources."
+msgstr "Vstavek za brskanje med posnetki predstavne vsebine različnih virov."
+
+#: ../src/plugins/grilo/grilo.plugin.in.h:2
+msgid "Grilo Browser"
+msgstr "Brskalnik Grilo"
+
+#: ../src/plugins/grilo/totem-grilo.c:452
+msgid "Browse Error"
+msgstr "Napaka med brskanjem"
+
+#: ../src/plugins/grilo/totem-grilo.c:599
+msgid "Search Error"
+msgstr "Napaka med iskanjem"
+
+#: ../src/plugins/grilo/totem-grilo.c:1220
+#: ../src/plugins/grilo/grilo.ui.h:1
+msgid "Browse"
+msgstr "Prebrskaj"
+
+#: ../src/plugins/grilo/totem-grilo.c:1286
+#: ../src/plugins/grilo/grilo.ui.h:2
+msgid "Search"
+msgstr "Iskanje"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid "By artist"
+#~ msgstr "po izvajalcu"
+
+#~ msgid "By tag"
+#~ msgstr "po oznaki"
+
+#~ msgid "Jamendo Album Page"
+#~ msgstr "Jamendo stran albuma"
+
+#~ msgid "Latest Releases"
+#~ msgstr "Najnovejše objave"
+
+#~ msgid "Number of albums to _retrieve:"
+#~ msgstr "_Zahtevano število albumov:"
+
+#~ msgid "Popular"
+#~ msgstr "Priljubljeno"
+
+#~ msgid "Preferred audio _format:"
+#~ msgstr "Prednostni _zapis zvoka:"
+
+#~ msgid "_Open Jamendo Album Page in Browser"
+#~ msgstr "_Odpri Jamendo stran albuma v brskalniku"
+
+#~ msgid "Jamendo"
+#~ msgstr "Jamendo"
+
+#~ msgid ""
+#~ "Listen to the large collection of Creative Commons licensed music on "
+#~ "Jamendo."
+#~ msgstr ""
+#~ "Poslušajte glasbo z velike zbirke Creative Commons na Jamendo strežnikih."
+
+#~ msgid "You need to install the Python simplejson module."
+#~ msgstr "Namestiti morate modul python simplejson."
+
+#~ msgid "Artist: %s"
+#~ msgstr "Izvajalec: %s"
+
+#~ msgid "%Y-%m-%d"
+#~ msgstr "%d.%m.%Y"
+
+#~ msgid "%x"
+#~ msgstr "%x"
+
+#~ msgid "Genre: %s"
+#~ msgstr "Zvrst: %s"
+
+#~ msgid "Released on: %s"
+#~ msgstr "Izdano dne: %s"
+
+#~ msgid "License: %s"
+#~ msgstr "Dovoljenje: %s"
+
+#~ msgid "%02d. %s"
+#~ msgstr "%02d. %s"
+
+#~ msgid "Album: %s"
+#~ msgstr "Album: %s"
+
+#~ msgid "Duration: %s"
+#~ msgstr "Trajanje: %s"
+
+#~ msgid "Fetching albums, please wait…"
+#~ msgstr "Prejemanje podatkov albumov ..."
+
+#~ msgid ""
+#~ "Failed to connect to Jamendo server.\n"
+#~ "%s."
+#~ msgstr ""
+#~ "Napaka med povezovanjem s strežnikom Jamendo.\n"
+#~ "%s."
+
+#~ msgid "The Jamendo server returned code %s."
+#~ msgstr "Strežnik Jamendo je odgovoril s kodo %s."
+
+#~ msgid "An error occurred while fetching albums."
+#~ msgstr "Prišlo je do napake med pridobivanjem podatkov albuma."
+
+#~ msgid "%H:%M:%S"
+#~ msgstr "%H:%M:%S"
+
+#~ msgid "%M:%S"
+#~ msgstr "%M:%S"
+
+#~ msgid "en"
+#~ msgstr "en"
+
+#~ msgid "Audio format to download from Jamendo"
+#~ msgstr "Zvočni zapis prejet preko spletišča Jamendo,"
+
+#~ msgid "Number of results per page"
+#~ msgstr "Število zadetkov na stran"
+
+#~ msgid ""
+#~ "The number of Jamendo search results to display in each page of results."
+#~ msgstr ""
+#~ "Število prikazanih rezultatov iskanja po strežniku Jamendo na posamezni "
+#~ "strani."
+
+#~ msgid "The preferred audio format to download tracks from Jamendo in."
+#~ msgstr ""
+#~ "Prednostno uporabljeni zvočni zapis za prejemanje skladb preko strežnika "
+#~ "Jamendo."
+
+#~ msgid "Could not connect to Tracker"
+#~ msgstr "Ni se mogoče povezati s programom Tracker."
+
+#~ msgid "No results"
+#~ msgstr "Ni rezultatov"
+
+#~ msgid "Showing %i - %i of %i match"
+
+#~ msgid_plural "Showing %i - %i of %i matches"
+#~ msgstr[0] "Prikazovanje %i - %i od %i zadetkov"
+#~ msgstr[1] "Prikazovanje %i - %i od %i zadetka"
+#~ msgstr[2] "Prikazovanje %i - %i od %i zadetkov"
+#~ msgstr[3] "Prikazovanje %i - %i od %i zadetkov"
+
+#~ msgid "Page"
+#~ msgstr "Stran"
+
+#~ msgid "Search for local videos using Tracker"
+#~ msgstr "Iskanje krajevnih posnetkov s pomočjo programa Tracker"
+
 #~ msgid ""
 #~ "The playback of this movie requires the following decoders which are not "
 #~ "installed:\n"
@@ -2955,9 +2898,6 @@ msgstr "Po potrditvi ukaza, program počaka na povezavo preko winpdb ali rpdb2. 
 #~ msgid "Could not get name and thumbnail for %s: %s"
 #~ msgstr "Ni mogoče pridobiti imena in sličice %s: %s"
 
-#~ msgid "File Error"
-#~ msgstr "Napaka datoteke"
-
 #~ msgid "Set the window icon to the thumbnail of the playing movie"
 #~ msgstr "Prenesi ikono okna med predvajanjem v sličico posnetka"
 
@@ -3022,24 +2962,25 @@ msgstr "Po potrditvi ukaza, program počaka na povezavo preko winpdb ali rpdb2. 
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
-#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
+#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Upravljanje hitrosti povezave pri izbiri kakovosti prenosa medijskih "
 #~ "vsebin preko spleta: \"0\" za 14.4 Kbps modem, \"1\" za 19.2 Kbps modem, "
 #~ "\"2\" zar 28.8 Kbps modem, \"3\" za 33.6 Kbps modem, \"4\" za 34.4 Kbps "
-#~ "modem, \"5\" za 56 Kbps modem/ISDN, \"6\" za 112 Kbps dvojni ISDN/DSL, \"7"
-#~ "\" za 256 Kbps DSL/kabel, \"8\" za 384 Kbps DSL/kabel, \"9\" za 512 Kbps "
-#~ "DSL/kabel, \"10\" za 1.5 Mbps T1/Intranet/LAN, \"11\" za Intranet/LAN."
+#~ "modem, \"5\" za 56 Kbps modem/ISDN, \"6\" za 112 Kbps dvojni ISDN/DSL, "
+#~ "\"7\" za 256 Kbps DSL/kabel, \"8\" za 384 Kbps DSL/kabel, \"9\" za 512 "
+#~ "Kbps DSL/kabel, \"10\" za 1.5 Mbps T1/Intranet/LAN, \"11\" za Intranet/"
+#~ "LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 #~ "normal, \"2\" for large, \"3\" for extra large."
 #~ msgstr ""
-#~ "Nastavitve kakovosti predočenja pri predvajanju zvoka: \"0\" za nizko, \"1"
-#~ "\" za običajno, \"2\" visoko, \"3\" zelo visoko."
+#~ "Nastavitve kakovosti predočenja pri predvajanju zvoka: \"0\" za nizko, "
+#~ "\"1\" za običajno, \"2\" visoko, \"3\" zelo visoko."
 
 #~ msgid ""
 #~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
@@ -3047,8 +2988,8 @@ msgstr "Po potrditvi ukaza, program počaka na povezavo preko winpdb ali rpdb2. 
 #~ "for AC3 Passthrough."
 #~ msgstr ""
 #~ "Vrsta uporabljenega zvočnega odvoda: \"0\" za stereo odvod, \"1\" za 4-"
-#~ "kanalni odvod, \"2\" za 5.0 kanalni odvod, \"3\" za 5.1 kanalni odvod, \"4"
-#~ "\" za AC3 prehod."
+#~ "kanalni odvod, \"2\" za 5.0 kanalni odvod, \"3\" za 5.1 kanalni odvod, "
+#~ "\"4\" za AC3 prehod."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
