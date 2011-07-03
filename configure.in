@@ -170,23 +170,42 @@ do
 done
 
 dnl Check the smclient backend
-GDK_TARGET="$($PKG_CONFIG --variable targets gdk-3.0)"
-
-SMCLIENT_PKGS=
 AC_MSG_CHECKING([which smclient backend to use])
 AC_ARG_WITH([smclient],
-  [AS_HELP_STRING([--with-smclient],[which smclient backend to use (xsmp/win32/quartz)])],
+  [AS_HELP_STRING([--with-smclient],[which smclient backend to use (auto/no/xsmp/win32/quartz)])],
   [],
-  [case "$GDK_TARGET" in
-    x11) with_smclient=xsmp SMCLIENT_PKGS="sm ice" ;;
-    win32|quartz) with_smclient=$GDK_TARGET ;;
-    *) with_smclient=no ;;
-   esac])
+  [with_smclient=auto])
+
+if test "$with_smclient" = "auto"; then
+	# There could be several targets, given in any order (see bgo#652999)
+	gdk_targets=`$PKG_CONFIG --variable targets gdk-3.0`
+	for target in $gdk_targets; do
+		case "$target" in
+			x11)
+				with_smclient=xsmp
+				PKG_CHECK_MODULES([SMCLIENT],[sm ice])
+				break
+				;;
+			win32)
+				with_smclient=win32
+				break
+				;;
+			quartz)
+				with_smclient=quartz
+				break
+				;;
+			*)
+				with_smclient=no
+				# Loop around and see if we find a better target next time
+				;;
+		esac
+	done
+fi
+
 AC_MSG_RESULT([$with_smclient])
 
 if test "$with_smclient" != "no"; then
-  PKG_CHECK_MODULES([SMCLIENT],[$SMCLIENT_PKGS])
-  AC_DEFINE([WITH_SMCLIENT],[1],[Define if smclient is enabled])
+	AC_DEFINE([WITH_SMCLIENT],[1],[Define if smclient is enabled])
 fi
 
 AM_CONDITIONAL([WITH_SMCLIENT],[test "$with_smclient" != "no"])
