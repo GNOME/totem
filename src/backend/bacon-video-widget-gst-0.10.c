@@ -6061,6 +6061,7 @@ bacon_video_widget_new (GError ** error)
 
   /* The logo */
   bvw->priv->logo_frame = totem_aspect_frame_new ();
+  clutter_actor_set_name (bvw->priv->logo_frame, "logo-frame");
   bvw->priv->logo = clutter_texture_new ();
   mx_bin_set_child (MX_BIN (bvw->priv->logo_frame), bvw->priv->logo);
   clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->logo_frame);
@@ -6073,6 +6074,7 @@ bacon_video_widget_new (GError ** error)
 
   /* The video */
   bvw->priv->frame = totem_aspect_frame_new ();
+  clutter_actor_set_name (bvw->priv->frame, "frame");
   mx_bin_set_child (MX_BIN (bvw->priv->frame), bvw->priv->texture);
 
   clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->frame);
