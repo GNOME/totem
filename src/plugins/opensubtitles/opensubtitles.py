@@ -594,7 +594,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
 
         results = search_thread.get_results ()
         if results:
-            self._apply_button.set_sensitive (True)
             for sub_data in results:
                 if not SUBTITLES_EXT.count (sub_data['SubFormat']):
                     continue
@@ -602,8 +601,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
                                         sub_data['SubFormat'],
                                         sub_data['SubRating'],
                                         sub_data['IDSubtitleFile'],])
-        else:
-            self._apply_button.set_sensitive (False)
 
         self._dialog.get_window ().set_cursor (None)
 
