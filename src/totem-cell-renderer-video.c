@@ -113,7 +113,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	 * so can be as large as reasonable.
 	 **/
 	g_object_class_install_property (object_class, PROP_THUMBNAIL,
-				g_param_spec_object ("thumbnail", NULL, NULL,
+				g_param_spec_object ("thumbnail", "Thumbnail", "A GdkPixbuf of a thumbnail of the video to display.",
 					GDK_TYPE_PIXBUF, G_PARAM_READWRITE));
 
 	/**
@@ -122,7 +122,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	 * The title of the video, as it should be displayed.
 	 **/
 	g_object_class_install_property (object_class, PROP_TITLE,
-				g_param_spec_string ("title", NULL, NULL,
+				g_param_spec_string ("title", "Title", "The title of the video, as it should be displayed.",
 					_("Unknown video"), G_PARAM_READWRITE));
 
 	/**
@@ -131,7 +131,7 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	 * A #PangoAlignment giving the text alignment for the video title.
 	 **/
 	g_object_class_install_property (object_class, PROP_ALIGNMENT,
-				g_param_spec_enum ("alignment", NULL, NULL,
+				g_param_spec_enum ("alignment", "Alignment", "A PangoAlignment giving the text alignment for the video title.",
 					PANGO_TYPE_ALIGNMENT,
 					PANGO_ALIGN_CENTER,
 					G_PARAM_READWRITE));
@@ -142,7 +142,8 @@ totem_cell_renderer_video_class_init (TotemCellRendererVideoClass *klass)
 	 * If %TRUE, a placeholder image should be used for the video thumbnail if a #TotemCellRendererVideo:thumbnail isn't provided.
 	 **/
 	g_object_class_install_property (object_class, PROP_USE_PLACEHOLDER,
-				g_param_spec_boolean ("use-placeholder", NULL, NULL,
+				g_param_spec_boolean ("use-placeholder", "Use placeholder?",
+				                      "Whether a placeholder image should be used for the video thumbnail.",
 					FALSE, G_PARAM_READWRITE));
 }
 

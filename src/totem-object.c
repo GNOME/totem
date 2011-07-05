@@ -159,7 +159,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * If %TRUE, Totem is in fullscreen mode.
 	 **/
 	g_object_class_install_property (object_class, PROP_FULLSCREEN,
-					 g_param_spec_boolean ("fullscreen", NULL, NULL,
+					 g_param_spec_boolean ("fullscreen", "Fullscreen?", "Whether Totem is in fullscreen mode.",
 							       FALSE, G_PARAM_READABLE));
 
 	/**
@@ -168,7 +168,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * If %TRUE, Totem is playing an audio or video file.
 	 **/
 	g_object_class_install_property (object_class, PROP_PLAYING,
-					 g_param_spec_boolean ("playing", NULL, NULL,
+					 g_param_spec_boolean ("playing", "Playing?", "Whether Totem is currently playing a file.",
 							       FALSE, G_PARAM_READABLE));
 
 	/**
@@ -177,7 +177,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * The length of the current stream, in milliseconds.
 	 **/
 	g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
-					 g_param_spec_int64 ("stream-length", NULL, NULL,
+					 g_param_spec_int64 ("stream-length", "Stream length", "The length of the current stream.",
 							     G_MININT64, G_MAXINT64, 0,
 							     G_PARAM_READABLE));
 
@@ -187,7 +187,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * The player's position (time) in the current stream, in milliseconds.
 	 **/
 	g_object_class_install_property (object_class, PROP_CURRENT_TIME,
-					 g_param_spec_int64 ("current-time", NULL, NULL,
+					 g_param_spec_int64 ("current-time", "Current time", "The player's position (time) in the current stream.",
 							     G_MININT64, G_MAXINT64, 0,
 							     G_PARAM_READABLE));
 
@@ -197,7 +197,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * If %TRUE, the current stream is seekable.
 	 **/
 	g_object_class_install_property (object_class, PROP_SEEKABLE,
-					 g_param_spec_boolean ("seekable", NULL, NULL,
+					 g_param_spec_boolean ("seekable", "Seekable?", "Whether the current stream is seekable.",
 							       FALSE, G_PARAM_READABLE));
 
 	/**
@@ -206,7 +206,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * The MRL of the current stream.
 	 **/
 	g_object_class_install_property (object_class, PROP_CURRENT_MRL,
-					 g_param_spec_string ("current-mrl", NULL, NULL,
+					 g_param_spec_string ("current-mrl", "Current MRL", "The MRL of the current stream.",
 							      NULL, G_PARAM_READABLE));
 
 	/**
@@ -215,7 +215,8 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * If %TRUE, Totem will automatically load any subtitle files it finds for each newly opened video.
 	 **/
 	g_object_class_install_property (object_class, PROP_AUTOLOAD_SUBTITLES,
-					 g_param_spec_boolean ("autoload-subtitles", NULL, NULL,
+					 g_param_spec_boolean ("autoload-subtitles", "Autoload subtitles?",
+					                       "Whether to automatically load any subtitle files Totem finds.",
 							       FALSE, G_PARAM_READWRITE));
 
 	/**
@@ -224,7 +225,8 @@ totem_object_class_init (TotemObjectClass *klass)
 	 * If %TRUE, Totem will remember the position it was at last time a given file was opened.
 	 **/
 	g_object_class_install_property (object_class, PROP_REMEMBER_POSITION,
-					 g_param_spec_boolean ("remember-position", NULL, NULL,
+					 g_param_spec_boolean ("remember-position", "Remember position?",
+					                       "Whether to remember the position each video was at last time.",
 							       FALSE, G_PARAM_READWRITE));
 
 	/**

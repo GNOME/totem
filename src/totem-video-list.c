@@ -134,7 +134,7 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	 * If it's set to -1, no tooltips shall be displayed.
 	 **/
 	g_object_class_install_property (object_class, PROP_TOOLTIP_COLUMN,
-				g_param_spec_int ("tooltip-column", NULL, NULL,
+				g_param_spec_int ("tooltip-column", "Tooltip column", "The column number of the column containing tooltips.",
 					-1, G_MAXINT, -1, G_PARAM_READWRITE));
 
 	/**
@@ -144,7 +144,7 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	 * If it's set to -1, video rows will not be activatable (e.g. by double-clicking them).
 	 **/
 	g_object_class_install_property (object_class, PROP_MRL_COLUMN,
-				g_param_spec_int ("mrl-column", NULL, NULL,
+				g_param_spec_int ("mrl-column", "MRL column", "The column number of the column containing MRLs of the videos.",
 					-1, G_MAXINT, -1, G_PARAM_READWRITE));
 
 	/**
@@ -154,7 +154,7 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	 **/
 	/* FIXME: Is there no better way to do this? */
 	g_object_class_install_property (object_class, PROP_TOTEM,
-				g_param_spec_object ("totem", NULL, NULL,
+				g_param_spec_object ("totem", "Totem", "A TotemObject for integration purposes.",
 					TOTEM_TYPE_OBJECT, G_PARAM_READWRITE));
 
 	/**
@@ -166,7 +166,8 @@ totem_video_list_class_init (TotemVideoListClass *klass)
 	 * Since: 2.90.6
 	 **/
 	g_object_class_install_property (object_class, PROP_SHOW_TOOLTIP_URI,
-				g_param_spec_boolean ("show-tooltip-uri", NULL, NULL,
+				g_param_spec_boolean ("show-tooltip-uri", "Show tooltip URI?",
+				                      "Whether the URI of each video will be displayed in the tooltip for that video.",
 					TRUE, G_PARAM_READWRITE));
 
 	/**

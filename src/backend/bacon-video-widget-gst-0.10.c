@@ -771,8 +771,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * should take up no space.
    **/
   g_object_class_install_property (object_class, PROP_LOGO_MODE,
-                                   g_param_spec_boolean ("logo-mode", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("logo-mode", "Logo mode?",
+                                                         "Whether the logo should be displayed when no stream is loaded.", FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -782,7 +782,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The current position in the stream, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>.
    **/
   g_object_class_install_property (object_class, PROP_POSITION,
-                                   g_param_spec_double ("position", NULL, NULL,
+                                   g_param_spec_double ("position", "Position", "The current position in the stream.",
 							0, 1.0, 0,
 							G_PARAM_READABLE |
                                                         G_PARAM_STATIC_STRINGS));
@@ -793,8 +793,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The length of the current stream, in milliseconds.
    **/
   g_object_class_install_property (object_class, PROP_STREAM_LENGTH,
-	                           g_param_spec_int64 ("stream-length", NULL,
-                                                     NULL, 0, G_MAXINT64, 0,
+	                           g_param_spec_int64 ("stream-length", "Stream length",
+                                                     "The length of the current stream, in milliseconds.", 0, G_MAXINT64, 0,
                                                      G_PARAM_READABLE |
                                                      G_PARAM_STATIC_STRINGS));
 
@@ -804,8 +804,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Whether a stream is currently playing.
    **/
   g_object_class_install_property (object_class, PROP_PLAYING,
-                                   g_param_spec_boolean ("playing", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("playing", "Playing?",
+                                                         "Whether a stream is currently playing.", FALSE,
                                                          G_PARAM_READABLE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -815,8 +815,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Whether the current stream can be seeked.
    **/
   g_object_class_install_property (object_class, PROP_SEEKABLE,
-                                   g_param_spec_boolean ("seekable", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("seekable", "Seekable?",
+                                                         "Whether the current stream can be seeked.", FALSE,
                                                          G_PARAM_READABLE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -826,7 +826,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The current volume level, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>.
    **/
   g_object_class_install_property (object_class, PROP_VOLUME,
-	                           g_param_spec_double ("volume", NULL, NULL,
+	                           g_param_spec_double ("volume", "Volume", "The current volume level.",
 	                                                0.0, 1.0, 0.0,
 	                                                G_PARAM_READWRITE |
                                                         G_PARAM_STATIC_STRINGS));
@@ -838,8 +838,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * the video widget.
    **/
   g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
-                                   g_param_spec_boolean ("show-cursor", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("show-cursor", "Show cursor?",
+                                                         "Whether the cursor should be shown.", FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -849,8 +849,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Whether visualisations should be shown for audio-only streams.
    **/
   g_object_class_install_property (object_class, PROP_SHOW_VISUALIZATIONS,
-                                   g_param_spec_boolean ("show-visualizations", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("show-visualizations", "Show visualizations?",
+                                                         "Whether visualisations should be shown for audio-only streams.", FALSE,
                                                          G_PARAM_WRITABLE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -860,7 +860,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The HTTP referrer URI.
    **/
   g_object_class_install_property (object_class, PROP_USER_AGENT,
-                                   g_param_spec_string ("referrer", NULL, NULL,
+                                   g_param_spec_string ("referrer", "Referrer URI", "The HTTP referrer URI.",
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_STATIC_STRINGS));
@@ -871,7 +871,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The HTTP user agent string to use.
    **/
   g_object_class_install_property (object_class, PROP_USER_AGENT,
-                                   g_param_spec_string ("user-agent", NULL, NULL,
+                                   g_param_spec_string ("user-agent", "User agent", "The HTTP user agent string to use.",
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_STATIC_STRINGS));
@@ -883,7 +883,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * download buffering.
    **/
   g_object_class_install_property (object_class, PROP_DOWNLOAD_FILENAME,
-                                   g_param_spec_string ("download-filename", NULL, NULL,
+                                   g_param_spec_string ("download-filename", "Download filename.", "The filename of the fully downloaded stream.",
                                                         NULL,
                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
@@ -893,8 +893,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Whether to automatically resize the video widget to the video size when loading a new video.
    **/
   g_object_class_install_property (object_class, PROP_AUTO_RESIZE,
-                                   g_param_spec_boolean ("auto-resize", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("auto-resize", "Auto resize?",
+                                                         "Whether to automatically resize the video widget to the video size.", FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -904,8 +904,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * Whether to automatically deinterlace videos.
    **/
   g_object_class_install_property (object_class, PROP_DEINTERLACING,
-                                   g_param_spec_boolean ("deinterlacing", NULL,
-                                                         NULL, FALSE,
+                                   g_param_spec_boolean ("deinterlacing", "Deinterlacing?",
+                                                         "Whether to automatically deinterlace videos.", FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
 
@@ -915,8 +915,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The connection speed to use when calculating how much of a network stream to buffer.
    **/
   g_object_class_install_property (object_class, PROP_CONNECTION_SPEED,
-                                   g_param_spec_enum ("connection-speed", NULL,
-                                                      NULL, BVW_TYPE_CONNECTION_SPEED,
+                                   g_param_spec_enum ("connection-speed", "Connection speed",
+                                                      "The connection speed to use in calculating buffering streams.", BVW_TYPE_CONNECTION_SPEED,
                                                       BVW_SPEED_LAN,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
@@ -927,8 +927,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The size of the visualizations to display when playing audio.
    **/
   g_object_class_install_property (object_class, PROP_VISUALIZATION_QUALITY,
-                                   g_param_spec_enum ("visualization-quality", NULL,
-                                                      NULL, BVW_TYPE_VISUALIZATION_QUALITY,
+                                   g_param_spec_enum ("visualization-quality", "Visualization quality",
+                                                      "The size of the visualizations to display when playing audio.", BVW_TYPE_VISUALIZATION_QUALITY,
                                                       BVW_VISUALIZATION_SMALL,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
@@ -939,8 +939,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The brightness of the video display.
    **/
   g_object_class_install_property (object_class, PROP_BRIGHTNESS,
-                                   g_param_spec_int ("brightness", NULL,
-                                                      NULL, 0, 65535, 32768,
+                                   g_param_spec_int ("brightness", "Brightness",
+                                                      "The brightness of the video display.", 0, 65535, 32768,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -950,8 +950,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The contrast of the video display.
    **/
   g_object_class_install_property (object_class, PROP_CONTRAST,
-                                   g_param_spec_int ("contrast", NULL,
-                                                      NULL, 0, 65535, 32768,
+                                   g_param_spec_int ("contrast", "Contrast",
+                                                      "The contrast of the video display.", 0, 65535, 32768,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -961,8 +961,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The saturation of the video display.
    **/
   g_object_class_install_property (object_class, PROP_SATURATION,
-                                   g_param_spec_int ("saturation", NULL,
-                                                      NULL, 0, 65535, 32768,
+                                   g_param_spec_int ("saturation", "Saturation",
+                                                      "The saturation of the video display.", 0, 65535, 32768,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -972,8 +972,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The hue of the video display.
    **/
   g_object_class_install_property (object_class, PROP_HUE,
-                                   g_param_spec_int ("hue", NULL,
-                                                      NULL, 0, 65535, 32768,
+                                   g_param_spec_int ("hue", "Hue",
+                                                      "The hue of the video display.", 0, 65535, 32768,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
 
@@ -983,8 +983,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * The type of audio output to use (e.g. the number of channels).
    **/
   g_object_class_install_property (object_class, PROP_AUDIO_OUTPUT_TYPE,
-                                   g_param_spec_enum ("audio-output-type", NULL,
-                                                      NULL, BVW_TYPE_AUDIO_OUTPUT_TYPE,
+                                   g_param_spec_enum ("audio-output-type", "Audio output type",
+                                                      "The type of audio output to use.", BVW_TYPE_AUDIO_OUTPUT_TYPE,
                                                       BVW_AUDIO_SOUND_STEREO,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
