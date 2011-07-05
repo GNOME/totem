@@ -473,7 +473,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         # Set up the results treeview
         renderer = Gtk.CellRendererText ()
         self._tree_view.set_model (self._list_store)
-        self._tree_view.set_headers_visible (False)
         renderer.set_property ('ellipsize', Pango.EllipsizeMode.END)
         column = Gtk.TreeViewColumn (_(u"Subtitles"), renderer, text=0)
         column.set_resizable (True)
@@ -576,7 +575,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
 
     def _get_results (self, movie_hash, movie_size):
         self._list_store.clear ()
-        self._tree_view.set_headers_visible (False)
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
 
@@ -604,7 +602,6 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
                                         sub_data['SubFormat'],
                                         sub_data['SubRating'],
                                         sub_data['IDSubtitleFile'],])
-                self._tree_view.set_headers_visible (True)
         else:
             self._apply_button.set_sensitive (False)
 
@@ -739,14 +736,12 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
                 if self._filename != new_mrl:
                     self._filename = new_mrl
                     self._list_store.clear ()
-                    self._tree_view.set_headers_visible (False)
                     self._apply_button.set_sensitive (False)
         else:
             self._action.set_sensitive (False)
             if self._dialog and self._dialog.is_active ():
                 self._filename = None
                 self._list_store.clear ()
-                self._tree_view.set_headers_visible (False)
                 self._apply_button.set_sensitive (False)
                 self._find_button.set_sensitive (False)
 
