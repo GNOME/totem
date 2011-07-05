@@ -29,10 +29,12 @@
  * SECTION:totem-plugin
  * @short_description: base plugin class and loading/unloading functions
  * @stability: Unstable
- * @include: totem-plugin.h
+ * @include: totem-dirs.h
  *
- * #TotemPlugin is a general-purpose architecture for adding plugins to Totem, with
+ * libpeas is used as a general-purpose architecture for adding plugins to Totem, with
  * derived support for different programming languages.
+ *
+ * The functions in totem-dirs.h are used to allow plugins to find and load files installed alongside the plugins, such as UI files.
  **/
 
 #ifdef HAVE_CONFIG_H
