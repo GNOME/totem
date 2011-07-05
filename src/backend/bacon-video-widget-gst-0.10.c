@@ -779,7 +779,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   /**
    * BaconVideoWidget:position:
    *
-   * The current position in the stream, as a percentage between %0 and %1.
+   * The current position in the stream, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>.
    **/
   g_object_class_install_property (object_class, PROP_POSITION,
                                    g_param_spec_double ("position", NULL, NULL,
@@ -823,7 +823,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   /**
    * BaconVideoWidget:volume:
    *
-   * The current volume level, as a percentage between %0 and %1.
+   * The current volume level, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>.
    **/
   g_object_class_install_property (object_class, PROP_VOLUME,
 	                           g_param_spec_double ("volume", NULL, NULL,
@@ -1069,7 +1069,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    * BaconVideoWidget::tick:
    * @current_time: the current position in the stream, in milliseconds since the beginning of the stream
    * @stream_length: the length of the stream, in milliseconds
-   * @current_position: the current position in the stream, as a percentage between %0 and %1
+   * @current_position: the current position in the stream, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>
    * @seekable: %TRUE if the stream can be seeked, %FALSE otherwise
    *
    * Emitted every time an important time event happens, or at regular intervals when playing a stream.
@@ -1086,7 +1086,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::buffering:
-   * @percentage: the percentage of buffering completed, between %0 and %1
+   * @percentage: the percentage of buffering completed, between <code class="literal">0</code> and <code class="literal">1</code>
    *
    * Emitted regularly when a network stream is being buffered, to provide status updates on the buffering
    * progress.
@@ -1123,7 +1123,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::download-buffering:
-   * @percentage: the percentage of download buffering completed, between %0 and %1
+   * @percentage: the percentage of download buffering completed, between <code class="literal">0</code> and <code class="literal">1</code>
    *
    * Emitted regularly when a network stream is being cached on disk, to provide status
    *  updates on the buffering level of the stream.
@@ -2708,8 +2708,8 @@ bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
  *
  * Returns the index of the current subtitles.
  *
- * If the widget is not playing, %-2 will be returned. If no subtitles are
- * being used, %-1 is returned.
+ * If the widget is not playing, <code class="literal">-2</code> will be returned. If no subtitles are
+ * being used, <code class="literal">-1</code> is returned.
  *
  * Return value: the subtitle index
  **/
@@ -2738,7 +2738,7 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
  * @bvw: a #BaconVideoWidget
  * @subtitle: a subtitle index
  *
- * Sets the subtitle index for @bvw. If @subtitle is %-1, no subtitles will
+ * Sets the subtitle index for @bvw. If @subtitle is <code class="literal">-1</code>, no subtitles will
  * be used.
  **/
 void
@@ -2940,7 +2940,7 @@ bacon_video_widget_get_languages (BaconVideoWidget * bvw)
  *
  * Returns the index of the current audio language.
  *
- * If the widget is not playing, or the default language is in use, %-1 will be returned.
+ * If the widget is not playing, or the default language is in use, <code class="literal">-1</code> will be returned.
  *
  * Return value: the audio language index
  **/
@@ -2963,7 +2963,7 @@ bacon_video_widget_get_language (BaconVideoWidget * bvw)
  * @bvw: a #BaconVideoWidget
  * @language: an audio language index
  *
- * Sets the audio language index for @bvw. If @language is %-1, the default language will
+ * Sets the audio language index for @bvw. If @language is <code class="literal">-1</code>, the default language will
  * be used.
  **/
 void
@@ -3013,8 +3013,8 @@ connection_speed_enum_to_kbps (gint speed)
  * bacon_video_widget_get_connection_speed:
  * @bvw: a #BaconVideoWidget
  *
- * Returns the current connection speed, where %0 is the lowest speed
- * and %11 is the highest.
+ * Returns the current connection speed, where <code class="literal">0</code> is the lowest speed
+ * and <code class="literal">11</code> is the highest.
  *
  * Return value: the connection speed index
  **/
@@ -3032,8 +3032,8 @@ bacon_video_widget_get_connection_speed (BaconVideoWidget * bvw)
  * @bvw: a #BaconVideoWidget
  * @speed: the connection speed index
  *
- * Sets the connection speed from the given @speed index, where %0 is the lowest speed
- * and %11 is the highest.
+ * Sets the connection speed from the given @speed index, where <code class="literal">0</code> is the lowest speed
+ * and <code class="literal">11</code> is the highest.
  **/
 void
 bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
@@ -3202,9 +3202,9 @@ set_audio_filter (BaconVideoWidget *bvw)
  * @bvw: a #BaconVideoWidget
  *
  * Returns the current audio output type (e.g. how many speaker channels)
- * from #BaconVideoWidgetAudioOutputType.
+ * from #BvwAudioOutputType.
  *
- * Return value: the audio output type, or %-1
+ * Return value: the audio output type, or <code class="literal">-1</code>
  **/
 BvwAudioOutputType
 bacon_video_widget_get_audio_output_type (BaconVideoWidget *bvw)
@@ -4251,9 +4251,9 @@ bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
 /**
  * bacon_video_widget_set_volume:
  * @bvw: a #BaconVideoWidget
- * @volume: the new volume level, as a percentage between %0 and %1
+ * @volume: the new volume level, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>
  *
- * Sets the volume level of the stream as a percentage between %0 and %1.
+ * Sets the volume level of the stream as a percentage between <code class="literal">0</code> and <code class="literal">1</code>.
  *
  * If bacon_video_widget_can_set_volume() returns %FALSE, this is a no-op.
  **/
@@ -4278,9 +4278,9 @@ bacon_video_widget_set_volume (BaconVideoWidget * bvw, double volume)
  * bacon_video_widget_get_volume:
  * @bvw: a #BaconVideoWidget
  *
- * Returns the current volume level, as a percentage between %0 and %1.
+ * Returns the current volume level, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>.
  *
- * Return value: the volume as a percentage between %0 and %1
+ * Return value: the volume as a percentage between <code class="literal">0</code> and <code class="literal">1</code>
  **/
 double
 bacon_video_widget_get_volume (BaconVideoWidget * bvw)
@@ -4741,7 +4741,7 @@ bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
  * @bvw: a #BaconVideoWidget
  * @ratio: the new aspect ratio
  *
- * Sets the aspect ratio used by the widget, from #BaconVideoWidgetAspectRatio.
+ * Sets the aspect ratio used by the widget, from #BvwAspectRatio.
  *
  * Changes to this take effect immediately.
  **/
@@ -4761,7 +4761,7 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
  * @bvw: a #BaconVideoWidget
  *
  * Returns the current aspect ratio used by the widget, from
- * #BaconVideoWidgetAspectRatio.
+ * #BvwAspectRatio.
  *
  * Return value: the aspect ratio
  **/
@@ -4780,7 +4780,7 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
  * @ratio: the new scale ratio
  *
  * Sets the ratio by which the widget will scale videos when they are
- * displayed. If @ratio is set to %0, the highest ratio possible will
+ * displayed. If @ratio is set to <code class="literal">0</code>, the highest ratio possible will
  * be chosen.
  **/
 void
@@ -5121,9 +5121,9 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
  * @bvw: a #BaconVideoWidget
  *
  * Returns the current position in the stream, as a value between
- * %0 and %1.
+ * <code class="literal">0</code> and <code class="literal">1</code>.
  *
- * Return value: the current position, or %-1
+ * Return value: the current position, or <code class="literal">-1</code>
  **/
 double
 bacon_video_widget_get_position (BaconVideoWidget * bvw)
@@ -5140,7 +5140,7 @@ bacon_video_widget_get_position (BaconVideoWidget * bvw)
  * Returns the current position in the stream, as the time (in milliseconds)
  * since the beginning of the stream.
  *
- * Return value: time since the beginning of the stream, in milliseconds, or %-1
+ * Return value: time since the beginning of the stream, in milliseconds, or <code class="literal">-1</code>
  **/
 gint64
 bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
@@ -5156,7 +5156,7 @@ bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
  *
  * Returns the total length of the stream, in milliseconds.
  *
- * Return value: the stream length, in milliseconds, or %-1
+ * Return value: the stream length, in milliseconds, or <code class="literal">-1</code>
  **/
 gint64
 bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
@@ -5271,7 +5271,7 @@ done:
  *
  * Returns an array of MRLs available for the given @device and media @type.
  *
- * @device should typically be the number of the device (e.g. %0 for the first
+ * @device should typically be the number of the device (e.g. <code class="literal">0</code> for the first
  * DVD drive.
  *
  * @type can be any value from #TotemDiscMediaType, but a %BVW_ERROR_INVALID_LOCATION error
@@ -5877,8 +5877,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
  * Returns the #GOptionGroup containing command-line options for
  * #BaconVideoWidget.
  *
- * Applications must call either this or bacon_video_widget_init_backend() exactly
- * once; but not both.
+ * Applications must call either this exactly once.
  *
  * Return value: a #GOptionGroup giving command-line options for #BaconVideoWidget
  **/
@@ -5968,7 +5967,7 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
  *
  * Creates a new #BaconVideoWidget.
  *
- * @width and @height give the initial or expected video height. Set them to %-1 if the
+ * @width and @height give the initial or expected video height. Set them to <code class="literal">-1</code> if the
  * video size is unknown. For small videos, #BaconVideoWidget will be configured differently.
  *
  * A #BvwError will be returned on error.

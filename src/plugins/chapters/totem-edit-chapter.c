@@ -22,14 +22,14 @@
  * Totem is covered by.
  */
 
-/**
+/*
  * SECTION:totem-edit-chapter
  * @short_description: dialog to add new chapters in chapters plugin
  * @stability: Unstable
  * @include: totem-edit-chapter.h
  *
  * #TotemEditChapter dialog is used for entering names of new chapters in the chapters plugin
- **/
+ */
 
 #include <gtk/gtk.h>
 

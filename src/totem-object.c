@@ -591,10 +591,10 @@ totem_object_get_playlist_length (TotemObject *totem)
  * totem_object_get_playlist_pos:
  * @totem: a #TotemObject
  *
- * Returns the %0-based index of the current entry in the playlist. If
- * there is no current entry in the playlist, %-1 is returned.
+ * Returns the <code class="literal">0</code>-based index of the current entry in the playlist. If
+ * there is no current entry in the playlist, <code class="literal">-1</code> is returned.
  *
- * Return value: the index of the current playlist entry, or %-1
+ * Return value: the index of the current playlist entry, or <code class="literal">-1</code>
  **/
 int
 totem_object_get_playlist_pos (TotemObject *totem)
@@ -605,7 +605,7 @@ totem_object_get_playlist_pos (TotemObject *totem)
 /**
  * totem_object_get_title_at_playlist_pos:
  * @totem: a #TotemObject
- * @playlist_index: the %0-based entry index
+ * @playlist_index: the <code class="literal">0</code>-based entry index
  *
  * Gets the title of the playlist entry at @index.
  *
@@ -2005,7 +2005,7 @@ totem_action_set_zoom (TotemObject *totem,
  * totem_object_get_volume:
  * @totem: a #TotemObject
  *
- * Gets the current volume level, as a value between %0.0 and %1.0.
+ * Gets the current volume level, as a value between <code class="literal">0.0</code> and <code class="literal">1.0</code>.
  *
  * Return value: the volume level
  **/
@@ -2020,7 +2020,7 @@ totem_object_get_volume (TotemObject *totem)
  * @totem: a #TotemObject
  * @volume: the new absolute volume value
  *
- * Sets the volume, with %1.0 being the maximum, and %0.0 being the minimum level.
+ * Sets the volume, with <code class="literal">1.0</code> being the maximum, and <code class="literal">0.0</code> being the minimum level.
  **/
 void
 totem_object_action_volume (TotemObject *totem, double volume)
@@ -2036,8 +2036,8 @@ totem_object_action_volume (TotemObject *totem, double volume)
  * @totem: a #TotemObject
  * @off_pct: the value by which to increase or decrease the volume
  *
- * Sets the volume relative to its current level, with %1.0 being the
- * maximum, and %0.0 being the minimum level.
+ * Sets the volume relative to its current level, with <code class="literal">1.0</code> being the
+ * maximum, and <code class="literal">0.0</code> being the minimum level.
  **/
 void
 totem_action_volume_relative (TotemObject *totem, double off_pct)
@@ -2958,7 +2958,7 @@ totem_action_next_angle (TotemObject *totem)
  * @totem: a #TotemObject
  * @index: the new playlist index
  *
- * Sets the %0-based playlist index to @index, causing Totem to load and
+ * Sets the <code class="literal">0</code>-based playlist index to @index, causing Totem to load and
  * start playing that playlist entry.
  *
  * If @index is higher than the current length of the playlist, this

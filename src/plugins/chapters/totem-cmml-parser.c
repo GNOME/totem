@@ -22,13 +22,13 @@
  * Totem is covered by.
  */
 
-/**
+/*
  * SECTION:totem-cmml-parser
  * @short_description: parser for CMML files
  * @stability: Unstable
  *
  * These functions are used to parse CMML files for chapters.
- **/
+ */
 
 #include "config.h"
 

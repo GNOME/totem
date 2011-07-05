@@ -22,14 +22,14 @@
  * Totem is covered by.
  */
 
-/**
+/*
  * SECTION:totem-chapters-utils
  * @short_description: misc helper functions
  * @stability: Unstable
  * @include: totem-chapters-utils.h
  *
  * These functions are used for misc operations within chapters plugin.
- **/
+ */
 
 #include <glib.h>
 

@@ -1,4 +1,4 @@
-/**
+/*
  * Useful macros.
  *
  * Author:
