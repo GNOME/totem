@@ -46,7 +46,8 @@ class DbusService (GObject.Object, Peas.Activatable):
         self.track_list = TrackList (name, self.object)
 
     def do_deactivate (self):
-        self.root.disconnect () # ensure we don't leak our paths on the bus
+        # Ensure we don't leak our paths on the bus
+        self.root.disconnect ()
         self.player.disconnect ()
         self.track_list.disconnect ()
 
@@ -249,7 +250,8 @@ class Player (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                           in_signature = 'b', # pylint: disable-msg=C0103
                           out_signature = '')
     def Repeat (self, value):
-        pass # we don't support repeating individual tracks
+        # We don't support repeating individual tracks
+        pass
 
     @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
                           in_signature = '', # pylint: disable-msg=C0103
