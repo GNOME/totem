@@ -66,16 +66,7 @@ IGNORE_HFILES = \
 	totem-sample-vala-plugin.h	\
 	totem-chapters-utils.h		\
 	totem-cmml-parser.h		\
-	totem-edit-chapter.h
-
-# Files we don't want exported to plugins
-IGNORE_HFILES += \
-	bacon-video-widget-common.h	\
-	baconvideowidget-marshal.h	\
-	bacon-video-widget-gst-missing-plugins.h
-
-# Files we don't want exported to plugins
-IGNORE_HFILES += \
+	totem-edit-chapter.h		\
 	bacon-video-widget-common.h			\
 	baconvideowidget-marshal.h			\
 	bacon-video-widget-gst-missing-plugins.h	\
@@ -87,7 +78,6 @@ IGNORE_HFILES += \
 	totem-plugin-manager.h				\
 	totem-properties-view.h				\
 	totem-open-location.h				\
-	totem-python-module.h				\
 	totem-statusbar.h				\
 	totem-sidebar.h					\
 	totem-session.h					\
@@ -103,10 +93,9 @@ IGNORE_HFILES += \
 	totem-menu.h					\
 	video-utils.h					\
 	debug.h						\
-	totem-dnd-menu.h
-
-# Plugin files
-IGNORE_HFILES += \
+	totem-dnd-menu.h				\
+	totem-aspect-frame.h				\
+	totem-gst-helpers.h				\
 	bacon-video-widget-properties.h	\
 	totem-gallery.h			\
 	totem-gallery-progress.h	\
