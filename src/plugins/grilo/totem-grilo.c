@@ -773,8 +773,7 @@ search_source_changed_cb (GtkComboBox *combo,
 			  TotemGriloPlugin *self)
 {
 	if (self->priv->search_id > 0) {
-		grl_metadata_source_cancel (GRL_METADATA_SOURCE (self->priv->search_source),
-					    self->priv->search_id);
+		grl_operation_cancel (self->priv->search_id);
 		self->priv->search_id = 0;
 	}
 	gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
