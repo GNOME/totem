@@ -1357,10 +1357,7 @@ setup_config (TotemGriloPlugin *self)
 	GrlPluginRegistry *registry = grl_plugin_registry_get_default ();
 
 	/* Setup system-wide plugins configuration */
-	config_file = g_build_path (G_DIR_SEPARATOR_S,
-	                            CONFDIR,
-	                            TOTEM_GRILO_CONFIG_FILE,
-	                            NULL);
+	config_file = totem_plugin_find_file ("grilo", TOTEM_GRILO_CONFIG_FILE);
 
 	if (g_file_test (config_file, G_FILE_TEST_EXISTS)) {
 		grl_plugin_registry_add_config_from_file (registry, config_file, NULL);

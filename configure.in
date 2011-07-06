@@ -40,10 +40,6 @@ PKG_PROG_PKG_CONFIG
 AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
-CONFDIR=`eval echo $sysconfdir`
-AC_DEFINE_UNQUOTED(CONFDIR, "$CONFDIR", [Directory containing default config])
-AC_SUBST(CONFDIR)
-
 # Requirements
 GLIB_REQS=2.27.92
 GIO_REQS=2.27.92

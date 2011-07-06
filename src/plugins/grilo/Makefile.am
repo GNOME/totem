@@ -9,7 +9,7 @@ uidir = $(plugindir)
 ui_DATA = grilo.ui
 EXTRA_DIST += $(ui_DATA)
 
-confdir = $(CONFDIR)
+confdir = $(plugindir)
 conf_DATA = totem-grilo.conf
 EXTRA_DIST += $(conf_DATA)
 
