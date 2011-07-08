@@ -95,7 +95,10 @@
           </packing>
         </child>
         <child>
-          <object class="GtkProgressBar" id="progress_bar"/>
+          <object class="GtkProgressBar" id="progress_bar">
+            <property name="text"> </property>
+            <property name="show-text">True</property>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="position">2</property>

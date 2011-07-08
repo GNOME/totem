@@ -174,7 +174,7 @@ class SearchThread (threading.Thread):
         return results
 
     def get_message (self):
-        message = ''
+        message = _(u'Searching for subtitles…')
 
         self._lock.acquire (True)
         if self._done:
@@ -222,7 +222,7 @@ class DownloadThread (threading.Thread):
         return subtitles
 
     def get_message (self):
-        message = ''
+        message = _(u'Downloading the subtitles…')
 
         self._lock.acquire (True)
         if self._done:
@@ -320,13 +320,13 @@ class OpenSubtitlesModel (object):
                 result = self._server.SearchSubtitles (self._token,
                                                        [searchdata])
             except xmlrpclib.ProtocolError:
-                message = _(u'Could not contact the OpenSubtitles website')
+                message = _(u'Could not contact the OpenSubtitles website.')
 
             if result.get ('data'):
                 self._lock.release ()
                 return (result['data'], message)
             else:
-                message = _(u'No results found')
+                message = _(u'No results found.')
         else:
             message = log_in_message
 
@@ -338,7 +338,7 @@ class OpenSubtitlesModel (object):
         self._lock.acquire (True)
 
         message = ''
-        error_message = _(u'Could not contact the OpenSubtitles website')
+        error_message = _(u'Could not contact the OpenSubtitles website.')
 
         (log_in_success, log_in_message) = self._log_in ()
 
@@ -683,7 +683,7 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
         if message:
             self._progress.set_text (message)
         else:
-            self._progress.set_text ('')
+            self._progress.set_text (' ')
 
         self._progress.set_fraction (0.0)
         self._find_button.set_sensitive (True)
