@@ -282,7 +282,7 @@ increment_progress_bar_fraction (TotemYouTubePlugin *self, guint tree_view)
 	if (gtk_progress_bar_get_fraction (priv->progress_bar[tree_view]) == 1.0) {
 		/* The entire search process (including loading thumbnails) is finished, so update the progress bar */
 		gdk_window_set_cursor (gtk_widget_get_window (priv->vbox), NULL);
-		gtk_progress_bar_set_text (priv->progress_bar[tree_view], "");
+		gtk_progress_bar_set_text (priv->progress_bar[tree_view], " ");
 		gtk_progress_bar_set_fraction (priv->progress_bar[tree_view], 0.0);
 	}
 }
