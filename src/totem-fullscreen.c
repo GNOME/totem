@@ -153,34 +153,18 @@ totem_fullscreen_theme_changed_cb (GtkIconTheme *icon_theme, TotemFullscreen *fs
 }
 
 static void
-totem_fullscreen_composited_changed_cb (GdkScreen *screen, TotemFullscreen *fs)
-{
-	if (gdk_screen_is_composited (screen)) {
-		if (fs->priv->osd == NULL)
-			fs->priv->osd = gsd_media_keys_window_new ();
-	} else {
-		if (fs->priv->osd != NULL) {
-			gtk_widget_destroy (fs->priv->osd);
-			fs->priv->osd = NULL;
-		}
-	}
-}
-
-static void
 totem_fullscreen_window_realize_cb (GtkWidget *widget, TotemFullscreen *fs)
 {
 	GdkScreen *screen;
-	
+
 	screen = gtk_widget_get_screen (widget);
 	g_signal_connect (G_OBJECT (screen), "size-changed",
 			  G_CALLBACK (totem_fullscreen_size_changed_cb), fs);
-	g_signal_connect (G_OBJECT (screen), "composited-changed",
-			  G_CALLBACK (totem_fullscreen_composited_changed_cb), fs);
 	g_signal_connect (G_OBJECT (gtk_icon_theme_get_for_screen (screen)),
 			  "changed",
 			  G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
 
-	totem_fullscreen_composited_changed_cb (screen, fs);
+	fs->priv->osd = gsd_media_keys_window_new ();
 }
 
 static void
@@ -193,6 +177,7 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 					      G_CALLBACK (totem_fullscreen_size_changed_cb), fs);
 	g_signal_handlers_disconnect_by_func (gtk_icon_theme_get_for_screen (screen),
 					      G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
+	gtk_widget_destroy (fs->priv->osd);
 }
 
 static gboolean
@@ -371,7 +356,7 @@ totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
 	GdkRectangle rect;
 	int monitor;
 
-	if (fs->priv->osd == NULL || icon_name == NULL) {
+	if (icon_name == NULL) {
 		totem_fullscreen_show_popups (fs, show_cursor);
 		return;
 	}
