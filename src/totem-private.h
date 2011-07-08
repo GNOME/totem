@@ -100,11 +100,6 @@ struct _TotemObject {
 	gboolean sidebar_shown;
 	int sidebar_w;
 
-	/* Play/Pause */
-	GtkWidget *pp_button;
-	/* fullscreen Play/Pause */
-	GtkWidget *fs_pp_button;
-
 	/* Seek */
 	GtkWidget *seek;
 	GtkAdjustment *seekadj;
