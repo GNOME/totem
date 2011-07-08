@@ -75,6 +75,8 @@ struct _TotemFullscreenPrivate {
 	guint             motion_start_time;
 	guint             motion_num_events;
 
+	gboolean          is_fullscreen;
+
 	GtkBuilder       *xml;
 };
 
@@ -87,7 +89,7 @@ totem_fullscreen_is_fullscreen (TotemFullscreen *fs)
 {
 	g_return_val_if_fail (TOTEM_IS_FULLSCREEN (fs), FALSE);
 
-	return (fs->is_fullscreen != FALSE);
+	return (fs->priv->is_fullscreen != FALSE);
 }
 
 static void
@@ -311,7 +313,7 @@ totem_fullscreen_show_popups (TotemFullscreen *fs, gboolean show_cursor)
 {
 	GtkWidget *item;
 
-	g_assert (fs->is_fullscreen != FALSE);
+	g_assert (fs->priv->is_fullscreen != FALSE);
 
 	if (fs->priv->popup_in_progress != FALSE)
 		return;
@@ -415,7 +417,7 @@ totem_fullscreen_set_fullscreen (TotemFullscreen *fs,
 	if (fullscreen == FALSE)
 		gtk_widget_hide (fs->priv->osd);
 
-	fs->is_fullscreen = fullscreen;
+	fs->priv->is_fullscreen = fullscreen;
 
 	if (fullscreen == FALSE && fs->priv->motion_handler_id != 0) {
 		g_signal_handler_disconnect (G_OBJECT (fs->priv->bvw),
@@ -491,7 +493,7 @@ totem_fullscreen_set_video_widget (TotemFullscreen *fs,
 
 	fs->priv->bvw = bvw;
 
-	if (fs->is_fullscreen != FALSE && fs->priv->motion_handler_id == 0) {
+	if (fs->priv->is_fullscreen != FALSE && fs->priv->motion_handler_id == 0) {
 		fs->priv->motion_handler_id = g_signal_connect (G_OBJECT (fs->priv->bvw), "motion-notify-event",
 								G_CALLBACK (totem_fullscreen_motion_notify), fs);
 	}

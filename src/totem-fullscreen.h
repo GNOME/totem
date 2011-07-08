@@ -47,16 +47,13 @@ typedef struct _TotemFullscreenPrivate TotemFullscreenPrivate;
 
 struct TotemFullscreen {
 	GObject                parent;
-	
+
 	/* Public Widgets from popups */
 	GtkWidget              *time_label;
 	GtkWidget              *seek;
 	GtkWidget              *volume;
 	GtkWidget              *buttons_box;
 	GtkWidget              *exit_button;
-
-	/* Read only */
-	gboolean                is_fullscreen;
 
 	/* Private */
 	TotemFullscreenPrivate *priv;
