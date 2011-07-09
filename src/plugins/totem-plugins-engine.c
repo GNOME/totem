@@ -81,7 +81,7 @@ on_activatable_extension_added (PeasExtensionSet *set,
 				PeasExtension    *exten,
 				TotemPluginsEngine *engine)
 {
-	peas_extension_call (exten, "activate");
+	peas_activatable_activate (PEAS_ACTIVATABLE (exten));
 }
 
 static void
@@ -90,7 +90,7 @@ on_activatable_extension_removed (PeasExtensionSet *set,
 				  PeasExtension    *exten,
 				  TotemPluginsEngine *engine)
 {
-	peas_extension_call (exten, "deactivate");
+	peas_activatable_deactivate (PEAS_ACTIVATABLE (exten));
 }
 
 TotemPluginsEngine *
