@@ -182,36 +182,36 @@ get_description (GrlMedia *media)
 static GList *
 browse_keys (void)
 {
-	static GList *browse_keys = NULL;
+	static GList *_browse_keys = NULL;
 
-	if (browse_keys == NULL) {
-		browse_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-		                                         GRL_METADATA_KEY_AUTHOR,
-		                                         GRL_METADATA_KEY_DURATION,
-		                                         GRL_METADATA_KEY_THUMBNAIL,
-		                                         GRL_METADATA_KEY_URL,
-		                                         GRL_METADATA_KEY_TITLE,
-		                                         NULL);
+	if (_browse_keys == NULL) {
+		_browse_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+		                                          GRL_METADATA_KEY_AUTHOR,
+		                                          GRL_METADATA_KEY_DURATION,
+		                                          GRL_METADATA_KEY_THUMBNAIL,
+		                                          GRL_METADATA_KEY_URL,
+		                                          GRL_METADATA_KEY_TITLE,
+		                                          NULL);
 	}
 
-	return browse_keys;
+	return _browse_keys;
 }
 
 static GList *
 search_keys (void)
 {
-	static GList *search_keys = NULL;
+	static GList *_search_keys = NULL;
 
-	if (search_keys == NULL) {
-		search_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-		                                         GRL_METADATA_KEY_AUTHOR,
-		                                         GRL_METADATA_KEY_THUMBNAIL,
-		                                         GRL_METADATA_KEY_URL,
-		                                         GRL_METADATA_KEY_TITLE,
-		                                         NULL);
+	if (_search_keys == NULL) {
+		_search_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+		                                          GRL_METADATA_KEY_AUTHOR,
+		                                          GRL_METADATA_KEY_THUMBNAIL,
+		                                          GRL_METADATA_KEY_URL,
+		                                          GRL_METADATA_KEY_TITLE,
+		                                          NULL);
 	}
 
-	return search_keys;
+	return _search_keys;
 }
 
 static GdkPixbuf *
