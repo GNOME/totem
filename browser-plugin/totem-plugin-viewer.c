@@ -2257,6 +2257,7 @@ int main (int argc, char **argv)
 	guint res;
 	GError *e = NULL;
 	char svcname[256];
+	GtkSettings *gtk_settings;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -2375,6 +2376,9 @@ int main (int argc, char **argv)
 
 		exit (1);
 	}
+
+	gtk_settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	emb = g_object_new (TOTEM_TYPE_EMBEDDED, NULL);
 
