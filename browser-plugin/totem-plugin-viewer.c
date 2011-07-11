@@ -348,7 +348,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	switch (state) {
 	case TOTEM_STATE_STOPPED:
-		id = GTK_STOCK_MEDIA_PLAY;
+		id = "media-playback-start-symbolic";
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
 		totem_time_label_set_time 
@@ -360,11 +360,11 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		}
 		break;
 	case TOTEM_STATE_PAUSED:
-		id = GTK_STOCK_MEDIA_PLAY;
+		id = "media-playback-start-symbolic";
 		totem_statusbar_set_text (emb->statusbar, _("Paused"));
 		break;
 	case TOTEM_STATE_PLAYING:
-		id = GTK_STOCK_MEDIA_PAUSE;
+		id = "media-playback-pause-symbolic";
 		totem_statusbar_set_text (emb->statusbar, _("Playing"));
 		if (emb->href_uri == NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
@@ -380,8 +380,8 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	if (emb->scrsaver != NULL)
 		totem_scrsaver_set_state (emb->scrsaver, (state == TOTEM_STATE_PLAYING) ? FALSE : TRUE);
-	gtk_image_set_from_stock (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
-	gtk_tool_button_set_stock_id (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
+	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
+	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
 
 	emb->state = state;
 }
@@ -1848,7 +1848,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (totem_embedded_on_fullscreen_exit), emb);
 
 	emb->pp_fs_button = GTK_WIDGET (gtk_tool_button_new_from_stock 
-					(GTK_STOCK_MEDIA_PLAY));
+					("media-playback-start-symbolic"));
 	g_signal_connect (G_OBJECT (emb->pp_fs_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 	gtk_container_add (GTK_CONTAINER (emb->fs->buttons_box), emb->pp_fs_button);
@@ -1912,7 +1912,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (cb_on_seek), emb);
 
 	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
-	image = gtk_image_new_from_stock (GTK_STOCK_MEDIA_PLAY, GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name ("media-playback-start-symbolic", GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (emb->pp_button), image);
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
