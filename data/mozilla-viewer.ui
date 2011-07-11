@@ -34,13 +34,6 @@
             <signal handler="on_fullscreen1_activate" name="activate"/>
           </object>
 	</child>
-        <child>
-          <object class="GtkAction" id="about1">
-            <property name="stock_id">gtk-about</property>
-            <property name="name">about1</property>
-            <signal handler="on_about1_activate" name="activate"/>
-          </object>
-        </child>
       </object>
     </child>
     <ui>
@@ -48,8 +41,6 @@
         <menuitem action="copy_location1"/>
         <menuitem action="preferences1"/>
         <menuitem action="fullscreen1"/>
-        <separator/>
-        <menuitem action="about1"/>
       </popup>
     </ui>
   </object>

@@ -104,7 +104,6 @@ typedef struct _TotemEmbedded {
 	DBusGConnection *conn;
 	GtkWidget *window;
 	GtkBuilder *menuxml, *xml;
-	GtkWidget *about;
 	GtkWidget *pp_button;
 	GtkWidget *pp_fs_button;
 	TotemStatusbar *statusbar;
@@ -187,7 +186,6 @@ static void totem_embedded_update_menu (TotemEmbedded *emb);
 static void on_open1_activate (GtkButton *button, TotemEmbedded *emb);
 static void totem_embedded_toggle_fullscreen (TotemEmbedded *emb);
 
-void on_about1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_preferences1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_copy_location1_activate (GtkButton *button, TotemEmbedded *emb);
 void on_fullscreen1_activate (GtkMenuItem *menuitem, TotemEmbedded *emb);
@@ -1126,61 +1124,6 @@ on_fullscreen1_activate (GtkMenuItem *menuitem, TotemEmbedded *emb)
 {
 	if (totem_fullscreen_is_fullscreen (emb->fs) == FALSE)
 		totem_embedded_toggle_fullscreen (emb);
-}
-
-void
-on_about1_activate (GtkButton *button, TotemEmbedded *emb)
-{
-	char *backend_version, *description, *license;
-	GtkWidget **about;
-
-	const char *authors[] =
-	{
-		"Bastien Nocera <hadess@hadess.net>",
-		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
-		"Christian Persch" " <" "chpe" "@" "gnome" "." "org" ">",
-		NULL
-	};
-	
-	if (emb->about != NULL)
-	{
-		gtk_window_present (GTK_WINDOW (emb->about));
-		return;
-	}
-
-	backend_version = bacon_video_widget_get_backend_name (emb->bvw);
-	description = g_strdup_printf (_("Browser Plugin using %s"),
-				       backend_version);
-	license = totem_interface_get_license ();
-
-	emb->about = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-				   "program-name", _("Totem Browser Plugin"),
-				   "version", VERSION,
-				   "copyright", "Copyright © 2002-2007 Bastien Nocera\n"
-                                                "Copyright © 2006, 2007, 2008 Christian Persch",
-				   "comments", description,
-				   "authors", authors,
-				   "translator-credits", _("translator-credits"),
-				   "logo-icon-name", "totem",
-				   "license", license,
-				   "wrap-license", TRUE,
-				   NULL);
-
-	g_free (backend_version);
-	g_free (description);
-	g_free (license);
-
-	totem_interface_set_transient_for (GTK_WINDOW (emb->about),
-					   GTK_WINDOW (emb->window));
-
-	about = &emb->about;
-	g_object_add_weak_pointer (G_OBJECT (emb->about),
-				   (gpointer *) about);
-
-	g_signal_connect (G_OBJECT (emb->about), "response",
-			  G_CALLBACK (gtk_widget_destroy), NULL);
-
-	gtk_widget_show (emb->about);
 }
 
 void
