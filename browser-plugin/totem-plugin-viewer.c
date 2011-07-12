@@ -1917,6 +1917,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 		} else {
 			/* Success! Apply the styling to various widgets */
 			GtkStyleContext *context;
+			GtkWidget *widget;
 
 			context = gtk_widget_get_style_context (emb->pp_button);
 			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -1925,6 +1926,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 			context = gtk_widget_get_style_context (emb->volume);
+			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+			widget = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
+			context = gtk_widget_get_style_context (widget);
 			gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 		}
 
