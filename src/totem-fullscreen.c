@@ -179,7 +179,10 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 					      G_CALLBACK (totem_fullscreen_size_changed_cb), fs);
 	g_signal_handlers_disconnect_by_func (gtk_icon_theme_get_for_screen (screen),
 					      G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
-	gtk_widget_destroy (fs->priv->osd);
+	if (fs->priv->osd != NULL) {
+		gtk_widget_destroy (fs->priv->osd);
+		fs->priv->osd = NULL;
+	}
 }
 
 static gboolean
@@ -568,6 +571,18 @@ totem_fullscreen_finalize (GObject *object)
 					     fs->priv->motion_handler_id);
 		fs->priv->motion_handler_id = 0;
 	}
+
+	if (fs->priv->osd != NULL) {
+		gtk_widget_destroy (fs->priv->osd);
+		fs->priv->osd = NULL;
+	}
+
+	g_signal_handlers_disconnect_by_func (fs->priv->parent_window,
+					      G_CALLBACK (totem_fullscreen_window_realize_cb),
+					      fs);
+	g_signal_handlers_disconnect_by_func (fs->priv->parent_window,
+					      G_CALLBACK (totem_fullscreen_window_unrealize_cb),
+					      fs);
 
 	G_OBJECT_CLASS (totem_fullscreen_parent_class)->finalize (object);
 }
