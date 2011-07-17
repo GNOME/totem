@@ -14,16 +14,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2010-08-25 18:25+0000\n"
-"PO-Revision-Date: 2010-08-28 13:45+0400\n"
-"Last-Translator: Alexander Saprykin <xelfium@gmail.com>\n"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-05-17 06:01+0000\n"
+"PO-Revision-Date: 2010-11-05 19:08+0800\n"
+"Last-Translator: Misha Shnurapet <shnurapet@fedoraproject.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../data/fullscreen.ui.h:1
@@ -360,7 +360,7 @@ msgstr "Уменьшить громкость"
 
 #: ../data/totem.ui.h:32
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Отключать _деинтерлейсинг для видео с интерлейсингом"
+msgstr "Отключить маскировку _чересстрочности"
 
 #: ../data/totem.ui.h:33
 msgid "Disable screensaver when playing "
@@ -590,7 +590,7 @@ msgstr "Квадрат"
 msgid "Start playing files from last position"
 msgstr "Воспроизводить файлы с последней позиции"
 
-#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5892
+#: ../data/totem.ui.h:96 ../src/backend/bacon-video-widget-gst-0.10.c:5919
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -820,16 +820,16 @@ msgid ""
 "the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, \"2\" for "
 "28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps Modem, \"5\" "
 "for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7\" for 256 Kbps "
-"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, "
-"\"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
+"DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 Kbps DSL/Cable, \"10"
+"\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/LAN."
 msgstr ""
 "Приблизительная скорость сетевого соединения. Используется для определения "
-"качества воспроизведения мультимедиа через сеть: «0» — 14.4 Кбит/c модем, "
-"«1» — 19.2 Кбит/c модем, «2» — 28.8 Кбит/c модем, «3» — 33.6 Кбит/c модем, "
-"«4» — 34.4 Кбит/c модем, «5» — 56 Кбит/c модем/ISDN, «6» — 112 Кбит/c ISDN/"
-"DSL, «7» — 256 Кбит/c DSL/кабель, «8» — 384 Кбит/c DSL/кабель, «9» — 512 "
-"Кбит/c DSL/кабель, «10» — 1.5 Мбит/с T1/Внутренняя сеть/Локальная сеть, «11» "
-"— Внутренняя сеть/Локальная сеть."
+"качества воспроизведения мультимедиа через сеть: «0» — 14.4 Кбит/c модем, «1» "
+"— 19.2 Кбит/c модем, «2» — 28.8 Кбит/c модем, «3» — 33.6 Кбит/c модем, «4» — "
+"34.4 Кбит/c модем, «5» — 56 Кбит/c модем/ISDN, «6» — 112 Кбит/c ISDN/DSL, «7» — "
+"256 Кбит/c DSL/кабель, «8» — 384 Кбит/c DSL/кабель, «9» — 512 Кбит/c DSL/"
+"кабель, «10» — 1.5 Мбит/с T1/Внутренняя сеть/Локальная сеть, «11» — Внутренняя "
+"сеть/Локальная сеть."
 
 #: ../data/totem.schemas.in.h:5
 msgid "Default location for the \"Open...\" dialogs"
@@ -880,8 +880,8 @@ msgid ""
 "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 "normal, \"2\" for large, \"3\" for extra large."
 msgstr ""
-"Качество визуализации для аудио: «0» — низкое, «1» — обычное, «2» — высокое, "
-"«3» — очень высокое."
+"Качество визуализации для аудио: «0» — низкое, «1» — обычное, «2» — высокое, «3» "
+"— очень высокое."
 
 #: ../data/totem.schemas.in.h:15
 msgid "Repeat mode"
@@ -972,7 +972,7 @@ msgstr ""
 
 #: ../data/totem.schemas.in.h:37
 msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr "Отключать деинтерлейсинг для фильмов с интерлейсингом или нет."
+msgstr "Оставлять чересстрочность картинки в фильмах или нет"
 
 #: ../data/totem.schemas.in.h:38
 msgid "Whether to disable the keyboard shortcuts"
@@ -1064,8 +1064,8 @@ msgstr "Расширение(я)"
 #: ../src/eggfileformatchooser.c:652
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "Не удалось определить формат файла для: «%s». Убедитесь, что используется "
@@ -1120,7 +1120,7 @@ msgstr "_Воспроизвести"
 msgid "Cancel"
 msgstr "Отменить"
 
-#: ../src/totem-fullscreen.c:595
+#: ../src/totem-fullscreen.c:597
 msgid "No File"
 msgstr "Нет файла"
 
@@ -1242,7 +1242,7 @@ msgstr "Totem %s"
 msgid "Playing"
 msgstr "Воспроизведение"
 
-#: ../src/totem-object.c:1001 ../src/totem-options.c:52
+#: ../src/totem-object.c:1001 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Пауза"
 
@@ -1252,7 +1252,7 @@ msgstr "Приостановлено"
 
 #. Translators: this refers to a media file
 #: ../src/totem-object.c:1008 ../src/totem-object.c:1018
-#: ../src/totem-options.c:51
+#: ../src/totem-options.c:50
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:76
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:88
 msgid "Play"
@@ -1329,7 +1329,7 @@ msgstr "Вставьте другой диск для проигрывания."
 msgid "Totem was not able to play this disc."
 msgstr "Не удалось воспроизвести этот диск."
 
-#: ../src/totem-object.c:1252 ../src/totem-object.c:4186
+#: ../src/totem-object.c:1252 ../src/totem-object.c:4174
 msgid "No reason."
 msgstr "Нет причины."
 
@@ -1351,28 +1351,28 @@ msgstr "Отсутствуют данные об ошибке"
 msgid "Totem could not display the help contents."
 msgstr "Не удалось отобразить содержимое справки."
 
-#: ../src/totem-object.c:2489 ../src/totem-object.c:2491
+#: ../src/totem-object.c:2472 ../src/totem-object.c:2474
 #: ../browser-plugin/totem-plugin-viewer.c:1469
 msgid "An error occurred"
 msgstr "Произошла ошибка"
 
-#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
+#: ../src/totem-object.c:4016 ../src/totem-object.c:4018
 msgid "Previous Chapter/Movie"
 msgstr "Предыдущая глава/фильм"
 
-#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
+#: ../src/totem-object.c:4025 ../src/totem-object.c:4027
 msgid "Play / Pause"
 msgstr "Воспроизведение / Пауза"
 
-#: ../src/totem-object.c:4047 ../src/totem-object.c:4049
+#: ../src/totem-object.c:4035 ../src/totem-object.c:4037
 msgid "Next Chapter/Movie"
 msgstr "Следующая глава/фильм"
 
-#: ../src/totem-object.c:4061 ../src/totem-object.c:4063
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Fullscreen"
 msgstr "Во весь экран"
 
-#: ../src/totem-object.c:4186
+#: ../src/totem-object.c:4174
 msgid "Totem could not startup."
 msgstr "Не удалось запустить Totem."
 
@@ -1380,79 +1380,79 @@ msgstr "Не удалось запустить Totem."
 msgid "Open Location..."
 msgstr "Открыть адрес…"
 
-#: ../src/totem-options.c:49
+#: ../src/totem-options.c:48
 msgid "Enable debug"
 msgstr "Включить отладку"
 
-#: ../src/totem-options.c:50
+#: ../src/totem-options.c:49
 msgid "Play/Pause"
 msgstr "Воспроизведение/Пауза"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Следующий"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Previous"
 msgstr "Предыдущий"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "Перемотка вперёд"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "Перемотка назад"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:56
 msgid "Volume Up"
 msgstr "Увеличить громкость"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:57
 msgid "Volume Down"
 msgstr "Уменьшить громкость"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:58
 msgid "Mute sound"
 msgstr "Приглушить звук"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Переключить полноэкранный режим"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:60
 msgid "Show/Hide Controls"
 msgstr "Показать/скрыть средства управления"
 
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:61
 msgid "Quit"
 msgstr "Выйти"
 
 #. Translators: this refers to a media file
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:79
 #: ../src/plugins/coherence_upnp/coherence_upnp.py:91
 msgid "Enqueue"
 msgstr "Поставить в очередь"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Replace"
 msgstr "Заменить"
 
-#: ../src/totem-options.c:65
+#: ../src/totem-options.c:64
 msgid "Don't connect to an already-running instance"
 msgstr "Не соединяться с уже запущенным экземпляром"
 
-#: ../src/totem-options.c:66
+#: ../src/totem-options.c:65
 msgid "Seek"
 msgstr "Поиск"
 
 #. Translators: help for a (hidden) command line option to specify a playlist entry to start playing on load
-#: ../src/totem-options.c:68
+#: ../src/totem-options.c:67
 msgid "Playlist index"
 msgstr "Индекс списка воспроизведения"
 
-#: ../src/totem-options.c:70
+#: ../src/totem-options.c:69
 msgid "Movies to play"
 msgstr "Фильмы для воспроизведения"
 
@@ -1484,23 +1484,23 @@ msgstr "Заголовок %d"
 msgid "Could not save the playlist"
 msgstr "Не удалось сохранить список воспроизведения"
 
-#: ../src/totem-playlist.c:1029
+#: ../src/totem-playlist.c:1033
 msgid "Save Playlist"
 msgstr "Сохранить список воспроизведения"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1041 ../src/totem-sidebar.c:145
+#: ../src/totem-playlist.c:1045 ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Список воспроизведения"
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1867
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Не удалось разобрать список воспроизведения «%s». Возможно, список повреждён."
 
-#: ../src/totem-playlist.c:1864
+#: ../src/totem-playlist.c:1868
 msgid "Playlist error"
 msgstr "Ошибка списка воспроизведения"
 
@@ -1531,7 +1531,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "Параметры"
 
-#: ../src/totem-preferences.c:767
+#: ../src/totem-preferences.c:766
 msgid "Select Subtitle Font"
 msgstr "Выбрать шрифт субтитров"
 
@@ -1732,7 +1732,7 @@ msgstr "Отсутствует URI видео"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:672
+#: ../src/totem-video-thumbnailer.c:675
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1743,71 +1743,71 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:673
+#: ../src/totem-video-thumbnailer.c:676
 msgid "Filename"
 msgstr "Файл"
 
-#: ../src/totem-video-thumbnailer.c:675
+#: ../src/totem-video-thumbnailer.c:678
 msgid "Resolution"
 msgstr "Разрешение"
 
-#: ../src/totem-video-thumbnailer.c:678
+#: ../src/totem-video-thumbnailer.c:681
 msgid "Duration"
 msgstr "Продолжительность"
 
-#: ../src/totem-uri.c:500 ../src/plugins/chapters/totem-chapters.c:1042
+#: ../src/totem-uri.c:502 ../src/plugins/chapters/totem-chapters.c:1045
 msgid "All files"
 msgstr "Все файлы"
 
-#: ../src/totem-uri.c:505 ../src/plugins/chapters/totem-chapters.c:1039
+#: ../src/totem-uri.c:507 ../src/plugins/chapters/totem-chapters.c:1042
 msgid "Supported files"
 msgstr "Поддерживаемые файлы"
 
-#: ../src/totem-uri.c:517
+#: ../src/totem-uri.c:519
 msgid "Audio files"
 msgstr "Звуковые файлы"
 
-#: ../src/totem-uri.c:525
+#: ../src/totem-uri.c:527
 msgid "Video files"
 msgstr "Видеофайлы"
 
-#: ../src/totem-uri.c:535
+#: ../src/totem-uri.c:537
 msgid "Subtitle files"
 msgstr "Файлы субтитров"
 
-#: ../src/totem-uri.c:587
+#: ../src/totem-uri.c:589
 msgid "Select Text Subtitles"
 msgstr "Выбрать текстовые субтитры"
 
-#: ../src/totem-uri.c:649
+#: ../src/totem-uri.c:651
 msgid "Select Movies or Playlists"
 msgstr "Выбор фильмов или списков воспроизведения"
 
-#: ../src/totem.c:114
+#: ../src/totem.c:93
 msgid "Could not open link"
 msgstr "Не удалось открыть ссылку"
 
-#: ../src/totem.c:192 ../src/totem.c:218
+#: ../src/totem.c:151 ../src/totem.c:177
 #: ../browser-plugin/totem-plugin-viewer.c:666
 #: ../browser-plugin/totem-plugin-viewer.c:1863
 msgid "Totem Movie Player"
 msgstr "Видеопроигрыватель Totem"
 
-#: ../src/totem.c:193 ../browser-plugin/totem-plugin-viewer.c:2286
+#: ../src/totem.c:152 ../browser-plugin/totem-plugin-viewer.c:2286
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Не удалось инициализировать библиотеки с поддержкой потоков (нитей)."
 
-#: ../src/totem.c:193
+#: ../src/totem.c:152
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Проверьте, правильно ли установлена система. Totem завершает свою работу."
 
 #. Handle command line arguments
-#: ../src/totem.c:201
+#: ../src/totem.c:160
 msgid "- Play movies and songs"
 msgstr "— воспроизведение фильмов и музыки"
 
-#: ../src/totem.c:210
+#: ../src/totem.c:169
 #, c-format
 msgid ""
 "%s\n"
@@ -1816,31 +1816,31 @@ msgstr ""
 "%s\n"
 "Запустите '%s --help', чтобы увидеть полный список доступных команд.\n"
 
-#: ../src/totem.c:226
+#: ../src/totem.c:186
 msgid "Totem could not initialize the configuration engine."
 msgstr "Не удалось инициализировать систему настройки."
 
-#: ../src/totem.c:227
+#: ../src/totem.c:186
 msgid "Make sure that GNOME is properly installed."
 msgstr "Убедитесь, что среда GNOME установлена правильно."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1759
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1772
 msgid "Password requested for RTSP server"
 msgstr "Требуется пароль для сервера RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2992
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2996
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3019
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3023
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Дорожка аудио #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3024
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3028
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3051
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3055
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Субтитры #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3437
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3464
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1848,16 +1848,16 @@ msgstr ""
 "Выбранная система вывода звука не найдена. Пожалуйста, выберите другую "
 "систему вывода звука в настройках рабочей среды."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3442
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3469
 msgid "Location not found."
 msgstr "Адрес не найден."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3446
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3473
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr "Не удалось открыть адрес; возможно, у вас нет прав на доступ к файлу."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3484
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1867,7 +1867,7 @@ msgstr ""
 "приложения или выберите другой способ вывода видео в параметрах рабочей "
 "среды."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3463
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3490
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1878,15 +1878,15 @@ msgstr ""
 "использовать сервер звука."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3481
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3487
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3508
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3514
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Для воспроизведения этого фильма требуется модуль (%s), который не "
 "установлен."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3488
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3515
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1899,34 +1899,34 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3513
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3540
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Не удалось воспроизвести этот файл по сети. Попробуйте сначала загрузить его "
 "на локальный диск."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3585
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3612
 msgid "Media file could not be played."
 msgstr "Не удалось воспроизвести файл."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5888
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5915
 msgid "Surround"
 msgstr "Объёмный"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5890
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5917
 msgid "Mono"
 msgstr "Моно"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6237
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6264
 msgid "Too old version of GStreamer installed."
 msgstr "Установлена слишком старая версия GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6244
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6271
 msgid "Media contains no supported video streams."
 msgstr "На носителе не найдено поддерживаемых потоков видео."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6757
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6782
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1934,8 +1934,8 @@ msgstr ""
 "Не удалось создать объект воспроизведения GStreamer. Проверьте, правильно ли "
 "установлен GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6871
-#: ../src/backend/bacon-video-widget-gst-0.10.c:7006
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6896
+#: ../src/backend/bacon-video-widget-gst-0.10.c:7031
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
 "video output in the Multimedia Systems Selector."
@@ -1943,7 +1943,7 @@ msgstr ""
 "Не удалось открыть систему вывода видео. Выберите другую систему в "
 "параметрах рабочей среды."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6883
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6908
 msgid ""
 "Could not find the video output. You may need to install additional "
 "GStreamer plugins, or select another video output in the Multimedia Systems "
@@ -1953,7 +1953,7 @@ msgstr ""
 "дополнительные модули GStreamer или выбрать другую систему в параметрах "
 "рабочей среды."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6918
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6943
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1963,7 +1963,7 @@ msgstr ""
 "доступа к звуковому устройству, или не запущен сервер звука. Выберите другую "
 "систему вывода звука в параметрах рабочей среды."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6938
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6963
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2136,7 +2136,7 @@ msgid "Video Disc Recorder"
 msgstr "Запись видео дисков"
 
 #: ../src/plugins/chapters/chapters.totem-plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1190
+#: ../src/plugins/chapters/totem-chapters.c:1193
 msgid "Chapters"
 msgstr "Главы"
 
@@ -2197,31 +2197,31 @@ msgstr ""
 msgid "Error while reading file with chapters"
 msgstr "При чтении файла с главами возникла ошибка"
 
-#: ../src/plugins/chapters/totem-chapters.c:582
+#: ../src/plugins/chapters/totem-chapters.c:585
 msgid "Chapter with the same time already exists"
 msgstr "Глава с таким временем уже существует"
 
-#: ../src/plugins/chapters/totem-chapters.c:583
+#: ../src/plugins/chapters/totem-chapters.c:586
 msgid "Try another name or remove an existing chapter"
 msgstr "Попробуйте другое название или удалите существующую главу"
 
-#: ../src/plugins/chapters/totem-chapters.c:760
+#: ../src/plugins/chapters/totem-chapters.c:763
 msgid "Error while writing file with chapters"
 msgstr "Во время записи файла с главами возникла ошибка"
 
-#: ../src/plugins/chapters/totem-chapters.c:885
+#: ../src/plugins/chapters/totem-chapters.c:888
 msgid "Error occurred while saving chapters"
 msgstr "При сохранении глав возникла ошибка"
 
-#: ../src/plugins/chapters/totem-chapters.c:886
+#: ../src/plugins/chapters/totem-chapters.c:889
 msgid "Please check you rights and free space"
 msgstr "Проверьте свои права и свободное пространство"
 
-#: ../src/plugins/chapters/totem-chapters.c:1020
+#: ../src/plugins/chapters/totem-chapters.c:1023
 msgid "Open Chapters File"
 msgstr "Открыть файл с главами"
 
-#: ../src/plugins/chapters/totem-cmml-parser.c:558
+#: ../src/plugins/chapters/totem-cmml-parser.c:559
 msgid "Failed to parse CMML file"
 msgstr "Не удалось разобрать файл CMML"
 
@@ -2612,7 +2612,7 @@ msgid "%d Hz"
 msgstr "%d Гц"
 
 #. Translators: computers on the local network which are publishing their playlists over the network
-#: ../src/plugins/publish/totem-publish.c:589
+#: ../src/plugins/publish/totem-publish.c:594
 msgid "Neighbors"
 msgstr "Окружение"
 
@@ -2673,7 +2673,7 @@ msgid "_Name:"
 msgstr "_Имя"
 
 #. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:383
+#: ../src/plugins/screenshot/gnome-screenshot-widget.c:389
 #: ../src/plugins/screenshot/totem-screenshot.c:63
 msgid "Screenshot.png"
 msgstr "Кадр.png"
@@ -2697,7 +2697,7 @@ msgid "Creating Gallery..."
 msgstr "Создание серии кадров…"
 
 #. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:108
+#: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
 msgid "Saving gallery as \"%s\""
 msgstr "Сохранение серии кадров в «%s»"
@@ -2706,13 +2706,13 @@ msgstr "Сохранение серии кадров в «%s»"
 msgid "There was an error saving the screenshot."
 msgstr "Произошла ошибка при сохранении кадра."
 
-#: ../src/plugins/screenshot/totem-screenshot.c:139
+#: ../src/plugins/screenshot/totem-screenshot.c:138
 msgid "Save Screenshot"
 msgstr "Сохранить кадр"
 
 #. Create the screenshot widget
 #. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:160
+#: ../src/plugins/screenshot/totem-screenshot.c:159
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Кадр-%s-%d.png"
@@ -2982,4 +2982,3 @@ msgstr ""
 "После нажатия кнопки OK видеопроигрыватель будет ожидать соединения с winpdb "
 "или rpdb2. Если пароль отладчика не указан в GConf, то будет использован "
 "пароль по умолчанию ('totem')."
-
