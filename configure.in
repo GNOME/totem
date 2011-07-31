@@ -47,7 +47,7 @@ GTK_REQS=2.99.3
 TOTEM_PLPARSER_REQS=2.32.4
 GNOMEICON_REQS=2.15.90
 DBUS_REQS=0.82
-VALA_REQS=0.11.1
+VALA_REQS=0.12.1
 PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
 PYGOBJECT_REQS=2.27.0
@@ -68,7 +68,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole save-file samplepython sample-vala screensaver screenshot sidebar-test skipto youtube zeitgeist-dp grilo"
+allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto youtube zeitgeist-dp grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -80,6 +80,7 @@ GST_REQS=0.10.30
 GSTPLUG_REQS=0.10.30
 CLUTTER_REQS=1.6.8
 CLUTTER_GST_REQS=1.3.9
+CLUTTER_GTK_REQS=1.0.2
 
 HAVE_GSTREAMER=no
 
@@ -219,7 +220,7 @@ PKG_CHECK_MODULES([DEPENDENCY],[
   gmodule-2.0
   totem-plparser >= $TOTEM_PLPARSER_REQS
   gstreamer-tag-0.10 >= 0.10.26
-  clutter-gtk-1.0
+  clutter-gtk-1.0 >= $CLUTTER_GTK_REQS
   cairo])
 
 PKG_CHECK_MODULES(MM, $MM)
@@ -453,6 +454,12 @@ for plugin in ${used_plugins}; do
 			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 >= 0.3.0, [HAVE_LIBEPC=yes], [HAVE_LIBEPC=no])
 			if test "${HAVE_LIBEPC}" != "yes" ; then
 				plugin_error_or_ignore "you need the easy-publish-and-consume library installed for the publish plugin"
+				add_plugin="0"
+			fi
+		;;
+		rotation)
+			if test "${with_vala}" != "yes" ; then
+				plugin_error_or_ignore "you need vala installed to use the rotation plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -781,6 +788,7 @@ src/plugins/media-player-keys/Makefile
 src/plugins/opensubtitles/Makefile
 src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in
 src/plugins/properties/Makefile
+src/plugins/rotation/Makefile
 src/plugins/save-file/Makefile
 src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
