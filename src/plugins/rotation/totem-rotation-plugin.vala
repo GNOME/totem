@@ -178,7 +178,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         this.try_restore_state (mrl);
     }
 
-    private void store_state ()
+    private async void store_state ()
     {
         Totem.Object t = (Totem.Object) this.object;
         string mrl = t.get_current_mrl ();
@@ -189,22 +189,26 @@ class RotationPlugin: GLib.Object, Peas.Activatable
 
         var file = GLib.File.new_for_uri (mrl);
         try {
+            var file_info = yield file.query_info_async (GIO_ROTATION_FILE_ATTRIBUTE,
+                    GLib.FileQueryInfoFlags.NONE);
+
             string state_str = "";
             if (this.state != Rotation._IDENTITY) {
                 state_str = "%u".printf ((uint) this.state);
             }
-            file.set_attribute_string (GIO_ROTATION_FILE_ATTRIBUTE, state_str,
-                    GLib.FileQueryInfoFlags.NONE);
+            file_info.set_attribute_string (GIO_ROTATION_FILE_ATTRIBUTE, state_str);
+            yield file.set_attributes_async (file_info, GLib.FileQueryInfoFlags.NONE,
+                    GLib.Priority.DEFAULT, null, null);
         } catch (GLib.Error e) {
             GLib.warning ("Could not store file attribute: %s", e.message);
         }
     }
 
-    private void try_restore_state (string mrl)
+    private async void try_restore_state (string mrl)
     {
         var file = GLib.File.new_for_uri (mrl);
         try {
-            var file_info = file.query_info (GIO_ROTATION_FILE_ATTRIBUTE,
+            var file_info = yield file.query_info_async (GIO_ROTATION_FILE_ATTRIBUTE,
                     GLib.FileQueryInfoFlags.NONE);
             string state_str = file_info.get_attribute_string (GIO_ROTATION_FILE_ATTRIBUTE);
             if (state_str != null) {
