@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-13 11:48+0200\n"
-"PO-Revision-Date: 2011-07-13 11:49+0200\n"
+"POT-Creation-Date: 2011-08-11 20:55+0200\n"
+"PO-Revision-Date: 2011-08-11 20:56+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -1110,7 +1110,7 @@ msgstr "S_pill av nå"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../src/totem-fullscreen.c:606
+#: ../src/totem-fullscreen.c:621
 msgid "No File"
 msgstr "Ingen fil"
 
@@ -1914,7 +1914,7 @@ msgstr ""
 "Kunne ikke opprette et spilleobjekt for GStreamer. Sjekk din GStreamer "
 "installasjon."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6126
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6128
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1924,7 +1924,7 @@ msgstr ""
 "lydenheten eller lydtjeneren kjører ikke. Velg en annen utgang for lyd i "
 "«Valg av multimediesystemer»."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6146
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6148
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2428,6 +2428,22 @@ msgstr ""
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid "rpdb2 password"
 msgstr "rpdb2-passord"
+
+#: ../src/plugins/rotation/rotation.plugin.in.h:1
+msgid "Allows videos to be rotated if they're in the wrong orientation."
+msgstr "Gjør det mulig å rotere videoer hvis de har feil orientering."
+
+#: ../src/plugins/rotation/rotation.plugin.in.h:2
+msgid "Rotation Plugin"
+msgstr "Tillegg for rotering"
+
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:60
+msgid "_Rotate Clockwise"
+msgstr "_Roter med klokken"
+
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:62
+msgid "Rotate Counterc_lockwise"
+msgstr "Roter _mot klokken"
 
 #: ../src/plugins/save-file/totem-save-file.c:63
 msgid "Save a Copy..."
