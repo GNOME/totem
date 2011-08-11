@@ -304,4 +304,7 @@ void	totem_object_action_remote_set_setting	(TotemObject *totem,
 gboolean totem_object_action_remote_get_setting	(TotemObject *totem,
 						 TotemRemoteSetting setting);
 
+const gchar * const *totem_object_get_supported_content_types (void);
+const gchar * const *totem_object_get_supported_uri_schemes (void);
+
 #endif /* __TOTEM_H__ */

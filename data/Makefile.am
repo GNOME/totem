@@ -56,7 +56,7 @@ desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-totem.desktop.in: totem.desktop.in.in mime-type-list.txt desktop.sh
+totem.desktop.in: totem.desktop.in.in mime-type-list.txt uri-schemes-list.txt desktop.sh
 	$(AM_V_GEN) cat totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
 	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt $(srcdir)/uri-schemes-list.txt >> $@
 
@@ -82,20 +82,25 @@ CLEANFILES += \
 	$(thumbnailer_DATA)
 
 # Content type handling
-nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h
+nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h totem-uri-schemes.h
 totem-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	> $@
 nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt > $@
+totem-uri-schemes.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
+	$(AM_V_GEN) $(srcdir)/uri-scheme-include.sh $(srcdir)/uri-schemes-list.txt > $@
 
 EXTRA_DIST += \
 	mime-type-include.sh	\
 	mime-type-list.txt	\
+	uri-scheme-include.sh	\
 	uri-schemes-list.txt	\
 	mime-functions.sh
 CLEANFILES += \
 	totem-mime-types.h		\
-	nautilus-audio-mime-types.h
+	totem-uri-schemes.h		\
+	nautilus-audio-mime-types.h	\
+	totem-uri-schemes.h
 
 # GSettings schemas, enum files and conversion file
 gsettings_ENUM_NAMESPACE = org.gnome.totem

@@ -25,7 +25,7 @@ fi
 MIMETYPES=`grep -v '^#' $1 | grep -v x-content/ | grep -v x-scheme-handler/`
 
 echo "/* generated with mime-types-include.sh, don't edit */"
-echo "const char *mime_types[] = {"
+echo "static const gchar *mime_types[] = {"
 
 for i in $MIMETYPES ; do
 	echo_mime;
@@ -35,7 +35,7 @@ echo "};"
 
 get_audio_mimetypes $1;
 
-echo "const char *audio_mime_types[] = {"
+echo "static const gchar *audio_mime_types[] = {"
 for i in $MIMETYPES ; do
 	echo_mime;
 done
@@ -44,7 +44,7 @@ echo "};"
 
 get_video_mimetypes $1;
 
-echo "const char *video_mime_types[] = {"
+echo "static const gchar *video_mime_types[] = {"
 for i in $MIMETYPES ; do
 	echo_mime;
 done

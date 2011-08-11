@@ -70,6 +70,9 @@
 #include "totem-dnd-menu.h"
 #include "totem-preferences.h"
 
+#include "totem-mime-types.h"
+#include "totem-uri-schemes.h"
+
 #define REWIND_OR_PREVIOUS 4000
 
 #define SEEK_FORWARD_SHORT_OFFSET 15
@@ -4298,4 +4301,32 @@ video_widget_create (TotemObject *totem)
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
 			G_CALLBACK (property_notify_cb_seekable), totem);
 	update_volume_sliders (totem);
+}
+
+/**
+ * totem_object_get_supported_content_types:
+ *
+ * Get the full list of file content types which Totem supports playing.
+ *
+ * Return value: (array zero-terminated=1) (transfer none): a %NULL-terminated array of the content types Totem supports
+ * Since: 3.1.5
+ */
+const gchar * const *
+totem_object_get_supported_content_types (void)
+{
+	return mime_types;
+}
+
+/**
+ * totem_object_get_supported_uri_schemes:
+ *
+ * Get the full list of URI schemes which Totem supports accessing.
+ *
+ * Return value: (array zero-terminated=1) (transfer none): a %NULL-terminated array of the URI schemes Totem supports
+ * Since: 3.1.5
+ */
+const gchar * const *
+totem_object_get_supported_uri_schemes (void)
+{
+	return uri_schemes;
 }
