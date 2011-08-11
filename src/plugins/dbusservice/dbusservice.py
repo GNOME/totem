@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 ## Totem D-Bus plugin
 ## Copyright (C) 2009 Lucky <lucky1.data@gmail.com>
 ## Copyright (C) 2009 Philip Withnall <philip@tecnocode.co.uk>
@@ -20,9 +22,13 @@
 ## Sunday 13th May 2007: Bastien Nocera: Add exception clause.
 ## See license_change file for details.
 
+import gettext
 from gi.repository import GObject, Peas, Totem # pylint: disable-msg=E0611
 import dbus, dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
+
+gettext.textdomain ("totem")
+_ = gettext.gettext
 
 class DbusService (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'DbusService'
@@ -33,331 +39,308 @@ class DbusService (GObject.Object, Peas.Activatable):
         GObject.Object.__init__ (self)
 
         self.root = None
-        self.player = None
-        self.track_list = None
 
     def do_activate (self):
         DBusGMainLoop (set_as_default = True)
 
-        name = dbus.service.BusName ('org.mpris.Totem',
+        name = dbus.service.BusName ('org.mpris.MediaPlayer2.totem',
                                      bus = dbus.SessionBus ())
         self.root = Root (name, self.object)
-        self.player = Player (name, self.object)
-        self.track_list = TrackList (name, self.object)
 
     def do_deactivate (self):
         # Ensure we don't leak our paths on the bus
         self.root.disconnect ()
-        self.player.disconnect ()
-        self.track_list.disconnect ()
 
-class Root (dbus.service.Object): # pylint: disable-msg=R0923
+class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
     def __init__ (self, name, totem):
-        dbus.service.Object.__init__ (self, name, '/')
-        self.totem = totem
-
-    def disconnect (self):
-        self.remove_from_connection (None, None)
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 's')
-    def Identity (self):
-        return self.totem.get_version ()
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = '')
-    def Quit (self):
-        self.totem.action_exit ()
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = '(qq)')
-    def MprisVersion (self):
-        return dbus.Struct ((dbus.UInt16 (1), dbus.UInt16 (0)),
-                            signature = '(qq)')
-
-class Player (dbus.service.Object): # pylint: disable-msg=R0923,R0904
-    def __init__ (self, name, totem):
-        dbus.service.Object.__init__ (self, name, '/Player')
+        dbus.service.Object.__init__ (self, name, '/org/mpris/MediaPlayer2')
         self.totem = totem
 
         self.null_metadata = {
-            "year" : "", "tracknumber" : "", "location" : "",
-            "title" : "", "album" : "", "time" : "", "genre" : "",
-            "artist" : ""
+            'year' : '', 'tracknumber' : '', 'location' : '',
+            'title' : '', 'album' : '', 'time' : '', 'genre' : '',
+            'artist' : ''
         }
-        self.old_metadata = self.null_metadata.copy ()
         self.current_metadata = self.null_metadata.copy ()
-        self.old_caps = 64 # at startup, we can only support a playlist
-        self.old_status = (2, 0, 0, 0) # startup state
+        self.current_position = 0
 
-        totem.connect ("metadata-updated", self.__do_update_metadata)
-        totem.connect ("notify::playing", self.__do_notify)
-        totem.connect ("notify::seekable", self.__do_notify)
-        totem.connect ("notify::current-mrl", self.__do_notify)
+        totem.connect ('metadata-updated', self.__do_update_metadata)
+        totem.connect ('notify::playing', self.__do_notify_playing)
+        totem.connect ('notify::seekable', self.__do_notify_seekable)
+        totem.connect ('notify::current-mrl', self.__do_notify_current_mrl)
+        totem.connect ('notify::current-time', self.__do_notify_current_time)
+
+    def disconnect (self):
+        self.totem.disconnect_by_func (self.__do_notify_current_time)
+        self.totem.disconnect_by_func (self.__do_notify_current_mrl)
+        self.totem.disconnect_by_func (self.__do_notify_seekable)
+        self.totem.disconnect_by_func (self.__do_notify_playing)
+        self.totem.disconnect_by_func (self.__do_update_metadata)
+
+        self.__do_update_metadata (self.totem, '', '', '', 0)
+
+        self.remove_from_connection (None, None)
+
+    def __calculate_playback_status (self):
+        if self.totem.is_playing ():
+            return 'Playing'
+        elif self.totem.is_paused ():
+            return 'Paused'
+        else:
+            return 'Stopped'
+
+    def __calculate_metadata (self):
+        metadata = {
+            'mpris:trackid': dbus.String (self.totem.props.current_mrl,
+                variant_level = 1),
+            'mpris:length': dbus.Int64 (
+                self.totem.props.stream_length * 1000L,
+                variant_level = 1),
+        }
+
+        if self.current_metadata['title'] != '':
+            metadata['xesam:title'] = dbus.String (
+                self.current_metadata['title'], variant_level = 1)
+
+        if self.current_metadata['artist'] != '':
+            metadata['xesam:artist'] = dbus.Array (
+                [ self.current_metadata['artist'] ], variant_level = 1)
+
+        if self.current_metadata['album'] != '':
+            metadata['xesam:album'] = dbus.String (
+                self.current_metadata['album'], variant_level = 1)
+
+        if self.current_metadata['tracknumber'] != '':
+            metadata['xesam:trackNumber'] = dbus.Int32 (
+                self.current_metadata['tracknumber'], variant_level = 1)
+
+        return metadata
 
     def __do_update_metadata (self, totem, artist, # pylint: disable-msg=R0913
                               title, album, num):
         self.current_metadata = self.null_metadata.copy ()
         if title:
-            self.current_metadata["title"] = title
+            self.current_metadata['title'] = title
         if artist:
-            self.current_metadata["artist"] = artist
+            self.current_metadata['artist'] = artist
         if album:
-            self.current_metadata["album"] = album
+            self.current_metadata['album'] = album
         if num:
-            self.current_metadata["tracknumber"] = num
+            self.current_metadata['tracknumber'] = num
 
-        if totem.is_playing ():
-            self.__track_change (self.current_metadata)
+        self.PropertiesChanged ('org.mpris.MediaPlayer2.Player',
+            { 'Metadata': self.__calculate_metadata () }, [])
 
-    def __do_notify (self, totem, status):
-        if totem.is_playing ():
-            self.__track_change (self.current_metadata)
-        else:
-            self.__track_change (self.null_metadata)
+    def __do_notify_playing (self, totem, prop):
+        self.PropertiesChanged ('org.mpris.MediaPlayer2.Player',
+            { 'PlaybackStatus': self.__calculate_playback_status () }, [])
 
-        status = self.__calculate_status ()
-        if status != self.old_status:
-            self.__status_change (status)
+    def __do_notify_current_mrl (self, totem, prop):
+        self.PropertiesChanged ('org.mpris.MediaPlayer2.Player', {
+            'CanPlay': (self.totem.props.current_mrl != None),
+            'CanPause': (self.totem.props.current_mrl != None),
+            'CanSeek': (self.totem.props.current_mrl != None and
+                        self.totem.props.seekable),
+        }, [])
 
-        caps = self.__calculate_caps ()
-        if caps != self.old_caps:
-            self.__caps_change (caps)
+    def __do_notify_seekable (self, totem, prop):
+        self.PropertiesChanged ('org.mpris.MediaPlayer2.Player', {
+            'CanSeek': (self.totem.props.current_mrl != None and
+                        self.totem.props.seekable),
+        }, [])
 
-    def __calculate_status (self):
-        if self.totem.is_playing ():
-            playing_status = 0
-        elif self.totem.is_paused ():
-            playing_status = 1
-        else:
-            playing_status = 2
+    def __do_notify_current_time (self, totem, prop):
+        # Only notify of seeks if we've skipped more than 3 seconds
+        if abs (totem.props.current_time - self.current_position) > 3:
+            self.Seeked (totem.props.current_time * 1000L)
 
-        if self.totem.action_remote_get_setting (Totem.RemoteSetting.SHUFFLE):
-            shuffle_status = 1
-        else:
-            shuffle_status = 0
+        self.current_position = totem.props.current_time
 
-        if self.totem.action_remote_get_setting (Totem.RemoteSetting.REPEAT):
-            repeat_status = 1
-        else:
-            repeat_status = 0
+    # org.freedesktop.DBus.Properties interface
+    @dbus.service.method (dbus_interface = dbus.PROPERTIES_IFACE,
+                          in_signature = 'ss', # pylint: disable-msg=C0103
+                          out_signature = 'v')
+    def Get (self, interface_name, property_name):
+        return self.GetAll (interface_name)[property_name]
 
-        return (
-            # 0 = Playing, 1 = Paused, 2 = Stopped
-            dbus.Int32 (playing_status),
-            # 0 = Playing linearly , 1 = Playing randomly
-            dbus.Int32 (shuffle_status),
-            # 0 = Go to the next element once the current has finished playing,
-            # 1 = Repeat the current element
-            dbus.Int32 (0),
-            # 0 = Stop playing once the last element has been played,
-            # 1 = Never give up playing
-            dbus.Int32 (repeat_status)
-        )
+    @dbus.service.method (dbus_interface = dbus.PROPERTIES_IFACE,
+                          in_signature = 's', # pylint: disable-msg=C0103
+                          out_signature = 'a{sv}')
+    def GetAll (self, interface_name):
+        if interface_name == 'org.mpris.MediaPlayer2':
+            return {
+                'CanQuit': True,
+                'CanRaise': True,
+                'HasTrackList': False,
+                'Identity': self.totem.get_version (),
+                'DesktopEntry': 'totem',
+                'SupportedUriSchemes': self.totem.get_supported_uri_schemes (),
+                'SupportedMimeTypes': self.totem.get_supported_content_types (),
+            }
+        elif interface_name == 'org.mpris.MediaPlayer2.Player':
+            # Loop status (we don't support Track)
+            if self.totem.action_remote_get_setting (
+                Totem.RemoteSetting.REPEAT):
+                loop_status = 'Playlist'
+            else:
+                loop_status = 'None'
 
-    def __calculate_caps (self):
-        caps = 64 # we can always have a playlist
-        playlist_length = self.totem.get_playlist_length ()
-        playlist_pos = self.totem.get_playlist_pos ()
+            # Shuffle
+            shuffle = self.totem.action_remote_get_setting (
+                Totem.RemoteSetting.SHUFFLE)
 
-        if playlist_pos < playlist_length - 1:
-            caps |= 1 << 0 # go next
-        if playlist_pos > 0:
-            caps |= 1 << 1 # go previous
-        if playlist_length > 0:
-            caps |= 1 << 2 # pause
-            caps |= 1 << 3 # play
-        if self.totem.is_seekable ():
-            caps |= 1 << 4 # seek
-        if self.current_metadata != self.null_metadata:
-            caps |= 1 << 5 # get metadata
+            return {
+                'PlaybackStatus': self.__calculate_playback_status (),
+                'LoopStatus': loop_status, # TODO: Notifications
+                'Rate': 1.0,
+                'MinimumRate': 1.0,
+                'MaximumRate': 1.0,
+                'Shuffle': shuffle, # TODO: Notifications
+                'Metadata': self.__calculate_metadata (),
+                'Volume': self.totem.get_volume (), # TODO: Notifications
+                'Position': self.totem.props.current_time * 1000L,
+                'CanGoNext': True, # TODO
+                'CanGoPrevious': True, # TODO
+                'CanPlay': (self.totem.props.current_mrl != None),
+                'CanPause': (self.totem.props.current_mrl != None),
+                'CanSeek': (self.totem.props.current_mrl != None and
+                            self.totem.props.seekable),
+                'CanControl': True,
+            }
 
-        return caps
+        raise dbus.exceptions.DBusException (
+            'org.mpris.MediaPlayer2.UnknownInterface',
+            _(u'The MediaPlayer2 object does not implement the ‘%s’ interface')
+                % interface_name)
 
-    def __track_change (self, metadata):
-        if self.old_metadata != metadata:
-            self.old_metadata = metadata.copy ()
-            self.TrackChange (metadata)
+    @dbus.service.method (dbus_interface = dbus.PROPERTIES_IFACE,
+                          in_signature = 'ssv') # pylint: disable-msg=C0103
+    def Set (self, interface_name, property_name, new_value):
+        if interface_name == 'org.mpris.MediaPlayer2':
+            raise dbus.exceptions.DBusException (
+                'org.mpris.MediaPlayer2.ReadOnlyProperty',
+                _(u'The property ‘%s’ is not writeable.'))
+        elif interface_name == 'org.mpris.MediaPlayer2.Player':
+            if property_name == 'LoopStatus':
+                self.totem.action_remote_set_setting (
+                    Totem.RemoteSetting.REPEAT, (new_value == 'Playlist'))
+            elif property_name == 'Rate':
+                # Ignore, since we don't support setting the rate
+                pass
+            elif property_name == 'Shuffle':
+                self.totem.action_remote_set_setting (
+                    Totem.RemoteSetting.SHUFFLE, new_value)
+            elif property_name == 'Volume':
+                self.totem.action_volume (new_value)
 
-    def __status_change (self, status):
-        if self.old_status != status:
-            self.old_status = status
-            self.StatusChange (status)
+            raise dbus.exceptions.DBusException (
+                'org.mpris.MediaPlayer2.ReadOnlyProperty',
+                _(u'Unknown property ‘%s’ requested of a MediaPlayer 2 object')
+                    % interface_name)
 
-    def __caps_change (self, caps):
-        if self.old_caps != caps:
-            self.old_caps = caps
-            self.CapsChange (caps)
+        raise dbus.exceptions.DBusException (
+            'org.mpris.MediaPlayer2.UnknownInterface',
+            _(u'The MediaPlayer2 object does not implement the ‘%s’ interface')
+                % interface_name)
 
-    def disconnect (self):
-        self.TrackChange (self.null_metadata)
-        self.remove_from_connection (None, None)
-
-    @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = 'a{sv}') # pylint: disable-msg=C0103
-    def TrackChange (self, metadata):
+    @dbus.service.signal (dbus_interface = dbus.PROPERTIES_IFACE,
+                          signature = 'sa{sv}as') # pylint: disable-msg=C0103
+    def PropertiesChanged (self, interface_name, changed_properties,
+                           invalidated_properties):
         pass
 
-    @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = '(iiii)') # pylint: disable-msg=C0103
-    def StatusChange (self, status):
-        pass
+    # org.mpris.MediaPlayer2 interface
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2',
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
+    def Raise (self):
+        main_window = self.totem.get_main_window ()
+        main_window.present ()
 
-    @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = 'i') # pylint: disable-msg=C0103
-    def CapsChange (self, caps):
-        pass
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2',
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
+    def Quit (self):
+        self.totem.action_exit ()
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
+    # org.mpris.MediaPlayer2.Player interface
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Next (self):
+        if self.totem.is_playing () or self.totem.is_paused ():
+            return
+
         self.totem.action_next ()
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
-    def Prev (self):
+    def Previous (self):
+        if self.totem.is_playing () or self.totem.is_paused ():
+            return
+
         self.totem.action_previous ()
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Pause (self):
+        self.totem.action_pause ()
+
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
+                          in_signature = '', # pylint: disable-msg=C0103
+                          out_signature = '')
+    def PlayPause (self):
         self.totem.action_play_pause ()
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Stop (self):
         self.totem.action_stop ()
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = '', # pylint: disable-msg=C0103
                           out_signature = '')
     def Play (self):
-        # If playing : rewind to the beginning of current track,
-        # else : start playing.
-        if self.totem.is_playing ():
-            self.totem.action_seek_time (0, False)
-        else:
-            self.totem.action_play ()
+        # If playing or no track loaded: do nothing,
+        # else: start playing.
+        if self.totem.is_playing () or self.totem.props.current_mrl == None:
+            return
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'b', # pylint: disable-msg=C0103
+        self.totem.action_play ()
+
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
+                          in_signature = 'x', # pylint: disable-msg=C0103
                           out_signature = '')
-    def Repeat (self, value):
-        # We don't support repeating individual tracks
-        pass
+    def Seek (self, offset):
+        self.totem.action_seek_relative (offset / 1000L, False)
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = '(iiii)')
-    def GetStatus (self):
-        status = self.__calculate_status ()
-        self.old_status = status
-        return dbus.Struct (status, signature = '(iiii)')
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 'a{sv}')
-    def GetMetadata (self):
-        return self.current_metadata
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 'i')
-    def GetCaps (self):
-        caps = self.__calculate_caps ()
-        self.old_caps = caps
-        return caps
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', # pylint: disable-msg=C0103
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
+                          in_signature = 'ox', # pylint: disable-msg=C0103
                           out_signature = '')
-    def VolumeSet (self, volume):
-        self.totem.action_volume (volume / 100.0)
+    def SetPosition (self, track_id, position):
+        position = position / 1000L
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 'i')
-    def VolumeGet (self):
-        return dbus.Int32 (self.totem.get_volume () * 100)
+        # Bail if the position is not in the permitted range
+        if position < 0 or position > self.totem.props.stream_length:
+            return
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', # pylint: disable-msg=C0103
-                          out_signature = '')
-    def PositionSet (self, position):
         self.totem.action_seek_time (position, False)
 
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 'i')
-    def PositionGet (self):
-        return dbus.Int32 (self.totem.props.current_time)
+    @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
+                          in_signature = 's', # pylint: disable-msg=C0103
+                          out_signature = '')
+    def OpenUri (self, uri):
+        if self.totem.action_set_mrl (uri):
+            self.totem.action_play ()
 
-class TrackList (dbus.service.Object): # pylint: disable-msg=R0923
-    def __init__ (self, name, totem):
-        dbus.service.Object.__init__ (self, name, '/TrackList')
-        self.totem = totem
+        raise dbus.exceptions.DBusException (
+            'org.mpris.MediaPlayer2.InvalidUri',
+            _(u'The URI ‘%s’ is not supported.') % uri)
 
-    def disconnect (self):
-        self.remove_from_connection (None, None)
-
-    @dbus.service.signal (dbus_interface = "org.freedesktop.MediaPlayer",
-                          signature = 'i') # pylint: disable-msg=C0103
-    def TrackListChange (self, length):
-        # TODO: we can't implement this until TotemPlaylist is exposed in the
-        # Python API
+    @dbus.service.signal (dbus_interface = 'org.mpris.MediaPlayer2.Player',
+                          signature = 'x') # pylint: disable-msg=C0103
+    def Seeked (self, position):
         pass
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', # pylint: disable-msg=C0103
-                          out_signature = 'a{sv}')
-    def GetMetadata (self, pos):
-        # Since the API doesn't currently exist in Totem to get the rest of the
-        # metadata, we can only return the title
-        return { "title" : self.totem.get_title_at_playlist_pos (pos) }
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 'i')
-    def GetCurrentTrack (self):
-        return self.totem.get_playlist_pos ()
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = '', # pylint: disable-msg=C0103
-                          out_signature = 'i')
-    def GetLength (self):
-        return self.totem.get_playlist_length ()
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'sb', # pylint: disable-msg=C0103
-                          out_signature = 'i')
-    def AddTrack (self, uri, play_immediately):
-        # We can't currently support !play_immediately
-        self.totem.add_to_playlist_and_play (str (uri), '', True)
-        return 0
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'i', # pylint: disable-msg=C0103
-                          out_signature = '')
-    def DelTrack (self, pos):
-        # TODO: we need TotemPlaylist exposed by the Python API for this
-        pass
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'b', # pylint: disable-msg=C0103
-                          out_signature = '')
-    def SetLoop (self, loop):
-        self.totem.action_remote_set_setting (Totem.RemoteSetting.REPEAT, loop)
-
-    @dbus.service.method (dbus_interface='org.freedesktop.MediaPlayer',
-                          in_signature = 'b', # pylint: disable-msg=C0103
-                          out_signature = '')
-    def SetRandom (self, random):
-        self.totem.action_remote_set_setting (Totem.RemoteSetting.SHUFFLE,
-                                              random)
