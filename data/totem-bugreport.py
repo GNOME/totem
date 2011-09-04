@@ -1,13 +1,13 @@
 #!/usr/bin/python
-import gtk
 import os
 from datetime import datetime
+from gi.repository import Gtk
 
 # Get the GStreamer version
 if os.system ('gst-typefind-0.10 --version') == 0:
 	# List the formats of the last files played
 	last_visited = 0
-	recent_manager = gtk.recent_manager_get_default ()
+	recent_manager = Gtk.RecentManager.get_default ()
 	for recent in recent_manager.get_items ():
 		if recent.has_group ("Totem"):
 			if recent.get_visited () > last_visited:
