@@ -50,7 +50,7 @@ DBUS_REQS=0.82
 VALA_REQS=0.12.1
 PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
-PYGOBJECT_REQS=2.27.0
+PYGOBJECT_REQS=2.90.3
 
 AC_SUBST(GLIB_REQS)
 AC_SUBST(GTK_REQS)
@@ -320,16 +320,16 @@ if test "x$enable_python" != "xno"; then
 		have_python=no
 	fi
 
-	PKG_CHECK_MODULES([PYGOBJECT],[pygobject-2.0 >= $PYGOBJECT_REQS],[have_pygobject=yes],[have_pygobject=no])
+	PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0 >= $PYGOBJECT_REQS],[have_pygobject=yes],[have_pygobject=no])
 fi
 
 # Output the results of the Python checks
 if test "x$have_python" != "xyes" -o "x$have_pygobject" != "xyes"; then
 	if test "x$enable_python" = "xyes"; then
-		AC_MSG_ERROR([python >= $PYTHON_REQS or pygobject-2.0 >= $PYGOBJECT_REQS not found])
+		AC_MSG_ERROR([python >= $PYTHON_REQS or pygobject-3.0 >= $PYGOBJECT_REQS not found])
 	elif test "x$enable_python" = "xautodetect"; then
 		enable_python=no
-		AC_MSG_WARN([python >= $PYTHON_REQS or pygobject-2.0 >= $PYGOBJECT_REQS not found; disabling Python support])
+		AC_MSG_WARN([python >= $PYTHON_REQS or pygobject-3.0 >= $PYGOBJECT_REQS not found; disabling Python support])
 	fi
 elif test "x$enable_python" != "xno"; then
 	enable_python=yes
