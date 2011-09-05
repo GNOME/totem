@@ -273,6 +273,13 @@ fake_event (TotemScrsaver *scr)
 {
 	if (scr->priv->disabled)
 	{
+		/* If the video window isn't focused, don't send out the
+		 * events. Note that it probably breaks when popups are used
+		 * but we can't do much about that... */
+		if (scr->priv->window != NULL &&
+		    gtk_window_has_toplevel_focus (scr->priv->window) == FALSE)
+			return;
+
 		XLockDisplay (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()));
 		XTestFakeKeyEvent (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), *scr->priv->keycode,
 				True, CurrentTime);
