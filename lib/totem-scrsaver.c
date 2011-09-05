@@ -227,7 +227,7 @@ static void
 screensaver_init_dbus (TotemScrsaver *scr)
 {
         g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
-	                          G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+	                          G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES | G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
 	                          NULL,
 	                          GS_SERVICE,
 	                          GS_PATH,
