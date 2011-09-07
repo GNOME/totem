@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-18 20:34+0000\n"
-"PO-Revision-Date: 2011-08-18 22:51+0100\n"
+"POT-Creation-Date: 2011-09-06 07:01+0000\n"
+"PO-Revision-Date: 2011-09-07 19:18+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -78,130 +78,72 @@ msgstr "Od_strani"
 msgid "_Select Text Subtitles..."
 msgstr "_Izbor podnapisa ..."
 
-#. Channels
 #: ../data/properties.ui.h:1
-#: ../src/properties/bacon-video-widget-properties.c:140
-msgid "0 Channels"
-msgstr "0 kanalov"
-
-#. Sample rate
-#: ../data/properties.ui.h:2
-#: ../src/properties/bacon-video-widget-properties.c:138
-msgid "0 Hz"
-msgstr "0 Hz"
-
-#: ../data/properties.ui.h:3
-msgid "0 frames per second"
-msgstr "0 sličic na sekundo"
-
-#: ../data/properties.ui.h:4
-msgid "0 kbps"
-msgstr "0 kbps"
-
-#. 0 seconds
-#: ../data/properties.ui.h:5
-#: ../src/properties/bacon-video-widget-properties.c:176
-msgid "0 seconds"
-msgstr "0 sekund"
-
-#: ../data/properties.ui.h:6
-msgid "0 x 0"
-msgstr "0 x 0"
-
-#: ../data/properties.ui.h:7
 msgid "Album:"
 msgstr "Album:"
 
-#: ../data/properties.ui.h:8
+#: ../data/properties.ui.h:2
 msgid "Artist:"
 msgstr "Izvajalec:"
 
-#: ../data/properties.ui.h:9
+#: ../data/properties.ui.h:3
 #: ../data/totem.ui.h:23
 #: ../src/totem-properties-view.c:254
 msgid "Audio"
 msgstr "Zvok"
 
-#. Audio Codec
-#: ../data/properties.ui.h:10
-#: ../src/properties/bacon-video-widget-properties.c:136
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../data/properties.ui.h:11
+#: ../data/properties.ui.h:4
 msgid "Bitrate:"
 msgstr "Bitna hitrost:"
 
-#: ../data/properties.ui.h:12
+#: ../data/properties.ui.h:5
 msgid "Channels:"
 msgstr "Kanali:"
 
-#: ../data/properties.ui.h:13
+#: ../data/properties.ui.h:6
 msgid "Codec:"
 msgstr "Kodek:"
 
-#: ../data/properties.ui.h:14
+#: ../data/properties.ui.h:7
 msgid "Comment:"
 msgstr "Opomba:"
 
-#: ../data/properties.ui.h:15
+#: ../data/properties.ui.h:8
 msgid "Container:"
 msgstr "Vsebovalnik:"
 
-#: ../data/properties.ui.h:16
+#: ../data/properties.ui.h:9
 msgid "Dimensions:"
 msgstr "Mere:"
 
-#: ../data/properties.ui.h:17
+#: ../data/properties.ui.h:10
 msgid "Duration:"
 msgstr "Trajanje:"
 
-#: ../data/properties.ui.h:18
+#: ../data/properties.ui.h:11
 msgid "Framerate:"
 msgstr "Hitrost sličic:"
 
-#: ../data/properties.ui.h:19
+#: ../data/properties.ui.h:12
 #: ../data/totem.ui.h:41
 msgid "General"
 msgstr "Splošno"
 
-#: ../data/properties.ui.h:20
+#: ../data/properties.ui.h:13
 msgid "Sample rate:"
 msgstr "Hitrost vzorčenja:"
 
-#: ../data/properties.ui.h:21
+#: ../data/properties.ui.h:14
 msgid "Title:"
 msgstr "Naslov:"
 
-#. Title
-#. Artist
-#. Album
-#. Year
-#. Container
-#: ../data/properties.ui.h:22
-#: ../src/properties/bacon-video-widget-properties.c:107
-#: ../src/properties/bacon-video-widget-properties.c:109
-#: ../src/properties/bacon-video-widget-properties.c:111
-#: ../src/properties/bacon-video-widget-properties.c:113
-#: ../src/properties/bacon-video-widget-properties.c:119
-msgid "Unknown"
-msgstr "Neznano"
-
-#: ../data/properties.ui.h:23
+#: ../data/properties.ui.h:15
 #: ../data/totem.ui.h:104
 #: ../src/totem-properties-view.c:256
 msgid "Video"
 msgstr "Posnetek"
 
-#. Video Codec
-#: ../data/properties.ui.h:24
-#: ../src/properties/bacon-video-widget-properties.c:124
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../data/properties.ui.h:25
+#: ../data/properties.ui.h:16
 msgid "Year:"
 msgstr "Leto:"
 
@@ -1014,11 +956,30 @@ msgstr "Možnosti upravljanja seje:"
 msgid "Show session management options"
 msgstr "Pokaži možnosti upravljanja seje"
 
+#. Title
+#. Artist
+#. Album
+#. Year
+#. Container
+#: ../src/properties/bacon-video-widget-properties.c:107
+#: ../src/properties/bacon-video-widget-properties.c:109
+#: ../src/properties/bacon-video-widget-properties.c:111
+#: ../src/properties/bacon-video-widget-properties.c:113
+#: ../src/properties/bacon-video-widget-properties.c:119
+msgid "Unknown"
+msgstr "Neznano"
+
 #. Dimensions
 #: ../src/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
 msgid "N/A"
 msgstr "ni podatka"
+
+#. Video Codec
+#: ../src/properties/bacon-video-widget-properties.c:124
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "N/A"
 
 #: ../src/properties/bacon-video-widget-properties.c:127
 msgctxt "Video bit rate"
@@ -1035,6 +996,22 @@ msgstr "ni podatka"
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "ni podatka"
+
+#. Audio Codec
+#: ../src/properties/bacon-video-widget-properties.c:136
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "N/A"
+
+#. Sample rate
+#: ../src/properties/bacon-video-widget-properties.c:138
+msgid "0 Hz"
+msgstr "0 Hz"
+
+#. Channels
+#: ../src/properties/bacon-video-widget-properties.c:140
+msgid "0 Channels"
+msgstr "0 kanalov"
 
 #: ../src/properties/bacon-video-widget-properties.c:156
 #, c-format
@@ -1076,6 +1053,11 @@ msgstr "%s %s %s"
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
+
+#. 0 seconds
+#: ../src/properties/bacon-video-widget-properties.c:176
+msgid "0 seconds"
+msgstr "0 sekund"
 
 #: ../src/properties/bacon-video-widget-properties.c:237
 #, c-format
@@ -2139,7 +2121,7 @@ msgstr "Vstavek za pošiljanje obvestil o trenutno predvajanem filmu na D-Bus po
 #: ../src/plugins/dbusservice/dbusservice.py:243
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr ""
+msgstr "Predmet MediaPlayer2 ne vključuje vmesnika ‘%s’."
 
 #: ../src/plugins/dbusservice/dbusservice.py:222
 #, python-format
@@ -2730,6 +2712,15 @@ msgstr "Prebrskaj"
 #: ../src/plugins/grilo/grilo.ui.h:2
 msgid "Search"
 msgstr "Iskanje"
+
+#~ msgid "0 frames per second"
+#~ msgstr "0 sličic na sekundo"
+
+#~ msgid "0 kbps"
+#~ msgstr "0 kbps"
+
+#~ msgid "0 x 0"
+#~ msgstr "0 x 0"
 
 #~ msgid "Browser Plugin using %s"
 #~ msgstr "Vstavek brskanja uporablja %s"
