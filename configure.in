@@ -451,7 +451,7 @@ for plugin in ${used_plugins}; do
 		;;
 		publish)
 			# FIXME
-			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 >= 0.3.0, [HAVE_LIBEPC=yes], [HAVE_LIBEPC=no])
+			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 > 0.4.0, [HAVE_LIBEPC=yes], [HAVE_LIBEPC=no])
 			if test "${HAVE_LIBEPC}" != "yes" ; then
 				plugin_error_or_ignore "you need the easy-publish-and-consume library installed for the publish plugin"
 				add_plugin="0"
