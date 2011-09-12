@@ -662,9 +662,9 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             subtitle_file = Gio.file_new_for_uri (filename)
             suburi = subtitle_file.get_uri ()
 
-            sub_file = subtitle_file.replace ('', False)
-            sub_file.write (subtitles)
-            sub_file.close ()
+            sub_file = subtitle_file.replace ('', False, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
+            sub_file.write (subtitles, None)
+            sub_file.close (None)
 
         self._dialog.get_window ().set_cursor (None)
         self._close_dialog ()
