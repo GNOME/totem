@@ -12,7 +12,7 @@ AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=totem])
 
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
 AC_CONFIG_SRCDIR([src/totem.c])
 AC_CONFIG_HEADERS([config.h])
 
