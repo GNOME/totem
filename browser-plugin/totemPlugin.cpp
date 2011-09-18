@@ -105,6 +105,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "image/x-macpaint", "pntg", NULL },
   { "image/x-quicktime", "pict, pict1, pict2", "image/x-pict" },
   { "video/x-m4v", "m4v", NULL },
+  { "application/vnd.apple.mpegurl", "m3u8", NULL },
 #elif defined(TOTEM_MULLY_PLUGIN)
   { "video/divx", "divx", "video/x-msvideo" },
 #elif defined(TOTEM_CONE_PLUGIN)
