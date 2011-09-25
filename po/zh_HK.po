@@ -9,11 +9,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: totem 3.1.4\n"
+"Project-Id-Version: totem 3.1.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-27 10:41+0800\n"
-"PO-Revision-Date: 2011-08-27 10:41+0800\n"
-"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
+"POT-Creation-Date: 2011-09-25 14:56+0800\n"
+"PO-Revision-Date: 2011-09-25 16:13+0800\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -74,127 +74,69 @@ msgstr "移除(_R)"
 msgid "_Select Text Subtitles..."
 msgstr "選擇文字字幕(_S)…"
 
-#. Channels
 #: ../data/properties.ui.h:1
-#: ../src/properties/bacon-video-widget-properties.c:140
-msgid "0 Channels"
-msgstr "0 頻道"
-
-#. Sample rate
-#: ../data/properties.ui.h:2
-#: ../src/properties/bacon-video-widget-properties.c:138
-msgid "0 Hz"
-msgstr "0 赫茲"
-
-#: ../data/properties.ui.h:3
-msgid "0 frames per second"
-msgstr "每秒 0 格"
-
-#: ../data/properties.ui.h:4
-msgid "0 kbps"
-msgstr "0 kbps"
-
-#. 0 seconds
-#: ../data/properties.ui.h:5
-#: ../src/properties/bacon-video-widget-properties.c:176
-msgid "0 seconds"
-msgstr "0 秒"
-
-#: ../data/properties.ui.h:6
-msgid "0 x 0"
-msgstr "0 x 0"
-
-#: ../data/properties.ui.h:7
 msgid "Album:"
 msgstr "專輯："
 
-#: ../data/properties.ui.h:8
+#: ../data/properties.ui.h:2
 msgid "Artist:"
 msgstr "演出者："
 
-#: ../data/properties.ui.h:9 ../data/totem.ui.h:23
+#: ../data/properties.ui.h:3 ../data/totem.ui.h:23
 #: ../src/totem-properties-view.c:254
 msgid "Audio"
 msgstr "音效"
 
-#. Audio Codec
-#: ../data/properties.ui.h:10
-#: ../src/properties/bacon-video-widget-properties.c:136
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../data/properties.ui.h:11
+#: ../data/properties.ui.h:4
 msgid "Bitrate:"
 msgstr "位元率："
 
-#: ../data/properties.ui.h:12
+#: ../data/properties.ui.h:5
 msgid "Channels:"
 msgstr "聲道："
 
-#: ../data/properties.ui.h:13
+#: ../data/properties.ui.h:6
 msgid "Codec:"
 msgstr "編碼："
 
-#: ../data/properties.ui.h:14
+#: ../data/properties.ui.h:7
 msgid "Comment:"
 msgstr "註解:"
 
-#: ../data/properties.ui.h:15
+#: ../data/properties.ui.h:8
 msgid "Container:"
 msgstr "容器："
 
-#: ../data/properties.ui.h:16
+#: ../data/properties.ui.h:9
 msgid "Dimensions:"
 msgstr "尺寸："
 
-#: ../data/properties.ui.h:17
+#: ../data/properties.ui.h:10
 msgid "Duration:"
 msgstr "時間長度："
 
-#: ../data/properties.ui.h:18
+#: ../data/properties.ui.h:11
 msgid "Framerate:"
 msgstr "幀率："
 
-#: ../data/properties.ui.h:19 ../data/totem.ui.h:41
+#: ../data/properties.ui.h:12 ../data/totem.ui.h:41
 msgid "General"
 msgstr "一般"
 
-#: ../data/properties.ui.h:20
+#: ../data/properties.ui.h:13
 msgid "Sample rate:"
 msgstr "取樣率："
 
-#: ../data/properties.ui.h:21
+#: ../data/properties.ui.h:14
 msgid "Title:"
 msgstr "標題："
 
-#. Title
-#. Artist
-#. Album
-#. Year
-#. Container
-#: ../data/properties.ui.h:22
-#: ../src/properties/bacon-video-widget-properties.c:107
-#: ../src/properties/bacon-video-widget-properties.c:109
-#: ../src/properties/bacon-video-widget-properties.c:111
-#: ../src/properties/bacon-video-widget-properties.c:113
-#: ../src/properties/bacon-video-widget-properties.c:119
-msgid "Unknown"
-msgstr "不明"
-
-#: ../data/properties.ui.h:23 ../data/totem.ui.h:104
+#: ../data/properties.ui.h:15 ../data/totem.ui.h:104
 #: ../src/totem-properties-view.c:256
 msgid "Video"
 msgstr "影片"
 
-#. Video Codec
-#: ../data/properties.ui.h:24
-#: ../src/properties/bacon-video-widget-properties.c:124
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "N/A"
-
-#: ../data/properties.ui.h:25
+#: ../data/properties.ui.h:16
 msgid "Year:"
 msgstr "年份："
 
@@ -1024,9 +966,28 @@ msgstr "作業階段管理選項:"
 msgid "Show session management options"
 msgstr "顯示作業階段管理選項"
 
+#. Title
+#. Artist
+#. Album
+#. Year
+#. Container
+#: ../src/properties/bacon-video-widget-properties.c:107
+#: ../src/properties/bacon-video-widget-properties.c:109
+#: ../src/properties/bacon-video-widget-properties.c:111
+#: ../src/properties/bacon-video-widget-properties.c:113
+#: ../src/properties/bacon-video-widget-properties.c:119
+msgid "Unknown"
+msgstr "不明"
+
 #. Dimensions
 #: ../src/properties/bacon-video-widget-properties.c:122
 msgctxt "Dimensions"
+msgid "N/A"
+msgstr "N/A"
+
+#. Video Codec
+#: ../src/properties/bacon-video-widget-properties.c:124
+msgctxt "Video codec"
 msgid "N/A"
 msgstr "N/A"
 
@@ -1045,6 +1006,22 @@ msgstr "N/A"
 msgctxt "Audio bit rate"
 msgid "N/A"
 msgstr "N/A"
+
+#. Audio Codec
+#: ../src/properties/bacon-video-widget-properties.c:136
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "N/A"
+
+#. Sample rate
+#: ../src/properties/bacon-video-widget-properties.c:138
+msgid "0 Hz"
+msgstr "0 赫茲"
+
+#. Channels
+#: ../src/properties/bacon-video-widget-properties.c:140
+msgid "0 Channels"
+msgstr "0 頻道"
 
 #: ../src/properties/bacon-video-widget-properties.c:156
 #, c-format
@@ -1077,6 +1054,11 @@ msgstr "%s %s %s"
 msgctxt "time"
 msgid "%s %s"
 msgstr "%s %s"
+
+#. 0 seconds
+#: ../src/properties/bacon-video-widget-properties.c:176
+msgid "0 seconds"
+msgstr "0 秒"
 
 #: ../src/properties/bacon-video-widget-properties.c:237
 #, c-format
@@ -1844,16 +1826,17 @@ msgstr "其它的應用程式正在使用音效輸出。請在多媒體系統選
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3320
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3326
-#, fuzzy, c-format
-#| msgid ""
-#| "The playback of this movie requires a %s plugin which is not installed."
+#, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following decoders which are not "
 "installed:\n"
 "\n"
 "%s"
-msgstr[0] "播放此影片需要外掛程式 %s，但其並沒有安裝。"
+msgstr[0] ""
+"播放此影片需要下列解碼器，但尚未安裝：\n"
+"\n"
+"%s"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3352
 msgid ""
@@ -2730,6 +2713,15 @@ msgstr "瀏覽"
 #: ../src/plugins/grilo/totem-grilo.c:1285 ../src/plugins/grilo/grilo.ui.h:2
 msgid "Search"
 msgstr "搜尋"
+
+#~ msgid "0 frames per second"
+#~ msgstr "每秒 0 格"
+
+#~ msgid "0 kbps"
+#~ msgstr "0 kbps"
+
+#~ msgid "0 x 0"
+#~ msgstr "0 x 0"
 
 #~ msgid "Zoom Out"
 #~ msgstr "拉遠"
