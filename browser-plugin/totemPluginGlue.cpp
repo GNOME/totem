@@ -434,7 +434,11 @@ NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 	/* we want to open libdbus-glib-1.so.2 in such a way
 	 * in such a way that it becomes permanentely resident */
 	void *handle;
+#if defined(__OpenBSD__)
+	handle = dlopen ("libdbus-glib-1.so", RTLD_NOW | RTLD_NODELETE);
+#else
 	handle = dlopen ("libdbus-glib-1.so.2", RTLD_NOW | RTLD_NODELETE);
+#endif
 	if (!handle) {
 		fprintf (stderr, "%s\n", dlerror()); 
 		return NPERR_MODULE_LOAD_FAILED_ERROR;
