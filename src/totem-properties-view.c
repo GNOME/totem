@@ -175,8 +175,11 @@ update_video (TotemPropertiesView    *props,
 	/* Round up/down to the nearest integer framerate */
 	fps_n = gst_discoverer_video_info_get_framerate_num (info);
 	fps_d = gst_discoverer_video_info_get_framerate_denom (info);
-	bacon_video_widget_properties_set_framerate (props->priv->props,
-						     (fps_n + fps_d/2) / fps_d);
+	if (fps_d == 0)
+		bacon_video_widget_properties_set_framerate (props->priv->props, 0);
+	else
+		bacon_video_widget_properties_set_framerate (props->priv->props,
+							     (fps_n + fps_d/2) / fps_d);
 }
 
 static void
