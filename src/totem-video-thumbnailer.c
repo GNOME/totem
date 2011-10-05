@@ -1055,7 +1055,7 @@ int main (int argc, char *argv[])
 	if (gallery == -1)
 		thumb_app_check_for_cover (&app);
 	if (thumb_app_get_has_video (&app) == FALSE) {
-		g_print ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
+		g_debug ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
 	}
 	if (thumb_app_set_duration (&app) == FALSE) {
