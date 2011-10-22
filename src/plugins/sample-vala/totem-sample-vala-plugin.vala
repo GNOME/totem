@@ -2,7 +2,7 @@ using GLib;
 using Totem;
 
 class SampleValaPlugin: GLib.Object, Peas.Activatable {
-	public Totem.Object object {get; set;}
+	public GLib.Object object { owned get; construct; }
 
 	public void activate () {
 		print ("Hello world\n");

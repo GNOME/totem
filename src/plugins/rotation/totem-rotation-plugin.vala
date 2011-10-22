@@ -34,7 +34,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         _90L = 3
     }
     private const int STATE_COUNT = 4;
-    public weak GLib.Object object { get; construct; }
+    public GLib.Object object { owned get; construct; }
     private weak Clutter.Actor video = null;
     private uint ui_id;
     private Gtk.ActionGroup action_group;
