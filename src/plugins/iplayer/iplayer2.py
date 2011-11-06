@@ -303,7 +303,7 @@ def httpget (url):
 
 def parse_entry_id (entry_id):
     # tag:bbc.co.uk,2008:PIPS:b00808sc
-    regexp = re.compile ('PIPS: ([0-9a-z]{8})')
+    regexp = re.compile ('PIPS:([0-9a-z]{8})')
     matches = regexp.findall (entry_id)
     if not matches:
         return None
@@ -994,7 +994,7 @@ class Feed (object):
         # quick and dirty category extraction and count
         xml_url = self.__create_url ('list')
         xml = httpget (xml_url)
-        cat = re.findall ("<category .*term=\" (.*?)\"", xml)
+        cat = re.findall ("<category .*term=\"(.*?)\"", xml)
         categories = {}
         for category in cat:
             if category != 'TV':

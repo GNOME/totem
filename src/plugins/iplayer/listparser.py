@@ -32,20 +32,20 @@ def parse (xml_source):
 
     elist = ListEntries ()
     # gather all list entries
-    entries_src = re.findall ("<entry> (.*?)</entry>", xml_source, re.DOTALL)
+    entries_src = re.findall ("<entry>(.*?)</entry>", xml_source, re.DOTALL)
     datematch = re.compile (':\s+ ([0-9]+)/ ([0-9]+)/ ([0-9]{4})')
 
     # enumerate thru the element list and gather info
     for entry_src in entries_src:
-        title = re.findall ("<title[^>]*> (.*?)</title>",
+        title = re.findall ("<title[^>]*>(.*?)</title>",
                             entry_src, re.DOTALL)[0]
-        identifier = re.findall ("<id[^>]*> (.*?)</id>",
+        identifier = re.findall ("<id[^>]*>(.*?)</id>",
                                  entry_src, re.DOTALL)[0]
-        updated = re.findall ("<updated[^>]*> (.*?)</updated>",
+        updated = re.findall ("<updated[^>]*>(.*?)</updated>",
                               entry_src, re.DOTALL)[0]
-        summary = re.findall ("<content[^>]*> (.*?)</content>",
+        summary = re.findall ("<content[^>]*>(.*?)</content>",
                               entry_src, re.DOTALL)[0].splitlines ()[-3]
-        categories = re.findall ("<category[^>]*term=\" (.*?)\"[^>]*>",
+        categories = re.findall ("<category[^>]*term=\"(.*?)\"[^>]*>",
                                  entry_src, re.DOTALL)
 
         match = datematch.search (title)
