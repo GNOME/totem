@@ -973,7 +973,7 @@ class Feed (object):
                 return []
             cached_programmes = []
             for entry in progs.entries:
-                pid = parse_entry_id (entry.id)
+                pid = parse_entry_id (entry.identifier)
                 programme = Programme (pid)
                 cached_programmes.append (programme)
             #logging.info ('Found %d entries', len (d))
