@@ -122,7 +122,7 @@ class IplayerPlugin (GObject.Object, Peas.Activatable):
             print "Populating programme list…"
 
         category_path = tree_store.get_path (category_iter)
-        thread = PopulateProgrammesThread (self,
+        thread = PopulateProgrammesThread (self.programme_download_lock,
                                            self.__populate_programme_list_cb,
                                            feed, (tree_store, category_path))
         thread.start ()
