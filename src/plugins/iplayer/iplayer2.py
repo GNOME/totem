@@ -316,7 +316,6 @@ class Media (object):
         self.kind = None
         self.method = None
         self.width, self.height = None, None
-        self.__read_media_node (media_node)
 
         self.mimetype = None
         self.encoding = None
@@ -326,6 +325,8 @@ class Media (object):
         self.connection_method = None
         self.connection_kind = None
         self.connection_live = False
+
+        self.__read_media_node (media_node)
 
     @property
     def url (self):
