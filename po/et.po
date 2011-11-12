@@ -14,15 +14,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=totem&component=general\n"
-"POT-Creation-Date: 2011-01-13 18:04+0000\n"
-"PO-Revision-Date: 2011-01-14 08:22+0200\n"
-"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-11-01 10:59+0000\n"
+"PO-Revision-Date: 2011-11-05 03:39+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Leave Fullscreen"
@@ -64,27 +64,6 @@ msgstr "_Eemalda"
 msgid "_Select Text Subtitles..."
 msgstr "_Vali tekstisubtiitrid..."
 
-#. Channels
-msgid "0 Channels"
-msgstr "0 kanalit"
-
-#. Sample rate
-msgid "0 Hz"
-msgstr "0 Hz"
-
-msgid "0 frames per second"
-msgstr "0 kaadrit sekundis"
-
-msgid "0 kbps"
-msgstr "0 kb/s"
-
-#. 0 seconds
-msgid "0 seconds"
-msgstr "0 sekundit"
-
-msgid "0 x 0"
-msgstr "0 x 0"
-
 msgid "Album:"
 msgstr "Album:"
 
@@ -93,11 +72,6 @@ msgstr "Esitaja:"
 
 msgid "Audio"
 msgstr "Audio"
-
-#. Audio Codec
-msgctxt "Audio codec"
-msgid "N/A"
-msgstr "Puudub"
 
 msgid "Bitrate:"
 msgstr "Bitikiirus:"
@@ -110,6 +84,9 @@ msgstr "Koodek:"
 
 msgid "Comment:"
 msgstr "Kommentaar:"
+
+msgid "Container:"
+msgstr "Konteiner:"
 
 msgid "Dimensions:"
 msgstr "Mõõtmed:"
@@ -129,20 +106,8 @@ msgstr "Diskreetimissagedus:"
 msgid "Title:"
 msgstr "Pealkiri:"
 
-#. Title
-#. Artist
-#. Album
-#. Year
-msgid "Unknown"
-msgstr "Tundmatu"
-
 msgid "Video"
 msgstr "Video"
-
-#. Video Codec
-msgctxt "Video codec"
-msgid "N/A"
-msgstr "Puudub"
 
 msgid "Year:"
 msgstr "Aasta:"
@@ -468,20 +433,8 @@ msgstr "Heli va_ljemaks"
 msgid "Zoom In"
 msgstr "Suurenda"
 
-msgid "Zoom Out"
-msgstr "Vähendamine"
-
-msgid "Zoom Reset"
-msgstr "Algsuurus"
-
 msgid "Zoom in"
 msgstr "Suurendamine"
-
-msgid "Zoom out"
-msgstr "Vähendamine"
-
-msgid "Zoom reset"
-msgstr "Algse suuruse määramine"
 
 msgid "_About"
 msgstr "_Programmist"
@@ -801,6 +754,89 @@ msgstr "Seansihalduse valikud:"
 msgid "Show session management options"
 msgstr "Seansihalduse valikute näitamine"
 
+#. Title
+#. Artist
+#. Album
+#. Year
+#. Container
+msgid "Unknown"
+msgstr "Tundmatu"
+
+#. Dimensions
+msgctxt "Dimensions"
+msgid "N/A"
+msgstr "Puuduvad"
+
+#. Video Codec
+msgctxt "Video codec"
+msgid "N/A"
+msgstr "Puudub"
+
+msgctxt "Video bit rate"
+msgid "N/A"
+msgstr "Puudub"
+
+msgctxt "Frame rate"
+msgid "N/A"
+msgstr "Puudub"
+
+msgctxt "Audio bit rate"
+msgid "N/A"
+msgstr "Puudub"
+
+#. Audio Codec
+msgctxt "Audio codec"
+msgid "N/A"
+msgstr "Puudub"
+
+#. Sample rate
+msgid "0 Hz"
+msgstr "0 Hz"
+
+#. Channels
+msgid "0 Channels"
+msgstr "0 kanalit"
+
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d tund"
+msgstr[1] "%d tundi"
+
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minut"
+msgstr[1] "%d minutit"
+
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d sekund"
+msgstr[1] "%d sekundit"
+
+#. 5 hours 2 minutes 12 seconds
+#, c-format
+msgctxt "time"
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. 2 minutes 12 seconds
+#, c-format
+msgctxt "time"
+msgid "%s %s"
+msgstr "%s %s"
+
+#. 0 seconds
+msgid "0 seconds"
+msgstr "0 sekundit"
+
+#, c-format
+msgid "%d frame per second"
+msgid_plural "%d frames per second"
+msgstr[0] "%d kaader sekundis"
+msgstr[1] "%d kaadrit sekundis"
+
 msgid "Audio Preview"
 msgstr "Audio eelvaatlemine"
 
@@ -924,7 +960,6 @@ msgstr "Pausitud"
 msgid "Paused"
 msgstr "Pausitud"
 
-#. Translators: this refers to a media file
 msgid "Play"
 msgstr "Esitamine"
 
@@ -1063,7 +1098,6 @@ msgstr "Juhtpaneeli näitamine või peitmine"
 msgid "Quit"
 msgstr "Lõpetamine"
 
-#. Translators: this refers to a media file
 msgid "Enqueue"
 msgstr "Järjekorda panemine"
 
@@ -1120,25 +1154,47 @@ msgstr "Esitusnimekirja '%s' pole võimalik parsida, see võib olla rikutud."
 msgid "Playlist error"
 msgstr "Esitusnimekirja viga"
 
-msgid "Enable visual effects?"
-msgstr "Kas lubada visuaalsed efektid?"
-
-msgid ""
-"It seems you are running Totem remotely.\n"
-"Are you sure you want to enable the visual effects?"
-msgstr ""
-"Paistab, et sa käivitasid Totem'i üle võrgu.\n"
-"Kas visuaalsed efektid peavad olema lubatud?"
-
 msgid "Preferences"
 msgstr "Eelistused"
 
 msgid "Select Subtitle Font"
 msgstr "Subtiitri kirjatüübi valimine"
 
-#. FIXME this should be setting an error?
 msgid "Audio/Video"
 msgstr "Audio/Video"
+
+msgid "N/A"
+msgstr "Puudub"
+
+msgctxt "Stream bit rate"
+msgid "N/A"
+msgstr "Puudub"
+
+#, c-format
+msgid "%d kbps"
+msgstr "%d kb/s"
+
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+msgctxt "Sample rate"
+msgid "N/A"
+msgstr "Puudub"
+
+msgid "Surround"
+msgstr "Surround"
+
+msgid "Mono"
+msgstr "Mono"
+
+msgctxt "Number of audio channels"
+msgid "N/A"
+msgstr "Puudub"
 
 msgid "0:00 / 0:00"
 msgstr "0:00 / 0:00"
@@ -1383,17 +1439,15 @@ msgstr ""
 #. should be exactly one missing thing (source or converter)
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
-msgstr ""
-"Selle filmi esitamine vajab %s pluginat, see plugin pole aga paigaldatud."
-
-#, c-format
-msgid ""
+msgid_plural ""
 "The playback of this movie requires the following decoders which are not "
 "installed:\n"
 "\n"
 "%s"
-msgstr ""
-"Selle filmi esitamine vajab järgnevaid dekoodereid, need dekoordid pole aga "
+msgstr[0] ""
+"Selle filmi esitamiseks on vaja %s pluginat, see plugin pole aga paigaldatud."
+msgstr[1] ""
+"Selle filmi esitamiseks on vaja järgnevaid dekoodereid, need pole aga "
 "paigaldatud:\n"
 "\n"
 "%s"
@@ -1404,18 +1458,6 @@ msgstr ""
 "Seda faili pole võimalik otse võrgust mängida. Proovi see kõigepealt kettale "
 "laadida."
 
-msgid "Media file could not be played."
-msgstr "Meediumifaili pole võimalik esitada."
-
-msgid "Surround"
-msgstr "Surround"
-
-msgid "Mono"
-msgstr "Mono"
-
-msgid "Too old version of GStreamer installed."
-msgstr "Paigaldatud GStreamer on liiga vana."
-
 msgid "Media contains no supported video streams."
 msgstr "Meedia ei sisalda ühtegi toetatud videostriimi."
 
@@ -1425,22 +1467,6 @@ msgid ""
 msgstr ""
 "Tõrge GStreamer esitusobjekti loomisel. Palun kontrolli GStreameri "
 "paigaldust."
-
-msgid ""
-"Failed to open video output. It may not be available. Please select another "
-"video output in the Multimedia Systems Selector."
-msgstr ""
-"Tõrge videoväljundi avamisel. See pole võib-olla saadaval. Palun vali "
-"Multimeediasüsteemide valija abil mõni muu videoväljund."
-
-msgid ""
-"Could not find the video output. You may need to install additional "
-"GStreamer plugins, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"Videoväljundit pole võimalik leida. Võib-olla on Sul tarvis paigaldada "
-"täiendavaid GStreamer'i pluginaid või valida Multimeediasüsteemide valija "
-"abil mõni teine videoväljund."
 
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1481,39 +1507,6 @@ msgstr "%d:%02d:%02d"
 msgctxt "short time format"
 msgid "%d:%02d"
 msgstr "%d:%02d"
-
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d tund"
-msgstr[1] "%d tundi"
-
-#, c-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d minut"
-msgstr[1] "%d minutit"
-
-#, c-format
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d sekund"
-msgstr[1] "%d sekundit"
-
-#. hour:minutes:seconds
-#, c-format
-msgid "%s %s %s"
-msgstr "%s %s %s"
-
-#. minutes:seconds
-#, c-format
-msgid "%s %s"
-msgstr "%s %s"
-
-#. seconds
-#, c-format
-msgid "%s"
-msgstr "%s"
 
 msgid "Bemused"
 msgstr "Bemused"
@@ -1669,16 +1662,6 @@ msgstr ""
 msgid "Failed to parse CMML file"
 msgstr "Tõrge CMML-faili parsimisel"
 
-#. Translators: this refers to a media file
-msgid "Delete"
-msgstr "Kustutatud"
-
-msgid "Coherence DLNA/UPnP Client"
-msgstr "Coherence DLNA/UPnP klient"
-
-msgid "A DLNA/UPnP client for Totem powered by Coherence"
-msgstr "DLNA/UPnP klient Totemi jaoks, mille on tootnud Coherence"
-
 msgid "D-Bus Service"
 msgstr "D-Bus teenus"
 
@@ -1689,17 +1672,27 @@ msgstr ""
 "Plugin hetkel esitatava filmi kohta teavituse saatmiseks D-Bus "
 "alamsüsteemile."
 
+#, python-format
+msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
+msgstr "MediaPlayer2 objektil ei ole '%s' liidest teostatud"
+
+#, python-format
+msgid "The property ‘%s’ is not writeable."
+msgstr "Omadus '%s' ei ole kirjutatav."
+
+#, python-format
+msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
+msgstr "MediaPlayer 2 objektilt päriti tundmatut omadust '%s'"
+
+#, python-format
+msgid "The URI ‘%s’ is not supported."
+msgstr "URI '%s' pole toetatud."
+
 msgid "Instant Messenger status"
 msgstr "Välksõnumirakenduse olek"
 
 msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr "Välksõnumirakendusele \"eemal\" oleku määramine filmi esitamise ajaks"
-
-msgid "Error loading Galago plugin"
-msgstr "Viga Galago plugina laadimisel"
-
-msgid "Could not connect to the Galago daemon."
-msgstr "Galago deemoniga pole võimalik ühendust luua"
 
 msgid "Gromit Annotations"
 msgstr "Gromiti kommentaarid"
@@ -1728,11 +1721,13 @@ msgstr ""
 "tundmatu viga."
 
 #. Append a dummy child row so that the expander's visible; we can
-#. then queue off the expander to load the programme listing for this category
+#. then queue off the expander to load the programme listing for this
+#. category
 msgid "Loading…"
 msgstr "Laadimine…"
 
-#. Translators: the "programme feed" is the list of TV shows available to watch online
+#. Translators: the "programme feed" is the list of TV shows
+#. available to watch online
 msgid "Error getting programme feed"
 msgstr "Viga saatekava voo hankimisel"
 
@@ -1750,135 +1745,6 @@ msgstr "<ühtegi põhjust ei määratud>"
 msgid "Programme unavailable (\"%s\")"
 msgstr "Saade pole saadaval (\"%s\")"
 
-msgid "By artist"
-msgstr "Esitaja"
-
-msgid "By tag"
-msgstr "Märksõna"
-
-msgid "Jamendo Album Page"
-msgstr "Jamendo albumilehekülg"
-
-msgid "Latest Releases"
-msgstr "Hiljutised väljalasked"
-
-msgid "Number of albums to _retrieve:"
-msgstr "_Tõmmatavate albumite arv:"
-
-msgid "Popular"
-msgstr "Populaarsed"
-
-msgid "Preferred audio _format:"
-msgstr "Eelistatud audio_vorming:"
-
-msgid "Search Results"
-msgstr "Otsing"
-
-msgid "_Open Jamendo Album Page in Browser"
-msgstr "_Ava Jamendo albumileht"
-
-msgid "Jamendo"
-msgstr "Jamendo"
-
-msgid ""
-"Listen to the large collection of Creative Commons licensed music on Jamendo."
-msgstr ""
-"Kuula suurt Creative Commons litsentsi alla kuuluvat muusikakogu Jamendos."
-
-msgid "You need to install the Python simplejson module."
-msgstr "Pead paigaldama Python'i mooduli simplejson."
-
-#, python-format
-msgid "Artist: %s"
-msgstr "Esitaja: %s"
-
-#. Translators: this is the release date of an album in Python strptime format
-msgid "%Y-%m-%d"
-msgstr "%Y-%m-%d"
-
-#. Translators: this is the release time of an album in Python strftime format
-#, python-format
-msgid "%x"
-msgstr "%x"
-
-#, python-format
-msgid "Genre: %s"
-msgstr "Žanr: %s"
-
-#, python-format
-msgid "Released on: %s"
-msgstr "Välja tulnud: %s"
-
-#, python-format
-msgid "License: %s"
-msgstr "Litsents: %s"
-
-#. track title
-#. Translators: this is the title of a track in Python format
-#. (first argument is the track number, second is the track title)
-#, python-format
-msgid "%02d. %s"
-msgstr "%02d. %s"
-
-#, python-format
-msgid "Album: %s"
-msgstr "Album: %s"
-
-#, python-format
-msgid "Duration: %s"
-msgstr "Kestus: %s"
-
-msgid "Fetching albums, please wait…"
-msgstr "Albumite tõmbamine, palun oota…"
-
-#, python-format
-msgid ""
-"Failed to connect to Jamendo server.\n"
-"%s."
-msgstr ""
-"Jamendo serverisse ühendumine nurjus.\n"
-"%s."
-
-#, python-format
-msgid "The Jamendo server returned code %s."
-msgstr "Jamendo server tagastas veakoodi %s."
-
-msgid "An error occurred while fetching albums."
-msgstr "Albumite tõmbamisel esines viga."
-
-#. Translators: time formatting (in Python strftime format) for the Jamendo plugin
-#. for times longer than an hour
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#. Translators: time formatting (in Python strftime format) for the Jamendo plugin
-#. for times shorter than an hour
-msgid "%M:%S"
-msgstr "%M:%S"
-
-#. Translators: If Jamendo supports your language, replace "en" with the language code, enclosed
-#. in slashes, used to view pages in your language on the Jamendo website. e.g. For French, "en"
-#. would be translated to "fr", as Jamendo uses that in its URLs:
-#. http://www.jamendo.com/fr/album/4818
-#. Compared to:
-#. http://www.jamendo.com/en/album/4818
-#. If Jamendo doesn't support your language, *do not translate this string*!
-msgid "en"
-msgstr "en"
-
-msgid "Audio format to download from Jamendo"
-msgstr "Jamendost allalaaditava audio vorming"
-
-msgid "Number of results per page"
-msgstr "Tulemuste arv lehe kohta"
-
-msgid ""
-"The number of Jamendo search results to display in each page of results."
-msgstr "Mitu Jamendo otsingutulemust ühel tulemustelehel kuvatakse."
-
-msgid "The preferred audio format to download tracks from Jamendo in."
-msgstr "Eelistatav andmevorming Jamendost allalaaditavatele lugudele."
-
 msgid "Infrared Remote Control"
 msgstr "Infrapuna-kaugjuhtimine"
 
@@ -1894,9 +1760,6 @@ msgstr "Lirc'i sätteid pole võimalik lugeda."
 msgid "Download Movie Subtitles"
 msgstr "Filmi subtiitrite allalaadimine"
 
-msgid "Language"
-msgstr "Keel"
-
 msgid "Subtitle _language:"
 msgstr "Subtiitrite _keel:"
 
@@ -1909,14 +1772,23 @@ msgstr "Esitatavale filmile subtiitrite otsimine."
 msgid "Subtitle Downloader"
 msgstr "Subtiitrite allalaadija"
 
-msgid "Brasilian Portuguese"
+msgid "Brazilian Portuguese"
 msgstr "Brasiilia-portugali"
+
+msgid "Searching for subtitles…"
+msgstr "Subtiitrite otsimine…"
+
+msgid "Downloading the subtitles…"
+msgstr "Subtriitrite allalaadimine…"
 
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles veebilehega ühendumine pole võimalik"
 
-msgid "No results found"
-msgstr "Tulemusi ei leitud"
+msgid "Could not contact the OpenSubtitles website."
+msgstr "OpenSubtitles veebilehega ühendumine pole võimalik"
+
+msgid "No results found."
+msgstr "Tulemusi ei leitud."
 
 msgid "Subtitles"
 msgstr "Subtiitrid"
@@ -1931,17 +1803,14 @@ msgstr "Vorming"
 msgid "Rating"
 msgstr "Hinnang"
 
-msgid "_Download Movie Subtitles…"
-msgstr "_Laadi filmi subtiitrid alla…"
-
 msgid "Download movie subtitles from OpenSubtitles"
 msgstr "Subtiitrite allalaadimine OpenSubtitles'ist"
 
+msgid "_Download Movie Subtitles…"
+msgstr "_Laadi filmi subtiitrid alla…"
+
 msgid "Searching subtitles…"
 msgstr "Subtiitrite otsimine…"
-
-msgid "Downloading the subtitles…"
-msgstr "Subtriitrite allalaadimine…"
 
 msgid "Subtitle language"
 msgstr "Subtiitrite keel"
@@ -1957,45 +1826,6 @@ msgstr "Filmi esitamise ajal hoitakse peaakent alati teiste akende peal"
 
 msgid "Properties"
 msgstr "Omadused"
-
-#. Dimensions
-msgctxt "Dimensions"
-msgid "N/A"
-msgstr "Puuduvad"
-
-msgctxt "Video bit rate"
-msgid "N/A"
-msgstr "Puudub"
-
-msgctxt "Frame rate"
-msgid "N/A"
-msgstr "Puudub"
-
-msgctxt "Audio bit rate"
-msgid "N/A"
-msgstr "Puudub"
-
-#, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
-
-#, c-format
-msgid "%d kbps"
-msgstr "%d kb/s"
-
-#, c-format
-msgid "%d frame per second"
-msgid_plural "%d frames per second"
-msgstr[0] "%d kaader sekundis"
-msgstr[1] "%d kaadrit sekundis"
-
-#, c-format
-msgid "%d Hz"
-msgstr "%d Hz"
-
-msgctxt "Sample rate"
-msgid "N/A"
-msgstr "Puudub"
 
 #, no-c-format
 msgid ""
@@ -2056,6 +1886,18 @@ msgstr ""
 
 msgid "rpdb2 password"
 msgstr "rpdb2 parool"
+
+msgid "Allows videos to be rotated if they're in the wrong orientation."
+msgstr "Võimaldab videot pöörata, kui see on vales suunas."
+
+msgid "Rotation Plugin"
+msgstr "Pööramise plugin"
+
+msgid "_Rotate Clockwise"
+msgstr "_Pööra päripäeva"
+
+msgid "Rotate Counterc_lockwise"
+msgstr "Pööra _vastupäeva"
 
 msgid "Save a Copy..."
 msgstr "Salvesta koopia..."
@@ -2176,46 +2018,6 @@ msgstr "Liikumine määratud ajahetkele"
 msgid "_Skip to:"
 msgstr "_Liikumine asukohale:"
 
-#. Display an error
-#, c-format
-msgid "Could not get name and thumbnail for %s: %s"
-msgstr "\"%s\" kohta pole võimalik nime ja pisipilti hankida: %s"
-
-msgid "File Error"
-msgstr "Faili viga"
-
-msgid "Could not connect to Tracker"
-msgstr "Trackeriga pole võimalik ühendust luua"
-
-msgid "No results"
-msgstr "Tulemused puuduvad"
-
-#. Translators:
-#. * This is used to show which items are listed in the list view, for example:
-#. * Showing 10-20 of 128 matches
-#. * This is similar to what web searches use, eg. Google on the top-right of their search results page show:
-#. * Personalized Results 1 - 10 of about 4,130,000 for foobar
-#, c-format
-msgid "Showing %i - %i of %i match"
-msgid_plural "Showing %i - %i of %i matches"
-msgstr[0] "Näidatakse %i - %i %i tulemust"
-msgstr[1] "Näidatakse %i - %i %i tulemuse seast"
-
-msgid "Page"
-msgstr "Leht"
-
-msgid "Local Search"
-msgstr "Kohalik otsing"
-
-msgid "Set the window icon to the thumbnail of the playing movie"
-msgstr "Filmi esitamise ajaks akna ikooni asendamine pisipildiga"
-
-msgid "Thumbnail"
-msgstr "Pisipilt"
-
-msgid "Search for local videos using Tracker"
-msgstr "Kohalike videote otsimine Trackeri abil"
-
 msgid "A plugin to let you browse YouTube videos."
 msgstr "Plugin YouTube videote sirvimiseks."
 
@@ -2224,6 +2026,9 @@ msgstr "YouTube sirvija"
 
 msgid "Related Videos"
 msgstr "Seotud videod"
+
+msgid "Search Results"
+msgstr "Otsing"
 
 msgid "Videos"
 msgstr "Videod"
@@ -2288,13 +2093,6 @@ msgstr "Esitamiseks puudub URI"
 msgid "_Open with \"%s\""
 msgstr "_Ava programmiga \"%s\""
 
-#, c-format
-msgid "Browser Plugin using %s"
-msgstr "Veebisirvija plugin, kasutab abiprogrammi %s"
-
-msgid "Totem Browser Plugin"
-msgstr "Totemi plugin veebisirvijale"
-
 msgid "No playlist or playlist empty"
 msgstr "Esitusnimekiri on puudu või tühi"
 
@@ -2325,6 +2123,7 @@ msgstr "Pythoni silur"
 msgid "Enable remote Python debugging with rpdb2"
 msgstr "Pythoni kaugsilumise lubamine rpdb2 abil"
 
+#. pylint: disable-msg=E1101
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "Totem.Object'i on võimalik kasutada 'totem_object' kaudu:\\n%s"
@@ -2340,6 +2139,242 @@ msgstr ""
 "Pärast \"Olgu\" vajutamist ootab Totem winpdb või rpdb2 abil loodud "
 "ühendust. Kui DConfi's pole siluri parooli määratud, siis kasutatakse "
 "vaikimisi parooli ('totem')."
+
+msgid "A plugin to let you browse media content from various sources."
+msgstr "Plugin erinevatest allikatest meedia sirvimiseks."
+
+msgid "Grilo Browser"
+msgstr "Grilo sirvija"
+
+msgid "Browse Error"
+msgstr "Viga sirvimisel"
+
+msgid "Search Error"
+msgstr "Viga otsimisel"
+
+msgid "Browse"
+msgstr "Sirvi"
+
+msgid "Search"
+msgstr "Otsing"
+
+#~ msgid "0 frames per second"
+#~ msgstr "0 kaadrit sekundis"
+
+#~ msgid "0 kbps"
+#~ msgstr "0 kb/s"
+
+#~ msgid "0 x 0"
+#~ msgstr "0 x 0"
+
+#~ msgid "Zoom Out"
+#~ msgstr "Vähendamine"
+
+#~ msgid "Zoom Reset"
+#~ msgstr "Algsuurus"
+
+#~ msgid "Zoom out"
+#~ msgstr "Vähendamine"
+
+#~ msgid "Zoom reset"
+#~ msgstr "Algse suuruse määramine"
+
+#~ msgid ""
+#~ "The playback of this movie requires the following decoders which are not "
+#~ "installed:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Selle filmi esitamine vajab järgnevaid dekoodereid, need dekoordid pole "
+#~ "aga paigaldatud:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Media file could not be played."
+#~ msgstr "Meediumifaili pole võimalik esitada."
+
+#~ msgid "Too old version of GStreamer installed."
+#~ msgstr "Paigaldatud GStreamer on liiga vana."
+
+#~ msgid ""
+#~ "Failed to open video output. It may not be available. Please select "
+#~ "another video output in the Multimedia Systems Selector."
+#~ msgstr ""
+#~ "Tõrge videoväljundi avamisel. See pole võib-olla saadaval. Palun vali "
+#~ "Multimeediasüsteemide valija abil mõni muu videoväljund."
+
+#~ msgid ""
+#~ "Could not find the video output. You may need to install additional "
+#~ "GStreamer plugins, or select another video output in the Multimedia "
+#~ "Systems Selector."
+#~ msgstr ""
+#~ "Videoväljundit pole võimalik leida. Võib-olla on Sul tarvis paigaldada "
+#~ "täiendavaid GStreamer'i pluginaid või valida Multimeediasüsteemide valija "
+#~ "abil mõni teine videoväljund."
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid "Delete"
+#~ msgstr "Kustutatud"
+
+#~ msgid "Coherence DLNA/UPnP Client"
+#~ msgstr "Coherence DLNA/UPnP klient"
+
+#~ msgid "A DLNA/UPnP client for Totem powered by Coherence"
+#~ msgstr "DLNA/UPnP klient Totemi jaoks, mille on tootnud Coherence"
+
+#~ msgid "By artist"
+#~ msgstr "Esitaja"
+
+#~ msgid "By tag"
+#~ msgstr "Märksõna"
+
+#~ msgid "Jamendo Album Page"
+#~ msgstr "Jamendo albumilehekülg"
+
+#~ msgid "Latest Releases"
+#~ msgstr "Hiljutised väljalasked"
+
+#~ msgid "Number of albums to _retrieve:"
+#~ msgstr "_Tõmmatavate albumite arv:"
+
+#~ msgid "Popular"
+#~ msgstr "Populaarsed"
+
+#~ msgid "Preferred audio _format:"
+#~ msgstr "Eelistatud audio_vorming:"
+
+#~ msgid "_Open Jamendo Album Page in Browser"
+#~ msgstr "_Ava Jamendo albumileht"
+
+#~ msgid "Jamendo"
+#~ msgstr "Jamendo"
+
+#~ msgid ""
+#~ "Listen to the large collection of Creative Commons licensed music on "
+#~ "Jamendo."
+#~ msgstr ""
+#~ "Kuula suurt Creative Commons litsentsi alla kuuluvat muusikakogu Jamendos."
+
+#~ msgid "You need to install the Python simplejson module."
+#~ msgstr "Pead paigaldama Python'i mooduli simplejson."
+
+#~ msgid "Artist: %s"
+#~ msgstr "Esitaja: %s"
+
+#~ msgid "%Y-%m-%d"
+#~ msgstr "%Y-%m-%d"
+
+#~ msgid "%x"
+#~ msgstr "%x"
+
+#~ msgid "Genre: %s"
+#~ msgstr "Žanr: %s"
+
+#~ msgid "Released on: %s"
+#~ msgstr "Välja tulnud: %s"
+
+#~ msgid "License: %s"
+#~ msgstr "Litsents: %s"
+
+#~ msgid "%02d. %s"
+#~ msgstr "%02d. %s"
+
+#~ msgid "Album: %s"
+#~ msgstr "Album: %s"
+
+#~ msgid "Duration: %s"
+#~ msgstr "Kestus: %s"
+
+#~ msgid "Fetching albums, please wait…"
+#~ msgstr "Albumite tõmbamine, palun oota…"
+
+#~ msgid ""
+#~ "Failed to connect to Jamendo server.\n"
+#~ "%s."
+#~ msgstr ""
+#~ "Jamendo serverisse ühendumine nurjus.\n"
+#~ "%s."
+
+#~ msgid "The Jamendo server returned code %s."
+#~ msgstr "Jamendo server tagastas veakoodi %s."
+
+#~ msgid "An error occurred while fetching albums."
+#~ msgstr "Albumite tõmbamisel esines viga."
+
+#~ msgid "%H:%M:%S"
+#~ msgstr "%H:%M:%S"
+
+#~ msgid "%M:%S"
+#~ msgstr "%M:%S"
+
+#~ msgid "en"
+#~ msgstr "en"
+
+#~ msgid "Audio format to download from Jamendo"
+#~ msgstr "Jamendost allalaaditava audio vorming"
+
+#~ msgid "Number of results per page"
+#~ msgstr "Tulemuste arv lehe kohta"
+
+#~ msgid ""
+#~ "The number of Jamendo search results to display in each page of results."
+#~ msgstr "Mitu Jamendo otsingutulemust ühel tulemustelehel kuvatakse."
+
+#~ msgid "The preferred audio format to download tracks from Jamendo in."
+#~ msgstr "Eelistatav andmevorming Jamendost allalaaditavatele lugudele."
+
+#~ msgid "Language"
+#~ msgstr "Keel"
+
+#~ msgid "Could not connect to Tracker"
+#~ msgstr "Trackeriga pole võimalik ühendust luua"
+
+#~ msgid "No results"
+#~ msgstr "Tulemused puuduvad"
+
+#~ msgid "Showing %i - %i of %i match"
+#~ msgid_plural "Showing %i - %i of %i matches"
+#~ msgstr[0] "Näidatakse %i - %i %i tulemust"
+#~ msgstr[1] "Näidatakse %i - %i %i tulemuse seast"
+
+#~ msgid "Page"
+#~ msgstr "Leht"
+
+#~ msgid "Set the window icon to the thumbnail of the playing movie"
+#~ msgstr "Filmi esitamise ajaks akna ikooni asendamine pisipildiga"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Pisipilt"
+
+#~ msgid "Search for local videos using Tracker"
+#~ msgstr "Kohalike videote otsimine Trackeri abil"
+
+#~ msgid "Browser Plugin using %s"
+#~ msgstr "Veebisirvija plugin, kasutab abiprogrammi %s"
+
+#~ msgid "Totem Browser Plugin"
+#~ msgstr "Totemi plugin veebisirvijale"
+
+#~ msgid "Enable visual effects?"
+#~ msgstr "Kas lubada visuaalsed efektid?"
+
+#~ msgid ""
+#~ "It seems you are running Totem remotely.\n"
+#~ "Are you sure you want to enable the visual effects?"
+#~ msgstr ""
+#~ "Paistab, et sa käivitasid Totem'i üle võrgu.\n"
+#~ "Kas visuaalsed efektid peavad olema lubatud?"
+
+#~ msgid "Error loading Galago plugin"
+#~ msgstr "Viga Galago plugina laadimisel"
+
+#~ msgid "Could not connect to the Galago daemon."
+#~ msgstr "Galago deemoniga pole võimalik ühendust luua"
+
+#~ msgid "Could not get name and thumbnail for %s: %s"
+#~ msgstr "\"%s\" kohta pole võimalik nime ja pisipilti hankida: %s"
 
 #~ msgid "seconds"
 #~ msgstr "sekundit"
