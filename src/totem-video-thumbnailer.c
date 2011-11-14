@@ -1071,7 +1071,7 @@ int main (int argc, char *argv[])
 		 * into the video, just use that frame no matter how boring it
 		 * is */
 		if (second_index != -1)
-			pixbuf = capture_frame_at_time (&app, second_index);
+			pixbuf = capture_frame_at_time (&app, second_index * 1000);
 		else
 			pixbuf = capture_interesting_frame (&app);
 		PRINT_PROGRESS (90.0);
