@@ -68,7 +68,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto youtube zeitgeist-dp grilo"
+allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -490,45 +490,6 @@ for plugin in ${used_plugins}; do
 				PKG_CHECK_MODULES(SAVE_FILE, gio-2.0 >= 2.26)
 			fi
 		;;
-		youtube)
-			PKG_CHECK_MODULES(LIBGDATA, libgdata >= 0.4.0 gdk-pixbuf-2.0 >= 2.23.0,
-				[HAVE_LIBGDATA=yes], [HAVE_LIBGDATA=no])
-			if test "${HAVE_LIBGDATA}" != "yes" ; then
-				plugin_error_or_ignore "you need libgdata >= 0.4.0 installed for the YouTube plugin"
-				add_plugin="0"
-			fi
-
-			# For timeout support. Remove this once we depend on libgdata >= 0.7.0
-			PKG_CHECK_MODULES(LIBGDATA_0_7, libgdata >= 0.7.0,
-				[HAVE_LIBGDATA_0_7=yes], [HAVE_LIBGDATA_0_7=no])
-			if test "${HAVE_LIBGDATA_0_7}" = "yes" ; then
-				AC_DEFINE([HAVE_LIBGDATA_0_7],[1],[Define if libgdata >= 0.7.0 is available])
-			fi
-
-			# For the API breaks in libgdata 0.9. Remove this once we depend on libgdata >= 0.9.1
-			PKG_CHECK_MODULES(LIBGDATA_0_9, libgdata >= 0.9.1,
-				[HAVE_LIBGDATA_0_9=yes], [HAVE_LIBGDATA_0_9=no])
-			if test "${HAVE_LIBGDATA_0_9}" = "yes" ; then
-				AC_DEFINE([HAVE_LIBGDATA_0_9],[1],[Define if libgdata >= 0.9.1 is available])
-			fi
-
-			PKG_CHECK_MODULES(LIBSOUP, libsoup-2.4,
-				[HAVE_LIBSOUP=yes], [HAVE_LIBSOUP=no])
-			if test "${HAVE_LIBSOUP}" != "yes" ; then
-				plugin_error_or_ignore "you need libsoup-2.4 installed for the YouTube plugin"
-				add_plugin="0"
-			fi
-
-			dnl We need the souphttpsrc element for the YouTube plugin
-			AC_MSG_CHECKING([GStreamer 0.10 souphttpsrc plugin])
-			if $gst010_inspect souphttpsrc >/dev/null 2>/dev/null; then
-				AC_MSG_RESULT([yes])
-			else
-				AC_MSG_RESULT([no])
-				plugin_error_or_ignore "you need souphttpsrc from gst-plugins-good installed for the YouTube plugin"
-				add_plugin="0"
-			fi
-		;;
 		chapters)
 			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= 2.6.0 gtk+-3.0 glib-2.0 >= 2.15.0,
 				[BUILD_CHAPTERS=yes], [BUILD_CHAPTERS=no])
@@ -794,7 +755,6 @@ src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
 src/plugins/samplepython/Makefile
 src/plugins/sample-vala/Makefile
-src/plugins/youtube/Makefile
 src/plugins/pythonconsole/Makefile
 src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
 src/plugins/publish/Makefile
