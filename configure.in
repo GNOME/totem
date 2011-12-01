@@ -68,7 +68,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="bemused brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo"
+allowed_plugins="brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -442,13 +442,6 @@ for plugin in ${used_plugins}; do
 				add_plugin="0"
 			fi
 		;;
-		bemused)
-			PKG_CHECK_MODULES(BEMUSED, bluez, [HAVE_BLUEZ=yes], [HAVE_BLUEZ=no])
-			if test "${HAVE_BLUEZ}" != "yes" ; then
-				plugin_error_or_ignore "you need the bluez libraries installed for the Bemused plugin"
-				add_plugin="0"
-			fi
-		;;
 		publish)
 			# FIXME
 			PKG_CHECK_MODULES(LIBEPC, libepc-ui-1.0 > 0.4.0, [HAVE_LIBEPC=yes], [HAVE_LIBEPC=no])
@@ -736,7 +729,6 @@ src/Makefile
 src/gst/Makefile
 src/properties/Makefile
 src/plugins/Makefile
-src/plugins/bemused/Makefile
 src/plugins/dbusservice/Makefile
 src/plugins/screensaver/Makefile
 src/plugins/screenshot/Makefile
