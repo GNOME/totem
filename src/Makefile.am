@@ -104,7 +104,8 @@ libtotem_la_CFLAGS = \
 	$(AM_CFLAGS)
 
 libtotem_la_LDFLAGS = \
-	-export_dynamic	\
+	-export-dynamic	\
+	-no-undefined \
 	$(AM_LDFLAGS)
 
 libtotem_la_LIBADD = \

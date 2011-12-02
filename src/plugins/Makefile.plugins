@@ -20,7 +20,8 @@ plugin_cflags = \
 	$(WARN_CFLAGS)
 
 plugin_ldflags = \
-	-export_dynamic \
+	-export-dynamic \
+	-no-undefined \
 	-avoid-version \
 	-module
 

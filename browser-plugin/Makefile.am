@@ -49,6 +49,7 @@ plugin_ldflags = \
 	-avoid-version					\
 	-export-symbols $(srcdir)/plugin.symbols	\
 	-module						\
+	-no-undefined					\
 	$(AM_LDFLAGS)
 
 # Marshaller

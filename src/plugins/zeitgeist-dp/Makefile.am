@@ -14,7 +14,10 @@ VALAFLAGS = \
 	bacon-video.vapi
 
 libtotem_zeitgeist_dp_plugin_la_SOURCES = totem-zeitgeist-dp-plugin.vala
-libtotem_zeitgeist_dp_plugin_la_LDFLAGS = $(plugin_ldflags) $(LIBZEITGEIST_LIBS)
+libtotem_zeitgeist_dp_plugin_la_LDFLAGS = $(plugin_ldflags)
+libtotem_zeitgeist_dp_plugin_la_LIBADD = \
+	$(plugin_libadd)		\
+	$(LIBZEITGEIST_LIBS)
 libtotem_zeitgeist_dp_plugin_la_CFLAGS = \
 	$(plugin_cflags) \
 	$(LIBZEITGEIST_CFLAGS) \

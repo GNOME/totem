@@ -436,6 +436,8 @@ NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 	void *handle;
 #if defined(__OpenBSD__)
 	handle = dlopen ("libdbus-glib-1.so", RTLD_NOW | RTLD_NODELETE);
+#elif defined(__CYGWIN__)
+	handle = dlopen ("cygdbus-glib-1-2.dll", RTLD_NOW);
 #else
 	handle = dlopen ("libdbus-glib-1.so.2", RTLD_NOW | RTLD_NODELETE);
 #endif
