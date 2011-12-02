@@ -40,12 +40,12 @@
 typedef struct TotemPropertiesViewPriv TotemPropertiesViewPriv;
 
 typedef struct {
-	GtkTable parent;
+	GtkGrid parent;
 	TotemPropertiesViewPriv *priv;
 } TotemPropertiesView;
 
 typedef struct {
-	GtkTableClass parent;
+	GtkGridClass parent;
 } TotemPropertiesViewClass;
 
 GType      totem_properties_view_get_type      (void);

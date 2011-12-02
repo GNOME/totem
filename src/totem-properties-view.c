@@ -45,7 +45,7 @@ struct TotemPropertiesViewPriv {
 static GObjectClass *parent_class = NULL;
 static void totem_properties_view_finalize (GObject *object);
 
-G_DEFINE_TYPE (TotemPropertiesView, totem_properties_view, GTK_TYPE_TABLE)
+G_DEFINE_TYPE (TotemPropertiesView, totem_properties_view, GTK_TYPE_GRID)
 
 void
 totem_properties_view_register_type (GTypeModule *module)
@@ -296,8 +296,7 @@ totem_properties_view_init (TotemPropertiesView *props)
 	props->priv = g_new0 (TotemPropertiesViewPriv, 1);
 
 	props->priv->vbox = bacon_video_widget_properties_new ();
-	gtk_table_resize (GTK_TABLE (props), 1, 1);
-	gtk_container_add (GTK_CONTAINER (props), props->priv->vbox);
+	gtk_grid_attach (GTK_GRID (props), props->priv->vbox, 0, 0, 1, 1);
 	gtk_widget_show (GTK_WIDGET (props));
 
 	props->priv->props = BACON_VIDEO_WIDGET_PROPERTIES (props->priv->vbox);
