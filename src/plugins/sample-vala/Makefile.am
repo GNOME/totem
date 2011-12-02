@@ -16,6 +16,11 @@ libsample_vala_la_LDFLAGS = $(plugin_ldflags)
 libsample_vala_la_CFLAGS = $(plugin_cflags)
 libsample_vala_la_LIBADD = $(plugin_libadd)
 
+GITIGNOREFILES = \
+	$(libsample_vala_la_SOURCES:.vala=.c) \
+	libsample_vala_la_vala.stamp \
+	$(NULL)
+
 # Override to _not_ install the test plugins
 install-pluginLTLIBRARIES:
 install-pluginDATA:

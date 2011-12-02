@@ -16,4 +16,9 @@ librotation_la_LDFLAGS = $(plugin_ldflags)
 librotation_la_CFLAGS = $(plugin_cflags) -include $(CONFIG_HEADER)
 librotation_la_LIBADD = $(plugin_libadd)
 
+GITIGNOREFILES = \
+	$(librotation_la_SOURCES:.vala=.c) \
+	librotation_la_vala.stamp \
+	$(NULL)
+
 -include $(top_srcdir)/git.mk
