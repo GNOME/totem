@@ -349,7 +349,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		id = "media-playback-start-symbolic";
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
-		totem_time_label_set_time 
+		totem_time_label_set_time
 			(TOTEM_TIME_LABEL (emb->fs->time_label), 0, 0);
 		if (emb->href_uri != NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
@@ -575,7 +575,7 @@ totem_embedded_set_volume (TotemEmbedded *embedded,
 
 static gboolean
 totem_embedded_launch_player (TotemEmbedded *embedded,
- 			      guint32 user_time)
+			      guint32 user_time)
 {
 	GList *uris = NULL;
 	GdkScreen *screen;
@@ -741,8 +741,8 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 {
 	GValue value = { 0, };
 	GtkAction *fs_action;
-	
-	fs_action = GTK_ACTION (gtk_builder_get_object 
+
+	fs_action = GTK_ACTION (gtk_builder_get_object
 				(emb->menuxml, "fullscreen1"));
 
 	if (totem_fullscreen_is_fullscreen (emb->fs) == fullscreen_enabled)
@@ -916,7 +916,7 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 		}
 
 		if ((eop != FALSE && emb->repeat != FALSE) || (eop == FALSE)) {
-		    	    totem_embedded_play (emb, NULL);
+			    totem_embedded_play (emb, NULL);
 		}
 	}
 
@@ -995,7 +995,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 	totem_embedded_clear_playlist (emb, NULL);
 
 	/* FIXME, we should remove that when we can
-	 * parse from memory or 
+	 * parse from memory or
 	 * https://bugzilla.gnome.org/show_bug.cgi?id=598702 is fixed */
 	fd = g_file_open_tmp ("totem-browser-plugin-playlist-XXXXXX",
 			      &tmp_file,
@@ -1177,7 +1177,7 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 }
 
 static void
-popup_menu_position_func (GtkMenu *menu, gint *x, gint *y, gboolean *push_in, GtkWidget *button) 
+popup_menu_position_func (GtkMenu *menu, gint *x, gint *y, gboolean *push_in, GtkWidget *button)
 {
 	GtkWidget *widget = GTK_WIDGET (button);
 	GtkRequisition menu_req;
@@ -1560,7 +1560,7 @@ on_tick (GtkWidget *bvw,
 					(int) (stream_length / 1000));
 		}
 
-		totem_time_label_set_time 
+		totem_time_label_set_time
 			(TOTEM_TIME_LABEL (emb->fs->time_label),
 			 current_time, stream_length);
 	}
@@ -1791,7 +1791,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (G_OBJECT (emb->fs->exit_button), "clicked",
 			  G_CALLBACK (totem_embedded_on_fullscreen_exit), emb);
 
-	emb->pp_fs_button = GTK_WIDGET (gtk_tool_button_new_from_stock 
+	emb->pp_fs_button = GTK_WIDGET (gtk_tool_button_new_from_stock
 					("media-playback-start-symbolic"));
 	g_signal_connect (G_OBJECT (emb->pp_fs_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
@@ -1804,7 +1804,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			G_CALLBACK (totem_embedded_key_press_event), emb);
 	g_signal_connect (G_OBJECT(emb->fs_window), "key_release_event",
 			G_CALLBACK (totem_embedded_key_press_event), emb);
-	gtk_widget_add_events (GTK_WIDGET (emb->bvw), GDK_KEY_PRESS_MASK | 
+	gtk_widget_add_events (GTK_WIDGET (emb->bvw), GDK_KEY_PRESS_MASK |
 			       GDK_KEY_RELEASE_MASK);
 	g_signal_connect (G_OBJECT(emb->bvw), "key_press_event",
 			G_CALLBACK (totem_embedded_key_press_event), emb);
@@ -1869,7 +1869,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	emb->volume = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
 	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (emb->fs->volume),
-					 gtk_scale_button_get_adjustment 
+					 gtk_scale_button_get_adjustment
 					 (GTK_SCALE_BUTTON (emb->volume)));
 	gtk_button_set_focus_on_click (GTK_BUTTON (emb->volume), FALSE);
 	g_signal_connect (G_OBJECT (emb->volume), "value-changed",
@@ -2314,7 +2314,7 @@ int main (int argc, char **argv)
 	g_assert (proxy != NULL);
 
 	if (!dbus_g_proxy_call (proxy, "RequestName", &e,
-	     			G_TYPE_STRING, svcname,
+				G_TYPE_STRING, svcname,
 				G_TYPE_UINT, DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT,
 				G_TYPE_INVALID,
 				G_TYPE_UINT, &res,

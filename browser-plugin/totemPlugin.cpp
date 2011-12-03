@@ -1,5 +1,5 @@
 /* Totem Mozilla plugin
- * 
+ *
  * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
  * Copyright © 2006, 2007, 2008, 2009 Christian Persch
@@ -1009,7 +1009,7 @@ totemPlugin::RequestStream (bool aForceViewer)
 	}
 #if 0
 	if (href && !requestURL) {
-	 	/* FIXME this looks wrong? any real-world testcase sites around? */
+		/* FIXME this looks wrong? any real-world testcase sites around? */
 		requestURL = href;
 	}
 #endif
@@ -1684,7 +1684,7 @@ totemPlugin::SetQtsrc (const char* aURL)
 	/* FIXME can qtsrc have URL extensions? */
 
         g_free (mQtsrcURI);
-        
+
 	/* Don't allow empty qtsrc */
 	if (!aURL || !aURL[0]) {
                 mQtsrcURI = NULL;
@@ -1709,7 +1709,7 @@ totemPlugin::SetHref (const char* aURL)
 	   aURL ? aURL : "", hasExtensions, url ? url : "", target ? target : "");
 
 #if 0
-// 	nsresult rv = NS_OK;
+//	nsresult rv = NS_OK;
 	char *baseURI;
 	if (mQtsrcURI) {
 		baseURI = mQtsrcURI;
@@ -1814,7 +1814,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* mode is NP_EMBED, NP_FULL, or NP_BACKGROUND (see npapi.h) */
 	/* FIXME we should error out if we are in fullscreen mode
 	 * FIXME: This might be possible on gecko trunk by returning an
- 	 * error code from the NewStream function.
+	 * error code from the NewStream function.
 	 */
 
 	NPError err;
@@ -1848,7 +1848,7 @@ totemPlugin::Init (NPMIMEType mimetype,
                 Dm ("Failed to get the document URI");
                 return NPERR_GENERIC_ERROR;
         }
-  
+
         /* FIXMEchpe: need to resolve this against any base URIs ? */
         mDocumentURI = g_strndup (docURI.GetString(), docURI.GetStringLen());
         D ("Document URI is '%s'", mDocumentURI ? mDocumentURI : "");
@@ -1858,7 +1858,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * for non-MOZILLA_INTERNAL_API code). nsIDOM3Node isn't frozen either,
 	 * but should be safe enough.
 	 */
-	
+
         /* This is a property on nsIDOM3Node */
         totemNPVariantWrapper baseURI;
         if (!NPN_GetProperty (mNPP,
@@ -1949,9 +1949,9 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * http://developer.mozilla.org/en/docs/Gecko_Plugin_API_Reference:Plug-in_Basics#Plug-in_Display_Modes
 	 */
 	/* FIXME: this is unnecessary, since gecko will automatically a synthetic
- 	 * "src" attribute with the "data" atttribute's content if "src" is missing,
- 	 * see http://lxr.mozilla.org/seamonkey/source/layout/generic/nsObjectFrame.cpp#2479
- 	 */
+	 * "src" attribute with the "data" atttribute's content if "src" is missing,
+	 * see http://lxr.mozilla.org/seamonkey/source/layout/generic/nsObjectFrame.cpp#2479
+	 */
 	if (!src) {
 		src = (const char *) g_hash_table_lookup (args, "data");
 	}
@@ -2485,7 +2485,7 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	}
 #endif /* TOTEM_GMP_PLUGIN */
 }
-    
+
 void
 totemPlugin::URLNotify (const char *url,
 		        NPReason reason,

@@ -72,7 +72,7 @@ class totemNPVariantWrapper {
     operator NPObject* () { return GetObject   (); }
 
     operator NPVariant*() { return &mVariant; }
-    
+
     class GetterCopies {
       public:
        explicit GetterCopies (totemNPVariantWrapper& aTarget) : mTarget (aTarget) { }

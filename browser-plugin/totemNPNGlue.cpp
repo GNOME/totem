@@ -73,7 +73,7 @@ NPError NPN_PostURLNotify(NPP instance, const char* url, const char* window, uin
 NPError NPN_PostURL(NPP instance, const char* url, const char* window, uint32_t len, const char* buf, NPBool file)
 {
   return NPNFuncs.posturl(instance, url, window, len, buf, file);
-} 
+}
 
 NPError NPN_RequestRead(NPStream* stream, NPByteRange* rangeList)
 {

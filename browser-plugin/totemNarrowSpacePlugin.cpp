@@ -284,7 +284,7 @@ totemNarrowSpacePlayer::InvokeByIndex (int aIndex,
 
       return StringVariant (_result, "#000000");
     }
-      
+
     case eSetBgColor: {
       /* void SetBgColor (in ACString color); */
       NPString color;

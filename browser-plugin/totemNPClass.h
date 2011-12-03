@@ -78,7 +78,7 @@ class totemNPClass_base : public NPClass {
 
 template <class T>
 class totemNPClass : public totemNPClass_base {
-  
+
   public:
 
     typedef totemNPClass<T> class_type;

@@ -112,12 +112,12 @@ totemGMPControls::InvokeByIndex (int aIndex,
       if (!GetNPStringFromArguments (argv, argc, 0, name))
         return false;
       if (g_ascii_strncasecmp (name.UTF8Characters, "currentItem", name.UTF8Length) == 0
-      	  || g_ascii_strncasecmp (name.UTF8Characters, "next", name.UTF8Length) == 0
-      	  || g_ascii_strncasecmp (name.UTF8Characters, "pause", name.UTF8Length) == 0
-      	  || g_ascii_strncasecmp (name.UTF8Characters, "play", name.UTF8Length) == 0
-      	  || g_ascii_strncasecmp (name.UTF8Characters, "previous", name.UTF8Length) == 0
-      	  || g_ascii_strncasecmp (name.UTF8Characters, "stop", name.UTF8Length) == 0)
-      	  return BoolVariant (_result, true);
+	  || g_ascii_strncasecmp (name.UTF8Characters, "next", name.UTF8Length) == 0
+	  || g_ascii_strncasecmp (name.UTF8Characters, "pause", name.UTF8Length) == 0
+	  || g_ascii_strncasecmp (name.UTF8Characters, "play", name.UTF8Length) == 0
+	  || g_ascii_strncasecmp (name.UTF8Characters, "previous", name.UTF8Length) == 0
+	  || g_ascii_strncasecmp (name.UTF8Characters, "stop", name.UTF8Length) == 0)
+	      return BoolVariant (_result, true);
       return BoolVariant (_result, false);
 
     case eFastForward:

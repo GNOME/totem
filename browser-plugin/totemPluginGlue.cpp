@@ -1,5 +1,5 @@
 /* Totem Mozilla plugin
- * 
+ *
  * Copyright © 2004-2006 Bastien Nocera <hadess@hadess.net>
  * Copyright © 2002 David A. Schleef <ds@schleef.org>
  * Copyright © 2006, 2008 Christian Persch
@@ -449,7 +449,7 @@ NP_Initialize (NPNetscapeFuncs *aMozillaVTable,
 	aPluginVTable->print          = NewNPP_PrintProc (totem_plugin_print);
 	aPluginVTable->event          = NewNPP_HandleEventProc (totem_plugin_handle_event);
 	aPluginVTable->urlnotify      = NewNPP_URLNotifyProc (totem_plugin_url_notify);
-	aPluginVTable->javaClass      = NULL; 
+	aPluginVTable->javaClass      = NULL;
 	aPluginVTable->getvalue       = NewNPP_GetValueProc (totem_plugin_get_value);
 	aPluginVTable->setvalue       = NewNPP_SetValueProc (totem_plugin_set_value);
 

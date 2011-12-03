@@ -69,7 +69,7 @@ totemGMPError::InvokeByIndex (int aIndex,
       /* void webHelp (); */
       TOTEM_WARN_INVOKE_UNIMPLEMENTED (aIndex, totemGMPError);
       return VoidVariant (_result);
-  
+
     case eItem:
       /* totemIGMPErrorItem item (in long index); */
       TOTEM_WARN_1_INVOKE_UNIMPLEMENTED (aIndex, totemGMPError);

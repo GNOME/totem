@@ -81,7 +81,7 @@ class totemPlugin {
   public:
     totemPlugin (NPP aNPP);
     ~totemPlugin ();
-  
+
     void* operator new (size_t aSize) throw ();
 
     /* plugin glue */
@@ -95,16 +95,16 @@ class totemPlugin {
                   char *argn[],
                   char *argv[],
                   NPSavedData *saved);
-  
+
     NPError SetWindow (NPWindow *aWindow);
-  
+
     NPError NewStream (NPMIMEType type,
                        NPStream* stream_ptr,
                        NPBool seekable,
                        uint16* stype);
     NPError DestroyStream (NPStream* stream,
                            NPError reason);
-  
+
     int32_t WriteReady (NPStream *stream);
     int32_t Write (NPStream *stream,
                    int32_t offset,
@@ -160,7 +160,7 @@ class totemPlugin {
     void ViewerCleanup ();
 
     void ViewerButtonPressed (guint aTimestamp,
-		    	      guint aButton);
+			      guint aButton);
 
     void ClearRequest ();
     void RequestStream (bool aForceViewer);

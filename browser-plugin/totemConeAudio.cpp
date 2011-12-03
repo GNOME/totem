@@ -87,7 +87,7 @@ totemConeAudio::GetPropertyByIndex (int aIndex,
   switch (Properties (aIndex)) {
     case eMute:
       return BoolVariant (_result, Plugin()->IsMute());
-      
+
     case eVolume:
       return Int32Variant (_result, Plugin()->Volume() * 200.0);
 
