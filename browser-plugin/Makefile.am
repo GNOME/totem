@@ -35,14 +35,12 @@ plugin_sources = \
 
 plugin_cxxflags = \
 	$(BROWSER_PLUGIN_CFLAGS)	\
-	$(DBUS_CFLAGS)			\
 	$(WARN_CXXFLAGS)		\
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
 plugin_libadd = \
 	libtotembrowserplugin_helper.la	\
-	$(DBUS_LIBS)			\
 	$(BROWSER_PLUGIN_LIBS)
 
 plugin_ldflags = \

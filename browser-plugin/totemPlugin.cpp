@@ -37,7 +37,6 @@
 
 #include "totem-pl-parser-mini.h"
 #include "totem-plugin-viewer-options.h"
-#include "marshal.h"
 
 #include "npapi.h"
 #include "npruntime.h"
@@ -164,6 +163,30 @@ static const char kPluginUserAgent[] =
   "";
 #endif
 
+static void NameAppearedCallback (GDBusConnection *connection,
+				  const gchar     *name,
+				  const gchar     *aNameOwner,
+				  gpointer         aData);
+static void NameVanishedCallback (GDBusConnection *connection,
+				  const gchar     *aName,
+				  gpointer         aData);
+
+static void
+totem_dbus_proxy_call_no_reply (GDBusProxy *proxy,
+				const gchar *method_name,
+				GVariant *parameters)
+{
+	GVariant *variant;
+
+	variant = g_dbus_proxy_call_sync (proxy, method_name, parameters,
+					  G_DBUS_CALL_FLAGS_NONE,
+					  -1,
+					  NULL,
+					  NULL);
+	if (variant != NULL)
+		g_variant_unref (variant);
+}
+
 void*
 totemPlugin::operator new (size_t aSize) throw ()
 {
@@ -198,15 +221,6 @@ totemPlugin::totemPlugin (NPP aNPP)
 totemPlugin::~totemPlugin ()
 {
         /* FIXMEchpe invalidate the scriptable object, or is that done automatically? */
-
-	if (mBusProxy) {
-		dbus_g_proxy_disconnect_signal (mBusProxy,
-						"NameOwnerChanged",
-						G_CALLBACK (NameOwnerChangedCallback),
-						reinterpret_cast<void*>(this));
-		g_object_unref (mBusProxy);
-		mBusProxy = NULL;
-	}
 
 	ViewerCleanup ();
 
@@ -271,11 +285,9 @@ totemPlugin::Command (const char *aCommand)
 	D ("Command '%s'", aCommand);
 
 	assert (mViewerProxy);
-	dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "DoCommand",
-				    G_TYPE_STRING, aCommand,
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+	totem_dbus_proxy_call_no_reply (mViewerProxy,
+					"DoCommand",
+					g_variant_new ("(s)", aCommand));
 }
 
 void
@@ -290,11 +302,9 @@ totemPlugin::SetTime (guint64 aTime)
 	mTime = aTime;
 
 	assert (mViewerProxy);
-	dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "SetTime",
-				    G_TYPE_UINT64, GetTime(),
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+	totem_dbus_proxy_call_no_reply (mViewerProxy,
+					"SetTime",
+					g_variant_new ("(t)", GetTime()));
 }
 
 void
@@ -309,11 +319,9 @@ totemPlugin::SetVolume (double aVolume)
 		return;
 
 	assert (mViewerProxy);
-	dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "SetVolume",
-				    G_TYPE_DOUBLE, gdouble (Volume()),
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+	totem_dbus_proxy_call_no_reply (mViewerProxy,
+					"SetVolume",
+					g_variant_new ("(d)", gdouble (Volume())));
 }
 
 void
@@ -328,11 +336,9 @@ totemPlugin::SetFullscreen (bool enabled)
 		return;
 
 	assert (mViewerProxy);
-	dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "SetFullscreen",
-				    G_TYPE_BOOLEAN, gboolean (IsFullscreen()),
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+	totem_dbus_proxy_call_no_reply (mViewerProxy,
+					"SetFullscreen",
+					g_variant_new ("(b)", gboolean (IsFullscreen())));
 }
 
 void
@@ -350,10 +356,9 @@ totemPlugin::ClearPlaylist ()
 	Dm ("ClearPlaylist");
 
 	assert (mViewerProxy);
-	dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "ClearPlaylist",
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+	totem_dbus_proxy_call_no_reply (mViewerProxy,
+					"ClearPlaylist",
+					NULL);
 }
 
 int32_t
@@ -392,14 +397,13 @@ totemPlugin::AddItem (const NPString& aURI,
 
 	assert (mViewerProxy);
 
-        dbus_g_proxy_call_no_reply (mViewerProxy,
-				    "AddItem",
-				    G_TYPE_STRING, mBaseURI,
-				    G_TYPE_STRING, uri,
-				    G_TYPE_STRING, title,
-				    G_TYPE_STRING, aSubtitle,
-				    G_TYPE_INVALID,
-				    G_TYPE_INVALID);
+        totem_dbus_proxy_call_no_reply (mViewerProxy,
+					"AddItem",
+					g_variant_new ("(ssss)",
+						       mBaseURI,
+						       uri,
+						       title,
+						       aSubtitle));
         g_free (uri);
         g_free (title);
 
@@ -635,6 +639,16 @@ totemPlugin::ViewerFork ()
 		return NPERR_GENERIC_ERROR;
 	}
 
+	mViewerServiceName = g_strdup_printf (TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE, mViewerPID);
+	D ("Viewer DBus interface name is '%s'", mViewerServiceName);
+
+	mBusWatchId = g_bus_watch_name (G_BUS_TYPE_SESSION, mViewerServiceName,
+					G_BUS_NAME_WATCHER_FLAGS_NONE,
+					&NameAppearedCallback,
+					&NameVanishedCallback,
+					reinterpret_cast<void*>(this),
+					NULL);
+
 	mQueue = g_queue_new ();
 
 	/* Set mViewerFD nonblocking */
@@ -660,61 +674,16 @@ totemPlugin::ViewerSetup ()
           mTimerID = 0;
 	}
 
-	mViewerProxy = dbus_g_proxy_new_for_name (mBusConnection,
-						  mViewerServiceName,
-						  TOTEM_PLUGIN_VIEWER_DBUS_PATH,
-						  TOTEM_PLUGIN_VIEWER_INTERFACE_NAME);
+	mViewerProxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+						      G_DBUS_PROXY_FLAGS_NONE,
+						      NULL,
+						      mViewerServiceName,
+						      TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+						      TOTEM_PLUGIN_VIEWER_INTERFACE_NAME,
+						      NULL, NULL);
 
-	dbus_g_object_register_marshaller
-		(totempluginviewer_marshal_VOID__UINT_UINT,
-		 G_TYPE_NONE, G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal (mViewerProxy, "ButtonPress",
-				 G_TYPE_UINT,
-				 G_TYPE_UINT,
-				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (mViewerProxy,
-				     "ButtonPress",
-				     G_CALLBACK (ButtonPressCallback),
-				     reinterpret_cast<void*>(this),
-				     NULL);
-
-	dbus_g_proxy_add_signal (mViewerProxy,
-				 "StopStream",
-				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (mViewerProxy,
-				     "StopStream",
-				     G_CALLBACK (StopStreamCallback),
-				     reinterpret_cast<void*>(this),
-				     NULL);
-
-	dbus_g_object_register_marshaller
-		(totempluginviewer_marshal_VOID__UINT_UINT_STRING,
-		 G_TYPE_NONE, G_TYPE_UINT, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal (mViewerProxy,
-				 "Tick",
-				 G_TYPE_UINT,
-				 G_TYPE_UINT,
-				 G_TYPE_STRING,
-				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (mViewerProxy,
-				     "Tick",
-				     G_CALLBACK (TickCallback),
-				     reinterpret_cast<void*>(this),
-				     NULL);
-
-	dbus_g_object_register_marshaller
-		(totempluginviewer_marshal_VOID__STRING_BOXED,
-		 G_TYPE_NONE, G_TYPE_STRING, G_TYPE_BOXED, G_TYPE_INVALID);
-	dbus_g_proxy_add_signal (mViewerProxy,
-				 "PropertyChange",
-				 G_TYPE_STRING,
-				 G_TYPE_VALUE,
-				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (mViewerProxy,
-				     "PropertyChange",
-				     G_CALLBACK (PropertyChangeCallback),
-				     reinterpret_cast<void*>(this),
-				     NULL);
+	mSignalId = g_signal_connect (G_OBJECT (mViewerProxy), "g-signal",
+				      G_CALLBACK (ProxySignalCallback), reinterpret_cast<void*>(this));
 
 	if (mHidden) {
 		ViewerReady ();
@@ -733,28 +702,17 @@ totemPlugin::ViewerCleanup ()
         g_free (mViewerServiceName);
         mViewerServiceName = NULL;
 
-	if (mViewerPendingCall) {
-		dbus_g_proxy_cancel_call (mViewerProxy, mViewerPendingCall);
-		mViewerPendingCall = NULL;
+        g_bus_unwatch_name (mBusWatchId);
+
+	if (mCancellable) {
+		g_cancellable_cancel (mCancellable);
+		g_object_unref (mCancellable);
+		mCancellable = NULL;
 	}
 
 	if (mViewerProxy) {
-		dbus_g_proxy_disconnect_signal (mViewerProxy,
-						"ButtonPress",
-						G_CALLBACK (ButtonPressCallback),
-						reinterpret_cast<void*>(this));
-		dbus_g_proxy_disconnect_signal (mViewerProxy,
-						"StopStream",
-						G_CALLBACK (StopStreamCallback),
-						reinterpret_cast<void*>(this));
-		dbus_g_proxy_disconnect_signal (mViewerProxy,
-						"Tick",
-						G_CALLBACK (TickCallback),
-						reinterpret_cast<void*>(this));
-		dbus_g_proxy_disconnect_signal (mViewerProxy,
-						"PropertyChange",
-						G_CALLBACK (PropertyChangeCallback),
-						reinterpret_cast<void*>(this));
+		g_signal_handler_disconnect (mViewerProxy, mSignalId);
+		mSignalId = 0;
 
 		g_object_unref (mViewerProxy);
 		mViewerProxy = NULL;
@@ -790,21 +748,19 @@ totemPlugin::ViewerSetWindow ()
 		return;
 	}
 
-	assert (mViewerPendingCall == NULL); /* Have a pending call */
+	assert (mCancellable == NULL); /* Have a pending call */
 
 	Dm ("Calling SetWindow");
-	mViewerPendingCall = 
-		dbus_g_proxy_begin_call (mViewerProxy,
-					 "SetWindow",
-					 ViewerSetWindowCallback,
-					 reinterpret_cast<void*>(this),
-					 NULL,
-					 G_TYPE_STRING, "All",
-					 G_TYPE_UINT, (guint) mWindow,
-					 G_TYPE_INT, mWidth,
-					 G_TYPE_INT, mHeight,
-					 G_TYPE_INVALID);
-		
+	mCancellable = g_cancellable_new ();
+	g_dbus_proxy_call (mViewerProxy,
+			   "SetWindow",
+			   g_variant_new ("(suii)", "All", (guint) mWindow, mWidth, mHeight),
+			   G_DBUS_CALL_FLAGS_NONE,
+			   -1,
+			   mCancellable,
+			   ViewerSetWindowCallback,
+			   reinterpret_cast<void*>(this));
+
 	mWindowSet = true;
 }
 
@@ -834,14 +790,13 @@ totemPlugin::ViewerReady ()
 			   cmd->add_item.uri, mBaseURI,
 			   cmd->add_item.title ? cmd->add_item.title : "",
 			   cmd->add_item.subtitle ? cmd->add_item.subtitle : "");
-			dbus_g_proxy_call_no_reply (mViewerProxy,
-						    "AddItem",
-						    G_TYPE_STRING, mBaseURI,
-						    G_TYPE_STRING, cmd->add_item.uri,
-						    G_TYPE_STRING, cmd->add_item.title,
-						    G_TYPE_STRING, cmd->add_item.subtitle,
-						    G_TYPE_INVALID,
-						    G_TYPE_INVALID);
+			totem_dbus_proxy_call_no_reply (mViewerProxy,
+							"AddItem",
+							g_variant_new ("(ssss)",
+								       mBaseURI,
+								       cmd->add_item.uri,
+								       cmd->add_item.title,
+								       cmd->add_item.subtitle));
 			g_free (cmd->add_item.uri);
 			g_free (cmd->add_item.title);
 			g_free (cmd->add_item.subtitle);
@@ -877,11 +832,9 @@ totemPlugin::ViewerReady ()
 	/* Tell the viewer it has an href */
 	if (mHref) {
 		Dm("SetHref in ViewerReady");
-		dbus_g_proxy_call_no_reply (mViewerProxy,
-					    "SetHref",
-					    G_TYPE_STRING, mHref,
-					    G_TYPE_STRING, mTarget ? mTarget : "",
-					    G_TYPE_INVALID);
+		totem_dbus_proxy_call_no_reply (mViewerProxy,
+						"SetHref",
+						g_variant_new ("(ss)", mHref, mTarget ? mTarget : ""));
 	}
 	if (mHref && mAutoHref)
 		ViewerButtonPressed (0, 0);
@@ -899,11 +852,9 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 		if (mTarget &&
                     g_ascii_strcasecmp (mTarget, "quicktimeplayer") == 0) {
 			D ("Opening movie '%s' in external player", mHref);
-			dbus_g_proxy_call_no_reply (mViewerProxy,
-						    "LaunchPlayer",
-						    G_TYPE_STRING, mHref,
-						    G_TYPE_UINT, time,
-						    G_TYPE_INVALID);
+			totem_dbus_proxy_call_no_reply (mViewerProxy,
+							"LaunchPlayer",
+							g_variant_new ("(su)", mHref, time));
 			return;
 		}
                 if (mTarget &&
@@ -911,11 +862,9 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
                      g_ascii_strcasecmp (mTarget, "_current") == 0 ||
                      g_ascii_strcasecmp (mTarget, "_self") == 0)) {
                         D ("Opening movie '%s'", mHref);
-			dbus_g_proxy_call_no_reply (mViewerProxy,
-						    "SetHref",
-						    G_TYPE_STRING, NULL,
-						    G_TYPE_STRING, NULL,
-						    G_TYPE_INVALID);
+			totem_dbus_proxy_call_no_reply (mViewerProxy,
+							"SetHref",
+							g_variant_new ("(ss)", "", ""));
 			/* FIXME this isn't right, we should just create a mHrefURI and instruct to load that one */
 			SetQtsrc (mHref);
 			RequestStream (true);
@@ -955,56 +904,61 @@ totemPlugin::ViewerButtonPressed (guint aTimestamp, guint aButton)
 	}
 }
 
-void
-totemPlugin::NameOwnerChanged (const char *aName,
-			       const char *aOldOwner,
-			       const char *aNewOwner)
+/* static */ void
+totemPlugin::BusNameAppearedCallback (GDBusConnection *connection,
+				      const gchar     *name,
+				      const gchar     *aNameOwner)
 {
-	if (!mViewerPID)
-		return;
-
-	/* Construct viewer interface name */
-	if (G_UNLIKELY (!mViewerServiceName)) {
-		mViewerServiceName = g_strdup_printf (TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE, mViewerPID);
-		D ("Viewer DBus interface name is '%s'", mViewerServiceName);
-	}
-
-	if (strcmp (mViewerServiceName, aName) != 0)
-		return;
-
-	D ("NameOwnerChanged old-owner '%s' new-owner '%s'", aOldOwner, aNewOwner);
-
-	if (aOldOwner[0] == '\0' /* empty */ &&
-	    aNewOwner[0] != '\0' /* non-empty */) {
-		if (mViewerBusAddress &&
-                    strcmp (mViewerBusAddress, aNewOwner) == 0) {
-			Dm ("Already have owner, why are we notified again?");
-                        g_free (mViewerBusAddress);
-		} else if (mViewerBusAddress) {
-			Dm ("WTF, new owner!?");
-                        g_free (mViewerBusAddress);
-		} else {
-			/* This is the regular case */
-			Dm ("Viewer now connected to the bus");
-		}
-
-		mViewerBusAddress = g_strdup (aNewOwner);
-
-		ViewerSetup ();
-	} else if (mViewerBusAddress &&
-		   strcmp (mViewerBusAddress, aOldOwner) == 0) {
-		Dm ("Viewer lost connection!");
-
+	if (mViewerBusAddress &&
+	    strcmp (mViewerBusAddress, aNameOwner) == 0) {
+		Dm ("Already have owner, why are we notified again?");
 		g_free (mViewerBusAddress);
-                mViewerBusAddress = NULL;
-
-		/* FIXME */
-		/* ViewerCleanup () ? */
-		/* FIXME if we're not quitting, put up error viewer */
+	} else if (mViewerBusAddress) {
+		Dm ("WTF, new owner!?");
+		g_free (mViewerBusAddress);
+	} else {
+		/* This is the regular case */
+		Dm ("Viewer now connected to the bus");
 	}
-	/* FIXME do we really need the lost-connection case?
-	 * We could just disconnect the handler in ViewerSetup
-	 */
+
+	mViewerBusAddress = g_strdup (aNameOwner);
+
+	ViewerSetup ();
+}
+
+static void
+NameAppearedCallback (GDBusConnection *connection,
+		      const gchar     *name,
+		      const gchar     *aNameOwner,
+		      gpointer         aData)
+{
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+
+	plugin->BusNameAppearedCallback (connection, name, aNameOwner);
+}
+
+/* static */ void
+totemPlugin::BusNameVanishedCallback (GDBusConnection *connection,
+				      const gchar     *aName)
+{
+	Dm ("Viewer lost connection!");
+
+	g_free (mViewerBusAddress);
+	mViewerBusAddress = NULL;
+
+	/* FIXME */
+	/* ViewerCleanup () ? */
+	/* FIXME if we're not quitting, put up error viewer */
+}
+
+static void
+NameVanishedCallback (GDBusConnection *connection,
+		      const gchar     *aName,
+		      gpointer         aData)
+{
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+
+	plugin->BusNameVanishedCallback (connection, aName);
 }
 
 /* Stream handling */
@@ -1089,29 +1043,31 @@ totemPlugin::RequestStream (bool aForceViewer)
 	/* If the URL is supported and the caller isn't asking us to make
 	 * the viewer open the stream, we call SetupStream, and
 	 * otherwise OpenURI. */
+
+	if (!mCancellable)
+		mCancellable = g_cancellable_new ();
+
 	if (!aForceViewer && IsSchemeSupported (requestURI, baseURI)) {
 		/* This will fail for the 2nd stream, but we shouldn't
 		 * ever come to using it for the 2nd stream... */
 
-		mViewerPendingCall =
-			dbus_g_proxy_begin_call (mViewerProxy,
-						 "SetupStream",
-						 ViewerSetupStreamCallback,
-						 reinterpret_cast<void*>(this),
-						 NULL,
-						 G_TYPE_STRING, requestURI,
-						 G_TYPE_STRING, baseURI,
-						 G_TYPE_INVALID);
+		g_dbus_proxy_call (mViewerProxy,
+				   "SetupStream",
+				   g_variant_new ("(ss)", requestURI, baseURI),
+				   G_DBUS_CALL_FLAGS_NONE,
+				   -1,
+				   mCancellable,
+				   ViewerSetupStreamCallback,
+				   reinterpret_cast<void*>(this));
 	} else {
-		mViewerPendingCall =
-			dbus_g_proxy_begin_call (mViewerProxy,
-						 "OpenURI",
-						 ViewerOpenURICallback,
-						 reinterpret_cast<void*>(this),
-						 NULL,
-						 G_TYPE_STRING, requestURI,
-						 G_TYPE_STRING, baseURI,
-						 G_TYPE_INVALID);
+		g_dbus_proxy_call (mViewerProxy,
+				   "OpenURI",
+				   g_variant_new ("(ss)", requestURI, baseURI),
+				   G_DBUS_CALL_FLAGS_NONE,
+				   -1,
+				   mCancellable,
+				   ViewerOpenURICallback,
+				   reinterpret_cast<void*>(this));
 	}
 
 	/* FIXME: start playing in the callbacks ! */
@@ -1168,18 +1124,6 @@ totemPlugin::UnsetStream ()
 
 /* Callbacks */
 
-/* static */ void 
-totemPlugin::NameOwnerChangedCallback (DBusGProxy *proxy,
-				       const char *aName,
-				       const char *aOldOwner,
-				       const char *aNewOwner,
-				       void *aData)
-{
-	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
-
-	plugin->NameOwnerChanged (aName, aOldOwner, aNewOwner);
-}
-
 /* static */ gboolean
 totemPlugin::ViewerForkTimeoutCallback (void *aData)
 {
@@ -1199,60 +1143,46 @@ totemPlugin::ViewerForkTimeoutCallback (void *aData)
 }
 
 /* static */ void
-totemPlugin::ButtonPressCallback (DBusGProxy *proxy,
-				  guint aTimestamp,
-				  guint aButton,
-			          void *aData)
+totemPlugin::ButtonPressCallback (guint aTimestamp,
+				  guint aButton)
 {
-	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
-
 	g_debug ("ButtonPress signal received");
 
-	plugin->ViewerButtonPressed (aTimestamp, aButton);
+	this->ViewerButtonPressed (aTimestamp, aButton);
 }
 
 /* static */ void
-totemPlugin::StopStreamCallback (DBusGProxy *proxy,
-			         void *aData)
+totemPlugin::StopStreamCallback (void)
 {
-	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
-
 	g_debug ("StopStream signal received");
 
-	plugin->UnsetStream ();
+	this->UnsetStream ();
 }
 
 /* static */ void
-totemPlugin::TickCallback (DBusGProxy *proxy,
-			   guint aTime,
+totemPlugin::TickCallback (guint aTime,
 			   guint aDuration,
-			   char *aState,
-			   void *aData)
+			   char *aState)
 {
-	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 	guint i;
-
-	//assert (aState != NULL) /* aState is NULL probably garbage */
-        if (!aState)
-                return;
 
 	DD ("Tick signal received, aState %s, aTime %d, aDuration %d", aState, aTime, aDuration);
 
 	for (i = 0; i < TOTEM_STATE_INVALID; i++) {
 		if (strcmp (aState, totem_states[i]) == 0) {
-			plugin->mState = (TotemStates) i;
+			this->mState = (TotemStates) i;
 			break;
 		}
 	}
 
-	plugin->mTime = aTime;
-	plugin->mDuration = aDuration;
+	this->mTime = aTime;
+	this->mDuration = aDuration;
 
 #ifdef TOTEM_GMP_PLUGIN
-        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
-                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+        if (!this->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = this->mNPObjects[ePluginScriptable];
                 totemGMPPlayer *scriptable = static_cast<totemGMPPlayer*>(object);
-                switch (plugin->mState) {
+                switch (this->mState) {
 		case TOTEM_STATE_PLAYING:
 			scriptable->mPluginState = totemGMPPlayer::eState_Playing;
 			break;
@@ -1269,10 +1199,10 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 #endif /* TOTEM_GMP_PLUGIN */
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
-        if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
-                NPObject *object = plugin->mNPObjects[ePluginScriptable];
+        if (!this->mNPObjects[ePluginScriptable].IsNull ()) {
+                NPObject *object = this->mNPObjects[ePluginScriptable];
                 totemNarrowSpacePlayer *scriptable = static_cast<totemNarrowSpacePlayer*>(object);
-                switch (plugin->mState) {
+                switch (this->mState) {
 		case TOTEM_STATE_PLAYING:
 		case TOTEM_STATE_PAUSED:
 			scriptable->mPluginState = totemNarrowSpacePlayer::eState_Playable;
@@ -1282,7 +1212,7 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 				scriptable->mPluginState = totemNarrowSpacePlayer::eState_Complete;
 				/* The QuickTime plugin expects the duration to be the
 				 * length of the file on EOS */
-				plugin->mTime = plugin->mDuration;
+				this->mTime = this->mDuration;
 			} else
 				scriptable->mPluginState = totemNarrowSpacePlayer::eState_Waiting;
 			break;
@@ -1294,13 +1224,9 @@ totemPlugin::TickCallback (DBusGProxy *proxy,
 }
 
 /* static */ void
-totemPlugin::PropertyChangeCallback (DBusGProxy  *proxy,
-				     const char *aType,
-				     GValue *value,
-				     void *aData)
+totemPlugin::PropertyChangeCallback (const char *aType,
+				     GVariant   *aVariant)
 {
-	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
-
 	//NS_ASSERTION (aType != NULL, "aType is NULL probably garbage");
         if (!aType)
                 return;
@@ -1308,59 +1234,99 @@ totemPlugin::PropertyChangeCallback (DBusGProxy  *proxy,
 	DD ("PropertyChange signal received, aType %s", aType);
 
 	if (strcmp (aType, TOTEM_PROPERTY_VOLUME) == 0) {
-		plugin->mVolume = g_value_get_double (value);
+		this->mVolume = g_variant_get_double (aVariant);
 	} else if (strcmp (aType, TOTEM_PROPERTY_ISFULLSCREEN) == 0) {
-		plugin->mIsFullscreen = g_value_get_boolean (value);
+		this->mIsFullscreen = g_variant_get_boolean (aVariant);
 	}
 }
 
 /* static */ void
-totemPlugin::ViewerSetWindowCallback (DBusGProxy *aProxy,
-				      DBusGProxyCall *aCall,
-				      void *aData)
+totemPlugin::ProxySignalCallback (GDBusProxy *aProxy,
+				  gchar      *sender_name,
+				  gchar      *signal_name,
+				  GVariant   *parameters,
+				  void       *aData)
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
 
+	if (g_str_equal (signal_name, "ButtonPress")) {
+		guint aTimestamp, aButton;
+
+		g_variant_get (parameters, "(uu)", &aTimestamp, &aButton);
+		plugin->ButtonPressCallback (aTimestamp, aButton);
+	} else if (g_str_equal (signal_name, "StopStream")) {
+		plugin->StopStreamCallback ();
+	} else if (g_str_equal (signal_name, "Tick")) {
+		guint aTime, aDuration;
+		char *aState;
+
+		g_variant_get (parameters, "(uus)", &aTime, &aDuration, &aState);
+		plugin->TickCallback (aTime, aDuration, aState);
+		g_free (aState);
+	} else if (g_str_equal (signal_name, "PropertyChange")) {
+		char *aType;
+		GVariant *aVariant;
+
+		g_variant_get (parameters, "(sv)", &aType, &aVariant);
+		plugin->PropertyChangeCallback (aType, aVariant);
+		g_free (aType);
+		g_variant_unref (aVariant);
+	} else {
+		g_warning ("Unhandled signal '%s'", signal_name);
+	}
+}
+
+/* static */ void
+totemPlugin::ViewerSetWindowCallback (GObject      *aObject,
+				      GAsyncResult *aRes,
+				      void         *aData)
+{
+	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+	GError *error = NULL;
+	GVariant *result;
+
 	g_debug ("SetWindow reply");
 
-	//assert (aCall == plugin->mViewerPendingCall, "SetWindow not the current call");
-        if (aCall != plugin->mViewerPendingCall)
-          return;
+	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (aObject), aRes, &error);
 
-	plugin->mViewerPendingCall = NULL;
+	g_object_unref (plugin->mCancellable);
+	plugin->mCancellable = NULL;
 
-	GError *error = NULL;
-	if (!dbus_g_proxy_end_call (aProxy, aCall, &error, G_TYPE_INVALID)) {
+	if (result == NULL) {
 		/* FIXME: mViewerFailed = true */
 		g_warning ("SetWindow failed: %s", error->message);
 		g_error_free (error);
 		return;
 	}
 
+	g_variant_unref (result);
+
 	plugin->ViewerReady ();
 }
 
 /* static */ void
-totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
-				       DBusGProxyCall *aCall,
+totemPlugin::ViewerOpenStreamCallback (GObject *aObject,
+				       GAsyncResult *aRes,
 				       void *aData)
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+	GError *error = NULL;
+	GVariant *result;
 
 	g_debug ("OpenStream reply");
 
-// 	assert (aCall == plugin->mViewerPendingCall, "OpenStream not the current call");
-        if (aCall != plugin->mViewerPendingCall)
-          return;
+	g_object_unref (plugin->mCancellable);
+	plugin->mCancellable = NULL;
 
-	plugin->mViewerPendingCall = NULL;
+	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (aObject), aRes, &error);
 
-	GError *error = NULL;
-	if (!dbus_g_proxy_end_call (aProxy, aCall, &error, G_TYPE_INVALID)) {
+	if (result == NULL) {
 		g_warning ("OpenStream failed: %s", error->message);
 		g_error_free (error);
 		return;
 	}
+
+	g_variant_unref (result);
 
 	/* FIXME this isn't the best way... */
 	if (plugin->mHidden &&
@@ -1370,26 +1336,28 @@ totemPlugin::ViewerOpenStreamCallback (DBusGProxy *aProxy,
 }
 
 /* static */ void
-totemPlugin::ViewerSetupStreamCallback (DBusGProxy *aProxy,
-					DBusGProxyCall *aCall,
+totemPlugin::ViewerSetupStreamCallback (GObject *aObject,
+					GAsyncResult *aRes,
 					void *aData)
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+	GError *error = NULL;
+	GVariant *result;
 
 	g_debug ("SetupStream reply");
 
-// 	assert (aCall == plugin->mViewerPendingCall, "OpenStream not the current call");
-        if (aCall != plugin->mViewerPendingCall)
-          return;
+	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (aObject), aRes, &error);
 
-	plugin->mViewerPendingCall = NULL;
+	g_object_unref (plugin->mCancellable);
+	plugin->mCancellable = NULL;
 
-	GError *error = NULL;
-	if (!dbus_g_proxy_end_call (aProxy, aCall, &error, G_TYPE_INVALID)) {
+	if (result == NULL) {
 		g_warning ("SetupStream failed: %s", error->message);
 		g_error_free (error);
 		return;
 	}
+
+	g_variant_unref (result);
 
 	assert (!plugin->mExpectingStream); /* Already expecting a stream */
 
@@ -1428,26 +1396,28 @@ totemPlugin::ViewerSetupStreamCallback (DBusGProxy *aProxy,
 }
 
 /* static */ void
-totemPlugin::ViewerOpenURICallback (DBusGProxy *aProxy,
-				    DBusGProxyCall *aCall,
-				    void *aData)
+totemPlugin::ViewerOpenURICallback (GObject      *aObject,
+				    GAsyncResult *aRes,
+				    void         *aData)
 {
 	totemPlugin *plugin = reinterpret_cast<totemPlugin*>(aData);
+	GError *error = NULL;
+	GVariant *result;
 
 	g_debug ("OpenURI reply");
 
-// 	//assert (aCall == plugin->mViewerPendingCall, "OpenURI not the current call");
-        if (aCall != plugin->mViewerPendingCall)
-          return;
+	result = g_dbus_proxy_call_finish (G_DBUS_PROXY (aObject), aRes, &error);
 
-	plugin->mViewerPendingCall = NULL;
+	g_object_unref (plugin->mCancellable);
+	plugin->mCancellable = NULL;
 
-	GError *error = NULL;
-	if (!dbus_g_proxy_end_call (aProxy, aCall, &error, G_TYPE_INVALID)) {
+	if (result == NULL) {
 		g_warning ("OpenURI failed: %s", error->message);
 		g_error_free (error);
 		return;
 	}
+
+	g_variant_unref (result);
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
         if (!plugin->mNPObjects[ePluginScriptable].IsNull ()) {
@@ -1903,35 +1873,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 	mBaseURI = g_strndup (baseURI.GetString (), baseURI.GetStringLen());
 	D ("Base URI is '%s'", mBaseURI ? mBaseURI : "");
 
-	/* Setup DBus connection handling */
-	GError *error = NULL;
-	if (!(mBusConnection = dbus_g_bus_get (DBUS_BUS_SESSION, &error))) {
-		g_message ("Failed to open DBUS session: %s", error->message);
-		g_error_free (error);
-
-		return NPERR_GENERIC_ERROR;
-	};
-
-	if (!(mBusProxy = dbus_g_proxy_new_for_name (mBusConnection,
-	      					     DBUS_SERVICE_DBUS,
-						     DBUS_PATH_DBUS,
-						     DBUS_INTERFACE_DBUS))) {
-		Dm ("Failed to get DBUS proxy");
-		return NPERR_OUT_OF_MEMORY_ERROR;
-	}
-
-	dbus_g_proxy_add_signal (mBusProxy,
-				 "NameOwnerChanged",
-				 G_TYPE_STRING,
-				 G_TYPE_STRING,
-				 G_TYPE_STRING,
-				 G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (mBusProxy,
-				     "NameOwnerChanged",
-				     G_CALLBACK (NameOwnerChangedCallback),
-				     reinterpret_cast<void*>(this),
-				     NULL);
-
 	/* Find the "real" mime-type */
 	SetRealMimeType (mimetype);
 
@@ -2318,14 +2259,17 @@ totemPlugin::NewStream (NPMIMEType type,
 	mBytesLength = stream->end;
 
 	gint64 length = mBytesLength;
-	mViewerPendingCall =
-		dbus_g_proxy_begin_call (mViewerProxy,
-					 "OpenStream",
-					 ViewerOpenStreamCallback,
-					 reinterpret_cast<void*>(this),
-					 NULL,
-					 G_TYPE_INT64, length,
-					 G_TYPE_INVALID);
+
+	if (!mCancellable)
+		mCancellable = g_cancellable_new ();
+	g_dbus_proxy_call (mViewerProxy,
+			   "OpenStream",
+			   g_variant_new ("(x)", length),
+			   G_DBUS_CALL_FLAGS_NONE,
+			   -1,
+			   mCancellable,
+			   ViewerOpenStreamCallback,
+			   reinterpret_cast<void*>(this));
 
 	return NPERR_NO_ERROR;
 }
@@ -2412,10 +2356,9 @@ totemPlugin::Write (NPStream *stream,
 			mIsPlaylist = true;
 
 			/* Close the viewer */
-			dbus_g_proxy_call_no_reply (mViewerProxy,
-						    "CloseStream",
-						    G_TYPE_INVALID,
-						    G_TYPE_INVALID);
+			totem_dbus_proxy_call_no_reply (mViewerProxy,
+							"CloseStream",
+							NULL);
 
 			return len;
 		} else {
@@ -2482,18 +2425,17 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	 * But the file may be unlinked as soon as we return from this
 	 * function... do we need to keep a link?
 	 */
-	gboolean retval = TRUE;
+	GVariant *retval = NULL;
 	GError *error = NULL;
 	if (mIsPlaylist) {
 		Dm("Calling SetPlaylist in StreamAsFile");
-		retval = dbus_g_proxy_call (mViewerProxy,
-					    "SetPlaylist",
-					    &error,
-					    G_TYPE_STRING, fname,
-					    G_TYPE_STRING, mRequestURI,
-					    G_TYPE_STRING, mRequestBaseURI,
-					    G_TYPE_INVALID,
-					    G_TYPE_INVALID);
+		retval = g_dbus_proxy_call_sync (mViewerProxy,
+						 "SetPlaylist",
+						 g_variant_new ("(sss)", fname, mRequestURI, mRequestBaseURI),
+						 G_DBUS_CALL_FLAGS_NONE,
+						 -1,
+						 NULL,
+						 &error);
 	}
 	/* Only call SetLocalFile if we haven't already streamed the file!
 	 * (It happens that we get no ::Write calls if the file is
@@ -2501,26 +2443,26 @@ totemPlugin::StreamAsFile (NPStream *stream,
 	 */
 	else if (mBytesStreamed == 0) {
 		Dm("Calling SetLocalFile from ViewerReady");
-		retval = dbus_g_proxy_call (mViewerProxy,
-					    "SetLocalFile",
-					    &error,
-					    G_TYPE_STRING, fname,
-					    G_TYPE_STRING, mRequestURI,
-					    G_TYPE_STRING, mRequestBaseURI,
-					    G_TYPE_INVALID,
-					    G_TYPE_INVALID);
+		retval = g_dbus_proxy_call_sync (mViewerProxy,
+						 "SetLocalFile",
+						 g_variant_new ("(sss)", fname, mRequestURI, mRequestBaseURI),
+						 G_DBUS_CALL_FLAGS_NONE,
+						 -1,
+						 NULL,
+						 &error);
 	}
 	/* If the file has finished streaming from the network
 	 * and is on the disk, then we should be able to play
 	 * it back from the cache, rather than just stopping there */
 	else {
 		D ("mBytesStreamed %u", mBytesStreamed);
-		retval = dbus_g_proxy_call (mViewerProxy,
-					    "SetLocalCache",
-					    &error,
-					    G_TYPE_STRING, fname,
-					    G_TYPE_INVALID,
-					    G_TYPE_INVALID);
+		retval = g_dbus_proxy_call_sync (mViewerProxy,
+						 "SetLocalCache",
+						 g_variant_new ("(s)", fname),
+						 G_DBUS_CALL_FLAGS_NONE,
+						 -1,
+						 NULL,
+						 &error);
 	}
 
 	if (!retval) {
@@ -2562,11 +2504,9 @@ totemPlugin::URLNotify (const char *url,
 	 */
 	if (mExpectingStream) {
 		if (reason == NPRES_NETWORK_ERR) {
-			dbus_g_proxy_call (mViewerProxy,
-					   "SetErrorLogo",
-					   NULL,
-					   G_TYPE_INVALID,
-					   G_TYPE_INVALID);
+			totem_dbus_proxy_call_no_reply (mViewerProxy,
+							"SetErrorLogo",
+							NULL);
 		} else if (reason != NPRES_DONE) {
 			Dm ("Failed to get stream");
 			/* FIXME: show error to user? */

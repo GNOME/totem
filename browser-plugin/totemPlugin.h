@@ -24,7 +24,7 @@
 #define __TOTEM_PLUGIN_H__
 
 #include <stdint.h>
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 #include "npapi.h"
 
@@ -123,46 +123,34 @@ class totemPlugin {
     static char *PluginLongDescription();
     static void PluginMimeTypes (const totemPluginMimeEntry **, uint32_t *);
 
-  private:
+    /* static */ void BusNameAppearedCallback (GDBusConnection *connection,
+					       const gchar     *name,
+					       const gchar     *aNameOwner);
+    /* static */ void BusNameVanishedCallback (GDBusConnection *connection,
+					       const gchar     *aName);
 
-    static void NameOwnerChangedCallback (DBusGProxy *proxy,
-						      const char *svc,
-						      const char *old_owner,
-						      const char *new_owner,
-						      void *aData);
+  private:
 
     static gboolean ViewerForkTimeoutCallback (void *aData);
 
-    static void ButtonPressCallback (DBusGProxy  *proxy,
-						 guint aTimestamp,
-		    				 guint aButton,
-					         void *aData);
+    static void ProxySignalCallback (GDBusProxy *aProxy,
+				     gchar      *sender_name,
+				     gchar      *signal_name,
+				     GVariant   *parameters,
+				     void       *aData);
 
-    static void StopStreamCallback (DBusGProxy  *proxy,
-						void *aData);
-
-    static void TickCallback (DBusGProxy  *proxy,
-    					  guint aTime,
-    					  guint aDuration,
-    					  char *aState,
+    static void ViewerSetWindowCallback (GObject *aObject,
+					 GAsyncResult *aRes,
+					 void *aData);
+    static void ViewerOpenStreamCallback (GObject *aObject,
+					  GAsyncResult *aRes,
 					  void *aData);
-    static void PropertyChangeCallback (DBusGProxy  *proxy,
-    						    const char *type,
-						    GValue *value,
-						    void *aData);
-
-    static void ViewerSetWindowCallback (DBusGProxy *aProxy,
-						     DBusGProxyCall *aCall,
-						     void *aData);
-    static void ViewerOpenStreamCallback (DBusGProxy *aProxy,
-						      DBusGProxyCall *aCall,
-						      void *aData);
-    static void ViewerSetupStreamCallback (DBusGProxy *aProxy,
-						      DBusGProxyCall *aCall,
-						      void *aData);
-    static void ViewerOpenURICallback (DBusGProxy *aProxy,
-						   DBusGProxyCall *aCall,
-						   void *aData);
+    static void ViewerSetupStreamCallback (GObject *aObject,
+					   GAsyncResult *aRes,
+					   void *aData);
+    static void ViewerOpenURICallback (GObject *aObject,
+				       GAsyncResult *aRes,
+				       void *aData);
 
 
     NPError ViewerFork ();
@@ -173,13 +161,19 @@ class totemPlugin {
 
     void ViewerButtonPressed (guint aTimestamp,
 		    	      guint aButton);
-    void NameOwnerChanged (const char *aName,
-			   const char *aOldOwner,
-			   const char *aNewOwner);
 
     void ClearRequest ();
     void RequestStream (bool aForceViewer);
     void UnsetStream ();
+
+    void TickCallback (guint aTime,
+		       guint aDuration,
+		       char *aState);
+    void ButtonPressCallback (guint aTimestamp,
+			      guint aButton);
+    void StopStreamCallback (void);
+    void PropertyChangeCallback (const char *aType,
+				 GVariant   *aVariant);
 
     bool IsMimeTypeSupported (const char *aMimeType,
                               const char *aURL);
@@ -219,12 +213,12 @@ class totemPlugin {
     char* mRequestBaseURI;
     char* mRequestURI; /* relative to mRequestBaseURI */
 
-    DBusGConnection *mBusConnection;
-    DBusGProxy *mBusProxy;
-    DBusGProxy *mViewerProxy;
-    DBusGProxyCall *mViewerPendingCall;
+    GDBusProxy *mViewerProxy;
+    GCancellable *mCancellable;
+    guint mSignalId;
     char* mViewerBusAddress;
     char* mViewerServiceName;
+    guint mBusWatchId;
     int mViewerPID;
     int mViewerFD;
 
