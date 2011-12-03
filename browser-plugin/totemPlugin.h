@@ -177,7 +177,6 @@ class totemPlugin {
 			   const char *aOldOwner,
 			   const char *aNewOwner);
 
-    void ComputeRequest ();
     void ClearRequest ();
     void RequestStream (bool aForceViewer);
     void UnsetStream ();
