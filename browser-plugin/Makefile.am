@@ -39,9 +39,7 @@ plugin_cxxflags = \
 	$(PLUGIN_EXTRA_WARN_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
-plugin_libadd = \
-	libtotembrowserplugin_helper.la	\
-	$(BROWSER_PLUGIN_LIBS)
+plugin_libadd = $(BROWSER_PLUGIN_LIBS)
 
 plugin_ldflags = \
 	-avoid-version					\
@@ -63,20 +61,6 @@ marshal.c: marshal.list marshal.h
 CLEANFILES = $(MARSHAL_FILES)
 EXTRA_DIST += marshal.list
 
-noinst_LTLIBRARIES = libtotembrowserplugin_helper.la
-
-libtotembrowserplugin_helper_la_SOURCES = $(MARSHAL_FILES)
-
-libtotembrowserplugin_helper_la_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)		\
-	$(WARN_CFLAGS)			\
-	$(AM_CFLAGS)
-
-libtotembrowserplugin_helper_la_LIBADD = \
-	$(DEPENDENCY_CFLAGS)			\
-	$(WARN_CFLAGS)				\
-	$(AM_CFLAGS)
-
 # The Glow button test program
 noinst_PROGRAMS = test-glow-button
 
@@ -86,7 +70,6 @@ test_glow_button_SOURCES = \
 	test-glow-button.c
 
 test_glow_button_LDADD = \
-	libtotembrowserplugin_helper.la		\
 	$(DEPENDENCY_LIBS)			\
 	-lm
 
@@ -107,7 +90,8 @@ totem_plugin_viewer_SOURCES = \
 	totem-plugin-viewer-interface.h	\
 	totem-plugin-viewer.c		\
 	totem-plugin-viewer-constants.h	\
-	totem-plugin-viewer-options.h
+	totem-plugin-viewer-options.h	\
+	$(MARSHAL_FILES)
 
 totem_plugin_viewer_CPPFLAGS = \
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
@@ -125,7 +109,6 @@ totem_plugin_viewer_LDADD = \
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
 	$(top_builddir)/lib/libtotemscrsaver.la				\
-	libtotembrowserplugin_helper.la					\
 	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
 	$(DBUS_LIBS)		\
