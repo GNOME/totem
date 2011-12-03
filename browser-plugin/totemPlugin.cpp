@@ -568,9 +568,9 @@ totemPlugin::ViewerFork ()
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HIDDEN));
 	}
 
- 	if (mRepeat) {
- 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_REPEAT));
- 	}
+	if (mRepeat) {
+		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_REPEAT));
+	}
 
 	if (mAudioOnly) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_AUDIOONLY));
