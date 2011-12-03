@@ -548,7 +548,7 @@ if test "$enable_browser_plugins" = "yes" ; then
 
 	PKG_CHECK_MODULES([BROWSER_PLUGIN],
 		[glib-2.0
-		 gio-2.0
+		 gio-2.0 >= $GIO_REQS
 		 x11
 		 totem-plparser-mini >= $TOTEM_PLPARSER_REQS],
 		[],[enable_browser_plugins=no])
