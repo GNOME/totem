@@ -2241,7 +2241,7 @@ int main (int argc, char **argv)
 
 		env = g_getenv ("TOTEM_EMBEDDED_GDB");
 		if (env && g_ascii_strtoull (env, NULL, 10) == 1) {
-			const char *gdbargv[4];
+			const char *gdbargv[5];
 			char *gdb;
 			GError *gdberr = NULL;
 			int gdbargc = 0;
@@ -2249,6 +2249,7 @@ int main (int argc, char **argv)
 			gdb = g_strdup_printf ("gdb %s %d", argv[0], getpid ());
 
 			gdbargv[gdbargc++] = "/usr/bin/gnome-terminal";
+			gdbargv[gdbargc++] = "--disable-factory";
 			gdbargv[gdbargc++] = "-e";
 			gdbargv[gdbargc++] = gdb;
 			gdbargv[gdbargc++] = NULL;
