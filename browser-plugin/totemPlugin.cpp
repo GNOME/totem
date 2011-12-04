@@ -498,21 +498,10 @@ totemPlugin::ViewerFork ()
 	}
 
         GPtrArray *arr = g_ptr_array_new ();
-	/* FIXME! no need to strdup, all args are const! */
 
-	/* FIXME what use is this anyway? */
-#ifdef TOTEM_RUN_IN_SOURCE_TREE
-	if (g_file_test ("./totem-plugin-viewer",
-			 G_FILE_TEST_EXISTS) != FALSE) {
-			 g_ptr_array_add (arr, g_strdup ("./totem-plugin-viewer"));
-	} else {
-		g_ptr_array_add (arr,
-				 g_build_filename (LIBEXECDIR, "totem-plugin-viewer", NULL));
-	}
-#else
+	/* And start the viewer */
 	g_ptr_array_add (arr,
 			 g_build_filename (LIBEXECDIR, "totem-plugin-viewer", NULL));
-#endif
 
 	/* So we can debug X errors in the viewer */
 	const char *sync = g_getenv ("TOTEM_EMBEDDED_DEBUG_SYNC");
