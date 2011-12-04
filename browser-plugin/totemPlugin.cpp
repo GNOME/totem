@@ -1098,17 +1098,10 @@ totemPlugin::UnsetStream ()
 	if (!mStream)
 		return;
 
-	if (NPN_DestroyStream (mNPP,
-                               mStream,
-                               NPRES_DONE) != NPERR_NO_ERROR) {
-                  g_warning ("Couldn't destroy the stream");
-                  /* FIXME: set mStream to NULL here too? */
-                  return;
-	}
-
-	/* Calling DestroyStream should already have set this to NULL */
-	assert (!mStream); /* Should not have a stream anymore */
-	mStream = NULL; /* just to make sure */
+	NPN_DestroyStream (mNPP,
+                           mStream,
+                           NPRES_DONE);
+        mStream = NULL;
 
 #ifdef TOTEM_NARROWSPACE_PLUGIN
         if (!mNPObjects[ePluginScriptable].IsNull ()) {
