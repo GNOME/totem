@@ -933,6 +933,9 @@ NameAppearedCallback (GDBusConnection *connection,
 totemPlugin::BusNameVanishedCallback (GDBusConnection *connection,
 				      const gchar     *aName)
 {
+	if (mViewerBusAddress == NULL)
+		return;
+
 	Dm ("Viewer lost connection!");
 
 	g_free (mViewerBusAddress);
