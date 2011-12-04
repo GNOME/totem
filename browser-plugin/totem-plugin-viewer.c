@@ -330,7 +330,6 @@ totem_embedded_set_error_logo (TotemEmbedded *embedded,
 	return TRUE;
 }
 
-
 static void
 totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
@@ -394,6 +393,7 @@ totem_embedded_set_logo_by_name (TotemEmbedded *embedded,
 		return;
 
 	bacon_video_widget_set_logo (embedded->bvw, name);
+	bacon_video_widget_set_logo_mode (embedded->bvw, TRUE);
 }
 
 static void
