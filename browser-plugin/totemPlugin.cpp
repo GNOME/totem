@@ -1879,7 +1879,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 		(GDestroyNotify) g_free,
 		(GDestroyNotify) g_free);
 	for (int16_t i = 0; i < argc; i++) {
-		printf ("argv[%d] %s %s\n", i, argn[i], argv[i] ? argv[i] : "");
+		D ("argv[%d] %s %s\n", i, argn[i], argv[i] ? argv[i] : "");
 		if (argv[i]) {
 			g_hash_table_insert (args, g_ascii_strdown (argn[i], -1),
 					     g_strdup (argv[i]));
