@@ -77,6 +77,7 @@
 /* gtk+/gnome */
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+#include <gtk/gtkx.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gio.h>
 
@@ -581,7 +582,8 @@ bacon_video_widget_realize (GtkWidget * widget)
   /* setup the toplevel, ready to be resized */
   toplevel = gtk_widget_get_toplevel (widget);
   if (gtk_widget_is_toplevel (toplevel) &&
-      gtk_widget_get_parent (widget) != toplevel)
+      gtk_widget_get_parent (widget) != toplevel &&
+      !GTK_IS_PLUG(toplevel))
     gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
