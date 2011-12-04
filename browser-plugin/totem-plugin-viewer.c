@@ -127,6 +127,7 @@ typedef struct _TotemEmbedded {
 	GList *playlist, *current;
 	guint parser_id;
 	int num_items;
+	gboolean remove_copy;
 
 	/* Open menu item */
 	GAppInfo *app;
@@ -1027,6 +1028,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 		g_object_unref (dst);
 		close (fd);
 
+		emb->remove_copy = TRUE;
 		totem_embedded_set_uri (emb, file_uri, base_uri, NULL, FALSE);
 		g_free (file_uri);
 	} else {
@@ -2079,7 +2081,6 @@ totem_embedded_push_parser (gpointer data)
 	TotemEmbedded *emb = (TotemEmbedded *) data;
 	TotemPlParser *parser;
 	TotemPlParserResult res;
-	GFile *file;
 
 	emb->parser_id = 0;
 
@@ -2094,9 +2095,16 @@ totem_embedded_push_parser (gpointer data)
 
 	/* Delete the temporary file created in
 	 * totem_embedded_set_playlist */
-	file = g_file_new_for_uri (emb->current_uri);
-	g_file_delete (file, NULL, NULL);
-	g_object_unref (file);
+	if (emb->remove_copy) {
+		GFile *file;
+
+		file = g_file_new_for_uri (emb->current_uri);
+		g_file_delete (file, NULL, NULL);
+		g_object_unref (file);
+
+		/* And reset */
+		emb->remove_copy = FALSE;
+	}
 
 	/* FIXME: show a proper error message */
 	switch (res) {
