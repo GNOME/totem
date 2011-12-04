@@ -983,51 +983,55 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 			     const char *base_uri,
 			     GError **error)
 {
-	char *file_uri;
-	char *tmp_file;
-	GError *err = NULL;
-	GFile *src, *dst;
-	int fd;
-
 	g_message ("Setting the current playlist to %s (uri: %s base: %s)",
 		   path, uri, base_uri);
 
 	totem_embedded_clear_playlist (emb, NULL);
 
-	/* FIXME, we should remove that when we can
-	 * parse from memory or
-	 * https://bugzilla.gnome.org/show_bug.cgi?id=598702 is fixed */
-	fd = g_file_open_tmp ("totem-browser-plugin-playlist-XXXXXX",
-			      &tmp_file,
-			      &err);
-	if (fd < 0) {
-		g_warning ("Couldn't open temporary file for playlist: %s",
-			   err->message);
-		g_error_free (err);
-		return TRUE;
-	}
-	src = g_file_new_for_path (path);
-	dst = g_file_new_for_path (tmp_file);
-	if (g_file_copy (src, dst, G_FILE_COPY_OVERWRITE | G_FILE_COPY_TARGET_DEFAULT_PERMS, NULL, NULL, NULL, &err) == FALSE) {
-		g_warning ("Failed to copy playlist '%s' to '%s': %s",
-			   path, tmp_file, err->message);
-		g_error_free (err);
+	if (path != NULL && *path != '\0') {
+		char *file_uri;
+		char *tmp_file;
+		GError *err = NULL;
+		GFile *src, *dst;
+		int fd;
+
+		/* FIXME, we should remove that when we can
+		 * parse from memory or
+		 * https://bugzilla.gnome.org/show_bug.cgi?id=598702 is fixed */
+		fd = g_file_open_tmp ("totem-browser-plugin-playlist-XXXXXX",
+				      &tmp_file,
+				      &err);
+		if (fd < 0) {
+			g_warning ("Couldn't open temporary file for playlist: %s",
+				   err->message);
+			g_error_free (err);
+			return TRUE;
+		}
+		src = g_file_new_for_path (path);
+		dst = g_file_new_for_path (tmp_file);
+		if (g_file_copy (src, dst, G_FILE_COPY_OVERWRITE | G_FILE_COPY_TARGET_DEFAULT_PERMS, NULL, NULL, NULL, &err) == FALSE) {
+			g_warning ("Failed to copy playlist '%s' to '%s': %s",
+				   path, tmp_file, err->message);
+			g_error_free (err);
+			g_object_unref (src);
+			g_object_unref (dst);
+			g_free (tmp_file);
+			close (fd);
+			return TRUE;
+		}
+		g_free (tmp_file);
+
+		file_uri = g_file_get_uri (dst);
+
 		g_object_unref (src);
 		g_object_unref (dst);
-		g_free (tmp_file);
 		close (fd);
-		return TRUE;
+
+		totem_embedded_set_uri (emb, file_uri, base_uri, NULL, FALSE);
+		g_free (file_uri);
+	} else {
+		totem_embedded_set_uri (emb, uri, base_uri, NULL, FALSE);
 	}
-	g_free (tmp_file);
-
-	file_uri = g_file_get_uri (dst);
-
-	g_object_unref (src);
-	g_object_unref (dst);
-	close (fd);
-
-	totem_embedded_set_uri (emb, file_uri, base_uri, NULL, FALSE);
-	g_free (file_uri);
 
 	/* Schedule parsing on idle */
 	if (emb->parser_id == 0)
