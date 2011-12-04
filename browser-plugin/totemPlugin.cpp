@@ -691,7 +691,10 @@ totemPlugin::ViewerCleanup ()
         g_free (mViewerServiceName);
         mViewerServiceName = NULL;
 
-        g_bus_unwatch_name (mBusWatchId);
+	if (mBusWatchId) {
+		g_bus_unwatch_name (mBusWatchId);
+		mBusWatchId = 0;
+	}
 
 	if (mCancellable) {
 		g_cancellable_cancel (mCancellable);
