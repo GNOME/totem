@@ -638,8 +638,6 @@ totemPlugin::ViewerFork ()
 					reinterpret_cast<void*>(this),
 					NULL);
 
-	mQueue = g_queue_new ();
-
 	/* Set mViewerFD nonblocking */
 	fcntl (mViewerFD, F_SETFL, O_NONBLOCK);
 
@@ -1822,6 +1820,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 	 * FIXME: This might be possible on gecko trunk by returning an
 	 * error code from the NewStream function.
 	 */
+
+	mQueue = g_queue_new ();
 
 	NPError err;
         err = NPN_GetValue (mNPP,
