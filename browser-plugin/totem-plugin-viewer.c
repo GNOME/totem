@@ -2150,6 +2150,7 @@ static gboolean arg_is_playlist = FALSE;
 static gboolean arg_repeat = FALSE;
 static gboolean arg_no_autostart = FALSE;
 static gboolean arg_audioonly = FALSE;
+static gboolean arg_g_fatal_warnings = FALSE;
 static TotemPluginType arg_plugin_type = TOTEM_PLUGIN_TYPE_LAST;
 
 static gboolean
@@ -2190,6 +2191,7 @@ static GOptionEntry option_entries [] =
 	{ TOTEM_OPTION_NOAUTOSTART, 0, 0, G_OPTION_ARG_NONE, &arg_no_autostart, NULL, NULL },
 	{ TOTEM_OPTION_AUDIOONLY, 0, 0, G_OPTION_ARG_NONE, &arg_audioonly, NULL, NULL },
         { TOTEM_OPTION_REFERRER, 0, 0, G_OPTION_ARG_STRING, &arg_referrer, NULL, NULL },
+	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &arg_g_fatal_warnings, "Make all warnings fatal", NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY /* STRING? */, &arg_remaining, NULL },
 	{ NULL }
 };
@@ -2290,6 +2292,14 @@ int main (int argc, char **argv)
 		g_setenv("PULSE_PROP_media.role", "video", TRUE);
 	else
 		g_setenv("PULSE_PROP_media.role", "music", TRUE);
+
+	if (arg_g_fatal_warnings) {
+		GLogLevelFlags fatal_mask;
+
+		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+		g_log_set_always_fatal (fatal_mask);
+	}
 
         // FIXME check that ALL necessary params were given!
 	if (arg_plugin_type == TOTEM_PLUGIN_TYPE_LAST) {
