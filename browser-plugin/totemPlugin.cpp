@@ -2023,19 +2023,28 @@ totemPlugin::Init (NPMIMEType mimetype,
 #endif /* TOTEM_CONE_PLUGIN */
 
 #ifdef TOTEM_VEGAS_PLUGIN
+	char *oldSrc;
+	const char *useURI;
+	oldSrc = g_strdup (mSrcURI);
+
 	/* Never try to load the SWF file */
 	SetSrc ("");
 
-	if (totem_pl_parser_can_parse_from_uri (mDocumentURI, TRUE)) {
-		value = (const char *) g_hash_table_lookup (args, "flashvars");
-		if (value != NULL) {
-			TotemQueueCommand *cmd;
-			cmd = g_new0 (TotemQueueCommand, 1);
-			cmd->type = TOTEM_QUEUE_TYPE_SET_PLAYLIST;
-			cmd->string = g_strdup (mDocumentURI);
-			QueueCommand (cmd);
-		}
+	useURI = NULL;
+	if (totem_pl_parser_can_parse_from_uri (oldSrc, TRUE))
+		useURI = oldSrc;
+	else if (totem_pl_parser_can_parse_from_uri (mDocumentURI, TRUE))
+		useURI = mDocumentURI;
+
+	value = (const char *) g_hash_table_lookup (args, "flashvars");
+	if (useURI != NULL && value != NULL) {
+		TotemQueueCommand *cmd;
+		cmd = g_new0 (TotemQueueCommand, 1);
+		cmd->type = TOTEM_QUEUE_TYPE_SET_PLAYLIST;
+		cmd->string = g_strdup (useURI);
+		QueueCommand (cmd);
 	}
+	g_free (oldSrc);
 #endif
 
 #if 0 //def TOTEM_MULLY_PLUGIN
