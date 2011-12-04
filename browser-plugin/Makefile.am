@@ -173,6 +173,27 @@ libtotem_narrowspace_plugin_la_LIBADD = $(plugin_libadd)
 libtotem_narrowspace_plugin_la_LDFLAGS = $(plugin_ldflags)
 endif
 
+# Totem Vegas Plugin
+if ENABLE_VEGAS_PLUGIN
+plugin_LTLIBRARIES += libtotem-vegas-plugin.la
+
+libtotem_vegas_plugin_la_SOURCES = \
+	$(plugin_sources)		\
+	totemVegasPlugin.cpp	\
+	totemVegasPlugin.h
+
+libtotem_vegas_plugin_la_CPPFLAGS = \
+	-DXP_UNIX					\
+	-DMOZ_X11					\
+	-DTOTEM_VEGAS_PLUGIN			\
+	-DTOTEM_PL_PARSER_MINI				\
+	$(AM_CPPFLAGS)
+
+libtotem_vegas_plugin_la_CXXFLAGS = $(plugin_cxxflags)
+libtotem_vegas_plugin_la_LIBADD = $(plugin_libadd)
+libtotem_vegas_plugin_la_LDFLAGS = $(plugin_ldflags)
+endif
+
 # Totem MULLY Plugin
 if ENABLE_MULLY_PLUGIN
 plugin_LTLIBRARIES += libtotem-mully-plugin.la

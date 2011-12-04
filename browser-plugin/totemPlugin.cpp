@@ -74,6 +74,8 @@
 #include "totemConePlaylist.h"
 #include "totemConePlaylistItems.h"
 #include "totemConeVideo.h"
+#elif defined(TOTEM_VEGAS_PLUGIN)
+#include "totemVegasPlugin.h"
 #else
 #error Unknown plugin type
 #endif
@@ -105,6 +107,8 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "image/x-quicktime", "pict, pict1, pict2", "image/x-pict" },
   { "video/x-m4v", "m4v", NULL },
   { "application/vnd.apple.mpegurl", "m3u8", NULL },
+#elif defined(TOTEM_VEGAS_PLUGIN)
+  { "application/x-shockwave-flash", "swf", "Shockwave Flash" },
 #elif defined(TOTEM_MULLY_PLUGIN)
   { "video/divx", "divx", "video/x-msvideo" },
 #elif defined(TOTEM_CONE_PLUGIN)
@@ -139,6 +143,8 @@ static const char kPluginDescription[] =
   "Windows Media Player Plug-in 10 (compatible; Totem)";
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
   "QuickTime Plug-in " TOTEM_NARROWSPACE_VERSION;
+#elif defined(TOTEM_VEGAS_PLUGIN)
+  "Shockwave Flash";
 #elif defined(TOTEM_MULLY_PLUGIN)
   "DivX\xC2\xAE Web Player";
 #elif defined(TOTEM_CONE_PLUGIN)
@@ -150,6 +156,8 @@ static const char kPluginDescription[] =
 static const char kPluginLongDescription[] =
 #if defined(TOTEM_MULLY_PLUGIN)
   "DivX Web Player version " TOTEM_MULLY_VERSION;
+#elif defined(TOTEM_VEGAS_PLUGIN)
+  "Shockwave Flash 11.1 r102";
 #else
   "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
 #endif
@@ -525,6 +533,8 @@ totemPlugin::ViewerFork ()
 	g_ptr_array_add (arr, g_strdup ("mully"));
 #elif defined(TOTEM_CONE_PLUGIN)
 	g_ptr_array_add (arr, g_strdup ("cone"));
+#elif defined(TOTEM_VEGAS_PLUGIN)
+	g_ptr_array_add (arr, g_strdup ("vegas"));
 #else
 #error Unknown plugin type
 #endif
@@ -2012,6 +2022,22 @@ totemPlugin::Init (NPMIMEType mimetype,
 	}
 #endif /* TOTEM_CONE_PLUGIN */
 
+#ifdef TOTEM_VEGAS_PLUGIN
+	/* Never try to load the SWF file */
+	SetSrc ("");
+
+	if (totem_pl_parser_can_parse_from_uri (mDocumentURI, TRUE)) {
+		value = (const char *) g_hash_table_lookup (args, "flashvars");
+		if (value != NULL) {
+			TotemQueueCommand *cmd;
+			cmd = g_new0 (TotemQueueCommand, 1);
+			cmd->type = TOTEM_QUEUE_TYPE_SET_PLAYLIST;
+			cmd->string = g_strdup (mDocumentURI);
+			QueueCommand (cmd);
+		}
+	}
+#endif
+
 #if 0 //def TOTEM_MULLY_PLUGIN
 	/* Click to play behaviour of the DivX plugin */
 	char *previewimage = (const char *) g_hash_table_lookup (args, "previewimage");
@@ -2544,6 +2570,8 @@ totemPlugin::GetNPObject (ObjectEnum which)
   npclass = totemNarrowSpacePlayerNPClass::Instance();
 #elif defined(TOTEM_MULLY_PLUGIN)
   npclass = totemMullYPlayerNPClass::Instance();
+#elif defined(TOTEM_VEGAS_PLUGIN)
+  npclass = totemVegasPlayerNPClass::Instance();
 #elif defined(TOTEM_CONE_PLUGIN)
   switch (which) {
     case ePluginScriptable:
@@ -2623,6 +2651,8 @@ totemPlugin::Shutdown ()
         totemConePlaylistNPClass::Shutdown ();
         totemConePlaylistItemsNPClass::Shutdown ();
         totemConeVideoNPClass::Shutdown ();
+#elif defined(TOTEM_VEGAS_PLUGIN)
+        totemVegasPlayerNPClass::Shutdown ();
 #else
 #error Unknown plugin type
 #endif
