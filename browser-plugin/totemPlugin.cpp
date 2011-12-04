@@ -775,6 +775,17 @@ totemPlugin::ViewerReady ()
 		case TOTEM_QUEUE_TYPE_CLEAR_PLAYLIST:
 			ClearPlaylist();
 			break;
+		case TOTEM_QUEUE_TYPE_SET_PLAYLIST:
+			assert (mViewerProxy);
+
+			D ("SetPlaylist '%s'", cmd->add_item.uri);
+			totem_dbus_proxy_call_no_reply (mViewerProxy,
+							"SetPlaylist",
+							g_variant_new ("(sss)",
+								       "",
+								       cmd->add_item.uri,
+								       ""));
+			break;
 		case TOTEM_QUEUE_TYPE_ADD_ITEM:
 			assert (mViewerProxy);
 
