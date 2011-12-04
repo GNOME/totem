@@ -165,8 +165,6 @@ totem_fullscreen_window_realize_cb (GtkWidget *widget, TotemFullscreen *fs)
 	g_signal_connect (G_OBJECT (gtk_icon_theme_get_for_screen (screen)),
 			  "changed",
 			  G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
-
-	fs->priv->osd = gsd_media_keys_window_new ();
 }
 
 static void
@@ -179,10 +177,6 @@ totem_fullscreen_window_unrealize_cb (GtkWidget *widget, TotemFullscreen *fs)
 					      G_CALLBACK (totem_fullscreen_size_changed_cb), fs);
 	g_signal_handlers_disconnect_by_func (gtk_icon_theme_get_for_screen (screen),
 					      G_CALLBACK (totem_fullscreen_theme_changed_cb), fs);
-	if (fs->priv->osd != NULL) {
-		gtk_widget_destroy (fs->priv->osd);
-		fs->priv->osd = NULL;
-	}
 }
 
 static gboolean
@@ -539,6 +533,7 @@ totem_fullscreen_init (TotemFullscreen *self)
 			  G_CALLBACK (totem_fullscreen_exit_popup_draw_cb), self);
 	self->priv->control_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_controls_window"));
+	self->priv->osd = gsd_media_keys_window_new ();
 
 	/* Motion notify */
 	gtk_widget_add_events (self->priv->exit_popup, GDK_POINTER_MOTION_MASK);
