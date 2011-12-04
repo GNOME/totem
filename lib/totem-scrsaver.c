@@ -278,7 +278,7 @@ fake_event (TotemScrsaver *scr)
 		 * but we can't do much about that... */
 		if (scr->priv->window != NULL &&
 		    gtk_window_has_toplevel_focus (scr->priv->window) == FALSE)
-			return;
+			return TRUE;
 
 		XLockDisplay (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()));
 		XTestFakeKeyEvent (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), *scr->priv->keycode,
