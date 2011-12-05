@@ -2037,20 +2037,23 @@ totemPlugin::Init (NPMIMEType mimetype,
 	}
 
 	useURI = NULL;
-	if (totem_pl_parser_can_parse_from_uri (oldSrc, TRUE))
-		useURI = oldSrc;
-	else if (totem_pl_parser_can_parse_from_uri (mDocumentURI, TRUE))
-		useURI = mDocumentURI;
+	/* Don't do anything if there's no source */
+	if (oldSrc) {
+		if (totem_pl_parser_can_parse_from_uri (oldSrc, TRUE))
+			useURI = oldSrc;
+		else if (totem_pl_parser_can_parse_from_uri (mDocumentURI, TRUE))
+			useURI = mDocumentURI;
 
-	value = (const char *) g_hash_table_lookup (args, "flashvars");
-	if (useURI != NULL && value != NULL) {
-		TotemQueueCommand *cmd;
-		cmd = g_new0 (TotemQueueCommand, 1);
-		cmd->type = TOTEM_QUEUE_TYPE_SET_PLAYLIST;
-		cmd->string = g_strdup (useURI);
-		QueueCommand (cmd);
+		value = (const char *) g_hash_table_lookup (args, "flashvars");
+		if (useURI != NULL && value != NULL) {
+			TotemQueueCommand *cmd;
+			cmd = g_new0 (TotemQueueCommand, 1);
+			cmd->type = TOTEM_QUEUE_TYPE_SET_PLAYLIST;
+			cmd->string = g_strdup (useURI);
+			QueueCommand (cmd);
+		}
+		g_free (oldSrc);
 	}
-	g_free (oldSrc);
 #endif
 
 #if 0 //def TOTEM_MULLY_PLUGIN
