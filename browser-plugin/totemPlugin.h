@@ -40,6 +40,8 @@
 #define TOTEM_CONE_VERSION          "0.8.6"
 #define TOTEM_GMP_VERSION_BUILD     "11.0.0.1024"
 
+#define TOTEM_VEGAS_SMALL_SWF_SIZE 50
+
 typedef struct {
   const char *mimetype;
   const char *extensions;

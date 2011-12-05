@@ -2030,6 +2030,12 @@ totemPlugin::Init (NPMIMEType mimetype,
 	/* Never try to load the SWF file */
 	SetSrc ("");
 
+	/* Is it too small to be a video? */
+	if (width != -1 && width < TOTEM_VEGAS_SMALL_SWF_SIZE) {
+		g_free (oldSrc);
+		oldSrc = NULL;
+	}
+
 	useURI = NULL;
 	if (totem_pl_parser_can_parse_from_uri (oldSrc, TRUE))
 		useURI = oldSrc;
