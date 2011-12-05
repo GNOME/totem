@@ -1911,11 +1911,11 @@ totemPlugin::Init (NPMIMEType mimetype,
 	int width = -1, height = -1;
 
 	value = (const char *) g_hash_table_lookup (args, "width");
-	if (value != NULL) {
+	if (value != NULL && strchr (value, '%') == NULL) {
 		width = strtol (value, NULL, 0);
 	}
 	value = (const char *) g_hash_table_lookup (args, "height");
-	if (value != NULL) {
+	if (value != NULL && strchr (value, '%') == NULL) {
 		height = strtol (value, NULL, 0);
 	}
 
