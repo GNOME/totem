@@ -167,6 +167,8 @@ static const char kPluginUserAgent[] =
   "Quicktime/"TOTEM_NARROWSPACE_VERSION;
 #elif defined(TOTEM_GMP_PLUGIN)
   "Windows-Media-Player/10.00.00.4019";
+#elif defined(TOTEM_VEGAS_PLUGIN)
+  "Totem/"VERSION;
 #else
   "";
 #endif
