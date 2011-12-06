@@ -61,10 +61,6 @@ marshal.c: marshal.list marshal.h
 CLEANFILES = $(MARSHAL_FILES)
 EXTRA_DIST += marshal.list
 
-config_DATA = browser-plugins.ini
-configdir = $(sysconfdir)/totem
-EXTRA_DIST += $(config_files)
-
 # The Glow button test program
 noinst_PROGRAMS = test-glow-button
 
