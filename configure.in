@@ -624,7 +624,7 @@ AC_MSG_RESULT([$enable_cone_plugin])
 AC_MSG_CHECKING([whether to enable the Vegas browser plugin])
 AC_ARG_ENABLE([vegas-plugin],
 	AS_HELP_STRING([--enable-vegas-plugin],[Whether to enable the Vegas browser plugin]),
-	[enable_vegas_plugin=yes],[enable_vegas_plugin=no])
+	[],[enable_vegas_plugin=yes])
 AC_MSG_RESULT([$enable_vegas_plugin])
 
 fi
