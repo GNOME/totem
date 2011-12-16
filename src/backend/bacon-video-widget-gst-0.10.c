@@ -5797,8 +5797,10 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
 	  break;
 
 	pixbuf = totem_gst_tag_list_get_cover (bvw->priv->tagcache);
-	if (pixbuf)
+	if (pixbuf) {
+	  g_value_init (value, GDK_TYPE_PIXBUF);
 	  g_value_take_object (value, pixbuf);
+        }
       }
       break;
     default:
