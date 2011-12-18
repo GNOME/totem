@@ -211,7 +211,6 @@ totem_options_process_for_server (Totem                     *totem,
 		totem_action_remote (totem, GPOINTER_TO_INT (l->data), NULL);
 	}
 
-	g_list_foreach (commands, (GFunc) g_free, NULL);
 	g_list_free (commands);
 }
 
