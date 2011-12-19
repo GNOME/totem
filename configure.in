@@ -68,7 +68,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo"
+allowed_plugins="brasero-disc-recorder chapters dbusservice im-status gromit iplayer lirc media-player-keys ontop opensubtitles properties publish pythonconsole rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto grilo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
