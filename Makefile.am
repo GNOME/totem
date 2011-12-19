@@ -16,8 +16,6 @@ EXTRA_DIST =			\
 	AUTHORS NEWS		\
 	totem.spec.in		\
 	totem.spec		\
-	omf.make		\
-	xmldocs.make		\
 	gnome-doc-utils.make	\
 	ChangeLog.pre-gitlog	\
 	MAINTAINERS		\
@@ -39,9 +37,7 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/ltmain.sh \
 	$(srcdir)/missing \
 	$(srcdir)/mkinstalldirs \
-	$(srcdir)/omf.make \
 	$(srcdir)/py-compile \
-	$(srcdir)/xmldocs.make \
 	$(srcdir)/gtk-doc.make \
 	$(srcdir)/ChangeLog \
 	`find "$(srcdir)" -type f -name Makefile.in -print`
