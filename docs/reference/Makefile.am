@@ -18,7 +18,7 @@ DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.xml
 # gtk-doc will search all .c & .h files beneath here for inline comments
 # documenting the functions and macros.
 # e.g. DOC_SOURCE_DIR=../../../gtk
-DOC_SOURCE_DIR=../../src
+DOC_SOURCE_DIR="$(abs_top_srcdir)/src"
 
 # Extra options to pass to gtkdoc-scangobj. Not normally needed.
 SCANGOBJ_OPTIONS=
@@ -146,7 +146,7 @@ include $(top_srcdir)/gtk-doc.make
 EXTRA_DIST += version.xml.in
 
 if ENABLE_GTK_DOC
-TESTS_ENVIRONMENT = cd $(srcdir) && 
+TESTS_ENVIRONMENT = cd $(builddir) &&
 TESTS = $(GTKDOC_CHECK)
 endif
 
