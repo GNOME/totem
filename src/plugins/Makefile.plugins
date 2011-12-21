@@ -35,7 +35,7 @@ check-pylint: $(plugin_PYTHON)
 if ENABLE_PYTHON
 	@exitstatus=0; \
 	for py in $^; do \
-		$(PYLINT) -i y -d C0111 -d W0511 $$py; \
+		$(PYLINT) -i y -d C0111 -d W0511 -d F0401 $$py; \
 		\
 		newexitstatus=$$?; \
 		if [ $$exitstatus == 0 ]; then \
