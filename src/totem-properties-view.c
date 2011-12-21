@@ -71,10 +71,10 @@ update_general (TotemPropertiesView *props,
 		{ GST_TAG_TITLE, "title" },
 		{ GST_TAG_ARTIST, "artist" },
 		{ GST_TAG_ALBUM, "album" },
-		{ GST_TAG_COMMENT, "comment" },
 	};
 	guint i;
         GDate *date;
+	gchar *comment;
 
 	for (i = 0; i < G_N_ELEMENTS(items); i++) {
 		char *string;
@@ -86,7 +86,18 @@ update_general (TotemPropertiesView *props,
 			g_free (string);
 		}
 	}
+	
+	/* Comment else use Description defined by:
+	 * http://xiph.org/vorbis/doc/v-comment.html */
+	if (gst_tag_list_get_string (list, GST_TAG_COMMENT, &comment) ||
+		gst_tag_list_get_string (list, GST_TAG_DESCRIPTION, &comment)) {
 
+		bacon_video_widget_properties_set_label (props->priv->props,
+							 "comment",
+							 comment);
+		g_free (comment);
+        }
+	
 	/* Date */
         if (gst_tag_list_get_date (list, GST_TAG_DATE, &date)) {
 		char *string;
