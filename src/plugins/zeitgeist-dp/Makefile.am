@@ -23,4 +23,9 @@ libtotem_zeitgeist_dp_plugin_la_CFLAGS = \
 	$(LIBZEITGEIST_CFLAGS) \
 	-I $(top_srcdir)/src/backend
 
+GITIGNOREFILES = \
+	$(libtotem_zeitgeist_dp_plugin_la_SOURCES:.vala=.c) \
+	libtotem_zeitgeist_dp_plugin_la_vala.stamp \
+	$(NULL)
+
 -include $(top_srcdir)/git.mk
