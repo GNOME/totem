@@ -10,8 +10,9 @@ def xmlunescape (data):
     data = data.replace ('&lt;', '<')
     return data
 
-class ListEntry (object):
-    def __init__ (self, title = None, identifier = None, updated = None,
+class ListEntry (object): # pylint: disable-msg=R0903
+    def __init__ (self, title = None, # pylint: disable-msg=R0913
+                  identifier = None, updated = None,
                   summary = None, categories = None):
         self.title = title
         self.identifier = identifier
@@ -19,7 +20,7 @@ class ListEntry (object):
         self.summary = summary
         self.categories = categories
 
-class ListEntries (object):
+class ListEntries (object): # pylint: disable-msg=R0903
     def __init__ (self):
         self.entries = []
 

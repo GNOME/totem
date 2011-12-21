@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# pylint: disable-msg=C0302
 
 # Python libs
 import re, os
@@ -309,7 +310,7 @@ def parse_entry_id (entry_id):
         return None
     return matches[0]
 
-class Media (object):
+class Media (object): # pylint: disable-msg=R0902
     def __init__ (self, item, media_node):
         self.item = item
         self.href = None
@@ -415,7 +416,7 @@ class Media (object):
     def programme (self):
         return self.item.programme
 
-class Item (object):
+class Item (object): # pylint: disable-msg=R0902
     """
     Represents an iPlayer programme item. Most programmes consist of 2 such
     items, (1) the ident, and (2) the actual programme. The item specifies the
@@ -761,8 +762,9 @@ class ProgrammeSimple (object):
     items = property (get_items)
 
 
-class Feed (object):
-    def __init__ (self, tvradio = None, channel = None, category = None,
+class Feed (object): # pylint: disable-msg=R0921
+    def __init__ (self, tvradio = None, # pylint: disable-msg=R0913
+                  channel = None, category = None,
                   subcategory = None, atoz = None, searchterm = None):
         """
         Creates a feed for the specified channel/category/whatever.
@@ -898,6 +900,7 @@ class Feed (object):
                     for (ch, _title) in CHANNELS_RADIO_LIST]
         return None
 
+    # This causes pylint message R0913 on the class.
     def subcategories (self):
         raise NotImplementedError ('Sub-categories not yet supported')
 
