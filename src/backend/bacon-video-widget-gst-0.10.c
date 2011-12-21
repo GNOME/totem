@@ -5520,6 +5520,13 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       if (bvw->priv->tagcache != NULL) {
         res = gst_tag_list_get_string_index (bvw->priv->tagcache,
                                              GST_TAG_COMMENT, 0, &string);
+
+        /* Use the Comment; if that fails, use Description as specified by:
+         * http://xiph.org/vorbis/doc/v-comment.html */
+        if (!res) {
+          res = gst_tag_list_get_string_index (bvw->priv->tagcache,
+                                               GST_TAG_DESCRIPTION, 0, &string);
+        }
       }
       break;
     case BVW_INFO_ALBUM:
