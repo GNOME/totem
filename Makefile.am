@@ -40,6 +40,8 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/py-compile \
 	$(srcdir)/gtk-doc.make \
 	$(srcdir)/ChangeLog \
+	$(srcdir)/omf.make \
+	$(srcdir)/xmldocs.make \
 	`find "$(srcdir)" -type f -name Makefile.in -print`
 
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
