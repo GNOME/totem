@@ -22,21 +22,23 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   private Zeitgeist.Log zg_log;
   private Zeitgeist.DataSourceRegistry zg_registry;
 
-  public unowned Totem.Object object { get; set; }
+  public GLib.Object object { owned get; construct; }
 
   public void activate () {
+    Totem.Object totem = (Totem.Object) this.object;
+
     zg_log = new Zeitgeist.Log ();
     zg_registry = new Zeitgeist.DataSourceRegistry ();
 
     current_media = MediaInfo ();
 
-    signals += Signal.connect_swapped (object, "file-opened",
+    signals += Signal.connect_swapped (totem, "file-opened",
                                        (Callback) file_opened, this);
-    signals += Signal.connect_swapped (object, "file-closed",
+    signals += Signal.connect_swapped (totem, "file-closed",
                                        (Callback)file_closed, this);
-    signals += Signal.connect_swapped (object, "metadata-updated",
+    signals += Signal.connect_swapped (totem, "metadata-updated",
                                        (Callback) metadata_changed, this);
-    signals += Signal.connect_swapped (object, "notify::playing",
+    signals += Signal.connect_swapped (totem, "notify::playing",
                                        (Callback) playing_changed, this);
 
     PtrArray templates = new PtrArray ();
@@ -53,11 +55,13 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   }
 
   public void deactivate () {
+    Totem.Object totem = (Totem.Object) this.object;
+
     /* we don't always get file-closed, so lets simulate it */
-    file_closed (object);
+    file_closed (totem);
 
     foreach (ulong id in signals) {
-      SignalHandler.disconnect (object, id);
+      SignalHandler.disconnect (totem, id);
     }
     signals = null;
 
@@ -128,13 +132,15 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   }
 
   private bool timeout_cb () {
+    Totem.Object totem = (Totem.Object) this.object;
+
     if (media_info_timeout != 0) {
       /* we don't have any info besides the url, so use the short_title */
 
       Source.remove (media_info_timeout);
       media_info_timeout = 0;
 
-      current_media.title = Totem.get_short_title (object);
+      current_media.title = Totem.get_short_title (totem);
       timeout_id = 0;
       wait_for_media_info ();
     }
@@ -144,6 +150,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   }
 
   private async void query_media_mimetype (string current_mrl) {
+    Totem.Object totem = (Totem.Object) this.object;
     string mrl = current_mrl;
     var f = File.new_for_uri (mrl);
 
@@ -151,7 +158,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
       var fi = yield f.query_info_async (FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
                                          0, Priority.DEFAULT_IDLE, null);
 
-      if (current_media.mrl != mrl || !object.is_playing ()) return;
+      if (current_media.mrl != mrl || !totem.is_playing ()) return;
       current_media.mimetype = fi.get_content_type ();
 
       /* send event */
@@ -163,9 +170,11 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   }
 
   private bool wait_for_media_info () {
-    if (current_media.title != null && object.is_playing ()) {
+    Totem.Object totem = (Totem.Object) this.object;
+
+    if (current_media.title != null && totem.is_playing ()) {
       Value val;
-      var video = Totem.get_video_widget (object) as Bacon.VideoWidget;
+      var video = Totem.get_video_widget (totem) as Bacon.VideoWidget;
       video.get_metadata (Bacon.MetadataType.HAS_VIDEO, out val);
       current_media.interpretation = val.get_boolean () ?
         Zeitgeist.NFO_VIDEO : Zeitgeist.NFO_AUDIO;
@@ -183,16 +192,18 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   }
 
   private void playing_changed () {
+    Totem.Object totem = (Totem.Object) this.object;
+
     if (media_info_timeout == 0 && current_media.sent_access == false) {
       wait_for_media_info ();
     }
 
     /* end of playlist */
-    if (!object.is_playing () && current_media.sent_access) {
+    if (!totem.is_playing () && current_media.sent_access) {
       /* sends leave event even if the user just pauses the playback
          for a little while, but we don't want too many access events
          for the same uri */
-      file_closed (object);
+      file_closed (totem);
     }
   }
 
