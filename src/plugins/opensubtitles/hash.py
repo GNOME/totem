@@ -1,6 +1,6 @@
 import struct
 import os
-from gi.repository import Gio
+from gi.repository import Gio # pylint: disable-msg=E0611
 
 SIZE_ERROR = -1
 SEEK_ERROR = -2
@@ -21,26 +21,26 @@ def hash_file (name):
     if filesize < 65536 * 2:
         return SIZE_ERROR, 0
 
-    f = file(file_to_hash.get_path(), "rb")
+    file_handle = file (file_to_hash.get_path (), "rb")
 
     for _ in range (65536 / bytesize):
-        buf = f.read (bytesize)
+        buf = file_handle.read (bytesize)
         (l_value,) = struct.unpack (longlongformat, buf)
         file_hash += l_value
         file_hash = file_hash & 0xFFFFFFFFFFFFFFFF #to remain as 64bit number
 
-    f.seek (max (0, filesize - 65536), os.SEEK_SET)
+    file_handle.seek (max (0, filesize - 65536), os.SEEK_SET)
 
-    if f.tell() != max (0, filesize - 65536):
+    if file_handle.tell() != max (0, filesize - 65536):
         return SEEK_ERROR, 0
 
     for _ in range (65536/bytesize):
-        buf = f.read (bytesize)
+        buf = file_handle.read (bytesize)
         (l_value,) = struct.unpack (longlongformat, buf)
         file_hash += l_value
         file_hash = file_hash & 0xFFFFFFFFFFFFFFFF
 
-    f.close ()
+    file_handle.close ()
     returnedhash = "%016x" % file_hash
 
     print returnedhash

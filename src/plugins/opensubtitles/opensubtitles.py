@@ -371,7 +371,8 @@ class OpenSubtitlesModel (object):
 
         return (None, message)
 
-class OpenSubtitles (GObject.Object, Peas.Activatable):
+class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
+                     Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
 
     object = GObject.property (type = GObject.Object)
@@ -662,7 +663,8 @@ class OpenSubtitles (GObject.Object, Peas.Activatable):
             subtitle_file = Gio.file_new_for_uri (filename)
             suburi = subtitle_file.get_uri ()
 
-            sub_file = subtitle_file.replace ('', False, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
+            flags = Gio.FileCreateFlags.REPLACE_DESTINATION
+            sub_file = subtitle_file.replace ('', False, flags, None)
             sub_file.write (subtitles, None)
             sub_file.close (None)
 
