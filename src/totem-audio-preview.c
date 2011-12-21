@@ -161,7 +161,9 @@ int main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+#if !GLIB_CHECK_VERSION (2, 31, 0)
 	g_thread_init (NULL);
+#endif
 
 	g_set_application_name (_("Audio Preview"));
 	g_setenv("PULSE_PROP_application.icon_name", "totem", TRUE);

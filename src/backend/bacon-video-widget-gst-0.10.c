@@ -240,7 +240,11 @@ struct BaconVideoWidgetPrivate
 
   /* When seeking, queue up the seeks if they happen before
    * the previous one finished */
+#if GLIB_CHECK_VERSION (2, 31, 0)
+  GMutex                       seek_mutex;
+#else
   GMutex                      *seek_mutex;
+#endif
   GstClock                    *clock;
   GstClockTime                 seek_req_time;
   gint64                       seek_time;
@@ -1162,7 +1166,11 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->tag_update_queue = g_async_queue_new_full ((GDestroyNotify) update_tags_delayed_data_destroy);
   priv->tag_update_id = 0;
 
+#if GLIB_CHECK_VERSION (2, 31, 0)
+  g_mutex_init (&priv->seek_mutex);
+#else
   priv->seek_mutex = g_mutex_new ();
+#endif
   priv->clock = gst_system_clock_obtain ();
   priv->seek_req_time = GST_CLOCK_TIME_NONE;
   priv->seek_time = -1;
@@ -2015,13 +2023,21 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_ASYNC_DONE: {
 	gint64 _time;
 	/* When a seek has finished, set the playing state again */
+#if GLIB_CHECK_VERSION (2, 31, 0)
+	g_mutex_lock (&bvw->priv->seek_mutex);
+#else
 	g_mutex_lock (bvw->priv->seek_mutex);
+#endif
 
 	bvw->priv->seek_req_time = gst_clock_get_internal_time (bvw->priv->clock);
 	_time = bvw->priv->seek_time;
 	bvw->priv->seek_time = -1;
 
+#if GLIB_CHECK_VERSION (2, 31, 0)
+	g_mutex_unlock (&bvw->priv->seek_mutex);
+#else
 	g_mutex_unlock (bvw->priv->seek_mutex);
+#endif
 
 	if (_time >= 0) {
 	  GST_DEBUG ("Have an old seek to schedule, doing it now");
@@ -2537,7 +2553,11 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->mount_cancellable = NULL;
   }
 
+#if GLIB_CHECK_VERSION (2, 31, 0)
+  g_mutex_clear (&bvw->priv->seek_mutex);
+#else
   g_mutex_free (bvw->priv->seek_mutex);
+#endif
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -3641,7 +3661,11 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, gboolean accu
   got_time_tick (bvw->priv->play, _time * GST_MSECOND, bvw);
 
   /* Is there a pending seek? */
+#if GLIB_CHECK_VERSION (2, 31, 0)
+  g_mutex_lock (&bvw->priv->seek_mutex);
+#else
   g_mutex_lock (bvw->priv->seek_mutex);
+#endif
   /* If there's no pending seek, or
    * it's been too long since the seek,
    * or we don't have an accurate seek requested */
@@ -3651,11 +3675,19 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, gboolean accu
       accurate) {
     bvw->priv->seek_time = -1;
     bvw->priv->seek_req_time = cur_time;
+#if GLIB_CHECK_VERSION (2, 31, 0)
+    g_mutex_unlock (&bvw->priv->seek_mutex);
+#else
     g_mutex_unlock (bvw->priv->seek_mutex);
+#endif
   } else {
     GST_LOG ("Not long enough since last seek, queuing it");
     bvw->priv->seek_time = _time;
+#if GLIB_CHECK_VERSION (2, 31, 0)
+    g_mutex_unlock (&bvw->priv->seek_mutex);
+#else
     g_mutex_unlock (bvw->priv->seek_mutex);
+#endif
     return TRUE;
   }
 

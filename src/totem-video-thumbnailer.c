@@ -978,7 +978,9 @@ int main (int argc, char *argv[])
 	const char *input, *output;
 	ThumbApp app;
 
+#if !GLIB_CHECK_VERSION (2, 31, 0)
 	g_thread_init (NULL);
+#endif
 
 	context = g_option_context_new ("Thumbnail movies");
 	options = gst_init_get_option_group ();
