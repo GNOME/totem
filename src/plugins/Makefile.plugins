@@ -32,9 +32,10 @@ plugin_libadd = \
 # Execute pylint on all the requisite files individually, returning non-zero
 # iff any of the calls to pylint returned non-zero.
 check-pylint: $(plugin_PYTHON)
+if ENABLE_PYTHON
 	@exitstatus=0; \
 	for py in $^; do \
-		pylint -i y -d C0111 -d W0511 $$py; \
+		$(PYLINT) -i y -d C0111 -d W0511 $$py; \
 		\
 		newexitstatus=$$?; \
 		if [ $$exitstatus == 0 ]; then \
@@ -42,6 +43,7 @@ check-pylint: $(plugin_PYTHON)
 		fi; \
 	done; \
 	exit $$exitstatus
+endif
 
 check: check-pylint
 

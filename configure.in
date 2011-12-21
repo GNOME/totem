@@ -301,7 +301,8 @@ PKG_CHECK_MODULES(PEASGTK, libpeas-gtk-1.0 >= $PEAS_REQS)
 # ================================================================
 # Python plugins
 # ================================================================
-# We don't need any of this at compile time, but it is needed for the Python plugins at runtime, so we check anyway.
+# We don't Python or PyGObject at compile time, but they are needed for the Python plugins at runtime, so we check anyway.
+# We need pylint for `make check`.
 
 AC_MSG_CHECKING([whether Python plugin support is requested])
 AC_ARG_ENABLE([python],
@@ -313,7 +314,7 @@ AC_MSG_RESULT([$enable_python])
 have_python=no
 have_pygobject=no
 
-# Test for the Python run time and PyGObject
+# Test for the Python run time and PyGObject. Test for pylint as well, for `make check`.
 if test "x$enable_python" != "xno"; then
 	AM_PATH_PYTHON([$PYTHON_REQS],[have_python=yes],[have_python=no])
 	if test "x$PYTHON" = "x:"; then
@@ -321,15 +322,16 @@ if test "x$enable_python" != "xno"; then
 	fi
 
 	PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0 >= $PYGOBJECT_REQS],[have_pygobject=yes],[have_pygobject=no])
+	AC_PATH_PROG([PYLINT], [pylint], [no])
 fi
 
 # Output the results of the Python checks
-if test "x$have_python" != "xyes" -o "x$have_pygobject" != "xyes"; then
+if test "x$have_python" != "xyes" -o "x$have_pygobject" != "xyes" -o "x$PYLINT" = "xno"; then
 	if test "x$enable_python" = "xyes"; then
-		AC_MSG_ERROR([python >= $PYTHON_REQS or pygobject-3.0 >= $PYGOBJECT_REQS not found])
+		AC_MSG_ERROR([python >= $PYTHON_REQS, pygobject-3.0 >= $PYGOBJECT_REQS or pylint not found])
 	elif test "x$enable_python" = "xautodetect"; then
 		enable_python=no
-		AC_MSG_WARN([python >= $PYTHON_REQS or pygobject-3.0 >= $PYGOBJECT_REQS not found; disabling Python support])
+		AC_MSG_WARN([python >= $PYTHON_REQS, pygobject-3.0 >= $PYGOBJECT_REQS or pylint not found; disabling Python support])
 	fi
 elif test "x$enable_python" != "xno"; then
 	enable_python=yes
