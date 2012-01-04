@@ -290,14 +290,15 @@ totem_setup_file_monitoring (Totem *totem)
 			  totem);
 }
 
-/* List from xine-lib's demux_sputext.c */
+/* List from xine-lib's demux_sputext.c. Keep in sync with the list in totem_setup_file_filters() in this file. */
 static const char subtitle_ext[][4] = {
 	"sub",
 	"srt",
 	"smi",
 	"ssa",
 	"ass",
-	"asc"
+	"asc",
+	"txt"
 };
 
 gboolean
@@ -534,7 +535,7 @@ totem_setup_file_filters (void)
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cue");
 	g_object_ref_sink (filter_video);
 
-	/* Subtitles files */
+	/* Subtitles files. Keep in sync with subtitle_ext in this file. */
 	filter_subs = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_subs, _("Subtitle files"));
 	gtk_file_filter_add_mime_type (filter_subs, "application/x-subrip"); /* *.srt */
