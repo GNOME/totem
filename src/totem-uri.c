@@ -290,15 +290,16 @@ totem_setup_file_monitoring (Totem *totem)
 			  totem);
 }
 
-/* List from xine-lib's demux_sputext.c. Keep in sync with the list in totem_setup_file_filters() in this file. */
+/* List from xine-lib's demux_sputext.c.
+ * Keep in sync with the list in totem_setup_file_filters() in this file.
+ * Don't add .txt extensions, as there are too many false positives. */
 static const char subtitle_ext[][4] = {
 	"sub",
 	"srt",
 	"smi",
 	"ssa",
 	"ass",
-	"asc",
-	"txt"
+	"asc"
 };
 
 gboolean
