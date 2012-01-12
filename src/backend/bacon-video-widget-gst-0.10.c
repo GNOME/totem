@@ -3599,7 +3599,8 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
    * hence no cdda:// here) */
   if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
       g_str_has_prefix (bvw->priv->mrl, "dvd:/") ||
-      g_str_has_prefix (bvw->priv->mrl, "vcd:/"))
+      g_str_has_prefix (bvw->priv->mrl, "vcd:/") ||
+      g_str_has_prefix (bvw->priv->mrl, "trash:/"))
     return TRUE;
 
   return FALSE;
