@@ -141,7 +141,7 @@ thumb_app_set_filename (ThumbApp *app)
 		uri = g_file_get_uri (file);
 	g_object_unref (file);
 
-	g_message ("setting URI %s", uri);
+	PROGRESS_DEBUG("setting URI %s", uri);
 
 	g_object_set (app->play, "uri", uri, NULL);
 	g_free (uri);
