@@ -660,7 +660,7 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (!bvw->priv->logo_mode)
+  if (bvw->priv->navigation && !bvw->priv->logo_mode)
     gst_navigation_send_mouse_event (bvw->priv->navigation, "mouse-move", 0, event->x, event->y);
 
   if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
@@ -677,7 +677,7 @@ bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (!bvw->priv->logo_mode) {
+  if (bvw->priv->navigation && !bvw->priv->logo_mode) {
     gst_navigation_send_mouse_event (bvw->priv->navigation,
 				     "mouse-button-press", event->button, event->x, event->y);
 
@@ -700,7 +700,7 @@ bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event)
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (!bvw->priv->logo_mode) {
+  if (bvw->priv->navigation && !bvw->priv->logo_mode) {
     gst_navigation_send_mouse_event (bvw->priv->navigation,
 				     "mouse-button-release", event->button, event->x, event->y);
 
@@ -1224,6 +1224,9 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 static gboolean
 bvw_do_navigation_query (BaconVideoWidget * bvw, GstQuery *query)
 {
+  if (!bvw->priv->navigation)
+    return FALSE;
+
   return gst_element_query (GST_ELEMENT_CAST (bvw->priv->navigation), query);
 }
 
@@ -1865,6 +1868,20 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
   }
 }
 
+static inline void
+bvw_get_navigation_if_available (BaconVideoWidget *bvw)
+{
+  GstElement * nav;
+  nav = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
+                                        GST_TYPE_NAVIGATION);
+  if (bvw->priv->navigation) {
+    gst_object_unref (GST_OBJECT (bvw->priv->navigation));
+    bvw->priv->navigation = NULL;
+  }
+  if (nav)
+    bvw->priv->navigation = GST_NAVIGATION (nav);
+}
+
 static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 {
@@ -1946,6 +1963,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
           gst_element_state_get_name (new_state));
       g_free (src_name);
 
+      if (new_state <= GST_STATE_READY) {
+        if (bvw->priv->navigation)
+          g_clear_object (&bvw->priv->navigation);
+      }
+
       /* now do stuff */
       if (new_state <= GST_STATE_PAUSED) {
         bvw_query_timeout (bvw);
@@ -2020,6 +2042,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 	  GST_DEBUG ("Have an old seek to schedule, doing it now");
 	  bacon_video_widget_seek_time_no_lock (bvw, _time, 0, NULL);
 	}
+	bvw_get_navigation_if_available (bvw);
       break;
     }
 
@@ -3769,7 +3792,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 static void
 bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
 {
-  gst_navigation_send_command (bvw->priv->navigation, command);
+  if (bvw->priv->navigation)
+    gst_navigation_send_command (bvw->priv->navigation, command);
 }
 
 /**
@@ -5871,7 +5895,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
     return FALSE;
   }
   g_object_set (G_OBJECT (video_sink), "texture", bvw->priv->texture, NULL);
-  bvw->priv->navigation = GST_NAVIGATION (video_sink);
 
   /* The logo */
   bvw->priv->logo_frame = totem_aspect_frame_new ();
