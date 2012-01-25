@@ -6,6 +6,7 @@
 # Sergio ALDANA < >, 2010.
 # Michael MORONI < >, 2011.
 # Tiffany ANTOPOLSKI <tiffany.antopolski@gmail.com>, 2011.
+# Tiffany Antopolski <tiffany.antopolski@gmail.com>, 2012.
 # Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2010, 2011, 2012.
 #
 msgid ""
@@ -13,14 +14,14 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-21 09:14+0000\n"
-"PO-Revision-Date: 2012-01-21 16:33+0100\n"
+"POT-Creation-Date: 2012-01-23 19:42+0000\n"
+"PO-Revision-Date: 2012-01-25 17:55+0100\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
 "Language-Team: Esperanto <gnome-l10n-eo@lists.launchpad.net>\n"
-"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: eo\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Virtaal 0.7.1-rc1\n"
 "X-DamnedLies-Scope: partial\n"
@@ -859,11 +860,11 @@ msgstr "Ĉu malebligi malinterplektigadon de interplektitaj videoj?"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:33
 msgid "Whether to disable the keyboard shortcuts"
-msgstr ""
+msgstr "Ĉu elŝalti la klavarajn klavkombinojn?"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:34
 msgid "Whether to disable the plugins in the user's home directory"
-msgstr ""
+msgstr "Ĉu malebligi la kromprogramojn en la home dosierujo de la uzanto?"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:35
 msgid "Whether to enable debug for the playback engine"
@@ -1213,7 +1214,8 @@ msgstr ""
 "  Michael Moroni https://launchpad.net/~airon90\n"
 "  Patrick (Petriko) Oudejans https://launchpad.net/~patrickoudejans\n"
 "  Sergio Aldana https://launchpad.net/~sangtrinkulo\n"
-" Tiffany ANTOPOLSKI"
+"GNOME Contribution:\n"
+"  Tiffany ANTOPOLSKI"
 
 #: ../src/totem-menu.c:1202
 msgid "Totem Website"
@@ -1859,6 +1861,7 @@ msgstr "Lokon ne trovis."
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
+"Ne eblas malferi lokon; vi eble ne havas permeso por malfermi la dosieron."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3318
 msgid ""
@@ -1866,6 +1869,8 @@ msgid ""
 "applications, or select another video output in the Multimedia Systems "
 "Selector."
 msgstr ""
+"La videa eligo estas uzita per alia aplikaĵo. Bonvolu fermi aliajn videajn "
+"aplikaĵojn, aŭ elektu alian videan eligon en la Plurmedia Sistemelektilo."
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3324
 msgid ""
@@ -1873,6 +1878,8 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
+"La soneligo estas uzita per alia aplikaĵo. Bonvolu elekti alian soneligo en "
+"la Plurmedia Sistemelektilo. Vi povas voli konsideri uzanta sonservilo."
 
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3342
@@ -1885,7 +1892,13 @@ msgid_plural ""
 "\n"
 "%s"
 msgstr[0] ""
+"La reproduktado de ĉi tiu filmo bezonas %s kromprogramon kiu ne estas "
+"instalita."
 msgstr[1] ""
+"La reproduktado de ĉi tiu filmo bezonas la sekvantajn malkodilojn kiujn ne "
+"estas instalitajn:\n"
+"\n"
+"%s"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3374
 msgid ""
@@ -2121,11 +2134,11 @@ msgstr "Se vi ne konservas, ŝanĝoj de ĉapitrolisto perdiĝos."
 
 #: ../src/plugins/chapters/totem-cmml-parser.c:651
 msgid "Failed to parse CMML file"
-msgstr ""
+msgstr "Fiaskis analizi CMML-dosieron"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "D-Bus Service"
-msgstr ""
+msgstr "D-Busa Servo"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
 msgid ""
@@ -2142,7 +2155,7 @@ msgstr ""
 #: ../src/plugins/dbusservice/dbusservice.py:222
 #, python-format
 msgid "The property ‘%s’ is not writeable."
-msgstr ""
+msgstr "La atributo '%s' ne estas skribebla."
 
 #: ../src/plugins/dbusservice/dbusservice.py:238
 #, python-format
@@ -2152,7 +2165,7 @@ msgstr ""
 #: ../src/plugins/dbusservice/dbusservice.py:341
 #, python-format
 msgid "The URI ‘%s’ is not supported."
-msgstr ""
+msgstr "La URI '%s' ne estas subtenata."
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
 msgid "Instant Messenger status"
@@ -2228,7 +2241,7 @@ msgstr "Transruĝa Teleregilo"
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:2
 msgid "Support infrared remote control"
-msgstr ""
+msgstr "Subteni transruĝan teleregilon"
 
 #: ../src/plugins/lirc/totem-lirc.c:242
 msgid "Couldn't initialize lirc."
@@ -2252,7 +2265,7 @@ msgstr "_Ludi kun subteksto"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:1
 msgid "Look for subtitles for the currently playing movie."
-msgstr ""
+msgstr "Serĉi subtekstojn por la nun ludanta filmo."
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
 msgid "Subtitle Downloader"
@@ -2382,7 +2395,7 @@ msgstr ""
 
 #: ../src/plugins/publish/publish-plugin.ui.h:6
 msgid "Use _encrypted transport protocol (HTTPS)"
-msgstr ""
+msgstr "Uzi HTTPS"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
 msgid ""
@@ -2400,7 +2413,7 @@ msgstr ""
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
 msgid "Rotation Plugin"
-msgstr ""
+msgstr "Turna kromprogramo"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:60
 msgid "_Rotate Clockwise"
@@ -2430,7 +2443,7 @@ msgstr "Filmo"
 
 #: ../src/plugins/save-file/totem-save-file.c:183
 msgid "Movie stream"
-msgstr ""
+msgstr "Filmfluo"
 
 #: ../src/plugins/screensaver/totem-screensaver.c:116
 #: ../browser-plugin/totem-plugin-viewer.c:1891
@@ -2439,7 +2452,7 @@ msgstr "Ludi filmon"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Calculate the number of screenshots"
-msgstr ""
+msgstr "Kalkuli la kvanton de ekrankopioj"
 
 #: ../src/plugins/screenshot/gallery.ui.h:2
 msgid "Number of screenshots:"
