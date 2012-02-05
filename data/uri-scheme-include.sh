@@ -15,4 +15,5 @@ for i in $SCHEMES ; do
 	echo_mime;
 done
 
+echo "NULL"
 echo "};"
