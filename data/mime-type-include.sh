@@ -17,6 +17,7 @@ if [ x"$1" = "x--nautilus" ] ; then
 		echo_mime;
 	done
 
+	echo "NULL"
 	echo "};"
 
 	exit 0
@@ -31,6 +32,7 @@ for i in $MIMETYPES ; do
 	echo_mime;
 done
 
+echo "NULL"
 echo "};"
 
 get_audio_mimetypes $1;
@@ -40,6 +42,7 @@ for i in $MIMETYPES ; do
 	echo_mime;
 done
 
+echo "NULL"
 echo "};"
 
 get_video_mimetypes $1;
@@ -49,5 +52,6 @@ for i in $MIMETYPES ; do
 	echo_mime;
 done
 
+echo "NULL"
 echo "};"
 

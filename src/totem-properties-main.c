@@ -95,7 +95,7 @@ totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 	file = files->data;
 
 	/* only add the properties page to these mime types */
-	for (i = 0; i < G_N_ELEMENTS (mime_types); i++)
+	for (i = 0; mime_types[i] != NULL; i++)
 	{
 		if (nautilus_file_info_is_mime_type (file, mime_types[i]))
 		{

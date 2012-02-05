@@ -509,7 +509,7 @@ totem_setup_file_filters (void)
 
 	filter_supported = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_supported, _("Supported files"));
-	for (i = 0; i < G_N_ELEMENTS (mime_types); i++) {
+	for (i = 0; mime_types[i] != NULL; i++) {
 		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
 	}
 
@@ -521,7 +521,7 @@ totem_setup_file_filters (void)
 	/* Audio files */
 	filter_audio = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_audio, _("Audio files"));
-	for (i = 0; i < G_N_ELEMENTS (audio_mime_types); i++) {
+	for (i = 0; audio_mime_types[i] != NULL; i++) {
 		gtk_file_filter_add_mime_type (filter_audio, audio_mime_types[i]);
 	}
 	g_object_ref_sink (filter_audio);
@@ -529,7 +529,7 @@ totem_setup_file_filters (void)
 	/* Video files */
 	filter_video = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_video, _("Video files"));
-	for (i = 0; i < G_N_ELEMENTS (video_mime_types); i++) {
+	for (i = 0; video_mime_types[i] != NULL; i++) {
 		gtk_file_filter_add_mime_type (filter_video, video_mime_types[i]);
 	}
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cd-image");
