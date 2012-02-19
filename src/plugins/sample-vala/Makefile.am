@@ -9,7 +9,7 @@ plugin_in_files = sample-vala.plugin.in
 # cannot parse the gir
 VALAFLAGS = \
 	--girdir=$(top_srcdir)/src	\
-	--pkg Totem-1.0 --pkg Peas-1.0 --pkg gtk+-3.0
+	--pkg Totem-1.0 --pkg libpeas-1.0 --pkg gtk+-3.0
 
 libsample_vala_la_SOURCES = totem-sample-vala-plugin.vala
 libsample_vala_la_LDFLAGS = $(plugin_ldflags)
