@@ -9,7 +9,7 @@ plugin_in_files = zeitgeist-dp.plugin.in
 # cannot parse the gir
 VALAFLAGS = \
 	--girdir=$(top_srcdir)/src	\
-	--pkg Totem-1.0 --pkg Peas-1.0 --pkg gtk+-3.0 \
+	--pkg Totem-1.0 --pkg libpeas-1.0 --pkg cogl-pango-1.0 --pkg GtkClutter-1.0 --pkg clutter-1.0  --pkg gtk+-3.0 \
 	--pkg zeitgeist-1.0 \
 	bacon-video.vapi
 
@@ -18,6 +18,6 @@ libtotem_zeitgeist_dp_plugin_la_LDFLAGS = $(plugin_ldflags) $(LIBZEITGEIST_LIBS)
 libtotem_zeitgeist_dp_plugin_la_CFLAGS = \
 	$(plugin_cflags) \
 	$(LIBZEITGEIST_CFLAGS) \
-	-I $(top_srcdir)/src/backend
+	-I$(top_srcdir)/src/backend
 
 -include $(top_srcdir)/git.mk
