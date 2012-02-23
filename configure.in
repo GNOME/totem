@@ -456,11 +456,17 @@ for plugin in ${used_plugins}; do
 			if test "${with_vala}" != "yes" ; then
 				plugin_error_or_ignore "you need vala installed to use the rotation plugin"
 				add_plugin="0"
+                        elif test "x$found_introspection" != "xyes"; then
+				plugin_error_or_ignore "you need introspection support for the rotation plugin"
+				add_plugin="0"
 			fi
 		;;
 		sample-vala)
 			if test "${with_vala}" != "yes" ; then
 				plugin_error_or_ignore "you need vala installed to use the sample-vala plugin"
+				add_plugin="0"
+                        elif test "x$found_introspection" != "xyes"; then
+				plugin_error_or_ignore "you need introspection support for the sample-vala plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -496,6 +502,9 @@ for plugin in ${used_plugins}; do
 		zeitgeist-dp)
 			if test "${with_vala}" != "yes" ; then
 				plugin_error_or_ignore "you need vala installed to use the zeitgeist-dp plugin"
+				add_plugin="0"
+                        elif test "x$found_introspection" != "xyes"; then
+				plugin_error_or_ignore "you need introspection support for the zeitgeist-dp plugin"
 				add_plugin="0"
 			else
 				PKG_CHECK_MODULES(LIBZEITGEIST, zeitgeist-1.0 >= 0.3.6,
