@@ -1,20 +1,29 @@
 include $(top_srcdir)/gnome-doc-utils.make
 dist-hook: doc-dist-hook
 
-DOC_MODULE = totem
-DOC_ENTITIES = legal.xml
-DOC_H_FILE = totem-docs.h
-DOC_H_DOCS = C/totem.xml
-DOC_INCLUDES = 
+# Module name
+DOC_ID = totem
 
-DOC_FIGURES  = 	figures/totem_show_playlist_button.png 	\
-		figures/totem_next_button.png		\
-		figures/totem_start_window.png		\
-		figures/totem_pause_button.png		\
-		figures/totem_volume_maximum_button.png	\
-		figures/totem_play_button.png		\
-		figures/totem_volume_mute_button.png	\
-		figures/totem_previous_button.png
+# List of figures to be included
+DOC_FIGURES = \
+	figures/totem-main-window.png \
+
+# List of pages
+DOC_PAGES = \
+	adjustment-sound.page \
+	file-open.page \
+	file-save.page \
+	index.page \
+	introduction.page \
+	keyboard-shortcuts.page \
+	navigation.page \
+	playlist.page \
+	preferences.page \
+	properties.page \
+	screenshot.page \
+	screenshot-gallery.page \
+	sidebar.page \
+	subtitles.page
 
 DOC_LINGUAS = bg ca cs da de el en_GB es eu fi fr gl it ja oc pa pl pt_BR ro ru sl sv uk zh_CN zh_HK zh_TW
 
