@@ -1,7 +1,7 @@
 # Vietnamese translation for Totem.
 # Copyright © 2009 GNOME i18n Project for Vietnamese.
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
-# Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007-2008,2011.
+# Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007-2008,2011-2012.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2009.
 # Lê Kiến Trúc <afterlastangel@gmail.com>, 2009.
 #
@@ -11,8 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-02-19 22:54+0000\n"
-"PO-Revision-Date: 2012-03-04 11:53+0700\n"
-"Last-Translator: Le Kien Truc <afterlastangel@gmail.com>\n"
+"PO-Revision-Date: 2012-03-04 11:57+0700\n"
+"Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -101,10 +101,9 @@ msgid "Comment:"
 msgstr "Chú thích:"
 
 #: ../data/properties.ui.h:8
-#, fuzzy
 #| msgid "Co_ntrast:"
 msgid "Container:"
-msgstr "Tươ_ng phản:"
+msgstr "Vật chứa:"
 
 #: ../data/properties.ui.h:9 ../data/totem.ui.h:128
 #: ../src/totem-properties-view.c:270
@@ -1052,7 +1051,7 @@ msgstr[0] "%d giây"
 # Variable: don't translate / Biến: đừng dịch
 #. 5 hours 2 minutes 12 seconds
 #: ../src/properties/bacon-video-widget-properties.c:167
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s %s %s"
 msgctxt "time"
 msgid "%s %s %s"
@@ -1060,7 +1059,7 @@ msgstr "%s %s %s"
 
 #. 2 minutes 12 seconds
 #: ../src/properties/bacon-video-widget-properties.c:170
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s %s"
 msgctxt "time"
 msgid "%s %s"
@@ -1487,7 +1486,6 @@ msgid "Audio/Video"
 msgstr "Âm thanh/phim ảnh"
 
 #: ../src/totem-properties-view.c:128
-#, fuzzy
 #| msgctxt "Audio codec"
 #| msgid "N/A"
 msgid "N/A"
@@ -1496,7 +1494,6 @@ msgstr "Không có"
 #: ../src/totem-properties-view.c:157
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
-#, fuzzy
 #| msgctxt "Audio codec"
 #| msgid "N/A"
 msgctxt "Stream bit rate"
@@ -1541,7 +1538,6 @@ msgid "Mono"
 msgstr "Âm đơn"
 
 #: ../src/totem-properties-view.c:236
-#, fuzzy
 #| msgctxt "Audio codec"
 #| msgid "N/A"
 msgctxt "Number of audio channels"
@@ -1882,7 +1878,7 @@ msgstr ""
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3342
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3348
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "The playback of this movie requires a %s plugin which is not installed."
 msgid "The playback of this movie requires a %s plugin which is not installed."
@@ -1891,7 +1887,10 @@ msgid_plural ""
 "installed:\n"
 "\n"
 "%s"
-msgstr[0] "Để phát phim này cần có phần bổ sung '%s', nhưng chưa được cài đặt."
+msgstr[0] ""
+"Để phát phim này cần có phần bổ sung sau, nhưng chưa được cài đặt:\n"
+"\n"
+"%s"
 
 #: ../src/backend/bacon-video-widget-gst-0.10.c:3374
 msgid ""
@@ -2275,13 +2274,11 @@ msgid "Look for subtitles for the currently playing movie."
 msgstr "Tìm phụ đề cho phim đang chiếu."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
-#, fuzzy
 #| msgid "Brasilian Portuguese"
 msgid "Brazilian Portuguese"
 msgstr "Tiếng Bồ Đào Nha ở Bra-xin"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:177
-#, fuzzy
 #| msgid "Searching subtitles…"
 msgid "Searching for subtitles…"
 msgstr "Đang tìm phụ đề…"
@@ -2297,16 +2294,14 @@ msgstr "Không thể liên lạc với website OpenSubtitles (Phụ đề Mở)"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:323
 #: ../src/plugins/opensubtitles/opensubtitles.py:341
-#, fuzzy
 #| msgid "Could not contact the OpenSubtitles website"
 msgid "Could not contact the OpenSubtitles website."
-msgstr "Không thể liên lạc với website OpenSubtitles (Phụ đề Mở)"
+msgstr "Không thể liên lạc với website OpenSubtitles."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:329
-#, fuzzy
 #| msgid "No results found"
 msgid "No results found."
-msgstr "Không tìm thấy"
+msgstr "Không tìm thấy."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:478
 msgid "Subtitles"
@@ -2429,19 +2424,19 @@ msgstr ""
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:1
 msgid "Rotation Plugin"
-msgstr ""
+msgstr "Phần bổ sung xoay vòng"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
 msgid "Allows videos to be rotated if they're in the wrong orientation."
-msgstr ""
+msgstr "Xoay vòng phim nếu sai chiều"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:60
 msgid "_Rotate Clockwise"
-msgstr ""
+msgstr "_Xoay chiều kim đồng hồ"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:62
 msgid "Rotate Counterc_lockwise"
-msgstr ""
+msgstr "Xoay _ngược chiều kim đồng hồ"
 
 #: ../src/plugins/save-file/totem-save-file.c:63
 msgid "Save a Copy..."
@@ -2671,38 +2666,33 @@ msgstr ""
 "dùng mật khẩu mặc định ('totem')."
 
 #: ../src/plugins/grilo/grilo.plugin.in.h:1
-#, fuzzy
 #| msgid "YouTube Browser"
 msgid "Grilo Browser"
-msgstr "Bộ duyệt YouTube"
+msgstr "Bộ duyệt Grilo"
 
 #: ../src/plugins/grilo/grilo.plugin.in.h:2
-#, fuzzy
 #| msgid "A plugin to let you browse YouTube videos."
 msgid "A plugin to let you browse media content from various sources."
-msgstr "Phần bổ sung cho bạn có khả năng duyệt qua các phim YouTube."
+msgstr "Phần bổ sung cho bạn có khả năng duyệt các nguồn khác nhau."
 
 #: ../src/plugins/grilo/totem-grilo.c:452
-#, fuzzy
 #| msgid "File Error"
 msgid "Browse Error"
-msgstr "Lỗi tập tin"
+msgstr "Lỗi duyệt"
 
 #: ../src/plugins/grilo/totem-grilo.c:599
-#, fuzzy
 #| msgid "Generic Error."
 msgid "Search Error"
-msgstr "Lỗi chung."
+msgstr "Lỗi tìm"
 
 #: ../src/plugins/grilo/totem-grilo.c:1219 ../src/plugins/grilo/grilo.ui.h:1
 msgid "Browse"
-msgstr ""
+msgstr "Duyệt"
 
 #: ../src/plugins/grilo/totem-grilo.c:1285 ../src/plugins/grilo/grilo.ui.h:2
-#, fuzzy
 #| msgid "Local Search"
 msgid "Search"
-msgstr "Tìm cục bộ"
+msgstr "Tìm"
 
 #~ msgid "0 frames per second"
 #~ msgstr "0 khung hình/giây"
