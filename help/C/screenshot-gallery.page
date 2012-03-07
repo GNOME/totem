@@ -16,13 +16,11 @@
 
   <title>Screenshot gallery</title>
 
-  <p>
-  Create screenshot gallery in the following way:
-  </p>
+  <p>Create a screenshot gallery in the following way:</p>
 
   <steps>
     <item>
-      <p>Click <guiseq><gui style="menu">Edit</gui>
+      <p>Select <guiseq><gui style="menu">Edit</gui>
       <gui>Create Screenshot Gallery…</gui></guiseq>.</p>
     </item>
     <item>
@@ -32,27 +30,34 @@
       <p>Type the name of your gallery.</p>
     </item>
     <item>
-      <p>Choose a folder, where the gallery should be saved.</p>
+      <p>Choose a folder into which the gallery should be saved.</p>
     </item>
     <item>
       <p>Click <gui>Save</gui> when ready.</p>
     </item>
     <item>
-      <p>The progress bar will pop up. While loading you may resign from
-      creating gallery by clicking <gui>Cancel</gui>.</p>
+      <p>The progress bar will pop up. You may cancel the process by clicking
+      <gui>Cancel</gui>.</p>
     </item>
     <item>
-      <p><app>Totem</app> creates a gallery from the random screenshots. The
-      gallery will be saved in the folder you chose, as a <file>.jpg</file>
+      <p><app>Movie Player</app> creates a gallery from the random screenshots.
+      The gallery will be saved in the folder you chose, as a <file>.jpg</file>
       file.</p>
     </item>
   </steps>
 
   <note style="advanced">
     <p>On the bottom of the file chooser you may specify the width of
-    screenshots in pixels. You may also set the number of screenshots, which
-    the gallery will consist of or tick option <gui>Calculate the number of
-    screenshots</gui> and <app>Totem</app> will set it automatically.</p>
+    screenshots in pixels. You may also set the number of screenshots that
+    the gallery will include or tick option <gui>Calculate the number of
+    screenshots</gui> and <app>Movie Player</app> will set it automatically.</p>
   </note>
+
+  <comment>
+    <cite date="2012-03-07">Ekaterina Gerasimova</cite>
+    <p>Bug in 2.32: when I select a video and do not have the codec to play it,
+    the Create Screenshot Gallery menuitem becomes enabled. Following the above
+    instructions fails silently. Check in 3.2/3.4</p>
+  </comment>
 
 </page>
