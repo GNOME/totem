@@ -200,6 +200,11 @@ app_command_line (GApplication             *app,
 	/* Options parsing */
 	context = g_option_context_new (N_("- Play movies and songs"));
 	baconoptiongroup = bacon_video_widget_get_option_group();
+	if (baconoptiongroup == NULL) {
+		g_warning ("Clutter or GTK+ failed to initialise properly");
+		g_option_context_free (context);
+		return 1;
+	}
 	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
 	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, baconoptiongroup);
