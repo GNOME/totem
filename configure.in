@@ -166,6 +166,21 @@ do
 	fi
 done
 
+dnl Check for elements from gst-plugins-bad
+for bad_element in pitch
+do
+	AC_MSG_CHECKING([GStreamer 0.10 $bad_element plugin])
+	if $gst010_inspect $bad_element >/dev/null 2>/dev/null; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		AC_MSG_ERROR([
+			Cannot find required GStreamer-0.10 plugin '$bad_element'.
+			It should be part of gst-plugins-bad. Please install it.
+		])
+	fi
+done
+
 dnl Check the smclient backend
 AC_MSG_CHECKING([which smclient backend to use])
 AC_ARG_WITH([smclient],

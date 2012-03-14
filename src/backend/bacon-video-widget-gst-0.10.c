@@ -207,6 +207,7 @@ struct BaconVideoWidgetPrivate
   BvwVisualizationQuality      visq;
   gchar                       *vis_element_name;
   GstElement                  *audio_capsfilter;
+  GstElement                  *audio_pitchcontrol;
 
   /* Other stuff */
   gboolean                     logo_mode;
@@ -3664,9 +3665,8 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
     return FALSE;
 
   bvw->priv->seek_time = -1;
-  bvw->priv->rate = FORWARD_RATE;
 
-  gst_element_seek (bvw->priv->play, FORWARD_RATE,
+  gst_element_seek (bvw->priv->play, bvw->priv->rate,
 		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | flag,
 		    GST_SEEK_TYPE_SET, _time * GST_MSECOND,
 		    GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
@@ -3911,6 +3911,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->has_angles = FALSE;
   bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
+  g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 
   bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->priv->seek_time = -1;
@@ -4024,6 +4025,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
         gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
             GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, 0);
 	bvw->priv->rate = FORWARD_RATE;
+        g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
       } else {
         GST_DEBUG ("failed to query position (%s)", fmt_name);
       }
@@ -6010,6 +6012,7 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
       } else {
 	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
 	bvw->priv->rate = REVERSE_RATE;
+	g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 	retval = TRUE;
       }
     } else {
@@ -6033,6 +6036,7 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
       } else {
 	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
 	bvw->priv->rate = FORWARD_RATE;
+	g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 	retval = TRUE;
       }
     } else {
@@ -6246,9 +6250,14 @@ bacon_video_widget_new (GError ** error)
     bvw->priv->audio_capsfilter =
         gst_element_factory_make ("capsfilter", "audiofilter");
     audio_bin = gst_bin_new ("audiosinkbin");
+    bvw->priv->audio_pitchcontrol =
+        gst_element_factory_make ("pitch", "audiopitch");
+    g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
     gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
-        audio_sink, NULL);
+        bvw->priv->audio_pitchcontrol, audio_sink, NULL);
     gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
+        bvw->priv->audio_pitchcontrol, "sink");
+    gst_element_link_pads (bvw->priv->audio_pitchcontrol, "src",
         audio_sink, "sink");
 
     audio_pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
@@ -6304,6 +6313,78 @@ sink_error:
 
     return NULL;
   }
+}
+
+gfloat
+bacon_video_widget_get_rate (BaconVideoWidget *bvw)
+{
+      return bvw->priv->rate;
+}
+
+gboolean
+bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat new_rate)
+{
+  GstEvent *event;
+  gboolean retval = FALSE;
+  GstFormat fmt;
+  gint64 cur;
+  gfloat pitch, ratio;
+
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  /* set upper and lower limit for rate */
+  if (new_rate <= 0.5)
+	return TRUE;
+  if (new_rate >= 2.0)
+	return TRUE;
+  ratio = new_rate / bvw->priv->rate;
+
+  fmt = GST_FORMAT_TIME;
+
+  if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+    GST_DEBUG ("Setting playback direction to reverse at %"G_GINT64_FORMAT"", cur);
+    event = gst_event_new_seek (new_rate,
+        fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+        GST_SEEK_TYPE_SET, cur,
+	GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
+    if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+      GST_DEBUG ("Failed to change rate");
+    } else {
+      gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+      bvw->priv->rate = new_rate;
+      g_object_get (bvw->priv->audio_pitchcontrol, "pitch", &pitch, NULL);
+      g_object_set (bvw->priv->audio_pitchcontrol, "pitch", pitch/ratio, NULL);
+      GST_DEBUG ("changed rate to %f, pitch to %f\n", new_rate, pitch);
+      retval = TRUE;
+    }
+  }
+  else {
+    GST_DEBUG ("failed to query position");
+  }
+  return retval;
+}
+
+gboolean
+bacon_video_widget_change_rate (BaconVideoWidget *bvw, gboolean increase)
+{
+  gfloat rate;
+
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  rate = bvw->priv->rate;
+  rate += (increase) ? 0.1 : -0.1;
+
+  return bacon_video_widget_set_rate (bvw, rate);
+}
+
+gboolean
+bacon_video_widget_reset_rate (BaconVideoWidget *bvw)
+{
+  return bacon_video_widget_set_rate (bvw, 1.0);
 }
 
 /*
