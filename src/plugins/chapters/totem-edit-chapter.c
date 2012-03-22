@@ -32,6 +32,7 @@
  */
 
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 
 #include "totem.h"
 #include "totem-interface.h"
@@ -91,7 +92,7 @@ totem_edit_chapter_new (void)
 		return NULL;
 	}
 
-	gtk_window_set_title (GTK_WINDOW (edit_chapter), "Add Chapter");
+	gtk_window_set_title (GTK_WINDOW (edit_chapter), _("Add Chapter"));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (edit_chapter),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
