@@ -3629,7 +3629,7 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_space:
 	case GDK_KEY_Return:
-		{
+		if (!(event->state & GDK_CONTROL_MASK)) {
 			GtkWidget *focus = gtk_window_get_focus (GTK_WINDOW (totem->win));
 			if (totem_is_fullscreen (totem) != FALSE || focus == NULL ||
 			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek) {
