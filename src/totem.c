@@ -82,9 +82,6 @@ app_init (Totem *totem, char **argv)
 {
 	char *sidebar_pageid;
 
-	/* Settings */
-	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
-
 	/* Debug log handling */
 	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, totem->settings);
 
@@ -226,6 +223,8 @@ app_command_line (GApplication             *app,
 	}
 	g_option_context_free (context);
 
+	totem_options_process_early (totem, &optionstate);
+
 	/* Don't create another window if we're remote.
 	 * We can't use g_application_get_is_remote() because it's not registered yet */
 	if (startup_called != FALSE) {
@@ -275,9 +274,9 @@ main (int argc, char **argv)
 	gtk_settings = gtk_settings_get_default ();
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
-
 	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
+	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
 	totem->app = gtk_application_new ("org.gnome.Totem", G_APPLICATION_HANDLES_COMMAND_LINE);
 	g_signal_connect (G_OBJECT (totem->app), "startup",
