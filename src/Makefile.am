@@ -40,6 +40,8 @@ libtotem_player_la_SOURCES = \
 	totem-interface.c	\
 	totem-fullscreen.c	\
 	totem-fullscreen.h	\
+	gd-fullscreen-filter.c	\
+	gd-fullscreen-filter.h	\
 	gsd-media-keys-window.c	\
 	gsd-media-keys-window.h	\
 	gsd-osd-window.c	\

@@ -17,7 +17,6 @@
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
-  <signal name="motion-notify-event" handler="totem_fullscreen_motion_notify"/>
   <signal name="enter-notify-event" handler="totem_fullscreen_control_enter_notify"/>
   <signal name="leave-notify-event" handler="totem_fullscreen_control_leave_notify"/>
 
@@ -27,7 +26,6 @@
       <property name="can_focus">True</property>
       <property name="relief">GTK_RELIEF_NORMAL</property>
       <property name="focus_on_click">True</property>
-      <signal name="motion-notify-event" handler="totem_fullscreen_motion_notify"/>
 
       <child>
 	<object class="GtkAlignment" id="tefw_alignment">
@@ -110,7 +108,6 @@
   <property name="gravity">GDK_GRAVITY_SOUTH_WEST</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
-  <signal name="motion-notify-event" handler="totem_fullscreen_motion_notify"/>
   <signal name="enter-notify-event" handler="totem_fullscreen_control_enter_notify"/>
   <signal name="leave-notify-event" handler="totem_fullscreen_control_leave_notify"/>
 
@@ -184,7 +181,6 @@
 	      <property name="adjustment">tcw_seek_adjustment</property>
 	      <signal name="button-press-event" handler="totem_fullscreen_seek_slider_pressed_cb"/>
 	      <signal name="button-release-event" handler="totem_fullscreen_seek_slider_released_cb"/>
-	      <signal name="motion-notify-event" handler="totem_fullscreen_motion_notify"/>
 	    </object>
 	    <packing>
 	      <property name="padding">0</property>
