@@ -170,6 +170,9 @@ totem_object_local_command_line (GApplication              *application,
 	        goto bail;
 	}
 
+	g_strfreev (optionstate.filenames);
+	optionstate.filenames = NULL;
+
 	*exit_status = 0;
 bail:
 	g_option_context_free (context);
