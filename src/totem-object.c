@@ -960,12 +960,7 @@ totem_object_action_exit (TotemObject *totem)
 		totem_object_plugins_shutdown (totem);
 
 	/* Exit forcefully if we can't do the shutdown in 10 seconds */
-#if GLIB_CHECK_VERSION (2, 31, 0)
 	g_thread_new ("force-exit", (GThreadFunc) totem_action_wait_force_exit, NULL);
-#else
-	g_thread_create ((GThreadFunc) totem_action_wait_force_exit,
-			 NULL, FALSE, NULL);
-#endif
 
 	if (gtk_main_level () > 0)
 		gtk_main_quit ();

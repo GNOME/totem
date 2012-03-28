@@ -80,9 +80,6 @@ int main
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
 #endif
-#if !GLIB_CHECK_VERSION (2, 31, 0)
-	g_thread_init (NULL);
-#endif
 	gdk_threads_init ();
 
 	context = g_option_context_new ("- Play audio and video inside a web browser");
