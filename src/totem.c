@@ -198,6 +198,9 @@ app_command_line (GApplication             *app,
 
 	argv = g_application_command_line_get_arguments (command_line, &argc);
 
+	/* Reset the options, if they were used before */
+	memset (&optionstate, 0, sizeof (optionstate));
+
 	/* Options parsing */
 	context = g_option_context_new (N_("- Play movies and songs"));
 	baconoptiongroup = bacon_video_widget_get_option_group();
