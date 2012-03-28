@@ -259,12 +259,10 @@ totem_create_full_path (const char *path)
 
 	g_return_val_if_fail (path != NULL, NULL);
 
-	if (strstr (path, "://") != NULL)
-		return NULL;
-	if (totem_is_special_mrl (path) != FALSE)
+	file = g_file_new_for_commandline_arg (path);
+	if (file == NULL)
 		return NULL;
 
-	file = g_file_new_for_commandline_arg (path);
 	retval = g_file_get_uri (file);
 	g_object_unref (file);
 
