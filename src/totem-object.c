@@ -143,7 +143,7 @@ static void totem_object_finalize (GObject *totem);
 
 static int totem_table_signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE(TotemObject, totem_object, G_TYPE_OBJECT)
+G_DEFINE_TYPE(TotemObject, totem_object, GTK_TYPE_APPLICATION)
 
 static void
 totem_object_class_init (TotemObjectClass *klass)
@@ -985,8 +985,6 @@ totem_object_action_exit (TotemObject *totem)
 		bacon_video_widget_close (totem->bvw);
 	}
 
-	if (totem->app != NULL)
-		g_object_unref (totem->app);
 	totem_action_save_state (totem, page_id);
 	g_free (page_id);
 

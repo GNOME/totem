@@ -69,7 +69,7 @@ typedef enum {
 } TotemStates;
 
 struct _TotemObject {
-	GObject parent;
+	GtkApplication parent;
 
 	/* Control window */
 	GtkBuilder *xml;
@@ -152,7 +152,6 @@ struct _TotemObject {
 	gint64 seek_to;
 	TotemPlaylist *playlist;
 	GSettings *settings;
-	GtkApplication *app;
 	TotemStates state;
 	TotemOpenLocation *open_location;
 	gboolean remember_position;

@@ -163,7 +163,7 @@ typedef struct _TotemObject TotemObject;
  * The class structure for the #TotemPlParser type.
  **/
 typedef struct {
-	GObjectClass parent_class;
+	GtkApplicationClass parent_class;
 
 	void (*file_opened)			(TotemObject *totem, const char *mrl);
 	void (*file_closed)			(TotemObject *totem);

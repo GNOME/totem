@@ -169,7 +169,7 @@ app_init (Totem *totem, char **argv)
 	if (optionstate.fullscreen == FALSE)
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 
-	gtk_window_set_application (GTK_WINDOW (totem->win), totem->app);
+	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
 
 static void
@@ -275,16 +275,18 @@ main (int argc, char **argv)
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	/* Build the main Totem object */
-	totem = g_object_new (TOTEM_TYPE_OBJECT, NULL);
+	totem = g_object_new (TOTEM_TYPE_OBJECT,
+			      "application-id", "org.gnome.Totem",
+			      "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
+			      NULL);
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
-	totem->app = gtk_application_new ("org.gnome.Totem", G_APPLICATION_HANDLES_COMMAND_LINE);
-	g_signal_connect (G_OBJECT (totem->app), "startup",
+	g_signal_connect (G_OBJECT (totem), "startup",
 			  G_CALLBACK (app_startup), totem);
-	g_signal_connect (G_OBJECT (totem->app), "command-line",
+	g_signal_connect (G_OBJECT (totem), "command-line",
 			  G_CALLBACK (app_command_line), totem);
 
-	g_application_run (G_APPLICATION (totem->app), argc, argv);
+	g_application_run (G_APPLICATION (totem), argc, argv);
 
 	return 0;
 }
