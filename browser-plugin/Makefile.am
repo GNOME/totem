@@ -8,7 +8,6 @@ EXTRA_DIST = \
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)					\
-	-I$(top_srcdir)/lib				\
 	-I$(top_srcdir)/src				\
 	-I$(top_srcdir)/src/backend			\
 	-I$(top_builddir)/src				\
@@ -108,7 +107,6 @@ totem_plugin_viewer_CFLAGS = \
 totem_plugin_viewer_LDADD = \
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
-	$(top_builddir)/lib/libtotemscrsaver.la				\
 	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
 	$(DBUS_LIBS)		\

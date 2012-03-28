@@ -40,7 +40,6 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <totem-pl-parser.h>
-#include <totem-scrsaver.h>
 
 #include <dbus/dbus-glib.h>
 
@@ -110,7 +109,6 @@ typedef struct _TotemEmbedded {
 	GtkWidget *pp_button;
 	GtkWidget *pp_fs_button;
 	TotemStatusbar *statusbar;
-	TotemScrsaver *scrsaver;
 	int width, height;
         char *user_agent;
 	const char *mimetype;
@@ -125,6 +123,7 @@ typedef struct _TotemEmbedded {
 	BaconVideoWidget *bvw;
 	TotemStates state;
 	GdkCursor *cursor;
+	guint inhibit_id;
 
 	/* Playlist, a GList of TotemPlItem */
 	GList *playlist, *current;
@@ -379,8 +378,19 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		break;
 	}
 
-	if (emb->scrsaver != NULL)
-		totem_scrsaver_set_state (emb->scrsaver, (state == TOTEM_STATE_PLAYING) ? FALSE : TRUE);
+	if (state == TOTEM_STATE_PLAYING) {
+		if (emb->inhibit_id == 0) {
+			emb->inhibit_id = gtk_application_inhibit (GTK_APPLICATION (emb),
+								   NULL,
+								   GTK_APPLICATION_INHIBIT_IDLE,
+								   _("Playing a movie"));
+		}
+	} else {
+		if (emb->inhibit_id != 0) {
+			gtk_application_uninhibit (GTK_APPLICATION (emb), emb->inhibit_id);
+			emb->inhibit_id = 0;
+		}
+	}
 	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (emb->pp_fs_button), id);
 
@@ -1886,13 +1896,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	emb->statusbar = TOTEM_STATUSBAR (gtk_builder_get_object (emb->xml, "statusbar"));
 
-	if (!emb->hidden) {
+	if (!emb->hidden)
 		gtk_widget_set_size_request (emb->window, width, height);
-		emb->scrsaver = totem_scrsaver_new ();
-		g_object_set (emb->scrsaver,
-			      "reason", _("Playing a movie"),
-			      NULL);
-	}
 
 #ifdef GNOME_ENABLE_DEBUG
 	child = GTK_WIDGET (gtk_builder_get_object (emb->xml, "controls"));
