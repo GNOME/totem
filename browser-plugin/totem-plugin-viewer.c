@@ -89,8 +89,6 @@ typedef enum {
 #define TOTEM_IS_EMBEDDED_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), TOTEM_TYPE_EMBEDDED))
 #define TOTEM_EMBEDDED_GET_CLASS(o)(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_EMBEDDED, TotemEmbeddedClass))
 
-typedef GObjectClass TotemEmbeddedClass;
-
 typedef struct {
 	char *uri;
 	char *subtitle;
@@ -99,8 +97,12 @@ typedef struct {
 	int starttime;
 } TotemPlItem;
 
+typedef struct {
+	GtkApplicationClass parent;
+} TotemEmbeddedClass;
+
 typedef struct _TotemEmbedded {
-	GObject parent;
+	GtkApplication parent;
 
 	DBusGConnection *conn;
 	GtkWidget *window;
@@ -176,7 +178,7 @@ enum
 	TOTEM_EMBEDDED_UNKNOWN_COMMAND
 };
 
-G_DEFINE_TYPE (TotemEmbedded, totem_embedded, G_TYPE_OBJECT);
+G_DEFINE_TYPE (TotemEmbedded, totem_embedded, GTK_TYPE_APPLICATION);
 static void totem_embedded_init (TotemEmbedded *emb) { }
 
 static gboolean totem_embedded_do_command (TotemEmbedded *emb, const char *command, GError **err);
@@ -2352,7 +2354,10 @@ int main (int argc, char **argv)
 	gtk_settings = gtk_settings_get_default ();
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
-	emb = g_object_new (TOTEM_TYPE_EMBEDDED, NULL);
+	emb = g_object_new (TOTEM_TYPE_EMBEDDED,
+			    "application-id", svcname,
+			    "flags", G_APPLICATION_FLAGS_NONE,
+			    NULL);
 
 	emb->state = TOTEM_STATE_INVALID;
 	emb->width = -1;
