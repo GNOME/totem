@@ -80,7 +80,6 @@ int main
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
 #endif
-	gdk_threads_init ();
 
 	context = g_option_context_new ("- Play audio and video inside a web browser");
 	baconoptiongroup = bacon_video_widget_get_option_group();
