@@ -170,6 +170,27 @@ totem_object_local_command_line (GApplication              *application,
 	        goto bail;
 	}
 
+	/* Replace relative paths with absolute URIs */
+	if (optionstate.filenames != NULL) {
+		guint n_files;
+		int i, n_args;
+
+		n_args = g_strv_length (*arguments);
+		n_files = g_strv_length (optionstate.filenames);
+
+		i = n_args - n_files;
+		for ( ; i < n_args; i++) {
+			char *new_path;
+
+			new_path = totem_create_full_path ((*arguments)[i]);
+			if (new_path == NULL)
+				continue;
+
+			g_free ((*arguments)[i]);
+			(*arguments)[i] = new_path;
+		}
+	}
+
 	g_strfreev (optionstate.filenames);
 	optionstate.filenames = NULL;
 
