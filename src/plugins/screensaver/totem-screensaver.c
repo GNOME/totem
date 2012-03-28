@@ -37,7 +37,6 @@
 
 #include "totem-plugin.h"
 #include "totem.h"
-#include "totem-scrsaver.h"
 #include "backend/bacon-video-widget.h"
 
 #define TOTEM_TYPE_SCREENSAVER_PLUGIN		(totem_screensaver_plugin_get_type ())
@@ -52,9 +51,9 @@ typedef struct {
 	BaconVideoWidget *bvw;
 	GSettings *settings;
 
-	TotemScrsaver *scr;
 	guint          handler_id_playing;
 	guint          handler_id_metadata;
+	guint          handler_id_inhibit;
 } TotemScreensaverPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
@@ -73,12 +72,24 @@ totem_screensaver_update_from_state (TotemObject *totem,
 	lock_screensaver_on_audio = g_settings_get_boolean (pi->priv->settings, "lock-screensaver-on-audio");
 	can_get_frames = bacon_video_widget_can_get_frames (bvw, NULL);
 
-	if (totem_is_playing (totem) != FALSE && can_get_frames)
-		totem_scrsaver_disable (pi->priv->scr);
-	else if (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)
-		totem_scrsaver_disable (pi->priv->scr);
-	else
-		totem_scrsaver_enable (pi->priv->scr);
+	if ((totem_is_playing (totem) != FALSE && can_get_frames) ||
+	    (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)) {
+		if (pi->priv->handler_id_inhibit == 0) {
+			GtkWindow *window;
+
+			window = totem_get_main_window (totem);
+			pi->priv->handler_id_inhibit = gtk_application_inhibit (GTK_APPLICATION (totem),
+										window,
+										GTK_APPLICATION_INHIBIT_IDLE,
+										_(""));
+			g_object_unref (window);
+		}
+	} else {
+		if (pi->priv->handler_id_inhibit != 0) {
+			gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->handler_id_inhibit);
+			pi->priv->handler_id_inhibit = 0;
+		}
+	}
 }
 
 static void
@@ -106,18 +117,8 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
-	GtkWindow *window;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	window = totem_get_main_window (totem);
-
-	pi->priv->scr = totem_scrsaver_new ();
-	g_object_set (pi->priv->scr,
-	              "reason", _("Playing a movie"),
-	              "window", window,
-	              NULL);
-	g_object_unref (window);
-
 	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
 
 	pi->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
@@ -156,11 +157,12 @@ impl_deactivate	(PeasActivatable *plugin)
 		pi->priv->handler_id_metadata = 0;
 	}
 
+	if (pi->priv->handler_id_inhibit != 0) {
+		gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->handler_id_inhibit);
+		pi->priv->handler_id_inhibit = 0;
+	}
+
 	g_object_unref (pi->priv->totem);
 	g_object_unref (pi->priv->bvw);
-
-	totem_scrsaver_enable (pi->priv->scr);
-
-	g_object_unref (pi->priv->scr);
 }
 
