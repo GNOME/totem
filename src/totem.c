@@ -188,8 +188,6 @@ app_command_line (GApplication             *app,
 		  Totem                    *totem)
 {
 	GOptionContext *context;
-	GOptionGroup *baconoptiongroup;
-	GError *error = NULL;
 	int argc;
 	char **argv;
 
@@ -199,25 +197,8 @@ app_command_line (GApplication             *app,
 	memset (&optionstate, 0, sizeof (optionstate));
 
 	/* Options parsing */
-	context = g_option_context_new (N_("- Play movies and songs"));
-	baconoptiongroup = bacon_video_widget_get_option_group();
-	if (baconoptiongroup == NULL) {
-		g_warning ("Clutter or GTK+ failed to initialise properly");
-		g_option_context_free (context);
-		return 1;
-	}
-	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
-	g_option_context_set_translation_domain(context, GETTEXT_PACKAGE);
-	g_option_context_add_group (context, baconoptiongroup);
-
-	g_option_context_add_group (context, gtk_get_option_group (TRUE));
-	/* Only add session options to the server process */
-	if (startup_called != FALSE)
-		totem_session_add_options (context);
-	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
-		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
-				error->message, argv[0]);
-		g_error_free (error);
+	context = totem_options_get_context ();
+	if (g_option_context_parse (context, &argc, &argv, NULL) == FALSE) {
 	        g_option_context_free (context);
 	        return 1;
 	}

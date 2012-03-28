@@ -57,6 +57,7 @@
 #include "totem.h"
 #include "totemobject-marshal.h"
 #include "totem-private.h"
+#include "totem-options.h"
 #include "totem-plugins-engine.h"
 #include "totem-playlist.h"
 #include "bacon-video-widget.h"
@@ -145,16 +146,52 @@ static int totem_table_signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(TotemObject, totem_object, GTK_TYPE_APPLICATION)
 
+static gboolean
+totem_object_local_command_line (GApplication              *application,
+				 gchar                   ***arguments,
+				 int                       *exit_status)
+{
+	GOptionContext *context;
+	GError *error = NULL;
+	char **argv;
+	int argc;
+
+	/* Dupe so that the remote arguments are listed, but
+	 * not removed from the list */
+	argv = g_strdupv (*arguments);
+	argc = g_strv_length (argv);
+
+	context = totem_options_get_context ();
+	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
+		g_print (_("%s\nRun '%s --help' to see a full list of available command line options.\n"),
+				error->message, argv[0]);
+		g_error_free (error);
+	        *exit_status = 1;
+	        goto bail;
+	}
+
+	*exit_status = 0;
+bail:
+	g_option_context_free (context);
+	g_strfreev (argv);
+
+	return FALSE;
+}
+
 static void
 totem_object_class_init (TotemObjectClass *klass)
 {
 	GObjectClass *object_class;
+	GApplicationClass *app_class;
 
 	object_class = (GObjectClass *) klass;
+	app_class = (GApplicationClass *) klass;
 
 	object_class->set_property = totem_object_set_property;
 	object_class->get_property = totem_object_get_property;
 	object_class->finalize = totem_object_finalize;
+
+	app_class->local_command_line = totem_object_local_command_line;
 
 	/**
 	 * TotemObject:fullscreen:
