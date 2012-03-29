@@ -1044,8 +1044,6 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 	gtk_widget_hide (fs);
-	while (gtk_events_pending())
-		gtk_main_iteration();
 
 	if (response == GTK_RESPONSE_ACCEPT) {
 		char *fname;

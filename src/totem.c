@@ -52,13 +52,6 @@
 
 static gboolean startup_called = FALSE;
 
-static void
-long_action (void)
-{
-	while (gtk_events_pending ())
-		gtk_main_iteration ();
-}
-
 /* Debug log message handler: discards debug messages unless Totem is run with TOTEM_DEBUG=1.
  * If we're building in the source tree, enable debug messages by default. */
 static void
@@ -117,12 +110,10 @@ app_init (Totem *totem, char **argv)
 	totem_callback_connect (totem);
 	sidebar_pageid = totem_setup_window (totem);
 
-	/* Show ! gtk_main_iteration trickery to show all the widgets
-	 * we have so far */
+	/* Show ! */
 	if (optionstate.fullscreen == FALSE) {
 		gtk_widget_show (totem->win);
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-		long_action ();
 	} else {
 		gtk_widget_realize (totem->win);
 	}
