@@ -6323,9 +6323,6 @@ bacon_video_widget_initable_iface_init (GInitableIface *iface)
  *
  * Creates a new #BaconVideoWidget.
  *
- * @width and @height give the initial or expected video height. Set them to <code class="literal">-1</code> if the
- * video size is unknown. For small videos, #BaconVideoWidget will be configured differently.
- *
  * A #BvwError will be returned on error.
  *
  * Return value: a new #BaconVideoWidget, or %NULL; destroy with gtk_widget_destroy()
