@@ -80,23 +80,30 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 {
 	GtkWindow *main_window;
 	GdkScreen *screen;
+	GdkDisplay *display;
 	gchar *command_line;
 	GList *uris;
 	GAppInfo *info;
 	GdkAppLaunchContext *context;
 	GError *error = NULL;
-	int xid;
+	char *xid_arg;
 
-	/* Build a command line to use */
 	main_window = totem_get_main_window (pi->priv->totem);
 	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
-	xid = gdk_x11_window_get_xid (gtk_widget_get_window (GTK_WIDGET (main_window)));
+	display = gdk_display_get_default ();
+
+	/* Build a command line to use */
+	xid_arg = NULL;
+#ifdef GDK_WINDOWING_X11
+	if (GDK_IS_X11_DISPLAY (display))
+		xid_arg = g_strdup_printf ("-x %d", (int) gdk_x11_window_get_xid (gtk_widget_get_window (GTK_WIDGET (main_window))));
+#endif /* GDK_WINDOWING_X11 */
 	g_object_unref (main_window);
 
 	if (copy != FALSE)
-		command_line = g_strdup_printf ("brasero -x %d -c", xid);
+		command_line = g_strdup_printf ("brasero %s -c", xid_arg ? xid_arg : "");
 	else
-		command_line = g_strdup_printf ("brasero -x %d -r", xid);
+		command_line = g_strdup_printf ("brasero %s -r", xid_arg ? xid_arg : "");
 
 	/* Build the app info */
 	info = g_app_info_create_from_commandline (command_line, NULL,
