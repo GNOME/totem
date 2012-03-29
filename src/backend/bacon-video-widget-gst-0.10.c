@@ -80,6 +80,7 @@
 #include <gtk/gtkx.h>
 #include <glib/gi18n-lib.h>
 #include <gio/gio.h>
+#include <gdesktop-enums.h>
 
 #include "totem-gst-helpers.h"
 #include "bacon-video-widget.h"
@@ -2164,6 +2165,72 @@ bvw_set_auth_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
+bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  GSettings *settings;
+  GDesktopProxyMode mode;
+  char *url;
+  const char *host, *user_id, *user_pw;
+  int port;
+  gboolean is_https;
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy") == NULL ||
+      g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy-id") == NULL ||
+      g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy-pw") == NULL)
+    return;
+
+  settings = g_settings_new ("org.gnome.system.proxy");
+  mode = g_settings_get_enum (settings, "mode");
+  g_object_unref (settings);
+
+  if (mode == G_DESKTOP_PROXY_MODE_NONE)
+    return;
+  if (mode == G_DESKTOP_PROXY_MODE_AUTO)
+    {
+      /* FIXME: Auto proxy configuration is unhandled */
+      GST_DEBUG ("Auto proxy configuration is unhandled");
+      return;
+    }
+
+  if (g_str_has_prefix (bvw->priv->mrl, "https://"))
+    {
+      settings = g_settings_new ("org.gnome.system.proxy.https");
+      is_https = TRUE;
+    }
+  else
+    {
+      settings = g_settings_new ("org.gnome.system.proxy.http");
+      is_https = FALSE;
+    }
+
+  host = g_settings_get_string (settings, "host");
+  if (*host == '\0')
+    goto finish;
+  port = g_settings_get_int (settings, "port");
+  if (port == 0)
+    goto finish;
+
+  url = g_strdup_printf ("http://%s:%d", host, port);
+  g_object_set (element, "proxy", url, NULL);
+  g_free (url);
+
+  /* https doesn't handle authentication yet */
+  if (is_https ||
+      g_settings_get_boolean (settings, "use-authentication") == FALSE)
+    goto finish;
+
+  user_id = g_settings_get_string (settings, "authentication-user");
+  user_pw = g_settings_get_string (settings, "authentication-password");
+  g_object_set (element,
+		"proxy-id", user_id,
+		"proxy-pw", user_pw,
+		NULL);
+
+finish:
+  g_object_unref (settings);
+}
+
+static void
 bvw_set_referrer_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
   BaconVideoWidgetPrivate *priv = bvw->priv;
@@ -2216,6 +2283,7 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
   bvw_set_user_agent_on_element (bvw, source);
   bvw_set_referrer_on_element (bvw, source);
   bvw_set_auth_on_element (bvw, source);
+  bvw_set_proxy_on_element (bvw, source);
 }
 
 static void
