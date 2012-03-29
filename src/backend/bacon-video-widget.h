@@ -249,13 +249,12 @@ void bacon_video_widget_set_user_agent           (BaconVideoWidget *bvw,
 void bacon_video_widget_set_referrer             (BaconVideoWidget *bvw,
                                                   const char *referrer);
 
-gboolean bacon_video_widget_change_rate (BaconVideoWidget *bvw, gboolean increase);
-
-gboolean bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat new_rate);
-
-gboolean bacon_video_widget_reset_rate (BaconVideoWidget *bvw);
-
-gfloat bacon_video_widget_get_rate (BaconVideoWidget *bvw);
+gboolean bacon_video_widget_change_rate		 (BaconVideoWidget *bvw,
+						  gboolean increase);
+gboolean bacon_video_widget_set_rate		 (BaconVideoWidget *bvw,
+						  gfloat new_rate);
+gboolean bacon_video_widget_reset_rate		 (BaconVideoWidget *bvw);
+gfloat bacon_video_widget_get_rate		 (BaconVideoWidget *bvw);
 
 /* Metadata */
 /**
