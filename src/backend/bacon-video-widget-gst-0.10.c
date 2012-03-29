@@ -2170,8 +2170,7 @@ bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
   GSettings *settings;
   GDesktopProxyMode mode;
-  char *url;
-  const char *host, *user_id, *user_pw;
+  char *url, *host = NULL, *user_id, *user_pw;
   int port;
   gboolean is_https;
 
@@ -2232,8 +2231,11 @@ bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
 		"proxy-id", user_id,
 		"proxy-pw", user_pw,
 		NULL);
+  g_free (user_pw);
+  g_free (user_id);
 
 finish:
+  g_free (host);
   g_object_unref (settings);
 }
 
