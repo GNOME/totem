@@ -2184,14 +2184,20 @@ bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
   mode = g_settings_get_enum (settings, "mode");
   g_object_unref (settings);
 
-  if (mode == G_DESKTOP_PROXY_MODE_NONE)
-    return;
-  if (mode == G_DESKTOP_PROXY_MODE_AUTO)
-    {
+  switch (mode) {
+    case G_DESKTOP_PROXY_MODE_NONE:
+      return;
+    case G_DESKTOP_PROXY_MODE_MANUAL:
+      /* Handled below. */
+      break;
+    case G_DESKTOP_PROXY_MODE_AUTO:
       /* FIXME: Auto proxy configuration is unhandled */
       GST_DEBUG ("Auto proxy configuration is unhandled");
       return;
-    }
+    default:
+      GST_DEBUG ("Proxy mode %d is unhandled", mode);
+      return;
+  }
 
   if (g_str_has_prefix (bvw->priv->mrl, "https://"))
     {
