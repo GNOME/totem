@@ -104,7 +104,11 @@
 
 #define I_(string) (g_intern_static_string (string))
 
-G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_CLUTTER_TYPE_EMBED)
+static void bacon_video_widget_initable_iface_init (GInitableIface *iface);
+
+G_DEFINE_TYPE_WITH_CODE (BaconVideoWidget, bacon_video_widget, GTK_CLUTTER_TYPE_EMBED,
+			 G_IMPLEMENT_INTERFACE (G_TYPE_INITABLE,
+						bacon_video_widget_initable_iface_init))
 
 /* Signals */
 enum
@@ -6055,21 +6059,10 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
   return retval;
 }
 
-/**
- * bacon_video_widget_new:
- * @error: a #GError, or %NULL
- *
- * Creates a new #BaconVideoWidget.
- *
- * @width and @height give the initial or expected video height. Set them to <code class="literal">-1</code> if the
- * video size is unknown. For small videos, #BaconVideoWidget will be configured differently.
- *
- * A #BvwError will be returned on error.
- *
- * Return value: a new #BaconVideoWidget, or %NULL; destroy with gtk_widget_destroy()
- **/
-GtkWidget *
-bacon_video_widget_new (GError ** error)
+static gboolean
+bacon_video_widget_initable_init (GInitable     *initable,
+				  GCancellable  *cancellable,
+				  GError       **error)
 {
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
@@ -6079,6 +6072,8 @@ bacon_video_widget_new (GError ** error)
   ClutterConstraint *constraint;
   GstElement *balance, *sink, *bin;
   GstPad *pad, *ghostpad;
+
+  bvw = BACON_VIDEO_WIDGET (initable);
 
 #ifndef GST_DISABLE_GST_DEBUG
   if (_totem_gst_debug_cat == NULL) {
@@ -6093,17 +6088,12 @@ bacon_video_widget_new (GError ** error)
 
   gst_pb_utils_init ();
 
-  bvw = BACON_VIDEO_WIDGET (g_object_new
-                            (bacon_video_widget_get_type (), NULL));
-
   bvw->priv->play = gst_element_factory_make ("playbin2", "play");
   if (!bvw->priv->play) {
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
-    g_object_ref_sink (bvw);
-    g_object_unref (bvw);
-    return NULL;
+    return FALSE;
   }
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
@@ -6137,7 +6127,6 @@ bacon_video_widget_new (GError ** error)
 
   audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
 
-
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_stage_set_color (CLUTTER_STAGE (bvw->priv->stage), &black);
 
@@ -6150,8 +6139,13 @@ bacon_video_widget_new (GError ** error)
 				     NULL);
   sink = clutter_gst_video_sink_new (CLUTTER_TEXTURE (bvw->priv->texture));
   bvw->priv->navigation = GST_NAVIGATION (sink);
-  if (sink == NULL)
+  if (sink == NULL) {
     g_critical ("Could not create Clutter video sink");
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
+                 _("Failed to create a GStreamer play object. "
+                   "Please check your GStreamer installation."));
+    return FALSE;
+  }
 
   /* The logo */
   bvw->priv->logo_frame = totem_aspect_frame_new ();
@@ -6301,26 +6295,45 @@ bacon_video_widget_new (GError ** error)
   g_signal_connect (bvw->priv->play, "text-tags-changed",
       G_CALLBACK (text_tags_changed_cb), bvw);
 
-  return GTK_WIDGET (bvw);
+  return TRUE;
 
   /* errors */
 sink_error:
-  {
-    if (video_sink) {
-      gst_element_set_state (video_sink, GST_STATE_NULL);
-      gst_object_unref (video_sink);
-    }
-    if (audio_sink) {
-      gst_element_set_state (audio_sink, GST_STATE_NULL);
-      gst_object_unref (audio_sink);
-    }
-
-    g_object_ref (bvw);
-    g_object_ref_sink (G_OBJECT (bvw));
-    g_object_unref (bvw);
-
-    return NULL;
+  if (video_sink) {
+    gst_element_set_state (video_sink, GST_STATE_NULL);
+    gst_object_unref (video_sink);
   }
+  if (audio_sink) {
+    gst_element_set_state (audio_sink, GST_STATE_NULL);
+    gst_object_unref (audio_sink);
+  }
+
+  return FALSE;
+}
+
+static void
+bacon_video_widget_initable_iface_init (GInitableIface *iface)
+{
+  iface->init = bacon_video_widget_initable_init;
+}
+
+/**
+ * bacon_video_widget_new:
+ * @error: a #GError, or %NULL
+ *
+ * Creates a new #BaconVideoWidget.
+ *
+ * @width and @height give the initial or expected video height. Set them to <code class="literal">-1</code> if the
+ * video size is unknown. For small videos, #BaconVideoWidget will be configured differently.
+ *
+ * A #BvwError will be returned on error.
+ *
+ * Return value: a new #BaconVideoWidget, or %NULL; destroy with gtk_widget_destroy()
+ **/
+GtkWidget *
+bacon_video_widget_new (GError ** error)
+{
+  return GTK_WIDGET (g_initable_new (BACON_TYPE_VIDEO_WIDGET, NULL, error, NULL));
 }
 
 gfloat
