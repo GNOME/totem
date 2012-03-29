@@ -1496,6 +1496,8 @@ gboolean
 window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		       TotemObject *totem)
 {
+	GAction *action;
+
 	if (event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) {
 		totem->maximised = (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
 		totem_action_set_sensitivity ("zoom-1-2", !totem->maximised);
@@ -1514,7 +1516,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);
-		totem_action_set_sensitivity ("fullscreen", FALSE);
 	} else {
 		GtkAction *action;
 
@@ -1529,8 +1530,11 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
 
 		show_controls (totem, TRUE);
-		totem_action_set_sensitivity ("fullscreen", TRUE);
 	}
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
+	g_simple_action_set_state (G_SIMPLE_ACTION (action),
+				   g_variant_new_boolean (totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN));
 
 	g_object_notify (G_OBJECT (totem), "fullscreen");
 
@@ -1572,7 +1576,10 @@ totem_action_fullscreen (TotemObject *totem, gboolean state)
 void
 fs_exit1_activate_cb (GtkButton *button, TotemObject *totem)
 {
-	totem_action_fullscreen (totem, FALSE);
+	GAction *action;
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
+	g_action_change_state (action, g_variant_new_boolean (FALSE));
 }
 
 void
@@ -1778,9 +1785,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		/* Subtitle selection */
 		totem_action_set_sensitivity ("select-subtitle", FALSE);
 
-		/* Fullscreen */
-		totem_action_set_sensitivity ("fullscreen", FALSE);
-
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		update_mrl_label (totem, NULL);
@@ -1793,7 +1797,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		gboolean caps;
 		gdouble volume;
 		char *autoload_sub = NULL;
-		GdkWindowState window_state;
 		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
@@ -1832,10 +1835,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 
 		/* Subtitle selection */
 		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl) && retval);
-
-		/* Fullscreen */
-		window_state = gdk_window_get_state (gtk_widget_get_window (totem->win));
-		totem_action_set_sensitivity ("fullscreen", !(window_state & GDK_WINDOW_STATE_FULLSCREEN));
 
 		/* Set the playlist */
 		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
@@ -3350,33 +3349,21 @@ subtitle_changed_cb (GtkWidget *playlist, TotemObject *totem)
 static void
 playlist_repeat_toggle_cb (TotemPlaylist *playlist, gboolean repeat, TotemObject *totem)
 {
-	GtkAction *action;
+	GAction *action;
 
-	action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
-
-	g_signal_handlers_block_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
-			NULL, NULL, totem);
-
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), repeat);
-
-	g_signal_handlers_unblock_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
-			NULL, NULL, totem);
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
+	g_simple_action_set_state (G_SIMPLE_ACTION (action),
+				   g_variant_new_boolean (repeat));
 }
 
 static void
 playlist_shuffle_toggle_cb (TotemPlaylist *playlist, gboolean shuffle, TotemObject *totem)
 {
-	GtkAction *action;
+	GAction *action;
 
-	action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
-
-	g_signal_handlers_block_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
-			NULL, NULL, totem);
-
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), shuffle);
-
-	g_signal_handlers_unblock_matched (G_OBJECT (action), G_SIGNAL_MATCH_DATA, 0, 0,
-			NULL, NULL, totem);
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
+	g_simple_action_set_state (G_SIMPLE_ACTION (action),
+				   g_variant_new_boolean (shuffle));
 }
 
 /**
@@ -4092,14 +4079,15 @@ totem_callback_connect (TotemObject *totem)
 	GtkAction *action;
 	GtkActionGroup *action_group;
 	GtkBox *box;
+	GAction *gaction;
 
 	/* Menu items */
-	action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-		totem_playlist_get_repeat (totem->playlist));
-	action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-		totem_playlist_get_shuffle (totem->playlist));
+	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
+	g_simple_action_set_state (G_SIMPLE_ACTION (gaction),
+				   g_variant_new_boolean (totem_playlist_get_repeat (totem->playlist)));
+	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
+	g_simple_action_set_state (G_SIMPLE_ACTION (gaction),
+				   g_variant_new_boolean (totem_playlist_get_shuffle (totem->playlist)));
 
 	/* Controls */
 	box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_buttons_hbox"));
@@ -4138,13 +4126,14 @@ totem_callback_connect (TotemObject *totem)
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Fullscreen button */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"fullscreen");
-	item = gtk_action_create_tool_item (action);
 	/* Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window. */
+	item = GTK_WIDGET (gtk_toggle_tool_button_new ());
+	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "view-fullscreen-symbolic");
 	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), _("Fullscreen"));
 	/* Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window. */
 	atk_object_set_name (gtk_widget_get_accessible (item), _("Fullscreen"));
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
+	gtk_widget_show (item);
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Sidebar button (Drag'n'Drop) */
@@ -4219,7 +4208,6 @@ totem_callback_connect (TotemObject *totem)
 	 * and skip-* are back in the main action group. */
 	/*totem_action_set_sensitivity ("skip-forward", FALSE);
 	totem_action_set_sensitivity ("skip-backwards", FALSE);*/
-	totem_action_set_sensitivity ("fullscreen", FALSE);
 
 	action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
 

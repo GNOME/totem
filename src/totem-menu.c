@@ -42,14 +42,11 @@
 #define TOTEM_MAX_RECENT_ITEM_LEN 40
 
 /* Callback functions for GtkBuilder */
-G_MODULE_EXPORT void open_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void open_location_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void eject_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void properties_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void preferences_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void fullscreen_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_1_2_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_1_1_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_2_1_action_callback (GtkAction *action, Totem *totem);
@@ -69,13 +66,108 @@ G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *tote
 G_MODULE_EXPORT void contents_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void about_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void plugins_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void repeat_mode_action_callback (GtkToggleAction *action, Totem *totem);
-G_MODULE_EXPORT void shuffle_mode_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void show_controls_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
 G_MODULE_EXPORT void select_subtitle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void clear_playlist_action_callback (GtkAction *action, Totem *totem);
+
+static void
+open_action_cb (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	totem_action_open (TOTEM_OBJECT (user_data));
+}
+
+static void
+open_location_action_cb (GSimpleAction *action,
+			 GVariant      *parameter,
+			 gpointer       user_data)
+{
+	totem_action_open_location (TOTEM_OBJECT (user_data));
+}
+
+static void
+fullscreen_change_state (GSimpleAction *action,
+			 GVariant      *value,
+			 gpointer       user_data)
+{
+	gboolean param;
+
+	param = g_variant_get_boolean (value);
+	totem_action_fullscreen (TOTEM_OBJECT (user_data), param);
+
+	g_simple_action_set_state (action, value);
+}
+
+static void
+shuffle_change_state (GSimpleAction *action,
+		      GVariant      *value,
+		      gpointer       user_data)
+{
+	gboolean param;
+
+	param = g_variant_get_boolean (value);
+	totem_playlist_set_shuffle (TOTEM_OBJECT (user_data)->playlist, param);
+
+	g_simple_action_set_state (action, value);
+}
+
+static void
+repeat_change_state (GSimpleAction *action,
+		     GVariant      *value,
+		     gpointer       user_data)
+{
+	gboolean param;
+
+	param = g_variant_get_boolean (value);
+	totem_playlist_set_repeat (TOTEM_OBJECT (user_data)->playlist, param);
+
+	g_simple_action_set_state (action, value);
+}
+
+static void
+toggle_action_cb (GSimpleAction *action,
+		  GVariant      *parameter,
+		  gpointer       user_data)
+{
+	GVariant *state;
+
+	state = g_action_get_state (G_ACTION (action));
+	g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
+	g_variant_unref (state);
+}
+
+static void
+quit_action_cb (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	totem_action_exit (TOTEM_OBJECT (user_data));
+}
+
+static GActionEntry app_entries[] = {
+	{ "open", open_action_cb, NULL, NULL, NULL },
+	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
+	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
+	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
+	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
+	{ "quit", quit_action_cb, NULL, NULL, NULL },
+};
+
+void
+totem_app_menu_setup (Totem *totem)
+{
+	GMenuModel *appmenu;
+
+	g_action_map_add_action_entries (G_ACTION_MAP (totem), app_entries, G_N_ELEMENTS (app_entries), totem);
+
+	appmenu = (GMenuModel *)gtk_builder_get_object (totem->xml, "appmenu");
+	gtk_application_set_app_menu (GTK_APPLICATION (totem), appmenu);
+
+	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
+}
 
 /* Helper function to escape underscores in labels
  * before putting them in menu items */
@@ -1007,18 +1099,6 @@ totem_setup_play_disc (Totem *totem)
 }
 
 void
-open_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_open (totem);
-}
-
-void
-open_location_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_open_location (totem);
-}
-
-void
 eject_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_eject (totem);
@@ -1046,12 +1126,6 @@ void
 preferences_action_callback (GtkAction *action, Totem *totem)
 {
 	gtk_widget_show (totem->prefs);
-}
-
-void
-fullscreen_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_fullscreen_toggle (totem);
 }
 
 void
@@ -1259,20 +1333,6 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 	}
 
 	gtk_window_present (GTK_WINDOW (totem->plugins));
-}
-
-void
-repeat_mode_action_callback (GtkToggleAction *action, Totem *totem)
-{
-	totem_playlist_set_repeat (totem->playlist,
-			gtk_toggle_action_get_active (action));
-}
-
-void
-shuffle_mode_action_callback (GtkToggleAction *action, Totem *totem)
-{
-	totem_playlist_set_shuffle (totem->playlist,
-			gtk_toggle_action_get_active (action));
 }
 
 void

@@ -84,6 +84,9 @@ app_init (Totem *totem, char **argv)
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
+	g_object_bind_property (G_OBJECT (totem), "fullscreen",
+				G_OBJECT (totem->win), "show-menubar",
+				G_BINDING_INVERT_BOOLEAN);
 
 	/* Menubar */
 	totem_ui_manager_setup (totem);
@@ -107,7 +110,9 @@ app_init (Totem *totem, char **argv)
 	totem_setup_file_monitoring (totem);
 	totem_setup_file_filters ();
 	totem_setup_play_disc (totem);
+	totem_app_menu_setup (totem);
 	totem_callback_connect (totem);
+
 	sidebar_pageid = totem_setup_window (totem);
 
 	/* Show ! */
