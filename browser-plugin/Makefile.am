@@ -110,7 +110,6 @@ totem_plugin_viewer_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(SN_LIBS)		\
 	$(DBUS_LIBS)		\
-	$(XTEST_LIBS)		\
 	$(X_LIBS)
 
 totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml

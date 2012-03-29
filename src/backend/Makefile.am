@@ -17,8 +17,7 @@ bvw_test_CFLAGS = \
 
 bvw_test_LDADD = \
 	libbaconvideowidget.la	\
-	$(DEPENDENCY_LIBS)	\
-	$(XTEST_LIBS)
+	$(DEPENDENCY_LIBS)
 
 # Marshallers
 BVW_MARSHAL_FILES = baconvideowidget-marshal.c baconvideowidget-marshal.h

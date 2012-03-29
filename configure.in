@@ -270,18 +270,6 @@ for gdk_target in $gdk_targets; do
 		CFLAGS="$X_INCLUDES $CFLAGS"
 		LIBS="$X_LIBRARIES $LIBS"
 
-		XTEST_LIBS=""
-		enable_xtest=no
-		AC_CHECK_LIB(Xtst, XTestFakeKeyEvent,
-			XTEST_LIBS="-lX11 -lXtst $X_LIBRARIES"
-			enable_xtest=yes
-			AC_DEFINE(HAVE_XTEST, 1, [defined if you have XTest library]),
-			,
-			$X_LIBRARIES)
-		AC_SUBST(XTEST_LIBS)
-
-		X_LIBS=""
-
 		dnl Explicitely link against libX11 to avoid problems with crappy linkers
 		X_LIBS="$X_LIBRARIES -lX11"
 		AC_SUBST(X_LIBS)
@@ -875,11 +863,6 @@ if test x$ENABLE_NAUTILUS = xyes ; then
 	AC_MSG_NOTICE([** Nautilus properties page enabled])
 else
 	AC_MSG_NOTICE([   Nautilus properties page disabled])
-fi
-if test x$enable_xtest = xyes ; then
-	AC_MSG_NOTICE([** XTest (legacy screensaver) support enabled])
-else
-	AC_MSG_NOTICE([   XTest (legacy screensaver) support disabled])
 fi
 if test x$have_xfree = xyes ; then
 	AC_MSG_NOTICE([** XFree86 multimedia keys support enabled])
