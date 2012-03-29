@@ -307,7 +307,7 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		add_lang_action (totem, action_group, ui_id, paths, prefix,
 				 action_data, i, num + 1, &group);
 		g_free (action_data);
- 		i++;
+		i++;
 	}
 
 	g_hash_table_destroy (lookup);
@@ -368,7 +368,7 @@ totem_languages_update (Totem *totem, GList *list)
 		action = create_lang_actions (totem, totem->languages_action_group,
 				totem->languages_ui_id,
 				paths,
-			       	"languages", list, TRUE);
+				"languages", list, TRUE);
 		gtk_ui_manager_ensure_update (totem->ui_manager);
 
 		current = bacon_video_widget_get_language (totem->bvw);
@@ -408,7 +408,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 		action = create_lang_actions (totem, totem->subtitles_action_group,
 				totem->subtitles_ui_id,
 				paths,
-			       	"subtitles", list, FALSE);
+				"subtitles", list, FALSE);
 		gtk_ui_manager_ensure_update (totem->ui_manager);
 
 		current = bacon_video_widget_get_subtitle (totem->bvw);
@@ -539,8 +539,8 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
                 info = (GtkRecentInfo *) l->data;
 
                 if (gtk_recent_info_has_group (info, "Totem")) {
-                	gtk_recent_info_ref (info);
-                	totem_items = g_list_prepend (totem_items, info);
+			gtk_recent_info_ref (info);
+			totem_items = g_list_prepend (totem_items, info);
 		}
 	}
 	g_list_foreach (items, (GFunc) gtk_recent_info_unref, NULL);
@@ -1131,7 +1131,7 @@ preferences_action_callback (GtkAction *action, Totem *totem)
 void
 zoom_1_2_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_set_scale_ratio (totem, 0.5); 
+	totem_action_set_scale_ratio (totem, 0.5);
 }
 
 void
@@ -1159,7 +1159,7 @@ select_subtitle_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_playlist_select_subtitle_dialog (totem->playlist,
 					       TOTEM_PLAYLIST_DIALOG_PLAYING);
-} 
+}
 
 void
 next_angle_action_callback (GtkAction *action, Totem *totem)
