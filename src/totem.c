@@ -36,7 +36,6 @@
 
 #ifdef GDK_WINDOWING_X11
 /* X11 headers */
-#include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #endif
 
@@ -229,18 +228,13 @@ main (int argc, char **argv)
 {
 	Totem *totem;
 	GtkSettings *gtk_settings;
-#ifdef GDK_WINDOWING_X11
-	GdkDisplay *display;
-#endif
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
 #ifdef GDK_WINDOWING_X11
-	display = gdk_display_get_default ();
-	if (GDK_IS_X11_DISPLAY (display) &&
-	    XInitThreads () == 0)
+	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
 		g_set_application_name (_("Totem Movie Player"));
