@@ -3155,7 +3155,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		}
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
-		gtk_window_present (GTK_WINDOW (totem->win));
+		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
 		break;
 	case TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS:
 		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)

@@ -215,8 +215,6 @@ app_command_line (GApplication             *app,
 		g_strfreev (optionstate.filenames);
 		optionstate.filenames = NULL;
 		startup_called = FALSE;
-	} else {
-		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
 	}
 
 	/* Now do something with it */
