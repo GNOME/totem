@@ -48,12 +48,6 @@
 
 #include <string.h>
 
-#ifdef GDK_WINDOWING_X11
-/* X11 headers */
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
-#endif
-
 #include "totem.h"
 #include "totemobject-marshal.h"
 #include "totem-private.h"
