@@ -243,6 +243,9 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **d
 	TotemCodecInstallContext *ctx;
 	GstInstallPluginsReturn status;
 	guint i, num;
+#ifdef GDK_WINDOWING_X11
+	GdkDisplay *display;
+#endif
 
 	num = g_strv_length (details);
 	g_return_val_if_fail (num > 0 && g_strv_length (descriptions) == num, FALSE);
@@ -281,14 +284,18 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **d
 	install_ctx = gst_install_plugins_context_new ();
 
 #ifdef GDK_WINDOWING_X11
-	if (gtk_widget_get_window (GTK_WIDGET (bvw)) != NULL && gtk_widget_get_realized (GTK_WIDGET (bvw)))
+	display = gdk_display_get_default ();
+
+	if (GDK_IS_X11_DISPLAY (display) &&
+	    gtk_widget_get_window (GTK_WIDGET (bvw)) != NULL &&
+	    gtk_widget_get_realized (GTK_WIDGET (bvw)))
 	{
 		gulong xid = 0;
 
 		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (bvw));
 		gst_install_plugins_context_set_xid (install_ctx, xid);
 	}
-#endif
+#endif /* GDK_WINDOWING_X11 */
 
 	status = gst_install_plugins_async (ctx->details, install_ctx,
 	                                    on_plugin_installation_done,
