@@ -487,12 +487,12 @@ drop_finished_cb (TotemPlaylist *playlist, GAsyncResult *result, gpointer user_d
 
 static void
 drop_cb (GtkWidget        *widget,
-         GdkDragContext   *context, 
+         GdkDragContext   *context,
 	 gint              x,
 	 gint              y,
-	 GtkSelectionData *data, 
-	 guint             info, 
-	 guint             _time, 
+	 GtkSelectionData *data,
+	 guint             info,
+	 guint             _time,
 	 TotemPlaylist    *playlist)
 {
 	char **list;
@@ -643,7 +643,7 @@ playlist_show_popup_menu (TotemPlaylist *playlist, GdkEventButton *event)
 	}
 
 	count = gtk_tree_selection_count_selected_rows (playlist->priv->selection);
-	
+
 	if (count == 0) {
 		return FALSE;
 	}
@@ -729,9 +729,9 @@ totem_playlist_set_reorderable (TotemPlaylist *playlist, gboolean set)
 	}
 }
 
-static gboolean 
+static gboolean
 button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
-{ 
+{
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
 
 	if (playlist->priv->drop_disabled)
@@ -746,7 +746,7 @@ button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 	return FALSE;
 }
 
-static gboolean 
+static gboolean
 button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 {
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
@@ -766,7 +766,7 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 	return FALSE;
 }
 
-static void 
+static void
 drag_begin_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 {
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
@@ -776,7 +776,7 @@ drag_begin_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 	return;
 }
 
-static void 
+static void
 drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 {
 	TotemPlaylist *playlist = (TotemPlaylist *)data;
@@ -1469,7 +1469,7 @@ ensure_shuffled (TotemPlaylist *playlist)
 	} else {
 		current = -1;
 	}
-	
+
 	current_new = -1;
 
 	array = g_array_sized_new (FALSE, FALSE, sizeof (RandomData), PL_LEN);
@@ -2635,7 +2635,7 @@ totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state)
 				      path, NULL,
 				      TRUE, 0.5, 0);
 	gtk_tree_path_free (path);
-	
+
 	return TRUE;
 }
 
@@ -2749,7 +2749,7 @@ totem_playlist_get_repeat (TotemPlaylist *playlist)
 
 	return playlist->priv->repeat;
 }
-	
+
 void
 totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat)
 {
