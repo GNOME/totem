@@ -289,6 +289,7 @@ totem_interface_get_full_path (const char *name)
 	return filename;
 }
 
+#ifdef GDK_WINDOWING_X11
 static GdkWindow *
 totem_gtk_plug_get_toplevel (GtkPlug *plug)
 {
@@ -320,11 +321,18 @@ totem_gtk_plug_get_toplevel (GtkPlug *plug)
 	}
 	while (TRUE);
 }
+#endif /* GDK_WINDOWING_X11 */
 
 void
 totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 {
-	if (GTK_IS_PLUG (parent)) {
+#ifdef GDK_WINDOWING_X11
+	GdkDisplay *display;
+
+	display = gdk_display_get_default ();
+
+	if (GDK_IS_X11_DISPLAY (display) &&
+	    GTK_IS_PLUG (parent)) {
 		GdkWindow *toplevel;
 
 		gtk_widget_realize (GTK_WIDGET (window));
@@ -334,10 +342,12 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 				(gtk_widget_get_window (GTK_WIDGET (window)), toplevel);
 			g_object_unref (toplevel);
 		}
-	} else {
-		gtk_window_set_transient_for (GTK_WINDOW (window),
-				GTK_WINDOW (parent));
+		return;
 	}
+#endif /* GDK_WINDOWING_X11 */
+
+	gtk_window_set_transient_for (GTK_WINDOW (window),
+				      GTK_WINDOW (parent));
 }
 
 char *
