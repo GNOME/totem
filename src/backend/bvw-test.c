@@ -5,6 +5,7 @@
 #include <gdk/gdk.h>
 #include "bacon-video-widget.h"
 #ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #endif
 
@@ -78,7 +79,11 @@ int main
 	GtkWidget *win, *bvw;
 
 #ifdef GDK_WINDOWING_X11
-	XInitThreads ();
+	GdkDisplay *display;
+
+	display = gdk_display_get_default ();
+	if (GDK_IS_X11_DISPLAY (display))
+		XInitThreads ();
 #endif
 
 	context = g_option_context_new ("- Play audio and video inside a web browser");
