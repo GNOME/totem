@@ -33,10 +33,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <libpeas/peas-activatable.h>
 
-#ifdef HAVE_XFREE
-#include <X11/XF86keysym.h>
-#endif
-
 #include "totem-plugin.h"
 #include "totem-screenshot-plugin.h"
 #include "totem-screenshot.h"
@@ -132,11 +128,9 @@ static gboolean
 window_key_press_event_cb (GtkWidget *window, GdkEventKey *event, TotemScreenshotPlugin *self)
 {
 	switch (event->keyval) {
-#ifdef HAVE_XFREE
-	case XF86XK_Save:
+	case GDK_KEY_Save:
 		take_screenshot_action_cb (NULL, self);
 		break;
-#endif /* HAVE_XFREE */
 	case GDK_KEY_s:
 	case GDK_KEY_S:
 		if (event->state & GDK_CONTROL_MASK)
