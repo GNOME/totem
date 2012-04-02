@@ -2056,6 +2056,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 		}
 		g_free (oldSrc);
 	}
+
+	mAutoPlay = FALSE;
 #endif
 
 #if 0 //def TOTEM_MULLY_PLUGIN
