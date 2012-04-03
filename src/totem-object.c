@@ -3870,8 +3870,7 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 			&& ((event->state & GDK_CONTROL_MASK)
 			|| (event->state & GDK_MOD1_MASK)
 			|| (event->state & GDK_MOD3_MASK)
-			|| (event->state & GDK_MOD4_MASK)
-			|| (event->state & GDK_MOD5_MASK)))
+			|| (event->state & GDK_MOD4_MASK)))
 		return FALSE;
 
 	if (event->type == GDK_KEY_PRESS) {
