@@ -857,7 +857,7 @@ add_mount_to_menu (GMount *mount,
 	label = g_strdup_printf (_("Play Image '%s'"), escaped_name);
 	g_free (escaped_name);
 
-	name = g_strdup_printf (_("device%d"), position);
+	name = g_strdup_printf ("device%d", position);
 
 	action = gtk_action_new (name, label, NULL, NULL);
 	g_object_set (G_OBJECT (action),
@@ -940,7 +940,7 @@ add_volume_to_menu (GVolume *volume,
 	label = g_strdup_printf (_("Play Disc '%s'"), escaped_name);
 	g_free (escaped_name);
 
-	name = g_strdup_printf (_("device%d"), position);
+	name = g_strdup_printf ("device%d", position);
 
 	action = gtk_action_new (name, label, NULL, NULL);
 	g_object_set (G_OBJECT (action),
