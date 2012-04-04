@@ -1067,7 +1067,7 @@ on_movie_menu_select (GtkMenuItem *movie_menuitem, Totem *totem)
 
 static void
 on_g_volume_monitor_event (GVolumeMonitor *monitor,
-			   gpointer *device,
+			   gpointer device,
 			   Totem *totem)
 {
 	totem->drives_changed = TRUE;
