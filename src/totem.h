@@ -30,7 +30,6 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-#include <totem-disc.h>
 #include "totem-cell-renderer-video.h"
 
 /**
@@ -223,10 +222,6 @@ gboolean totem_action_set_mrl_with_warning	(TotemObject *totem,
 						 const char *subtitle,
 						 gboolean warn);
 
-void	totem_action_play_media			(TotemObject *totem,
-						 TotemDiscMediaType type,
-						 const char *device);
-
 void	totem_action_toggle_aspect_ratio	(TotemObject *totem);
 void	totem_action_set_aspect_ratio		(TotemObject *totem, int ratio);
 int	totem_action_get_aspect_ratio		(TotemObject *totem);
@@ -238,8 +233,6 @@ void	totem_action_set_scale_ratio		(TotemObject *totem, gfloat ratio);
 void    totem_object_action_error               (TotemObject *totem,
 						 const char *title,
 						 const char *reason);
-void    totem_action_play_media_device		(TotemObject *totem,
-						 const char *device);
 
 gboolean totem_is_fullscreen			(TotemObject *totem);
 #define totem_is_playing totem_object_is_playing

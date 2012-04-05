@@ -41,7 +41,6 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <totem-disc.h>
 #include <stdlib.h>
 #include <math.h>
 #include <gio/gio.h>
@@ -88,7 +87,6 @@ static const GtkTargetEntry target_table[] = {
 };
 
 static gboolean totem_action_open_files_list (TotemObject *totem, GSList *list);
-static gboolean totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char *device);
 static void update_buttons (TotemObject *totem);
 static void update_fill (TotemObject *totem, gdouble level);
 static void update_media_menu_items (TotemObject *totem);
@@ -1275,151 +1273,6 @@ totem_action_open_dialog (TotemObject *totem, const char *path, gboolean play)
 	}
 
 	return TRUE;
-}
-
-static gboolean
-totem_action_load_media (TotemObject *totem, TotemDiscMediaType type, const char *device)
-{
-	char **mrls;
-	GError *error = NULL;
-	const char *uri, *link_text, *secondary;
-	gboolean retval;
-
-	mrls = bacon_video_widget_get_mrls (totem->bvw, type, device, &error);
-	if (mrls == NULL) {
-		char *msg;
-
-		/* No errors? Weird */
-		if (error == NULL) {
-			msg = g_strdup_printf (_("Totem could not play this media (%s) although a plugin is present to handle it."), _(totem_cd_get_human_readable_name (type)));
-			totem_action_error (totem, msg, _("You might want to check that a disc is present in the drive and that it is correctly configured."));
-			g_free (msg);
-			return FALSE;
-		}
-
-		/* No plugin for the media type */
-		if (g_error_matches (error, BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE) != FALSE) {
-			uri = "http://projects.gnome.org/totem/#codecs";
-			link_text = _("More information about media plugins");
-			secondary = _("Please install the necessary plugins and restart Totem to be able to play this media.");
-			if (type == MEDIA_TYPE_DVD || type == MEDIA_TYPE_VCD)
-				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because it does not have the appropriate plugins to be able to read from the disc."), _(totem_cd_get_human_readable_name (type)));
-			else
-				msg = g_strdup_printf (_("Totem cannot play this type of media (%s) because you do not have the appropriate plugins to handle it."), _(totem_cd_get_human_readable_name (type)));
-		/* Unsupported type (ie. CDDA) */
-		} else if (g_error_matches (error, BVW_ERROR, BVW_ERROR_INVALID_LOCATION) != FALSE) {
-			msg = g_strdup_printf(_("Totem cannot play this type of media (%s) because it is not supported."), _(totem_cd_get_human_readable_name (type)));
-			totem_action_error (totem, msg, _("Please insert another disc to play back."));
-			g_free (msg);
-			return FALSE;
-		} else {
-			g_assert_not_reached ();
-		}
-
-		totem_interface_error_with_link (msg, secondary, uri, link_text, GTK_WINDOW (totem->win));
-		g_free (msg);
-		return FALSE;
-	}
-
-	retval = totem_action_open_files (totem, mrls);
-	g_strfreev (mrls);
-
-	return retval;
-}
-
-static gboolean
-totem_action_load_media_device (TotemObject *totem, const char *device)
-{
-	TotemDiscMediaType type;
-	GError *error = NULL;
-	char *device_path, *url;
-	gboolean retval;
-
-	if (g_str_has_prefix (device, "file://") != FALSE)
-		device_path = g_filename_from_uri (device, NULL, NULL);
-	else
-		device_path = g_strdup (device);
-
-	type = totem_cd_detect_type_with_url (device_path, &url, &error);
-
-	switch (type) {
-		case MEDIA_TYPE_ERROR:
-			totem_action_error (totem,
-					    _("Totem was not able to play this disc."),
-					    error ? error->message : _("No reason."));
-			retval = FALSE;
-			break;
-		case MEDIA_TYPE_DATA:
-			/* Set default location to the mountpoint of
-			 * this device */
-			retval = totem_action_open_dialog (totem, url, FALSE);
-			break;
-		case MEDIA_TYPE_DVD:
-		case MEDIA_TYPE_VCD:
-			retval = totem_action_load_media (totem, type, device_path);
-			break;
-		case MEDIA_TYPE_CDDA:
-			totem_action_error (totem,
-					    _("Totem does not support playback of Audio CDs"),
-					    _("Please consider using a music player or a CD extractor to play this CD"));
-			retval = FALSE;
-			break;
-		case MEDIA_TYPE_DVB:
-		default:
-			g_assert_not_reached ();
-	}
-
-	g_free (url);
-	g_free (device_path);
-
-	return retval;
-}
-
-/**
- * totem_action_play_media_device:
- * @totem: a #TotemObject
- * @device: the media device's path
- *
- * Attempts to play the media device (for example, a DVD drive or CD drive)
- * with the given @device path by first adding it to the playlist, then
- * playing it.
- *
- * An error dialog will be displayed if Totem cannot read or play what's on
- * the media device.
- **/
-void
-totem_action_play_media_device (TotemObject *totem, const char *device)
-{
-	char *mrl;
-
-	if (totem_action_load_media_device (totem, device) != FALSE) {
-		mrl = totem_playlist_get_current_mrl (totem->playlist, NULL);
-		totem_action_set_mrl_and_play (totem, mrl, NULL);
-		g_free (mrl);
-	}
-}
-
-/**
- * totem_action_play_media:
- * @totem: a #TotemObject
- * @type: the type of disc media
- * @device: the media's device path
- *
- * Attempts to play the media found on @device (for example, a DVD in a drive or a DVB
- * tuner) by first adding it to the playlist, then playing it.
- *
- * An error dialog will be displayed if Totem cannot support media of @type.
- **/
-void
-totem_action_play_media (TotemObject *totem, TotemDiscMediaType type, const char *device)
-{
-	char *mrl;
-
-	if (totem_action_load_media (totem, type, device) != FALSE) {
-		mrl = totem_playlist_get_current_mrl (totem->playlist, NULL);
-		totem_action_set_mrl_and_play (totem, mrl, NULL);
-		g_free (mrl);
-	}
 }
 
 /**
@@ -2848,10 +2701,7 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 				cleared = TRUE;
 			}
 
-			if (totem_is_block_device (filename) != FALSE) {
-				totem_action_load_media_device (totem, data);
-				changed = TRUE;
-			} else if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
+			if (g_str_has_prefix (filename, "dvb:/") != FALSE) {
 				mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (data, NULL));
 				changed = TRUE;
 			} else {
@@ -3143,15 +2993,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 			totem_action_set_mrl (totem, NULL, NULL);
 			break;
 		}
-		if (strcmp (url, "dvd:") == 0) {
-			/* FIXME b0rked */
-			totem_action_play_media (totem, MEDIA_TYPE_DVD, NULL);
-		} else if (strcmp (url, "vcd:") == 0) {
-			/* FIXME b0rked */
-			totem_action_play_media (totem, MEDIA_TYPE_VCD, NULL);
-		} else {
-			totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
-		}
+		totem_playlist_add_mrl (totem->playlist, url, NULL, TRUE, NULL, NULL, NULL);
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
 		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
