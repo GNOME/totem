@@ -88,22 +88,23 @@ static void save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 static char *
 get_special_url (GFile *file)
 {
-	char *path, *uri, *mime_type;
+	char *path, *orig_uri, *uri, *mime_type;
 	TotemDiscMediaType type;
 
 	path = g_file_get_path (file);
 
 	mime_type = g_content_type_guess (path, NULL, 0, NULL);
+	g_free (path);
 	if (g_strcmp0 (mime_type, "application/x-cd-image") != 0) {
-		g_free (path);
 		g_free (mime_type);
 		return NULL;
 	}
 	g_free (mime_type);
 
 	uri = NULL;
-	type = totem_cd_detect_type_with_url (path, &uri, NULL);
-	g_free (path);
+	orig_uri = g_file_get_uri (file);
+	type = totem_cd_detect_type_with_url (orig_uri, &uri, NULL);
+	g_free (orig_uri);
 
 	if (type == MEDIA_TYPE_DVD ||
 	    type == MEDIA_TYPE_VCD)
