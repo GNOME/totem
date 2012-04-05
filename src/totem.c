@@ -109,7 +109,6 @@ app_init (Totem *totem, char **argv)
 	totem_session_setup (totem, argv);
 	totem_setup_file_monitoring (totem);
 	totem_setup_file_filters ();
-	totem_setup_play_disc (totem);
 	totem_app_menu_setup (totem);
 	totem_callback_connect (totem);
 
