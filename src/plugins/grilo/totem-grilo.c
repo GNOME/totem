@@ -564,7 +564,7 @@ play (TotemGriloPlugin *self,
 		const GList *slow_keys;
 		GList *url_keys;
 		slow_keys = grl_metadata_source_slow_keys (GRL_METADATA_SOURCE (source));
-		if (g_list_find ((GList *) slow_keys, GRL_METADATA_KEY_URL) != NULL) {
+		if (g_list_find ((GList *) slow_keys, GINT_TO_POINTER (GRL_METADATA_KEY_URL)) != NULL) {
 			url_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_URL, NULL);
 			grl_media_source_metadata (source, media, url_keys, 0, resolve_url_cb, self);
 			g_list_free (url_keys);
