@@ -513,16 +513,25 @@ browse (TotemGriloPlugin *self,
         gint page)
 {
 	if (source != NULL) {
-		BrowseUserData *bud = g_slice_new (BrowseUserData);
+		BrowseUserData *bud;
+		GrlOperationOptions *default_options;
+
+		default_options = grl_operation_options_new (NULL);
+		grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
+		grl_operation_options_set_count (default_options, PAGE_SIZE);
+
+		bud = g_slice_new (BrowseUserData);
 		bud->totem_grilo = g_object_ref (self);
 		bud->ref_parent = gtk_tree_row_reference_new (self->priv->browser_model, path);
 		grl_media_source_browse (source,
 		                         container,
 		                         browse_keys (),
-		                         (page - 1) * PAGE_SIZE, PAGE_SIZE,
-		                         BROWSE_FLAGS,
+		                         default_options,
 		                         browse_cb,
 		                         bud);
+
+		g_object_unref (default_options);
 	} else {
 		show_sources (self);
 	}
@@ -635,17 +644,24 @@ search_cb (GrlMediaSource *source,
 static void
 search_more (TotemGriloPlugin *self)
 {
+	GrlOperationOptions *default_options;
+
+	default_options = grl_operation_options_new (NULL);
+	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+	grl_operation_options_set_skip (default_options, (self->priv->search_page - 1) * PAGE_SIZE);
+	grl_operation_options_set_count (default_options, PAGE_SIZE);
+
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_page++;
 	self->priv->search_remaining = PAGE_SIZE;
 	self->priv->search_id = grl_media_source_search (self->priv->search_source,
 	                                                 self->priv->search_text,
 	                                                 search_keys (),
-	                                                 (self->priv->search_page - 1) * PAGE_SIZE,
-	                                                 PAGE_SIZE,
-	                                                 BROWSE_FLAGS,
+	                                                 default_options,
 	                                                 search_cb,
 	                                                 self);
+	g_object_unref (default_options);
+
 	if (self->priv->search_id == 0) {
 		search_cb (self->priv->search_source, 0, NULL, 0, self, NULL);
 	}
