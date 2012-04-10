@@ -6083,8 +6083,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->logo_mode = FALSE;
   bvw->priv->auto_resize = FALSE;
 
-  audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
-
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_stage_set_color (CLUTTER_STAGE (bvw->priv->stage), &black);
 
@@ -6142,66 +6140,12 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   gst_element_link (balance, sink);
 
+  /* And tell playbin */
   video_sink = bin;
-  gst_element_set_state (video_sink, GST_STATE_READY);
+  g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
 
-  if (audio_sink) {
-    GstStateChangeReturn ret;
-    GstBus *bus;
-
-    /* need to set bus explicitly as it's not in a bin yet and
-     * we need one to catch error messages */
-    bus = gst_bus_new ();
-    gst_element_set_bus (audio_sink, bus);
-
-    /* state change NULL => READY should always be synchronous */
-    ret = gst_element_set_state (audio_sink, GST_STATE_READY);
-    gst_element_set_bus (audio_sink, NULL);
-
-    if (ret == GST_STATE_CHANGE_FAILURE) {
-      /* doesn't work, drop this audio sink */
-      gst_element_set_state (audio_sink, GST_STATE_NULL);
-      gst_object_unref (audio_sink);
-      /* Hopefully, fakesink should always work */
-      audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
-      if (audio_sink == NULL) {
-        GstMessage *err_msg;
-
-        err_msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, 0);
-        if (err_msg == NULL) {
-          g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
-                       _("Failed to open audio output. You may not have "
-                         "permission to open the sound device, or the sound "
-                         "server may not be running. "
-                         "Please select another audio output in the Multimedia "
-                         "Systems Selector."));
-        } else if (error) {
-          *error = bvw_error_from_gst_error (bvw, err_msg);
-          gst_message_unref (err_msg);
-        }
-        gst_object_unref (bus);
-        goto sink_error;
-      }
-      /* make fakesink sync to the clock like a real sink */
-      g_object_set (audio_sink, "sync", TRUE, NULL);
-      GST_DEBUG ("audio sink doesn't work, using fakesink instead");
-      bvw->priv->uses_audio_fakesink = TRUE;
-    }
-    gst_object_unref (bus);
-  } else {
-    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
-                 _("Could not find the audio output. "
-                   "You may need to install additional GStreamer plugins, or "
-                   "select another audio output in the Multimedia Systems "
-                   "Selector."));
-    goto sink_error;
-  }
-
-  /* set back to NULL to close device again in order to avoid interrupts
-   * being generated after startup while there's nothing to play yet
-   * FIXME not needed anymore, PulseAudio? */
-  gst_element_set_state (audio_sink, GST_STATE_NULL);
+  /* Audio sink */
+  audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
 
   /* Link the audiopitch element */
   bvw->priv->audio_capsfilter =
@@ -6221,10 +6165,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gst_element_add_pad (audio_bin, gst_ghost_pad_new ("sink", audio_pad));
   gst_object_unref (audio_pad);
 
+  /* And tell playbin */
   audio_sink = audio_bin;
-
-  /* now tell playbin */
-  g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
   g_object_set (bvw->priv->play, "audio-sink", audio_sink, NULL);
 
   bvw->priv->vis_plugins_list = NULL;
@@ -6250,19 +6192,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
       G_CALLBACK (text_tags_changed_cb), bvw);
 
   return TRUE;
-
-  /* errors */
-sink_error:
-  if (video_sink) {
-    gst_element_set_state (video_sink, GST_STATE_NULL);
-    gst_object_unref (video_sink);
-  }
-  if (audio_sink) {
-    gst_element_set_state (audio_sink, GST_STATE_NULL);
-    gst_object_unref (audio_sink);
-  }
-
-  return FALSE;
 }
 
 static void
