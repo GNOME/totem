@@ -3332,15 +3332,8 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
     } else {
 #endif
       if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
-        if (GST_IS_BASE_AUDIO_SINK (err_msg->src)) {
-          ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
-              _("The requested audio output was not found. "
-                "Please select another audio output in the Multimedia "
-                "Systems Selector."));
-        } else {
-          ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-                                     _("Location not found."));
-        }
+        ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+                                   _("Location not found."));
       } else {
         ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
             _("Could not open location; "
@@ -3349,21 +3342,6 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
 #if 0
     }
 #endif
-  } else if (is_error (e, RESOURCE, BUSY)) {
-    if (GST_IS_VIDEO_SINK (err_msg->src)) {
-      /* a somewhat evil check, but hey.. */
-      ret = g_error_new_literal (BVW_ERROR,
-          BVW_ERROR_VIDEO_PLUGIN,
-          _("The video output is in use by another application. "
-            "Please close other video applications, or select "
-            "another video output in the Multimedia Systems Selector."));
-    } else if (GST_IS_BASE_AUDIO_SINK (err_msg->src)) {
-      ret = g_error_new_literal (BVW_ERROR,
-          BVW_ERROR_AUDIO_BUSY,
-           _("The audio output is in use by another application. "
-             "Please select another audio output in the Multimedia Systems Selector. "
-             "You may want to consider using a sound server."));
-    }
   } else if (e->domain == GST_RESOURCE_ERROR) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
                                e->message);
