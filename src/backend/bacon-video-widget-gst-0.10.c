@@ -6028,6 +6028,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   ClutterConstraint *constraint;
   GstElement *balance, *sink, *bin;
   GstPad *pad, *ghostpad;
+  GstElement *audio_bin;
+  GstPad *audio_pad;
 
   bvw = BACON_VIDEO_WIDGET (initable);
 
@@ -6201,29 +6203,25 @@ bacon_video_widget_initable_init (GInitable     *initable,
    * FIXME not needed anymore, PulseAudio? */
   gst_element_set_state (audio_sink, GST_STATE_NULL);
 
-  do {
-    GstElement *audio_bin;
-    GstPad *audio_pad;
+  /* Link the audiopitch element */
+  bvw->priv->audio_capsfilter =
+    gst_element_factory_make ("capsfilter", "audiofilter");
+  audio_bin = gst_bin_new ("audiosinkbin");
+  bvw->priv->audio_pitchcontrol =
+    gst_element_factory_make ("pitch", "audiopitch");
+  g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
+  gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
+		    bvw->priv->audio_pitchcontrol, audio_sink, NULL);
+  gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
+			 bvw->priv->audio_pitchcontrol, "sink");
+  gst_element_link_pads (bvw->priv->audio_pitchcontrol, "src",
+			 audio_sink, "sink");
 
-    bvw->priv->audio_capsfilter =
-        gst_element_factory_make ("capsfilter", "audiofilter");
-    audio_bin = gst_bin_new ("audiosinkbin");
-    bvw->priv->audio_pitchcontrol =
-        gst_element_factory_make ("pitch", "audiopitch");
-    g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
-    gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
-        bvw->priv->audio_pitchcontrol, audio_sink, NULL);
-    gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
-        bvw->priv->audio_pitchcontrol, "sink");
-    gst_element_link_pads (bvw->priv->audio_pitchcontrol, "src",
-        audio_sink, "sink");
+  audio_pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
+  gst_element_add_pad (audio_bin, gst_ghost_pad_new ("sink", audio_pad));
+  gst_object_unref (audio_pad);
 
-    audio_pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
-    gst_element_add_pad (audio_bin, gst_ghost_pad_new ("sink", audio_pad));
-    gst_object_unref (audio_pad);
-
-    audio_sink = audio_bin;
-  } while (0);
+  audio_sink = audio_bin;
 
   /* now tell playbin */
   g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
