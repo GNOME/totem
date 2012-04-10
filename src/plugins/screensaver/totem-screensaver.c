@@ -81,7 +81,7 @@ totem_screensaver_update_from_state (TotemObject *totem,
 			pi->priv->handler_id_inhibit = gtk_application_inhibit (GTK_APPLICATION (totem),
 										window,
 										GTK_APPLICATION_INHIBIT_IDLE,
-										_(""));
+										_("Playing a movie"));
 			g_object_unref (window);
 		}
 	} else {
