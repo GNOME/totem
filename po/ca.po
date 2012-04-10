@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the totem package.
 # Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004, 2005, 2006, 2007.
 # Gil Forcada <gilforcada@guifi.net>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
+# Jordi Serratosa <jordis@softcatala.cat>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.14\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-24 01:35+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-03-28 18:27+0000\n"
 "PO-Revision-Date: 2012-03-24 01:36+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../data/fullscreen.ui.h:1
@@ -947,8 +949,8 @@ msgstr "Extensions"
 #: ../src/eggfileformatchooser.c:657
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
 "No s'ha pogut descobrir el format de fitxer que voleu utilitzar per a «%s». "
@@ -1799,31 +1801,31 @@ msgid "Select Movies or Playlists"
 msgstr "Seleccioneu pel·lícules o llistes de reproducció"
 
 #. Options parsing
-#: ../src/totem.c:201
+#: ../src/totem.c:204
 msgid "- Play movies and songs"
 msgstr "- Reproduïu vídeos i cançons"
 
-#: ../src/totem.c:212
+#: ../src/totem.c:220
 #, c-format
 msgid ""
 "%s\n"
 "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 "%s\n"
-"Executeu «%s --help» per veure una llista completa de les opcions de la "
-"línia d'ordres.\n"
+"Executeu «%s --help» per veure una llista completa de les opcions de la línia "
+"d'ordres.\n"
 
-#: ../src/totem.c:254 ../src/totem.c:265
+#: ../src/totem.c:262 ../src/totem.c:273
 #: ../browser-plugin/totem-plugin-viewer.c:663
 #: ../browser-plugin/totem-plugin-viewer.c:1793
 msgid "Totem Movie Player"
 msgstr "Reproductor de vídeo Totem"
 
-#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2251
+#: ../src/totem.c:263 ../browser-plugin/totem-plugin-viewer.c:2251
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No s'han pogut inicialitzar les biblioteques que permeten fils segurs."
 
-#: ../src/totem.c:255
+#: ../src/totem.c:263
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifiqueu la instal·lació del sistema. El Totem sortirà ara."
 
@@ -1910,7 +1912,7 @@ msgstr ""
 msgid "Media contains no supported video streams."
 msgstr "El medi no conté cap flux de vídeo conegut."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6052
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6053
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1918,7 +1920,7 @@ msgstr ""
 "No s'ha pogut crear un objecte de reproducció del GStreamer. Comproveu la "
 "instal·lació del GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6172
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6173
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1928,7 +1930,7 @@ msgstr ""
 "obrir el dispositiu d'àudio, o que el servidor de so no s'estigui executant. "
 "Seleccioneu una altra sortida de so al selector de sistemes multimèdia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6192
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6193
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2295,7 +2297,7 @@ msgstr "Cerca subtítols per a la pel·lícula que s'està reproduint."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brazilian Portuguese"
-msgstr "Brasiler portuguès"
+msgstr "Brasiler portuguès"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:177
 msgid "Searching for subtitles…"
@@ -3025,18 +3027,17 @@ msgstr "Copia la ubicació"
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
+#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Velocitat de connexió a la xarxa aproximada, s'utilitza per seleccionar "
 #~ "la qualitat dels recursos obtinguts a través de la xarxa: «0» mòdem de "
-#~ "14.4 Kbps, «1» mòdem de 19.2 Kbps, «2» mòdem de 28.8 Kbps, «3» mòdem de "
-#~ "33.6 Kbps, «4» mòdem de 34.4 Kbps, «5» mòdem/XDSI de 56 Kbps, «6» XDSI "
-#~ "dual/ADSL de 112 Kbps, «7» ADSL/Cable de 256 Kbps, «8» ADSL/cable de 384 "
-#~ "Kbps, «9» ADSL/cable de 512 Kbps, «10»T1/intranet/LAN de 1.5 Mbps i «11» "
-#~ "intranet/LAN."
+#~ "14.4 Kbps, «1» mòdem de 19.2 Kbps, «2» mòdem de 28.8 Kbps, «3» mòdem de 33.6 "
+#~ "Kbps, «4» mòdem de 34.4 Kbps, «5» mòdem/XDSI de 56 Kbps, «6» XDSI dual/ADSL "
+#~ "de 112 Kbps, «7» ADSL/Cable de 256 Kbps, «8» ADSL/cable de 384 Kbps, «9» "
+#~ "ADSL/cable de 512 Kbps, «10»T1/intranet/LAN de 1.5 Mbps i «11» intranet/LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
@@ -3050,9 +3051,9 @@ msgstr "Copia la ubicació"
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Tipus de sortida d'àudio a utilitzar: «0» per a estèreo, «1» per a "
-#~ "sortida a 4 canals, «2» per a sortida amb canals 5.0, «3» per a sortida "
-#~ "amb canals 5.1, «4» per a AC3 directe a la targeta de so."
+#~ "Tipus de sortida d'àudio a utilitzar: «0» per a estèreo, «1» per a sortida "
+#~ "a 4 canals, «2» per a sortida amb canals 5.0, «3» per a sortida amb canals "
+#~ "5.1, «4» per a AC3 directe a la targeta de so."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
@@ -3300,8 +3301,8 @@ msgstr "Copia la ubicació"
 
 #~ msgid "The server you are trying to connect to (%s) is unreachable."
 #~ msgstr ""
-#~ "No es pot contactar amb el servidor al qual esteu intentant connectar "
-#~ "(%s)."
+#~ "No es pot contactar amb el servidor al qual esteu intentant connectar (%"
+#~ "s)."
 
 #~ msgid "The connection to this server was refused."
 #~ msgstr "S'ha refusat la connexió a aquest servidor."
