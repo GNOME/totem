@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the totem package.
 # Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004, 2005, 2006, 2007.
 # Gil Forcada <gilforcada@guifi.net>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
+# Jordi Serratosa <jordis@softcatala.cat>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 2.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-24 01:38+0100\n"
+"POT-Creation-Date: 2012-04-10 23:36+0200\n"
 "PO-Revision-Date: 2012-03-24 01:36+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -1316,7 +1317,7 @@ msgstr "Inseriu un altre disc a reproduir."
 msgid "Totem was not able to play this disc."
 msgstr "El Totem no pot reproduir este disc."
 
-#: ../src/totem-object.c:1301 ../src/totem-object.c:4229
+#: ../src/totem-object.c:1301 ../src/totem-object.c:4228
 msgid "No reason."
 msgstr "Sense motiu."
 
@@ -1343,25 +1344,25 @@ msgstr "El Totem no ha pogut mostrar els continguts de l'ajuda."
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
-#: ../src/totem-object.c:4064 ../src/totem-object.c:4066
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
 msgid "Previous Chapter/Movie"
 msgstr "Capítol/pel·lícula anterior"
 
-#: ../src/totem-object.c:4073 ../src/totem-object.c:4075
+#: ../src/totem-object.c:4072 ../src/totem-object.c:4074
 msgid "Play / Pause"
 msgstr "Reprodueix / Fes una pausa"
 
-#: ../src/totem-object.c:4083 ../src/totem-object.c:4085
+#: ../src/totem-object.c:4082 ../src/totem-object.c:4084
 msgid "Next Chapter/Movie"
 msgstr "Capítol/pel·lícula següent"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4097 ../src/totem-object.c:4099
+#: ../src/totem-object.c:4096 ../src/totem-object.c:4098
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4229
+#: ../src/totem-object.c:4228
 msgid "Totem could not startup."
 msgstr "No s'ha pogut executar el Totem."
 
@@ -1798,11 +1799,11 @@ msgid "Select Movies or Playlists"
 msgstr "Seleccioneu pel·lícules o llistes de reproducció"
 
 #. Options parsing
-#: ../src/totem.c:201
+#: ../src/totem.c:204
 msgid "- Play movies and songs"
 msgstr "- Reproduïu vídeos i cançons"
 
-#: ../src/totem.c:212
+#: ../src/totem.c:220
 #, c-format
 msgid ""
 "%s\n"
@@ -1812,17 +1813,17 @@ msgstr ""
 "Executeu «%s --help» per veure una llista completa de les opcions de la "
 "línia d'ordes.\n"
 
-#: ../src/totem.c:254 ../src/totem.c:265
+#: ../src/totem.c:262 ../src/totem.c:273
 #: ../browser-plugin/totem-plugin-viewer.c:663
 #: ../browser-plugin/totem-plugin-viewer.c:1793
 msgid "Totem Movie Player"
 msgstr "Reproductor de vídeo Totem"
 
-#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2251
+#: ../src/totem.c:263 ../browser-plugin/totem-plugin-viewer.c:2251
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No s'han pogut inicialitzar les biblioteques que permeten fils segurs."
 
-#: ../src/totem.c:255
+#: ../src/totem.c:263
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifiqueu la instal·lació del sistema. El Totem eixirà ara."
 
@@ -1907,7 +1908,7 @@ msgstr ""
 msgid "Media contains no supported video streams."
 msgstr "El medi no conté cap flux de vídeo conegut."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6052
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6053
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1915,7 +1916,7 @@ msgstr ""
 "No s'ha pogut crear un objecte de reproducció del GStreamer. Comproveu la "
 "instal·lació del GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6172
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6173
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1925,7 +1926,7 @@ msgstr ""
 "obrir el dispositiu d'àudio, o que el servidor de so no s'estiga executant. "
 "Seleccioneu una altra eixida de so al selector de sistemes multimèdia."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6192
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6193
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2292,7 +2293,7 @@ msgstr "Cerca subtítols per a la pel·lícula que s'està reproduint."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brazilian Portuguese"
-msgstr "Brasiler portuguès"
+msgstr "Brasiler portugués"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:177
 msgid "Searching for subtitles…"
