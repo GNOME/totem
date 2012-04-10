@@ -137,48 +137,58 @@ else
 fi
 
 dnl Check for elements from gst-plugins-base
+dnl Set plugins which contain below elements
+set -- playback ffmpegcolorspace videoscale
 for base_element in playbin2 ffmpegcolorspace videoscale
 do
-	AC_MSG_CHECKING([GStreamer 0.10 $base_element plugin])
+	AC_MSG_CHECKING([GStreamer 0.10 $base_element element])
 	if $gst010_inspect $base_element >/dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
 		AC_MSG_ERROR([
-			Cannot find required GStreamer-0.10 plugin '$base_element'.
+			Cannot find required GStreamer-0.10 plugin '$1'.
 			It should be part of gst-plugins-base. Please install it.
 		])
+
 	fi
+	shift;
 done
 
 dnl Check for elements from gst-plugins-good
+dnl Set plugins which contain below elements
+set -- autodetect goom
 for good_element in autoaudiosink goom
 do
-	AC_MSG_CHECKING([GStreamer 0.10 $good_element plugin])
+	AC_MSG_CHECKING([GStreamer 0.10 $good_element element])
 	if $gst010_inspect $good_element >/dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
 		AC_MSG_ERROR([
-			Cannot find required GStreamer-0.10 plugin '$good_element'.
+			Cannot find required GStreamer-0.10 plugin '$1'.
 			It should be part of gst-plugins-good. Please install it.
 		])
 	fi
+	shift;
 done
 
 dnl Check for elements from gst-plugins-bad
+dnl Set plugins which contain below elements
+set -- soundtouch
 for bad_element in pitch
 do
-	AC_MSG_CHECKING([GStreamer 0.10 $bad_element plugin])
+	AC_MSG_CHECKING([GStreamer 0.10 $bad_element element])
 	if $gst010_inspect $bad_element >/dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
 		AC_MSG_ERROR([
-			Cannot find required GStreamer-0.10 plugin '$bad_element'.
+			Cannot find required GStreamer-0.10 plugin '$1'.
 			It should be part of gst-plugins-bad. Please install it.
 		])
 	fi
+	shift;
 done
 
 dnl Check the smclient backend
