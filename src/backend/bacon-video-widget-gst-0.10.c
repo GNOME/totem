@@ -3464,16 +3464,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 
   g_object_unref (file);
 
-  if (g_str_has_prefix (mrl, "icy:") != FALSE) {
-    /* Handle "icy://" URLs from QuickTime */
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 4);
-  } else if (g_str_has_prefix (mrl, "icyx:") != FALSE) {
-    /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
-  }
-
   bvw->priv->got_redirect = FALSE;
   bvw->priv->media_has_video = FALSE;
   bvw->priv->media_has_audio = FALSE;
