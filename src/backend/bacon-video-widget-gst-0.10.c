@@ -233,8 +233,6 @@ struct BaconVideoWidgetPrivate
   gint                         video_fps_n;
   gint                         video_fps_d;
 
-  gchar                       *media_device;
-
   BvwAudioOutputType           speakersetup;
   gint                         connection_speed;
 
@@ -2121,18 +2119,6 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 }
 
 static void
-bvw_set_device_on_element (BaconVideoWidget * bvw, GstElement * element)
-{
-  if (bvw->priv->media_device == NULL)
-    return;
-
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "device")) {
-    GST_DEBUG ("Setting device to '%s'", bvw->priv->media_device);
-    g_object_set (element, "device", bvw->priv->media_device, NULL);
-  }
-}
-
-static void
 bvw_set_user_agent_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
   BaconVideoWidgetPrivate *priv = bvw->priv;
@@ -2291,7 +2277,6 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
     return;
 
   GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
-  bvw_set_device_on_element (bvw, source);
   bvw_set_user_agent_on_element (bvw, source);
   bvw_set_referrer_on_element (bvw, source);
   bvw_set_auth_on_element (bvw, source);
@@ -2542,9 +2527,6 @@ bacon_video_widget_finalize (GObject * object)
 
   g_free (bvw->priv->user_agent);
   bvw->priv->user_agent = NULL;
-
-  g_free (bvw->priv->media_device);
-  bvw->priv->media_device = NULL;
 
   g_free (bvw->priv->referrer);
   bvw->priv->referrer = NULL;
@@ -5930,7 +5912,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
                         bvw);
 
   bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
-  bvw->priv->media_device = g_strdup ("/dev/dvd");
   bvw->priv->visq = BVW_VISUALIZATION_SMALL;
   bvw->priv->show_vfx = FALSE;
   bvw->priv->vis_element_name = g_strdup ("goom");
