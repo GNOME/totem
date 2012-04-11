@@ -3420,7 +3420,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 {
   GFile *file;
   char *path;
-  GstBus *bus;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (mrl != NULL, FALSE);
@@ -3473,14 +3472,10 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   /* Flush the bus to make sure we don't get any messages
    * from the previous URI, see bug #607224.
    */
-  bus = gst_element_get_bus (bvw->priv->play);
-  gst_bus_set_flushing (bus, TRUE);
-
+  gst_bus_set_flushing (bvw->priv->bus, TRUE);
   bvw->priv->target_state = GST_STATE_READY;
   gst_element_set_state (bvw->priv->play, GST_STATE_READY);
-
-  gst_bus_set_flushing (bus, FALSE);
-  gst_object_unref (bus);
+  gst_bus_set_flushing (bvw->priv->bus, FALSE);
 
   g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
                 "suburi", subtitle_uri, NULL);
@@ -3741,9 +3736,7 @@ static void
 bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 {
   GstState cur_state;
-  GstBus *bus;
 
-  bus = gst_element_get_bus (bvw->priv->play);
   gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
   if (cur_state > GST_STATE_READY) {
     GstMessage *msg;
@@ -3754,8 +3747,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     /* process all remaining state-change messages so everything gets
      * cleaned up properly (before the state change to NULL flushes them) */
     GST_DEBUG ("processing pending state-change messages");
-    while ((msg = gst_bus_poll (bus, GST_MESSAGE_STATE_CHANGED, 0))) {
-      gst_bus_async_signal_func (bus, msg, NULL);
+    while ((msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_STATE_CHANGED, 0))) {
+      gst_bus_async_signal_func (bvw->priv->bus, msg, NULL);
       gst_message_unref (msg);
     }
   }
@@ -3763,8 +3756,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   /* and now drop all following messages until we start again. The
    * bus is set to flush=false again in bacon_video_widget_open()
    */
-  gst_bus_set_flushing (bus, TRUE);
-  gst_object_unref (bus);
+  gst_bus_set_flushing (bvw->priv->bus, TRUE);
 
   /* Now in READY or lower */
   bvw->priv->target_state = GST_STATE_READY;
