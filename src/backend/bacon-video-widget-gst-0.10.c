@@ -3469,18 +3469,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
     g_free (bvw->priv->mrl);
     bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
-  } else if (g_str_has_prefix (mrl, "dvd:///")) {
-    /* this allows to play backups of dvds */
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = g_strdup ("dvd://");
-    g_free (bvw->priv->media_device);
-    bvw->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
-  } else if (g_str_has_prefix (mrl, "vcd:///")) {
-    /* this allows to play backups of vcds */
-    g_free (bvw->priv->mrl);
-    bvw->priv->mrl = g_strdup ("vcd://");
-    g_free (bvw->priv->media_device);
-    bvw->priv->media_device = g_strdup (mrl + strlen ("vcd://"));
   }
 
   bvw->priv->got_redirect = FALSE;
