@@ -234,10 +234,6 @@ void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
 						  int speed);
 int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
 
-gchar **bacon_video_widget_get_mrls		 (BaconVideoWidget *bvw,
-						  TotemDiscMediaType type,
-						  const char *device,
-						  GError **error);
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
