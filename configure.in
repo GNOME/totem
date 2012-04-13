@@ -508,7 +508,7 @@ for plugin in ${used_plugins}; do
 			PKG_CHECK_MODULES(LIBGRILO, grilo-0.2 >= 0.2.0,
 				[HAVE_LIBGRILO=yes], [HAVE_LIBGRILO=no])
 			if test "${HAVE_LIBGRILO}" != "yes" ; then
-				plugin_error_or_ignore "you need libgrilo >= 0.1.16 installed for the Grilo plugin"
+				plugin_error_or_ignore "you need libgrilo >= 0.2.0 installed for the Grilo plugin"
 				add_plugin="0"
 			fi
 		;;
