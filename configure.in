@@ -51,6 +51,8 @@ VALA_REQS=0.14.1
 PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
 PYGOBJECT_REQS=2.90.3
+GRILO_REQS=0.2.0
+LIBXML_REQS=2.6.0
 
 AC_SUBST(GLIB_REQS)
 AC_SUBST(GTK_REQS)
@@ -372,6 +374,11 @@ plugin_error_or_ignore()
 	fi
 }
 
+plugin_error()
+{
+	AC_MSG_ERROR([$1])
+}
+
 AC_ARG_WITH([plugins],
 	[AS_HELP_STRING([--with-plugins],[Which Totem plugins to compile (default: auto; "all", "none" and "autodetect" are valid)])],
 	[], [with_plugins=autodetect])
@@ -420,10 +427,10 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		media-player-keys)
-			PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, gio-2.0 >= 2.24,
+			PKG_CHECK_MODULES(MEDIA_PLAYER_KEYS, gio-2.0,
 				[HAVE_MEDIA_PLAYER_KEYS=yes], [HAVE_MEDIA_PLAYER_KEYS=no])
 			if test "${HAVE_MEDIA_PLAYER_KEYS}" != "yes" ; then
-				plugin_error_or_ignore "you need gio >= 2.24 installed for the media-player-keys plugin"
+				plugin_error "you need gio installed for the media-player-keys plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -481,10 +488,10 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		chapters)
-			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= 2.6.0 gtk+-3.0 glib-2.0 >= 2.15.0,
+			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= $LIBXML_REQS gtk+-3.0 glib-2.0,
 				[BUILD_CHAPTERS=yes], [BUILD_CHAPTERS=no])
 			if test "${BUILD_CHAPTERS}" != "yes" ; then
-				plugin_error_or_ignore "you need gtk+-3.0, glib-2.0 >= 2.15.0 and libxml-2.0 >= 2.6.0 to use the chapters plugin"
+				plugin_error "you need gtk+-3.0, glib-2.0 >= 2.15.0 and libxml-2.0 >= 2.6.0 to use the chapters plugin"
 				add_plugin="0"
 			fi
 		;;
@@ -505,10 +512,10 @@ for plugin in ${used_plugins}; do
 			fi
 		;;
 		grilo)
-			PKG_CHECK_MODULES(LIBGRILO, grilo-0.2 >= 0.2.0,
+			PKG_CHECK_MODULES(LIBGRILO, grilo-0.2 >= $GRILO_REQS,
 				[HAVE_LIBGRILO=yes], [HAVE_LIBGRILO=no])
 			if test "${HAVE_LIBGRILO}" != "yes" ; then
-				plugin_error_or_ignore "you need libgrilo >= 0.2.0 installed for the Grilo plugin"
+				plugin_error "you need libgrilo >= $GRILO_REQS installed for the Grilo plugin"
 				add_plugin="0"
 			fi
 		;;
