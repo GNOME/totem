@@ -165,10 +165,6 @@ int        totem_playlist_get_current (TotemPlaylist *playlist);
 int        totem_playlist_get_last (TotemPlaylist *playlist);
 void       totem_playlist_set_current (TotemPlaylist *playlist, guint current_index);
 
-void       totem_playlist_foreach (TotemPlaylist *playlist,
-				   TotemPlaylistForeachFunc callback,
-				   gpointer user_data);
-
 G_END_DECLS
 
 #endif /* TOTEM_PLAYLIST_H */

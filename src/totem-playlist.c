@@ -2951,37 +2951,3 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				totemplaylist_marshal_VOID__STRING_STRING,
 				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
 }
-
-static gboolean
-totem_playlist_foreach_cb (GtkTreeModel *model,
-			   GtkTreePath  *path,
-			   GtkTreeIter  *iter,
-			   gpointer      data)
-{
-	PlaylistForeachContext *context = data;
-	gchar *filename = NULL;
-	gchar *uri = NULL;
-
-	gtk_tree_model_get (model, iter, URI_COL, &uri, FILENAME_COL, &filename, -1);
-	context->callback (context->playlist, filename, uri, context->user_data);
-
-	g_free (filename);
-	g_free (uri);
-
-	return FALSE;
-}
-
-void
-totem_playlist_foreach (TotemPlaylist            *playlist,
-			TotemPlaylistForeachFunc  callback,
-			gpointer                  user_data)
-{
-	PlaylistForeachContext context = { playlist, callback, user_data };
-
-	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
-	g_return_if_fail (NULL != callback);
-
-	gtk_tree_model_foreach (playlist->priv->model,
-				totem_playlist_foreach_cb,
-				&context);
-}
