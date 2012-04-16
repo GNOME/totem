@@ -3992,7 +3992,7 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
 
     set_current_actor (bvw);
 
-    g_object_notify (G_OBJECT (bvw), "logo_mode");
+    g_object_notify (G_OBJECT (bvw), "logo-mode");
     g_object_notify (G_OBJECT (bvw), "seekable");
   }
 }
