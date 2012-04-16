@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-23 16:04+0100\n"
-"PO-Revision-Date: 2012-03-23 16:04+0100\n"
+"POT-Creation-Date: 2012-04-16 21:31+0200\n"
+"PO-Revision-Date: 2012-04-16 21:32+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -323,7 +323,7 @@ msgstr "Menu _kamer"
 
 #: ../data/totem.ui.h:42
 msgid "Go to the angle menu"
-msgstr "Przechodzi do menu kamery"
+msgstr "Przechodzi do menu kamer"
 
 #: ../data/totem.ui.h:43
 msgid "_Chapter Menu"
@@ -608,7 +608,7 @@ msgstr "Napisy"
 
 #: ../data/totem.ui.h:117
 msgid "_Load subtitle files when movie is loaded"
-msgstr "Wczytywanie pliku _napisów po wczytaniu nagrania wideo"
+msgstr "Wczytywanie pliku _napisów po wczytaniu filmu"
 
 #: ../data/totem.ui.h:118
 msgid "_Font:"
@@ -624,7 +624,7 @@ msgstr "Zewnętrzne rozdziały"
 
 #: ../data/totem.ui.h:121
 msgid "Load _chapter files when movie is loaded"
-msgstr "W_czytywanie plików rozdziałów po wczytaniu nagrania wideo"
+msgstr "W_czytywanie plików rozdziałów po wczytaniu filmu"
 
 #. Tab label in the Preferences dialogue
 #: ../data/totem.ui.h:124
@@ -849,13 +849,13 @@ msgstr "Określa, czy wyłączyć skróty klawiszowe"
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Określa, czy automatycznie wczytywać plik z napisami podczas wczytywania "
-"nagrania wideo"
+"filmu"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:33
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr ""
 "Określa, czy automatycznie wczytywać zewnętrzne pliki rozdziałów podczas "
-"wczytywania nagrania wideo"
+"wczytywania filmu"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:34
 msgid ""
@@ -1318,7 +1318,7 @@ msgstr "Proszę wsunąć następną płytę, aby odtwarzać."
 msgid "Totem was not able to play this disc."
 msgstr "Program Totem nie może odtworzyć tej płyty."
 
-#: ../src/totem-object.c:1301 ../src/totem-object.c:4229
+#: ../src/totem-object.c:1301 ../src/totem-object.c:4228
 msgid "No reason."
 msgstr "Brak powodu."
 
@@ -1345,25 +1345,25 @@ msgstr "Nie można wyświetlić spisu treści pomocy programu Totem."
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: ../src/totem-object.c:4064 ../src/totem-object.c:4066
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
 msgid "Previous Chapter/Movie"
 msgstr "Poprzedni rozdział/film"
 
-#: ../src/totem-object.c:4073 ../src/totem-object.c:4075
+#: ../src/totem-object.c:4072 ../src/totem-object.c:4074
 msgid "Play / Pause"
 msgstr "Odtwarza/wstrzymuje"
 
-#: ../src/totem-object.c:4083 ../src/totem-object.c:4085
+#: ../src/totem-object.c:4082 ../src/totem-object.c:4084
 msgid "Next Chapter/Movie"
 msgstr "Następny rozdział/film"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4097 ../src/totem-object.c:4099
+#: ../src/totem-object.c:4096 ../src/totem-object.c:4098
 msgid "Fullscreen"
 msgstr "Pełny ekran"
 
-#: ../src/totem-object.c:4229
+#: ../src/totem-object.c:4228
 msgid "Totem could not startup."
 msgstr "Nie można uruchomić programu Totem."
 
@@ -1438,7 +1438,7 @@ msgstr "Spis listy odtwarzania"
 
 #: ../src/totem-options.c:69
 msgid "Movies to play"
-msgstr "Nagrania wideo do odtworzenia"
+msgstr "Filmy do odtworzenia"
 
 #: ../src/totem-options.c:117
 msgid "Can't enqueue and replace at the same time"
@@ -1795,14 +1795,14 @@ msgstr "Wybór pliku napisów"
 
 #: ../src/totem-uri.c:656
 msgid "Select Movies or Playlists"
-msgstr "Wybór nagrań wideo lub list odtwarzania"
+msgstr "Wybór filmów lub list odtwarzania"
 
 #. Options parsing
-#: ../src/totem.c:201
+#: ../src/totem.c:204
 msgid "- Play movies and songs"
 msgstr "- odtwarzanie filmów i muzyki"
 
-#: ../src/totem.c:212
+#: ../src/totem.c:220
 #, c-format
 msgid ""
 "%s\n"
@@ -1812,17 +1812,17 @@ msgstr ""
 "Wykonanie polecenia \"%s --help\" wyświetli pełną listę dostępnych opcji "
 "wiersza poleceń.\n"
 
-#: ../src/totem.c:254 ../src/totem.c:265
+#: ../src/totem.c:262 ../src/totem.c:273
 #: ../browser-plugin/totem-plugin-viewer.c:663
 #: ../browser-plugin/totem-plugin-viewer.c:1793
 msgid "Totem Movie Player"
 msgstr "Odtwarzacz filmów Totem"
 
-#: ../src/totem.c:255 ../browser-plugin/totem-plugin-viewer.c:2251
+#: ../src/totem.c:263 ../browser-plugin/totem-plugin-viewer.c:2251
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nie można zainicjować bibliotek bezpiecznych dla wątków."
 
-#: ../src/totem.c:255
+#: ../src/totem.c:263
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Proszę sprawdzić poprawność instalacji systemu. Działanie programu Totem "
@@ -1917,7 +1917,7 @@ msgstr ""
 msgid "Media contains no supported video streams."
 msgstr "Plik multimediów zawiera nieobsługiwany strumień wideo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6052
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6053
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -1925,7 +1925,7 @@ msgstr ""
 "Utworzenie obiektu odtwarzania GStreamer się nie powiodło. Proszę sprawdzić "
 "poprawność instalacji biblioteki GStreamer."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6172
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6173
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
 "device, or the sound server may not be running. Please select another audio "
@@ -1936,7 +1936,7 @@ msgstr ""
 "dźwięku. Proszę wybrać inne wyjście dźwięku w oknie Wyboru systemu "
 "multimediów."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6192
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6193
 msgid ""
 "Could not find the audio output. You may need to install additional "
 "GStreamer plugins, or select another audio output in the Multimedia Systems "
@@ -2166,7 +2166,7 @@ msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
 msgstr ""
-"Wtyczka do wysyłania powiadomień o obecnie odtwarzanych nagraniach wideo do "
+"Wtyczka do wysyłania powiadomień o obecnie odtwarzanych filmach do "
 "podsystemu D-Bus."
 
 #: ../src/plugins/dbusservice/dbusservice.py:213
@@ -2348,7 +2348,7 @@ msgstr "Pobiera napisy do filmów z serwisu OpenSubtitles"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:527
 msgid "_Download Movie Subtitles…"
-msgstr "_Pobierz napisy do filmu..."
+msgstr "_Pobierz napisy do filmu…"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:589
 msgid "Searching subtitles…"
@@ -2368,8 +2368,7 @@ msgstr "Zawsze na wierzchu"
 
 #: ../src/plugins/ontop/ontop.plugin.in.h:2
 msgid "Keep the main window on top when playing a movie"
-msgstr ""
-"Utrzymywanie głównego okna ponad innymi podczas odtwarzania nagrania wideo"
+msgstr "Utrzymywanie głównego okna ponad innymi podczas odtwarzania filmu"
 
 #: ../src/plugins/properties/totem-movie-properties.c:246
 msgid "Properties"
@@ -2640,7 +2639,7 @@ msgstr "Brak listy odtwarzania lub lista jest pusta"
 
 #: ../browser-plugin/totem-plugin-viewer.c:2235
 msgid "Movie browser plugin"
-msgstr "Wtyczka przeglądarki nagrań wideo"
+msgstr "Wtyczka przeglądarki filmów"
 
 #: ../browser-plugin/totem-plugin-viewer.c:2251
 msgid "Verify your system installation. The Totem plugin will now exit."
