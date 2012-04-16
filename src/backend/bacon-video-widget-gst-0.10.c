@@ -5941,6 +5941,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
                    "Please check your GStreamer installation."));
     return FALSE;
   }
+  gst_bin_add (GST_BIN (bin), sink);
 
   /* The logo */
   bvw->priv->logo_frame = totem_aspect_frame_new ();
@@ -5966,8 +5967,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   clutter_actor_raise (CLUTTER_ACTOR (bvw->priv->frame),
 		       CLUTTER_ACTOR (bvw->priv->logo_frame));
-
-  gst_bin_add (GST_BIN (bin), sink);
 
   /* Add video balance */
   balance = gst_element_factory_make ("videobalance", "video_balance");
