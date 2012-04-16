@@ -10,14 +10,13 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011, 2012.
 #
-#: ../src/plugins/screensaver/totem-screensaver.c:84
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-05 17:02+0000\n"
-"PO-Revision-Date: 2012-04-08 12:54+0200\n"
+"POT-Creation-Date: 2012-04-13 11:49+0000\n"
+"PO-Revision-Date: 2012-04-16 16:28+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -155,7 +154,7 @@ msgstr "Añadir el vídeo a la lista de reproducción"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:136
-#: ../src/totem-object.c:1722
+#: ../src/totem-object.c:1575
 msgid "Movie Player"
 msgstr "Reproductor de películas"
 
@@ -163,13 +162,15 @@ msgstr "Reproductor de películas"
 msgid "Play movies and songs"
 msgstr "Reproduzca películas y canciones"
 
+#: ../data/totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr "Vídeo;Película;Clip,Serie;Reproductor;DVD;TV;Disco;"
+
 #: ../data/totem.ui.h:1
-#| msgid "_Open..."
 msgid "_Open"
 msgstr "_Abrir"
 
 #: ../data/totem.ui.h:2
-#| msgid "Open _Location..."
 msgid "Open _Location"
 msgstr "Abrir _ubicación"
 
@@ -182,12 +183,10 @@ msgid "Prefere_nces"
 msgstr "Prefere_ncias"
 
 #: ../data/totem.ui.h:5
-#| msgid "Shuff_le Mode"
 msgid "Shuff_le"
 msgstr "Mezc_lar"
 
 #: ../data/totem.ui.h:6
-#| msgid "_Repeat Mode"
 msgid "_Repeat"
 msgstr "_Repetir"
 
@@ -540,7 +539,7 @@ msgid "Extra Large"
 msgstr "Muy grande"
 
 #: ../data/totem.ui.h:98 ../src/totem-properties-view.c:228
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5644
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5440
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -933,12 +932,12 @@ msgstr "Extensiones"
 #: ../src/eggfileformatchooser.c:657
 #, c-format
 msgid ""
-"The program was not able to find out the file format you want to use for `"
-"%s'. Please make sure to use a known extension for that file or manually "
+"The program was not able to find out the file format you want to use for `%"
+"s'. Please make sure to use a known extension for that file or manually "
 "choose a file format from the list below."
 msgstr ""
-"El programa no pudo encontrar el formato de archivo que quiere usar para "
-"«%s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
+"El programa no pudo encontrar el formato de archivo que quiere usar para «%"
+"s». Asegúrese de que usa una extensión conocida para ese archivo o elija "
 "manualmente un formato de archivo de la lista inferior."
 
 #: ../src/eggfileformatchooser.c:664
@@ -1164,31 +1163,18 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
 
-#. Translators:
-#. * This is not a JPEG image, but a disc image, for example,
-#. * an ISO file
-#: ../src/totem-menu.c:857
-#, c-format
-msgid "Play Image '%s'"
-msgstr "Reproducir imagen «%s»"
-
-#: ../src/totem-menu.c:940
-#, c-format
-msgid "Play Disc '%s'"
-msgstr "Reproducir disco «%s»"
-
 #. This lists the back-end type and version, such as
 #. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1263
+#: ../src/totem-menu.c:877
 #, c-format
 msgid "Movie Player using %s"
 msgstr "Reproductor de películas que usa %s"
 
-#: ../src/totem-menu.c:1267
+#: ../src/totem-menu.c:881
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1272
+#: ../src/totem-menu.c:886
 msgid "translator-credits"
 msgstr ""
 "Jorge González <jorgegonz@svn.gnome.org>\n"
@@ -1199,15 +1185,15 @@ msgstr ""
 "Germán Poo Caamaño <gpoo@ubiobio.cl>\n"
 "Daniel Mustieles <daniel.mustieles@gmail.com>"
 
-#: ../src/totem-menu.c:1276
+#: ../src/totem-menu.c:890
 msgid "Totem Website"
 msgstr "Página web de Totem"
 
-#: ../src/totem-menu.c:1310
+#: ../src/totem-menu.c:924
 msgid "Configure Plugins"
 msgstr "Configurar complementos"
 
-#: ../src/totem-object.c:160
+#: ../src/totem-object.c:158
 #, c-format
 msgid ""
 "%s\n"
@@ -1218,147 +1204,76 @@ msgstr ""
 "disponibles de la línea de comandos.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:526
+#: ../src/totem-object.c:524
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1095 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1093 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Reproduciendo"
 
-#: ../src/totem-object.c:1097 ../src/totem-options.c:52
+#: ../src/totem-object.c:1095 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1102 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1100 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1104 ../src/totem-object.c:1114
+#: ../src/totem-object.c:1102 ../src/totem-object.c:1112
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1109 ../src/totem-object.c:1714
+#: ../src/totem-object.c:1107 ../src/totem-object.c:1567
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Detenido"
 
-#: ../src/totem-object.c:1190 ../src/totem-object.c:1217
-#: ../src/totem-object.c:1846 ../src/totem-object.c:2010
+#: ../src/totem-object.c:1188 ../src/totem-object.c:1215
+#: ../src/totem-object.c:1699 ../src/totem-object.c:1863
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:1294
-#, c-format
-msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
-msgstr ""
-"Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
-"instalado que puede manipularlo."
-
-#: ../src/totem-object.c:1295
-msgid ""
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr ""
-"Compruebe que haya un disco en la unidad y que esté correctamente "
-"configurada."
-
-#: ../src/totem-object.c:1303
-msgid "More information about media plugins"
-msgstr "Más información acerca de los complementos de soportes"
-
-#: ../src/totem-object.c:1304
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr ""
-"Por favor, instale los complementos necesarios y reinicie Totem para poder "
-"reproducir este soporte."
-
-#: ../src/totem-object.c:1306
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
-"complementos apropiados para leer del disco."
-
-#: ../src/totem-object.c:1308
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
-"complementos apropiados para manejarlo."
-
-#: ../src/totem-object.c:1311
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr ""
-"Totem no puede reproducir este tipo de soporte (%s) porque no está soportado."
-
-#: ../src/totem-object.c:1312
-msgid "Please insert another disc to play back."
-msgstr "Introduzca otro disco para reproducir."
-
-#: ../src/totem-object.c:1348
-msgid "Totem was not able to play this disc."
-msgstr "No no fue capaz de reproducir este disco."
-
-#: ../src/totem-object.c:1349 ../src/totem-object.c:4262
-msgid "No reason."
-msgstr "No hay razón."
-
-#: ../src/totem-object.c:1363
-msgid "Totem does not support playback of Audio CDs"
-msgstr "Totem no soporta la reproducción de CD de sonido"
-
-#: ../src/totem-object.c:1364
-msgid "Please consider using a music player or a CD extractor to play this CD"
-msgstr ""
-"Considere usar un reproductor de música o un extractor de CD para reproducir "
-"este CD"
-
-#: ../src/totem-object.c:1852
+#: ../src/totem-object.c:1705
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem-object.c:2201
+#: ../src/totem-object.c:2054
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:2540 ../src/totem-object.c:2542
+#: ../src/totem-object.c:2393 ../src/totem-object.c:2395
 #: ../browser-plugin/totem-plugin-viewer.c:1429
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:4097 ../src/totem-object.c:4099
+#: ../src/totem-object.c:3939 ../src/totem-object.c:3941
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:4106 ../src/totem-object.c:4108
+#: ../src/totem-object.c:3948 ../src/totem-object.c:3950
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:4116 ../src/totem-object.c:4118
+#: ../src/totem-object.c:3958 ../src/totem-object.c:3960
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4129 ../src/totem-object.c:4131
+#: ../src/totem-object.c:3971 ../src/totem-object.c:3973
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4262
+#: ../src/totem-object.c:4104
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
+
+#: ../src/totem-object.c:4104
+msgid "No reason."
+msgstr "No hay razón."
 
 #: ../src/totem-open-location.c:182
 msgid "Open Location..."
@@ -1538,12 +1453,12 @@ msgid "N/A"
 msgstr "N/D"
 
 #: ../src/totem-properties-view.c:224
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5640
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5436
 msgid "Surround"
 msgstr "Envolvente"
 
 #: ../src/totem-properties-view.c:226
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5642
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5438
 msgid "Mono"
 msgstr "Mono"
 
@@ -1766,105 +1681,75 @@ msgstr "Resolución"
 msgid "Duration"
 msgstr "Duración"
 
-#: ../src/totem-uri.c:504 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:506 ../src/plugins/chapters/totem-chapters.c:998
 msgid "All files"
 msgstr "Todos los archivos"
 
-#: ../src/totem-uri.c:509 ../src/plugins/chapters/totem-chapters.c:995
+#: ../src/totem-uri.c:511 ../src/plugins/chapters/totem-chapters.c:995
 msgid "Supported files"
 msgstr "Archivos soportados"
 
-#: ../src/totem-uri.c:521
+#: ../src/totem-uri.c:523
 msgid "Audio files"
 msgstr "Archivos de audio"
 
-#: ../src/totem-uri.c:529
+#: ../src/totem-uri.c:531
 msgid "Video files"
 msgstr "Archivos de vídeo"
 
-#: ../src/totem-uri.c:539
+#: ../src/totem-uri.c:541
 msgid "Subtitle files"
 msgstr "Archivos de subtítulos"
 
-#: ../src/totem-uri.c:591
+#: ../src/totem-uri.c:593
 msgid "Select Text Subtitles"
 msgstr "Seleccionar los subtítulos de texto"
 
-#: ../src/totem-uri.c:654
+#: ../src/totem-uri.c:656
 msgid "Select Movies or Playlists"
 msgstr "Seleccionar películas o listas de reproducción"
 
-#: ../src/totem.c:236 ../src/totem.c:244
+#: ../src/totem.c:235 ../src/totem.c:243
 #: ../browser-plugin/totem-plugin-viewer.c:675
 #: ../browser-plugin/totem-plugin-viewer.c:1805
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
-#: ../src/totem.c:237 ../browser-plugin/totem-plugin-viewer.c:2254
+#: ../src/totem.c:236 ../browser-plugin/totem-plugin-viewer.c:2254
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../src/totem.c:237
+#: ../src/totem.c:236
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1587
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1584
 msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2919
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2923
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2877
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2951
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2955
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2881
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3359
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector."
-msgstr ""
-"No se encontró la salida de sonido solicitada. Seleccione otra salida de "
-"sonido en el «Selector de sistemas multimedia»."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3364
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3312
 msgid "Location not found."
 msgstr "No se encontró la dirección."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3315
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la dirección; quizá no tiene permiso para abrir el archivo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3379
-msgid ""
-"The video output is in use by another application. Please close other video "
-"applications, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"La salida de vídeo la está usando otra aplicación. Cierre las otras "
-"aplicaciones de vídeo o seleccione otra salida de vídeo en el selector de "
-"Sistemas Multimedia."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3385
-msgid ""
-"The audio output is in use by another application. Please select another "
-"audio output in the Multimedia Systems Selector. You may want to consider "
-"using a sound server."
-msgstr ""
-"La salida de sonido la está usando otra aplicación. Seleccione otra salida "
-"de sonido en el «Selector de sistemas multimedia». Quizá deba considerar "
-"usar un servidor de sonido."
-
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3403
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3409
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3335
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3341
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -1881,45 +1766,25 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3435
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3367
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5929
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5725
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6094
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6145
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5892
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5940
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6216
-msgid ""
-"Failed to open audio output. You may not have permission to open the sound "
-"device, or the sound server may not be running. Please select another audio "
-"output in the Multimedia Systems Selector."
-msgstr ""
-"Falló al abrir la salida de sonido. Quizá no tenga permiso para abrir el "
-"dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
-"Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6236
-msgid ""
-"Could not find the audio output. You may need to install additional "
-"GStreamer plugins, or select another audio output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"La salida de sonido solicitada no se encontró. Quizá necesite instalar "
-"complementos adicionales de GStreamer, o seleccionar otra salida de sonido "
-"en el «Selector de sistemas multimedia»."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -2354,70 +2219,6 @@ msgstr ""
 msgid "Properties"
 msgstr "Propiedades"
 
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:1
-msgid "Publisher protocol to use"
-msgstr "Protocolo de publicación que usar"
-
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
-msgid ""
-"The transport protocol to use when publishing playlists over the network."
-msgstr ""
-"El protocolo de transporte que usar para la publicación de listas de "
-"reproducción en red."
-
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
-msgid "Format for network service name"
-msgstr "Formato para el nombre del servicio de red"
-
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
-#, no-c-format
-msgid ""
-"A format string used to build the network service name used when publishing "
-"playlists over the network. The following format placeholders can be used: • "
-"%a: the program name as returned by g_get_application_name() • %h: the "
-"machine's host name in title case • %u: the user's login name in title case "
-"• %U: the user's real name • %%: the percent sign"
-msgstr ""
-"Una cadena de formato usada para construir el nombre de servicio de red al "
-"publicar listas de reproducción en red. Se pueden usar los siguientes "
-"marcadores de posición de formato: • %a: el nombre del programa como lo "
-"devuelve g_get_application_name() • %h: el nombre del servidor caso de "
-"título • %u: el nombre de inicio de sesión en caso de título • %U: el nombre "
-"real del usuario • %%: el signo de porcentaje"
-
-#. Translators: computers on the local network which are publishing their playlists over the network
-#: ../src/plugins/publish/totem-publish.c:552
-msgid "Neighbors"
-msgstr "Vecinos"
-
-#: ../src/plugins/publish/publish.plugin.in.h:1
-msgid "Publish Playlist"
-msgstr "Publicar lista de reproducción"
-
-#: ../src/plugins/publish/publish.plugin.in.h:2
-msgid "Share the current playlist via HTTP"
-msgstr "Compartir la lista de reproducción actual a través de HTTP"
-
-#: ../src/plugins/publish/publish-plugin.ui.h:1
-msgid "Service _Name:"
-msgstr "_Nombre del servicio:"
-
-#: ../src/plugins/publish/publish-plugin.ui.h:3
-#, no-c-format
-msgid ""
-"The name used for announcing the playlist service on the network.\n"
-"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-"and <b>%h</b> will be replaced by your computer's host name."
-msgstr ""
-"El nombre que usar para anunciar el servicio de las listas de reproducción "
-"en la red.\n"
-"Todas las apariciones de la cadena <b>%u</b> se reemplazarán con su nombre,\n"
-"y <b>%h</b> se reemplazará con el nombre de su equipo."
-
-#: ../src/plugins/publish/publish-plugin.ui.h:6
-msgid "Use _encrypted transport protocol (HTTPS)"
-msgstr "Usar protocolo de transporte ci_frado (HTTPS)"
-
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
 msgid "rpdb2 password"
 msgstr "Contraseña rpdb2"
@@ -2468,6 +2269,11 @@ msgstr "Película"
 #: ../src/plugins/save-file/totem-save-file.c:183
 msgid "Movie stream"
 msgstr "Flujo de la película"
+
+#: ../src/plugins/screensaver/totem-screensaver.c:84
+#: ../browser-plugin/totem-plugin-viewer.c:386
+msgid "Playing a movie"
+msgstr "Reproduciendo una película"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Screenshot width (in pixels):"
@@ -2596,10 +2402,6 @@ msgstr "Salta a un tiempo específico"
 msgid "_Skip to:"
 msgstr "_Saltar a:"
 
-#: ../browser-plugin/totem-plugin-viewer.c:386
-msgid "Playing a movie"
-msgstr "Reproduciendo una película"
-
 #: ../browser-plugin/totem-plugin-viewer.c:443
 msgid "No URI to play"
 msgstr "No hay una URI para reproducir"
@@ -2707,6 +2509,166 @@ msgstr "Añadir a la lista de reproducción"
 #: ../src/plugins/grilo/grilo.ui.h:2
 msgid "Copy Location"
 msgstr "Copiar ubicación"
+
+#~ msgid "Play Image '%s'"
+#~ msgstr "Reproducir imagen «%s»"
+
+#~ msgid "Play Disc '%s'"
+#~ msgstr "Reproducir disco «%s»"
+
+#~ msgid ""
+#~ "Totem could not play this media (%s) although a plugin is present to "
+#~ "handle it."
+#~ msgstr ""
+#~ "Totem no pudo reproducir este soporte (%s) aunque hay un complemento "
+#~ "instalado que puede manipularlo."
+
+#~ msgid ""
+#~ "You might want to check that a disc is present in the drive and that it "
+#~ "is correctly configured."
+#~ msgstr ""
+#~ "Compruebe que haya un disco en la unidad y que esté correctamente "
+#~ "configurada."
+
+#~ msgid "More information about media plugins"
+#~ msgstr "Más información acerca de los complementos de soportes"
+
+#~ msgid ""
+#~ "Please install the necessary plugins and restart Totem to be able to play "
+#~ "this media."
+#~ msgstr ""
+#~ "Por favor, instale los complementos necesarios y reinicie Totem para "
+#~ "poder reproducir este soporte."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because it does not have the "
+#~ "appropriate plugins to be able to read from the disc."
+#~ msgstr ""
+#~ "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
+#~ "complementos apropiados para leer del disco."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because you do not have the "
+#~ "appropriate plugins to handle it."
+#~ msgstr ""
+#~ "Totem no puede reproducir este tipo de soporte (%s) porque no tiene los "
+#~ "complementos apropiados para manejarlo."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because it is not supported."
+#~ msgstr ""
+#~ "Totem no puede reproducir este tipo de soporte (%s) porque no está "
+#~ "soportado."
+
+#~ msgid "Please insert another disc to play back."
+#~ msgstr "Introduzca otro disco para reproducir."
+
+#~ msgid "Totem was not able to play this disc."
+#~ msgstr "No no fue capaz de reproducir este disco."
+
+#~ msgid "Totem does not support playback of Audio CDs"
+#~ msgstr "Totem no soporta la reproducción de CD de sonido"
+
+#~ msgid ""
+#~ "Please consider using a music player or a CD extractor to play this CD"
+#~ msgstr ""
+#~ "Considere usar un reproductor de música o un extractor de CD para "
+#~ "reproducir este CD"
+
+#~ msgid ""
+#~ "The requested audio output was not found. Please select another audio "
+#~ "output in the Multimedia Systems Selector."
+#~ msgstr ""
+#~ "No se encontró la salida de sonido solicitada. Seleccione otra salida de "
+#~ "sonido en el «Selector de sistemas multimedia»."
+
+#~ msgid ""
+#~ "The video output is in use by another application. Please close other "
+#~ "video applications, or select another video output in the Multimedia "
+#~ "Systems Selector."
+#~ msgstr ""
+#~ "La salida de vídeo la está usando otra aplicación. Cierre las otras "
+#~ "aplicaciones de vídeo o seleccione otra salida de vídeo en el selector de "
+#~ "Sistemas Multimedia."
+
+#~ msgid ""
+#~ "The audio output is in use by another application. Please select another "
+#~ "audio output in the Multimedia Systems Selector. You may want to consider "
+#~ "using a sound server."
+#~ msgstr ""
+#~ "La salida de sonido la está usando otra aplicación. Seleccione otra "
+#~ "salida de sonido en el «Selector de sistemas multimedia». Quizá deba "
+#~ "considerar usar un servidor de sonido."
+
+#~ msgid ""
+#~ "Failed to open audio output. You may not have permission to open the "
+#~ "sound device, or the sound server may not be running. Please select "
+#~ "another audio output in the Multimedia Systems Selector."
+#~ msgstr ""
+#~ "Falló al abrir la salida de sonido. Quizá no tenga permiso para abrir el "
+#~ "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
+#~ "Seleccione otra salida de sonido en el «Selector de Sistemas Multimedia»."
+
+#~ msgid ""
+#~ "Could not find the audio output. You may need to install additional "
+#~ "GStreamer plugins, or select another audio output in the Multimedia "
+#~ "Systems Selector."
+#~ msgstr ""
+#~ "La salida de sonido solicitada no se encontró. Quizá necesite instalar "
+#~ "complementos adicionales de GStreamer, o seleccionar otra salida de "
+#~ "sonido en el «Selector de sistemas multimedia»."
+
+#~ msgid "Publisher protocol to use"
+#~ msgstr "Protocolo de publicación que usar"
+
+#~ msgid ""
+#~ "The transport protocol to use when publishing playlists over the network."
+#~ msgstr ""
+#~ "El protocolo de transporte que usar para la publicación de listas de "
+#~ "reproducción en red."
+
+#~ msgid "Format for network service name"
+#~ msgstr "Formato para el nombre del servicio de red"
+
+#~ msgid ""
+#~ "A format string used to build the network service name used when "
+#~ "publishing playlists over the network. The following format placeholders "
+#~ "can be used: • %a: the program name as returned by g_get_application_name"
+#~ "() • %h: the machine's host name in title case • %u: the user's login "
+#~ "name in title case • %U: the user's real name • %%: the percent sign"
+#~ msgstr ""
+#~ "Una cadena de formato usada para construir el nombre de servicio de red "
+#~ "al publicar listas de reproducción en red. Se pueden usar los siguientes "
+#~ "marcadores de posición de formato: • %a: el nombre del programa como lo "
+#~ "devuelve g_get_application_name() • %h: el nombre del servidor caso de "
+#~ "título • %u: el nombre de inicio de sesión en caso de título • %U: el "
+#~ "nombre real del usuario • %%: el signo de porcentaje"
+
+#~ msgid "Neighbors"
+#~ msgstr "Vecinos"
+
+#~ msgid "Publish Playlist"
+#~ msgstr "Publicar lista de reproducción"
+
+#~ msgid "Share the current playlist via HTTP"
+#~ msgstr "Compartir la lista de reproducción actual a través de HTTP"
+
+#~ msgid "Service _Name:"
+#~ msgstr "_Nombre del servicio:"
+
+#~ msgid ""
+#~ "The name used for announcing the playlist service on the network.\n"
+#~ "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
+#~ "and <b>%h</b> will be replaced by your computer's host name."
+#~ msgstr ""
+#~ "El nombre que usar para anunciar el servicio de las listas de "
+#~ "reproducción en la red.\n"
+#~ "Todas las apariciones de la cadena <b>%u</b> se reemplazarán con su "
+#~ "nombre,\n"
+#~ "y <b>%h</b> se reemplazará con el nombre de su equipo."
+
+#~ msgid "Use _encrypted transport protocol (HTTPS)"
+#~ msgstr "Usar protocolo de transporte ci_frado (HTTPS)"
 
 #~ msgid "Open a file"
 #~ msgstr "Abrir un archivo"
@@ -3094,33 +3056,33 @@ msgstr "Copiar ubicación"
 #~ "Approximate network connection speed, used to select quality on media "
 #~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
 #~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
+#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, \"7"
+#~ "\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
 #~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
 #~ "LAN."
 #~ msgstr ""
 #~ "Velocidad aproximada de la red, usado para seleccionar la calidad para el "
 #~ "contenido multimedia sobre la red: «0» para módem de 14.4 Kbps, «1» para "
 #~ "módem de 19.2 Kbps, «2» para módem de 28.8 Kbps, «3» para módem de 33.6 "
-#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» "
-#~ "para RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para "
-#~ "DSL/cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/"
-#~ "Intranet/LAN de 1.5 Mbps, «11» para Intranet/LAN."
+#~ "Kbps, «4» para módem de 34.4 Kbps, «5» para módem/RDSI de 56 Kbps, «6» para "
+#~ "RDSI dual/DSL de 112 Kbps, «7» para DSL/cable de 256 Kbps, «8» para DSL/"
+#~ "cable de 384 Kbps, «9» para DSL/cable de 512 Kbps, «10» para T1/Intranet/"
+#~ "LAN de 1.5 Mbps, «11» para Intranet/LAN."
 
 #~ msgid ""
 #~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
 #~ "normal, \"2\" for large, \"3\" for extra large."
 #~ msgstr ""
-#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, "
-#~ "«1» para normal, «2» para grande, «3» para extra grande."
+#~ "Ajustes de calidad para la visualización del sonido: «0» para pequeña, «1» "
+#~ "para normal, «2» para grande, «3» para extra grande."
 
 #~ msgid ""
 #~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, "
-#~ "«2» para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
+#~ "Tipo de salida de sonido que usar: «0» para estéreo, «1» para 4 canales, «2» "
+#~ "para salida 5.0, «3» para salida 5.1, «4» para salida a través de AC3."
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"
