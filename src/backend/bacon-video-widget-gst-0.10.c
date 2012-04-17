@@ -5966,8 +5966,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
 
   clutter_actor_set_child_above_sibling (CLUTTER_ACTOR (bvw->priv->stage),
-					 CLUTTER_ACTOR (bvw->priv->frame),
-					 CLUTTER_ACTOR (bvw->priv->logo_frame));
+					 CLUTTER_ACTOR (bvw->priv->logo_frame),
+					 CLUTTER_ACTOR (bvw->priv->frame));
 
   /* Add video balance */
   balance = gst_element_factory_make ("videobalance", "video_balance");
