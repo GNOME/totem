@@ -5864,7 +5864,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
-  ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
   ClutterConstraint *constraint;
   GstElement *balance, *sink, *bin;
   GstPad *pad, *ghostpad;
@@ -5923,7 +5922,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->auto_resize = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
-  clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), &black);
+  clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), CLUTTER_COLOR_Black);
 
   /* Bin */
   bin = gst_bin_new ("video_sink_bin");
