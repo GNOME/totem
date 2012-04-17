@@ -76,6 +76,7 @@ int main
 	GOptionGroup *baconoptiongroup;
 	GError *error = NULL;
 	GtkWidget *win, *bvw;
+	GtkSettings *gtk_settings;
 
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
@@ -101,6 +102,9 @@ int main
 		g_free (help);
 		return 1;
 	}
+
+	gtk_settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_default_size (GTK_WINDOW (win), 500, 500);
