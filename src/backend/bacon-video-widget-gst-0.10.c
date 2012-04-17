@@ -5932,8 +5932,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
 				     "disable-slicing", TRUE,
 				     NULL);
-  sink = clutter_gst_video_sink_new (CLUTTER_TEXTURE (bvw->priv->texture));
-  bvw->priv->navigation = GST_NAVIGATION (sink);
+  sink = gst_element_factory_make ("cluttersink", NULL);
   if (sink == NULL) {
     g_critical ("Could not create Clutter video sink");
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
@@ -5941,6 +5940,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
                    "Please check your GStreamer installation."));
     return FALSE;
   }
+  g_object_set (G_OBJECT (sink), "texture", bvw->priv->texture, NULL);
+  bvw->priv->navigation = GST_NAVIGATION (sink);
   gst_bin_add (GST_BIN (bin), sink);
 
   /* The logo */
