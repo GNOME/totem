@@ -5923,7 +5923,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->auto_resize = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
-  clutter_stage_set_color (CLUTTER_STAGE (bvw->priv->stage), &black);
+  clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), &black);
 
   /* Bin */
   bin = gst_bin_new ("video_sink_bin");
@@ -5948,7 +5948,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_name (bvw->priv->logo_frame, "logo-frame");
   bvw->priv->logo = clutter_texture_new ();
   mx_bin_set_child (MX_BIN (bvw->priv->logo_frame), bvw->priv->logo);
-  clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->logo_frame);
+  clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->logo_frame);
   mx_bin_set_fill (MX_BIN (bvw->priv->logo_frame), FALSE, FALSE);
   mx_bin_set_alignment (MX_BIN (bvw->priv->logo_frame), MX_ALIGN_MIDDLE, MX_ALIGN_MIDDLE);
   clutter_actor_set_size (bvw->priv->logo, LOGO_SIZE, LOGO_SIZE);
@@ -5961,12 +5961,13 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_name (bvw->priv->frame, "frame");
   mx_bin_set_child (MX_BIN (bvw->priv->frame), bvw->priv->texture);
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (bvw->priv->stage), bvw->priv->frame);
+  clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->frame);
   constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
   clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
 
-  clutter_actor_raise (CLUTTER_ACTOR (bvw->priv->frame),
-		       CLUTTER_ACTOR (bvw->priv->logo_frame));
+  clutter_actor_set_child_above_sibling (CLUTTER_ACTOR (bvw->priv->stage),
+					 CLUTTER_ACTOR (bvw->priv->frame),
+					 CLUTTER_ACTOR (bvw->priv->logo_frame));
 
   /* Add video balance */
   balance = gst_element_factory_make ("videobalance", "video_balance");
