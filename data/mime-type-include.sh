@@ -9,7 +9,7 @@ echo_mime () {
 if [ x"$1" = "x--nautilus" ] ; then
 	get_audio_mimetypes $2;
 
-	echo "/* generated with mime-types-include.sh in the totem module, don't edit or "
+	echo "/* generated with mime-type-include.sh in the totem module, don't edit or "
 	echo "   commit in the nautilus module without filing a bug against totem */"
 
 	echo "static const char *audio_mime_types[] = {"
