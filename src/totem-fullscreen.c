@@ -37,7 +37,7 @@
 #include "totem-time-label.h"
 #include "bacon-video-widget.h"
 #include "gd-fullscreen-filter.h"
-#include "gsd-media-keys-window.h"
+#include "gsd-osd-window.h"
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
 #define FULLSCREEN_MOTION_TIME 200 /* in milliseconds */
@@ -376,8 +376,8 @@ totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
 	else
 		gtk_window_move (GTK_WINDOW (fs->priv->osd), rect.x + 8, rect.y + 8);
 
-	gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (fs->priv->osd),
-						 icon_name, FALSE);
+	gsd_osd_window_set_action_custom (GSD_OSD_WINDOW (fs->priv->osd),
+					  icon_name, FALSE);
 	gtk_widget_show (fs->priv->osd);
 }
 
@@ -526,7 +526,7 @@ totem_fullscreen_init (TotemFullscreen *self)
 			  G_CALLBACK (totem_fullscreen_exit_popup_draw_cb), self);
 	self->priv->control_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_controls_window"));
-	self->priv->osd = gsd_media_keys_window_new ();
+	self->priv->osd = gsd_osd_window_new ();
 
 	/* Motion notify */
 	gtk_widget_add_events (self->priv->exit_popup, GDK_POINTER_MOTION_MASK);

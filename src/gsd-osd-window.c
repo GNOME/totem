@@ -38,159 +38,39 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "gsd-osd-window.h"
+#include "gsd-osd-window-private.h"
 
-#define DIALOG_TIMEOUT 2000     /* dialog timeout in ms */
-#define DIALOG_FADE_TIMEOUT 1500 /* timeout before fade starts */
-#define FADE_TIMEOUT 10        /* timeout in ms between each frame of the fade */
-
-#define BG_ALPHA 0.75
+#define DIALOG_TIMEOUT 2000       /* dialog timeout in ms */
+#define DIALOG_FADE_TIMEOUT 1500  /* timeout before fade starts */
+#define FADE_TIMEOUT 10           /* timeout in ms between each frame of the fade */
+#define ICON_SCALE 0.50           /* size of the icon compared to the whole OSD */
+#define BG_ALPHA 0.75             /* background transparency */
 
 #define GSD_OSD_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GSD_TYPE_OSD_WINDOW, GsdOsdWindowPrivate))
 
 struct GsdOsdWindowPrivate
 {
-        guint                    is_composited : 1;
         guint                    hide_timeout_id;
         guint                    fade_timeout_id;
         double                   fade_out_alpha;
-};
 
-enum {
-        DRAW_WHEN_COMPOSITED,
-        LAST_SIGNAL
-};
+        gint                     screen_width;
+        gint                     screen_height;
+        gint                     primary_monitor;
+        guint                    monitors_changed_id;
+        guint                    monitor_changed : 1;
 
-static guint signals[LAST_SIGNAL] = { 0 };
+        GsdOsdWindowAction       action;
+        char                    *icon_name;
+        gboolean                 show_level;
+
+        int                      volume_level;
+        guint                    volume_muted : 1;
+};
 
 G_DEFINE_TYPE (GsdOsdWindow, gsd_osd_window, GTK_TYPE_WINDOW)
 
-static gboolean
-fade_timeout (GsdOsdWindow *window)
-{
-        if (window->priv->fade_out_alpha <= 0.0) {
-                gtk_widget_hide (GTK_WIDGET (window));
-
-                /* Reset it for the next time */
-                window->priv->fade_out_alpha = 1.0;
-                window->priv->fade_timeout_id = 0;
-
-                return FALSE;
-        } else {
-                GdkRectangle rect;
-                GtkWidget *win = GTK_WIDGET (window);
-                GtkAllocation allocation;
-
-                window->priv->fade_out_alpha -= 0.10;
-
-                rect.x = 0;
-                rect.y = 0;
-                gtk_widget_get_allocation (win, &allocation);
-                rect.width = allocation.width;
-                rect.height = allocation.height;
-
-                gtk_widget_realize (win);
-                gdk_window_invalidate_rect (gtk_widget_get_window (win), &rect, FALSE);
-        }
-
-        return TRUE;
-}
-
-static gboolean
-hide_timeout (GsdOsdWindow *window)
-{
-        if (window->priv->is_composited) {
-                window->priv->hide_timeout_id = 0;
-                window->priv->fade_timeout_id = g_timeout_add (FADE_TIMEOUT,
-                                                               (GSourceFunc) fade_timeout,
-                                                               window);
-        } else {
-                gtk_widget_hide (GTK_WIDGET (window));
-        }
-
-        return FALSE;
-}
-
-static void
-remove_hide_timeout (GsdOsdWindow *window)
-{
-        if (window->priv->hide_timeout_id != 0) {
-                g_source_remove (window->priv->hide_timeout_id);
-                window->priv->hide_timeout_id = 0;
-        }
-
-        if (window->priv->fade_timeout_id != 0) {
-                g_source_remove (window->priv->fade_timeout_id);
-                window->priv->fade_timeout_id = 0;
-                window->priv->fade_out_alpha = 1.0;
-        }
-}
-
-static void
-add_hide_timeout (GsdOsdWindow *window)
-{
-        int timeout;
-
-        if (window->priv->is_composited) {
-                timeout = DIALOG_FADE_TIMEOUT;
-        } else {
-                timeout = DIALOG_TIMEOUT;
-        }
-        window->priv->hide_timeout_id = g_timeout_add (timeout,
-                                                       (GSourceFunc) hide_timeout,
-                                                       window);
-}
-
-void
-gsd_osd_window_draw_rounded_rectangle (cairo_t* cr,
-                                       gdouble  aspect,
-                                       gdouble  x,
-                                       gdouble  y,
-                                       gdouble  corner_radius,
-                                       gdouble  width,
-                                       gdouble  height)
-{
-        gdouble radius = corner_radius / aspect;
-
-        cairo_move_to (cr, x + radius, y);
-
-        cairo_line_to (cr,
-                       x + width - radius,
-                       y);
-        cairo_arc (cr,
-                   x + width - radius,
-                   y + radius,
-                   radius,
-                   -90.0f * G_PI / 180.0f,
-                   0.0f * G_PI / 180.0f);
-        cairo_line_to (cr,
-                       x + width,
-                       y + height - radius);
-        cairo_arc (cr,
-                   x + width - radius,
-                   y + height - radius,
-                   radius,
-                   0.0f * G_PI / 180.0f,
-                   90.0f * G_PI / 180.0f);
-        cairo_line_to (cr,
-                       x + radius,
-                       y + height);
-        cairo_arc (cr,
-                   x + radius,
-                   y + height - radius,
-                   radius,
-                   90.0f * G_PI / 180.0f,
-                   180.0f * G_PI / 180.0f);
-        cairo_line_to (cr,
-                       x,
-                       y + radius);
-        cairo_arc (cr,
-                   x + radius,
-                   y + radius,
-                   radius,
-                   180.0f * G_PI / 180.0f,
-                   270.0f * G_PI / 180.0f);
-        cairo_close_path (cr);
-}
+static void gsd_osd_window_update_and_hide (GsdOsdWindow *window);
 
 static void
 rgb_to_hls (gdouble *r,
@@ -342,7 +222,7 @@ hls_to_rgb (gdouble *h,
         }
 }
 
-void
+static void
 gsd_osd_window_color_shade (GdkRGBA *a,
                             gdouble   k)
 {
@@ -375,8 +255,7 @@ gsd_osd_window_color_shade (GdkRGBA *a,
         a->blue = blue;
 }
 
-
-void
+static void
 gsd_osd_window_color_reverse (GdkRGBA *a)
 {
         gdouble red;
@@ -405,31 +284,712 @@ gsd_osd_window_color_reverse (GdkRGBA *a)
         a->blue = blue;
 }
 
-/* This is our draw handler when the window is in a compositing manager.
- * We draw everything by hand, using Cairo, so that we can have a nice
- * transparent/rounded look.
- */
 static void
-draw_when_composited (GtkWidget *widget, cairo_t *orig_cr)
+gsd_osd_window_draw_rounded_rectangle (cairo_t* cr,
+                                       gdouble  aspect,
+                                       gdouble  x,
+                                       gdouble  y,
+                                       gdouble  corner_radius,
+                                       gdouble  width,
+                                       gdouble  height)
 {
-        GsdOsdWindow    *window;
-        cairo_t         *cr;
-        cairo_surface_t *surface;
-        int              width;
-        int              height;
-        GtkStyleContext *context;
+        gdouble radius = corner_radius / aspect;
+
+        cairo_move_to (cr, x + radius, y);
+
+        cairo_line_to (cr,
+                       x + width - radius,
+                       y);
+        cairo_arc (cr,
+                   x + width - radius,
+                   y + radius,
+                   radius,
+                   -90.0f * G_PI / 180.0f,
+                   0.0f * G_PI / 180.0f);
+        cairo_line_to (cr,
+                       x + width,
+                       y + height - radius);
+        cairo_arc (cr,
+                   x + width - radius,
+                   y + height - radius,
+                   radius,
+                   0.0f * G_PI / 180.0f,
+                   90.0f * G_PI / 180.0f);
+        cairo_line_to (cr,
+                       x + radius,
+                       y + height);
+        cairo_arc (cr,
+                   x + radius,
+                   y + height - radius,
+                   radius,
+                   90.0f * G_PI / 180.0f,
+                   180.0f * G_PI / 180.0f);
+        cairo_line_to (cr,
+                       x,
+                       y + radius);
+        cairo_arc (cr,
+                   x + radius,
+                   y + radius,
+                   radius,
+                   180.0f * G_PI / 180.0f,
+                   270.0f * G_PI / 180.0f);
+        cairo_close_path (cr);
+}
+
+static gboolean
+fade_timeout (GsdOsdWindow *window)
+{
+        if (window->priv->fade_out_alpha <= 0.0) {
+                gtk_widget_hide (GTK_WIDGET (window));
+
+                /* Reset it for the next time */
+                window->priv->fade_out_alpha = 1.0;
+                window->priv->fade_timeout_id = 0;
+
+                return FALSE;
+        } else {
+                GdkRectangle rect;
+                GtkWidget *win = GTK_WIDGET (window);
+                GtkAllocation allocation;
+
+                window->priv->fade_out_alpha -= 0.10;
+
+                rect.x = 0;
+                rect.y = 0;
+                gtk_widget_get_allocation (win, &allocation);
+                rect.width = allocation.width;
+                rect.height = allocation.height;
+
+                gtk_widget_realize (win);
+                gdk_window_invalidate_rect (gtk_widget_get_window (win), &rect, FALSE);
+        }
+
+        return TRUE;
+}
+
+static gboolean
+hide_timeout (GsdOsdWindow *window)
+{
+	window->priv->hide_timeout_id = 0;
+	window->priv->fade_timeout_id = g_timeout_add (FADE_TIMEOUT,
+						       (GSourceFunc) fade_timeout,
+						       window);
+
+        return FALSE;
+}
+
+static void
+remove_hide_timeout (GsdOsdWindow *window)
+{
+        if (window->priv->hide_timeout_id != 0) {
+                g_source_remove (window->priv->hide_timeout_id);
+                window->priv->hide_timeout_id = 0;
+        }
+
+        if (window->priv->fade_timeout_id != 0) {
+                g_source_remove (window->priv->fade_timeout_id);
+                window->priv->fade_timeout_id = 0;
+                window->priv->fade_out_alpha = 1.0;
+        }
+}
+
+static void
+add_hide_timeout (GsdOsdWindow *window)
+{
+        window->priv->hide_timeout_id = g_timeout_add (DIALOG_FADE_TIMEOUT,
+                                                       (GSourceFunc) hide_timeout,
+                                                       window);
+}
+
+static const char *
+get_image_name_for_volume (gboolean muted,
+                           int volume)
+{
+        static const char *icon_names[] = {
+                "audio-volume-muted-symbolic",
+                "audio-volume-low-symbolic",
+                "audio-volume-medium-symbolic",
+                "audio-volume-high-symbolic",
+                NULL
+        };
+        int n;
+
+        if (muted) {
+                n = 0;
+        } else {
+                /* select image */
+                n = 3 * volume / 100 + 1;
+                if (n < 1) {
+                        n = 1;
+                } else if (n > 3) {
+                        n = 3;
+                }
+        }
+
+	return icon_names[n];
+}
+
+static void
+action_changed (GsdOsdWindow *window)
+{
+        gsd_osd_window_update_and_hide (GSD_OSD_WINDOW (window));
+}
+
+static void
+volume_level_changed (GsdOsdWindow *window)
+{
+        gsd_osd_window_update_and_hide (GSD_OSD_WINDOW (window));
+}
+
+static void
+volume_muted_changed (GsdOsdWindow *window)
+{
+        gsd_osd_window_update_and_hide (GSD_OSD_WINDOW (window));
+}
+
+void
+gsd_osd_window_set_action (GsdOsdWindow      *window,
+                           GsdOsdWindowAction action)
+{
+        g_return_if_fail (GSD_IS_OSD_WINDOW (window));
+        g_return_if_fail (action == GSD_OSD_WINDOW_ACTION_VOLUME);
+
+        if (window->priv->action != action) {
+                window->priv->action = action;
+                action_changed (window);
+        } else {
+                gsd_osd_window_update_and_hide (GSD_OSD_WINDOW (window));
+        }
+}
+
+void
+gsd_osd_window_set_action_custom (GsdOsdWindow      *window,
+                                  const char        *icon_name,
+                                  gboolean           show_level)
+{
+        g_return_if_fail (GSD_IS_OSD_WINDOW (window));
+        g_return_if_fail (icon_name != NULL);
+
+        if (window->priv->action != GSD_OSD_WINDOW_ACTION_CUSTOM ||
+            g_strcmp0 (window->priv->icon_name, icon_name) != 0 ||
+            window->priv->show_level != show_level) {
+                window->priv->action = GSD_OSD_WINDOW_ACTION_CUSTOM;
+                g_free (window->priv->icon_name);
+                window->priv->icon_name = g_strdup (icon_name);
+                window->priv->show_level = show_level;
+                action_changed (window);
+        } else {
+                gsd_osd_window_update_and_hide (GSD_OSD_WINDOW (window));
+        }
+}
+
+void
+gsd_osd_window_set_volume_muted (GsdOsdWindow *window,
+                                 gboolean      muted)
+{
+        g_return_if_fail (GSD_IS_OSD_WINDOW (window));
+
+        if (window->priv->volume_muted != muted) {
+                window->priv->volume_muted = muted;
+                volume_muted_changed (window);
+        }
+}
+
+void
+gsd_osd_window_set_volume_level (GsdOsdWindow *window,
+                                 int           level)
+{
+        g_return_if_fail (GSD_IS_OSD_WINDOW (window));
+
+        if (window->priv->volume_level != level) {
+                window->priv->volume_level = level;
+                volume_level_changed (window);
+        }
+}
+
+static GdkPixbuf *
+load_pixbuf (GsdOsdDrawContext *ctx,
+             const char        *name,
+             int                icon_size)
+{
+        GtkIconInfo     *info;
+        GdkPixbuf       *pixbuf;
+        GdkRGBA          color;
+
+        gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &color);
+        info = gtk_icon_theme_lookup_icon (ctx->theme,
+                                           name,
+                                           icon_size,
+                                           GTK_ICON_LOOKUP_FORCE_SIZE | GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+
+        if (info == NULL) {
+                g_warning ("Failed to load '%s'", name);
+                return NULL;
+        }
+
+        pixbuf = gtk_icon_info_load_symbolic (info,
+                                              &color,
+                                              NULL,
+                                              NULL,
+                                              NULL,
+                                              NULL,
+                                              NULL);
+        gtk_icon_info_free (info);
+
+        return pixbuf;
+}
+
+static void
+draw_eject (cairo_t *cr,
+            double   _x0,
+            double   _y0,
+            double   width,
+            double   height)
+{
+        int box_height;
+        int tri_height;
+        int separation;
+
+        box_height = height * 0.2;
+        separation = box_height / 3;
+        tri_height = height - box_height - separation;
+
+        cairo_rectangle (cr, _x0, _y0 + height - box_height, width, box_height);
+
+        cairo_move_to (cr, _x0, _y0 + tri_height);
+        cairo_rel_line_to (cr, width, 0);
+        cairo_rel_line_to (cr, -width / 2, -tri_height);
+        cairo_rel_line_to (cr, -width / 2, tri_height);
+        cairo_close_path (cr);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_fill_preserve (cr);
+
+        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, GSD_OSD_WINDOW_FG_ALPHA / 2);
+        cairo_set_line_width (cr, 2);
+        cairo_stroke (cr);
+}
+
+static void
+draw_waves (cairo_t *cr,
+            double   cx,
+            double   cy,
+            double   max_radius,
+            int      volume_level)
+{
+        const int n_waves = 3;
+        int last_wave;
+        int i;
+
+        last_wave = n_waves * volume_level / 100;
+
+        for (i = 0; i < n_waves; i++) {
+                double angle1;
+                double angle2;
+                double radius;
+                double alpha;
+
+                angle1 = -M_PI / 4;
+                angle2 = M_PI / 4;
+
+                if (i < last_wave)
+                        alpha = 1.0;
+                else if (i > last_wave)
+                        alpha = 0.1;
+                else alpha = 0.1 + 0.9 * (n_waves * volume_level % 100) / 100.0;
+
+                radius = (i + 1) * (max_radius / n_waves);
+                cairo_arc (cr, cx, cy, radius, angle1, angle2);
+                cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, alpha / 2);
+                cairo_set_line_width (cr, 14);
+                cairo_set_line_cap  (cr, CAIRO_LINE_CAP_ROUND);
+                cairo_stroke_preserve (cr);
+
+                cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, alpha);
+                cairo_set_line_width (cr, 10);
+                cairo_set_line_cap  (cr, CAIRO_LINE_CAP_ROUND);
+                cairo_stroke (cr);
+        }
+}
+
+static void
+draw_cross (cairo_t *cr,
+            double   cx,
+            double   cy,
+            double   size)
+{
+        cairo_move_to (cr, cx, cy - size/2.0);
+        cairo_rel_line_to (cr, size, size);
+
+        cairo_move_to (cr, cx, cy + size/2.0);
+        cairo_rel_line_to (cr, size, -size);
+
+        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, GSD_OSD_WINDOW_FG_ALPHA / 2);
+        cairo_set_line_width (cr, 14);
+        cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
+        cairo_stroke_preserve (cr);
+
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_set_line_width (cr, 10);
+        cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
+        cairo_stroke (cr);
+}
+
+static void
+draw_speaker (cairo_t *cr,
+              double   cx,
+              double   cy,
+              double   width,
+              double   height)
+{
+        double box_width;
+        double box_height;
+        double _x0;
+        double _y0;
+
+        box_width = width / 3;
+        box_height = height / 3;
+
+        _x0 = cx - (width / 2) + box_width;
+        _y0 = cy - box_height / 2;
+
+        cairo_move_to (cr, _x0, _y0);
+        cairo_rel_line_to (cr, - box_width, 0);
+        cairo_rel_line_to (cr, 0, box_height);
+        cairo_rel_line_to (cr, box_width, 0);
+
+        cairo_line_to (cr, cx + box_width, cy + height / 2);
+        cairo_rel_line_to (cr, 0, -height);
+        cairo_line_to (cr, _x0, _y0);
+        cairo_close_path (cr);
+
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_fill_preserve (cr);
+
+        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, GSD_OSD_WINDOW_FG_ALPHA / 2);
+        cairo_set_line_width (cr, 2);
+        cairo_stroke (cr);
+}
+
+static gboolean
+render_speaker (GsdOsdDrawContext *ctx,
+                cairo_t           *cr,
+                double             _x0,
+                double             _y0,
+                double             width,
+                double             height)
+{
+        GdkPixbuf         *pixbuf;
+        const char        *icon_name;
+        int                icon_size;
+
+        icon_name = get_image_name_for_volume (ctx->volume_muted,
+                                               ctx->volume_level);
+
+        icon_size = (int) width;
+
+        pixbuf = load_pixbuf (ctx, icon_name, icon_size);
+
+        if (pixbuf == NULL) {
+                return FALSE;
+        }
+
+        gdk_cairo_set_source_pixbuf (cr, pixbuf, _x0, _y0);
+        cairo_paint_with_alpha (cr, GSD_OSD_WINDOW_FG_ALPHA);
+
+        g_object_unref (pixbuf);
+
+        return TRUE;
+}
+
+#define LIGHTNESS_MULT  1.3
+#define DARKNESS_MULT   0.7
+
+static void
+draw_volume_boxes (GsdOsdDrawContext *ctx,
+                   cairo_t           *cr,
+                   double             percentage,
+                   double             _x0,
+                   double             _y0,
+                   double             width,
+                   double             height)
+{
+        gdouble   x1;
+        GdkRGBA  acolor;
+
+        height = round (height) - 1;
+        width = round (width) - 1;
+        x1 = round ((width - 1) * percentage);
+
+        /* bar background */
+        gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
+        gsd_osd_window_color_shade (&acolor, DARKNESS_MULT);
+        gsd_osd_window_color_reverse (&acolor);
+        acolor.alpha = GSD_OSD_WINDOW_FG_ALPHA / 2;
+        gsd_osd_window_draw_rounded_rectangle (cr, 1.0, _x0, _y0, height / 6, width, height);
+        gdk_cairo_set_source_rgba (cr, &acolor);
+        cairo_fill (cr);
+
+        /* bar progress */
+        if (percentage < 0.01)
+                return;
+        gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
+        acolor.alpha = GSD_OSD_WINDOW_FG_ALPHA;
+        gsd_osd_window_draw_rounded_rectangle (cr, 1.0, _x0, _y0, height / 6, x1, height);
+        gdk_cairo_set_source_rgba (cr, &acolor);
+        cairo_fill (cr);
+}
+
+static void
+draw_action_volume (GsdOsdDrawContext *ctx,
+                    cairo_t           *cr)
+{
+        int window_width;
+        int window_height;
+        double icon_box_width;
+        double icon_box_height;
+        double icon_box_x0;
+        double icon_box_y0;
+        double volume_box_x0;
+        double volume_box_y0;
+        double volume_box_width;
+        double volume_box_height;
+        gboolean res;
+
+	window_width = window_height = ctx->size;
+
+        icon_box_width = round (window_width * ICON_SCALE);
+        icon_box_height = round (window_height * ICON_SCALE);
+        volume_box_width = icon_box_width;
+        volume_box_height = round (window_height * 0.05);
+
+        icon_box_x0 = round ((window_width - icon_box_width) / 2);
+        icon_box_y0 = round ((window_height - icon_box_height - volume_box_height) / 2 - volume_box_height);
+        volume_box_x0 = round (icon_box_x0);
+        volume_box_y0 = round (icon_box_height + icon_box_y0) + volume_box_height;
+
+#if 0
+        g_message ("icon box: w=%f h=%f _x0=%f _y0=%f",
+                   icon_box_width,
+                   icon_box_height,
+                   icon_box_x0,
+                   icon_box_y0);
+        g_message ("volume box: w=%f h=%f _x0=%f _y0=%f",
+                   volume_box_width,
+                   volume_box_height,
+                   volume_box_x0,
+                   volume_box_y0);
+#endif
+
+        res = render_speaker (ctx,
+                              cr,
+                              icon_box_x0, icon_box_y0,
+                              icon_box_width, icon_box_height);
+        if (! res) {
+                double speaker_width;
+                double speaker_height;
+                double speaker_cx;
+                double speaker_cy;
+
+                speaker_width = icon_box_width * 0.5;
+                speaker_height = icon_box_height * 0.75;
+                speaker_cx = icon_box_x0 + speaker_width / 2;
+                speaker_cy = icon_box_y0 + speaker_height / 2;
+
+#if 0
+                g_message ("speaker box: w=%f h=%f cx=%f cy=%f",
+                           speaker_width,
+                           speaker_height,
+                           speaker_cx,
+                           speaker_cy);
+#endif
+
+                /* draw speaker symbol */
+                draw_speaker (cr, speaker_cx, speaker_cy, speaker_width, speaker_height);
+
+                if (!ctx->volume_muted) {
+                        /* draw sound waves */
+                        double wave_x0;
+                        double wave_y0;
+                        double wave_radius;
+
+                        wave_x0 = window_width / 2;
+                        wave_y0 = speaker_cy;
+                        wave_radius = icon_box_width / 2;
+
+                        draw_waves (cr, wave_x0, wave_y0, wave_radius, ctx->volume_level);
+                } else {
+                        /* draw 'mute' cross */
+                        double cross_x0;
+                        double cross_y0;
+                        double cross_size;
+
+                        cross_size = speaker_width * 3 / 4;
+                        cross_x0 = icon_box_x0 + icon_box_width - cross_size;
+                        cross_y0 = speaker_cy;
+
+                        draw_cross (cr, cross_x0, cross_y0, cross_size);
+                }
+        }
+
+        /* draw volume meter */
+        draw_volume_boxes (ctx,
+                           cr,
+                           (double) ctx->volume_level / 100.0,
+                           volume_box_x0,
+                           volume_box_y0,
+                           volume_box_width,
+                           volume_box_height);
+}
+
+static gboolean
+render_custom (GsdOsdDrawContext  *ctx,
+               cairo_t            *cr,
+               double              _x0,
+               double              _y0,
+               double              width,
+               double              height)
+{
+        GdkPixbuf         *pixbuf;
+        int                icon_size;
+
+        icon_size = (int)width;
+
+        pixbuf = load_pixbuf (ctx, ctx->icon_name, icon_size);
+
+        if (pixbuf == NULL) {
+                char *name;
+                if (ctx->direction == GTK_TEXT_DIR_RTL)
+                        name = g_strdup_printf ("%s-rtl", ctx->icon_name);
+                else
+                        name = g_strdup_printf ("%s-ltr", ctx->icon_name);
+                pixbuf = load_pixbuf (ctx, name, icon_size);
+                g_free (name);
+                if (pixbuf == NULL)
+                        return FALSE;
+        }
+
+        gdk_cairo_set_source_pixbuf (cr, pixbuf, _x0, _y0);
+        cairo_paint_with_alpha (cr, GSD_OSD_WINDOW_FG_ALPHA);
+
+        g_object_unref (pixbuf);
+
+        return TRUE;
+}
+
+static void
+draw_action_custom (GsdOsdDrawContext  *ctx,
+                    cairo_t            *cr)
+{
+        int window_width;
+        int window_height;
+        double icon_box_width;
+        double icon_box_height;
+        double icon_box_x0;
+        double icon_box_y0;
+        double bright_box_x0;
+        double bright_box_y0;
+        double bright_box_width;
+        double bright_box_height;
+        gboolean res;
+
+	window_width = window_height = ctx->size;
+
+        icon_box_width = round (window_width * ICON_SCALE);
+        icon_box_height = round (window_height * ICON_SCALE);
+        bright_box_width = round (icon_box_width);
+        bright_box_height = round (window_height * 0.05);
+
+        icon_box_x0 = round ((window_width - icon_box_width) / 2);
+        icon_box_y0 = round ((window_height - icon_box_height - bright_box_height) / 2 - bright_box_height);
+        bright_box_x0 = round (icon_box_x0);
+        bright_box_y0 = round (icon_box_height + icon_box_y0) + bright_box_height;
+
+#if 0
+        g_message ("icon box: w=%f h=%f _x0=%f _y0=%f",
+                   icon_box_width,
+                   icon_box_height,
+                   icon_box_x0,
+                   icon_box_y0);
+        g_message ("brightness box: w=%f h=%f _x0=%f _y0=%f",
+                   bright_box_width,
+                   bright_box_height,
+                   bright_box_x0,
+                   bright_box_y0);
+#endif
+
+        res = render_custom (ctx,
+                             cr,
+                             icon_box_x0, icon_box_y0,
+                             icon_box_width, icon_box_height);
+        if (!res && g_str_has_prefix (ctx->icon_name, "media-eject")) {
+                /* draw eject symbol */
+                draw_eject (cr,
+                            icon_box_x0, icon_box_y0,
+                            icon_box_width, icon_box_height);
+        }
+
+        if (ctx->show_level != FALSE) {
+                /* draw volume meter */
+                draw_volume_boxes (ctx,
+                                   cr,
+                                   (double) ctx->volume_level / 100.0,
+                                   bright_box_x0,
+                                   bright_box_y0,
+                                   bright_box_width,
+                                   bright_box_height);
+        }
+}
+
+void
+gsd_osd_window_draw (GsdOsdDrawContext *ctx,
+                     cairo_t           *cr)
+{
+        gdouble          corner_radius;
         GdkRGBA          acolor;
 
+        /* draw a box */
+        corner_radius = ctx->size / 10;
+        gsd_osd_window_draw_rounded_rectangle (cr, 1.0, 0.0, 0.0, corner_radius, ctx->size - 1, ctx->size - 1);
+        gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
+        gsd_osd_window_color_reverse (&acolor);
+        acolor.alpha = BG_ALPHA;
+        gdk_cairo_set_source_rgba (cr, &acolor);
+        cairo_fill (cr);
+
+        switch (ctx->action) {
+        case GSD_OSD_WINDOW_ACTION_VOLUME:
+                draw_action_volume (ctx, cr);
+                break;
+        case GSD_OSD_WINDOW_ACTION_CUSTOM:
+                draw_action_custom (ctx, cr);
+                break;
+        default:
+                break;
+        }
+}
+
+static gboolean
+gsd_osd_window_obj_draw (GtkWidget *widget,
+                         cairo_t   *orig_cr)
+{
+        GsdOsdWindow      *window;
+        cairo_t           *cr;
+        cairo_surface_t   *surface;
+        GtkStyleContext   *context;
+        GsdOsdDrawContext  ctx;
+        int                width, height, size;
+
         window = GSD_OSD_WINDOW (widget);
+        gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
+        size = MIN (width, height);
 
         context = gtk_widget_get_style_context (widget);
         cairo_set_operator (orig_cr, CAIRO_OPERATOR_SOURCE);
-        gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
 
         surface = cairo_surface_create_similar (cairo_get_target (orig_cr),
                                                 CAIRO_CONTENT_COLOR_ALPHA,
-                                                width,
-                                                height);
+                                                size,
+                                                size);
 
         if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS) {
                 goto done;
@@ -443,28 +1003,25 @@ draw_when_composited (GtkWidget *widget, cairo_t *orig_cr)
         cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
         cairo_paint (cr);
 
-        /* draw a box */
-        gsd_osd_window_draw_rounded_rectangle (cr, 1.0, 0.5, 0.5, height / 10, width-1, height-1);
-        gtk_style_context_get_background_color (context, GTK_STATE_NORMAL, &acolor);
-        gsd_osd_window_color_reverse (&acolor);
-        acolor.alpha = BG_ALPHA;
-        gdk_cairo_set_source_rgba (cr, &acolor);
-        cairo_fill_preserve (cr);
-
-        /* FIXME use &style->text_aa[GTK_STATE_NORMAL] instead? */
-        gtk_style_context_get_color (context, GTK_STATE_NORMAL, &acolor);
-        gsd_osd_window_color_reverse (&acolor);
-        acolor.alpha = BG_ALPHA / 2;
-        gdk_cairo_set_source_rgba (cr, &acolor);
-        cairo_set_line_width (cr, 1);
-        cairo_stroke (cr);
-
-        g_signal_emit (window, signals[DRAW_WHEN_COMPOSITED], 0, cr);
+        ctx.size = size;
+        ctx.style = context;
+        ctx.volume_level = window->priv->volume_level;
+        ctx.volume_muted = window->priv->volume_muted;
+        ctx.icon_name = window->priv->icon_name;
+        ctx.direction = gtk_widget_get_direction (GTK_WIDGET (window));
+        ctx.show_level = window->priv->show_level;
+        ctx.action = window->priv->action;
+        if (window != NULL && gtk_widget_has_screen (GTK_WIDGET (window))) {
+                ctx.theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)));
+        } else {
+                ctx.theme = gtk_icon_theme_get_default ();
+        }
+        gsd_osd_window_draw (&ctx, cr);
 
         cairo_destroy (cr);
 
         /* Make sure we have a transparent background */
-        cairo_rectangle (orig_cr, 0, 0, width, height);
+        cairo_rectangle (orig_cr, 0, 0, size, size);
         cairo_set_source_rgba (orig_cr, 0.0, 0.0, 0.0, 0.0);
         cairo_fill (orig_cr);
 
@@ -475,51 +1032,6 @@ draw_when_composited (GtkWidget *widget, cairo_t *orig_cr)
         if (surface != NULL) {
                 cairo_surface_destroy (surface);
         }
-}
-
-/* This is our draw handler when the window is *not* in a compositing manager.
- * We just draw a rectangular frame by hand.  We do this with hardcoded drawing code,
- * instead of GtkFrame, to avoid changing the window's internal widget hierarchy:  in
- * either case (composited or non-composited), callers can assume that this works
- * identically to a GtkWindow without any intermediate widgetry.
- */
-static void
-draw_when_not_composited (GtkWidget *widget, cairo_t *cr)
-{
-        GtkStyleContext *context;
-        int width;
-        int height;
-
-        width = gtk_widget_get_allocated_width (widget);
-        height = gtk_widget_get_allocated_width (widget);
-        context = gtk_widget_get_style_context (widget);
-
-        gtk_style_context_set_state (context, GTK_STATE_FLAG_ACTIVE);
-        gtk_render_frame (context,
-                          cr,
-                          0,
-                          0,
-                          width,
-                          height);
-}
-
-static gboolean
-gsd_osd_window_draw (GtkWidget *widget,
-                     cairo_t   *cr)
-{
-        GsdOsdWindow *window;
-        GtkWidget *child;
-
-        window = GSD_OSD_WINDOW (widget);
-
-        if (window->priv->is_composited)
-                draw_when_composited (widget, cr);
-        else
-                draw_when_not_composited (widget, cr);
-
-        child = gtk_bin_get_child (GTK_BIN (window));
-        if (child)
-                gtk_container_propagate_draw (GTK_CONTAINER (window), child, cr);
 
         return FALSE;
 }
@@ -576,62 +1088,6 @@ gsd_osd_window_real_realize (GtkWidget *widget)
         cairo_region_destroy (region);
 }
 
-static void
-gsd_osd_window_style_updated (GtkWidget *widget)
-{
-        GtkStyleContext *context;
-        GtkBorder padding;
-
-        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->style_updated (widget);
-
-        /* We set our border width to 12 (per the GNOME standard), plus the
-         * thickness of the frame that we draw in our draw handler.  This will
-         * make our child be 12 pixels away from the frame.
-         */
-
-        context = gtk_widget_get_style_context (widget);
-        gtk_style_context_get_padding (context, GTK_STATE_NORMAL, &padding);
-        gtk_container_set_border_width (GTK_CONTAINER (widget), 12 + MAX (padding.left, padding.top));
-}
-
-static void
-gsd_osd_window_get_preferred_width (GtkWidget *widget,
-                                    gint      *minimum,
-                                    gint      *natural)
-{
-        GtkStyleContext *context;
-        GtkBorder padding;
-
-        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->get_preferred_width (widget, minimum, natural);
-
-        /* See the comment in gsd_osd_window_style_updated() for why we add the padding here */
-
-        context = gtk_widget_get_style_context (widget);
-        gtk_style_context_get_padding (context, GTK_STATE_NORMAL, &padding);
-
-        *minimum += padding.left;
-        *natural += padding.left;
-}
-
-static void
-gsd_osd_window_get_preferred_height (GtkWidget *widget,
-                                     gint      *minimum,
-                                     gint      *natural)
-{
-        GtkStyleContext *context;
-        GtkBorder padding;
-
-        GTK_WIDGET_CLASS (gsd_osd_window_parent_class)->get_preferred_height (widget, minimum, natural);
-
-        /* See the comment in gsd_osd_window_style_updated() for why we add the padding here */
-
-        context = gtk_widget_get_style_context (widget);
-        gtk_style_context_get_padding (context, GTK_STATE_NORMAL, &padding);
-
-        *minimum += padding.top;
-        *natural += padding.top;
-}
-
 static GObject *
 gsd_osd_window_constructor (GType                  type,
                             guint                  n_construct_properties,
@@ -653,89 +1109,106 @@ gsd_osd_window_constructor (GType                  type,
 }
 
 static void
+gsd_osd_window_finalize (GObject *object)
+{
+	GsdOsdWindow *window;
+
+	window = GSD_OSD_WINDOW (object);
+	if (window->priv->icon_name) {
+		g_free (window->priv->icon_name);
+		window->priv->icon_name = NULL;
+	}
+
+	if (window->priv->monitors_changed_id > 0) {
+		GdkScreen *screen;
+		screen = gtk_widget_get_screen (GTK_WIDGET (object));
+		g_signal_handler_disconnect (G_OBJECT (screen), window->priv->monitors_changed_id);
+		window->priv->monitors_changed_id = 0;
+	}
+
+	G_OBJECT_CLASS (gsd_osd_window_parent_class)->finalize (object);
+}
+
+static void
 gsd_osd_window_class_init (GsdOsdWindowClass *klass)
 {
         GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
         GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
         gobject_class->constructor = gsd_osd_window_constructor;
+        gobject_class->finalize = gsd_osd_window_finalize;
 
         widget_class->show = gsd_osd_window_real_show;
         widget_class->hide = gsd_osd_window_real_hide;
         widget_class->realize = gsd_osd_window_real_realize;
-        widget_class->style_updated = gsd_osd_window_style_updated;
-        widget_class->get_preferred_width = gsd_osd_window_get_preferred_width;
-        widget_class->get_preferred_height = gsd_osd_window_get_preferred_height;
-        widget_class->draw = gsd_osd_window_draw;
-
-        signals[DRAW_WHEN_COMPOSITED] = g_signal_new ("draw-when-composited",
-                                                      G_TYPE_FROM_CLASS (gobject_class),
-                                                      G_SIGNAL_RUN_FIRST,
-                                                      G_STRUCT_OFFSET (GsdOsdWindowClass, draw_when_composited),
-                                                      NULL, NULL,
-                                                      g_cclosure_marshal_VOID__POINTER,
-                                                      G_TYPE_NONE, 1,
-                                                      G_TYPE_POINTER);
+        widget_class->draw = gsd_osd_window_obj_draw;
 
         g_type_class_add_private (klass, sizeof (GsdOsdWindowPrivate));
 }
 
-/*
- * gsd_osd_window_is_composited:
- * @window: a #GsdOsdWindow
- *
- * Return value: whether the window was created on a composited screen.
- */
-gboolean
-gsd_osd_window_is_composited (GsdOsdWindow *window)
-{
-        return window->priv->is_composited;
-}
-
-/*
+/**
  * gsd_osd_window_is_valid:
  * @window: a #GsdOsdWindow
  *
- * Return value: TRUE if the @window's idea of being composited matches whether
- * its current screen is actually composited.
+ * Return value: TRUE if the @window's idea of the screen geometry is the
+ * same as the current screen's.
  */
 gboolean
 gsd_osd_window_is_valid (GsdOsdWindow *window)
 {
-        GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (window));
-        return gdk_screen_is_composited (screen) == window->priv->is_composited;
+	return window->priv->monitor_changed;
+}
+
+static void
+monitors_changed_cb (GdkScreen    *screen,
+		     GsdOsdWindow *window)
+{
+        gint primary_monitor;
+        GdkRectangle mon_rect;
+
+	primary_monitor = gdk_screen_get_primary_monitor (screen);
+	if (primary_monitor != window->priv->primary_monitor) {
+		window->priv->monitor_changed = TRUE;
+		return;
+	}
+
+	gdk_screen_get_monitor_geometry (screen, primary_monitor, &mon_rect);
+
+        if (window->priv->screen_width != mon_rect.width ||
+            window->priv->screen_height != mon_rect.height)
+                window->priv->monitor_changed = TRUE;
 }
 
 static void
 gsd_osd_window_init (GsdOsdWindow *window)
 {
         GdkScreen *screen;
+        gdouble scalew, scaleh, scale;
+        GdkRectangle monitor;
+        int size;
 
         window->priv = GSD_OSD_WINDOW_GET_PRIVATE (window);
 
         screen = gtk_widget_get_screen (GTK_WIDGET (window));
+        window->priv->monitors_changed_id = g_signal_connect (G_OBJECT (screen), "monitors-changed",
+                                                              G_CALLBACK (monitors_changed_cb), window);
 
-        window->priv->is_composited = gdk_screen_is_composited (screen);
+        window->priv->primary_monitor = gdk_screen_get_primary_monitor (screen);
+        gdk_screen_get_monitor_geometry (screen, window->priv->primary_monitor, &monitor);
+        window->priv->screen_width = monitor.width;
+        window->priv->screen_height = monitor.height;
 
-        if (window->priv->is_composited) {
-                gdouble scalew, scaleh, scale;
-                gint size;
+        gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
+        gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
 
-                gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
-                gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
+        /* assume 130x130 on a 640x480 display and scale from there */
+        scalew = monitor.width / 640.0;
+        scaleh = monitor.height / 480.0;
+        scale = MIN (scalew, scaleh);
+        size = 130 * MAX (1, scale);
+        gtk_window_set_default_size (GTK_WINDOW (window), size, size);
 
-                /* assume 130x130 on a 640x480 display and scale from there */
-                scalew = gdk_screen_get_width (screen) / 640.0;
-                scaleh = gdk_screen_get_height (screen) / 480.0;
-                scale = MIN (scalew, scaleh);
-                size = 130 * MAX (1, scale);
-
-                gtk_window_set_default_size (GTK_WINDOW (window), size, size);
-
-                window->priv->fade_out_alpha = 1.0;
-        } else {
-                gtk_container_set_border_width (GTK_CONTAINER (window), 12);
-        }
+        window->priv->fade_out_alpha = 1.0;
 }
 
 GtkWidget *
@@ -750,13 +1223,11 @@ gsd_osd_window_new (void)
  *
  * Queues the @window for immediate drawing, and queues a timer to hide the window.
  */
-void
+static void
 gsd_osd_window_update_and_hide (GsdOsdWindow *window)
 {
         remove_hide_timeout (window);
         add_hide_timeout (window);
 
-        if (window->priv->is_composited) {
-                gtk_widget_queue_draw (GTK_WIDGET (window));
-        }
+        gtk_widget_queue_draw (GTK_WIDGET (window));
 }

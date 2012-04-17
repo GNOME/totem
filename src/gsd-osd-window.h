@@ -67,28 +67,26 @@ struct GsdOsdWindow {
 
 struct GsdOsdWindowClass {
         GtkWindowClass parent_class;
-
-        void (* draw_when_composited) (GsdOsdWindow *window, cairo_t *cr);
 };
+
+typedef enum {
+        GSD_OSD_WINDOW_ACTION_VOLUME,
+        GSD_OSD_WINDOW_ACTION_CUSTOM
+} GsdOsdWindowAction;
 
 GType                 gsd_osd_window_get_type          (void);
 
 GtkWidget *           gsd_osd_window_new               (void);
-gboolean              gsd_osd_window_is_composited     (GsdOsdWindow      *window);
-gboolean              gsd_osd_window_is_valid          (GsdOsdWindow      *window);
-void                  gsd_osd_window_update_and_hide   (GsdOsdWindow      *window);
-
-void                  gsd_osd_window_draw_rounded_rectangle (cairo_t *cr,
-                                                             gdouble  aspect,
-                                                             gdouble  x,
-                                                             gdouble  y,
-                                                             gdouble  corner_radius,
-                                                             gdouble  width,
-                                                             gdouble  height);
-
-void                  gsd_osd_window_color_reverse          (GdkRGBA *a);
-void                  gsd_osd_window_color_shade            (GdkRGBA *a,
-                                                             gdouble  k);
+gboolean              gsd_osd_window_is_valid          (GsdOsdWindow       *window);
+void                  gsd_osd_window_set_action        (GsdOsdWindow       *window,
+                                                        GsdOsdWindowAction  action);
+void                  gsd_osd_window_set_action_custom (GsdOsdWindow       *window,
+                                                        const char         *icon_name,
+                                                        gboolean            show_level);
+void                  gsd_osd_window_set_volume_muted  (GsdOsdWindow       *window,
+                                                        gboolean            muted);
+void                  gsd_osd_window_set_volume_level  (GsdOsdWindow       *window,
+                                                        int                 level);
 
 G_END_DECLS
 
