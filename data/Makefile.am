@@ -82,12 +82,12 @@ CLEANFILES += \
 	$(thumbnailer_DATA)
 
 # Content type handling
-nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h totem-uri-schemes.h totem-mime-types.js
+nodist_noinst_HEADERS = totem-mime-types.h nautilus-audio-mime-types.h totem-uri-schemes.h totemMimeTypes.js
 totem-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/mime-type-include.sh $(srcdir)/mime-type-list.txt	> $@
 nautilus-audio-mime-types.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/mime-type-include.sh --nautilus $(srcdir)/mime-type-list.txt > $@
-totem-mime-types.js: mime-type-imports.sh mime-type-list.txt mime-functions.sh
+totemMimeTypes.js: mime-type-imports.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/mime-type-imports.sh $(srcdir)/mime-type-list.txt	> $@
 totem-uri-schemes.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/uri-scheme-include.sh $(srcdir)/uri-schemes-list.txt > $@
