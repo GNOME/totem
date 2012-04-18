@@ -3046,7 +3046,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		icon_name = "media-eject";
 		break;
 	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
-		/* TODO - how to see if can, and play the DVD (like the menu item) */
+		/* FIXME - focus the "Optical Media" section in Grilo */
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
 		totem_action_volume_toggle_mute (totem);
