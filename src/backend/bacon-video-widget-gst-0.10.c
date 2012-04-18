@@ -85,18 +85,22 @@
 #include "totem-gst-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
+#include "bacon-video-osd-actor.h"
 #include "baconvideowidget-marshal.h"
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
 
 #define DEFAULT_USER_AGENT "Totem/"VERSION
 
-#define FORWARD_RATE 1.0
-#define REVERSE_RATE -1.0
-/* Maximum size of the logo */
-#define LOGO_SIZE 256
+#define OSD_SIZE 130                           /* Size of the OSD popup */
+#define OSD_MARGIN 8                           /* Pixels from the top-left */
+#define LOGO_SIZE 256                          /* Maximum size of the logo */
+
+/* Helper constants */
 #define NANOSECS_IN_SEC 1000000000
 #define SEEK_TIMEOUT NANOSECS_IN_SEC / 10
+#define FORWARD_RATE 1.0
+#define REVERSE_RATE -1.0
 
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
@@ -198,6 +202,7 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *stage;
   ClutterActor                *texture;
   ClutterActor                *frame;
+  ClutterActor                *osd;
 
   ClutterActor                *logo_frame;
   ClutterActor                *logo;
@@ -3277,6 +3282,18 @@ bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
   set_audio_filter (bvw);
 }
 
+void
+bacon_video_widget_popup_osd (BaconVideoWidget *bvw,
+			      const char       *icon_name)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bacon_video_osd_actor_set_icon_name (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd),
+				       icon_name);
+  bacon_video_osd_actor_show_and_fade (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
+}
+
 /* =========================================== */
 /*                                             */
 /*               Play/Pause, Stop              */
@@ -5968,6 +5985,16 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_child_above_sibling (CLUTTER_ACTOR (bvw->priv->stage),
 					 CLUTTER_ACTOR (bvw->priv->logo_frame),
 					 CLUTTER_ACTOR (bvw->priv->frame));
+
+  /* The OSD */
+  bvw->priv->osd = bacon_video_osd_actor_new ();
+  clutter_actor_set_anchor_point (bvw->priv->osd, -OSD_MARGIN, -OSD_MARGIN); /* FIXME RTL */
+  clutter_actor_set_size (bvw->priv->osd, OSD_SIZE, OSD_SIZE);
+  clutter_actor_add_child (bvw->priv->stage, bvw->priv->osd);
+  clutter_actor_set_child_above_sibling (bvw->priv->stage,
+					 bvw->priv->osd,
+					 bvw->priv->frame);
+  bacon_video_osd_actor_hide (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
 
   /* Add video balance */
   balance = gst_element_factory_make ("videobalance", "video_balance");

@@ -55,7 +55,12 @@ libbaconvideowidget_la_SOURCES = \
 	bacon-video-widget-gst-missing-plugins.c	\
 	bacon-video-widget-gst-missing-plugins.h	\
 	totem-aspect-frame.h				\
-	totem-aspect-frame.c
+	totem-aspect-frame.c				\
+	gsd-osd-window.c				\
+	gsd-osd-window.h				\
+	gsd-osd-window-private.h			\
+	bacon-video-osd-actor.c				\
+	bacon-video-osd-actor.h
 
 libbaconvideowidget_la_CPPFLAGS = \
 	-D_REENTRANT				\

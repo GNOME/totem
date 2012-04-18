@@ -37,7 +37,6 @@
 #include "totem-time-label.h"
 #include "bacon-video-widget.h"
 #include "gd-fullscreen-filter.h"
-#include "gsd-osd-window.h"
 
 #define FULLSCREEN_POPUP_TIMEOUT 5
 #define FULLSCREEN_MOTION_TIME 200 /* in milliseconds */
@@ -59,7 +58,6 @@ G_MODULE_EXPORT gboolean totem_fullscreen_control_leave_notify (GtkWidget *widge
 struct _TotemFullscreenPrivate {
 	BaconVideoWidget *bvw;
 	GtkWidget        *parent_window;
-	GtkWidget        *osd;
 
 	/* Fullscreen Popups */
 	GtkWidget        *exit_popup;
@@ -348,37 +346,12 @@ totem_fullscreen_show_popups_or_osd (TotemFullscreen *fs,
 				     const char *icon_name,
 				     gboolean show_cursor)
 {
-	GtkAllocation allocation;
-	GdkScreen *screen;
-	GdkWindow *window;
-	GdkRectangle rect;
-	int monitor;
-
 	if (icon_name == NULL) {
 		totem_fullscreen_show_popups (fs, show_cursor);
 		return;
 	}
 
-	gtk_widget_get_allocation (GTK_WIDGET (fs->priv->bvw), &allocation);
-	gtk_window_resize (GTK_WINDOW (fs->priv->osd),
-			   allocation.height / 8,
-			   allocation.height / 8);
-
-	window = gtk_widget_get_window (GTK_WIDGET (fs->priv->bvw));
-	screen = gtk_widget_get_screen (GTK_WIDGET (fs->priv->bvw));
-	monitor = gdk_screen_get_monitor_at_window (screen, window);
-	gdk_screen_get_monitor_geometry (screen, monitor, &rect);
-
-	if (gtk_widget_get_direction (GTK_WIDGET (fs->priv->bvw)) == GTK_TEXT_DIR_RTL)
-		gtk_window_move (GTK_WINDOW (fs->priv->osd),
-				 rect.width - 8 - allocation.height / 8,
-				 rect.y + 8);
-	else
-		gtk_window_move (GTK_WINDOW (fs->priv->osd), rect.x + 8, rect.y + 8);
-
-	gsd_osd_window_set_action_custom (GSD_OSD_WINDOW (fs->priv->osd),
-					  icon_name, FALSE);
-	gtk_widget_show (fs->priv->osd);
+	bacon_video_widget_popup_osd (fs->priv->bvw, icon_name);
 }
 
 G_MODULE_EXPORT gboolean
@@ -410,8 +383,6 @@ totem_fullscreen_set_fullscreen (TotemFullscreen *fs,
 
 	bacon_video_widget_set_fullscreen (fs->priv->bvw, fullscreen);
 	totem_fullscreen_set_cursor (fs, !fullscreen);
-	if (fullscreen == FALSE)
-		gtk_widget_hide (fs->priv->osd);
 
 	fs->priv->is_fullscreen = fullscreen;
 
@@ -526,7 +497,6 @@ totem_fullscreen_init (TotemFullscreen *self)
 			  G_CALLBACK (totem_fullscreen_exit_popup_draw_cb), self);
 	self->priv->control_popup = GTK_WIDGET (gtk_builder_get_object (self->priv->xml,
 				"totem_controls_window"));
-	self->priv->osd = gsd_osd_window_new ();
 
 	/* Motion notify */
 	gtk_widget_add_events (self->priv->exit_popup, GDK_POINTER_MOTION_MASK);
@@ -557,11 +527,6 @@ totem_fullscreen_finalize (GObject *object)
 	if (fs->priv->filter) {
 		g_object_unref (fs->priv->filter);
 		fs->priv->filter = NULL;
-	}
-
-	if (fs->priv->osd != NULL) {
-		gtk_widget_destroy (fs->priv->osd);
-		fs->priv->osd = NULL;
 	}
 
 	g_signal_handlers_disconnect_by_func (fs->priv->parent_window,

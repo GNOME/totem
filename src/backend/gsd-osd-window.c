@@ -40,11 +40,9 @@
 #include "gsd-osd-window.h"
 #include "gsd-osd-window-private.h"
 
-#define DIALOG_TIMEOUT 2000       /* dialog timeout in ms */
-#define DIALOG_FADE_TIMEOUT 1500  /* timeout before fade starts */
-#define FADE_TIMEOUT 10           /* timeout in ms between each frame of the fade */
 #define ICON_SCALE 0.50           /* size of the icon compared to the whole OSD */
 #define BG_ALPHA 0.75             /* background transparency */
+#define FG_ALPHA 1.0              /* Alpha value to be used for foreground objects drawn in an OSD window */
 
 #define GSD_OSD_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GSD_TYPE_OSD_WINDOW, GsdOsdWindowPrivate))
 
@@ -371,7 +369,7 @@ static gboolean
 hide_timeout (GsdOsdWindow *window)
 {
 	window->priv->hide_timeout_id = 0;
-	window->priv->fade_timeout_id = g_timeout_add (FADE_TIMEOUT,
+	window->priv->fade_timeout_id = g_timeout_add (FADE_FRAME_TIMEOUT,
 						       (GSourceFunc) fade_timeout,
 						       window);
 
@@ -561,10 +559,10 @@ draw_eject (cairo_t *cr,
         cairo_rel_line_to (cr, -width / 2, -tri_height);
         cairo_rel_line_to (cr, -width / 2, tri_height);
         cairo_close_path (cr);
-        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, FG_ALPHA);
         cairo_fill_preserve (cr);
 
-        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, GSD_OSD_WINDOW_FG_ALPHA / 2);
+        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, FG_ALPHA / 2);
         cairo_set_line_width (cr, 2);
         cairo_stroke (cr);
 }
@@ -623,12 +621,12 @@ draw_cross (cairo_t *cr,
         cairo_move_to (cr, cx, cy + size/2.0);
         cairo_rel_line_to (cr, size, -size);
 
-        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, GSD_OSD_WINDOW_FG_ALPHA / 2);
+        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, FG_ALPHA / 2);
         cairo_set_line_width (cr, 14);
         cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
         cairo_stroke_preserve (cr);
 
-        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, FG_ALPHA);
         cairo_set_line_width (cr, 10);
         cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
         cairo_stroke (cr);
@@ -662,10 +660,10 @@ draw_speaker (cairo_t *cr,
         cairo_line_to (cr, _x0, _y0);
         cairo_close_path (cr);
 
-        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, FG_ALPHA);
         cairo_fill_preserve (cr);
 
-        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, GSD_OSD_WINDOW_FG_ALPHA / 2);
+        cairo_set_source_rgba (cr, 0.6, 0.6, 0.6, FG_ALPHA / 2);
         cairo_set_line_width (cr, 2);
         cairo_stroke (cr);
 }
@@ -694,7 +692,7 @@ render_speaker (GsdOsdDrawContext *ctx,
         }
 
         gdk_cairo_set_source_pixbuf (cr, pixbuf, _x0, _y0);
-        cairo_paint_with_alpha (cr, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_paint_with_alpha (cr, FG_ALPHA);
 
         g_object_unref (pixbuf);
 
@@ -724,7 +722,7 @@ draw_volume_boxes (GsdOsdDrawContext *ctx,
         gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
         gsd_osd_window_color_shade (&acolor, DARKNESS_MULT);
         gsd_osd_window_color_reverse (&acolor);
-        acolor.alpha = GSD_OSD_WINDOW_FG_ALPHA / 2;
+        acolor.alpha = FG_ALPHA / 2;
         gsd_osd_window_draw_rounded_rectangle (cr, 1.0, _x0, _y0, height / 6, width, height);
         gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_fill (cr);
@@ -733,7 +731,7 @@ draw_volume_boxes (GsdOsdDrawContext *ctx,
         if (percentage < 0.01)
                 return;
         gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
-        acolor.alpha = GSD_OSD_WINDOW_FG_ALPHA;
+        acolor.alpha = FG_ALPHA;
         gsd_osd_window_draw_rounded_rectangle (cr, 1.0, _x0, _y0, height / 6, x1, height);
         gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_fill (cr);
@@ -869,7 +867,7 @@ render_custom (GsdOsdDrawContext  *ctx,
         }
 
         gdk_cairo_set_source_pixbuf (cr, pixbuf, _x0, _y0);
-        cairo_paint_with_alpha (cr, GSD_OSD_WINDOW_FG_ALPHA);
+        cairo_paint_with_alpha (cr, FG_ALPHA);
 
         g_object_unref (pixbuf);
 

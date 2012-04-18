@@ -31,10 +31,6 @@
  * semi-transparent, curved popup that appears when you press a hotkey global to
  * the desktop, such as to change the volume, switch your monitor's parameters,
  * etc.
- *
- * You can create a GsdOsdWindow and use it as a normal GtkWindow.  It will
- * automatically center itself, figure out if it needs to be composited, etc.
- * Just pack your widgets in it, sit back, and enjoy the ride.
  */
 
 #ifndef GSD_OSD_WINDOW_H
@@ -44,9 +40,6 @@
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
-
-/* Alpha value to be used for foreground objects drawn in an OSD window */
-#define GSD_OSD_WINDOW_FG_ALPHA 1.0
 
 #define GSD_TYPE_OSD_WINDOW            (gsd_osd_window_get_type ())
 #define GSD_OSD_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj),  GSD_TYPE_OSD_WINDOW, GsdOsdWindow))

@@ -497,6 +497,10 @@ BvwAudioOutputType bacon_video_widget_get_audio_output_type
 void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
 						  BvwAudioOutputType type);
 
+/* OSD */
+void bacon_video_widget_popup_osd                 (BaconVideoWidget *bvw,
+						   const char       *icon_name);
+
 G_END_DECLS
 
 #endif				/* HAVE_BACON_VIDEO_WIDGET_H */

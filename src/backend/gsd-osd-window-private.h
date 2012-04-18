@@ -46,6 +46,9 @@
 
 G_BEGIN_DECLS
 
+#define DIALOG_FADE_TIMEOUT 1500  /* timeout before fade starts */
+#define FADE_FRAME_TIMEOUT 10     /* timeout in ms between each frame of the fade */
+
 typedef struct {
         int                 size;
         GtkStyleContext    *style;
