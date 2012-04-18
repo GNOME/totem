@@ -643,6 +643,8 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	return subtitle;
 }
 
+#define OPEN_DIRECTORY_RESPONSE 1
+
 GSList *
 totem_add_files (GtkWindow *parent, const char *path)
 {
@@ -654,11 +656,12 @@ totem_add_files (GtkWindow *parent, const char *path)
 	gboolean set_folder;
 
 	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
-			parent,
-			GTK_FILE_CHOOSER_ACTION_OPEN,
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
-			NULL);
+					  parent,
+					  GTK_FILE_CHOOSER_ACTION_OPEN,
+					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  _("Add Directory"), OPEN_DIRECTORY_RESPONSE,
+					  GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
+					  NULL);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_supported);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_audio);
@@ -691,13 +694,12 @@ totem_add_files (GtkWindow *parent, const char *path)
 
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 
-	if (response != GTK_RESPONSE_ACCEPT) {
-		gtk_widget_destroy (fs);
-		g_object_unref (settings);
-		return NULL;
+	filenames = NULL;
+	if (response == OPEN_DIRECTORY_RESPONSE ||
+	    response == GTK_RESPONSE_ACCEPT) {
+		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
 	}
 
-	filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
 	if (filenames == NULL) {
 		gtk_widget_destroy (fs);
 		g_object_unref (settings);
