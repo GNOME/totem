@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-13 11:49+0000\n"
-"PO-Revision-Date: 2012-04-16 16:28+0200\n"
+"POT-Creation-Date: 2012-04-18 18:10+0000\n"
+"PO-Revision-Date: 2012-04-19 12:25+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -539,7 +539,7 @@ msgid "Extra Large"
 msgstr "Muy grande"
 
 #: ../data/totem.ui.h:98 ../src/totem-properties-view.c:228
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5440
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5457
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -1092,7 +1092,7 @@ msgstr "_Reproducir ahora"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../src/totem-fullscreen.c:608
+#: ../src/totem-fullscreen.c:573
 msgid "No File"
 msgstr "Ningún archivo"
 
@@ -1250,28 +1250,28 @@ msgstr "Totem no pudo mostrar el contenido de la ayuda."
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:3939 ../src/totem-object.c:3941
+#: ../src/totem-object.c:3936 ../src/totem-object.c:3938
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:3948 ../src/totem-object.c:3950
+#: ../src/totem-object.c:3945 ../src/totem-object.c:3947
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:3958 ../src/totem-object.c:3960
+#: ../src/totem-object.c:3955 ../src/totem-object.c:3957
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3971 ../src/totem-object.c:3973
+#: ../src/totem-object.c:3968 ../src/totem-object.c:3970
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4104
+#: ../src/totem-object.c:4101
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem-object.c:4104
+#: ../src/totem-object.c:4101
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1391,7 +1391,7 @@ msgstr "Guardar lista de reproducción"
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
 #: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1262
-#: ../src/totem-sidebar.c:142
+#: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
@@ -1453,12 +1453,12 @@ msgid "N/A"
 msgstr "N/D"
 
 #: ../src/totem-properties-view.c:224
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5436
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5453
 msgid "Surround"
 msgstr "Envolvente"
 
 #: ../src/totem-properties-view.c:226
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5438
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5455
 msgid "Mono"
 msgstr "Mono"
 
@@ -1705,9 +1705,13 @@ msgstr "Archivos de subtítulos"
 msgid "Select Text Subtitles"
 msgstr "Seleccionar los subtítulos de texto"
 
-#: ../src/totem-uri.c:656
+#: ../src/totem-uri.c:658
 msgid "Select Movies or Playlists"
 msgstr "Seleccionar películas o listas de reproducción"
+
+#: ../src/totem-uri.c:662
+msgid "Add Directory"
+msgstr "Añadir carpeta"
 
 #: ../src/totem.c:235 ../src/totem.c:243
 #: ../browser-plugin/totem-plugin-viewer.c:675
@@ -1723,33 +1727,33 @@ msgstr "No se pudo inicializar el soporte de hilos seguro."
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1584
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1589
 msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2877
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2882
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2881
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2886
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3312
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3329
 msgid "Location not found."
 msgstr "No se encontró la dirección."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3315
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3332
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la dirección; quizá no tiene permiso para abrir el archivo."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3335
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3341
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3352
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -1766,19 +1770,19 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3367
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3384
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5725
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5742
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5892
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5940
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5908
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5955
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -2490,15 +2494,15 @@ msgstr ""
 msgid "Browse Error"
 msgstr "Error al examinar"
 
-#: ../src/plugins/grilo/totem-grilo.c:599
+#: ../src/plugins/grilo/totem-grilo.c:608
 msgid "Search Error"
 msgstr "Error al buscar"
 
-#: ../src/plugins/grilo/totem-grilo.c:1219 ../src/plugins/grilo/grilo.ui.h:3
+#: ../src/plugins/grilo/totem-grilo.c:1235 ../src/plugins/grilo/grilo.ui.h:3
 msgid "Browse"
 msgstr "Examinar"
 
-#: ../src/plugins/grilo/totem-grilo.c:1285 ../src/plugins/grilo/grilo.ui.h:4
+#: ../src/plugins/grilo/totem-grilo.c:1301 ../src/plugins/grilo/grilo.ui.h:4
 msgid "Search"
 msgstr "Buscar"
 
