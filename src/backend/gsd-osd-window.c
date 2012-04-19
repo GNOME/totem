@@ -41,7 +41,6 @@
 #include "gsd-osd-window-private.h"
 
 #define ICON_SCALE 0.50           /* size of the icon compared to the whole OSD */
-#define BG_ALPHA 0.75             /* background transparency */
 #define FG_ALPHA 1.0              /* Alpha value to be used for foreground objects drawn in an OSD window */
 
 #define GSD_OSD_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GSD_TYPE_OSD_WINDOW, GsdOsdWindowPrivate))
@@ -69,218 +68,6 @@ struct GsdOsdWindowPrivate
 G_DEFINE_TYPE (GsdOsdWindow, gsd_osd_window, GTK_TYPE_WINDOW)
 
 static void gsd_osd_window_update_and_hide (GsdOsdWindow *window);
-
-static void
-rgb_to_hls (gdouble *r,
-            gdouble *g,
-            gdouble *b)
-{
-        gdouble min;
-        gdouble max;
-        gdouble red;
-        gdouble green;
-        gdouble blue;
-        gdouble h, l, s;
-        gdouble delta;
-
-        red = *r;
-        green = *g;
-        blue = *b;
-
-        if (red > green)
-        {
-                if (red > blue)
-                        max = red;
-                else
-                        max = blue;
-
-                if (green < blue)
-                        min = green;
-                else
-                        min = blue;
-        }
-        else
-        {
-                if (green > blue)
-                        max = green;
-                else
-                        max = blue;
-
-                if (red < blue)
-                        min = red;
-                else
-                        min = blue;
-        }
-
-        l = (max + min) / 2;
-        s = 0;
-        h = 0;
-
-        if (max != min)
-        {
-                if (l <= 0.5)
-                        s = (max - min) / (max + min);
-                else
-                        s = (max - min) / (2 - max - min);
-
-                delta = max -min;
-                if (red == max)
-                        h = (green - blue) / delta;
-                else if (green == max)
-                        h = 2 + (blue - red) / delta;
-                else if (blue == max)
-                        h = 4 + (red - green) / delta;
-
-                h *= 60;
-                if (h < 0.0)
-                        h += 360;
-        }
-
-        *r = h;
-        *g = l;
-        *b = s;
-}
-
-static void
-hls_to_rgb (gdouble *h,
-            gdouble *l,
-            gdouble *s)
-{
-        gdouble hue;
-        gdouble lightness;
-        gdouble saturation;
-        gdouble m1, m2;
-        gdouble r, g, b;
-
-        lightness = *l;
-        saturation = *s;
-
-        if (lightness <= 0.5)
-                m2 = lightness * (1 + saturation);
-        else
-                m2 = lightness + saturation - lightness * saturation;
-        m1 = 2 * lightness - m2;
-
-        if (saturation == 0)
-        {
-                *h = lightness;
-                *l = lightness;
-                *s = lightness;
-        }
-        else
-        {
-                hue = *h + 120;
-                while (hue > 360)
-                        hue -= 360;
-                while (hue < 0)
-                        hue += 360;
-
-                if (hue < 60)
-                        r = m1 + (m2 - m1) * hue / 60;
-                else if (hue < 180)
-                        r = m2;
-                else if (hue < 240)
-                        r = m1 + (m2 - m1) * (240 - hue) / 60;
-                else
-                        r = m1;
-
-                hue = *h;
-                while (hue > 360)
-                        hue -= 360;
-                while (hue < 0)
-                        hue += 360;
-
-                if (hue < 60)
-                        g = m1 + (m2 - m1) * hue / 60;
-                else if (hue < 180)
-                        g = m2;
-                else if (hue < 240)
-                        g = m1 + (m2 - m1) * (240 - hue) / 60;
-                else
-                        g = m1;
-
-                hue = *h - 120;
-                while (hue > 360)
-                        hue -= 360;
-                while (hue < 0)
-                        hue += 360;
-
-                if (hue < 60)
-                        b = m1 + (m2 - m1) * hue / 60;
-                else if (hue < 180)
-                        b = m2;
-                else if (hue < 240)
-                        b = m1 + (m2 - m1) * (240 - hue) / 60;
-                else
-                        b = m1;
-
-                *h = r;
-                *l = g;
-                *s = b;
-        }
-}
-
-static void
-gsd_osd_window_color_shade (GdkRGBA *a,
-                            gdouble   k)
-{
-        gdouble red;
-        gdouble green;
-        gdouble blue;
-
-        red = a->red;
-        green = a->green;
-        blue = a->blue;
-
-        rgb_to_hls (&red, &green, &blue);
-
-        green *= k;
-        if (green > 1.0)
-                green = 1.0;
-        else if (green < 0.0)
-                green = 0.0;
-
-        blue *= k;
-        if (blue > 1.0)
-                blue = 1.0;
-        else if (blue < 0.0)
-                blue = 0.0;
-
-        hls_to_rgb (&red, &green, &blue);
-
-        a->red = red;
-        a->green = green;
-        a->blue = blue;
-}
-
-static void
-gsd_osd_window_color_reverse (GdkRGBA *a)
-{
-        gdouble red;
-        gdouble green;
-        gdouble blue;
-        gdouble h;
-        gdouble s;
-        gdouble v;
-
-        red = a->red;
-        green = a->green;
-        blue = a->blue;
-
-        gtk_rgb_to_hsv (red, green, blue, &h, &s, &v);
-
-        v = 0.5 + (0.5 - v);
-        if (v > 1.0)
-                v = 1.0;
-        else if (v < 0.0)
-                v = 0.0;
-
-        gtk_hsv_to_rgb (h, s, v, &red, &green, &blue);
-
-        a->red = red;
-        a->green = green;
-        a->blue = blue;
-}
 
 static void
 gsd_osd_window_draw_rounded_rectangle (cairo_t* cr,
@@ -512,9 +299,7 @@ load_pixbuf (GsdOsdDrawContext *ctx,
 {
         GtkIconInfo     *info;
         GdkPixbuf       *pixbuf;
-        GdkRGBA          color;
 
-        gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &color);
         info = gtk_icon_theme_lookup_icon (ctx->theme,
                                            name,
                                            icon_size,
@@ -525,13 +310,10 @@ load_pixbuf (GsdOsdDrawContext *ctx,
                 return NULL;
         }
 
-        pixbuf = gtk_icon_info_load_symbolic (info,
-                                              &color,
-                                              NULL,
-                                              NULL,
-                                              NULL,
-                                              NULL,
-                                              NULL);
+        pixbuf = gtk_icon_info_load_symbolic_for_context (info,
+                                                          ctx->style,
+                                                          NULL,
+                                                          NULL);
         gtk_icon_info_free (info);
 
         return pixbuf;
@@ -691,16 +473,13 @@ render_speaker (GsdOsdDrawContext *ctx,
                 return FALSE;
         }
 
-        gdk_cairo_set_source_pixbuf (cr, pixbuf, _x0, _y0);
-        cairo_paint_with_alpha (cr, FG_ALPHA);
+        gtk_render_icon (ctx->style, cr,
+                         pixbuf, _x0, _y0);
 
         g_object_unref (pixbuf);
 
         return TRUE;
 }
-
-#define LIGHTNESS_MULT  1.3
-#define DARKNESS_MULT   0.7
 
 static void
 draw_volume_boxes (GsdOsdDrawContext *ctx,
@@ -719,22 +498,28 @@ draw_volume_boxes (GsdOsdDrawContext *ctx,
         x1 = round ((width - 1) * percentage);
 
         /* bar background */
+        gtk_style_context_save (ctx->style);
+        gtk_style_context_add_class (ctx->style, GTK_STYLE_CLASS_TROUGH);
         gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
-        gsd_osd_window_color_shade (&acolor, DARKNESS_MULT);
-        gsd_osd_window_color_reverse (&acolor);
-        acolor.alpha = FG_ALPHA / 2;
+
         gsd_osd_window_draw_rounded_rectangle (cr, 1.0, _x0, _y0, height / 6, width, height);
         gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_fill (cr);
 
+        gtk_style_context_restore (ctx->style);
+
         /* bar progress */
         if (percentage < 0.01)
                 return;
+        gtk_style_context_save (ctx->style);
+        gtk_style_context_add_class (ctx->style, GTK_STYLE_CLASS_PROGRESSBAR);
         gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
-        acolor.alpha = FG_ALPHA;
+
         gsd_osd_window_draw_rounded_rectangle (cr, 1.0, _x0, _y0, height / 6, x1, height);
         gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_fill (cr);
+
+        gtk_style_context_restore (ctx->style);
 }
 
 static void
@@ -866,8 +651,8 @@ render_custom (GsdOsdDrawContext  *ctx,
                         return FALSE;
         }
 
-        gdk_cairo_set_source_pixbuf (cr, pixbuf, _x0, _y0);
-        cairo_paint_with_alpha (cr, FG_ALPHA);
+        gtk_render_icon (ctx->style, cr,
+                         pixbuf, _x0, _y0);
 
         g_object_unref (pixbuf);
 
@@ -948,9 +733,8 @@ gsd_osd_window_draw (GsdOsdDrawContext *ctx,
         /* draw a box */
         corner_radius = ctx->size / 10;
         gsd_osd_window_draw_rounded_rectangle (cr, 1.0, 0.0, 0.0, corner_radius, ctx->size - 1, ctx->size - 1);
+
         gtk_style_context_get_background_color (ctx->style, GTK_STATE_NORMAL, &acolor);
-        gsd_osd_window_color_reverse (&acolor);
-        acolor.alpha = BG_ALPHA;
         gdk_cairo_set_source_rgba (cr, &acolor);
         cairo_fill (cr);
 
@@ -982,6 +766,9 @@ gsd_osd_window_obj_draw (GtkWidget *widget,
         size = MIN (width, height);
 
         context = gtk_widget_get_style_context (widget);
+        gtk_style_context_save (context);
+        gtk_style_context_add_class (context, "osd");
+
         cairo_set_operator (orig_cr, CAIRO_OPERATOR_SOURCE);
 
         surface = cairo_surface_create_similar (cairo_get_target (orig_cr),
@@ -1017,6 +804,7 @@ gsd_osd_window_obj_draw (GtkWidget *widget,
         gsd_osd_window_draw (&ctx, cr);
 
         cairo_destroy (cr);
+        gtk_style_context_restore (context);
 
         /* Make sure we have a transparent background */
         cairo_rectangle (orig_cr, 0, 0, size, size);
