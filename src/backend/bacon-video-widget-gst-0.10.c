@@ -2160,37 +2160,12 @@ bvw_set_auth_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
-bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
+bvw_set_http_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
 {
   GSettings *settings;
-  GDesktopProxyMode mode;
   char *url, *host = NULL, *user_id, *user_pw;
   int port;
   gboolean is_https;
-
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy") == NULL ||
-      g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy-id") == NULL ||
-      g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy-pw") == NULL)
-    return;
-
-  settings = g_settings_new ("org.gnome.system.proxy");
-  mode = g_settings_get_enum (settings, "mode");
-  g_object_unref (settings);
-
-  switch (mode) {
-    case G_DESKTOP_PROXY_MODE_NONE:
-      return;
-    case G_DESKTOP_PROXY_MODE_MANUAL:
-      /* Handled below. */
-      break;
-    case G_DESKTOP_PROXY_MODE_AUTO:
-      /* FIXME: Auto proxy configuration is unhandled */
-      GST_DEBUG ("Auto proxy configuration is unhandled");
-      return;
-    default:
-      GST_DEBUG ("Proxy mode %d is unhandled", mode);
-      return;
-  }
 
   if (g_str_has_prefix (bvw->priv->mrl, "https://"))
     {
@@ -2231,6 +2206,92 @@ bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
 finish:
   g_free (host);
   g_object_unref (settings);
+}
+
+static void
+bvw_set_rtsp_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  GSettings *settings;
+  char *url, *host = NULL, *user_id, *user_pw;
+  char *enc_id, *enc_pw;
+  int port;
+
+  settings = g_settings_new ("org.gnome.system.proxy.http");
+
+  host = g_settings_get_string (settings, "host");
+  if (*host == '\0')
+    goto finish;
+  port = g_settings_get_int (settings, "port");
+  if (port == 0)
+    goto finish;
+
+  url = g_strdup_printf ("http://%s:%d", host, port);
+  g_object_set (element, "proxy", url, NULL);
+  g_free (url);
+
+  if (g_settings_get_boolean (settings, "use-authentication") == FALSE)
+    {
+      url = g_strdup_printf ("http://%s:%d", host, port);
+      g_object_set (element, "proxy", url, NULL);
+      g_free (url);
+      goto finish;
+    }
+
+  user_id = g_settings_get_string (settings, "authentication-user");
+  enc_id = g_uri_escape_string (user_id, NULL, TRUE);
+  g_free (user_id);
+  user_pw = g_settings_get_string (settings, "authentication-password");
+  enc_pw = g_uri_escape_string (user_pw, NULL, TRUE);
+  g_free (user_pw);
+
+  url = g_strdup_printf ("http://%s:%s@%s:%u",
+			 enc_id, enc_pw, host, port);
+  g_object_set (element, "proxy", url, NULL);
+  g_free (url);
+
+  g_free (enc_id);
+  g_free (enc_pw);
+
+finish:
+  g_free (host);
+  g_object_unref (settings);
+}
+
+static void
+bvw_set_proxy_on_element (BaconVideoWidget * bvw, GstElement * element)
+{
+  GSettings *settings;
+  GDesktopProxyMode mode;
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy") == NULL)
+    return;
+
+  settings = g_settings_new ("org.gnome.system.proxy");
+  mode = g_settings_get_enum (settings, "mode");
+  g_object_unref (settings);
+
+  switch (mode) {
+    case G_DESKTOP_PROXY_MODE_NONE:
+      return;
+    case G_DESKTOP_PROXY_MODE_MANUAL:
+      /* Handled below. */
+      break;
+    case G_DESKTOP_PROXY_MODE_AUTO:
+      /* FIXME: Auto proxy configuration is unhandled */
+      GST_DEBUG ("Auto proxy configuration is unhandled");
+      return;
+    default:
+      GST_DEBUG ("Proxy mode %d is unhandled", mode);
+      return;
+  }
+
+  /* The RTSP source lacks separate properties for auth ID and password:
+   * https://bugzilla.gnome.org/show_bug.cgi?id=395427#c5 */
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy-id") == NULL ||
+      g_object_class_find_property (G_OBJECT_GET_CLASS (element), "proxy-pw") == NULL)
+    bvw_set_rtsp_proxy_on_element (bvw, element);
+  else
+    bvw_set_http_proxy_on_element (bvw, element);
 }
 
 static void
