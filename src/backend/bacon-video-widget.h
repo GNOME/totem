@@ -142,8 +142,6 @@ GOptionGroup* bacon_video_widget_get_option_group (void);
 
 GtkWidget *bacon_video_widget_new		 (GError **error);
 
-char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
-
 /* Actions */
 gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
 						  const char *mrl,

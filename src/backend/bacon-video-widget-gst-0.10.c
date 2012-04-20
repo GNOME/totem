@@ -2814,20 +2814,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
 /* ============================================================= */
 
 /**
- * bacon_video_widget_get_backend_name:
- * @bvw: a #BaconVideoWidget
- *
- * Returns the name string for @bvw. For the GStreamer backend, it is the output
- * of gst_version_string(). *
- * Return value: the backend's name; free with g_free()
- **/
-char *
-bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
-{
-  return gst_version_string ();
-}
-
-/**
  * bacon_video_widget_get_subtitle:
  * @bvw: a #BaconVideoWidget
  *
