@@ -80,7 +80,7 @@ typedef struct {
 /**
  * BvwError:
  * @BVW_ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
- * @BVW_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin or xine feature is missing.
+ * @BVW_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin is missing.
  * @BVW_ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
  * @BVW_ERROR_AUDIO_BUSY: Audio output device is busy.
  * @BVW_ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
