@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-18 18:10+0000\n"
-"PO-Revision-Date: 2012-04-19 12:25+0200\n"
+"POT-Creation-Date: 2012-04-20 11:36+0000\n"
+"PO-Revision-Date: 2012-04-20 14:16+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -154,13 +154,15 @@ msgstr "Añadir el vídeo a la lista de reproducción"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:136
-#: ../src/totem-object.c:1575
-msgid "Movie Player"
-msgstr "Reproductor de películas"
+#: ../src/totem-menu.c:875 ../src/totem-object.c:1560 ../src/totem.c:235
+#: ../src/totem.c:243
+msgid "Videos"
+msgstr "Vídeos"
 
 #: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies and songs"
-msgstr "Reproduzca películas y canciones"
+#| msgid "Playing a movie"
+msgid "Play movies"
+msgstr "Reproducir películas"
 
 #: ../data/totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
@@ -539,7 +541,7 @@ msgid "Extra Large"
 msgstr "Muy grande"
 
 #: ../data/totem.ui.h:98 ../src/totem-properties-view.c:228
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5457
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5504
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -1163,18 +1165,11 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
 
-#. This lists the back-end type and version, such as
-#. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:877
-#, c-format
-msgid "Movie Player using %s"
-msgstr "Reproductor de películas que usa %s"
-
-#: ../src/totem-menu.c:881
+#: ../src/totem-menu.c:874
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:886
+#: ../src/totem-menu.c:879
 msgid "translator-credits"
 msgstr ""
 "Jorge González <jorgegonz@svn.gnome.org>\n"
@@ -1185,11 +1180,11 @@ msgstr ""
 "Germán Poo Caamaño <gpoo@ubiobio.cl>\n"
 "Daniel Mustieles <daniel.mustieles@gmail.com>"
 
-#: ../src/totem-menu.c:890
+#: ../src/totem-menu.c:883
 msgid "Totem Website"
 msgstr "Página web de Totem"
 
-#: ../src/totem-menu.c:924
+#: ../src/totem-menu.c:914
 msgid "Configure Plugins"
 msgstr "Configurar complementos"
 
@@ -1204,74 +1199,74 @@ msgstr ""
 "disponibles de la línea de comandos.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:524
+#: ../src/totem-object.c:509
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1093 ../browser-plugin/totem-plugin-viewer.c:368
+#: ../src/totem-object.c:1078 ../browser-plugin/totem-plugin-viewer.c:368
 msgid "Playing"
 msgstr "Reproduciendo"
 
-#: ../src/totem-object.c:1095 ../src/totem-options.c:52
+#: ../src/totem-object.c:1080 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1100 ../browser-plugin/totem-plugin-viewer.c:364
+#: ../src/totem-object.c:1085 ../browser-plugin/totem-plugin-viewer.c:364
 msgid "Paused"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1102 ../src/totem-object.c:1112
+#: ../src/totem-object.c:1087 ../src/totem-object.c:1097
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1107 ../src/totem-object.c:1567
+#: ../src/totem-object.c:1092 ../src/totem-object.c:1552
 #: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:352
 msgid "Stopped"
 msgstr "Detenido"
 
-#: ../src/totem-object.c:1188 ../src/totem-object.c:1215
-#: ../src/totem-object.c:1699 ../src/totem-object.c:1863
+#: ../src/totem-object.c:1173 ../src/totem-object.c:1200
+#: ../src/totem-object.c:1684 ../src/totem-object.c:1848
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:1705
+#: ../src/totem-object.c:1690
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem-object.c:2054
+#: ../src/totem-object.c:2039
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:2393 ../src/totem-object.c:2395
+#: ../src/totem-object.c:2378 ../src/totem-object.c:2380
 #: ../browser-plugin/totem-plugin-viewer.c:1429
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../src/totem-object.c:3936 ../src/totem-object.c:3938
+#: ../src/totem-object.c:3921 ../src/totem-object.c:3923
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:3945 ../src/totem-object.c:3947
+#: ../src/totem-object.c:3930 ../src/totem-object.c:3932
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:3955 ../src/totem-object.c:3957
+#: ../src/totem-object.c:3940 ../src/totem-object.c:3942
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3968 ../src/totem-object.c:3970
+#: ../src/totem-object.c:3953 ../src/totem-object.c:3955
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4101
+#: ../src/totem-object.c:4086
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem-object.c:4101
+#: ../src/totem-object.c:4086
 msgid "No reason."
 msgstr "No hay razón."
 
@@ -1453,12 +1448,12 @@ msgid "N/A"
 msgstr "N/D"
 
 #: ../src/totem-properties-view.c:224
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5453
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5500
 msgid "Surround"
 msgstr "Envolvente"
 
 #: ../src/totem-properties-view.c:226
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5455
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5502
 msgid "Mono"
 msgstr "Mono"
 
@@ -1713,12 +1708,6 @@ msgstr "Seleccionar películas o listas de reproducción"
 msgid "Add Directory"
 msgstr "Añadir carpeta"
 
-#: ../src/totem.c:235 ../src/totem.c:243
-#: ../browser-plugin/totem-plugin-viewer.c:675
-#: ../browser-plugin/totem-plugin-viewer.c:1805
-msgid "Totem Movie Player"
-msgstr "Reproductor de películas Totem"
-
 #: ../src/totem.c:236 ../browser-plugin/totem-plugin-viewer.c:2254
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
@@ -1731,29 +1720,29 @@ msgstr "Verifique la instalación de su sistema. Totem ahora terminará."
 msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2882
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2929
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2886
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2933
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3329
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3376
 msgid "Location not found."
 msgstr "No se encontró la dirección."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3332
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3379
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la dirección; quizá no tiene permiso para abrir el archivo."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3352
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3399
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3405
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -1770,19 +1759,19 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3384
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3431
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5742
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5789
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5908
 #: ../src/backend/bacon-video-widget-gst-0.10.c:5955
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6002
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
@@ -2410,6 +2399,11 @@ msgstr "_Saltar a:"
 msgid "No URI to play"
 msgstr "No hay una URI para reproducir"
 
+#: ../browser-plugin/totem-plugin-viewer.c:675
+#: ../browser-plugin/totem-plugin-viewer.c:1805
+msgid "Totem Movie Player"
+msgstr "Reproductor de películas Totem"
+
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
@@ -2513,6 +2507,15 @@ msgstr "Añadir a la lista de reproducción"
 #: ../src/plugins/grilo/grilo.ui.h:2
 msgid "Copy Location"
 msgstr "Copiar ubicación"
+
+#~ msgid "Movie Player"
+#~ msgstr "Reproductor de películas"
+
+#~ msgid "Play movies and songs"
+#~ msgstr "Reproduzca películas y canciones"
+
+#~ msgid "Movie Player using %s"
+#~ msgstr "Reproductor de películas que usa %s"
 
 #~ msgid "Play Image '%s'"
 #~ msgstr "Reproducir imagen «%s»"
@@ -2725,9 +2728,6 @@ msgstr "Copiar ubicación"
 
 #~ msgid "Search Results"
 #~ msgstr "Resultados de la búsqueda"
-
-#~ msgid "Videos"
-#~ msgstr "Vídeos"
 
 #~ msgid "_Open in Web Browser"
 #~ msgstr "Abrir en un navegador _web"
