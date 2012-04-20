@@ -1689,7 +1689,8 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 		totem_try_restore_position (totem, mrl);
-		retval = bacon_video_widget_open (totem->bvw, mrl, subtitle ? subtitle : autoload_sub, &err);
+		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
+		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 		totem->mrl = g_strdup (mrl);
@@ -2346,7 +2347,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
 	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL, NULL);
+	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 	bacon_video_widget_play (bvw, NULL);
@@ -3202,9 +3203,8 @@ subtitle_changed_cb (GtkWidget *playlist, TotemObject *totem)
 {
 	char *mrl, *subtitle;
 
-	totem_action_stop (totem);
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-	totem_action_set_mrl_and_play (totem, mrl, subtitle);
+	bacon_video_widget_set_text_subtitle (totem->bvw, subtitle);
 
 	g_free (mrl);
 	g_free (subtitle);

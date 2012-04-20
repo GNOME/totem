@@ -145,7 +145,6 @@ GtkWidget *bacon_video_widget_new		 (GError **error);
 /* Actions */
 gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
 						  const char *mrl,
-						  const char *subtitle_uri,
 						  GError **error);
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);
@@ -179,6 +178,8 @@ void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
 double bacon_video_widget_get_volume             (BaconVideoWidget *bvw);
 
 /* Properties */
+void bacon_video_widget_set_text_subtitle	(BaconVideoWidget * bvw,
+						 const gchar * subtitle_uri);
 void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
 						  const char *name);
 void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,

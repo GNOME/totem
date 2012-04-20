@@ -16,7 +16,7 @@ static void
 test_bvw_set_mrl (GtkWidget *bvw, const char *path)
 {
 	mrl = g_strdup (path);
-	bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), mrl, NULL, NULL);
+	bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), mrl, NULL);
 }
 
 static void

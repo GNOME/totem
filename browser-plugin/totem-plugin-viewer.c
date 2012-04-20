@@ -451,7 +451,8 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 	bacon_video_widget_set_logo_mode (emb->bvw, FALSE);
 
-	retval = bacon_video_widget_open (emb->bvw, uri, emb->current_subtitle_uri, NULL);
+	retval = bacon_video_widget_open (emb->bvw, uri, NULL);
+	bacon_video_widget_set_text_subtitle (emb->bvw, emb->current_subtitle_uri);
 	g_free (uri);
 
 	/* FIXME we shouldn't even do that here */

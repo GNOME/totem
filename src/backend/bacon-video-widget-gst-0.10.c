@@ -169,6 +169,7 @@ struct BaconVideoWidgetPrivate
 
   char                        *referrer;
   char                        *mrl;
+  char                        *subtitle_uri;
   BvwAspectRatio               ratio_type;
 
   GstElement                  *play;
@@ -2579,6 +2580,9 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
 
+  g_free (bvw->priv->subtitle_uri);
+  bvw->priv->subtitle_uri = NULL;
+
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
 
@@ -3411,11 +3415,9 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
  * bacon_video_widget_open:
  * @bvw: a #BaconVideoWidget
  * @mrl: an MRL
- * @subtitle_uri: the URI of a subtitle file, or %NULL
  * @error: a #GError, or %NULL
  *
- * Opens the given @mrl in @bvw for playing. If @subtitle_uri is not %NULL, the given
- * subtitle file is also loaded.
+ * Opens the given @mrl in @bvw for playing.
  *
  * If there was a filesystem error, a %BVW_ERROR_GENERIC error will be returned. Otherwise,
  * more specific #BvwError errors will be returned.
@@ -3426,7 +3428,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
  **/
 gboolean
 bacon_video_widget_open (BaconVideoWidget * bvw,
-                         const gchar * mrl, const gchar *subtitle_uri, GError ** error)
+                         const gchar * mrl, GError ** error)
 {
   GFile *file;
   char *path;
@@ -3441,8 +3443,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   }
   
   GST_DEBUG ("mrl = %s", GST_STR_NULL (mrl));
-  GST_DEBUG ("subtitle_uri = %s", GST_STR_NULL (subtitle_uri));
-  
+
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
@@ -3486,9 +3487,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   gst_element_set_state (bvw->priv->play, GST_STATE_READY);
   gst_bus_set_flushing (bvw->priv->bus, FALSE);
 
-  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,
-                "suburi", subtitle_uri, NULL);
-
+  g_object_set (bvw->priv->play, "uri", bvw->priv->mrl, NULL);
 
   bvw->priv->seekable = -1;
   bvw->priv->target_state = GST_STATE_PAUSED;
@@ -3818,6 +3817,8 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
+  g_free (bvw->priv->subtitle_uri);
+  bvw->priv->subtitle_uri = NULL;
   g_free (bvw->priv->user_id);
   bvw->priv->user_id = NULL;
   g_free (bvw->priv->user_pw);
@@ -3857,6 +3858,59 @@ bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
 {
   gst_navigation_send_command (bvw->priv->navigation, command);
 }
+
+/**
+ * bacon_video_widget_set_text_subtitle:
+ * @bvw: a #BaconVideoWidget
+ * @subtitle_uri: (allow-none): the URI of a subtitle file, or %NULL
+ *
+ * Sets the URI for the text subtitle file to be displayed alongside
+ * the current video. Use %NULL if you want to unload the current text subtitle
+ * file being used.
+ */
+void
+bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
+				      const gchar * subtitle_uri)
+{
+  GstState cur_state;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+  g_return_if_fail (bvw->priv->mrl != NULL);
+
+  GST_LOG ("Setting subtitle as %s", GST_STR_NULL (subtitle_uri));
+
+  if (subtitle_uri == NULL &&
+      bvw->priv->subtitle_uri == NULL)
+    return;
+
+  /* Wait for the previous state change to finish */
+  gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+
+  /* -> READY */
+  gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+  if (cur_state > GST_STATE_READY) {
+    gst_element_set_state (bvw->priv->play, GST_STATE_READY);
+    /* Block for new state */
+    gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+  }
+
+  g_free (bvw->priv->subtitle_uri);
+  bvw->priv->subtitle_uri = g_strdup (subtitle_uri);
+  g_object_set (G_OBJECT (bvw->priv->play), "suburi", subtitle_uri, NULL);
+
+  /* And back to the original state */
+  if (cur_state > GST_STATE_READY) {
+    gst_element_set_state (bvw->priv->play, cur_state);
+    /* Block for new state */
+    gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+  }
+
+  if (bvw->priv->current_time > 0)
+    bacon_video_widget_seek_time_no_lock (bvw, bvw->priv->current_time,
+					  GST_SEEK_FLAG_ACCURATE, NULL);
+}
+
 
 /**
  * bacon_video_widget_dvd_event:
