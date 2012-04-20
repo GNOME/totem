@@ -856,8 +856,6 @@ contents_action_callback (GtkAction *action, Totem *totem)
 void
 about_action_callback (GtkAction *action, Totem *totem)
 {
-	char *backend_version, *description;
-
 	const char *authors[] =
 	{
 		"Bastien Nocera <hadess@hadess.net>",
@@ -871,15 +869,10 @@ about_action_callback (GtkAction *action, Totem *totem)
 	#include "../help/totem-docs.h"
 	char *license = totem_interface_get_license ();
 
-	backend_version = bacon_video_widget_get_backend_name (totem->bvw);
-	/* This lists the back-end type and version, such as
-	 * Movie Player using GStreamer 0.10.1 */
-	description = g_strdup_printf (_("Movie Player using %s"), backend_version);
-
 	gtk_show_about_dialog (GTK_WINDOW (totem->win),
 				     "version", VERSION,
 				     "copyright", _("Copyright \xc2\xa9 2002-2009 Bastien Nocera"),
-				     "comments", description,
+				     "comments", _("Videos"),
 				     "authors", authors,
 				     "documenters", documentation_credits,
 				     "artists", artists,
@@ -890,9 +883,6 @@ about_action_callback (GtkAction *action, Totem *totem)
 				     "website-label", _("Totem Website"),
 				     "website", "http://projects.gnome.org/totem/",
 				     NULL);
-
-	g_free (backend_version);
-	g_free (description);
 	g_free (license);
 }
 
