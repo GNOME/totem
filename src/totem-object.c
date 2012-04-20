@@ -1572,7 +1572,7 @@ update_mrl_label (TotemObject *totem, const char *name)
 		totem_fullscreen_set_title (totem->fs, NULL);
 
 		/* Title */
-		gtk_window_set_title (GTK_WINDOW (totem->win), _("Movie Player"));
+		gtk_window_set_title (GTK_WINDOW (totem->win), _("Videos"));
 	}
 }
 

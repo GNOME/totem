@@ -232,7 +232,7 @@ main (int argc, char **argv)
 	if (XInitThreads () == 0)
 	{
 		gtk_init (&argc, &argv);
-		g_set_application_name (_("Totem Movie Player"));
+		g_set_application_name (_("Videos"));
 		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
 #endif
@@ -240,7 +240,7 @@ main (int argc, char **argv)
 	g_type_init ();
 	gtk_init (&argc, &argv);
 
-	g_set_application_name (_("Totem Movie Player"));
+	g_set_application_name (_("Videos"));
 	gtk_window_set_default_icon_name ("totem");
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
 
