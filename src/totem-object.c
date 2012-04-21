@@ -113,7 +113,6 @@ enum {
 	PROP_SEEKABLE,
 	PROP_CURRENT_TIME,
 	PROP_CURRENT_MRL,
-	PROP_AUTOLOAD_SUBTITLES,
 	PROP_REMEMBER_POSITION
 };
 
@@ -122,6 +121,7 @@ enum {
 	FILE_CLOSED,
 	METADATA_UPDATED,
 	GET_USER_AGENT,
+	GET_TEXT_SUBTITLE,
 	LAST_SIGNAL
 };
 
@@ -283,16 +283,6 @@ totem_object_class_init (TotemObjectClass *klass)
 							      NULL, G_PARAM_READABLE));
 
 	/**
-	 * TotemObject:autoload-subtitles:
-	 *
-	 * If %TRUE, Totem will automatically load any subtitle files it finds for each newly opened video.
-	 **/
-	g_object_class_install_property (object_class, PROP_AUTOLOAD_SUBTITLES,
-					 g_param_spec_boolean ("autoload-subtitles", "Autoload subtitles?",
-					                       "Whether to automatically load any subtitle files Totem finds.",
-							       FALSE, G_PARAM_READWRITE));
-
-	/**
 	 * TotemObject:remember-position:
 	 *
 	 * If %TRUE, Totem will remember the position it was at last time a given file was opened.
@@ -371,6 +361,25 @@ totem_object_class_init (TotemObjectClass *klass)
 			      accumulator_first_non_null_wins, NULL,
 			      totemobject_marshal_STRING__STRING,
 			      G_TYPE_STRING, 1, G_TYPE_STRING);
+
+	/**
+	 * TotemObject::get-text-subtitle:
+	 * @totem: the #TotemObject which received the signal
+	 * @mrl: the MRL of the opened stream
+	 *
+	 * The #TotemObject::get-text-subtitle signal is emitted before opening a stream, so that plugins
+	 * have the opportunity to detect or download text subtitles for the stream if necessary.
+	 *
+	 * Return value: allocated string representing the URI of the subtitle to use for @mrl
+	 */
+	totem_table_signals[GET_TEXT_SUBTITLE] =
+		g_signal_new ("get-text-subtitle",
+			      G_TYPE_FROM_CLASS (object_class),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (TotemObjectClass, get_text_subtitle),
+			      accumulator_first_non_null_wins, NULL,
+			      totemobject_marshal_STRING__STRING,
+			      G_TYPE_STRING, 1, G_TYPE_STRING);
 }
 
 static void
@@ -395,10 +404,6 @@ totem_object_set_property (GObject *object,
 	TotemObject *totem = TOTEM_OBJECT (object);
 
 	switch (property_id) {
-		case PROP_AUTOLOAD_SUBTITLES:
-			totem->autoload_subs = g_value_get_boolean (value);
-			g_object_notify (object, "autoload-subtitles");
-			break;
 		case PROP_REMEMBER_POSITION:
 			totem->remember_position = g_value_get_boolean (value);
 			g_object_notify (object, "remember-position");
@@ -437,9 +442,6 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_CURRENT_MRL:
 		g_value_set_string (value, totem->mrl);
-		break;
-	case PROP_AUTOLOAD_SUBTITLES:
-		g_value_set_boolean (value, totem->autoload_subs);
 		break;
 	case PROP_REMEMBER_POSITION:
 		g_value_set_boolean (value, totem->remember_position);
@@ -1671,13 +1673,14 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		gboolean caps;
 		gdouble volume;
 		char *user_agent;
-		char *autoload_sub = NULL;
+		char *autoload_sub;
 		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
-		if (subtitle == NULL && totem->autoload_subs != FALSE)
-			autoload_sub = totem_uri_get_subtitle_uri (mrl);
+		autoload_sub = NULL;
+		if (subtitle == NULL)
+			g_signal_emit (G_OBJECT (totem), totem_table_signals[GET_TEXT_SUBTITLE], 0, mrl, &autoload_sub);
 
 		user_agent = NULL;
 		g_signal_emit (G_OBJECT (totem), totem_table_signals[GET_USER_AGENT], 0, mrl, &user_agent);

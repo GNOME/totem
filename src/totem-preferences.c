@@ -360,7 +360,6 @@ totem_setup_preferences (Totem *totem)
 	/* Auto-load subtitles */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_subtitles_checkbutton");
 	g_settings_bind (totem->settings, "autoload-subtitles", item, "active", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind (totem->settings, "autoload-subtitles", totem, "autoload-subtitles", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Auto-load external chapters */
 	item = gtk_builder_get_object (totem->xml, "tpw_auto_chapters_checkbutton");

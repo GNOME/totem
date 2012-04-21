@@ -173,6 +173,8 @@ typedef struct {
 						 guint track_num);
 	char * (*get_user_agent)		(TotemObject *totem,
 						 const char  *mrl);
+	char * (*get_text_subtitle)		(TotemObject *totem,
+						 const char  *mrl);
 } TotemObjectClass;
 
 GType	totem_object_get_type			(void);
