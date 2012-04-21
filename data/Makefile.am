@@ -102,7 +102,8 @@ CLEANFILES += \
 	totem-mime-types.h		\
 	totem-uri-schemes.h		\
 	nautilus-audio-mime-types.h	\
-	totem-uri-schemes.h
+	totem-uri-schemes.h		\
+	totemMimeTypes.js
 
 # GSettings schemas, enum files and conversion file
 gsettings_ENUM_NAMESPACE = org.gnome.totem
