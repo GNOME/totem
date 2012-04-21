@@ -3416,9 +3416,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
  * @error: a #GError, or %NULL
  *
  * Opens the given @mrl in @bvw for playing. If @subtitle_uri is not %NULL, the given
- * subtitle file is also loaded. Alternatively, the subtitle URI can be passed in @mrl
- * by adding it after <literal>#subtitle:</literal>. For example:
- * <literal>http://example.com/video.mpg#subtitle:/home/user/subtitle.ass</literal>.
+ * subtitle file is also loaded.
  *
  * If there was a filesystem error, a %BVW_ERROR_GENERIC error will be returned. Otherwise,
  * more specific #BvwError errors will be returned.
