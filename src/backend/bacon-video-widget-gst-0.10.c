@@ -2067,18 +2067,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 }
 
 static void
-got_video_size (BaconVideoWidget * bvw)
-{
-  GstMessage *msg;
-
-  msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
-      gst_structure_new ("video-size", "width", G_TYPE_INT,
-          bvw->priv->video_width, "height", G_TYPE_INT,
-          bvw->priv->video_height, NULL));
-  gst_element_post_message (bvw->priv->play, msg);
-}
-
-static void
 got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 {
   gboolean seekable;
@@ -4740,9 +4728,14 @@ bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
                                 BvwAspectRatio ratio)
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  GstMessage *msg;
 
   bvw->priv->ratio_type = ratio;
-  got_video_size (bvw);
+  msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
+      gst_structure_new ("video-size", "width", G_TYPE_INT,
+          bvw->priv->video_width, "height", G_TYPE_INT,
+          bvw->priv->video_height, NULL));
+  gst_element_post_message (bvw->priv->play, msg);
 }
 
 /**
