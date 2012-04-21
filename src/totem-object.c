@@ -121,6 +121,7 @@ enum {
 	FILE_OPENED,
 	FILE_CLOSED,
 	METADATA_UPDATED,
+	GET_USER_AGENT,
 	LAST_SIGNAL
 };
 
@@ -190,6 +191,22 @@ totem_object_local_command_line (GApplication              *application,
 bail:
 	g_option_context_free (context);
 	g_strfreev (argv);
+
+	return FALSE;
+}
+
+static gboolean
+accumulator_first_non_null_wins (GSignalInvocationHint *ihint,
+				 GValue *return_accu,
+				 const GValue *handler_return,
+				 gpointer data)
+{
+	const gchar *str;
+
+	str = g_value_get_string (handler_return);
+	if (str == NULL)
+		return TRUE;
+	g_value_set_string (return_accu, str);
 
 	return FALSE;
 }
@@ -335,6 +352,25 @@ totem_object_class_init (TotemObjectClass *klass)
 				NULL, NULL,
 				totemobject_marshal_VOID__STRING_STRING_STRING_UINT,
 				G_TYPE_NONE, 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UINT);
+
+	/**
+	 * TotemObject::get-user-agent:
+	 * @totem: the #TotemObject which received the signal
+	 * @mrl: the MRL of the opened stream
+	 *
+	 * The #TotemObject::get-user-agent signal is emitted before opening a stream, so that plugins
+	 * have the opportunity to return the user-agent to be set.
+	 *
+	 * Return value: allocated string representing the user-agent to use for @mrl
+	 */
+	totem_table_signals[GET_USER_AGENT] =
+		g_signal_new ("get-user-agent",
+			      G_TYPE_FROM_CLASS (object_class),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (TotemObjectClass, get_user_agent),
+			      accumulator_first_non_null_wins, NULL,
+			      totemobject_marshal_STRING__STRING,
+			      G_TYPE_STRING, 1, G_TYPE_STRING);
 }
 
 static void
@@ -1634,6 +1670,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 	} else {
 		gboolean caps;
 		gdouble volume;
+		char *user_agent;
 		char *autoload_sub = NULL;
 		GError *err = NULL;
 
@@ -1642,12 +1679,10 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		if (subtitle == NULL && totem->autoload_subs != FALSE)
 			autoload_sub = totem_uri_get_subtitle_uri (mrl);
 
-		/* HACK: Bad bad Apple */
-		if (g_str_has_prefix (mrl, "http://movies.apple.com")
-				|| g_str_has_prefix (mrl, "http://trailers.apple.com"))
-			bacon_video_widget_set_user_agent (totem->bvw, "Quicktime/7.2.0");
-		else
-			bacon_video_widget_set_user_agent (totem->bvw, NULL);
+		user_agent = NULL;
+		g_signal_emit (G_OBJECT (totem), totem_table_signals[GET_USER_AGENT], 0, mrl, &user_agent);
+		bacon_video_widget_set_user_agent (totem->bvw, user_agent);
+		g_free (user_agent);
 
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 		totem_try_restore_position (totem, mrl);

@@ -171,6 +171,8 @@ typedef struct {
 						 const char *title,
 						 const char *album,
 						 guint track_num);
+	char * (*get_user_agent)		(TotemObject *totem,
+						 const char  *mrl);
 } TotemObjectClass;
 
 GType	totem_object_get_type			(void);
