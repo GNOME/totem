@@ -46,7 +46,6 @@ G_MODULE_EXPORT void eject_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void properties_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void preferences_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_1_2_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_1_1_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_2_1_action_callback (GtkAction *action, Totem *totem);
@@ -86,6 +85,14 @@ open_location_action_cb (GSimpleAction *action,
 			 gpointer       user_data)
 {
 	totem_action_open_location (TOTEM_OBJECT (user_data));
+}
+
+static void
+preferences_action_cb (GSimpleAction *action,
+		       GVariant      *parameter,
+		       gpointer       user_data)
+{
+	gtk_widget_show (TOTEM_OBJECT (user_data)->prefs);
 }
 
 static void
@@ -151,6 +158,7 @@ static GActionEntry app_entries[] = {
 	{ "open", open_action_cb, NULL, NULL, NULL },
 	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
 	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
+	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
 	{ "quit", quit_action_cb, NULL, NULL, NULL },
@@ -734,12 +742,6 @@ G_GNUC_NORETURN void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_exit (totem);
-}
-
-void
-preferences_action_callback (GtkAction *action, Totem *totem)
-{
-	gtk_widget_show (totem->prefs);
 }
 
 void
