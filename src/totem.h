@@ -149,18 +149,6 @@ GQuark totem_remote_setting_quark	(void);
 typedef struct _TotemObject Totem;
 typedef struct _TotemObject TotemObject;
 
-/**
- * TotemObjectClass:
- * @parent_class: the parent class
- * @file_opened: the generic signal handler for the #TotemObject::file-opened signal,
- * which can be overridden by inheriting classes
- * @file_closed: the generic signal handler for the #TotemObject::file-closed signal,
- * which can be overridden by inheriting classes
- * @metadata_updated: the generic signal handler for the #TotemObject::metadata-updated signal,
- * which can be overridden by inheriting classes
- *
- * The class structure for the #TotemPlParser type.
- **/
 typedef struct {
 	GtkApplicationClass parent_class;
 
