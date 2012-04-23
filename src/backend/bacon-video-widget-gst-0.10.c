@@ -3830,6 +3830,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->rate = FORWARD_RATE;
   g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 
+  bvw->priv->current_time = 0;
   bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->priv->seek_time = -1;
 
