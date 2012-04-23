@@ -3660,7 +3660,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 _time, gboolean accu
     return TRUE;
   }
 
-  flag = (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_KEY_UNIT);
+  flag = (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_NONE);
   bacon_video_widget_seek_time_no_lock (bvw, _time, flag, error);
 
   return TRUE;
