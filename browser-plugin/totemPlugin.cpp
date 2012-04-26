@@ -131,7 +131,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
   { "application/x-nsv-vp3-mp3", "nsv", "video/x-nsv" },
   { "video/flv", "flv", "application/x-flash-video" },
   { "video/webm", "webm", NULL },
-  { "application/x-totem-plugin", "", "Totem Multimedia plugin" },
+  { "application/x-totem-plugin", "", "Videos multimedia plugin" },
   { "audio/midi", "mid, midi", NULL },
 #else
 #error Unknown plugin type
@@ -140,7 +140,7 @@ static const totemPluginMimeEntry kMimeTypes[] = {
 
 static const char kPluginDescription[] =
 #if defined(TOTEM_GMP_PLUGIN)
-  "Windows Media Player Plug-in 10 (compatible; Totem)";
+  "Windows Media Player Plug-in 10 (compatible; Videos)";
 #elif defined(TOTEM_NARROWSPACE_PLUGIN)
   "QuickTime Plug-in " TOTEM_NARROWSPACE_VERSION;
 #elif defined(TOTEM_VEGAS_PLUGIN)
@@ -148,7 +148,7 @@ static const char kPluginDescription[] =
 #elif defined(TOTEM_MULLY_PLUGIN)
   "DivX\xC2\xAE Web Player";
 #elif defined(TOTEM_CONE_PLUGIN)
-  "VLC Multimedia Plugin (compatible Totem " VERSION ")";
+  "VLC Multimedia Plugin (compatible Videos " VERSION ")";
 #else
 #error Unknown plugin type
 #endif
@@ -159,7 +159,7 @@ static const char kPluginLongDescription[] =
 #elif defined(TOTEM_VEGAS_PLUGIN)
   "Shockwave Flash 11.1 r102";
 #else
-  "The <a href=\"http://www.gnome.org/projects/totem/\">Totem</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
+  "The <a href=\"http://www.gnome.org/\">Videos</a> " PACKAGE_VERSION " plugin handles video and audio streams.";
 #endif
 
 static const char kPluginUserAgent[] =
@@ -168,7 +168,7 @@ static const char kPluginUserAgent[] =
 #elif defined(TOTEM_GMP_PLUGIN)
   "Windows-Media-Player/10.00.00.4019";
 #elif defined(TOTEM_VEGAS_PLUGIN)
-  "Totem/"VERSION;
+  "Videos/"VERSION;
 #else
   "";
 #endif
