@@ -90,7 +90,7 @@
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
 
-#define DEFAULT_USER_AGENT "Totem/"VERSION
+#define DEFAULT_USER_AGENT "Videos/"VERSION
 
 #define OSD_SIZE 130                           /* Size of the OSD popup */
 #define OSD_MARGIN 8                           /* Pixels from the top-left */
