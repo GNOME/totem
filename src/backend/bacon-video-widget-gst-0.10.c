@@ -96,6 +96,8 @@
 #define OSD_MARGIN 8                           /* Pixels from the top-left */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
 
+#define MAX_NETWORK_SPEED 10752
+
 /* Helper constants */
 #define NANOSECS_IN_SEC 1000000000
 #define SEEK_TIMEOUT NANOSECS_IN_SEC / 10
@@ -147,7 +149,6 @@ enum
   PROP_DOWNLOAD_FILENAME,
   PROP_AUTO_RESIZE,
   PROP_DEINTERLACING,
-  PROP_CONNECTION_SPEED,
   PROP_VISUALIZATION_QUALITY,
   PROP_BRIGHTNESS,
   PROP_CONTRAST,
@@ -240,7 +241,6 @@ struct BaconVideoWidgetPrivate
   gint                         video_fps_d;
 
   BvwAudioOutputType           speakersetup;
-  gint                         connection_speed;
 
   GstBus                      *bus;
   gulong                       sig_bus_async;
@@ -918,18 +918,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                          "Whether to automatically deinterlace videos.", FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
-
-  /**
-   * BaconVideoWidget:connection-speed:
-   *
-   * The connection speed to use when calculating how much of a network stream to buffer.
-   **/
-  g_object_class_install_property (object_class, PROP_CONNECTION_SPEED,
-                                   g_param_spec_enum ("connection-speed", "Connection speed",
-                                                      "The connection speed to use in calculating buffering streams.", BVW_TYPE_CONNECTION_SPEED,
-                                                      BVW_SPEED_LAN,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:visualization-quality:
@@ -2686,9 +2674,6 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_DEINTERLACING:
       bacon_video_widget_set_deinterlacing (bvw, g_value_get_boolean (value));
       break;
-    case PROP_CONNECTION_SPEED:
-      bacon_video_widget_set_connection_speed (bvw, g_value_get_enum (value));
-      break;
     case PROP_VISUALIZATION_QUALITY:
       bacon_video_widget_set_visualization_quality (bvw, g_value_get_enum (value));
       break;
@@ -2762,9 +2747,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_DEINTERLACING:
       g_value_set_boolean (value, bacon_video_widget_get_deinterlacing (bvw));
-      break;
-    case PROP_CONNECTION_SPEED:
-      g_value_set_enum (value, bvw->priv->connection_speed);
       break;
     case PROP_VISUALIZATION_QUALITY:
       g_value_set_enum (value, bvw->priv->visq);
@@ -3059,64 +3041,6 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   /* so it updates its metadata for the newly-selected stream */
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-}
-
-static guint
-connection_speed_enum_to_kbps (gint speed)
-{
-  static const guint conv_table[] = { 14400, 19200, 28800, 33600, 34400, 56000,
-      112000, 256000, 384000, 512000, 1536000, 10752000 };
-
-  g_return_val_if_fail (speed >= 0 && (guint) speed < G_N_ELEMENTS (conv_table), 0);
-
-  /* must round up so that the correct streams are chosen and not ignored
-   * due to rounding errors when doing kbps <=> bps */
-  return (conv_table[speed] / 1000) +
-    (((conv_table[speed] % 1000) != 0) ? 1 : 0);
-}
-
-/**
- * bacon_video_widget_get_connection_speed:
- * @bvw: a #BaconVideoWidget
- *
- * Returns the current connection speed, where <code class="literal">0</code> is the lowest speed
- * and <code class="literal">11</code> is the highest.
- *
- * Return value: the connection speed index
- **/
-int
-bacon_video_widget_get_connection_speed (BaconVideoWidget * bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
-
-  return bvw->priv->connection_speed;
-}
-
-/**
- * bacon_video_widget_set_connection_speed:
- * @bvw: a #BaconVideoWidget
- * @speed: the connection speed index
- *
- * Sets the connection speed from the given @speed index, where <code class="literal">0</code> is the lowest speed
- * and <code class="literal">11</code> is the highest.
- **/
-void
-bacon_video_widget_set_connection_speed (BaconVideoWidget * bvw, int speed)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  if (bvw->priv->connection_speed != speed) {
-    bvw->priv->connection_speed = speed;
-    g_object_notify (G_OBJECT (bvw), "connection-speed");
-  }
-
-  if (bvw->priv->play != NULL &&
-      g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "connection-speed")) {
-    guint kbps = connection_speed_enum_to_kbps (speed);
-
-    GST_LOG ("Setting connection speed %d (= %d kbps)", speed, kbps);
-    g_object_set (bvw->priv->play, "connection-speed", kbps, NULL);
-  }
 }
 
 /**
@@ -5951,7 +5875,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->show_vfx = FALSE;
   bvw->priv->vis_plugins_list = NULL;
   bvw->priv->vis_element_name = g_strdup ("goom");
-  bvw->priv->connection_speed = 11;
   bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
   bvw->priv->cursor_shown = TRUE;
@@ -6055,6 +5978,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   audio_sink = audio_bin;
   g_object_set (bvw->priv->play, "audio-sink", audio_sink, NULL);
 
+  /* Set default connection speed */
+  g_object_set (bvw->priv->play, "connection-speed", MAX_NETWORK_SPEED, NULL);
 
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::volume",
       G_CALLBACK (notify_volume_cb), bvw);

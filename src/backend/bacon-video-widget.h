@@ -197,42 +197,6 @@ gboolean bacon_video_widget_get_auto_resize	 (BaconVideoWidget *bvw);
 void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 						  gboolean auto_resize);
 
-/**
- * BvwConnectionSpeed:
- * @BVW_SPEED_14_4_MODEM: 14.4 Kbps Modem
- * @BVW_SPEED_19_2_MODEM: 19.2 Kbps Modem
- * @BVW_SPEED_28_8_MODEM: 28.8 Kbps Modem
- * @BVW_SPEED_33_6_MODEM: 33.6 Kbps Modem
- * @BVW_SPEED_34_4_MODEM: 34.4 Kbps Modem
- * @BVW_SPEED_56_ISDN: 56 Kbps Modem/ISDN
- * @BVW_SPEED_112_ISDN: 112 Kbps Dual ISDN/DSL
- * @BVW_SPEED_256_DSL: 256 Kbps DSL/Cable
- * @BVW_SPEED_384_DSL: 384 Kbps DSL/Cable
- * @BVW_SPEED_512_DSL: 512 Kbps DSL/Cable
- * @BVW_SPEED_1500_T1: 1.5 Mbps T1/Intranet/LAN
- * @BVW_SPEED_LAN: Intranet/LAN
- *
- * The different connection speeds understood by bacon_video_widget_set_connection_speed().
- */
-typedef enum {
-	BVW_SPEED_14_4_MODEM = 0,
-	BVW_SPEED_19_2_MODEM,
-	BVW_SPEED_28_8_MODEM,
-	BVW_SPEED_33_6_MODEM,
-	BVW_SPEED_34_4_MODEM,
-	BVW_SPEED_56_ISDN,
-	BVW_SPEED_112_ISDN,
-	BVW_SPEED_256_DSL,
-	BVW_SPEED_384_DSL,
-	BVW_SPEED_512_DSL,
-	BVW_SPEED_1500_T1,
-	BVW_SPEED_LAN
-} BvwConnectionSpeed;
-
-void bacon_video_widget_set_connection_speed     (BaconVideoWidget *bvw,
-						  int speed);
-int bacon_video_widget_get_connection_speed      (BaconVideoWidget *bvw);
-
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
