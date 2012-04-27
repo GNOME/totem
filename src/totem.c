@@ -136,6 +136,8 @@ app_init (Totem *totem, char **argv)
 	}
 
 	/* The prefs after the video widget is connected */
+	totem->prefs_xml = totem_interface_load ("preferences.ui", TRUE, NULL, totem);
+
 	totem_setup_preferences (totem);
 
 	totem_setup_recent (totem);

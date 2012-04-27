@@ -76,6 +76,7 @@ struct _TotemObject {
 	GtkWidget *win;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
+	GtkBuilder *prefs_xml;
 	GtkWidget *statusbar;
 
 	/* UI manager */
