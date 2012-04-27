@@ -5886,7 +5886,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
 				     "disable-slicing", TRUE,
 				     NULL);
-  video_sink = gst_element_factory_make ("cluttersink", NULL);
+  video_sink = gst_element_factory_make ("autocluttersink", NULL);
   if (video_sink == NULL) {
     g_critical ("Could not create Clutter video sink");
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
