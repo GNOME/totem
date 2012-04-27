@@ -26,6 +26,7 @@ stuff_DATA =				\
 	fullscreen.ui			\
 	playlist.ui			\
 	mozilla-viewer.ui		\
+	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
 	video-list.ui			\
