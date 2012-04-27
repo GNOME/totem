@@ -175,7 +175,6 @@ struct BaconVideoWidgetPrivate
 
   GstElement                  *play;
   GstElement                  *source;
-  GstColorBalance             *balance;
   GstNavigation               *navigation;
 
   guint                        update_id;
@@ -4849,41 +4848,27 @@ int
 bacon_video_widget_get_video_property (BaconVideoWidget *bvw,
                                        BvwVideoProperty type)
 {
-  int ret;
+  GstColorBalanceChannel *found_channel = NULL;
+  int ret, cur;
 
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 65535/2);
-  
+  g_return_val_if_fail (bvw->priv->play != NULL, 65535/2);
+
   ret = 0;
-  
-  if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
-    {
-      GstColorBalanceChannel *found_channel = NULL;
-      
-      found_channel = bvw_get_color_balance_channel (bvw->priv->balance, type);
-      
-      if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel)) {
-        gint cur;
 
-        cur = gst_color_balance_get_value (bvw->priv->balance,
-                                           found_channel);
 
-        GST_DEBUG ("channel %s: cur=%d, min=%d, max=%d", found_channel->label,
-            cur, found_channel->min_value, found_channel->max_value);
+  found_channel = bvw_get_color_balance_channel (GST_COLOR_BALANCE (bvw->priv->play), type);
+  cur = gst_color_balance_get_value (GST_COLOR_BALANCE (bvw->priv->play), found_channel);
 
-        ret = floor (0.5 +
-            ((double) cur - found_channel->min_value) * 65535 /
-            ((double) found_channel->max_value - found_channel->min_value));
+  GST_DEBUG ("channel %s: cur=%d, min=%d, max=%d", found_channel->label,
+	     cur, found_channel->min_value, found_channel->max_value);
 
-        GST_DEBUG ("channel %s: returning value %d", found_channel->label, ret);
-        g_object_unref (found_channel);
-        return ret;
-      } else {
-	ret = -1;
-      }
-    }
+  ret = floor (0.5 +
+	       ((double) cur - found_channel->min_value) * 65535 /
+	       ((double) found_channel->max_value - found_channel->min_value));
 
-  GST_DEBUG ("nothing found for type %d, returning value %d", type, ret);
-
+  GST_DEBUG ("channel %s: returning value %d", found_channel->label, ret);
+  g_object_unref (found_channel);
   return ret;
 }
 
@@ -5015,36 +5000,27 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
                                        int value)
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  
+  g_return_if_fail (bvw->priv->play != NULL);
+  GstColorBalanceChannel *found_channel = NULL;
+  int i_value;
+
   GST_DEBUG ("set video property type %d to value %d", type, value);
-  
+
   if ( !(value <= 65535 && value >= 0) )
     return;
 
-  if (bvw->priv->balance && GST_IS_COLOR_BALANCE (bvw->priv->balance))
-    {
-      GstColorBalanceChannel *found_channel = NULL;
-      
-      found_channel = bvw_get_color_balance_channel (bvw->priv->balance, type);
+  found_channel = bvw_get_color_balance_channel (GST_COLOR_BALANCE (bvw->priv->play), type);
+  i_value = floor (0.5 + value * ((double) found_channel->max_value -
+				  found_channel->min_value) / 65535 + found_channel->min_value);
 
-      if (found_channel && GST_IS_COLOR_BALANCE_CHANNEL (found_channel))
-        {
-          int i_value;
-          
-          i_value = floor (0.5 + value * ((double) found_channel->max_value -
-              found_channel->min_value) / 65535 + found_channel->min_value);
+  GST_DEBUG ("channel %s: set to %d/65535", found_channel->label, value);
 
-          GST_DEBUG ("channel %s: set to %d/65535", found_channel->label, value);
+  gst_color_balance_set_value (GST_COLOR_BALANCE (bvw->priv->play), found_channel, i_value);
 
-          gst_color_balance_set_value (bvw->priv->balance, found_channel,
-                                       i_value);
+  GST_DEBUG ("channel %s: val=%d, min=%d, max=%d", found_channel->label,
+	     i_value, found_channel->min_value, found_channel->max_value);
 
-          GST_DEBUG ("channel %s: val=%d, min=%d, max=%d", found_channel->label,
-              i_value, found_channel->min_value, found_channel->max_value);
-
-          g_object_unref (found_channel);
-        }
-    }
+  g_object_unref (found_channel);
 
   /* Notify of the property change */
   g_object_notify (G_OBJECT (bvw), video_props_str[type]);
@@ -5825,8 +5801,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gchar *version_str;
   GstPlayFlags flags;
   ClutterConstraint *constraint;
-  GstElement *balance, *sink, *bin;
-  GstPad *pad, *ghostpad;
   GstElement *audio_bin;
   GstPad *audio_pad;
 
@@ -5884,24 +5858,20 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), CLUTTER_COLOR_Black);
 
-  /* Bin */
-  bin = gst_bin_new ("video_sink_bin");
-
   /* Video sink, with aspect frame */
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
 				     "disable-slicing", TRUE,
 				     NULL);
-  sink = gst_element_factory_make ("cluttersink", NULL);
-  if (sink == NULL) {
+  video_sink = gst_element_factory_make ("cluttersink", NULL);
+  if (video_sink == NULL) {
     g_critical ("Could not create Clutter video sink");
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
     return FALSE;
   }
-  g_object_set (G_OBJECT (sink), "texture", bvw->priv->texture, NULL);
-  bvw->priv->navigation = GST_NAVIGATION (sink);
-  gst_bin_add (GST_BIN (bin), sink);
+  g_object_set (G_OBJECT (video_sink), "texture", bvw->priv->texture, NULL);
+  bvw->priv->navigation = GST_NAVIGATION (video_sink);
 
   /* The logo */
   bvw->priv->logo_frame = totem_aspect_frame_new ();
@@ -5939,18 +5909,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 					 bvw->priv->frame);
   bacon_video_osd_actor_hide (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
 
-  /* Add video balance */
-  balance = gst_element_factory_make ("videobalance", "video_balance");
-  gst_bin_add (GST_BIN (bin), balance);
-  bvw->priv->balance = GST_COLOR_BALANCE (balance);
-  pad = gst_element_get_static_pad (balance, "sink");
-  ghostpad = gst_ghost_pad_new ("sink", pad);
-  gst_element_add_pad (bin, ghostpad);
-
-  gst_element_link (balance, sink);
-
   /* And tell playbin */
-  video_sink = bin;
   g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
 
   /* Audio sink */
