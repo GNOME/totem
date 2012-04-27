@@ -5949,6 +5949,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
   bvw->priv->visq = BVW_VISUALIZATION_SMALL;
   bvw->priv->show_vfx = FALSE;
+  bvw->priv->vis_plugins_list = NULL;
   bvw->priv->vis_element_name = g_strdup ("goom");
   bvw->priv->connection_speed = 11;
   bvw->priv->ratio_type = BVW_RATIO_AUTO;
@@ -6054,7 +6055,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   audio_sink = audio_bin;
   g_object_set (bvw->priv->play, "audio-sink", audio_sink, NULL);
 
-  bvw->priv->vis_plugins_list = NULL;
 
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::volume",
       G_CALLBACK (notify_volume_cb), bvw);
