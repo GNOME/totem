@@ -44,6 +44,9 @@
 #include "totem-subtitle-encoding.h"
 #include "totem-plugins-engine.h"
 
+#define PWID(x) (GtkWidget *) gtk_builder_get_object (totem->prefs_xml, x)
+#define POBJ(x) gtk_builder_get_object (totem->prefs_xml, x)
+
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
@@ -59,15 +62,13 @@ totem_prefs_set_show_visuals (Totem *totem, gboolean value)
 
 	g_settings_set_boolean (totem->settings, "show-visualizations", value);
 
-	item = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_type_label"));
+	item = PWID ("tpw_visuals_type_label");
 	gtk_widget_set_sensitive (item, value);
-	item = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml,
-			"tpw_visuals_type_combobox"));
+	item = PWID ("tpw_visuals_type_combobox");
 	gtk_widget_set_sensitive (item, value);
-	item = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_size_label"));
+	item = PWID ("tpw_visuals_size_label");
 	gtk_widget_set_sensitive (item, value);
-	item = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml,
-			"tpw_visuals_size_combobox"));
+	item = PWID ("tpw_visuals_size_combobox");
 	gtk_widget_set_sensitive (item, value);
 
 	bacon_video_widget_set_show_visualizations
@@ -97,7 +98,7 @@ show_vfx_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	GObject *item;
 
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_checkbutton");
+	item = POBJ ("tpw_visuals_checkbutton");
 	g_signal_handlers_disconnect_by_func (item,
 			checkbutton2_toggled_cb, totem);
 
@@ -119,15 +120,15 @@ lock_screensaver_on_audio_changed_cb (GSettings *settings, const gchar *key, Tot
 	GObject *item, *radio;
 	gboolean value;
 
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_audio_toggle_button");
+	item = POBJ ("tpw_audio_toggle_button");
 	g_signal_handlers_disconnect_by_func (item,
 					      audio_screensaver_button_toggled_cb, totem);
 
 	value = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
 	if (value != FALSE) {
-		radio = gtk_builder_get_object (totem->prefs_xml, "tpw_audio_toggle_button");
+		radio = POBJ ("tpw_audio_toggle_button");
 	} else {
-		radio = gtk_builder_get_object (totem->prefs_xml, "tpw_video_toggle_button");
+		radio = POBJ ("tpw_video_toggle_button");
 	}
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
 
@@ -163,7 +164,7 @@ tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem)
 
 	for (i = 0; i < G_N_ELEMENTS (scales); i++) {
 		GtkRange *item;
-		item = GTK_RANGE (gtk_builder_get_object (totem->prefs_xml, scales[i]));
+		item = GTK_RANGE (POBJ (scales[i]));
 		gtk_range_set_value (item, 65535/2);
 	}
 }
@@ -193,7 +194,7 @@ font_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 	gchar *font;
 	GtkFontButton *item;
 
-	item = GTK_FONT_BUTTON (gtk_builder_get_object (totem->prefs_xml, "font_sel_button"));
+	item = GTK_FONT_BUTTON (POBJ ("font_sel_button"));
 	font = g_settings_get_string (settings, "subtitle-font");
 	gtk_font_button_set_font_name (item, font);
 	bacon_video_widget_set_subtitle_font (totem->bvw, font);
@@ -206,7 +207,7 @@ encoding_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 	gchar *encoding;
 	GtkComboBox *item;
 
-	item = GTK_COMBO_BOX (gtk_builder_get_object (totem->prefs_xml, "subtitle_encoding_combo"));
+	item = GTK_COMBO_BOX (POBJ ("subtitle_encoding_combo"));
 	encoding = g_settings_get_string (settings, "subtitle-encoding");
 	totem_subtitle_encoding_set (item, encoding);
 	bacon_video_widget_set_subtitle_encoding (totem->bvw, encoding);
@@ -259,7 +260,7 @@ visualization_quality_writable_changed_cb (GSettings *settings, const gchar *key
 	show_visualizations = g_settings_get_boolean (settings, "show-visualizations");
 
 	/* Only enable the size combobox if the visualization-quality setting is writable, and visualizations are enabled */
-	gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_size_combobox")), writable && show_visualizations);
+	gtk_widget_set_sensitive (PWID ("tpw_visuals_size_combobox"), writable && show_visualizations);
 }
 
 void
@@ -270,6 +271,7 @@ totem_setup_preferences (Totem *totem)
 	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
+	GtkWidget *widget;
 	GObject *item;
 
 	static struct {
@@ -291,7 +293,7 @@ totem_setup_preferences (Totem *totem)
 
 	/* Work-around builder dialogue not parenting properly for
 	 * On top windows */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_notebook");
+	widget = PWID ("tpw_notebook");
 	totem->prefs = gtk_dialog_new_with_buttons (_("Preferences"),
 			GTK_WINDOW (totem->win),
 			GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -301,10 +303,10 @@ totem_setup_preferences (Totem *totem)
 	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
 	content_area = gtk_dialog_get_content_area (GTK_DIALOG (totem->prefs));
 	gtk_box_set_spacing (GTK_BOX (content_area), 2);
-	gtk_widget_reparent (GTK_WIDGET (item), content_area);
+	gtk_widget_reparent (widget, content_area);
 	gtk_widget_show_all (content_area);
-	item = gtk_builder_get_object (totem->prefs_xml, "totem_preferences_window");
-	gtk_widget_destroy (GTK_WIDGET (item));
+	widget = PWID ("totem_preferences_window");
+	gtk_widget_destroy (widget);
 
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
@@ -314,39 +316,39 @@ totem_setup_preferences (Totem *totem)
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
 	/* Remember position */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_remember_position_checkbutton");
+	item = POBJ ("tpw_remember_position_checkbutton");
 	g_settings_bind (totem->settings, "remember-position", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "remember-position", totem, "remember-position", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Auto-resize */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_display_checkbutton");
+	item = POBJ ("tpw_display_checkbutton");
 	g_settings_bind (totem->settings, "auto-resize", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "auto-resize", bvw, "auto-resize", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Screensaver audio locking */
 	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
 	if (lock_screensaver_on_audio != FALSE)
-		item = gtk_builder_get_object (totem->prefs_xml, "tpw_audio_toggle_button");
+		item = POBJ ("tpw_audio_toggle_button");
 	else
-		item = gtk_builder_get_object (totem->prefs_xml, "tpw_video_toggle_button");
+		item = POBJ ("tpw_video_toggle_button");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
 	g_signal_connect (totem->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, totem);
 
 	/* Disable deinterlacing */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_no_deinterlace_checkbutton");
+	item = POBJ ("tpw_no_deinterlace_checkbutton");
 	g_settings_bind (totem->settings, "disable-deinterlacing", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
 
 	/* Connection Speed */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_speed_combobox");
+	item = POBJ ("tpw_speed_combobox");
 	g_settings_bind (totem->settings, "connection-speed", bvw, "connection-speed", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "connection-speed", item, "active", G_SETTINGS_BIND_DEFAULT,
 	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
 	                              g_type_class_ref (BVW_TYPE_CONNECTION_SPEED), (GDestroyNotify) g_type_class_unref);
 
 	/* Enable visuals */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_checkbutton");
+	item = POBJ ("tpw_visuals_checkbutton");
 	show_visuals = g_settings_get_boolean (totem->settings, "show-visualizations");
 
 	g_signal_handlers_disconnect_by_func (item, checkbutton2_toggled_cb, totem);
@@ -358,11 +360,11 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (totem->settings, "changed::show-visualizations", (GCallback) show_vfx_changed_cb, totem);
 
 	/* Auto-load subtitles */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_auto_subtitles_checkbutton");
+	item = POBJ ("tpw_auto_subtitles_checkbutton");
 	g_settings_bind (totem->settings, "autoload-subtitles", item, "active", G_SETTINGS_BIND_DEFAULT);
 
 	/* Auto-load external chapters */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_auto_chapters_checkbutton");
+	item = POBJ ("tpw_auto_chapters_checkbutton");
 	g_settings_bind (totem->settings, "autoload-chapters", item, "active", G_SETTINGS_BIND_DEFAULT);
 
 	/* Visuals list */
@@ -376,7 +378,7 @@ totem_setup_preferences (Totem *totem)
 		visual = g_strdup ("goom");
 	}
 
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_type_liststore");
+	item = POBJ ("tpw_visuals_type_liststore");
 
 	i = 0;
 	for (l = list; l != NULL; l = l->next) {
@@ -390,7 +392,7 @@ totem_setup_preferences (Totem *totem)
 		if (strcmp (name, visual) == 0) {
 			GObject *combobox;
 
-			combobox = gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_type_combobox");
+			combobox = POBJ ("tpw_visuals_type_combobox");
 			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), i);
 		}
 
@@ -400,7 +402,7 @@ totem_setup_preferences (Totem *totem)
 
 	/* Visualisation quality. We have to bind the writability separately, as the sensitivity of the size combobox is also affected by whether
 	 * visualizations are enabled. */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_visuals_size_combobox");
+	item = POBJ ("tpw_visuals_size_combobox");
 	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active",
@@ -414,17 +416,17 @@ totem_setup_preferences (Totem *totem)
 	for (i = 0; i < G_N_ELEMENTS (props); i++) {
 		int prop_value;
 
-		item = gtk_builder_get_object (totem->prefs_xml, props[i].adjustment);
+		item = POBJ (props[i].adjustment);
 		g_settings_bind (totem->settings, props[i].key, item, "value", G_SETTINGS_BIND_DEFAULT);
 		g_settings_bind (totem->settings, props[i].key, bvw, props[i].key, G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 		prop_value = bacon_video_widget_get_video_property (totem->bvw, props[i].prop);
 		if (prop_value < 0) {
 			/* The property's unsupported, so hide the widget and its label */
-			item = gtk_builder_get_object (totem->prefs_xml, props[i].name);
+			item = POBJ (props[i].name);
 			gtk_range_set_value (GTK_RANGE (item), (gdouble) 65535/2);
 			gtk_widget_hide (GTK_WIDGET (item));
-			item = gtk_builder_get_object (totem->prefs_xml, props[i].label);
+			item = POBJ (props[i].label);
 			gtk_widget_hide (GTK_WIDGET (item));
 			hidden++;
 		}
@@ -432,12 +434,12 @@ totem_setup_preferences (Totem *totem)
 
 	/* If all the properties have been hidden, hide their section box */
 	if (hidden == G_N_ELEMENTS (props)) {
-		item = gtk_builder_get_object (totem->prefs_xml, "tpw_bright_contr_vbox");
+		item = POBJ ("tpw_bright_contr_vbox");
 		gtk_widget_hide (GTK_WIDGET (item));
 	}
 
 	/* Sound output type */
-	item = gtk_builder_get_object (totem->prefs_xml, "tpw_sound_output_combobox");
+	item = POBJ ("tpw_sound_output_combobox");
 	g_settings_bind (totem->settings, "audio-output-type", bvw, "audio-output-type",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 	g_settings_bind_with_mapping (totem->settings, "audio-output-type", item, "active", G_SETTINGS_BIND_DEFAULT,
@@ -445,7 +447,7 @@ totem_setup_preferences (Totem *totem)
 	                              g_type_class_ref (BVW_TYPE_AUDIO_OUTPUT_TYPE), (GDestroyNotify) g_type_class_unref);
 
 	/* Subtitle font selection */
-	item = gtk_builder_get_object (totem->prefs_xml, "font_sel_button");
+	item = POBJ ("font_sel_button");
 	gtk_font_button_set_title (GTK_FONT_BUTTON (item),
 				   _("Select Subtitle Font"));
 	font = g_settings_get_string (totem->settings, "subtitle-font");
@@ -457,7 +459,7 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (totem->settings, "changed::subtitle-font", (GCallback) font_changed_cb, totem);
 
 	/* Subtitle encoding selection */
-	item = gtk_builder_get_object (totem->prefs_xml, "subtitle_encoding_combo");
+	item = POBJ ("subtitle_encoding_combo");
 	totem_subtitle_encoding_init (GTK_COMBO_BOX (item));
 	encoding = g_settings_get_string (totem->settings, "subtitle-encoding");
 	/* Make sure the default is UTF-8 */
