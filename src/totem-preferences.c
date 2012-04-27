@@ -340,13 +340,6 @@ totem_setup_preferences (Totem *totem)
 	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
 
-	/* Connection Speed */
-	item = POBJ ("tpw_speed_combobox");
-	g_settings_bind (totem->settings, "connection-speed", bvw, "connection-speed", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
-	g_settings_bind_with_mapping (totem->settings, "connection-speed", item, "active", G_SETTINGS_BIND_DEFAULT,
-	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
-	                              g_type_class_ref (BVW_TYPE_CONNECTION_SPEED), (GDestroyNotify) g_type_class_unref);
-
 	/* Enable visuals */
 	item = POBJ ("tpw_visuals_checkbutton");
 	show_visuals = g_settings_get_boolean (totem->settings, "show-visualizations");
