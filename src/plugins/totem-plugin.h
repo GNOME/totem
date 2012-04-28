@@ -38,7 +38,7 @@
 G_BEGIN_DECLS
 
 /**
- * TOTEM_PLUGIN_REGISTER:
+ * _TOTEM_PLUGIN_REGISTER:
  * @TYPE_NAME: the name of the plugin type, in UPPER_CASE
  * @TypeName: the name of the plugin type, in CamelCase
  * @type_name: the name of the plugin type, in lower_case
