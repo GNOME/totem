@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.4.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-29 10:08+0200\n"
-"PO-Revision-Date: 2012-03-29 10:09+0200\n"
+"POT-Creation-Date: 2012-04-30 13:02+0200\n"
+"PO-Revision-Date: 2012-04-30 13:03+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -633,7 +633,7 @@ msgstr "End_re størrelse på vinduet når en video lastes"
 
 #: ../data/totem.ui.h:126
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr "Slå av _deinterlacing for interlacede videoer"
+msgstr "Slå av _fjerning av sammenfletting for videoer med sammenfletting"
 
 #: ../data/totem.ui.h:127
 msgid "Disable screensaver when playing "
@@ -760,9 +760,8 @@ msgid "Shuffle mode"
 msgstr "Byttemodus"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:15
-#, fuzzy
 msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr "Om feilsøking skal aktiveres for avspillingsmotoren"
+msgstr "Hvorvidt fjerning av sammenfletting skal slås av for filmer med sammenfletting"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:16
 msgid "Whether to enable debug for the playback engine"
@@ -1300,7 +1299,7 @@ msgstr "Vennligst sett inn en annen plate som skal spilles av."
 msgid "Totem was not able to play this disc."
 msgstr "Totem kunne ikke spille av denne platen."
 
-#: ../src/totem-object.c:1301 ../src/totem-object.c:4229
+#: ../src/totem-object.c:1301 ../src/totem-object.c:4228
 msgid "No reason."
 msgstr "Ingen årsak."
 
@@ -1327,25 +1326,25 @@ msgstr "Totem kunne ikke vise hjelpinnhold."
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
-#: ../src/totem-object.c:4064 ../src/totem-object.c:4066
+#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem-object.c:4073 ../src/totem-object.c:4075
+#: ../src/totem-object.c:4072 ../src/totem-object.c:4074
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem-object.c:4083 ../src/totem-object.c:4085
+#: ../src/totem-object.c:4082 ../src/totem-object.c:4084
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
 #. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4097 ../src/totem-object.c:4099
+#: ../src/totem-object.c:4096 ../src/totem-object.c:4098
 msgid "Fullscreen"
 msgstr "Fullskjerm"
 
-#: ../src/totem-object.c:4229
+#: ../src/totem-object.c:4228
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
@@ -1461,7 +1460,7 @@ msgstr "Lagre spilleliste"
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
 #: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1264
-#: ../src/totem-sidebar.c:142
+#: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Spilleliste"
 
