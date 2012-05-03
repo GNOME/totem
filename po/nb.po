@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-30 12:51+0200\n"
-"PO-Revision-Date: 2012-04-30 13:04+0200\n"
+"POT-Creation-Date: 2012-05-03 13:38+0200\n"
+"PO-Revision-Date: 2012-05-03 13:42+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -135,7 +135,9 @@ msgstr "Byttemodus"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:13
 msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr "Hvorvidt fjerning av sammenfletting skal slås av for filmer med sammenfletting"
+msgstr ""
+"Hvorvidt fjerning av sammenfletting skal slås av for filmer med "
+"sammenfletting"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:14
 msgid "Whether to enable debug for the playback engine"
@@ -1735,6 +1737,22 @@ msgstr "Oppløsning"
 msgid "Duration"
 msgstr "Varighet"
 
+#: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:1
+msgid "Apple Trailers"
+msgstr "Apple Trailers"
+
+#: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
+msgid "Sets the user agent for the Apple Trailers site"
+msgstr "Setter brukeragent for Apple Trailers nettstedet"
+
+#: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
+msgid "Autoload Subtitles"
+msgstr "Last undertekst automatisk"
+
+#: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
+msgid "Autoloads text subtitles"
+msgstr "Laster undertekster automatisk"
+
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Video Disc Recorder"
 msgstr "Opptak av videoplater"
@@ -1844,8 +1862,8 @@ msgid "Chapters"
 msgstr "Kapitler"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies."
-msgstr "Støtte for kapittelmarkører i filmer."
+msgid "Support chapter markers in movies"
+msgstr "Støtte for kapittelmarkører i filmer"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -1956,8 +1974,8 @@ msgid "Grilo Browser"
 msgstr "Grilo-leser"
 
 #: ../src/plugins/grilo/grilo.plugin.in.h:2
-msgid "A plugin to let you browse media content from various sources."
-msgstr "Et tillegg som lar deg se på media fra ulike kilder."
+msgid "A plugin to let you browse media content from various sources"
+msgstr "Et tillegg som lar deg se på medieinnhold fra forskjellige kilder"
 
 #: ../src/plugins/grilo/grilo.ui.h:1
 msgid "Add to Playlist"
@@ -1996,7 +2014,7 @@ msgid "The gromit binary was not found."
 msgstr "Binærfilen for gromit ble ikke funnet"
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
-msgid "Instant Messenger status"
+msgid "Instant Messenger Status"
 msgstr "Status for lynmeldingsklient"
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
@@ -2019,8 +2037,8 @@ msgid "BBC iPlayer"
 msgstr "BBC iPlayer"
 
 #: ../src/plugins/iplayer/iplayer.plugin.in.h:2
-msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
-msgstr "Vis BBC-programmer fra BBC iPlayer-tjenesten de siste 7 dagene."
+msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service"
+msgstr "Vis BBC-programmer fra BBC iPlayer-tjenesten de siste 7 dagene"
 
 #: ../src/plugins/iplayer/iplayer.py:72
 msgid "Error listing channel categories"
@@ -2071,6 +2089,14 @@ msgstr "Kunne ikke initiere lirc."
 msgid "Couldn't read lirc configuration."
 msgstr "Kunne ikke lese konfigurasjon for lirc."
 
+#: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
+msgid "Media Player Keys"
+msgstr "Mediespillertaster"
+
+#: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:2
+msgid "Support additional media player keys"
+msgstr "Støtter flere mediespillertaster"
+
 #: ../src/plugins/ontop/ontop.plugin.in.h:1
 msgid "Always On Top"
 msgstr "Alltid øverst"
@@ -2084,8 +2110,8 @@ msgid "Subtitle Downloader"
 msgstr "Nedlasting av undertekst"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
-msgid "Look for subtitles for the currently playing movie."
-msgstr "Se etter en undertekst for filmen som spilles av."
+msgid "Look for subtitles for the currently playing movie"
+msgstr "Se etter en undertekst for filmen som spilles av"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brazilian Portuguese"
@@ -2161,6 +2187,14 @@ msgstr "Språk for undertekst"
 msgid "The language to search for subtitles for movies in."
 msgstr "Språk du vil søke etter undertekster for filmer."
 
+#: ../src/plugins/properties/movie-properties.plugin.in.h:1
+msgid "Movie Properties"
+msgstr "Egenskaper for film"
+
+#: ../src/plugins/properties/movie-properties.plugin.in.h:2
+msgid "Adds movie properties to the sidebar"
+msgstr "Legger til egenskaper for filmen på sidelinjen"
+
 #: ../src/plugins/properties/totem-movie-properties.c:246
 msgid "Properties"
 msgstr "Egenskaper"
@@ -2183,8 +2217,8 @@ msgid "Python Console"
 msgstr "Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
-msgid "Interactive Python console."
-msgstr "Interaktivt Python-konsoll."
+msgid "Interactive Python console"
+msgstr "Interaktivt Python-konsoll"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:88
 msgid "Python Console Menu"
@@ -2231,8 +2265,8 @@ msgid "Rotation Plugin"
 msgstr "Tillegg for rotering"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
-msgid "Allows videos to be rotated if they're in the wrong orientation."
-msgstr "Gjør det mulig å rotere videoer hvis de har feil orientering."
+msgid "Allows videos to be rotated if they are in the wrong orientation"
+msgstr "Gjør det mulig å rotere videoer hvis de har feil orientering"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:60
 msgid "_Rotate Clockwise"
@@ -2241,6 +2275,14 @@ msgstr "_Roter med klokken"
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:62
 msgid "Rotate Counterc_lockwise"
 msgstr "Roter _mot klokken"
+
+#: ../src/plugins/save-file/save-file.plugin.in.h:1
+msgid "Save Copy"
+msgstr "Lagre en kopi"
+
+#: ../src/plugins/save-file/save-file.plugin.in.h:2
+msgid "Save a copy of the currently playing movie"
+msgstr "Lagre en kopi av filmen som spilles av"
 
 #: ../src/plugins/save-file/totem-save-file.c:63
 msgid "Save a Copy..."
@@ -2263,6 +2305,14 @@ msgstr "Film"
 #: ../src/plugins/save-file/totem-save-file.c:183
 msgid "Movie stream"
 msgstr "Filmstrøm"
+
+#: ../src/plugins/screensaver/screensaver.plugin.in.h:1
+msgid "Screen Saver"
+msgstr "Skjermsparer"
+
+#: ../src/plugins/screensaver/screensaver.plugin.in.h:2
+msgid "Deactivates the screen saver when a movie is playing"
+msgstr "Slår av skjermsparer når en film spilles av"
 
 #: ../src/plugins/screenshot/gallery.ui.h:1
 msgid "Screenshot width (in pixels):"
@@ -2293,6 +2343,14 @@ msgstr "Velg en mappe"
 #: ../src/plugins/screenshot/totem-screenshot.c:64
 msgid "Screenshot.png"
 msgstr "Skjermdump.png"
+
+#: ../src/plugins/screenshot/screenshot.plugin.in.h:1
+msgid "Screenshot"
+msgstr "Skjermdump"
+
+#: ../src/plugins/screenshot/screenshot.plugin.in.h:2
+msgid "Allows screenshots and galleries to be taken of videos"
+msgstr "Muliggjør skjermdump og gallerier fra videoer"
 
 #: ../src/plugins/screenshot/totem-gallery.c:91
 msgid "Save Gallery"
@@ -2358,6 +2416,15 @@ msgstr "Lag _galleri av skjermdump …"
 msgid "Create a gallery of screenshots"
 msgstr "Lag et galleri av skjermdump"
 
+#: ../src/plugins/skipto/skipto.plugin.in.h:1
+#: ../src/plugins/skipto/totem-skipto.c:197
+msgid "Skip To"
+msgstr "Hopp til"
+
+#: ../src/plugins/skipto/skipto.plugin.in.h:2
+msgid "Provides the \"Skip to\" dialog"
+msgstr "Støtte for «Hopp til»-dialogen"
+
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
 msgstr "_Hopp til:"
@@ -2378,10 +2445,6 @@ msgstr[1] "sekunder"
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
-
-#: ../src/plugins/skipto/totem-skipto.c:197
-msgid "Skip To"
-msgstr "Hopp til"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "_Skip To..."
