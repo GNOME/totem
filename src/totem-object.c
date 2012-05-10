@@ -2592,12 +2592,12 @@ property_notify_cb_seekable (BaconVideoWidget *bvw, GParamSpec *spec, TotemObjec
 gboolean
 seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem)
 {
-	/* HACK: we want the behaviour you get with the middle button, so we
+	/* HACK: we want the behaviour you get with the left button, so we
 	 * mangle the event.  clicking with other buttons moves the slider in
-	 * step increments, clicking with the middle button moves the slider to
+	 * step increments, clicking with the left button moves the slider to
 	 * the location of the click.
 	 */
-	event->button = 2;
+	event->button = GDK_BUTTON_PRIMARY;
 
 	totem->seek_lock = TRUE;
 	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE) {
@@ -2636,7 +2636,7 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *
 	gdouble val;
 
 	/* HACK: see seek_slider_pressed_cb */
-	event->button = 2;
+	event->button = GDK_BUTTON_PRIMARY;
 
 	/* set to FALSE here to avoid triggering a final seek when
 	 * syncing the adjustments while being in direct seek mode */
