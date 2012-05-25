@@ -3926,7 +3926,7 @@ totem_setup_window (TotemObject *totem)
 	gdk_rgba_parse (&black, "Black");
 	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
 
-	totem_sidebar_setup (totem, show_sidebar, page_id);
+	totem_sidebar_setup (totem, show_sidebar);
 	return page_id;
 }
 

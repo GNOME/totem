@@ -125,7 +125,7 @@ totem_sidebar_is_focused (Totem *totem, gboolean *handles_kbd)
 }
 
 void
-totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
+totem_sidebar_setup (Totem *totem, gboolean visible)
 {
 	GtkPaned *item;
 	GtkAction *action;
@@ -151,11 +151,6 @@ totem_sidebar_setup (Totem *totem, gboolean visible, const char *page_id)
 
 	gtk_widget_show_all (totem->sidebar);
 	gtk_widget_realize (totem->sidebar);
-
-	totem_sidebar_set_current_page (totem,
-					page_id ? page_id : "playlist",
-					visible);
-
 
 	if (!visible)
 		gtk_widget_hide (totem->sidebar);
