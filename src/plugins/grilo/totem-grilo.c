@@ -654,12 +654,21 @@ search_more (TotemGriloPlugin *self)
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_page++;
 	self->priv->search_remaining = PAGE_SIZE;
-	self->priv->search_id = grl_media_source_search (self->priv->search_source,
-	                                                 self->priv->search_text,
-	                                                 search_keys (),
-	                                                 default_options,
-	                                                 search_cb,
-	                                                 self);
+	if (self->priv->search_source != NULL) {
+		self->priv->search_id = grl_media_source_search (self->priv->search_source,
+								 self->priv->search_text,
+								 search_keys (),
+								 default_options,
+								 search_cb,
+								 self);
+	} else {
+		self->priv->search_id = grl_multiple_search (NULL,
+							     self->priv->search_text,
+							     search_keys (),
+							     default_options,
+							     search_cb,
+							     self);
+	}
 	g_object_unref (default_options);
 
 	if (self->priv->search_id == 0) {
@@ -882,11 +891,7 @@ source_added_cb (GrlPluginRegistry *registry,
 		                    SEARCH_MODEL_SOURCES_SOURCE, source,
 		                    SEARCH_MODEL_SOURCES_NAME, name,
 		                    -1);
-		/* Select one of them */
-		if (gtk_combo_box_get_active (GTK_COMBO_BOX (self->priv->search_sources_list)) == -1) {
-			gtk_combo_box_set_active (GTK_COMBO_BOX (self->priv->search_sources_list), 0);
-			gtk_widget_set_sensitive (self->priv->search_entry, TRUE);
-		}
+		/* FIXME: We could set the last used source here */
 	}
 
 	if (icon != NULL) {
@@ -1249,8 +1254,6 @@ setup_sidebar_search (TotemGriloPlugin *self,
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->search_sources_model),
 	                                      SEARCH_MODEL_SOURCES_NAME,
 	                                      GTK_SORT_ASCENDING);
-
-	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 
 	g_signal_connect (self->priv->search_sources_list,
 			  "changed",

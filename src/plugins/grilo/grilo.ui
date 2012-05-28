@@ -100,16 +100,13 @@
           </packing>
         </child>
         <child>
-          <object class="GtkComboBox" id="gw_search_select_source">
+          <object class="GtkEntry" id="gw_search_text">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="model">gw_search_store_sources</property>
-            <child>
-              <object class="GtkCellRendererText" id="gw_search_source_col_name"/>
-              <attributes>
-                <attribute name="text">1</attribute>
-              </attributes>
-            </child>
+            <property name="can_focus">True</property>
+            <property name="invisible_char">●</property>
+            <property name="activates_default">True</property>
+            <property name="shadow_type">etched-out</property>
+            <property name="caps_lock_warning">False</property>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -122,21 +119,6 @@
         <property name="expand">False</property>
         <property name="fill">True</property>
         <property name="position">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkEntry" id="gw_search_text">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="invisible_char">●</property>
-        <property name="activates_default">True</property>
-        <property name="shadow_type">etched-out</property>
-        <property name="caps_lock_warning">False</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
       </packing>
     </child>
     <child>
