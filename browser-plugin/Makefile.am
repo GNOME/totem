@@ -81,7 +81,7 @@ test_glow_button_CFLAGS = \
 libexec_PROGRAMS = totem-plugin-viewer
 
 # Are we a bit thick, Mister?
-totem-plugin-viewer.c: totem-plugin-viewer-interface.h
+totem-plugin-viewer.c: totem-plugin-viewer-interface.h $(MARSHAL_FILES)
 
 totem_plugin_viewer_SOURCES = \
 	totem-glow-button.c		\
