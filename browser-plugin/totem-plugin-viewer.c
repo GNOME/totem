@@ -1196,95 +1196,6 @@ on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 	}
 }
 
-static void
-popup_menu_position_func (GtkMenu *menu, gint *x, gint *y, gboolean *push_in, GtkWidget *button)
-{
-	GtkWidget *widget = GTK_WIDGET (button);
-	GtkRequisition menu_req;
-	GtkTextDirection direction;
-	GtkAllocation allocation;
-
-	gtk_widget_get_preferred_size (GTK_WIDGET (menu), NULL, &menu_req);
-
-	direction = gtk_widget_get_direction (widget);
-
-	gdk_window_get_origin (gtk_widget_get_window (widget), x, y);
-	gtk_widget_get_allocation (widget, &allocation);
-	*x += allocation.x;
-	*y += allocation.y;
-
-	if (direction == GTK_TEXT_DIR_LTR)
-		*x += MAX (allocation.width - menu_req.width, 0);
-	else if (menu_req.width > allocation.width)
-		*x -= menu_req.width - allocation.width;
-
-	/* This might not work properly if the popup button is right at the
-	 * top of the screen, but really, what are the chances */
-	*y -= menu_req.height;
-
-	*push_in = FALSE;
-}
-
-static void
-popup_menu_over_arrow (GtkToggleButton *button,
-		       GtkMenu *menu,
-		       GdkEventButton *event)
-{
-	gtk_menu_popup (menu, NULL, NULL,
-			(GtkMenuPositionFunc) popup_menu_position_func,
-			button,
-			event ? event->button : 0,
-			event ? event->time : gtk_get_current_event_time ());
-}
-
-static void
-on_popup_button_toggled (GtkToggleButton *button, TotemEmbedded *emb)
-{
-	GtkMenu *menu;
-
-	menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
-
-	if (gtk_toggle_button_get_active (button) && !gtk_widget_get_visible (GTK_WIDGET (menu))) {
-		/* we get here only when the menu is activated by a key
-		 * press, so that we can select the first menu item */
-		popup_menu_over_arrow (button, menu, NULL);
-		gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
-	}
-}
-
-static gboolean
-on_popup_button_button_pressed (GtkToggleButton *button,
-				GdkEventButton *event,
-				TotemEmbedded *emb)
-{
-	if (event->button == 1) {
-		GtkMenu *menu;
-
-		menu = GTK_MENU (gtk_builder_get_object (emb->menuxml, "menu"));
-		if (!gtk_widget_get_visible (GTK_WIDGET (menu))) {
-			popup_menu_over_arrow (button, menu, event);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-		} else {
-			gtk_menu_popdown (menu);
-			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
-		}
-
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-static void
-on_popup_menu_unmap (GtkWidget *menu,
-		     TotemEmbedded *emb)
-{
-	GtkWidget *button;
-
-	button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
-}
-
 static char *
 resolve_redirect (const char *old_mrl, const char *mrl)
 {
@@ -1755,7 +1666,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 {
 	GtkWidget *child, *container, *image;
 	GtkWidget *popup_button;
-	GtkWidget *menu;
 	GError *err = NULL;
 
 	emb->xml = totem_interface_load ("mozilla-viewer.ui", TRUE,
@@ -1881,11 +1791,15 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 
+	/* popup */
+	emb->menuxml = totem_interface_load ("mozilla-viewer.ui", TRUE,
+					     GTK_WINDOW (emb->window), emb);
+	g_assert (emb->menuxml);
+
 	popup_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
-	g_signal_connect (G_OBJECT (popup_button), "toggled",
-			  G_CALLBACK (on_popup_button_toggled), emb);
-	g_signal_connect (G_OBJECT (popup_button), "button-press-event",
-			  G_CALLBACK (on_popup_button_button_pressed), emb);
+	gtk_menu_button_set_menu (GTK_MENU_BUTTON (popup_button),
+				  (GtkWidget *) gtk_builder_get_object (emb->menuxml, "menu"));
+	gtk_menu_button_set_direction (GTK_MENU_BUTTON (popup_button), GTK_ARROW_UP);
 
 	emb->volume = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
 	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (emb->fs->volume),
@@ -1962,15 +1876,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 	if (!emb->hidden) {
 		gtk_widget_show (emb->window);
 	}
-
-	/* popup */
-	emb->menuxml = totem_interface_load ("mozilla-viewer.ui", TRUE,
-					     GTK_WINDOW (emb->window), emb);
-	g_assert (emb->menuxml);
-
-	menu = GTK_WIDGET (gtk_builder_get_object (emb->menuxml, "menu"));
-	g_signal_connect (G_OBJECT (menu), "unmap",
-			  G_CALLBACK (on_popup_menu_unmap), emb);
 
 	/* Set the logo and the button glow */
 	if (!emb->hidden && emb->autostart == FALSE) {
