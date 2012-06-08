@@ -302,7 +302,7 @@ totem_plugin_mimetype_is_disabled (const char *mimetype,
 		}
 	}
 
-        // FIXME g_free (key);
+	g_free (key);
 	return retval;
 }
 
