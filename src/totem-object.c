@@ -3496,6 +3496,7 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		bacon_video_widget_step (totem->bvw, TRUE, NULL);
 		break;
 	case GDK_KEY_AudioPause:
+	case GDK_KEY_Pause:
 	case GDK_KEY_AudioStop:
 		totem_action_pause (totem);
 		icon_name = "media-playback-pause-symbolic";
