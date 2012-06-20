@@ -295,7 +295,7 @@ thumb_app_start (ThumbApp *app)
 			break;
 		case GST_MESSAGE_ERROR:
 			totem_gst_message_print (message, app->play, "totem-video-thumbnailer-error");
-			break;
+			return FALSE;
 
 		case GST_MESSAGE_UNKNOWN:
 		case GST_MESSAGE_EOS:
