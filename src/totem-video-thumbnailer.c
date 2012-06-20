@@ -687,7 +687,8 @@ static GdkPixbuf *
 capture_frame_at_time (ThumbApp   *app,
 		       gint64 milliseconds)
 {
-	thumb_app_seek (app, milliseconds);
+	if (milliseconds != 0)
+		thumb_app_seek (app, milliseconds);
 
 	return totem_gst_playbin_get_frame (app->play);
 }
