@@ -157,7 +157,7 @@ error_handler (GstBus *bus,
 	msg_type = GST_MESSAGE_TYPE (message);
 	switch (msg_type) {
 	case GST_MESSAGE_ERROR:
-		totem_gst_message_print (message, play, "totem-audio-preview-error");
+		totem_gst_message_print (message, play, "totem-video-thumbnailer-error");
 		exit (1);
 	case GST_MESSAGE_EOS:
 		exit (0);
