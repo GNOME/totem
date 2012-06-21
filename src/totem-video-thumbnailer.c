@@ -243,6 +243,7 @@ check_cover_for_stream (ThumbApp   *app,
 static void
 thumb_app_check_for_cover (ThumbApp *app)
 {
+	PROGRESS_DEBUG ("Checking whether file has cover");
 	check_cover_for_stream (app, "get-audio-tags");
 	check_cover_for_stream (app, "get-video-tags");
 }
@@ -1055,7 +1056,7 @@ int main (int argc, char *argv[])
 	if (gallery == -1)
 		thumb_app_check_for_cover (&app);
 	if (thumb_app_get_has_video (&app) == FALSE) {
-		g_debug ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
+		PROGRESS_DEBUG ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
 	}
 	if (thumb_app_set_duration (&app) == FALSE) {
