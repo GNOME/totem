@@ -258,7 +258,17 @@ thumb_app_set_duration (ThumbApp *app)
 		app->duration = len / GST_MSECOND;
 		return TRUE;
 	}
+	app->duration = -1;
 	return FALSE;
+}
+
+static void
+assert_duration (ThumbApp *app)
+{
+	if (app->duration != -1)
+		return;
+	g_print ("totem-video-thumbnailer couldn't get the duration of file '%s'\n", app->input);
+	exit (1);
 }
 
 static gboolean
@@ -644,6 +654,16 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 }
 
 static GdkPixbuf *
+capture_frame_at_time (ThumbApp   *app,
+		       gint64 milliseconds)
+{
+	if (milliseconds != 0)
+		thumb_app_seek (app, milliseconds);
+
+	return totem_gst_playbin_get_frame (app->play);
+}
+
+static GdkPixbuf *
 capture_interesting_frame (ThumbApp *app)
 {
 	GdkPixbuf* pixbuf;
@@ -655,6 +675,11 @@ capture_interesting_frame (ThumbApp *app)
 		0.9,
 		0.5
 	};
+
+	if (app->duration == -1) {
+		PROGRESS_DEBUG("Video has no duration, so capture 1st frame");
+		return capture_frame_at_time (app, 0);
+	}
 
 	/* Test at multiple points in the file to see if we can get an
 	 * interesting frame */
@@ -682,16 +707,6 @@ capture_interesting_frame (ThumbApp *app)
 		PROGRESS_DEBUG("Frame for iter %d was not interesting", current);
 	}
 	return pixbuf;
-}
-
-static GdkPixbuf *
-capture_frame_at_time (ThumbApp   *app,
-		       gint64 milliseconds)
-{
-	if (milliseconds != 0)
-		thumb_app_seek (app, milliseconds);
-
-	return totem_gst_playbin_get_frame (app->play);
 }
 
 static GdkPixbuf *
@@ -1059,10 +1074,7 @@ int main (int argc, char *argv[])
 		PROGRESS_DEBUG ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
 	}
-	if (thumb_app_set_duration (&app) == FALSE) {
-		g_print ("totem-video-thumbnailer couldn't get the duration of file '%s'\n", input);
-		exit (1);
-	}
+	thumb_app_set_duration (&app);
 
 	PROGRESS_DEBUG("Opened video file: '%s'", input);
 	PRINT_PROGRESS (10.0);
@@ -1071,12 +1083,15 @@ int main (int argc, char *argv[])
 		/* If the user has told us to use a frame at a specific second
 		 * into the video, just use that frame no matter how boring it
 		 * is */
-		if (second_index != -1)
+		if (second_index != -1) {
+			assert_duration (&app);
 			pixbuf = capture_frame_at_time (&app, second_index * 1000);
-		else
+		} else {
 			pixbuf = capture_interesting_frame (&app);
+		}
 		PRINT_PROGRESS (90.0);
 	} else {
+		assert_duration (&app);
 		/* We're producing a gallery of screenshots from throughout the file */
 		pixbuf = create_gallery (&app);
 	}
