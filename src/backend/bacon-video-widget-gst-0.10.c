@@ -5843,8 +5843,20 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   gst_pb_utils_init ();
 
+  /* Instantiate all the fallible plugins */
   bvw->priv->play = gst_element_factory_make ("playbin2", "play");
-  if (!bvw->priv->play) {
+  bvw->priv->audio_pitchcontrol = gst_element_factory_make ("pitch", "audiopitch");
+  video_sink = gst_element_factory_make ("autocluttersink", NULL);
+  audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+
+  if (!bvw->priv->play ||
+      !bvw->priv->audio_pitchcontrol ||
+      !video_sink ||
+      !audio_sink) {
+    if (video_sink)
+      g_object_ref_sink (video_sink);
+    if (audio_sink)
+      g_object_ref_sink (audio_sink);
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
@@ -5886,14 +5898,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
 				     "disable-slicing", TRUE,
 				     NULL);
-  video_sink = gst_element_factory_make ("autocluttersink", NULL);
-  if (video_sink == NULL) {
-    g_critical ("Could not create Clutter video sink");
-    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
-                 _("Failed to create a GStreamer play object. "
-                   "Please check your GStreamer installation."));
-    return FALSE;
-  }
   g_object_set (G_OBJECT (video_sink), "texture", bvw->priv->texture, NULL);
 
   /* The logo */
@@ -5935,15 +5939,10 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* And tell playbin */
   g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
 
-  /* Audio sink */
-  audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
-
   /* Link the audiopitch element */
   bvw->priv->audio_capsfilter =
     gst_element_factory_make ("capsfilter", "audiofilter");
   audio_bin = gst_bin_new ("audiosinkbin");
-  bvw->priv->audio_pitchcontrol =
-    gst_element_factory_make ("pitch", "audiopitch");
   g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
   gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
 		    bvw->priv->audio_pitchcontrol, audio_sink, NULL);
