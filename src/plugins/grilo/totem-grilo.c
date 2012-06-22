@@ -71,7 +71,7 @@
 
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
-#define THUMB_SEARCH_SIZE     128
+#define THUMB_SEARCH_SIZE     256
 #define THUMB_BROWSE_SIZE     32
 #define SCROLL_GET_MORE_LIMIT 0.8
 
