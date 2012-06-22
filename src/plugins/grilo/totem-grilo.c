@@ -46,6 +46,8 @@
 
 #include <video-utils.h>
 
+#include "totem-search-entry.h"
+
 #define TOTEM_TYPE_GRILO_PLUGIN                                         \
 	(totem_grilo_plugin_get_type ())
 #define TOTEM_GRILO_PLUGIN(o)                                           \
@@ -111,7 +113,7 @@ typedef struct {
 	/* Search widgets */
 	GtkWidget *search_entry;
 	GtkTreeModel *search_results_model;
-	GtkTreeModel *search_sources_model;
+	GHashTable *search_sources_ht;
 	GtkWidget *search_sources_list;
 	GtkWidget *search_results_view;
 
@@ -690,51 +692,22 @@ search (TotemGriloPlugin *self, GrlMediaSource *source, const gchar *text)
 }
 
 static void
-search_entry_changed_cb (GtkEntry *entry, TotemGriloPlugin *self)
-{
-	if (g_strcmp0 (gtk_entry_get_text (entry), "") == 0) {
-		g_object_set (G_OBJECT (entry),
-		              "secondary-icon-name", "edit-find-symbolic",
-		              "secondary-icon-activatable", FALSE,
-		              "secondary-icon-sensitive", FALSE,
-		              NULL);
-	} else {
-		g_object_set (G_OBJECT (entry),
-		              "secondary-icon-name", "edit-clear-symbolic",
-		              "secondary-icon-activatable", TRUE,
-		              "secondary-icon-sensitive", TRUE,
-		              NULL);
-	}
-}
-
-static void
 search_entry_activate_cb (GtkEntry *entry, TotemGriloPlugin *self)
 {
-	GtkTreeIter iter;
-	GrlMediaSource *source = NULL;
-	const gchar *text;
+	GrlPluginRegistry *registry;
+	const char *id;
+	const char *text;
+	GrlMediaPlugin *source;
 
-	if (gtk_widget_is_sensitive (self->priv->search_sources_list)) {
-		if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (self->priv->search_sources_list),
-		                                   &iter)) {
-			gtk_tree_model_get (self->priv->search_sources_model, &iter,
-			                    SEARCH_MODEL_SOURCES_SOURCE, &source,
-			                    -1);
-		}
-	}
+	id = totem_search_entry_get_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
+	g_return_if_fail (id != NULL);
+	registry = grl_plugin_registry_get_default ();
+	source = grl_plugin_registry_lookup_source (registry, id);
+	g_return_if_fail (source != NULL);
 
-	text = gtk_entry_get_text (GTK_ENTRY (self->priv->search_entry));
-	search (self, source, text);
-
-	if (source != NULL) {
-		g_object_unref (source);
-	}
-}
-
-static void
-search_entry_clear_cb (GtkEntry *entry, TotemGriloPlugin *self)
-{
-	gtk_entry_set_text (entry, "");
+	text = totem_search_entry_get_text (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
+	g_return_if_fail (text != NULL);
+	search (self, GRL_MEDIA_SOURCE (source), text);
 }
 
 static void
@@ -794,9 +767,11 @@ browser_activated_cb (GtkTreeView *tree_view,
 }
 
 static void
-search_source_changed_cb (GtkComboBox *combo,
-			  TotemGriloPlugin *self)
+search_entry_source_changed_cb (GObject          *object,
+				GParamSpec       *pspec,
+				TotemGriloPlugin *self)
 {
+	/* FIXME: Do we actually want to do that? */
 	if (self->priv->search_id > 0) {
 		grl_operation_cancel (self->priv->search_id);
 		self->priv->search_id = 0;
@@ -885,13 +860,12 @@ source_added_cb (GrlPluginRegistry *registry,
 		g_free (description);
 	}
 	if (ops & GRL_OP_SEARCH) {
-		gtk_list_store_append (GTK_LIST_STORE (self->priv->search_sources_model), &iter);
-		gtk_list_store_set (GTK_LIST_STORE (self->priv->search_sources_model),
-		                    &iter,
-		                    SEARCH_MODEL_SOURCES_SOURCE, source,
-		                    SEARCH_MODEL_SOURCES_NAME, name,
-		                    -1);
-		/* FIXME: We could set the last used source here */
+		/* FIXME:
+		 * Handle tracker/filesystem specifically, so that we have a "local" entry here */
+		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
+					       grl_metadata_source_get_id (GRL_METADATA_SOURCE (source)),
+					       grl_metadata_source_get_name (GRL_METADATA_SOURCE (source)),
+					       0); /* FIXME: Use correct priority */
 	}
 
 	if (icon != NULL) {
@@ -924,31 +898,6 @@ remove_browse_result (GtkTreeModel *model,
 	return same_source;
 }
 
-static gboolean
-remove_searchable_source (GtkTreeModel *model,
-                          GtkTreePath *path,
-                          GtkTreeIter *iter,
-                          gpointer user_data)
-{
-	GrlMediaSource *removed_source = GRL_MEDIA_SOURCE (user_data);
-	GrlMediaSource *model_source;
-	gboolean same_source;
-
-	gtk_tree_model_get (model, iter,
-	                    MODEL_RESULTS_SOURCE, &model_source,
-	                    -1);
-
-	same_source = (model_source == removed_source);
-
-	if (same_source) {
-		gtk_list_store_remove (GTK_LIST_STORE (model), iter);
-	}
-
-	g_object_unref (model_source);
-
-	return same_source;
-}
-
 static void
 source_removed_cb (GrlPluginRegistry *registry,
                    GrlMediaSource *source,
@@ -969,19 +918,15 @@ source_removed_cb (GrlPluginRegistry *registry,
 	/* If current search results belongs to removed source, clear the results. In
 	   any case, remove the source from the list of searchable sources */
 	if (ops & GRL_OP_SEARCH) {
+		const char *id;
+
 		if (self->priv->search_source == source) {
 			gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
 			self->priv->search_source = NULL;
 		}
 
-		gtk_tree_model_foreach (self->priv->search_sources_model,
-		                        remove_searchable_source,
-		                        source);
-
-		/* Select one if the selected source was removed */
-		if (gtk_combo_box_get_active (GTK_COMBO_BOX (self->priv->search_sources_list)) == -1) {
-			gtk_combo_box_set_active (GTK_COMBO_BOX (self->priv->search_sources_list), 0);
-		}
+		id = grl_metadata_source_get_id (GRL_METADATA_SOURCE (source));
+		totem_search_entry_remove_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry), id);
 	}
 }
 
@@ -1246,18 +1191,9 @@ setup_sidebar_search (TotemGriloPlugin *self,
                       GtkBuilder *builder)
 {
 	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
-	self->priv->search_sources_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_sources"));
 	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
 	self->priv->search_results_view = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_results_view"));
 	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
-
-	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->search_sources_model),
-	                                      SEARCH_MODEL_SOURCES_NAME,
-	                                      GTK_SORT_ASCENDING);
-
-	g_signal_connect (self->priv->search_sources_list,
-			  "changed",
-			  G_CALLBACK (search_source_changed_cb), self);
 
 	g_signal_connect (self->priv->search_results_view,
 	                  "item-activated",
@@ -1269,24 +1205,12 @@ setup_sidebar_search (TotemGriloPlugin *self,
 	g_signal_connect (self->priv->search_results_view,
 	                  "button-press-event",
 	                  G_CALLBACK (context_button_pressed_cb), self);
-	g_signal_connect (self->priv->search_entry,
-	                  "changed",
-	                  G_CALLBACK (search_entry_changed_cb), self);
 
-	g_signal_connect (self->priv->search_entry,
-	                  "activate",
+	g_signal_connect (self->priv->search_entry, "activate",
 	                  G_CALLBACK (search_entry_activate_cb),
 	                  self);
-	g_signal_connect (self->priv->search_entry,
-	                  "icon-release",
-	                  G_CALLBACK (search_entry_clear_cb),
-	                  self);
-
-	g_object_set (G_OBJECT (self->priv->search_entry),
-	              "secondary-icon-name", "edit-find-symbolic",
-	              "secondary-icon-activatable", FALSE,
-	              "secondary-icon-sensitive", FALSE,
-	              NULL);
+	g_signal_connect (self->priv->search_entry, "notify::selected-id",
+			  G_CALLBACK (search_entry_source_changed_cb), self);
 
 	g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder,
 		                    "gw_search_results_window"))),
