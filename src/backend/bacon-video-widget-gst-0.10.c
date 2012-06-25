@@ -865,7 +865,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    *
    * The HTTP referrer URI.
    **/
-  g_object_class_install_property (object_class, PROP_REFERER,
+  g_object_class_install_property (object_class, PROP_REFERRER,
                                    g_param_spec_string ("referrer", "Referrer URI", "The HTTP referrer URI.",
                                                         NULL,
                                                         G_PARAM_READWRITE |
