@@ -16,6 +16,7 @@ AM_CPPFLAGS = \
 	$(DISABLE_DEPRECATED)				\
 	-I$(top_srcdir)/				\
 	-I$(top_srcdir)/src/backend			\
+	-I$(top_builddir)/src/backend			\
 	-I$(srcdir)/plugins
 
 AM_CFLAGS = $(WARN_CFLAGS)
