@@ -61,6 +61,7 @@ libbaconvideowidget_la_SOURCES = \
 libbaconvideowidget_la_CPPFLAGS = \
 	-D_REENTRANT				\
 	-I$(top_srcdir)/src/gst/		\
+	-I$(top_builddir)/src/backend		\
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
