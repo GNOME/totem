@@ -1547,13 +1547,6 @@ property_notify_cb_volume (BaconVideoWidget *bvw,
 static gboolean
 on_seek_start (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
 {
-	/* HACK: we want the behaviour you get with the middle button, so we
-	 * mangle the event.  clicking with other buttons moves the slider in
-	 * step increments, clicking with the middle button moves the slider to
-	 * the location of the click.
-	 */
-	event->button = 2;
-
 	emb->seeking = TRUE;
 	totem_time_label_set_seeking (TOTEM_TIME_LABEL (emb->fs->time_label),
 				      TRUE);
@@ -1564,9 +1557,6 @@ on_seek_start (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
 static gboolean
 cb_on_seek (GtkWidget *widget, GdkEventButton *event, TotemEmbedded *emb)
 {
-	/* HACK: see on_seek_start */
-	event->button = 2;
-
 	bacon_video_widget_seek (emb->bvw,
 		gtk_range_get_value (GTK_RANGE (widget)) / 65535, NULL);
 	totem_time_label_set_seeking (TOTEM_TIME_LABEL (emb->fs->time_label),
