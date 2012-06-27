@@ -11,9 +11,9 @@ namespace Bacon {
 	}
   [CCode (cname="BvwRotation", cprefix = "BVW_ROTATION_", cheader_filename = "bacon-video-widget.h")]
   public enum Rotation {
-    R_0   = 0,
-    R_90R = 1,
-    R_180 = 2,
-    R_90L = 3
+    R_ZERO = 0,
+    R_90R  = 1,
+    R_180  = 2,
+    R_90L  = 3
   }
 }

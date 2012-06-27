@@ -87,7 +87,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         ui_manager.remove_action_group (this.action_group);
 
         // undo transformations
-        this.bvw.set_rotation (Bacon.Rotation.R_0);
+        this.bvw.set_rotation (Bacon.Rotation.R_ZERO);
     }
 
     public void update_state ()
@@ -119,7 +119,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     private void cb_file_closed ()
     {
         // reset the rotation
-        this.bvw.set_rotation (Bacon.Rotation.R_0);
+        this.bvw.set_rotation (Bacon.Rotation.R_ZERO);
         this.action_group.sensitive = false;
     }
 
@@ -146,7 +146,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
 
             string state_str = "";
             rotation = this.bvw.get_rotation ();
-            if (rotation != Bacon.Rotation.R_0) {
+            if (rotation != Bacon.Rotation.R_ZERO) {
                 state_str = "%u".printf ((uint) rotation);
             }
             file_info.set_attribute_string (GIO_ROTATION_FILE_ATTRIBUTE, state_str);
