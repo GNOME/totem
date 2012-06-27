@@ -155,7 +155,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
     var f = File.new_for_uri (mrl);
 
     try {
-      var fi = yield f.query_info_async (FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+      var fi = yield f.query_info_async (FileAttribute.STANDARD_CONTENT_TYPE,
                                          0, Priority.DEFAULT_IDLE, null);
 
       if (current_media.mrl != mrl || !totem.is_playing ()) return;
