@@ -155,6 +155,9 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
   box_height = box->y2 - box->y1;
   clutter_actor_get_preferred_size (child, NULL, NULL, &width, &height);
 
+  if (width <= 0.0f || height <= 0.0f)
+    return;
+
   aspect = box_width / box_height;
   child_aspect = width / height;
 
