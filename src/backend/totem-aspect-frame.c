@@ -178,6 +178,8 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
   child_box.y2 = child_box.y1 + height;
 
   clutter_actor_allocate (child, &child_box, flags);
+
+  clutter_actor_set_easing_duration (child, 0);
 }
 
 static void
@@ -316,8 +318,17 @@ totem_aspect_frame_set_expand (TotemAspectFrame *frame, gboolean expand)
   priv = frame->priv;
   if (priv->expand != expand)
     {
+      ClutterActor *child;
+
       priv->expand = expand;
-      clutter_actor_queue_relayout (CLUTTER_ACTOR (frame));
+      child = clutter_actor_get_child_at_index (CLUTTER_ACTOR (frame), 0);
+      if (child)
+        {
+          /* Duration will be reset in _allocate() */
+          clutter_actor_set_easing_duration (child, 500);
+          clutter_actor_queue_relayout (CLUTTER_ACTOR (frame));
+        }
+
       g_object_notify (G_OBJECT (frame), "expand");
     }
 }
