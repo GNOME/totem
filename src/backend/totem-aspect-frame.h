@@ -79,7 +79,7 @@ GType           totem_aspect_frame_get_type    (void) G_GNUC_CONST;
 ClutterActor *  totem_aspect_frame_new         (void);
 
 void            totem_aspect_frame_set_expand  (TotemAspectFrame *frame,
-                                             gboolean       expand);
+                                                gboolean          expand);
 gboolean        totem_aspect_frame_get_expand  (TotemAspectFrame *frame);
 
 G_END_DECLS

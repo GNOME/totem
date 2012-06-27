@@ -46,9 +46,9 @@ struct _TotemAspectFramePrivate
 
 static void
 totem_aspect_frame_get_property (GObject    *object,
-                               guint       property_id,
-                               GValue     *value,
-                               GParamSpec *pspec)
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
 {
   TotemAspectFrame *frame = TOTEM_ASPECT_FRAME (object);
 
@@ -65,9 +65,9 @@ totem_aspect_frame_get_property (GObject    *object,
 
 static void
 totem_aspect_frame_set_property (GObject      *object,
-                               guint         property_id,
-                               const GValue *value,
-                               GParamSpec   *pspec)
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
 {
   switch (property_id)
     {
@@ -95,9 +95,9 @@ totem_aspect_frame_finalize (GObject *object)
 
 static void
 totem_aspect_frame_get_preferred_width (ClutterActor *actor,
-                                      gfloat        for_height,
-                                      gfloat       *min_width_p,
-                                      gfloat       *nat_width_p)
+                                        gfloat        for_height,
+                                        gfloat       *min_width_p,
+                                        gfloat       *nat_width_p)
 {
   gboolean override;
 
@@ -115,9 +115,9 @@ totem_aspect_frame_get_preferred_width (ClutterActor *actor,
 
 static void
 totem_aspect_frame_get_preferred_height (ClutterActor *actor,
-                                       gfloat        for_width,
-                                       gfloat       *min_height_p,
-                                       gfloat       *nat_height_p)
+                                         gfloat        for_width,
+                                         gfloat       *min_height_p,
+                                         gfloat       *nat_height_p)
 {
   gboolean override;
 
@@ -135,8 +135,8 @@ totem_aspect_frame_get_preferred_height (ClutterActor *actor,
 
 static void
 totem_aspect_frame_allocate (ClutterActor           *actor,
-                           const ClutterActorBox  *box,
-                           ClutterAllocationFlags  flags)
+                             const ClutterActorBox  *box,
+                             ClutterAllocationFlags  flags)
 {
   ClutterActor *child;
   ClutterActorBox child_box;
@@ -232,7 +232,7 @@ totem_aspect_frame_paint (ClutterActor *actor)
 
 static void
 totem_aspect_frame_pick (ClutterActor       *actor,
-                       const ClutterColor *color)
+                         const ClutterColor *color)
 {
   ClutterActorBox box;
 
