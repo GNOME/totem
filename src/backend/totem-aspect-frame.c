@@ -43,6 +43,7 @@ enum
 struct _TotemAspectFramePrivate
 {
   guint expand : 1;
+  gdouble rotation;
 };
 
 
@@ -235,9 +236,6 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
 
   /* FIXME: We should swap height and width if the actor is on its side */
   rotation = totem_aspect_frame_get_rotation (TOTEM_ASPECT_FRAME (actor));
-  if (rotation == 0.0)
-    return;
-
   totem_aspect_frame_set_rotation_internal (TOTEM_ASPECT_FRAME (actor),
 					    rotation,
 					    FALSE);
@@ -390,6 +388,7 @@ totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
 
   g_debug ("Setting rotation to '%lf'", rotation);
 
+  frame->priv->rotation = rotation;
   totem_aspect_frame_set_rotation_internal (frame, rotation, TRUE);
 }
 
@@ -400,11 +399,7 @@ totem_aspect_frame_get_rotation (TotemAspectFrame *frame)
 
   g_return_val_if_fail (TOTEM_IS_ASPECT_FRAME (frame), 0.0);
 
-  rotation = clutter_actor_get_rotation (CLUTTER_ACTOR (frame),
-					 CLUTTER_Z_AXIS,
-					 NULL, NULL, NULL);
-
-  rotation = fmod (rotation, 360.0);
+  rotation = fmod (frame->priv->rotation, 360.0);
   g_debug ("Got rotation %lf", rotation);
 
   return rotation;
