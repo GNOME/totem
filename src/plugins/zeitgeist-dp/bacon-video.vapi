@@ -2,19 +2,12 @@
 
 namespace Bacon {
 	[CCode (cheader_filename = "bacon-video-widget.h")]
-	public class VideoWidget : Gtk.EventBox {
+	public class VideoWidget : Gtk.Widget {
     [CCode (has_construct_function = false)]
-		public VideoWidget (int width, int height, UseType type) throws GLib.Error;
+		public VideoWidget () throws GLib.Error;
 
     public void get_metadata (MetadataType type, out GLib.Value val);
 	}
-  [CCode (cprefix = "BVW_USE_TYPE_", cheader_filename = "bacon-video-widget.h")]
-  public enum UseType {
-    VIDEO,
-    AUDIO,
-    CAPTURE,
-    METADATA
-  }
   [CCode (cprefix = "BVW_INFO_", cheader_filename = "bacon-video-widget.h")]
   public enum MetadataType {
     TITLE,
