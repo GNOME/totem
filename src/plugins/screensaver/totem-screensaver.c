@@ -60,19 +60,32 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
 		      TotemScreensaverPlugin,
 		      totem_screensaver_plugin)
 
+static gboolean
+has_video (BaconVideoWidget *bvw)
+{
+	GValue value = { 0, };
+	gboolean ret;
+
+	bacon_video_widget_get_metadata (bvw, BVW_INFO_HAS_VIDEO, &value);
+	ret = g_value_get_boolean (&value);
+	g_value_unset (&value);
+
+	return ret;
+}
+
 static void
 totem_screensaver_update_from_state (TotemObject *totem,
 				     TotemScreensaverPlugin *pi)
 {
-	gboolean lock_screensaver_on_audio, can_get_frames;
+	gboolean lock_screensaver_on_audio, has_video_frames;
 	BaconVideoWidget *bvw;
 
 	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget ((Totem *)(totem)));
 
 	lock_screensaver_on_audio = g_settings_get_boolean (pi->priv->settings, "lock-screensaver-on-audio");
-	can_get_frames = bacon_video_widget_can_get_frames (bvw, NULL);
+	has_video_frames = has_video (bvw);
 
-	if ((totem_is_playing (totem) != FALSE && can_get_frames) ||
+	if ((totem_is_playing (totem) != FALSE && has_video_frames) ||
 	    (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)) {
 		if (pi->priv->handler_id_inhibit == 0) {
 			GtkWindow *window;
