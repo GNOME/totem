@@ -100,11 +100,6 @@ totem_aspect_frame_get_preferred_width (ClutterActor *actor,
                                       gfloat       *nat_width_p)
 {
   gboolean override;
-  MxPadding padding;
-
-  mx_widget_get_padding (MX_WIDGET (actor), &padding);
-  if (for_height >= 0)
-    for_height = MAX (0, for_height - padding.top - padding.bottom);
 
   if (for_height >= 0)
     override = FALSE;
@@ -116,11 +111,6 @@ totem_aspect_frame_get_preferred_width (ClutterActor *actor,
 
   CLUTTER_ACTOR_CLASS (totem_aspect_frame_parent_class)->
     get_preferred_width (actor, for_height, min_width_p, nat_width_p);
-
-  if (min_width_p)
-    *min_width_p += padding.left + padding.right;
-  if (nat_width_p)
-    *nat_width_p += padding.left + padding.right;
 }
 
 static void
@@ -130,11 +120,6 @@ totem_aspect_frame_get_preferred_height (ClutterActor *actor,
                                        gfloat       *nat_height_p)
 {
   gboolean override;
-  MxPadding padding;
-
-  mx_widget_get_padding (MX_WIDGET (actor), &padding);
-  if (for_width >= 0)
-    for_width = MAX (0, for_width - padding.left - padding.right);
 
   if (for_width >= 0)
     override = FALSE;
@@ -153,7 +138,6 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
                            const ClutterActorBox  *box,
                            ClutterAllocationFlags  flags)
 {
-  MxPadding padding;
   ClutterActor *child;
   ClutterActorBox child_box;
   gfloat aspect, child_aspect, width, height, box_width, box_height;
@@ -167,10 +151,8 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
   if (!child)
     return;
 
-  mx_widget_get_padding (MX_WIDGET (actor), &padding);
-
-  box_width = box->x2 - box->x1 - padding.left - padding.right;
-  box_height = box->y2 - box->y1 - padding.top - padding.bottom;
+  box_width = box->x2 - box->x1;
+  box_height = box->y2 - box->y1;
   clutter_actor_get_preferred_size (child, NULL, NULL, &width, &height);
 
   aspect = box_width / box_height;
@@ -187,8 +169,8 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
       width = box_height * child_aspect;
     }
 
-  child_box.x1 = (box_width - width) / 2 + padding.left;
-  child_box.y1 = (box_height - height) / 2 + padding.top;
+  child_box.x1 = (box_width - width) / 2;
+  child_box.y1 = (box_height - height) / 2;
   child_box.x2 = child_box.x1 + width;
   child_box.y2 = child_box.y1 + height;
 
@@ -206,11 +188,9 @@ totem_aspect_frame_paint (ClutterActor *actor)
 
   if (priv->expand)
     {
-      MxPadding padding;
       gfloat width, height;
 
       clutter_actor_get_size (actor, &width, &height);
-      mx_widget_get_padding (MX_WIDGET (actor), &padding);
 
       /* Special-case textures and just munge their coordinates.
        * This avoids clipping, which can break Clutter's batching.
@@ -230,24 +210,18 @@ totem_aspect_frame_paint (ClutterActor *actor)
                                       opacity, opacity, opacity, opacity);
           cogl_set_source (material);
 
-          x -= padding.left;
-          y -= padding.top;
-          width -= padding.left + padding.right;
-          height -= padding.top + padding.bottom;
-
           tx = (width / (width - (x * 2.f))) / 2.f;
           ty = (height / (height - (y * 2.f))) / 2.f;
 
-          cogl_rectangle_with_texture_coords (padding.left, padding.top,
-                                              padding.left + width,
-                                              padding.top + height,
+          cogl_rectangle_with_texture_coords (0.0, 0.0,
+                                              width,
+                                              height,
                                               0.5f - tx, 0.5f - ty,
                                               0.5f + tx, 0.5f + ty);
         }
       else
         {
-          cogl_clip_push_rectangle (padding.left, padding.top,
-                                    padding.left + width, padding.top + height);
+          cogl_clip_push_rectangle (0.0, 0.0, width, height);
           clutter_actor_paint (child);
           cogl_clip_pop ();
         }
@@ -276,12 +250,7 @@ totem_aspect_frame_pick (ClutterActor       *actor,
 
   if (priv->expand)
     {
-      MxPadding padding;
-      mx_widget_get_padding (MX_WIDGET (actor), &padding);
-
-      cogl_clip_push_rectangle (padding.left, padding.top,
-                                padding.left + (box.x2 - box.x1),
-                                padding.top + (box.y2 - box.y1));
+      cogl_clip_push_rectangle (0.0, 0.0, box.x2 - box.x1, box.y2 - box.y1);
       clutter_actor_paint (child);
       cogl_clip_pop ();
     }
