@@ -1,8 +1,11 @@
 /* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*- */
 /*
- * mx-aspect-frame.c: A container that respect the aspect ratio of its child
+ * A container that respects the aspect ratio of its child
  *
  * Copyright 2010, 2011 Intel Corporation.
+ * Copyright 2012, Red Hat, Inc.
+ *
+ * Based upon mx-aspect-frame.c
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU Lesser General Public License,
@@ -33,14 +36,11 @@ enum
   PROP_0,
 
   PROP_EXPAND,
-  PROP_RATIO
 };
 
 struct _TotemAspectFramePrivate
 {
   guint expand : 1;
-
-  gfloat ratio;
 };
 
 
@@ -56,10 +56,6 @@ totem_aspect_frame_get_property (GObject    *object,
     {
     case PROP_EXPAND:
       g_value_set_boolean (value, totem_aspect_frame_get_expand (frame));
-      break;
-
-    case PROP_RATIO:
-      g_value_set_float (value, totem_aspect_frame_get_ratio (frame));
       break;
 
     default:
@@ -78,11 +74,6 @@ totem_aspect_frame_set_property (GObject      *object,
     case PROP_EXPAND:
       totem_aspect_frame_set_expand (TOTEM_ASPECT_FRAME (object),
                                    g_value_get_boolean (value));
-      break;
-
-    case PROP_RATIO:
-      totem_aspect_frame_set_ratio (TOTEM_ASPECT_FRAME (object),
-                                  g_value_get_float (value));
       break;
 
     default:
@@ -183,10 +174,7 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
   clutter_actor_get_preferred_size (child, NULL, NULL, &width, &height);
 
   aspect = box_width / box_height;
-  if (priv->ratio >= 0.f)
-    child_aspect = priv->ratio;
-  else
-    child_aspect = width / height;
+  child_aspect = width / height;
 
   if ((aspect < child_aspect) ^ priv->expand)
     {
@@ -329,21 +317,12 @@ totem_aspect_frame_class_init (TotemAspectFrameClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_EXPAND, pspec);
-
-  pspec = g_param_spec_float ("ratio",
-                              "Ratio",
-                              "Override the child's aspect ratio "
-                              "(width/height).",
-                              -1.f, G_MAXFLOAT, -1.f,
-                              G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
-  g_object_class_install_property (object_class, PROP_RATIO, pspec);
 }
 
 static void
 totem_aspect_frame_init (TotemAspectFrame *self)
 {
-  TotemAspectFramePrivate *priv = self->priv = ASPECT_FRAME_PRIVATE (self);
-  priv->ratio = -1.f;
+  self->priv = ASPECT_FRAME_PRIVATE (self);
 }
 
 ClutterActor *
@@ -373,27 +352,4 @@ totem_aspect_frame_get_expand (TotemAspectFrame *frame)
 {
   g_return_val_if_fail (TOTEM_IS_ASPECT_FRAME (frame), FALSE);
   return frame->priv->expand;
-}
-
-void
-totem_aspect_frame_set_ratio (TotemAspectFrame *frame, gfloat ratio)
-{
-  TotemAspectFramePrivate *priv;
-
-  g_return_if_fail (TOTEM_IS_ASPECT_FRAME (frame));
-
-  priv = frame->priv;
-  if (priv->ratio != ratio)
-    {
-      priv->ratio = ratio;
-      clutter_actor_queue_relayout (CLUTTER_ACTOR (frame));
-      g_object_notify (G_OBJECT (frame), "ratio");
-    }
-}
-
-gfloat
-totem_aspect_frame_get_ratio (TotemAspectFrame *frame)
-{
-  g_return_val_if_fail (TOTEM_IS_ASPECT_FRAME (frame), -1.f);
-  return frame->priv->ratio;
 }

@@ -82,10 +82,6 @@ void            totem_aspect_frame_set_expand  (TotemAspectFrame *frame,
                                              gboolean       expand);
 gboolean        totem_aspect_frame_get_expand  (TotemAspectFrame *frame);
 
-void            totem_aspect_frame_set_ratio   (TotemAspectFrame *frame,
-                                             gfloat         ratio);
-gfloat          totem_aspect_frame_get_ratio   (TotemAspectFrame *frame);
-
 G_END_DECLS
 
 #endif /* __TOTEM_ASPECT_FRAME_H__ */
