@@ -24,7 +24,7 @@
 
 #include "totem-aspect-frame.h"
 
-G_DEFINE_TYPE (TotemAspectFrame, totem_aspect_frame, MX_TYPE_BIN)
+G_DEFINE_TYPE (TotemAspectFrame, totem_aspect_frame, CLUTTER_TYPE_ACTOR)
 
 #define ASPECT_FRAME_PRIVATE(o)                         \
   (G_TYPE_INSTANCE_GET_PRIVATE ((o),                    \
@@ -147,7 +147,7 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
   CLUTTER_ACTOR_CLASS (totem_aspect_frame_parent_class)->
     allocate (actor, box, flags);
 
-  child = mx_bin_get_child (MX_BIN (actor));
+  child = clutter_actor_get_child_at_index (actor, 0);
   if (!child)
     return;
 
@@ -180,8 +180,10 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
 static void
 totem_aspect_frame_paint (ClutterActor *actor)
 {
-  ClutterActor *child = mx_bin_get_child (MX_BIN (actor));
+  ClutterActor *child;
   TotemAspectFramePrivate *priv = TOTEM_ASPECT_FRAME (actor)->priv;
+
+  child = clutter_actor_get_child_at_index (actor, 0);
 
   if (!child)
     return;
@@ -235,8 +237,7 @@ totem_aspect_frame_pick (ClutterActor       *actor,
                          const ClutterColor *color)
 {
   ClutterActorBox box;
-
-  ClutterActor *child = mx_bin_get_child (MX_BIN (actor));
+  ClutterActor *child;
   TotemAspectFramePrivate *priv = TOTEM_ASPECT_FRAME (actor)->priv;
 
   clutter_actor_get_allocation_box (actor, &box);
@@ -244,6 +245,8 @@ totem_aspect_frame_pick (ClutterActor       *actor,
   cogl_set_source_color4ub (color->red, color->green,
                             color->blue, color->alpha);
   cogl_rectangle (box.x1, box.y1, box.x2, box.y2);
+
+  child = clutter_actor_get_child_at_index (actor, 0);
 
   if (!child)
     return;
@@ -329,5 +332,5 @@ totem_aspect_frame_set_child   (TotemAspectFrame *frame,
 {
   g_return_if_fail (TOTEM_IS_ASPECT_FRAME (frame));
 
-  mx_bin_set_child (MX_BIN (frame), child);
+  clutter_actor_add_child (CLUTTER_ACTOR (frame), child);
 }

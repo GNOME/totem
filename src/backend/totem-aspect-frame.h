@@ -25,7 +25,7 @@
 #define __TOTEM_ASPECT_FRAME_H__
 
 #include <glib-object.h>
-#include <mx/mx.h>
+#include <clutter/clutter.h>
 
 G_BEGIN_DECLS
 
@@ -57,14 +57,14 @@ typedef struct _TotemAspectFramePrivate TotemAspectFramePrivate;
 
 struct _TotemAspectFrame
 {
-  MxBin parent;
+  ClutterActor parent;
 
   TotemAspectFramePrivate *priv;
 };
 
 struct _TotemAspectFrameClass
 {
-  MxBinClass parent_class;
+  ClutterActorClass parent_class;
 };
 
 GType           totem_aspect_frame_get_type    (void) G_GNUC_CONST;
