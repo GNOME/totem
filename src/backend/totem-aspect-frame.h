@@ -79,8 +79,8 @@ void            totem_aspect_frame_set_expand   (TotemAspectFrame *frame,
 gboolean        totem_aspect_frame_get_expand   (TotemAspectFrame *frame);
 
 void            totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
-						 gfloat            rotation);
-gfloat          totem_aspect_frame_get_rotation (TotemAspectFrame *frame);
+						 gdouble           rotation);
+gdouble         totem_aspect_frame_get_rotation (TotemAspectFrame *frame);
 
 G_END_DECLS
 
