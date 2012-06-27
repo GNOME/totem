@@ -226,6 +226,8 @@ struct BaconVideoWidgetPrivate
   gdouble                      volume;
   gboolean                     is_menu;
   gboolean                     has_angles;
+
+  BvwRotation                  rotation;
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
@@ -1142,6 +1144,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
 
   g_type_class_ref (BVW_TYPE_METADATA_TYPE);
   g_type_class_ref (BVW_TYPE_DVD_EVENT);
+  g_type_class_ref (BVW_TYPE_ROTATION);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
 
@@ -2567,6 +2570,7 @@ bacon_video_widget_finalize (GObject * object)
 
   g_type_class_unref (g_type_class_peek (BVW_TYPE_METADATA_TYPE));
   g_type_class_unref (g_type_class_peek (BVW_TYPE_DVD_EVENT));
+  g_type_class_unref (g_type_class_peek (BVW_TYPE_ROTATION));
 
   if (bvw->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
@@ -4828,6 +4832,51 @@ bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 
   expand = totem_aspect_frame_get_expand (TOTEM_ASPECT_FRAME (bvw->priv->frame));
   return expand ? BVW_ZOOM_EXPAND : BVW_ZOOM_NONE;
+}
+
+/**
+ * bacon_video_widget_set_rotation:
+ * @bvw: a #BaconVideoWidget
+ * @rotation: the #BvwRotation of the video in degrees
+ *
+ * Sets the rotation to be applied to the video when it is displayed.
+ **/
+void
+bacon_video_widget_set_rotation (BaconVideoWidget *bvw,
+				 BvwRotation       rotation)
+{
+  gfloat angle;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  if (bvw->priv->frame == NULL)
+    return;
+
+  GST_DEBUG ("Rotating to %s (%f degrees) from %s",
+	     get_type_name (BVW_TYPE_ROTATION, rotation),
+	     rotation * 90.0,
+	     get_type_name (BVW_TYPE_ROTATION, bvw->priv->rotation));
+
+  bvw->priv->rotation = rotation;
+
+  angle = rotation * 90.0;
+  totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->priv->frame), angle);
+}
+
+/**
+ * bacon_video_widget_get_rotation:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns the angle of rotation of the video, in degrees.
+ *
+ * Return value: a #BvwRotation.
+ **/
+BvwRotation
+bacon_video_widget_get_rotation (BaconVideoWidget *bvw)
+{
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_ROTATION_R_0);
+
+  return bvw->priv->rotation;
 }
 
 /* Search for the color balance channel corresponding to type and return it. */

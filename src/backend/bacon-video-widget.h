@@ -347,6 +347,23 @@ typedef enum {
 	BVW_ZOOM_EXPAND = 1
 } BvwZoomMode;
 
+/**
+ * BvwRotation:
+ * @BVW_ROTATION_0: No rotation
+ * @BVW_ROTATION_90R: Rotate 90 degrees to the right
+ * @BVW_ROTATION_180: Rotate 180 degrees
+ * @BVW_ROTATION_90L: Rotate 90 degrees to the left
+ *
+ * The rotation is used by the video widget, as set by
+ * bacon_video_widget_set_rotation().
+ **/
+typedef enum {
+	BVW_ROTATION_R_0 = 0,
+	BVW_ROTATION_R_90R = 1,
+	BVW_ROTATION_R_180 = 2,
+	BVW_ROTATION_R_90L = 3
+} BvwRotation;
+
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,
 						  gboolean deinterlace);
 gboolean bacon_video_widget_get_deinterlacing    (BaconVideoWidget *bvw);
@@ -362,6 +379,10 @@ void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
 void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
 						  BvwZoomMode       mode);
 BvwZoomMode bacon_video_widget_get_zoom		 (BaconVideoWidget *bvw);
+
+void bacon_video_widget_set_rotation		 (BaconVideoWidget *bvw,
+						  BvwRotation       rotation);
+BvwRotation bacon_video_widget_get_rotation	 (BaconVideoWidget *bvw);
 
 int bacon_video_widget_get_video_property        (BaconVideoWidget *bvw,
 						  BvwVideoProperty type);
