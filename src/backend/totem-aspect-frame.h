@@ -65,13 +65,6 @@ struct _TotemAspectFrame
 struct _TotemAspectFrameClass
 {
   MxBinClass parent_class;
-
-  /* padding for future expansion */
-  void (*_padding_0) (void);
-  void (*_padding_1) (void);
-  void (*_padding_2) (void);
-  void (*_padding_3) (void);
-  void (*_padding_4) (void);
 };
 
 GType           totem_aspect_frame_get_type    (void) G_GNUC_CONST;
