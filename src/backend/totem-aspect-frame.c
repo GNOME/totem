@@ -322,3 +322,12 @@ totem_aspect_frame_get_expand (TotemAspectFrame *frame)
   g_return_val_if_fail (TOTEM_IS_ASPECT_FRAME (frame), FALSE);
   return frame->priv->expand;
 }
+
+void
+totem_aspect_frame_set_child   (TotemAspectFrame *frame,
+				ClutterActor     *child)
+{
+  g_return_if_fail (TOTEM_IS_ASPECT_FRAME (frame));
+
+  mx_bin_set_child (MX_BIN (frame), child);
+}
