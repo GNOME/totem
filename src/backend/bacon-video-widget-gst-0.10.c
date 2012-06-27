@@ -64,7 +64,6 @@
 #include <gst/tag/tag.h>
 
 #include <clutter-gst/clutter-gst.h>
-#include <mx/mx.h>
 #include "totem-aspect-frame.h"
 
 /* system */
@@ -5904,11 +5903,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->logo_frame = totem_aspect_frame_new ();
   clutter_actor_set_name (bvw->priv->logo_frame, "logo-frame");
   bvw->priv->logo = clutter_texture_new ();
-  mx_bin_set_child (MX_BIN (bvw->priv->logo_frame), bvw->priv->logo);
+  totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->logo_frame), bvw->priv->logo);
   clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->logo_frame);
-  mx_bin_set_fill (MX_BIN (bvw->priv->logo_frame), FALSE, FALSE);
-  mx_bin_set_alignment (MX_BIN (bvw->priv->logo_frame), MX_ALIGN_MIDDLE, MX_ALIGN_MIDDLE);
-  clutter_actor_set_size (bvw->priv->logo, LOGO_SIZE, LOGO_SIZE);
   constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
   clutter_actor_add_constraint_with_name (bvw->priv->logo_frame, "size", constraint);
   clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
@@ -5916,7 +5912,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* The video */
   bvw->priv->frame = totem_aspect_frame_new ();
   clutter_actor_set_name (bvw->priv->frame, "frame");
-  mx_bin_set_child (MX_BIN (bvw->priv->frame), bvw->priv->texture);
+  totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->frame), bvw->priv->texture);
 
   clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->frame);
   constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
