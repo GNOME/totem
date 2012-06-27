@@ -199,39 +199,9 @@ totem_aspect_frame_paint (ClutterActor *actor)
 
       clutter_actor_get_size (actor, &width, &height);
 
-      /* Special-case textures and just munge their coordinates.
-       * This avoids clipping, which can break Clutter's batching.
-       */
-      if (CLUTTER_IS_TEXTURE (child))
-        {
-          guint8 opacity;
-          gfloat x, y, tx, ty;
-          CoglHandle material;
-
-          clutter_actor_get_position (child, &x, &y);
-
-          material =
-            clutter_texture_get_cogl_material (CLUTTER_TEXTURE (child));
-          opacity = clutter_actor_get_paint_opacity (child);
-          cogl_material_set_color4ub (material,
-                                      opacity, opacity, opacity, opacity);
-          cogl_set_source (material);
-
-          tx = (width / (width - (x * 2.f))) / 2.f;
-          ty = (height / (height - (y * 2.f))) / 2.f;
-
-          cogl_rectangle_with_texture_coords (0.0, 0.0,
-                                              width,
-                                              height,
-                                              0.5f - tx, 0.5f - ty,
-                                              0.5f + tx, 0.5f + ty);
-        }
-      else
-        {
-          cogl_clip_push_rectangle (0.0, 0.0, width, height);
-          clutter_actor_paint (child);
-          cogl_clip_pop ();
-        }
+      cogl_clip_push_rectangle (0.0, 0.0, width, height);
+      clutter_actor_paint (child);
+      cogl_clip_pop ();
     }
   else
     clutter_actor_paint (child);
