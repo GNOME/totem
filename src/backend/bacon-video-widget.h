@@ -349,19 +349,19 @@ typedef enum {
 
 /**
  * BvwRotation:
- * @BVW_ROTATION_0: No rotation
- * @BVW_ROTATION_90R: Rotate 90 degrees to the right
- * @BVW_ROTATION_180: Rotate 180 degrees
- * @BVW_ROTATION_90L: Rotate 90 degrees to the left
+ * @BVW_ROTATION_R_ZERO: No rotation
+ * @BVW_ROTATION_R_90R: Rotate 90 degrees to the right
+ * @BVW_ROTATION_R_180: Rotate 180 degrees
+ * @BVW_ROTATION_R_90L: Rotate 90 degrees to the left
  *
  * The rotation is used by the video widget, as set by
  * bacon_video_widget_set_rotation().
  **/
 typedef enum {
-	BVW_ROTATION_R_0 = 0,
-	BVW_ROTATION_R_90R = 1,
-	BVW_ROTATION_R_180 = 2,
-	BVW_ROTATION_R_90L = 3
+	BVW_ROTATION_R_ZERO = 0,
+	BVW_ROTATION_R_90R  = 1,
+	BVW_ROTATION_R_180  = 2,
+	BVW_ROTATION_R_90L  = 3
 } BvwRotation;
 
 void bacon_video_widget_set_deinterlacing        (BaconVideoWidget *bvw,

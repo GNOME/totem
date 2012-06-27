@@ -4874,7 +4874,7 @@ bacon_video_widget_set_rotation (BaconVideoWidget *bvw,
 BvwRotation
 bacon_video_widget_get_rotation (BaconVideoWidget *bvw)
 {
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_ROTATION_R_0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), BVW_ROTATION_R_ZERO);
 
   return bvw->priv->rotation;
 }
