@@ -100,7 +100,7 @@ totem_gromit_ensure_config_file (void)
 		return;
 	}
 
-	g_message ("%s doesn't exist", path);
+	g_debug ("%s doesn't exist so creating it", path);
 
 	if (g_file_set_contents (path, DEFAULT_CONFIG, sizeof (DEFAULT_CONFIG), &error) == FALSE) {
 		g_warning ("Could not write default config file: %s.", error->message);
