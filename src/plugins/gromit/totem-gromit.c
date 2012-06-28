@@ -94,7 +94,7 @@ totem_gromit_ensure_config_file (void)
 	char *path;
 	GError *error = NULL;
 
-	path = g_build_filename (g_get_home_dir (), ".gromitrc", NULL);
+	path = g_build_filename (g_get_user_config_dir (), "gromit", "gromitrc", NULL);
 	if (g_file_test (path, G_FILE_TEST_EXISTS) != FALSE) {
 		g_free (path);
 		return;
