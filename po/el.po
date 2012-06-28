@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-25 13:36+0000\n"
-"PO-Revision-Date: 2012-06-22 12:51+0200\n"
+"POT-Creation-Date: 2012-06-28 16:41+0000\n"
+"PO-Revision-Date: 2012-06-29 01:30+0200\n"
 "Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgid "Playing"
 msgstr "Αναπαραγωγή"
 
 #: ../browser-plugin/totem-plugin-viewer.c:386
-#: ../src/plugins/screensaver/totem-screensaver.c:84
+#: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "Γίνεται αναπαραγωγή μιας ταινίας"
 
@@ -49,7 +49,7 @@ msgid "No URI to play"
 msgstr "Δεν υπάρχει URI προς αναπαραγωγή"
 
 #: ../browser-plugin/totem-plugin-viewer.c:676
-#: ../browser-plugin/totem-plugin-viewer.c:1806
+#: ../browser-plugin/totem-plugin-viewer.c:1706
 msgid "Totem Movie Player"
 msgstr "Totem αναπαραγωγή ταινιών"
 
@@ -61,26 +61,26 @@ msgstr "Totem αναπαραγωγή ταινιών"
 msgid "_Open with \"%s\""
 msgstr "Άν_οιγμα με \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1430
+#: ../browser-plugin/totem-plugin-viewer.c:1341
 #: ../src/totem-object.c:2417
 #: ../src/totem-object.c:2419
 msgid "An error occurred"
 msgstr "Προέκυψε ένα σφάλμα"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144
+#: ../browser-plugin/totem-plugin-viewer.c:2039
 msgid "No playlist or playlist empty"
 msgstr "Δεν υπάρχει λίστα αναπαραγωγής ή η λίστα είναι κενή"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2239
+#: ../browser-plugin/totem-plugin-viewer.c:2134
 msgid "Movie browser plugin"
 msgstr "Πρόσθετη λειτουργία περιήγησης ταινιών"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2255
+#: ../browser-plugin/totem-plugin-viewer.c:2150
 #: ../src/totem.c:238
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Αδυναμία αρχικοποίησης των βιβλιοθηκών thread-safe."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2255
+#: ../browser-plugin/totem-plugin-viewer.c:2150
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Επιβεβαιώστε τη σωστή εγκατάσταση του συστήματος σας. Το πρόσθετο Totem θα τερματιστεί τώρα."
 
@@ -293,7 +293,7 @@ msgid "Extra Large"
 msgstr "Πολύ μεγάλο"
 
 #: ../data/preferences.ui.h:7
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5403
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5451
 #: ../src/totem-properties-view.c:228
 msgid "Stereo"
 msgstr "Στερεοφωνικό"
@@ -515,32 +515,26 @@ msgid "_Open"
 msgstr "Άν_οιγμα"
 
 #: ../data/totem.ui.h:2
-#| msgid "Open Location..."
 msgid "Open _Location"
 msgstr "Άνοιγμα το_ποθεσίας"
 
 #: ../data/totem.ui.h:3
-#| msgid "Fullscreen"
 msgid "_Fullscreen"
 msgstr "_Πλήρης οθόνη"
 
 #: ../data/totem.ui.h:4
-#| msgid "Preferences"
 msgid "Prefere_nces"
 msgstr "Προτι_μήσεις"
 
 #: ../data/totem.ui.h:5
-#| msgid "Shuffle mode"
 msgid "Shuff_le"
 msgstr "Τυχαία ανα_παραγωγή"
 
 #: ../data/totem.ui.h:6
-#| msgid "Repeat mode"
 msgid "_Repeat"
 msgstr "_Επανάληψη"
 
 #: ../data/totem.ui.h:7
-#| msgid "Quit"
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
@@ -842,31 +836,31 @@ msgstr "_Προσθήκη στη λίστα αναπαραγωγής"
 msgid "Add the video to the playlist"
 msgstr "Προσθήκη του βίντεο στη λίστα αναπαραγωγής"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1579
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1581
 msgid "Password requested for RTSP server"
 msgstr "Αίτηση συνθηματιικού πρόσβασης για τον διακομιστή RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2914
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2917
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Κομμάτι ήχου #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2918
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2921
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Υπότιτλος #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3292
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3295
 msgid "Location not found."
 msgstr "Δε βρέθηκε η τοποθεσία."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3295
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3298
 msgid "Could not open location; you might not have permission to open the file."
 msgstr "Είναι αδύνατο το άνοιγμα της τοποθεσίας· ίσως δεν έχετε τα δικαιώματα για να ανοίξετε το αρχείο."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3315
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3321
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3318
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3324
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -879,26 +873,25 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3347
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3350
 msgid "Cannot play this file over the network. Try downloading it to disk first."
 msgstr "Αδυναμία αναπαραγωγής αυτού του αρχείου μέσω δικτύου. Μεταφορτώστε το στο δίσκο πρώτα."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5399
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5447
 #: ../src/totem-properties-view.c:224
 msgid "Surround"
 msgstr "Περιφερειακό"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5401
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5449
 #: ../src/totem-properties-view.c:226
 msgid "Mono"
 msgstr "Μονοφωνικό"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5686
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5734
 msgid "Media contains no supported video streams."
 msgstr "Το αρχείο περιέχει μη υποστηριζόμενες ροές βίντεο."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5849
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5893
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5909
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
 msgstr "Αδυναμία δημιουργίας αντικειμένου αναπαραγωγής GStreamer. Παρακαλώ ελέγξτε την εγκατάσταση του GStreamer."
 
@@ -1261,32 +1254,32 @@ msgstr "Δεν υπάρχει μήνυμα σφάλματος"
 msgid "Totem could not display the help contents."
 msgstr "Το Totem δε μπορεί να εμφανίσει τα περιεχόμενα βοήθειας."
 
-#: ../src/totem-object.c:3959
-#: ../src/totem-object.c:3961
+#: ../src/totem-object.c:3969
+#: ../src/totem-object.c:3971
 msgid "Previous Chapter/Movie"
 msgstr "Προηγούμενο κεφάλαιο/ταινία"
 
-#: ../src/totem-object.c:3968
-#: ../src/totem-object.c:3970
+#: ../src/totem-object.c:3978
+#: ../src/totem-object.c:3980
 msgid "Play / Pause"
 msgstr "Αναπαραγωγή / Παύση"
 
-#: ../src/totem-object.c:3978
-#: ../src/totem-object.c:3980
+#: ../src/totem-object.c:3988
+#: ../src/totem-object.c:3990
 msgid "Next Chapter/Movie"
 msgstr "Επόμενο κεφάλαιο/ταινία"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3991
-#: ../src/totem-object.c:3993
+#: ../src/totem-object.c:4001
+#: ../src/totem-object.c:4003
 msgid "Fullscreen"
 msgstr "Πλήρης οθόνη"
 
-#: ../src/totem-object.c:4124
+#: ../src/totem-object.c:4134
 msgid "Totem could not startup."
 msgstr "Το Totem δε μπορεί να ξεκινήσει."
 
-#: ../src/totem-object.c:4124
+#: ../src/totem-object.c:4134
 msgid "No reason."
 msgstr "Χωρίς λόγο."
 
@@ -1727,7 +1720,7 @@ msgstr "Χωρίς URI για βίντεο"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:873
+#: ../src/totem-video-thumbnailer.c:890
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1738,15 +1731,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:874
+#: ../src/totem-video-thumbnailer.c:891
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
-#: ../src/totem-video-thumbnailer.c:876
+#: ../src/totem-video-thumbnailer.c:893
 msgid "Resolution"
 msgstr "Ανάλυση"
 
-#: ../src/totem-video-thumbnailer.c:879
+#: ../src/totem-video-thumbnailer.c:896
 msgid "Duration"
 msgstr "Διάρκεια"
 
@@ -1995,20 +1988,20 @@ msgid "Copy Location"
 msgstr "Αντιγραφή τοποθεσίας"
 
 #: ../src/plugins/grilo/grilo.ui.h:3
-#: ../src/plugins/grilo/totem-grilo.c:1235
+#: ../src/plugins/grilo/totem-grilo.c:1185
 msgid "Browse"
 msgstr "Περιήγηση"
 
 #: ../src/plugins/grilo/grilo.ui.h:4
-#: ../src/plugins/grilo/totem-grilo.c:1301
+#: ../src/plugins/grilo/totem-grilo.c:1228
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: ../src/plugins/grilo/totem-grilo.c:452
+#: ../src/plugins/grilo/totem-grilo.c:454
 msgid "Browse Error"
 msgstr "Σφάλμα περιηγητή"
 
-#: ../src/plugins/grilo/totem-grilo.c:608
+#: ../src/plugins/grilo/totem-grilo.c:610
 msgid "Search Error"
 msgstr "Σφάλμα αναζήτησης"
 
@@ -2264,11 +2257,11 @@ msgstr "Πρόσθετο περιστροφής"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Επιτρέπει την περιστροφή των βίντεο αν έχουν λάθος προσανατολισμό"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:60
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:50
 msgid "_Rotate Clockwise"
 msgstr "Πε_ριστροφή προς τα δεξιά"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:62
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
 msgid "Rotate Counterc_lockwise"
 msgstr "Περιστροφή προς τα αρ_ιστερά"
 
@@ -2322,23 +2315,22 @@ msgstr "Υπολογισμός του αριθμού στιγμιοτύπων"
 msgid "Number of screenshots:"
 msgstr "Αριθμός στιγμιοτύπων:"
 
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:1
-msgid "_Name:"
-msgstr "Ό_νομα:"
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: ../src/plugins/screenshot/screenshot-filename-builder.c:147
+#, c-format
+#| msgid "Screenshot.png"
+msgid "Screenshot from %s.png"
+msgstr "Στιγμιότυπο οθόνης από %s.png"
 
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:2
-msgid "Save in _folder:"
-msgstr "Αποθήκευση στον _φάκελο:"
-
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
-msgid "Select a folder"
-msgstr "Επιλογή φακέλου"
-
-#. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:385
-#: ../src/plugins/screenshot/totem-screenshot.c:64
-msgid "Screenshot.png"
-msgstr "Στιγμιότυπο οθόνης.png"
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: ../src/plugins/screenshot/screenshot-filename-builder.c:154
+#, c-format
+#| msgid "Screenshot-%s-%d.png"
+msgid "Screenshot from %s - %d.png"
+msgstr "Στιγμιότυπο οθόνης από %s - %d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
 msgid "Screenshot"
@@ -2372,43 +2364,29 @@ msgstr "Δημιουργία συλλογής..."
 msgid "Saving gallery as \"%s\""
 msgstr "Αποθήκευση συλλογής ως \"%s\""
 
-#: ../src/plugins/screenshot/totem-screenshot.c:113
-msgid "There was an error saving the screenshot."
-msgstr "Σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης."
-
-#: ../src/plugins/screenshot/totem-screenshot.c:139
-msgid "Save Screenshot"
-msgstr "Αποθήκευση στιγμιότυπου οθόνης"
-
-#. Create the screenshot widget
-#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:160
-#, c-format
-msgid "Screenshot-%s-%d.png"
-msgstr "Στιγμιότυπο οθόνης-%s-%d.png"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:84
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:91
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:220
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
 msgid "Totem could not get a screenshot of the video."
 msgstr "Το Totem δε μπορεί να λάβει στιγμιότυπο οθόνης από αυτό το βίντεο."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:91
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Αυτό δεν προβλεπόταν να συμβεί, παρακαλώ στείλτε μια αναφορά σφάλματος."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:191
-msgid "Take _Screenshot..."
-msgstr "Λήψη _στιγμιότυπου οθόνης..."
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#| msgid "Take _Screenshot..."
+msgid "Take _Screenshot"
+msgstr "Λήψη _στιγμιότυπου οθόνης"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:191
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
 msgid "Take a screenshot"
 msgstr "Λήψη ενός στιγμιότυπου οθόνης"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:192
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Create Screenshot _Gallery..."
 msgstr "Δημιουργία Συλλο_γής στιγμιοτύπων..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:192
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Create a gallery of screenshots"
 msgstr "Δημιουργία συλλογής στιγμιοτύπων οθόνης"
 
@@ -2450,3 +2428,17 @@ msgstr "Παρά_καμψη σε…"
 msgid "Skip to a specific time"
 msgstr "Παράκαμψη σε συγκεκριμένο χρονικό σημείο"
 
+#~ msgid "_Name:"
+#~ msgstr "Ό_νομα:"
+
+#~ msgid "Save in _folder:"
+#~ msgstr "Αποθήκευση στον _φάκελο:"
+
+#~ msgid "Select a folder"
+#~ msgstr "Επιλογή φακέλου"
+
+#~ msgid "There was an error saving the screenshot."
+#~ msgstr "Σφάλμα κατά την αποθήκευση του στιγμιότυπου οθόνης."
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Αποθήκευση στιγμιότυπου οθόνης"
