@@ -2112,7 +2112,6 @@
   <signal name="window-state-event" handler="window_state_event_cb"/>
   <signal name="key-press-event" handler="window_key_press_event_cb"/>
   <signal name="key-release-event" handler="window_key_press_event_cb"/>
-  <signal name="scroll-event" handler="window_scroll_event_cb"/>
 
   <child>
     <object class="GtkVBox" id="totem_main_vbox">
@@ -2157,6 +2156,7 @@
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
               <property name="orientation">vertical</property>
+              <signal name="scroll-event" handler="window_scroll_event_cb"/>
 
 	      <child>
 	        <object class="GtkEventBox" id="tmw_bvw_box">

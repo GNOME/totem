@@ -108,7 +108,7 @@ G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *to
 G_MODULE_EXPORT gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 G_MODULE_EXPORT void volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
-G_MODULE_EXPORT int window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, TotemObject *totem);
+G_MODULE_EXPORT int window_scroll_event_cb (GtkWidget *win, GdkEvent *event, TotemObject *totem);
 G_MODULE_EXPORT void main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, TotemObject *totem);
 G_MODULE_EXPORT void fs_exit1_activate_cb (GtkButton *button, TotemObject *totem);
 
@@ -3770,12 +3770,23 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 }
 
 static gboolean
-totem_action_handle_scroll (TotemObject *totem, GdkScrollDirection direction)
+totem_action_handle_scroll (TotemObject    *totem,
+			    const GdkEvent *event)
 {
 	gboolean retval = TRUE;
+	GdkEventScroll *sevent = (GdkEventScroll *) event;
+	GdkScrollDirection direction;
+
+	direction = sevent->direction;
 
 	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
 		totem_fullscreen_show_popups (totem->fs, TRUE);
+
+	if (direction == GDK_SCROLL_SMOOTH) {
+		gdouble y;
+		gdk_event_get_scroll_deltas (event, NULL, &y);
+		direction = y >= 0.0 ? GDK_SCROLL_DOWN : GDK_SCROLL_UP;
+	}
 
 	switch (direction) {
 	case GDK_SCROLL_UP:
@@ -3784,8 +3795,6 @@ totem_action_handle_scroll (TotemObject *totem, GdkScrollDirection direction)
 	case GDK_SCROLL_DOWN:
 		totem_action_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000, FALSE);
 		break;
-	case GDK_SCROLL_LEFT:
-	case GDK_SCROLL_RIGHT:
 	default:
 		retval = FALSE;
 	}
@@ -3881,9 +3890,9 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 }
 
 gboolean
-window_scroll_event_cb (GtkWidget *win, GdkEventScroll *event, TotemObject *totem)
+window_scroll_event_cb (GtkWidget *win, GdkEvent *event, TotemObject *totem)
 {
-	return totem_action_handle_scroll (totem, event->direction);
+	return totem_action_handle_scroll (totem, event);
 }
 
 static void
@@ -4149,7 +4158,7 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
 	/* Connect the mouse wheel */
-	gtk_widget_add_events (totem->win, GDK_SCROLL_MASK);
+	gtk_widget_add_events (GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_vbox")), GDK_SCROLL_MASK);
 	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK);
 	gtk_widget_add_events (totem->fs->seek, GDK_SCROLL_MASK);
 
