@@ -224,13 +224,13 @@ impl_activate (PeasActivatable *plugin)
 
 	priv->ui_merge_id = gtk_ui_manager_new_merge_id (manager);
 	gtk_ui_manager_add_ui (manager, priv->ui_merge_id,
-			       "/ui/tmw-menubar/edit/repeat-mode", "take-screenshot",
+			       "/ui/tmw-menubar/edit/clear-playlist", "take-screenshot",
 			       "take-screenshot", GTK_UI_MANAGER_AUTO, TRUE);
 	gtk_ui_manager_add_ui (manager, priv->ui_merge_id,
-			       "/ui/tmw-menubar/edit/repeat-mode", "take-gallery",
+			       "/ui/tmw-menubar/edit/clear-playlist", "take-gallery",
 			       "take-gallery", GTK_UI_MANAGER_AUTO, TRUE);
 	gtk_ui_manager_add_ui (manager, priv->ui_merge_id,
-			       "/ui/tmw-menubar/edit/repeat-mode", NULL,
+			       "/ui/tmw-menubar/edit/clear-playlist", NULL,
 			       NULL, GTK_UI_MANAGER_SEPARATOR, TRUE);
 
 	/* Set up a GSettings watch for lockdown keys */
