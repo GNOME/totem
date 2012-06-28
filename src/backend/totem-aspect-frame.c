@@ -232,6 +232,7 @@ totem_aspect_frame_allocate (ClutterActor           *actor,
 
   clutter_actor_allocate (child, &child_box, flags);
 
+  clutter_actor_save_easing_state (child);
   clutter_actor_set_easing_duration (child, 0);
 
   /* FIXME: We should swap height and width if the actor is on its side */
@@ -354,6 +355,7 @@ totem_aspect_frame_set_expand (TotemAspectFrame *frame, gboolean expand)
       if (child)
         {
           /* Duration will be reset in _allocate() */
+          clutter_actor_save_easing_state (child);
           clutter_actor_set_easing_duration (child, 500);
           clutter_actor_queue_relayout (CLUTTER_ACTOR (frame));
         }
