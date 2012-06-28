@@ -6,16 +6,14 @@ plugin_LTLIBRARIES = libscreenshot.la
 plugin_in_files = screenshot.plugin.in
 
 uidir = $(plugindir)
-ui_DATA = gallery.ui gnome-screenshot.ui
+ui_DATA = gallery.ui
 EXTRA_DIST += $(ui_DATA)
 
 libscreenshot_la_SOURCES = \
-	gnome-screenshot-widget.c	\
-	gnome-screenshot-widget.h	\
 	totem-screenshot-plugin.c	\
 	totem-screenshot-plugin.h	\
-	totem-screenshot.c		\
-	totem-screenshot.h		\
+	screenshot-filename-builder.c	\
+	screenshot-filename-builder.h	\
 	totem-gallery.c			\
 	totem-gallery.h			\
 	totem-gallery-progress.c	\

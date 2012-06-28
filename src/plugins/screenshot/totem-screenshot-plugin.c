@@ -35,7 +35,7 @@
 
 #include "totem-plugin.h"
 #include "totem-screenshot-plugin.h"
-#include "totem-screenshot.h"
+#include "screenshot-filename-builder.h"
 #include "totem-gallery.h"
 #include "totem-uri.h"
 #include "backend/bacon-video-widget.h"
@@ -66,13 +66,149 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSHOT_PLUGIN,
 		      TotemScreenshotPlugin,
 		      totem_screenshot_plugin)
 
+typedef struct {
+	TotemScreenshotPlugin *plugin;
+	GdkPixbuf *pixbuf;
+} ScreenshotSaveJob;
+
+static void
+screenshot_save_job_free (ScreenshotSaveJob *job)
+{
+	g_object_unref (job->pixbuf);
+	g_slice_free (ScreenshotSaveJob, job);
+}
+
+static void
+save_pixbuf_ready_cb (GObject *source,
+		      GAsyncResult *res,
+		      gpointer user_data)
+{
+	GError *error = NULL;
+	ScreenshotSaveJob *job = (ScreenshotSaveJob *) user_data;
+
+	if (gdk_pixbuf_save_to_stream_finish (res, &error) == FALSE) {
+		g_warning ("Couldn't save screenshot: %s", error->message);
+		g_error_free (error);
+	}
+
+	screenshot_save_job_free (job);
+}
+
+static void
+save_file_create_ready_cb (GObject *source,
+			   GAsyncResult *res,
+			   gpointer user_data)
+{
+	GFileOutputStream *stream;
+	GError *error = NULL;
+	ScreenshotSaveJob *job = (ScreenshotSaveJob *) user_data;
+
+	stream = g_file_create_finish (G_FILE (source), res, &error);
+	if (stream == NULL) {
+		char *path;
+
+		path = g_file_get_path (G_FILE (source));
+		g_warning ("Couldn't create a new file at '%s': %s", path, error->message);
+		g_free (path);
+
+		g_error_free (error);
+		screenshot_save_job_free (job);
+		return;
+	}
+
+	gdk_pixbuf_save_to_stream_async (job->pixbuf,
+					 G_OUTPUT_STREAM (stream),
+					 "png", NULL,
+					 save_pixbuf_ready_cb, job,
+					 "tEXt::Software", "totem",
+					 NULL);
+
+	g_object_unref (stream);
+}
+
+static void
+screenshot_name_ready_cb (GObject *source,
+			  GAsyncResult *res,
+			  gpointer user_data)
+{
+	GFile *save_file;
+	char *save_path;
+	GError *error = NULL;
+	ScreenshotSaveJob *job = (ScreenshotSaveJob *) user_data;
+
+	save_path = screenshot_build_filename_finish (res, &error);
+	if (save_path == NULL) {
+		g_warning ("Could not find a valid location to save the screenshot: %s", error->message);
+		g_error_free (error);
+		screenshot_save_job_free (job);
+		return;
+	}
+
+	save_file = g_file_new_for_path (save_path);
+	g_free (save_path);
+
+	g_file_create_async (save_file,
+			     G_FILE_CREATE_NONE,
+			     G_PRIORITY_DEFAULT,
+			     NULL,
+			     save_file_create_ready_cb, job);
+
+	g_object_unref (save_file);
+}
+
+static void
+flash_area_done_cb (GObject *source_object,
+		    GAsyncResult *res,
+		    gpointer user_data)
+{
+	GVariant *variant;
+
+	variant = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object), res, NULL);
+	if (variant != NULL)
+		g_variant_unref (variant);
+}
+
+static void
+flash_area (GtkWidget *widget)
+{
+	GDBusProxy *proxy;
+	GdkWindow *window;
+	int x, y, w, h;
+
+	window = gtk_widget_get_window (widget);
+	gdk_window_get_origin (window, &x, &y);
+	w = gdk_window_get_width (window);
+	h = gdk_window_get_height (window);
+
+	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
+					       G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS |
+					       G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+					       NULL,
+					       "org.gnome.Shell",
+					       "/org/gnome/Shell",
+					       "org.gnome.Shell",
+					       NULL, NULL);
+	if (proxy == NULL)
+		g_warning ("no proxy");
+
+	g_dbus_proxy_call (proxy, "org.gnome.Shell.FlashArea",
+			   g_variant_new ("(iiii)", x, y, w, h),
+			   G_DBUS_CALL_FLAGS_NO_AUTO_START,
+			   -1,
+			   NULL,
+			   flash_area_done_cb,
+			   NULL);
+}
+
 static void
 take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 {
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	GdkPixbuf *pixbuf;
-	GtkWidget *dialog;
 	GError *err = NULL;
+	ScreenshotSaveJob *job;
+	char *video_name;
 
 	if (bacon_video_widget_get_logo_mode (priv->bvw) != FALSE)
 		return;
@@ -86,17 +222,23 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		return;
 	}
 
+	flash_area (GTK_WIDGET (priv->bvw));
+
 	pixbuf = bacon_video_widget_get_current_frame (priv->bvw);
 	if (pixbuf == NULL) {
 		totem_action_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
 		return;
 	}
 
-	dialog = totem_screenshot_new (priv->totem, pixbuf);
+	video_name = totem_get_short_title (self->priv->totem);
 
-	gtk_dialog_run (GTK_DIALOG (dialog));
-	gtk_widget_destroy (dialog);
-	g_object_unref (pixbuf);
+	job = g_slice_new (ScreenshotSaveJob);
+	job->plugin = self;
+	job->pixbuf = pixbuf;
+
+	screenshot_build_filename_async (NULL, video_name, screenshot_name_ready_cb, job);
+
+	g_free (video_name);
 }
 
 static void
