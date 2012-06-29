@@ -1528,6 +1528,44 @@ bvw_auth_reply_cb (GMountOperation      *op,
   }
 }
 
+static int
+bvw_get_http_error_code (GstMessage *err_msg)
+{
+  GError *err = NULL;
+  gchar *dbg = NULL;
+  int code = -1;
+
+  if (g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) != 0 &&
+      g_strcmp0 ("GstSoupHTTPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) != 0)
+    return code;
+
+  gst_message_parse_error (err_msg, &err, &dbg);
+
+  /* Urgh! Check whether this is an auth error */
+  if (err == NULL || dbg == NULL)
+    goto done;
+  if (!is_error (err, RESOURCE, READ) &&
+      !is_error (err, RESOURCE, OPEN_READ))
+    goto done;
+
+  /* FIXME: Need to find a better way than parsing the plain text */
+  /* Keep in sync with bvw_error_from_gst_error() */
+  if (strstr (dbg, "400") != NULL)
+    code = 400;
+  if (strstr (dbg, "401") != NULL)
+    code = 401;
+  else if (strstr (dbg, "403") != NULL)
+    code = 403;
+  else if (strstr (dbg, "404") != NULL)
+    code = 404;
+
+done:
+  if (err != NULL)
+    g_error_free (err);
+  g_free (dbg);
+  return code;
+}
+
 /* returns TRUE if the error should be ignored */
 static gboolean
 bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
