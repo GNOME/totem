@@ -94,7 +94,6 @@ typedef struct {
  * @BVW_ERROR_INVALID_LOCATION: An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
  * @BVW_ERROR_GENERIC: A generic error occurred.
  * @BVW_ERROR_CODEC_NOT_HANDLED: The audio or video codec required by the stream is not supported.
- * @BVW_ERROR_AUDIO_ONLY: An audio-only stream could not be played due to missing audio output support.
  * @BVW_ERROR_CANNOT_CAPTURE: Error determining frame capture support for a video with bacon_video_widget_can_get_frames().
  * @BVW_ERROR_READ_ERROR: A generic error for problems reading streams.
  * @BVW_ERROR_PLUGIN_LOAD: A library or plugin could not be loaded.
@@ -123,7 +122,6 @@ typedef enum {
 	BVW_ERROR_INVALID_LOCATION,
 	BVW_ERROR_GENERIC,
 	BVW_ERROR_CODEC_NOT_HANDLED,
-	BVW_ERROR_AUDIO_ONLY,
 	BVW_ERROR_CANNOT_CAPTURE,
 	BVW_ERROR_READ_ERROR,
 	BVW_ERROR_PLUGIN_LOAD,
