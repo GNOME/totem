@@ -5931,8 +5931,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
     if (audio_sink)
       g_object_ref_sink (audio_sink);
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
-                 _("Failed to create a GStreamer play object. "
-                   "Please check your GStreamer installation."));
+			 _("Some necessary plug-ins are missing. "
+			   "Make sure that the program is correctly installed."));
     return FALSE;
   }
 
