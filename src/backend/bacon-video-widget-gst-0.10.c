@@ -1550,14 +1550,12 @@ bvw_get_http_error_code (GstMessage *err_msg)
 
   /* FIXME: Need to find a better way than parsing the plain text */
   /* Keep in sync with bvw_error_from_gst_error() */
-  if (strstr (dbg, "400") != NULL)
-    code = 400;
   if (strstr (dbg, "401") != NULL)
     code = 401;
-  else if (strstr (dbg, "403") != NULL)
-    code = 403;
   else if (strstr (dbg, "404") != NULL)
     code = 404;
+  else if (strstr (dbg, "403") != NULL)
+    code = 403;
 
 done:
   if (err != NULL)
@@ -3297,40 +3295,99 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   const gchar *src_typename;
   GError *ret = NULL;
   GError *e = NULL;
+  char *dbg = NULL;
+  int http_error_code;
 
   GST_LOG ("resolving error message %" GST_PTR_FORMAT, err_msg);
 
   src_typename = (err_msg->src) ? G_OBJECT_TYPE_NAME (err_msg->src) : NULL;
 
-  gst_message_parse_error (err_msg, &e, NULL);
+  gst_message_parse_error (err_msg, &e, &dbg);
 
+  /* FIXME:
+   * Unemitted errors:
+   * BVW_ERROR_NETWORK_UNREACHABLE
+   * BVW_ERROR_DVD_ENCRYPTED
+   * BVW_ERROR_FILE_ENCRYPTED
+   * BVW_ERROR_EMPTY_FILE
+   * BVW_ERROR_BROKEN_FILE
+   */
+
+  /* Can't open optical disc? */
   if (is_error (e, RESOURCE, NOT_FOUND) ||
       is_error (e, RESOURCE, OPEN_READ)) {
-#if 0
-    if (strchr (mrl, ':') &&
-        (g_str_has_prefix (mrl, "dvd") ||
-         g_str_has_prefix (mrl, "cd") ||
-         g_str_has_prefix (mrl, "vcd"))) {
+    if (g_str_has_prefix (bvw->priv->mrl, "dvd:")) {
       ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
-                                 e->message);
-    } else {
-#endif
-      if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
-        ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
-                                   _("Location not found."));
-      } else {
-        ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
-            _("Could not open location; "
-              "you might not have permission to open the file."));
-      }
-#if 0
+				 "The DVD device you specified seems to be invalid.");
+      goto done;
+    } else if (g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
+				 "The VCD device you specified seems to be invalid.");
+      goto done;
     }
-#endif
-  } else if (e->domain == GST_RESOURCE_ERROR) {
+  }
+
+  /* HTTP error codes */
+  /* FIXME: bvw_get_http_error_code() calls gst_message_parse_error too */
+  http_error_code = bvw_get_http_error_code (err_msg);
+
+  if (is_error (e, RESOURCE, NOT_FOUND) ||
+      http_error_code == 404) {
+    if (strstr (e->message, "Cannot resolve hostname") != NULL) {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_UNKNOWN_HOST,
+				 _("The server you are trying to connect to is not known."));
+    } else if (strstr (e->message, "Cannot connect to destination") != NULL) {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CONNECTION_REFUSED,
+				 _("The connection to this server was refused."));
+    } else {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
+				 _("The specified movie could not be found."));
+    }
+    goto done;
+  }
+
+  if (http_error_code == 403) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
+			       _("The server refused access to this file or stream."));
+    goto done;
+  }
+
+  if (http_error_code == 401) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
+			       _("Authentication is required to access this file or stream."));
+    goto done;
+  }
+
+  if (is_error (e, RESOURCE, OPEN_READ)) {
+    if (strstr (dbg, g_strerror (EACCES)) != NULL) {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
+				 _("You are not allowed to open this file."));
+      goto done;
+    }
+    if (strstr (dbg, "Error parsing URL.") != NULL) {
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_LOCATION,
+				 _("This location is not a valid one."));
+      goto done;
+    }
+  }
+
+  if (is_error (e, RESOURCE, OPEN_READ) ||
+      is_error (e, RESOURCE, READ)) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
+			       _("The movie could not be read."));
+    goto done;
+  }
+
+  if (e->domain == GST_RESOURCE_ERROR) {
     ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
                                e->message);
-  } else if (is_error (e, CORE, MISSING_PLUGIN) ||
-             is_error (e, STREAM, CODEC_NOT_FOUND)) {
+    goto done;
+  }
+
+  if (is_error (e, CORE, MISSING_PLUGIN) ||
+      is_error (e, STREAM, CODEC_NOT_FOUND) ||
+      is_error (e, STREAM, WRONG_TYPE) ||
+      is_error (e, STREAM, NOT_IMPLEMENTED)) {
     if (bvw->priv->missing_plugins != NULL) {
       gchar **descs, *msg = NULL;
       guint num;
@@ -3341,7 +3398,9 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       if (is_error (e, CORE, MISSING_PLUGIN)) {
         /* should be exactly one missing thing (source or converter) */
         msg = g_strdup_printf (_("The playback of this movie requires a %s "
-          "plugin which is not installed."), descs[0]);
+				 "plugin which is not installed."), descs[0]);
+	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_NO_PLUGIN_FOR_FILE, msg);
+	g_free (msg);
       } else {
         gchar *desc_list;
 
@@ -3351,35 +3410,33 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
             "of this movie requires the following decoders which are not "
             "installed:\n\n%s", num), (num == 1) ? descs[0] : desc_list);
         g_free (desc_list);
+	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, msg);
+	g_free (msg);
       }
-      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, msg);
-      g_free (msg);
       g_strfreev (descs);
     } else {
-      GST_LOG ("no missing plugin messages, posting generic error");
       ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-          e->message);
+				 _("An audio or video stream is not handled due to missing codecs. "
+				   "You might need to install additional plugins to be able to play some types of movies"));
     }
-  } else if (is_error (e, STREAM, WRONG_TYPE) ||
-             is_error (e, STREAM, NOT_IMPLEMENTED)) {
-    if (src_typename) {
-      ret = g_error_new (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, "%s: %s",
-          src_typename, e->message);
-    } else {
-      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-          e->message);
-    }
-  } else if (is_error (e, STREAM, FAILED) &&
-             src_typename && strncmp (src_typename, "GstTypeFind", 11) == 0) {
-    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
-        _("Cannot play this file over the network. "
-          "Try downloading it to disk first."));
-  } else {
-    /* generic error, no code; take message */
-    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
-                               e->message);
+    goto done;
   }
+
+  if (is_error (e, STREAM, FAILED) &&
+	     src_typename &&
+	     strncmp (src_typename, "GstTypeFind", 11) == 0) {
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
+			       _("This file cannot be played over the network. Try downloading it locally first."));
+    goto done;
+  }
+
+  /* generic error, no code; take message */
+  ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
+			     e->message);
+
+done:
   g_error_free (e);
+  g_free (dbg);
   bvw_clear_missing_plugins_messages (bvw);
 
   return ret;
