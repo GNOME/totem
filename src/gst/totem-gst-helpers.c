@@ -65,9 +65,6 @@ totem_gst_message_print (GstMessage *msg,
     GST_ERROR ("uri     = %s", GST_STR_NULL (uri));
     g_free (uri);
 
-    g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
-        GST_STR_NULL (dbg));
-
     g_error_free (err);
   }
   g_free (dbg);
