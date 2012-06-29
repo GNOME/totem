@@ -65,9 +65,6 @@ class RotationPlugin: GLib.Object, Peas.Activatable
             this.try_restore_state (mrl);
         }
 
-        // get notified if the video gets resized
-        //this.video.allocation_changed.connect (this.cb_allocation_changed);
-
         t.file_closed.connect (this.cb_file_closed);
         t.file_opened.connect (this.cb_file_opened);
     }
@@ -77,7 +74,6 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         Totem.Object t = (Totem.Object) this.object;
 
         // disconnect callbacks
-        //this.video.allocation_changed.disconnect (this.cb_allocation_changed);
         t.file_closed.disconnect (this.cb_file_closed);
         t.file_opened.disconnect (this.cb_file_opened);
 
@@ -92,14 +88,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
 
     public void update_state ()
     {
-        //this.update_video_geometry ();
-    }
-
-    private void cb_allocation_changed (Clutter.ActorBox box, Clutter.AllocationFlags flags)
-    {
-        //this.width = box.x2 - box.x1;
-        //this.height = box.y2 - box.y1;
-        //this.update_video_geometry ();
+        //no-op
     }
 
     private void cb_rotate_left ()
