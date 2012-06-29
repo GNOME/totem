@@ -79,9 +79,7 @@ typedef struct {
 
 /**
  * BvwError:
- * @BVW_ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
  * @BVW_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin is missing.
- * @BVW_ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
  * @BVW_ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
  * @BVW_ERROR_FILE_GENERIC: A generic error for problems with movie files.
  * @BVW_ERROR_FILE_PERMISSION: Permission was refused to access the stream, or authentication was required.
@@ -106,9 +104,7 @@ typedef struct {
  **/
 typedef enum {
 	/* Plugins */
-	BVW_ERROR_AUDIO_PLUGIN,
 	BVW_ERROR_NO_PLUGIN_FOR_FILE,
-	BVW_ERROR_VIDEO_PLUGIN,
 	/* File */
 	BVW_ERROR_BROKEN_FILE,
 	BVW_ERROR_FILE_GENERIC,
