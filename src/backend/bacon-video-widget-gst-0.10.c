@@ -1219,7 +1219,7 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     bvw->priv->window_resized = TRUE;
     set_current_actor (bvw);
   } else {
-    g_message ("Unhandled application message %s", msg_name);
+    g_debug ("Unhandled application message %s", msg_name);
   }
 }
 
