@@ -1626,6 +1626,9 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 	gboolean retval = TRUE;
 
 	if (totem->mrl != NULL) {
+		totem->seek_to = 0;
+		totem->seek_to_start = 0;
+
 		totem_save_position (totem);
 		g_free (totem->mrl);
 		totem->mrl = NULL;
