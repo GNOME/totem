@@ -87,7 +87,6 @@ typedef struct {
  * @BVW_ERROR_FILE_NOT_FOUND: The stream cannot be found.
  * @BVW_ERROR_DVD_ENCRYPTED: The DVD is encrypted and libdvdcss is not installed.
  * @BVW_ERROR_INVALID_DEVICE: The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
- * @BVW_ERROR_DEVICE_BUSY: The device was busy.
  * @BVW_ERROR_UNKNOWN_HOST: The host for a given stream could not be resolved.
  * @BVW_ERROR_NETWORK_UNREACHABLE: The host for a given stream could not be reached.
  * @BVW_ERROR_CONNECTION_REFUSED: The server for a given stream refused the connection.
@@ -113,7 +112,6 @@ typedef enum {
 	/* Devices */
 	BVW_ERROR_DVD_ENCRYPTED,
 	BVW_ERROR_INVALID_DEVICE,
-	BVW_ERROR_DEVICE_BUSY,
 	/* Network */
 	BVW_ERROR_UNKNOWN_HOST,
 	BVW_ERROR_NETWORK_UNREACHABLE,
