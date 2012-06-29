@@ -7,6 +7,7 @@ bvw_test_SOURCES = bvw-test.c
 bvw_test_CPPFLAGS = \
 	-DDATADIR=\"$(pkgdatadir)\"	\
 	-DLOGO_PATH=DATADIR\"\"G_DIR_SEPARATOR_S\"totem\"G_DIR_SEPARATOR_S\"totem_logo.png\"	\
+	-DG_LOG_DOMAIN="\"bvw-test\"" \
 	$(DISABLE_DEPRECATED)		\
 	$(AM_CPPFLAGS)
 
