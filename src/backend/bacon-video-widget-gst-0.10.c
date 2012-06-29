@@ -1570,17 +1570,17 @@ done:
 static gboolean
 bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
 {
-  gboolean retval;
-
-  retval = FALSE;
+  GtkWidget *toplevel;
+  GMountOperationClass *klass;
+  int code;
 
   if (gtk_widget_get_realized (GTK_WIDGET (bvw)) == FALSE)
-    return retval;
+    return FALSE;
 
   /* The user already tried, and we aborted */
   if (bvw->priv->auth_last_result == G_MOUNT_OPERATION_ABORTED) {
     GST_DEBUG ("Not authenticating, the user aborted the last auth attempt");
-    return retval;
+    return FALSE;
   }
   /* There's already an auth on-going, ignore */
   if (bvw->priv->auth_dialog != NULL) {
@@ -1589,45 +1589,32 @@ bvw_check_missing_auth (BaconVideoWidget * bvw, GstMessage * err_msg)
   }
 
   /* RTSP or HTTP source with user-id property ? */
-  if ((g_strcmp0 ("GstRTSPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0 ||
-       g_strcmp0 ("GstSoupHTTPSrc", G_OBJECT_TYPE_NAME (err_msg->src)) == 0) &&
-      g_object_class_find_property (G_OBJECT_GET_CLASS (err_msg->src), "user-id") != NULL) {
-    GError *err = NULL;
-    gchar *dbg = NULL;
+  code = bvw_get_http_error_code (err_msg);
+  if (code != 401)
+    return FALSE;
 
-    gst_message_parse_error (err_msg, &err, &dbg);
-
-    /* Urgh! Check whether this is an auth error */
-    if (err != NULL && dbg != NULL &&
-	is_error (err, RESOURCE, READ) &&
-	strstr (dbg, "401") != NULL) {
-      GtkWidget *toplevel;
-      GMountOperationClass *klass;
-
-      GST_DEBUG ("Trying to get auth for location '%s'", GST_STR_NULL (bvw->priv->mrl));
-
-      if (bvw->priv->auth_dialog == NULL) {
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
-	bvw->priv->auth_dialog = gtk_mount_operation_new (GTK_WINDOW (toplevel));
-	g_signal_connect (G_OBJECT (bvw->priv->auth_dialog), "reply",
-			  G_CALLBACK (bvw_auth_reply_cb), bvw);
-      }
-
-      /* And popup the dialogue! */
-      klass = (GMountOperationClass *) G_OBJECT_GET_CLASS (bvw->priv->auth_dialog);
-      klass->ask_password (bvw->priv->auth_dialog,
-			   _("Password requested for RTSP server"),
-			   g_get_user_name (),
-			   NULL,
-			   G_ASK_PASSWORD_NEED_PASSWORD | G_ASK_PASSWORD_NEED_USERNAME);
-      retval = TRUE;
-    }
-    if (err != NULL)
-      g_error_free (err);
-    g_free (dbg);
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (err_msg->src), "user-id") == NULL) {
+    GST_DEBUG ("HTTP error is 401, but don't have \"user-id\" property, exiting");
+    return FALSE;
   }
 
-  return retval;
+  GST_DEBUG ("Trying to get auth for location '%s'", GST_STR_NULL (bvw->priv->mrl));
+
+  if (bvw->priv->auth_dialog == NULL) {
+    toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+    bvw->priv->auth_dialog = gtk_mount_operation_new (GTK_WINDOW (toplevel));
+    g_signal_connect (G_OBJECT (bvw->priv->auth_dialog), "reply",
+		      G_CALLBACK (bvw_auth_reply_cb), bvw);
+  }
+
+  /* And popup the dialogue! */
+  klass = (GMountOperationClass *) G_OBJECT_GET_CLASS (bvw->priv->auth_dialog);
+  klass->ask_password (bvw->priv->auth_dialog,
+		       _("Password requested for RTSP server"),
+		       g_get_user_name (),
+		       NULL,
+		       G_ASK_PASSWORD_NEED_PASSWORD | G_ASK_PASSWORD_NEED_USERNAME);
+  return TRUE;
 }
 
 /* returns TRUE if the error has been handled and should be ignored */
