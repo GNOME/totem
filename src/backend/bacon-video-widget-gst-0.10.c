@@ -5812,7 +5812,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
 
   /* check for video */
   if (!bvw->priv->media_has_video && !bvw->priv->show_vfx) {
-    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_GENERIC,
+    g_set_error_literal (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
         _("Media contains no supported video streams."));
     return FALSE;
   }
