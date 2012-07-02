@@ -288,6 +288,10 @@ totem_setup_file_monitoring (Totem *totem)
 			  "mount-pre-unmount",
 			  G_CALLBACK (totem_action_on_unmount),
 			  totem);
+	g_signal_connect (G_OBJECT (totem->monitor),
+			  "mount-removed",
+			  G_CALLBACK (totem_action_on_unmount),
+			  totem);
 }
 
 /* List from xine-lib's demux_sputext.c.
