@@ -146,6 +146,7 @@ enum {
 	TITLE_CUSTOM_COL,
 	SUBTITLE_URI_COL,
 	FILE_MONITOR_COL,
+	MOUNT_COL,
 	MIME_TYPE_COL,
 	NUM_COLS
 };
@@ -1745,6 +1746,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 	char *filename_for_display, *uri, *escaped_filename;
 	GtkTreeRowReference *ref;
 	GFileMonitor *monitor;
+	GMount *mount;
 	GFile *file;
 	int pos;
 
@@ -1783,20 +1785,23 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 				  "changed",
 				  G_CALLBACK (totem_playlist_file_changed),
 				  playlist);
+		mount = NULL;
 	} else {
+		mount = totem_get_mount_for_media (uri ? uri : mrl);
 		monitor = NULL;
 	}
 
 	escaped_filename = g_markup_escape_text (filename_for_display, -1);
 	gtk_list_store_insert_with_values (store, &iter, pos,
-			PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
-			FILENAME_COL, filename_for_display,
-			FILENAME_ESCAPED_COL, escaped_filename,
-			URI_COL, uri ? uri : mrl,
-			TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
-			FILE_MONITOR_COL, monitor,
-			MIME_TYPE_COL, content_type,
-			-1);
+					   PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
+					   FILENAME_COL, filename_for_display,
+					   FILENAME_ESCAPED_COL, escaped_filename,
+					   URI_COL, uri ? uri : mrl,
+					   TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
+					   FILE_MONITOR_COL, monitor,
+					   MOUNT_COL, mount,
+					   MIME_TYPE_COL, content_type,
+					   -1);
 	g_free (escaped_filename);
 
 	g_signal_emit (playlist,
