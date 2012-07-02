@@ -2403,22 +2403,50 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 	playlist->priv->current_to_be_removed = FALSE;
 }
 
+static char *
+get_mount_default_location (GMount *mount)
+{
+	GFile *file;
+	char *path;
+
+	file = g_mount_get_root (mount);
+	if (file == NULL)
+		return NULL;
+	path = g_file_get_path (file);
+	g_object_unref (file);
+	return path;
+}
+
 static gboolean
 totem_playlist_compare_with_mount (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data)
 {
 	GMount *clear_mount = (GMount *) data;
-	char *mrl;
-
 	GMount *mount;
+	char *mount_path, *clear_mount_path;
 	gboolean retval = FALSE;
 
 	gtk_tree_model_get (playlist->priv->model, iter,
-			    URI_COL, &mrl, -1);
-	mount = totem_get_mount_for_media (mrl);
-	g_free (mrl);
+			    MOUNT_COL, &mount, -1);
 
-	if (mount == clear_mount)
+	if (mount == NULL)
+		return FALSE;
+
+	clear_mount_path = NULL;
+
+	mount_path = get_mount_default_location (mount);
+	if (mount_path == NULL)
+		goto bail;
+
+	clear_mount_path = get_mount_default_location (clear_mount);
+	if (clear_mount_path == NULL)
+		goto bail;
+
+	if (g_str_equal (mount_path, clear_mount_path))
 		retval = TRUE;
+
+bail:
+	g_free (mount_path);
+	g_free (clear_mount_path);
 
 	if (mount != NULL)
 		g_object_unref (mount);
