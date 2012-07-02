@@ -130,7 +130,7 @@ totem_get_mount_for_uri (const char *path)
 		return NULL;
 
 	/* FIXME: We used to explicitly check whether it was a CD/DVD */
-	if (g_mount_can_eject (mount) == TRUE) {
+	if (g_mount_can_eject (mount) == FALSE) {
 		g_object_unref (mount);
 		return NULL;
 	}
