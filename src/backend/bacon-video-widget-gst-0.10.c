@@ -6144,14 +6144,32 @@ bacon_video_widget_new (GError ** error)
   return GTK_WIDGET (g_initable_new (BACON_TYPE_VIDEO_WIDGET, NULL, error, NULL));
 }
 
+/**
+ * bacon_video_widget_get_rate:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Get the current playback rate, with 1.0 being normal rate.
+ *
+ * Returns: the current playback rate
+ **/
 gfloat
 bacon_video_widget_get_rate (BaconVideoWidget *bvw)
 {
-      return bvw->priv->rate;
+  return bvw->priv->rate;
 }
 
+/**
+ * bacon_video_widget_set_rate:
+ * @bvw: a #BaconVideoWidget
+ * @new_rate: the new playback rate
+ *
+ * Sets the current playback rate.
+ *
+ * Returns: %TRUE on success, %FALSE on failure.
+ **/
 gboolean
-bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat new_rate)
+bacon_video_widget_set_rate (BaconVideoWidget *bvw,
+			     gfloat            new_rate)
 {
   GstEvent *event;
   gboolean retval = FALSE;
@@ -6172,23 +6190,22 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat new_rate)
   fmt = GST_FORMAT_TIME;
 
   if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
-    GST_DEBUG ("Setting playback direction to reverse at %"G_GINT64_FORMAT"", cur);
+    GST_DEBUG ("Setting new rate at %"G_GINT64_FORMAT"", cur);
     event = gst_event_new_seek (new_rate,
-        fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
-        GST_SEEK_TYPE_SET, cur,
-	GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
+				fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				GST_SEEK_TYPE_SET, cur,
+				GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
     if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
       GST_DEBUG ("Failed to change rate");
     } else {
       gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
       bvw->priv->rate = new_rate;
       g_object_get (bvw->priv->audio_pitchcontrol, "pitch", &pitch, NULL);
-      g_object_set (bvw->priv->audio_pitchcontrol, "pitch", pitch/ratio, NULL);
+      g_object_set (bvw->priv->audio_pitchcontrol, "pitch", pitch / ratio, NULL);
       GST_DEBUG ("changed rate to %f, pitch to %f\n", new_rate, pitch);
       retval = TRUE;
     }
-  }
-  else {
+  } else {
     GST_DEBUG ("failed to query position");
   }
 
