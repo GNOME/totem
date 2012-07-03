@@ -6094,8 +6094,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gst_object_unref (audio_pad);
 
   /* And tell playbin */
-  audio_sink = audio_bin;
-  g_object_set (bvw->priv->play, "audio-sink", audio_sink, NULL);
+  g_object_set (bvw->priv->play, "audio-sink", audio_bin, NULL);
 
   /* Set default connection speed */
   g_object_set (bvw->priv->play, "connection-speed", MAX_NETWORK_SPEED, NULL);
