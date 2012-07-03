@@ -107,7 +107,13 @@ IGNORE_HFILES = \
 	totem-tracker-widget.h		\
 	totem-marshal.h			\
 	gsd-media-keys-window.h		\
-	gsd-osd-window.h
+	gsd-osd-window.h		\
+	bacon-video-osd-actor.h		\
+	totem-search-entry.h		\
+	gd-tagged-entry.h		\
+	gd-fullscreen-filter.h		\
+	gsd-osd-window-private.h	\
+	screenshot-filename-builder.h
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png
