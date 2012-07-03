@@ -6208,12 +6208,6 @@ bacon_video_widget_change_rate (BaconVideoWidget *bvw, gboolean increase)
   return bacon_video_widget_set_rate (bvw, rate);
 }
 
-gboolean
-bacon_video_widget_reset_rate (BaconVideoWidget *bvw)
-{
-  return bacon_video_widget_set_rate (bvw, 1.0);
-}
-
 /*
  * vim: sw=2 ts=8 cindent noai bs=2
  */
