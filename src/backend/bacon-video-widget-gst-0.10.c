@@ -5956,6 +5956,17 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
   return retval;
 }
 
+static GstElement *
+element_make_or_warn (const char *plugin,
+		      const char *name)
+{
+  GstElement *element;
+  element = gst_element_factory_make (plugin, name);
+  if (!element)
+    g_warning ("Element '%s' is missing, verify your installation", plugin);
+  return element;
+}
+
 static gboolean
 bacon_video_widget_initable_init (GInitable     *initable,
 				  GCancellable  *cancellable,
@@ -5985,10 +5996,10 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gst_pb_utils_init ();
 
   /* Instantiate all the fallible plugins */
-  bvw->priv->play = gst_element_factory_make ("playbin2", "play");
-  bvw->priv->audio_pitchcontrol = gst_element_factory_make ("pitch", "audiopitch");
-  video_sink = gst_element_factory_make ("autocluttersink", NULL);
-  audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+  bvw->priv->play = element_make_or_warn ("playbin2", "play");
+  bvw->priv->audio_pitchcontrol = element_make_or_warn ("pitch", "audiopitch");
+  video_sink = element_make_or_warn ("autocluttersink", "video-sink");
+  audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->priv->play ||
       !bvw->priv->audio_pitchcontrol ||
