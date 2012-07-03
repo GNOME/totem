@@ -153,7 +153,8 @@ enum
   PROP_CONTRAST,
   PROP_SATURATION,
   PROP_HUE,
-  PROP_AUDIO_OUTPUT_TYPE
+  PROP_AUDIO_OUTPUT_TYPE,
+  PROP_AV_OFFSET
 };
 
 static const gchar *video_props_str[4] = {
@@ -986,6 +987,20 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                       BVW_AUDIO_SOUND_STEREO,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:av-offset:
+   *
+   * Control the synchronisation offset between the audio and video streams.
+   * Positive values make the audio ahead of the video and negative values
+   * make the audio go behind the video.
+   **/
+  g_object_class_install_property (object_class, PROP_AV_OFFSET,
+				   g_param_spec_int64 ("av-offset", "Audio/Video offset",
+						       "The synchronisation offset between audio and video in nanoseconds.",
+						       G_MININT64, G_MAXINT64,
+						       0, G_PARAM_READWRITE |
+						       G_PARAM_STATIC_STRINGS));
 
   /* Signals */
   /**
@@ -2735,6 +2750,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_AUDIO_OUTPUT_TYPE:
       bacon_video_widget_set_audio_output_type (bvw, g_value_get_enum (value));
       break;
+    case PROP_AV_OFFSET:
+      g_object_set_property (G_OBJECT (bvw->priv->play), "av-offset", value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2803,6 +2821,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_AUDIO_OUTPUT_TYPE:
       g_value_set_enum (value, bacon_video_widget_get_audio_output_type (bvw));
+      break;
+    case PROP_AV_OFFSET:
+      g_object_get_property (G_OBJECT (bvw->priv->play), "av-offset", value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
