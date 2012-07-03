@@ -5998,7 +5998,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* Instantiate all the fallible plugins */
   bvw->priv->play = element_make_or_warn ("playbin2", "play");
   bvw->priv->audio_pitchcontrol = element_make_or_warn ("pitch", "audiopitch");
-  video_sink = element_make_or_warn ("autocluttersink", "video-sink");
+  video_sink = element_make_or_warn ("cluttersink", "video-sink");
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->priv->play ||
