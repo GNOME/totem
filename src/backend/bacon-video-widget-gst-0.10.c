@@ -6191,21 +6191,8 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat new_rate)
   else {
     GST_DEBUG ("failed to query position");
   }
+
   return retval;
-}
-
-gboolean
-bacon_video_widget_change_rate (BaconVideoWidget *bvw, gboolean increase)
-{
-  gfloat rate;
-
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-
-  rate = bvw->priv->rate;
-  rate += (increase) ? 0.1 : -0.1;
-
-  return bacon_video_widget_set_rate (bvw, rate);
 }
 
 /*
