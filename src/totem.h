@@ -237,7 +237,8 @@ gboolean totem_object_is_seekable		(TotemObject *totem);
 GtkWindow *totem_object_get_main_window		(TotemObject *totem);
 #define totem_get_ui_manager totem_object_get_ui_manager
 GtkUIManager *totem_object_get_ui_manager	(TotemObject *totem);
-GtkWidget *totem_get_video_widget		(TotemObject *totem);
+ #define totem_get_video_widget totem_object_get_video_widget
+GtkWidget *totem_object_get_video_widget	(TotemObject *totem);
 #define totem_get_version totem_object_get_version
 char *totem_object_get_version			(void);
 

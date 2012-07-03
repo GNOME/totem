@@ -516,7 +516,7 @@ totem_object_get_ui_manager (TotemObject *totem)
 }
 
 /**
- * totem_get_video_widget:
+ * totem_object_get_video_widget:
  * @totem: a #TotemObject
  *
  * Gets Totem's video widget and increments its reference count.
@@ -524,7 +524,7 @@ totem_object_get_ui_manager (TotemObject *totem)
  * Return value: (transfer full): Totem's video widget
  **/
 GtkWidget *
-totem_get_video_widget (TotemObject *totem)
+totem_object_get_video_widget (TotemObject *totem)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
