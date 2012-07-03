@@ -178,6 +178,7 @@ BvwAspectRatio
 BvwAudioOutputType
 BvwDVDEvent
 BvwMetadataType
+BvwRotation
 BvwVisualizationQuality
 BvwVideoProperty
 BvwZoomMode
@@ -216,6 +217,8 @@ bacon_video_widget_get_metadata
 bacon_video_widget_get_option_group
 bacon_video_widget_get_position
 bacon_video_widget_set_referrer
+bacon_video_widget_get_rotation
+bacon_video_widget_set_rotation
 bacon_video_widget_set_scale_ratio
 bacon_video_widget_get_show_cursor
 bacon_video_widget_set_show_cursor
@@ -253,7 +256,7 @@ BVW_TYPE_AUDIO_OUTPUT_TYPE
 BVW_TYPE_DVD_EVENT
 BVW_TYPE_ERROR
 BVW_TYPE_METADATA_TYPE
-BVW_TYPE_USE_TYPE
+BVW_TYPE_ROTATION
 BVW_TYPE_VIDEO_PROPERTY
 BVW_TYPE_VISUALIZATION_QUALITY
 BVW_TYPE_ZOOM_MODE
@@ -262,7 +265,7 @@ bvw_audio_output_type_get_type
 bvw_dvd_event_get_type
 bvw_error_get_type
 bvw_metadata_type_get_type
-bvw_use_type_get_type
+bvw_rotation_get_type
 bvw_video_property_get_type
 bvw_visualization_quality_get_type
 bvw_zoom_mode_get_type
