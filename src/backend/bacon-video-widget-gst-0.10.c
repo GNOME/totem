@@ -2694,24 +2694,19 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
 
   switch (property_id) {
     case PROP_LOGO_MODE:
-      bacon_video_widget_set_logo_mode (bvw,
-      g_value_get_boolean (value));
+      bacon_video_widget_set_logo_mode (bvw, g_value_get_boolean (value));
       break;
     case PROP_REFERRER:
-      bacon_video_widget_set_referrer (bvw,
-      g_value_get_string (value));
+      bacon_video_widget_set_referrer (bvw, g_value_get_string (value));
       break;
     case PROP_SHOW_CURSOR:
-      bacon_video_widget_set_show_cursor (bvw,
-      g_value_get_boolean (value));
+      bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
       break;
     case PROP_SHOW_VISUALIZATIONS:
-      bacon_video_widget_set_show_visualizations (bvw,
-      g_value_get_boolean (value));
+      bacon_video_widget_set_show_visualizations (bvw, g_value_get_boolean (value));
       break;
     case PROP_USER_AGENT:
-      bacon_video_widget_set_user_agent (bvw,
-      g_value_get_string (value));
+      bacon_video_widget_set_user_agent (bvw, g_value_get_string (value));
       break;
     case PROP_VOLUME:
       bacon_video_widget_set_volume (bvw, g_value_get_double (value));
@@ -2756,30 +2751,25 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
 
   switch (property_id) {
     case PROP_LOGO_MODE:
-      g_value_set_boolean (value,
-      bacon_video_widget_get_logo_mode (bvw));
+      g_value_set_boolean (value, bacon_video_widget_get_logo_mode (bvw));
       break;
     case PROP_POSITION:
       g_value_set_double (value, bacon_video_widget_get_position (bvw));
       break;
     case PROP_STREAM_LENGTH:
-      g_value_set_int64 (value,
-      bacon_video_widget_get_stream_length (bvw));
+      g_value_set_int64 (value, bacon_video_widget_get_stream_length (bvw));
       break;
     case PROP_PLAYING:
-      g_value_set_boolean (value,
-      bacon_video_widget_is_playing (bvw));
+      g_value_set_boolean (value, bacon_video_widget_is_playing (bvw));
       break;
     case PROP_REFERRER:
       g_value_set_string (value, bvw->priv->referrer);
       break;
     case PROP_SEEKABLE:
-      g_value_set_boolean (value,
-      bacon_video_widget_is_seekable (bvw));
+      g_value_set_boolean (value, bacon_video_widget_is_seekable (bvw));
       break;
     case PROP_SHOW_CURSOR:
-      g_value_set_boolean (value,
-      bacon_video_widget_get_show_cursor (bvw));
+      g_value_set_boolean (value, bacon_video_widget_get_show_cursor (bvw));
       break;
     case PROP_USER_AGENT:
       g_value_set_string (value, bvw->priv->user_agent);
