@@ -174,7 +174,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
 
     if (current_media.title != null && totem.is_playing ()) {
       Value val;
-      var video = Totem.get_video_widget (totem) as Bacon.VideoWidget;
+      var video = totem.get_video_widget () as Bacon.VideoWidget;
       video.get_metadata (Bacon.MetadataType.HAS_VIDEO, out val);
       current_media.interpretation = val.get_boolean () ?
         Zeitgeist.NFO_VIDEO : Zeitgeist.NFO_AUDIO;
