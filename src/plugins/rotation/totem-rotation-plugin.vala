@@ -37,7 +37,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         Totem.Object t = (Totem.Object) this.object;
         string mrl = t.get_current_mrl ();
 
-        this.bvw = Totem.get_video_widget (t) as Bacon.VideoWidget;
+        this.bvw = t.get_video_widget () as Bacon.VideoWidget;
 
         // add interface elements to control the rotation
         unowned Gtk.UIManager ui_manager = t.get_ui_manager ();
