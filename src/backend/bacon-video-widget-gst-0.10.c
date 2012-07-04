@@ -43,19 +43,21 @@
 
 #include <config.h>
 
+#define GST_USE_UNSTABLE_API 1
+
 #include <gst/gst.h>
 
 /* GStreamer Interfaces */
-#include <gst/interfaces/navigation.h>
-#include <gst/interfaces/colorbalance.h>
+#include <gst/video/navigation.h>
+#include <gst/video/colorbalance.h>
 /* for detecting sources of errors */
 #include <gst/video/gstvideosink.h>
 #include <gst/video/video.h>
-#include <gst/audio/gstbaseaudiosink.h>
+#include <gst/audio/gstaudiosink.h>
 /* for pretty multichannel strings */
-#include <gst/audio/multichannel.h>
+#include <gst/audio/audio-channels.h>
 /* for the volume property */
-#include <gst/interfaces/streamvolume.h>
+#include <gst/audio/streamvolume.h>
 
 /* for missing decoder/demuxer detection */
 #include <gst/pbutils/pbutils.h>
@@ -1206,12 +1208,14 @@ bvw_update_stream_info (BaconVideoWidget *bvw)
 static void
 bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
+  const GstStructure *structure;
   const gchar *msg_name;
 
-  msg_name = gst_structure_get_name (msg->structure);
+  structure = gst_message_get_structure (msg);
+  msg_name = gst_structure_get_name (structure);
   g_return_if_fail (msg_name != NULL);
 
-  GST_DEBUG ("Handling application message: %" GST_PTR_FORMAT, msg->structure);
+  GST_DEBUG ("Handling application message: %" GST_PTR_FORMAT, structure);
 
   if (strcmp (msg_name, "stream-changed") == 0) {
     bvw_update_stream_info (bvw);
@@ -1290,14 +1294,17 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
 static void
 bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
+  const GstStructure *structure;
   const gchar *type_name = NULL;
   gchar *src_name;
 
   src_name = gst_object_get_name (msg->src);
-  if (msg->structure)
-    type_name = gst_structure_get_name (msg->structure);
 
-  GST_DEBUG ("from %s: %" GST_PTR_FORMAT, src_name, msg->structure);
+  structure = gst_message_get_structure (msg);
+  if (structure)
+    type_name = gst_structure_get_name (structure);
+
+  GST_DEBUG ("from %s: %" GST_PTR_FORMAT, src_name, structure);
 
   if (type_name == NULL)
     goto unhandled;
@@ -1305,7 +1312,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
   if (strcmp (type_name, "redirect") == 0) {
     const gchar *new_location;
 
-    new_location = gst_structure_get_string (msg->structure, "new-location");
+    new_location = gst_structure_get_string (structure, "new-location");
     GST_DEBUG ("Got redirect to '%s'", GST_STR_NULL (new_location));
 
     if (new_location && *new_location) {
@@ -1319,7 +1326,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (!bvw->priv->buffering) {
       gint percent = 0;
 
-      if (gst_structure_get_int (msg->structure, "percent", &percent)) {
+      if (gst_structure_get_int (structure, "percent", &percent)) {
 	gdouble fraction = (gdouble) percent / 100.0;
         g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, fraction);
       }
@@ -1351,7 +1358,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (toplevel == GTK_WIDGET (bvw) || !GTK_IS_WINDOW (toplevel))
       toplevel = NULL;
 
-    val = gst_structure_get_value (msg->structure, "file");
+    val = gst_structure_get_value (structure, "file");
     if (val == NULL)
       goto done;
       
@@ -2319,7 +2326,7 @@ bvw_set_referrer_on_element (BaconVideoWidget * bvw, GstElement * element)
 
   g_object_get (element, "extra-headers", &extra_headers, NULL);
   if (extra_headers == NULL) {
-    extra_headers = gst_structure_empty_new ("extra-headers");
+    extra_headers = gst_structure_new_empty ("extra-headers");
   }
   g_assert (GST_IS_STRUCTURE (extra_headers));
 
@@ -2379,19 +2386,18 @@ playbin_deep_notify_cb (GstObject  *gstobject,
 static gboolean
 bvw_query_timeout (BaconVideoWidget *bvw)
 {
-  GstFormat fmt = GST_FORMAT_TIME;
   gint64 pos = -1, len = -1;
 
   /* check length/pos of stream */
-  if (gst_element_query_duration (bvw->priv->play, &fmt, &len)) {
-    if (len != -1 && fmt == GST_FORMAT_TIME)
+  if (gst_element_query_duration (bvw->priv->play, GST_FORMAT_TIME, &len)) {
+    if (len != -1)
       bvw->priv->stream_length = len / GST_MSECOND;
   } else {
     GST_DEBUG ("could not get duration");
   }
 
-  if (gst_element_query_position (bvw->priv->play, &fmt, &pos)) {
-    if (pos != -1 && fmt == GST_FORMAT_TIME) {
+  if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &pos)) {
+    if (pos != -1) {
       got_time_tick (GST_ELEMENT (bvw->priv->play), pos, bvw);
     }
   } else {
@@ -2473,7 +2479,7 @@ caps_set (GObject * obj,
   GstStructure *s;
   GstCaps *caps;
 
-  if (!(caps = gst_pad_get_negotiated_caps (pad)))
+  if (!(caps = gst_pad_get_current_caps (pad)))
     return;
 
   /* Get video decoder caps */
@@ -2549,7 +2555,7 @@ parse_stream_info (BaconVideoWidget *bvw)
   if (videopad) {
     GstCaps *caps;
 
-    if ((caps = gst_pad_get_negotiated_caps (videopad))) {
+    if ((caps = gst_pad_get_current_caps (videopad))) {
       caps_set (G_OBJECT (videopad), NULL, bvw);
       gst_caps_unref (caps);
     }
@@ -2573,7 +2579,7 @@ playbin_stream_changed_cb (GstElement * obj, gpointer data)
   /* we're being called from the streaming thread, so don't do anything here */
   GST_LOG ("streams have changed");
   msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
-      gst_structure_new ("stream-changed", NULL));
+				     gst_structure_new_empty ("stream-changed"));
   gst_element_post_message (bvw->priv->play, msg);
 }
 
@@ -3154,7 +3160,7 @@ set_audio_filter (BaconVideoWidget *bvw)
 {
   gint channels;
   GstCaps *caps, *res;
-  GstPad *pad;
+  GstPad *pad, *peer_pad;
 
   /* reset old */
   g_object_set (bvw->priv->audio_capsfilter, "caps", NULL, NULL);
@@ -3163,8 +3169,11 @@ set_audio_filter (BaconVideoWidget *bvw)
   /* Start with what the audio sink supports, but limit the allowed
    * channel count to our speaker output configuration */
   pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "src");
-  caps = gst_pad_peer_get_caps (pad);        
+  peer_pad = gst_pad_get_peer (pad);
   gst_object_unref (pad);
+
+  caps = gst_pad_get_current_caps (peer_pad);
+  gst_object_unref (peer_pad);
 
   if ((channels = get_num_audio_channels (bvw)) == -1)
     return;
@@ -3952,7 +3961,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       bvw_set_playback_direction (bvw, TRUE);
 
       fmt = gst_format_get_by_nick (fmt_name);
-      if (gst_element_query_position (bvw->priv->play, &fmt, &val)) {
+      if (gst_element_query_position (bvw->priv->play, fmt, &val)) {
         GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
         val += dir;
         GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
@@ -4482,7 +4491,7 @@ setup_vis (BaconVideoWidget * bvw)
     }
     /* We created the bin, now ref and sink to make sure we own it */
     gst_object_ref (vis_bin);
-    gst_object_sink (vis_bin);
+    gst_object_ref_sink (vis_bin);
     
     gst_bin_add_many (GST_BIN (vis_bin), vis_element, vis_capsfilter, NULL);
     
@@ -4595,7 +4604,7 @@ filter_features (GstPluginFeature * feature, gpointer data)
 static GList *
 get_visualization_features (void)
 {
-  return gst_registry_feature_filter (gst_registry_get_default (),
+  return gst_registry_feature_filter (gst_registry_get (),
       filter_features, FALSE, NULL);
 }
 
@@ -5158,10 +5167,9 @@ bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
 
   if (bvw->priv->stream_length == 0 && bvw->priv->play != NULL) {
-    GstFormat fmt = GST_FORMAT_TIME;
     gint64 len = -1;
 
-    if (gst_element_query_duration (bvw->priv->play, &fmt, &len) && len != -1) {
+    if (gst_element_query_duration (bvw->priv->play, GST_FORMAT_TIME, &len) && len != -1) {
       bvw->priv->stream_length = len / GST_MSECOND;
     }
   }
@@ -5315,7 +5323,7 @@ bvw_get_caps_of_current_stream (BaconVideoWidget * bvw,
   g_free (lower);
 
   if (current != NULL) {
-    caps = gst_pad_get_negotiated_caps (current);
+    caps = gst_pad_get_current_caps (current);
     gst_object_unref (current);
   }
   GST_LOG ("current %s stream caps: %" GST_PTR_FORMAT, stream_type, caps);
@@ -5325,26 +5333,20 @@ bvw_get_caps_of_current_stream (BaconVideoWidget * bvw,
 static gboolean
 audio_caps_have_LFE (GstStructure * s)
 {
-  GstAudioChannelPosition *positions;
-  gint i, channels;
+  guint64 mask;
+  int channels;
 
-  if (!gst_structure_get_value (s, "channel-positions") ||
-      !gst_structure_get_int (s, "channels", &channels)) {
-    return FALSE;
-  }
-
-  positions = gst_audio_get_channel_positions (s);
-  if (positions == NULL)
+  if (!gst_structure_get_int (s, "channels", &channels) ||
+      channels == 0)
     return FALSE;
 
-  for (i = 0; i < channels; ++i) {
-    if (positions[i] == GST_AUDIO_CHANNEL_POSITION_LFE) {
-      g_free (positions);
-      return TRUE;
-    }
-  }
+  if (!gst_structure_get (s, "channel-mask", GST_TYPE_BITMASK, &mask, NULL))
+    return FALSE;
 
-  g_free (positions);
+  if (mask & GST_AUDIO_CHANNEL_POSITION_LFE1 ||
+      mask & GST_AUDIO_CHANNEL_POSITION_LFE2)
+    return TRUE;
+
   return FALSE;
 }
 
@@ -5825,14 +5827,12 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
 
   if (forward == FALSE) {
     GstEvent *event;
-    GstFormat fmt;
     gint64 cur = 0;
 
-    fmt = GST_FORMAT_TIME;
-    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+    if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
       GST_DEBUG ("Setting playback direction to reverse at %"G_GINT64_FORMAT"", cur);
       event = gst_event_new_seek (REVERSE_RATE,
-				  fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				  GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
 				  GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0),
 				  GST_SEEK_TYPE_SET, cur);
       if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
@@ -5848,15 +5848,13 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
     }
   } else {
     GstEvent *event;
-    GstFormat fmt;
     gint64 cur = 0;
 
-    fmt = GST_FORMAT_TIME;
     cur = 0;
-    if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+    if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
       GST_DEBUG ("Setting playback direction to forward at %"G_GINT64_FORMAT"", cur);
       event = gst_event_new_seek (FORWARD_RATE,
-				  fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				  GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
 				  GST_SEEK_TYPE_SET, cur,
 				  GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
       if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
@@ -5915,7 +5913,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gst_pb_utils_init ();
 
   /* Instantiate all the fallible plugins */
-  bvw->priv->play = element_make_or_warn ("playbin2", "play");
+  bvw->priv->play = element_make_or_warn ("playbin", "play");
   bvw->priv->audio_pitchcontrol = element_make_or_warn ("pitch", "audiopitch");
   video_sink = element_make_or_warn ("cluttersink", "video-sink");
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
@@ -6103,7 +6101,6 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
 {
   GstEvent *event;
   gboolean retval = FALSE;
-  GstFormat fmt;
   gint64 cur;
   gfloat pitch, ratio;
 
@@ -6117,12 +6114,10 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
 	return TRUE;
   ratio = new_rate / bvw->priv->rate;
 
-  fmt = GST_FORMAT_TIME;
-
-  if (gst_element_query_position (bvw->priv->play, &fmt, &cur)) {
+  if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
     GST_DEBUG ("Setting new rate at %"G_GINT64_FORMAT"", cur);
     event = gst_event_new_seek (new_rate,
-				fmt, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
 				GST_SEEK_TYPE_SET, cur,
 				GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
     if (gst_element_send_event (bvw->priv->play, event) == FALSE) {

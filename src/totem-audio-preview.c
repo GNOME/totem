@@ -128,7 +128,7 @@ setup_errors (GstElement *play)
 	GstBus *bus;
 
 	bus = gst_element_get_bus (play);
-	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, play);
+	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, play, NULL);
 }
 
 static void
@@ -198,7 +198,7 @@ int main (int argc, char **argv)
 		return 1;
 	}
 
-	play = gst_element_factory_make ("playbin2", "play");
+	play = gst_element_factory_make ("playbin", "play");
 	setup_play (play);
 	setup_filename (play);
 	setup_errors (play);

@@ -30,6 +30,9 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n-lib.h>
+
+#define GST_USE_UNSTABLE_API 1
+#include <gst/tag/tag.h>
 #include <gst/pbutils/pbutils.h>
 
 #include "totem-properties-view.h"

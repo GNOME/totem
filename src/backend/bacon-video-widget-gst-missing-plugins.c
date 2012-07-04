@@ -23,6 +23,8 @@
 #include "config.h"
 
 #include "bacon-video-widget-gst-missing-plugins.h"
+
+#define GST_USE_UNSTABLE_API 1
 #include <gst/gst.h> /* for gst_registry_update and functions in bacon_video_widget_gst_missing_plugins_blacklist */
 
 #ifdef ENABLE_MISSING_PLUGIN_INSTALLATION
@@ -349,13 +351,17 @@ void
 bacon_video_widget_gst_missing_plugins_blacklist (void)
 {
 	const gchar *blacklisted_elements[] = { "ffdemux_flv", "avdemux_flv" };
+	GstRegistry *registry;
 	guint i;
+
+	registry = gst_registry_get ();
 
 	for (i = 0; i < G_N_ELEMENTS (blacklisted_elements); ++i) {
 		GstPluginFeature *feature;
 
-		feature = gst_default_registry_find_feature (blacklisted_elements[i],
-							     GST_TYPE_ELEMENT_FACTORY);
+		feature = gst_registry_find_feature (registry,
+						     blacklisted_elements[i],
+						     GST_TYPE_ELEMENT_FACTORY);
 
 		if (feature)
 			gst_plugin_feature_set_rank (feature, GST_RANK_NONE);

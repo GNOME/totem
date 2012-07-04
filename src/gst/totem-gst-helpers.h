@@ -28,12 +28,14 @@
 #ifndef HAVE_TOTEM_GST_HELPERS_H
 #define HAVE_TOTEM_GST_HELPERS_H
 
+#define GST_USE_UNSTABLE_API 1
+
 #include <gst/gst.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 G_BEGIN_DECLS
 
-/* GstPlayFlags flags from playbin2 */
+/* GstPlayFlags flags from playbin */
 typedef enum {
   GST_PLAY_FLAG_VIDEO         = (1 << 0),
   GST_PLAY_FLAG_AUDIO         = (1 << 1),

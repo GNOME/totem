@@ -30,8 +30,10 @@
  *
  */
 
-#include <gst/tag/tag.h>
 #include "totem-gst-helpers.h"
+
+#include <gst/tag/tag.h>
+#include <gst/video/video-format.h>
 
 void
 totem_gst_message_print (GstMessage *msg,
@@ -73,26 +75,27 @@ totem_gst_message_print (GstMessage *msg,
 static void
 destroy_pixbuf (guchar *pix, gpointer data)
 {
-  gst_buffer_unref (GST_BUFFER (data));
+  gst_sample_unref (GST_SAMPLE (data));
 }
 
 GdkPixbuf *
 totem_gst_playbin_get_frame (GstElement *play)
 {
   GstStructure *s;
-  GstBuffer *buf = NULL;
+  GstSample *sample = NULL;
   GdkPixbuf *pixbuf;
-  GstCaps *to_caps;
+  GstCaps *to_caps, *sample_caps;
   gint outwidth = 0;
   gint outheight = 0;
+  GstMemory *memory;
+  GstMapInfo info;
 
   g_return_val_if_fail (play != NULL, NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (play), NULL);
 
   /* our desired output format (RGB24) */
-  to_caps = gst_caps_new_simple ("video/x-raw-rgb",
-      "bpp", G_TYPE_INT, 24,
-      "depth", G_TYPE_INT, 24,
+  to_caps = gst_caps_new_simple ("video/x-raw",
+      "format", G_TYPE_STRING, "RGB",
       /* Note: we don't ask for a specific width/height here, so that
        * videoscale can adjust dimensions from a non-1/1 pixel aspect
        * ratio to a 1/1 pixel-aspect-ratio. We also don't ask for a
@@ -100,17 +103,13 @@ totem_gst_playbin_get_frame (GstElement *play)
        * necessarily match the output framerate if there's a deinterlacer
        * in the pipeline. */
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
-      "endianness", G_TYPE_INT, G_BIG_ENDIAN,
-      "red_mask", G_TYPE_INT, 0xff0000,
-      "green_mask", G_TYPE_INT, 0x00ff00,
-      "blue_mask", G_TYPE_INT, 0x0000ff,
       NULL);
 
   /* get frame */
-  g_signal_emit_by_name (play, "convert-frame", to_caps, &buf);
+  g_signal_emit_by_name (play, "convert-sample", to_caps, &sample);
   gst_caps_unref (to_caps);
 
-  if (!buf) {
+  if (!sample) {
     GST_DEBUG ("Could not take screenshot: %s",
         "failed to retrieve or convert video frame");
     g_warning ("Could not take screenshot: %s",
@@ -118,28 +117,36 @@ totem_gst_playbin_get_frame (GstElement *play)
     return NULL;
   }
 
-  if (!GST_BUFFER_CAPS (buf)) {
+  sample_caps = gst_sample_get_caps (sample);
+  if (!sample_caps) {
     GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
     g_warning ("Could not take screenshot: %s", "no caps on output buffer");
     return NULL;
   }
 
-  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
+  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, sample_caps);
 
-  s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
+  s = gst_caps_get_structure (sample_caps, 0);
   gst_structure_get_int (s, "width", &outwidth);
   gst_structure_get_int (s, "height", &outheight);
-  g_return_val_if_fail (outwidth > 0 && outheight > 0, NULL);
+  if (outwidth <= 0 || outheight <= 0)
+    goto done;
+
+  memory = gst_buffer_get_memory (gst_sample_get_buffer (sample), 0);
+  gst_memory_map (memory, &info, GST_MAP_READ);
 
   /* create pixbuf from that - use our own destroy function */
-  pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
+  pixbuf = gdk_pixbuf_new_from_data (info.data,
       GDK_COLORSPACE_RGB, FALSE, 8, outwidth, outheight,
-      GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, buf);
+      GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, sample);
 
+  gst_memory_unmap (memory, &info);
+
+done:
   if (!pixbuf) {
     GST_DEBUG ("Could not take screenshot: %s", "could not create pixbuf");
     g_warning ("Could not take screenshot: %s", "could not create pixbuf");
-    gst_buffer_unref (buf);
+    gst_sample_unref (sample);
   }
 
   return pixbuf;
@@ -151,10 +158,23 @@ totem_gst_buffer_to_pixbuf (GstBuffer *buffer)
   GdkPixbufLoader *loader;
   GdkPixbuf *pixbuf = NULL;
   GError *err = NULL;
+  GstMemory *memory;
+  GstMapInfo info;
+
+  memory = gst_buffer_get_memory (buffer, 0);
+  if (!memory) {
+    GST_WARNING("could not get memory for buffer");
+    return NULL;
+  }
+
+  if (!gst_memory_map (memory, &info, GST_MAP_READ)) {
+    GST_WARNING("could not map memory buffer");
+    return NULL;
+  }
 
   loader = gdk_pixbuf_loader_new ();
 
-  if (gdk_pixbuf_loader_write (loader, buffer->data, buffer->size, &err) &&
+  if (gdk_pixbuf_loader_write (loader, info.data, info.size, &err) &&
       gdk_pixbuf_loader_close (loader, &err)) {
     pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
     if (pixbuf)
@@ -165,6 +185,9 @@ totem_gst_buffer_to_pixbuf (GstBuffer *buffer)
   }
 
   g_object_unref (loader);
+
+  gst_memory_unmap (memory, &info);
+
   return pixbuf;
 }
 
@@ -176,8 +199,8 @@ totem_gst_tag_list_get_cover_real (GstTagList *tag_list)
 
   for (i = 0; ; i++) {
     const GValue *value;
-    GstBuffer *buffer;
-    GstStructure *caps_struct;
+    GstSample *sample;
+    const GstStructure *caps_struct;
     int type;
 
     value = gst_tag_list_get_value_index (tag_list,
@@ -186,9 +209,9 @@ totem_gst_tag_list_get_cover_real (GstTagList *tag_list)
     if (value == NULL)
       break;
 
-    buffer = gst_value_get_buffer (value);
 
-    caps_struct = gst_caps_get_structure (buffer->caps, 0);
+    sample = gst_value_get_sample (value);
+    caps_struct = gst_sample_get_info (sample);
     gst_structure_get_enum (caps_struct,
 			    "image-type",
 			    GST_TYPE_TAG_IMAGE_TYPE,
@@ -222,9 +245,11 @@ totem_gst_tag_list_get_cover (GstTagList *tag_list)
 
   if (cover_value) {
     GstBuffer *buffer;
+    GstSample *sample;
     GdkPixbuf *pixbuf;
 
-    buffer = gst_value_get_buffer (cover_value);
+    sample = gst_value_get_sample (cover_value);
+    buffer = gst_sample_get_buffer (sample);
     pixbuf = totem_gst_buffer_to_pixbuf (buffer);
     return pixbuf;
   }

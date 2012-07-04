@@ -27,6 +27,7 @@
 
 #include <config.h>
 #include <string.h>
+#define GST_USE_UNSTABLE_API 1
 #include <gst/gst.h>
 #include <glib/gi18n-lib.h>
 #include "totem-properties-view.h"

@@ -27,6 +27,8 @@
 
 #include "config.h"
 
+#define GST_USE_UNSTABLE_API 1
+
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
@@ -185,7 +187,7 @@ thumb_app_set_error_handler (ThumbApp *app)
 	GstBus *bus;
 
 	bus = gst_element_get_bus (app->play);
-	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, app->play);
+	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, app->play, NULL);
 }
 
 static void
@@ -225,10 +227,9 @@ thumb_app_check_for_cover (ThumbApp *app)
 static gboolean
 thumb_app_set_duration (ThumbApp *app)
 {
-	GstFormat fmt = GST_FORMAT_TIME;
 	gint64 len = -1;
 
-	if (gst_element_query_duration (app->play, &fmt, &len) && len != -1) {
+	if (gst_element_query_duration (app->play, GST_FORMAT_TIME, &len) && len != -1) {
 		app->duration = len / GST_MSECOND;
 		return TRUE;
 	}
@@ -304,7 +305,7 @@ thumb_app_setup_play (ThumbApp *app)
 	GstElement *play;
 	GstElement *audio_sink, *video_sink;
 
-	play = gst_element_factory_make ("playbin2", "play");
+	play = gst_element_factory_make ("playbin", "play");
 	audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
 	video_sink = gst_element_factory_make ("fakesink", "video-fake-sink");
 	g_object_set (video_sink, "sync", TRUE, NULL);

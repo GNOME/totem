@@ -24,6 +24,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#define GST_USE_UNSTABLE_API 1
 #include <gst/tag/tag.h>
 #include <string.h>
 #include <libpeas-gtk/peas-gtk-plugin-manager.h>
