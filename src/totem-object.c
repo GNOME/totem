@@ -2406,7 +2406,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 
 static void
 on_error_event (BaconVideoWidget *bvw, char *message,
-                gboolean playback_stopped, gboolean fatal, TotemObject *totem)
+                gboolean playback_stopped, TotemObject *totem)
 {
 	/* Clear the seek if it's there, we only want to try and seek
 	 * the first file, even if it's not there */
@@ -2416,12 +2416,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 	if (playback_stopped)
 		play_pause_set_label (totem, STATE_STOPPED);
 
-	if (fatal == FALSE) {
-		totem_action_error (totem, _("An error occurred"), message);
-	} else {
-		totem_action_error_and_exit (_("An error occurred"),
-				message, totem);
-	}
+	totem_action_error (totem, _("An error occurred"), message);
 }
 
 static void
