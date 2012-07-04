@@ -212,6 +212,7 @@ struct BaconVideoWidgetPrivate
 
   /* Visual effects */
   GList                       *vis_plugins_list;
+  GHashTable                  *vis_plugins_ht;
   gboolean                     show_vfx;
   BvwVisualizationQuality      visq;
   gchar                       *vis_element_name;
@@ -2646,6 +2647,10 @@ bacon_video_widget_finalize (GObject * object)
     g_list_free (bvw->priv->vis_plugins_list);
     bvw->priv->vis_plugins_list = NULL;
   }
+  if (bvw->priv->vis_plugins_ht) {
+    g_hash_table_destroy (bvw->priv->vis_plugins_ht);
+    bvw->priv->vis_plugins_ht = NULL;
+  }
 
   if (bvw->priv->source != NULL) {
     g_object_unref (bvw->priv->source);
@@ -4463,39 +4468,39 @@ get_visualization_size (BaconVideoWidget *bvw,
     *fps_d = 1;
 }
 
+static void
+add_longname (GstElementFactory *f, GHashTable *ht)
+{
+  g_hash_table_insert (ht,
+		       (gpointer) gst_element_factory_get_longname (f),
+		       (gpointer) gst_plugin_feature_get_name (GST_PLUGIN_FEATURE (f)));
+}
+
+static void
+ensure_vis_plugins_list (BaconVideoWidget *bvw)
+{
+  GHashTable *ht;
+  GList *features;
+
+  if (bvw->priv->vis_plugins_ht)
+    return;
+
+  features = get_visualization_features ();
+  ht = g_hash_table_new (g_str_hash, g_str_equal);
+  g_list_foreach (features, (GFunc) add_longname, ht);
+  g_list_free (features);
+
+  bvw->priv->vis_plugins_ht = ht;
+}
+
 static GstElementFactory *
 setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
 {
-  GstElementFactory *fac = NULL;
-  GList *l, *features;
+  const char *factory_name;
 
-  features = get_visualization_features ();
-
-  /* find element factory using long name */
-  for (l = features; l != NULL; l = l->next) {
-    GstElementFactory *f = GST_ELEMENT_FACTORY (l->data);
-       
-    if (f && strcmp (vis_name, gst_element_factory_get_longname (f)) == 0) {
-      fac = f;
-      goto done;
-    }
-  }
-
-  /* if nothing was found, try the short name (the default schema uses this) */
-  for (l = features; l != NULL; l = l->next) {
-    GstElementFactory *f = GST_ELEMENT_FACTORY (l->data);
-
-    /* set to long name as key so that the preferences dialog gets it right */
-    if (f && strcmp (vis_name, GST_PLUGIN_FEATURE_NAME (f)) == 0) {
-      bacon_video_widget_set_visualization (bvw, gst_element_factory_get_longname (f));
-      fac = f;
-      goto done;
-    }
-  }
-
-done:
-  g_list_free (features);
-  return fac;
+  ensure_vis_plugins_list (bvw);
+  factory_name = g_hash_table_lookup (bvw->priv->vis_plugins_ht, vis_name);
+  return gst_element_factory_find (factory_name);
 }
 
 static void
@@ -4669,12 +4674,6 @@ get_visualization_features (void)
       filter_features, FALSE, NULL);
 }
 
-static void
-add_longname (GstElementFactory *f, GList ** to)
-{
-  *to = g_list_append (*to, (gchar *) gst_element_factory_get_longname (f));
-}
-
 /**
  * bacon_video_widget_get_visualization_list:
  * @bvw: a #BaconVideoWidget
@@ -4686,21 +4685,16 @@ add_longname (GstElementFactory *f, GList ** to)
 GList *
 bacon_video_widget_get_visualization_list (BaconVideoWidget * bvw)
 {
-  GList *features, *names = NULL;
-
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
-  if (bvw->priv->vis_plugins_list) {
+  if (bvw->priv->vis_plugins_list)
     return bvw->priv->vis_plugins_list;
-  }
 
-  features = get_visualization_features ();
-  g_list_foreach (features, (GFunc) add_longname, &names);
-  g_list_free (features);
-  bvw->priv->vis_plugins_list = names;
+  ensure_vis_plugins_list (bvw);
+  bvw->priv->vis_plugins_list = g_hash_table_get_keys (bvw->priv->vis_plugins_ht);
 
-  return names;
+  return bvw->priv->vis_plugins_list;
 }
 
 /**
