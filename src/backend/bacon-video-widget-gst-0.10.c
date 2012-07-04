@@ -396,7 +396,7 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
         g_error_free (err);
         err = bvw_error_from_gst_error (bvw, msg);
         gst_message_unref (msg);
-        g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE, FALSE);
+        g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE);
         g_error_free (err);
         g_free (d);
         break;
@@ -1019,9 +1019,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
                   NULL, NULL,
-                  baconvideowidget_marshal_VOID__STRING_BOOLEAN_BOOLEAN,
-                  G_TYPE_NONE, 3, G_TYPE_STRING,
-                  G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+                  baconvideowidget_marshal_VOID__STRING_BOOLEAN,
+                  G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
 
   /**
    * BaconVideoWidget::eos:
@@ -1282,7 +1281,7 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
     g_error_free (error);
     err = bvw_error_from_gst_error (bvw, msg);
     gst_message_unref (msg);
-    g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE, FALSE);
+    g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE);
     g_error_free (err);
   }
 
@@ -1956,7 +1955,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
         bvw->priv->buffering = FALSE;
 
         g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0,
-                       error->message, TRUE, FALSE);
+                       error->message, TRUE);
 
         g_error_free (error);
       }

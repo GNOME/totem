@@ -64,8 +64,7 @@ typedef struct {
 	/*< private >*/
 	GtkClutterEmbedClass parent_class;
 
-	void (*error) (GtkWidget *bvw, const char *message,
-                       gboolean playback_stopped, gboolean fatal);
+	void (*error) (GtkWidget *bvw, const char *message, gboolean playback_stopped);
 	void (*eos) (GtkWidget *bvw);
 	void (*got_metadata) (GtkWidget *bvw);
 	void (*got_redirect) (GtkWidget *bvw, const char *mrl);
