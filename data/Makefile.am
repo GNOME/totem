@@ -94,6 +94,7 @@ totem-uri-schemes.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/uri-scheme-include.sh $(srcdir)/uri-schemes-list.txt > $@
 
 EXTRA_DIST += \
+	mime-type-imports.sh	\
 	mime-type-include.sh	\
 	mime-type-list.txt	\
 	uri-scheme-include.sh	\
