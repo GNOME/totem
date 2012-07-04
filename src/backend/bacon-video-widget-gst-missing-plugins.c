@@ -348,7 +348,7 @@ bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 void 
 bacon_video_widget_gst_missing_plugins_blacklist (void)
 {
-	const gchar *blacklisted_elements[] = { "ffdemux_flv" };
+	const gchar *blacklisted_elements[] = { "ffdemux_flv", "avdemux_flv" };
 	guint i;
 
 	for (i = 0; i < G_N_ELEMENTS (blacklisted_elements); ++i) {
