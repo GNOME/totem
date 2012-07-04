@@ -72,7 +72,7 @@ typedef struct {
 	void (*channels_change) (GtkWidget *bvw);
 	void (*tick) (GtkWidget *bvw, gint64 current_time, gint64 stream_length,
 			double current_position, gboolean seekable);
-	void (*buffering) (GtkWidget *bvw, guint progress);
+	void (*buffering) (GtkWidget *bvw, gdouble percentage);
 	void (*download_buffering) (GtkWidget *bvw, gdouble percentage);
 } BaconVideoWidgetClass;
 

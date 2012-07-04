@@ -1110,7 +1110,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, buffering),
                   NULL, NULL,
-                  g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+                  g_cclosure_marshal_VOID__DOUBLE, G_TYPE_NONE, 1, G_TYPE_DOUBLE);
 
   /**
    * BaconVideoWidget::missing-plugins:
@@ -1320,8 +1320,10 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (!bvw->priv->buffering) {
       gint percent = 0;
 
-      if (gst_structure_get_int (msg->structure, "percent", &percent))
-        g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
+      if (gst_structure_get_int (msg->structure, "percent", &percent)) {
+	gdouble fraction = (gdouble) percent / 100.0;
+        g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, fraction);
+      }
     }
     goto done;
   } else if (gst_is_missing_plugin_message (msg)) {
@@ -1880,7 +1882,7 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 
    /* Live, timeshift and stream buffering modes */
   gst_message_parse_buffering (message, &percent);
-  g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, percent);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, (gdouble) percent / 100.0);
 
   if (percent >= 100) {
     /* a 100% message means buffering is done */
