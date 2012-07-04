@@ -1423,7 +1423,6 @@ static void
 on_error_event (BaconVideoWidget *bvw,
 		char *message,
                 gboolean playback_stopped,
-		gboolean fatal,
 		TotemEmbedded *emb)
 {
 	if (playback_stopped) {
@@ -1450,11 +1449,6 @@ on_error_event (BaconVideoWidget *bvw,
 				return;
 			}
 		}
-	}
-
-	if (fatal) {
-		/* FIXME: report error back to plugin */
-		exit (1);
 	}
 
 	totem_embedded_set_error (emb, BVW_ERROR_GENERIC, message);
