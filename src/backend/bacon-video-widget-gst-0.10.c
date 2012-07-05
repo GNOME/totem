@@ -1257,8 +1257,7 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
 
   ret = g_file_mount_enclosing_volume_finish (G_FILE (obj), res, &error);
 
-  g_object_unref (bvw->priv->mount_cancellable);
-  bvw->priv->mount_cancellable = NULL;
+  g_clear_object (&bvw->priv->mount_cancellable);
   bvw->priv->mount_in_progress = FALSE;
 
   g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
@@ -1341,8 +1340,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 
     if (bvw->priv->mount_in_progress) {
       g_cancellable_cancel (bvw->priv->mount_cancellable);
-      g_object_unref (bvw->priv->mount_cancellable);
-      bvw->priv->mount_cancellable = NULL;
+      g_clear_object (&bvw->priv->mount_cancellable);
       bvw->priv->mount_in_progress = FALSE;
     }
 
@@ -1385,10 +1383,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
             bvw->priv->cursor = gdk_cursor_new (GDK_HAND2);
           }
         } else {
-          if (bvw->priv->cursor != NULL) {
-            g_object_unref (bvw->priv->cursor);
-            bvw->priv->cursor = NULL;
-          }
+	  g_clear_object (&bvw->priv->cursor);
         }
         gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET(bvw)),
             bvw->priv->cursor);
@@ -1536,8 +1531,7 @@ bvw_auth_reply_cb (GMountOperation      *op,
     bvw->priv->user_pw = g_strdup (g_mount_operation_get_password (op));
   }
 
-  g_object_unref (bvw->priv->auth_dialog);
-  bvw->priv->auth_dialog = NULL;
+  g_clear_object (&bvw->priv->auth_dialog);
 
   if (bvw->priv->target_state == GST_STATE_PLAYING) {
     GST_DEBUG ("Starting deferred playback after authentication");
@@ -2473,10 +2467,7 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     if (fill == 1.0) {
       bvw->priv->fill_id = 0;
       gst_query_unref (query);
-      if (bvw->priv->download_buffering_element != NULL) {
-	g_object_unref (bvw->priv->download_buffering_element);
-	bvw->priv->download_buffering_element = NULL;
-      }
+      g_object_unref (&bvw->priv->download_buffering_element);
 
       /* Tell the front-end about the downloaded file */
       g_object_notify (G_OBJECT (bvw), "download-filename");
@@ -2639,10 +2630,7 @@ bacon_video_widget_finalize (GObject * object)
   g_free (bvw->priv->vis_element_name);
   bvw->priv->vis_element_name = NULL;
 
-  if (bvw->priv->clock) {
-    g_object_unref (bvw->priv->clock);
-    bvw->priv->clock = NULL;
-  }
+  g_clear_object (&bvw->priv->clock);
 
   if (bvw->priv->vis_plugins_list) {
     g_list_free (bvw->priv->vis_plugins_list);
@@ -2653,16 +2641,12 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->vis_plugins_ht = NULL;
   }
 
-  if (bvw->priv->source != NULL) {
-    g_object_unref (bvw->priv->source);
-    bvw->priv->source = NULL;
-  }
+  g_clear_object (&bvw->priv->source);
 
-  if (bvw->priv->play != NULL && GST_IS_ELEMENT (bvw->priv->play)) {
+  if (bvw->priv->play != NULL)
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
-    gst_object_unref (bvw->priv->play);
-    bvw->priv->play = NULL;
-  }
+
+  g_clear_object (&bvw->priv->play);
 
   if (bvw->priv->update_id) {
     g_source_remove (bvw->priv->update_id);
@@ -2691,16 +2675,11 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->eos_id = 0;
   }
 
-  if (bvw->priv->cursor != NULL) {
-    g_object_unref (bvw->priv->cursor);
-    bvw->priv->cursor = NULL;
-  }
+  g_clear_object (&bvw->priv->cursor);
 
-  if (bvw->priv->mount_cancellable) {
+  if (bvw->priv->mount_cancellable)
     g_cancellable_cancel (bvw->priv->mount_cancellable);
-    g_object_unref (bvw->priv->mount_cancellable);
-    bvw->priv->mount_cancellable = NULL;
-  }
+  g_clear_object (&bvw->priv->mount_cancellable);
 
   g_mutex_clear (&bvw->priv->seek_mutex);
 
@@ -3808,16 +3787,10 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   g_free (bvw->priv->download_filename);
   bvw->priv->download_filename = NULL;
   bvw->priv->buffering_left = -1;
-  if (bvw->priv->download_buffering_element != NULL) {
-    g_object_unref (bvw->priv->download_buffering_element);
-    bvw->priv->download_buffering_element = NULL;
-  }
+  g_clear_object (&bvw->priv->download_buffering_element);
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
-  if (bvw->priv->cover_pixbuf) {
-    g_object_unref (bvw->priv->cover_pixbuf);
-    bvw->priv->cover_pixbuf = NULL;
-  }
+  g_clear_object (&bvw->priv->cover_pixbuf);
   GST_DEBUG ("stopped");
 }
 
