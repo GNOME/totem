@@ -65,7 +65,7 @@ void       totem_statusbar_push_help            (TotemStatusbar *statusbar,
 						 const char *message);
 void       totem_statusbar_pop_help             (TotemStatusbar *statusbar);
 void	   totem_statusbar_push			(TotemStatusbar *statusbar,
-						 guint percentage);
+						 gdouble percentage);
 void       totem_statusbar_pop			(TotemStatusbar *statusbar);
 
 G_END_DECLS

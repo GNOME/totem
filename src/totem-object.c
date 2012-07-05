@@ -2420,7 +2420,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 }
 
 static void
-on_buffering_event (BaconVideoWidget *bvw, int percentage, TotemObject *totem)
+on_buffering_event (BaconVideoWidget *bvw, gdouble percentage, TotemObject *totem)
 {
 	totem_statusbar_push (TOTEM_STATUSBAR (totem->statusbar), percentage);
 }

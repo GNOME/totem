@@ -27,8 +27,8 @@
 
 #include "config.h"
 
+#include <math.h>
 #include <glib/gi18n.h>
-
 #include <gtk/gtk.h>
 
 #include "totem-statusbar.h"
@@ -49,7 +49,7 @@ struct _TotemStatusbarPrivate {
   gint time;
   gint length;
   guint timeout;
-  guint percentage;
+  gdouble percentage;
 
   guint pushed : 1;
   guint seeking : 1;
@@ -225,7 +225,7 @@ totem_statusbar_timeout_pop (TotemStatusbar *statusbar)
 }
 
 void
-totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
+totem_statusbar_push (TotemStatusbar *statusbar, gdouble percentage)
 {
   TotemStatusbarPrivate *priv = statusbar->priv;
   GtkStatusbar *gstatusbar = GTK_STATUSBAR (statusbar);
@@ -247,11 +247,11 @@ totem_statusbar_push (TotemStatusbar *statusbar, guint percentage)
     priv->percentage = percentage;
 
     /* eg: 75 % */
-    label = g_strdup_printf (_("%d %%"), percentage);
+    label = g_strdup_printf (_("%lf %%"), floorf (percentage));
     gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), label);
     g_free (label);
     gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
-                                  percentage / 100.);
+                                  percentage);
     gtk_widget_show (priv->progress);
 
     need_update = TRUE;
@@ -327,9 +327,9 @@ totem_statusbar_sync_description (TotemStatusbar *statusbar)
 	gtk_label_get_text (GTK_LABEL (statusbar->priv->time_label)));
   } else {
     /* eg: Buffering, 75 % */
-    text = g_strdup_printf (_("%s, %d %%"),
+    text = g_strdup_printf (_("%s, %f %%"),
 	gtk_label_get_text (GTK_LABEL (label)),
-	statusbar->priv->percentage);
+	floorf (statusbar->priv->percentage));
   }
 
   atk_object_set_name (obj, text);
