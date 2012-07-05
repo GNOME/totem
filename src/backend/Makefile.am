@@ -52,7 +52,7 @@ libbaconvideowidget_la_SOURCES = \
 	$(BVW_ENUM_FILES)				\
 	bacon-video-widget.h				\
 	video-utils.c video-utils.h			\
-	bacon-video-widget-gst-0.10.c			\
+	bacon-video-widget.c				\
 	bacon-video-widget-gst-missing-plugins.c	\
 	bacon-video-widget-gst-missing-plugins.h	\
 	totem-aspect-frame.h				\
