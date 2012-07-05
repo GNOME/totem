@@ -17,8 +17,6 @@ libtotemgsthelpers_la_CFLAGS = \
 
 libtotemgsthelpers_la_LIBADD = \
 	$(MM_LIBS)		\
-	$(GST_LIBS)		\
-	$(EXTRA_BACKEND_LIBS)	\
 	$(X_LIBS)		\
 	$(MISSING_PLUGINS_LIBS)	\
 	-lm

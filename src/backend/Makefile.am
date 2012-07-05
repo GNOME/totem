@@ -79,8 +79,6 @@ libbaconvideowidget_la_CFLAGS = \
 libbaconvideowidget_la_LIBADD =				\
 	$(top_builddir)/src/gst/libtotemgsthelpers.la	\
 	$(MM_LIBS)					\
-	$(GST_LIBS)					\
-	$(EXTRA_BACKEND_LIBS)				\
 	$(X_LIBS)					\
 	$(MISSING_PLUGINS_LIBS)				\
 	-lm
