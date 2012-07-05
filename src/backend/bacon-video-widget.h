@@ -29,8 +29,6 @@
 #define HAVE_BACON_VIDEO_WIDGET_H
 
 #include <clutter-gtk/clutter-gtk.h>
-/* for optical disc enumeration type */
-#include <totem-disc.h>
 
 G_BEGIN_DECLS
 
