@@ -475,10 +475,7 @@ totem_object_plugins_init (TotemObject *totem)
 void
 totem_object_plugins_shutdown (TotemObject *totem)
 {
-	if (totem->engine != NULL) {
-		g_object_unref (totem->engine);
-		totem->engine = NULL;
-	}
+	g_clear_object (&totem->engine);
 }
 
 /**
@@ -1067,11 +1064,8 @@ totem_object_action_exit (TotemObject *totem)
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
 
-	if (totem->settings)
-		g_object_unref (totem->settings);
-
-	if (totem->fs)
-		g_object_unref (totem->fs);
+	g_clear_object (&totem->settings);
+	g_clear_object (&totem->fs);
 
 	if (totem->win)
 		gtk_widget_destroy (GTK_WIDGET (totem->win));
