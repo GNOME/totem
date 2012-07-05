@@ -1497,7 +1497,7 @@ on_tick (GtkWidget *bvw,
 }
 
 static void
-on_buffering (BaconVideoWidget *bvw, guint percentage, TotemEmbedded *emb)
+on_buffering (BaconVideoWidget *bvw, gdouble percentage, TotemEmbedded *emb)
 {
 //	g_message ("Buffering: %d %%", percentage);
 }
