@@ -2686,8 +2686,10 @@ bacon_video_widget_finalize (GObject * object)
     g_source_remove (bvw->priv->tag_update_id);
   g_async_queue_unref (bvw->priv->tag_update_queue);
 
-  if (bvw->priv->eos_id != 0)
+  if (bvw->priv->eos_id != 0) {
     g_source_remove (bvw->priv->eos_id);
+    bvw->priv->eos_id = 0;
+  }
 
   if (bvw->priv->cursor != NULL) {
     g_object_unref (bvw->priv->cursor);
@@ -3872,6 +3874,9 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->current_time = 0;
   bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->priv->seek_time = -1;
+
+  if (bvw->priv->eos_id != 0)
+    g_source_remove (bvw->priv->eos_id);
 
   if (bvw->priv->tagcache) {
     gst_tag_list_free (bvw->priv->tagcache);
