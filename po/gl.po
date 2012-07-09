@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem-master-po-gl-55923\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-30 21:08+0200\n"
-"PO-Revision-Date: 2012-04-30 21:12+0200\n"
+"POT-Creation-Date: 2012-07-09 15:07+0200\n"
+"PO-Revision-Date: 2012-07-09 15:11+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1130
 #: ../src/totem-object.c:1590 ../src/totem-statusbar.c:115
@@ -41,7 +41,7 @@ msgid "Playing"
 msgstr "Reproducindo"
 
 #: ../browser-plugin/totem-plugin-viewer.c:386
-#: ../src/plugins/screensaver/totem-screensaver.c:84
+#: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "Reproducindo un filme"
 
@@ -50,7 +50,7 @@ msgid "No URI to play"
 msgstr "Non hai un URI para reproducir"
 
 #: ../browser-plugin/totem-plugin-viewer.c:676
-#: ../browser-plugin/totem-plugin-viewer.c:1806
+#: ../browser-plugin/totem-plugin-viewer.c:1700
 msgid "Totem Movie Player"
 msgstr "Reprodutor de filmes Totem"
 
@@ -62,26 +62,25 @@ msgstr "Reprodutor de filmes Totem"
 msgid "_Open with \"%s\""
 msgstr "_Abrir con «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1430 ../src/totem-object.c:2417
-#: ../src/totem-object.c:2419
+#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2419
 msgid "An error occurred"
 msgstr "Produciuse un erro"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144
+#: ../browser-plugin/totem-plugin-viewer.c:2033
 msgid "No playlist or playlist empty"
 msgstr ""
 "Ou non hai ningunha lista de reprodución ou a lista de reprodución está "
 "baleira"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2239
+#: ../browser-plugin/totem-plugin-viewer.c:2128
 msgid "Movie browser plugin"
 msgstr "Engadido de navegador para filmes"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2255 ../src/totem.c:238
+#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:238
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Non foi posíbel inicializar as bibliotecas de fío seguro."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2255
+#: ../browser-plugin/totem-plugin-viewer.c:2144
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Verifique a instalación do seu sistema. O engadido do Totem sairá agora."
@@ -323,7 +322,7 @@ msgid "Extra Large"
 msgstr "Moi grande"
 
 #: ../data/preferences.ui.h:7
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5403
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5539
 #: ../src/totem-properties-view.c:228
 msgid "Stereo"
 msgstr "Estéreo"
@@ -858,34 +857,55 @@ msgstr "_Engadir á lista de reprodución"
 msgid "Add the video to the playlist"
 msgstr "Engadir o vídeo á lista de reprodución"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1579
+#: ../src/backend/bacon-video-widget-gst-0.10.c:1628
 msgid "Password requested for RTSP server"
 msgstr "O contrasinal foi solicitado polo servidor RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2914
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2957
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de son #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2918
+#: ../src/backend/bacon-video-widget-gst-0.10.c:2961
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3292
-msgid "Location not found."
-msgstr "Non se atopou a localización."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3355
+msgid "The server you are trying to connect to is not known."
+msgstr "O servidor ao que está tentando conectarse non se recoñece."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3295
-msgid ""
-"Could not open location; you might not have permission to open the file."
-msgstr ""
-"Non foi posíbel abrir a localización; pode que non teña permiso para abrir o "
-"ficheiro."
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
+msgid "The connection to this server was refused."
+msgstr "Rexeitouse a conexión a este servidor."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3361
+msgid "The specified movie could not be found."
+msgstr "Non foi posíbel atopar o filme especificado."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+msgid "The server refused access to this file or stream."
+msgstr "O servidor rexeitou o acceso a este ficheiro ou fluxo."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3374
+msgid "Authentication is required to access this file or stream."
+msgstr "Requírese autenticación para acceder a este ficheiro ou fluxo."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3381
+msgid "You are not allowed to open this file."
+msgstr "Non tes permisos para abrir este ficheiro."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3386
+msgid "This location is not a valid one."
+msgstr "Esta localización non é válida."
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3394
+msgid "The movie could not be read."
+msgstr "Non é posíbel ler o filme."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3315
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3321
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3417
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3425
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -898,35 +918,43 @@ msgstr[0] ""
 msgstr[1] ""
 "A reprodución deste filme necesita os engadidos %s que non están instalados."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3347
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3436
 msgid ""
-"Cannot play this file over the network. Try downloading it to disk first."
+"An audio or video stream is not handled due to missing codecs. You might "
+"need to install additional plugins to be able to play some types of movies"
+msgstr ""
+"Non se pode xestionar un son ou vídeo xa que falta algún códec. Debe "
+"instalar engadidos adicionais para poder reproducir algúns tipos de filmes"
+
+#: ../src/backend/bacon-video-widget-gst-0.10.c:3446
+msgid ""
+"This file cannot be played over the network. Try downloading it locally "
+"first."
 msgstr ""
 "Non foi posíbel reproducir este ficheiro a través da rede. Ténteo de novo "
-"descargándoo primeiro ao disco."
+"descargándoo primeiro a local."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5399
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5535
 #: ../src/totem-properties-view.c:224
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5401
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5537
 #: ../src/totem-properties-view.c:226
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5686
+#: ../src/backend/bacon-video-widget-gst-0.10.c:5822
 msgid "Media contains no supported video streams."
 msgstr "O multimedia contén fluxos de vídeo non compatíbeis."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5849
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5893
+#: ../src/backend/bacon-video-widget-gst-0.10.c:6008
 msgid ""
-"Failed to create a GStreamer play object. Please check your GStreamer "
-"installation."
+"Some necessary plug-ins are missing. Make sure that the program is correctly "
+"installed."
 msgstr ""
-"Produciuse un fallo ao crear o obxecto de reprodución GStreamer. Comprobe a "
-"súa instalación de GStreamer."
+"Faltan algúns dos engadidos necesarios. Asegúrese de que o programa está "
+"correctamente instalado."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1300,41 +1328,41 @@ msgid "Play"
 msgstr "Reproducir"
 
 #: ../src/totem-object.c:1211 ../src/totem-object.c:1238
-#: ../src/totem-object.c:1723 ../src/totem-object.c:1887
+#: ../src/totem-object.c:1726 ../src/totem-object.c:1890
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "O Totem non puido reproducir «%s»."
 
-#: ../src/totem-object.c:1729
+#: ../src/totem-object.c:1732
 msgid "No error message"
 msgstr "Non hai unha mensaxe de erro"
 
-#: ../src/totem-object.c:2078
+#: ../src/totem-object.c:2081
 msgid "Totem could not display the help contents."
 msgstr "O Totem non puido mostrar os contidos da axuda."
 
-#: ../src/totem-object.c:3959 ../src/totem-object.c:3961
+#: ../src/totem-object.c:3967 ../src/totem-object.c:3969
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/Filme anterior"
 
-#: ../src/totem-object.c:3968 ../src/totem-object.c:3970
+#: ../src/totem-object.c:3976 ../src/totem-object.c:3978
 msgid "Play / Pause"
 msgstr "Reproducir / Deter"
 
-#: ../src/totem-object.c:3978 ../src/totem-object.c:3980
+#: ../src/totem-object.c:3986 ../src/totem-object.c:3988
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/Filme seguinte"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3991 ../src/totem-object.c:3993
+#: ../src/totem-object.c:3999 ../src/totem-object.c:4001
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4124
+#: ../src/totem-object.c:4132
 msgid "Totem could not startup."
 msgstr "Non foi posíbel iniciar o Totem."
 
-#: ../src/totem-object.c:4124
+#: ../src/totem-object.c:4132
 msgid "No reason."
 msgstr "Sen motivo."
 
@@ -1420,51 +1448,51 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Non foi posíbel incluír na cola e substituír ao mesmo tempo"
 
 #. By extension entry
-#: ../src/totem-playlist.c:161
+#: ../src/totem-playlist.c:162
 msgid "MP3 ShoutCast playlist"
 msgstr "Lista de reprodución de MP3"
 
-#: ../src/totem-playlist.c:162
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed)"
 msgstr "Son MP3 (en fluxo)"
 
-#: ../src/totem-playlist.c:163
+#: ../src/totem-playlist.c:164
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "Son MP3 (en fluxo, formato DOS)"
 
-#: ../src/totem-playlist.c:164
+#: ../src/totem-playlist.c:165
 msgid "XML Shareable Playlist"
 msgstr "Lista de reprodución XML compatíbel"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:347
+#: ../src/totem-playlist.c:348
 #, c-format
 msgid "Title %d"
 msgstr "Título %d"
 
-#: ../src/totem-playlist.c:446
+#: ../src/totem-playlist.c:447
 msgid "Could not save the playlist"
 msgstr "Non foi posíbel gardar a lista de reprodución"
 
-#: ../src/totem-playlist.c:1021
+#: ../src/totem-playlist.c:1022
 msgid "Save Playlist"
 msgstr "Gardar a lista de reprodución"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1262
+#: ../src/totem-playlist.c:1034 ../src/totem-playlist.c:1263
 #: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Lista de reprodución"
 
-#: ../src/totem-playlist.c:1855
+#: ../src/totem-playlist.c:1860
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Non foi posíbel analizar a lista de reprodución «%s», pode que estea danada."
 
-#: ../src/totem-playlist.c:1856
+#: ../src/totem-playlist.c:1861
 msgid "Playlist error"
 msgstr "Erro na lista de reprodución"
 
@@ -1549,8 +1577,8 @@ msgstr "Almacenando no búfer"
 #. eg: 75 %
 #: ../src/totem-statusbar.c:250
 #, c-format
-msgid "%d %%"
-msgstr "%d %%"
+msgid "%lf %%"
+msgstr "%lf %%"
 
 #. eg: Paused, 0:32 / 1:05
 #: ../src/totem-statusbar.c:325
@@ -1561,8 +1589,8 @@ msgstr "%s, %s"
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:330
 #, c-format
-msgid "%s, %d %%"
-msgstr "%s, %d %%"
+msgid "%s, %f %%"
+msgstr "%s, %f %%"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1705,35 +1733,35 @@ msgstr "Occidental"
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: ../src/totem-uri.c:339 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:343 ../src/plugins/chapters/totem-chapters.c:998
 msgid "All files"
 msgstr "Todos os ficheiros"
 
-#: ../src/totem-uri.c:344 ../src/plugins/chapters/totem-chapters.c:995
+#: ../src/totem-uri.c:348 ../src/plugins/chapters/totem-chapters.c:995
 msgid "Supported files"
 msgstr "Ficheiros compatíbeis"
 
-#: ../src/totem-uri.c:356
+#: ../src/totem-uri.c:360
 msgid "Audio files"
 msgstr "Ficheiros de son"
 
-#: ../src/totem-uri.c:364
+#: ../src/totem-uri.c:368
 msgid "Video files"
 msgstr "Ficheiros de vídeo"
 
-#: ../src/totem-uri.c:374
+#: ../src/totem-uri.c:378
 msgid "Subtitle files"
 msgstr "Subtítulos"
 
-#: ../src/totem-uri.c:426
+#: ../src/totem-uri.c:430
 msgid "Select Text Subtitles"
 msgstr "Seleccionar subtítulos de texto"
 
-#: ../src/totem-uri.c:491
+#: ../src/totem-uri.c:495
 msgid "Select Movies or Playlists"
 msgstr "Seleccionar os filmes ou as listas de reprodución"
 
-#: ../src/totem-uri.c:495
+#: ../src/totem-uri.c:499
 msgid "Add Directory"
 msgstr "Engadir cartafol"
 
@@ -1744,7 +1772,7 @@ msgstr "Non hai URI de vídeo"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:873
+#: ../src/totem-video-thumbnailer.c:890
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1755,15 +1783,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:874
+#: ../src/totem-video-thumbnailer.c:891
 msgid "Filename"
 msgstr "Nome de ficheiro"
 
-#: ../src/totem-video-thumbnailer.c:876
+#: ../src/totem-video-thumbnailer.c:893
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../src/totem-video-thumbnailer.c:879
+#: ../src/totem-video-thumbnailer.c:896
 msgid "Duration"
 msgstr "Duración"
 
@@ -2017,19 +2045,19 @@ msgstr "Engadir á lista de reprodución"
 msgid "Copy Location"
 msgstr "Copiar a localización"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1235
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1185
 msgid "Browse"
 msgstr "Examinar"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1301
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1228
 msgid "Search"
 msgstr "Buscar"
 
-#: ../src/plugins/grilo/totem-grilo.c:452
+#: ../src/plugins/grilo/totem-grilo.c:454
 msgid "Browse Error"
 msgstr "Erro ao examinar"
 
-#: ../src/plugins/grilo/totem-grilo.c:608
+#: ../src/plugins/grilo/totem-grilo.c:610
 msgid "Search Error"
 msgstr "Erro ao buscar"
 
@@ -2307,11 +2335,11 @@ msgstr ""
 "Permítelle aos vídeos que se poidan rotar se teñen unha orientación "
 "incorrecta"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:60
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:50
 msgid "_Rotate Clockwise"
 msgstr "_Rotar en sentido horario"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:62
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
 msgid "Rotate Counterc_lockwise"
 msgstr "Rotar en sentido _antihorario"
 
@@ -2365,23 +2393,20 @@ msgstr "Calcular o número de capturas de pantalla"
 msgid "Number of screenshots:"
 msgstr "Número de capturas de pantalla:"
 
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:1
-msgid "_Name:"
-msgstr "_Nome:"
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: ../src/plugins/screenshot/screenshot-filename-builder.c:147
+#, c-format
+msgid "Screenshot from %s.png"
+msgstr "Captura de pantalla desde %s.png"
 
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:2
-msgid "Save in _folder:"
-msgstr "Gardar no _cartafol:"
-
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
-msgid "Select a folder"
-msgstr "Seleccione un cartafol"
-
-#. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:385
-#: ../src/plugins/screenshot/totem-screenshot.c:64
-msgid "Screenshot.png"
-msgstr "Captura de pantalla.png"
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: ../src/plugins/screenshot/screenshot-filename-builder.c:154
+#, c-format
+msgid "Screenshot from %s - %d.png"
+msgstr "Captura desde %s - %d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
 msgid "Screenshot"
@@ -2415,43 +2440,28 @@ msgstr "Creando a galería…"
 msgid "Saving gallery as \"%s\""
 msgstr "Gardando a galería como «%s»"
 
-#: ../src/plugins/screenshot/totem-screenshot.c:113
-msgid "There was an error saving the screenshot."
-msgstr "Produciuse un erro ao gardar a captura de pantalla."
-
-#: ../src/plugins/screenshot/totem-screenshot.c:139
-msgid "Save Screenshot"
-msgstr "Gardar a captura de pantalla"
-
-#. Create the screenshot widget
-#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:160
-#, c-format
-msgid "Screenshot-%s-%d.png"
-msgstr "Captura-%s-%d.png"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:84
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:91
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:220
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
 msgid "Totem could not get a screenshot of the video."
 msgstr "O Totem non puido obter unha captura do vídeo."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:91
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Suponse que isto non debe ocorrer; escriba un informe de erros."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:191
-msgid "Take _Screenshot..."
-msgstr "Facer unha _captura de pantalla…"
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+msgid "Take _Screenshot"
+msgstr "Facer _captura de pantalla"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:191
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
 msgid "Take a screenshot"
 msgstr "Facer unha captura de pantalla-"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:192
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Create Screenshot _Gallery..."
 msgstr "Crear unha _galería de capturas…"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:192
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Create a gallery of screenshots"
 msgstr "Crear unha galería coas capturas"
 
@@ -2492,6 +2502,40 @@ msgstr "_Saltar a…"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Saltar a un tempo específico"
+
+#~ msgid "Location not found."
+#~ msgstr "Non se atopou a localización."
+
+#~ msgid ""
+#~ "Could not open location; you might not have permission to open the file."
+#~ msgstr ""
+#~ "Non foi posíbel abrir a localización; pode que non teña permiso para "
+#~ "abrir o ficheiro."
+
+#~ msgid ""
+#~ "Failed to create a GStreamer play object. Please check your GStreamer "
+#~ "installation."
+#~ msgstr ""
+#~ "Produciuse un fallo ao crear o obxecto de reprodución GStreamer. Comprobe "
+#~ "a súa instalación de GStreamer."
+
+#~ msgid "%d %%"
+#~ msgstr "%d %%"
+
+#~ msgid "_Name:"
+#~ msgstr "_Nome:"
+
+#~ msgid "Save in _folder:"
+#~ msgstr "Gardar no _cartafol:"
+
+#~ msgid "Select a folder"
+#~ msgstr "Seleccione un cartafol"
+
+#~ msgid "There was an error saving the screenshot."
+#~ msgstr "Produciuse un erro ao gardar a captura de pantalla."
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Gardar a captura de pantalla"
 
 #~ msgid "14.4 Kbps Modem"
 #~ msgstr "14.4 Kbps Módem"
@@ -2627,9 +2671,6 @@ msgstr "Saltar a un tempo específico"
 
 #~ msgid "Please insert another disc to play back."
 #~ msgstr "Insira outro disco para reproducir."
-
-#~ msgid "Totem was not able to play this disc."
-#~ msgstr "O Totem non foi capaz de reproducir este disco."
 
 #~ msgid "Totem does not support playback of Audio CDs"
 #~ msgstr "Totem non permite a reprodución de CD de son"
