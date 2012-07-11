@@ -1870,8 +1870,7 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
    if (bvw->priv->download_buffering != FALSE) {
      bvw_reconfigure_fill_timeout (bvw, 0);
      bvw->priv->download_buffering = FALSE;
-     g_free (bvw->priv->download_filename);
-     bvw->priv->download_filename = NULL;
+     g_clear_pointer (&bvw->priv->download_filename, g_free);
    }
 
    /* Live, timeshift and stream buffering modes */
@@ -1910,10 +1909,8 @@ bvw_get_navigation_if_available (BaconVideoWidget *bvw)
   GstElement * nav;
   nav = gst_bin_get_by_interface (GST_BIN (bvw->priv->play),
                                         GST_TYPE_NAVIGATION);
-  if (bvw->priv->navigation) {
-    gst_object_unref (GST_OBJECT (bvw->priv->navigation));
-    bvw->priv->navigation = NULL;
-  }
+  g_clear_pointer (&bvw->priv->navigation, gst_object_unref);
+
   if (nav)
     bvw->priv->navigation = GST_NAVIGATION (nav);
 }
@@ -2031,18 +2028,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
         bvw->priv->media_has_audio = FALSE;
 
         /* clean metadata cache */
-        if (bvw->priv->tagcache) {
-          gst_tag_list_free (bvw->priv->tagcache);
-          bvw->priv->tagcache = NULL;
-        }
-        if (bvw->priv->audiotags) {
-          gst_tag_list_free (bvw->priv->audiotags);
-          bvw->priv->audiotags = NULL;
-        }
-        if (bvw->priv->videotags) {
-          gst_tag_list_free (bvw->priv->videotags);
-          bvw->priv->videotags = NULL;
-        }
+	g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
+	g_clear_pointer (&bvw->priv->audiotags, gst_tag_list_unref);
+	g_clear_pointer (&bvw->priv->videotags, gst_tag_list_unref);
 
         bvw->priv->video_width = 0;
         bvw->priv->video_height = 0;
@@ -2179,10 +2167,8 @@ bvw_set_auth_on_element (BaconVideoWidget * bvw, GstElement * element)
 		"user-pw", bvw->priv->user_pw,
 		NULL);
 
-  g_free (bvw->priv->user_id);
-  bvw->priv->user_id = NULL;
-  g_free (bvw->priv->user_pw);
-  bvw->priv->user_pw = NULL;
+  g_clear_pointer (&bvw->priv->user_id, g_free);
+  g_clear_pointer (&bvw->priv->user_pw, g_free);
 }
 
 static void
@@ -2384,8 +2370,7 @@ playbin_deep_notify_cb (GstObject  *gstobject,
   if (g_str_equal (prop->name, "temp-location") == FALSE)
     return;
 
-  g_free (bvw->priv->download_filename);
-  bvw->priv->download_filename = NULL;
+  g_clear_pointer (&bvw->priv->download_filename, g_free);
   g_object_get (G_OBJECT (prop_object),
 		"temp-location", &bvw->priv->download_filename,
 		NULL);
@@ -2611,35 +2596,19 @@ bacon_video_widget_finalize (GObject * object)
     if (bvw->priv->sig_bus_async)
       g_signal_handler_disconnect (bvw->priv->bus, bvw->priv->sig_bus_async);
 
-    gst_object_unref (bvw->priv->bus);
-    bvw->priv->bus = NULL;
+    g_clear_pointer (&bvw->priv->bus, gst_object_unref);
   }
 
-  g_free (bvw->priv->user_agent);
-  bvw->priv->user_agent = NULL;
-
-  g_free (bvw->priv->referrer);
-  bvw->priv->referrer = NULL;
-
-  g_free (bvw->priv->mrl);
-  bvw->priv->mrl = NULL;
-
-  g_free (bvw->priv->subtitle_uri);
-  bvw->priv->subtitle_uri = NULL;
-
-  g_free (bvw->priv->vis_element_name);
-  bvw->priv->vis_element_name = NULL;
+  g_clear_pointer (&bvw->priv->user_agent, g_free);
+  g_clear_pointer (&bvw->priv->referrer, g_free);
+  g_clear_pointer (&bvw->priv->mrl, g_free);
+  g_clear_pointer (&bvw->priv->subtitle_uri, g_free);
+  g_clear_pointer (&bvw->priv->vis_element_name, g_free);
 
   g_clear_object (&bvw->priv->clock);
 
-  if (bvw->priv->vis_plugins_list) {
-    g_list_free (bvw->priv->vis_plugins_list);
-    bvw->priv->vis_plugins_list = NULL;
-  }
-  if (bvw->priv->vis_plugins_ht) {
-    g_hash_table_destroy (bvw->priv->vis_plugins_ht);
-    bvw->priv->vis_plugins_ht = NULL;
-  }
+  g_clear_pointer (&bvw->priv->vis_plugins_list, g_list_free);
+  g_clear_pointer (&bvw->priv->vis_plugins_ht, g_hash_table_destroy);
 
   g_clear_object (&bvw->priv->source);
 
@@ -2653,18 +2622,9 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->update_id = 0;
   }
 
-  if (bvw->priv->tagcache) {
-    gst_tag_list_free (bvw->priv->tagcache);
-    bvw->priv->tagcache = NULL;
-  }
-  if (bvw->priv->audiotags) {
-    gst_tag_list_free (bvw->priv->audiotags);
-    bvw->priv->audiotags = NULL;
-  }
-  if (bvw->priv->videotags) {
-    gst_tag_list_free (bvw->priv->videotags);
-    bvw->priv->videotags = NULL;
-  }
+  g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
+  g_clear_pointer (&bvw->priv->audiotags, gst_tag_list_unref);
+  g_clear_pointer (&bvw->priv->videotags, gst_tag_list_unref);
 
   if (bvw->priv->tag_update_id != 0)
     g_source_remove (bvw->priv->tag_update_id);
@@ -3784,8 +3744,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->buffering = FALSE;
   bvw->priv->plugin_install_in_progress = FALSE;
   bvw->priv->download_buffering = FALSE;
-  g_free (bvw->priv->download_filename);
-  bvw->priv->download_filename = NULL;
+  g_clear_pointer (&bvw->priv->download_filename, g_free);
   bvw->priv->buffering_left = -1;
   g_clear_object (&bvw->priv->download_buffering_element);
   bvw_reconfigure_fill_timeout (bvw, 0);
@@ -3828,14 +3787,10 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   GST_LOG ("Closing");
   bvw_stop_play_pipeline (bvw);
 
-  g_free (bvw->priv->mrl);
-  bvw->priv->mrl = NULL;
-  g_free (bvw->priv->subtitle_uri);
-  bvw->priv->subtitle_uri = NULL;
-  g_free (bvw->priv->user_id);
-  bvw->priv->user_id = NULL;
-  g_free (bvw->priv->user_pw);
-  bvw->priv->user_pw = NULL;
+  g_clear_pointer (&bvw->priv->mrl, g_free);
+  g_clear_pointer (&bvw->priv->subtitle_uri, g_free);
+  g_clear_pointer (&bvw->priv->user_id, g_free);
+  g_clear_pointer (&bvw->priv->user_pw, g_free);
 
   bvw->priv->is_live = FALSE;
   bvw->priv->is_menu = FALSE;
@@ -3851,18 +3806,9 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   if (bvw->priv->eos_id != 0)
     g_source_remove (bvw->priv->eos_id);
 
-  if (bvw->priv->tagcache) {
-    gst_tag_list_free (bvw->priv->tagcache);
-    bvw->priv->tagcache = NULL;
-  }
-  if (bvw->priv->audiotags) {
-    gst_tag_list_free (bvw->priv->audiotags);
-    bvw->priv->audiotags = NULL;
-  }
-  if (bvw->priv->videotags) {
-    gst_tag_list_free (bvw->priv->videotags);
-    bvw->priv->videotags = NULL;
-  }
+  g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
+  g_clear_pointer (&bvw->priv->audiotags, gst_tag_list_unref);
+  g_clear_pointer (&bvw->priv->videotags, gst_tag_list_unref);
 
   g_object_notify (G_OBJECT (bvw), "seekable");
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
