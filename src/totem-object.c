@@ -4048,9 +4048,9 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
 	/* Connect the mouse wheel */
-	gtk_widget_add_events (GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_vbox")), GDK_SCROLL_MASK);
-	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK);
-	gtk_widget_add_events (totem->fs->seek, GDK_SCROLL_MASK);
+	gtk_widget_add_events (GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_vbox")), GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
+	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
+	gtk_widget_add_events (totem->fs->seek, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
 
 	/* FIXME Hack to fix bug #462286 and #563894 */
 	g_signal_connect (G_OBJECT (totem->fs->seek), "button-press-event",
