@@ -176,7 +176,6 @@ struct BaconVideoWidgetPrivate
   BvwAspectRatio               ratio_type;
 
   GstElement                  *play;
-  GstElement                  *source;
   GstNavigation               *navigation;
 
   guint                        update_id;
@@ -2346,21 +2345,10 @@ bvw_set_referrer_on_element (BaconVideoWidget * bvw, GstElement * element)
 }
 
 static void
-playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
+playbin_source_setup_cb (GstElement       *playbin,
+			 GstElement       *source,
+			 BaconVideoWidget *bvw)
 {
-  BaconVideoWidgetPrivate *priv = bvw->priv;
-  GstElement *source = NULL;
-
-  g_object_get (play, "source", &source, NULL);
-
-  if (priv->source != NULL) {
-    g_object_unref (priv->source);
-  }
-
-  priv->source = source;
-  if (source == NULL)
-    return;
-
   GST_DEBUG ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
   bvw_set_user_agent_on_element (bvw, source);
   bvw_set_referrer_on_element (bvw, source);
@@ -2615,8 +2603,6 @@ bacon_video_widget_finalize (GObject * object)
 
   g_clear_pointer (&bvw->priv->vis_plugins_list, g_list_free);
   g_clear_pointer (&bvw->priv->vis_plugins_ht, g_hash_table_destroy);
-
-  g_clear_object (&bvw->priv->source);
 
   if (bvw->priv->play != NULL)
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
@@ -4191,10 +4177,6 @@ bacon_video_widget_set_user_agent (BaconVideoWidget *bvw,
   g_free (priv->user_agent);
   priv->user_agent = g_strdup (user_agent);
 
-  if (priv->source) {
-    bvw_set_user_agent_on_element (bvw, priv->source);
-  }
-
   g_object_notify (G_OBJECT (bvw), "user-agent");
 }
 
@@ -4225,10 +4207,6 @@ bacon_video_widget_set_referrer (BaconVideoWidget *bvw,
   /* Referrer URIs must not have a fragment */
   if ((frag = strchr (priv->referrer, '#')) != NULL)
     *frag = '\0';
-
-  if (priv->source) {
-    bvw_set_referrer_on_element (bvw, priv->source);
-  }
 
   g_object_notify (G_OBJECT (bvw), "referrer");
 }
@@ -6029,8 +6007,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::volume",
       G_CALLBACK (notify_volume_cb), bvw);
-  g_signal_connect (bvw->priv->play, "notify::source",
-      G_CALLBACK (playbin_source_notify_cb), bvw);
+  g_signal_connect (bvw->priv->play, "source-setup",
+      G_CALLBACK (playbin_source_setup_cb), bvw);
   g_signal_connect (bvw->priv->play, "video-changed",
       G_CALLBACK (playbin_stream_changed_cb), bvw);
   g_signal_connect (bvw->priv->play, "audio-changed",
