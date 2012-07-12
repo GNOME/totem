@@ -242,6 +242,7 @@ main (int argc, char **argv)
 	g_type_init ();
 	gtk_init (&argc, &argv);
 
+	g_set_prgname ("totem");
 	g_set_application_name (_("Videos"));
 	gtk_window_set_default_icon_name ("totem");
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
