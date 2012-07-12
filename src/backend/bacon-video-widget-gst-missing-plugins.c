@@ -347,10 +347,17 @@ bacon_video_widget_gst_missing_plugins_setup (BaconVideoWidget *bvw)
 #endif
 }
 
-void 
+void
 bacon_video_widget_gst_missing_plugins_blacklist (void)
 {
-	const gchar *blacklisted_elements[] = { "ffdemux_flv", "avdemux_flv" };
+	struct {
+		const char *name;
+		gboolean remove;
+	} blacklisted_elements[] = {
+		{ "ffdemux_flv", 0 },
+		{ "avdemux_flv", 0 },
+		{ "dvdreadsrc" , 1 }
+	};
 	GstRegistry *registry;
 	guint i;
 
@@ -360,10 +367,15 @@ bacon_video_widget_gst_missing_plugins_blacklist (void)
 		GstPluginFeature *feature;
 
 		feature = gst_registry_find_feature (registry,
-						     blacklisted_elements[i],
+						     blacklisted_elements[i].name,
 						     GST_TYPE_ELEMENT_FACTORY);
 
-		if (feature)
+		if (!feature)
+			continue;
+
+		if (blacklisted_elements[i].remove)
+			gst_registry_remove_feature (registry, feature);
+		else
 			gst_plugin_feature_set_rank (feature, GST_RANK_NONE);
 	}
 }
