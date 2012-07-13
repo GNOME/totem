@@ -381,6 +381,15 @@ for plugin in ${used_plugins}; do
 
 	case ${plugin} in
 		gromit)
+			have_x11=no
+			gdk_targets=$(pkg-config --variable=targets gtk+-3.0)
+			for gdk_target in $gdk_targets; do
+				if test x$gdk_target = xx11; then
+					have_x11=yes
+					break
+				fi
+			done
+
 			if test "${have_x11}" != "yes" ; then
 				plugin_error_or_ignore "the gromit plugin is not supported on non-X11 targets"
 				add_plugin="0"
