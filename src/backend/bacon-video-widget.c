@@ -2855,8 +2855,15 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 gboolean
 bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
 {
-  //FIXME
-  return TRUE;
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  if (bvw->priv->mrl == NULL)
+    return FALSE;
+
+  if (g_str_has_prefix (bvw->priv->mrl, "dvd:/"))
+    return TRUE;
+
+  return FALSE;
 }
 
 /**
@@ -2871,8 +2878,22 @@ bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 {
-  //FIXME
-  return TRUE;
+  GstFormat fmt;
+  gint64 val;
+
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  if (bvw->priv->mrl == NULL)
+    return FALSE;
+
+  if (g_str_has_prefix (bvw->priv->mrl, "dvd:/"))
+    return TRUE;
+
+  fmt = gst_format_get_by_nick ("chapter");
+  if (gst_element_query_position (bvw->priv->play, &fmt, &val))
+    return (val > 0);
+
+  return FALSE;
 }
 
 static GList *
