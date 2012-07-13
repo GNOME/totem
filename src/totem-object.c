@@ -1791,24 +1791,21 @@ totem_time_within_seconds (TotemObject *totem)
 static void
 totem_action_direction (TotemObject *totem, TotemPlaylistDirection dir)
 {
-	if (totem_playing_dvd (totem->mrl) == FALSE &&
-		totem_playlist_has_direction (totem->playlist, dir) == FALSE
-		&& totem_playlist_get_repeat (totem->playlist) == FALSE)
+	if (bacon_video_widget_has_next_track (totem->bvw) == FALSE &&
+	    totem_playlist_has_direction (totem->playlist, dir) == FALSE &&
+	    totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-	if (totem_playing_dvd (totem->mrl) != FALSE)
-	{
-		bacon_video_widget_dvd_event (totem->bvw,
-				dir == TOTEM_PLAYLIST_DIRECTION_NEXT ?
-				BVW_DVD_NEXT_CHAPTER :
-				BVW_DVD_PREV_CHAPTER);
+	if (bacon_video_widget_has_next_track (totem->bvw) != FALSE) {
+		BvwDVDEvent event;
+		event = (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ? BVW_DVD_NEXT_CHAPTER : BVW_DVD_PREV_CHAPTER);
+		bacon_video_widget_dvd_event (totem->bvw, event);
 		return;
 	}
-	
-	if (dir == TOTEM_PLAYLIST_DIRECTION_NEXT
-			|| bacon_video_widget_is_seekable (totem->bvw) == FALSE
-			|| totem_time_within_seconds (totem) != FALSE)
-	{
+
+	if (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ||
+	    bacon_video_widget_is_seekable (totem->bvw) == FALSE ||
+	    totem_time_within_seconds (totem) != FALSE) {
 		char *mrl, *subtitle;
 
 		totem_playlist_set_direction (totem->playlist, dir);
@@ -3812,19 +3809,13 @@ update_buttons (TotemObject *totem)
 	gboolean has_item;
 
 	/* Previous */
-	if (totem_playing_dvd (totem->mrl) != FALSE)
-		has_item = bacon_video_widget_has_previous_track (totem->bvw);
-	else
-		has_item = totem_playlist_has_previous_mrl (totem->playlist);
-
+	has_item = bacon_video_widget_has_previous_track (totem->bvw) ||
+		totem_playlist_has_previous_mrl (totem->playlist);
 	totem_action_set_sensitivity ("previous-chapter", has_item);
 
 	/* Next */
-	if (totem_playing_dvd (totem->mrl) != FALSE)
-		has_item = bacon_video_widget_has_next_track (totem->bvw);
-	else
-		has_item = totem_playlist_has_next_mrl (totem->playlist);
-
+	has_item = bacon_video_widget_has_next_track (totem->bvw) ||
+		totem_playlist_has_next_mrl (totem->playlist);
 	totem_action_set_sensitivity ("next-chapter", has_item);
 }
 
