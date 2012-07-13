@@ -141,7 +141,7 @@ bacon_video_widget_properties_reset (BaconVideoWidgetProperties *props)
 }
 
 static char *
-totem_time_to_string_text (gint64 msecs)
+time_to_string_text (gint64 msecs)
 {
 	char *secs, *mins, *hours, *string;
 	int sec, min, hour, _time;
@@ -195,7 +195,7 @@ bacon_video_widget_properties_set_duration (BaconVideoWidgetProperties *props,
 	if (_time == props->priv->time)
 		return;
 
-	string = totem_time_to_string_text (_time);
+	string = time_to_string_text (_time);
 	bacon_video_widget_properties_set_label (props, "duration", string);
 	g_free (string);
 
