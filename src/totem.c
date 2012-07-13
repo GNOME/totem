@@ -194,6 +194,7 @@ app_command_line (GApplication             *app,
 
 	/* Options parsing */
 	context = totem_options_get_context ();
+	g_option_context_set_help_enabled (context, FALSE);
 	if (g_option_context_parse (context, &argc, &argv, NULL) == FALSE) {
 	        g_option_context_free (context);
 	        return 1;
