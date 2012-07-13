@@ -25,9 +25,9 @@ libgrilo_la_LIBADD =			\
         $(plugin_libadd)	\
         $(LIBGRILO_LIBS)
 libgrilo_la_CFLAGS =			\
-        $(plugin_cflags)	\
-        $(LIBGRILO_CFLAGS)	\
-		  -I $(top_srcdir)/src/backend
+        $(plugin_cflags)		\
+        $(LIBGRILO_CFLAGS)		\
+	-I $(top_srcdir)/src/gst/
 
 -include $(top_srcdir)/git.mk
 

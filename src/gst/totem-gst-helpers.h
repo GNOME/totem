@@ -31,7 +31,6 @@
 #define GST_USE_UNSTABLE_API 1
 
 #include <gst/gst.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 
 G_BEGIN_DECLS
 
@@ -52,10 +51,6 @@ typedef enum {
 void totem_gst_message_print (GstMessage *msg,
 			      GstElement *play,
 			      const char *filename);
-
-GdkPixbuf * totem_gst_playbin_get_frame (GstElement *play);
-
-GdkPixbuf * totem_gst_tag_list_get_cover (GstTagList *tag_list);
 
 G_END_DECLS
 

@@ -68,12 +68,12 @@ test_glow_button_SOURCES = \
 	totem-glow-button.h	\
 	test-glow-button.c
 
-test_glow_button_LDADD = \
-	$(DEPENDENCY_LIBS)			\
+test_glow_button_LDADD =	\
+	$(GLOW_BUTTON_LIBS)	\
 	-lm
 
-test_glow_button_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
+test_glow_button_CFLAGS =	\
+	$(GLOW_BUTTON_CFLAGS)	\
 	$(WARN_CFLAGS)		\
 	$(AM_CFLAGS)
 
@@ -98,19 +98,14 @@ totem_plugin_viewer_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 totem_plugin_viewer_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
+	$(PLUGIN_VIEWER_CFLAGS)	\
 	$(WARN_CFLAGS)		\
-	$(DBUS_CFLAGS)		\
-	$(SN_CFLAGS)		\
 	$(AM_CFLAGS)
 
 totem_plugin_viewer_LDADD = \
 	$(top_builddir)/src/backend/libbaconvideowidget.la		\
 	$(top_builddir)/src/libtotem_player.la				\
-	$(DEPENDENCY_LIBS)	\
-	$(SN_LIBS)		\
-	$(DBUS_LIBS)		\
-	$(X_LIBS)
+	$(PLUGIN_VIEWER_LIBS)
 
 totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@

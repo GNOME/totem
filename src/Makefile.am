@@ -46,13 +46,16 @@ libtotem_player_la_SOURCES = \
 	totem-time-label.c	\
 	totem-time-label.h
 
-libtotem_player_la_CPPFLAGS = \
+libtotem_player_la_CPPFLAGS =		\
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
-libtotem_player_la_LIBADD = $(DEPENDENCY_LIBS)
-libtotem_player_la_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
+libtotem_player_la_LIBADD =	\
+	$(PLAYER_LIBS)		\
+	gst/libtotemtimehelpers.la
+libtotem_player_la_CFLAGS =	\
+	$(LIBPLAYER_CFLAGS)	\
+	-I$(srcdir)/gst/	\
 	$(AM_CFLAGS)
 
 # Totem main library (used for main player; separate to allow gtk-doc to be used)
@@ -97,9 +100,7 @@ libtotem_la_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 libtotem_la_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)		\
-	$(PEAS_CFLAGS)			\
-	$(PEASGTK_CFLAGS)		\
+	$(PLAYER_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_la_LDFLAGS = \
@@ -110,9 +111,7 @@ libtotem_la_LDFLAGS = \
 libtotem_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
-	$(PEAS_LIBS)			\
-	$(PEASGTK_LIBS)			\
-	$(DEPENDENCY_LIBS)
+	$(PLAYER_LIBS)
 
 if WITH_SMCLIENT
 libtotem_la_SOURCES += \
@@ -170,16 +169,13 @@ totem_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""Totem"\"	\
 	$(AM_CPPFLAGS)
 
-totem_CFLAGS = \
-	$(PEAS_CFLAGS)		\
-	$(DEPENDENCY_CFLAGS)	\
+totem_CFLAGS =			\
+	$(PLAYER_CFLAGS)	\
 	$(AM_CFLAGS)
 
-totem_LDADD = \
-	libtotem.la		\
-	$(DEPENDENCY_LIBS)	\
-	$(X_LIBS)	\
-	$(PEAS_LIBS)
+totem_LDADD =		\
+	libtotem.la	\
+	$(PLAYER_LIBS)
 
 # Totem video thumbnailer
 totem_video_thumbnailer_SOURCES = \
@@ -191,13 +187,15 @@ totem_video_thumbnailer_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""TotemVideoThumbnailer"\"	\
 	$(AM_CPPFLAGS)
 
-totem_video_thumbnailer_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
+totem_video_thumbnailer_CFLAGS =	\
+	$(THUMBNAILER_CFLAGS)		\
 	$(AM_CFLAGS)
 
-totem_video_thumbnailer_LDADD = \
-	backend/libbaconvideowidget.la		\
-	$(DEPENDENCY_LIBS)
+totem_video_thumbnailer_LDADD =		\
+	$(THUMBNAILER_LIBS)		\
+	gst/libtotemgstpixbufhelpers.la	\
+	gst/libtotemgsthelpers.la	\
+	gst/libtotemtimehelpers.la
 
 # Nautilus Property Page
 if HAVE_NAUTILUS
@@ -215,20 +213,17 @@ libtotem_properties_page_la_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""TotemPropertiesPage"\"\
 	$(AM_CPPFLAGS)
 
-libtotem_properties_page_la_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
-	$(NAUTILUS_CFLAGS)	\
+libtotem_properties_page_la_CFLAGS =	\
+	$(NAUTILUS_CFLAGS)		\
 	$(AM_CFLAGS)
 
 libtotem_properties_page_la_LDFLAGS = \
 	-export_dynamic -avoid-version -module -no-undefined	\
 	$(AM_LDFLAGS)
 
-libtotem_properties_page_la_LIBADD = \
-	backend/libbaconvideowidget.la				\
+libtotem_properties_page_la_LIBADD =				\
 	properties/libbaconvideowidgetproperties.la		\
 	libtotem_player.la					\
-	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)
 
 noinst_PROGRAMS = test-properties-page
@@ -244,8 +239,7 @@ test_properties_page_CPPFLAGS = \
 	-I$(top_srcdir)/src/properties		\
 	$(AM_CPPFLAGS)
 
-test_properties_page_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
+test_properties_page_CFLAGS =	\
 	$(NAUTILUS_CFLAGS)	\
 	$(AM_CFLAGS)
 
@@ -253,7 +247,6 @@ test_properties_page_LDADD = \
 	backend/libbaconvideowidget.la				\
 	properties/libbaconvideowidgetproperties.la		\
 	libtotem_player.la					\
-	$(DEPENDENCY_LIBS)					\
 	$(NAUTILUS_LIBS)
 endif # HAVE_NAUTILUS
 
@@ -269,14 +262,13 @@ totem_audio_preview_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\""TotemAudioPreview"\"	\
 	$(AM_CPPFLAGS)
 
-totem_audio_preview_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
+totem_audio_preview_CFLAGS =	\
+	$(PREVIEW_CFLAGS)	\
 	$(AM_CFLAGS)
 
 totem_audio_preview_LDADD =			\
 	gst/libtotemgsthelpers.la		\
-	backend/libbaconvideowidget.la		\
-	$(DEPENDENCY_LIBS)
+	$(PREVIEW_LIBS)
 
 # Introspection
 -include $(INTROSPECTION_MAKEFILE)
@@ -293,9 +285,8 @@ introspection_sources = $(INST_H_FILES) $(filter %.c,$(libtotem_player_la_SOURCE
 Totem-1.0.gir: libtotem.la
 Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
 Totem_1_0_gir_SCANNERFLAGS = --c-include=totem.h --pkg-export=totem
-Totem_1_0_gir_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
-	$(PEAS_CFLAGS)		\
+Totem_1_0_gir_CFLAGS =		\
+	$(PLAYER_CFLAGS)	\
 	$(libtotem_la_CPPFLAGS)
 Totem_1_0_gir_LIBS = libtotem.la
 Totem_1_0_gir_FILES = $(introspection_sources)

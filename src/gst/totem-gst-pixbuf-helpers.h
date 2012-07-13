@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2010 Bastien Nocera <hadess@hadess.net>
+ * Copyright (C) 2001,2002,2003,2004,2005 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *
  * The Totem project hereby grant permission for non-gpl compatible GStreamer
  * plugins to be used and distributed together with GStreamer and Totem. This
- * permission is above and beyond the permissions granted by the GPL license
+ * permission are above and beyond the permissions granted by the GPL license
  * Totem is covered by.
  *
  * Monday 7th February 2005: Christian Schaller: Add exception clause.
@@ -25,14 +25,20 @@
  *
  */
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+#ifndef HAVE_TOTEM_GST_PIXBUF_HELPERS_H
+#define HAVE_TOTEM_GST_PIXBUF_HELPERS_H
 
-void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
-void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
+#define GST_USE_UNSTABLE_API 1
 
-gboolean totem_ratio_fits_screen (GtkWidget *widget,
-				  int video_width,
-				  int video_height,
-				  gfloat ratio);
+#include <gst/gst.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
+G_BEGIN_DECLS
+
+GdkPixbuf * totem_gst_playbin_get_frame (GstElement *play);
+
+GdkPixbuf * totem_gst_tag_list_get_cover (GstTagList *tag_list);
+
+G_END_DECLS
+
+#endif				/* HAVE_TOTEM_GST_PIXBUF_HELPERS_H */

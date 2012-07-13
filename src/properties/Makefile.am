@@ -10,7 +10,7 @@ libbaconvideowidgetproperties_la_CPPFLAGS = \
 	$(AM_CPPFLAGS)
 
 libbaconvideowidgetproperties_la_CFLAGS = \
-	$(DEPENDENCY_CFLAGS) \
+	$(PROPERTIES_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS)
 

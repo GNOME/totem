@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2010 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002-2012 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,39 @@
  *
  */
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+#include <glib/gi18n.h>
+#include <libintl.h>
 
-void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
-void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
+#include "totem-time-helpers.h"
 
-gboolean totem_ratio_fits_screen (GtkWidget *widget,
-				  int video_width,
-				  int video_height,
-				  gfloat ratio);
+char *
+totem_time_to_string (gint64 msecs)
+{
+	int sec, min, hour, _time;
 
+	_time = (int) (msecs / 1000);
+	sec = _time % 60;
+	_time = _time - sec;
+	min = (_time % (60*60)) / 60;
+	_time = _time - (min * 60);
+	hour = _time / (60*60);
+
+	if (hour > 0)
+	{
+		/* hour:minutes:seconds */
+		/* Translators: This is a time format, like "9:05:02" for 9
+		 * hours, 5 minutes, and 2 seconds. You may change ":" to
+		 * the separator that your locale uses or use "%Id" instead
+		 * of "%d" if your locale uses localized digits.
+		 */
+		return g_strdup_printf (C_("long time format", "%d:%02d:%02d"), hour, min, sec);
+	}
+
+	/* minutes:seconds */
+	/* Translators: This is a time format, like "5:02" for 5
+	 * minutes and 2 seconds. You may change ":" to the
+	 * separator that your locale uses or use "%Id" instead of
+	 * "%d" if your locale uses localized digits.
+	 */
+	return g_strdup_printf (C_("short time format", "%d:%02d"), min, sec);
+}

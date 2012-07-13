@@ -33,7 +33,7 @@
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-#include "backend/video-utils.h"
+#include "totem-time-helpers.h"
 #include "totem-time-entry.h"
 
 static void dispose (GObject *object);

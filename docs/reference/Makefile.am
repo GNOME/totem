@@ -138,11 +138,10 @@ GTKDOC_CFLAGS = \
 	-I$(top_srcdir)/src		\
 	-I$(top_srcdir)/src/backend	\
 	-I$(top_srcdir)/src/plugins	\
-	$(DEPENDENCY_CFLAGS)		\
-	$(PEAS_CFLAGS)
+	$(PLAYER_CFLAGS)
 GTKDOC_LIBS = \
 	$(top_builddir)/src/libtotem.la	\
-	$(DEPENDENCY_LIBS)
+	$(PLAYER_LIBS)
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.
 include $(top_srcdir)/gtk-doc.make

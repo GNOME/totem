@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2010 Bastien Nocera <hadess@hadess.net>
+ * Copyright © 2002-2012 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,11 @@
  *
  */
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+#ifndef _TOTEM_TIME_HELPERS_H_
+#define _TOTEM_TIME_HELPERS_H_
 
-void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
-void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
+#include <glib.h>
 
-gboolean totem_ratio_fits_screen (GtkWidget *widget,
-				  int video_width,
-				  int video_height,
-				  gfloat ratio);
+char *totem_time_to_string (gint64 msecs);
 
+#endif /* _TOTEM_TIME_HELPERS_H_ */

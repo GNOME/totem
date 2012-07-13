@@ -11,14 +11,13 @@ bvw_test_CPPFLAGS = \
 	$(DISABLE_DEPRECATED)		\
 	$(AM_CPPFLAGS)
 
-bvw_test_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)	\
-	$(MM_CFLAGS)		\
+bvw_test_CFLAGS =		\
+	$(BACKEND_CFLAGS)	\
 	$(AM_CFLAGS)
 
-bvw_test_LDADD = \
+bvw_test_LDADD =		\
 	libbaconvideowidget.la	\
-	$(DEPENDENCY_LIBS)
+	$(BACKEND_LIBS)
 
 # Marshallers
 BVW_MARSHAL_FILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
@@ -70,17 +69,14 @@ libbaconvideowidget_la_CPPFLAGS = \
 	$(DISABLE_DEPRECATED)			\
 	$(AM_CPPFLAGS)
 
-libbaconvideowidget_la_CFLAGS = \
-	$(DEPENDENCY_CFLAGS)		\
-	$(MM_CFLAGS)			\
-	$(MISSING_PLUGINS_CFLAGS)	\
+libbaconvideowidget_la_CFLAGS =	\
+	$(BACKEND_CFLAGS)	\
 	$(AM_CFLAGS)
 
-libbaconvideowidget_la_LIBADD =				\
-	$(top_builddir)/src/gst/libtotemgsthelpers.la	\
-	$(MM_LIBS)					\
-	$(X_LIBS)					\
-	$(MISSING_PLUGINS_LIBS)				\
+libbaconvideowidget_la_LIBADD =					\
+	$(top_builddir)/src/gst/libtotemgsthelpers.la		\
+	$(top_builddir)/src/gst/libtotemgstpixbufhelpers.la	\
+	$(BACKEND_LIBS)						\
 	-lm
 
 libbaconvideowidget_la_LDFLAGS= \

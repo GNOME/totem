@@ -84,6 +84,7 @@
 #include <gdesktop-enums.h>
 
 #include "totem-gst-helpers.h"
+#include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "bacon-video-osd-actor.h"

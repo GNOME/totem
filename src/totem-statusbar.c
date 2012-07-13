@@ -32,7 +32,7 @@
 #include <gtk/gtk.h>
 
 #include "totem-statusbar.h"
-#include "video-utils.h"
+#include "totem-time-helpers.h"
 
 #define SPACING 4
 #define NORMAL_CONTEXT "text"

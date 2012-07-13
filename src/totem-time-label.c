@@ -3,7 +3,7 @@
 
 #include "totem-time-label.h"
 #include <glib/gi18n.h>
-#include "video-utils.h"
+#include "totem-time-helpers.h"
 
 struct _TotemTimeLabelPrivate {
 	gint64 time;

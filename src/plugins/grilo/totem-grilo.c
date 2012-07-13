@@ -44,7 +44,7 @@
 #include <totem-dirs.h>
 #include <totem.h>
 
-#include <video-utils.h>
+#include <totem-time-helpers.h>
 
 #include "totem-search-entry.h"
 

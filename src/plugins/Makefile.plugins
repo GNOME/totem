@@ -12,11 +12,11 @@ AM_CPPFLAGS = \
 	$(DISABLE_DEPRECATED)		\
 	-I$(top_srcdir)/		\
 	-I$(top_srcdir)/src		\
-	-I$(top_srcdir)/src/plugins
+	-I$(top_srcdir)/src/plugins	\
+	-I$(top_srcdir)/src/gst
 
-plugin_cflags = \
-	$(DEPENDENCY_CFLAGS)	\
-	$(PEAS_CFLAGS)		\
+plugin_cflags =			\
+	$(PLAYER_CFLAGS)	\
 	$(WARN_CFLAGS)
 
 plugin_ldflags = \
