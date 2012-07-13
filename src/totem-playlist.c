@@ -480,6 +480,8 @@ drop_finished_cb (TotemPlaylist *playlist, GAsyncResult *result, gpointer user_d
 {
 	totem_playlist_add_mrls_finish (playlist, result, NULL);
 
+	g_clear_pointer (&playlist->priv->tree_path, gtk_tree_path_free);
+
 	/* Emit the "changed" signal once the last dropped MRL has been added to the playlist */
 	g_signal_emit (G_OBJECT (playlist),
 	               totem_playlist_table_signals[CHANGED], 0,
@@ -574,8 +576,6 @@ drop_cb (GtkWidget        *widget,
 	g_strfreev (list);
 	g_list_free (file_list);
 	gtk_drag_finish (context, TRUE, FALSE, _time);
-	gtk_tree_path_free (playlist->priv->tree_path);
-	playlist->priv->tree_path = NULL;
 }
 
 void
@@ -1635,6 +1635,8 @@ totem_playlist_finalize (GObject *object)
 
 	if (playlist->priv->current != NULL)
 		gtk_tree_path_free (playlist->priv->current);
+
+	g_clear_pointer (&playlist->priv->tree_path, gtk_tree_path_free);
 
 	G_OBJECT_CLASS (totem_playlist_parent_class)->finalize (object);
 }
