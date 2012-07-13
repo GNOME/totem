@@ -30,6 +30,9 @@
 
 #include "totem-time-helpers.h"
 
+
+/* FIXME: Remove
+ * See https://bugzilla.gnome.org/show_bug.cgi?id=679850 */
 char *
 totem_time_to_string (gint64 msecs)
 {
