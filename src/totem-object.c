@@ -113,6 +113,8 @@ enum {
 	PROP_SEEKABLE,
 	PROP_CURRENT_TIME,
 	PROP_CURRENT_MRL,
+	PROP_CURRENT_CONTENT_TYPE,
+	PROP_CURRENT_DISPLAY_NAME,
 	PROP_REMEMBER_POSITION
 };
 
@@ -281,6 +283,28 @@ totem_object_class_init (TotemObjectClass *klass)
 	 **/
 	g_object_class_install_property (object_class, PROP_CURRENT_MRL,
 					 g_param_spec_string ("current-mrl", "Current MRL", "The MRL of the current stream.",
+							      NULL, G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:current-content-type:
+	 *
+	 * The content-type of the current stream.
+	 **/
+	g_object_class_install_property (object_class, PROP_CURRENT_CONTENT_TYPE,
+					 g_param_spec_string ("current-content-type",
+							      "Current stream's content-type",
+							      "Current stream's content-type.",
+							      NULL, G_PARAM_READABLE));
+
+	/**
+	 * TotemObject:current-display-name:
+	 *
+	 * The display name of the current stream.
+	 **/
+	g_object_class_install_property (object_class, PROP_CURRENT_DISPLAY_NAME,
+					 g_param_spec_string ("current-display-name",
+							      "Current stream's display name",
+							      "Current stream's display name.",
 							      NULL, G_PARAM_READABLE));
 
 	/**
@@ -459,6 +483,12 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_CURRENT_MRL:
 		g_value_set_string (value, totem->mrl);
+		break;
+	case PROP_CURRENT_CONTENT_TYPE:
+		g_value_take_string (value, totem_playlist_get_current_content_type (totem->playlist));
+		break;
+	case PROP_CURRENT_DISPLAY_NAME:
+		g_value_take_string (value, totem_playlist_get_current_title (totem->playlist));
 		break;
 	case PROP_REMEMBER_POSITION:
 		g_value_set_boolean (value, totem->remember_position);
