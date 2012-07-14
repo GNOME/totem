@@ -611,7 +611,6 @@ typedef struct {
 	TotemObject *totem;
 	gchar *uri;
 	gchar *display_name;
-	gboolean add_to_recent;
 } AddToPlaylistData;
 
 static void
@@ -622,8 +621,6 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 
 	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
 
-	if (data->add_to_recent != FALSE)
-		totem_action_add_recent (data->totem, data->uri, data->display_name, NULL);
 	end = totem_playlist_get_last (playlist);
 
 	totem_signal_unblock_by_data (playlist, data->totem);
@@ -672,7 +669,6 @@ totem_object_add_to_playlist_and_play (TotemObject *totem,
 	data->totem = g_object_ref (totem);
 	data->uri = g_strdup (uri);
 	data->display_name = g_strdup (display_name);
-	data->add_to_recent = add_to_recent;
 
 	totem_playlist_add_mrl (totem->playlist, uri, display_name, TRUE,
 	                        NULL, (GAsyncReadyCallback) add_to_playlist_and_play_cb, data);
@@ -1808,7 +1804,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 			totem->mrl = NULL;
 			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		} else {
-			char *display_name, *content_type;
 			/* cast is to shut gcc up */
 			const GtkTargetEntry source_table[] = {
 				{ (gchar*) "text/uri-list", 0, 0 }
@@ -1821,12 +1816,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 					     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
 					     source_table, G_N_ELEMENTS (source_table),
 					     GDK_ACTION_COPY);
-
-			display_name = totem_playlist_get_current_title (totem->playlist);
-			content_type = totem_playlist_get_current_content_type (totem->playlist);
-			totem_action_add_recent (totem, totem->mrl, display_name, content_type);
-			g_free (display_name);
-			g_free (content_type);
 		}
 	}
 	update_buttons (totem);
