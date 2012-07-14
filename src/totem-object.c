@@ -1194,6 +1194,7 @@ totem_action_eject (TotemObject *totem)
 	totem->mrl = NULL;
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
+	totem->has_played_emitted = FALSE;
 
 	/* The volume monitoring will take care of removing the items */
 	g_mount_eject_with_operation (mount, G_MOUNT_UNMOUNT_NONE, NULL, NULL, NULL, NULL);
@@ -1230,8 +1231,13 @@ totem_object_action_play (TotemObject *totem)
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 
-	if (retval != FALSE)
+	if (retval != FALSE) {
+		if (totem->has_played_emitted == FALSE) {
+			totem_file_has_played (totem, totem->mrl);
+			totem->has_played_emitted = TRUE;
+		}
 		return;
+	}
 
 	disp = totem_uri_escape_for_display (totem->mrl);
 	msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
@@ -1364,7 +1370,11 @@ totem_object_action_play_pause (TotemObject *totem)
 	}
 
 	if (bacon_video_widget_is_playing (totem->bvw) == FALSE) {
-		bacon_video_widget_play (totem->bvw, NULL);
+		if (bacon_video_widget_play (totem->bvw, NULL) != FALSE &&
+		    totem->has_played_emitted == FALSE) {
+			totem_file_has_played (totem, totem->mrl);
+			totem->has_played_emitted = TRUE;
+		}
 		play_pause_set_label (totem, STATE_PLAYING);
 	} else {
 		bacon_video_widget_pause (totem->bvw);
@@ -1660,6 +1670,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
 		totem_file_closed (totem);
+		totem->has_played_emitted = FALSE;
 		play_pause_set_label (totem, STATE_STOPPED);
 		update_fill (totem, -1.0);
 	}
@@ -2372,11 +2383,15 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
+	totem->has_played_emitted = FALSE;
 	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
-	bacon_video_widget_play (bvw, NULL);
+	if (bacon_video_widget_play (bvw, NULL) != FALSE) {
+		totem_file_has_played (totem, totem->mrl);
+		totem->has_played_emitted = TRUE;
+	}
 	g_free (new_mrl);
 }
 
@@ -2743,6 +2758,7 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 				changed = totem_playlist_clear (totem->playlist);
 				bacon_video_widget_close (totem->bvw);
 				totem_file_closed (totem);
+				totem->has_played_emitted = FALSE;
 				cleared = TRUE;
 			}
 
@@ -3035,6 +3051,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		if (url == NULL) {
 			bacon_video_widget_close (totem->bvw);
 			totem_file_closed (totem);
+			totem->has_played_emitted = FALSE;
 			totem_action_set_mrl (totem, NULL, NULL);
 			break;
 		}

@@ -156,6 +156,7 @@ struct _TotemObject {
 	TotemOpenLocation *open_location;
 	gboolean remember_position;
 	gboolean disable_kbd_shortcuts;
+	gboolean has_played_emitted;
 };
 
 GtkWidget *totem_volume_create (void);
