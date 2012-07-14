@@ -2500,10 +2500,10 @@ totem_playlist_get_current_mrl (TotemPlaylist *playlist, char **subtitle)
 }
 
 char *
-totem_playlist_get_current_title (TotemPlaylist *playlist, char **content_type)
+totem_playlist_get_current_title (TotemPlaylist *playlist)
 {
 	GtkTreeIter iter;
-	char *path;
+	char *title;
 
 	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), NULL);
 
@@ -2511,23 +2511,37 @@ totem_playlist_get_current_title (TotemPlaylist *playlist, char **content_type)
 		return NULL;
 
 	gtk_tree_model_get_iter (playlist->priv->model,
-			&iter,
-			playlist->priv->current);
+				 &iter,
+				 playlist->priv->current);
 
-	if (content_type != NULL) {
-		gtk_tree_model_get (playlist->priv->model,
-				    &iter,
-				    FILENAME_COL, &path,
-				    MIME_TYPE_COL, content_type,
-				    -1);
-	} else {
-		gtk_tree_model_get (playlist->priv->model,
-				    &iter,
-				    FILENAME_COL, &path,
-				    -1);
-	}
+	gtk_tree_model_get (playlist->priv->model,
+			    &iter,
+			    FILENAME_COL, &title,
+			    -1);
+	return title;
+}
 
-	return path;
+char *
+totem_playlist_get_current_content_type (TotemPlaylist *playlist)
+{
+	GtkTreeIter iter;
+	char *content_type;
+
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), NULL);
+
+	if (update_current_from_playlist (playlist) == FALSE)
+		return NULL;
+
+	gtk_tree_model_get_iter (playlist->priv->model,
+				 &iter,
+				 playlist->priv->current);
+
+	gtk_tree_model_get (playlist->priv->model,
+			    &iter,
+			    MIME_TYPE_COL, &content_type,
+			    -1);
+
+	return content_type;
 }
 
 char *

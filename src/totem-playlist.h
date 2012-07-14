@@ -130,8 +130,8 @@ void       totem_playlist_clear_with_g_mount (TotemPlaylist *playlist,
 					      GMount *mount);
 char      *totem_playlist_get_current_mrl (TotemPlaylist *playlist,
 					   char **subtitle);
-char      *totem_playlist_get_current_title (TotemPlaylist *playlist,
-					     char         **content_type);
+char      *totem_playlist_get_current_title (TotemPlaylist *playlist);
+char      *totem_playlist_get_current_content_type (TotemPlaylist *playlist);
 char      *totem_playlist_get_title (TotemPlaylist *playlist,
 				     guint title_index);
 

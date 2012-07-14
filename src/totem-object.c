@@ -723,7 +723,7 @@ totem_object_get_title_at_playlist_pos (TotemObject *totem, guint playlist_index
 char *
 totem_get_short_title (TotemObject *totem)
 {
-	return totem_playlist_get_current_title (totem->playlist, NULL);
+	return totem_playlist_get_current_title (totem->playlist);
 }
 
 /**
@@ -1792,7 +1792,8 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 					     source_table, G_N_ELEMENTS (source_table),
 					     GDK_ACTION_COPY);
 
-			display_name = totem_playlist_get_current_title (totem->playlist, &content_type);
+			display_name = totem_playlist_get_current_title (totem->playlist);
+			content_type = totem_playlist_get_current_content_type (totem->playlist);
 			totem_action_add_recent (totem, totem->mrl, display_name, content_type);
 			g_free (display_name);
 			g_free (content_type);
@@ -2419,7 +2420,7 @@ on_playlist_change_name (TotemPlaylist *playlist, TotemObject *totem)
 {
 	char *name;
 
-	name = totem_playlist_get_current_title (playlist, NULL);
+	name = totem_playlist_get_current_title (playlist);
 	if (name != NULL) {
 		update_mrl_label (totem, name);
 		g_free (name);
