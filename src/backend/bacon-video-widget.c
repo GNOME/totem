@@ -2890,6 +2890,10 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
     return TRUE;
 
   fmt = gst_format_get_by_nick ("chapter");
+  /* If chapter isn't registered, then there's no chapters support */
+  if (fmt == GST_FORMAT_UNDEFINED)
+    return FALSE;
+
   if (gst_element_query_position (bvw->priv->play, fmt, &val))
     return (val > 0);
 
