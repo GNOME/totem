@@ -115,7 +115,7 @@ class IplayerPlugin (GObject.Object, Peas.Activatable):
 
         # Add the programme to the playlist and play it
         title = tree_store.get_value (tree_iter, 0)
-        self.totem.add_to_playlist_and_play (mrl, title, True)
+        self.totem.add_to_playlist_and_play (mrl, title)
 
     def _populate_programme_list (self, feed, tree_store, category_iter):
         if self.debug:

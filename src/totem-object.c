@@ -648,15 +648,13 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
  * @totem: a #TotemObject
  * @uri: the URI to add to the playlist
  * @display_name: the display name of the URI
- * @add_to_recent: if %TRUE, add the URI to the recent items list
  *
  * Add @uri to the playlist and play it immediately.
  **/
 void
 totem_object_add_to_playlist_and_play (TotemObject *totem,
 				const char *uri,
-				const char *display_name,
-				gboolean add_to_recent)
+				const char *display_name)
 {
 	AddToPlaylistData *data;
 

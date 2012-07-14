@@ -262,8 +262,7 @@ char *	totem_object_get_title_at_playlist_pos	(TotemObject *totem,
 #define totem_add_to_playlist_and_play totem_object_add_to_playlist_and_play
 void totem_object_add_to_playlist_and_play	(TotemObject *totem,
 						 const char *uri,
-						 const char *display_name,
-						 gboolean add_to_recent);
+						 const char *display_name);
 #define totem_get_current_mrl totem_object_get_current_mrl
 char *  totem_object_get_current_mrl		(TotemObject *totem);
 #define totem_set_current_subtitle totem_object_set_current_subtitle

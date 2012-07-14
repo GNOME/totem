@@ -565,8 +565,7 @@ play (TotemGriloPlugin *self,
 	url = grl_media_get_url (media);
 	if (url != NULL) {
 		totem_add_to_playlist_and_play (self->priv->totem, url,
-		                                grl_media_get_title (media),
-		                                TRUE);
+		                                grl_media_get_title (media));
 		return;
 	}
 
@@ -1234,8 +1233,7 @@ add_to_pls_cb (GtkAction *action, TotemGriloPlugin *self)
 {
 	totem_add_to_playlist_and_play (self->priv->totem,
 	                                grl_media_get_url (self->priv->selected_media),
-	                                grl_media_get_title (self->priv->selected_media),
-	                                TRUE);
+	                                grl_media_get_title (self->priv->selected_media));
 }
 
 static void

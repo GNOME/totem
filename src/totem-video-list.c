@@ -378,7 +378,7 @@ row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *
 		goto finish;
 
 	if (mrl != NULL)
-		totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name, FALSE);
+		totem_add_to_playlist_and_play (self->priv->totem, mrl, display_name);
 
 finish:
 	g_free (mrl);
