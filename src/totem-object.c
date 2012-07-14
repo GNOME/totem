@@ -119,6 +119,7 @@ enum {
 enum {
 	FILE_OPENED,
 	FILE_CLOSED,
+	FILE_HAS_PLAYED,
 	METADATA_UPDATED,
 	GET_USER_AGENT,
 	GET_TEXT_SUBTITLE,
@@ -304,6 +305,22 @@ totem_object_class_init (TotemObjectClass *klass)
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemObjectClass, file_opened),
+				NULL, NULL,
+				g_cclosure_marshal_VOID__STRING,
+				G_TYPE_NONE, 1, G_TYPE_STRING);
+
+	/**
+	 * TotemObject::file-has-played:
+	 * @totem: the #TotemObject which received the signal
+	 * @mrl: the MRL of the opened stream
+	 *
+	 * The #TotemObject::file-has-played signal is emitted when a new stream has started playing in Totem.
+	 */
+	totem_table_signals[FILE_HAS_PLAYED] =
+		g_signal_new ("file-has-played",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (TotemObjectClass, file_has_played),
 				NULL, NULL,
 				g_cclosure_marshal_VOID__STRING,
 				G_TYPE_NONE, 1, G_TYPE_STRING);
@@ -793,6 +810,21 @@ totem_file_closed (TotemObject *totem)
 		       totem_table_signals[FILE_CLOSED],
 		       0);
 
+}
+
+/**
+ * totem_file_has_played:
+ * @totem: a #TotemObject
+ *
+ * Emits the #TotemObject::file-played signal on @totem.
+ **/
+void
+totem_file_has_played (TotemObject *totem,
+		       const char  *mrl)
+{
+	g_signal_emit (G_OBJECT (totem),
+		       totem_table_signals[FILE_HAS_PLAYED],
+		       0, mrl);
 }
 
 /**
