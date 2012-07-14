@@ -195,7 +195,8 @@ totem_video_thumbnailer_LDADD =		\
 	$(THUMBNAILER_LIBS)		\
 	gst/libtotemgstpixbufhelpers.la	\
 	gst/libtotemgsthelpers.la	\
-	gst/libtotemtimehelpers.la
+	gst/libtotemtimehelpers.la	\
+	-lm
 
 # Nautilus Property Page
 if HAVE_NAUTILUS
