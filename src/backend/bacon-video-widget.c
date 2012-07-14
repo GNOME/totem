@@ -4437,7 +4437,11 @@ setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
   const char *factory_name;
 
   ensure_vis_plugins_list (bvw);
+
   factory_name = g_hash_table_lookup (bvw->priv->vis_plugins_ht, vis_name);
+  if (factory_name == NULL)
+    return NULL;
+
   return gst_element_factory_find (factory_name);
 }
 
