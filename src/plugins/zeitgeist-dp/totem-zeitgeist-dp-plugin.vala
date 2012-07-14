@@ -32,8 +32,8 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
 
     current_media = MediaInfo ();
 
-    signals += Signal.connect_swapped (totem, "file-opened",
-                                       (Callback) file_opened, this);
+    signals += Signal.connect_swapped (totem, "file-has-played",
+                                       (Callback) file_has_played, this);
     signals += Signal.connect_swapped (totem, "file-closed",
                                        (Callback)file_closed, this);
     signals += Signal.connect_swapped (totem, "metadata-updated",
@@ -84,11 +84,9 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
     timeout_id = Timeout.add (interval, timeout_cb);
   }
 
-  private void file_opened (string mrl, Totem.Object totem) {
-    if (current_media.mrl != null) {
-      /* we don't always get file-closed, so lets simulate it */
+  private void file_has_played (string mrl, Totem.Object totem) {
+    if (current_media.mrl != null)
       file_closed (totem);
-    }
 
     current_media = MediaInfo ();
     current_media.mrl = mrl;
