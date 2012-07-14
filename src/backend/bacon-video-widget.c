@@ -2890,7 +2890,7 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
     return TRUE;
 
   fmt = gst_format_get_by_nick ("chapter");
-  if (gst_element_query_position (bvw->priv->play, &fmt, &val))
+  if (gst_element_query_position (bvw->priv->play, fmt, &val))
     return (val > 0);
 
   return FALSE;
