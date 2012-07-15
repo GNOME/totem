@@ -487,7 +487,7 @@ on_recent_file_item_activated (GtkAction *action,
 	uri = gtk_recent_info_get_uri (recent_info);
 	display_name = gtk_recent_info_get_display_name (recent_info);
 
-	totem_add_to_playlist_and_play (totem, uri, display_name, FALSE);
+	totem_add_to_playlist_and_play (totem, uri, display_name);
 }
 
 static gint
