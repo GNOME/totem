@@ -5258,7 +5258,8 @@ bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
     goto done;
   }
 
-  /* try to guess from duration (this is very unreliable though) */
+  /* Try to guess from duration. This is very unreliable
+   * though so don't save it */
   if (bvw->priv->stream_length == 0) {
     res = (bacon_video_widget_get_stream_length (bvw) > 0);
   } else {
