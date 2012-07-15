@@ -2086,6 +2086,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 	  bacon_video_widget_seek_time_no_lock (bvw, _time, 0, NULL);
 	}
 	bvw_get_navigation_if_available (bvw);
+	bacon_video_widget_get_stream_length (bvw);
+	bacon_video_widget_is_seekable (bvw);
       break;
     }
 
