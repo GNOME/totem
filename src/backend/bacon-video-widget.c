@@ -2393,16 +2393,9 @@ playbin_deep_notify_cb (GstObject  *gstobject,
 static gboolean
 bvw_query_timeout (BaconVideoWidget *bvw)
 {
-  gint64 pos = -1, len = -1;
+  gint64 pos = -1;
 
-  /* check length/pos of stream */
-  if (gst_element_query_duration (bvw->priv->play, GST_FORMAT_TIME, &len)) {
-    if (len != -1)
-      bvw->priv->stream_length = len / GST_MSECOND;
-  } else {
-    GST_DEBUG ("could not get duration");
-  }
-
+  /* check pos of stream */
   if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &pos)) {
     if (pos != -1) {
       got_time_tick (GST_ELEMENT (bvw->priv->play), pos, bvw);
