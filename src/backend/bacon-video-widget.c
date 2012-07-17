@@ -2090,6 +2090,9 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 	if (_time >= 0) {
 	  GST_DEBUG ("Have an old seek to schedule, doing it now");
 	  bacon_video_widget_seek_time_no_lock (bvw, _time, 0, NULL);
+	} else if (bvw->priv->target_state == GST_STATE_PLAYING) {
+	  GST_DEBUG ("Maybe starting deferred playback after seek");
+	  bacon_video_widget_play (bvw, NULL);
 	}
 	bvw_get_navigation_if_available (bvw);
 	bacon_video_widget_get_stream_length (bvw);
@@ -3620,6 +3623,8 @@ bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
     return FALSE;
 
   bvw->priv->seek_time = -1;
+
+  gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
   gst_element_seek (bvw->priv->play, bvw->priv->rate,
 		    GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | flag,
