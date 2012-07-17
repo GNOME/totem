@@ -1911,10 +1911,10 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
 
     gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
     if (cur_state != GST_STATE_PAUSED) {
-      GST_DEBUG ("Buffering ... temporarily pausing playback");
+      GST_DEBUG ("Buffering ... temporarily pausing playback %d%%", percent);
       gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
     } else {
-      GST_LOG ("Buffering (already paused) ... %d", percent);
+      GST_LOG ("Buffering (already paused) ... %d%%", percent);
     }
     bvw->priv->buffering = TRUE;
   } else {
