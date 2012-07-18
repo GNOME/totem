@@ -268,7 +268,8 @@ struct BaconVideoWidgetPrivate
   GstElement                  *download_buffering_element;
   char                        *download_filename;
   /* used to compute when the download buffer has gone far
-   * enough to start playback */
+   * enough to start playback, not "amount of buffering time left
+   * to reach 100% fill-level" */
   gint64                       buffering_left;
 
   /* for easy codec installation */
