@@ -77,33 +77,34 @@ rm -f conf pid lock log access_log
 
 # Setup the config file
 
-echo "LoadModule env_module /etc/httpd/modules/mod_env.so" >> conf
-#echo "LoadModule mime_magic_module /etc/httpd/modules/mod_mime_magic.so" >> conf
-echo "LoadModule mime_module /etc/httpd/modules/mod_mime.so" >> conf
-echo "LoadModule dir_module /etc/httpd/modules/mod_dir.so" >> conf
-echo "LoadModule autoindex_module /etc/httpd/modules/mod_autoindex.so" >> conf
-echo "LoadModule rewrite_module  /etc/httpd/modules/mod_rewrite.so" >> conf
-echo "LoadModule log_config_module /etc/httpd/modules/mod_log_config.so" >> conf
+cat > conf << EOF
+LoadModule env_module /etc/httpd/modules/mod_env.so
+#echo "LoadModule mime_magic_module /etc/httpd/modules/mod_mime_magic.so
+LoadModule mime_module /etc/httpd/modules/mod_mime.so
+LoadModule dir_module /etc/httpd/modules/mod_dir.so
+LoadModule autoindex_module /etc/httpd/modules/mod_autoindex.so
+LoadModule rewrite_module  /etc/httpd/modules/mod_rewrite.so
+LoadModule log_config_module /etc/httpd/modules/mod_log_config.so
 
-echo "ServerRoot \"$ROOTDIR\""                  >> conf
-echo "PidFile pid"                              >> conf
-echo "LockFile lock"                            >> conf
-#echo "LogLevel crit"                            >> conf
-echo "LogLevel info"                            >> conf
-echo "ErrorLog log"                             >> conf
-echo 'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined' >> conf
-echo "CustomLog access_log combined"		>> conf
-echo "TypesConfig /etc/mime.types"              >> conf
-echo "DocumentRoot \"$DOCDIR\""                 >> conf
-echo "<Directory \"$DOCDIR\">"                  >> conf
-echo "AllowOverride All"                        >> conf
-echo "</Directory>"                             >> conf
-echo                                            >> conf
-echo "StartServers 1"                           >> conf
-echo "MinSpareServers 1"                        >> conf
-echo "MaxSpareServers 1"                        >> conf
-echo "MaxClients 3"                             >> conf
-echo                                            >> conf
+ServerRoot "$ROOTDIR"
+PidFile pid
+LockFile lock
+# LogLevel crit
+LogLevel info
+ErrorLog log
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+CustomLog access_log combined
+TypesConfig /etc/mime.types
+DocumentRoot "$DOCDIR"
+<Directory "$DOCDIR">
+AllowOverride All
+</Directory>
+
+StartServers 1
+MinSpareServers 1
+MaxSpareServers 1
+MaxClients 3
+EOF
 
 popd > /dev/null
 
