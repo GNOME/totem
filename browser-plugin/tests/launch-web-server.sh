@@ -85,6 +85,7 @@ LoadModule dir_module /etc/httpd/modules/mod_dir.so
 LoadModule autoindex_module /etc/httpd/modules/mod_autoindex.so
 LoadModule rewrite_module  /etc/httpd/modules/mod_rewrite.so
 LoadModule log_config_module /etc/httpd/modules/mod_log_config.so
+LoadModule bw_module /etc/httpd/modules/mod_bw.so
 
 ServerRoot "$ROOTDIR"
 PidFile pid
@@ -95,15 +96,23 @@ ErrorLog log
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 CustomLog access_log combined
 TypesConfig /etc/mime.types
-DocumentRoot "$DOCDIR"
-<Directory "$DOCDIR">
-AllowOverride All
-</Directory>
+
+<VirtualHost *:$PORT>
+  DocumentRoot "$DOCDIR"
+  BandWidthModule On
+  ForceBandWidthModule On
+  # Max 400 kB/s for files bigger than 10 megs
+  LargeFileLimit * 10000 400000
+
+  <Directory "$DOCDIR">
+    AllowOverride All
+  </Directory>
+</VirtualHost>
 
 StartServers 1
 MinSpareServers 1
 MaxSpareServers 1
-MaxClients 3
+MaxClients 10
 EOF
 
 popd > /dev/null
