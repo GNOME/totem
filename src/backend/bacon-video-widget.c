@@ -1855,11 +1855,11 @@ bvw_download_buffering_done (BaconVideoWidget *bvw)
     return TRUE;
   }
 
-  if (bvw->priv->buffering_left * BUFFERING_LEFT_RATIO < bvw->priv->stream_length) {
+  if (bvw->priv->buffering_left * BUFFERING_LEFT_RATIO < bvw->priv->stream_length - bvw->priv->current_time) {
     GST_DEBUG ("Buffering left: %lld * %f = %lld < %lld",
 	       bvw->priv->buffering_left, BUFFERING_LEFT_RATIO,
 	       bvw->priv->buffering_left * BUFFERING_LEFT_RATIO,
-	       bvw->priv->stream_length);
+	       bvw->priv->stream_length - bvw->priv->current_time);
     return TRUE;
   }
   return FALSE;
