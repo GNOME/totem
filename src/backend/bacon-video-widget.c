@@ -101,6 +101,7 @@
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
 
 #define MAX_NETWORK_SPEED 10752
+#define BUFFERING_LEFT_RATIO 1.1
 
 /* Helper constants */
 #define NANOSECS_IN_SEC 1000000000
@@ -1854,9 +1855,10 @@ bvw_download_buffering_done (BaconVideoWidget *bvw)
     return TRUE;
   }
 
-  if (bvw->priv->buffering_left * 1.1 < bvw->priv->stream_length) {
-    GST_DEBUG ("Buffering left: %lld * 1.1 = %lld < %lld",
-	       bvw->priv->buffering_left, bvw->priv->buffering_left * 1.1,
+  if (bvw->priv->buffering_left * BUFFERING_LEFT_RATIO < bvw->priv->stream_length) {
+    GST_DEBUG ("Buffering left: %lld * %f = %lld < %lld",
+	       bvw->priv->buffering_left, BUFFERING_LEFT_RATIO,
+	       bvw->priv->buffering_left * BUFFERING_LEFT_RATIO,
 	       bvw->priv->stream_length);
     return TRUE;
   }
