@@ -2439,6 +2439,17 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
 	       ", buffering left %" G_GINT64_FORMAT ", percent %d%%",
 	       start, stop, bvw->priv->buffering_left, percent);
 
+#if 0
+    guint i;
+    for (i = 0; i < n_ranges; i++) {
+      gint64 n_start, n_stop;
+      gst_query_parse_nth_buffering_range (query, i, &n_start, &n_stop);
+      GST_DEBUG ("%s range %d: start %" G_GINT64_FORMAT " stop %" G_GINT64_FORMAT,
+		 n_stop == stop ? "*" : " ",
+		 i, n_start, n_stop);
+    }
+#endif
+
     if (stop != -1)
       fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
     else
