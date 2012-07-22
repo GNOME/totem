@@ -4002,7 +4002,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
         val += dir;
         GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
         gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
-            GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, 0);
+            GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, G_GINT64_CONSTANT (0));
 	bvw->priv->rate = FORWARD_RATE;
         g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
       } else {
@@ -5889,7 +5889,7 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
       event = gst_event_new_seek (FORWARD_RATE,
 				  GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
 				  GST_SEEK_TYPE_SET, cur,
-				  GST_SEEK_TYPE_SET, GST_CLOCK_TIME_NONE);
+				  GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0));
       if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
 	GST_WARNING ("Failed to set playback direction to forward");
       } else {
