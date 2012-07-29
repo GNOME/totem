@@ -4,97 +4,466 @@
 #
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004, 2005.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
+# Lukács Bence <lukacs.bence1 at gmail dot com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 17:03+0200\n"
-"PO-Revision-Date: 2012-04-04 17:03+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
+"cgi?product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-07-19 15:25+0000\n"
+"PO-Revision-Date: 2012-07-29 12:48+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
-"Language: \n"
+"Language-Team: Magyar <gnome-hu-list at gnome dot org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1180
+#: ../src/totem-object.c:1650 ../src/totem-statusbar.c:115
+msgid "Stopped"
+msgstr "Leállítva"
+
+#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1173
+msgid "Paused"
+msgstr "Szüneteltetve"
+
+#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1166
+msgid "Playing"
+msgstr "Lejátszás"
+
+#: ../browser-plugin/totem-plugin-viewer.c:386
+#: ../src/plugins/screensaver/totem-screensaver.c:97
+msgid "Playing a movie"
+msgstr "Film lejátszása"
+
+#: ../browser-plugin/totem-plugin-viewer.c:443
+msgid "No URI to play"
+msgstr "Nincs lejátszandó URI cím"
+
+#: ../browser-plugin/totem-plugin-viewer.c:676
+#: ../browser-plugin/totem-plugin-viewer.c:1700
+msgid "Totem Movie Player"
+msgstr "Totem médialejátszó"
+
+#. translators: this is:
+#. * Open With ApplicationName
+#. * as in nautilus' right-click menu
+#: ../browser-plugin/totem-plugin-viewer.c:1120
+#, c-format
+msgid "_Open with \"%s\""
+msgstr "Megnyitás e_zzel: „%s”"
+
+#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2475
+msgid "An error occurred"
+msgstr "Hiba történt"
+
+#: ../browser-plugin/totem-plugin-viewer.c:2033
+msgid "No playlist or playlist empty"
+msgstr "Nem létező vagy üres lejátszólista"
+
+#: ../browser-plugin/totem-plugin-viewer.c:2128
+msgid "Movie browser plugin"
+msgstr "Médialejátszó böngészőbővítmény"
+
+#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:239
+msgid "Could not initialize the thread-safe libraries."
+msgstr "A szálbiztos programkönyvtárak nem készíthetők elő."
+
+#: ../browser-plugin/totem-plugin-viewer.c:2144
+msgid "Verify your system installation. The Totem plugin will now exit."
+msgstr "Ellenőrizze a rendszer telepítését. A Totem bővítmény most kilép."
 
 #: ../data/fullscreen.ui.h:1
 msgid "Leave Fullscreen"
 msgstr "Teljes képernyő elhagyása"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:102
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:81
 msgid "Time:"
 msgstr "Idő:"
 
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+msgid "Allow the screensaver to activate when playing audio"
+msgstr "A képernyővédő aktivizálódhat hang lejátszása esetén"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+msgid ""
+"Allow the screensaver to activate when playing audio. Disable if you have "
+"monitor-powered speakers."
+msgstr ""
+"A képernyővédő aktivizálódhat hang lejátszása esetén. Tiltsa le, ha "
+"monitorról működtetett hangszórókat használ."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+msgid "Show visual effects when no video is displayed"
+msgstr "Vizuális effektusok megjelenítése, amikor nincs videólejátszás"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+msgid "Show visual effects when playing an audio only file."
+msgstr "Vizuális effektusok megjelenítése hangfájl lejátszásánál."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+msgid "Name of the visual effects plugin"
+msgstr "A vizuáliseffektus-bővítmény neve"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
+msgid "The brightness of the video"
+msgstr "A videó fényerőssége"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
+msgid "The contrast of the video"
+msgstr "A videó kontrasztja"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+msgid "The hue of the video"
+msgstr "A videó árnyalata"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+msgid "The saturation of the video"
+msgstr "A videó telítettsége"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+msgid "Resize the canvas automatically on file load"
+msgstr "Vászon automatikus átméretezése fájl betöltésekor"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+msgid "Repeat mode"
+msgstr "Ismétlés mód"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+msgid "Shuffle mode"
+msgstr "Véletlenszerű lejátszás mód"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+msgid "Whether to disable deinterlacing for interlaced movies"
+msgstr "A váltottsoros videók váltottsorosság-mentesítése letiltandó-e"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+msgid "Whether to enable debug for the playback engine"
+msgstr "A hibakeresés engedélyezve legyen-e a lejátszómotornál"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+msgid "Type of audio output to use"
+msgstr "A használandó hangkimenet típusa"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+msgid "Visualization quality setting"
+msgstr "Vizualizáció minőségbeállítása"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+msgid "Quality setting for the audio visualization."
+msgstr "Minőségbeállítás a hangvizualizációhoz."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+msgid "Network buffering threshold"
+msgstr "Hálózati pufferelés küszöbszintje"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+msgid ""
+"Amount of data to buffer for network streams before starting to display the "
+"stream (in seconds)."
+msgstr ""
+"Pufferelendő adat mennyisége hálózati folyamok esetén a folyam "
+"megjelenítésének megkezdése előtt (másodpercekben)."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+msgid "Subtitle font"
+msgstr "Feliratok betűkészlete"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+msgid "Pango font description for subtitle rendering."
+msgstr "A feliratok megjelenítéséhez használt Pango betűkészlet neve."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+msgid "Subtitle encoding"
+msgstr "Felirat betűkészlete"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+msgid "Encoding character set for subtitle."
+msgstr "Felirat kódolása."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+msgid "Default location for the \"Open...\" dialogs"
+msgstr "Az alapértelmezett hely a „Megnyitás…” ablakokban"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+msgid ""
+"Default location for the \"Open...\" dialogs. Default is the current "
+"directory."
+msgstr ""
+"A „Megnyitás…” ablakokban az alapértelmezett hely, az alapértelmezés az "
+"aktuális könyvtár."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+msgid "Default location for the \"Take Screenshot\" dialogs"
+msgstr "Az alapértelmezett hely a „Képernyőkép készítése” ablakokban"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
+msgid ""
+"Default location for the \"Take Screenshot\" dialogs. Default is the "
+"Pictures directory."
+msgstr ""
+"A „Képernyőkép készítése” ablakokban az alapértelmezett hely, az "
+"alapértelmezés a Képek könyvtár."
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
+msgid "Whether to disable the plugins in the user's home directory"
+msgstr "A felhasználó saját könyvtárában található bővítmények letiltandók-e"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
+msgid "Whether to disable the keyboard shortcuts"
+msgstr "A gyorsbillentyűk letiltandók-e"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
+msgid "Whether to autoload text subtitle files when a movie is loaded"
+msgstr "A feliratfájlok automatikusan betöltendők-e film betöltésekor"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
+msgid "Whether to autoload external chapter files when a movie is loaded"
+msgstr "A külső fejezetfájlok automatikusan betöltendők-e film betöltésekor"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
+msgid ""
+"Whether to remember the position of played audio/video files when pausing or "
+"closing them"
+msgstr ""
+"A lejátszott hang/videófájlok pozíciója megjegyzendő-e szüneteltetéskor vagy "
+"bezárásukkor"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+msgid "Active plugins list"
+msgstr "Aktív bővítmények listája"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:34
+msgid ""
+"A list of the names of the plugins which are currently active (loaded and "
+"running)."
+msgstr "A jelenleg aktív (betöltött és futó) bővítmények neveinek listája."
+
 #: ../data/playlist.ui.h:1
-msgid "Add..."
-msgstr "Hozzáadás…"
-
-#: ../data/playlist.ui.h:2 ../data/video-list.ui.h:2
-msgid "Copy the location to the clipboard"
-msgstr "A hely másolása a vágólapra"
-
-#: ../data/playlist.ui.h:3
-msgid "Move Down"
-msgstr "Lefelé mozgatás"
-
-#: ../data/playlist.ui.h:4
-msgid "Move Up"
-msgstr "Felfelé mozgatás"
-
-#: ../data/playlist.ui.h:5
-msgid "Remove"
-msgstr "Eltávolítás"
-
-#: ../data/playlist.ui.h:6
-msgid "Remove file from playlist"
-msgstr "Fájl eltávolítása a lejátszólistáról"
-
-#: ../data/playlist.ui.h:7
-msgid "Save Playlist..."
-msgstr "Lejátszólista mentése…"
-
-#: ../data/playlist.ui.h:8 ../data/totem.ui.h:77
-msgid "Select a file to use for text subtitles"
-msgstr "Válassza ki a feliratfájlt"
-
-#: ../data/playlist.ui.h:9 ../data/video-list.ui.h:4
-msgid "_Copy Location"
-msgstr "Hely _másolása"
-
-#: ../data/playlist.ui.h:10
 msgid "_Remove"
 msgstr "_Eltávolítás"
 
-#: ../data/playlist.ui.h:11 ../data/totem.ui.h:141
+#: ../data/playlist.ui.h:2
+msgid "Remove file from playlist"
+msgstr "Fájl eltávolítása a lejátszólistáról"
+
+#: ../data/playlist.ui.h:3 ../data/video-list.ui.h:3
+msgid "_Copy Location"
+msgstr "Hely _másolása"
+
+#: ../data/playlist.ui.h:4 ../data/video-list.ui.h:4
+msgid "Copy the location to the clipboard"
+msgstr "A hely másolása a vágólapra"
+
+#: ../data/playlist.ui.h:5 ../data/totem.ui.h:71
 msgid "_Select Text Subtitles..."
 msgstr "_Felirat kiválasztása…"
 
-#: ../data/properties.ui.h:1
-msgid "Album:"
-msgstr "Album:"
+#: ../data/playlist.ui.h:6 ../data/totem.ui.h:72
+msgid "Select a file to use for text subtitles"
+msgstr "Válassza ki a feliratfájlt"
 
-#: ../data/properties.ui.h:2
-msgid "Artist:"
-msgstr "Előadó:"
+#: ../data/playlist.ui.h:7
+msgid "Add..."
+msgstr "Hozzáadás…"
 
-#: ../data/properties.ui.h:3 ../data/totem.ui.h:23
-#: ../src/totem-properties-view.c:268
+#: ../data/playlist.ui.h:8
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: ../data/playlist.ui.h:9
+msgid "Save Playlist..."
+msgstr "Lejátszólista mentése…"
+
+#: ../data/playlist.ui.h:10
+msgid "Move Up"
+msgstr "Felfelé mozgatás"
+
+#: ../data/playlist.ui.h:11
+msgid "Move Down"
+msgstr "Lefelé mozgatás"
+
+#. Audio visualization dimensions
+#: ../data/preferences.ui.h:2
+msgid "Normal"
+msgstr "Normál"
+
+#. Audio visualization dimensions
+#: ../data/preferences.ui.h:4
+msgid "Large"
+msgstr "Nagy"
+
+#. Audio visualization dimensions
+#: ../data/preferences.ui.h:6
+msgid "Extra Large"
+msgstr "Nagyon nagy"
+
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5498
+#: ../src/totem-properties-view.c:231
+msgid "Stereo"
+msgstr "Sztereó"
+
+#: ../data/preferences.ui.h:8
+msgid "4-channel"
+msgstr "4 csatorna"
+
+#: ../data/preferences.ui.h:9
+msgid "4.1-channel"
+msgstr "4.1 csatorna"
+
+#: ../data/preferences.ui.h:10
+msgid "5.0-channel"
+msgstr "5.0 csatorna"
+
+#: ../data/preferences.ui.h:11
+msgid "5.1-channel"
+msgstr "5.1 csatorna"
+
+#: ../data/preferences.ui.h:12
+msgid "AC3 Passthrough"
+msgstr "AC3 Passthrough"
+
+#: ../data/preferences.ui.h:13
+msgid "Totem Preferences"
+msgstr "Totem beállításai"
+
+#: ../data/preferences.ui.h:14
+msgid "Playback"
+msgstr "Lejátszás"
+
+#: ../data/preferences.ui.h:15
+msgid "Start playing files from last position"
+msgstr "Fájlok lejátszásának indítása az utolsó pozícióból"
+
+#: ../data/preferences.ui.h:16
+msgid "Text Subtitles"
+msgstr "Feliratok"
+
+#: ../data/preferences.ui.h:17
+msgid "_Load subtitle files when movie is loaded"
+msgstr "Feliratfájlok be_töltése a film betöltésekor"
+
+#: ../data/preferences.ui.h:18
+msgid "_Font:"
+msgstr "_Betűkészlet:"
+
+#: ../data/preferences.ui.h:19
+msgid "_Encoding:"
+msgstr "Kó_dolás:"
+
+#: ../data/preferences.ui.h:20
+msgid "External Chapters"
+msgstr "Külső fejezetek"
+
+#: ../data/preferences.ui.h:21
+msgid "Load _chapter files when movie is loaded"
+msgstr "_Fejezetfájlok betöltése a film betöltésekor"
+
+#: ../data/preferences.ui.h:22 ../data/properties.ui.h:1
+msgid "General"
+msgstr "Általános"
+
+#. Tab label in the Preferences dialogue
+#: ../data/preferences.ui.h:24
+msgid "Display"
+msgstr "Megjelenítés"
+
+#: ../data/preferences.ui.h:25
+msgid "_Resize the window when a new video is loaded"
+msgstr "Ablak átmé_retezése új videó betöltésekor"
+
+#: ../data/preferences.ui.h:26
+msgid "Disable _deinterlacing of interlaced videos"
+msgstr "_Váltottsoros videók váltottsorosság-mentesítésének letiltása"
+
+#: ../data/preferences.ui.h:27
+msgid "Disable screensaver when playing "
+msgstr "Képernyővédő letiltása ennek lejátszásakor:"
+
+#: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
+#: ../src/totem-properties-view.c:273
+msgid "Video"
+msgstr "Videó"
+
+#: ../data/preferences.ui.h:29
+msgid "Video or Audio"
+msgstr "Videó vagy hang"
+
+#: ../data/preferences.ui.h:30
+msgid "Visual Effects"
+msgstr "Vizuális effektusok"
+
+#: ../data/preferences.ui.h:31
+msgid "Show _visual effects when an audio file is played"
+msgstr "_Vizuális effektusok megjelenítése hangfájl lejátszásánál"
+
+#: ../data/preferences.ui.h:32
+msgid "_Type of visualization:"
+msgstr "Vizualizáció _típusa:"
+
+#: ../data/preferences.ui.h:33
+msgid "Visualization _size:"
+msgstr "Vizualizáció _mérete:"
+
+#: ../data/preferences.ui.h:34
+msgid "Color Balance"
+msgstr "Színegyensúly"
+
+#: ../data/preferences.ui.h:35
+msgid "_Brightness:"
+msgstr "_Fényerősség:"
+
+#: ../data/preferences.ui.h:36
+msgid "Co_ntrast:"
+msgstr "Ko_ntraszt:"
+
+#: ../data/preferences.ui.h:37
+msgid "Sat_uration:"
+msgstr "_Telítettség:"
+
+#: ../data/preferences.ui.h:38
+msgid "_Hue:"
+msgstr "Á_rnyalat:"
+
+#: ../data/preferences.ui.h:39
+msgid "Reset to _Defaults"
+msgstr "Alapértelmezések _visszaállítása"
+
+#: ../data/preferences.ui.h:40
+msgid "Audio Output"
+msgstr "Hangkimenet"
+
+#: ../data/preferences.ui.h:41
+msgid "_Audio output type:"
+msgstr "_Hangkimenet típusa:"
+
+#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
+#: ../src/totem-properties-view.c:271
 msgid "Audio"
 msgstr "Hang"
 
+#: ../data/properties.ui.h:2
+msgid "Title:"
+msgstr "Cím:"
+
+#: ../data/properties.ui.h:3
+msgid "Artist:"
+msgstr "Előadó:"
+
 #: ../data/properties.ui.h:4
-msgid "Bitrate:"
-msgstr "Bitsebesség:"
+msgid "Duration:"
+msgstr "Időtartam:"
 
 #: ../data/properties.ui.h:5
-msgid "Channels:"
-msgstr "Csatornák:"
+msgid "Year:"
+msgstr "Év:"
 
 #: ../data/properties.ui.h:6
-msgid "Codec:"
-msgstr "Kodek:"
+msgid "Album:"
+msgstr "Album:"
 
 #: ../data/properties.ui.h:7
 msgid "Comment:"
@@ -104,772 +473,474 @@ msgstr "Megjegyzés:"
 msgid "Container:"
 msgstr "Tároló:"
 
-#: ../data/properties.ui.h:9
+#: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Dimenziók:"
 
-#: ../data/properties.ui.h:10
-msgid "Duration:"
-msgstr "Időtartam:"
-
 #: ../data/properties.ui.h:11
+msgid "Codec:"
+msgstr "Kodek:"
+
+#: ../data/properties.ui.h:12
 msgid "Framerate:"
 msgstr "Képkockasebesség:"
 
-#: ../data/properties.ui.h:12 ../data/totem.ui.h:41
-msgid "General"
-msgstr "Általános"
-
 #: ../data/properties.ui.h:13
+msgid "Bitrate:"
+msgstr "Bitsebesség:"
+
+#: ../data/properties.ui.h:15
 msgid "Sample rate:"
 msgstr "Mintavételezés:"
 
-#: ../data/properties.ui.h:14
-msgid "Title:"
-msgstr "Cím:"
-
-#: ../data/properties.ui.h:15 ../data/totem.ui.h:104
-#: ../src/totem-properties-view.c:270
-msgid "Video"
-msgstr "Videó"
-
 #: ../data/properties.ui.h:16
-msgid "Year:"
-msgstr "Év:"
-
-#: ../data/video-list.ui.h:1
-msgid "Add the video to the playlist"
-msgstr "A videó hozzáadása a lejátszólistához"
-
-#: ../data/video-list.ui.h:3 ../src/totem-dnd-menu.c:97
-msgid "_Add to Playlist"
-msgstr "_Hozzáadás a lejátszólistához"
+msgid "Channels:"
+msgstr "Csatornák:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:53
-#: ../src/totem-object.c:1667
-msgid "Movie Player"
-msgstr "Médialejátszó"
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:238
+#: ../src/totem.c:247 ../src/totem-menu.c:790 ../src/totem-object.c:1658
+msgid "Videos"
+msgstr "Videók"
 
 #: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies and songs"
-msgstr "Filmek és dalok lejátszása"
+msgid "Play movies"
+msgstr "Filmek lejátszása"
+
+#: ../data/totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr "Videó;Film;Klip;Sorozat;Lejátszó;Lejátszás;DVD;TV;Lemez;"
 
 #: ../data/totem.ui.h:1
-msgid "1.5 Mbps T1/Intranet/LAN"
-msgstr "1.5 Mbps T1/Intranet/LAN"
+msgid "_Open"
+msgstr "_Megnyitás"
 
 #: ../data/totem.ui.h:2
-msgid "112 Kbps Dual ISDN/DSL"
-msgstr "112 Kbps duál ISDN/DSL"
+msgid "Open _Location"
+msgstr "He_ly megnyitása"
 
 #: ../data/totem.ui.h:3
-msgid "14.4 Kbps Modem"
-msgstr "14.4 Kbps modem"
+msgid "_Fullscreen"
+msgstr "_Teljes képernyő"
 
 #: ../data/totem.ui.h:4
-msgid "16:9 (Widescreen)"
-msgstr "16:9 (szélesvásznú)"
+msgid "Prefere_nces"
+msgstr "_Beállítások"
 
 #: ../data/totem.ui.h:5
-msgid "19.2 Kbps Modem"
-msgstr "19.2 Kbps modem"
+msgid "Shuff_le"
+msgstr "_Véletlenszerű"
 
 #: ../data/totem.ui.h:6
-msgid "2.11:1 (DVB)"
-msgstr "2.11:1 (DVB)"
+msgid "_Repeat"
+msgstr "_Ismétlés mód"
 
 #: ../data/totem.ui.h:7
-msgid "256 Kbps DSL/Cable"
-msgstr "256 Kbps DSL/kábel"
+msgid "_Quit"
+msgstr "_Kilépés"
 
 #: ../data/totem.ui.h:8
-msgid "28.8 Kbps Modem"
-msgstr "28.8 Kbps modem"
+msgid "_Movie"
+msgstr "_Film"
 
 #: ../data/totem.ui.h:9
-msgid "33.6 Kbps Modem"
-msgstr "33.6 Kbps modem"
+msgid "_Eject"
+msgstr "_Kiadás"
 
 #: ../data/totem.ui.h:10
-msgid "34.4 Kbps Modem"
-msgstr "34.4 Kbps modem"
-
-#: ../data/totem.ui.h:11
-msgid "384 Kbps DSL/Cable"
-msgstr "384 Kbps DSL/kábel"
-
-#: ../data/totem.ui.h:12
-msgid "4-channel"
-msgstr "4 csatorna"
-
-#: ../data/totem.ui.h:13
-msgid "4.1-channel"
-msgstr "4.1 csatorna"
-
-#: ../data/totem.ui.h:14
-msgid "4:3 (TV)"
-msgstr "4:3 (TV)"
-
-#: ../data/totem.ui.h:15
-msgid "5.0-channel"
-msgstr "5.0 csatorna"
-
-#: ../data/totem.ui.h:16
-msgid "5.1-channel"
-msgstr "5.1 csatorna"
-
-#: ../data/totem.ui.h:17
-msgid "512 Kbps DSL/Cable"
-msgstr "512 Kbps DSL/kábel"
-
-#: ../data/totem.ui.h:18
-msgid "56 Kbps Modem/ISDN"
-msgstr "56 Kbps modem/ISDN"
-
-#: ../data/totem.ui.h:19
-msgid "AC3 Passthrough"
-msgstr "AC3 Passthrough"
-
-#: ../data/totem.ui.h:20
-msgid "A_udio Menu"
-msgstr "_Hang menü"
-
-#: ../data/totem.ui.h:21
-msgid "About this application"
-msgstr "Az alkalmazás névjegye"
-
-#: ../data/totem.ui.h:22
-msgctxt "Aspect ratio"
-msgid "Auto"
-msgstr "Auto"
-
-#: ../data/totem.ui.h:24
-msgid "Audio Output"
-msgstr "Hangkimenet"
-
-#: ../data/totem.ui.h:25
-msgid "Clear the playlist"
-msgstr "Lejátszólista törlése"
-
-#: ../data/totem.ui.h:26
-msgid "Co_ntrast:"
-msgstr "Ko_ntraszt:"
-
-#: ../data/totem.ui.h:27
-msgid "Color Balance"
-msgstr "Színegyensúly"
-
-#: ../data/totem.ui.h:28
-msgid "Configure plugins to extend the application"
-msgstr "Az alkalmazás bővítményeinek beállítása"
-
-#: ../data/totem.ui.h:29
-msgid "Configure the application"
-msgstr "Az alkalmazás beállítása"
-
-#: ../data/totem.ui.h:30
-msgid "Connection _speed:"
-msgstr "Csatlakozási _sebesség:"
-
-#: ../data/totem.ui.h:31
-msgid "Decrease volume"
-msgstr "Hangerő csökkentése"
-
-#: ../data/totem.ui.h:32
-msgid "Disable _deinterlacing of interlaced videos"
-msgstr "_Váltottsoros videók váltottsorosság-mentesítésének letiltása"
-
-#: ../data/totem.ui.h:33
-msgid "Disable screensaver when playing "
-msgstr "Képernyővédő letiltása ennek lejátszásakor:"
-
-#. Tab label in the Preferences dialogue
-#: ../data/totem.ui.h:35
-msgid "Display"
-msgstr "Megjelenítés"
-
-#: ../data/totem.ui.h:36
 msgid "Eject the current disc"
 msgstr "Az aktuális lemez kiadása"
 
-#: ../data/totem.ui.h:37
-msgid "External Chapters"
-msgstr "Külső fejezetek"
+#: ../data/totem.ui.h:11
+msgid "_Properties"
+msgstr "_Tulajdonságok"
 
-#. Audio visualization dimensions
-#: ../data/totem.ui.h:39
-msgid "Extra Large"
-msgstr "Nagyon nagy"
+#: ../data/totem.ui.h:12
+msgid "View the properties of the current stream"
+msgstr "A jelenlegi műsor tulajdonságainak megjelenítése"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:13
+msgid "Play / P_ause"
+msgstr "Lejátszás/Szü_net"
+
+#: ../data/totem.ui.h:14
+msgid "Play or pause the movie"
+msgstr "A film lejátszása vagy szüneteltetése"
+
+#: ../data/totem.ui.h:15
+msgid "_Edit"
+msgstr "S_zerkesztés"
+
+#: ../data/totem.ui.h:16
+msgid "_Clear Playlist"
+msgstr "Lejátszólista _törlése"
+
+#: ../data/totem.ui.h:17
+msgid "Clear the playlist"
+msgstr "Lejátszólista törlése"
+
+#: ../data/totem.ui.h:18
+msgid "Plugins..."
+msgstr "Bővítmények…"
+
+#: ../data/totem.ui.h:19
+msgid "Configure plugins to extend the application"
+msgstr "Az alkalmazás bővítményeinek beállítása"
+
+#: ../data/totem.ui.h:20
+msgid "_View"
+msgstr "_Nézet"
+
+#: ../data/totem.ui.h:21
 msgid "Fit Window to Movie"
 msgstr "Ablak igazítása a filmhez"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:22
+msgid "_Resize 1:2"
+msgstr "Át_méretezés 1:2"
+
+#: ../data/totem.ui.h:23
+msgid "Resize to half the original video size"
+msgstr "Átméretezés a videóméret felére"
+
+#: ../data/totem.ui.h:24
+msgid "Resize _1:1"
+msgstr "Átméretezés _1:1"
+
+#: ../data/totem.ui.h:25
+msgid "Resize to the original video size"
+msgstr "Átméretezés az eredeti videóméretre"
+
+#: ../data/totem.ui.h:26
+msgid "Resize _2:1"
+msgstr "Átméretezés _2:1"
+
+#: ../data/totem.ui.h:27
+msgid "Resize to double the original video size"
+msgstr "Átméretezés a videóméret duplájára"
+
+#: ../data/totem.ui.h:28
+msgid "_Aspect Ratio"
+msgstr "Méret_arány"
+
+#: ../data/totem.ui.h:29
+msgid "Switch An_gles"
+msgstr "Szögek _váltása"
+
+#: ../data/totem.ui.h:30
+msgid "Switch camera angles"
+msgstr "Kameraszögek váltása"
+
+#: ../data/totem.ui.h:31
+msgid "_Go"
+msgstr "_Ugrás"
+
+#: ../data/totem.ui.h:32
+msgid "_DVD Menu"
+msgstr "_DVD menü"
+
+#: ../data/totem.ui.h:33
 msgid "Go to the DVD menu"
 msgstr "Ugrás a DVD menüre"
 
-#: ../data/totem.ui.h:43
-msgid "Go to the angle menu"
-msgstr "Ugrás a szög menüre"
+#: ../data/totem.ui.h:34
+msgid "_Title Menu"
+msgstr "_Cím menü"
 
-#: ../data/totem.ui.h:44
-msgid "Go to the audio menu"
-msgstr "Ugrás a hang menüre"
-
-#: ../data/totem.ui.h:45
-msgid "Go to the chapter menu"
-msgstr "Ugrás a fejezet menüre"
-
-#: ../data/totem.ui.h:46
+#: ../data/totem.ui.h:35
 msgid "Go to the title menu"
 msgstr "Ugrás a cím menüre"
 
+#: ../data/totem.ui.h:36
+msgid "A_udio Menu"
+msgstr "_Hang menü"
+
+#: ../data/totem.ui.h:37
+msgid "Go to the audio menu"
+msgstr "Ugrás a hang menüre"
+
+#: ../data/totem.ui.h:38
+msgid "_Angle Menu"
+msgstr "_Szög menü"
+
+#: ../data/totem.ui.h:39
+msgid "Go to the angle menu"
+msgstr "Ugrás a szög menüre"
+
+#: ../data/totem.ui.h:40
+msgid "_Chapter Menu"
+msgstr "_Fejezet menü"
+
+#: ../data/totem.ui.h:41
+msgid "Go to the chapter menu"
+msgstr "Ugrás a fejezet menüre"
+
+#: ../data/totem.ui.h:42
+msgid "_Next Chapter/Movie"
+msgstr "_Következő fejezet/film"
+
+#: ../data/totem.ui.h:43
+msgid "Next chapter or movie"
+msgstr "Következő fejezet vagy film"
+
+#: ../data/totem.ui.h:44
+msgid "_Previous Chapter/Movie"
+msgstr "_Előző fejezet/film"
+
+#: ../data/totem.ui.h:45
+msgid "Previous chapter or movie"
+msgstr "Előző fejezet vagy film"
+
+#: ../data/totem.ui.h:46
+msgid "_Sound"
+msgstr "_Hang"
+
 #: ../data/totem.ui.h:47
-msgid "Help contents"
-msgstr "Súgótartalom"
+msgid "Volume _Up"
+msgstr "Hangerő _fel"
 
 #: ../data/totem.ui.h:48
 msgid "Increase volume"
 msgstr "Hangerő növelése"
 
 #: ../data/totem.ui.h:49
-msgid "Intranet/LAN"
-msgstr "Intranet/LAN"
-
-#. Audio visualization dimensions
-#: ../data/totem.ui.h:51
-msgid "Large"
-msgstr "Nagy"
-
-#: ../data/totem.ui.h:52
-msgid "Load _chapter files when movie is loaded"
-msgstr "_Fejezetfájlok betöltése a film betöltésekor"
-
-#: ../data/totem.ui.h:54
-msgid "Networking"
-msgstr "Hálózatkezelés"
-
-#: ../data/totem.ui.h:55
-msgid "Next chapter or movie"
-msgstr "Következő fejezet vagy film"
-
-#. Audio visualization dimensions
-#: ../data/totem.ui.h:57
-msgid "Normal"
-msgstr "Normál"
-
-#: ../data/totem.ui.h:58
-msgid "Open _Location..."
-msgstr "He_ly megnyitása…"
-
-#: ../data/totem.ui.h:59
-msgid "Open a file"
-msgstr "Fájl megnyitása"
-
-#: ../data/totem.ui.h:60
-msgid "Open a non-local file"
-msgstr "Nem helyi fájl megnyitása"
-
-#: ../data/totem.ui.h:61
-msgid "Play / P_ause"
-msgstr "Lejátszás/Szü_net"
-
-#: ../data/totem.ui.h:62
-msgid "Play or pause the movie"
-msgstr "A film lejátszása vagy szüneteltetése"
-
-#: ../data/totem.ui.h:63
-msgid "Playback"
-msgstr "Lejátszás"
-
-#: ../data/totem.ui.h:64
-msgid "Plugins..."
-msgstr "Bővítmények…"
-
-#: ../data/totem.ui.h:65
-msgid "Prefere_nces"
-msgstr "_Beállítások"
-
-#: ../data/totem.ui.h:66
-msgid "Previous chapter or movie"
-msgstr "Előző fejezet vagy film"
-
-#: ../data/totem.ui.h:67
-msgid "Quit the program"
-msgstr "Kilépés a programból"
-
-#: ../data/totem.ui.h:68
-msgid "Reset to _Defaults"
-msgstr "Alapértelmezések _visszaállítása"
-
-#: ../data/totem.ui.h:69
-msgid "Resize _1:1"
-msgstr "Átméretezés _1:1"
-
-#: ../data/totem.ui.h:70
-msgid "Resize _2:1"
-msgstr "Átméretezés _2:1"
-
-#: ../data/totem.ui.h:71
-msgid "Resize to double the original video size"
-msgstr "Átméretezés a videóméret duplájára"
-
-#: ../data/totem.ui.h:72
-msgid "Resize to half the original video size"
-msgstr "Átméretezés a videóméret felére"
-
-#: ../data/totem.ui.h:73
-msgid "Resize to the original video size"
-msgstr "Átméretezés az eredeti videóméretre"
-
-#: ../data/totem.ui.h:74
-msgid "S_idebar"
-msgstr "_Oldalsáv"
-
-#: ../data/totem.ui.h:75
-msgid "S_ubtitles"
-msgstr "_Feliratok"
-
-#: ../data/totem.ui.h:76
-msgid "Sat_uration:"
-msgstr "_Telítettség:"
-
-#: ../data/totem.ui.h:78
-msgid "Set the repeat mode"
-msgstr "Ismétlés mód beállítása"
-
-#: ../data/totem.ui.h:79
-msgid "Set the shuffle mode"
-msgstr "Véletlenszerű lejátszás mód beállítása"
-
-#: ../data/totem.ui.h:80
-msgid "Sets 16:9 (widescreen) aspect ratio"
-msgstr "16:9-es (szélesvásznú) méretarány beállítása"
-
-#: ../data/totem.ui.h:81
-msgid "Sets 2.11:1 (DVB) aspect ratio"
-msgstr "2.11:1-es (DVB) méretarány beállítása"
-
-#: ../data/totem.ui.h:82
-msgid "Sets 4:3 (TV) aspect ratio"
-msgstr "4:3-as (tévé) méretarány beállítása"
-
-#: ../data/totem.ui.h:83
-msgid "Sets automatic aspect ratio"
-msgstr "Automatikus méretarány beállítása"
-
-#: ../data/totem.ui.h:84
-msgid "Sets square aspect ratio"
-msgstr "Négyzetes méretarány beállítása"
-
-#: ../data/totem.ui.h:85
-msgid "Show _Controls"
-msgstr "_Vezérlés megjelenítése"
-
-#: ../data/totem.ui.h:86
-msgid "Show _visual effects when an audio file is played"
-msgstr "_Vizuális effektusok megjelenítése hangfájl lejátszásánál"
-
-#: ../data/totem.ui.h:87
-msgid "Show controls"
-msgstr "Vezérlés megjelenítése"
-
-#: ../data/totem.ui.h:88
-msgid "Show or hide the sidebar"
-msgstr "Az oldalsáv mutatása vagy elrejtése"
-
-#: ../data/totem.ui.h:89
-msgid "Shuff_le Mode"
-msgstr "_Véletlenszerű lejátszás mód"
-
-#: ../data/totem.ui.h:90
-msgid "Skip _Backwards"
-msgstr "Ugrás _vissza"
-
-#: ../data/totem.ui.h:91
-msgid "Skip _Forward"
-msgstr "Ugrás _előre"
-
-#: ../data/totem.ui.h:92
-msgid "Skip backwards"
-msgstr "Ugrás vissza"
-
-#: ../data/totem.ui.h:93
-msgid "Skip forward"
-msgstr "Ugrás előre"
-
-#: ../data/totem.ui.h:94
-msgid "Square"
-msgstr "Négyzet"
-
-#: ../data/totem.ui.h:95
-msgid "Start playing files from last position"
-msgstr "Fájlok lejátszásának indítása az utolsó pozícióból"
-
-#: ../data/totem.ui.h:96 ../src/totem-properties-view.c:228
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5593
-msgid "Stereo"
-msgstr "Sztereó"
-
-#: ../data/totem.ui.h:97
-msgid "Switch An_gles"
-msgstr "Szögek _váltása"
-
-#: ../data/totem.ui.h:98
-msgid "Switch camera angles"
-msgstr "Kameraszögek váltása"
-
-#: ../data/totem.ui.h:99
-msgid "Switch to fullscreen"
-msgstr "Átváltás teljes képernyőre"
-
-#: ../data/totem.ui.h:100
-msgid "Text Subtitles"
-msgstr "Feliratok"
-
-#: ../data/totem.ui.h:101
-msgid "Time seek bar"
-msgstr "Keresősáv"
-
-#: ../data/totem.ui.h:103
-msgid "Totem Preferences"
-msgstr "Totem beállításai"
-
-#: ../data/totem.ui.h:105
-msgid "Video or Audio"
-msgstr "Videó vagy hang"
-
-#: ../data/totem.ui.h:106
-msgid "View the properties of the current stream"
-msgstr "A jelenlegi műsor tulajdonságainak megjelenítése"
-
-#: ../data/totem.ui.h:107
-msgid "Visual Effects"
-msgstr "Vizuális effektusok"
-
-#: ../data/totem.ui.h:108
-msgid "Visualization _size:"
-msgstr "Vizualizáció _mérete:"
-
-#: ../data/totem.ui.h:109
 msgid "Volume _Down"
 msgstr "Hangerő _le"
 
-#: ../data/totem.ui.h:110
-msgid "Volume _Up"
-msgstr "Hangerő _fel"
+#: ../data/totem.ui.h:50
+msgid "Decrease volume"
+msgstr "Hangerő csökkentése"
 
-#: ../data/totem.ui.h:111
-msgid "Zoom In"
-msgstr "Nagyítás"
-
-#: ../data/totem.ui.h:112
-msgid "Zoom in"
-msgstr "Nagyítás"
-
-#: ../data/totem.ui.h:113
-msgid "_About"
-msgstr "_Névjegy"
-
-#: ../data/totem.ui.h:114
-msgid "_Angle Menu"
-msgstr "_Szög menü"
-
-#: ../data/totem.ui.h:115
-msgid "_Aspect Ratio"
-msgstr "Méret_arány"
-
-#: ../data/totem.ui.h:116
-msgid "_Audio output type:"
-msgstr "_Hangkimenet típusa:"
-
-#: ../data/totem.ui.h:117
-msgid "_Brightness:"
-msgstr "_Fényerősség:"
-
-#: ../data/totem.ui.h:118
-msgid "_Chapter Menu"
-msgstr "_Fejezet menü"
-
-#: ../data/totem.ui.h:119
-msgid "_Clear Playlist"
-msgstr "Lejátszólista _törlése"
-
-#: ../data/totem.ui.h:120
-msgid "_Contents"
-msgstr "_Tartalom"
-
-#: ../data/totem.ui.h:121
-msgid "_DVD Menu"
-msgstr "_DVD menü"
-
-#: ../data/totem.ui.h:122
-msgid "_Edit"
-msgstr "S_zerkesztés"
-
-#: ../data/totem.ui.h:123
-msgid "_Eject"
-msgstr "_Kiadás"
-
-#: ../data/totem.ui.h:124
-msgid "_Encoding:"
-msgstr "Kó_dolás:"
-
-#: ../data/totem.ui.h:125
-msgid "_Font:"
-msgstr "_Betűkészlet:"
-
-#: ../data/totem.ui.h:126
-msgid "_Fullscreen"
-msgstr "_Teljes képernyő"
-
-#: ../data/totem.ui.h:127
-msgid "_Go"
-msgstr "_Ugrás"
-
-#: ../data/totem.ui.h:128
+#: ../data/totem.ui.h:51
 msgid "_Help"
 msgstr "_Súgó"
 
-#: ../data/totem.ui.h:129
-msgid "_Hue:"
-msgstr "Á_rnyalat:"
+#: ../data/totem.ui.h:52
+msgid "_Contents"
+msgstr "_Tartalom"
 
-#: ../data/totem.ui.h:130
+#: ../data/totem.ui.h:53
+msgid "Help contents"
+msgstr "Súgótartalom"
+
+#: ../data/totem.ui.h:54
+msgid "_About"
+msgstr "_Névjegy"
+
+#: ../data/totem.ui.h:55
+msgid "About this application"
+msgstr "Az alkalmazás névjegye"
+
+#: ../data/totem.ui.h:56
+msgid "Show _Controls"
+msgstr "_Vezérlés megjelenítése"
+
+#: ../data/totem.ui.h:57
+msgid "Show controls"
+msgstr "Vezérlés megjelenítése"
+
+#: ../data/totem.ui.h:58
+msgid "S_idebar"
+msgstr "_Oldalsáv"
+
+#: ../data/totem.ui.h:59
+msgid "Show or hide the sidebar"
+msgstr "Az oldalsáv mutatása vagy elrejtése"
+
+#: ../data/totem.ui.h:60
+msgctxt "Aspect ratio"
+msgid "Auto"
+msgstr "Auto"
+
+#: ../data/totem.ui.h:61
+msgid "Sets automatic aspect ratio"
+msgstr "Automatikus méretarány beállítása"
+
+#: ../data/totem.ui.h:62
+msgid "Square"
+msgstr "Négyzet"
+
+#: ../data/totem.ui.h:63
+msgid "Sets square aspect ratio"
+msgstr "Négyzetes méretarány beállítása"
+
+#: ../data/totem.ui.h:64
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
+
+#: ../data/totem.ui.h:65
+msgid "Sets 4:3 (TV) aspect ratio"
+msgstr "4:3-as (tévé) méretarány beállítása"
+
+#: ../data/totem.ui.h:66
+msgid "16:9 (Widescreen)"
+msgstr "16:9 (szélesvásznú)"
+
+#: ../data/totem.ui.h:67
+msgid "Sets 16:9 (widescreen) aspect ratio"
+msgstr "16:9-es (szélesvásznú) méretarány beállítása"
+
+#: ../data/totem.ui.h:68
+msgid "2.11:1 (DVB)"
+msgstr "2.11:1 (DVB)"
+
+#: ../data/totem.ui.h:69
+msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgstr "2.11:1-es (DVB) méretarány beállítása"
+
+#: ../data/totem.ui.h:70
+msgid "S_ubtitles"
+msgstr "_Feliratok"
+
+#: ../data/totem.ui.h:73
 msgid "_Languages"
 msgstr "Nye_lvek"
 
-#: ../data/totem.ui.h:131
-msgid "_Load subtitle files when movie is loaded"
-msgstr "Feliratfájlok be_töltése a film betöltésekor"
+#: ../data/totem.ui.h:74
+msgid "Zoom In"
+msgstr "Nagyítás"
 
-#: ../data/totem.ui.h:132
-msgid "_Movie"
-msgstr "_Film"
+#: ../data/totem.ui.h:75
+msgid "Zoom in"
+msgstr "Nagyítás"
 
-#: ../data/totem.ui.h:133
-msgid "_Next Chapter/Movie"
-msgstr "_Következő fejezet/film"
+#: ../data/totem.ui.h:76
+msgid "Skip _Forward"
+msgstr "Ugrás _előre"
 
-#: ../data/totem.ui.h:134
-msgid "_Open..."
-msgstr "_Megnyitás…"
+#: ../data/totem.ui.h:77
+msgid "Skip forward"
+msgstr "Ugrás előre"
 
-#: ../data/totem.ui.h:135
-msgid "_Previous Chapter/Movie"
-msgstr "_Előző fejezet/film"
+#: ../data/totem.ui.h:78
+msgid "Skip _Backwards"
+msgstr "Ugrás _vissza"
 
-#: ../data/totem.ui.h:136
-msgid "_Properties"
-msgstr "_Tulajdonságok"
+#: ../data/totem.ui.h:79
+msgid "Skip backwards"
+msgstr "Ugrás vissza"
 
-#: ../data/totem.ui.h:137
-msgid "_Quit"
-msgstr "_Kilépés"
-
-#: ../data/totem.ui.h:138
-msgid "_Repeat Mode"
-msgstr "_Ismétlés mód"
-
-#: ../data/totem.ui.h:139
-msgid "_Resize 1:2"
-msgstr "Át_méretezés 1:2"
-
-#: ../data/totem.ui.h:140
-msgid "_Resize the window when a new video is loaded"
-msgstr "Ablak átmé_retezése új videó betöltésekor"
-
-#: ../data/totem.ui.h:142
-msgid "_Sound"
-msgstr "_Hang"
-
-#: ../data/totem.ui.h:143
-msgid "_Title Menu"
-msgstr "_Cím menü"
-
-#: ../data/totem.ui.h:144
-msgid "_Type of visualization:"
-msgstr "Vizualizáció _típusa:"
-
-#: ../data/totem.ui.h:145
-msgid "_View"
-msgstr "_Nézet"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
-msgid ""
-"A list of the names of the plugins which are currently active (loaded and "
-"running)."
-msgstr "A jelenleg aktív (betöltött és futó) bővítmények neveinek listája."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
-msgid "Active plugins list"
-msgstr "Aktív bővítmények listája"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
-msgid "Allow the screensaver to activate when playing audio"
-msgstr "A képernyővédő aktivizálódhat hang lejátszása esetén"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
-msgid ""
-"Allow the screensaver to activate when playing audio. Disable if you have "
-"monitor-powered speakers."
-msgstr ""
-"A képernyővédő aktivizálódhat hang lejátszása esetén. Tiltsa le, ha "
-"monitorról működtetett hangszórókat használ."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
-msgid ""
-"Amount of data to buffer for network streams before starting to display the "
-"stream (in seconds)."
-msgstr ""
-"Pufferelendő adat mennyisége hálózati folyamok esetén a folyam "
-"megjelenítésének megkezdése előtt (másodpercekben)."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
-msgid ""
-"Approximate network connection speed, used to select quality on media over "
-"the network."
-msgstr ""
-"Hálózati kapcsolat becsült sebessége, a hálózati média minőségének "
-"kiválasztásához."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
-msgid "Default location for the \"Open...\" dialogs"
-msgstr "Az alapértelmezett hely a „Megnyitás…” ablakokban"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
-msgid ""
-"Default location for the \"Open...\" dialogs. Default is the current "
-"directory."
-msgstr ""
-"A „Megnyitás…” ablakokban az alapértelmezett hely, az alapértelmezés az "
-"aktuális könyvtár."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
-msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr "Az alapértelmezett hely a „Képernyőkép készítése” ablakokban"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
-msgid ""
-"Default location for the \"Take Screenshot\" dialogs. Default is the "
-"Pictures directory."
-msgstr ""
-"A „Képernyőkép készítése” ablakokban az alapértelmezett hely, az "
-"alapértelmezés a Képek könyvtár."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
-msgid "Encoding character set for subtitle."
-msgstr "Felirat kódolása."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
-msgid "Name of the visual effects plugin"
-msgstr "A vizuáliseffektus-bővítmény neve"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
-msgid "Network buffering threshold"
-msgstr "Hálózati pufferelés küszöbszintje"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
-msgid "Network connection speed"
-msgstr "Hálózati kapcsolat sebessége"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
-msgid "Pango font description for subtitle rendering."
-msgstr "A feliratok megjelenítéséhez használt Pango betűkészlet neve."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
-msgid "Quality setting for the audio visualization."
-msgstr "Minőségbeállítás a hangvizualizációhoz."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
-msgid "Repeat mode"
-msgstr "Ismétlés mód"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
-msgid "Resize the canvas automatically on file load"
-msgstr "Vászon automatikus átméretezése fájl betöltésekor"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
-msgid "Show visual effects when no video is displayed"
-msgstr "Vizuális effektusok megjelenítése, amikor nincs videólejátszás"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
-msgid "Show visual effects when playing an audio only file."
-msgstr "Vizuális effektusok megjelenítése hangfájl lejátszásánál."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
-msgid "Shuffle mode"
-msgstr "Véletlenszerű lejátszás mód"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
-msgid "Subtitle encoding"
-msgstr "Felirat betűkészlete"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
-msgid "Subtitle font"
-msgstr "Feliratok betűkészlete"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
-msgid "The brightness of the video"
-msgstr "A videó fényerőssége"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
-msgid "The contrast of the video"
-msgstr "A videó kontrasztja"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
-msgid "The hue of the video"
-msgstr "A videó árnyalata"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
-msgid "The saturation of the video"
-msgstr "A videó telítettsége"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
-msgid "Type of audio output to use"
-msgstr "A használandó hangkimenet típusa"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
-msgid "Visualization quality setting"
-msgstr "Vizualizáció minőségbeállítása"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
-msgid "Whether to autoload external chapter files when a movie is loaded"
-msgstr "A külső fejezetfájlok automatikusan betöltendők-e film betöltésekor"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
-msgid "Whether to autoload text subtitle files when a movie is loaded"
-msgstr "A feliratfájlok automatikusan betöltendők-e film betöltésekor"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
-msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr "A váltottsoros videók váltottsorosság-mentesítése letiltandó-e"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
-msgid "Whether to disable the keyboard shortcuts"
-msgstr "A gyorsbillentyűk letiltandók-e"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:34
-msgid "Whether to disable the plugins in the user's home directory"
-msgstr "A felhasználó saját könyvtárában található bővítmények letiltandók-e"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:35
-msgid "Whether to enable debug for the playback engine"
-msgstr "A hibakeresés engedélyezve legyen-e a lejátszómotornál"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:36
-msgid ""
-"Whether to remember the position of played audio/video files when pausing or "
-"closing them"
-msgstr ""
-"A lejátszott hang/videófájlok pozíciója megjegyzendő-e szüneteltetéskor vagy "
-"bezárásukkor"
+#: ../data/totem.ui.h:82
+msgid "Time seek bar"
+msgstr "Keresősáv"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Írja be a megnyitandó fájl _címét:"
+
+#: ../data/video-list.ui.h:1 ../src/totem-dnd-menu.c:97
+msgid "_Add to Playlist"
+msgstr "_Hozzáadás a lejátszólistához"
+
+#: ../data/video-list.ui.h:2
+msgid "Add the video to the playlist"
+msgstr "A videó hozzáadása a lejátszólistához"
+
+#: ../src/backend/bacon-video-widget.c:1643
+msgid "Password requested for RTSP server"
+msgstr "Az RTSP-kiszolgáló jelszót kér"
+
+#: ../src/backend/bacon-video-widget.c:2944
+#, c-format
+msgid "Audio Track #%d"
+msgstr "%d. hangsáv"
+
+#: ../src/backend/bacon-video-widget.c:2948
+#, c-format
+msgid "Subtitle #%d"
+msgstr "%d. felirat"
+
+#: ../src/backend/bacon-video-widget.c:3345
+msgid "The server you are trying to connect to is not known."
+msgstr "Az elérni kívánt kiszolgáló ismeretlen."
+
+#: ../src/backend/bacon-video-widget.c:3348
+msgid "The connection to this server was refused."
+msgstr "A kapcsolódás a kiszolgálóhoz visszautasítva."
+
+#: ../src/backend/bacon-video-widget.c:3351
+#| msgid "The movie could not be recorded."
+msgid "The specified movie could not be found."
+msgstr "A megadott film nem található."
+
+#: ../src/backend/bacon-video-widget.c:3358
+msgid "The server refused access to this file or stream."
+msgstr "A kiszolgáló elutasította a fájl vagy műsor elérését."
+
+#: ../src/backend/bacon-video-widget.c:3364
+msgid "Authentication is required to access this file or stream."
+msgstr "Hitelesítés szükséges a fájl vagy műsor eléréséhez."
+
+#: ../src/backend/bacon-video-widget.c:3371
+#| msgid "Totem was not able to play this disc."
+msgid "You are not allowed to open this file."
+msgstr "A fájl megnyitása nem engedélyezett."
+
+#: ../src/backend/bacon-video-widget.c:3376
+#| msgid "File is not a valid .desktop file"
+msgid "This location is not a valid one."
+msgstr "A hely nem érvényes."
+
+#: ../src/backend/bacon-video-widget.c:3384
+#| msgid "The movie could not be recorded."
+msgid "The movie could not be read."
+msgstr "A film nem olvasható."
+
+#. should be exactly one missing thing (source or converter)
+#: ../src/backend/bacon-video-widget.c:3407
+#: ../src/backend/bacon-video-widget.c:3415
+#, c-format
+msgid "The playback of this movie requires a %s plugin which is not installed."
+msgid_plural ""
+"The playback of this movie requires the following decoders which are not "
+"installed:\n"
+"\n"
+"%s"
+msgstr[0] ""
+"Ezen film lejátszása egy %s bővítményt igényel, amely nincs telepítve."
+msgstr[1] ""
+"Ezen film lejátszása egy a következő dekódolókat igényli, amelyek nincsenek "
+"telepítve:\n"
+"\n"
+"%s"
+
+#: ../src/backend/bacon-video-widget.c:3426
+msgid ""
+"An audio or video stream is not handled due to missing codecs. You might "
+"need to install additional plugins to be able to play some types of movies"
+msgstr ""
+"A hang- vagy videoműsor hiányzó kodekek miatt nincs kezelve. További "
+"bővítmények telepítésére lehet szükség egyes filmtípusok lejátszásához."
+
+#: ../src/backend/bacon-video-widget.c:3436
+#| msgid ""
+#| "Cannot play this file over the network. Try downloading it to disk first."
+msgid ""
+"This file cannot be played over the network. Try downloading it locally "
+"first."
+msgstr ""
+"Ez a fájl nem játszható le a hálózaton keresztül. Próbálja előbb letölteni a "
+"gépére."
+
+#: ../src/backend/bacon-video-widget.c:5494 ../src/totem-properties-view.c:227
+msgid "Surround"
+msgstr "Térhatású"
+
+#: ../src/backend/bacon-video-widget.c:5496 ../src/totem-properties-view.c:229
+msgid "Mono"
+msgstr "Mono"
+
+#: ../src/backend/bacon-video-widget.c:5781
+msgid "Media contains no supported video streams."
+msgstr "A média nem tartalmaz támogatott videofolyamot."
+
+#: ../src/backend/bacon-video-widget.c:5963
+msgid ""
+"Some necessary plug-ins are missing. Make sure that the program is correctly "
+"installed."
+msgstr ""
+"Egyes szükséges bővítmények hiányoznak. Győződjön meg róla, hogy a program "
+"megfelelően van telepítve."
 
 #: ../src/eggdesktopfile.c:165
 #, c-format
@@ -975,6 +1046,31 @@ msgstr "Munkamenet-kezelés kapcsolói:"
 msgid "Show session management options"
 msgstr "Munkamenet-kezelési kapcsolók megjelenítése"
 
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/gst/totem-time-helpers.c:56
+#: ../src/plugins/skipto/totem-time-entry.c:57
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d"
+msgstr "%d.%02d.%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/gst/totem-time-helpers.c:65
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d"
+msgstr "%d.%02d"
+
 #. Title
 #. Artist
 #. Album
@@ -1079,9 +1175,13 @@ msgid_plural "%d frames per second"
 msgstr[0] "%d képkocka másodpercenként"
 msgstr[1] "%d képkocka másodpercenként"
 
-#: ../src/totem-audio-preview.c:168
+#: ../src/totem-audio-preview.c:137
 msgid "Audio Preview"
 msgstr "Hangelőnézet"
+
+#: ../src/totem.c:239
+msgid "Verify your system installation. Totem will now exit."
+msgstr "Ellenőrizze a rendszer telepítését. A Totem most kilép."
 
 #: ../src/totem-cell-renderer-video.c:126
 msgid "Unknown video"
@@ -1095,7 +1195,7 @@ msgstr "Lejátszás _most"
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../src/totem-fullscreen.c:616
+#: ../src/totem-fullscreen.c:573
 msgid "No File"
 msgstr "Nincs fájl"
 
@@ -1113,7 +1213,7 @@ msgstr "A fájl nem létezik."
 msgid "Make sure that Totem is properly installed."
 msgstr "Győződjön meg róla, hogy a Totem megfelelően van telepítve."
 
-#: ../src/totem-interface.c:347
+#: ../src/totem-interface.c:357
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -1124,7 +1224,7 @@ msgstr ""
 "Foundation által kiadott GNU General Public License második (vagy bármely "
 "későbbi) változatában foglaltak alapján."
 
-#: ../src/totem-interface.c:351
+#: ../src/totem-interface.c:361
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -1136,7 +1236,7 @@ msgstr ""
 "alkalmas-e a KÖZREADÁSRA vagy EGY BIZONYOS FELADAT ELVÉGZÉSÉRE. További "
 "részletekért tanulmányozza a GNU GPL licencet."
 
-#: ../src/totem-interface.c:355
+#: ../src/totem-interface.c:365
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -1146,7 +1246,7 @@ msgstr ""
 "kapta meg, írjon a Free Software Foundation Inc.-nek. Levélcímük: 51 "
 "Franklin St, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../src/totem-interface.c:358
+#: ../src/totem-interface.c:368
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -1155,199 +1255,98 @@ msgstr ""
 "bővítmények használatának lehetővé tételéhez."
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:190
+#: ../src/totem-menu.c:291
 msgid "None"
 msgstr "Nincs"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:195
+#: ../src/totem-menu.c:296
 msgctxt "Language"
 msgid "Auto"
 msgstr "Auto"
 
-#. Translators:
-#. * This is not a JPEG image, but a disc image, for example,
-#. * an ISO file
-#: ../src/totem-menu.c:765
-#, c-format
-msgid "Play Image '%s'"
-msgstr "„%s” lemezkép lejátszása"
-
-#: ../src/totem-menu.c:768 ../src/totem-menu.c:851
-#, c-format
-msgid "device%d"
-msgstr "%d. eszköz"
-
-#: ../src/totem-menu.c:848
-#, c-format
-msgid "Play Disc '%s'"
-msgstr "„%s” lemez lejátszása"
-
-#. This lists the back-end type and version, such as
-#. * Movie Player using GStreamer 0.10.1
-#: ../src/totem-menu.c:1189
-#, c-format
-msgid "Movie Player using %s"
-msgstr "Médialejátszó %s alapokon"
-
-#: ../src/totem-menu.c:1193
+#: ../src/totem-menu.c:789
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:1198
+#: ../src/totem-menu.c:794
 msgid "translator-credits"
 msgstr ""
 "Dvornik László <dvornik at gnome dot hu>\n"
-"Kelemen Gábor <kelemeng at gnome dot hu>"
+"Kelemen Gábor <kelemeng at gnome dot hu>\n"
+"Lukács Bence <lukacs.bence1 at gmail dot com>"
 
-#: ../src/totem-menu.c:1202
+#: ../src/totem-menu.c:798
 msgid "Totem Website"
 msgstr "A Totem weboldala"
 
-#: ../src/totem-menu.c:1236
+#: ../src/totem-menu.c:829
 msgid "Configure Plugins"
 msgstr "Bővítmények beállítása"
 
+#: ../src/totem-object.c:162
+#, c-format
+msgid ""
+"%s\n"
+"Run '%s --help' to see a full list of available command line options.\n"
+msgstr ""
+"%s\n"
+"Az elérhető parancssori kapcsolók teljes listájáért adja ki a „%s --help” "
+"parancsot.\n"
+
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:471
+#: ../src/totem-object.c:591
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1047 ../browser-plugin/totem-plugin-viewer.c:367
-msgid "Playing"
-msgstr "Lejátszás"
-
-#: ../src/totem-object.c:1049 ../src/totem-options.c:52
+#: ../src/totem-object.c:1168 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Szünet"
 
-#: ../src/totem-object.c:1054 ../browser-plugin/totem-plugin-viewer.c:363
-msgid "Paused"
-msgstr "Szüneteltetve"
-
-#: ../src/totem-object.c:1056 ../src/totem-object.c:1066
+#: ../src/totem-object.c:1175 ../src/totem-object.c:1185
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Lejátszás"
 
-#: ../src/totem-object.c:1061 ../src/totem-object.c:1659
-#: ../src/totem-statusbar.c:115 ../browser-plugin/totem-plugin-viewer.c:351
-msgid "Stopped"
-msgstr "Leállítva"
-
-#: ../src/totem-object.c:1142 ../src/totem-object.c:1169
-#: ../src/totem-object.c:1799 ../src/totem-object.c:1963
+#: ../src/totem-object.c:1267 ../src/totem-object.c:1294
+#: ../src/totem-object.c:1787 ../src/totem-object.c:1942
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "A Totem nem tudja lejátszani a következőt: „%s”."
 
-#: ../src/totem-object.c:1246
-#, c-format
-msgid ""
-"Totem could not play this media (%s) although a plugin is present to handle "
-"it."
-msgstr ""
-"A Totem nem tudja lejátszani ezen médiát (%s), habár van bővítmény a "
-"kezeléséhez."
-
-#: ../src/totem-object.c:1247
-msgid ""
-"You might want to check that a disc is present in the drive and that it is "
-"correctly configured."
-msgstr ""
-"Ellenőrizze, hogy a lemez a meghajtóban van-e és megfelelően be van-e "
-"állítva."
-
-#: ../src/totem-object.c:1255
-msgid "More information about media plugins"
-msgstr "További információk a médiabővítményekről"
-
-#: ../src/totem-object.c:1256
-msgid ""
-"Please install the necessary plugins and restart Totem to be able to play "
-"this media."
-msgstr ""
-"Telepítse a szükséges bővítményeket és indítsa újra a Totemet ezen média "
-"lejátszásához."
-
-#: ../src/totem-object.c:1258
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because it does not have the "
-"appropriate plugins to be able to read from the disc."
-msgstr ""
-"A Totem nem tudja lejátszani ezt a típusú médiát (%s), mert nincsenek "
-"megfelelő bővítmények a lemezről történő olvasáshoz."
-
-#: ../src/totem-object.c:1260
-#, c-format
-msgid ""
-"Totem cannot play this type of media (%s) because you do not have the "
-"appropriate plugins to handle it."
-msgstr ""
-"A Totem nem tudja lejátszani ezt a típusú médiát (%s), mert nincs megfelelő "
-"bővítmény a kezeléséhez."
-
-#: ../src/totem-object.c:1263
-#, c-format
-msgid "Totem cannot play this type of media (%s) because it is not supported."
-msgstr "A Totem nem tudja lejátszani ezt a médiatípust (%s), mert nem támogatott."
-
-#: ../src/totem-object.c:1264
-msgid "Please insert another disc to play back."
-msgstr "Helyezzen be egy másik lemezt a lejátszáshoz."
-
-#: ../src/totem-object.c:1300
-msgid "Totem was not able to play this disc."
-msgstr "A Totem nem volt képes lejátszani ezt a lemezt."
-
-#: ../src/totem-object.c:1301 ../src/totem-object.c:4228
-msgid "No reason."
-msgstr "Nincs ok."
-
-#: ../src/totem-object.c:1315
-msgid "Totem does not support playback of Audio CDs"
-msgstr "A Totem nem támogatja a hang CD-k lejátszását"
-
-#: ../src/totem-object.c:1316
-msgid "Please consider using a music player or a CD extractor to play this CD"
-msgstr "A CD lejátszásához használjon zenelejátszót vagy CD-beolvasót"
-
-#: ../src/totem-object.c:1805
+#: ../src/totem-object.c:1793
 msgid "No error message"
 msgstr "Nincs hibaüzenet"
 
-#: ../src/totem-object.c:2154
+#: ../src/totem-object.c:2133
 msgid "Totem could not display the help contents."
 msgstr "A Totem nem tudja megjeleníteni a súgótartalmat."
 
-#: ../src/totem-object.c:2493 ../src/totem-object.c:2495
-#: ../browser-plugin/totem-plugin-viewer.c:1417
-msgid "An error occurred"
-msgstr "Hiba történt"
-
-#: ../src/totem-object.c:4063 ../src/totem-object.c:4065
+#: ../src/totem-object.c:4019 ../src/totem-object.c:4021
 msgid "Previous Chapter/Movie"
 msgstr "Előző fejezet/film"
 
-#: ../src/totem-object.c:4072 ../src/totem-object.c:4074
+#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
 msgid "Play / Pause"
 msgstr "Lejátszás / Szünet"
 
-#: ../src/totem-object.c:4082 ../src/totem-object.c:4084
+#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
 msgid "Next Chapter/Movie"
 msgstr "Következő fejezet/film"
 
-#. Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window.
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4096 ../src/totem-object.c:4098
+#: ../src/totem-object.c:4051 ../src/totem-object.c:4053
 msgid "Fullscreen"
 msgstr "Teljes képernyő"
 
-#: ../src/totem-object.c:4228
+#: ../src/totem-object.c:4184
 msgid "Totem could not startup."
 msgstr "A Totem nem tud elindulni."
+
+#: ../src/totem-object.c:4184
+msgid "No reason."
+msgstr "Nincs ok."
 
 #: ../src/totem-open-location.c:182
 msgid "Open Location..."
@@ -1422,117 +1421,111 @@ msgstr "Lejátszólista-index"
 msgid "Movies to play"
 msgstr "Lejátszandó filmek"
 
-#: ../src/totem-options.c:117
+#: ../src/totem-options.c:79
+msgid "- Play movies and songs"
+msgstr "– Filmek és dalok lejátszása"
+
+#: ../src/totem-options.c:142
 msgid "Can't enqueue and replace at the same time"
 msgstr "Nem lehet egyszerre sorba állítani és helyettesíteni"
 
 #. By extension entry
-#: ../src/totem-playlist.c:161
+#: ../src/totem-playlist.c:162
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast lejátszólista"
 
-#: ../src/totem-playlist.c:162
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed)"
 msgstr "MP3 hang (szórt)"
 
-#: ../src/totem-playlist.c:163
+#: ../src/totem-playlist.c:164
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 hang (szórt, DOS formátum)"
 
-#: ../src/totem-playlist.c:164
+#: ../src/totem-playlist.c:165
 msgid "XML Shareable Playlist"
 msgstr "XML megosztható lejátszólista"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:347
+#: ../src/totem-playlist.c:348
 #, c-format
 msgid "Title %d"
 msgstr "%d. cím"
 
-#: ../src/totem-playlist.c:446
+#: ../src/totem-playlist.c:447
 msgid "Could not save the playlist"
 msgstr "A lejátszólista nem menthető"
 
-#: ../src/totem-playlist.c:1021
+#: ../src/totem-playlist.c:1022
 msgid "Save Playlist"
 msgstr "Lejátszólista mentése"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1264
-#: ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1034 ../src/totem-playlist.c:1263
+#: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Lejátszólista"
 
-#: ../src/totem-playlist.c:1857
+#: ../src/totem-playlist.c:1862
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "A(z) „%s” lejátszólista nem dolgozható fel, lehet, hogy sérült."
 
-#: ../src/totem-playlist.c:1858
+#: ../src/totem-playlist.c:1863
 msgid "Playlist error"
 msgstr "Lejátszólista hiba"
 
-#: ../src/totem-preferences.c:295
+#: ../src/totem-preferences.c:297
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: ../src/totem-preferences.c:451
+#: ../src/totem-preferences.c:445
 msgid "Select Subtitle Font"
 msgstr "Válassza ki a felirat betűtípusát"
 
-#: ../src/totem-properties-main.c:115 ../src/totem-properties-view.c:266
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:269
 msgid "Audio/Video"
 msgstr "Hang/videó"
 
-#: ../src/totem-properties-view.c:128
-msgid "N/A"
-msgstr "---"
-
-#: ../src/totem-properties-view.c:157
-#: ../src/plugins/properties/totem-movie-properties.c:152
-#: ../src/plugins/properties/totem-movie-properties.c:163
-msgctxt "Stream bit rate"
+#: ../src/totem-properties-view.c:131
 msgid "N/A"
 msgstr "---"
 
 #: ../src/totem-properties-view.c:160
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
+msgctxt "Stream bit rate"
+msgid "N/A"
+msgstr "---"
+
+#: ../src/totem-properties-view.c:163
+#: ../src/plugins/properties/totem-movie-properties.c:152
+#: ../src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kb/s"
 
-#: ../src/totem-properties-view.c:177
+#: ../src/totem-properties-view.c:180
 #: ../src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:209
+#: ../src/totem-properties-view.c:212
 #: ../src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:216
+#: ../src/totem-properties-view.c:219
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/totem-properties-view.c:224
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5589
-msgid "Surround"
-msgstr "Térhatású"
-
-#: ../src/totem-properties-view.c:226
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5591
-msgid "Mono"
-msgstr "Mono"
-
-#: ../src/totem-properties-view.c:236
+#: ../src/totem-properties-view.c:239
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "---"
@@ -1565,8 +1558,8 @@ msgstr "Pufferelés"
 #. eg: 75 %
 #: ../src/totem-statusbar.c:250
 #, c-format
-msgid "%d %%"
-msgstr "%d%%"
+msgid "%lf %%"
+msgstr "%lf %%"
 
 #. eg: Paused, 0:32 / 1:05
 #: ../src/totem-statusbar.c:325
@@ -1577,8 +1570,9 @@ msgstr "%s, %s"
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:330
 #, c-format
-msgid "%s, %d %%"
-msgstr "%s, %d %%"
+#| msgid "%s, %d %%"
+msgid "%s, %f %%"
+msgstr "%s, %f %%"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1721,6 +1715,38 @@ msgstr "Nyugati"
 msgid "Vietnamese"
 msgstr "Vietnami"
 
+#: ../src/totem-uri.c:343 ../src/plugins/chapters/totem-chapters.c:998
+msgid "All files"
+msgstr "Minden fájl"
+
+#: ../src/totem-uri.c:348 ../src/plugins/chapters/totem-chapters.c:995
+msgid "Supported files"
+msgstr "Támogatott fájlok"
+
+#: ../src/totem-uri.c:360
+msgid "Audio files"
+msgstr "Hangfájlok"
+
+#: ../src/totem-uri.c:368
+msgid "Video files"
+msgstr "Videofájlok"
+
+#: ../src/totem-uri.c:378
+msgid "Subtitle files"
+msgstr "Feliratfájlok"
+
+#: ../src/totem-uri.c:430
+msgid "Select Text Subtitles"
+msgstr "Válassza ki a feliratokat"
+
+#: ../src/totem-uri.c:495
+msgid "Select Movies or Playlists"
+msgstr "Válasszon ki filmeket vagy lejátszólistákat"
+
+#: ../src/totem-uri.c:499
+msgid "Add Directory"
+msgstr "Könyvtár hozzáadása"
+
 #: ../src/totem-video-list.c:330
 msgid "No video URI"
 msgstr "Nincs videó URI"
@@ -1728,7 +1754,7 @@ msgstr "Nincs videó URI"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:872
+#: ../src/totem-video-thumbnailer.c:841
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1739,205 +1765,41 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:873
+#: ../src/totem-video-thumbnailer.c:842
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: ../src/totem-video-thumbnailer.c:875
+#: ../src/totem-video-thumbnailer.c:844
 msgid "Resolution"
 msgstr "Felbontás"
 
-#: ../src/totem-video-thumbnailer.c:878
+#: ../src/totem-video-thumbnailer.c:847
 msgid "Duration"
 msgstr "Időtartam"
 
-#: ../src/totem-uri.c:506 ../src/plugins/chapters/totem-chapters.c:998
-msgid "All files"
-msgstr "Minden fájl"
+#: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:1
+msgid "Apple Trailers"
+msgstr "Apple előzetesek"
 
-#: ../src/totem-uri.c:511 ../src/plugins/chapters/totem-chapters.c:995
-msgid "Supported files"
-msgstr "Támogatott fájlok"
+#: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
+msgid "Sets the user agent for the Apple Trailers site"
+msgstr "Felhasználóügynök beállítása az Apple előzetesek oldalához"
 
-#: ../src/totem-uri.c:523
-msgid "Audio files"
-msgstr "Hangfájlok"
+#: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
+msgid "Autoload Subtitles"
+msgstr "Feliratok automatikus betöltése"
 
-#: ../src/totem-uri.c:531
-msgid "Video files"
-msgstr "Videofájlok"
+#: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
+msgid "Autoloads text subtitles"
+msgstr "Szöveges feliratok automatikus betöltése"
 
-#: ../src/totem-uri.c:541
-msgid "Subtitle files"
-msgstr "Feliratfájlok"
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
+msgid "Video Disc Recorder"
+msgstr "Videolemez-rögzítő"
 
-#: ../src/totem-uri.c:593
-msgid "Select Text Subtitles"
-msgstr "Válassza ki a feliratokat"
-
-#: ../src/totem-uri.c:656
-msgid "Select Movies or Playlists"
-msgstr "Válasszon ki filmeket vagy lejátszólistákat"
-
-#. Options parsing
-#: ../src/totem.c:204
-msgid "- Play movies and songs"
-msgstr "– Filmek és dalok lejátszása"
-
-#: ../src/totem.c:220
-#, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"Az elérhető parancssori kapcsolók teljes listájáért adja ki a „%s --help” "
-"parancsot.\n"
-
-#: ../src/totem.c:262 ../src/totem.c:273
-#: ../browser-plugin/totem-plugin-viewer.c:663
-#: ../browser-plugin/totem-plugin-viewer.c:1793
-msgid "Totem Movie Player"
-msgstr "Totem médialejátszó"
-
-#: ../src/totem.c:263 ../browser-plugin/totem-plugin-viewer.c:2251
-msgid "Could not initialize the thread-safe libraries."
-msgstr "A szálbiztos programkönyvtárak nem készíthetők elő."
-
-#: ../src/totem.c:263
-msgid "Verify your system installation. Totem will now exit."
-msgstr "Ellenőrizze a rendszer telepítését. A Totem most kilép."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1589
-msgid "Password requested for RTSP server"
-msgstr "Az RTSP-kiszolgáló jelszót kér"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2858
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2862
-#, c-format
-msgid "Audio Track #%d"
-msgstr "%d. hangsáv"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2890
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2894
-#, c-format
-msgid "Subtitle #%d"
-msgstr "%d. felirat"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3298
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector."
-msgstr ""
-"A kért hangkimenet nem található. Kérem válasszon másik hangkimenetet a "
-"Multimédia rendszer választóban."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3303
-msgid "Location not found."
-msgstr "A hely nem található."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3307
-msgid "Could not open location; you might not have permission to open the file."
-msgstr "A hely nem nyitható meg; lehet, hogy nincs jogosultsága megnyitni a fájlt."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3318
-msgid ""
-"The video output is in use by another application. Please close other video "
-"applications, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"A videokimenetet egy másik alkalmazás használja. Kérem zárja be a többi "
-"videoalkalmazást vagy válasszon másik videokimenetet a Multimédia rendszer "
-"választóban."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3324
-msgid ""
-"The audio output is in use by another application. Please select another "
-"audio output in the Multimedia Systems Selector. You may want to consider "
-"using a sound server."
-msgstr ""
-"A hangkimenetet egy másik alkalmazás használja. Kérem válasszon másik "
-"hangkimenetet a Multimédia rendszer választóban. Fontolja meg egy "
-"hangkiszolgáló használatát."
-
-#. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3342
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3348
-#, c-format
-msgid "The playback of this movie requires a %s plugin which is not installed."
-msgid_plural ""
-"The playback of this movie requires the following decoders which are not "
-"installed:\n"
-"\n"
-"%s"
-msgstr[0] "Ezen film lejátszása egy %s bővítményt igényel, amely nincs telepítve."
-msgstr[1] ""
-"Ezen film lejátszása egy a következő dekódolókat igényli, amelyek nincsenek "
-"telepítve:\n"
-"\n"
-"%s"
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3374
-msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr ""
-"Ez a fájl nem játszható le a hálózaton keresztül. Próbálja előbb letölteni a "
-"lemezre."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5878
-msgid "Media contains no supported video streams."
-msgstr "A média nem tartalmaz támogatott videofolyamot."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6053
-msgid ""
-"Failed to create a GStreamer play object. Please check your GStreamer "
-"installation."
-msgstr ""
-"Nem sikerült GStreamer-lejátszóobjektumot létrehozni. Kérem ellenőrizze a "
-"GStreamer telepítését."
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6173
-msgid ""
-"Failed to open audio output. You may not have permission to open the sound "
-"device, or the sound server may not be running. Please select another audio "
-"output in the Multimedia Systems Selector."
-msgstr ""
-"A hangkimenet megnyitása sikertelen. Lehet, hogy nincs jogosultsága a "
-"hangeszköz megnyitásához vagy a hangkiszolgáló nem fut. Kérem válasszon "
-"másik hangkimenetet a Multimédia rendszer választóban. "
-
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6193
-msgid ""
-"Could not find the audio output. You may need to install additional "
-"GStreamer plugins, or select another audio output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"A hangkimenet nem található. Lehet, hogy további GStreamer bővítményeket "
-"kell telepítenie, vagy válasszon másik hangkimenetet a Multimédia rendszer "
-"választóban."
-
-#. hour:minutes:seconds
-#. Translators: This is a time format, like "9:05:02" for 9
-#. * hours, 5 minutes, and 2 seconds. You may change ":" to
-#. * the separator that your locale uses or use "%Id" instead
-#. * of "%d" if your locale uses localized digits.
-#.
-#: ../src/backend/video-utils.c:83 ../src/plugins/skipto/totem-time-entry.c:57
-#, c-format
-msgctxt "long time format"
-msgid "%d:%02d:%02d"
-msgstr "%d.%02d.%02d"
-
-#. minutes:seconds
-#. Translators: This is a time format, like "5:02" for 5
-#. * minutes and 2 seconds. You may change ":" to the
-#. * separator that your locale uses or use "%Id" instead of
-#. * "%d" if your locale uses localized digits.
-#.
-#: ../src/backend/video-utils.c:92
-#, c-format
-msgctxt "short time format"
-msgid "%d:%02d"
-msgstr "%d.%02d"
+#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
+msgid "Records (S)VCDs or video DVDs"
+msgstr "(S)VCD-k vagy video DVD-k írása"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:65
 msgid "_Create Video Disc..."
@@ -1963,28 +1825,76 @@ msgstr "(S)VCD másolása…"
 msgid "Copy the currently playing (S)VCD"
 msgstr "A jelenleg lejátszott (S)VCD másolása"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:129
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:136
 msgid "The video disc could not be duplicated."
 msgstr "A videolemez nem másolható."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:131
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:276
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:138
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:283
 msgid "The movie could not be recorded."
 msgstr "A film nem rögzíthető."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:157
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:167
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:263
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:164
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:174
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:270
 msgid "Unable to write a project."
 msgstr "A projekt nem írható."
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
-msgid "Records (S)VCDs or video DVDs"
-msgstr "(S)VCD-k vagy video DVD-k írása"
+#: ../src/plugins/chapters/chapters-edit.ui.h:1
+msgid "Name for new chapter:"
+msgstr "Az új fejezet neve:"
 
-#: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
-msgid "Video Disc Recorder"
-msgstr "Videolemez-rögzítő"
+#: ../src/plugins/chapters/chapters-list.ui.h:1
+msgid "_Remove Chapter"
+msgstr "Fejezet _eltávolítása"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:2
+msgid "Remove the chapter from the list"
+msgstr "A fejezet eltávolítása a listáról"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:3
+msgid "_Go to Chapter"
+msgstr "_Ugrás fejezetre"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:4
+msgid "Go to the chapter in the movie"
+msgstr "Ugrás a film egy fejezetére"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:5
+msgid "Add Chapter..."
+msgstr "Fejezet hozzáadása…"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:6
+msgid "Remove Chapter"
+msgstr "Fejezet eltávolítása"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:7
+msgid "Go to Chapter"
+msgstr "Ugrás fejezetre"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:8
+msgid "Save Changes"
+msgstr "Változtatások mentése"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:9
+msgid "No chapter data"
+msgstr "Nincsenek fejezetadatok"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:10
+msgid "Load Chapters..."
+msgstr "Fejezetek betöltése…"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:11
+msgid "Load chapters from an external CMML file"
+msgstr "Fejezetek betöltése külső CMML fájlból"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:12
+msgid "Add New Chapters"
+msgstr "Új fejezetek hozzáadása"
+
+#: ../src/plugins/chapters/chapters-list.ui.h:13
+msgid "Create a new chapter list for the movie"
+msgstr "Új fejezetlista létrehozása a filmhez"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
 #: ../src/plugins/chapters/totem-chapters.c:1139
@@ -1992,64 +1902,8 @@ msgid "Chapters"
 msgstr "Fejezetek"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies."
-msgstr "Fejezetjelzők támogatása filmekben."
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Az új fejezet neve:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "Add Chapter..."
-msgstr "Fejezet hozzáadása…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Add New Chapters"
-msgstr "Új fejezetek hozzáadása"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "Create a new chapter list for the movie"
-msgstr "Új fejezetlista létrehozása a filmhez"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to Chapter"
-msgstr "Ugrás fejezetre"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Go to the chapter in the movie"
-msgstr "Ugrás a film egy fejezetére"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Load Chapters..."
-msgstr "Fejezetek betöltése…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Load chapters from an external CMML file"
-msgstr "Fejezetek betöltése külső CMML fájlból"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "No chapter data"
-msgstr "Nincsenek fejezetadatok"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "Remove Chapter"
-msgstr "Fejezet eltávolítása"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Remove the chapter from the list"
-msgstr "A fejezet eltávolítása a listáról"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Save Changes"
-msgstr "Változtatások mentése"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "_Go to Chapter"
-msgstr "_Ugrás fejezetre"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "_Remove Chapter"
-msgstr "Fejezet _eltávolítása"
+msgid "Support chapter markers in movies"
+msgstr "Fejezetjelzők támogatása filmekben"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -2081,8 +1935,10 @@ msgid "Error occurred while saving chapters"
 msgstr "Hiba történt a fejezetek mentése közben"
 
 #: ../src/plugins/chapters/totem-chapters.c:843
-msgid "Please check you have permission to write to the folder containing the movie."
-msgstr "Ellenőrizze, hogy van-e jogosultsága a filmet tartalmazó mappa írására."
+msgid ""
+"Please check you have permission to write to the folder containing the movie."
+msgstr ""
+"Ellenőrizze, hogy van-e jogosultsága a filmet tartalmazó mappa írására."
 
 #: ../src/plugins/chapters/totem-chapters.c:976
 msgid "Open Chapter File"
@@ -2130,7 +1986,8 @@ msgstr "D-Bus szolgáltatás"
 msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
-msgstr "Értesítések küldése a jelenleg lejátszott filmekről a D-Bus alrendszernek."
+msgstr ""
+"Értesítések küldése a jelenleg lejátszott filmekről a D-Bus alrendszernek."
 
 #: ../src/plugins/dbusservice/dbusservice.py:213
 #: ../src/plugins/dbusservice/dbusservice.py:243
@@ -2153,13 +2010,37 @@ msgstr "Ismeretlen tulajdonság („%s”) lett kérve egy MediaPlayer 2 objektu
 msgid "The URI ‘%s’ is not supported."
 msgstr "A(z) „%s” URI nem támogatott."
 
-#: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
-msgid "Instant Messenger status"
-msgstr "Azonnali üzenő állapota"
+#: ../src/plugins/grilo/grilo.plugin.in.h:1
+msgid "Grilo Browser"
+msgstr "Grilo böngésző"
 
-#: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
-msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr "Az azonnali üzenő állapotának beállítása „távolra” film lejátszásakor"
+#: ../src/plugins/grilo/grilo.plugin.in.h:2
+msgid "A plugin to let you browse media content from various sources"
+msgstr "Különböző forrásokból származó médiatartalmakat böngésző bővítmény"
+
+#: ../src/plugins/grilo/grilo.ui.h:1
+msgid "Add to Playlist"
+msgstr "Hozzáadás a lejátszólistához"
+
+#: ../src/plugins/grilo/grilo.ui.h:2
+msgid "Copy Location"
+msgstr "Hely másolása"
+
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1184
+msgid "Browse"
+msgstr "Tallózás"
+
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1227
+msgid "Search"
+msgstr "Keresés"
+
+#: ../src/plugins/grilo/totem-grilo.c:454
+msgid "Browse Error"
+msgstr "Böngészési hiba"
+
+#: ../src/plugins/grilo/totem-grilo.c:609
+msgid "Search Error"
+msgstr "Keresési hiba"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -2173,55 +2054,13 @@ msgstr "Prezentációsegéd feljegyzések készítéséhez a képernyőre"
 msgid "The gromit binary was not found."
 msgstr "A gromit bináris nem található."
 
-#. Add the interface to Totem's sidebar
-#: ../src/plugins/iplayer/iplayer.plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:46
-msgid "BBC iPlayer"
-msgstr "BBC iPlayer"
+#: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
+msgid "Instant Messenger Status"
+msgstr "Azonnali üzenő állapota"
 
-#: ../src/plugins/iplayer/iplayer.plugin.in.h:2
-msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service."
-msgstr "Az elmúlt 7 nap BBC műsorainak lejátszása a BBC iPlayer szolgáltatással"
-
-#: ../src/plugins/iplayer/iplayer.py:72
-msgid "Error listing channel categories"
-msgstr "Hiba a csatornakategóriák felsorolásakor"
-
-#: ../src/plugins/iplayer/iplayer.py:73
-msgid ""
-"There was an unknown error getting the list of television channels available "
-"on BBC iPlayer."
-msgstr ""
-"Ismeretlen hiba történt a BBC iPlayeren elérhető tévécsatornák listájának "
-"lekérésekor."
-
-#. Append a dummy child row so that the expander's visible; we can
-#. then queue off the expander to load the programme listing for this
-#. category
-#: ../src/plugins/iplayer/iplayer.py:84
-msgid "Loading…"
-msgstr "Betöltés…"
-
-#. Translators: the "programme feed" is the list of TV shows
-#. available to watch online
-#: ../src/plugins/iplayer/iplayer.py:136
-msgid "Error getting programme feed"
-msgstr "Hiba a műsorforrás lekérésekor"
-
-#: ../src/plugins/iplayer/iplayer.py:137
-msgid ""
-"There was an error getting the list of programmes for this channel and "
-"category combination."
-msgstr "Hiba történt a csatorna- és kategóriakombináció műsorlistájának lekérésekor."
-
-#: ../src/plugins/iplayer/iplayer2.py:298
-msgid "<no reason given>"
-msgstr "<nincs megadva ok>"
-
-#: ../src/plugins/iplayer/iplayer2.py:299
-#, python-format
-msgid "Programme unavailable (\"%s\")"
-msgstr "A műsor nem érhető el („%s”)"
+#: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
+msgid "Set your Instant Messenger status to away when a movie is playing"
+msgstr "Az azonnali üzenő állapotának beállítása „távolra” film lejátszásakor"
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -2239,25 +2078,29 @@ msgstr "A lirc nem készíthető elő."
 msgid "Couldn't read lirc configuration."
 msgstr "A lirc konfigurációja nem olvasható."
 
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
-msgid "Download Movie Subtitles"
-msgstr "Filmfeliratok letöltése"
+#: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
+msgid "Media Player Keys"
+msgstr "Médialejátszó billentyűk"
 
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
-msgid "Subtitle _language:"
-msgstr "Felirat _nyelve:"
+#: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:2
+msgid "Support additional media player keys"
+msgstr "További médialejátszó billentyűk engedélyezése"
 
-#: ../src/plugins/opensubtitles/opensubtitles.ui.h:3
-msgid "_Play with Subtitle"
-msgstr "_Lejátszás felirattal"
+#: ../src/plugins/ontop/ontop.plugin.in.h:1
+msgid "Always On Top"
+msgstr "Mindig legfelül"
+
+#: ../src/plugins/ontop/ontop.plugin.in.h:2
+msgid "Keep the main window on top when playing a movie"
+msgstr "A főablak legfelül tartása film lejátszásakor"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:1
-msgid "Look for subtitles for the currently playing movie."
-msgstr "Feliratok keresése a jelenleg lejátszott filmhez."
-
-#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
 msgid "Subtitle Downloader"
 msgstr "Feliratletöltő"
+
+#: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
+msgid "Look for subtitles for the currently playing movie"
+msgstr "Feliratok keresése a jelenleg lejátszott filmhez"
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:42
 msgid "Brazilian Portuguese"
@@ -2313,6 +2156,18 @@ msgstr "_Filmfeliratok letöltése…"
 msgid "Searching subtitles…"
 msgstr "Feliratok keresése…"
 
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:1
+msgid "Download Movie Subtitles"
+msgstr "Filmfeliratok letöltése"
+
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:2
+msgid "Subtitle _language:"
+msgstr "Felirat _nyelve:"
+
+#: ../src/plugins/opensubtitles/opensubtitles.ui.h:3
+msgid "_Play with Subtitle"
+msgstr "_Lejátszás felirattal"
+
 #: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
 msgid "Subtitle language"
 msgstr "Felirat nyelve"
@@ -2321,79 +2176,23 @@ msgstr "Felirat nyelve"
 msgid "The language to search for subtitles for movies in."
 msgstr "Filmek feliratának keresése ezen a nyelven."
 
-#: ../src/plugins/ontop/ontop.plugin.in.h:1
-msgid "Always On Top"
-msgstr "Mindig legfelül"
+#: ../src/plugins/properties/movie-properties.plugin.in.h:1
+msgid "Movie Properties"
+msgstr "Videobeállítások"
 
-#: ../src/plugins/ontop/ontop.plugin.in.h:2
-msgid "Keep the main window on top when playing a movie"
-msgstr "A főablak legfelül tartása film lejátszásakor"
+#: ../src/plugins/properties/movie-properties.plugin.in.h:2
+msgid "Adds movie properties to the sidebar"
+msgstr "Videobeállítások hozzáadása az oldalsávhoz"
 
 #: ../src/plugins/properties/totem-movie-properties.c:246
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:2
-#, no-c-format
-msgid ""
-"A format string used to build the network service name used when publishing "
-"playlists over the network. The following format placeholders can be used: • "
-"%a: the program name as returned by g_get_application_name() • %h: the "
-"machine's host name in title case • %u: the user's login name in title case "
-"• %U: the user's real name • %%: the percent sign"
-msgstr ""
-"A hálózati szolgáltatás nevének felépítéséhez használt formátum-karakterlánc "
-"a lejátszólisták hálózaton való közzétételekor. A következő formátum-"
-"helykitöltők használhatók: • %a: a program neve, a g_get_application_name() "
-"által visszaadott formában • %h: a gépnév nagybetűvel • %u: a felhasználó "
-"bejelentkezési neve nagybetűvel • %U: a felhasználó valódi neve • %%: "
-"százalékjel"
-
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:3
-msgid "Format for network service name"
-msgstr "Formátum a hálózati szolgáltatásnévhez"
-
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:4
-msgid "Publisher protocol to use"
-msgstr "Használandó közzétételi protokoll"
-
-#: ../src/plugins/publish/org.gnome.totem.plugins.publish.gschema.xml.in.in.h:5
-msgid "The transport protocol to use when publishing playlists over the network."
-msgstr "A lejátszólisták hálózati közzétételéhez használandó szállítási protokoll."
-
-#. Translators: computers on the local network which are publishing their playlists over the network
-#: ../src/plugins/publish/totem-publish.c:552
-msgid "Neighbors"
-msgstr "Szomszédok"
-
-#: ../src/plugins/publish/publish.plugin.in.h:1
-msgid "Publish Playlist"
-msgstr "Lejátszólista közzététele"
-
-#: ../src/plugins/publish/publish.plugin.in.h:2
-msgid "Share the current playlist via HTTP"
-msgstr "A lejátszólista megosztása HTTP használatával"
-
-#: ../src/plugins/publish/publish-plugin.ui.h:1
-msgid "Service _Name:"
-msgstr "Szolgáltatás _neve:"
-
-#: ../src/plugins/publish/publish-plugin.ui.h:3
-#, no-c-format
-msgid ""
-"The name used for announcing the playlist service on the network.\n"
-"All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-"and <b>%h</b> will be replaced by your computer's host name."
-msgstr ""
-"A lejátszólista-szolgáltatás hálózaton való bejelentéséhez használt név.\n"
-"A <b>%u</b> minden előfordulása az Ön nevével, a <b>%h</b> minden\n"
-"előfordulása pedig a számítógép nevével lesz helyettesítve."
-
-#: ../src/plugins/publish/publish-plugin.ui.h:6
-msgid "Use _encrypted transport protocol (HTTPS)"
-msgstr "_Titkosított átviteli protokoll (HTTPS) használata"
-
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+msgid "rpdb2 password"
+msgstr "rpdb2 jelszó"
+
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
@@ -2402,213 +2201,13 @@ msgstr ""
 "jogosultság nélküli távoli hozzáférés ellen. Ha üres, akkor a „totem” kerül "
 "felhasználásra."
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
-msgid "rpdb2 password"
-msgstr "rpdb2 jelszó"
-
-#: ../src/plugins/rotation/rotation.plugin.in.h:1
-msgid "Allows videos to be rotated if they're in the wrong orientation."
-msgstr "Lehetővé teszi a videók forgatását, ha tájolásuk nem megfelelő."
-
-#: ../src/plugins/rotation/rotation.plugin.in.h:2
-msgid "Rotation Plugin"
-msgstr "Forgatás bővítmény"
-
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:60
-msgid "_Rotate Clockwise"
-msgstr "Forgatás az ó_ramutató irányába"
-
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:62
-msgid "Rotate Counterc_lockwise"
-msgstr "Forgatás az óramutatóval _ellentétesen"
-
-#: ../src/plugins/save-file/totem-save-file.c:63
-msgid "Save a Copy..."
-msgstr "Másolat mentése…"
-
-#: ../src/plugins/save-file/totem-save-file.c:64
-msgid "Save a copy of the movie"
-msgstr "A film másolatának mentése"
-
-#: ../src/plugins/save-file/totem-save-file.c:129
-msgid "Save a Copy"
-msgstr "Másolat mentése"
-
-#. translators: Movie is the default saved movie filename,
-#. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:161
-msgid "Movie"
-msgstr "Film"
-
-#: ../src/plugins/save-file/totem-save-file.c:183
-msgid "Movie stream"
-msgstr "Film adatfolyam"
-
-#: ../src/plugins/screensaver/totem-screensaver.c:116
-#: ../browser-plugin/totem-plugin-viewer.c:1891
-msgid "Playing a movie"
-msgstr "Film lejátszása"
-
-#: ../src/plugins/screenshot/gallery.ui.h:1
-msgid "Calculate the number of screenshots"
-msgstr "Képernyőképek számának kiszámolása"
-
-#: ../src/plugins/screenshot/gallery.ui.h:2
-msgid "Number of screenshots:"
-msgstr "Képernyőképek száma:"
-
-#: ../src/plugins/screenshot/gallery.ui.h:3
-msgid "Screenshot width (in pixels):"
-msgstr "Képernyőkép szélessége (képpont):"
-
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:1
-msgid "Save in _folder:"
-msgstr "_Mentés ebbe a mappába:"
-
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:2
-msgid "Select a folder"
-msgstr "Válasszon egy mappát"
-
-#: ../src/plugins/screenshot/gnome-screenshot.ui.h:3
-msgid "_Name:"
-msgstr "_Név:"
-
-#. Write the screenshot to the temporary file
-#: ../src/plugins/screenshot/gnome-screenshot-widget.c:385
-#: ../src/plugins/screenshot/totem-screenshot.c:64
-msgid "Screenshot.png"
-msgstr "Képernyőkép.png"
-
-#: ../src/plugins/screenshot/totem-gallery.c:91
-msgid "Save Gallery"
-msgstr "Galéria mentése"
-
-#. Translators: The first argument is the movie title. The second
-#. * argument is a number which is used to prevent overwriting files.
-#. * Just translate "Gallery", and not the ".jpg". Example:
-#. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
-#, c-format
-msgid "Gallery-%s-%d.jpg"
-msgstr "Galéria-%s-%d.jpg"
-
-#. Set up the window
-#: ../src/plugins/screenshot/totem-gallery-progress.c:101
-msgid "Creating Gallery..."
-msgstr "Galéria készítése…"
-
-#. Set the progress label
-#: ../src/plugins/screenshot/totem-gallery-progress.c:107
-#, c-format
-msgid "Saving gallery as \"%s\""
-msgstr "Galéria mentése mint „%s”"
-
-#: ../src/plugins/screenshot/totem-screenshot.c:113
-msgid "There was an error saving the screenshot."
-msgstr "Hiba történt a képernyőkép mentése közben."
-
-#: ../src/plugins/screenshot/totem-screenshot.c:139
-msgid "Save Screenshot"
-msgstr "Képernyőkép mentése"
-
-#. Create the screenshot widget
-#. Translators: %s is the movie title and %d is an auto-incrementing number to make filename unique
-#: ../src/plugins/screenshot/totem-screenshot.c:160
-#, c-format
-msgid "Screenshot-%s-%d.png"
-msgstr "Képernyőkép-%s-%d.png"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:88
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:95
-msgid "Totem could not get a screenshot of the video."
-msgstr "A Totem nem tud képernyőképet készíteni a videóról."
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:95
-msgid "This is not supposed to happen; please file a bug report."
-msgstr ""
-"Ennek a bekövetkezését nem tételeztük fel, kérjük küldjön be egy "
-"hibajelentést."
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:197
-msgid "Take _Screenshot..."
-msgstr "_Képernyőkép készítése…"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:197
-msgid "Take a screenshot"
-msgstr "Képernyőkép készítése"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:198
-msgid "Create Screenshot _Gallery..."
-msgstr "Képernyőkép-g_aléria készítése…"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:198
-msgid "Create a gallery of screenshots"
-msgstr "Képernyőképekből álló galéria készítése"
-
-#. Update the "seconds" label so that it always has the correct singular/plural form
-#. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:160
-msgid "second"
-msgid_plural "seconds"
-msgstr[0] "másodperc"
-msgstr[1] "másodperc"
-
-#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
-#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
-#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
-#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:190
-msgctxt "Skip To label length"
-msgid "7"
-msgstr "9"
-
-#: ../src/plugins/skipto/totem-skipto.c:197
-msgid "Skip To"
-msgstr "Ugrás"
-
-#: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "_Skip To..."
-msgstr "_Ugrás…"
-
-#: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "Skip to a specific time"
-msgstr "Ugrás egy adott időpontra"
-
-#: ../src/plugins/skipto/skipto.ui.h:1
-msgid "_Skip to:"
-msgstr "_Ugrás ide:"
-
-#: ../browser-plugin/totem-plugin-viewer.c:431
-msgid "No URI to play"
-msgstr "Nincs lejátszandó URI cím"
-
-#. translators: this is:
-#. * Open With ApplicationName
-#. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1107
-#, c-format
-msgid "_Open with \"%s\""
-msgstr "Megnyitás e_zzel: „%s”"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2136
-msgid "No playlist or playlist empty"
-msgstr "Nem létező vagy üres lejátszólista"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2235
-msgid "Movie browser plugin"
-msgstr "Médialejátszó böngészőbővítmény"
-
-#: ../browser-plugin/totem-plugin-viewer.c:2251
-msgid "Verify your system installation. The Totem plugin will now exit."
-msgstr "Ellenőrizze a rendszer telepítését. A Totem bővítmény most kilép."
-
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
-msgid "Interactive Python console."
-msgstr "Interaktív Python konzol."
-
-#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
 msgid "Python Console"
 msgstr "Python konzol"
+
+#: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
+msgid "Interactive Python console"
+msgstr "Interaktív Python konzol"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:88
 msgid "Python Console Menu"
@@ -2650,37 +2249,500 @@ msgstr ""
 "segítségével csatlakozik hozzá. Ha nem állított be hibakeresési jelszót a "
 "DConf-ban, akkor az alapértelmezett („totem”) kerül felhasználásra."
 
-#: ../src/plugins/grilo/grilo.plugin.in.h:1
-msgid "A plugin to let you browse media content from various sources."
-msgstr "Különböző forrásokból származó médiatartalom böngészése."
+#: ../src/plugins/recent/recent.plugin.in.h:1
+#| msgid "Video files"
+msgid "Recent files"
+msgstr "Legutóbbi fájlok"
 
-#: ../src/plugins/grilo/grilo.plugin.in.h:2
-msgid "Grilo Browser"
-msgstr "Grilo böngésző"
+#: ../src/plugins/recent/recent.plugin.in.h:2
+msgid "Adds files that have been played to recent files"
+msgstr "A lejátszott fájlok hozzáadása a legutóbbi fájlokhoz"
 
-#: ../src/plugins/grilo/totem-grilo.c:452
-msgid "Browse Error"
-msgstr "Böngészési hiba"
+#: ../src/plugins/rotation/rotation.plugin.in.h:1
+msgid "Rotation Plugin"
+msgstr "Forgatás bővítmény"
 
-#: ../src/plugins/grilo/totem-grilo.c:599
-msgid "Search Error"
-msgstr "Keresési hiba"
+#: ../src/plugins/rotation/rotation.plugin.in.h:2
+msgid "Allows videos to be rotated if they are in the wrong orientation"
+msgstr "Lehetővé teszi a videók forgatását, ha tájolásuk nem megfelelő"
 
-#: ../src/plugins/grilo/totem-grilo.c:1219 ../src/plugins/grilo/grilo.ui.h:2
-msgid "Browse"
-msgstr "Tallózás"
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:50
+msgid "_Rotate Clockwise"
+msgstr "Forgatás az ó_ramutató irányába"
 
-#: ../src/plugins/grilo/totem-grilo.c:1285 ../src/plugins/grilo/grilo.ui.h:4
-msgid "Search"
-msgstr "Keresés"
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
+msgid "Rotate Counterc_lockwise"
+msgstr "Forgatás az óramutatóval _ellentétesen"
 
-#: ../src/plugins/grilo/grilo.ui.h:1
-msgid "Add to Playlist"
-msgstr "Hozzáadás a lejátszólistához"
+#: ../src/plugins/save-file/save-file.plugin.in.h:1
+msgid "Save Copy"
+msgstr "Másolat mentése"
 
-#: ../src/plugins/grilo/grilo.ui.h:3
-msgid "Copy Location"
-msgstr "Hely másolása"
+#: ../src/plugins/save-file/save-file.plugin.in.h:2
+msgid "Save a copy of the currently playing movie"
+msgstr "A jelenleg lejátszott videó másolása"
+
+#: ../src/plugins/save-file/totem-save-file.c:63
+msgid "Save a Copy..."
+msgstr "Másolat mentése…"
+
+#: ../src/plugins/save-file/totem-save-file.c:64
+msgid "Save a copy of the movie"
+msgstr "A film másolatának mentése"
+
+#: ../src/plugins/save-file/totem-save-file.c:129
+msgid "Save a Copy"
+msgstr "Másolat mentése"
+
+#. translators: Movie is the default saved movie filename,
+#. * without the suffix
+#: ../src/plugins/save-file/totem-save-file.c:161
+msgid "Movie"
+msgstr "Film"
+
+#: ../src/plugins/save-file/totem-save-file.c:183
+msgid "Movie stream"
+msgstr "Film adatfolyam"
+
+#: ../src/plugins/screensaver/screensaver.plugin.in.h:1
+msgid "Screen Saver"
+msgstr "Képernyővédő"
+
+#: ../src/plugins/screensaver/screensaver.plugin.in.h:2
+msgid "Deactivates the screen saver when a movie is playing"
+msgstr "Képernyővédő letiltása videó lejátszásakor"
+
+#: ../src/plugins/screenshot/gallery.ui.h:1
+msgid "Screenshot width (in pixels):"
+msgstr "Képernyőkép szélessége (képpont):"
+
+#: ../src/plugins/screenshot/gallery.ui.h:2
+msgid "Calculate the number of screenshots"
+msgstr "Képernyőképek számának kiszámolása"
+
+#: ../src/plugins/screenshot/gallery.ui.h:3
+msgid "Number of screenshots:"
+msgstr "Képernyőképek száma:"
+
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: ../src/plugins/screenshot/screenshot-filename-builder.c:147
+#, c-format
+#| msgid "Screenshot.png"
+msgid "Screenshot from %s.png"
+msgstr "Képernyőkép erről: %s.png"
+
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: ../src/plugins/screenshot/screenshot-filename-builder.c:154
+#, c-format
+#| msgid "Screenshot-%s-%d.png"
+msgid "Screenshot from %s - %d.png"
+msgstr "Képernyőkép erről: %s - %d.png"
+
+#: ../src/plugins/screenshot/screenshot.plugin.in.h:1
+msgid "Screenshot"
+msgstr "Képernyőkép"
+
+#: ../src/plugins/screenshot/screenshot.plugin.in.h:2
+msgid "Allows screenshots and galleries to be taken of videos"
+msgstr "Képernyőképek és galériák készítése videókról"
+
+#: ../src/plugins/screenshot/totem-gallery.c:91
+msgid "Save Gallery"
+msgstr "Galéria mentése"
+
+#. Translators: The first argument is the movie title. The second
+#. * argument is a number which is used to prevent overwriting files.
+#. * Just translate "Gallery", and not the ".jpg". Example:
+#. * "Galerie-%s-%d.jpg".
+#: ../src/plugins/screenshot/totem-gallery.c:115
+#, c-format
+msgid "Gallery-%s-%d.jpg"
+msgstr "Galéria-%s-%d.jpg"
+
+#. Set up the window
+#: ../src/plugins/screenshot/totem-gallery-progress.c:101
+msgid "Creating Gallery..."
+msgstr "Galéria készítése…"
+
+#. Set the progress label
+#: ../src/plugins/screenshot/totem-gallery-progress.c:107
+#, c-format
+msgid "Saving gallery as \"%s\""
+msgstr "Galéria mentése mint „%s”"
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:220
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
+msgid "Totem could not get a screenshot of the video."
+msgstr "A Totem nem tud képernyőképet készíteni a videóról."
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
+msgid "This is not supposed to happen; please file a bug report."
+msgstr ""
+"Ennek a bekövetkezését nem tételeztük fel, kérjük küldjön be egy "
+"hibajelentést."
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#| msgid "Take _Screenshot..."
+msgid "Take _Screenshot"
+msgstr "_Képernyőkép készítése"
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+msgid "Take a screenshot"
+msgstr "Képernyőkép készítése"
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+msgid "Create Screenshot _Gallery..."
+msgstr "Képernyőkép-g_aléria készítése…"
+
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+msgid "Create a gallery of screenshots"
+msgstr "Képernyőképekből álló galéria készítése"
+
+#: ../src/plugins/skipto/skipto.plugin.in.h:1
+#: ../src/plugins/skipto/totem-skipto.c:196
+msgid "Skip To"
+msgstr "Ugrás"
+
+#: ../src/plugins/skipto/skipto.plugin.in.h:2
+msgid "Provides the \"Skip to\" dialog"
+msgstr "Az „Ugrás” ablak"
+
+#: ../src/plugins/skipto/skipto.ui.h:1
+msgid "_Skip to:"
+msgstr "_Ugrás ide:"
+
+#. Update the "seconds" label so that it always has the correct singular/plural form
+#. Translators: label for the seconds selector in the "Skip to" dialogue
+#: ../src/plugins/skipto/totem-skipto.c:159
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "másodperc"
+msgstr[1] "másodperc"
+
+#. Fix the label width at the maximum necessary for the plural labels, to prevent it changing size when we change the spinner value
+#. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
+#. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
+#. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
+#: ../src/plugins/skipto/totem-skipto.c:189
+msgctxt "Skip To label length"
+msgid "7"
+msgstr "9"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:182
+msgid "_Skip To..."
+msgstr "_Ugrás…"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:182
+msgid "Skip to a specific time"
+msgstr "Ugrás egy adott időpontra"
+
+#~ msgid "Location not found."
+#~ msgstr "A hely nem található."
+
+#~ msgid ""
+#~ "Could not open location; you might not have permission to open the file."
+#~ msgstr ""
+#~ "A hely nem nyitható meg; lehet, hogy nincs jogosultsága megnyitni a fájlt."
+
+#~ msgid ""
+#~ "Failed to create a GStreamer play object. Please check your GStreamer "
+#~ "installation."
+#~ msgstr ""
+#~ "Nem sikerült GStreamer-lejátszóobjektumot létrehozni. Kérem ellenőrizze a "
+#~ "GStreamer telepítését."
+
+#~ msgid "%d %%"
+#~ msgstr "%d%%"
+
+#~ msgid "<no reason given>"
+#~ msgstr "<nincs megadva ok>"
+
+#~ msgid "Programme unavailable (\"%s\")"
+#~ msgstr "A műsor nem érhető el („%s”)"
+
+#~ msgid "BBC iPlayer"
+#~ msgstr "BBC iPlayer"
+
+#~| msgid ""
+#~| "Stream BBC programs from the last 7 days from the BBC iPlayer service."
+#~ msgid ""
+#~ "Stream BBC programs from the last 7 days from the BBC iPlayer service"
+#~ msgstr ""
+#~ "Az elmúlt 7 nap BBC műsorainak lejátszása a BBC iPlayer szolgáltatással"
+
+#~ msgid "Error listing channel categories"
+#~ msgstr "Hiba a csatornakategóriák felsorolásakor"
+
+#~ msgid ""
+#~ "There was an unknown error getting the list of television channels "
+#~ "available on BBC iPlayer."
+#~ msgstr ""
+#~ "Ismeretlen hiba történt a BBC iPlayeren elérhető tévécsatornák listájának "
+#~ "lekérésekor."
+
+#~ msgid "Loading…"
+#~ msgstr "Betöltés…"
+
+#~ msgid "Error getting programme feed"
+#~ msgstr "Hiba a műsorforrás lekérésekor"
+
+#~ msgid ""
+#~ "There was an error getting the list of programmes for this channel and "
+#~ "category combination."
+#~ msgstr ""
+#~ "Hiba történt a csatorna- és kategóriakombináció műsorlistájának "
+#~ "lekérésekor."
+
+#~ msgid "_Name:"
+#~ msgstr "_Név:"
+
+#~ msgid "Save in _folder:"
+#~ msgstr "_Mentés ebbe a mappába:"
+
+#~ msgid "Select a folder"
+#~ msgstr "Válasszon egy mappát"
+
+#~ msgid "There was an error saving the screenshot."
+#~ msgstr "Hiba történt a képernyőkép mentése közben."
+
+#~ msgid "Save Screenshot"
+#~ msgstr "Képernyőkép mentése"
+
+#~ msgid "Play movies and songs"
+#~ msgstr "Filmek és dalok lejátszása"
+
+#~ msgid "1.5 Mbps T1/Intranet/LAN"
+#~ msgstr "1.5 Mbps T1/Intranet/LAN"
+
+#~ msgid "112 Kbps Dual ISDN/DSL"
+#~ msgstr "112 Kbps duál ISDN/DSL"
+
+#~ msgid "14.4 Kbps Modem"
+#~ msgstr "14.4 Kbps modem"
+
+#~ msgid "19.2 Kbps Modem"
+#~ msgstr "19.2 Kbps modem"
+
+#~ msgid "256 Kbps DSL/Cable"
+#~ msgstr "256 Kbps DSL/kábel"
+
+#~ msgid "28.8 Kbps Modem"
+#~ msgstr "28.8 Kbps modem"
+
+#~ msgid "33.6 Kbps Modem"
+#~ msgstr "33.6 Kbps modem"
+
+#~ msgid "34.4 Kbps Modem"
+#~ msgstr "34.4 Kbps modem"
+
+#~ msgid "384 Kbps DSL/Cable"
+#~ msgstr "384 Kbps DSL/kábel"
+
+#~ msgid "512 Kbps DSL/Cable"
+#~ msgstr "512 Kbps DSL/kábel"
+
+#~ msgid "56 Kbps Modem/ISDN"
+#~ msgstr "56 Kbps modem/ISDN"
+
+#~ msgid "Configure the application"
+#~ msgstr "Az alkalmazás beállítása"
+
+#~ msgid "Connection _speed:"
+#~ msgstr "Csatlakozási _sebesség:"
+
+#~ msgid "Intranet/LAN"
+#~ msgstr "Intranet/LAN"
+
+#~ msgid "Networking"
+#~ msgstr "Hálózatkezelés"
+
+#~ msgid "Open a file"
+#~ msgstr "Fájl megnyitása"
+
+#~ msgid "Open a non-local file"
+#~ msgstr "Nem helyi fájl megnyitása"
+
+#~ msgid "Quit the program"
+#~ msgstr "Kilépés a programból"
+
+#~ msgid "Set the repeat mode"
+#~ msgstr "Ismétlés mód beállítása"
+
+#~ msgid "Set the shuffle mode"
+#~ msgstr "Véletlenszerű lejátszás mód beállítása"
+
+#~ msgid "Switch to fullscreen"
+#~ msgstr "Átváltás teljes képernyőre"
+
+#~ msgid ""
+#~ "Approximate network connection speed, used to select quality on media "
+#~ "over the network."
+#~ msgstr ""
+#~ "Hálózati kapcsolat becsült sebessége, a hálózati média minőségének "
+#~ "kiválasztásához."
+
+#~ msgid "Network connection speed"
+#~ msgstr "Hálózati kapcsolat sebessége"
+
+#~ msgid "Play Image '%s'"
+#~ msgstr "„%s” lemezkép lejátszása"
+
+#~ msgid "device%d"
+#~ msgstr "%d. eszköz"
+
+#~ msgid "Play Disc '%s'"
+#~ msgstr "„%s” lemez lejátszása"
+
+#~ msgid "Movie Player using %s"
+#~ msgstr "Médialejátszó %s alapokon"
+
+#~ msgid ""
+#~ "Totem could not play this media (%s) although a plugin is present to "
+#~ "handle it."
+#~ msgstr ""
+#~ "A Totem nem tudja lejátszani ezen médiát (%s), habár van bővítmény a "
+#~ "kezeléséhez."
+
+#~ msgid ""
+#~ "You might want to check that a disc is present in the drive and that it "
+#~ "is correctly configured."
+#~ msgstr ""
+#~ "Ellenőrizze, hogy a lemez a meghajtóban van-e és megfelelően be van-e "
+#~ "állítva."
+
+#~ msgid "More information about media plugins"
+#~ msgstr "További információk a médiabővítményekről"
+
+#~ msgid ""
+#~ "Please install the necessary plugins and restart Totem to be able to play "
+#~ "this media."
+#~ msgstr ""
+#~ "Telepítse a szükséges bővítményeket és indítsa újra a Totemet ezen média "
+#~ "lejátszásához."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because it does not have the "
+#~ "appropriate plugins to be able to read from the disc."
+#~ msgstr ""
+#~ "A Totem nem tudja lejátszani ezt a típusú médiát (%s), mert nincsenek "
+#~ "megfelelő bővítmények a lemezről történő olvasáshoz."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because you do not have the "
+#~ "appropriate plugins to handle it."
+#~ msgstr ""
+#~ "A Totem nem tudja lejátszani ezt a típusú médiát (%s), mert nincs "
+#~ "megfelelő bővítmény a kezeléséhez."
+
+#~ msgid ""
+#~ "Totem cannot play this type of media (%s) because it is not supported."
+#~ msgstr ""
+#~ "A Totem nem tudja lejátszani ezt a médiatípust (%s), mert nem támogatott."
+
+#~ msgid "Please insert another disc to play back."
+#~ msgstr "Helyezzen be egy másik lemezt a lejátszáshoz."
+
+#~ msgid "Totem does not support playback of Audio CDs"
+#~ msgstr "A Totem nem támogatja a hang CD-k lejátszását"
+
+#~ msgid ""
+#~ "Please consider using a music player or a CD extractor to play this CD"
+#~ msgstr "A CD lejátszásához használjon zenelejátszót vagy CD-beolvasót"
+
+#~ msgid ""
+#~ "The requested audio output was not found. Please select another audio "
+#~ "output in the Multimedia Systems Selector."
+#~ msgstr ""
+#~ "A kért hangkimenet nem található. Kérem válasszon másik hangkimenetet a "
+#~ "Multimédia rendszer választóban."
+
+#~ msgid ""
+#~ "The video output is in use by another application. Please close other "
+#~ "video applications, or select another video output in the Multimedia "
+#~ "Systems Selector."
+#~ msgstr ""
+#~ "A videokimenetet egy másik alkalmazás használja. Kérem zárja be a többi "
+#~ "videoalkalmazást vagy válasszon másik videokimenetet a Multimédia "
+#~ "rendszer választóban."
+
+#~ msgid ""
+#~ "The audio output is in use by another application. Please select another "
+#~ "audio output in the Multimedia Systems Selector. You may want to consider "
+#~ "using a sound server."
+#~ msgstr ""
+#~ "A hangkimenetet egy másik alkalmazás használja. Kérem válasszon másik "
+#~ "hangkimenetet a Multimédia rendszer választóban. Fontolja meg egy "
+#~ "hangkiszolgáló használatát."
+
+#~ msgid ""
+#~ "Failed to open audio output. You may not have permission to open the "
+#~ "sound device, or the sound server may not be running. Please select "
+#~ "another audio output in the Multimedia Systems Selector."
+#~ msgstr ""
+#~ "A hangkimenet megnyitása sikertelen. Lehet, hogy nincs jogosultsága a "
+#~ "hangeszköz megnyitásához vagy a hangkiszolgáló nem fut. Kérem válasszon "
+#~ "másik hangkimenetet a Multimédia rendszer választóban. "
+
+#~ msgid ""
+#~ "Could not find the audio output. You may need to install additional "
+#~ "GStreamer plugins, or select another audio output in the Multimedia "
+#~ "Systems Selector."
+#~ msgstr ""
+#~ "A hangkimenet nem található. Lehet, hogy további GStreamer bővítményeket "
+#~ "kell telepítenie, vagy válasszon másik hangkimenetet a Multimédia "
+#~ "rendszer választóban."
+
+#~ msgid ""
+#~ "A format string used to build the network service name used when "
+#~ "publishing playlists over the network. The following format placeholders "
+#~ "can be used: • %a: the program name as returned by g_get_application_name"
+#~ "() • %h: the machine's host name in title case • %u: the user's login "
+#~ "name in title case • %U: the user's real name • %%: the percent sign"
+#~ msgstr ""
+#~ "A hálózati szolgáltatás nevének felépítéséhez használt formátum-"
+#~ "karakterlánc a lejátszólisták hálózaton való közzétételekor. A következő "
+#~ "formátum-helykitöltők használhatók: • %a: a program neve, a "
+#~ "g_get_application_name() által visszaadott formában • %h: a gépnév "
+#~ "nagybetűvel • %u: a felhasználó bejelentkezési neve nagybetűvel • %U: a "
+#~ "felhasználó valódi neve • %%: százalékjel"
+
+#~ msgid "Format for network service name"
+#~ msgstr "Formátum a hálózati szolgáltatásnévhez"
+
+#~ msgid "Publisher protocol to use"
+#~ msgstr "Használandó közzétételi protokoll"
+
+#~ msgid ""
+#~ "The transport protocol to use when publishing playlists over the network."
+#~ msgstr ""
+#~ "A lejátszólisták hálózati közzétételéhez használandó szállítási protokoll."
+
+#~ msgid "Neighbors"
+#~ msgstr "Szomszédok"
+
+#~ msgid "Publish Playlist"
+#~ msgstr "Lejátszólista közzététele"
+
+#~ msgid "Share the current playlist via HTTP"
+#~ msgstr "A lejátszólista megosztása HTTP használatával"
+
+#~ msgid "Service _Name:"
+#~ msgstr "Szolgáltatás _neve:"
+
+#~ msgid ""
+#~ "The name used for announcing the playlist service on the network.\n"
+#~ "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
+#~ "and <b>%h</b> will be replaced by your computer's host name."
+#~ msgstr ""
+#~ "A lejátszólista-szolgáltatás hálózaton való bejelentéséhez használt név.\n"
+#~ "A <b>%u</b> minden előfordulása az Ön nevével, a <b>%h</b> minden\n"
+#~ "előfordulása pedig a számítógép nevével lesz helyettesítve."
+
+#~ msgid "Use _encrypted transport protocol (HTTPS)"
+#~ msgstr "_Titkosított átviteli protokoll (HTTPS) használata"
 
 #~ msgid "Bemused"
 #~ msgstr "Bemused"
@@ -2708,9 +2770,6 @@ msgstr "Hely másolása"
 
 #~ msgid "Search Results"
 #~ msgstr "Keresési eredmények"
-
-#~ msgid "Videos"
-#~ msgstr "Videók"
 
 #~ msgid "_Open in Web Browser"
 #~ msgstr "Megnyitás _webböngészőben"
@@ -2955,4 +3014,3 @@ msgstr "Hely másolása"
 
 #~ msgid "Totem Browser Plugin"
 #~ msgstr "Totem böngészőbővítmény"
-
