@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem-master-po-gl-55923\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-09 15:07+0200\n"
-"PO-Revision-Date: 2012-07-09 15:11+0200\n"
+"POT-Creation-Date: 2012-07-30 03:23+0200\n"
+"PO-Revision-Date: 2012-07-30 03:23+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -27,16 +27,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Gtranslator 2.91.5\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1130
-#: ../src/totem-object.c:1590 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1180
+#: ../src/totem-object.c:1650 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "Detido"
 
-#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1123
+#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1173
 msgid "Paused"
 msgstr "Detido"
 
-#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1116
+#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1166
 msgid "Playing"
 msgstr "Reproducindo"
 
@@ -62,7 +62,7 @@ msgstr "Reprodutor de filmes Totem"
 msgid "_Open with \"%s\""
 msgstr "_Abrir con «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2419
+#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2475
 msgid "An error occurred"
 msgstr "Produciuse un erro"
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Movie browser plugin"
 msgstr "Engadido de navegador para filmes"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:238
+#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:239
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Non foi posíbel inicializar as bibliotecas de fío seguro."
 
@@ -321,9 +321,8 @@ msgstr "Grande"
 msgid "Extra Large"
 msgstr "Moi grande"
 
-#: ../data/preferences.ui.h:7
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5539
-#: ../src/totem-properties-view.c:228
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5498
+#: ../src/totem-properties-view.c:231
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -405,7 +404,7 @@ msgid "Disable screensaver when playing "
 msgstr "Desactivar o protector de pantalla ao reproducir "
 
 #: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:270
+#: ../src/totem-properties-view.c:273
 msgid "Video"
 msgstr "Vídeo"
 
@@ -462,7 +461,7 @@ msgid "_Audio output type:"
 msgstr "Tipo de saída de _son:"
 
 #: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:268
+#: ../src/totem-properties-view.c:271
 msgid "Audio"
 msgstr "Son"
 
@@ -519,8 +518,8 @@ msgid "Channels:"
 msgstr "Canles:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:237
-#: ../src/totem.c:245 ../src/totem-menu.c:877 ../src/totem-object.c:1598
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:238
+#: ../src/totem.c:247 ../src/totem-menu.c:790 ../src/totem-object.c:1658
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -857,55 +856,55 @@ msgstr "_Engadir á lista de reprodución"
 msgid "Add the video to the playlist"
 msgstr "Engadir o vídeo á lista de reprodución"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:1628
+#: ../src/backend/bacon-video-widget.c:1643
 msgid "Password requested for RTSP server"
 msgstr "O contrasinal foi solicitado polo servidor RTSP"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2957
+#: ../src/backend/bacon-video-widget.c:2944
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de son #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:2961
+#: ../src/backend/bacon-video-widget.c:2948
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo #%d"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3355
+#: ../src/backend/bacon-video-widget.c:3345
 msgid "The server you are trying to connect to is not known."
 msgstr "O servidor ao que está tentando conectarse non se recoñece."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3358
+#: ../src/backend/bacon-video-widget.c:3348
 msgid "The connection to this server was refused."
 msgstr "Rexeitouse a conexión a este servidor."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3361
+#: ../src/backend/bacon-video-widget.c:3351
 msgid "The specified movie could not be found."
 msgstr "Non foi posíbel atopar o filme especificado."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3368
+#: ../src/backend/bacon-video-widget.c:3358
 msgid "The server refused access to this file or stream."
 msgstr "O servidor rexeitou o acceso a este ficheiro ou fluxo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3374
+#: ../src/backend/bacon-video-widget.c:3364
 msgid "Authentication is required to access this file or stream."
 msgstr "Requírese autenticación para acceder a este ficheiro ou fluxo."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3381
+#: ../src/backend/bacon-video-widget.c:3371
 msgid "You are not allowed to open this file."
 msgstr "Non tes permisos para abrir este ficheiro."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3386
+#: ../src/backend/bacon-video-widget.c:3376
 msgid "This location is not a valid one."
 msgstr "Esta localización non é válida."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3394
+#: ../src/backend/bacon-video-widget.c:3384
 msgid "The movie could not be read."
 msgstr "Non é posíbel ler o filme."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3417
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3425
+#: ../src/backend/bacon-video-widget.c:3407
+#: ../src/backend/bacon-video-widget.c:3415
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -918,7 +917,7 @@ msgstr[0] ""
 msgstr[1] ""
 "A reprodución deste filme necesita os engadidos %s que non están instalados."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3436
+#: ../src/backend/bacon-video-widget.c:3426
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -926,7 +925,7 @@ msgstr ""
 "Non se pode xestionar un son ou vídeo xa que falta algún códec. Debe "
 "instalar engadidos adicionais para poder reproducir algúns tipos de filmes"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:3446
+#: ../src/backend/bacon-video-widget.c:3436
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -934,51 +933,25 @@ msgstr ""
 "Non foi posíbel reproducir este ficheiro a través da rede. Ténteo de novo "
 "descargándoo primeiro a local."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5535
-#: ../src/totem-properties-view.c:224
+#: ../src/backend/bacon-video-widget.c:5494 ../src/totem-properties-view.c:227
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5537
-#: ../src/totem-properties-view.c:226
+#: ../src/backend/bacon-video-widget.c:5496 ../src/totem-properties-view.c:229
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:5822
+#: ../src/backend/bacon-video-widget.c:5781
 msgid "Media contains no supported video streams."
 msgstr "O multimedia contén fluxos de vídeo non compatíbeis."
 
-#: ../src/backend/bacon-video-widget-gst-0.10.c:6008
+#: ../src/backend/bacon-video-widget.c:5963
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Faltan algúns dos engadidos necesarios. Asegúrese de que o programa está "
 "correctamente instalado."
-
-#. hour:minutes:seconds
-#. Translators: This is a time format, like "9:05:02" for 9
-#. * hours, 5 minutes, and 2 seconds. You may change ":" to
-#. * the separator that your locale uses or use "%Id" instead
-#. * of "%d" if your locale uses localized digits.
-#.
-#: ../src/backend/video-utils.c:83 ../src/plugins/skipto/totem-time-entry.c:57
-#, c-format
-msgctxt "long time format"
-msgid "%d:%02d:%02d"
-msgstr "%d:%02d:%02d"
-
-#. minutes:seconds
-#. Translators: This is a time format, like "5:02" for 5
-#. * minutes and 2 seconds. You may change ":" to the
-#. * separator that your locale uses or use "%Id" instead of
-#. * "%d" if your locale uses localized digits.
-#.
-#: ../src/backend/video-utils.c:92
-#, c-format
-msgctxt "short time format"
-msgid "%d:%02d"
-msgstr "%d:%02d"
 
 #: ../src/eggdesktopfile.c:165
 #, c-format
@@ -1086,6 +1059,31 @@ msgstr "Opcións de xestión da sesión:"
 msgid "Show session management options"
 msgstr "Mostrar as opcións de xestión de sesión"
 
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../src/gst/totem-time-helpers.c:56
+#: ../src/plugins/skipto/totem-time-entry.c:57
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d"
+msgstr "%d:%02d:%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../src/gst/totem-time-helpers.c:65
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d"
+msgstr "%d:%02d"
+
 #. Title
 #. Artist
 #. Album
@@ -1190,11 +1188,11 @@ msgid_plural "%d frames per second"
 msgstr[0] "%d fotograma por segundo"
 msgstr[1] "%d fotogramas por segundo"
 
-#: ../src/totem-audio-preview.c:164
+#: ../src/totem-audio-preview.c:137
 msgid "Audio Preview"
 msgstr "Previsualización de son"
 
-#: ../src/totem.c:238
+#: ../src/totem.c:239
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Verifique a instalación do seu sistema. O Totem sairá agora."
 
@@ -1271,21 +1269,21 @@ msgstr ""
 "GStreamer."
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:290
+#: ../src/totem-menu.c:291
 msgid "None"
 msgstr "Ningún"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:295
+#: ../src/totem-menu.c:296
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
 
-#: ../src/totem-menu.c:876
+#: ../src/totem-menu.c:789
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2007 Bastien Nocera"
 
-#: ../src/totem-menu.c:881
+#: ../src/totem-menu.c:794
 msgid "translator-credits"
 msgstr ""
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2011.\n"
@@ -1294,15 +1292,15 @@ msgstr ""
 "Suso Baleato <suso.baleato@xunta.es>, 2009.\n"
 "Ignacio Casal Quinteiro <icq@gnome.org>, 2005, 2006, 2007, 2008."
 
-#: ../src/totem-menu.c:885
+#: ../src/totem-menu.c:798
 msgid "Totem Website"
 msgstr "Sitio web do Totem"
 
-#: ../src/totem-menu.c:916
+#: ../src/totem-menu.c:829
 msgid "Configure Plugins"
 msgstr "Configurar os engadidos"
 
-#: ../src/totem-object.c:159
+#: ../src/totem-object.c:162
 #, c-format
 msgid ""
 "%s\n"
@@ -1313,56 +1311,56 @@ msgstr ""
 "dispoñíbeis.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:547
+#: ../src/totem-object.c:591
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1118 ../src/totem-options.c:52
+#: ../src/totem-object.c:1168 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Deter"
 
-#: ../src/totem-object.c:1125 ../src/totem-object.c:1135
+#: ../src/totem-object.c:1175 ../src/totem-object.c:1185
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1211 ../src/totem-object.c:1238
-#: ../src/totem-object.c:1726 ../src/totem-object.c:1890
+#: ../src/totem-object.c:1267 ../src/totem-object.c:1294
+#: ../src/totem-object.c:1787 ../src/totem-object.c:1942
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "O Totem non puido reproducir «%s»."
 
-#: ../src/totem-object.c:1732
+#: ../src/totem-object.c:1793
 msgid "No error message"
 msgstr "Non hai unha mensaxe de erro"
 
-#: ../src/totem-object.c:2081
+#: ../src/totem-object.c:2133
 msgid "Totem could not display the help contents."
 msgstr "O Totem non puido mostrar os contidos da axuda."
 
-#: ../src/totem-object.c:3967 ../src/totem-object.c:3969
+#: ../src/totem-object.c:4019 ../src/totem-object.c:4021
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo/Filme anterior"
 
-#: ../src/totem-object.c:3976 ../src/totem-object.c:3978
+#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
 msgid "Play / Pause"
 msgstr "Reproducir / Deter"
 
-#: ../src/totem-object.c:3986 ../src/totem-object.c:3988
+#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
 msgid "Next Chapter/Movie"
 msgstr "Capítulo/Filme seguinte"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3999 ../src/totem-object.c:4001
+#: ../src/totem-object.c:4051 ../src/totem-object.c:4053
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4132
+#: ../src/totem-object.c:4184
 msgid "Totem could not startup."
 msgstr "Non foi posíbel iniciar o Totem."
 
-#: ../src/totem-object.c:4132
+#: ../src/totem-object.c:4184
 msgid "No reason."
 msgstr "Sen motivo."
 
@@ -1486,13 +1484,13 @@ msgstr "Gardar a lista de reprodución"
 msgid "Playlist"
 msgstr "Lista de reprodución"
 
-#: ../src/totem-playlist.c:1860
+#: ../src/totem-playlist.c:1862
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Non foi posíbel analizar a lista de reprodución «%s», pode que estea danada."
 
-#: ../src/totem-playlist.c:1861
+#: ../src/totem-playlist.c:1863
 msgid "Playlist error"
 msgstr "Erro na lista de reprodución"
 
@@ -1504,47 +1502,47 @@ msgstr "Preferencias"
 msgid "Select Subtitle Font"
 msgstr "Seleccionar o tipo de letra para os subtítulos"
 
-#: ../src/totem-properties-main.c:115 ../src/totem-properties-view.c:266
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:269
 msgid "Audio/Video"
 msgstr "Son/Vídeo"
 
-#: ../src/totem-properties-view.c:128
-msgid "N/A"
-msgstr "N/D"
-
-#: ../src/totem-properties-view.c:157
-#: ../src/plugins/properties/totem-movie-properties.c:152
-#: ../src/plugins/properties/totem-movie-properties.c:163
-msgctxt "Stream bit rate"
+#: ../src/totem-properties-view.c:131
 msgid "N/A"
 msgstr "N/D"
 
 #: ../src/totem-properties-view.c:160
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
+msgctxt "Stream bit rate"
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/totem-properties-view.c:163
+#: ../src/plugins/properties/totem-movie-properties.c:152
+#: ../src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/totem-properties-view.c:177
+#: ../src/totem-properties-view.c:180
 #: ../src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:209
+#: ../src/totem-properties-view.c:212
 #: ../src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:216
+#: ../src/totem-properties-view.c:219
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../src/totem-properties-view.c:236
+#: ../src/totem-properties-view.c:239
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "N/D"
@@ -1772,7 +1770,7 @@ msgstr "Non hai URI de vídeo"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:890
+#: ../src/totem-video-thumbnailer.c:841
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1783,15 +1781,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:891
+#: ../src/totem-video-thumbnailer.c:842
 msgid "Filename"
 msgstr "Nome de ficheiro"
 
-#: ../src/totem-video-thumbnailer.c:893
+#: ../src/totem-video-thumbnailer.c:844
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../src/totem-video-thumbnailer.c:896
+#: ../src/totem-video-thumbnailer.c:847
 msgid "Duration"
 msgstr "Duración"
 
@@ -2045,11 +2043,11 @@ msgstr "Engadir á lista de reprodución"
 msgid "Copy Location"
 msgstr "Copiar a localización"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1185
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1184
 msgid "Browse"
 msgstr "Examinar"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1228
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1227
 msgid "Search"
 msgstr "Buscar"
 
@@ -2057,7 +2055,7 @@ msgstr "Buscar"
 msgid "Browse Error"
 msgstr "Erro ao examinar"
 
-#: ../src/plugins/grilo/totem-grilo.c:610
+#: ../src/plugins/grilo/totem-grilo.c:609
 msgid "Search Error"
 msgstr "Erro ao buscar"
 
@@ -2082,59 +2080,6 @@ msgid "Set your Instant Messenger status to away when a movie is playing"
 msgstr ""
 "Estabelecer o estado do seu programa de mensaxería instantánea como ausente "
 "cando se está reproducindo un filme"
-
-#: ../src/plugins/iplayer/iplayer2.py:298
-msgid "<no reason given>"
-msgstr "<sen cambios razonábeis>"
-
-#: ../src/plugins/iplayer/iplayer2.py:299
-#, python-format
-msgid "Programme unavailable (\"%s\")"
-msgstr "O programa non está dispoñíbel («%s»)"
-
-#. Add the interface to Totem's sidebar
-#: ../src/plugins/iplayer/iplayer.plugin.in.h:1
-#: ../src/plugins/iplayer/iplayer.py:46
-msgid "BBC iPlayer"
-msgstr "iPlayer da BBC"
-
-#: ../src/plugins/iplayer/iplayer.plugin.in.h:2
-msgid "Stream BBC programs from the last 7 days from the BBC iPlayer service"
-msgstr ""
-"Fluxo de programas da BBC dos últimos 7 días desde o servizo iPlayer da BBC"
-
-#: ../src/plugins/iplayer/iplayer.py:72
-msgid "Error listing channel categories"
-msgstr "Produciuse un erro ao mostrar as categorías de canles"
-
-#: ../src/plugins/iplayer/iplayer.py:73
-msgid ""
-"There was an unknown error getting the list of television channels available "
-"on BBC iPlayer."
-msgstr ""
-"Produciuse un erro descoñecido ao obter a lista das canles de televisión "
-"dispoñíbeis no iPlayer da BBC."
-
-#. Append a dummy child row so that the expander's visible; we can
-#. then queue off the expander to load the programme listing for this
-#. category
-#: ../src/plugins/iplayer/iplayer.py:84
-msgid "Loading…"
-msgstr "Cargando…"
-
-#. Translators: the "programme feed" is the list of TV shows
-#. available to watch online
-#: ../src/plugins/iplayer/iplayer.py:136
-msgid "Error getting programme feed"
-msgstr "Produciuse un erro ao recibir a fonte do programa"
-
-#: ../src/plugins/iplayer/iplayer.py:137
-msgid ""
-"There was an error getting the list of programmes for this channel and "
-"category combination."
-msgstr ""
-"Produciuse un erro ao obter a lista de programas para esta canle e "
-"combinación de categorías."
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -2325,6 +2270,14 @@ msgstr ""
 "ou rpdb2. Se non estabeleceu un contrasinal para o depurador en DConf, "
 "usarase o contrasinal por omisión («totem»)."
 
+#: ../src/plugins/recent/recent.plugin.in.h:1
+msgid "Recent files"
+msgstr "Ficheiros recentes"
+
+#: ../src/plugins/recent/recent.plugin.in.h:2
+msgid "Adds files that have been played to recent files"
+msgstr "Engadir ficheiros que xa se reproduciron aos ficheiros recentes"
+
 #: ../src/plugins/rotation/rotation.plugin.in.h:1
 msgid "Rotation Plugin"
 msgstr "Engadido de rotación"
@@ -2466,7 +2419,7 @@ msgid "Create a gallery of screenshots"
 msgstr "Crear unha galería coas capturas"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:197
+#: ../src/plugins/skipto/totem-skipto.c:196
 msgid "Skip To"
 msgstr "Saltar a"
 
@@ -2480,7 +2433,7 @@ msgstr "_Salta a:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:160
+#: ../src/plugins/skipto/totem-skipto.c:159
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "segundo"
@@ -2490,7 +2443,7 @@ msgstr[1] "segundos"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:190
+#: ../src/plugins/skipto/totem-skipto.c:189
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "8"
@@ -2502,6 +2455,44 @@ msgstr "_Saltar a…"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Saltar a un tempo específico"
+
+#~ msgid "<no reason given>"
+#~ msgstr "<sen cambios razonábeis>"
+
+#~ msgid "Programme unavailable (\"%s\")"
+#~ msgstr "O programa non está dispoñíbel («%s»)"
+
+#~ msgid "BBC iPlayer"
+#~ msgstr "iPlayer da BBC"
+
+#~ msgid ""
+#~ "Stream BBC programs from the last 7 days from the BBC iPlayer service"
+#~ msgstr ""
+#~ "Fluxo de programas da BBC dos últimos 7 días desde o servizo iPlayer da "
+#~ "BBC"
+
+#~ msgid "Error listing channel categories"
+#~ msgstr "Produciuse un erro ao mostrar as categorías de canles"
+
+#~ msgid ""
+#~ "There was an unknown error getting the list of television channels "
+#~ "available on BBC iPlayer."
+#~ msgstr ""
+#~ "Produciuse un erro descoñecido ao obter a lista das canles de televisión "
+#~ "dispoñíbeis no iPlayer da BBC."
+
+#~ msgid "Loading…"
+#~ msgstr "Cargando…"
+
+#~ msgid "Error getting programme feed"
+#~ msgstr "Produciuse un erro ao recibir a fonte do programa"
+
+#~ msgid ""
+#~ "There was an error getting the list of programmes for this channel and "
+#~ "category combination."
+#~ msgstr ""
+#~ "Produciuse un erro ao obter a lista de programas para esta canle e "
+#~ "combinación de categorías."
 
 #~ msgid "Location not found."
 #~ msgstr "Non se atopou a localización."
