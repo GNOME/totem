@@ -46,7 +46,7 @@ totem_gst_playbin_get_frame (GstElement *play)
 {
   GstStructure *s;
   GstSample *sample = NULL;
-  GdkPixbuf *pixbuf;
+  GdkPixbuf *pixbuf = NULL;
   GstCaps *to_caps, *sample_caps;
   gint outwidth = 0;
   gint outheight = 0;
