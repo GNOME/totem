@@ -100,7 +100,7 @@ typedef struct {
 	GHashTable *cache_thumbnails;
 
 	/* Search related information */
-	GrlMediaSource *search_source;
+	GrlSource *search_source;
 	guint search_id;
 	gint search_page;
 	gint search_remaining;
@@ -157,7 +157,7 @@ enum {
 };
 
 static void play (TotemGriloPlugin *self,
-                  GrlMediaSource *source,
+                  GrlSource *source,
                   GrlMedia *media,
                   gboolean resolve_url);
 
@@ -395,18 +395,18 @@ show_sources (TotemGriloPlugin *self)
 {
 	GList *sources, *source;
 	GtkTreeIter iter;
-	GrlPluginRegistry *registry;
+	GrlRegistry *registry;
 	const gchar *name;
 	GdkPixbuf *icon;
 
-	registry = grl_plugin_registry_get_default ();
-	sources = grl_plugin_registry_get_sources_by_operations (registry,
-	                                                         GRL_OP_BROWSE,
-	                                                         FALSE);
+	registry = grl_registry_get_default ();
+	sources = grl_registry_get_sources_by_operations (registry,
+	                                                  GRL_OP_BROWSE,
+	                                                  FALSE);
 
 	for (source = sources; source ; source = g_list_next (source)) {
 		icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
-		name = grl_metadata_source_get_name (GRL_METADATA_SOURCE (source->data));
+		name = grl_source_get_name (source->data);
 		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, NULL);
 		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
 		                    &iter,
@@ -424,7 +424,7 @@ show_sources (TotemGriloPlugin *self)
 }
 
 static void
-browse_cb (GrlMediaSource *source,
+browse_cb (GrlSource *source,
            guint browse_id,
            GrlMedia *media,
            guint remaining,
@@ -510,7 +510,7 @@ browse_cb (GrlMediaSource *source,
 static void
 browse (TotemGriloPlugin *self,
         GtkTreePath *path,
-        GrlMediaSource *source,
+        GrlSource *source,
         GrlMedia *container,
         gint page)
 {
@@ -526,12 +526,12 @@ browse (TotemGriloPlugin *self,
 		bud = g_slice_new (BrowseUserData);
 		bud->totem_grilo = g_object_ref (self);
 		bud->ref_parent = gtk_tree_row_reference_new (self->priv->browser_model, path);
-		grl_media_source_browse (source,
-		                         container,
-		                         browse_keys (),
-		                         default_options,
-		                         browse_cb,
-		                         bud);
+		grl_source_browse (source,
+		                   container,
+		                   browse_keys (),
+		                   default_options,
+		                   browse_cb,
+		                   bud);
 
 		g_object_unref (default_options);
 	} else {
@@ -540,7 +540,7 @@ browse (TotemGriloPlugin *self,
 }
 
 static void
-resolve_url_cb (GrlMediaSource *source,
+resolve_url_cb (GrlSource *source,
                 guint op_id,
                 GrlMedia *media,
                 gpointer user_data,
@@ -556,7 +556,7 @@ resolve_url_cb (GrlMediaSource *source,
 
 static void
 play (TotemGriloPlugin *self,
-      GrlMediaSource *source,
+      GrlSource *source,
       GrlMedia *media,
       gboolean resolve_url)
 {
@@ -573,10 +573,10 @@ play (TotemGriloPlugin *self,
 	if (resolve_url) {
 		const GList *slow_keys;
 		GList *url_keys;
-		slow_keys = grl_metadata_source_slow_keys (GRL_METADATA_SOURCE (source));
+		slow_keys = grl_source_slow_keys (source);
 		if (g_list_find ((GList *) slow_keys, GINT_TO_POINTER (GRL_METADATA_KEY_URL)) != NULL) {
 			url_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_URL, NULL);
-			grl_media_source_metadata (source, media, url_keys, 0, resolve_url_cb, self);
+			grl_source_resolve (source, media, url_keys, 0, resolve_url_cb, self);
 			g_list_free (url_keys);
 			return;
 		}
@@ -586,7 +586,7 @@ play (TotemGriloPlugin *self,
 }
 
 static void
-search_cb (GrlMediaSource *source,
+search_cb (GrlSource *source,
            guint search_id,
            GrlMedia *media,
            guint remaining,
@@ -656,19 +656,21 @@ search_more (TotemGriloPlugin *self)
 	self->priv->search_page++;
 	self->priv->search_remaining = PAGE_SIZE;
 	if (self->priv->search_source != NULL) {
-		self->priv->search_id = grl_media_source_search (self->priv->search_source,
-								 self->priv->search_text,
-								 search_keys (),
-								 default_options,
-								 search_cb,
-								 self);
+		self->priv->search_id =
+			grl_source_search (self->priv->search_source,
+			                   self->priv->search_text,
+			                   search_keys (),
+			                   default_options,
+			                   search_cb,
+			                   self);
 	} else {
-		self->priv->search_id = grl_multiple_search (NULL,
-							     self->priv->search_text,
-							     search_keys (),
-							     default_options,
-							     search_cb,
-							     self);
+		self->priv->search_id =
+			grl_multiple_search (NULL,
+			                     self->priv->search_text,
+			                     search_keys (),
+			                     default_options,
+			                     search_cb,
+			                     self);
 	}
 	g_object_unref (default_options);
 
@@ -678,7 +680,7 @@ search_more (TotemGriloPlugin *self)
 }
 
 static void
-search (TotemGriloPlugin *self, GrlMediaSource *source, const gchar *text)
+search (TotemGriloPlugin *self, GrlSource *source, const gchar *text)
 {
 	gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
 	g_hash_table_remove_all (self->priv->cache_thumbnails);
@@ -693,20 +695,20 @@ search (TotemGriloPlugin *self, GrlMediaSource *source, const gchar *text)
 static void
 search_entry_activate_cb (GtkEntry *entry, TotemGriloPlugin *self)
 {
-	GrlPluginRegistry *registry;
+	GrlRegistry *registry;
 	const char *id;
 	const char *text;
-	GrlMediaPlugin *source;
+	GrlSource *source;
 
 	id = totem_search_entry_get_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
 	g_return_if_fail (id != NULL);
-	registry = grl_plugin_registry_get_default ();
-	source = grl_plugin_registry_lookup_source (registry, id);
+	registry = grl_registry_get_default ();
+	source = grl_registry_lookup_source (registry, id);
 	g_return_if_fail (source != NULL);
 
 	text = totem_search_entry_get_text (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
 	g_return_if_fail (text != NULL);
-	search (self, GRL_MEDIA_SOURCE (source), text);
+	search (self, source, text);
 }
 
 static void
@@ -720,7 +722,7 @@ browser_activated_cb (GtkTreeView *tree_view,
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	GrlMedia *content;
-	GrlMediaSource *source;
+	GrlSource *source;
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (user_data);
 
 	model = gtk_tree_view_get_model (tree_view);
@@ -767,8 +769,8 @@ browser_activated_cb (GtkTreeView *tree_view,
 
 static void
 search_entry_source_changed_cb (GObject          *object,
-				GParamSpec       *pspec,
-				TotemGriloPlugin *self)
+                                GParamSpec       *pspec,
+                                TotemGriloPlugin *self)
 {
 	/* FIXME: Do we actually want to do that? */
 	if (self->priv->search_id > 0) {
@@ -785,7 +787,7 @@ search_activated_cb (GtkIconView *icon_view,
 {
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-	GrlMediaSource *source;
+	GrlSource *source;
 	GrlMedia *content;
 
 	model = gtk_icon_view_get_model (icon_view);
@@ -807,9 +809,9 @@ search_activated_cb (GtkIconView *icon_view,
 }
 
 static gboolean
-source_is_blacklisted (GrlMediaSource *source)
+source_is_blacklisted (GrlSource *source)
 {
-	const gchar *id = grl_metadata_source_get_id (GRL_METADATA_SOURCE (source));
+	const gchar *id = grl_source_get_id (source);
 	const gchar **s = BLACKLIST_SOURCES;
 
 	while (*s) {
@@ -823,8 +825,8 @@ source_is_blacklisted (GrlMediaSource *source)
 }
 
 static void
-source_added_cb (GrlPluginRegistry *registry,
-                 GrlMediaSource *source,
+source_added_cb (GrlRegistry *registry,
+                 GrlSource *source,
                  gpointer user_data)
 {
 	const gchar *name;
@@ -835,16 +837,16 @@ source_added_cb (GrlPluginRegistry *registry,
 	GrlSupportedOps ops;
 
 	if (source_is_blacklisted (source)) {
-		grl_plugin_registry_unregister_source (registry,
-		                                       GRL_MEDIA_PLUGIN (source),
-		                                       NULL);
+		grl_registry_unregister_source (registry,
+		                                source,
+		                                NULL);
 		return;
 	}
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
 	icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
-	name = grl_metadata_source_get_name (GRL_METADATA_SOURCE (source));
-	ops = grl_metadata_source_supported_operations (GRL_METADATA_SOURCE (source));
+	name = grl_source_get_name (source);
+	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
 		description = g_markup_printf_escaped ("<b>%s</b>", name);
 		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, NULL);
@@ -862,8 +864,8 @@ source_added_cb (GrlPluginRegistry *registry,
 		/* FIXME:
 		 * Handle tracker/filesystem specifically, so that we have a "local" entry here */
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
-					       grl_metadata_source_get_id (GRL_METADATA_SOURCE (source)),
-					       grl_metadata_source_get_name (GRL_METADATA_SOURCE (source)),
+					       grl_source_get_id (source),
+					       grl_source_get_name (source),
 					       0); /* FIXME: Use correct priority */
 	}
 
@@ -878,8 +880,8 @@ remove_browse_result (GtkTreeModel *model,
                       GtkTreeIter *iter,
                       gpointer user_data)
 {
-	GrlMediaSource *removed_source = GRL_MEDIA_SOURCE (user_data);
-	GrlMediaSource *model_source;
+	GrlSource *removed_source = GRL_SOURCE (user_data);
+	GrlSource *model_source;
 	gboolean same_source;
 
 	gtk_tree_model_get (model, iter,
@@ -898,14 +900,14 @@ remove_browse_result (GtkTreeModel *model,
 }
 
 static void
-source_removed_cb (GrlPluginRegistry *registry,
-                   GrlMediaSource *source,
+source_removed_cb (GrlRegistry *registry,
+                   GrlSource *source,
                    gpointer user_data)
 {
 	GrlSupportedOps ops;
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (user_data);
 
-	ops = grl_metadata_source_supported_operations (GRL_METADATA_SOURCE (source));
+	ops = grl_source_supported_operations (source);
 
 	/* Remove source and content from browse results */
 	if (ops & GRL_OP_BROWSE) {
@@ -924,7 +926,7 @@ source_removed_cb (GrlPluginRegistry *registry,
 			self->priv->search_source = NULL;
 		}
 
-		id = grl_metadata_source_get_id (GRL_METADATA_SOURCE (source));
+		id = grl_source_get_id (source);
 		totem_search_entry_remove_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry), id);
 	}
 }
@@ -932,17 +934,17 @@ source_removed_cb (GrlPluginRegistry *registry,
 static void
 load_grilo_plugins (TotemGriloPlugin *self)
 {
-	GrlPluginRegistry *registry;
+	GrlRegistry *registry;
 	GError *error = NULL;
 
-	registry = grl_plugin_registry_get_default ();
+	registry = grl_registry_get_default ();
 
 	g_signal_connect (registry, "source-added",
 	                  G_CALLBACK (source_added_cb), self);
 	g_signal_connect (registry, "source-removed",
 	                  G_CALLBACK (source_removed_cb), self);
 
-	if (grl_plugin_registry_load_all (registry, &error) == FALSE) {
+	if (grl_registry_load_all_plugins (registry, &error) == FALSE) {
 		g_warning ("Failed to load grilo plugins: %s", error->message);
 		g_error_free (error);
 	}
@@ -959,7 +961,7 @@ show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 	GList *sel_list = NULL;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-	GrlMediaSource *source;
+	GrlSource *source;
 	const gchar *url = NULL;
 
 	if (view == self->priv->browser) {
@@ -1088,7 +1090,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	GtkTreePath *end_path;
 	GtkTreePath *parent_path;
 	GtkTreeIter iter;
-	GrlMediaSource *source;
+	GrlSource *source;
 	GrlMedia *container;
 	gint page;
 	gint remaining;
@@ -1294,13 +1296,13 @@ static void
 setup_config (TotemGriloPlugin *self)
 {
 	gchar *config_file;
-	GrlPluginRegistry *registry = grl_plugin_registry_get_default ();
+	GrlRegistry *registry = grl_registry_get_default ();
 
 	/* Setup system-wide plugins configuration */
 	config_file = totem_plugin_find_file ("grilo", TOTEM_GRILO_CONFIG_FILE);
 
 	if (g_file_test (config_file, G_FILE_TEST_EXISTS)) {
-		grl_plugin_registry_add_config_from_file (registry, config_file, NULL);
+		grl_registry_add_config_from_file (registry, config_file, NULL);
 	}
 	g_free (config_file);
 
@@ -1312,7 +1314,7 @@ setup_config (TotemGriloPlugin *self)
 	                            NULL);
 
 	if (g_file_test (config_file, G_FILE_TEST_EXISTS)) {
-		grl_plugin_registry_add_config_from_file (registry, config_file, NULL);
+		grl_registry_add_config_from_file (registry, config_file, NULL);
 	}
 	g_free (config_file);
 }
@@ -1346,21 +1348,21 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (plugin);
 	GList *sources;
 	GList *s;
-	GrlPluginRegistry *registry;
+	GrlRegistry *registry;
 
 	totem_remove_sidebar_page (self->priv->totem, "grilo-browse");
 	totem_remove_sidebar_page (self->priv->totem, "grilo-search");
 
-	registry = grl_plugin_registry_get_default ();
+	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
 	g_signal_handlers_disconnect_by_func (registry, source_removed_cb, self);
 
 	/* Shutdown all sources */
-	sources  = grl_plugin_registry_get_sources (registry, FALSE);
+	sources  = grl_registry_get_sources (registry, FALSE);
 	for (s = sources; s; s = g_list_next (s)) {
-		grl_plugin_registry_unregister_source (registry,
-		                                       GRL_MEDIA_PLUGIN (s->data),
-		                                       NULL);
+		grl_registry_unregister_source (registry,
+		                                GRL_SOURCE (s->data),
+		                                NULL);
 	}
 	g_list_free (sources);
 
