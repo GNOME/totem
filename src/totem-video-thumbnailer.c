@@ -66,7 +66,7 @@
 #define GALLERY_MIN 3				/* minimum number of screenshots in a gallery */
 #define GALLERY_MAX 30				/* maximum number of screenshots in a gallery */
 #define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
-#define DEFAULT_OUTPUT_SIZE 128
+#define DEFAULT_OUTPUT_SIZE 256
 
 static gboolean jpeg_output = FALSE;
 static gboolean raw_output = FALSE;
