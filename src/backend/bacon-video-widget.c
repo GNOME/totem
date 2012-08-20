@@ -3449,6 +3449,21 @@ done:
   return ret;
 }
 
+static char *
+get_target_uri (GFile *file)
+{
+  GFileInfo *info;
+  char *target;
+
+  info = g_file_query_info (file, G_FILE_ATTRIBUTE_STANDARD_TARGET_URI, G_FILE_QUERY_INFO_NONE, NULL, NULL);
+  if (info == NULL)
+    return NULL;
+  target = g_strdup (g_file_info_get_attribute_string (info, G_FILE_ATTRIBUTE_STANDARD_TARGET_URI));
+  g_object_unref (info);
+
+  return target;
+}
+
 /**
  * bacon_video_widget_open:
  * @bvw: a #BaconVideoWidget
@@ -3489,10 +3504,19 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
    * or we're trying to read from an archive or ObexFTP */
   if (g_file_has_uri_scheme (file, "archive") != FALSE ||
       g_file_has_uri_scheme (file, "obex") != FALSE ||
-      g_file_has_uri_scheme (file, "ftp") != FALSE)
+      g_file_has_uri_scheme (file, "ftp") != FALSE) {
     path = NULL;
-  else
+  } else if (g_file_has_uri_scheme (file, "trash") != FALSE ||
+           g_file_has_uri_scheme (file, "recent") != FALSE) {
+    path = get_target_uri (file);
+    if (path == NULL)
+      path = g_file_get_path (file);
+    else
+      GST_DEBUG ("Found target location '%s' for original MRL '%s'",
+		 GST_STR_NULL (path), mrl);
+  } else {
     path = g_file_get_path (file);
+  }
   if (path) {
     bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
     g_free (path);
