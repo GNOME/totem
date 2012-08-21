@@ -1,5 +1,41 @@
 New features and significant updates in version...
 
+Major changes in 3.5.90:
+
+- Plenty of build fixes to make it possible to build with Wayland support
+- Increase thumbnail size to 256 px
+
+Movie player:
+- Rename to "Videos"
+- Hide titlebar when maximised
+- Move some menu items to the app menu
+- Command-line parsing bug fixes
+- Use Grilo to list DVDs and other optical media
+- Remove connection speed preferences
+- Stop DVD playback when disc is ejected
+- Fix ordering of the playlist after drag'n'drop
+
+Backend:
+- Port to GStreamer 1.0
+- Add HTTP proxy support
+- Much improved error messages
+- Add variable rate playback
+- Use Clutter for the OSD
+- Disable visualisations by default
+- Animate rotations
+- Add av-offset support
+- Prepare the ground for chapter support in non-DVDs
+
+Plugins:
+- Make screenshot UI-less, like in gnome-shell
+- Simplify the screensaver and browser plugin code
+- Remove publish and iPlayer plugins
+- Use Grilo 0.2
+- Better search sidebar
+- Add hook for site-specific user-agents
+- Add hook for custom subtitle selection through plugins
+- Move recent-files handling to a plugin
+
 3.4.0:
 * Mark some strings as translatable
 * Handle Clutter failing to initialise
