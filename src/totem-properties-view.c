@@ -213,6 +213,7 @@ update_audio (TotemPropertiesView    *props,
 		bacon_video_widget_properties_set_label (props->priv->props,
 							 "samplerate",
 							 string);
+		g_free (string);
 	} else {
 		bacon_video_widget_properties_set_label (props->priv->props,
 							 "samplerate",
@@ -233,6 +234,7 @@ update_audio (TotemPropertiesView    *props,
 		bacon_video_widget_properties_set_label (props->priv->props,
 							 "channels",
 							 string);
+		g_free (string);
 	} else {
 		bacon_video_widget_properties_set_label (props->priv->props,
 							 "channels",
