@@ -2071,7 +2071,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       gst_message_parse_duration (message, &fmt, &duration);
       if (fmt == GST_FORMAT_TIME &&
 	  duration != (gint64) GST_CLOCK_TIME_NONE) {
-	bvw->priv->stream_length = duration / 1000;
+	bvw->priv->stream_length = duration / GST_MSECOND;
 	GST_DEBUG ("got new stream length %" G_GINT64_FORMAT, bvw->priv->stream_length);
       }
       break;
