@@ -121,16 +121,9 @@ totem_gst_buffer_to_pixbuf (GstBuffer *buffer)
   GdkPixbufLoader *loader;
   GdkPixbuf *pixbuf = NULL;
   GError *err = NULL;
-  GstMemory *memory;
   GstMapInfo info;
 
-  memory = gst_buffer_get_memory (buffer, 0);
-  if (!memory) {
-    GST_WARNING("could not get memory for buffer");
-    return NULL;
-  }
-
-  if (!gst_memory_map (memory, &info, GST_MAP_READ)) {
+  if (!gst_buffer_map (buffer, &info, GST_MAP_READ)) {
     GST_WARNING("could not map memory buffer");
     return NULL;
   }
@@ -149,71 +142,68 @@ totem_gst_buffer_to_pixbuf (GstBuffer *buffer)
 
   g_object_unref (loader);
 
-  gst_memory_unmap (memory, &info);
+  gst_buffer_unmap (buffer, &info);
 
   return pixbuf;
 }
 
-static const GValue *
+static GstSample *
 totem_gst_tag_list_get_cover_real (GstTagList *tag_list)
 {
-  const GValue *cover_value = NULL;
+  GstSample *cover_sample = NULL;
   guint i;
 
   for (i = 0; ; i++) {
-    const GValue *value;
     GstSample *sample;
+    GstCaps *caps;
     const GstStructure *caps_struct;
     int type;
 
-    value = gst_tag_list_get_value_index (tag_list,
-					  GST_TAG_IMAGE,
-					  i);
-    if (value == NULL)
+    if (!gst_tag_list_get_sample_index (tag_list, GST_TAG_IMAGE, i, &sample))
       break;
 
-
-    sample = gst_value_get_sample (value);
-    caps_struct = gst_sample_get_info (sample);
+    caps = gst_sample_get_caps (sample);
+    caps_struct = gst_caps_get_structure (caps, 0);
     gst_structure_get_enum (caps_struct,
 			    "image-type",
 			    GST_TYPE_TAG_IMAGE_TYPE,
 			    &type);
     if (type == GST_TAG_IMAGE_TYPE_UNDEFINED) {
-      if (cover_value == NULL)
-        cover_value = value;
+      if (cover_sample == NULL) {
+	/* take a ref here since we will continue and unref below */
+	cover_sample = gst_sample_ref (sample);
+      }
     } else if (type == GST_TAG_IMAGE_TYPE_FRONT_COVER) {
-      cover_value = value;
+      cover_sample = sample;
       break;
     }
+    gst_sample_unref (sample);
   }
 
-  return cover_value;
+  return cover_sample;
 }
 
 GdkPixbuf *
 totem_gst_tag_list_get_cover (GstTagList *tag_list)
 {
-  const GValue *cover_value;
+  GstSample *cover_sample;
 
   g_return_val_if_fail (tag_list != NULL, FALSE);
 
-  cover_value = totem_gst_tag_list_get_cover_real (tag_list);
+  cover_sample = totem_gst_tag_list_get_cover_real (tag_list);
   /* Fallback to preview */
-  if (!cover_value) {
-    cover_value = gst_tag_list_get_value_index (tag_list,
-						GST_TAG_PREVIEW_IMAGE,
-						0);
-  }
+    if (!cover_sample) {
+      gst_tag_list_get_sample_index (tag_list, GST_TAG_PREVIEW_IMAGE, 0,
+				     &cover_sample);
+    }
 
-  if (cover_value) {
+  if (cover_sample) {
     GstBuffer *buffer;
-    GstSample *sample;
     GdkPixbuf *pixbuf;
 
-    sample = gst_value_get_sample (cover_value);
-    buffer = gst_sample_get_buffer (sample);
+    buffer = gst_sample_get_buffer (cover_sample);
     pixbuf = totem_gst_buffer_to_pixbuf (buffer);
+    gst_sample_unref (cover_sample);
     return pixbuf;
   }
 
