@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: totem TRUNK\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-17 09:30+0000\n"
-"PO-Revision-Date: 2012-08-23 13:17+0700\n"
+"POT-Creation-Date: 2012-08-23 06:18+0000\n"
+"PO-Revision-Date: 2012-09-01 22:42+0700\n"
 "Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
 "Language: vi\n"
@@ -300,7 +300,7 @@ msgstr "Lớn"
 msgid "Extra Large"
 msgstr "Rất lớn"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5479
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5522
 #: ../src/totem-properties-view.c:231
 msgid "Stereo"
 msgstr "Âm lập thể"
@@ -503,7 +503,6 @@ msgid "Videos"
 msgstr "Phim"
 
 #: ../data/totem.desktop.in.in.in.h:2
-#| msgid "Playing a movie"
 msgid "Play movies"
 msgstr "Phát phim"
 
@@ -512,12 +511,10 @@ msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Video;Phim;Movie;Film;Clip;Series;Player;Phát;Xem;DVD;TV;Disc;Đĩa;"
 
 #: ../data/totem.ui.h:1
-#| msgid "_Open..."
 msgid "_Open"
 msgstr "_Mở"
 
 #: ../data/totem.ui.h:2
-#| msgid "Open _Location..."
 msgid "Open _Location"
 msgstr "Mở đị_a chỉ"
 
@@ -530,12 +527,10 @@ msgid "Prefere_nces"
 msgstr "Tù_y chỉnh"
 
 #: ../data/totem.ui.h:5
-#| msgid "Shuff_le Mode"
 msgid "Shuff_le"
 msgstr "_Xáo trộn"
 
 #: ../data/totem.ui.h:6
-#| msgid "_Repeat Mode"
 msgid "_Repeat"
 msgstr "Lặp _lại"
 
@@ -840,55 +835,55 @@ msgstr "Thê_m vào danh sách phát"
 msgid "Add the video to the playlist"
 msgstr "Thêm phim vào danh sách phát."
 
-#: ../src/backend/bacon-video-widget.c:1641
+#: ../src/backend/bacon-video-widget.c:1643
 msgid "Password requested for RTSP server"
 msgstr "Cần mật khẩu cho máy chủ RTSP"
 
-#: ../src/backend/bacon-video-widget.c:2927
+#: ../src/backend/bacon-video-widget.c:2944
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Bản nhạc #%d"
 
-#: ../src/backend/bacon-video-widget.c:2931
+#: ../src/backend/bacon-video-widget.c:2948
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Phụ đề #%d"
 
-#: ../src/backend/bacon-video-widget.c:3328
+#: ../src/backend/bacon-video-widget.c:3345
 msgid "The server you are trying to connect to is not known."
 msgstr "Bạn đang cố kết nối đến một máy phục vụ lạ."
 
-#: ../src/backend/bacon-video-widget.c:3331
+#: ../src/backend/bacon-video-widget.c:3348
 msgid "The connection to this server was refused."
 msgstr "Kết nối đến máy phục vụ này bị từ chối."
 
-#: ../src/backend/bacon-video-widget.c:3334
+#: ../src/backend/bacon-video-widget.c:3351
 msgid "The specified movie could not be found."
 msgstr "Không tìm thấy phim đã ghi rõ."
 
-#: ../src/backend/bacon-video-widget.c:3341
+#: ../src/backend/bacon-video-widget.c:3358
 msgid "The server refused access to this file or stream."
 msgstr "Máy phục vụ đã từ chối truy cập vào tập tin hay dòng này."
 
-#: ../src/backend/bacon-video-widget.c:3347
+#: ../src/backend/bacon-video-widget.c:3364
 msgid "Authentication is required to access this file or stream."
 msgstr "Cần phải xác thực để truy cập đến tập tin hay luồng này."
 
-#: ../src/backend/bacon-video-widget.c:3354
+#: ../src/backend/bacon-video-widget.c:3371
 msgid "You are not allowed to open this file."
 msgstr "Bạn không có quyền mở tập tin này."
 
-#: ../src/backend/bacon-video-widget.c:3359
+#: ../src/backend/bacon-video-widget.c:3376
 msgid "This location is not a valid one."
 msgstr "Địa điểm này không hợp lệ."
 
-#: ../src/backend/bacon-video-widget.c:3367
+#: ../src/backend/bacon-video-widget.c:3384
 msgid "The movie could not be read."
 msgstr "Không đọc được phim này."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3390
-#: ../src/backend/bacon-video-widget.c:3398
+#: ../src/backend/bacon-video-widget.c:3407
+#: ../src/backend/bacon-video-widget.c:3415
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -901,7 +896,7 @@ msgstr[0] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3409
+#: ../src/backend/bacon-video-widget.c:3426
 #, fuzzy
 #| msgid ""
 #| "Audio codec '%s' is not handled. You might need to install additional "
@@ -913,7 +908,7 @@ msgstr ""
 "Codec âm thanh « %s » không được xử lý. Bạn cần cài đặt thêm phần bổ sung để "
 "có thể phát một số kiểu phim."
 
-#: ../src/backend/bacon-video-widget.c:3419
+#: ../src/backend/bacon-video-widget.c:3436
 #, fuzzy
 #| msgid ""
 #| "Cannot play this file over the network. Try downloading it to disk first."
@@ -922,19 +917,19 @@ msgid ""
 "first."
 msgstr "Không thể phát tập tin trên mạng này. Hãy thử tải về đĩa trước."
 
-#: ../src/backend/bacon-video-widget.c:5475 ../src/totem-properties-view.c:227
+#: ../src/backend/bacon-video-widget.c:5518 ../src/totem-properties-view.c:227
 msgid "Surround"
 msgstr "Âm thanh vòm"
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:229
+#: ../src/backend/bacon-video-widget.c:5520 ../src/totem-properties-view.c:229
 msgid "Mono"
 msgstr "Âm đơn"
 
-#: ../src/backend/bacon-video-widget.c:5762
+#: ../src/backend/bacon-video-widget.c:5805
 msgid "Media contains no supported video streams."
 msgstr "Thiết bị lưu trữ không hỗ trợ phát phim."
 
-#: ../src/backend/bacon-video-widget.c:5944
+#: ../src/backend/bacon-video-widget.c:5987
 #, fuzzy
 #| msgid ""
 #| "No video output is available. Make sure that the program is correctly "
@@ -1580,7 +1575,6 @@ msgstr "%s, %s"
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:330
 #, c-format
-#| msgid "%s, %d %%"
 msgid "%s, %f %%"
 msgstr "%s, %f %%"
 
@@ -1796,12 +1790,10 @@ msgid "Sets the user agent for the Apple Trailers site"
 msgstr ""
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
-#| msgid "Download Movie Subtitles"
 msgid "Autoload Subtitles"
 msgstr "Tự động tải phụ đề phim về"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
-#| msgid "Downloading the subtitles…"
 msgid "Autoloads text subtitles"
 msgstr "Tự động tải phụ đề phim về"
 
@@ -1914,7 +1906,6 @@ msgid "Chapters"
 msgstr "Đoạn phim"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-#| msgid "Support chapter markers in movies."
 msgid "Support chapter markers in movies"
 msgstr "Hỗ trợ đánh dấu đoạn phim"
 
@@ -1987,7 +1978,6 @@ msgid "Failed to parse CMML file"
 msgstr "Lỗi phân tích tập tin CMML"
 
 #: ../src/plugins/chapters/totem-edit-chapter.c:95
-#| msgid "Add Chapter..."
 msgid "Add Chapter"
 msgstr "Thêm đoạn phim"
 
@@ -2027,25 +2017,22 @@ msgid "Grilo Browser"
 msgstr "Bộ duyệt Grilo"
 
 #: ../src/plugins/grilo/grilo.plugin.in.h:2
-#| msgid "A plugin to let you browse media content from various sources."
 msgid "A plugin to let you browse media content from various sources"
 msgstr "Phần bổ sung cho bạn có khả năng duyệt các nguồn khác nhau"
 
 #: ../src/plugins/grilo/grilo.ui.h:1
-#| msgid "_Add to Playlist"
 msgid "Add to Playlist"
 msgstr "Thêm vào danh sách phát"
 
 #: ../src/plugins/grilo/grilo.ui.h:2
-#| msgid "_Copy Location"
 msgid "Copy Location"
 msgstr "Chép địa chỉ"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1184
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1186
 msgid "Browse"
 msgstr "Duyệt"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1227
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1229
 msgid "Search"
 msgstr "Tìm"
 
@@ -2070,7 +2057,6 @@ msgid "The gromit binary was not found."
 msgstr "Không tìm thấy tập tin nhị phân gromit."
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
-#| msgid "Instant Messenger status"
 msgid "Instant Messenger Status"
 msgstr "Trạng thái tin nhắn"
 
@@ -2095,7 +2081,6 @@ msgid "Couldn't read lirc configuration."
 msgstr "Không thể đọc cấu hình lirc."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
-#| msgid "Movie Player"
 msgid "Media Player Keys"
 msgstr "Phím bộ phát phim"
 
@@ -2116,7 +2101,6 @@ msgid "Subtitle Downloader"
 msgstr "Chương trình tải phụ đề"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
-#| msgid "Look for subtitles for the currently playing movie."
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Tìm phụ đề cho phim đang chiếu"
 
@@ -2195,12 +2179,10 @@ msgid "The language to search for subtitles for movies in."
 msgstr "Ngôn ngữ phụ đề cần tìm"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:1
-#| msgid "Properties"
 msgid "Movie Properties"
 msgstr "Thuộc tính phim"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:2
-#| msgid "Show or hide the sidebar"
 msgid "Adds movie properties to the sidebar"
 msgstr "Thêm thuộc tính phim ở khung bên"
 
@@ -2225,7 +2207,6 @@ msgid "Python Console"
 msgstr "Dòng lệnh giao tiếp Python"
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
-#| msgid "Interactive Python console."
 msgid "Interactive Python console"
 msgstr "Dòng lệnh giao tiếp Python tương tác"
 
@@ -2270,7 +2251,6 @@ msgstr ""
 "dùng mật khẩu mặc định ('totem')."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
-#| msgid "Video files"
 msgid "Recent files"
 msgstr "Tập tin gần đây"
 
@@ -2283,7 +2263,6 @@ msgid "Rotation Plugin"
 msgstr "Phần bổ sung xoay vòng"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
-#| msgid "Allows videos to be rotated if they're in the wrong orientation."
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Xoay vòng phim nếu sai chiều"
 
@@ -2296,12 +2275,10 @@ msgid "Rotate Counterc_lockwise"
 msgstr "Xoay _ngược chiều kim đồng hồ"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:1
-#| msgid "Save a Copy"
 msgid "Save Copy"
 msgstr "Lưu bản sao"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:2
-#| msgid "Copy the currently playing video DVD"
 msgid "Save a copy of the currently playing movie"
 msgstr ""
 
@@ -2332,7 +2309,6 @@ msgid "Screen Saver"
 msgstr "Trình bảo về màn hình"
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:2
-#| msgid "Disable screensaver when playing "
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Tắt trình bảo vệ màn hình khi xem phim"
 
@@ -2352,7 +2328,6 @@ msgstr "Số ảnh chụp màn hình:"
 #. * with the screenshot if the entire screen is taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:147
 #, c-format
-#| msgid "Screenshot.png"
 msgid "Screenshot from %s.png"
 msgstr "Ảnh chụp từ %s.png"
 
@@ -2361,12 +2336,10 @@ msgstr "Ảnh chụp từ %s.png"
 #. * taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
-#| msgid "Screenshot-%s-%d.png"
 msgid "Screenshot from %s - %d.png"
 msgstr "Ảnh chụp từ %s - %d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
-#| msgid "Screenshot.png"
 msgid "Screenshot"
 msgstr "Ảnh chụp.png"
 
@@ -2408,7 +2381,6 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "Điều này lẽ ra không được xảy ra, vui lòng thông báo lỗi."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
-#| msgid "Take _Screenshot..."
 msgid "Take _Screenshot"
 msgstr "_Chụp ảnh"
 
@@ -2430,7 +2402,6 @@ msgid "Skip To"
 msgstr "Nhảy tới"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
-#| msgid "Could not load the \"Skip to\" dialog interface."
 msgid "Provides the \"Skip to\" dialog"
 msgstr "Không thể nạp giao diện hộp thoại \"Nhảy tới\""
 
