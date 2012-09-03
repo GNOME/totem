@@ -1,13 +1,13 @@
-include $(top_srcdir)/gnome-doc-utils.make
-dist-hook: doc-dist-hook
+@YELP_HELP_RULES@
 
-DOC_MODULE = totem
-DOC_ENTITIES = legal.xml
-DOC_H_FILE = totem-docs.h
-DOC_H_DOCS = C/totem.xml
-DOC_INCLUDES = 
+HELP_ID = totem
 
-DOC_FIGURES  = 	figures/totem_show_playlist_button.png 	\
+HELP_FILES = \
+	index.docbook \
+	legal.xml
+
+HELP_MEDIA = \
+		figures/totem_show_playlist_button.png 	\
 		figures/totem_next_button.png		\
 		figures/totem_start_window.png		\
 		figures/totem_pause_button.png		\
@@ -16,6 +16,6 @@ DOC_FIGURES  = 	figures/totem_show_playlist_button.png 	\
 		figures/totem_volume_mute_button.png	\
 		figures/totem_previous_button.png
 
-DOC_LINGUAS = bg ca cs da de el en_GB es eu fi fr gl it ja oc pa pl pt_BR ro ru sl sv te uk zh_CN zh_HK zh_TW
+HELP_LINGUAS = bg ca cs da de el en_GB es eu fi fr gl it ja oc pa pl pt_BR ro ru sl sv te uk zh_CN zh_HK zh_TW
 
 -include $(top_srcdir)/git.mk
