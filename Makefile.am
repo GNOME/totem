@@ -14,7 +14,6 @@ EXTRA_DIST =			\
 	AUTHORS NEWS		\
 	totem.spec.in		\
 	totem.spec		\
-	gnome-doc-utils.make	\
 	ChangeLog.pre-gitlog	\
 	MAINTAINERS		\
 	totem.doap
@@ -42,8 +41,7 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/xmldocs.make \
 	`find "$(srcdir)" -type f -name Makefile.in -print`
 
-DISTCLEANFILES = intltool-extract intltool-merge intltool-update \
-		 gnome-doc-utils.make
+DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
 DIST_SUBDIRS = $(NORMAL_SUBDIRS) browser-plugin
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --enable-gtk-doc --with-nautilusdir='$${libdir}/nautilus/extensions-2.0-distcheck' --enable-vala=no --enable-introspection
