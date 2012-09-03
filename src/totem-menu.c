@@ -781,7 +781,6 @@ about_action_callback (GtkAction *action, Totem *totem)
 		NULL
 	};
 	const char *artists[] = { "Jakub Steiner <jimmac@ximian.com>", NULL };
-	#include "../help/totem-docs.h"
 	char *license = totem_interface_get_license ();
 
 	gtk_show_about_dialog (GTK_WINDOW (totem->win),
@@ -789,7 +788,6 @@ about_action_callback (GtkAction *action, Totem *totem)
 				     "copyright", _("Copyright \xc2\xa9 2002-2009 Bastien Nocera"),
 				     "comments", _("Videos"),
 				     "authors", authors,
-				     "documenters", documentation_credits,
 				     "artists", artists,
 				     "translator-credits", _("translator-credits"),
 				     "logo-icon-name", "totem",
