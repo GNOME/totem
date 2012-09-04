@@ -4,12 +4,21 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Zbigniew Chyla <chyla@alice.ci.pwr.wroc.pl>, 2003.
+# Artur Flinta <aflinta@at.kernel.pl>, 2003-2004.
+# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005.
+# Artur Flinta <aflinta@at.kernel.pl>, 2006.
+# Stanisław Małolepszy <smalolepszy@aviary.pl>, 2007.
+# Tomasz Dominikowski <dominikowski@gmail.com>, 2007-2009.
+# Piotr Drąg <piotrdrag@gmail.com>, 2010-2012.
+# Asia Słowik <asiaslowik@gmail.com>, 2011.
+# Aviary.pl <gnomepl@aviary.pl>, 2007-2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-22 04:51+0200\n"
-"PO-Revision-Date: 2012-08-22 04:52+0200\n"
+"POT-Creation-Date: 2012-09-04 21:02+0200\n"
+"PO-Revision-Date: 2012-09-04 21:10+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -310,7 +319,7 @@ msgid "Extra Large"
 msgstr "Bardzo duży"
 
 #: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5522
-#: ../src/totem-properties-view.c:231
+#: ../src/totem-properties-view.c:232
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -392,7 +401,7 @@ msgid "Disable screensaver when playing "
 msgstr "Wyłączanie wygaszania ekranu podczas odtwarzania "
 
 #: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:273
+#: ../src/totem-properties-view.c:275
 msgid "Video"
 msgstr "Wideo"
 
@@ -449,7 +458,7 @@ msgid "_Audio output type:"
 msgstr "_Typ wyjścia dźwięku:"
 
 #: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:271
+#: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "Dźwięk"
 
@@ -507,7 +516,7 @@ msgstr "Kanały:"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:238
-#: ../src/totem.c:247 ../src/totem-menu.c:790 ../src/totem-object.c:1658
+#: ../src/totem.c:247 ../src/totem-menu.c:789 ../src/totem-object.c:1658
 msgid "Videos"
 msgstr "Filmy"
 
@@ -838,7 +847,7 @@ msgstr "Proszę wprowadzić adres p_liku do otwarcia:"
 
 #: ../data/video-list.ui.h:1 ../src/totem-dnd-menu.c:97
 msgid "_Add to Playlist"
-msgstr "Dod_aj do listy odtwarzania"
+msgstr "_Dodaj do listy odtwarzania"
 
 #: ../data/video-list.ui.h:2
 msgid "Add the video to the playlist"
@@ -933,11 +942,11 @@ msgstr ""
 "Ten plik nie może być odtwarzany przez sieć. Proszę spróbować najpierw "
 "pobrać plik na dysk."
 
-#: ../src/backend/bacon-video-widget.c:5518 ../src/totem-properties-view.c:227
+#: ../src/backend/bacon-video-widget.c:5518 ../src/totem-properties-view.c:228
 msgid "Surround"
 msgstr "Przestrzenny"
 
-#: ../src/backend/bacon-video-widget.c:5520 ../src/totem-properties-view.c:229
+#: ../src/backend/bacon-video-widget.c:5520 ../src/totem-properties-view.c:230
 msgid "Mono"
 msgstr "Mono"
 
@@ -1286,19 +1295,28 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automatyczny"
 
-#: ../src/totem-menu.c:789
+#: ../src/totem-menu.c:788
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:794
+#: ../src/totem-menu.c:792
 msgid "translator-credits"
-msgstr "Aviary.pl <gnomepl@aviary.pl>, 2007, 2008, 2009, 2010, 2011, 2012"
+msgstr ""
+"Zbigniew Chyla <chyla@alice.ci.pwr.wroc.pl>, 2003\n"
+"Artur Flinta <aflinta@at.kernel.pl>, 2003-2004\n"
+"Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005\n"
+"Artur Flinta <aflinta@at.kernel.pl>, 2006\n"
+"Stanisław Małolepszy <smalolepszy@aviary.pl>, 2007\n"
+"Tomasz Dominikowski <dominikowski@gmail.com>, 2007-2009\n"
+"Piotr Drąg <piotrdrag@gmail.com>, 2010-2012\n"
+"Asia Słowik <asiaslowik@gmail.com>, 2011\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2007-2012"
 
-#: ../src/totem-menu.c:798
+#: ../src/totem-menu.c:796
 msgid "Totem Website"
 msgstr "Witryna programu Totem"
 
-#: ../src/totem-menu.c:829
+#: ../src/totem-menu.c:827
 msgid "Configure Plugins"
 msgstr "Konfiguracja wtyczek"
 
@@ -1503,7 +1521,7 @@ msgstr "Preferencje"
 msgid "Select Subtitle Font"
 msgstr "Wybór czcionki napisów"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:269
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
 msgid "Audio/Video"
 msgstr "Dźwięk/obraz"
 
@@ -1537,13 +1555,13 @@ msgstr "%d x %d"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:219
+#: ../src/totem-properties-view.c:220
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Brak danych"
 
-#: ../src/totem-properties-view.c:239
+#: ../src/totem-properties-view.c:241
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "Brak danych"
