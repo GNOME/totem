@@ -127,12 +127,12 @@ PKG_CHECK_MODULES(BACKEND, $BACKEND_MODULES)
 PKG_CHECK_MODULES(BACKEND_TEST, $BACKEND_MODULES gtk+-3.0 >= $GTK_REQS)
 
 dnl Check for required plugins
-gst010_toolsdir=`$PKG_CONFIG --variable=toolsdir gstreamer-1.0`
-gst010_inspect="$gst010_toolsdir/gst-inspect-1.0"
+gst10_toolsdir=`$PKG_CONFIG --variable=toolsdir gstreamer-1.0`
+gst10_inspect="$gst10_toolsdir/gst-inspect-1.0"
 
 dnl Give error and exit if we don't have the gst_inspect tool
 AC_MSG_CHECKING([GStreamer 1.0 inspection tool])
-if test -r "$gst010_inspect"; then
+if test -r "$gst10_inspect"; then
 	AC_MSG_RESULT([yes])
 else
 	AC_MSG_RESULT([no])
@@ -148,7 +148,7 @@ set -- playback videoscale
 for base_element in playbin videoscale
 do
 	AC_MSG_CHECKING([GStreamer 1.0 $base_element element])
-	if $gst010_inspect $base_element >/dev/null 2>/dev/null; then
+	if $gst10_inspect $base_element >/dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
@@ -167,7 +167,7 @@ set -- autodetect goom
 for good_element in autoaudiosink goom
 do
 	AC_MSG_CHECKING([GStreamer 1.0 $good_element element])
-	if $gst010_inspect $good_element >/dev/null 2>/dev/null; then
+	if $gst10_inspect $good_element >/dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
@@ -185,7 +185,7 @@ set -- soundtouch
 for bad_element in pitch
 do
 	AC_MSG_CHECKING([GStreamer 1.0 $bad_element element])
-	if $gst010_inspect $bad_element >/dev/null 2>/dev/null; then
+	if $gst10_inspect $bad_element >/dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
