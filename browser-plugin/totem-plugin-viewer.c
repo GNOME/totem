@@ -2197,6 +2197,10 @@ int main (int argc, char **argv)
 		exit (1);
 	}
 
+	g_type_ensure (TOTEM_TYPE_GLOW_BUTTON);
+	g_type_ensure (TOTEM_TYPE_STATUSBAR);
+	g_type_ensure (TOTEM_TYPE_TIME_LABEL);
+
 	if (arg_audioonly != FALSE)
 		g_setenv("PULSE_PROP_media.role", "video", TRUE);
 	else
