@@ -2475,7 +2475,7 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
     if (fill == 1.0) {
       bvw->priv->fill_id = 0;
       gst_query_unref (query);
-      g_object_unref (&bvw->priv->download_buffering_element);
+      g_clear_object (&bvw->priv->download_buffering_element);
 
       /* Tell the front-end about the downloaded file */
       g_object_notify (G_OBJECT (bvw), "download-filename");
