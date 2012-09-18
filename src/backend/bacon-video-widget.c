@@ -2064,15 +2064,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       break;
     }
 
-    case GST_MESSAGE_DURATION: {
-      gint64 duration;
-      GstFormat fmt;
-
-      gst_message_parse_duration (message, &fmt, &duration);
-      if (fmt == GST_FORMAT_TIME &&
-	  duration != (gint64) GST_CLOCK_TIME_NONE) {
-	bvw->priv->stream_length = duration / GST_MSECOND;
-	GST_DEBUG ("got new stream length %" G_GINT64_FORMAT, bvw->priv->stream_length);
+    case GST_MESSAGE_DURATION_CHANGED: {
+      gint64 len = -1;
+      if (gst_element_query_duration (bvw->priv->play, GST_FORMAT_TIME, &len) && len != -1) {
+        bvw->priv->stream_length = len / GST_MSECOND;
+	GST_DEBUG ("got new stream length (through duration message) %" G_GINT64_FORMAT, bvw->priv->stream_length);
       }
       break;
     }
