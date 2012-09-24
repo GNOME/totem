@@ -1342,7 +1342,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 			g_error_free (emb->error);
 			emb->error = NULL;
 		} else if (!gtk_widget_get_visible (GTK_WIDGET (menu))) {
-			g_message ("emitting signal");
+			g_message ("emitting signal button press");
 			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
 				       event->time,
 				       event->button);
