@@ -270,7 +270,9 @@ thumb_app_start (ThumbApp *app)
 		GstMessage *message;
 		GstElement *src;
 
-		message = gst_bus_poll (bus, events, -1);
+		message = gst_bus_timed_pop_filtered (bus,
+		                                      GST_CLOCK_TIME_NONE,
+		                                      events);
 
 		src = (GstElement*)GST_MESSAGE_SRC (message);
 
