@@ -1781,8 +1781,8 @@ totem_embedded_construct (TotemEmbedded *emb,
 	g_assert (emb->menuxml);
 
 	popup_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "popup_button"));
-	gtk_menu_button_set_menu (GTK_MENU_BUTTON (popup_button),
-				  (GtkWidget *) gtk_builder_get_object (emb->menuxml, "menu"));
+	gtk_menu_button_set_popup (GTK_MENU_BUTTON (popup_button),
+				   (GtkWidget *) gtk_builder_get_object (emb->menuxml, "menu"));
 	gtk_menu_button_set_direction (GTK_MENU_BUTTON (popup_button), GTK_ARROW_UP);
 
 	emb->volume = GTK_WIDGET (gtk_builder_get_object (emb->xml, "volume_button"));
