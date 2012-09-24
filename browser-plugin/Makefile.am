@@ -107,6 +107,8 @@ totem_plugin_viewer_LDADD = \
 	$(top_builddir)/src/libtotem_player.la				\
 	$(PLUGIN_VIEWER_LIBS)
 
+totem_plugin_viewer_LDFLAGS = -export-dynamic
+
 totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@
 
