@@ -200,8 +200,8 @@ totem_search_entry_add_source (TotemSearchEntry *self,
 
 	if (self->priv->menu == NULL) {
 		self->priv->menu = gtk_menu_new ();
-		gtk_menu_button_set_menu (GTK_MENU_BUTTON (self->priv->button),
-					  self->priv->menu);
+		gtk_menu_button_set_popup (GTK_MENU_BUTTON (self->priv->button),
+					   self->priv->menu);
 		gd_tagged_entry_add_tag (GD_TAGGED_ENTRY (self->priv->entry),
 					 SOURCE_ID, label);
 	}
@@ -235,7 +235,7 @@ totem_search_entry_remove_source (TotemSearchEntry *self,
 	num_items = 1;
 
 	if (num_items == 0) {
-		gtk_menu_button_set_menu (GTK_MENU_BUTTON (self->priv->button), NULL);
+		gtk_menu_button_set_popup (GTK_MENU_BUTTON (self->priv->button), NULL);
 		g_clear_object (&self->priv->menu);
 		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), SOURCE_ID);
 	}
