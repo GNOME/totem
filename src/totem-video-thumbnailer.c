@@ -261,12 +261,14 @@ thumb_app_start (ThumbApp *app)
 {
 	GstBus *bus;
 	GstMessageType events;
+	gboolean terminate = FALSE;
+	gboolean async_received = FALSE;
 
 	gst_element_set_state (app->play, GST_STATE_PAUSED);
 	bus = gst_element_get_bus (app->play);
 	events = GST_MESSAGE_ASYNC_DONE | GST_MESSAGE_ERROR;
 
-	while (TRUE) {
+	while (terminate == FALSE) {
 		GstMessage *message;
 		GstElement *src;
 
@@ -279,13 +281,14 @@ thumb_app_start (ThumbApp *app)
 		switch (GST_MESSAGE_TYPE (message)) {
 		case GST_MESSAGE_ASYNC_DONE:
 			if (src == app->play) {
-				gst_message_unref (message);
-				goto success;
+				async_received = TRUE;
+				terminate = TRUE;
 			}
 			break;
 		case GST_MESSAGE_ERROR:
 			totem_gst_message_print (message, app->play, "totem-video-thumbnailer-error");
-			return FALSE;
+			terminate = TRUE;
+			break;
 
 		default:
 			/* Ignore */
@@ -295,12 +298,14 @@ thumb_app_start (ThumbApp *app)
 		gst_message_unref (message);
 	}
 
-	g_assert_not_reached ();
+	gst_object_unref (bus);
 
-success:
-	/* state change succeeded */
-	GST_DEBUG ("state change to %s succeeded", gst_element_state_get_name (GST_STATE_PAUSED));
-	return TRUE;
+	if (async_received) {
+		/* state change succeeded */
+		GST_DEBUG ("state change to %s succeeded", gst_element_state_get_name (GST_STATE_PAUSED));
+	}
+
+	return async_received;
 }
 
 static void
