@@ -78,6 +78,12 @@ rm -f conf pid lock log access_log
 # Setup the config file
 
 cat > conf << EOF
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule authn_anon_module modules/mod_authn_anon.so
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule access_compat_module modules/mod_access_compat.so
 LoadModule env_module /etc/httpd/modules/mod_env.so
 #echo "LoadModule mime_magic_module /etc/httpd/modules/mod_mime_magic.so
 LoadModule mime_module /etc/httpd/modules/mod_mime.so
@@ -87,9 +93,10 @@ LoadModule rewrite_module  /etc/httpd/modules/mod_rewrite.so
 LoadModule log_config_module /etc/httpd/modules/mod_log_config.so
 LoadModule bw_module /etc/httpd/modules/mod_bw.so
 
+ServerName localhost
 ServerRoot "$ROOTDIR"
 PidFile pid
-LockFile lock
+#LockFile lock
 # LogLevel crit
 LogLevel info
 ErrorLog log
@@ -112,7 +119,7 @@ TypesConfig /etc/mime.types
 StartServers 1
 MinSpareServers 1
 MaxSpareServers 1
-MaxClients 10
+MaxRequestWorkers 10
 EOF
 
 popd > /dev/null
