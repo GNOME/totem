@@ -3792,7 +3792,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
     /* process all remaining state-change messages so everything gets
      * cleaned up properly (before the state change to NULL flushes them) */
     GST_DEBUG ("processing pending state-change messages");
-    while ((msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_STATE_CHANGED, 0))) {
+    while ((msg = gst_bus_pop_filtered (bvw->priv->bus, GST_MESSAGE_STATE_CHANGED))) {
       gst_bus_async_signal_func (bvw->priv->bus, msg, NULL);
       gst_message_unref (msg);
     }
