@@ -1,0 +1,60 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="guide"
+      id="troubleshooting-subtitles">
+
+  <info>
+    <link type="guide" xref="index#troubleshooting"/>
+    <link type="seealso" xref="subtitles"/>
+    <link type="seealso" xref="preferences"/>
+    <desc>I cannot load subtitles.</desc>
+    <credit type="author">
+      <name>Marta Bogdanowicz</name>
+      <email>majus85@gmail.com</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+
+  <title>Problem with loading subtitles</title>
+
+  <p>
+  It may happen that, even though you follow instructions concerning subtitles
+  from <link xref="subtitles"/> page or <link xref="preferences"/> page,
+  <app>Totem</app> still does not load subtitles. The reason for that may be:
+  </p>
+
+  <list>
+    <item>
+      <p>Wrong name of the subtitles file - open the file chooser and check if
+      the name of the subtitles file is the same as the name of the movie file.
+      </p>
+    </item>
+    <item>
+      <p>Lack of the subtitles file - open the file chooser and check if there
+      is also a file with the subtitles in the directory with the movie.</p>
+    </item>
+  </list>
+
+  <p>If you do not have subtitles file for your movie, you can search for it
+  via <app>Totem</app>. Do it in the following way:</p>
+  <steps>
+    <item>
+      <p>Select <guiseq><gui style="menu">Edit</gui>
+      <gui style="menuitem">Plugins…</gui></guiseq>.</p>
+    </item>
+    <item>
+      <p>The <gui>Configure Plugins</gui> window will pop up.</p>
+    </item>
+    <item>
+      <p>Tick <gui>Subtitle Downloader</gui> option. It will try to find
+      and download subtitles for the currently played movie.</p>
+    </item>
+  </steps>
+
+  <note>
+  <p>Please notice that to search for subtitles you need to be connected
+  to the Internet.</p>
+  </note>
+
+</page>
