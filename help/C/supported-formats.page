@@ -1,0 +1,41 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="guide"
+      id="supported-formats">
+
+  <info>
+    <link type="guide" xref="index"/>
+    <link type="seealso" xref="introduction"/>
+    <desc>See what file formats are supported by <gui>Totem</gui>.</desc>
+    <credit type="author">
+      <name>Marta Bogdanowicz</name>
+      <email>majus85@gmail.com</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+
+  <title>Supported file formats</title>
+
+  <p>File formats displayed by <app>Totem</app> depend on <gui>GStreamer</gui>
+  plugins. Install plugin packages you need:</p>
+
+  <list>
+    <item>
+      <p>The basic and essential plugin for GStreamer is
+      <code>gst-plugins-base</code>.</p>
+    </item>
+    <item>
+      <p>The plugin for most open formts is <code>gst-plugins-good</code>.</p>
+    </item>
+    <item>
+      <p>The plugins needed to play DVDs are <code>gst-plugins-ugly</code> and
+      <code>gst-plugins-bad</code>.</p>
+    </item>
+    <item>
+      <p>The plugin, which contains all the basic decoders for popular codecs is
+      <code>gst-ffmpeg</code>.</p>
+    </item>
+  </list>
+
+</page>
