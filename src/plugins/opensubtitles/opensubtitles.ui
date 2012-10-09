@@ -30,11 +30,11 @@
     <property name="default_height">400</property>
     <property name="type_hint">dialog</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkBox" id="vbox1">
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkHBox" id="hbox2">
+          <object class="GtkBox" id="hbox2">
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel" id="label3">
@@ -45,6 +45,7 @@
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -54,6 +55,8 @@
               </object>
               <packing>
                 <property name="position">1</property>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
               </packing>
             </child>
             <child>
@@ -72,6 +75,7 @@
             </child>
           </object>
           <packing>
+            <property name="fill">True</property>
             <property name="expand">False</property>
             <property name="position">0</property>
           </packing>
@@ -92,6 +96,8 @@
           </object>
           <packing>
             <property name="position">1</property>
+            <property name="fill">True</property>
+            <property name="expand">True</property>
           </packing>
         </child>
         <child>
@@ -108,7 +114,7 @@
           <object class="GtkAlignment" id="alignment2">
             <property name="top_padding">6</property>
             <child>
-              <object class="GtkHButtonBox" id="hbbox1">
+              <object class="GtkButtonBox" id="hbbox1">
                 <property name="visible">True</property>
                 <property name="spacing">6</property>
                 <property name="layout_style">end</property>
