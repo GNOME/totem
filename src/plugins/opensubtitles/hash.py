@@ -43,8 +43,5 @@ def hash_file (name):
     file_handle.close ()
     returnedhash = "%016x" % file_hash
 
-    print returnedhash
-    print filesize
-
     return returnedhash, filesize
 
