@@ -53,7 +53,7 @@ typedef struct {
 
 	guint          handler_id_playing;
 	guint          handler_id_metadata;
-	guint          handler_id_inhibit;
+	guint          inhibit_cookie;
 } TotemScreensaverPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
@@ -87,20 +87,22 @@ totem_screensaver_update_from_state (TotemObject *totem,
 
 	if ((totem_is_playing (totem) != FALSE && has_video_frames) ||
 	    (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)) {
-		if (pi->priv->handler_id_inhibit == 0) {
+		if (pi->priv->inhibit_cookie == 0) {
 			GtkWindow *window;
 
 			window = totem_get_main_window (totem);
-			pi->priv->handler_id_inhibit = gtk_application_inhibit (GTK_APPLICATION (totem),
+			g_message ("doing it");
+			pi->priv->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (totem),
 										window,
 										GTK_APPLICATION_INHIBIT_IDLE,
 										_("Playing a movie"));
 			g_object_unref (window);
 		}
 	} else {
-		if (pi->priv->handler_id_inhibit != 0) {
-			gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->handler_id_inhibit);
-			pi->priv->handler_id_inhibit = 0;
+		if (pi->priv->inhibit_cookie != 0) {
+			g_message ("undoing it");
+			gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->inhibit_cookie);
+			pi->priv->inhibit_cookie = 0;
 		}
 	}
 }
@@ -170,9 +172,9 @@ impl_deactivate	(PeasActivatable *plugin)
 		pi->priv->handler_id_metadata = 0;
 	}
 
-	if (pi->priv->handler_id_inhibit != 0) {
-		gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->handler_id_inhibit);
-		pi->priv->handler_id_inhibit = 0;
+	if (pi->priv->inhibit_cookie != 0) {
+		gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->inhibit_cookie);
+		pi->priv->inhibit_cookie = 0;
 	}
 
 	g_object_unref (pi->priv->totem);
