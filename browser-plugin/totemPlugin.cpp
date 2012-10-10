@@ -2151,7 +2151,7 @@ totemPlugin::Init (NPMIMEType mimetype,
 	}
 #endif /* TOTEM_GMP_PLUGIN */
 #if defined(TOTEM_NARROWSPACE_PLUGIN)
-	if (height <= 16 && !mControllerHidden) {
+	if (height > 0 && height <= 16 && !mControllerHidden) {
 		mAudioOnly = true;
 	}
 #endif /* TOTEM_NARROWSPACE_PLUGIN */
