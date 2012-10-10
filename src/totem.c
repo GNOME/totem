@@ -72,7 +72,14 @@ debug_handler (const char *log_domain,
 static void
 app_init (Totem *totem, char **argv)
 {
+	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
+
+	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
+		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
+
+	gtk_settings = gtk_settings_get_default ();
+	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	/* Debug log handling */
 	g_log_set_handler (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, (GLogFunc) debug_handler, totem->settings);
@@ -226,7 +233,6 @@ int
 main (int argc, char **argv)
 {
 	Totem *totem;
-	GtkSettings *gtk_settings;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -242,15 +248,12 @@ main (int argc, char **argv)
 #endif
 
 	g_type_init ();
-	gtk_init (&argc, &argv);
 
 	g_set_prgname ("totem");
 	g_set_application_name (_("Videos"));
 	gtk_window_set_default_icon_name ("totem");
 	g_setenv("PULSE_PROP_media.role", "video", TRUE);
 
-	gtk_settings = gtk_settings_get_default ();
-	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT,

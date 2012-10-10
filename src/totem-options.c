@@ -87,7 +87,7 @@ totem_options_get_context (void)
 	g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, baconoptiongroup);
 
-	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+	g_option_context_add_group (context, gtk_get_option_group (FALSE));
 	/* FIXME:
 	 * This seems to hang on startup */
 	/* totem_session_add_options (context); */

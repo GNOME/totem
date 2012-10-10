@@ -5850,8 +5850,6 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 GOptionGroup*
 bacon_video_widget_get_option_group (void)
 {
-  if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
-    return NULL;
   return gst_init_get_option_group ();
 }
 
