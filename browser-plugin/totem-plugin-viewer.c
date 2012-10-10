@@ -2184,6 +2184,9 @@ int main (int argc, char **argv)
 	}
 #endif
 
+	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
+		g_assert_not_reached ();
+
 	context = g_option_context_new ("- Play audio and video inside a web browser");
 	baconoptiongroup = bacon_video_widget_get_option_group();
 	g_option_context_add_main_entries (context, option_entries, GETTEXT_PACKAGE);
