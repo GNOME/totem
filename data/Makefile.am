@@ -29,7 +29,6 @@ stuff_DATA =				\
 	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
-	video-list.ui			\
 	mozilla-viewer.css
 EXTRA_DIST += $(stuff_DATA)
 
