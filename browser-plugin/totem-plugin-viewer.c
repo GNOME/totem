@@ -2260,8 +2260,14 @@ int main (int argc, char **argv)
 
 	emb = g_object_new (TOTEM_TYPE_EMBEDDED,
 			    "application-id", svcname,
-			    "flags", G_APPLICATION_FLAGS_NONE,
+			    "flags", G_APPLICATION_NON_UNIQUE,
 			    NULL);
+
+	if (g_application_register (G_APPLICATION (emb), NULL, &e) == FALSE) {
+		g_warning ("Failed to register application: %s", e->message);
+		g_error_free (e);
+		return 1;
+	}
 
 	emb->state = TOTEM_STATE_INVALID;
 	emb->width = -1;
