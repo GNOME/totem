@@ -30,7 +30,6 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-#include "totem-cell-renderer-video.h"
 
 /**
  * TOTEM_GSETTINGS_SCHEMA:

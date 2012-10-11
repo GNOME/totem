@@ -24,7 +24,6 @@ AM_CFLAGS = $(WARN_CFLAGS)
 # Header files installed for use by plugins (and consequently introspected using gobject-introspection; see the bottom of the Makefile)
 INST_H_FILES = \
 	totem.h				\
-	totem-cell-renderer-video.h	\
 	totem-interface.h		\
 	plugins/totem-plugin.h		\
 	plugins/totem-dirs.h
@@ -63,7 +62,6 @@ libtotem_la_SOURCES = \
 	$(INST_H_FILES)			\
 	totem-object.c			\
 	totem-private.h			\
-	totem-cell-renderer-video.c	\
 	totem-preferences.c		\
 	totem-preferences.h		\
 	totem-dnd-menu.c		\
