@@ -70,6 +70,7 @@
 	"</ui>"
 
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
+#define RESOLVE_FLAGS 	      (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define THUMB_SEARCH_SIZE     256
 #define THUMB_BROWSE_SIZE     32
@@ -573,11 +574,20 @@ play (TotemGriloPlugin *self,
 	if (resolve_url &&
 	    grl_source_supported_operations (source) & GRL_OP_RESOLVE) {
 		const GList *slow_keys;
-		GList *url_keys;
+
 		slow_keys = grl_source_slow_keys (source);
+
 		if (g_list_find ((GList *) slow_keys, GINT_TO_POINTER (GRL_METADATA_KEY_URL)) != NULL) {
+			GList *url_keys;
+			GrlOperationOptions *resolve_options;
+			
+			resolve_options = grl_operation_options_new (NULL);
+			grl_operation_options_set_flags (resolve_options, RESOLVE_FLAGS);
+
 			url_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_URL, NULL);
-			grl_source_resolve (source, media, url_keys, 0, resolve_url_cb, self);
+			grl_source_resolve (source, media, url_keys, resolve_options, resolve_url_cb, self);
+
+			g_object_unref (resolve_options);
 			g_list_free (url_keys);
 			return;
 		}
