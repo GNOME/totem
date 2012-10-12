@@ -642,15 +642,34 @@ search_cb (GrlSource *source,
 	}
 }
 
-static void
-search_more (TotemGriloPlugin *self)
+static GrlOperationOptions *
+get_search_options (TotemGriloPlugin *self)
 {
 	GrlOperationOptions *default_options;
+	GrlOperationOptions *supported_options;
 
 	default_options = grl_operation_options_new (NULL);
 	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
 	grl_operation_options_set_skip (default_options, self->priv->search_page * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
+	grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
+
+	/* And now remove all the unsupported filters and options */
+	grl_operation_options_obey_caps (default_options,
+					 grl_source_get_caps (GRL_SOURCE (self->priv->search_source), GRL_OP_SEARCH),
+					 &supported_options,
+					 NULL);
+	g_object_unref (default_options);
+
+	return supported_options;
+}
+
+static void
+search_more (TotemGriloPlugin *self)
+{
+	GrlOperationOptions *search_options;
+
+	search_options = get_search_options (self);
 
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_page++;
@@ -660,7 +679,7 @@ search_more (TotemGriloPlugin *self)
 			grl_source_search (self->priv->search_source,
 			                   self->priv->search_text,
 			                   search_keys (),
-			                   default_options,
+			                   search_options,
 			                   search_cb,
 			                   self);
 	} else {
@@ -668,11 +687,11 @@ search_more (TotemGriloPlugin *self)
 			grl_multiple_search (NULL,
 			                     self->priv->search_text,
 			                     search_keys (),
-			                     default_options,
+			                     search_options,
 			                     search_cb,
 			                     self);
 	}
-	g_object_unref (default_options);
+	g_object_unref (search_options);
 
 	if (self->priv->search_id == 0) {
 		search_cb (self->priv->search_source, 0, NULL, 0, self, NULL);
