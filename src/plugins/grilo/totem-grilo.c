@@ -649,7 +649,7 @@ search_more (TotemGriloPlugin *self)
 
 	default_options = grl_operation_options_new (NULL);
 	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
-	grl_operation_options_set_skip (default_options, (self->priv->search_page - 1) * PAGE_SIZE);
+	grl_operation_options_set_skip (default_options, self->priv->search_page * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
 
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
