@@ -91,7 +91,6 @@ totem_screensaver_update_from_state (TotemObject *totem,
 			GtkWindow *window;
 
 			window = totem_get_main_window (totem);
-			g_message ("doing it");
 			pi->priv->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (totem),
 										window,
 										GTK_APPLICATION_INHIBIT_IDLE,
@@ -100,7 +99,6 @@ totem_screensaver_update_from_state (TotemObject *totem,
 		}
 	} else {
 		if (pi->priv->inhibit_cookie != 0) {
-			g_message ("undoing it");
 			gtk_application_uninhibit (GTK_APPLICATION (pi->priv->totem), pi->priv->inhibit_cookie);
 			pi->priv->inhibit_cookie = 0;
 		}
