@@ -580,7 +580,7 @@ play (TotemGriloPlugin *self,
 		if (g_list_find ((GList *) slow_keys, GINT_TO_POINTER (GRL_METADATA_KEY_URL)) != NULL) {
 			GList *url_keys;
 			GrlOperationOptions *resolve_options;
-			
+
 			resolve_options = grl_operation_options_new (NULL);
 			grl_operation_options_set_flags (resolve_options, RESOLVE_FLAGS);
 
