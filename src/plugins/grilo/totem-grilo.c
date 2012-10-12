@@ -570,7 +570,8 @@ play (TotemGriloPlugin *self,
 	}
 
 	/* If url is a slow key, then we need to full resolve it */
-	if (resolve_url) {
+	if (resolve_url &&
+	    grl_source_supported_operations (source) & GRL_OP_RESOLVE) {
 		const GList *slow_keys;
 		GList *url_keys;
 		slow_keys = grl_source_slow_keys (source);
@@ -580,6 +581,10 @@ play (TotemGriloPlugin *self,
 			g_list_free (url_keys);
 			return;
 		}
+	} else if (resolve_url) {
+		/* If source does not support resolve() operation, then use the current media */
+		resolve_url_cb (source, 0, media, NULL, NULL);
+		return;
 	}
 
 	g_warning ("Current element has no URL to play");
