@@ -57,9 +57,9 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
         self.totem = totem
 
         self.null_metadata = {
-            'year' : '', 'tracknumber' : '', 'location' : '',
-            'title' : '', 'album' : '', 'time' : '', 'genre' : '',
-            'artist' : ''
+            'year' : u'', 'tracknumber' : '', 'location' : '',
+            'title' : u'', 'album' : u'', 'time' : u'', 'genre' : u'',
+            'artist' : u''
         }
         self.current_metadata = self.null_metadata.copy ()
         self.current_position = 0
@@ -120,11 +120,11 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                               title, album, num):
         self.current_metadata = self.null_metadata.copy ()
         if title:
-            self.current_metadata['title'] = title
+            self.current_metadata['title'] = unicode (title, 'utf-8')
         if artist:
-            self.current_metadata['artist'] = artist
+            self.current_metadata['artist'] = unicode (artist, 'utf-8')
         if album:
-            self.current_metadata['album'] = album
+            self.current_metadata['album'] = unicode (album, 'utf-8')
         if num:
             self.current_metadata['tracknumber'] = num
 
