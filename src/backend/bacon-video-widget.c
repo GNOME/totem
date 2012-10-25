@@ -2482,6 +2482,8 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
 
       return FALSE;
     }
+  } else {
+    g_debug ("Failed to query the source element for buffering info in percent");
   }
   gst_query_unref (query);
 
