@@ -3864,7 +3864,6 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->has_angles = FALSE;
   bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
-  g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 
   bvw->priv->current_time = 0;
   bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
@@ -4026,7 +4025,6 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
         gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
             GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, G_GINT64_CONSTANT (0));
 	bvw->priv->rate = FORWARD_RATE;
-        g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
       } else {
         GST_DEBUG ("failed to query position (%s)", fmt_name);
       }
@@ -5893,7 +5891,6 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
       } else {
 	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
 	bvw->priv->rate = REVERSE_RATE;
-	g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 	retval = TRUE;
       }
     } else {
@@ -5915,7 +5912,6 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
       } else {
 	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
 	bvw->priv->rate = FORWARD_RATE;
-	g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
 	retval = TRUE;
       }
     } else {
@@ -5967,7 +5963,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* Instantiate all the fallible plugins */
   bvw->priv->play = element_make_or_warn ("playbin", "play");
-  bvw->priv->audio_pitchcontrol = element_make_or_warn ("pitch", "audiopitch");
+  bvw->priv->audio_pitchcontrol = element_make_or_warn ("pitch", "scaletempo");
   video_sink = element_make_or_warn ("cluttersink", "video-sink");
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
@@ -6062,7 +6058,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->audio_capsfilter =
     gst_element_factory_make ("capsfilter", "audiofilter");
   audio_bin = gst_bin_new ("audiosinkbin");
-  g_object_set (bvw->priv->audio_pitchcontrol, "pitch", 1.0, NULL);
   gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
 		    bvw->priv->audio_pitchcontrol, audio_sink, NULL);
   gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
@@ -6178,9 +6173,6 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
     } else {
       gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
       bvw->priv->rate = new_rate;
-      g_object_get (bvw->priv->audio_pitchcontrol, "pitch", &pitch, NULL);
-      g_object_set (bvw->priv->audio_pitchcontrol, "pitch", pitch / ratio, NULL);
-      GST_DEBUG ("changed rate to %f, pitch to %f\n", new_rate, pitch);
       retval = TRUE;
     }
   } else {

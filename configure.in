@@ -181,8 +181,10 @@ done
 
 dnl Check for elements from gst-plugins-bad
 dnl Set plugins which contain below elements
-set -- soundtouch
-for bad_element in pitch
+PKG_CHECK_MODULES(GST_PLUGINS_BAD, gstreamer-plugins-bad-1.0 >= 1.0.2)
+
+set -- scaletempo
+for bad_element in scaletempo
 do
 	AC_MSG_CHECKING([GStreamer 1.0 $bad_element element])
 	if $gst10_inspect $bad_element >/dev/null 2>/dev/null; then
