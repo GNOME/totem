@@ -5943,7 +5943,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gchar *version_str;
   GstPlayFlags flags;
   ClutterConstraint *constraint;
-  GstElement *audio_bin;
+  GstElement *audio_bin, *audio_converter;
   GstPad *audio_pad;
 
   bvw = BACON_VIDEO_WIDGET (initable);
@@ -5963,11 +5963,13 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* Instantiate all the fallible plugins */
   bvw->priv->play = element_make_or_warn ("playbin", "play");
+  audio_converter = element_make_or_warn ("audioconvert", "audio-converter");
   bvw->priv->audio_pitchcontrol = element_make_or_warn ("scaletempo", "scaletempo");
   video_sink = element_make_or_warn ("cluttersink", "video-sink");
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->priv->play ||
+      !audio_converter ||
       !bvw->priv->audio_pitchcontrol ||
       !video_sink ||
       !audio_sink) {
@@ -5975,6 +5977,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
       g_object_ref_sink (video_sink);
     if (audio_sink)
       g_object_ref_sink (audio_sink);
+    if (audio_converter)
+      g_object_ref_sink (audio_converter);
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
 			 _("Some necessary plug-ins are missing. "
 			   "Make sure that the program is correctly installed."));
@@ -6058,14 +6062,17 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->audio_capsfilter =
     gst_element_factory_make ("capsfilter", "audiofilter");
   audio_bin = gst_bin_new ("audiosinkbin");
-  gst_bin_add_many (GST_BIN (audio_bin), bvw->priv->audio_capsfilter,
-		    bvw->priv->audio_pitchcontrol, audio_sink, NULL);
+  gst_bin_add_many (GST_BIN (audio_bin), audio_converter,
+                    bvw->priv->audio_capsfilter,
+                    bvw->priv->audio_pitchcontrol, audio_sink, NULL);
+  gst_element_link_pads (audio_converter, "src",
+                         bvw->priv->audio_capsfilter, "sink");
   gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
-			 bvw->priv->audio_pitchcontrol, "sink");
+                         bvw->priv->audio_pitchcontrol, "sink");
   gst_element_link_pads (bvw->priv->audio_pitchcontrol, "src",
-			 audio_sink, "sink");
+                         audio_sink, "sink");
 
-  audio_pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
+  audio_pad = gst_element_get_static_pad (audio_converter, "sink");
   gst_element_add_pad (audio_bin, gst_ghost_pad_new ("sink", audio_pad));
   gst_object_unref (audio_pad);
 
