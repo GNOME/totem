@@ -5963,7 +5963,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* Instantiate all the fallible plugins */
   bvw->priv->play = element_make_or_warn ("playbin", "play");
-  bvw->priv->audio_pitchcontrol = element_make_or_warn ("pitch", "scaletempo");
+  bvw->priv->audio_pitchcontrol = element_make_or_warn ("scaletempo", "scaletempo");
   video_sink = element_make_or_warn ("cluttersink", "video-sink");
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
@@ -6150,7 +6150,6 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
   GstEvent *event;
   gboolean retval = FALSE;
   gint64 cur;
-  gfloat pitch, ratio;
 
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
@@ -6160,7 +6159,6 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
 	return TRUE;
   if (new_rate >= 2.0)
 	return TRUE;
-  ratio = new_rate / bvw->priv->rate;
 
   if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
     GST_DEBUG ("Setting new rate at %"G_GINT64_FORMAT"", cur);
