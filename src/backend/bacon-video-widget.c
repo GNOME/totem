@@ -6062,17 +6062,17 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->audio_capsfilter =
     gst_element_factory_make ("capsfilter", "audiofilter");
   audio_bin = gst_bin_new ("audiosinkbin");
-  gst_bin_add_many (GST_BIN (audio_bin), audio_converter,
+  gst_bin_add_many (GST_BIN (audio_bin),
                     bvw->priv->audio_capsfilter,
-                    bvw->priv->audio_pitchcontrol, audio_sink, NULL);
-  gst_element_link_pads (audio_converter, "src",
-                         bvw->priv->audio_capsfilter, "sink");
-  gst_element_link_pads (bvw->priv->audio_capsfilter, "src",
-                         bvw->priv->audio_pitchcontrol, "sink");
-  gst_element_link_pads (bvw->priv->audio_pitchcontrol, "src",
-                         audio_sink, "sink");
+                    bvw->priv->audio_pitchcontrol,
+		   audio_converter, audio_sink, NULL);
+  gst_element_link_many (bvw->priv->audio_capsfilter,
+			 bvw->priv->audio_pitchcontrol,
+			 audio_converter,
+			 audio_sink,
+			 NULL);
 
-  audio_pad = gst_element_get_static_pad (audio_converter, "sink");
+  audio_pad = gst_element_get_static_pad (bvw->priv->audio_capsfilter, "sink");
   gst_element_add_pad (audio_bin, gst_ghost_pad_new ("sink", audio_pad));
   gst_object_unref (audio_pad);
 
