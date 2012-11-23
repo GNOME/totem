@@ -48,7 +48,6 @@
 #include <string.h>
 
 #include "totem.h"
-#include "totemobject-marshal.h"
 #include "totem-private.h"
 #include "totem-options.h"
 #include "totem-plugins-engine.h"
@@ -381,7 +380,7 @@ totem_object_class_init (TotemObjectClass *klass)
 				G_SIGNAL_RUN_LAST,
 				G_STRUCT_OFFSET (TotemObjectClass, metadata_updated),
 				NULL, NULL,
-				totemobject_marshal_VOID__STRING_STRING_STRING_UINT,
+	                        g_cclosure_marshal_generic,
 				G_TYPE_NONE, 4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UINT);
 
 	/**
@@ -400,7 +399,7 @@ totem_object_class_init (TotemObjectClass *klass)
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (TotemObjectClass, get_user_agent),
 			      accumulator_first_non_null_wins, NULL,
-			      totemobject_marshal_STRING__STRING,
+	                      g_cclosure_marshal_generic,
 			      G_TYPE_STRING, 1, G_TYPE_STRING);
 
 	/**
@@ -419,7 +418,7 @@ totem_object_class_init (TotemObjectClass *klass)
 			      G_SIGNAL_RUN_LAST,
 			      G_STRUCT_OFFSET (TotemObjectClass, get_text_subtitle),
 			      accumulator_first_non_null_wins, NULL,
-			      totemobject_marshal_STRING__STRING,
+	                      g_cclosure_marshal_generic,
 			      G_TYPE_STRING, 1, G_TYPE_STRING);
 }
 

@@ -90,7 +90,6 @@
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "bacon-video-osd-actor.h"
-#include "baconvideowidget-marshal.h"
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
 
@@ -1035,7 +1034,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, error),
                   NULL, NULL,
-                  baconvideowidget_marshal_VOID__STRING_BOOLEAN,
+                  g_cclosure_marshal_generic,
                   G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
 
   /**
@@ -1109,7 +1108,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, tick),
                   NULL, NULL,
-                  baconvideowidget_marshal_VOID__INT64_INT64_DOUBLE_BOOLEAN,
+                  g_cclosure_marshal_generic,
                   G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_DOUBLE,
                   G_TYPE_BOOLEAN);
 
@@ -1147,7 +1146,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_SIGNAL_RUN_LAST,
                   0, /* signal is enough, we don't need a vfunc */
                   bvw_boolean_handled_accumulator, NULL,
-                  baconvideowidget_marshal_BOOLEAN__BOXED_BOXED_BOOLEAN,
+                  g_cclosure_marshal_generic,
                   G_TYPE_BOOLEAN, 3, G_TYPE_STRV, G_TYPE_STRV, G_TYPE_BOOLEAN);
 
   /**

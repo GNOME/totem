@@ -133,31 +133,6 @@ libtotem_la_SOURCES += eggsmclient-osx.c
 endif
 endif
 
-# Marshal files
-TOTEM_MARSHAL_FILES = \
-	totemobject-marshal.c totemobject-marshal.h		\
-	totemplaylist-marshal.c totemplaylist-marshal.h		\
-	totemvideolist-marshal.c totemvideolist-marshal.h
-
-totemobject-marshal.h: totemobject-marshal.list
-	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header > $@)
-totemobject-marshal.c: totemobject-marshal.h totemobject-marshal.list
-	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemobject_marshal $(srcdir)/totemobject-marshal.list --header --body > $@)
-totemplaylist-marshal.h: totemplaylist-marshal.list
-	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemplaylist_marshal $(srcdir)/totemplaylist-marshal.list --header > $@)
-totemplaylist-marshal.c: totemplaylist-marshal.h totemobject-marshal.list
-	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemplaylist_marshal $(srcdir)/totemplaylist-marshal.list --header --body > $@)
-totemvideolist-marshal.h: totemvideolist-marshal.list
-	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header > $@)
-totemvideolist-marshal.c: totemvideolist-marshal.h totemobject-marshal.list
-	$(AM_V_GEN) ($(GLIB_GENMARSHAL) --prefix=totemvideolist_marshal $(srcdir)/totemvideolist-marshal.list --header --body > $@)
-
-EXTRA_DIST = \
-	totemobject-marshal.list	\
-	totemvideolist-marshal.list	\
-	totemplaylist-marshal.list
-CLEANFILES = $(TOTEM_MARSHAL_FILES)
-
 # Totem
 totem_SOURCES = totem.c
 
@@ -295,7 +270,7 @@ gir_DATA = $(INTROSPECTION_GIRS)
 typelibdir = $(libdir)/girepository-1.0
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
-CLEANFILES += $(gir_DATA) $(typelib_DATA)
+CLEANFILES = $(gir_DATA) $(typelib_DATA)
 
 endif
 

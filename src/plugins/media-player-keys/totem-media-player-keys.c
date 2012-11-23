@@ -37,7 +37,6 @@
 #include <string.h>
 
 #include "totem-plugin.h"
-#include "totem-marshal.h"
 #include "totem.h"
 
 #define TOTEM_TYPE_MEDIA_PLAYER_KEYS_PLUGIN		(totem_media_player_keys_plugin_get_type ())

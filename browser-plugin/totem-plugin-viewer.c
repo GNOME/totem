@@ -53,7 +53,6 @@
 
 #include "totem-plugin-viewer-constants.h"
 #include "totem-plugin-viewer-options.h"
-#include "marshal.h"
 
 GtkWidget *totem_statusbar_create (void);
 GtkWidget *totem_volume_create (void);
@@ -241,7 +240,7 @@ static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 				G_SIGNAL_RUN_LAST,
 				NULL /* class closure */,
 				NULL /* accu */, NULL /* accu data */,
-				totempluginviewer_marshal_VOID__UINT_UINT,
+				g_cclosure_marshal_generic,
 				G_TYPE_NONE, 2, param_types);
 	signals[START_STREAM] =
 		g_signal_newv ("start-stream",
@@ -267,7 +266,7 @@ static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 				G_SIGNAL_RUN_LAST,
 				NULL /* class closure */,
 				NULL /* accu */, NULL /* accu data */,
-				totempluginviewer_marshal_VOID__UINT_UINT_STRING,
+	                        g_cclosure_marshal_generic,
 				G_TYPE_NONE, 3, param_types);
 	signals[PROPERTY_CHANGE] =
 		g_signal_new ("property-change",
@@ -275,7 +274,7 @@ static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 			      G_SIGNAL_RUN_LAST,
 			      0 /* class offset */,
 			      NULL /* accu */, NULL /* accu data */,
-			      totempluginviewer_marshal_VOID__STRING_BOXED,
+			      g_cclosure_marshal_generic,
 			      G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_VALUE);
 }
 

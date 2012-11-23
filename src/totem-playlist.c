@@ -23,7 +23,6 @@
 
 #include "config.h"
 #include "totem-playlist.h"
-#include "totemplaylist-marshal.h"
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
@@ -2990,7 +2989,7 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_STRUCT_OFFSET (TotemPlaylistClass,
 					item_added),
 				NULL, NULL,
-				totemplaylist_marshal_VOID__STRING_STRING,
+				g_cclosure_marshal_generic,
 				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
 	totem_playlist_table_signals[ITEM_REMOVED] =
 		g_signal_new ("item-removed",
@@ -2999,6 +2998,6 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				G_STRUCT_OFFSET (TotemPlaylistClass,
 					item_removed),
 				NULL, NULL,
-				totemplaylist_marshal_VOID__STRING_STRING,
+				g_cclosure_marshal_generic,
 				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
 }

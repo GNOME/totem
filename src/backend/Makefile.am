@@ -19,14 +19,6 @@ bvw_test_LDADD =		\
 	libbaconvideowidget.la	\
 	$(BACKEND_LIBS)
 
-# Marshallers
-BVW_MARSHAL_FILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
-
-baconvideowidget-marshal.h: baconvideowidget-marshal.list
-	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --header > $@)
-baconvideowidget-marshal.c: baconvideowidget-marshal.h baconvideowidget-marshal.list
-	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > $@)
-
 # Enums
 BVW_ENUM_FILES = bacon-video-widget-enums.c bacon-video-widget-enums.h
 
@@ -85,8 +77,5 @@ libbaconvideowidget_la_LDFLAGS= \
 CLEANFILES = \
 	$(BVW_MARSHAL_FILES)	\
 	$(BVW_ENUM_FILES)
-
-EXTRA_DIST = \
-	baconvideowidget-marshal.list
 
 -include $(top_srcdir)/git.mk

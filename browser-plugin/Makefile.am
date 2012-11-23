@@ -47,19 +47,6 @@ plugin_ldflags = \
 	-no-undefined					\
 	$(AM_LDFLAGS)
 
-# Marshaller
-MARSHAL_FILES = \
-	marshal.h	\
-	marshal.c
-
-marshal.h: marshal.list
-	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --header $< > $@)
-marshal.c: marshal.list marshal.h
-	$(AM_V_GEN)($(GLIB_GENMARSHAL) --prefix=totempluginviewer_marshal --internal --body --header $< > $@)
-
-CLEANFILES = $(MARSHAL_FILES)
-EXTRA_DIST += marshal.list
-
 # The Glow button test program
 noinst_PROGRAMS = test-glow-button
 
@@ -112,7 +99,7 @@ totem_plugin_viewer_LDFLAGS = -export-dynamic
 totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@
 
-CLEANFILES += totem-plugin-viewer-interface.h
+CLEANFILES = totem-plugin-viewer-interface.h
 EXTRA_DIST += org_gnome_totem_PluginViewer.xml
 
 # Totem GMP Plugin

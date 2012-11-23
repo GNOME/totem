@@ -59,16 +59,12 @@ IGNORE_HFILES = \
 	eggsmclient-private.h		\
 	gnome-screenshot-widget.h	\
 	gsd-media-keys-window.h		\
-	totemobject-marshal.h		\
-	totemplaylist-marshal.h		\
-	totemvideolist-marshal.h	\
 	totem-profile.h			\
 	totem-sample-vala-plugin.h	\
 	totem-chapters-utils.h		\
 	totem-cmml-parser.h		\
 	totem-edit-chapter.h		\
 	bacon-video-widget-common.h			\
-	baconvideowidget-marshal.h			\
 	bacon-video-widget-gst-missing-plugins.h	\
 	bacon-resize.h					\
 	totem-playlist.h				\
@@ -105,7 +101,6 @@ IGNORE_HFILES = \
 	totem-skipto-plugin.h		\
 	totem-time-entry.h		\
 	totem-tracker-widget.h		\
-	totem-marshal.h			\
 	gsd-media-keys-window.h		\
 	gsd-osd-window.h		\
 	bacon-video-osd-actor.h		\
