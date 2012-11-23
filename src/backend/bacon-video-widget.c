@@ -3412,7 +3412,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
         desc_list = g_strjoinv ("\n", descs);
         msg = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "The playback of this movie "
             "requires a %s plugin which is not installed.", "The playback "
-            "of this movie requires the following decoders which are not "
+            "of this movie requires the following plugins which are not "
             "installed:\n\n%s", num), (num == 1) ? descs[0] : desc_list);
         g_free (desc_list);
 	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, msg);
