@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-10 19:47+0200\n"
-"PO-Revision-Date: 2012-09-10 19:48+0200\n"
+"POT-Creation-Date: 2012-11-27 17:16+0100\n"
+"PO-Revision-Date: 2012-11-27 17:17+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -77,7 +77,7 @@ msgstr "Brak listy odtwarzania lub lista jest pusta"
 msgid "Movie browser plugin"
 msgstr "Wtyczka przeglądarki filmów"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:241
+#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:247
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nie można zainicjować bibliotek bezpiecznych dla wątków."
 
@@ -267,11 +267,11 @@ msgstr "_Usuń"
 msgid "Remove file from playlist"
 msgstr "Usuwa plik z listy odtwarzania"
 
-#: ../data/playlist.ui.h:3 ../data/video-list.ui.h:3
+#: ../data/playlist.ui.h:3
 msgid "_Copy Location"
 msgstr "S_kopiuj położenie"
 
-#: ../data/playlist.ui.h:4 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:4
 msgid "Copy the location to the clipboard"
 msgstr "Kopiuje położenie do schowka"
 
@@ -318,7 +318,7 @@ msgstr "Duży"
 msgid "Extra Large"
 msgstr "Bardzo duży"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5522
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5518
 #: ../src/totem-properties-view.c:232
 msgid "Stereo"
 msgstr "Stereo"
@@ -515,8 +515,8 @@ msgid "Channels:"
 msgstr "Kanały:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:240
-#: ../src/totem.c:249 ../src/totem-menu.c:789 ../src/totem-object.c:1658
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:246
+#: ../src/totem.c:254 ../src/totem-menu.c:789 ../src/totem-object.c:1658
 msgid "Videos"
 msgstr "Filmy"
 
@@ -845,69 +845,61 @@ msgstr "Pasek czasu"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Proszę wprowadzić adres p_liku do otwarcia:"
 
-#: ../data/video-list.ui.h:1 ../src/totem-dnd-menu.c:97
-msgid "_Add to Playlist"
-msgstr "_Dodaj do listy odtwarzania"
-
-#: ../data/video-list.ui.h:2
-msgid "Add the video to the playlist"
-msgstr "Dodanie nagrania wideo do listy odtwarzania"
-
 #: ../src/backend/bacon-video-widget.c:1643
 msgid "Password requested for RTSP server"
 msgstr "Zażądano hasła dla serwera RTSP"
 
-#: ../src/backend/bacon-video-widget.c:2944
+#: ../src/backend/bacon-video-widget.c:2942
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Ścieżka dźwiękowa #%d"
 
-#: ../src/backend/bacon-video-widget.c:2948
+#: ../src/backend/bacon-video-widget.c:2946
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Napisy #%d"
 
-#: ../src/backend/bacon-video-widget.c:3345
+#: ../src/backend/bacon-video-widget.c:3343
 msgid "The server you are trying to connect to is not known."
 msgstr "Łączenie z nieznanym serwerem."
 
-#: ../src/backend/bacon-video-widget.c:3348
+#: ../src/backend/bacon-video-widget.c:3346
 msgid "The connection to this server was refused."
 msgstr "Odrzucono połączenie z tym serwerem."
 
-#: ../src/backend/bacon-video-widget.c:3351
+#: ../src/backend/bacon-video-widget.c:3349
 msgid "The specified movie could not be found."
 msgstr "Nie można odnaleźć podanego filmu."
 
-#: ../src/backend/bacon-video-widget.c:3358
+#: ../src/backend/bacon-video-widget.c:3356
 msgid "The server refused access to this file or stream."
 msgstr "Serwer odmówił dostępu do tego pliku lub strumienia."
 
-#: ../src/backend/bacon-video-widget.c:3364
+#: ../src/backend/bacon-video-widget.c:3362
 msgid "Authentication is required to access this file or stream."
 msgstr ""
 "Wymagane jest uwierzytelnienie, aby uzyskać dostęp do tego pliku lub "
 "strumienia."
 
-#: ../src/backend/bacon-video-widget.c:3371
+#: ../src/backend/bacon-video-widget.c:3369
 msgid "You are not allowed to open this file."
 msgstr "Brak uprawnień do otwarcia tego pliku."
 
-#: ../src/backend/bacon-video-widget.c:3376
+#: ../src/backend/bacon-video-widget.c:3374
 msgid "This location is not a valid one."
 msgstr "To położenie jest nieprawidłowe."
 
-#: ../src/backend/bacon-video-widget.c:3384
+#: ../src/backend/bacon-video-widget.c:3382
 msgid "The movie could not be read."
 msgstr "Nie można odczytać filmu."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3407
-#: ../src/backend/bacon-video-widget.c:3415
+#: ../src/backend/bacon-video-widget.c:3405
+#: ../src/backend/bacon-video-widget.c:3413
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
-"The playback of this movie requires the following decoders which are not "
+"The playback of this movie requires the following plugins which are not "
 "installed:\n"
 "\n"
 "%s"
@@ -915,17 +907,17 @@ msgstr[0] ""
 "Odtworzenie tego nagrania wideo wymaga wtyczki %s, która nie jest "
 "zainstalowana."
 msgstr[1] ""
-"Odtworzenie tego nagrania wideo wymaga następujących dekoderów, które nie są "
+"Odtworzenie tego nagrania wideo wymaga następujących wtyczek, które nie są "
 "zainstalowane:\n"
 "\n"
 "%s"
 msgstr[2] ""
-"Odtworzenie tego nagrania wideo wymaga następujących dekoderów, które nie są "
+"Odtworzenie tego nagrania wideo wymaga następujących wtyczek, które nie są "
 "zainstalowane:\n"
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3426
+#: ../src/backend/bacon-video-widget.c:3424
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -934,7 +926,7 @@ msgstr ""
 "kodeków. Należy zainstalować dodatkowe wtyczki, aby odtwarzać niektóre "
 "rodzaje filmów"
 
-#: ../src/backend/bacon-video-widget.c:3436
+#: ../src/backend/bacon-video-widget.c:3434
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -942,19 +934,19 @@ msgstr ""
 "Ten plik nie może być odtwarzany przez sieć. Proszę spróbować najpierw "
 "pobrać plik na dysk."
 
-#: ../src/backend/bacon-video-widget.c:5518 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5514 ../src/totem-properties-view.c:228
 msgid "Surround"
 msgstr "Przestrzenny"
 
-#: ../src/backend/bacon-video-widget.c:5520 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5516 ../src/totem-properties-view.c:230
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5805
+#: ../src/backend/bacon-video-widget.c:5801
 msgid "Media contains no supported video streams."
 msgstr "Plik multimediów zawiera nieobsługiwany strumień wideo."
 
-#: ../src/backend/bacon-video-widget.c:5987
+#: ../src/backend/bacon-video-widget.c:5983
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1205,19 +1197,19 @@ msgstr[2] "%d klatek na sekundę"
 msgid "Audio Preview"
 msgstr "Podgląd dźwięku"
 
-#: ../src/totem.c:241
+#: ../src/totem.c:247
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Proszę sprawdzić poprawność instalacji systemu. Działanie programu Totem "
 "zostanie teraz zakończone."
 
-#: ../src/totem-cell-renderer-video.c:126
-msgid "Unknown video"
-msgstr "Nieznane nagranie wideo"
-
 #: ../src/totem-dnd-menu.c:94
 msgid "_Play Now"
 msgstr "_Odtwarzaj teraz"
+
+#: ../src/totem-dnd-menu.c:97
+msgid "_Add to Playlist"
+msgstr "_Dodaj do listy odtwarzania"
 
 #: ../src/totem-dnd-menu.c:103
 msgid "Cancel"
@@ -1782,14 +1774,10 @@ msgstr "Wybór filmów lub list odtwarzania"
 msgid "Add Directory"
 msgstr "Dodaj katalog"
 
-#: ../src/totem-video-list.c:330
-msgid "No video URI"
-msgstr "Brak adresu URI nagrania wideo"
-
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:848
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1800,15 +1788,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:842
+#: ../src/totem-video-thumbnailer.c:849
 msgid "Filename"
 msgstr "Nazwa pliku"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:851
 msgid "Resolution"
 msgstr "Rozdzielczość"
 
-#: ../src/totem-video-thumbnailer.c:847
+#: ../src/totem-video-thumbnailer.c:854
 msgid "Duration"
 msgstr "Czas trwania"
 
@@ -2064,19 +2052,19 @@ msgstr "Dodaj do listy odtwarzania"
 msgid "Copy Location"
 msgstr "Skopiuj położenie"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1186
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1220
 msgid "Browse"
 msgstr "Przeglądaj"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1229
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1263
 msgid "Search"
 msgstr "Wyszukaj"
 
-#: ../src/plugins/grilo/totem-grilo.c:454
+#: ../src/plugins/grilo/totem-grilo.c:455
 msgid "Browse Error"
 msgstr "Błąd przeglądania"
 
-#: ../src/plugins/grilo/totem-grilo.c:609
+#: ../src/plugins/grilo/totem-grilo.c:624
 msgid "Search Error"
 msgstr "Błąd wyszukiwania"
 
