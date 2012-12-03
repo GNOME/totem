@@ -17,4 +17,4 @@ which gnome-autogen.sh || {
 	exit 1
 }
 
-REQUIRED_PKG_CONFIG_VERSION=0.17.1 REQUIRED_AUTOMAKE_VERSION=1.11 USE_GNOME2_MACROS=1 . gnome-autogen.sh --enable-debug $*
+REQUIRED_PKG_CONFIG_VERSION=0.17.1 REQUIRED_AUTOMAKE_VERSION=1.11 USE_GNOME2_MACROS=1 . gnome-autogen.sh --enable-debug "$@"
