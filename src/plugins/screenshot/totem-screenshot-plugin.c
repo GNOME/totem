@@ -275,7 +275,8 @@ window_key_press_event_cb (GtkWidget *window, GdkEventKey *event, TotemScreensho
 		break;
 	case GDK_KEY_s:
 	case GDK_KEY_S:
-		if (event->state & GDK_CONTROL_MASK)
+		if (event->state & GDK_CONTROL_MASK &&
+		    event->state & GDK_MOD1_MASK)
 			take_screenshot_action_cb (NULL, self);
 		else
 			return FALSE;
@@ -330,7 +331,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreenshotPlugin *self = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	const GtkActionEntry menu_entries[] = {
-		{ "take-screenshot", "camera-photo", N_("Take _Screenshot"), "<Ctrl>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_cb) },
+		{ "take-screenshot", "camera-photo", N_("Take _Screenshot"), "<Ctrl><Primary>S", N_("Take a screenshot"), G_CALLBACK (take_screenshot_action_cb) },
 		{ "take-gallery", NULL, N_("Create Screenshot _Gallery..."), NULL, N_("Create a gallery of screenshots"), G_CALLBACK (take_gallery_action_cb) }
 	};
 
