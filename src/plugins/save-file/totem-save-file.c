@@ -60,7 +60,7 @@ static void totem_save_file_plugin_copy (GtkAction *action,
 					 TotemSaveFilePlugin *pi);
 
 static GtkActionEntry totem_save_file_plugin_actions [] = {
-	{ "SaveFile", "save-as", N_("Save a Copy..."), "<Ctrl>C",
+	{ "SaveFile", "save-as", N_("Save a Copy..."), "<Ctrl>S",
 		N_("Save a copy of the movie"),
 		G_CALLBACK (totem_save_file_plugin_copy) },
 };
