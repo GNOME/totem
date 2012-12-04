@@ -54,7 +54,7 @@ totem_string_to_time (const char *time_string)
 {
 	int sec, min, hour, args;
 
-	args = sscanf (time_string, C_("long time format", "%d∶%02d∶%02d"), &hour, &min, &sec);
+	args = sscanf (time_string, C_("long time format", "%d:%02d:%02d"), &hour, &min, &sec);
 
 	if (args == 3) {
 		/* Parsed all three arguments successfully */
