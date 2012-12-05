@@ -257,10 +257,11 @@ bacon_video_widget_properties_new (void)
 			"samplerate_label", "channels_label" };
 	guint i;
 
-	xml = totem_interface_load ("properties.ui", TRUE, NULL, NULL);
-
-	if (xml == NULL)
+	xml = gtk_builder_new ();
+	if (gtk_builder_add_from_file (xml, DATADIR"/properties.ui", NULL) == 0) {
+		g_object_unref (xml);
 		return NULL;
+	}
 
 	props = BACON_VIDEO_WIDGET_PROPERTIES (g_object_new
 			(BACON_TYPE_VIDEO_WIDGET_PROPERTIES, NULL));

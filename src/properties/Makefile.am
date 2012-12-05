@@ -5,8 +5,9 @@ libbaconvideowidgetproperties_la_SOURCES = \
 	bacon-video-widget-properties.h \
 	$(NULL)
 
-libbaconvideowidgetproperties_la_CPPFLAGS = \
-	-I$(top_srcdir)/src/ \
+libbaconvideowidgetproperties_la_CPPFLAGS =	\
+	-I$(top_srcdir)/src/			\
+	-DDATADIR=\""$(datadir)/totem/"\"	\
 	$(AM_CPPFLAGS)
 
 libbaconvideowidgetproperties_la_CFLAGS = \
