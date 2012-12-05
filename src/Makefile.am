@@ -224,7 +224,6 @@ libtotem_properties_page_la_LDFLAGS = \
 
 libtotem_properties_page_la_LIBADD =				\
 	properties/libbaconvideowidgetproperties.la		\
-	libtotem_player.la					\
 	$(NAUTILUS_LIBS)
 
 noinst_PROGRAMS = test-properties-page
