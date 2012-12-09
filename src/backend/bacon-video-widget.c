@@ -1710,7 +1710,7 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
                                    GST_TAG_MERGE_REPLACE);
   if (bvw->priv->tagcache)
-    gst_tag_list_free (bvw->priv->tagcache);
+    gst_tag_list_unref (bvw->priv->tagcache);
   bvw->priv->tagcache = result;
 
   /* media-type-specific tags */
@@ -1723,13 +1723,13 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   if (cache) {
     result = gst_tag_list_merge (*cache, tag_list, GST_TAG_MERGE_REPLACE);
     if (*cache)
-      gst_tag_list_free (*cache);
+      gst_tag_list_unref (*cache);
     *cache = result;
   }
 
   /* clean up */
   if (tag_list)
-    gst_tag_list_free (tag_list);
+    gst_tag_list_unref (tag_list);
 
   bvw_check_for_cover_pixbuf (bvw);
 
@@ -2972,7 +2972,7 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
       } else {
 	  ret = g_list_prepend (ret, g_strdup_printf (_(text), num++));
       }
-      gst_tag_list_free (tags);
+      gst_tag_list_unref (tags);
     } else {
       ret = g_list_prepend (ret, g_strdup_printf (_(text), num++));
     }
@@ -4453,7 +4453,7 @@ static void
 add_longname (GstElementFactory *f, GHashTable *ht)
 {
   g_hash_table_insert (ht,
-		       (gpointer) gst_element_factory_get_longname (f),
+		       (gpointer) gst_element_factory_get_metadata (f, GST_ELEMENT_METADATA_LONGNAME),
 		       (gpointer) gst_plugin_feature_get_name (GST_PLUGIN_FEATURE (f)));
 }
 
@@ -4641,12 +4641,13 @@ bacon_video_widget_set_show_visualizations (BaconVideoWidget * bvw,
 static gboolean
 filter_features (GstPluginFeature * feature, gpointer data)
 {
-  GstElementFactory *f;
+  const gchar *element_type;
 
   if (!GST_IS_ELEMENT_FACTORY (feature))
     return FALSE;
-  f = GST_ELEMENT_FACTORY (feature);
-  if (!g_strrstr (gst_element_factory_get_klass (f), "Visualization"))
+  element_type = gst_element_factory_get_metadata (GST_ELEMENT_FACTORY (feature),
+                                                   GST_ELEMENT_METADATA_KLASS);
+  if (!g_strrstr (element_type, "Visualization"))
     return FALSE;
 
   return TRUE;
@@ -5472,7 +5473,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       /* try to get this from the stream info first */
       if ((tags = bvw_get_tags_of_current_stream (bvw, "video"))) {
         res = gst_tag_list_get_string (tags, GST_TAG_CODEC, &string);
-	gst_tag_list_free (tags);
+	gst_tag_list_unref (tags);
       }
 
       /* if that didn't work, try the aggregated tags */
@@ -5488,7 +5489,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
       /* try to get this from the stream info first */
       if ((tags = bvw_get_tags_of_current_stream (bvw, "audio"))) {
         res = gst_tag_list_get_string (tags, GST_TAG_CODEC, &string);
-	gst_tag_list_free (tags);
+	gst_tag_list_unref (tags);
       }
 
       /* if that didn't work, try the aggregated tags */

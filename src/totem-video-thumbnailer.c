@@ -206,7 +206,7 @@ check_cover_for_stream (ThumbApp   *app,
 
 	pixbuf = totem_gst_tag_list_get_cover (tags);
 	if (!pixbuf) {
-		gst_tag_list_free (tags);
+		gst_tag_list_unref (tags);
 		return;
 	}
 
