@@ -626,7 +626,7 @@ dnl ********
 
 dnl Check for Nautilus property page build
 AC_ARG_ENABLE(nautilus,
-	AC_HELP_STRING([--enable-nautilus],[compile the nautilus plugin]),
+	AS_HELP_STRING([--enable-nautilus],[compile the nautilus plugin]),
 	[case "${enableval}" in
 	yes) ENABLE_NAUTILUS=yes ;;
 	no) ENABLE_NAUTILUS=no ;;
@@ -683,7 +683,7 @@ AC_SUBST(FULL_LIBEXECDIR)
 
 dnl run in source tree
 AC_ARG_ENABLE(run-in-source-tree,
-	      AC_HELP_STRING([--disable-run-in-source-tree],[disable search for UI files and plugins in local directory ]),
+	      AS_HELP_STRING([--disable-run-in-source-tree],[disable search for UI files and plugins in local directory ]),
 	[case "${enableval}" in
 	yes) ENABLE_RUN_IN_SOURCE_TREE=yes ;;
 	no)  ENABLE_RUN_IN_SOURCE_TREE=no ;;
@@ -709,7 +709,7 @@ AC_SUBST([AM_CFLAGS])
 AC_SUBST([AM_CXXFLAGS])
 AC_SUBST([AM_LDFLAGS])
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 totem.spec
 src/Makefile
@@ -762,6 +762,7 @@ docs/Makefile
 docs/reference/Makefile
 docs/reference/version.xml
 ])
+AC_OUTPUT
 
 AC_MSG_NOTICE([Totem was configured with the following options:])
 AC_MSG_NOTICE([** Using the GStreamer-$GST_MAJORMINOR backend])
