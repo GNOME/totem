@@ -15,6 +15,8 @@ AC_INIT([totem],
 AM_MAINTAINER_MODE([enable])
 AC_CONFIG_SRCDIR([src/totem.c])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
 
 AM_INIT_AUTOMAKE([1.11 dist-xz tar-ustar no-dist-gzip check-news])
 
