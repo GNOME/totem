@@ -794,7 +794,7 @@ about_action_callback (GtkAction *action, Totem *totem)
 				     "license", license,
 				     "wrap-license", TRUE,
 				     "website-label", _("Totem Website"),
-				     "website", "http://projects.gnome.org/totem/",
+				     "website", PACKAGE_URL,
 				     NULL);
 	g_free (license);
 }

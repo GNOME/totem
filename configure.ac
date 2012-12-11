@@ -1,4 +1,4 @@
-AC_PREREQ(2.52)
+AC_PREREQ[(2.64)]
 
 m4_define(totem_version_major, 3)
 m4_define(totem_version_minor, 7)
@@ -10,7 +10,9 @@ m4_define(totem_api_version_minor, 0)
 
 AC_INIT([totem],
         [totem_version_major.totem_version_minor.totem_version_micro],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=totem])
+        [http://bugzilla.gnome.org/enter_bug.cgi?product=totem],
+        [totem],
+        [http://projects.gnome.org/totem/])
 
 AM_MAINTAINER_MODE([enable])
 AC_CONFIG_SRCDIR([src/totem.c])
