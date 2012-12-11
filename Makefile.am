@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
 NORMAL_SUBDIRS = po data help src docs
 SUBDIRS = $(NORMAL_SUBDIRS)
 
