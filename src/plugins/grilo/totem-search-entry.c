@@ -20,7 +20,7 @@
  */
 
 #include "totem-search-entry.h"
-#include "gd-tagged-entry.h"
+#include "libgd/gd-tagged-entry.h"
 
 G_DEFINE_TYPE (TotemSearchEntry, totem_search_entry, GTK_TYPE_BOX)
 
@@ -78,7 +78,7 @@ totem_search_entry_init (TotemSearchEntry *self)
 
 	/* Entry */
 	entry = GTK_WIDGET (gd_tagged_entry_new ());
-	gd_tagged_entry_set_button_visible (GD_TAGGED_ENTRY (entry), FALSE);
+	gd_tagged_entry_set_tag_button_visible (GD_TAGGED_ENTRY (entry), FALSE);
 	gtk_box_pack_start (GTK_BOX (self),
 			    entry,
 			    TRUE, TRUE, 0);
