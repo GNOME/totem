@@ -308,6 +308,12 @@ PKG_CHECK_MODULES(THUMBNAILER, gtk+-3.0 >= $GTK_REQS totem-plparser >= $TOTEM_PL
 PKG_CHECK_MODULES(PREVIEW, gstreamer-1.0 >= $GST_REQS gio-2.0 >= $GIO_REQS gdk-pixbuf-2.0)
 PKG_CHECK_MODULES(PROPERTIES, gtk+-3.0 >= $GTK_REQS)
 
+LIBGD_INIT([
+	tagged-entry
+	static
+ ])
+
+
 dnl ================================================================
 dnl Vala plugins
 dnl ================================================================
@@ -717,6 +723,7 @@ AC_SUBST([AM_LDFLAGS])
 AC_CONFIG_FILES([
 Makefile
 totem.spec
+libgd/Makefile
 src/Makefile
 src/gst/Makefile
 src/properties/Makefile

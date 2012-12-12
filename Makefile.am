@@ -1,6 +1,7 @@
-ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+ACLOCAL_AMFLAGS = -I m4 -I libgd ${ACLOCAL_FLAGS}
 
-NORMAL_SUBDIRS = po data help src docs
+NORMAL_SUBDIRS = libgd po data help src docs
+
 SUBDIRS = $(NORMAL_SUBDIRS)
 
 if ENABLE_BROWSER_PLUGINS

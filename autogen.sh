@@ -5,12 +5,16 @@ srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
 PKG_NAME="totem"
+ACLOCAL_FLAGS="-I libgd $ACLOCAL_FLAGS"
 
 (test -f $srcdir/configure.ac) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level $PKG_NAME directory"
     exit 1
 }
+
+echo "+ Setting up submodules"
+git submodule update --init --recursive
 
 which gnome-autogen.sh || {
 	echo "You need to install gnome-common from the GNOME SVN"
