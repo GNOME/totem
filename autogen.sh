@@ -17,7 +17,7 @@ echo "+ Setting up submodules"
 git submodule update --init --recursive
 
 which gnome-autogen.sh || {
-	echo "You need to install gnome-common from the GNOME SVN"
+	echo "You need to install gnome-common from the GNOME git"
 	exit 1
 }
 
