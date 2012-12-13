@@ -47,6 +47,7 @@
 #include <totem-time-helpers.h>
 
 #include "totem-search-entry.h"
+#include <libgd/gd.h>
 
 #define TOTEM_TYPE_GRILO_PLUGIN                                         \
 	(totem_grilo_plugin_get_type ())
@@ -147,12 +148,9 @@ enum {
 };
 
 enum {
-	MODEL_RESULTS_SOURCE = 0,
+	MODEL_RESULTS_SOURCE = GD_MAIN_COLUMN_LAST,
 	MODEL_RESULTS_CONTENT,
-	MODEL_RESULTS_THUMBNAIL,
 	MODEL_RESULTS_IS_PRETHUMBNAIL,
-	MODEL_RESULTS_DESCRIPTION,
-	MODEL_RESULTS_DURATION,
 	MODEL_RESULTS_PAGE,
 	MODEL_RESULTS_REMAINING,
 };
@@ -163,23 +161,18 @@ static void play (TotemGriloPlugin *self,
                   gboolean resolve_url);
 
 static gchar *
-get_description (GrlMedia *media)
+get_secondary_text (GrlMedia *media)
 {
-	const gchar *author;
+	const char *artist;
+	int duration;
 
-	author = grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_AUTHOR);
-	if (author == NULL) {
-		author = grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_ARTIST);
-	}
-
-	if (author != NULL) {
-		return g_markup_printf_escaped ("<b>%s</b>\n%s",
-		                                grl_media_get_title (media),
-		                                author);
-	} else {
-		return g_markup_printf_escaped ("<b>%s</b>",
-		                                grl_media_get_title (media));
-	}
+	artist = grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_ARTIST);
+	if (artist != NULL)
+		return g_strdup (artist);
+	duration = grl_media_get_duration (media);
+	if (duration > 0)
+		return totem_time_to_string (duration * 1000);
+	return NULL;
 }
 
 static GList *
@@ -285,7 +278,7 @@ get_stream_thumbnail_cb (GObject *source_object,
 	if (thumbnail) {
 		gtk_list_store_set (GTK_LIST_STORE (thumb_data->totem_grilo->priv->search_results_model),
 		                    &iter,
-		                    MODEL_RESULTS_THUMBNAIL, thumbnail,
+		                    GD_MAIN_COLUMN_ICON, thumbnail,
 		                    -1);
 		/* Cache it */
 		g_hash_table_insert (thumb_data->totem_grilo->priv->cache_thumbnails,
@@ -332,7 +325,7 @@ set_thumbnail_async (TotemGriloPlugin *self, GrlMedia *media, GtkTreePath *path,
 			gtk_tree_model_get_iter (self->priv->search_results_model, &iter, path);
 			gtk_list_store_set (GTK_LIST_STORE (self->priv->search_results_model),
 			                    &iter,
-			                    MODEL_RESULTS_THUMBNAIL, thumbnail,
+			                    GD_MAIN_COLUMN_ICON, thumbnail,
 			                    -1);
 		}
 	} else {
@@ -413,8 +406,8 @@ show_sources (TotemGriloPlugin *self)
 		                    &iter,
 		                    MODEL_RESULTS_SOURCE, source->data,
 		                    MODEL_RESULTS_CONTENT, NULL,
-		                    MODEL_RESULTS_DESCRIPTION, name,
-		                    MODEL_RESULTS_THUMBNAIL, icon,
+		                    GD_MAIN_COLUMN_PRIMARY_TEXT, name,
+		                    GD_MAIN_COLUMN_ICON, icon,
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
 		                    -1);
 		if (icon != NULL) {
@@ -432,9 +425,6 @@ browse_cb (GrlSource *source,
            gpointer user_data,
            const GError *error)
 {
-	gchar *description;
-	gchar *pretty_duration;
-	gint duration;
 	GtkTreeIter iter;
 	GdkPixbuf *thumbnail;
 	BrowseUserData *bud;
@@ -466,31 +456,26 @@ browse_cb (GrlSource *source,
 		                    -1);
 		/* Filter images */
 		if (GRL_IS_MEDIA_IMAGE (media) == FALSE) {
+			char *secondary;
+
 			thumbnail = get_icon (self, media, THUMB_BROWSE_SIZE);
-			description = get_description (media);
-			duration = grl_media_get_duration (media);
-			if (duration > 0) {
-				pretty_duration = totem_time_to_string (duration * 1000);
-			} else {
-				pretty_duration = NULL;
-			}
+			secondary = get_secondary_text (media);
 
 			gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent);
 			gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
 			                    &iter,
 			                    MODEL_RESULTS_SOURCE, source,
 			                    MODEL_RESULTS_CONTENT, media,
-			                    MODEL_RESULTS_THUMBNAIL, thumbnail,
+			                    GD_MAIN_COLUMN_ICON, thumbnail,
 			                    MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-			                    MODEL_RESULTS_DESCRIPTION, description,
-			                    MODEL_RESULTS_DURATION, pretty_duration,
+			                    GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+			                    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 			                    -1);
 
 			if (thumbnail != NULL) {
 				g_object_unref (thumbnail);
 			}
-			g_free (description);
-			g_free (pretty_duration);
+			g_free (secondary);
 
 			path = gtk_tree_model_get_path (self->priv->browser_model, &parent);
 			gtk_tree_view_expand_row (GTK_TREE_VIEW (self->priv->browser), path, FALSE);
@@ -608,8 +593,6 @@ search_cb (GrlSource *source,
            gpointer user_data,
            const GError *error)
 {
-	gchar *description;
-	GtkTreeIter iter;
 	GdkPixbuf *thumbnail;
 	GtkWindow *window;
 	TotemGriloPlugin *self;
@@ -628,23 +611,24 @@ search_cb (GrlSource *source,
 		self->priv->search_remaining--;
 		/* Filter images */
 		if (GRL_IS_MEDIA_IMAGE (media) == FALSE) {
+			char *secondary;
 			thumbnail = get_icon (self, media, THUMB_SEARCH_SIZE);
-			description = get_description (media);
+			secondary = get_secondary_text (media);
 
-			gtk_list_store_append (GTK_LIST_STORE (self->priv->search_results_model), &iter);
-			gtk_list_store_set (GTK_LIST_STORE (self->priv->search_results_model),
-			                    &iter,
-			                    MODEL_RESULTS_SOURCE, source,
-			                    MODEL_RESULTS_CONTENT, media,
-			                    MODEL_RESULTS_THUMBNAIL, thumbnail,
-			                    MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-			                    MODEL_RESULTS_DESCRIPTION, description,
-			                    -1);
+			gtk_list_store_insert_with_values (GTK_LIST_STORE (self->priv->search_results_model),
+							   NULL, -1,
+							   MODEL_RESULTS_SOURCE, source,
+							   MODEL_RESULTS_CONTENT, media,
+							   GD_MAIN_COLUMN_ICON, thumbnail,
+							   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+							   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+							   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+							   -1);
 
 			if (thumbnail != NULL) {
 				g_object_unref (thumbnail);
 			}
-			g_free (description);
+			g_free (secondary);
 		}
 
 		g_object_unref (media);
@@ -864,10 +848,7 @@ source_added_cb (GrlRegistry *registry,
                  gpointer user_data)
 {
 	const gchar *name;
-	gchar *description;
-	GdkPixbuf *icon;
 	TotemGriloPlugin *self;
-	GtkTreeIter iter;
 	GrlSupportedOps ops;
 
 	if (source_is_blacklisted (source)) {
@@ -878,33 +859,35 @@ source_added_cb (GrlRegistry *registry,
 	}
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
-	icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
 	name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
+		GdkPixbuf *icon;
+		char *description;
+
+		icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
+
 		description = g_markup_printf_escaped ("<b>%s</b>", name);
-		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, NULL);
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
-		                    &iter,
-		                    MODEL_RESULTS_SOURCE, source,
-		                    MODEL_RESULTS_CONTENT, NULL,
-		                    MODEL_RESULTS_DESCRIPTION, description,
-		                    MODEL_RESULTS_THUMBNAIL, icon,
-		                    MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-		                    -1);
+		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
+						   NULL, NULL, -1,
+						   MODEL_RESULTS_SOURCE, source,
+						   MODEL_RESULTS_CONTENT, NULL,
+						   GD_MAIN_COLUMN_PRIMARY_TEXT, description,
+						   GD_MAIN_COLUMN_ICON, icon,
+						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+						   -1);
 		g_free (description);
+		if (icon != NULL) {
+			g_object_unref (icon);
+		}
 	}
 	if (ops & GRL_OP_SEARCH) {
 		/* FIXME:
 		 * Handle tracker/filesystem specifically, so that we have a "local" entry here */
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
 					       grl_source_get_id (source),
-					       grl_source_get_name (source),
+					       name,
 					       0); /* FIXME: Use correct priority */
-	}
-
-	if (icon != NULL) {
-		g_object_unref (icon);
 	}
 }
 
