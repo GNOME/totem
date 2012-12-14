@@ -87,7 +87,6 @@ const gchar *BLACKLIST_SOURCES[] = { "grl-filesystem",
 
 typedef enum {
 	ICON_BOX = 0,
-	ICON_AUDIO,
 	ICON_VIDEO,
 	ICON_DEFAULT
 } IconType;
@@ -243,8 +242,6 @@ get_icon (TotemGriloPlugin *self, GrlMedia *media, gint thumb_size)
 {
 	if (GRL_IS_MEDIA_BOX (media)) {
 		return load_icon (self, ICON_BOX, thumb_size);
-	} else if (GRL_IS_MEDIA_AUDIO (media)) {
-		return load_icon (self, ICON_AUDIO, thumb_size);
 	} else if (GRL_IS_MEDIA_VIDEO (media)) {
 		return load_icon (self, ICON_VIDEO, thumb_size);
 	} else {
@@ -446,6 +443,8 @@ browse_cb (GrlSource *source,
 	}
 
 	if (media != NULL) {
+		char *secondary;
+
 		gtk_tree_model_get_iter (self->priv->browser_model, &parent, gtk_tree_row_reference_get_path (bud->ref_parent));
 		gtk_tree_model_get (self->priv->browser_model, &parent,
 		                    MODEL_RESULTS_REMAINING, &remaining_expected,
@@ -455,37 +454,39 @@ browse_cb (GrlSource *source,
 		                    MODEL_RESULTS_REMAINING, &remaining_expected,
 		                    -1);
 		/* Filter images */
-		if (GRL_IS_MEDIA_IMAGE (media) == FALSE) {
-			char *secondary;
-
-			thumbnail = get_icon (self, media, THUMB_BROWSE_SIZE);
-			secondary = get_secondary_text (media);
-
-			gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent);
-			gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
-			                    &iter,
-			                    MODEL_RESULTS_SOURCE, source,
-			                    MODEL_RESULTS_CONTENT, media,
-			                    GD_MAIN_COLUMN_ICON, thumbnail,
-			                    MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-			                    GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
-			                    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
-			                    -1);
-
-			if (thumbnail != NULL) {
-				g_object_unref (thumbnail);
-			}
-			g_free (secondary);
-
-			path = gtk_tree_model_get_path (self->priv->browser_model, &parent);
-			gtk_tree_view_expand_row (GTK_TREE_VIEW (self->priv->browser), path, FALSE);
-			gtk_tree_view_columns_autosize (GTK_TREE_VIEW (self->priv->browser));
-			gtk_tree_path_free (path);
+		if (GRL_IS_MEDIA_IMAGE (media) ||
+		    GRL_IS_MEDIA_AUDIO (media)) {
+			g_object_unref (media);
+			goto out;
 		}
 
+		thumbnail = get_icon (self, media, THUMB_BROWSE_SIZE);
+		secondary = get_secondary_text (media);
+
+		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent);
+		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
+				    &iter,
+				    MODEL_RESULTS_SOURCE, source,
+				    MODEL_RESULTS_CONTENT, media,
+				    GD_MAIN_COLUMN_ICON, thumbnail,
+				    MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+				    GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+				    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+				    -1);
+
+		if (thumbnail != NULL) {
+			g_object_unref (thumbnail);
+		}
+		g_free (secondary);
+
+		path = gtk_tree_model_get_path (self->priv->browser_model, &parent);
+		gtk_tree_view_expand_row (GTK_TREE_VIEW (self->priv->browser), path, FALSE);
+		gtk_tree_view_columns_autosize (GTK_TREE_VIEW (self->priv->browser));
+		gtk_tree_path_free (path);
 		g_object_unref (media);
 	}
 
+out:
 	if (remaining == 0) {
 		gtk_tree_row_reference_free (bud->ref_parent);
 		g_object_unref (bud->totem_grilo);
@@ -608,32 +609,36 @@ search_cb (GrlSource *source,
 	}
 
 	if (media != NULL) {
+		char *secondary;
+
 		self->priv->search_remaining--;
 		/* Filter images */
-		if (GRL_IS_MEDIA_IMAGE (media) == FALSE) {
-			char *secondary;
-			thumbnail = get_icon (self, media, THUMB_SEARCH_SIZE);
-			secondary = get_secondary_text (media);
-
-			gtk_list_store_insert_with_values (GTK_LIST_STORE (self->priv->search_results_model),
-							   NULL, -1,
-							   MODEL_RESULTS_SOURCE, source,
-							   MODEL_RESULTS_CONTENT, media,
-							   GD_MAIN_COLUMN_ICON, thumbnail,
-							   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-							   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
-							   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
-							   -1);
-
-			if (thumbnail != NULL) {
-				g_object_unref (thumbnail);
-			}
-			g_free (secondary);
+		if (GRL_IS_MEDIA_IMAGE (media) ||
+		    GRL_IS_MEDIA_AUDIO (media)) {
+			g_object_unref (media);
+			goto out;
 		}
 
+		thumbnail = get_icon (self, media, THUMB_SEARCH_SIZE);
+		secondary = get_secondary_text (media);
+
+		gtk_list_store_insert_with_values (GTK_LIST_STORE (self->priv->search_results_model),
+						   NULL, -1,
+						   MODEL_RESULTS_SOURCE, source,
+						   MODEL_RESULTS_CONTENT, media,
+						   GD_MAIN_COLUMN_ICON, thumbnail,
+						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+						   -1);
+
+		if (thumbnail != NULL)
+			g_object_unref (thumbnail);
+		g_free (secondary);
 		g_object_unref (media);
 	}
 
+out:
 	if (remaining == 0) {
 		self->priv->search_id = 0;
 		gtk_widget_set_sensitive (self->priv->search_entry, TRUE);
