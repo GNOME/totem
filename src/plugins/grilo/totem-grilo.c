@@ -868,20 +868,17 @@ source_added_cb (GrlRegistry *registry,
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
 		GdkPixbuf *icon;
-		char *description;
 
 		icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
 
-		description = g_markup_printf_escaped ("<b>%s</b>", name);
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
 						   NULL, NULL, -1,
 						   MODEL_RESULTS_SOURCE, source,
 						   MODEL_RESULTS_CONTENT, NULL,
-						   GD_MAIN_COLUMN_PRIMARY_TEXT, description,
+						   GD_MAIN_COLUMN_PRIMARY_TEXT, name,
 						   GD_MAIN_COLUMN_ICON, icon,
 						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
 						   -1);
-		g_free (description);
 		if (icon != NULL) {
 			g_object_unref (icon);
 		}
