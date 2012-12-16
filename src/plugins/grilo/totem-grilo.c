@@ -509,6 +509,7 @@ browse (TotemGriloPlugin *self,
 		grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
 		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
 		grl_operation_options_set_count (default_options, PAGE_SIZE);
+		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 
 		bud = g_slice_new (BrowseUserData);
 		bud->totem_grilo = g_object_ref (self);
