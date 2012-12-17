@@ -3505,19 +3505,20 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     path = NULL;
   } else if (g_file_has_uri_scheme (file, "trash") != FALSE ||
            g_file_has_uri_scheme (file, "recent") != FALSE) {
-    path = get_target_uri (file);
-    if (path == NULL)
+    path = NULL;
+    bvw->priv->mrl = get_target_uri (file);
+    if (bvw->priv->mrl == NULL)
       path = g_file_get_path (file);
     else
       GST_DEBUG ("Found target location '%s' for original MRL '%s'",
-		 GST_STR_NULL (path), mrl);
+		 GST_STR_NULL (bvw->priv->mrl), mrl);
   } else {
     path = g_file_get_path (file);
   }
   if (path) {
     bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
     g_free (path);
-  } else {
+  } else if (bvw->priv->mrl == NULL) {
     bvw->priv->mrl = g_strdup (mrl);
   }
 
