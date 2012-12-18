@@ -157,7 +157,7 @@ totem_gst_tag_list_get_cover_real (GstTagList *tag_list)
     GstSample *sample;
     GstCaps *caps;
     const GstStructure *caps_struct;
-    int type;
+    int type = GST_TAG_IMAGE_TYPE_UNDEFINED;
 
     if (!gst_tag_list_get_sample_index (tag_list, GST_TAG_IMAGE, i, &sample))
       break;
