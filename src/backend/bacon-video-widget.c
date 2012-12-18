@@ -53,11 +53,7 @@
 /* for detecting sources of errors */
 #include <gst/video/gstvideosink.h>
 #include <gst/video/video.h>
-#include <gst/audio/gstaudiosink.h>
-/* for pretty multichannel strings */
-#include <gst/audio/audio-channels.h>
-/* for the volume property */
-#include <gst/audio/streamvolume.h>
+#include <gst/audio/audio.h>
 
 /* for missing decoder/demuxer detection */
 #include <gst/pbutils/pbutils.h>
