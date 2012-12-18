@@ -496,12 +496,16 @@ browse (TotemGriloPlugin *self,
 	if (source != NULL) {
 		BrowseUserData *bud;
 		GrlOperationOptions *default_options;
+		GrlCaps *caps;
+
+		caps = grl_source_get_caps (source, GRL_OP_BROWSE);
 
 		default_options = grl_operation_options_new (NULL);
 		grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
 		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
 		grl_operation_options_set_count (default_options, PAGE_SIZE);
-		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
+		if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
+			grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 
 		bud = g_slice_new (BrowseUserData);
 		bud->totem_grilo = g_object_ref (self);
