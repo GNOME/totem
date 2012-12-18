@@ -71,7 +71,7 @@
 	"</ui>"
 
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
-#define RESOLVE_FLAGS 	      (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
+#define RESOLVE_FLAGS         (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define THUMB_SEARCH_SIZE     256
 #define THUMB_BROWSE_SIZE     32
@@ -87,8 +87,7 @@ const gchar *BLACKLIST_SOURCES[] = { "grl-filesystem",
 
 typedef enum {
 	ICON_BOX = 0,
-	ICON_VIDEO,
-	ICON_DEFAULT
+	ICON_VIDEO
 } IconType;
 
 typedef struct {
@@ -216,9 +215,7 @@ load_icon (TotemGriloPlugin *self, IconType icon_type, gint thumb_size)
 	GtkIconTheme *theme;
 
 	const gchar *icon_name[] = { GTK_STOCK_DIRECTORY,
-	                             "audio-x-generic",
-	                             "video-x-generic",
-	                             GTK_STOCK_FILE };
+	                             "video-x-generic" };
 
 	static GdkPixbuf *pixbuf[G_N_ELEMENTS(icon_name)] = { NULL };
 
@@ -230,11 +227,10 @@ load_icon (TotemGriloPlugin *self, IconType icon_type, gint thumb_size)
 		                                              thumb_size, 0, NULL);
 	}
 
-	if (pixbuf[icon_type] != NULL) {
+	if (pixbuf[icon_type] != NULL)
 		return g_object_ref (pixbuf[icon_type]);
-	} else {
+	else
 		return NULL;
-	}
 }
 
 static GdkPixbuf *
@@ -244,9 +240,8 @@ get_icon (TotemGriloPlugin *self, GrlMedia *media, gint thumb_size)
 		return load_icon (self, ICON_BOX, thumb_size);
 	} else if (GRL_IS_MEDIA_VIDEO (media)) {
 		return load_icon (self, ICON_VIDEO, thumb_size);
-	} else {
-		return load_icon (self, ICON_DEFAULT, thumb_size);
 	}
+	return NULL;
 }
 
 static void
@@ -349,9 +344,9 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 		for (;
 		     gtk_tree_path_compare (start_path, end_path) <= 0;
 		     gtk_tree_path_next (start_path)) {
-			if (gtk_tree_model_get_iter (self->priv->search_results_model, &iter, start_path) == FALSE) {
+
+			if (gtk_tree_model_get_iter (self->priv->search_results_model, &iter, start_path) == FALSE)
 				break;
-			}
 
 			gtk_tree_model_get (self->priv->search_results_model,
 			                    &iter,
@@ -395,7 +390,7 @@ show_sources (TotemGriloPlugin *self)
 	                                                  GRL_OP_BROWSE,
 	                                                  FALSE);
 
-	for (source = sources; source ; source = g_list_next (source)) {
+	for (source = sources; source ; source = source->next) {
 		icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
 		name = grl_source_get_name (source->data);
 		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, NULL);
@@ -407,9 +402,8 @@ show_sources (TotemGriloPlugin *self)
 		                    GD_MAIN_COLUMN_ICON, icon,
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
 		                    -1);
-		if (icon != NULL) {
-			g_object_unref (icon);
-		}
+
+		g_clear_object (&icon);
 	}
 	g_list_free (sources);
 }
@@ -474,9 +468,7 @@ browse_cb (GrlSource *source,
 				    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 				    -1);
 
-		if (thumbnail != NULL) {
-			g_object_unref (thumbnail);
-		}
+		g_clear_object (&thumbnail);
 		g_free (secondary);
 
 		path = gtk_tree_model_get_path (self->priv->browser_model, &parent);
@@ -698,9 +690,8 @@ search_more (TotemGriloPlugin *self)
 	}
 	g_object_unref (search_options);
 
-	if (self->priv->search_id == 0) {
+	if (self->priv->search_id == 0)
 		search_cb (self->priv->search_source, 0, NULL, 0, self, NULL);
-	}
 }
 
 static void
@@ -782,13 +773,9 @@ browser_activated_cb (GtkTreeView *tree_view,
 		browse (self, path, source, content, page);
 	}
 
- free_data:
-	if (source != NULL) {
-		g_object_unref (source);
-	}
-	if (content != NULL) {
-		g_object_unref (content);
-	}
+free_data:
+	g_clear_object (&source);
+	g_clear_object (&content);
 }
 
 static void
@@ -823,13 +810,8 @@ search_activated_cb (GtkIconView *icon_view,
 
 	play (TOTEM_GRILO_PLUGIN (user_data), source, content, TRUE);
 
-	if (source != NULL) {
-		g_object_unref (source);
-	}
-
-	if (content != NULL) {
-		g_object_unref (content);
-	}
+	g_clear_object (&source);
+	g_clear_object (&content);
 }
 
 static gboolean
@@ -839,9 +821,8 @@ source_is_blacklisted (GrlSource *source)
 	const gchar **s = BLACKLIST_SOURCES;
 
 	while (*s) {
-		if (g_strcmp0 (*s, id) == 0) {
+		if (g_strcmp0 (*s, id) == 0)
 			return TRUE;
-		}
 		s++;
 	}
 
@@ -880,9 +861,8 @@ source_added_cb (GrlRegistry *registry,
 						   GD_MAIN_COLUMN_ICON, icon,
 						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
 						   -1);
-		if (icon != NULL) {
-			g_object_unref (icon);
-		}
+
+		g_clear_object (&icon);
 	}
 	if (ops & GRL_OP_SEARCH) {
 		/* FIXME:
@@ -910,9 +890,8 @@ remove_browse_result (GtkTreeModel *model,
 
 	same_source = (model_source == removed_source);
 
-	if (same_source) {
+	if (same_source)
 		gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
-	}
 
 	g_object_unref (model_source);
 
@@ -988,9 +967,8 @@ show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 		/* Selection happened in browser view */
 		sel_tree = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-		if (gtk_tree_selection_get_selected (sel_tree, &model, &iter) == FALSE) {
+		if (gtk_tree_selection_get_selected (sel_tree, &model, &iter) == FALSE)
 			return FALSE;
-		}
 	} else {
 		/* Selection happened in search view */
 		sel_list = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (view));
@@ -1009,9 +987,8 @@ show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 	}
 
 	/* Get rid of previously selected media */
-	if (self->priv->selected_media != NULL) {
+	if (self->priv->selected_media != NULL)
 		g_object_unref (self->priv->selected_media);
-	}
 
 	gtk_tree_model_get (model, &iter,
 	                    MODEL_RESULTS_SOURCE, &source,
@@ -1025,9 +1002,8 @@ show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 		_time = gtk_get_current_event_time ();
 	}
 
-	if (self->priv->selected_media != NULL) {
+	if (self->priv->selected_media != NULL)
 		url = grl_media_get_url (self->priv->selected_media);
-	}
 
 	action = gtk_action_group_get_action (self->priv->action_group, "add-to-playlist");
 	gtk_action_set_sensitive (action, url != NULL);
@@ -1039,9 +1015,7 @@ show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 	                button, _time);
 
-	if (source != NULL) {
-		g_object_unref (source);
-	}
+	g_clear_object (&source);
 
 	return TRUE;
 }
@@ -1081,18 +1055,15 @@ adjustment_value_changed_cb (GtkAdjustment *adjustment,
 	update_search_thumbnails (self);
 
 	/* Do not get more results if search is in progress */
-	if (self->priv->search_id != 0) {
+	if (self->priv->search_id != 0)
 		return;
-	}
 
 	/* Do not get more results if there are no more results to get :) */
-	if (self->priv->search_remaining > 0) {
+	if (self->priv->search_remaining > 0)
 		return;
-	}
 
-	if (adjustment_over_limit (adjustment)) {
+	if (adjustment_over_limit (adjustment))
 		search_more (self);
-	}
 }
 
 static void
@@ -1116,9 +1087,8 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	gint remaining;
 	gboolean stop_processing = FALSE;
 
-	if (adjustment_over_limit (adjustment) == FALSE) {
+	if (adjustment_over_limit (adjustment) == FALSE)
 		return;
-	}
 
 	if (gtk_tree_view_get_visible_range (GTK_TREE_VIEW (self->priv->browser),
 	                                     &start_path, &end_path) == FALSE) {
@@ -1165,15 +1135,9 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		stop_processing = TRUE;
 
 	free_elements:
-		if (source != NULL) {
-			g_object_unref (source);
-		}
-		if (container != NULL) {
-			g_object_unref (container);
-		}
-		if (parent_path) {
-			gtk_tree_path_free (parent_path);
-		}
+		g_clear_object (&source);
+		g_clear_object (&container);
+		g_clear_pointer (&parent_path, gtk_tree_path_free);
 
 	continue_next:
 		stop_processing = stop_processing || (gtk_tree_path_prev (end_path) == FALSE);
@@ -1321,9 +1285,8 @@ setup_config (TotemGriloPlugin *self)
 	/* Setup system-wide plugins configuration */
 	config_file = totem_plugin_find_file ("grilo", TOTEM_GRILO_CONFIG_FILE);
 
-	if (g_file_test (config_file, G_FILE_TEST_EXISTS)) {
+	if (g_file_test (config_file, G_FILE_TEST_EXISTS))
 		grl_registry_add_config_from_file (registry, config_file, NULL);
-	}
 	g_free (config_file);
 
 	/* Setup user-defined plugins configuration */
@@ -1333,9 +1296,8 @@ setup_config (TotemGriloPlugin *self)
 	                            TOTEM_GRILO_CONFIG_FILE,
 	                            NULL);
 
-	if (g_file_test (config_file, G_FILE_TEST_EXISTS)) {
+	if (g_file_test (config_file, G_FILE_TEST_EXISTS))
 		grl_registry_add_config_from_file (registry, config_file, NULL);
-	}
 	g_free (config_file);
 }
 
