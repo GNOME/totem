@@ -54,6 +54,7 @@
 #include <gst/video/gstvideosink.h>
 #include <gst/video/video.h>
 #include <gst/audio/audio.h>
+#include <gst/audio/streamvolume.h>
 
 /* for missing decoder/demuxer detection */
 #include <gst/pbutils/pbutils.h>
