@@ -249,6 +249,7 @@ main (int argc, char **argv)
 #endif
 
 	g_type_init ();
+	gtk_init (&argc, &argv);
 
 	g_set_prgname ("totem");
 	g_set_application_name (_("Videos"));
