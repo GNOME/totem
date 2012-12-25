@@ -171,8 +171,8 @@ done
 
 dnl Check for elements from gst-plugins-good
 dnl Set plugins which contain below elements
-set -- autodetect goom
-for good_element in autoaudiosink goom
+set -- autodetect goom scaletempo
+for good_element in autoaudiosink goom scaletempo
 do
 	AC_MSG_CHECKING([GStreamer 1.0 $good_element element])
 	if $gst10_inspect $good_element >/dev/null 2>/dev/null; then
@@ -190,22 +190,6 @@ done
 dnl Check for elements from gst-plugins-bad
 dnl Set plugins which contain below elements
 PKG_CHECK_MODULES(GST_PLUGINS_BAD, gstreamer-plugins-bad-1.0 >= 1.0.2)
-
-set -- scaletempo
-for bad_element in scaletempo
-do
-	AC_MSG_CHECKING([GStreamer 1.0 $bad_element element])
-	if $gst10_inspect $bad_element >/dev/null 2>/dev/null; then
-		AC_MSG_RESULT([yes])
-	else
-		AC_MSG_RESULT([no])
-		AC_MSG_ERROR([
-			Cannot find required GStreamer-1.0 plugin '$1'.
-			It should be part of gst-plugins-bad. Please install it.
-		])
-	fi
-	shift;
-done
 
 dnl Check the smclient backend
 AC_MSG_CHECKING([which smclient backend to use])
