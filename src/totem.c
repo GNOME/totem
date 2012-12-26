@@ -32,6 +32,7 @@
 #include <glib-object.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <locale.h>
 #include <string.h>
 
 #ifdef GDK_WINDOWING_X11
@@ -235,6 +236,7 @@ main (int argc, char **argv)
 {
 	Totem *totem;
 
+	setlocale (LC_ALL, "");
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
@@ -249,7 +251,6 @@ main (int argc, char **argv)
 #endif
 
 	g_type_init ();
-	gtk_init (&argc, &argv);
 
 	g_set_prgname ("totem");
 	g_set_application_name (_("Videos"));
