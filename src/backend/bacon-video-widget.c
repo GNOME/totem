@@ -5487,8 +5487,10 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
   /* Remove line feeds */
   if (string && strstr (string, "\n") != NULL)
     g_strdelimit (string, "\n", ' ');
+  if (string != NULL)
+    string = g_strstrip (string);
 
-  if (res && string && g_utf8_validate (string, -1, NULL)) {
+  if (res && string && *string != '\0' && g_utf8_validate (string, -1, NULL)) {
     g_value_take_string (value, string);
     GST_DEBUG ("%s = '%s'", get_type_name (BVW_TYPE_METADATA_TYPE, type), string);
   } else {
