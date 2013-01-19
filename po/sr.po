@@ -1,19 +1,19 @@
 # Serbian translation of totem
-# Courtesy of Prevod.org team (http://prevod.org/) -- 2003 - 2009.
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003 - 2013.
 # This file is distributed under the same license as the totem package.
 # Maintainer: Милош Поповић <gpopac@gmail.com>
 # Prevous maintainer: Вељко М. Станојевић <veljko@vms.homelinux.net>
 # Reviewed on 2005-07-11 by Данило Шеган <danilo@gnome.org>
 # Reviewed on 2005-09-03 by Андрија Зарић <andrija@gmail.com>
 # Милош Поповић <gpopac@gmail.com>, 2010.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011, 2012.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&"
 "keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-17 09:30+0000\n"
-"PO-Revision-Date: 2012-07-29 15:53+0200\n"
+"POT-Creation-Date: 2012-12-04 18:54+0000\n"
+"PO-Revision-Date: 2013-01-19 23:04+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -73,7 +73,7 @@ msgstr "Прикључак за прегледање филмова"
 
 # andrija: непотпун превод, а тежак :)
 # данило: нити и безбедно, послужиће ;)
-#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:239
+#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:247
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Нисам успео да учитам библиотеке за безбедан рад са нитима."
 
@@ -257,11 +257,11 @@ msgstr "_Уклони"
 msgid "Remove file from playlist"
 msgstr "Уклоните датотеку из списка"
 
-#: ../data/playlist.ui.h:3 ../data/video-list.ui.h:3
+#: ../data/playlist.ui.h:3
 msgid "_Copy Location"
 msgstr "_Умножи путању"
 
-#: ../data/playlist.ui.h:4 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:4
 msgid "Copy the location to the clipboard"
 msgstr "Умножите путању међу исечке"
 
@@ -308,8 +308,8 @@ msgstr "Велико"
 msgid "Extra Large"
 msgstr "Веома велико"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5479
-#: ../src/totem-properties-view.c:231
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5518
+#: ../src/totem-properties-view.c:232
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -391,7 +391,7 @@ msgid "Disable screensaver when playing "
 msgstr "Искључи чувара екрана приликом пуштања "
 
 #: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:273
+#: ../src/totem-properties-view.c:275
 msgid "Video"
 msgstr "Видео"
 
@@ -448,7 +448,7 @@ msgid "_Audio output type:"
 msgstr "Врста _звучног излаза:"
 
 #: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:271
+#: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "Звук"
 
@@ -505,8 +505,8 @@ msgid "Channels:"
 msgstr "Канала:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:238
-#: ../src/totem.c:247 ../src/totem-menu.c:790 ../src/totem-object.c:1658
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:246
+#: ../src/totem.c:254 ../src/totem-menu.c:789 ../src/totem-object.c:1658
 msgid "Videos"
 msgstr "Видео снимци"
 
@@ -603,15 +603,17 @@ msgid "Fit Window to Movie"
 msgstr "Прилагоди прозор филму"
 
 #: ../data/totem.ui.h:22
-msgid "_Resize 1:2"
+#| msgid "_Resize 1:2"
+msgid "_Resize 1∶2"
 msgstr "_Величина 1:2"
 
 #: ../data/totem.ui.h:23
 msgid "Resize to half the original video size"
-msgstr "Промените на половину величине првобитног видеа"
+msgstr "Промените величину на половину величине првобитног видеа"
 
 #: ../data/totem.ui.h:24
-msgid "Resize _1:1"
+#| msgid "Resize _1:1"
+msgid "Resize _1∶1"
 msgstr "Величина _1:1"
 
 #: ../data/totem.ui.h:25
@@ -619,7 +621,8 @@ msgid "Resize to the original video size"
 msgstr "Промените величину на првобитну величину видеа"
 
 #: ../data/totem.ui.h:26
-msgid "Resize _2:1"
+#| msgid "Resize _2:1"
+msgid "Resize _2∶1"
 msgstr "Величина _2:1"
 
 #: ../data/totem.ui.h:27
@@ -772,28 +775,34 @@ msgid "Sets square aspect ratio"
 msgstr "Поставите квадратни однос висине и ширине"
 
 #: ../data/totem.ui.h:64
-msgid "4:3 (TV)"
+#| msgid "4:3 (TV)"
+msgid "4∶3 (TV)"
 msgstr "4:3 (ТВ)"
 
 #: ../data/totem.ui.h:65
-msgid "Sets 4:3 (TV) aspect ratio"
+#| msgid "Sets 4:3 (TV) aspect ratio"
+msgid "Sets 4∶3 (TV) aspect ratio"
 msgstr "Поставите однос висине и ширине на 4:3 (ТВ)"
 
 #: ../data/totem.ui.h:66
-msgid "16:9 (Widescreen)"
+#| msgid "16:9 (Widescreen)"
+msgid "16∶9 (Widescreen)"
 msgstr "16:9 (широки екран)"
 
 #: ../data/totem.ui.h:67
-msgid "Sets 16:9 (widescreen) aspect ratio"
+#| msgid "Sets 16:9 (widescreen) aspect ratio"
+msgid "Sets 16∶9 (widescreen) aspect ratio"
 msgstr "Поставите однос висине и ширине на 16:9 (широки екран)"
 
 #: ../data/totem.ui.h:68
-msgid "2.11:1 (DVB)"
+#| msgid "2.11:1 (DVB)"
+msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (ДВБ)"
 
 #: ../data/totem.ui.h:69
-msgid "Sets 2.11:1 (DVB) aspect ratio"
-msgstr "Поставите однос висине и ширине на 2,11:1 (ДВБ)"
+#| msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgid "Sets 2.11∶1 (DVB) aspect ratio"
+msgstr "Поставите однос висине и ширине на 2.11:1 (ДВБ)"
 
 #: ../data/totem.ui.h:70
 msgid "S_ubtitles"
@@ -835,82 +844,84 @@ msgstr "Трака протока времена"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Унесите _адресу датотеке коју желите да отворите:"
 
-#: ../data/video-list.ui.h:1 ../src/totem-dnd-menu.c:97
-msgid "_Add to Playlist"
-msgstr "_Додај на списак за пуштање"
-
-#: ../data/video-list.ui.h:2
-msgid "Add the video to the playlist"
-msgstr "Додајте видео на списак за пуштање"
-
-#: ../src/backend/bacon-video-widget.c:1641
+#: ../src/backend/bacon-video-widget.c:1643
 msgid "Password requested for RTSP server"
 msgstr "Захтевана је лозинка за РТСП сервер"
 
-#: ../src/backend/bacon-video-widget.c:2927
+#: ../src/backend/bacon-video-widget.c:2942
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Звучна нумера #%d"
 
-#: ../src/backend/bacon-video-widget.c:2931
+#: ../src/backend/bacon-video-widget.c:2946
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Превод #%d"
 
-#: ../src/backend/bacon-video-widget.c:3328
+#: ../src/backend/bacon-video-widget.c:3343
 msgid "The server you are trying to connect to is not known."
 msgstr "Није познат сервер на који покушавате да се повежете."
 
-#: ../src/backend/bacon-video-widget.c:3331
+#: ../src/backend/bacon-video-widget.c:3346
 msgid "The connection to this server was refused."
 msgstr "Веза са овим сервером је одбијена."
 
-#: ../src/backend/bacon-video-widget.c:3334
+#: ../src/backend/bacon-video-widget.c:3349
 msgid "The specified movie could not be found."
 msgstr "Не могу да нађем наведени филм."
 
-#: ../src/backend/bacon-video-widget.c:3341
+#: ../src/backend/bacon-video-widget.c:3356
 msgid "The server refused access to this file or stream."
 msgstr "Сервер је одбио приступ овој датотеци или току."
 
-#: ../src/backend/bacon-video-widget.c:3347
+#: ../src/backend/bacon-video-widget.c:3362
 msgid "Authentication is required to access this file or stream."
 msgstr "Потребно је потврђивање идентитета за приступ овој датотеци или току."
 
-#: ../src/backend/bacon-video-widget.c:3354
+#: ../src/backend/bacon-video-widget.c:3369
 msgid "You are not allowed to open this file."
 msgstr "Вама није дозвољено да отворите ову датотеку."
 
-#: ../src/backend/bacon-video-widget.c:3359
+#: ../src/backend/bacon-video-widget.c:3374
 msgid "This location is not a valid one."
 msgstr "Ова путања није исправна."
 
-#: ../src/backend/bacon-video-widget.c:3367
+#: ../src/backend/bacon-video-widget.c:3382
 msgid "The movie could not be read."
 msgstr "Филм не може бити прочитан."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3390
-#: ../src/backend/bacon-video-widget.c:3398
+#: ../src/backend/bacon-video-widget.c:3405
+#: ../src/backend/bacon-video-widget.c:3413
 #, c-format
+#| msgid ""
+#| "The playback of this movie requires a %s plugin which is not installed."
+#| msgid_plural ""
+#| "The playback of this movie requires the following decoders which are not "
+#| "installed:\n"
+#| "\n"
+#| "%s"
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
-"The playback of this movie requires the following decoders which are not "
+"The playback of this movie requires the following plugins which are not "
 "installed:\n"
 "\n"
 "%s"
-msgstr[0] "Пуштање овог филма захтева прикључак %s који није инсталиран."
+msgstr[0] "Пуштање овог филма захтева прикључак „%s“ који није инсталиран."
 msgstr[1] ""
-"Пуштање овог филма захтева следеће декодере који нису инсталирани:\n"
+"Пуштање овог филма захтева следеће прикључке који нису инсталирани:\n"
 "\n"
 "%s"
 msgstr[2] ""
-"Пуштање овог филма захтева следеће декодере који нису инсталирани:\n"
+"Пуштање овог филма захтева следеће прикључке који нису инсталирани:\n"
 "\n"
 "%s"
-msgstr[3] "прикључак"
+msgstr[3] ""
+"Пуштање овог филма захтева следећи прикључак који није инсталиран:\n"
+"\n"
+"%s"
 
-#: ../src/backend/bacon-video-widget.c:3409
+#: ../src/backend/bacon-video-widget.c:3424
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -919,7 +930,7 @@ msgstr ""
 "Мораћете да инсталирате додатне прикључке да бисте могли да пуштате неке "
 "врсте филмова"
 
-#: ../src/backend/bacon-video-widget.c:3419
+#: ../src/backend/bacon-video-widget.c:3434
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -927,19 +938,19 @@ msgstr ""
 "Не могу да пустим ову датотеку преко мреже. Покушајте да је прво пренесете "
 "на диск."
 
-#: ../src/backend/bacon-video-widget.c:5475 ../src/totem-properties-view.c:227
+#: ../src/backend/bacon-video-widget.c:5514 ../src/totem-properties-view.c:228
 msgid "Surround"
 msgstr "Окружење"
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:229
+#: ../src/backend/bacon-video-widget.c:5516 ../src/totem-properties-view.c:230
 msgid "Mono"
 msgstr "Моно"
 
-#: ../src/backend/bacon-video-widget.c:5762
+#: ../src/backend/bacon-video-widget.c:5801
 msgid "Media contains no supported video streams."
 msgstr "Датотека не садржи подржане видео токове."
 
-#: ../src/backend/bacon-video-widget.c:5944
+#: ../src/backend/bacon-video-widget.c:5983
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1193,17 +1204,17 @@ msgstr[3] "Један кадар у секунди"
 msgid "Audio Preview"
 msgstr "Звучни преглед"
 
-#: ../src/totem.c:239
+#: ../src/totem.c:247
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Проверите инсталацију система. Тотем ће се сада угасити."
-
-#: ../src/totem-cell-renderer-video.c:126
-msgid "Unknown video"
-msgstr "Непознат видео"
 
 #: ../src/totem-dnd-menu.c:94
 msgid "_Play Now"
 msgstr "_Пусти сада"
+
+#: ../src/totem-dnd-menu.c:97
+msgid "_Add to Playlist"
+msgstr "_Додај на списак за пуштање"
 
 #: ../src/totem-dnd-menu.c:103
 msgid "Cancel"
@@ -1279,11 +1290,11 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Сам одреди"
 
-#: ../src/totem-menu.c:789
+#: ../src/totem-menu.c:788
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Ауторска права © 2002–2009 Бастијен Носера"
 
-#: ../src/totem-menu.c:794
+#: ../src/totem-menu.c:792
 msgid "translator-credits"
 msgstr ""
 "Вељко Станојевић <veljko@vms.homelinux.net>\n"
@@ -1292,13 +1303,15 @@ msgstr ""
 "Слободан Д. Средојевић <slobo@akrep.be>\n"
 "Милош Поповић <gpopac@gmail.com>\n"
 "Бранко Кокановић <branko.kokanovic@gmail.com>\n"
-"Превод.орг — превод на српски језик."
+"Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"\n"
+"http://prevod.org — превод на српски језик"
 
-#: ../src/totem-menu.c:798
+#: ../src/totem-menu.c:796
 msgid "Totem Website"
 msgstr "Веб сајт Тотема"
 
-#: ../src/totem-menu.c:829
+#: ../src/totem-menu.c:827
 msgid "Configure Plugins"
 msgstr "Подесите прикључке"
 
@@ -1503,7 +1516,7 @@ msgstr "Поставке"
 msgid "Select Subtitle Font"
 msgstr "Изаберите словни лик за преводе"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:269
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
 msgid "Audio/Video"
 msgstr "Звук/видео"
 
@@ -1537,13 +1550,13 @@ msgstr "%d x %d"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:219
+#: ../src/totem-properties-view.c:220
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "недоступно"
 
-#: ../src/totem-properties-view.c:239
+#: ../src/totem-properties-view.c:241
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "недоступно"
@@ -1765,14 +1778,10 @@ msgstr "Изаберите филмове или спискове"
 msgid "Add Directory"
 msgstr "Додајте директоријум"
 
-#: ../src/totem-video-list.c:330
-msgid "No video URI"
-msgstr "Нема адресе видео снимка"
-
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:848
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1783,15 +1792,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:842
+#: ../src/totem-video-thumbnailer.c:849
 msgid "Filename"
 msgstr "Назив датотеке"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:851
 msgid "Resolution"
 msgstr "Резолуција"
 
-#: ../src/totem-video-thumbnailer.c:847
+#: ../src/totem-video-thumbnailer.c:854
 msgid "Duration"
 msgstr "Трајање"
 
@@ -2006,8 +2015,8 @@ msgid ""
 "Plugin for sending notifications of currently playing movies to the D-Bus "
 "subsystem."
 msgstr ""
-"Додатак за слање обавештења о тренутно пуштеном филму на подсистем "
-"Д-сабирнице."
+"Додатак за слање обавештења о тренутно пуштеном филму на подсистем Д-"
+"сабирнице."
 
 #: ../src/plugins/dbusservice/dbusservice.py:213
 #: ../src/plugins/dbusservice/dbusservice.py:243
@@ -2046,19 +2055,19 @@ msgstr "Додајте на списак за пуштање"
 msgid "Copy Location"
 msgstr "Умножи путању"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1184
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1220
 msgid "Browse"
 msgstr "Разгледај"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1227
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1263
 msgid "Search"
 msgstr "Тражи"
 
-#: ../src/plugins/grilo/totem-grilo.c:454
+#: ../src/plugins/grilo/totem-grilo.c:455
 msgid "Browse Error"
 msgstr "Грешка у разгледању"
 
-#: ../src/plugins/grilo/totem-grilo.c:609
+#: ../src/plugins/grilo/totem-grilo.c:624
 msgid "Search Error"
 msgstr "Грешка претраге"
 
@@ -2222,8 +2231,7 @@ msgid ""
 "remote access. If this is empty, a default of 'totem' will be used."
 msgstr ""
 "Лозинка за заштиту рпдб2 сервера за отклањање грешака Тотема од неовлашћеног "
-"удаљеног приступа. Ако је ово празно, подразумевано „totem“ ће се "
-"користити."
+"удаљеног приступа. Ако је ово празно, подразумевано „totem“ ће се користити."
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:1
 msgid "Python Console"
@@ -2403,19 +2411,19 @@ msgstr "Тотем није успео да направи снимак екра
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Ово није требало да се деси; молим пријавите грешку."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Take _Screenshot"
 msgstr "_Сними екран"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Take a screenshot"
 msgstr "Направите снимак екрана"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
 msgid "Create Screenshot _Gallery..."
 msgstr "Направи _збирку снимака екрана..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
 msgid "Create a gallery of screenshots"
 msgstr "Направите збирку снимака екрана"
 
