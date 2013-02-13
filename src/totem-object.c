@@ -446,7 +446,6 @@ totem_object_set_property (GObject *object,
 	switch (property_id) {
 		case PROP_REMEMBER_POSITION:
 			totem->remember_position = g_value_get_boolean (value);
-			g_object_notify (object, "remember-position");
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
