@@ -66,7 +66,6 @@ G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *tote
 G_MODULE_EXPORT void contents_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void about_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void plugins_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void show_controls_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
 G_MODULE_EXPORT void select_subtitle_action_callback (GtkAction *action, Totem *totem);
@@ -850,22 +849,6 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 	}
 
 	gtk_window_present (GTK_WINDOW (totem->plugins));
-}
-
-void
-show_controls_action_callback (GtkToggleAction *action, Totem *totem)
-{
-	gboolean show;
-
-	show = gtk_toggle_action_get_active (action);
-
-	/* Let's update our controls visibility */
-	if (show)
-		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-	else
-		totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
-
-	show_controls (totem, FALSE);
 }
 
 void

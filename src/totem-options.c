@@ -58,7 +58,6 @@ const GOptionEntry all_options[] = {
 	{"volume-down", '\0', 0, G_OPTION_ARG_NONE, &optionstate.volumedown, N_("Volume Down"), NULL},
 	{"mute", '\0', 0, G_OPTION_ARG_NONE, &optionstate.mute, N_("Mute sound"), NULL},
 	{"fullscreen", '\0', 0, G_OPTION_ARG_NONE, &optionstate.fullscreen, N_("Toggle Fullscreen"), NULL},
-	{"toggle-controls", '\0', 0, G_OPTION_ARG_NONE, &optionstate.togglecontrols, N_("Show/Hide Controls"), NULL},
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
@@ -98,9 +97,6 @@ totem_options_get_context (void)
 void
 totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
 {
-	if (options->togglecontrols)
-		totem_action_toggle_controls (totem);
-
 	/* Handle --playlist-idx */
 	totem->index = options->playlistidx;
 
@@ -218,11 +214,6 @@ totem_options_process_for_server (Totem                     *totem,
 	if (options->fullscreen) {
 		commands = g_list_append (commands, GINT_TO_POINTER
 					  (TOTEM_REMOTE_COMMAND_FULLSCREEN));
-	}
-
-	if (options->togglecontrols) {
-		commands = g_list_append (commands, GINT_TO_POINTER
-					  (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS));
 	}
 
 	/* No commands, no files, show ourselves */

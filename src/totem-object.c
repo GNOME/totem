@@ -912,7 +912,6 @@ totem_remote_command_get_type (void)
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_ENQUEUE, "enqueue"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_REPLACE, "replace"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_SHOW, "show"),
-			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS, "toggle-controls"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_UP, "up"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_DOWN, "down"),
 			ENUM_ENTRY (TOTEM_REMOTE_COMMAND_LEFT, "left"),
@@ -1455,14 +1454,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 
 		totem_fullscreen_set_fullscreen (totem->fs, FALSE);
 
-		action = gtk_action_group_get_action (totem->main_action_group,
-				"show-controls");
-
-		if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-			totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
-		else
-			totem->controls_visibility = TOTEM_CONTROLS_HIDDEN;
-
+		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
 		show_controls (totem, TRUE);
 	}
 
@@ -2810,7 +2802,6 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 void
 show_controls (TotemObject *totem, gboolean was_fullscreen)
 {
-	GtkAction *action;
 	GtkWidget *menubar, *controlbar, *statusbar, *bvw_box, *widget;
 	GtkAllocation allocation;
 	int width = 0, height = 0;
@@ -2824,8 +2815,6 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 	bvw_box = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
 	widget = GTK_WIDGET (totem->bvw);
 
-	action = gtk_action_group_get_action (totem->main_action_group, "show-controls");
-	gtk_action_set_sensitive (action, !totem_is_fullscreen (totem));
 	gtk_widget_get_allocation (widget, &allocation);
 
 	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
@@ -2878,11 +2867,6 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 					width, height);
 		}
 	} else {
-		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
-			width = allocation.width;
-			height = allocation.height;
-		}
-
 		/* Hide and make the menubar unsensitive */
 		gtk_widget_set_sensitive (menubar, FALSE);
 		gtk_widget_hide (menubar);
@@ -2893,34 +2877,7 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 
 		 /* We won't show controls in fullscreen */
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_box), 0);
-
-		if (totem->controls_visibility == TOTEM_CONTROLS_HIDDEN) {
-			gtk_window_resize (GTK_WINDOW(totem->win),
-					width, height);
-		}
 	}
-}
-
-/**
- * totem_action_toggle_controls:
- * @totem: a #TotemObject
- *
- * If Totem's not fullscreened, this toggles the state of the "Show Controls"
- * menu entry, and consequently shows or hides the controls in the UI.
- **/
-void
-totem_action_toggle_controls (TotemObject *totem)
-{
-	GtkAction *action;
-	gboolean state;
-
-	if (totem_is_fullscreen (totem) != FALSE)
-		return;
-
- 	action = gtk_action_group_get_action (totem->main_action_group,
- 		"show-controls");
- 	state = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
- 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), !state);
 }
 
 /**
@@ -3075,19 +3032,6 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		break;
 	case TOTEM_REMOTE_COMMAND_SHOW:
 		gtk_window_present_with_time (GTK_WINDOW (totem->win), GDK_CURRENT_TIME);
-		break;
-	case TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS:
-		if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN)
-		{
-			GtkToggleAction *action;
-			gboolean state;
-
-			action = GTK_TOGGLE_ACTION (gtk_action_group_get_action
-					(totem->main_action_group,
-					 "show-controls"));
-			state = gtk_toggle_action_get_active (action);
-			gtk_toggle_action_set_active (action, !state);
-		}
 		break;
 	case TOTEM_REMOTE_COMMAND_UP:
 		bacon_video_widget_dvd_event (totem->bvw,
@@ -3501,10 +3445,6 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_g:
 	case GDK_KEY_G:
 		totem_action_next_angle (totem);
-		break;
-	case GDK_KEY_h:
-	case GDK_KEY_H:
-		totem_action_toggle_controls (totem);
 		break;
 	case GDK_KEY_M:
 	case GDK_KEY_m:

@@ -58,7 +58,6 @@ G_BEGIN_DECLS
  * @TOTEM_REMOTE_COMMAND_ENQUEUE: enqueue a new playlist item
  * @TOTEM_REMOTE_COMMAND_REPLACE: replace an item in the playlist
  * @TOTEM_REMOTE_COMMAND_SHOW: show the Totem instance
- * @TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS: toggle the control visibility
  * @TOTEM_REMOTE_COMMAND_UP: go up (DVD controls)
  * @TOTEM_REMOTE_COMMAND_DOWN: go down (DVD controls)
  * @TOTEM_REMOTE_COMMAND_LEFT: go left (DVD controls)
@@ -91,7 +90,6 @@ typedef enum {
 	TOTEM_REMOTE_COMMAND_ENQUEUE,
 	TOTEM_REMOTE_COMMAND_REPLACE,
 	TOTEM_REMOTE_COMMAND_SHOW,
-	TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS,
 	TOTEM_REMOTE_COMMAND_UP,
 	TOTEM_REMOTE_COMMAND_DOWN,
 	TOTEM_REMOTE_COMMAND_LEFT,
@@ -219,7 +217,6 @@ gboolean totem_action_set_mrl_with_warning	(TotemObject *totem,
 void	totem_action_toggle_aspect_ratio	(TotemObject *totem);
 void	totem_action_set_aspect_ratio		(TotemObject *totem, int ratio);
 int	totem_action_get_aspect_ratio		(TotemObject *totem);
-void	totem_action_toggle_controls		(TotemObject *totem);
 void	totem_action_next_angle			(TotemObject *totem);
 
 void	totem_action_set_scale_ratio		(TotemObject *totem, gfloat ratio);

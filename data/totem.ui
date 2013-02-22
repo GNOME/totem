@@ -262,15 +262,6 @@
          </child>
 
          <child>
-            <object class="GtkToggleAction" id="show-controls">
-               <property name="label" translatable="yes">Show _Controls</property>
-               <property name="tooltip" translatable="yes">Show controls</property>
-               <property name="active">TRUE</property>
-               <signal name="activate" handler="show_controls_action_callback"/>
-            </object>
-            <accelerator key="H" modifiers="GDK_CONTROL_MASK"/>
-         </child>
-         <child>
                <object class="GtkToggleAction" id="sidebar">
                <property name="label" translatable="yes">S_idebar</property>
                <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
@@ -417,7 +408,6 @@
                <menuitem name="aspect-ratio-dvb" action="aspect-ratio-dvb"/>
             </menu>
             <menuitem name="next-angle" action="next-angle"/>
-	    <menuitem name="show-controls" action="show-controls"/>
             <separator/>
             <menu name="subtitles" action="subtitles-menu">
                <menuitem name="select-subtitle" action="select-subtitle"/>
@@ -460,7 +450,6 @@
          <menuitem name="previous-chapter" action="previous-chapter"/>
          <menuitem name="skip-forward" action="skip-forward"/>
          <menuitem name="skip-backwards" action="skip-backwards"/>
-         <menuitem name="show-controls" action="show-controls"/>
          <menuitem name="select-subtitle" action="select-subtitle"/>
          <separator/>
          <placeholder name="save-placeholder"/>
