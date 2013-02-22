@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-11 15:52+0000\n"
-"PO-Revision-Date: 2013-02-14 14:41+0100\n"
+"POT-Creation-Date: 2013-02-22 11:05+0000\n"
+"PO-Revision-Date: 2013-02-22 12:16+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -27,16 +27,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: Spanish\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1179
-#: ../src/totem-object.c:1649 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1178
+#: ../src/totem-object.c:1648 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "Detenido"
 
-#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1172
+#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1171
 msgid "Paused"
 msgstr "Pausa"
 
-#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1165
+#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1164
 msgid "Playing"
 msgstr "Reproduciendo"
 
@@ -62,7 +62,7 @@ msgstr "Reproductor de películas Totem"
 msgid "_Open with \"%s\""
 msgstr "_Abrir con «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2474
+#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2473
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
@@ -401,68 +401,69 @@ msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Desactivar _desentrelazado de vídeos entrelazados"
 
 #: ../data/preferences.ui.h:27
-#| msgid "Disable screensaver when playing "
 msgid "Disable screensaver when playing"
 msgstr "Desactivar salvapantallas al reproducir"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:275
+#: ../data/preferences.ui.h:28
+#| msgid "Video"
+msgctxt "Screensaver disable"
 msgid "Video"
-msgstr "Vídeo"
+msgstr "Vídeo"
 
-#: ../data/preferences.ui.h:29
+#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
+#: ../data/preferences.ui.h:30
 msgid "Video or Audio"
 msgstr "Vídeo o sonido"
 
-#: ../data/preferences.ui.h:30
+#: ../data/preferences.ui.h:31
 msgid "Visual Effects"
 msgstr "Efectos visuales"
 
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:32
 msgid "Show _visual effects when an audio file is played"
 msgstr "Mostrar efectos _visuales al reproducir un archivo de sonido"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:33
 msgid "_Type of visualization:"
 msgstr "_Tipo de visualización:"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:34
 msgid "Visualization _size:"
 msgstr "_Tamaño de visualización:"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:35
 msgid "Color Balance"
 msgstr "Balance de color"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:36
 msgid "_Brightness:"
 msgstr "_Brillo:"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:37
 msgid "Co_ntrast:"
 msgstr "Co_ntraste:"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:38
 msgid "Sat_uration:"
 msgstr "Sat_uración:"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:39
 msgid "_Hue:"
 msgstr "_Tono:"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:40
 msgid "Reset to _Defaults"
 msgstr "_Restablecer predeterminados"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:41
 msgid "Audio Output"
 msgstr "Salida de sonido"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:42
 msgid "_Audio output type:"
 msgstr "Tipo de salida de _sonido:"
 
-#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:43 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "Sonido"
@@ -495,6 +496,10 @@ msgstr "Comentario:"
 msgid "Container:"
 msgstr "Contenedor:"
 
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+msgid "Video"
+msgstr "Vídeo"
+
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Dimensiones:"
@@ -521,7 +526,7 @@ msgstr "Canales:"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:248
-#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1657
+#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1656
 msgid "Videos"
 msgstr "Vídeos"
 
@@ -1311,56 +1316,56 @@ msgstr ""
 "disponibles de la línea de comandos.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:590
+#: ../src/totem-object.c:589
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1167 ../src/totem-options.c:52
+#: ../src/totem-object.c:1166 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1174 ../src/totem-object.c:1184
+#: ../src/totem-object.c:1173 ../src/totem-object.c:1183
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1266 ../src/totem-object.c:1293
-#: ../src/totem-object.c:1786 ../src/totem-object.c:1941
+#: ../src/totem-object.c:1265 ../src/totem-object.c:1292
+#: ../src/totem-object.c:1785 ../src/totem-object.c:1940
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:1792
+#: ../src/totem-object.c:1791
 msgid "No error message"
 msgstr "Sin mensaje de error"
 
-#: ../src/totem-object.c:2132
+#: ../src/totem-object.c:2131
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:4018 ../src/totem-object.c:4020
+#: ../src/totem-object.c:4017 ../src/totem-object.c:4019
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:4027 ../src/totem-object.c:4029
+#: ../src/totem-object.c:4026 ../src/totem-object.c:4028
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
+#: ../src/totem-object.c:4036 ../src/totem-object.c:4038
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4050 ../src/totem-object.c:4052
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: ../src/totem-object.c:4183
+#: ../src/totem-object.c:4182
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem-object.c:4183
+#: ../src/totem-object.c:4182
 msgid "No reason."
 msgstr "No hay razón."
 
