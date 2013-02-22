@@ -1431,14 +1431,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 {
 	GAction *action;
 
-	if (event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) {
-		totem->maximised = (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
-		totem_action_set_sensitivity ("zoom-1-2", !totem->maximised);
-		totem_action_set_sensitivity ("zoom-1-1", !totem->maximised);
-		totem_action_set_sensitivity ("zoom-2-1", !totem->maximised);
-		return FALSE;
-	}
-
 	if ((event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN) == 0)
 		return FALSE;
 
@@ -2098,20 +2090,6 @@ int
 totem_action_get_aspect_ratio (TotemObject *totem)
 {
 	return (bacon_video_widget_get_aspect_ratio (totem->bvw));
-}
-
-/**
- * totem_action_set_scale_ratio:
- * @totem: a #TotemObject
- * @ratio: the scale ratio to use
- *
- * Sets the video scale ratio, as a float where, for example,
- * 1.0 is 1:1 and 2.0 is 2:1.
- **/
-void
-totem_action_set_scale_ratio (TotemObject *totem, gfloat ratio)
-{
-	bacon_video_widget_set_scale_ratio (totem->bvw, ratio);
 }
 
 void
@@ -3580,17 +3558,6 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_0:
 		if (event->state & GDK_CONTROL_MASK)
 			totem_action_set_zoom (totem, FALSE);
-		else
-			totem_action_set_scale_ratio (totem, 0.5);
-		break;
-	case GDK_KEY_onehalf:
-		totem_action_set_scale_ratio (totem, 0.5);
-		break;
-	case GDK_KEY_1:
-		totem_action_set_scale_ratio (totem, 1);
-		break;
-	case GDK_KEY_2:
-		totem_action_set_scale_ratio (totem, 2);
 		break;
 	case GDK_KEY_Menu:
 		totem_action_menu_popup (totem, 0);

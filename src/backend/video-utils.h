@@ -30,9 +30,3 @@
 
 void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
 void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
-
-gboolean totem_ratio_fits_screen (GtkWidget *widget,
-				  int video_width,
-				  int video_height,
-				  gfloat ratio);
-

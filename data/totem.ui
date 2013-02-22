@@ -117,27 +117,6 @@
             </object>
          </child>
          <child>
-            <object class="GtkAction" id="zoom-1-2">
-               <property name="label" translatable="yes">_Resize 1∶2</property>
-               <property name="tooltip" translatable="yes">Resize to half the original video size</property>
-               <signal name="activate" handler="zoom_1_2_action_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="zoom-1-1">
-               <property name="label" translatable="yes">Resize _1∶1</property>
-               <property name="tooltip" translatable="yes">Resize to the original video size</property>
-               <signal name="activate" handler="zoom_1_1_action_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="zoom-2-1">
-               <property name="label" translatable="yes">Resize _2∶1</property>
-               <property name="tooltip" translatable="yes">Resize to double the original video size</property>
-               <signal name="activate" handler="zoom_2_1_action_callback"/>
-            </object>
-         </child>
-         <child>
             <object class="GtkAction" id="aspect-ratio-menu">
                <property name="label" translatable="yes">_Aspect Ratio</property>
             </object>
@@ -393,11 +372,6 @@
             <menuitem name="plugins" action="plugins"/>
          </menu>
          <menu name="view" action="view-menu">
-            <menu name="zoom-window" action="zoom-window-menu">
-               <menuitem name="zoom-1-2" action="zoom-1-2"/>
-               <menuitem name="zoom-1-1" action="zoom-1-1"/>
-               <menuitem name="zoom-2-1" action="zoom-2-1"/>
-            </menu>
             <menuitem name="zoom-toggle" action="zoom-toggle"/>
             <separator/>
             <menu name="aspect-ratio" action="aspect-ratio-menu">

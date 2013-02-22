@@ -320,11 +320,6 @@ totem_setup_preferences (Totem *totem)
 	g_settings_bind (totem->settings, "remember-position", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "remember-position", totem, "remember-position", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
-	/* Auto-resize */
-	item = POBJ ("tpw_display_checkbutton");
-	g_settings_bind (totem->settings, "auto-resize", item, "active", G_SETTINGS_BIND_DEFAULT);
-	g_settings_bind (totem->settings, "auto-resize", bvw, "auto-resize", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
-
 	/* Screensaver audio locking */
 	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
 	if (lock_screensaver_on_audio != FALSE)

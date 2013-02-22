@@ -224,7 +224,6 @@ struct BaconVideoWidgetPrivate
   gboolean                     logo_mode;
   gboolean                     cursor_shown;
   gboolean                     fullscreen_mode;
-  gboolean                     auto_resize;
   gboolean                     uses_audio_fakesink;
   gdouble                      volume;
   gboolean                     is_menu;
@@ -234,8 +233,6 @@ struct BaconVideoWidgetPrivate
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
-  gboolean                     window_resized; /* Whether the window has already been resized
-						  for this media */
   gint                         movie_par_n; /* Movie pixel aspect ratio numerator */
   gint                         movie_par_d; /* Movie pixel aspect ratio denominator */
   gint                         video_width_pixels; /* Scaled movie width */
@@ -912,17 +909,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /**
-   * BaconVideoWidget:auto-resize:
-   *
-   * Whether to automatically resize the video widget to the video size when loading a new video.
-   **/
-  g_object_class_install_property (object_class, PROP_AUTO_RESIZE,
-                                   g_param_spec_boolean ("auto-resize", "Auto resize?",
-                                                         "Whether to automatically resize the video widget to the video size.", FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_STATIC_STRINGS));
-
-  /**
    * BaconVideoWidget:deinterlacing:
    *
    * Whether to automatically deinterlace videos.
@@ -1240,12 +1226,6 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     get_media_size (bvw, &w, &h);
     clutter_actor_set_size (bvw->priv->texture, w, h);
 
-    if (bvw->priv->auto_resize
-	&& !bvw->priv->fullscreen_mode
-	&& !bvw->priv->window_resized) {
-      bacon_video_widget_set_scale_ratio (bvw, 0.0);
-    }
-    bvw->priv->window_resized = TRUE;
     set_current_actor (bvw);
   } else {
     g_debug ("Unhandled application message %s", msg_name);
@@ -2633,9 +2613,6 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_VOLUME:
       bacon_video_widget_set_volume (bvw, g_value_get_double (value));
       break;
-    case PROP_AUTO_RESIZE:
-      bacon_video_widget_set_auto_resize (bvw, g_value_get_boolean (value));
-      break;
     case PROP_DEINTERLACING:
       bacon_video_widget_set_deinterlacing (bvw, g_value_get_boolean (value));
       break;
@@ -2704,9 +2681,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_DOWNLOAD_FILENAME:
       g_value_set_string (value, bvw->priv->download_filename);
-      break;
-    case PROP_AUTO_RESIZE:
-      g_value_set_boolean (value, bvw->priv->auto_resize);
       break;
     case PROP_DEINTERLACING:
       g_value_set_boolean (value, bacon_video_widget_get_deinterlacing (bvw));
@@ -3804,7 +3778,6 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->is_live = FALSE;
   bvw->priv->is_menu = FALSE;
   bvw->priv->has_angles = FALSE;
-  bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
 
   bvw->priv->current_time = 0;
@@ -4683,43 +4656,6 @@ bacon_video_widget_set_visualization_quality (BaconVideoWidget * bvw,
 }
 
 /**
- * bacon_video_widget_get_auto_resize:
- * @bvw: a #BaconVideoWidget
- *
- * Returns whether the widget will automatically resize to fit videos.
- *
- * Return value: %TRUE if the widget will resize, %FALSE otherwise
- **/
-gboolean
-bacon_video_widget_get_auto_resize (BaconVideoWidget * bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-
-  return bvw->priv->auto_resize;
-}
-
-/**
- * bacon_video_widget_set_auto_resize:
- * @bvw: a #BaconVideoWidget
- * @auto_resize: %TRUE to automatically resize for new videos, %FALSE otherwise
- *
- * Sets whether the widget should automatically resize to fit to new videos when
- * they are loaded. Changes to this will take effect when the next media file is
- * loaded.
- **/
-void
-bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
-                                    gboolean auto_resize)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  bvw->priv->auto_resize = auto_resize;
-
-  /* this will take effect when the next media file loads */
-  g_object_notify (G_OBJECT (bvw), "auto-resize");
-}
-
-/**
  * bacon_video_widget_set_aspect_ratio:
  * @bvw: a #BaconVideoWidget
  * @ratio: the new aspect ratio
@@ -4758,57 +4694,6 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 
   return bvw->priv->ratio_type;
-}
-
-/**
- * bacon_video_widget_set_scale_ratio:
- * @bvw: a #BaconVideoWidget
- * @ratio: the new scale ratio
- *
- * Sets the ratio by which the widget will scale videos when they are
- * displayed. If @ratio is set to <code class="literal">0</code>, the highest ratio possible will
- * be chosen.
- **/
-void
-bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
-{
-  GtkWidget *toplevel;
-  gint w, h;
-
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
-
-  GST_DEBUG ("ratio = %.2f", ratio);
-
-  if (!bvw->priv->media_has_video && bvw->priv->show_vfx) {
-    get_visualization_size (bvw, &w, &h, NULL, NULL);
-  } else {
-    get_media_size (bvw, &w, &h);
-  }
-
-  if (ratio == 0.0) {
-    if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 2.0))
-      ratio = 2.0;
-    else if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 1.0))
-      ratio = 1.0;
-    else if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 0.5))
-      ratio = 0.5;
-    else
-      return;
-  } else {
-    if (!totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, ratio)) {
-      GST_DEBUG ("movie doesn't fit on screen @ %.1fx (%dx%d)", w, h, ratio);
-      return;
-    }
-  }
-  w = (gfloat) w * ratio;
-  h = (gfloat) h * ratio;
-
-  GST_DEBUG ("setting preferred size %dx%d", w, h);
-
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
-  if (gtk_widget_is_toplevel (toplevel))
-    gtk_window_resize_to_geometry (GTK_WINDOW (toplevel), w, h);
 }
 
 /**
@@ -5956,7 +5841,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = FALSE;
-  bvw->priv->auto_resize = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
   clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), CLUTTER_COLOR_Black);

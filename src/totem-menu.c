@@ -47,9 +47,6 @@ G_MODULE_EXPORT void eject_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void properties_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_1_2_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_1_1_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_2_1_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_toggle_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void next_angle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void dvd_root_menu_action_callback (GtkAction *action, Totem *totem);
@@ -654,24 +651,6 @@ G_GNUC_NORETURN void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_exit (totem);
-}
-
-void
-zoom_1_2_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_set_scale_ratio (totem, 0.5);
-}
-
-void
-zoom_1_1_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_set_scale_ratio (totem, 1);
-}
-
-void
-zoom_2_1_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_set_scale_ratio (totem, 2);
 }
 
 void

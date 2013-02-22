@@ -179,10 +179,6 @@ void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
 						  gboolean show_cursor);
 gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
-gboolean bacon_video_widget_get_auto_resize	 (BaconVideoWidget *bvw);
-void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
-						  gboolean auto_resize);
-
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
@@ -355,9 +351,6 @@ void bacon_video_widget_set_aspect_ratio         (BaconVideoWidget *bvw,
 						  BvwAspectRatio ratio);
 BvwAspectRatio bacon_video_widget_get_aspect_ratio
 						 (BaconVideoWidget *bvw);
-
-void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
-						  float ratio);
 
 void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
 						  BvwZoomMode       mode);
