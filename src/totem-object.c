@@ -3403,6 +3403,9 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_a:
 		totem_action_toggle_aspect_ratio (totem);
 		break;
+	case GDK_KEY_AudioCycleTrack:
+		bacon_video_widget_set_next_language (totem->bvw);
+		break;
 	case GDK_KEY_AudioPrev:
 	case GDK_KEY_Back:
 	case GDK_KEY_B:
@@ -3420,6 +3423,7 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_F:
 		totem_action_fullscreen_toggle (totem);
 		break;
+	case GDK_KEY_CycleAngle:
 	case GDK_KEY_g:
 	case GDK_KEY_G:
 		totem_action_next_angle (totem);
@@ -3460,10 +3464,12 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		}
 		break;
 	case GDK_KEY_comma:
+	case GDK_KEY_FrameBack:
 		totem_action_pause (totem);
 		bacon_video_widget_step (totem->bvw, FALSE, NULL);
 		break;
 	case GDK_KEY_period:
+	case GDK_KEY_FrameForward:
 		totem_action_pause (totem);
 		bacon_video_widget_step (totem->bvw, TRUE, NULL);
 		break;
@@ -3481,6 +3487,9 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_R:
 	case GDK_KEY_ZoomIn:
 		totem_action_set_zoom (totem, TRUE);
+		break;
+	case GDK_KEY_Subtitle:
+		bacon_video_widget_set_next_subtitle (totem->bvw);
 		break;
 	case GDK_KEY_t:
 	case GDK_KEY_T:
@@ -3555,11 +3564,19 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		else
 			totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 		break;
+	case GDK_KEY_Select:
+		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
+			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_SELECT);
+		break;
+	case GDK_KEY_View:
+		totem_action_show_properties (totem);
+		break;
 	case GDK_KEY_0:
 		if (event->state & GDK_CONTROL_MASK)
 			totem_action_set_zoom (totem, FALSE);
 		break;
 	case GDK_KEY_Menu:
+	case GDK_KEY_Time:
 		totem_action_menu_popup (totem, 0);
 		break;
 	case GDK_KEY_F10:
