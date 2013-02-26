@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-11 15:52+0000\n"
-"PO-Revision-Date: 2013-02-22 03:55+0000\n"
+"POT-Creation-Date: 2013-02-22 11:05+0000\n"
+"PO-Revision-Date: 2013-02-26 07:29+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
 "Language: pa\n"
@@ -22,16 +22,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Bookmarks: 42,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1179
-#: ../src/totem-object.c:1649 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1178
+#: ../src/totem-object.c:1648 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "ਰੁਕਿਆ"
 
-#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1172
+#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1171
 msgid "Paused"
 msgstr "ਰੁਕਿਆ"
 
-#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1165
+#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1164
 msgid "Playing"
 msgstr "ਚੱਲ ਰਿਹਾ ਹੈ"
 
@@ -57,7 +57,7 @@ msgstr "ਟੋਟੇਮ ਮੂਵੀ ਪਲੇਅਰ"
 msgid "_Open with \"%s\""
 msgstr "\"%s\" ਨਾਲ ਖੋਲ੍ਹੋ(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2474
+#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2473
 msgid "An error occurred"
 msgstr "ਇੱਕ ਗਲਤੀ ਆਈ ਹੈ"
 
@@ -383,68 +383,69 @@ msgid "Disable _deinterlacing of interlaced videos"
 msgstr "ਇੰਟਰਲੇਸ ਵਿਡੀਓ ਲਈ ਡਿ-ਇੰਟਰਲੇਸ ਕਰਨ ਬੰਦ(_d)"
 
 #: ../data/preferences.ui.h:27
-#| msgid "Disable screensaver when playing "
 msgid "Disable screensaver when playing"
 msgstr "ਜਦੋਂ ਕੁਝ ਚੱਲ ਰਿਹਾ ਹੋਵੇ ਤਾਂ ਸਕਰੀਨ-ਸੇਵਰ ਬੰਦ ਰੱਖੋ"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:275
+#: ../data/preferences.ui.h:28
+#| msgid "Video"
+msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "ਵਿਡੀਓ"
 
-#: ../data/preferences.ui.h:29
+#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
+#: ../data/preferences.ui.h:30
 msgid "Video or Audio"
 msgstr "ਵਿਡੀਓ ਜਾਂ ਆਡੀਓ"
 
-#: ../data/preferences.ui.h:30
+#: ../data/preferences.ui.h:31
 msgid "Visual Effects"
 msgstr "ਦਿੱਖ ਪਰਭਾਵ"
 
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:32
 msgid "Show _visual effects when an audio file is played"
 msgstr "ਆਡੀਓ ਫਾਇਲ ਚਲਾਉਣ ਦੌਰਾਨ ਦਿੱਖ ਪਰਭਾਵ ਚਲਾਓ(_v)"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:33
 msgid "_Type of visualization:"
 msgstr "ਦਿੱਖ ਦੀ ਕਿਸਮ(_T):"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:34
 msgid "Visualization _size:"
 msgstr "ਦਿੱਖ ਅਕਾਰ(_s):"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:35
 msgid "Color Balance"
 msgstr "ਰੰਗ ਸੰਤੁਲਨ"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:36
 msgid "_Brightness:"
 msgstr "ਚਮਕ(_B):"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:37
 msgid "Co_ntrast:"
 msgstr "ਭਿੰਨਤਾ(_n):"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:38
 msgid "Sat_uration:"
 msgstr "ਸੰਤ੍ਰਿਪਤ(_u):"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:39
 msgid "_Hue:"
 msgstr "ਆਭਾ(_H):"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:40
 msgid "Reset to _Defaults"
 msgstr "ਡਿਫਾਲਟ ਮੁਡ਼-ਸੈੱਟ(_D)"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:41
 msgid "Audio Output"
 msgstr "ਆਡੀਓ ਆਉਟਪੁੱਟ"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:42
 msgid "_Audio output type:"
 msgstr "ਆਡੀਓ ਆਉਟਪੁੱਟ ਕਿਸਮ(_A):"
 
-#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:43 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "ਆਡੀਓ"
@@ -477,6 +478,10 @@ msgstr "ਟਿੱਪਣੀ:"
 msgid "Container:"
 msgstr "ਕੰਨਟੇਨਰ:"
 
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+msgid "Video"
+msgstr "ਵਿਡੀਓ"
+
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "ਮਾਪ:"
@@ -503,7 +508,7 @@ msgstr "ਚੈਨਲ:"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:248
-#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1657
+#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1656
 msgid "Videos"
 msgstr "ਵਿਡੀਓ"
 
@@ -603,7 +608,6 @@ msgid "Fit Window to Movie"
 msgstr "ਫਿਲਮ ਵਿੰਡੋ ਉੱਤੇ ਫਿੱਟ"
 
 #: ../data/totem.ui.h:22
-#| msgid "_Resize 1:2"
 msgid "_Resize 1∶2"
 msgstr "ਮੁੜ ਅਕਾਰ 1_:2"
 
@@ -612,7 +616,6 @@ msgid "Resize to half the original video size"
 msgstr "ਅਸਲੀ ਵਿਡੀਓ ਅਕਾਰ ਅੱਧਾ ਕਰੋ"
 
 #: ../data/totem.ui.h:24
-#| msgid "Resize _1:1"
 msgid "Resize _1∶1"
 msgstr "ਮੁੜ-ਅਕਾਰ _1:1"
 
@@ -621,7 +624,6 @@ msgid "Resize to the original video size"
 msgstr "ਅਸਲੀ ਵਿਡੀਓ ਸਾਈਜ਼ ਕਰੋ"
 
 #: ../data/totem.ui.h:26
-#| msgid "Resize _2:1"
 msgid "Resize _2∶1"
 msgstr "ਮੁੜ-ਅਕਾਰ _2:1"
 
@@ -775,32 +777,26 @@ msgid "Sets square aspect ratio"
 msgstr "ਅਕਾਰ ਅਨੁਪਾਤ ਵਰਗ ਦਿਓ"
 
 #: ../data/totem.ui.h:64
-#| msgid "4:3 (TV)"
 msgid "4∶3 (TV)"
 msgstr "੪:੩ (TV)"
 
 #: ../data/totem.ui.h:65
-#| msgid "Sets 4:3 (TV) aspect ratio"
 msgid "Sets 4∶3 (TV) aspect ratio"
 msgstr "4∶3 (TV) ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
 #: ../data/totem.ui.h:66
-#| msgid "16:9 (Widescreen)"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (ਚੌੜੀ-ਸਕਰੀਨ)"
 
 #: ../data/totem.ui.h:67
-#| msgid "Sets 16:9 (widescreen) aspect ratio"
 msgid "Sets 16∶9 (widescreen) aspect ratio"
 msgstr "16∶9 (ਵਾਇਡਸਕਰੀਨ) ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
 #: ../data/totem.ui.h:68
-#| msgid "2.11:1 (DVB)"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
 #: ../data/totem.ui.h:69
-#| msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgid "Sets 2.11∶1 (DVB) aspect ratio"
 msgstr "2.11∶1 (DVB) ਅਕਾਰ ਅਨੁਪਾਤ ਦਿਓ"
 
@@ -894,13 +890,6 @@ msgstr "ਮੂਵੀ ਪੜ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ ਹੈ।"
 #: ../src/backend/bacon-video-widget.c:3346
 #: ../src/backend/bacon-video-widget.c:3354
 #, c-format
-#| msgid ""
-#| "The playback of this movie requires a %s plugin which is not installed."
-#| msgid_plural ""
-#| "The playback of this movie requires the following decoders which are not "
-#| "installed:\n"
-#| "\n"
-#| "%s"
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following plugins which are not "
@@ -1307,56 +1296,56 @@ msgstr ""
 "ਪੂਰੀਆਂ ਕਮਾਂਡ ਲਾਈਨ ਚੋਣਂ ਦੀ ਲਿਸਟ ਵੇਖਣ ਵਾਸਤੇ '%s --help' ਚਲਾਉ।\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:590
+#: ../src/totem-object.c:589
 #, c-format
 msgid "Totem %s"
 msgstr "ਟੋਟੇਮ %s"
 
-#: ../src/totem-object.c:1167 ../src/totem-options.c:52
+#: ../src/totem-object.c:1166 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "ਰੁਕਿਆ"
 
-#: ../src/totem-object.c:1174 ../src/totem-object.c:1184
+#: ../src/totem-object.c:1173 ../src/totem-object.c:1183
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "ਚੱਲ ਰਿਹਾ ਹੈ"
 
-#: ../src/totem-object.c:1266 ../src/totem-object.c:1293
-#: ../src/totem-object.c:1786 ../src/totem-object.c:1941
+#: ../src/totem-object.c:1265 ../src/totem-object.c:1292
+#: ../src/totem-object.c:1785 ../src/totem-object.c:1940
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "ਟੋਟੇਮ '%s' ਨੂੰ ਚਲਾ ਨਹੀਂ ਸਕਦਾ ਹੈ।"
 
-#: ../src/totem-object.c:1792
+#: ../src/totem-object.c:1791
 msgid "No error message"
 msgstr "ਕੋਈ ਗਲਤੀ ਸੁਨੇਹਾ ਨਹੀਂ"
 
-#: ../src/totem-object.c:2132
+#: ../src/totem-object.c:2131
 msgid "Totem could not display the help contents."
 msgstr "ਟੋਟੇਮ ਸਹਾਇਤਾ ਅੰਸ਼ ਨਹੀਂ ਵੇਖਾ ਸਕਦਾ ਹੈ।"
 
-#: ../src/totem-object.c:4018 ../src/totem-object.c:4020
+#: ../src/totem-object.c:4017 ../src/totem-object.c:4019
 msgid "Previous Chapter/Movie"
 msgstr "ਪਿਛਲਾ ਚੈਪਟਰ/ਮੂਵੀ"
 
-#: ../src/totem-object.c:4027 ../src/totem-object.c:4029
+#: ../src/totem-object.c:4026 ../src/totem-object.c:4028
 msgid "Play / Pause"
 msgstr "ਚਲਾਓ / ਵਿਰਾਮ"
 
-#: ../src/totem-object.c:4037 ../src/totem-object.c:4039
+#: ../src/totem-object.c:4036 ../src/totem-object.c:4038
 msgid "Next Chapter/Movie"
 msgstr "ਅੱਗੇ ਚੈਪਟਰ/ਮੂਵੀ"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4050 ../src/totem-object.c:4052
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Fullscreen"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ"
 
-#: ../src/totem-object.c:4183
+#: ../src/totem-object.c:4182
 msgid "Totem could not startup."
 msgstr "ਟੋਟੇਮ ਸ਼ੁਰੂ ਨਹੀਂ ਹੋ ਸਕਿਆ ਹੈ।"
 
-#: ../src/totem-object.c:4183
+#: ../src/totem-object.c:4182
 msgid "No reason."
 msgstr "ਕੋਈ ਕਾਰਨ ਨਹੀਂ ਹੈ।"
 
