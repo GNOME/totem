@@ -1442,8 +1442,6 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);
 	} else {
-		GtkAction *action;
-
 		totem_fullscreen_set_fullscreen (totem->fs, FALSE);
 
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
