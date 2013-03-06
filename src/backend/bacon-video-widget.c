@@ -1248,35 +1248,46 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
   gboolean ret;
   gchar *uri;
   GError *error = NULL;
+  GError *err = NULL;
+  GstMessage *msg;
 
   ret = g_file_mount_enclosing_volume_finish (G_FILE (obj), res, &error);
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    return;
 
   g_clear_object (&bvw->priv->mount_cancellable);
   bvw->priv->mount_in_progress = FALSE;
 
-  g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
+  uri = g_strdup (bvw->priv->mrl);
 
   if (ret) {
+    GstState target_state;
 
     GST_DEBUG ("Mounting location '%s' successful", GST_STR_NULL (uri));
-    if (bvw->priv->target_state == GST_STATE_PLAYING)
-      bacon_video_widget_play (bvw, NULL);
-  } else {
-    GError *err = NULL;
-    GstMessage *msg;
-
-    GST_DEBUG ("Mounting location '%s' failed: %s", GST_STR_NULL (uri), error->message);
-
-    /* create a fake GStreamer error so we get a nice warning message */
-    err = g_error_new_literal (GST_RESOURCE_ERROR, GST_RESOURCE_ERROR_OPEN_READ, error->message);
-    msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, error->message);
-    g_error_free (err);
-    g_error_free (error);
-    err = bvw_error_from_gst_error (bvw, msg);
-    gst_message_unref (msg);
-    g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE);
-    g_error_free (err);
+    /* Save the expected pipeline state */
+    target_state = bvw->priv->target_state;
+    if (bacon_video_widget_open (bvw, uri, &error)) {
+        if (target_state == GST_STATE_PLAYING)
+          bacon_video_widget_play (bvw, NULL);
+        g_free (uri);
+        return;
+    }
   }
+
+  if (!ret)
+    GST_DEBUG ("Mounting location '%s' failed: %s", GST_STR_NULL (uri), error->message);
+  else
+    GST_DEBUG ("Failed to set '%s' back to playing: %s", GST_STR_NULL (uri), error->message);
+
+  /* create a fake GStreamer error so we get a nice warning message */
+  err = g_error_new_literal (GST_RESOURCE_ERROR, GST_RESOURCE_ERROR_OPEN_READ, error->message);
+  msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, error->message);
+  g_error_free (err);
+  g_error_free (error);
+  err = bvw_error_from_gst_error (bvw, msg);
+  gst_message_unref (msg);
+  g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE);
+  g_error_free (err);
 
   g_free (uri);
 }
@@ -1331,9 +1342,11 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     GFile *file;
     GMountOperation *mount_op;
     GtkWidget *toplevel;
-    gchar *uri;
+    GstState target_state;
+    const char *uri;
 
-    g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
+    val = gst_structure_get_value (structure, "uri");
+    uri = g_value_get_string (val);
 
     if (bvw->priv->mount_in_progress) {
       g_cancellable_cancel (bvw->priv->mount_cancellable);
@@ -1342,8 +1355,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     }
 
     GST_DEBUG ("Trying to mount location '%s'", GST_STR_NULL (uri));
-    g_free (uri);
-    
+
     toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
     if (toplevel == GTK_WIDGET (bvw) || !GTK_IS_WINDOW (toplevel))
       toplevel = NULL;
@@ -1356,7 +1368,10 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (file == NULL)
       goto done;
 
+    /* Save and restore the expected pipeline state */
+    target_state = bvw->priv->target_state;
     bacon_video_widget_stop (bvw);
+    bvw->priv->target_state = target_state;
 
     mount_op = gtk_mount_operation_new (toplevel ? GTK_WINDOW (toplevel) : NULL);
     bvw->priv->mount_in_progress = TRUE;
