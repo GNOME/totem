@@ -3875,12 +3875,14 @@ update_buttons (TotemObject *totem)
 
 	/* Previous */
 	has_item = bacon_video_widget_has_previous_track (totem->bvw) ||
-		totem_playlist_has_previous_mrl (totem->playlist);
+		totem_playlist_has_previous_mrl (totem->playlist) ||
+		totem_playlist_get_repeat (totem->playlist);
 	totem_action_set_sensitivity ("previous-chapter", has_item);
 
 	/* Next */
 	has_item = bacon_video_widget_has_next_track (totem->bvw) ||
-		totem_playlist_has_next_mrl (totem->playlist);
+		totem_playlist_has_next_mrl (totem->playlist) ||
+		totem_playlist_get_repeat (totem->playlist);
 	totem_action_set_sensitivity ("next-chapter", has_item);
 }
 

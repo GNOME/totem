@@ -2577,14 +2577,10 @@ totem_playlist_has_previous_mrl (TotemPlaylist *playlist)
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
-	if (playlist->priv->repeat != FALSE)
-		return TRUE;
-
-	if (playlist->priv->shuffle == FALSE)
-	{
+	if (playlist->priv->shuffle == FALSE) {
 		gtk_tree_model_get_iter (playlist->priv->model,
-				&iter,
-				playlist->priv->current);
+					 &iter,
+					 playlist->priv->current);
 
 		return gtk_tree_model_iter_previous (playlist->priv->model, &iter);
 	} else {
@@ -2605,14 +2601,10 @@ totem_playlist_has_next_mrl (TotemPlaylist *playlist)
 	if (update_current_from_playlist (playlist) == FALSE)
 		return FALSE;
 
-	if (playlist->priv->repeat != FALSE)
-		return TRUE;
-
-	if (playlist->priv->shuffle == FALSE)
-	{
+	if (playlist->priv->shuffle == FALSE) {
 		gtk_tree_model_get_iter (playlist->priv->model,
-				&iter,
-				playlist->priv->current);
+					 &iter,
+					 playlist->priv->current);
 
 		return gtk_tree_model_iter_next (playlist->priv->model, &iter);
 	} else {
@@ -2718,13 +2710,11 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 
 	totem_playlist_unset_playing (playlist);
 
-	if (playlist->priv->shuffle == FALSE)
-	{
+	if (playlist->priv->shuffle == FALSE) {
 		char *path;
 
 		path = gtk_tree_path_to_string (playlist->priv->current);
-		if (strcmp (path, "0") == 0)
-		{
+		if (g_str_equal (path, "0")) {
 			totem_playlist_set_at_end (playlist);
 			g_free (path);
 			return;
@@ -2735,7 +2725,8 @@ totem_playlist_set_previous (TotemPlaylist *playlist)
 				&iter,
 				playlist->priv->current);
 
-		gtk_tree_model_iter_previous (playlist->priv->model, &iter);
+		if (!gtk_tree_model_iter_previous (playlist->priv->model, &iter))
+			g_assert_not_reached ();
 		gtk_tree_path_free (playlist->priv->current);
 		playlist->priv->current = gtk_tree_model_get_path
 			(playlist->priv->model, &iter);
@@ -2774,7 +2765,8 @@ totem_playlist_set_next (TotemPlaylist *playlist)
 					 &iter,
 					 playlist->priv->current);
 
-		gtk_tree_model_iter_next (playlist->priv->model, &iter);
+		if (!gtk_tree_model_iter_next (playlist->priv->model, &iter))
+			g_assert_not_reached ();
 		gtk_tree_path_free (playlist->priv->current);
 		playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
 	} else {
