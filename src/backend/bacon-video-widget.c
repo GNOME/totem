@@ -2801,6 +2801,21 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   }
 }
 
+void
+bacon_video_widget_set_next_subtitle (BaconVideoWidget *bvw)
+{
+  int n_text;
+  int current_text;
+
+  g_object_get (bvw->priv->play, "current-text", &current_text, "n-text", &n_text, NULL);
+
+  current_text++;
+  if (current_text >= n_text)
+    current_text = -2;
+
+  bacon_video_widget_set_subtitle (bvw, current_text);
+}
+
 /**
  * bacon_video_widget_has_next_track:
  * @bvw: a #BaconVideoWidget
@@ -3028,6 +3043,21 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   /* so it updates its metadata for the newly-selected stream */
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+}
+
+void
+bacon_video_widget_set_next_language (BaconVideoWidget *bvw)
+{
+  int n_audio;
+  int current_audio;
+
+  g_object_get (bvw->priv->play, "current-audio", &current_audio, "n-audio", &n_audio, NULL);
+
+  current_audio++;
+  if (current_audio >= n_audio)
+    current_audio = -2;
+
+  bacon_video_widget_set_language (bvw, current_audio);
 }
 
 /**

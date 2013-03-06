@@ -417,11 +417,13 @@ GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_language              (BaconVideoWidget *bvw);
 void bacon_video_widget_set_language             (BaconVideoWidget *bvw,
 		                                  int language);
+void bacon_video_widget_set_next_language        (BaconVideoWidget *bvw);
 
 GList *bacon_video_widget_get_subtitles          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_subtitle              (BaconVideoWidget *bvw);
 void bacon_video_widget_set_subtitle             (BaconVideoWidget *bvw,
 		                                  int subtitle);
+void bacon_video_widget_set_next_subtitle        (BaconVideoWidget *bvw);
 
 gboolean bacon_video_widget_has_next_track	 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_has_previous_track	 (BaconVideoWidget *bvw);
