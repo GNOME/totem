@@ -76,7 +76,14 @@ gchar *	totem_cmml_convert_msecs_to_str (gint64 time_msecs);
 TotemCmmlClip * totem_cmml_clip_new (const gchar *title, const gchar *desc, gint64 start, GdkPixbuf *pixbuf);
 void totem_cmml_clip_free (TotemCmmlClip *clip);
 TotemCmmlClip * totem_cmml_clip_copy (TotemCmmlClip *clip);
-gint totem_cmml_read_file_async (TotemCmmlAsyncData *data);
+
+void totem_cmml_read_file (GFile               *file,
+			   GCancellable        *cancellable,
+			   GAsyncReadyCallback  callback,
+			   gpointer             user_data);
+GList *totem_cmml_read_file_finish (GFile        *file,
+				    GAsyncResult *res,
+				    GError      **error);
 gint totem_cmml_write_file_async (TotemCmmlAsyncData *data);
 
 #endif /* TOTEM_CMML_PARSER_H_ */

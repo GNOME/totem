@@ -607,55 +607,45 @@ totem_cmml_clip_copy (TotemCmmlClip *clip)
 }
 
 static void
-totem_cmml_read_file_result (GObject		*source_object,
-			     GAsyncResult	*result,
-			     gpointer		user_data)
+totem_cmml_read_file_cb (GObject	*source_object,
+			 GAsyncResult	*result,
+			 gpointer	 user_data)
 {
 	GError			*error = NULL;
 	xmlTextReaderPtr	reader;
 	TotemCmmlContext	*context;
-	TotemCmmlAsyncData	*data;
 	gint			ret;
 	gchar			*contents;
 	gsize			length;
+	gboolean		load_ret;
 
+	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
+	GList *list = NULL;
 
-	data = (TotemCmmlAsyncData *) user_data;
-	data->is_exists = TRUE;
-
-	g_file_load_contents_finish (G_FILE (source_object), result, &contents, &length, NULL, &error);
+	load_ret = g_file_load_contents_finish (G_FILE (source_object), result, &contents, &length, NULL, &error);
 	g_object_unref (source_object);
 
-	if (G_UNLIKELY (error != NULL)) {
-		if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND) ||
-		    g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED)) {
-			/* it's ok if file doesn't exist */
-			data->successful = TRUE;
-			data->is_exists = FALSE;
-		} else {
-			data->successful = FALSE;
-			data->error = g_strdup (error->message);
-			g_warning ("chapters: failed to load CMML file %s: %s", data->file, error->message);
-		}
+	if (!load_ret) {
+		g_simple_async_result_set_from_error (simple, error);
+		g_simple_async_result_complete_in_idle (simple);
+		g_object_unref (simple);
 		g_error_free (error);
-		(data->final) (data, NULL);
 		return;
 	}
 
 	/* parse in-memory xml data */
 	reader = xmlReaderForMemory (contents, length, "", NULL, 0);
 	if (G_UNLIKELY (reader == NULL)) {
-		g_warning ("chapters: failed to parse CMML file %s", data->file);
-		g_free (contents);
-		data->successful = FALSE;
-		data->error = g_strdup (_("Failed to parse CMML file"));
-		(data->final) (data, NULL);
+		g_simple_async_result_set_error (simple, G_IO_ERROR, G_IO_ERROR_FAILED,
+						 "Failed to parse CMML file");
+		g_simple_async_result_complete_in_idle (simple);
+		g_object_unref (simple);
 		return;
 	}
 
 	context = totem_cmml_context_new ();
 	context->reader = reader;
-	totem_cmml_context_set_callback (context, totem_cmml_read_clip_cb, &(data->list));
+	totem_cmml_context_set_callback (context, totem_cmml_read_clip_cb, &list);
 
 	ret = xmlTextReaderRead (reader);
 	while (ret == 1) {
@@ -669,32 +659,61 @@ totem_cmml_read_file_result (GObject		*source_object,
 	totem_cmml_context_free (context);
 
 	/* sort clips by time growth */
-	data->list = g_list_sort (data->list, (GCompareFunc) totem_cmml_compare_clips);
-	data->successful = TRUE;
-	(data->final) (data, NULL);
+	list = g_list_sort (list, (GCompareFunc) totem_cmml_compare_clips);
+
+	g_simple_async_result_set_op_res_gpointer (simple, list, NULL);
+	g_simple_async_result_complete_in_idle (simple);
+	g_object_unref (simple);
 }
 
 /**
- * totem_cmml_read_file_async:
- * @data: #TotemCmmlAsyncData structure with info needed
+ * totem_cmml_read_file:
+ * @file: a #GFile representing the file to read
+ * @cancellable: optional #GCancellable object, %NULL to ignore
+ * @callback: a #GAsyncReadyCallback to call when the request is satisfied.
+ * @user_data: the data to pass to callback function.
  *
- * Reads CMML file and parse it for clips in async way.
- *
- * Returns: 0 if no errors occurred while starting async reading, -1 otherwise.
+ * Reads and parses a CMML file asynchronously.
  **/
-gint
-totem_cmml_read_file_async (TotemCmmlAsyncData	*data)
+void
+totem_cmml_read_file (GFile               *file,
+		      GCancellable        *cancellable,
+		      GAsyncReadyCallback  callback,
+		      gpointer             user_data)
 {
-	GFile	*gio_file;
+	GSimpleAsyncResult *simple;
 
-	g_return_val_if_fail (data != NULL, -1);
-	g_return_val_if_fail (data->file != NULL, -1);
-	g_return_val_if_fail (data->list == NULL, -1);
-	g_return_val_if_fail (data->final != NULL, -1);
+	simple = g_simple_async_result_new (G_OBJECT (file),
+					    callback,
+					    user_data,
+					    totem_cmml_read_file);
 
-	gio_file = g_file_new_for_uri (data->file);
-	g_file_load_contents_async (gio_file, data->cancellable, totem_cmml_read_file_result, data);
-	return 0;
+	g_file_load_contents_async (file, cancellable, totem_cmml_read_file_cb, simple);
+}
+
+/**
+ * totem_ccml_read_file_finish:
+ * @file: a #GFile representing the file to read
+ * @res: a #GAsyncResult
+ * @error: a #GError, or %NULL
+ *
+ * Returns a list of parsed chapters or %NULL on error
+ **/
+GList *
+totem_cmml_read_file_finish (GFile        *file,
+			     GAsyncResult *res,
+			     GError      **error)
+{
+	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+
+	g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == totem_cmml_read_file);
+
+	if (g_simple_async_result_propagate_error (simple, error))
+		return NULL;
+
+	return g_simple_async_result_get_op_res_gpointer (simple);
 }
 
 static void
