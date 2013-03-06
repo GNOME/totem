@@ -319,7 +319,8 @@ totem_file_opened_result_cb (GObject      *source_object,
 	if (list == NULL) {
 		/* Ignore errors if file is not present */
 		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND) &&
-		    !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED)) {
+		    !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED) &&
+		    !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_MOUNTED)) {
 			totem_action_error (plugin->priv->totem, _("Error while reading file with chapters"),
 					    error->message);
 			g_error_free (error);
