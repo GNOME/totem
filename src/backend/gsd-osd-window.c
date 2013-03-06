@@ -314,7 +314,7 @@ load_pixbuf (GsdOsdDrawContext *ctx,
                                                           ctx->style,
                                                           NULL,
                                                           NULL);
-        gtk_icon_info_free (info);
+        g_object_unref (info);
 
         return pixbuf;
 }
