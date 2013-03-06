@@ -98,7 +98,7 @@ enum {
 };
 
 static void totem_file_opened_async_cb (TotemObject *totem, const gchar *uri, TotemChaptersPlugin *plugin);
-static void totem_file_opened_result_cb (gpointer data, gpointer user_data);
+static void totem_file_opened_result_cb (GObject *source_object, GAsyncResult *res, gpointer user_data);
 static void totem_file_closed_cb (TotemObject *totem, TotemChaptersPlugin *plugin);
 static void add_chapter_to_the_list (gpointer data, gpointer user_data);
 static void add_chapter_to_the_list_new (TotemChaptersPlugin *plugin, const gchar *title, gint64 time);
@@ -303,48 +303,47 @@ check_available_time (TotemChaptersPlugin	*plugin,
 }
 
 static void
-totem_file_opened_result_cb (gpointer	data,
-			     gpointer	user_data)
+totem_file_opened_result_cb (GObject      *source_object,
+			     GAsyncResult *res,
+			     gpointer      user_data)
 {
-	TotemCmmlAsyncData	*adata;
-	TotemChaptersPlugin	*plugin;
+	TotemChaptersPlugin *plugin = TOTEM_CHAPTERS_PLUGIN (user_data);
+	GError *error = NULL;
+	GList *list;
+	gboolean from_dialog;
+	gboolean is_exists;
 
-	g_return_if_fail (data != NULL);
+	is_exists = TRUE;
+	list = totem_cmml_read_file_finish (G_FILE (source_object), res, &error);
 
-	adata = (TotemCmmlAsyncData *) data;
-	plugin = TOTEM_CHAPTERS_PLUGIN (adata->user_data);
-
-	if (G_UNLIKELY (!adata->successful)) {
-		if (G_UNLIKELY (g_cancellable_is_cancelled (adata->cancellable))) {
-			/* if operation was cancelled due to plugin deactivation only clean up */
-			g_object_unref (adata->cancellable);
-			g_free (adata->file);
-			g_free (adata->error);
-			g_list_foreach (adata->list, (GFunc) totem_cmml_clip_free, NULL);
-			g_list_free (adata->list);
-			g_free (adata);
-			return;
-		} else
+	if (list == NULL) {
+		/* Ignore errors if file is not present */
+		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND) &&
+		    !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED)) {
 			totem_action_error (plugin->priv->totem, _("Error while reading file with chapters"),
-					    adata->error);
+					    error->message);
+			g_error_free (error);
+
+			set_no_data_visible (TRUE, TRUE, plugin);
+			return;
+		}
+		g_error_free (error);
+		is_exists = FALSE;
 	}
 
-	if (adata->is_exists && adata->from_dialog) {
+	from_dialog = GPOINTER_TO_INT(g_object_get_data (source_object, "from-dialog"));
+
+	if (from_dialog) {
 		g_free (plugin->priv->cmml_mrl);
-		plugin->priv->cmml_mrl = g_strdup (adata->file);
+		plugin->priv->cmml_mrl = g_file_get_uri (G_FILE (source_object));
 	}
 
-	g_list_foreach (adata->list, (GFunc) add_chapter_to_the_list, plugin);
-	g_list_foreach (adata->list, (GFunc) totem_cmml_clip_free, NULL);
-	g_list_free (adata->list);
+	g_list_foreach (list, (GFunc) add_chapter_to_the_list, plugin);
+	g_list_foreach (list, (GFunc) totem_cmml_clip_free, NULL);
+	g_list_free (list);
 
 	/* do not show tree if read operation failed */
-	set_no_data_visible (!adata->successful || !adata->is_exists, TRUE, plugin);
-
-	g_object_unref (adata->cancellable);
-	g_free (adata->file);
-	g_free (adata->error);
-	g_free (adata);
+	set_no_data_visible (!is_exists, TRUE, plugin);
 }
 
 static void
@@ -607,7 +606,7 @@ load_chapters_from_file (const gchar		*uri,
 			 gboolean		from_dialog,
 			 TotemChaptersPlugin	*plugin)
 {
-	TotemCmmlAsyncData	*data;
+	GFile *file;
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
@@ -616,27 +615,14 @@ load_chapters_from_file (const gchar		*uri,
 		g_object_unref (plugin->priv->cancellable[0]);
 	}
 
-	data = g_new0 (TotemCmmlAsyncData, 1);
-	/* do not forget to save this pointer in the result function */
-	data->file = g_strdup (uri);
-	data->final = totem_file_opened_result_cb;
-	data->user_data = (gpointer) plugin;
-	if (from_dialog)
-		data->from_dialog = TRUE;
+	file = g_file_new_for_uri (uri);
+	g_object_set_data (G_OBJECT (file), "from-dialog", GINT_TO_POINTER (from_dialog));
 	/* cancellable object shouldn't be finalized during result func */
 	plugin->priv->cancellable[0] = g_cancellable_new ();
 	g_object_add_weak_pointer (G_OBJECT (plugin->priv->cancellable[0]),
 				   (gpointer *) &(plugin->priv->cancellable[0]));
-	data->cancellable = plugin->priv->cancellable[0];
 
-	if (G_UNLIKELY (totem_cmml_read_file_async (data) < 0)) {
-		g_warning ("chapters: wrong parameters for reading CMML file, may be a bug");
-
-		set_no_data_visible (TRUE, TRUE, plugin);
-
-		g_object_unref (plugin->priv->cancellable[0]);
-		g_free (data);
-	}
+	totem_cmml_read_file (file, plugin->priv->cancellable[0], totem_file_opened_result_cb, plugin);
 }
 
 static void
