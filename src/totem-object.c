@@ -2250,9 +2250,11 @@ drag_motion_video_cb (GtkWidget      *widget,
                       guint           _time,
                       Totem          *totem)
 {
+	GdkDevice *device;
 	GdkModifierType mask;
 
-	gdk_window_get_pointer (gtk_widget_get_window (widget), NULL, NULL, &mask);
+	device = gdk_drag_context_get_device (context);
+	gdk_device_get_state (device, gtk_widget_get_window (widget), NULL, &mask);
 	if (mask & GDK_CONTROL_MASK) {
 		gdk_drag_status (context, GDK_ACTION_COPY, _time);
 	} else if (mask & GDK_MOD1_MASK || gdk_drag_context_get_suggested_action (context) == GDK_ACTION_ASK) {
@@ -2299,9 +2301,11 @@ drag_motion_playlist_cb (GtkWidget      *widget,
 			 guint           _time,
 			 Totem          *totem)
 {
+	GdkDevice *device;
 	GdkModifierType mask;
 
-	gdk_window_get_pointer (gtk_widget_get_window (widget), NULL, NULL, &mask);
+	device = gdk_drag_context_get_device (context);
+	gdk_device_get_state (device, gtk_widget_get_window (widget), NULL, &mask);
 
 	if (mask & GDK_MOD1_MASK || gdk_drag_context_get_suggested_action (context) == GDK_ACTION_ASK)
 		gdk_drag_status (context, GDK_ACTION_ASK, _time);
