@@ -2748,6 +2748,20 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   return subtitle;
 }
 
+static gboolean
+sublang_is_valid (int sublang,
+		  int n_sublang)
+{
+  if (sublang == -1 ||
+      sublang == -2)
+    return TRUE;
+  if (sublang < 0)
+    return FALSE;
+  if (sublang >= n_sublang)
+    return FALSE;
+  return TRUE;
+}
+
 /**
  * bacon_video_widget_set_subtitle:
  * @bvw: a #BaconVideoWidget
@@ -2761,11 +2775,14 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 {
   GstTagList *tags;
   gint flags;
+  gint n_text;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->priv->play != NULL);
 
-  g_object_get (bvw->priv->play, "flags", &flags, NULL);
+  g_object_get (bvw->priv->play, "flags", &flags, "n-text", &n_text, NULL);
+
+  g_return_if_fail (sublang_is_valid (subtitle, n_text));
 
   if (subtitle == -2) {
     flags &= ~GST_PLAY_FLAG_TEXT;
@@ -2984,9 +3001,14 @@ void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 {
   GstTagList *tags;
+  int n_lang;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->priv->play != NULL);
+
+  g_object_get (bvw->priv->play, "n-audio", &n_lang, NULL);
+
+  g_return_if_fail (sublang_is_valid (language, n_lang));
 
   if (language == -1)
     language = 0;
