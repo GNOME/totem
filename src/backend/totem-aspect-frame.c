@@ -383,6 +383,7 @@ totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
 				 gdouble           rotation)
 {
   g_return_if_fail (TOTEM_IS_ASPECT_FRAME (frame));
+  g_return_if_fail (fmod (rotation, 90.0) == 0.0);
 
   rotation = fmod (rotation, 360.0);
 
