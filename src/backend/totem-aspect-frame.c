@@ -142,7 +142,7 @@ totem_aspect_frame_set_rotation_internal (TotemAspectFrame *frame,
 					  gboolean          animate)
 {
   ClutterActor *actor;
-  gfloat w, h, center_x, center_y;
+  gfloat w, h;
   gdouble scale;
 
   g_return_if_fail (TOTEM_IS_ASPECT_FRAME (frame));
@@ -166,9 +166,6 @@ totem_aspect_frame_set_rotation_internal (TotemAspectFrame *frame,
       scale = 1.0;
     }
 
-  center_x = w * 0.5f;
-  center_y = h * 0.5f;
-
   actor = CLUTTER_ACTOR (frame);
 
   if (animate)
@@ -178,8 +175,8 @@ totem_aspect_frame_set_rotation_internal (TotemAspectFrame *frame,
     }
   /* FIXME: When animated, make sure that we go in the right direction,
    * otherwise we'll spin in the wrong direction going back to 0 from 270 */
-  clutter_actor_set_rotation (actor, CLUTTER_Z_AXIS, rotation, center_x, center_y, 0);
-  clutter_actor_set_scale_full (actor, scale, scale, center_x, center_y);
+  clutter_actor_set_rotation_angle (actor, CLUTTER_Z_AXIS, rotation);
+  clutter_actor_set_scale (actor, scale, scale);
 
   if (animate)
     clutter_actor_restore_easing_state (actor);
@@ -330,6 +327,7 @@ static void
 totem_aspect_frame_init (TotemAspectFrame *self)
 {
   self->priv = ASPECT_FRAME_PRIVATE (self);
+  clutter_actor_set_pivot_point (CLUTTER_ACTOR (self), 0.5f, 0.5f);
 }
 
 ClutterActor *
