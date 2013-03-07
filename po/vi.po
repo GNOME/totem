@@ -1,7 +1,7 @@
 # Vietnamese translation for Totem.
 # Copyright © 2009 GNOME i18n Project for Vietnamese.
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
-# Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007-2008,2011-2012.
+# Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007-2008,2011-2013.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2009.
 # Lê Kiến Trúc <afterlastangel@gmail.com>, 2009.
 #
@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-03-06 17:19+0000\n"
-"PO-Revision-Date: 2013-03-07 18:29+0700\n"
+"PO-Revision-Date: 2013-03-07 18:31+0700\n"
 "Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
 "Language: vi\n"
@@ -379,14 +379,10 @@ msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Tắt _bỏ xen kẻ phim"
 
 #: ../data/preferences.ui.h:27
-#, fuzzy
-#| msgid "Disable screensaver when playing "
 msgid "Disable screensaver when playing"
-msgstr "Tắt trình bảo vệ màn hình khi phát "
+msgstr "Tắt trình bảo vệ màn hình khi phát"
 
 #: ../data/preferences.ui.h:28
-#, fuzzy
-#| msgid "Video"
 msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "Phim"
@@ -606,30 +602,24 @@ msgid "Fit Window to Movie"
 msgstr "Khung cửa sổ vừa với phim"
 
 #: ../data/totem.ui.h:22
-#, fuzzy
-#| msgid "_Resize 1:2"
 msgid "_Resize 1∶2"
-msgstr "Đổ_i cỡ 1:2"
+msgstr "Đổ_i cỡ 1∶2"
 
 #: ../data/totem.ui.h:23
 msgid "Resize to half the original video size"
 msgstr "Chia đôi kích cỡ phim gốc"
 
 #: ../data/totem.ui.h:24
-#, fuzzy
-#| msgid "Resize _1:1"
 msgid "Resize _1∶1"
-msgstr "Đổi cỡ _1:1"
+msgstr "Đổi cỡ _1∶1"
 
 #: ../data/totem.ui.h:25
 msgid "Resize to the original video size"
 msgstr "Trở về kích cỡ phim gốc"
 
 #: ../data/totem.ui.h:26
-#, fuzzy
-#| msgid "Resize _2:1"
 msgid "Resize _2∶1"
-msgstr "Đổi cỡ _2:1"
+msgstr "Đổi cỡ _2∶1"
 
 #: ../data/totem.ui.h:27
 msgid "Resize to double the original video size"
@@ -781,40 +771,28 @@ msgid "Sets square aspect ratio"
 msgstr "Đặt tỷ lệ màn hình vuông"
 
 #: ../data/totem.ui.h:64
-#, fuzzy
-#| msgid "4:3 (TV)"
 msgid "4∶3 (TV)"
-msgstr "4:3 (TV)"
+msgstr "4∶3 (TV)"
 
 #: ../data/totem.ui.h:65
-#, fuzzy
-#| msgid "Sets 4:3 (TV) aspect ratio"
 msgid "Sets 4∶3 (TV) aspect ratio"
-msgstr "Đặt tỷ lệ màn hình 4:3 (TV)"
+msgstr "Đặt tỷ lệ màn hình 4∶3 (TV)"
 
 #: ../data/totem.ui.h:66
-#, fuzzy
-#| msgid "16:9 (Widescreen)"
 msgid "16∶9 (Widescreen)"
-msgstr "16:9 (Màn hình rộng)"
+msgstr "16∶9 (Màn hình rộng)"
 
 #: ../data/totem.ui.h:67
-#, fuzzy
-#| msgid "Sets 16:9 (widescreen) aspect ratio"
 msgid "Sets 16∶9 (widescreen) aspect ratio"
-msgstr "Đặt tỷ lệ màn hình 16:9 (màn hình rộng)"
+msgstr "Đặt tỷ lệ màn hình 16∶9 (màn hình rộng)"
 
 #: ../data/totem.ui.h:68
-#, fuzzy
-#| msgid "2.11:1 (DVB)"
 msgid "2.11∶1 (DVB)"
-msgstr "2.11:1 (DVB)"
+msgstr "2.11∶1 (DVB)"
 
 #: ../data/totem.ui.h:69
-#, fuzzy
-#| msgid "Sets 2.11:1 (DVB) aspect ratio"
 msgid "Sets 2.11∶1 (DVB) aspect ratio"
-msgstr "Đặt tỷ lệ màn hình 2.11:1 (DVB)"
+msgstr "Đặt tỷ lệ màn hình 2.11∶1 (DVB)"
 
 #: ../data/totem.ui.h:70
 msgid "S_ubtitles"
@@ -905,14 +883,7 @@ msgstr "Không đọc được phim này."
 #. should be exactly one missing thing (source or converter)
 #: ../src/backend/bacon-video-widget.c:3346
 #: ../src/backend/bacon-video-widget.c:3354
-#, fuzzy, c-format
-#| msgid ""
-#| "The playback of this movie requires a %s plugin which is not installed."
-#| msgid_plural ""
-#| "The playback of this movie requires the following decoders which are not "
-#| "installed:\n"
-#| "\n"
-#| "%s"
+#, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following plugins which are not "
