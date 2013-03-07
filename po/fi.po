@@ -12,16 +12,16 @@
 # Tommi Vainikainen <Tommi.Vainikainen@iki.fi>, 2003-2005, 2008-2009.
 # Ilkka Tuohela <hile@iki.fi>, 2002,2003,2005-2009.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008-2010.
-# Jiri Grönroos <jiri.gronroos@iki.fi>, 2012.
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-17 09:30+0000\n"
-"PO-Revision-Date: 2012-09-09 22:04+0300\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <>\n"
+"POT-Creation-Date: 2013-02-22 11:05+0000\n"
+"PO-Revision-Date: 2013-03-05 21:07+0200\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,58 +29,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1180
-#: ../src/totem-object.c:1650 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1178
+#: ../src/totem-object.c:1648 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "Pysäytetty"
 
-#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1173
+#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1171
 msgid "Paused"
 msgstr "Tauko"
 
-#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1166
+#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1164
 msgid "Playing"
 msgstr "Toistetaan"
 
-#: ../browser-plugin/totem-plugin-viewer.c:386
+#: ../browser-plugin/totem-plugin-viewer.c:385
 #: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "Toistetaan elokuvaa"
 
-#: ../browser-plugin/totem-plugin-viewer.c:443
+#: ../browser-plugin/totem-plugin-viewer.c:442
 msgid "No URI to play"
 msgstr "Soitettavaa URI:a ei annettu"
 
-#: ../browser-plugin/totem-plugin-viewer.c:676
-#: ../browser-plugin/totem-plugin-viewer.c:1700
+#: ../browser-plugin/totem-plugin-viewer.c:675
+#: ../browser-plugin/totem-plugin-viewer.c:1699
 msgid "Totem Movie Player"
 msgstr "Totem-elokuvasoitin"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1120
+#: ../browser-plugin/totem-plugin-viewer.c:1119
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Avaa sovelluksella ”%s”"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2475
+#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2473
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2033
+#: ../browser-plugin/totem-plugin-viewer.c:2032
 msgid "No playlist or playlist empty"
 msgstr "Soittolistaa ei ole tai se on tyhjä"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2128
+#: ../browser-plugin/totem-plugin-viewer.c:2127
 msgid "Movie browser plugin"
 msgstr "Elokuvaselainliitännäinen"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:239
+#: ../browser-plugin/totem-plugin-viewer.c:2143 ../src/totem.c:249
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144
+#: ../browser-plugin/totem-plugin-viewer.c:2143
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totemin liitännäinen suljetaan."
 
@@ -258,11 +258,11 @@ msgstr "_Poista"
 msgid "Remove file from playlist"
 msgstr "Poista tiedosto soittolistalta"
 
-#: ../data/playlist.ui.h:3 ../data/video-list.ui.h:3
+#: ../data/playlist.ui.h:3
 msgid "_Copy Location"
 msgstr "_Kopioi sijainti"
 
-#: ../data/playlist.ui.h:4 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:4
 msgid "Copy the location to the clipboard"
 msgstr "Kopioi sijainti leikepöydälle"
 
@@ -309,8 +309,8 @@ msgstr "Suuri"
 msgid "Extra Large"
 msgstr "Erityisen suuri"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5479
-#: ../src/totem-properties-view.c:231
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5461
+#: ../src/totem-properties-view.c:232
 msgid "Stereo"
 msgstr "Stereo"
 
@@ -388,68 +388,71 @@ msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Poista lomitettujen videoiden lomituksen poisto käytöstä"
 
 #: ../data/preferences.ui.h:27
-msgid "Disable screensaver when playing "
-msgstr "Estä näytönsäästäjä, kun toistetaan "
+#| msgid "Disable screensaver when playing "
+msgid "Disable screensaver when playing"
+msgstr "Estä näytönsäästäjä, kun toistetaan"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:273
+#: ../data/preferences.ui.h:28
+#| msgid "Video"
+msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "Video"
 
-#: ../data/preferences.ui.h:29
+#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
+#: ../data/preferences.ui.h:30
 msgid "Video or Audio"
 msgstr "Videoa tai ääntä"
 
-#: ../data/preferences.ui.h:30
+#: ../data/preferences.ui.h:31
 msgid "Visual Effects"
 msgstr "Visuaaliset tehosteet"
 
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:32
 msgid "Show _visual effects when an audio file is played"
 msgstr "Näytä _visuaalisia tehosteita soitettaessa ääntä"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:33
 msgid "_Type of visualization:"
 msgstr "Visualisoinnin _tyyppi:"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:34
 msgid "Visualization _size:"
 msgstr "Visualisointik_oko:"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:35
 msgid "Color Balance"
 msgstr "Väritasapaino"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:36
 msgid "_Brightness:"
 msgstr "_Kirkkaus:"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:37
 msgid "Co_ntrast:"
 msgstr "Ko_ntrasti:"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:38
 msgid "Sat_uration:"
 msgstr "_Kylläisyys:"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:39
 msgid "_Hue:"
 msgstr "_Sävy:"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:40
 msgid "Reset to _Defaults"
 msgstr "Palauta _oletusasetukset"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:41
 msgid "Audio Output"
 msgstr "Ääniulostulo"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:42
 msgid "_Audio output type:"
 msgstr "_Ääniulostulon tyyppi:"
 
-#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:271
+#: ../data/preferences.ui.h:43 ../data/properties.ui.h:14
+#: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "Ääni"
 
@@ -481,6 +484,10 @@ msgstr "Kommentti:"
 msgid "Container:"
 msgstr "Säiliö:"
 
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+msgid "Video"
+msgstr "Video"
+
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Mitat:"
@@ -506,29 +513,26 @@ msgid "Channels:"
 msgstr "Kanavat:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:238
-#: ../src/totem.c:247 ../src/totem-menu.c:790 ../src/totem-object.c:1658
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:248
+#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1656
 msgid "Videos"
 msgstr "Videot"
 
 #: ../data/totem.desktop.in.in.in.h:2
-#| msgid "Playing a movie"
 msgid "Play movies"
 msgstr "Toista elokuvia"
 
 #: ../data/totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr ""
-"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Elokuva;Filmi;Sarja;Soitin;lev"
-"y;"
+"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Elokuva;Filmi;Sarja;Soitin;"
+"levy;"
 
 #: ../data/totem.ui.h:1
-#| msgid "_Open..."
 msgid "_Open"
 msgstr "_Avaa"
 
 #: ../data/totem.ui.h:2
-#| msgid "Open _Location..."
 msgid "Open _Location"
 msgstr "Avaa _sijainti"
 
@@ -541,12 +545,10 @@ msgid "Prefere_nces"
 msgstr "_Asetukset"
 
 #: ../data/totem.ui.h:5
-#| msgid "Shuff_le Mode"
 msgid "Shuff_le"
 msgstr "_Satunnaistoisto"
 
 #: ../data/totem.ui.h:6
-#| msgid "_Repeat Mode"
 msgid "_Repeat"
 msgstr "Kertaus_tila"
 
@@ -611,7 +613,8 @@ msgid "Fit Window to Movie"
 msgstr "Sovita ikkuna elokuvalle"
 
 #: ../data/totem.ui.h:22
-msgid "_Resize 1:2"
+#| msgid "_Resize 1:2"
+msgid "_Resize 1∶2"
 msgstr "_Muuta kooksi 1:2"
 
 #: ../data/totem.ui.h:23
@@ -619,7 +622,8 @@ msgid "Resize to half the original video size"
 msgstr "Muuta kooksi puolet videon koosta"
 
 #: ../data/totem.ui.h:24
-msgid "Resize _1:1"
+#| msgid "Resize _1:1"
+msgid "Resize _1∶1"
 msgstr "Muuta kooksi _1:1"
 
 #: ../data/totem.ui.h:25
@@ -627,7 +631,8 @@ msgid "Resize to the original video size"
 msgstr "Muuta kooksi alkuperäinen videon koko"
 
 #: ../data/totem.ui.h:26
-msgid "Resize _2:1"
+#| msgid "Resize _2:1"
+msgid "Resize _2∶1"
 msgstr "Muuta kooksi _2:1"
 
 #: ../data/totem.ui.h:27
@@ -780,27 +785,33 @@ msgid "Sets square aspect ratio"
 msgstr "Aseta neliönmuotoinen kuvasuhde"
 
 #: ../data/totem.ui.h:64
-msgid "4:3 (TV)"
+#| msgid "4:3 (TV)"
+msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
 
 #: ../data/totem.ui.h:65
-msgid "Sets 4:3 (TV) aspect ratio"
+#| msgid "Sets 4:3 (TV) aspect ratio"
+msgid "Sets 4∶3 (TV) aspect ratio"
 msgstr "Asettaa kuvasuhteen 4:3 (TV)"
 
 #: ../data/totem.ui.h:66
-msgid "16:9 (Widescreen)"
+#| msgid "16:9 (Widescreen)"
+msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Laajakuva)"
 
 #: ../data/totem.ui.h:67
-msgid "Sets 16:9 (widescreen) aspect ratio"
+#| msgid "Sets 16:9 (widescreen) aspect ratio"
+msgid "Sets 16∶9 (widescreen) aspect ratio"
 msgstr "Asettaa kuvasuhteen 16:9 (leveä kuva)"
 
 #: ../data/totem.ui.h:68
-msgid "2.11:1 (DVB)"
+#| msgid "2.11:1 (DVB)"
+msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
 #: ../data/totem.ui.h:69
-msgid "Sets 2.11:1 (DVB) aspect ratio"
+#| msgid "Sets 2.11:1 (DVB) aspect ratio"
+msgid "Sets 2.11∶1 (DVB) aspect ratio"
 msgstr "Asettaa kuvasuhteen 2.11:1 (DVB)"
 
 #: ../data/totem.ui.h:70
@@ -843,115 +854,106 @@ msgstr "Aikasiirtymäpalkki"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Syötä avattavan tiedoston _sijainti:"
 
-#: ../data/video-list.ui.h:1 ../src/totem-dnd-menu.c:97
-msgid "_Add to Playlist"
-msgstr "_Lisää soittolistaan"
-
-#: ../data/video-list.ui.h:2
-msgid "Add the video to the playlist"
-msgstr "Lisää video soittolistaan"
-
-#: ../src/backend/bacon-video-widget.c:1641
+#: ../src/backend/bacon-video-widget.c:1639
 msgid "Password requested for RTSP server"
 msgstr "RTSP-palvelin pyytää salasanaa"
 
-#: ../src/backend/bacon-video-widget.c:2927
+#: ../src/backend/bacon-video-widget.c:2883
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Ääniraita #%d"
 
-#: ../src/backend/bacon-video-widget.c:2931
+#: ../src/backend/bacon-video-widget.c:2887
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Tekstitys #%d"
 
-#: ../src/backend/bacon-video-widget.c:3328
+#: ../src/backend/bacon-video-widget.c:3284
 msgid "The server you are trying to connect to is not known."
 msgstr "Pavelin, johon yrität yhdistää, ei ole tunnettu."
 
-#: ../src/backend/bacon-video-widget.c:3331
+#: ../src/backend/bacon-video-widget.c:3287
 msgid "The connection to this server was refused."
 msgstr "Yhteys tähän palvelimeen hylättiin."
 
-#: ../src/backend/bacon-video-widget.c:3334
-#| msgid "The movie could not be recorded."
+#: ../src/backend/bacon-video-widget.c:3290
 msgid "The specified movie could not be found."
 msgstr "Määriteltyä elokuvaa ei löytynyt."
 
-#: ../src/backend/bacon-video-widget.c:3341
+#: ../src/backend/bacon-video-widget.c:3297
 msgid "The server refused access to this file or stream."
 msgstr "Palvelin hylkäsi pääsyn tähän tiedostoon tai suoratoistovirtaan."
 
-#: ../src/backend/bacon-video-widget.c:3347
+#: ../src/backend/bacon-video-widget.c:3303
 msgid "Authentication is required to access this file or stream."
 msgstr "Pääsy tähän tiedostoon tai suoratoistovirtaan vaatii tunnistautumisen."
 
-#: ../src/backend/bacon-video-widget.c:3354
-#| msgid "Totem was not able to play this disc."
+#: ../src/backend/bacon-video-widget.c:3310
 msgid "You are not allowed to open this file."
 msgstr "Sinulla ei ole oikeuksia avata tätä tiedostoa."
 
-#: ../src/backend/bacon-video-widget.c:3359
-#| msgid "File is not a valid .desktop file"
+#: ../src/backend/bacon-video-widget.c:3315
 msgid "This location is not a valid one."
 msgstr "Tämä sijainti on virheellinen."
 
-#: ../src/backend/bacon-video-widget.c:3367
-#| msgid "The movie could not be recorded."
+#: ../src/backend/bacon-video-widget.c:3323
 msgid "The movie could not be read."
 msgstr "Elokuvaa ei voitu lukea."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3390
-#: ../src/backend/bacon-video-widget.c:3398
+#: ../src/backend/bacon-video-widget.c:3346
+#: ../src/backend/bacon-video-widget.c:3354
 #, c-format
+#| msgid ""
+#| "The playback of this movie requires a %s plugin which is not installed."
+#| msgid_plural ""
+#| "The playback of this movie requires the following decoders which are not "
+#| "installed:\n"
+#| "\n"
+#| "%s"
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
-"The playback of this movie requires the following decoders which are not "
+"The playback of this movie requires the following plugins which are not "
 "installed:\n"
 "\n"
 "%s"
 msgstr[0] ""
 "Tämän elokuvan näyttäminen vaatii liitännäisen %s, jota ei ole asennettu."
 msgstr[1] ""
-"Tämän elokuvan näyttäminen vaatii seuraavat dekooderit, joita ei ole "
+"Tämän elokuvan näyttäminen vaatii seuraavat liitännäiset, joita ei ole "
 "asennettu:\n"
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3409
+#: ../src/backend/bacon-video-widget.c:3365
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
 msgstr ""
 "Puuttuvat koodekit estävät ääni- tai videosuoratoiston käsittelyn. "
-"Liitännäisten "
-"asennus saattaa olla tarpeen, jotta tietynlaisten mediatiedostojen toisto on "
-"mahdollista"
+"Liitännäisten asennus saattaa olla tarpeen, jotta tietynlaisten "
+"mediatiedostojen toisto on mahdollista"
 
-#: ../src/backend/bacon-video-widget.c:3419
-#| msgid ""
-#| "Cannot play this file over the network. Try downloading it to disk first."
+#: ../src/backend/bacon-video-widget.c:3375
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
-"Tätä tiedostoa ei voi näyttää verkon yli. Hae se ensin "
-"omalle kiintolevylle."
+"Tätä tiedostoa ei voi näyttää verkon yli. Hae se ensin omalle kiintolevylle."
 
-#: ../src/backend/bacon-video-widget.c:5475 ../src/totem-properties-view.c:227
+#: ../src/backend/bacon-video-widget.c:5457 ../src/totem-properties-view.c:228
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:229
+#: ../src/backend/bacon-video-widget.c:5459 ../src/totem-properties-view.c:230
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5762
+#: ../src/backend/bacon-video-widget.c:5746
 msgid "Media contains no supported video streams."
 msgstr "Media ei sisällä tuettuja videomuotoja."
 
-#: ../src/backend/bacon-video-widget.c:5944
+#: ../src/backend/bacon-video-widget.c:5928
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1196,17 +1198,17 @@ msgstr[1] "%d kuvaa sekunnissa"
 msgid "Audio Preview"
 msgstr "Ääniesikatselu"
 
-#: ../src/totem.c:239
+#: ../src/totem.c:249
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totem sulkeutuu."
-
-#: ../src/totem-cell-renderer-video.c:126
-msgid "Unknown video"
-msgstr "Tuntematon video"
 
 #: ../src/totem-dnd-menu.c:94
 msgid "_Play Now"
 msgstr "_Toista nyt"
+
+#: ../src/totem-dnd-menu.c:97
+msgid "_Add to Playlist"
+msgstr "_Lisää soittolistaan"
 
 #: ../src/totem-dnd-menu.c:103
 msgid "Cancel"
@@ -1283,11 +1285,11 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automaattinen"
 
-#: ../src/totem-menu.c:789
+#: ../src/totem-menu.c:788
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Tekijänoikeudet © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:794
+#: ../src/totem-menu.c:792
 msgid "translator-credits"
 msgstr ""
 "Jiri Grönroos, 2012\n"
@@ -1304,15 +1306,15 @@ msgstr ""
 "  Jussi Aalto https://launchpad.net/~jtaalto-deactivatedaccount\n"
 "  Timo Jyrinki https://launchpad.net/~timo-jyrinki"
 
-#: ../src/totem-menu.c:798
+#: ../src/totem-menu.c:796
 msgid "Totem Website"
 msgstr "Totemin verkkosivusto"
 
-#: ../src/totem-menu.c:829
+#: ../src/totem-menu.c:827
 msgid "Configure Plugins"
 msgstr "Liitännäisten asetukset"
 
-#: ../src/totem-object.c:162
+#: ../src/totem-object.c:161
 #, c-format
 msgid ""
 "%s\n"
@@ -1322,56 +1324,56 @@ msgstr ""
 "Komennolla '%s --help' näet kaikki mahdolliset komentorivivalitsimet.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:591
+#: ../src/totem-object.c:589
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1168 ../src/totem-options.c:52
+#: ../src/totem-object.c:1166 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Tauko"
 
-#: ../src/totem-object.c:1175 ../src/totem-object.c:1185
+#: ../src/totem-object.c:1173 ../src/totem-object.c:1183
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Toista"
 
-#: ../src/totem-object.c:1267 ../src/totem-object.c:1294
-#: ../src/totem-object.c:1787 ../src/totem-object.c:1942
+#: ../src/totem-object.c:1265 ../src/totem-object.c:1292
+#: ../src/totem-object.c:1785 ../src/totem-object.c:1940
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ei voinut toistaa sijaintia ”%s”."
 
-#: ../src/totem-object.c:1793
+#: ../src/totem-object.c:1791
 msgid "No error message"
 msgstr "Ei virheviestiä"
 
-#: ../src/totem-object.c:2133
+#: ../src/totem-object.c:2131
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: ../src/totem-object.c:4019 ../src/totem-object.c:4021
+#: ../src/totem-object.c:4017 ../src/totem-object.c:4019
 msgid "Previous Chapter/Movie"
 msgstr "Edellinen kappale/elokuva"
 
-#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
+#: ../src/totem-object.c:4026 ../src/totem-object.c:4028
 msgid "Play / Pause"
 msgstr "Toista / keskeytä"
 
-#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
+#: ../src/totem-object.c:4036 ../src/totem-object.c:4038
 msgid "Next Chapter/Movie"
 msgstr "Seuraava kappale/elokuva"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4051 ../src/totem-object.c:4053
+#: ../src/totem-object.c:4049 ../src/totem-object.c:4051
 msgid "Fullscreen"
 msgstr "Koko näyttö"
 
-#: ../src/totem-object.c:4184
+#: ../src/totem-object.c:4182
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: ../src/totem-object.c:4184
+#: ../src/totem-object.c:4182
 msgid "No reason."
 msgstr "Ei syytä."
 
@@ -1457,51 +1459,51 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Ei voida lisätä jonon perään ja korvata samaan aikaan"
 
 #. By extension entry
-#: ../src/totem-playlist.c:162
+#: ../src/totem-playlist.c:161
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast -soittolista"
 
-#: ../src/totem-playlist.c:163
+#: ../src/totem-playlist.c:162
 msgid "MP3 audio (streamed)"
 msgstr "MP3-ääni (virta)"
 
-#: ../src/totem-playlist.c:164
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3-ääni (virta, DOS-muoto)"
 
-#: ../src/totem-playlist.c:165
+#: ../src/totem-playlist.c:164
 msgid "XML Shareable Playlist"
 msgstr "XML Shareable -soittolista"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:348
+#: ../src/totem-playlist.c:347
 #, c-format
 msgid "Title %d"
 msgstr "Jakso %d"
 
-#: ../src/totem-playlist.c:447
+#: ../src/totem-playlist.c:446
 msgid "Could not save the playlist"
 msgstr "Soittolistaa ei voi tallentaa"
 
-#: ../src/totem-playlist.c:1022
+#: ../src/totem-playlist.c:1021
 msgid "Save Playlist"
 msgstr "Tallenna soittolista"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1034 ../src/totem-playlist.c:1263
+#: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1262
 #: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Soittolista"
 
-#: ../src/totem-playlist.c:1862
+#: ../src/totem-playlist.c:1861
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Soittolistan '%s' jäsennys epäonnistui. Soittolista saattaa olla rikkoutunut."
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1862
 msgid "Playlist error"
 msgstr "Soittolistan virhe"
 
@@ -1513,7 +1515,7 @@ msgstr "Asetukset"
 msgid "Select Subtitle Font"
 msgstr "Valitse tekstityksen kirjasin"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:269
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
 msgid "Audio/Video"
 msgstr "Ääni/kuva"
 
@@ -1547,13 +1549,13 @@ msgstr "%d × %d"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:219
+#: ../src/totem-properties-view.c:220
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "-"
 
-#: ../src/totem-properties-view.c:239
+#: ../src/totem-properties-view.c:241
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "-"
@@ -1598,7 +1600,6 @@ msgstr "%s, %s"
 #. eg: Buffering, 75 %
 #: ../src/totem-statusbar.c:330
 #, c-format
-#| msgid "%s, %d %%"
 msgid "%s, %f %%"
 msgstr "%s, %f %%"
 
@@ -1775,14 +1776,10 @@ msgstr "Valitse elokuvia tai soittolistoja"
 msgid "Add Directory"
 msgstr "Lisää kansio"
 
-#: ../src/totem-video-list.c:330
-msgid "No video URI"
-msgstr "Ei video-URI"
-
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:848
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1793,15 +1790,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:842
+#: ../src/totem-video-thumbnailer.c:849
 msgid "Filename"
 msgstr "Tiedostonimi"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:851
 msgid "Resolution"
 msgstr "Tarkkuus"
 
-#: ../src/totem-video-thumbnailer.c:847
+#: ../src/totem-video-thumbnailer.c:854
 msgid "Duration"
 msgstr "Kesto"
 
@@ -1814,12 +1811,10 @@ msgid "Sets the user agent for the Apple Trailers site"
 msgstr "Asettaa user agent -tunnisteen Applen trailerisivustoa varten"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
-#| msgid "Download Movie Subtitles"
 msgid "Autoload Subtitles"
 msgstr "Lataa tekstitykset automaattisesti"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
-#| msgid "Downloading the subtitles…"
 msgid "Autoloads text subtitles"
 msgstr "Lataa teksitykset automaattisesti"
 
@@ -1932,7 +1927,6 @@ msgid "Chapters"
 msgstr "Kappaleet"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-#| msgid "Support chapter markers in movies."
 msgid "Support chapter markers in movies"
 msgstr "Tue kappalemerkintöjä elokuvissa"
 
@@ -2047,7 +2041,6 @@ msgid "Grilo Browser"
 msgstr "Grilo-selain"
 
 #: ../src/plugins/grilo/grilo.plugin.in.h:2
-#| msgid "A plugin to let you browse media content from various sources."
 msgid "A plugin to let you browse media content from various sources"
 msgstr "Liitännäinen mediasisällön selailuun useista lähteistä"
 
@@ -2059,19 +2052,19 @@ msgstr "Lisää soittolistaan"
 msgid "Copy Location"
 msgstr "Kopioi sijainti"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1184
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1175
 msgid "Browse"
 msgstr "Selaa"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1227
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1218
 msgid "Search"
 msgstr "Etsi"
 
-#: ../src/plugins/grilo/totem-grilo.c:454
+#: ../src/plugins/grilo/totem-grilo.c:437
 msgid "Browse Error"
 msgstr "Selausvirhe"
 
-#: ../src/plugins/grilo/totem-grilo.c:609
+#: ../src/plugins/grilo/totem-grilo.c:606
 msgid "Search Error"
 msgstr "Hakuvirhe"
 
@@ -2088,7 +2081,6 @@ msgid "The gromit binary was not found."
 msgstr "Ohjelmaa gromit ei löytynyt."
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
-#| msgid "Instant Messenger status"
 msgid "Instant Messenger Status"
 msgstr "Pikaviestimen tila"
 
@@ -2113,7 +2105,6 @@ msgid "Couldn't read lirc configuration."
 msgstr "LIRC:in asetuksia ei voitu lukea."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
-#| msgid "Movie Player"
 msgid "Media Player Keys"
 msgstr "Mediasoittimen näppäimet"
 
@@ -2134,7 +2125,6 @@ msgid "Subtitle Downloader"
 msgstr "Tekstitysten latain"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
-#| msgid "Look for subtitles for the currently playing movie."
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Etsi tekstityksiä parhaillaan toistettavalle elokuvalle"
 
@@ -2213,12 +2203,10 @@ msgid "The language to search for subtitles for movies in."
 msgstr "Kieli, jolla etsitään tekstityksiä elokuvaan."
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:1
-#| msgid "Properties"
 msgid "Movie Properties"
 msgstr "Elokuvan ominaisuudet"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:2
-#| msgid "Show or hide the sidebar"
 msgid "Adds movie properties to the sidebar"
 msgstr "Lisää elokuvan ominaisuudet sivupalkkiin"
 
@@ -2243,7 +2231,6 @@ msgid "Python Console"
 msgstr "Python-konsoli"
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
-#| msgid "Interactive Python console."
 msgid "Interactive Python console"
 msgstr "Vuorovaikutteinen python-konsoli"
 
@@ -2288,7 +2275,6 @@ msgstr ""
 "DConfissa, käytetään oletussalasanaa ”totem”."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
-#| msgid "Video files"
 msgid "Recent files"
 msgstr "Viimeisimmät tiedostot"
 
@@ -2301,7 +2287,6 @@ msgid "Rotation Plugin"
 msgstr "Kiertoliitännäinen"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
-#| msgid "Allows videos to be rotated if they're in the wrong orientation."
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Mahdollistaa videoiden kääntämisen, jos ne ovat väärässä asennossa"
 
@@ -2314,12 +2299,10 @@ msgid "Rotate Counterc_lockwise"
 msgstr "Kierrä _vastapäivään"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:1
-#| msgid "Save a Copy"
 msgid "Save Copy"
 msgstr "Tallenna kopio"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:2
-#| msgid "Copy the currently playing video DVD"
 msgid "Save a copy of the currently playing movie"
 msgstr "Tallenna kopio parhaillaan toistettavasta elokuvasta"
 
@@ -2350,7 +2333,6 @@ msgid "Screen Saver"
 msgstr "Näytönsäästäjä"
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:2
-#| msgid "Disable screensaver when playing "
 msgid "Deactivates the screen saver when a movie is playing"
 msgstr "Estää näytönsäästäjän käynnistymisen, kun elokuvaa toistetaan"
 
@@ -2370,7 +2352,6 @@ msgstr "Kuvakaappausten lukumäärä:"
 #. * with the screenshot if the entire screen is taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:147
 #, c-format
-#| msgid "Screenshot.png"
 msgid "Screenshot from %s.png"
 msgstr "Kuvakaappaus-%s.png"
 
@@ -2379,12 +2360,10 @@ msgstr "Kuvakaappaus-%s.png"
 #. * taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
-#| msgid "Screenshot-%s-%d.png"
 msgid "Screenshot from %s - %d.png"
 msgstr "Kuvakaappaus-%s-%d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
-#| msgid "Screenshot.png"
 msgid "Screenshot"
 msgstr "Kuvakaappaus"
 
@@ -2425,20 +2404,19 @@ msgstr "Totem ei voinut kaapata kuvaa tästä videosta."
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "Näin ei pitäisi päästä tapahtumaan. Ole hyvä ja ilmoita viasta."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
-#| msgid "Take _Screenshot..."
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Take _Screenshot"
 msgstr "Ota _kuvakaappaus"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Take a screenshot"
 msgstr "Ota kuvakaappaus"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
 msgid "Create Screenshot _Gallery..."
 msgstr "Luo kuvakaappaus_galleria…"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
 msgid "Create a gallery of screenshots"
 msgstr "Luo galleria kuvakaappauksista"
 
@@ -2479,6 +2457,15 @@ msgstr "Sii_rry kohtaan…"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Siirry annettuun ajankohtaan"
+
+#~ msgid "Add the video to the playlist"
+#~ msgstr "Lisää video soittolistaan"
+
+#~ msgid "Unknown video"
+#~ msgstr "Tuntematon video"
+
+#~ msgid "No video URI"
+#~ msgstr "Ei video-URI"
 
 #~ msgid "Play movies and songs"
 #~ msgstr "Toista elokuvia ja musiikkia"
