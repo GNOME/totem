@@ -398,7 +398,7 @@ totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
   else if (rotation == 270.0 && fmod (frame->priv->rotation, 360.0) == 0.0)
     totem_aspect_frame_set_rotation_internal (frame, 360.0, FALSE);
 
-  g_message ("Setting rotation to '%lf'", rotation);
+  g_debug ("Setting rotation to '%lf'", rotation);
 
   frame->priv->rotation = rotation;
   totem_aspect_frame_set_rotation_internal (frame, rotation, TRUE);
