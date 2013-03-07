@@ -173,8 +173,6 @@ totem_aspect_frame_set_rotation_internal (TotemAspectFrame *frame,
       clutter_actor_save_easing_state (actor);
       clutter_actor_set_easing_duration (actor, 500);
     }
-  /* FIXME: When animated, make sure that we go in the right direction,
-   * otherwise we'll spin in the wrong direction going back to 0 from 270 */
   clutter_actor_set_rotation_angle (actor, CLUTTER_Z_AXIS, rotation);
   clutter_actor_set_scale (actor, scale, scale);
 
@@ -387,7 +385,16 @@ totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
 
   rotation = fmod (rotation, 360.0);
 
-  g_debug ("Setting rotation to '%lf'", rotation);
+  /* When animating, make sure that we go in the right direction,
+   * otherwise we'll spin in the wrong direction going back to 0 from 270 */
+  if (rotation == 0.0 && frame->priv->rotation == 270.0)
+    rotation = 360.0;
+  else if (rotation == 90.0 && frame->priv->rotation == 360.0)
+    totem_aspect_frame_set_rotation_internal (frame, 0.0, FALSE);
+  else if (rotation == 270.0 && fmod (frame->priv->rotation, 360.0) == 0.0)
+    totem_aspect_frame_set_rotation_internal (frame, 360.0, FALSE);
+
+  g_message ("Setting rotation to '%lf'", rotation);
 
   frame->priv->rotation = rotation;
   totem_aspect_frame_set_rotation_internal (frame, rotation, TRUE);
