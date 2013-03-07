@@ -34,6 +34,7 @@
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
 
+#define WANT_MIME_TYPES 1
 #include "totem-mime-types.h"
 
 static GType tpp_type = 0;

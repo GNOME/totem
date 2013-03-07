@@ -30,6 +30,9 @@
 #include <unistd.h>
 #include <gio/gio.h>
 
+#define WANT_MIME_TYPES 1
+#define WANT_AUDIO_MIME_TYPES 1
+#define WANT_VIDEO_MIME_TYPES 1
 #include "totem-mime-types.h"
 #include "totem-uri.h"
 #include "totem-private.h"

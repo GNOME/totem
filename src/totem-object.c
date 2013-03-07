@@ -63,6 +63,7 @@
 #include "totem-dnd-menu.h"
 #include "totem-preferences.h"
 
+#define WANT_MIME_TYPES 1
 #include "totem-mime-types.h"
 #include "totem-uri-schemes.h"
 

@@ -39,6 +39,8 @@
 
 #include "totem-gst-helpers.h"
 #include "totem-resources.h"
+#define WANT_MIME_TYPES 1
+#define WANT_AUDIO_MIME_TYPES 1
 #include "totem-mime-types.h"
 
 static gboolean show_mimetype = FALSE;
