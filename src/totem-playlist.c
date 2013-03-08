@@ -24,11 +24,12 @@
 #include "config.h"
 #include "totem-playlist.h"
 
+#include <stdlib.h>
+#include <string.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
-#include <string.h>
 
 #include "eggfileformatchooser.h"
 #include "totem-dnd-menu.h"
@@ -42,7 +43,9 @@ static void ensure_shuffled (TotemPlaylist *playlist);
 static gboolean totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 					    const char    *mrl,
 					    const char    *display_name,
-					    const char    *content_type);
+					    const char    *content_type,
+					    const char    *subtitle_uri,
+					    gboolean       playing);
 
 typedef gboolean (*ClearComparisonFunc) (TotemPlaylist *playlist, GtkTreeIter *iter, gconstpointer data);
 
@@ -402,23 +405,32 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 {
 	TotemPlPlaylist *playlist = user_data;
 	TotemPlPlaylistIter pl_iter;
-	gchar *uri, *title;
+	gchar *uri, *title, *subtitle_uri, *mime_type;
+	TotemPlaylistStatus status;
 	gboolean custom_title;
 
 	gtk_tree_model_get (model, iter,
 			    URI_COL, &uri,
 			    FILENAME_COL, &title,
 			    TITLE_CUSTOM_COL, &custom_title,
+			    SUBTITLE_URI_COL, &subtitle_uri,
+			    PLAYING_COL, &status,
+			    MIME_TYPE_COL, &mime_type,
 			    -1);
 
 	totem_pl_playlist_append (playlist, &pl_iter);
 	totem_pl_playlist_set (playlist, &pl_iter,
 			       TOTEM_PL_PARSER_FIELD_URI, uri,
 			       TOTEM_PL_PARSER_FIELD_TITLE, (custom_title) ? title : NULL,
+			       TOTEM_PL_PARSER_FIELD_SUBTITLE_URI, subtitle_uri,
+			       TOTEM_PL_PARSER_FIELD_PLAYING, status != TOTEM_PLAYLIST_STATUS_NONE ? "true" : "",
+			       TOTEM_PL_PARSER_FIELD_CONTENT_TYPE, mime_type,
 			       NULL);
 
 	g_free (uri);
 	g_free (title);
+	g_free (subtitle_uri);
+	g_free (mime_type);
 
 	return FALSE;
 }
@@ -1547,14 +1559,27 @@ init_config (TotemPlaylist *playlist)
 	g_signal_connect (playlist->priv->settings, "changed::shuffle", (GCallback) update_shuffle_cb, playlist);
 }
 
+static gboolean
+parse_bool_str (const char *str)
+{
+	if (str == NULL)
+		return FALSE;
+	if (g_ascii_strcasecmp (str, "true") == 0)
+		return TRUE;
+	if (g_ascii_strcasecmp (str, "false") == 0)
+		return FALSE;
+	return atoi (str);
+}
+
 static void
 totem_playlist_entry_parsed (TotemPlParser *parser,
 			     const char *uri,
 			     GHashTable *metadata,
 			     TotemPlaylist *playlist)
 {
-	const char *title, *content_type;
+	const char *title, *content_type, *subtitle_uri;
 	gint64 duration;
+	gboolean playing;
 
 	/* We ignore 0-length items in playlists, they're usually just banners */
 	duration = totem_pl_parser_parse_duration
@@ -1563,7 +1588,9 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 		return;
 	title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
 	content_type = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_CONTENT_TYPE);
-	totem_playlist_add_one_mrl (playlist, uri, title, content_type);
+	playing = parse_bool_str (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_PLAYING));
+	subtitle_uri = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_SUBTITLE_URI);
+	totem_playlist_add_one_mrl (playlist, uri, title, content_type, subtitle_uri, playing);
 }
 
 static gboolean
@@ -1744,7 +1771,9 @@ static gboolean
 totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 			    const char *mrl,
 			    const char *display_name,
-			    const char *content_type)
+			    const char *content_type,
+			    const char *subtitle_uri,
+			    gboolean    playing)
 {
 	GtkListStore *store;
 	GtkTreeIter iter;
@@ -1766,7 +1795,7 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 	ref = NULL;
 	uri = totem_create_full_path (mrl);
 
-	g_debug ("totem_playlist_add_one_mrl (): %s %s %s\n", filename_for_display, uri, display_name);
+	g_debug ("totem_playlist_add_one_mrl (): %s %s %s %s %s\n", filename_for_display, uri, display_name, subtitle_uri, playing ? "true" : "false");
 
 	if (playlist->priv->tree_path != NULL && playlist->priv->current != NULL) {
 		int *indices;
@@ -1798,10 +1827,11 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 
 	escaped_filename = g_markup_escape_text (filename_for_display, -1);
 	gtk_list_store_insert_with_values (store, &iter, pos,
-					   PLAYING_COL, TOTEM_PLAYLIST_STATUS_NONE,
+					   PLAYING_COL, playing ? TOTEM_PLAYLIST_STATUS_PAUSED : TOTEM_PLAYLIST_STATUS_NONE,
 					   FILENAME_COL, filename_for_display,
 					   FILENAME_ESCAPED_COL, escaped_filename,
 					   URI_COL, uri ? uri : mrl,
+					   SUBTITLE_URI_COL, subtitle_uri,
 					   TITLE_CUSTOM_COL, display_name ? TRUE : FALSE,
 					   FILE_MONITOR_COL, monitor,
 					   MOUNT_COL, mount,
@@ -1858,7 +1888,7 @@ static gboolean
 handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gchar *mrl, const gchar *display_name)
 {
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
-		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL);
+		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL, NULL, FALSE);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR) {
 		char *msg;
 
@@ -1942,9 +1972,33 @@ totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result)
 gboolean
 totem_playlist_add_mrl_sync (TotemPlaylist *playlist, const char *mrl, const char *display_name)
 {
+	GtkTreeIter iter;
+	gboolean ret;
+
 	g_return_val_if_fail (mrl != NULL, FALSE);
 
-	return handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, display_name);
+	ret = handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, NULL);
+	if (!ret)
+		return ret;
+
+	/* Find the currently playing track, and set ->current */
+	ret = gtk_tree_model_get_iter_first (playlist->priv->model, &iter);
+	while (ret) {
+		TotemPlaylistStatus status;
+
+		gtk_tree_model_get (playlist->priv->model, &iter,
+				    PLAYING_COL, &status,
+				    -1);
+		if (status == TOTEM_PLAYLIST_STATUS_PAUSED) {
+			gtk_tree_path_free (playlist->priv->current);
+			playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
+			/* FIXME get the starttime as well */
+			break;
+		}
+		ret = gtk_tree_model_iter_next (playlist->priv->model, &iter);
+	}
+
+	return TRUE;
 }
 
 typedef struct {
