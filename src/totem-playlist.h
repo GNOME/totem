@@ -73,8 +73,6 @@ struct TotemPlaylistClass {
 	void (*item_activated) (TotemPlaylist *playlist);
 	void (*active_name_changed) (TotemPlaylist *playlist);
 	void (*current_removed) (TotemPlaylist *playlist);
-	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);
-	void (*shuffle_toggled) (TotemPlaylist *playlist, gboolean toggled);
 	void (*subtitle_changed) (TotemPlaylist *playlist);
 	void (*item_added) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
 	void (*item_removed) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);

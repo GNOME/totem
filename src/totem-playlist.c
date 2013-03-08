@@ -129,8 +129,6 @@ enum {
 	ITEM_ACTIVATED,
 	ACTIVE_NAME_CHANGED,
 	CURRENT_REMOVED,
-	REPEAT_TOGGLED,
-	SHUFFLE_TOGGLED,
 	SUBTITLE_CHANGED,
 	ITEM_ADDED,
 	ITEM_REMOVED,
@@ -1427,9 +1425,6 @@ update_repeat_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
 	g_object_notify (G_OBJECT (playlist), "repeat");
-	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[REPEAT_TOGGLED], 0,
-			playlist->priv->repeat, NULL);
 }
 
 typedef struct {
@@ -1521,9 +1516,6 @@ update_shuffle_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlis
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
 	g_object_notify (G_OBJECT (playlist), "shuffle");
-	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[SHUFFLE_TOGGLED], 0,
-			playlist->priv->shuffle, NULL);
 }
 
 static void
@@ -3003,24 +2995,6 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_VOID__VOID,
 				G_TYPE_NONE, 0);
-	totem_playlist_table_signals[REPEAT_TOGGLED] =
-		g_signal_new ("repeat-toggled",
-				G_TYPE_FROM_CLASS (klass),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (TotemPlaylistClass,
-						 repeat_toggled),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__BOOLEAN,
-				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-	totem_playlist_table_signals[SHUFFLE_TOGGLED] =
-		g_signal_new ("shuffle-toggled",
-				G_TYPE_FROM_CLASS (klass),
-				G_SIGNAL_RUN_LAST,
-				G_STRUCT_OFFSET (TotemPlaylistClass,
-						 shuffle_toggled),
-				NULL, NULL,
-				g_cclosure_marshal_VOID__BOOLEAN,
-				G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 	totem_playlist_table_signals[SUBTITLE_CHANGED] =
 		g_signal_new ("subtitle-changed",
 			      G_TYPE_FROM_CLASS (klass),
