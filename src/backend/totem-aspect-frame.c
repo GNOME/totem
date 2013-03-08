@@ -147,7 +147,7 @@ totem_aspect_frame_get_size (TotemAspectFrame *frame,
 
   clutter_actor_get_allocation_box (CLUTTER_ACTOR (frame), &box);
 
-  if (rotation == 90.0 || rotation == 270.0)
+  if (fmod (rotation, 180.0) == 90.0)
     {
       w = box.y2 - box.y1;
       h = box.x2 - box.x1;
