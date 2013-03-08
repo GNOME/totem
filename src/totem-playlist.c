@@ -107,6 +107,9 @@ struct TotemPlaylistPrivate
 	/* Cursor ref: 0 if the cursor is unbusy; positive numbers indicate the number of nested calls to set_waiting_cursor() */
 	guint cursor_ref;
 
+	/* Current time in the track */
+	char *starttime;
+
 	/* This is a scratch list for when we're removing files */
 	GList *list;
 	guint current_to_be_removed : 1;
@@ -1577,7 +1580,7 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 			     GHashTable *metadata,
 			     TotemPlaylist *playlist)
 {
-	const char *title, *content_type, *subtitle_uri;
+	const char *title, *content_type, *subtitle_uri, *starttime;
 	gint64 duration;
 	gboolean playing;
 
@@ -1590,6 +1593,11 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	content_type = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_CONTENT_TYPE);
 	playing = parse_bool_str (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_PLAYING));
 	subtitle_uri = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_SUBTITLE_URI);
+	starttime = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME);
+	if (starttime != NULL) {
+		g_free (playlist->priv->starttime);
+		playlist->priv->starttime = g_strdup (starttime);
+	}
 	totem_playlist_add_one_mrl (playlist, uri, title, content_type, subtitle_uri, playing);
 }
 
@@ -1646,6 +1654,8 @@ totem_playlist_dispose (GObject *object)
 		g_object_unref (G_OBJECT (playlist->priv->action_group));
 		playlist->priv->action_group = NULL;
 	}
+
+	g_clear_pointer (&playlist->priv->starttime, g_free);
 
 	if (playlist->priv->settings != NULL)
 		g_object_unref (playlist->priv->settings);
@@ -1969,13 +1979,30 @@ totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result)
 	return g_simple_async_result_get_op_res_gboolean (G_SIMPLE_ASYNC_RESULT (result));
 }
 
+static gint64
+parse_starttime (TotemPlaylist *playlist)
+{
+	gint64 ret;
+
+	if (playlist->priv->starttime == NULL)
+		return 0;
+	ret = totem_pl_parser_parse_duration (playlist->priv->starttime, FALSE);
+	if (ret == -1)
+		return 0;
+
+	return ret * 1000; /* and in msecs */
+}
+
 gboolean
-totem_playlist_add_mrl_sync (TotemPlaylist *playlist, const char *mrl, const char *display_name)
+totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
+			     const char    *mrl,
+			     gint64        *starttime)
 {
 	GtkTreeIter iter;
 	gboolean ret;
 
 	g_return_val_if_fail (mrl != NULL, FALSE);
+	g_return_val_if_fail (starttime != NULL, FALSE);
 
 	ret = handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, NULL);
 	if (!ret)
@@ -1992,7 +2019,10 @@ totem_playlist_add_mrl_sync (TotemPlaylist *playlist, const char *mrl, const cha
 		if (status == TOTEM_PLAYLIST_STATUS_PAUSED) {
 			gtk_tree_path_free (playlist->priv->current);
 			playlist->priv->current = gtk_tree_model_get_path (playlist->priv->model, &iter);
-			/* FIXME get the starttime as well */
+
+			*starttime = parse_starttime (playlist);
+			g_clear_pointer (&playlist->priv->starttime, g_free);
+
 			break;
 		}
 		ret = gtk_tree_model_iter_next (playlist->priv->model, &iter);
