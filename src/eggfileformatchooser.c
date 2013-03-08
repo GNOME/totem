@@ -647,7 +647,7 @@ chooser_response_cb (GtkDialog *dialog,
       g_free (filename);
 
       format = egg_file_format_chooser_get_format (self, basename);
-      g_print ("%s: %s - %d\n", G_STRFUNC, basename, format);
+      g_debug ("%s: %s - %d\n", G_STRFUNC, basename, format);
 
       if (0 == format)
         {
