@@ -121,6 +121,9 @@ struct TotemPlaylistPrivate
 
 	/* Shuffle mode */
 	guint shuffle : 1;
+
+	/* Whether to auto-save the playlist */
+	guint save : 1;
 };
 
 /* Signals */
@@ -151,7 +154,8 @@ enum {
 enum {
 	PROP_0,
 	PROP_SHUFFLE,
-	PROP_REPEAT
+	PROP_REPEAT,
+	PROP_SAVE
 };
 
 typedef struct {
@@ -2920,6 +2924,9 @@ totem_playlist_set_property (GObject      *object,
 	case PROP_REPEAT:
 		g_settings_set_boolean (playlist->priv->settings, "repeat", g_value_get_boolean (value));
 		break;
+	case PROP_SAVE:
+		playlist->priv->save = !!g_value_get_boolean (value);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 		break;
@@ -2942,6 +2949,9 @@ totem_playlist_get_property (GObject    *object,
 		break;
 	case PROP_REPEAT:
 		g_value_set_boolean (value, playlist->priv->repeat);
+		break;
+	case PROP_SAVE:
+		g_value_set_boolean (value, playlist->priv->save);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3031,5 +3041,10 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 	g_object_class_install_property (object_class, PROP_REPEAT,
 					 g_param_spec_boolean ("repeat", "Repeat",
 							       "Whether repeat mode is enabled.", FALSE,
+							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+	g_object_class_install_property (object_class, PROP_SAVE,
+					 g_param_spec_boolean ("save", "Save",
+							       "Whether to save the current session.", FALSE,
 							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
