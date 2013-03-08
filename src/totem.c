@@ -250,8 +250,6 @@ main (int argc, char **argv)
 	}
 #endif
 
-	g_type_init ();
-
 	g_set_prgname ("totem");
 	g_set_application_name (_("Videos"));
 	gtk_window_set_default_icon_name ("totem");
