@@ -191,51 +191,6 @@ dnl Check for elements from gst-plugins-bad
 dnl Set plugins which contain below elements
 PKG_CHECK_MODULES(GST_PLUGINS_BAD, gstreamer-plugins-bad-1.0 >= 1.0.2)
 
-dnl Check the smclient backend
-AC_MSG_CHECKING([which smclient backend to use])
-AC_ARG_WITH([smclient],
-  [AS_HELP_STRING([--with-smclient],[which smclient backend to use (auto/no/xsmp/win32/quartz)])],
-  [],
-  [with_smclient=auto])
-
-if test "$with_smclient" = "auto"; then
-	# There could be several targets, given in any order (see bgo#652999)
-	gdk_targets=`$PKG_CONFIG --variable targets gdk-3.0`
-	for target in $gdk_targets; do
-		case "$target" in
-			x11)
-				with_smclient=xsmp
-				PKG_CHECK_MODULES([SMCLIENT],[sm ice])
-				break
-				;;
-			win32)
-				with_smclient=win32
-				break
-				;;
-			quartz)
-				with_smclient=quartz
-				break
-				;;
-			*)
-				with_smclient=no
-				# Loop around and see if we find a better target next time
-				;;
-		esac
-	done
-fi
-
-AC_MSG_RESULT([$with_smclient])
-
-if test "$with_smclient" != "no"; then
-	AC_DEFINE([WITH_SMCLIENT],[1],[Define if smclient is enabled])
-fi
-
-AM_CONDITIONAL([WITH_SMCLIENT],[test "$with_smclient" != "no"])
-AM_CONDITIONAL([WITH_SMCLIENT_XSMP],[test "$with_smclient" = "xsmp"])
-AM_CONDITIONAL([WITH_SMCLIENT_WIN32],[test "$with_smclient" = "win32"])
-AM_CONDITIONAL([WITH_SMCLIENT_QUARTZ],[test "$with_smclient" = "quartz"])
-
-
 # ================================================================
 # Python plugins
 # ================================================================
