@@ -150,6 +150,12 @@ enum {
 	NUM_COLS
 };
 
+enum {
+	PROP_0,
+	PROP_SHUFFLE,
+	PROP_REPEAT
+};
+
 typedef struct {
 	const char *name;
 	const char *suffix;
@@ -1420,6 +1426,7 @@ update_repeat_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
+	g_object_notify (G_OBJECT (playlist), "repeat");
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[REPEAT_TOGGLED], 0,
 			playlist->priv->repeat, NULL);
@@ -1513,6 +1520,7 @@ update_shuffle_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlis
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
+	g_object_notify (G_OBJECT (playlist), "shuffle");
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[SHUFFLE_TOGGLED], 0,
 			playlist->priv->shuffle, NULL);
@@ -2904,12 +2912,60 @@ totem_playlist_set_current (TotemPlaylist *playlist, guint current_index)
 }
 
 static void
+totem_playlist_set_property (GObject      *object,
+			     guint         property_id,
+			     const GValue *value,
+			     GParamSpec   *pspec)
+{
+	TotemPlaylist *playlist;
+
+	playlist = TOTEM_PLAYLIST (object);
+
+	switch (property_id) {
+	case PROP_SHUFFLE:
+		g_settings_set_boolean (playlist->priv->settings, "shuffle", g_value_get_boolean (value));
+		break;
+	case PROP_REPEAT:
+		g_settings_set_boolean (playlist->priv->settings, "repeat", g_value_get_boolean (value));
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+static void
+totem_playlist_get_property (GObject    *object,
+			     guint       property_id,
+			     GValue     *value,
+			     GParamSpec *pspec)
+{
+	TotemPlaylist *playlist;
+
+	playlist = TOTEM_PLAYLIST (object);
+
+	switch (property_id) {
+	case PROP_SHUFFLE:
+		g_value_set_boolean (value, playlist->priv->shuffle);
+		break;
+	case PROP_REPEAT:
+		g_value_set_boolean (value, playlist->priv->repeat);
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+		break;
+	}
+}
+
+static void
 totem_playlist_class_init (TotemPlaylistClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	g_type_class_add_private (klass, sizeof (TotemPlaylistPrivate));
 
+	object_class->set_property = totem_playlist_set_property;
+	object_class->get_property = totem_playlist_get_property;
 	object_class->dispose = totem_playlist_dispose;
 	object_class->finalize = totem_playlist_finalize;
 
@@ -2992,4 +3048,14 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 				NULL, NULL,
 				g_cclosure_marshal_generic,
 				G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
+
+	g_object_class_install_property (object_class, PROP_SHUFFLE,
+					 g_param_spec_boolean ("shuffle", "Shuffle",
+							       "Whether shuffle mode is enabled.", FALSE,
+							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+	g_object_class_install_property (object_class, PROP_REPEAT,
+					 g_param_spec_boolean ("repeat", "Repeat",
+							       "Whether repeat mode is enabled.", FALSE,
+							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
