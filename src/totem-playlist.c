@@ -438,7 +438,7 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 void
 totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *output)
 {
-	totem_playlist_save_current_playlist_ext (playlist, output, TOTEM_PL_PARSER_PLS);
+	totem_playlist_save_current_playlist_ext (playlist, output, TOTEM_PL_PARSER_XSPF);
 }
 
 void

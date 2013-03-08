@@ -42,7 +42,7 @@ totem_session_create_key (void)
 {
 	char *filename, *path;
 
-	filename = g_strdup_printf ("playlist-%d-%d-%u.pls",
+	filename = g_strdup_printf ("playlist-%d-%d-%u.xspf",
 			(int) getpid (),
 			(int) time (NULL),
 			g_random_int ());
