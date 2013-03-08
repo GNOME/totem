@@ -3190,20 +3190,24 @@ subtitle_changed_cb (GtkWidget *playlist, TotemObject *totem)
 }
 
 static void
-playlist_repeat_toggle_cb (TotemPlaylist *playlist, gboolean repeat, TotemObject *totem)
+playlist_repeat_toggle_cb (TotemPlaylist *playlist, GParamSpec *pspec, TotemObject *totem)
 {
 	GAction *action;
+	gboolean repeat;
 
+	repeat = totem_playlist_get_repeat (playlist);
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
 				   g_variant_new_boolean (repeat));
 }
 
 static void
-playlist_shuffle_toggle_cb (TotemPlaylist *playlist, gboolean shuffle, TotemObject *totem)
+playlist_shuffle_toggle_cb (TotemPlaylist *playlist, GParamSpec *pspec, TotemObject *totem)
 {
 	GAction *action;
+	gboolean shuffle;
 
+	shuffle = totem_playlist_get_shuffle (playlist);
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
 				   g_variant_new_boolean (shuffle));
@@ -4085,11 +4089,11 @@ playlist_widget_setup (TotemObject *totem)
 			  "current-removed", G_CALLBACK (current_removed_cb),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			  "repeat-toggled",
+			  "notify::repeat",
 			  G_CALLBACK (playlist_repeat_toggle_cb),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
-			  "shuffle-toggled",
+			  "notify::shuffle",
 			  G_CALLBACK (playlist_shuffle_toggle_cb),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
