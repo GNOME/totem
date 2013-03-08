@@ -144,7 +144,6 @@ int main (int argc, char **argv)
 	options = gst_init_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
-	g_type_init ();
 
 	if (g_option_context_parse (context, &argc, &argv, &error) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", error->message);
