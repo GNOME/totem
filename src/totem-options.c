@@ -95,16 +95,6 @@ totem_options_get_context (void)
 }
 
 void
-totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
-{
-	/* Handle --playlist-idx */
-	totem->index = options->playlistidx;
-
-	/* Handle --seek */
-	totem->seek_to_start = options->seek;
-}
-
-void
 totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
 {
 	if (options->quit) {

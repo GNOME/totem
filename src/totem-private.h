@@ -137,10 +137,7 @@ struct _TotemObject {
 	gboolean drives_changed;
 
 	/* session */
-	const char *argv0;
 	gint64 seek_to_start;
-	guint index;
-	gboolean session_restored;
 
 	/* Window State */
 	int window_w, window_h;

@@ -114,7 +114,6 @@ app_init (Totem *totem, char **argv)
 					 gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (totem->volume)));
 	gtk_range_set_adjustment (GTK_RANGE (totem->fs->seek), totem->seekadj);
 
-	totem_session_setup (totem, argv);
 	totem_setup_file_monitoring (totem);
 	totem_setup_file_filters ();
 	totem_app_menu_setup (totem);
@@ -150,21 +149,20 @@ app_init (Totem *totem, char **argv)
 
 	totem_setup_recent (totem);
 
-	/* Command-line handling */
-	totem_options_process_late (totem, &optionstate);
-
 	/* Initialise all the plugins, and set the default page, in case
 	 * it comes from a plugin */
 	totem_object_plugins_init (totem);
 	totem_sidebar_set_current_page (totem, sidebar_pageid, FALSE);
 	g_free (sidebar_pageid);
 
-	if (totem->session_restored != FALSE) {
-		totem_session_restore (totem, optionstate.filenames);
-	} else if (optionstate.filenames != NULL && totem_action_open_files (totem, optionstate.filenames)) {
-		totem_action_play_pause (totem);
+	if (optionstate.filenames == NULL) {
+		if (totem_session_try_restore (totem) == FALSE)
+			totem_action_set_mrl (totem, NULL, NULL);
 	} else {
-		totem_action_set_mrl (totem, NULL, NULL);
+		if (totem_action_open_files (totem, optionstate.filenames))
+			totem_action_play_pause (totem);
+		else
+			totem_action_set_mrl (totem, NULL, NULL);
 	}
 
 	/* Set the logo at the last minute so we won't try to show it before a video */

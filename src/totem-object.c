@@ -62,6 +62,7 @@
 #include "video-utils.h"
 #include "totem-dnd-menu.h"
 #include "totem-preferences.h"
+#include "totem-session.h"
 
 #define WANT_MIME_TYPES 1
 #include "totem-mime-types.h"
@@ -1114,6 +1115,8 @@ totem_object_action_exit (TotemObject *totem)
 
 	totem_action_save_state (totem, page_id);
 	g_free (page_id);
+
+	totem_session_save (totem);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();

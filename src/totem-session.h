@@ -27,9 +27,8 @@
 
 G_BEGIN_DECLS
 
-void totem_session_add_options (GOptionContext *context);
-void totem_session_setup (Totem *totem, char **argv);
-void totem_session_restore (Totem *totem, char **filenames);
+gboolean totem_session_try_restore (Totem *totem);
+void totem_session_save (Totem *totem);
 
 G_END_DECLS
 

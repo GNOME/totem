@@ -27,139 +27,40 @@
 #include "totem-session.h"
 #include "totem-uri.h"
 
-#ifdef WITH_SMCLIENT
-
-#include <unistd.h>
-
-#include "eggsmclient.h"
-
-#ifdef GDK_WINDOWING_X11
-#include "eggdesktopfile.h"
-#endif
-
 static char *
-totem_session_create_key (void)
+get_session_filename (void)
 {
-	char *filename, *path;
+	char *path, *uri;
 
-	filename = g_strdup_printf ("playlist-%d-%d-%u.xspf",
-			(int) getpid (),
-			(int) time (NULL),
-			g_random_int ());
-	path = g_build_filename (totem_dot_dir (), filename, NULL);
-	g_free (filename);
+	path = g_build_filename (g_get_user_config_dir (), "totem", "session_state.xspf", NULL);
+	uri = g_filename_to_uri (path, NULL, NULL);
+	g_free (path);
 
-	return path;
+	return uri;
 }
 
-static void
-totem_save_state_cb (EggSMClient *client,
-	             GKeyFile *key_file,
-	             Totem *totem)
+gboolean
+totem_session_try_restore (Totem *totem)
 {
-	const char *argv[] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
-	int i = 0;
-	char *path_id, *current, *seek, *uri;
-	int current_index;
-
-	current_index = totem_playlist_get_current (totem->playlist);
-
-	if (current_index == -1)
-		return;
-
-	path_id = totem_session_create_key ();
-	totem_playlist_save_current_playlist (totem->playlist, path_id);
-
-	/* How to discard the save */
-	argv[i++] = "rm";
-	argv[i++] = "-f";
-	argv[i++] = path_id;
-	egg_sm_client_set_discard_command (client, i, (const char **) argv);
-
-	/* How to clone or restart */
-	i = 0;
-	current = g_strdup_printf ("%d", current_index);
-	seek = g_strdup_printf ("%"G_GINT64_FORMAT,
-			bacon_video_widget_get_current_time (totem->bvw));
-	argv[i++] = totem->argv0;
-	argv[i++] = "--playlist-idx";
-	argv[i++] = current;
-	argv[i++] = "--seek";
-	argv[i++] = seek;
-
-	uri = g_filename_to_uri (path_id, NULL, NULL);
-	argv[i++] = uri;
-
-	/* FIXME: what's this used for? */
-	/* egg_sm_client_set_clone_command (client, i, argv); */
-
-	egg_sm_client_set_restart_command (client, i, (const char **) argv);
-
-	g_free (path_id);
-	g_free (current);
-	g_free (seek);
-	g_free (uri);
-}
-
-G_GNUC_NORETURN static void
-totem_quit_cb (EggSMClient *client,
-	       Totem *totem)
-{
-	totem_action_exit (totem);
-}
-
-void
-totem_session_add_options (GOptionContext *context)
-{
-#ifdef GDK_WINDOWING_X11
-	egg_set_desktop_file_without_defaults (DATADIR "/applications/" PACKAGE ".desktop");
-#endif
-
-	g_option_context_add_group (context, egg_sm_client_get_option_group ());
-}
-
-void
-totem_session_setup (Totem *totem, char **argv)
-{
-	EggSMClient *sm_client;
-
-	totem->argv0 = argv[0];
-
-	sm_client = egg_sm_client_get ();
-	g_signal_connect (sm_client, "save-state",
-	                  G_CALLBACK (totem_save_state_cb), totem);
-	g_signal_connect (sm_client, "quit",
-	                  G_CALLBACK (totem_quit_cb), totem);
-
-	if (egg_sm_client_is_resumed (sm_client))
-		totem->session_restored = TRUE;
-}
-
-void
-totem_session_restore (Totem *totem, char **filenames)
-{
-	char *mrl, *uri, *subtitle;
-
-	g_return_if_fail (filenames != NULL);
-	g_return_if_fail (filenames[0] != NULL);
-	uri = filenames[0];
-	subtitle = NULL;
+	char *uri;
+	char *mrl, *subtitle;
 
 	totem_signal_block_by_data (totem->playlist, totem);
 
 	/* Possibly the only place in Totem where it makes sense to add an MRL to the playlist synchronously, since we haven't yet entered
 	 * the GTK+ main loop, and thus can't freeze the application. */
-	if (totem_playlist_add_mrl_sync (totem->playlist, uri, NULL) == FALSE) {
+	uri = get_session_filename ();
+	if (totem_playlist_add_mrl_sync (totem->playlist, uri, &totem->seek_to_start) == FALSE) {
 		totem_signal_unblock_by_data (totem->playlist, totem);
 		totem_action_set_mrl (totem, NULL, NULL);
 		g_free (uri);
-		return;
+		return FALSE;
 	}
+	g_free (uri);
 
 	totem_signal_unblock_by_data (totem->playlist, totem);
 
-	if (totem->index != 0)
-		totem_playlist_set_current (totem->playlist, totem->index);
+	subtitle = NULL;
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
 	totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
@@ -169,23 +70,18 @@ totem_session_restore (Totem *totem, char **filenames)
 
 	g_free (mrl);
 	g_free (subtitle);
-}
 
-#else
-
-void
-totem_session_add_options (GOptionContext *context)
-{
+	return TRUE;
 }
 
 void
-totem_session_setup (Totem *totem, char **argv)
+totem_session_save (Totem *totem)
 {
-}
+	char *uri;
 
-void
-totem_session_restore (Totem *totem, char **argv)
-{
+	uri = get_session_filename ();
+	/* FIXME: Save the current seek time somehow */
+	/* FIXME: Check whether we actually want to be saved */
+	totem_playlist_save_current_playlist (totem->playlist, uri);
+	g_free (uri);
 }
-
-#endif /* WITH_SMCLIENT */
