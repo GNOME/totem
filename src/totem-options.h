@@ -47,7 +47,6 @@ typedef struct {
 	gboolean quit;
 	gboolean enqueue;
 	gboolean replace;
-	gdouble playlistidx;
 	gint64 seek;
 	gchar **filenames;
 } TotemCmdLineOptions;
