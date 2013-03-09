@@ -45,7 +45,6 @@
 #include "totem-interface.h"
 #include "totem-options.h"
 #include "totem-menu.h"
-#include "totem-session.h"
 #include "totem-uri.h"
 #include "totem-preferences.h"
 #include "totem-sidebar.h"
