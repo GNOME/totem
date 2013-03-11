@@ -1072,6 +1072,8 @@ totem_object_action_exit (TotemObject *totem)
 	if (display != NULL)
 		gdk_display_sync (display);
 
+	totem_session_save (totem);
+
 	if (totem->bvw) {
 		totem_action_save_size (totem);
 		bacon_video_widget_close (totem->bvw);
@@ -1079,8 +1081,6 @@ totem_object_action_exit (TotemObject *totem)
 
 	totem_action_save_state (totem, page_id);
 	g_free (page_id);
-
-	totem_session_save (totem);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
