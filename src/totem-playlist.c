@@ -1538,6 +1538,13 @@ update_shuffle_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlis
 }
 
 static void
+update_save_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
+{
+	playlist->priv->save = g_settings_get_boolean (settings, "save-playback-state");
+	g_object_notify (G_OBJECT (playlist), "save");
+}
+
+static void
 update_lockdown_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
 {
 	playlist->priv->disable_save_to_disk = g_settings_get_boolean (settings, "disable-save-to-disk");
@@ -1553,13 +1560,16 @@ init_config (TotemPlaylist *playlist)
 	playlist->priv->disable_save_to_disk = g_settings_get_boolean (playlist->priv->lockdown_settings, "disable-save-to-disk");
 	totem_playlist_update_save_button (playlist);
 
-	g_signal_connect (playlist->priv->lockdown_settings, "changed::disable-save-to-disk", (GCallback) update_lockdown_cb, playlist);
+	g_signal_connect (playlist->priv->lockdown_settings, "changed::disable-save-to-disk",
+			  G_CALLBACK (update_lockdown_cb), playlist);
 
 	playlist->priv->repeat = g_settings_get_boolean (playlist->priv->settings, "repeat");
 	playlist->priv->shuffle = g_settings_get_boolean (playlist->priv->settings, "shuffle");
+	playlist->priv->save = g_settings_get_boolean (playlist->priv->settings, "save-playback-state");
 
 	g_signal_connect (playlist->priv->settings, "changed::repeat", (GCallback) update_repeat_cb, playlist);
 	g_signal_connect (playlist->priv->settings, "changed::shuffle", (GCallback) update_shuffle_cb, playlist);
+	g_signal_connect (playlist->priv->settings, "changed::save-playback-state", G_CALLBACK (update_save_cb), playlist);
 }
 
 static gboolean
