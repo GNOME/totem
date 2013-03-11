@@ -1593,10 +1593,12 @@ totem_playlist_entry_parsed (TotemPlParser *parser,
 	content_type = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_CONTENT_TYPE);
 	playing = parse_bool_str (g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_PLAYING));
 	subtitle_uri = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_SUBTITLE_URI);
-	starttime = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME);
-	if (starttime != NULL) {
-		g_free (playlist->priv->starttime);
-		playlist->priv->starttime = g_strdup (starttime);
+	if (playing) {
+		starttime = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_STARTTIME);
+		if (starttime != NULL) {
+			g_free (playlist->priv->starttime);
+			playlist->priv->starttime = g_strdup (starttime);
+		}
 	}
 	totem_playlist_add_one_mrl (playlist, uri, title, content_type, subtitle_uri, playing);
 }
