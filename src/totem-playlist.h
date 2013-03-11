@@ -114,8 +114,8 @@ gboolean totem_playlist_add_mrls_finish (TotemPlaylist *self,
                                          GAsyncResult *result,
                                          GError **error);
 
-void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
-					   const char *output);
+void totem_playlist_save_session_playlist (TotemPlaylist *playlist,
+					   const char *output_uri);
 void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
 					   const char *output, TotemPlParserType type);
 void totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,

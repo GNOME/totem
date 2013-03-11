@@ -439,9 +439,25 @@ totem_playlist_save_iter_foreach (GtkTreeModel *model,
 }
 
 void
-totem_playlist_save_current_playlist (TotemPlaylist *playlist, const char *output)
+totem_playlist_save_session_playlist (TotemPlaylist *playlist,
+				      const char    *output_uri)
 {
-	totem_playlist_save_current_playlist_ext (playlist, output, TOTEM_PL_PARSER_XSPF);
+	if (playlist->priv->disable_save_to_disk) {
+		/* On lockdown, we do not touch the disk,
+		 * even to remove the existing session */
+		return;
+	}
+	if (!playlist->priv->save) {
+		GFile *file;
+
+
+		file = g_file_new_for_uri (output_uri);
+		g_file_delete (file, NULL, NULL);
+		g_object_unref (file);
+		return;
+	}
+
+	totem_playlist_save_current_playlist_ext (playlist, output_uri, TOTEM_PL_PARSER_XSPF);
 }
 
 void

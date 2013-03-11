@@ -82,6 +82,6 @@ totem_session_save (Totem *totem)
 	uri = get_session_filename ();
 	/* FIXME: Save the current seek time somehow */
 	/* FIXME: Check whether we actually want to be saved */
-	totem_playlist_save_current_playlist (totem->playlist, uri);
+	totem_playlist_save_session_playlist (totem->playlist, uri);
 	g_free (uri);
 }
