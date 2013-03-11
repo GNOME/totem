@@ -2915,6 +2915,23 @@ totem_playlist_set_shuffle (TotemPlaylist *playlist, gboolean shuffle)
 }
 
 void
+totem_playlist_set_save (TotemPlaylist *playlist,
+			 gboolean       save)
+{
+	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
+
+	g_settings_set_boolean (playlist->priv->settings, "save-playback-state", save);
+}
+
+gboolean
+totem_playlist_get_save (TotemPlaylist *playlist)
+{
+	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
+
+	return playlist->priv->save;
+}
+
+void
 totem_playlist_set_at_start (TotemPlaylist *playlist)
 {
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
