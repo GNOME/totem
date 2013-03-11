@@ -447,7 +447,7 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 		 * even to remove the existing session */
 		return;
 	}
-	if (!playlist->priv->save) {
+	if (!playlist->priv->save || PL_LEN == 0) {
 		GFile *file;
 
 
