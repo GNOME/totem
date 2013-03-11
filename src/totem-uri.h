@@ -47,9 +47,6 @@ GSList *	totem_add_files			(GtkWindow *parent,
 char *		totem_add_subtitle		(GtkWindow *parent, 
 						 const char *uri);
 
-void totem_save_position (Totem *totem);
-void totem_try_restore_position (Totem *totem, const char *mrl);
-
 G_END_DECLS
 
 #endif /* TOTEM_URI_H */

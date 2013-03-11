@@ -129,10 +129,6 @@ enum {
 	LAST_SIGNAL
 };
 
-static void totem_object_set_property		(GObject *object,
-						 guint property_id,
-						 const GValue *value,
-						 GParamSpec *pspec);
 static void totem_object_get_property		(GObject *object,
 						 guint property_id,
 						 GValue *value,
@@ -224,7 +220,6 @@ totem_object_class_init (TotemObjectClass *klass)
 	object_class = (GObjectClass *) klass;
 	app_class = (GApplicationClass *) klass;
 
-	object_class->set_property = totem_object_set_property;
 	object_class->get_property = totem_object_get_property;
 	object_class->finalize = totem_object_finalize;
 
@@ -307,16 +302,6 @@ totem_object_class_init (TotemObjectClass *klass)
 							      "Current stream's display name",
 							      "Current stream's display name.",
 							      NULL, G_PARAM_READABLE));
-
-	/**
-	 * TotemObject:remember-position:
-	 *
-	 * If %TRUE, Totem will remember the position it was at last time a given file was opened.
-	 **/
-	g_object_class_install_property (object_class, PROP_REMEMBER_POSITION,
-					 g_param_spec_boolean ("remember-position", "Remember position?",
-					                       "Whether to remember the position each video was at last time.",
-							       FALSE, G_PARAM_READWRITE));
 
 	/**
 	 * TotemObject::file-opened:
@@ -438,23 +423,6 @@ totem_object_finalize (GObject *object)
 }
 
 static void
-totem_object_set_property (GObject *object,
-			   guint property_id,
-			   const GValue *value,
-			   GParamSpec *pspec)
-{
-	TotemObject *totem = TOTEM_OBJECT (object);
-
-	switch (property_id) {
-		case PROP_REMEMBER_POSITION:
-			totem->remember_position = g_value_get_boolean (value);
-			break;
-		default:
-			G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-	}
-}
-
-static void
 totem_object_get_property (GObject *object,
 			   guint property_id,
 			   GValue *value,
@@ -489,9 +457,6 @@ totem_object_get_property (GObject *object,
 		break;
 	case PROP_CURRENT_DISPLAY_NAME:
 		g_value_take_string (value, totem_playlist_get_current_title (totem->playlist));
-		break;
-	case PROP_REMEMBER_POSITION:
-		g_value_set_boolean (value, totem->remember_position);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1109,7 +1074,6 @@ totem_object_action_exit (TotemObject *totem)
 
 	if (totem->bvw) {
 		totem_action_save_size (totem);
-		totem_save_position (totem);
 		bacon_video_widget_close (totem->bvw);
 	}
 
@@ -1404,9 +1368,6 @@ totem_object_action_play_pause (TotemObject *totem)
 	} else {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
-
-		/* Save the stream position */
-		totem_save_position (totem);
 	}
 }
 
@@ -1423,9 +1384,6 @@ totem_action_pause (TotemObject *totem)
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE) {
 		bacon_video_widget_pause (totem->bvw);
 		play_pause_set_label (totem, STATE_PAUSED);
-
-		/* Save the stream position */
-		totem_save_position (totem);
 	}
 }
 
@@ -1673,7 +1631,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		totem->seek_to = 0;
 		totem->seek_to_start = 0;
 
-		totem_save_position (totem);
 		g_free (totem->mrl);
 		totem->mrl = NULL;
 		bacon_video_widget_close (totem->bvw);
@@ -1736,7 +1693,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		g_free (user_agent);
 
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-		totem_try_restore_position (totem, mrl);
 		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
 		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
 		g_free (autoload_sub);
