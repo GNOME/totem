@@ -27,14 +27,28 @@
 #include "totem-session.h"
 #include "totem-uri.h"
 
+static GFile *
+get_session_file (void)
+{
+	GFile *file;
+	char *path;
+
+	path = g_build_filename (g_get_user_config_dir (), "totem", "session_state.xspf", NULL);
+	file = g_file_new_for_path (path);
+	g_free (path);
+
+	return file;
+}
+
 static char *
 get_session_filename (void)
 {
-	char *path, *uri;
+	GFile *file;
+	char *uri;
 
-	path = g_build_filename (g_get_user_config_dir (), "totem", "session_state.xspf", NULL);
-	uri = g_filename_to_uri (path, NULL, NULL);
-	g_free (path);
+	file = get_session_file ();
+	uri = g_file_get_uri (file);
+	g_object_unref (file);
 
 	return uri;
 }
@@ -80,11 +94,11 @@ totem_session_try_restore (Totem *totem)
 void
 totem_session_save (Totem *totem)
 {
-	char *uri;
+	GFile *file;
 
-	uri = get_session_filename ();
+	file = get_session_file ();
 	/* FIXME: Save the current seek time somehow */
 	/* FIXME: Check whether we actually want to be saved */
-	totem_playlist_save_session_playlist (totem->playlist, uri);
-	g_free (uri);
+	totem_playlist_save_session_playlist (totem->playlist, file);
+	g_object_unref (file);
 }
