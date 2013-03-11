@@ -95,10 +95,11 @@ void
 totem_session_save (Totem *totem)
 {
 	GFile *file;
+	gint64 curr;
 
 	file = get_session_file ();
-	/* FIXME: Save the current seek time somehow */
 	/* FIXME: Check whether we actually want to be saved */
-	totem_playlist_save_session_playlist (totem->playlist, file);
+	curr = bacon_video_widget_get_current_time (totem->bvw);
+	totem_playlist_save_session_playlist (totem->playlist, file, curr);
 	g_object_unref (file);
 }
