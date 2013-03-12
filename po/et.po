@@ -8,15 +8,15 @@
 # Ilmar Kerm <ikerm hot ee>, 2002.
 # Ivar Smolin <okul linux ee>, 2005–2011.
 # Priit Laes <amd store20 com>, 2005–2007, 2009.
-# Mattias Põldaru <mahfiaz@gmail.com>, 2008–2010, 2012.
+# Mattias Põldaru <mahfiaz@gmail.com>, 2008–2010, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-18 16:17+0000\n"
-"PO-Revision-Date: 2012-12-18 18:28+0300\n"
+"POT-Creation-Date: 2013-03-11 22:26+0000\n"
+"PO-Revision-Date: 2013-03-12 16:45+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "Language: et\n"
@@ -102,9 +102,6 @@ msgstr "Video toon"
 msgid "The saturation of the video"
 msgstr "Video küllastatus"
 
-msgid "Resize the canvas automatically on file load"
-msgstr "Lõuendi suuruse automaatne muutmine faili laadimisel"
-
 msgid "Repeat mode"
 msgstr "Kordav režiim"
 
@@ -183,11 +180,9 @@ msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Kas filmiga koos laaditakse automaatselt ka välised peatükifailid"
 
 msgid ""
-"Whether to remember the position of played audio/video files when pausing or "
-"closing them"
+"Whether to remember the current playlist, the playing track and position."
 msgstr ""
-"Kas audio- ja videofailide viimane asukoht tuleb esitamise pausimisel või "
-"faili sulgemisel meelde jätta või mitte"
+"Kas pidada meeles praegust esitusnimekirja, esitatavat lugu ja asukohta."
 
 msgid "Active plugins list"
 msgstr "Aktiivsete pluginate nimekiri"
@@ -266,8 +261,8 @@ msgstr "Totem'i eelistused"
 msgid "Playback"
 msgstr "Esitamine"
 
-msgid "Start playing files from last position"
-msgstr "Failide esitust jätkatakse sealt, kus pooleli jäi"
+msgid "Remember last played movies"
+msgstr "Viimati esitatud filmide meelespidamine"
 
 msgid "Text Subtitles"
 msgstr "Tekstilised subtiitrid"
@@ -294,18 +289,17 @@ msgstr "Üldine"
 msgid "Display"
 msgstr "Kuva"
 
-msgid "_Resize the window when a new video is loaded"
-msgstr "_Uue video avamisel sobitatakse akna suurus"
-
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Üle_realaotusega videotelt ülerealaotuse eemaldamine"
 
-msgid "Disable screensaver when playing "
+msgid "Disable screensaver when playing"
 msgstr "Ekraanisäästja keelamine esituse ajaks"
 
+msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "Video"
 
+#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
 msgid "Video or Audio"
 msgstr "Video või audio"
 
@@ -368,6 +362,9 @@ msgstr "Kommentaar:"
 
 msgid "Container:"
 msgstr "Konteiner:"
+
+msgid "Video"
+msgstr "Video"
 
 msgid "Dimensions:"
 msgstr "Mõõtmed:"
@@ -462,24 +459,6 @@ msgstr "_Vaade"
 msgid "Fit Window to Movie"
 msgstr "Sobita aken filmi järgi"
 
-msgid "_Resize 1∶2"
-msgstr "_Suurus 1∶2"
-
-msgid "Resize to half the original video size"
-msgstr "Suurenda poole suuruseni originaalsuurusest"
-
-msgid "Resize _1∶1"
-msgstr "Suurus _1∶1"
-
-msgid "Resize to the original video size"
-msgstr "Taasta video originaalsuurus"
-
-msgid "Resize _2∶1"
-msgstr "Suurus _2∶1"
-
-msgid "Resize to double the original video size"
-msgstr "Suurenda topeltsuurusele originaalsuurusest"
-
 msgid "_Aspect Ratio"
 msgstr "_Kuvasuhe"
 
@@ -563,12 +542,6 @@ msgstr "_Programmist"
 
 msgid "About this application"
 msgstr "Lähem teave selle rakenduse kohta"
-
-msgid "Show _Controls"
-msgstr "Näita _juhtnuppe"
-
-msgid "Show controls"
-msgstr "Juhtnuppude näitamine"
 
 msgid "S_idebar"
 msgstr "_Külgriba"
@@ -777,27 +750,6 @@ msgstr ""
 
 msgid "File format not recognized"
 msgstr "Faili vormingut pole võimalik ära tunda"
-
-msgid "Disable connection to session manager"
-msgstr "Seansihalduriga ühendumise keelamine"
-
-msgid "Specify file containing saved configuration"
-msgstr "Salvestatud seadistusi sisaldava faili määramine"
-
-msgid "FILE"
-msgstr "FAIL"
-
-msgid "Specify session management ID"
-msgstr "Seansihalduse ID määramine"
-
-msgid "ID"
-msgstr "ID"
-
-msgid "Session management options:"
-msgstr "Seansihalduse valikud:"
-
-msgid "Show session management options"
-msgstr "Seansihalduse valikute näitamine"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1076,9 +1028,6 @@ msgstr "Heli vaigistamine"
 msgid "Toggle Fullscreen"
 msgstr "Täisekraanvaate sisse- või väljalülitamine"
 
-msgid "Show/Hide Controls"
-msgstr "Juhtpaneeli näitamine või peitmine"
-
 msgid "Quit"
 msgstr "Lõpetamine"
 
@@ -1090,10 +1039,6 @@ msgstr "Asendamine"
 
 msgid "Seek"
 msgstr "Kerimine"
-
-#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
-msgid "Playlist index"
-msgstr "Esitusnimekirja indeks"
 
 msgid "Movies to play"
 msgstr "Esitatavad filmid"
@@ -1496,9 +1441,6 @@ msgstr ""
 "Salvestamata jätmise korral lähevad pealkirjade nimekirjas tehtud muudatused "
 "kaotsi."
 
-msgid "Failed to parse CMML file"
-msgstr "Tõrge CMML-faili parsimisel"
-
 msgid "Add Chapter"
 msgstr "Peatüki lisamine"
 
@@ -1851,6 +1793,76 @@ msgstr "_Liigu asukohale..."
 
 msgid "Skip to a specific time"
 msgstr "Liikumine määratud ajahetkele"
+
+#~ msgid "Resize the canvas automatically on file load"
+#~ msgstr "Lõuendi suuruse automaatne muutmine faili laadimisel"
+
+#~ msgid ""
+#~ "Whether to remember the position of played audio/video files when pausing "
+#~ "or closing them"
+#~ msgstr ""
+#~ "Kas audio- ja videofailide viimane asukoht tuleb esitamise pausimisel või "
+#~ "faili sulgemisel meelde jätta või mitte"
+
+#~ msgid "Start playing files from last position"
+#~ msgstr "Failide esitust jätkatakse sealt, kus pooleli jäi"
+
+#~ msgid "_Resize the window when a new video is loaded"
+#~ msgstr "_Uue video avamisel sobitatakse akna suurus"
+
+#~ msgid "_Resize 1∶2"
+#~ msgstr "_Suurus 1∶2"
+
+#~ msgid "Resize to half the original video size"
+#~ msgstr "Suurenda poole suuruseni originaalsuurusest"
+
+#~ msgid "Resize _1∶1"
+#~ msgstr "Suurus _1∶1"
+
+#~ msgid "Resize to the original video size"
+#~ msgstr "Taasta video originaalsuurus"
+
+#~ msgid "Resize _2∶1"
+#~ msgstr "Suurus _2∶1"
+
+#~ msgid "Resize to double the original video size"
+#~ msgstr "Suurenda topeltsuurusele originaalsuurusest"
+
+#~ msgid "Show _Controls"
+#~ msgstr "Näita _juhtnuppe"
+
+#~ msgid "Show controls"
+#~ msgstr "Juhtnuppude näitamine"
+
+#~ msgid "Disable connection to session manager"
+#~ msgstr "Seansihalduriga ühendumise keelamine"
+
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "Salvestatud seadistusi sisaldava faili määramine"
+
+#~ msgid "FILE"
+#~ msgstr "FAIL"
+
+#~ msgid "Specify session management ID"
+#~ msgstr "Seansihalduse ID määramine"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Session management options:"
+#~ msgstr "Seansihalduse valikud:"
+
+#~ msgid "Show session management options"
+#~ msgstr "Seansihalduse valikute näitamine"
+
+#~ msgid "Show/Hide Controls"
+#~ msgstr "Juhtpaneeli näitamine või peitmine"
+
+#~ msgid "Playlist index"
+#~ msgstr "Esitusnimekirja indeks"
+
+#~ msgid "Failed to parse CMML file"
+#~ msgstr "Tõrge CMML-faili parsimisel"
 
 #~ msgid "Add the video to the playlist"
 #~ msgstr "Lisa video esitusnimekirja"
