@@ -2860,6 +2860,7 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 			gtk_widget_get_allocation (totem->sidebar, &allocation_sidebar);
 			width += allocation_sidebar.width + handle_size;
 		} else {
+			totem_action_save_size (totem);
 			gtk_widget_hide (totem->sidebar);
 		}
 
