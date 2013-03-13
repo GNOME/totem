@@ -1703,20 +1703,10 @@ totem_playlist_dispose (GObject *object)
 	g_clear_pointer (&playlist->priv->starttime, g_free);
 	g_clear_object (&playlist->priv->settings);
 	g_clear_object (&playlist->priv->lockdown_settings);
-
-	G_OBJECT_CLASS (totem_playlist_parent_class)->dispose (object);
-}
-
-static void
-totem_playlist_finalize (GObject *object)
-{
-	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
-
 	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
-
 	g_clear_pointer (&playlist->priv->tree_path, gtk_tree_path_free);
 
-	G_OBJECT_CLASS (totem_playlist_parent_class)->finalize (object);
+	G_OBJECT_CLASS (totem_playlist_parent_class)->dispose (object);
 }
 
 static void
@@ -3096,7 +3086,6 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 	object_class->set_property = totem_playlist_set_property;
 	object_class->get_property = totem_playlist_get_property;
 	object_class->dispose = totem_playlist_dispose;
-	object_class->finalize = totem_playlist_finalize;
 
 	/* Signals */
 	totem_playlist_table_signals[CHANGED] =
