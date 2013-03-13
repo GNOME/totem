@@ -119,8 +119,8 @@ totem_open_location_get_uri (TotemOpenLocation *open_location)
 
 	uri = g_strdup (gtk_entry_get_text (open_location->priv->uri_entry));
 
-	if (strcmp (uri, "") == 0)
-		uri = NULL;
+	if (*uri == '\0')
+		g_clear_pointer (&uri, g_free);
 
 	if (uri != NULL && g_strrstr (uri, "://") == NULL)
 	{

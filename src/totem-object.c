@@ -1179,8 +1179,7 @@ totem_action_eject (TotemObject *totem)
 	if (mount == NULL)
 		return;
 
-	g_free (totem->mrl);
-	totem->mrl = NULL;
+	g_clear_pointer (&totem->mrl, g_free);
 	bacon_video_widget_close (totem->bvw);
 	totem_file_closed (totem);
 	totem->has_played_emitted = FALSE;
@@ -1631,8 +1630,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		totem->seek_to = 0;
 		totem->seek_to_start = 0;
 
-		g_free (totem->mrl);
-		totem->mrl = NULL;
+		g_clear_pointer (&totem->mrl, g_free);
 		bacon_video_widget_close (totem->bvw);
 		totem_file_closed (totem);
 		totem->has_played_emitted = FALSE;

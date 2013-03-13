@@ -334,16 +334,9 @@ totem_properties_view_finalize (GObject *object)
 
 	props = TOTEM_PROPERTIES_VIEW (object);
 
-	if (props->priv != NULL)
-	{
-		if (props->priv->disco != NULL) {
-			g_object_unref (G_OBJECT (props->priv->disco));
-			props->priv->disco = NULL;
-		}
-		if (props->priv->label != NULL) {
-			g_object_unref (G_OBJECT (props->priv->label));
-			props->priv->label = NULL;
-		}
+	if (props->priv != NULL) {
+		g_clear_object (&props->priv->disco);
+		g_clear_object (&props->priv->label);
 		g_free (props->priv);
 	}
 	props->priv = NULL;

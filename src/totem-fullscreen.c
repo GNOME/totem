@@ -509,8 +509,7 @@ totem_fullscreen_dispose (GObject *object)
         TotemFullscreenPrivate *priv = TOTEM_FULLSCREEN_GET_PRIVATE (object);
 
 	if (priv->xml != NULL) {
-		g_object_unref (priv->xml);
-		priv->xml = NULL;
+		g_clear_object (&priv->xml);
 		gtk_widget_destroy (priv->exit_popup);
 		gtk_widget_destroy (priv->control_popup);
 	}
@@ -524,10 +523,7 @@ totem_fullscreen_finalize (GObject *object)
         TotemFullscreen *fs = TOTEM_FULLSCREEN (object);
 
 	totem_fullscreen_popup_timeout_remove (fs);
-	if (fs->priv->filter) {
-		g_object_unref (fs->priv->filter);
-		fs->priv->filter = NULL;
-	}
+	g_clear_object (&fs->priv->filter);
 
 	g_signal_handlers_disconnect_by_func (fs->priv->parent_window,
 					      G_CALLBACK (totem_fullscreen_window_realize_cb),

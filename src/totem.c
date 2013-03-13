@@ -217,8 +217,7 @@ app_command_line (GApplication             *app,
 		gdk_notify_startup_complete ();
 
 		/* Don't add files again through totem_options_process_for_server() */
-		g_strfreev (optionstate.filenames);
-		optionstate.filenames = NULL;
+		g_clear_pointer (&optionstate.filenames, g_strfreev);
 		startup_called = FALSE;
 	}
 
