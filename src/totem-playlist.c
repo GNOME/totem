@@ -1724,7 +1724,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 	playlist->priv->parser = totem_pl_parser_new ();
 
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "dvd:");
-	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "cdda:");
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "vcd:");
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "cd:");
 	totem_pl_parser_add_ignored_scheme (playlist->priv->parser, "dvb:");
