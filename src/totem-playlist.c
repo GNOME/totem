@@ -1570,8 +1570,7 @@ update_shuffle_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlis
 	playlist->priv->shuffle = g_settings_get_boolean (settings, "shuffle");
 
 	if (playlist->priv->shuffle == FALSE) {
-		g_free (playlist->priv->shuffled);
-		playlist->priv->shuffled = NULL;
+		g_clear_pointer (&playlist->priv->shuffled, g_free);
 		playlist->priv->shuffle_len = 0;
 	} else {
 		ensure_shuffled (playlist);
@@ -1698,30 +1697,12 @@ totem_playlist_dispose (GObject *object)
 {
 	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
 
-	if (playlist->priv->parser != NULL) {
-		g_object_unref (playlist->priv->parser);
-		playlist->priv->parser = NULL;
-	}
-
-	if (playlist->priv->ui_manager != NULL) {
-		g_object_unref (G_OBJECT (playlist->priv->ui_manager));
-		playlist->priv->ui_manager = NULL;
-	}
-
-	if (playlist->priv->action_group != NULL) {
-		g_object_unref (G_OBJECT (playlist->priv->action_group));
-		playlist->priv->action_group = NULL;
-	}
-
+	g_clear_object (&playlist->priv->parser);
+	g_clear_object (&playlist->priv->ui_manager);
+	g_clear_object (&playlist->priv->action_group);
 	g_clear_pointer (&playlist->priv->starttime, g_free);
-
-	if (playlist->priv->settings != NULL)
-		g_object_unref (playlist->priv->settings);
-	playlist->priv->settings = NULL;
-
-	if (playlist->priv->lockdown_settings != NULL)
-		g_object_unref (playlist->priv->lockdown_settings);
-	playlist->priv->lockdown_settings = NULL;
+	g_clear_object (&playlist->priv->settings);
+	g_clear_object (&playlist->priv->lockdown_settings);
 
 	G_OBJECT_CLASS (totem_playlist_parent_class)->dispose (object);
 }
@@ -1731,8 +1712,7 @@ totem_playlist_finalize (GObject *object)
 {
 	TotemPlaylist *playlist = TOTEM_PLAYLIST (object);
 
-	if (playlist->priv->current != NULL)
-		gtk_tree_path_free (playlist->priv->current);
+	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
 
 	g_clear_pointer (&playlist->priv->tree_path, gtk_tree_path_free);
 
@@ -2367,9 +2347,7 @@ totem_playlist_clear (TotemPlaylist *playlist)
 	store = GTK_LIST_STORE (playlist->priv->model);
 	gtk_list_store_clear (store);
 
-	if (playlist->priv->current != NULL)
-		gtk_tree_path_free (playlist->priv->current);
-	playlist->priv->current = NULL;
+	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
 
 	totem_playlist_update_save_button (playlist);
 
@@ -2983,12 +2961,7 @@ totem_playlist_set_at_start (TotemPlaylist *playlist)
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
 
 	totem_playlist_unset_playing (playlist);
-
-	if (playlist->priv->current != NULL)
-	{
-		gtk_tree_path_free (playlist->priv->current);
-		playlist->priv->current = NULL;
-	}
+	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
 	update_current_from_playlist (playlist);
 }
 
@@ -3000,12 +2973,7 @@ totem_playlist_set_at_end (TotemPlaylist *playlist)
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
 
 	totem_playlist_unset_playing (playlist);
-
-	if (playlist->priv->current != NULL)
-	{
-		gtk_tree_path_free (playlist->priv->current);
-		playlist->priv->current = NULL;
-	}
+	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
 
 	if (PL_LEN)
 	{
