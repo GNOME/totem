@@ -467,10 +467,10 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 	pl_playlist = totem_pl_playlist_new ();
 
 	if (starttime > 0) {
-		char *starttime_sec;
+		char *starttime_msec;
 
-		starttime_sec = g_strdup_printf ("%" G_GINT64_FORMAT, starttime / 1000);
-		g_object_set_data_full (G_OBJECT (pl_playlist), "starttime", starttime_sec, g_free);
+		starttime_msec = g_strdup_printf ("%" G_GINT64_FORMAT, starttime);
+		g_object_set_data_full (G_OBJECT (pl_playlist), "starttime", starttime_msec, g_free);
 	}
 
 	gtk_tree_model_foreach (playlist->priv->model,
@@ -2014,11 +2014,9 @@ parse_starttime (TotemPlaylist *playlist)
 
 	if (playlist->priv->starttime == NULL)
 		return 0;
-	ret = totem_pl_parser_parse_duration (playlist->priv->starttime, FALSE);
-	if (ret == -1)
-		return 0;
+	ret = g_ascii_strtoll (playlist->priv->starttime, NULL, 0);
 
-	return ret * 1000; /* and in msecs */
+	return ret;
 }
 
 gboolean
