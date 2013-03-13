@@ -2325,7 +2325,7 @@ on_playlist_change_name (TotemPlaylist *playlist, TotemObject *totem)
 static void
 on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 {
-        char *name = NULL;
+        char *name;
 
 	name = totem_get_nice_name_for_stream (totem);
 
@@ -2990,8 +2990,6 @@ void totem_object_action_remote_set_setting (TotemObject *totem,
 					     gboolean value)
 {
 	GtkAction *action;
-
-	action = NULL;
 
 	switch (setting) {
 	case TOTEM_REMOTE_SETTING_SHUFFLE:
