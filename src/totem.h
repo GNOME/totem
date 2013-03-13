@@ -202,17 +202,12 @@ double	totem_object_get_volume			(TotemObject *totem);
 void	totem_object_action_volume		(TotemObject *totem, double volume);
 void	totem_action_volume_relative		(TotemObject *totem, double off_pct);
 void	totem_action_volume_toggle_mute		(TotemObject *totem);
-gboolean totem_action_set_mrl			(TotemObject *totem,
+void    totem_action_set_mrl			(TotemObject *totem,
 						 const char *mrl,
 						 const char *subtitle);
 void	totem_action_set_mrl_and_play		(TotemObject *totem,
 						 const char *mrl, 
 						 const char *subtitle);
-
-gboolean totem_action_set_mrl_with_warning	(TotemObject *totem,
-						 const char *mrl,
-						 const char *subtitle,
-						 gboolean warn);
 
 void	totem_action_toggle_aspect_ratio	(TotemObject *totem);
 void	totem_action_set_aspect_ratio		(TotemObject *totem, int ratio);

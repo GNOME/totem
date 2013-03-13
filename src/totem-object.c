@@ -1274,13 +1274,13 @@ totem_action_seek (TotemObject *totem, double pos)
  *
  * Loads the specified @mrl and plays it, if possible.
  * Calls totem_action_set_mrl() then totem_action_play().
- * For more information, see the documentation for totem_action_set_mrl_with_warning().
+ * For more information, see the documentation for totem_action_set_mrl().
  **/
 void
 totem_action_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *subtitle)
 {
-	if (totem_action_set_mrl (totem, mrl, subtitle) != FALSE)
-		totem_action_play (totem);
+	totem_action_set_mrl (totem, mrl, subtitle);
+	totem_action_play (totem);
 }
 
 static gboolean
@@ -1601,11 +1601,10 @@ update_mrl_label (TotemObject *totem, const char *name)
 }
 
 /**
- * totem_action_set_mrl_with_warning:
+ * totem_action_set_mrl:
  * @totem: a #TotemObject
  * @mrl: the MRL to play
  * @subtitle: a subtitle file to load, or %NULL
- * @warn: %TRUE if error dialogs should be displayed
  *
  * Loads the specified @mrl and optionally the specified subtitle
  * file. If @subtitle is %NULL Totem will attempt to auto-locate
@@ -1613,19 +1612,13 @@ update_mrl_label (TotemObject *totem, const char *name)
  *
  * If a stream is already playing, it will be stopped and closed.
  *
- * If any errors are encountered, error dialogs will only be displayed
- * if @warn is %TRUE.
- *
- * Return value: %TRUE on success
+ * Errors will be reported asynchronously.
  **/
-gboolean
-totem_action_set_mrl_with_warning (TotemObject *totem,
-				   const char *mrl,
-				   const char *subtitle,
-				   gboolean warn)
+void
+totem_action_set_mrl (TotemObject *totem,
+		      const char *mrl,
+		      const char *subtitle)
 {
-	gboolean retval = TRUE;
-
 	if (totem->mrl != NULL) {
 		totem->seek_to = 0;
 		totem->seek_to_start = 0;
@@ -1639,8 +1632,6 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 	}
 
 	if (mrl == NULL) {
-		retval = FALSE;
-
 		play_pause_set_label (totem, STATE_STOPPED);
 
 		/* Play/Pause */
@@ -1691,7 +1682,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		g_free (user_agent);
 
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
+		bacon_video_widget_open (totem->bvw, mrl, &err);
 		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
@@ -1710,71 +1701,30 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		totem->volume_sensitive = caps;
 
 		/* Clear the playlist */
-		totem_action_set_sensitivity ("clear-playlist", retval);
+		totem_action_set_sensitivity ("clear-playlist", TRUE);
 
 		/* Subtitle selection */
-		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl) && retval);
+		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl));
 
 		/* Set the playlist */
-		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
+		play_pause_set_label (totem, STATE_PAUSED);
 
-		if (retval == FALSE && warn != FALSE) {
-			char *msg, *disp;
+		/* cast is to shut gcc up */
+		const GtkTargetEntry source_table[] = {
+			{ (gchar*) "text/uri-list", 0, 0 }
+		};
 
-			disp = totem_uri_escape_for_display (totem->mrl);
-			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
-			g_free (disp);
-			if (err && err->message) {
-				totem_action_error (totem, msg, err->message);
-			}
-			else {
-				totem_action_error (totem, msg, _("No error message"));
-			}
-			g_free (msg);
-		}
+		totem_file_opened (totem, totem->mrl);
 
-		if (retval == FALSE) {
-			if (err)
-				g_error_free (err);
-			g_free (totem->mrl);
-			totem->mrl = NULL;
-			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		} else {
-			/* cast is to shut gcc up */
-			const GtkTargetEntry source_table[] = {
-				{ (gchar*) "text/uri-list", 0, 0 }
-			};
-
-			totem_file_opened (totem, totem->mrl);
-
-			/* Set the drag source */
-			gtk_drag_source_set (GTK_WIDGET (totem->bvw),
-					     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-					     source_table, G_N_ELEMENTS (source_table),
-					     GDK_ACTION_COPY);
-		}
+		/* Set the drag source */
+		gtk_drag_source_set (GTK_WIDGET (totem->bvw),
+				     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+				     source_table, G_N_ELEMENTS (source_table),
+				     GDK_ACTION_COPY);
 	}
+
 	update_buttons (totem);
 	update_media_menu_items (totem);
-
-	return retval;
-}
-
-/**
- * totem_action_set_mrl:
- * @totem: a #TotemObject
- * @mrl: the MRL to load
- * @subtitle: a subtitle file to load, or %NULL
- *
- * Calls totem_action_set_mrl_with_warning() with warnings enabled.
- * For more information, see the documentation for totem_action_set_mrl_with_warning().
- *
- * Return value: %TRUE on success
- **/
-gboolean
-totem_action_set_mrl (TotemObject *totem, const char *mrl, const char *subtitle)
-{
-	return totem_action_set_mrl_with_warning (totem, mrl, subtitle, TRUE);
 }
 
 static gboolean
@@ -2900,7 +2850,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		totem_action_stop (totem);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 		if (mrl != NULL) {
-			totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
+			totem_action_set_mrl (totem, mrl, subtitle);
 			bacon_video_widget_pause (totem->bvw);
 			g_free (mrl);
 			g_free (subtitle);
@@ -3293,7 +3243,7 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 		update_buttons (totem);
 		totem_action_stop (totem);
 		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		totem_action_set_mrl_with_warning (totem, mrl, subtitle, FALSE);
+		totem_action_set_mrl (totem, mrl, subtitle);
 		bacon_video_widget_pause (totem->bvw);
 		g_free (mrl);
 		g_free (subtitle);
