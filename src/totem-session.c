@@ -97,6 +97,9 @@ totem_session_save (Totem *totem)
 	GFile *file;
 	gint64 curr;
 
+	if (totem->bvw == NULL)
+		return;
+
 	file = get_session_file ();
 	curr = bacon_video_widget_get_current_time (totem->bvw);
 	totem_playlist_save_session_playlist (totem->playlist, file, curr);
