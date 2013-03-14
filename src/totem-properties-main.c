@@ -83,48 +83,45 @@ static GList *
 totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 			     GList *files)
 {
-	GList *pages = NULL;
 	NautilusFileInfo *file;
-	char *uri = NULL;
+	char *uri;
 	GtkWidget *page, *label;
 	NautilusPropertyPage *property_page;
 	guint i;
-	gboolean found = FALSE;
+	gboolean found;
 
 	/* only add properties page if a single file is selected */
 	if (files == NULL || files->next != NULL)
-		goto end;
+		return NULL;
 	file = files->data;
 
 	/* only add the properties page to these mime types */
-	for (i = 0; mime_types[i] != NULL; i++)
-	{
-		if (nautilus_file_info_is_mime_type (file, mime_types[i]))
-		{
+	found = FALSE;
+	for (i = 0; mime_types[i] != NULL; i++) {
+		if (nautilus_file_info_is_mime_type (file, mime_types[i])) {
 			found = TRUE;
 			break;
 		}
 	}
 	if (found == FALSE)
-		goto end;
+		return NULL;
 
 	/* okay, make the page, init'ing the backend first if necessary */
 	if (backend_inited == FALSE) {
 		gst_init (NULL, NULL);
 		backend_inited = TRUE;
 	}
+
 	uri = nautilus_file_info_get_uri (file);
 	label = gtk_label_new (_("Audio/Video"));
 	page = totem_properties_view_new (uri, label);
+	g_free (uri);
+
 	gtk_container_set_border_width (GTK_CONTAINER (page), 6);
 	property_page = nautilus_property_page_new ("video-properties",
 			label, page);
 
-	pages = g_list_prepend (pages, property_page);
-
-end:
-	g_free (uri);
-	return pages;
+	return g_list_prepend (NULL, property_page);
 }
 
 /* --- extension interface --- */
