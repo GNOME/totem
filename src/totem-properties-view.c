@@ -344,20 +344,7 @@ totem_properties_view_finalize (GObject *object)
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-GtkWidget *
-totem_properties_view_new (const char *location, GtkWidget *label)
-{
-	TotemPropertiesView *self;
-
-	self = g_object_new (TOTEM_TYPE_PROPERTIES_VIEW, NULL);
-	g_object_ref (label);
-	self->priv->label = label;
-	totem_properties_view_set_location (self, location);
-
-	return GTK_WIDGET (self);
-}
-
-void
+static void
 totem_properties_view_set_location (TotemPropertiesView *props,
 				    const char          *location)
 {
@@ -378,3 +365,15 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 	}
 }
 
+GtkWidget *
+totem_properties_view_new (const char *location, GtkWidget *label)
+{
+	TotemPropertiesView *self;
+
+	self = g_object_new (TOTEM_TYPE_PROPERTIES_VIEW, NULL);
+	g_object_ref (label);
+	self->priv->label = label;
+	totem_properties_view_set_location (self, location);
+
+	return GTK_WIDGET (self);
+}
