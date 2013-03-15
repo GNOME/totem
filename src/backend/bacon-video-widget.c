@@ -228,6 +228,7 @@ struct BaconVideoWidgetPrivate
   gdouble                      volume;
   gboolean                     is_menu;
   gboolean                     has_angles;
+  GList                       *chapters;
 
   BvwRotation                  rotation;
   
@@ -1929,6 +1930,53 @@ bvw_get_navigation_if_available (BaconVideoWidget *bvw)
 }
 
 static void
+bvw_handle_toc_message (GstMessage       *message,
+			BaconVideoWidget *bvw)
+{
+  GstToc *toc;
+  GList *entries, *l;
+  guint i;
+
+  gst_message_parse_toc (message, &toc, NULL);
+  if (gst_toc_get_scope (toc) != GST_TOC_SCOPE_GLOBAL)
+    goto out;
+
+  entries = gst_toc_get_entries (toc);
+
+parse:
+  if (entries == NULL)
+    goto out;
+  if (gst_toc_entry_get_entry_type (entries->data) != GST_TOC_ENTRY_TYPE_CHAPTER) {
+    if (g_list_length (entries) == 1) {
+      entries = gst_toc_entry_get_sub_entries (entries->data);
+      goto parse;
+    }
+    goto out;
+  }
+
+  GST_DEBUG ("Found %d chapters", g_list_length (entries));
+
+  if (bvw->priv->chapters)
+    g_list_free_full (bvw->priv->chapters, (GDestroyNotify) gst_mini_object_unref);
+
+  for (l = entries, i = 0; l != NULL; l = l->next, i++) {
+    GstTocEntry *entry = l->data;
+    gint64 start, stop;
+
+    if (!gst_toc_entry_get_start_stop_times (entry, &start, &stop)) {
+      GST_DEBUG ("Chapter #%d (couldn't get times)", i);
+    } else {
+      GST_DEBUG ("Chapter #%d (start: %li stop: %li)", i, start, stop);
+    }
+  }
+
+  bvw->priv->chapters = g_list_copy_deep (entries, (GCopyFunc) gst_mini_object_ref, NULL);
+
+out:
+  gst_toc_unref (toc);
+}
+
+static void
 bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 {
   GstMessageType msg_type;
@@ -2086,6 +2134,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
 	bacon_video_widget_get_stream_length (bvw);
 	bacon_video_widget_is_seekable (bvw);
       break;
+    }
+
+    case GST_MESSAGE_TOC: {
+	bvw_handle_toc_message (message, bvw);
+	break;
     }
 
     /* FIXME: at some point we might want to handle CLOCK_LOST and set the
@@ -2577,6 +2630,11 @@ bacon_video_widget_finalize (GObject * object)
     bvw->priv->update_id = 0;
   }
 
+  if (bvw->priv->chapters) {
+    g_list_free_full (bvw->priv->chapters, (GDestroyNotify) gst_mini_object_unref);
+    bvw->priv->chapters = NULL;
+  }
+
   g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
   g_clear_pointer (&bvw->priv->audiotags, gst_tag_list_unref);
   g_clear_pointer (&bvw->priv->videotags, gst_tag_list_unref);
@@ -2831,6 +2889,28 @@ bacon_video_widget_set_next_subtitle (BaconVideoWidget *bvw)
   bacon_video_widget_set_subtitle (bvw, current_text);
 }
 
+static gboolean
+bvw_chapter_compare_func (GstTocEntry      *entry,
+			  BaconVideoWidget *bvw)
+{
+  gint64 start, stop;
+
+  if (!gst_toc_entry_get_start_stop_times (entry, &start, &stop))
+    return -1;
+
+  if (bvw->priv->current_time >= start / GST_MSECOND &&
+      bvw->priv->current_time < stop / GST_MSECOND)
+    return 0;
+
+  return -1;
+}
+
+static GList *
+bvw_get_current_chapter (BaconVideoWidget *bvw)
+{
+  return g_list_find_custom (bvw->priv->chapters, bvw, (GCompareFunc) bvw_chapter_compare_func);
+}
+
 /**
  * bacon_video_widget_has_next_track:
  * @bvw: a #BaconVideoWidget
@@ -2843,12 +2923,18 @@ bacon_video_widget_set_next_subtitle (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
 {
+  GList *l;
+
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   if (bvw->priv->mrl == NULL)
     return FALSE;
 
   if (g_str_has_prefix (bvw->priv->mrl, "dvd:/"))
+    return TRUE;
+
+  l = bvw_get_current_chapter (bvw);
+  if (l != NULL && l->next != NULL)
     return TRUE;
 
   return FALSE;
@@ -2868,6 +2954,7 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 {
   GstFormat fmt;
   gint64 val;
+  GList *l;
 
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
@@ -2875,6 +2962,11 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
     return FALSE;
 
   if (g_str_has_prefix (bvw->priv->mrl, "dvd:/"))
+    return TRUE;
+
+  /* Look in the chapters first */
+  l = bvw_get_current_chapter (bvw);
+  if (l != NULL && l->prev != NULL)
     return TRUE;
 
   fmt = gst_format_get_by_nick ("chapter");
@@ -3854,6 +3946,11 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   if (bvw->priv->eos_id != 0)
     g_source_remove (bvw->priv->eos_id);
 
+  if (bvw->priv->chapters) {
+    g_list_free_full (bvw->priv->chapters, (GDestroyNotify) gst_mini_object_unref);
+    bvw->priv->chapters = NULL;
+  }
+
   g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
   g_clear_pointer (&bvw->priv->audiotags, gst_tag_list_unref);
   g_clear_pointer (&bvw->priv->videotags, gst_tag_list_unref);
@@ -3948,6 +4045,35 @@ handle_dvd_seek (BaconVideoWidget *bvw,
   }
 }
 
+static gboolean
+handle_chapters_seek (BaconVideoWidget *bvw,
+		      gboolean          forward)
+{
+  GList *l;
+  GstTocEntry *entry;
+  gint64 start;
+
+  l = bvw_get_current_chapter (bvw);
+  if (!l)
+    return FALSE;
+
+  entry = NULL;
+  if (forward && l->next)
+    entry = l->next->data;
+  else if (!forward && l->prev)
+    entry = l->prev->data;
+
+  if (!entry)
+    return FALSE;
+
+  if (!gst_toc_entry_get_start_stop_times (entry, &start, NULL))
+    return FALSE;
+
+  GST_DEBUG ("Found chapter and seeking to %" G_GINT64_FORMAT, start / GST_MSECOND);
+
+  return bacon_video_widget_seek_time (bvw, start / GST_MSECOND, FALSE, NULL);
+}
+
 /**
  * bacon_video_widget_dvd_event:
  * @bvw: a #BaconVideoWidget
@@ -4002,10 +4128,12 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_ACTIVATE);
       break;
     case BVW_DVD_NEXT_CHAPTER:
-      handle_dvd_seek (bvw, 1, "chapter");
+      if (!handle_chapters_seek (bvw, TRUE))
+	handle_dvd_seek (bvw, 1, "chapter");
       break;
     case BVW_DVD_PREV_CHAPTER:
-      handle_dvd_seek (bvw, -1, "chapter");
+      if (!handle_chapters_seek (bvw, FALSE))
+	handle_dvd_seek (bvw, -1, "chapter");
       break;
     case BVW_DVD_NEXT_TITLE:
       handle_dvd_seek (bvw, 1, "title");
