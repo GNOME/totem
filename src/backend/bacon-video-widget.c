@@ -2050,7 +2050,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       }
       break;
     }
-    case GST_MESSAGE_ELEMENT:{
+    case GST_MESSAGE_ELEMENT: {
       bvw_handle_element_message (bvw, message);
       break;
     }
