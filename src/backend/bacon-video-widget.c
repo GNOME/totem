@@ -3991,11 +3991,9 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
         dir = -1;
 
       if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_PREV_CHAPTER)
-        fmt_name = "chapter"; 
-      else if (type == BVW_DVD_NEXT_TITLE || type == BVW_DVD_PREV_TITLE)
-        fmt_name = "title";
+        fmt_name = "chapter";
       else
-        fmt_name = "angle";
+        fmt_name = "title";
 
       bvw_set_playback_direction (bvw, TRUE);
 
