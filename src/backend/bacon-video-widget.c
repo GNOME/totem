@@ -3922,6 +3922,31 @@ bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
 					  GST_SEEK_FLAG_ACCURATE, NULL);
 }
 
+static void
+handle_dvd_seek (BaconVideoWidget *bvw,
+		 int               offset,
+		 const char       *fmt_name)
+{
+  GstFormat fmt;
+  gint64 val;
+
+  fmt = gst_format_get_by_nick (fmt_name);
+  if (!fmt)
+    return;
+
+  bvw_set_playback_direction (bvw, TRUE);
+
+  if (gst_element_query_position (bvw->priv->play, fmt, &val)) {
+    GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
+    val += offset;
+    GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
+    gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
+		      GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, G_GINT64_CONSTANT (0));
+    bvw->priv->rate = FORWARD_RATE;
+  } else {
+    GST_DEBUG ("failed to query position (%s)", fmt_name);
+  }
+}
 
 /**
  * bacon_video_widget_dvd_event:
@@ -3977,39 +4002,17 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_ACTIVATE);
       break;
     case BVW_DVD_NEXT_CHAPTER:
-    case BVW_DVD_PREV_CHAPTER:
-    case BVW_DVD_NEXT_TITLE:
-    case BVW_DVD_PREV_TITLE: {
-      const gchar *fmt_name;
-      GstFormat fmt;
-      gint64 val;
-      gint dir;
-
-      if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_NEXT_TITLE)
-        dir = 1;
-      else
-        dir = -1;
-
-      if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_PREV_CHAPTER)
-        fmt_name = "chapter";
-      else
-        fmt_name = "title";
-
-      bvw_set_playback_direction (bvw, TRUE);
-
-      fmt = gst_format_get_by_nick (fmt_name);
-      if (gst_element_query_position (bvw->priv->play, fmt, &val)) {
-        GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
-        val += dir;
-        GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
-        gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
-            GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, G_GINT64_CONSTANT (0));
-	bvw->priv->rate = FORWARD_RATE;
-      } else {
-        GST_DEBUG ("failed to query position (%s)", fmt_name);
-      }
+      handle_dvd_seek (bvw, 1, "chapter");
       break;
-    }
+    case BVW_DVD_PREV_CHAPTER:
+      handle_dvd_seek (bvw, -1, "chapter");
+      break;
+    case BVW_DVD_NEXT_TITLE:
+      handle_dvd_seek (bvw, 1, "title");
+      break;
+    case BVW_DVD_PREV_TITLE:
+      handle_dvd_seek (bvw, -1, "title");
+      break;
     default:
       GST_WARNING ("unhandled type %d", type);
       break;
