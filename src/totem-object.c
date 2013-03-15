@@ -1737,15 +1737,17 @@ totem_time_within_seconds (TotemObject *totem)
 	return (_time < REWIND_OR_PREVIOUS);
 }
 
+#define totem_has_direction_track(totem, dir) (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ? bacon_video_widget_has_next_track (totem->bvw) : bacon_video_widget_has_previous_track (totem->bvw))
+
 static void
 totem_action_direction (TotemObject *totem, TotemPlaylistDirection dir)
 {
-	if (bacon_video_widget_has_next_track (totem->bvw) == FALSE &&
+	if (totem_has_direction_track (totem, dir) == FALSE &&
 	    totem_playlist_has_direction (totem->playlist, dir) == FALSE &&
 	    totem_playlist_get_repeat (totem->playlist) == FALSE)
 		return;
 
-	if (bacon_video_widget_has_next_track (totem->bvw) != FALSE) {
+	if (totem_has_direction_track (totem, dir) != FALSE) {
 		BvwDVDEvent event;
 		event = (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ? BVW_DVD_NEXT_CHAPTER : BVW_DVD_PREV_CHAPTER);
 		bacon_video_widget_dvd_event (totem->bvw, event);
