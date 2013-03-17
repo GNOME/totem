@@ -3,7 +3,7 @@
 #
 # Jang,Jae-Man <jacojang@korea.com>, 2003.
 # Young-Ho Cha <ganadist@gmail.com>, 2006
-# Changwoo Ryu <cwryu@debian.org>, 2004-2012.
+# Changwoo Ryu <cwryu@debian.org>, 2004-2013.
 #
 #
 # 새로 번역하신 분은 아래 "translator-credits"에 추가해 주세요.
@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-17 09:30+0000\n"
-"PO-Revision-Date: 2012-09-09 07:46+0900\n"
+"POT-Creation-Date: 2013-03-06 17:19+0000\n"
+"PO-Revision-Date: 2013-03-17 19:39+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: Korean\n"
@@ -29,58 +29,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1180
-#: ../src/totem-object.c:1650 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1178
+#: ../src/totem-object.c:1648 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "멈춤"
 
-#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1173
+#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1171
 msgid "Paused"
 msgstr "일시 정지"
 
-#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1166
+#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1164
 msgid "Playing"
 msgstr "재생중"
 
-#: ../browser-plugin/totem-plugin-viewer.c:386
+#: ../browser-plugin/totem-plugin-viewer.c:385
 #: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "영상을 재생하는 중"
 
-#: ../browser-plugin/totem-plugin-viewer.c:443
+#: ../browser-plugin/totem-plugin-viewer.c:442
 msgid "No URI to play"
 msgstr "재생할 URI가 없습니다"
 
-#: ../browser-plugin/totem-plugin-viewer.c:676
-#: ../browser-plugin/totem-plugin-viewer.c:1700
+#: ../browser-plugin/totem-plugin-viewer.c:675
+#: ../browser-plugin/totem-plugin-viewer.c:1699
 msgid "Totem Movie Player"
 msgstr "토템 동영상 플레이어"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1120
+#: ../browser-plugin/totem-plugin-viewer.c:1119
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\"(으)로 열기(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2475
+#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2473
 msgid "An error occurred"
 msgstr "오류가 발생했습니다"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2033
+#: ../browser-plugin/totem-plugin-viewer.c:2032
 msgid "No playlist or playlist empty"
 msgstr "재생 목록이 없거나 목록이 비어 있습니다"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2128
+#: ../browser-plugin/totem-plugin-viewer.c:2127
 msgid "Movie browser plugin"
 msgstr "동영상 브라우저 플러그인"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:239
+#: ../browser-plugin/totem-plugin-viewer.c:2143 ../src/totem.c:249
 msgid "Could not initialize the thread-safe libraries."
 msgstr "스레드에 안전한 라이브러리를 초기화할 수 없습니다."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144
+#: ../browser-plugin/totem-plugin-viewer.c:2143
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. 토템 플러그인을 끝냅니다."
 
@@ -251,11 +251,11 @@ msgstr "제거(_R)"
 msgid "Remove file from playlist"
 msgstr "재생 목록에서 파일을 제거합니다"
 
-#: ../data/playlist.ui.h:3 ../data/video-list.ui.h:3
+#: ../data/playlist.ui.h:3
 msgid "_Copy Location"
 msgstr "위치 복사(_C)"
 
-#: ../data/playlist.ui.h:4 ../data/video-list.ui.h:4
+#: ../data/playlist.ui.h:4
 msgid "Copy the location to the clipboard"
 msgstr "위치를 클립보드에 복사합니다"
 
@@ -302,8 +302,8 @@ msgstr "크게"
 msgid "Extra Large"
 msgstr "아주 크게"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5479
-#: ../src/totem-properties-view.c:231
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5461
+#: ../src/totem-properties-view.c:232
 msgid "Stereo"
 msgstr "스테레오"
 
@@ -381,68 +381,69 @@ msgid "Disable _deinterlacing of interlaced videos"
 msgstr "비디오의 인터레이스 없애기 사용하지 않기(_D)"
 
 #: ../data/preferences.ui.h:27
-msgid "Disable screensaver when playing "
-msgstr "다음 재생시 화면 보호기를 사용하지 않음: "
+msgid "Disable screensaver when playing"
+msgstr "다음 재생시 화면 보호기를 사용하지 않음:"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:273
+#: ../data/preferences.ui.h:28
+msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "비디오"
 
-#: ../data/preferences.ui.h:29
+#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
+#: ../data/preferences.ui.h:30
 msgid "Video or Audio"
 msgstr "비디오 또는 오디오"
 
-#: ../data/preferences.ui.h:30
+#: ../data/preferences.ui.h:31
 msgid "Visual Effects"
 msgstr "시각 효과"
 
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:32
 msgid "Show _visual effects when an audio file is played"
 msgstr "오디오 파일 재생시 시각 효과 표시(_V)"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:33
 msgid "_Type of visualization:"
 msgstr "시각 효과 종류(_T):"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:34
 msgid "Visualization _size:"
 msgstr "시각 효과 크기(_S):"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:35
 msgid "Color Balance"
 msgstr "색 밸런스"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:36
 msgid "_Brightness:"
 msgstr "밝기(_B):"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:37
 msgid "Co_ntrast:"
 msgstr "대비(_N):"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:38
 msgid "Sat_uration:"
 msgstr "채도(_U):"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:39
 msgid "_Hue:"
 msgstr "색상(_H):"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:40
 msgid "Reset to _Defaults"
 msgstr "기본값으로 초기화(_D)"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:41
 msgid "Audio Output"
 msgstr "오디오 출력"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:42
 msgid "_Audio output type:"
 msgstr "오디오 출력 형식(_A):"
 
-#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:271
+#: ../data/preferences.ui.h:43 ../data/properties.ui.h:14
+#: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "오디오"
 
@@ -474,6 +475,10 @@ msgstr "커멘트:"
 msgid "Container:"
 msgstr "컨테이너:"
 
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+msgid "Video"
+msgstr "비디오"
+
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "크기:"
@@ -499,8 +504,8 @@ msgid "Channels:"
 msgstr "채널:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:238
-#: ../src/totem.c:247 ../src/totem-menu.c:790 ../src/totem-object.c:1658
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:248
+#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1656
 msgid "Videos"
 msgstr "동영상"
 
@@ -510,7 +515,9 @@ msgstr "동영상을 재생합니다"
 
 #: ../data/totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr "Video;비디오;Movie;영상;Film;영화;Clip;동영상;Series;시리즈;Player;플레이어;DVD;TV;텔레비젼;티비;Disc;디스크;"
+msgstr ""
+"Video;비디오;Movie;영상;Film;영화;Clip;동영상;Series;시리즈;Player;플레이어;"
+"DVD;TV;텔레비젼;티비;Disc;디스크;"
 
 #: ../data/totem.ui.h:1
 msgid "_Open"
@@ -599,24 +606,24 @@ msgid "Fit Window to Movie"
 msgstr "창 크기를 영상 크기에 맞추기"
 
 #: ../data/totem.ui.h:22
-msgid "_Resize 1:2"
-msgstr "1:2 크기(_R)"
+msgid "_Resize 1∶2"
+msgstr "1∶2 크기(_R)"
 
 #: ../data/totem.ui.h:23
 msgid "Resize to half the original video size"
 msgstr "원래 영상 크기의 절반 크기로"
 
 #: ../data/totem.ui.h:24
-msgid "Resize _1:1"
-msgstr "_1:1 크기"
+msgid "Resize _1∶1"
+msgstr "_1∶1 크기"
 
 #: ../data/totem.ui.h:25
 msgid "Resize to the original video size"
 msgstr "원래 영상 크기와 같은 크기로"
 
 #: ../data/totem.ui.h:26
-msgid "Resize _2:1"
-msgstr "_2:1 크기"
+msgid "Resize _2∶1"
+msgstr "_2∶1 크기"
 
 #: ../data/totem.ui.h:27
 msgid "Resize to double the original video size"
@@ -768,28 +775,28 @@ msgid "Sets square aspect ratio"
 msgstr "화면 비율을 정사각형으로 설정합니다"
 
 #: ../data/totem.ui.h:64
-msgid "4:3 (TV)"
-msgstr "4:3 (TV)"
+msgid "4∶3 (TV)"
+msgstr "4∶3 (TV)"
 
 #: ../data/totem.ui.h:65
-msgid "Sets 4:3 (TV) aspect ratio"
-msgstr "4:3 (TV) 화면 비율"
+msgid "Sets 4∶3 (TV) aspect ratio"
+msgstr "4∶3 (TV) 화면 비율"
 
 #: ../data/totem.ui.h:66
-msgid "16:9 (Widescreen)"
-msgstr "16:9 (와이드스크린)"
+msgid "16∶9 (Widescreen)"
+msgstr "16∶9 (와이드스크린)"
 
 #: ../data/totem.ui.h:67
-msgid "Sets 16:9 (widescreen) aspect ratio"
-msgstr "16:9 (와이드) 화면 비율"
+msgid "Sets 16∶9 (widescreen) aspect ratio"
+msgstr "16∶9 (와이드) 화면 비율"
 
 #: ../data/totem.ui.h:68
-msgid "2.11:1 (DVB)"
-msgstr "2.11:1 (DVB)"
+msgid "2.11∶1 (DVB)"
+msgstr "2.11∶1 (DVB)"
 
 #: ../data/totem.ui.h:69
-msgid "Sets 2.11:1 (DVB) aspect ratio"
-msgstr "2.11:1 (DVB) 화면 비율"
+msgid "Sets 2.11∶1 (DVB) aspect ratio"
+msgstr "2.11∶1 (DVB) 화면 비율"
 
 #: ../data/totem.ui.h:70
 msgid "S_ubtitles"
@@ -831,104 +838,101 @@ msgstr "재생 시간 표시줄"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "열려는 파일의 주소를 입력하십시오(_A):"
 
-#: ../data/video-list.ui.h:1 ../src/totem-dnd-menu.c:97
-msgid "_Add to Playlist"
-msgstr "재생 목록에 추가(_A)"
-
-#: ../data/video-list.ui.h:2
-msgid "Add the video to the playlist"
-msgstr "재생 목록에 영상을 추가할 수 없습니다"
-
-#: ../src/backend/bacon-video-widget.c:1641
+#: ../src/backend/bacon-video-widget.c:1639
 msgid "Password requested for RTSP server"
 msgstr "RTSP 서버에서 암호를 요청했습니다"
 
-#: ../src/backend/bacon-video-widget.c:2927
+#: ../src/backend/bacon-video-widget.c:2883
 #, c-format
 msgid "Audio Track #%d"
 msgstr "오디오 트랙 #%d"
 
-#: ../src/backend/bacon-video-widget.c:2931
+#: ../src/backend/bacon-video-widget.c:2887
 #, c-format
 msgid "Subtitle #%d"
 msgstr "자막 #%d"
 
-#: ../src/backend/bacon-video-widget.c:3328
+#: ../src/backend/bacon-video-widget.c:3284
 msgid "The server you are trying to connect to is not known."
 msgstr "연결하려는 서버를 알 수 없습니다."
 
-#: ../src/backend/bacon-video-widget.c:3331
+#: ../src/backend/bacon-video-widget.c:3287
 msgid "The connection to this server was refused."
 msgstr "이 서버에 대한 연결이 거부되었습니다."
 
-#: ../src/backend/bacon-video-widget.c:3334
+#: ../src/backend/bacon-video-widget.c:3290
 msgid "The specified movie could not be found."
 msgstr "지정한 동영상을 찾을 수 없습니다."
 
-#: ../src/backend/bacon-video-widget.c:3341
+#: ../src/backend/bacon-video-widget.c:3297
 msgid "The server refused access to this file or stream."
 msgstr "서버에서 이 파일이나 스트림에 대한 접근을 거부햇습니다."
 
-#: ../src/backend/bacon-video-widget.c:3347
+#: ../src/backend/bacon-video-widget.c:3303
 msgid "Authentication is required to access this file or stream."
 msgstr "이 파일이나 스트림에 접근하려면 인증이 필요합니다."
 
-#: ../src/backend/bacon-video-widget.c:3354
+#: ../src/backend/bacon-video-widget.c:3310
 msgid "You are not allowed to open this file."
 msgstr "이 파일을 열 권한이 없습니다."
 
-#: ../src/backend/bacon-video-widget.c:3359
+#: ../src/backend/bacon-video-widget.c:3315
 msgid "This location is not a valid one."
 msgstr "올바른 위치가 아닙니다."
 
-#: ../src/backend/bacon-video-widget.c:3367
+#: ../src/backend/bacon-video-widget.c:3323
 msgid "The movie could not be read."
 msgstr "동영상을 읽을 수 없습니다."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3390
-#: ../src/backend/bacon-video-widget.c:3398
+#: ../src/backend/bacon-video-widget.c:3346
+#: ../src/backend/bacon-video-widget.c:3354
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
-"The playback of this movie requires the following decoders which are not "
+"The playback of this movie requires the following plugins which are not "
 "installed:\n"
 "\n"
 "%s"
 msgstr[0] ""
-"이 동영상을 재생하려면 다음 디코더가 필요하지만 설치하지 않았습니다:\n"
+"이 동영상을 재생하려면 다음 플러그인이 필요하지만 설치하지 않았습니다:\n"
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3409
+#: ../src/backend/bacon-video-widget.c:3365
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
-msgstr "코덱이 없어서 오디오 또는 비디오 스트림을 처리할 수 없습니다. 동영상 파일의 종류에 따라 추가 플러그인을 설치해야 할 수도 있습니다."
+msgstr ""
+"코덱이 없어서 오디오 또는 비디오 스트림을 처리할 수 없습니다. 동영상 파일의 "
+"종류에 따라 추가 플러그인을 설치해야 할 수도 있습니다."
 
-#: ../src/backend/bacon-video-widget.c:3419
+#: ../src/backend/bacon-video-widget.c:3375
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
-msgstr "이 파일은 네트워크를 통해 재생할 수 없습니다. 먼저 로컬 위치에 다운로드하십시오."
+msgstr ""
+"이 파일은 네트워크를 통해 재생할 수 없습니다. 먼저 로컬 위치에 다운로드하십시"
+"오."
 
-#: ../src/backend/bacon-video-widget.c:5475 ../src/totem-properties-view.c:227
+#: ../src/backend/bacon-video-widget.c:5457 ../src/totem-properties-view.c:228
 msgid "Surround"
 msgstr "서라운드"
 
-#: ../src/backend/bacon-video-widget.c:5477 ../src/totem-properties-view.c:229
+#: ../src/backend/bacon-video-widget.c:5459 ../src/totem-properties-view.c:230
 msgid "Mono"
 msgstr "모노"
 
-#: ../src/backend/bacon-video-widget.c:5762
+#: ../src/backend/bacon-video-widget.c:5746
 msgid "Media contains no supported video streams."
 msgstr "지원하지 않는 비디오 스트림이 미디어에 포함되어 있습니다."
 
-#: ../src/backend/bacon-video-widget.c:5944
+#: ../src/backend/bacon-video-widget.c:5928
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
-msgstr "필요한 플러그인이 없습니다. 프로그램을 올바르게 설치했는지 확인하십시오."
+msgstr ""
+"필요한 플러그인이 없습니다. 프로그램을 올바르게 설치했는지 확인하십시오."
 
 #: ../src/eggdesktopfile.c:165
 #, c-format
@@ -1162,17 +1166,17 @@ msgstr[0] "초당 %d 프레임"
 msgid "Audio Preview"
 msgstr "오디오 미리 보기"
 
-#: ../src/totem.c:239
+#: ../src/totem.c:249
 msgid "Verify your system installation. Totem will now exit."
 msgstr "시스템 설치가 올바른지 확인하십시오. 토템을 끝냅니다."
-
-#: ../src/totem-cell-renderer-video.c:126
-msgid "Unknown video"
-msgstr "알 수 없는 영상"
 
 #: ../src/totem-dnd-menu.c:94
 msgid "_Play Now"
 msgstr "지금 재생(_P)"
+
+#: ../src/totem-dnd-menu.c:97
+msgid "_Add to Playlist"
+msgstr "재생 목록에 추가(_A)"
 
 #: ../src/totem-dnd-menu.c:103
 msgid "Cancel"
@@ -1248,26 +1252,26 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "자동"
 
-#: ../src/totem-menu.c:789
+#: ../src/totem-menu.c:788
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "Copyright © 2002-2009 Bastien Nocera"
 
-#: ../src/totem-menu.c:794
+#: ../src/totem-menu.c:792
 msgid "translator-credits"
 msgstr ""
 "장재만 <jacojang@korea.com>\n"
 "류창우 <cwryu@debian.org>\n"
 "차영호 <ganadist@gmail.com>"
 
-#: ../src/totem-menu.c:798
+#: ../src/totem-menu.c:796
 msgid "Totem Website"
 msgstr "토템 홈페이지"
 
-#: ../src/totem-menu.c:829
+#: ../src/totem-menu.c:827
 msgid "Configure Plugins"
 msgstr "플러그인 설정"
 
-#: ../src/totem-object.c:162
+#: ../src/totem-object.c:161
 #, c-format
 msgid ""
 "%s\n"
@@ -1277,31 +1281,31 @@ msgstr ""
 "사용 가능한 명령행 옵션 목록을 보려면 '%s --help' 명령을 실행하십시오.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:591
+#: ../src/totem-object.c:589
 #, c-format
 msgid "Totem %s"
 msgstr "토템 %s"
 
-#: ../src/totem-object.c:1168 ../src/totem-options.c:52
+#: ../src/totem-object.c:1166 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "일시 정지"
 
-#: ../src/totem-object.c:1175 ../src/totem-object.c:1185
+#: ../src/totem-object.c:1173 ../src/totem-object.c:1183
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "재생"
 
-#: ../src/totem-object.c:1267 ../src/totem-object.c:1294
-#: ../src/totem-object.c:1787 ../src/totem-object.c:1942
+#: ../src/totem-object.c:1265 ../src/totem-object.c:1292
+#: ../src/totem-object.c:1785 ../src/totem-object.c:1940
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "토템이 '%s'을(를) 재생할 수 없습니다."
 
-#: ../src/totem-object.c:1793
+#: ../src/totem-object.c:1791
 msgid "No error message"
 msgstr "오류 메시지가 없습니다"
 
-#: ../src/totem-object.c:2133
+#: ../src/totem-object.c:2131
 msgid "Totem could not display the help contents."
 msgstr "토템 도움말 차례를 표시할 수 없습니다."
 
@@ -1412,50 +1416,50 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "동시에 대기열에 넣고 바꿀 수 없습니다"
 
 #. By extension entry
-#: ../src/totem-playlist.c:162
+#: ../src/totem-playlist.c:161
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast 재생 목록"
 
-#: ../src/totem-playlist.c:163
+#: ../src/totem-playlist.c:162
 msgid "MP3 audio (streamed)"
 msgstr "MP3 오디오(스트림)"
 
-#: ../src/totem-playlist.c:164
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 오디오(스트림, DOS 형식)"
 
-#: ../src/totem-playlist.c:165
+#: ../src/totem-playlist.c:164
 msgid "XML Shareable Playlist"
 msgstr "XML 공유 재생 목록(XSPF)"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:348
+#: ../src/totem-playlist.c:347
 #, c-format
 msgid "Title %d"
 msgstr "타이틀 %d"
 
-#: ../src/totem-playlist.c:447
+#: ../src/totem-playlist.c:446
 msgid "Could not save the playlist"
 msgstr "재생 목록을 저장할 수 없습니다"
 
-#: ../src/totem-playlist.c:1022
+#: ../src/totem-playlist.c:1021
 msgid "Save Playlist"
 msgstr "재생 목록 저장"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1034 ../src/totem-playlist.c:1263
+#: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1262
 #: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "재생 목록"
 
-#: ../src/totem-playlist.c:1862
+#: ../src/totem-playlist.c:1861
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "'%s' 재생 목록을 파싱할 수 없습니다. 손상된 것 같습니다."
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1862
 msgid "Playlist error"
 msgstr "재생 목록 오류"
 
@@ -1467,7 +1471,7 @@ msgstr "기본 설정"
 msgid "Select Subtitle Font"
 msgstr "자막 글꼴 선택"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:269
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
 msgid "Audio/Video"
 msgstr "오디오/비디오"
 
@@ -1501,13 +1505,13 @@ msgstr "%d x %d"
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:219
+#: ../src/totem-properties-view.c:220
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "해당 없음"
 
-#: ../src/totem-properties-view.c:239
+#: ../src/totem-properties-view.c:241
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "해당 없음"
@@ -1696,11 +1700,11 @@ msgstr "서양어"
 msgid "Vietnamese"
 msgstr "베트남어"
 
-#: ../src/totem-uri.c:343 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:343 ../src/plugins/chapters/totem-chapters.c:984
 msgid "All files"
 msgstr "모든 파일"
 
-#: ../src/totem-uri.c:348 ../src/plugins/chapters/totem-chapters.c:995
+#: ../src/totem-uri.c:348 ../src/plugins/chapters/totem-chapters.c:981
 msgid "Supported files"
 msgstr "지원하는 파일"
 
@@ -1728,14 +1732,10 @@ msgstr "동영상 혹은 재생 목록 선택"
 msgid "Add Directory"
 msgstr "디렉터리 추가"
 
-#: ../src/totem-video-list.c:330
-msgid "No video URI"
-msgstr "비디오 URI가 없습니다"
-
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:848
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1746,15 +1746,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:842
+#: ../src/totem-video-thumbnailer.c:849
 msgid "Filename"
 msgstr "파일 이름"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:851
 msgid "Resolution"
 msgstr "해상도"
 
-#: ../src/totem-video-thumbnailer.c:847
+#: ../src/totem-video-thumbnailer.c:854
 msgid "Duration"
 msgstr "재생 시간"
 
@@ -1878,7 +1878,7 @@ msgid "Create a new chapter list for the movie"
 msgstr "동영상에 대한 새 챕터 목록을 만듭니다"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1139
+#: ../src/plugins/chapters/totem-chapters.c:1125
 msgid "Chapters"
 msgstr "챕터"
 
@@ -1895,64 +1895,60 @@ msgstr ""
 "<b>제목: </b>%s\n"
 "<b>시작 시각: </b>%s"
 
-#: ../src/plugins/chapters/totem-chapters.c:328
+#: ../src/plugins/chapters/totem-chapters.c:323
 msgid "Error while reading file with chapters"
 msgstr "챕터 파일을 읽는데 오류가 발생했습니다"
 
-#: ../src/plugins/chapters/totem-chapters.c:543
+#: ../src/plugins/chapters/totem-chapters.c:542
 msgid "Chapter with the same time already exists"
 msgstr "같은 시각의 챕터가 이미 있습니다"
 
-#: ../src/plugins/chapters/totem-chapters.c:544
+#: ../src/plugins/chapters/totem-chapters.c:543
 msgid "Try another name or remove an existing chapter."
 msgstr "다른 이름을 사용하거나 기존 챕터를 제거하십시오."
 
-#: ../src/plugins/chapters/totem-chapters.c:717
+#: ../src/plugins/chapters/totem-chapters.c:703
 msgid "Error while writing file with chapters"
 msgstr "챕터와 같이 파일을 쓰는데 오류가 발생했습니다"
 
-#: ../src/plugins/chapters/totem-chapters.c:842
+#: ../src/plugins/chapters/totem-chapters.c:828
 msgid "Error occurred while saving chapters"
 msgstr "챕터를 저장하는데 오류가 발생했습니다"
 
-#: ../src/plugins/chapters/totem-chapters.c:843
+#: ../src/plugins/chapters/totem-chapters.c:829
 msgid ""
 "Please check you have permission to write to the folder containing the movie."
 msgstr "동영상이 들어 있는 폴더에 쓰기 권한이 있는지 확인하십시오."
 
-#: ../src/plugins/chapters/totem-chapters.c:976
+#: ../src/plugins/chapters/totem-chapters.c:962
 msgid "Open Chapter File"
 msgstr "챕터 파일 열기"
 
-#: ../src/plugins/chapters/totem-chapters.c:1093
+#: ../src/plugins/chapters/totem-chapters.c:1079
 msgid "Chapter Screenshot"
 msgstr "챕터 스크린샷"
 
-#: ../src/plugins/chapters/totem-chapters.c:1104
+#: ../src/plugins/chapters/totem-chapters.c:1090
 msgid "Chapter Title"
 msgstr "챕터 제목"
 
-#: ../src/plugins/chapters/totem-chapters.c:1184
+#: ../src/plugins/chapters/totem-chapters.c:1170
 msgid "Save changes to chapter list before closing?"
 msgstr "닫기 전에 챕터 목록의 바뀐 사항을 저장하시겠습니까?"
 
 #. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1189
+#: ../src/plugins/chapters/totem-chapters.c:1175
 msgid "Close without Saving"
 msgstr "저장하지 않고 닫기"
 
 #. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1191
+#: ../src/plugins/chapters/totem-chapters.c:1177
 msgid "Save"
 msgstr "저장"
 
-#: ../src/plugins/chapters/totem-chapters.c:1194
+#: ../src/plugins/chapters/totem-chapters.c:1180
 msgid "If you don't save, changes to the chapter list will be lost."
 msgstr "저장하지 않으면, 챕터 목록의 바뀐 점을 잃어버립니다."
-
-#: ../src/plugins/chapters/totem-cmml-parser.c:651
-msgid "Failed to parse CMML file"
-msgstr "CMML 파일 파싱에 실패했습니다"
 
 #: ../src/plugins/chapters/totem-edit-chapter.c:95
 msgid "Add Chapter"
@@ -2005,19 +2001,19 @@ msgstr "재생 목록에 추가"
 msgid "Copy Location"
 msgstr "위치 복사"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1184
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1175
 msgid "Browse"
 msgstr "찾아보기"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1227
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1218
 msgid "Search"
 msgstr "검색"
 
-#: ../src/plugins/grilo/totem-grilo.c:454
+#: ../src/plugins/grilo/totem-grilo.c:437
 msgid "Browse Error"
 msgstr "찾아보기 오류"
 
-#: ../src/plugins/grilo/totem-grilo.c:609
+#: ../src/plugins/grilo/totem-grilo.c:606
 msgid "Search Error"
 msgstr "검색 오류"
 
@@ -2356,19 +2352,19 @@ msgstr "토템이 이 비디오의 스크린샷을 찍을 수 없습니다."
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "이런 일이 일어날 수 없습니다. 버그 보고서를 제출하십시오."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Take _Screenshot"
 msgstr "스크린샷 찍기(_S)"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:333
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
 msgid "Take a screenshot"
 msgstr "스크린샷을 찍습니다"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
 msgid "Create Screenshot _Gallery..."
 msgstr "스크린샷 갤러리 만들기(_G)..."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
 msgid "Create a gallery of screenshots"
 msgstr "스크린샷 갤러리를 만듭니다"
 
@@ -2408,706 +2404,3 @@ msgstr "건너뛰기(_S)..."
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "특정 시간으로 이동"
-
-#~ msgid "Play movies and songs"
-#~ msgstr "동영상과 음악 재생"
-
-#~ msgid "Open a file"
-#~ msgstr "파일을 엽니다"
-
-#~ msgid "Open a non-local file"
-#~ msgstr "로컬이 아닌 파일을 엽니다"
-
-#~ msgid "Quit the program"
-#~ msgstr "프로그램을 끝냅니다"
-
-# tooltip - 문장으로 번역
-#~ msgid "Configure the application"
-#~ msgstr "프로그램을 설정합니다"
-
-#~ msgid "Switch to fullscreen"
-#~ msgstr "전체 화면"
-
-#~ msgid "Set the repeat mode"
-#~ msgstr "반복 모드 설정"
-
-#~ msgid "Set the shuffle mode"
-#~ msgstr "임의 재생 모드 설정"
-
-#~ msgid "14.4 Kbps Modem"
-#~ msgstr "14.4 Kbps 모뎀"
-
-#~ msgid "19.2 Kbps Modem"
-#~ msgstr "19.2 Kbps 모뎀"
-
-#~ msgid "28.8 Kbps Modem"
-#~ msgstr "28.8 Kbps 모뎀"
-
-#~ msgid "33.6 Kbps Modem"
-#~ msgstr "33.6 Kbps 모뎀"
-
-#~ msgid "34.4 Kbps Modem"
-#~ msgstr "34.4 Kbps 모뎀"
-
-#~ msgid "56 Kbps Modem/ISDN"
-#~ msgstr "56 Kbps 모뎀/ISDN"
-
-#~ msgid "112 Kbps Dual ISDN/DSL"
-#~ msgstr "112 Kbps Dual ISDN/DSL"
-
-#~ msgid "256 Kbps DSL/Cable"
-#~ msgstr "256 Kbps DSL/케이블"
-
-#~ msgid "384 Kbps DSL/Cable"
-#~ msgstr "384 Kbps DSL/케이블"
-
-#~ msgid "512 Kbps DSL/Cable"
-#~ msgstr "512 Kbps DSL/케이블"
-
-#~ msgid "1.5 Mbps T1/Intranet/LAN"
-#~ msgstr "1.5 Mbps T1/Intranet/LAN"
-
-#~ msgid "Intranet/LAN"
-#~ msgstr "인트라넷/LAN"
-
-#~ msgid "Networking"
-#~ msgstr "네트워킹"
-
-#~ msgid "Connection _speed:"
-#~ msgstr "접속 속도(_S):"
-
-#~ msgid "Network connection speed"
-#~ msgstr "네트워크 연결 속도"
-
-#~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media "
-#~ "over the network."
-#~ msgstr ""
-#~ "예상 네트워크 연결 속도. 네트워크를 통해 전달할 화질을 결정할 때 사용."
-
-#~ msgid "Play Image '%s'"
-#~ msgstr "'%s' 이미지 재생"
-
-#~ msgid "device%d"
-#~ msgstr "장치%d"
-
-#~ msgid "Play Disc '%s'"
-#~ msgstr "'%s' 디스크 재생"
-
-#~ msgid "Movie Player using %s"
-#~ msgstr "동영상 플레이어, %s 사용"
-
-#~ msgid ""
-#~ "Totem could not play this media (%s) although a plugin is present to "
-#~ "handle it."
-#~ msgstr ""
-#~ "이 형태의 미디어를 처리할 수 있는 플러그인이 있지만 이 미디어를 (%s) 재생"
-#~ "할 수 없습니다."
-
-#~ msgid ""
-#~ "You might want to check that a disc is present in the drive and that it "
-#~ "is correctly configured."
-#~ msgstr ""
-#~ "디스크가 드라이브 안에 들어 있고 올바르게 설정되어 있는지 확인하십시오."
-
-#~ msgid "More information about media plugins"
-#~ msgstr "미디어 플러그인에 대한 자세한 정보"
-
-#~ msgid ""
-#~ "Please install the necessary plugins and restart Totem to be able to play "
-#~ "this media."
-#~ msgstr ""
-#~ "필요한 플러그인을 설치하고 토템을 다시 시작하면 이 미디어를 재생할 수 있습"
-#~ "니다."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because it does not have the "
-#~ "appropriate plugins to be able to read from the disc."
-#~ msgstr ""
-#~ "이 형태의 미디어를 (%s) 디스크에서 읽을 수 있는 적절한 플러그인이 없기 때"
-#~ "문에 토템에서 이 형태의 미디어를 재생할 수 없습니다."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because you do not have the "
-#~ "appropriate plugins to handle it."
-#~ msgstr ""
-#~ "이 형태의 미디어를 (%s) 처리할 수 있는 적절한 플러그인이 없기 때문에 토템"
-#~ "에서 이 형태의 미디어를 재생할 수 없습니다."
-
-#~ msgid ""
-#~ "Totem cannot play this type of media (%s) because it is not supported."
-#~ msgstr ""
-#~ "이 형태의 미디어를 (%s) 지원하지 않으므로 토템에서 이 형태의 미디어를 재생"
-#~ "할 수 없습니다."
-
-#~ msgid "Please insert another disc to play back."
-#~ msgstr "플레이할 다른 디스크를 넣으십시오."
-
-#~ msgid "Totem does not support playback of Audio CDs"
-#~ msgstr "토템은 오디오 CD 재생을 지원하지 않습니다"
-
-#~ msgid ""
-#~ "Please consider using a music player or a CD extractor to play this CD"
-#~ msgstr ""
-#~ "이 CD를 재생하려면 음악 플레이어나 CD 음악 추출 프로그램을 이용해 보십시오"
-
-#~ msgid "%d %%"
-#~ msgstr "%d %%"
-
-#~ msgid ""
-#~ "The requested audio output was not found. Please select another audio "
-#~ "output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "요청한 오디오 출력을 찾을 수 없습니다. 멀티미디어 시스템 선택에서 다른 오"
-#~ "디오 출력을 선택하십시오."
-
-#~ msgid "Location not found."
-#~ msgstr "위치를 찾을 수 없습니다."
-
-#~ msgid ""
-#~ "Could not open location; you might not have permission to open the file."
-#~ msgstr "위치를 열 수 없습니다. 파일을 열 수 있는 권한이 없는 것 같습니다."
-
-#~ msgid ""
-#~ "The video output is in use by another application. Please close other "
-#~ "video applications, or select another video output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "비디오 출력이 다른 프로그램에서 쓰이고 있는 것 같습니다. 다른 비디오 프로"
-#~ "그램을 닫던지, 멀티미디어 시스템 선택에서 다른 비디오 출력을 선택하십시오."
-
-#~ msgid ""
-#~ "The audio output is in use by another application. Please select another "
-#~ "audio output in the Multimedia Systems Selector. You may want to consider "
-#~ "using a sound server."
-#~ msgstr ""
-#~ "오디오 출력이 다른 프로그램에서 쓰이고 있는 것 같습니다. 다른 오디오프로그"
-#~ "램을 닫던지, 멀티미디어 시스템 선택에서 다른 오디오 출력을 선택하십시오."
-
-#~ msgid ""
-#~ "Failed to create a GStreamer play object. Please check your GStreamer "
-#~ "installation."
-#~ msgstr ""
-#~ "GStreamer 재생 오브젝트를 만드는데 실패했습니다. GStreamer 설치가 제대로 "
-#~ "되었는지 확인하십시오."
-
-#~ msgid ""
-#~ "Failed to open audio output. You may not have permission to open the "
-#~ "sound device, or the sound server may not be running. Please select "
-#~ "another audio output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "오디오 출력을 열 수 없습니다. 사운드 장치를 열 수 있는 허가권이 없거나, 사"
-#~ "운드 서버가 실행되고 있지 않는 것 같습니다. 멀티미디어 시스템 선택에서 다"
-#~ "른 오디오 출력을 선택하십시오."
-
-#~ msgid ""
-#~ "Could not find the audio output. You may need to install additional "
-#~ "GStreamer plugins, or select another audio output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "오디오 출력을 찾을 수 없습니다. 다른 GStreamer 플러그인을 설치하거나, 멀티"
-#~ "미디어 시스템 선택에서 다른 비디오 출력을 선택하십시오."
-
-#~ msgid "BBC iPlayer"
-#~ msgstr "BBC iPlayer"
-
-#~ msgid ""
-#~ "Stream BBC programs from the last 7 days from the BBC iPlayer service."
-#~ msgstr ""
-#~ "BBC iPlayer 서비스에서 최근 7일 사이의 BBC 프로그램 스트림을 재생합니다."
-
-#~ msgid "Error listing channel categories"
-#~ msgstr "채널 분류 목록을 표시하는데 오류"
-
-#~ msgid ""
-#~ "There was an unknown error getting the list of television channels "
-#~ "available on BBC iPlayer."
-#~ msgstr ""
-#~ "BBC iPlayer에 사용 가능한 TV 채널 목록을 받는데 알 수 없는 오류가 발생했습"
-#~ "니다."
-
-#~ msgid "Loading…"
-#~ msgstr "읽어들이는 중…"
-
-#~ msgid "Error getting programme feed"
-#~ msgstr "프로그램 피드를 받는데 오류"
-
-#~ msgid ""
-#~ "There was an error getting the list of programmes for this channel and "
-#~ "category combination."
-#~ msgstr "이 채널과 분류에 대해 프로그램 목록을 받는데 오류가 발생했습니다."
-
-#~ msgid "<no reason given>"
-#~ msgstr "<이유 없음>"
-
-#~ msgid "Programme unavailable (\"%s\")"
-#~ msgstr "프로그램이 없습니다 (\"%s\")"
-
-#~ msgid "Publisher protocol to use"
-#~ msgstr "사용할 공개 프로토콜"
-
-#~ msgid ""
-#~ "The transport protocol to use when publishing playlists over the network."
-#~ msgstr "네트워크를 통해 재생목록을 발표할 때 사용할 프로토콜."
-
-#~ msgid "Format for network service name"
-#~ msgstr "네트워크 서비스 이름의 형식"
-
-#~ msgid ""
-#~ "A format string used to build the network service name used when "
-#~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by g_get_application_name"
-#~ "() • %h: the machine's host name in title case • %u: the user's login "
-#~ "name in title case • %U: the user's real name • %%: the percent sign"
-#~ msgstr ""
-#~ "네트워크를 통해 재생 목록을 공개할 때 사용할 네트워크 서비스 이름을 만들 "
-#~ "포맷 문자열. 다음 포맷 지정 표기를 사용합니다. • %a: "
-#~ "g_get_application_name()에서 리턴한 프로그램 이름 • %h: 컴퓨터의 호스트 이"
-#~ "름, 제목에 맞는 대소문자로 • %u: 사용자의 로그인 이름, 제목에 맞는 대소문"
-#~ "자로 • %U: 사용자의 실제 이름 • %%: 퍼센트 기호"
-
-#~ msgid "Neighbors"
-#~ msgstr "이웃"
-
-#~ msgid "Publish Playlist"
-#~ msgstr "재생 목록 게시"
-
-#~ msgid "Share the current playlist via HTTP"
-#~ msgstr "현재 재생 목록을 HTTP로 공유합니다"
-
-#~ msgid "Service _Name:"
-#~ msgstr "서비스 이름(_N):"
-
-#~ msgid ""
-#~ "The name used for announcing the playlist service on the network.\n"
-#~ "All occurrences of the string <b>%u</b> will be replaced by your name,\n"
-#~ "and <b>%h</b> will be replaced by your computer's host name."
-#~ msgstr ""
-#~ "네트워크의 재생 목록 서비스를 알리는데 사용할 이름.\n"
-#~ "<b>%u</b> 스트링은 자기 이름으로 바뀌고, <b>%h</b> 스트링은\n"
-#~ "컴퓨터의 호스트 이름으로 바뀝니다."
-
-#~ msgid "Use _encrypted transport protocol (HTTPS)"
-#~ msgstr "암호화 전송 프로토콜 사용(_E) (HTTPS)"
-
-#~ msgid "_Name:"
-#~ msgstr "이름(_N):"
-
-#~ msgid "Save in _folder:"
-#~ msgstr "폴더에 저장(_F):"
-
-#~ msgid "Select a folder"
-#~ msgstr "폴더 선택"
-
-#~ msgid "There was an error saving the screenshot."
-#~ msgstr "스크린샷을 저장하는 중에 오류가 발생했습니다."
-
-#~ msgid "Save Screenshot"
-#~ msgstr "스크린샷 저장"
-
-#~ msgid "Bemused"
-#~ msgstr "Bemused"
-
-#~ msgid "Control Totem through a mobile phone with a Bemused client"
-#~ msgstr "Bemused 클라이언트로 휴대폰을 통해 토템을 제어합니다"
-
-#~ msgid "Untitled %d"
-#~ msgstr "제목없음 %d"
-
-#~ msgid "Totem Bemused Server"
-#~ msgstr "토템 Bemused 서버"
-
-#~ msgid "Totem Bemused Server version 1.0"
-#~ msgstr "토템 Bemused 서버 버전 1.0"
-
-#~ msgid "A plugin to let you browse YouTube videos."
-#~ msgstr "유튜브 영상을 둘러보는 플러그인."
-
-#~ msgid "YouTube Browser"
-#~ msgstr "유튜브 브라우저"
-
-#~ msgid "Related Videos"
-#~ msgstr "관련 비디오"
-
-#~ msgid "Search Results"
-#~ msgstr "검색 결과"
-
-#~ msgid "_Open in Web Browser"
-#~ msgstr "웹 브라우저에서 열기(_O)"
-
-#~ msgid "Open the video in your web browser"
-#~ msgstr "웹 브라우저에서 동영상을 엽니다"
-
-#~ msgid "YouTube"
-#~ msgstr "유튜브"
-
-#~ msgid "Cancelling query…"
-#~ msgstr "질의를 취소하는 중입니다…"
-
-#~ msgid "Error Searching for Videos"
-#~ msgstr "영상을 검색하는데 오류"
-
-#~ msgid ""
-#~ "The response from the server could not be understood. Please check you "
-#~ "are running the latest version of libgdata."
-#~ msgstr ""
-#~ "서버의 응답을 이해할 수 없습니다. 최근 버전의 libgdata를 사용하는지 확인하"
-#~ "십시오."
-
-#~ msgid "Fetching search results…"
-#~ msgstr "검색 결과를 가져오는 중입니다…"
-
-#~ msgid "Fetching related videos…"
-#~ msgstr "관련 영상을 가져오는 중입니다…"
-
-#~ msgid "Error Opening Video in Web Browser"
-#~ msgstr "웹 브라우저에서 영상을 여는데 오류"
-
-#~ msgid "Fetching more videos…"
-#~ msgstr "더 많은 영상을 가져오는 중입니다…"
-
-#~ msgid "Video Format Not Supported"
-#~ msgstr "비디오 형식을 지원하지 않습니다"
-
-#~ msgid ""
-#~ "This video is not available in any formats which Totem supports. Would "
-#~ "you like to open it in your web browser instead?"
-#~ msgstr ""
-#~ "토템이 지원하는 형식의 비디오가 없습니다. 대신 웹브라우저에서 여시겠습니"
-#~ "까?"
-
-#~ msgid "0 frames per second"
-#~ msgstr "초당 0 프레임"
-
-#~ msgid "0 kbps"
-#~ msgstr "0 kbps"
-
-#~ msgid "0 x 0"
-#~ msgstr "0 x 0"
-
-#~ msgid "Zoom Out"
-#~ msgstr "축소"
-
-#~ msgid "Zoom Reset"
-#~ msgstr "확대/축소 리셋"
-
-#~ msgid "Zoom out"
-#~ msgstr "축소"
-
-#~ msgid "Zoom reset"
-#~ msgstr "확대/축소 리셋"
-
-#~ msgid "Enable visual effects?"
-#~ msgstr "시각 효과를 사용하시겠습니까?"
-
-#~ msgid ""
-#~ "It seems you are running Totem remotely.\n"
-#~ "Are you sure you want to enable the visual effects?"
-#~ msgstr ""
-#~ "토템을 원격으로 실행하고 있습니다.\n"
-#~ "정말로 시각 효과를 사용할까요?"
-
-#~ msgid ""
-#~ "The playback of this movie requires the following decoders which are not "
-#~ "installed:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "이 동영상을 재생하려면 다음 디코더가 필요하지만 설치하지 않았습니다.\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Media file could not be played."
-#~ msgstr "미디어 파일을 플레이할 수 없습니다."
-
-#~ msgid "Too old version of GStreamer installed."
-#~ msgstr "너무 오래된 GStreamer가 설치되어 있습니다."
-
-#~ msgid ""
-#~ "Failed to open video output. It may not be available. Please select "
-#~ "another video output in the Multimedia Systems Selector."
-#~ msgstr ""
-#~ "비디오 출력을 열 수 없습니다. 비디오 출력이 사용가능 하지 않습니다. 멀티미"
-#~ "디어 시스템 선택에서 다른 비디오 출력을 선택하십시오."
-
-#~ msgid ""
-#~ "Could not find the video output. You may need to install additional "
-#~ "GStreamer plugins, or select another video output in the Multimedia "
-#~ "Systems Selector."
-#~ msgstr ""
-#~ "비디오 출력을 찾을 수 없습니다. 다른 GStreamer 플러그인을 설치하거나, 멀티"
-#~ "미디어 시스템 선택에서 다른 비디오 출력을 선택하십시오."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "Delete"
-#~ msgstr "삭제"
-
-#~ msgid "Coherence DLNA/UPnP Client"
-#~ msgstr "Coherence DLNA/UPnP 클라이언트"
-
-#~ msgid "A DLNA/UPnP client for Totem powered by Coherence"
-#~ msgstr "토템을 위한 DLNA/UPnP 클라이언트, Coherence 사용"
-
-#~ msgid "Error loading Galago plugin"
-#~ msgstr "Galago 플러그인을 읽어들이는데 오류"
-
-#~ msgid "Could not connect to the Galago daemon."
-#~ msgstr "Galago 데몬에 연결할 수 없습니다."
-
-#~ msgid "By artist"
-#~ msgstr "아티스트 순서"
-
-#~ msgid "By tag"
-#~ msgstr "태그 순서"
-
-#~ msgid "Jamendo Album Page"
-#~ msgstr "자멘도 앨범 페이지"
-
-#~ msgid "Latest Releases"
-#~ msgstr "최근 릴리스"
-
-#~ msgid "Number of albums to _retrieve:"
-#~ msgstr "가져올 앨범 수(_R):"
-
-#~ msgid "Popular"
-#~ msgstr "인기"
-
-#~ msgid "Preferred audio _format:"
-#~ msgstr "선호하는 오디오 형식(_F):"
-
-#~ msgid "_Open Jamendo Album Page in Browser"
-#~ msgstr "브라우저에서 자멘도 앨범 페이지 열기(_O)"
-
-#~ msgid "Jamendo"
-#~ msgstr "자멘도"
-
-#~ msgid ""
-#~ "Listen to the large collection of Creative Commons licensed music on "
-#~ "Jamendo."
-#~ msgstr "자멘도에 있는 크리에이티브 커먼즈 라이선스의 음악을 듣습니다."
-
-#~ msgid "You need to install the Python simplejson module."
-#~ msgstr "파이썬 simplejson 모듈을 설치해야 합니다."
-
-#~ msgid "Artist: %s"
-#~ msgstr "아티스트: %s"
-
-#~ msgid "%Y-%m-%d"
-#~ msgstr "%Y-%m-%d"
-
-#~ msgid "%x"
-#~ msgstr "%x"
-
-#~ msgid "Genre: %s"
-#~ msgstr "장르: %s"
-
-#~ msgid "Released on: %s"
-#~ msgstr "릴리스 날짜: %s"
-
-#~ msgid "License: %s"
-#~ msgstr "라이선스: %s"
-
-#~ msgid "%02d. %s"
-#~ msgstr "%02d. %s"
-
-#~ msgid "Album: %s"
-#~ msgstr "앨범: %s"
-
-#~ msgid "Duration: %s"
-#~ msgstr "재생 시간: %s"
-
-#~ msgid "Fetching albums, please wait…"
-#~ msgstr "앨범을 가져오는 중, 잠시 기다리십시오…"
-
-#~ msgid ""
-#~ "Failed to connect to Jamendo server.\n"
-#~ "%s."
-#~ msgstr ""
-#~ "자멘도 서버에 연결하는데 실패했습니다.\n"
-#~ "%s."
-
-#~ msgid "The Jamendo server returned code %s."
-#~ msgstr "자멘도 서버에서 %s 코드를 리턴했습니다."
-
-#~ msgid "An error occurred while fetching albums."
-#~ msgstr "앨범을 가져오는데 오류가 발생했습니다."
-
-#~ msgid "%H:%M:%S"
-#~ msgstr "%H:%M:%S"
-
-#~ msgid "%M:%S"
-#~ msgstr "%M:%S"
-
-#~ msgid "Audio format to download from Jamendo"
-#~ msgstr "자멘도에서 다운로드한 오디오 형식"
-
-#~ msgid "Number of results per page"
-#~ msgstr "페이지의 결과 개수"
-
-#~ msgid ""
-#~ "The number of Jamendo search results to display in each page of results."
-#~ msgstr "한 페이지에 표시할 자멘도 검색 결과 개수."
-
-#~ msgid "The preferred audio format to download tracks from Jamendo in."
-#~ msgstr "자멘도에서 트랙을 다운로드할 때 선호하는 오디오 형식."
-
-#~ msgid "Language"
-#~ msgstr "언어"
-
-#~ msgid "Could not connect to Tracker"
-#~ msgstr "트래커에 연결할 수 없습니다"
-
-#~ msgid "No results"
-#~ msgstr "결과 없음"
-
-#~ msgid "Showing %i - %i of %i match"
-#~ msgid_plural "Showing %i - %i of %i matches"
-#~ msgstr[0] "표시: %i - %i , 전체 %i개"
-
-#~ msgid "Page"
-#~ msgstr "페이지"
-
-#~ msgid "Set the window icon to the thumbnail of the playing movie"
-#~ msgstr "창의 아이콘을 플레이하는 동영상의 섬네일로 합니다"
-
-#~ msgid "Thumbnail"
-#~ msgstr "섬네일"
-
-#~ msgid "Search for local videos using Tracker"
-#~ msgstr "트래커를 이용해 로컬 영상 검색"
-
-#~ msgid "Browser Plugin using %s"
-#~ msgstr "%s 사용 브라우저 플러그인"
-
-#~ msgid "Totem Browser Plugin"
-#~ msgstr "토템 브라우저 플러그인"
-
-#~ msgid "Author:"
-#~ msgstr "만든이:"
-
-#~ msgid "C_onfigure..."
-#~ msgstr "설정(_O)..."
-
-#~ msgid "Copyright:"
-#~ msgstr "저작권:"
-
-#~ msgid "Description:"
-#~ msgstr "설명:"
-
-#~ msgid "Site:"
-#~ msgstr "홈페이지:"
-
-#~ msgid ""
-#~ "Approximate network connection speed, used to select quality on media "
-#~ "over the network: \"0\" for 14.4 Kbps Modem, \"1\" for 19.2 Kbps Modem, "
-#~ "\"2\" for 28.8 Kbps Modem, \"3\" for 33.6 Kbps Modem, \"4\" for 34.4 Kbps "
-#~ "Modem, \"5\" for 56 Kbps Modem/ISDN, \"6\" for 112 Kbps Dual ISDN/DSL, "
-#~ "\"7\" for 256 Kbps DSL/Cable, \"8\" for 384 Kbps DSL/Cable, \"9\" for 512 "
-#~ "Kbps DSL/Cable, \"10\" for 1.5 Mbps T1/Intranet/LAN, \"11\" for Intranet/"
-#~ "LAN."
-#~ msgstr ""
-#~ "네트워크 연결 속도. 네트워크의 미디오 품질을 선택하는데 사용합니다. "
-#~ "\"0\"은 14.4 Kbps 모뎀, \"1\"은 19.2 Kbps 모뎀, \"2\"는 28.8 Kbps 모뎀, "
-#~ "\"3\"은 33.6 Kbps 모뎀, \"4\"는 34.4 Kbps 모뎀, \"5\"는 56 Kbps 모뎀/"
-#~ "ISDN, \"6\"은 112 Kbps Dual ISDN/DSL, \"7\"은 256 Kbps DSL/케이블, "
-#~ "\"8\"은 384 Kbps DSL/케이블, \"9\"는 512 Kbps DSL/케이블, \"10\"은 1.5 "
-#~ "Mbps T1/인트라넷/LAN, \"11\"은 인트라넷/LAN."
-
-#~ msgid ""
-#~ "Quality settings for the audio visualization: \"0\" for small, \"1\" for "
-#~ "normal, \"2\" for large, \"3\" for extra large."
-#~ msgstr ""
-#~ "오디오 시각화의 품질 설정: \"0\"은 작게, \"1\"은 보통, \"2\"는 크게, "
-#~ "\"3\"는 아주 크게."
-
-#~ msgid ""
-#~ "Type of audio output to use: \"0\" for stereo, \"1\" for 4-channel "
-#~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
-#~ "for AC3 Passthrough."
-#~ msgstr ""
-#~ "사용할 오디오 출력 형식: \"0\"은 스테레오, \"1\"은 4 채널 출력, \"2\"는 "
-#~ "5.0 채널 출력, \"3\"은 5.1 채널 출력, \"4\"는 AC3 통과 연결입니다."
-
-#~ msgid "UTF-8"
-#~ msgstr "UHC"
-
-#~ msgid "Whether to autoload external chapter files when a movie is loaded."
-#~ msgstr "동영상을 읽어들였을 때 외부 챕터 파일을 자동으로 읽어들일지 여부."
-
-#~ msgid "Don't connect to an already-running instance"
-#~ msgstr "실행 중인 토템에 연결하지 않습니다"
-
-#~ msgid ""
-#~ "Changing the visuals effect type will require a restart to take effect."
-#~ msgstr "시각 효과를 바꾸면 다시 시작해야 효과가 있습니다."
-
-#~ msgid ""
-#~ "The change of audio output type will only take effect when Totem is "
-#~ "restarted."
-#~ msgstr "바꾼 설정은 토템을 다시 시작했을 때 적용됩니다."
-
-#~ msgid "Could not open link"
-#~ msgstr "링크를 열 수 없습니다"
-
-#~ msgid "Totem could not initialize the configuration engine."
-#~ msgstr "토템이 설정 엔진을 초기화할 수 없습니다."
-
-#~ msgid "Make sure that GNOME is properly installed."
-#~ msgstr "그놈을 올바르게 설치했는지 확인하십시오."
-
-#~ msgid "Plugin"
-#~ msgstr "플러그인"
-
-#~ msgid "Enabled"
-#~ msgstr "사용"
-
-#~ msgid ""
-#~ "Unable to activate plugin %s.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "플러그인 %s(을)를 활성화 하지 못합니다.\n"
-#~ "%s"
-
-#~ msgid "Unable to activate plugin %s"
-#~ msgstr "플러그인 %s(을)를 활성화 할 수 없음"
-
-#~ msgid "Plugin Error"
-#~ msgstr "플러그인 오류"
-
-#~ msgid "Chapters support"
-#~ msgstr "챕터 기능"
-
-#~ msgid "Continue to watch movie without loaded chapters"
-#~ msgstr "읽어들인 챕터 없이 동영상 계속 보기"
-
-#~ msgid "_Go to"
-#~ msgstr "이동(_G)"
-
-#~ msgid "Please check you rights and free space"
-#~ msgstr "권한 및 저장 장치 남은 용량을 확인하십시오"
-
-#~ msgid "Jamendo Plugin Configuration"
-#~ msgstr "자멘도 플러그인 설정"
-
-#~ msgid "Recordings"
-#~ msgstr "녹화"
-
-#~ msgid "MythTV Recordings"
-#~ msgstr "MythTV 녹화"
-
-#~ msgid "MythTV LiveTV"
-#~ msgstr "MythTV 생방송"
-
-#~ msgid "_Download Movie Subtitles..."
-#~ msgstr "동영상 자막 다운로드(_D)..."
-
-#~ msgid "seconds"
-#~ msgstr "초"
-
-#~ msgid "Could not get name and thumbnail for %s: %s"
-#~ msgstr "%s 파일의 이름과 섬네일을 읽을 수 없습니다: %s"
-
-#~ msgid "Error Looking Up Video URI"
-#~ msgstr "비디오 URI를 찾아보는데 오류"
