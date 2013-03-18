@@ -3499,7 +3499,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   bvw->priv->got_redirect = FALSE;
   bvw->priv->media_has_video = FALSE;
   bvw->priv->media_has_audio = FALSE;
-  bvw->priv->stream_length = 0;
 
   /* Flush the bus to make sure we don't get any messages
    * from the previous URI, see bug #607224.
@@ -3840,6 +3839,7 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   bvw->priv->current_time = 0;
   bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->priv->seek_time = -1;
+  bvw->priv->stream_length = 0;
 
   if (bvw->priv->eos_id != 0)
     g_source_remove (bvw->priv->eos_id);
