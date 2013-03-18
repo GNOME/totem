@@ -379,9 +379,7 @@ bvw_get_missing_plugins_descriptions (const GList * missing_plugins)
 static void
 bvw_clear_missing_plugins_messages (BaconVideoWidget * bvw)
 {
-  g_list_foreach (bvw->priv->missing_plugins,
-                  (GFunc) gst_mini_object_unref, NULL);
-  g_list_free (bvw->priv->missing_plugins);
+  g_list_free_full (bvw->priv->missing_plugins, (GDestroyNotify) gst_mini_object_unref);
   bvw->priv->missing_plugins = NULL;
 }
 
