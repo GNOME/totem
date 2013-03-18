@@ -696,8 +696,7 @@ totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 {
 	g_message ("totem_embedded_clear_playlist");
 
-	g_list_foreach (emb->playlist, (GFunc) totem_pl_item_free, NULL);
-	g_list_free (emb->playlist);
+	g_list_free_full (emb->playlist, (GDestroyNotify) totem_pl_item_free);
 
 	emb->playlist = NULL;
 	emb->current = NULL;
