@@ -763,6 +763,8 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
+  clutter_gst_init (NULL, NULL);
+
   object_class = (GObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
