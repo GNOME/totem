@@ -95,6 +95,7 @@
 #define OSD_SIZE 130                           /* Size of the OSD popup */
 #define OSD_MARGIN 8                           /* Pixels from the top-left */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
+#define REWIND_OR_PREVIOUS 4000
 
 #define MAX_NETWORK_SPEED 10752
 #define BUFFERING_LEFT_RATIO 1.1
@@ -4060,8 +4061,18 @@ handle_chapters_seek (BaconVideoWidget *bvw,
   entry = NULL;
   if (forward && l->next)
     entry = l->next->data;
-  else if (!forward && l->prev)
-    entry = l->prev->data;
+  else if (!forward) {
+    gint64 current_start;
+    if (gst_toc_entry_get_start_stop_times (l->data, &current_start, NULL)) {
+      if (bvw->priv->current_time - current_start / GST_MSECOND < REWIND_OR_PREVIOUS &&
+	  bvw->priv->current_time - current_start / GST_MSECOND > 0 &&
+	  l->prev) {
+	entry = l->prev->data;
+      } else {
+	entry = l->data;
+      }
+    }
+  }
 
   if (!entry)
     return FALSE;
