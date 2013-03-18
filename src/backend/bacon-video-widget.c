@@ -420,6 +420,7 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 
 static void
 set_display_pixel_aspect_ratio (GdkScreen *screen,
+				int        monitor,
 				GValue    *value)
 {
   static const gint par[][2] = {
@@ -429,19 +430,22 @@ set_display_pixel_aspect_ratio (GdkScreen *screen,
     {54, 59},                   /* 625 line Rec.601 video */
     {64, 45},                   /* 1280x1024 on 16:9 display */
     {5, 3},                     /* 1280x1024 on 4:3 display */
-    {4, 3}                      /*  800x600 on 16:9 display */
+    {4, 3}                      /* 800x600 on 16:9 display */
   };
   guint i;
   gint par_index;
   gdouble ratio;
   gdouble delta;
+  GdkRectangle rect;
 
 #define DELTA(idx) (ABS (ratio - ((gdouble) par[idx][0] / par[idx][1])))
 
   /* first calculate the "real" ratio based on the X values;
-   *    * which is the "physical" w/h divided by the w/h in pixels of the display */
-  ratio = (gdouble) (gdk_screen_get_width_mm (screen) * gdk_screen_get_height (screen))
-    / (gdk_screen_get_height_mm (screen) * gdk_screen_get_width (screen));
+   * which is the "physical" w/h divided by the w/h in pixels of the display */
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  ratio = (gdouble) (gdk_screen_get_monitor_width_mm (screen, monitor) * rect.height) /
+    (gdk_screen_get_monitor_height_mm (screen, monitor) * rect.width);
 
   GST_DEBUG ("calculated pixel aspect ratio: %f", ratio);
   /* now find the one from par[][2] with the lowest delta to the real one */
@@ -493,8 +497,17 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       gst_value_set_fraction (&disp_par, 1, 1);
 
       /* Now try getting display's pixel aspect ratio */
-      if (gtk_widget_get_realized (GTK_WIDGET (bvw)))
-	set_display_pixel_aspect_ratio (gtk_widget_get_screen (GTK_WIDGET (bvw)), &disp_par);
+      if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
+	GdkScreen *screen;
+	GdkWindow *window;
+	int monitor;
+
+	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
+	window = gtk_widget_get_window (GTK_WIDGET (bvw));
+	if (window)
+	  monitor = gdk_screen_get_monitor_at_window (screen, window);
+	set_display_pixel_aspect_ratio (screen, monitor, &disp_par);
+      }
 
       disp_par_n = gst_value_get_fraction_numerator (&disp_par);
       disp_par_d = gst_value_get_fraction_denominator (&disp_par);
