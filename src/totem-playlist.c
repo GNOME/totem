@@ -281,8 +281,7 @@ totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSele
 
 		l = gtk_tree_selection_get_selected_rows (playlist->priv->selection, NULL);
 		gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
-		g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
-		g_list_free (l);
+		g_list_free_full (l, (GDestroyNotify) gtk_tree_path_free);
 	} else {
 		g_assert_not_reached ();
 	}
@@ -663,8 +662,7 @@ playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playli
 	l = gtk_tree_selection_get_selected_rows (playlist->priv->selection,
 			NULL);
 	gtk_tree_model_get_iter (playlist->priv->model, &iter, l->data);
-	g_list_foreach (l, (GFunc) gtk_tree_path_free, NULL);
-	g_list_free (l);
+	g_list_free_full (l, (GDestroyNotify) gtk_tree_path_free);
 
 	gtk_tree_model_get (playlist->priv->model,
 			&iter,
@@ -1188,8 +1186,7 @@ totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 				pos = MIN (cur_pos, pos);
 		}
 	}
-	g_list_foreach (paths, (GFunc) gtk_tree_path_free, NULL);
-	g_list_free (paths);
+	g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
 
 	/* Otherwise we reverse the items when moving down */
 	if (direction_up != FALSE)
@@ -1234,8 +1231,7 @@ totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 		}
 	}
 
-	g_list_foreach (refs, (GFunc) gtk_tree_row_reference_free, NULL);
-	g_list_free (refs);
+	g_list_free_full (refs, (GDestroyNotify) gtk_tree_row_reference_free);
 
 	/* Update the current path */
 	if (current != NULL) {
@@ -2075,8 +2071,7 @@ add_mrls_operation_data_free (AddMrlsOperationData *data)
 	if (data->cursor)
 		unset_waiting_cursor (data->playlist);
 
-	g_list_foreach (data->mrls, (GFunc) totem_playlist_mrl_data_free, NULL);
-	g_list_free (data->mrls);
+	g_list_free_full (data->mrls, (GDestroyNotify) totem_playlist_mrl_data_free);
 	g_object_unref (data->playlist);
 
 	g_slice_free (AddMrlsOperationData, data);
@@ -2475,8 +2470,7 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 		playlist->priv->list = g_list_remove (playlist->priv->list,
 				playlist->priv->list->data);
 	}
-	g_list_free (playlist->priv->list);
-	playlist->priv->list = NULL;
+	g_clear_pointer (&playlist->priv->list, g_list_free);
 
 	if (playlist->priv->current_to_be_removed != FALSE) {
 		/* The current item was removed from the playlist */
