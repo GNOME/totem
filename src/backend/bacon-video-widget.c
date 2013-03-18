@@ -2197,12 +2197,12 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
   bvw->priv->is_live = (bvw->priv->stream_length == 0);
 
 /*
-  GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
-      GST_TIME_ARGS (bvw->priv->current_time),
-      GST_TIME_ARGS (bvw->priv->stream_length),
+  GST_DEBUG ("current time: %" GST_TIME_FORMAT ", stream length: %" GST_TIME_FORMAT ", seekable: %s",
+      GST_TIME_ARGS (bvw->priv->current_time * GST_MSECOND),
+      GST_TIME_ARGS (bvw->priv->stream_length * GST_MSECOND),
       (seekable) ? "TRUE" : "FALSE");
 */
-  
+
   g_signal_emit (bvw, bvw_signals[SIGNAL_TICK], 0,
                  bvw->priv->current_time, bvw->priv->stream_length,
                  bvw->priv->current_position,
