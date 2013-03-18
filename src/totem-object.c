@@ -1620,7 +1620,6 @@ totem_action_set_mrl (TotemObject *totem,
 		      const char *subtitle)
 {
 	if (totem->mrl != NULL) {
-		totem->seek_to = 0;
 		totem->seek_to_start = 0;
 
 		g_clear_pointer (&totem->mrl, g_free);
@@ -2346,7 +2345,6 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 {
 	/* Clear the seek if it's there, we only want to try and seek
 	 * the first file, even if it's not there */
-	totem->seek_to = 0;
 	totem->seek_to_start = 0;
 
 	if (playback_stopped)
@@ -2420,12 +2418,8 @@ update_seekable (TotemObject *totem)
 			bacon_video_widget_seek_time (totem->bvw,
 						      totem->seek_to_start, FALSE, NULL);
 			totem_action_pause (totem);
-		} else if (totem->seek_to != 0) {
-			bacon_video_widget_seek_time (totem->bvw,
-						      totem->seek_to, FALSE, NULL);
 		}
 	}
-	totem->seek_to = 0;
 	totem->seek_to_start = 0;
 
 	g_object_notify (G_OBJECT (totem), "seekable");
