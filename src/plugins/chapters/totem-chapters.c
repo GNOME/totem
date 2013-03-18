@@ -340,8 +340,7 @@ totem_file_opened_result_cb (GObject      *source_object,
 	}
 
 	g_list_foreach (list, (GFunc) add_chapter_to_the_list, plugin);
-	g_list_foreach (list, (GFunc) totem_cmml_clip_free, NULL);
-	g_list_free (list);
+	g_list_free_full (list, (GDestroyNotify) totem_cmml_clip_free);
 
 	/* do not show tree if read operation failed */
 	set_no_data_visible (!is_exists, TRUE, plugin);
@@ -684,8 +683,7 @@ remove_button_clicked_cb (GtkButton		*button,
 
 	gtk_widget_set_sensitive (plugin->priv->save_button, TRUE);
 
-	g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
-	g_list_free (list);
+	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 }
 
 static void
@@ -707,8 +705,7 @@ save_chapters_result_cb (gpointer	data,
 	}
 
 	g_object_unref (adata->cancellable);
-	g_list_foreach (adata->list, (GFunc) totem_cmml_clip_free, NULL);
-	g_list_free (adata->list);
+	g_list_free_full (adata->list, (GDestroyNotify) totem_cmml_clip_free);
 	g_free (adata->error);
 	g_free (adata);
 }
@@ -1036,8 +1033,7 @@ goto_button_clicked_cb (GtkButton		*button,
 
 	tree_view_row_activated_cb (tree, (GtkTreePath *) list->data, NULL, plugin);
 
-	g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
-	g_list_free (list);
+	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 }
 
 static void
