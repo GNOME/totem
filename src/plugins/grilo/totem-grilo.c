@@ -987,8 +987,7 @@ show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 		                         &iter,
 		                         (GtkTreePath *) sel_list->data);
 
-		g_list_foreach (sel_list, (GFunc) gtk_tree_path_free, NULL);
-		g_list_free (sel_list);
+		g_list_free_full (sel_list, (GDestroyNotify) gtk_tree_path_free);
 	}
 
 	/* Get rid of previously selected media */
