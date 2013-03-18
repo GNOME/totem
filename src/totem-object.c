@@ -2106,8 +2106,7 @@ totem_action_drop_files (TotemObject *totem, GtkSelectionData *data,
 	}
 
 bail:
-	g_list_foreach (file_list, (GFunc) g_free, NULL);
-	g_list_free (file_list);
+	g_list_free_full (file_list, g_free);
 
 	return TRUE;
 }

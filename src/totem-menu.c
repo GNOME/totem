@@ -190,16 +190,6 @@ escape_label_for_menu (const char *name)
 
 /* Subtitle and language menus */
 static void
-totem_g_list_deep_free (GList *list)
-{
-	GList *l;
-
-	for (l = list; l != NULL; l = l->next)
-		g_free (l->data);
-	g_list_free (list);
-}
-
-static void
 subtitles_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
 		Totem *totem)
 {
@@ -383,7 +373,7 @@ totem_languages_update (Totem *totem, GList *list)
 				G_CALLBACK (languages_changed_callback), totem);
 	}
 
-	totem_g_list_deep_free (totem->language_list);
+	g_list_free_full (totem->language_list, g_free);
 	totem->language_list = list;
 }
 
@@ -423,7 +413,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 				G_CALLBACK (subtitles_changed_callback), totem);
 	}
 
-	totem_g_list_deep_free (totem->subtitles_list);
+	g_list_free_full (totem->subtitles_list, g_free);
 	totem->subtitles_list = list;
 }
 
@@ -434,14 +424,14 @@ totem_sublang_update (Totem *totem)
 
 	list = bacon_video_widget_get_languages (totem->bvw);
 	if (totem_sublang_equal_lists (totem->language_list, list) == TRUE) {
-		totem_g_list_deep_free (list);
+		g_list_free_full (list, g_free);
 	} else {
 		totem_languages_update (totem, list);
 	}
 
 	list = bacon_video_widget_get_subtitles (totem->bvw);
 	if (totem_sublang_equal_lists (totem->subtitles_list, list) == TRUE) {
-		totem_g_list_deep_free (list);
+		g_list_free_full (list, g_free);
 	} else {
 		totem_subtitles_update (totem, list);
 	}
@@ -450,8 +440,8 @@ totem_sublang_update (Totem *totem)
 void
 totem_sublang_exit (Totem *totem)
 {
-	totem_g_list_deep_free (totem->subtitles_list);
-	totem_g_list_deep_free (totem->language_list);
+	g_list_free_full (totem->subtitles_list, g_free);
+	g_list_free_full (totem->language_list, g_free);
 }
 
 /* Recent files */
@@ -548,8 +538,7 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
 			totem_items = g_list_prepend (totem_items, info);
 		}
 	}
-	g_list_foreach (items, (GFunc) gtk_recent_info_unref, NULL);
-        g_list_free (items);
+	g_list_free_full (items, (GDestroyNotify) gtk_recent_info_unref);
 
         totem_items = g_list_sort (totem_items, (GCompareFunc) totem_compare_recent_items);
 
@@ -611,8 +600,7 @@ totem_recent_manager_changed_callback (GtkRecentManager *recent_manager, Totem *
                         break;
         }
 
-        g_list_foreach (totem_items, (GFunc) gtk_recent_info_unref, NULL);
-        g_list_free (totem_items);
+	g_list_free_full (totem_items, (GDestroyNotify) gtk_recent_info_unref);
 }
 
 void

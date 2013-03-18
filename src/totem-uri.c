@@ -162,8 +162,7 @@ totem_get_mount_for_dvd (const char *uri)
 			}
 			g_free (id);
 		}
-		g_list_foreach (volumes, (GFunc) g_object_unref, NULL);
-		g_list_free (volumes);
+		g_list_free_full (volumes, (GDestroyNotify) g_object_unref);
 	} else {
 		mount = totem_get_mount_for_uri (path);
 		g_free (path);
