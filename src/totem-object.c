@@ -435,7 +435,7 @@ totem_object_get_property (GObject *object,
 	switch (property_id)
 	{
 	case PROP_FULLSCREEN:
-		g_value_set_boolean (value, totem_is_fullscreen (totem));
+		g_value_set_boolean (value, totem_object_is_fullscreen (totem));
 		break;
 	case PROP_PLAYING:
 		g_value_set_boolean (value, totem_object_is_playing (totem));
@@ -978,7 +978,7 @@ totem_action_save_size (TotemObject *totem)
 	if (totem->bvw == NULL)
 		return;
 
-	if (totem_is_fullscreen (totem) != FALSE)
+	if (totem_object_is_fullscreen (totem) != FALSE)
 		return;
 
 	/* Save the size of the video widget */
@@ -1192,7 +1192,7 @@ totem_action_eject (TotemObject *totem)
 void
 totem_action_show_properties (TotemObject *totem)
 {
-	if (totem_is_fullscreen (totem) == FALSE)
+	if (totem_object_is_fullscreen (totem) == FALSE)
 		totem_sidebar_set_current_page (totem, "properties", TRUE);
 }
 
@@ -1428,7 +1428,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 void
 totem_object_action_fullscreen_toggle (TotemObject *totem)
 {
-	if (totem_is_fullscreen (totem) != FALSE)
+	if (totem_object_is_fullscreen (totem) != FALSE)
 		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
 	else
 		gtk_window_fullscreen (GTK_WINDOW (totem->win));
@@ -1444,7 +1444,7 @@ totem_object_action_fullscreen_toggle (TotemObject *totem)
 void
 totem_action_fullscreen (TotemObject *totem, gboolean state)
 {
-	if (totem_is_fullscreen (totem) == state)
+	if (totem_object_is_fullscreen (totem) == state)
 		return;
 
 	totem_object_action_fullscreen_toggle (totem);
@@ -3080,7 +3080,7 @@ playlist_shuffle_toggle_cb (TotemPlaylist *playlist, GParamSpec *pspec, TotemObj
 }
 
 /**
- * totem_is_fullscreen:
+ * totem_object_is_fullscreen:
  * @totem: a #TotemObject
  *
  * Returns %TRUE if Totem is fullscreened.
@@ -3088,7 +3088,7 @@ playlist_shuffle_toggle_cb (TotemPlaylist *playlist, GParamSpec *pspec, TotemObj
  * Return value: %TRUE if Totem is fullscreened
  **/
 gboolean
-totem_is_fullscreen (TotemObject *totem)
+totem_object_is_fullscreen (TotemObject *totem)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), FALSE);
 
@@ -3383,7 +3383,7 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Return:
 		if (!(event->state & GDK_CONTROL_MASK)) {
 			GtkWidget *focus = gtk_window_get_focus (GTK_WINDOW (totem->win));
-			if (totem_is_fullscreen (totem) != FALSE || focus == NULL ||
+			if (totem_object_is_fullscreen (totem) != FALSE || focus == NULL ||
 			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek) {
 				if (event->keyval == GDK_KEY_space) {
 					if (bacon_video_widget_is_playing (totem->bvw) == FALSE)

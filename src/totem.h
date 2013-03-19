@@ -200,7 +200,7 @@ void    totem_object_action_error               (TotemObject *totem,
 						 const char *title,
 						 const char *reason);
 
-gboolean totem_is_fullscreen			(TotemObject *totem);
+gboolean totem_object_is_fullscreen		(TotemObject *totem);
 gboolean totem_object_is_playing		(TotemObject *totem);
 gboolean totem_object_is_paused			(TotemObject *totem);
 gboolean totem_object_is_seekable		(TotemObject *totem);

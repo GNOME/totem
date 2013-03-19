@@ -821,7 +821,7 @@ plugins_action_callback (GtkAction *action, Totem *totem)
 void
 show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 {
-	if (totem_is_fullscreen (totem))
+	if (totem_object_is_fullscreen (totem))
 		return;
 
 	totem_sidebar_toggle (totem, gtk_toggle_action_get_active (action));
