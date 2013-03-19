@@ -1447,7 +1447,7 @@ totem_action_fullscreen (TotemObject *totem, gboolean state)
 	if (totem_object_is_fullscreen (totem) == state)
 		return;
 
-	totem_object_action_fullscreen_toggle (totem);
+	gtk_window_fullscreen (GTK_WINDOW (totem->win));
 }
 
 void
