@@ -228,7 +228,7 @@ totem_save_file_file_opened (TotemObject *totem,
 		action = gtk_action_group_get_action (priv->action_group, "SaveFile");
 		gtk_action_set_sensitive (action, TRUE);
 		pi->priv->mrl = g_strdup (mrl);
-		pi->priv->name = totem_get_short_title (pi->priv->totem);
+		pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 		pi->priv->is_tmp = FALSE;
 	}
 }
@@ -252,7 +252,7 @@ totem_save_file_download_filename (GObject    *gobject,
 
 	pi->priv->mrl = g_filename_to_uri (filename, NULL, NULL);
 	g_free (filename);
-	pi->priv->name = totem_get_short_title (pi->priv->totem);
+	pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 	pi->priv->is_tmp = TRUE;
 
 	action = gtk_action_group_get_action (pi->priv->action_group, "SaveFile");

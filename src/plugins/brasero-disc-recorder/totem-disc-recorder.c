@@ -196,7 +196,7 @@ totem_disc_recorder_plugin_write_video_project (TotemDiscRecorderPlugin *pi,
 	if (success < 0)
 		goto error;
 
-	title = totem_get_short_title (pi->priv->totem);
+	title = totem_object_get_short_title (pi->priv->totem);
 	if (title) {
 		success = xmlTextWriterWriteElement (project,
 						     (xmlChar *) "label",

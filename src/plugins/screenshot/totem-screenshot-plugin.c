@@ -230,7 +230,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		return;
 	}
 
-	video_name = totem_get_short_title (self->priv->totem);
+	video_name = totem_object_get_short_title (self->priv->totem);
 
 	job = g_slice_new (ScreenshotSaveJob);
 	job->plugin = self;

@@ -106,7 +106,7 @@ totem_gallery_new (Totem *totem)
 				"gallery_dialog_content"));
 	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (gallery), container);
 
-	movie_title = totem_get_short_title (totem);
+	movie_title = totem_object_get_short_title (totem);
 
 	/* Translators: The first argument is the movie title. The second
 	 * argument is a number which is used to prevent overwriting files.

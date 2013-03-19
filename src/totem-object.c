@@ -702,7 +702,7 @@ totem_object_get_title_at_playlist_pos (TotemObject *totem, guint playlist_index
 }
 
 /**
- * totem_get_short_title:
+ * totem_object_get_short_title:
  * @totem: a #TotemObject
  *
  * Gets the title of the current entry in the playlist.
@@ -710,7 +710,7 @@ totem_object_get_title_at_playlist_pos (TotemObject *totem, guint playlist_index
  * Return value: the current entry's title, or %NULL; free with g_free()
  **/
 char *
-totem_get_short_title (TotemObject *totem)
+totem_object_get_short_title (TotemObject *totem)
 {
 	return totem_playlist_get_current_title (totem->playlist);
 }
