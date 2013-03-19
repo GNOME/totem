@@ -165,18 +165,6 @@ typedef struct {
 
 GType	totem_object_get_type			(void);
 
-/* Signal emission */
-void	totem_file_opened			(TotemObject *totem,
-						 const char *mrl);
-void	totem_file_has_played			(TotemObject *totem,
-						 const char *mrl);
-void	totem_file_closed			(TotemObject *totem);
-void	totem_metadata_updated			(TotemObject *totem,
-						 const char *artist,
-						 const char *title,
-						 const char *album,
-						 guint track_num);
-
 void	totem_object_action_exit		(TotemObject *totem) G_GNUC_NORETURN;
 void	totem_object_action_play		(TotemObject *totem);
 void	totem_object_action_stop		(TotemObject *totem);

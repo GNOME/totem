@@ -188,4 +188,16 @@ void	totem_action_fullscreen			(TotemObject *totem, gboolean state);
 void	totem_action_volume_relative		(TotemObject *totem, double off_pct);
 void	totem_action_volume_toggle_mute		(TotemObject *totem);
 
+/* Signal emission */
+void	totem_file_opened			(TotemObject *totem,
+						 const char *mrl);
+void	totem_file_has_played			(TotemObject *totem,
+						 const char *mrl);
+void	totem_file_closed			(TotemObject *totem);
+void	totem_metadata_updated			(TotemObject *totem,
+						 const char *artist,
+						 const char *title,
+						 const char *album,
+						 guint track_num);
+
 #endif /* __TOTEM_PRIVATE_H__ */
