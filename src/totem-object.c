@@ -2765,14 +2765,14 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 }
 
 /**
- * totem_action_next_angle:
+ * totem_object_action_next_angle:
  * @totem: a #TotemObject
  *
  * Switches to the next angle, if watching a DVD. If not watching a DVD, this is a
  * no-op.
  **/
 void
-totem_action_next_angle (TotemObject *totem)
+totem_object_action_next_angle (TotemObject *totem)
 {
 	bacon_video_widget_set_next_angle (totem->bvw);
 }
