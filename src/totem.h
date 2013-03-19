@@ -179,7 +179,7 @@ void	totem_object_action_exit		(TotemObject *totem) G_GNUC_NORETURN;
 void	totem_object_action_play		(TotemObject *totem);
 void	totem_object_action_stop		(TotemObject *totem);
 void	totem_object_action_play_pause		(TotemObject *totem);
-void	totem_action_pause			(TotemObject *totem);
+void	totem_object_action_pause		(TotemObject *totem);
 void	totem_object_action_fullscreen_toggle	(TotemObject *totem);
 void	totem_action_fullscreen			(TotemObject *totem, gboolean state);
 void	totem_object_action_next		(TotemObject *totem);

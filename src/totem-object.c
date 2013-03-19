@@ -1371,14 +1371,14 @@ totem_object_action_play_pause (TotemObject *totem)
 }
 
 /**
- * totem_action_pause:
+ * totem_object_action_pause:
  * @totem: a #TotemObject
  *
  * Pauses the current stream. If Totem is already paused, it continues
  * to be paused.
  **/
 void
-totem_action_pause (TotemObject *totem)
+totem_object_action_pause (TotemObject *totem)
 {
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE) {
 		bacon_video_widget_pause (totem->bvw);
@@ -2416,7 +2416,7 @@ update_seekable (TotemObject *totem)
 		if (totem->seek_to_start != 0) {
 			bacon_video_widget_seek_time (totem->bvw,
 						      totem->seek_to_start, FALSE, NULL);
-			totem_action_pause (totem);
+			totem_object_action_pause (totem);
 		}
 	}
 	totem->seek_to_start = 0;
@@ -2835,7 +2835,7 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		totem_object_action_play_pause (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_PAUSE:
-		totem_action_pause (totem);
+		totem_object_action_pause (totem);
 		icon_name = "media-playback-pause-symbolic";
 		break;
 	case TOTEM_REMOTE_COMMAND_STOP: {
@@ -3248,7 +3248,7 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 				totem_object_action_seek_time (totem, 0, FALSE);
 				totem_object_action_play (totem);
 			} else {
-				totem_action_pause (totem);
+				totem_object_action_pause (totem);
 				totem_object_action_seek_time (totem, 0, FALSE);
 			}
 		} else {
@@ -3373,18 +3373,18 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_comma:
 	case GDK_KEY_FrameBack:
-		totem_action_pause (totem);
+		totem_object_action_pause (totem);
 		bacon_video_widget_step (totem->bvw, FALSE, NULL);
 		break;
 	case GDK_KEY_period:
 	case GDK_KEY_FrameForward:
-		totem_action_pause (totem);
+		totem_object_action_pause (totem);
 		bacon_video_widget_step (totem->bvw, TRUE, NULL);
 		break;
 	case GDK_KEY_AudioPause:
 	case GDK_KEY_Pause:
 	case GDK_KEY_AudioStop:
-		totem_action_pause (totem);
+		totem_object_action_pause (totem);
 		icon_name = "media-playback-pause-symbolic";
 		break;
 	case GDK_KEY_q:

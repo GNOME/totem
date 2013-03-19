@@ -69,7 +69,7 @@ on_media_player_key_pressed (TotemObject *totem,
 	else if (strcmp ("Next", key) == 0)
 		totem_object_action_next (totem);
 	else if (strcmp ("Stop", key) == 0)
-		totem_action_pause (totem);
+		totem_object_action_pause (totem);
 	else if (strcmp ("FastForward", key) == 0)
 		totem_object_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
 	else if (strcmp ("Rewind", key) == 0)

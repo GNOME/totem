@@ -534,7 +534,7 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 
 	main_window = totem_object_get_main_window (plugin->priv->totem);
 	plugin->priv->was_played = totem_object_is_playing (plugin->priv->totem);
-	totem_action_pause (plugin->priv->totem);
+	totem_object_action_pause (plugin->priv->totem);
 
 	/* adding a new one, check if it's time available */
 	g_object_get (G_OBJECT (plugin->priv->totem), "current-time", &_time, NULL);
@@ -953,7 +953,7 @@ load_button_clicked_cb (GtkButton		*button,
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
 	plugin->priv->was_played = totem_object_is_playing (plugin->priv->totem);
-	totem_action_pause (plugin->priv->totem);
+	totem_object_action_pause (plugin->priv->totem);
 
 	mrl = totem_object_get_current_mrl (plugin->priv->totem);
 	main_window = totem_object_get_main_window (plugin->priv->totem);
