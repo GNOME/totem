@@ -216,8 +216,6 @@ gint64	totem_get_current_time			(TotemObject *totem);
 
 /* Playlist handling */
 guint	totem_object_get_playlist_length	(TotemObject *totem);
-void	totem_action_set_playlist_index		(TotemObject *totem,
-						 guint index);
 int	totem_object_get_playlist_pos		(TotemObject *totem);
 char *	totem_object_get_title_at_playlist_pos	(TotemObject *totem,
 						 guint playlist_index);

@@ -2736,29 +2736,6 @@ totem_object_action_next_angle (TotemObject *totem)
 }
 
 /**
- * totem_action_set_playlist_index:
- * @totem: a #TotemObject
- * @index: the new playlist index
- *
- * Sets the <code class="literal">0</code>-based playlist index to @index, causing Totem to load and
- * start playing that playlist entry.
- *
- * If @index is higher than the current length of the playlist, this
- * has the effect of restarting the current playlist entry.
- **/
-void
-totem_action_set_playlist_index (TotemObject *totem, guint playlist_index)
-{
-	char *mrl, *subtitle;
-
-	totem_playlist_set_current (totem->playlist, playlist_index);
-	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-	totem_action_set_mrl_and_play (totem, mrl, subtitle);
-	g_free (mrl);
-	g_free (subtitle);
-}
-
-/**
  * totem_object_action_remote:
  * @totem: a #TotemObject
  * @cmd: a #TotemRemoteCommand
