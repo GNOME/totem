@@ -187,8 +187,6 @@ void	totem_object_action_seek_time		(TotemObject *totem, gint64 msec, gboolean a
 void	totem_object_action_seek_relative	(TotemObject *totem, gint64 offset, gboolean accurate);
 double	totem_object_get_volume			(TotemObject *totem);
 void	totem_object_action_volume		(TotemObject *totem, double volume);
-void	totem_action_volume_relative		(TotemObject *totem, double off_pct);
-void	totem_action_volume_toggle_mute		(TotemObject *totem);
 void    totem_action_set_mrl			(TotemObject *totem,
 						 const char *mrl,
 						 const char *subtitle);
