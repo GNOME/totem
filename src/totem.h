@@ -164,8 +164,6 @@ typedef struct {
 } TotemObjectClass;
 
 GType	totem_object_get_type			(void);
-void    totem_object_plugins_init		(TotemObject *totem);
-void    totem_object_plugins_shutdown		(TotemObject *totem);
 void	totem_file_opened			(TotemObject *totem,
 						 const char *mrl);
 void	totem_file_has_played			(TotemObject *totem,
