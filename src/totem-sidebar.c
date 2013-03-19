@@ -138,7 +138,7 @@ totem_sidebar_setup (Totem *totem, gboolean visible)
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (totem->sidebar), FALSE);
 
 	action_group = gtk_action_group_new ("SidebarActions");
-	uimanager = totem_get_ui_manager (totem);
+	uimanager = totem_object_get_ui_manager (totem);
 	gtk_ui_manager_insert_action_group (uimanager, action_group, -1);
 	g_object_set_data (G_OBJECT (totem->sidebar), "sidebar-action-group", action_group);
 
@@ -198,7 +198,7 @@ totem_sidebar_add_page (Totem *totem,
 	g_signal_connect (G_OBJECT (action), "activate",
 			  G_CALLBACK (action_activated), totem);
 
-	uimanager = totem_get_ui_manager (totem);
+	uimanager = totem_object_get_ui_manager (totem);
 	merge_id = gtk_ui_manager_new_merge_id (uimanager);
 
 	action_group = g_object_get_data (G_OBJECT (totem->sidebar), "sidebar-action-group");
@@ -267,7 +267,7 @@ totem_sidebar_remove_page (Totem *totem,
 		return;
 
 	action_group = g_object_get_data (G_OBJECT (totem->sidebar), "sidebar-action-group");
-	uimanager = totem_get_ui_manager (totem);
+	uimanager = totem_object_get_ui_manager (totem);
 	gtk_ui_manager_remove_ui (uimanager, merge_id);
 	action = gtk_action_group_get_action (action_group, page_id);
 	gtk_action_group_remove_action (action_group, action);

@@ -114,7 +114,7 @@ totem_options_process_for_server (Totem                     *totem,
 
 	/* Are we quitting ? */
 	if (options->quit) {
-		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
+		totem_object_action_remote (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 		return;
 	}
 
@@ -135,7 +135,7 @@ totem_options_process_for_server (Totem                     *totem,
 		filename = options->filenames[i];
 		full_path = totem_create_full_path (filename);
 
-		totem_action_remote (totem, action, full_path ? full_path : filename);
+		totem_object_action_remote (totem, action, full_path ? full_path : filename);
 
 		g_free (full_path);
 
@@ -203,13 +203,13 @@ totem_options_process_for_server (Totem                     *totem,
 
 	/* No commands, no files, show ourselves */
 	if (commands == NULL && options->filenames == NULL) {
-		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
+		totem_object_action_remote (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
 
 	/* Send commands */
 	for (l = commands; l != NULL; l = l->next) {
-		totem_action_remote (totem, GPOINTER_TO_INT (l->data), NULL);
+		totem_object_action_remote (totem, GPOINTER_TO_INT (l->data), NULL);
 	}
 
 	g_list_free (commands);

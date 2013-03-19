@@ -148,7 +148,7 @@ quit_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
 {
-	totem_action_exit (TOTEM_OBJECT (user_data));
+	totem_object_action_exit (TOTEM_OBJECT (user_data));
 }
 
 static GActionEntry app_entries[] = {
@@ -473,7 +473,7 @@ on_recent_file_item_activated (GtkAction *action,
 	uri = gtk_recent_info_get_uri (recent_info);
 	display_name = gtk_recent_info_get_display_name (recent_info);
 
-	totem_add_to_playlist_and_play (totem, uri, display_name);
+	totem_object_add_to_playlist_and_play (totem, uri, display_name);
 }
 
 static gint
@@ -632,13 +632,13 @@ properties_action_callback (GtkAction *action, Totem *totem)
 void
 play_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_play_pause (totem);
+	totem_object_action_play_pause (totem);
 }
 
 G_GNUC_NORETURN void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_exit (totem);
+	totem_object_action_exit (totem);
 }
 
 void
@@ -659,7 +659,7 @@ select_subtitle_action_callback (GtkAction *action, Totem *totem)
 void
 next_angle_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_action_next_angle (totem);
+	totem_object_action_next_angle (totem);
 }
 
 void
@@ -695,13 +695,13 @@ dvd_chapter_menu_action_callback (GtkAction *action, Totem *totem)
 void
 next_chapter_action_callback (GtkAction *action, Totem *totem)
 {
-	TOTEM_PROFILE (totem_action_next (totem));
+	TOTEM_PROFILE (totem_object_action_next (totem));
 }
 
 void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
-	TOTEM_PROFILE (totem_action_previous (totem));
+	TOTEM_PROFILE (totem_object_action_previous (totem));
 }
 
 void

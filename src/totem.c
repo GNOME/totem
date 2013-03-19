@@ -88,7 +88,7 @@ app_init (Totem *totem, char **argv)
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
-		totem_action_exit (NULL);
+		totem_object_action_exit (NULL);
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
@@ -160,7 +160,7 @@ app_init (Totem *totem, char **argv)
 			totem_action_set_mrl (totem, NULL, NULL);
 	} else {
 		if (totem_action_open_files (totem, optionstate.filenames))
-			totem_action_play_pause (totem);
+			totem_object_action_play_pause (totem);
 		else
 			totem_action_set_mrl (totem, NULL, NULL);
 	}

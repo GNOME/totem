@@ -54,7 +54,7 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	GtkWidget *error_dialog;
 
 	if (reason == NULL)
-		g_warning ("totem_action_error called with reason == NULL");
+		g_warning ("totem_object_action_error called with reason == NULL");
 
 	error_dialog =
 		gtk_message_dialog_new (NULL,

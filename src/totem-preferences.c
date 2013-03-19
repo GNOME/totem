@@ -289,7 +289,7 @@ totem_setup_preferences (Totem *totem)
 
 	g_return_if_fail (totem->settings != NULL);
 
-	bvw = totem_get_video_widget (totem);
+	bvw = totem_object_get_video_widget (totem);
 
 	/* Work-around builder dialogue not parenting properly for
 	 * On top windows */
