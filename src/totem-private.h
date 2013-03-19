@@ -184,5 +184,6 @@ void	playlist_widget_setup			(Totem *totem);
 void	video_widget_create			(Totem *totem);
 void    totem_object_plugins_init		(TotemObject *totem);
 void    totem_object_plugins_shutdown		(TotemObject *totem);
+void	totem_action_fullscreen			(TotemObject *totem, gboolean state);
 
 #endif /* __TOTEM_PRIVATE_H__ */
