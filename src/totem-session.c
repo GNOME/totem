@@ -33,7 +33,7 @@ get_session_file (void)
 	GFile *file;
 	char *path;
 
-	path = g_build_filename (g_get_user_config_dir (), "totem", "session_state.xspf", NULL);
+	path = g_build_filename (totem_dot_dir (), "session_state.xspf", NULL);
 	file = g_file_new_for_path (path);
 	g_free (path);
 
