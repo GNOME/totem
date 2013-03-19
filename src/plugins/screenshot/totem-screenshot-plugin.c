@@ -217,7 +217,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 		if (err == NULL)
 			return;
 
-		totem_action_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message);
+		totem_object_action_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message);
 		g_error_free (err);
 		return;
 	}
@@ -226,7 +226,7 @@ take_screenshot_action_cb (GtkAction *action, TotemScreenshotPlugin *self)
 
 	pixbuf = bacon_video_widget_get_current_frame (priv->bvw);
 	if (pixbuf == NULL) {
-		totem_action_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
+		totem_object_action_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
 		return;
 	}
 
@@ -336,7 +336,7 @@ impl_activate (PeasActivatable *plugin)
 	};
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (priv->totem));
+	priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (priv->totem));
 	priv->got_metadata_signal = g_signal_connect (G_OBJECT (priv->bvw),
 						      "got-metadata",
 						      G_CALLBACK (got_metadata_cb),
@@ -347,7 +347,7 @@ impl_activate (PeasActivatable *plugin)
 							  self);
 
 	/* Key press handler */
-	window = totem_get_main_window (priv->totem);
+	window = totem_object_get_main_window (priv->totem);
 	priv->key_press_event_signal = g_signal_connect (G_OBJECT (window),
 							 "key-press-event", 
 							 G_CALLBACK (window_key_press_event_cb),
@@ -360,7 +360,7 @@ impl_activate (PeasActivatable *plugin)
 	gtk_action_group_add_actions (priv->action_group, menu_entries,
 				      G_N_ELEMENTS (menu_entries), self);
 
-	manager = totem_get_ui_manager (priv->totem);
+	manager = totem_object_get_ui_manager (priv->totem);
 
 	gtk_ui_manager_insert_action_group (manager, priv->action_group, -1);
 	g_object_unref (priv->action_group);
@@ -396,7 +396,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->notify_logo_mode_signal);
 
-	window = totem_get_main_window (priv->totem);
+	window = totem_object_get_main_window (priv->totem);
 	g_signal_handler_disconnect (G_OBJECT (window), priv->key_press_event_signal);
 	g_object_unref (window);
 
@@ -404,7 +404,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_object_unref (priv->settings);
 
 	/* Remove the menu */
-	manager = totem_get_ui_manager (priv->totem);
+	manager = totem_object_get_ui_manager (priv->totem);
 	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (manager, priv->action_group);
 

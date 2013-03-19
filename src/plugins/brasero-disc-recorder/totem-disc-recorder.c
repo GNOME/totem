@@ -88,7 +88,7 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 	GError *error = NULL;
 	char *xid_arg;
 
-	main_window = totem_get_main_window (pi->priv->totem);
+	main_window = totem_object_get_main_window (pi->priv->totem);
 	screen = gtk_widget_get_screen (GTK_WIDGET (main_window));
 	display = gdk_display_get_default ();
 
@@ -130,7 +130,7 @@ totem_disc_recorder_plugin_start_burning (TotemDiscRecorderPlugin *pi,
 	return TRUE;
 
 error:
-	main_window = totem_get_main_window (pi->priv->totem);
+	main_window = totem_object_get_main_window (pi->priv->totem);
 
 	if (copy != FALSE)
 		totem_interface_error (_("The video disc could not be duplicated."), error->message, main_window);
@@ -215,7 +215,7 @@ totem_disc_recorder_plugin_write_video_project (TotemDiscRecorderPlugin *pi,
 	if (success < 0)
 		goto error;
 
-	uri = totem_get_current_mrl (pi->priv->totem);
+	uri = totem_object_get_current_mrl (pi->priv->totem);
 	escaped = (unsigned char *) g_uri_escape_string (uri, NULL, FALSE);
 	g_free (uri);
 
@@ -282,7 +282,7 @@ totem_disc_recorder_plugin_burn (GtkAction *action,
 	if (!path) {
 		totem_interface_error (_("The movie could not be recorded."),
 				       error,
-				       totem_get_main_window (pi->priv->totem));
+				       totem_object_get_main_window (pi->priv->totem));
 		g_free (error);
 		return;
 	}
@@ -299,7 +299,7 @@ totem_disc_recorder_plugin_copy (GtkAction *action,
 {
 	char *mrl;
 
-	mrl = totem_get_current_mrl (pi->priv->totem);
+	mrl = totem_object_get_current_mrl (pi->priv->totem);
 	if (!g_str_has_prefix (mrl, "dvd:") && !g_str_has_prefix (mrl, "vcd:")) {
 		g_free (mrl);
 		g_assert_not_reached ();
@@ -410,7 +410,7 @@ impl_activate (PeasActivatable *plugin)
 				      G_N_ELEMENTS (totem_disc_recorder_plugin_actions),
 				      pi);
 
-	uimanager = totem_get_ui_manager (priv->totem);
+	uimanager = totem_object_get_ui_manager (priv->totem);
 	gtk_ui_manager_insert_action_group (uimanager, priv->action_group, -1);
 	g_object_unref (priv->action_group);
 
@@ -440,7 +440,7 @@ impl_activate (PeasActivatable *plugin)
 			       GTK_UI_MANAGER_MENUITEM,
 			       TRUE);
 
-	if (!totem_is_paused (priv->totem) && !totem_is_playing (priv->totem)) {
+	if (!totem_object_is_paused (priv->totem) && !totem_object_is_playing (priv->totem)) {
 		action = gtk_action_group_get_action (priv->action_group, "VideoBurnToDisc");
 		gtk_action_set_visible (action, FALSE);
 		action = gtk_action_group_get_action (priv->action_group, "VideoDVDCopy");
@@ -450,7 +450,7 @@ impl_activate (PeasActivatable *plugin)
 	else {
 		char *mrl;
 
-		mrl = totem_get_current_mrl (priv->totem);
+		mrl = totem_object_get_current_mrl (priv->totem);
 		totem_disc_recorder_file_opened (priv->totem, mrl, pi);
 		g_free (mrl);
 	}
@@ -466,7 +466,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_disc_recorder_file_closed, plugin);
 
-	uimanager = totem_get_ui_manager (priv->totem);
+	uimanager = totem_object_get_ui_manager (priv->totem);
 	gtk_ui_manager_remove_ui (uimanager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (uimanager, priv->action_group);
 

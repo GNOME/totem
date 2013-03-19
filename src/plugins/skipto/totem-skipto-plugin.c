@@ -112,7 +112,7 @@ skip_to_response_callback (GtkDialog *dialog, gint response, TotemSkiptoPlugin *
 
 	gtk_widget_hide (GTK_WIDGET (dialog));
 
-	totem_action_seek_time (plugin->priv->totem,
+	totem_object_action_seek_time (plugin->priv->totem,
 				totem_skipto_get_range (plugin->priv->st),
 				TRUE);
 	destroy_dialog (plugin);
@@ -123,7 +123,7 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 {
 	TotemSkiptoPluginPrivate *priv = plugin->priv;
 
-	if (totem_is_seekable (priv->totem) == FALSE)
+	if (totem_object_is_seekable (priv->totem) == FALSE)
 		return;
 
 	if (priv->st != NULL) {
@@ -193,7 +193,7 @@ impl_activate (PeasActivatable *plugin)
 				pi);
 
 	/* Key press handler */
-	window = totem_get_main_window (priv->totem);
+	window = totem_object_get_main_window (priv->totem);
 	priv->handler_id_key_press = g_signal_connect (G_OBJECT(window),
 				"key-press-event",
 				G_CALLBACK (on_window_key_press_event),
@@ -206,7 +206,7 @@ impl_activate (PeasActivatable *plugin)
 	gtk_action_group_add_actions (priv->action_group, menu_entries,
 				G_N_ELEMENTS (menu_entries), pi);
 
-	manager = totem_get_ui_manager (priv->totem);
+	manager = totem_object_get_ui_manager (priv->totem);
 
 	gtk_ui_manager_insert_action_group (manager, priv->action_group, -1);
 	g_object_unref (priv->action_group);
@@ -235,7 +235,7 @@ impl_deactivate (PeasActivatable *plugin)
 				     priv->handler_id_seekable);
 
 	if (priv->handler_id_key_press != 0) {
-		window = totem_get_main_window (totem);
+		window = totem_object_get_main_window (totem);
 		g_signal_handler_disconnect (G_OBJECT(window),
 					     priv->handler_id_key_press);
 		priv->handler_id_key_press = 0;
@@ -243,7 +243,7 @@ impl_deactivate (PeasActivatable *plugin)
 	}
 
 	/* Remove the menu */
-	manager = totem_get_ui_manager (totem);
+	manager = totem_object_get_ui_manager (totem);
 	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (manager, priv->action_group);
 

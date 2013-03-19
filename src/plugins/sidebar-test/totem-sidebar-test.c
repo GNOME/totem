@@ -56,7 +56,7 @@ impl_activate (PeasActivatable *plugin)
 
 	label = gtk_label_new ("This is a test sidebar main widget");
 	gtk_widget_show (label);
-	totem_add_sidebar_page (g_object_get_data (G_OBJECT (plugin), "object"),
+	totem_object_add_sidebar_page (g_object_get_data (G_OBJECT (plugin), "object"),
 				"sidebar-test",
 				"Sidebar Test",
 				label);
@@ -69,7 +69,7 @@ impl_deactivate (PeasActivatable *plugin)
 	TotemObject *totem;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	totem_remove_sidebar_page (totem, "sidebar-test");
+	totem_object_remove_sidebar_page (totem, "sidebar-test");
 	g_message ("Just removed a test sidebar");
 }
 

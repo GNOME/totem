@@ -321,7 +321,7 @@ totem_file_opened_result_cb (GObject      *source_object,
 		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND) &&
 		    !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED) &&
 		    !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_MOUNTED)) {
-			totem_action_error (plugin->priv->totem, _("Error while reading file with chapters"),
+			totem_object_action_error (plugin->priv->totem, _("Error while reading file with chapters"),
 					    error->message);
 			g_error_free (error);
 
@@ -417,7 +417,7 @@ chapter_edit_dialog_response_cb (GtkDialog		*dialog,
 			g_object_unref (G_OBJECT (plugin->priv->last_frame));
 
 		if (plugin->priv->was_played)
-			totem_action_play (plugin->priv->totem);
+			totem_object_action_play (plugin->priv->totem);
 		return;
 	}
 
@@ -435,7 +435,7 @@ chapter_edit_dialog_response_cb (GtkDialog		*dialog,
 	gtk_widget_destroy (GTK_WIDGET (plugin->priv->edit_chapter));
 
 	if (plugin->priv->was_played)
-		totem_action_play (plugin->priv->totem);
+		totem_object_action_play (plugin->priv->totem);
 }
 
 static void
@@ -532,8 +532,8 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 		return;
 	}
 
-	main_window = totem_get_main_window (plugin->priv->totem);
-	plugin->priv->was_played = totem_is_playing (plugin->priv->totem);
+	main_window = totem_object_get_main_window (plugin->priv->totem);
+	plugin->priv->was_played = totem_object_is_playing (plugin->priv->totem);
 	totem_action_pause (plugin->priv->totem);
 
 	/* adding a new one, check if it's time available */
@@ -544,13 +544,13 @@ show_chapter_edit_dialog (TotemChaptersPlugin	*plugin)
 						main_window);
 		g_object_unref (main_window);
 		if (plugin->priv->was_played)
-			totem_action_play (plugin->priv->totem);
+			totem_object_action_play (plugin->priv->totem);
 		return;
 	}
 	plugin->priv->last_time = _time;
 
 	/* capture frame */
-	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (plugin->priv->totem));
+	bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (plugin->priv->totem));
 	plugin->priv->last_frame = bacon_video_widget_get_current_frame (bvw);
 	g_object_add_weak_pointer (G_OBJECT (plugin->priv->last_frame), (gpointer *) &plugin->priv->last_frame);
 	g_object_unref (bvw);
@@ -699,7 +699,7 @@ save_chapters_result_cb (gpointer	data,
 	plugin = TOTEM_CHAPTERS_PLUGIN (adata->user_data);
 
 	if (G_UNLIKELY (!adata->successful && !g_cancellable_is_cancelled (adata->cancellable))) {
-		totem_action_error (plugin->priv->totem, _("Error while writing file with chapters"),
+		totem_object_action_error (plugin->priv->totem, _("Error while writing file with chapters"),
 				    adata->error);
 		gtk_widget_set_sensitive (plugin->priv->save_button, TRUE);
 	}
@@ -823,7 +823,7 @@ save_button_clicked_cb (GtkButton		*button,
 				   (gpointer *) &(plugin->priv->cancellable[1]));
 
 	if (G_UNLIKELY (totem_cmml_write_file_async (data) < 0)) {
-		totem_action_error (plugin->priv->totem, _("Error occurred while saving chapters"),
+		totem_object_action_error (plugin->priv->totem, _("Error occurred while saving chapters"),
 		                    _("Please check you have permission to write to the folder containing the movie."));
 		g_free (data);
 	} else
@@ -846,7 +846,7 @@ tree_view_row_activated_cb (GtkTreeView			*tree_view,
 	g_return_if_fail (path != NULL);
 
 	store = gtk_tree_view_get_model (tree_view);
-	seekable = totem_is_seekable (plugin->priv->totem);
+	seekable = totem_object_is_seekable (plugin->priv->totem);
 	if (!seekable) {
 		g_warning ("chapters: unable to seek stream!");
 		return;
@@ -855,7 +855,7 @@ tree_view_row_activated_cb (GtkTreeView			*tree_view,
 	gtk_tree_model_get_iter (store, &iter, path);
 	gtk_tree_model_get (store, &iter, CHAPTERS_TIME_PRIV_COLUMN, &_time, -1);
 
-	totem_action_seek_time (plugin->priv->totem, _time, TRUE);
+	totem_object_action_seek_time (plugin->priv->totem, _time, TRUE);
 }
 
 gboolean
@@ -952,11 +952,11 @@ load_button_clicked_cb (GtkButton		*button,
 
 	g_return_if_fail (TOTEM_IS_CHAPTERS_PLUGIN (plugin));
 
-	plugin->priv->was_played = totem_is_playing (plugin->priv->totem);
+	plugin->priv->was_played = totem_object_is_playing (plugin->priv->totem);
 	totem_action_pause (plugin->priv->totem);
 
-	mrl = totem_get_current_mrl (plugin->priv->totem);
-	main_window = totem_get_main_window (plugin->priv->totem);
+	mrl = totem_object_get_current_mrl (plugin->priv->totem);
+	main_window = totem_object_get_main_window (plugin->priv->totem);
 	dialog = gtk_file_chooser_dialog_new (_("Open Chapter File"), main_window, GTK_FILE_CHOOSER_ACTION_OPEN,
 					      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 					      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
@@ -995,7 +995,7 @@ load_button_clicked_cb (GtkButton		*button,
 	}
 
 	if (plugin->priv->was_played)
-		totem_action_play (plugin->priv->totem);
+		totem_object_action_play (plugin->priv->totem);
 
 	gtk_widget_destroy (dialog);
 	g_object_unref (main_window);
@@ -1053,7 +1053,7 @@ impl_activate (PeasActivatable *plugin)
 
 	cplugin = TOTEM_CHAPTERS_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	main_window = totem_get_main_window (totem);
+	main_window = totem_object_get_main_window (totem);
 
 	builder = totem_plugin_load_interface ("chapters", "chapters-list.ui", TRUE,
 					       main_window, cplugin);
@@ -1119,7 +1119,7 @@ impl_activate (PeasActivatable *plugin)
 
 	set_no_data_visible (TRUE, FALSE, cplugin);
 
-	totem_add_sidebar_page (totem, "chapters", _("Chapters"), main_box);
+	totem_object_add_sidebar_page (totem, "chapters", _("Chapters"), main_box);
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (cplugin->priv->tree));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
@@ -1137,7 +1137,7 @@ impl_activate (PeasActivatable *plugin)
 			  G_CALLBACK (chapter_selection_changed_cb),
 			  plugin);
 
-	mrl = totem_get_current_mrl (cplugin->priv->totem);
+	mrl = totem_object_get_current_mrl (cplugin->priv->totem);
 	if (mrl != NULL)
 		totem_file_opened_async_cb (cplugin->priv->totem, mrl, cplugin);
 
@@ -1220,5 +1220,5 @@ impl_deactivate (PeasActivatable *plugin)
 	g_object_unref (cplugin->priv->totem);
 	g_free (cplugin->priv->cmml_mrl);
 
-	totem_remove_sidebar_page (totem, "chapters");
+	totem_object_remove_sidebar_page (totem, "chapters");
 }

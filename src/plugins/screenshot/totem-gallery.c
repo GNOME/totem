@@ -165,7 +165,7 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 		screenshot_count = gtk_spin_button_get_value_as_int (self->priv->screenshot_count);
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self));
-	video_mrl = totem_get_current_mrl (self->priv->totem);
+	video_mrl = totem_object_get_current_mrl (self->priv->totem);
 	totem_screenshot_plugin_update_file_chooser (filename);
 
 	/* Build the command and arguments to pass it */

@@ -221,7 +221,7 @@ load_icon (TotemGriloPlugin *self, IconType icon_type, gint thumb_size)
 	static GdkPixbuf *pixbuf[G_N_ELEMENTS(icon_name)] = { NULL };
 
 	if (pixbuf[icon_type] == NULL) {
-		screen = gtk_window_get_screen (totem_get_main_window (self->priv->totem));
+		screen = gtk_window_get_screen (totem_object_get_main_window (self->priv->totem));
 		theme = gtk_icon_theme_get_for_screen (screen);
 		pixbuf[icon_type] = gtk_icon_theme_load_icon (theme,
 		                                              icon_name[icon_type],
@@ -433,7 +433,7 @@ browse_cb (GrlSource *source,
 	    g_error_matches (error,
 	                     GRL_CORE_ERROR,
 	                     GRL_CORE_ERROR_OPERATION_CANCELLED) == FALSE) {
-		window = totem_get_main_window (self->priv->totem);
+		window = totem_object_get_main_window (self->priv->totem);
 		totem_interface_error (_("Browse Error"), error->message, window);
 	}
 
@@ -549,7 +549,7 @@ play (TotemGriloPlugin *self,
 
 	url = grl_media_get_url (media);
 	if (url != NULL) {
-		totem_add_to_playlist_and_play (self->priv->totem, url,
+		totem_object_add_to_playlist_and_play (self->priv->totem, url,
 		                                grl_media_get_title (media));
 		return;
 	}
@@ -602,7 +602,7 @@ search_cb (GrlSource *source,
 	    g_error_matches (error,
 	                     GRL_CORE_ERROR,
 	                     GRL_CORE_ERROR_OPERATION_CANCELLED) == FALSE) {
-		window = totem_get_main_window (self->priv->totem);
+		window = totem_object_get_main_window (self->priv->totem);
 		totem_interface_error (_("Search Error"), error->message, window);
 	}
 
@@ -1170,7 +1170,7 @@ setup_sidebar_browse (TotemGriloPlugin *self,
 	                  G_CALLBACK (get_more_browse_results_cb),
 	                  self);
 
-	totem_add_sidebar_page (self->priv->totem,
+	totem_object_add_sidebar_page (self->priv->totem,
 	                        "grilo-browse", _("Browse"),
 	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse_window")));
 }
@@ -1213,7 +1213,7 @@ setup_sidebar_search (TotemGriloPlugin *self,
 	                  G_CALLBACK (adjustment_changed_cb),
 	                  self);
 
-	totem_add_sidebar_page (self->priv->totem,
+	totem_object_add_sidebar_page (self->priv->totem,
 	                        "grilo-search", _("Search"),
 	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
 }
@@ -1221,7 +1221,7 @@ setup_sidebar_search (TotemGriloPlugin *self,
 static void
 add_to_pls_cb (GtkAction *action, TotemGriloPlugin *self)
 {
-	totem_add_to_playlist_and_play (self->priv->totem,
+	totem_object_add_to_playlist_and_play (self->priv->totem,
 	                                grl_media_get_url (self->priv->selected_media),
 	                                grl_media_get_title (self->priv->selected_media));
 }
@@ -1314,7 +1314,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (plugin);
 	TotemGriloPluginPrivate *priv = self->priv;
 	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	main_window = totem_get_main_window (priv->totem);
+	main_window = totem_object_get_main_window (priv->totem);
 	priv->cache_thumbnails = g_hash_table_new_full (g_str_hash,
 	                                                g_str_equal,
 	                                                g_free,
@@ -1336,8 +1336,8 @@ impl_deactivate (PeasActivatable *plugin)
 	GList *s;
 	GrlRegistry *registry;
 
-	totem_remove_sidebar_page (self->priv->totem, "grilo-browse");
-	totem_remove_sidebar_page (self->priv->totem, "grilo-search");
+	totem_object_remove_sidebar_page (self->priv->totem, "grilo-browse");
+	totem_object_remove_sidebar_page (self->priv->totem, "grilo-search");
 
 	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);

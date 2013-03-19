@@ -127,7 +127,7 @@ totem_save_file_plugin_copy (GtkAction *action,
 
 
 	fs = gtk_file_chooser_dialog_new (_("Save a Copy"),
-					  totem_get_main_window (pi->priv->totem),
+					  totem_object_get_main_window (pi->priv->totem),
 					  GTK_FILE_CHOOSER_ACTION_SAVE,
 					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 					  GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
@@ -276,7 +276,7 @@ impl_activate (PeasActivatable *plugin)
 	g_free (path);
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
-	priv->bvw = totem_get_video_widget (priv->totem);
+	priv->bvw = totem_object_get_video_widget (priv->totem);
 
 	g_signal_connect (priv->totem,
 			  "file-opened",
@@ -299,7 +299,7 @@ impl_activate (PeasActivatable *plugin)
 				      G_N_ELEMENTS (totem_save_file_plugin_actions),
 				      pi);
 
-	uimanager = totem_get_ui_manager (priv->totem);
+	uimanager = totem_object_get_ui_manager (priv->totem);
 	gtk_ui_manager_insert_action_group (uimanager, priv->action_group, -1);
 	g_object_unref (priv->action_group);
 
@@ -323,7 +323,7 @@ impl_activate (PeasActivatable *plugin)
 	action = gtk_action_group_get_action (priv->action_group, "SaveFile");
 	gtk_action_set_sensitive (action, FALSE);
 
-	mrl = totem_get_current_mrl (priv->totem);
+	mrl = totem_object_get_current_mrl (priv->totem);
 	totem_save_file_file_opened (priv->totem, mrl, pi);
 	totem_save_file_download_filename (NULL, NULL, pi);
 	g_free (mrl);
@@ -340,7 +340,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_closed, plugin);
 	g_signal_handlers_disconnect_by_func (priv->bvw, totem_save_file_download_filename, plugin);
 
-	uimanager = totem_get_ui_manager (priv->totem);
+	uimanager = totem_object_get_ui_manager (priv->totem);
 	gtk_ui_manager_remove_ui (uimanager, priv->ui_merge_id);
 	gtk_ui_manager_remove_action_group (uimanager, priv->action_group);
 

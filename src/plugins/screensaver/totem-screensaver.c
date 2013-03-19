@@ -80,17 +80,17 @@ totem_screensaver_update_from_state (TotemObject *totem,
 	gboolean lock_screensaver_on_audio, has_video_frames;
 	BaconVideoWidget *bvw;
 
-	bvw = BACON_VIDEO_WIDGET (totem_get_video_widget ((Totem *)(totem)));
+	bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget ((Totem *)(totem)));
 
 	lock_screensaver_on_audio = g_settings_get_boolean (pi->priv->settings, "lock-screensaver-on-audio");
 	has_video_frames = has_video (bvw);
 
-	if ((totem_is_playing (totem) != FALSE && has_video_frames) ||
-	    (totem_is_playing (totem) != FALSE && !lock_screensaver_on_audio)) {
+	if ((totem_object_is_playing (totem) != FALSE && has_video_frames) ||
+	    (totem_object_is_playing (totem) != FALSE && !lock_screensaver_on_audio)) {
 		if (pi->priv->inhibit_cookie == 0) {
 			GtkWindow *window;
 
-			window = totem_get_main_window (totem);
+			window = totem_object_get_main_window (totem);
 			pi->priv->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (totem),
 										window,
 										GTK_APPLICATION_INHIBIT_IDLE,
@@ -132,7 +132,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemObject *totem;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_get_video_widget (totem));
+	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (totem));
 
 	pi->priv->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 	g_signal_connect (pi->priv->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, plugin);
