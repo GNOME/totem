@@ -1949,14 +1949,7 @@ totem_action_volume_toggle_mute (TotemObject *totem)
 	}
 }
 
-/**
- * totem_action_toggle_aspect_ratio:
- * @totem: a #TotemObject
- *
- * Toggles the aspect ratio selected in the menu to the
- * next one in the list.
- **/
-void
+static void
 totem_action_toggle_aspect_ratio (TotemObject *totem)
 {
 	GtkAction *action;

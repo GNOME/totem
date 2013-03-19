@@ -194,7 +194,6 @@ void	totem_action_set_mrl_and_play		(TotemObject *totem,
 						 const char *mrl, 
 						 const char *subtitle);
 
-void	totem_action_toggle_aspect_ratio	(TotemObject *totem);
 void	totem_action_set_aspect_ratio		(TotemObject *totem, int ratio);
 int	totem_action_get_aspect_ratio		(TotemObject *totem);
 void	totem_object_action_next_angle		(TotemObject *totem);
