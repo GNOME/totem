@@ -830,7 +830,7 @@ show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 void
 aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem)
 {
-	totem_action_set_aspect_ratio (totem, gtk_radio_action_get_current_value (current));
+	bacon_video_widget_set_aspect_ratio (totem->bvw, gtk_radio_action_get_current_value (current));
 }
 
 void

@@ -1955,41 +1955,13 @@ totem_action_toggle_aspect_ratio (TotemObject *totem)
 	GtkAction *action;
 	int tmp;
 
-	tmp = totem_action_get_aspect_ratio (totem);
+	tmp = bacon_video_widget_get_aspect_ratio (totem->bvw);
 	tmp++;
 	if (tmp > BVW_RATIO_DVB)
 		tmp = BVW_RATIO_AUTO;
 
 	action = gtk_action_group_get_action (totem->main_action_group, "aspect-ratio-auto");
 	gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action), tmp);
-}
-
-/**
- * totem_action_set_aspect_ratio:
- * @totem: a #TotemObject
- * @ratio: the aspect ratio to use
- *
- * Sets the aspect ratio selected in the menu to @ratio,
- * as defined in #BvwAspectRatio.
- **/
-void
-totem_action_set_aspect_ratio (TotemObject *totem, int ratio)
-{
-	bacon_video_widget_set_aspect_ratio (totem->bvw, ratio);
-}
-
-/**
- * totem_action_get_aspect_ratio:
- * @totem: a #TotemObject
- *
- * Gets the current aspect ratio as defined in #BvwAspectRatio.
- *
- * Return value: the current aspect ratio
- **/
-int
-totem_action_get_aspect_ratio (TotemObject *totem)
-{
-	return (bacon_video_widget_get_aspect_ratio (totem->bvw));
 }
 
 void
