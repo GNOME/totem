@@ -128,7 +128,7 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 
 	if (priv->st != NULL) {
 		gtk_window_present (GTK_WINDOW (priv->st));
-		totem_skipto_set_current (priv->st, totem_get_current_time
+		totem_skipto_set_current (priv->st, totem_object_get_current_time
 					  (priv->totem));
 		return;
 	}
@@ -142,7 +142,7 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 				   (gpointer *)&(priv->st));
 	totem_skipto_update_from_state (priv->totem, plugin);
 	totem_skipto_set_current (priv->st,
-				  totem_get_current_time (priv->totem));
+				  totem_object_get_current_time (priv->totem));
 }
 
 static void

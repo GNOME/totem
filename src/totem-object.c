@@ -557,7 +557,7 @@ totem_object_get_version (void)
 }
 
 /**
- * totem_get_current_time:
+ * totem_object_get_current_time:
  * @totem: a #TotemObject
  *
  * Gets the current position's time in the stream as a gint64.
@@ -565,7 +565,7 @@ totem_object_get_version (void)
  * Return value: the current position in the stream
  **/
 gint64
-totem_get_current_time (TotemObject *totem)
+totem_object_get_current_time (TotemObject *totem)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), 0);
 

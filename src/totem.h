@@ -212,7 +212,7 @@ char *totem_object_get_version			(void);
 
 /* Current media information */
 char *	totem_get_short_title			(TotemObject *totem);
-gint64	totem_get_current_time			(TotemObject *totem);
+gint64	totem_object_get_current_time		(TotemObject *totem);
 
 /* Playlist handling */
 guint	totem_object_get_playlist_length	(TotemObject *totem);
