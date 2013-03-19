@@ -177,28 +177,18 @@ void	totem_metadata_updated			(TotemObject *totem,
 						 const char *album,
 						 guint track_num);
 
-#define totem_action_exit totem_object_action_exit
 void	totem_object_action_exit		(TotemObject *totem) G_GNUC_NORETURN;
-#define totem_action_play totem_object_action_play
 void	totem_object_action_play		(TotemObject *totem);
-#define totem_action_stop totem_object_action_stop
 void	totem_object_action_stop		(TotemObject *totem);
-#define totem_action_play_pause totem_object_action_play_pause
 void	totem_object_action_play_pause		(TotemObject *totem);
 void	totem_action_pause			(TotemObject *totem);
-#define totem_action_fullscreen_toggle totem_object_action_fullscreen_toggle
 void	totem_object_action_fullscreen_toggle	(TotemObject *totem);
 void	totem_action_fullscreen			(TotemObject *totem, gboolean state);
-#define totem_action_next totem_object_action_next
 void	totem_object_action_next		(TotemObject *totem);
-#define totem_action_previous totem_object_action_previous
 void	totem_object_action_previous		(TotemObject *totem);
-#define totem_action_seek_time totem_object_action_seek_time
 void	totem_object_action_seek_time		(TotemObject *totem, gint64 msec, gboolean accurate);
 void	totem_action_seek_relative		(TotemObject *totem, gint64 offset, gboolean accurate);
-#define totem_get_volume totem_object_get_volume
 double	totem_object_get_volume			(TotemObject *totem);
-#define totem_action_volume totem_object_action_volume
 void	totem_object_action_volume		(TotemObject *totem, double volume);
 void	totem_action_volume_relative		(TotemObject *totem, double off_pct);
 void	totem_action_volume_toggle_mute		(TotemObject *totem);
@@ -214,25 +204,17 @@ void	totem_action_set_aspect_ratio		(TotemObject *totem, int ratio);
 int	totem_action_get_aspect_ratio		(TotemObject *totem);
 void	totem_object_action_next_angle		(TotemObject *totem);
 
-#define totem_action_error totem_object_action_error
 void    totem_object_action_error               (TotemObject *totem,
 						 const char *title,
 						 const char *reason);
 
 gboolean totem_is_fullscreen			(TotemObject *totem);
-#define totem_is_playing totem_object_is_playing
 gboolean totem_object_is_playing		(TotemObject *totem);
-#define totem_is_paused totem_object_is_paused
 gboolean totem_object_is_paused			(TotemObject *totem);
-#define totem_is_seekable totem_object_is_seekable
 gboolean totem_object_is_seekable		(TotemObject *totem);
-#define totem_get_main_window totem_object_get_main_window
 GtkWindow *totem_object_get_main_window		(TotemObject *totem);
-#define totem_get_ui_manager totem_object_get_ui_manager
 GtkUIManager *totem_object_get_ui_manager	(TotemObject *totem);
- #define totem_get_video_widget totem_object_get_video_widget
 GtkWidget *totem_object_get_video_widget	(TotemObject *totem);
-#define totem_get_version totem_object_get_version
 char *totem_object_get_version			(void);
 
 /* Current media information */
@@ -240,44 +222,33 @@ char *	totem_get_short_title			(TotemObject *totem);
 gint64	totem_get_current_time			(TotemObject *totem);
 
 /* Playlist handling */
-#define totem_get_playlist_length totem_object_get_playlist_length
 guint	totem_object_get_playlist_length	(TotemObject *totem);
 void	totem_action_set_playlist_index		(TotemObject *totem,
 						 guint index);
-#define totem_get_playlist_pos totem_object_get_playlist_pos
 int	totem_object_get_playlist_pos		(TotemObject *totem);
-#define totem_get_title_at_playlist_pos totem_object_get_title_at_playlist_pos
 char *	totem_object_get_title_at_playlist_pos	(TotemObject *totem,
 						 guint playlist_index);
-#define totem_add_to_playlist_and_play totem_object_add_to_playlist_and_play
 void totem_object_add_to_playlist_and_play	(TotemObject *totem,
 						 const char *uri,
 						 const char *display_name);
-#define totem_get_current_mrl totem_object_get_current_mrl
 char *  totem_object_get_current_mrl		(TotemObject *totem);
-#define totem_set_current_subtitle totem_object_set_current_subtitle
 void	totem_object_set_current_subtitle	(TotemObject *totem,
 						 const char *subtitle_uri);
 /* Sidebar handling */
-#define totem_add_sidebar_page totem_object_add_sidebar_page
 void    totem_object_add_sidebar_page		(TotemObject *totem,
 						 const char *page_id,
 						 const char *title,
 						 GtkWidget *main_widget);
-#define totem_remove_sidebar_page totem_object_remove_sidebar_page
 void    totem_object_remove_sidebar_page	(TotemObject *totem,
 						 const char *page_id);
 
 /* Remote actions */
-#define totem_action_remote totem_object_action_remote
 void    totem_object_action_remote		(TotemObject *totem,
 						 TotemRemoteCommand cmd,
 						 const char *url);
-#define totem_action_remote_set_setting totem_object_action_remote_set_setting
 void	totem_object_action_remote_set_setting	(TotemObject *totem,
 						 TotemRemoteSetting setting,
 						 gboolean value);
-#define totem_action_remote_get_setting totem_object_action_remote_get_setting
 gboolean totem_object_action_remote_get_setting	(TotemObject *totem,
 						 TotemRemoteSetting setting);
 
