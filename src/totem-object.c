@@ -1418,14 +1418,7 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 	return FALSE;
 }
 
-/**
- * totem_object_action_fullscreen_toggle:
- * @totem: a #TotemObject
- *
- * Toggles Totem's fullscreen state; if Totem is fullscreened, calling
- * this makes it unfullscreened and vice-versa.
- **/
-void
+static void
 totem_object_action_fullscreen_toggle (TotemObject *totem)
 {
 	if (totem_object_is_fullscreen (totem) != FALSE)

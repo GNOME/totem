@@ -182,7 +182,6 @@ void	totem_object_action_play		(TotemObject *totem);
 void	totem_object_action_stop		(TotemObject *totem);
 void	totem_object_action_play_pause		(TotemObject *totem);
 void	totem_object_action_pause		(TotemObject *totem);
-void	totem_object_action_fullscreen_toggle	(TotemObject *totem);
 void	totem_object_action_next		(TotemObject *totem);
 void	totem_object_action_previous		(TotemObject *totem);
 void	totem_object_action_seek_time		(TotemObject *totem, gint64 msec, gboolean accurate);
