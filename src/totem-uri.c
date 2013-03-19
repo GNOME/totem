@@ -102,12 +102,7 @@ totem_data_dot_dir (void)
 char *
 totem_pictures_dir (void)
 {
-	const char *dir;
-
-	dir = g_get_user_special_dir (G_USER_DIRECTORY_PICTURES);
-	if (dir == NULL)
-		return NULL;
-	return g_strdup (dir);
+	return g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_PICTURES));
 }
 
 static GMount *
