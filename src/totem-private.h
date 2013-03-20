@@ -173,6 +173,9 @@ void	totem_action_eject			(Totem *totem);
 void	totem_action_set_zoom			(Totem *totem, gboolean zoom);
 void	totem_action_show_help			(Totem *totem);
 void	totem_action_show_properties		(Totem *totem);
+void    totem_action_set_mrl			(TotemObject *totem,
+						 const char *mrl,
+						 const char *subtitle);
 gboolean totem_action_open_files		(Totem *totem, char **list);
 G_GNUC_NORETURN void totem_action_error_and_exit (const char *title, const char *reason, Totem *totem);
 
