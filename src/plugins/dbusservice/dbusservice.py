@@ -333,12 +333,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                           in_signature = 's', # pylint: disable-msg=C0103
                           out_signature = '')
     def OpenUri (self, uri):
-        if self.totem.action_set_mrl (uri):
-            self.totem.action_play ()
-
-        raise dbus.exceptions.DBusException (
-            'org.mpris.MediaPlayer2.InvalidUri',
-            _(u'The URI ‘%s’ is not supported.') % uri)
+        self.totem.add_to_playlist_and_play (uri)
 
     @dbus.service.signal (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           signature = 'x') # pylint: disable-msg=C0103
