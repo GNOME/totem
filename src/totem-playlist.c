@@ -193,31 +193,6 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
 
 /* Helper functions */
-static gboolean
-totem_playlist_gtk_tree_path_equals (GtkTreePath *path1, GtkTreePath *path2)
-{
-	char *str1, *str2;
-	gboolean retval;
-
-	if (path1 == NULL && path2 == NULL)
-		return TRUE;
-	if (path1 == NULL || path2 == NULL)
-		return FALSE;
-
-	str1 = gtk_tree_path_to_string (path1);
-	str2 = gtk_tree_path_to_string (path2);
-
-	if (strcmp (str1, str2) == 0)
-		retval = TRUE;
-	else
-		retval = FALSE;
-
-	g_free (str1);
-	g_free (str2);
-
-	return retval;
-}
-
 static GtkWindow *
 totem_playlist_get_toplevel (TotemPlaylist *playlist)
 {
@@ -1342,8 +1317,7 @@ static void
 treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 		GtkTreeViewColumn *arg2, TotemPlaylist *playlist)
 {
-	if (totem_playlist_gtk_tree_path_equals
-	    (arg1, playlist->priv->current) != FALSE) {
+	if (gtk_tree_path_compare (arg1, playlist->priv->current) == 0) {
 		g_signal_emit (G_OBJECT (playlist),
 				totem_playlist_table_signals[ITEM_ACTIVATED], 0,
 				NULL);
