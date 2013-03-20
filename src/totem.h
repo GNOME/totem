@@ -179,9 +179,6 @@ void	totem_object_action_volume		(TotemObject *totem, double volume);
 void    totem_action_set_mrl			(TotemObject *totem,
 						 const char *mrl,
 						 const char *subtitle);
-void	totem_action_set_mrl_and_play		(TotemObject *totem,
-						 const char *mrl, 
-						 const char *subtitle);
 
 void	totem_object_action_next_angle		(TotemObject *totem);
 

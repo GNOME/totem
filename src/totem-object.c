@@ -93,6 +93,7 @@ static void update_fill (TotemObject *totem, gdouble level);
 static void update_media_menu_items (TotemObject *totem);
 static void playlist_changed_cb (GtkWidget *playlist, TotemObject *totem);
 static void play_pause_set_label (TotemObject *totem, TotemStates state);
+static void totem_action_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *subtitle);
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT gboolean main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem);
@@ -1266,17 +1267,7 @@ totem_action_seek (TotemObject *totem, double pos)
 	}
 }
 
-/**
- * totem_action_set_mrl_and_play:
- * @totem: a #TotemObject
- * @mrl: the MRL to play
- * @subtitle: a subtitle file to load, or %NULL
- *
- * Loads the specified @mrl and plays it, if possible.
- * Calls totem_action_set_mrl() then totem_object_action_play().
- * For more information, see the documentation for totem_action_set_mrl().
- **/
-void
+static void
 totem_action_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *subtitle)
 {
 	totem_action_set_mrl (totem, mrl, subtitle);
