@@ -138,7 +138,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
       Source.remove (media_info_timeout);
       media_info_timeout = 0;
 
-      current_media.title = Totem.get_short_title (totem);
+      current_media.title = totem.get_short_title ();
       timeout_id = 0;
       wait_for_media_info ();
     }
