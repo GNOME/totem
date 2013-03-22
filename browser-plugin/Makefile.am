@@ -14,6 +14,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/src/backend			\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
+	-DPKGDATADIR="\"$(pkgdatadir)\""		\
 	$(DISABLE_DEPRECATED)
 
 plugin_sources = \

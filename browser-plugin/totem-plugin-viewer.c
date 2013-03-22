@@ -41,8 +41,6 @@
 
 #include <totem-pl-parser.h>
 
-#include <dbus/dbus-glib.h>
-
 #include "bacon-video-widget.h"
 #include "totem-interface.h"
 #include "totem-statusbar.h"
@@ -65,11 +63,6 @@ char * totem_pl_parser_resolve_uri (GFile *base_gfile, const char *relative_uri)
 #define VOLUME_DOWN_OFFSET (-0.08)
 #define VOLUME_UP_OFFSET (0.08)
 #define MINIMUM_VIDEO_SIZE 150
-
-/* For newer D-Bus version */
-#ifndef DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT
-#define DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT 0
-#endif
 
 typedef enum {
 	TOTEM_PLUGIN_TYPE_GMP,
@@ -102,7 +95,11 @@ typedef struct {
 typedef struct _TotemEmbedded {
 	GtkApplication parent;
 
-	DBusGConnection *conn;
+	/* D-Bus stuff */
+	guint name_id;
+	GDBusConnection *conn;
+	GDBusNodeInfo *introspection_data;
+
 	GtkWidget *window;
 	GtkBuilder *menuxml, *xml;
 	GtkWidget *pp_button;
@@ -179,7 +176,6 @@ enum
 G_DEFINE_TYPE (TotemEmbedded, totem_embedded, GTK_TYPE_APPLICATION);
 static void totem_embedded_init (TotemEmbedded *emb) { }
 
-static gboolean totem_embedded_do_command (TotemEmbedded *emb, const char *command, GError **err);
 static gboolean totem_embedded_push_parser (gpointer data);
 static gboolean totem_embedded_play (TotemEmbedded *embedded, GError **error);
 static void totem_embedded_set_logo_by_name (TotemEmbedded *embedded, const char *name);
@@ -203,16 +199,20 @@ enum {
 	LAST_SIGNAL
 };
 
-static int signals[LAST_SIGNAL] = { 0 };
-
 static void
 totem_embedded_finalize (GObject *object)
 {
 	TotemEmbedded *embedded = TOTEM_EMBEDDED (object);
 
+	/* D-Bus */
+	if (embedded->name_id)
+		g_bus_unown_name (embedded->name_id);
+	g_clear_object (&embedded->conn);
+	g_clear_pointer (&embedded->introspection_data, g_dbus_node_info_unref);
+
+	/* Interface */
 	if (embedded->window)
 		gtk_widget_destroy (embedded->window);
-
 	if (embedded->xml)
 		g_object_unref (embedded->xml);
 	if (embedded->menuxml)
@@ -227,55 +227,9 @@ totem_embedded_finalize (GObject *object)
 
 static void totem_embedded_class_init (TotemEmbeddedClass *klass)
 {
-	GType param_types[3];
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->finalize = totem_embedded_finalize;
-
-	param_types[0] = param_types[1] = G_TYPE_UINT;
-	param_types[2] = G_TYPE_STRING;
-	signals[BUTTON_PRESS] =
-		g_signal_newv ("button-press",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				NULL /* class closure */,
-				NULL /* accu */, NULL /* accu data */,
-				g_cclosure_marshal_generic,
-				G_TYPE_NONE, 2, param_types);
-	signals[START_STREAM] =
-		g_signal_newv ("start-stream",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				NULL /* class closure */,
-				NULL /* accu */, NULL /* accu data */,
-				g_cclosure_marshal_VOID__VOID,
-				G_TYPE_NONE,
-				0, NULL);
-	signals[STOP_STREAM] =
-		g_signal_newv ("stop-stream",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				NULL /* class closure */,
-				NULL /* accu */, NULL /* accu data */,
-				g_cclosure_marshal_VOID__VOID,
-				G_TYPE_NONE,
-				0, NULL);
-	signals[SIGNAL_TICK] =
-		g_signal_newv ("tick",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST,
-				NULL /* class closure */,
-				NULL /* accu */, NULL /* accu data */,
-	                        g_cclosure_marshal_generic,
-				G_TYPE_NONE, 3, param_types);
-	signals[PROPERTY_CHANGE] =
-		g_signal_new ("property-change",
-			      G_TYPE_FROM_CLASS (object_class),
-			      G_SIGNAL_RUN_LAST,
-			      0 /* class offset */,
-			      NULL /* accu */, NULL /* accu data */,
-			      g_cclosure_marshal_generic,
-			      G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_VALUE);
 }
 
 static void
@@ -289,10 +243,11 @@ static void
 totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 {
 	/* Avoid any more contacts, so drop off the bus */
-	if (emb->conn != NULL) {
-		dbus_g_connection_unregister_g_object(emb->conn, G_OBJECT (emb));
-		emb->conn = NULL;
+	if (emb->name_id > 0) {
+		g_bus_unown_name (emb->name_id);
+		emb->name_id = 0;
 	}
+	g_clear_object (&emb->conn);
 
 	/* FIXME send a signal to the plugin with the error message instead! */
 	totem_interface_error_blocking (title, reason,
@@ -303,13 +258,13 @@ totem_embedded_error_and_exit (char *title, char *reason, TotemEmbedded *emb)
 static void
 totem_embedded_volume_changed (TotemEmbedded *emb, double volume)
 {
-	GValue value = { 0, };
-
-	g_value_init (&value, G_TYPE_DOUBLE);
-	g_value_set_double (&value, volume);
-	g_signal_emit (emb, signals[PROPERTY_CHANGE], 0,
-		       TOTEM_PROPERTY_VOLUME,
-		       &value);
+	g_dbus_connection_emit_signal (emb->conn,
+				       NULL,
+				       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+				       "org.gnome.totem.PluginViewer",
+				       "PropertyChange",
+				       g_variant_new ("(sv)", TOTEM_PROPERTY_VOLUME, g_variant_new_double (volume), NULL),
+				       NULL);
 }
 
 static void
@@ -323,13 +278,13 @@ totem_embedded_set_error (TotemEmbedded *emb,
 	g_message ("totem_embedded_set_error: '%s'", secondary);
 }
 
-static gboolean
+static void
 totem_embedded_set_error_logo (TotemEmbedded *embedded,
-			       GError *error)
+			       GDBusMethodInvocation *invocation)
 {
 	g_message ("totem_embedded_set_error_logo called by browser plugin");
 	totem_embedded_set_logo_by_name (embedded, "image-missing");
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
 static void
@@ -477,8 +432,13 @@ totem_embedded_play (TotemEmbedded *emb,
 
 	if (emb->current_uri == NULL) {
 		totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
-		g_signal_emit (emb, signals[BUTTON_PRESS], 0,
-			       gtk_get_current_event_time (), 0);
+		g_dbus_connection_emit_signal (emb->conn,
+					       NULL,
+					       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+					       "org.gnome.totem.PluginViewer",
+					       "ButtonPress",
+					       g_variant_new ("(uu)", gtk_get_current_event_time (), 0, NULL),
+					       NULL);
 		return TRUE;
 	}
 
@@ -495,62 +455,70 @@ totem_embedded_play (TotemEmbedded *emb,
 	return TRUE;
 }
 
-static gboolean
-totem_embedded_pause (TotemEmbedded *emb,
-		      GError **error)
+static void
+totem_embedded_pause (TotemEmbedded *emb)
 {
 	totem_embedded_set_state (emb, TOTEM_STATE_PAUSED);
 	bacon_video_widget_pause (emb->bvw);
-
-	return TRUE;
 }
 
-static gboolean
-totem_embedded_stop (TotemEmbedded *emb,
-		     GError **error)
+static void
+totem_embedded_stop (TotemEmbedded *emb)
 {
 	totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 	bacon_video_widget_stop (emb->bvw);
 
-	g_signal_emit (emb, signals[SIGNAL_TICK], 0,
-		       (guint32) 0,
-		       (guint32) 0,
-		       totem_states[emb->state]);
-
-	return TRUE;
+	g_dbus_connection_emit_signal (emb->conn,
+				       NULL,
+				       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+				       "org.gnome.totem.PluginViewer",
+				       "Tick",
+				       g_variant_new ("(uus)", 0, 0, totem_states[emb->state], NULL),
+				       NULL);
 }
 
-static gboolean
+static void
 totem_embedded_do_command (TotemEmbedded *embedded,
-			   const char *command,
-			   GError **error)
+			   GDBusMethodInvocation *invocation,
+			   const char *command)
 {
+	char *error_msg;
+
 	g_return_val_if_fail (command != NULL, FALSE);
 
 	g_message ("totem_embedded_do_command: %s", command);
 
 	if (strcmp (command, TOTEM_COMMAND_PLAY) == 0) {
-		return totem_embedded_play (embedded, error);
+		GError *error = NULL;
+		if (!totem_embedded_play (embedded, &error))
+			g_dbus_method_invocation_take_error (invocation, error);
+		else
+			g_dbus_method_invocation_return_value (invocation, NULL);
+		return;
 	}
 	if (strcmp (command, TOTEM_COMMAND_PAUSE) == 0) {
-		return totem_embedded_pause (embedded, error);
+		totem_embedded_pause (embedded);
+		g_dbus_method_invocation_return_value (invocation, NULL);
+		return;
 	}
 	if (strcmp (command, TOTEM_COMMAND_STOP) == 0) {
-		return totem_embedded_stop (embedded, error);
+		totem_embedded_stop (embedded);
+		g_dbus_method_invocation_return_value (invocation, NULL);
+		return;
 	}
-		
-	g_set_error (error,
-                     TOTEM_EMBEDDED_ERROR_QUARK,
-                     TOTEM_EMBEDDED_UNKNOWN_COMMAND,
-                     "Unknown command '%s'", command);
-	return FALSE;
+
+	error_msg = g_strdup_printf ("Unknown command '%s'", command);
+	g_dbus_method_invocation_return_dbus_error (invocation,
+						    "org.freedesktop.DBus.Error.InvalidArgs",
+						    error_msg);
+	g_free (error_msg);
 }
 
-static gboolean
+static void
 totem_embedded_set_href (TotemEmbedded *embedded,
+			 GDBusMethodInvocation *invocation,
 			 const char *href_uri,
-			 const char *target,
-			 GError *error)
+			 const char *target)
 {
 	g_message ("totem_embedded_set_href %s (target: %s)",
 		   href_uri, target);
@@ -572,25 +540,27 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 	} else {
 		embedded->target = NULL;
 	}
-
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_set_volume (TotemEmbedded *embedded,
-			   gdouble volume,
-			   GError *error)
+			   GDBusMethodInvocation *invocation,
+			   gdouble volume)
 {
 	g_message ("totem_embedded_set_volume: %f", volume);
 	bacon_video_widget_set_volume (embedded->bvw, volume);
 	totem_embedded_volume_changed (embedded, volume);
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_launch_player (TotemEmbedded *embedded,
+			      GDBusMethodInvocation *invocation,
+			      const char *uri,
 			      guint32 user_time)
 {
+	GError *error = NULL;
 	GList *uris = NULL;
 	GdkScreen *screen;
 	GdkAppLaunchContext *ctx;
@@ -612,11 +582,17 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 	gdk_app_launch_context_set_timestamp (ctx, user_time);
 	gdk_app_launch_context_set_icon (ctx, g_app_info_get_icon (embedded->app));
 
-	result = g_app_info_launch_uris (embedded->app, uris, G_APP_LAUNCH_CONTEXT (ctx), NULL);
+	result = g_app_info_launch_uris (embedded->app, uris, G_APP_LAUNCH_CONTEXT (ctx), &error);
+	if (invocation == NULL)
+		goto end;
 
+	if (result)
+		g_dbus_method_invocation_take_error (invocation, error);
+	else
+		g_dbus_method_invocation_return_value (invocation, NULL);
+
+end:
 	g_list_free (uris);
-
-	return result;
 }
 
 static void
@@ -691,8 +667,9 @@ totem_pl_item_free (gpointer data, gpointer user_data)
 	g_slice_free (TotemPlItem, item);
 }
 
-static gboolean
-totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
+static void
+totem_embedded_clear_playlist (TotemEmbedded *emb,
+			       GDBusMethodInvocation *invocation)
 {
 	g_message ("totem_embedded_clear_playlist");
 
@@ -708,16 +685,17 @@ totem_embedded_clear_playlist (TotemEmbedded *emb, GError *error)
 	update_fill (emb, -1.0);
 	totem_embedded_update_title (emb, NULL);
 
-	return TRUE;
+	if (invocation != NULL)
+		g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_add_item (TotemEmbedded *embedded,
+			 GDBusMethodInvocation *invocation,
 			 const char *base_uri,
 			 const char *uri,
 			 const char *title,
-			 const char *subtitle,
-			 GError *error)
+			 const char *subtitle)
 {
 	TotemPlItem *item;
 
@@ -743,23 +721,24 @@ totem_embedded_add_item (TotemEmbedded *embedded,
 					FALSE);
 		totem_embedded_open_internal (embedded, FALSE, NULL /* FIXME */);
 	}
-
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_set_fullscreen (TotemEmbedded *emb,
-			       gboolean fullscreen_enabled,
-			       GError **error)
+			       GDBusMethodInvocation *invocation,
+			       gboolean fullscreen_enabled)
 {
-	GValue value = { 0, };
 	GtkAction *fs_action;
 
 	fs_action = GTK_ACTION (gtk_builder_get_object
 				(emb->menuxml, "fullscreen1"));
 
-	if (totem_fullscreen_is_fullscreen (emb->fs) == fullscreen_enabled)
-		return TRUE;
+	if (totem_fullscreen_is_fullscreen (emb->fs) == fullscreen_enabled) {
+		if (invocation)
+			g_dbus_method_invocation_return_value (invocation, NULL);
+		return;
+	}
 
 	g_message ("totem_embedded_set_fullscreen: %d", fullscreen_enabled);
 
@@ -795,33 +774,37 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 		gtk_action_set_sensitive (fs_action, FALSE);
 	}
 
-	g_value_init (&value, G_TYPE_BOOLEAN);
-	g_value_set_boolean (&value, fullscreen_enabled);
-	g_signal_emit (emb, signals[PROPERTY_CHANGE], 0,
-		       TOTEM_PROPERTY_ISFULLSCREEN,
-		       &value);
+	g_dbus_connection_emit_signal (emb->conn,
+				       NULL,
+				       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+				       "org.gnome.totem.PluginViewer",
+				       "PropertyChange",
+				       g_variant_new ("(sv)", TOTEM_PROPERTY_ISFULLSCREEN, g_variant_new_boolean (fullscreen_enabled), NULL),
+				       NULL);
 
-	return TRUE;
+	if (invocation)
+		g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_set_time (TotemEmbedded *emb,
-			 guint64 _time,
-			 GError **error)
+			 GDBusMethodInvocation *invocation,
+			 guint64 _time)
 {
 	g_message ("totem_embedded_set_time: %"G_GUINT64_FORMAT, _time);
 
 	bacon_video_widget_seek_time (emb->bvw, _time, FALSE, NULL);
-
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_open_uri (TotemEmbedded *emb,
+			 GDBusMethodInvocation *invocation,
 			 const char *uri,
-			 const char *base_uri,
-			 GError **error)
+			 const char *base_uri)
 {
+	GError *error = NULL;
+
 	g_message ("totem_embedded_open_uri: uri %s base_uri: %s", uri, base_uri);
 
 	totem_embedded_clear_playlist (emb, NULL);
@@ -831,14 +814,17 @@ totem_embedded_open_uri (TotemEmbedded *emb,
 	 * we open a particular URI like this */
 	emb->num_items = 1;
 
-	return totem_embedded_open_internal (emb, TRUE, error);
+	if (!totem_embedded_open_internal (emb, TRUE, &error))
+		g_dbus_method_invocation_take_error (invocation, error);
+	else
+		g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_setup_stream (TotemEmbedded *emb,
+			     GDBusMethodInvocation *invocation,
 			     const char *uri,
-			     const char *base_uri,
-			     GError **error)
+			     const char *base_uri)
 {
 	g_message ("totem_embedded_setup_stream called: uri %s, base_uri: %s", uri, base_uri);
 
@@ -850,36 +836,41 @@ totem_embedded_setup_stream (TotemEmbedded *emb,
 	emb->num_items = 1;
 
 	/* FIXME: consume any remaining input from stdin */
-
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_open_stream (TotemEmbedded *emb,
-			    gint64 size,
-			    GError **error)
+			    GDBusMethodInvocation *invocation,
+			    gint64 size)
 {
+	GError *error = NULL;
+
 	g_message ("totem_embedded_open_stream called: with size %"G_GINT64_FORMAT, size);
 
 	emb->size = size;
 
-	return totem_embedded_open_internal (emb, TRUE, error);
+	if (!totem_embedded_open_internal (emb, TRUE, &error))
+		g_dbus_method_invocation_take_error (invocation, error);
+	else
+		g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_close_stream (TotemEmbedded *emb,
-			     GError *error)
+			     GDBusMethodInvocation *invocation)
 {
 	g_message ("totem_embedded_close_stream");
 
 	if (!emb->is_browser_stream)
-		return TRUE;
+		goto end;
 
 	/* FIXME this enough? */
 	bacon_video_widget_close (emb->bvw);
 	update_fill (emb, -1.0);
 
-	return TRUE;
+end:
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
 static gboolean
@@ -936,13 +927,14 @@ totem_embedded_open_playlist_item (TotemEmbedded *emb,
 	return TRUE;
 }
 
-static gboolean
+static void
 totem_embedded_set_local_file (TotemEmbedded *emb,
+			       GDBusMethodInvocation *invocation,
 			       const char *path,
 			       const char *uri,
-			       const char *base_uri,
-			       GError **error)
+			       const char *base_uri)
 {
+	GError *error = NULL;
 	char *file_uri;
 
 	g_message ("Setting the current path to %s (uri: %s base: %s)",
@@ -950,21 +942,26 @@ totem_embedded_set_local_file (TotemEmbedded *emb,
 
 	totem_embedded_clear_playlist (emb, NULL);
 
-	file_uri = g_filename_to_uri (path, NULL, error);
-	if (!file_uri)
-		return FALSE;
+	file_uri = g_filename_to_uri (path, NULL, &error);
+	if (!file_uri) {
+		g_dbus_method_invocation_take_error (invocation, error);
+		return;
+	}
 
 	/* FIXME what about |uri| param?!! */
 	totem_embedded_set_uri (emb, file_uri, base_uri, emb->current_subtitle_uri, FALSE);
 	g_free (file_uri);
 
-	return totem_embedded_open_internal (emb, TRUE, error);
+	if (!totem_embedded_open_internal (emb, TRUE, &error))
+		g_dbus_method_invocation_take_error (invocation, error);
+	else
+		g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_set_local_cache (TotemEmbedded *emb,
-				const char *path,
-				GError **error)
+				GDBusMethodInvocation *invocation,
+				const char *path)
 {
 	int fd;
 
@@ -972,7 +969,7 @@ totem_embedded_set_local_cache (TotemEmbedded *emb,
 
 	/* FIXME Should also handle playlists */
 	if (!emb->is_browser_stream)
-		return TRUE;
+		goto end;
 
 	/* Keep the temporary file open, so that StreamAsFile
 	 * doesn't remove it from under us */
@@ -980,21 +977,22 @@ totem_embedded_set_local_cache (TotemEmbedded *emb,
 	if (fd < 0) {
 		g_message ("Failed to open local cache file '%s': %s",
 			   path, g_strerror (errno));
-		return FALSE;
+		goto end;
 	}
 
 	emb->stream_uri = emb->current_uri;
 	emb->current_uri = g_strdup_printf ("fd://%d", fd);
 
-	return TRUE;
+end:
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static gboolean
+static void
 totem_embedded_set_playlist (TotemEmbedded *emb,
+			     GDBusMethodInvocation *invocation,
 			     const char *path,
 			     const char *uri,
-			     const char *base_uri,
-			     GError **error)
+			     const char *base_uri)
 {
 	g_message ("Setting the current playlist to %s (uri: %s base: %s)",
 		   path, uri, base_uri);
@@ -1018,7 +1016,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 			g_warning ("Couldn't open temporary file for playlist: %s",
 				   err->message);
 			g_error_free (err);
-			return TRUE;
+			goto end;
 		}
 		src = g_file_new_for_path (path);
 		dst = g_file_new_for_path (tmp_file);
@@ -1030,7 +1028,7 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 			g_object_unref (dst);
 			g_free (tmp_file);
 			close (fd);
-			return TRUE;
+			goto end;
 		}
 		g_free (tmp_file);
 
@@ -1052,7 +1050,8 @@ totem_embedded_set_playlist (TotemEmbedded *emb,
 		emb->parser_id = g_idle_add (totem_embedded_push_parser,
 					     emb);
 
-	return TRUE;
+end:
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
 static GAppInfo *
@@ -1134,8 +1133,8 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 {
 	GTimeVal val;
 	g_get_current_time (&val);
-	totem_embedded_launch_player (emb, val.tv_sec);
-	totem_embedded_stop (emb, NULL);
+	totem_embedded_launch_player (emb, NULL, NULL, val.tv_sec);
+	totem_embedded_stop (emb);
 }
 
 void
@@ -1182,12 +1181,17 @@ static void
 on_play_pause (GtkWidget *widget, TotemEmbedded *emb)
 {
 	if (emb->state == TOTEM_STATE_PLAYING) {
-		totem_embedded_pause (emb, NULL);
+		totem_embedded_pause (emb);
 	} else {
 		if (emb->current_uri == NULL) {
 			totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (emb->pp_button), FALSE);
-			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
-				       gtk_get_current_event_time (), 0);
+			g_dbus_connection_emit_signal (emb->conn,
+						       NULL,
+						       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+						       "org.gnome.totem.PluginViewer",
+						       "ButtonPress",
+						       g_variant_new ("(uu)", gtk_get_current_event_time (), 0, NULL),
+						       NULL);
 		} else {
 			totem_embedded_play (emb, NULL);
 		}
@@ -1309,9 +1313,9 @@ static void
 totem_embedded_toggle_fullscreen (TotemEmbedded *emb)
 {
 	if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
-		totem_embedded_set_fullscreen (emb, FALSE, NULL);
+		totem_embedded_set_fullscreen (emb, NULL, FALSE);
 	else
-		totem_embedded_set_fullscreen (emb, TRUE, NULL);
+		totem_embedded_set_fullscreen (emb, NULL, TRUE);
 }
 
 static void
@@ -1341,9 +1345,13 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 			emb->error = NULL;
 		} else if (!gtk_widget_get_visible (GTK_WIDGET (menu))) {
 			g_message ("emitting signal button press");
-			g_signal_emit (emb, signals[BUTTON_PRESS], 0,
-				       event->time,
-				       event->button);
+			g_dbus_connection_emit_signal (emb->conn,
+						       NULL,
+						       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+						       "org.gnome.totem.PluginViewer",
+						       "ButtonPress",
+						       g_variant_new ("(uu)", gtk_get_current_event_time (), 0, NULL),
+						       NULL);
 		} else {
 			gtk_menu_popdown (menu);
 		}
@@ -1426,8 +1434,14 @@ on_error_event (BaconVideoWidget *bvw,
 	if (playback_stopped) {
 		/* FIXME: necessary? */
 		if (emb->is_browser_stream)
-			g_signal_emit (emb, signals[STOP_STREAM], 0);
-	
+			g_dbus_connection_emit_signal (emb->conn,
+						       NULL,
+						       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+						       "org.gnome.totem.PluginViewer",
+						       "StopStream",
+						       NULL,
+						       NULL);
+
 		totem_embedded_set_state (emb, TOTEM_STATE_STOPPED);
 
 		/* If we have a playlist, and that the current item
@@ -1450,7 +1464,7 @@ on_error_event (BaconVideoWidget *bvw,
 	}
 
 	totem_embedded_set_error (emb, BVW_ERROR_GENERIC, message);
-	totem_embedded_set_error_logo (emb, NULL);
+	totem_embedded_set_logo_by_name (emb, "image-missing");
 }
 
 static void
@@ -1488,10 +1502,13 @@ on_tick (GtkWidget *bvw,
 			 current_time, stream_length);
 	}
 
-	g_signal_emit (emb, signals[SIGNAL_TICK], 0,
-		       (guint32) current_time,
-		       (guint32) stream_length,
-		       totem_states[emb->state]);
+	g_dbus_connection_emit_signal (emb->conn,
+				       NULL,
+				       TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+				       "org.gnome.totem.PluginViewer",
+				       "Tick",
+				       g_variant_new ("(uus)", (guint32) current_time, (guint32) stream_length, totem_states[emb->state], NULL),
+				       NULL);
 }
 
 static void
@@ -1527,9 +1544,9 @@ property_notify_cb_volume (BaconVideoWidget *bvw,
 			   TotemEmbedded *emb)
 {
 	double volume;
-	
+
 	volume = bacon_video_widget_get_volume (emb->bvw);
-	
+
 	g_signal_handlers_block_by_func (emb->volume, cb_vol, emb);
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (emb->volume), volume);
 	totem_embedded_volume_changed (emb, volume);
@@ -1873,41 +1890,41 @@ totem_embedded_construct (TotemEmbedded *emb,
 	return TRUE;
 }
 
-static gboolean
+static void
 totem_embedded_set_window (TotemEmbedded *embedded,
+			   GDBusMethodInvocation *invocation,
 			   const char *controls,
 			   guint window,
 			   int width,
-			   int height,
-			   GError **error)
+			   int height)
 {
 	g_print ("Viewer: SetWindow XID %u size %d:%d\n", window, width, height);
 
 	if (strcmp (controls, "All") != 0 &&
 	    strcmp (controls, "ImageWindow") != 0) {
-		g_set_error (error,
-			     TOTEM_EMBEDDED_ERROR_QUARK,
-			     TOTEM_EMBEDDED_SETWINDOW_UNSUPPORTED_CONTROLS,
-			     "Unsupported controls '%s'", controls);
-		return FALSE;
+		g_dbus_method_invocation_return_error (invocation,
+						       TOTEM_EMBEDDED_ERROR_QUARK,
+						       TOTEM_EMBEDDED_SETWINDOW_UNSUPPORTED_CONTROLS,
+						       "Unsupported controls '%s'", controls);
+		return;
 	}
 
 	if (embedded->window != NULL) {
 		g_warning ("Viewer: Already have a window!");
 
-		g_set_error_literal (error,
-                                     TOTEM_EMBEDDED_ERROR_QUARK,
-                                     TOTEM_EMBEDDED_SETWINDOW_HAVE_WINDOW,
-                                     "Already have a window");
-		return FALSE;
+		g_dbus_method_invocation_return_error (invocation,
+						       TOTEM_EMBEDDED_ERROR_QUARK,
+						       TOTEM_EMBEDDED_SETWINDOW_HAVE_WINDOW,
+						       "Already have a window");
+		return;
 	}
 
 	if (window == 0) {
-		g_set_error_literal (error,
-                                     TOTEM_EMBEDDED_ERROR_QUARK,
-                                     TOTEM_EMBEDDED_SETWINDOW_INVALID_XID,
-                                     "Invalid XID");
-		return FALSE;
+		g_dbus_method_invocation_return_error (invocation,
+						       TOTEM_EMBEDDED_ERROR_QUARK,
+						       TOTEM_EMBEDDED_SETWINDOW_INVALID_XID,
+						       "Invalid XID");
+		return;
 	}
 
 	embedded->width = width;
@@ -1916,16 +1933,7 @@ totem_embedded_set_window (TotemEmbedded *embedded,
 	totem_embedded_construct (embedded, (Window) window,
 				  width, height);
 
-	return TRUE;
-}
-
-static gboolean
-totem_embedded_unset_window (TotemEmbedded *embedded,
-			    guint window,
-			    GError **error)
-{
-	g_warning ("UnsetWindow unimplemented");
-	return TRUE;
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
 static void
@@ -2029,7 +2037,7 @@ totem_embedded_push_parser (gpointer data)
 		g_message ("Couldn't parse playlist '%s'", emb->current_uri);
 		totem_embedded_set_error (emb, BVW_ERROR_EMPTY_FILE,
 					  _("No playlist or playlist empty"));
-		totem_embedded_set_error_logo (emb, NULL);
+		totem_embedded_set_logo_by_name (emb, "image-missing");
 		return FALSE;
 	} else if (emb->playlist == NULL) {
 		g_message ("Playlist empty");
@@ -2046,6 +2054,135 @@ totem_embedded_push_parser (gpointer data)
 	/* don't run again */
 	return FALSE;
 }
+
+static void
+handle_method_call (GDBusConnection *connection,
+		    const gchar           *sender,
+		    const gchar           *object_path,
+		    const gchar           *interface_name,
+		    const gchar           *method_name,
+		    GVariant              *parameters,
+		    GDBusMethodInvocation *invocation,
+		    gpointer               user_data)
+{
+	TotemEmbedded *emb = (TotemEmbedded *) user_data;
+
+	if (g_strcmp0 (method_name, "DoCommand") == 0) {
+		char *command;
+
+		g_variant_get (parameters, "(s)", &command);
+		totem_embedded_do_command (emb, invocation, command);
+		g_free (command);
+	} else if (g_strcmp0 (method_name, "SetWindow") == 0) {
+		char *controls;
+		guint xid;
+		int width, height;
+
+		g_variant_get (parameters, "(suii)", &controls, &xid, &width, &height);
+		totem_embedded_set_window (emb, invocation, controls, xid, width, height);
+		g_free (controls);
+	} else if (g_strcmp0 (method_name, "SetupStream") == 0) {
+		char *uri, *base_uri;
+
+		g_variant_get (parameters, "(ss)", &uri, &base_uri);
+		totem_embedded_setup_stream (emb, invocation, uri, base_uri);
+		g_free (uri);
+		g_free (base_uri);
+	} else if (g_strcmp0 (method_name, "OpenStream") == 0) {
+		gint64 size;
+
+		g_variant_get (parameters, "(x)", &size);
+		totem_embedded_open_stream (emb, invocation, size);
+	} else if (g_strcmp0 (method_name, "CloseStream") == 0) {
+		totem_embedded_close_stream (emb, invocation);
+	} else if (g_strcmp0 (method_name, "OpenURI") == 0) {
+		char *uri, *base_uri;
+
+		g_variant_get (parameters, "(ss)", &uri, &base_uri);
+		totem_embedded_open_uri (emb, invocation, uri, base_uri);
+		g_free (uri);
+		g_free (base_uri);
+	} else if (g_strcmp0 (method_name, "SetPlaylist") == 0) {
+		char *path, *uri, *base_uri;
+
+		g_variant_get (parameters, "(sss)", &path, &uri, &base_uri);
+		totem_embedded_set_playlist (emb, invocation, path, uri, base_uri);
+		g_free (path);
+		g_free (uri);
+		g_free (base_uri);
+	} else if (g_strcmp0 (method_name, "SetLocalFile") == 0) {
+		char *path, *uri, *base_uri;
+
+		g_variant_get (parameters, "(sss)", &path, &uri, &base_uri);
+		totem_embedded_set_local_file (emb, invocation, path, uri, base_uri);
+		g_free (path);
+		g_free (uri);
+		g_free (base_uri);
+	} else if (g_strcmp0 (method_name, "SetLocalCache") == 0) {
+		char *path;
+
+		g_variant_get (parameters, "(s)", &path);
+		totem_embedded_set_local_cache (emb, invocation, path);
+		g_free (path);
+	} else if (g_strcmp0 (method_name, "SetHref") == 0) {
+		char *href_uri, *target;
+
+		g_variant_get (parameters, "(ss)", &href_uri, &target);
+		totem_embedded_set_href (emb, invocation, href_uri, target);
+		g_free (href_uri);
+		g_free (target);
+	} else if (g_strcmp0 (method_name, "SetErrorLogo") == 0) {
+		totem_embedded_set_error_logo (emb, invocation);
+	} else if (g_strcmp0 (method_name, "LaunchPlayer") == 0) {
+		char *uri;
+		guint time;
+
+		g_variant_get (parameters, "(su)", &uri, &time);
+		totem_embedded_launch_player (emb, invocation, uri, time);
+		g_free (uri);
+	} else if (g_strcmp0 (method_name, "SetVolume") == 0) {
+		gdouble volume;
+
+		g_variant_get (parameters, "(d)", &volume);
+		totem_embedded_set_volume (emb, invocation, volume);
+	} else if (g_strcmp0 (method_name, "ClearPlaylist") == 0) {
+		totem_embedded_clear_playlist (emb, invocation);
+	} else if (g_strcmp0 (method_name, "AddItem") == 0) {
+		char *base_uri, *uri, *title, *subtitle;
+
+		g_variant_get (parameters, "(ssss)", &base_uri, &uri, &title, &subtitle);
+		totem_embedded_add_item (emb, invocation, base_uri, uri, title, subtitle);
+		g_free (base_uri);
+		g_free (uri);
+		g_free (title);
+		g_free (subtitle);
+	} else if (g_strcmp0 (method_name, "SetFullscreen") == 0) {
+		gboolean fullscreen_enabled;
+
+		g_variant_get (parameters, "(b)", &fullscreen_enabled);
+		totem_embedded_set_fullscreen (emb, invocation, fullscreen_enabled);
+	} else if (g_strcmp0 (method_name, "SetTime") == 0) {
+		guint64 time;
+
+		g_variant_get (parameters, "(t)", &time);
+		totem_embedded_set_time (emb, invocation, time);
+	} else {
+		char *error_msg;
+
+		error_msg = g_strdup_printf ("Unimplemented method call '%s'", method_name);
+		g_dbus_method_invocation_return_dbus_error (invocation,
+							    "org.freedesktop.DBus.Error.UnknownMethod",
+							    error_msg);
+		g_free (error_msg);
+	}
+}
+
+static const GDBusInterfaceVTable interface_vtable =
+{
+	handle_method_call,
+	NULL, /* GetProperty */
+	NULL, /* SetProperty */
+};
 
 static char *arg_user_agent = NULL;
 static char *arg_mime_type = NULL;
@@ -2105,8 +2242,6 @@ static GOptionEntry option_entries [] =
 	{ NULL }
 };
 
-#include "totem-plugin-viewer-interface.h"
-
 static gboolean
 check_options (void)
 {
@@ -2123,9 +2258,6 @@ int main (int argc, char **argv)
 	GOptionContext *context;
 	GOptionGroup *baconoptiongroup;
 	TotemEmbedded *emb;
-	DBusGProxy *proxy;
-	DBusGConnection *conn;
-	guint res;
 	GError *e = NULL;
 	char svcname[256];
 	GtkSettings *gtk_settings;
@@ -2152,8 +2284,6 @@ int main (int argc, char **argv)
 		gtk_init (&argc, &argv);
 		totem_embedded_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. The Totem plugin will now exit."), NULL);
 	}
-
-	dbus_g_thread_init ();
 
 #ifdef GNOME_ENABLE_DEBUG
 	{
@@ -2185,7 +2315,7 @@ int main (int argc, char **argv)
 				g_error_free (gdberr);
 			} else {
 				g_print ("Sleeping....\n");
-				g_usleep (10* 1000 * 1000); /* 10s */
+				g_usleep (10 * 1000 * 1000); /* 10s */
 			}
 
 			g_free (gdb);
@@ -2231,38 +2361,11 @@ int main (int argc, char **argv)
 	if (!check_options ())
 		exit (1);
 
-	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
-					 &dbus_glib_totem_embedded_object_info);
-	g_snprintf (svcname, sizeof (svcname),
-		    TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE, getpid());
-
-	if (!(conn = dbus_g_bus_get (DBUS_BUS_SESSION, &e))) {
-		g_warning ("Failed to get DBUS connection: %s", e->message);
-		g_error_free (e);
-		exit (1);
-	}
-
-	proxy = dbus_g_proxy_new_for_name (conn,
-					   "org.freedesktop.DBus",
-					   "/org/freedesktop/DBus",
-					   "org.freedesktop.DBus");
-	g_assert (proxy != NULL);
-
-	if (!dbus_g_proxy_call (proxy, "RequestName", &e,
-				G_TYPE_STRING, svcname,
-				G_TYPE_UINT, DBUS_NAME_FLAG_PROHIBIT_REPLACEMENT,
-				G_TYPE_INVALID,
-				G_TYPE_UINT, &res,
-				G_TYPE_INVALID)) {
-		g_warning ("RequestName for '%s'' failed: %s\n",
-			   svcname, e->message);
-		g_error_free (e);
-
-		exit (1);
-	}
-
 	gtk_settings = gtk_settings_get_default ();
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
+
+	g_snprintf (svcname, sizeof (svcname),
+		    TOTEM_PLUGIN_VIEWER_NAME_TEMPLATE, getpid());
 
 	emb = g_object_new (TOTEM_TYPE_EMBEDDED,
 			    "application-id", svcname,
@@ -2291,18 +2394,41 @@ int main (int argc, char **argv)
         emb->user_agent = arg_user_agent;
         emb->referrer_uri = arg_referrer;
 
-	/* FIXME: register this BEFORE requesting the service name? */
-	dbus_g_connection_register_g_object (conn,
-					     TOTEM_PLUGIN_VIEWER_DBUS_PATH,
-					     G_OBJECT (emb));
-	emb->conn = conn;
-
 	/* If we're hidden, construct a hidden window;
 	 * else wait to be plugged in.
 	 */
 	if (emb->hidden) {
 		totem_embedded_construct (emb, 0, -1, -1);
 	}
+
+	//FIXME error checking
+	char *introspection_xml;
+	g_file_get_contents (PKGDATADIR "/org_gnome_totem_PluginViewer.xml", &introspection_xml, NULL, NULL);
+	emb->introspection_data = g_dbus_node_info_new_for_xml (introspection_xml, NULL);
+	g_free (introspection_xml);
+
+	if (!(emb->conn = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &e))) {
+		g_warning ("Failed to get DBUS connection: %s", e->message);
+		g_error_free (e);
+		g_object_unref (emb);
+		exit (1);
+	}
+
+	g_dbus_connection_register_object (emb->conn,
+					   TOTEM_PLUGIN_VIEWER_DBUS_PATH,
+					   emb->introspection_data->interfaces[0],
+					   &interface_vtable,
+					   emb,
+					   NULL,
+					   NULL);
+
+	emb->name_id = g_bus_own_name_on_connection (emb->conn,
+						     svcname,
+						     G_BUS_NAME_OWNER_FLAGS_NONE,
+						     NULL,
+						     NULL,
+						     NULL,
+						     NULL);
 
 	gtk_main ();
 
