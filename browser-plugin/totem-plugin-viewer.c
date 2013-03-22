@@ -269,6 +269,7 @@ totem_embedded_set_error (TotemEmbedded *emb,
 			  int code,
 			  char *secondary)
 {
+	g_clear_error (&emb->error);
 	emb->error = g_error_new_literal (TOTEM_EMBEDDED_ERROR_QUARK,
 	                                  code,
 	                                  secondary);
