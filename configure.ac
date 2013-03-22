@@ -54,7 +54,6 @@ GIO_REQS=2.27.92
 GTK_REQS=3.5.2
 TOTEM_PLPARSER_REQS=3.4.4
 GNOMEICON_REQS=2.15.90
-DBUS_REQS=0.82
 VALA_REQS=0.14.1
 PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
@@ -496,16 +495,6 @@ if test "$enable_browser_plugins" = "yes" ; then
 				The Browser plugin requires shared-mime-info
 				>= 0.22 to function.])])
 
-	PKG_CHECK_MODULES([DBUS], [dbus-glib-1 >= $DBUS_REQS],,
-			[enable_browser_plugins=no])
-	DBUSLIBDIR="`$PKG_CONFIG dbus-glib-1 --variable=libdir`"
-	DBUSBINDIR="`echo $DBUSLIBDIR | sed -e s/lib/bin/`"
-	AC_PATH_PROG([DBUS_BIND], [dbus-binding-tool], [no], [$DBUSBINDIR:$PATH])
-	if test "x$DBUS_BIND" = "xno"; then
-		AC_MSG_WARN([dbus-binding-tool not found])
-		enable_browser_plugins=no
-	fi
-
         # check for -fno-rtti flag
 
 	AC_LANG_PUSH([C++])
@@ -523,7 +512,7 @@ if test "$enable_browser_plugins" = "yes" ; then
 		AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
 	fi
 
-	PKG_CHECK_MODULES(PLUGIN_VIEWER, $BACKEND_MODULES gtk+-3.0 >= $GTK_REQS totem-plparser >= $TOTEM_PLPARSER_REQS gdk-x11-3.0 >= $GTK_REQS dbus-glib-1 >= $DBUS_REQS)
+	PKG_CHECK_MODULES(PLUGIN_VIEWER, $BACKEND_MODULES gtk+-3.0 >= $GTK_REQS totem-plparser >= $TOTEM_PLPARSER_REQS gdk-x11-3.0 >= $GTK_REQS)
 	PKG_CHECK_MODULES(GLOW_BUTTON, gtk+-3.0)
 fi
 
