@@ -20,6 +20,7 @@ plugin_sources = \
 	npapi.h				\
 	npruntime.h			\
 	npupp.h				\
+	nptypes.h			\
 	totemNPNGlue.cpp		\
 	totemNPClass.cpp		\
 	totemNPClass.h			\
