@@ -720,7 +720,6 @@ totem_embedded_add_item (TotemEmbedded *embedded,
 
 static void
 totem_embedded_set_fullscreen (TotemEmbedded *emb,
-			       GDBusMethodInvocation *invocation,
 			       gboolean fullscreen_enabled)
 {
 	GtkAction *fs_action;
@@ -728,11 +727,8 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 	fs_action = GTK_ACTION (gtk_builder_get_object
 				(emb->menuxml, "fullscreen1"));
 
-	if (totem_fullscreen_is_fullscreen (emb->fs) == fullscreen_enabled) {
-		if (invocation)
-			g_dbus_method_invocation_return_value (invocation, NULL);
+	if (totem_fullscreen_is_fullscreen (emb->fs) == fullscreen_enabled)
 		return;
-	}
 
 	g_message ("totem_embedded_set_fullscreen: %d", fullscreen_enabled);
 
@@ -774,9 +770,15 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 				       "PropertyChange",
 				       g_variant_new ("(sv)", TOTEM_PROPERTY_ISFULLSCREEN, g_variant_new_boolean (fullscreen_enabled), NULL),
 				       NULL);
+}
 
-	if (invocation)
-		g_dbus_method_invocation_return_value (invocation, NULL);
+static void
+_totem_embedded_set_fullscreen (TotemEmbedded *emb,
+				GDBusMethodInvocation *invocation,
+				gboolean fullscreen_enabled)
+{
+	totem_embedded_set_fullscreen (emb, fullscreen_enabled);
+	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
 static void
@@ -1127,8 +1129,7 @@ on_open1_activate (GtkButton *button, TotemEmbedded *emb)
 void
 on_fullscreen1_activate (GtkMenuItem *menuitem, TotemEmbedded *emb)
 {
-	if (totem_fullscreen_is_fullscreen (emb->fs) == FALSE)
-		totem_embedded_toggle_fullscreen (emb);
+	totem_embedded_set_fullscreen (emb, TRUE);
 }
 
 void
@@ -1301,17 +1302,13 @@ on_got_metadata (BaconVideoWidget *bvw, TotemEmbedded *emb)
 static void
 totem_embedded_toggle_fullscreen (TotemEmbedded *emb)
 {
-	if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
-		totem_embedded_set_fullscreen (emb, NULL, FALSE);
-	else
-		totem_embedded_set_fullscreen (emb, NULL, TRUE);
+	totem_embedded_set_fullscreen (emb, !totem_fullscreen_is_fullscreen (emb->fs));
 }
 
 static void
 totem_embedded_on_fullscreen_exit (GtkWidget *widget, TotemEmbedded *emb)
 {
-	if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
-		totem_embedded_toggle_fullscreen (emb);
+	totem_embedded_set_fullscreen (emb, FALSE);
 }
 
 static gboolean
@@ -1592,8 +1589,7 @@ totem_embedded_handle_key_press (TotemEmbedded *emb, GdkEventKey *event)
 {
 	switch (event->keyval) {
 	case GDK_KEY_Escape:
-		if (totem_fullscreen_is_fullscreen (emb->fs) != FALSE)
-			totem_embedded_toggle_fullscreen (emb);
+		totem_embedded_set_fullscreen (emb, FALSE);
 		return TRUE;
 	case GDK_KEY_F11:
 	case GDK_KEY_f:
@@ -2146,7 +2142,7 @@ handle_method_call (GDBusConnection *connection,
 		gboolean fullscreen_enabled;
 
 		g_variant_get (parameters, "(b)", &fullscreen_enabled);
-		totem_embedded_set_fullscreen (emb, invocation, fullscreen_enabled);
+		_totem_embedded_set_fullscreen (emb, invocation, fullscreen_enabled);
 	} else if (g_strcmp0 (method_name, "SetTime") == 0) {
 		guint64 time;
 
