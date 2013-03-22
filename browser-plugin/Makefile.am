@@ -100,8 +100,10 @@ totem_plugin_viewer_LDFLAGS = -export-dynamic
 totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
 	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@
 
+dbusifacedir = $(pkgdatadir)
+dbusiface_DATA = org_gnome_totem_PluginViewer.xml
+
 CLEANFILES = totem-plugin-viewer-interface.h
-EXTRA_DIST += org_gnome_totem_PluginViewer.xml
 
 # Totem GMP Plugin
 if ENABLE_GMP_PLUGIN
