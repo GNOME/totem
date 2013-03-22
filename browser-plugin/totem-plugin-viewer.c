@@ -49,6 +49,7 @@
 #include "totem-glow-button.h"
 #include "video-utils.h"
 
+#include "totem-plugin-viewer-resources.h"
 #include "totem-plugin-viewer-constants.h"
 #include "totem-plugin-viewer-options.h"
 
@@ -2261,6 +2262,7 @@ int main (int argc, char **argv)
 	GError *e = NULL;
 	char svcname[256];
 	GtkSettings *gtk_settings;
+	GBytes *introspection_xml;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -2341,6 +2343,8 @@ int main (int argc, char **argv)
 		exit (1);
 	}
 
+	g_resources_register (totem_plugin_viewer_get_resource ());
+
 	g_type_ensure (TOTEM_TYPE_GLOW_BUTTON);
 	g_type_ensure (TOTEM_TYPE_STATUSBAR);
 	g_type_ensure (TOTEM_TYPE_TIME_LABEL);
@@ -2401,11 +2405,9 @@ int main (int argc, char **argv)
 		totem_embedded_construct (emb, 0, -1, -1);
 	}
 
-	//FIXME error checking
-	char *introspection_xml;
-	g_file_get_contents (PKGDATADIR "/org_gnome_totem_PluginViewer.xml", &introspection_xml, NULL, NULL);
-	emb->introspection_data = g_dbus_node_info_new_for_xml (introspection_xml, NULL);
-	g_free (introspection_xml);
+	introspection_xml = g_resources_lookup_data ("/org/gnome/totem/org_gnome_totem_PluginViewer.xml", 0, NULL);
+	emb->introspection_data = g_dbus_node_info_new_for_xml (g_bytes_get_data (introspection_xml, NULL), NULL);
+	g_bytes_unref (introspection_xml);
 
 	if (!(emb->conn = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &e))) {
 		g_warning ("Failed to get DBUS connection: %s", e->message);

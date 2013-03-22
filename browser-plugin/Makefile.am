@@ -14,7 +14,6 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/src/backend			\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
 	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	-DPKGDATADIR="\"$(pkgdatadir)\""		\
 	$(DISABLE_DEPRECATED)
 
 plugin_sources = \
@@ -69,6 +68,14 @@ test_glow_button_CFLAGS =	\
 # Totem Plugin Viewer
 libexec_PROGRAMS = totem-plugin-viewer
 
+BUILT_SOURCES = totem-plugin-viewer-resources.c totem-plugin-viewer-resources.h
+
+resource_files = $(shell glib-compile-resources --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/totem-plugin-viewer.gresource.xml)
+totem-plugin-viewer-resources.c: totem-plugin-viewer.gresource.xml $(resource_files)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --generate-source --c-name totem_plugin_viewer $<
+totem-plugin-viewer-resources.h: totem-plugin-viewer.gresource.xml $(resource_files)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --generate-header --c-name totem_plugin_viewer $<
+
 # Are we a bit thick, Mister?
 totem-plugin-viewer.c: $(MARSHAL_FILES)
 
@@ -79,6 +86,7 @@ totem_plugin_viewer_SOURCES = \
 	totem-plugin-viewer.c		\
 	totem-plugin-viewer-constants.h	\
 	totem-plugin-viewer-options.h	\
+	$(BUILT_SOURCES)		\
 	$(MARSHAL_FILES)
 
 totem_plugin_viewer_CPPFLAGS = \
