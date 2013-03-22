@@ -76,9 +76,6 @@ totem-plugin-viewer-resources.c: totem-plugin-viewer.gresource.xml $(resource_fi
 totem-plugin-viewer-resources.h: totem-plugin-viewer.gresource.xml $(resource_files)
 	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --generate-header --c-name totem_plugin_viewer $<
 
-# Are we a bit thick, Mister?
-totem-plugin-viewer.c: $(MARSHAL_FILES)
-
 totem_plugin_viewer_SOURCES = \
 	totem-glow-button.c		\
 	totem-glow-button.h		\
@@ -86,8 +83,7 @@ totem_plugin_viewer_SOURCES = \
 	totem-plugin-viewer.c		\
 	totem-plugin-viewer-constants.h	\
 	totem-plugin-viewer-options.h	\
-	$(BUILT_SOURCES)		\
-	$(MARSHAL_FILES)
+	$(BUILT_SOURCES)
 
 totem_plugin_viewer_CPPFLAGS = \
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
