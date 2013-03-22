@@ -224,7 +224,6 @@ struct BaconVideoWidgetPrivate
   /* Other stuff */
   gboolean                     logo_mode;
   gboolean                     cursor_shown;
-  gboolean                     fullscreen_mode;
   gboolean                     uses_audio_fakesink;
   gdouble                      volume;
   gboolean                     is_menu;
@@ -4480,22 +4479,6 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), 0.0);
 
   return bvw->priv->volume;
-}
-
-/**
- * bacon_video_widget_set_fullscreen:
- * @bvw: a #BaconVideoWidget
- * @fullscreen: %TRUE to go fullscreen, %FALSE otherwise
- *
- * Sets whether the widget renders the stream in fullscreen mode.
- **/
-void
-bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
-                                   gboolean fullscreen)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  bvw->priv->fullscreen_mode = fullscreen;
 }
 
 /**

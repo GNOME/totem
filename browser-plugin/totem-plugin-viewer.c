@@ -760,7 +760,6 @@ totem_embedded_set_fullscreen (TotemEmbedded *emb,
 		totem_interface_set_transient_for (GTK_WINDOW (emb->fs_window), GTK_WINDOW (emb->window));
 
 		gtk_widget_reparent (GTK_WIDGET (emb->bvw), emb->fs_window);
-		bacon_video_widget_set_fullscreen (emb->bvw, TRUE);
 		gtk_window_fullscreen (GTK_WINDOW (emb->fs_window));
 		totem_fullscreen_set_fullscreen (emb->fs, TRUE);
 		gtk_widget_show_all (emb->fs_window);

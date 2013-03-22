@@ -381,7 +381,6 @@ totem_fullscreen_set_fullscreen (TotemFullscreen *fs,
 
 	totem_fullscreen_force_popup_hide (fs);
 
-	bacon_video_widget_set_fullscreen (fs->priv->bvw, fullscreen);
 	totem_fullscreen_set_cursor (fs, !fullscreen);
 
 	fs->priv->is_fullscreen = fullscreen;
