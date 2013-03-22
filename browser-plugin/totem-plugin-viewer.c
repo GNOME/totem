@@ -2107,6 +2107,17 @@ static GOptionEntry option_entries [] =
 
 #include "totem-plugin-viewer-interface.h"
 
+static gboolean
+check_options (void)
+{
+	if (arg_plugin_type == TOTEM_PLUGIN_TYPE_LAST) {
+		g_warning ("Plugin type is required\n");
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 int main (int argc, char **argv)
 {
 	GOptionContext *context;
@@ -2217,11 +2228,8 @@ int main (int argc, char **argv)
 		g_log_set_always_fatal (fatal_mask);
 	}
 
-        // FIXME check that ALL necessary params were given!
-	if (arg_plugin_type == TOTEM_PLUGIN_TYPE_LAST) {
-		g_warning ("Plugin type is required\n");
+	if (!check_options ())
 		exit (1);
-	}
 
 	dbus_g_object_type_install_info (TOTEM_TYPE_EMBEDDED,
 					 &dbus_glib_totem_embedded_object_info);
