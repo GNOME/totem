@@ -212,14 +212,10 @@ totem_embedded_finalize (GObject *object)
 	g_clear_pointer (&embedded->introspection_data, g_dbus_node_info_unref);
 
 	/* Interface */
-	if (embedded->window)
-		gtk_widget_destroy (embedded->window);
-	if (embedded->xml)
-		g_object_unref (embedded->xml);
-	if (embedded->menuxml)
-		g_object_unref (embedded->menuxml);
-	if (embedded->fs)
-		g_object_unref (embedded->fs);
+	g_clear_object (&embedded->window);
+	g_clear_object (&embedded->xml);
+	g_clear_object (&embedded->menuxml);
+	g_clear_object (&embedded->fs);
 
 	/* FIXME etc */
 
@@ -530,17 +526,13 @@ totem_embedded_set_href (TotemEmbedded *embedded,
 	if (href_uri != NULL) {
 		embedded->href_uri = g_strdup (href_uri);
 	} else {
-		g_free (embedded->href_uri);
-		embedded->href_uri = NULL;
+		g_clear_pointer (&embedded->href_uri, g_free);
 		gdk_window_set_cursor
 			(gtk_widget_get_window (GTK_WIDGET (embedded->bvw)), NULL);
 	}
 
-	if (target != NULL) {
-		embedded->target = g_strdup (target);
-	} else {
-		embedded->target = NULL;
-	}
+	embedded->target = g_strdup (target);
+
 	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
@@ -562,18 +554,18 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 			      guint32 user_time)
 {
 	GError *error = NULL;
-	GList *uris = NULL;
+	GList *uris;
 	GdkScreen *screen;
 	GdkAppLaunchContext *ctx;
 	gboolean result;
 
 	g_return_val_if_fail (embedded->app != NULL, FALSE);
 
-	if (embedded->type == TOTEM_PLUGIN_TYPE_NARROWSPACE
-		   && embedded->href_uri != NULL) {
-		uris = g_list_prepend (uris, embedded->href_uri);
+	if (embedded->type == TOTEM_PLUGIN_TYPE_NARROWSPACE &&
+	    embedded->href_uri != NULL) {
+		uris = g_list_prepend (NULL, embedded->href_uri);
 	} else {
-		uris = g_list_prepend (uris, embedded->current_uri);
+		uris = g_list_prepend (NULL, embedded->current_uri);
 	}
 
 	ctx = gdk_display_get_app_launch_context (gtk_widget_get_display (embedded->window));
@@ -641,8 +633,8 @@ totem_embedded_set_uri (TotemEmbedded *emb,
 	g_free (old_base);
 	g_free (old_href);
 	g_free (old_subtitle);
-	g_free (emb->stream_uri);
-	emb->stream_uri = NULL;
+
+	g_clear_pointer (&emb->stream_uri, g_free);
 }
 
 static void
@@ -1075,14 +1067,8 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 	GtkMenuShell *menu;
 	char *label;
 
-	if (emb->menu_item != NULL) {
-		gtk_widget_destroy (emb->menu_item);
-		emb->menu_item = NULL;
-	}
-	if (emb->app != NULL) {
-		g_object_unref (emb->app);
-		emb->app = NULL;
-	}
+	g_clear_object (&emb->menu_item);
+	g_clear_object (&emb->app);
 
 	if (emb->mimetype && strcmp (emb->mimetype, "application/octet-stream") != 0) {
 		emb->app = g_app_info_get_default_for_type (emb->mimetype, TRUE);
@@ -1223,7 +1209,7 @@ resolve_redirect (const char *old_mrl, const char *mrl)
 static void
 on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 {
-	char *new_uri = NULL;
+	char *new_uri;
 
 	g_message ("stream uri: %s", emb->stream_uri ? emb->stream_uri : "(null)");
 	g_message ("current uri: %s", emb->current_uri ? emb->current_uri : "(null)");
@@ -1245,6 +1231,8 @@ on_got_redirect (GtkWidget *bvw, const char *mrl, TotemEmbedded *emb)
 	/* FIXME: not sure that this is actually correct... */
 	else if (emb->base_uri)
 		new_uri = resolve_redirect (emb->base_uri, mrl);
+	else
+		new_uri = NULL;
 
 	g_message ("Redirecting to '%s'", new_uri ? new_uri : mrl);
 
@@ -1342,8 +1330,7 @@ on_video_button_press_event (BaconVideoWidget *bvw,
 	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && state == 0 && emb->state == TOTEM_STATE_STOPPED) {
 		if (emb->error != NULL) {
 			totem_interface_error (_("An error occurred"), emb->error->message, (GtkWindow *) (emb->window));
-			g_error_free (emb->error);
-			emb->error = NULL;
+			g_clear_error (&emb->error);
 		} else if (!gtk_widget_get_visible (GTK_WIDGET (menu))) {
 			g_message ("emitting signal button press");
 			g_dbus_connection_emit_signal (emb->conn,
@@ -1696,8 +1683,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 	/* FIXME: at least hxplayer seems to send different UAs depending on the protocol!? */
 	if (emb->user_agent != NULL) {
                 bacon_video_widget_set_user_agent (emb->bvw, emb->user_agent);
-		g_free (emb->user_agent);
-		emb->user_agent = NULL;
+                g_clear_pointer (&emb->user_agent, g_free);
 	}
 
         /* FIXMEchpe: this is just the initial value. I think in case e.g. we're doing
@@ -1706,8 +1692,7 @@ totem_embedded_construct (TotemEmbedded *emb,
         g_print ("Referrer URI: %s\n", emb->referrer_uri);
         if (emb->referrer_uri != NULL) {
                 bacon_video_widget_set_referrer (emb->bvw, emb->referrer_uri);
-                g_free (emb->referrer_uri);
-                emb->referrer_uri = NULL;
+                g_clear_pointer (&emb->referrer_uri, g_free);
         }
 
 	/* Fullscreen setup */
