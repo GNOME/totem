@@ -69,7 +69,7 @@ test_glow_button_CFLAGS =	\
 libexec_PROGRAMS = totem-plugin-viewer
 
 # Are we a bit thick, Mister?
-totem-plugin-viewer.c: totem-plugin-viewer-interface.h $(MARSHAL_FILES)
+totem-plugin-viewer.c: $(MARSHAL_FILES)
 
 totem_plugin_viewer_SOURCES = \
 	totem-glow-button.c		\
@@ -97,13 +97,8 @@ totem_plugin_viewer_LDADD = \
 
 totem_plugin_viewer_LDFLAGS = -export-dynamic
 
-totem-plugin-viewer-interface.h: org_gnome_totem_PluginViewer.xml
-	$(DBUS_BIND) --prefix=totem_embedded --mode=glib-server $< > $@
-
 dbusifacedir = $(pkgdatadir)
 dbusiface_DATA = org_gnome_totem_PluginViewer.xml
-
-CLEANFILES = totem-plugin-viewer-interface.h
 
 # Totem GMP Plugin
 if ENABLE_GMP_PLUGIN
