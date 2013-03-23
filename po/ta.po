@@ -4,7 +4,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Felix <ifelix@redhat.com>, 2006.
-# Dr.T.Vasudevan <agnihot3@gmail.com>, 2007, 2008, 2009, 2010, 2011, 2012.
+# Dr.T.Vasudevan <agnihot3@gmail.com>, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 # Dr.T.vasudevan <agnihot3@gmail.com>, 2009.
 # I. Felix <ifelix@redhat.com>, 2009.
 # Dr,T,Vasudevan <agnihot3@gmail.com>, 2010, 2011.
@@ -12,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.master.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-09 14:48+0530\n"
-"PO-Revision-Date: 2012-12-09 14:50+0530\n"
+"POT-Creation-Date: 2013-03-23 09:20+0530\n"
+"PO-Revision-Date: 2013-03-23 09:23+0530\n"
 "Last-Translator: Dr.T.Vasudevan <drtvasudevan@gmail.com>\n"
-"Language-Team: American English <gnome-tamil-translation@googlegroups.com>\n"
+"Language-Team: American English <<gnome-tamil-translation@googlegroups.com>>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,58 +27,58 @@ msgstr ""
 "\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1180
-#: ../src/totem-object.c:1650 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1146
+#: ../src/totem-object.c:1575 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "நிறுத்துங்கள்"
 
-#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1173
+#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1139
 msgid "Paused"
 msgstr "தற்காலிகமாக நிறுத்தத்தப்பட்டுள்ளது"
 
-#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1166
+#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1132
 msgid "Playing"
 msgstr "இயங்குகிறது"
 
-#: ../browser-plugin/totem-plugin-viewer.c:386
+#: ../browser-plugin/totem-plugin-viewer.c:385
 #: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "திரைப்படம் இயக்கத்தில் உள்ளது"
 
-#: ../browser-plugin/totem-plugin-viewer.c:443
+#: ../browser-plugin/totem-plugin-viewer.c:442
 msgid "No URI to play"
 msgstr "இயக்க ஒரு யூஆர்எல் உம் இல்லை"
 
-#: ../browser-plugin/totem-plugin-viewer.c:676
-#: ../browser-plugin/totem-plugin-viewer.c:1700
+#: ../browser-plugin/totem-plugin-viewer.c:675
+#: ../browser-plugin/totem-plugin-viewer.c:1698
 msgid "Totem Movie Player"
 msgstr "Totem திரைப்பட இயக்கி"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1120
+#: ../browser-plugin/totem-plugin-viewer.c:1118
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" உடன் திற"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1341 ../src/totem-object.c:2475
+#: ../browser-plugin/totem-plugin-viewer.c:1339 ../src/totem-object.c:2301
 msgid "An error occurred"
 msgstr "பிழை ஏற்பட்டுள்ளது"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2033
+#: ../browser-plugin/totem-plugin-viewer.c:2031
 msgid "No playlist or playlist empty"
 msgstr "இயக்க பட்டியல் இல்லை அல்லது காலி"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2128
+#: ../browser-plugin/totem-plugin-viewer.c:2126
 msgid "Movie browser plugin"
 msgstr "நகர்பட உலாவி செருகி"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144 ../src/totem.c:247
+#: ../browser-plugin/totem-plugin-viewer.c:2142 ../src/totem.c:246
 msgid "Could not initialize the thread-safe libraries."
 msgstr "இழை காப்பு நூலகங்களை துவக்க முடியவில்லை."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2144
+#: ../browser-plugin/totem-plugin-viewer.c:2142
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "உங்கள் கணினி நிறுவலை சோதிக்கவும். டோடம் சொருகி இப்போது வெளியேறும்."
 
@@ -86,7 +86,7 @@ msgstr "உங்கள் கணினி நிறுவலை சோதிக
 msgid "Leave Fullscreen"
 msgstr "முழுத்திரையை விட்டு விலகவும்"
 
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:81
+#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:73
 msgid "Time:"
 msgstr "நேரம்:"
 
@@ -132,44 +132,40 @@ msgid "The saturation of the video"
 msgstr "விடியோவின் ஒளி தெவிட்டம்."
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:10
-msgid "Resize the canvas automatically on file load"
-msgstr "கோப்பு ஏற்றப்படும் போது தானியங்கியாக திரையை மறு அளவாக்கு."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
 msgid "Repeat mode"
 msgstr "மீட்டுஇயக்கும் வகை"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
 msgid "Shuffle mode"
 msgstr "கலக்கும் பாங்கு"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr ""
 "இன்டர்லேஸ் செய்த நகர்படங்களை டீஇன்டர்லேஸ் செய்வதை செயல் நீக்கம் செய்ய "
 "வேண்டுமா?"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
 msgid "Whether to enable debug for the playback engine"
 msgstr "மீட்டிசைக்கும் இயந்திரத்தை வழு நீக்கத்துக்கு இயலுமை படுத்த வேண்டுமா?"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
 msgid "Type of audio output to use"
 msgstr "பயன்படுத்த ஒலி வெளியீட்டு வகை"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
 msgid "Visualization quality setting"
 msgstr "காட்சிக்கு தர அளவு:"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
 msgid "Quality setting for the audio visualization."
 msgstr "ஒலியை காணலுக்கு தர நிர்ணயம்"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
 msgid "Network buffering threshold"
 msgstr "பிணைய இடையக விளிம்பு"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -177,27 +173,27 @@ msgstr ""
 "வலை ஓடைகளில் ஒடையைக்காட்ட துவங்கு முன் இடைமாற்றாக சேமிக்க வேண்டிய தரவின் அளவு "
 "(வினாடிகளில்)"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
 msgid "Subtitle font"
 msgstr "உப தலைப்பு எழுத்துரு"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
 msgid "Pango font description for subtitle rendering."
 msgstr "துணை தலைப்புகளை வரைய பாங்கோ எழுதுரு விவரம்."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
 msgid "Subtitle encoding"
 msgstr "உப தலைப்பு குறியாக்கம்"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
 msgid "Encoding character set for subtitle."
 msgstr "துணை தலைப்புகளுக்கு குறியாக்க எழுதுரு தொகுதி"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "\"Open...\" (திற) உரையாடல்களுக்கு முன்னிருப்பு இடம்"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
@@ -205,11 +201,11 @@ msgstr ""
 "\"Open...\" (திற) உரையாடல்களுக்கு முன்னிருப்பு இடம். முன்னிருப்பு இப்போதைய "
 "அடைவு"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "\"திரைவெட்டு எடு...\"  உரையாடல்களுக்கு முன்னிருப்பு இடம்"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -217,36 +213,34 @@ msgstr ""
 "\"திரைவெட்டு எடு...\"  உரையாடல்களுக்கு முன்னிருப்பு இடம். முன்னிருப்பு "
 "படங்கள்  அடைவு"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:27
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "பயனரின் இல்ல அடைவில் சொருகிகளை செயல் நீக்கம் செய்ய வேண்டுமா?"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:28
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "பயனரின் இல்ல அடைவில் சொருகிகளை செயல் நீக்கம் செய்ய வேண்டுமா?"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:29
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "திரைப்படம் ஏற்றப்படும்போது தானியங்கியாக உரை துணத்தலைப்புகளை ஏற்றுவதா"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "திரைப்படம் ஏற்றப்படும்போது தானியங்கியாக  அத்தியாய கோப்புகளை ஏற்றுவதா"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
 msgid ""
-"Whether to remember the position of played audio/video files when pausing or "
-"closing them"
+"Whether to remember the current playlist, the playing track and position."
 msgstr ""
-"இடைநிறுத்தம் அல்லது நிறுத்தம் செய்த போது ஒலி/ஒளி கோப்புகளில் இடத்தை நினைவில் "
-"வைக்க "
-"வேண்டுமா. "
+"நடப்பு இயக்கப்பட்டியல், இயக்கப்படும் தடம், இடம் ஆகியவற்றை நினைவில் வைக்க "
+"வேண்டுமா."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Active plugins list"
 msgstr "செயல்படும் செருகிகள் பட்டியல்"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:34
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -268,11 +262,11 @@ msgstr "இடத்தை நகலெடு (_C)"
 msgid "Copy the location to the clipboard"
 msgstr "இடத்தை ஒட்டுப்பலகைக்கு படியெடு"
 
-#: ../data/playlist.ui.h:5 ../data/totem.ui.h:71
+#: ../data/playlist.ui.h:5 ../data/totem.ui.h:63
 msgid "_Select Text Subtitles..."
 msgstr "(_S) துணைத்தலைப்பு உரைகளை தேர்வு செய்க..."
 
-#: ../data/playlist.ui.h:6 ../data/totem.ui.h:72
+#: ../data/playlist.ui.h:6 ../data/totem.ui.h:64
 msgid "Select a file to use for text subtitles"
 msgstr "உரை துணைதலைப்புகளுக்கு ஒரு கோப்பை தேர்ந்தெடுக்கவும்."
 
@@ -311,7 +305,7 @@ msgstr "பெரிய"
 msgid "Extra Large"
 msgstr "மிகப் பெரிய"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5518
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5566
 #: ../src/totem-properties-view.c:232
 msgid "Stereo"
 msgstr "ஸ்டீரியோ"
@@ -345,8 +339,8 @@ msgid "Playback"
 msgstr "திருப்பி இசை"
 
 #: ../data/preferences.ui.h:15
-msgid "Start playing files from last position"
-msgstr "கோப்புகளை இசைத்தலை கடைசி நிலையில் இருந்து துவங்கு"
+msgid "Remember last played movies"
+msgstr "கடைசியாக இயக்கிய திரைப்படங்களை நினைவில் வைக்கவும்"
 
 #: ../data/preferences.ui.h:16
 msgid "Text Subtitles"
@@ -382,22 +376,19 @@ msgid "Display"
 msgstr "காட்சி"
 
 #: ../data/preferences.ui.h:25
-msgid "_Resize the window when a new video is loaded"
-msgstr "_R புதிய விடியோ ஏற்றப்பட்ட போது தானியங்கியாக சாளர அளவை மாற்றவும்."
-
-#: ../data/preferences.ui.h:26
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "_d இன்டர்லேஸ் செய்த நகர்படங்களை டீஇன்டர்லேஸ் செய்வதை செயல் நீக்குக"
 
-#: ../data/preferences.ui.h:27
-msgid "Disable screensaver when playing "
-msgstr "ஒலி பாடும்போது திரை சேமிப்பியை செயல் நீக்கு"
+#: ../data/preferences.ui.h:26
+msgid "Disable screensaver when playing"
+msgstr "பாடும்போது திரை சேமிப்பியை செயல் நீக்கு"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:9
-#: ../src/totem-properties-view.c:275
+#: ../data/preferences.ui.h:27
+msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "வீடியோ"
 
+#. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
 #: ../data/preferences.ui.h:29
 msgid "Video or Audio"
 msgstr "விடியோ அல்லது ஒலி"
@@ -483,6 +474,10 @@ msgstr "குறிப்பு:"
 msgid "Container:"
 msgstr "கலன்:"
 
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+msgid "Video"
+msgstr "வீடியோ"
+
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "அளவுகள்:"
@@ -508,8 +503,8 @@ msgid "Channels:"
 msgstr "தடங்கள்"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:246
-#: ../src/totem.c:254 ../src/totem-menu.c:789 ../src/totem-object.c:1658
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:72 ../src/totem.c:245
+#: ../src/totem.c:251 ../src/totem-menu.c:755 ../src/totem-object.c:1583
 msgid "Videos"
 msgstr "வீடியோக்கள்"
 
@@ -606,231 +601,199 @@ msgid "Fit Window to Movie"
 msgstr "திரைப்படத்தை சாளரத்துக்கு பொருத்து"
 
 #: ../data/totem.ui.h:22
-msgid "_Resize 1∶2"
-msgstr "_R மறு அளவாக்கு 1:2"
-
-#: ../data/totem.ui.h:23
-msgid "Resize to half the original video size"
-msgstr "உண்மை விடியோ அளவுக்கு பாதி அளவு ஆக்கு"
-
-#: ../data/totem.ui.h:24
-msgid "Resize _1∶1"
-msgstr "_1:1 மறுஅளவிடு"
-
-#: ../data/totem.ui.h:25
-msgid "Resize to the original video size"
-msgstr "உண்மை விடியோ அளவுக்கு ஆக்கு"
-
-#: ../data/totem.ui.h:26
-msgid "Resize _2∶1"
-msgstr "_2:1 மறுஅளவிடு"
-
-#: ../data/totem.ui.h:27
-msgid "Resize to double the original video size"
-msgstr "உண்மை விடியோ அளவுக்கு இரட்டிப்பு அளவு ஆக்கு"
-
-#: ../data/totem.ui.h:28
 msgid "_Aspect Ratio"
 msgstr "விகிதம் படி (_A)"
 
-#: ../data/totem.ui.h:29
+#: ../data/totem.ui.h:23
 msgid "Switch An_gles"
 msgstr "கோணங்களை மாற்று (_g)"
 
-#: ../data/totem.ui.h:30
+#: ../data/totem.ui.h:24
 msgid "Switch camera angles"
 msgstr "காமிரா கோணத்தை மாற்று"
 
-#: ../data/totem.ui.h:31
+#: ../data/totem.ui.h:25
 msgid "_Go"
 msgstr "செல் (_G)"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:26
 msgid "_DVD Menu"
 msgstr "_DVD பட்டி"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:27
 msgid "Go to the DVD menu"
 msgstr "DVD பட்டிக்கு செல்"
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:28
 msgid "_Title Menu"
 msgstr "தலைப்பு பட்டி (_T)"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:29
 msgid "Go to the title menu"
 msgstr "தலைப்பு பட்டிக்கு செல்"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:30
 msgid "A_udio Menu"
 msgstr "கேட்பொலி பட்டி (_u)"
 
-#: ../data/totem.ui.h:37
+#: ../data/totem.ui.h:31
 msgid "Go to the audio menu"
 msgstr "கேட்பொலி பட்டிக்கு செல்"
 
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:32
 msgid "_Angle Menu"
 msgstr "கோண பட்டி (_A)"
 
-#: ../data/totem.ui.h:39
+#: ../data/totem.ui.h:33
 msgid "Go to the angle menu"
 msgstr "கோண பட்டிக்கு செல்"
 
-#: ../data/totem.ui.h:40
+#: ../data/totem.ui.h:34
 msgid "_Chapter Menu"
 msgstr "அத்தியாய பட்டி (_C)"
 
-#: ../data/totem.ui.h:41
+#: ../data/totem.ui.h:35
 msgid "Go to the chapter menu"
 msgstr "அத்தியாய பட்டிக்கு செல்"
 
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:36
 msgid "_Next Chapter/Movie"
 msgstr "அடுத்த அத்தியாயம்/திரைப்படம் (_N)"
 
-#: ../data/totem.ui.h:43
+#: ../data/totem.ui.h:37
 msgid "Next chapter or movie"
 msgstr "அடுத்த அத்தியாயம் அல்லது திரைப்படம்"
 
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:38
 msgid "_Previous Chapter/Movie"
 msgstr "முந்தைய அத்தியாயம்/திரைப்படம் (_P)"
 
-#: ../data/totem.ui.h:45
+#: ../data/totem.ui.h:39
 msgid "Previous chapter or movie"
 msgstr "முந்தைய அத்தியாயம் அல்லது திரைப்படம்"
 
-#: ../data/totem.ui.h:46
+#: ../data/totem.ui.h:40
 msgid "_Sound"
 msgstr "ஒலி (_S)"
 
-#: ../data/totem.ui.h:47
+#: ../data/totem.ui.h:41
 msgid "Volume _Up"
 msgstr "ஒலி அளவினை கூட்டு(_U)"
 
-#: ../data/totem.ui.h:48
+#: ../data/totem.ui.h:42
 msgid "Increase volume"
 msgstr "ஒலியளவை அதிகமாக்கு"
 
-#: ../data/totem.ui.h:49
+#: ../data/totem.ui.h:43
 msgid "Volume _Down"
 msgstr "ஒலி அளவினை குறை (_D)"
 
-#: ../data/totem.ui.h:50
+#: ../data/totem.ui.h:44
 msgid "Decrease volume"
 msgstr "ஒலியளவை குறை"
 
-#: ../data/totem.ui.h:51
+#: ../data/totem.ui.h:45
 msgid "_Help"
 msgstr "உதவி (_H)"
 
-#: ../data/totem.ui.h:52
+#: ../data/totem.ui.h:46
 msgid "_Contents"
 msgstr "உள்ளடக்கங்கள் (_C)"
 
-#: ../data/totem.ui.h:53
+#: ../data/totem.ui.h:47
 msgid "Help contents"
 msgstr "உதவி உள்ளடக்கங்கள்"
 
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:48
 msgid "_About"
 msgstr "பற்றி (_A)"
 
-#: ../data/totem.ui.h:55
+#: ../data/totem.ui.h:49
 msgid "About this application"
 msgstr "இந்த பயன்பாடு பற்றி"
 
-#: ../data/totem.ui.h:56
-msgid "Show _Controls"
-msgstr "கட்டுப்பாடுகளை காட்டு (_C)"
-
-#: ../data/totem.ui.h:57
-msgid "Show controls"
-msgstr "கட்டுப்பாடுகளை காட்டு"
-
-#: ../data/totem.ui.h:58
+#: ../data/totem.ui.h:50
 msgid "S_idebar"
 msgstr "பக்கப்பட்டி"
 
-#: ../data/totem.ui.h:59
+#: ../data/totem.ui.h:51
 msgid "Show or hide the sidebar"
 msgstr "பக்க பட்டையை காட்டு/மறை"
 
-#: ../data/totem.ui.h:60
+#: ../data/totem.ui.h:52
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "தானியங்கி"
 
-#: ../data/totem.ui.h:61
+#: ../data/totem.ui.h:53
 msgid "Sets automatic aspect ratio"
 msgstr "தானியங்கி தோற்ற விகிதத்தை அமைக்கிறது"
 
-#: ../data/totem.ui.h:62
+#: ../data/totem.ui.h:54
 msgid "Square"
 msgstr "சதுரம்"
 
-#: ../data/totem.ui.h:63
+#: ../data/totem.ui.h:55
 msgid "Sets square aspect ratio"
 msgstr "சதுர தோற்ற விகிதத்தை அமைக்கிறது"
 
-#: ../data/totem.ui.h:64
+#: ../data/totem.ui.h:56
 msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:65
+#: ../data/totem.ui.h:57
 msgid "Sets 4∶3 (TV) aspect ratio"
 msgstr "4:3 (TV) தோற்ற விகிதத்தை அமைக்கிறது"
 
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:58
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (அகன்ற திரை)"
 
-#: ../data/totem.ui.h:67
+#: ../data/totem.ui.h:59
 msgid "Sets 16∶9 (widescreen) aspect ratio"
 msgstr "தோற்ற விகிதம் 16:9 (அகலத்திரை) க்கு அமைக்கிறது"
 
-#: ../data/totem.ui.h:68
+#: ../data/totem.ui.h:60
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:69
+#: ../data/totem.ui.h:61
 msgid "Sets 2.11∶1 (DVB) aspect ratio"
 msgstr "2.11:1 (DVB) தோற்ற விகிதத்தை அமைக்கிறது"
 
-#: ../data/totem.ui.h:70
+#: ../data/totem.ui.h:62
 msgid "S_ubtitles"
 msgstr "துணைத்தலைப்புகள் (_u)"
 
-#: ../data/totem.ui.h:73
+#: ../data/totem.ui.h:65
 msgid "_Languages"
 msgstr "மொழிகள் (_L)"
 
-#: ../data/totem.ui.h:74
+#: ../data/totem.ui.h:66
 msgid "Zoom In"
 msgstr "சிறிதாக்கு"
 
-#: ../data/totem.ui.h:75
+#: ../data/totem.ui.h:67
 msgid "Zoom in"
 msgstr "சிறிதாக்கு"
 
-#: ../data/totem.ui.h:76
+#: ../data/totem.ui.h:68
 msgid "Skip _Forward"
 msgstr "முன்னோக்கை கைவிடு (_F)"
 
-#: ../data/totem.ui.h:77
+#: ../data/totem.ui.h:69
 msgid "Skip forward"
 msgstr "முன்னோக்கை கைவிடு"
 
-#: ../data/totem.ui.h:78
+#: ../data/totem.ui.h:70
 msgid "Skip _Backwards"
 msgstr "பின்னோக்கை கைவிடு (_B)"
 
-#: ../data/totem.ui.h:79
+#: ../data/totem.ui.h:71
 msgid "Skip backwards"
 msgstr "பின்னோக்கை கைவிடு"
 
-#: ../data/totem.ui.h:82
+#: ../data/totem.ui.h:74
 msgid "Time seek bar"
 msgstr "நேர தேடல் பலகம்"
 
@@ -838,55 +801,55 @@ msgstr "நேர தேடல் பலகம்"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "திறக்க வேண்டிய  கோப்பின் முகவரியை உள்ளிடுக."
 
-#: ../src/backend/bacon-video-widget.c:1643
+#: ../src/backend/bacon-video-widget.c:1649
 msgid "Password requested for RTSP server"
 msgstr "RTSP சேவையக கடவுச்சொல் கோரப்படுகிறது"
 
-#: ../src/backend/bacon-video-widget.c:2942
+#: ../src/backend/bacon-video-widget.c:3010
 #, c-format
 msgid "Audio Track #%d"
 msgstr "ஒலி தடம் #%d"
 
-#: ../src/backend/bacon-video-widget.c:2946
+#: ../src/backend/bacon-video-widget.c:3014
 #, c-format
 msgid "Subtitle #%d"
 msgstr "துணைத்தலைப்பு #%d"
 
-#: ../src/backend/bacon-video-widget.c:3343
+#: ../src/backend/bacon-video-widget.c:3431
 msgid "The server you are trying to connect to is not known."
 msgstr "நீங்கள் இணைக்க நினைக்கும் சேவயகம் அறியப்படாதது"
 
-#: ../src/backend/bacon-video-widget.c:3346
+#: ../src/backend/bacon-video-widget.c:3434
 msgid "The connection to this server was refused."
 msgstr "இந்த சேவையகத்துக்கு இணைப்பு மறுக்கப்பட்டது."
 
-#: ../src/backend/bacon-video-widget.c:3349
+#: ../src/backend/bacon-video-widget.c:3437
 msgid "The specified movie could not be found."
 msgstr "குறிப்பிட்ட திரைப்படத்தை கண்டுபிடிக்க முடியவில்லை"
 
-#: ../src/backend/bacon-video-widget.c:3356
+#: ../src/backend/bacon-video-widget.c:3444
 msgid "The server refused access to this file or stream."
 msgstr "இந்த கோப்பு அல்லது ஓடைக்கு அனுமதி சேவையகத்தால் மறுக்கப்பட்டது"
 
-#: ../src/backend/bacon-video-widget.c:3362
+#: ../src/backend/bacon-video-widget.c:3450
 msgid "Authentication is required to access this file or stream."
 msgstr "இந்த கோப்பு அல்லது ஓடைக்கு அணுகல் அனுமதி தேவை"
 
-#: ../src/backend/bacon-video-widget.c:3369
+#: ../src/backend/bacon-video-widget.c:3457
 msgid "You are not allowed to open this file."
 msgstr "இந்த கோப்பை திறக்க உங்களுக்கு அனுமதி இல்லை"
 
-#: ../src/backend/bacon-video-widget.c:3374
+#: ../src/backend/bacon-video-widget.c:3462
 msgid "This location is not a valid one."
 msgstr "இது செல்லுபடியாகும்  இடம் அல்ல"
 
-#: ../src/backend/bacon-video-widget.c:3382
+#: ../src/backend/bacon-video-widget.c:3470
 msgid "The movie could not be read."
 msgstr "திரைப்படத்தை படிக்க முடியவில்லை"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3405
-#: ../src/backend/bacon-video-widget.c:3413
+#: ../src/backend/bacon-video-widget.c:3493
+#: ../src/backend/bacon-video-widget.c:3501
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -900,7 +863,7 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3424
+#: ../src/backend/bacon-video-widget.c:3512
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -908,66 +871,31 @@ msgstr ""
 "காணாத சில கோடெக்களால் ஒரு ஒலி அல்லது விடியோ ஓடையை கையாளமுடியவில்லை. சில வகை "
 "நகர்படங்களை இயக்க நீங்கள் கூடுதல் சொருகிகளை நிறுவ வேண்டி இருக்கலாம்."
 
-#: ../src/backend/bacon-video-widget.c:3434
+#: ../src/backend/bacon-video-widget.c:3522
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "இந்த கோப்பை பிணையத்தில் இயக்க முடியாது. உள்ளமைவாக தரவிறக்க முயலவும்."
 
-#: ../src/backend/bacon-video-widget.c:5514 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5562 ../src/totem-properties-view.c:228
 msgid "Surround"
 msgstr "சூழும்"
 
-#: ../src/backend/bacon-video-widget.c:5516 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5564 ../src/totem-properties-view.c:230
 msgid "Mono"
 msgstr "தனி(மோனோ)"
 
-#: ../src/backend/bacon-video-widget.c:5801
+#: ../src/backend/bacon-video-widget.c:5851
 msgid "Media contains no supported video streams."
 msgstr "ஊடகத்தில் விடியோ ஓடைகளுக்கு ஆதரவு இல்லை."
 
-#: ../src/backend/bacon-video-widget.c:5983
+#: ../src/backend/bacon-video-widget.c:6033
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "சில தேவையான சொருகிகள் காணவில்லை. நிரல் சரியாக அமைக்கப்பட்டதா என உறுதி செய்து "
 "கொள்க."
-
-#: ../src/eggdesktopfile.c:165
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "கோப்பு செல்லுபடியாகும்  .desktop கோப்பு அல்ல"
-
-#: ../src/eggdesktopfile.c:188
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "அடையாளம் தெரியாத மேல்மேசை கோப்பு பதிப்பு '%s' "
-
-#: ../src/eggdesktopfile.c:968
-#, c-format
-msgid "Starting %s"
-msgstr "%s ஐ துவக்குகிறது"
-
-#: ../src/eggdesktopfile.c:1110
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "பயன்பாடு கட்டளை வரியில் ஆவணங்களை ஒப்புக்கொள்ளாது"
-
-#: ../src/eggdesktopfile.c:1178
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "இனம் காணாத துவக்க தேர்வு: %d"
-
-#: ../src/eggdesktopfile.c:1383
-#, c-format
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "'Type=Link' மேல்மேசை உள்ளீடுக்கு ஆவண யூஆர்ஐ ஐ கொடுக்க இயலாது"
-
-#: ../src/eggdesktopfile.c:1404
-#, c-format
-msgid "Not a launchable item"
-msgstr "துவக்க முடியாத உருப்படி"
 
 #: ../src/eggfileformatchooser.c:240
 #, c-format
@@ -1011,34 +939,6 @@ msgstr ""
 #: ../src/eggfileformatchooser.c:664
 msgid "File format not recognized"
 msgstr "கோப்பு வடிவம் அடையாளம் தெரியாதது"
-
-#: ../src/eggsmclient.c:226
-msgid "Disable connection to session manager"
-msgstr "அமர்வு மேலாளருக்கு இணைப்பை செயல் நீக்கு"
-
-#: ../src/eggsmclient.c:229
-msgid "Specify file containing saved configuration"
-msgstr "சேமித்த வடிவமைப்பு கூடிய கோப்பை குறிப்பிடுக"
-
-#: ../src/eggsmclient.c:229
-msgid "FILE"
-msgstr "FILE"
-
-#: ../src/eggsmclient.c:232
-msgid "Specify session management ID"
-msgstr "அமர்வு மேலாண்மை அடையாளத்தை குறிப்பிடுக"
-
-#: ../src/eggsmclient.c:232
-msgid "ID"
-msgstr "ஐடி (ID)"
-
-#: ../src/eggsmclient.c:253
-msgid "Session management options:"
-msgstr "அமர்வு மேலாண்மை தேர்வுகள்:"
-
-#: ../src/eggsmclient.c:254
-msgid "Show session management options"
-msgstr "அமர்வு மேலாணமை தேர்வுகளை காட்டு"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1169,11 +1069,11 @@ msgid_plural "%d frames per second"
 msgstr[0] "நொடிக்கு %d சட்டம் "
 msgstr[1] "நொடிக்கு %d சட்டங்கள்"
 
-#: ../src/totem-audio-preview.c:137
+#: ../src/totem-audio-preview.c:138
 msgid "Audio Preview"
 msgstr "ஒலி முன்னோட்டம்"
 
-#: ../src/totem.c:247
+#: ../src/totem.c:246
 msgid "Verify your system installation. Totem will now exit."
 msgstr "உங்கள் நிறுவலை சோதிக்கவும். டோடம் இப்போது வெளியேறும்."
 
@@ -1189,7 +1089,7 @@ msgstr "_A பாடல் பட்டியலில் சேர் "
 msgid "Cancel"
 msgstr "ரத்து செய்"
 
-#: ../src/totem-fullscreen.c:573
+#: ../src/totem-fullscreen.c:569
 msgid "No File"
 msgstr "கோப்பு இல்லை"
 
@@ -1253,33 +1153,33 @@ msgstr ""
 "தனியுரிமை ஜிஸ்ட்ரீமர் சொருகிகளை பயன்படுத்த டோடத்தில் ஒரு விதிவிலக்கு உள்ளது"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:291
+#: ../src/totem-menu.c:277
 msgid "None"
 msgstr "எதுவுமில்லை"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:296
+#: ../src/totem-menu.c:282
 msgctxt "Language"
 msgid "Auto"
 msgstr "தானியங்கி"
 
-#: ../src/totem-menu.c:788
+#: ../src/totem-menu.c:754
 msgid "Copyright © 2002-2009 Bastien Nocera"
 msgstr "பதிப்புரிமை © 2002-2009  பாஸ்தியன் நோசெரா"
 
-#: ../src/totem-menu.c:792
+#: ../src/totem-menu.c:758
 msgid "translator-credits"
 msgstr "I. Felix <ifelix@redhat.com>. Dr. T. Vasudevan <agnihot3@gmail.com>"
 
-#: ../src/totem-menu.c:796
+#: ../src/totem-menu.c:762
 msgid "Totem Website"
 msgstr "டோடம் வலைத்தளம்"
 
-#: ../src/totem-menu.c:827
+#: ../src/totem-menu.c:793
 msgid "Configure Plugins"
 msgstr "சொருகுபொருள்களை வடிவமை"
 
-#: ../src/totem-object.c:162
+#: ../src/totem-object.c:160
 #, c-format
 msgid ""
 "%s\n"
@@ -1290,56 +1190,52 @@ msgstr ""
 "காண்க.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:591
+#: ../src/totem-object.c:557
 #, c-format
 msgid "Totem %s"
 msgstr "டோடம் %s"
 
-#: ../src/totem-object.c:1168 ../src/totem-options.c:52
+#: ../src/totem-object.c:1134 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "ஒட்டு"
 
-#: ../src/totem-object.c:1175 ../src/totem-object.c:1185
+#: ../src/totem-object.c:1141 ../src/totem-object.c:1151
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "இயக்கு"
 
-#: ../src/totem-object.c:1267 ../src/totem-object.c:1294
-#: ../src/totem-object.c:1787 ../src/totem-object.c:1942
+#: ../src/totem-object.c:1232 ../src/totem-object.c:1259
+#: ../src/totem-object.c:1815
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem '%s' ஐ இயக்க முடியவில்லை."
 
-#: ../src/totem-object.c:1793
-msgid "No error message"
-msgstr "பிழை செய்தி இல்லை"
-
-#: ../src/totem-object.c:2133
+#: ../src/totem-object.c:1957
 msgid "Totem could not display the help contents."
 msgstr "டோடம் உதவி அடக்கத்தை காட்ட இயலவில்லை"
 
-#: ../src/totem-object.c:4019 ../src/totem-object.c:4021
+#: ../src/totem-object.c:3777 ../src/totem-object.c:3779
 msgid "Previous Chapter/Movie"
 msgstr "முந்தைய அத்தியாயம்/திரைப்படம்"
 
-#: ../src/totem-object.c:4028 ../src/totem-object.c:4030
+#: ../src/totem-object.c:3786 ../src/totem-object.c:3788
 msgid "Play / Pause"
 msgstr "இயக்கு/தாமதி"
 
-#: ../src/totem-object.c:4038 ../src/totem-object.c:4040
+#: ../src/totem-object.c:3796 ../src/totem-object.c:3798
 msgid "Next Chapter/Movie"
 msgstr "அடுத்த அத்தியாயம்/திரைப்படம்"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4051 ../src/totem-object.c:4053
+#: ../src/totem-object.c:3809 ../src/totem-object.c:3811
 msgid "Fullscreen"
 msgstr "முழுத்திரை"
 
-#: ../src/totem-object.c:4184
+#: ../src/totem-object.c:3942
 msgid "Totem could not startup."
 msgstr "டோடம் துவங்க முடியவில்லை"
 
-#: ../src/totem-object.c:4184
+#: ../src/totem-object.c:3942
 msgid "No reason."
 msgstr "காரணம் இல்லை."
 
@@ -1388,87 +1284,78 @@ msgid "Toggle Fullscreen"
 msgstr "முழுத்திரைக்கு மாற்று"
 
 #: ../src/totem-options.c:61
-msgid "Show/Hide Controls"
-msgstr "கட்டுப்பாடுகளை காட்டு/மறை"
-
-#: ../src/totem-options.c:62
 msgid "Quit"
 msgstr "வெளிச்செல்"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 msgid "Enqueue"
 msgstr "வரிசை"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Replace"
 msgstr "இடமாற்று"
 
-#: ../src/totem-options.c:65
+#: ../src/totem-options.c:64
 msgid "Seek"
 msgstr "நாடு"
 
-#. Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading
-#: ../src/totem-options.c:67
-msgid "Playlist index"
-msgstr "பாடல் பட்டியல் அட்டவணை"
-
-#: ../src/totem-options.c:69
+#: ../src/totem-options.c:66
 msgid "Movies to play"
 msgstr "இயக்க வேண்டிய திரைப்படங்கள் "
 
-#: ../src/totem-options.c:79
+#: ../src/totem-options.c:76
 msgid "- Play movies and songs"
 msgstr "- திரைப்படங்கள் மற்றும் பாடல்களை இயக்கு"
 
-#: ../src/totem-options.c:142
+#: ../src/totem-options.c:123
 msgid "Can't enqueue and replace at the same time"
 msgstr "வரிசையில் நிறுத்துவதும் மாற்றுவதும் ஒரே நேரத்தில் செய்ய இயலாது"
 
 #. By extension entry
-#: ../src/totem-playlist.c:162
+#: ../src/totem-playlist.c:175
 msgid "MP3 ShoutCast playlist"
 msgstr "எம்பி3 ஷௌட்காஸ்ட்  பாடல் பட்டியல்"
 
-#: ../src/totem-playlist.c:163
+#: ../src/totem-playlist.c:176
 msgid "MP3 audio (streamed)"
 msgstr "எம்பி3 ஒலி (ஓடை)"
 
-#: ../src/totem-playlist.c:164
+#: ../src/totem-playlist.c:177
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "எம்பி3 ஒலி (ஓடை டாஸ்(DOS) ஒழுங்கு)"
 
-#: ../src/totem-playlist.c:165
+#: ../src/totem-playlist.c:178
 msgid "XML Shareable Playlist"
 msgstr "எக்ஸ்எம்எல் பகிரக்கூடிய பாடல் பட்டியல்"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:348
+#: ../src/totem-playlist.c:335
 #, c-format
 msgid "Title %d"
 msgstr "தலைப்பு %d"
 
-#: ../src/totem-playlist.c:447
+#: ../src/totem-playlist.c:489
 msgid "Could not save the playlist"
 msgstr "இயக்க பட்டியலை சேமிக்க முடியவில்லை"
 
-#: ../src/totem-playlist.c:1022
+#: ../src/totem-playlist.c:1063
 msgid "Save Playlist"
 msgstr "பாடல் பட்டியலை சேமி"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1034 ../src/totem-playlist.c:1263
+#: ../src/totem-playlist.c:1075 ../src/totem-playlist.c:1302
 #: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "பாடல் பட்டியல்"
 
-#: ../src/totem-playlist.c:1862
+#: ../src/totem-playlist.c:1902
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "இயக்கப்பட்டியல் '%s'  ஐ பகுக்க முடியவில்லை. அது சிதைந்து இருக்கலாம்."
 
-#: ../src/totem-playlist.c:1863
+#: ../src/totem-playlist.c:1903
 msgid "Playlist error"
 msgstr "பாடல் பட்டியல் பிழை"
 
@@ -1476,7 +1363,7 @@ msgstr "பாடல் பட்டியல் பிழை"
 msgid "Preferences"
 msgstr "விருப்பங்கள்"
 
-#: ../src/totem-preferences.c:445
+#: ../src/totem-preferences.c:439
 msgid "Select Subtitle Font"
 msgstr "உப தலைப்பு எழுத்துருவை தேர்ந்தெடு"
 
@@ -1709,42 +1596,42 @@ msgstr "மேற்கு மொழி"
 msgid "Vietnamese"
 msgstr "வியட்னாம்"
 
-#: ../src/totem-uri.c:343 ../src/plugins/chapters/totem-chapters.c:998
+#: ../src/totem-uri.c:331 ../src/plugins/chapters/totem-chapters.c:982
 msgid "All files"
 msgstr "எல்லா கோப்புகள்"
 
-#: ../src/totem-uri.c:348 ../src/plugins/chapters/totem-chapters.c:995
+#: ../src/totem-uri.c:336 ../src/plugins/chapters/totem-chapters.c:979
 msgid "Supported files"
 msgstr "துணையாக உள்ள கோப்புகள்"
 
-#: ../src/totem-uri.c:360
+#: ../src/totem-uri.c:348
 msgid "Audio files"
 msgstr "ஒலி கோப்புகள்"
 
-#: ../src/totem-uri.c:368
+#: ../src/totem-uri.c:356
 msgid "Video files"
 msgstr "வீடியோ கோப்புகள்"
 
-#: ../src/totem-uri.c:378
+#: ../src/totem-uri.c:366
 msgid "Subtitle files"
 msgstr "துணைத்தலைப்புகள் "
 
-#: ../src/totem-uri.c:430
+#: ../src/totem-uri.c:418
 msgid "Select Text Subtitles"
 msgstr "உரை துணைத்தலைப்புகளை தேர்வு செய்க"
 
-#: ../src/totem-uri.c:495
+#: ../src/totem-uri.c:483
 msgid "Select Movies or Playlists"
 msgstr "திரைப்படங்கள் அல்லது இயக்கப்பட்டியலை தேர்ந்தெடு"
 
-#: ../src/totem-uri.c:499
+#: ../src/totem-uri.c:487
 msgid "Add Directory"
 msgstr "அடைவு சேர்"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:848
+#: ../src/totem-video-thumbnailer.c:843
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1755,15 +1642,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:849
+#: ../src/totem-video-thumbnailer.c:844
 msgid "Filename"
 msgstr "கோப்பு பெயர்"
 
-#: ../src/totem-video-thumbnailer.c:851
+#: ../src/totem-video-thumbnailer.c:846
 msgid "Resolution"
 msgstr "தெளிதிறன் "
 
-#: ../src/totem-video-thumbnailer.c:854
+#: ../src/totem-video-thumbnailer.c:849
 msgid "Duration"
 msgstr "காலஅளவு"
 
@@ -1889,7 +1776,7 @@ msgid "Create a new chapter list for the movie"
 msgstr "திரைப்படத்துக்கு புதிய அத்தியாய பட்டியலை உருவாக்கு "
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1139
+#: ../src/plugins/chapters/totem-chapters.c:1122
 msgid "Chapters"
 msgstr "அத்தியாயங்கள்"
 
@@ -1906,67 +1793,63 @@ msgstr ""
 "<b>தலைப்பு: </b>%s\n"
 "<b>துவக்க நேரம்: </b>%s"
 
-#: ../src/plugins/chapters/totem-chapters.c:328
+#: ../src/plugins/chapters/totem-chapters.c:324
 msgid "Error while reading file with chapters"
 msgstr "அத்தியாயங்கள் கோப்பு படித்தலில் பிழை"
 
-#: ../src/plugins/chapters/totem-chapters.c:543
+#: ../src/plugins/chapters/totem-chapters.c:542
 msgid "Chapter with the same time already exists"
 msgstr "இந்த பெயரில் அத்தியாயம் ஏற்கெனவே உள்ளது"
 
-#: ../src/plugins/chapters/totem-chapters.c:544
+#: ../src/plugins/chapters/totem-chapters.c:543
 msgid "Try another name or remove an existing chapter."
 msgstr "வேறு பெயரை முயற்சிக்க அல்லது இருப்பில் உள்ள ஒரு அத்தியாயத்தை நீக்குக."
 
-#: ../src/plugins/chapters/totem-chapters.c:717
+#: ../src/plugins/chapters/totem-chapters.c:702
 msgid "Error while writing file with chapters"
 msgstr "அத்தியாய கோப்பு எழுதுதலில் பிழை"
 
-#: ../src/plugins/chapters/totem-chapters.c:842
+#: ../src/plugins/chapters/totem-chapters.c:826
 msgid "Error occurred while saving chapters"
 msgstr "அத்தியாயங்களை சேமிக்கையில் பிழை"
 
-#: ../src/plugins/chapters/totem-chapters.c:843
+#: ../src/plugins/chapters/totem-chapters.c:827
 msgid ""
 "Please check you have permission to write to the folder containing the movie."
 msgstr ""
 "திரைப்படம் உள்ள அடைவில் எழுத உங்களுக்கு தேவையான அனுமதி உள்ளதா என சோதிக்கவும்"
 
-#: ../src/plugins/chapters/totem-chapters.c:976
+#: ../src/plugins/chapters/totem-chapters.c:960
 msgid "Open Chapter File"
 msgstr "அத்தியாயம் கோப்பை திறக்கவும்"
 
-#: ../src/plugins/chapters/totem-chapters.c:1093
+#: ../src/plugins/chapters/totem-chapters.c:1076
 msgid "Chapter Screenshot"
 msgstr "அத்தியாய திரைப்பிடிப்பு"
 
-#: ../src/plugins/chapters/totem-chapters.c:1104
+#: ../src/plugins/chapters/totem-chapters.c:1087
 msgid "Chapter Title"
 msgstr "அத்தியாய தலைப்பு"
 
-#: ../src/plugins/chapters/totem-chapters.c:1184
+#: ../src/plugins/chapters/totem-chapters.c:1167
 msgid "Save changes to chapter list before closing?"
 msgstr "அத்தியாய பட்டியலில் செய்த மாற்றங்களை மூடும் முன் சேமிக்கலாமா?"
 
 #. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1189
+#: ../src/plugins/chapters/totem-chapters.c:1172
 msgid "Close without Saving"
 msgstr "சேமிக்காமல் மூடு"
 
 #. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1191
+#: ../src/plugins/chapters/totem-chapters.c:1174
 msgid "Save"
 msgstr "சேமி"
 
-#: ../src/plugins/chapters/totem-chapters.c:1194
+#: ../src/plugins/chapters/totem-chapters.c:1177
 msgid "If you don't save, changes to the chapter list will be lost."
 msgstr ""
 "நீங்கள் சேமிக்கவில்லையென்றால், அத்தியாய பட்டியலில் செய்த மாற்றங்களை இழக்க "
 "நேரும். "
-
-#: ../src/plugins/chapters/totem-cmml-parser.c:651
-msgid "Failed to parse CMML file"
-msgstr "CMML கோப்பை அலகிடுதல் தோற்றது"
 
 #: ../src/plugins/chapters/totem-edit-chapter.c:95
 msgid "Add Chapter"
@@ -2001,11 +1884,6 @@ msgstr "பண்பு  '%s' எழுத முடியாதது."
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "தெரியாத பண்பு ‘%s’ மீடியாப்லேயர்  2 பொருளிலிருந்து கோரப்பட்டது."
 
-#: ../src/plugins/dbusservice/dbusservice.py:341
-#, python-format
-msgid "The URI ‘%s’ is not supported."
-msgstr "யூஆர்ஐ ‘%s’ க்கு ஆதரவில்லை."
-
 #: ../src/plugins/grilo/grilo.plugin.in.h:1
 msgid "Grilo Browser"
 msgstr "க்ரிலோ  உலாவி"
@@ -2022,19 +1900,19 @@ msgstr "இயக்க பட்டியலில் சேர் "
 msgid "Copy Location"
 msgstr "இடத்தை நகலெடு"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1220
+#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1174
 msgid "Browse"
 msgstr "உலாவு"
 
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1263
+#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1217
 msgid "Search"
 msgstr "தேடு"
 
-#: ../src/plugins/grilo/totem-grilo.c:455
+#: ../src/plugins/grilo/totem-grilo.c:437
 msgid "Browse Error"
 msgstr "உலாவு பிழை"
 
-#: ../src/plugins/grilo/totem-grilo.c:624
+#: ../src/plugins/grilo/totem-grilo.c:606
 msgid "Search Error"
 msgstr "தேடல் பிழை"
 
@@ -2431,6 +2309,103 @@ msgstr "_S இங்கு தத்து..."
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "குறிப்பிட்ட நேரத்திற்கு செல்"
+
+#~ msgid "Resize the canvas automatically on file load"
+#~ msgstr "கோப்பு ஏற்றப்படும் போது தானியங்கியாக திரையை மறு அளவாக்கு."
+
+#~ msgid ""
+#~ "Whether to remember the position of played audio/video files when pausing "
+#~ "or closing them"
+#~ msgstr ""
+#~ "இடைநிறுத்தம் அல்லது நிறுத்தம் செய்த போது ஒலி/ஒளி கோப்புகளில் இடத்தை நினைவில் வைக்க "
+#~ "வேண்டுமா. "
+
+#~ msgid "Start playing files from last position"
+#~ msgstr "கோப்புகளை இசைத்தலை கடைசி நிலையில் இருந்து துவங்கு"
+
+#~ msgid "_Resize the window when a new video is loaded"
+#~ msgstr "_R புதிய விடியோ ஏற்றப்பட்ட போது தானியங்கியாக சாளர அளவை மாற்றவும்."
+
+#~ msgid "_Resize 1∶2"
+#~ msgstr "_R மறு அளவாக்கு 1:2"
+
+#~ msgid "Resize to half the original video size"
+#~ msgstr "உண்மை விடியோ அளவுக்கு பாதி அளவு ஆக்கு"
+
+#~ msgid "Resize _1∶1"
+#~ msgstr "_1:1 மறுஅளவிடு"
+
+#~ msgid "Resize to the original video size"
+#~ msgstr "உண்மை விடியோ அளவுக்கு ஆக்கு"
+
+#~ msgid "Resize _2∶1"
+#~ msgstr "_2:1 மறுஅளவிடு"
+
+#~ msgid "Resize to double the original video size"
+#~ msgstr "உண்மை விடியோ அளவுக்கு இரட்டிப்பு அளவு ஆக்கு"
+
+#~ msgid "Show _Controls"
+#~ msgstr "கட்டுப்பாடுகளை காட்டு (_C)"
+
+#~ msgid "Show controls"
+#~ msgstr "கட்டுப்பாடுகளை காட்டு"
+
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "கோப்பு செல்லுபடியாகும்  .desktop கோப்பு அல்ல"
+
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "அடையாளம் தெரியாத மேல்மேசை கோப்பு பதிப்பு '%s' "
+
+#~ msgid "Starting %s"
+#~ msgstr "%s ஐ துவக்குகிறது"
+
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "பயன்பாடு கட்டளை வரியில் ஆவணங்களை ஒப்புக்கொள்ளாது"
+
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "இனம் காணாத துவக்க தேர்வு: %d"
+
+#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+#~ msgstr "'Type=Link' மேல்மேசை உள்ளீடுக்கு ஆவண யூஆர்ஐ ஐ கொடுக்க இயலாது"
+
+#~ msgid "Not a launchable item"
+#~ msgstr "துவக்க முடியாத உருப்படி"
+
+#~ msgid "Disable connection to session manager"
+#~ msgstr "அமர்வு மேலாளருக்கு இணைப்பை செயல் நீக்கு"
+
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "சேமித்த வடிவமைப்பு கூடிய கோப்பை குறிப்பிடுக"
+
+#~ msgid "FILE"
+#~ msgstr "FILE"
+
+#~ msgid "Specify session management ID"
+#~ msgstr "அமர்வு மேலாண்மை அடையாளத்தை குறிப்பிடுக"
+
+#~ msgid "ID"
+#~ msgstr "ஐடி (ID)"
+
+#~ msgid "Session management options:"
+#~ msgstr "அமர்வு மேலாண்மை தேர்வுகள்:"
+
+#~ msgid "Show session management options"
+#~ msgstr "அமர்வு மேலாணமை தேர்வுகளை காட்டு"
+
+#~ msgid "No error message"
+#~ msgstr "பிழை செய்தி இல்லை"
+
+#~ msgid "Show/Hide Controls"
+#~ msgstr "கட்டுப்பாடுகளை காட்டு/மறை"
+
+#~ msgid "Playlist index"
+#~ msgstr "பாடல் பட்டியல் அட்டவணை"
+
+#~ msgid "Failed to parse CMML file"
+#~ msgstr "CMML கோப்பை அலகிடுதல் தோற்றது"
+
+#~ msgid "The URI ‘%s’ is not supported."
+#~ msgstr "யூஆர்ஐ ‘%s’ க்கு ஆதரவில்லை."
 
 #~ msgid "Add the video to the playlist"
 #~ msgstr "விடியோவை பாடல் பட்டியலில் சேர் "
