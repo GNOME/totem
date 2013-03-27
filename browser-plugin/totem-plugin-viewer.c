@@ -65,6 +65,8 @@ char * totem_pl_parser_resolve_uri (GFile *base_gfile, const char *relative_uri)
 #define VOLUME_UP_OFFSET (0.08)
 #define MINIMUM_VIDEO_SIZE 150
 
+#define IMAGE_MISSING "image-missing"
+
 typedef enum {
 	TOTEM_PLUGIN_TYPE_GMP,
 	TOTEM_PLUGIN_TYPE_NARROWSPACE,
@@ -281,7 +283,7 @@ totem_embedded_set_error_logo (TotemEmbedded *embedded,
 			       GDBusMethodInvocation *invocation)
 {
 	g_message ("totem_embedded_set_error_logo called by browser plugin");
-	totem_embedded_set_logo_by_name (embedded, "image-missing");
+	totem_embedded_set_logo_by_name (embedded, IMAGE_MISSING);
 	g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
@@ -1449,7 +1451,7 @@ on_error_event (BaconVideoWidget *bvw,
 	}
 
 	totem_embedded_set_error (emb, BVW_ERROR_GENERIC, message);
-	totem_embedded_set_logo_by_name (emb, "image-missing");
+	totem_embedded_set_logo_by_name (emb, IMAGE_MISSING);
 }
 
 static void
@@ -2019,7 +2021,7 @@ totem_embedded_push_parser (gpointer data)
 		g_message ("Couldn't parse playlist '%s'", emb->current_uri);
 		totem_embedded_set_error (emb, BVW_ERROR_EMPTY_FILE,
 					  _("No playlist or playlist empty"));
-		totem_embedded_set_logo_by_name (emb, "image-missing");
+		totem_embedded_set_logo_by_name (emb, IMAGE_MISSING);
 		return FALSE;
 	} else if (emb->playlist == NULL) {
 		g_message ("Playlist empty");
