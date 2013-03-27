@@ -376,7 +376,6 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 			      gboolean start_play,
 			      GError **error)
 {
-	gboolean retval;
 	char *uri;
 
 	/* FIXME: stop previous content, or is that automatic ? */
@@ -405,7 +404,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 
 	bacon_video_widget_set_logo_mode (emb->bvw, FALSE);
 
-	retval = bacon_video_widget_open (emb->bvw, uri, NULL);
+	bacon_video_widget_open (emb->bvw, uri);
 	bacon_video_widget_set_text_subtitle (emb->bvw, emb->current_subtitle_uri);
 	g_free (uri);
 
@@ -421,7 +420,7 @@ totem_embedded_open_internal (TotemEmbedded *emb,
 	else
 		totem_fullscreen_set_title (emb->fs, emb->current_uri);
 
-	return retval;
+	return TRUE;
 }
 
 static gboolean

@@ -129,9 +129,8 @@ GOptionGroup* bacon_video_widget_get_option_group (void);
 GtkWidget *bacon_video_widget_new		 (GError **error);
 
 /* Actions */
-gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
-						  const char *mrl,
-						  GError **error);
+void bacon_video_widget_open			 (BaconVideoWidget *bvw,
+						  const char *mrl);
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);
 void bacon_video_widget_pause			 (BaconVideoWidget *bvw);

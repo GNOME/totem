@@ -1651,7 +1651,6 @@ totem_action_set_mrl (TotemObject *totem,
 		gdouble volume;
 		char *user_agent;
 		char *autoload_sub;
-		GError *err = NULL;
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
@@ -1665,7 +1664,7 @@ totem_action_set_mrl (TotemObject *totem,
 		g_free (user_agent);
 
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-		bacon_video_widget_open (totem->bvw, mrl, &err);
+		bacon_video_widget_open (totem->bvw, mrl);
 		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
@@ -2230,7 +2229,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 	totem_file_closed (totem);
 	totem->has_played_emitted = FALSE;
 	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL);
+	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 	if (bacon_video_widget_play (bvw, NULL) != FALSE) {
