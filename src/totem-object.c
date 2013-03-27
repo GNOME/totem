@@ -1738,7 +1738,10 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		gdouble volume;
 		char *user_agent;
 		char *autoload_sub;
-		GError *err = NULL;
+		/* cast is to shut gcc up */
+		const GtkTargetEntry source_table[] = {
+			{ (gchar*) "text/uri-list", 0, 0 }
+		};
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
@@ -1753,7 +1756,7 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 
 		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
 		totem_try_restore_position (totem, mrl);
-		retval = bacon_video_widget_open (totem->bvw, mrl, &err);
+		bacon_video_widget_open (totem->bvw, mrl);
 		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
 		g_free (autoload_sub);
 		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
@@ -1772,49 +1775,21 @@ totem_action_set_mrl_with_warning (TotemObject *totem,
 		totem->volume_sensitive = caps;
 
 		/* Clear the playlist */
-		totem_action_set_sensitivity ("clear-playlist", retval);
+		totem_action_set_sensitivity ("clear-playlist", TRUE);
 
 		/* Subtitle selection */
-		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl) && retval);
+		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl));
 
 		/* Set the playlist */
-		play_pause_set_label (totem, retval ? STATE_PAUSED : STATE_STOPPED);
+		play_pause_set_label (totem, STATE_PAUSED);
 
-		if (retval == FALSE && warn != FALSE) {
-			char *msg, *disp;
+		totem_file_opened (totem, totem->mrl);
 
-			disp = totem_uri_escape_for_display (totem->mrl);
-			msg = g_strdup_printf(_("Totem could not play '%s'."), disp);
-			g_free (disp);
-			if (err && err->message) {
-				totem_action_error (totem, msg, err->message);
-			}
-			else {
-				totem_action_error (totem, msg, _("No error message"));
-			}
-			g_free (msg);
-		}
-
-		if (retval == FALSE) {
-			if (err)
-				g_error_free (err);
-			g_free (totem->mrl);
-			totem->mrl = NULL;
-			bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
-		} else {
-			/* cast is to shut gcc up */
-			const GtkTargetEntry source_table[] = {
-				{ (gchar*) "text/uri-list", 0, 0 }
-			};
-
-			totem_file_opened (totem, totem->mrl);
-
-			/* Set the drag source */
-			gtk_drag_source_set (GTK_WIDGET (totem->bvw),
-					     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-					     source_table, G_N_ELEMENTS (source_table),
-					     GDK_ACTION_COPY);
-		}
+		/* Set the drag source */
+		gtk_drag_source_set (GTK_WIDGET (totem->bvw),
+				     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+				     source_table, G_N_ELEMENTS (source_table),
+				     GDK_ACTION_COPY);
 	}
 	update_buttons (totem);
 	update_media_menu_items (totem);
@@ -2403,7 +2378,7 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 	totem_file_closed (totem);
 	totem->has_played_emitted = FALSE;
 	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
-	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl, NULL);
+	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl);
 	totem_file_opened (totem, new_mrl ? new_mrl : mrl);
 	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
 	if (bacon_video_widget_play (bvw, NULL) != FALSE) {

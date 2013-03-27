@@ -1301,12 +1301,7 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
     GST_DEBUG ("Mounting location '%s' successful", GST_STR_NULL (uri));
     /* Save the expected pipeline state */
     target_state = bvw->priv->target_state;
-    if (bacon_video_widget_open (bvw, uri, &error)) {
-        if (target_state == GST_STATE_PLAYING)
-          bacon_video_widget_play (bvw, NULL);
-        g_free (uri);
-        return;
-    }
+    bacon_video_widget_open (bvw, uri);
   }
 
   if (!ret)
@@ -3437,27 +3432,21 @@ get_target_uri (GFile *file)
  * bacon_video_widget_open:
  * @bvw: a #BaconVideoWidget
  * @mrl: an MRL
- * @error: a #GError, or %NULL
  *
  * Opens the given @mrl in @bvw for playing.
  *
- * If there was a filesystem error, a %BVW_ERROR_GENERIC error will be returned. Otherwise,
- * more specific #BvwError errors will be returned.
- *
- * On success, the MRL is loaded and waiting to be played with bacon_video_widget_play().
- *
- * Return value: %TRUE on success, %FALSE otherwise
+ * The MRL is loaded and waiting to be played with bacon_video_widget_play().
  **/
-gboolean
-bacon_video_widget_open (BaconVideoWidget * bvw,
-                         const gchar * mrl, GError ** error)
+void
+bacon_video_widget_open (BaconVideoWidget *bvw,
+                         const char       *mrl)
 {
   GFile *file;
   char *path;
 
-  g_return_val_if_fail (mrl != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+  g_return_if_fail (mrl != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (bvw->priv->play != NULL);
   
   /* So we aren't closed yet... */
   if (bvw->priv->mrl) {
@@ -3517,8 +3506,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-
-  return TRUE;
 }
 
 /**
