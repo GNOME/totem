@@ -2121,6 +2121,8 @@ handle_method_call (GDBusConnection *connection,
 		char *uri;
 		guint time;
 
+		/* FIXME the URI parameter is unused in the function,
+		 * broken API? */
 		g_variant_get (parameters, "(su)", &uri, &time);
 		totem_embedded_launch_player (emb, invocation, uri, time);
 		g_free (uri);
