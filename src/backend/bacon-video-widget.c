@@ -1281,6 +1281,10 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
     /* Save the expected pipeline state */
     target_state = bvw->priv->target_state;
     bacon_video_widget_open (bvw, uri);
+    if (target_state == GST_STATE_PLAYING)
+      bacon_video_widget_play (bvw, NULL);
+    g_free (uri);
+    return;
   }
 
   if (!ret)
