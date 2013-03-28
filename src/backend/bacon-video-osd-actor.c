@@ -109,17 +109,9 @@ bacon_video_osd_actor_finalize (GObject *object)
 	BaconVideoOsdActor *osd;
 
 	osd = BACON_VIDEO_OSD_ACTOR (object);
-	if (osd->priv->ctx) {
-		g_free (osd->priv->ctx);
-		osd->priv->ctx = NULL;
-	}
-	if (osd->priv->style) {
-		g_object_unref (osd->priv->style);
-		osd->priv->style = NULL;
-	}
-
-	g_free (osd->priv->icon_name);
-	osd->priv->icon_name = NULL;
+	g_clear_pointer (&osd->priv->ctx, g_free);
+	g_clear_object (&osd->priv->style);
+	g_clear_pointer (&osd->priv->icon_name, g_free);
 
 	G_OBJECT_CLASS (bacon_video_osd_actor_parent_class)->finalize (object);
 }
@@ -129,7 +121,6 @@ bacon_video_osd_actor_class_init (BaconVideoOsdActorClass *klass)
 {
         GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-//        gobject_class->constructor = bacon_video_osd_actor_constructor;
         gobject_class->finalize = bacon_video_osd_actor_finalize;
 
         g_type_class_add_private (klass, sizeof (BaconVideoOsdActorPrivate));
