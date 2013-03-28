@@ -122,7 +122,7 @@ output_cb (GtkSpinButton *self, gpointer user_data)
 {
 	gchar *text;
 
-	text = totem_time_to_string ((gint64) gtk_spin_button_get_value (self) * 1000);
+	text = totem_time_to_string ((gint64) gtk_spin_button_get_value (self) * 1000, FALSE, FALSE);
 	gtk_entry_set_text (GTK_ENTRY (self), text);
 	g_free (text);
 
@@ -170,7 +170,7 @@ changed_cb (GtkAdjustment *adjustment, TotemTimeEntry *self)
 	/* Set the width of the entry according to the length of the longest string it'll now accept */
 	upper = (guint) gtk_adjustment_get_upper (adjustment); /* in seconds */
 
-	time_string = totem_time_to_string (((gint64) upper) * 1000);
+	time_string = totem_time_to_string (((gint64) upper) * 1000, FALSE, FALSE);
 	width = strlen (time_string);
 	g_free (time_string);
 

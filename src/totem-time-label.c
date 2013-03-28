@@ -20,7 +20,7 @@ totem_time_label_init (TotemTimeLabel *label)
 	char *time_string;
 	label->priv = G_TYPE_INSTANCE_GET_PRIVATE (label, TOTEM_TYPE_TIME_LABEL, TotemTimeLabelPrivate);
 
-	time_string = totem_time_to_string (0);
+	time_string = totem_time_to_string (0, FALSE, FALSE);
 	gtk_label_set_text (GTK_LABEL (label), time_string);
 	g_free (time_string);
 
@@ -53,12 +53,12 @@ totem_time_label_set_time (TotemTimeLabel *label, gint64 _time, gint64 length)
 		return;
 
 	if (length <= 0) {
-		label_str = totem_time_to_string (_time);
+		label_str = totem_time_to_string (_time, FALSE, FALSE);
 	} else {
 		char *time_str, *length_str;
 
-		time_str = totem_time_to_string (_time);
-		length_str = totem_time_to_string (length);
+		time_str = totem_time_to_string (_time, FALSE, FALSE);
+		length_str = totem_time_to_string (length, FALSE, FALSE);
 		if (label->priv->seeking == FALSE) {
 			/* Elapsed / Total Length */
 			label_str = g_strdup_printf (_("%s / %s"), time_str, length_str);

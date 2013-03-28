@@ -826,7 +826,7 @@ create_gallery (ThumbApp *app)
 	g_object_unref (pixbuf);
 
 	/* Build the header information */
-	duration_text = totem_time_to_string (stream_length);
+	duration_text = totem_time_to_string (stream_length, FALSE, FALSE);
 	filename = NULL;
 	if (strstr (app->input, "://")) {
 		char *local;
@@ -881,7 +881,7 @@ create_gallery (ThumbApp *app)
 		gchar *timestamp_text;
 		gint layout_width, layout_height;
 
-		timestamp_text = totem_time_to_string (pos);
+		timestamp_text = totem_time_to_string (pos, FALSE, FALSE);
 
 		pango_layout_set_text (layout, timestamp_text, -1);
 		pango_layout_get_pixel_size (layout, &layout_width, &layout_height);

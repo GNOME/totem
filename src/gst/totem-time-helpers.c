@@ -34,7 +34,9 @@
 /* FIXME: Remove
  * See https://bugzilla.gnome.org/show_bug.cgi?id=679850 */
 char *
-totem_time_to_string (gint64 msecs)
+totem_time_to_string (gint64   msecs,
+		      gboolean remaining,
+		      gboolean force_hour)
 {
 	int sec, min, hour, _time;
 
@@ -45,15 +47,34 @@ totem_time_to_string (gint64 msecs)
 	_time = _time - (min * 60);
 	hour = _time / (60*60);
 
-	if (hour > 0)
-	{
-		/* hour:minutes:seconds */
-		/* Translators: This is a time format, like "9:05:02" for 9
-		 * hours, 5 minutes, and 2 seconds. You may change ":" to
-		 * the separator that your locale uses or use "%Id" instead
-		 * of "%d" if your locale uses localized digits.
+	if (hour > 0 || force_hour) {
+		if (!remaining) {
+			/* hour:minutes:seconds */
+			/* Translators: This is a time format, like "-9:05:02" for 9
+			 * hours, 5 minutes, and 2 seconds. You may change ":" to
+			 * the separator that your locale uses or use "%Id" instead
+			 * of "%d" if your locale uses localized digits.
+			 */
+			return g_strdup_printf (C_("long time format", "%d:%02d:%02d"), hour, min, sec);
+		} else {
+			/* -hour:minutes:seconds */
+			/* Translators: This is a time format, like "-9:05:02" for 9
+			 * hours, 5 minutes, and 2 seconds playback remaining. You may
+			 * change ":" to the separator that your locale uses or use
+			 * "%Id" instead of "%d" if your locale uses localized digits.
+			 */
+			return g_strdup_printf (C_("long time format", "-%d:%02d:%02d"), hour, min, sec);
+		}
+	}
+
+	if (remaining) {
+		/* -minutes:seconds */
+		/* Translators: This is a time format, like "-5:02" for 5
+		 * minutes and 2 seconds playback remaining. You may change
+		 * ":" to the separator that your locale uses or use "%Id"
+		 * instead of "%d" if your locale uses localized digits.
 		 */
-		return g_strdup_printf (C_("long time format", "%d:%02d:%02d"), hour, min, sec);
+		return g_strdup_printf (C_("short time format", "-%d:%02d"), min, sec);
 	}
 
 	/* minutes:seconds */

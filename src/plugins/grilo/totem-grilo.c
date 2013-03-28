@@ -169,7 +169,7 @@ get_secondary_text (GrlMedia *media)
 		return g_strdup (artist);
 	duration = grl_media_get_duration (media);
 	if (duration > 0)
-		return totem_time_to_string (duration * 1000);
+		return totem_time_to_string (duration * 1000, FALSE, FALSE);
 	return NULL;
 }
 

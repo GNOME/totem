@@ -127,13 +127,12 @@ totem_statusbar_update_time (TotemStatusbar *statusbar)
   TotemStatusbarPrivate *priv = statusbar->priv;
   char *time_string, *length, *label;
 
-  time_string = totem_time_to_string (priv->time * 1000);
+  time_string = totem_time_to_string (priv->time * 1000, FALSE, FALSE);
 
   if (priv->length < 0) {
     label = g_strdup_printf (_("%s (Streaming)"), time_string);
   } else {
-    length = totem_time_to_string
-	    (priv->length == -1 ? 0 : priv->length * 1000);
+    length = totem_time_to_string (priv->length == -1 ? 0 : priv->length * 1000, FALSE, FALSE);
 
     if (priv->seeking == FALSE)
       /* Elapsed / Total Length */
