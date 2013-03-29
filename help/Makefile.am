@@ -10,7 +10,6 @@ DOC_FIGURES = \
 
 # List of pages
 DOC_PAGES = \
-  adjustment-view.page \
   file-open.page \
   file-save.page \
   index.page \
@@ -32,7 +31,8 @@ DOC_PAGES = \
   supported-formats.page \
   troubleshooting-Audio-CD.page \
   troubleshooting-DVD.page \
-  troubleshooting-subtitles.page
+  troubleshooting-subtitles.page \
+  view-zoom.page
 
 DOC_LINGUAS = bg ca cs da de el en_GB es eu fi fr gl it ja oc pa pl pt_BR ro ru sl sv uk zh_CN zh_HK zh_TW
 
