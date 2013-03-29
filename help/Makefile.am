@@ -10,7 +10,6 @@ DOC_FIGURES = \
 
 # List of pages
 DOC_PAGES = \
-  adjustment-sound.page \
   adjustment-view.page \
   file-open.page \
   file-save.page \
@@ -27,6 +26,8 @@ DOC_PAGES = \
   screenshot-gallery.page \
   screenshot.page \
   sidebar.page \
+  sound-language.page \
+  sound-volume.page \
   subtitles.page \
   supported-formats.page \
   troubleshooting-Audio-CD.page \
