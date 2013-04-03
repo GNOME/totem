@@ -79,8 +79,7 @@
 
 #define TOTEM_GRILO_CONFIG_FILE "totem-grilo.conf"
 
-const gchar *BLACKLIST_SOURCES[] = { "grl-filesystem",
-                                     "grl-bookmarks",
+const gchar *BLACKLIST_SOURCES[] = { "grl-bookmarks",
                                      "grl-shoutcast",
                                      "grl-flickr",
                                      NULL };
@@ -817,7 +816,10 @@ source_added_cb (GrlRegistry *registry,
 	}
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
-	name = grl_source_get_name (source);
+	if (g_str_equal (grl_source_get_id (source), "grl-filesystem"))
+		name = g_strdup (_("Recent"));
+	else
+		name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
 		GdkPixbuf *icon;
