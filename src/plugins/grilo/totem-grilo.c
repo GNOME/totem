@@ -378,38 +378,6 @@ update_search_thumbnails (TotemGriloPlugin *self)
 }
 
 static void
-show_sources (TotemGriloPlugin *self)
-{
-	GList *sources, *source;
-	GtkTreeIter iter;
-	GrlRegistry *registry;
-	const gchar *name;
-	GdkPixbuf *icon;
-
-	registry = grl_registry_get_default ();
-	sources = grl_registry_get_sources_by_operations (registry,
-	                                                  GRL_OP_BROWSE,
-	                                                  FALSE);
-
-	for (source = sources; source ; source = source->next) {
-		icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
-		name = grl_source_get_name (source->data);
-		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, NULL);
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
-		                    &iter,
-		                    MODEL_RESULTS_SOURCE, source->data,
-		                    MODEL_RESULTS_CONTENT, NULL,
-		                    GD_MAIN_COLUMN_PRIMARY_TEXT, name,
-		                    GD_MAIN_COLUMN_ICON, icon,
-		                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
-		                    -1);
-
-		g_clear_object (&icon);
-	}
-	g_list_free (sources);
-}
-
-static void
 browse_cb (GrlSource *source,
            guint browse_id,
            GrlMedia *media,
@@ -494,34 +462,32 @@ browse (TotemGriloPlugin *self,
         GrlMedia *container,
         gint page)
 {
-	if (source != NULL) {
-		BrowseUserData *bud;
-		GrlOperationOptions *default_options;
-		GrlCaps *caps;
+	BrowseUserData *bud;
+	GrlOperationOptions *default_options;
+	GrlCaps *caps;
 
-		caps = grl_source_get_caps (source, GRL_OP_BROWSE);
+	g_return_if_fail (source != NULL);
 
-		default_options = grl_operation_options_new (NULL);
-		grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
-		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
-		grl_operation_options_set_count (default_options, PAGE_SIZE);
-		if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
-			grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
+	caps = grl_source_get_caps (source, GRL_OP_BROWSE);
 
-		bud = g_slice_new (BrowseUserData);
-		bud->totem_grilo = g_object_ref (self);
-		bud->ref_parent = gtk_tree_row_reference_new (self->priv->browser_model, path);
-		grl_source_browse (source,
-		                   container,
-		                   browse_keys (),
-		                   default_options,
-		                   browse_cb,
-		                   bud);
+	default_options = grl_operation_options_new (NULL);
+	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+	grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
+	grl_operation_options_set_count (default_options, PAGE_SIZE);
+	if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
+		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 
-		g_object_unref (default_options);
-	} else {
-		show_sources (self);
-	}
+	bud = g_slice_new (BrowseUserData);
+	bud->totem_grilo = g_object_ref (self);
+	bud->ref_parent = gtk_tree_row_reference_new (self->priv->browser_model, path);
+	grl_source_browse (source,
+			   container,
+			   browse_keys (),
+			   default_options,
+			   browse_cb,
+			   bud);
+
+	g_object_unref (default_options);
 }
 
 static void
