@@ -147,8 +147,6 @@ app_init (Totem *totem, char **argv)
 
 	totem_setup_preferences (totem);
 
-	totem_setup_recent (totem);
-
 	/* Initialise all the plugins, and set the default page, in case
 	 * it comes from a plugin */
 	totem_object_plugins_init (totem);

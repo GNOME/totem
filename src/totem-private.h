@@ -127,11 +127,6 @@ struct _TotemObject {
 	/* Stream info */
 	gint64 stream_length;
 
-	/* recent file stuff */
-	GtkRecentManager *recent_manager;
-	GtkActionGroup *recent_action_group;
-	guint recent_ui_id;
-
 	/* Monitor for playlist unmounts and drives/volumes monitoring */
 	GVolumeMonitor *monitor;
 	gboolean drives_changed;
