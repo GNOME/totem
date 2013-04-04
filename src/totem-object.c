@@ -53,7 +53,7 @@
 #include "totem-plugins-engine.h"
 #include "totem-playlist.h"
 #include "bacon-video-widget.h"
-#include "totem-statusbar.h"
+#include "bacon-time-label.h"
 #include "totem-time-label.h"
 #include "totem-sidebar.h"
 #include "totem-menu.h"
@@ -936,8 +936,6 @@ reset_seek_status (TotemObject *totem)
 	 * avoid being "stuck" seeking on errors */
 
 	if (totem->seek_lock != FALSE) {
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
-		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
 		totem->seek_lock = FALSE;
 		bacon_video_widget_seek (totem->bvw, 0, NULL);
 		totem_object_action_stop (totem);
@@ -1088,7 +1086,6 @@ totem_object_action_exit (TotemObject *totem)
 	totem_destroy_file_filters ();
 
 	g_clear_object (&totem->settings);
-	g_clear_object (&totem->fs);
 
 	if (totem->win)
 		gtk_widget_destroy (GTK_WIDGET (totem->win));
@@ -1129,24 +1126,20 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 	switch (state)
 	{
 	case STATE_PLAYING:
-		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
-				_("Playing"));
 		id = "media-playback-pause-symbolic";
 		tip = N_("Pause");
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 		break;
 	case STATE_PAUSED:
-		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
-				_("Paused"));
 		id = "media-playback-start-symbolic";
 		tip = N_("Play");
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 		break;
 	case STATE_STOPPED:
-		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
-				_("Stopped"));
-		totem_statusbar_set_time_and_length
-			(TOTEM_STATUSBAR (totem->statusbar), 0, 0);
+		bacon_time_label_set_time (totem->time_label,
+					   0, 0);
+		bacon_time_label_set_time (totem->time_rem_label,
+					   0, 0);
 		id = "media-playback-start-symbolic";
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_NONE);
 		tip = N_("Play");
@@ -1390,13 +1383,10 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 	if (event->new_window_state & GDK_WINDOW_STATE_FULLSCREEN) {
 		if (totem->controls_visibility != TOTEM_CONTROLS_UNDEFINED)
 			totem_action_save_size (totem);
-		totem_fullscreen_set_fullscreen (totem->fs, TRUE);
 
 		totem->controls_visibility = TOTEM_CONTROLS_FULLSCREEN;
 		show_controls (totem, FALSE);
 	} else {
-		totem_fullscreen_set_fullscreen (totem->fs, FALSE);
-
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
 		show_controls (totem, TRUE);
 	}
@@ -1432,7 +1422,10 @@ totem_action_fullscreen (TotemObject *totem, gboolean state)
 	if (totem_object_is_fullscreen (totem) == state)
 		return;
 
-	gtk_window_fullscreen (GTK_WINDOW (totem->win));
+	if (state)
+		gtk_window_fullscreen (GTK_WINDOW (totem->win));
+	else
+		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
 }
 
 void
@@ -1562,26 +1555,19 @@ bail:
 static void
 update_mrl_label (TotemObject *totem, const char *name)
 {
-	if (name != NULL)
-	{
+	if (name != NULL) {
 		/* Update the mrl label */
-		totem_fullscreen_set_title (totem->fs, name);
-
-		/* Title */
-		gtk_window_set_title (GTK_WINDOW (totem->win), name);
+		gtk_header_bar_set_title (GTK_HEADER_BAR (totem->header), name);
 	} else {
-		totem_statusbar_set_time_and_length (TOTEM_STATUSBAR
-				(totem->statusbar), 0, 0);
-		totem_statusbar_set_text (TOTEM_STATUSBAR (totem->statusbar),
-				_("Stopped"));
+		bacon_time_label_set_time (totem->time_label,
+					   0, 0);
+		bacon_time_label_set_time (totem->time_rem_label,
+					   0, 0);
 
 		g_object_notify (G_OBJECT (totem), "stream-length");
 
 		/* Update the mrl label */
-		totem_fullscreen_set_title (totem->fs, NULL);
-
-		/* Title */
-		gtk_window_set_title (GTK_WINDOW (totem->win), _("Videos"));
+		gtk_header_bar_set_title (GTK_HEADER_BAR (totem->header), "");
 	}
 }
 
@@ -1622,14 +1608,12 @@ totem_action_set_mrl (TotemObject *totem,
 		totem_action_set_sensitivity ("play", FALSE);
 
 		/* Volume */
-		totem_main_set_sensitivity ("tmw_volume_button", FALSE);
+		totem_controls_set_sensitivity ("volume_button", FALSE);
 		totem_action_set_sensitivity ("volume-up", FALSE);
 		totem_action_set_sensitivity ("volume-down", FALSE);
 		totem->volume_sensitive = FALSE;
 
 		/* Control popup */
-		totem_fullscreen_set_can_set_volume (totem->fs, FALSE);
-		totem_fullscreen_set_seekable (totem->fs, FALSE);
 		totem_action_set_sensitivity ("next-chapter", FALSE);
 		totem_action_set_sensitivity ("previous-chapter", FALSE);
 
@@ -1676,8 +1660,7 @@ totem_action_set_mrl (TotemObject *totem,
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
-		totem_main_set_sensitivity ("tmw_volume_button", caps);
-		totem_fullscreen_set_can_set_volume (totem->fs, caps);
+		totem_controls_set_sensitivity ("volume_button", caps);
 		volume = bacon_video_widget_get_volume (totem->bvw);
 		totem_action_set_sensitivity ("volume-up", caps && volume < (1.0 - VOLUME_EPSILON));
 		totem_action_set_sensitivity ("volume-down", caps && volume > VOLUME_EPSILON);
@@ -1791,9 +1774,6 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 	if (bacon_video_widget_is_seekable (totem->bvw) == FALSE)
 		return;
 
-	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), TRUE);
-
 	if (relative != FALSE) {
 		gint64 oldmsec;
 		oldmsec = bacon_video_widget_get_current_time (totem->bvw);
@@ -1803,9 +1783,6 @@ totem_seek_time_rel (TotemObject *totem, gint64 _time, gboolean relative, gboole
 	}
 
 	bacon_video_widget_seek_time (totem->bvw, sec, accurate, &err);
-
-	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
-	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
 
 	if (err != NULL)
 	{
@@ -2304,7 +2281,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 static void
 on_buffering_event (BaconVideoWidget *bvw, gdouble percentage, TotemObject *totem)
 {
-	totem_statusbar_push (TOTEM_STATUSBAR (totem->statusbar), percentage);
+	//FIXME show that somehow
 }
 
 static void
@@ -2318,13 +2295,9 @@ update_fill (TotemObject *totem, gdouble level)
 {
 	if (level < 0.0) {
 		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), FALSE);
-		gtk_range_set_show_fill_level (GTK_RANGE (totem->fs->seek), FALSE);
 	} else {
 		gtk_range_set_fill_level (GTK_RANGE (totem->seek), level * 65535.0f);
 		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), TRUE);
-
-		gtk_range_set_fill_level (GTK_RANGE (totem->fs->seek), level * 65535.0f);
-		gtk_range_set_show_fill_level (GTK_RANGE (totem->fs->seek), TRUE);
 	}
 }
 
@@ -2342,10 +2315,6 @@ update_seekable (TotemObject *totem)
 
 	/* Check if the stream is seekable */
 	gtk_widget_set_sensitive (totem->seek, seekable);
-
-	totem_main_set_sensitivity ("tmw_seek_hbox", seekable);
-
-	totem_fullscreen_set_seekable (totem->fs, seekable);
 
 	/* FIXME: We can use this code again once bug #457631 is fixed and
 	 * skip-* are back in the main action group. */
@@ -2384,10 +2353,8 @@ update_slider_visibility (TotemObject *totem,
 		return;
 	if (stream_length != 0) {
 		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 65535.);
-		gtk_range_set_range (GTK_RANGE (totem->fs->seek), 0., 65535.);
 	} else {
 		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 0.);
-		gtk_range_set_range (GTK_RANGE (totem->fs->seek), 0., 0.);
 	}
 }
 
@@ -2406,19 +2373,18 @@ update_current_time (BaconVideoWidget *bvw,
 
 		if (stream_length == 0 && totem->mrl != NULL)
 		{
-			totem_statusbar_set_time_and_length
-				(TOTEM_STATUSBAR (totem->statusbar),
-				(int) (current_time / 1000), -1);
+			bacon_time_label_set_time (totem->time_label,
+						   (current_time), -1);
+			bacon_time_label_set_time (totem->time_rem_label,
+						   (current_time), -1);
 		} else {
-			totem_statusbar_set_time_and_length
-				(TOTEM_STATUSBAR (totem->statusbar),
-				(int) (current_time / 1000),
-				(int) (stream_length / 1000));
+			bacon_time_label_set_time (totem->time_label,
+						   current_time,
+						   stream_length);
+			bacon_time_label_set_time (totem->time_rem_label,
+						   current_time,
+						   stream_length);
 		}
-
-		totem_time_label_set_time
-			(TOTEM_TIME_LABEL (totem->fs->time_label),
-			 current_time, stream_length);
 	}
 
 	if (totem->stream_length != stream_length) {
@@ -2476,10 +2442,6 @@ seek_slider_pressed_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *t
 	event->button = GDK_BUTTON_PRIMARY;
 
 	totem->seek_lock = TRUE;
-	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE) {
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), TRUE);
-		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), TRUE);
-	}
 
 	return FALSE;
 }
@@ -2495,11 +2457,11 @@ seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem)
 
 	pos = gtk_adjustment_get_value (adj) / 65535;
 	_time = bacon_video_widget_get_stream_length (totem->bvw);
-	totem_statusbar_set_time_and_length (TOTEM_STATUSBAR (totem->statusbar),
-			(int) (pos * _time / 1000), _time / 1000);
-	totem_time_label_set_time
-			(TOTEM_TIME_LABEL (totem->fs->time_label),
-			 (int) (pos * _time), _time);
+
+	bacon_time_label_set_time (totem->time_label,
+				   pos * _time, _time);
+	bacon_time_label_set_time (totem->time_rem_label,
+				   pos * _time, _time);
 
 	if (bacon_video_widget_can_direct_seek (totem->bvw) != FALSE)
 		totem_action_seek (totem, pos);
@@ -2525,9 +2487,6 @@ seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *
 	if (bacon_video_widget_can_direct_seek (totem->bvw) == FALSE)
 		totem_action_seek (totem, val / 65535.0);
 
-	totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
-	totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label),
-			FALSE);
 	return FALSE;
 }
 
@@ -2634,7 +2593,7 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 void
 show_controls (TotemObject *totem, gboolean was_fullscreen)
 {
-	GtkWidget *menubar, *controlbar, *statusbar, *bvw_box, *widget;
+	GtkWidget *menubar, *bvw_box, *widget;
 	GtkAllocation allocation;
 	int width = 0, height = 0;
 
@@ -2642,8 +2601,6 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 		return;
 
 	menubar = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_menubar_box"));
-	controlbar = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_controls_vbox"));
-	statusbar = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_statusbar"));
 	bvw_box = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
 	widget = GTK_WIDGET (totem->bvw);
 
@@ -2657,8 +2614,6 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 
 		gtk_widget_set_sensitive (menubar, TRUE);
 		gtk_widget_show (menubar);
-		gtk_widget_show (controlbar);
-		gtk_widget_show (statusbar);
 		if (totem_sidebar_is_visible (totem) != FALSE) {
 			/* This is uglier then you might expect because of the
 			   resize handle between the video and sidebar. There
@@ -2687,15 +2642,9 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 
 		if (was_fullscreen == FALSE) {
 			GtkAllocation allocation_menubar;
-			GtkAllocation allocation_controlbar;
-			GtkAllocation allocation_statusbar;
 
 			gtk_widget_get_allocation (menubar, &allocation_menubar);
-			gtk_widget_get_allocation (controlbar, &allocation_controlbar);
-			gtk_widget_get_allocation (statusbar, &allocation_statusbar);
-			height += allocation_menubar.height
-				+ allocation_controlbar.height
-				+ allocation_statusbar.height;
+			height += allocation_menubar.height;
 			gtk_window_resize (GTK_WINDOW(totem->win),
 					width, height);
 		}
@@ -2704,8 +2653,6 @@ show_controls (TotemObject *totem, gboolean was_fullscreen)
 		gtk_widget_set_sensitive (menubar, FALSE);
 		gtk_widget_hide (menubar);
 
-		gtk_widget_hide (controlbar);
-		gtk_widget_hide (statusbar);
 		gtk_widget_hide (totem->sidebar);
 
 		 /* We won't show controls in fullscreen */
@@ -2892,10 +2839,12 @@ totem_object_action_remote (TotemObject *totem, TotemRemoteCommand cmd, const ch
 		break;
 	}
 
+#if 0
 	if (handled != FALSE
 	    && gtk_window_is_active (GTK_WINDOW (totem->win))) {
 		totem_fullscreen_show_popups_or_osd (totem->fs, icon_name, TRUE);
 	}
+#endif
 }
 
 /**
@@ -3113,8 +3062,10 @@ totem_object_is_seekable (TotemObject *totem)
 static void
 on_mouse_click_fullscreen (GtkWidget *widget, TotemObject *totem)
 {
+#if 0
 	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
 		totem_fullscreen_show_popups (totem->fs, TRUE);
+#endif
 }
 
 static gboolean
@@ -3133,7 +3084,7 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 			icon_name = "media-playback-start-symbolic";
 		else
 			icon_name = "media-playback-pause-symbolic";
-		totem_fullscreen_show_popups_or_osd (totem->fs, icon_name, FALSE);
+		//totem_fullscreen_show_popups_or_osd (totem->fs, icon_name, FALSE);
 		totem_object_action_play_pause (totem);
 		return TRUE;
 	} else if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
@@ -3183,24 +3134,6 @@ on_eos_event (GtkWidget *widget, TotemObject *totem)
 	}
 
 	return FALSE;
-}
-
-static gboolean
-totem_action_handle_key_release (TotemObject *totem, GdkEventKey *event)
-{
-	gboolean retval = TRUE;
-
-	switch (event->keyval) {
-	case GDK_KEY_Left:
-	case GDK_KEY_Right:
-		totem_statusbar_set_seeking (TOTEM_STATUSBAR (totem->statusbar), FALSE);
-		totem_time_label_set_seeking (TOTEM_TIME_LABEL (totem->fs->time_label), FALSE);
-		break;
-	default:
-		retval = FALSE;
-	}
-
-	return retval;
 }
 
 static void
@@ -3471,11 +3404,12 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		retval = FALSE;
 	}
 
+#if 0
 	if (icon_name != NULL)
 		totem_fullscreen_show_popups_or_osd (totem->fs,
 						     icon_name,
 						     FALSE);
-
+#endif
 	return retval;
 }
 
@@ -3489,8 +3423,8 @@ totem_action_handle_scroll (TotemObject    *totem,
 
 	direction = sevent->direction;
 
-	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
-		totem_fullscreen_show_popups (totem->fs, TRUE);
+//	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
+//		totem_fullscreen_show_popups (totem->fs, TRUE);
 
 	if (direction == GDK_SCROLL_SMOOTH) {
 		gdouble y;
@@ -3560,8 +3494,6 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_hyphen:
 			if (event->type == GDK_KEY_PRESS)
 				return totem_action_handle_key_press (totem, event);
-			else
-				return totem_action_handle_key_release (totem, event);
 		default:
 			break;
 		}
@@ -3572,8 +3504,6 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_Escape:
 			if (event->type == GDK_KEY_PRESS)
 				return totem_action_handle_key_press (totem, event);
-			else
-				return totem_action_handle_key_release (totem, event);
 		default:
 			break;
 		}
@@ -3590,11 +3520,10 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 			|| (event->state & GDK_MOD4_MASK)))
 		return FALSE;
 
-	if (event->type == GDK_KEY_PRESS) {
+	if (event->type == GDK_KEY_PRESS)
 		return totem_action_handle_key_press (totem, event);
-	} else {
-		return totem_action_handle_key_release (totem, event);
-	}
+
+	return FALSE;
 }
 
 gboolean
@@ -3748,6 +3677,46 @@ totem_setup_window (TotemObject *totem)
 	return page_id;
 }
 
+static gboolean
+fullscreen_button_image_sync (GBinding     *binding,
+			      const GValue *source_value,
+			      GValue       *target_value,
+			      gpointer      user_data)
+{
+	gboolean state;
+
+	state = g_value_get_boolean (source_value);
+	g_value_set_string (target_value, state ? "view-restore-symbolic" : "view-fullscreen-symbolic");
+
+	return TRUE;
+}
+
+static GtkWidget *
+create_control_button (TotemObject *totem,
+		       const gchar *action_name,
+		       const gchar *tooltip_text)
+{
+	GtkWidget *button, *image;
+	GtkAction *action;
+
+	button = gtk_button_new ();
+	image = gtk_image_new ();
+	gtk_button_set_image (GTK_BUTTON (button), image);
+	gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
+
+	action = gtk_action_group_get_action (totem->main_action_group,
+					      action_name);
+	gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
+
+	gtk_button_set_label (GTK_BUTTON (button), NULL);
+	gtk_widget_set_tooltip_text (button, tooltip_text);
+	atk_object_set_name (gtk_widget_get_accessible (button), tooltip_text);
+
+	gtk_widget_show_all (button);
+
+	return button;
+}
+
 void
 totem_callback_connect (TotemObject *totem)
 {
@@ -3767,54 +3736,44 @@ totem_callback_connect (TotemObject *totem)
 				   g_variant_new_boolean (totem_playlist_get_shuffle (totem->playlist)));
 
 	/* Controls */
-	box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_buttons_hbox"));
+	box = g_object_get_data (totem->controls, "controls_box");
 
 	/* Previous */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"previous-chapter");
-	item = gtk_action_create_tool_item (action);
-	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), 
-					_("Previous Chapter/Movie"));
-	atk_object_set_name (gtk_widget_get_accessible (item),
-			_("Previous Chapter/Movie"));
+	item = create_control_button (totem, "previous-chapter",
+				      _("Previous Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Play/Pause */
-	action = gtk_action_group_get_action (totem->main_action_group, "play");
-	item = gtk_action_create_tool_item (action);
-	atk_object_set_name (gtk_widget_get_accessible (item),
-			_("Play / Pause"));
-	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item),
- 					_("Play / Pause"));
+	item = create_control_button (totem, "play",
+				      _("Play / Pause"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Next */
-	action = gtk_action_group_get_action (totem->main_action_group,
-			"next-chapter");
-	item = gtk_action_create_tool_item (action);
-	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), 
-					_("Next Chapter/Movie"));
-	atk_object_set_name (gtk_widget_get_accessible (item),
-			_("Next Chapter/Movie"));
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
-
-	/* Separator */
-	item = GTK_WIDGET(gtk_separator_tool_item_new ());
+	item = create_control_button (totem, "next-chapter",
+				      _("Next Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Fullscreen button */
-	/* Translators: this is the tooltip text for the fullscreen button in the controls box in Totem's main window. */
-	item = GTK_WIDGET (gtk_toggle_tool_button_new ());
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "view-fullscreen-symbolic");
-	gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (item), _("Fullscreen"));
-	/* Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window. */
-	atk_object_set_name (gtk_widget_get_accessible (item), _("Fullscreen"));
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
-	gtk_widget_show (item);
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
+	item = g_object_get_data (totem->controls, "fullscreen_button");
+	image = gtk_image_new ();
+	gtk_button_set_image (GTK_BUTTON (item), image);
+	g_object_bind_property_full (totem, "fullscreen",
+				     image, "icon-name",
+				     G_BINDING_SYNC_CREATE,
+				     fullscreen_button_image_sync,
+				     NULL, NULL, NULL);
+
+	/* Seekbar */
+	g_signal_connect (totem->seek, "button-press-event",
+			  G_CALLBACK (seek_slider_pressed_cb), totem);
+	g_signal_connect (totem->seek, "button-release-event",
+			  G_CALLBACK (seek_slider_released_cb), totem);
+	g_signal_connect (totem->seek, "scroll-event",
+			  G_CALLBACK (window_scroll_event_cb), totem);
+	g_signal_connect (totem->seekadj, "value-changed",
+			  G_CALLBACK (seek_slider_changed_cb), totem);
 
 	/* Sidebar button (Drag'n'Drop) */
-	box = GTK_BOX (gtk_builder_get_object (totem->xml, "tmw_sidebar_button_hbox"));
 	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
 	item = gtk_toggle_button_new ();
 	gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
@@ -3829,7 +3788,7 @@ totem_callback_connect (TotemObject *totem)
 	image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_BUTTON);
 	gtk_widget_show (image);
 	gtk_container_add (GTK_CONTAINER (item), image);
-	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->header), item);
 	g_signal_connect (G_OBJECT (item), "drag_data_received",
 			G_CALLBACK (drop_playlist_cb), totem);
 	g_signal_connect (G_OBJECT (item), "drag_motion",
@@ -3838,44 +3797,12 @@ totem_callback_connect (TotemObject *totem)
 			target_table, G_N_ELEMENTS (target_table),
 			GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
-	/* Fullscreen window buttons */
-	g_signal_connect (G_OBJECT (totem->fs->exit_button), "clicked",
-			  G_CALLBACK (fs_exit1_activate_cb), totem);
-
-	action = gtk_action_group_get_action (totem->main_action_group, "play");
-	item = gtk_action_create_tool_item (action);
-	gtk_box_pack_start (GTK_BOX (totem->fs->buttons_box), item, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_mouse_click_fullscreen), totem);
-
-	action = gtk_action_group_get_action (totem->main_action_group, "previous-chapter");
-	item = gtk_action_create_tool_item (action);
-	gtk_box_pack_start (GTK_BOX (totem->fs->buttons_box), item, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_mouse_click_fullscreen), totem);
-
-	action = gtk_action_group_get_action (totem->main_action_group, "next-chapter");
-	item = gtk_action_create_tool_item (action);
-	gtk_box_pack_start (GTK_BOX (totem->fs->buttons_box), item, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (item), "clicked",
-			G_CALLBACK (on_mouse_click_fullscreen), totem);
-
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
 	/* Connect the mouse wheel */
 	gtk_widget_add_events (GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_vbox")), GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
 	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
-	gtk_widget_add_events (totem->fs->seek, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
-
-	/* FIXME Hack to fix bug #462286 and #563894 */
-	g_signal_connect (G_OBJECT (totem->fs->seek), "button-press-event",
-			G_CALLBACK (seek_slider_pressed_cb), totem);
-	g_signal_connect (G_OBJECT (totem->fs->seek), "button-release-event",
-			G_CALLBACK (seek_slider_released_cb), totem);
-	g_signal_connect (G_OBJECT (totem->fs->seek), "scroll-event",
-			  G_CALLBACK (window_scroll_event_cb), totem);
-
 
 	/* Set sensitivity of the toolbar buttons */
 	totem_action_set_sensitivity ("play", FALSE);
@@ -3893,6 +3820,14 @@ totem_callback_connect (TotemObject *totem)
 
 	action = gtk_action_group_get_action (action_group, "skip-backwards");
 	gtk_action_set_sensitive (action, FALSE);
+
+	/* Volume */
+	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
+			G_CALLBACK (property_notify_cb_volume), totem);
+	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
+			G_CALLBACK (property_notify_cb_seekable), totem);
+	update_volume_sliders (totem);
+
 }
 
 void
@@ -3935,6 +3870,7 @@ video_widget_create (TotemObject *totem)
 	GError *err = NULL;
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
+	GObject *header;
 
 	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
@@ -3943,6 +3879,10 @@ video_widget_create (TotemObject *totem)
 		if (err != NULL)
 			g_error_free (err);
 	}
+
+	totem->controls = bacon_video_widget_get_controls_object (totem->bvw);
+	header = bacon_video_widget_get_header_object (totem->bvw);
+	totem->header = g_object_get_data (G_OBJECT (header), "header");
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
 			"button-press-event",
@@ -4012,12 +3952,6 @@ video_widget_create (TotemObject *totem)
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
 	totem_preferences_visuals_setup (totem);
-
-	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
-			G_CALLBACK (property_notify_cb_volume), totem);
-	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
-			G_CALLBACK (property_notify_cb_seekable), totem);
-	update_volume_sliders (totem);
 }
 
 /**

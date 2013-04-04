@@ -104,20 +104,13 @@ app_init (Totem *totem, char **argv)
 
 	/* The rest of the widgets */
 	totem->state = STATE_STOPPED;
-	totem->seek = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_seek_hscale"));
-	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
-	totem->volume = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_volume_button"));
-	totem->statusbar = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_statusbar"));
+
 	totem->seek_lock = FALSE;
-	totem->fs = totem_fullscreen_new (GTK_WINDOW (totem->win));
-	gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (totem->fs->volume),
-					 gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (totem->volume)));
-	gtk_range_set_adjustment (GTK_RANGE (totem->fs->seek), totem->seekadj);
 
 	totem_setup_file_monitoring (totem);
 	totem_setup_file_filters ();
 	totem_app_menu_setup (totem);
-	totem_callback_connect (totem);
+	/* totem_callback_connect (totem); XXX we do this later now, so it might look ugly for a short while */
 
 	sidebar_pageid = totem_setup_window (totem);
 
@@ -133,8 +126,16 @@ app_init (Totem *totem, char **argv)
 
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
+
+	totem->seek = g_object_get_data (totem->controls, "seek_scale");
+	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));
+	totem->volume = g_object_get_data (totem->controls, "volume_button");
+	totem->time_label = g_object_get_data (totem->controls, "time_label");
+	totem->time_rem_label = g_object_get_data (totem->controls, "time_rem_label");
+
+	totem_callback_connect (totem);
+
 	gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
-	totem_fullscreen_set_video_widget (totem->fs, totem->bvw);
 
 	if (optionstate.fullscreen != FALSE) {
 		gtk_widget_show (totem->win);
@@ -174,7 +175,7 @@ app_init (Totem *totem, char **argv)
 
 static void
 app_startup (GApplication *application,
-		Totem        *totem)
+	     Totem        *totem)
 {
 	/* We don't do anything here, as we need to know the options
 	 * when we set everything up.

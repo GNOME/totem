@@ -107,7 +107,7 @@ has_popup (void)
 gboolean
 totem_sidebar_is_focused (Totem *totem, gboolean *handles_kbd)
 {
-	GtkWidget *focused, *sidebar_button;
+	GtkWidget *focused;
 
 	if (handles_kbd != NULL)
 		*handles_kbd = has_popup ();
@@ -116,9 +116,6 @@ totem_sidebar_is_focused (Totem *totem, gboolean *handles_kbd)
 	if (focused == NULL)
 		return FALSE;
 	if (gtk_widget_is_ancestor (focused, GTK_WIDGET (totem->sidebar)) != FALSE)
-		return TRUE;
-	sidebar_button = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_sidebar_button_hbox"));
-	if (gtk_widget_is_ancestor (focused, sidebar_button) != FALSE)
 		return TRUE;
 
 	return FALSE;

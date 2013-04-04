@@ -23,12 +23,12 @@ stuff_DATA =				\
 	filmholes-big-left.png		\
 	filmholes-big-right.png		\
 	totem.ui			\
-	fullscreen.ui			\
 	playlist.ui			\
 	mozilla-viewer.ui		\
 	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
+	controls.ui			\
 	mozilla-viewer.css
 EXTRA_DIST += $(stuff_DATA)
 

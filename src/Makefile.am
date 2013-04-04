@@ -34,11 +34,7 @@ header_DATA = $(INST_H_FILES)
 # Totem UI ltlibrary (used by browser plugins)
 libtotem_player_la_SOURCES = \
 	$(INST_H_FILES)		\
-	totem-statusbar.c	\
-	totem-statusbar.h	\
 	totem-interface.c	\
-	totem-fullscreen.c	\
-	totem-fullscreen.h	\
 	gd-fullscreen-filter.c	\
 	gd-fullscreen-filter.h	\
 	totem-time-label.c	\

@@ -87,6 +87,9 @@
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "bacon-video-osd-actor.h"
+#include "bacon-video-controls-actor.h"
+#include "bacon-video-header-actor.h"
+#include "bacon-video-spinner-actor.h"
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
 
@@ -94,6 +97,8 @@
 
 #define OSD_SIZE 130                           /* Size of the OSD popup */
 #define OSD_MARGIN 8                           /* Pixels from the top-left */
+#define CONTROLS_MARGIN 32.0                   /* Pixels from the bottom, left and right */
+#define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
 #define REWIND_OR_PREVIOUS 4000
 
@@ -205,6 +210,9 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *texture;
   ClutterActor                *frame;
   ClutterActor                *osd;
+  ClutterActor                *controls;
+  ClutterActor                *header;
+  ClutterActor                *spinner;
 
   ClutterActor                *logo_frame;
   ClutterContent              *logo;
@@ -691,45 +699,91 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
   return res;
 }
 
+static void
+toggle_controls (BaconVideoWidget *bvw)
+{
+  /* FIXME:
+   * Using a show/hide seems to not trigger the
+   * controls to redraw, so let's change the opacity instead */
+  if (clutter_actor_get_opacity (bvw->priv->controls) != 0) {
+    clutter_actor_set_opacity (bvw->priv->controls, 0);
+    clutter_actor_set_opacity (bvw->priv->header, 0);
+  } else {
+    clutter_actor_set_opacity (bvw->priv->header, OVERLAY_OPACITY);
+    clutter_actor_set_opacity (bvw->priv->controls, OVERLAY_OPACITY);
+  }
+}
+
+static void
+translate_coords (GtkWidget      *widget,
+		  GdkEventButton *event,
+		  int            *x,
+		  int            *y)
+{
+  GtkWidget *src;
+
+  gdk_window_get_user_data (event->window, (gpointer *)&src);
+  if (src && src != widget) {
+    gtk_widget_translate_coordinates (src, widget, event->x, event->y, x, y);
+  } else {
+    *x = event->x;
+    *y = event->y;
+  }
+}
+
 static gboolean
-bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
+ignore_event (BaconVideoWidget *bvw,
+	      int               x,
+	      int               y)
+{
+  ClutterActor *actor;
+
+  actor = clutter_stage_get_actor_at_pos (CLUTTER_STAGE (bvw->priv->stage), CLUTTER_PICK_REACTIVE, x, y);
+
+  /* Eat the GTK+ event if we're not clicking on the video itself */
+  if (actor == bvw->priv->controls || actor == bvw->priv->header)
+    return TRUE;
+
+  return FALSE;
+}
+
+static gboolean
+bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *event)
 {
   gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  int x, y;
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (bvw->priv->navigation && !bvw->priv->logo_mode) {
+  translate_coords (widget, event, &x, &y);
+  if (ignore_event (bvw, x, y))
+    return TRUE;
+
+  if (event->type != GDK_BUTTON_PRESS &&
+      event->type != GDK_BUTTON_RELEASE)
+    goto bail;
+
+  if (bvw->priv->navigation &&
+      !bvw->priv->logo_mode &&
+      event->button == 1 &&
+      bvw->priv->is_menu != FALSE) {
+    const char *event_str;
+    event_str = (event->type == GDK_BUTTON_PRESS) ? "mouse-button-press" : "mouse-button-release";
     gst_navigation_send_mouse_event (bvw->priv->navigation,
-				     "mouse-button-press", event->button, event->x, event->y);
+				     event_str, event->button, x, y);
 
     /* FIXME need to check whether the backend will have handled
      * the button press
      res = TRUE; */
+  } else if (event->type == GDK_BUTTON_RELEASE) {
+    toggle_controls (bvw);
   }
 
-  if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
+bail:
+  if (event->type == GDK_BUTTON_PRESS && GTK_WIDGET_CLASS (parent_class)->button_press_event)
     res |= GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
-
-  return res;
-}
-
-static gboolean
-bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event)
-{
-  gboolean res = FALSE;
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-
-  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
-
-  if (bvw->priv->navigation && !bvw->priv->logo_mode) {
-    gst_navigation_send_mouse_event (bvw->priv->navigation,
-				     "mouse-button-release", event->button, event->x, event->y);
-
-    res = TRUE;
-  }
-
-  if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
+  if (event->type == GDK_BUTTON_RELEASE && GTK_WIDGET_CLASS (parent_class)->button_release_event)
     res |= GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 
   return res;
@@ -740,7 +794,8 @@ bacon_video_widget_get_preferred_width (GtkWidget *widget,
                                         gint      *minimum,
                                         gint      *natural)
 {
-  *minimum = *natural = 240;
+  /* We could also make the actor a minimum width, based on its contents */
+  *minimum = *natural = DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN;
 }
 
 static void
@@ -748,7 +803,7 @@ bacon_video_widget_get_preferred_height (GtkWidget *widget,
                                          gint      *minimum,
                                          gint      *natural)
 {
-  *minimum = *natural = 180;
+  *minimum = *natural = (DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN) / 16 * 9;
 }
 
 static gboolean
@@ -785,11 +840,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->get_preferred_height = bacon_video_widget_get_preferred_height;
   widget_class->realize = bacon_video_widget_realize;
 
-  /* FIXME: Remove those when GtkClutterEmbedded passes on GDK XI 1.2
-   * events properly */
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
-  widget_class->button_press_event = bacon_video_widget_button_press;
-  widget_class->button_release_event = bacon_video_widget_button_release;
+  widget_class->button_press_event = bacon_video_widget_button_press_or_release;
+  widget_class->button_release_event = bacon_video_widget_button_press_or_release;
 
   /* GObject */
   object_class->set_property = bacon_video_widget_set_property;
@@ -1160,6 +1213,8 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   g_type_class_ref (BVW_TYPE_ROTATION);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
+
+  g_object_set (G_OBJECT (bvw), "use-layout-size", TRUE, NULL);
 
   priv->update_id = 0;
   priv->tagcache = NULL;
@@ -1888,6 +1943,15 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
    /* Live, timeshift and stream buffering modes */
   gst_message_parse_buffering (message, &percent);
   g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, (gdouble) percent / 100.0);
+
+  if (percent >= 100) {
+    clutter_actor_hide (bvw->priv->spinner);
+    /* Reset */
+    g_object_set (G_OBJECT (bvw->priv->spinner), "percent", 0.0, NULL);
+  } else {
+    clutter_actor_show (bvw->priv->spinner);
+    g_object_set (G_OBJECT (bvw->priv->spinner), "percent", (float) percent, NULL);
+  }
 
   if (percent >= 100) {
     /* a 100% message means buffering is done */
@@ -3352,6 +3416,22 @@ bacon_video_widget_popup_osd (BaconVideoWidget *bvw,
   bacon_video_osd_actor_set_icon_name (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd),
 				       icon_name);
   bacon_video_osd_actor_show_and_fade (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
+}
+
+GObject *
+bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  return G_OBJECT (bvw->priv->controls);
+}
+
+GObject *
+bacon_video_widget_get_header_object (BaconVideoWidget *bvw)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  return G_OBJECT (bvw->priv->header);
 }
 
 /* =========================================== */
@@ -5914,6 +5994,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   gchar *version_str;
   GstPlayFlags flags;
   ClutterConstraint *constraint;
+  ClutterActor *layout;
   GstElement *audio_bin, *audio_converter;
   GstPad *audio_pad;
 
@@ -6011,13 +6092,24 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_name (bvw->priv->frame, "frame");
   totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->frame), bvw->priv->texture);
 
-  clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->frame);
+  clutter_actor_add_child (bvw->priv->stage, bvw->priv->frame);
   constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
   clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
 
-  clutter_actor_set_child_above_sibling (CLUTTER_ACTOR (bvw->priv->stage),
-					 CLUTTER_ACTOR (bvw->priv->logo_frame),
-					 CLUTTER_ACTOR (bvw->priv->frame));
+  clutter_actor_set_child_above_sibling (bvw->priv->stage,
+					 bvw->priv->logo_frame,
+					 bvw->priv->frame);
+
+  /* The spinner */
+  bvw->priv->spinner = bacon_video_spinner_actor_new ();
+  clutter_actor_set_name (bvw->priv->spinner, "spinner");
+  clutter_actor_add_child (bvw->priv->stage, bvw->priv->spinner);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (bvw->priv->spinner, "size", constraint);
+  clutter_actor_set_child_above_sibling (bvw->priv->stage,
+					 bvw->priv->spinner,
+					 bvw->priv->frame);
+  clutter_actor_hide (bvw->priv->spinner);
 
   /* The OSD */
   bvw->priv->osd = bacon_video_osd_actor_new ();
@@ -6029,6 +6121,45 @@ bacon_video_widget_initable_init (GInitable     *initable,
 					 bvw->priv->osd,
 					 bvw->priv->frame);
   bacon_video_osd_actor_hide (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
+
+  /* The controls */
+  bvw->priv->controls = bacon_video_controls_actor_new ();
+  clutter_actor_set_name (bvw->priv->controls, "controls");
+  layout = g_object_new (CLUTTER_TYPE_ACTOR,
+			 "layout-manager", clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_CENTER, CLUTTER_BIN_ALIGNMENT_END),
+			 NULL);
+  clutter_actor_set_name (layout, "layout");
+  clutter_actor_add_child (layout, bvw->priv->controls);
+
+  clutter_actor_add_child (bvw->priv->stage, layout);
+  g_object_set (G_OBJECT (bvw->priv->controls),
+		"margin-bottom", CONTROLS_MARGIN,
+		"margin-left", CONTROLS_MARGIN,
+		"margin-right", CONTROLS_MARGIN,
+		NULL);
+
+  clutter_actor_set_child_above_sibling (bvw->priv->stage,
+					 layout,
+					 bvw->priv->logo_frame);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (layout, "size", constraint);
+
+  /* The header bar */
+  bvw->priv->header = bacon_video_header_actor_new ();
+  clutter_actor_set_name (bvw->priv->header, "header");
+  layout = g_object_new (CLUTTER_TYPE_ACTOR,
+			 "layout-manager", clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_FILL, CLUTTER_BIN_ALIGNMENT_START),
+			 NULL);
+  clutter_actor_set_name (layout, "layout");
+  clutter_actor_add_child (layout, bvw->priv->header);
+
+  clutter_actor_add_child (bvw->priv->stage, layout);
+
+  clutter_actor_set_child_above_sibling (bvw->priv->stage,
+					 layout,
+					 bvw->priv->logo_frame);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (layout, "size", constraint);
 
   /* And tell playbin */
   g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);

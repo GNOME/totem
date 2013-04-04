@@ -110,7 +110,6 @@ int main
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_default_size (GTK_WINDOW (win), 500, 500);
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 

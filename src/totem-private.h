@@ -33,8 +33,8 @@
 
 #include "totem-playlist.h"
 #include "backend/bacon-video-widget.h"
+#include "backend/bacon-time-label.h"
 #include "totem-open-location.h"
-#include "totem-fullscreen.h"
 #include "totem-plugins-engine.h"
 
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
@@ -46,7 +46,7 @@
 		widget = GTK_WIDGET (gtk_builder_get_object (xml, name));	\
 		gtk_widget_set_sensitive (widget, state);			\
 	}
-#define totem_main_set_sensitivity(name, state) totem_set_sensitivity (totem->xml, name, state)
+#define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (g_object_get_data (totem->controls, name), state)
 
 #define totem_action_set_sensitivity(name, state)					\
 	{										\
@@ -76,7 +76,11 @@ struct _TotemObject {
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
-	GtkWidget *statusbar;
+
+	GObject *controls;
+	BaconTimeLabel *time_label;
+	BaconTimeLabel *time_rem_label;
+	GtkWidget *header;
 
 	/* UI manager */
 	GtkActionGroup *main_action_group;
@@ -117,9 +121,6 @@ struct _TotemObject {
 	GtkWidget *languages;
 	GList *subtitles_list;
 	GList *language_list;
-
-	/* Fullscreen */
-	TotemFullscreen *fs;
 
 	/* controls management */
 	ControlsVisibility controls_visibility;

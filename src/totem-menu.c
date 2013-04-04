@@ -34,7 +34,6 @@
 #include "totem-interface.h"
 #include "totem-private.h"
 #include "totem-sidebar.h"
-#include "totem-statusbar.h"
 #include "bacon-video-widget.h"
 #include "totem-uri.h"
 
@@ -668,55 +667,6 @@ clear_playlist_action_callback (GtkAction *action, Totem *totem)
 }
 
 /* Show help in status bar when selecting (hovering over) a menu item. */
-static void
-menu_item_select_cb (GtkMenuItem *proxy, Totem *totem)
-{
-	GtkAction *action;
-	const gchar *message;
-
-	action = gtk_activatable_get_related_action (GTK_ACTIVATABLE (proxy));
-	g_return_if_fail (action != NULL);
-
-	message = gtk_action_get_tooltip (action);
-	if (message)
-		totem_statusbar_push_help (TOTEM_STATUSBAR (totem->statusbar), message);
-}
-
-static void
-menu_item_deselect_cb (GtkMenuItem *proxy, Totem *totem)
-{
-	totem_statusbar_pop_help (TOTEM_STATUSBAR (totem->statusbar));
-}
-
-static void
-setup_action (Totem *totem, GtkAction *action)
-{
-	GSList *proxies;
-	for (proxies = gtk_action_get_proxies (action); proxies != NULL; proxies = proxies->next) {
-		if (GTK_IS_MENU_ITEM (proxies->data)) {
-			g_signal_connect (proxies->data, "select", G_CALLBACK (menu_item_select_cb), totem);
-			g_signal_connect (proxies->data, "deselect", G_CALLBACK (menu_item_deselect_cb), totem);
-		}
-
-	}
-}
-
-static void
-setup_menu_items (Totem *totem)
-{
-	GList *action_groups;
-
-	/* FIXME: We can remove this once GTK+ bug #574001 is fixed */
-	for (action_groups = gtk_ui_manager_get_action_groups (totem->ui_manager);
-	     action_groups != NULL; action_groups = action_groups->next) {
-		GtkActionGroup *action_group = GTK_ACTION_GROUP (action_groups->data);
-		GList *actions;
-		for (actions = gtk_action_group_list_actions (action_group); actions != NULL; actions = actions->next) {
-			setup_action (totem, GTK_ACTION (actions->data));
-		}
-	}
-}
-
 void
 totem_ui_manager_setup (Totem *totem)
 {
@@ -735,8 +685,6 @@ totem_ui_manager_setup (Totem *totem)
 	}
 
 	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
-
-	setup_menu_items (totem);
 
 	totem->devices_action_group = NULL;
 	totem->devices_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);

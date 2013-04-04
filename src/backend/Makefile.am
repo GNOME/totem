@@ -17,7 +17,8 @@ bvw_test_CFLAGS =		\
 
 bvw_test_LDADD =		\
 	libbaconvideowidget.la	\
-	$(BACKEND_LIBS)
+	$(BACKEND_LIBS)		\
+	$(top_builddir)/src/gst/libtotemtimehelpers.la
 
 # Enums
 BVW_ENUM_FILES = bacon-video-widget-enums.c bacon-video-widget-enums.h
@@ -52,10 +53,20 @@ libbaconvideowidget_la_SOURCES = \
 	gsd-osd-window.h				\
 	gsd-osd-window-private.h			\
 	bacon-video-osd-actor.c				\
-	bacon-video-osd-actor.h
+	bacon-video-osd-actor.h				\
+	bacon-video-controls-actor.c			\
+	bacon-video-controls-actor.h			\
+	bacon-video-header-actor.h			\
+	bacon-video-header-actor.c			\
+	bacon-video-spinner-actor.h			\
+	bacon-video-spinner-actor.c			\
+	clock.c clock.h					\
+	bacon-time-label.c				\
+	bacon-time-label.h
 
 libbaconvideowidget_la_CPPFLAGS = \
 	-D_REENTRANT				\
+	-DDATADIR=\"$(pkgdatadir)\"		\
 	-I$(top_srcdir)/src/gst/		\
 	-I$(top_builddir)/src/backend		\
 	$(DISABLE_DEPRECATED)			\

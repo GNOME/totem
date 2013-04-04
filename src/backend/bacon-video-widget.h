@@ -458,6 +458,9 @@ void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
 void bacon_video_widget_popup_osd                 (BaconVideoWidget *bvw,
 						   const char       *icon_name);
 
+GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
+GObject * bacon_video_widget_get_header_object  (BaconVideoWidget *bvw);
+
 G_END_DECLS
 
 #endif				/* HAVE_BACON_VIDEO_WIDGET_H */
