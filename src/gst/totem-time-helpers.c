@@ -30,7 +30,6 @@
 
 #include "totem-time-helpers.h"
 
-
 /* FIXME: Remove
  * See https://bugzilla.gnome.org/show_bug.cgi?id=679850 */
 char *
@@ -41,6 +40,12 @@ totem_time_to_string (gint64   msecs,
 	int sec, min, hour, _time;
 
 	_time = (int) (msecs / 1000);
+	/* When calculating the remaining time,
+	 * we want to make sure that:
+	 * current time + time remaining = total run time */
+	if (remaining)
+		_time++;
+
 	sec = _time % 60;
 	_time = _time - sec;
 	min = (_time % (60*60)) / 60;
