@@ -3446,7 +3446,6 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
                          const char       *mrl)
 {
   GFile *file;
-  char *path;
 
   g_return_if_fail (mrl != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -3462,28 +3461,12 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
-  /* Only use the URI when FUSE isn't available for a file
-   * or we're trying to read from an archive or ObexFTP */
-  if (g_file_has_uri_scheme (file, "archive") != FALSE ||
-      g_file_has_uri_scheme (file, "obex") != FALSE ||
-      g_file_has_uri_scheme (file, "ftp") != FALSE) {
-    path = NULL;
-  } else if (g_file_has_uri_scheme (file, "trash") != FALSE ||
-           g_file_has_uri_scheme (file, "recent") != FALSE) {
-    path = NULL;
+  if (g_file_has_uri_scheme (file, "trash") != FALSE ||
+      g_file_has_uri_scheme (file, "recent") != FALSE) {
     bvw->priv->mrl = get_target_uri (file);
-    if (bvw->priv->mrl == NULL)
-      path = g_file_get_path (file);
-    else
-      GST_DEBUG ("Found target location '%s' for original MRL '%s'",
-		 GST_STR_NULL (bvw->priv->mrl), mrl);
+    GST_DEBUG ("Found target location '%s' for original MRL '%s'",
+	       GST_STR_NULL (bvw->priv->mrl), mrl);
   } else {
-    path = g_file_get_path (file);
-  }
-  if (path) {
-    bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
-    g_free (path);
-  } else if (bvw->priv->mrl == NULL) {
     bvw->priv->mrl = g_strdup (mrl);
   }
 
