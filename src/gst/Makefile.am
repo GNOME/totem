@@ -51,6 +51,20 @@ libtotemtimehelpers_la_CFLAGS =	\
 libtotemtimehelpers_la_LIBADD = $(TIME_HELPER_LIBS)
 libtotemtimehelpers_la_LDFLAGS= -no-undefined
 
+include $(top_srcdir)/Makefile.decl
+
+pwd=`pwd`
+INCLUDES = \
+	-I$(top_srcdir)/plparse	\
+	-DTEST_SRCDIR=\""$(srcdir)/"\"
+
+noinst_PROGRAMS = $(TEST_PROGS)
+
+TEST_PROGS			+= test-time
+test_time_SOURCES		 = test-time.c
+test_time_CFLAGS		 = $(HELPER_CFLAGS) $(AM_CFLAGS)
+test_time_LDADD			 = libtotemtimehelpers.la $(HELPER_LIBS)
+
 EXTRA_DIST = totem-time-helpers.h
 
 -include $(top_srcdir)/git.mk
