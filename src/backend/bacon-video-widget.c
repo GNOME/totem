@@ -6020,11 +6020,14 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->logo_mode = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
+  clutter_actor_set_name (bvw->priv->stage, "stage");
   clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), CLUTTER_COLOR_Black);
 
   /* Video sink, with aspect frame */
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
 				     "disable-slicing", TRUE,
+				     "reactive", TRUE,
+				     "name", "texture",
 				     NULL);
   g_object_set (G_OBJECT (video_sink), "texture", bvw->priv->texture, NULL);
 
@@ -6032,6 +6035,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->logo_frame = totem_aspect_frame_new ();
   clutter_actor_set_name (bvw->priv->logo_frame, "logo-frame");
   bvw->priv->logo = clutter_texture_new ();
+  clutter_actor_set_name (bvw->priv->logo, "logo");
   totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->logo_frame), bvw->priv->logo);
   clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->logo_frame);
   constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
@@ -6053,6 +6057,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* The OSD */
   bvw->priv->osd = bacon_video_osd_actor_new ();
+  clutter_actor_set_name (bvw->priv->osd, "osd");
   clutter_actor_set_pivot_point (bvw->priv->osd, -OSD_MARGIN, -OSD_MARGIN); /* FIXME RTL */
   clutter_actor_set_size (bvw->priv->osd, OSD_SIZE, OSD_SIZE);
   clutter_actor_add_child (bvw->priv->stage, bvw->priv->osd);
