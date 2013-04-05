@@ -144,7 +144,6 @@ enum
   PROP_PLAYING,
   PROP_REFERRER,
   PROP_SEEKABLE,
-  PROP_SHOW_CURSOR,
   PROP_SHOW_VISUALIZATIONS,
   PROP_USER_AGENT,
   PROP_VOLUME,
@@ -865,18 +864,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 	                                                0.0, 1.0, 0.0,
 	                                                G_PARAM_READWRITE |
                                                         G_PARAM_STATIC_STRINGS));
-
-  /**
-   * BaconVideoWidget:show-cursor:
-   *
-   * Whether the cursor should be shown, or should be invisible, when it is over
-   * the video widget.
-   **/
-  g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
-                                   g_param_spec_boolean ("show-cursor", "Show cursor?",
-                                                         "Whether the cursor should be shown.", FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:show-visualizations:
@@ -2686,9 +2673,6 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_REFERRER:
       bacon_video_widget_set_referrer (bvw, g_value_get_string (value));
       break;
-    case PROP_SHOW_CURSOR:
-      bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
-      break;
     case PROP_SHOW_VISUALIZATIONS:
       bacon_video_widget_set_show_visualizations (bvw, g_value_get_boolean (value));
       break;
@@ -2754,9 +2738,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_SEEKABLE:
       g_value_set_boolean (value, bacon_video_widget_is_seekable (bvw));
-      break;
-    case PROP_SHOW_CURSOR:
-      g_value_set_boolean (value, bacon_video_widget_get_show_cursor (bvw));
       break;
     case PROP_USER_AGENT:
       g_value_set_string (value, bvw->priv->user_agent);
@@ -4484,22 +4465,6 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
   } else {
     gdk_window_set_cursor (window, bvw->priv->cursor);
   }
-}
-
-/**
- * bacon_video_widget_get_show_cursor:
- * @bvw: a #BaconVideoWidget
- *
- * Returns whether the cursor is shown when it is over the video widget.
- *
- * Return value: %TRUE if the cursor is shown, %FALSE otherwise
- **/
-gboolean
-bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-
-  return bvw->priv->cursor_shown;
 }
 
 static struct {

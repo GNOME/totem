@@ -173,7 +173,6 @@ gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
 						  gboolean show_cursor);
-gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
