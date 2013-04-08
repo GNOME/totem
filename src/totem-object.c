@@ -1095,6 +1095,9 @@ totem_object_action_exit (TotemObject *totem)
 	if (totem == NULL)
 		exit (0);
 
+	if (totem->bvw)
+		totem_action_save_size (totem);
+
 	if (totem->win != NULL) {
 		gtk_widget_hide (totem->win);
 		display = gtk_widget_get_display (totem->win);
@@ -1107,7 +1110,6 @@ totem_object_action_exit (TotemObject *totem)
 		gdk_display_sync (display);
 
 	if (totem->bvw) {
-		totem_action_save_size (totem);
 		totem_save_position (totem);
 		bacon_video_widget_close (totem->bvw);
 	}
