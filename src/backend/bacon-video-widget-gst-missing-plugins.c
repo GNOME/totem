@@ -299,7 +299,7 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **d
 	}
 #endif /* GDK_WINDOWING_X11 */
 
-	status = gst_install_plugins_async (ctx->details, install_ctx,
+	status = gst_install_plugins_async ((const char * const*) ctx->details, install_ctx,
 	                                    on_plugin_installation_done,
 	                                    ctx);
 
