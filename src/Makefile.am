@@ -35,8 +35,6 @@ header_DATA = $(INST_H_FILES)
 libtotem_player_la_SOURCES = \
 	$(INST_H_FILES)		\
 	totem-interface.c	\
-	gd-fullscreen-filter.c	\
-	gd-fullscreen-filter.h	\
 	totem-time-label.c	\
 	totem-time-label.h
 
