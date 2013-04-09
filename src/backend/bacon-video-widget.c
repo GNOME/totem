@@ -207,7 +207,7 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *osd;
 
   ClutterActor                *logo_frame;
-  ClutterActor                *logo;
+  ClutterContent              *logo;
 
   GdkCursor                   *cursor;
 
@@ -648,16 +648,15 @@ set_current_actor (BaconVideoWidget *bvw)
       gboolean ret;
       GError *err = NULL;
 
-      ret = clutter_texture_set_from_rgb_data (CLUTTER_TEXTURE (bvw->priv->logo),
-					       gdk_pixbuf_get_pixels (pixbuf),
-					       gdk_pixbuf_get_has_alpha (pixbuf),
-					       gdk_pixbuf_get_width (pixbuf),
-					       gdk_pixbuf_get_height (pixbuf),
-					       gdk_pixbuf_get_rowstride (pixbuf),
-					       gdk_pixbuf_get_has_alpha (pixbuf) ? 4 : 3,
-					       CLUTTER_TEXTURE_NONE, &err);
+      ret = clutter_image_set_data (CLUTTER_IMAGE (bvw->priv->logo),
+				    gdk_pixbuf_get_pixels (pixbuf),
+				    gdk_pixbuf_get_has_alpha (pixbuf) ? COGL_PIXEL_FORMAT_RGBA_8888 : COGL_PIXEL_FORMAT_RGB_888,
+				    gdk_pixbuf_get_width (pixbuf),
+				    gdk_pixbuf_get_height (pixbuf),
+				    gdk_pixbuf_get_rowstride (pixbuf),
+				    &err);
       if (ret == FALSE) {
-	g_message ("clutter_texture_set_from_rgb_data failed %s", err->message);
+	g_warning ("clutter_image_set_data() failed %s", err->message);
 	g_error_free (err);
       } else {
 	clutter_actor_show (CLUTTER_ACTOR (bvw->priv->logo_frame));
@@ -5997,11 +5996,11 @@ bacon_video_widget_initable_init (GInitable     *initable,
   g_object_set (G_OBJECT (video_sink), "texture", bvw->priv->texture, NULL);
 
   /* The logo */
-  bvw->priv->logo_frame = totem_aspect_frame_new ();
+  bvw->priv->logo_frame = clutter_actor_new ();
   clutter_actor_set_name (bvw->priv->logo_frame, "logo-frame");
-  bvw->priv->logo = clutter_texture_new ();
-  clutter_actor_set_name (bvw->priv->logo, "logo");
-  totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->logo_frame), bvw->priv->logo);
+  bvw->priv->logo = clutter_image_new ();
+  clutter_actor_set_content (bvw->priv->logo_frame, bvw->priv->logo);
+  clutter_actor_set_content_gravity (bvw->priv->logo_frame, CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT);
   clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->logo_frame);
   constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
   clutter_actor_add_constraint_with_name (bvw->priv->logo_frame, "size", constraint);
