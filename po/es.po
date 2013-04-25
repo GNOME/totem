@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-10 12:11+0000\n"
-"PO-Revision-Date: 2013-04-22 17:36+0200\n"
+"POT-Creation-Date: 2013-04-25 01:06+0000\n"
+"PO-Revision-Date: 2013-04-25 12:37+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -977,8 +977,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:71
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
@@ -991,8 +989,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:82
 #, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
@@ -1679,7 +1675,7 @@ msgstr "Añadir carpeta"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:843
+#: ../src/totem-video-thumbnailer.c:838
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1690,15 +1686,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:839
 msgid "Filename"
 msgstr "Nombre del archivo"
 
-#: ../src/totem-video-thumbnailer.c:846
+#: ../src/totem-video-thumbnailer.c:841
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../src/totem-video-thumbnailer.c:849
+#: ../src/totem-video-thumbnailer.c:844
 msgid "Duration"
 msgstr "Duración"
 
@@ -1964,7 +1960,6 @@ msgid "Search Error"
 msgstr "Error al buscar"
 
 #: ../src/plugins/grilo/totem-grilo.c:820
-#| msgid "Recent files"
 msgid "Recent"
 msgstr "Recientes"
 
@@ -2363,6 +2358,15 @@ msgstr "Sa_ltar a…"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Salta a un tiempo específico"
+
+#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
+#| msgid "Configure Plugins"
+msgid "Zeitgeist Plugin"
+msgstr "Complemento Zeitgeist"
+
+#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
+msgid "A plugin sending events to Zeitgeist"
+msgstr "Un complemento para enviar eventos a Zeitgeist"
 
 #~ msgid "Resize the canvas automatically on file load"
 #~ msgstr "Autoredimensionar la ventana al cargar el archivo"
