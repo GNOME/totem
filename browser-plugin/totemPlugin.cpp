@@ -567,10 +567,6 @@ totemPlugin::ViewerFork ()
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_CONTROLS_HIDDEN));
 	}
 
-	if (mShowStatusbar) {
-		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_STATUSBAR));
-	}
-
 	if (mHidden) {
 		g_ptr_array_add (arr, g_strdup (DASHES TOTEM_OPTION_HIDDEN));
 	}
@@ -2120,9 +2116,8 @@ totemPlugin::Init (NPMIMEType mimetype,
 			mControllerHidden = true;
 		} else if (g_ascii_strcasecmp (value, "invisible") == 0) {
 			mHidden = true;
-		} else if (g_ascii_strcasecmp (value, "full") == 0) {
-			mShowStatusbar = true;
-		} else if (g_ascii_strcasecmp (value, "mini") == 0) {
+		} else if (g_ascii_strcasecmp (value, "full") == 0 ||
+			   g_ascii_strcasecmp (value, "mini") == 0) {
 			;
 		}
 	}
@@ -2133,7 +2128,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 	mControllerHidden = !GetBooleanValue (args, "controller",
 					      GetBooleanValue (args, "showcontrols", true));
 
-	mShowStatusbar = GetBooleanValue (args, "showstatusbar", mShowStatusbar);
 #endif /* TOTEM_GMP_PLUGIN */
 
 	/* Whether to NOT autostart */
@@ -2170,7 +2164,6 @@ totemPlugin::Init (NPMIMEType mimetype,
 	D ("mBaseURI: %s", mBaseURI ? mBaseURI : "");
 	D ("mCache: %d", mCache);
 	D ("mControllerHidden: %d", mControllerHidden);
-	D ("mShowStatusbar: %d", mShowStatusbar);
 	D ("mHidden: %d", mHidden);
 	D ("mAudioOnly: %d", mAudioOnly);
 	D ("mAutoPlay: %d, mRepeat: %d", mAutoPlay, mRepeat);

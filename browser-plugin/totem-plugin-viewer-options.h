@@ -34,7 +34,6 @@
 #define TOTEM_OPTION_PLUGIN_TYPE	"plugin-type"
 #define TOTEM_OPTION_REPEAT		"repeat"
 #define TOTEM_OPTION_USER_AGENT		"user-agent"
-#define TOTEM_OPTION_STATUSBAR		"statusbar"
 #define TOTEM_OPTION_AUDIOONLY		"audio-only"
 #define TOTEM_OPTION_REFERRER           "referrer"
 

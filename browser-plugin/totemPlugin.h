@@ -255,7 +255,6 @@ class totemPlugin {
     bool mRepeat;
     bool mRequestIsSrc;
     bool mResetPropertiesOnReload;
-    bool mShowStatusbar;
     bool mTimerRunning;
     bool mUnownedViewerSetUp;
     bool mViewerReady;
