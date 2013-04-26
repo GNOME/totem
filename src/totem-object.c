@@ -3069,13 +3069,24 @@ on_mouse_click_fullscreen (GtkWidget *widget, TotemObject *totem)
 }
 
 static gboolean
+event_is_touch (GdkEventButton *event)
+{
+	GdkDevice *device;
+
+	device = gdk_event_get_device ((GdkEvent *) event);
+	return (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN);
+}
+
+static gboolean
 on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		TotemObject *totem)
 {
 	if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
 		gtk_widget_grab_focus (GTK_WIDGET (bvw));
 		return TRUE;
-	} else if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
+	} else if (event->type == GDK_2BUTTON_PRESS &&
+		   event->button == 1 &&
+		   event_is_touch (event) == FALSE) {
 		totem_object_action_fullscreen_toggle (totem);
 		return TRUE;
 	} else if (event->type == GDK_BUTTON_PRESS && event->button == 2) {
