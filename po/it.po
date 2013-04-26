@@ -7,9 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-22 21:54+0100\n"
-"PO-Revision-Date: 2013-03-21 11:59+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-04-26 07:19+0000\n"
+"PO-Revision-Date: 2013-04-26 10:44+0200\n"
 "Last-Translator: Gianvito Cavasoli <gianvito@gmx.it>\n"
 "Language-Team: Italiano <tp@linux.it>\n"
 "Language: \n"
@@ -19,16 +20,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1178
-#: ../src/totem-object.c:1648 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1180
+#: ../src/totem-object.c:1650 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "Interrotto"
 
-#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1171
+#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1173
 msgid "Paused"
 msgstr "In pausa"
 
-#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1164
+#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1166
 msgid "Playing"
 msgstr "Riproduzione in corso"
 
@@ -54,7 +55,7 @@ msgstr "Riproduttore filmati Totem"
 msgid "_Open with \"%s\""
 msgstr "A_pri con «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2473
+#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2475
 msgid "An error occurred"
 msgstr "Si è verificato un errore"
 
@@ -525,7 +526,7 @@ msgstr "Canali:"
 
 #. Title
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:248
-#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1656
+#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1658
 msgid "Videos"
 msgstr "Video"
 
@@ -1318,51 +1319,51 @@ msgstr ""
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1166 ../src/totem-options.c:52
+#: ../src/totem-object.c:1168 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1173 ../src/totem-object.c:1183
+#: ../src/totem-object.c:1175 ../src/totem-object.c:1185
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../src/totem-object.c:1265 ../src/totem-object.c:1292
-#: ../src/totem-object.c:1785 ../src/totem-object.c:1940
+#: ../src/totem-object.c:1267 ../src/totem-object.c:1294
+#: ../src/totem-object.c:1787 ../src/totem-object.c:1942
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Impossibile riprodurre il file «%s»."
 
-#: ../src/totem-object.c:1791
+#: ../src/totem-object.c:1793
 msgid "No error message"
 msgstr "Nessun messaggio di errore"
 
-#: ../src/totem-object.c:2131
+#: ../src/totem-object.c:2133
 msgid "Totem could not display the help contents."
 msgstr "Impossibile visualizzare il sommario della guida."
 
-#: ../src/totem-object.c:4020 ../src/totem-object.c:4022
+#: ../src/totem-object.c:4022 ../src/totem-object.c:4024
 msgid "Previous Chapter/Movie"
 msgstr "Capitolo/Filmato precedente"
 
-#: ../src/totem-object.c:4029 ../src/totem-object.c:4031
+#: ../src/totem-object.c:4031 ../src/totem-object.c:4033
 msgid "Play / Pause"
 msgstr "Riproduci / Pausa"
 
-#: ../src/totem-object.c:4039 ../src/totem-object.c:4041
+#: ../src/totem-object.c:4041 ../src/totem-object.c:4043
 msgid "Next Chapter/Movie"
 msgstr "Capitolo/Filmato successivo"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4052 ../src/totem-object.c:4054
+#: ../src/totem-object.c:4054 ../src/totem-object.c:4056
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: ../src/totem-object.c:4185
+#: ../src/totem-object.c:4187
 msgid "Totem could not startup."
 msgstr "Impossibile avviare Totem."
 
-#: ../src/totem-object.c:4185
+#: ../src/totem-object.c:4187
 msgid "No reason."
 msgstr "Motivo sconosciuto."
 
@@ -2452,6 +2453,14 @@ msgstr "_Salta a..."
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Salta a uno specifico istante"
+
+#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
+msgid "Zeitgeist Plugin"
+msgstr "Plugin Zeitgeist"
+
+#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
+msgid "A plugin sending events to Zeitgeist"
+msgstr "Un plugin che invia gli eventi a Zeitgeist"
 
 #~ msgid "Add the video to the playlist"
 #~ msgstr "Aggiunge il video alla scaletta"
