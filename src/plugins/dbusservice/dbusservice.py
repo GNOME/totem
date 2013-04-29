@@ -94,7 +94,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             'mpris:trackid': dbus.String (self.totem.props.current_mrl,
                 variant_level = 1),
             'mpris:length': dbus.Int64 (
-                self.totem.props.stream_length * 1000L,
+                self.totem.props.stream_length * 1000,
                 variant_level = 1),
         }
 
@@ -152,7 +152,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
     def __do_notify_current_time (self, totem, prop):
         # Only notify of seeks if we've skipped more than 3 seconds
         if abs (totem.props.current_time - self.current_position) > 3:
-            self.Seeked (totem.props.current_time * 1000L)
+            self.Seeked (totem.props.current_time * 1000)
 
         self.current_position = totem.props.current_time
 
@@ -198,7 +198,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                 'Shuffle': shuffle, # TODO: Notifications
                 'Metadata': self.__calculate_metadata (),
                 'Volume': self.totem.get_volume (), # TODO: Notifications
-                'Position': self.totem.props.current_time * 1000L,
+                'Position': self.totem.props.current_time * 1000,
                 'CanGoNext': True, # TODO
                 'CanGoPrevious': True, # TODO
                 'CanPlay': (self.totem.props.current_mrl != None),
@@ -315,13 +315,13 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                           in_signature = 'x', # pylint: disable-msg=C0103
                           out_signature = '')
     def Seek (self, offset):
-        self.totem.action_seek_relative (offset / 1000L, False)
+        self.totem.action_seek_relative (offset / 1000, False)
 
     @dbus.service.method (dbus_interface = 'org.mpris.MediaPlayer2.Player',
                           in_signature = 'ox', # pylint: disable-msg=C0103
                           out_signature = '')
     def SetPosition (self, track_id, position):
-        position = position / 1000L
+        position = position / 1000
 
         # Bail if the position is not in the permitted range
         if position < 0 or position > self.totem.props.stream_length:
