@@ -236,6 +236,7 @@ struct BaconVideoWidgetPrivate
   gboolean                     is_menu;
   gboolean                     has_angles;
   GList                       *chapters;
+  gboolean                     embedded;
 
   BvwRotation                  rotation;
   
@@ -805,6 +806,12 @@ bacon_video_widget_get_preferred_width (GtkWidget *widget,
                                         gint      *minimum,
                                         gint      *natural)
 {
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+
+  if (bvw->priv->embedded) {
+    *minimum = *natural = 240;
+    return;
+  }
   /* We could also make the actor a minimum width, based on its contents */
   *minimum = *natural = DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN;
 }
@@ -814,6 +821,12 @@ bacon_video_widget_get_preferred_height (GtkWidget *widget,
                                          gint      *minimum,
                                          gint      *natural)
 {
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+
+  if (bvw->priv->embedded) {
+    *minimum = *natural = 180;
+    return;
+  }
   *minimum = *natural = (DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN) / 16 * 9;
 }
 
