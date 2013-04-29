@@ -313,6 +313,8 @@ static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 						      gint64 _time,
 						      GstSeekFlags flag,
 						      GError **error);
+static void set_controls_visibility (BaconVideoWidget *bvw,
+				     gboolean          visible);
 
 typedef struct {
   GstTagList *tags;
@@ -334,10 +336,10 @@ static gboolean
 is_gtk_plug (GtkWidget *toplevel)
 {
 #ifdef GDK_WINDOWING_X11
-  return GTK_IS_PLUG(toplevel);
-#else
-  return FALSE;
+  if (gtk_widget_is_toplevel (toplevel) && GTK_IS_PLUG (toplevel))
+    return TRUE;
 #endif /* GDK_WINDOWING_X11 */
+  return FALSE;
 }
 
 static const gchar *
@@ -620,10 +622,12 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   /* setup the toplevel, ready to be resized */
   toplevel = gtk_widget_get_toplevel (widget);
-  if (gtk_widget_is_toplevel (toplevel) &&
-      gtk_widget_get_parent (widget) != toplevel &&
-      !is_gtk_plug(toplevel))
+  if (is_gtk_plug (toplevel) == FALSE) {
     gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
+  } else {
+    bvw->priv->embedded = TRUE;
+    set_controls_visibility (bvw, FALSE);
+  }
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
 }
@@ -700,18 +704,25 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 }
 
 static void
-toggle_controls (BaconVideoWidget *bvw)
+set_controls_visibility (BaconVideoWidget *bvw,
+			 gboolean          visible)
 {
+  guint8 opacity = visible ? OVERLAY_OPACITY : 0;
+
   /* FIXME:
    * Using a show/hide seems to not trigger the
    * controls to redraw, so let's change the opacity instead */
-  if (clutter_actor_get_opacity (bvw->priv->controls) != 0) {
-    clutter_actor_set_opacity (bvw->priv->controls, 0);
-    clutter_actor_set_opacity (bvw->priv->header, 0);
-  } else {
-    clutter_actor_set_opacity (bvw->priv->header, OVERLAY_OPACITY);
-    clutter_actor_set_opacity (bvw->priv->controls, OVERLAY_OPACITY);
-  }
+  clutter_actor_set_opacity (bvw->priv->controls, opacity);
+  clutter_actor_set_opacity (bvw->priv->header, opacity);
+}
+
+static void
+toggle_controls (BaconVideoWidget *bvw)
+{
+  if (clutter_actor_get_opacity (bvw->priv->controls) != 0)
+    set_controls_visibility (bvw, FALSE);
+  else
+    set_controls_visibility (bvw, TRUE);
 }
 
 static void
