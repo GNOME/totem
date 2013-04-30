@@ -80,16 +80,21 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="fullscreen_button">
+          <object class="GtkToolItem" id="fullscreen_toolbutton">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="tooltip_text" translatable="yes">Fullscreen</property>
-            <property name="action_name">app.fullscreen</property>
-            <property name="label" translatable="yes">toolbutton1</property>
-            <property name="use_underline">True</property>
+            <child>
+              <object class="GtkButton" id="fullscreen_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="relief">none</property>
+              </object>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
+            <property name="homogeneous">True</property>
           </packing>
         </child>
         <child>
