@@ -3766,10 +3766,8 @@ totem_callback_connect (TotemObject *totem)
 
 	/* Fullscreen button */
 	item = g_object_get_data (totem->controls, "fullscreen_button");
-	image = gtk_image_new ();
-	gtk_button_set_image (GTK_BUTTON (item), image);
 	g_object_bind_property_full (totem, "fullscreen",
-				     image, "icon-name",
+				     item, "icon-name",
 				     G_BINDING_SYNC_CREATE,
 				     fullscreen_button_image_sync,
 				     NULL, NULL, NULL);
