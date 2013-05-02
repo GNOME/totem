@@ -43,6 +43,7 @@
 #include <totem-interface.h>
 #include <totem-dirs.h>
 #include <totem.h>
+#include <totem-private.h>
 
 #include <totem-time-helpers.h>
 
@@ -74,7 +75,6 @@
 #define RESOLVE_FLAGS         (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define THUMB_SEARCH_SIZE     256
-#define THUMB_BROWSE_SIZE     32
 #define SCROLL_GET_MORE_LIMIT 0.8
 
 #define TOTEM_GRILO_CONFIG_FILE "totem-grilo.conf"
@@ -108,13 +108,15 @@ typedef struct {
 	/* Browser widgets */
 	GtkWidget *browser;
 	GtkTreeModel *browser_model;
+	GtkTreeModel *browser_filter_model;
+	gboolean in_search;
 
 	/* Search widgets */
+	GtkWidget *revealer;
 	GtkWidget *search_entry;
 	GtkTreeModel *search_results_model;
 	GHashTable *search_sources_ht;
 	GtkWidget *search_sources_list;
-	GtkWidget *search_results_view;
 
 	/* Popup */
 	GtkUIManager *ui_manager;
@@ -131,9 +133,8 @@ typedef struct {
 typedef struct {
 	TotemGriloPlugin *totem_grilo;
 	GrlMedia *media;
-	GFile *file;
+	GtkTreeModel *model;
 	GtkTreeRowReference *reference;
-	gint thumb_size;
 } SetThumbnailData;
 
 enum {
@@ -206,13 +207,13 @@ search_keys (void)
 }
 
 static GdkPixbuf *
-load_icon (TotemGriloPlugin *self, IconType icon_type, gint thumb_size)
+load_icon (TotemGriloPlugin *self, IconType icon_type)
 {
 	GdkScreen *screen;
 	GtkIconTheme *theme;
 
-	const gchar *icon_name[] = { GTK_STOCK_DIRECTORY,
-	                             "video-x-generic" };
+	const gchar *icon_name[] = { "folder-symbolic",
+	                             "folder-videos-symbolic" };
 
 	static GdkPixbuf *pixbuf[G_N_ELEMENTS(icon_name)] = { NULL };
 
@@ -221,7 +222,7 @@ load_icon (TotemGriloPlugin *self, IconType icon_type, gint thumb_size)
 		theme = gtk_icon_theme_get_for_screen (screen);
 		pixbuf[icon_type] = gtk_icon_theme_load_icon (theme,
 		                                              icon_name[icon_type],
-		                                              thumb_size, 0, NULL);
+		                                              THUMB_SEARCH_SIZE, 0, NULL);
 	}
 
 	if (pixbuf[icon_type] != NULL)
@@ -231,12 +232,12 @@ load_icon (TotemGriloPlugin *self, IconType icon_type, gint thumb_size)
 }
 
 static GdkPixbuf *
-get_icon (TotemGriloPlugin *self, GrlMedia *media, gint thumb_size)
+get_icon (TotemGriloPlugin *self, GrlMedia *media)
 {
 	if (GRL_IS_MEDIA_BOX (media)) {
-		return load_icon (self, ICON_BOX, thumb_size);
+		return load_icon (self, ICON_BOX);
 	} else if (GRL_IS_MEDIA_VIDEO (media)) {
-		return load_icon (self, ICON_VIDEO, thumb_size);
+		return load_icon (self, ICON_VIDEO);
 	}
 	return NULL;
 }
@@ -251,40 +252,48 @@ get_stream_thumbnail_cb (GObject *source_object,
 	GtkTreeIter iter;
 	SetThumbnailData *thumb_data = (SetThumbnailData *) user_data;
 
-	stream = g_file_read_finish (thumb_data->file, res, NULL);
+	stream = g_file_read_finish (G_FILE (source_object), res, NULL);
+	//FIXME handle cancellation
 	if (stream != NULL) {
+		//FIXME make it async
 		thumbnail = gdk_pixbuf_new_from_stream_at_scale (G_INPUT_STREAM (stream),
-		                                                 thumb_data->thumb_size,
-		                                                 thumb_data->thumb_size,
+								 THUMB_SEARCH_SIZE,
+								 THUMB_SEARCH_SIZE,
 		                                                 TRUE, NULL, NULL);
 		g_object_unref (stream);
 	}
 
-	gtk_tree_model_get_iter (thumb_data->totem_grilo->priv->search_results_model,
+	gtk_tree_model_get_iter (thumb_data->model,
 	                         &iter,
 	                         gtk_tree_row_reference_get_path (thumb_data->reference));
 
 	if (thumbnail) {
-		gtk_list_store_set (GTK_LIST_STORE (thumb_data->totem_grilo->priv->search_results_model),
+		gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
 		                    &iter,
 		                    GD_MAIN_COLUMN_ICON, thumbnail,
 		                    -1);
+
+		//FIXME tell the filter view that the row changed
+
 		/* Cache it */
 		g_hash_table_insert (thumb_data->totem_grilo->priv->cache_thumbnails,
-		                     g_file_get_uri (thumb_data->file),
+		                     g_file_get_uri (G_FILE (source_object)),
 		                     thumbnail);
 	}
 
 	/* Free thumb data */
 	g_object_unref (thumb_data->totem_grilo);
 	g_object_unref (thumb_data->media);
-	g_object_unref (thumb_data->file);
+	g_object_unref (thumb_data->model);
 	gtk_tree_row_reference_free (thumb_data->reference);
 	g_slice_free (SetThumbnailData, thumb_data);
 }
 
 static void
-set_thumbnail_async (TotemGriloPlugin *self, GrlMedia *media, GtkTreePath *path, gint thumb_size)
+set_thumbnail_async (TotemGriloPlugin *self,
+		     GrlMedia         *media,
+		     GtkTreeModel     *model,
+		     GtkTreePath      *path)
 {
 	const gchar *url_thumb;
 	GFile *file_uri;
@@ -303,24 +312,24 @@ set_thumbnail_async (TotemGriloPlugin *self, GrlMedia *media, GtkTreePath *path,
 			thumb_data = g_slice_new (SetThumbnailData);
 			thumb_data->totem_grilo = g_object_ref (self);
 			thumb_data->media = g_object_ref (media);
-			thumb_data->file = g_object_ref (file_uri);
-			thumb_data->reference = gtk_tree_row_reference_new (self->priv->search_results_model, path);
-			thumb_data->thumb_size = thumb_size;
+			thumb_data->model = g_object_ref (model);
+			thumb_data->reference = gtk_tree_row_reference_new (model, path);
+
 			g_file_read_async (file_uri, G_PRIORITY_DEFAULT, NULL,
 			                   get_stream_thumbnail_cb, thumb_data);
 			g_object_unref (file_uri);
 		} else {
 			/* Use cached thumbnail */
-			gtk_tree_model_get_iter (self->priv->search_results_model, &iter, path);
-			gtk_list_store_set (GTK_LIST_STORE (self->priv->search_results_model),
+			gtk_tree_model_get_iter (model, &iter, path);
+			gtk_tree_store_set (GTK_TREE_STORE (model),
 			                    &iter,
 			                    GD_MAIN_COLUMN_ICON, thumbnail,
 			                    -1);
 		}
 	} else {
 		/* Keep the icon */
-		gtk_tree_model_get_iter (self->priv->search_results_model, &iter, path);
-		gtk_list_store_set (GTK_LIST_STORE (self->priv->search_results_model),
+		gtk_tree_model_get_iter (model, &iter, path);
+		gtk_tree_store_set (GTK_TREE_STORE (model),
 		                    &iter,
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
 		                    -1);
@@ -333,36 +342,55 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 	GtkTreePath *start_path;
 	GtkTreePath *end_path;
 	GrlMedia *media;
-	GtkTreeIter iter;
 	gboolean is_prethumbnail = FALSE;
+	GtkTreeModel *view_model, *model;
 
-	if (gtk_icon_view_get_visible_range (GTK_ICON_VIEW (self->priv->search_results_view),
-	                                     &start_path, &end_path)) {
-		for (;
-		     gtk_tree_path_compare (start_path, end_path) <= 0;
-		     gtk_tree_path_next (start_path)) {
-
-			if (gtk_tree_model_get_iter (self->priv->search_results_model, &iter, start_path) == FALSE)
-				break;
-
-			gtk_tree_model_get (self->priv->search_results_model,
-			                    &iter,
-			                    MODEL_RESULTS_CONTENT, &media,
-			                    MODEL_RESULTS_IS_PRETHUMBNAIL, &is_prethumbnail,
-			                    -1);
-			if (is_prethumbnail) {
-				set_thumbnail_async (self, media, start_path, THUMB_SEARCH_SIZE);
-				gtk_list_store_set (GTK_LIST_STORE (self->priv->search_results_model),
-				                    &iter,
-				                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
-				                    -1);
-			}
-
-			g_object_unref (media);
-		}
-		gtk_tree_path_free (start_path);
-		gtk_tree_path_free (end_path);
+	if (!gtk_icon_view_get_visible_range (GTK_ICON_VIEW (self->priv->browser),
+					      &start_path, &end_path)) {
+		return FALSE;
 	}
+
+	view_model = gtk_icon_view_get_model (GTK_ICON_VIEW (self->priv->browser));
+	if (GTK_IS_TREE_MODEL_FILTER (view_model))
+		model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
+	else
+		model = view_model;
+
+	for (;
+	     gtk_tree_path_compare (start_path, end_path) <= 0;
+	     gtk_tree_path_next (start_path)) {
+		GtkTreePath *path;
+		GtkTreeIter iter;
+
+		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
+			path = gtk_tree_model_filter_convert_path_to_child_path (GTK_TREE_MODEL_FILTER (view_model),
+										 start_path);
+		} else {
+			path = gtk_tree_path_copy (start_path);
+		}
+
+		if (gtk_tree_model_get_iter (model, &iter, path) == FALSE) {
+			gtk_tree_path_free (path);
+			break;
+		}
+
+		gtk_tree_model_get (model,
+		                    &iter,
+		                    MODEL_RESULTS_CONTENT, &media,
+		                    MODEL_RESULTS_IS_PRETHUMBNAIL, &is_prethumbnail,
+		                    -1);
+		if (is_prethumbnail) {
+			set_thumbnail_async (self, media, model, path);
+			gtk_tree_store_set (GTK_TREE_STORE (model),
+			                    &iter,
+			                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
+			                    -1);
+		}
+
+		g_object_unref (media);
+	}
+	gtk_tree_path_free (start_path);
+	gtk_tree_path_free (end_path);
 
 	return FALSE;
 }
@@ -382,11 +410,9 @@ browse_cb (GrlSource *source,
            const GError *error)
 {
 	GtkTreeIter iter;
-	GdkPixbuf *thumbnail;
 	BrowseUserData *bud;
 	TotemGriloPlugin *self;
 	GtkTreeIter parent;
-	GtkTreePath *path;
 	GtkWindow *window;
 	gint remaining_expected;
 
@@ -402,6 +428,7 @@ browse_cb (GrlSource *source,
 	}
 
 	if (media != NULL) {
+		GdkPixbuf *thumbnail;
 		char *secondary;
 
 		gtk_tree_model_get_iter (self->priv->browser_model, &parent, gtk_tree_row_reference_get_path (bud->ref_parent));
@@ -419,27 +446,21 @@ browse_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = get_icon (self, media, THUMB_BROWSE_SIZE);
+		thumbnail = get_icon (self, media);
 		secondary = get_secondary_text (media);
 
-		gtk_tree_store_append (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent);
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model),
-				    &iter,
-				    MODEL_RESULTS_SOURCE, source,
-				    MODEL_RESULTS_CONTENT, media,
-				    GD_MAIN_COLUMN_ICON, thumbnail,
-				    MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-				    GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
-				    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
-				    -1);
+		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent, -1,
+						   MODEL_RESULTS_SOURCE, source,
+						   MODEL_RESULTS_CONTENT, media,
+						   GD_MAIN_COLUMN_ICON, thumbnail,
+						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+						   -1);
 
 		g_clear_object (&thumbnail);
 		g_free (secondary);
 
-		path = gtk_tree_model_get_path (self->priv->browser_model, &parent);
-		gtk_tree_view_expand_row (GTK_TREE_VIEW (self->priv->browser), path, FALSE);
-		gtk_tree_view_columns_autosize (GTK_TREE_VIEW (self->priv->browser));
-		gtk_tree_path_free (path);
 		g_object_unref (media);
 	}
 
@@ -448,6 +469,8 @@ out:
 		gtk_tree_row_reference_free (bud->ref_parent);
 		g_object_unref (bud->totem_grilo);
 		g_slice_free (BrowseUserData, bud);
+
+		update_search_thumbnails (self);
 	}
 }
 
@@ -470,8 +493,11 @@ browse (TotemGriloPlugin *self,
 	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
 	grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
+	//FIXME https://bugzilla.gnome.org/show_bug.cgi?id=699477
+#if 0
 	if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
+#endif
 
 	bud = g_slice_new (BrowseUserData);
 	bud->totem_grilo = g_object_ref (self);
@@ -579,11 +605,11 @@ search_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = get_icon (self, media, THUMB_SEARCH_SIZE);
+		thumbnail = get_icon (self, media);
 		secondary = get_secondary_text (media);
 
-		gtk_list_store_insert_with_values (GTK_LIST_STORE (self->priv->search_results_model),
-						   NULL, -1,
+		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->search_results_model),
+						   NULL, NULL, -1,
 						   MODEL_RESULTS_SOURCE, source,
 						   MODEL_RESULTS_CONTENT, media,
 						   GD_MAIN_COLUMN_ICON, thumbnail,
@@ -664,13 +690,16 @@ search_more (TotemGriloPlugin *self)
 static void
 search (TotemGriloPlugin *self, GrlSource *source, const gchar *text)
 {
-	gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
+	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 	g_hash_table_remove_all (self->priv->cache_thumbnails);
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_source = source;
 	g_free (self->priv->search_text);
 	self->priv->search_text = g_strdup (text);
 	self->priv->search_page = 0;
+	gtk_icon_view_set_model (GTK_ICON_VIEW (self->priv->browser),
+				 self->priv->search_results_model);
+	self->priv->browser_filter_model = NULL;
 	search_more (self);
 }
 
@@ -690,13 +719,25 @@ search_entry_activate_cb (GtkEntry *entry, TotemGriloPlugin *self)
 
 	text = totem_search_entry_get_text (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
 	g_return_if_fail (text != NULL);
+
+	self->priv->in_search = TRUE;
 	search (self, source, text);
 }
 
 static void
-browser_activated_cb (GtkTreeView *tree_view,
+set_browser_filter_model_for_path (TotemGriloPlugin *self,
+				   GtkTreePath      *path)
+{
+	g_clear_object (&self->priv->browser_filter_model);
+	self->priv->browser_filter_model = gtk_tree_model_filter_new (self->priv->browser_model, path);
+
+	gtk_icon_view_set_model (GTK_ICON_VIEW (self->priv->browser),
+				 self->priv->browser_filter_model);
+}
+
+static void
+browser_activated_cb (GtkIconView *icon_view,
                       GtkTreePath *path,
-                      GtkTreeViewColumn *column,
                       gpointer user_data)
 {
 	gint remaining;
@@ -706,8 +747,10 @@ browser_activated_cb (GtkTreeView *tree_view,
 	GrlMedia *content;
 	GrlSource *source;
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (user_data);
+	GtkTreeIter real_model_iter;
+	GtkTreePath *treepath;
 
-	model = gtk_tree_view_get_model (tree_view);
+	model = gtk_icon_view_get_model (GTK_ICON_VIEW (icon_view));
 	gtk_tree_model_get_iter (model, &iter, path);
 	gtk_tree_model_get (model, &iter,
 	                    MODEL_RESULTS_SOURCE, &source,
@@ -716,29 +759,28 @@ browser_activated_cb (GtkTreeView *tree_view,
 	                    MODEL_RESULTS_REMAINING, &remaining,
 	                    -1);
 
-	if (content != NULL &&
-	    GRL_IS_MEDIA_BOX (content) == FALSE) {
+	/* Activate an item */
+	if (content != NULL && GRL_IS_MEDIA_BOX (content) == FALSE) {
 		play (self, source, content, TRUE);
 		goto free_data;
 	}
 
-	if (gtk_tree_model_iter_has_child (model, &iter)) {
-		if (gtk_tree_view_row_expanded (tree_view, path)) {
-			gtk_tree_view_collapse_row (tree_view, path);
-			gtk_tree_view_columns_autosize (GTK_TREE_VIEW (self->priv->browser));
-		} else {
-			gtk_tree_view_expand_row (tree_view, path, FALSE);
-		}
-		goto free_data;
-	}
+	/* Clicked on a container */
+	gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (model),
+							  &real_model_iter, &iter);
 
+	treepath = gtk_tree_model_get_path (self->priv->browser_model, &real_model_iter);
+	set_browser_filter_model_for_path (self, treepath);
+
+	/* We need to fill the model with browse data */
 	if (remaining == 0) {
-		gtk_tree_store_set (GTK_TREE_STORE (model), &iter,
+		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model), &real_model_iter,
 		                    MODEL_RESULTS_PAGE, ++page,
 		                    MODEL_RESULTS_REMAINING, PAGE_SIZE,
 		                    -1);
-		browse (self, path, source, content, page);
+		browse (self, treepath, source, content, page);
 	}
+	gtk_tree_path_free (treepath);
 
 free_data:
 	g_clear_object (&source);
@@ -755,7 +797,7 @@ search_entry_source_changed_cb (GObject          *object,
 		grl_operation_cancel (self->priv->search_id);
 		self->priv->search_id = 0;
 	}
-	gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
+	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 }
 
 static void
@@ -779,6 +821,19 @@ search_activated_cb (GtkIconView *icon_view,
 
 	g_clear_object (&source);
 	g_clear_object (&content);
+}
+
+static void
+item_activated_cb (GtkIconView *icon_view,
+		   GtkTreePath *path,
+		   gpointer user_data)
+{
+	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (user_data);
+
+	if (self->priv->in_search)
+		search_activated_cb (icon_view, path, user_data);
+	else
+		browser_activated_cb (icon_view, path, user_data);
 }
 
 static gboolean
@@ -822,7 +877,7 @@ source_added_cb (GrlRegistry *registry,
 	if (ops & GRL_OP_BROWSE) {
 		GdkPixbuf *icon;
 
-		icon = load_icon (self, ICON_BOX, THUMB_BROWSE_SIZE);
+		icon = load_icon (self, ICON_BOX);
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
 						   NULL, NULL, -1,
@@ -892,7 +947,7 @@ source_removed_cb (GrlRegistry *registry,
 		const char *id;
 
 		if (self->priv->search_source == source) {
-			gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
+			gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 			self->priv->search_source = NULL;
 		}
 
@@ -1060,10 +1115,12 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	if (adjustment_over_limit (adjustment) == FALSE)
 		return;
 
-	if (gtk_tree_view_get_visible_range (GTK_TREE_VIEW (self->priv->browser),
+	if (gtk_icon_view_get_visible_range (GTK_ICON_VIEW (self->priv->browser),
 	                                     &start_path, &end_path) == FALSE) {
 		return;
 	}
+
+	//FIXME this is broken, our checks are on the filter model, not the original model
 
 	/* Start to check from last visible element, and check if its parent can get more elements */
 	while (gtk_tree_path_compare (start_path, end_path) <= 0 &&
@@ -1123,22 +1180,25 @@ setup_sidebar_browse (TotemGriloPlugin *self,
 {
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
+	//FIXME put revealer in a toolbar
+	self->priv->revealer = GTK_WIDGET (gtk_builder_get_object (builder, "gw_revealer"));
 
-	g_signal_connect (self->priv->browser, "row-activated",
-	                  G_CALLBACK (browser_activated_cb), self);
+	g_signal_connect (self->priv->browser, "item-activated",
+	                  G_CALLBACK (item_activated_cb), self);
 	g_signal_connect (self->priv->browser, "popup-menu",
 	                  G_CALLBACK (popup_menu_cb), self);
 	g_signal_connect (self->priv->browser,
 	                  "button-press-event",
 	                  G_CALLBACK (context_button_pressed_cb), self);
-	g_signal_connect (gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (self->priv->browser)),
-	                  "value_changed",
-	                  G_CALLBACK (get_more_browse_results_cb),
-	                  self);
+
+	//FIXME do this when events come in
+	gtk_revealer_set_reveal_child (GTK_REVEALER (self->priv->revealer), TRUE);
+
+	set_browser_filter_model_for_path (self, NULL);
 
 	totem_object_add_sidebar_page (self->priv->totem,
 	                        "grilo-browse", _("Browse"),
-	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse_window")));
+	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
 }
 
 static void
@@ -1147,26 +1207,15 @@ setup_sidebar_search (TotemGriloPlugin *self,
 {
 	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
 	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
-	self->priv->search_results_view = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_results_view"));
 	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
-
-	g_signal_connect (self->priv->search_results_view,
-	                  "item-activated",
-	                  G_CALLBACK (search_activated_cb),
-	                  self);
-	g_signal_connect (self->priv->search_results_view,
-	                  "popup-menu",
-	                  G_CALLBACK (popup_menu_cb), self);
-	g_signal_connect (self->priv->search_results_view,
-	                  "button-press-event",
-	                  G_CALLBACK (context_button_pressed_cb), self);
 
 	g_signal_connect (self->priv->search_entry, "activate",
 	                  G_CALLBACK (search_entry_activate_cb),
 	                  self);
+	//FIXME also setup a timeout for that
 	g_signal_connect (self->priv->search_entry, "notify::selected-id",
 			  G_CALLBACK (search_entry_source_changed_cb), self);
-
+#if 0
 	g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder,
 		                    "gw_search_results_window"))),
 	                  "value_changed",
@@ -1182,6 +1231,7 @@ setup_sidebar_search (TotemGriloPlugin *self,
 	totem_object_add_sidebar_page (self->priv->totem,
 	                        "grilo-search", _("Search"),
 	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
+#endif
 }
 
 static void
@@ -1320,7 +1370,7 @@ impl_deactivate (PeasActivatable *plugin)
 
 	/* Empty results */
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
-	gtk_list_store_clear (GTK_LIST_STORE (self->priv->search_results_model));
+	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 
 	g_object_unref (self->priv->totem);
 }
