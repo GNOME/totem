@@ -119,9 +119,6 @@ typedef struct {
 	/* Popup */
 	GtkUIManager *ui_manager;
 	GtkActionGroup *action_group;
-
-	/* Configuration */
-	guint max_items;
 } TotemGriloPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GRILO_PLUGIN, TotemGriloPlugin, totem_grilo_plugin)
