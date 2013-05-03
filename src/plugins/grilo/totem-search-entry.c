@@ -51,7 +51,7 @@ totem_search_entry_finalize (GObject *obj)
 {
 	TotemSearchEntry *self = TOTEM_SEARCH_ENTRY (obj);
 
-	/* FIXME */
+	g_clear_pointer (&self->priv->group, g_slist_free);
 
 	G_OBJECT_CLASS (totem_search_entry_parent_class)->finalize (obj);
 }
