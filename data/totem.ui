@@ -418,105 +418,85 @@
   <property name="value">0</property>
   <signal name="value-changed" handler="seek_slider_changed_cb"/>
 </object>
-
-<object class="GtkApplicationWindow" id="totem_main_window">
-  <property name="title" translatable="yes">Videos</property>
-  <property name="type">GTK_WINDOW_TOPLEVEL</property>
-  <property name="window_position">GTK_WIN_POS_NONE</property>
-  <property name="modal">False</property>
-  <property name="resizable">True</property>
-  <property name="destroy_with_parent">False</property>
-  <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">False</property>
-  <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
-  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
-  <property name="focus_on_map">True</property>
-  <property name="urgency_hint">False</property>
-  <signal name="delete-event" handler="main_window_destroy_cb"/>
-  <signal name="window-state-event" handler="window_state_event_cb"/>
-  <signal name="key-press-event" handler="window_key_press_event_cb"/>
-  <signal name="key-release-event" handler="window_key_press_event_cb"/>
-
-  <child>
-    <object class="GtkVBox" id="totem_main_vbox">
-      <property name="visible">True</property>
-      <property name="homogeneous">False</property>
-      <property name="spacing">0</property>
-      <property name="orientation">vertical</property>
-
-      <child>
-	<object class="GtkVBox" id="tmw_menubar_box">
-	  <property name="visible">True</property>
-	  <property name="homogeneous">False</property>
-	  <property name="spacing">0</property>
-          <property name="orientation">vertical</property>
-
-	  <child>
-	    <object class="GtkMenuBar" id="tmw-menubar" constructor="totem-ui-manager"/>
-	    <packing>
-	       <property name="pack-type">start</property>
-	       <property name="expand">False</property>
-	       <property name="fill">False</property>
-	       <property name="padding">0</property>
-	    </packing>
-	  </child>
-	</object>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">False</property>
-	  <property name="fill">False</property>
-	</packing>
-      </child>
-
-      <child>
-	<object class="GtkHPaned" id="tmw_main_pane">
-	  <property name="visible">True</property>
-	  <property name="can_focus">True</property>
-	  <signal name="size-allocate" handler="main_pane_size_allocated"/>
-
-	  <child>
-	    <object class="GtkVBox" id="tmw_main_vbox">
-	      <property name="visible">True</property>
-	      <property name="homogeneous">False</property>
-	      <property name="spacing">0</property>
-              <property name="orientation">vertical</property>
-              <signal name="scroll-event" handler="window_scroll_event_cb"/>
-
-	      <child>
-	        <object class="GtkEventBox" id="tmw_bvw_box">
-		  <property name="border_width">0</property>
-		  <property name="visible">True</property>
-		  <property name="visible_window">True</property>
-		  <property name="above_child">False</property>
-
-		  <!--Placeholder-->
-		</object>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
-		</packing>
-	      </child>
-
-	    </object>
-	    <packing>
-	      <property name="shrink">False</property>
-	      <property name="resize">True</property>
-	    </packing>
-	  </child>
-
-	  <!--Placeholder-->
-	</object>
-	<packing>
-	  <property name="padding">0</property>
-	  <property name="expand">True</property>
-	  <property name="fill">True</property>
-	</packing>
-      </child>
-
-    </object>
-  </child>
-</object>
-
+  <object class="GtkApplicationWindow" id="totem_main_window">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Videos</property>
+    <signal name="window-state-event" handler="window_state_event_cb" swapped="no"/>
+    <signal name="key-release-event" handler="window_key_press_event_cb" swapped="no"/>
+    <signal name="key-press-event" handler="window_key_press_event_cb" swapped="no"/>
+    <signal name="delete-event" handler="main_window_destroy_cb" swapped="no"/>
+    <child>
+      <object class="GtkVBox" id="totem_main_vbox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkVBox" id="tmw_menubar_box">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuBar" id="tmw-menubar" constructor="totem-ui-manager">
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHPaned" id="tmw_main_pane">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <signal name="size-allocate" handler="main_pane_size_allocated" swapped="no"/>
+            <child>
+              <object class="GtkStack" id="tmw_main_stack">
+                <property name="visible">True</property>
+                <property name="homogeneous">True</property>
+                <child>
+                  <object class="GtkVBox" id="tmw_main_vbox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <signal name="scroll-event" handler="window_scroll_event_cb" swapped="no"/>
+                    <child>
+                      <object class="GtkEventBox" id="tmw_bvw_box">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="name">player</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="resize">True</property>
+                <property name="shrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
 </interface>
