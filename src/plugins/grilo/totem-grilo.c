@@ -1196,8 +1196,8 @@ setup_sidebar_browse (TotemGriloPlugin *self,
 
 	set_browser_filter_model_for_path (self, NULL);
 
-	totem_object_add_sidebar_page (self->priv->totem,
-	                        "grilo-browse", _("Browse"),
+	totem_object_add_main_page (self->priv->totem,
+	                        "grilo",
 	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
 }
 
