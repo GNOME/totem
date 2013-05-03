@@ -770,6 +770,20 @@ totem_object_remove_sidebar_page (TotemObject *totem,
 	totem_sidebar_remove_page (totem, page_id);
 }
 
+void
+totem_object_add_main_page (TotemObject *totem,
+			    const char  *page_id,
+			    GtkWidget   *widget)
+{
+	g_return_if_fail (page_id != NULL);
+	g_return_if_fail (g_str_equal (page_id, "grilo"));
+
+	gtk_stack_add_named (GTK_STACK (totem->stack),
+			     widget,
+			     page_id);
+	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), page_id);
+}
+
 /**
  * totem_file_opened:
  * @totem: a #TotemObject

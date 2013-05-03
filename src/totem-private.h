@@ -73,6 +73,7 @@ struct _TotemObject {
 	/* Control window */
 	GtkBuilder *xml;
 	GtkWidget *win;
+	GtkWidget *stack;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
@@ -186,6 +187,9 @@ void    totem_object_plugins_shutdown		(TotemObject *totem);
 void	totem_action_fullscreen			(TotemObject *totem, gboolean state);
 void	totem_action_volume_relative		(TotemObject *totem, double off_pct);
 void	totem_action_volume_toggle_mute		(TotemObject *totem);
+void	totem_object_add_main_page		(TotemObject *totem,
+						 const char  *page_id,
+						 GtkWidget   *widget);
 
 /* Signal emission */
 void	totem_file_opened			(TotemObject *totem,

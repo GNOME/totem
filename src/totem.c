@@ -97,6 +97,7 @@ app_init (Totem *totem, char **argv)
 				G_BINDING_INVERT_BOOLEAN);
 
 	/* Menubar */
+	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
 	totem_ui_manager_setup (totem);
 
 	/* The sidebar */
