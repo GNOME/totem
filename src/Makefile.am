@@ -91,7 +91,8 @@ libtotem_la_CPPFLAGS = \
 
 libtotem_la_CFLAGS = \
 	$(PLAYER_CFLAGS)		\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)			\
+	-I$(top_srcdir)/libgd
 
 libtotem_la_LDFLAGS = \
 	-export-dynamic	\
@@ -116,7 +117,8 @@ totem_CFLAGS =			\
 
 totem_LDADD =		\
 	libtotem.la	\
-	$(PLAYER_LIBS)
+	$(PLAYER_LIBS)  \
+	$(top_builddir)/libgd/libgd.la
 
 # Totem video thumbnailer
 totem_video_thumbnailer_SOURCES = \

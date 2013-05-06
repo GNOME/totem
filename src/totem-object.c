@@ -44,6 +44,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <gio/gio.h>
+#include <libgd/gd.h>
 
 #include <string.h>
 
@@ -2210,6 +2211,14 @@ drag_video_cb (GtkWidget *widget,
 }
 
 static void
+back_button_clicked_cb (GtkButton   *button,
+			TotemObject *totem)
+{
+	totem_object_action_pause (totem);
+	switch_to_page (totem, "grilo");
+}
+
+static void
 on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 {
 	char *new_mrl;
@@ -3779,6 +3788,7 @@ totem_callback_connect (TotemObject *totem)
 	GtkActionGroup *action_group;
 	GtkBox *box;
 	GAction *gaction;
+	AtkObject *accessible;
 
 	/* Menu items */
 	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
@@ -3849,6 +3859,16 @@ totem_callback_connect (TotemObject *totem)
 	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
 			GDK_ACTION_COPY | GDK_ACTION_MOVE);
+
+	/* Add a back button */
+	item = gd_header_simple_button_new ();
+	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (item),
+						 "go-previous-symbolic");
+	accessible = gtk_widget_get_accessible (item);
+	atk_object_set_name (accessible, _("Back"));
+	gtk_header_bar_pack_start (GTK_HEADER_BAR (totem->header), item);
+	gtk_widget_show (item);
+	g_signal_connect (item, "clicked", G_CALLBACK (back_button_clicked_cb), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
