@@ -303,6 +303,7 @@ get_stream_thumbnail_cb (GObject *source_object,
 	GdkPixbuf *thumbnail = NULL;
 	GtkTreeIter iter;
 	SetThumbnailData *thumb_data = (SetThumbnailData *) user_data;
+	GtkTreePath *path;
 
 	stream = g_file_read_finish (G_FILE (source_object), res, NULL);
 	//FIXME handle cancellation
@@ -315,9 +316,9 @@ get_stream_thumbnail_cb (GObject *source_object,
 		g_object_unref (stream);
 	}
 
-	gtk_tree_model_get_iter (thumb_data->model,
-	                         &iter,
-	                         gtk_tree_row_reference_get_path (thumb_data->reference));
+	path = gtk_tree_row_reference_get_path (thumb_data->reference);
+	gtk_tree_model_get_iter (thumb_data->model, &iter, path);
+	gtk_tree_path_free (path);
 
 	if (thumbnail) {
 		gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
@@ -487,8 +488,11 @@ browse_cb (GrlSource *source,
 		GdkPixbuf *thumbnail;
 		gboolean thumbnailing;
 		char *secondary;
+		GtkTreePath *path;
 
-		gtk_tree_model_get_iter (self->priv->browser_model, &parent, gtk_tree_row_reference_get_path (bud->ref_parent));
+		path = gtk_tree_row_reference_get_path (bud->ref_parent);
+		gtk_tree_model_get_iter (self->priv->browser_model, &parent, path);
+		gtk_tree_path_free (path);
 		gtk_tree_model_get (self->priv->browser_model, &parent,
 		                    MODEL_RESULTS_REMAINING, &remaining_expected,
 		                    -1);
