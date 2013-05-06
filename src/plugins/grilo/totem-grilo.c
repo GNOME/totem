@@ -75,6 +75,7 @@
 #define RESOLVE_FLAGS         (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define THUMB_SEARCH_SIZE     128
+#define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
 #define SCROLL_GET_MORE_LIMIT 0.8
 
 #define TOTEM_GRILO_CONFIG_FILE "totem-grilo.conf"
@@ -86,7 +87,9 @@ const gchar *BLACKLIST_SOURCES[] = { "grl-bookmarks",
 
 typedef enum {
 	ICON_BOX = 0,
-	ICON_VIDEO
+	ICON_VIDEO,
+	ICON_VIDEO_THUMBNAILING,
+	NUM_ICONS
 } IconType;
 
 typedef struct {
@@ -97,6 +100,8 @@ typedef struct {
 
 	/* Thumb cache to speed up loading: maps url strings to GdkPixbuf thumbnails */
 	GHashTable *cache_thumbnails;
+	/* Stock icons */
+	GdkPixbuf *icons[NUM_ICONS];
 
 	/* Search related information */
 	GrlSource *search_source;
@@ -210,38 +215,81 @@ search_keys (void)
 	return _search_keys;
 }
 
-static GdkPixbuf *
-load_icon (TotemGriloPlugin *self, IconType icon_type)
+static void
+put_pixel (guchar *p)
 {
-	GdkScreen *screen;
-	GtkIconTheme *theme;
-
-	const gchar *icon_name[] = { "folder-symbolic",
-	                             "folder-videos-symbolic" };
-
-	static GdkPixbuf *pixbuf[G_N_ELEMENTS(icon_name)] = { NULL };
-
-	if (pixbuf[icon_type] == NULL) {
-		screen = gtk_window_get_screen (totem_object_get_main_window (self->priv->totem));
-		theme = gtk_icon_theme_get_for_screen (screen);
-		pixbuf[icon_type] = gtk_icon_theme_load_icon (theme,
-		                                              icon_name[icon_type],
-		                                              THUMB_SEARCH_SIZE, 0, NULL);
-	}
-
-	if (pixbuf[icon_type] != NULL)
-		return g_object_ref (pixbuf[icon_type]);
-	else
-		return NULL;
+	p[0] = 46;
+	p[1] = 52;
+	p[2] = 54;
+	p[3] = 0xff;
 }
 
 static GdkPixbuf *
-get_icon (TotemGriloPlugin *self, GrlMedia *media)
+load_icon (TotemGriloPlugin *self,
+	   const char       *name,
+	   int               size,
+	   gboolean          with_border)
 {
-	if (GRL_IS_MEDIA_BOX (media)) {
-		return load_icon (self, ICON_BOX);
-	} else if (GRL_IS_MEDIA_VIDEO (media)) {
-		return load_icon (self, ICON_VIDEO);
+	GdkScreen *screen;
+	GtkIconTheme *theme;
+	GdkPixbuf *icon, *ret;
+	guchar *pixels;
+	int rowstride;
+	int x, y;
+
+	screen = gtk_window_get_screen (totem_object_get_main_window (self->priv->totem));
+	theme = gtk_icon_theme_get_for_screen (screen);
+	icon = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
+
+	ret = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+			       TRUE,
+			       8, THUMB_SEARCH_SIZE, THUMB_SEARCH_HEIGHT);
+	pixels = gdk_pixbuf_get_pixels (ret);
+	rowstride = gdk_pixbuf_get_rowstride (ret);
+
+	/* Clean up */
+	gdk_pixbuf_fill (ret, 0x00000000);
+
+	/* Draw a border */
+	if (with_border) {
+		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
+			put_pixel (pixels + x * 4);
+		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
+			put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
+		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
+			put_pixel (pixels + y * rowstride);
+		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
+			put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
+	}
+
+	/* Put the icon in the middle */
+	gdk_pixbuf_copy_area (icon, 0, 0,
+			      gdk_pixbuf_get_width (icon), gdk_pixbuf_get_height (icon),
+			      ret,
+			      (THUMB_SEARCH_SIZE - gdk_pixbuf_get_width (icon)) / 2,
+			      (THUMB_SEARCH_HEIGHT - gdk_pixbuf_get_height (icon)) / 2);
+
+	g_object_unref (icon);
+
+	return ret;
+}
+
+static GdkPixbuf *
+get_icon (TotemGriloPlugin *self,
+	  GrlMedia         *media,
+	  gboolean         *thumbnailing)
+{
+	*thumbnailing = FALSE;
+
+	if (GRL_IS_MEDIA_BOX (media))
+		return g_object_ref (self->priv->icons[ICON_BOX]);
+	else if (GRL_IS_MEDIA_VIDEO (media)) {
+		if (grl_media_get_thumbnail (media)) {
+			*thumbnailing = TRUE;
+			return g_object_ref (self->priv->icons[ICON_VIDEO_THUMBNAILING]);
+		} else {
+			return g_object_ref (self->priv->icons[ICON_VIDEO]);
+		}
 	}
 	return NULL;
 }
@@ -332,11 +380,15 @@ set_thumbnail_async (TotemGriloPlugin *self,
 		}
 	} else {
 		/* Keep the icon */
+		//FIXME that shouldn't happen
+		g_assert_not_reached ();
+#if 0
 		gtk_tree_model_get_iter (model, &iter, path);
 		gtk_tree_store_set (GTK_TREE_STORE (model),
 		                    &iter,
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
 		                    -1);
+#endif
 	}
 }
 
@@ -433,6 +485,7 @@ browse_cb (GrlSource *source,
 
 	if (media != NULL) {
 		GdkPixbuf *thumbnail;
+		gboolean thumbnailing;
 		char *secondary;
 
 		gtk_tree_model_get_iter (self->priv->browser_model, &parent, gtk_tree_row_reference_get_path (bud->ref_parent));
@@ -450,14 +503,14 @@ browse_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = get_icon (self, media);
+		thumbnail = get_icon (self, media, &thumbnailing);
 		secondary = get_secondary_text (media);
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent, -1,
 						   MODEL_RESULTS_SOURCE, source,
 						   MODEL_RESULTS_CONTENT, media,
 						   GD_MAIN_COLUMN_ICON, thumbnail,
-						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+						   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
 						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
 						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 						   -1);
@@ -584,7 +637,6 @@ search_cb (GrlSource *source,
            gpointer user_data,
            const GError *error)
 {
-	GdkPixbuf *thumbnail;
 	GtkWindow *window;
 	TotemGriloPlugin *self;
 
@@ -599,6 +651,8 @@ search_cb (GrlSource *source,
 	}
 
 	if (media != NULL) {
+		GdkPixbuf *thumbnail;
+		gboolean thumbnailing;
 		char *secondary;
 
 		self->priv->search_remaining--;
@@ -609,7 +663,7 @@ search_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = get_icon (self, media);
+		thumbnail = get_icon (self, media, &thumbnailing);
 		secondary = get_secondary_text (media);
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->search_results_model),
@@ -617,7 +671,7 @@ search_cb (GrlSource *source,
 						   MODEL_RESULTS_SOURCE, source,
 						   MODEL_RESULTS_CONTENT, media,
 						   GD_MAIN_COLUMN_ICON, thumbnail,
-						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+						   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
 						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
 						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 						   -1);
@@ -882,9 +936,9 @@ source_added_cb (GrlRegistry *registry,
 		name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
-		GdkPixbuf *icon;
+		const GdkPixbuf *icon;
 
-		icon = load_icon (self, ICON_BOX);
+		icon = self->priv->icons[ICON_BOX];
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
 						   NULL, NULL, -1,
@@ -894,8 +948,6 @@ source_added_cb (GrlRegistry *registry,
 						   GD_MAIN_COLUMN_ICON, icon,
 						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
 						   -1);
-
-		g_clear_object (&icon);
 	}
 	if (ops & GRL_OP_SEARCH) {
 		/* FIXME:
@@ -1338,6 +1390,10 @@ static void
 setup_ui (TotemGriloPlugin *self,
           GtkBuilder *builder)
 {
+	self->priv->icons[ICON_BOX] = load_icon (self, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
+	self->priv->icons[ICON_VIDEO] = load_icon (self, "folder-videos-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
+	self->priv->icons[ICON_VIDEO_THUMBNAILING] = load_icon (self, "folder-videos-symbolic", 24, TRUE);
+
 	setup_sidebar_browse (self, builder);
 	setup_sidebar_search (self, builder);
 	setup_menus (self, builder);
@@ -1398,6 +1454,7 @@ impl_deactivate (PeasActivatable *plugin)
 	GList *sources;
 	GList *s;
 	GrlRegistry *registry;
+	guint i;
 
 	totem_object_remove_sidebar_page (self->priv->totem, "grilo-browse");
 	totem_object_remove_sidebar_page (self->priv->totem, "grilo-search");
@@ -1414,6 +1471,9 @@ impl_deactivate (PeasActivatable *plugin)
 		                                NULL);
 	}
 	g_list_free (sources);
+
+	for (i = 0; i < NUM_ICONS; i++)
+		g_clear_object (&self->priv->icons[i]);
 
 	/* Empty results */
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
