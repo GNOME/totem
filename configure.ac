@@ -249,6 +249,7 @@ PKG_CHECK_MODULES(PROPERTIES, gtk+-3.0 >= $GTK_REQS)
 LIBGD_INIT([
 	tagged-entry
 	main-icon-view
+	header-bar
 	static
  ])
 

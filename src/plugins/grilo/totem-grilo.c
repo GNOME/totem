@@ -105,6 +105,10 @@ typedef struct {
 	gint search_remaining;
 	gchar *search_text;
 
+	/* Toolbar widgets */
+	GtkWidget *header;
+	GtkWidget *back_button;
+
 	/* Browser widgets */
 	GtkWidget *browser;
 	GtkTreeModel *browser_model;
@@ -733,6 +737,9 @@ set_browser_filter_model_for_path (TotemGriloPlugin *self,
 
 	gtk_icon_view_set_model (GTK_ICON_VIEW (self->priv->browser),
 				 self->priv->browser_filter_model);
+
+	gtk_widget_set_visible (self->priv->back_button,
+				path != NULL);
 }
 
 static void
@@ -1175,13 +1182,67 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 }
 
 static void
+back_button_clicked_cb (GtkButton        *button,
+			TotemGriloPlugin *self)
+{
+	GtkTreePath *path;
+
+	g_assert (self->priv->browser_filter_model);
+	g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
+	g_assert (path);
+
+	gtk_tree_path_up (path);
+	if (gtk_tree_path_get_depth (path) == 0)
+		set_browser_filter_model_for_path (self, NULL);
+	else
+		set_browser_filter_model_for_path (self, path);
+	gtk_tree_path_free (path);
+}
+
+static void
 setup_sidebar_browse (TotemGriloPlugin *self,
                       GtkBuilder *builder)
 {
+	GtkWidget *button;
+	AtkObject *accessible;
+
+	/* Search */
+	self->priv->revealer = GTK_WIDGET (gtk_builder_get_object (builder, "gw_revealer"));
+	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
+	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
+	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
+
+	g_signal_connect (self->priv->search_entry, "activate",
+	                  G_CALLBACK (search_entry_activate_cb),
+	                  self);
+	//FIXME also setup a timeout for that
+	g_signal_connect (self->priv->search_entry, "notify::selected-id",
+			  G_CALLBACK (search_entry_source_changed_cb), self);
+
+	/* Toolbar */
+	self->priv->header = GTK_WIDGET (gtk_builder_get_object (builder, "gw_headerbar"));
+	self->priv->back_button = button = gd_header_simple_button_new ();
+	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button),
+						 "go-previous-symbolic");
+	gtk_widget_set_no_show_all (button, TRUE);
+	accessible = gtk_widget_get_accessible (button);
+	atk_object_set_name (accessible, _("Back"));
+	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->priv->header), button);
+	g_signal_connect (button, "clicked", G_CALLBACK (back_button_clicked_cb), self);
+
+#if 0
+	self->priv->search_button = button = gd_header_simple_button_new ();
+	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button),
+						 "go-previous-symbolic");
+	gtk_widget_set_no_show_all (button, TRUE);
+	accessible = gtk_widget_get_accessible (button);
+	atk_object_set_name (accessible, _("Back"));
+	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->priv->header), button);
+	g_signal_connect (button, "clicked", G_CALLBACK (back_button_clicked_cb), self);
+#endif
+	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
-	//FIXME put revealer in a toolbar
-	self->priv->revealer = GTK_WIDGET (gtk_builder_get_object (builder, "gw_revealer"));
 
 	g_signal_connect (self->priv->browser, "item-activated",
 	                  G_CALLBACK (item_activated_cb), self);
@@ -1205,16 +1266,6 @@ static void
 setup_sidebar_search (TotemGriloPlugin *self,
                       GtkBuilder *builder)
 {
-	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
-	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
-	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
-
-	g_signal_connect (self->priv->search_entry, "activate",
-	                  G_CALLBACK (search_entry_activate_cb),
-	                  self);
-	//FIXME also setup a timeout for that
-	g_signal_connect (self->priv->search_entry, "notify::selected-id",
-			  G_CALLBACK (search_entry_source_changed_cb), self);
 #if 0
 	g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder,
 		                    "gw_search_results_window"))),
@@ -1227,10 +1278,6 @@ setup_sidebar_search (TotemGriloPlugin *self,
 	                  "changed",
 	                  G_CALLBACK (adjustment_changed_cb),
 	                  self);
-
-	totem_object_add_sidebar_page (self->priv->totem,
-	                        "grilo-search", _("Search"),
-	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
 #endif
 }
 
