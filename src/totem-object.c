@@ -573,6 +573,23 @@ totem_object_get_current_time (TotemObject *totem)
 	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
+static void
+switch_to_page (Totem      *totem,
+		const char *page)
+{
+	GtkStackTransitionType type;
+
+	if (g_str_equal (page, "player"))
+		type = GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT;
+	else
+		type = GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT;
+
+	/* FIXME should we increase the minimum duration like that? */
+	gtk_stack_set_transition_duration (GTK_STACK (totem->stack), 500);
+	gtk_stack_set_transition_type (GTK_STACK (totem->stack), type);
+	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), page);
+}
+
 typedef struct {
 	TotemObject *totem;
 	gchar *uri;
@@ -597,6 +614,7 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 		subtitle = NULL;
 		totem_playlist_set_current (playlist, end);
 		mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
+		switch_to_page (data->totem, "player");
 		totem_action_set_mrl_and_play (data->totem, mrl, subtitle);
 		g_free (mrl);
 		g_free (subtitle);
