@@ -318,21 +318,30 @@ get_stream_thumbnail_cb (GObject *source_object,
 
 	path = gtk_tree_row_reference_get_path (thumb_data->reference);
 	gtk_tree_model_get_iter (thumb_data->model, &iter, path);
-	gtk_tree_path_free (path);
 
 	if (thumbnail) {
+		GtkTreeModel *view_model;
+
 		gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
 		                    &iter,
 		                    GD_MAIN_COLUMN_ICON, thumbnail,
 		                    -1);
 
-		//FIXME tell the filter view that the row changed
-
 		/* Cache it */
 		g_hash_table_insert (thumb_data->totem_grilo->priv->cache_thumbnails,
 		                     g_file_get_uri (G_FILE (source_object)),
 		                     thumbnail);
+
+		/* Can we find that thumbnail in the view model? */
+		view_model = gtk_icon_view_get_model (GTK_ICON_VIEW (thumb_data->totem_grilo->priv->browser));
+		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
+			path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model),
+										 path);
+			if (gtk_tree_model_get_iter (view_model, &iter, path))
+				gtk_tree_model_row_changed (view_model, path, &iter);
+		}
 	}
+	gtk_tree_path_free (path);
 
 	/* Free thumb data */
 	g_object_unref (thumb_data->totem_grilo);
