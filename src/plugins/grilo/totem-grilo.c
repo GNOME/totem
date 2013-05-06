@@ -435,7 +435,7 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 		                    MODEL_RESULTS_CONTENT, &media,
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, &is_prethumbnail,
 		                    -1);
-		if (is_prethumbnail) {
+		if (media != NULL && is_prethumbnail) {
 			set_thumbnail_async (self, media, model, path);
 			gtk_tree_store_set (GTK_TREE_STORE (model),
 			                    &iter,
@@ -443,7 +443,7 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 			                    -1);
 		}
 
-		g_object_unref (media);
+		g_clear_object (&media);
 	}
 	gtk_tree_path_free (start_path);
 	gtk_tree_path_free (end_path);
@@ -1133,24 +1133,6 @@ adjustment_over_limit (GtkAdjustment *adjustment)
 }
 
 static void
-adjustment_value_changed_cb (GtkAdjustment *adjustment,
-                             TotemGriloPlugin *self)
-{
-	update_search_thumbnails (self);
-
-	/* Do not get more results if search is in progress */
-	if (self->priv->search_id != 0)
-		return;
-
-	/* Do not get more results if there are no more results to get :) */
-	if (self->priv->search_remaining > 0)
-		return;
-
-	if (adjustment_over_limit (adjustment))
-		search_more (self);
-}
-
-static void
 adjustment_changed_cb (GtkAdjustment *adjustment,
                        TotemGriloPlugin *self)
 {
@@ -1234,6 +1216,29 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 }
 
 static void
+adjustment_value_changed_cb (GtkAdjustment *adjustment,
+                             TotemGriloPlugin *self)
+{
+	update_search_thumbnails (self);
+
+	if (self->priv->in_search == FALSE) {
+		get_more_browse_results_cb (adjustment, self);
+		return;
+	}
+
+	/* Do not get more results if search is in progress */
+	if (self->priv->search_id != 0)
+		return;
+
+	/* Do not get more results if there are no more results to get :) */
+	if (self->priv->search_remaining > 0)
+		return;
+
+	if (adjustment_over_limit (adjustment))
+		search_more (self);
+}
+
+static void
 back_button_clicked_cb (GtkButton        *button,
 			TotemGriloPlugin *self)
 {
@@ -1252,11 +1257,12 @@ back_button_clicked_cb (GtkButton        *button,
 }
 
 static void
-setup_sidebar_browse (TotemGriloPlugin *self,
-                      GtkBuilder *builder)
+setup_browse (TotemGriloPlugin *self,
+	      GtkBuilder *builder)
 {
 	GtkWidget *button;
 	AtkObject *accessible;
+	GtkAdjustment *adj;
 
 	/* Search */
 	self->priv->revealer = GTK_WIDGET (gtk_builder_get_object (builder, "gw_revealer"));
@@ -1304,6 +1310,14 @@ setup_sidebar_browse (TotemGriloPlugin *self,
 	                  "button-press-event",
 	                  G_CALLBACK (context_button_pressed_cb), self);
 
+	/* Loading thumbnails or more search results */
+	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "gw_browse_window")));
+	g_signal_connect (adj, "value_changed",
+	                  G_CALLBACK (adjustment_value_changed_cb), self);
+	g_signal_connect (adj, "changed",
+	                  G_CALLBACK (adjustment_changed_cb), self);
+
+
 	//FIXME do this when events come in
 	gtk_revealer_set_reveal_child (GTK_REVEALER (self->priv->revealer), TRUE);
 
@@ -1312,25 +1326,6 @@ setup_sidebar_browse (TotemGriloPlugin *self,
 	totem_object_add_main_page (self->priv->totem,
 	                        "grilo",
 	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
-}
-
-static void
-setup_sidebar_search (TotemGriloPlugin *self,
-                      GtkBuilder *builder)
-{
-#if 0
-	g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder,
-		                    "gw_search_results_window"))),
-	                  "value_changed",
-	                  G_CALLBACK (adjustment_value_changed_cb),
-	                  self);
-
-	g_signal_connect (gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder,
-		                    "gw_search_results_window"))),
-	                  "changed",
-	                  G_CALLBACK (adjustment_changed_cb),
-	                  self);
-#endif
 }
 
 static void
@@ -1394,8 +1389,7 @@ setup_ui (TotemGriloPlugin *self,
 	self->priv->icons[ICON_VIDEO] = load_icon (self, "folder-videos-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
 	self->priv->icons[ICON_VIDEO_THUMBNAILING] = load_icon (self, "folder-videos-symbolic", 24, TRUE);
 
-	setup_sidebar_browse (self, builder);
-	setup_sidebar_search (self, builder);
+	setup_browse (self, builder);
 	setup_menus (self, builder);
 }
 
