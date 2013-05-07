@@ -184,10 +184,8 @@ static void
 totem_save_file_file_closed (TotemObject *totem,
 				 TotemSaveFilePlugin *pi)
 {
-	g_free (pi->priv->mrl);
-	pi->priv->mrl = NULL;
-	g_free (pi->priv->name);
-	pi->priv->name = NULL;
+	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->priv->name, g_free);
 
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), FALSE);
 }
@@ -197,12 +195,8 @@ totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
 			     TotemSaveFilePlugin *pi)
 {
-	if (pi->priv->mrl != NULL) {
-		g_free (pi->priv->mrl);
-		pi->priv->mrl = NULL;
-		g_free (pi->priv->name);
-		pi->priv->name = NULL;
-	}
+	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->priv->name, g_free);
 
 	if (mrl == NULL)
 		return;
@@ -301,10 +295,7 @@ impl_deactivate (PeasActivatable *plugin)
 	priv->totem = NULL;
 	priv->bvw = NULL;
 
-	g_free (priv->mrl);
-	priv->mrl = NULL;
-	g_free (priv->name);
-	priv->name = NULL;
-	g_free (priv->save_uri);
-	priv->save_uri = NULL;
+	g_clear_pointer (&pi->priv->mrl, g_free);
+	g_clear_pointer (&pi->priv->name, g_free);
+	g_clear_pointer (&pi->priv->save_uri, g_free);
 }
