@@ -50,20 +50,10 @@ typedef struct {
 	char        *save_uri;
 	gboolean     is_tmp;
 
-	GtkActionGroup *action_group;
-	guint ui_merge_id;
+	GSimpleAction *action;
 } TotemSaveFilePluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SAVE_FILE_PLUGIN, TotemSaveFilePlugin, totem_save_file_plugin)
-
-static void totem_save_file_plugin_copy (GtkAction *action,
-					 TotemSaveFilePlugin *pi);
-
-static GtkActionEntry totem_save_file_plugin_actions [] = {
-	{ "SaveFile", "save-as", N_("Save a Copy..."), "<Ctrl>S",
-		N_("Save a copy of the movie"),
-		G_CALLBACK (totem_save_file_plugin_copy) },
-};
 
 static void
 copy_uris_with_nautilus (const char *source,
@@ -116,7 +106,8 @@ copy_uris_with_nautilus (const char *source,
 }
 
 static void
-totem_save_file_plugin_copy (GtkAction *action,
+totem_save_file_plugin_copy (GSimpleAction       *action,
+			     GVariant            *parameter,
 			     TotemSaveFilePlugin *pi)
 {
 	GtkWidget *fs;
@@ -124,7 +115,6 @@ totem_save_file_plugin_copy (GtkAction *action,
 	int response;
 
 	g_assert (pi->priv->mrl != NULL);
-
 
 	fs = gtk_file_chooser_dialog_new (_("Save a Copy"),
 					  totem_object_get_main_window (pi->priv->totem),
@@ -194,15 +184,12 @@ static void
 totem_save_file_file_closed (TotemObject *totem,
 				 TotemSaveFilePlugin *pi)
 {
-	GtkAction *action;
-
 	g_free (pi->priv->mrl);
 	pi->priv->mrl = NULL;
 	g_free (pi->priv->name);
 	pi->priv->name = NULL;
 
-	action = gtk_action_group_get_action (pi->priv->action_group, "SaveFile");
-	gtk_action_set_sensitive (action, FALSE);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), FALSE);
 }
 
 static void
@@ -210,9 +197,6 @@ totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
 			     TotemSaveFilePlugin *pi)
 {
-	TotemSaveFilePluginPrivate *priv = pi->priv;
-	GtkAction *action;
-
 	if (pi->priv->mrl != NULL) {
 		g_free (pi->priv->mrl);
 		pi->priv->mrl = NULL;
@@ -225,8 +209,7 @@ totem_save_file_file_opened (TotemObject *totem,
 
 	if (g_str_has_prefix (mrl, "file:") || g_str_has_prefix (mrl, "smb:")) {
 		/* We can always copy files from file:/// URIs */
-		action = gtk_action_group_get_action (priv->action_group, "SaveFile");
-		gtk_action_set_sensitive (action, TRUE);
+		g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
 		pi->priv->mrl = g_strdup (mrl);
 		pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 		pi->priv->is_tmp = FALSE;
@@ -238,7 +221,6 @@ totem_save_file_download_filename (GObject    *gobject,
 				   GParamSpec *pspec,
 				   TotemSaveFilePlugin *pi)
 {
-	GtkAction *action;
 	char *filename;
 
 	/* We're already ready to copy it */
@@ -255,8 +237,7 @@ totem_save_file_download_filename (GObject    *gobject,
 	pi->priv->name = totem_object_get_short_title (pi->priv->totem);
 	pi->priv->is_tmp = TRUE;
 
-	action = gtk_action_group_get_action (pi->priv->action_group, "SaveFile");
-	gtk_action_set_sensitive (action, TRUE);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
 }
 
 static void
@@ -264,8 +245,7 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 	TotemSaveFilePluginPrivate *priv = pi->priv;
-	GtkUIManager *uimanager = NULL;
-	GtkAction *action;
+	GMenu *menu;
 	char *path;
 	char *mrl;
 
@@ -291,37 +271,14 @@ impl_activate (PeasActivatable *plugin)
 			  G_CALLBACK (totem_save_file_download_filename),
 			  plugin);
 
+	priv->action = g_simple_action_new ("save-as", NULL);
+	g_signal_connect (G_OBJECT (priv->action), "activate",
+			  G_CALLBACK (totem_save_file_plugin_copy), plugin);
+	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
+
 	/* add UI */
-	priv->action_group = gtk_action_group_new ("SaveFileActions");
-	gtk_action_group_set_translation_domain (priv->action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (priv->action_group,
-				      totem_save_file_plugin_actions,
-				      G_N_ELEMENTS (totem_save_file_plugin_actions),
-				      pi);
-
-	uimanager = totem_object_get_ui_manager (priv->totem);
-	gtk_ui_manager_insert_action_group (uimanager, priv->action_group, -1);
-	g_object_unref (priv->action_group);
-
-	priv->ui_merge_id = gtk_ui_manager_new_merge_id (uimanager);
-
-	gtk_ui_manager_add_ui (uimanager,
-			       priv->ui_merge_id,
-			       "/ui/tmw-menubar/movie/save-placeholder",
-			       "SaveFile",
-			       "SaveFile",
-			       GTK_UI_MANAGER_MENUITEM,
-			       TRUE);
-	gtk_ui_manager_add_ui (uimanager,
-			       priv->ui_merge_id,
-			       "/ui/totem-main-popup/save-placeholder",
-			       "SaveFile",
-			       "SaveFile",
-			       GTK_UI_MANAGER_MENUITEM,
-			       TRUE);
-
-	action = gtk_action_group_get_action (priv->action_group, "SaveFile");
-	gtk_action_set_sensitive (action, FALSE);
+	menu = totem_object_get_menu_section (priv->totem, "save-placeholder");
+	g_menu_append (G_MENU (menu), _("Save a Copy..."), "app.save-as");
 
 	mrl = totem_object_get_current_mrl (priv->totem);
 	totem_save_file_file_opened (priv->totem, mrl, pi);
@@ -334,15 +291,12 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 	TotemSaveFilePluginPrivate *priv = pi->priv;
-	GtkUIManager *uimanager = NULL;
 
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_opened, plugin);
 	g_signal_handlers_disconnect_by_func (priv->totem, totem_save_file_file_closed, plugin);
 	g_signal_handlers_disconnect_by_func (priv->bvw, totem_save_file_download_filename, plugin);
 
-	uimanager = totem_object_get_ui_manager (priv->totem);
-	gtk_ui_manager_remove_ui (uimanager, priv->ui_merge_id);
-	gtk_ui_manager_remove_action_group (uimanager, priv->action_group);
+	totem_object_empty_menu_section (priv->totem, "save-placeholder");
 
 	priv->totem = NULL;
 	priv->bvw = NULL;

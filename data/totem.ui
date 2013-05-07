@@ -58,6 +58,7 @@
 
 <menu id="playermenu">
 	<section>
+		<section id="save-placeholder"/>
 	</section>
 </menu>
 
@@ -337,8 +338,6 @@
    <ui>
       <menubar name="tmw-menubar">
          <menu name="movie" action="movie-menu">
-	    <placeholder name="save-placeholder"/>
-            <separator name="recent-separator"/>
             <placeholder name="recent-placeholder"/>
 	    <separator/>
 	    <placeholder name="burn-placeholder"/>
@@ -401,8 +400,6 @@
          <menuitem name="skip-forward" action="skip-forward"/>
          <menuitem name="skip-backwards" action="skip-backwards"/>
          <menuitem name="select-subtitle" action="select-subtitle"/>
-         <separator/>
-         <placeholder name="save-placeholder"/>
          <separator/>
          <menu name="popup-languages" action="languages-menu">
             <placeholder name="placeholder"/>
