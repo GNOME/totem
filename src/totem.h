@@ -189,6 +189,11 @@ gboolean totem_object_is_paused			(TotemObject *totem);
 gboolean totem_object_is_seekable		(TotemObject *totem);
 GtkWindow *totem_object_get_main_window		(TotemObject *totem);
 GtkUIManager *totem_object_get_ui_manager	(TotemObject *totem);
+GMenu *totem_object_get_menu_section		(TotemObject *totem,
+						 const char  *id);
+void totem_object_empty_menu_section		(TotemObject *totem,
+						 const char  *id);
+
 GtkWidget *totem_object_get_video_widget	(TotemObject *totem);
 char *totem_object_get_version			(void);
 

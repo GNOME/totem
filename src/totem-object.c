@@ -526,6 +526,34 @@ totem_object_get_ui_manager (TotemObject *totem)
 	return totem->ui_manager;
 }
 
+GMenu *
+totem_object_get_menu_section (TotemObject *totem,
+			       const char  *id)
+{
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+
+	return (GMenu *) gtk_builder_get_object (totem->xml, id);
+}
+
+void
+totem_object_empty_menu_section (TotemObject *totem,
+				 const char  *id)
+{
+	GMenu *menu;
+	guint i;
+
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+
+	menu = gtk_builder_get_object (totem->xml, id);
+
+	for (i = 0; i < g_menu_model_get_n_items (G_MENU_MODEL (menu)); i++) {
+		const char *action;
+		g_menu_model_get_item_attribute (G_MENU_MODEL (menu), i, G_MENU_ATTRIBUTE_ACTION, "s", &action);
+		g_action_map_remove_action (G_ACTION_MAP (totem), action);
+		g_menu_remove (G_MENU (menu), i);
+	}
+}
+
 /**
  * totem_object_get_video_widget:
  * @totem: a #TotemObject
