@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <libpeas-gtk/peas-gtk-plugin-manager.h>
 
 #include "bacon-video-widget-enums.h"
 #include "totem.h"
@@ -263,6 +264,59 @@ visualization_quality_writable_changed_cb (GSettings *settings, const gchar *key
 	gtk_widget_set_sensitive (PWID ("tpw_visuals_size_combobox"), writable && show_visualizations);
 }
 
+static gboolean
+totem_plugins_window_delete_cb (GtkWidget *window,
+				   GdkEventAny *event,
+				   gpointer data)
+{
+	gtk_widget_hide (window);
+
+	return TRUE;
+}
+
+static void
+totem_plugins_response_cb (GtkDialog *dialog,
+			      int response_id,
+			      gpointer data)
+{
+	gtk_widget_hide (GTK_WIDGET (dialog));
+}
+
+static void
+plugin_button_clicked_cb (GtkButton *button,
+			  Totem     *totem)
+{
+	if (totem->plugins == NULL) {
+		GtkWidget *manager;
+
+		totem->plugins = gtk_dialog_new_with_buttons (_("Configure Plugins"),
+							      GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (button))),
+							      GTK_DIALOG_DESTROY_WITH_PARENT,
+							      GTK_STOCK_CLOSE,
+							      GTK_RESPONSE_CLOSE,
+							      NULL);
+		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
+		gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))), 2);
+
+		g_signal_connect_object (G_OBJECT (totem->plugins),
+					 "delete_event",
+					 G_CALLBACK (totem_plugins_window_delete_cb),
+					 NULL, 0);
+		g_signal_connect_object (G_OBJECT (totem->plugins),
+					 "response",
+					 G_CALLBACK (totem_plugins_response_cb),
+					 NULL, 0);
+
+		manager = peas_gtk_plugin_manager_new (NULL);
+		gtk_widget_show_all (GTK_WIDGET (manager));
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
+				    manager, TRUE, TRUE, 0);
+		gtk_window_set_default_size (GTK_WINDOW (totem->plugins), 600, 400);
+	}
+
+	gtk_window_present (GTK_WINDOW (totem->plugins));
+}
+
 void
 totem_setup_preferences (Totem *totem)
 {
@@ -353,6 +407,11 @@ totem_setup_preferences (Totem *totem)
 	/* Auto-load external chapters */
 	item = POBJ ("tpw_auto_chapters_checkbutton");
 	g_settings_bind (totem->settings, "autoload-chapters", item, "active", G_SETTINGS_BIND_DEFAULT);
+
+	/* Plugins button */
+	item = POBJ ("tpw_plugins_button");
+	g_signal_connect (G_OBJECT (item), "clicked",
+			  G_CALLBACK (plugin_button_clicked_cb), totem);
 
 	/* Visuals list */
 	list = bacon_video_widget_get_visualization_list (totem->bvw);

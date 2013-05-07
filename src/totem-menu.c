@@ -27,7 +27,6 @@
 #define GST_USE_UNSTABLE_API 1
 #include <gst/tag/tag.h>
 #include <string.h>
-#include <libpeas-gtk/peas-gtk-plugin-manager.h>
 
 #include "totem-menu.h"
 #include "totem.h"
@@ -59,7 +58,6 @@ G_MODULE_EXPORT void skip_forward_action_callback (GtkAction *action, Totem *tot
 G_MODULE_EXPORT void skip_backwards_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void plugins_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
 G_MODULE_EXPORT void select_subtitle_action_callback (GtkAction *action, Totem *totem);
@@ -559,59 +557,6 @@ void
 volume_down_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
-}
-
-static gboolean
-totem_plugins_window_delete_cb (GtkWidget *window,
-				   GdkEventAny *event,
-				   gpointer data)
-{
-	gtk_widget_hide (window);
-
-	return TRUE;
-}
-
-static void
-totem_plugins_response_cb (GtkDialog *dialog,
-			      int response_id,
-			      gpointer data)
-{
-	gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
-
-void
-plugins_action_callback (GtkAction *action, Totem *totem)
-{
-	if (totem->plugins == NULL) {
-		GtkWidget *manager;
-
-		totem->plugins = gtk_dialog_new_with_buttons (_("Configure Plugins"),
-							      GTK_WINDOW (totem->win),
-							      GTK_DIALOG_DESTROY_WITH_PARENT,
-							      GTK_STOCK_CLOSE,
-							      GTK_RESPONSE_CLOSE,
-							      NULL);
-		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
-		gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))), 2);
-
-		g_signal_connect_object (G_OBJECT (totem->plugins),
-					 "delete_event",
-					 G_CALLBACK (totem_plugins_window_delete_cb),
-					 NULL, 0);
-		g_signal_connect_object (G_OBJECT (totem->plugins),
-					 "response",
-					 G_CALLBACK (totem_plugins_response_cb),
-					 NULL, 0);
-
-		manager = peas_gtk_plugin_manager_new (NULL);
-		gtk_widget_show_all (GTK_WIDGET (manager));
-		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
-				    manager, TRUE, TRUE, 0);
-		gtk_window_set_default_size (GTK_WINDOW (totem->plugins), 600, 400);
-	}
-
-	gtk_window_present (GTK_WINDOW (totem->plugins));
 }
 
 void

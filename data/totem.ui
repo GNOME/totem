@@ -105,13 +105,6 @@
                <signal name="activate" handler="clear_playlist_action_callback"/>
             </object>
          </child>
-         <child>
-            <object class="GtkAction" id="plugins">
-               <property name="label" translatable="yes">Plugins...</property>
-               <property name="tooltip" translatable="yes">Configure plugins to extend the application</property>
-               <signal name="activate" handler="plugins_action_callback"/>
-            </object>
-         </child>
 
          <child>
             <object class="GtkAction" id="view-menu">
@@ -352,8 +345,6 @@
          </menu>
          <menu name="edit" action="edit-menu">
             <menuitem name="clear-playlist" action="clear-playlist"/>
-            <separator/>
-            <menuitem name="plugins" action="plugins"/>
          </menu>
          <menu name="view" action="view-menu">
             <menuitem name="zoom-toggle" action="zoom-toggle"/>
