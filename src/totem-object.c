@@ -3819,6 +3819,7 @@ totem_callback_connect (TotemObject *totem)
 	GtkBox *box;
 	GAction *gaction;
 	AtkObject *accessible;
+	GMenuModel *menu;
 
 	/* Menu items */
 	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
@@ -3865,6 +3866,12 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (window_scroll_event_cb), totem);
 	g_signal_connect (totem->seekadj, "value-changed",
 			  G_CALLBACK (seek_slider_changed_cb), totem);
+
+	/* Cog wheel */
+	item = g_object_get_data (bacon_video_widget_get_header_object (totem->bvw),
+				  "button");
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Sidebar button (Drag'n'Drop) */
 	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
