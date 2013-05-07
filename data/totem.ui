@@ -42,6 +42,13 @@
 	</section>
 	<section>
 		<item>
+			<attribute name="label" translatable="yes">_Help</attribute>
+			<attribute name="action">app.help</attribute>
+			<attribute name="accel">F1</attribute>
+		</item>
+	</section>
+	<section>
+		<item>
 			<attribute name="label" translatable="yes">_Quit</attribute>
 			<attribute name="action">app.quit</attribute>
 			<attribute name="accel">&lt;Ctrl&gt;Q</attribute>
@@ -218,21 +225,6 @@
          </child>
 
          <child>
-            <object class="GtkAction" id="help-menu">
-               <property name="label" translatable="yes">_Help</property>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="contents">
-               <property name="label" translatable="yes">_Contents</property>
-               <property name="stock-id">gtk-help</property>
-               <property name="tooltip" translatable="yes">Help contents</property>
-               <signal name="activate" handler="contents_action_callback"/>
-            </object>
-            <accelerator key="F1"/>
-         </child>
-
-         <child>
                <object class="GtkToggleAction" id="sidebar">
                <property name="label" translatable="yes">S_idebar</property>
                <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
@@ -404,9 +396,6 @@
             </menu>
             <menuitem name="volume-up" action="volume-up"/>
             <menuitem name="volume-down" action="volume-down"/>
-         </menu>
-         <menu name="help" action="help-menu">
-            <menuitem name="contents" action="contents"/>
          </menu>
       </menubar>
       <popup name="totem-main-popup">

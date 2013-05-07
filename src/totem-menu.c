@@ -59,7 +59,6 @@ G_MODULE_EXPORT void skip_forward_action_callback (GtkAction *action, Totem *tot
 G_MODULE_EXPORT void skip_backwards_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void contents_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void plugins_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
@@ -142,6 +141,14 @@ toggle_action_cb (GSimpleAction *action,
 }
 
 static void
+help_action_cb (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	totem_action_show_help (TOTEM_OBJECT (user_data));
+}
+
+static void
 quit_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
@@ -156,6 +163,7 @@ static GActionEntry app_entries[] = {
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
+	{ "help", help_action_cb, NULL, NULL, NULL },
 	{ "quit", quit_action_cb, NULL, NULL, NULL },
 };
 
@@ -551,12 +559,6 @@ void
 volume_down_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
-}
-
-void
-contents_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_show_help (totem);
 }
 
 static gboolean
