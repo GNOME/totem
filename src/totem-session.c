@@ -80,6 +80,9 @@ totem_session_try_restore (Totem *totem)
 	subtitle = NULL;
 	mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
 
+	if (mrl != NULL)
+		totem_object_set_main_page (totem, "player", FALSE);
+
 	totem_action_set_mrl (totem, mrl, subtitle);
 
 	/* We do the seeking after being told that the stream is seekable,
