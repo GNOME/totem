@@ -231,14 +231,6 @@
             </object>
             <accelerator key="F1"/>
          </child>
-         <child>
-            <object class="GtkAction" id="about">
-               <property name="label" translatable="yes">_About</property>
-               <property name="stock-id">gtk-about</property>
-               <property name="tooltip" translatable="yes">About this application</property>
-               <signal name="activate" handler="about_action_callback"/>
-            </object>
-         </child>
 
          <child>
                <object class="GtkToggleAction" id="sidebar">
@@ -415,7 +407,6 @@
          </menu>
          <menu name="help" action="help-menu">
             <menuitem name="contents" action="contents"/>
-            <menuitem name="about" action="about"/>
          </menu>
       </menubar>
       <popup name="totem-main-popup">

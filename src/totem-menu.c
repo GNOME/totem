@@ -60,7 +60,6 @@ G_MODULE_EXPORT void skip_backwards_action_callback (GtkAction *action, Totem *t
 G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void contents_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void about_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void plugins_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
@@ -558,37 +557,6 @@ void
 contents_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_action_show_help (totem);
-}
-
-void
-about_action_callback (GtkAction *action, Totem *totem)
-{
-	const char *authors[] =
-	{
-		"Bastien Nocera <hadess@hadess.net>",
-		"Ronald Bultje <rbultje@ronald.bitfreak.net>",
-		"Julien Moutte <julien@moutte.net> (GStreamer backend)",
-		"Tim-Philipp M\303\274ller <tim\100centricular\056net> (GStreamer backend)",
-		"Philip Withnall <philip@tecnocode.co.uk>",
-		NULL
-	};
-	const char *artists[] = { "Jakub Steiner <jimmac@ximian.com>", NULL };
-	char *license = totem_interface_get_license ();
-
-	gtk_show_about_dialog (GTK_WINDOW (totem->win),
-				     "version", VERSION,
-				     "copyright", _("Copyright \xc2\xa9 2002-2009 Bastien Nocera"),
-				     "comments", _("Videos"),
-				     "authors", authors,
-				     "artists", artists,
-				     "translator-credits", _("translator-credits"),
-				     "logo-icon-name", "totem",
-				     "license", license,
-				     "wrap-license", TRUE,
-				     "website-label", _("Totem Website"),
-				     "website", PACKAGE_URL,
-				     NULL);
-	g_free (license);
 }
 
 static gboolean
