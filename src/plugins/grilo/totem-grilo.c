@@ -805,7 +805,8 @@ source_added_cb (GrlRegistry *registry,
 	TotemGriloPlugin *self;
 	GrlSupportedOps ops;
 
-	if (source_is_blacklisted (source)) {
+	if (source_is_blacklisted (source) ||
+	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
 		grl_registry_unregister_source (registry,
 		                                source,
 		                                NULL);
