@@ -597,18 +597,6 @@ totem_ui_manager_setup (Totem *totem)
 {
 	totem->main_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "main-action-group"));
 
-	/* FIXME: Moving these to GtkBuilder depends on bug #457631 */
-	if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL) {
-		GtkActionGroup *action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
-		GtkAction *action;
-
-		action = gtk_action_group_get_action (action_group, "skip-forward");
-		gtk_action_set_accel_path (action, "Left");
-
-		action = gtk_action_group_get_action (action_group, "skip-backwards");
-		gtk_action_set_accel_path (action, "Right");
-	}
-
 	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
 
 	totem->devices_action_group = NULL;

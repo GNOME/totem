@@ -2403,8 +2403,6 @@ update_fill (TotemObject *totem, gdouble level)
 static void
 update_seekable (TotemObject *totem)
 {
-	GtkAction *action;
-	GtkActionGroup *action_group;
 	gboolean seekable;
 
 	seekable = bacon_video_widget_is_seekable (totem->bvw);
@@ -2414,18 +2412,6 @@ update_seekable (TotemObject *totem)
 
 	/* Check if the stream is seekable */
 	gtk_widget_set_sensitive (totem->seek, seekable);
-
-	/* FIXME: We can use this code again once bug #457631 is fixed and
-	 * skip-* are back in the main action group. */
-	/*totem_action_set_sensitivity ("skip-forward", seekable);
-	totem_action_set_sensitivity ("skip-backwards", seekable);*/
-	action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
-
-	action = gtk_action_group_get_action (action_group, "skip-forward");
-	gtk_action_set_sensitive (action, seekable);
-
-	action = gtk_action_group_get_action (action_group, "skip-backwards");
-	gtk_action_set_sensitive (action, seekable);
 
 	/* This is for the session restore and the position saving
 	 * to seek to the saved time */
@@ -3845,7 +3831,6 @@ totem_callback_connect (TotemObject *totem)
 	GtkWidget *item, *image, *label;
 	GIcon *icon;
 	GtkAction *action;
-	GtkActionGroup *action_group;
 	GtkBox *box;
 	GAction *gaction;
 	AtkObject *accessible;
@@ -3953,18 +3938,6 @@ totem_callback_connect (TotemObject *totem)
 	totem_action_set_sensitivity ("play", FALSE);
 	totem_action_set_sensitivity ("next-chapter", FALSE);
 	totem_action_set_sensitivity ("previous-chapter", FALSE);
-	/* FIXME: We can use this code again once bug #457631 is fixed
-	 * and skip-* are back in the main action group. */
-	/*totem_action_set_sensitivity ("skip-forward", FALSE);
-	totem_action_set_sensitivity ("skip-backwards", FALSE);*/
-
-	action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "skip-action-group"));
-
-	action = gtk_action_group_get_action (action_group, "skip-forward");
-	gtk_action_set_sensitive (action, FALSE);
-
-	action = gtk_action_group_get_action (action_group, "skip-backwards");
-	gtk_action_set_sensitive (action, FALSE);
 
 	/* Volume */
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",

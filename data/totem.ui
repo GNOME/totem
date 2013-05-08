@@ -170,11 +170,6 @@
          </child>
 
          <child>
-            <object class="GtkAction" id="go-menu">
-               <property name="label" translatable="yes">_Go</property>
-            </object>
-         </child>
-         <child>
             <object class="GtkAction" id="next-chapter">
                <property name="label" translatable="yes">_Next Chapter/Movie</property>
                <property name="icon-name">media-skip-forward-symbolic</property>
@@ -307,28 +302,6 @@
          </child>
       </object>
    </child>
-   <child>
-      <object class="GtkActionGroup" id="skip-action-group">
-         <child>
-            <object class="GtkAction" id="skip-forward">
-               <property name="label" translatable="yes">Skip _Forward</property>
-               <property name="tooltip" translatable="yes">Skip forward</property>
-               <property name="icon-name">media-seek-forward-symbolic</property>
-               <signal name="activate" handler="skip_forward_action_callback"/>
-            </object>
-            <accelerator key="Right"/>
-         </child>
-         <child>
-            <object class="GtkAction" id="skip-backwards">
-               <property name="label" translatable="yes">Skip _Backwards</property>
-               <property name="tooltip" translatable="yes">Skip backwards</property>
-               <property name="icon-name">media-seek-backward-symbolic</property>
-               <signal name="activate" handler="skip_backwards_action_callback"/>
-            </object>
-            <accelerator key="Left"/>
-         </child>
-      </object>
-   </child>
    <ui>
       <menubar name="tmw-menubar">
          <menu name="movie" action="movie-menu">
@@ -365,13 +338,6 @@
             <menuitem name="sidebar" action="sidebar"/>
             <placeholder name="sidebars-placeholder"/>
          </menu>
-         <menu name="go" action="go-menu">
-            <menuitem name="next-chapter" action="next-chapter"/>
-            <menuitem name="previous-chapter" action="previous-chapter"/>
-            <separator/>
-            <menuitem name="skip-forward" action="skip-forward"/>
-            <menuitem name="skip-backwards" action="skip-backwards"/>
-         </menu>
          <menu name="sound" action="sound-menu">
             <menu name="languages" action="languages-menu">
                <placeholder name="placeholder"/>
@@ -384,8 +350,6 @@
          <menuitem name="play" action="play"/>
          <menuitem name="next-chapter" action="next-chapter"/>
          <menuitem name="previous-chapter" action="previous-chapter"/>
-         <menuitem name="skip-forward" action="skip-forward"/>
-         <menuitem name="skip-backwards" action="skip-backwards"/>
          <menuitem name="select-subtitle" action="select-subtitle"/>
          <separator/>
          <menu name="popup-languages" action="languages-menu">
