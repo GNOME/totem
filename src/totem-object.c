@@ -526,6 +526,13 @@ totem_object_get_ui_manager (TotemObject *totem)
 	return totem->ui_manager;
 }
 
+/**
+ * totem_object_get_menu_section:
+ * @totem: a #TotemObject
+ * @id: the ID for the menu section to look up
+ *
+ * Return value: (transfer none): a #GMenu or %NULL on failure
+ **/
 GMenu *
 totem_object_get_menu_section (TotemObject *totem,
 			       const char  *id)
@@ -535,6 +542,13 @@ totem_object_get_menu_section (TotemObject *totem,
 	return (GMenu *) gtk_builder_get_object (totem->xml, id);
 }
 
+/**
+ * totem_object_empty_menu_section:
+ * @totem: a #TotemObject
+ * @id: the ID for the menu section to empty
+ *
+ * Empty the GMenu section pointed to by @id.
+ **/
 void
 totem_object_empty_menu_section (TotemObject *totem,
 				 const char  *id)
