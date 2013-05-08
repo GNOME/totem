@@ -26,6 +26,7 @@
 
 #include <glib-object.h>
 #include <clutter-gtk/clutter-gtk.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
