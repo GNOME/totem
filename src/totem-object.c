@@ -839,6 +839,14 @@ totem_object_set_main_page (TotemObject *totem,
 	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, type);
 }
 
+/**
+ * totem_object_add_main_page:
+ * @totem: a #TotemObject
+ * @page_id: a string used to identify the page
+ * @widget: a #GtkWidget for that new page
+ *
+ * Adds a page to Totem's main view with the given @page_id.
+ **/
 void
 totem_object_add_main_page (TotemObject *totem,
 			    const char  *page_id,
