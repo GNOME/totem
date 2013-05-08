@@ -3538,8 +3538,10 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		return FALSE;
 
 	/* Check whether we're in the browse panel */
-	if (!g_str_equal (gtk_stack_get_visible_child_name (GTK_STACK (totem->stack)), "player"))
+	if (!g_str_equal (gtk_stack_get_visible_child_name (GTK_STACK (totem->stack)), "player")) {
+		//FIXME do the dance to show the search bar when grilo is shown
 		return FALSE;
+	}
 
 	/* Check whether the sidebar needs the key events */
 	if (event->type == GDK_KEY_PRESS) {
