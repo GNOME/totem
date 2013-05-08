@@ -193,24 +193,6 @@
                <property name="label" translatable="yes">_Sound</property>
             </object>
          </child>
-         <child>
-            <object class="GtkAction" id="volume-up">
-               <property name="label" translatable="yes">Volume _Up</property>
-               <property name="icon-name">audio-volume-high-symbolic</property>
-               <property name="tooltip" translatable="yes">Increase volume</property>
-               <signal name="activate" handler="volume_up_action_callback"/>
-            </object>
-            <accelerator key="Up"/>
-         </child>
-         <child>
-            <object class="GtkAction" id="volume-down">
-               <property name="label" translatable="yes">Volume _Down</property>
-               <property name="icon-name">audio-volume-low-symbolic</property>
-               <property name="tooltip" translatable="yes">Decrease volume</property>
-               <signal name="activate" handler="volume_down_action_callback"/>
-            </object>
-            <accelerator key="Down"/>
-         </child>
 
          <child>
                <object class="GtkToggleAction" id="sidebar">
@@ -342,8 +324,6 @@
             <menu name="languages" action="languages-menu">
                <placeholder name="placeholder"/>
             </menu>
-            <menuitem name="volume-up" action="volume-up"/>
-            <menuitem name="volume-down" action="volume-down"/>
          </menu>
       </menubar>
       <popup name="totem-main-popup">

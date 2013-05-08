@@ -80,8 +80,6 @@
 #define DEFAULT_WINDOW_W 650
 #define DEFAULT_WINDOW_H 500
 
-#define VOLUME_EPSILON (1e-10)
-
 /* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
 	{ (gchar*) "text/uri-list", 0, 0 },
@@ -1700,8 +1698,6 @@ totem_action_set_mrl (TotemObject *totem,
 
 		/* Volume */
 		totem_controls_set_sensitivity ("volume_button", FALSE);
-		totem_action_set_sensitivity ("volume-up", FALSE);
-		totem_action_set_sensitivity ("volume-down", FALSE);
 		totem->volume_sensitive = FALSE;
 
 		/* Control popup */
@@ -1724,7 +1720,6 @@ totem_action_set_mrl (TotemObject *totem,
 		g_object_notify (G_OBJECT (totem), "playing");
 	} else {
 		gboolean caps;
-		gdouble volume;
 		char *user_agent;
 		char *autoload_sub;
 
@@ -1752,9 +1747,6 @@ totem_action_set_mrl (TotemObject *totem,
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_controls_set_sensitivity ("volume_button", caps);
-		volume = bacon_video_widget_get_volume (totem->bvw);
-		totem_action_set_sensitivity ("volume-up", caps && volume < (1.0 - VOLUME_EPSILON));
-		totem_action_set_sensitivity ("volume-down", caps && volume > VOLUME_EPSILON);
 		totem->volume_sensitive = caps;
 
 		/* Clear the playlist */
@@ -2489,19 +2481,12 @@ static void
 update_volume_sliders (TotemObject *totem)
 {
 	double volume;
-	GtkAction *action;
 
 	volume = bacon_video_widget_get_volume (totem->bvw);
 
 	g_signal_handlers_block_by_func (totem->volume, volume_button_value_changed_cb, totem);
 	gtk_scale_button_set_value (GTK_SCALE_BUTTON (totem->volume), volume);
 	g_signal_handlers_unblock_by_func (totem->volume, volume_button_value_changed_cb, totem);
-  
-	action = gtk_action_group_get_action (totem->main_action_group, "volume-down");
-	gtk_action_set_sensitive (action, volume > VOLUME_EPSILON && totem->volume_sensitive);
-
-	action = gtk_action_group_get_action (totem->main_action_group, "volume-up");
-	gtk_action_set_sensitive (action, volume < (1.0 - VOLUME_EPSILON) && totem->volume_sensitive);
 }
 
 static void
