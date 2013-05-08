@@ -348,14 +348,6 @@ impl_activate (PeasActivatable *plugin)
 		return;
 	g_free (path);
 
-	//FIXME this shouldn't be necessary
-#if 0
-	/* Set up to use brasero icons */
-	path = g_build_path (G_DIR_SEPARATOR_S, LIBBRASERO_MEDIA_INSTALL, "/share/brasero/icons", NULL);
-	gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (), path);
-	g_free (path);
-#endif
-
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	g_signal_connect (priv->totem,
