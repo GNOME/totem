@@ -51,8 +51,7 @@ typedef struct {
 	guint		handler_id_stream_length;
 	guint		handler_id_seekable;
 	guint		handler_id_key_press;
-	guint		ui_merge_id;
-	GtkActionGroup	*action_group;
+	GSimpleAction  *action;
 } TotemSkiptoPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SKIPTO_PLUGIN, TotemSkiptoPlugin, totem_skipto_plugin)
@@ -76,7 +75,6 @@ totem_skipto_update_from_state (TotemObject *totem,
 {
 	gint64 _time;
 	gboolean seekable;
-	GtkAction *action;
 	TotemSkiptoPluginPrivate *priv = plugin->priv;
 
 	g_object_get (G_OBJECT (totem),
@@ -90,8 +88,7 @@ totem_skipto_update_from_state (TotemObject *totem,
 	}
 
 	/* Update the action's sensitivity */
-	action = gtk_action_group_get_action (priv->action_group, "skip-to");
-	gtk_action_set_sensitive (action, seekable);
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->action), seekable);
 }
 
 static void
@@ -146,7 +143,9 @@ run_skip_to_dialog (TotemSkiptoPlugin *plugin)
 }
 
 static void
-skip_to_action_callback (GtkAction *action, TotemSkiptoPlugin *plugin)
+skip_to_action_callback (GSimpleAction     *action,
+			 GVariant          *parameter,
+			 TotemSkiptoPlugin *plugin)
 {
 	run_skip_to_dialog (plugin);
 }
@@ -174,13 +173,10 @@ static void
 impl_activate (PeasActivatable *plugin)
 {
 	GtkWindow *window;
-	GtkUIManager *manager;
 	TotemSkiptoPlugin *pi = TOTEM_SKIPTO_PLUGIN (plugin);
 	TotemSkiptoPluginPrivate *priv = pi->priv;
-
-	const GtkActionEntry menu_entries[] = {
-		{ "skip-to", GTK_STOCK_JUMP_TO, N_("_Skip To..."), "<Control>K", N_("Skip to a specific time"), G_CALLBACK (skip_to_action_callback) }
-	};
+	GMenu *menu;
+	GMenuItem *item;
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->handler_id_stream_length = g_signal_connect (G_OBJECT (priv->totem),
@@ -201,20 +197,15 @@ impl_activate (PeasActivatable *plugin)
 	g_object_unref (window);
 
 	/* Install the menu */
-	priv->action_group = gtk_action_group_new ("skip-to_group");
-	gtk_action_group_set_translation_domain (priv->action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (priv->action_group, menu_entries,
-				G_N_ELEMENTS (menu_entries), pi);
+	priv->action = g_simple_action_new ("skip-to", NULL);
+	g_signal_connect (G_OBJECT (priv->action), "activate",
+			  G_CALLBACK (skip_to_action_callback), plugin);
+	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
 
-	manager = totem_object_get_ui_manager (priv->totem);
-
-	gtk_ui_manager_insert_action_group (manager, priv->action_group, -1);
-	g_object_unref (priv->action_group);
-
-	priv->ui_merge_id = gtk_ui_manager_new_merge_id (manager);
-	gtk_ui_manager_add_ui (manager, priv->ui_merge_id,
-			       "/ui/tmw-menubar/go/skip-forward", "skip-to",
-			       "skip-to", GTK_UI_MANAGER_AUTO, TRUE);
+	menu = totem_object_get_menu_section (priv->totem, "skipto-placeholder");
+	item = g_menu_item_new (_("_Skip To..."), "app.skip-to");
+	g_menu_item_set_attribute (item, "accel", "s", "<Ctrl>K");
+	g_menu_append_item (G_MENU (menu), item);
 
 	totem_skipto_update_from_state (priv->totem, pi);
 }
@@ -223,7 +214,6 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	GtkWindow *window;
-	GtkUIManager *manager;
 	TotemObject *totem;
 	TotemSkiptoPluginPrivate *priv = TOTEM_SKIPTO_PLUGIN (plugin)->priv;
 
@@ -243,9 +233,7 @@ impl_deactivate (PeasActivatable *plugin)
 	}
 
 	/* Remove the menu */
-	manager = totem_object_get_ui_manager (totem);
-	gtk_ui_manager_remove_ui (manager, priv->ui_merge_id);
-	gtk_ui_manager_remove_action_group (manager, priv->action_group);
+	totem_object_empty_menu_section (priv->totem, "skipto-placeholder");
 
 	destroy_dialog (TOTEM_SKIPTO_PLUGIN (plugin));
 }
