@@ -47,11 +47,6 @@ G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void zoom_toggle_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void next_angle_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void dvd_root_menu_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void dvd_title_menu_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void dvd_audio_menu_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void dvd_angle_menu_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void dvd_chapter_menu_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void skip_forward_action_callback (GtkAction *action, Totem *totem);
@@ -154,10 +149,55 @@ quit_action_cb (GSimpleAction *action,
 	totem_object_action_exit (TOTEM_OBJECT (user_data));
 }
 
+static void
+dvd_root_menu_action_cb (GSimpleAction *action,
+			 GVariant      *parameter,
+			 gpointer       user_data)
+{
+        bacon_video_widget_dvd_event (TOTEM_OBJECT (user_data)->bvw, BVW_DVD_ROOT_MENU);
+}
+
+static void
+dvd_title_menu_action_cb (GSimpleAction *action,
+			  GVariant      *parameter,
+			  gpointer       user_data)
+{
+        bacon_video_widget_dvd_event (TOTEM_OBJECT (user_data)->bvw, BVW_DVD_TITLE_MENU);
+}
+
+static void
+dvd_audio_menu_action_cb (GSimpleAction *action,
+			  GVariant      *parameter,
+			  gpointer       user_data)
+{
+        bacon_video_widget_dvd_event (TOTEM_OBJECT (user_data)->bvw, BVW_DVD_AUDIO_MENU);
+}
+
+static void
+dvd_angle_menu_action_cb (GSimpleAction *action,
+			  GVariant      *parameter,
+			  gpointer       user_data)
+{
+        bacon_video_widget_dvd_event (TOTEM_OBJECT (user_data)->bvw, BVW_DVD_ANGLE_MENU);
+}
+
+static void
+dvd_chapter_menu_action_cb (GSimpleAction *action,
+			    GVariant      *parameter,
+			    gpointer       user_data)
+{
+        bacon_video_widget_dvd_event (TOTEM_OBJECT (user_data)->bvw, BVW_DVD_CHAPTER_MENU);
+}
+
 static GActionEntry app_entries[] = {
 	{ "open", open_action_cb, NULL, NULL, NULL },
 	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
 	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
+	{ "dvd-root-menu", dvd_root_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-title-menu", dvd_title_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-audio-menu", dvd_audio_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-angle-menu", dvd_angle_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
@@ -491,36 +531,6 @@ void
 next_angle_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_object_action_next_angle (totem);
-}
-
-void
-dvd_root_menu_action_callback (GtkAction *action, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
-}
-
-void
-dvd_title_menu_action_callback (GtkAction *action, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_TITLE_MENU);
-}
-
-void
-dvd_audio_menu_action_callback (GtkAction *action, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_AUDIO_MENU);
-}
-
-void
-dvd_angle_menu_action_callback (GtkAction *action, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ANGLE_MENU);
-}
-
-void
-dvd_chapter_menu_action_callback (GtkAction *action, Totem *totem)
-{
-        bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_CHAPTER_MENU);
 }
 
 void

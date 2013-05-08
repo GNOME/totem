@@ -3656,11 +3656,11 @@ update_media_menu_items (TotemObject *totem)
 
 	playing = totem_playing_dvd (totem->mrl);
 
-	totem_action_set_sensitivity ("dvd-root-menu", playing);
-	totem_action_set_sensitivity ("dvd-title-menu", playing);
-	totem_action_set_sensitivity ("dvd-audio-menu", playing);
-	totem_action_set_sensitivity ("dvd-angle-menu", playing);
-	totem_action_set_sensitivity ("dvd-chapter-menu", playing);
+	totem_action_set_sensitivity2 ("dvd-root-menu", playing);
+	totem_action_set_sensitivity2 ("dvd-title-menu", playing);
+	totem_action_set_sensitivity2 ("dvd-audio-menu", playing);
+	totem_action_set_sensitivity2 ("dvd-angle-menu", playing);
+	totem_action_set_sensitivity2 ("dvd-chapter-menu", playing);
 
 	totem_action_set_sensitivity ("next-angle",
 				      bacon_video_widget_has_angles (totem->bvw));
@@ -3888,7 +3888,9 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (seek_slider_changed_cb), totem);
 
 	/* Go button */
-	/* FIXME */
+	item = g_object_get_data (totem->controls, "go_button");
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Fullscreen button */
 	item = g_object_get_data (bacon_video_widget_get_header_object (totem->bvw),

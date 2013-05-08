@@ -66,6 +66,32 @@
 	</section>
 </menu>
 
+<menu id="gomenu">
+	<section>
+		<item>
+			<attribute name="label" translatable="yes">_DVD Menu</attribute>
+			<attribute name="action">app.dvd-root-menu</attribute>
+			<attribute name="accel">&lt;Ctrl&gt;M</attribute>
+		</item>
+		<item>
+			<attribute name="label" translatable="yes">_Title Menu</attribute>
+			<attribute name="action">app.dvd-title-menu</attribute>
+		</item>
+		<item>
+			<attribute name="label" translatable="yes">A_udio Menu</attribute>
+			<attribute name="action">app.dvd-audio-menu</attribute>
+		</item>
+		<item>
+			<attribute name="label" translatable="yes">_Angle Menu</attribute>
+			<attribute name="action">app.dvd-angle-menu</attribute>
+		</item>
+		<item>
+			<attribute name="label" translatable="yes">_Chapter Menu</attribute>
+			<attribute name="action">app.dvd-chapter-menu</attribute>
+		</item>
+	</section>
+</menu>
+
 <object class="GtkUIManager" id="totem-ui-manager">
    <child>
       <object class="GtkActionGroup" id="main-action-group">
@@ -144,45 +170,6 @@
             <object class="GtkAction" id="go-menu">
                <property name="label" translatable="yes">_Go</property>
             </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="dvd-root-menu">
-               <property name="label" translatable="yes">_DVD Menu</property>
-               <property name="stock-id">gtk-index</property>
-               <property name="tooltip" translatable="yes">Go to the DVD menu</property>
-               <signal name="activate" handler="dvd_root_menu_action_callback"/>
-            </object>
-            <accelerator key="M" modifiers="GDK_CONTROL_MASK"/>
-         </child>
-         <child>
-            <object class="GtkAction" id="dvd-title-menu">
-               <property name="label" translatable="yes">_Title Menu</property>
-               <property name="tooltip" translatable="yes">Go to the title menu</property>
-               <signal name="activate" handler="dvd_title_menu_action_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="dvd-audio-menu">
-               <property name="label" translatable="yes">A_udio Menu</property>
-               <property name="tooltip" translatable="yes">Go to the audio menu</property>
-               <signal name="activate" handler="dvd_audio_menu_action_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="dvd-angle-menu">
-               <property name="label" translatable="yes">_Angle Menu</property>
-               <property name="tooltip" translatable="yes">Go to the angle menu</property>
-               <signal name="activate" handler="dvd_angle_menu_action_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="dvd-chapter-menu">
-               <property name="label" translatable="yes">_Chapter Menu</property>
-               <property name="stock-id">gtk-index</property>
-               <property name="tooltip" translatable="yes">Go to the chapter menu</property>
-               <signal name="activate" handler="dvd_chapter_menu_action_callback"/>
-            </object>
-            <accelerator key="C" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="next-chapter">
@@ -376,12 +363,6 @@
             <placeholder name="sidebars-placeholder"/>
          </menu>
          <menu name="go" action="go-menu">
-            <menuitem name="dvd-root-menu" action="dvd-root-menu"/>
-            <menuitem name="dvd-title-menu" action="dvd-title-menu"/>
-            <menuitem name="dvd-audio-menu" action="dvd-audio-menu"/>
-            <menuitem name="dvd-angle-menu" action="dvd-angle-menu"/>
-            <menuitem name="dvd-chapter-menu" action="dvd-chapter-menu"/>
-            <separator/>
             <menuitem name="next-chapter" action="next-chapter"/>
             <menuitem name="previous-chapter" action="previous-chapter"/>
             <separator/>
