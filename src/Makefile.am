@@ -231,7 +231,7 @@ Totem_1_0_gir_SCANNERFLAGS = --c-include=totem.h --pkg-export=totem
 Totem_1_0_gir_CFLAGS =		\
 	$(PLAYER_CFLAGS)	\
 	$(libtotem_la_CPPFLAGS)
-Totem_1_0_gir_LIBS = libtotem.la
+Totem_1_0_gir_LIBS = libtotem.la $(top_builddir)/libgd/libgd.la
 Totem_1_0_gir_FILES = $(introspection_sources)
 Totem_1_0_gir_EXPORT_PACKAGES = totem
 INTROSPECTION_GIRS += Totem-1.0.gir
