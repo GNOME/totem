@@ -500,7 +500,7 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
 	GdkScreen *screen;
 	GdkWindow *window;
-	int monitor;
+	int monitor = 0;
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
 	window = gtk_widget_get_window (GTK_WIDGET (bvw));
