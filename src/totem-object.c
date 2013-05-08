@@ -537,9 +537,14 @@ GMenu *
 totem_object_get_menu_section (TotemObject *totem,
 			       const char  *id)
 {
+	GObject *object;
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
-	return (GMenu *) gtk_builder_get_object (totem->xml, id);
+	object = gtk_builder_get_object (totem->xml, id);
+	if (object == NULL || !G_IS_MENU (object))
+		return NULL;
+
+	return G_MENU (object);
 }
 
 /**
@@ -554,11 +559,12 @@ totem_object_empty_menu_section (TotemObject *totem,
 				 const char  *id)
 {
 	GMenu *menu;
-	guint i;
+	gint i;
 
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
-	menu = gtk_builder_get_object (totem->xml, id);
+	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
+	g_return_if_fail (menu != NULL);
 
 	for (i = 0; i < g_menu_model_get_n_items (G_MENU_MODEL (menu)); i++) {
 		const char *action;
