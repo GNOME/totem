@@ -82,16 +82,21 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolItem" id="fullscreen_toolbutton">
+          <object class="GtkToolItem" id="go_toolbutton">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="fullscreen_button">
+              <object class="GtkMenuButton" id="go_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="relief">none</property>
-                <property name="action_name">app.fullscreen</property>
+                <child>
+                  <object class="GtkImage" id="go_button_image">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-more-symbolic</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>

@@ -146,9 +146,9 @@ int main
 	item = gtk_separator_tool_item_new ();
 	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
 
-	/* Fullscreen button */
-	item = g_object_get_data (bacon_video_widget_get_controls_object (BACON_VIDEO_WIDGET (bvw)), "fullscreen_button");
-	image = gtk_image_new_from_icon_name ("view-fullscreen-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
+	/* Go button */
+	item = g_object_get_data (bacon_video_widget_get_controls_object (BACON_VIDEO_WIDGET (bvw)), "go_button");
+	image = gtk_image_new_from_icon_name ("view-more-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_button_set_image (GTK_BUTTON (item), image);
 
 	gtk_widget_show_all (GTK_WIDGET (box));

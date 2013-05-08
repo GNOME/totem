@@ -105,7 +105,7 @@ bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 
 	setup_object (controls, "seek_scale");
 	setup_object (controls, "controls_box");
-	setup_object (controls, "fullscreen_button");
+	setup_object (controls, "go_button");
 	setup_object (controls, "volume_button");
 	setup_object (controls, "time_label");
 	setup_object (controls, "time_rem_label");

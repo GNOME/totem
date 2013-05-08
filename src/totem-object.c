@@ -3877,16 +3877,6 @@ totem_callback_connect (TotemObject *totem)
 				      _("Next Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
-	/* Fullscreen button */
-	item = g_object_get_data (totem->controls, "fullscreen_button");
-	image = gtk_image_new ();
-	gtk_button_set_image (GTK_BUTTON (item), image);
-	g_object_bind_property_full (totem, "fullscreen",
-				     image, "icon-name",
-				     G_BINDING_SYNC_CREATE,
-				     fullscreen_button_image_sync,
-				     NULL, NULL, NULL);
-
 	/* Seekbar */
 	g_signal_connect (totem->seek, "button-press-event",
 			  G_CALLBACK (seek_slider_pressed_cb), totem);
@@ -3896,6 +3886,19 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (window_scroll_event_cb), totem);
 	g_signal_connect (totem->seekadj, "value-changed",
 			  G_CALLBACK (seek_slider_changed_cb), totem);
+
+	/* Go button */
+	/* FIXME */
+
+	/* Fullscreen button */
+	item = g_object_get_data (bacon_video_widget_get_header_object (totem->bvw),
+				  "fullscreen_button");
+	image = gtk_button_get_image (GTK_BUTTON (item));
+	g_object_bind_property_full (totem, "fullscreen",
+				     image, "icon-name",
+				     G_BINDING_SYNC_CREATE,
+				     fullscreen_button_image_sync,
+				     NULL, NULL, NULL);
 
 	/* Cog wheel */
 	item = g_object_get_data (bacon_video_widget_get_header_object (totem->bvw),

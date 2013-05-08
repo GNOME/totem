@@ -30,7 +30,6 @@
 struct BaconVideoHeaderActorPrivate
 {
 	GtkWidget *widget;
-	GtkWidget *button;
 };
 
 G_DEFINE_TYPE (BaconVideoHeaderActor, bacon_video_header_actor, GTK_CLUTTER_TYPE_ACTOR);
@@ -71,22 +70,34 @@ setup_object (BaconVideoHeaderActor *header,
 	g_object_set_data (G_OBJECT (header), name, widget);
 }
 
+static GtkWidget *
+add_button (BaconVideoHeaderActor *header,
+	    GtkWidget             *button,
+	    const char            *icon_name,
+	    const char            *object_name)
+{
+	GtkWidget *image;
+
+	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
+	gtk_button_set_image (GTK_BUTTON (button), image);
+	setup_object (header, object_name, button);
+
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (header->priv->widget), button);
+	return button;
+}
+
 static void
 bacon_video_header_actor_init (BaconVideoHeaderActor *header)
 {
-	GtkWidget *image;
+	GtkWidget *button;
 
 	header->priv = BACON_VIDEO_HEADER_ACTOR_GET_PRIVATE (G_OBJECT (header));
 	header->priv->widget = gtk_header_bar_new ();
 	setup_object (header, "header", header->priv->widget);
 
-	header->priv->button = gtk_menu_button_new ();
-	image = gtk_image_new_from_icon_name ("emblem-system-symbolic", GTK_ICON_SIZE_MENU);
-	gtk_button_set_image (GTK_BUTTON (header->priv->button), image);
-	setup_object (header, "button", header->priv->button);
-
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (header->priv->widget),
-				 header->priv->button);
+	button = add_button (header, gtk_button_new (), "view-fullscreen-symbolic", "fullscreen_button");
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "app.fullscreen");
+	add_button (header, gtk_menu_button_new (), "emblem-system-symbolic", "button");
 }
 
 ClutterActor *
