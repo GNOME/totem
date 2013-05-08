@@ -333,7 +333,7 @@ get_stream_thumbnail_cb (GObject *source_object,
 		                     thumbnail);
 
 		/* Can we find that thumbnail in the view model? */
-		view_model = gtk_icon_view_get_model (GTK_ICON_VIEW (thumb_data->totem_grilo->priv->browser));
+		view_model = gd_main_view_get_model (GD_MAIN_VIEW (thumb_data->totem_grilo->priv->browser));
 		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 			path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model),
 										 path);
@@ -410,13 +410,14 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 	GrlMedia *media;
 	gboolean is_prethumbnail = FALSE;
 	GtkTreeModel *view_model, *model;
+	GtkIconView *icon_view;
 
-	if (!gtk_icon_view_get_visible_range (GTK_ICON_VIEW (self->priv->browser),
-					      &start_path, &end_path)) {
+	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->priv->browser)));
+	if (!gtk_icon_view_get_visible_range (icon_view, &start_path, &end_path)) {
 		return FALSE;
 	}
 
-	view_model = gtk_icon_view_get_model (GTK_ICON_VIEW (self->priv->browser));
+	view_model = gtk_icon_view_get_model (icon_view);
 	if (GTK_IS_TREE_MODEL_FILTER (view_model))
 		model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
 	else
@@ -768,8 +769,8 @@ search (TotemGriloPlugin *self, GrlSource *source, const gchar *text)
 	g_free (self->priv->search_text);
 	self->priv->search_text = g_strdup (text);
 	self->priv->search_page = 0;
-	gtk_icon_view_set_model (GTK_ICON_VIEW (self->priv->browser),
-				 self->priv->search_results_model);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
+				self->priv->search_results_model);
 	self->priv->browser_filter_model = NULL;
 	search_more (self);
 }
@@ -802,15 +803,15 @@ set_browser_filter_model_for_path (TotemGriloPlugin *self,
 	g_clear_object (&self->priv->browser_filter_model);
 	self->priv->browser_filter_model = gtk_tree_model_filter_new (self->priv->browser_model, path);
 
-	gtk_icon_view_set_model (GTK_ICON_VIEW (self->priv->browser),
-				 self->priv->browser_filter_model);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
+				self->priv->browser_filter_model);
 
 	gtk_widget_set_visible (self->priv->back_button,
 				path != NULL);
 }
 
 static void
-browser_activated_cb (GtkIconView *icon_view,
+browser_activated_cb (GdMainView  *view,
                       GtkTreePath *path,
                       gpointer user_data)
 {
@@ -824,7 +825,7 @@ browser_activated_cb (GtkIconView *icon_view,
 	GtkTreeIter real_model_iter;
 	GtkTreePath *treepath;
 
-	model = gtk_icon_view_get_model (GTK_ICON_VIEW (icon_view));
+	model = gd_main_view_get_model (GD_MAIN_VIEW (view));
 	gtk_tree_model_get_iter (model, &iter, path);
 	gtk_tree_model_get (model, &iter,
 	                    MODEL_RESULTS_SOURCE, &source,
@@ -875,7 +876,7 @@ search_entry_source_changed_cb (GObject          *object,
 }
 
 static void
-search_activated_cb (GtkIconView *icon_view,
+search_activated_cb (GdMainView  *view,
                      GtkTreePath *path,
                      gpointer user_data)
 {
@@ -884,7 +885,7 @@ search_activated_cb (GtkIconView *icon_view,
 	GrlSource *source;
 	GrlMedia *content;
 
-	model = gtk_icon_view_get_model (icon_view);
+	model = gd_main_view_get_model (view);
 	gtk_tree_model_get_iter (model, &iter, path);
 	gtk_tree_model_get (model, &iter,
 	                    MODEL_RESULTS_SOURCE, &source,
@@ -898,16 +899,17 @@ search_activated_cb (GtkIconView *icon_view,
 }
 
 static void
-item_activated_cb (GtkIconView *icon_view,
+item_activated_cb (GdMainView  *view,
+		   const char  *id,
 		   GtkTreePath *path,
 		   gpointer user_data)
 {
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (user_data);
 
 	if (self->priv->in_search)
-		search_activated_cb (icon_view, path, user_data);
+		search_activated_cb (view, path, user_data);
 	else
-		browser_activated_cb (icon_view, path, user_data);
+		browser_activated_cb (view, path, user_data);
 }
 
 static gboolean
