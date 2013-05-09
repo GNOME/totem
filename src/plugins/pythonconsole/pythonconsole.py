@@ -111,7 +111,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
         data['ui_id'] = manager.add_ui_from_string (UI_STR)
         manager.ensure_update ()
 
-        self.totem.set_data ('PythonConsolePluginInfo', data)
+        self.totem.PythonConsolePluginInfo = data
 
     def _show_console (self, _action):
         if not self.window:
@@ -158,14 +158,14 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
         self.window = None
 
     def do_deactivate (self):
-        data = self.totem.get_data ('PythonConsolePluginInfo')
+        data = self.totem.PythonConsolePluginInfo
 
         manager = self.totem.get_ui_manager ()
         manager.remove_ui (data['ui_id'])
         manager.remove_action_group (data['action_group'])
         manager.ensure_update ()
 
-        self.totem.set_data ('PythonConsolePluginInfo', None)
+        self.totem.PythonConsolePluginInfo = None
 
         if self.window is not None:
             self.window.destroy ()
