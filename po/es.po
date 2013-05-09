@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-05-08 17:21+0000\n"
-"PO-Revision-Date: 2013-05-09 13:56+0200\n"
+"POT-Creation-Date: 2013-05-09 15:32+0000\n"
+"PO-Revision-Date: 2013-05-09 17:35+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -252,11 +252,11 @@ msgstr "_Copiar dirección"
 msgid "Copy the location to the clipboard"
 msgstr "Copiar la dirección en el portapapeles"
 
-#: ../data/playlist.ui.h:5 ../data/totem.ui.h:47
+#: ../data/playlist.ui.h:5 ../data/totem.ui.h:43
 msgid "_Select Text Subtitles..."
 msgstr "_Seleccionar subtítulos de texto…"
 
-#: ../data/playlist.ui.h:6 ../data/totem.ui.h:48
+#: ../data/playlist.ui.h:6 ../data/totem.ui.h:44
 msgid "Select a file to use for text subtitles"
 msgstr "Seleccione un archivo que usar como subtítulos"
 
@@ -357,7 +357,6 @@ msgid "Load _chapter files when movie is loaded"
 msgstr "Ca_rgar los archivos de capítulos al cargar la película"
 
 #: ../data/preferences.ui.h:22
-#| msgid "Plugin"
 msgid "Plugins"
 msgstr "Complementos"
 
@@ -501,7 +500,7 @@ msgstr "Frec. de muestreo:"
 msgid "Channels:"
 msgstr "Canales:"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:52 ../src/totem.c:245
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:46 ../src/totem.c:245
 #: ../src/totem.c:251
 msgid "Videos"
 msgstr "Vídeos"
@@ -547,169 +546,153 @@ msgid "_Quit"
 msgstr "_Salir"
 
 #: ../data/totem.ui.h:9
-msgid "_DVD Menu"
-msgstr "Menú de _DVD"
-
-#: ../data/totem.ui.h:10
-msgid "_Title Menu"
-msgstr "Menú de _títulos"
-
-#: ../data/totem.ui.h:11
-msgid "A_udio Menu"
-msgstr "Menú de s_onido"
-
-#: ../data/totem.ui.h:12
-msgid "_Angle Menu"
-msgstr "Menú de á_ngulos"
-
-#: ../data/totem.ui.h:13
-msgid "_Chapter Menu"
-msgstr "Menú de _capítulos"
-
-#: ../data/totem.ui.h:14
-msgid "_Movie"
-msgstr "_Película"
-
-#: ../data/totem.ui.h:15
-msgid "_Eject"
-msgstr "_Expulsar"
-
-#: ../data/totem.ui.h:16
-msgid "Eject the current disc"
-msgstr "Expulsar el disco actual"
-
-#: ../data/totem.ui.h:17
-msgid "_Properties"
-msgstr "_Propiedades"
-
-#: ../data/totem.ui.h:18
-msgid "View the properties of the current stream"
-msgstr "Ver las propiedades del flujo actual"
-
-#: ../data/totem.ui.h:19
-msgid "Play / P_ause"
-msgstr "_Reproducir / Pausar"
-
-#: ../data/totem.ui.h:20
-msgid "Play or pause the movie"
-msgstr "Reproducir o pausar la película"
-
-#: ../data/totem.ui.h:21
-msgid "_Edit"
-msgstr "_Editar"
-
-#: ../data/totem.ui.h:22
-msgid "_Clear Playlist"
-msgstr "_Limpiar la lista de reproducción"
-
-#: ../data/totem.ui.h:23
-msgid "Clear the playlist"
-msgstr "Limpiar la lista de reproducción"
-
-#: ../data/totem.ui.h:24
-msgid "_View"
-msgstr "_Ver"
-
-#: ../data/totem.ui.h:25
-msgid "Fit Window to Movie"
-msgstr "Ajustar la ventana a la película"
-
-#: ../data/totem.ui.h:26
-msgid "_Aspect Ratio"
-msgstr "Pr_oporción"
-
-#: ../data/totem.ui.h:27
-msgid "Switch An_gles"
-msgstr "_Cambiar ángulos"
-
-#: ../data/totem.ui.h:28
-msgid "Switch camera angles"
-msgstr "Cambiar los ángulos de la cámara"
-
-#: ../data/totem.ui.h:29
-msgid "_Next Chapter/Movie"
-msgstr "_Siguiente capítulo / película"
-
-#: ../data/totem.ui.h:30
-msgid "Next chapter or movie"
-msgstr "Siguiente capítulo o película"
-
-#: ../data/totem.ui.h:31
-msgid "_Previous Chapter/Movie"
-msgstr "Capítulo / película _anterior"
-
-#: ../data/totem.ui.h:32
-msgid "Previous chapter or movie"
-msgstr "Capítulo o película anterior"
-
-#: ../data/totem.ui.h:33
-msgid "_Sound"
-msgstr "_Sonido"
-
-#: ../data/totem.ui.h:34
-msgid "S_idebar"
-msgstr "_Barra lateral"
-
-#: ../data/totem.ui.h:35
-msgid "Show or hide the sidebar"
-msgstr "Mostrar u ocultar la barra lateral"
-
-#: ../data/totem.ui.h:36
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Automática"
 
-#: ../data/totem.ui.h:37
-msgid "Sets automatic aspect ratio"
-msgstr "Establecer la proporción automáticamente"
-
-#: ../data/totem.ui.h:38
+#: ../data/totem.ui.h:10
+#| msgid "Square"
+msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Cuadrada"
 
-#: ../data/totem.ui.h:39
-msgid "Sets square aspect ratio"
-msgstr "Establecer la proporción cuadrada"
+#: ../data/totem.ui.h:11
+#| msgid "4∶3 (TV)"
+msgctxt "Aspect ratio"
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:40
-msgid "4∶3 (TV)"
-msgstr "4∶3 (TV)"
-
-#: ../data/totem.ui.h:41
-msgid "Sets 4∶3 (TV) aspect ratio"
-msgstr "Establecer la proporción de aspecto a 4:3 (TV)"
-
-#: ../data/totem.ui.h:42
+#: ../data/totem.ui.h:12
+#| msgid "16∶9 (Widescreen)"
+msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Panorámico)"
 
-#: ../data/totem.ui.h:43
-msgid "Sets 16∶9 (widescreen) aspect ratio"
-msgstr "Establecer la proporción de aspecto a 16:9 (panorámico)"
-
-#: ../data/totem.ui.h:44
+#: ../data/totem.ui.h:13
+#| msgid "2.11∶1 (DVB)"
+msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:45
-msgid "Sets 2.11∶1 (DVB) aspect ratio"
-msgstr "Establecer la proporción de aspecto a a 2.11:1 (DVB)"
-
-#: ../data/totem.ui.h:46
-msgid "S_ubtitles"
-msgstr "S_ubtítulos"
-
-#: ../data/totem.ui.h:49
-msgid "_Languages"
-msgstr "_Idiomas"
-
-#: ../data/totem.ui.h:50
+#: ../data/totem.ui.h:14
 msgid "Zoom In"
 msgstr "Ampliar"
 
-#: ../data/totem.ui.h:51
-msgid "Zoom in"
-msgstr "Ampliar"
+#: ../data/totem.ui.h:15
+msgid "_DVD Menu"
+msgstr "Menú de _DVD"
+
+#: ../data/totem.ui.h:16
+msgid "_Title Menu"
+msgstr "Menú de _títulos"
+
+#: ../data/totem.ui.h:17
+msgid "A_udio Menu"
+msgstr "Menú de s_onido"
+
+#: ../data/totem.ui.h:18
+msgid "_Angle Menu"
+msgstr "Menú de á_ngulos"
+
+#: ../data/totem.ui.h:19
+msgid "_Chapter Menu"
+msgstr "Menú de _capítulos"
+
+#: ../data/totem.ui.h:20
+msgid "_Movie"
+msgstr "_Película"
+
+#: ../data/totem.ui.h:21
+msgid "_Eject"
+msgstr "_Expulsar"
+
+#: ../data/totem.ui.h:22
+msgid "Eject the current disc"
+msgstr "Expulsar el disco actual"
+
+#: ../data/totem.ui.h:23
+msgid "_Properties"
+msgstr "_Propiedades"
+
+#: ../data/totem.ui.h:24
+msgid "View the properties of the current stream"
+msgstr "Ver las propiedades del flujo actual"
+
+#: ../data/totem.ui.h:25
+msgid "Play / P_ause"
+msgstr "_Reproducir / Pausar"
+
+#: ../data/totem.ui.h:26
+msgid "Play or pause the movie"
+msgstr "Reproducir o pausar la película"
+
+#: ../data/totem.ui.h:27
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../data/totem.ui.h:28
+msgid "_Clear Playlist"
+msgstr "_Limpiar la lista de reproducción"
+
+#: ../data/totem.ui.h:29
+msgid "Clear the playlist"
+msgstr "Limpiar la lista de reproducción"
+
+#: ../data/totem.ui.h:30
+msgid "_View"
+msgstr "_Ver"
+
+#: ../data/totem.ui.h:31
+msgid "Fit Window to Movie"
+msgstr "Ajustar la ventana a la película"
+
+#: ../data/totem.ui.h:32
+msgid "_Aspect Ratio"
+msgstr "Pr_oporción"
+
+#: ../data/totem.ui.h:33
+msgid "Switch An_gles"
+msgstr "_Cambiar ángulos"
+
+#: ../data/totem.ui.h:34
+msgid "Switch camera angles"
+msgstr "Cambiar los ángulos de la cámara"
+
+#: ../data/totem.ui.h:35
+msgid "_Next Chapter/Movie"
+msgstr "_Siguiente capítulo / película"
+
+#: ../data/totem.ui.h:36
+msgid "Next chapter or movie"
+msgstr "Siguiente capítulo o película"
+
+#: ../data/totem.ui.h:37
+msgid "_Previous Chapter/Movie"
+msgstr "Capítulo / película _anterior"
+
+#: ../data/totem.ui.h:38
+msgid "Previous chapter or movie"
+msgstr "Capítulo o película anterior"
+
+#: ../data/totem.ui.h:39
+msgid "_Sound"
+msgstr "_Sonido"
+
+#: ../data/totem.ui.h:40
+msgid "S_idebar"
+msgstr "_Barra lateral"
+
+#: ../data/totem.ui.h:41
+msgid "Show or hide the sidebar"
+msgstr "Mostrar u ocultar la barra lateral"
+
+#: ../data/totem.ui.h:42
+msgid "S_ubtitles"
+msgstr "S_ubtítulos"
+
+#: ../data/totem.ui.h:45
+msgid "_Languages"
+msgstr "_Idiomas"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1093,12 +1076,12 @@ msgstr ""
 "propietarios de GStreamer."
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:321
+#: ../src/totem-menu.c:356
 msgid "None"
 msgstr "Ninguno"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:326
+#: ../src/totem-menu.c:361
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automático"
@@ -2186,6 +2169,24 @@ msgstr "Complemento Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Un complemento para enviar eventos a Zeitgeist"
+
+#~ msgid "Sets automatic aspect ratio"
+#~ msgstr "Establecer la proporción automáticamente"
+
+#~ msgid "Sets square aspect ratio"
+#~ msgstr "Establecer la proporción cuadrada"
+
+#~ msgid "Sets 4∶3 (TV) aspect ratio"
+#~ msgstr "Establecer la proporción de aspecto a 4:3 (TV)"
+
+#~ msgid "Sets 16∶9 (widescreen) aspect ratio"
+#~ msgstr "Establecer la proporción de aspecto a 16:9 (panorámico)"
+
+#~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
+#~ msgstr "Establecer la proporción de aspecto a a 2.11:1 (DVB)"
+
+#~ msgid "Zoom in"
+#~ msgstr "Ampliar"
 
 #~ msgid "Configure plugins to extend the application"
 #~ msgstr "Configurar complementos para extender la aplicación"
