@@ -45,7 +45,6 @@ G_MODULE_EXPORT void eject_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void properties_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void zoom_toggle_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void next_angle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
@@ -113,6 +112,20 @@ aspect_ratio_action_cb (GSimpleAction *action,
 			gpointer       user_data)
 {
 	g_action_change_state (G_ACTION (action), parameter);
+}
+
+static void
+zoom_action_change_state (GSimpleAction *action,
+			  GVariant      *value,
+			  gpointer       user_data)
+{
+	gboolean expand;
+
+	expand = g_variant_get_boolean (value);
+	bacon_video_widget_set_zoom (TOTEM_OBJECT (user_data)->bvw,
+				     expand ? BVW_ZOOM_EXPAND : BVW_ZOOM_NONE);
+
+	g_simple_action_set_state (action, value);
 }
 
 static void
@@ -219,6 +232,7 @@ static GActionEntry app_entries[] = {
 	{ "dvd-angle-menu", dvd_angle_menu_action_cb, NULL, NULL, NULL },
 	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
 	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
+	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
@@ -531,14 +545,6 @@ G_GNUC_NORETURN void
 quit_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_object_action_exit (totem);
-}
-
-void
-zoom_toggle_action_callback (GtkToggleAction *action,
-			     Totem           *totem)
-{
-	bacon_video_widget_set_zoom (totem->bvw,
-				     gtk_toggle_action_get_active (action) ? BVW_ZOOM_EXPAND : BVW_ZOOM_NONE);
 }
 
 void

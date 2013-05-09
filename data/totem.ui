@@ -95,6 +95,10 @@
 				</item>
 			</section>
 		</submenu>
+		<item>
+			<attribute name="label" translatable="yes">Zoom In</attribute>
+			<attribute name="action">app.zoom</attribute>
+		</item>
 	</section>
 </menu>
 
@@ -258,15 +262,6 @@
             </object>
          </child>
 
-         <child>
-            <object class="GtkToggleAction" id="zoom-toggle">
-               <property name="label" translatable="yes">Zoom In</property>
-               <property name="stock-id">gtk-zoom-in</property>
-               <property name="tooltip" translatable="yes">Zoom in</property>
-               <signal name="activate" handler="zoom_toggle_action_callback"/>
-            </object>
-            <accelerator key="Z" modifiers="GDK_CONTROL_MASK"/>
-         </child>
       </object>
    </child>
    <ui>
@@ -282,8 +277,6 @@
             <menuitem name="clear-playlist" action="clear-playlist"/>
          </menu>
          <menu name="view" action="view-menu">
-            <menuitem name="zoom-toggle" action="zoom-toggle"/>
-            <separator/>
             <menuitem name="next-angle" action="next-angle"/>
             <separator/>
             <menu name="subtitles" action="subtitles-menu">

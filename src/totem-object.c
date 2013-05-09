@@ -1916,10 +1916,10 @@ void
 totem_action_set_zoom (TotemObject *totem,
 		       gboolean     zoom)
 {
-	GtkAction *action;
+	GAction *action;
 
-	action = gtk_action_group_get_action (totem->main_action_group, "zoom-toggle");
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), zoom);
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "zoom");
+	g_action_change_state (action, g_variant_new_boolean (zoom));
 }
 
 /**
