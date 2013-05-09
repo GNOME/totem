@@ -54,7 +54,6 @@ G_MODULE_EXPORT void skip_backwards_action_callback (GtkAction *action, Totem *t
 G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
-G_MODULE_EXPORT void aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem);
 G_MODULE_EXPORT void select_subtitle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void clear_playlist_action_callback (GtkAction *action, Totem *totem);
 
@@ -93,6 +92,27 @@ fullscreen_change_state (GSimpleAction *action,
 	totem_action_fullscreen (TOTEM_OBJECT (user_data), param);
 
 	g_simple_action_set_state (action, value);
+}
+
+static void
+aspect_ratio_change_state (GSimpleAction *action,
+			   GVariant      *value,
+			   gpointer       user_data)
+{
+	BvwAspectRatio ratio;
+
+	ratio = g_variant_get_int32 (value);
+	bacon_video_widget_set_aspect_ratio (TOTEM_OBJECT (user_data)->bvw, ratio);
+
+	g_simple_action_set_state (action, value);
+}
+
+static void
+aspect_ratio_action_cb (GSimpleAction *action,
+			GVariant      *parameter,
+			gpointer       user_data)
+{
+	g_action_change_state (G_ACTION (action), parameter);
 }
 
 static void
@@ -198,6 +218,7 @@ static GActionEntry app_entries[] = {
 	{ "dvd-audio-menu", dvd_audio_menu_action_cb, NULL, NULL, NULL },
 	{ "dvd-angle-menu", dvd_angle_menu_action_cb, NULL, NULL, NULL },
 	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
+	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
@@ -576,12 +597,6 @@ show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
 		return;
 
 	totem_sidebar_toggle (totem, gtk_toggle_action_get_active (action));
-}
-
-void
-aspect_ratio_changed_callback (GtkRadioAction *action, GtkRadioAction *current, Totem *totem)
-{
-	bacon_video_widget_set_aspect_ratio (totem->bvw, gtk_radio_action_get_current_value (current));
 }
 
 void

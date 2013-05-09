@@ -1996,7 +1996,7 @@ totem_action_volume_toggle_mute (TotemObject *totem)
 static void
 totem_action_toggle_aspect_ratio (TotemObject *totem)
 {
-	GtkAction *action;
+	GAction *action;
 	int tmp;
 
 	tmp = bacon_video_widget_get_aspect_ratio (totem->bvw);
@@ -2004,8 +2004,8 @@ totem_action_toggle_aspect_ratio (TotemObject *totem)
 	if (tmp > BVW_RATIO_DVB)
 		tmp = BVW_RATIO_AUTO;
 
-	action = gtk_action_group_get_action (totem->main_action_group, "aspect-ratio-auto");
-	gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action), tmp);
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "aspect-ratio");
+	g_action_change_state (action, g_variant_new ("i", tmp));
 }
 
 void

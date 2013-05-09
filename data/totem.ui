@@ -64,6 +64,38 @@
 	<section>
 		<section id="screenshot-placeholder"/>
 	</section>
+	<section>
+		<submenu>
+			<attribute name="label">_Aspect Ratio</attribute>
+			<section>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">0</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Square</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">1</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">4:3 (TV)</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">2</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">16∶9 (Widescreen)</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">3</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">2.11∶1 (DVB)</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">4</attribute>
+				</item>
+			</section>
+		</submenu>
+	</section>
 </menu>
 
 <menu id="gomenu">
@@ -206,53 +238,6 @@
          </child>
 
          <child>
-            <object class="GtkRadioAction" id="aspect-ratio-auto">
-               <property name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</property>
-	       <property name="tooltip" translatable="yes">Sets automatic aspect ratio</property>
-	       <!-- BVW_RATIO_AUTO -->
-	       <property name="value">0</property>
-	       <property name="current-value">0</property>
-               <signal name="changed" handler="aspect_ratio_changed_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkRadioAction" id="aspect-ratio-square">
-               <property name="label" translatable="yes">Square</property>
-               <property name="tooltip" translatable="yes">Sets square aspect ratio</property>
-	       <!-- BVW_RATIO_SQUARE -->
-	       <property name="group">aspect-ratio-auto</property>
-               <property name="value">1</property>
-            </object>
-         </child>
-         <child>
-            <object class="GtkRadioAction" id="aspect-ratio-fbt">
-               <property name="label" translatable="yes">4∶3 (TV)</property>
-               <property name="tooltip" translatable="yes">Sets 4∶3 (TV) aspect ratio</property>
-	       <!-- BVW_RATIO_FOURBYTHREE -->
-	       <property name="group">aspect-ratio-auto</property>
-               <property name="value">2</property>
-            </object>
-         </child>
-         <child>
-            <object class="GtkRadioAction" id="aspect-ratio-anamorphic">
-               <property name="label" translatable="yes">16∶9 (Widescreen)</property>
-               <property name="tooltip" translatable="yes">Sets 16∶9 (widescreen) aspect ratio</property>
-	       <!-- BVW_RATIO_ANAMORPHIC -->
-	       <property name="group">aspect-ratio-auto</property>
-               <property name="value">3</property>
-            </object>
-         </child>
-         <child>
-            <object class="GtkRadioAction" id="aspect-ratio-dvb">
-               <property name="label" translatable="yes">2.11∶1 (DVB)</property>
-               <property name="tooltip" translatable="yes">Sets 2.11∶1 (DVB) aspect ratio</property>
-	       <!-- BVW_RATIO_DVB -->
-	       <property name="group">aspect-ratio-auto</property>
-               <property name="value">4</property>
-            </object>
-         </child>
-
-         <child>
             <object class="GtkAction" id="subtitles-menu">
                <property name="label" translatable="yes">S_ubtitles</property>
                <property name="hide-if-empty">False</property>
@@ -299,13 +284,6 @@
          <menu name="view" action="view-menu">
             <menuitem name="zoom-toggle" action="zoom-toggle"/>
             <separator/>
-            <menu name="aspect-ratio" action="aspect-ratio-menu">
-               <menuitem name="aspect-ratio-auto" action="aspect-ratio-auto"/>
-               <menuitem name="aspect-ratio-square" action="aspect-ratio-square"/>
-               <menuitem name="aspect-ratio-fbt" action="aspect-ratio-fbt"/>
-               <menuitem name="aspect-ratio-anamorphic" action="aspect-ratio-anamorphic"/>
-               <menuitem name="aspect-ratio-dvb" action="aspect-ratio-dvb"/>
-            </menu>
             <menuitem name="next-angle" action="next-angle"/>
             <separator/>
             <menu name="subtitles" action="subtitles-menu">
