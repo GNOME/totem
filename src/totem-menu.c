@@ -41,7 +41,6 @@
 #define TOTEM_MAX_RECENT_ITEM_LEN 40
 
 /* Callback functions for GtkBuilder */
-G_MODULE_EXPORT void eject_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
@@ -234,6 +233,14 @@ properties_action_cb (GSimpleAction *action,
         totem_action_show_properties (TOTEM_OBJECT (user_data));
 }
 
+static void
+eject_action_cb (GSimpleAction *action,
+		 GVariant      *parameter,
+		 gpointer       user_data)
+{
+	totem_action_eject (TOTEM_OBJECT (user_data));
+}
+
 static GActionEntry app_entries[] = {
 	/* Main app menu */
 	{ "open", open_action_cb, NULL, NULL, NULL },
@@ -257,6 +264,7 @@ static GActionEntry app_entries[] = {
 	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
 	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
 	{ "properties", properties_action_cb, NULL, NULL, NULL },
+	{ "eject", eject_action_cb, NULL, NULL, NULL },
 };
 
 void
@@ -273,6 +281,7 @@ totem_app_menu_setup (Totem *totem)
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>G", "app.next-angle", NULL);
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>M", "app.next-angle", NULL);
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>P", "app.properties", NULL);
+	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>E", "app.eject", NULL);
 
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
@@ -545,12 +554,6 @@ totem_sublang_exit (Totem *totem)
 {
 	g_list_free_full (totem->subtitles_list, g_free);
 	g_list_free_full (totem->language_list, g_free);
-}
-
-void
-eject_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_eject (totem);
 }
 
 void
