@@ -53,7 +53,6 @@ typedef struct {
 
 	gulong got_metadata_signal;
 	gulong notify_logo_mode_signal;
-	gulong key_press_event_signal;
 
 	GSettings *settings;
 	gboolean save_to_disk;
@@ -270,28 +269,6 @@ take_gallery_action_cb (GAction               *action,
 	gtk_widget_show (GTK_WIDGET (dialog));
 }
 
-static gboolean
-window_key_press_event_cb (GtkWidget *window, GdkEventKey *event, TotemScreenshotPlugin *self)
-{
-	switch (event->keyval) {
-	case GDK_KEY_Save:
-		take_screenshot_action_cb (NULL, NULL, self);
-		break;
-	case GDK_KEY_s:
-	case GDK_KEY_S:
-		if (event->state & GDK_CONTROL_MASK &&
-		    event->state & GDK_MOD1_MASK)
-			take_screenshot_action_cb (NULL, NULL, self);
-		else
-			return FALSE;
-		break;
-	default:
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
 static void
 update_state (TotemScreenshotPlugin *self)
 {
@@ -327,7 +304,6 @@ disable_save_to_disk_changed_cb (GSettings *settings, const gchar *key, TotemScr
 static void
 impl_activate (PeasActivatable *plugin)
 {
-	GtkWindow *window;
 	TotemScreenshotPlugin *self = TOTEM_SCREENSHOT_PLUGIN (plugin);
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	GMenu *menu;
@@ -344,18 +320,14 @@ impl_activate (PeasActivatable *plugin)
 							  G_CALLBACK (notify_logo_mode_cb),
 							  self);
 
-	/* Key press handler */
-	window = totem_object_get_main_window (priv->totem);
-	priv->key_press_event_signal = g_signal_connect (G_OBJECT (window),
-							 "key-press-event", 
-							 G_CALLBACK (window_key_press_event_cb),
-							 self);
-	g_object_unref (window);
-
 	priv->screenshot_action = g_simple_action_new ("take-screenshot", NULL);
 	g_signal_connect (G_OBJECT (priv->screenshot_action), "activate",
 			  G_CALLBACK (take_screenshot_action_cb), plugin);
 	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->screenshot_action));
+	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
+					 "<Primary><Alt>s",
+					 "app.take-screenshot",
+					 NULL);
 
 	priv->gallery_action = g_simple_action_new ("take-gallery", NULL);
 	g_signal_connect (G_OBJECT (priv->gallery_action), "activate",
@@ -382,15 +354,14 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
-	GtkWindow *window;
 
 	/* Disconnect signal handlers */
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->notify_logo_mode_signal);
 
-	window = totem_object_get_main_window (priv->totem);
-	g_signal_handler_disconnect (G_OBJECT (window), priv->key_press_event_signal);
-	g_object_unref (window);
+	gtk_application_remove_accelerator (GTK_APPLICATION (priv->totem),
+					    "app.take-screenshot",
+					    NULL);
 
 	/* Disconnect from GSettings */
 	g_object_unref (priv->settings);
