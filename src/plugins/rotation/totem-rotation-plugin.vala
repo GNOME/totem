@@ -29,36 +29,40 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     private const int STATE_COUNT = 4;
     public GLib.Object object { owned get; construct; }
     private Bacon.VideoWidget bvw = null;
-    private uint ui_id;
-    private Gtk.ActionGroup action_group;
+    private GLib.SimpleAction rotate_left_action = null;
+    private GLib.SimpleAction rotate_right_action = null;
 
     public void activate ()
     {
         Totem.Object t = (Totem.Object) this.object;
         string mrl = t.get_current_mrl ();
+        GLib.Menu menu = t.get_menu_section ("rotation-placeholder");
 
         this.bvw = t.get_video_widget () as Bacon.VideoWidget;
 
         // add interface elements to control the rotation
-        unowned Gtk.UIManager ui_manager = t.get_ui_manager ();
-        this.ui_id = ui_manager.new_merge_id ();
-        ui_manager.add_ui (this.ui_id, "/ui/tmw-menubar/view/next-angle",
-                "rotate-left", "rotate-left", Gtk.UIManagerItemType.AUTO, false);
-        ui_manager.add_ui (this.ui_id, "/ui/tmw-menubar/view/next-angle",
-                "rotate-right", "rotate-right", Gtk.UIManagerItemType.AUTO, false);
+        this.rotate_left_action = new GLib.SimpleAction ("rotate-left", null);
+        this.rotate_left_action.activate.connect (this.cb_rotate_left);
+        t.add_action (this.rotate_left_action);
+        t.add_accelerator("<Primary><Shift>R", "app.rotate-left", null);
 
-        var rotate_right  = new Gtk.Action ("rotate-right", _("_Rotate Clockwise"), null, null);
-        rotate_right.activate.connect (this.cb_rotate_right);
-        var rotate_left = new Gtk.Action ("rotate-left", _("Rotate Counterc_lockwise"), null, null);
-        rotate_left.activate.connect (this.cb_rotate_left);
+        this.rotate_right_action = new GLib.SimpleAction ("rotate-right", null);
+        this.rotate_right_action.activate.connect (this.cb_rotate_right);
+        t.add_action (this.rotate_right_action);
+        t.add_accelerator("<Primary>R", "app.rotate-right", null);
 
-        this.action_group = new Gtk.ActionGroup ("RotationActions");
-        this.action_group.add_action_with_accel (rotate_right, "<ctrl>R");
-        this.action_group.add_action_with_accel (rotate_left, "<ctrl><shift>R");
+        GLib.MenuItem item = new GLib.MenuItem (_("_Rotate Clockwise"), "app.rotate-right");
+        item.set_attribute ("accel", "s", "<Primary>R");
+        menu.append_item (item);
+
+        item = new GLib.MenuItem (_("Rotate Counterc_lockwise"), "app.rotate-left");
+        item.set_attribute ("accel", "s", "<Primary><Shift>R");
+        menu.append_item (item);
+
         if (mrl == null) {
-            this.action_group.sensitive = false;
+            this.rotate_right_action.set_enabled (false);
+            this.rotate_left_action.set_enabled (false);
         }
-        ui_manager.insert_action_group (this.action_group, 0);
 
         // read the state of the current video from the GIO attribute
         if (mrl != null) {
@@ -78,9 +82,11 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         t.file_opened.disconnect (this.cb_file_opened);
 
         // remove interface elements to control the rotation
-        unowned Gtk.UIManager ui_manager = t.get_ui_manager ();
-        ui_manager.remove_ui (this.ui_id);
-        ui_manager.remove_action_group (this.action_group);
+        t.empty_menu_section ("rotate-placeholder");
+
+        // remove accelerators
+        t.remove_accelerator("app.rotate-right", null);
+        t.remove_accelerator("app.rotate-left", null);
 
         // undo transformations
         this.bvw.set_rotation (Bacon.Rotation.R_ZERO);
@@ -109,12 +115,14 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     {
         // reset the rotation
         this.bvw.set_rotation (Bacon.Rotation.R_ZERO);
-        this.action_group.sensitive = false;
+        this.rotate_right_action.set_enabled (false);
+        this.rotate_left_action.set_enabled (false);
     }
 
     private void cb_file_opened (string mrl)
     {
-        this.action_group.sensitive = true;
+        this.rotate_right_action.set_enabled (true);
+        this.rotate_left_action.set_enabled (true);
         this.try_restore_state (mrl);
     }
 
