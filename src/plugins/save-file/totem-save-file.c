@@ -240,6 +240,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemSaveFilePlugin *pi = TOTEM_SAVE_FILE_PLUGIN (plugin);
 	TotemSaveFilePluginPrivate *priv = pi->priv;
 	GMenu *menu;
+	GMenuItem *item;
 	char *path;
 	char *mrl;
 
@@ -269,10 +270,21 @@ impl_activate (PeasActivatable *plugin)
 	g_signal_connect (G_OBJECT (priv->action), "activate",
 			  G_CALLBACK (totem_save_file_plugin_copy), plugin);
 	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
+	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
+					 "<Primary>S",
+					 "app.save-as",
+					 NULL);
+	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=695917
+	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
+					 "Save",
+					 "app.save-as",
+					 NULL); */
 
 	/* add UI */
 	menu = totem_object_get_menu_section (priv->totem, "save-placeholder");
-	g_menu_append (G_MENU (menu), _("Save a Copy..."), "app.save-as");
+	item = g_menu_item_new (_("Save a Copy..."), "app.save-as");
+	g_menu_item_set_attribute (item, "accel", "s", "<Primary>s");
+	g_menu_append_item (G_MENU (menu), item);
 
 	mrl = totem_object_get_current_mrl (priv->totem);
 	totem_save_file_file_opened (priv->totem, mrl, pi);
