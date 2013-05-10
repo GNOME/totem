@@ -261,7 +261,9 @@ totem_app_menu_setup (Totem *totem)
 	appmenu = (GMenuModel *)gtk_builder_get_object (totem->xml, "appmenu");
 	gtk_application_set_app_menu (GTK_APPLICATION (totem), appmenu);
 
+	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=700085 */
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>G", "app.next-angle", NULL);
+	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>M", "app.next-angle", NULL);
 
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
