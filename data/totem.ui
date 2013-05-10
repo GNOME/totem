@@ -105,6 +105,13 @@
 			<attribute name="action">app.next-angle</attribute>
 			<attribute name="accel">&lt;Ctrl&gt;G</attribute>
 		</item>
+		<section>
+			<item>
+				<attribute name="label" translatable="yes">_Properties</attribute>
+				<attribute name="action">app.properties</attribute>
+				<attribute name="accel">&lt;Ctrl&gt;P</attribute>
+			</item>
+		</section>
 	</section>
 </menu>
 
@@ -153,15 +160,6 @@
                <signal name="activate" handler="eject_action_callback"/>
             </object>
             <accelerator key="E" modifiers="GDK_CONTROL_MASK"/>
-         </child>
-         <child>
-            <object class="GtkAction" id="properties">
-               <property name="label" translatable="yes">_Properties</property>
-               <property name="stock-id">gtk-properties</property>
-               <property name="tooltip" translatable="yes">View the properties of the current stream</property>
-               <signal name="activate" handler="properties_action_callback"/>
-            </object>
-            <accelerator key="P" modifiers="GDK_CONTROL_MASK"/>
          </child>
          <child>
             <object class="GtkAction" id="play">
@@ -256,8 +254,6 @@
       <menubar name="tmw-menubar">
          <menu name="movie" action="movie-menu">
             <placeholder name="recent-placeholder"/>
-	    <separator/>
-            <menuitem name="properties" action="properties"/>
             <separator/>
             <menuitem name="eject" action="eject"/>
          </menu>
