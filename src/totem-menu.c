@@ -48,8 +48,6 @@ G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_angle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void skip_forward_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void skip_backwards_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
@@ -570,18 +568,6 @@ void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
 	TOTEM_PROFILE (totem_object_action_previous (totem));
-}
-
-void
-skip_forward_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_object_action_seek_relative (totem, SEEK_FORWARD_OFFSET * 1000, FALSE);
-}
-
-void
-skip_backwards_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_object_action_seek_relative (totem, SEEK_BACKWARD_OFFSET * 1000, FALSE);
 }
 
 void
