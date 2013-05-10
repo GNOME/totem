@@ -228,22 +228,27 @@ next_angle_action_cb (GSimpleAction *action,
 }
 
 static GActionEntry app_entries[] = {
+	/* Main app menu */
 	{ "open", open_action_cb, NULL, NULL, NULL },
 	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
 	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
-	{ "dvd-root-menu", dvd_root_menu_action_cb, NULL, NULL, NULL },
-	{ "dvd-title-menu", dvd_title_menu_action_cb, NULL, NULL, NULL },
-	{ "dvd-audio-menu", dvd_audio_menu_action_cb, NULL, NULL, NULL },
-	{ "dvd-angle-menu", dvd_angle_menu_action_cb, NULL, NULL, NULL },
-	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
-	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
-	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
-	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
 	{ "help", help_action_cb, NULL, NULL, NULL },
 	{ "quit", quit_action_cb, NULL, NULL, NULL },
+
+	/* "Go" menu */
+	{ "dvd-root-menu", dvd_root_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-title-menu", dvd_title_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-audio-menu", dvd_audio_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-angle-menu", dvd_angle_menu_action_cb, NULL, NULL, NULL },
+	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
+
+	/* Cogwheel menu */
+	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
+	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
+	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
 };
 
 void
