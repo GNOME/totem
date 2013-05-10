@@ -226,7 +226,7 @@ introspection_sources = $(INST_H_FILES) $(filter %.c,$(libtotem_player_la_SOURCE
 
 # NOTE: This should change with $(TOTEM_API_VERSION)
 Totem-1.0.gir: libtotem.la
-Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gtk-3.0 TotemPlParser-1.0
+Totem_1_0_gir_INCLUDES = GLib-2.0 GObject-2.0 Gio-2.0 Gtk-3.0 TotemPlParser-1.0
 Totem_1_0_gir_SCANNERFLAGS = --c-include=totem.h --pkg-export=totem
 Totem_1_0_gir_CFLAGS =		\
 	$(PLAYER_CFLAGS)	\
