@@ -52,19 +52,6 @@ gettext.textdomain ("totem")
 D_ = gettext.dgettext
 _ = gettext.gettext
 
-UI_STR = """
-<ui>
-  <menubar name="tmw-menubar">
-    <menu name="Python" action="Python">
-      <placeholder name="ToolsOps_5">
-        <menuitem name="PythonConsole" action="PythonConsole"/>
-        <menuitem name="PythonDebugger" action="PythonDebugger"/>
-      </placeholder>
-    </menu>
-  </menubar>
-</ui>
-"""
-
 class PythonConsolePlugin (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'PythonConsolePlugin'
 
@@ -79,39 +66,20 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
     def do_activate (self):
         self.totem = self.object
 
-        data = dict ()
-        manager = self.totem.get_ui_manager ()
-
-        self.action_group = Gtk.ActionGroup (name = 'Python')
-
-        action = Gtk.Action (name = 'Python', label = 'Python',
-                             tooltip = _('Python Console Menu'),
-                             stock_id = None)
-        self.action_group.add_action (action)
-
-        action = Gtk.Action (name = 'PythonConsole',
-                             label = _('_Python Console'),
-                             tooltip = _("Show Totem's Python console"),
-                             stock_id = 'gnome-mime-text-x-python')
+        action = Gio.SimpleAction.new ("python-console", None)
         action.connect ('activate', self._show_console)
-        self.action_group.add_action (action)
+        self.totem.add_action (action)
 
-        action = Gtk.Action (name = 'PythonDebugger',
-                             label = _('Python Debugger'),
-                             tooltip = _("Enable remote Python debugging "\
-                                          "with rpdb2"),
-                             stock_id = None)
+        menu = self.totem.get_menu_section ("python-console-placeholder");
+        menu.append (_('_Python Console'), "app.python-console")
+
         if HAVE_RPDB2:
+            action = Gio.SimpleAction.new ("python-debugger", None)
             action.connect ('activate', self._enable_debugging)
-        else:
-            action.set_visible (False)
-        self.action_group.add_action (action)
+            self.totem.add_action (action)
+            menu.append (_('Python Debugger'), "app.python-debugger")
 
-        manager.insert_action_group (self.action_group, 0)
-        self.ui_id = manager.add_ui_from_string (UI_STR)
-        manager.ensure_update ()
-
-    def _show_console (self, _action):
+    def _show_console (self, parameter, _action):
         if not self.window:
             console = PythonConsole (namespace = {
                 '__builtins__' : __builtins__,
@@ -133,7 +101,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             self.window.grab_focus ()
 
     @classmethod
-    def _enable_debugging (cls, _action):
+    def _enable_debugging (cls, parameter, _action):
         msg = _("After you press OK, Totem will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
@@ -156,10 +124,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
         self.window = None
 
     def do_deactivate (self):
-        manager = self.totem.get_ui_manager ()
-        manager.remove_ui (self.ui_id)
-        manager.remove_action_group (self.action_group)
-        manager.ensure_update ()
+        self.totem.empty_menu_section ("python-console-placeholder")
 
         if self.window is not None:
             self.window.destroy ()
