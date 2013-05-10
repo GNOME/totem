@@ -100,6 +100,11 @@
 			<attribute name="action">app.zoom</attribute>
 		</item>
 		<section id="rotation-placeholder"/>
+		<item>
+			<attribute name="label" translatable="yes">Switch An_gles</attribute>
+			<attribute name="action">app.next-angle</attribute>
+			<attribute name="accel">&lt;Ctrl&gt;G</attribute>
+		</item>
 	</section>
 </menu>
 
@@ -197,14 +202,6 @@
                <property name="label" translatable="yes">_Aspect Ratio</property>
             </object>
          </child>
-         <child>
-            <object class="GtkAction" id="next-angle">
-               <property name="label" translatable="yes">Switch An_gles</property>
-               <property name="tooltip" translatable="yes">Switch camera angles</property>
-               <signal name="activate" handler="next_angle_action_callback"/>
-            </object>
-            <accelerator key="G" modifiers="GDK_CONTROL_MASK"/>
-         </child>
 
          <child>
             <object class="GtkAction" id="next-chapter">
@@ -278,7 +275,6 @@
             <menuitem name="clear-playlist" action="clear-playlist"/>
          </menu>
          <menu name="view" action="view-menu">
-            <menuitem name="next-angle" action="next-angle"/>
             <separator/>
             <menu name="subtitles" action="subtitles-menu">
                <menuitem name="select-subtitle" action="select-subtitle"/>

@@ -45,7 +45,6 @@ G_MODULE_EXPORT void eject_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void properties_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void next_angle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
@@ -220,6 +219,14 @@ dvd_chapter_menu_action_cb (GSimpleAction *action,
         bacon_video_widget_dvd_event (TOTEM_OBJECT (user_data)->bvw, BVW_DVD_CHAPTER_MENU);
 }
 
+static void
+next_angle_action_cb (GSimpleAction *action,
+		      GVariant      *parameter,
+		      gpointer       user_data)
+{
+        totem_object_action_next_angle (TOTEM_OBJECT (user_data));
+}
+
 static GActionEntry app_entries[] = {
 	{ "open", open_action_cb, NULL, NULL, NULL },
 	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
@@ -231,6 +238,7 @@ static GActionEntry app_entries[] = {
 	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
 	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
 	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
+	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
 	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
@@ -247,6 +255,8 @@ totem_app_menu_setup (Totem *totem)
 
 	appmenu = (GMenuModel *)gtk_builder_get_object (totem->xml, "appmenu");
 	gtk_application_set_app_menu (GTK_APPLICATION (totem), appmenu);
+
+	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>G", "app.next-angle", NULL);
 
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }
@@ -550,12 +560,6 @@ select_subtitle_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_playlist_select_subtitle_dialog (totem->playlist,
 					       TOTEM_PLAYLIST_DIALOG_PLAYING);
-}
-
-void
-next_angle_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_object_action_next_angle (totem);
 }
 
 void

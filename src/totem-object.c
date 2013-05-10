@@ -3633,8 +3633,8 @@ update_media_menu_items (TotemObject *totem)
 	totem_action_set_sensitivity2 ("dvd-angle-menu", playing);
 	totem_action_set_sensitivity2 ("dvd-chapter-menu", playing);
 
-	totem_action_set_sensitivity ("next-angle",
-				      bacon_video_widget_has_angles (totem->bvw));
+	totem_action_set_sensitivity2 ("next-angle",
+				       bacon_video_widget_has_angles (totem->bvw));
 
 	mount = totem_get_mount_for_media (totem->mrl);
 	totem_action_set_sensitivity ("eject", mount != NULL);
