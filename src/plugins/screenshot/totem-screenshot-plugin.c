@@ -186,13 +186,13 @@ flash_area (GtkWidget *widget)
 					       G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
 					       NULL,
 					       "org.gnome.Shell",
-					       "/org/gnome/Shell",
-					       "org.gnome.Shell",
+					       "/org/gnome/Shell/Screenshot",
+					       "org.gnome.Shell.Screenshot",
 					       NULL, NULL);
 	if (proxy == NULL)
 		g_warning ("no proxy");
 
-	g_dbus_proxy_call (proxy, "org.gnome.Shell.FlashArea",
+	g_dbus_proxy_call (proxy, "org.gnome.Shell.Screenshot.FlashArea",
 			   g_variant_new ("(iiii)", x, y, w, h),
 			   G_DBUS_CALL_FLAGS_NO_AUTO_START,
 			   -1,
