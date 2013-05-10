@@ -365,7 +365,7 @@ impl_activate (PeasActivatable *plugin)
 	/* Install the menu */
 	menu = totem_object_get_menu_section (priv->totem, "screenshot-placeholder");
 	item = g_menu_item_new (_("Take _Screenshot"), "app.take-screenshot");
-	g_menu_item_set_attribute (item, "accel", "s", "<Ctrl><Primary>S");
+	g_menu_item_set_attribute (item, "accel", "s", "<Primary><Alt>s");
 	g_menu_append_item (G_MENU (menu), item);
 	g_menu_append (G_MENU (menu), _("Create Screenshot _Gallery..."), "app.take-gallery");
 
