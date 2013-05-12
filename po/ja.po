@@ -7,7 +7,7 @@
 # Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 2004, 2009-2010.
 # Satoru SATOH <ss@gnome.gr.jp>, 2005, 2006.
 # Hideki Yamane (Debian-JP) <henrich@debian.or.jp>, 2009.
-# Kentaro KAZUHAMA <kazken3@gmail.com>, 2012
+# Kentaro KAZUHAMA <kazken3@gmail.com>, 2012-2013
 # Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012.
 #
 msgid ""
@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-05-12 16:08+0900\n"
-"PO-Revision-Date: 2013-02-01 20:14+0900\n"
-"Last-Translator: Carrot031 <www.carrotsoft@gmail.com>\n"
+"PO-Revision-Date: 2013-04-14 22:25+0900\n"
+"Last-Translator: Kentaro KAZUHAMA <kazken3@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -305,7 +305,7 @@ msgstr "5.1 チャンネル"
 
 #: ../data/preferences.ui.h:12
 msgid "AC3 Passthrough"
-msgstr "AC3 PassThrough"
+msgstr "AC3 パススルー"
 
 #: ../data/preferences.ui.h:13
 msgid "Totem Preferences"
@@ -361,14 +361,10 @@ msgid "Disable _deinterlacing of interlaced videos"
 msgstr "インターレースのビデオのインターレース解除を無効にする(_D)"
 
 #: ../data/preferences.ui.h:27
-#, fuzzy
-#| msgid "Disable screensaver when playing "
 msgid "Disable screensaver when playing"
-msgstr "以下の再生中にスクリーンセーバーを無効にする: "
+msgstr "再生中にスクリーンセーバーを無効にする: "
 
 #: ../data/preferences.ui.h:28
-#, fuzzy
-#| msgid "Video"
 msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "ビデオ"
@@ -835,7 +831,7 @@ msgstr "サブタイトル #%d"
 
 #: ../src/backend/bacon-video-widget.c:3286
 msgid "The server you are trying to connect to is not known."
-msgstr ""
+msgstr "接続しようとしているサーバーは不明です。"
 
 #: ../src/backend/bacon-video-widget.c:3289
 msgid "The connection to this server was refused."
@@ -854,14 +850,12 @@ msgid "Authentication is required to access this file or stream."
 msgstr "このファイルまたはストリームにアクセスするには認証が必要です。"
 
 #: ../src/backend/bacon-video-widget.c:3312
-#, fuzzy
 msgid "You are not allowed to open this file."
-msgstr "このディスクを再生できませんでした。"
+msgstr "このファイルを開くことができませんでした。"
 
 #: ../src/backend/bacon-video-widget.c:3317
-#, fuzzy
 msgid "This location is not a valid one."
-msgstr "妥当な .desktop ファイルではありません"
+msgstr "場所が無効です。"
 
 #: ../src/backend/bacon-video-widget.c:3325
 msgid "The movie could not be read."
@@ -883,7 +877,7 @@ msgstr[0] ""
 
 #: ../src/backend/bacon-video-widget.c:3367
 msgid "An audio or video stream is not handled due to missing codecs. You might need to install additional plugins to be able to play some types of movies"
-msgstr ""
+msgstr "音声か動画ストリームのコーデックがないため処理できません。動画の種類によっては再生するのに追加のプラグインをインストールする必要があります"
 
 #: ../src/backend/bacon-video-widget.c:3377
 msgid "This file cannot be played over the network. Try downloading it locally first."
@@ -1727,7 +1721,7 @@ msgstr "ビデオディスクレコーダー"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:2
 msgid "Records (S)VCDs or video DVDs"
-msgstr "(S)VCD または VIDEO-DVD を作成します"
+msgstr "(S)VCD または DVD-Video を作成します"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:65
 msgid "_Create Video Disc..."
@@ -1735,19 +1729,19 @@ msgstr "ビデオディスクの作成(_C)..."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:66
 msgid "Create a video DVD or a (S)VCD from the currently opened movie"
-msgstr "現在開いている動画から VIDEO-DVD または (S)VCD を作成します"
+msgstr "現在開いている動画からDVD-Video または (S)VCD を作成します"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
 msgid "Copy Vide_o DVD..."
-msgstr "VIDEO-DVD のコピー(_O)..."
+msgstr "DVD-Videoの複製(_O)..."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:69
 msgid "Copy the currently playing video DVD"
-msgstr "現在再生中の VIDEO-DVD の複製を作成します"
+msgstr "現在再生中の DVD-Video の複製を作成します"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
 msgid "Copy (S)VCD..."
-msgstr "(S)VCD のコピー..."
+msgstr "(S)VCD の複製..."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:72
 msgid "Copy the currently playing (S)VCD"
@@ -1830,9 +1824,8 @@ msgid "Chapters"
 msgstr "チャプター"
 
 #: ../src/plugins/chapters/chapters.plugin.in.h:2
-#, fuzzy
 msgid "Support chapter markers in movies"
-msgstr "動画のチャプター作成をサポートします。"
+msgstr "動画のチャプター作成をサポートします"
 
 #: ../src/plugins/chapters/totem-chapters.c:56
 #, c-format
@@ -1935,9 +1928,8 @@ msgid "Grilo Browser"
 msgstr "Griloブラウザー"
 
 #: ../src/plugins/grilo/grilo.plugin.in.h:2
-#, fuzzy
 msgid "A plugin to let you browse media content from various sources"
-msgstr "さまざまなソースからメディアコンテンツを見ることができるプラグインです。"
+msgstr "さまざまなソースからメディアコンテンツを見ることができるプラグインです"
 
 #: ../src/plugins/grilo/grilo.ui.h:1
 msgid "Add to Playlist"
@@ -1976,13 +1968,12 @@ msgid "The gromit binary was not found."
 msgstr "Gromit のバイナリが見つかりませんでした。"
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
-#, fuzzy
 msgid "Instant Messenger Status"
-msgstr "インスタント・メッセンジャーの状態"
+msgstr "インスタントメッセンジャーのステータス"
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:2
 msgid "Set your Instant Messenger status to away when a movie is playing"
-msgstr "動画を再生している時は、お使いのインスタント・メッセンジャーを離席状態にセットします"
+msgstr "動画を再生している時にインスタントメッセンジャーを離席状態にセットします"
 
 #: ../src/plugins/lirc/lirc.plugin.in.h:1
 msgid "Infrared Remote Control"
@@ -2001,13 +1992,12 @@ msgid "Couldn't read lirc configuration."
 msgstr "lirc の設定を読み込めませんでした。"
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
-#, fuzzy
 msgid "Media Player Keys"
-msgstr "動画プレイヤー"
+msgstr "メディアプレイヤーのキー"
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:2
 msgid "Support additional media player keys"
-msgstr ""
+msgstr "メディアプレイヤーのキー追加サポート"
 
 #: ../src/plugins/ontop/ontop.plugin.in.h:1
 msgid "Always On Top"
@@ -2167,7 +2157,7 @@ msgstr "最近使用したファイル"
 
 #: ../src/plugins/recent/recent.plugin.in.h:2
 msgid "Adds files that have been played to recent files"
-msgstr ""
+msgstr "最近使ったファイルに再生したファイルを追加します"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:1
 msgid "Rotation Plugin"
@@ -2186,14 +2176,12 @@ msgid "Rotate Counterc_lockwise"
 msgstr "反時計回りに回転(_L)"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:1
-#, fuzzy
 msgid "Save Copy"
 msgstr "コピーを保存"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:2
-#, fuzzy
 msgid "Save a copy of the currently playing movie"
-msgstr "現在再生中の VIDEO-DVD の複製を作成します"
+msgstr "現在再生中の動画を複製します"
 
 #: ../src/plugins/save-file/totem-save-file.c:63
 msgid "Save a Copy..."
@@ -2240,17 +2228,17 @@ msgstr "スクリーンショットの総数:"
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:147
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot from %s.png"
-msgstr "Screenshot.png"
+msgstr "Screenshot_from_%s.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "Screenshot-%s-%d.png"
+msgstr "Screenshot_%s_%d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
 msgid "Screenshot"
