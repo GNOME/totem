@@ -279,7 +279,7 @@ totem_app_menu_setup (Totem *totem)
 
 	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=700085 */
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>G", "app.next-angle", NULL);
-	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>M", "app.next-angle", NULL);
+	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>M", "app.root-menu", NULL);
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>P", "app.properties", NULL);
 	gtk_application_add_accelerator (GTK_APPLICATION (totem), "<Primary>E", "app.eject", NULL);
 
