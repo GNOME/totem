@@ -45,8 +45,6 @@ G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void volume_up_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void volume_down_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void select_subtitle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void clear_playlist_action_callback (GtkAction *action, Totem *totem);
@@ -585,18 +583,6 @@ void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
 	TOTEM_PROFILE (totem_object_action_previous (totem));
-}
-
-void
-volume_up_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_volume_relative (totem, VOLUME_UP_OFFSET);
-}
-
-void
-volume_down_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_action_volume_relative (totem, VOLUME_DOWN_OFFSET);
 }
 
 void
