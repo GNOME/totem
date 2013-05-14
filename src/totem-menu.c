@@ -321,14 +321,13 @@ languages_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
 
 static GtkAction *
 add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
-		const char **paths, const char *prefix, const char *lang, 
+		const char *path, const char *prefix, const char *lang,
 		int lang_id, int lang_index, GSList **group)
 {
 	const char *full_lang;
 	char *label;
 	char *name;
 	GtkAction *action;
-	guint i;
 
 	full_lang = gst_tag_get_language_name (lang);
 
@@ -357,10 +356,8 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 	*group = gtk_radio_action_get_group (GTK_RADIO_ACTION (action));
 	gtk_action_group_add_action (action_group, action);
 	g_object_unref (action);
-	for (i = 0; paths[i] != NULL; i++) {
-		gtk_ui_manager_add_ui (totem->ui_manager, ui_id,
-				       paths[i], name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
-	}
+	gtk_ui_manager_add_ui (totem->ui_manager, ui_id,
+			       path, name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
 	g_free (name);
 
 	return action;
@@ -368,7 +365,7 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 
 static GtkAction *
 create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
-		const char **paths, const char *prefix, GList *list,
+		const char *path, const char *prefix, GList *list,
 		gboolean is_lang)
 {
 	GtkAction *action = NULL;
@@ -379,12 +376,12 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 	char *action_data;
 
 	if (is_lang == FALSE) {
-		add_lang_action (totem, action_group, ui_id, paths, prefix,
+		add_lang_action (totem, action_group, ui_id, path, prefix,
 		                /* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
 				_("None"), -2, 0, &group);
 	}
 
-	action = add_lang_action (totem, action_group, ui_id, paths, prefix,
+	action = add_lang_action (totem, action_group, ui_id, path, prefix,
 	                          /* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
 	                          C_("Language", "Auto"), -1, 0, &group);
 
@@ -406,7 +403,7 @@ create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 			g_hash_table_replace (lookup, l->data, GINT_TO_POINTER (num + 1));
 		}
 
-		add_lang_action (totem, action_group, ui_id, paths, prefix,
+		add_lang_action (totem, action_group, ui_id, path, prefix,
 				 action_data, i, num + 1, &group);
 		g_free (action_data);
 		i++;
@@ -449,7 +446,7 @@ static void
 totem_languages_update (Totem *totem, GList *list)
 {
 	GtkAction *action;
-	const char *paths[3] = { "/tmw-menubar/sound/languages/placeholder", NULL };
+	const char *path = "/tmw-menubar/sound/languages/placeholder";
 	int current;
 
 	/* Remove old UI */
@@ -469,7 +466,7 @@ totem_languages_update (Totem *totem, GList *list)
 	if (list != NULL) {
 		action = create_lang_actions (totem, totem->languages_action_group,
 				totem->languages_ui_id,
-				paths,
+				path,
 				"languages", list, TRUE);
 		gtk_ui_manager_ensure_update (totem->ui_manager);
 
@@ -489,7 +486,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 {
 	GtkAction *action;
 	int current;
-	const char *paths[3] = { "/tmw-menubar/view/subtitles/placeholder", NULL };
+	const char *path = "/tmw-menubar/view/subtitles/placeholder";
 
 	/* Remove old UI */
 	gtk_ui_manager_remove_ui (totem->ui_manager, totem->subtitles_ui_id);
@@ -509,7 +506,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 	if (list != NULL) {
 		action = create_lang_actions (totem, totem->subtitles_action_group,
 				totem->subtitles_ui_id,
-				paths,
+				path,
 				"subtitles", list, FALSE);
 		gtk_ui_manager_ensure_update (totem->ui_manager);
 
