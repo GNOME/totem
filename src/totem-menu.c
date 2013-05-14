@@ -592,7 +592,6 @@ clear_playlist_action_callback (GtkAction *action, Totem *totem)
 	totem_action_set_mrl (totem, NULL, NULL);
 }
 
-/* Show help in status bar when selecting (hovering over) a menu item. */
 void
 totem_ui_manager_setup (Totem *totem)
 {
