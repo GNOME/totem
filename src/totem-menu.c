@@ -449,7 +449,7 @@ static void
 totem_languages_update (Totem *totem, GList *list)
 {
 	GtkAction *action;
-	const char *paths[3] = { "/tmw-menubar/sound/languages/placeholder", "/totem-main-popup/popup-languages/placeholder", NULL };
+	const char *paths[3] = { "/tmw-menubar/sound/languages/placeholder", NULL };
 	int current;
 
 	/* Remove old UI */
@@ -489,7 +489,7 @@ totem_subtitles_update (Totem *totem, GList *list)
 {
 	GtkAction *action;
 	int current;
-	const char *paths[3] = { "/tmw-menubar/view/subtitles/placeholder", "/totem-main-popup/popup-subtitles/placeholder", NULL };
+	const char *paths[3] = { "/tmw-menubar/view/subtitles/placeholder", NULL };
 
 	/* Remove old UI */
 	gtk_ui_manager_remove_ui (totem->ui_manager, totem->subtitles_ui_id);

@@ -1184,18 +1184,6 @@ totem_object_action_exit (TotemObject *totem)
 	exit (0);
 }
 
-static void
-totem_action_menu_popup (TotemObject *totem, guint button)
-{
-	GtkWidget *menu;
-
-	menu = gtk_ui_manager_get_widget (totem->ui_manager,
-			"/totem-main-popup");
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-			button, gtk_get_current_event_time ());
-	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
-}
-
 G_GNUC_NORETURN gboolean
 main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem)
 {
@@ -3176,9 +3164,6 @@ on_video_button_press_event (BaconVideoWidget *bvw, GdkEventButton *event,
 		//totem_fullscreen_show_popups_or_osd (totem->fs, icon_name, FALSE);
 		totem_object_action_play_pause (totem);
 		return TRUE;
-	} else if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
-		totem_action_menu_popup (totem, event->button);
-		return TRUE;
 	}
 
 	return FALSE;
@@ -3433,13 +3418,15 @@ totem_action_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_Menu:
 	case GDK_KEY_Time:
-		totem_action_menu_popup (totem, 0);
+		/* FIXME find replacement
+		totem_action_menu_popup (totem, 0); */
 		break;
 	case GDK_KEY_F10:
 		if (!(event->state & GDK_SHIFT_MASK))
 			return FALSE;
 
-		totem_action_menu_popup (totem, 0);
+		/* FIXME find replacement
+		totem_action_menu_popup (totem, 0); */
 		break;
 	case GDK_KEY_equal:
 		if (event->state & GDK_CONTROL_MASK)
