@@ -40,7 +40,6 @@
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
@@ -556,12 +555,6 @@ void
 play_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_object_action_play_pause (totem);
-}
-
-G_GNUC_NORETURN void
-quit_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_object_action_exit (totem);
 }
 
 void
