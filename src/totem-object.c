@@ -2929,20 +2929,21 @@ void totem_object_action_remote_set_setting (TotemObject *totem,
 					     TotemRemoteSetting setting,
 					     gboolean value)
 {
-	GtkAction *action;
+	GAction *action;
 
 	switch (setting) {
 	case TOTEM_REMOTE_SETTING_SHUFFLE:
-		action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
+		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
 		break;
 	case TOTEM_REMOTE_SETTING_REPEAT:
-		action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
+		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 		break;
 	default:
 		g_assert_not_reached ();
 	}
 
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), value);
+	g_simple_action_set_state (G_SIMPLE_ACTION (action),
+				   g_variant_new_boolean (value));
 }
 
 /**
@@ -2954,25 +2955,32 @@ void totem_object_action_remote_set_setting (TotemObject *totem,
  *
  * Return value: %TRUE if the setting is enabled, %FALSE otherwise
  **/
-gboolean totem_object_action_remote_get_setting (TotemObject *totem,
-						 TotemRemoteSetting setting)
+gboolean
+totem_object_action_remote_get_setting (TotemObject        *totem,
+					TotemRemoteSetting  setting)
 {
-	GtkAction *action;
+	GAction *action;
+	GVariant *v;
+	gboolean ret;
 
 	action = NULL;
 
 	switch (setting) {
 	case TOTEM_REMOTE_SETTING_SHUFFLE:
-		action = gtk_action_group_get_action (totem->main_action_group, "shuffle-mode");
+		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
 		break;
 	case TOTEM_REMOTE_SETTING_REPEAT:
-		action = gtk_action_group_get_action (totem->main_action_group, "repeat-mode");
+		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 		break;
 	default:
 		g_assert_not_reached ();
 	}
 
-	return gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+	v = g_action_get_state (action);
+	ret = g_variant_get_boolean (v);
+	g_variant_unref (v);
+
+	return ret;
 }
 
 static void
