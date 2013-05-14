@@ -38,8 +38,6 @@
 
 #include "totem-profile.h"
 
-#define TOTEM_MAX_RECENT_ITEM_LEN 40
-
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void quit_action_callback (GtkAction *action, Totem *totem);
