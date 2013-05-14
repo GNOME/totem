@@ -94,9 +94,6 @@ struct _TotemObject {
 	GtkActionGroup *main_action_group;
 	GtkUIManager *ui_manager;
 
-	GtkActionGroup *devices_action_group;
-	guint devices_ui_id;
-
 	GtkActionGroup *languages_action_group;
 	guint languages_ui_id;
 

@@ -609,8 +609,6 @@ totem_ui_manager_setup (Totem *totem)
 
 	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
 
-	totem->devices_action_group = NULL;
-	totem->devices_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 	totem->languages_action_group = NULL;
 	totem->languages_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 	totem->subtitles_action_group = NULL;
