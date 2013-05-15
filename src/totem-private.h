@@ -122,10 +122,9 @@ struct _TotemObject {
 	double prev_volume;
 
 	/* Subtitles/Languages menus */
-	GtkWidget *subtitles;
-	GtkWidget *languages;
+	gboolean updating_menu;
 	GList *subtitles_list;
-	GList *language_list;
+	GList *languages_list;
 
 	/* controls management */
 	ControlsVisibility controls_visibility;

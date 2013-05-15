@@ -83,6 +83,34 @@ fullscreen_change_state (GSimpleAction *action,
 }
 
 static void
+set_subtitle_action_change_state (GSimpleAction *action,
+				  GVariant      *value,
+				  gpointer       user_data)
+{
+	int rank;
+
+	rank = g_variant_get_int32 (value);
+	if (!TOTEM_OBJECT (user_data)->updating_menu)
+		bacon_video_widget_set_subtitle (TOTEM_OBJECT (user_data)->bvw, rank);
+
+	g_simple_action_set_state (action, value);
+}
+
+static void
+set_language_action_change_state (GSimpleAction *action,
+				  GVariant      *value,
+				  gpointer       user_data)
+{
+	int rank;
+
+	rank = g_variant_get_int32 (value);
+	if (!TOTEM_OBJECT (user_data)->updating_menu)
+		bacon_video_widget_set_language (TOTEM_OBJECT (user_data)->bvw, rank);
+
+	g_simple_action_set_state (action, value);
+}
+
+static void
 aspect_ratio_change_state (GSimpleAction *action,
 			   GVariant      *value,
 			   gpointer       user_data)
@@ -93,14 +121,6 @@ aspect_ratio_change_state (GSimpleAction *action,
 	bacon_video_widget_set_aspect_ratio (TOTEM_OBJECT (user_data)->bvw, ratio);
 
 	g_simple_action_set_state (action, value);
-}
-
-static void
-aspect_ratio_action_cb (GSimpleAction *action,
-			GVariant      *parameter,
-			gpointer       user_data)
-{
-	g_action_change_state (G_ACTION (action), parameter);
 }
 
 static void
@@ -153,6 +173,14 @@ toggle_action_cb (GSimpleAction *action,
 	state = g_action_get_state (G_ACTION (action));
 	g_action_change_state (G_ACTION (action), g_variant_new_boolean (!g_variant_get_boolean (state)));
 	g_variant_unref (state);
+}
+
+static void
+list_action_cb (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	g_action_change_state (G_ACTION (action), parameter);
 }
 
 static void
@@ -264,7 +292,9 @@ static GActionEntry app_entries[] = {
 
 	/* Cogwheel menu */
 	{ "select-subtitle", select_subtitle_action_cb, NULL, NULL, NULL },
-	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
+	{ "set-subtitle", list_action_cb, "i", "-1", set_subtitle_action_change_state },
+	{ "set-language", list_action_cb, "i", "-1", set_language_action_change_state },
+	{ "aspect-ratio", list_action_cb, "i", "0", aspect_ratio_change_state },
 	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
 	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
 	{ "properties", properties_action_cb, NULL, NULL, NULL },
@@ -306,37 +336,27 @@ escape_label_for_menu (const char *name)
 
 /* Subtitle and language menus */
 static void
-subtitles_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
-		Totem *totem)
+add_lang_item (GMenu      *menu,
+	       const char *label,
+	       const char *action,
+	       int         target)
 {
-	int rank;
+	GMenuItem *item;
 
-	rank = gtk_radio_action_get_current_value (current);
-
-	bacon_video_widget_set_subtitle (totem->bvw, rank);
+	item = g_menu_item_new (label, NULL);
+	g_menu_item_set_action_and_target_value (item, action, g_variant_new_int32 (target));
+	g_menu_append_item (G_MENU (menu), item);
 }
-
 
 static void
-languages_changed_callback (GtkRadioAction *action, GtkRadioAction *current,
-		Totem *totem)
-{
-	int rank;
-
-	rank = gtk_radio_action_get_current_value (current);
-
-	bacon_video_widget_set_language (totem->bvw, rank);
-}
-
-static GtkAction *
-add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
-		const char *path, const char *prefix, const char *lang,
-		int lang_id, int lang_index, GSList **group)
+add_lang_action (GMenu *menu,
+		 const char *action,
+		 const char *lang,
+		 int lang_id,
+		 int lang_index)
 {
 	const char *full_lang;
 	char *label;
-	char *name;
-	GtkAction *action;
 
 	full_lang = gst_tag_get_language_name (lang);
 
@@ -352,75 +372,50 @@ add_lang_action (Totem *totem, GtkActionGroup *action_group, guint ui_id,
 		label = escape_label_for_menu (full_lang ? full_lang : lang);
 	}
 
-	name = g_strdup_printf ("%s-%d", prefix, lang_id);
-
-	action = g_object_new (GTK_TYPE_RADIO_ACTION,
-			       "name", name,
-			       "label", label,
-			       "value", lang_id,
-			       NULL);
+	add_lang_item (menu, label, action, lang_id);
 	g_free (label);
-
-	gtk_radio_action_set_group (GTK_RADIO_ACTION (action), *group);
-	*group = gtk_radio_action_get_group (GTK_RADIO_ACTION (action));
-	gtk_action_group_add_action (action_group, action);
-	g_object_unref (action);
-	gtk_ui_manager_add_ui (totem->ui_manager, ui_id,
-			       path, name, name, GTK_UI_MANAGER_MENUITEM, FALSE);
-	g_free (name);
-
-	return action;
 }
 
-static GtkAction *
-create_lang_actions (Totem *totem, GtkActionGroup *action_group, guint ui_id,
-		const char *path, const char *prefix, GList *list,
-		gboolean is_lang)
+static void
+create_lang_actions (GMenu *menu,
+		     const char *action,
+		     GList *list,
+		     gboolean is_lang)
 {
-	GtkAction *action = NULL;
-	unsigned int i, *hash_value;
+	unsigned int i;
 	GList *l;
-	GSList *group = NULL;
 	GHashTable *lookup;
-	char *action_data;
 
 	if (is_lang == FALSE) {
-		add_lang_action (totem, action_group, ui_id, path, prefix,
-		                /* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
-				_("None"), -2, 0, &group);
+		/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
+		add_lang_action (menu, action, _("None"), -2, 0);
 	}
 
-	action = add_lang_action (totem, action_group, ui_id, path, prefix,
-	                          /* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
-	                          C_("Language", "Auto"), -1, 0, &group);
+	/* Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD */
+	add_lang_action (menu, action, C_("Language", "Auto"), -1, 0);
 
 	i = 0;
 	lookup = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
 
-	for (l = list; l != NULL; l = l->next)
-	{
+	for (l = list; l != NULL; l = l->next) {
 		guint num;
+		unsigned int *hash_value;
 
 		hash_value = g_hash_table_lookup (lookup, l->data);
-		if (hash_value == NULL) {
+		if (hash_value == NULL)
 			num = 0;
-			action_data = g_strdup (l->data);
-			g_hash_table_insert (lookup, l->data, GINT_TO_POINTER (1));
-		} else {
+		else
 			num = GPOINTER_TO_INT (hash_value);
-			action_data = g_strdup (l->data);
-			g_hash_table_replace (lookup, l->data, GINT_TO_POINTER (num + 1));
-		}
+		num++;
 
-		add_lang_action (totem, action_group, ui_id, path, prefix,
-				 action_data, i, num + 1, &group);
-		g_free (action_data);
+		g_hash_table_insert (lookup, l->data, GINT_TO_POINTER (num));
+
+		add_lang_action (menu, action, l->data, i, num);
+
 		i++;
 	}
 
 	g_hash_table_destroy (lookup);
-
-	return action;
 }
 
 static gboolean
@@ -454,77 +449,48 @@ totem_sublang_equal_lists (GList *orig, GList *new)
 static void
 totem_languages_update (Totem *totem, GList *list)
 {
-	GtkAction *action;
-	const char *path = "/tmw-menubar/sound/languages/placeholder";
+	GAction *action;
 	int current;
 
 	/* Remove old UI */
-	gtk_ui_manager_remove_ui (totem->ui_manager, totem->languages_ui_id);
-	gtk_ui_manager_ensure_update (totem->ui_manager);
-
-	/* Create new ActionGroup */
-	if (totem->languages_action_group) {
-		gtk_ui_manager_remove_action_group (totem->ui_manager,
-				totem->languages_action_group);
-		g_object_unref (totem->languages_action_group);
-	}
-	totem->languages_action_group = gtk_action_group_new ("languages-action-group");
-	gtk_ui_manager_insert_action_group (totem->ui_manager,
-			totem->languages_action_group, -1);
+	totem_object_empty_menu_section (totem, "languages-placeholder");
 
 	if (list != NULL) {
-		action = create_lang_actions (totem, totem->languages_action_group,
-				totem->languages_ui_id,
-				path,
-				"languages", list, TRUE);
-		gtk_ui_manager_ensure_update (totem->ui_manager);
-
-		current = bacon_video_widget_get_language (totem->bvw);
-		gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action),
-				current);
-		g_signal_connect (G_OBJECT (action), "changed",
-				G_CALLBACK (languages_changed_callback), totem);
+		GMenu *menu;
+		menu = totem_object_get_menu_section (totem, "languages-placeholder");
+		create_lang_actions (menu, "app.set-language", list, TRUE);
 	}
 
-	g_list_free_full (totem->language_list, g_free);
-	totem->language_list = list;
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-language");
+	totem->updating_menu = TRUE;
+	current = bacon_video_widget_get_language (totem->bvw);
+	g_action_change_state (action, g_variant_new_int32 (current));
+	totem->updating_menu = FALSE;
+
+	g_list_free_full (totem->languages_list, g_free);
+	totem->languages_list = list;
 }
 
 static void
 totem_subtitles_update (Totem *totem, GList *list)
 {
-	GtkAction *action;
+	GAction *action;
 	int current;
-	const char *path = "/tmw-menubar/view/subtitles/placeholder";
 
 	/* Remove old UI */
-	gtk_ui_manager_remove_ui (totem->ui_manager, totem->subtitles_ui_id);
-	gtk_ui_manager_ensure_update (totem->ui_manager);
-
-	/* Create new ActionGroup */
-	if (totem->subtitles_action_group) {
-		gtk_ui_manager_remove_action_group (totem->ui_manager,
-				totem->subtitles_action_group);
-		g_object_unref (totem->subtitles_action_group);
-	}
-	totem->subtitles_action_group = gtk_action_group_new ("subtitles-action-group");
-	gtk_ui_manager_insert_action_group (totem->ui_manager,
-			totem->subtitles_action_group, -1);
-
+	totem_object_empty_menu_section (totem, "subtitles-placeholder");
 
 	if (list != NULL) {
-		action = create_lang_actions (totem, totem->subtitles_action_group,
-				totem->subtitles_ui_id,
-				path,
-				"subtitles", list, FALSE);
-		gtk_ui_manager_ensure_update (totem->ui_manager);
-
-		current = bacon_video_widget_get_subtitle (totem->bvw);
-		gtk_radio_action_set_current_value (GTK_RADIO_ACTION (action),
-				current);
-		g_signal_connect (G_OBJECT (action), "changed",
-				G_CALLBACK (subtitles_changed_callback), totem);
+		GMenu *menu;
+		menu = totem_object_get_menu_section (totem, "subtitles-placeholder");
+		create_lang_actions (menu, "app.set-subtitle", list, FALSE);
 	}
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "set-subtitle");
+	totem->updating_menu = TRUE;
+	current = bacon_video_widget_get_subtitle (totem->bvw);
+	g_action_change_state (action, g_variant_new_int32 (current));
+	totem->updating_menu = FALSE;
 
 	g_list_free_full (totem->subtitles_list, g_free);
 	totem->subtitles_list = list;
@@ -536,7 +502,7 @@ totem_sublang_update (Totem *totem)
 	GList *list;
 
 	list = bacon_video_widget_get_languages (totem->bvw);
-	if (totem_sublang_equal_lists (totem->language_list, list) == TRUE) {
+	if (totem_sublang_equal_lists (totem->languages_list, list) == TRUE) {
 		g_list_free_full (list, g_free);
 	} else {
 		totem_languages_update (totem, list);
@@ -554,7 +520,7 @@ void
 totem_sublang_exit (Totem *totem)
 {
 	g_list_free_full (totem->subtitles_list, g_free);
-	g_list_free_full (totem->language_list, g_free);
+	g_list_free_full (totem->languages_list, g_free);
 }
 
 void
@@ -597,10 +563,5 @@ totem_ui_manager_setup (Totem *totem)
 	totem->main_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "main-action-group"));
 
 	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
-
-	totem->languages_action_group = NULL;
-	totem->languages_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
-	totem->subtitles_action_group = NULL;
-	totem->subtitles_ui_id = gtk_ui_manager_new_merge_id (totem->ui_manager);
 }
 

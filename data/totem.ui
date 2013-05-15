@@ -109,6 +109,10 @@
 	</section>
 	<section>
 		<submenu>
+			<attribute name="label">_Languages</attribute>
+			<section id="languages-placeholder"/>
+		</submenu>
+		<submenu>
 			<attribute name="label">S_ubtitles</attribute>
 			<section>
 				<item>
@@ -116,6 +120,7 @@
 					<attribute name="action">app.select-subtitle</attribute>
 				</item>
 				<section id="subtitle-download-placeholder"/>
+				<section id="subtitles-placeholder"/>
 			</section>
 		</submenu>
 	</section>
@@ -233,20 +238,6 @@
             <accelerator key="F9"/>
          </child>
 
-         <child>
-            <object class="GtkAction" id="subtitles-menu">
-               <property name="label" translatable="yes">S_ubtitles</property>
-               <property name="hide-if-empty">False</property>
-            </object>
-         </child>
-
-         <child>
-            <object class="GtkAction" id="languages-menu">
-               <property name="label" translatable="yes">_Languages</property>
-               <property name="hide-if-empty">False</property>
-            </object>
-         </child>
-
       </object>
    </child>
    <ui>
@@ -256,17 +247,8 @@
          </menu>
          <menu name="view" action="view-menu">
             <separator/>
-            <menu name="subtitles" action="subtitles-menu">
-               <placeholder name="placeholder"/>
-            </menu>
-            <separator/>
             <menuitem name="sidebar" action="sidebar"/>
             <placeholder name="sidebars-placeholder"/>
-         </menu>
-         <menu name="sound" action="sound-menu">
-            <menu name="languages" action="languages-menu">
-               <placeholder name="placeholder"/>
-            </menu>
          </menu>
       </menubar>
    </ui>
