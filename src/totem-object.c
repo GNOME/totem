@@ -550,25 +550,36 @@ totem_object_get_menu_section (TotemObject *totem,
  * @totem: a #TotemObject
  * @id: the ID for the menu section to empty
  *
- * Empty the GMenu section pointed to by @id.
+ * Empty the GMenu section pointed to by @id, and remove any
+ * related actions. Note that menu items with specific target
+ * will not have the associated action removed.
  **/
 void
 totem_object_empty_menu_section (TotemObject *totem,
 				 const char  *id)
 {
 	GMenu *menu;
-	gint i;
 
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
 	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
 	g_return_if_fail (menu != NULL);
 
-	for (i = 0; i < g_menu_model_get_n_items (G_MENU_MODEL (menu)); i++) {
+	while (g_menu_model_get_n_items (G_MENU_MODEL (menu)) > 0) {
 		const char *action;
-		g_menu_model_get_item_attribute (G_MENU_MODEL (menu), i, G_MENU_ATTRIBUTE_ACTION, "s", &action);
-		g_action_map_remove_action (G_ACTION_MAP (totem), action);
-		g_menu_remove (G_MENU (menu), i);
+		g_menu_model_get_item_attribute (G_MENU_MODEL (menu), 0, G_MENU_ATTRIBUTE_ACTION, "s", &action);
+		if (g_str_has_prefix (action, "app.")) {
+			GVariant *target;
+
+			target = g_menu_model_get_item_attribute_value (G_MENU_MODEL (menu), 0, G_MENU_ATTRIBUTE_TARGET, NULL);
+
+			/* Don't remove actions that have a specific target */
+			if (target == NULL)
+				g_action_map_remove_action (G_ACTION_MAP (totem), action + strlen ("app."));
+			else
+				g_variant_unref (target);
+		}
+		g_menu_remove (G_MENU (menu), 0);
 	}
 }
 
