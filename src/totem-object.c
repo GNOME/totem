@@ -1707,7 +1707,7 @@ totem_action_set_mrl (TotemObject *totem,
 		totem_action_set_sensitivity ("clear-playlist", FALSE);
 
 		/* Subtitle selection */
-		totem_action_set_sensitivity ("select-subtitle", FALSE);
+		totem_action_set_sensitivity2 ("app.select-subtitle", FALSE);
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
@@ -1752,7 +1752,7 @@ totem_action_set_mrl (TotemObject *totem,
 		totem_action_set_sensitivity ("clear-playlist", TRUE);
 
 		/* Subtitle selection */
-		totem_action_set_sensitivity ("select-subtitle", !totem_is_special_mrl (mrl));
+		totem_action_set_sensitivity2 ("select-subtitle", !totem_is_special_mrl (mrl));
 
 		/* Set the playlist */
 		play_pause_set_label (totem, STATE_PAUSED);

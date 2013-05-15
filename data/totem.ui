@@ -108,6 +108,17 @@
 		</item>
 	</section>
 	<section>
+		<submenu>
+			<attribute name="label">S_ubtitles</attribute>
+			<section>
+				<item>
+					<attribute name="label" translatable="yes">_Select Text Subtitles...</attribute>
+					<attribute name="action">app.select-subtitle</attribute>
+				</item>
+			</section>
+		</submenu>
+	</section>
+	<section>
 		<item>
 			<attribute name="label" translatable="yes">_Properties</attribute>
 			<attribute name="action">app.properties</attribute>
@@ -227,13 +238,6 @@
                <property name="hide-if-empty">False</property>
             </object>
          </child>
-         <child>
-            <object class="GtkAction" id="select-subtitle">
-               <property name="label" translatable="yes">_Select Text Subtitles...</property>
-               <property name="tooltip" translatable="yes">Select a file to use for text subtitles</property>
-               <signal name="activate" handler="select_subtitle_action_callback"/>
-            </object>
-         </child>
 
          <child>
             <object class="GtkAction" id="languages-menu">
@@ -252,7 +256,6 @@
          <menu name="view" action="view-menu">
             <separator/>
             <menu name="subtitles" action="subtitles-menu">
-               <menuitem name="select-subtitle" action="select-subtitle"/>
 	       <placeholder name="subtitle-download-placeholder"/>
 	       <separator/>
                <placeholder name="placeholder"/>

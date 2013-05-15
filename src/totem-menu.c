@@ -43,7 +43,6 @@ G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
-G_MODULE_EXPORT void select_subtitle_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void clear_playlist_action_callback (GtkAction *action, Totem *totem);
 
 static void
@@ -236,6 +235,15 @@ eject_action_cb (GSimpleAction *action,
 	totem_action_eject (TOTEM_OBJECT (user_data));
 }
 
+static void
+select_subtitle_action_cb (GSimpleAction *action,
+			   GVariant      *parameter,
+			   gpointer       user_data)
+{
+	totem_playlist_select_subtitle_dialog (TOTEM_OBJECT (user_data)->playlist,
+					       TOTEM_PLAYLIST_DIALOG_PLAYING);
+}
+
 static GActionEntry app_entries[] = {
 	/* Main app menu */
 	{ "open", open_action_cb, NULL, NULL, NULL },
@@ -255,6 +263,7 @@ static GActionEntry app_entries[] = {
 	{ "dvd-chapter-menu", dvd_chapter_menu_action_cb, NULL, NULL, NULL },
 
 	/* Cogwheel menu */
+	{ "select-subtitle", select_subtitle_action_cb, NULL, NULL, NULL },
 	{ "aspect-ratio", aspect_ratio_action_cb, "i", "0", aspect_ratio_change_state },
 	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
 	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
@@ -552,13 +561,6 @@ void
 play_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_object_action_play_pause (totem);
-}
-
-void
-select_subtitle_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_playlist_select_subtitle_dialog (totem->playlist,
-					       TOTEM_PLAYLIST_DIALOG_PLAYING);
 }
 
 void
