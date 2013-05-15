@@ -383,9 +383,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         schema = 'org.gnome.totem.plugins.opensubtitles'
         self._settings = Gio.Settings.new (schema)
 
-        self._manager = None
-        self._menu_id = None
-        self._action_group = None
         self._action = None
 
         self._find_button = None
@@ -413,7 +410,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         # are related to.
         self._filename = None
 
-        self._manager = self._totem.get_ui_manager ()
         self._append_menu ()
 
         self._totem.connect ('file-opened', self.__on_totem__file_opened)
@@ -518,34 +514,14 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._progress.set_fraction (0.0)
 
     def _append_menu (self):
-        self._action_group = Gtk.ActionGroup (name='OpenSubtitles')
-
-        tooltip_text = _(u"Download movie subtitles from OpenSubtitles")
-        self._action = Gtk.Action (name='opensubtitles',
-                                 label=_(u'_Download Movie Subtitles…'),
-                                 tooltip=tooltip_text,
-                                 stock_id=None)
-
-        self._action_group.add_action (self._action)
-
-        self._manager.insert_action_group (self._action_group, 0)
-
-        self._menu_id = self._manager.new_merge_id ()
-        merge_path = '/tmw-menubar/view/subtitles/subtitle-download-placeholder'
-        self._manager.add_ui (self._menu_id,
-                             merge_path,
-                             'opensubtitles',
-                             'opensubtitles',
-                             Gtk.UIManagerItemType.MENUITEM,
-                             False
-                            )
-        self._action.set_visible (True)
-
-        self._manager.ensure_update ()
-
+        self._action = Gio.SimpleAction.new ("opensubtitles", None)
         self._action.connect ('activate', self._show_dialog)
+        self._totem.add_action (self._action)
 
-        self._action.set_sensitive (self._totem.is_playing () and
+        menu = self._totem.get_menu_section ("subtitle-download-placeholder");
+        menu.append (_(u'_Download Movie Subtitles…'), "app.opensubtitles")
+
+        self._action.set_enabled (self._totem.is_playing () and
                   self._check_allowed_scheme () and
                                   not self._check_is_audio ())
 
@@ -569,8 +545,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         return False
 
     def _delete_menu (self):
-        self._manager.remove_action_group (self._action_group)
-        self._manager.remove_ui (self._menu_id)
+        self._totem.empty_menu_section ("subtitle-download-placeholder")
 
     def _get_results (self, movie_hash, movie_size):
         self._list_store.clear ()
@@ -694,7 +669,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
     def _download_and_apply (self):
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
-        self._action.set_sensitive (False)
+        self._action.set_enabled (False)
         self._tree_view.set_sensitive (False)
         self._save_selected_subtitle ()
 
@@ -724,7 +699,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
     def __on_totem__file_opened (self, _totem, new_mrl):
         # Check if allows subtitles
         if self._check_allowed_scheme () and not self._check_is_audio ():
-            self._action.set_sensitive (True)
+            self._action.set_enabled (True)
             if self._dialog:
                 self._find_button.set_sensitive (True)
                 # Check we're not re-opening the same file; if we are, don't
@@ -735,7 +710,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
                     self._list_store.clear ()
                     self._apply_button.set_sensitive (False)
         else:
-            self._action.set_sensitive (False)
+            self._action.set_enabled (False)
             if self._dialog and self._dialog.is_active ():
                 self._filename = None
                 self._list_store.clear ()
@@ -743,7 +718,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
                 self._find_button.set_sensitive (False)
 
     def __on_totem__file_closed (self, _totem):
-        self._action.set_sensitive (False)
+        self._action.set_enabled (False)
         if self._dialog:
             self._apply_button.set_sensitive (False)
             self._find_button.set_sensitive (False)
