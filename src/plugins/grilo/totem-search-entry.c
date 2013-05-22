@@ -289,3 +289,11 @@ totem_search_entry_set_selected_id (TotemSearchEntry *self,
 	g_warning ("Could not find ID '%s' in TotemSearchEntry %p",
 		   id, self);
 }
+
+GtkWidget *
+totem_search_entry_get_entry (TotemSearchEntry *self)
+{
+	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
+
+	return self->priv->entry;
+}
