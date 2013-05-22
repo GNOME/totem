@@ -94,6 +94,7 @@ typedef enum {
 
 typedef struct {
 	Totem *totem;
+	GtkWindow *main_window;
 
 	/* Current media selected in results*/
 	GrlMedia *selected_media;
@@ -121,7 +122,7 @@ typedef struct {
 	gboolean in_search;
 
 	/* Search widgets */
-	GtkWidget *revealer;
+	GtkWidget *search_bar;
 	GtkWidget *search_entry;
 	GtkTreeModel *search_results_model;
 	GHashTable *search_sources_ht;
@@ -1271,6 +1272,18 @@ back_button_clicked_cb (GtkButton        *button,
 	gtk_tree_path_free (path);
 }
 
+static gboolean
+window_key_press_event_cb (GtkWidget        *win,
+			   GdkEvent         *event,
+			   TotemGriloPlugin *self)
+{
+	/* Check whether we're in the browse panel */
+	if (!g_str_equal (totem_object_get_main_page (self->priv->totem), "grilo"))
+		return FALSE;
+
+	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->priv->search_bar), event);
+}
+
 static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
@@ -1280,11 +1293,14 @@ setup_browse (TotemGriloPlugin *self,
 	GtkAdjustment *adj;
 
 	/* Search */
-	self->priv->revealer = GTK_WIDGET (gtk_builder_get_object (builder, "gw_revealer"));
+	self->priv->search_bar = GTK_WIDGET (gtk_builder_get_object (builder, "gw_searchbar"));
 	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
 	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
 	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
+	g_object_set (self->priv->search_bar, "entry", totem_search_entry_get_entry (self->priv->search_entry), NULL);
 
+	g_signal_connect (self->priv->main_window, "key-press-event",
+			  G_CALLBACK (window_key_press_event_cb), self);
 	g_signal_connect (self->priv->search_entry, "activate",
 	                  G_CALLBACK (search_entry_activate_cb),
 	                  self);
@@ -1332,15 +1348,11 @@ setup_browse (TotemGriloPlugin *self,
 	g_signal_connect (adj, "changed",
 	                  G_CALLBACK (adjustment_changed_cb), self);
 
-
-	//FIXME do this when events come in
-	gtk_revealer_set_reveal_child (GTK_REVEALER (self->priv->revealer), TRUE);
-
 	set_browser_filter_model_for_path (self, NULL);
 
 	totem_object_add_main_page (self->priv->totem,
-	                        "grilo",
-	                        GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
+				    "grilo",
+				    GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
 }
 
 static void
@@ -1437,19 +1449,17 @@ static void
 impl_activate (PeasActivatable *plugin)
 {
 	GtkBuilder *builder;
-	GtkWindow *main_window;
 
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (plugin);
 	TotemGriloPluginPrivate *priv = self->priv;
 	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
-	main_window = totem_object_get_main_window (priv->totem);
+	priv->main_window = totem_object_get_main_window (priv->totem);
 	priv->cache_thumbnails = g_hash_table_new_full (g_str_hash,
 	                                                g_str_equal,
 	                                                g_free,
 	                                                g_object_unref);
 
-	builder = totem_plugin_load_interface ("grilo", "grilo.ui", TRUE, main_window, self);
-	g_object_unref (main_window);
+	builder = totem_plugin_load_interface ("grilo", "grilo.ui", TRUE, self->priv->main_window, self);
 	setup_ui (self, builder);
 	grl_init (0, NULL);
 	setup_config (self);
@@ -1488,5 +1498,6 @@ impl_deactivate (PeasActivatable *plugin)
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 
+	g_object_unref (self->priv->main_window);
 	g_object_unref (self->priv->totem);
 }

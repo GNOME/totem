@@ -50,7 +50,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="border_width">0</property>
-    <property name="spacing">6</property>
+    <property name="spacing">0</property>
     <child>
       <object class="GtkHeaderBar" id="gw_headerbar">
         <property name="visible">True</property>
@@ -63,56 +63,25 @@
       </packing>
     </child>
     <child>
-      <object class="GtkRevealer" id="gw_revealer">
+      <object class="GtkSearchBar" id="gw_searchbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkToolbar" id="gw_toolbar">
+          <object class="GtkHBox" id="gw_box">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <style>
-              <class name="primary-toolbar"/>
-            </style>
+            <property name="spacing">6</property>
+            <property name="width_request">500</property>
+            <property name="halign">center</property>
             <child>
-              <object class="GtkToolItem" id="toolbutton1">
+              <object class="TotemSearchEntry" id="gw_search_text">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkHBox" id="gw_combo_box">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="spacing">6</property>
-                    <property name="width_request">500</property>
-                    <property name="halign">center</property>
-                    <child>
-                      <object class="GtkLabel" id="gw_search_title">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Search</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="TotemSearchEntry" id="gw_search_text">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
+                <property name="can_focus">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
-                <property name="homogeneous">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>
