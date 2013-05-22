@@ -871,6 +871,19 @@ totem_object_add_main_page (TotemObject *totem,
 }
 
 /**
+ * totem_object_get_main_page:
+ * @totem: a #TotemObject
+ *
+ * Returns the identifier for the current page in Totem's
+ * main view.
+ **/
+const char *
+totem_object_get_main_page (Totem *totem)
+{
+	return gtk_stack_get_visible_child_name (GTK_STACK (totem->stack));
+}
+
+/**
  * totem_file_opened:
  * @totem: a #TotemObject
  * @mrl: the MRL opened
