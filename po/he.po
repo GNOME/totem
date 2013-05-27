@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-24 12:11+0300\n"
-"PO-Revision-Date: 2013-05-24 12:13+0200\n"
+"POT-Creation-Date: 2013-05-27 11:11+0300\n"
+"PO-Revision-Date: 2013-05-27 11:12+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "Language: he\n"
@@ -627,6 +627,11 @@ msgstr "הצגה או הסתרה של סרגל הצד"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "נא להזין את _מיקום הקובץ שברצונך לפתוח:"
 
+#. translators: Unknown remaining time
+#: ../src/backend/bacon-time-label.c:115
+msgid "--:--"
+msgstr "--:--"
+
 #: ../src/backend/bacon-video-widget.c:1712
 msgid "Password requested for RTSP server"
 msgstr "נדרשת סיסמה עבור שרת ה־RTSP"
@@ -713,11 +718,6 @@ msgstr "המדיה איננה כוללת זרמי וידאו נתמכים"
 #: ../src/backend/bacon-video-widget.c:6059
 msgid "Some necessary plug-ins are missing. Make sure that the program is correctly installed."
 msgstr "חלק מתוספי השמע הנחוצים חסרים. נא לוודא שהתכנית מותקנת כראוי."
-
-#. translators: Unknown remaining time
-#: ../src/backend/bacon-time-label.c:115
-msgid "--:--"
-msgstr "--:--"
 
 #: ../src/eggfileformatchooser.c:240
 #, c-format
@@ -2042,6 +2042,14 @@ msgstr "5"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To..."
 msgstr "_דילוג אל..."
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:1
+msgid "Vimeo"
+msgstr "Vimeo"
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:2
+msgid "Sets the user agent for the Vimeo site"
+msgstr "הגדרת סוכן המשתמש ל־Vimeo"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
 msgid "Zeitgeist Plugin"
