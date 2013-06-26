@@ -1926,7 +1926,7 @@ bvw_download_buffering_done (BaconVideoWidget *bvw)
   }
 
   if (bvw->priv->buffering_left * BUFFERING_LEFT_RATIO < bvw->priv->stream_length - bvw->priv->current_time) {
-    GST_DEBUG ("Buffering left: %lld * %f = %lld < %lld",
+    GST_DEBUG ("Buffering left: %" G_GINT64_FORMAT " * %f, = %f < %" G_GUINT64_FORMAT,
 	       bvw->priv->buffering_left, BUFFERING_LEFT_RATIO,
 	       bvw->priv->buffering_left * BUFFERING_LEFT_RATIO,
 	       bvw->priv->stream_length - bvw->priv->current_time);
