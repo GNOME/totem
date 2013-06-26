@@ -115,6 +115,9 @@ app_init (Totem *totem, char **argv)
 
 	sidebar_pageid = totem_setup_window (totem);
 
+	/* Show ! (again) the video widget this time. */
+	video_widget_create (totem);
+
 	/* Show ! */
 	if (optionstate.fullscreen == FALSE) {
 		gtk_widget_show (totem->win);
@@ -124,9 +127,6 @@ app_init (Totem *totem, char **argv)
 	}
 
 	totem->controls_visibility = TOTEM_CONTROLS_UNDEFINED;
-
-	/* Show ! (again) the video widget this time. */
-	video_widget_create (totem);
 
 	totem->seek = g_object_get_data (totem->controls, "seek_scale");
 	totem->seekadj = gtk_range_get_adjustment (GTK_RANGE (totem->seek));

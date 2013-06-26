@@ -4068,7 +4068,6 @@ video_widget_create (TotemObject *totem)
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
 				   (gpointer *) bvw);
 
-	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
 	totem_preferences_visuals_setup (totem);
