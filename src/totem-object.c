@@ -655,7 +655,6 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 		subtitle = NULL;
 		totem_playlist_set_current (playlist, end);
 		mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
-		totem_object_set_main_page (data->totem, "player", TRUE);
 		totem_action_set_mrl_and_play (data->totem, mrl, subtitle);
 		g_free (mrl);
 		g_free (subtitle);
@@ -1312,6 +1311,7 @@ totem_object_action_play (TotemObject *totem)
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 		return;
 
+	totem_object_set_main_page (totem, "player", TRUE);
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 
