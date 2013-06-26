@@ -1707,7 +1707,7 @@ totem_action_set_mrl (TotemObject *totem,
 		totem_action_set_sensitivity ("clear-playlist", FALSE);
 
 		/* Subtitle selection */
-		totem_action_set_sensitivity2 ("app.select-subtitle", FALSE);
+		totem_action_set_sensitivity2 ("select-subtitle", FALSE);
 
 		/* Set the logo */
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
