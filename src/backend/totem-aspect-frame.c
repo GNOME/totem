@@ -320,9 +320,7 @@ totem_aspect_frame_pick (ClutterActor       *actor,
 
   clutter_actor_get_allocation_box (actor, &box);
 
-  cogl_set_source_color4ub (color->red, color->green,
-                            color->blue, color->alpha);
-  cogl_rectangle (box.x1, box.y1, box.x2, box.y2);
+  CLUTTER_ACTOR_CLASS (totem_aspect_frame_parent_class)->pick (actor, color);
 
   child = clutter_actor_get_child_at_index (actor, 0);
 
