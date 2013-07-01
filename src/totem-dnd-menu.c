@@ -86,17 +86,12 @@ totem_drag_ask (gboolean show_add_to)
 	GtkWidget *menu;
 	GtkWidget *menu_item;
 	DragData dt;
-	gboolean rtl;
 
 	dt.ch = 0;
 
 	menu = gtk_menu_new ();
 
-	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
-
-	drag_append_drop_action_menu_item (menu, _("_Play Now"), 
-	                                   rtl ? "media-playback-start-rtl-symbolic" : "media-playback-start-symbolic", 
-	                                   GDK_ACTION_MOVE, &dt);
+	drag_append_drop_action_menu_item (menu, _("_Play Now"), "media-playback-start-symbolic", GDK_ACTION_MOVE, &dt);
 
 	if (show_add_to != FALSE)
 		drag_append_drop_action_menu_item (menu, _("_Add to Playlist"), "gtk-add", GDK_ACTION_COPY, &dt);
