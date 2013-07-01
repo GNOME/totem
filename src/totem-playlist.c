@@ -1272,12 +1272,15 @@ set_playing_icon (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
 {
 	TotemPlaylistStatus playing;
 	const char *icon_name;
+	gboolean rtl;
+
+	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	gtk_tree_model_get (model, iter, PLAYING_COL, &playing, -1);
 
 	switch (playing) {
 		case TOTEM_PLAYLIST_STATUS_PLAYING:
-			icon_name = "media-playback-start-symbolic";
+			icon_name = rtl ? "media-playback-start-rtl-symbolic" : "media-playback-start-symbolic";
 			break;
 		case TOTEM_PLAYLIST_STATUS_PAUSED:
 			icon_name = "media-playback-pause-symbolic";

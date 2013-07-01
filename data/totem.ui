@@ -205,7 +205,6 @@
          <child>
             <object class="GtkAction" id="next-chapter">
                <property name="label" translatable="yes">_Next Chapter/Movie</property>
-               <property name="icon-name">media-skip-forward-symbolic</property>
                <property name="tooltip" translatable="yes">Next chapter or movie</property>
                <signal name="activate" handler="next_chapter_action_callback"/>
             </object>
@@ -214,7 +213,6 @@
          <child>
             <object class="GtkAction" id="previous-chapter">
                <property name="label" translatable="yes">_Previous Chapter/Movie</property>
-               <property name="icon-name">media-skip-backward-symbolic</property>
                <property name="tooltip" translatable="yes">Previous chapter or movie</property>
                <signal name="activate" handler="previous_chapter_action_callback"/>
             </object>

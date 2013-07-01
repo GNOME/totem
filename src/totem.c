@@ -75,6 +75,8 @@ app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
+	const char *icon_skip_forward, *icon_skip_backward;
+	GtkAction *next_chapter, *previous_chapter;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
@@ -89,6 +91,20 @@ app_init (Totem *totem, char **argv)
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
 		totem_object_action_exit (NULL);
+
+	if (gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL) {
+		icon_skip_forward = "media-skip-forward-rtl-symbolic";
+		icon_skip_backward = "media-skip-backward-rtl-symbolic";
+	} else {
+		icon_skip_forward = "media-skip-forward-symbolic";
+		icon_skip_backward = "media-skip-backward-symbolic";
+	}
+
+	next_chapter = GTK_ACTION (gtk_builder_get_object (totem->xml, "next-chapter"));
+	previous_chapter = GTK_ACTION (gtk_builder_get_object (totem->xml, "previous-chapter"));
+
+	g_object_set (next_chapter, "icon-name", icon_skip_forward, NULL);
+	g_object_set (previous_chapter, "icon-name", icon_skip_backward, NULL);
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
