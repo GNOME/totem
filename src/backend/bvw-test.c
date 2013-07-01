@@ -80,6 +80,7 @@ int main
 	GtkBox *box;
 	GtkToolItem *item;
 	GtkWidget *image;
+	gchar *icon_start, *icon_skip_forward, *icon_skip_backward;
 
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
@@ -87,6 +88,16 @@ int main
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_assert_not_reached ();
+
+	if (gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL) {
+		icon_start = "media-playback-start-rtl-symbolic";
+		icon_skip_forward = "media-skip-forward-rtl-symbolic";
+		icon_skip_backward = "media-skip-backward-rtl-symbolic";
+	} else {
+		icon_start = "media-playback-start-symbolic";
+		icon_skip_forward = "media-skip-forward-symbolic";
+		icon_skip_backward = "media-skip-backward-symbolic";
+	}
 
 	context = g_option_context_new ("- Play audio and video inside a web browser");
 	baconoptiongroup = bacon_video_widget_get_option_group();
@@ -129,17 +140,17 @@ int main
 
 	/* Previous */
 	item = gtk_tool_button_new (NULL, NULL);
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "media-skip-backward-symbolic");
+	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_skip_backward);
 	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
 
 	/* Play/Pause */
 	item = gtk_tool_button_new (NULL, NULL);
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "media-playback-start-symbolic");
+	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_start);
 	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
 
 	/* Next */
 	item = gtk_tool_button_new (NULL, NULL);
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "media-skip-forward-symbolic");
+	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_skip_forward);
 	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
 
 	/* Separator */
