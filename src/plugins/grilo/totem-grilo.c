@@ -1278,9 +1278,6 @@ setup_browse (TotemGriloPlugin *self,
 	GtkWidget *button;
 	AtkObject *accessible;
 	GtkAdjustment *adj;
-	gboolean rtl;
-
-	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	/* Search */
 	self->priv->revealer = GTK_WIDGET (gtk_builder_get_object (builder, "gw_revealer"));
@@ -1299,7 +1296,7 @@ setup_browse (TotemGriloPlugin *self,
 	self->priv->header = GTK_WIDGET (gtk_builder_get_object (builder, "gw_headerbar"));
 	self->priv->back_button = button = gd_header_simple_button_new ();
 	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button),
-						 rtl ? "go-previous-rtl-symbolic" : "go-previous-symbolic");
+						 "go-previous-symbolic");
 	gtk_widget_set_no_show_all (button, TRUE);
 	accessible = gtk_widget_get_accessible (button);
 	atk_object_set_name (accessible, _("Back"));
@@ -1309,7 +1306,7 @@ setup_browse (TotemGriloPlugin *self,
 #if 0
 	self->priv->search_button = button = gd_header_simple_button_new ();
 	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button),
-						 rtl ? "go-previous-rtl-symbolic" : "go-previous-symbolic");
+						 "go-previous-symbolic");
 	gtk_widget_set_no_show_all (button, TRUE);
 	accessible = gtk_widget_get_accessible (button);
 	atk_object_set_name (accessible, _("Back"));
