@@ -286,7 +286,6 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 {
 	GtkWidget *image;
 	const gchar *id;
-	const gchar *icon_start;
 
 	if (state == emb->state)
 		return;
@@ -295,14 +294,9 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	image = gtk_button_get_image (GTK_BUTTON (emb->pp_button));
 
-	if (gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL)
-		icon_start = "media-playback-start-rtl-symbolic";
-	else
-		icon_start = "media-playback-start-symbolic";
-
 	switch (state) {
 	case TOTEM_STATE_STOPPED:
-		id = icon_start;
+		id = "media-playback-start-symbolic";
 		if (emb->href_uri != NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
 				(gtk_widget_get_window (GTK_WIDGET (emb->bvw)),
@@ -310,7 +304,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		}
 		break;
 	case TOTEM_STATE_PAUSED:
-		id = icon_start;
+		id = "media-playback-start-symbolic";
 		break;
 	case TOTEM_STATE_PLAYING:
 		id = "media-playback-pause-symbolic";
@@ -1634,13 +1628,10 @@ totem_embedded_construct (TotemEmbedded *emb,
 	GtkWidget *child, *container, *image;
 	GtkWidget *popup_button;
 	GError *err = NULL;
-	gboolean rtl;
 
 	emb->xml = totem_interface_load ("mozilla-viewer.ui", TRUE,
 					 GTK_WINDOW (emb->window), emb);
 	g_assert (emb->xml);
-
-	rtl = gtk_widget_get_default_direction () == GTK_TEXT_DIR_RTL;
 
 	if (xid != 0) {
 		g_assert (!emb->hidden);
@@ -1754,7 +1745,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 //			  G_CALLBACK (cb_on_seek), emb);
 
 	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
-	image = gtk_image_new_from_icon_name (rtl ? "media-playback-start-rtl-symbolic" : "media-playback-start-symbolic", GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name ("media-playback-start-symbolic", GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (emb->pp_button), image);
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
