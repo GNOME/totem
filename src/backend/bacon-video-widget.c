@@ -5889,7 +5889,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
-  ClutterConstraint *constraint;
   GstElement *audio_bin, *audio_converter;
   GstPad *audio_pad;
 
@@ -5961,7 +5960,10 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->auto_resize = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
-  clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), CLUTTER_COLOR_Black);
+  clutter_actor_set_layout_manager (bvw->priv->stage,
+                                    clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_FILL, CLUTTER_BIN_ALIGNMENT_FILL));
+  clutter_actor_set_name (bvw->priv->stage, "stage");
+  clutter_actor_set_background_color (bvw->priv->stage, CLUTTER_COLOR_Black);
 
   /* Video sink, with aspect frame */
   bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
@@ -5975,8 +5977,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   bvw->priv->logo = clutter_texture_new ();
   totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->logo_frame), bvw->priv->logo);
   clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->logo_frame);
-  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
-  clutter_actor_add_constraint_with_name (bvw->priv->logo_frame, "size", constraint);
   clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
 
   /* The video */
@@ -5985,8 +5985,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
   totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->frame), bvw->priv->texture);
 
   clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->frame);
-  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
-  clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
 
   clutter_actor_set_child_above_sibling (CLUTTER_ACTOR (bvw->priv->stage),
 					 CLUTTER_ACTOR (bvw->priv->logo_frame),
