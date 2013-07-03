@@ -69,7 +69,7 @@ const char *totem_search_entry_get_selected_id (TotemSearchEntry *self);
 void        totem_search_entry_set_selected_id (TotemSearchEntry *self,
 						const char       *id);
 
-GtkWidget  *totem_search_entry_get_entry       (TotemSearchEntry *self);
+GtkEntry   *totem_search_entry_get_entry       (TotemSearchEntry *self);
 
 G_END_DECLS
 
