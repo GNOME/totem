@@ -1297,7 +1297,8 @@ setup_browse (TotemGriloPlugin *self,
 	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
 	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
 	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
-	g_object_set (self->priv->search_bar, "entry", totem_search_entry_get_entry (self->priv->search_entry), NULL);
+	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
+				      totem_search_entry_get_entry (TOTEM_SEARCH_ENTRY (self->priv->search_entry)));
 
 	g_signal_connect (self->priv->main_window, "key-press-event",
 			  G_CALLBACK (window_key_press_event_cb), self);
