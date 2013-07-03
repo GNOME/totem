@@ -10,7 +10,7 @@ plugin_in_files = zeitgeist-dp.plugin.in
 AM_VALAFLAGS = \
 	--girdir=$(top_builddir)/src	\
 	--pkg Totem-1.0 --pkg Peas-1.0 --pkg gtk+-3.0 \
-	--pkg zeitgeist-1.0 \
+	--pkg zeitgeist-2.0 \
 	bacon-video.vapi
 
 libtotem_zeitgeist_dp_plugin_la_SOURCES = totem-zeitgeist-dp-plugin.vala

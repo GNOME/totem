@@ -428,10 +428,10 @@ for plugin in ${used_plugins}; do
 				plugin_error_or_ignore "you need introspection support for the zeitgeist-dp plugin"
 				add_plugin="0"
 			else
-				PKG_CHECK_MODULES(LIBZEITGEIST, zeitgeist-1.0 >= 0.3.6,
+				PKG_CHECK_MODULES(LIBZEITGEIST, zeitgeist-2.0 >= 0.9.12,
 				[HAS_LIBZEITGEIST=yes], [HAS_LIBZEITGEIST=no])
 				if test "${HAS_LIBZEITGEIST}" != "yes" ; then
-					plugin_error_or_ignore "you need zeitgeist-1.0 >= 0.3.6 to use the zeitgeist-dp plugin"
+					plugin_error_or_ignore "you need zeitgeist-2.0 >= 0.9.12 to use the zeitgeist-dp plugin"
 					add_plugin="0"
 				fi
 			fi

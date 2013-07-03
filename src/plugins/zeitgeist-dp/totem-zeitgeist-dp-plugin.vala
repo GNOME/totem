@@ -41,15 +41,16 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
     signals += Signal.connect_swapped (totem, "notify::playing",
                                        (Callback) playing_changed, this);
 
-    PtrArray templates = new PtrArray ();
-    var event = new Zeitgeist.Event.full ("", Zeitgeist.ZG_USER_ACTIVITY,
+    GenericArray<Zeitgeist.Event> templates =
+      new GenericArray<Zeitgeist.Event> ();
+    var event = new Zeitgeist.Event.full ("", Zeitgeist.ZG.USER_ACTIVITY,
                                           "application://totem.desktop", null);
     templates.add (event);
     var ds = new Zeitgeist.DataSource.full (
       "org.gnome.Totem,dataprovider",
       "Totem dataprovider",
       "Logs access/leave events for media files played with Totem",
-      (owned) templates
+      templates
     );
     zg_registry.register_data_source.begin (ds, null);
   }
@@ -175,7 +176,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
       var video = totem.get_video_widget () as Bacon.VideoWidget;
       video.get_metadata (Bacon.MetadataType.HAS_VIDEO, out val);
       current_media.interpretation = val.get_boolean () ?
-        Zeitgeist.NFO_VIDEO : Zeitgeist.NFO_AUDIO;
+        Zeitgeist.NFO.VIDEO : Zeitgeist.NFO.AUDIO;
 
       query_media_mimetype (current_media.mrl);
 
@@ -208,7 +209,7 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
   private void send_event_to_zg (bool leave_event = false) {
     if (current_media.mrl != null && current_media.title != null) {
       string event_interpretation = leave_event ?
-        Zeitgeist.ZG_LEAVE_EVENT : Zeitgeist.ZG_ACCESS_EVENT;
+        Zeitgeist.ZG.LEAVE_EVENT : Zeitgeist.ZG.ACCESS_EVENT;
       string origin = Path.get_dirname (current_media.mrl);
       var subject = new Zeitgeist.Subject.full (
         current_media.mrl,
@@ -218,12 +219,16 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
         origin,
         current_media.title,
         "");
+      GenericArray<Zeitgeist.Event> events =
+        new GenericArray<Zeitgeist.Event> ();
       var event = new Zeitgeist.Event.full (event_interpretation,
-                                            Zeitgeist.ZG_USER_ACTIVITY,
+                                            Zeitgeist.ZG.USER_ACTIVITY,
                                             "application://totem.desktop",
-                                            subject, null);
-      event.set_timestamp (current_media.timestamp);
-      zg_log.insert_events_no_reply (event, null);
+                                            null);
+      event.add_subject (subject);
+      events.add (event);
+      event.timestamp = current_media.timestamp;
+      zg_log.insert_events_no_reply (events);
     }
   }
 }
