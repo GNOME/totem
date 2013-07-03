@@ -118,19 +118,11 @@ void
 totem_sidebar_setup (Totem *totem, gboolean visible)
 {
 	GtkPaned *item;
-	GtkAction *action;
-	GtkUIManager *uimanager;
-	GtkActionGroup *action_group;
 
 	item = GTK_PANED (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
 	totem->sidebar = gtk_notebook_new ();
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (totem->sidebar), FALSE);
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (totem->sidebar), FALSE);
-
-	action_group = gtk_action_group_new ("SidebarActions");
-	uimanager = totem_object_get_ui_manager (totem);
-	gtk_ui_manager_insert_action_group (uimanager, action_group, -1);
-	g_object_set_data (G_OBJECT (totem->sidebar), "sidebar-action-group", action_group);
 
 	totem_sidebar_add_page (totem, "playlist", _("Playlist"), NULL, GTK_WIDGET (totem->playlist));
 	gtk_paned_pack2 (item, totem->sidebar, FALSE, FALSE);
@@ -144,15 +136,6 @@ totem_sidebar_setup (Totem *totem, gboolean visible)
 		gtk_widget_hide (totem->sidebar);
 }
 
-static void
-action_activated (GtkAction *action,
-		  Totem     *totem)
-{
-	totem_sidebar_set_current_page (totem,
-					gtk_action_get_name (action),
-					TRUE);
-}
-
 void
 totem_sidebar_add_page (Totem *totem,
 			const char *page_id,
@@ -160,11 +143,6 @@ totem_sidebar_add_page (Totem *totem,
 			const char *accelerator,
 			GtkWidget *main_widget)
 {
-	GtkAction *action;
-	GtkActionGroup *action_group;
-	GtkUIManager *uimanager;
-	guint merge_id;
-
 	g_return_if_fail (page_id != NULL);
 	g_return_if_fail (GTK_IS_WIDGET (main_widget));
 
@@ -174,32 +152,6 @@ totem_sidebar_add_page (Totem *totem,
 	gtk_notebook_append_page (GTK_NOTEBOOK (totem->sidebar),
 				  main_widget,
 				  NULL);
-
-	/* The properties page already has a menu item in "Movie" */
-	if (g_str_equal (page_id, "properties"))
-		return;
-
-	action = gtk_action_new (page_id,
-				 label,
-				 NULL,
-				 NULL);
-	g_signal_connect (G_OBJECT (action), "activate",
-			  G_CALLBACK (action_activated), totem);
-
-	uimanager = totem_object_get_ui_manager (totem);
-	merge_id = gtk_ui_manager_new_merge_id (uimanager);
-
-	action_group = g_object_get_data (G_OBJECT (totem->sidebar), "sidebar-action-group");
-	gtk_action_group_add_action_with_accel (action_group, action, accelerator);
-	gtk_ui_manager_add_ui (uimanager,
-			       merge_id,
-			       "/ui/tmw-menubar/view/sidebars-placeholder",
-			       page_id,
-			       page_id,
-			       GTK_UI_MANAGER_MENUITEM,
-			       FALSE);
-	g_object_set_data (G_OBJECT (main_widget), "sidebar-menu-merge-id",
-			   GUINT_TO_POINTER (merge_id));
 }
 
 static int
@@ -230,13 +182,7 @@ void
 totem_sidebar_remove_page (Totem *totem,
 			   const char *page_id)
 {
-	GtkUIManager *uimanager;
-	GtkAction *action;
-	GtkActionGroup *action_group;
-	GtkWidget *main_widget;
 	int page_num;
-	guint merge_id;
-	gpointer data;
 
 	page_num = get_page_num_for_name (totem, page_id);
 
@@ -245,20 +191,7 @@ totem_sidebar_remove_page (Totem *totem,
 		return;
 	}
 
-	main_widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (totem->sidebar), page_num);
-	data = g_object_get_data (G_OBJECT (main_widget), "sidebar-menu-merge-id");
-	merge_id = GPOINTER_TO_UINT (data);
-
 	gtk_notebook_remove_page (GTK_NOTEBOOK (totem->sidebar), page_num);
-
-	if (data == NULL)
-		return;
-
-	action_group = g_object_get_data (G_OBJECT (totem->sidebar), "sidebar-action-group");
-	uimanager = totem_object_get_ui_manager (totem);
-	gtk_ui_manager_remove_ui (uimanager, merge_id);
-	action = gtk_action_group_get_action (action_group, page_id);
-	gtk_action_group_remove_action (action_group, action);
 }
 
 char *
