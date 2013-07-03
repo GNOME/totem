@@ -1282,8 +1282,11 @@ totem_action_eject (TotemObject *totem)
 void
 totem_action_show_properties (TotemObject *totem)
 {
+	/* FIXME Implement showing properties */
+#if 0
 	if (totem_object_is_fullscreen (totem) == FALSE)
 		totem_sidebar_set_current_page (totem, "properties", TRUE);
+#endif
 }
 
 /**
