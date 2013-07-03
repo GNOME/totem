@@ -174,20 +174,6 @@
          </child>
 
          <child>
-            <object class="GtkAction" id="edit-menu">
-               <property name="label" translatable="yes">_Edit</property>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="clear-playlist">
-               <property name="label" translatable="yes">_Clear Playlist</property>
-               <property name="icon-name">gtk-clear</property>
-               <property name="tooltip" translatable="yes">Clear the playlist</property>
-               <signal name="activate" handler="clear_playlist_action_callback"/>
-            </object>
-         </child>
-
-         <child>
             <object class="GtkAction" id="view-menu">
                <property name="label" translatable="yes">_View</property>
             </object>
@@ -233,9 +219,6 @@
    </child>
    <ui>
       <menubar name="tmw-menubar">
-         <menu name="edit" action="edit-menu">
-            <menuitem name="clear-playlist" action="clear-playlist"/>
-         </menu>
          <menu name="view" action="view-menu">
             <separator/>
             <menuitem name="sidebar" action="sidebar"/>

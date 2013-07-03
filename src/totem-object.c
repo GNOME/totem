@@ -1716,9 +1716,6 @@ totem_action_set_mrl (TotemObject *totem,
 		totem_action_set_sensitivity ("next-chapter", FALSE);
 		totem_action_set_sensitivity ("previous-chapter", FALSE);
 
-		/* Clear the playlist */
-		totem_action_set_sensitivity ("clear-playlist", FALSE);
-
 		/* Subtitle selection */
 		totem_action_set_sensitivity2 ("select-subtitle", FALSE);
 
@@ -1760,9 +1757,6 @@ totem_action_set_mrl (TotemObject *totem,
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
 		totem_controls_set_sensitivity ("volume_button", caps);
 		totem->volume_sensitive = caps;
-
-		/* Clear the playlist */
-		totem_action_set_sensitivity ("clear-playlist", TRUE);
 
 		/* Subtitle selection */
 		totem_action_set_sensitivity2 ("select-subtitle", !totem_is_special_mrl (mrl));
