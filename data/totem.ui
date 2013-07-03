@@ -204,24 +204,11 @@
             </object>
          </child>
 
-         <child>
-               <object class="GtkToggleAction" id="sidebar">
-               <property name="label" translatable="yes">S_idebar</property>
-               <property name="tooltip" translatable="yes">Show or hide the sidebar</property>
-	       <property name="active">TRUE</property>
-	       <property name="icon-name">view-sidebar-symbolic</property>
-               <signal name="activate" handler="show_sidebar_action_callback"/>
-            </object>
-            <accelerator key="F9"/>
-         </child>
-
       </object>
    </child>
    <ui>
       <menubar name="tmw-menubar">
          <menu name="view" action="view-menu">
-            <separator/>
-            <menuitem name="sidebar" action="sidebar"/>
             <placeholder name="sidebars-placeholder"/>
          </menu>
       </menubar>

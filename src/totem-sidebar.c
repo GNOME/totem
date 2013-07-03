@@ -61,8 +61,6 @@ cb_resize (Totem * totem)
 void
 totem_sidebar_toggle (Totem *totem, gboolean state)
 {
-	GtkAction *action;
-
 	if (gtk_widget_get_visible (GTK_WIDGET (totem->sidebar)) == state)
 		return;
 
@@ -70,11 +68,6 @@ totem_sidebar_toggle (Totem *totem, gboolean state)
 		gtk_widget_show (GTK_WIDGET (totem->sidebar));
 	else
 		gtk_widget_hide (GTK_WIDGET (totem->sidebar));
-
-	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
-	totem_signal_block_by_data (G_OBJECT (action), totem);
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), state);
-	totem_signal_unblock_by_data (G_OBJECT (action), totem);
 
 	totem->sidebar_shown = state;
 	cb_resize(totem);
@@ -143,8 +136,6 @@ totem_sidebar_setup (Totem *totem, gboolean visible)
 	gtk_paned_pack2 (item, totem->sidebar, FALSE, FALSE);
 
 	totem->sidebar_shown = visible;
-	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), visible);
 
 	gtk_widget_show_all (totem->sidebar);
 	gtk_widget_realize (totem->sidebar);

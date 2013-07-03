@@ -3824,9 +3824,7 @@ create_control_button (TotemObject *totem,
 void
 totem_callback_connect (TotemObject *totem)
 {
-	GtkWidget *item, *image, *label;
-	GIcon *icon;
-	GtkAction *action;
+	GtkWidget *item, *image;
 	GtkBox *box;
 	GAction *gaction;
 	AtkObject *accessible;
@@ -3888,30 +3886,6 @@ totem_callback_connect (TotemObject *totem)
 				  "button");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-
-	/* Sidebar button (Drag'n'Drop) */
-	action = gtk_action_group_get_action (totem->main_action_group, "sidebar");
-	item = gtk_toggle_button_new ();
-	gtk_activatable_set_related_action (GTK_ACTIVATABLE (item), action);
-
-	/* Remove the label */
-	label = gtk_bin_get_child (GTK_BIN (item));
-	gtk_widget_destroy (label);
-
-	/* Force add an icon, so it doesn't follow the
-	 * gtk-button-images setting */
-	icon = g_themed_icon_new_with_default_fallbacks ("view-sidebar-symbolic");
-	image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_BUTTON);
-	gtk_widget_show (image);
-	gtk_container_add (GTK_CONTAINER (item), image);
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->header), item);
-	g_signal_connect (G_OBJECT (item), "drag_data_received",
-			G_CALLBACK (drop_playlist_cb), totem);
-	g_signal_connect (G_OBJECT (item), "drag_motion",
-			G_CALLBACK (drag_motion_playlist_cb), totem);
-	gtk_drag_dest_set (item, GTK_DEST_DEFAULT_ALL,
-			target_table, G_N_ELEMENTS (target_table),
-			GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
 	/* Add a back button */
 	item = gd_header_simple_button_new ();
