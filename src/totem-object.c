@@ -2667,68 +2667,17 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 void
 show_controls (TotemObject *totem, gboolean was_fullscreen)
 {
-	GtkWidget *menubar, *bvw_box, *widget;
-	GtkAllocation allocation;
-	int width = 0, height = 0;
+	GtkWidget *bvw_box, *widget;
 
 	if (totem->bvw == NULL)
 		return;
 
-	menubar = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_menubar_box"));
 	bvw_box = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
 	widget = GTK_WIDGET (totem->bvw);
 
-	gtk_widget_get_allocation (widget, &allocation);
-
 	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
-		if (was_fullscreen == FALSE) {
-			height = allocation.height;
-			width = allocation.width;
-		}
-
-		gtk_widget_set_sensitive (menubar, TRUE);
-		gtk_widget_show (menubar);
-		if (totem_sidebar_is_visible (totem) != FALSE) {
-			/* This is uglier then you might expect because of the
-			   resize handle between the video and sidebar. There
-			   is no convenience method to get the handle's width.
-			   */
-			GValue value = { 0, };
-			GtkWidget *pane;
-			GtkAllocation allocation_sidebar;
-			int handle_size;
-
-			g_value_init (&value, G_TYPE_INT);
-			pane = GTK_WIDGET (gtk_builder_get_object (totem->xml,
-					"tmw_main_pane"));
-			gtk_widget_style_get_property (pane, "handle-size",
-					&value);
-			handle_size = g_value_get_int (&value);
-			g_value_unset (&value);
-
-			gtk_widget_show (totem->sidebar);
-			gtk_widget_get_allocation (totem->sidebar, &allocation_sidebar);
-			width += allocation_sidebar.width + handle_size;
-		} else {
-			totem_action_save_size (totem);
-			gtk_widget_hide (totem->sidebar);
-		}
-
-		if (was_fullscreen == FALSE) {
-			GtkAllocation allocation_menubar;
-
-			gtk_widget_get_allocation (menubar, &allocation_menubar);
-			height += allocation_menubar.height;
-			gtk_window_resize (GTK_WINDOW(totem->win),
-					width, height);
-		}
+		totem_action_save_size (totem);
 	} else {
-		/* Hide and make the menubar unsensitive */
-		gtk_widget_set_sensitive (menubar, FALSE);
-		gtk_widget_hide (menubar);
-
-		gtk_widget_hide (totem->sidebar);
-
 		 /* We won't show controls in fullscreen */
 		gtk_container_set_border_width (GTK_CONTAINER (bvw_box), 0);
 	}
