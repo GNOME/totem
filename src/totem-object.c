@@ -1118,14 +1118,9 @@ totem_action_save_state (TotemObject *totem, const char *page_id)
 	g_key_file_set_integer (keyfile, "State",
 			"window_h", totem->window_h);
 	g_key_file_set_boolean (keyfile, "State",
-			"show_sidebar", totem_sidebar_is_visible (totem));
-	g_key_file_set_boolean (keyfile, "State",
 			"maximised", totem->maximised);
 	g_key_file_set_integer (keyfile, "State",
 			"sidebar_w", totem->sidebar_w);
-
-	g_key_file_set_string (keyfile, "State",
-			"sidebar_page", page_id);
 
 	contents = g_key_file_to_data (keyfile, NULL, NULL);
 	g_key_file_free (keyfile);
@@ -3692,7 +3687,6 @@ totem_setup_window (TotemObject *totem)
 {
 	GKeyFile *keyfile;
 	int w, h;
-	gboolean show_sidebar;
 	char *filename, *page_id;
 	GError *err = NULL;
 	GtkWidget *vbox;
@@ -3705,7 +3699,6 @@ totem_setup_window (TotemObject *totem)
 		totem->sidebar_w = 0;
 		w = DEFAULT_WINDOW_W;
 		h = DEFAULT_WINDOW_H;
-		show_sidebar = TRUE;
 		page_id = NULL;
 		g_free (filename);
 	} else {
@@ -3721,14 +3714,6 @@ totem_setup_window (TotemObject *totem)
 		h = g_key_file_get_integer (keyfile, "State", "window_h", &err);
 		if (err != NULL) {
 			h = 0;
-			g_error_free (err);
-			err = NULL;
-		}
-
-		show_sidebar = g_key_file_get_boolean (keyfile, "State",
-				"show_sidebar", &err);
-		if (err != NULL) {
-			show_sidebar = TRUE;
 			g_error_free (err);
 			err = NULL;
 		}
@@ -3771,7 +3756,7 @@ totem_setup_window (TotemObject *totem)
 	gdk_rgba_parse (&black, "Black");
 	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
 
-	totem_sidebar_setup (totem, show_sidebar);
+	totem_sidebar_setup (totem, FALSE);
 	return page_id;
 }
 
