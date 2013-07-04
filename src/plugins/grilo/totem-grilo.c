@@ -83,6 +83,8 @@
 const gchar *BLACKLIST_SOURCES[] = { "grl-bookmarks",
                                      "grl-shoutcast",
                                      "grl-flickr",
+                                     "grl-metadata-store",
+                                     "grl-podcasts",
                                      NULL };
 
 typedef enum {
