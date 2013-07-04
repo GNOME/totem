@@ -51,24 +51,22 @@ struct _TotemSearchEntryClass
 	GtkBoxClass parent_class;
 };
 
-GType totem_search_entry_get_type (void) G_GNUC_CONST;
+GType totem_search_entry_get_type              (void) G_GNUC_CONST;
 
-TotemSearchEntry *totem_search_entry_new (void);
+TotemSearchEntry *totem_search_entry_new       (void);
 
-void totem_search_entry_add_source (TotemSearchEntry *entry,
-                                  const gchar *id,
-                                  const gchar *label,
-                                  int priority);
-
-void totem_search_entry_remove_source (TotemSearchEntry *self,
-                                       const gchar *id);
-
-const char *totem_search_entry_get_text (TotemSearchEntry *self);
+void totem_search_entry_add_source             (TotemSearchEntry *entry,
+						const gchar      *id,
+						const gchar      *label,
+						int               priority);
+void totem_search_entry_remove_source          (TotemSearchEntry *self,
+						const gchar      *id);
 
 const char *totem_search_entry_get_selected_id (TotemSearchEntry *self);
 void        totem_search_entry_set_selected_id (TotemSearchEntry *self,
 						const char       *id);
 
+const char *totem_search_entry_get_text        (TotemSearchEntry *self);
 GtkEntry   *totem_search_entry_get_entry       (TotemSearchEntry *self);
 
 G_END_DECLS
