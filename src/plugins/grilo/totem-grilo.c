@@ -567,11 +567,8 @@ browse (TotemGriloPlugin *self,
 	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
 	grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
-	//FIXME https://bugzilla.gnome.org/show_bug.cgi?id=699477
-#if 0
 	if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
-#endif
 
 	bud = g_slice_new (BrowseUserData);
 	bud->totem_grilo = g_object_ref (self);
