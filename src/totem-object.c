@@ -1181,6 +1181,7 @@ totem_object_action_exit (TotemObject *totem)
 		gdk_display_sync (display);
 
 	totem_session_save (totem);
+	totem_session_cleanup (totem);
 
 	if (totem->bvw)
 		bacon_video_widget_close (totem->bvw);

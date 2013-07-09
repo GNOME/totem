@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 
 gboolean totem_session_try_restore (Totem *totem);
 void totem_session_save (Totem *totem);
+void totem_session_cleanup (Totem *totem);
 
 G_END_DECLS
 

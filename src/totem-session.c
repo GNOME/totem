@@ -27,30 +27,27 @@
 #include "totem-session.h"
 #include "totem-uri.h"
 
+static GFile *session_file = NULL;
+
 static GFile *
 get_session_file (void)
 {
-	GFile *file;
 	char *path;
 
+	if (session_file)
+		return session_file;
+
 	path = g_build_filename (totem_dot_dir (), "session_state.xspf", NULL);
-	file = g_file_new_for_path (path);
+	session_file = g_file_new_for_path (path);
 	g_free (path);
 
-	return file;
+	return session_file;
 }
 
 static char *
 get_session_filename (void)
 {
-	GFile *file;
-	char *uri;
-
-	file = get_session_file ();
-	uri = g_file_get_uri (file);
-	g_object_unref (file);
-
-	return uri;
+	return g_file_get_uri (get_session_file ());
 }
 
 gboolean
@@ -107,5 +104,10 @@ totem_session_save (Totem *totem)
 	if (!totem_playing_dvd (totem->mrl))
 		curr = bacon_video_widget_get_current_time (totem->bvw);
 	totem_playlist_save_session_playlist (totem->playlist, file, curr);
-	g_object_unref (file);
+}
+
+void
+totem_session_cleanup (Totem *totem)
+{
+	g_clear_object (&session_file);
 }
