@@ -195,7 +195,6 @@ void totem_object_empty_menu_section		(TotemObject *totem,
 						 const char  *id);
 
 GtkWidget *totem_object_get_video_widget	(TotemObject *totem);
-char *totem_object_get_version			(void);
 
 /* Current media information */
 char *	totem_object_get_short_title		(TotemObject *totem);

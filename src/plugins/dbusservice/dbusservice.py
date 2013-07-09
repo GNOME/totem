@@ -172,7 +172,7 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
                 'CanQuit': True,
                 'CanRaise': True,
                 'HasTrackList': False,
-                'Identity': self.totem.get_version (),
+                'Identity': 'Videos',
                 'DesktopEntry': 'totem',
                 'SupportedUriSchemes': self.totem.get_supported_uri_schemes (),
                 'SupportedMimeTypes': self.totem.get_supported_content_types (),

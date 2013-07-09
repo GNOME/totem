@@ -602,20 +602,6 @@ totem_object_get_video_widget (TotemObject *totem)
 }
 
 /**
- * totem_object_get_version:
- *
- * Gets the application name and version (e.g. "Totem 2.28.0").
- *
- * Return value: a newly-allocated string of the name and version of the application
- **/
-char *
-totem_object_get_version (void)
-{
-	/* Translators: %s is the totem version number */
-	return g_strdup_printf (_("Totem %s"), VERSION);
-}
-
-/**
  * totem_object_get_current_time:
  * @totem: a #TotemObject
  *
