@@ -2428,22 +2428,21 @@ update_slider_visibility (TotemObject *totem,
 {
 	if (totem->stream_length == stream_length)
 		return;
-	if (totem->stream_length > 0 &&
-	    stream_length > 0)
+	if (totem->stream_length > 0 && stream_length > 0)
 		return;
-	if (stream_length != 0) {
+	if (stream_length != 0)
 		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 65535.);
-	} else {
+	else
 		gtk_range_set_range (GTK_RANGE (totem->seek), 0., 0.);
-	}
 }
 
 static void
 update_current_time (BaconVideoWidget *bvw,
-		gint64 current_time,
-		gint64 stream_length,
-		double current_position,
-		gboolean seekable, TotemObject *totem)
+		     gint64            current_time,
+		     gint64            stream_length,
+		     double            current_position,
+		     gboolean          seekable,
+		     TotemObject      *totem)
 {
 	update_slider_visibility (totem, stream_length);
 
@@ -2451,12 +2450,11 @@ update_current_time (BaconVideoWidget *bvw,
 		gtk_adjustment_set_value (totem->seekadj,
 					  current_position * 65535);
 
-		if (stream_length == 0 && totem->mrl != NULL)
-		{
+		if (stream_length == 0 && totem->mrl != NULL) {
 			bacon_time_label_set_time (totem->time_label,
-						   (current_time), -1);
+						   current_time, -1);
 			bacon_time_label_set_time (totem->time_rem_label,
-						   (current_time), -1);
+						   current_time, -1);
 		} else {
 			bacon_time_label_set_time (totem->time_label,
 						   current_time,
