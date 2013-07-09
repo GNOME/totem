@@ -127,9 +127,6 @@ struct TotemPlaylistPrivate
 
 	/* Shuffle mode */
 	guint shuffle : 1;
-
-	/* Whether to auto-save the playlist */
-	guint save : 1;
 };
 
 /* Signals */
@@ -433,7 +430,7 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 		 * even to remove the existing session */
 		return;
 	}
-	if (!playlist->priv->save || PL_LEN == 0) {
+	if (PL_LEN == 0) {
 		g_file_delete (output, NULL, NULL);
 		return;
 	}
@@ -1553,13 +1550,6 @@ update_shuffle_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlis
 }
 
 static void
-update_save_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
-{
-	playlist->priv->save = g_settings_get_boolean (settings, "save-playback-state");
-	g_object_notify (G_OBJECT (playlist), "save");
-}
-
-static void
 update_lockdown_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
 {
 	playlist->priv->disable_save_to_disk = g_settings_get_boolean (settings, "disable-save-to-disk");
@@ -1580,11 +1570,9 @@ init_config (TotemPlaylist *playlist)
 
 	playlist->priv->repeat = g_settings_get_boolean (playlist->priv->settings, "repeat");
 	playlist->priv->shuffle = g_settings_get_boolean (playlist->priv->settings, "shuffle");
-	playlist->priv->save = g_settings_get_boolean (playlist->priv->settings, "save-playback-state");
 
 	g_signal_connect (playlist->priv->settings, "changed::repeat", (GCallback) update_repeat_cb, playlist);
 	g_signal_connect (playlist->priv->settings, "changed::shuffle", (GCallback) update_shuffle_cb, playlist);
-	g_signal_connect (playlist->priv->settings, "changed::save-playback-state", G_CALLBACK (update_save_cb), playlist);
 }
 
 static gboolean
@@ -2894,23 +2882,6 @@ totem_playlist_set_shuffle (TotemPlaylist *playlist, gboolean shuffle)
 }
 
 void
-totem_playlist_set_save (TotemPlaylist *playlist,
-			 gboolean       save)
-{
-	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
-
-	g_settings_set_boolean (playlist->priv->settings, "save-playback-state", save);
-}
-
-gboolean
-totem_playlist_get_save (TotemPlaylist *playlist)
-{
-	g_return_val_if_fail (TOTEM_IS_PLAYLIST (playlist), FALSE);
-
-	return playlist->priv->save;
-}
-
-void
 totem_playlist_set_at_start (TotemPlaylist *playlist)
 {
 	g_return_if_fail (TOTEM_IS_PLAYLIST (playlist));
@@ -3006,9 +2977,6 @@ totem_playlist_set_property (GObject      *object,
 	case PROP_REPEAT:
 		g_settings_set_boolean (playlist->priv->settings, "repeat", g_value_get_boolean (value));
 		break;
-	case PROP_SAVE:
-		playlist->priv->save = !!g_value_get_boolean (value);
-		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
 		break;
@@ -3031,9 +2999,6 @@ totem_playlist_get_property (GObject    *object,
 		break;
 	case PROP_REPEAT:
 		g_value_set_boolean (value, playlist->priv->repeat);
-		break;
-	case PROP_SAVE:
-		g_value_set_boolean (value, playlist->priv->save);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

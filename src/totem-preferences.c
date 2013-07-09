@@ -369,10 +369,6 @@ totem_setup_preferences (Totem *totem)
         g_signal_connect (totem->prefs, "destroy",
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
-	/* Save session on exit */
-	item = POBJ ("tpw_save_session_checkbutton");
-	g_settings_bind (totem->settings, "save-playback-state", item, "active", G_SETTINGS_BIND_DEFAULT);
-
 	/* Screensaver audio locking */
 	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
 	if (lock_screensaver_on_audio != FALSE)

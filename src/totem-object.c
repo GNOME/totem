@@ -1180,7 +1180,6 @@ totem_object_action_exit (TotemObject *totem)
 	if (display != NULL)
 		gdk_display_sync (display);
 
-	totem_session_save (totem);
 	totem_session_cleanup (totem);
 
 	if (totem->bvw)

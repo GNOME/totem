@@ -56,9 +56,6 @@ totem_session_try_restore (Totem *totem)
 	char *uri;
 	char *mrl, *subtitle;
 
-	if (totem_playlist_get_save (totem->playlist) == FALSE)
-		return FALSE;
-
 	totem_signal_block_by_data (totem->playlist, totem);
 
 	/* Possibly the only place in Totem where it makes sense to add an MRL to the playlist synchronously, since we haven't yet entered
@@ -109,5 +106,6 @@ totem_session_save (Totem *totem)
 void
 totem_session_cleanup (Totem *totem)
 {
+	g_file_delete (get_session_file (), NULL, NULL);
 	g_clear_object (&session_file);
 }
