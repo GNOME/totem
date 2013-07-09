@@ -205,7 +205,8 @@ guint	totem_object_get_playlist_length	(TotemObject *totem);
 int	totem_object_get_playlist_pos		(TotemObject *totem);
 char *	totem_object_get_title_at_playlist_pos	(TotemObject *totem,
 						 guint playlist_index);
-void totem_object_add_to_playlist_and_play	(TotemObject *totem,
+void	totem_object_clear_playlist		(TotemObject *totem);
+void	totem_object_add_to_playlist_and_play	(TotemObject *totem,
 						 const char *uri,
 						 const char *display_name);
 char *  totem_object_get_current_mrl		(TotemObject *totem);

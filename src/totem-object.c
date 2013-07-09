@@ -706,6 +706,18 @@ totem_object_add_to_playlist_and_play (TotemObject *totem,
 }
 
 /**
+ * totem_object_clear_playlist:
+ * @totem: a #TotemObject
+ *
+ * Empties the current playlist.
+ **/
+void
+totem_object_clear_playlist (TotemObject *totem)
+{
+	totem_playlist_clear (totem->playlist);
+}
+
+/**
  * totem_object_get_current_mrl:
  * @totem: a #TotemObject
  *
