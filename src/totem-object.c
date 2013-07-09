@@ -80,6 +80,8 @@
 #define DEFAULT_WINDOW_W 650
 #define DEFAULT_WINDOW_H 500
 
+#define TOTEM_SESSION_SAVE_TIMEOUT 10 /* seconds */
+
 /* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
 	{ (gchar*) "text/uri-list", 0, 0 },
@@ -653,6 +655,27 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 	g_slice_free (AddToPlaylistData, data);
 }
 
+static gboolean
+save_session_timeout_cb (Totem *totem)
+{
+	totem_session_save (totem);
+	return TRUE;
+}
+
+static void
+setup_save_timeout_cb (Totem    *totem,
+		       gboolean  enable)
+{
+	if (enable && totem->save_timeout_id == 0) {
+		totem->save_timeout_id = g_timeout_add_seconds (TOTEM_SESSION_SAVE_TIMEOUT,
+								(GSourceFunc) save_session_timeout_cb,
+								totem);
+	} else if (totem->save_timeout_id > 0) {
+		g_source_remove (totem->save_timeout_id);
+		totem->save_timeout_id = 0;
+	}
+}
+
 /**
  * totem_object_add_to_playlist_and_play:
  * @totem: a #TotemObject
@@ -880,6 +903,8 @@ static void
 emit_file_opened (TotemObject *totem,
 		   const char *mrl)
 {
+	totem_session_save (totem);
+	setup_save_timeout_cb (totem, TRUE);
 	g_signal_emit (G_OBJECT (totem),
 		       totem_table_signals[FILE_OPENED],
 		       0, mrl);
@@ -894,6 +919,8 @@ emit_file_opened (TotemObject *totem,
 static void
 emit_file_closed (TotemObject *totem)
 {
+	setup_save_timeout_cb (totem, FALSE);
+	totem_session_save (totem);
 	g_signal_emit (G_OBJECT (totem),
 		       totem_table_signals[FILE_CLOSED],
 		       0);
@@ -1166,6 +1193,7 @@ totem_object_action_exit (TotemObject *totem)
 	if (display != NULL)
 		gdk_display_sync (display);
 
+	setup_save_timeout_cb (totem, FALSE);
 	totem_session_cleanup (totem);
 
 	if (totem->bvw)

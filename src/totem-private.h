@@ -138,6 +138,7 @@ struct _TotemObject {
 
 	/* session */
 	gint64 seek_to_start;
+	guint save_timeout_id;
 
 	/* Window State */
 	int window_w, window_h;
