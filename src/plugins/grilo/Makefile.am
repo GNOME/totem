@@ -16,7 +16,9 @@ EXTRA_DIST += $(conf_DATA)
 libgrilo_la_SOURCES =				\
 	totem-grilo.c				\
 	totem-search-entry.c			\
-	totem-search-entry.h
+	totem-search-entry.h			\
+	icon-helpers.c				\
+	icon-helpers.h
 
 libgrilo_la_LDFLAGS = $(plugin_ldflags)
 libgrilo_la_LIBADD =			\

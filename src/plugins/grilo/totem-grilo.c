@@ -26,6 +26,7 @@
  */
 
 #include "config.h"
+#include "icon-helpers.h"
 
 #include <time.h>
 
@@ -74,8 +75,6 @@
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
 #define RESOLVE_FLAGS         (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
-#define THUMB_SEARCH_SIZE     128
-#define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
 #define SCROLL_GET_MORE_LIMIT 0.8
 
 #define TOTEM_GRILO_CONFIG_FILE "totem-grilo.conf"
@@ -87,24 +86,12 @@ const gchar *BLACKLIST_SOURCES[] = { "grl-bookmarks",
                                      "grl-podcasts",
                                      NULL };
 
-typedef enum {
-	ICON_BOX = 0,
-	ICON_VIDEO,
-	ICON_VIDEO_THUMBNAILING,
-	NUM_ICONS
-} IconType;
-
 typedef struct {
 	Totem *totem;
 	GtkWindow *main_window;
 
 	/* Current media selected in results*/
 	GrlMedia *selected_media;
-
-	/* Thumb cache to speed up loading: maps url strings to GdkPixbuf thumbnails */
-	GHashTable *cache_thumbnails;
-	/* Stock icons */
-	GdkPixbuf *icons[NUM_ICONS];
 
 	/* Search related information */
 	GrlSource *search_source;
@@ -219,132 +206,43 @@ search_keys (void)
 }
 
 static void
-put_pixel (guchar *p)
+get_thumbnail_cb (GObject *source_object,
+		  GAsyncResult *res,
+		  gpointer user_data)
 {
-	p[0] = 46;
-	p[1] = 52;
-	p[2] = 54;
-	p[3] = 0xff;
-}
-
-static GdkPixbuf *
-load_icon (TotemGriloPlugin *self,
-	   const char       *name,
-	   int               size,
-	   gboolean          with_border)
-{
-	GdkScreen *screen;
-	GtkIconTheme *theme;
-	GdkPixbuf *icon, *ret;
-	guchar *pixels;
-	int rowstride;
-	int x, y;
-
-	screen = gtk_window_get_screen (totem_object_get_main_window (self->priv->totem));
-	theme = gtk_icon_theme_get_for_screen (screen);
-	icon = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
-
-	ret = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-			       TRUE,
-			       8, THUMB_SEARCH_SIZE, THUMB_SEARCH_HEIGHT);
-	pixels = gdk_pixbuf_get_pixels (ret);
-	rowstride = gdk_pixbuf_get_rowstride (ret);
-
-	/* Clean up */
-	gdk_pixbuf_fill (ret, 0x00000000);
-
-	/* Draw a border */
-	if (with_border) {
-		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
-			put_pixel (pixels + x * 4);
-		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
-			put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
-		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
-			put_pixel (pixels + y * rowstride);
-		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
-			put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
-	}
-
-	/* Put the icon in the middle */
-	gdk_pixbuf_copy_area (icon, 0, 0,
-			      gdk_pixbuf_get_width (icon), gdk_pixbuf_get_height (icon),
-			      ret,
-			      (THUMB_SEARCH_SIZE - gdk_pixbuf_get_width (icon)) / 2,
-			      (THUMB_SEARCH_HEIGHT - gdk_pixbuf_get_height (icon)) / 2);
-
-	g_object_unref (icon);
-
-	return ret;
-}
-
-static GdkPixbuf *
-get_icon (TotemGriloPlugin *self,
-	  GrlMedia         *media,
-	  gboolean         *thumbnailing)
-{
-	*thumbnailing = FALSE;
-
-	if (GRL_IS_MEDIA_BOX (media))
-		return g_object_ref (self->priv->icons[ICON_BOX]);
-	else if (GRL_IS_MEDIA_VIDEO (media)) {
-		if (grl_media_get_thumbnail (media)) {
-			*thumbnailing = TRUE;
-			return g_object_ref (self->priv->icons[ICON_VIDEO_THUMBNAILING]);
-		} else {
-			return g_object_ref (self->priv->icons[ICON_VIDEO]);
-		}
-	}
-	return NULL;
-}
-
-static void
-get_stream_thumbnail_cb (GObject *source_object,
-                         GAsyncResult *res,
-                         gpointer user_data)
-{
-	GFileInputStream *stream;
-	GdkPixbuf *thumbnail = NULL;
 	GtkTreeIter iter;
 	SetThumbnailData *thumb_data = (SetThumbnailData *) user_data;
 	GtkTreePath *path;
+	GdkPixbuf *thumbnail;
+	GtkTreeModel *view_model;
+	GError *error = NULL;
 
-	stream = g_file_read_finish (G_FILE (source_object), res, NULL);
-	//FIXME handle cancellation
-	if (stream != NULL) {
-		//FIXME make it async
-		thumbnail = gdk_pixbuf_new_from_stream_at_scale (G_INPUT_STREAM (stream),
-								 THUMB_SEARCH_SIZE,
-								 THUMB_SEARCH_SIZE,
-		                                                 TRUE, NULL, NULL);
-		g_object_unref (stream);
-	}
+	thumbnail = totem_grilo_get_thumbnail_finish (res, &error);
+	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+		goto out;
 
 	path = gtk_tree_row_reference_get_path (thumb_data->reference);
 	gtk_tree_model_get_iter (thumb_data->model, &iter, path);
 
-	if (thumbnail) {
-		GtkTreeModel *view_model;
+	gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
+			    &iter,
+			    GD_MAIN_COLUMN_ICON, thumbnail ? thumbnail : totem_grilo_get_video_icon (),
+			    -1);
+	g_clear_object (&thumbnail);
 
-		gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
-		                    &iter,
-		                    GD_MAIN_COLUMN_ICON, thumbnail,
-		                    -1);
-
-		/* Cache it */
-		g_hash_table_insert (thumb_data->totem_grilo->priv->cache_thumbnails,
-		                     g_file_get_uri (G_FILE (source_object)),
-		                     thumbnail);
-
-		/* Can we find that thumbnail in the view model? */
-		view_model = gd_main_view_get_model (GD_MAIN_VIEW (thumb_data->totem_grilo->priv->browser));
-		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
-			path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model),
-										 path);
-			if (gtk_tree_model_get_iter (view_model, &iter, path))
-				gtk_tree_model_row_changed (view_model, path, &iter);
-		}
+	/* Can we find that thumbnail in the view model? */
+	view_model = gd_main_view_get_model (GD_MAIN_VIEW (thumb_data->totem_grilo->priv->browser));
+	if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
+		path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model),
+									 path);
+		if (gtk_tree_model_get_iter (view_model, &iter, path))
+			gtk_tree_model_row_changed (view_model, path, &iter);
 	}
+
 	gtk_tree_path_free (path);
+
+out:
+	g_clear_error (&error);
 
 	/* Free thumb data */
 	g_object_unref (thumb_data->totem_grilo);
@@ -360,49 +258,17 @@ set_thumbnail_async (TotemGriloPlugin *self,
 		     GtkTreeModel     *model,
 		     GtkTreePath      *path)
 {
-	const gchar *url_thumb;
-	GFile *file_uri;
 	SetThumbnailData *thumb_data;
-	GdkPixbuf *thumbnail;
-	GtkTreeIter iter;
 
-	url_thumb = grl_media_get_thumbnail (media);
-	if (url_thumb != NULL) {
-		/* Check cache */
-		thumbnail = g_hash_table_lookup (self->priv->cache_thumbnails,
-		                                 url_thumb);
-		if (thumbnail == NULL) {
-			/* Let's read the thumbnail stream and set the thumbnail */
-			file_uri = g_file_new_for_uri (url_thumb);
-			thumb_data = g_slice_new (SetThumbnailData);
-			thumb_data->totem_grilo = g_object_ref (self);
-			thumb_data->media = g_object_ref (media);
-			thumb_data->model = g_object_ref (model);
-			thumb_data->reference = gtk_tree_row_reference_new (model, path);
+	/* Let's read the thumbnail stream and set the thumbnail */
+	thumb_data = g_slice_new (SetThumbnailData);
+	thumb_data->totem_grilo = g_object_ref (self);
+	thumb_data->media = g_object_ref (media);
+	thumb_data->model = g_object_ref (model);
+	thumb_data->reference = gtk_tree_row_reference_new (model, path);
 
-			g_file_read_async (file_uri, G_PRIORITY_DEFAULT, NULL,
-			                   get_stream_thumbnail_cb, thumb_data);
-			g_object_unref (file_uri);
-		} else {
-			/* Use cached thumbnail */
-			gtk_tree_model_get_iter (model, &iter, path);
-			gtk_tree_store_set (GTK_TREE_STORE (model),
-			                    &iter,
-			                    GD_MAIN_COLUMN_ICON, thumbnail,
-			                    -1);
-		}
-	} else {
-		/* Keep the icon */
-		//FIXME that shouldn't happen
-		g_assert_not_reached ();
-#if 0
-		gtk_tree_model_get_iter (model, &iter, path);
-		gtk_tree_store_set (GTK_TREE_STORE (model),
-		                    &iter,
-		                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
-		                    -1);
-#endif
-	}
+	//FIXME cancellable?
+	totem_grilo_get_thumbnail (media, NULL, get_thumbnail_cb, thumb_data);
 }
 
 static gboolean
@@ -520,7 +386,7 @@ browse_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = get_icon (self, media, &thumbnailing);
+		thumbnail = totem_grilo_get_icon (media, &thumbnailing);
 		secondary = get_secondary_text (media);
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent, -1,
@@ -677,7 +543,7 @@ search_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = get_icon (self, media, &thumbnailing);
+		thumbnail = totem_grilo_get_icon (media, &thumbnailing);
 		secondary = get_secondary_text (media);
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->search_results_model),
@@ -763,7 +629,7 @@ static void
 search (TotemGriloPlugin *self, GrlSource *source, const gchar *text)
 {
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
-	g_hash_table_remove_all (self->priv->cache_thumbnails);
+//	g_hash_table_remove_all (self->priv->cache_thumbnails);
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_source = source;
 	g_free (self->priv->search_text);
@@ -953,7 +819,7 @@ source_added_cb (GrlRegistry *registry,
 	if (ops & GRL_OP_BROWSE) {
 		const GdkPixbuf *icon;
 
-		icon = self->priv->icons[ICON_BOX];
+		icon = totem_grilo_get_box_icon ();
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
 						   NULL, NULL, -1,
@@ -1413,10 +1279,7 @@ static void
 setup_ui (TotemGriloPlugin *self,
           GtkBuilder *builder)
 {
-	self->priv->icons[ICON_BOX] = load_icon (self, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
-	self->priv->icons[ICON_VIDEO] = load_icon (self, "folder-videos-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
-	self->priv->icons[ICON_VIDEO_THUMBNAILING] = load_icon (self, "folder-videos-symbolic", 24, TRUE);
-
+	totem_grilo_setup_icons (self->priv->totem);
 	setup_browse (self, builder);
 	setup_menus (self, builder);
 }
@@ -1455,10 +1318,6 @@ impl_activate (PeasActivatable *plugin)
 	TotemGriloPluginPrivate *priv = self->priv;
 	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 	priv->main_window = totem_object_get_main_window (priv->totem);
-	priv->cache_thumbnails = g_hash_table_new_full (g_str_hash,
-	                                                g_str_equal,
-	                                                g_free,
-	                                                g_object_unref);
 
 	builder = totem_plugin_load_interface ("grilo", "grilo.ui", TRUE, self->priv->main_window, self);
 	setup_ui (self, builder);
@@ -1474,7 +1333,6 @@ impl_deactivate (PeasActivatable *plugin)
 	GList *sources;
 	GList *s;
 	GrlRegistry *registry;
-	guint i;
 
 	totem_object_remove_sidebar_page (self->priv->totem, "grilo-browse");
 	totem_object_remove_sidebar_page (self->priv->totem, "grilo-search");
@@ -1492,8 +1350,7 @@ impl_deactivate (PeasActivatable *plugin)
 	}
 	g_list_free (sources);
 
-	for (i = 0; i < NUM_ICONS; i++)
-		g_clear_object (&self->priv->icons[i]);
+	totem_grilo_clear_icons ();
 
 	/* Empty results */
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
