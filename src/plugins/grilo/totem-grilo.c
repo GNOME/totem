@@ -1358,6 +1358,7 @@ setup_browse (TotemGriloPlugin *self,
 static void
 add_to_pls_cb (GtkAction *action, TotemGriloPlugin *self)
 {
+	totem_object_clear_playlist (self->priv->totem);
 	totem_object_add_to_playlist_and_play (self->priv->totem,
 	                                grl_media_get_url (self->priv->selected_media),
 	                                grl_media_get_title (self->priv->selected_media));
