@@ -2678,13 +2678,12 @@ totem_action_open_files_list (TotemObject *totem, GSList *list)
 void
 show_controls (TotemObject *totem, gboolean was_fullscreen)
 {
-	GtkWidget *bvw_box, *widget;
+	GtkWidget *bvw_box;
 
 	if (totem->bvw == NULL)
 		return;
 
 	bvw_box = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
-	widget = GTK_WIDGET (totem->bvw);
 
 	if (totem->controls_visibility == TOTEM_CONTROLS_VISIBLE) {
 		totem_action_save_size (totem);
