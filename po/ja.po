@@ -1,6 +1,6 @@
 # totem ja.po.
 # This file is distributed under the same license as the totem package.
-# Copyright (C) 2002-2012 Free Software Foundation, Inc.
+# Copyright (C) 2002-2013 Free Software Foundation, Inc.
 # James Hashida <khashida@redhat.com>, 2002.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2003-2009.
@@ -8,15 +8,15 @@
 # Satoru SATOH <ss@gnome.gr.jp>, 2005, 2006.
 # Hideki Yamane (Debian-JP) <henrich@debian.or.jp>, 2009.
 # Kentaro KAZUHAMA <kazken3@gmail.com>, 2012-2013
-# Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012.
+# Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2012-2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-05-14 17:04+0000\n"
-"PO-Revision-Date: 2013-05-13 00:33+0900\n"
-"Last-Translator: Kentaro KAZUHAMA <kazken3@gmail.com>\n"
+"POT-Creation-Date: 2013-07-09 08:29+0000\n"
+"PO-Revision-Date: 2013-07-14 00:33+0900\n"
+"Last-Translator: Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "再生する URI を指定してください"
 msgid "_Open with \"%s\""
 msgstr "\"%s\" で開く(_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2357
+#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2386
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
@@ -186,14 +186,10 @@ msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "ビデオを読み込んだらチャプター・ファイルを自動的に読み込むかどうか"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:31
-msgid "Whether to remember the current playlist, the playing track and position."
-msgstr "現在のプレイリスト、再生しているトラックや位置を記憶するかどうか。"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Active plugins list"
 msgstr "有効なプラグイン一覧"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "A list of the names of the plugins which are currently active (loaded and running)."
 msgstr "現在有効(読み込み済みで実行中)であるプラグインの名前の一覧です。"
 
@@ -213,11 +209,11 @@ msgstr "場所のコピー(_C)"
 msgid "Copy the location to the clipboard"
 msgstr "場所をクリップボードへコピーします"
 
-#: ../data/playlist.ui.h:5 ../data/totem.ui.h:37
+#: ../data/playlist.ui.h:5 ../data/totem.ui.h:18
 msgid "_Select Text Subtitles..."
 msgstr "字幕の選択(_S)..."
 
-#: ../data/playlist.ui.h:6 ../data/totem.ui.h:38
+#: ../data/playlist.ui.h:6
 msgid "Select a file to use for text subtitles"
 msgstr "字幕で使用するファイルを選択してください"
 
@@ -286,121 +282,113 @@ msgid "Totem Preferences"
 msgstr "Totem の設定"
 
 #: ../data/preferences.ui.h:14
-msgid "Playback"
-msgstr "再生"
-
-#: ../data/preferences.ui.h:15
-msgid "Remember last played movies"
-msgstr "最後に再生したプレイリストを記録する"
-
-#: ../data/preferences.ui.h:16
 msgid "Text Subtitles"
 msgstr "字幕"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:15
 msgid "_Load subtitle files when movie is loaded"
 msgstr "ビデオを読み込んだら字幕ファイルも読み込む(_L)"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:16
 msgid "_Font:"
 msgstr "フォント(_F):"
 
-#: ../data/preferences.ui.h:19
+#: ../data/preferences.ui.h:17
 msgid "_Encoding:"
 msgstr "エンコーディング(_E):"
 
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:18
 msgid "External Chapters"
 msgstr "チャプター・ファイル"
 
-#: ../data/preferences.ui.h:21
+#: ../data/preferences.ui.h:19
 msgid "Load _chapter files when movie is loaded"
 msgstr "ビデオを読み込んだらチャプター・ファイルも読み込む(_C)"
 
-#: ../data/preferences.ui.h:22
+#: ../data/preferences.ui.h:20
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: ../data/preferences.ui.h:23
+#: ../data/preferences.ui.h:21
 msgid "Plugins..."
 msgstr "プラグイン..."
 
-#: ../data/preferences.ui.h:24 ../data/properties.ui.h:1
+#: ../data/preferences.ui.h:22 ../data/properties.ui.h:1
 msgid "General"
 msgstr "全般"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:26
+#: ../data/preferences.ui.h:24
 msgid "Display"
 msgstr "表示"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:25
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "インターレースのビデオのインターレース解除を無効にする(_D)"
 
-#: ../data/preferences.ui.h:28
+#: ../data/preferences.ui.h:26
 msgid "Disable screensaver when playing"
 msgstr "再生中にスクリーンセーバーを無効にする: "
 
-#: ../data/preferences.ui.h:29
+#: ../data/preferences.ui.h:27
 msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "ビデオ"
 
 #. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:29
 msgid "Video or Audio"
 msgstr "ビデオまたは音声"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:30
 msgid "Visual Effects"
 msgstr "視覚効果"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:31
 msgid "Show _visual effects when an audio file is played"
 msgstr "楽曲ファイルを演奏する時に視覚効果を表示する(_V)"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:32
 msgid "_Type of visualization:"
 msgstr "視覚効果の種類(_T):"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:33
 msgid "Visualization _size:"
 msgstr "視覚効果の大きさ(_S):"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:34
 msgid "Color Balance"
 msgstr "色のバランス"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:35
 msgid "_Brightness:"
 msgstr "明るさ(_B):"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:36
 msgid "Co_ntrast:"
 msgstr "コントラスト(_N):"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:37
 msgid "Sat_uration:"
 msgstr "彩度(_U):"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:38
 msgid "_Hue:"
 msgstr "色相(_H):"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:39
 msgid "Reset to _Defaults"
 msgstr "デフォルトに戻す(_D)"
 
-#: ../data/preferences.ui.h:42
+#: ../data/preferences.ui.h:40
 msgid "Audio Output"
 msgstr "音声の出力"
 
-#: ../data/preferences.ui.h:43
+#: ../data/preferences.ui.h:41
 msgid "_Audio output type:"
 msgstr "音声出力の種類(_A):"
 
-#: ../data/preferences.ui.h:44 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "音声"
@@ -461,7 +449,7 @@ msgstr "サンプリング:"
 msgid "Channels:"
 msgstr "チャンネル数:"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:40 ../src/totem.c:245
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:245
 #: ../src/totem.c:251
 msgid "Videos"
 msgstr "ビデオ"
@@ -479,32 +467,32 @@ msgid "_Open"
 msgstr "開く(_O)"
 
 #: ../data/totem.ui.h:2
-msgid "Open _Location"
-msgstr "場所を開く(_L)"
+msgid "Add Web Video..."
+msgstr ""
 
 #: ../data/totem.ui.h:3
-msgid "_Fullscreen"
-msgstr "フルスクリーン(_F)"
-
-#: ../data/totem.ui.h:4
 msgid "Prefere_nces"
 msgstr "設定(_N)"
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:4
 msgid "Shuff_le"
 msgstr "シャッフル(_L)"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:5
 msgid "_Repeat"
 msgstr "リピート(_R)"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:6
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:7
 msgid "_Quit"
 msgstr "終了(_Q)"
+
+#: ../data/totem.ui.h:8
+msgid "_Aspect Ratio"
+msgstr "アスペクト比(_A)"
 
 #: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
@@ -540,52 +528,48 @@ msgid "Switch An_gles"
 msgstr "角度の切り替え(_G)"
 
 #: ../data/totem.ui.h:16
+msgid "_Languages"
+msgstr "言語(_L)"
+
+#: ../data/totem.ui.h:17
+msgid "S_ubtitles"
+msgstr "字幕(_U)"
+
+#: ../data/totem.ui.h:19
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:20
 msgid "_Eject"
 msgstr "取り出し(_E)"
 
-#: ../data/totem.ui.h:18
+#: ../data/totem.ui.h:21
 msgid "_DVD Menu"
 msgstr "DVD メニュー(_D)"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:22
 msgid "_Title Menu"
 msgstr "タイトル・メニュー(_T)"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:23
 msgid "A_udio Menu"
 msgstr "音声メニュー(_U)"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:24
 msgid "_Angle Menu"
 msgstr "アングル・メニュー(_A)"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:25
 msgid "_Chapter Menu"
 msgstr "チャプター・メニュー(_C)"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:26
 msgid "Play / P_ause"
 msgstr "再生/一時停止(_A)"
 
-#: ../data/totem.ui.h:24
+#: ../data/totem.ui.h:27
 msgid "Play or pause the movie"
 msgstr "動画を再生したり停止します"
-
-#: ../data/totem.ui.h:25
-msgid "_Edit"
-msgstr "編集(_E)"
-
-#: ../data/totem.ui.h:26
-msgid "_Clear Playlist"
-msgstr "プレイリストのクリア(_C)"
-
-#: ../data/totem.ui.h:27
-msgid "Clear the playlist"
-msgstr "プレイリストをクリアします"
 
 #: ../data/totem.ui.h:28
 msgid "_View"
@@ -611,25 +595,14 @@ msgstr "前のチャプターまたは動画に戻ります"
 msgid "_Sound"
 msgstr "サウンド(_S)"
 
-#: ../data/totem.ui.h:34
-msgid "S_idebar"
-msgstr "サイドバー(_I)"
-
-#: ../data/totem.ui.h:35
-msgid "Show or hide the sidebar"
-msgstr "サイドバーの表示/非表示を切り替えます"
-
-#: ../data/totem.ui.h:36
-msgid "S_ubtitles"
-msgstr "字幕(_U)"
-
-#: ../data/totem.ui.h:39
-msgid "_Languages"
-msgstr "言語(_L)"
-
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "オープンするファイルのアドレスを入力してください(_A):"
+
+#. translators: Unknown remaining time
+#: ../src/backend/bacon-time-label.c:115
+msgid "--:--"
+msgstr "--:--"
 
 # FIXME: 画面が見たい
 #: ../src/backend/bacon-video-widget.c:1712
@@ -712,14 +685,9 @@ msgstr "モノラル"
 msgid "Media contains no supported video streams."
 msgstr "このメディアにはビデオストリームが含まれていません。"
 
-#: ../src/backend/bacon-video-widget.c:6059
+#: ../src/backend/bacon-video-widget.c:6058
 msgid "Some necessary plug-ins are missing. Make sure that the program is correctly installed."
 msgstr "必要なプラグインが見つかりません。プログラムが正しくインストールされているか確認してください。"
-
-#. translators: Unknown remaining time
-#: ../src/backend/bacon-time-label.c:115
-msgid "--:--"
-msgstr "--:--"
 
 #: ../src/eggfileformatchooser.c:240
 #, c-format
@@ -956,17 +924,17 @@ msgid "Totem contains an exception to allow the use of proprietary GStreamer plu
 msgstr "例外として、Totem にはプロプラエタリとして利用可能な Gstreamer プラグインが含まれています。"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:381
+#: ../src/totem-menu.c:391
 msgid "None"
 msgstr "なし"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:386
+#: ../src/totem-menu.c:395
 msgctxt "Language"
 msgid "Auto"
 msgstr "自動"
 
-#: ../src/totem-object.c:159
+#: ../src/totem-object.c:161
 #, c-format
 msgid ""
 "%s\n"
@@ -975,53 +943,47 @@ msgstr ""
 "%s\n"
 "コマンドライン・オプションの一覧を表示する場合は '%s --help' を実行してください\n"
 
-#. Translators: %s is the totem version number
-#: ../src/totem-object.c:604
-#, c-format
-msgid "Totem %s"
-msgstr "Totem %s"
-
-#: ../src/totem-object.c:1207 ../src/totem-options.c:52
+#: ../src/totem-object.c:1238 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "一時停止する"
 
-#: ../src/totem-object.c:1212 ../src/totem-object.c:1222
+#: ../src/totem-object.c:1243 ../src/totem-object.c:1253
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "再生する"
 
-#: ../src/totem-object.c:1303 ../src/totem-object.c:1330
-#: ../src/totem-object.c:1863
+#: ../src/totem-object.c:1338 ../src/totem-object.c:1365
+#: ../src/totem-object.c:1892
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem は '%s' を再生できませんでした。"
 
-#: ../src/totem-object.c:2005
+#: ../src/totem-object.c:2034
 msgid "Totem could not display the help contents."
 msgstr "Totem はヘルプの目次を表示できませんでした。"
 
-#: ../src/totem-object.c:3832
+#: ../src/totem-object.c:3793
 msgid "Previous Chapter/Movie"
 msgstr "前のチャプター/動画に移動します"
 
-#: ../src/totem-object.c:3837
+#: ../src/totem-object.c:3798
 msgid "Play / Pause"
 msgstr "再生/一時停止します"
 
-#: ../src/totem-object.c:3842
+#: ../src/totem-object.c:3803
 msgid "Next Chapter/Movie"
 msgstr "次のチャプター/動画に移動します"
 
-#: ../src/totem-object.c:3905 ../src/plugins/grilo/totem-grilo.c:1302
-#: ../src/plugins/grilo/totem-grilo.c:1312
+#: ../src/totem-object.c:3842 ../src/plugins/grilo/totem-grilo.c:1318
+#: ../src/plugins/grilo/totem-grilo.c:1328
 msgid "Back"
 msgstr "戻る"
 
-#: ../src/totem-object.c:3976
+#: ../src/totem-object.c:3913
 msgid "Totem could not startup."
 msgstr "Totem を起動できませんでした。"
 
-#: ../src/totem-object.c:3976
+#: ../src/totem-object.c:3913
 msgid "No reason."
 msgstr "原因は不明です。"
 
@@ -1098,50 +1060,50 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "キューへの追加と置き換えは同時にできません"
 
 #. By extension entry
-#: ../src/totem-playlist.c:175
+#: ../src/totem-playlist.c:172
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast 形式の演奏一覧"
 
-#: ../src/totem-playlist.c:176
+#: ../src/totem-playlist.c:173
 msgid "MP3 audio (streamed)"
 msgstr "MP3 オーディオ (ストリーム)"
 
-#: ../src/totem-playlist.c:177
+#: ../src/totem-playlist.c:174
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 オーディオ (ストリーム、DOS 形式)"
 
-#: ../src/totem-playlist.c:178
+#: ../src/totem-playlist.c:175
 msgid "XML Shareable Playlist"
 msgstr "XML Shareable 形式のプレイリスト"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:335
+#: ../src/totem-playlist.c:332
 #, c-format
 msgid "Title %d"
 msgstr "タイトル %d"
 
-#: ../src/totem-playlist.c:489
+#: ../src/totem-playlist.c:486
 msgid "Could not save the playlist"
 msgstr "プレイリストを保存できませんでした"
 
-#: ../src/totem-playlist.c:1063
+#: ../src/totem-playlist.c:1060
 msgid "Save Playlist"
 msgstr "プレイリストの保存"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1075 ../src/totem-playlist.c:1302
-#: ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1072 ../src/totem-playlist.c:1299
+#: ../src/totem-sidebar.c:127
 msgid "Playlist"
 msgstr "プレイリスト"
 
-#: ../src/totem-playlist.c:1902
+#: ../src/totem-playlist.c:1890
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "プレイリスト '%s' を解析できませんでした。おそらく壊れています。"
 
-#: ../src/totem-playlist.c:1903
+#: ../src/totem-playlist.c:1891
 msgid "Playlist error"
 msgstr "プレイリストのエラー"
 
@@ -1153,7 +1115,7 @@ msgstr "プラグインの設定"
 msgid "Preferences"
 msgstr "設定"
 
-#: ../src/totem-preferences.c:498
+#: ../src/totem-preferences.c:494
 msgid "Select Subtitle Font"
 msgstr "字幕で使用するフォントの選択"
 
@@ -1636,11 +1598,7 @@ msgstr "プレイリストに追加"
 msgid "Copy Location"
 msgstr "場所のコピー"
 
-#: ../src/plugins/grilo/grilo.ui.h:3
-msgid "Search"
-msgstr "検索"
-
-#: ../src/plugins/grilo/totem-grilo.c:494
+#: ../src/plugins/grilo/totem-grilo.c:497
 msgid "Browse Error"
 msgstr "表示エラー"
 
@@ -1721,7 +1679,7 @@ msgid "Searching for subtitles…"
 msgstr "字幕を検索中..."
 
 #: ../src/plugins/opensubtitles/opensubtitles.py:223
-#: ../src/plugins/opensubtitles/opensubtitles.py:643
+#: ../src/plugins/opensubtitles/opensubtitles.py:618
 msgid "Downloading the subtitles…"
 msgstr "字幕をダウンロード中..."
 
@@ -1738,31 +1696,27 @@ msgstr "OpenSubtitlesのウェブサイトにアクセスできませんでし�
 msgid "No results found."
 msgstr "見つかりませんでした。"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:476
+#: ../src/plugins/opensubtitles/opensubtitles.py:472
 msgid "Subtitles"
 msgstr "字幕"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:482
+#: ../src/plugins/opensubtitles/opensubtitles.py:478
 msgid "Format"
 msgstr "形式"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:487
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Rating"
 msgstr "評価"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:523
-msgid "Download movie subtitles from OpenSubtitles"
-msgstr "OpenSubtitles から動画の字幕をダウンロードします"
-
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
+#: ../src/plugins/opensubtitles/opensubtitles.py:522
 msgid "_Download Movie Subtitles…"
 msgstr "動画の字幕をダウンロード(_D)…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:587
+#: ../src/plugins/opensubtitles/opensubtitles.py:562
 msgid "Searching subtitles…"
 msgstr "字幕を検索中..."
 
@@ -1911,7 +1865,7 @@ msgstr "スクリーンショットの総数:"
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:147
 #, c-format
 msgid "Screenshot from %s.png"
-msgstr "Screenshot_from_%s.png"
+msgstr "Screenshot from %s.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
@@ -1919,7 +1873,7 @@ msgstr "Screenshot_from_%s.png"
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:154
 #, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "Screenshot_%s_%d.png"
+msgstr "Screenshot from %s - %d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
 msgid "Screenshot"
@@ -2003,6 +1957,16 @@ msgstr "7"
 msgid "_Skip To..."
 msgstr "指定先へスキップ(_S)..."
 
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:1
+msgid "Vimeo"
+msgstr ""
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:2
+#, fuzzy
+#| msgid "Sets the user agent for the Apple Trailers site"
+msgid "Sets the user agent for the Vimeo site"
+msgstr "Apple トレーラーのサイトに使用するユーザーエージェントを設定します"
+
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
 msgid "Zeitgeist Plugin"
 msgstr "Zeitgeistプラグイン"
@@ -2010,6 +1974,45 @@ msgstr "Zeitgeistプラグイン"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Zeitgeistへのイベント送信プラグイン"
+
+#~ msgid "Whether to remember the current playlist, the playing track and position."
+#~ msgstr "現在のプレイリスト、再生しているトラックや位置を記憶するかどうか。"
+
+#~ msgid "Playback"
+#~ msgstr "再生"
+
+#~ msgid "Remember last played movies"
+#~ msgstr "最後に再生したプレイリストを記録する"
+
+#~ msgid "Open _Location"
+#~ msgstr "場所を開く(_L)"
+
+#~ msgid "_Fullscreen"
+#~ msgstr "フルスクリーン(_F)"
+
+#~ msgid "_Edit"
+#~ msgstr "編集(_E)"
+
+#~ msgid "_Clear Playlist"
+#~ msgstr "プレイリストのクリア(_C)"
+
+#~ msgid "Clear the playlist"
+#~ msgstr "プレイリストをクリアします"
+
+#~ msgid "S_idebar"
+#~ msgstr "サイドバー(_I)"
+
+#~ msgid "Show or hide the sidebar"
+#~ msgstr "サイドバーの表示/非表示を切り替えます"
+
+#~ msgid "Totem %s"
+#~ msgstr "Totem %s"
+
+#~ msgid "Search"
+#~ msgstr "検索"
+
+#~ msgid "Download movie subtitles from OpenSubtitles"
+#~ msgstr "OpenSubtitles から動画の字幕をダウンロードします"
 
 #~ msgid "Stopped"
 #~ msgstr "停止中"
@@ -2040,9 +2043,6 @@ msgstr "Zeitgeistへのイベント送信プラグイン"
 
 #~ msgid "Fit Window to Movie"
 #~ msgstr "ウィンドウを合わせる"
-
-#~ msgid "_Aspect Ratio"
-#~ msgstr "アスペクト比(_A)"
 
 #~ msgid "Switch camera angles"
 #~ msgstr "カメラの角度を切り替えます"
