@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.9.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 11:32+0200\n"
-"PO-Revision-Date: 2013-07-04 11:33+0200\n"
+"POT-Creation-Date: 2013-07-16 14:52+0200\n"
+"PO-Revision-Date: 2013-07-16 14:52+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -34,7 +34,7 @@ msgstr "Ingen URI å spille av"
 msgid "_Open with \"%s\""
 msgstr "_Åpne med «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2381
+#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2398
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
@@ -195,15 +195,10 @@ msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Om eksterne kapittelfiler skal lastes automatisk når en film lastes"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:31
-msgid ""
-"Whether to remember the current playlist, the playing track and position."
-msgstr "Hvorvidt aktiv spilleliste skal huskes med spor og posisjon."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Active plugins list"
 msgstr "Liste med aktive tillegg"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -298,121 +293,113 @@ msgid "Totem Preferences"
 msgstr "Brukervalg for Totem"
 
 #: ../data/preferences.ui.h:14
-msgid "Playback"
-msgstr "Avspilling"
-
-#: ../data/preferences.ui.h:15
-msgid "Remember last played movies"
-msgstr "Husk sist spilte filmer"
-
-#: ../data/preferences.ui.h:16
 msgid "Text Subtitles"
 msgstr "Teksting"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:15
 msgid "_Load subtitle files when movie is loaded"
 msgstr "_Last undertekstfiler når en video lastes"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:16
 msgid "_Font:"
 msgstr "Skri_ft:"
 
-#: ../data/preferences.ui.h:19
+#: ../data/preferences.ui.h:17
 msgid "_Encoding:"
 msgstr "_Koding:"
 
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:18
 msgid "External Chapters"
 msgstr "Eksterne kapittel"
 
-#: ../data/preferences.ui.h:21
+#: ../data/preferences.ui.h:19
 msgid "Load _chapter files when movie is loaded"
 msgstr "Last _kapittelfiler når en video lastes"
 
-#: ../data/preferences.ui.h:22
+#: ../data/preferences.ui.h:20
 msgid "Plugins"
 msgstr "Tillegg"
 
-#: ../data/preferences.ui.h:23
+#: ../data/preferences.ui.h:21
 msgid "Plugins..."
 msgstr "Tillegg …"
 
-#: ../data/preferences.ui.h:24 ../data/properties.ui.h:1
+#: ../data/preferences.ui.h:22 ../data/properties.ui.h:1
 msgid "General"
 msgstr "Generelt"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:26
+#: ../data/preferences.ui.h:24
 msgid "Display"
 msgstr "Skjerm"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:25
 msgid "Disable _deinterlacing of interlaced videos"
 msgstr "Slå av _fjerning av sammenfletting for videoer med sammenfletting"
 
-#: ../data/preferences.ui.h:28
+#: ../data/preferences.ui.h:26
 msgid "Disable screensaver when playing"
 msgstr "Slå av skjermsparer ved avspilling "
 
-#: ../data/preferences.ui.h:29
+#: ../data/preferences.ui.h:27
 msgctxt "Screensaver disable"
 msgid "Video"
 msgstr "Film"
 
 #. Translators: this is part of the sentence 'Disable screensaver when playing [] Video [] Video or Audio
-#: ../data/preferences.ui.h:31
+#: ../data/preferences.ui.h:29
 msgid "Video or Audio"
 msgstr "Video eller lyd"
 
-#: ../data/preferences.ui.h:32
+#: ../data/preferences.ui.h:30
 msgid "Visual Effects"
 msgstr "Visuelle effekter?"
 
-#: ../data/preferences.ui.h:33
+#: ../data/preferences.ui.h:31
 msgid "Show _visual effects when an audio file is played"
 msgstr "Vis _visuelle effekter når en lydfil spilles av"
 
-#: ../data/preferences.ui.h:34
+#: ../data/preferences.ui.h:32
 msgid "_Type of visualization:"
 msgstr "_Type visualisering"
 
-#: ../data/preferences.ui.h:35
+#: ../data/preferences.ui.h:33
 msgid "Visualization _size:"
 msgstr "_Størrelse på visualisering:"
 
-#: ../data/preferences.ui.h:36
+#: ../data/preferences.ui.h:34
 msgid "Color Balance"
 msgstr "Fargebalanse"
 
-#: ../data/preferences.ui.h:37
+#: ../data/preferences.ui.h:35
 msgid "_Brightness:"
 msgstr "_Lysstyrke:"
 
-#: ../data/preferences.ui.h:38
+#: ../data/preferences.ui.h:36
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
-#: ../data/preferences.ui.h:39
+#: ../data/preferences.ui.h:37
 msgid "Sat_uration:"
 msgstr "Me_tning:"
 
-#: ../data/preferences.ui.h:40
+#: ../data/preferences.ui.h:38
 msgid "_Hue:"
 msgstr "_Glød:"
 
-#: ../data/preferences.ui.h:41
+#: ../data/preferences.ui.h:39
 msgid "Reset to _Defaults"
 msgstr "Sett til _forvalg"
 
-#: ../data/preferences.ui.h:42
+#: ../data/preferences.ui.h:40
 msgid "Audio Output"
 msgstr "Lydutgang"
 
-#: ../data/preferences.ui.h:43
+#: ../data/preferences.ui.h:41
 msgid "_Audio output type:"
 msgstr "Type _lydutgang:"
 
-#: ../data/preferences.ui.h:44 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:273
 msgid "Audio"
 msgstr "Lyd"
@@ -473,7 +460,7 @@ msgstr "Samplingsrate:"
 msgid "Channels:"
 msgstr "Kanaler:"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:39 ../src/totem.c:245
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:245
 #: ../src/totem.c:251
 msgid "Videos"
 msgstr "Filmer"
@@ -508,7 +495,7 @@ msgstr "_Gjenta"
 
 #: ../data/totem.ui.h:6
 msgid "_Help"
-msgstr "_Hjelp:"
+msgstr "_Hjelp"
 
 #: ../data/totem.ui.h:7
 msgid "_Quit"
@@ -596,48 +583,28 @@ msgid "Play or pause the movie"
 msgstr "Spill av eller pause en film"
 
 #: ../data/totem.ui.h:28
-msgid "_Edit"
-msgstr "R_ediger"
-
-#: ../data/totem.ui.h:29
-msgid "_Clear Playlist"
-msgstr "_Tøm spilleliste"
-
-#: ../data/totem.ui.h:30
-msgid "Clear the playlist"
-msgstr "Tøm spillelisten"
-
-#: ../data/totem.ui.h:31
 msgid "_View"
 msgstr "_Vis"
 
-#: ../data/totem.ui.h:32
+#: ../data/totem.ui.h:29
 msgid "_Next Chapter/Movie"
 msgstr "_Neste kapittel/film"
 
-#: ../data/totem.ui.h:33
+#: ../data/totem.ui.h:30
 msgid "Next chapter or movie"
 msgstr "Neste kapittel eller film"
 
-#: ../data/totem.ui.h:34
+#: ../data/totem.ui.h:31
 msgid "_Previous Chapter/Movie"
 msgstr "_Forrige kapittel/film"
 
-#: ../data/totem.ui.h:35
+#: ../data/totem.ui.h:32
 msgid "Previous chapter or movie"
 msgstr "Forrige kapittel eller film"
 
-#: ../data/totem.ui.h:36
+#: ../data/totem.ui.h:33
 msgid "_Sound"
 msgstr "_Lyd"
-
-#: ../data/totem.ui.h:37
-msgid "S_idebar"
-msgstr "S_idelinje"
-
-#: ../data/totem.ui.h:38
-msgid "Show or hide the sidebar"
-msgstr "Vis eller skjul sidelinjen"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -1024,7 +991,7 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automatisk"
 
-#: ../src/totem-object.c:159
+#: ../src/totem-object.c:161
 #, c-format
 msgid ""
 "%s\n"
@@ -1034,53 +1001,47 @@ msgstr ""
 "Kjør «%s --help» for å se en full liste med tilgjengelige "
 "komanndolinjeflagg.\n"
 
-#. Translators: %s is the totem version number
-#: ../src/totem-object.c:615
-#, c-format
-msgid "Totem %s"
-msgstr "Totem %s"
-
-#: ../src/totem-object.c:1230 ../src/totem-options.c:52
+#: ../src/totem-object.c:1250 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/totem-object.c:1235 ../src/totem-object.c:1245
+#: ../src/totem-object.c:1255 ../src/totem-object.c:1265
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Spill av"
 
-#: ../src/totem-object.c:1327 ../src/totem-object.c:1354
-#: ../src/totem-object.c:1887
+#: ../src/totem-object.c:1350 ../src/totem-object.c:1377
+#: ../src/totem-object.c:1904
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke spille av «%s»."
 
-#: ../src/totem-object.c:2029
+#: ../src/totem-object.c:2046
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: ../src/totem-object.c:3854
+#: ../src/totem-object.c:3805
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem-object.c:3859
+#: ../src/totem-object.c:3810
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem-object.c:3864
+#: ../src/totem-object.c:3815
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem-object.c:3927 ../src/plugins/grilo/totem-grilo.c:1319
-#: ../src/plugins/grilo/totem-grilo.c:1329
+#: ../src/totem-object.c:3854 ../src/plugins/grilo/totem-grilo.c:1184
+#: ../src/plugins/grilo/totem-grilo.c:1194
 msgid "Back"
 msgstr "Tilbake"
 
-#: ../src/totem-object.c:3998
+#: ../src/totem-object.c:3925
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: ../src/totem-object.c:3998
+#: ../src/totem-object.c:3925
 msgid "No reason."
 msgstr "Ingen årsak."
 
@@ -1157,50 +1118,50 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Kan ikke legge i kø og erstatte samtidig"
 
 #. By extension entry
-#: ../src/totem-playlist.c:175
+#: ../src/totem-playlist.c:172
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast-spilleliste"
 
-#: ../src/totem-playlist.c:176
+#: ../src/totem-playlist.c:173
 msgid "MP3 audio (streamed)"
 msgstr "MP3-lyd (strøm)"
 
-#: ../src/totem-playlist.c:177
+#: ../src/totem-playlist.c:174
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3-lyd (strøm, DOS-format)"
 
-#: ../src/totem-playlist.c:178
+#: ../src/totem-playlist.c:175
 msgid "XML Shareable Playlist"
 msgstr "XML-spilleliste som kan deles"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:335
+#: ../src/totem-playlist.c:332
 #, c-format
 msgid "Title %d"
 msgstr "Tittel %d"
 
-#: ../src/totem-playlist.c:489
+#: ../src/totem-playlist.c:486
 msgid "Could not save the playlist"
 msgstr "Kunne ikke lagre spillelisten"
 
-#: ../src/totem-playlist.c:1063
+#: ../src/totem-playlist.c:1060
 msgid "Save Playlist"
 msgstr "Lagre spilleliste"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1075 ../src/totem-playlist.c:1302
-#: ../src/totem-sidebar.c:142
+#: ../src/totem-playlist.c:1072 ../src/totem-playlist.c:1299
+#: ../src/totem-sidebar.c:127
 msgid "Playlist"
 msgstr "Spilleliste"
 
-#: ../src/totem-playlist.c:1902
+#: ../src/totem-playlist.c:1890
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Spilleliste «%s» kunne ikke leses. Den kan være skadet."
 
-#: ../src/totem-playlist.c:1903
+#: ../src/totem-playlist.c:1891
 msgid "Playlist error"
 msgstr "Feil med spilleliste"
 
@@ -1212,7 +1173,7 @@ msgstr "Konfigurer tillegg"
 msgid "Preferences"
 msgstr "Brukervalg"
 
-#: ../src/totem-preferences.c:498
+#: ../src/totem-preferences.c:494
 msgid "Select Subtitle Font"
 msgstr "Velg skrift for teksting"
 
@@ -1699,15 +1660,15 @@ msgstr "Legg til i spilleliste"
 msgid "Copy Location"
 msgstr "Kopier lokasjon"
 
-#: ../src/plugins/grilo/totem-grilo.c:495
+#: ../src/plugins/grilo/totem-grilo.c:363
 msgid "Browse Error"
 msgstr "Feil ved lesing"
 
-#: ../src/plugins/grilo/totem-grilo.c:665
+#: ../src/plugins/grilo/totem-grilo.c:530
 msgid "Search Error"
 msgstr "Feil ved søk"
 
-#: ../src/plugins/grilo/totem-grilo.c:950
+#: ../src/plugins/grilo/totem-grilo.c:815
 msgid "Recent"
 msgstr "Nylig brukt"
 
