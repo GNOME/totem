@@ -1055,7 +1055,7 @@ totem_embedded_get_app_for_uri (const char *uri)
 static void
 totem_embedded_update_menu (TotemEmbedded *emb)
 {
-	GtkWidget *item, *image;
+	GtkWidget *item;
 	GtkMenuShell *menu;
 	char *label;
 
@@ -1094,10 +1094,8 @@ totem_embedded_update_menu (TotemEmbedded *emb)
 	 * Open With ApplicationName
 	 * as in nautilus' right-click menu */
 	label = g_strdup_printf (_("_Open with \"%s\""), g_app_info_get_name (emb->app));
-	item = gtk_image_menu_item_new_with_mnemonic (label);
+	item = gtk_menu_item_new_with_mnemonic (label);
 	g_free (label);
-	image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (on_open1_activate), emb);
 	gtk_widget_show (item);

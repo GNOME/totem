@@ -53,24 +53,16 @@ drag_drop_action_activated_callback (GtkWidget  *menu_item,
 }
 
 static void
-drag_append_drop_action_menu_item (GtkWidget          *menu,
+drag_append_drop_action_menu_item (GtkWidget     *menu,
 				   const char    *text,
-				   const char    *icon,
-				   GdkDragAction action,
-				   DragData       *dt)
+				   GdkDragAction  action,
+				   DragData      *dt)
 {
 	GtkWidget *menu_item;
 
-	menu_item = gtk_image_menu_item_new_with_mnemonic (text);
+	menu_item = gtk_menu_item_new_with_mnemonic (text);
 	gtk_widget_set_sensitive (menu_item, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-
-	if (icon != NULL) {
-		GtkWidget *image;
-
-		image = gtk_image_new_from_stock (icon, GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu_item), image);
-	}
 
 	g_object_set_data (G_OBJECT (menu_item), "action", GINT_TO_POINTER (action));
 
@@ -91,16 +83,16 @@ totem_drag_ask (gboolean show_add_to)
 
 	menu = gtk_menu_new ();
 
-	drag_append_drop_action_menu_item (menu, _("_Play Now"), "media-playback-start-symbolic", GDK_ACTION_MOVE, &dt);
+	drag_append_drop_action_menu_item (menu, _("_Play Now"), GDK_ACTION_MOVE, &dt);
 
 	if (show_add_to != FALSE)
-		drag_append_drop_action_menu_item (menu, _("_Add to Playlist"), "gtk-add", GDK_ACTION_COPY, &dt);
+		drag_append_drop_action_menu_item (menu, _("_Add to Playlist"), GDK_ACTION_COPY, &dt);
 
 	menu_item = gtk_separator_menu_item_new ();
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 	gtk_widget_show (menu_item);
 
-	drag_append_drop_action_menu_item (menu, _("Cancel"), NULL, GDK_ACTION_DEFAULT, &dt);
+	drag_append_drop_action_menu_item (menu, _("Cancel"), GDK_ACTION_DEFAULT, &dt);
 
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (drag_menu_deactivate_callback), &dt);
