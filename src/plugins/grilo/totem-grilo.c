@@ -1334,8 +1334,7 @@ impl_deactivate (PeasActivatable *plugin)
 	GList *s;
 	GrlRegistry *registry;
 
-	totem_object_remove_sidebar_page (self->priv->totem, "grilo-browse");
-	totem_object_remove_sidebar_page (self->priv->totem, "grilo-search");
+	/* FIXME remove main page? */
 
 	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
