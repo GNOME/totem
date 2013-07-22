@@ -94,8 +94,8 @@ totem_gallery_new (Totem *totem)
 	/*gtk_window_set_resizable (GTK_WINDOW (gallery), FALSE);
 	gtk_dialog_set_has_separator (GTK_DIALOG (gallery), TRUE);*/
 	gtk_dialog_add_buttons (GTK_DIALOG (gallery),
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_SAVE, GTK_RESPONSE_OK,
+			_("_Cancel"), GTK_RESPONSE_CANCEL,
+			_("_Save"), GTK_RESPONSE_OK,
 			NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (gallery), GTK_RESPONSE_OK);
 

@@ -95,8 +95,8 @@ totem_edit_chapter_new (void)
 	gtk_window_set_title (GTK_WINDOW (edit_chapter), _("Add Chapter"));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (edit_chapter),
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				GTK_STOCK_OK, GTK_RESPONSE_OK,
+				_("_Cancel"), GTK_RESPONSE_CANCEL,
+				_("_Add"), GTK_RESPONSE_OK,
 				NULL);
 	gtk_container_set_border_width (GTK_CONTAINER (edit_chapter), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (edit_chapter), GTK_RESPONSE_OK);

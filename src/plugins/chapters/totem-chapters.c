@@ -958,8 +958,8 @@ load_button_clicked_cb (GtkButton		*button,
 	mrl = totem_object_get_current_mrl (plugin->priv->totem);
 	main_window = totem_object_get_main_window (plugin->priv->totem);
 	dialog = gtk_file_chooser_dialog_new (_("Open Chapter File"), main_window, GTK_FILE_CHOOSER_ACTION_OPEN,
-					      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					      _("_Cancel"), GTK_RESPONSE_CANCEL,
+					      _("_Open"), GTK_RESPONSE_ACCEPT,
 					      NULL);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
 

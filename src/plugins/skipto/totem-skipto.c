@@ -195,8 +195,8 @@ totem_skipto_new (TotemObject *totem)
 
 	gtk_window_set_title (GTK_WINDOW (skipto), _("Skip To"));
 	gtk_dialog_add_buttons (GTK_DIALOG (skipto),
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				GTK_STOCK_OK, GTK_RESPONSE_OK,
+				_("_Cancel"), GTK_RESPONSE_CANCEL,
+				_("_Skip To"), GTK_RESPONSE_OK,
 				NULL);
 
 	/* Skipto dialog */

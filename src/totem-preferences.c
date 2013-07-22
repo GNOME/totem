@@ -292,7 +292,7 @@ plugin_button_clicked_cb (GtkButton *button,
 		totem->plugins = gtk_dialog_new_with_buttons (_("Configure Plugins"),
 							      GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (button))),
 							      GTK_DIALOG_DESTROY_WITH_PARENT,
-							      GTK_STOCK_CLOSE,
+							      _("_Close"),
 							      GTK_RESPONSE_CLOSE,
 							      NULL);
 		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
@@ -351,7 +351,7 @@ totem_setup_preferences (Totem *totem)
 	totem->prefs = gtk_dialog_new_with_buttons (_("Preferences"),
 			GTK_WINDOW (totem->win),
 			GTK_DIALOG_DESTROY_WITH_PARENT,
-			GTK_STOCK_CLOSE,
+			_("_Close"),
 			GTK_RESPONSE_ACCEPT,
 			NULL);
 	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);

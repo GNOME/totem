@@ -418,8 +418,8 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	fs = gtk_file_chooser_dialog_new (_("Select Text Subtitles"), 
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
-					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					  GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					  _("_Cancel"), GTK_RESPONSE_CANCEL,
+					  _("_Open"), GTK_RESPONSE_ACCEPT,
 					  NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
@@ -483,9 +483,9 @@ totem_add_files (GtkWindow *parent, const char *path)
 	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
-					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  _("_Cancel"), GTK_RESPONSE_CANCEL,
 					  _("Add Directory"), OPEN_DIRECTORY_RESPONSE,
-					  GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
+					  _("_Add"), GTK_RESPONSE_ACCEPT,
 					  NULL);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_supported);

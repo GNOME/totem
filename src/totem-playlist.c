@@ -1060,8 +1060,8 @@ totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
 	fs = gtk_file_chooser_dialog_new (_("Save Playlist"),
 					  totem_playlist_get_toplevel (playlist),
 					  GTK_FILE_CHOOSER_ACTION_SAVE,
-					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					  GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+					  _("_Cancel"), GTK_RESPONSE_CANCEL,
+					  _("_Save"), GTK_RESPONSE_ACCEPT,
 					  NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);

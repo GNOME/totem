@@ -34,12 +34,8 @@ int main (int argc, char **argv)
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	button = totem_glow_button_new ();
-	image = gtk_image_new_from_stock (GTK_STOCK_MEDIA_PLAY, GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name ("media-playback-start", GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (button), image);
-#if 0
-	gtk_button_set_label (GTK_BUTTON (button), GTK_STOCK_MEDIA_PLAY);
-	gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
-#endif
 	gtk_container_add (GTK_CONTAINER(window), button);
 
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (button), TRUE);
