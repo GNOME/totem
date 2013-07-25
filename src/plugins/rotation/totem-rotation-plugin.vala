@@ -157,6 +157,8 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     private async void try_restore_state (string mrl)
     {
         var file = GLib.File.new_for_uri (mrl);
+        if (file.has_uri_scheme ("http"))
+          return;
         try {
             var file_info = yield file.query_info_async (GIO_ROTATION_FILE_ATTRIBUTE,
                     GLib.FileQueryInfoFlags.NONE);
