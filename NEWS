@@ -1,5 +1,18 @@
 New features and significant updates in version...
 
+Major changes in 3.9.5:
+- Add work-around to allow streaming of Vimeo videos
+- Don't hide the titlebar on fullscreen (as we still have
+  a menu bar)
+- Make thumbnailer work even when VA-API support is enabled
+- Avoid warnings from the rotation plugin for unsupported locations
+- Fix aspect ratio in dual-head setups
+- Fix playback when video location is not mounted
+- Access streams directly rather than through FUSE, making
+  buffering and playback smoother
+- Fix excessive redraws when using rotation, and make
+  rotation and crop work together
+
 Major changes in 3.8.2:
 - Work-around problem with initial window size
 - Fix errors in gallery name print when filename contains "&"
