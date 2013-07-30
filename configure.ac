@@ -287,6 +287,7 @@ PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GI
 PKG_CHECK_MODULES(LIBPLAYER, glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS clutter-gtk-1.0)
 PKG_CHECK_MODULES(HELPER, gstreamer-1.0 gstreamer-tag-1.0)
 PKG_CHECK_MODULES(TIME_HELPER, glib-2.0)
+PKG_CHECK_MODULES(RTL_HELPER, glib-2.0 gtk+-3.0 >= $GTK_REQS)
 PKG_CHECK_MODULES(PIXBUF_HELPER, gdk-pixbuf-2.0 gstreamer-tag-1.0 >= $GSTPLUG_REQS gstreamer-video-1.0)
 PKG_CHECK_MODULES(THUMBNAILER, gtk+-3.0 >= $GTK_REQS totem-plparser >= $TOTEM_PLPARSER_REQS gstreamer-tag-1.0 >= $GSTPLUG_REQS gstreamer-video-1.0)
 PKG_CHECK_MODULES(PREVIEW, gstreamer-1.0 >= $GST_REQS gio-2.0 >= $GIO_REQS gdk-pixbuf-2.0)
