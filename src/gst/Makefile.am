@@ -1,7 +1,8 @@
 noinst_LTLIBRARIES =			\
 	libtotemgsthelpers.la		\
 	libtotemgstpixbufhelpers.la	\
-	libtotemtimehelpers.la
+	libtotemtimehelpers.la		\
+	libtotemrtlhelpers.la
 
 libtotemgsthelpers_la_SOURCES =	\
 	totem-gst-helpers.c	\
@@ -50,6 +51,22 @@ libtotemtimehelpers_la_CFLAGS =	\
 
 libtotemtimehelpers_la_LIBADD = $(TIME_HELPER_LIBS)
 libtotemtimehelpers_la_LDFLAGS= -no-undefined
+
+libtotemrtlhelpers_la_SOURCES =	\
+	totem-rtl-helpers.c		\
+	totem-rtl-helpers.h
+
+libtotemrtlhelpers_la_CPPFLAGS =	\
+	-D_REENTRANT			\
+	$(DISABLE_DEPRECATED)		\
+	$(AM_CPPFLAGS)
+
+libtotemrtlhelpers_la_CFLAGS =	\
+	$(RTL_HELPER_CFLAGS)	\
+	$(AM_CFLAGS)
+
+libtotemrtlhelpers_la_LIBADD = $(RTL_HELPER_LIBS)
+libtotemrtlhelpers_la_LDFLAGS= -no-undefined
 
 include $(top_srcdir)/Makefile.decl
 
