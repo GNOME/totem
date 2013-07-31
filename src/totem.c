@@ -50,6 +50,7 @@
 #include "totem-sidebar.h"
 #include "totem-session.h"
 #include "video-utils.h"
+#include "totem-rtl-helpers.h"
 
 static gboolean startup_called = FALSE;
 
@@ -75,6 +76,7 @@ app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
+	GtkAction *action;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
@@ -89,6 +91,15 @@ app_init (Totem *totem, char **argv)
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
 		totem_object_action_exit (NULL);
+
+	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "play"));
+	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-playback-start"));
+
+	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "next-chapter"));
+	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-skip-forward"));
+
+	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "previous-chapter"));
+	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-skip-backward"));
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
