@@ -82,6 +82,7 @@ totem_plugin_viewer_SOURCES = \
 totem_plugin_viewer_CPPFLAGS = \
 	-DGNOMELOCALEDIR="\"$(datadir)/locale\""	\
 	-DG_LOG_DOMAIN=\""TotemEmbedded\""		\
+	-I$(top_srcdir)/src/gst				\
 	$(AM_CPPFLAGS)
 
 totem_plugin_viewer_CFLAGS = \

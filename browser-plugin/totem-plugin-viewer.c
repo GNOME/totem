@@ -49,6 +49,7 @@
 #include "totem-time-label.h"
 #include "totem-fullscreen.h"
 #include "totem-glow-button.h"
+#include "totem-rtl-helpers.h"
 #include "video-utils.h"
 
 #include "totem-plugin-viewer-constants.h"
@@ -347,7 +348,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	switch (state) {
 	case TOTEM_STATE_STOPPED:
-		id = "media-playback-start-symbolic";
+		id = totem_get_rtl_icon_name ("media-playback-start");
 		totem_statusbar_set_text (emb->statusbar, _("Stopped"));
 		totem_statusbar_set_time_and_length (emb->statusbar, 0, 0);
 		totem_time_label_set_time
@@ -359,7 +360,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		}
 		break;
 	case TOTEM_STATE_PAUSED:
-		id = "media-playback-start-symbolic";
+		id = totem_get_rtl_icon_name ("media-playback-start");
 		totem_statusbar_set_text (emb->statusbar, _("Paused"));
 		break;
 	case TOTEM_STATE_PLAYING:
@@ -1704,7 +1705,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (totem_embedded_on_fullscreen_exit), emb);
 
 	emb->pp_fs_button = GTK_WIDGET (gtk_tool_button_new_from_stock
-					("media-playback-start-symbolic"));
+					(totem_get_rtl_icon_name ("media-playback-start")));
 	g_signal_connect (G_OBJECT (emb->pp_fs_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 	gtk_container_add (GTK_CONTAINER (emb->fs->buttons_box), emb->pp_fs_button);
@@ -1768,7 +1769,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 			  G_CALLBACK (cb_on_seek), emb);
 
 	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
-	image = gtk_image_new_from_icon_name ("media-playback-start-symbolic", GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name (totem_get_rtl_icon_name ("media-playback-start"), GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (emb->pp_button), image);
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
