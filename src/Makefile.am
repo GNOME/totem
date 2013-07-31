@@ -98,7 +98,8 @@ libtotem_la_CPPFLAGS = \
 
 libtotem_la_CFLAGS = \
 	$(PLAYER_CFLAGS)		\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)			\
+	-I$(srcdir)/gst/
 
 libtotem_la_LDFLAGS = \
 	-export-dynamic	\
@@ -143,6 +144,7 @@ totem_CPPFLAGS = \
 
 totem_CFLAGS =			\
 	$(PLAYER_CFLAGS)	\
+	-I$(srcdir)/gst/	\
 	$(AM_CFLAGS)
 
 totem_LDADD =		\
