@@ -48,6 +48,7 @@
 #include "totem-session.h"
 #include "totem-uri.h"
 #include "totem-preferences.h"
+#include "totem-rtl-helpers.h"
 #include "totem-sidebar.h"
 #include "video-utils.h"
 
@@ -86,6 +87,7 @@ app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
+	GtkAction *action;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
@@ -100,6 +102,12 @@ app_init (Totem *totem, char **argv)
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
 		totem_action_exit (NULL);
+
+	set_rtl_icon_name (totem, "play", "media-playback-start");
+	set_rtl_icon_name (totem, "next-chapter", "media-skip-forward");
+	set_rtl_icon_name (totem, "previous-chapter", "media-skip-backward");
+	set_rtl_icon_name (totem, "skip-forward", "media-seek-forward");
+	set_rtl_icon_name (totem, "skip-backward", "media-seek-backward");
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	g_object_bind_property (G_OBJECT (totem), "fullscreen",

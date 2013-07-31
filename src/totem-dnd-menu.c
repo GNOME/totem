@@ -27,6 +27,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "totem-dnd-menu.h"
+#include "totem-rtl-helpers.h"
 
 typedef struct
 {
@@ -91,7 +92,7 @@ totem_drag_ask (gboolean show_add_to)
 
 	menu = gtk_menu_new ();
 
-	drag_append_drop_action_menu_item (menu, _("_Play Now"), "media-playback-start-symbolic", GDK_ACTION_MOVE, &dt);
+	drag_append_drop_action_menu_item (menu, _("_Play Now"), totem_get_rtl_icon_name ("media-playback-start"), GDK_ACTION_MOVE, &dt);
 
 	if (show_add_to != FALSE)
 		drag_append_drop_action_menu_item (menu, _("_Add to Playlist"), "gtk-add", GDK_ACTION_COPY, &dt);

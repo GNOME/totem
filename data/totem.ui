@@ -78,7 +78,6 @@
          <child>
             <object class="GtkAction" id="play">
                <property name="label" translatable="yes">Play / P_ause</property>
-               <property name="icon-name">media-playback-start-symbolic</property>
                <property name="tooltip" translatable="yes">Play or pause the movie</property>
                <signal name="activate" handler="play_action_callback"/>
             </object>
@@ -198,7 +197,6 @@
          <child>
             <object class="GtkAction" id="next-chapter">
                <property name="label" translatable="yes">_Next Chapter/Movie</property>
-               <property name="icon-name">media-skip-forward-symbolic</property>
                <property name="tooltip" translatable="yes">Next chapter or movie</property>
                <signal name="activate" handler="next_chapter_action_callback"/>
             </object>
@@ -207,7 +205,6 @@
          <child>
             <object class="GtkAction" id="previous-chapter">
                <property name="label" translatable="yes">_Previous Chapter/Movie</property>
-               <property name="icon-name">media-skip-backward-symbolic</property>
                <property name="tooltip" translatable="yes">Previous chapter or movie</property>
                <signal name="activate" handler="previous_chapter_action_callback"/>
             </object>
@@ -366,7 +363,6 @@
             <object class="GtkAction" id="skip-forward">
                <property name="label" translatable="yes">Skip _Forward</property>
                <property name="tooltip" translatable="yes">Skip forward</property>
-               <property name="icon-name">media-seek-forward-symbolic</property>
                <signal name="activate" handler="skip_forward_action_callback"/>
             </object>
             <accelerator key="Right"/>
@@ -375,7 +371,6 @@
             <object class="GtkAction" id="skip-backwards">
                <property name="label" translatable="yes">Skip _Backwards</property>
                <property name="tooltip" translatable="yes">Skip backwards</property>
-               <property name="icon-name">media-seek-backward-symbolic</property>
                <signal name="activate" handler="skip_backwards_action_callback"/>
             </object>
             <accelerator key="Left"/>
