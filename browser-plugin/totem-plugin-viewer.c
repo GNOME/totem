@@ -51,6 +51,8 @@
 #include "totem-plugin-viewer-constants.h"
 #include "totem-plugin-viewer-options.h"
 
+#include "gst/totem-rtl-helpers.h"
+
 GtkWidget *totem_volume_create (void);
 GtkWidget *totem_pp_create (void);
 
@@ -296,7 +298,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 
 	switch (state) {
 	case TOTEM_STATE_STOPPED:
-		id = "media-playback-start-symbolic";
+		id = totem_get_rtl_icon_name ("media-playback-start");
 		if (emb->href_uri != NULL && emb->hidden == FALSE) {
 			gdk_window_set_cursor
 				(gtk_widget_get_window (GTK_WIDGET (emb->bvw)),
@@ -304,7 +306,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 		}
 		break;
 	case TOTEM_STATE_PAUSED:
-		id = "media-playback-start-symbolic";
+		id = totem_get_rtl_icon_name ("media-playback-start");
 		break;
 	case TOTEM_STATE_PLAYING:
 		id = "media-playback-pause-symbolic";
@@ -1679,7 +1681,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 
 	/* FIXME make popup controls work
 	emb->pp_fs_button = GTK_WIDGET (gtk_tool_button_new_from_stock
-					("media-playback-start-symbolic"));
+					(totem_get_rtl_icon_name ("media-playback-start")));
 	g_signal_connect (G_OBJECT (emb->pp_fs_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
 	gtk_container_add (GTK_CONTAINER (emb->fs->buttons_box), emb->pp_fs_button); */
@@ -1743,7 +1745,7 @@ totem_embedded_construct (TotemEmbedded *emb,
 //			  G_CALLBACK (cb_on_seek), emb);
 
 	emb->pp_button = GTK_WIDGET (gtk_builder_get_object (emb->xml, "pp_button"));
-	image = gtk_image_new_from_icon_name ("media-playback-start-symbolic", GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name (totem_get_rtl_icon_name ("media-playback-start"), GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (emb->pp_button), image);
 	g_signal_connect (G_OBJECT (emb->pp_button), "clicked",
 			  G_CALLBACK (on_play_pause), emb);
