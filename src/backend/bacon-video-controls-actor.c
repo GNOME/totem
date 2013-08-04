@@ -93,14 +93,14 @@ setup_object (BaconVideoControlsActor *controls,
 static void
 bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 {
-	char *objects[] = { "toolbar", NULL };
+	const char *objects[] = { "toolbar", NULL };
 
 	controls->priv = BACON_VIDEO_CONTROLS_ACTOR_GET_PRIVATE (G_OBJECT (controls));
 
 	g_type_class_ref (BACON_TYPE_TIME_LABEL);
 
 	controls->priv->builder = gtk_builder_new ();
-	if (gtk_builder_add_objects_from_file (controls->priv->builder, DATADIR "/controls.ui", objects, NULL) == 0)
+	if (gtk_builder_add_objects_from_file (controls->priv->builder, DATADIR "/controls.ui", (gchar **) objects, NULL) == 0)
 		g_assert_not_reached ();
 
 	setup_object (controls, "seek_scale");

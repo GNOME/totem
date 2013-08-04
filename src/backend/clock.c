@@ -113,9 +113,10 @@ clock_get_property (GObject      *object,
 static void
 clock_init (Clock *self)
 {
+  ClutterContent *content;
+
   self->angle = 0;
 
-  ClutterContent *content;
   content = clutter_canvas_new ();
   clutter_canvas_set_size (CLUTTER_CANVAS (content),
                            CLOCK_RADIUS + 2,

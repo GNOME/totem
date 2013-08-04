@@ -3445,7 +3445,7 @@ bacon_video_widget_popup_osd (BaconVideoWidget *bvw,
 GObject *
 bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
 {
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 
   return G_OBJECT (bvw->priv->controls);
 }
@@ -3453,7 +3453,7 @@ bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
 GObject *
 bacon_video_widget_get_header_object (BaconVideoWidget *bvw)
 {
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
 
   return G_OBJECT (bvw->priv->header);
 }
@@ -4913,8 +4913,9 @@ void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
                                 BvwAspectRatio ratio)
 {
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   GstMessage *msg;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   bvw->priv->ratio_type = ratio;
   msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
@@ -5217,10 +5218,11 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
                                        BvwVideoProperty type,
                                        int value)
 {
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (bvw->priv->play != NULL);
   GstColorBalanceChannel *found_channel = NULL;
   int i_value;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (bvw->priv->play != NULL);
 
   GST_DEBUG ("set video property type %d to value %d", type, value);
 

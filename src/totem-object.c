@@ -563,7 +563,7 @@ totem_object_empty_menu_section (TotemObject *totem,
 {
 	GMenu *menu;
 
-	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
+	g_return_if_fail (TOTEM_IS_OBJECT (totem));
 
 	menu = G_MENU (gtk_builder_get_object (totem->xml, id));
 	g_return_if_fail (menu != NULL);
@@ -1756,6 +1756,11 @@ totem_object_set_mrl (TotemObject *totem,
 		char *user_agent;
 		char *autoload_sub;
 
+		/* cast is to shut gcc up */
+		const GtkTargetEntry source_table[] = {
+			{ (gchar*) "text/uri-list", 0, 0 }
+		};
+
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
 		autoload_sub = NULL;
@@ -1787,11 +1792,6 @@ totem_object_set_mrl (TotemObject *totem,
 
 		/* Set the playlist */
 		play_pause_set_label (totem, STATE_PAUSED);
-
-		/* cast is to shut gcc up */
-		const GtkTargetEntry source_table[] = {
-			{ (gchar*) "text/uri-list", 0, 0 }
-		};
 
 		emit_file_opened (totem, totem->mrl);
 
