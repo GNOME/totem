@@ -3503,6 +3503,9 @@ totem_object_handle_scroll (TotemObject    *totem,
 	case GDK_SCROLL_DOWN:
 		totem_object_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000, FALSE);
 		break;
+	case GDK_SCROLL_LEFT:
+	case GDK_SCROLL_RIGHT:
+	case GDK_SCROLL_SMOOTH:
 	default:
 		retval = FALSE;
 	}
