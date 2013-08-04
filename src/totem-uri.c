@@ -260,7 +260,7 @@ totem_create_full_path (const char *path)
 }
 
 static void
-totem_action_on_unmount (GVolumeMonitor *volume_monitor,
+totem_object_on_unmount (GVolumeMonitor *volume_monitor,
 			 GMount *mount,
 			 Totem *totem)
 {
@@ -274,11 +274,11 @@ totem_setup_file_monitoring (Totem *totem)
 
 	g_signal_connect (G_OBJECT (totem->monitor),
 			  "mount-pre-unmount",
-			  G_CALLBACK (totem_action_on_unmount),
+			  G_CALLBACK (totem_object_on_unmount),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->monitor),
 			  "mount-removed",
-			  G_CALLBACK (totem_action_on_unmount),
+			  G_CALLBACK (totem_object_on_unmount),
 			  totem);
 }
 

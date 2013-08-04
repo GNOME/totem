@@ -210,12 +210,12 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 			if (setting >= 0) {
 				gboolean value;
 
-				value = totem_object_action_remote_get_setting (pi->priv->totem, setting);
-				totem_object_action_remote_set_setting (pi->priv->totem, setting, !value);
+				value = totem_object_remote_commandget_setting (pi->priv->totem, setting);
+				totem_object_remote_commandset_setting (pi->priv->totem, setting, !value);
 			}
 		} else {
 			cmd = totem_lirc_to_command (str, &url);
-			totem_object_action_remote (pi->priv->totem, cmd, url);
+			totem_object_remote_command (pi->priv->totem, cmd, url);
 		}
 		g_free (url);
 	} while (TRUE);

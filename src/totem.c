@@ -90,7 +90,7 @@ app_init (Totem *totem, char **argv)
 	/* Main window */
 	totem->xml = totem_interface_load ("totem.ui", TRUE, NULL, totem);
 	if (totem->xml == NULL)
-		totem_object_action_exit (NULL);
+		totem_object_exit (NULL);
 
 	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "play"));
 	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-playback-start"));
@@ -152,7 +152,7 @@ app_init (Totem *totem, char **argv)
 	if (optionstate.fullscreen != FALSE) {
 		gtk_widget_show (totem->win);
 		gdk_flush ();
-		totem_action_fullscreen (totem, TRUE);
+		totem_object_set_fullscreen (totem, TRUE);
 	}
 
 	/* The prefs after the video widget is connected */
@@ -168,12 +168,12 @@ app_init (Totem *totem, char **argv)
 
 	if (optionstate.filenames == NULL) {
 		if (totem_session_try_restore (totem) == FALSE)
-			totem_action_set_mrl (totem, NULL, NULL);
+			totem_object_set_mrl (totem, NULL, NULL);
 	} else {
-		if (totem_action_open_files (totem, optionstate.filenames))
-			totem_object_action_play_pause (totem);
+		if (totem_object_open_files (totem, optionstate.filenames))
+			totem_object_play_pause (totem);
 		else
-			totem_action_set_mrl (totem, NULL, NULL);
+			totem_object_set_mrl (totem, NULL, NULL);
 	}
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
@@ -254,7 +254,7 @@ main (int argc, char **argv)
 	{
 		gtk_init (&argc, &argv);
 		g_set_application_name (_("Videos"));
-		totem_action_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
+		totem_object_show_error_and_exit (_("Could not initialize the thread-safe libraries."), _("Verify your system installation. Totem will now exit."), NULL);
 	}
 #endif
 

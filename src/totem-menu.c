@@ -50,7 +50,7 @@ open_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
 {
-	totem_action_open (TOTEM_OBJECT (user_data));
+	totem_object_open (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -58,7 +58,7 @@ open_location_action_cb (GSimpleAction *action,
 			 GVariant      *parameter,
 			 gpointer       user_data)
 {
-	totem_action_open_location (TOTEM_OBJECT (user_data));
+	totem_object_open_location (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -77,7 +77,7 @@ fullscreen_change_state (GSimpleAction *action,
 	gboolean param;
 
 	param = g_variant_get_boolean (value);
-	totem_action_fullscreen (TOTEM_OBJECT (user_data), param);
+	totem_object_set_fullscreen (TOTEM_OBJECT (user_data), param);
 
 	g_simple_action_set_state (action, value);
 }
@@ -188,7 +188,7 @@ help_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
 {
-	totem_action_show_help (TOTEM_OBJECT (user_data));
+	totem_object_show_help (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -196,7 +196,7 @@ quit_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
 		gpointer       user_data)
 {
-	totem_object_action_exit (TOTEM_OBJECT (user_data));
+	totem_object_exit (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -244,7 +244,7 @@ next_angle_action_cb (GSimpleAction *action,
 		      GVariant      *parameter,
 		      gpointer       user_data)
 {
-        totem_object_action_next_angle (TOTEM_OBJECT (user_data));
+        totem_object_next_angle (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -252,7 +252,7 @@ properties_action_cb (GSimpleAction *action,
 		      GVariant      *parameter,
 		      gpointer       user_data)
 {
-        totem_action_show_properties (TOTEM_OBJECT (user_data));
+        totem_object_show_properties (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -260,7 +260,7 @@ eject_action_cb (GSimpleAction *action,
 		 GVariant      *parameter,
 		 gpointer       user_data)
 {
-	totem_action_eject (TOTEM_OBJECT (user_data));
+	totem_object_eject (TOTEM_OBJECT (user_data));
 }
 
 static void
@@ -526,19 +526,19 @@ totem_sublang_exit (Totem *totem)
 void
 play_action_callback (GtkAction *action, Totem *totem)
 {
-	totem_object_action_play_pause (totem);
+	totem_object_play_pause (totem);
 }
 
 void
 next_chapter_action_callback (GtkAction *action, Totem *totem)
 {
-	TOTEM_PROFILE (totem_object_action_next (totem));
+	TOTEM_PROFILE (totem_object_seek_next (totem));
 }
 
 void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
-	TOTEM_PROFILE (totem_object_action_previous (totem));
+	TOTEM_PROFILE (totem_object_seek_previous (totem));
 }
 
 void
@@ -554,7 +554,7 @@ void
 clear_playlist_action_callback (GtkAction *action, Totem *totem)
 {
 	totem_playlist_clear (totem->playlist);
-	totem_action_set_mrl (totem, NULL, NULL);
+	totem_object_set_mrl (totem, NULL, NULL);
 }
 
 void

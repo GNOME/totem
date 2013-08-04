@@ -48,14 +48,14 @@
 	}
 #define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (g_object_get_data (totem->controls, name), state)
 
-#define totem_action_set_sensitivity(name, state)					\
+#define totem_object_set_sensitivity(name, state)					\
 	{										\
 		GtkAction *__action;							\
 		__action = gtk_action_group_get_action (totem->main_action_group, name);\
 		gtk_action_set_sensitive (__action, state);				\
 	}
 
-#define totem_action_set_sensitivity2(name, state)					\
+#define totem_object_set_sensitivity2(name, state)					\
 	{										\
 		GAction *__action;							\
 		__action = g_action_map_lookup_action (G_ACTION_MAP (totem), name);	\
@@ -168,17 +168,17 @@ GtkWidget *totem_volume_create (void);
 #define ZOOM_IN_OFFSET 0.01
 #define ZOOM_OUT_OFFSET -0.01
 
-void	totem_action_open			(Totem *totem);
-void	totem_action_open_location		(Totem *totem);
-void	totem_action_eject			(Totem *totem);
-void	totem_action_set_zoom			(Totem *totem, gboolean zoom);
-void	totem_action_show_help			(Totem *totem);
-void	totem_action_show_properties		(Totem *totem);
-void    totem_action_set_mrl			(TotemObject *totem,
+void	totem_object_open			(Totem *totem);
+void	totem_object_open_location		(Totem *totem);
+void	totem_object_eject			(Totem *totem);
+void	totem_object_set_zoom			(Totem *totem, gboolean zoom);
+void	totem_object_show_help			(Totem *totem);
+void	totem_object_show_properties		(Totem *totem);
+void    totem_object_set_mrl			(TotemObject *totem,
 						 const char *mrl,
 						 const char *subtitle);
-gboolean totem_action_open_files		(Totem *totem, char **list);
-G_GNUC_NORETURN void totem_action_error_and_exit (const char *title, const char *reason, Totem *totem);
+gboolean totem_object_open_files		(Totem *totem, char **list);
+G_GNUC_NORETURN void totem_object_show_error_and_exit (const char *title, const char *reason, Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
 
@@ -188,9 +188,9 @@ void	playlist_widget_setup			(Totem *totem);
 void	video_widget_create			(Totem *totem);
 void    totem_object_plugins_init		(TotemObject *totem);
 void    totem_object_plugins_shutdown		(TotemObject *totem);
-void	totem_action_fullscreen			(TotemObject *totem, gboolean state);
-void	totem_action_volume_relative		(TotemObject *totem, double off_pct);
-void	totem_action_volume_toggle_mute		(TotemObject *totem);
+void	totem_object_set_fullscreen		(TotemObject *totem, gboolean state);
+void	totem_object_set_volume_relative	(TotemObject *totem, double off_pct);
+void	totem_object_volume_toggle_mute		(TotemObject *totem);
 void	totem_object_add_main_page		(TotemObject *totem,
 						 const char  *page_id,
 						 GtkWidget   *widget);

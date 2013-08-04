@@ -63,27 +63,27 @@ on_media_player_key_pressed (TotemObject *totem,
 			     const gchar *key)
 {
 	if (strcmp ("Play", key) == 0)
-		totem_object_action_play_pause (totem);
+		totem_object_play_pause (totem);
 	else if (strcmp ("Previous", key) == 0)
-		totem_object_action_previous (totem);
+		totem_object_seek_previous (totem);
 	else if (strcmp ("Next", key) == 0)
-		totem_object_action_next (totem);
+		totem_object_seek_next (totem);
 	else if (strcmp ("Stop", key) == 0)
-		totem_object_action_pause (totem);
+		totem_object_pause (totem);
 	else if (strcmp ("FastForward", key) == 0)
-		totem_object_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
+		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
 	else if (strcmp ("Rewind", key) == 0)
-		totem_object_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
+		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
 	else if (strcmp ("Repeat", key) == 0) {
 		gboolean value;
 
-		value = totem_object_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
-		totem_object_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
+		value = totem_object_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
+		totem_object_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
 	} else if (strcmp ("Shuffle", key) == 0) {
 		gboolean value;
 
-		value = totem_object_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
-		totem_object_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
+		value = totem_object_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
+		totem_object_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
 	}
 }
 

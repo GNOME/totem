@@ -63,7 +63,7 @@ totem_session_try_restore (Totem *totem)
 	uri = get_session_filename ();
 	if (totem_playlist_add_mrl_sync (totem->playlist, uri, &totem->seek_to_start) == FALSE) {
 		totem_signal_unblock_by_data (totem->playlist, totem);
-		totem_action_set_mrl (totem, NULL, NULL);
+		totem_object_set_mrl (totem, NULL, NULL);
 		g_free (uri);
 		return FALSE;
 	}
@@ -77,7 +77,7 @@ totem_session_try_restore (Totem *totem)
 	if (mrl != NULL)
 		totem_object_set_main_page (totem, "player", FALSE);
 
-	totem_action_set_mrl (totem, mrl, subtitle);
+	totem_object_set_mrl (totem, mrl, subtitle);
 
 	/* We do the seeking after being told that the stream is seekable,
 	 * not straight away */

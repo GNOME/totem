@@ -165,21 +165,21 @@ typedef struct {
 
 GType	totem_object_get_type			(void);
 
-void	totem_object_action_exit		(TotemObject *totem) G_GNUC_NORETURN;
-void	totem_object_action_play		(TotemObject *totem);
-void	totem_object_action_stop		(TotemObject *totem);
-void	totem_object_action_play_pause		(TotemObject *totem);
-void	totem_object_action_pause		(TotemObject *totem);
-void	totem_object_action_next		(TotemObject *totem);
-void	totem_object_action_previous		(TotemObject *totem);
-void	totem_object_action_seek_time		(TotemObject *totem, gint64 msec, gboolean accurate);
-void	totem_object_action_seek_relative	(TotemObject *totem, gint64 offset, gboolean accurate);
+void	totem_object_exit			(TotemObject *totem) G_GNUC_NORETURN;
+void	totem_object_play			(TotemObject *totem);
+void	totem_object_stop			(TotemObject *totem);
+void	totem_object_play_pause			(TotemObject *totem);
+void	totem_object_pause			(TotemObject *totem);
+void	totem_object_seek_next			(TotemObject *totem);
+void	totem_object_seek_previous		(TotemObject *totem);
+void	totem_object_seek_time			(TotemObject *totem, gint64 msec, gboolean accurate);
+void	totem_object_seek_relative		(TotemObject *totem, gint64 offset, gboolean accurate);
 double	totem_object_get_volume			(TotemObject *totem);
-void	totem_object_action_volume		(TotemObject *totem, double volume);
+void	totem_object_set_volume			(TotemObject *totem, double volume);
 
-void	totem_object_action_next_angle		(TotemObject *totem);
+void	totem_object_next_angle			(TotemObject *totem);
 
-void    totem_object_action_error               (TotemObject *totem,
+void    totem_object_show_error			(TotemObject *totem,
 						 const char *title,
 						 const char *reason);
 
@@ -221,13 +221,13 @@ void    totem_object_remove_sidebar_page	(TotemObject *totem,
 						 const char *page_id);
 
 /* Remote actions */
-void    totem_object_action_remote		(TotemObject *totem,
+void    totem_object_remote_command		(TotemObject *totem,
 						 TotemRemoteCommand cmd,
 						 const char *url);
-void	totem_object_action_remote_set_setting	(TotemObject *totem,
+void	totem_object_remote_set_setting		(TotemObject *totem,
 						 TotemRemoteSetting setting,
 						 gboolean value);
-gboolean totem_object_action_remote_get_setting	(TotemObject *totem,
+gboolean totem_object_remote_get_setting	(TotemObject *totem,
 						 TotemRemoteSetting setting);
 
 const gchar * const *totem_object_get_supported_content_types (void);

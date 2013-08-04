@@ -218,7 +218,7 @@ take_screenshot_action_cb (GSimpleAction         *action,
 		if (err == NULL)
 			return;
 
-		totem_object_action_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message);
+		totem_object_show_error (priv->totem, _("Totem could not get a screenshot of the video."), err->message);
 		g_error_free (err);
 		return;
 	}
@@ -227,7 +227,7 @@ take_screenshot_action_cb (GSimpleAction         *action,
 
 	pixbuf = bacon_video_widget_get_current_frame (priv->bvw);
 	if (pixbuf == NULL) {
-		totem_object_action_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
+		totem_object_show_error (priv->totem, _("Totem could not get a screenshot of the video."), _("This is not supposed to happen; please file a bug report."));
 		return;
 	}
 
