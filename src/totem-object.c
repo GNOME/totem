@@ -2212,52 +2212,6 @@ drag_motion_video_cb (GtkWidget      *widget,
 }
 
 static void
-drop_playlist_cb (GtkWidget     *widget,
-	       GdkDragContext     *context,
-	       gint                x,
-	       gint                y,
-	       GtkSelectionData   *data,
-	       guint               info,
-	       guint               _time,
-	       Totem              *totem)
-{
-	gboolean empty_pl;
-	GdkDragAction action = gdk_drag_context_get_selected_action (context);
-
-	if (action == GDK_ACTION_ASK) {
-		action = totem_drag_ask (totem_object_get_playlist_length (totem) > 0);
-		gdk_drag_status (context, action, GDK_CURRENT_TIME);
-	}
-
-	if (action == GDK_ACTION_DEFAULT) {
-		gtk_drag_finish (context, FALSE, FALSE, _time);
-		return;
-	}
-
-	empty_pl = (action == GDK_ACTION_MOVE);
-
-	totem_object_drop_files (totem, data, info, empty_pl);
-	gtk_drag_finish (context, TRUE, FALSE, _time);
-}
-
-static void
-drag_motion_playlist_cb (GtkWidget      *widget,
-			 GdkDragContext *context,
-			 gint            x,
-			 gint            y,
-			 guint           _time,
-			 Totem          *totem)
-{
-	GdkDevice *device;
-	GdkModifierType mask;
-
-	device = gdk_drag_context_get_device (context);
-	gdk_device_get_state (device, gtk_widget_get_window (widget), NULL, &mask);
-
-	if (mask & GDK_MOD1_MASK || gdk_drag_context_get_suggested_action (context) == GDK_ACTION_ASK)
-		gdk_drag_status (context, GDK_ACTION_ASK, _time);
-}
-static void
 drag_video_cb (GtkWidget *widget,
 	       GdkDragContext *context,
 	       GtkSelectionData *selection_data,
@@ -3111,15 +3065,6 @@ totem_object_is_seekable (TotemObject *totem)
 		return FALSE;
 
 	return bacon_video_widget_is_seekable (totem->bvw) != FALSE;
-}
-
-static void
-on_mouse_click_fullscreen (GtkWidget *widget, TotemObject *totem)
-{
-#if 0
-	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
-		totem_fullscreen_show_popups (totem->fs, TRUE);
-#endif
 }
 
 static gboolean
