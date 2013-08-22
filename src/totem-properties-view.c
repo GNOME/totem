@@ -77,6 +77,7 @@ update_general (TotemPropertiesView *props,
 	};
 	guint i;
         GDate *date;
+	GstDateTime *datetime;
 	gchar *comment;
 
 	for (i = 0; i < G_N_ELEMENTS(items); i++) {
@@ -111,7 +112,16 @@ update_general (TotemPropertiesView *props,
 							 "year",
 							 string);
 		g_free (string);
-        }
+        } else if (gst_tag_list_get_date_time (list, GST_TAG_DATE_TIME, &datetime)) {
+		char *string;
+
+		string = g_strdup_printf ("%d", gst_date_time_get_year (datetime));
+		gst_date_time_unref (datetime);
+		bacon_video_widget_properties_set_label (props->priv->props,
+							 "year",
+							 string);
+		g_free (string);
+	}
 }
 
 static void
