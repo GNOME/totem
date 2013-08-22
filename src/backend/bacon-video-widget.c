@@ -3927,6 +3927,8 @@ bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error
 
   if (retval != FALSE)
     bvw_query_timeout (bvw);
+  else
+    GST_WARNING ("Failed to step %s", DIRECTION_STR);
 
   return retval;
 }
