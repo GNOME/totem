@@ -5379,11 +5379,16 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     case BVW_INFO_YEAR:
       if (bvw->priv->tagcache != NULL) {
         GDate *date;
+        GstDateTime *datetime;
 
         if ((res = gst_tag_list_get_date (bvw->priv->tagcache,
                                           GST_TAG_DATE, &date))) {
           string = g_strdup_printf ("%d", g_date_get_year (date));
           g_date_free (date);
+        } else if ((res = gst_tag_list_get_date_time (bvw->priv->tagcache,
+                                                      GST_TAG_DATE_TIME, &datetime))) {
+          string = g_strdup_printf ("%d", gst_date_time_get_year (datetime));
+          gst_date_time_unref (datetime);
         }
       }
       break;
