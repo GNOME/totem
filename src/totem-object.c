@@ -3201,6 +3201,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 {
 	GdkModifierType mask;
 	gboolean retval;
+	gboolean switch_rtl = FALSE;
 
 	retval = TRUE;
 
@@ -3224,6 +3225,11 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_c:
 		bacon_video_widget_dvd_event (totem->bvw,
 				BVW_DVD_CHAPTER_MENU);
+		break;
+	case GDK_KEY_F5:
+		/* Start presentation button */
+		totem_object_set_fullscreen (totem, TRUE);
+		totem_object_play_pause (totem);
 		break;
 	case GDK_KEY_F11:
 	case GDK_KEY_f:
@@ -3319,18 +3325,22 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_Left:
 	case GDK_KEY_Right:
+		switch_rtl = TRUE;
+		/* fall through */
+	case GDK_KEY_Page_Up:
+	case GDK_KEY_Page_Down:
 		if (bacon_video_widget_has_menus (totem->bvw) == FALSE) {
 			gboolean is_forward;
 
-			is_forward = (event->keyval == GDK_KEY_Right);
+			is_forward = (event->keyval == GDK_KEY_Right || event->keyval == GDK_KEY_Page_Up);
 			/* Switch direction in RTL environment */
-			if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
+			if (switch_rtl && gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 				is_forward = !is_forward;
 
 			if (totem_object_is_seekable (totem))
 				totem_object_handle_seek (totem, event, is_forward);
 		} else {
-			if (event->keyval == GDK_KEY_Left)
+			if (event->keyval == GDK_KEY_Left || event->keyval == GDK_KEY_Page_Down)
 				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_LEFT);
 			else
 				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_RIGHT);
