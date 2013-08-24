@@ -34,7 +34,7 @@
 #include <glib/gi18n.h>
 #include <cairo.h>
 #include <gst/gst.h>
-#include <totem-disc.h>
+#include <totem-pl-parser.h>
 
 #include <errno.h>
 #include <unistd.h>
@@ -89,11 +89,21 @@ typedef struct {
 static void save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 			 const char *video_path, int size, gboolean is_still);
 
+static void
+entry_parsed_cb (TotemPlParser *parser,
+		 const char    *uri,
+		 GHashTable    *metadata,
+		 char         **new_url)
+{
+	*new_url = g_strdup (uri);
+}
+
 static char *
 get_special_url (GFile *file)
 {
 	char *path, *orig_uri, *uri, *mime_type;
-	TotemDiscMediaType type;
+	TotemPlParser *parser;
+	TotemPlParserResult res;
 
 	path = g_file_get_path (file);
 
@@ -107,11 +117,17 @@ get_special_url (GFile *file)
 
 	uri = NULL;
 	orig_uri = g_file_get_uri (file);
-	type = totem_cd_detect_type_with_url (orig_uri, &uri, NULL);
-	g_free (orig_uri);
 
-	if (type == MEDIA_TYPE_DVD ||
-	    type == MEDIA_TYPE_VCD)
+	parser = totem_pl_parser_new ();
+	g_signal_connect (parser, "entry-parsed",
+			  G_CALLBACK (entry_parsed_cb), &uri);
+
+	res = totem_pl_parser_parse (parser, orig_uri, FALSE);
+
+	g_free (orig_uri);
+	g_object_unref (parser);
+
+	if (res == TOTEM_PL_PARSER_RESULT_SUCCESS)
 		return uri;
 
 	g_free (uri);
