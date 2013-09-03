@@ -23,7 +23,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-07-22 09:21+0000\n"
-"PO-Revision-Date: 2013-02-25 21:00+0100\n"
+"PO-Revision-Date: 2013-09-03 23:27+0200\n"
 "Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: \n"
@@ -346,10 +346,8 @@ msgid "Load _chapter files when movie is loaded"
 msgstr "Ch_arger les fichiers de chapitrage au chargement d'un film"
 
 #: ../data/preferences.ui.h:20
-#, fuzzy
-#| msgid "Plugins..."
 msgid "Plugins"
-msgstr "Greffons..."
+msgstr "Greffons"
 
 #: ../data/preferences.ui.h:21
 msgid "Plugins..."
@@ -513,7 +511,7 @@ msgstr "_Ouvrir"
 
 #: ../data/totem.ui.h:2
 msgid "Add Web Video..."
-msgstr ""
+msgstr "Ajouter une vidéo Web..."
 
 #: ../data/totem.ui.h:3
 msgid "Prefere_nces"
@@ -545,29 +543,21 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../data/totem.ui.h:10
-#, fuzzy
-#| msgid "Square"
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Carré"
 
 #: ../data/totem.ui.h:11
-#, fuzzy
-#| msgid "4∶3 (TV)"
 msgctxt "Aspect ratio"
 msgid "4:3 (TV)"
 msgstr "4∶3 (TV)"
 
 #: ../data/totem.ui.h:12
-#, fuzzy
-#| msgid "16∶9 (Widescreen)"
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16∶9 (grand écran)"
 
 #: ../data/totem.ui.h:13
-#, fuzzy
-#| msgid "2.11∶1 (DVB)"
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
@@ -655,7 +645,7 @@ msgstr "Saisissez l'_emplacement du fichier que vous voulez ouvrir :"
 #. translators: Unknown remaining time
 #: ../src/backend/bacon-time-label.c:115
 msgid "--:--"
-msgstr ""
+msgstr "--:--"
 
 #: ../src/backend/bacon-video-widget.c:1712
 msgid "Password requested for RTSP server"
@@ -821,12 +811,10 @@ msgstr "%d:%02d:%02d"
 #. * "%Id" instead of "%d" if your locale uses localized digits.
 #.
 #: ../src/gst/totem-time-helpers.c:71
-#, fuzzy, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
+#, c-format
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
-msgstr "%d:%02d:%02d"
+msgstr "-%d:%02d:%02d"
 
 #. -minutes:seconds
 #. Translators: This is a time format, like "-5:02" for 5
@@ -835,12 +823,10 @@ msgstr "%d:%02d:%02d"
 #. * instead of "%d" if your locale uses localized digits.
 #.
 #: ../src/gst/totem-time-helpers.c:82
-#, fuzzy, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
+#, c-format
 msgctxt "short time format"
 msgid "-%d:%02d"
-msgstr "%d:%02d"
+msgstr "-%d:%02d"
 
 #. minutes:seconds
 #. Translators: This is a time format, like "5:02" for 5
@@ -1090,7 +1076,7 @@ msgstr "Chapitre/Film suivant"
 #: ../src/totem-object.c:3854 ../src/plugins/grilo/totem-grilo.c:1184
 #: ../src/plugins/grilo/totem-grilo.c:1194
 msgid "Back"
-msgstr ""
+msgstr "Retour"
 
 #: ../src/totem-object.c:3925
 msgid "Totem could not startup."
@@ -1112,10 +1098,8 @@ msgstr "Ouvrir un emplacement..."
 #: ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:198
-#, fuzzy
-#| msgid "Cancel"
 msgid "_Cancel"
-msgstr "Annuler"
+msgstr "A_nnuler"
 
 #: ../src/totem-options.c:49
 msgid "Enable debug"
@@ -1219,10 +1203,8 @@ msgstr "Enregistrer la liste de lecture"
 
 #: ../src/totem-playlist.c:1064 ../src/plugins/save-file/totem-save-file.c:123
 #: ../src/plugins/screenshot/totem-gallery.c:98
-#, fuzzy
-#| msgid "Save"
 msgid "_Save"
-msgstr "Enregistrer"
+msgstr "_Enregistrer"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
@@ -1247,7 +1229,7 @@ msgstr "Configuration des greffons"
 
 #: ../src/totem-preferences.c:295 ../src/totem-preferences.c:354
 msgid "_Close"
-msgstr ""
+msgstr "_Fermer"
 
 #: ../src/totem-preferences.c:351
 msgid "Preferences"
@@ -1489,7 +1471,7 @@ msgstr "Ajouter un répertoire"
 
 #: ../src/totem-uri.c:488 ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
-msgstr ""
+msgstr "_Ajouter"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
@@ -1760,10 +1742,8 @@ msgid "Search Error"
 msgstr "Erreur lors de la recherche"
 
 #: ../src/plugins/grilo/totem-grilo.c:815
-#, fuzzy
-#| msgid "Recent files"
 msgid "Recent"
-msgstr "Fichiers récents"
+msgstr "Récents"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -2131,10 +2111,8 @@ msgid "7"
 msgstr "8"
 
 #: ../src/plugins/skipto/totem-skipto.c:199
-#, fuzzy
-#| msgid "Skip To"
 msgid "_Skip To"
-msgstr "Sauter à"
+msgstr "_Sauter à"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To..."
@@ -2142,23 +2120,19 @@ msgstr "_Sauter à..."
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
-msgstr ""
+msgstr "Vimeo"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:2
-#, fuzzy
-#| msgid "Sets the user agent for the Apple Trailers site"
 msgid "Sets the user agent for the Vimeo site"
-msgstr "Définit l'agent utilisateur pour le site Apple Trailers"
+msgstr "Définit l'agent utilisateur pour le site Vimeo"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
-#, fuzzy
-#| msgid "Configure Plugins"
 msgid "Zeitgeist Plugin"
-msgstr "Configuration des greffons"
+msgstr "Greffon Zeitgeist"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
-msgstr ""
+msgstr "Un greffon qui envoie les évènements à Zeitgeist"
 
 #~ msgid "Stopped"
 #~ msgstr "Arrêté"
