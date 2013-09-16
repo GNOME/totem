@@ -144,6 +144,7 @@ app_init (Totem *totem, char **argv)
 	totem->volume = g_object_get_data (totem->controls, "volume_button");
 	totem->time_label = g_object_get_data (totem->controls, "time_label");
 	totem->time_rem_label = g_object_get_data (totem->controls, "time_rem_label");
+	totem->pause_start = optionstate.pause;
 
 	totem_callback_connect (totem);
 

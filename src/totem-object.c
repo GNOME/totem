@@ -1734,6 +1734,7 @@ totem_object_set_mrl (TotemObject *totem,
 {
 	if (totem->mrl != NULL) {
 		totem->seek_to_start = 0;
+		totem->pause_start = FALSE;
 
 		g_clear_pointer (&totem->mrl, g_free);
 		bacon_video_widget_close (totem->bvw);
@@ -2162,6 +2163,7 @@ on_error_event (BaconVideoWidget *bvw, char *message,
 	/* Clear the seek if it's there, we only want to try and seek
 	 * the first file, even if it's not there */
 	totem->seek_to_start = 0;
+	totem->pause_start = FALSE;
 
 	if (playback_stopped)
 		play_pause_set_label (totem, STATE_STOPPED);
@@ -2718,8 +2720,14 @@ playlist_changed_cb (GtkWidget *playlist, TotemObject *totem)
 	if (mrl == NULL)
 		return;
 
-	if (totem_playlist_get_playing (totem->playlist) == TOTEM_PLAYLIST_STATUS_NONE)
-		totem_object_set_mrl_and_play (totem, mrl, subtitle);
+	if (totem_playlist_get_playing (totem->playlist) == TOTEM_PLAYLIST_STATUS_NONE) {
+		if (totem->pause_start)
+			totem_object_set_mrl (totem, mrl, subtitle);
+		else
+			totem_object_set_mrl_and_play (totem, mrl, subtitle);
+	}
+
+	totem->pause_start = FALSE;
 
 	g_free (mrl);
 	g_free (subtitle);
