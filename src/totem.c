@@ -72,11 +72,21 @@ debug_handler (const char *log_domain,
 }
 
 static void
+set_rtl_icon_name (Totem *totem,
+		   const char *widget_name,
+		   const char *icon_name)
+{
+	GtkAction *action;
+
+	action = GTK_ACTION (gtk_builder_get_object (totem->xml, widget_name));
+	gtk_action_set_icon_name (action, totem_get_rtl_icon_name (icon_name));
+}
+
+static void
 app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
-	GtkAction *action;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
