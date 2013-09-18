@@ -13,8 +13,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/src				\
 	-I$(top_builddir)/src/backend			\
 	-DSYSCONFDIR="\"$(sysconfdir)\""		\
-	-DLIBEXECDIR="\"$(libexecdir)\""		\
-	$(DISABLE_DEPRECATED)
+	-DLIBEXECDIR="\"$(libexecdir)\""
 
 plugin_sources = \
 	npapi.h				\
