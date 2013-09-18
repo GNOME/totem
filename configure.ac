@@ -2,7 +2,7 @@ AC_PREREQ[(2.64)]
 
 m4_define(totem_version_major, 3)
 m4_define(totem_version_minor, 9)
-m4_define(totem_version_micro, 5)
+m4_define(totem_version_micro, 92)
 
 # The version of the API exposed to plugins
 m4_define(totem_api_version_major, 1)
