@@ -102,14 +102,9 @@ app_init (Totem *totem, char **argv)
 	if (totem->xml == NULL)
 		totem_object_exit (NULL);
 
-	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "play"));
-	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-playback-start"));
-
-	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "next-chapter"));
-	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-skip-forward"));
-
-	action = GTK_ACTION (gtk_builder_get_object (totem->xml, "previous-chapter"));
-	gtk_action_set_icon_name (action, totem_get_rtl_icon_name ("media-skip-backward"));
+	set_rtl_icon_name (totem, "play", "media-playback-start");
+	set_rtl_icon_name (totem, "next-chapter", "media-skip-forward");
+	set_rtl_icon_name (totem, "previous-chapter", "media-skip-backward");
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
