@@ -2,7 +2,9 @@ plugindir = $(BROWSER_PLUGIN_DIR)
 plugin_LTLIBRARIES =
 
 EXTRA_DIST = \
+	org_gnome_totem_PluginViewer.xml \
 	plugin.symbols	\
+	totem-plugin-viewer.gresource.xml \
 	TODO		\
 	README.browser-plugin
 
@@ -79,7 +81,6 @@ totem-plugin-viewer-resources.h: totem-plugin-viewer.gresource.xml $(resource_fi
 totem_plugin_viewer_SOURCES = \
 	totem-glow-button.c		\
 	totem-glow-button.h		\
-	totem-plugin-viewer-interface.h	\
 	totem-plugin-viewer.c		\
 	totem-plugin-viewer-constants.h	\
 	totem-plugin-viewer-options.h	\
