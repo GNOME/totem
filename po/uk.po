@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-27 23:02+0200\n"
-"PO-Revision-Date: 2013-03-27 23:08+0300\n"
+"POT-Creation-Date: 2013-09-21 19:52+0300\n"
+"PO-Revision-Date: 2013-09-21 19:52+0300\n"
 "Last-Translator: Daniel Korostil <ted.korostiled@gmail.com>\n"
 "Language-Team: linux.org.ua\n"
 "Language: uk\n"
@@ -22,20 +22,20 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Virtaal 0.7.1\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:351 ../src/totem-object.c:1178
-#: ../src/totem-object.c:1648 ../src/totem-statusbar.c:115
+#: ../browser-plugin/totem-plugin-viewer.c:352 ../src/totem-object.c:1181
+#: ../src/totem-object.c:1651 ../src/totem-statusbar.c:115
 msgid "Stopped"
 msgstr "Зупинено"
 
-#: ../browser-plugin/totem-plugin-viewer.c:363 ../src/totem-object.c:1171
+#: ../browser-plugin/totem-plugin-viewer.c:364 ../src/totem-object.c:1174
 msgid "Paused"
 msgstr "Призупинено"
 
-#: ../browser-plugin/totem-plugin-viewer.c:367 ../src/totem-object.c:1164
+#: ../browser-plugin/totem-plugin-viewer.c:368 ../src/totem-object.c:1167
 msgid "Playing"
 msgstr "Відтворення"
 
-#: ../browser-plugin/totem-plugin-viewer.c:385
+#: ../browser-plugin/totem-plugin-viewer.c:386
 #: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "Відтворення відео"
@@ -57,7 +57,7 @@ msgstr "Мультимедійний програвач Totem"
 msgid "_Open with \"%s\""
 msgstr "Відкрити _у програмі «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2473
+#: ../browser-plugin/totem-plugin-viewer.c:1340 ../src/totem-object.c:2451
 msgid "An error occurred"
 msgstr "Виникла помилка"
 
@@ -69,7 +69,7 @@ msgstr "Немає списку відтворення, або список ві
 msgid "Movie browser plugin"
 msgstr "Додаток перегляду відео"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2143 ../src/totem.c:249
+#: ../browser-plugin/totem-plugin-viewer.c:2143 ../src/totem.c:267
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Неможливо ініціалізувати безпечну бібліотеку потоків виконання."
 
@@ -299,8 +299,8 @@ msgstr "Великий"
 msgid "Extra Large"
 msgstr "Дуже високий"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5463
-#: ../src/totem-properties-view.c:232
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5468
+#: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Стерео"
 
@@ -440,7 +440,7 @@ msgid "_Audio output type:"
 msgstr "Тип з_вукового виходу:"
 
 #: ../data/preferences.ui.h:43 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:273
+#: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Звук"
 
@@ -472,7 +472,7 @@ msgstr "Коментар:"
 msgid "Container:"
 msgstr "Контейнер:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
 msgid "Video"
 msgstr "Відео"
 
@@ -501,8 +501,8 @@ msgid "Channels:"
 msgstr "Канали:"
 
 #. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:248
-#: ../src/totem.c:256 ../src/totem-menu.c:789 ../src/totem-object.c:1656
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:80 ../src/totem.c:266
+#: ../src/totem.c:274 ../src/totem-menu.c:789 ../src/totem-object.c:1659
 msgid "Videos"
 msgstr "Відео"
 
@@ -831,55 +831,55 @@ msgstr "Повзунок часу"
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Введіть _адресу файла, який треба відкрити:"
 
-#: ../src/backend/bacon-video-widget.c:1641
+#: ../src/backend/bacon-video-widget.c:1668
 msgid "Password requested for RTSP server"
 msgstr "Запит пароля для сервера RTSP"
 
-#: ../src/backend/bacon-video-widget.c:2885
+#: ../src/backend/bacon-video-widget.c:2912
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Аудіо доріжка #%d"
 
-#: ../src/backend/bacon-video-widget.c:2889
+#: ../src/backend/bacon-video-widget.c:2916
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Субтитри №%d"
 
-#: ../src/backend/bacon-video-widget.c:3286
+#: ../src/backend/bacon-video-widget.c:3313
 msgid "The server you are trying to connect to is not known."
 msgstr "Сервер, до якого ви намагаєтесь під'єднатись, невідомий."
 
-#: ../src/backend/bacon-video-widget.c:3289
+#: ../src/backend/bacon-video-widget.c:3316
 msgid "The connection to this server was refused."
 msgstr "У зв'язку з цим сервером відмовлено."
 
-#: ../src/backend/bacon-video-widget.c:3292
+#: ../src/backend/bacon-video-widget.c:3319
 msgid "The specified movie could not be found."
 msgstr "Вказаний фільм неможливо знайти."
 
-#: ../src/backend/bacon-video-widget.c:3299
+#: ../src/backend/bacon-video-widget.c:3326
 msgid "The server refused access to this file or stream."
 msgstr "Сервер відмовив у доступі до цього файла або потоку."
 
-#: ../src/backend/bacon-video-widget.c:3305
+#: ../src/backend/bacon-video-widget.c:3332
 msgid "Authentication is required to access this file or stream."
 msgstr "Щоб доступитись до цього файла або потоку, потрібно засвідчити право."
 
-#: ../src/backend/bacon-video-widget.c:3312
+#: ../src/backend/bacon-video-widget.c:3339
 msgid "You are not allowed to open this file."
 msgstr "Ви не можете відкрити цей файл."
 
-#: ../src/backend/bacon-video-widget.c:3317
+#: ../src/backend/bacon-video-widget.c:3344
 msgid "This location is not a valid one."
 msgstr "Ця адреса не є правильною."
 
-#: ../src/backend/bacon-video-widget.c:3325
+#: ../src/backend/bacon-video-widget.c:3352
 msgid "The movie could not be read."
 msgstr "Фільм неможливо прочитати."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3348
-#: ../src/backend/bacon-video-widget.c:3356
+#: ../src/backend/bacon-video-widget.c:3375
+#: ../src/backend/bacon-video-widget.c:3383
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -900,7 +900,7 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3367
+#: ../src/backend/bacon-video-widget.c:3394
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -909,7 +909,7 @@ msgstr ""
 "варто встановити додатки, які надають можливість програвати певні типи "
 "відеозаписів"
 
-#: ../src/backend/bacon-video-widget.c:3377
+#: ../src/backend/bacon-video-widget.c:3404
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -917,19 +917,19 @@ msgstr ""
 "Неможливо відтворити цей файл через мережу. Спробуйте спочатку звантажити "
 "його на локальний диск."
 
-#: ../src/backend/bacon-video-widget.c:5459 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5464 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Об'ємний"
 
-#: ../src/backend/bacon-video-widget.c:5461 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5466 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Моно"
 
-#: ../src/backend/bacon-video-widget.c:5748
+#: ../src/backend/bacon-video-widget.c:5753
 msgid "Media contains no supported video streams."
 msgstr "Не знайдено підтримуваних потоків відео."
 
-#: ../src/backend/bacon-video-widget.c:5930
+#: ../src/backend/bacon-video-widget.c:5934
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -1178,19 +1178,19 @@ msgstr[2] "%d кадрів за секунду"
 msgid "Audio Preview"
 msgstr "Попереднє відтворення звукових файлів"
 
-#: ../src/totem.c:249
+#: ../src/totem.c:267
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Перевірте систему. Totem завершується."
 
-#: ../src/totem-dnd-menu.c:94
+#: ../src/totem-dnd-menu.c:95
 msgid "_Play Now"
 msgstr "_Відтворити"
 
-#: ../src/totem-dnd-menu.c:97
+#: ../src/totem-dnd-menu.c:98
 msgid "_Add to Playlist"
 msgstr "_Додати до списку відтворення"
 
-#: ../src/totem-dnd-menu.c:103
+#: ../src/totem-dnd-menu.c:104
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -1281,7 +1281,7 @@ msgstr "Сайт Totem"
 msgid "Configure Plugins"
 msgstr "Налаштувати додатки"
 
-#: ../src/totem-object.c:161
+#: ../src/totem-object.c:162
 #, c-format
 msgid ""
 "%s\n"
@@ -1292,57 +1292,53 @@ msgstr ""
 "рядка.\n"
 
 #. Translators: %s is the totem version number
-#: ../src/totem-object.c:589
+#: ../src/totem-object.c:590
 #, c-format
 msgid "Totem %s"
 msgstr "Totem %s"
 
-#: ../src/totem-object.c:1166 ../src/totem-options.c:52
+#: ../src/totem-object.c:1169 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/totem-object.c:1173 ../src/totem-object.c:1183
+#: ../src/totem-object.c:1176 ../src/totem-object.c:1186
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Відтворення"
 
 # c-format
-#: ../src/totem-object.c:1265 ../src/totem-object.c:1292
-#: ../src/totem-object.c:1785 ../src/totem-object.c:1940
+#: ../src/totem-object.c:1268 ../src/totem-object.c:1295
+#: ../src/totem-object.c:1918
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Не вдалось відтворити «%s»."
 
-#: ../src/totem-object.c:1791
-msgid "No error message"
-msgstr "Повідомлення про помилку відсутнє"
-
-#: ../src/totem-object.c:2131
+#: ../src/totem-object.c:2109
 msgid "Totem could not display the help contents."
 msgstr "Неможливо показати вміст довідки."
 
-#: ../src/totem-object.c:4020 ../src/totem-object.c:4022
+#: ../src/totem-object.c:3998 ../src/totem-object.c:4000
 msgid "Previous Chapter/Movie"
 msgstr "Попередній фрагмент/фільм"
 
-#: ../src/totem-object.c:4029 ../src/totem-object.c:4031
+#: ../src/totem-object.c:4007 ../src/totem-object.c:4009
 msgid "Play / Pause"
 msgstr "Відтворення / _пауза"
 
-#: ../src/totem-object.c:4039 ../src/totem-object.c:4041
+#: ../src/totem-object.c:4017 ../src/totem-object.c:4019
 msgid "Next Chapter/Movie"
 msgstr "Наступний фрагмент/фільм"
 
 #. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:4052 ../src/totem-object.c:4054
+#: ../src/totem-object.c:4030 ../src/totem-object.c:4032
 msgid "Fullscreen"
 msgstr "На весь екран"
 
-#: ../src/totem-object.c:4185
+#: ../src/totem-object.c:4163
 msgid "Totem could not startup."
 msgstr "Не вдалось запустити Totem."
 
-#: ../src/totem-object.c:4185
+#: ../src/totem-object.c:4163
 msgid "No reason."
 msgstr "Причина невідома."
 
@@ -1428,51 +1424,51 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Неможливо поставити в чергу і замінити одночасно"
 
 #. By extension entry
-#: ../src/totem-playlist.c:161
+#: ../src/totem-playlist.c:162
 msgid "MP3 ShoutCast playlist"
 msgstr "Список відтворення MP3 ShoutCast"
 
-#: ../src/totem-playlist.c:162
+#: ../src/totem-playlist.c:163
 msgid "MP3 audio (streamed)"
 msgstr "MP3 аудіо (потік)"
 
-#: ../src/totem-playlist.c:163
+#: ../src/totem-playlist.c:164
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 аудіо (потік, формат DOS)"
 
-#: ../src/totem-playlist.c:164
+#: ../src/totem-playlist.c:165
 msgid "XML Shareable Playlist"
 msgstr "Список відтворення XML Shareable"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:347
+#: ../src/totem-playlist.c:348
 #, c-format
 msgid "Title %d"
 msgstr "Заголовок %d"
 
-#: ../src/totem-playlist.c:446
+#: ../src/totem-playlist.c:447
 msgid "Could not save the playlist"
 msgstr "Не вдалось зберегти список відтворення"
 
-#: ../src/totem-playlist.c:1021
+#: ../src/totem-playlist.c:1022
 msgid "Save Playlist"
 msgstr "Збереження списку відтворення"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1033 ../src/totem-playlist.c:1262
+#: ../src/totem-playlist.c:1034 ../src/totem-playlist.c:1263
 #: ../src/totem-sidebar.c:145
 msgid "Playlist"
 msgstr "Список відтворення"
 
-#: ../src/totem-playlist.c:1860
+#: ../src/totem-playlist.c:1861
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Список відтворення «%s» неможливо проаналізувати. Можливо, його пошкоджено."
 
-#: ../src/totem-playlist.c:1861
+#: ../src/totem-playlist.c:1862
 msgid "Playlist error"
 msgstr "Помилка списку відтворення"
 
@@ -1484,47 +1480,47 @@ msgstr "Параметри"
 msgid "Select Subtitle Font"
 msgstr "Вибір шрифту субтитрів"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:281
 msgid "Audio/Video"
 msgstr "Звук/Відео"
 
-#: ../src/totem-properties-view.c:131
+#: ../src/totem-properties-view.c:141
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../src/totem-properties-view.c:160
+#: ../src/totem-properties-view.c:170
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../src/totem-properties-view.c:163
+#: ../src/totem-properties-view.c:173
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d кбіт/с"
 
-#: ../src/totem-properties-view.c:180
+#: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:212
+#: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Гц"
 
-#: ../src/totem-properties-view.c:220
+#: ../src/totem-properties-view.c:230
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../src/totem-properties-view.c:241
+#: ../src/totem-properties-view.c:251
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "Н/Д"
@@ -1748,7 +1744,7 @@ msgstr "Додати каталог"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:848
+#: ../src/totem-video-thumbnailer.c:877
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1759,15 +1755,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:849
+#: ../src/totem-video-thumbnailer.c:878
 msgid "Filename"
 msgstr "Файл"
 
-#: ../src/totem-video-thumbnailer.c:851
+#: ../src/totem-video-thumbnailer.c:880
 msgid "Resolution"
 msgstr "Роздільна здатність"
 
-#: ../src/totem-video-thumbnailer.c:854
+#: ../src/totem-video-thumbnailer.c:883
 msgid "Duration"
 msgstr "Тривалість"
 
@@ -2425,6 +2421,17 @@ msgstr "_Перескочити до…"
 #: ../src/plugins/skipto/totem-skipto-plugin.c:182
 msgid "Skip to a specific time"
 msgstr "Перестрибнути до вказаного часу"
+
+#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
+msgid "Zeitgeist Plugin"
+msgstr "Додаток Zeitgeist"
+
+#: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
+msgid "A plugin sending events to Zeitgeist"
+msgstr "Додаток, що надсилає події в Zeitgeist"
+
+#~ msgid "No error message"
+#~ msgstr "Повідомлення про помилку відсутнє"
 
 #~ msgid ""
 #~ "Whether to remember the current playlist, the playing track and position."
