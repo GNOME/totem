@@ -87,7 +87,6 @@ app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
 	char *sidebar_pageid;
-	GtkAction *action;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
