@@ -107,7 +107,7 @@ app_init (Totem *totem, char **argv)
 	set_rtl_icon_name (totem, "next-chapter", "media-skip-forward");
 	set_rtl_icon_name (totem, "previous-chapter", "media-skip-backward");
 	set_rtl_icon_name (totem, "skip-forward", "media-seek-forward");
-	set_rtl_icon_name (totem, "skip-backward", "media-seek-backward");
+	set_rtl_icon_name (totem, "skip-backwards", "media-seek-backward");
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	g_object_bind_property (G_OBJECT (totem), "fullscreen",
