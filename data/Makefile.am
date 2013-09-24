@@ -65,6 +65,15 @@ CLEANFILES += \
 	$(desktop_in_files)	\
 	$(desktop_DATA)
 
+# AppData
+@INTLTOOL_XML_NOMERGE_RULE@
+appdatadir = $(datadir)/appdata
+dist_appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+appdata_in_files = totem.appdata.xml.in
+EXTRA_DIST += $(appdata_in_files})
+CLEANFILES += \
+	totem.appdata.xml
+
 # Thumbnailer
 thumbnailerdir = $(datadir)/thumbnailers
 thumbnailer_in_files = totem.thumbnailer.in
