@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: as\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-27 11:10+0000\n"
-"PO-Revision-Date: 2013-04-29 14:36+0530\n"
+"POT-Creation-Date: 2013-09-23 07:13+0000\n"
+"PO-Revision-Date: 2013-09-24 15:04+0530\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
 "Language-Team: Assamese <kde-i18n-doc@kde.org>\n"
 "Language: as_IN\n"
@@ -21,69 +21,47 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1)\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:306 ../src/totem-object.c:1147
-#: ../src/totem-object.c:1576 ../src/totem-statusbar.c:115
-msgid "Stopped"
-msgstr "বন্ধ"
-
-#: ../browser-plugin/totem-plugin-viewer.c:318 ../src/totem-object.c:1140
-msgid "Paused"
-msgstr "স্থগিত"
-
-#: ../browser-plugin/totem-plugin-viewer.c:322 ../src/totem-object.c:1133
-msgid "Playing"
-msgstr "চলোৱা হৈছে"
-
-#: ../browser-plugin/totem-plugin-viewer.c:340
+#: ../browser-plugin/totem-plugin-viewer.c:330
 #: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "চলচিত্ৰ চলোৱা হৈছে"
 
-#: ../browser-plugin/totem-plugin-viewer.c:396
+#: ../browser-plugin/totem-plugin-viewer.c:399
 msgid "No URI to play"
 msgstr "চলোৱাৰ বাবে কোনো URI নাই"
-
-#: ../browser-plugin/totem-plugin-viewer.c:646
-#: ../browser-plugin/totem-plugin-viewer.c:1698
-msgid "Totem Movie Player"
-msgstr "Totem চলচিত্ৰ প্লেয়াৰ"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1107
+#: ../browser-plugin/totem-plugin-viewer.c:1098
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "\"%s\" সহযোগে খোলক (_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1330 ../src/totem-object.c:2301
+#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2353
 msgid "An error occurred"
 msgstr "ত্ৰুটি উৎপন্ন হৈছে"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2022
+#: ../browser-plugin/totem-plugin-viewer.c:1675
+msgid "Totem Movie Player"
+msgstr "Totem চলচিত্ৰ প্লেয়াৰ"
+
+#: ../browser-plugin/totem-plugin-viewer.c:1993
 msgid "No playlist or playlist empty"
 msgstr "প্লেলিস্ট পৰিষ্কাৰ অথবা অনুপস্থিত"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2255
+#: ../browser-plugin/totem-plugin-viewer.c:2224
 msgid "Movie browser plugin"
 msgstr "চলচিত্ৰ ব্ৰাউজাৰ প্লাগিন"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2271 ../src/totem.c:244
+#: ../browser-plugin/totem-plugin-viewer.c:2240 ../src/totem.c:262
 msgid "Could not initialize the thread-safe libraries."
 msgstr "থ্ৰেড-চেইফ লাইব্ৰৰি চলোৱা নাযায়।"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2271
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "আপোনাৰ চিস্টেমৰ ইনস্টলেষণ পৰীক্ষা কৰক। Totem প্লাগিন এতিয়া বন্ধ কৰা হ'ব।"
-
-#: ../data/fullscreen.ui.h:1
-msgid "Leave Fullscreen"
-msgstr "পূৰ্ণপৰ্দা ত্যাগ কৰক"
-
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:73
-msgid "Time:"
-msgstr "সময়:"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:1
 msgid "Allow the screensaver to activate when playing audio"
@@ -224,15 +202,10 @@ msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "যেতিয়া এটা চলচিত্ৰ ল'ড হয় বহিৰ্তম পাঠ ফাইলসমূহ স্বচালিতভাৱে ল'ড হব নে"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:31
-msgid ""
-"Whether to remember the current playlist, the playing track and position."
-msgstr "বৰ্তমান প্লেলিস্ট, চলি থকা ট্ৰেক আৰু অৱস্থান মনত ৰখা হব নে।"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Active plugins list"
 msgstr "সক্ৰিয় প্লাগিনসমূহৰ তালিকা"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -255,11 +228,11 @@ msgstr "অৱস্থান কপি কৰক (_C)"
 msgid "Copy the location to the clipboard"
 msgstr "নিৰ্বাচিত অৱস্থান ক্লিপবৰ্ডত কপি কৰক"
 
-#: ../data/playlist.ui.h:5 ../data/totem.ui.h:63
+#: ../data/playlist.ui.h:5 ../data/totem.ui.h:18
 msgid "_Select Text Subtitles..."
 msgstr "লিখনী উপশীৰ্ষকসমূহ বাছক...(_S)"
 
-#: ../data/playlist.ui.h:6 ../data/totem.ui.h:64
+#: ../data/playlist.ui.h:6
 msgid "Select a file to use for text subtitles"
 msgstr "লিখনী উপশীৰ্ষকসমূহৰ বাবে ব্যৱহাৰ কৰিবলে এটা ফাইল বাছক"
 
@@ -298,8 +271,8 @@ msgstr "বৃহৎ"
 msgid "Extra Large"
 msgstr "অতি বৃহৎ"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5487
-#: ../src/totem-properties-view.c:232
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5607
+#: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "স্টিৰিও"
 
@@ -328,36 +301,37 @@ msgid "Totem Preferences"
 msgstr "Totem পছন্দসমূহ"
 
 #: ../data/preferences.ui.h:14
-msgid "Playback"
-msgstr "চলাওক"
-
-#: ../data/preferences.ui.h:15
-msgid "Remember last played movies"
-msgstr "সৰ্বশেষ চলোৱা চলচ্চিত্ৰসমূহ মনত ৰাখিব"
-
-#: ../data/preferences.ui.h:16
 msgid "Text Subtitles"
 msgstr "লিখনী উপশীৰ্ষকসমূহ"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:15
 msgid "_Load subtitle files when movie is loaded"
 msgstr "চলচিত্ৰ ল'ড হৈ গলে উপশীৰ্ষক ফাইলসমূহ ল'ড কৰক (_L)"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:16
 msgid "_Font:"
 msgstr "ফন্ট (_F):"
 
-#: ../data/preferences.ui.h:19
+#: ../data/preferences.ui.h:17
 msgid "_Encoding:"
 msgstr "এনক'ডিং (_E):"
 
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:18
 msgid "External Chapters"
 msgstr "বহিৰ্তম পাঠসমূহ"
 
-#: ../data/preferences.ui.h:21
+#: ../data/preferences.ui.h:19
 msgid "Load _chapter files when movie is loaded"
 msgstr "চলচিত্ৰ ল'ড হৈ গলে পাঠ ফাইলসমূহ ল'ড কৰক (_c)"
+
+#: ../data/preferences.ui.h:20
+#| msgid "Plugin"
+msgid "Plugins"
+msgstr "প্লাগিনসমূহ"
+
+#: ../data/preferences.ui.h:21
+msgid "Plugins..."
+msgstr "প্লাগিনসমূহ..."
 
 #: ../data/preferences.ui.h:22 ../data/properties.ui.h:1
 msgid "General"
@@ -435,7 +409,7 @@ msgid "_Audio output type:"
 msgstr "অডিঅ' আউটপুট ধৰণ:"
 
 #: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:273
+#: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "অডিঅ'"
 
@@ -467,7 +441,7 @@ msgstr "মন্তব্য:"
 msgid "Container:"
 msgstr "বৈয়াম:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
 msgid "Video"
 msgstr "ভিডিঅ'"
 
@@ -495,9 +469,8 @@ msgstr "নমুনা হাৰ:"
 msgid "Channels:"
 msgstr "চেনেলসমূহ:"
 
-#. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:72 ../src/totem.c:243
-#: ../src/totem.c:249 ../src/totem-menu.c:582 ../src/totem-object.c:1584
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:261
+#: ../src/totem.c:267
 msgid "Videos"
 msgstr "Videos"
 
@@ -509,340 +482,202 @@ msgstr "চলচিত্ৰসমূহ চলাওক"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "ভিডিঅ';চলচিত্ৰ;চলচিত্ৰ;ক্লিপ;ক্ৰম;প্লেয়াৰ;DVD;TV;ডিস্ক;"
 
-#: ../data/totem.ui.h:1
+#: ../data/totem.ui.h:1 ../src/totem-open-location.c:185
+#: ../src/totem-uri.c:422 ../src/plugins/chapters/totem-chapters.c:962
 msgid "_Open"
 msgstr "খোলক (_O)"
 
 #: ../data/totem.ui.h:2
-msgid "Open _Location"
-msgstr "অৱস্থান খোলক (_L)"
+msgid "Add Web Video..."
+msgstr "ৱেব ভিডিঅ' যোগ কৰক..."
 
 #: ../data/totem.ui.h:3
-msgid "_Fullscreen"
-msgstr "পূৰ্ণপৰ্দা (_F)"
-
-#: ../data/totem.ui.h:4
 msgid "Prefere_nces"
 msgstr "পছন্দসমূহ (_n)"
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:4
 msgid "Shuff_le"
 msgstr "সানমিহলি (_l)"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:5
 msgid "_Repeat"
 msgstr "পুনৰাবৃত্তি (_R)"
+
+#: ../data/totem.ui.h:6
+msgid "_Help"
+msgstr "সহায় (_H)"
 
 #: ../data/totem.ui.h:7
 msgid "_Quit"
 msgstr "প্ৰস্থান কৰক (_Q)"
 
 #: ../data/totem.ui.h:8
-msgid "_Movie"
-msgstr "চলচিত্ৰ (_M)"
-
-#: ../data/totem.ui.h:9
-msgid "_Eject"
-msgstr "বাহিৰ কৰক (_E)"
-
-#: ../data/totem.ui.h:10
-msgid "Eject the current disc"
-msgstr "বৰ্তমান ডিস্ক বাহিৰ কৰক"
-
-#: ../data/totem.ui.h:11
-msgid "_Properties"
-msgstr "বৈশিষ্টসমূহ (_P)"
-
-#: ../data/totem.ui.h:12
-msgid "View the properties of the current stream"
-msgstr "বৰ্তমানে স্ট্ৰিমৰ বৈশিষ্ট্য দৰ্শন কৰক"
-
-#: ../data/totem.ui.h:13
-msgid "Play / P_ause"
-msgstr "চলাওক/বিৰাম দিয়ক (_a)"
-
-#: ../data/totem.ui.h:14
-msgid "Play or pause the movie"
-msgstr "চলচিত্ৰ চলাওক অথবা বিৰাম দিয়ক"
-
-#: ../data/totem.ui.h:15
-msgid "_Edit"
-msgstr "সম্পাদনা (_E)"
-
-#: ../data/totem.ui.h:16
-msgid "_Clear Playlist"
-msgstr "প্লেলিস্ট পৰিষ্কাৰ কৰক (_C)"
-
-#: ../data/totem.ui.h:17
-msgid "Clear the playlist"
-msgstr "প্লেলিস্ট পৰিষ্কাৰ কৰক"
-
-#: ../data/totem.ui.h:18
-msgid "Plugins..."
-msgstr "প্লাগিনসমূহ..."
-
-#: ../data/totem.ui.h:19
-msgid "Configure plugins to extend the application"
-msgstr "এপ্লিকেচনৰ বৈশিষ্ট্য বৃদ্ধি কৰাৰ বাবে প্লাগিন সংৰূপণ কৰক"
-
-#: ../data/totem.ui.h:20
-msgid "_View"
-msgstr "দৰ্শন কৰক (_V)"
-
-#: ../data/totem.ui.h:21
-msgid "Fit Window to Movie"
-msgstr "চলচিত্ৰ অনুযায়ী উইন্ডোক খাপ খুৱাওক"
-
-#: ../data/totem.ui.h:22
 msgid "_Aspect Ratio"
 msgstr "এসপেক্টৰ অনুপাত (_A)"
 
-#: ../data/totem.ui.h:23
-msgid "Switch An_gles"
-msgstr "কোণ পৰিবৰ্তন কৰক (_g)"
-
-#: ../data/totem.ui.h:24
-msgid "Switch camera angles"
-msgstr "কেমেৰা কোণ পৰিবৰ্তন কৰক"
-
-#: ../data/totem.ui.h:25
-msgid "_Go"
-msgstr "যাওক (_G)"
-
-#: ../data/totem.ui.h:26
-msgid "_DVD Menu"
-msgstr "DVD মেনু (_D)"
-
-#: ../data/totem.ui.h:27
-msgid "Go to the DVD menu"
-msgstr "DVD মেনুলে যাওক"
-
-#: ../data/totem.ui.h:28
-msgid "_Title Menu"
-msgstr "শীৰ্ষক মেনু (_T)"
-
-#: ../data/totem.ui.h:29
-msgid "Go to the title menu"
-msgstr "শীৰ্ষক মেনুলে যাওক"
-
-#: ../data/totem.ui.h:30
-msgid "A_udio Menu"
-msgstr "অডিঅ' মেনু (_u)"
-
-#: ../data/totem.ui.h:31
-msgid "Go to the audio menu"
-msgstr "অডিঅ' মেনুলে যাওক"
-
-#: ../data/totem.ui.h:32
-msgid "_Angle Menu"
-msgstr "কোণ মেনু (_A)"
-
-#: ../data/totem.ui.h:33
-msgid "Go to the angle menu"
-msgstr "কোণ মেনুলে যাওক"
-
-#: ../data/totem.ui.h:34
-msgid "_Chapter Menu"
-msgstr "পাঠ মেনু (_C)"
-
-#: ../data/totem.ui.h:35
-msgid "Go to the chapter menu"
-msgstr "পাঠ মেনুলে যাওক"
-
-#: ../data/totem.ui.h:36
-msgid "_Next Chapter/Movie"
-msgstr "পৰবৰ্তী পাঠ/চলচিত্ৰ (_N)"
-
-#: ../data/totem.ui.h:37
-msgid "Next chapter or movie"
-msgstr "পৰবৰ্তি পাঠ অথবা চলচিত্ৰ"
-
-#: ../data/totem.ui.h:38
-msgid "_Previous Chapter/Movie"
-msgstr "পূৰ্ববৰ্তী পাঠ/চলচিত্ৰ (_P)"
-
-#: ../data/totem.ui.h:39
-msgid "Previous chapter or movie"
-msgstr "পূৰ্ববৰ্তী পাঠ অথবা চলচিত্ৰ"
-
-#: ../data/totem.ui.h:40
-msgid "_Sound"
-msgstr "শব্দ (_S)"
-
-#: ../data/totem.ui.h:41
-msgid "Volume _Up"
-msgstr "ভলিউম বৃদ্ধি কৰক (_U)"
-
-#: ../data/totem.ui.h:42
-msgid "Increase volume"
-msgstr "ভলিউম বৃদ্ধি কৰক"
-
-#: ../data/totem.ui.h:43
-msgid "Volume _Down"
-msgstr "ভলিউম কম কৰক (_D)"
-
-#: ../data/totem.ui.h:44
-msgid "Decrease volume"
-msgstr "ভলিউম কম কৰক"
-
-#: ../data/totem.ui.h:45
-msgid "_Help"
-msgstr "সহায় (_H)"
-
-#: ../data/totem.ui.h:46
-msgid "_Contents"
-msgstr "সমল (_C)"
-
-#: ../data/totem.ui.h:47
-msgid "Help contents"
-msgstr "সহায়ৰ সমল"
-
-#: ../data/totem.ui.h:48
-msgid "_About"
-msgstr "বিষয়ে (_A)"
-
-#: ../data/totem.ui.h:49
-msgid "About this application"
-msgstr "এই এপ্লিকেচনৰ বিষয়ে"
-
-#: ../data/totem.ui.h:50
-msgid "S_idebar"
-msgstr "কাষবাৰ (_i)"
-
-#: ../data/totem.ui.h:51
-msgid "Show or hide the sidebar"
-msgstr "কাষবাৰ দেখুৱাওক অথবা লুকাওক"
-
-#: ../data/totem.ui.h:52
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "স্বচালিত"
 
-#: ../data/totem.ui.h:53
-msgid "Sets automatic aspect ratio"
-msgstr "স্বচালিতৰূপে এস্পেক্টৰ অনুপাত সংহতি কৰক"
-
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:10
+#| msgid "Square"
+msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "বৰ্গ"
 
-#: ../data/totem.ui.h:55
-msgid "Sets square aspect ratio"
-msgstr "বৰ্গ এস্পেক্ট অনুপাত সংহতি কৰে"
+#: ../data/totem.ui.h:11
+#| msgid "4∶3 (TV)"
+msgctxt "Aspect ratio"
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:56
-msgid "4∶3 (TV)"
-msgstr "4∶3 (TV)"
-
-#: ../data/totem.ui.h:57
-msgid "Sets 4∶3 (TV) aspect ratio"
-msgstr "4:3 (TV) এস্পেক্ট অনুপাত সংহতি কৰে"
-
-#: ../data/totem.ui.h:58
+#: ../data/totem.ui.h:12
+#| msgid "16∶9 (Widescreen)"
+msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (বহলপৰ্দা)"
 
-#: ../data/totem.ui.h:59
-msgid "Sets 16∶9 (widescreen) aspect ratio"
-msgstr "16:9 (বহলপৰ্দা) এস্পেক্ট অনুপাত সংহতি কৰে"
-
-#: ../data/totem.ui.h:60
+#: ../data/totem.ui.h:13
+#| msgid "2.11∶1 (DVB)"
+msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:61
-msgid "Sets 2.11∶1 (DVB) aspect ratio"
-msgstr "2.11∶1 (DVB) এস্পেক্ট অনুপাত সংহতি কৰে"
-
-#: ../data/totem.ui.h:62
-msgid "S_ubtitles"
-msgstr "উপশীৰ্ষকসমূহ (_u)"
-
-#: ../data/totem.ui.h:65
-msgid "_Languages"
-msgstr "ভাষাসমূহ (_L)"
-
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:14
 msgid "Zoom In"
 msgstr "ডাঙৰ কৰক"
 
-#: ../data/totem.ui.h:67
-msgid "Zoom in"
-msgstr "ডাঙৰ কৰক"
+#: ../data/totem.ui.h:15
+msgid "Switch An_gles"
+msgstr "কোণ পৰিবৰ্তন কৰক (_g)"
 
-#: ../data/totem.ui.h:68
-msgid "Skip _Forward"
-msgstr "আগলৈ যাওক (_F)"
+#: ../data/totem.ui.h:16
+msgid "_Languages"
+msgstr "ভাষাসমূহ (_L)"
 
-#: ../data/totem.ui.h:69
-msgid "Skip forward"
-msgstr "আগলৈ যাওক"
+#: ../data/totem.ui.h:17
+msgid "S_ubtitles"
+msgstr "উপশীৰ্ষকসমূহ (_u)"
 
-#: ../data/totem.ui.h:70
-msgid "Skip _Backwards"
-msgstr "পিছলৈ যাওক (_B)"
+#: ../data/totem.ui.h:19
+msgid "_Properties"
+msgstr "বৈশিষ্টসমূহ (_P)"
 
-#: ../data/totem.ui.h:71
-msgid "Skip backwards"
-msgstr "পিছলৈ যাওক"
+#: ../data/totem.ui.h:20
+msgid "_Eject"
+msgstr "বাহিৰ কৰক (_E)"
 
-#: ../data/totem.ui.h:74
-msgid "Time seek bar"
-msgstr "সময় সন্ধান বাৰ"
+#: ../data/totem.ui.h:21
+msgid "_DVD Menu"
+msgstr "DVD মেনু (_D)"
+
+#: ../data/totem.ui.h:22
+msgid "_Title Menu"
+msgstr "শীৰ্ষক মেনু (_T)"
+
+#: ../data/totem.ui.h:23
+msgid "A_udio Menu"
+msgstr "অডিঅ' মেনু (_u)"
+
+#: ../data/totem.ui.h:24
+msgid "_Angle Menu"
+msgstr "কোণ মেনু (_A)"
+
+#: ../data/totem.ui.h:25
+msgid "_Chapter Menu"
+msgstr "পাঠ মেনু (_C)"
+
+#: ../data/totem.ui.h:26
+msgid "Play / P_ause"
+msgstr "চলাওক/বিৰাম দিয়ক (_a)"
+
+#: ../data/totem.ui.h:27
+msgid "Play or pause the movie"
+msgstr "চলচিত্ৰ চলাওক অথবা বিৰাম দিয়ক"
+
+#: ../data/totem.ui.h:28
+msgid "_View"
+msgstr "দৰ্শন কৰক (_V)"
+
+#: ../data/totem.ui.h:29
+msgid "_Next Chapter/Movie"
+msgstr "পৰবৰ্তী পাঠ/চলচিত্ৰ (_N)"
+
+#: ../data/totem.ui.h:30
+msgid "Next chapter or movie"
+msgstr "পৰবৰ্তি পাঠ অথবা চলচিত্ৰ"
+
+#: ../data/totem.ui.h:31
+msgid "_Previous Chapter/Movie"
+msgstr "পূৰ্ববৰ্তী পাঠ/চলচিত্ৰ (_P)"
+
+#: ../data/totem.ui.h:32
+msgid "Previous chapter or movie"
+msgstr "পূৰ্ববৰ্তী পাঠ অথবা চলচিত্ৰ"
+
+#: ../data/totem.ui.h:33
+msgid "_Sound"
+msgstr "শব্দ (_S)"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "আপুনি খোলিব বিচৰা ফাইলৰ ঠিকনা সুমুৱাওক (_a):"
 
-#: ../src/backend/bacon-video-widget.c:1633
+#. translators: Unknown remaining time
+#: ../src/backend/bacon-time-label.c:115
+msgid "--:--"
+msgstr "--:--"
+
+#: ../src/backend/bacon-video-widget.c:1713
 msgid "Password requested for RTSP server"
 msgstr "RTSP চাৰ্ভাৰৰ বাবে অনুৰোধিত পাছৱাৰ্ড"
 
-#: ../src/backend/bacon-video-widget.c:2988
+#: ../src/backend/bacon-video-widget.c:3083
 #, c-format
 msgid "Audio Track #%d"
 msgstr "অডিঅ' ট্ৰেক সংখ্যা #%d"
 
-#: ../src/backend/bacon-video-widget.c:2992
+#: ../src/backend/bacon-video-widget.c:3087
 #, c-format
 msgid "Subtitle #%d"
 msgstr "উপশীৰ্ষকসমূহ #%d"
 
-#: ../src/backend/bacon-video-widget.c:3409
+#: ../src/backend/bacon-video-widget.c:3520
 msgid "The server you are trying to connect to is not known."
 msgstr "সংযোগ স্থাপনেৰ জন্য চিহ্নিত সাৰ্ভাৰটি সনাক্ত কৰতে ব্যৰ্থ।"
 
-#: ../src/backend/bacon-video-widget.c:3412
+#: ../src/backend/bacon-video-widget.c:3523
 msgid "The connection to this server was refused."
 msgstr "চিহ্নিত সাৰ্ভাৰেৰ সাথে সংযোগ প্ৰত্যাখ্যাওক কৰা হয়েছে।"
 
-#: ../src/backend/bacon-video-widget.c:3415
+#: ../src/backend/bacon-video-widget.c:3526
 msgid "The specified movie could not be found."
 msgstr "নিৰ্ধাৰিত চলচিত্ৰ পাওয়া যায়নি।"
 
-#: ../src/backend/bacon-video-widget.c:3422
+#: ../src/backend/bacon-video-widget.c:3533
 msgid "The server refused access to this file or stream."
 msgstr "সাৰ্ভাৰেৰ দ্বাৰা এই ফাইল অথবা স্ট্ৰিমেৰ ব্যবহাৰ প্ৰতিৰোধ কৰা হয়েছে।"
 
-#: ../src/backend/bacon-video-widget.c:3428
+#: ../src/backend/bacon-video-widget.c:3539
 msgid "Authentication is required to access this file or stream."
 msgstr "অনুমোদন ব্যবস্থা হলো ফাইল."
 
-#: ../src/backend/bacon-video-widget.c:3435
+#: ../src/backend/bacon-video-widget.c:3546
 msgid "You are not allowed to open this file."
 msgstr "এই ফাইলটি খোলাৰ অনুমতি আপোনাৰ নেই।"
 
-#: ../src/backend/bacon-video-widget.c:3440
+#: ../src/backend/bacon-video-widget.c:3551
 msgid "This location is not a valid one."
 msgstr "এই অৱস্থান এটা বৈধ অৱস্থান নহয়।"
 
-#: ../src/backend/bacon-video-widget.c:3448
+#: ../src/backend/bacon-video-widget.c:3559
 msgid "The movie could not be read."
 msgstr "চলচিত্ৰ পঢ়িব পৰা নগল।"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3471
-#: ../src/backend/bacon-video-widget.c:3479
+#: ../src/backend/bacon-video-widget.c:3582
+#: ../src/backend/bacon-video-widget.c:3590
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -856,7 +691,7 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3490
+#: ../src/backend/bacon-video-widget.c:3601
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -864,26 +699,26 @@ msgstr ""
 "সন্ধানহিন ক'ডেকসমূহৰ বাবে এটা অডিঅ' অথবা ভিডিঅ' স্ট্ৰিম ব্যৱস্থাপনা কৰা নহয়। "
 "কিছুমান চলচিত্ৰ চলাবলে আপুনি কিছুমান অতিৰিক্ত প্লাগিন ইনস্টল কৰিব লাগিব"
 
-#: ../src/backend/bacon-video-widget.c:3500
+#: ../src/backend/bacon-video-widget.c:3611
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr ""
 "এই ফাইল নেটৱাৰ্কত চলাব নোৱাৰি। ইয়াক প্ৰথমতে স্থানীয়ভাৱে ডাউনল'ড কৰি চাওক।"
 
-#: ../src/backend/bacon-video-widget.c:5483 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5603 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "চাৰিওফালে"
 
-#: ../src/backend/bacon-video-widget.c:5485 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5605 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "ম'নো"
 
-#: ../src/backend/bacon-video-widget.c:5772
+#: ../src/backend/bacon-video-widget.c:5892
 msgid "Media contains no supported video streams."
 msgstr "কোনো সমৰ্থিত ভিডিঅ' স্ট্ৰিম মাধ্যমত উপস্থিত নাই।"
 
-#: ../src/backend/bacon-video-widget.c:5954
+#: ../src/backend/bacon-video-widget.c:6052
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -954,8 +789,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:71
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
@@ -968,8 +801,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:82
 #, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
@@ -1090,29 +921,25 @@ msgid_plural "%d frames per second"
 msgstr[0] "প্ৰতি ছেকেণ্ড %d ফ্ৰেম"
 msgstr[1] "প্ৰতি ছেকেণ্ড %d ফ্ৰেমসমূহ"
 
-#: ../src/totem-audio-preview.c:138
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "অডিঅ' পূৰ্বদৰ্শন"
 
-#: ../src/totem.c:244
+#: ../src/totem.c:262
 msgid "Verify your system installation. Totem will now exit."
 msgstr "আপোনাৰ চিস্টেমৰ ইনস্টলেষণ পৰীক্ষা কৰক। Totem এতিয়া বন্ধ কৰা হ'ব।"
 
-#: ../src/totem-dnd-menu.c:94
+#: ../src/totem-dnd-menu.c:86
 msgid "_Play Now"
 msgstr "এতিয়া চলাওক (_P)"
 
-#: ../src/totem-dnd-menu.c:97
+#: ../src/totem-dnd-menu.c:89
 msgid "_Add to Playlist"
 msgstr "প্লেলিস্টত যোগ কৰক (_A)"
 
-#: ../src/totem-dnd-menu.c:103
+#: ../src/totem-dnd-menu.c:95
 msgid "Cancel"
 msgstr "বাতিল কৰক"
-
-#: ../src/totem-fullscreen.c:568
-msgid "No File"
-msgstr "কোনো ফাইল নাই।"
 
 #: ../src/totem-interface.c:181 ../src/totem-interface.c:224
 #, c-format
@@ -1174,36 +1001,17 @@ msgstr ""
 "আছে।"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:277
+#: ../src/totem-menu.c:391
 msgid "None"
 msgstr "শূণ্য"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:282
+#: ../src/totem-menu.c:395
 msgctxt "Language"
 msgid "Auto"
 msgstr "স্বচালিত"
 
-#: ../src/totem-menu.c:581
-msgid "Copyright © 2002-2009 Bastien Nocera"
-msgstr "স্বত্বাধিকাৰ © ২০০২-২০০৯ বাচটিয়ান নচেৰা"
-
-#: ../src/totem-menu.c:585
-msgid "translator-credits"
-msgstr ""
-"অমিতাক্ষ ফুকন (aphukan@fedoraproject.org), নীলমদ্যুতি গোস্বামী "
-"(ngoswami@redhat."
-"com)"
-
-#: ../src/totem-menu.c:589
-msgid "Totem Website"
-msgstr "Totem ৱেবছাইট"
-
-#: ../src/totem-menu.c:620
-msgid "Configure Plugins"
-msgstr "প্লাগিন সংৰূপণ কৰক"
-
-#: ../src/totem-object.c:160
+#: ../src/totem-object.c:162
 #, c-format
 msgid ""
 "%s\n"
@@ -1214,59 +1022,65 @@ msgstr ""
 "ব্যৱহাৰ "
 "কৰক।\n"
 
-#. Translators: %s is the totem version number
-#: ../src/totem-object.c:557
-#, c-format
-msgid "Totem %s"
-msgstr "Totem %s"
-
-#: ../src/totem-object.c:1135 ../src/totem-options.c:52
+#: ../src/totem-object.c:1251 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "স্থগিত"
 
-#: ../src/totem-object.c:1142 ../src/totem-object.c:1152
+#: ../src/totem-object.c:1256 ../src/totem-object.c:1266
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Play"
 
-#: ../src/totem-object.c:1233 ../src/totem-object.c:1260
-#: ../src/totem-object.c:1815
+#: ../src/totem-object.c:1351 ../src/totem-object.c:1378
+#: ../src/totem-object.c:1905
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem এ '%s' চলাব নোৱাৰে।"
 
-#: ../src/totem-object.c:1957
+#: ../src/totem-object.c:2047
 msgid "Totem could not display the help contents."
 msgstr "Totem দ্বাৰা সহায়ৰ সমল প্ৰদৰ্শন কৰা নাযায়।"
 
-#: ../src/totem-object.c:3777 ../src/totem-object.c:3779
+#: ../src/totem-object.c:3700
 msgid "Previous Chapter/Movie"
 msgstr "পূৰ্ববৰ্তী পাঠ/চলচিত্ৰ"
 
-#: ../src/totem-object.c:3786 ../src/totem-object.c:3788
+#: ../src/totem-object.c:3705
 msgid "Play / Pause"
 msgstr "চলোৱা / বিৰাম দিয়ক"
 
-#: ../src/totem-object.c:3796 ../src/totem-object.c:3798
+#: ../src/totem-object.c:3710
 msgid "Next Chapter/Movie"
 msgstr "পৰবৰ্তী পাঠ/চলচিত্ৰ"
 
-#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3809 ../src/totem-object.c:3811
-msgid "Fullscreen"
-msgstr "পূৰ্ণপৰ্দা"
+#: ../src/totem-object.c:3749 ../src/plugins/grilo/totem-grilo.c:1185
+#: ../src/plugins/grilo/totem-grilo.c:1195
+msgid "Back"
+msgstr "পিছলৈ"
 
-#: ../src/totem-object.c:3942
+#: ../src/totem-object.c:3820
 msgid "Totem could not startup."
 msgstr "Totem আৰম্ভ কৰা নাযায়।"
 
-#: ../src/totem-object.c:3942
+#: ../src/totem-object.c:3820
 msgid "No reason."
 msgstr "কাৰণ নাই।"
 
 #: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "অৱস্থান খোলক..."
+
+#: ../src/totem-open-location.c:184 ../src/totem-playlist.c:1064
+#: ../src/totem-uri.c:421 ../src/totem-uri.c:486
+#: ../src/plugins/chapters/totem-chapters.c:961
+#: ../src/plugins/chapters/totem-edit-chapter.c:98
+#: ../src/plugins/save-file/totem-save-file.c:122
+#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/plugins/screenshot/totem-gallery-progress.c:103
+#: ../src/plugins/skipto/totem-skipto.c:198
+#| msgid "Cancel"
+msgid "_Cancel"
+msgstr "বাতিল কৰক (_C)"
 
 #: ../src/totem-options.c:49
 msgid "Enable debug"
@@ -1337,148 +1151,119 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "একে সময়তে শাৰীত অানিব আৰু চলাব নোৱাৰি"
 
 #. By extension entry
-#: ../src/totem-playlist.c:175
+#: ../src/totem-playlist.c:173
 msgid "MP3 ShoutCast playlist"
 msgstr "MP3 ShoutCast প্লেলিস্ট"
 
-#: ../src/totem-playlist.c:176
+#: ../src/totem-playlist.c:174
 msgid "MP3 audio (streamed)"
 msgstr "MP3 অডিঅ' (স্ট্ৰিম কৰা)"
 
-#: ../src/totem-playlist.c:177
+#: ../src/totem-playlist.c:175
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "MP3 অডিঅ' (স্ট্ৰিম কৰা, DOS বিন্যাস)"
 
-#: ../src/totem-playlist.c:178
+#: ../src/totem-playlist.c:176
 msgid "XML Shareable Playlist"
 msgstr "XML অংশীদাৰী প্লেলিস্ট"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:335
+#: ../src/totem-playlist.c:333
 #, c-format
 msgid "Title %d"
 msgstr "শীৰ্ষক %d"
 
-#: ../src/totem-playlist.c:489
+#: ../src/totem-playlist.c:487
 msgid "Could not save the playlist"
 msgstr "প্লেলিস্ট সংৰক্ষণ কৰা নাযায়"
 
-#: ../src/totem-playlist.c:1063
+#: ../src/totem-playlist.c:1061
 msgid "Save Playlist"
 msgstr "প্লেলিস্ট সংৰক্ষণ কৰক"
 
+#: ../src/totem-playlist.c:1065 ../src/plugins/save-file/totem-save-file.c:123
+#: ../src/plugins/screenshot/totem-gallery.c:98
+#| msgid "Save"
+msgid "_Save"
+msgstr "সংৰক্ষণ কৰক (_S)"
+
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1075 ../src/totem-playlist.c:1302
-#: ../src/totem-sidebar.c:145
+#: ../src/totem-playlist.c:1073 ../src/totem-playlist.c:1300
+#: ../src/totem-sidebar.c:127
 msgid "Playlist"
 msgstr "প্লেলিস্ট"
 
-#: ../src/totem-playlist.c:1902
+#: ../src/totem-playlist.c:1891
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "সম্ভৱত ক্ষতিগ্ৰস্ত হোৱাৰ ফলত '%s' প্লেলিস্টটো পঢ়া নাযায়।"
 
-#: ../src/totem-playlist.c:1903
+#: ../src/totem-playlist.c:1892
 msgid "Playlist error"
 msgstr "প্লেলিস্ট ত্ৰুটি"
 
-#: ../src/totem-preferences.c:297
+#: ../src/totem-preferences.c:292
+msgid "Configure Plugins"
+msgstr "প্লাগিন সংৰূপণ কৰক"
+
+#: ../src/totem-preferences.c:295 ../src/totem-preferences.c:354
+msgid "_Close"
+msgstr "বন্ধ কৰক (_C)"
+
+#: ../src/totem-preferences.c:351
 msgid "Preferences"
 msgstr "পছন্দসমূহ"
 
-#: ../src/totem-preferences.c:439
+#: ../src/totem-preferences.c:494
 msgid "Select Subtitle Font"
 msgstr "উপশীৰ্ষকসমূহৰ ফন্ট বাছক"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:281
 msgid "Audio/Video"
 msgstr "অডিঅ'/ভিডিঅ'"
 
-#: ../src/totem-properties-view.c:131
+#: ../src/totem-properties-view.c:141
 msgid "N/A"
 msgstr "অপ্ৰযোজ্য"
 
-#: ../src/totem-properties-view.c:160
+#: ../src/totem-properties-view.c:170
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "অপ্ৰযোজ্য"
 
-#: ../src/totem-properties-view.c:163
+#: ../src/totem-properties-view.c:173
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/totem-properties-view.c:180
+#: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:212
+#: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:220
+#: ../src/totem-properties-view.c:230
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "অপ্ৰযোজ্য"
 
-#: ../src/totem-properties-view.c:241
+#: ../src/totem-properties-view.c:251
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "অপ্ৰযোজ্য"
-
-#: ../src/totem-statusbar.c:110
-msgid "0:00 / 0:00"
-msgstr "০:০০ / ০:০০"
-
-#: ../src/totem-statusbar.c:133
-#, c-format
-msgid "%s (Streaming)"
-msgstr "%s (স্ট্ৰিম কৰা হৈছে)"
-
-#. Elapsed / Total Length
-#: ../src/totem-statusbar.c:139 ../src/totem-time-label.c:64
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:142 ../src/totem-time-label.c:67
-#, c-format
-msgid "Seek to %s / %s"
-msgstr "%s / %s সন্ধান কৰা হ'ব"
-
-#: ../src/totem-statusbar.c:238
-msgid "Buffering"
-msgstr "বাফাৰ কৰা হৈছে"
-
-#. eg: 75 %
-#: ../src/totem-statusbar.c:249
-#, c-format
-msgid "%lf %%"
-msgstr "%lf %%"
-
-#. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:324
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:329
-#, c-format
-msgid "%s, %f %%"
-msgstr "%s, %f %%"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1621,6 +1406,18 @@ msgstr "পশ্চিমী"
 msgid "Vietnamese"
 msgstr "ভিয়েতনামিচ"
 
+#. Elapsed / Total Length
+#: ../src/totem-time-label.c:64
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#. Seeking to Time / Total Length
+#: ../src/totem-time-label.c:67
+#, c-format
+msgid "Seek to %s / %s"
+msgstr "%s / %s সন্ধান কৰা হ'ব"
+
 #: ../src/totem-uri.c:331 ../src/plugins/chapters/totem-chapters.c:982
 msgid "All files"
 msgstr "সকলো ফাইল"
@@ -1653,10 +1450,14 @@ msgstr "চলচিত্ৰ অথবা প্লেলিস্ট বাছ
 msgid "Add Directory"
 msgstr "ডাইৰেকটৰি যোগ কৰক"
 
+#: ../src/totem-uri.c:488 ../src/plugins/chapters/totem-edit-chapter.c:99
+msgid "_Add"
+msgstr "যোগ কৰক (_A)"
+
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:838
+#: ../src/totem-video-thumbnailer.c:933
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1667,15 +1468,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:839
+#: ../src/totem-video-thumbnailer.c:934
 msgid "Filename"
 msgstr "ফাইলৰ নাম"
 
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:936
 msgid "Resolution"
 msgstr "বিভেদন"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:939
 msgid "Duration"
 msgstr "অৱধি"
 
@@ -1703,44 +1504,32 @@ msgstr "ভিডিঅ' ডিস্ক ৰেকৰ্ডাৰ"
 msgid "Records (S)VCDs or video DVDs"
 msgstr "(S)VCD অথবা DVD ৰেকৰ্ড কৰিবলৈ ব্যৱহৃত হয়"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:65
-msgid "_Create Video Disc..."
-msgstr "ভিডিঅ' ডিস্ক সৃষ্টি কৰক (_C)..."
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:66
-msgid "Create a video DVD or a (S)VCD from the currently opened movie"
-msgstr "বৰ্তমানে চলমান চলচিত্ৰৰ পৰা ভিডিঅ' DVD অথবা (S)VCD সৃষ্টি কৰক"
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
-msgid "Copy Vide_o DVD..."
-msgstr "ভিডিঅ' DVD কপি কৰক (_o)..."
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:69
-msgid "Copy the currently playing video DVD"
-msgstr "বৰ্তমানে চলমান ভিডিঅ' DVD কপি কৰক"
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
-msgid "Copy (S)VCD..."
-msgstr "(S)VCD কপি কৰক..."
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:72
-msgid "Copy the currently playing (S)VCD"
-msgstr "বৰ্তমানে চলমান (S)VCD কপি কৰক"
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:136
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:120
 msgid "The video disc could not be duplicated."
 msgstr "ভিডিঅ' ডিস্কৰ প্ৰতিলিপি সৃষ্টি কৰিবলৈ ব্যৰ্থ।"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:138
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:283
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:122
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:268
 msgid "The movie could not be recorded."
 msgstr "চলচিত্ৰ ৰেকৰ্ড কৰিবলৈ ব্যৰ্থ।"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:164
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:174
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:270
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:148
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:158
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:254
 msgid "Unable to write a project."
 msgstr "প্ৰকল্প লিখিবলৈ ব্যৰ্থ।"
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:380
+msgid "_Create Video Disc..."
+msgstr "ভিডিঅ' ডিস্ক সৃষ্টি কৰক (_C)..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:381
+msgid "Copy Vide_o DVD..."
+msgstr "ভিডিঅ' DVD কপি কৰক (_o)..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:382
+msgid "Copy (S)VCD..."
+msgstr "(S)VCD কপি কৰক..."
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
 msgid "Name for new chapter:"
@@ -1921,24 +1710,15 @@ msgstr "প্লেলিস্টলে যোগ কৰক"
 msgid "Copy Location"
 msgstr "অৱস্থান কপি কৰক"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1142
-msgid "Browse"
-msgstr "ব্ৰাউছ কৰক"
-
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1185
-msgid "Search"
-msgstr "সন্ধান কৰক"
-
-#: ../src/plugins/grilo/totem-grilo.c:404
+#: ../src/plugins/grilo/totem-grilo.c:364
 msgid "Browse Error"
 msgstr "ব্ৰাউছাৰ ত্ৰুটি"
 
-#: ../src/plugins/grilo/totem-grilo.c:571
+#: ../src/plugins/grilo/totem-grilo.c:531
 msgid "Search Error"
 msgstr "সন্ধানত ত্ৰুটি"
 
-#: ../src/plugins/grilo/totem-grilo.c:820
-#| msgid "Recent files"
+#: ../src/plugins/grilo/totem-grilo.c:816
 msgid "Recent"
 msgstr "শেহতীয়া"
 
@@ -2002,57 +1782,53 @@ msgstr "উপশীৰ্ষকসমূহ ডাউনল'ডাৰ"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "বৰ্তমানে চলি থকা চলচিত্ৰৰ বাবে উপশীৰ্ষকসমূহ সন্ধান কৰক"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:40
 msgid "Brazilian Portuguese"
 msgstr "ব্ৰাজিলিয়ান পৰ্তুগিজ"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:177
+#: ../src/plugins/opensubtitles/opensubtitles.py:175
 msgid "Searching for subtitles…"
 msgstr "উপশীৰ্ষকসমূহৰ বাবে সন্ধান কৰা হৈ আছে..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:225
-#: ../src/plugins/opensubtitles/opensubtitles.py:645
+#: ../src/plugins/opensubtitles/opensubtitles.py:223
+#: ../src/plugins/opensubtitles/opensubtitles.py:618
 msgid "Downloading the subtitles…"
 msgstr "উপশীৰ্ষকসমূহ ডাউনল'ড কৰা হৈছে..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:290
+#: ../src/plugins/opensubtitles/opensubtitles.py:288
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles ৱেবছাইটৰ সৈতে সংযোগ স্থাপন কৰিবলৈ ব্যৰ্থ"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:323
-#: ../src/plugins/opensubtitles/opensubtitles.py:341
+#: ../src/plugins/opensubtitles/opensubtitles.py:321
+#: ../src/plugins/opensubtitles/opensubtitles.py:339
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles ৱেবছাইটৰ সৈতে সংযোগ স্থাপন কৰিব নোৱাৰি।"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:329
+#: ../src/plugins/opensubtitles/opensubtitles.py:327
 msgid "No results found."
 msgstr "কোনো ফলাফল পোৱা নগল।"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:472
 msgid "Subtitles"
 msgstr "উপশীৰ্ষকসমূহ"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:484
+#: ../src/plugins/opensubtitles/opensubtitles.py:478
 msgid "Format"
 msgstr "বিন্যাস"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:489
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Rating"
 msgstr "মাত্ৰা"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
-msgid "Download movie subtitles from OpenSubtitles"
-msgstr "OpenSubtitles ৰ পৰা চলচিত্ৰৰ উপশীৰ্ষকসমূহ ডাউনল'ড কৰক"
-
-#: ../src/plugins/opensubtitles/opensubtitles.py:527
+#: ../src/plugins/opensubtitles/opensubtitles.py:522
 msgid "_Download Movie Subtitles…"
 msgstr "চলচিত্ৰৰ উপশীৰ্ষকসমূহ ডাউনল'ড কৰক (_D)... "
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:589
+#: ../src/plugins/opensubtitles/opensubtitles.py:562
 msgid "Searching subtitles…"
 msgstr "উপশীৰ্ষকসমূহ সন্ধান কৰা হৈছে..."
 
@@ -2109,38 +1885,25 @@ msgstr "Python কনচৌল"
 msgid "Interactive Python console"
 msgstr "ভাৱবিনিময়ী Python কনচৌল"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
-msgid "Python Console Menu"
-msgstr "Python কনচৌল মেনু"
-
-#: ../src/plugins/pythonconsole/pythonconsole.py:93
+#: ../src/plugins/pythonconsole/pythonconsole.py:74
 msgid "_Python Console"
 msgstr "Python কনচৌল (_P)"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
-msgid "Show Totem's Python console"
-msgstr "Totem ৰ python কনচৌল দেখুৱাওক"
-
-#: ../src/plugins/pythonconsole/pythonconsole.py:100
+#: ../src/plugins/pythonconsole/pythonconsole.py:80
 msgid "Python Debugger"
 msgstr "Python ডিবাগাৰ"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Enable remote Python debugging with rpdb2"
-msgstr ""
-"rpdb2 ৰ সহায়ত দূৰবৰ্তী অৱস্থানৰ পৰা python ডিবাগ প্ৰক্ৰিয়া সামৰ্থবান কৰক"
-
 #. pylint: disable-msg=E1101
-#: ../src/plugins/pythonconsole/pythonconsole.py:125
+#: ../src/plugins/pythonconsole/pythonconsole.py:91
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "'totem_object' ৰ সহায়ত Totem.Object ব্যৱহাৰ কৰা যাব :\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:129
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Totem Python Console"
 msgstr "Totem Python কনচৌল"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:139
+#: ../src/plugins/pythonconsole/pythonconsole.py:105
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -2166,11 +1929,11 @@ msgstr "ঘূৰ্ণন প্লাগিন"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "ভিডিঅ'সমূহ ঘুৰোৱাৰ অনুমতি দিয়ে যদি সিহত ভুল দিশত থাকে"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:50
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:54
 msgid "_Rotate Clockwise"
 msgstr "উত্তৰাৱৰ্তী ঘুৰাওক (_R)"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:58
 msgid "Rotate Counterc_lockwise"
 msgstr "দক্ষিণাৱৰ্তী ঘুৰাওক (_l)"
 
@@ -2182,27 +1945,23 @@ msgstr "কপি সংৰক্ষণ কৰক"
 msgid "Save a copy of the currently playing movie"
 msgstr "বৰ্তমানে চলি থকা চলচিত্ৰৰ এটা কপি সংৰক্ষণ কৰক"
 
-#: ../src/plugins/save-file/totem-save-file.c:63
-msgid "Save a Copy..."
-msgstr "এটা কপি সংৰক্ষণ কৰক..."
-
-#: ../src/plugins/save-file/totem-save-file.c:64
-msgid "Save a copy of the movie"
-msgstr "চলচিত্ৰৰ এটা কপি সংৰক্ষণ কৰক"
-
-#: ../src/plugins/save-file/totem-save-file.c:129
+#: ../src/plugins/save-file/totem-save-file.c:119
 msgid "Save a Copy"
 msgstr "এটা কপি সংৰক্ষণ কৰক"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:161
+#: ../src/plugins/save-file/totem-save-file.c:151
 msgid "Movie"
 msgstr "চলচিত্ৰ"
 
-#: ../src/plugins/save-file/totem-save-file.c:183
+#: ../src/plugins/save-file/totem-save-file.c:173
 msgid "Movie stream"
 msgstr "চলচিত্ৰ স্ট্ৰিম"
+
+#: ../src/plugins/save-file/totem-save-file.c:285
+msgid "Save a Copy..."
+msgstr "এটা কপি সংৰক্ষণ কৰক..."
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:1
 msgid "Screen Saver"
@@ -2271,30 +2030,22 @@ msgstr "গেলেৰি সৃষ্টি কৰা হৈছে..."
 msgid "Saving gallery as \"%s\""
 msgstr "\"%s\" নামে গেলেৰি সংৰক্ষণ কৰা হৈছে"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:220
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
 msgstr "Totem দ্বাৰা ভিডিঅ'ৰ ছবি গ্ৰহণ কৰা সম্ভৱ নহয়।"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
 msgstr "এই আচৰণ প্ৰত্যাশিত নহয়; অনুগ্ৰহ কৰি বাগ সংবাদ নথিভুক্ত কৰক"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
 msgstr "স্ক্ৰিনশ্বট লওক (_S)"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
-msgid "Take a screenshot"
-msgstr "স্ক্ৰিনশ্বট লওক"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:342
 msgid "Create Screenshot _Gallery..."
 msgstr "স্ক্ৰিনশ্বটৰ গেলেৰি সৃষ্টি কৰক (_G)..."
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
-msgid "Create a gallery of screenshots"
-msgstr "স্ক্ৰিনশ্বটৰ গেলেৰি সৃষ্টি কৰক"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:196
@@ -2326,22 +2077,247 @@ msgctxt "Skip To label length"
 msgid "7"
 msgstr "৭"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:182
+#: ../src/plugins/skipto/totem-skipto.c:199
+#| msgid "Skip To"
+msgid "_Skip To"
+msgstr "বাদ দি যাওক (_S)"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To..."
 msgstr "বাদ দি যাওক (_S)... "
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "Skip to a specific time"
-msgstr "চিহ্নিত সময়ত আগলৈ যাওক"
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:1
+msgid "Vimeo"
+msgstr "Vimeo"
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:2
+#| msgid "Sets the user agent for the Apple Trailers site"
+msgid "Sets the user agent for the Vimeo site"
+msgstr "Vimeo ছাইটৰ বাবে ব্যৱহাৰকাৰী সহায়ক সংহতি কৰে"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
-#| msgid "Configure Plugins"
 msgid "Zeitgeist Plugin"
 msgstr "Zeitgeist প্লাগিন"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Zeitgeist লৈ ঘটনাসমূহ পঠোৱা এটা প্লাগিন"
+
+#~ msgid "Stopped"
+#~ msgstr "বন্ধ"
+
+#~ msgid "Paused"
+#~ msgstr "স্থগিত"
+
+#~ msgid "Playing"
+#~ msgstr "চলোৱা হৈছে"
+
+#~ msgid "Leave Fullscreen"
+#~ msgstr "পূৰ্ণপৰ্দা ত্যাগ কৰক"
+
+#~ msgid "Time:"
+#~ msgstr "সময়:"
+
+#~ msgid ""
+#~ "Whether to remember the current playlist, the playing track and position."
+#~ msgstr "বৰ্তমান প্লেলিস্ট, চলি থকা ট্ৰেক আৰু অৱস্থান মনত ৰখা হব নে।"
+
+#~ msgid "Playback"
+#~ msgstr "চলাওক"
+
+#~ msgid "Remember last played movies"
+#~ msgstr "সৰ্বশেষ চলোৱা চলচ্চিত্ৰসমূহ মনত ৰাখিব"
+
+#~ msgid "Open _Location"
+#~ msgstr "অৱস্থান খোলক (_L)"
+
+#~ msgid "_Fullscreen"
+#~ msgstr "পূৰ্ণপৰ্দা (_F)"
+
+#~ msgid "_Movie"
+#~ msgstr "চলচিত্ৰ (_M)"
+
+#~ msgid "Eject the current disc"
+#~ msgstr "বৰ্তমান ডিস্ক বাহিৰ কৰক"
+
+#~ msgid "View the properties of the current stream"
+#~ msgstr "বৰ্তমানে স্ট্ৰিমৰ বৈশিষ্ট্য দৰ্শন কৰক"
+
+#~ msgid "_Edit"
+#~ msgstr "সম্পাদনা (_E)"
+
+#~ msgid "_Clear Playlist"
+#~ msgstr "প্লেলিস্ট পৰিষ্কাৰ কৰক (_C)"
+
+#~ msgid "Clear the playlist"
+#~ msgstr "প্লেলিস্ট পৰিষ্কাৰ কৰক"
+
+#~ msgid "Configure plugins to extend the application"
+#~ msgstr "এপ্লিকেচনৰ বৈশিষ্ট্য বৃদ্ধি কৰাৰ বাবে প্লাগিন সংৰূপণ কৰক"
+
+#~ msgid "Fit Window to Movie"
+#~ msgstr "চলচিত্ৰ অনুযায়ী উইন্ডোক খাপ খুৱাওক"
+
+#~ msgid "Switch camera angles"
+#~ msgstr "কেমেৰা কোণ পৰিবৰ্তন কৰক"
+
+#~ msgid "_Go"
+#~ msgstr "যাওক (_G)"
+
+#~ msgid "Go to the DVD menu"
+#~ msgstr "DVD মেনুলে যাওক"
+
+#~ msgid "Go to the title menu"
+#~ msgstr "শীৰ্ষক মেনুলে যাওক"
+
+#~ msgid "Go to the audio menu"
+#~ msgstr "অডিঅ' মেনুলে যাওক"
+
+#~ msgid "Go to the angle menu"
+#~ msgstr "কোণ মেনুলে যাওক"
+
+#~ msgid "Go to the chapter menu"
+#~ msgstr "পাঠ মেনুলে যাওক"
+
+#~ msgid "Volume _Up"
+#~ msgstr "ভলিউম বৃদ্ধি কৰক (_U)"
+
+#~ msgid "Increase volume"
+#~ msgstr "ভলিউম বৃদ্ধি কৰক"
+
+#~ msgid "Volume _Down"
+#~ msgstr "ভলিউম কম কৰক (_D)"
+
+#~ msgid "Decrease volume"
+#~ msgstr "ভলিউম কম কৰক"
+
+#~ msgid "_Contents"
+#~ msgstr "সমল (_C)"
+
+#~ msgid "Help contents"
+#~ msgstr "সহায়ৰ সমল"
+
+#~ msgid "_About"
+#~ msgstr "বিষয়ে (_A)"
+
+#~ msgid "About this application"
+#~ msgstr "এই এপ্লিকেচনৰ বিষয়ে"
+
+#~ msgid "S_idebar"
+#~ msgstr "কাষবাৰ (_i)"
+
+#~ msgid "Show or hide the sidebar"
+#~ msgstr "কাষবাৰ দেখুৱাওক অথবা লুকাওক"
+
+#~ msgid "Sets automatic aspect ratio"
+#~ msgstr "স্বচালিতৰূপে এস্পেক্টৰ অনুপাত সংহতি কৰক"
+
+#~ msgid "Sets square aspect ratio"
+#~ msgstr "বৰ্গ এস্পেক্ট অনুপাত সংহতি কৰে"
+
+#~ msgid "Sets 4∶3 (TV) aspect ratio"
+#~ msgstr "4:3 (TV) এস্পেক্ট অনুপাত সংহতি কৰে"
+
+#~ msgid "Sets 16∶9 (widescreen) aspect ratio"
+#~ msgstr "16:9 (বহলপৰ্দা) এস্পেক্ট অনুপাত সংহতি কৰে"
+
+#~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
+#~ msgstr "2.11∶1 (DVB) এস্পেক্ট অনুপাত সংহতি কৰে"
+
+#~ msgid "Zoom in"
+#~ msgstr "ডাঙৰ কৰক"
+
+#~ msgid "Skip _Forward"
+#~ msgstr "আগলৈ যাওক (_F)"
+
+#~ msgid "Skip forward"
+#~ msgstr "আগলৈ যাওক"
+
+#~ msgid "Skip _Backwards"
+#~ msgstr "পিছলৈ যাওক (_B)"
+
+#~ msgid "Skip backwards"
+#~ msgstr "পিছলৈ যাওক"
+
+#~ msgid "Time seek bar"
+#~ msgstr "সময় সন্ধান বাৰ"
+
+#~ msgid "No File"
+#~ msgstr "কোনো ফাইল নাই।"
+
+#~ msgid "Copyright © 2002-2009 Bastien Nocera"
+#~ msgstr "স্বত্বাধিকাৰ © ২০০২-২০০৯ বাচটিয়ান নচেৰা"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "অমিতাক্ষ ফুকন (aphukan@fedoraproject.org), নীলমদ্যুতি গোস্বামী "
+#~ "(ngoswami@redhat.com)"
+
+#~ msgid "Totem Website"
+#~ msgstr "Totem ৱেবছাইট"
+
+#~ msgid "Totem %s"
+#~ msgstr "Totem %s"
+
+#~ msgid "Fullscreen"
+#~ msgstr "পূৰ্ণপৰ্দা"
+
+#~ msgid "0:00 / 0:00"
+#~ msgstr "০:০০ / ০:০০"
+
+#~ msgid "%s (Streaming)"
+#~ msgstr "%s (স্ট্ৰিম কৰা হৈছে)"
+
+#~ msgid "Buffering"
+#~ msgstr "বাফাৰ কৰা হৈছে"
+
+#~ msgid "%lf %%"
+#~ msgstr "%lf %%"
+
+#~ msgid "%s, %s"
+#~ msgstr "%s, %s"
+
+#~ msgid "%s, %f %%"
+#~ msgstr "%s, %f %%"
+
+#~ msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+#~ msgstr "বৰ্তমানে চলমান চলচিত্ৰৰ পৰা ভিডিঅ' DVD অথবা (S)VCD সৃষ্টি কৰক"
+
+#~ msgid "Copy the currently playing video DVD"
+#~ msgstr "বৰ্তমানে চলমান ভিডিঅ' DVD কপি কৰক"
+
+#~ msgid "Copy the currently playing (S)VCD"
+#~ msgstr "বৰ্তমানে চলমান (S)VCD কপি কৰক"
+
+#~ msgid "Browse"
+#~ msgstr "ব্ৰাউছ কৰক"
+
+#~ msgid "Search"
+#~ msgstr "সন্ধান কৰক"
+
+#~ msgid "Download movie subtitles from OpenSubtitles"
+#~ msgstr "OpenSubtitles ৰ পৰা চলচিত্ৰৰ উপশীৰ্ষকসমূহ ডাউনল'ড কৰক"
+
+#~ msgid "Python Console Menu"
+#~ msgstr "Python কনচৌল মেনু"
+
+#~ msgid "Show Totem's Python console"
+#~ msgstr "Totem ৰ python কনচৌল দেখুৱাওক"
+
+#~ msgid "Enable remote Python debugging with rpdb2"
+#~ msgstr "rpdb2 ৰ সহায়ত দূৰবৰ্তী অৱস্থানৰ পৰা python ডিবাগ প্ৰক্ৰিয়া সামৰ্থবান কৰক"
+
+#~ msgid "Save a copy of the movie"
+#~ msgstr "চলচিত্ৰৰ এটা কপি সংৰক্ষণ কৰক"
+
+#~ msgid "Take a screenshot"
+#~ msgstr "স্ক্ৰিনশ্বট লওক"
+
+#~ msgid "Create a gallery of screenshots"
+#~ msgstr "স্ক্ৰিনশ্বটৰ গেলেৰি সৃষ্টি কৰক"
+
+#~ msgid "Skip to a specific time"
+#~ msgstr "চিহ্নিত সময়ত আগলৈ যাওক"
 
 #~ msgid "The URI ‘%s’ is not supported."
 #~ msgstr "URI ‘%s’ সমৰ্থিত নহয়।"
@@ -3189,9 +3165,6 @@ msgstr "Zeitgeist লৈ ঘটনাসমূহ পঠোৱা এটা প�
 
 #~ msgid "Make sure that GNOME is properly installed."
 #~ msgstr "GNOME সঠিকৰূপে ইনস্টল কৰা হৈছে নে পৰীক্ষা কৰক।"
-
-#~ msgid "Plugin"
-#~ msgstr "প্লাগিন"
 
 #~ msgid "Enabled"
 #~ msgstr "সক্ৰিয়"
