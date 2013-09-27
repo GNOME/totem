@@ -692,6 +692,7 @@ data/Makefile
 data/org.gnome.totem.gschema.xml.in
 data/totem.desktop.in.in
 data/totem.pc
+data/appdata/Makefile
 data/icons/Makefile
 data/icons/16x16/Makefile
 data/icons/22x22/Makefile
