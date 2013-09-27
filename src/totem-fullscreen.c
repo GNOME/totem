@@ -307,7 +307,8 @@ totem_fullscreen_show_popups (TotemFullscreen *fs, gboolean show_cursor)
 {
 	GtkWidget *item;
 
-	g_assert (fs->priv->is_fullscreen != FALSE);
+	if (!fs->priv->is_fullscreen)
+		return;
 
 	if (fs->priv->popup_in_progress != FALSE)
 		return;
