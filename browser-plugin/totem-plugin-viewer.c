@@ -484,7 +484,7 @@ totem_embedded_do_command (TotemEmbedded *embedded,
 {
 	char *error_msg;
 
-	g_return_val_if_fail (command != NULL, FALSE);
+	g_return_if_fail (command != NULL);
 
 	g_message ("totem_embedded_do_command: %s", command);
 
@@ -562,7 +562,7 @@ totem_embedded_launch_player (TotemEmbedded *embedded,
 	GdkAppLaunchContext *ctx;
 	gboolean result;
 
-	g_return_val_if_fail (embedded->app != NULL, FALSE);
+	g_return_if_fail (embedded->app != NULL);
 
 	if (embedded->type == TOTEM_PLUGIN_TYPE_NARROWSPACE &&
 	    embedded->href_uri != NULL) {
