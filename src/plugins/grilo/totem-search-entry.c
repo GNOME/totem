@@ -293,7 +293,7 @@ totem_search_entry_set_selected_id (TotemSearchEntry *self,
 GtkEntry *
 totem_search_entry_get_entry (TotemSearchEntry *self)
 {
-	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
+	g_return_val_if_fail (TOTEM_IS_SEARCH_ENTRY (self), NULL);
 
 	return GTK_ENTRY (self->priv->entry);
 }
