@@ -178,7 +178,9 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
       current_media.interpretation = val.get_boolean () ?
         Zeitgeist.NFO.VIDEO : Zeitgeist.NFO.AUDIO;
 
-      query_media_mimetype (current_media.mrl);
+      query_media_mimetype.begin (current_media.mrl, (o, r) => {
+        query_media_mimetype.end (r);
+      });
 
       /* cleanup timers */
       if (timeout_id != 0) Source.remove (timeout_id);
@@ -228,7 +230,12 @@ class ZeitgeistDpPlugin: GLib.Object, Peas.Activatable {
       event.add_subject (subject);
       events.add (event);
       event.timestamp = current_media.timestamp;
-      zg_log.insert_events_no_reply (events);
+
+      try {
+        zg_log.insert_events_no_reply (events);
+      } catch (GLib.Error e1) {
+        warning ("Error sending event to Zeitgeist: %s", e1.message);
+      }
     }
   }
 }
