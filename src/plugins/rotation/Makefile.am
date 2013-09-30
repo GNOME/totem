@@ -13,7 +13,7 @@ AM_VALAFLAGS = \
 
 librotation_la_SOURCES = totem-rotation-plugin.vala
 librotation_la_LDFLAGS = $(plugin_ldflags)
-librotation_la_CFLAGS = $(plugin_cflags) -include $(CONFIG_HEADER) -I $(top_srcdir)/src/backend
+librotation_la_CFLAGS = $(plugin_cflags) $(vala_plugin_cflags) -include $(CONFIG_HEADER) -I $(top_srcdir)/src/backend
 librotation_la_LIBADD = $(plugin_libadd)
 
 GITIGNOREFILES = \

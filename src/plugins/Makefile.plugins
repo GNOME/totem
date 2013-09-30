@@ -33,6 +33,14 @@ plugin_ldflags = \
 plugin_libadd = \
 	$(top_builddir)/src/libtotem.la
 
+# Disable some C warnings for Vala plugins which just create noise because the
+# C code Vala generates is a little messy.
+vala_plugin_cflags = \
+	-Wno-unused-but-set-variable \
+	-Wno-unused-variable \
+	-Wno-unused-function \
+	$(NULL)
+
 # Checking rules for Python plugins
 # Execute pylint on all the requisite files individually, returning non-zero
 # iff any of the calls to pylint returned non-zero.

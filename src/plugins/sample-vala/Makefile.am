@@ -13,7 +13,7 @@ AM_VALAFLAGS = \
 
 libsample_vala_la_SOURCES = totem-sample-vala-plugin.vala
 libsample_vala_la_LDFLAGS = $(plugin_ldflags)
-libsample_vala_la_CFLAGS = $(plugin_cflags)
+libsample_vala_la_CFLAGS = $(plugin_cflags) $(vala_plugin_cflags)
 libsample_vala_la_LIBADD = $(plugin_libadd)
 
 GITIGNOREFILES = \

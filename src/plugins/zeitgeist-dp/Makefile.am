@@ -20,6 +20,7 @@ libtotem_zeitgeist_dp_plugin_la_LIBADD = \
 	$(LIBZEITGEIST_LIBS)
 libtotem_zeitgeist_dp_plugin_la_CFLAGS = \
 	$(plugin_cflags) \
+	$(vala_plugin_cflags) \
 	$(LIBZEITGEIST_CFLAGS) \
 	-I $(top_srcdir)/src/backend
 
