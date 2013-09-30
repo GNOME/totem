@@ -66,7 +66,9 @@ class RotationPlugin: GLib.Object, Peas.Activatable
 
         // read the state of the current video from the GIO attribute
         if (mrl != null) {
-            this.try_restore_state (mrl);
+            this.try_restore_state.begin (mrl, (o, r) => {
+                this.try_restore_state.end (r);
+            });
         }
 
         t.file_closed.connect (this.cb_file_closed);
@@ -101,14 +103,14 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     {
         int state = (this.bvw.get_rotation() - 1) % STATE_COUNT;
         this.bvw.set_rotation ((Bacon.Rotation) state);
-        this.store_state ();
+        this.store_state.begin ((o, r) => { this.store_state.end (r); });
     }
 
     private void cb_rotate_right ()
     {
         int state = (this.bvw.get_rotation() + 1) % STATE_COUNT;
         this.bvw.set_rotation ((Bacon.Rotation) state);
-        this.store_state ();
+        this.store_state.begin ((o, r) => { this.store_state.end (r); });
     }
 
     private void cb_file_closed ()
@@ -123,7 +125,9 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     {
         this.rotate_right_action.set_enabled (true);
         this.rotate_left_action.set_enabled (true);
-        this.try_restore_state (mrl);
+        this.try_restore_state.begin (mrl, (o, r) => {
+            this.try_restore_state.end (r);
+        });
     }
 
     private async void store_state ()
