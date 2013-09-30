@@ -895,9 +895,11 @@ totem_object_add_main_page (TotemObject *totem,
  * totem_object_get_main_page:
  * @totem: a #TotemObject
  *
- * Returns the identifier for the current page in Totem's
+ * Gets the identifier for the current page in Totem's
  * main view.
- **/
+ *
+ * Return value: identifier for current page
+ */
 const char *
 totem_object_get_main_page (Totem *totem)
 {
