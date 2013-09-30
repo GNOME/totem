@@ -697,8 +697,10 @@ totem_cmml_read_file (GFile               *file,
  * @res: a #GAsyncResult
  * @error: a #GError, or %NULL
  *
- * Returns a list of parsed chapters or %NULL on error
- **/
+ * Gets a list of parsed chapters or %NULL on error.
+ *
+ * Return value: (allow-none): list of chapters
+ */
 GList *
 totem_cmml_read_file_finish (GFile        *file,
 			     GAsyncResult *res,
