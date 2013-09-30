@@ -19,7 +19,8 @@ libscreenshot_la_SOURCES = \
 	totem-gallery-progress.c	\
 	totem-gallery-progress.h
 libscreenshot_la_LDFLAGS = $(plugin_ldflags)
-libscreenshot_la_CFLAGS = $(plugin_cflags)
+# format-nonliteral causes failures for the totem_screenshot_plugin_setup_file_chooser() function
+libscreenshot_la_CFLAGS = $(plugin_cflags) -Wno-error=format-nonliteral -Wno-format-nonliteral
 libscreenshot_la_LIBADD = $(plugin_libadd)
 
 -include $(top_srcdir)/git.mk

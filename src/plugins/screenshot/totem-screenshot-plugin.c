@@ -372,6 +372,8 @@ impl_deactivate (PeasActivatable *plugin)
 	g_object_unref (priv->bvw);
 }
 
+static char *make_filename_for_dir (const char *directory, const char *format, const char *movie_title) G_GNUC_FORMAT (2);
+
 static char *
 make_filename_for_dir (const char *directory, const char *format, const char *movie_title)
 {
