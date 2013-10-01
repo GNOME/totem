@@ -35,7 +35,7 @@
 
 from console import PythonConsole
 
-__all__ = ('PythonConsole', 'OutFile')
+__all__ = ('PythonConsole', 'OutFile') # pylint: disable-msg=E0603
 
 from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable-msg=E0611
 from gi.repository import Gio # pylint: disable-msg=E0611
@@ -70,7 +70,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
         action.connect ('activate', self._show_console)
         self.totem.add_action (action)
 
-        menu = self.totem.get_menu_section ("python-console-placeholder");
+        menu = self.totem.get_menu_section ("python-console-placeholder")
         menu.append (_('_Python Console'), "app.python-console")
 
         if HAVE_RPDB2:
@@ -79,7 +79,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             self.totem.add_action (action)
             menu.append (_('Python Debugger'), "app.python-debugger")
 
-    def _show_console (self, parameter, _action):
+    def _show_console (self, parameter, _action): # pylint: disable-msg=W0613
         if not self.window:
             console = PythonConsole (namespace = {
                 '__builtins__' : __builtins__,
@@ -101,7 +101,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             self.window.grab_focus ()
 
     @classmethod
-    def _enable_debugging (cls, parameter, _action):
+    def _enable_debugging (cls, param, _action): # pylint: disable-msg=W0613
         msg = _("After you press OK, Totem will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
@@ -119,7 +119,7 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             GObject.idle_add (start_debugger, password)
         dialog.destroy ()
 
-    def _destroy_console (self, *_args):
+    def _destroy_console (self, *_args): # pylint: disable-msg=W0613
         self.window.destroy ()
         self.window = None
 
