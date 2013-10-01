@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from gi.repository import GLib, GObject, Peas, Gtk, Gdk # pylint: disable-msg=E0611
+from gi.repository import GLib, GObject # pylint: disable-msg=E0611
+from gi.repository import Peas, Gtk, Gdk # pylint: disable-msg=E0611
 from gi.repository import Gio, Pango, Totem # pylint: disable-msg=E0611
 
 import xmlrpc.client
@@ -249,7 +250,7 @@ class OpenSubtitlesModel (object):
 
         try:
             import locale
-            (language_code, _encoding) = locale.getlocale ()
+            (language_code, _) = locale.getlocale ()
             self.lang = LANGUAGES[language_code.split ('_')[0]]
         except (ImportError, IndexError, AttributeError):
             self.lang = 'eng'
@@ -505,7 +506,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._tree_view.connect ('row-activated',
                                self.__on_treeview__row_activate)
 
-    def _show_dialog (self, _action):
+    def _show_dialog (self, _):
         if not self._dialog:
             self._build_dialog ()
 
@@ -518,7 +519,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._action.connect ('activate', self._show_dialog)
         self._totem.add_action (self._action)
 
-        menu = self._totem.get_menu_section ("subtitle-download-placeholder");
+        menu = self._totem.get_menu_section ("subtitle-download-placeholder")
         menu.append (_(u'_Download Movie Subtitles…'), "app.opensubtitles")
 
         self._action.set_enabled (self._totem.is_playing () and
@@ -681,7 +682,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
 
     # Callbacks
 
-    def __on_window__key_press_event (self, _widget, event):
+    def __on_window__key_press_event (self, _, event):
         if event.keyval == Gdk.KEY_Escape:
             self._close_dialog ()
             return True
@@ -693,10 +694,13 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         else:
             self._apply_button.set_sensitive (False)
 
-    def __on_treeview__row_activate (self, _tree_path, _column, _data):
+    def __on_treeview__row_activate (self,
+                                     _tree_path, # pylint: disable-msg=W0613
+                                     _column, # pylint: disable-msg=W0613
+                                     _data): # pylint: disable-msg=W0613
         self._download_and_apply ()
 
-    def __on_totem__file_opened (self, _totem, new_mrl):
+    def __on_totem__file_opened (self, _, new_mrl):
         # Check if allows subtitles
         if self._check_allowed_scheme () and not self._check_is_audio ():
             self._action.set_enabled (True)
@@ -717,7 +721,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
                 self._apply_button.set_sensitive (False)
                 self._find_button.set_sensitive (False)
 
-    def __on_totem__file_closed (self, _totem):
+    def __on_totem__file_closed (self, _):
         self._action.set_enabled (False)
         if self._dialog:
             self._apply_button.set_sensitive (False)
@@ -729,13 +733,13 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._model.lang = LANGUAGES[combo_model.get_value (combo_iter, 1)]
         self._settings.set_string ('language', self._model.lang)
 
-    def __on_close_clicked (self, _data):
+    def __on_close_clicked (self, _):
         self._close_dialog ()
 
-    def __on_apply_clicked (self, _data):
+    def __on_apply_clicked (self, _):
         self._download_and_apply ()
 
-    def __on_find_clicked (self, _data):
+    def __on_find_clicked (self, _):
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
         self._filename = self._totem.get_current_mrl ()
