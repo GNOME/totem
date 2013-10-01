@@ -44,6 +44,8 @@ vala_plugin_cflags = \
 # Checking rules for Python plugins
 # Execute pylint on all the requisite files individually, returning non-zero
 # iff any of the calls to pylint returned non-zero.
+# Don't bother adding this as a prerequisite rule of 'check', since it can
+# easily cause spurious and painful distcheck failures.
 check-pylint: $(plugin_PYTHON)
 if ENABLE_PYTHON
 	@exitstatus=0; \
@@ -57,7 +59,5 @@ if ENABLE_PYTHON
 	done; \
 	exit $$exitstatus
 endif
-
-check: check-pylint
 
 .PHONY: check-pylint
