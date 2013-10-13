@@ -30,10 +30,10 @@
 #define GST_USE_UNSTABLE_API 1
 
 #include <glib/gstdio.h>
-#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <cairo.h>
 #include <gst/gst.h>
+#include <gdk/gdk.h>
 #include <totem-pl-parser.h>
 
 #include <errno.h>
@@ -48,7 +48,6 @@
 #include "gst/totem-gst-helpers.h"
 #include "gst/totem-time-helpers.h"
 #include "gst/totem-gst-pixbuf-helpers.h"
-#include "video-utils.h"
 #include "totem-resources.h"
 
 #ifdef G_HAVE_ISO_VARARGS
@@ -1043,7 +1042,6 @@ int main (int argc, char *argv[])
 	options = gst_init_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
-	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 
 	if (g_option_context_parse (context, &argc, &argv, &err) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", err->message);
