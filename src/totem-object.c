@@ -521,6 +521,8 @@ totem_object_plugins_init (TotemObject *totem)
 void
 totem_object_plugins_shutdown (TotemObject *totem)
 {
+	if (totem->engine)
+		totem_plugins_engine_shut_down (totem->engine);
 	g_clear_object (&totem->engine);
 }
 
