@@ -954,6 +954,23 @@ load_grilo_plugins (TotemGriloPlugin *self)
 	}
 }
 
+static void
+unload_grilo_plugins (TotemGriloPlugin *self)
+{
+	GrlRegistry *registry;
+	GList *l, *plugins;
+
+	registry = grl_registry_get_default ();
+	plugins = grl_registry_get_plugins (registry, TRUE);
+
+	for (l = plugins; l != NULL; l = l->next) {
+		GrlPlugin *plugin = l->data;
+		grl_registry_unload_plugin (registry, grl_plugin_get_id (plugin), NULL);
+	}
+
+	g_list_free (plugins);
+}
+
 static gboolean
 show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
 {
@@ -1344,14 +1361,8 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
 	g_signal_handlers_disconnect_by_func (registry, source_removed_cb, self);
 
-	/* Shutdown all sources */
-	sources  = grl_registry_get_sources (registry, FALSE);
-	for (s = sources; s; s = g_list_next (s)) {
-		grl_registry_unregister_source (registry,
-		                                GRL_SOURCE (s->data),
-		                                NULL);
-	}
-	g_list_free (sources);
+	/* Shutdown all plugins */
+	unload_grilo_plugins (self);
 
 	/* Empty results */
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
