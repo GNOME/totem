@@ -84,7 +84,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         t.file_opened.disconnect (this.cb_file_opened);
 
         // remove interface elements to control the rotation
-        t.empty_menu_section ("rotate-placeholder");
+        t.empty_menu_section ("rotation-placeholder");
 
         // remove accelerators
         t.remove_accelerator("app.rotate-right", null);
