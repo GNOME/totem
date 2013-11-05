@@ -8,13 +8,14 @@
 # Jennie Petoumenou <epetoumenou@gmail.com>, 2009.
 # Marios Zindilis <m.zindilis@dmajor.org>, 2010, 2011.
 # Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012, 2013.
+# Efstathios Iosifidis <iosifidis@opensuse.org>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem&"
 "keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-24 22:46+0000\n"
-"PO-Revision-Date: 2013-04-25 08:50+0300\n"
+"POT-Creation-Date: 2013-10-16 12:34+0000\n"
+"PO-Revision-Date: 2013-11-05 23:11+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
@@ -25,70 +26,48 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:306 ../src/totem-object.c:1147
-#: ../src/totem-object.c:1576 ../src/totem-statusbar.c:115
-msgid "Stopped"
-msgstr "Διακόπηκε"
-
-#: ../browser-plugin/totem-plugin-viewer.c:318 ../src/totem-object.c:1140
-msgid "Paused"
-msgstr "Σε παύση"
-
-#: ../browser-plugin/totem-plugin-viewer.c:322 ../src/totem-object.c:1133
-msgid "Playing"
-msgstr "Αναπαραγωγή"
-
-#: ../browser-plugin/totem-plugin-viewer.c:340
+#: ../browser-plugin/totem-plugin-viewer.c:330
 #: ../src/plugins/screensaver/totem-screensaver.c:97
 msgid "Playing a movie"
 msgstr "Γίνεται αναπαραγωγή μιας ταινίας"
 
-#: ../browser-plugin/totem-plugin-viewer.c:396
+#: ../browser-plugin/totem-plugin-viewer.c:399
 msgid "No URI to play"
 msgstr "Δεν υπάρχει URI προς αναπαραγωγή"
-
-#: ../browser-plugin/totem-plugin-viewer.c:646
-#: ../browser-plugin/totem-plugin-viewer.c:1698
-msgid "Totem Movie Player"
-msgstr "Totem αναπαραγωγή ταινιών"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1107
+#: ../browser-plugin/totem-plugin-viewer.c:1098
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "Άν_οιγμα με \"%s\""
 
-#: ../browser-plugin/totem-plugin-viewer.c:1330 ../src/totem-object.c:2301
+#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2355
 msgid "An error occurred"
 msgstr "Προέκυψε ένα σφάλμα"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2022
+#: ../browser-plugin/totem-plugin-viewer.c:1675
+msgid "Totem Movie Player"
+msgstr "Totem αναπαραγωγή ταινιών"
+
+#: ../browser-plugin/totem-plugin-viewer.c:1993
 msgid "No playlist or playlist empty"
 msgstr "Δεν υπάρχει λίστα αναπαραγωγής ή η λίστα είναι κενή"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2255
+#: ../browser-plugin/totem-plugin-viewer.c:2224
 msgid "Movie browser plugin"
 msgstr "Πρόσθετη λειτουργία περιήγησης ταινιών"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2271 ../src/totem.c:244
+#: ../browser-plugin/totem-plugin-viewer.c:2240 ../src/totem.c:262
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Αδυναμία αρχικοποίησης των βιβλιοθηκών thread-safe."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2271
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Επιβεβαιώστε τη σωστή εγκατάσταση του συστήματος σας. Το πρόσθετο Totem θα "
 "τερματιστεί τώρα."
-
-#: ../data/fullscreen.ui.h:1
-msgid "Leave Fullscreen"
-msgstr "Έξοδος από πλήρη οθόνη"
-
-#: ../data/fullscreen.ui.h:2 ../data/totem.ui.h:73
-msgid "Time:"
-msgstr "Χρόνος:"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:1
 msgid "Allow the screensaver to activate when playing audio"
@@ -234,17 +213,10 @@ msgstr ""
 "ταινία"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:31
-msgid ""
-"Whether to remember the current playlist, the playing track and position."
-msgstr ""
-"Αν θα θυμάται την τρέχουσα λίστα αναπαραγωγής, το αναπαραγόμενο κομμάτι και "
-"τη θέση."
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid "Active plugins list"
 msgstr "Λίστα ενεργών πρόσθετων λειτουργιών"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:33
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:32
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
@@ -268,11 +240,11 @@ msgstr "Αντι_γραφή τοποθεσίας"
 msgid "Copy the location to the clipboard"
 msgstr "Αντιγραφή της τοποθεσίας στο πρόχειρο"
 
-#: ../data/playlist.ui.h:5 ../data/totem.ui.h:63
+#: ../data/playlist.ui.h:5 ../data/totem.ui.h:18
 msgid "_Select Text Subtitles..."
 msgstr "_Επιλογή υποτίτλων..."
 
-#: ../data/playlist.ui.h:6 ../data/totem.ui.h:64
+#: ../data/playlist.ui.h:6
 msgid "Select a file to use for text subtitles"
 msgstr "Επιλέξτε ένα αρχείο για να χρησιμοποιηθεί για υπότιτλους"
 
@@ -311,8 +283,8 @@ msgstr "Μεγάλο"
 msgid "Extra Large"
 msgstr "Πολύ μεγάλο"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5487
-#: ../src/totem-properties-view.c:232
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5607
+#: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Στερεοφωνικό"
 
@@ -341,36 +313,36 @@ msgid "Totem Preferences"
 msgstr "Προτιμήσεις για το Totem"
 
 #: ../data/preferences.ui.h:14
-msgid "Playback"
-msgstr "Αναπαραγωγή"
-
-#: ../data/preferences.ui.h:15
-msgid "Remember last played movies"
-msgstr "Να θυμάται τις τελευταίες παιγμένες ταινίες"
-
-#: ../data/preferences.ui.h:16
 msgid "Text Subtitles"
 msgstr "Υπότιτλοι"
 
-#: ../data/preferences.ui.h:17
+#: ../data/preferences.ui.h:15
 msgid "_Load subtitle files when movie is loaded"
 msgstr "Αυτόματη _φόρτωση αρχείων υποτίτλων όταν φορτώνεται μια ταινία"
 
-#: ../data/preferences.ui.h:18
+#: ../data/preferences.ui.h:16
 msgid "_Font:"
 msgstr "_Γραμματοσειρά:"
 
-#: ../data/preferences.ui.h:19
+#: ../data/preferences.ui.h:17
 msgid "_Encoding:"
 msgstr "_Κωδικοποίηση:"
 
-#: ../data/preferences.ui.h:20
+#: ../data/preferences.ui.h:18
 msgid "External Chapters"
 msgstr "Εξωτερικά κεφάλαια"
 
-#: ../data/preferences.ui.h:21
+#: ../data/preferences.ui.h:19
 msgid "Load _chapter files when movie is loaded"
 msgstr "Αυτόματη _φόρτωση αρχείων κεφαλαίων όταν φορτώνεται μια ταινία"
+
+#: ../data/preferences.ui.h:20
+msgid "Plugins"
+msgstr "Πρόσθετα"
+
+#: ../data/preferences.ui.h:21
+msgid "Plugins..."
+msgstr "Πρόσθετες λειτουργίες..."
 
 #: ../data/preferences.ui.h:22 ../data/properties.ui.h:1
 msgid "General"
@@ -448,7 +420,7 @@ msgid "_Audio output type:"
 msgstr "Τύπος εξόδου ή_χου:"
 
 #: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:273
+#: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Ήχος"
 
@@ -480,7 +452,7 @@ msgstr "Σχόλιο:"
 msgid "Container:"
 msgstr "Πλαίσιο:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
 msgid "Video"
 msgstr "Βίντεο"
 
@@ -508,9 +480,45 @@ msgstr "Ρυθμός δειγματοληψίας:"
 msgid "Channels:"
 msgstr "Κανάλια:"
 
-#. Title
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:72 ../src/totem.c:243
-#: ../src/totem.c:249 ../src/totem-menu.c:582 ../src/totem-object.c:1584
+#: ../data/appdata/totem.appdata.xml.in.h:1
+msgid ""
+"Totem, also known as Videos, is the official movie player of the GNOME "
+"desktop environment. It features a playlist, a full-screen mode, seek and "
+"volume controls, as well as keyboard navigation."
+msgstr ""
+"Το Totem, γνωστό ως Βίντεο, είναι το επίσημο πρόγραμμα αναπαραγωγής ταινιών "
+"στο GNOME. Μερικά χαρακτηριστικά του είναι η λίστα αναπαραγωγής, η κατάσταση "
+"πλήρους οθόνης, έλεγχος έντασης φωνής και αναζήτησης στην ταινία, γνωστό ως "
+"περιήγηση με το πληκτρολόγιο."
+
+#: ../data/appdata/totem.appdata.xml.in.h:2
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, support "
+"to watch live TV and VCD recording."
+msgstr ""
+"Στο Totem υπάρχουν λειτουργίες όπως: λήψη υποτίτλων, υποστήριξη "
+"παρακολούθησης live TV και εγγραφής VCD."
+
+#: ../data/appdata/totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "Εικόνα επισκόπησης βίντεο για τον διαχειριστή αρχείων"
+
+#: ../data/appdata/totem.appdata.xml.in.h:4
+msgid "Nautilus properties tab"
+msgstr "Καρτέλα ρυθμίσεων του Ναυτίλου."
+
+#: ../data/appdata/totem.appdata.xml.in.h:5
+msgid "Mozilla (Firefox) plugin to view movies inside your browser"
+msgstr ""
+"Πρόσθετο για το Mozilla (Firefox) ώστε να προβάλονται οι ταινίες μέσα στον "
+"περιηγητή σας"
+
+#: ../data/appdata/totem.appdata.xml.in.h:6
+msgid "Command-line video properties helper (for indexers)"
+msgstr "Βοηθός ρυθμίσεων βίντεο με τερματικό (για δημιουργια ευρετηρίου)"
+
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:261
+#: ../src/totem.c:267
 msgid "Videos"
 msgstr "Βίντεο"
 
@@ -522,340 +530,198 @@ msgstr "Αναπαραγωγή ταινιών"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Βίντεο;Ταινία;Φιλμ;Clip;Σειρά;Αναπαραγωγέας;DVD;Τηλεόραση;Δίσκος"
 
-#: ../data/totem.ui.h:1
+#: ../data/totem.ui.h:1 ../src/totem-open-location.c:185
+#: ../src/totem-uri.c:422 ../src/plugins/chapters/totem-chapters.c:962
 msgid "_Open"
 msgstr "Άν_οιγμα"
 
 #: ../data/totem.ui.h:2
-msgid "Open _Location"
-msgstr "Άνοιγμα το_ποθεσίας"
+msgid "Add Web Video..."
+msgstr "Προσθήκη Βίντεο Ιστού..."
 
 #: ../data/totem.ui.h:3
-msgid "_Fullscreen"
-msgstr "_Πλήρης οθόνη"
-
-#: ../data/totem.ui.h:4
 msgid "Prefere_nces"
 msgstr "Προτι_μήσεις"
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:4
 msgid "Shuff_le"
 msgstr "Τυχαία ανα_παραγωγή"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:5
 msgid "_Repeat"
 msgstr "_Επανάληψη"
+
+#: ../data/totem.ui.h:6
+msgid "_Help"
+msgstr "_Βοήθεια"
 
 #: ../data/totem.ui.h:7
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
 #: ../data/totem.ui.h:8
-msgid "_Movie"
-msgstr "_Ταινία"
-
-#: ../data/totem.ui.h:9
-msgid "_Eject"
-msgstr "Ε_ξαγωγή"
-
-#: ../data/totem.ui.h:10
-msgid "Eject the current disc"
-msgstr "Εξαγωγή του παρόντος δίσκου"
-
-#: ../data/totem.ui.h:11
-msgid "_Properties"
-msgstr "_Ιδιότητες"
-
-#: ../data/totem.ui.h:12
-msgid "View the properties of the current stream"
-msgstr "Προβολή των ιδιοτήτων της τρέχουσας ροής"
-
-#: ../data/totem.ui.h:13
-msgid "Play / P_ause"
-msgstr "Αναπαραγωγή / Π_αύση"
-
-#: ../data/totem.ui.h:14
-msgid "Play or pause the movie"
-msgstr "Αναπαραγωγή ή παύση της ταινίας"
-
-#: ../data/totem.ui.h:15
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#: ../data/totem.ui.h:16
-msgid "_Clear Playlist"
-msgstr "_Καθαρισμός λίστας αναπαραγωγής"
-
-#: ../data/totem.ui.h:17
-msgid "Clear the playlist"
-msgstr "Καθαρισμός λίστας αναπαραγωγής"
-
-#: ../data/totem.ui.h:18
-msgid "Plugins..."
-msgstr "Πρόσθετες λειτουργίες..."
-
-#: ../data/totem.ui.h:19
-msgid "Configure plugins to extend the application"
-msgstr "Ρύθμιση πρόσθετων για την επέκταση των λειτουργιών της εφαρμογής"
-
-#: ../data/totem.ui.h:20
-msgid "_View"
-msgstr "_Προβολή"
-
-#: ../data/totem.ui.h:21
-msgid "Fit Window to Movie"
-msgstr "Ταίριασμα παραθύρου στην ταινία"
-
-#: ../data/totem.ui.h:22
 msgid "_Aspect Ratio"
 msgstr "_Συντελεστής αναλογίας"
 
-#: ../data/totem.ui.h:23
-msgid "Switch An_gles"
-msgstr "Αλλαγή _γωνίας"
-
-#: ../data/totem.ui.h:24
-msgid "Switch camera angles"
-msgstr "Αλλαγή γωνίας κάμερας"
-
-#: ../data/totem.ui.h:25
-msgid "_Go"
-msgstr "_Μετάβαση"
-
-#: ../data/totem.ui.h:26
-msgid "_DVD Menu"
-msgstr "Μενού _DVD"
-
-#: ../data/totem.ui.h:27
-msgid "Go to the DVD menu"
-msgstr "Μετάβαση στο μενού του DVD"
-
-#: ../data/totem.ui.h:28
-msgid "_Title Menu"
-msgstr "Μενού _τίτλων"
-
-#: ../data/totem.ui.h:29
-msgid "Go to the title menu"
-msgstr "Μετάβαση στο μενού τίτλων"
-
-#: ../data/totem.ui.h:30
-msgid "A_udio Menu"
-msgstr "Μενού ή_χου"
-
-#: ../data/totem.ui.h:31
-msgid "Go to the audio menu"
-msgstr "Μετάβαση στο μενού ήχου"
-
-#: ../data/totem.ui.h:32
-msgid "_Angle Menu"
-msgstr "Μενού οπτικής _γωνίας"
-
-#: ../data/totem.ui.h:33
-msgid "Go to the angle menu"
-msgstr "Μετάβαση στο μενού οπτικής γωνίας"
-
-#: ../data/totem.ui.h:34
-msgid "_Chapter Menu"
-msgstr "Μενού κε_φαλαίων"
-
-#: ../data/totem.ui.h:35
-msgid "Go to the chapter menu"
-msgstr "Μετάβαση στο μενού κεφαλαίων"
-
-#: ../data/totem.ui.h:36
-msgid "_Next Chapter/Movie"
-msgstr "Επόμε_νο κεφάλαιο/ταινία"
-
-#: ../data/totem.ui.h:37
-msgid "Next chapter or movie"
-msgstr "Επόμενο κεφάλαιο ή ταινία"
-
-#: ../data/totem.ui.h:38
-msgid "_Previous Chapter/Movie"
-msgstr "_Προηγούμενο κεφάλαιο/ταινία"
-
-#: ../data/totem.ui.h:39
-msgid "Previous chapter or movie"
-msgstr "Προηγούμενο κεφάλαιο ή ταινία"
-
-#: ../data/totem.ui.h:40
-msgid "_Sound"
-msgstr "Ή_χος"
-
-#: ../data/totem.ui.h:41
-msgid "Volume _Up"
-msgstr "_Αύξηση έντασης"
-
-#: ../data/totem.ui.h:42
-msgid "Increase volume"
-msgstr "Αύξηση έντασης"
-
-#: ../data/totem.ui.h:43
-msgid "Volume _Down"
-msgstr "_Μείωση έντασης"
-
-#: ../data/totem.ui.h:44
-msgid "Decrease volume"
-msgstr "Μείωση έντασης"
-
-#: ../data/totem.ui.h:45
-msgid "_Help"
-msgstr "_Βοήθεια"
-
-#: ../data/totem.ui.h:46
-msgid "_Contents"
-msgstr "Περιε_χόμενα"
-
-#: ../data/totem.ui.h:47
-msgid "Help contents"
-msgstr "Περιεχόμενα βοήθειας"
-
-#: ../data/totem.ui.h:48
-msgid "_About"
-msgstr "_Περί"
-
-#: ../data/totem.ui.h:49
-msgid "About this application"
-msgstr "Περί αυτής της εφαρμογής"
-
-#: ../data/totem.ui.h:50
-msgid "S_idebar"
-msgstr "Πλευ_ρική στήλη"
-
-#: ../data/totem.ui.h:51
-msgid "Show or hide the sidebar"
-msgstr "Εμφάνιση ή απόκρυψη της πλευρικής στήλης"
-
-#: ../data/totem.ui.h:52
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Αυτόματο"
 
-#: ../data/totem.ui.h:53
-msgid "Sets automatic aspect ratio"
-msgstr "Ορίζει αυτόματο συντελεστή αναλογίας"
-
-#: ../data/totem.ui.h:54
+#: ../data/totem.ui.h:10
+msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: ../data/totem.ui.h:55
-msgid "Sets square aspect ratio"
-msgstr "Ορίζει τετράγωνο συντελεστή αναλογίας"
+#: ../data/totem.ui.h:11
+msgctxt "Aspect ratio"
+msgid "4:3 (TV)"
+msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:56
-msgid "4∶3 (TV)"
-msgstr "4:3 (Τηλεόραση)"
-
-#: ../data/totem.ui.h:57
-msgid "Sets 4∶3 (TV) aspect ratio"
-msgstr "Ορίζει λόγο θέασης σε 4:3 (τηλεόραση)"
-
-#: ../data/totem.ui.h:58
+#: ../data/totem.ui.h:12
+msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Ευρεία οθόνη)"
 
-#: ../data/totem.ui.h:59
-msgid "Sets 16∶9 (widescreen) aspect ratio"
-msgstr "Ορίζει λόγο θέασης σε 16:9 (ευρεία οθόνη)"
-
-#: ../data/totem.ui.h:60
+#: ../data/totem.ui.h:13
+msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
-msgstr "2.11:1 (DVB)"
+msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:61
-msgid "Sets 2.11∶1 (DVB) aspect ratio"
-msgstr "Ορίζει λόγο θέασης 2.11:1 (DVB)"
-
-#: ../data/totem.ui.h:62
-msgid "S_ubtitles"
-msgstr "_Υπότιτλοι"
-
-#: ../data/totem.ui.h:65
-msgid "_Languages"
-msgstr "Γ_λώσσες"
-
-#: ../data/totem.ui.h:66
+#: ../data/totem.ui.h:14
 msgid "Zoom In"
 msgstr "Μεγέθυνση"
 
-#: ../data/totem.ui.h:67
-msgid "Zoom in"
-msgstr "Μεγέθυνση"
+#: ../data/totem.ui.h:15
+msgid "Switch An_gles"
+msgstr "Αλλαγή _γωνίας"
 
-#: ../data/totem.ui.h:68
-msgid "Skip _Forward"
-msgstr "Παράκαμψη προς τα _μπροστά"
+#: ../data/totem.ui.h:16
+msgid "_Languages"
+msgstr "Γ_λώσσες"
 
-#: ../data/totem.ui.h:69
-msgid "Skip forward"
-msgstr "Παράκαμψη προς τα μπροστά"
+#: ../data/totem.ui.h:17
+msgid "S_ubtitles"
+msgstr "_Υπότιτλοι"
 
-#: ../data/totem.ui.h:70
-msgid "Skip _Backwards"
-msgstr "Παράκαμψη προς τα _πίσω"
+#: ../data/totem.ui.h:19
+msgid "_Properties"
+msgstr "_Ιδιότητες"
 
-#: ../data/totem.ui.h:71
-msgid "Skip backwards"
-msgstr "Παράκαμψη προς τα πίσω"
+#: ../data/totem.ui.h:20
+msgid "_Eject"
+msgstr "Ε_ξαγωγή"
 
-#: ../data/totem.ui.h:74
-msgid "Time seek bar"
-msgstr "Μπάρα χρονικής αναζήτησης"
+#: ../data/totem.ui.h:21
+msgid "_DVD Menu"
+msgstr "Μενού _DVD"
+
+#: ../data/totem.ui.h:22
+msgid "_Title Menu"
+msgstr "Μενού _τίτλων"
+
+#: ../data/totem.ui.h:23
+msgid "A_udio Menu"
+msgstr "Μενού ή_χου"
+
+#: ../data/totem.ui.h:24
+msgid "_Angle Menu"
+msgstr "Μενού οπτικής _γωνίας"
+
+#: ../data/totem.ui.h:25
+msgid "_Chapter Menu"
+msgstr "Μενού κε_φαλαίων"
+
+#: ../data/totem.ui.h:26
+msgid "Play / P_ause"
+msgstr "Αναπαραγωγή / Π_αύση"
+
+#: ../data/totem.ui.h:27
+msgid "Play or pause the movie"
+msgstr "Αναπαραγωγή ή παύση της ταινίας"
+
+#: ../data/totem.ui.h:28
+msgid "_View"
+msgstr "_Προβολή"
+
+#: ../data/totem.ui.h:29
+msgid "_Next Chapter/Movie"
+msgstr "Επόμε_νο κεφάλαιο/ταινία"
+
+#: ../data/totem.ui.h:30
+msgid "Next chapter or movie"
+msgstr "Επόμενο κεφάλαιο ή ταινία"
+
+#: ../data/totem.ui.h:31
+msgid "_Previous Chapter/Movie"
+msgstr "_Προηγούμενο κεφάλαιο/ταινία"
+
+#: ../data/totem.ui.h:32
+msgid "Previous chapter or movie"
+msgstr "Προηγούμενο κεφάλαιο ή ταινία"
+
+#: ../data/totem.ui.h:33
+msgid "_Sound"
+msgstr "Ή_χος"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
 msgstr "Εισάγετε τη _διεύθυνση του αρχείου που θέλετε να ανοίξετε:"
 
-#: ../src/backend/bacon-video-widget.c:1633
+#. translators: Unknown remaining time
+#: ../src/backend/bacon-time-label.c:115
+msgid "--:--"
+msgstr "--:--"
+
+#: ../src/backend/bacon-video-widget.c:1713
 msgid "Password requested for RTSP server"
 msgstr "Αίτηση συνθηματιικού πρόσβασης για τον διακομιστή RTSP"
 
-#: ../src/backend/bacon-video-widget.c:2988
+#: ../src/backend/bacon-video-widget.c:3083
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Κομμάτι ήχου #%d"
 
-#: ../src/backend/bacon-video-widget.c:2992
+#: ../src/backend/bacon-video-widget.c:3087
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Υπότιτλος #%d"
 
-#: ../src/backend/bacon-video-widget.c:3409
+#: ../src/backend/bacon-video-widget.c:3520
 msgid "The server you are trying to connect to is not known."
 msgstr "Ο διακομιστής που προσπαθείτε να συνδεθείτε δεν είναι γνωστός."
 
-#: ../src/backend/bacon-video-widget.c:3412
+#: ../src/backend/bacon-video-widget.c:3523
 msgid "The connection to this server was refused."
 msgstr "Απορρίφθηκε η σύνδεση σε αυτόν τον διακομιστή."
 
-#: ../src/backend/bacon-video-widget.c:3415
+#: ../src/backend/bacon-video-widget.c:3526
 msgid "The specified movie could not be found."
 msgstr "Δε βρέθηκε η συγκεκριμένη ταινία."
 
-#: ../src/backend/bacon-video-widget.c:3422
+#: ../src/backend/bacon-video-widget.c:3533
 msgid "The server refused access to this file or stream."
 msgstr "Ο διακομιστής αρνήθηκε την πρόσβαση σε αυτό το αρχείο ή την ροή."
 
-#: ../src/backend/bacon-video-widget.c:3428
+#: ../src/backend/bacon-video-widget.c:3539
 msgid "Authentication is required to access this file or stream."
 msgstr "Απαιτείται πιστοποίηση για την πρόσβαση σε αυτό το αρχείο ή την ροή."
 
-#: ../src/backend/bacon-video-widget.c:3435
+#: ../src/backend/bacon-video-widget.c:3546
 msgid "You are not allowed to open this file."
 msgstr "Δεν επιτρέπεται να ανοίξετε αυτό το αρχείο."
 
-#: ../src/backend/bacon-video-widget.c:3440
+#: ../src/backend/bacon-video-widget.c:3551
 msgid "This location is not a valid one."
 msgstr "Δεν είναι έγκυρη αυτή η τοποθεσία."
 
-#: ../src/backend/bacon-video-widget.c:3448
+#: ../src/backend/bacon-video-widget.c:3559
 msgid "The movie could not be read."
 msgstr "Δεν ήταν δυνατή η ανάγνωση της ταινίας."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3471
-#: ../src/backend/bacon-video-widget.c:3479
+#: ../src/backend/bacon-video-widget.c:3582
+#: ../src/backend/bacon-video-widget.c:3590
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -872,7 +738,7 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3490
+#: ../src/backend/bacon-video-widget.c:3601
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -881,7 +747,7 @@ msgstr ""
 "Ίσως χρειαστεί να εγκαταστήσετε πρόσθετα για να είστε σε θέση να "
 "αναπαραγάγετε κάποιους τύπους ταινιών"
 
-#: ../src/backend/bacon-video-widget.c:3500
+#: ../src/backend/bacon-video-widget.c:3611
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -889,19 +755,19 @@ msgstr ""
 "Αυτό το αρχείο δεν μπορεί να αναπαραχθεί μέσω του δικτύου. Αρχικά δοκιμάστε "
 "να το μεταφορτώσετε τοπικά."
 
-#: ../src/backend/bacon-video-widget.c:5483 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5603 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Περιφερειακό"
 
-#: ../src/backend/bacon-video-widget.c:5485 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5605 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Μονοφωνικό"
 
-#: ../src/backend/bacon-video-widget.c:5772
+#: ../src/backend/bacon-video-widget.c:5892
 msgid "Media contains no supported video streams."
 msgstr "Το αρχείο περιέχει μη υποστηριζόμενες ροές βίντεο."
 
-#: ../src/backend/bacon-video-widget.c:5954
+#: ../src/backend/bacon-video-widget.c:6052
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -972,8 +838,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:71
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
@@ -986,8 +850,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:82
 #, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
@@ -1108,31 +970,27 @@ msgid_plural "%d frames per second"
 msgstr[0] "%d καρέ ανά δευτερόλεπτο"
 msgstr[1] "%d καρέ ανά δευτερόλεπτο"
 
-#: ../src/totem-audio-preview.c:138
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Προεπισκόπηση ήχου"
 
-#: ../src/totem.c:244
+#: ../src/totem.c:262
 msgid "Verify your system installation. Totem will now exit."
 msgstr ""
 "Επιβεβαιώστε την εγκατάσταση του συστήματος σας. Το Totem τώρα θα "
 "τερματιστεί."
 
-#: ../src/totem-dnd-menu.c:94
+#: ../src/totem-dnd-menu.c:86
 msgid "_Play Now"
 msgstr "_Αναπαραγωγή τώρα"
 
-#: ../src/totem-dnd-menu.c:97
+#: ../src/totem-dnd-menu.c:89
 msgid "_Add to Playlist"
 msgstr "_Προσθήκη στη λίστα αναπαραγωγής"
 
-#: ../src/totem-dnd-menu.c:103
+#: ../src/totem-dnd-menu.c:95
 msgid "Cancel"
 msgstr "Ακύρωση"
-
-#: ../src/totem-fullscreen.c:568
-msgid "No File"
-msgstr "Δεν υπάρχει αρχείο"
 
 #: ../src/totem-interface.c:181 ../src/totem-interface.c:224
 #, c-format
@@ -1190,40 +1048,17 @@ msgstr ""
 "λειτουργιών GStreamer."
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:277
+#: ../src/totem-menu.c:391
 msgid "None"
 msgstr "Κανένα"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:282
+#: ../src/totem-menu.c:395
 msgctxt "Language"
 msgid "Auto"
 msgstr "Αυτόματο"
 
-#: ../src/totem-menu.c:581
-msgid "Copyright © 2002-2009 Bastien Nocera"
-msgstr "Πνευματικά δικαιώματα © 2002-2009 Bastien Nocera"
-
-#: ../src/totem-menu.c:585
-msgid "translator-credits"
-msgstr ""
-"Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
-"Κώστας Παπαδήμας <pkst@gnome.org>\n"
-"Νίκος Χαρωνιτάκης <charosn@her.forthnet.gr>\n"
-"Σίμος Ξενιτέλλης <simos@gnome.org>\n"
-"Αθανάσιος Λευτέρης <alefteris@gmail.com>\n"
-"Τζένη Πετούμενου <epetoumenou@gmail.com>\n"
-"Μάριος Ζηντίλης <m.zindilis@dmajor.org>"
-
-#: ../src/totem-menu.c:589
-msgid "Totem Website"
-msgstr "Ιστοσελίδα του Totem"
-
-#: ../src/totem-menu.c:620
-msgid "Configure Plugins"
-msgstr "Ρύθμιση πρόσθετων λειτουργιών"
-
-#: ../src/totem-object.c:160
+#: ../src/totem-object.c:162
 #, c-format
 msgid ""
 "%s\n"
@@ -1233,59 +1068,64 @@ msgstr ""
 "Τρέξτε: '%s --help' για να δείτε μια πλήρη λίστα με επιλογές γραμμής "
 "εντολών.\n"
 
-#. Translators: %s is the totem version number
-#: ../src/totem-object.c:557
-#, c-format
-msgid "Totem %s"
-msgstr "Totem %s"
-
-#: ../src/totem-object.c:1135 ../src/totem-options.c:52
+#: ../src/totem-object.c:1253 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Παύση"
 
-#: ../src/totem-object.c:1142 ../src/totem-object.c:1152
+#: ../src/totem-object.c:1258 ../src/totem-object.c:1268
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
-#: ../src/totem-object.c:1233 ../src/totem-object.c:1260
-#: ../src/totem-object.c:1815
+#: ../src/totem-object.c:1353 ../src/totem-object.c:1380
+#: ../src/totem-object.c:1907
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Το Totem δε μπορεί να αναπαράγει το '%s'."
 
-#: ../src/totem-object.c:1957
+#: ../src/totem-object.c:2049
 msgid "Totem could not display the help contents."
 msgstr "Το Totem δε μπορεί να εμφανίσει τα περιεχόμενα βοήθειας."
 
-#: ../src/totem-object.c:3777 ../src/totem-object.c:3779
+#: ../src/totem-object.c:3702
 msgid "Previous Chapter/Movie"
 msgstr "Προηγούμενο κεφάλαιο/ταινία"
 
-#: ../src/totem-object.c:3786 ../src/totem-object.c:3788
+#: ../src/totem-object.c:3707
 msgid "Play / Pause"
 msgstr "Αναπαραγωγή / Παύση"
 
-#: ../src/totem-object.c:3796 ../src/totem-object.c:3798
+#: ../src/totem-object.c:3712
 msgid "Next Chapter/Movie"
 msgstr "Επόμενο κεφάλαιο/ταινία"
 
-#. Translators: this is the accessibility text for the fullscreen button in the controls box in Totem's main window.
-#: ../src/totem-object.c:3809 ../src/totem-object.c:3811
-msgid "Fullscreen"
-msgstr "Πλήρης οθόνη"
+#: ../src/totem-object.c:3751 ../src/plugins/grilo/totem-grilo.c:1185
+#: ../src/plugins/grilo/totem-grilo.c:1195
+msgid "Back"
+msgstr "Πίσω"
 
-#: ../src/totem-object.c:3942
+#: ../src/totem-object.c:3822
 msgid "Totem could not startup."
 msgstr "Το Totem δε μπορεί να ξεκινήσει."
 
-#: ../src/totem-object.c:3942
+#: ../src/totem-object.c:3822
 msgid "No reason."
 msgstr "Χωρίς λόγο."
 
 #: ../src/totem-open-location.c:182
 msgid "Open Location..."
 msgstr "Άνοιγμα τοποθεσίας..."
+
+#: ../src/totem-open-location.c:184 ../src/totem-playlist.c:1064
+#: ../src/totem-uri.c:421 ../src/totem-uri.c:486
+#: ../src/plugins/chapters/totem-chapters.c:961
+#: ../src/plugins/chapters/totem-edit-chapter.c:98
+#: ../src/plugins/save-file/totem-save-file.c:122
+#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/plugins/screenshot/totem-gallery-progress.c:103
+#: ../src/plugins/skipto/totem-skipto.c:198
+msgid "_Cancel"
+msgstr "_Ακύρωση"
 
 #: ../src/totem-options.c:49
 msgid "Enable debug"
@@ -1356,149 +1196,119 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "Δεν γίνεται προσθήκη στη λίστα και αντικατάσταση ταυτόχρονα"
 
 #. By extension entry
-#: ../src/totem-playlist.c:175
+#: ../src/totem-playlist.c:173
 msgid "MP3 ShoutCast playlist"
 msgstr "Λίστα αναπαραγωγής MP3 ShoutCast"
 
-#: ../src/totem-playlist.c:176
+#: ../src/totem-playlist.c:174
 msgid "MP3 audio (streamed)"
 msgstr "ήχος MP3 (εκπεμπόμενος)"
 
-#: ../src/totem-playlist.c:177
+#: ../src/totem-playlist.c:175
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "ήχος MP3 (εκπεμπόμενος, μορφή DOS)"
 
-#: ../src/totem-playlist.c:178
+#: ../src/totem-playlist.c:176
 msgid "XML Shareable Playlist"
 msgstr "Κοινόχρηστη λίστα αναπαραγωγής XML"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:335
+#: ../src/totem-playlist.c:333
 #, c-format
 msgid "Title %d"
 msgstr "Τίτλος %d"
 
-#: ../src/totem-playlist.c:489
+#: ../src/totem-playlist.c:487
 msgid "Could not save the playlist"
 msgstr "Αδυναμία αποθήκευσης της λίστας αναπαραγωγής"
 
-#: ../src/totem-playlist.c:1063
+#: ../src/totem-playlist.c:1061
 msgid "Save Playlist"
 msgstr "Αποθήκευση λίστας αναπαραγωγής"
 
+#: ../src/totem-playlist.c:1065 ../src/plugins/save-file/totem-save-file.c:123
+#: ../src/plugins/screenshot/totem-gallery.c:98
+msgid "_Save"
+msgstr "_Αποθήκευση"
+
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1075 ../src/totem-playlist.c:1302
-#: ../src/totem-sidebar.c:145
+#: ../src/totem-playlist.c:1073 ../src/totem-playlist.c:1300
+#: ../src/totem-sidebar.c:127
 msgid "Playlist"
 msgstr "Λίστα αναπαραγωγής"
 
-#: ../src/totem-playlist.c:1902
+#: ../src/totem-playlist.c:1891
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr ""
 "Η λίστα αναπαραγωγής '%s' δεν είναι αναγνώσιμη. Πιθανώς να έχει καταστραφεί."
 
-#: ../src/totem-playlist.c:1903
+#: ../src/totem-playlist.c:1892
 msgid "Playlist error"
 msgstr "Σφάλμα λίστας αναπαραγωγής"
 
-#: ../src/totem-preferences.c:297
+#: ../src/totem-preferences.c:292
+msgid "Configure Plugins"
+msgstr "Ρύθμιση πρόσθετων λειτουργιών"
+
+#: ../src/totem-preferences.c:295 ../src/totem-preferences.c:354
+msgid "_Close"
+msgstr "_Κλείσιμο"
+
+#: ../src/totem-preferences.c:351
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: ../src/totem-preferences.c:439
+#: ../src/totem-preferences.c:494
 msgid "Select Subtitle Font"
 msgstr "Επιλογή γραμματοσειράς υποτίτλων"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:281
 msgid "Audio/Video"
 msgstr "Ήχος/Βίντεο"
 
-#: ../src/totem-properties-view.c:131
+#: ../src/totem-properties-view.c:141
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/totem-properties-view.c:160
+#: ../src/totem-properties-view.c:170
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/totem-properties-view.c:163
+#: ../src/totem-properties-view.c:173
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d kbps"
 
-#: ../src/totem-properties-view.c:180
+#: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:212
+#: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: ../src/totem-properties-view.c:220
+#: ../src/totem-properties-view.c:230
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "Μη διαθέσιμο"
 
-#: ../src/totem-properties-view.c:241
+#: ../src/totem-properties-view.c:251
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "N/A"
-
-#: ../src/totem-statusbar.c:110
-msgid "0:00 / 0:00"
-msgstr "0:00 / 0:00"
-
-#: ../src/totem-statusbar.c:133
-#, c-format
-msgid "%s (Streaming)"
-msgstr "%s (Ροή)"
-
-#. Elapsed / Total Length
-#: ../src/totem-statusbar.c:139 ../src/totem-time-label.c:64
-#, c-format
-msgid "%s / %s"
-msgstr "%s / %s"
-
-#. Seeking to Time / Total Length
-#: ../src/totem-statusbar.c:142 ../src/totem-time-label.c:67
-#, c-format
-msgid "Seek to %s / %s"
-msgstr "Αναζήτηση σε %s / %s"
-
-#: ../src/totem-statusbar.c:238
-msgid "Buffering"
-msgstr "Γίνεται αποθήκευση στην ενδιάμεση μνήμη"
-
-#. eg: 75 %
-#: ../src/totem-statusbar.c:249
-#, c-format
-msgid "%lf %%"
-msgstr "%lf %%"
-
-#. eg: Paused, 0:32 / 1:05
-#: ../src/totem-statusbar.c:324
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. eg: Buffering, 75 %
-#: ../src/totem-statusbar.c:329
-#, c-format
-msgid "%s, %f %%"
-msgstr "%s, %f %%"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1641,6 +1451,18 @@ msgstr "Δυτική"
 msgid "Vietnamese"
 msgstr "Βιετναμέζικα"
 
+#. Elapsed / Total Length
+#: ../src/totem-time-label.c:64
+#, c-format
+msgid "%s / %s"
+msgstr "%s / %s"
+
+#. Seeking to Time / Total Length
+#: ../src/totem-time-label.c:67
+#, c-format
+msgid "Seek to %s / %s"
+msgstr "Αναζήτηση σε %s / %s"
+
 #: ../src/totem-uri.c:331 ../src/plugins/chapters/totem-chapters.c:982
 msgid "All files"
 msgstr "Όλα τα αρχεία"
@@ -1673,10 +1495,14 @@ msgstr "Επιλογή ταινιών ή λιστών αναπαραγωγής"
 msgid "Add Directory"
 msgstr "Προσθήκη καταλόγου"
 
+#: ../src/totem-uri.c:488 ../src/plugins/chapters/totem-edit-chapter.c:99
+msgid "_Add"
+msgstr "_Προσθήκη"
+
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:838
+#: ../src/totem-video-thumbnailer.c:932
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1687,15 +1513,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:839
+#: ../src/totem-video-thumbnailer.c:933
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
-#: ../src/totem-video-thumbnailer.c:841
+#: ../src/totem-video-thumbnailer.c:935
 msgid "Resolution"
 msgstr "Ανάλυση"
 
-#: ../src/totem-video-thumbnailer.c:844
+#: ../src/totem-video-thumbnailer.c:938
 msgid "Duration"
 msgstr "Διάρκεια"
 
@@ -1723,44 +1549,32 @@ msgstr "Εγγραφή δίσκων βίντεο"
 msgid "Records (S)VCDs or video DVDs"
 msgstr "Γράφει (S)VCD ή βίντεο DVD"
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:65
-msgid "_Create Video Disc..."
-msgstr "_Δημιουργία δίσκου βίντεο..."
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:66
-msgid "Create a video DVD or a (S)VCD from the currently opened movie"
-msgstr "Δημιουργία DVD βίντεο ή (S)VCD από την ταινία που είναι ανοιχτή"
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:68
-msgid "Copy Vide_o DVD..."
-msgstr "Αντιγραφή DVD βίντε_ο..."
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:69
-msgid "Copy the currently playing video DVD"
-msgstr "Αντιγραφή του αναπαραγόμενου DVD βίντεο"
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:71
-msgid "Copy (S)VCD..."
-msgstr "Αντιγραφή βίντεο (S)VCD..."
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:72
-msgid "Copy the currently playing (S)VCD"
-msgstr "Αντιγραφή του αναπαραγόμενου (S)VCD"
-
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:136
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:120
 msgid "The video disc could not be duplicated."
 msgstr "Δεν ήταν δυνατή η αντιγραφή του δίσκου βίντεο."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:138
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:283
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:122
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:268
 msgid "The movie could not be recorded."
 msgstr "Δεν ήταν δυνατή η εγγραφή της ταινίας."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:164
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:174
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:270
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:148
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:158
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:254
 msgid "Unable to write a project."
 msgstr "Αδύνατη η εγγραφή έργου."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:380
+msgid "_Create Video Disc..."
+msgstr "_Δημιουργία δίσκου βίντεο..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:381
+msgid "Copy Vide_o DVD..."
+msgstr "Αντιγραφή DVD βίντε_ο..."
+
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:382
+msgid "Copy (S)VCD..."
+msgstr "Αντιγραφή βίντεο (S)VCD..."
 
 #: ../src/plugins/chapters/chapters-edit.ui.h:1
 msgid "Name for new chapter:"
@@ -1898,29 +1712,29 @@ msgid "Add Chapter"
 msgstr "Προσθήκη κεφαλαίου"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
-msgid "D-Bus Service"
-msgstr "Υπηρεσία D-Bus"
+msgid "MPRIS D-Bus Interface"
+msgstr "Διεπαφή MPRIS D-Bus"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
 msgid ""
-"Plugin for sending notifications of currently playing movies to the D-Bus "
-"subsystem."
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
 msgstr ""
-"Πρόσθετη λειτουργία για αποστολή ειδοποιήσεων για ταινίες που αναπαράγονται "
-"στο υποσύστημα D-Bus."
+"Αποστολή ειδοποιήσεων των ταινιών που αναπαράγονται και να επιτρέπεται "
+"απομακρυσμένος έλεγχος με χρήση MPRIS."
 
 #: ../src/plugins/dbusservice/dbusservice.py:213
-#: ../src/plugins/dbusservice/dbusservice.py:243
+#: ../src/plugins/dbusservice/dbusservice.py:244
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "Ο MediaPlayer2 δεν εκτελεί την ‘%s’ διεπαφή"
 
-#: ../src/plugins/dbusservice/dbusservice.py:222
+#: ../src/plugins/dbusservice/dbusservice.py:223
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "Η ιδιότητα ‘%s’ δεν είναι εγγράψιμη."
 
-#: ../src/plugins/dbusservice/dbusservice.py:238
+#: ../src/plugins/dbusservice/dbusservice.py:239
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Ζητήθηκε άγνωστη ιδιότητα ‘%s’ από τον MediaPlayer 2"
@@ -1943,24 +1757,15 @@ msgstr "Προσθήκη στη λίστα αναπαραγωγής"
 msgid "Copy Location"
 msgstr "Αντιγραφή τοποθεσίας"
 
-#: ../src/plugins/grilo/grilo.ui.h:3 ../src/plugins/grilo/totem-grilo.c:1142
-msgid "Browse"
-msgstr "Περιήγηση"
-
-#: ../src/plugins/grilo/grilo.ui.h:4 ../src/plugins/grilo/totem-grilo.c:1185
-msgid "Search"
-msgstr "Αναζήτηση"
-
-#: ../src/plugins/grilo/totem-grilo.c:404
+#: ../src/plugins/grilo/totem-grilo.c:364
 msgid "Browse Error"
 msgstr "Σφάλμα περιηγητή"
 
-#: ../src/plugins/grilo/totem-grilo.c:571
+#: ../src/plugins/grilo/totem-grilo.c:531
 msgid "Search Error"
 msgstr "Σφάλμα αναζήτησης"
 
-#: ../src/plugins/grilo/totem-grilo.c:820
-#| msgid "Recent files"
+#: ../src/plugins/grilo/totem-grilo.c:816
 msgid "Recent"
 msgstr "Πρόσφατα"
 
@@ -2027,57 +1832,53 @@ msgstr "Λήψη υποτίτλων"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Αναζήτηση υποτίτλων για την αναπαραγόμενη ταινία."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:41
 msgid "Brazilian Portuguese"
 msgstr "Πορτογαλικά Βραζιλίας"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:177
+#: ../src/plugins/opensubtitles/opensubtitles.py:176
 msgid "Searching for subtitles…"
 msgstr "Αναζήτηση υποτίτλων…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:225
-#: ../src/plugins/opensubtitles/opensubtitles.py:645
+#: ../src/plugins/opensubtitles/opensubtitles.py:224
+#: ../src/plugins/opensubtitles/opensubtitles.py:619
 msgid "Downloading the subtitles…"
 msgstr "Λήψη υποτίτλων…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:290
+#: ../src/plugins/opensubtitles/opensubtitles.py:289
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Δεν ήταν δυνατή η σύνδεση με την ιστοσελίδα του OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:323
-#: ../src/plugins/opensubtitles/opensubtitles.py:341
+#: ../src/plugins/opensubtitles/opensubtitles.py:322
+#: ../src/plugins/opensubtitles/opensubtitles.py:340
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Αδυναμία σύνδεσης με την ιστοσελίδα του OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:329
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
 msgid "No results found."
 msgstr "Δε βρέθηκαν αποτελέσματα."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:473
 msgid "Subtitles"
 msgstr "Υπότιτλοι"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:484
+#: ../src/plugins/opensubtitles/opensubtitles.py:479
 msgid "Format"
 msgstr "Μορφή"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:489
+#: ../src/plugins/opensubtitles/opensubtitles.py:484
 msgid "Rating"
 msgstr "Βαθμολογία"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:525
-msgid "Download movie subtitles from OpenSubtitles"
-msgstr "Λήψη υποτίτλων ταινίας από το OpenSubtitles"
-
-#: ../src/plugins/opensubtitles/opensubtitles.py:527
+#: ../src/plugins/opensubtitles/opensubtitles.py:523
 msgid "_Download Movie Subtitles…"
 msgstr "_Λήψη υποτίτλων ταινίας…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:589
+#: ../src/plugins/opensubtitles/opensubtitles.py:563
 msgid "Searching subtitles…"
 msgstr "Αναζήτηση υποτίτλων…"
 
@@ -2134,38 +1935,27 @@ msgstr "Κονσόλα Python"
 msgid "Interactive Python console"
 msgstr "Διαδραστική κονσόλα Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:88
-msgid "Python Console Menu"
-msgstr "Μενού κονσόλας Python"
-
-#: ../src/plugins/pythonconsole/pythonconsole.py:93
+#: ../src/plugins/pythonconsole/pythonconsole.py:74
 msgid "_Python Console"
 msgstr "Κον_σόλα Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:94
-msgid "Show Totem's Python console"
-msgstr "Εμφάνιση της κονσόλας Python του Totem"
-
-#: ../src/plugins/pythonconsole/pythonconsole.py:100
+#: ../src/plugins/pythonconsole/pythonconsole.py:80
 msgid "Python Debugger"
 msgstr "Εφαρμογή αποσφαλμάτωσης Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:101
-msgid "Enable remote Python debugging with rpdb2"
-msgstr "Ενεργοποίηση απομακρυσμένης αποσφαλμάτωσης Python με rpdb2"
-
 #. pylint: disable-msg=E1101
-#: ../src/plugins/pythonconsole/pythonconsole.py:125
+#: ../src/plugins/pythonconsole/pythonconsole.py:91
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr ""
 "Μπορείτε να έχετε πρόσβαση στο Totem.Object μέσω του 'totem_object' :\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:129
+#: ../src/plugins/pythonconsole/pythonconsole.py:95
 msgid "Totem Python Console"
 msgstr "Κονσόλα Python του Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:139
+#. pylint: disable-msg=W0613
+#: ../src/plugins/pythonconsole/pythonconsole.py:105
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -2191,11 +1981,11 @@ msgstr "Πρόσθετο περιστροφής"
 msgid "Allows videos to be rotated if they are in the wrong orientation"
 msgstr "Επιτρέπει την περιστροφή των βίντεο αν έχουν λάθος προσανατολισμό"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:50
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:54
 msgid "_Rotate Clockwise"
 msgstr "Πε_ριστροφή προς τα δεξιά"
 
-#: ../src/plugins/rotation/totem-rotation-plugin.vala:52
+#: ../src/plugins/rotation/totem-rotation-plugin.vala:58
 msgid "Rotate Counterc_lockwise"
 msgstr "Περιστροφή προς τα αρ_ιστερά"
 
@@ -2207,27 +1997,23 @@ msgstr "Αποθήκευση ενός αντιγράφου"
 msgid "Save a copy of the currently playing movie"
 msgstr "Αποθήκευση ενός αντιγράφου της αναπαραγόμενης ταινίας"
 
-#: ../src/plugins/save-file/totem-save-file.c:63
-msgid "Save a Copy..."
-msgstr "Αποθήκευση ενός αντιγράφου..."
-
-#: ../src/plugins/save-file/totem-save-file.c:64
-msgid "Save a copy of the movie"
-msgstr "Αποθήκευση ενός αντιγράφου του βίντεο"
-
-#: ../src/plugins/save-file/totem-save-file.c:129
+#: ../src/plugins/save-file/totem-save-file.c:119
 msgid "Save a Copy"
 msgstr "Αποθήκευση ενός αντιγράφου"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:161
+#: ../src/plugins/save-file/totem-save-file.c:151
 msgid "Movie"
 msgstr "Ταινία"
 
-#: ../src/plugins/save-file/totem-save-file.c:183
+#: ../src/plugins/save-file/totem-save-file.c:173
 msgid "Movie stream"
 msgstr "Stream ταινίας"
+
+#: ../src/plugins/save-file/totem-save-file.c:285
+msgid "Save a Copy..."
+msgstr "Αποθήκευση ενός αντιγράφου..."
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:1
 msgid "Screen Saver"
@@ -2296,31 +2082,23 @@ msgstr "Δημιουργία συλλογής..."
 msgid "Saving gallery as \"%s\""
 msgstr "Αποθήκευση συλλογής ως \"%s\""
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:220
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "Totem could not get a screenshot of the video."
 msgstr "Το Totem δε μπορεί να λάβει στιγμιότυπο οθόνης από αυτό το βίντεο."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:229
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
 msgid "This is not supposed to happen; please file a bug report."
 msgstr ""
 "Αυτό δεν προβλεπόταν να συμβεί, παρακαλώ στείλτε μια αναφορά σφάλματος."
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
 msgid "Take _Screenshot"
 msgstr "Λήψη _στιγμιότυπου οθόνης"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:334
-msgid "Take a screenshot"
-msgstr "Λήψη ενός στιγμιότυπου οθόνης"
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:342
 msgid "Create Screenshot _Gallery..."
 msgstr "Δημιουργία Συλλο_γής στιγμιοτύπων..."
-
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:335
-msgid "Create a gallery of screenshots"
-msgstr "Δημιουργία συλλογής στιγμιοτύπων οθόνης"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
 #: ../src/plugins/skipto/totem-skipto.c:196
@@ -2352,22 +2130,255 @@ msgctxt "Skip To label length"
 msgid "7"
 msgstr "12"
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:182
+#: ../src/plugins/skipto/totem-skipto.c:199
+msgid "_Skip To"
+msgstr "Παρά_καμψη σε"
+
+#: ../src/plugins/skipto/totem-skipto-plugin.c:206
 msgid "_Skip To..."
 msgstr "Παρά_καμψη σε..."
 
-#: ../src/plugins/skipto/totem-skipto-plugin.c:182
-msgid "Skip to a specific time"
-msgstr "Παράκαμψη σε συγκεκριμένο χρονικό σημείο"
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:1
+msgid "Vimeo"
+msgstr "Vimeo"
+
+#: ../src/plugins/vimeo/vimeo.plugin.in.h:2
+msgid "Sets the user agent for the Vimeo site"
+msgstr "Ορίστε τοn οδηγό χρήστη για την ιστοσελίδα Vimeo"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
-#| msgid "Configure Plugins"
 msgid "Zeitgeist Plugin"
 msgstr "Πρόσθετο Zeitgeist"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Ένα πρόσθετο που στέλνει συμβάντα στο Zeitgeist"
+
+#~ msgid "Stopped"
+#~ msgstr "Διακόπηκε"
+
+#~ msgid "Paused"
+#~ msgstr "Σε παύση"
+
+#~ msgid "Playing"
+#~ msgstr "Αναπαραγωγή"
+
+#~ msgid "Leave Fullscreen"
+#~ msgstr "Έξοδος από πλήρη οθόνη"
+
+#~ msgid "Time:"
+#~ msgstr "Χρόνος:"
+
+#~ msgid ""
+#~ "Whether to remember the current playlist, the playing track and position."
+#~ msgstr ""
+#~ "Αν θα θυμάται την τρέχουσα λίστα αναπαραγωγής, το αναπαραγόμενο κομμάτι "
+#~ "και τη θέση."
+
+#~ msgid "Playback"
+#~ msgstr "Αναπαραγωγή"
+
+#~ msgid "Remember last played movies"
+#~ msgstr "Να θυμάται τις τελευταίες παιγμένες ταινίες"
+
+#~ msgid "Open _Location"
+#~ msgstr "Άνοιγμα το_ποθεσίας"
+
+#~ msgid "_Fullscreen"
+#~ msgstr "_Πλήρης οθόνη"
+
+#~ msgid "_Movie"
+#~ msgstr "_Ταινία"
+
+#~ msgid "Eject the current disc"
+#~ msgstr "Εξαγωγή του παρόντος δίσκου"
+
+#~ msgid "View the properties of the current stream"
+#~ msgstr "Προβολή των ιδιοτήτων της τρέχουσας ροής"
+
+#~ msgid "_Edit"
+#~ msgstr "_Επεξεργασία"
+
+#~ msgid "_Clear Playlist"
+#~ msgstr "_Καθαρισμός λίστας αναπαραγωγής"
+
+#~ msgid "Clear the playlist"
+#~ msgstr "Καθαρισμός λίστας αναπαραγωγής"
+
+#~ msgid "Configure plugins to extend the application"
+#~ msgstr "Ρύθμιση πρόσθετων για την επέκταση των λειτουργιών της εφαρμογής"
+
+#~ msgid "Fit Window to Movie"
+#~ msgstr "Ταίριασμα παραθύρου στην ταινία"
+
+#~ msgid "Switch camera angles"
+#~ msgstr "Αλλαγή γωνίας κάμερας"
+
+#~ msgid "_Go"
+#~ msgstr "_Μετάβαση"
+
+#~ msgid "Go to the DVD menu"
+#~ msgstr "Μετάβαση στο μενού του DVD"
+
+#~ msgid "Go to the title menu"
+#~ msgstr "Μετάβαση στο μενού τίτλων"
+
+#~ msgid "Go to the audio menu"
+#~ msgstr "Μετάβαση στο μενού ήχου"
+
+#~ msgid "Go to the angle menu"
+#~ msgstr "Μετάβαση στο μενού οπτικής γωνίας"
+
+#~ msgid "Go to the chapter menu"
+#~ msgstr "Μετάβαση στο μενού κεφαλαίων"
+
+#~ msgid "Volume _Up"
+#~ msgstr "_Αύξηση έντασης"
+
+#~ msgid "Increase volume"
+#~ msgstr "Αύξηση έντασης"
+
+#~ msgid "Volume _Down"
+#~ msgstr "_Μείωση έντασης"
+
+#~ msgid "Decrease volume"
+#~ msgstr "Μείωση έντασης"
+
+#~ msgid "_Contents"
+#~ msgstr "Περιε_χόμενα"
+
+#~ msgid "Help contents"
+#~ msgstr "Περιεχόμενα βοήθειας"
+
+#~ msgid "_About"
+#~ msgstr "_Περί"
+
+#~ msgid "About this application"
+#~ msgstr "Περί αυτής της εφαρμογής"
+
+#~ msgid "S_idebar"
+#~ msgstr "Πλευ_ρική στήλη"
+
+#~ msgid "Show or hide the sidebar"
+#~ msgstr "Εμφάνιση ή απόκρυψη της πλευρικής στήλης"
+
+#~ msgid "Sets automatic aspect ratio"
+#~ msgstr "Ορίζει αυτόματο συντελεστή αναλογίας"
+
+#~ msgid "Sets square aspect ratio"
+#~ msgstr "Ορίζει τετράγωνο συντελεστή αναλογίας"
+
+#~ msgid "Sets 4∶3 (TV) aspect ratio"
+#~ msgstr "Ορίζει λόγο θέασης σε 4:3 (τηλεόραση)"
+
+#~ msgid "Sets 16∶9 (widescreen) aspect ratio"
+#~ msgstr "Ορίζει λόγο θέασης σε 16:9 (ευρεία οθόνη)"
+
+#~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
+#~ msgstr "Ορίζει λόγο θέασης 2.11:1 (DVB)"
+
+#~ msgid "Zoom in"
+#~ msgstr "Μεγέθυνση"
+
+#~ msgid "Skip _Forward"
+#~ msgstr "Παράκαμψη προς τα _μπροστά"
+
+#~ msgid "Skip forward"
+#~ msgstr "Παράκαμψη προς τα μπροστά"
+
+#~ msgid "Skip _Backwards"
+#~ msgstr "Παράκαμψη προς τα _πίσω"
+
+#~ msgid "Skip backwards"
+#~ msgstr "Παράκαμψη προς τα πίσω"
+
+#~ msgid "Time seek bar"
+#~ msgstr "Μπάρα χρονικής αναζήτησης"
+
+#~ msgid "No File"
+#~ msgstr "Δεν υπάρχει αρχείο"
+
+#~ msgid "Copyright © 2002-2009 Bastien Nocera"
+#~ msgstr "Πνευματικά δικαιώματα © 2002-2009 Bastien Nocera"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
+#~ "Κώστας Παπαδήμας <pkst@gnome.org>\n"
+#~ "Νίκος Χαρωνιτάκης <charosn@her.forthnet.gr>\n"
+#~ "Σίμος Ξενιτέλλης <simos@gnome.org>\n"
+#~ "Αθανάσιος Λευτέρης <alefteris@gmail.com>\n"
+#~ "Τζένη Πετούμενου <epetoumenou@gmail.com>\n"
+#~ "Μάριος Ζηντίλης <m.zindilis@dmajor.org>"
+
+#~ msgid "Totem Website"
+#~ msgstr "Ιστοσελίδα του Totem"
+
+#~ msgid "Totem %s"
+#~ msgstr "Totem %s"
+
+#~ msgid "Fullscreen"
+#~ msgstr "Πλήρης οθόνη"
+
+#~ msgid "0:00 / 0:00"
+#~ msgstr "0:00 / 0:00"
+
+#~ msgid "%s (Streaming)"
+#~ msgstr "%s (Ροή)"
+
+#~ msgid "Buffering"
+#~ msgstr "Γίνεται αποθήκευση στην ενδιάμεση μνήμη"
+
+#~ msgid "%lf %%"
+#~ msgstr "%lf %%"
+
+#~ msgid "%s, %s"
+#~ msgstr "%s, %s"
+
+#~ msgid "%s, %f %%"
+#~ msgstr "%s, %f %%"
+
+#~ msgid "Create a video DVD or a (S)VCD from the currently opened movie"
+#~ msgstr "Δημιουργία DVD βίντεο ή (S)VCD από την ταινία που είναι ανοιχτή"
+
+#~ msgid "Copy the currently playing video DVD"
+#~ msgstr "Αντιγραφή του αναπαραγόμενου DVD βίντεο"
+
+#~ msgid "Copy the currently playing (S)VCD"
+#~ msgstr "Αντιγραφή του αναπαραγόμενου (S)VCD"
+
+#~ msgid "D-Bus Service"
+#~ msgstr "Υπηρεσία D-Bus"
+
+#~ msgid "Browse"
+#~ msgstr "Περιήγηση"
+
+#~ msgid "Search"
+#~ msgstr "Αναζήτηση"
+
+#~ msgid "Download movie subtitles from OpenSubtitles"
+#~ msgstr "Λήψη υποτίτλων ταινίας από το OpenSubtitles"
+
+#~ msgid "Python Console Menu"
+#~ msgstr "Μενού κονσόλας Python"
+
+#~ msgid "Show Totem's Python console"
+#~ msgstr "Εμφάνιση της κονσόλας Python του Totem"
+
+#~ msgid "Enable remote Python debugging with rpdb2"
+#~ msgstr "Ενεργοποίηση απομακρυσμένης αποσφαλμάτωσης Python με rpdb2"
+
+#~ msgid "Save a copy of the movie"
+#~ msgstr "Αποθήκευση ενός αντιγράφου του βίντεο"
+
+#~ msgid "Take a screenshot"
+#~ msgstr "Λήψη ενός στιγμιότυπου οθόνης"
+
+#~ msgid "Create a gallery of screenshots"
+#~ msgstr "Δημιουργία συλλογής στιγμιοτύπων οθόνης"
+
+#~ msgid "Skip to a specific time"
+#~ msgstr "Παράκαμψη σε συγκεκριμένο χρονικό σημείο"
 
 #~ msgid "Resize the canvas automatically on file load"
 #~ msgstr "Αυτόματη αλλαγή του μεγέθους του καμβά κατά τη φόρτωση αρχείου"
