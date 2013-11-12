@@ -186,10 +186,6 @@ do
 	shift;
 done
 
-dnl Check for elements from gst-plugins-bad
-dnl Set plugins which contain below elements
-PKG_CHECK_MODULES(GST_PLUGINS_BAD, gstreamer-plugins-bad-1.0 >= 1.0.2)
-
 # ================================================================
 # Python plugins
 # ================================================================
