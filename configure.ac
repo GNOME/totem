@@ -740,6 +740,7 @@ src/plugins/vimeo/Makefile
 src/backend/Makefile
 browser-plugin/Makefile
 data/Makefile
+data/appdata/Makefile
 data/org.gnome.totem.gschema.xml.in
 data/totem.desktop.in.in
 data/totem.pc
