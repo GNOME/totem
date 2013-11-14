@@ -2314,6 +2314,7 @@ on_got_metadata_event (BaconVideoWidget *bvw, TotemObject *totem)
 		g_free (name);
 	}
 
+	totem_sublang_update (totem);
 	on_playlist_change_name (TOTEM_PLAYLIST (totem->playlist), totem);
 }
 
