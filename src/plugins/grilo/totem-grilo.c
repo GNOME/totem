@@ -1364,6 +1364,8 @@ impl_deactivate (PeasActivatable *plugin)
 	totem_grilo_clear_icons ();
 
 	/* Empty results */
+	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
+	g_clear_object (&self->priv->browser_filter_model);
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 
