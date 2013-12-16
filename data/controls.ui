@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.0 on Mon Dec 16 08:54:54 2013 -->
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
   <object class="GtkWindow" id="window">
@@ -24,6 +25,7 @@
           </object>
           <packing>
             <property name="expand">False</property>
+            <property name="homogeneous">False</property>
           </packing>
         </child>
         <child>
@@ -79,23 +81,70 @@
           </object>
           <packing>
             <property name="expand">True</property>
+            <property name="homogeneous">False</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolItem" id="go_toolbutton">
+          <object class="GtkToolItem" id="box_toolbutton">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkMenuButton" id="go_button">
+              <object class="GtkBox" id="box1">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="relief">none</property>
+                <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkImage" id="go_button_image">
+                  <object class="GtkMenuButton" id="go_button">
                     <property name="visible">True</property>
-                    <property name="icon-name">view-more-symbolic</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="relief">none</property>
+                    <child>
+                      <object class="GtkImage" id="go_button_image">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">view-more-symbolic</property>
+                      </object>
+                    </child>
                   </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkVolumeButton" id="volume_button">
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="relief">none</property>
+                    <property name="focus_on_click">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="icons">audio-volume-muted-symbolic
+audio-volume-high-symbolic
+audio-volume-low-symbolic
+audio-volume-medium-symbolic</property>
+                    <property name="use_symbolic">True</property>
+                    <child internal-child="plus_button">
+                      <object class="GtkButton" id="volumebutton-plus_button">
+                        <property name="can_focus">False</property>
+                        <property name="receives_default">False</property>
+                      </object>
+                    </child>
+                    <child internal-child="minus_button">
+                      <object class="GtkButton" id="volumebutton-minus_button">
+                        <property name="can_focus">False</property>
+                        <property name="receives_default">False</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
             </child>
@@ -103,28 +152,6 @@
           <packing>
             <property name="expand">False</property>
             <property name="homogeneous">True</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkToolItem" id="volume_toolbutton">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkVolumeButton" id="volume_button">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="has_tooltip">True</property>
-                <property name="relief">none</property>
-                <property name="focus_on_click">False</property>
-                <property name="orientation">vertical</property>
-                <property name="use_symbolic">True</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
           </packing>
         </child>
       </object>
