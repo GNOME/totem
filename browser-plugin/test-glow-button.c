@@ -40,8 +40,8 @@ int main (int argc, char **argv)
 
 	totem_glow_button_set_glow (TOTEM_GLOW_BUTTON (button), TRUE);
 
-	g_timeout_add_seconds (3, idle_cb, button);
-	g_timeout_add_seconds (5, idle_un_cb, button);
+	g_timeout_add_seconds (3, idle_un_cb, button);
+	g_timeout_add_seconds (5, idle_cb, button);
 
 	gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
 
