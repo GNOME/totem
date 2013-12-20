@@ -71,7 +71,7 @@ libtotemrtlhelpers_la_LDFLAGS= -no-undefined
 include $(top_srcdir)/Makefile.decl
 
 pwd=`pwd`
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)/plparse	\
 	-DTEST_SRCDIR=\""$(srcdir)/"\"
 
