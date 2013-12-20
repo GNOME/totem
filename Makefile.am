@@ -37,7 +37,13 @@ MAINTAINERCLEANFILES = \
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
 DIST_SUBDIRS = $(NORMAL_SUBDIRS) browser-plugin
-DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --enable-gtk-doc --with-nautilusdir='$${libdir}/nautilus/extensions-2.0-distcheck' --enable-vala=no --enable-introspection
+DISTCHECK_CONFIGURE_FLAGS = \
+	--disable-scrollkeeper \
+	--enable-gtk-doc \
+	--with-nautilusdir='$${libdir}/nautilus/extensions-2.0-distcheck' \
+	--enable-vala=no \
+	--enable-introspection \
+	--enable-appdata-validate
 
 # Build ChangeLog from GIT history
 ChangeLog:
