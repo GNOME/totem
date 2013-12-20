@@ -24,25 +24,15 @@ EXTRA_DIST =			\
 CLEANFILES = totem.spec
 
 MAINTAINERCLEANFILES = \
+	$(GITIGNORE_MAINTAINERCLEANFILES_TOPLEVEL) \
+	$(GITIGNORE_MAINTAINERCLEANFILES_MAKEFILE_IN) \
 	$(srcdir)/INSTALL \
-	$(srcdir)/aclocal.m4 \
-	$(srcdir)/autoscan.log \
-	$(srcdir)/compile \
-	$(srcdir)/config.guess \
 	$(srcdir)/config.h.in \
-	$(srcdir)/config.sub \
-	$(srcdir)/configure.scan \
-	$(srcdir)/depcomp \
-	$(srcdir)/install-sh \
-	$(srcdir)/ltmain.sh \
-	$(srcdir)/missing \
-	$(srcdir)/mkinstalldirs \
 	$(srcdir)/py-compile \
 	$(srcdir)/gtk-doc.make \
 	$(srcdir)/ChangeLog \
 	$(srcdir)/omf.make \
-	$(srcdir)/xmldocs.make \
-	`find "$(srcdir)" -type f -name Makefile.in -print`
+	$(srcdir)/xmldocs.make
 
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
