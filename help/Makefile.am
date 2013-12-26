@@ -16,6 +16,6 @@ HELP_MEDIA = \
 		figures/totem_volume_mute_button.png	\
 		figures/totem_previous_button.png
 
-HELP_LINGUAS = bg ca cs da de el en_GB es eu fi fr gl it ja oc pa pl pt_BR ro ru sl sv te uk zh_CN zh_HK zh_TW
+HELP_LINGUAS = bg ca cs da de el en_GB es eu fi fr gl id it ja oc pa pl pt_BR ro ru sl sv te uk zh_CN zh_HK zh_TW
 
 -include $(top_srcdir)/git.mk
