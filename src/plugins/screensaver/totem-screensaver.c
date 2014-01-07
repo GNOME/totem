@@ -51,6 +51,7 @@ typedef struct {
 	BaconVideoWidget *bvw;
 	GSettings *settings;
 
+	gboolean       inhibit_available;
 	guint          handler_id_playing;
 	guint          handler_id_metadata;
 	guint          inhibit_cookie;
@@ -87,7 +88,8 @@ totem_screensaver_update_from_state (TotemObject *totem,
 
 	if ((totem_object_is_playing (totem) != FALSE && has_video_frames) ||
 	    (totem_object_is_playing (totem) != FALSE && !lock_screensaver_on_audio)) {
-		if (pi->priv->inhibit_cookie == 0) {
+		if (pi->priv->inhibit_cookie == 0 &&
+		    pi->priv->inhibit_available) {
 			GtkWindow *window;
 
 			window = totem_object_get_main_window (totem);
@@ -95,6 +97,8 @@ totem_screensaver_update_from_state (TotemObject *totem,
 										window,
 										GTK_APPLICATION_INHIBIT_IDLE,
 										_("Playing a movie"));
+			if (pi->priv->inhibit_cookie == 0)
+				pi->priv->inhibit_available = FALSE;
 			g_object_unref (window);
 		}
 	} else {
@@ -130,6 +134,8 @@ impl_activate (PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
 	TotemObject *totem;
+
+	pi->priv->inhibit_available = TRUE;
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 	pi->priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (totem));
