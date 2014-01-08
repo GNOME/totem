@@ -127,6 +127,7 @@
 			<attribute name="label" translatable="yes">_Eject</attribute>
 			<attribute name="action">app.eject</attribute>
 			<attribute name="accel">&lt;Ctrl&gt;E</attribute>
+			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
 	</section>
 </menu>
@@ -137,22 +138,27 @@
 			<attribute name="label" translatable="yes">_DVD Menu</attribute>
 			<attribute name="action">app.dvd-root-menu</attribute>
 			<attribute name="accel">&lt;Ctrl&gt;M</attribute>
+			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
 		<item>
 			<attribute name="label" translatable="yes">_Title Menu</attribute>
 			<attribute name="action">app.dvd-title-menu</attribute>
+			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
 		<item>
 			<attribute name="label" translatable="yes">A_udio Menu</attribute>
 			<attribute name="action">app.dvd-audio-menu</attribute>
+			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
 		<item>
 			<attribute name="label" translatable="yes">_Angle Menu</attribute>
 			<attribute name="action">app.dvd-angle-menu</attribute>
+			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
 		<item>
 			<attribute name="label" translatable="yes">_Chapter Menu</attribute>
 			<attribute name="action">app.dvd-chapter-menu</attribute>
+			<attribute name="hidden-when">action-disabled</attribute>
 		</item>
 	</section>
 	<section>
