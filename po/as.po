@@ -4,14 +4,14 @@
 #
 # Amitakhya Phukan <aphukan@redhat.com>, 2008.
 # Amitakhya Phukan <amitakhya@svn.gnome.org>, 2008, 2009.
-# Nilamdyuti Goswami <ngoswami@redhat.com>, 2011, 2012, 2013.
+# Nilamdyuti Goswami <ngoswami@redhat.com>, 2011, 2012, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: as\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-23 07:13+0000\n"
-"PO-Revision-Date: 2013-09-24 15:04+0530\n"
+"POT-Creation-Date: 2014-01-07 10:13+0000\n"
+"PO-Revision-Date: 2014-01-10 20:21+0630\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
 "Language-Team: Assamese <kde-i18n-doc@kde.org>\n"
 "Language: as_IN\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 #: ../browser-plugin/totem-plugin-viewer.c:330
-#: ../src/plugins/screensaver/totem-screensaver.c:97
+#: ../src/plugins/screensaver/totem-screensaver.c:99
 msgid "Playing a movie"
 msgstr "চলচিত্ৰ চলোৱা হৈছে"
 
@@ -38,7 +38,7 @@ msgstr "চলোৱাৰ বাবে কোনো URI নাই"
 msgid "_Open with \"%s\""
 msgstr "\"%s\" সহযোগে খোলক (_O)"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2353
+#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2357
 msgid "An error occurred"
 msgstr "ত্ৰুটি উৎপন্ন হৈছে"
 
@@ -325,7 +325,6 @@ msgid "Load _chapter files when movie is loaded"
 msgstr "চলচিত্ৰ ল'ড হৈ গলে পাঠ ফাইলসমূহ ল'ড কৰক (_c)"
 
 #: ../data/preferences.ui.h:20
-#| msgid "Plugin"
 msgid "Plugins"
 msgstr "প্লাগিনসমূহ"
 
@@ -469,10 +468,46 @@ msgstr "নমুনা হাৰ:"
 msgid "Channels:"
 msgstr "চেনেলসমূহ:"
 
+#: ../data/appdata/totem.appdata.xml.in.h:1
+msgid ""
+"Totem, also known as Videos, is the official movie player of the GNOME "
+"desktop environment. It features a playlist, a full-screen mode, seek and "
+"volume controls, as well as keyboard navigation."
+msgstr ""
+"Totem, ভিডিঅ'সমূহ ৰূপেও জনাজাত, GNOME ডেস্কটপ পৰিৱেশৰ চলচিত্ৰ প্লেয়াৰ। ইয়াত "
+"এটা প্লেলিস্ট, এটা পূৰ্ণ-পৰ্দা অৱস্থা, সন্ধান আৰু ভলিউম নিযন্ত্ৰণসমূহ, লগতে "
+"কিবৰ্ড দিশনিৰ্ণয় "
+"আছে।"
+
+#: ../data/appdata/totem.appdata.xml.in.h:2
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, support "
+"to watch live TV and VCD recording."
+msgstr ""
+"Totem ত অতিৰিক্ত কাৰ্য্যকৰীতা যেনে: উপশীৰ্ষক ডাউনল'ডাৰ, জীৱন্ত TV চোৱাৰ "
+"সমৰ্থন আৰু VCD ৰেকৰ্ডিং "
+"আছে।"
+
+#: ../data/appdata/totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "ফাইল ব্যৱস্থাপকৰ বাবে ভিডিঅ' থাম্বনেইলাৰ"
+
+#: ../data/appdata/totem.appdata.xml.in.h:4
+msgid "Nautilus properties tab"
+msgstr "Nautilus বৈশিষ্ট্যসমূহ টেব"
+
+#: ../data/appdata/totem.appdata.xml.in.h:5
+msgid "Mozilla (Firefox) plugin to view movies inside your browser"
+msgstr "আপোনাৰ ব্ৰাউছাৰৰ ভিতৰত চলচিত্ৰ চাবলৈ Mozilla (Firefox) প্লাগিন"
+
+#: ../data/appdata/totem.appdata.xml.in.h:6
+msgid "Command-line video properties helper (for indexers)"
+msgstr "কমান্ড-লাইন ভিডিঅ' বৈশিষ্ট্যসমূহ সহায়ক (সূচকৰ বাবে)"
+
 #: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:261
 #: ../src/totem.c:267
 msgid "Videos"
-msgstr "Videos"
+msgstr "ভিডিঅ'সমূহ"
 
 #: ../data/totem.desktop.in.in.in.h:2
 msgid "Play movies"
@@ -521,25 +556,21 @@ msgid "Auto"
 msgstr "স্বচালিত"
 
 #: ../data/totem.ui.h:10
-#| msgid "Square"
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "বৰ্গ"
 
 #: ../data/totem.ui.h:11
-#| msgid "4∶3 (TV)"
 msgctxt "Aspect ratio"
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
 #: ../data/totem.ui.h:12
-#| msgid "16∶9 (Widescreen)"
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (বহলপৰ্দা)"
 
 #: ../data/totem.ui.h:13
-#| msgid "2.11∶1 (DVB)"
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
@@ -1022,47 +1053,47 @@ msgstr ""
 "ব্যৱহাৰ "
 "কৰক।\n"
 
-#: ../src/totem-object.c:1251 ../src/totem-options.c:52
+#: ../src/totem-object.c:1255 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "স্থগিত"
 
-#: ../src/totem-object.c:1256 ../src/totem-object.c:1266
+#: ../src/totem-object.c:1260 ../src/totem-object.c:1270
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "Play"
 
-#: ../src/totem-object.c:1351 ../src/totem-object.c:1378
-#: ../src/totem-object.c:1905
+#: ../src/totem-object.c:1355 ../src/totem-object.c:1382
+#: ../src/totem-object.c:1909
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem এ '%s' চলাব নোৱাৰে।"
 
-#: ../src/totem-object.c:2047
+#: ../src/totem-object.c:2051
 msgid "Totem could not display the help contents."
 msgstr "Totem দ্বাৰা সহায়ৰ সমল প্ৰদৰ্শন কৰা নাযায়।"
 
-#: ../src/totem-object.c:3700
+#: ../src/totem-object.c:3704
 msgid "Previous Chapter/Movie"
 msgstr "পূৰ্ববৰ্তী পাঠ/চলচিত্ৰ"
 
-#: ../src/totem-object.c:3705
+#: ../src/totem-object.c:3709
 msgid "Play / Pause"
 msgstr "চলোৱা / বিৰাম দিয়ক"
 
-#: ../src/totem-object.c:3710
+#: ../src/totem-object.c:3714
 msgid "Next Chapter/Movie"
 msgstr "পৰবৰ্তী পাঠ/চলচিত্ৰ"
 
-#: ../src/totem-object.c:3749 ../src/plugins/grilo/totem-grilo.c:1185
-#: ../src/plugins/grilo/totem-grilo.c:1195
+#: ../src/totem-object.c:3753 ../src/plugins/grilo/totem-grilo.c:1202
+#: ../src/plugins/grilo/totem-grilo.c:1212
 msgid "Back"
 msgstr "পিছলৈ"
 
-#: ../src/totem-object.c:3820
+#: ../src/totem-object.c:3824
 msgid "Totem could not startup."
 msgstr "Totem আৰম্ভ কৰা নাযায়।"
 
-#: ../src/totem-object.c:3820
+#: ../src/totem-object.c:3824
 msgid "No reason."
 msgstr "কাৰণ নাই।"
 
@@ -1078,7 +1109,6 @@ msgstr "অৱস্থান খোলক..."
 #: ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
 #: ../src/plugins/skipto/totem-skipto.c:198
-#| msgid "Cancel"
 msgid "_Cancel"
 msgstr "বাতিল কৰক (_C)"
 
@@ -1184,7 +1214,6 @@ msgstr "প্লেলিস্ট সংৰক্ষণ কৰক"
 
 #: ../src/totem-playlist.c:1065 ../src/plugins/save-file/totem-save-file.c:123
 #: ../src/plugins/screenshot/totem-gallery.c:98
-#| msgid "Save"
 msgid "_Save"
 msgstr "সংৰক্ষণ কৰক (_S)"
 
@@ -1457,7 +1486,7 @@ msgstr "যোগ কৰক (_A)"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:933
+#: ../src/totem-video-thumbnailer.c:932
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1468,15 +1497,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:934
+#: ../src/totem-video-thumbnailer.c:933
 msgid "Filename"
 msgstr "ফাইলৰ নাম"
 
-#: ../src/totem-video-thumbnailer.c:936
+#: ../src/totem-video-thumbnailer.c:935
 msgid "Resolution"
 msgstr "বিভেদন"
 
-#: ../src/totem-video-thumbnailer.c:939
+#: ../src/totem-video-thumbnailer.c:938
 msgid "Duration"
 msgstr "অৱধি"
 
@@ -1666,30 +1695,33 @@ msgid "Add Chapter"
 msgstr "পাঠ যোগ কৰক"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
-msgid "D-Bus Service"
-msgstr "D-Bus সেৱা"
+msgid "MPRIS D-Bus Interface"
+msgstr "MPRIS D-Bus আন্তঃপৃষ্ঠ"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
+#| msgid ""
+#| "Plugin for sending notifications of currently playing movies to the D-Bus "
+#| "subsystem."
 msgid ""
-"Plugin for sending notifications of currently playing movies to the D-Bus "
-"subsystem."
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
 msgstr ""
-"বৰ্তমানে চলমান চলচিত্ৰৰ পৰা D-Bus উপ-চিস্টেমত সূচনাপ্ৰদানৰ বাবে এই প্লাগিন "
-"ব্যৱহৃত "
-"হয়।"
+"বৰ্তমানে চলমান ভিডিঅ'সমূহৰ অধিসূচনা পঠাওক আৰু MPRIS ব্যৱহাৰ কৰি দূৰৱৰ্তী "
+"নিয়ন্ত্ৰণৰ অনুমতি "
+"দিয়ক।"
 
 #: ../src/plugins/dbusservice/dbusservice.py:213
-#: ../src/plugins/dbusservice/dbusservice.py:243
+#: ../src/plugins/dbusservice/dbusservice.py:244
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "MediaPlayer2 অবজেক্টে ‘%s’ আন্তঃপৃষ্ঠ প্ৰণয়ন নকৰে"
 
-#: ../src/plugins/dbusservice/dbusservice.py:222
+#: ../src/plugins/dbusservice/dbusservice.py:223
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "বৈশিষ্ট ‘%s’ লিখিব পৰা নহয়।"
 
-#: ../src/plugins/dbusservice/dbusservice.py:238
+#: ../src/plugins/dbusservice/dbusservice.py:239
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "এটা MediaPlayer 2 অবজেক্টৰ অনুৰোধ কৰা অজ্ঞাত বৈশিষ্ট ‘%s’"
@@ -1782,53 +1814,53 @@ msgstr "উপশীৰ্ষকসমূহ ডাউনল'ডাৰ"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "বৰ্তমানে চলি থকা চলচিত্ৰৰ বাবে উপশীৰ্ষকসমূহ সন্ধান কৰক"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:40
+#: ../src/plugins/opensubtitles/opensubtitles.py:41
 msgid "Brazilian Portuguese"
 msgstr "ব্ৰাজিলিয়ান পৰ্তুগিজ"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:175
+#: ../src/plugins/opensubtitles/opensubtitles.py:176
 msgid "Searching for subtitles…"
 msgstr "উপশীৰ্ষকসমূহৰ বাবে সন্ধান কৰা হৈ আছে..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:223
-#: ../src/plugins/opensubtitles/opensubtitles.py:618
+#: ../src/plugins/opensubtitles/opensubtitles.py:224
+#: ../src/plugins/opensubtitles/opensubtitles.py:619
 msgid "Downloading the subtitles…"
 msgstr "উপশীৰ্ষকসমূহ ডাউনল'ড কৰা হৈছে..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:288
+#: ../src/plugins/opensubtitles/opensubtitles.py:289
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles ৱেবছাইটৰ সৈতে সংযোগ স্থাপন কৰিবলৈ ব্যৰ্থ"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:321
-#: ../src/plugins/opensubtitles/opensubtitles.py:339
+#: ../src/plugins/opensubtitles/opensubtitles.py:322
+#: ../src/plugins/opensubtitles/opensubtitles.py:340
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles ৱেবছাইটৰ সৈতে সংযোগ স্থাপন কৰিব নোৱাৰি।"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:327
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
 msgid "No results found."
 msgstr "কোনো ফলাফল পোৱা নগল।"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:473
 msgid "Subtitles"
 msgstr "উপশীৰ্ষকসমূহ"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:479
 msgid "Format"
 msgstr "বিন্যাস"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:484
 msgid "Rating"
 msgstr "মাত্ৰা"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:523
 msgid "_Download Movie Subtitles…"
 msgstr "চলচিত্ৰৰ উপশীৰ্ষকসমূহ ডাউনল'ড কৰক (_D)... "
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:563
 msgid "Searching subtitles…"
 msgstr "উপশীৰ্ষকসমূহ সন্ধান কৰা হৈছে..."
 
@@ -1903,6 +1935,7 @@ msgstr "'totem_object' ৰ সহায়ত Totem.Object ব্যৱহাৰ �
 msgid "Totem Python Console"
 msgstr "Totem Python কনচৌল"
 
+#. pylint: disable-msg=W0613
 #: ../src/plugins/pythonconsole/pythonconsole.py:105
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
@@ -2078,7 +2111,6 @@ msgid "7"
 msgstr "৭"
 
 #: ../src/plugins/skipto/totem-skipto.c:199
-#| msgid "Skip To"
 msgid "_Skip To"
 msgstr "বাদ দি যাওক (_S)"
 
@@ -2091,7 +2123,6 @@ msgid "Vimeo"
 msgstr "Vimeo"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:2
-#| msgid "Sets the user agent for the Apple Trailers site"
 msgid "Sets the user agent for the Vimeo site"
 msgstr "Vimeo ছাইটৰ বাবে ব্যৱহাৰকাৰী সহায়ক সংহতি কৰে"
 
@@ -2102,6 +2133,9 @@ msgstr "Zeitgeist প্লাগিন"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Zeitgeist লৈ ঘটনাসমূহ পঠোৱা এটা প্লাগিন"
+
+#~ msgid "D-Bus Service"
+#~ msgstr "D-Bus সেৱা"
 
 #~ msgid "Stopped"
 #~ msgstr "বন্ধ"
@@ -2667,9 +2701,10 @@ msgstr "Zeitgeist লৈ ঘটনাসমূহ পঠোৱা এটা প�
 #~ msgid ""
 #~ "A format string used to build the network service name used when "
 #~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by g_get_application_name"
-#~ "() • %h: the machine's host name in title case • %u: the user's login "
-#~ "name in title case • %U: the user's real name • %%: the percent sign"
+#~ "can be used: • %a: the program name as returned by "
+#~ "g_get_application_name() • %h: the machine's host name in title case • "
+#~ "%u: the user's login name in title case • %U: the user's real name • %%: "
+#~ "the percent sign"
 #~ msgstr ""
 #~ "প্লেলিস্টসমূহ নেটৱাৰ্কত প্ৰকাশ কৰোতে ব্যৱহৃত নেটৱাৰক সেৱাৰ নাম বনাওতে ব্যৱহৃত "
 #~ "বিন্যাস স্ট্ৰিং। নিম্নলিখিত বিন্যাস স্থানধৰোতা ব্যৱহাৰ কৰিব পাৰি: • %a: প্ৰগ্ৰামৰ "
