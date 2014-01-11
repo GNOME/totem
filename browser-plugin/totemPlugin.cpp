@@ -303,7 +303,7 @@ totemPlugin::Command (const char *aCommand)
 }
 
 void
-totemPlugin::SetTime (guint64 aTime)
+totemPlugin::SetTime (uint64_t aTime)
 {
 	D ("SetTime '%lu'", aTime);
 
