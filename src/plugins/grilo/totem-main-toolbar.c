@@ -602,7 +602,7 @@ totem_main_toolbar_new (void)
  **/
 void
 totem_main_toolbar_set_search_mode (TotemMainToolbar *bar,
-                                  gboolean        search_mode)
+                                    gboolean        search_mode)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -613,6 +613,8 @@ totem_main_toolbar_set_search_mode (TotemMainToolbar *bar,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bar->priv->search_button),
                                 bar->priv->search_mode);
   update_toolbar_state (bar);
+  if (search_mode == FALSE)
+    totem_main_toolbar_set_search_string (bar, "");
   g_object_notify (G_OBJECT (bar), "search-mode");
 }
 
@@ -650,7 +652,7 @@ totem_main_toolbar_get_select_mode (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_search_string (TotemMainToolbar *bar,
-                                    const char     *search_string)
+                                      const char     *search_string)
 {
   char *tmp;
 
