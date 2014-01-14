@@ -104,6 +104,7 @@ typedef struct {
 	/* Toolbar widgets */
 	GtkWidget *header;
 	GtkWidget *back_button;
+	GtkWidget *search_button;
 
 	/* Browser widgets */
 	GtkWidget *browser;
@@ -1221,16 +1222,16 @@ setup_browse (TotemGriloPlugin *self,
 	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->priv->header), button);
 	g_signal_connect (button, "clicked", G_CALLBACK (back_button_clicked_cb), self);
 
-#if 0
-	self->priv->search_button = button = gd_header_simple_button_new ();
-	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button),
-						 totem_get_rtl_icon_name ("go-previous"));
-	gtk_widget_set_no_show_all (button, TRUE);
+	self->priv->search_button = button = gd_header_toggle_button_new ();
+	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button), "edit-find-symbolic");
 	accessible = gtk_widget_get_accessible (button);
-	atk_object_set_name (accessible, _("Back"));
+	atk_object_set_name (accessible, _("Search"));
+	gtk_widget_show (button);
 	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->priv->header), button);
-	g_signal_connect (button, "clicked", G_CALLBACK (back_button_clicked_cb), self);
-#endif
+	g_object_bind_property (self->priv->search_button, "active",
+				self->priv->search_bar, "search-mode-enabled",
+				G_BINDING_BIDIRECTIONAL);
+
 	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
