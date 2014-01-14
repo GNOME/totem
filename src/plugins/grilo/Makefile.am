@@ -13,12 +13,25 @@ confdir = $(plugindir)
 conf_DATA = totem-grilo.conf
 EXTRA_DIST += $(conf_DATA)
 
+EXTRA_DIST += grilo.gresource.xml
+
+griloresources.h: grilo.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
+		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-header
+griloresources.c: grilo.gresource.xml totemmaintoolbar.ui griloresources.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
+		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-source
+
 libgrilo_la_SOURCES =				\
 	totem-grilo.c				\
 	totem-search-entry.c			\
 	totem-search-entry.h			\
+	totem-main-toolbar.h			\
+	totem-main-toolbar.c			\
 	icon-helpers.c				\
-	icon-helpers.h
+	icon-helpers.h				\
+	griloresources.h			\
+	griloresources.c
 
 libgrilo_la_LDFLAGS = $(plugin_ldflags)
 libgrilo_la_LIBADD =			\

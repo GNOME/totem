@@ -35,6 +35,8 @@ IT_PROG_INTLTOOL([0.40.0])
 YELP_HELP_INIT
 
 GOBJECT_INTROSPECTION_CHECK([0.6.7])
+m4_define([glib_required_version], [2.32.0])
+AM_PATH_GLIB_2_0(glib_required_version)
 
 AC_PROG_CXX
 AM_PROG_CC_C_O
