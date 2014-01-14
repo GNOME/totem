@@ -54,9 +54,11 @@
     <property name="border_width">0</property>
     <property name="spacing">0</property>
     <child>
-      <object class="GtkHeaderBar" id="gw_headerbar">
+      <object class="TotemMainToolbar" id="gw_headerbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="show-search-button">True</property>
+        <property name="show-select-button">True</property>
       </object>
       <packing>
         <property name="expand">False</property>

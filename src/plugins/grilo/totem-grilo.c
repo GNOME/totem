@@ -50,6 +50,7 @@
 #include <totem-rtl-helpers.h>
 
 #include "totem-search-entry.h"
+#include "totem-main-toolbar.h"
 #include <libgd/gd.h>
 
 #define TOTEM_TYPE_GRILO_PLUGIN                                         \
@@ -103,7 +104,6 @@ typedef struct {
 
 	/* Toolbar widgets */
 	GtkWidget *header;
-	GtkWidget *back_button;
 	GtkWidget *search_button;
 
 	/* Browser widgets */
@@ -677,8 +677,7 @@ set_browser_filter_model_for_path (TotemGriloPlugin *self,
 	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 				self->priv->browser_filter_model);
 
-	gtk_widget_set_visible (self->priv->back_button,
-				path != NULL);
+	g_object_set (self->priv->header, "show-back-button", path != NULL, NULL);
 }
 
 static void
@@ -1142,7 +1141,7 @@ adjustment_value_changed_cb (GtkAdjustment *adjustment,
 }
 
 static void
-back_button_clicked_cb (GtkButton        *button,
+back_button_clicked_cb (TotemMainToolbar *toolbar,
 			TotemGriloPlugin *self)
 {
 	GtkTreePath *path;
@@ -1213,28 +1212,18 @@ setup_browse (TotemGriloPlugin *self,
 
 	/* Toolbar */
 	self->priv->header = GTK_WIDGET (gtk_builder_get_object (builder, "gw_headerbar"));
-	self->priv->back_button = button = gd_header_simple_button_new ();
-	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button),
-						 totem_get_rtl_icon_name ("go-previous"));
-	gtk_widget_set_no_show_all (button, TRUE);
-	accessible = gtk_widget_get_accessible (button);
-	atk_object_set_name (accessible, _("Back"));
-	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->priv->header), button);
-	g_signal_connect (button, "clicked", G_CALLBACK (back_button_clicked_cb), self);
-
-	self->priv->search_button = button = gd_header_toggle_button_new ();
-	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (button), "edit-find-symbolic");
-	accessible = gtk_widget_get_accessible (button);
-	atk_object_set_name (accessible, _("Search"));
-	gtk_widget_show (button);
-	gtk_header_bar_pack_start (GTK_HEADER_BAR (self->priv->header), button);
-	g_object_bind_property (self->priv->search_button, "active",
+	g_signal_connect (self->priv->header, "back-clicked",
+			  G_CALLBACK (back_button_clicked_cb), self);
+	g_object_bind_property (self->priv->header, "search-mode",
 				self->priv->search_bar, "search-mode-enabled",
 				G_BINDING_BIDIRECTIONAL);
 
 	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
+	g_object_bind_property (self->priv->header, "select-mode",
+				self->priv->browser, "selection-mode",
+				G_BINDING_BIDIRECTIONAL);
 
 	g_signal_connect (self->priv->browser, "item-activated",
 	                  G_CALLBACK (item_activated_cb), self);
