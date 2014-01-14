@@ -371,6 +371,7 @@ browse_cb (GrlSource *source,
 		gboolean thumbnailing;
 		char *secondary;
 		GtkTreePath *path;
+		GDateTime *mtime;
 
 		path = gtk_tree_row_reference_get_path (bud->ref_parent);
 		gtk_tree_model_get_iter (self->priv->browser_model, &parent, path);
@@ -391,6 +392,7 @@ browse_cb (GrlSource *source,
 
 		thumbnail = totem_grilo_get_icon (media, &thumbnailing);
 		secondary = get_secondary_text (media);
+		mtime = grl_media_get_modification_date (media);
 
 		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent, -1,
 						   MODEL_RESULTS_SOURCE, source,
@@ -399,7 +401,7 @@ browse_cb (GrlSource *source,
 						   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
 						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
 						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
-						   GD_MAIN_COLUMN_MTIME, g_date_time_to_unix (grl_media_get_modification_date (media)),
+						   GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
 						   -1);
 
 		g_clear_object (&thumbnail);
