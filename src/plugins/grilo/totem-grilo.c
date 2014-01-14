@@ -1311,12 +1311,61 @@ setup_menus (TotemGriloPlugin *self,
 }
 
 static void
+create_debug_window (TotemGriloPlugin *self,
+		     GtkTreeModel     *model)
+{
+	GtkWidget *window, *scrolled, *tree;
+
+	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+	gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
+	g_signal_connect (G_OBJECT (window), "delete-event",
+			  G_CALLBACK(gtk_widget_hide_on_delete), NULL);
+
+	scrolled = gtk_scrolled_window_new(NULL, NULL);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
+				       GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_container_add (GTK_CONTAINER (window), scrolled);
+
+	tree = gtk_tree_view_new ();
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree), TRUE);
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree), TRUE);
+	gtk_widget_grab_focus (GTK_WIDGET (tree));
+	gtk_container_add (GTK_CONTAINER (scrolled), tree);
+
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "ID", gtk_cell_renderer_text_new (),
+						    "text", GD_MAIN_COLUMN_ID, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "URI", gtk_cell_renderer_text_new (),
+						    "text", GD_MAIN_COLUMN_URI, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "Primary text", gtk_cell_renderer_text_new (),
+						    "text", GD_MAIN_COLUMN_PRIMARY_TEXT, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "Secondary text", gtk_cell_renderer_text_new (),
+						    "text", GD_MAIN_COLUMN_SECONDARY_TEXT, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "Icon", gtk_cell_renderer_pixbuf_new (),
+						    "pixbuf", GD_MAIN_COLUMN_ICON, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "Selected", gtk_cell_renderer_toggle_new (),
+						    "active", GD_MAIN_COLUMN_SELECTED, NULL);
+
+	gtk_tree_view_set_model (GTK_TREE_VIEW (tree), model);
+
+	gtk_widget_show_all (window);
+}
+
+static void
 setup_ui (TotemGriloPlugin *self,
           GtkBuilder *builder)
 {
 	totem_grilo_setup_icons (self->priv->totem);
 	setup_browse (self, builder);
 	setup_menus (self, builder);
+
+	/* create_debug_window (self, self->priv->browser_model); */
 }
 
 static void
