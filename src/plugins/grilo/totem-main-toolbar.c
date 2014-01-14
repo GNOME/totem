@@ -54,7 +54,6 @@ struct _TotemMainToolbarPrivate {
   GtkWidget   *done_button;
   GtkWidget   *back_button;
   GtkWidget   *back_button_image;
-  GtkWidget   *new_button;
   GtkWidget   *stack;
 
   /* Visibility */
@@ -98,7 +97,6 @@ enum {
   PROP_SELECT_MODE_AVAILABLE,
   PROP_SHOW_SELECT_BUTTON,
   PROP_SHOW_BACK_BUTTON,
-  PROP_SHOW_NEW_BUTTON,
   PROP_CUSTOM_TITLE,
   PROP_SELECT_MENU_MODEL
 };
@@ -201,13 +199,6 @@ back_button_clicked_cb (GtkButton      *button,
 }
 
 static void
-new_button_clicked_cb (GtkButton      *button,
-                       TotemMainToolbar *bar)
-{
-  g_signal_emit_by_name (G_OBJECT (bar), "new-clicked", NULL);
-}
-
-static void
 totem_main_toolbar_set_property (GObject         *object,
                                guint            prop_id,
                                const GValue    *value,
@@ -246,10 +237,6 @@ totem_main_toolbar_set_property (GObject         *object,
 
     case PROP_SHOW_BACK_BUTTON:
       gtk_widget_set_visible (priv->back_button, g_value_get_boolean (value));
-      break;
-
-    case PROP_SHOW_NEW_BUTTON:
-      gtk_widget_set_visible (priv->new_button, g_value_get_boolean (value));
       break;
 
     case PROP_CUSTOM_TITLE:
@@ -303,10 +290,6 @@ totem_main_toolbar_get_property (GObject         *object,
 
     case PROP_SHOW_BACK_BUTTON:
       g_value_set_boolean (value, gtk_widget_get_visible (priv->back_button));
-      break;
-
-    case PROP_SHOW_NEW_BUTTON:
-      g_value_set_boolean (value, gtk_widget_get_visible (priv->new_button));
       break;
 
     case PROP_CUSTOM_TITLE:
@@ -439,14 +422,6 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class,
-                                   PROP_SHOW_NEW_BUTTON,
-                                   g_param_spec_boolean ("show-new-button",
-                                                         "Show New Button",
-                                                         "Whether the new button is visible",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class,
                                    PROP_CUSTOM_TITLE,
                                    g_param_spec_object ("custom-title",
                                                         "Custom Title",
@@ -486,7 +461,6 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, done_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, back_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, back_button_image);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, new_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, stack);
 }
 
@@ -550,10 +524,6 @@ totem_main_toolbar_init (TotemMainToolbar *bar)
                                   GTK_ICON_SIZE_MENU);
   g_signal_connect (G_OBJECT (bar->priv->back_button), "clicked",
                     G_CALLBACK (back_button_clicked_cb), bar);
-
-  /* New button */
-  g_signal_connect (G_OBJECT (bar->priv->new_button), "clicked",
-                    G_CALLBACK (new_button_clicked_cb), bar);
 
   /* Titles */
   title_widget = create_title_box ("", "", &bar->priv->title_label, &bar->priv->subtitle_label);
