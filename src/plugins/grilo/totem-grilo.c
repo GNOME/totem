@@ -1192,6 +1192,20 @@ selection_mode_requested (GdMainView       *view,
 }
 
 static void
+search_mode_changed (GObject          *gobject,
+		     GParamSpec       *pspec,
+		     TotemGriloPlugin *self)
+{
+	gboolean search_mode;
+
+	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header));
+	if (!search_mode)
+		set_browser_filter_model_for_path (self, NULL);
+
+	self->priv->in_search = search_mode;
+}
+
+static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
 {
@@ -1223,6 +1237,8 @@ setup_browse (TotemGriloPlugin *self,
 	g_object_bind_property (self->priv->header, "search-mode",
 				self->priv->search_bar, "search-mode-enabled",
 				G_BINDING_BIDIRECTIONAL);
+	g_signal_connect (self->priv->header, "notify::search-mode",
+			  G_CALLBACK (search_mode_changed), self);
 
 	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
