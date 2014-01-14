@@ -663,6 +663,8 @@ search_entry_activate_cb (GtkEntry *entry, TotemGriloPlugin *self)
 	text = totem_search_entry_get_text (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
 	g_return_if_fail (text != NULL);
 
+	g_object_set (self->priv->header, "search-string", text, NULL);
+
 	self->priv->in_search = TRUE;
 	search (self, source, text);
 }
