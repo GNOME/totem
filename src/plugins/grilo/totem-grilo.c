@@ -277,7 +277,6 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 {
 	GtkTreePath *start_path;
 	GtkTreePath *end_path;
-	GrlMedia *media;
 	gboolean is_prethumbnail = FALSE;
 	GtkTreeModel *view_model, *model;
 	GtkIconView *icon_view;
@@ -298,6 +297,7 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 	     gtk_tree_path_next (start_path)) {
 		GtkTreePath *path;
 		GtkTreeIter iter;
+		GrlMedia *media;
 
 		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 			path = gtk_tree_model_filter_convert_path_to_child_path (GTK_TREE_MODEL_FILTER (view_model),
@@ -311,6 +311,7 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 			break;
 		}
 
+		media = NULL;
 		gtk_tree_model_get (model,
 		                    &iter,
 		                    MODEL_RESULTS_CONTENT, &media,
