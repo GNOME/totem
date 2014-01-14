@@ -656,6 +656,8 @@ search_entry_activate_cb (GtkEntry *entry, TotemGriloPlugin *self)
 	const char *text;
 	GrlSource *source;
 
+	g_object_set (self->priv->header, "show-back-button", FALSE, NULL);
+
 	id = totem_search_entry_get_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
 	g_return_if_fail (id != NULL);
 	registry = grl_registry_get_default ();
