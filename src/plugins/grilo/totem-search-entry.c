@@ -24,9 +24,6 @@
 
 G_DEFINE_TYPE (TotemSearchEntry, totem_search_entry, GTK_TYPE_BOX)
 
-/* To be used as the ID in the GdTaggedEntry */
-#define SOURCE_ID "source-id"
-
 enum {
 	SIGNAL_ACTIVATE,
 	LAST_SIGNAL
@@ -44,6 +41,7 @@ struct _TotemSearchEntryPrivate {
 	GtkWidget *button;
 	GtkWidget *menu;
 	GSList *group;
+	GdTaggedEntryTag *tag;
 };
 
 static void
@@ -51,6 +49,7 @@ totem_search_entry_finalize (GObject *obj)
 {
 	TotemSearchEntry *self = TOTEM_SEARCH_ENTRY (obj);
 
+	g_clear_object (&self->priv->tag);
 	g_clear_pointer (&self->priv->group, g_slist_free);
 
 	G_OBJECT_CLASS (totem_search_entry_parent_class)->finalize (obj);
@@ -172,8 +171,7 @@ item_toggled (GtkCheckMenuItem *item,
 
 	if (gtk_check_menu_item_get_active (item)) {
 		label = g_object_get_data (G_OBJECT (item), "label");
-		gd_tagged_entry_set_tag_label (GD_TAGGED_ENTRY (self->priv->entry),
-					       SOURCE_ID, label);
+		gd_tagged_entry_tag_set_label (self->priv->tag, label);
 		g_object_notify (G_OBJECT (self), "selected-id");
 	}
 }
@@ -202,8 +200,9 @@ totem_search_entry_add_source (TotemSearchEntry *self,
 		self->priv->menu = gtk_menu_new ();
 		gtk_menu_button_set_popup (GTK_MENU_BUTTON (self->priv->button),
 					   self->priv->menu);
-		gd_tagged_entry_add_tag (GD_TAGGED_ENTRY (self->priv->entry),
-					 SOURCE_ID, label);
+		self->priv->tag = gd_tagged_entry_tag_new (label);
+		gd_tagged_entry_tag_set_has_close_button (self->priv->tag, FALSE);
+		gd_tagged_entry_insert_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag, -1);
 	}
 
 	item = gtk_radio_menu_item_new_with_label (self->priv->group, label);
@@ -237,7 +236,8 @@ totem_search_entry_remove_source (TotemSearchEntry *self,
 	if (num_items == 0) {
 		gtk_menu_button_set_popup (GTK_MENU_BUTTON (self->priv->button), NULL);
 		g_clear_object (&self->priv->menu);
-		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), SOURCE_ID);
+		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag);
+		g_clear_object (&self->priv->tag);
 	}
 }
 
