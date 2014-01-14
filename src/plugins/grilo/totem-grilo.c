@@ -398,6 +398,7 @@ browse_cb (GrlSource *source,
 						   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
 						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
 						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+						   GD_MAIN_COLUMN_MTIME, g_date_time_to_unix (grl_media_get_modification_date (media)),
 						   -1);
 
 		g_clear_object (&thumbnail);
@@ -1313,6 +1314,28 @@ setup_menus (TotemGriloPlugin *self,
 }
 
 static void
+mtime_to_text (GtkTreeViewColumn *column,
+	       GtkCellRenderer   *cell,
+	       GtkTreeModel      *model,
+	       GtkTreeIter       *iter,
+	       gpointer           user_data)
+{
+	GDateTime *date;
+	gint64 mtime;
+	char *text;
+
+	gtk_tree_model_get (model, iter, GD_MAIN_COLUMN_MTIME, &mtime, -1);
+	if (mtime == 0)
+		return;
+
+	date = g_date_time_new_from_unix_utc (mtime);
+	text = g_date_time_format (date, "%FT%H:%M:%SZ");
+	g_date_time_unref (date);
+	g_object_set (cell, "text", text, NULL);
+	g_free (text);
+}
+
+static void
 create_debug_window (TotemGriloPlugin *self,
 		     GtkTreeModel     *model)
 {
@@ -1350,6 +1373,9 @@ create_debug_window (TotemGriloPlugin *self,
 	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
 						    "Icon", gtk_cell_renderer_pixbuf_new (),
 						    "pixbuf", GD_MAIN_COLUMN_ICON, NULL);
+	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
+						    "MTime", gtk_cell_renderer_text_new (),
+						    mtime_to_text, NULL, NULL);
 	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
 						    "Selected", gtk_cell_renderer_toggle_new (),
 						    "active", GD_MAIN_COLUMN_SELECTED, NULL);
