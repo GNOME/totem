@@ -475,6 +475,7 @@ play (TotemGriloPlugin *self,
 
 	url = grl_media_get_url (media);
 	if (url != NULL) {
+		totem_object_clear_playlist (self->priv->totem);
 		totem_object_add_to_playlist_and_play (self->priv->totem, url,
 		                                grl_media_get_title (media));
 		return;
