@@ -1168,6 +1168,21 @@ window_key_press_event_cb (GtkWidget        *win,
 }
 
 static void
+selection_mode_requested (GdMainView       *view,
+			  TotemGriloPlugin *self)
+{
+	GtkTreePath *root;
+
+	g_object_get (self->priv->browser_filter_model,
+		      "virtual-root", &root,
+		      NULL);
+	if (root == NULL)
+		return;
+	gd_main_view_set_selection_mode (GD_MAIN_VIEW (view), TRUE);
+	gtk_tree_path_free (root);
+}
+
+static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
 {
@@ -1219,6 +1234,8 @@ setup_browse (TotemGriloPlugin *self,
 
 	g_signal_connect (self->priv->browser, "item-activated",
 	                  G_CALLBACK (item_activated_cb), self);
+	g_signal_connect (self->priv->browser, "selection-mode-request",
+			  G_CALLBACK (selection_mode_requested), self);
 	g_signal_connect (self->priv->browser, "popup-menu",
 	                  G_CALLBACK (popup_menu_cb), self);
 	g_signal_connect (self->priv->browser,
