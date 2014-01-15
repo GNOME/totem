@@ -1206,6 +1206,20 @@ search_mode_changed (GObject          *gobject,
 }
 
 static void
+view_selection_changed_cb (GdMainView       *view,
+			   TotemGriloPlugin *self)
+{
+	GList *list;
+	guint count;
+
+	list = gd_main_view_get_selection (view);
+	count = g_list_length (list);
+	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
+
+	totem_main_toolbar_set_n_selected (TOTEM_MAIN_TOOLBAR (self->priv->header), count);
+}
+
+static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
 {
@@ -1247,6 +1261,8 @@ setup_browse (TotemGriloPlugin *self,
 				self->priv->browser, "selection-mode",
 				G_BINDING_BIDIRECTIONAL);
 
+	g_signal_connect (self->priv->browser, "view-selection-changed",
+			  G_CALLBACK (view_selection_changed_cb), self);
 	g_signal_connect (self->priv->browser, "item-activated",
 	                  G_CALLBACK (item_activated_cb), self);
 	g_signal_connect (self->priv->browser, "selection-mode-request",
