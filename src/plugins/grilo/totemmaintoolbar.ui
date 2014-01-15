@@ -39,32 +39,6 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToggleButton" id="search_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <child internal-child="accessible">
-              <object class="AtkObject" id="search-button-atkobject">
-                <property name="AtkObject::accessible-name" translatable="yes">Search</property>
-              </object>
-           </child>
-            <style>
-              <class name="image-button"/>
-            </style>
-            <child>
-              <object class="GtkImage" id="image2">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">edit-find-symbolic</property>
-                <property name="icon_size">1</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="pack_type">end</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkToggleButton" id="select_button">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -96,14 +70,13 @@
             <property name="no-show-all">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <property name="label" translatable="yes">Done</property>
+            <property name="label" translatable="yes">Cancel</property>
             <child internal-child="accessible">
               <object class="AtkObject" id="done-button-atkobject">
-                <property name="AtkObject::accessible-name" translatable="yes">Done</property>
+                <property name="AtkObject::accessible-name" translatable="yes">Cancel</property>
               </object>
            </child>
             <style>
-              <class name="suggested-action"/>
               <class name="text-button"/>
             </style>
           </object>
@@ -111,6 +84,33 @@
             <property name="pack_type">end</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkToggleButton" id="search_button">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <child internal-child="accessible">
+              <object class="AtkObject" id="search-button-atkobject">
+                <property name="AtkObject::accessible-name" translatable="yes">Search</property>
+              </object>
+           </child>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage" id="image2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">edit-find-symbolic</property>
+                <property name="icon_size">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack_type">end</property>
+          </packing>
+        </child>
+
         <child type="title">
           <object class="GtkStack" id="stack">
             <property name="visible">True</property>
