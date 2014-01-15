@@ -104,6 +104,8 @@ typedef struct {
 
 	/* Toolbar widgets */
 	GtkWidget *header;
+	GSimpleAction *select_all_action;
+	GSimpleAction *select_none_action;
 	GtkWidget *search_button;
 
 	/* Browser widgets */
@@ -1220,6 +1222,22 @@ view_selection_changed_cb (GdMainView       *view,
 }
 
 static void
+select_all_action_cb (GSimpleAction    *action,
+		      GVariant         *parameter,
+		      TotemGriloPlugin *self)
+{
+	gd_main_view_select_all (GD_MAIN_VIEW (self->priv->browser));
+}
+
+static void
+select_none_action_cb (GSimpleAction    *action,
+		       GVariant         *parameter,
+		       TotemGriloPlugin *self)
+{
+	gd_main_view_unselect_all (GD_MAIN_VIEW (self->priv->browser));
+}
+
+static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
 {
@@ -1246,6 +1264,19 @@ setup_browse (TotemGriloPlugin *self,
 
 	/* Toolbar */
 	self->priv->header = GTK_WIDGET (gtk_builder_get_object (builder, "gw_headerbar"));
+	totem_main_toolbar_set_select_menu_model (TOTEM_MAIN_TOOLBAR (self->priv->header),
+						  G_MENU_MODEL (gtk_builder_get_object (builder, "selectmenu")));
+
+	self->priv->select_all_action = g_simple_action_new ("select-all", NULL);
+	g_signal_connect (G_OBJECT (self->priv->select_all_action), "activate",
+			  G_CALLBACK (select_all_action_cb), self);
+	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_all_action));
+	gtk_application_add_accelerator (GTK_APPLICATION (self->priv->totem), "<Primary>A", "app.select-all", NULL);
+	self->priv->select_none_action = g_simple_action_new ("select-none", NULL);
+	g_signal_connect (G_OBJECT (self->priv->select_none_action), "activate",
+			  G_CALLBACK (select_none_action_cb), self);
+	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_none_action));
+
 	g_signal_connect (self->priv->header, "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), self);
 	g_object_bind_property (self->priv->header, "search-mode",
