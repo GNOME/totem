@@ -1443,7 +1443,7 @@ impl_activate (PeasActivatable *plugin)
 	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 	priv->main_window = totem_object_get_main_window (priv->totem);
 
-	builder = totem_plugin_load_interface ("grilo", "grilo.ui", TRUE, self->priv->main_window, self);
+	builder = gtk_builder_new_from_resource ("/org/totem/grilo/grilo.ui");
 	setup_ui (self, builder);
 	grl_init (0, NULL);
 	setup_config (self);
