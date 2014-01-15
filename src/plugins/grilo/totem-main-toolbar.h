@@ -63,24 +63,24 @@ void            totem_main_toolbar_set_search_mode   (TotemMainToolbar *bar,
 
 gboolean        totem_main_toolbar_get_search_mode   (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_select_mode   (TotemMainToolbar *bar,
-						      gboolean        select_mode);
+						      gboolean          select_mode);
 gboolean        totem_main_toolbar_get_select_mode   (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_search_string (TotemMainToolbar *bar,
-						      const char     *search_string);
+						      const char       *search_string);
 const char *    totem_main_toolbar_get_search_string (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_n_selected    (TotemMainToolbar *bar,
-						      guint           n_selected);
+						      guint             n_selected);
 guint           totem_main_toolbar_get_n_selected    (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_custom_title  (TotemMainToolbar *bar,
-						      GtkWidget      *title_widget);
+						      GtkWidget        *title_widget);
 GtkWidget *     totem_main_toolbar_get_custom_title  (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_select_menu_model (TotemMainToolbar *bar,
-							  GMenuModel     *model);
+							  GMenuModel       *model);
 GMenuModel *    totem_main_toolbar_get_select_menu_model (TotemMainToolbar *bar);
-void            totem_main_toolbar_pack_start           (TotemMainToolbar *bar,
-							 GtkWidget      *child);
-void            totem_main_toolbar_pack_end             (TotemMainToolbar *bar,
-							 GtkWidget      *child);
+void            totem_main_toolbar_pack_start            (TotemMainToolbar *bar,
+							  GtkWidget        *child);
+void            totem_main_toolbar_pack_end              (TotemMainToolbar *bar,
+							  GtkWidget        *child);
 
 G_END_DECLS
 
