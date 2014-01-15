@@ -13,7 +13,7 @@ confdir = $(plugindir)
 conf_DATA = totem-grilo.conf
 EXTRA_DIST += $(conf_DATA)
 
-EXTRA_DIST += grilo.gresource.xml
+EXTRA_DIST += grilo.gresource.xml totemmaintoolbar.ui
 
 griloresources.h: grilo.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
