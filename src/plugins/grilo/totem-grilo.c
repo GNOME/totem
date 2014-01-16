@@ -72,8 +72,6 @@
 #define PAGE_SIZE             50
 #define SCROLL_GET_MORE_LIMIT 0.8
 
-#define TOTEM_GRILO_CONFIG_FILE "totem-grilo.conf"
-
 typedef struct {
 	Totem *totem;
 	GtkWindow *main_window;
@@ -2073,26 +2071,8 @@ setup_ui (TotemGriloPlugin *self,
 static void
 setup_config (TotemGriloPlugin *self)
 {
-	gchar *config_file;
 	GrlRegistry *registry = grl_registry_get_default ();
-
-	/* Setup system-wide plugins configuration */
-	config_file = totem_plugin_find_file ("grilo", TOTEM_GRILO_CONFIG_FILE);
-
-	if (g_file_test (config_file, G_FILE_TEST_EXISTS))
-		grl_registry_add_config_from_file (registry, config_file, NULL);
-	g_free (config_file);
-
-	/* Setup user-defined plugins configuration */
-	config_file = g_build_path (G_DIR_SEPARATOR_S,
-	                            g_get_user_config_dir (),
-	                            g_get_prgname (),
-	                            TOTEM_GRILO_CONFIG_FILE,
-	                            NULL);
-
-	if (g_file_test (config_file, G_FILE_TEST_EXISTS))
-		grl_registry_add_config_from_file (registry, config_file, NULL);
-	g_free (config_file);
+	grl_registry_add_config_from_resource (registry, "/org/totem/grilo/totem-grilo.conf", NULL);
 }
 
 static void

@@ -5,16 +5,12 @@ plugin_LTLIBRARIES = libgrilo.la
 
 plugin_in_files = grilo.plugin.in
 
-confdir = $(plugindir)
-conf_DATA = totem-grilo.conf
-EXTRA_DIST += $(conf_DATA)
-
-EXTRA_DIST += grilo.gresource.xml totemmaintoolbar.ui totemselectiontoolbar.ui grilo.ui
+EXTRA_DIST = grilo.gresource.xml totemmaintoolbar.ui totemselectiontoolbar.ui grilo.ui totem-grilo.conf
 
 griloresources.h: grilo.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
 		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-header
-griloresources.c: grilo.gresource.xml totemmaintoolbar.ui grilo.ui totemselectiontoolbar.ui griloresources.h
+griloresources.c: $(EXTRA_DIST) griloresources.h
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
 		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-source
 
