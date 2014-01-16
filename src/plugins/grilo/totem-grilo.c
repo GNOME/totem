@@ -1272,10 +1272,17 @@ setup_browse (TotemGriloPlugin *self,
 			  G_CALLBACK (select_all_action_cb), self);
 	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_all_action));
 	gtk_application_add_accelerator (GTK_APPLICATION (self->priv->totem), "<Primary>A", "app.select-all", NULL);
+	g_object_bind_property (self->priv->header, "select-mode",
+				self->priv->select_all_action, "enabled",
+				G_BINDING_SYNC_CREATE);
+
 	self->priv->select_none_action = g_simple_action_new ("select-none", NULL);
 	g_signal_connect (G_OBJECT (self->priv->select_none_action), "activate",
 			  G_CALLBACK (select_none_action_cb), self);
 	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_none_action));
+	g_object_bind_property (self->priv->header, "select-mode",
+				self->priv->select_none_action, "enabled",
+				G_BINDING_SYNC_CREATE);
 
 	g_signal_connect (self->priv->header, "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), self);
