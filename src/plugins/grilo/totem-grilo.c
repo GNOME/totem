@@ -1274,8 +1274,6 @@ static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
 {
-	GtkWidget *button;
-	AtkObject *accessible;
 	GtkAdjustment *adj;
 
 	/* Search */
