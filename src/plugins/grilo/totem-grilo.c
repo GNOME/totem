@@ -1508,6 +1508,38 @@ mtime_to_text (GtkTreeViewColumn *column,
 }
 
 static void
+page_to_text (GtkTreeViewColumn *column,
+	      GtkCellRenderer   *cell,
+	      GtkTreeModel      *model,
+	      GtkTreeIter       *iter,
+	      gpointer           user_data)
+{
+	gint page;
+	char *text;
+
+	gtk_tree_model_get (model, iter, MODEL_RESULTS_PAGE, &page, -1);
+	text = g_strdup_printf ("%d", page);
+	g_object_set (cell, "text", text, NULL);
+	g_free (text);
+}
+
+static void
+remaining_to_text (GtkTreeViewColumn *column,
+		   GtkCellRenderer   *cell,
+		   GtkTreeModel      *model,
+		   GtkTreeIter       *iter,
+		   gpointer           user_data)
+{
+	gint remaining;
+	char *text;
+
+	gtk_tree_model_get (model, iter, MODEL_RESULTS_REMAINING, &remaining, -1);
+	text = g_strdup_printf ("%d", remaining);
+	g_object_set (cell, "text", text, NULL);
+	g_free (text);
+}
+
+static void
 create_debug_window (TotemGriloPlugin *self,
 		     GtkTreeModel     *model)
 {
@@ -1551,6 +1583,12 @@ create_debug_window (TotemGriloPlugin *self,
 	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
 						    "Selected", gtk_cell_renderer_toggle_new (),
 						    "active", GD_MAIN_COLUMN_SELECTED, NULL);
+	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
+						    "Page", gtk_cell_renderer_text_new (),
+						    page_to_text, NULL, NULL);
+	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
+						    "Remaining", gtk_cell_renderer_text_new (),
+						    remaining_to_text, NULL, NULL);
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (tree), model);
 
