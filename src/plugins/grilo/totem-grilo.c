@@ -392,8 +392,8 @@ browse_cb (GrlSource *source,
 		/* Filter images */
 		if (GRL_IS_MEDIA_IMAGE (media) ||
 		    GRL_IS_MEDIA_AUDIO (media)) {
-			g_object_unref (media);
-			goto out;
+			/* This isn't supposed to happen as we filter for videos */
+			g_assert_not_reached ();
 		}
 
 		thumbnail = totem_grilo_get_icon (media, &thumbnailing);
@@ -416,7 +416,6 @@ browse_cb (GrlSource *source,
 		g_object_unref (media);
 	}
 
-out:
 	if (remaining == 0) {
 		gtk_tree_row_reference_free (bud->ref_parent);
 		g_object_unref (bud->totem_grilo);
