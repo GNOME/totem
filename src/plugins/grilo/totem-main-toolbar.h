@@ -65,6 +65,12 @@ gboolean        totem_main_toolbar_get_search_mode   (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_select_mode   (TotemMainToolbar *bar,
 						      gboolean          select_mode);
 gboolean        totem_main_toolbar_get_select_mode   (TotemMainToolbar *bar);
+void            totem_main_toolbar_set_title         (TotemMainToolbar *bar,
+						      const char       *title);
+const char *    totem_main_toolbar_get_title         (TotemMainToolbar *bar);
+void            totem_main_toolbar_set_subtitle      (TotemMainToolbar *bar,
+						      const char       *subtitle);
+const char *    totem_main_toolbar_get_subtitle      (TotemMainToolbar *bar);
 void            totem_main_toolbar_set_search_string (TotemMainToolbar *bar,
 						      const char       *search_string);
 const char *    totem_main_toolbar_get_search_string (TotemMainToolbar *bar);

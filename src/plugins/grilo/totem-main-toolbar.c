@@ -89,6 +89,8 @@ G_DEFINE_TYPE_WITH_CODE (TotemMainToolbar, totem_main_toolbar, GTK_TYPE_BOX,
 
 enum {
   PROP_0,
+  PROP_TITLE,
+  PROP_SUBTITLE,
   PROP_SEARCH_STRING,
   PROP_N_SELECTED,
   PROP_SEARCH_MODE,
@@ -209,6 +211,14 @@ totem_main_toolbar_set_property (GObject         *object,
 
   switch (prop_id)
     {
+    case PROP_TITLE:
+      totem_main_toolbar_set_title (bar, g_value_get_string (value));
+      break;
+
+    case PROP_SUBTITLE:
+      totem_main_toolbar_set_subtitle (bar, g_value_get_string (value));
+      break;
+
     case PROP_SEARCH_STRING:
       totem_main_toolbar_set_search_string (bar, g_value_get_string (value));
       break;
@@ -264,6 +274,14 @@ totem_main_toolbar_get_property (GObject         *object,
 
   switch (prop_id)
     {
+    case PROP_TITLE:
+      g_value_set_string (value, bar->priv->title);
+      break;
+
+    case PROP_SUBTITLE:
+      g_value_set_string (value, bar->priv->subtitle);
+      break;
+
     case PROP_SEARCH_STRING:
       g_value_set_string (value, totem_main_toolbar_get_search_string (bar));
       break;
@@ -362,6 +380,22 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
   object_class->get_property = totem_main_toolbar_get_property;
 
   container_class->add = totem_main_toolbar_add;
+
+  g_object_class_install_property (object_class,
+                                   PROP_TITLE,
+                                   g_param_spec_string ("title",
+                                                        "Title",
+                                                        "The title",
+                                                        NULL,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class,
+                                   PROP_SUBTITLE,
+                                   g_param_spec_string ("subtitle",
+                                                        "Subtitle",
+                                                        "The subtitle",
+                                                        NULL,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class,
                                    PROP_SEARCH_STRING,
@@ -618,6 +652,56 @@ totem_main_toolbar_get_select_mode (TotemMainToolbar *bar)
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), FALSE);
 
   return bar->priv->select_mode;
+}
+
+void
+totem_main_toolbar_set_title (TotemMainToolbar *bar,
+			      const char       *title)
+{
+  char *tmp;
+
+  g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
+
+  tmp = bar->priv->title;
+  bar->priv->title = g_strdup (title);
+  g_free (tmp);
+
+  gtk_label_set_text (GTK_LABEL (bar->priv->title_label), title);
+
+  g_object_notify (G_OBJECT (bar), "title");
+}
+
+const char *
+totem_main_toolbar_get_title (TotemMainToolbar *bar)
+{
+  g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
+
+  return bar->priv->title;
+}
+
+void
+totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
+			         const char       *subtitle)
+{
+  char *tmp;
+
+  g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
+
+  tmp = bar->priv->subtitle;
+  bar->priv->subtitle = g_strdup (subtitle);
+  g_free (tmp);
+
+  gtk_label_set_text (GTK_LABEL (bar->priv->title_label), subtitle);
+
+  g_object_notify (G_OBJECT (bar), "subtitle");
+}
+
+const char *
+totem_main_toolbar_get_subtitle (TotemMainToolbar *bar)
+{
+  g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
+
+  return bar->priv->subtitle;
 }
 
 void
