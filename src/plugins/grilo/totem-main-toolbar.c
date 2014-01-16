@@ -807,7 +807,7 @@ totem_main_toolbar_set_custom_title (TotemMainToolbar *bar,
       GtkWidget *custom = priv->custom_title;
 
       priv->custom_title = NULL;
-      gtk_widget_unparent (custom);
+      gtk_container_remove (GTK_CONTAINER (bar->priv->stack), custom);
     }
 
   if (title_widget != NULL)
@@ -818,6 +818,10 @@ totem_main_toolbar_set_custom_title (TotemMainToolbar *bar,
       gtk_widget_show (title_widget);
 
       update_toolbar_state (bar);
+    }
+  else
+    {
+      gtk_stack_set_visible_child_name (GTK_STACK (bar->priv->stack), DEFAULT_PAGE);
     }
 
   g_object_notify (G_OBJECT (bar), "custom-title");
