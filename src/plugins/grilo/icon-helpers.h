@@ -35,7 +35,7 @@ GdkPixbuf       *totem_grilo_get_icon             (GrlMedia *media,
 const GdkPixbuf *totem_grilo_get_video_icon       (void);
 const GdkPixbuf *totem_grilo_get_box_icon         (void);
 
-void             totem_grilo_get_thumbnail        (GrlMedia            *media,
+void             totem_grilo_get_thumbnail        (GObject             *object,
 						   GCancellable        *cancellable,
 						   GAsyncReadyCallback  callback,
 						   gpointer             user_data);

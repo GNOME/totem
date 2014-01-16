@@ -115,20 +115,36 @@ get_stream_thumbnail_cb (GObject *source_object,
 }
 
 void
-totem_grilo_get_thumbnail (GrlMedia            *media,
+totem_grilo_get_thumbnail (GObject             *object,
 			   GCancellable        *cancellable,
 			   GAsyncReadyCallback  callback,
 			   gpointer             user_data)
 {
 	GSimpleAsyncResult *simple;
-	const char *url_thumb;
+	const char *url_thumb = NULL;
 	const GdkPixbuf *thumbnail;
 	GFile *file;
 
-	url_thumb = grl_media_get_thumbnail (media);
+	if (GRL_IS_MEDIA (object))
+		url_thumb = grl_media_get_thumbnail (GRL_MEDIA (object));
+	else if (GRL_IS_SOURCE (object)) {
+		GIcon *icon;
+
+		icon = grl_source_get_icon (GRL_SOURCE (object));
+		if (icon) {
+			GFile *file;
+
+			file = g_file_icon_get_file (G_FILE_ICON (icon));
+			url_thumb = g_file_get_uri (file);
+			g_object_unref (file);
+		} else {
+			//FIXME
+			return;
+		}
+	}
 	g_return_if_fail (url_thumb != NULL);
 
-	simple = g_simple_async_result_new (G_OBJECT (media),
+	simple = g_simple_async_result_new (G_OBJECT (object),
 					    callback,
 					    user_data,
 					    totem_grilo_get_thumbnail);

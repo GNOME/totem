@@ -138,6 +138,7 @@ typedef struct {
 typedef struct {
 	TotemGriloPlugin *totem_grilo;
 	GrlMedia *media;
+	GrlSource *source;
 	GtkTreeModel *model;
 	GtkTreeRowReference *reference;
 } SetThumbnailData;
@@ -241,18 +242,19 @@ get_thumbnail_cb (GObject *source_object,
 	if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 		path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model),
 									 path);
-		if (gtk_tree_model_get_iter (view_model, &iter, path))
+		if (path != NULL && gtk_tree_model_get_iter (view_model, &iter, path))
 			gtk_tree_model_row_changed (view_model, path, &iter);
 	}
 
-	gtk_tree_path_free (path);
+	g_clear_pointer (&path, gtk_tree_path_free);
 
 out:
 	g_clear_error (&error);
 
 	/* Free thumb data */
 	g_object_unref (thumb_data->totem_grilo);
-	g_object_unref (thumb_data->media);
+	g_clear_object (&thumb_data->media);
+	g_clear_object (&thumb_data->source);
 	g_object_unref (thumb_data->model);
 	gtk_tree_row_reference_free (thumb_data->reference);
 	g_slice_free (SetThumbnailData, thumb_data);
@@ -267,14 +269,33 @@ set_thumbnail_async (TotemGriloPlugin *self,
 	SetThumbnailData *thumb_data;
 
 	/* Let's read the thumbnail stream and set the thumbnail */
-	thumb_data = g_slice_new (SetThumbnailData);
+	thumb_data = g_slice_new0 (SetThumbnailData);
 	thumb_data->totem_grilo = g_object_ref (self);
 	thumb_data->media = g_object_ref (media);
 	thumb_data->model = g_object_ref (model);
 	thumb_data->reference = gtk_tree_row_reference_new (model, path);
 
 	//FIXME cancellable?
-	totem_grilo_get_thumbnail (media, NULL, get_thumbnail_cb, thumb_data);
+	totem_grilo_get_thumbnail (G_OBJECT (media), NULL, get_thumbnail_cb, thumb_data);
+}
+
+static void
+set_thumbnail_source_async (TotemGriloPlugin *self,
+			    GrlSource        *source,
+			    GtkTreeModel     *model,
+			    GtkTreePath      *path)
+{
+	SetThumbnailData *thumb_data;
+
+	/* Let's read the thumbnail stream and set the thumbnail */
+	thumb_data = g_slice_new0 (SetThumbnailData);
+	thumb_data->totem_grilo = g_object_ref (self);
+	thumb_data->source = g_object_ref (source);
+	thumb_data->model = g_object_ref (model);
+	thumb_data->reference = gtk_tree_row_reference_new (model, path);
+
+	//FIXME cancellable?
+	totem_grilo_get_thumbnail (G_OBJECT (source), NULL, get_thumbnail_cb, thumb_data);
 }
 
 static gboolean
@@ -282,6 +303,7 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 {
 	GtkTreePath *start_path;
 	GtkTreePath *end_path;
+	GrlSource *source;
 	gboolean is_prethumbnail = FALSE;
 	GtkTreeModel *view_model, *model;
 	GtkIconView *icon_view;
@@ -320,10 +342,14 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 		gtk_tree_model_get (model,
 		                    &iter,
 		                    MODEL_RESULTS_CONTENT, &media,
+		                    MODEL_RESULTS_SOURCE, &source,
 		                    MODEL_RESULTS_IS_PRETHUMBNAIL, &is_prethumbnail,
 		                    -1);
-		if (media != NULL && is_prethumbnail) {
-			set_thumbnail_async (self, media, model, path);
+		if ((media != NULL || source != NULL) && is_prethumbnail) {
+			if (media)
+				set_thumbnail_async (self, media, model, path);
+			else
+				set_thumbnail_source_async (self, source, model, path);
 			gtk_tree_store_set (GTK_TREE_STORE (model),
 			                    &iter,
 			                    MODEL_RESULTS_IS_PRETHUMBNAIL, FALSE,
@@ -331,6 +357,7 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 		}
 
 		g_clear_object (&media);
+		g_clear_object (&source);
 	}
 	gtk_tree_path_free (start_path);
 	gtk_tree_path_free (end_path);
