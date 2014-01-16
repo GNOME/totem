@@ -3,60 +3,61 @@
 # Copyright (C) 2005 THE PACKAGE'S COPYRIGHT HOLDER.
 # Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2003.
 # Gil Osher <dolfin@rpg.org.il>, 2004.
+# Yosef Or Boczko <yoseforb@gmail.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-31 09:11+0300\n"
-"PO-Revision-Date: 2013-07-31 09:12+0200\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <he@li.org>\n"
+"POT-Creation-Date: 2014-01-16 03:56+0200\n"
+"PO-Revision-Date: 2014-01-16 04:04+0200\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"Language-Team: עברית <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
-#: ../browser-plugin/totem-plugin-viewer.c:328
-#: ../src/plugins/screensaver/totem-screensaver.c:97
+#: ../browser-plugin/totem-plugin-viewer.c:330
+#: ../src/plugins/screensaver/totem-screensaver.c:99
 msgid "Playing a movie"
 msgstr "סרט מתנגן"
 
-#: ../browser-plugin/totem-plugin-viewer.c:397
+#: ../browser-plugin/totem-plugin-viewer.c:399
 msgid "No URI to play"
 msgstr "אין כתובת לנגינה"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1096
+#: ../browser-plugin/totem-plugin-viewer.c:1098
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_פתיחה באמצעות „%s“"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1317 ../src/totem-object.c:2398
+#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2357
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1673
+#: ../browser-plugin/totem-plugin-viewer.c:1675
 msgid "Totem Movie Player"
 msgstr "נגן הסרטים Totem"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1991
+#: ../browser-plugin/totem-plugin-viewer.c:1993
 msgid "No playlist or playlist empty"
 msgstr "אין רשימת שמע או שרשימת ההשמעה ריקה"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2222
+#: ../browser-plugin/totem-plugin-viewer.c:2224
 msgid "Movie browser plugin"
 msgstr "תוסף סרטים לדפדן"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2238 ../src/totem.c:246
+#: ../browser-plugin/totem-plugin-viewer.c:2240 ../src/totem.c:262
 msgid "Could not initialize the thread-safe libraries."
 msgstr "לא ניתן לאתחל את ספריות ה־thread-safe."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2238
+#: ../browser-plugin/totem-plugin-viewer.c:2240
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr "נא לבדוק את התקנת המערכת שלך. תוסף Totem ייסגר כעת."
 
@@ -267,8 +268,8 @@ msgstr "גדול"
 msgid "Extra Large"
 msgstr "גדול במיוחד"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5591
-#: ../src/totem-properties-view.c:232
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5607
+#: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "סטריאו"
 
@@ -339,7 +340,7 @@ msgstr "תצוגה"
 
 #: ../data/preferences.ui.h:25
 msgid "Disable _deinterlacing of interlaced videos"
-msgstr "ביטול פעולת ה־deinterlace על סרטונים שהם interlaced"
+msgstr "ביטול _פעולת ה־deinterlace על סרטונים שהם interlaced"
 
 #: ../data/preferences.ui.h:26
 msgid "Disable screensaver when playing"
@@ -404,7 +405,7 @@ msgid "_Audio output type:"
 msgstr "סוג פלט _שמע:"
 
 #: ../data/preferences.ui.h:42 ../data/properties.ui.h:14
-#: ../src/totem-properties-view.c:273
+#: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "שמע"
 
@@ -436,7 +437,7 @@ msgstr "הערה:"
 msgid "Container:"
 msgstr "מכל:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:275
+#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
 msgid "Video"
 msgstr "וידאו"
 
@@ -464,8 +465,42 @@ msgstr "קצב דגימה:"
 msgid "Channels:"
 msgstr "ערוצים:"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:245
-#: ../src/totem.c:251
+#: ../data/appdata/totem.appdata.xml.in.h:1
+msgid ""
+"Totem, also known as Videos, is the official movie player of the GNOME "
+"desktop environment. It features a playlist, a full-screen mode, seek and "
+"volume controls, as well as keyboard navigation."
+msgstr ""
+"‏Totem, ידוע גם כסרטונים, הוא נגן הסרטים הרשמי של סביבת שולחן העבודה GNOME. "
+"הוא כולל רשימת השמעה, מצב מסך־מלא, חיפוש ושליטה בעצמת השמע, כמו גם ניווט "
+"באמצעות מקלדת.."
+
+#: ../data/appdata/totem.appdata.xml.in.h:2
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, support "
+"to watch live TV and VCD recording."
+msgstr ""
+"‏Totem מגיע עם שימושיות נוספת כמו: הורדת כתוביות, תמיכה בצפייה ישירה "
+"בטלוויזיה והקלטת VCD."
+
+#: ../data/appdata/totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "תצוגה מקדימה של סרטים למנהל קבצים."
+
+#: ../data/appdata/totem.appdata.xml.in.h:4
+msgid "Nautilus properties tab"
+msgstr ""
+
+#: ../data/appdata/totem.appdata.xml.in.h:5
+msgid "Mozilla (Firefox) plugin to view movies inside your browser"
+msgstr "תוסף מוזילה (Firefox) לצפייה בסרטים בתוך הדפדפן שלך"
+
+#: ../data/appdata/totem.appdata.xml.in.h:6
+msgid "Command-line video properties helper (for indexers)"
+msgstr ""
+
+#: ../data/totem.desktop.in.in.in.h:1 ../data/totem.ui.h:34 ../src/totem.c:261
+#: ../src/totem.c:267
 msgid "Videos"
 msgstr "סרטונים"
 
@@ -616,59 +651,59 @@ msgid "Enter the _address of the file you would like to open:"
 msgstr "נא להזין את _מיקום הקובץ שברצונך לפתוח:"
 
 #. translators: Unknown remaining time
-#: ../src/backend/bacon-time-label.c:115
+#: ../src/backend/bacon-time-label.c:113
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1712
+#: ../src/backend/bacon-video-widget.c:1713
 msgid "Password requested for RTSP server"
 msgstr "נדרשת סיסמה עבור שרת ה־RTSP"
 
-#: ../src/backend/bacon-video-widget.c:3076
+#: ../src/backend/bacon-video-widget.c:3083
 #, c-format
 msgid "Audio Track #%d"
 msgstr "רצועת שמע מס' %d"
 
-#: ../src/backend/bacon-video-widget.c:3080
+#: ../src/backend/bacon-video-widget.c:3087
 #, c-format
 msgid "Subtitle #%d"
 msgstr "כתובית מס' %d"
 
-#: ../src/backend/bacon-video-widget.c:3513
+#: ../src/backend/bacon-video-widget.c:3520
 msgid "The server you are trying to connect to is not known."
 msgstr "השרת אליו אתה מנסה להתחבר אינו ידוע."
 
-#: ../src/backend/bacon-video-widget.c:3516
+#: ../src/backend/bacon-video-widget.c:3523
 msgid "The connection to this server was refused."
 msgstr "החיבור לשרת זה נדחה."
 
-#: ../src/backend/bacon-video-widget.c:3519
+#: ../src/backend/bacon-video-widget.c:3526
 msgid "The specified movie could not be found."
 msgstr "לא ניתן למצוא את הסרט שצוין."
 
-#: ../src/backend/bacon-video-widget.c:3526
+#: ../src/backend/bacon-video-widget.c:3533
 msgid "The server refused access to this file or stream."
 msgstr "השרת מונע גישה לקובץ או שידור זה."
 
-#: ../src/backend/bacon-video-widget.c:3532
+#: ../src/backend/bacon-video-widget.c:3539
 msgid "Authentication is required to access this file or stream."
 msgstr "נדרש אישור כדי לגשת לקובץ או שידור זה."
 
-#: ../src/backend/bacon-video-widget.c:3539
+#: ../src/backend/bacon-video-widget.c:3546
 msgid "You are not allowed to open this file."
 msgstr "אינך מורשה לפתוח קובץ זה."
 
-#: ../src/backend/bacon-video-widget.c:3544
+#: ../src/backend/bacon-video-widget.c:3551
 msgid "This location is not a valid one."
 msgstr "מיקום זה אינו תקני."
 
-#: ../src/backend/bacon-video-widget.c:3552
+#: ../src/backend/bacon-video-widget.c:3559
 msgid "The movie could not be read."
 msgstr "לא ניתן לקרוא את הסרט"
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3575
-#: ../src/backend/bacon-video-widget.c:3583
+#: ../src/backend/bacon-video-widget.c:3582
+#: ../src/backend/bacon-video-widget.c:3590
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -682,7 +717,7 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3594
+#: ../src/backend/bacon-video-widget.c:3601
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -690,57 +725,57 @@ msgstr ""
 "תזרים שמע או וידאו לא מטופל כראוי עקב מפענחים חסרים. יתכן שיהיה עליך להתקין "
 "תוספים נוספים כדי לנגן סוגים מסוימים של סרטים"
 
-#: ../src/backend/bacon-video-widget.c:3604
+#: ../src/backend/bacon-video-widget.c:3611
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "לא ניתן לנגן קובץ זה דרך הרשת. כדאי לנסות לשמור אותו על הכונן קודם."
 
-#: ../src/backend/bacon-video-widget.c:5587 ../src/totem-properties-view.c:228
+#: ../src/backend/bacon-video-widget.c:5603 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "צליל היקפי"
 
-#: ../src/backend/bacon-video-widget.c:5589 ../src/totem-properties-view.c:230
+#: ../src/backend/bacon-video-widget.c:5605 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "מונו"
 
-#: ../src/backend/bacon-video-widget.c:5876
+#: ../src/backend/bacon-video-widget.c:5892
 msgid "Media contains no supported video streams."
 msgstr "המדיה איננה כוללת זרמי וידאו נתמכים"
 
-#: ../src/backend/bacon-video-widget.c:6058
+#: ../src/backend/bacon-video-widget.c:6052
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr "חלק מתוספי השמע הנחוצים חסרים. נא לוודא שהתכנית מותקנת כראוי."
 
-#: ../src/eggfileformatchooser.c:240
+#: ../src/eggfileformatchooser.c:238
 #, c-format
 msgid "File _Format: %s"
 msgstr "_מבנה הקובץ: %s"
 
-#: ../src/eggfileformatchooser.c:379
+#: ../src/eggfileformatchooser.c:377
 msgid "All Files"
 msgstr "כל הקבצים"
 
-#: ../src/eggfileformatchooser.c:380
+#: ../src/eggfileformatchooser.c:378
 msgid "All Supported Files"
 msgstr "כל הקבצים הנתמכים"
 
-#: ../src/eggfileformatchooser.c:389
+#: ../src/eggfileformatchooser.c:387
 msgid "By Extension"
 msgstr "לפי סיומת"
 
-#: ../src/eggfileformatchooser.c:404
+#: ../src/eggfileformatchooser.c:402
 msgid "File Format"
 msgstr "תצורת קובץ"
 
-#: ../src/eggfileformatchooser.c:422
+#: ../src/eggfileformatchooser.c:420
 msgid "Extension(s)"
 msgstr "סיומת"
 
 #. Translators: the parameter is a filename
-#: ../src/eggfileformatchooser.c:657
+#: ../src/eggfileformatchooser.c:655
 #, c-format
 msgid ""
 "The program was not able to find out the file format you want to use for `"
@@ -751,7 +786,7 @@ msgstr ""
 "השימוש בסיומות קבצים מוכרים עבור קובץ זה או לחלופין לבחור ידנית במבנה הקובץ "
 "מהרשימה שלהלן."
 
-#: ../src/eggfileformatchooser.c:664
+#: ../src/eggfileformatchooser.c:662
 msgid "File format not recognized"
 msgstr "File format not recognized"
 
@@ -908,11 +943,11 @@ msgid_plural "%d frames per second"
 msgstr[0] "שקופית אחת לשנייה"
 msgstr[1] "%d שקופיות לשנייה"
 
-#: ../src/totem-audio-preview.c:138
+#: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "השמעה מקדימה"
 
-#: ../src/totem.c:246
+#: ../src/totem.c:262
 msgid "Verify your system installation. Totem will now exit."
 msgstr "נא לוודא את התקנת המערכת שלך. Totem ייצא עכשיו."
 
@@ -928,21 +963,21 @@ msgstr "ה_וספה לרשימת השמעה"
 msgid "Cancel"
 msgstr "ביטול"
 
-#: ../src/totem-interface.c:181 ../src/totem-interface.c:224
+#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "לא ניתן לטעון את המנשק '%s'.‏ %s"
 
-#: ../src/totem-interface.c:181
+#: ../src/totem-interface.c:180
 msgid "The file does not exist."
 msgstr "הקובץ אינו קיים."
 
-#: ../src/totem-interface.c:183 ../src/totem-interface.c:185
-#: ../src/totem-interface.c:226 ../src/totem-interface.c:228
+#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
+#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
 msgid "Make sure that Totem is properly installed."
 msgstr "נא לוודא ש־Totem מותקן כראוי."
 
-#: ../src/totem-interface.c:357
+#: ../src/totem-interface.c:356
 msgid ""
 "Totem is free software; you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -954,7 +989,7 @@ msgstr ""
 "Foundation; either version 2 of the License, or (at your option) any later "
 "version."
 
-#: ../src/totem-interface.c:361
+#: ../src/totem-interface.c:360
 msgid ""
 "Totem is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -966,7 +1001,7 @@ msgstr ""
 "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
 "details."
 
-#: ../src/totem-interface.c:365
+#: ../src/totem-interface.c:364
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
@@ -976,7 +1011,7 @@ msgstr ""
 "Totem; if not, write to the Free Software Foundation, Inc., 59 Temple Place, "
 "Suite 330, Boston, MA  02111-1307  USA"
 
-#: ../src/totem-interface.c:368
+#: ../src/totem-interface.c:367
 msgid ""
 "Totem contains an exception to allow the use of proprietary GStreamer "
 "plugins."
@@ -995,7 +1030,7 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "אוטומטי"
 
-#: ../src/totem-object.c:161
+#: ../src/totem-object.c:162
 #, c-format
 msgid ""
 "%s\n"
@@ -1004,47 +1039,46 @@ msgstr ""
 "%s\n"
 "Run '%s --help' to see a full list of available command line options.\n"
 
-#: ../src/totem-object.c:1250 ../src/totem-options.c:52
+#: ../src/totem-object.c:1255 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "השהיה"
 
-#: ../src/totem-object.c:1255 ../src/totem-object.c:1265
+#: ../src/totem-object.c:1260 ../src/totem-object.c:1270
 #: ../src/totem-options.c:51
 msgid "Play"
 msgstr "נגינה"
 
-#: ../src/totem-object.c:1350 ../src/totem-object.c:1377
-#: ../src/totem-object.c:1904
+#: ../src/totem-object.c:1355 ../src/totem-object.c:1382
+#: ../src/totem-object.c:1909
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem אינו יכול לנגן את '%s'."
 
-#: ../src/totem-object.c:2046
+#: ../src/totem-object.c:2051
 msgid "Totem could not display the help contents."
 msgstr "Totem אינו יכול להציג את תוכן העזרה."
 
-#: ../src/totem-object.c:3805
+#: ../src/totem-object.c:3704
 msgid "Previous Chapter/Movie"
 msgstr "הפרק/סרט הקודם"
 
-#: ../src/totem-object.c:3810
+#: ../src/totem-object.c:3709
 msgid "Play / Pause"
 msgstr "נגינה / השהיה"
 
-#: ../src/totem-object.c:3815
+#: ../src/totem-object.c:3714
 msgid "Next Chapter/Movie"
 msgstr "הפרק/סרט הבא"
 
-#: ../src/totem-object.c:3854 ../src/plugins/grilo/totem-grilo.c:1184
-#: ../src/plugins/grilo/totem-grilo.c:1194
+#: ../src/totem-object.c:3753 ../src/plugins/grilo/totemmaintoolbar.ui.h:1
 msgid "Back"
 msgstr "חזרה"
 
-#: ../src/totem-object.c:3925
+#: ../src/totem-object.c:3831
 msgid "Totem could not startup."
 msgstr "Totem לא יכול לעלות."
 
-#: ../src/totem-object.c:3925
+#: ../src/totem-object.c:3831
 msgid "No reason."
 msgstr "אין סיבה."
 
@@ -1052,7 +1086,7 @@ msgstr "אין סיבה."
 msgid "Open Location..."
 msgstr "פתיחת מיקום..."
 
-#: ../src/totem-open-location.c:184 ../src/totem-playlist.c:1063
+#: ../src/totem-open-location.c:184 ../src/totem-playlist.c:1064
 #: ../src/totem-uri.c:421 ../src/totem-uri.c:486
 #: ../src/plugins/chapters/totem-chapters.c:961
 #: ../src/plugins/chapters/totem-edit-chapter.c:98
@@ -1132,55 +1166,55 @@ msgid "Can't enqueue and replace at the same time"
 msgstr "לא ניתן להוסיף לתור ולהחליף באותו הזמן"
 
 #. By extension entry
-#: ../src/totem-playlist.c:172
+#: ../src/totem-playlist.c:173
 msgid "MP3 ShoutCast playlist"
 msgstr "רשימת השמעה MP3 - ‏ShoutCast"
 
-#: ../src/totem-playlist.c:173
+#: ../src/totem-playlist.c:174
 msgid "MP3 audio (streamed)"
 msgstr "שמע MP3 (מוזרם)"
 
-#: ../src/totem-playlist.c:174
+#: ../src/totem-playlist.c:175
 msgid "MP3 audio (streamed, DOS format)"
 msgstr "שמע MP3 (מוזרם, תצורת DOS)"
 
-#: ../src/totem-playlist.c:175
+#: ../src/totem-playlist.c:176
 msgid "XML Shareable Playlist"
 msgstr "רשימת השמעה XML משותפת"
 
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:332
+#: ../src/totem-playlist.c:333
 #, c-format
 msgid "Title %d"
 msgstr "שם %d"
 
-#: ../src/totem-playlist.c:486
+#: ../src/totem-playlist.c:487
 msgid "Could not save the playlist"
 msgstr "לא ניתן לשמור את רשימת ההשמעה"
 
-#: ../src/totem-playlist.c:1060
+#: ../src/totem-playlist.c:1061
 msgid "Save Playlist"
 msgstr "שמירת רשימת השמעה"
 
-#: ../src/totem-playlist.c:1064 ../src/plugins/save-file/totem-save-file.c:123
+#: ../src/totem-playlist.c:1065 ../src/plugins/save-file/totem-save-file.c:123
 #: ../src/plugins/screenshot/totem-gallery.c:98
 msgid "_Save"
 msgstr "_שמירה"
 
 #. translators: Playlist is the default saved playlist filename,
 #. * without the suffix
-#: ../src/totem-playlist.c:1072 ../src/totem-playlist.c:1299
+#: ../src/totem-playlist.c:1073 ../src/totem-playlist.c:1300
 #: ../src/totem-sidebar.c:127
 msgid "Playlist"
 msgstr "רשימת השמעה"
 
-#: ../src/totem-playlist.c:1890
+#: ../src/totem-playlist.c:1891
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "לא ניתן לנתח את רשימת ההשמעה '%s'. יתכן שהיא פגומה."
 
-#: ../src/totem-playlist.c:1891
+#: ../src/totem-playlist.c:1892
 msgid "Playlist error"
 msgstr "שגיאה ברשימת השמעה"
 
@@ -1200,47 +1234,47 @@ msgstr "העדפות"
 msgid "Select Subtitle Font"
 msgstr "בחירת גופן כתוביות"
 
-#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:271
+#: ../src/totem-properties-main.c:116 ../src/totem-properties-view.c:281
 msgid "Audio/Video"
 msgstr "שמע/וידאו"
 
-#: ../src/totem-properties-view.c:131
+#: ../src/totem-properties-view.c:141
 msgid "N/A"
 msgstr "לא זמין"
 
-#: ../src/totem-properties-view.c:160
+#: ../src/totem-properties-view.c:170
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 msgctxt "Stream bit rate"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: ../src/totem-properties-view.c:163
+#: ../src/totem-properties-view.c:173
 #: ../src/plugins/properties/totem-movie-properties.c:152
 #: ../src/plugins/properties/totem-movie-properties.c:163
 #, c-format
 msgid "%d kbps"
 msgstr "%d ק״ב לשנייה"
 
-#: ../src/totem-properties-view.c:180
+#: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:149
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/totem-properties-view.c:212
+#: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:166
 #, c-format
 msgid "%d Hz"
 msgstr "%d הרץ"
 
-#: ../src/totem-properties-view.c:220
+#: ../src/totem-properties-view.c:230
 #: ../src/plugins/properties/totem-movie-properties.c:166
 msgctxt "Sample rate"
 msgid "N/A"
 msgstr "לא זמין"
 
-#: ../src/totem-properties-view.c:241
+#: ../src/totem-properties-view.c:251
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "לא זמין"
@@ -1437,7 +1471,7 @@ msgstr "הו_ספה"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:851
+#: ../src/totem-video-thumbnailer.c:932
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1448,15 +1482,15 @@ msgstr ""
 "‏<b>%s</b>: ‏%d×%d‏\n"
 "‏<b>%s</b>: ‏%s"
 
-#: ../src/totem-video-thumbnailer.c:852
+#: ../src/totem-video-thumbnailer.c:933
 msgid "Filename"
 msgstr "שם קובץ"
 
-#: ../src/totem-video-thumbnailer.c:854
+#: ../src/totem-video-thumbnailer.c:935
 msgid "Resolution"
 msgstr "הפרדה"
 
-#: ../src/totem-video-thumbnailer.c:857
+#: ../src/totem-video-thumbnailer.c:938
 msgid "Duration"
 msgstr "משך"
 
@@ -1499,15 +1533,15 @@ msgstr "לא ניתן להקליט את הסרט."
 msgid "Unable to write a project."
 msgstr "לא ניתן לכתוב פרויקט."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:380
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
 msgid "_Create Video Disc..."
 msgstr "יצירת _דיסק וידאו..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:381
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
 msgid "Copy Vide_o DVD..."
 msgstr "העתקת DVD _וידאו..."
 
-#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:382
+#: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
 msgid "Copy (S)VCD..."
 msgstr "העתקת וידאו ‎(S)VCD..."
 
@@ -1645,27 +1679,28 @@ msgid "Add Chapter"
 msgstr "הוספת פרק"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
-msgid "D-Bus Service"
-msgstr "שירות D-Bus"
+msgid "MPRIS D-Bus Interface"
+msgstr "ממשק MPRIS D-Bus"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
 msgid ""
-"Plugin for sending notifications of currently playing movies to the D-Bus "
-"subsystem."
-msgstr "תוסף לשליחת התרעות על הסרטים המתנגנים כעת אל תת־מערכת ה־D-Bus."
+"Send notifications of currently-playing videos and allow remote control "
+"using MPRIS."
+msgstr ""
+"שליחת התרעות על הסרטים המתנגנים כעת ואפשרות לשליטה מרחוק באמצעות MPRIS."
 
 #: ../src/plugins/dbusservice/dbusservice.py:213
-#: ../src/plugins/dbusservice/dbusservice.py:243
+#: ../src/plugins/dbusservice/dbusservice.py:244
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
 msgstr "רכיב ה־MediaPlayer2 אינו מיישם את המנשק ‘%s’"
 
-#: ../src/plugins/dbusservice/dbusservice.py:222
+#: ../src/plugins/dbusservice/dbusservice.py:223
 #, python-format
 msgid "The property ‘%s’ is not writeable."
 msgstr "המאפיין ‘%s’ אינו ניתן לכתיבה."
 
-#: ../src/plugins/dbusservice/dbusservice.py:238
+#: ../src/plugins/dbusservice/dbusservice.py:239
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "התבקש מאפיין בלתי ידוע ‘%s’ מרכיב מסוג MediaPlayer 2"
@@ -1686,17 +1721,53 @@ msgstr "הוספה לרשימת השמעה"
 msgid "Copy Location"
 msgstr "העתקת מיקום"
 
-#: ../src/plugins/grilo/totem-grilo.c:363
+#: ../src/plugins/grilo/totem-grilo.c:366
 msgid "Browse Error"
 msgstr "שגיאת עיון"
 
-#: ../src/plugins/grilo/totem-grilo.c:530
+#: ../src/plugins/grilo/totem-grilo.c:535
 msgid "Search Error"
 msgstr "שגיאה בחיפוש"
 
-#: ../src/plugins/grilo/totem-grilo.c:815
+#: ../src/plugins/grilo/totem-grilo.c:821
 msgid "Recent"
 msgstr "קבצים אחרונים"
+
+#: ../src/plugins/grilo/totem-main-toolbar.c:138
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:7
+msgid "Click on items to select them"
+msgstr "יש ללחוץ על פריטים כדי לבחור אותם"
+
+#: ../src/plugins/grilo/totem-main-toolbar.c:145
+#, c-format
+msgid "%d selected"
+msgstr "%d נבחרו"
+
+#: ../src/plugins/grilo/totem-main-toolbar.c:161
+#, c-format
+msgid "Results for “%s”"
+msgstr "תוצאות עבור „%s”"
+
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:2
+msgctxt "Item"
+msgid "New"
+msgstr "חדש"
+
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:3
+msgid "New"
+msgstr "חדש"
+
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "חיפוש"
+
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:5
+msgid "Select"
+msgstr "בחירה"
+
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:6
+msgid "Done"
+msgstr "בוצע"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1758,53 +1829,53 @@ msgstr "מוריד הכתוביות"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "חיפוש אחר כתוביות של הסרט המתנגן כעת"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:40
+#: ../src/plugins/opensubtitles/opensubtitles.py:41
 msgid "Brazilian Portuguese"
 msgstr "פורטוגזית ברזילאית"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:175
+#: ../src/plugins/opensubtitles/opensubtitles.py:176
 msgid "Searching for subtitles…"
 msgstr "מתבצע חיפוש אחר כתוביות…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:223
-#: ../src/plugins/opensubtitles/opensubtitles.py:618
+#: ../src/plugins/opensubtitles/opensubtitles.py:224
+#: ../src/plugins/opensubtitles/opensubtitles.py:619
 msgid "Downloading the subtitles…"
 msgstr "הכתוביות בהורדה…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:288
+#: ../src/plugins/opensubtitles/opensubtitles.py:289
 msgid "Could not contact the OpenSubtitles website"
 msgstr "לא ניתן לגשת לאתר ה־OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:321
-#: ../src/plugins/opensubtitles/opensubtitles.py:339
+#: ../src/plugins/opensubtitles/opensubtitles.py:322
+#: ../src/plugins/opensubtitles/opensubtitles.py:340
 msgid "Could not contact the OpenSubtitles website."
 msgstr "לא ניתן לגשת לאתר OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:327
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
 msgid "No results found."
 msgstr "אין תוצאות."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:473
 msgid "Subtitles"
 msgstr "כתוביות"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:479
 msgid "Format"
 msgstr "תצורה"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:484
 msgid "Rating"
 msgstr "ניקוד"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:523
 msgid "_Download Movie Subtitles…"
 msgstr "הורדת _כתוביות עבור הסרט…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:563
 msgid "Searching subtitles…"
 msgstr "מתבצע חיפוש אחר כתוביות…"
 
@@ -1860,25 +1931,26 @@ msgstr "מסוף Python"
 msgid "Interactive Python console"
 msgstr "מסוף Python אינטראקטיבי"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:74
+#: ../src/plugins/pythonconsole/pythonconsole.py:73
 msgid "_Python Console"
 msgstr "_מסוף Python"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:80
+#: ../src/plugins/pythonconsole/pythonconsole.py:79
 msgid "Python Debugger"
 msgstr "מנפה Python"
 
 #. pylint: disable-msg=E1101
-#: ../src/plugins/pythonconsole/pythonconsole.py:91
+#: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
 msgstr "You can access the Totem.Object through 'totem_object' :\\n%s"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:95
+#: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
 msgstr "מסוף Python של Totem"
 
-#: ../src/plugins/pythonconsole/pythonconsole.py:105
+#. pylint: disable-msg=W0613
+#: ../src/plugins/pythonconsole/pythonconsole.py:104
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
@@ -2017,7 +2089,7 @@ msgstr "שגיאה זו לא הייתה אמורה לקרות, נא לשלוח �
 msgid "Take _Screenshot"
 msgstr "צילום המ_סך"
 
-#: ../src/plugins/screenshot/totem-screenshot-plugin.c:342
+#: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
 msgid "Create Screenshot _Gallery..."
 msgstr "יצירת _גלריית צילומי מסך..."
 
@@ -2075,6 +2147,9 @@ msgstr "תוסף Zeitgeist"
 msgid "A plugin sending events to Zeitgeist"
 msgstr "תוסף ששולח אירועים ל־Zeitgeist"
 
+#~ msgid "D-Bus Service"
+#~ msgstr "שירות D-Bus"
+
 #~ msgid ""
 #~ "Whether to remember the current playlist, the playing track and position."
 #~ msgstr "האם לזכור את הרשימה הנוכחית, את הרצועה שמתנגנת ואת המיקום בה."
@@ -2108,9 +2183,6 @@ msgstr "תוסף ששולח אירועים ל־Zeitgeist"
 
 #~ msgid "Totem %s"
 #~ msgstr "Totem %s"
-
-#~ msgid "Search"
-#~ msgstr "חיפוש"
 
 #~ msgid "Stopped"
 #~ msgstr "בעצירה"
@@ -2528,15 +2600,17 @@ msgstr "תוסף ששולח אירועים ל־Zeitgeist"
 #~ msgid ""
 #~ "A format string used to build the network service name used when "
 #~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by g_get_application_name"
-#~ "() • %h: the machine's host name in title case • %u: the user's login "
-#~ "name in title case • %U: the user's real name • %%: the percent sign"
+#~ "can be used: • %a: the program name as returned by "
+#~ "g_get_application_name() • %h: the machine's host name in title case • "
+#~ "%u: the user's login name in title case • %U: the user's real name • %%: "
+#~ "the percent sign"
 #~ msgstr ""
 #~ "A format string used to build the network service name used when "
 #~ "publishing playlists over the network. The following format placeholders "
-#~ "can be used: • %a: the program name as returned by g_get_application_name"
-#~ "() • %h: the machine's host name in title case • %u: the user's login "
-#~ "name in title case • %U: the user's real name • %%: the percent sign"
+#~ "can be used: • %a: the program name as returned by "
+#~ "g_get_application_name() • %h: the machine's host name in title case • "
+#~ "%u: the user's login name in title case • %U: the user's real name • %%: "
+#~ "the percent sign"
 
 #~ msgid "Format for network service name"
 #~ msgstr "Format for network service name"
