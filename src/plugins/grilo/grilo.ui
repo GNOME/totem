@@ -31,6 +31,37 @@
     <property name="value">300</property>
     <property name="step_increment">5</property>
   </object>
+  <object class="GtkTreeStore" id="browser_recent_model">
+    <columns>
+      <!-- column-name id -->
+      <column type="gchararray"/>
+      <!-- column-name uri -->
+      <column type="gchararray"/>
+      <!-- column-name primary_text -->
+      <column type="gchararray"/>
+      <!-- column-name secondary_text -->
+      <column type="gchararray"/>
+      <!-- column-name icon -->
+      <column type="GdkPixbuf"/>
+      <!-- column-name mtime -->
+      <column type="gint64"/>
+      <!-- column-name selected -->
+      <column type="gboolean"/>
+      <!-- column-name pulse -->
+      <column type="guint"/>
+
+      <!-- column-name source -->
+      <column type="GObject"/>
+      <!-- column-name content -->
+      <column type="GObject"/>
+      <!-- column-name is_prethumbnail -->
+      <column type="gboolean"/>
+      <!-- column-name page -->
+      <column type="gint"/>
+      <!-- column-name remaining -->
+      <column type="gint"/>
+    </columns>
+  </object>
   <object class="GtkTreeStore" id="gw_browse_store_results">
     <columns>
       <!-- column-name id -->

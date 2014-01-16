@@ -109,6 +109,7 @@ typedef struct {
 
 	/* Browser widgets */
 	GtkWidget *browser;
+	GtkTreeModel *browser_recent_model;
 	GtkTreeModel *browser_model;
 	GtkTreeModel *browser_filter_model;
 	gboolean in_search;
@@ -837,6 +838,7 @@ source_added_cb (GrlRegistry *registry,
 	const gchar *name;
 	TotemGriloPlugin *self;
 	GrlSupportedOps ops;
+	const char *id;
 
 	if (source_is_blacklisted (source) ||
 	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
@@ -847,10 +849,15 @@ source_added_cb (GrlRegistry *registry,
 	}
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
-	if (g_str_equal (grl_source_get_id (source), "grl-filesystem"))
-		name = g_strdup (_("Recent"));
-	else
-		name = grl_source_get_name (source);
+	id = grl_source_get_id (source);
+	if (g_str_equal (id, "grl-filesystem") ||
+	    g_str_equal (id, "grl-optical-media")) {
+		browse (self, self->priv->browser_recent_model,
+			NULL, source, NULL, 1);
+		return;
+	}
+
+	name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
 		const GdkPixbuf *icon;
@@ -1320,6 +1327,7 @@ setup_browse (TotemGriloPlugin *self,
 
 	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
+	self->priv->browser_recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->browser, "selection-mode",
@@ -1344,7 +1352,8 @@ setup_browse (TotemGriloPlugin *self,
 	g_signal_connect (adj, "changed",
 	                  G_CALLBACK (adjustment_changed_cb), self);
 
-	set_browser_filter_model_for_path (self, NULL);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
+				self->priv->browser_recent_model);
 
 	totem_object_add_main_page (self->priv->totem,
 				    "grilo",
@@ -1486,6 +1495,7 @@ setup_ui (TotemGriloPlugin *self,
 	setup_menus (self, builder);
 
 	/* create_debug_window (self, self->priv->browser_model); */
+	/* create_debug_window (self, self->priv->browser_recent_model); */
 }
 
 static void
