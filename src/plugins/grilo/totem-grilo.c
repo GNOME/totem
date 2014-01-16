@@ -438,6 +438,7 @@ browse (TotemGriloPlugin *self,
 	GrlCaps *caps;
 
 	g_return_if_fail (source != NULL);
+	g_return_if_fail (page >= 1);
 
 	caps = grl_source_get_caps (source, GRL_OP_BROWSE);
 
