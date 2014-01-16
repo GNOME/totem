@@ -106,7 +106,6 @@ typedef struct {
 	GtkWidget *header;
 	GSimpleAction *select_all_action;
 	GSimpleAction *select_none_action;
-	GtkWidget *search_button;
 
 	/* Browser widgets */
 	GtkWidget *browser;
