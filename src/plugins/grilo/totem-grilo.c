@@ -130,6 +130,7 @@ TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GRILO_PLUGIN, TotemGriloPlugin, totem_grilo_pl
 typedef struct {
 	TotemGriloPlugin *totem_grilo;
 	GtkTreeRowReference *ref_parent;
+	GtkTreeModel *model;
 } BrowseUserData;
 
 typedef struct {
@@ -349,7 +350,6 @@ browse_cb (GrlSource *source,
            gpointer user_data,
            const GError *error)
 {
-	GtkTreeIter iter;
 	BrowseUserData *bud;
 	TotemGriloPlugin *self;
 	GtkTreeIter parent;
@@ -374,16 +374,20 @@ browse_cb (GrlSource *source,
 		GtkTreePath *path;
 		GDateTime *mtime;
 
-		path = gtk_tree_row_reference_get_path (bud->ref_parent);
-		gtk_tree_model_get_iter (self->priv->browser_model, &parent, path);
-		gtk_tree_path_free (path);
-		gtk_tree_model_get (self->priv->browser_model, &parent,
-		                    MODEL_RESULTS_REMAINING, &remaining_expected,
-		                    -1);
-		remaining_expected--;
-		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model), &parent,
-		                    MODEL_RESULTS_REMAINING, &remaining_expected,
-		                    -1);
+		if (bud->ref_parent) {
+			path = gtk_tree_row_reference_get_path (bud->ref_parent);
+			gtk_tree_model_get_iter (bud->model, &parent, path);
+			gtk_tree_path_free (path);
+
+			gtk_tree_model_get (bud->model, &parent,
+					    MODEL_RESULTS_REMAINING, &remaining_expected,
+					    -1);
+			remaining_expected--;
+			gtk_tree_store_set (GTK_TREE_STORE (bud->model), &parent,
+					    MODEL_RESULTS_REMAINING, &remaining_expected,
+					    -1);
+		}
+
 		/* Filter images */
 		if (GRL_IS_MEDIA_IMAGE (media) ||
 		    GRL_IS_MEDIA_AUDIO (media)) {
@@ -395,7 +399,7 @@ browse_cb (GrlSource *source,
 		secondary = get_secondary_text (media);
 		mtime = grl_media_get_modification_date (media);
 
-		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model), &iter, &parent, -1,
+		gtk_tree_store_insert_with_values (GTK_TREE_STORE (bud->model), NULL, bud->ref_parent ? &parent : NULL, -1,
 						   MODEL_RESULTS_SOURCE, source,
 						   MODEL_RESULTS_CONTENT, media,
 						   GD_MAIN_COLUMN_ICON, thumbnail,
@@ -423,10 +427,11 @@ out:
 
 static void
 browse (TotemGriloPlugin *self,
-        GtkTreePath *path,
-        GrlSource *source,
-        GrlMedia *container,
-        gint page)
+	GtkTreeModel     *model,
+        GtkTreePath      *path,
+        GrlSource        *source,
+        GrlMedia         *container,
+        gint              page)
 {
 	BrowseUserData *bud;
 	GrlOperationOptions *default_options;
@@ -443,9 +448,12 @@ browse (TotemGriloPlugin *self,
 	if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 
-	bud = g_slice_new (BrowseUserData);
+	bud = g_slice_new0 (BrowseUserData);
 	bud->totem_grilo = g_object_ref (self);
-	bud->ref_parent = gtk_tree_row_reference_new (self->priv->browser_model, path);
+	if (path)
+		bud->ref_parent = gtk_tree_row_reference_new (model, path);
+	bud->model = g_object_ref (model);
+
 	grl_source_browse (source,
 			   container,
 			   browse_keys (),
@@ -745,7 +753,7 @@ browser_activated_cb (GdMainView  *view,
 		                    MODEL_RESULTS_PAGE, ++page,
 		                    MODEL_RESULTS_REMAINING, PAGE_SIZE,
 		                    -1);
-		browse (self, treepath, source, content, page);
+		browse (self, self->priv->browser_model, treepath, source, content, page);
 	}
 	gtk_tree_path_free (treepath);
 
@@ -1125,7 +1133,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		                    MODEL_RESULTS_PAGE, ++page,
 		                    MODEL_RESULTS_REMAINING, PAGE_SIZE,
 		                    -1);
-		browse (self, parent_path, source, container, page);
+		browse (self, self->priv->browser_model, parent_path, source, container, page);
 		stop_processing = TRUE;
 
 	free_elements:
