@@ -1172,6 +1172,8 @@ back_button_clicked_cb (TotemMainToolbar *toolbar,
 	g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
 	g_assert (path);
 
+	/* FIXME: Remove all the items at that level */
+
 	gtk_tree_path_up (path);
 	if (gtk_tree_path_get_depth (path) == 0)
 		set_browser_filter_model_for_path (self, NULL);
