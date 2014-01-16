@@ -83,7 +83,7 @@ struct _TotemMainToolbarPrivate {
 };
 
 G_DEFINE_TYPE_WITH_CODE (TotemMainToolbar, totem_main_toolbar, GTK_TYPE_BOX,
-			 G_ADD_PRIVATE (TotemMainToolbar)
+                         G_ADD_PRIVATE (TotemMainToolbar)
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_BUILDABLE,
                                                 totem_main_toolbar_buildable_init));
 
@@ -187,14 +187,14 @@ update_toolbar_state (TotemMainToolbar *bar)
 }
 
 static void
-done_button_clicked_cb (GtkButton      *button,
+done_button_clicked_cb (GtkButton        *button,
                         TotemMainToolbar *bar)
 {
   totem_main_toolbar_set_select_mode (bar, FALSE);
 }
 
 static void
-back_button_clicked_cb (GtkButton      *button,
+back_button_clicked_cb (GtkButton        *button,
                         TotemMainToolbar *bar)
 {
   g_signal_emit_by_name (G_OBJECT (bar), "back-clicked", NULL);
@@ -202,9 +202,9 @@ back_button_clicked_cb (GtkButton      *button,
 
 static void
 totem_main_toolbar_set_property (GObject         *object,
-                               guint            prop_id,
-                               const GValue    *value,
-                               GParamSpec      *pspec)
+                                 guint            prop_id,
+                                 const GValue    *value,
+                                 GParamSpec      *pspec)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (object);
   TotemMainToolbarPrivate *priv = bar->priv;
@@ -265,9 +265,9 @@ totem_main_toolbar_set_property (GObject         *object,
 
 static void
 totem_main_toolbar_get_property (GObject         *object,
-                               guint            prop_id,
-                               GValue          *value,
-                               GParamSpec      *pspec)
+                                 guint            prop_id,
+                                 GValue          *value,
+                                 GParamSpec      *pspec)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (object);
   TotemMainToolbarPrivate *priv = bar->priv;
@@ -291,7 +291,7 @@ totem_main_toolbar_get_property (GObject         *object,
       break;
 
     case PROP_SEARCH_MODE:
-      g_value_set_boolean (value, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->search_button)));
+      g_value_set_boolean (value, totem_main_toolbar_get_search_mode (bar));
       break;
 
     case PROP_SHOW_SEARCH_BUTTON:
@@ -336,7 +336,7 @@ totem_main_toolbar_finalize (GObject *object)
 
 static void
 totem_main_toolbar_add (GtkContainer *container,
-                      GtkWidget    *child)
+                        GtkWidget    *child)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (container);
 
@@ -348,9 +348,9 @@ totem_main_toolbar_add (GtkContainer *container,
 
 static void
 totem_main_toolbar_buildable_add_child (GtkBuildable *buildable,
-				      GtkBuilder   *builder,
-				      GObject      *child,
-				      const gchar  *type)
+                                        GtkBuilder   *builder,
+                                        GObject      *child,
+                                        const gchar  *type)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (buildable);
 
@@ -500,9 +500,9 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
 
 static GtkWidget *
 create_title_box (const char *title,
-		  const char *subtitle,
-		  GtkWidget **ret_title_label,
-		  GtkWidget **ret_subtitle_label)
+                  const char *subtitle,
+                  GtkWidget **ret_title_label,
+                  GtkWidget **ret_subtitle_label)
 {
   GtkWidget *label_box;
 
@@ -606,7 +606,7 @@ totem_main_toolbar_new (void)
  **/
 void
 totem_main_toolbar_set_search_mode (TotemMainToolbar *bar,
-                                    gboolean        search_mode)
+                                    gboolean          search_mode)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -632,7 +632,7 @@ totem_main_toolbar_get_search_mode (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_select_mode (TotemMainToolbar *bar,
-                                  gboolean        select_mode)
+                                    gboolean          select_mode)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -656,7 +656,7 @@ totem_main_toolbar_get_select_mode (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_title (TotemMainToolbar *bar,
-			      const char       *title)
+                              const char       *title)
 {
   char *tmp;
 
@@ -681,7 +681,7 @@ totem_main_toolbar_get_title (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
-			         const char       *subtitle)
+                                 const char       *subtitle)
 {
   char *tmp;
 
@@ -706,7 +706,7 @@ totem_main_toolbar_get_subtitle (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_search_string (TotemMainToolbar *bar,
-                                      const char     *search_string)
+                                      const char       *search_string)
 {
   char *tmp;
 
@@ -730,7 +730,7 @@ totem_main_toolbar_get_search_string (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_n_selected (TotemMainToolbar *bar,
-                                 guint           n_selected)
+                                   guint             n_selected)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -753,7 +753,7 @@ totem_main_toolbar_get_n_selected (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_pack_start (TotemMainToolbar *bar,
-                               GtkWidget      *child)
+                               GtkWidget        *child)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -762,7 +762,7 @@ totem_main_toolbar_pack_start (TotemMainToolbar *bar,
 
 void
 totem_main_toolbar_pack_end (TotemMainToolbar *bar,
-                           GtkWidget      *child)
+                           GtkWidget          *child)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -771,7 +771,7 @@ totem_main_toolbar_pack_end (TotemMainToolbar *bar,
 
 void
 totem_main_toolbar_set_select_menu_model (TotemMainToolbar *bar,
-					GMenuModel     *model)
+                                          GMenuModel       *model)
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
@@ -788,7 +788,7 @@ totem_main_toolbar_get_select_menu_model (TotemMainToolbar *bar)
 
 void
 totem_main_toolbar_set_custom_title (TotemMainToolbar *bar,
-                                   GtkWidget      *title_widget)
+                                     GtkWidget        *title_widget)
 {
   TotemMainToolbarPrivate *priv;
 
