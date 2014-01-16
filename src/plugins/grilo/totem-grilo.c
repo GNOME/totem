@@ -1187,17 +1187,31 @@ back_button_clicked_cb (TotemMainToolbar *toolbar,
 			TotemGriloPlugin *self)
 {
 	GtkTreePath *path;
+	GtkTreeIter iter;
 
 	g_assert (self->priv->browser_filter_model);
 	g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
 	g_assert (path);
 
-	/* FIXME: Remove all the items at that level */
+	set_browser_filter_model_for_path (self, NULL);
+
+	/* Remove all the items at that level */
+	if (gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+		GtkTreeIter child;
+
+		if (gtk_tree_model_iter_children (self->priv->browser_model, &child, &iter)) {
+			while (gtk_tree_store_remove (GTK_TREE_STORE (self->priv->browser_model), &child))
+				;
+		}
+
+		gtk_tree_store_set (GTK_TREE_STORE (self->priv->browser_model), &iter,
+		                    MODEL_RESULTS_PAGE, 0,
+		                    MODEL_RESULTS_REMAINING, 0,
+		                    -1);
+	}
 
 	gtk_tree_path_up (path);
-	if (gtk_tree_path_get_depth (path) == 0)
-		set_browser_filter_model_for_path (self, NULL);
-	else
+	if (gtk_tree_path_get_depth (path) > 0)
 		set_browser_filter_model_for_path (self, path);
 	gtk_tree_path_free (path);
 }
