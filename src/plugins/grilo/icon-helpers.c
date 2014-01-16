@@ -106,7 +106,7 @@ get_stream_thumbnail_cb (GObject *source_object,
 	cancellable = g_object_get_data (G_OBJECT (simple), "cancellable");
 	gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (stream),
 						   THUMB_SEARCH_SIZE,
-						   THUMB_SEARCH_SIZE,
+						   THUMB_SEARCH_HEIGHT,
 						   TRUE,
 						   cancellable,
 						   load_thumbnail_cb,
