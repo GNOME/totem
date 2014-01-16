@@ -106,6 +106,7 @@ typedef struct {
 	GtkWidget *header;
 	GSimpleAction *select_all_action;
 	GSimpleAction *select_none_action;
+	GtkWidget *switcher;
 
 	/* Browser widgets */
 	GtkWidget *browser;
@@ -695,9 +696,11 @@ set_browser_filter_model_for_path (TotemGriloPlugin *self,
 
 	g_object_set (self->priv->header, "show-back-button", path != NULL, NULL);
 	if (path == NULL) {
-		/* FIXME show switcher */
+		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
 	} else {
 		GtkTreeIter iter;
+
+		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), NULL);
 
 		if (gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
 			char *text;
@@ -1271,6 +1274,73 @@ select_none_action_cb (GSimpleAction    *action,
 }
 
 static void
+source_switched (GtkToggleButton  *button,
+		 TotemGriloPlugin *self)
+{
+	const char *id;
+
+	if (!gtk_toggle_button_get_active (button))
+		return;
+
+	id = g_object_get_data (G_OBJECT (button), "name");
+	if (g_str_equal (id, "recent")) {
+		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
+					self->priv->browser_recent_model);
+	} else if (g_str_equal (id, "channels")) {
+		if (self->priv->browser_filter_model != NULL)
+			gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
+						self->priv->browser_filter_model);
+		else
+			set_browser_filter_model_for_path (self, NULL);
+	} else {
+		g_assert_not_reached ();
+	}
+}
+
+static GtkWidget *
+create_switcher_button (TotemGriloPlugin *self,
+			const char *label,
+			const char *id)
+{
+	GtkStyleContext *context;
+	GtkWidget *button;
+
+	button = gtk_radio_button_new_with_label (NULL, label);
+	gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+	g_object_set_data_full (G_OBJECT (button), "name", g_strdup (id), g_free);
+	g_signal_connect (G_OBJECT (button), "toggled",
+			  G_CALLBACK (source_switched), self);
+
+	context = gtk_widget_get_style_context (button);
+	gtk_style_context_add_class (context, "text-button");
+
+	return button;
+}
+
+static void
+setup_source_switcher (TotemGriloPlugin *self)
+{
+	GtkWidget *button1, *button2;
+	GtkStyleContext *context;
+
+	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+
+	button1 = create_switcher_button (self, _("Recent"), "recent");
+	gtk_container_add (GTK_CONTAINER (self->priv->switcher), button1);
+
+	button2 = create_switcher_button (self, _("Channels"), "channels");
+	gtk_radio_button_join_group (GTK_RADIO_BUTTON (button2), GTK_RADIO_BUTTON (button1));
+	gtk_container_add (GTK_CONTAINER (self->priv->switcher), button2);
+
+	context = gtk_widget_get_style_context (self->priv->switcher);
+	gtk_style_context_add_class (context, "stack-switcher");
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_LINKED);
+
+	gtk_widget_show_all (self->priv->switcher);
+	g_object_ref_sink (self->priv->switcher);
+}
+
+static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
 {
@@ -1314,6 +1384,9 @@ setup_browse (TotemGriloPlugin *self,
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->select_none_action, "enabled",
 				G_BINDING_SYNC_CREATE);
+
+	setup_source_switcher (self);
+	totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
 
 	g_signal_connect (self->priv->header, "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), self);
@@ -1556,6 +1629,8 @@ impl_deactivate (PeasActivatable *plugin)
 	unload_grilo_plugins (self);
 
 	totem_grilo_clear_icons ();
+
+	g_clear_object (&self->priv->switcher);
 
 	/* Empty results */
 	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
