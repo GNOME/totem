@@ -685,6 +685,21 @@ set_browser_filter_model_for_path (TotemGriloPlugin *self,
 				self->priv->browser_filter_model);
 
 	g_object_set (self->priv->header, "show-back-button", path != NULL, NULL);
+	if (path == NULL) {
+		/* FIXME show switcher */
+	} else {
+		GtkTreeIter iter;
+
+		if (gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+			char *text;
+
+			gtk_tree_model_get (self->priv->browser_model, &iter,
+					    GD_MAIN_COLUMN_PRIMARY_TEXT, &text,
+					    -1);
+			totem_main_toolbar_set_title (TOTEM_MAIN_TOOLBAR (self->priv->header), text);
+			g_free (text);
+		}
+	}
 }
 
 static void
