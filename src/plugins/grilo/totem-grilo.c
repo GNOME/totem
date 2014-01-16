@@ -810,8 +810,10 @@ source_is_blacklisted (GrlSource *source)
 	const gchar *id = grl_source_get_id (source);
 	const gchar **s = BLACKLIST_SOURCES;
 
+	g_assert (id);
+
 	while (*s) {
-		if (g_strcmp0 (*s, id) == 0)
+		if (g_str_has_prefix (id, *s))
 			return TRUE;
 		s++;
 	}
