@@ -34,6 +34,7 @@ GdkPixbuf       *totem_grilo_get_icon             (GrlMedia *media,
 						   gboolean *thumbnailing);
 const GdkPixbuf *totem_grilo_get_video_icon       (void);
 const GdkPixbuf *totem_grilo_get_box_icon         (void);
+const GdkPixbuf *totem_grilo_get_optical_icon     (void);
 
 void             totem_grilo_get_thumbnail        (GObject             *object,
 						   GCancellable        *cancellable,

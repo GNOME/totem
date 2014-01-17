@@ -34,6 +34,7 @@ typedef enum {
 	ICON_BOX = 0,
 	ICON_VIDEO,
 	ICON_VIDEO_THUMBNAILING,
+	ICON_OPTICAL,
 	NUM_ICONS
 } IconType;
 
@@ -233,6 +234,8 @@ totem_grilo_get_icon (GrlMedia *media,
 	if (GRL_IS_MEDIA_BOX (media))
 		return g_object_ref (icons[ICON_BOX]);
 	else if (GRL_IS_MEDIA_VIDEO (media)) {
+		if (g_str_equal (grl_media_get_source (media), "grl-optical-media"))
+			return g_object_ref (icons[ICON_OPTICAL]);
 		if (grl_media_get_thumbnail (media)) {
 			*thumbnailing = TRUE;
 			return g_object_ref (icons[ICON_VIDEO_THUMBNAILING]);
@@ -255,6 +258,12 @@ totem_grilo_get_box_icon (void)
 	return icons[ICON_BOX];
 }
 
+const GdkPixbuf *
+totem_grilo_get_optical_icon (void)
+{
+	return icons[ICON_OPTICAL];
+}
+
 void
 totem_grilo_clear_icons (void)
 {
@@ -272,6 +281,7 @@ totem_grilo_setup_icons (Totem *totem)
 	icons[ICON_BOX] = load_icon (totem, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
 	icons[ICON_VIDEO] = load_icon (totem, "folder-videos-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
 	icons[ICON_VIDEO_THUMBNAILING] = load_icon (totem, "folder-videos-symbolic", 24, TRUE);
+	icons[ICON_OPTICAL] = load_icon (totem, "media-optical-dvd-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
 
 	cache_thumbnails = g_hash_table_new_full (g_str_hash,
 						  g_str_equal,
