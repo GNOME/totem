@@ -829,6 +829,29 @@ source_is_blacklisted (GrlSource *source)
 	return FALSE;
 }
 
+static gboolean
+source_is_browse_blacklisted (GrlSource *source)
+{
+	const char *id;
+	const char const *sources[] = {
+		/* https://bugzilla.gnome.org/show_bug.cgi?id=722422 */
+		"grl-youtube",
+		NULL
+	};
+	const char **s = sources;
+
+	id = grl_source_get_id (source);
+	g_assert (id);
+
+	while (*s) {
+		if (g_str_has_prefix (id, *s))
+			return TRUE;
+		s++;
+	}
+
+	return FALSE;
+}
+
 static void
 source_added_cb (GrlRegistry *registry,
                  GrlSource *source,
@@ -858,7 +881,8 @@ source_added_cb (GrlRegistry *registry,
 
 	name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
-	if (ops & GRL_OP_BROWSE) {
+	if (ops & GRL_OP_BROWSE &&
+	    !source_is_browse_blacklisted (source)) {
 		const GdkPixbuf *icon;
 
 		icon = totem_grilo_get_box_icon ();
