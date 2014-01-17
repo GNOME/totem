@@ -92,7 +92,7 @@ typedef struct {
 	GrlSource *search_source;
 	guint search_id;
 	gint search_page;
-	gint search_remaining;
+	guint search_remaining;
 	gchar *search_text;
 
 	/* Toolbar widgets */
@@ -343,7 +343,7 @@ browse_cb (GrlSource *source,
 	TotemGriloPlugin *self;
 	GtkTreeIter parent;
 	GtkWindow *window;
-	gint remaining_expected;
+	guint remaining_expected;
 
 	bud = (BrowseUserData *) user_data;
 	self = bud->totem_grilo;
@@ -706,7 +706,7 @@ browser_activated_cb (GdMainView  *view,
                       GtkTreePath *path,
                       gpointer user_data)
 {
-	gint remaining;
+	guint remaining;
 	gint page;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
@@ -1115,7 +1115,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	GrlSource *source;
 	GrlMedia *container;
 	gint page;
-	gint remaining;
+	guint remaining;
 	gboolean stop_processing = FALSE;
 
 	if (adjustment_over_limit (adjustment) == FALSE)
@@ -1571,11 +1571,11 @@ remaining_to_text (GtkTreeViewColumn *column,
 		   GtkTreeIter       *iter,
 		   gpointer           user_data)
 {
-	gint remaining;
+	guint remaining;
 	char *text;
 
 	gtk_tree_model_get (model, iter, MODEL_RESULTS_REMAINING, &remaining, -1);
-	text = g_strdup_printf ("%d", remaining);
+	text = g_strdup_printf ("%u", remaining);
 	g_object_set (cell, "text", text, NULL);
 	g_free (text);
 }
