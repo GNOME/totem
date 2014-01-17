@@ -143,20 +143,13 @@
       </packing>
     </child>
     <child>
-      <object class="GtkScrolledWindow" id="gw_browse_window">
+      <object class="GdMainView" id="gw_browse">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <property name="shadow_type">in</property>
-        <child>
-          <object class="GdMainView" id="gw_browse">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="model">gw_browse_store_results</property>
-            <style>
-              <class name="content-view"/>
-            </style>
-          </object>
-        </child>
+        <property name="model">gw_browse_store_results</property>
+        <style>
+          <class name="content-view"/>
+        </style>
       </object>
       <packing>
         <property name="expand">True</property>

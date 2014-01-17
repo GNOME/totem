@@ -1458,7 +1458,7 @@ setup_browse (TotemGriloPlugin *self,
 	                  G_CALLBACK (context_button_pressed_cb), self);
 
 	/* Loading thumbnails or more search results */
-	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "gw_browse_window")));
+	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "gw_browse")));
 	g_signal_connect (adj, "value_changed",
 	                  G_CALLBACK (adjustment_value_changed_cb), self);
 	g_signal_connect (adj, "changed",
