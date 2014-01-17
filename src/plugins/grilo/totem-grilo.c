@@ -373,7 +373,7 @@ browse_cb (GrlSource *source,
 					    -1);
 			remaining_expected--;
 			gtk_tree_store_set (GTK_TREE_STORE (bud->model), &parent,
-					    MODEL_RESULTS_REMAINING, &remaining_expected,
+					    MODEL_RESULTS_REMAINING, remaining_expected,
 					    -1);
 		}
 
