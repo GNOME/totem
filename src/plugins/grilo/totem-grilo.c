@@ -1134,8 +1134,6 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	if (model == self->priv->browser_recent_model)
 		return;
 
-	//FIXME this is broken, our checks are on the filter model, not the original model
-
 	/* Start to check from last visible element, and check if its parent can get more elements */
 	while (gtk_tree_path_compare (start_path, end_path) <= 0 &&
 	       stop_processing == FALSE) {
