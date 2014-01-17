@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-16 03:56+0200\n"
-"PO-Revision-Date: 2014-01-16 04:04+0200\n"
+"POT-Creation-Date: 2014-01-17 14:28+0200\n"
+"PO-Revision-Date: 2014-01-17 14:30+0200\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
@@ -959,7 +959,7 @@ msgstr "_נגינה כעת"
 msgid "_Add to Playlist"
 msgstr "ה_וספה לרשימת השמעה"
 
-#: ../src/totem-dnd-menu.c:95
+#: ../src/totem-dnd-menu.c:95 ../src/plugins/grilo/totemmaintoolbar.ui.h:3
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -1714,27 +1714,39 @@ msgid "A plugin to let you browse media content from various sources"
 msgstr "תוסף המאפשר לעיין בתכני מדיה ממקורות שונים"
 
 #: ../src/plugins/grilo/grilo.ui.h:1
+msgid "Select All"
+msgstr "בחירת הכל"
+
+#: ../src/plugins/grilo/grilo.ui.h:2
+msgid "Select None"
+msgstr "ביטול הבחירה"
+
+#: ../src/plugins/grilo/grilo.ui.h:3
 msgid "Add to Playlist"
 msgstr "הוספה לרשימת השמעה"
 
-#: ../src/plugins/grilo/grilo.ui.h:2
+#: ../src/plugins/grilo/grilo.ui.h:4
 msgid "Copy Location"
 msgstr "העתקת מיקום"
 
-#: ../src/plugins/grilo/totem-grilo.c:366
+#: ../src/plugins/grilo/totem-grilo.c:355
 msgid "Browse Error"
 msgstr "שגיאת עיון"
 
-#: ../src/plugins/grilo/totem-grilo.c:535
+#: ../src/plugins/grilo/totem-grilo.c:534
 msgid "Search Error"
 msgstr "שגיאה בחיפוש"
 
-#: ../src/plugins/grilo/totem-grilo.c:821
+#: ../src/plugins/grilo/totem-grilo.c:1337
 msgid "Recent"
 msgstr "קבצים אחרונים"
 
+#: ../src/plugins/grilo/totem-grilo.c:1340
+msgid "Channels"
+msgstr "ערוצים"
+
 #: ../src/plugins/grilo/totem-main-toolbar.c:138
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:7
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:5
 msgid "Click on items to select them"
 msgstr "יש ללחוץ על פריטים כדי לבחור אותם"
 
@@ -1749,25 +1761,12 @@ msgid "Results for “%s”"
 msgstr "תוצאות עבור „%s”"
 
 #: ../src/plugins/grilo/totemmaintoolbar.ui.h:2
-msgctxt "Item"
-msgid "New"
-msgstr "חדש"
-
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:3
-msgid "New"
-msgstr "חדש"
+msgid "Select"
+msgstr "בחירה"
 
 #: ../src/plugins/grilo/totemmaintoolbar.ui.h:4
 msgid "Search"
 msgstr "חיפוש"
-
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:5
-msgid "Select"
-msgstr "בחירה"
-
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:6
-msgid "Done"
-msgstr "בוצע"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -2146,6 +2145,16 @@ msgstr "תוסף Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "תוסף ששולח אירועים ל־Zeitgeist"
+
+#~ msgctxt "Item"
+#~ msgid "New"
+#~ msgstr "חדש"
+
+#~ msgid "New"
+#~ msgstr "חדש"
+
+#~ msgid "Done"
+#~ msgstr "בוצע"
 
 #~ msgid "D-Bus Service"
 #~ msgstr "שירות D-Bus"
