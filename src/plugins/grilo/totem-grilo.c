@@ -426,14 +426,16 @@ browse (TotemGriloPlugin *self,
 	GrlCaps *caps;
 
 	g_return_if_fail (source != NULL);
-	g_return_if_fail (page >= 1);
+	g_return_if_fail (page >= 1 || page == -1);
 
 	caps = grl_source_get_caps (source, GRL_OP_BROWSE);
 
 	default_options = grl_operation_options_new (NULL);
 	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
-	grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
-	grl_operation_options_set_count (default_options, PAGE_SIZE);
+	if (page >= 1) {
+		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
+		grl_operation_options_set_count (default_options, PAGE_SIZE);
+	}
 	if (grl_caps_get_type_filter (caps) & GRL_TYPE_FILTER_VIDEO)
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 
@@ -876,7 +878,7 @@ source_added_cb (GrlRegistry *registry,
 	if (g_str_equal (id, "grl-tracker-source") ||
 	    g_str_equal (id, "grl-optical-media")) {
 		browse (self, self->priv->browser_recent_model,
-			NULL, source, NULL, 1);
+			NULL, source, NULL, -1);
 		return;
 	}
 
