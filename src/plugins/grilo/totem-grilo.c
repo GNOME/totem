@@ -107,6 +107,8 @@ typedef struct {
 	GtkTreeModel *browser_model;
 	GtkTreeModel *browser_filter_model;
 	gboolean in_search;
+	GList *browse_keys;
+	GList *search_keys;
 
 	/* Search widgets */
 	GtkWidget *search_bar;
@@ -167,42 +169,6 @@ get_secondary_text (GrlMedia *media)
 	if (duration > 0)
 		return totem_time_to_string (duration * 1000, FALSE, FALSE);
 	return NULL;
-}
-
-static GList *
-browse_keys (void)
-{
-	static GList *_browse_keys = NULL;
-
-	if (_browse_keys == NULL) {
-		_browse_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-		                                          GRL_METADATA_KEY_AUTHOR,
-		                                          GRL_METADATA_KEY_DURATION,
-		                                          GRL_METADATA_KEY_THUMBNAIL,
-		                                          GRL_METADATA_KEY_URL,
-		                                          GRL_METADATA_KEY_TITLE,
-		                                          NULL);
-	}
-
-	return _browse_keys;
-}
-
-static GList *
-search_keys (void)
-{
-	static GList *_search_keys = NULL;
-
-	if (_search_keys == NULL) {
-		_search_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-		                                          GRL_METADATA_KEY_AUTHOR,
-		                                          GRL_METADATA_KEY_DURATION,
-		                                          GRL_METADATA_KEY_THUMBNAIL,
-		                                          GRL_METADATA_KEY_URL,
-		                                          GRL_METADATA_KEY_TITLE,
-		                                          NULL);
-	}
-
-	return _search_keys;
 }
 
 static void
@@ -478,7 +444,7 @@ browse (TotemGriloPlugin *self,
 
 	grl_source_browse (source,
 			   container,
-			   browse_keys (),
+			   self->priv->browse_keys,
 			   default_options,
 			   browse_cb,
 			   bud);
@@ -644,7 +610,7 @@ search_more (TotemGriloPlugin *self)
 		self->priv->search_id =
 			grl_source_search (self->priv->search_source,
 			                   self->priv->search_text,
-			                   search_keys (),
+			                   self->priv->search_keys,
 			                   search_options,
 			                   search_cb,
 			                   self);
@@ -652,7 +618,7 @@ search_more (TotemGriloPlugin *self)
 		self->priv->search_id =
 			grl_multiple_search (NULL,
 			                     self->priv->search_text,
-			                     search_keys (),
+			                     self->priv->search_keys,
 			                     search_options,
 			                     search_cb,
 			                     self);
@@ -1685,6 +1651,21 @@ impl_activate (PeasActivatable *plugin)
 	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 	priv->main_window = totem_object_get_main_window (priv->totem);
 
+	priv->browse_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+						       GRL_METADATA_KEY_AUTHOR,
+						       GRL_METADATA_KEY_DURATION,
+						       GRL_METADATA_KEY_THUMBNAIL,
+						       GRL_METADATA_KEY_URL,
+						       GRL_METADATA_KEY_TITLE,
+						       NULL);
+	priv->search_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+						       GRL_METADATA_KEY_AUTHOR,
+						       GRL_METADATA_KEY_DURATION,
+						       GRL_METADATA_KEY_THUMBNAIL,
+						       GRL_METADATA_KEY_URL,
+						       GRL_METADATA_KEY_TITLE,
+						       NULL);
+
 	builder = gtk_builder_new_from_resource ("/org/totem/grilo/grilo.ui");
 	setup_ui (self, builder);
 	grl_init (0, NULL);
@@ -1705,6 +1686,9 @@ impl_deactivate (PeasActivatable *plugin)
 	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
 	g_signal_handlers_disconnect_by_func (registry, source_removed_cb, self);
+
+	g_clear_pointer (&self->priv->browse_keys, g_list_free);
+	g_clear_pointer (&self->priv->search_keys, g_list_free);
 
 	/* Shutdown all plugins */
 	unload_grilo_plugins (self);
