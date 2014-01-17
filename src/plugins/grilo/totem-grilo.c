@@ -1239,19 +1239,6 @@ selection_mode_requested (GdMainView       *view,
 	gtk_tree_path_free (root);
 }
 
-static void
-search_mode_changed (GObject          *gobject,
-		     GParamSpec       *pspec,
-		     TotemGriloPlugin *self)
-{
-	gboolean search_mode;
-
-	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header));
-	if (!search_mode)
-		set_browser_filter_model_for_path (self, NULL);
-
-	self->priv->in_search = search_mode;
-}
 
 static void
 view_selection_changed_cb (GdMainView       *view,
@@ -1349,6 +1336,24 @@ setup_source_switcher (TotemGriloPlugin *self)
 
 	gtk_widget_show_all (self->priv->switcher);
 	g_object_ref_sink (self->priv->switcher);
+}
+
+static void
+search_mode_changed (GObject          *gobject,
+		     GParamSpec       *pspec,
+		     TotemGriloPlugin *self)
+{
+	gboolean search_mode;
+
+	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header));
+	if (!search_mode) {
+		/* One of those will fail, as there's the toggle
+		 * button won't be active */
+		source_switched (self->priv->recent, self);
+		source_switched (self->priv->channels, self);
+	}
+
+	self->priv->in_search = search_mode;
 }
 
 static void
