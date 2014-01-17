@@ -875,29 +875,28 @@ source_added_cb (GrlRegistry *registry,
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
 	id = grl_source_get_id (source);
-	if (g_str_equal (id, "grl-tracker-source") ||
-	    g_str_equal (id, "grl-optical-media")) {
-		browse (self, self->priv->browser_recent_model,
-			NULL, source, NULL, -1);
-		return;
-	}
-
 	name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
-	if (ops & GRL_OP_BROWSE &&
-	    !source_is_browse_blacklisted (source)) {
-		const GdkPixbuf *icon;
 
-		icon = totem_grilo_get_box_icon ();
+	if (ops & GRL_OP_BROWSE) {
+		if (g_str_equal (id, "grl-tracker-source") ||
+		    g_str_equal (id, "grl-optical-media")) {
+			browse (self, self->priv->browser_recent_model,
+				NULL, source, NULL, -1);
+		} else if (!source_is_browse_blacklisted (source)) {
+			const GdkPixbuf *icon;
 
-		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
-						   NULL, NULL, -1,
-						   MODEL_RESULTS_SOURCE, source,
-						   MODEL_RESULTS_CONTENT, NULL,
-						   GD_MAIN_COLUMN_PRIMARY_TEXT, name,
-						   GD_MAIN_COLUMN_ICON, icon,
-						   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
-						   -1);
+			icon = totem_grilo_get_box_icon ();
+
+			gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
+							   NULL, NULL, -1,
+							   MODEL_RESULTS_SOURCE, source,
+							   MODEL_RESULTS_CONTENT, NULL,
+							   GD_MAIN_COLUMN_PRIMARY_TEXT, name,
+							   GD_MAIN_COLUMN_ICON, icon,
+							   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+							   -1);
+		}
 	}
 	if (ops & GRL_OP_SEARCH) {
 		/* FIXME:
