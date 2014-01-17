@@ -809,6 +809,7 @@ source_is_blacklisted (GrlSource *source)
 	const char *id;
 	const char const *sources[] = {
 		"grl-bookmarks",
+		"grl-filesystem",
 		"grl-shoutcast",
 		"grl-flickr",
 		"grl-metadata-store",
@@ -872,7 +873,7 @@ source_added_cb (GrlRegistry *registry,
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
 	id = grl_source_get_id (source);
-	if (g_str_equal (id, "grl-filesystem") ||
+	if (g_str_equal (id, "grl-tracker-source") ||
 	    g_str_equal (id, "grl-optical-media")) {
 		browse (self, self->priv->browser_recent_model,
 			NULL, source, NULL, 1);
