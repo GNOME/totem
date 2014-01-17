@@ -81,13 +81,6 @@
 
 #define TOTEM_GRILO_CONFIG_FILE "totem-grilo.conf"
 
-const gchar *BLACKLIST_SOURCES[] = { "grl-bookmarks",
-                                     "grl-shoutcast",
-                                     "grl-flickr",
-                                     "grl-metadata-store",
-                                     "grl-podcasts",
-                                     NULL };
-
 typedef struct {
 	Totem *totem;
 	GtkWindow *main_window;
@@ -846,9 +839,18 @@ item_activated_cb (GdMainView  *view,
 static gboolean
 source_is_blacklisted (GrlSource *source)
 {
-	const gchar *id = grl_source_get_id (source);
-	const gchar **s = BLACKLIST_SOURCES;
+	const char *id;
+	const char const *sources[] = {
+		"grl-bookmarks",
+		"grl-shoutcast",
+		"grl-flickr",
+		"grl-metadata-store",
+		"grl-podcasts",
+		NULL
+	};
+	const char **s = sources;
 
+	id = grl_source_get_id (source);
 	g_assert (id);
 
 	while (*s) {
