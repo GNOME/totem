@@ -722,10 +722,12 @@ set_controls_visibility (BaconVideoWidget *bvw,
 static void
 toggle_controls (BaconVideoWidget *bvw)
 {
+  gboolean value = TRUE;
+
   if (clutter_actor_get_opacity (bvw->priv->controls) != 0)
-    set_controls_visibility (bvw, FALSE);
-  else
-    set_controls_visibility (bvw, TRUE);
+    value = FALSE;
+  set_controls_visibility (bvw, value);
+  bacon_video_widget_set_show_cursor (bvw, value);
 }
 
 static void
