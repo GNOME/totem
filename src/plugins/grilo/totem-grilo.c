@@ -875,7 +875,10 @@ source_added_cb (GrlRegistry *registry,
 
 	self = TOTEM_GRILO_PLUGIN (user_data);
 	id = grl_source_get_id (source);
-	name = grl_source_get_name (source);
+	if (g_str_equal (id, "grl-tracker-source"))
+		name = _("Local");
+	else
+		name = grl_source_get_name (source);
 	ops = grl_source_supported_operations (source);
 
 	if (ops & GRL_OP_BROWSE) {
@@ -899,8 +902,6 @@ source_added_cb (GrlRegistry *registry,
 		}
 	}
 	if (ops & GRL_OP_SEARCH) {
-		/* FIXME:
-		 * Handle tracker/filesystem specifically, so that we have a "local" entry here */
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
 					       grl_source_get_id (source),
 					       name,
