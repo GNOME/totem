@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-01-14 23:51+0000\n"
-"PO-Revision-Date: 2014-01-15 10:18+0100\n"
+"POT-Creation-Date: 2014-01-17 09:10+0000\n"
+"PO-Revision-Date: 2014-01-17 11:36+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -989,7 +989,7 @@ msgstr "_Reproducir ahora"
 msgid "_Add to Playlist"
 msgstr "_Añadir a la lista de reproducción"
 
-#: ../src/totem-dnd-menu.c:95
+#: ../src/totem-dnd-menu.c:95 ../src/plugins/grilo/totemmaintoolbar.ui.h:3
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1750,34 +1750,47 @@ msgstr ""
 "fuentes"
 
 #: ../src/plugins/grilo/grilo.ui.h:1
+#| msgid "Select"
+msgid "Select All"
+msgstr "Selecccionar todo"
+
+#: ../src/plugins/grilo/grilo.ui.h:2
+#| msgid "Select"
+msgid "Select None"
+msgstr "No seleccionar nada"
+
+#: ../src/plugins/grilo/grilo.ui.h:3
 msgid "Add to Playlist"
 msgstr "Añadir a la lista de reproducción"
 
-#: ../src/plugins/grilo/grilo.ui.h:2
+#: ../src/plugins/grilo/grilo.ui.h:4
 msgid "Copy Location"
 msgstr "Copiar ubicación"
 
-#: ../src/plugins/grilo/totem-grilo.c:366
+#: ../src/plugins/grilo/totem-grilo.c:355
 msgid "Browse Error"
 msgstr "Error al examinar"
 
-#: ../src/plugins/grilo/totem-grilo.c:535
+#: ../src/plugins/grilo/totem-grilo.c:534
 msgid "Search Error"
 msgstr "Error al buscar"
 
-#: ../src/plugins/grilo/totem-grilo.c:821
+#: ../src/plugins/grilo/totem-grilo.c:1337
 msgid "Recent"
 msgstr "Recientes"
 
+#: ../src/plugins/grilo/totem-grilo.c:1340
+#| msgid "Channels:"
+msgid "Channels"
+msgstr "Canales"
+
 #: ../src/plugins/grilo/totem-main-toolbar.c:138
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:7
+#: ../src/plugins/grilo/totemmaintoolbar.ui.h:5
 msgid "Click on items to select them"
 msgstr "Pulse en los elementos para seleccionarlos"
 
 #: ../src/plugins/grilo/totem-main-toolbar.c:145
 #, c-format
-#| msgid "%d second"
-#| msgid_plural "%d seconds"
 msgid "%d selected"
 msgstr "%d seleccionado"
 
@@ -1787,25 +1800,12 @@ msgid "Results for “%s”"
 msgstr "Resultados para «%s»"
 
 #: ../src/plugins/grilo/totemmaintoolbar.ui.h:2
-msgctxt "Item"
-msgid "New"
-msgstr "Nuevo"
-
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:3
-msgid "New"
-msgstr "Nueva"
+msgid "Select"
+msgstr "Seleccionar"
 
 #: ../src/plugins/grilo/totemmaintoolbar.ui.h:4
 msgid "Search"
 msgstr "Buscar"
-
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:5
-msgid "Select"
-msgstr "Seleccionar"
-
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:6
-msgid "Done"
-msgstr "Hecho"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -2191,6 +2191,16 @@ msgstr "Complemento Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Un complemento para enviar eventos a Zeitgeist"
+
+#~ msgctxt "Item"
+#~ msgid "New"
+#~ msgstr "Nuevo"
+
+#~ msgid "New"
+#~ msgstr "Nueva"
+
+#~ msgid "Done"
+#~ msgstr "Hecho"
 
 #~ msgid "D-Bus Service"
 #~ msgstr "Servicio D-Bus"
