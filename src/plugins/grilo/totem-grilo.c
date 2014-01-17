@@ -1110,6 +1110,8 @@ static void
 get_more_browse_results_cb (GtkAdjustment *adjustment,
                             TotemGriloPlugin *self)
 {
+	GtkTreeModel *model;
+	GtkIconView *icon_view;
 	GtkTreePath *start_path;
 	GtkTreePath *end_path;
 	GtkTreePath *parent_path;
@@ -1123,26 +1125,38 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 	if (adjustment_over_limit (adjustment) == FALSE)
 		return;
 
-	if (gtk_icon_view_get_visible_range (GTK_ICON_VIEW (self->priv->browser),
-	                                     &start_path, &end_path) == FALSE) {
+	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->priv->browser)));
+
+	if (gtk_icon_view_get_visible_range (icon_view, &start_path, &end_path) == FALSE)
 		return;
-	}
+
+	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
+	if (model == self->priv->browser_recent_model)
+		return;
 
 	//FIXME this is broken, our checks are on the filter model, not the original model
 
 	/* Start to check from last visible element, and check if its parent can get more elements */
 	while (gtk_tree_path_compare (start_path, end_path) <= 0 &&
 	       stop_processing == FALSE) {
-		if (gtk_tree_path_get_depth (end_path) <= 1) {
+		GtkTreeModel *real_model;
+		GtkTreePath *path = NULL;
+
+		real_model = gtk_tree_model_filter_get_model (model);
+		path = gtk_tree_model_filter_convert_path_to_child_path (model, end_path);
+
+		if (gtk_tree_path_get_depth (path) <= 1) {
 			goto continue_next;
 		}
-		parent_path = gtk_tree_path_copy (end_path);
+
+		parent_path = gtk_tree_path_copy (path);
 		if (gtk_tree_path_up (parent_path) == FALSE ||
-		    gtk_tree_model_get_iter (self->priv->browser_model, &iter, parent_path) == FALSE) {
+		    gtk_tree_model_get_iter (real_model, &iter, parent_path) == FALSE) {
 			gtk_tree_path_free (parent_path);
 			goto continue_next;
 		}
-		gtk_tree_model_get (self->priv->browser_model,
+
+		gtk_tree_model_get (real_model,
 		                    &iter,
 		                    MODEL_RESULTS_SOURCE, &source,
 		                    MODEL_RESULTS_CONTENT, &container,
@@ -1176,6 +1190,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 
 	continue_next:
 		stop_processing = stop_processing || (gtk_tree_path_prev (end_path) == FALSE);
+		g_clear_pointer (&path, gtk_tree_path_free);
 	}
 
 	gtk_tree_path_free (start_path);
