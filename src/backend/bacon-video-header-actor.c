@@ -75,10 +75,14 @@ add_button (BaconVideoHeaderActor *header,
 	    const char            *object_name)
 {
 	GtkWidget *image;
+	GtkStyleContext *context;
 
 	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (button), image);
 	setup_object (header, object_name, button);
+	context = gtk_widget_get_style_context (button);
+	gtk_style_context_add_class (context, "image-button");
+	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
 
 	gtk_header_bar_pack_end (GTK_HEADER_BAR (header->priv->widget), button);
 	return button;
