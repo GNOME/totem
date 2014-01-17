@@ -100,6 +100,7 @@ typedef struct {
 	GSimpleAction *select_all_action;
 	GSimpleAction *select_none_action;
 	GtkWidget *switcher;
+	GtkWidget *recent, *channels;
 
 	/* Browser widgets */
 	GtkWidget *browser;
@@ -1334,12 +1335,13 @@ setup_source_switcher (TotemGriloPlugin *self)
 
 	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-	button1 = create_switcher_button (self, _("Recent"), "recent");
-	gtk_container_add (GTK_CONTAINER (self->priv->switcher), button1);
+	self->priv->recent = create_switcher_button (self, _("Recent"), "recent");
+	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->recent);
 
-	button2 = create_switcher_button (self, _("Channels"), "channels");
-	gtk_radio_button_join_group (GTK_RADIO_BUTTON (button2), GTK_RADIO_BUTTON (button1));
-	gtk_container_add (GTK_CONTAINER (self->priv->switcher), button2);
+	self->priv->channels = create_switcher_button (self, _("Channels"), "channels");
+	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->priv->channels),
+				     GTK_RADIO_BUTTON (self->priv->recent));
+	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->channels);
 
 	context = gtk_widget_get_style_context (self->priv->switcher);
 	gtk_style_context_add_class (context, "stack-switcher");
