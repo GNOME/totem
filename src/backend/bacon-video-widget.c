@@ -162,7 +162,8 @@ enum
   PROP_SATURATION,
   PROP_HUE,
   PROP_AUDIO_OUTPUT_TYPE,
-  PROP_AV_OFFSET
+  PROP_AV_OFFSET,
+  PROP_SHOW_CURSOR
 };
 
 static const gchar *video_props_str[4] = {
@@ -1078,6 +1079,17 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 						       G_MININT64, G_MAXINT64,
 						       0, G_PARAM_READWRITE |
 						       G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:show-cursor:
+   *
+   * Whether the mouse cursor is shown.
+   **/
+  g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
+                                   g_param_spec_boolean ("show-cursor", "Show cursor",
+                                                         "Whether the mouse cursor is shown.", FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
 
   /* Signals */
   /**
@@ -2800,6 +2812,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_AV_OFFSET:
       g_object_set_property (G_OBJECT (bvw->priv->play), "av-offset", value);
       break;
+    case PROP_SHOW_CURSOR:
+      bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -2865,6 +2880,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_AV_OFFSET:
       g_object_get_property (G_OBJECT (bvw->priv->play), "av-offset", value);
+      break;
+    case PROP_SHOW_CURSOR:
+      g_value_set_boolean (value, bvw->priv->cursor_shown);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
