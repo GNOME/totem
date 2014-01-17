@@ -203,12 +203,16 @@ load_icon (Totem      *totem,
 
 	/* Draw a border */
 	if (with_border) {
+		/* top */
 		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
 			put_pixel (pixels + x * 4);
+		/* bottom */
 		for (x = 0; x < THUMB_SEARCH_SIZE; x++)
 			put_pixel (pixels + (THUMB_SEARCH_HEIGHT -1) * rowstride + x * 4);
+		/* left */
 		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
 			put_pixel (pixels + y * rowstride);
+		/* right */
 		for (y = 1; y < THUMB_SEARCH_HEIGHT - 1; y++)
 			put_pixel (pixels + y * rowstride + (THUMB_SEARCH_SIZE - 1) * 4);
 	}
