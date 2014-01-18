@@ -139,6 +139,12 @@ typedef struct {
 	GtkTreeRowReference *reference;
 } SetThumbnailData;
 
+typedef struct {
+	gboolean found;
+	GtkTreeIter *iter;
+	GrlMedia *media;
+} FindMediaData;
+
 enum {
 	SEARCH_MODEL_SOURCES_SOURCE = 0,
 	SEARCH_MODEL_SOURCES_NAME,
@@ -898,6 +904,140 @@ source_is_browse_blacklisted (GrlSource *source)
 	return FALSE;
 }
 
+static gboolean
+find_media_cb (GtkTreeModel  *model,
+	       GtkTreePath   *path,
+	       GtkTreeIter   *iter,
+	       FindMediaData *data)
+{
+	GrlMedia *media;
+
+	gtk_tree_model_get (model, iter,
+			    MODEL_RESULTS_CONTENT, &media,
+			    -1);
+	if (g_strcmp0 (grl_media_get_id (media), grl_media_get_id (data->media)) == 0) {
+		g_object_unref (media);
+		data->found = TRUE;
+		data->iter = iter;
+		return TRUE;
+	}
+	g_object_unref (media);
+	return FALSE;
+}
+
+static gboolean
+find_media (GtkTreeModel *model,
+	    GrlMedia     *media,
+	    GtkTreeIter  *iter)
+{
+	FindMediaData data;
+
+	data.found = FALSE;
+	data.media = media;
+	gtk_tree_model_foreach (model, (GtkTreeModelForeachFunc) find_media_cb, &data);
+
+	*iter = *(data.iter);
+
+	return data.found;
+}
+
+static GtkTreeModel *
+get_tree_model_for_source (TotemGriloPlugin *self,
+			   GrlSource        *source)
+{
+	const char *id;
+
+	id = grl_source_get_id (source);
+	if (g_str_equal (id, "grl-tracker-source") ||
+	    g_str_equal (id, "grl-optical-media")) {
+		return self->priv->browser_recent_model;
+	}
+
+	return self->priv->browser_model;
+}
+
+static void
+content_changed (TotemGriloPlugin   *self,
+		 GrlSource          *source,
+		 GPtrArray          *changed_medias)
+{
+	GtkTreeModel *model;
+	guint i;
+
+	model = get_tree_model_for_source (self, source);
+
+	for (i = 0; i < changed_medias->len; i++) {
+		GrlMedia *media = changed_medias->pdata[i];
+		GtkTreeIter iter;
+
+		if (find_media (model, media, &iter))
+			update_media (GTK_TREE_STORE (model), &iter, source, media);
+	}
+}
+
+static void
+content_removed (TotemGriloPlugin   *self,
+		 GrlSource          *source,
+		 GPtrArray          *changed_medias)
+{
+	GtkTreeModel *model;
+	guint i;
+
+	model = get_tree_model_for_source (self, source);
+
+	for (i = 0; i < changed_medias->len; i++) {
+		GrlMedia *media = changed_medias->pdata[i];
+		GtkTreeIter iter;
+
+		if (find_media (model, media, &iter))
+			gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+	}
+}
+
+static void
+content_added (TotemGriloPlugin   *self,
+	       GrlSource          *source,
+	       GPtrArray          *changed_medias)
+{
+	GtkTreeModel *model;
+	guint i;
+
+	model = get_tree_model_for_source (self, source);
+	/* We're missing a container for the new media */
+	if (model != self->priv->browser_recent_model)
+		return;
+
+	for (i = 0; i < changed_medias->len; i++) {
+		GrlMedia *media = changed_medias->pdata[i];
+
+		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
+	}
+}
+
+static void
+content_changed_cb (GrlSource          *source,
+		    GPtrArray          *changed_medias,
+		    GrlSourceChangeType change_type,
+		    gboolean            location_unknown,
+		    TotemGriloPlugin   *self)
+{
+	switch (change_type) {
+	case GRL_CONTENT_CHANGED:
+		content_changed (self, source, changed_medias);
+		break;
+	case GRL_CONTENT_ADDED:
+		/* Added somewhere we don't know?
+		 * We'll see it again when we browse away and back again */
+		if (location_unknown)
+			return;
+		content_added (self, source, changed_medias);
+		break;
+	case GRL_CONTENT_REMOVED:
+		content_removed (self, source, changed_medias);
+		break;
+	}
+}
+
 static void
 source_added_cb (GrlRegistry *registry,
                  GrlSource *source,
@@ -925,10 +1065,13 @@ source_added_cb (GrlRegistry *registry,
 	ops = grl_source_supported_operations (source);
 
 	if (ops & GRL_OP_BROWSE) {
+		gboolean monitor = FALSE;
+
 		if (g_str_equal (id, "grl-tracker-source") ||
 		    g_str_equal (id, "grl-optical-media")) {
 			browse (self, self->priv->browser_recent_model,
 				NULL, source, NULL, -1);
+			monitor = TRUE;
 		} else if (!source_is_browse_blacklisted (source)) {
 			const GdkPixbuf *icon;
 
@@ -942,7 +1085,12 @@ source_added_cb (GrlRegistry *registry,
 							   GD_MAIN_COLUMN_ICON, icon,
 							   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
 							   -1);
+			monitor = TRUE;
 		}
+
+		if (monitor)
+			g_signal_connect (G_OBJECT (source), "content-changed",
+					  G_CALLBACK (content_changed_cb), self);
 	}
 	if (ops & GRL_OP_SEARCH) {
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
