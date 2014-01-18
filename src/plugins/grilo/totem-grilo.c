@@ -1140,8 +1140,8 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		GtkTreeModel *real_model;
 		GtkTreePath *path = NULL;
 
-		real_model = gtk_tree_model_filter_get_model (model);
-		path = gtk_tree_model_filter_convert_path_to_child_path (model, end_path);
+		real_model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
+		path = gtk_tree_model_filter_convert_path_to_child_path (GTK_TREE_MODEL_FILTER (model), end_path);
 
 		if (gtk_tree_path_get_depth (path) <= 1) {
 			goto continue_next;
@@ -1357,7 +1357,6 @@ create_switcher_button (TotemGriloPlugin *self,
 static void
 setup_source_switcher (TotemGriloPlugin *self)
 {
-	GtkWidget *button1, *button2;
 	GtkStyleContext *context;
 
 	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -1389,8 +1388,8 @@ search_mode_changed (GObject          *gobject,
 	if (!search_mode) {
 		/* One of those will fail, as there's the toggle
 		 * button won't be active */
-		source_switched (self->priv->recent, self);
-		source_switched (self->priv->channels, self);
+		source_switched (GTK_TOGGLE_BUTTON (self->priv->recent), self);
+		source_switched (GTK_TOGGLE_BUTTON (self->priv->channels), self);
 	}
 
 	self->priv->in_search = search_mode;
