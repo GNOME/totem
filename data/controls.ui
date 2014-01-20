@@ -89,15 +89,19 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkBox" id="box1">
+              <object class="GtkBox" id="box2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkMenuButton" id="go_button">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="relief">none</property>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
                     <child>
                       <object class="GtkImage" id="go_button_image">
                         <property name="visible">True</property>
@@ -107,11 +111,28 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolItem" id="volume_toolbutton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkBox" id="box1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkVolumeButton" id="volume_button">
                     <property name="visible">True</property>
@@ -127,23 +148,14 @@ audio-volume-high-symbolic
 audio-volume-low-symbolic
 audio-volume-medium-symbolic</property>
                     <property name="use_symbolic">True</property>
-                    <child internal-child="plus_button">
-                      <object class="GtkButton" id="volumebutton-plus_button">
-                        <property name="can_focus">False</property>
-                        <property name="receives_default">False</property>
-                      </object>
-                    </child>
-                    <child internal-child="minus_button">
-                      <object class="GtkButton" id="volumebutton-minus_button">
-                        <property name="can_focus">False</property>
-                        <property name="receives_default">False</property>
-                      </object>
-                    </child>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">0</property>
                   </packing>
                 </child>
               </object>
