@@ -237,12 +237,12 @@ totem_grilo_get_icon (GrlMedia *media,
 	if (GRL_IS_MEDIA_BOX (media))
 		return g_object_ref (icons[ICON_BOX]);
 	else if (GRL_IS_MEDIA_VIDEO (media)) {
-		if (g_str_equal (grl_media_get_source (media), "grl-optical-media"))
-			return g_object_ref (icons[ICON_OPTICAL]);
 		if (grl_media_get_thumbnail (media)) {
 			*thumbnailing = TRUE;
 			return g_object_ref (icons[ICON_VIDEO_THUMBNAILING]);
 		} else {
+			if (g_str_equal (grl_media_get_source (media), "grl-optical-media"))
+				return g_object_ref (icons[ICON_OPTICAL]);
 			return g_object_ref (icons[ICON_VIDEO]);
 		}
 	}
