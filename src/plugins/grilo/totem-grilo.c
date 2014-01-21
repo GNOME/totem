@@ -418,7 +418,6 @@ add_media_to_model (GtkTreeStore *model,
 	GDateTime *mtime;
 
 	thumbnail = totem_grilo_get_icon (media, &thumbnailing);
-	g_message ("thumbnailing? %d", thumbnailing);
 	secondary = get_secondary_text (media);
 	mtime = grl_media_get_modification_date (media);
 
