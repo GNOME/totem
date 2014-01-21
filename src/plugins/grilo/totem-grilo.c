@@ -105,6 +105,7 @@ typedef struct {
 	/* Browser widgets */
 	GtkWidget *browser;
 	GtkTreeModel *recent_model;
+	GtkTreeModel *recent_sort_model;
 	GtkTreeModel *browser_model;
 	GtkTreeModel *browser_filter_model;
 	gboolean in_search;
@@ -206,12 +207,19 @@ get_thumbnail_cb (GObject *source_object,
 	/* Can we find that thumbnail in the view model? */
 	view_model = gd_main_view_get_model (GD_MAIN_VIEW (thumb_data->totem_grilo->priv->browser));
 	if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
-		path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model),
-									 path);
-		if (path != NULL && gtk_tree_model_get_iter (view_model, &iter, path))
-			gtk_tree_model_row_changed (view_model, path, &iter);
+		GtkTreePath *parent_path;
+		parent_path = gtk_tree_model_filter_convert_child_path_to_path (GTK_TREE_MODEL_FILTER (view_model), path);
+		gtk_tree_path_free (path);
+		path = parent_path;
+	} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
+		GtkTreePath *parent_path;
+		parent_path = gtk_tree_model_sort_convert_child_path_to_path (GTK_TREE_MODEL_SORT (view_model), path);
+		gtk_tree_path_free (path);
+		path = parent_path;
 	}
 
+	if (path != NULL && gtk_tree_model_get_iter (view_model, &iter, path))
+		gtk_tree_model_row_changed (view_model, path, &iter);
 	g_clear_pointer (&path, gtk_tree_path_free);
 
 out:
@@ -282,6 +290,8 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 	view_model = gtk_icon_view_get_model (icon_view);
 	if (GTK_IS_TREE_MODEL_FILTER (view_model))
 		model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
+	else if (GTK_IS_TREE_MODEL_SORT (view_model))
+		model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (view_model));
 	else
 		model = view_model;
 
@@ -295,6 +305,9 @@ update_search_thumbnails_idle (TotemGriloPlugin *self)
 		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
 			path = gtk_tree_model_filter_convert_path_to_child_path (GTK_TREE_MODEL_FILTER (view_model),
 										 start_path);
+		} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
+			path = gtk_tree_model_sort_convert_path_to_child_path (GTK_TREE_MODEL_SORT (view_model),
+									       start_path);
 		} else {
 			path = gtk_tree_path_copy (start_path);
 		}
@@ -1322,7 +1335,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		return;
 
 	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
-	if (model == self->priv->recent_model)
+	if (model == self->priv->recent_sort_model)
 		return;
 
 	/* Start to check from last visible element, and check if its parent can get more elements */
@@ -1513,7 +1526,7 @@ source_switched (GtkToggleButton  *button,
 	id = g_object_get_data (G_OBJECT (button), "name");
 	if (g_str_equal (id, "recent")) {
 		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-					self->priv->recent_model);
+					self->priv->recent_sort_model);
 	} else if (g_str_equal (id, "channels")) {
 		if (self->priv->browser_filter_model != NULL)
 			gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
@@ -1586,6 +1599,43 @@ search_mode_changed (GObject          *gobject,
 	self->priv->in_search = search_mode;
 }
 
+static int
+get_source_priority (GrlSource *source)
+{
+	const char *id;
+
+	if (source == NULL)
+		return 2;
+
+	id = grl_source_get_id (source);
+	if (g_str_equal (id, "grl-optical-media"))
+		return 0;
+	if (g_str_equal (id, "grl-tracker-source"))
+		return 1;
+	return 2;
+}
+
+static int
+recent_sort_func (GtkTreeModel     *model,
+		  GtkTreeIter      *a,
+		  GtkTreeIter      *b,
+		  TotemGriloPlugin *self)
+{
+	GrlSource *source_a, *source_b;
+	int prio_a, prio_b;
+
+	gtk_tree_model_get (model, a, MODEL_RESULTS_SOURCE, &source_a, -1);
+	gtk_tree_model_get (model, b, MODEL_RESULTS_SOURCE, &source_b, -1);
+
+	prio_a = get_source_priority (source_a);
+	prio_b = get_source_priority (source_b);
+
+	g_clear_object (&source_a);
+	g_clear_object (&source_b);
+
+	return prio_a - prio_b;
+}
+
 static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
@@ -1645,6 +1695,15 @@ setup_browse (TotemGriloPlugin *self,
 	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
+	self->priv->recent_sort_model = gtk_tree_model_sort_new_with_model (self->priv->recent_model);
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
+					 MODEL_RESULTS_CONTENT,
+					 (GtkTreeIterCompareFunc) recent_sort_func,
+					 self,
+					 NULL);
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
+					      MODEL_RESULTS_CONTENT, GTK_SORT_ASCENDING);
+
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->browser, "selection-mode",
@@ -1670,7 +1729,7 @@ setup_browse (TotemGriloPlugin *self,
 	                  G_CALLBACK (adjustment_changed_cb), self);
 
 	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-				self->priv->recent_model);
+				self->priv->recent_sort_model);
 
 	totem_object_add_main_page (self->priv->totem,
 				    "grilo",
