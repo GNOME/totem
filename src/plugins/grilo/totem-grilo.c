@@ -188,6 +188,7 @@ get_thumbnail_cb (GObject *source_object,
 	SetThumbnailData *thumb_data = (SetThumbnailData *) user_data;
 	GtkTreePath *path;
 	GdkPixbuf *thumbnail;
+	const GdkPixbuf *fallback_thumbnail;
 	GtkTreeModel *view_model;
 	GError *error = NULL;
 
@@ -198,9 +199,16 @@ get_thumbnail_cb (GObject *source_object,
 	path = gtk_tree_row_reference_get_path (thumb_data->reference);
 	gtk_tree_model_get_iter (thumb_data->model, &iter, path);
 
+	if (thumbnail == NULL) {
+		if (thumb_data->media)
+			fallback_thumbnail = totem_grilo_get_video_icon ();
+		else
+			fallback_thumbnail = totem_grilo_get_box_icon ();
+	}
+
 	gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
 			    &iter,
-			    GD_MAIN_COLUMN_ICON, thumbnail ? thumbnail : totem_grilo_get_video_icon (),
+			    GD_MAIN_COLUMN_ICON, thumbnail ? thumbnail : fallback_thumbnail,
 			    -1);
 	g_clear_object (&thumbnail);
 
