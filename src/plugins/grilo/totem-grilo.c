@@ -332,6 +332,35 @@ update_search_thumbnails (TotemGriloPlugin *self)
 }
 
 static void
+add_media_to_model (GtkTreeStore *model,
+		    GtkTreeIter  *parent,
+		    GrlSource    *source,
+		    GrlMedia     *media)
+{
+	GdkPixbuf *thumbnail;
+	gboolean thumbnailing;
+	char *secondary;
+	GDateTime *mtime;
+
+	thumbnail = totem_grilo_get_icon (media, &thumbnailing);
+	secondary = get_secondary_text (media);
+	mtime = grl_media_get_modification_date (media);
+
+	gtk_tree_store_insert_with_values (GTK_TREE_STORE (model), NULL, parent, -1,
+					   MODEL_RESULTS_SOURCE, source,
+					   MODEL_RESULTS_CONTENT, media,
+					   GD_MAIN_COLUMN_ICON, thumbnail,
+					   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
+					   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+					   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+					   GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
+					   -1);
+
+	g_clear_object (&thumbnail);
+	g_free (secondary);
+}
+
+static void
 browse_cb (GrlSource *source,
            guint browse_id,
            GrlMedia *media,
@@ -357,13 +386,9 @@ browse_cb (GrlSource *source,
 	}
 
 	if (media != NULL) {
-		GdkPixbuf *thumbnail;
-		gboolean thumbnailing;
-		char *secondary;
-		GtkTreePath *path;
-		GDateTime *mtime;
-
 		if (bud->ref_parent) {
+			GtkTreePath *path;
+
 			path = gtk_tree_row_reference_get_path (bud->ref_parent);
 			gtk_tree_model_get_iter (bud->model, &parent, path);
 			gtk_tree_path_free (path);
@@ -384,22 +409,9 @@ browse_cb (GrlSource *source,
 			g_assert_not_reached ();
 		}
 
-		thumbnail = totem_grilo_get_icon (media, &thumbnailing);
-		secondary = get_secondary_text (media);
-		mtime = grl_media_get_modification_date (media);
-
-		gtk_tree_store_insert_with_values (GTK_TREE_STORE (bud->model), NULL, bud->ref_parent ? &parent : NULL, -1,
-						   MODEL_RESULTS_SOURCE, source,
-						   MODEL_RESULTS_CONTENT, media,
-						   GD_MAIN_COLUMN_ICON, thumbnail,
-						   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
-						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
-						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
-						   GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
-						   -1);
-
-		g_clear_object (&thumbnail);
-		g_free (secondary);
+		add_media_to_model (GTK_TREE_STORE (bud->model),
+				    bud->ref_parent ? &parent : NULL,
+				    source, media);
 
 		g_object_unref (media);
 	}
