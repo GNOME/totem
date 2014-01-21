@@ -85,6 +85,8 @@ typedef struct {
 	Totem *totem;
 	GtkWindow *main_window;
 
+	GrlSource *local_metadata_src;
+
 	/* Current media selected in results*/
 	GrlMedia *selected_media;
 
@@ -389,6 +391,22 @@ update_media (GtkTreeStore *model,
 }
 
 static void
+add_local_metadata (TotemGriloPlugin *self,
+		    GrlMedia         *media)
+{
+	GrlOperationOptions *options;
+
+	options = grl_operation_options_new (NULL);
+	grl_operation_options_set_flags (options, GRL_RESOLVE_FULL);
+	grl_source_resolve_sync (self->priv->local_metadata_src,
+				 media,
+				 self->priv->browse_keys,
+				 options,
+				 NULL);
+	g_object_unref (options);
+}
+
+static void
 add_media_to_model (GtkTreeStore *model,
 		    GtkTreeIter  *parent,
 		    GrlSource    *source,
@@ -400,6 +418,7 @@ add_media_to_model (GtkTreeStore *model,
 	GDateTime *mtime;
 
 	thumbnail = totem_grilo_get_icon (media, &thumbnailing);
+	g_message ("thumbnailing? %d", thumbnailing);
 	secondary = get_secondary_text (media);
 	mtime = grl_media_get_modification_date (media);
 
@@ -467,6 +486,7 @@ browse_cb (GrlSource *source,
 			g_assert_not_reached ();
 		}
 
+		add_local_metadata (self, media);
 		add_media_to_model (GTK_TREE_STORE (bud->model),
 				    bud->ref_parent ? &parent : NULL,
 				    source, media);
@@ -608,10 +628,6 @@ search_cb (GrlSource *source,
 	}
 
 	if (media != NULL) {
-		GdkPixbuf *thumbnail;
-		gboolean thumbnailing;
-		char *secondary;
-
 		self->priv->search_remaining--;
 		/* Filter images */
 		if (GRL_IS_MEDIA_IMAGE (media) ||
@@ -620,22 +636,10 @@ search_cb (GrlSource *source,
 			goto out;
 		}
 
-		thumbnail = totem_grilo_get_icon (media, &thumbnailing);
-		secondary = get_secondary_text (media);
+		add_local_metadata (self, media);
+		add_media_to_model (GTK_TREE_STORE (self->priv->search_results_model),
+				    NULL, source, media);
 
-		gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->search_results_model),
-						   NULL, NULL, -1,
-						   MODEL_RESULTS_SOURCE, source,
-						   MODEL_RESULTS_CONTENT, media,
-						   GD_MAIN_COLUMN_ICON, thumbnail,
-						   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
-						   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
-						   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
-						   -1);
-
-		if (thumbnail != NULL)
-			g_object_unref (thumbnail);
-		g_free (secondary);
 		g_object_unref (media);
 	}
 
@@ -1031,6 +1035,7 @@ content_added (TotemGriloPlugin   *self,
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
 
+		add_local_metadata (self, media);
 		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
 	}
 }
@@ -1083,6 +1088,8 @@ source_added_cb (GrlRegistry *registry,
 		name = _("Local");
 	else
 		name = grl_source_get_name (source);
+	if (g_str_equal (id, "grl-local-metadata"))
+		self->priv->local_metadata_src = source;
 	ops = grl_source_supported_operations (source);
 
 	if (ops & GRL_OP_BROWSE) {
