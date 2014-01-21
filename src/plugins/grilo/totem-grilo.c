@@ -479,7 +479,6 @@ browse_cb (GrlSource *source,
 					    -1);
 		}
 
-		/* Filter images */
 		if (GRL_IS_MEDIA_IMAGE (media) ||
 		    GRL_IS_MEDIA_AUDIO (media)) {
 			/* This isn't supposed to happen as we filter for videos */
@@ -629,11 +628,11 @@ search_cb (GrlSource *source,
 
 	if (media != NULL) {
 		self->priv->search_remaining--;
-		/* Filter images */
+
 		if (GRL_IS_MEDIA_IMAGE (media) ||
 		    GRL_IS_MEDIA_AUDIO (media)) {
-			g_object_unref (media);
-			goto out;
+			/* This isn't supposed to happen as we filter for videos */
+			g_assert_not_reached ();
 		}
 
 		add_local_metadata (self, media);
@@ -643,7 +642,6 @@ search_cb (GrlSource *source,
 		g_object_unref (media);
 	}
 
-out:
 	if (remaining == 0) {
 		self->priv->search_id = 0;
 		gtk_widget_set_sensitive (self->priv->search_entry, TRUE);
