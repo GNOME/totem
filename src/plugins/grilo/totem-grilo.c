@@ -104,7 +104,7 @@ typedef struct {
 
 	/* Browser widgets */
 	GtkWidget *browser;
-	GtkTreeModel *browser_recent_model;
+	GtkTreeModel *recent_model;
 	GtkTreeModel *browser_model;
 	GtkTreeModel *browser_filter_model;
 	gboolean in_search;
@@ -950,7 +950,7 @@ get_tree_model_for_source (TotemGriloPlugin *self,
 	id = grl_source_get_id (source);
 	if (g_str_equal (id, "grl-tracker-source") ||
 	    g_str_equal (id, "grl-optical-media")) {
-		return self->priv->browser_recent_model;
+		return self->priv->recent_model;
 	}
 
 	return self->priv->browser_model;
@@ -1004,7 +1004,7 @@ content_added (TotemGriloPlugin   *self,
 
 	model = get_tree_model_for_source (self, source);
 	/* We're missing a container for the new media */
-	if (model != self->priv->browser_recent_model)
+	if (model != self->priv->recent_model)
 		return;
 
 	for (i = 0; i < changed_medias->len; i++) {
@@ -1069,7 +1069,7 @@ source_added_cb (GrlRegistry *registry,
 
 		if (g_str_equal (id, "grl-tracker-source") ||
 		    g_str_equal (id, "grl-optical-media")) {
-			browse (self, self->priv->browser_recent_model,
+			browse (self, self->priv->recent_model,
 				NULL, source, NULL, -1);
 			monitor = TRUE;
 		} else if (!source_is_browse_blacklisted (source)) {
@@ -1322,7 +1322,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		return;
 
 	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
-	if (model == self->priv->browser_recent_model)
+	if (model == self->priv->recent_model)
 		return;
 
 	/* Start to check from last visible element, and check if its parent can get more elements */
@@ -1513,7 +1513,7 @@ source_switched (GtkToggleButton  *button,
 	id = g_object_get_data (G_OBJECT (button), "name");
 	if (g_str_equal (id, "recent")) {
 		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-					self->priv->browser_recent_model);
+					self->priv->recent_model);
 	} else if (g_str_equal (id, "channels")) {
 		if (self->priv->browser_filter_model != NULL)
 			gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
@@ -1644,7 +1644,7 @@ setup_browse (TotemGriloPlugin *self,
 
 	/* Main view */
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
-	self->priv->browser_recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
+	self->priv->recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->browser, "selection-mode",
@@ -1670,7 +1670,7 @@ setup_browse (TotemGriloPlugin *self,
 	                  G_CALLBACK (adjustment_changed_cb), self);
 
 	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
-				self->priv->browser_recent_model);
+				self->priv->recent_model);
 
 	totem_object_add_main_page (self->priv->totem,
 				    "grilo",
@@ -1850,7 +1850,7 @@ setup_ui (TotemGriloPlugin *self,
 	setup_menus (self, builder);
 
 	/* create_debug_window (self, self->priv->browser_model); */
-	/* create_debug_window (self, self->priv->browser_recent_model); */
+	/* create_debug_window (self, self->priv->recent_model); */
 }
 
 static void
