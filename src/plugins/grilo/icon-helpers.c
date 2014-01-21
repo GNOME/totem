@@ -100,7 +100,6 @@ get_stream_thumbnail_cb (GObject *source_object,
 	if (!stream) {
 		g_simple_async_result_take_error (simple, error);
 		g_simple_async_result_complete_in_idle (simple);
-		g_object_unref (res);
 		return;
 	}
 
