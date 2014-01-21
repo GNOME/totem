@@ -18,6 +18,10 @@ griloresources.c: grilo.gresource.xml totemmaintoolbar.ui grilo.ui griloresource
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
 		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-source
 
+
+BUILT_SOURCES = griloresources.h griloresources.c
+
+
 libgrilo_la_SOURCES =				\
 	totem-grilo.c				\
 	totem-search-entry.c			\
