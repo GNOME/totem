@@ -332,6 +332,36 @@ update_search_thumbnails (TotemGriloPlugin *self)
 }
 
 static void
+update_media (GtkTreeStore *model,
+	      GtkTreeIter  *iter,
+	      GrlSource    *source,
+	      GrlMedia     *media)
+{
+	GdkPixbuf *thumbnail;
+	gboolean thumbnailing;
+	char *secondary;
+	GDateTime *mtime;
+
+	thumbnail = totem_grilo_get_icon (media, &thumbnailing);
+	secondary = get_secondary_text (media);
+	mtime = grl_media_get_modification_date (media);
+
+	gtk_tree_store_set (GTK_TREE_STORE (model), iter,
+			    MODEL_RESULTS_SOURCE, source,
+			    MODEL_RESULTS_CONTENT, media,
+			    GD_MAIN_COLUMN_ICON, thumbnail,
+			    MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
+			    GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+			    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
+			    GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
+			    -1);
+
+	g_clear_object (&thumbnail);
+	g_free (secondary);
+	g_clear_pointer (&mtime, g_date_time_unref);
+}
+
+static void
 add_media_to_model (GtkTreeStore *model,
 		    GtkTreeIter  *parent,
 		    GrlSource    *source,
