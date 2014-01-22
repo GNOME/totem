@@ -60,6 +60,8 @@
       <column type="gint"/>
       <!-- column-name remaining -->
       <column type="guint"/>
+      <!-- column-name priority -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkTreeStore" id="gw_browse_store_results">
@@ -91,6 +93,8 @@
       <column type="gint"/>
       <!-- column-name remaining -->
       <column type="guint"/>
+      <!-- column-name priority -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkVBox" id="gw_search">
@@ -183,6 +187,8 @@
       <column type="GObject"/>
       <!-- column-name is_prethumbnail -->
       <column type="gboolean"/>
+      <!-- column-name priority -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkListStore" id="gw_search_store_sources">

@@ -159,6 +159,7 @@ enum {
 	MODEL_RESULTS_IS_PRETHUMBNAIL,
 	MODEL_RESULTS_PAGE,
 	MODEL_RESULTS_REMAINING,
+	MODEL_RESULTS_SORT_PRIORITY
 };
 
 static void play (TotemGriloPlugin *self,
@@ -411,6 +412,22 @@ add_local_metadata (TotemGriloPlugin *self,
 	g_object_unref (options);
 }
 
+static int
+get_source_priority (GrlSource *source)
+{
+	const char *id;
+
+	if (source == NULL)
+		return 0;
+
+	id = grl_source_get_id (source);
+	if (g_str_equal (id, "grl-optical-media"))
+		return 100;
+	if (g_str_equal (id, "grl-tracker-source"))
+		return 50;
+	return 0;
+}
+
 static void
 add_media_to_model (GtkTreeStore *model,
 		    GtkTreeIter  *parent,
@@ -421,10 +438,12 @@ add_media_to_model (GtkTreeStore *model,
 	gboolean thumbnailing;
 	char *secondary;
 	GDateTime *mtime;
+	int prio;
 
 	thumbnail = totem_grilo_get_icon (media, &thumbnailing);
 	secondary = get_secondary_text (media);
 	mtime = grl_media_get_modification_date (media);
+	prio = get_source_priority (source);
 
 	gtk_tree_store_insert_with_values (GTK_TREE_STORE (model), NULL, parent, -1,
 					   MODEL_RESULTS_SOURCE, source,
@@ -434,6 +453,7 @@ add_media_to_model (GtkTreeStore *model,
 					   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
 					   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 					   GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
+					   MODEL_RESULTS_SORT_PRIORITY, prio,
 					   -1);
 
 	g_clear_object (&thumbnail);
@@ -1616,43 +1636,6 @@ search_mode_changed (GObject          *gobject,
 	self->priv->in_search = search_mode;
 }
 
-static int
-get_source_priority (GrlSource *source)
-{
-	const char *id;
-
-	if (source == NULL)
-		return 2;
-
-	id = grl_source_get_id (source);
-	if (g_str_equal (id, "grl-optical-media"))
-		return 0;
-	if (g_str_equal (id, "grl-tracker-source"))
-		return 1;
-	return 2;
-}
-
-static int
-recent_sort_func (GtkTreeModel     *model,
-		  GtkTreeIter      *a,
-		  GtkTreeIter      *b,
-		  TotemGriloPlugin *self)
-{
-	GrlSource *source_a, *source_b;
-	int prio_a, prio_b;
-
-	gtk_tree_model_get (model, a, MODEL_RESULTS_SOURCE, &source_a, -1);
-	gtk_tree_model_get (model, b, MODEL_RESULTS_SOURCE, &source_b, -1);
-
-	prio_a = get_source_priority (source_a);
-	prio_b = get_source_priority (source_b);
-
-	g_clear_object (&source_a);
-	g_clear_object (&source_b);
-
-	return prio_a - prio_b;
-}
-
 static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
@@ -1713,13 +1696,8 @@ setup_browse (TotemGriloPlugin *self,
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
 	self->priv->recent_sort_model = gtk_tree_model_sort_new_with_model (self->priv->recent_model);
-	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
-					 MODEL_RESULTS_CONTENT,
-					 (GtkTreeIterCompareFunc) recent_sort_func,
-					 self,
-					 NULL);
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
-					      MODEL_RESULTS_CONTENT, GTK_SORT_ASCENDING);
+					      MODEL_RESULTS_SORT_PRIORITY, GTK_SORT_DESCENDING);
 
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
 	g_object_bind_property (self->priv->header, "select-mode",
