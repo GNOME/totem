@@ -124,7 +124,6 @@ totem_sidebar_setup (Totem *totem, gboolean visible)
 	gtk_notebook_set_show_border (GTK_NOTEBOOK (totem->sidebar), FALSE);
 	gtk_notebook_set_show_tabs (GTK_NOTEBOOK (totem->sidebar), FALSE);
 
-	totem_sidebar_add_page (totem, "playlist", _("Playlist"), NULL, GTK_WIDGET (totem->playlist));
 	gtk_paned_pack2 (item, totem->sidebar, FALSE, FALSE);
 
 	totem->sidebar_shown = visible;
