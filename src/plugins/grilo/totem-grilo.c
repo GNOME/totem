@@ -396,6 +396,11 @@ add_local_metadata (TotemGriloPlugin *self,
 {
 	GrlOperationOptions *options;
 
+	/* This is very slow and sync, so don't run it
+	 * for non-local media */
+	if (!g_str_equal (grl_media_get_source (media), "grl-tracker-source"))
+		return;
+
 	options = grl_operation_options_new (NULL);
 	grl_operation_options_set_flags (options, GRL_RESOLVE_FULL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
