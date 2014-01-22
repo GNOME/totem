@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* 
+/*
  * Copyright (C) 2007 Bastien Nocera <hadess@hadess.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -49,8 +49,10 @@
 #define TOTEM_MOVIE_PROPERTIES_PLUGIN_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN, TotemMoviePropertiesPluginClass))
 
 typedef struct {
-	GtkWidget    *props;
-	guint         handler_id_stream_length;
+	GtkWidget     *props;
+	GtkWidget     *dialog;
+	guint          handler_id_stream_length;
+	GSimpleAction *props_action;
 } TotemMoviePropertiesPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
@@ -231,21 +233,60 @@ totem_movie_properties_plugin_metadata_updated (TotemObject *totem,
 }
 
 static void
+properties_action_cb (GSimpleAction              *simple,
+		      GVariant                   *parameter,
+		      TotemMoviePropertiesPlugin *pi)
+{
+	gtk_widget_show (pi->priv->dialog);
+}
+
+static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;
+	GtkWindow *parent;
+	GMenu *menu;
+	GMenuItem *item;
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
 
 	pi->priv->props = bacon_video_widget_properties_new ();
 	gtk_widget_show (pi->priv->props);
-	totem_object_add_sidebar_page (totem,
-				"properties",
-				_("Properties"),
-				pi->priv->props);
 	gtk_widget_set_sensitive (pi->priv->props, FALSE);
+
+	parent = totem_object_get_main_window (totem);
+	pi->priv->dialog = gtk_dialog_new_with_buttons (_("Properties"),
+							parent,
+							GTK_DIALOG_MODAL | GTK_DIALOG_USE_HEADER_BAR | GTK_DIALOG_USE_HEADER_BAR,
+							_("Close"),
+							GTK_RESPONSE_CLOSE,
+							NULL);
+	g_object_unref (parent);
+	g_signal_connect (pi->priv->dialog, "delete-event",
+			  G_CALLBACK (gtk_widget_hide_on_delete), NULL);
+	g_signal_connect (pi->priv->dialog, "response",
+			  G_CALLBACK (gtk_widget_hide_on_delete), NULL);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (pi->priv->dialog))),
+			   pi->priv->props);
+
+	/* Properties action */
+	pi->priv->props_action = g_simple_action_new ("properties", NULL);
+	g_signal_connect (G_OBJECT (pi->priv->props_action), "activate",
+			  G_CALLBACK (properties_action_cb), pi);
+	g_action_map_add_action (G_ACTION_MAP (totem), G_ACTION (pi->priv->props_action));
+	gtk_application_add_accelerator (GTK_APPLICATION (totem),
+					 "<Primary>p",
+					 "app.properties",
+					 NULL);
+
+	/* Install the menu */
+	menu = totem_object_get_menu_section (totem, "properties-placeholder");
+	item = g_menu_item_new (_("_Properties"), "app.properties");
+	g_menu_item_set_attribute (item, "accel", "s", "<Primary>p");
+	g_menu_append_item (G_MENU (menu), item);
+	g_object_unref (item);
 
 	g_signal_connect (G_OBJECT (totem),
 			  "file-opened",
@@ -260,9 +301,9 @@ impl_activate (PeasActivatable *plugin)
 			  G_CALLBACK (totem_movie_properties_plugin_metadata_updated),
 			  plugin);
 	pi->priv->handler_id_stream_length = g_signal_connect (G_OBJECT (totem),
-							 "notify::stream-length",
-							 G_CALLBACK (stream_length_notify_cb),
-							 plugin);
+							       "notify::stream-length",
+							       G_CALLBACK (stream_length_notify_cb),
+							       plugin);
 }
 
 static void
@@ -285,6 +326,9 @@ impl_deactivate (PeasActivatable *plugin)
 					      totem_movie_properties_plugin_file_closed,
 					      plugin);
 	pi->priv->handler_id_stream_length = 0;
-	totem_object_remove_sidebar_page (totem, "properties");
-}
 
+	gtk_application_remove_accelerator (GTK_APPLICATION (totem),
+					    "app.properties",
+					    NULL);
+	totem_object_empty_menu_section (totem, "properties-placeholder");
+}
