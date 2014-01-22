@@ -1509,17 +1509,21 @@ static void
 selection_mode_requested (GdMainView       *view,
 			  TotemGriloPlugin *self)
 {
-	GtkTreePath *root;
+	GtkTreePath *root = NULL;
 
-	g_object_get (self->priv->browser_filter_model,
-		      "virtual-root", &root,
-		      NULL);
-	if (root == NULL)
-		return;
+	/* Don't allow selections when at the root of the
+	 * "Channels" view */
+	if (self->priv->browser_filter_model != NULL) {
+		g_object_get (self->priv->browser_filter_model,
+			      "virtual-root", &root,
+			      NULL);
+		if (root == NULL)
+			return;
+	}
+
 	gd_main_view_set_selection_mode (GD_MAIN_VIEW (view), TRUE);
-	gtk_tree_path_free (root);
+	g_clear_pointer (&root, gtk_tree_path_free);
 }
-
 
 static void
 view_selection_changed_cb (GdMainView       *view,
