@@ -82,8 +82,6 @@ struct TotemPlaylistPrivate
 
 	/* Widgets */
 	GtkWidget *remove_button;
-	GtkWidget *up_button;
-	GtkWidget *down_button;
 
 	/* These is the current paths for the file selectors */
 	char *path;
@@ -833,8 +831,6 @@ selection_changed (GtkTreeSelection *treeselection, TotemPlaylist *playlist)
 		sensitivity = FALSE;
 
 	gtk_widget_set_sensitive (playlist->priv->remove_button, sensitivity);
-	gtk_widget_set_sensitive (playlist->priv->up_button, sensitivity);
-	gtk_widget_set_sensitive (playlist->priv->down_button, sensitivity);
 }
 
 /* This function checks if the current item is NULL, and try to update it
@@ -941,127 +937,6 @@ void
 playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist)
 {
 	playlist_remove_files (playlist);
-}
-
-static void
-totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
-{
-	GtkTreeSelection *selection;
-	GtkTreeModel *model;
-	GtkListStore *store;
-	GtkTreeIter iter;
-	GtkTreeRowReference *current;
-	GList *paths, *refs, *l;
-	int pos;
-
-	selection = gtk_tree_view_get_selection
-		(GTK_TREE_VIEW (playlist->priv->treeview));
-	if (selection == NULL)
-		return;
-
-	model = gtk_tree_view_get_model
-		(GTK_TREE_VIEW (playlist->priv->treeview));
-	store = GTK_LIST_STORE (model);
-	pos = -2;
-	refs = NULL;
-
-	if (playlist->priv->current != NULL) {
-		current = gtk_tree_row_reference_new (model,
-				playlist->priv->current);
-	} else {
-		current = NULL;
-	}
-
-	/* Build a list of tree references */
-	paths = gtk_tree_selection_get_selected_rows (selection, NULL);
-	for (l = paths; l != NULL; l = l->next) {
-		GtkTreePath *path = l->data;
-		int cur_pos, *indices;
-
-		refs = g_list_prepend (refs,
-				gtk_tree_row_reference_new (model, path));
-		indices = gtk_tree_path_get_indices (path);
-		cur_pos = indices[0];
-		if (pos == -2)
-		{
-			pos = cur_pos;
-		} else {
-			if (direction_up == FALSE)
-				pos = MAX (cur_pos, pos);
-			else
-				pos = MIN (cur_pos, pos);
-		}
-	}
-	g_list_free_full (paths, (GDestroyNotify) gtk_tree_path_free);
-
-	/* Otherwise we reverse the items when moving down */
-	if (direction_up != FALSE)
-		refs = g_list_reverse (refs);
-
-	if (direction_up == FALSE)
-		pos = pos + 2;
-	else
-		pos = pos - 2;
-
-	for (l = refs; l != NULL; l = l->next) {
-		GtkTreeIter *position, cur;
-		GtkTreeRowReference *ref = l->data;
-		GtkTreePath *path;
-
-		if (pos < 0) {
-			position = NULL;
-		} else {
-			char *str;
-
-			str = g_strdup_printf ("%d", pos);
-			if (gtk_tree_model_get_iter_from_string (model,
-					&iter, str))
-				position = &iter;
-			else
-				position = NULL;
-
-			g_free (str);
-		}
-
-		path = gtk_tree_row_reference_get_path (ref);
-		gtk_tree_model_get_iter (model, &cur, path);
-		gtk_tree_path_free (path);
-
-		if (direction_up == FALSE)
-		{
-			pos--;
-			gtk_list_store_move_before (store, &cur, position);
-		} else {
-			gtk_list_store_move_after (store, &cur, position);
-			pos++;
-		}
-	}
-
-	g_list_free_full (refs, (GDestroyNotify) gtk_tree_row_reference_free);
-
-	/* Update the current path */
-	if (current != NULL) {
-		gtk_tree_path_free (playlist->priv->current);
-		playlist->priv->current = gtk_tree_row_reference_get_path
-			(current);
-		gtk_tree_row_reference_free (current);
-	}
-
-	g_signal_emit (G_OBJECT (playlist),
-			totem_playlist_table_signals[CHANGED], 0,
-			NULL);
-}
-
-void
-totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist)
-{
-	totem_playlist_move_files (playlist, TRUE);
-}
-
-void
-totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist)
-{
-	totem_playlist_move_files (playlist, FALSE);
 }
 
 static int
@@ -1541,8 +1416,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 
 	/* Buttons */
 	playlist->priv->remove_button = GTK_WIDGET (gtk_builder_get_object (xml, "remove_button"));
-	playlist->priv->up_button = GTK_WIDGET (gtk_builder_get_object (xml, "up_button"));
-	playlist->priv->down_button = GTK_WIDGET (gtk_builder_get_object (xml, "down_button"));
 
 	/* Join treeview and buttons */
 	widget = GTK_WIDGET (gtk_builder_get_object (xml, ("scrolledwindow1")));
