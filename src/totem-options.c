@@ -202,7 +202,7 @@ totem_options_process_for_server (Totem                     *totem,
 	}
 
 	/* No commands, no files, show ourselves */
-	if (commands == NULL && options->filenames == NULL) {
+	if (commands == NULL) {
 		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
