@@ -153,8 +153,7 @@ enum {
 enum {
 	PROP_0,
 	PROP_SHUFFLE,
-	PROP_REPEAT,
-	PROP_SAVE
+	PROP_REPEAT
 };
 
 typedef struct {
@@ -2787,10 +2786,5 @@ totem_playlist_class_init (TotemPlaylistClass *klass)
 	g_object_class_install_property (object_class, PROP_REPEAT,
 					 g_param_spec_boolean ("repeat", "Repeat",
 							       "Whether repeat mode is enabled.", FALSE,
-							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-	g_object_class_install_property (object_class, PROP_SAVE,
-					 g_param_spec_boolean ("save", "Save",
-							       "Whether to save the current session.", FALSE,
 							       G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
