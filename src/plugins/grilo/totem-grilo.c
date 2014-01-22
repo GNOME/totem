@@ -1700,8 +1700,10 @@ setup_browse (TotemGriloPlugin *self,
 	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
 	self->priv->recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
 	self->priv->recent_sort_model = gtk_tree_model_sort_new_with_model (self->priv->recent_model);
+	/* FIXME: Sorting is disabled for now
+	 * https://bugzilla.gnome.org/show_bug.cgi?id=722781
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
-					      MODEL_RESULTS_SORT_PRIORITY, GTK_SORT_DESCENDING);
+					      MODEL_RESULTS_SORT_PRIORITY, GTK_SORT_DESCENDING); */
 
 	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
 	g_object_bind_property (self->priv->header, "select-mode",
