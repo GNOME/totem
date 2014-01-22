@@ -3789,6 +3789,7 @@ playlist_widget_setup (TotemObject *totem)
 		GtkWidget *window;
 
 		window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+		gtk_window_set_default_size (GTK_WINDOW (window), 500, 400);
 		gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (totem->playlist));
 		gtk_widget_show_all (window);
 	}
