@@ -31,7 +31,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
-#include "eggfileformatchooser.h"
 #include "totem-dnd-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
@@ -55,7 +54,6 @@ static void totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 					       gconstpointer data);
 
 /* Callback function for GtkBuilder */
-G_MODULE_EXPORT void totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist);
 G_MODULE_EXPORT void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist);
 G_MODULE_EXPORT void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist);
 G_MODULE_EXPORT void totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist);
@@ -83,7 +81,6 @@ struct TotemPlaylistPrivate
 	GtkUIManager *ui_manager;
 
 	/* Widgets */
-	GtkWidget *save_button;
 	GtkWidget *remove_button;
 	GtkWidget *up_button;
 	GtkWidget *down_button;
@@ -361,15 +358,6 @@ totem_playlist_mrl_to_title (const gchar *mrl)
 	g_free (unescaped);
 
 	return filename_for_display;
-}
-
-static void
-totem_playlist_update_save_button (TotemPlaylist *playlist)
-{
-	gboolean state;
-
-	state = (!playlist->priv->disable_save_to_disk) && (PL_LEN != 0);
-	gtk_widget_set_sensitive (playlist->priv->save_button, state);
 }
 
 static gboolean
@@ -956,161 +944,6 @@ playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist)
 }
 
 static void
-totem_playlist_save_playlist (TotemPlaylist *playlist, char *filename, gint active_format)
-{
-	if (active_format == 0)
-		active_format = 1;
-
-	totem_playlist_save_current_playlist_ext (playlist, filename,
-						  save_types[active_format].type);
-}
-
-static char *
-suffix_match_replace (const char *fname, guint old_format, guint new_format)
-{
-	char *ext;
-
-	ext = g_strdup_printf (".%s", save_types[old_format].suffix);
-	if (g_str_has_suffix (fname, ext) != FALSE) {
-		char *no_suffix, *new_fname;
-
-		no_suffix = g_strndup (fname, strlen (fname) - strlen (ext));
-		new_fname = g_strconcat (no_suffix, ".", save_types[new_format].suffix, NULL);
-		g_free (no_suffix);
-		g_free (ext);
-
-		return new_fname;
-	}
-	g_free (ext);
-
-	return NULL;
-}
-
-static void
-format_selection_changed (EggFileFormatChooser *chooser, TotemPlaylist *playlist)
-{
-	guint format;
-
-	format = egg_file_format_chooser_get_format (chooser, NULL);
-
-	if (format != playlist->priv->save_format) {
-		char *fname, *new_fname;
-
-		new_fname = NULL;
-		fname = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (playlist->priv->file_chooser));
-
-		if (format == 0) {
-			/* The new format is "By extension" don't touch anything */
-		} else if (playlist->priv->save_format == 0) {
-			guint i;
-
-			for (i = 1; i < G_N_ELEMENTS (save_types); i++) {
-				new_fname = suffix_match_replace (fname, i, format);
-				if (new_fname != NULL)
-					break;
-			}
-		} else {
-			new_fname = suffix_match_replace (fname, playlist->priv->save_format, format);
-		}
-		if (new_fname != NULL) {
-			char *basename;
-
-			basename = g_path_get_basename (new_fname);
-			g_free (new_fname);
-			gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (playlist->priv->file_chooser), basename);
-			g_free (basename);
-		}
-		playlist->priv->save_format = format;
-	}
-}
-
-static GtkWidget *
-totem_playlist_save_add_format_chooser (GtkFileChooser *fc, TotemPlaylist *playlist)
-{
-	GtkWidget *format_chooser;
-	guint i;
-
-	format_chooser = egg_file_format_chooser_new ();
-
-	playlist->priv->save_format = 0;
-
-	for (i = 1; i < G_N_ELEMENTS (save_types) ; i++) {
-		egg_file_format_chooser_add_format (
-		    EGG_FILE_FORMAT_CHOOSER (format_chooser), 0, _(save_types[i].name),
-		    "gnome-mime-audio", save_types[i].suffix, NULL);
-	}
-
-	g_signal_connect (format_chooser, "selection-changed",
-			  G_CALLBACK (format_selection_changed), playlist);
-
-	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (fc),
-					   format_chooser);
-
-	return format_chooser;
-}
-
-void
-totem_playlist_save_files (GtkWidget *widget, TotemPlaylist *playlist)
-{
-	GtkWidget *fs, *format_chooser;
-	char *filename;
-	int response;
-
-	g_assert (playlist->priv->file_chooser == NULL);
-
-	fs = gtk_file_chooser_dialog_new (_("Save Playlist"),
-					  totem_playlist_get_toplevel (playlist),
-					  GTK_FILE_CHOOSER_ACTION_SAVE,
-					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("_Save"), GTK_RESPONSE_ACCEPT,
-					  NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
-	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
-	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (fs), TRUE);
-
-	/* translators: Playlist is the default saved playlist filename,
-	 * without the suffix */
-	filename = g_strconcat (_("Playlist"), ".", save_types[1].suffix, NULL);
-	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (fs), filename);
-	g_free (filename);
-	format_chooser = totem_playlist_save_add_format_chooser (GTK_FILE_CHOOSER (fs), playlist);
-
-	if (playlist->priv->save_path != NULL) {
-		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
-				playlist->priv->save_path);
-	}
-
-	playlist->priv->file_chooser = fs;
-
-	response = gtk_dialog_run (GTK_DIALOG (fs));
-	gtk_widget_hide (fs);
-
-	if (response == GTK_RESPONSE_ACCEPT) {
-		char *fname;
-		guint active_format;
-
-		fname = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
-		active_format = egg_file_format_chooser_get_format (EGG_FILE_FORMAT_CHOOSER (format_chooser),
-								    fname);
-
-		playlist->priv->file_chooser = NULL;
-		gtk_widget_destroy (fs);
-
-		if (fname == NULL)
-			return;
-
-		g_free (playlist->priv->save_path);
-		playlist->priv->save_path = g_path_get_dirname (fname);
-
-		totem_playlist_save_playlist (playlist, fname, active_format);
-		g_free (fname);
-	} else {
-		playlist->priv->file_chooser = NULL;
-		gtk_widget_destroy (fs);
-	}
-}
-
-static void
 totem_playlist_move_files (TotemPlaylist *playlist, gboolean direction_up)
 {
 	GtkTreeSelection *selection;
@@ -1554,7 +1387,6 @@ static void
 update_lockdown_cb (GSettings *settings, const gchar *key, TotemPlaylist *playlist)
 {
 	playlist->priv->disable_save_to_disk = g_settings_get_boolean (settings, "disable-save-to-disk");
-	totem_playlist_update_save_button (playlist);
 }
 
 static void
@@ -1564,7 +1396,6 @@ init_config (TotemPlaylist *playlist)
 	playlist->priv->lockdown_settings = g_settings_new ("org.gnome.desktop.lockdown");
 
 	playlist->priv->disable_save_to_disk = g_settings_get_boolean (playlist->priv->lockdown_settings, "disable-save-to-disk");
-	totem_playlist_update_save_button (playlist);
 
 	g_signal_connect (playlist->priv->lockdown_settings, "changed::disable-save-to-disk",
 			  G_CALLBACK (update_lockdown_cb), playlist);
@@ -1709,7 +1540,6 @@ totem_playlist_init (TotemPlaylist *playlist)
 			  G_CALLBACK (totem_playlist_key_press), playlist);
 
 	/* Buttons */
-	playlist->priv->save_button = GTK_WIDGET (gtk_builder_get_object (xml, "save_button"));;
 	playlist->priv->remove_button = GTK_WIDGET (gtk_builder_get_object (xml, "remove_button"));
 	playlist->priv->up_button = GTK_WIDGET (gtk_builder_get_object (xml, "up_button"));
 	playlist->priv->down_button = GTK_WIDGET (gtk_builder_get_object (xml, "down_button"));
@@ -1857,7 +1687,6 @@ totem_playlist_add_one_mrl (TotemPlaylist *playlist,
 	g_signal_emit (G_OBJECT (playlist),
 			totem_playlist_table_signals[CHANGED], 0,
 			NULL);
-	totem_playlist_update_save_button (playlist);
 
 	return TRUE;
 }
@@ -2294,8 +2123,6 @@ totem_playlist_clear (TotemPlaylist *playlist)
 
 	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
 
-	totem_playlist_update_save_button (playlist);
-
 	return TRUE;
 }
 
@@ -2466,7 +2293,6 @@ totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 	}
 	if (ref != NULL)
 		gtk_tree_row_reference_free (ref);
-	totem_playlist_update_save_button (playlist);
 	gtk_tree_view_columns_autosize (GTK_TREE_VIEW (playlist->priv->treeview));
 
 	playlist->priv->current_to_be_removed = FALSE;

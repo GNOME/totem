@@ -65,9 +65,6 @@ libtotem_la_SOURCES = \
 	totem-options.h			\
 	totem-playlist.c		\
 	totem-playlist.h		\
-	eggfileformatchooser.c		\
-	eggfileformatchooser.h		\
-	egg-macros.h			\
 	totem-session.c			\
 	totem-session.h			\
 	totem-sidebar.c			\

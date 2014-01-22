@@ -130,21 +130,6 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="save_button">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="use_action_appearance">False</property>
-            <property name="use_underline">True</property>
-	    <property name="icon_name">document-save-symbolic</property>
-	    <property name="tooltip-text" translatable="yes">Save Playlist...</property>
-	    <signal name="clicked" handler="totem_playlist_save_files"/>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="homogeneous">True</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkToolButton" id="up_button">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
