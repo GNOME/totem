@@ -320,12 +320,11 @@ plugin_button_clicked_cb (GtkButton *button,
 void
 totem_setup_preferences (Totem *totem)
 {
-	GtkWidget *menu, *content_area, *bvw;
+	GtkWidget *menu, *bvw;
 	gboolean show_visuals, lock_screensaver_on_audio;
 	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
-	GtkWidget *widget;
 	GObject *item;
 
 	static struct {
@@ -345,23 +344,7 @@ totem_setup_preferences (Totem *totem)
 
 	bvw = totem_object_get_video_widget (totem);
 
-	/* Work-around builder dialogue not parenting properly for
-	 * On top windows */
-	widget = PWID ("tpw_notebook");
-	totem->prefs = gtk_dialog_new_with_buttons (_("Preferences"),
-			GTK_WINDOW (totem->win),
-			GTK_DIALOG_DESTROY_WITH_PARENT,
-			_("_Close"),
-			GTK_RESPONSE_ACCEPT,
-			NULL);
-	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
-	content_area = gtk_dialog_get_content_area (GTK_DIALOG (totem->prefs));
-	gtk_box_set_spacing (GTK_BOX (content_area), 2);
-	gtk_widget_reparent (widget, content_area);
-	gtk_widget_show_all (content_area);
-	widget = PWID ("totem_preferences_window");
-	gtk_widget_destroy (widget);
-
+	totem->prefs = PWID ("totem_preferences_window");
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
