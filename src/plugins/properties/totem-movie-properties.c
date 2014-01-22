@@ -259,7 +259,7 @@ impl_activate (PeasActivatable *plugin)
 	parent = totem_object_get_main_window (totem);
 	pi->priv->dialog = gtk_dialog_new_with_buttons (_("Properties"),
 							parent,
-							GTK_DIALOG_MODAL | GTK_DIALOG_USE_HEADER_BAR | GTK_DIALOG_USE_HEADER_BAR,
+							GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_USE_HEADER_BAR,
 							_("Close"),
 							GTK_RESPONSE_CLOSE,
 							NULL);
