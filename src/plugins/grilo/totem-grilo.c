@@ -853,6 +853,21 @@ item_activated_cb (GdMainView  *view,
 }
 
 static gboolean
+strv_has_prefix (const char **strv,
+		 const char  *str)
+{
+	const char **s = strv;
+
+	while (*s) {
+		if (g_str_has_prefix (str, *s))
+			return TRUE;
+		s++;
+	}
+
+	return FALSE;
+}
+
+static gboolean
 source_is_blacklisted (GrlSource *source)
 {
 	const char *id;
@@ -865,18 +880,11 @@ source_is_blacklisted (GrlSource *source)
 		"grl-podcasts",
 		NULL
 	};
-	const char **s = sources;
 
 	id = grl_source_get_id (source);
 	g_assert (id);
 
-	while (*s) {
-		if (g_str_has_prefix (id, *s))
-			return TRUE;
-		s++;
-	}
-
-	return FALSE;
+	return strv_has_prefix (sources, id);
 }
 
 static gboolean
@@ -888,18 +896,11 @@ source_is_browse_blacklisted (GrlSource *source)
 		"grl-youtube",
 		NULL
 	};
-	const char **s = sources;
 
 	id = grl_source_get_id (source);
 	g_assert (id);
 
-	while (*s) {
-		if (g_str_has_prefix (id, *s))
-			return TRUE;
-		s++;
-	}
-
-	return FALSE;
+	return strv_has_prefix (sources, id);
 }
 
 static gboolean
