@@ -167,11 +167,6 @@ enum {
 	MODEL_RESULTS_SORT_PRIORITY
 };
 
-static void play (TotemGriloPlugin *self,
-                  GrlSource *source,
-                  GrlMedia *media,
-                  gboolean resolve_url);
-
 static gchar *
 get_secondary_text (GrlMedia *media)
 {
@@ -574,21 +569,6 @@ browse (TotemGriloPlugin *self,
 }
 
 static void
-resolve_url_cb (GrlSource *source,
-                guint op_id,
-                GrlMedia *media,
-                gpointer user_data,
-                const GError *error)
-{
-	if (error != NULL) {
-		g_warning ("Failed to resolve URL for media: %s", error->message);
-		return;
-	}
-
-	play (TOTEM_GRILO_PLUGIN (user_data), source, media, FALSE);
-}
-
-static void
 play (TotemGriloPlugin *self,
       GrlSource *source,
       GrlMedia *media,
@@ -597,42 +577,19 @@ play (TotemGriloPlugin *self,
 	const gchar *url;
 
 	url = grl_media_get_url (media);
-	if (url != NULL) {
-		totem_object_clear_playlist (self->priv->totem);
-		totem_object_add_to_playlist (self->priv->totem, url,
-					      grl_media_get_title (media),
-					      TRUE);
+	if (!url)
+		url = grl_media_get_external_url (media);
+	if (!url) {
+		g_warning ("Cannot find URL for %s (source: %s), please file a bug at https://bugzilla.gnome.org/",
+			   grl_media_get_id (media),
+			   grl_media_get_source (media));
 		return;
 	}
 
-	/* If url is a slow key, then we need to full resolve it */
-	if (resolve_url &&
-	    grl_source_supported_operations (source) & GRL_OP_RESOLVE) {
-		const GList *slow_keys;
-
-		slow_keys = grl_source_slow_keys (source);
-
-		if (g_list_find ((GList *) slow_keys, GINT_TO_POINTER (GRL_METADATA_KEY_URL)) != NULL) {
-			GList *url_keys;
-			GrlOperationOptions *resolve_options;
-
-			resolve_options = grl_operation_options_new (NULL);
-			grl_operation_options_set_flags (resolve_options, RESOLVE_FLAGS);
-
-			url_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_URL, NULL);
-			grl_source_resolve (source, media, url_keys, resolve_options, resolve_url_cb, self);
-
-			g_object_unref (resolve_options);
-			g_list_free (url_keys);
-			return;
-		}
-	} else if (resolve_url) {
-		/* If source does not support resolve() operation, then use the current media */
-		resolve_url_cb (source, 0, media, NULL, NULL);
-		return;
-	}
-
-	g_warning ("Current element has no URL to play");
+	totem_object_clear_playlist (self->priv->totem);
+	totem_object_add_to_playlist (self->priv->totem, url,
+				      grl_media_get_title (media),
+				      TRUE);
 }
 
 static void
@@ -1735,12 +1692,15 @@ play_selection (TotemGriloPlugin *self,
 				    -1);
 
 		url = grl_media_get_url (media);
+		if (!url)
+			url = grl_media_get_external_url (media);
 		if (!url) {
-			g_message ("FIXME: resolve");
+			g_warning ("Cannot find URL for %s (source: %s), please file a bug at https://bugzilla.gnome.org/",
+				   grl_media_get_id (media),
+				   grl_media_get_source (media));
 			goto next_item;
 		}
 
-		g_message ("title: %s", grl_media_get_title (media));
 		totem_object_add_to_playlist (self->priv->totem, url,
 					      grl_media_get_title (media),
 					      first);
