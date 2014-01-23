@@ -27,7 +27,7 @@
 
 #include <icon-helpers.h>
 
-#define THUMB_SEARCH_SIZE     128
+#define THUMB_SEARCH_SIZE     256
 #define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
 
 typedef enum {
