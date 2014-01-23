@@ -1718,6 +1718,7 @@ next_item:
 	}
 
 	g_ptr_array_free (items, FALSE);
+	g_object_set (G_OBJECT (self->priv->browser), "selection-mode", FALSE, NULL);
 }
 
 static void
