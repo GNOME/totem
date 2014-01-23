@@ -104,8 +104,7 @@ typedef struct {
 	GtkTreeModel *browser_model;
 	GtkTreeModel *browser_filter_model;
 	gboolean in_search;
-	GList *browse_keys;
-	GList *search_keys;
+	GList *metadata_keys;
 
 	/* Search widgets */
 	GtkWidget *search_bar;
@@ -394,7 +393,7 @@ add_local_metadata (TotemGriloPlugin *self,
 	grl_operation_options_set_flags (options, GRL_RESOLVE_FULL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
 				 media,
-				 self->priv->browse_keys,
+				 self->priv->metadata_keys,
 				 options,
 				 NULL);
 	g_object_unref (options);
@@ -548,7 +547,7 @@ browse (TotemGriloPlugin *self,
 
 	grl_source_browse (source,
 			   container,
-			   self->priv->browse_keys,
+			   self->priv->metadata_keys,
 			   default_options,
 			   browse_cb,
 			   bud);
@@ -660,7 +659,7 @@ search_more (TotemGriloPlugin *self)
 		self->priv->search_id =
 			grl_source_search (self->priv->search_source,
 			                   self->priv->search_text,
-			                   self->priv->search_keys,
+			                   self->priv->metadata_keys,
 			                   search_options,
 			                   search_cb,
 			                   self);
@@ -668,7 +667,7 @@ search_more (TotemGriloPlugin *self)
 		self->priv->search_id =
 			grl_multiple_search (NULL,
 			                     self->priv->search_text,
-			                     self->priv->search_keys,
+			                     self->priv->metadata_keys,
 			                     search_options,
 			                     search_cb,
 			                     self);
@@ -1901,20 +1900,13 @@ impl_activate (PeasActivatable *plugin)
 	priv->totem = g_object_ref (g_object_get_data (G_OBJECT (plugin), "object"));
 	priv->main_window = totem_object_get_main_window (priv->totem);
 
-	priv->browse_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-						       GRL_METADATA_KEY_AUTHOR,
-						       GRL_METADATA_KEY_DURATION,
-						       GRL_METADATA_KEY_THUMBNAIL,
-						       GRL_METADATA_KEY_URL,
-						       GRL_METADATA_KEY_TITLE,
-						       NULL);
-	priv->search_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-						       GRL_METADATA_KEY_AUTHOR,
-						       GRL_METADATA_KEY_DURATION,
-						       GRL_METADATA_KEY_THUMBNAIL,
-						       GRL_METADATA_KEY_URL,
-						       GRL_METADATA_KEY_TITLE,
-						       NULL);
+	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+							 GRL_METADATA_KEY_AUTHOR,
+							 GRL_METADATA_KEY_DURATION,
+							 GRL_METADATA_KEY_THUMBNAIL,
+							 GRL_METADATA_KEY_URL,
+							 GRL_METADATA_KEY_TITLE,
+							 NULL);
 
 	builder = gtk_builder_new_from_resource ("/org/totem/grilo/grilo.ui");
 	setup_ui (self, builder);
@@ -1937,8 +1929,7 @@ impl_deactivate (PeasActivatable *plugin)
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
 	g_signal_handlers_disconnect_by_func (registry, source_removed_cb, self);
 
-	g_clear_pointer (&self->priv->browse_keys, g_list_free);
-	g_clear_pointer (&self->priv->search_keys, g_list_free);
+	g_clear_pointer (&self->priv->metadata_keys, g_list_free);
 
 	/* Shutdown all plugins */
 	unload_grilo_plugins (self);
