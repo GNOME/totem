@@ -193,15 +193,17 @@ totem_playlist_get_toplevel (TotemPlaylist *playlist)
 static void
 set_waiting_cursor (TotemPlaylist *playlist)
 {
+	/* FIXME: Use g_application_mark_busy()
 	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))));
-	playlist->priv->cursor_ref++;
+	playlist->priv->cursor_ref++; */
 }
 
 static void
 unset_waiting_cursor (TotemPlaylist *playlist)
 {
+	/* FIXME: Use g_application_unmark_busy()
 	if (--playlist->priv->cursor_ref < 1)
-		gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))), NULL);
+		gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))), NULL); */
 }
 
 static void
