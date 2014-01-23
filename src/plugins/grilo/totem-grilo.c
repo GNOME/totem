@@ -117,10 +117,6 @@ typedef struct {
 	/* Selection toolbar */
 	GtkWidget *selection_bar;
 	GtkWidget *selection_revealer;
-
-	/* Popup */
-	GtkUIManager *ui_manager;
-	GtkActionGroup *action_group;
 } TotemGriloPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER (TOTEM_TYPE_GRILO_PLUGIN, TotemGriloPlugin, totem_grilo_plugin)
