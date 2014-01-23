@@ -106,13 +106,11 @@ typedef enum {
 
 /**
  * TotemRemoteSetting:
- * @TOTEM_REMOTE_SETTING_SHUFFLE: whether shuffle is enabled
  * @TOTEM_REMOTE_SETTING_REPEAT: whether repeat is enabled
  *
  * Represents a boolean setting or preference on a remote Totem instance.
  **/
 typedef enum {
-	TOTEM_REMOTE_SETTING_SHUFFLE,
 	TOTEM_REMOTE_SETTING_REPEAT
 } TotemRemoteSetting;
 

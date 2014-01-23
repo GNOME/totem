@@ -1064,7 +1064,6 @@ totem_remote_setting_get_type (void)
 
 	if (etype == 0) {
 		static const GEnumValue values[] = {
-			ENUM_ENTRY (TOTEM_REMOTE_SETTING_SHUFFLE, "shuffle"),
 			ENUM_ENTRY (TOTEM_REMOTE_SETTING_REPEAT, "repeat"),
 			{ 0, NULL, NULL }
 		};
@@ -2845,9 +2844,6 @@ void totem_object_remote_set_setting (TotemObject *totem,
 	GAction *action;
 
 	switch (setting) {
-	case TOTEM_REMOTE_SETTING_SHUFFLE:
-		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
-		break;
 	case TOTEM_REMOTE_SETTING_REPEAT:
 		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 		break;
@@ -2879,9 +2875,6 @@ totem_object_remote_get_setting (TotemObject        *totem,
 	action = NULL;
 
 	switch (setting) {
-	case TOTEM_REMOTE_SETTING_SHUFFLE:
-		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
-		break;
 	case TOTEM_REMOTE_SETTING_REPEAT:
 		action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 		break;
@@ -2966,18 +2959,6 @@ playlist_repeat_toggle_cb (TotemPlaylist *playlist, GParamSpec *pspec, TotemObje
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
 				   g_variant_new_boolean (repeat));
-}
-
-static void
-playlist_shuffle_toggle_cb (TotemPlaylist *playlist, GParamSpec *pspec, TotemObject *totem)
-{
-	GAction *action;
-	gboolean shuffle;
-
-	shuffle = totem_playlist_get_shuffle (playlist);
-	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
-	g_simple_action_set_state (G_SIMPLE_ACTION (action),
-				   g_variant_new_boolean (shuffle));
 }
 
 /**
@@ -3697,9 +3678,6 @@ totem_callback_connect (TotemObject *totem)
 	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
 	g_simple_action_set_state (G_SIMPLE_ACTION (gaction),
 				   g_variant_new_boolean (totem_playlist_get_repeat (totem->playlist)));
-	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "shuffle");
-	g_simple_action_set_state (G_SIMPLE_ACTION (gaction),
-				   g_variant_new_boolean (totem_playlist_get_shuffle (totem->playlist)));
 
 	/* Controls */
 	box = g_object_get_data (totem->controls, "controls_box");
@@ -3812,10 +3790,6 @@ playlist_widget_setup (TotemObject *totem)
 	g_signal_connect (G_OBJECT (totem->playlist),
 			  "notify::repeat",
 			  G_CALLBACK (playlist_repeat_toggle_cb),
-			  totem);
-	g_signal_connect (G_OBJECT (totem->playlist),
-			  "notify::shuffle",
-			  G_CALLBACK (playlist_shuffle_toggle_cb),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->playlist),
 			  "subtitle-changed",

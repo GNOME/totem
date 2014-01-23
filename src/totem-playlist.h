@@ -150,10 +150,6 @@ void       totem_playlist_set_next (TotemPlaylist *playlist);
 gboolean   totem_playlist_get_repeat (TotemPlaylist *playlist);
 void       totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat);
 
-gboolean   totem_playlist_get_shuffle (TotemPlaylist *playlist);
-void       totem_playlist_set_shuffle (TotemPlaylist *playlist,
-				       gboolean shuffle);
-
 gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state);
 TotemPlaylistStatus totem_playlist_get_playing (TotemPlaylist *playlist);
 

@@ -138,19 +138,6 @@ zoom_action_change_state (GSimpleAction *action,
 }
 
 static void
-shuffle_change_state (GSimpleAction *action,
-		      GVariant      *value,
-		      gpointer       user_data)
-{
-	gboolean param;
-
-	param = g_variant_get_boolean (value);
-	totem_playlist_set_shuffle (TOTEM_OBJECT (user_data)->playlist, param);
-
-	g_simple_action_set_state (action, value);
-}
-
-static void
 repeat_change_state (GSimpleAction *action,
 		     GVariant      *value,
 		     gpointer       user_data)
@@ -278,7 +265,6 @@ static GActionEntry app_entries[] = {
 	{ "open-location", open_location_action_cb, NULL, NULL, NULL },
 	{ "fullscreen", toggle_action_cb, NULL, "false", fullscreen_change_state },
 	{ "preferences", preferences_action_cb, NULL, NULL, NULL },
-	{ "shuffle", toggle_action_cb, NULL, "false", shuffle_change_state },
 	{ "repeat", toggle_action_cb, NULL, "false", repeat_change_state },
 	{ "help", help_action_cb, NULL, NULL, NULL },
 	{ "quit", quit_action_cb, NULL, NULL, NULL },
