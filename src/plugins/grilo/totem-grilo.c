@@ -140,6 +140,11 @@ typedef struct {
 	GrlMedia *media;
 } FindMediaData;
 
+typedef struct {
+	GtkTreeModel *model;
+	gboolean all_removable;
+} CanRemoveData;
+
 enum {
 	SEARCH_MODEL_SOURCES_SOURCE = 0,
 	SEARCH_MODEL_SOURCES_NAME,
@@ -151,7 +156,8 @@ enum {
 	MODEL_RESULTS_IS_PRETHUMBNAIL,
 	MODEL_RESULTS_PAGE,
 	MODEL_RESULTS_REMAINING,
-	MODEL_RESULTS_SORT_PRIORITY
+	MODEL_RESULTS_SORT_PRIORITY,
+	MODEL_RESULTS_CAN_REMOVE
 };
 
 static gchar *
@@ -208,6 +214,29 @@ get_title (GrlMedia *media)
 	}
 
 	return g_strdup (grl_media_get_title (media));
+}
+
+static gboolean
+can_remove (GrlSource *source,
+	    GrlMedia  *media)
+{
+	const char *url;
+	char *scheme;
+	gboolean ret;
+
+	if (grl_source_supported_operations (source) & GRL_OP_REMOVE)
+		return TRUE;
+	if (GRL_IS_MEDIA_BOX (media))
+		return FALSE;
+	url = grl_media_get_url (media);
+	if (!url)
+		return FALSE;
+
+	scheme = g_uri_parse_scheme (url);
+	ret = g_str_equal (scheme, "file");
+	g_free (scheme);
+
+	return ret;
 }
 
 static void
@@ -482,6 +511,7 @@ add_media_to_model (GtkTreeStore *model,
 					   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 					   GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
 					   MODEL_RESULTS_SORT_PRIORITY, prio,
+					   MODEL_RESULTS_CAN_REMOVE, can_remove (source, media),
 					   -1);
 
 	g_clear_object (&thumbnail);
@@ -1433,18 +1463,48 @@ selection_mode_requested (GdMainView       *view,
 }
 
 static void
+can_remove_foreach (gpointer data,
+		    gpointer user_data)
+{
+	CanRemoveData *can_remove_data = user_data;
+	GtkTreePath *path = data;
+	GtkTreeIter iter;
+	gboolean removable = FALSE;
+
+	gtk_tree_model_get_iter (can_remove_data->model, &iter, path);
+	gtk_tree_model_get (can_remove_data->model, &iter,
+	                    MODEL_RESULTS_CAN_REMOVE, &removable,
+	                    -1);
+
+	if (!removable)
+		can_remove_data->all_removable = FALSE;
+}
+
+static void
 view_selection_changed_cb (GdMainView       *view,
 			   TotemGriloPlugin *self)
 {
+	GtkTreeModel *model;
 	GList *list;
 	guint count;
+	CanRemoveData data;
 
 	list = gd_main_view_get_selection (view);
+	model = gd_main_view_get_model (view);
+
 	count = g_list_length (list);
+	if (count == 0) {
+		data.all_removable = FALSE;
+	} else {
+		data.model = model;
+		data.all_removable = TRUE;
+		g_list_foreach (list, can_remove_foreach, &data);
+	}
 	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 
 	totem_main_toolbar_set_n_selected (TOTEM_MAIN_TOOLBAR (self->priv->header), count);
 	totem_selection_toolbar_set_n_selected (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), count);
+	totem_selection_toolbar_set_delete_button_sensitive (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), data.all_removable);
 }
 
 static void
@@ -1675,10 +1735,75 @@ shuffle_cb (TotemSelectionToolbar *bar,
 }
 
 static void
+delete_foreach (gpointer data,
+		gpointer user_data)
+{
+	GtkTreePath *path = data;
+	GtkTreeModel *view_model = user_data;
+	GtkTreeIter iter;
+	GrlSource *source;
+	GrlMedia *media;
+	gboolean success;
+	GError *error = NULL;
+
+	gtk_tree_model_get_iter (view_model, &iter, path);
+	gtk_tree_model_get (view_model, &iter,
+			    MODEL_RESULTS_CONTENT, &media,
+			    MODEL_RESULTS_SOURCE, &source,
+			    -1);
+
+	success = TRUE;
+	if (grl_source_supported_operations (source) & GRL_OP_REMOVE) {
+		grl_source_remove_sync (source, media, &error);
+		success = (error != NULL);
+	} else {
+		GFile *file;
+
+		file = g_file_new_for_uri (grl_media_get_url (media));
+		success = g_file_trash (file, NULL, &error);
+		g_object_unref (file);
+	}
+	if (!success) {
+		g_warning ("Couldn't remove item '%s': %s",
+			   grl_media_get_title (media),
+			   error->message);
+		g_error_free (error);
+	} else {
+		GtkTreeModel *model;
+		GtkTreeIter real_model_iter;
+
+		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
+			model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
+			gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (view_model),
+									  &real_model_iter, &iter);
+		} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
+			model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (view_model));
+			gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (view_model),
+									&real_model_iter, &iter);
+		} else {
+			g_assert_not_reached ();
+		}
+
+		gtk_tree_store_remove (GTK_TREE_STORE (model), &real_model_iter);
+	}
+
+	g_clear_object (&media);
+	g_clear_object (&source);
+}
+
+static void
 delete_cb (TotemSelectionToolbar *bar,
 	   TotemGriloPlugin      *self)
 {
-	/* FIXME: Call grl_source_remove(); */
+	GtkTreeModel *model;
+	GList *list;
+
+	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
+	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->priv->browser));
+	g_list_foreach (list, delete_foreach, model);
+	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
+
+	g_object_set (G_OBJECT (self->priv->browser), "selection-mode", FALSE, NULL);
 }
 
 static void
@@ -1761,7 +1886,8 @@ setup_browse (TotemGriloPlugin *self,
 	/* Selection toolbar */
 	self->priv->selection_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "selection_revealer"));
 	self->priv->selection_bar = totem_selection_toolbar_new ();
-	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), FALSE);
+	/* FIXME only show when all not all the items are boxes */
+	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), TRUE);
 	gtk_container_add (GTK_CONTAINER (self->priv->selection_revealer),
 			   self->priv->selection_bar);
 	gtk_widget_show (self->priv->selection_bar);
@@ -1894,6 +2020,9 @@ create_debug_window (TotemGriloPlugin *self,
 	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
 						    "Remaining", gtk_cell_renderer_text_new (),
 						    remaining_to_text, NULL, NULL);
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    "Can Remove", gtk_cell_renderer_toggle_new (),
+						    "active", MODEL_RESULTS_CAN_REMOVE, NULL);
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (tree), model);
 

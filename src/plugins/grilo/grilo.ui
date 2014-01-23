@@ -52,6 +52,8 @@
       <column type="guint"/>
       <!-- column-name priority -->
       <column type="gint"/>
+      <!-- column-name can-remove -->
+      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkTreeStore" id="gw_browse_store_results">
@@ -85,6 +87,8 @@
       <column type="guint"/>
       <!-- column-name priority -->
       <column type="gint"/>
+      <!-- column-name can-remove -->
+      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkVBox" id="gw_search">
@@ -193,6 +197,8 @@
       <column type="gboolean"/>
       <!-- column-name priority -->
       <column type="gint"/>
+      <!-- column-name can-remove -->
+      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkListStore" id="gw_search_store_sources">
