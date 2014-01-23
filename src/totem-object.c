@@ -626,6 +626,7 @@ typedef struct {
 	TotemObject *totem;
 	gchar *uri;
 	gchar *display_name;
+	gboolean play;
 } AddToPlaylistData;
 
 static void
@@ -636,11 +637,12 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 
 	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
 
-	end = totem_playlist_get_last (playlist);
+	if (data->play)
+		end = totem_playlist_get_last (playlist);
 
 	totem_signal_unblock_by_data (playlist, data->totem);
 
-	if (playlist_changed && end != -1) {
+	if (data->play && playlist_changed && end != -1) {
 		char *mrl, *subtitle;
 
 		subtitle = NULL;
@@ -680,17 +682,19 @@ setup_save_timeout_cb (Totem    *totem,
 }
 
 /**
- * totem_object_add_to_playlist_and_play:
+ * totem_object_add_to_playlist:
  * @totem: a #TotemObject
  * @uri: the URI to add to the playlist
  * @display_name: the display name of the URI
+ * @play: whether to play the added item
  *
  * Add @uri to the playlist and play it immediately.
  **/
 void
-totem_object_add_to_playlist_and_play (TotemObject *totem,
-				const char *uri,
-				const char *display_name)
+totem_object_add_to_playlist (TotemObject *totem,
+			      const char  *uri,
+			      const char  *display_name,
+			      gboolean     play)
 {
 	AddToPlaylistData *data;
 
@@ -703,6 +707,7 @@ totem_object_add_to_playlist_and_play (TotemObject *totem,
 	data->totem = g_object_ref (totem);
 	data->uri = g_strdup (uri);
 	data->display_name = g_strdup (display_name);
+	data->play = play;
 
 	totem_playlist_add_mrl (totem->playlist, uri, display_name, TRUE,
 	                        NULL, (GAsyncReadyCallback) add_to_playlist_and_play_cb, data);
