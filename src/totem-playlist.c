@@ -31,7 +31,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gio/gio.h>
 
-#include "totem-dnd-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "video-utils.h"
@@ -500,109 +499,6 @@ gtk_tree_selection_has_selected (GtkTreeSelection *selection)
 	return retval;
 }
 
-static void
-drop_finished_cb (TotemPlaylist *playlist, GAsyncResult *result, gpointer user_data)
-{
-	totem_playlist_add_mrls_finish (playlist, result, NULL);
-
-	g_clear_pointer (&playlist->priv->tree_path, gtk_tree_path_free);
-
-	/* Emit the "changed" signal once the last dropped MRL has been added to the playlist */
-	g_signal_emit (G_OBJECT (playlist),
-	               totem_playlist_table_signals[CHANGED], 0,
-	               NULL);
-}
-
-static void
-drop_cb (GtkWidget        *widget,
-         GdkDragContext   *context,
-	 gint              x,
-	 gint              y,
-	 GtkSelectionData *data,
-	 guint             info,
-	 guint             _time,
-	 TotemPlaylist    *playlist)
-{
-	char **list;
-	GList *p, *file_list, *mrl_list = NULL;
-	guint i;
-	GdkDragAction action;
-
-	if (gdk_drag_context_get_suggested_action (context) == GDK_ACTION_ASK) {
-		action = totem_drag_ask (PL_LEN != 0);
-		gdk_drag_status (context, action, GDK_CURRENT_TIME);
-		if (action == GDK_ACTION_DEFAULT) {
-			gtk_drag_finish (context, FALSE, FALSE, _time);
-			return;
-		}
-	}
-
-	action = gdk_drag_context_get_selected_action (context);
-	if (action == GDK_ACTION_MOVE)
-		totem_playlist_clear (playlist);
-
-	list = g_uri_list_extract_uris ((char *) gtk_selection_data_get_data (data));
-	file_list = NULL;
-
-	for (i = 0; list[i] != NULL; i++) {
-		/* We get the list in the wrong order here,
-		 * so when we insert the files at the same position
-		 * in the tree, they are in the right order.*/
-		file_list = g_list_prepend (file_list, list[i]);
-	}
-
-	if (file_list == NULL) {
-		gtk_drag_finish (context, FALSE, FALSE, _time);
-		return;
-	}
-
-	playlist->priv->tree_path = gtk_tree_path_new ();
-	gtk_tree_view_get_dest_row_at_pos (GTK_TREE_VIEW (playlist->priv->treeview),
-					   x, y,
-					   &playlist->priv->tree_path,
-					   &playlist->priv->drop_pos);
-
-	/* But we reverse the list if we don't have any items in the
-	 * list, as we insert new items at the end */
-	if (playlist->priv->tree_path == NULL)
-		file_list = g_list_reverse (file_list);
-
-	for (p = file_list; p != NULL; p = p->next) {
-		char *filename, *title;
-
-		if (p->data == NULL)
-			continue;
-
-		filename = totem_create_full_path (p->data);
-		if (filename == NULL)
-			filename = g_strdup (p->data);
-		title = NULL;
-
-		if (info == 1) {
-			p = p->next;
-			if (p != NULL) {
-				if (g_str_has_prefix (p->data, "file:") != FALSE)
-					title = (char *)p->data + 5;
-				else
-					title = p->data;
-			}
-		}
-
-		/* Add the MRL to the list of MRLs to be added to the playlist */
-		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (filename, title));
-		g_free (filename);
-	}
-
-	/* Add all the MRLs to the playlist asynchronously, emitting the "changed" signal once we're done.
-	 * Note that this takes ownership of @mrl_list. */
-	if (mrl_list != NULL)
-		totem_playlist_add_mrls (playlist, g_list_reverse (mrl_list), TRUE, NULL, (GAsyncReadyCallback) drop_finished_cb, NULL);
-
-	g_strfreev (list);
-	g_list_free (file_list);
-	gtk_drag_finish (context, TRUE, FALSE, _time);
-}
-
 void
 playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist)
 {
@@ -764,7 +660,6 @@ button_press_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 
 	playlist->priv->drop_disabled = TRUE;
 	gtk_drag_dest_unset (treeview);
-	g_signal_handlers_block_by_func (treeview, (GFunc) drop_cb, data);
 
 	totem_playlist_set_reorderable (playlist, TRUE);
 
@@ -783,9 +678,6 @@ button_release_cb (GtkWidget *treeview, GdkEventButton *event, gpointer data)
 		gtk_tree_view_enable_model_drag_dest (GTK_TREE_VIEW (treeview),
 						      target_table, G_N_ELEMENTS (target_table),
 						      GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-		g_signal_handlers_unblock_by_func (treeview,
-				(GFunc) drop_cb, data);
 	}
 
 	return FALSE;
@@ -813,8 +705,6 @@ drag_end_cb (GtkWidget *treeview, GdkDragContext *context, gpointer data)
 	gtk_tree_view_enable_model_drag_dest (GTK_TREE_VIEW (treeview),
 					      target_table, G_N_ELEMENTS (target_table),
 					      GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-	g_signal_handlers_unblock_by_func (treeview, (GFunc) drop_cb, data);
 
 	return;
 }
@@ -1062,9 +952,6 @@ treeview_row_changed (GtkTreeView *treeview, GtkTreePath *arg1,
 		gtk_tree_view_enable_model_drag_dest (GTK_TREE_VIEW (treeview),
 						      target_table, G_N_ELEMENTS (target_table),
 						      GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-		g_signal_handlers_unblock_by_func (treeview,
-				(GFunc) drop_cb, playlist);
 	}
 }
 
@@ -1132,8 +1019,6 @@ init_treeview (GtkWidget *treeview, TotemPlaylist *playlist)
 			G_CALLBACK (playlist_treeview_popup_menu), playlist);
 
 	/* Drag'n'Drop */
-	g_signal_connect (G_OBJECT (treeview), "drag_data_received",
-			G_CALLBACK (drop_cb), playlist);
         g_signal_connect (G_OBJECT (treeview), "button_press_event",
 			G_CALLBACK (button_press_cb), playlist);
         g_signal_connect (G_OBJECT (treeview), "button_release_event",
