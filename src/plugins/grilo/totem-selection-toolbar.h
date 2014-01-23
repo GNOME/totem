@@ -58,12 +58,18 @@ struct _TotemSelectionToolbarClass
 
 GType           totem_selection_toolbar_get_type               (void) G_GNUC_CONST;
 GtkWidget*      totem_selection_toolbar_new                    (void);
+
 void            totem_selection_toolbar_set_n_selected         (TotemSelectionToolbar *bar,
                                                                guint                  n_selected);
 guint           totem_selection_toolbar_get_n_selected         (TotemSelectionToolbar *bar);
+
 void            totem_selection_toolbar_set_show_delete_button (TotemSelectionToolbar *bar,
                                                                 gboolean               show_delete_button);
 gboolean        totem_selection_toolbar_get_show_delete_button (TotemSelectionToolbar *bar);
+
+void            totem_selection_toolbar_set_delete_button_sensitive (TotemSelectionToolbar *bar,
+                                                                     gboolean               sensitive);
+gboolean        totem_selection_toolbar_get_delete_button_sensitive (TotemSelectionToolbar *bar);
 
 G_END_DECLS
 

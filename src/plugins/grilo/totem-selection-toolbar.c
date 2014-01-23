@@ -49,8 +49,9 @@ struct _TotemSelectionToolbarPrivate {
   GtkWidget   *shuffle;
   GtkWidget   *delete;
 
-  /* Visibility */
+  /* Delete button */
   gboolean     show_delete_button;
+  gboolean     delete_sensitive;
 
   /* Selection mode */
   guint        n_selected;
@@ -62,7 +63,8 @@ G_DEFINE_TYPE_WITH_CODE (TotemSelectionToolbar, totem_selection_toolbar, GTK_TYP
 enum {
   PROP_0,
   PROP_SHOW_DELETE_BUTTON,
-  PROP_N_SELECTED
+  PROP_N_SELECTED,
+  PROP_DELETE_BUTTON_SENSITIVE
 };
 
 static void
@@ -99,7 +101,6 @@ update_toolbar_state (TotemSelectionToolbar *bar)
   gtk_widget_set_sensitive (priv->add_to_fav, sensitive);
   gtk_widget_set_sensitive (priv->play, sensitive);
   gtk_widget_set_sensitive (priv->shuffle, sensitive);
-  gtk_widget_set_sensitive (priv->delete, sensitive);
 }
 
 static void
@@ -148,6 +149,10 @@ totem_selection_toolbar_set_property (GObject         *object,
       totem_selection_toolbar_set_show_delete_button (bar, g_value_get_boolean (value));
       break;
 
+    case PROP_DELETE_BUTTON_SENSITIVE:
+      totem_selection_toolbar_set_delete_button_sensitive (bar, g_value_get_boolean (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -171,6 +176,10 @@ totem_selection_toolbar_get_property (GObject         *object,
 
     case PROP_SHOW_DELETE_BUTTON:
       g_value_set_boolean (value, priv->show_delete_button);
+      break;
+
+    case PROP_DELETE_BUTTON_SENSITIVE:
+      g_value_set_boolean (value, priv->delete_sensitive);
       break;
 
     default:
@@ -204,6 +213,14 @@ totem_selection_toolbar_class_init (TotemSelectionToolbarClass *klass)
                                                          "Show Delete Button",
                                                          "Whether the delete button is visible",
                                                          TRUE,
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class,
+                                   PROP_DELETE_BUTTON_SENSITIVE,
+                                   g_param_spec_boolean ("delete-button-sensitive",
+                                                         "Delete Button Sensitive",
+                                                         "Whether the delete button is sensitive",
+                                                         FALSE,
                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   g_signal_new ("add-to-favourites-clicked",
@@ -253,6 +270,9 @@ totem_selection_toolbar_init (TotemSelectionToolbar *bar)
   gtk_widget_init_template (GTK_WIDGET (bar));
 
   gtk_widget_hide (bar->priv->add_to_fav);
+
+  /* So that the default FALSE actually gets applied */
+  bar->priv->delete_sensitive = TRUE;
 
   g_signal_connect (bar->priv->add_to_fav, "clicked",
                     G_CALLBACK (add_to_fav_clicked_cb), bar);
@@ -323,4 +343,27 @@ totem_selection_toolbar_get_show_delete_button (TotemSelectionToolbar *bar)
   g_return_val_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar), 0);
 
   return bar->priv->show_delete_button;
+}
+
+void
+totem_selection_toolbar_set_delete_button_sensitive (TotemSelectionToolbar *bar,
+                                                     gboolean               sensitive)
+{
+  g_return_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar));
+
+  if (bar->priv->delete_sensitive == sensitive)
+    return;
+
+  bar->priv->delete_sensitive = sensitive;
+  gtk_widget_set_sensitive (bar->priv->delete, sensitive);
+
+  g_object_notify (G_OBJECT (bar), "delete-button-sensitive");
+}
+
+gboolean
+totem_selection_toolbar_get_delete_button_sensitive (TotemSelectionToolbar *bar)
+{
+  g_return_val_if_fail (TOTEM_IS_SELECTION_TOOLBAR (bar), 0);
+
+  return bar->priv->delete_sensitive;
 }
