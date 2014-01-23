@@ -185,17 +185,12 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             else:
                 loop_status = 'None'
 
-            # Shuffle
-            shuffle = self.totem.action_remote_get_setting (
-                Totem.RemoteSetting.SHUFFLE)
-
             return {
                 'PlaybackStatus': self.__calculate_playback_status (),
                 'LoopStatus': loop_status, # TODO: Notifications
                 'Rate': 1.0,
                 'MinimumRate': 1.0,
                 'MaximumRate': 1.0,
-                'Shuffle': shuffle, # TODO: Notifications
                 'Metadata': self.__calculate_metadata (),
                 'Volume': self.totem.get_volume (), # TODO: Notifications
                 'Position': self.totem.props.current_time * 1000,
@@ -228,9 +223,6 @@ class Root (dbus.service.Object): # pylint: disable-msg=R0923,R0904
             elif property_name == 'Rate':
                 # Ignore, since we don't support setting the rate
                 pass
-            elif property_name == 'Shuffle':
-                self.totem.action_remote_set_setting (
-                    Totem.RemoteSetting.SHUFFLE, new_value)
             elif property_name == 'Volume':
                 self.totem.action_volume (new_value)
 
