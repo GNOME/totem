@@ -160,6 +160,15 @@ get_secondary_text (GrlMedia *media)
 	const char *artist;
 	int duration;
 
+	if (grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_SHOW) != NULL) {
+		int season, episode;
+
+		season = grl_data_get_int (GRL_DATA (media), GRL_METADATA_KEY_SEASON);
+		episode = grl_data_get_int (GRL_DATA (media), GRL_METADATA_KEY_EPISODE);
+		if (season != 0 && episode != 0)
+			return g_strdup_printf (_("Season %d Episode %d"), season, episode);
+	}
+
 	artist = grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_ARTIST);
 	if (artist != NULL)
 		return g_strdup (artist);
@@ -167,6 +176,38 @@ get_secondary_text (GrlMedia *media)
 	if (duration > 0)
 		return totem_time_to_string (duration * 1000, FALSE, FALSE);
 	return NULL;
+}
+
+static const char *
+get_primary_text (GrlMedia *media)
+{
+	const char *show;
+
+	show = grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_SHOW);
+	if (show)
+		return show;
+	return grl_media_get_title (media);
+}
+
+static char *
+get_title (GrlMedia *media)
+{
+	const char *show;
+
+	show = grl_data_get_string (GRL_DATA (media), GRL_METADATA_KEY_SHOW);
+	if (show != NULL) {
+		int season, episode;
+
+		season = grl_data_get_int (GRL_DATA (media), GRL_METADATA_KEY_SEASON);
+		episode = grl_data_get_int (GRL_DATA (media), GRL_METADATA_KEY_EPISODE);
+		if (season != 0 && episode != 0) {
+			/* translators: The first item is the show name, for example:
+			 * Boardwalk Empire (Season 1 Episode 1) */
+			return g_strdup_printf (_("%s (Season %d Episode %d)"), show, season, episode);
+		}
+	}
+
+	return g_strdup (grl_media_get_title (media));
 }
 
 static void
@@ -368,7 +409,7 @@ update_media (GtkTreeStore *model,
 			    MODEL_RESULTS_CONTENT, media,
 			    GD_MAIN_COLUMN_ICON, thumbnail,
 			    MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
-			    GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+			    GD_MAIN_COLUMN_PRIMARY_TEXT, get_primary_text (media),
 			    GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 			    GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
 			    -1);
@@ -437,7 +478,7 @@ add_media_to_model (GtkTreeStore *model,
 					   MODEL_RESULTS_CONTENT, media,
 					   GD_MAIN_COLUMN_ICON, thumbnail,
 					   MODEL_RESULTS_IS_PRETHUMBNAIL, thumbnailing,
-					   GD_MAIN_COLUMN_PRIMARY_TEXT, grl_media_get_title (media),
+					   GD_MAIN_COLUMN_PRIMARY_TEXT, get_primary_text (media),
 					   GD_MAIN_COLUMN_SECONDARY_TEXT, secondary,
 					   GD_MAIN_COLUMN_MTIME, mtime ? g_date_time_to_unix (mtime) : 0,
 					   MODEL_RESULTS_SORT_PRIORITY, prio,
@@ -562,6 +603,7 @@ play (TotemGriloPlugin *self,
       gboolean resolve_url)
 {
 	const gchar *url;
+	char *title;
 
 	url = grl_media_get_url (media);
 	if (!url)
@@ -574,9 +616,11 @@ play (TotemGriloPlugin *self,
 	}
 
 	totem_object_clear_playlist (self->priv->totem);
+	title = get_title (media);
 	totem_object_add_to_playlist (self->priv->totem, url,
-				      grl_media_get_title (media),
+				      title,
 				      TRUE);
+	g_free (title);
 }
 
 static void
@@ -1585,6 +1629,7 @@ play_selection (TotemGriloPlugin *self,
 		GtkTreeIter iter;
 		GrlMedia *media;
 		const gchar *url;
+		char *title;
 
 		gtk_tree_model_get_iter (model, &iter, path);
 		gtk_tree_model_get (model, &iter,
@@ -1601,9 +1646,10 @@ play_selection (TotemGriloPlugin *self,
 			goto next_item;
 		}
 
+		title = get_title (media);
 		totem_object_add_to_playlist (self->priv->totem, url,
-					      grl_media_get_title (media),
-					      first);
+					      title, first);
+		g_free (title);
 		first = FALSE;
 
 next_item:
@@ -1906,6 +1952,9 @@ impl_activate (PeasActivatable *plugin)
 							 GRL_METADATA_KEY_THUMBNAIL,
 							 GRL_METADATA_KEY_URL,
 							 GRL_METADATA_KEY_TITLE,
+							 GRL_METADATA_KEY_SHOW,
+							 GRL_METADATA_KEY_SEASON,
+							 GRL_METADATA_KEY_EPISODE,
 							 NULL);
 
 	builder = gtk_builder_new_from_resource ("/org/totem/grilo/grilo.ui");
