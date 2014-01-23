@@ -594,8 +594,9 @@ play (TotemGriloPlugin *self,
 	url = grl_media_get_url (media);
 	if (url != NULL) {
 		totem_object_clear_playlist (self->priv->totem);
-		totem_object_add_to_playlist_and_play (self->priv->totem, url,
-		                                grl_media_get_title (media));
+		totem_object_add_to_playlist (self->priv->totem, url,
+					      grl_media_get_title (media),
+					      TRUE);
 		return;
 	}
 
@@ -1741,9 +1742,10 @@ static void
 add_to_pls_cb (GtkAction *action, TotemGriloPlugin *self)
 {
 	totem_object_clear_playlist (self->priv->totem);
-	totem_object_add_to_playlist_and_play (self->priv->totem,
-	                                grl_media_get_url (self->priv->selected_media),
-	                                grl_media_get_title (self->priv->selected_media));
+	totem_object_add_to_playlist (self->priv->totem,
+				      grl_media_get_url (self->priv->selected_media),
+				      grl_media_get_title (self->priv->selected_media),
+				      TRUE);
 }
 
 static void
