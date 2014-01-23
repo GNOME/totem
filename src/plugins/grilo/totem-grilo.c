@@ -67,14 +67,6 @@
 #define TOTEM_GRILO_PLUGIN_GET_CLASS(o)                                 \
 	(G_TYPE_INSTANCE_GET_CLASS ((o), TOTEM_TYPE_GRILO_PLUGIN, TotemGriloPluginClass))
 
-#define GRILO_POPUP_MENU                                                \
-	"<ui>" \
-	"<popup name=\"grilo-popup\">" \
-	"<menuitem name=\"add-to-playlist\" action=\"add-to-playlist\"/>" \
-	"<menuitem name=\"copy-location\" action=\"copy-location\"/>" \
-	"</popup>" \
-	"</ui>"
-
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
 #define RESOLVE_FLAGS         (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
@@ -1206,94 +1198,6 @@ unload_grilo_plugins (TotemGriloPlugin *self)
 }
 
 static gboolean
-show_popup_menu (TotemGriloPlugin *self, GtkWidget *view, GdkEventButton *event)
-{
-	GtkWidget *menu;
-	gint button = 0;
-	guint32 _time;
-	GtkAction *action;
-	GtkTreeSelection *sel_tree;
-	GList *sel_list = NULL;
-	GtkTreeModel *model;
-	GtkTreeIter iter;
-	GrlSource *source;
-	const gchar *url = NULL;
-
-	if (view == self->priv->browser) {
-		/* Selection happened in browser view */
-		sel_tree = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-
-		if (gtk_tree_selection_get_selected (sel_tree, &model, &iter) == FALSE)
-			return FALSE;
-	} else {
-		/* Selection happened in search view */
-		sel_list = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (view));
-		if (!sel_list) {
-			return FALSE;
-		}
-
-		model = self->priv->search_results_model;
-
-		gtk_tree_model_get_iter (model,
-		                         &iter,
-		                         (GtkTreePath *) sel_list->data);
-
-		g_list_free_full (sel_list, (GDestroyNotify) gtk_tree_path_free);
-	}
-
-	/* Get rid of previously selected media */
-	if (self->priv->selected_media != NULL)
-		g_object_unref (self->priv->selected_media);
-
-	gtk_tree_model_get (model, &iter,
-	                    MODEL_RESULTS_SOURCE, &source,
-	                    MODEL_RESULTS_CONTENT, &(self->priv->selected_media),
-	                    -1);
-
-	if (event != NULL) {
-		button = event->button;
-		_time = event->time;
-	} else {
-		_time = gtk_get_current_event_time ();
-	}
-
-	if (self->priv->selected_media != NULL)
-		url = grl_media_get_url (self->priv->selected_media);
-
-	action = gtk_action_group_get_action (self->priv->action_group, "add-to-playlist");
-	gtk_action_set_sensitive (action, url != NULL);
-	action = gtk_action_group_get_action (self->priv->action_group, "copy-location");
-	gtk_action_set_sensitive (action, url != NULL);
-
-	menu = gtk_ui_manager_get_widget (self->priv->ui_manager, "/grilo-popup");
-	gtk_menu_shell_select_first (GTK_MENU_SHELL (menu), FALSE);
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-	                button, _time);
-
-	g_clear_object (&source);
-
-	return TRUE;
-}
-
-static gboolean
-popup_menu_cb (GtkWidget *view, TotemGriloPlugin *self)
-{
-	return show_popup_menu (self, view, NULL);
-}
-
-static gboolean
-context_button_pressed_cb (GtkWidget *view,
-                           GdkEventButton *event,
-                           TotemGriloPlugin *self)
-{
-	if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
-		return show_popup_menu (self, view, event);
-	}
-
-	return FALSE;
-}
-
-static gboolean
 adjustment_over_limit (GtkAdjustment *adjustment)
 {
 	if ((gtk_adjustment_get_value (adjustment) + gtk_adjustment_get_page_size (adjustment)) / gtk_adjustment_get_upper (adjustment) > SCROLL_GET_MORE_LIMIT) {
@@ -1811,11 +1715,6 @@ setup_browse (TotemGriloPlugin *self,
 	                  G_CALLBACK (item_activated_cb), self);
 	g_signal_connect (self->priv->browser, "selection-mode-request",
 			  G_CALLBACK (selection_mode_requested), self);
-	g_signal_connect (self->priv->browser, "popup-menu",
-	                  G_CALLBACK (popup_menu_cb), self);
-	g_signal_connect (self->priv->browser,
-	                  "button-press-event",
-	                  G_CALLBACK (context_button_pressed_cb), self);
 
 	/* Selection toolbar */
 	self->priv->selection_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "selection_revealer"));
@@ -1847,61 +1746,6 @@ setup_browse (TotemGriloPlugin *self,
 	totem_object_add_main_page (self->priv->totem,
 				    "grilo",
 				    GTK_WIDGET (gtk_builder_get_object (builder, "gw_search")));
-}
-
-static void
-add_to_pls_cb (GtkAction *action, TotemGriloPlugin *self)
-{
-	totem_object_clear_playlist (self->priv->totem);
-	totem_object_add_to_playlist (self->priv->totem,
-				      grl_media_get_url (self->priv->selected_media),
-				      grl_media_get_title (self->priv->selected_media),
-				      TRUE);
-}
-
-static void
-copy_location_cb (GtkAction *action, TotemGriloPlugin *self)
-{
-	GtkClipboard *clip;
-	const gchar *url;
-
-	url = grl_media_get_url (self->priv->selected_media);
-	if (url != NULL) {
-		clip = gtk_clipboard_get_for_display (gdk_display_get_default (),
-		                                      GDK_SELECTION_CLIPBOARD);
-		gtk_clipboard_set_text (clip, url, -1);
-		clip = gtk_clipboard_get_for_display (gdk_display_get_default (),
-		                                      GDK_SELECTION_PRIMARY);
-		gtk_clipboard_set_text (clip, url, -1);
-	}
-}
-
-static void
-setup_menus (TotemGriloPlugin *self,
-             GtkBuilder *builder)
-{
-	GtkAction *action;
-	GError *error =NULL;
-
-	self->priv->ui_manager = gtk_ui_manager_new  ();
-	self->priv->action_group = gtk_action_group_new ("grilo-action-group");
-
-	action = GTK_ACTION (gtk_builder_get_object (builder, "add-to-playlist"));
-	g_signal_connect (action, "activate", G_CALLBACK (add_to_pls_cb), self);
-	gtk_action_group_add_action_with_accel (self->priv->action_group, action, NULL);
-
-	action = GTK_ACTION (gtk_builder_get_object (builder, "copy-location"));
-	g_signal_connect (action, "activate", G_CALLBACK (copy_location_cb), self);
-	gtk_action_group_add_action_with_accel (self->priv->action_group, action, NULL);
-
-	gtk_ui_manager_insert_action_group (self->priv->ui_manager, self->priv->action_group, 1);
-	gtk_ui_manager_add_ui_from_string (self->priv->ui_manager,
-	                                   GRILO_POPUP_MENU, -1, &error);
-	if (error != NULL) {
-		g_warning ("grilo-ui: Failed to create popup menu: %s", error->message);
-		g_error_free (error);
-		return;
-	}
 }
 
 static void
@@ -2020,7 +1864,6 @@ setup_ui (TotemGriloPlugin *self,
 {
 	totem_grilo_setup_icons (self->priv->totem);
 	setup_browse (self, builder);
-	setup_menus (self, builder);
 
 	/* create_debug_window (self, self->priv->browser_model); */
 	/* create_debug_window (self, self->priv->recent_model); */
