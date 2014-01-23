@@ -51,6 +51,7 @@
 
 #include "totem-search-entry.h"
 #include "totem-main-toolbar.h"
+#include "totem-selection-toolbar.h"
 #include <libgd/gd.h>
 
 #define TOTEM_TYPE_GRILO_PLUGIN                                         \
@@ -120,6 +121,10 @@ typedef struct {
 	GtkTreeModel *search_results_model;
 	GHashTable *search_sources_ht;
 	GtkWidget *search_sources_list;
+
+	/* Selection toolbar */
+	GtkWidget *selection_bar;
+	GtkWidget *selection_revealer;
 
 	/* Popup */
 	GtkUIManager *ui_manager;
@@ -1538,6 +1543,7 @@ view_selection_changed_cb (GdMainView       *view,
 	g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 
 	totem_main_toolbar_set_n_selected (TOTEM_MAIN_TOOLBAR (self->priv->header), count);
+	totem_selection_toolbar_set_n_selected (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), count);
 }
 
 static void
@@ -1641,6 +1647,134 @@ search_mode_changed (GObject          *gobject,
 	self->priv->in_search = search_mode;
 }
 
+typedef struct {
+	int random;
+	GtkTreePath *path;
+} RandomData;
+
+static int
+compare_random (gconstpointer ptr_a, gconstpointer ptr_b)
+{
+	RandomData *a = (RandomData *) ptr_a;
+	RandomData *b = (RandomData *) ptr_b;
+
+	if (a->random < b->random)
+		return -1;
+	else if (a->random > b->random)
+		return 1;
+	else
+		return 0;
+}
+
+static GPtrArray *
+shuffle_items (GList *list)
+{
+	GPtrArray *items;
+	GList *l;
+	GArray *array;
+	RandomData data;
+	guint len, i;
+
+	len = g_list_length (list);
+
+	items = g_ptr_array_new ();
+
+	array = g_array_sized_new (FALSE, FALSE, sizeof (RandomData), len);
+	for (l = list; l != NULL; l = l->next) {
+		data.random = g_random_int_range (0, len);
+		data.path = l->data;
+
+		g_array_append_val (array, data);
+	}
+	g_array_sort (array, compare_random);
+
+	for (i = 0; i < len; i++)
+		g_ptr_array_add (items, g_array_index (array, RandomData, i).path);
+
+	g_array_free (array, FALSE);
+
+	return items;
+}
+
+static void
+play_selection (TotemGriloPlugin *self,
+		gboolean          shuffle)
+{
+	GtkTreeModel *model;
+	GList *list;
+	gboolean first = TRUE;
+	GPtrArray *items;
+	guint i;
+
+	list = gd_main_view_get_selection (GD_MAIN_VIEW (self->priv->browser));
+	model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
+
+	/* Stuff the items in an array */
+	if (shuffle) {
+		items = shuffle_items (list);
+	} else {
+		GList *l;
+
+		items = g_ptr_array_new ();
+		for (l = list; l != NULL; l = l->next)
+			g_ptr_array_add (items, l->data);
+	}
+	g_list_free (list);
+
+	totem_object_clear_playlist (self->priv->totem);
+
+	for (i = 0; i < items->len; i++) {
+		GtkTreePath *path = items->pdata[i];
+		GtkTreeIter iter;
+		GrlMedia *media;
+		const gchar *url;
+
+		gtk_tree_model_get_iter (model, &iter, path);
+		gtk_tree_model_get (model, &iter,
+				    MODEL_RESULTS_CONTENT, &media,
+				    -1);
+
+		url = grl_media_get_url (media);
+		if (!url) {
+			g_message ("FIXME: resolve");
+			goto next_item;
+		}
+
+		g_message ("title: %s", grl_media_get_title (media));
+		totem_object_add_to_playlist (self->priv->totem, url,
+					      grl_media_get_title (media),
+					      first);
+		first = FALSE;
+
+next_item:
+		g_clear_object (&media);
+		gtk_tree_path_free (path);
+	}
+
+	g_ptr_array_free (items, FALSE);
+}
+
+static void
+play_cb (TotemSelectionToolbar *bar,
+	 TotemGriloPlugin      *self)
+{
+	play_selection (self, FALSE);
+}
+
+static void
+shuffle_cb (TotemSelectionToolbar *bar,
+	    TotemGriloPlugin      *self)
+{
+	play_selection (self, TRUE);
+}
+
+static void
+delete_cb (TotemSelectionToolbar *bar,
+	   TotemGriloPlugin      *self)
+{
+	/* FIXME: Call grl_source_remove(); */
+}
+
 static void
 setup_browse (TotemGriloPlugin *self,
 	      GtkBuilder *builder)
@@ -1722,6 +1856,23 @@ setup_browse (TotemGriloPlugin *self,
 	g_signal_connect (self->priv->browser,
 	                  "button-press-event",
 	                  G_CALLBACK (context_button_pressed_cb), self);
+
+	/* Selection toolbar */
+	self->priv->selection_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "selection_revealer"));
+	self->priv->selection_bar = totem_selection_toolbar_new ();
+	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), FALSE);
+	gtk_container_add (GTK_CONTAINER (self->priv->selection_revealer),
+			   self->priv->selection_bar);
+	gtk_widget_show (self->priv->selection_bar);
+	g_object_bind_property (self->priv->header, "select-mode",
+				self->priv->selection_revealer, "reveal-child",
+				G_BINDING_SYNC_CREATE);
+	g_signal_connect (self->priv->selection_bar, "play-clicked",
+			  G_CALLBACK (play_cb), self);
+	g_signal_connect (self->priv->selection_bar, "shuffle-clicked",
+			  G_CALLBACK (shuffle_cb), self);
+	g_signal_connect (self->priv->selection_bar, "delete-clicked",
+			  G_CALLBACK (delete_cb), self);
 
 	/* Loading thumbnails or more search results */
 	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "gw_browse")));
