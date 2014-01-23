@@ -86,7 +86,6 @@ typedef struct {
 
 #define TOTEM_IR_SETTING "setting_"
 #define TOTEM_IR_SETTING_TOGGLE_REPEAT "setting_repeat"
-#define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin)
 
@@ -108,8 +107,6 @@ totem_lirc_to_setting (const gchar *str, char **url)
 {
 	if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_REPEAT) == 0)
 		return TOTEM_REMOTE_SETTING_REPEAT;
-	else if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_SHUFFLE) == 0)
-		return TOTEM_REMOTE_SETTING_SHUFFLE;
 	else
 		return -1;
 }
