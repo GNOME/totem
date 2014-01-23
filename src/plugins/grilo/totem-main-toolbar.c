@@ -332,6 +332,8 @@ totem_main_toolbar_finalize (GObject *object)
   g_free (bar->priv->title);
   g_free (bar->priv->subtitle);
   g_free (bar->priv->search_string);
+
+  G_OBJECT_CLASS (totem_main_toolbar_parent_class)->finalize (object);
 }
 
 static void
