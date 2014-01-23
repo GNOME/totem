@@ -79,11 +79,6 @@ on_media_player_key_pressed (TotemObject *totem,
 
 		value = totem_object_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
 		totem_object_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
-	} else if (strcmp ("Shuffle", key) == 0) {
-		gboolean value;
-
-		value = totem_object_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
-		totem_object_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
 	}
 }
 
