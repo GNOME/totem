@@ -171,12 +171,6 @@
          </child>
 
          <child>
-            <object class="GtkAction" id="view-menu">
-               <property name="label" translatable="yes">_View</property>
-            </object>
-         </child>
-
-         <child>
             <object class="GtkAction" id="next-chapter">
                <property name="label" translatable="yes">_Next Chapter/Movie</property>
                <property name="tooltip" translatable="yes">Next chapter or movie</property>
@@ -191,12 +185,6 @@
                <signal name="activate" handler="previous_chapter_action_callback"/>
             </object>
             <accelerator key="Left" modifiers="GDK_MOD1_MASK"/>
-         </child>
-
-         <child>
-            <object class="GtkAction" id="sound-menu">
-               <property name="label" translatable="yes">_Sound</property>
-            </object>
          </child>
 
       </object>

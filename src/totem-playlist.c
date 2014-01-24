@@ -54,11 +54,8 @@ static void totem_playlist_clear_with_compare (TotemPlaylist *playlist,
 /* Callback function for GtkBuilder */
 G_MODULE_EXPORT void totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist);
 G_MODULE_EXPORT void playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist);
-G_MODULE_EXPORT void totem_playlist_up_files (GtkWidget *widget, TotemPlaylist *playlist);
-G_MODULE_EXPORT void totem_playlist_down_files (GtkWidget *widget, TotemPlaylist *playlist);
 G_MODULE_EXPORT void playlist_copy_location_action_callback (GtkAction *action, TotemPlaylist *playlist);
 G_MODULE_EXPORT void playlist_select_subtitle_action_callback (GtkAction *action, TotemPlaylist *playlist);
-G_MODULE_EXPORT void playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist);
 
 
 typedef struct {
@@ -803,12 +800,6 @@ playlist_remove_files (TotemPlaylist *playlist)
 
 void
 playlist_remove_button_clicked (GtkWidget *button, TotemPlaylist *playlist)
-{
-	playlist_remove_files (playlist);
-}
-
-void
-playlist_remove_action_callback (GtkAction *action, TotemPlaylist *playlist)
 {
 	playlist_remove_files (playlist);
 }
