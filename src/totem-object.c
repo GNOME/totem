@@ -56,7 +56,6 @@
 #include "bacon-video-widget.h"
 #include "bacon-time-label.h"
 #include "totem-time-label.h"
-#include "totem-sidebar.h"
 #include "totem-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
@@ -106,7 +105,6 @@ G_MODULE_EXPORT gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventBut
 G_MODULE_EXPORT void volume_button_value_changed_cb (GtkScaleButton *button, gdouble value, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
 G_MODULE_EXPORT int window_scroll_event_cb (GtkWidget *win, GdkEvent *event, TotemObject *totem);
-G_MODULE_EXPORT void main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, TotemObject *totem);
 G_MODULE_EXPORT void fs_exit1_activate_cb (GtkButton *button, TotemObject *totem);
 
 enum {
@@ -834,11 +832,7 @@ totem_object_add_sidebar_page (TotemObject *totem,
 			       const char *title,
 			       GtkWidget *main_widget)
 {
-	totem_sidebar_add_page (totem,
-				page_id,
-				title,
-				NULL,
-				main_widget);
+	g_warning ("totem_object_add_sidebar_page is obsolete");
 }
 
 /**
@@ -854,7 +848,7 @@ void
 totem_object_remove_sidebar_page (TotemObject *totem,
 			   const char *page_id)
 {
-	totem_sidebar_remove_page (totem, page_id);
+	/* Empty */
 }
 
 void
@@ -1117,8 +1111,6 @@ totem_object_show_error_and_exit (const char *title,
 static void
 totem_object_save_size (TotemObject *totem)
 {
-	GtkPaned *item;
-
 	if (totem->bvw == NULL)
 		return;
 
@@ -1126,11 +1118,7 @@ totem_object_save_size (TotemObject *totem)
 		return;
 
 	/* Save the size of the video widget */
-	item = GTK_PANED (gtk_builder_get_object (totem->xml, "tmw_main_pane"));
-	gtk_window_get_size (GTK_WINDOW (totem->win), &totem->window_w,
-			&totem->window_h);
-	totem->sidebar_w = totem->window_w
-		- gtk_paned_get_position (item);
+	gtk_window_get_size (GTK_WINDOW (totem->win), &totem->window_w, &totem->window_h);
 }
 
 static void
@@ -1152,8 +1140,6 @@ totem_object_save_state (TotemObject *totem, const char *page_id)
 			"window_h", totem->window_h);
 	g_key_file_set_boolean (keyfile, "State",
 			"maximised", totem->maximised);
-	g_key_file_set_integer (keyfile, "State",
-			"sidebar_w", totem->sidebar_w);
 
 	contents = g_key_file_to_data (keyfile, NULL, NULL);
 	g_key_file_free (keyfile);
@@ -1181,11 +1167,6 @@ void
 totem_object_exit (TotemObject *totem)
 {
 	GdkDisplay *display = NULL;
-	char *page_id;
-
-	/* Save the page ID before we close the plugins, otherwise
-	 * we'll never save it properly */
-	page_id = totem_sidebar_get_current_page (totem);
 
 	/* Shut down the plugins first, allowing them to display modal dialogues (etc.) without threat of being killed from another thread */
 	if (totem != NULL && totem->engine != NULL)
@@ -1219,9 +1200,6 @@ totem_object_exit (TotemObject *totem)
 
 	if (totem->bvw)
 		bacon_video_widget_close (totem->bvw);
-
-	totem_object_save_state (totem, page_id);
-	g_free (page_id);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
@@ -3380,8 +3358,6 @@ totem_object_handle_scroll (TotemObject    *totem,
 gboolean
 window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem)
 {
-	gboolean sidebar_handles_kbd;
-
 	/* Shortcuts disabled? */
 	if (totem->disable_kbd_shortcuts != FALSE)
 		return FALSE;
@@ -3389,20 +3365,6 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 	/* Check whether we're in the player panel */
 	if (!g_str_equal (totem_object_get_main_page (totem), "player"))
 		return FALSE;
-
-	/* Check whether the sidebar needs the key events */
-	if (event->type == GDK_KEY_PRESS) {
-		if (totem_sidebar_is_focused (totem, &sidebar_handles_kbd) != FALSE) {
-			/* Make Escape pass the focus to the video widget */
-			if (sidebar_handles_kbd == FALSE &&
-			    event->keyval == GDK_KEY_Escape)
-				gtk_widget_grab_focus (GTK_WIDGET (totem->bvw));
-			return FALSE;
-		}
-	} else {
-		if (totem_sidebar_is_focused (totem, NULL) != FALSE)
-			return FALSE;
-	}
 
 	/* Special case Eject, Open, Open URI,
 	 * seeking and zoom keyboard shortcuts */
@@ -3509,27 +3471,11 @@ update_buttons (TotemObject *totem)
 }
 
 void
-main_pane_size_allocated (GtkWidget *main_pane, GtkAllocation *allocation, TotemObject *totem)
-{
-	gulong handler_id;
-
-	if (!totem->maximised || gtk_widget_get_mapped (totem->win)) {
-		handler_id = g_signal_handler_find (main_pane, 
-				G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA,
-				0, 0, NULL,
-				main_pane_size_allocated, totem);
-		g_signal_handler_disconnect (main_pane, handler_id);
-
-		gtk_paned_set_position (GTK_PANED (main_pane), allocation->width - totem->sidebar_w);
-	}
-}
-
-char *
 totem_setup_window (TotemObject *totem)
 {
 	GKeyFile *keyfile;
 	int w, h;
-	char *filename, *page_id;
+	char *filename;
 	GError *err = NULL;
 	GtkWidget *vbox;
 	GdkRGBA black;
@@ -3538,10 +3484,8 @@ totem_setup_window (TotemObject *totem)
 	keyfile = g_key_file_new ();
 	if (g_key_file_load_from_file (keyfile, filename,
 			G_KEY_FILE_NONE, NULL) == FALSE) {
-		totem->sidebar_w = 0;
 		w = DEFAULT_WINDOW_W;
 		h = DEFAULT_WINDOW_H;
-		page_id = NULL;
 		g_free (filename);
 	} else {
 		g_free (filename);
@@ -3566,22 +3510,6 @@ totem_setup_window (TotemObject *totem)
 			g_error_free (err);
 			err = NULL;
 		}
-
-		page_id = g_key_file_get_string (keyfile, "State",
-				"sidebar_page", &err);
-		if (err != NULL) {
-			g_error_free (err);
-			page_id = NULL;
-			err = NULL;
-		}
-
-		totem->sidebar_w = g_key_file_get_integer (keyfile, "State",
-				"sidebar_w", &err);
-		if (err != NULL) {
-			g_error_free (err);
-			totem->sidebar_w = 0;
-		}
-		g_key_file_free (keyfile);
 	}
 
 	if (w > 0 && h > 0 && totem->maximised == FALSE) {
@@ -3598,8 +3526,7 @@ totem_setup_window (TotemObject *totem)
 	gdk_rgba_parse (&black, "Black");
 	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
 
-	totem_sidebar_setup (totem, FALSE);
-	return page_id;
+	return;
 }
 
 static gboolean

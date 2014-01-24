@@ -47,7 +47,6 @@
 #include "totem-menu.h"
 #include "totem-uri.h"
 #include "totem-preferences.h"
-#include "totem-sidebar.h"
 #include "totem-session.h"
 #include "video-utils.h"
 #include "totem-rtl-helpers.h"
@@ -86,7 +85,6 @@ static void
 app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
-	char *sidebar_pageid;
 
 	if (gtk_clutter_init (NULL, NULL) != CLUTTER_INIT_SUCCESS)
 		g_warning ("gtk-clutter failed to initialise, expect problems from here on.");
@@ -126,7 +124,7 @@ app_init (Totem *totem, char **argv)
 	totem_app_menu_setup (totem);
 	/* totem_callback_connect (totem); XXX we do this later now, so it might look ugly for a short while */
 
-	sidebar_pageid = totem_setup_window (totem);
+	totem_setup_window (totem);
 
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
@@ -165,8 +163,6 @@ app_init (Totem *totem, char **argv)
 	/* Initialise all the plugins, and set the default page, in case
 	 * it comes from a plugin */
 	totem_object_plugins_init (totem);
-	totem_sidebar_set_current_page (totem, sidebar_pageid, FALSE);
-	g_free (sidebar_pageid);
 
 	if (optionstate.filenames == NULL) {
 		if (totem_session_try_restore (totem) == FALSE)

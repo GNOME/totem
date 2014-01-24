@@ -104,11 +104,6 @@ struct _TotemObject {
 	GtkWidget *plugins;
 	TotemPluginsEngine *engine;
 
-	/* Sidebar */
-	GtkWidget *sidebar;
-	gboolean sidebar_shown;
-	int sidebar_w;
-
 	/* Seek */
 	GtkWidget *seek;
 	GtkAdjustment *seekadj;
@@ -182,7 +177,7 @@ G_GNUC_NORETURN void totem_object_show_error_and_exit (const char *title, const 
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
 
-char	*totem_setup_window			(Totem *totem);
+void	totem_setup_window			(Totem *totem);
 void	totem_callback_connect			(Totem *totem);
 void	playlist_widget_setup			(Totem *totem);
 void	video_widget_create			(Totem *totem);

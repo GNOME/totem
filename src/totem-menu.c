@@ -32,7 +32,6 @@
 #include "totem.h"
 #include "totem-interface.h"
 #include "totem-private.h"
-#include "totem-sidebar.h"
 #include "bacon-video-widget.h"
 #include "totem-uri.h"
 
@@ -42,7 +41,6 @@
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void show_sidebar_action_callback (GtkToggleAction *action, Totem *totem);
 G_MODULE_EXPORT void clear_playlist_action_callback (GtkAction *action, Totem *totem);
 
 static void
@@ -516,15 +514,6 @@ void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
 	TOTEM_PROFILE (totem_object_seek_previous (totem));
-}
-
-void
-show_sidebar_action_callback (GtkToggleAction *action, Totem *totem)
-{
-	if (totem_object_is_fullscreen (totem))
-		return;
-
-	totem_sidebar_toggle (totem, gtk_toggle_action_get_active (action));
 }
 
 void

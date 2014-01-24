@@ -212,12 +212,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkHPaned" id="tmw_main_pane">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <signal name="size-allocate" handler="main_pane_size_allocated" swapped="no"/>
-            <child>
-              <object class="GtkStack" id="tmw_main_stack">
+          <object class="GtkStack" id="tmw_main_stack">
                 <property name="visible">True</property>
                 <property name="homogeneous">True</property>
                 <child>
@@ -242,19 +237,10 @@
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="resize">True</property>
-                <property name="shrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">0</property>
           </packing>
         </child>
       </object>

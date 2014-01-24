@@ -67,8 +67,6 @@ libtotem_la_SOURCES = \
 	totem-playlist.h		\
 	totem-session.c			\
 	totem-session.h			\
-	totem-sidebar.c			\
-	totem-sidebar.h			\
 	totem-open-location.c		\
 	totem-open-location.h		\
 	totem-menu.c			\
