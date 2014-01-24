@@ -477,6 +477,9 @@ get_source_priority (GrlSource *source)
 		return 100;
 	if (g_str_equal (id, "grl-tracker-source"))
 		return 50;
+	if (g_str_has_prefix (id, "grl-upnp-") ||
+	    g_str_has_prefix (id, "grl-dleyna-"))
+		return 25;
 	return 0;
 }
 
@@ -1166,7 +1169,7 @@ source_added_cb (GrlRegistry *registry,
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
 					       grl_source_get_id (source),
 					       name,
-					       0); /* FIXME: Use correct priority */
+					       get_source_priority (source));
 	}
 }
 

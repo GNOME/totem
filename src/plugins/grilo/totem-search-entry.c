@@ -177,12 +177,58 @@ item_toggled (GtkCheckMenuItem *item,
 }
 
 static void
+foreach_menu_item_cb (GtkWidget  *item,
+		      GList     **list)
+{
+	*list = g_list_prepend (*list, item);
+}
+
+static int
+sort_sources (gconstpointer a,
+	      gconstpointer b)
+{
+	int prio_a, prio_b;
+	const char *name_a, *name_b;
+
+	prio_a = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (a), "priority"));
+	prio_b = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (b), "priority"));
+
+	if (prio_a > prio_b)
+		return -1;
+	if (prio_b > prio_a)
+		return 1;
+
+	name_a = g_object_get_data (G_OBJECT (a), "label");
+	name_b = g_object_get_data (G_OBJECT (b), "label");
+
+	return 0 - g_utf8_collate (name_a, name_b);
+}
+
+static void
 insert_item_sorted (TotemSearchEntry *self,
 		    int               priority,
 		    GtkWidget        *item)
 {
-	/* FIXME really do that sorted */
-	gtk_menu_shell_append (GTK_MENU_SHELL (self->priv->menu), item);
+	GList *children = NULL;
+	GList *l;
+	int n;
+
+	gtk_container_foreach (GTK_CONTAINER (self->priv->menu),
+			       (GtkCallback) foreach_menu_item_cb,
+			       &children);
+	children = g_list_reverse (children);
+	children = g_list_insert_sorted (children, item, sort_sources);
+
+	for (n = 0, l = children; l != NULL; n++, l = l->next) {
+		if (l->data == item)
+			break;
+	}
+
+	g_list_free (children);
+
+	gtk_menu_shell_insert (GTK_MENU_SHELL (self->priv->menu), item, n);
+	if (priority == 50)
+		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
 	gtk_widget_show (item);
 }
 
