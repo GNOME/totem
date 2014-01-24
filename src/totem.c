@@ -108,9 +108,6 @@ app_init (Totem *totem, char **argv)
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
-	g_object_bind_property (G_OBJECT (totem), "fullscreen",
-				G_OBJECT (totem->win), "show-menubar",
-				G_BINDING_INVERT_BOOLEAN);
 
 	/* Menubar */
 	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
