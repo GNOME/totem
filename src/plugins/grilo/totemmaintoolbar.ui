@@ -2,10 +2,6 @@
 <interface domain="totem">
   <!-- interface-requires gtk+ 3.10 -->
   <template class="TotemMainToolbar" parent="GtkBox">
-    <property name="app_paintable">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkHeaderBar" id="headerbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
@@ -134,13 +130,5 @@
             </child>
           </object>
         </child>
-      </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="pack_type">end</property>
-        <property name="position">0</property>
-      </packing>
-    </child>
   </template>
 </interface>

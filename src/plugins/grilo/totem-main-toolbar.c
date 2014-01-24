@@ -44,11 +44,8 @@
  * Since: 3.10
  */
 
-static void totem_main_toolbar_buildable_init (GtkBuildableIface *iface);
-
 struct _TotemMainToolbarPrivate {
   /* Template widgets */
-  GtkWidget   *headerbar;
   GtkWidget   *search_button;
   GtkWidget   *select_button;
   GtkWidget   *done_button;
@@ -82,10 +79,8 @@ struct _TotemMainToolbarPrivate {
   GtkWidget   *selection_menu_button;
 };
 
-G_DEFINE_TYPE_WITH_CODE (TotemMainToolbar, totem_main_toolbar, GTK_TYPE_BOX,
-                         G_ADD_PRIVATE (TotemMainToolbar)
-                         G_IMPLEMENT_INTERFACE (GTK_TYPE_BUILDABLE,
-                                                totem_main_toolbar_buildable_init));
+G_DEFINE_TYPE_WITH_CODE (TotemMainToolbar, totem_main_toolbar, GTK_TYPE_HEADER_BAR,
+                         G_ADD_PRIVATE (TotemMainToolbar));
 
 enum {
   PROP_0,
@@ -148,7 +143,7 @@ update_toolbar_state (TotemMainToolbar *bar)
           g_free (label);
         }
 
-      change_class (GTK_WIDGET (priv->headerbar), "selection-mode", TRUE);
+      change_class (GTK_WIDGET (bar), "selection-mode", TRUE);
     }
   else if (priv->search_mode)
     {
@@ -167,7 +162,7 @@ update_toolbar_state (TotemMainToolbar *bar)
         gtk_widget_show (priv->select_button);
       gtk_widget_hide (priv->done_button);
 
-      change_class (GTK_WIDGET (priv->headerbar), "selection-mode", FALSE);
+      change_class (GTK_WIDGET (bar), "selection-mode", FALSE);
     }
   else
     {
@@ -182,7 +177,7 @@ update_toolbar_state (TotemMainToolbar *bar)
       if (priv->show_search_button)
         gtk_widget_show (priv->search_button);
 
-      change_class (GTK_WIDGET (priv->headerbar), "selection-mode", FALSE);
+      change_class (GTK_WIDGET (bar), "selection-mode", FALSE);
     }
 }
 
@@ -337,40 +332,6 @@ totem_main_toolbar_finalize (GObject *object)
 }
 
 static void
-totem_main_toolbar_add (GtkContainer *container,
-                        GtkWidget    *child)
-{
-  TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (container);
-
-  if (bar->priv->headerbar == NULL)
-    GTK_CONTAINER_CLASS (totem_main_toolbar_parent_class)->add (container, child);
-  else
-    gtk_container_add (GTK_CONTAINER (bar->priv->headerbar), child);
-}
-
-static void
-totem_main_toolbar_buildable_add_child (GtkBuildable *buildable,
-                                        GtkBuilder   *builder,
-                                        GObject      *child,
-                                        const gchar  *type)
-{
-  TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (buildable);
-
-  if (type && strcmp (type, "title") == 0)
-    totem_main_toolbar_set_custom_title (bar, GTK_WIDGET (child));
-  else if (!type)
-    gtk_container_add (GTK_CONTAINER (buildable), GTK_WIDGET (child));
-  else
-    GTK_BUILDER_WARN_INVALID_CHILD_TYPE (GTK_HEADER_BAR (buildable), type);
-}
-
-static void
-totem_main_toolbar_buildable_init (GtkBuildableIface *iface)
-{
-  iface->add_child = totem_main_toolbar_buildable_add_child;
-}
-
-static void
 totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -380,8 +341,6 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
   object_class->finalize = totem_main_toolbar_finalize;
   object_class->set_property = totem_main_toolbar_set_property;
   object_class->get_property = totem_main_toolbar_get_property;
-
-  container_class->add = totem_main_toolbar_add;
 
   g_object_class_install_property (object_class,
                                    PROP_TITLE,
@@ -490,7 +449,6 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
                 G_TYPE_NONE, 0, G_TYPE_NONE);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/totemmaintoolbar.ui");
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, headerbar);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, search_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, select_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, selection_menu_button);
@@ -577,8 +535,6 @@ totem_main_toolbar_init (TotemMainToolbar *bar)
                             bar, "search-mode", 0);
   g_object_bind_property (bar->priv->select_button, "active",
                             bar, "select-mode", 0);
-
-  gtk_widget_show_all (bar->priv->headerbar);
 };
 
 /**
@@ -759,7 +715,7 @@ totem_main_toolbar_pack_start (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_header_bar_pack_start (GTK_HEADER_BAR (bar->priv->headerbar), child);
+  gtk_header_bar_pack_start (GTK_HEADER_BAR (bar), child);
 }
 
 void
@@ -768,7 +724,7 @@ totem_main_toolbar_pack_end (TotemMainToolbar *bar,
 {
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (bar->priv->headerbar), child);
+  gtk_header_bar_pack_end (GTK_HEADER_BAR (bar), child);
 }
 
 void

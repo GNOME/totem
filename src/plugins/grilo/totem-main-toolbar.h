@@ -46,14 +46,14 @@ typedef struct _TotemMainToolbarClass   TotemMainToolbarClass;
 struct _TotemMainToolbar
 {
   /*< private >*/
-  GtkBox parent;
+  GtkHeaderBar parent;
 
   TotemMainToolbarPrivate *priv;
 };
 
 struct _TotemMainToolbarClass
 {
-  GtkBoxClass parent_class;
+  GtkHeaderBarClass parent_class;
 };
 
 GType           totem_main_toolbar_get_type              (void) G_GNUC_CONST;
