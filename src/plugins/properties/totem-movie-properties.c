@@ -280,6 +280,7 @@ impl_activate (PeasActivatable *plugin)
 					 "<Primary>p",
 					 "app.properties",
 					 NULL);
+	/* FIXME: Handle GDK_KEY_View */
 
 	/* Install the menu */
 	menu = totem_object_get_menu_section (totem, "properties-placeholder");

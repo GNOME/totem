@@ -1313,16 +1313,6 @@ totem_object_eject (TotemObject *totem)
 	g_object_unref (mount);
 }
 
-void
-totem_object_show_properties (TotemObject *totem)
-{
-	/* FIXME Implement showing properties */
-#if 0
-	if (totem_object_is_fullscreen (totem) == FALSE)
-		totem_sidebar_set_current_page (totem, "properties", TRUE);
-#endif
-}
-
 /**
  * totem_object_play:
  * @totem: a #TotemObject
@@ -3181,11 +3171,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_AudioPlay:
 	case GDK_KEY_p:
 	case GDK_KEY_P:
-		if (event->state & GDK_CONTROL_MASK) {
-			totem_object_show_properties (totem);
-		} else {
-			totem_object_play_pause (totem);
-		}
+		totem_object_play_pause (totem);
 		break;
 	case GDK_KEY_comma:
 	case GDK_KEY_FrameBack:
@@ -3283,9 +3269,6 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Select:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_SELECT);
-		break;
-	case GDK_KEY_View:
-		totem_object_show_properties (totem);
 		break;
 	case GDK_KEY_0:
 		if (event->state & GDK_CONTROL_MASK)

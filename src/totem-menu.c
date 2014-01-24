@@ -235,14 +235,6 @@ next_angle_action_cb (GSimpleAction *action,
 }
 
 static void
-properties_action_cb (GSimpleAction *action,
-		      GVariant      *parameter,
-		      gpointer       user_data)
-{
-        totem_object_show_properties (TOTEM_OBJECT (user_data));
-}
-
-static void
 eject_action_cb (GSimpleAction *action,
 		 GVariant      *parameter,
 		 gpointer       user_data)
@@ -283,7 +275,6 @@ static GActionEntry app_entries[] = {
 	{ "aspect-ratio", list_action_cb, "i", "0", aspect_ratio_change_state },
 	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
 	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
-	{ "properties", properties_action_cb, NULL, NULL, NULL },
 	{ "eject", eject_action_cb, NULL, NULL, NULL },
 };
 
