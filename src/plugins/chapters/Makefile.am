@@ -25,4 +25,10 @@ libchapters_la_CFLAGS = \
 	$(plugin_cflags)	\
 	$(CHAPTERS_CFLAGS)
 
+# Override to _not_ install the test plugins
+install-pluginLTLIBRARIES:
+install-pluginDATA:
+uninstall-pluginLTLIBRARIES:
+uninstall-pluginDATA:
+
 -include $(top_srcdir)/git.mk
