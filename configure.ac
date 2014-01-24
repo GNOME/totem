@@ -80,7 +80,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo vimeo"
+allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot skipto zeitgeist-dp grilo vimeo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -675,7 +675,6 @@ src/plugins/properties/Makefile
 src/plugins/recent/Makefile
 src/plugins/rotation/Makefile
 src/plugins/save-file/Makefile
-src/plugins/sidebar-test/Makefile
 src/plugins/skipto/Makefile
 src/plugins/samplepython/Makefile
 src/plugins/sample-vala/Makefile
