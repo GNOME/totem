@@ -630,7 +630,7 @@ typedef struct {
 static void
 add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result, AddToPlaylistData *data)
 {
-	int end;
+	int end = -1;
 	gboolean playlist_changed;
 
 	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
