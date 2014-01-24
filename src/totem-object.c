@@ -1122,7 +1122,7 @@ totem_object_save_size (TotemObject *totem)
 }
 
 static void
-totem_object_save_state (TotemObject *totem, const char *page_id)
+totem_object_save_state (TotemObject *totem)
 {
 	GKeyFile *keyfile;
 	char *contents, *filename;
@@ -1200,6 +1200,8 @@ totem_object_exit (TotemObject *totem)
 
 	if (totem->bvw)
 		bacon_video_widget_close (totem->bvw);
+
+	totem_object_save_state (totem);
 
 	totem_sublang_exit (totem);
 	totem_destroy_file_filters ();
