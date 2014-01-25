@@ -172,7 +172,8 @@ totem_open_location_new (void)
 	GtkTreeModel *model;
 	GList *recent_items, *streams_recent_items = NULL;
 
-	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
+	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION,
+							   "use-header-bar", 1, NULL));
 
 	if (open_location->priv->uri_container == NULL) {
 		g_object_unref (open_location);
