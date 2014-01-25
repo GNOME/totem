@@ -2226,7 +2226,7 @@ static void
 back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
 {
-	totem_object_pause (totem);
+	totem_playlist_clear (totem->playlist);
 	totem_object_set_main_page (totem, "grilo", TRUE);
 }
 
