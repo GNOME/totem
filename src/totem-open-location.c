@@ -180,11 +180,11 @@ totem_open_location_new (void)
 		return NULL;
 	}
 
-	gtk_window_set_title (GTK_WINDOW (open_location), _("Open Location..."));
+	gtk_window_set_title (GTK_WINDOW (open_location), _("Add Web Video..."));
 	gtk_dialog_add_buttons (GTK_DIALOG (open_location),
-			_("_Cancel"), GTK_RESPONSE_CANCEL,
-			_("_Open"), GTK_RESPONSE_OK,
-			NULL);
+				_("_Cancel"), GTK_RESPONSE_CANCEL,
+				_("_Open"), GTK_RESPONSE_OK,
+				NULL);
 	gtk_dialog_set_response_sensitive (GTK_DIALOG (open_location), GTK_RESPONSE_OK, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (open_location), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (open_location), GTK_RESPONSE_OK);
