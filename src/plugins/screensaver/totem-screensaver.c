@@ -53,6 +53,7 @@ typedef struct {
 	gboolean       inhibit_available;
 	guint          handler_id_playing;
 	guint          inhibit_cookie;
+	guint          uninhibit_timeout;
 } TotemScreensaverPluginPrivate;
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SCREENSAVER_PLUGIN,
@@ -85,11 +86,29 @@ totem_screensaver_update_from_state (TotemObject *totem,
 	}
 }
 
+static gboolean
+uninhibit_timeout_cb (TotemScreensaverPlugin *pi)
+{
+	totem_screensaver_update_from_state (pi->priv->totem, pi);
+	pi->priv->uninhibit_timeout = 0;
+	return G_SOURCE_REMOVE;
+}
+
 static void
 property_notify_cb (TotemObject *totem,
 		    GParamSpec *spec,
 		    TotemScreensaverPlugin *pi)
 {
+	if (pi->priv->uninhibit_timeout != 0) {
+		g_source_remove (pi->priv->uninhibit_timeout);
+		pi->priv->uninhibit_timeout = 0;
+	}
+
+	if (totem_object_is_playing (totem) == FALSE) {
+		pi->priv->uninhibit_timeout = g_timeout_add_seconds (5, (GSourceFunc) uninhibit_timeout_cb, pi);
+		return;
+	}
+
 	totem_screensaver_update_from_state (totem, pi);
 }
 
@@ -125,6 +144,11 @@ impl_deactivate	(PeasActivatable *plugin)
 		totem = g_object_get_data (G_OBJECT (plugin), "object");
 		g_signal_handler_disconnect (G_OBJECT (totem), pi->priv->handler_id_playing);
 		pi->priv->handler_id_playing = 0;
+	}
+
+	if (pi->priv->uninhibit_timeout != 0) {
+		g_source_remove (pi->priv->uninhibit_timeout);
+		pi->priv->uninhibit_timeout = 0;
 	}
 
 	if (pi->priv->inhibit_cookie != 0) {
