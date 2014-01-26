@@ -38,9 +38,8 @@ static guint signals[LAST_SIGNAL] = { 0, };
 
 struct _TotemSearchEntryPrivate {
 	GtkWidget *entry;
-	GtkWidget *button;
-	GtkWidget *menu;
-	GSList *group;
+	GtkWidget *popover;
+	GtkWidget *listbox;
 	GdTaggedEntryTag *tag;
 };
 
@@ -50,7 +49,7 @@ totem_search_entry_finalize (GObject *obj)
 	TotemSearchEntry *self = TOTEM_SEARCH_ENTRY (obj);
 
 	g_clear_object (&self->priv->tag);
-	g_clear_pointer (&self->priv->group, g_slist_free);
+	g_clear_object (&self->priv->popover);
 
 	G_OBJECT_CLASS (totem_search_entry_parent_class)->finalize (obj);
 }
@@ -68,10 +67,71 @@ entry_activate_cb (GtkEntry *entry,
 }
 
 static void
+tag_clicked_cb (GdTaggedEntry    *entry,
+		GdTaggedEntryTag *tag,
+		TotemSearchEntry *self)
+{
+	cairo_rectangle_int_t rect;
+
+	if (gd_tagged_entry_tag_get_area (tag, &rect)) {
+		gtk_popover_set_pointing_to (GTK_POPOVER (self->priv->popover), &rect);
+		gtk_widget_show (self->priv->popover);
+	}
+}
+
+static void
+listbox_row_activated (GtkListBox    *list_box,
+		       GtkListBoxRow *row,
+		       gpointer       user_data)
+{
+	TotemSearchEntry *self = user_data;
+	GList *children, *l;
+
+	children = gtk_container_get_children (GTK_CONTAINER (list_box));
+	for (l = children; l != NULL; l = l->next) {
+		GtkWidget *check;
+
+		check = g_object_get_data (G_OBJECT (l->data), "check");
+		if (l->data == row) {
+			const char *label;
+
+			gtk_widget_set_opacity (check, 1.0);
+			label = g_object_get_data (G_OBJECT (l->data), "label");
+			gd_tagged_entry_tag_set_label (self->priv->tag, label);
+			g_object_notify (G_OBJECT (self), "selected-id");
+		} else {
+			gtk_widget_set_opacity (check, 0.0);
+		}
+	}
+	g_list_free (children);
+}
+
+static int
+sort_sources (GtkListBoxRow *row_a,
+	      GtkListBoxRow *row_b,
+	      gpointer       user_data)
+{
+	int prio_a, prio_b;
+	const char *name_a, *name_b;
+
+	prio_a = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (row_a), "priority"));
+	prio_b = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (row_b), "priority"));
+
+	if (prio_a > prio_b)
+		return -1;
+	if (prio_b > prio_a)
+		return 1;
+
+	name_a = g_object_get_data (G_OBJECT (row_a), "label");
+	name_b = g_object_get_data (G_OBJECT (row_b), "label");
+
+	return 0 - g_utf8_collate (name_a, name_b);
+}
+
+static void
 totem_search_entry_init (TotemSearchEntry *self)
 {
 	GtkWidget *entry;
-	GtkWidget *button;
 
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, TOTEM_TYPE_SEARCH_ENTRY, TotemSearchEntryPrivate);
 
@@ -85,16 +145,23 @@ totem_search_entry_init (TotemSearchEntry *self)
 
 	self->priv->entry = entry;
 
-	/* Button */
-	button = gtk_menu_button_new ();
-	gtk_box_pack_start (GTK_BOX (self),
-			    button,
-			    FALSE, TRUE, 0);
-	gtk_widget_show (button);
+	/* Popover */
+	self->priv->popover = gtk_popover_new (GTK_WIDGET (self));
+	gtk_popover_set_modal (GTK_POPOVER (self->priv->popover), TRUE);
+	gtk_popover_set_position (GTK_POPOVER (self->priv->popover), GTK_POS_BOTTOM);
 
-	self->priv->button = button;
+	self->priv->listbox = gtk_list_box_new ();
+	gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (self->priv->listbox), TRUE);
+	gtk_list_box_set_sort_func (GTK_LIST_BOX (self->priv->listbox), sort_sources, self, NULL);
+	gtk_widget_show (self->priv->listbox);
+	gtk_container_add (GTK_CONTAINER (self->priv->popover), self->priv->listbox);
+
+	g_signal_connect (self->priv->listbox, "row-activated",
+			  G_CALLBACK (listbox_row_activated), self);
 
 	/* Connect signals */
+	g_signal_connect (self->priv->entry, "tag-clicked",
+			  G_CALLBACK (tag_clicked_cb), self);
 	g_signal_connect (self->priv->entry, "activate",
 			  G_CALLBACK (entry_activate_cb), self);
 }
@@ -163,73 +230,19 @@ totem_search_entry_new (void)
 	return g_object_new (TOTEM_TYPE_SEARCH_ENTRY, NULL);
 }
 
-static void
-item_toggled (GtkCheckMenuItem *item,
-	      TotemSearchEntry *self)
+static GtkWidget *
+padded_label_new (const char *text)
 {
-	const char *label;
+	GtkWidget *widget;
 
-	if (gtk_check_menu_item_get_active (item)) {
-		label = g_object_get_data (G_OBJECT (item), "label");
-		gd_tagged_entry_tag_set_label (self->priv->tag, label);
-		g_object_notify (G_OBJECT (self), "selected-id");
-	}
-}
+	widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 10);
+	gtk_widget_set_margin_top (widget, 10);
+	gtk_widget_set_margin_bottom (widget, 10);
+	gtk_widget_set_margin_start (widget, 10);
+	gtk_widget_set_margin_end (widget, 10);
+	gtk_box_pack_start (GTK_BOX (widget), gtk_label_new (text), FALSE, FALSE, 0);
 
-static void
-foreach_menu_item_cb (GtkWidget  *item,
-		      GList     **list)
-{
-	*list = g_list_prepend (*list, item);
-}
-
-static int
-sort_sources (gconstpointer a,
-	      gconstpointer b)
-{
-	int prio_a, prio_b;
-	const char *name_a, *name_b;
-
-	prio_a = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (a), "priority"));
-	prio_b = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (b), "priority"));
-
-	if (prio_a > prio_b)
-		return -1;
-	if (prio_b > prio_a)
-		return 1;
-
-	name_a = g_object_get_data (G_OBJECT (a), "label");
-	name_b = g_object_get_data (G_OBJECT (b), "label");
-
-	return 0 - g_utf8_collate (name_a, name_b);
-}
-
-static void
-insert_item_sorted (TotemSearchEntry *self,
-		    int               priority,
-		    GtkWidget        *item)
-{
-	GList *children = NULL;
-	GList *l;
-	int n;
-
-	gtk_container_foreach (GTK_CONTAINER (self->priv->menu),
-			       (GtkCallback) foreach_menu_item_cb,
-			       &children);
-	children = g_list_reverse (children);
-	children = g_list_insert_sorted (children, item, sort_sources);
-
-	for (n = 0, l = children; l != NULL; n++, l = l->next) {
-		if (l->data == item)
-			break;
-	}
-
-	g_list_free (children);
-
-	gtk_menu_shell_insert (GTK_MENU_SHELL (self->priv->menu), item, n);
-	if (priority == 50)
-		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
-	gtk_widget_show (item);
+	return widget;
 }
 
 void
@@ -239,29 +252,42 @@ totem_search_entry_add_source (TotemSearchEntry *self,
 			       int               priority)
 {
 	GtkWidget *item;
+	GtkWidget *check;
+	GtkWidget *box;
 
 	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
 
-	if (self->priv->menu == NULL) {
-		self->priv->menu = gtk_menu_new ();
-		gtk_menu_button_set_popup (GTK_MENU_BUTTON (self->priv->button),
-					   self->priv->menu);
+	if (self->priv->tag == NULL) {
 		self->priv->tag = gd_tagged_entry_tag_new (label);
 		gd_tagged_entry_tag_set_has_close_button (self->priv->tag, FALSE);
 		gd_tagged_entry_insert_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag, -1);
 	}
 
-	item = gtk_radio_menu_item_new_with_label (self->priv->group, label);
-	self->priv->group = g_slist_prepend (self->priv->group, item);
+	item = gtk_list_box_row_new ();
+	box = padded_label_new (label);
+	gtk_container_add (GTK_CONTAINER (item), box);
 
+	check = gtk_image_new ();
+	gtk_image_set_from_icon_name (GTK_IMAGE (check), "object-select-symbolic", GTK_ICON_SIZE_MENU);
+	gtk_widget_set_opacity (check, 0.0);
+	g_object_set (check, "icon-size", GTK_ICON_SIZE_MENU, NULL);
+	gtk_box_pack_start (GTK_BOX (box), check, FALSE, FALSE, 0);
+	gtk_box_reorder_child (GTK_BOX (box), check, 0);
+
+	g_object_set_data (G_OBJECT (item), "check", check);
 	g_object_set_data_full (G_OBJECT (item), "id", g_strdup (id), g_free);
 	g_object_set_data_full (G_OBJECT (item), "label", g_strdup (label), g_free);
 	g_object_set_data (G_OBJECT (item), "priority", GINT_TO_POINTER (priority));
 
-	g_signal_connect (item, "toggled",
-			  G_CALLBACK (item_toggled), self);
+	gtk_widget_show_all (item);
+	gtk_list_box_insert (GTK_LIST_BOX (self->priv->listbox), item, -1);
 
-	insert_item_sorted (self, priority, item);
+	/* Is this the local one? */
+	if (priority == 50) {
+		listbox_row_activated (GTK_LIST_BOX (self->priv->listbox),
+				       GTK_LIST_BOX_ROW (item),
+				       self);
+	}
 }
 
 void
@@ -280,8 +306,7 @@ totem_search_entry_remove_source (TotemSearchEntry *self,
 	num_items = 1;
 
 	if (num_items == 0) {
-		gtk_menu_button_set_popup (GTK_MENU_BUTTON (self->priv->button), NULL);
-		g_clear_object (&self->priv->menu);
+		g_clear_object (&self->priv->popover);
 		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag);
 		g_clear_object (&self->priv->tag);
 	}
@@ -298,42 +323,52 @@ totem_search_entry_get_text (TotemSearchEntry *self)
 const char *
 totem_search_entry_get_selected_id (TotemSearchEntry *self)
 {
-	GSList *l;
+	GList *children, *l;
+	const char *id = NULL;
 
 	g_return_val_if_fail (TOTEM_IS_SEARCH_ENTRY (self), NULL);
+	children = gtk_container_get_children (GTK_CONTAINER (self->priv->listbox));
+	for (l = children; l != NULL; l = l->next) {
+		GtkWidget *check;
 
-	for (l = self->priv->group ; l != NULL; l = l->next) {
-		GtkCheckMenuItem *item = l->data;
-
-		if (gtk_check_menu_item_get_active (item) != FALSE)
-			return g_object_get_data (G_OBJECT (item), "id");
+		check = g_object_get_data (G_OBJECT (l->data), "check");
+		if (gtk_widget_get_opacity (check) == 1.0) {
+			id = g_object_get_data (G_OBJECT (l->data), "id");
+			break;
+		}
 	}
+	g_list_free (children);
 
-	return NULL;
+	return id;
 }
 
 void
 totem_search_entry_set_selected_id (TotemSearchEntry *self,
 				    const char       *id)
 {
-	GSList *l;
+	GList *children, *l;
 
 	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
 	g_return_if_fail (id != NULL);
 
-	for (l = self->priv->group ; l != NULL; l = l->next) {
-		GtkCheckMenuItem *item = l->data;
+	children = gtk_container_get_children (GTK_CONTAINER (self->priv->listbox));
+	for (l = children; l != NULL; l = l->next) {
 		const char *item_id;
 
-		item_id = g_object_get_data (G_OBJECT (item), "id");
+		item_id = g_object_get_data (G_OBJECT (l->data), "id");
 		if (g_strcmp0 (item_id, id) == 0) {
-			gtk_check_menu_item_set_active (item, TRUE);
-			return;
+			listbox_row_activated (GTK_LIST_BOX (self->priv->listbox),
+					       GTK_LIST_BOX_ROW (l->data),
+					       self);
+			goto end;
 		}
 	}
 
 	g_warning ("Could not find ID '%s' in TotemSearchEntry %p",
 		   id, self);
+
+end:
+	g_list_free (children);
 }
 
 GtkEntry *
