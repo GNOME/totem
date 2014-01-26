@@ -79,6 +79,7 @@ typedef struct {
 	GtkWindow *main_window;
 
 	GrlSource *local_metadata_src;
+	GrlSource *metadata_store_src;
 
 	/* Current media selected in results*/
 	GrlMedia *selected_media;
@@ -457,6 +458,11 @@ add_local_metadata (TotemGriloPlugin *self,
 	options = grl_operation_options_new (NULL);
 	grl_operation_options_set_flags (options, GRL_RESOLVE_FULL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
+				 media,
+				 self->priv->metadata_keys,
+				 options,
+				 NULL);
+	grl_source_resolve_sync (self->priv->metadata_store_src,
 				 media,
 				 self->priv->metadata_keys,
 				 options,
@@ -947,7 +953,6 @@ source_is_blacklisted (GrlSource *source)
 		"grl-filesystem",
 		"grl-shoutcast",
 		"grl-flickr",
-		"grl-metadata-store",
 		"grl-podcasts",
 		NULL
 	};
@@ -1135,6 +1140,8 @@ source_added_cb (GrlRegistry *registry,
 		name = grl_source_get_name (source);
 	if (g_str_equal (id, "grl-local-metadata"))
 		self->priv->local_metadata_src = source;
+	else if (g_str_equal (id, "grl-metadata-store"))
+		self->priv->metadata_store_src = source;
 	ops = grl_source_supported_operations (source);
 
 	if (ops & GRL_OP_BROWSE) {
