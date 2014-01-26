@@ -580,6 +580,7 @@ browse_cb (GrlSource *source,
 	}
 
 	if (remaining == 0) {
+		g_application_unmark_busy (g_application_get_default ());
 		gtk_tree_row_reference_free (bud->ref_parent);
 		g_object_unref (bud->totem_grilo);
 		g_slice_free (BrowseUserData, bud);
@@ -620,6 +621,7 @@ browse (TotemGriloPlugin *self,
 		bud->ref_parent = gtk_tree_row_reference_new (model, path);
 	bud->model = g_object_ref (model);
 
+	g_application_mark_busy (g_application_get_default ());
 	grl_source_browse (source,
 			   container,
 			   self->priv->metadata_keys,
@@ -695,6 +697,7 @@ search_cb (GrlSource *source,
 	}
 
 	if (remaining == 0) {
+		g_application_unmark_busy (g_application_get_default ());
 		self->priv->search_id = 0;
 		gtk_widget_set_sensitive (self->priv->search_entry, TRUE);
 		update_search_thumbnails (self);
@@ -733,6 +736,9 @@ search_more (TotemGriloPlugin *self)
 	gtk_widget_set_sensitive (self->priv->search_entry, FALSE);
 	self->priv->search_page++;
 	self->priv->search_remaining = PAGE_SIZE;
+
+	g_application_mark_busy (g_application_get_default ());
+
 	if (self->priv->search_source != NULL) {
 		self->priv->search_id =
 			grl_source_search (self->priv->search_source,
