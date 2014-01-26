@@ -1747,6 +1747,10 @@ totem_playlist_clear (TotemPlaylist *playlist)
 
 	g_clear_pointer (&playlist->priv->current, gtk_tree_path_free);
 
+	g_signal_emit (G_OBJECT (playlist),
+		       totem_playlist_table_signals[CURRENT_REMOVED],
+		       0, NULL);
+
 	return TRUE;
 }
 
