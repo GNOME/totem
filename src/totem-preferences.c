@@ -50,7 +50,6 @@
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-G_MODULE_EXPORT void audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
 G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
@@ -85,15 +84,6 @@ checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
 	totem_prefs_set_show_visuals (totem, value);
 }
 
-void
-audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
-{
-	gboolean value;
-
-	value = gtk_toggle_button_get_active (togglebutton);
-	g_settings_set_boolean (totem->settings, "lock-screensaver-on-audio", value);
-}
-
 static void
 show_vfx_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
@@ -113,28 +103,6 @@ static void
 disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
-}
-
-static void
-lock_screensaver_on_audio_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
-{
-	GObject *item, *radio;
-	gboolean value;
-
-	item = POBJ ("tpw_audio_toggle_button");
-	g_signal_handlers_disconnect_by_func (item,
-					      audio_screensaver_button_toggled_cb, totem);
-
-	value = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
-	if (value != FALSE) {
-		radio = POBJ ("tpw_audio_toggle_button");
-	} else {
-		radio = POBJ ("tpw_video_toggle_button");
-	}
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
-
-	g_signal_connect (item, "toggled",
-			  G_CALLBACK (audio_screensaver_button_toggled_cb), totem);
 }
 
 void
@@ -351,15 +319,6 @@ totem_setup_preferences (Totem *totem)
 			G_CALLBACK (gtk_widget_hide_on_delete), NULL);
         g_signal_connect (totem->prefs, "destroy",
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
-
-	/* Screensaver audio locking */
-	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
-	if (lock_screensaver_on_audio != FALSE)
-		item = POBJ ("tpw_audio_toggle_button");
-	else
-		item = POBJ ("tpw_video_toggle_button");
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
-	g_signal_connect (totem->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, totem);
 
 	/* Disable deinterlacing */
 	item = POBJ ("tpw_no_deinterlace_checkbutton");
