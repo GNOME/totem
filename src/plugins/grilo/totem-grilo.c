@@ -980,6 +980,23 @@ source_is_browse_blacklisted (GrlSource *source)
 }
 
 static gboolean
+source_is_search_blacklisted (GrlSource *source)
+{
+	const char *id;
+	const char const *sources[] = {
+		"grl-metadata-store",
+		NULL
+	};
+
+	id = grl_source_get_id (source);
+	g_assert (id);
+
+	return strv_has_prefix (sources, id);
+}
+
+
+
+static gboolean
 find_media_cb (GtkTreeModel  *model,
 	       GtkTreePath   *path,
 	       GtkTreeIter   *iter,
@@ -1172,7 +1189,8 @@ source_added_cb (GrlRegistry *registry,
 			g_signal_connect (G_OBJECT (source), "content-changed",
 					  G_CALLBACK (content_changed_cb), self);
 	}
-	if (ops & GRL_OP_SEARCH) {
+	if ((ops & GRL_OP_SEARCH) &&
+	    !source_is_search_blacklisted (source)) {
 		totem_search_entry_add_source (TOTEM_SEARCH_ENTRY (self->priv->search_entry),
 					       grl_source_get_id (source),
 					       name,
