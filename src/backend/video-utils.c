@@ -44,15 +44,3 @@ totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 	gdk_window_set_cursor (window, cursor);
 	g_object_unref (cursor);
 }
-
-void
-totem_gdk_window_set_waiting_cursor (GdkWindow *window)
-{
-	GdkCursor *cursor;
-
-	cursor = gdk_cursor_new (GDK_WATCH);
-	gdk_window_set_cursor (window, cursor);
-	g_object_unref (cursor);
-
-	gdk_flush ();
-}

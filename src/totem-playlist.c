@@ -91,9 +91,6 @@ struct TotemPlaylistPrivate
 	GtkTreePath *tree_path;
 	GtkTreeViewDropPosition drop_pos;
 
-	/* Cursor ref: 0 if the cursor is unbusy; positive numbers indicate the number of nested calls to set_waiting_cursor() */
-	guint cursor_ref;
-
 	/* Current time in the track */
 	char *starttime;
 
@@ -176,22 +173,6 @@ static GtkWindow *
 totem_playlist_get_toplevel (TotemPlaylist *playlist)
 {
 	return GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (playlist)));
-}
-
-static void
-set_waiting_cursor (TotemPlaylist *playlist)
-{
-	/* FIXME: Use g_application_mark_busy()
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))));
-	playlist->priv->cursor_ref++; */
-}
-
-static void
-unset_waiting_cursor (TotemPlaylist *playlist)
-{
-	/* FIXME: Use g_application_unmark_busy()
-	if (--playlist->priv->cursor_ref < 1)
-		gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (totem_playlist_get_toplevel (playlist))), NULL); */
 }
 
 static void
@@ -1365,7 +1346,7 @@ add_mrl_cb (TotemPlParser *parser, GAsyncResult *result, AddMrlData *data)
 
 	/* Remove the cursor, if one was set */
 	if (data->cursor)
-		unset_waiting_cursor (data->playlist);
+		g_application_unmark_busy (g_application_get_default ());
 
 	/* Create an async result which will return the result to the code which called totem_playlist_add_mrl() */
 	if (error != NULL)
@@ -1394,7 +1375,7 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl, const char *di
 
 	/* Display a waiting cursor if required */
 	if (cursor)
-		set_waiting_cursor (playlist);
+		g_application_mark_busy (g_application_get_default ());
 
 	/* Build the data struct to pass to the callback function */
 	data = g_slice_new (AddMrlData);
@@ -1485,7 +1466,7 @@ add_mrls_operation_data_free (AddMrlsOperationData *data)
 {
 	/* Remove the cursor, if one was set */
 	if (data->cursor)
-		unset_waiting_cursor (data->playlist);
+		g_application_unmark_busy (g_application_get_default ());
 
 	g_list_free_full (data->mrls, (GDestroyNotify) totem_playlist_mrl_data_free);
 	g_object_unref (data->playlist);
@@ -1666,7 +1647,7 @@ totem_playlist_add_mrls (TotemPlaylist *self,
 
 	/* Display a waiting cursor if required */
 	if (cursor)
-		set_waiting_cursor (self);
+		g_application_mark_busy (g_application_get_default ());
 
 	for (i = mrls; i != NULL; i = i->next) {
 		TotemPlaylistMrlData *mrl_data = (TotemPlaylistMrlData*) i->data;

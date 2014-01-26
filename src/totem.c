@@ -132,7 +132,7 @@ app_init (Totem *totem, char **argv)
 	/* Show ! */
 	if (optionstate.fullscreen == FALSE) {
 		gtk_widget_show (totem->win);
-		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
+		g_application_mark_busy (G_APPLICATION (totem));
 	} else {
 		gtk_widget_realize (totem->win);
 	}
@@ -178,7 +178,7 @@ app_init (Totem *totem, char **argv)
 	bacon_video_widget_set_logo (totem->bvw, "totem");
 
 	if (optionstate.fullscreen == FALSE)
-		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
+		g_application_unmark_busy (G_APPLICATION (totem));
 
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
 }

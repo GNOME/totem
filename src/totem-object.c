@@ -1750,11 +1750,11 @@ totem_object_set_mrl (TotemObject *totem,
 		bacon_video_widget_set_user_agent (totem->bvw, user_agent);
 		g_free (user_agent);
 
-		totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
+		g_application_mark_busy (G_APPLICATION (totem));
 		bacon_video_widget_open (totem->bvw, mrl);
 		bacon_video_widget_set_text_subtitle (totem->bvw, subtitle ? subtitle : autoload_sub);
 		g_free (autoload_sub);
-		gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
+		g_application_unmark_busy (G_APPLICATION (totem));
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
@@ -2259,10 +2259,10 @@ on_got_redirect (BaconVideoWidget *bvw, const char *mrl, TotemObject *totem)
 	bacon_video_widget_close (totem->bvw);
 	emit_file_closed (totem);
 	totem->has_played_emitted = FALSE;
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
+	g_application_mark_busy (G_APPLICATION (totem));
 	bacon_video_widget_open (totem->bvw, new_mrl ? new_mrl : mrl);
 	emit_file_opened (totem, new_mrl ? new_mrl : mrl);
-	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
+	g_application_unmark_busy (G_APPLICATION (totem));
 	if (bacon_video_widget_play (bvw, NULL) != FALSE) {
 		totem_file_has_played (totem, totem->mrl);
 		totem->has_played_emitted = TRUE;
@@ -2550,7 +2550,7 @@ totem_object_open_files_list (TotemObject *totem, GSList *list)
 	if (list == NULL)
 		return changed;
 
-	totem_gdk_window_set_waiting_cursor (gtk_widget_get_window (totem->win));
+	g_application_mark_busy (G_APPLICATION (totem));
 
 	for (l = list ; l != NULL; l = l->next)
 	{
@@ -2607,7 +2607,7 @@ totem_object_open_files_list (TotemObject *totem, GSList *list)
 	if (mrl_list != NULL)
 		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), FALSE, NULL, NULL, NULL);
 
-	gdk_window_set_cursor (gtk_widget_get_window (totem->win), NULL);
+	g_application_unmark_busy (G_APPLICATION (totem));
 
 	/* ... and reconnect because we're nice people */
 	if (cleared != FALSE)

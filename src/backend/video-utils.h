@@ -29,4 +29,3 @@
 #include <gtk/gtk.h>
 
 void totem_gdk_window_set_invisible_cursor (GdkWindow *window);
-void totem_gdk_window_set_waiting_cursor (GdkWindow *window);
