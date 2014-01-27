@@ -505,7 +505,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         self._tree_view.connect ('row-activated',
                                self.__on_treeview__row_activate)
 
-    def _show_dialog (self, _):
+    def _show_dialog (self, params, _):
         if not self._dialog:
             self._build_dialog ()
 
