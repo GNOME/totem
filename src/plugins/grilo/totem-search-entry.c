@@ -261,7 +261,7 @@ totem_search_entry_add_source (TotemSearchEntry *self,
 		self->priv->tag = gd_tagged_entry_tag_new (label);
 		gd_tagged_entry_tag_set_has_close_button (self->priv->tag, FALSE);
 		gd_tagged_entry_insert_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag, -1);
-		gtk_widget_set_sensitive (self, TRUE);
+		gtk_widget_set_sensitive (GTK_WIDGET (self), TRUE);
 	}
 
 	item = gtk_list_box_row_new ();
@@ -330,7 +330,7 @@ totem_search_entry_remove_source (TotemSearchEntry *self,
 	if (num_items == 0) {
 		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag);
 		g_clear_object (&self->priv->tag);
-		gtk_widget_set_sensitive (self, FALSE);
+		gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
 	}
 }
 
