@@ -958,6 +958,7 @@ source_is_blacklisted (GrlSource *source)
 		"grl-shoutcast",
 		"grl-flickr",
 		"grl-podcasts",
+		"grl-dmap",
 		NULL
 	};
 
