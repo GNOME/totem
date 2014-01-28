@@ -261,6 +261,7 @@ totem_search_entry_add_source (TotemSearchEntry *self,
 		self->priv->tag = gd_tagged_entry_tag_new (label);
 		gd_tagged_entry_tag_set_has_close_button (self->priv->tag, FALSE);
 		gd_tagged_entry_insert_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag, -1);
+		gtk_widget_set_sensitive (self, TRUE);
 	}
 
 	item = gtk_list_box_row_new ();
@@ -294,21 +295,42 @@ void
 totem_search_entry_remove_source (TotemSearchEntry *self,
 				  const gchar *id)
 {
+	GList *children, *l;
 	guint num_items;
+	gboolean current_removed = FALSE;
 
 	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
 
-	/* FIXME
-	 * - implement
-	 * - don't forget to remove tag
-	 * - check if it's the currently selected source and notify of the change if so */
+	children = gtk_container_get_children (GTK_CONTAINER (self->priv->listbox));
+	if (children == NULL)
+		return;
 
-	num_items = 1;
+	num_items = g_list_length (children) - 1;
+	for (l = children; l != NULL; l = l->next) {
+		const char *tmp_id;
+
+		tmp_id = g_object_get_data (G_OBJECT (l->data), "id");
+		if (g_strcmp0 (id, tmp_id) == 0) {
+			GtkWidget *check;
+
+			check = g_object_get_data (G_OBJECT (l->data), "check");
+			if (gtk_widget_get_opacity (check) == 1.0)
+				current_removed = TRUE;
+
+			gtk_widget_destroy (l->data);
+		}
+	}
+
+	if (current_removed) {
+		/* FIXME
+		 * - don't forget to remove tag
+		 * - check if it's the currently selected source and notify of the change if so */
+	}
 
 	if (num_items == 0) {
-		g_clear_object (&self->priv->popover);
 		gd_tagged_entry_remove_tag (GD_TAGGED_ENTRY (self->priv->entry), self->priv->tag);
 		g_clear_object (&self->priv->tag);
+		gtk_widget_set_sensitive (self, FALSE);
 	}
 }
 
