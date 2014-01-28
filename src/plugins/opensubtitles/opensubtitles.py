@@ -596,7 +596,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
 
                 directory = Gio.file_new_for_path (bpath + 'subtitles' + sep)
                 if not directory.query_exists (None):
-                        directory.make_directory_with_parents (None);
+                    directory.make_directory_with_parents (None);
 
                 subtitle_file = Gio.file_new_for_path (self._filename)
                 movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
