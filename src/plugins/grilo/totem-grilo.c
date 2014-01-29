@@ -926,11 +926,16 @@ item_activated_cb (GdMainView  *view,
 		   gpointer user_data)
 {
 	TotemGriloPlugin *self = TOTEM_GRILO_PLUGIN (user_data);
+	GtkTreeModel *model;
 
-	if (self->priv->in_search)
+	model = gd_main_view_get_model (view);
+
+	if (model == self->priv->search_results_model) {
 		search_activated_cb (view, path, user_data);
-	else
+	} else {
+		totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header), FALSE);
 		browser_activated_cb (view, path, user_data);
+	}
 }
 
 static gboolean
