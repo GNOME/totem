@@ -364,11 +364,12 @@ totem_search_entry_get_selected_id (TotemSearchEntry *self)
 	return id;
 }
 
-void
+gboolean
 totem_search_entry_set_selected_id (TotemSearchEntry *self,
 				    const char       *id)
 {
 	GList *children, *l;
+	gboolean ret = FALSE;
 
 	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
 	g_return_if_fail (id != NULL);
@@ -382,15 +383,16 @@ totem_search_entry_set_selected_id (TotemSearchEntry *self,
 			listbox_row_activated (GTK_LIST_BOX (self->priv->listbox),
 					       GTK_LIST_BOX_ROW (l->data),
 					       self);
+			ret = TRUE;
 			goto end;
 		}
 	}
 
-	g_warning ("Could not find ID '%s' in TotemSearchEntry %p",
-		   id, self);
+	g_debug ("Could not find ID '%s' in TotemSearchEntry %p", id, self);
 
 end:
 	g_list_free (children);
+	return ret;
 }
 
 GtkEntry *

@@ -63,7 +63,7 @@ void totem_search_entry_remove_source          (TotemSearchEntry *self,
 						const gchar      *id);
 
 const char *totem_search_entry_get_selected_id (TotemSearchEntry *self);
-void        totem_search_entry_set_selected_id (TotemSearchEntry *self,
+gboolean    totem_search_entry_set_selected_id (TotemSearchEntry *self,
 						const char       *id);
 
 const char *totem_search_entry_get_text        (TotemSearchEntry *self);
