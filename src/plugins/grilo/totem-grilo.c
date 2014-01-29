@@ -1638,6 +1638,33 @@ search_mode_changed (GObject          *gobject,
 		 * button won't be active */
 		source_switched (GTK_TOGGLE_BUTTON (self->priv->recent), self);
 		source_switched (GTK_TOGGLE_BUTTON (self->priv->channels), self);
+	} else {
+		GtkTreeModel *model;
+		const char *id = NULL;
+
+		/* Try to guess which source should be used for search */
+		model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
+		if (model == self->priv->recent_sort_model) {
+			id = "grl-tracker-source";
+		} else {
+			GtkTreeIter iter;
+			GtkTreePath *path;
+
+			g_object_get (G_OBJECT (model), "virtual-root", &path, NULL);
+			if (path != NULL &&
+			    gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+				GrlSource *source;
+
+				gtk_tree_model_get (self->priv->browser_model, &iter,
+						    MODEL_RESULTS_SOURCE, &source,
+						    -1);
+				id = source ? grl_source_get_id (source) : NULL;
+				g_clear_object (&source);
+			}
+		}
+
+		if (id != NULL)
+			totem_search_entry_set_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry), id);
 	}
 
 	self->priv->in_search = search_mode;
