@@ -3545,6 +3545,7 @@ create_control_button (TotemObject *totem,
 	button = gtk_button_new ();
 	image = gtk_image_new ();
 	gtk_button_set_image (GTK_BUTTON (button), image);
+	gtk_widget_set_valign (GTK_WIDGET (button), GTK_ALIGN_CENTER);
 	gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
 	if (g_str_equal (action_name, "play")) {
 		g_object_set (G_OBJECT (image),
