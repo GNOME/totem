@@ -251,6 +251,8 @@ get_thumbnail_cb (GObject *source_object,
 		goto out;
 
 	path = gtk_tree_row_reference_get_path (thumb_data->reference);
+	if (!path)
+		goto out;
 	gtk_tree_model_get_iter (thumb_data->model, &iter, path);
 
 	if (thumbnail == NULL) {
