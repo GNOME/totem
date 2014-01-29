@@ -853,21 +853,9 @@ totem_object_remove_sidebar_page (TotemObject *totem,
 
 void
 totem_object_set_main_page (TotemObject *totem,
-			    const char  *page_id,
-			    gboolean animate)
+			    const char  *page_id)
 {
-	GtkStackTransitionType type;
-
-	if (!animate)
-		type = GTK_STACK_TRANSITION_TYPE_NONE;
-	else if (g_str_equal (page_id, "player"))
-		type = GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT;
-	else
-		type = GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT;
-
-	/* FIXME should we increase the minimum duration like that? */
-	gtk_stack_set_transition_duration (GTK_STACK (totem->stack), 500);
-	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, type);
+	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 }
 
 /**
@@ -1313,7 +1301,7 @@ totem_object_play (TotemObject *totem)
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 		return;
 
-	totem_object_set_main_page (totem, "player", TRUE);
+	totem_object_set_main_page (totem, "player");
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 
@@ -2227,7 +2215,7 @@ back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
 {
 	totem_playlist_clear (totem->playlist);
-	totem_object_set_main_page (totem, "grilo", TRUE);
+	totem_object_set_main_page (totem, "grilo");
 }
 
 static void

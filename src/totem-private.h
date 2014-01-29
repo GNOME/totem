@@ -190,8 +190,7 @@ void	totem_object_add_main_page		(TotemObject *totem,
 						 const char  *page_id,
 						 GtkWidget   *widget);
 void	totem_object_set_main_page		(TotemObject *totem,
-						 const char  *page_id,
-						 gboolean     animate);
+						 const char  *page_id);
 const char * totem_object_get_main_page		(Totem *totem);
 
 /* Signal emission */
