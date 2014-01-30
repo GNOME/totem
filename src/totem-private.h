@@ -189,9 +189,6 @@ void    totem_object_plugins_shutdown		(TotemObject *totem);
 void	totem_object_set_fullscreen		(TotemObject *totem, gboolean state);
 void	totem_object_set_volume_relative	(TotemObject *totem, double off_pct);
 void	totem_object_volume_toggle_mute		(TotemObject *totem);
-void	totem_object_add_main_page		(TotemObject *totem,
-						 const char  *page_id,
-						 GtkWidget   *widget);
 void	totem_object_set_main_page		(TotemObject *totem,
 						 const char  *page_id);
 const char * totem_object_get_main_page		(Totem *totem);

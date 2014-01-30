@@ -860,28 +860,6 @@ totem_object_set_main_page (TotemObject *totem,
 }
 
 /**
- * totem_object_add_main_page:
- * @totem: a #TotemObject
- * @page_id: a string used to identify the page
- * @widget: a #GtkWidget for that new page
- *
- * Adds a page to Totem's main view with the given @page_id.
- **/
-void
-totem_object_add_main_page (TotemObject *totem,
-			    const char  *page_id,
-			    GtkWidget   *widget)
-{
-	g_return_if_fail (page_id != NULL);
-	g_return_if_fail (g_str_equal (page_id, "grilo"));
-
-	gtk_stack_add_named (GTK_STACK (totem->stack),
-			     widget,
-			     page_id);
-	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), page_id);
-}
-
-/**
  * totem_object_get_main_page:
  * @totem: a #TotemObject
  *
