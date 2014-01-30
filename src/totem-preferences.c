@@ -289,7 +289,7 @@ void
 totem_setup_preferences (Totem *totem)
 {
 	GtkWidget *menu, *bvw;
-	gboolean show_visuals, lock_screensaver_on_audio;
+	gboolean show_visuals;
 	guint i, hidden;
 	char *visual, *font, *encoding;
 	GList *list, *l;
