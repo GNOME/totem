@@ -336,7 +336,6 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
   object_class->finalize = totem_main_toolbar_finalize;
   object_class->set_property = totem_main_toolbar_set_property;
