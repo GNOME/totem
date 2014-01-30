@@ -187,7 +187,7 @@ load_icon (Totem      *totem,
 	int rowstride;
 	int x, y;
 
-	screen = gtk_window_get_screen (totem_object_get_main_window (totem));
+	screen = gdk_screen_get_default ();
 	theme = gtk_icon_theme_get_for_screen (screen);
 	icon = gtk_icon_theme_load_icon (theme, name, size, 0, NULL);
 
