@@ -92,14 +92,18 @@ struct _TotemGriloPrivate {
 	GtkWidget *search_entry;
 	GtkTreeModel *search_results_model;
 	GHashTable *search_sources_ht;
-	GtkWidget *search_sources_list;
 
 	/* Selection toolbar */
 	GtkWidget *selection_bar;
 	GtkWidget *selection_revealer;
 };
 
-G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_WIDGET,
+enum {
+	PROP_0,
+	PROP_TOTEM
+};
+
+G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_BOX,
                          G_ADD_PRIVATE (TotemGrilo));
 
 typedef struct {
@@ -1853,16 +1857,11 @@ delete_cb (TotemSelectionToolbar *bar,
 }
 
 static void
-setup_browse (TotemGrilo *self,
-	      GtkBuilder *builder)
+setup_browse (TotemGrilo *self)
 {
 	GtkAdjustment *adj;
 
 	/* Search */
-	self->priv->search_bar = GTK_WIDGET (gtk_builder_get_object (builder, "gw_searchbar"));
-	self->priv->search_results_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_search_store_results"));
-	self->priv->search_sources_list = GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_select_source"));
-	self->priv->search_entry =  GTK_WIDGET (gtk_builder_get_object (builder, "gw_search_text"));
 	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
 				      totem_search_entry_get_entry (TOTEM_SEARCH_ENTRY (self->priv->search_entry)));
 
@@ -1871,15 +1870,12 @@ setup_browse (TotemGrilo *self,
 	g_signal_connect (self->priv->search_entry, "activate",
 	                  G_CALLBACK (search_entry_activate_cb),
 	                  self);
+
 	//FIXME also setup a timeout for that
 	g_signal_connect (self->priv->search_entry, "notify::selected-id",
 			  G_CALLBACK (search_entry_source_changed_cb), self);
 
 	/* Toolbar */
-	self->priv->header = GTK_WIDGET (gtk_builder_get_object (builder, "gw_headerbar"));
-	totem_main_toolbar_set_select_menu_model (TOTEM_MAIN_TOOLBAR (self->priv->header),
-						  G_MENU_MODEL (gtk_builder_get_object (builder, "selectmenu")));
-
 	self->priv->select_all_action = g_simple_action_new ("select-all", NULL);
 	g_signal_connect (G_OBJECT (self->priv->select_all_action), "activate",
 			  G_CALLBACK (select_all_action_cb), self);
@@ -1909,15 +1905,12 @@ setup_browse (TotemGrilo *self,
 			  G_CALLBACK (search_mode_changed), self);
 
 	/* Main view */
-	self->priv->browser_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "gw_browse_store_results"));
-	self->priv->recent_model = GTK_TREE_MODEL (gtk_builder_get_object (builder, "browser_recent_model"));
 	self->priv->recent_sort_model = gtk_tree_model_sort_new_with_model (self->priv->recent_model);
 	/* FIXME: Sorting is disabled for now
 	 * https://bugzilla.gnome.org/show_bug.cgi?id=722781
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (self->priv->recent_sort_model),
 					      MODEL_RESULTS_SORT_PRIORITY, GTK_SORT_DESCENDING); */
 
-	self->priv->browser = GTK_WIDGET (gtk_builder_get_object (builder, "gw_browse"));
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->browser, "selection-mode",
 				G_BINDING_BIDIRECTIONAL);
@@ -1930,7 +1923,6 @@ setup_browse (TotemGrilo *self,
 			  G_CALLBACK (selection_mode_requested), self);
 
 	/* Selection toolbar */
-	self->priv->selection_revealer = GTK_WIDGET (gtk_builder_get_object (builder, "selection_revealer"));
 	self->priv->selection_bar = totem_selection_toolbar_new ();
 	/* FIXME only show when all not all the items are boxes */
 	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), TRUE);
@@ -1948,7 +1940,7 @@ setup_browse (TotemGrilo *self,
 			  G_CALLBACK (delete_cb), self);
 
 	/* Loading thumbnails or more search results */
-	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (gtk_builder_get_object (builder, "gw_browse")));
+	adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (self->priv->browser));
 	g_signal_connect (adj, "value_changed",
 	                  G_CALLBACK (adjustment_value_changed_cb), self);
 	g_signal_connect (adj, "changed",
@@ -2072,11 +2064,10 @@ create_debug_window (TotemGrilo *self,
 }
 
 static void
-setup_ui (TotemGrilo *self,
-          GtkBuilder *builder)
+setup_ui (TotemGrilo *self)
 {
 	totem_grilo_setup_icons (self->priv->totem);
-	setup_browse (self, builder);
+	setup_browse (self);
 
 	/* create_debug_window (self, self->priv->browser_model); */
 	/* create_debug_window (self, self->priv->recent_model); */
@@ -2092,34 +2083,9 @@ setup_config (TotemGrilo *self)
 GtkWidget *
 totem_grilo_new (TotemObject *totem)
 {
-	GtkBuilder *builder;
-	TotemGrilo *self;
-	TotemGriloPrivate *priv;
+	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
-	self = g_object_new (TOTEM_TYPE_GRILO, NULL);
-	priv = self->priv;
-
-	priv->totem = g_object_ref (totem);
-	priv->main_window = totem_object_get_main_window (priv->totem);
-
-	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
-							 GRL_METADATA_KEY_AUTHOR,
-							 GRL_METADATA_KEY_DURATION,
-							 GRL_METADATA_KEY_THUMBNAIL,
-							 GRL_METADATA_KEY_URL,
-							 GRL_METADATA_KEY_TITLE,
-							 GRL_METADATA_KEY_SHOW,
-							 GRL_METADATA_KEY_SEASON,
-							 GRL_METADATA_KEY_EPISODE,
-							 NULL);
-
-	builder = gtk_builder_new_from_resource ("/org/totem/grilo/grilo.ui");
-	setup_ui (self, builder);
-	grl_init (0, NULL);
-	setup_config (self);
-	load_grilo_plugins (self);
-
-	return GTK_WIDGET (gtk_builder_get_object (builder, "gw_search"));
+	return GTK_WIDGET (g_object_new (TOTEM_TYPE_GRILO, "totem", totem, NULL));
 }
 
 static void
@@ -2144,10 +2110,11 @@ totem_grilo_finalize (GObject *object)
 	g_clear_object (&self->priv->switcher);
 
 	/* Empty results */
-	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
-	g_clear_object (&self->priv->browser_filter_model);
-	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
-	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
+	//FIXME
+	//gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
+	//g_clear_object (&self->priv->browser_filter_model);
+	//gtk_tree_store_clear (GTK_TREE_STORE (self->priv->browser_model));
+	//gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 
 	g_object_unref (self->priv->main_window);
 	g_object_unref (self->priv->totem);
@@ -2156,17 +2123,88 @@ totem_grilo_finalize (GObject *object)
 }
 
 static void
+totem_grilo_constructed (GObject *object)
+{
+	TotemGrilo *self = TOTEM_GRILO (object);
+
+	self->priv->main_window = totem_object_get_main_window (self->priv->totem);
+
+	setup_ui (self);
+	grl_init (0, NULL);
+	setup_config (self);
+	load_grilo_plugins (self);
+}
+
+static void
+totem_grilo_set_property (GObject         *object,
+                          guint            prop_id,
+                          const GValue    *value,
+                          GParamSpec      *pspec)
+{
+	TotemGrilo *self = TOTEM_GRILO (object);
+	TotemGriloPrivate *priv = self->priv;
+
+	switch (prop_id)
+	{
+	case PROP_TOTEM:
+		g_assert (priv->totem == NULL);
+		priv->totem = g_value_dup_object (value);
+		break;
+
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
+
+static void
 totem_grilo_class_init (TotemGriloClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
 	object_class->finalize = totem_grilo_finalize;
+	object_class->constructed = totem_grilo_constructed;
+	object_class->set_property = totem_grilo_set_property;
+
+	g_object_class_install_property (object_class,
+					 PROP_TOTEM,
+					 g_param_spec_object ("totem",
+							      "Totem",
+							      "Totem.",
+							      TOTEM_TYPE_OBJECT,
+							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+
+	gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/grilo.ui");
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, header);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_bar);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_entry);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, browser);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selection_revealer);
+
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_results_model);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, browser_model);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, recent_model);
 }
 
 static void
 totem_grilo_init (TotemGrilo *self)
 {
-	self->priv = totem_grilo_get_instance_private (self);
+	TotemGriloPrivate *priv;
 
-	/* FIXME this is gross */
+	self->priv = totem_grilo_get_instance_private (self);
+	priv = self->priv;
+
+	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
+							 GRL_METADATA_KEY_AUTHOR,
+							 GRL_METADATA_KEY_DURATION,
+							 GRL_METADATA_KEY_THUMBNAIL,
+							 GRL_METADATA_KEY_URL,
+							 GRL_METADATA_KEY_TITLE,
+							 GRL_METADATA_KEY_SHOW,
+							 GRL_METADATA_KEY_SEASON,
+							 GRL_METADATA_KEY_EPISODE,
+							 NULL);
+
+	gtk_widget_init_template (GTK_WIDGET (self));
 }

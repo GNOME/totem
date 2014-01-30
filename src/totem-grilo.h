@@ -47,14 +47,14 @@ typedef struct _TotemGriloClass   TotemGriloClass;
 struct _TotemGrilo
 {
   /*< private >*/
-  GtkWidget parent;
+  GtkBox parent;
 
   TotemGriloPrivate *priv;
 };
 
 struct _TotemGriloClass
 {
-  GtkWidgetClass parent_class;
+  GtkBoxClass parent_class;
 };
 
 GType           totem_grilo_get_type              (void) G_GNUC_CONST;
