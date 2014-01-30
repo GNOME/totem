@@ -2071,6 +2071,7 @@ setup_ui (TotemGrilo *self)
 
 	/* create_debug_window (self, self->priv->browser_model); */
 	/* create_debug_window (self, self->priv->recent_model); */
+	/* create_debug_window (self, self->priv->search_results_model); */
 }
 
 static void
