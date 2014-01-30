@@ -80,7 +80,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot skipto zeitgeist-dp grilo vimeo"
+allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot skipto zeitgeist-dp vimeo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -235,7 +235,7 @@ AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 # Player requirements
 #================================================================
 
-PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS libpeas-1.0 >= $PEAS_REQS libpeas-gtk-1.0 >= $PEAS_REQS $PYTHON_MODULES)
+PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS libpeas-1.0 >= $PEAS_REQS libpeas-gtk-1.0 >= $PEAS_REQS $PYTHON_MODULES grilo-0.2 >= $GRILO_REQS)
 PKG_CHECK_MODULES(LIBPLAYER, glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS clutter-gtk-1.0)
 PKG_CHECK_MODULES(HELPER, gstreamer-1.0 gstreamer-tag-1.0)
 PKG_CHECK_MODULES(TIME_HELPER, glib-2.0)
@@ -433,14 +433,6 @@ for plugin in ${used_plugins}; do
 					plugin_error_or_ignore "you need zeitgeist-2.0 >= 0.9.12 to use the zeitgeist-dp plugin"
 					add_plugin="0"
 				fi
-			fi
-		;;
-		grilo)
-			PKG_CHECK_MODULES(LIBGRILO, grilo-0.2 >= $GRILO_REQS,
-				[HAVE_LIBGRILO=yes], [HAVE_LIBGRILO=no])
-			if test "${HAVE_LIBGRILO}" != "yes" ; then
-				plugin_error "you need libgrilo >= $GRILO_REQS installed for the Grilo plugin"
-				add_plugin="0"
 			fi
 		;;
 	esac
@@ -683,7 +675,6 @@ src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
 src/plugins/brasero-disc-recorder/Makefile
 src/plugins/chapters/Makefile
 src/plugins/zeitgeist-dp/Makefile
-src/plugins/grilo/Makefile
 src/plugins/vimeo/Makefile
 src/backend/Makefile
 browser-plugin/Makefile

@@ -128,6 +128,7 @@ app_init (Totem *totem, char **argv)
 
 	/* Show ! (again) the video widget this time. */
 	video_widget_create (totem);
+	grilo_widget_setup (totem);
 
 	/* Show ! */
 	if (optionstate.fullscreen == FALSE) {

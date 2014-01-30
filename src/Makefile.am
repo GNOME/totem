@@ -52,6 +52,16 @@ libtotem_player_la_CFLAGS =	\
 	$(AM_CFLAGS)
 
 # Totem main library (used for main player; separate to allow gtk-doc to be used)
+BUILT_SOURCES = griloresources.h griloresources.c
+EXTRA_DIST = grilo.gresource.xml totemmaintoolbar.ui totemselectiontoolbar.ui grilo.ui totem-grilo.conf
+
+griloresources.h: grilo.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
+		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-header
+griloresources.c: $(EXTRA_DIST) griloresources.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) $(srcdir)/grilo.gresource.xml \
+		--target=$@ --sourcedir=$(srcdir) --c-name _totem --generate-source
+
 libtotem_la_SOURCES = \
 	$(TOTEM_MARSHAL_FILES)		\
 	$(INST_H_FILES)			\
@@ -78,7 +88,18 @@ libtotem_la_SOURCES = \
 	totem-profile.h			\
 	plugins/totem-plugins-engine.c	\
 	plugins/totem-plugins-engine.h	\
-	plugins/totem-dirs.c
+	plugins/totem-dirs.c		\
+	totem-grilo.c			\
+	totem-search-entry.c		\
+	totem-search-entry.h		\
+	totem-main-toolbar.h		\
+	totem-main-toolbar.c		\
+	totem-selection-toolbar.h	\
+	totem-selection-toolbar.c	\
+	icon-helpers.c			\
+	icon-helpers.h			\
+	griloresources.h		\
+	griloresources.c
 
 libtotem_la_CPPFLAGS = \
 	-I$(top_builddir)/data		\

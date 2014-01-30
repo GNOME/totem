@@ -85,6 +85,8 @@ struct _TotemObject {
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
 
+	GtkWidget *grilo;
+
 	GObject *controls;
 	BaconTimeLabel *time_label;
 	BaconTimeLabel *time_rem_label;
@@ -180,6 +182,7 @@ void	show_controls				(Totem *totem, gboolean was_fullscreen);
 void	totem_setup_window			(Totem *totem);
 void	totem_callback_connect			(Totem *totem);
 void	playlist_widget_setup			(Totem *totem);
+void	grilo_widget_setup			(Totem *totem);
 void	video_widget_create			(Totem *totem);
 void    totem_object_plugins_init		(TotemObject *totem);
 void    totem_object_plugins_shutdown		(TotemObject *totem);

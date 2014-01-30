@@ -53,6 +53,7 @@
 #include "totem-options.h"
 #include "totem-plugins-engine.h"
 #include "totem-playlist.h"
+#include "totem-grilo.h"
 #include "bacon-video-widget.h"
 #include "bacon-time-label.h"
 #include "totem-time-label.h"
@@ -3697,6 +3698,16 @@ playlist_widget_setup (TotemObject *totem)
 			  "subtitle-changed",
 			  G_CALLBACK (subtitle_changed_cb),
 			  totem);
+}
+
+void
+grilo_widget_setup (TotemObject *totem)
+{
+	totem->grilo = totem_grilo_new (totem);
+	gtk_stack_add_named (GTK_STACK (totem->stack),
+			     totem->grilo,
+			     "grilo");
+	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), "grilo");
 }
 
 void
