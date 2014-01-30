@@ -104,6 +104,8 @@ listbox_row_activated (GtkListBox    *list_box,
 		}
 	}
 	g_list_free (children);
+
+	gtk_widget_hide (self->priv->popover);
 }
 
 static int
