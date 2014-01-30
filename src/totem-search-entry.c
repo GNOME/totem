@@ -49,7 +49,8 @@ totem_search_entry_finalize (GObject *obj)
 	TotemSearchEntry *self = TOTEM_SEARCH_ENTRY (obj);
 
 	g_clear_object (&self->priv->tag);
-	g_clear_object (&self->priv->popover);
+	/* FIXME this causes a crash
+	g_clear_object (&self->priv->popover); */
 
 	G_OBJECT_CLASS (totem_search_entry_parent_class)->finalize (obj);
 }
