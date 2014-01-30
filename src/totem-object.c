@@ -3775,6 +3775,10 @@ video_widget_create (TotemObject *totem)
 	gtk_widget_show (GTK_WIDGET (totem->bvw));
 
 	totem_preferences_visuals_setup (totem);
+
+	/* FIXME: Otherwise we get a visible but
+	 * not realized widget ?!?! */
+	gtk_widget_realize (GTK_WIDGET (totem->bvw));
 }
 
 /**
