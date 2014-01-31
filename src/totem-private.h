@@ -145,7 +145,6 @@ struct _TotemObject {
 	char *title;
 	char *subtitle;
 	char *search_string;
-	gboolean search_mode;
 	gboolean select_mode;
 	GObject *custom_title;
 	GtkWidget *fullscreen_button;
