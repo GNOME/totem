@@ -56,8 +56,6 @@ libbaconvideowidget_la_SOURCES = \
 	bacon-video-osd-actor.h				\
 	bacon-video-controls-actor.c			\
 	bacon-video-controls-actor.h			\
-	bacon-video-header-actor.h			\
-	bacon-video-header-actor.c			\
 	bacon-video-spinner-actor.h			\
 	bacon-video-spinner-actor.c			\
 	clock.c clock.h					\

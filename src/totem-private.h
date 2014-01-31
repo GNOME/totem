@@ -141,6 +141,18 @@ struct _TotemObject {
 	int window_w, window_h;
 	gboolean maximised;
 
+	/* Toolbar state */
+	char *title;
+	char *subtitle;
+	char *search_string;
+	gboolean search_mode;
+	gboolean select_mode;
+	GObject *custom_title;
+	GtkWidget *fullscreen_button;
+	GtkWidget *gear_button;
+
+	char *player_title;
+
 	/* other */
 	char *mrl;
 	TotemPlaylist *playlist;

@@ -65,6 +65,7 @@
 #include "totem-preferences.h"
 #include "totem-session.h"
 #include "totem-rtl-helpers.h"
+#include "totem-main-toolbar.h"
 
 #define WANT_MIME_TYPES 1
 #include "totem-mime-types.h"
@@ -420,6 +421,13 @@ totem_object_init (TotemObject *totem)
 static void
 totem_object_finalize (GObject *object)
 {
+	TotemObject *totem = TOTEM_OBJECT (object);
+
+	g_clear_pointer (&totem->title, g_free);
+	g_clear_pointer (&totem->subtitle, g_free);
+	g_clear_pointer (&totem->search_string, g_free);
+	g_clear_pointer (&totem->player_title, g_free);
+	g_clear_object (&totem->custom_title);
 
 	G_OBJECT_CLASS (totem_object_parent_class)->finalize (object);
 }
@@ -856,6 +864,48 @@ void
 totem_object_set_main_page (TotemObject *totem,
 			    const char  *page_id)
 {
+	if (g_strcmp0 (page_id, "player") == 0) {
+		g_object_get (totem->header,
+			      "title", &totem->title,
+			      "subtitle", &totem->subtitle,
+			      "search-string", &totem->search_string,
+			      "search-mode", &totem->search_mode,
+			      "select-mode", &totem->select_mode,
+			      "custom-title", &totem->custom_title,
+			      NULL);
+		g_object_set (totem->header,
+			      "show-back-button", TRUE,
+			      "show-select-button", FALSE,
+			      "show-search-button", FALSE,
+			      "title", totem->player_title,
+			      "subtitle", NULL,
+			      "search-string", NULL,
+			      "search-mode", FALSE,
+			      "select-mode", FALSE,
+			      "custom-title", NULL,
+			      NULL);
+		gtk_widget_show (totem->fullscreen_button);
+		gtk_widget_show (totem->gear_button);
+	} else if (g_strcmp0 (page_id, "grilo") == 0) {
+		g_object_set (totem->header,
+			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
+			      "show-select-button", TRUE,
+			      "show-search-button", TRUE,
+			      "title", totem->title,
+			      "subtitle", totem->subtitle,
+			      "search-string", totem->search_string,
+			      "search-mode", totem->search_mode,
+			      "select-mode", totem->select_mode,
+			      "custom-title", totem->custom_title,
+			      NULL);
+		g_clear_pointer (&totem->title, g_free);
+		g_clear_pointer (&totem->subtitle, g_free);
+		g_clear_pointer (&totem->search_string, g_free);
+		g_clear_pointer (&totem->player_title, g_free);
+		g_clear_object (&totem->custom_title);
+		gtk_widget_hide (totem->fullscreen_button);
+		gtk_widget_hide (totem->gear_button);
+	}
 	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 }
 
@@ -1627,7 +1677,8 @@ update_mrl_label (TotemObject *totem, const char *name)
 {
 	if (name != NULL) {
 		/* Update the mrl label */
-		gtk_header_bar_set_title (GTK_HEADER_BAR (totem->header), name);
+		g_clear_pointer (&totem->player_title, g_free);
+		totem->player_title = g_strdup (name);
 	} else {
 		bacon_time_label_set_time (totem->time_label,
 					   0, 0);
@@ -1637,8 +1688,11 @@ update_mrl_label (TotemObject *totem, const char *name)
 		g_object_notify (G_OBJECT (totem), "stream-length");
 
 		/* Update the mrl label */
-		gtk_header_bar_set_title (GTK_HEADER_BAR (totem->header), "");
+		g_clear_pointer (&totem->player_title, g_free);
 	}
+
+	if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
+		g_object_set (totem->header, "title", totem->player_title, NULL);
 }
 
 /**
@@ -2193,8 +2247,12 @@ static void
 back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
 {
-	totem_playlist_clear (totem->playlist);
-	totem_object_set_main_page (totem, "grilo");
+	if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0) {
+		totem_playlist_clear (totem->playlist);
+		totem_object_set_main_page (totem, "grilo");
+	} else {
+		totem_grilo_back_button_clicked (TOTEM_GRILO (totem->grilo));
+	}
 }
 
 static void
@@ -3496,6 +3554,16 @@ totem_setup_window (TotemObject *totem)
 	gdk_rgba_parse (&black, "Black");
 	gtk_widget_override_background_color (vbox, (GTK_STATE_FLAG_FOCUSED << 1), &black);
 
+	/* Headerbar */
+	totem->header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
+				      "show-search-button", TRUE,
+				      "show-select-button", TRUE,
+				      "show-close-button", TRUE,
+				      NULL);
+	g_signal_connect (G_OBJECT (totem->header), "back-clicked",
+			  G_CALLBACK (back_button_clicked_cb), totem);
+	gtk_window_set_titlebar (GTK_WINDOW (totem->win), totem->header);
+
 	return;
 }
 
@@ -3511,6 +3579,24 @@ fullscreen_button_image_sync (GBinding     *binding,
 	g_value_set_string (target_value, state ? "view-restore-symbolic" : "view-fullscreen-symbolic");
 
 	return TRUE;
+}
+
+static GtkWidget *
+create_header_button (Totem      *totem,
+		      GtkWidget  *button,
+		      const char *icon_name)
+{
+	GtkWidget *image;
+	GtkStyleContext *context;
+
+	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
+	gtk_button_set_image (GTK_BUTTON (button), image);
+	context = gtk_widget_get_style_context (button);
+	gtk_style_context_add_class (context, "image-button");
+	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
+
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->header), button);
+	return button;
 }
 
 static GtkWidget *
@@ -3552,7 +3638,6 @@ totem_callback_connect (TotemObject *totem)
 	GtkWidget *item, *image;
 	GtkBox *box;
 	GAction *gaction;
-	AtkObject *accessible;
 	GMenuModel *menu;
 
 	/* Menu items */
@@ -3594,8 +3679,8 @@ totem_callback_connect (TotemObject *totem)
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Fullscreen button */
-	item = g_object_get_data (bacon_video_widget_get_header_object (totem->bvw),
-				  "fullscreen_button");
+	item = totem->fullscreen_button = create_header_button (totem, gtk_button_new (), "view-fullscreen-symbolic");
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
 	image = gtk_button_get_image (GTK_BUTTON (item));
 	g_object_bind_property_full (totem, "fullscreen",
 				     image, "icon-name",
@@ -3604,20 +3689,9 @@ totem_callback_connect (TotemObject *totem)
 				     NULL, NULL, NULL);
 
 	/* Cog wheel */
-	item = g_object_get_data (bacon_video_widget_get_header_object (totem->bvw),
-				  "button");
+	item = totem->gear_button = create_header_button (totem, gtk_menu_button_new (), "emblem-system-symbolic");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-
-	/* Add a back button */
-	item = gd_header_simple_button_new ();
-	gd_header_button_set_symbolic_icon_name (GD_HEADER_BUTTON (item),
-						 totem_get_rtl_icon_name ("go-previous"));
-	accessible = gtk_widget_get_accessible (item);
-	atk_object_set_name (accessible, _("Back"));
-	gtk_header_bar_pack_start (GTK_HEADER_BAR (totem->header), item);
-	gtk_widget_show (item);
-	g_signal_connect (item, "clicked", G_CALLBACK (back_button_clicked_cb), totem);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
@@ -3678,10 +3752,24 @@ playlist_widget_setup (TotemObject *totem)
 			  totem);
 }
 
+static void
+grilo_show_back_button_changed (TotemGrilo  *grilo,
+				GParamSpec  *spec,
+				TotemObject *totem)
+{
+	if (g_strcmp0 (totem_object_get_main_page (totem), "grilo") == 0) {
+		g_object_set (totem->header,
+			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
+			      NULL);
+	}
+}
+
 void
 grilo_widget_setup (TotemObject *totem)
 {
-	totem->grilo = totem_grilo_new (totem);
+	totem->grilo = totem_grilo_new (totem, totem->header);
+	g_signal_connect (G_OBJECT (totem->grilo), "notify::show-back-button",
+			  G_CALLBACK (grilo_show_back_button_changed), totem);
 	gtk_stack_add_named (GTK_STACK (totem->stack),
 			     totem->grilo,
 			     "grilo");
@@ -3694,7 +3782,6 @@ video_widget_create (TotemObject *totem)
 	GError *err = NULL;
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
-	GObject *header;
 
 	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
@@ -3705,8 +3792,6 @@ video_widget_create (TotemObject *totem)
 	}
 
 	totem->controls = bacon_video_widget_get_controls_object (totem->bvw);
-	header = bacon_video_widget_get_header_object (totem->bvw);
-	totem->header = g_object_get_data (G_OBJECT (header), "header");
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
 			"button-press-event",

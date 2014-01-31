@@ -88,7 +88,6 @@
 #include "bacon-video-widget-gst-missing-plugins.h"
 #include "bacon-video-osd-actor.h"
 #include "bacon-video-controls-actor.h"
-#include "bacon-video-header-actor.h"
 #include "bacon-video-spinner-actor.h"
 #include "bacon-video-widget-enums.h"
 #include "video-utils.h"
@@ -213,7 +212,6 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *frame;
   ClutterActor                *osd;
   ClutterActor                *controls;
-  ClutterActor                *header;
   ClutterActor                *spinner;
 
   ClutterActor                *logo_frame;
@@ -716,7 +714,6 @@ set_controls_visibility (BaconVideoWidget *bvw,
    * Using a show/hide seems to not trigger the
    * controls to redraw, so let's change the opacity instead */
   clutter_actor_set_opacity (bvw->priv->controls, opacity);
-  clutter_actor_set_opacity (bvw->priv->header, opacity);
 }
 
 static void
@@ -757,7 +754,7 @@ ignore_event (BaconVideoWidget *bvw,
   actor = clutter_stage_get_actor_at_pos (CLUTTER_STAGE (bvw->priv->stage), CLUTTER_PICK_REACTIVE, x, y);
 
   /* Eat the GTK+ event if we're not clicking on the video itself */
-  if (actor == bvw->priv->controls || actor == bvw->priv->header)
+  if (actor == bvw->priv->controls)
     return TRUE;
 
   return FALSE;
@@ -3477,14 +3474,6 @@ bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
   return G_OBJECT (bvw->priv->controls);
 }
 
-GObject *
-bacon_video_widget_get_header_object (BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
-
-  return G_OBJECT (bvw->priv->header);
-}
-
 /* =========================================== */
 /*                                             */
 /*               Play/Pause, Stop              */
@@ -6170,21 +6159,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
 		"margin-left", CONTROLS_MARGIN,
 		"margin-right", CONTROLS_MARGIN,
 		NULL);
-
-  clutter_actor_set_child_above_sibling (bvw->priv->stage,
-					 layout,
-					 bvw->priv->logo_frame);
-
-  /* The header bar */
-  bvw->priv->header = bacon_video_header_actor_new ();
-  clutter_actor_set_name (bvw->priv->header, "header");
-  layout = g_object_new (CLUTTER_TYPE_ACTOR,
-			 "layout-manager", clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_FILL, CLUTTER_BIN_ALIGNMENT_START),
-			 NULL);
-  clutter_actor_set_name (layout, "layout");
-  clutter_actor_add_child (layout, bvw->priv->header);
-
-  clutter_actor_add_child (bvw->priv->stage, layout);
 
   clutter_actor_set_child_above_sibling (bvw->priv->stage,
 					 layout,

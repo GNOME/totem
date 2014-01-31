@@ -73,6 +73,9 @@ struct _TotemGriloPrivate {
 
 	/* Toolbar widgets */
 	GtkWidget *header;
+	gboolean show_back_button;
+	gboolean show_search_button;
+	gboolean show_select_button;
 	GMenuModel *selectmenu;
 	GSimpleAction *select_all_action;
 	GSimpleAction *select_none_action;
@@ -101,7 +104,9 @@ struct _TotemGriloPrivate {
 
 enum {
 	PROP_0,
-	PROP_TOTEM
+	PROP_TOTEM,
+	PROP_HEADER,
+	PROP_SHOW_BACK_BUTTON
 };
 
 G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_BOX,
@@ -774,7 +779,7 @@ search_entry_activate_cb (GtkEntry *entry, TotemGrilo *self)
 	const char *text;
 	GrlSource *source;
 
-	g_object_set (self->priv->header, "show-back-button", FALSE, NULL);
+	g_object_set (self, "show-back-button", FALSE, NULL);
 
 	id = totem_search_entry_get_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry));
 	g_return_if_fail (id != NULL);
@@ -792,8 +797,8 @@ search_entry_activate_cb (GtkEntry *entry, TotemGrilo *self)
 }
 
 static void
-set_browser_filter_model_for_path (TotemGrilo *self,
-				   GtkTreePath      *path)
+set_browser_filter_model_for_path (TotemGrilo    *self,
+				   GtkTreePath   *path)
 {
 	g_clear_object (&self->priv->browser_filter_model);
 	self->priv->browser_filter_model = gtk_tree_model_filter_new (self->priv->browser_model, path);
@@ -801,7 +806,7 @@ set_browser_filter_model_for_path (TotemGrilo *self,
 	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 				self->priv->browser_filter_model);
 
-	g_object_set (self->priv->header, "show-back-button", path != NULL, NULL);
+	g_object_set (self, "show-back-button", path != NULL, NULL);
 	if (path == NULL) {
 		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
 	} else {
@@ -1419,13 +1424,15 @@ adjustment_value_changed_cb (GtkAdjustment *adjustment,
 		search_more (self);
 }
 
-static void
-back_button_clicked_cb (TotemMainToolbar *toolbar,
-			TotemGrilo *self)
+void
+totem_grilo_back_button_clicked (TotemGrilo *self)
 {
 	GtkTreePath *path;
 	GtkTreeIter iter;
 
+	g_return_if_fail (TOTEM_IS_GRILO (self));
+
+	g_assert (self->priv->show_back_button);
 	g_assert (self->priv->browser_filter_model);
 	g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
 	g_assert (path);
@@ -1877,15 +1884,6 @@ setup_browse (TotemGrilo *self)
 			  G_CALLBACK (search_entry_source_changed_cb), self);
 
 	/* Toolbar */
-	self->priv->header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
-					   "show-search-button", TRUE,
-					   "show-select-button", TRUE,
-					   "show-close-button", TRUE,
-					   "select-menu-model", self->priv->selectmenu,
-					   NULL);
-	gtk_widget_show_all (self->priv->header);
-	gtk_window_set_titlebar (GTK_WINDOW (self->priv->main_window), self->priv->header);
-
 	self->priv->select_all_action = g_simple_action_new ("select-all", NULL);
 	g_signal_connect (G_OBJECT (self->priv->select_all_action), "activate",
 			  G_CALLBACK (select_all_action_cb), self);
@@ -1906,8 +1904,6 @@ setup_browse (TotemGrilo *self)
 	setup_source_switcher (self);
 	totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
 
-	g_signal_connect (self->priv->header, "back-clicked",
-			  G_CALLBACK (back_button_clicked_cb), self);
 	g_object_bind_property (self->priv->header, "search-mode",
 				self->priv->search_bar, "search-mode-enabled",
 				G_BINDING_BIDIRECTIONAL);
@@ -1933,6 +1929,7 @@ setup_browse (TotemGrilo *self)
 			  G_CALLBACK (selection_mode_requested), self);
 
 	/* Selection toolbar */
+	g_object_set (G_OBJECT (self->priv->header), "select-menu-model", self->priv->selectmenu, NULL);
 	self->priv->selection_bar = totem_selection_toolbar_new ();
 	/* FIXME only show when all not all the items are boxes */
 	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), TRUE);
@@ -2092,11 +2089,14 @@ setup_config (TotemGrilo *self)
 }
 
 GtkWidget *
-totem_grilo_new (TotemObject *totem)
+totem_grilo_new (TotemObject *totem,
+		 GtkWidget   *header)
 {
 	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
 
-	return GTK_WIDGET (g_object_new (TOTEM_TYPE_GRILO, "totem", totem, NULL));
+	return GTK_WIDGET (g_object_new (TOTEM_TYPE_GRILO,
+					 "totem", totem,
+					 "header", header, NULL));
 }
 
 static void
@@ -2146,6 +2146,14 @@ totem_grilo_constructed (GObject *object)
 	load_grilo_plugins (self);
 }
 
+gboolean
+totem_grilo_get_show_back_button (TotemGrilo *self)
+{
+	g_return_val_if_fail (TOTEM_IS_GRILO (self), FALSE);
+
+	return self->priv->show_back_button;
+}
+
 static void
 totem_grilo_set_property (GObject         *object,
                           guint            prop_id,
@@ -2158,8 +2166,35 @@ totem_grilo_set_property (GObject         *object,
 	switch (prop_id)
 	{
 	case PROP_TOTEM:
-		g_assert (priv->totem == NULL);
 		priv->totem = g_value_dup_object (value);
+		break;
+
+	case PROP_HEADER:
+		priv->header = g_value_dup_object (value);
+		break;
+
+	case PROP_SHOW_BACK_BUTTON:
+		priv->show_back_button = g_value_get_boolean (value);
+		g_object_set (self->priv->header, "show-back-button", priv->show_back_button, NULL);
+		break;
+
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
+
+static void
+totem_grilo_get_property (GObject         *object,
+                          guint            prop_id,
+                          GValue          *value,
+                          GParamSpec      *pspec)
+{
+	TotemGrilo *self = TOTEM_GRILO (object);
+
+	switch (prop_id) {
+	case PROP_SHOW_BACK_BUTTON:
+		g_value_set_boolean (value, self->priv->show_back_button);
 		break;
 
 	default:
@@ -2177,6 +2212,7 @@ totem_grilo_class_init (TotemGriloClass *klass)
 	object_class->finalize = totem_grilo_finalize;
 	object_class->constructed = totem_grilo_constructed;
 	object_class->set_property = totem_grilo_set_property;
+	object_class->get_property = totem_grilo_get_property;
 
 	g_object_class_install_property (object_class,
 					 PROP_TOTEM,
@@ -2185,6 +2221,22 @@ totem_grilo_class_init (TotemGriloClass *klass)
 							      "Totem.",
 							      TOTEM_TYPE_OBJECT,
 							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+
+	g_object_class_install_property (object_class,
+					 PROP_HEADER,
+					 g_param_spec_object ("header",
+							      "Headerbar",
+							      "Headerbar.",
+							      GTK_TYPE_HEADER_BAR,
+							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+
+	g_object_class_install_property (object_class,
+					 PROP_SHOW_BACK_BUTTON,
+					 g_param_spec_boolean ("show-back-button",
+							       "Show Back Button",
+							       "Whether the back button is visible",
+							       FALSE,
+							       G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/grilo.ui");
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selectmenu);
