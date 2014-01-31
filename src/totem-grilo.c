@@ -73,6 +73,7 @@ struct _TotemGriloPrivate {
 
 	/* Toolbar widgets */
 	GtkWidget *header;
+	GMenuModel *selectmenu;
 	GSimpleAction *select_all_action;
 	GSimpleAction *select_none_action;
 	GtkWidget *switcher;
@@ -1876,6 +1877,15 @@ setup_browse (TotemGrilo *self)
 			  G_CALLBACK (search_entry_source_changed_cb), self);
 
 	/* Toolbar */
+	self->priv->header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
+					   "show-search-button", TRUE,
+					   "show-select-button", TRUE,
+					   "show-close-button", TRUE,
+					   "select-menu-model", self->priv->selectmenu,
+					   NULL);
+	gtk_widget_show_all (self->priv->header);
+	gtk_window_set_titlebar (GTK_WINDOW (self->priv->main_window), self->priv->header);
+
 	self->priv->select_all_action = g_simple_action_new ("select-all", NULL);
 	g_signal_connect (G_OBJECT (self->priv->select_all_action), "activate",
 			  G_CALLBACK (select_all_action_cb), self);
@@ -2177,7 +2187,7 @@ totem_grilo_class_init (TotemGriloClass *klass)
 							      G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/grilo.ui");
-	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, header);
+	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selectmenu);
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_bar);
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, search_entry);
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, browser);

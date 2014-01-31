@@ -105,7 +105,6 @@ app_init (Totem *totem, char **argv)
 	set_rtl_icon_name (totem, "previous-chapter", "media-skip-backward");
 
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
-	gtk_window_set_hide_titlebar_when_maximized (GTK_WINDOW (totem->win), TRUE);
 
 	/* Menubar */
 	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
