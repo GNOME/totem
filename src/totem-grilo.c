@@ -147,6 +147,12 @@ enum {
 	MODEL_RESULTS_CAN_REMOVE
 };
 
+enum {
+	CAN_REMOVE_UNSUPPORTED = -1,
+	CAN_REMOVE_FALSE       = 0,
+	CAN_REMOVE_TRUE        = 1
+};
+
 static gchar *
 get_secondary_text (GrlMedia *media)
 {
@@ -203,24 +209,26 @@ get_title (GrlMedia *media)
 	return g_strdup (grl_media_get_title (media));
 }
 
-static gboolean
+static int
 can_remove (GrlSource *source,
 	    GrlMedia  *media)
 {
 	const char *url;
 	char *scheme;
-	gboolean ret;
+	int ret;
 
-	if (grl_source_supported_operations (source) & GRL_OP_REMOVE)
-		return TRUE;
+	if (!(grl_source_supported_operations (source) & GRL_OP_REMOVE))
+		return CAN_REMOVE_UNSUPPORTED;
+	if (!media)
+		return CAN_REMOVE_FALSE;
 	if (GRL_IS_MEDIA_BOX (media))
-		return FALSE;
+		return CAN_REMOVE_FALSE;
 	url = grl_media_get_url (media);
 	if (!url)
-		return FALSE;
+		return CAN_REMOVE_FALSE;
 
 	scheme = g_uri_parse_scheme (url);
-	ret = g_str_equal (scheme, "file");
+	ret = g_str_equal (scheme, "file") ? CAN_REMOVE_TRUE : CAN_REMOVE_FALSE;
 	g_free (scheme);
 
 	return ret;
@@ -800,30 +808,34 @@ static void
 set_browser_filter_model_for_path (TotemGrilo    *self,
 				   GtkTreePath   *path)
 {
+	GtkTreeIter iter;
+	int can_remove = CAN_REMOVE_FALSE;
+	char *text = NULL;
+
 	g_clear_object (&self->priv->browser_filter_model);
 	self->priv->browser_filter_model = gtk_tree_model_filter_new (self->priv->browser_model, path);
 
 	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 				self->priv->browser_filter_model);
 
+	if (path != NULL && gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+		gtk_tree_model_get (self->priv->browser_model, &iter,
+				    GD_MAIN_COLUMN_PRIMARY_TEXT, &text,
+				    MODEL_RESULTS_CAN_REMOVE, &can_remove,
+				    -1);
+	}
+
 	g_object_set (self, "show-back-button", path != NULL, NULL);
 	if (path == NULL) {
 		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), self->priv->switcher);
 	} else {
-		GtkTreeIter iter;
-
 		totem_main_toolbar_set_custom_title (TOTEM_MAIN_TOOLBAR (self->priv->header), NULL);
-
-		if (gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
-			char *text;
-
-			gtk_tree_model_get (self->priv->browser_model, &iter,
-					    GD_MAIN_COLUMN_PRIMARY_TEXT, &text,
-					    -1);
-			totem_main_toolbar_set_title (TOTEM_MAIN_TOOLBAR (self->priv->header), text);
-			g_free (text);
-		}
+		totem_main_toolbar_set_title (TOTEM_MAIN_TOOLBAR (self->priv->header), text);
 	}
+
+	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar),
+							can_remove != CAN_REMOVE_UNSUPPORTED);
+	g_free (text);
 }
 
 static void
@@ -1186,6 +1198,7 @@ source_added_cb (GrlRegistry *registry,
 							   GD_MAIN_COLUMN_PRIMARY_TEXT, name,
 							   GD_MAIN_COLUMN_ICON, icon,
 							   MODEL_RESULTS_IS_PRETHUMBNAIL, TRUE,
+							   MODEL_RESULTS_CAN_REMOVE, can_remove (source, NULL),
 							   -1);
 			monitor = TRUE;
 		}
@@ -1499,14 +1512,14 @@ can_remove_foreach (gpointer data,
 	CanRemoveData *can_remove_data = user_data;
 	GtkTreePath *path = data;
 	GtkTreeIter iter;
-	gboolean removable = FALSE;
+	int removable;
 
 	gtk_tree_model_get_iter (can_remove_data->model, &iter, path);
 	gtk_tree_model_get (can_remove_data->model, &iter,
 	                    MODEL_RESULTS_CAN_REMOVE, &removable,
 	                    -1);
 
-	if (!removable)
+	if (removable <= CAN_REMOVE_FALSE)
 		can_remove_data->all_removable = FALSE;
 }
 
@@ -1931,7 +1944,6 @@ setup_browse (TotemGrilo *self)
 	/* Selection toolbar */
 	g_object_set (G_OBJECT (self->priv->header), "select-menu-model", self->priv->selectmenu, NULL);
 	self->priv->selection_bar = totem_selection_toolbar_new ();
-	/* FIXME only show when all not all the items are boxes */
 	totem_selection_toolbar_set_show_delete_button (TOTEM_SELECTION_TOOLBAR (self->priv->selection_bar), TRUE);
 	gtk_container_add (GTK_CONTAINER (self->priv->selection_revealer),
 			   self->priv->selection_bar);
@@ -1980,16 +1992,18 @@ mtime_to_text (GtkTreeViewColumn *column,
 }
 
 static void
-page_to_text (GtkTreeViewColumn *column,
-	      GtkCellRenderer   *cell,
-	      GtkTreeModel      *model,
-	      GtkTreeIter       *iter,
-	      gpointer           user_data)
+int_to_text (GtkTreeViewColumn *column,
+	     GtkCellRenderer   *cell,
+	     GtkTreeModel      *model,
+	     GtkTreeIter       *iter,
+	     gpointer           user_data)
 {
+	int column_num;
 	gint page;
 	char *text;
 
-	gtk_tree_model_get (model, iter, MODEL_RESULTS_PAGE, &page, -1);
+	column_num = GPOINTER_TO_INT (user_data);
+	gtk_tree_model_get (model, iter, column_num, &page, -1);
 	text = g_strdup_printf ("%d", page);
 	g_object_set (cell, "text", text, NULL);
 	g_free (text);
@@ -2057,13 +2071,13 @@ create_debug_window (TotemGrilo *self,
 						    "active", GD_MAIN_COLUMN_SELECTED, NULL);
 	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
 						    "Page", gtk_cell_renderer_text_new (),
-						    page_to_text, NULL, NULL);
+						    int_to_text, GINT_TO_POINTER (MODEL_RESULTS_PAGE), NULL);
 	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
 						    "Remaining", gtk_cell_renderer_text_new (),
 						    remaining_to_text, NULL, NULL);
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
-						    "Can Remove", gtk_cell_renderer_toggle_new (),
-						    "active", MODEL_RESULTS_CAN_REMOVE, NULL);
+	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
+						    "Can Remove", gtk_cell_renderer_text_new (),
+						    int_to_text, GINT_TO_POINTER (MODEL_RESULTS_CAN_REMOVE), NULL);
 
 	gtk_tree_view_set_model (GTK_TREE_VIEW (tree), model);
 
