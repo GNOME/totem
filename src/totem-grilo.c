@@ -1451,6 +1451,8 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 	g_assert (path);
 
 	set_browser_filter_model_for_path (self, NULL);
+	totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header), FALSE);
+	gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->priv->browser), FALSE);
 
 	/* Remove all the items at that level */
 	if (gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
