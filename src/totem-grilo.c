@@ -1450,7 +1450,11 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 	g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
 	g_assert (path);
 
-	set_browser_filter_model_for_path (self, NULL);
+	/* We don't call set_browser_filter_model_for_path() to avoid
+	 * the back button getting hidden and re-shown */
+	g_clear_object (&self->priv->browser_filter_model);
+	gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser), NULL);
+
 	totem_main_toolbar_set_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header), FALSE);
 	gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->priv->browser), FALSE);
 
@@ -1470,8 +1474,10 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 	}
 
 	gtk_tree_path_up (path);
-	if (gtk_tree_path_get_depth (path) > 0)
+	if (path != NULL && gtk_tree_path_get_depth (path) > 0)
 		set_browser_filter_model_for_path (self, path);
+	else
+		set_browser_filter_model_for_path (self, NULL);
 	gtk_tree_path_free (path);
 }
 
