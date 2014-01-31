@@ -443,7 +443,6 @@ update_media (GtkTreeStore *model,
 
 	g_clear_object (&thumbnail);
 	g_free (secondary);
-	g_clear_pointer (&mtime, g_date_time_unref);
 }
 
 static void
@@ -522,7 +521,6 @@ add_media_to_model (GtkTreeStore *model,
 
 	g_clear_object (&thumbnail);
 	g_free (secondary);
-	g_clear_pointer (&mtime, g_date_time_unref);
 }
 
 static void
