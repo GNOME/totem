@@ -370,8 +370,8 @@ totem_search_entry_set_selected_id (TotemSearchEntry *self,
 	GList *children, *l;
 	gboolean ret = FALSE;
 
-	g_return_if_fail (TOTEM_IS_SEARCH_ENTRY (self));
-	g_return_if_fail (id != NULL);
+	g_return_val_if_fail (TOTEM_IS_SEARCH_ENTRY (self), FALSE);
+	g_return_val_if_fail (id != NULL, FALSE);
 
 	children = gtk_container_get_children (GTK_CONTAINER (self->priv->listbox));
 	for (l = children; l != NULL; l = l->next) {
