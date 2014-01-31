@@ -169,19 +169,13 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
 
 /* Helper functions */
-static GtkWindow *
-totem_playlist_get_toplevel (TotemPlaylist *playlist)
-{
-	return GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (playlist)));
-}
-
 static void
 totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
 {
 	GtkWidget *error_dialog;
 
 	error_dialog =
-		gtk_message_dialog_new (totem_playlist_get_toplevel (playlist),
+		gtk_message_dialog_new (NULL,
 				GTK_DIALOG_MODAL,
 				GTK_MESSAGE_ERROR,
 				GTK_BUTTONS_OK,
@@ -240,7 +234,7 @@ totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSele
 		g_object_unref (dir);
 	}
 
-	subtitle = totem_add_subtitle (totem_playlist_get_toplevel (playlist), uri);
+	subtitle = totem_add_subtitle (NULL, uri);
 	g_free (uri);
 
 	if (subtitle == NULL)
@@ -721,7 +715,7 @@ totem_playlist_add_files (GtkWidget *widget, TotemPlaylist *playlist)
 	GSList *filenames, *l;
 	GList *mrl_list = NULL;
 
-	filenames = totem_add_files (totem_playlist_get_toplevel (playlist), NULL);
+	filenames = totem_add_files (NULL, NULL);
 	if (filenames == NULL)
 		return;
 
