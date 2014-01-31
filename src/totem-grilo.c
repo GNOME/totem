@@ -60,6 +60,7 @@ struct _TotemGriloPrivate {
 
 	GrlSource *local_metadata_src;
 	GrlSource *metadata_store_src;
+	gboolean fs_plugin_configured;
 
 	/* Current media selected in results*/
 	GrlMedia *selected_media;
@@ -966,7 +967,6 @@ source_is_blacklisted (GrlSource *source)
 	const char *id;
 	const char const *sources[] = {
 		"grl-bookmarks",
-		"grl-filesystem",
 		"grl-shoutcast",
 		"grl-flickr",
 		"grl-podcasts",
@@ -1168,16 +1168,26 @@ source_added_cb (GrlRegistry *registry,
 
 	self = TOTEM_GRILO (user_data);
 	id = grl_source_get_id (source);
+
+	/* The filesystem plugin */
+	if (g_str_equal (id, "grl-filesystem") &&
+	    self->priv->fs_plugin_configured == FALSE) {
+		return;
+	}
+
+	/* The local search source */
 	if (g_str_equal (id, "grl-tracker-source"))
 		name = _("Local");
 	else
 		name = grl_source_get_name (source);
+
+	/* Metadata */
 	if (g_str_equal (id, "grl-local-metadata"))
 		self->priv->local_metadata_src = source;
 	else if (g_str_equal (id, "grl-metadata-store"))
 		self->priv->metadata_store_src = source;
-	ops = grl_source_supported_operations (source);
 
+	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
 		gboolean monitor = FALSE;
 
@@ -1277,8 +1287,26 @@ load_grilo_plugins (TotemGrilo *self)
 {
 	GrlRegistry *registry;
 	GError *error = NULL;
+	GSettings *settings;
+	char **configs;
+	guint i;
 
 	registry = grl_registry_get_default ();
+
+	/* Check if there's filesystems to show */
+	settings = g_settings_new ("org.gnome.totem");
+	configs = g_settings_get_strv (settings, "filesystem-paths");
+	g_object_unref (settings);
+
+	for (i = 0; configs[i] != NULL; i++) {
+		GrlConfig *config;
+
+		config = grl_config_new ("grl-filesystem", NULL);
+		grl_config_set_string (config, "base-uri", configs[i]);
+		grl_registry_add_config (registry, config, NULL);
+		self->priv->fs_plugin_configured = TRUE;
+	}
+	g_strfreev (configs);
 
 	g_signal_connect (registry, "source-added",
 	                  G_CALLBACK (source_added_cb), self);
