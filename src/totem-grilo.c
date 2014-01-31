@@ -2309,6 +2309,7 @@ totem_grilo_init (TotemGrilo *self)
 	priv->metadata_keys = grl_metadata_key_list_new (GRL_METADATA_KEY_ARTIST,
 							 GRL_METADATA_KEY_AUTHOR,
 							 GRL_METADATA_KEY_DURATION,
+							 GRL_METADATA_KEY_MODIFICATION_DATE,
 							 GRL_METADATA_KEY_THUMBNAIL,
 							 GRL_METADATA_KEY_URL,
 							 GRL_METADATA_KEY_EXTERNAL_URL,
