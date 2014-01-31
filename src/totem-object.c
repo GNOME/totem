@@ -3675,6 +3675,11 @@ totem_callback_connect (TotemObject *totem)
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
+	/* Cog wheel */
+	item = totem->gear_button = create_header_button (totem, gtk_menu_button_new (), "emblem-system-symbolic");
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+
 	/* Fullscreen button */
 	item = totem->fullscreen_button = create_header_button (totem, gtk_button_new (), "view-fullscreen-symbolic");
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
@@ -3684,11 +3689,6 @@ totem_callback_connect (TotemObject *totem)
 				     G_BINDING_SYNC_CREATE,
 				     fullscreen_button_image_sync,
 				     NULL, NULL, NULL);
-
-	/* Cog wheel */
-	item = totem->gear_button = create_header_button (totem, gtk_menu_button_new (), "emblem-system-symbolic");
-	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
-	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
