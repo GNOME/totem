@@ -93,7 +93,8 @@ void totem_playlist_add_mrl (TotemPlaylist *playlist,
                              GAsyncReadyCallback callback,
                              gpointer user_data);
 gboolean totem_playlist_add_mrl_finish (TotemPlaylist *playlist,
-                                        GAsyncResult *result);
+                                        GAsyncResult  *result,
+                                        GError       **error);
 gboolean totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
                                       const char *mrl,
                                       gint64 *starttime);

@@ -169,32 +169,6 @@ static void init_treeview (GtkWidget *treeview, TotemPlaylist *playlist);
 G_DEFINE_TYPE (TotemPlaylist, totem_playlist, GTK_TYPE_BOX)
 
 /* Helper functions */
-static void
-totem_playlist_error (char *title, char *reason, TotemPlaylist *playlist)
-{
-	GtkWidget *error_dialog;
-
-	error_dialog =
-		gtk_message_dialog_new (NULL,
-				GTK_DIALOG_MODAL,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
-				"%s", title);
-	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (error_dialog),
-						  "%s", reason);
-
-	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
-	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
-			GTK_RESPONSE_OK);
-	g_signal_connect (G_OBJECT (error_dialog), "destroy", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	g_signal_connect (G_OBJECT (error_dialog), "response", G_CALLBACK
-			(gtk_widget_destroy), error_dialog);
-	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
-
-	gtk_widget_show (error_dialog);
-}
-
 void
 totem_playlist_select_subtitle_dialog(TotemPlaylist *playlist, TotemPlaylistSelectDialog mode)
 {
@@ -431,10 +405,8 @@ totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist, const char *o
 				       output_file,
 				       NULL, type, &error);
 
-	if (retval == FALSE)
-	{
-		totem_playlist_error (_("Could not save the playlist"),
-				error->message, playlist);
+	if (retval == FALSE) {
+		g_warning ("Playlist could not be saved: %s", error->message);
 		g_error_free (error);
 	}
 
@@ -1309,16 +1281,13 @@ add_mrl_data_free (AddMrlData *data)
 }
 
 static gboolean
-handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gchar *mrl, const gchar *display_name)
+handle_parse_result (TotemPlParserResult res, TotemPlaylist *playlist, const gchar *mrl, const gchar *display_name, GError **error)
 {
 	if (res == TOTEM_PL_PARSER_RESULT_UNHANDLED)
 		return totem_playlist_add_one_mrl (playlist, mrl, display_name, NULL, NULL, FALSE);
 	if (res == TOTEM_PL_PARSER_RESULT_ERROR) {
-		char *msg;
-
-		msg = g_strdup_printf (_("The playlist '%s' could not be parsed. It might be damaged."), display_name ? display_name : mrl);
-		totem_playlist_error (_("Playlist error"), msg, playlist);
-		g_free (msg);
+		g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+			     _("The playlist '%s' could not be parsed. It might be damaged."), display_name ? display_name : mrl);
 
 		return FALSE;
 	}
@@ -1334,22 +1303,25 @@ add_mrl_cb (TotemPlParser *parser, GAsyncResult *result, AddMrlData *data)
 	TotemPlParserResult res;
 	GSimpleAsyncResult *async_result;
 	GError *error = NULL;
+	gboolean ret;
+
+	g_assert (data != NULL);
 
 	/* Finish parsing the playlist */
-	res = totem_pl_parser_parse_finish (parser, result, &error);
+	res = totem_pl_parser_parse_finish (parser, result, NULL);
 
 	/* Remove the cursor, if one was set */
 	if (data->cursor)
 		g_application_unmark_busy (g_application_get_default ());
 
 	/* Create an async result which will return the result to the code which called totem_playlist_add_mrl() */
+	ret = handle_parse_result (res, data->playlist, data->mrl, data->display_name, &error);
+	async_result = g_simple_async_result_new (G_OBJECT (data->playlist), data->callback, data->user_data, totem_playlist_add_mrl);
 	if (error != NULL)
-		async_result = g_simple_async_result_new_from_error (G_OBJECT (data->playlist), data->callback, data->user_data, error);
-	else
-		async_result = g_simple_async_result_new (G_OBJECT (data->playlist), data->callback, data->user_data, totem_playlist_add_mrl);
+		g_simple_async_result_take_error (async_result, error);
 
 	/* Handle the various return cases from the playlist parser */
-	g_simple_async_result_set_op_res_gboolean (async_result, handle_parse_result (res, data->playlist, data->mrl, data->display_name));
+	g_simple_async_result_set_op_res_gboolean (async_result, ret);
 
 	/* Free the closure's data, now that we're finished with it */
 	add_mrl_data_free (data);
@@ -1386,11 +1358,14 @@ totem_playlist_add_mrl (TotemPlaylist *playlist, const char *mrl, const char *di
 }
 
 gboolean
-totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result)
+totem_playlist_add_mrl_finish (TotemPlaylist *playlist, GAsyncResult *result, GError **error)
 {
 	g_assert (g_simple_async_result_get_source_tag (G_SIMPLE_ASYNC_RESULT (result)) == totem_playlist_add_mrl);
 
-	return g_simple_async_result_get_op_res_gboolean (G_SIMPLE_ASYNC_RESULT (result));
+	if (g_simple_async_result_get_op_res_gboolean (G_SIMPLE_ASYNC_RESULT (result)))
+		return TRUE;
+	g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (result), error);
+	return FALSE;
 }
 
 static gint64
@@ -1416,7 +1391,7 @@ totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
 	g_return_val_if_fail (mrl != NULL, FALSE);
 	g_return_val_if_fail (starttime != NULL, FALSE);
 
-	ret = handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, NULL);
+	ret = handle_parse_result (totem_pl_parser_parse (playlist->priv->parser, mrl, FALSE), playlist, mrl, NULL, NULL);
 	if (!ret)
 		return ret;
 
@@ -1566,7 +1541,7 @@ add_mrls_cb (TotemPlParser *parser, GAsyncResult *result, TotemPlaylistMrlData *
 
 		/* The entry is the next one in the order, so doesn't need to be added to the unadded list, and can be added to playlist proper */
 		operation_data->next_index_to_add++;
-		handle_parse_result (mrl_data->res, operation_data->playlist, mrl_data->mrl, mrl_data->display_name);
+		handle_parse_result (mrl_data->res, operation_data->playlist, mrl_data->mrl, mrl_data->display_name, NULL);
 
 		/* See if we can now add any other entries which have already been processed */
 		for (i = operation_data->unadded_entries;
@@ -1575,7 +1550,7 @@ add_mrls_cb (TotemPlParser *parser, GAsyncResult *result, TotemPlaylistMrlData *
 			TotemPlaylistMrlData *_mrl_data = (TotemPlaylistMrlData*) i->data;
 
 			operation_data->next_index_to_add++;
-			handle_parse_result (_mrl_data->res, operation_data->playlist, _mrl_data->mrl, _mrl_data->display_name);
+			handle_parse_result (_mrl_data->res, operation_data->playlist, _mrl_data->mrl, _mrl_data->display_name, NULL);
 		}
 
 		operation_data->unadded_entries = i;

@@ -641,8 +641,15 @@ add_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result
 {
 	int end = -1;
 	gboolean playlist_changed;
+	GError *error = NULL;
 
-	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result);
+	playlist_changed = totem_playlist_add_mrl_finish (playlist, async_result, &error);
+
+	if (playlist_changed == FALSE && error != NULL) {
+		/* FIXME: Crappy dialogue */
+		totem_object_show_error (data->totem, "", error->message);
+		g_error_free (error);
+	}
 
 	if (data->play)
 		end = totem_playlist_get_last (playlist);
