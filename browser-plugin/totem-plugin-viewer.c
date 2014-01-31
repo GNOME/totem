@@ -364,15 +364,16 @@ totem_embedded_set_pp_state (TotemEmbedded *emb, gboolean state)
 static void
 totem_embedded_update_title (TotemEmbedded *emb, const char *title)
 {
+	// FIXME
+#if 0
 	GObject *obj;
 	GtkWidget *header;
 
 	obj = bacon_video_widget_get_header_object (emb->bvw);
 	header = g_object_get_data (obj, "header");
 	gtk_header_bar_set_title (GTK_HEADER_BAR (header), title ? title : "");
+#endif
 }
-
-
 
 static gboolean
 totem_embedded_open_internal (TotemEmbedded *emb,
