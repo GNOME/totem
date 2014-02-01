@@ -385,35 +385,6 @@ totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 	g_object_unref (pl_playlist);
 }
 
-void
-totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist, const char *output, TotemPlParserType type)
-{
-	TotemPlPlaylist *pl_playlist;
-	GError *error = NULL;
-	GFile *output_file;
-	gboolean retval;
-
-	pl_playlist = totem_pl_playlist_new ();
-	output_file = g_file_new_for_commandline_arg (output);
-
-	gtk_tree_model_foreach (playlist->priv->model,
-				totem_playlist_save_iter_foreach,
-				pl_playlist);
-
-	retval = totem_pl_parser_save (playlist->priv->parser,
-				       pl_playlist,
-				       output_file,
-				       NULL, type, &error);
-
-	if (retval == FALSE) {
-		g_warning ("Playlist could not be saved: %s", error->message);
-		g_error_free (error);
-	}
-
-	g_object_unref (pl_playlist);
-	g_object_unref (output_file);
-}
-
 static void
 gtk_tree_selection_has_selected_foreach (GtkTreeModel *model,
 		GtkTreePath *path, GtkTreeIter *iter, gpointer user_data)

@@ -118,8 +118,6 @@ gboolean totem_playlist_add_mrls_finish (TotemPlaylist *self,
 void totem_playlist_save_session_playlist (TotemPlaylist *playlist,
 					   GFile         *output,
 					   gint64         starttime);
-void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
-					   const char *output, TotemPlParserType type);
 void totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,
 					    TotemPlaylistSelectDialog mode);
 
