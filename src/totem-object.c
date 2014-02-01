@@ -871,6 +871,11 @@ void
 totem_object_set_main_page (TotemObject *totem,
 			    const char  *page_id)
 {
+	if (g_strcmp0 (page_id, gtk_stack_get_visible_child_name (GTK_STACK (totem->stack))) == 0)
+		return;
+
+	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
+
 	if (g_strcmp0 (page_id, "player") == 0) {
 		g_object_get (totem->header,
 			      "title", &totem->title,
@@ -910,7 +915,6 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_hide (totem->fullscreen_button);
 		gtk_widget_hide (totem->gear_button);
 	}
-	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 }
 
 /**
