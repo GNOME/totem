@@ -648,7 +648,7 @@ totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
   bar->priv->subtitle = g_strdup (subtitle);
   g_free (tmp);
 
-  gtk_label_set_text (GTK_LABEL (bar->priv->title_label), subtitle);
+  gtk_label_set_text (GTK_LABEL (bar->priv->subtitle_label), subtitle);
 
   g_object_notify (G_OBJECT (bar), "subtitle");
 }
