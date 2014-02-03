@@ -89,6 +89,28 @@ setup_object (BaconVideoControlsActor *controls,
 }
 
 static void
+setup_popover (BaconVideoControlsActor *controls)
+{
+	GtkWidget *volume_button;
+	GtkStyleContext *context;
+	GtkCssProvider *provider;
+	const gchar volume_control_css[] =
+		"GtkPopover {\n"
+		"  border-radius: 0px;\n"
+		"  margin: 0px;\n"
+		"  padding: 0px;\n"
+		"}";
+
+	volume_button = GTK_WIDGET (g_object_get_data (G_OBJECT (controls), "volume_button"));
+	context = gtk_widget_get_style_context (gtk_scale_button_get_popup (GTK_SCALE_BUTTON (volume_button)));
+	provider = gtk_css_provider_new ();
+	gtk_css_provider_load_from_data (provider, volume_control_css, -1, NULL);
+	gtk_style_context_add_provider (context, GTK_STYLE_PROVIDER (provider),
+					GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	g_object_unref (provider);
+}
+
+static void
 bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 {
 	const char *objects[] = { "toolbar", NULL };
@@ -107,6 +129,8 @@ bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 	setup_object (controls, "volume_button");
 	setup_object (controls, "time_label");
 	setup_object (controls, "time_rem_label");
+
+	setup_popover (controls);
 }
 
 ClutterActor *
