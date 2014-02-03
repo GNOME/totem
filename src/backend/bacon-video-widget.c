@@ -804,6 +804,23 @@ bail:
   return res;
 }
 
+static gboolean
+bacon_video_widget_scroll (GtkWidget *widget, GdkEventScroll *event)
+{
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  int x, y;
+
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+
+  translate_coords (widget, event->window, event->x, event->y, &x, &y);
+  if (ignore_event (bvw, x, y))
+    return TRUE;
+
+  if (GTK_WIDGET_CLASS (parent_class)->scroll_event)
+    return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
+  return FALSE;
+}
+
 static void
 bacon_video_widget_get_preferred_width (GtkWidget *widget,
                                         gint      *minimum,
@@ -870,6 +887,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
   widget_class->button_press_event = bacon_video_widget_button_press_or_release;
   widget_class->button_release_event = bacon_video_widget_button_press_or_release;
+  widget_class->scroll_event = bacon_video_widget_scroll;
 
   /* GObject */
   object_class->set_property = bacon_video_widget_set_property;
