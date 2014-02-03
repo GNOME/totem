@@ -728,19 +728,21 @@ toggle_controls (BaconVideoWidget *bvw)
 }
 
 static void
-translate_coords (GtkWidget      *widget,
-		  GdkEventButton *event,
-		  int            *x,
-		  int            *y)
+translate_coords (GtkWidget   *widget,
+		  GdkWindow   *window,
+		  int          x,
+		  int          y,
+		  int         *out_x,
+		  int         *out_y)
 {
   GtkWidget *src;
 
-  gdk_window_get_user_data (event->window, (gpointer *)&src);
+  gdk_window_get_user_data (window, (gpointer *)&src);
   if (src && src != widget) {
-    gtk_widget_translate_coordinates (src, widget, event->x, event->y, x, y);
+    gtk_widget_translate_coordinates (src, widget, x, y, out_x, out_y);
   } else {
-    *x = event->x;
-    *y = event->y;
+    *out_x = x;
+    *out_y = y;
   }
 }
 
@@ -769,7 +771,7 @@ bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *e
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  translate_coords (widget, event, &x, &y);
+  translate_coords (widget, event->window, event->x, event->y, &x, &y);
   if (ignore_event (bvw, x, y))
     return TRUE;
 
