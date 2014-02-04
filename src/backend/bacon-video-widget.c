@@ -3828,6 +3828,8 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
   bvw->priv->target_state = GST_STATE_PAUSED;
   bvw_clear_missing_plugins_messages (bvw);
 
+  bacon_video_widget_mark_popup_busy (bvw, "opening file");
+
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
@@ -3891,6 +3893,8 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     GST_DEBUG ("Failed to reset direction back to forward to play");
     return FALSE;
   }
+
+  bacon_video_widget_unmark_popup_busy (bvw, "opening file");
 
   GST_DEBUG ("play");
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
