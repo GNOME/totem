@@ -458,7 +458,6 @@ void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
 void bacon_video_widget_show_popup                (BaconVideoWidget *bvw);
 
 GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
-GObject * bacon_video_widget_get_header_object  (BaconVideoWidget *bvw);
 
 G_END_DECLS
 
