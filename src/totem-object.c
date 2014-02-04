@@ -3606,6 +3606,16 @@ totem_setup_window (TotemObject *totem)
 	return;
 }
 
+static void
+fullscreen_menu_shown_cb (GtkToggleButton *button,
+			  TotemObject     *totem)
+{
+	if (gtk_toggle_button_get_active (button))
+		bacon_video_widget_mark_popup_busy (totem->bvw, "toolbar menu visible");
+	else
+		bacon_video_widget_unmark_popup_busy (totem->bvw, "toolbar menu visible");
+}
+
 static gboolean
 fullscreen_button_image_sync (GBinding     *binding,
 			      const GValue *source_value,
@@ -3721,6 +3731,8 @@ totem_callback_connect (TotemObject *totem)
 	item = totem->gear_button = create_header_button (totem->header, gtk_menu_button_new (), "emblem-system-symbolic");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	g_signal_connect (G_OBJECT (item), "toggled",
+			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 
 	/* Fullscreen button */
 	item = totem->fullscreen_button = create_header_button (totem->header, gtk_button_new (), "view-fullscreen-symbolic");
@@ -3845,6 +3857,8 @@ add_fullscreen_toolbar (TotemObject *totem)
 	item = create_header_button (totem->fullscreen_header, gtk_menu_button_new (), "emblem-system-symbolic");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	g_signal_connect (G_OBJECT (item), "toggled",
+			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 
 	item = create_header_button (totem->fullscreen_header, gtk_button_new (), "view-fullscreen-symbolic");
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
