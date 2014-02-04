@@ -1967,6 +1967,9 @@ setup_browse (TotemGrilo *self)
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->browser, "selection-mode",
 				G_BINDING_BIDIRECTIONAL);
+	g_object_bind_property (self->priv->header, "select-mode",
+				self->priv->header, "show-close-button",
+				G_BINDING_INVERT_BOOLEAN);
 
 	g_signal_connect (self->priv->browser, "view-selection-changed",
 			  G_CALLBACK (view_selection_changed_cb), self);
