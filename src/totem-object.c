@@ -106,7 +106,6 @@ G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *to
 G_MODULE_EXPORT gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
 G_MODULE_EXPORT int window_scroll_event_cb (GtkWidget *win, GdkEvent *event, TotemObject *totem);
-G_MODULE_EXPORT void fs_exit1_activate_cb (GtkButton *button, TotemObject *totem);
 
 enum {
 	PROP_0,
@@ -1578,15 +1577,6 @@ totem_object_set_fullscreen (TotemObject *totem, gboolean state)
 		gtk_window_fullscreen (GTK_WINDOW (totem->win));
 	else
 		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
-}
-
-void
-fs_exit1_activate_cb (GtkButton *button, TotemObject *totem)
-{
-	GAction *action;
-
-	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
-	g_action_change_state (action, g_variant_new_boolean (FALSE));
 }
 
 void
