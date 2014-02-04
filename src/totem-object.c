@@ -896,6 +896,7 @@ totem_object_set_main_page (TotemObject *totem,
 			      NULL);
 		gtk_widget_show (totem->fullscreen_button);
 		gtk_widget_show (totem->gear_button);
+		bacon_video_widget_show_popup (totem->bvw);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
 		g_object_set (totem->header,
 			      "show-back-button", totem_grilo_get_show_back_button (TOTEM_GRILO (totem->grilo)),
@@ -1499,9 +1500,31 @@ totem_object_pause (TotemObject *totem)
 	}
 }
 
+static void
+update_toolbar_visibility (TotemObject *totem,
+			   gboolean     animate)
+{
+	gboolean visible;
+	guint duration;
+
+	if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN) {
+		visible = FALSE;
+		duration = 0;
+	} else {
+		g_object_get (G_OBJECT (totem->bvw), "reveal-controls", &visible, NULL);
+		duration = animate ? 250 : 0;
+	}
+
+	/* We don't change the transition type, because it causes
+	 * a queue resize, and it might short-circuit the animation */
+	gtk_revealer_set_transition_duration (GTK_REVEALER (totem->revealer), duration);
+	gtk_revealer_set_reveal_child (GTK_REVEALER (totem->revealer), visible);
+}
+
 gboolean
-window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
-		       TotemObject *totem)
+window_state_event_cb (GtkWidget           *window,
+		       GdkEventWindowState *event,
+		       TotemObject         *totem)
 {
 	GAction *action;
 
@@ -1518,6 +1541,8 @@ window_state_event_cb (GtkWidget *window, GdkEventWindowState *event,
 		totem->controls_visibility = TOTEM_CONTROLS_VISIBLE;
 		show_controls (totem, TRUE);
 	}
+
+	update_toolbar_visibility (totem, FALSE);
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
@@ -2257,6 +2282,7 @@ back_button_clicked_cb (GtkButton   *button,
 {
 	if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0) {
 		totem_playlist_clear (totem->playlist);
+		gtk_window_unfullscreen (GTK_WINDOW (totem->win));
 		totem_object_set_main_page (totem, "grilo");
 	} else {
 		totem_grilo_back_button_clicked (TOTEM_GRILO (totem->grilo));
@@ -2386,6 +2412,14 @@ update_fill (TotemObject *totem, gdouble level)
 		gtk_range_set_fill_level (GTK_RANGE (totem->seek), level * 65535.0f);
 		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), TRUE);
 	}
+}
+
+static void
+on_reveal_controls_changed (GObject     *gobject,
+			    GParamSpec  *pspec,
+			    TotemObject *totem)
+{
+	update_toolbar_visibility (totem, TRUE);
 }
 
 static void
@@ -3365,9 +3399,6 @@ totem_object_handle_scroll (TotemObject    *totem,
 
 	direction = sevent->direction;
 
-//	if (totem_fullscreen_is_fullscreen (totem->fs) != FALSE)
-//		totem_fullscreen_show_popups (totem->fs, TRUE);
-
 	if (direction == GDK_SCROLL_SMOOTH) {
 		gdouble y;
 		gdk_event_get_scroll_deltas (event, NULL, &y);
@@ -3590,7 +3621,7 @@ fullscreen_button_image_sync (GBinding     *binding,
 }
 
 static GtkWidget *
-create_header_button (Totem      *totem,
+create_header_button (GtkWidget  *header,
 		      GtkWidget  *button,
 		      const char *icon_name)
 {
@@ -3603,7 +3634,7 @@ create_header_button (Totem      *totem,
 	gtk_style_context_add_class (context, "image-button");
 	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
 
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->header), button);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 	return button;
 }
 
@@ -3687,12 +3718,12 @@ totem_callback_connect (TotemObject *totem)
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Cog wheel */
-	item = totem->gear_button = create_header_button (totem, gtk_menu_button_new (), "emblem-system-symbolic");
+	item = totem->gear_button = create_header_button (totem->header, gtk_menu_button_new (), "emblem-system-symbolic");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Fullscreen button */
-	item = totem->fullscreen_button = create_header_button (totem, gtk_button_new (), "view-fullscreen-symbolic");
+	item = totem->fullscreen_button = create_header_button (totem->header, gtk_button_new (), "view-fullscreen-symbolic");
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
 	image = gtk_button_get_image (GTK_BUTTON (item));
 	g_object_bind_property_full (totem, "fullscreen",
@@ -3784,6 +3815,52 @@ grilo_widget_setup (TotemObject *totem)
 	gtk_stack_set_visible_child_name (GTK_STACK (totem->stack), "grilo");
 }
 
+static void
+add_fullscreen_toolbar (TotemObject *totem)
+{
+	GtkWidget *overlay;
+	GtkWidget *item, *image;
+	GMenuModel *menu;
+
+	overlay = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
+	totem->revealer = gtk_revealer_new ();
+	g_object_set (G_OBJECT (totem->revealer),
+		      "halign", GTK_ALIGN_FILL,
+		      "valign", GTK_ALIGN_START,
+		      NULL);
+
+	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
+						 "show-search-button", FALSE,
+						 "show-select-button", FALSE,
+						 "show-close-button", TRUE,
+						 "show-back-button", TRUE,
+						 NULL);
+	g_object_bind_property (totem->header, "title",
+				totem->fullscreen_header, "title", 0);
+	g_object_bind_property (totem->header, "subtitle",
+				totem->fullscreen_header, "title", 0);
+	g_signal_connect (G_OBJECT (totem->fullscreen_header), "back-clicked",
+			  G_CALLBACK (back_button_clicked_cb), totem);
+
+	item = create_header_button (totem->fullscreen_header, gtk_menu_button_new (), "emblem-system-symbolic");
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+
+	item = create_header_button (totem->fullscreen_header, gtk_button_new (), "view-fullscreen-symbolic");
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
+	image = gtk_button_get_image (GTK_BUTTON (item));
+	g_object_bind_property_full (totem, "fullscreen",
+				     image, "icon-name",
+				     G_BINDING_SYNC_CREATE,
+				     fullscreen_button_image_sync,
+				     NULL, NULL, NULL);
+
+	gtk_container_add (GTK_CONTAINER (totem->revealer), totem->fullscreen_header);
+	gtk_widget_show_all (totem->revealer);
+
+	gtk_overlay_add_overlay (GTK_OVERLAY (overlay), totem->revealer);
+}
+
 void
 video_widget_create (TotemObject *totem)
 {
@@ -3837,10 +3914,16 @@ video_widget_create (TotemObject *totem)
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			  "notify::reveal-controls",
+			  G_CALLBACK (on_reveal_controls_changed),
+			  totem);
 
 	container = GTK_CONTAINER (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
 	gtk_container_add (container,
 			GTK_WIDGET (totem->bvw));
+
+	add_fullscreen_toolbar (totem);
 
 	/* Events for the widget video window as well */
 	gtk_widget_add_events (GTK_WIDGET (totem->bvw),

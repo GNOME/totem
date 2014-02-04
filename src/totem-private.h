@@ -92,6 +92,9 @@ struct _TotemObject {
 	BaconTimeLabel *time_rem_label;
 	GtkWidget *header;
 
+	GtkWidget *revealer;
+	GtkWidget *fullscreen_header;
+
 	/* UI manager */
 	GtkActionGroup *main_action_group;
 	GtkUIManager *ui_manager;
