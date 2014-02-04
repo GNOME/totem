@@ -49,11 +49,6 @@ libbaconvideowidget_la_SOURCES = \
 	bacon-video-widget-gst-missing-plugins.h	\
 	totem-aspect-frame.h				\
 	totem-aspect-frame.c				\
-	gsd-osd-window.c				\
-	gsd-osd-window.h				\
-	gsd-osd-window-private.h			\
-	bacon-video-osd-actor.c				\
-	bacon-video-osd-actor.h				\
 	bacon-video-controls-actor.c			\
 	bacon-video-controls-actor.h			\
 	bacon-video-spinner-actor.h			\

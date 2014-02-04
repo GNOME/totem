@@ -102,12 +102,9 @@ IGNORE_HFILES = \
 	totem-time-entry.h		\
 	totem-tracker-widget.h		\
 	gsd-media-keys-window.h		\
-	gsd-osd-window.h		\
-	bacon-video-osd-actor.h		\
 	totem-search-entry.h		\
 	gd-tagged-entry.h		\
 	gd-fullscreen-filter.h		\
-	gsd-osd-window-private.h	\
 	screenshot-filename-builder.h
 
 # Images to copy into HTML directory.

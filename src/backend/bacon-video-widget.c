@@ -86,7 +86,6 @@
 #include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
-#include "bacon-video-osd-actor.h"
 #include "bacon-video-controls-actor.h"
 #include "bacon-video-spinner-actor.h"
 #include "bacon-video-widget-enums.h"
@@ -94,8 +93,6 @@
 
 #define DEFAULT_USER_AGENT "Videos/"VERSION
 
-#define OSD_SIZE 130                           /* Size of the OSD popup */
-#define OSD_MARGIN 8                           /* Pixels from the top-left */
 #define CONTROLS_MARGIN 32.0                   /* Pixels from the bottom, left and right */
 #define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
@@ -212,7 +209,6 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *stage;
   ClutterActor                *texture;
   ClutterActor                *frame;
-  ClutterActor                *osd;
   ClutterActor                *controls;
   ClutterActor                *spinner;
 
@@ -3541,17 +3537,6 @@ bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
 }
 
 void
-bacon_video_widget_popup_osd (BaconVideoWidget *bvw,
-			      const char       *icon_name)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  bacon_video_osd_actor_set_icon_name (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd),
-				       icon_name);
-  bacon_video_osd_actor_show_and_fade (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
-}
-
-void
 bacon_video_widget_show_popup (BaconVideoWidget *bvw)
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
@@ -6226,17 +6211,6 @@ bacon_video_widget_initable_init (GInitable     *initable,
 					 bvw->priv->spinner,
 					 bvw->priv->frame);
   clutter_actor_hide (bvw->priv->spinner);
-
-  /* The OSD */
-  bvw->priv->osd = bacon_video_osd_actor_new ();
-  clutter_actor_set_name (bvw->priv->osd, "osd");
-  clutter_actor_set_pivot_point (bvw->priv->osd, -OSD_MARGIN, -OSD_MARGIN); /* FIXME RTL */
-  clutter_actor_set_size (bvw->priv->osd, OSD_SIZE, OSD_SIZE);
-  clutter_actor_add_child (bvw->priv->stage, bvw->priv->osd);
-  clutter_actor_set_child_above_sibling (bvw->priv->stage,
-					 bvw->priv->osd,
-					 bvw->priv->frame);
-  bacon_video_osd_actor_hide (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
 
   /* The controls */
   bvw->priv->controls = bacon_video_controls_actor_new ();
