@@ -220,6 +220,7 @@ struct BaconVideoWidgetPrivate
   /* Controls */
   gboolean                     reveal_controls;
   guint                        transition_timeout_id;
+  GHashTable                  *busy_popup_ht; /* key=reason string, value=gboolean */
 
   /* Visual effects */
   GList                       *vis_plugins_list;
@@ -1351,6 +1352,8 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->mount_in_progress = FALSE;
   priv->auth_last_result = G_MOUNT_OPERATION_HANDLED;
   priv->auth_dialog = NULL;
+
+  priv->busy_popup_ht = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
   bacon_video_widget_gst_missing_plugins_blacklist ();
 }
@@ -2796,6 +2799,7 @@ bacon_video_widget_finalize (GObject * object)
   g_clear_pointer (&bvw->priv->mrl, g_free);
   g_clear_pointer (&bvw->priv->subtitle_uri, g_free);
   g_clear_pointer (&bvw->priv->vis_element_name, g_free);
+  g_clear_pointer (&bvw->priv->busy_popup_ht, g_hash_table_destroy);
 
   g_clear_object (&bvw->priv->clock);
 
@@ -3543,6 +3547,45 @@ bacon_video_widget_show_popup (BaconVideoWidget *bvw)
 
   set_controls_visibility (bvw, TRUE, FALSE);
   schedule_hiding_popup (bvw);
+}
+
+void
+bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
+				    const char       *reason)
+{
+  gboolean was_busy;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  was_busy = (g_hash_table_size (bvw->priv->busy_popup_ht) > 0);
+  g_hash_table_insert (bvw->priv->busy_popup_ht,
+		       g_strdup (reason),
+		       GINT_TO_POINTER (1));
+
+  GST_DEBUG ("Adding popup busy for reason %s", reason);
+
+  if (!was_busy) {
+    GST_DEBUG ("Will not hide popup due to timeout");
+    unschedule_hiding_popup (bvw);
+  }
+}
+
+void
+bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
+				      const char       *reason)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (clutter_actor_get_opacity (bvw->priv->controls) != 0);
+
+  g_hash_table_remove (bvw->priv->busy_popup_ht, reason);
+
+  GST_DEBUG ("Removing popup busy for reason %s", reason);
+
+  if (g_hash_table_size (bvw->priv->busy_popup_ht) == 0 &&
+      clutter_actor_get_opacity (bvw->priv->controls) != 0) {
+    GST_DEBUG ("Will hide popup soon");
+    schedule_hiding_popup (bvw);
+  }
 }
 
 GObject *

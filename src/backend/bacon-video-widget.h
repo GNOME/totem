@@ -456,6 +456,10 @@ void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
 
 /* OSD */
 void bacon_video_widget_show_popup                (BaconVideoWidget *bvw);
+void bacon_video_widget_mark_popup_busy           (BaconVideoWidget *bvw,
+						   const char       *reason);
+void bacon_video_widget_unmark_popup_busy         (BaconVideoWidget *bvw,
+						   const char       *reason);
 
 GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
 
