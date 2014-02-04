@@ -510,6 +510,9 @@ totem_main_toolbar_init (TotemMainToolbar *bar)
 
   gtk_widget_init_template (GTK_WIDGET (bar));
 
+  gtk_widget_set_no_show_all (bar->priv->search_button, TRUE);
+  gtk_widget_set_no_show_all (bar->priv->select_button, TRUE);
+
   /* Back button */
   if (gtk_widget_get_direction (GTK_WIDGET (bar)) == GTK_TEXT_DIR_RTL)
     gtk_image_set_from_icon_name (GTK_IMAGE (bar->priv->back_button_image),
