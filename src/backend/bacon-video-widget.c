@@ -100,6 +100,7 @@
 #define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
 #define REWIND_OR_PREVIOUS 4000
+#define POPUP_HIDING_TIMEOUT 5
 
 #define MAX_NETWORK_SPEED 10752
 #define BUFFERING_LEFT_RATIO 1.1
@@ -162,7 +163,8 @@ enum
   PROP_HUE,
   PROP_AUDIO_OUTPUT_TYPE,
   PROP_AV_OFFSET,
-  PROP_SHOW_CURSOR
+  PROP_SHOW_CURSOR,
+  PROP_REVEAL_CONTROLS
 };
 
 static const gchar *video_props_str[4] = {
@@ -218,6 +220,10 @@ struct BaconVideoWidgetPrivate
   ClutterContent              *logo;
 
   GdkCursor                   *cursor;
+
+  /* Controls */
+  gboolean                     reveal_controls;
+  guint                        transition_timeout_id;
 
   /* Visual effects */
   GList                       *vis_plugins_list;
@@ -315,7 +321,8 @@ static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 						      GstSeekFlags flag,
 						      GError **error);
 static void set_controls_visibility (BaconVideoWidget *bvw,
-				     gboolean          visible);
+				     gboolean          visible,
+				     gboolean          animate);
 
 typedef struct {
   GstTagList *tags;
@@ -627,7 +634,6 @@ bacon_video_widget_realize (GtkWidget * widget)
     gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
   } else {
     bvw->priv->embedded = TRUE;
-    set_controls_visibility (bvw, FALSE);
   }
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
@@ -683,48 +689,48 @@ set_current_actor (BaconVideoWidget *bvw)
   clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
 }
 
-/* need to use gstnavigation interface for these vmethods, to allow for the sink
-   to map screen coordinates to video coordinates in the presence of e.g.
-   hardware scaling */
+static void
+unschedule_hiding_popup (BaconVideoWidget *bvw)
+{
+  if (bvw->priv->transition_timeout_id > 0)
+    g_source_remove (bvw->priv->transition_timeout_id);
+  bvw->priv->transition_timeout_id = 0;
+}
 
 static gboolean
-bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
+hide_popup_timeout_cb (BaconVideoWidget *bvw)
 {
-  gboolean res = FALSE;
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  set_controls_visibility (bvw, FALSE, TRUE);
+  unschedule_hiding_popup (bvw);
+  return G_SOURCE_REMOVE;
+}
 
-  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
-
-  if (bvw->priv->navigation && !bvw->priv->logo_mode)
-    gst_navigation_send_mouse_event (bvw->priv->navigation, "mouse-move", 0, event->x, event->y);
-
-  if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
-    res |= GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
-
-  return res;
+static void
+schedule_hiding_popup (BaconVideoWidget *bvw)
+{
+  unschedule_hiding_popup (bvw);
+  bvw->priv->transition_timeout_id = g_timeout_add_seconds (POPUP_HIDING_TIMEOUT, (GSourceFunc) hide_popup_timeout_cb, bvw);
 }
 
 static void
 set_controls_visibility (BaconVideoWidget *bvw,
-			 gboolean          visible)
+			 gboolean          visible,
+			 gboolean          animate)
 {
   guint8 opacity = visible ? OVERLAY_OPACITY : 0;
 
   /* FIXME:
    * Using a show/hide seems to not trigger the
    * controls to redraw, so let's change the opacity instead */
+  clutter_actor_set_easing_duration (bvw->priv->controls, animate ? 250 : 0);
   clutter_actor_set_opacity (bvw->priv->controls, opacity);
-}
 
-static void
-toggle_controls (BaconVideoWidget *bvw)
-{
-  gboolean value = TRUE;
+  bacon_video_widget_set_show_cursor (bvw, visible);
+  if (animate)
+    schedule_hiding_popup (bvw);
 
-  if (clutter_actor_get_opacity (bvw->priv->controls) != 0)
-    value = FALSE;
-  set_controls_visibility (bvw, value);
-  bacon_video_widget_set_show_cursor (bvw, value);
+  bvw->priv->reveal_controls = visible;
+  g_object_notify (G_OBJECT (bvw), "reveal-controls");
 }
 
 static void
@@ -762,6 +768,45 @@ ignore_event (BaconVideoWidget *bvw,
   return FALSE;
 }
 
+/* need to use gstnavigation interface for these vmethods, to allow for the sink
+   to map screen coordinates to video coordinates in the presence of e.g.
+   hardware scaling */
+
+static gboolean
+bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
+{
+  gboolean res = FALSE;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GdkDevice *device;
+  int x, y;
+
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+
+  if (bvw->priv->navigation && !bvw->priv->logo_mode)
+    gst_navigation_send_mouse_event (bvw->priv->navigation, "mouse-move", 0, event->x, event->y);
+
+  if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
+    res |= GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
+
+  device = gdk_event_get_source_device ((GdkEvent *) event);
+  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
+    return res;
+
+  if (!bvw->priv->reveal_controls) {
+    set_controls_visibility (bvw, TRUE, TRUE);
+  }
+
+  translate_coords (widget, event->window, event->x, event->y, &x, &y);
+  if (ignore_event (bvw, x, y)) {
+    /* Is the mouse on the popups? */
+    unschedule_hiding_popup (bvw);
+  } else {
+    schedule_hiding_popup (bvw);
+  }
+
+  return res;
+}
+
 static gboolean
 bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *event)
 {
@@ -792,7 +837,11 @@ bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *e
      * the button press
      res = TRUE; */
   } else if (event->type == GDK_BUTTON_RELEASE) {
-    toggle_controls (bvw);
+    gboolean value = TRUE;
+
+    if (clutter_actor_get_opacity (bvw->priv->controls) != 0)
+      value = FALSE;
+    set_controls_visibility (bvw, value, FALSE);
   }
 
 bail:
@@ -1108,6 +1157,17 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_boolean ("show-cursor", "Show cursor",
                                                          "Whether the mouse cursor is shown.", FALSE,
                                                          G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:reveal-controls:
+   *
+   * Whether to show or hide the controls.
+   **/
+  g_object_class_install_property (object_class, PROP_REVEAL_CONTROLS,
+                                   g_param_spec_boolean ("reveal-controls", "Reveal controls",
+                                                         "Whether to show or hide the controls.", FALSE,
+                                                         G_PARAM_READABLE |
                                                          G_PARAM_STATIC_STRINGS));
 
   /* Signals */
@@ -2722,6 +2782,8 @@ bacon_video_widget_finalize (GObject * object)
   g_type_class_unref (g_type_class_peek (BVW_TYPE_DVD_EVENT));
   g_type_class_unref (g_type_class_peek (BVW_TYPE_ROTATION));
 
+  unschedule_hiding_popup (bvw);
+
   if (bvw->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
      * called again (main loop might be run again to display error dialog) */
@@ -2902,6 +2964,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_SHOW_CURSOR:
       g_value_set_boolean (value, bvw->priv->cursor_shown);
+      break;
+    case PROP_REVEAL_CONTROLS:
+      g_value_set_boolean (value, bvw->priv->reveal_controls);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3484,6 +3549,15 @@ bacon_video_widget_popup_osd (BaconVideoWidget *bvw,
   bacon_video_osd_actor_set_icon_name (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd),
 				       icon_name);
   bacon_video_osd_actor_show_and_fade (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
+}
+
+void
+bacon_video_widget_show_popup (BaconVideoWidget *bvw)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  set_controls_visibility (bvw, TRUE, FALSE);
+  schedule_hiding_popup (bvw);
 }
 
 GObject *
@@ -6183,6 +6257,8 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_child_above_sibling (bvw->priv->stage,
 					 layout,
 					 bvw->priv->logo_frame);
+
+  clutter_actor_set_opacity (bvw->priv->controls, 0);
 
   /* And tell playbin */
   g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
