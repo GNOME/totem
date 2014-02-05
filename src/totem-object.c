@@ -3652,8 +3652,8 @@ create_control_button (TotemObject *totem,
 	gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
 	if (g_str_equal (action_name, "play")) {
 		g_object_set (G_OBJECT (image),
-			      "margin-left", 16,
-			      "margin-right", 16,
+			      "margin-start", 16,
+			      "margin-end", 16,
 			      NULL);
 	}
 
