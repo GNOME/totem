@@ -90,6 +90,7 @@ libtotem_la_SOURCES = \
 	plugins/totem-plugins-engine.h	\
 	plugins/totem-dirs.c		\
 	totem-grilo.c			\
+	totem-grilo.h			\
 	totem-search-entry.c		\
 	totem-search-entry.h		\
 	totem-main-toolbar.h		\
