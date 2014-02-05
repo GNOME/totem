@@ -282,7 +282,7 @@ void
 totem_grilo_setup_icons (Totem *totem)
 {
 	icons[ICON_BOX] = load_icon (totem, "folder-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
-	icons[ICON_VIDEO] = load_icon (totem, "folder-videos-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
+	icons[ICON_VIDEO] = load_icon (totem, "folder-videos-symbolic", 16, TRUE);
 	icons[ICON_VIDEO_THUMBNAILING] = load_icon (totem, "content-loading-symbolic", 16, TRUE);
 	icons[ICON_OPTICAL] = load_icon (totem, "media-optical-dvd-symbolic", THUMB_SEARCH_HEIGHT, FALSE);
 
