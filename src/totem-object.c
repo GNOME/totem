@@ -3542,6 +3542,7 @@ totem_setup_window (TotemObject *totem)
 			G_KEY_FILE_NONE, NULL) == FALSE) {
 		w = DEFAULT_WINDOW_W;
 		h = DEFAULT_WINDOW_H;
+		totem->maximised = TRUE;
 		g_free (filename);
 	} else {
 		g_free (filename);
