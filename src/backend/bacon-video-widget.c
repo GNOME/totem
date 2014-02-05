@@ -3575,7 +3575,6 @@ bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
 				      const char       *reason)
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (clutter_actor_get_opacity (bvw->priv->controls) != 0);
 
   g_hash_table_remove (bvw->priv->busy_popup_ht, reason);
 
