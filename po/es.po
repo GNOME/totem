@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: totem.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-01-27 09:10+0000\n"
-"PO-Revision-Date: 2014-01-29 10:15+0100\n"
+"POT-Creation-Date: 2014-02-05 08:37+0000\n"
+"PO-Revision-Date: 2014-02-05 13:19+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -32,39 +32,39 @@ msgstr ""
 msgid "Playing a movie"
 msgstr "Reproduciendo una película"
 
-#: ../browser-plugin/totem-plugin-viewer.c:399
+#: ../browser-plugin/totem-plugin-viewer.c:400
 msgid "No URI to play"
 msgstr "No hay una URI para reproducir"
 
 #. translators: this is:
 #. * Open With ApplicationName
 #. * as in nautilus' right-click menu
-#: ../browser-plugin/totem-plugin-viewer.c:1098
+#: ../browser-plugin/totem-plugin-viewer.c:1099
 #, c-format
 msgid "_Open with \"%s\""
 msgstr "_Abrir con «%s»"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1319 ../src/totem-object.c:2331
+#: ../browser-plugin/totem-plugin-viewer.c:1320 ../src/totem-object.c:2380
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1675
+#: ../browser-plugin/totem-plugin-viewer.c:1676
 msgid "Totem Movie Player"
 msgstr "Reproductor de películas Totem"
 
-#: ../browser-plugin/totem-plugin-viewer.c:1993
+#: ../browser-plugin/totem-plugin-viewer.c:1994
 msgid "No playlist or playlist empty"
 msgstr "Ninguna lista o lista vacía"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2224
+#: ../browser-plugin/totem-plugin-viewer.c:2225
 msgid "Movie browser plugin"
 msgstr "Complemento de examinador de películas"
 
-#: ../browser-plugin/totem-plugin-viewer.c:2240 ../src/totem.c:255
+#: ../browser-plugin/totem-plugin-viewer.c:2241 ../src/totem.c:255
 msgid "Could not initialize the thread-safe libraries."
 msgstr "No se pudo inicializar el soporte de hilos seguro."
 
-#: ../browser-plugin/totem-plugin-viewer.c:2240
+#: ../browser-plugin/totem-plugin-viewer.c:2241
 msgid "Verify your system installation. The Totem plugin will now exit."
 msgstr ""
 "Verifique la instalación de su sistema. EL complemento de Totem ahora "
@@ -212,6 +212,16 @@ msgstr ""
 "Una lista de los nombres de los complementos que están actualmente activos "
 "(cargados y en ejecución)."
 
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:30
+msgid "Directories to show"
+msgstr "Carpetas que mostrar"
+
+#: ../data/org.gnome.totem.gschema.xml.in.in.h:31
+msgid "Directories to show in the browse interface, none by default"
+msgstr ""
+"Carpetas que mostrar en la interfaz del explorador; lo predeterminado es "
+"ninguna"
+
 #: ../data/playlist.ui.h:1
 msgid "_Copy Location"
 msgstr "_Copiar dirección"
@@ -220,7 +230,7 @@ msgstr "_Copiar dirección"
 msgid "Copy the location to the clipboard"
 msgstr "Copiar la dirección en el portapapeles"
 
-#: ../data/playlist.ui.h:3 ../data/totem.ui.h:17
+#: ../data/playlist.ui.h:3 ../data/totem.ui.h:16
 msgid "_Select Text Subtitles..."
 msgstr "_Seleccionar subtítulos de texto…"
 
@@ -251,7 +261,7 @@ msgstr "Grande"
 msgid "Extra Large"
 msgstr "Muy grande"
 
-#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5627
+#: ../data/preferences.ui.h:7 ../src/backend/bacon-video-widget.c:5742
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Estéreo"
@@ -483,12 +493,12 @@ msgstr "Reproducir películas"
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
 msgstr "Vídeo;Película;Clip,Serie;Reproductor;DVD;TV;Disco;"
 
-#: ../data/totem.ui.h:1 ../src/totem-open-location.c:186
-#: ../src/totem-uri.c:422 ../src/plugins/chapters/totem-chapters.c:962
+#: ../data/totem.ui.h:1 ../src/totem-uri.c:422
+#: ../src/plugins/chapters/totem-chapters.c:962
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../data/totem.ui.h:2 ../src/totem-open-location.c:183
+#: ../data/totem.ui.h:2
 msgid "Add Web Video..."
 msgstr "Añadir vídeo web…"
 
@@ -497,65 +507,65 @@ msgid "Prefere_nces"
 msgstr "Prefere_ncias"
 
 #: ../data/totem.ui.h:4
-msgid "_Repeat"
-msgstr "_Repetir"
-
-#: ../data/totem.ui.h:5
 msgid "_Help"
 msgstr "Ay_uda"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:5
 msgid "_Quit"
 msgstr "_Salir"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:6
 msgid "_Aspect Ratio"
 msgstr "Pr_oporción"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:7
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Automática"
 
-#: ../data/totem.ui.h:9
+#: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Cuadrada"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "4:3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Panorámico)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:11
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11∶1 (DVB)"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:12
 msgid "Zoom In"
 msgstr "Ampliar"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:13
 msgid "Switch An_gles"
 msgstr "_Cambiar ángulos"
 
-#: ../data/totem.ui.h:15
+#: ../data/totem.ui.h:14
 msgid "_Languages"
 msgstr "_Idiomas"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:15
 msgid "S_ubtitles"
 msgstr "S_ubtítulos"
 
-#: ../data/totem.ui.h:18
+#: ../data/totem.ui.h:17
 msgid "_Eject"
 msgstr "_Expulsar"
+
+#: ../data/totem.ui.h:18
+msgid "_Repeat"
+msgstr "_Repetir"
 
 #: ../data/totem.ui.h:19
 msgid "_DVD Menu"
@@ -610,55 +620,55 @@ msgstr "Introduzca la _dirección del archivo que quiere abrir:"
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1727
+#: ../src/backend/bacon-video-widget.c:1803
 msgid "Password requested for RTSP server"
 msgstr "Contraseña solicitada para el servidor RTSP"
 
-#: ../src/backend/bacon-video-widget.c:3103
+#: ../src/backend/bacon-video-widget.c:3185
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Pista de sonido nº %d"
 
-#: ../src/backend/bacon-video-widget.c:3107
+#: ../src/backend/bacon-video-widget.c:3189
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Subtítulo nº %d"
 
-#: ../src/backend/bacon-video-widget.c:3540
+#: ../src/backend/bacon-video-widget.c:3651
 msgid "The server you are trying to connect to is not known."
 msgstr "El servidor al que está intentando conectar no es conocido."
 
-#: ../src/backend/bacon-video-widget.c:3543
+#: ../src/backend/bacon-video-widget.c:3654
 msgid "The connection to this server was refused."
 msgstr "La conexión a este servidor fue rehusada."
 
-#: ../src/backend/bacon-video-widget.c:3546
+#: ../src/backend/bacon-video-widget.c:3657
 msgid "The specified movie could not be found."
 msgstr "La película especificada no se pudo encontrar."
 
-#: ../src/backend/bacon-video-widget.c:3553
+#: ../src/backend/bacon-video-widget.c:3664
 msgid "The server refused access to this file or stream."
 msgstr "El servidor rechazó el acceso a este archivo a flujo."
 
-#: ../src/backend/bacon-video-widget.c:3559
+#: ../src/backend/bacon-video-widget.c:3670
 msgid "Authentication is required to access this file or stream."
 msgstr "Se requiere autenticación para acceder a este archivo o flujo."
 
-#: ../src/backend/bacon-video-widget.c:3566
+#: ../src/backend/bacon-video-widget.c:3677
 msgid "You are not allowed to open this file."
 msgstr "No se le permite abrir este archivo."
 
-#: ../src/backend/bacon-video-widget.c:3571
+#: ../src/backend/bacon-video-widget.c:3682
 msgid "This location is not a valid one."
 msgstr "Esta dirección no es válida."
 
-#: ../src/backend/bacon-video-widget.c:3579
+#: ../src/backend/bacon-video-widget.c:3690
 msgid "The movie could not be read."
 msgstr "La película no se pudo leer."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3602
-#: ../src/backend/bacon-video-widget.c:3610
+#: ../src/backend/bacon-video-widget.c:3713
+#: ../src/backend/bacon-video-widget.c:3721
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -675,7 +685,7 @@ msgstr[1] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3621
+#: ../src/backend/bacon-video-widget.c:3732
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -684,7 +694,7 @@ msgstr ""
 "necesite instalar complementos adicionales para ser capaz de reproducir "
 "algunos tipos de películas"
 
-#: ../src/backend/bacon-video-widget.c:3631
+#: ../src/backend/bacon-video-widget.c:3742
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -692,19 +702,19 @@ msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../src/backend/bacon-video-widget.c:5623 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5738 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../src/backend/bacon-video-widget.c:5625 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5740 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5912
+#: ../src/backend/bacon-video-widget.c:6027
 msgid "Media contains no supported video streams."
 msgstr "El soporte no contiene ningún flujo de vídeo soportado."
 
-#: ../src/backend/bacon-video-widget.c:6072
+#: ../src/backend/bacon-video-widget.c:6187
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
@@ -881,7 +891,7 @@ msgstr "_Reproducir ahora"
 msgid "_Add to Playlist"
 msgstr "_Añadir a la lista de reproducción"
 
-#: ../src/totem-dnd-menu.c:95 ../src/plugins/grilo/totemmaintoolbar.ui.h:3
+#: ../src/totem-dnd-menu.c:95 ../src/totemmaintoolbar.ui.h:3
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -962,48 +972,49 @@ msgstr ""
 "Ejecute «%s --help» para ver una lista completa de todas las opciones "
 "disponibles de la línea de comandos.\n"
 
-#: ../src/totem-object.c:1239 ../src/totem-options.c:52
+#: ../src/totem-object.c:1263 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/totem-object.c:1244 ../src/totem-object.c:1254
-#: ../src/totem-options.c:51 ../src/plugins/grilo/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1268 ../src/totem-object.c:1278
+#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Reproducir"
 
-#: ../src/totem-object.c:1329 ../src/totem-object.c:1356
-#: ../src/totem-object.c:1883
+#: ../src/totem-object.c:1353 ../src/totem-object.c:1380
+#: ../src/totem-object.c:1926
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem no pudo reproducir «%s»."
 
-#: ../src/totem-object.c:2025
+#: ../src/totem-object.c:2068
 msgid "Totem could not display the help contents."
 msgstr "Totem no pudo mostrar el contenido de la ayuda."
 
-#: ../src/totem-object.c:3599
+#: ../src/totem-object.c:3691
 msgid "Previous Chapter/Movie"
 msgstr "Capítulo / película anterior"
 
-#: ../src/totem-object.c:3604
+#: ../src/totem-object.c:3696
 msgid "Play / Pause"
 msgstr "Reproducir / Pausar"
 
-#: ../src/totem-object.c:3609
+#: ../src/totem-object.c:3701
 msgid "Next Chapter/Movie"
 msgstr "Capítulo / película siguiente"
 
-#: ../src/totem-object.c:3648 ../src/plugins/grilo/totemmaintoolbar.ui.h:1
-msgid "Back"
-msgstr "Atrás"
-
-#: ../src/totem-object.c:3723
+#: ../src/totem-object.c:3880
 msgid "Totem could not startup."
 msgstr "No se ha podido iniciar Totem."
 
-#: ../src/totem-object.c:3723
+#: ../src/totem-object.c:3880
 msgid "No reason."
 msgstr "No hay razón."
+
+#: ../src/totem-open-location.c:183
+#| msgid "Add Web Video..."
+msgid "Add Web Video"
+msgstr "Añadir vídeo web"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:421
 #: ../src/totem-uri.c:486 ../src/plugins/chapters/totem-chapters.c:961
@@ -1014,6 +1025,11 @@ msgstr "No hay razón."
 #: ../src/plugins/skipto/totem-skipto.c:198
 msgid "_Cancel"
 msgstr "Cancelar"
+
+#: ../src/totem-open-location.c:186 ../src/totem-uri.c:488
+#: ../src/plugins/chapters/totem-edit-chapter.c:99
+msgid "_Add"
+msgstr "_Añadir"
 
 #: ../src/totem-options.c:49
 msgid "Enable debug"
@@ -1083,46 +1099,21 @@ msgstr "- Reproduzca películas y canciones"
 msgid "Can't enqueue and replace at the same time"
 msgstr "No se puede encolar y reemplazar al mismo tiempo"
 
-#. By extension entry
-#: ../src/totem-playlist.c:151
-msgid "MP3 ShoutCast playlist"
-msgstr "Lista de reproducción MP3 ShoutCast"
-
-#: ../src/totem-playlist.c:152
-msgid "MP3 audio (streamed)"
-msgstr "Sonido MP3 (en flujo)"
-
-#: ../src/totem-playlist.c:153
-msgid "MP3 audio (streamed, DOS format)"
-msgstr "Sonido MP3 (en flujo, formato DOS)"
-
-#: ../src/totem-playlist.c:154
-msgid "XML Shareable Playlist"
-msgstr "Lista de reproducción XML compartible"
-
 #. This is "Title 3", where title is a DVD title
 #. * Note: NOT a DVD chapter
-#: ../src/totem-playlist.c:297
+#: ../src/totem-playlist.c:235
 #, c-format
 msgid "Title %d"
 msgstr "Título %d"
 
-#: ../src/totem-playlist.c:442
-msgid "Could not save the playlist"
-msgstr "No se pudo guardar la lista de reproducción"
-
-#: ../src/totem-playlist.c:854
+#: ../src/totem-playlist.c:653
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
-#: ../src/totem-playlist.c:1325
+#: ../src/totem-playlist.c:1089
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "La lista de reproducción «%s» no se pudo analizar. Puede estar dañada."
-
-#: ../src/totem-playlist.c:1326
-msgid "Playlist error"
-msgstr "Error en la lista de reproducción"
 
 #: ../src/totem-preferences.c:260
 msgid "Configure Plugins"
@@ -1366,10 +1357,6 @@ msgstr "Seleccionar películas o listas de reproducción"
 msgid "Add Directory"
 msgstr "Añadir carpeta"
 
-#: ../src/totem-uri.c:488 ../src/plugins/chapters/totem-edit-chapter.c:99
-msgid "_Add"
-msgstr "_Añadir"
-
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
@@ -1610,90 +1597,81 @@ msgstr "La propiedad «%s» no es escribible."
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Propiedad «%s» desconocida solicitada de un objeto MediaPlayer 2."
 
-#: ../src/plugins/grilo/grilo.plugin.in.h:1
-msgid "Grilo Browser"
-msgstr "Examinador Grilo"
-
-#: ../src/plugins/grilo/grilo.plugin.in.h:2
-msgid "A plugin to let you browse media content from various sources"
-msgstr ""
-"Un complemento que le permite examinar contenido multimedia desde varias "
-"fuentes"
-
-#: ../src/plugins/grilo/grilo.ui.h:1
+#: ../src/grilo.ui.h:1
 msgid "Select All"
 msgstr "Selecccionar todo"
 
-#: ../src/plugins/grilo/grilo.ui.h:2
+#: ../src/grilo.ui.h:2
 msgid "Select None"
 msgstr "No seleccionar nada"
 
-#: ../src/plugins/grilo/totem-grilo.c:169
+#: ../src/totem-grilo.c:169
 #, c-format
 msgid "Season %d Episode %d"
 msgstr "Temporada %d, capítulo %d"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/plugins/grilo/totem-grilo.c:206
+#: ../src/totem-grilo.c:206
 #, c-format
 msgid "%s (Season %d Episode %d)"
 msgstr "%s (Temporada %d, capítulo %d)"
 
-#: ../src/plugins/grilo/totem-grilo.c:546
+#: ../src/totem-grilo.c:548
 msgid "Browse Error"
 msgstr "Error al examinar"
 
-#: ../src/plugins/grilo/totem-grilo.c:678
+#: ../src/totem-grilo.c:680
 msgid "Search Error"
 msgstr "Error al buscar"
 
-#: ../src/plugins/grilo/totem-grilo.c:1159
+#: ../src/totem-grilo.c:1178
 msgid "Local"
 msgstr "Local"
 
-#: ../src/plugins/grilo/totem-grilo.c:1604
+#: ../src/totem-grilo.c:1654
 msgid "Recent"
 msgstr "Recientes"
 
-#: ../src/plugins/grilo/totem-grilo.c:1607
+#: ../src/totem-grilo.c:1657
 msgid "Channels"
 msgstr "Canales"
 
-#: ../src/plugins/grilo/totem-main-toolbar.c:133
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:5
+#: ../src/totem-main-toolbar.c:133 ../src/totemmaintoolbar.ui.h:5
 msgid "Click on items to select them"
 msgstr "Pulse en los elementos para seleccionarlos"
 
-#: ../src/plugins/grilo/totem-main-toolbar.c:140
+#: ../src/totem-main-toolbar.c:140
 #, c-format
 msgid "%d selected"
 msgstr "%d seleccionado"
 
-#: ../src/plugins/grilo/totem-main-toolbar.c:156
+#: ../src/totem-main-toolbar.c:156
 #, c-format
 msgid "Results for “%s”"
 msgstr "Resultados para «%s»"
 
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:2
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "Atrás"
+
+#: ../src/totemmaintoolbar.ui.h:2
 msgid "Select"
 msgstr "Seleccionar"
 
-#: ../src/plugins/grilo/totemmaintoolbar.ui.h:4
+#: ../src/totemmaintoolbar.ui.h:4
 msgid "Search"
 msgstr "Buscar"
 
-#: ../src/plugins/grilo/totemselectiontoolbar.ui.h:1
-#| msgid "Add to Playlist"
+#: ../src/totemselectiontoolbar.ui.h:1
 msgid "Add to Favourites"
 msgstr "Añadir a favoritos"
 
-#: ../src/plugins/grilo/totemselectiontoolbar.ui.h:3
-#| msgid "Shuff_le"
+#: ../src/totemselectiontoolbar.ui.h:3
 msgid "Shuffle"
 msgstr "Mezclar"
 
-#: ../src/plugins/grilo/totemselectiontoolbar.ui.h:4
+#: ../src/totemselectiontoolbar.ui.h:4
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -1762,53 +1740,53 @@ msgid "Look for subtitles for the currently playing movie"
 msgstr ""
 "Buscar subtítulos para la película que se está reproduciendo actualmente"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:40
+#: ../src/plugins/opensubtitles/opensubtitles.py:41
 msgid "Brazilian Portuguese"
 msgstr "Portugués de Brasil"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:175
+#: ../src/plugins/opensubtitles/opensubtitles.py:176
 msgid "Searching for subtitles…"
 msgstr "Buscando subtítulos…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:223
-#: ../src/plugins/opensubtitles/opensubtitles.py:611
+#: ../src/plugins/opensubtitles/opensubtitles.py:224
+#: ../src/plugins/opensubtitles/opensubtitles.py:609
 msgid "Downloading the subtitles…"
 msgstr "Descargando los subtítulos…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:288
+#: ../src/plugins/opensubtitles/opensubtitles.py:289
 msgid "Could not contact the OpenSubtitles website"
 msgstr "No se pudo contactar con la página web OpenSubtitles"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:321
-#: ../src/plugins/opensubtitles/opensubtitles.py:339
+#: ../src/plugins/opensubtitles/opensubtitles.py:322
+#: ../src/plugins/opensubtitles/opensubtitles.py:340
 msgid "Could not contact the OpenSubtitles website."
 msgstr "No se pudo contactar con la página web OpenSubtitles."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:327
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
 msgid "No results found."
 msgstr "No se encontraron resultados."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:470
 msgid "Subtitles"
 msgstr "Subtítulos"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:476
 msgid "Format"
 msgstr "Formato"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:481
 msgid "Rating"
 msgstr "Puntuación"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:520
 msgid "_Download Movie Subtitles…"
 msgstr "_Descargar subtítulos para la película…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:560
 msgid "Searching subtitles…"
 msgstr "Buscando subtítulos…"
 
@@ -1837,7 +1815,6 @@ msgid "Movie Properties"
 msgstr "Propiedades de la película"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:2
-#| msgid "Adds movie properties to the sidebar"
 msgid "Adds movie properties menu item"
 msgstr "Añade el elemento de menú de propiedades de la película"
 
@@ -2095,6 +2072,32 @@ msgstr "Complemento Zeitgeist"
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Un complemento para enviar eventos a Zeitgeist"
+
+#~ msgid "MP3 ShoutCast playlist"
+#~ msgstr "Lista de reproducción MP3 ShoutCast"
+
+#~ msgid "MP3 audio (streamed)"
+#~ msgstr "Sonido MP3 (en flujo)"
+
+#~ msgid "MP3 audio (streamed, DOS format)"
+#~ msgstr "Sonido MP3 (en flujo, formato DOS)"
+
+#~ msgid "XML Shareable Playlist"
+#~ msgstr "Lista de reproducción XML compartible"
+
+#~ msgid "Could not save the playlist"
+#~ msgstr "No se pudo guardar la lista de reproducción"
+
+#~ msgid "Playlist error"
+#~ msgstr "Error en la lista de reproducción"
+
+#~ msgid "Grilo Browser"
+#~ msgstr "Examinador Grilo"
+
+#~ msgid "A plugin to let you browse media content from various sources"
+#~ msgstr ""
+#~ "Un complemento que le permite examinar contenido multimedia desde varias "
+#~ "fuentes"
 
 #~ msgid "Allow the screensaver to activate when playing audio"
 #~ msgstr ""
