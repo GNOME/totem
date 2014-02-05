@@ -3837,7 +3837,6 @@ add_fullscreen_toolbar (TotemObject *totem)
 	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
 						 "show-search-button", FALSE,
 						 "show-select-button", FALSE,
-						 "show-close-button", TRUE,
 						 "show-back-button", TRUE,
 						 NULL);
 	g_object_bind_property (totem->header, "title",
