@@ -1337,6 +1337,13 @@ unload_grilo_plugins (TotemGrilo *self)
 static gboolean
 adjustment_over_limit (GtkAdjustment *adjustment)
 {
+#if 0
+	g_message ("adj: %lf", gtk_adjustment_get_value (adjustment));
+	g_message ("page size: %lf", gtk_adjustment_get_page_size (adjustment));
+	g_message ("upper: %lf", gtk_adjustment_get_page_size (adjustment));
+	g_message ("total: %lf", (gtk_adjustment_get_value (adjustment) + gtk_adjustment_get_page_size (adjustment)) / gtk_adjustment_get_upper (adjustment));
+	g_message ("limit: %lf", SCROLL_GET_MORE_LIMIT);
+#endif
 	if ((gtk_adjustment_get_value (adjustment) + gtk_adjustment_get_page_size (adjustment)) / gtk_adjustment_get_upper (adjustment) > SCROLL_GET_MORE_LIMIT) {
 		return TRUE;
 	} else {
