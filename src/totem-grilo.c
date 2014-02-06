@@ -2223,6 +2223,24 @@ totem_grilo_get_show_back_button (TotemGrilo *self)
 	return self->priv->show_back_button;
 }
 
+void
+totem_grilo_set_current_page (TotemGrilo     *self,
+			      TotemGriloPage  page)
+{
+	GtkWidget *button;
+
+	g_return_if_fail (TOTEM_IS_GRILO (self));
+
+	if (page == TOTEM_GRILO_PAGE_RECENT)
+		button = self->priv->recent;
+	else if (page == TOTEM_GRILO_PAGE_CHANNELS)
+		button = self->priv->channels;
+	else
+		g_assert_not_reached ();
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+}
+
 static void
 totem_grilo_set_property (GObject         *object,
                           guint            prop_id,

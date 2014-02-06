@@ -2842,7 +2842,9 @@ totem_object_remote_command (TotemObject *totem, TotemRemoteCommand cmd, const c
 		totem_object_eject (totem);
 		break;
 	case TOTEM_REMOTE_COMMAND_PLAY_DVD:
-		/* FIXME - focus the "Optical Media" section in Grilo */
+		if (g_strcmp0 (totem_object_get_main_page (totem), "player") == 0)
+			back_button_clicked_cb (NULL, totem);
+		totem_grilo_set_current_page (TOTEM_GRILO (totem->grilo), TOTEM_GRILO_PAGE_RECENT);
 		break;
 	case TOTEM_REMOTE_COMMAND_MUTE:
 		totem_object_volume_toggle_mute (totem);

@@ -57,11 +57,18 @@ struct _TotemGriloClass
   GtkBoxClass parent_class;
 };
 
+typedef enum{
+  TOTEM_GRILO_PAGE_RECENT,
+  TOTEM_GRILO_PAGE_CHANNELS
+} TotemGriloPage;
+
 GType           totem_grilo_get_type              (void) G_GNUC_CONST;
 GtkWidget*      totem_grilo_new                   (TotemObject *totem,
                                                    GtkWidget   *header);
 void            totem_grilo_back_button_clicked   (TotemGrilo  *self);
 gboolean        totem_grilo_get_show_back_button  (TotemGrilo  *self);
+void            totem_grilo_set_current_page      (TotemGrilo     *self,
+                                                   TotemGriloPage  page);
 
 G_END_DECLS
 
