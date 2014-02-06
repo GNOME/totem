@@ -50,6 +50,9 @@ typedef struct {
 	TotemObject *totem;
 	BaconVideoWidget *bvw;
 
+	GDBusProxy    *screensaver;
+	GCancellable  *cancellable;
+
 	gboolean       inhibit_available;
 	guint          handler_id_playing;
 	guint          inhibit_cookie;
@@ -113,6 +116,47 @@ property_notify_cb (TotemObject *totem,
 }
 
 static void
+screensaver_signal_cb (GDBusProxy  *proxy,
+		       const gchar *sender_name,
+		       const gchar *signal_name,
+		       GVariant    *parameters,
+		       gpointer     user_data)
+{
+	TotemScreensaverPlugin *pi = user_data;
+
+	if (g_strcmp0 (signal_name, "ActiveChanged") == 0) {
+		gboolean active;
+
+		g_variant_get (parameters, "(b)", &active);
+		if (active)
+			totem_object_pause (pi->priv->totem);
+	}
+}
+
+static void
+screensaver_proxy_ready_cb (GObject      *source_object,
+			    GAsyncResult *res,
+			    gpointer      user_data)
+{
+	TotemScreensaverPlugin *pi;
+	GDBusProxy *proxy;
+	GError *error = NULL;
+
+	proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
+	if (!proxy) {
+		if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+			g_warning ("Failed to acquire screensaver proxy: %s", error->message);
+		g_error_free (error);
+		return;
+	}
+
+	pi = TOTEM_SCREENSAVER_PLUGIN (user_data);
+	pi->priv->screensaver = proxy;
+	g_signal_connect (G_OBJECT (proxy), "g-signal",
+			  G_CALLBACK (screensaver_signal_cb), pi);
+}
+
+static void
 impl_activate (PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
@@ -130,6 +174,17 @@ impl_activate (PeasActivatable *plugin)
 
 	pi->priv->totem = g_object_ref (totem);
 
+	pi->priv->cancellable = g_cancellable_new ();
+	g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
+				  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+				  NULL,
+				  "org.gnome.ScreenSaver",
+				  "/org/gnome/ScreenSaver",
+				  "org.gnome.ScreenSaver",
+				  pi->priv->cancellable,
+				  screensaver_proxy_ready_cb,
+				  pi);
+
 	/* Force setting the current status */
 	totem_screensaver_update_from_state (totem, pi);
 }
@@ -138,6 +193,12 @@ static void
 impl_deactivate	(PeasActivatable *plugin)
 {
 	TotemScreensaverPlugin *pi = TOTEM_SCREENSAVER_PLUGIN (plugin);
+
+	if (pi->priv->cancellable) {
+		g_cancellable_cancel (pi->priv->cancellable);
+		g_clear_object (&pi->priv->cancellable);
+	}
+	g_clear_object (&pi->priv->screensaver);
 
 	if (pi->priv->handler_id_playing != 0) {
 		TotemObject *totem;
