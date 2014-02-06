@@ -1721,6 +1721,7 @@ search_mode_changed (GObject          *gobject,
 				id = source ? grl_source_get_id (source) : NULL;
 				g_clear_object (&source);
 			}
+			g_clear_pointer (&path, gtk_tree_path_free);
 		}
 
 		if (id != NULL)
