@@ -1515,13 +1515,24 @@ totem_grilo_back_button_clicked (TotemGrilo *self)
 }
 
 static gboolean
-window_key_press_event_cb (GtkWidget        *win,
-			   GdkEvent         *event,
-			   TotemGrilo *self)
+window_key_press_event_cb (GtkWidget   *win,
+			   GdkEventKey *event,
+			   TotemGrilo  *self)
 {
 	/* Check whether we're in the browse panel */
 	if (!g_str_equal (totem_object_get_main_page (self->priv->totem), "grilo"))
-		return FALSE;
+		return GDK_EVENT_PROPAGATE;
+
+	/* Handle Ctrl+F */
+	if (event->state != 0 &&
+	    (event->state & GDK_CONTROL_MASK)) {
+		if (event->keyval == GDK_KEY_F ||
+		    event->keyval == GDK_KEY_f) {
+			gtk_search_bar_set_search_mode (GTK_SEARCH_BAR (self->priv->search_bar),
+							!gtk_search_bar_get_search_mode (GTK_SEARCH_BAR (self->priv->search_bar)));
+			return GDK_EVENT_STOP;
+		}
+	}
 
 	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->priv->search_bar), event);
 }
