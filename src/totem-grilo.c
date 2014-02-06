@@ -1250,8 +1250,8 @@ remove_browse_result (GtkTreeModel *model,
 
 static void
 source_removed_cb (GrlRegistry *registry,
-                   GrlSource *source,
-                   gpointer user_data)
+                   GrlSource   *source,
+                   gpointer     user_data)
 {
 	GrlSupportedOps ops;
 	TotemGrilo *self = TOTEM_GRILO (user_data);
@@ -1260,6 +1260,26 @@ source_removed_cb (GrlRegistry *registry,
 
 	/* Remove source and content from browse results */
 	if (ops & GRL_OP_BROWSE) {
+		/* Inside the removed browse source? */
+		if (self->priv->browser_filter_model) {
+			GtkTreePath *path;
+			GtkTreeIter iter;
+
+			g_object_get (G_OBJECT (self->priv->browser_filter_model), "virtual-root", &path, NULL);
+			if (path != NULL &&
+			    gtk_tree_model_get_iter (self->priv->browser_model, &iter, path)) {
+				GrlSource *current_source;
+
+				gtk_tree_model_get (self->priv->browser_model, &iter,
+						    MODEL_RESULTS_SOURCE, &current_source,
+						    -1);
+				if (current_source == source)
+					set_browser_filter_model_for_path (self, NULL);
+				g_clear_object (&current_source);
+			}
+			g_clear_pointer (&path, gtk_tree_path_free);
+		}
+
 		gtk_tree_model_foreach (self->priv->browser_model,
 		                        remove_browse_result,
 		                        source);
