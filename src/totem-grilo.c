@@ -1534,7 +1534,7 @@ window_key_press_event_cb (GtkWidget   *win,
 		}
 	}
 
-	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->priv->search_bar), event);
+	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->priv->search_bar), (GdkEvent *) event);
 }
 
 static void
