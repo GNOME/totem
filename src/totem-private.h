@@ -94,6 +94,7 @@ struct _TotemObject {
 
 	GtkWidget *revealer;
 	GtkWidget *fullscreen_header;
+	GtkWidget *fullscreen_gear_button;
 
 	/* UI manager */
 	GtkActionGroup *main_action_group;
