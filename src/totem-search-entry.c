@@ -131,6 +131,13 @@ sort_sources (GtkListBoxRow *row_a,
 }
 
 static void
+popover_closed_cb (GtkPopover       *popover,
+		   TotemSearchEntry *self)
+{
+	gtk_widget_grab_focus (self->priv->entry);
+}
+
+static void
 totem_search_entry_init (TotemSearchEntry *self)
 {
 	GtkWidget *entry;
@@ -151,6 +158,8 @@ totem_search_entry_init (TotemSearchEntry *self)
 	self->priv->popover = gtk_popover_new (GTK_WIDGET (self));
 	gtk_popover_set_modal (GTK_POPOVER (self->priv->popover), TRUE);
 	gtk_popover_set_position (GTK_POPOVER (self->priv->popover), GTK_POS_BOTTOM);
+	g_signal_connect (G_OBJECT (self->priv->popover), "closed",
+			  G_CALLBACK (popover_closed_cb), self);
 
 	self->priv->listbox = gtk_list_box_new ();
 	gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (self->priv->listbox), TRUE);
