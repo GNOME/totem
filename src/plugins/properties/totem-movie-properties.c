@@ -260,7 +260,7 @@ impl_activate (PeasActivatable *plugin)
 	pi->priv->dialog = gtk_dialog_new_with_buttons (_("Properties"),
 							parent,
 							GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_USE_HEADER_BAR,
-							_("Close"),
+							NULL,
 							GTK_RESPONSE_CLOSE,
 							NULL);
 	g_object_unref (parent);
