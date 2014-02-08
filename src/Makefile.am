@@ -121,6 +121,7 @@ libtotem_la_LDFLAGS = \
 libtotem_la_LIBADD = \
 	libtotem_player.la		\
 	backend/libbaconvideowidget.la	\
+	$(top_builddir)/libgd/libgd.la	\
 	$(PLAYER_LIBS)
 
 # Totem
@@ -137,8 +138,7 @@ totem_CFLAGS =			\
 
 totem_LDADD =		\
 	libtotem.la	\
-	$(PLAYER_LIBS)  \
-	$(top_builddir)/libgd/libgd.la
+	$(PLAYER_LIBS)
 
 # Totem video thumbnailer
 totem_video_thumbnailer_SOURCES = \
