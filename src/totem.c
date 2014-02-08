@@ -157,6 +157,10 @@ app_init (Totem *totem, char **argv)
 
 	/* The prefs after the video widget is connected */
 	totem->prefs_xml = totem_interface_load ("preferences.ui", TRUE, NULL, totem);
+	totem->prefs = GTK_WIDGET (gtk_builder_get_object (totem->prefs_xml, "totem_preferences_window"));
+
+	gtk_window_set_modal (GTK_WINDOW (totem->prefs), TRUE);
+	gtk_window_set_transient_for (GTK_WINDOW (totem->prefs), GTK_WINDOW(totem->win));
 
 	totem_setup_preferences (totem);
 
