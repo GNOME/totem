@@ -1526,6 +1526,8 @@ window_state_event_cb (GtkWidget           *window,
 {
 	GAction *action;
 
+	totem->maximised = !!(event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED);
+
 	if ((event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN) == 0)
 		return FALSE;
 
