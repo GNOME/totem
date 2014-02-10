@@ -1337,23 +1337,6 @@ load_grilo_plugins (TotemGrilo *self)
 	}
 }
 
-static void
-unload_grilo_plugins (TotemGrilo *self)
-{
-	GrlRegistry *registry;
-	GList *l, *plugins;
-
-	registry = grl_registry_get_default ();
-	plugins = grl_registry_get_plugins (registry, TRUE);
-
-	for (l = plugins; l != NULL; l = l->next) {
-		GrlPlugin *plugin = l->data;
-		grl_registry_unload_plugin (registry, grl_plugin_get_id (plugin), NULL);
-	}
-
-	g_list_free (plugins);
-}
-
 static gboolean
 adjustment_over_limit (GtkAdjustment *adjustment)
 {
@@ -2203,8 +2186,7 @@ totem_grilo_finalize (GObject *object)
 
 	g_clear_pointer (&self->priv->metadata_keys, g_list_free);
 
-	/* Shutdown all plugins */
-	unload_grilo_plugins (self);
+	grl_deinit ();
 
 	totem_grilo_clear_icons ();
 
