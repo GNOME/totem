@@ -772,7 +772,7 @@ ignore_event (BaconVideoWidget *bvw,
 static gboolean
 bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 {
-  gboolean res = FALSE;
+  gboolean res = GDK_EVENT_PROPAGATE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkDevice *device;
   int x, y;
@@ -815,7 +815,7 @@ bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *e
 
   translate_coords (widget, event->window, event->x, event->y, &x, &y);
   if (ignore_event (bvw, x, y))
-    return TRUE;
+    return GDK_EVENT_STOP;
 
   if (event->type != GDK_BUTTON_PRESS &&
       event->type != GDK_BUTTON_RELEASE)
@@ -860,11 +860,11 @@ bacon_video_widget_scroll (GtkWidget *widget, GdkEventScroll *event)
 
   translate_coords (widget, event->window, event->x, event->y, &x, &y);
   if (ignore_event (bvw, x, y))
-    return TRUE;
+    return GDK_EVENT_STOP;
 
   if (GTK_WIDGET_CLASS (parent_class)->scroll_event)
     return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
-  return FALSE;
+  return GDK_EVENT_PROPAGATE;
 }
 
 static void
