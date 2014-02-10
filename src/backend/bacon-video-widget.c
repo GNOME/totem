@@ -789,9 +789,8 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
   if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
     return res;
 
-  if (!bvw->priv->reveal_controls) {
+  if (!bvw->priv->reveal_controls)
     set_controls_visibility (bvw, TRUE, TRUE);
-  }
 
   translate_coords (widget, event->window, event->x, event->y, &x, &y);
   if (ignore_event (bvw, x, y)) {
