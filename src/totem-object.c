@@ -1770,19 +1770,11 @@ totem_object_set_mrl (TotemObject *totem,
 		bacon_video_widget_set_logo_mode (totem->bvw, TRUE);
 		update_mrl_label (totem, NULL);
 
-		/* Unset the drag */
-		gtk_drag_source_unset (GTK_WIDGET (totem->bvw));
-
 		g_object_notify (G_OBJECT (totem), "playing");
 	} else {
 		gboolean caps;
 		char *user_agent;
 		char *autoload_sub;
-
-		/* cast is to shut gcc up */
-		const GtkTargetEntry source_table[] = {
-			{ (gchar*) "text/uri-list", 0, 0 }
-		};
 
 		bacon_video_widget_set_logo_mode (totem->bvw, FALSE);
 
@@ -1817,12 +1809,6 @@ totem_object_set_mrl (TotemObject *totem,
 		play_pause_set_label (totem, STATE_PAUSED);
 
 		emit_file_opened (totem, totem->mrl);
-
-		/* Set the drag source */
-		gtk_drag_source_set (GTK_WIDGET (totem->bvw),
-				     GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
-				     source_table, G_N_ELEMENTS (source_table),
-				     GDK_ACTION_COPY);
 	}
 
 	update_buttons (totem);
@@ -2232,39 +2218,6 @@ drag_motion_video_cb (GtkWidget      *widget,
 	} else {
 		gdk_drag_status (context, GDK_ACTION_MOVE, _time);
 	}
-}
-
-static void
-drag_video_cb (GtkWidget *widget,
-	       GdkDragContext *context,
-	       GtkSelectionData *selection_data,
-	       guint info,
-	       guint32 _time,
-	       gpointer callback_data)
-{
-	TotemObject *totem = TOTEM_OBJECT (callback_data);
-	char *text;
-	int len;
-	GFile *file;
-
-	g_assert (selection_data != NULL);
-
-	if (totem->mrl == NULL)
-		return;
-
-	/* Canonicalise the MRL as a proper URI */
-	file = g_file_new_for_commandline_arg (totem->mrl);
-	text = g_file_get_uri (file);
-	g_object_unref (file);
-
-	g_return_if_fail (text != NULL);
-
-	len = strlen (text);
-
-	gtk_selection_data_set (selection_data, gtk_selection_data_get_target (selection_data),
-				8, (guchar *) text, len);
-
-	g_free (text);
 }
 
 static void
@@ -3956,9 +3909,6 @@ video_widget_create (TotemObject *totem)
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			target_table, G_N_ELEMENTS (target_table),
 			GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_get",
-			G_CALLBACK (drag_video_cb), totem);
 
 	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
