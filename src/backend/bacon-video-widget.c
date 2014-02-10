@@ -809,6 +809,11 @@ bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *e
   gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   int x, y;
+  GdkDevice *device;
+
+  device = gdk_event_get_source_device ((GdkEvent *) event);
+  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
+    return FALSE;
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
@@ -832,12 +837,6 @@ bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *e
     /* FIXME need to check whether the backend will have handled
      * the button press
      res = TRUE; */
-  } else if (event->type == GDK_BUTTON_RELEASE) {
-    gboolean value = TRUE;
-
-    if (clutter_actor_get_opacity (bvw->priv->controls) != 0)
-      value = FALSE;
-    set_controls_visibility (bvw, value, FALSE);
   }
 
 bail:
@@ -847,6 +846,20 @@ bail:
     res |= GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 
   return res;
+}
+
+static gboolean
+bacon_video_widget_tap (ClutterTapAction *action,
+			ClutterActor     *actor,
+			BaconVideoWidget *bvw)
+{
+    gboolean value;
+
+    GST_DEBUG ("Tap event received");
+
+    value = (clutter_actor_get_opacity (bvw->priv->controls) == 0);
+    set_controls_visibility (bvw, value, FALSE);
+    return CLUTTER_EVENT_STOP;
 }
 
 static gboolean
@@ -6147,6 +6160,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   ClutterActor *layout;
   GstElement *audio_bin, *audio_converter;
   GstPad *audio_pad;
+  ClutterAction *action;
 
   bvw = BACON_VIDEO_WIDGET (initable);
 
@@ -6247,6 +6261,12 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_child_above_sibling (bvw->priv->stage,
 					 bvw->priv->logo_frame,
 					 bvw->priv->frame);
+
+  /* The video's actions */
+  action = clutter_tap_action_new ();
+  clutter_actor_add_action (bvw->priv->texture, action);
+  g_signal_connect (action, "tap",
+		    G_CALLBACK (bacon_video_widget_tap), bvw);
 
   /* The spinner */
   bvw->priv->spinner = bacon_video_spinner_actor_new ();
