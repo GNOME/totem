@@ -263,6 +263,7 @@ plugin_button_clicked_cb (GtkButton *button,
 							      _("_Close"),
 							      GTK_RESPONSE_CLOSE,
 							      NULL);
+		gtk_window_set_modal (GTK_WINDOW (totem->plugins), TRUE);
 		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
 		gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))), 2);
 
