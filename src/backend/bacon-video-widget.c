@@ -904,7 +904,7 @@ bacon_video_widget_handle_scroll (GtkWidget        *widget,
     if (bvw->priv->seekable > 0)
       g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, forward);
   } else if (widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button")) {
-    if (bacon_video_widget_set_volume (bvw))
+    if (bacon_video_widget_can_set_volume (bvw))
       g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED], 0, forward);
   }
 
