@@ -865,6 +865,30 @@ bacon_video_widget_tap (ClutterTapAction *action,
 }
 
 static gboolean
+bacon_video_widget_swipe (ClutterTapAction      *action,
+			  ClutterActor          *actor,
+			  ClutterSwipeDirection  direction,
+			  BaconVideoWidget      *bvw)
+{
+    GST_DEBUG ("Swipe event received");
+
+    if ((direction & CLUTTER_SWIPE_DIRECTION_UP) ||
+	(direction & CLUTTER_SWIPE_DIRECTION_DOWN)) {
+      if ((direction & CLUTTER_SWIPE_DIRECTION_LEFT) ||
+	  (direction & CLUTTER_SWIPE_DIRECTION_RIGHT))
+	GST_DEBUG ("Ignoring diagonal swipe 0x%X", direction);
+	return CLUTTER_EVENT_PROPAGATE;
+    }
+
+    if (direction & CLUTTER_SWIPE_DIRECTION_LEFT)
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, FALSE);
+    if (direction & CLUTTER_SWIPE_DIRECTION_RIGHT)
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, TRUE);
+
+    return CLUTTER_EVENT_STOP;
+}
+
+static gboolean
 bacon_video_widget_handle_scroll (GtkWidget        *widget,
 				  GdkEventScroll   *event,
 				  BaconVideoWidget *bvw)
@@ -6335,6 +6359,12 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_add_action (bvw->priv->texture, action);
   g_signal_connect (action, "tap",
 		    G_CALLBACK (bacon_video_widget_tap), bvw);
+
+  action = clutter_swipe_action_new ();
+  clutter_gesture_action_set_threshold_trigger_distance (CLUTTER_GESTURE_ACTION (action), 80.0, 80.0);
+  clutter_actor_add_action (bvw->priv->texture, action);
+  g_signal_connect (action, "swipe",
+		    G_CALLBACK (bacon_video_widget_swipe), bvw);
 
   /* The spinner */
   bvw->priv->spinner = bacon_video_spinner_actor_new ();
