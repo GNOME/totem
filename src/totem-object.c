@@ -3232,7 +3232,8 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 			if (gtk_widget_get_direction (totem->win) == GTK_TEXT_DIR_RTL)
 				is_forward = !is_forward;
 
-			totem_object_handle_seek (totem, event, is_forward);
+			if (totem_object_is_seekable (totem))
+				totem_object_handle_seek (totem, event, is_forward);
 		} else {
 			if (event->keyval == GDK_KEY_Left)
 				bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_LEFT);
