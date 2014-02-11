@@ -105,7 +105,6 @@ G_MODULE_EXPORT gboolean seek_slider_pressed_cb (GtkWidget *widget, GdkEventButt
 G_MODULE_EXPORT void seek_slider_changed_cb (GtkAdjustment *adj, TotemObject *totem);
 G_MODULE_EXPORT gboolean seek_slider_released_cb (GtkWidget *widget, GdkEventButton *event, TotemObject *totem);
 G_MODULE_EXPORT gboolean window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *totem);
-G_MODULE_EXPORT int window_scroll_event_cb (GtkWidget *win, GdkEvent *event, TotemObject *totem);
 
 enum {
 	PROP_0,
@@ -3339,37 +3338,23 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	return retval;
 }
 
-static gboolean
-totem_object_handle_scroll (TotemObject    *totem,
-			    const GdkEvent *event)
+static void
+on_seek_requested_event (BaconVideoWidget *bvw,
+			 gboolean          forward,
+			 TotemObject      *totem)
 {
-	gboolean retval = TRUE;
-	GdkEventScroll *sevent = (GdkEventScroll *) event;
-	GdkScrollDirection direction;
+	gint64 offset;
 
-	direction = sevent->direction;
+	offset = forward ? SEEK_FORWARD_SHORT_OFFSET * 1000 : SEEK_BACKWARD_SHORT_OFFSET * 1000;
+	totem_object_seek_relative (totem, offset, FALSE);
+}
 
-	if (direction == GDK_SCROLL_SMOOTH) {
-		gdouble y;
-		gdk_event_get_scroll_deltas (event, NULL, &y);
-		direction = y >= 0.0 ? GDK_SCROLL_DOWN : GDK_SCROLL_UP;
-	}
-
-	switch (direction) {
-	case GDK_SCROLL_UP:
-		totem_object_seek_relative (totem, SEEK_FORWARD_SHORT_OFFSET * 1000, FALSE);
-		break;
-	case GDK_SCROLL_DOWN:
-		totem_object_seek_relative (totem, SEEK_BACKWARD_SHORT_OFFSET * 1000, FALSE);
-		break;
-	case GDK_SCROLL_LEFT:
-	case GDK_SCROLL_RIGHT:
-	case GDK_SCROLL_SMOOTH:
-	default:
-		retval = FALSE;
-	}
-
-	return retval;
+static void
+on_volume_change_requested_event (BaconVideoWidget *bvw,
+				  gboolean          increase,
+				  TotemObject      *totem)
+{
+	totem_object_set_volume_relative (totem, increase ? VOLUME_UP_OFFSET : VOLUME_DOWN_OFFSET);
 }
 
 gboolean
@@ -3438,12 +3423,6 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		return totem_object_handle_key_press (totem, event);
 
 	return FALSE;
-}
-
-gboolean
-window_scroll_event_cb (GtkWidget *win, GdkEvent *event, TotemObject *totem)
-{
-	return totem_object_handle_scroll (totem, event);
 }
 
 static void
@@ -3668,8 +3647,6 @@ totem_callback_connect (TotemObject *totem)
 			  G_CALLBACK (seek_slider_pressed_cb), totem);
 	g_signal_connect (totem->seek, "button-release-event",
 			  G_CALLBACK (seek_slider_released_cb), totem);
-	g_signal_connect (totem->seek, "scroll-event",
-			  G_CALLBACK (window_scroll_event_cb), totem);
 	g_signal_connect (totem->seekadj, "value-changed",
 			  G_CALLBACK (seek_slider_changed_cb), totem);
 
@@ -3886,6 +3863,14 @@ video_widget_create (TotemObject *totem)
 	g_signal_connect (G_OBJECT (totem->bvw),
 			  "notify::reveal-controls",
 			  G_CALLBACK (on_reveal_controls_changed),
+			  totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			  "seek-requested",
+			  G_CALLBACK (on_seek_requested_event),
+			  totem);
+	g_signal_connect (G_OBJECT (totem->bvw),
+			  "volume-change-requested",
+			  G_CALLBACK (on_volume_change_requested_event),
 			  totem);
 
 	container = GTK_CONTAINER (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));

@@ -133,6 +133,8 @@ enum
   SIGNAL_BUFFERING,
   SIGNAL_MISSING_PLUGINS,
   SIGNAL_DOWNLOAD_BUFFERING,
+  SIGNAL_SEEK_REQUESTED,
+  SIGNAL_VOLUME_CHANGE_REQUESTED,
   LAST_SIGNAL
 };
 
@@ -863,20 +865,53 @@ bacon_video_widget_tap (ClutterTapAction *action,
 }
 
 static gboolean
-bacon_video_widget_scroll (GtkWidget *widget, GdkEventScroll *event)
+bacon_video_widget_handle_scroll (GtkWidget        *widget,
+				  GdkEventScroll   *event,
+				  BaconVideoWidget *bvw)
 {
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   int x, y;
+  GdkScrollDirection direction;
+  gboolean forward;
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  translate_coords (widget, event->window, event->x, event->y, &x, &y);
-  if (ignore_event (bvw, x, y))
-    return GDK_EVENT_STOP;
+  if (widget == (gpointer) bvw) {
+    translate_coords (widget, event->window, event->x, event->y, &x, &y);
+    if (ignore_event (bvw, x, y))
+      return GDK_EVENT_STOP;
+  }
 
-  if (GTK_WIDGET_CLASS (parent_class)->scroll_event)
-    return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
-  return GDK_EVENT_PROPAGATE;
+  direction = event->direction;
+  if (direction == GDK_SCROLL_SMOOTH) {
+    gdouble y;
+    gdk_event_get_scroll_deltas ((GdkEvent *) event, NULL, &y);
+    direction = y >= 0.0 ? GDK_SCROLL_DOWN : GDK_SCROLL_UP;
+  }
+
+  switch (direction) {
+  case GDK_SCROLL_UP:
+    forward = TRUE;
+    break;
+  case GDK_SCROLL_DOWN:
+    forward = FALSE;
+    break;
+  default:
+    return GDK_EVENT_PROPAGATE;
+  }
+
+  if (widget == (gpointer) bvw ||
+      widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale"))
+    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, forward);
+  else if (widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button"))
+    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED], 0, forward);
+
+  return GDK_EVENT_STOP;
+}
+
+static gboolean
+bacon_video_widget_scroll (GtkWidget *widget, GdkEventScroll *event)
+{
+  return bacon_video_widget_handle_scroll (widget, event, BACON_VIDEO_WIDGET (widget));
 }
 
 static void
@@ -1324,6 +1359,35 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, download_buffering),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__DOUBLE, G_TYPE_NONE, 1, G_TYPE_DOUBLE);
+
+  /**
+   * BaconVideoWidget::seek-requested:
+   * @forward: whether the seek requested is a forward or backward seek.
+   *
+   * Emitted when a gesture, our mouse movement that should seek is made.
+   **/
+  bvw_signals[SIGNAL_SEEK_REQUESTED] =
+    g_signal_new ("seek-requested",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+
+  /**
+   * BaconVideoWidget::volume-change-requested:
+   * @increase: whether the volume change requested is an increase or decrease.
+   *
+   * Emitted when a gesture, our mouse movement that should change the volume
+   * is emitted.
+   **/
+  bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED] =
+    g_signal_new ("volume-change-requested",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 }
 
 static void
@@ -6161,6 +6225,7 @@ bacon_video_widget_initable_init (GInitable     *initable,
   GstElement *audio_bin, *audio_converter;
   GstPad *audio_pad;
   ClutterAction *action;
+  GObject *item;
 
   bvw = BACON_VIDEO_WIDGET (initable);
 
@@ -6298,6 +6363,13 @@ bacon_video_widget_initable_init (GInitable     *initable,
 					 bvw->priv->logo_frame);
 
   clutter_actor_set_opacity (bvw->priv->controls, 0);
+
+  item = g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale");
+  g_signal_connect (item, "scroll-event",
+		    G_CALLBACK (bacon_video_widget_handle_scroll), bvw);
+  item = g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button");
+  g_signal_connect (item, "scroll-event",
+		    G_CALLBACK (bacon_video_widget_handle_scroll), bvw);
 
   /* And tell playbin */
   g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
