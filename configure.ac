@@ -60,7 +60,7 @@ VALA_REQS=0.14.1
 PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
 PYGOBJECT_REQS=2.90.3
-GRILO_REQS=0.2.0
+GRILO_REQS=0.2.8
 LIBXML_REQS=2.6.0
 
 # Used in the pkg-config file for plugins
