@@ -900,10 +900,13 @@ bacon_video_widget_handle_scroll (GtkWidget        *widget,
   }
 
   if (widget == (gpointer) bvw ||
-      widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale"))
-    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, forward);
-  else if (widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button"))
-    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED], 0, forward);
+      widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale")) {
+    if (bvw->priv->seekable > 0)
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, forward);
+  } else if (widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button")) {
+    if (bacon_video_widget_set_volume (bvw))
+      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED], 0, forward);
+  }
 
   return GDK_EVENT_STOP;
 }
