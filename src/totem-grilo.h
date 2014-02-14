@@ -72,6 +72,7 @@ void            totem_grilo_set_current_page      (TotemGrilo     *self,
 TotemGriloPage  totem_grilo_get_current_page      (TotemGrilo     *self);
 gboolean        totem_grilo_add_item_to_recent    (TotemGrilo     *self,
                                                    const char     *uri,
+                                                   const char     *title,
                                                    gboolean        is_web);
 
 G_END_DECLS

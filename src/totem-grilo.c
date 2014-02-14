@@ -2302,6 +2302,7 @@ totem_grilo_get_current_page (TotemGrilo *self)
 gboolean
 totem_grilo_add_item_to_recent (TotemGrilo *self,
 				const char *uri,
+				const char *title,
 				gboolean    is_web)
 {
 	GrlMedia *media;
@@ -2313,6 +2314,11 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 
 	if (is_web) {
 		char *basename;
+
+		/* This should only come from the
+		 * "Open Location" dialogue, so it
+		 * shouldn't have a title */
+		g_assert (title == NULL);
 
 		media = grl_media_video_new ();
 
@@ -2330,6 +2336,8 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 					       NULL,
 					       FALSE,
 					       options);
+		if (title)
+			grl_media_set_title (media, title);
 		g_object_unref (options);
 	}
 

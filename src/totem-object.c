@@ -1410,7 +1410,7 @@ totem_object_open_dialog (TotemObject *totem, const char *path)
 	for (l = filenames; l != NULL; l = l->next) {
 		char *uri = l->data;
 
-		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, FALSE);
+		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, FALSE);
 		g_free (uri);
 	}
 	g_slist_free (filenames);
@@ -1591,7 +1591,7 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, TotemObject *
 	uri = totem_open_location_get_uri (totem->open_location);
 
 	if (uri != NULL) {
-		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, TRUE);
+		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, NULL, TRUE);
 		g_free (uri);
 	}
 
