@@ -69,6 +69,7 @@ void            totem_grilo_back_button_clicked   (TotemGrilo  *self);
 gboolean        totem_grilo_get_show_back_button  (TotemGrilo  *self);
 void            totem_grilo_set_current_page      (TotemGrilo     *self,
                                                    TotemGriloPage  page);
+TotemGriloPage  totem_grilo_get_current_page      (TotemGrilo     *self);
 
 G_END_DECLS
 

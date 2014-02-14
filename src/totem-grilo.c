@@ -62,6 +62,8 @@ struct _TotemGriloPrivate {
 	GrlSource *metadata_store_src;
 	gboolean fs_plugin_configured;
 
+	TotemGriloPage current_page;
+
 	/* Current media selected in results*/
 	GrlMedia *selected_media;
 
@@ -107,7 +109,8 @@ enum {
 	PROP_0,
 	PROP_TOTEM,
 	PROP_HEADER,
-	PROP_SHOW_BACK_BUTTON
+	PROP_SHOW_BACK_BUTTON,
+	PROP_CURRENT_PAGE
 };
 
 G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_BOX,
@@ -1648,15 +1651,19 @@ source_switched (GtkToggleButton  *button,
 	if (g_str_equal (id, "recent")) {
 		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 					self->priv->recent_sort_model);
+		self->priv->current_page = TOTEM_GRILO_PAGE_RECENT;
 	} else if (g_str_equal (id, "channels")) {
 		if (self->priv->browser_filter_model != NULL)
 			gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 						self->priv->browser_filter_model);
 		else
 			set_browser_filter_model_for_path (self, NULL);
+		self->priv->current_page = TOTEM_GRILO_PAGE_CHANNELS;
 	} else {
 		g_assert_not_reached ();
 	}
+
+	g_object_notify (G_OBJECT (self), "current-page");
 }
 
 static GtkWidget *
@@ -2255,7 +2262,19 @@ totem_grilo_set_current_page (TotemGrilo     *self,
 	else
 		g_assert_not_reached ();
 
+	self->priv->current_page = page;
+
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+	g_object_notify (G_OBJECT (self), "current-page");
+}
+
+TotemGriloPage
+totem_grilo_get_current_page (TotemGrilo *self)
+{
+	g_return_val_if_fail (TOTEM_IS_GRILO (self), TOTEM_GRILO_PAGE_RECENT);
+
+	return self->priv->current_page;
 }
 
 static void
@@ -2282,6 +2301,10 @@ totem_grilo_set_property (GObject         *object,
 		g_object_set (self->priv->header, "show-back-button", priv->show_back_button, NULL);
 		break;
 
+	case PROP_CURRENT_PAGE:
+		totem_grilo_set_current_page (self, g_value_get_int (value));
+		break;
+
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -2299,6 +2322,10 @@ totem_grilo_get_property (GObject         *object,
 	switch (prop_id) {
 	case PROP_SHOW_BACK_BUTTON:
 		g_value_set_boolean (value, self->priv->show_back_button);
+		break;
+
+	case PROP_CURRENT_PAGE:
+		g_value_set_int (value, self->priv->current_page);
 		break;
 
 	default:
@@ -2341,6 +2368,14 @@ totem_grilo_class_init (TotemGriloClass *klass)
 							       "Whether the back button is visible",
 							       FALSE,
 							       G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (object_class,
+					 PROP_CURRENT_PAGE,
+					 g_param_spec_int ("current-page",
+							   "Current page",
+							   "The name of the currently visible page",
+							   TOTEM_GRILO_PAGE_RECENT, TOTEM_GRILO_PAGE_CHANNELS, TOTEM_GRILO_PAGE_RECENT,
+							   G_PARAM_READWRITE));
 
 	gtk_widget_class_set_template_from_resource (widget_class, "/org/totem/grilo/grilo.ui");
 	gtk_widget_class_bind_template_child_private (widget_class, TotemGrilo, selectmenu);
