@@ -153,6 +153,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
             file_info.set_attribute_string (GIO_ROTATION_FILE_ATTRIBUTE, state_str);
             yield file.set_attributes_async (file_info, GLib.FileQueryInfoFlags.NONE,
                     GLib.Priority.DEFAULT, null, null);
+        } catch (IOError.NOT_SUPPORTED e) {
         } catch (GLib.Error e) {
             GLib.warning ("Could not store file attribute: %s", e.message);
         }
@@ -171,6 +172,7 @@ class RotationPlugin: GLib.Object, Peas.Activatable
                 int state = (Bacon.Rotation) uint64.parse (state_str);
                 this.bvw.set_rotation ((Bacon.Rotation) state);
             }
+        } catch (IOError.NOT_SUPPORTED e) {
         } catch (GLib.Error e) {
             GLib.warning ("Could not query file attribute: %s", e.message);
         }
