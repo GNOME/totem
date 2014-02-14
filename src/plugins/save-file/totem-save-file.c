@@ -282,7 +282,7 @@ impl_activate (PeasActivatable *plugin)
 
 	/* add UI */
 	menu = totem_object_get_menu_section (priv->totem, "save-placeholder");
-	item = g_menu_item_new (_("Save a Copy..."), "app.save-as");
+	item = g_menu_item_new (_("Save a Copy…"), "app.save-as");
 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>s");
 	g_menu_append_item (G_MENU (menu), item);
 

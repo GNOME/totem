@@ -342,7 +342,7 @@ impl_activate (PeasActivatable *plugin)
 					 g_variant_new_string ("action-disabled"));
 	g_menu_append_item (G_MENU (menu), item);
 	g_object_unref (item);
-	item = g_menu_item_new (_("Create Screenshot _Gallery..."), "app.take-gallery");
+	item = g_menu_item_new (_("Create Screenshot _Gallery…"), "app.take-gallery");
 	g_menu_item_set_attribute_value (item, "hidden-when",
 					 g_variant_new_string ("action-disabled"));
 	g_menu_append_item (G_MENU (menu), item);

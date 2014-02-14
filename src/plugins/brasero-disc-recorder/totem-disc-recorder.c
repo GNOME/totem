@@ -391,9 +391,9 @@ impl_activate (PeasActivatable *plugin)
 
 	/* Install the menu */
 	menu = totem_object_get_menu_section (priv->totem, "burn-placeholder");
-	menu_append_hidden (G_MENU (menu), _("_Create Video Disc..."), "app.media-optical-video-new");
-	menu_append_hidden (G_MENU (menu), _("Copy Vide_o DVD..."), "app.media-optical-copy");
-	menu_append_hidden (G_MENU (menu), _("Copy (S)VCD..."), "app.media-optical-copy-vcd");
+	menu_append_hidden (G_MENU (menu), _("_Create Video Disc…"), "app.media-optical-video-new");
+	menu_append_hidden (G_MENU (menu), _("Copy Vide_o DVD…"), "app.media-optical-copy");
+	menu_append_hidden (G_MENU (menu), _("Copy (S)VCD…"), "app.media-optical-copy-vcd");
 
 	if (!totem_object_is_paused (priv->totem) && !totem_object_is_playing (priv->totem)) {
 		set_menu_items_state (pi, FALSE, FALSE, FALSE);

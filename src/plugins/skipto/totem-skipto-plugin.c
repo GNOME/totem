@@ -203,7 +203,7 @@ impl_activate (PeasActivatable *plugin)
 	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
 
 	menu = totem_object_get_menu_section (priv->totem, "skipto-placeholder");
-	item = g_menu_item_new (_("_Skip To..."), "app.skip-to");
+	item = g_menu_item_new (_("_Skip To…"), "app.skip-to");
 	g_menu_item_set_attribute (item, "accel", "s", "<Ctrl>K");
 	g_menu_append_item (G_MENU (menu), item);
 
