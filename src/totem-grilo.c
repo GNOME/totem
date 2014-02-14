@@ -34,6 +34,7 @@
 #include <glib-object.h>
 #include <glib/gi18n-lib.h>
 #include <grilo.h>
+#include <pls/grl-pls.h>
 
 #include <totem-interface.h>
 #include <totem-dirs.h>
@@ -60,6 +61,7 @@ struct _TotemGriloPrivate {
 
 	GrlSource *local_metadata_src;
 	GrlSource *metadata_store_src;
+	GrlSource *bookmarks_src;
 	gboolean fs_plugin_configured;
 
 	TotemGriloPage current_page;
@@ -540,6 +542,19 @@ add_local_metadata (TotemGrilo *self,
 	 * for non-local media */
 	if (!source_is_recent (source))
 		return;
+
+	/* Avoid trying to get metadata for web radios */
+	if (source == self->priv->bookmarks_src) {
+		char *scheme;
+
+		scheme = g_uri_parse_scheme (grl_media_get_url (media));
+		if (g_strcmp0 (scheme, "http") == 0 ||
+		    g_strcmp0 (scheme, "https") == 0) {
+			g_free (scheme);
+			return;
+		}
+		g_free (scheme);
+	}
 
 	options = grl_operation_options_new (NULL);
 	grl_operation_options_set_flags (options, GRL_RESOLVE_FULL);
@@ -1202,6 +1217,8 @@ source_added_cb (GrlRegistry *registry,
 		self->priv->local_metadata_src = source;
 	else if (g_str_equal (id, "grl-metadata-store"))
 		self->priv->metadata_store_src = source;
+	else if (g_str_equal (id, "grl-bookmarks"))
+		self->priv->bookmarks_src = source;
 
 	ops = grl_source_supported_operations (source);
 	if (ops & GRL_OP_BROWSE) {
@@ -2278,6 +2295,51 @@ totem_grilo_get_current_page (TotemGrilo *self)
 	g_return_val_if_fail (TOTEM_IS_GRILO (self), TOTEM_GRILO_PAGE_RECENT);
 
 	return self->priv->current_page;
+}
+
+gboolean
+totem_grilo_add_item_to_recent (TotemGrilo *self,
+				const char *uri,
+				gboolean    is_web)
+{
+	GrlMedia *media;
+	GFile *file;
+
+	g_return_val_if_fail (TOTEM_IS_GRILO (self), FALSE);
+
+	file = g_file_new_for_uri (uri);
+
+	if (is_web) {
+		char *basename;
+
+		media = grl_media_video_new ();
+
+		basename = g_file_get_basename (file);
+		grl_media_set_title (media, basename);
+		g_free (basename);
+
+		grl_media_set_url (media, uri);
+	} else {
+		GrlOperationOptions *options;
+
+		options = grl_operation_options_new (NULL);
+		media = grl_pls_file_to_media (NULL,
+					       file,
+					       NULL,
+					       FALSE,
+					       options);
+		g_object_unref (options);
+	}
+
+	g_object_unref (file);
+
+	/* This should be quick, just adding the item to the DB */
+	grl_source_store_sync (self->priv->bookmarks_src,
+			       NULL,
+			       media,
+			       GRL_WRITE_NORMAL,
+			       NULL);
+	return TRUE;
 }
 
 static void

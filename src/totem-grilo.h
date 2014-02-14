@@ -70,6 +70,9 @@ gboolean        totem_grilo_get_show_back_button  (TotemGrilo  *self);
 void            totem_grilo_set_current_page      (TotemGrilo     *self,
                                                    TotemGriloPage  page);
 TotemGriloPage  totem_grilo_get_current_page      (TotemGrilo     *self);
+gboolean        totem_grilo_add_item_to_recent    (TotemGrilo     *self,
+                                                   const char     *uri,
+                                                   gboolean        is_web);
 
 G_END_DECLS
 
