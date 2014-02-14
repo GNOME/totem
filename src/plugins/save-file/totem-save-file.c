@@ -27,6 +27,7 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 #include <gdk/gdkx.h>
+#include <errno.h>
 #include <libpeas/peas-extension-base.h>
 #include <libpeas/peas-object-module.h>
 #include <libpeas/peas-activatable.h>
@@ -47,7 +48,6 @@ typedef struct {
 
 	char        *mrl;
 	char        *name;
-	char        *save_uri;
 	gboolean     is_tmp;
 
 	GSimpleAction *action;
@@ -57,7 +57,6 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_SAVE_FILE_PLUGIN, TotemSaveFilePlugin, totem_sa
 
 static void
 copy_uris_with_nautilus (const char *source,
-			 const char *src_name,
 			 const char *dest)
 {
 	GError *error = NULL;
@@ -68,7 +67,6 @@ copy_uris_with_nautilus (const char *source,
 
 	g_return_if_fail (source != NULL);
 	g_return_if_fail (dest != NULL);
-	g_return_if_fail (src_name != NULL); /* Must be "" or something interesting, not NULL */
 
 	flags = G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES;
 	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
@@ -93,7 +91,7 @@ copy_uris_with_nautilus (const char *source,
 	g_object_unref (parent);
 
 	if (g_dbus_proxy_call_sync (proxy,
-				"CopyFile", g_variant_new ("(&s&s&s&s)", source, src_name, dest_dir, dest_name),
+				"CopyFile", g_variant_new ("(&s&s&s&s)", source, "", dest_dir, dest_name),
 				G_DBUS_CALL_FLAGS_NONE,
 				-1, NULL, &error) == FALSE) {
 		g_warning ("Could not get nautilus to copy file: %s", error->message);
@@ -105,26 +103,20 @@ copy_uris_with_nautilus (const char *source,
 	g_object_unref (proxy);
 }
 
+static char *
+get_cache_path (void)
+{
+	return g_build_filename (g_get_user_cache_dir (), "totem", "media", NULL);
+}
+
 static void
 totem_save_file_plugin_copy (GSimpleAction       *action,
 			     GVariant            *parameter,
 			     TotemSaveFilePlugin *pi)
 {
-	GtkWidget *fs;
 	char *filename;
-	int response;
 
 	g_assert (pi->priv->mrl != NULL);
-
-	fs = gtk_file_chooser_dialog_new (_("Save a Copy"),
-					  totem_object_get_main_window (pi->priv->totem),
-					  GTK_FILE_CHOOSER_ACTION_SAVE,
-					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("_Save"), GTK_RESPONSE_ACCEPT,
-					  NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
-	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
-	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (fs), TRUE);
 
 	if (pi->priv->name != NULL) {
 		filename = g_strdup (pi->priv->name);
@@ -151,33 +143,46 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 		filename = g_strdup (_("Movie"));
 	}
 
-	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (fs), filename);
-	g_free (filename);
+	if (pi->priv->is_tmp) {
+		char *dest_dir, *dest_name, *dest_path;
+		char *src_path;
 
-	if (pi->priv->save_uri != NULL) {
-		gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (fs),
-							 pi->priv->save_uri);
-	}
+		dest_dir = get_cache_path ();
+		dest_name = g_compute_checksum_for_string (G_CHECKSUM_SHA256, pi->priv->mrl, -1);
+		dest_path = g_build_filename (dest_dir, dest_name, NULL);
+		g_free (dest_name);
+		g_free (dest_dir);
 
-	response = gtk_dialog_run (GTK_DIALOG (fs));
-	gtk_widget_hide (fs);
+		src_path = g_filename_from_uri (pi->priv->mrl, NULL, NULL);
 
-	if (response == GTK_RESPONSE_ACCEPT) {
-		char *dest_uri;
+		if (link (src_path, dest_path) != 0) {
+			int err = errno;
+			g_warning ("Failed to link '%s' to '%s': %s",
+				   src_path, dest_path, g_strerror (err));
+		} else {
+			GFile *file;
 
-		dest_uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (fs));
-		/* translators: "Movie stream" is what will show up in the
-		 * nautilus copy dialogue as the source, when saving a streamed
-		 * movie */
-		copy_uris_with_nautilus (pi->priv->mrl,
-					 pi->priv->is_tmp ? _("Movie stream") : "",
-					 dest_uri);
+			file = g_file_new_for_path (dest_path);
+			totem_object_add_to_view (pi->priv->totem, file, filename);
+			g_object_unref (file);
+		}
 
-		g_free (pi->priv->save_uri);
-		pi->priv->save_uri = g_path_get_dirname (dest_uri);
+		g_free (src_path);
+		g_free (dest_path);
+	} else {
+		char *dest_path, *dest_uri;
+
+		dest_path = g_build_filename (g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS), filename, NULL);
+		dest_uri = g_filename_to_uri (dest_path, NULL, NULL);
+		g_free (dest_path);
+
+		copy_uris_with_nautilus (pi->priv->mrl, dest_uri);
 		g_free (dest_uri);
+
+		/* We don't call Totem to bookmark it, as Tracker should pick it up */
 	}
-	gtk_widget_destroy (fs);
+
+	g_free (filename);
 }
 
 static void
@@ -195,19 +200,52 @@ totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
 			     TotemSaveFilePlugin *pi)
 {
+	GFile *videos_dir;
+	GFile *cache_dir = NULL;
+	char *cache_path;
+	GFile *file;
+
 	g_clear_pointer (&pi->priv->mrl, g_free);
 	g_clear_pointer (&pi->priv->name, g_free);
 
 	if (mrl == NULL)
 		return;
 
-	if (g_str_has_prefix (mrl, "file:") || g_str_has_prefix (mrl, "smb:")) {
-		/* We can always copy files from file:/// URIs */
-		g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
-		pi->priv->mrl = g_strdup (mrl);
-		pi->priv->name = totem_object_get_short_title (pi->priv->totem);
-		pi->priv->is_tmp = FALSE;
+	/* We can only save files from file:/// and smb:/// URIs (for now) */
+	if (!g_str_has_prefix (mrl, "file:") &&
+	    !g_str_has_prefix (mrl, "smb:")) {
+		g_debug ("Not enabling offline as scheme for '%s' not supported", mrl);
+		return;
 	}
+
+	file = g_file_new_for_uri (mrl);
+
+	/* We check whether it's in the Videos dir, in the future,
+	 * we might want to check if it's native instead */
+	videos_dir = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS));
+	if (g_file_has_parent (file, videos_dir)) {
+		g_debug ("Not enabling offline save, as '%s' already in ~/Videos", mrl);
+		goto out;
+	}
+
+	/* Already cached? */
+	cache_path = get_cache_path ();
+	cache_dir = g_file_new_for_path (cache_path);
+	g_free (cache_path);
+	if (g_file_has_parent (file, cache_dir)) {
+		g_debug ("Not enabling offline save, as '%s' already cached", mrl);
+		goto out;
+	}
+
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), TRUE);
+	pi->priv->mrl = g_strdup (mrl);
+	pi->priv->name = totem_object_get_short_title (pi->priv->totem);
+	pi->priv->is_tmp = FALSE;
+
+out:
+	g_clear_object (&cache_dir);
+	g_clear_object (&videos_dir);
+	g_clear_object (&file);
 }
 
 static void
@@ -279,10 +317,11 @@ impl_activate (PeasActivatable *plugin)
 					 "Save",
 					 "app.save-as",
 					 NULL); */
+	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->action), FALSE);
 
 	/* add UI */
 	menu = totem_object_get_menu_section (priv->totem, "save-placeholder");
-	item = g_menu_item_new (_("Save a Copy…"), "app.save-as");
+	item = g_menu_item_new (_("Make Available Offline"), "app.save-as");
 	g_menu_item_set_attribute (item, "accel", "s", "<Primary>s");
 	g_menu_append_item (G_MENU (menu), item);
 
@@ -309,5 +348,4 @@ impl_deactivate (PeasActivatable *plugin)
 
 	g_clear_pointer (&pi->priv->mrl, g_free);
 	g_clear_pointer (&pi->priv->name, g_free);
-	g_clear_pointer (&pi->priv->save_uri, g_free);
 }
