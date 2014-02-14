@@ -61,6 +61,7 @@ PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
 PYGOBJECT_REQS=2.90.3
 GRILO_REQS=0.2.8
+GRILO_PLS_REQS=0.2.0
 LIBXML_REQS=2.6.0
 
 # Used in the pkg-config file for plugins
@@ -235,7 +236,7 @@ AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 # Player requirements
 #================================================================
 
-PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS libpeas-1.0 >= $PEAS_REQS libpeas-gtk-1.0 >= $PEAS_REQS $PYTHON_MODULES grilo-0.2 >= $GRILO_REQS grilo-pls-0.2 >= $GRILO_REQS)
+PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS libpeas-1.0 >= $PEAS_REQS libpeas-gtk-1.0 >= $PEAS_REQS $PYTHON_MODULES grilo-0.2 >= $GRILO_REQS grilo-pls-0.2 >= $GRILOPLS_REQS)
 PKG_CHECK_MODULES(LIBPLAYER, glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS clutter-gtk-1.0)
 PKG_CHECK_MODULES(HELPER, gstreamer-1.0 gstreamer-tag-1.0)
 PKG_CHECK_MODULES(TIME_HELPER, glib-2.0)
