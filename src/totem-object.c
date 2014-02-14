@@ -1398,36 +1398,22 @@ totem_object_set_mrl_and_play (TotemObject *totem, const char *mrl, const char *
 }
 
 static gboolean
-totem_object_open_dialog (TotemObject *totem, const char *path, gboolean play)
+totem_object_open_dialog (TotemObject *totem, const char *path)
 {
-	GSList *filenames;
-	gboolean playlist_modified;
+	GSList *filenames, *l;
 
 	filenames = totem_add_files (GTK_WINDOW (totem->win), path);
 
 	if (filenames == NULL)
 		return FALSE;
 
-	playlist_modified = totem_object_open_files_list (totem,
-			filenames);
+	for (l = filenames; l != NULL; l = l->next) {
+		char *uri = l->data;
 
-	if (playlist_modified == FALSE) {
-		g_slist_foreach (filenames, (GFunc) g_free, NULL);
-		g_slist_free (filenames);
-		return FALSE;
+		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, FALSE);
+		g_free (uri);
 	}
-
-	g_slist_foreach (filenames, (GFunc) g_free, NULL);
 	g_slist_free (filenames);
-
-	if (play != FALSE) {
-		char *mrl, *subtitle;
-
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		totem_object_set_mrl_and_play (totem, mrl, subtitle);
-		g_free (mrl);
-		g_free (subtitle);
-	}
 
 	return TRUE;
 }
@@ -1586,7 +1572,7 @@ totem_object_set_fullscreen (TotemObject *totem, gboolean state)
 void
 totem_object_open (TotemObject *totem)
 {
-	totem_object_open_dialog (totem, NULL, TRUE);
+	totem_object_open_dialog (totem, NULL);
 }
 
 static void
@@ -1604,21 +1590,10 @@ totem_open_location_response_cb (GtkDialog *dialog, gint response, TotemObject *
 	/* Open the specified URI */
 	uri = totem_open_location_get_uri (totem->open_location);
 
-	if (uri != NULL)
-	{
-		char *mrl, *subtitle;
-		const char *filenames[2];
-
-		filenames[0] = uri;
-		filenames[1] = NULL;
-		totem_object_open_files (totem, (char **) filenames);
-
-		mrl = totem_playlist_get_current_mrl (totem->playlist, &subtitle);
-		totem_object_set_mrl_and_play (totem, mrl, subtitle);
-		g_free (mrl);
-		g_free (subtitle);
+	if (uri != NULL) {
+		totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo), uri, TRUE);
+		g_free (uri);
 	}
- 	g_free (uri);
 
 	gtk_widget_destroy (GTK_WIDGET (totem->open_location));
 }
