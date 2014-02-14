@@ -51,11 +51,11 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         t.add_action (this.rotate_right_action);
         t.add_accelerator("<Primary>R", "app.rotate-right", null);
 
-        GLib.MenuItem item = new GLib.MenuItem (_("_Rotate Clockwise"), "app.rotate-right");
+        GLib.MenuItem item = new GLib.MenuItem (_("_Rotate ↷"), "app.rotate-right");
         item.set_attribute ("accel", "s", "<Primary>R");
         menu.append_item (item);
 
-        item = new GLib.MenuItem (_("Rotate Counterc_lockwise"), "app.rotate-left");
+        item = new GLib.MenuItem (_("Rotate ↶"), "app.rotate-left");
         item.set_attribute ("accel", "s", "<Primary><Shift>R");
         menu.append_item (item);
 
