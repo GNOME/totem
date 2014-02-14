@@ -478,7 +478,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 	GSettings *settings;
 	gboolean set_folder;
 
-	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
+	fs = gtk_file_chooser_dialog_new (_("Add Videos"),
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
 					  _("_Cancel"), GTK_RESPONSE_CANCEL,
