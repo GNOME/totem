@@ -174,7 +174,6 @@ source_is_blacklisted (GrlSource *source)
 {
 	const char *id;
 	const char const *sources[] = {
-		"grl-bookmarks",
 		"grl-shoutcast",
 		"grl-flickr",
 		"grl-podcasts",
@@ -226,6 +225,7 @@ source_is_recent (GrlSource *source)
 	const char const *sources[] = {
 		"grl-tracker-source",
 		"grl-optical-media",
+		"grl-bookmarks",
 		NULL
 	};
 
@@ -564,6 +564,8 @@ get_source_priority (GrlSource *source)
 	id = grl_source_get_id (source);
 	if (g_str_equal (id, "grl-optical-media"))
 		return 100;
+	if (g_str_equal (id, "grl-bookmarks"))
+		return 75;
 	if (g_str_equal (id, "grl-tracker-source"))
 		return 50;
 	if (g_str_has_prefix (id, "grl-upnp-") ||
