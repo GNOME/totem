@@ -382,10 +382,10 @@ out:
 }
 
 static void
-set_thumbnail_async (TotemGrilo *self,
-		     GrlMedia         *media,
-		     GtkTreeModel     *model,
-		     GtkTreePath      *path)
+set_thumbnail_async (TotemGrilo   *self,
+		     GrlMedia     *media,
+		     GtkTreeModel *model,
+		     GtkTreePath  *path)
 {
 	SetThumbnailData *thumb_data;
 
@@ -401,10 +401,10 @@ set_thumbnail_async (TotemGrilo *self,
 }
 
 static void
-set_thumbnail_source_async (TotemGrilo *self,
-			    GrlSource        *source,
-			    GtkTreeModel     *model,
-			    GtkTreePath      *path)
+set_thumbnail_source_async (TotemGrilo   *self,
+			    GrlSource    *source,
+			    GtkTreeModel *model,
+			    GtkTreePath  *path)
 {
 	SetThumbnailData *thumb_data;
 
@@ -606,11 +606,11 @@ add_media_to_model (GtkTreeStore *model,
 }
 
 static void
-browse_cb (GrlSource *source,
-           guint browse_id,
-           GrlMedia *media,
-           guint remaining,
-           gpointer user_data,
+browse_cb (GrlSource    *source,
+           guint         browse_id,
+           GrlMedia     *media,
+           guint         remaining,
+           gpointer      user_data,
            const GError *error)
 {
 	BrowseUserData *bud;
@@ -672,12 +672,12 @@ browse_cb (GrlSource *source,
 }
 
 static void
-browse (TotemGrilo *self,
-	GtkTreeModel     *model,
-        GtkTreePath      *path,
-        GrlSource        *source,
-        GrlMedia         *container,
-        gint              page)
+browse (TotemGrilo   *self,
+	GtkTreeModel *model,
+        GtkTreePath  *path,
+        GrlSource    *source,
+        GrlMedia     *container,
+        gint          page)
 {
 	BrowseUserData *bud;
 	GrlOperationOptions *default_options;
@@ -716,9 +716,9 @@ browse (TotemGrilo *self,
 
 static void
 play (TotemGrilo *self,
-      GrlSource *source,
-      GrlMedia *media,
-      gboolean resolve_url)
+      GrlSource  *source,
+      GrlMedia   *media,
+      gboolean    resolve_url)
 {
 	const gchar *url;
 	char *title;
@@ -742,11 +742,11 @@ play (TotemGrilo *self,
 }
 
 static void
-search_cb (GrlSource *source,
-           guint search_id,
-           GrlMedia *media,
-           guint remaining,
-           gpointer user_data,
+search_cb (GrlSource    *source,
+           guint         search_id,
+           GrlMedia     *media,
+           guint         remaining,
+           gpointer      user_data,
            const GError *error)
 {
 	GtkWindow *window;
@@ -845,7 +845,9 @@ search_more (TotemGrilo *self)
 }
 
 static void
-search (TotemGrilo *self, GrlSource *source, const gchar *text)
+search (TotemGrilo  *self,
+	GrlSource   *source,
+	const gchar *text)
 {
 	gtk_tree_store_clear (GTK_TREE_STORE (self->priv->search_results_model));
 //	g_hash_table_remove_all (self->priv->cache_thumbnails);
@@ -861,7 +863,8 @@ search (TotemGrilo *self, GrlSource *source, const gchar *text)
 }
 
 static void
-search_entry_activate_cb (GtkEntry *entry, TotemGrilo *self)
+search_entry_activate_cb (GtkEntry   *entry,
+			  TotemGrilo *self)
 {
 	GrlRegistry *registry;
 	const char *id;
@@ -922,7 +925,7 @@ set_browser_filter_model_for_path (TotemGrilo    *self,
 static void
 browser_activated_cb (GdMainView  *view,
                       GtkTreePath *path,
-                      gpointer user_data)
+                      gpointer     user_data)
 {
 	guint remaining;
 	gint page;
@@ -972,8 +975,8 @@ free_data:
 }
 
 static void
-search_entry_source_changed_cb (GObject          *object,
-                                GParamSpec       *pspec,
+search_entry_source_changed_cb (GObject    *object,
+                                GParamSpec *pspec,
                                 TotemGrilo *self)
 {
 	/* FIXME: Do we actually want to do that? */
@@ -987,7 +990,7 @@ search_entry_source_changed_cb (GObject          *object,
 static void
 search_activated_cb (GdMainView  *view,
                      GtkTreePath *path,
-                     gpointer user_data)
+                     gpointer     user_data)
 {
 	GtkTreeModel *model;
 	GtkTreeIter iter;
@@ -1011,7 +1014,7 @@ static void
 item_activated_cb (GdMainView  *view,
 		   const char  *id,
 		   GtkTreePath *path,
-		   gpointer user_data)
+		   gpointer     user_data)
 {
 	TotemGrilo *self = TOTEM_GRILO (user_data);
 	GtkTreeModel *model;
@@ -1065,7 +1068,7 @@ find_media (GtkTreeModel *model,
 
 static GtkTreeModel *
 get_tree_model_for_source (TotemGrilo *self,
-			   GrlSource        *source)
+			   GrlSource  *source)
 {
 	if (source_is_recent (source))
 		return self->priv->recent_model;
@@ -1075,8 +1078,8 @@ get_tree_model_for_source (TotemGrilo *self,
 
 static void
 content_changed (TotemGrilo   *self,
-		 GrlSource          *source,
-		 GPtrArray          *changed_medias)
+		 GrlSource    *source,
+		 GPtrArray    *changed_medias)
 {
 	GtkTreeModel *model;
 	guint i;
@@ -1094,8 +1097,8 @@ content_changed (TotemGrilo   *self,
 
 static void
 content_removed (TotemGrilo   *self,
-		 GrlSource          *source,
-		 GPtrArray          *changed_medias)
+		 GrlSource    *source,
+		 GPtrArray    *changed_medias)
 {
 	GtkTreeModel *model;
 	guint i;
@@ -1113,8 +1116,8 @@ content_removed (TotemGrilo   *self,
 
 static void
 content_added (TotemGrilo   *self,
-	       GrlSource          *source,
-	       GPtrArray          *changed_medias)
+	       GrlSource    *source,
+	       GPtrArray    *changed_medias)
 {
 	GtkTreeModel *model;
 	guint i;
@@ -1133,11 +1136,11 @@ content_added (TotemGrilo   *self,
 }
 
 static void
-content_changed_cb (GrlSource          *source,
-		    GPtrArray          *changed_medias,
-		    GrlSourceChangeType change_type,
-		    gboolean            location_unknown,
-		    TotemGrilo   *self)
+content_changed_cb (GrlSource           *source,
+		    GPtrArray           *changed_medias,
+		    GrlSourceChangeType  change_type,
+		    gboolean             location_unknown,
+		    TotemGrilo          *self)
 {
 	switch (change_type) {
 	case GRL_CONTENT_CHANGED:
@@ -1158,8 +1161,8 @@ content_changed_cb (GrlSource          *source,
 
 static void
 source_added_cb (GrlRegistry *registry,
-                 GrlSource *source,
-                 gpointer user_data)
+                 GrlSource   *source,
+                 gpointer     user_data)
 {
 	const gchar *name;
 	TotemGrilo *self;
@@ -1235,9 +1238,9 @@ source_added_cb (GrlRegistry *registry,
 
 static gboolean
 remove_browse_result (GtkTreeModel *model,
-                      GtkTreePath *path,
-                      GtkTreeIter *iter,
-                      gpointer user_data)
+                      GtkTreePath  *path,
+                      GtkTreeIter  *iter,
+                      gpointer      user_data)
 {
 	GrlSource *removed_source = GRL_SOURCE (user_data);
 	GrlSource *model_source;
@@ -1372,7 +1375,7 @@ adjustment_changed_cb (GtkAdjustment *adjustment,
 
 static void
 get_more_browse_results_cb (GtkAdjustment *adjustment,
-                            TotemGrilo *self)
+                            TotemGrilo    *self)
 {
 	GtkTreeModel *model;
 	GtkIconView *icon_view;
@@ -1461,7 +1464,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 
 static void
 adjustment_value_changed_cb (GtkAdjustment *adjustment,
-                             TotemGrilo *self)
+                             TotemGrilo    *self)
 {
 	update_search_thumbnails (self);
 
@@ -1550,8 +1553,8 @@ window_key_press_event_cb (GtkWidget   *win,
 }
 
 static void
-selection_mode_requested (GdMainView       *view,
-			  TotemGrilo *self)
+selection_mode_requested (GdMainView  *view,
+			  TotemGrilo  *self)
 {
 	GtkTreePath *root = NULL;
 
@@ -1588,8 +1591,8 @@ can_remove_foreach (gpointer data,
 }
 
 static void
-view_selection_changed_cb (GdMainView       *view,
-			   TotemGrilo *self)
+view_selection_changed_cb (GdMainView   *view,
+			   TotemGrilo   *self)
 {
 	GtkTreeModel *model;
 	GList *list;
@@ -1617,7 +1620,7 @@ view_selection_changed_cb (GdMainView       *view,
 static void
 select_all_action_cb (GSimpleAction    *action,
 		      GVariant         *parameter,
-		      TotemGrilo *self)
+		      TotemGrilo       *self)
 {
 	gd_main_view_select_all (GD_MAIN_VIEW (self->priv->browser));
 }
@@ -1625,14 +1628,14 @@ select_all_action_cb (GSimpleAction    *action,
 static void
 select_none_action_cb (GSimpleAction    *action,
 		       GVariant         *parameter,
-		       TotemGrilo *self)
+		       TotemGrilo       *self)
 {
 	gd_main_view_unselect_all (GD_MAIN_VIEW (self->priv->browser));
 }
 
 static void
 source_switched (GtkToggleButton  *button,
-		 TotemGrilo *self)
+		 TotemGrilo       *self)
 {
 	const char *id;
 
@@ -1700,7 +1703,7 @@ setup_source_switcher (TotemGrilo *self)
 static void
 search_mode_changed (GObject          *gobject,
 		     GParamSpec       *pspec,
-		     TotemGrilo *self)
+		     TotemGrilo       *self)
 {
 	gboolean search_mode;
 
@@ -1794,7 +1797,7 @@ shuffle_items (GList *list)
 
 static void
 play_selection (TotemGrilo *self,
-		gboolean          shuffle)
+		gboolean    shuffle)
 {
 	GtkTreeModel *model;
 	GList *list;
@@ -1858,14 +1861,14 @@ next_item:
 
 static void
 play_cb (TotemSelectionToolbar *bar,
-	 TotemGrilo      *self)
+	 TotemGrilo            *self)
 {
 	play_selection (self, FALSE);
 }
 
 static void
 shuffle_cb (TotemSelectionToolbar *bar,
-	    TotemGrilo      *self)
+	    TotemGrilo            *self)
 {
 	play_selection (self, TRUE);
 }
@@ -1929,7 +1932,7 @@ delete_foreach (gpointer data,
 
 static void
 delete_cb (TotemSelectionToolbar *bar,
-	   TotemGrilo      *self)
+	   TotemGrilo            *self)
 {
 	GtkTreeModel *model;
 	GList *list;
@@ -2094,7 +2097,7 @@ remaining_to_text (GtkTreeViewColumn *column,
 }
 
 static void
-create_debug_window (TotemGrilo *self,
+create_debug_window (TotemGrilo       *self,
 		     GtkTreeModel     *model)
 {
 	GtkWidget *window, *scrolled, *tree;
