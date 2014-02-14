@@ -3346,7 +3346,7 @@ on_seek_requested_event (BaconVideoWidget *bvw,
 {
 	gint64 offset;
 
-	offset = forward ? SEEK_FORWARD_SHORT_OFFSET * 1000 : SEEK_BACKWARD_SHORT_OFFSET * 1000;
+	offset = forward ? SEEK_FORWARD_OFFSET * 1000 : SEEK_BACKWARD_OFFSET * 1000;
 	totem_object_seek_relative (totem, offset, FALSE);
 }
 
