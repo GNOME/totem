@@ -468,8 +468,6 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	return subtitle;
 }
 
-#define OPEN_DIRECTORY_RESPONSE 1
-
 GSList *
 totem_add_files (GtkWindow *parent, const char *path)
 {
@@ -484,7 +482,6 @@ totem_add_files (GtkWindow *parent, const char *path)
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
 					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("Add Directory"), OPEN_DIRECTORY_RESPONSE,
 					  _("_Add"), GTK_RESPONSE_ACCEPT,
 					  NULL);
 	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
@@ -520,10 +517,8 @@ totem_add_files (GtkWindow *parent, const char *path)
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 
 	filenames = NULL;
-	if (response == OPEN_DIRECTORY_RESPONSE ||
-	    response == GTK_RESPONSE_ACCEPT) {
+	if (response == GTK_RESPONSE_ACCEPT)
 		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
-	}
 
 	if (filenames == NULL) {
 		gtk_widget_destroy (fs);
