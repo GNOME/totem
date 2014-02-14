@@ -3691,7 +3691,6 @@ totem_callback_connect (TotemObject *totem)
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::seekable",
 			G_CALLBACK (property_notify_cb_seekable), totem);
 	update_volume_sliders (totem);
-
 }
 
 void
