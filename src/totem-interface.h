@@ -51,6 +51,10 @@ void		 totem_interface_error_with_link (const char *title,
 						  GtkWindow *parent);
 void		 totem_interface_set_transient_for (GtkWindow *window,
 						    GtkWindow *parent);
+GtkWidget *	 totem_interface_create_header_button (GtkWidget  *header,
+						       GtkWidget  *button,
+						       const char *icon_name,
+						       GtkPackType pack_type);
 
 G_END_DECLS
 

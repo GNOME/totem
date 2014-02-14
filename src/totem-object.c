@@ -3562,24 +3562,6 @@ fullscreen_button_image_sync (GBinding     *binding,
 }
 
 static GtkWidget *
-create_header_button (GtkWidget  *header,
-		      GtkWidget  *button,
-		      const char *icon_name)
-{
-	GtkWidget *image;
-	GtkStyleContext *context;
-
-	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
-	gtk_button_set_image (GTK_BUTTON (button), image);
-	context = gtk_widget_get_style_context (button);
-	gtk_style_context_add_class (context, "image-button");
-	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
-
-	gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
-	return button;
-}
-
-static GtkWidget *
 create_control_button (TotemObject *totem,
 		       const gchar *action_name,
 		       const gchar *tooltip_text)
@@ -3661,14 +3643,20 @@ totem_callback_connect (TotemObject *totem)
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 
 	/* Cog wheel */
-	item = totem->gear_button = create_header_button (totem->header, gtk_menu_button_new (), "emblem-system-symbolic");
+	item = totem->gear_button = totem_interface_create_header_button (totem->header,
+									  gtk_menu_button_new (),
+									  "emblem-system-symbolic",
+									  GTK_PACK_END);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 
 	/* Fullscreen button */
-	item = totem->fullscreen_button = create_header_button (totem->header, gtk_button_new (), "view-fullscreen-symbolic");
+	item = totem->fullscreen_button = totem_interface_create_header_button (totem->header,
+										gtk_button_new (),
+										"view-fullscreen-symbolic",
+										GTK_PACK_END);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
 	image = gtk_button_get_image (GTK_BUTTON (item));
 	g_object_bind_property_full (totem, "fullscreen",
@@ -3786,14 +3774,20 @@ add_fullscreen_toolbar (TotemObject *totem)
 	g_signal_connect (G_OBJECT (totem->fullscreen_header), "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), totem);
 
-	item = create_header_button (totem->fullscreen_header, gtk_menu_button_new (), "emblem-system-symbolic");
+	item = totem_interface_create_header_button (totem->fullscreen_header,
+						     gtk_menu_button_new (),
+						     "emblem-system-symbolic",
+						     GTK_PACK_END);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
 
-	item = create_header_button (totem->fullscreen_header, gtk_button_new (), "view-fullscreen-symbolic");
+	item = totem_interface_create_header_button (totem->fullscreen_header,
+						     gtk_button_new (),
+						     "view-fullscreen-symbolic",
+						     GTK_PACK_END);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
 	image = gtk_button_get_image (GTK_BUTTON (item));
 	g_object_bind_property_full (totem, "fullscreen",

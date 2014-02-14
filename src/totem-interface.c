@@ -348,3 +348,26 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 	gtk_window_set_transient_for (GTK_WINDOW (window),
 				      GTK_WINDOW (parent));
 }
+
+GtkWidget *
+totem_interface_create_header_button (GtkWidget  *header,
+				      GtkWidget  *button,
+				      const char *icon_name,
+				      GtkPackType pack_type)
+{
+	GtkWidget *image;
+	GtkStyleContext *context;
+
+	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
+	gtk_button_set_image (GTK_BUTTON (button), image);
+	context = gtk_widget_get_style_context (button);
+	gtk_style_context_add_class (context, "image-button");
+	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
+
+	if (pack_type == GTK_PACK_END)
+		gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
+	else
+		gtk_header_bar_pack_start (GTK_HEADER_BAR (header), button);
+
+	return button;
+}
