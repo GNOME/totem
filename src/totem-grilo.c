@@ -154,6 +154,87 @@ enum {
 	CAN_REMOVE_TRUE        = 1
 };
 
+static gboolean
+strv_has_prefix (const char **strv,
+		 const char  *str)
+{
+	const char **s = strv;
+
+	while (*s) {
+		if (g_str_has_prefix (str, *s))
+			return TRUE;
+		s++;
+	}
+
+	return FALSE;
+}
+
+static gboolean
+source_is_blacklisted (GrlSource *source)
+{
+	const char *id;
+	const char const *sources[] = {
+		"grl-bookmarks",
+		"grl-shoutcast",
+		"grl-flickr",
+		"grl-podcasts",
+		"grl-dmap",
+		NULL
+	};
+
+	id = grl_source_get_id (source);
+	g_assert (id);
+
+	return strv_has_prefix (sources, id);
+}
+
+static gboolean
+source_is_browse_blacklisted (GrlSource *source)
+{
+	const char *id;
+	const char const *sources[] = {
+		/* https://bugzilla.gnome.org/show_bug.cgi?id=722422 */
+		"grl-youtube",
+		NULL
+	};
+
+	id = grl_source_get_id (source);
+	g_assert (id);
+
+	return strv_has_prefix (sources, id);
+}
+
+static gboolean
+source_is_search_blacklisted (GrlSource *source)
+{
+	const char *id;
+	const char const *sources[] = {
+		"grl-metadata-store",
+		NULL
+	};
+
+	id = grl_source_get_id (source);
+	g_assert (id);
+
+	return strv_has_prefix (sources, id);
+}
+
+static gboolean
+source_is_recent (GrlSource *source)
+{
+	const char *id;
+	const char const *sources[] = {
+		"grl-tracker-source",
+		"grl-optical-media",
+		NULL
+	};
+
+	id = grl_source_get_id (source);
+	g_assert (id);
+
+	return strv_has_prefix (sources, id);
+}
+
 static gchar *
 get_secondary_text (GrlMedia *media)
 {
@@ -447,13 +528,14 @@ update_media (GtkTreeStore *model,
 
 static void
 add_local_metadata (TotemGrilo *self,
-		    GrlMedia         *media)
+		    GrlSource  *source,
+		    GrlMedia   *media)
 {
 	GrlOperationOptions *options;
 
 	/* This is very slow and sync, so don't run it
 	 * for non-local media */
-	if (!g_str_equal (grl_media_get_source (media), "grl-tracker-source"))
+	if (!source_is_recent (source))
 		return;
 
 	options = grl_operation_options_new (NULL);
@@ -571,7 +653,7 @@ browse_cb (GrlSource *source,
 			g_assert_not_reached ();
 		}
 
-		add_local_metadata (self, media);
+		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (bud->model),
 				    bud->ref_parent ? &parent : NULL,
 				    source, media);
@@ -689,7 +771,7 @@ search_cb (GrlSource *source,
 			g_assert_not_reached ();
 		}
 
-		add_local_metadata (self, media);
+		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (self->priv->search_results_model),
 				    NULL, source, media);
 
@@ -945,73 +1027,6 @@ item_activated_cb (GdMainView  *view,
 }
 
 static gboolean
-strv_has_prefix (const char **strv,
-		 const char  *str)
-{
-	const char **s = strv;
-
-	while (*s) {
-		if (g_str_has_prefix (str, *s))
-			return TRUE;
-		s++;
-	}
-
-	return FALSE;
-}
-
-static gboolean
-source_is_blacklisted (GrlSource *source)
-{
-	const char *id;
-	const char const *sources[] = {
-		"grl-bookmarks",
-		"grl-shoutcast",
-		"grl-flickr",
-		"grl-podcasts",
-		"grl-dmap",
-		NULL
-	};
-
-	id = grl_source_get_id (source);
-	g_assert (id);
-
-	return strv_has_prefix (sources, id);
-}
-
-static gboolean
-source_is_browse_blacklisted (GrlSource *source)
-{
-	const char *id;
-	const char const *sources[] = {
-		/* https://bugzilla.gnome.org/show_bug.cgi?id=722422 */
-		"grl-youtube",
-		NULL
-	};
-
-	id = grl_source_get_id (source);
-	g_assert (id);
-
-	return strv_has_prefix (sources, id);
-}
-
-static gboolean
-source_is_search_blacklisted (GrlSource *source)
-{
-	const char *id;
-	const char const *sources[] = {
-		"grl-metadata-store",
-		NULL
-	};
-
-	id = grl_source_get_id (source);
-	g_assert (id);
-
-	return strv_has_prefix (sources, id);
-}
-
-
-
-static gboolean
 find_media_cb (GtkTreeModel  *model,
 	       GtkTreePath   *path,
 	       GtkTreeIter   *iter,
@@ -1052,13 +1067,8 @@ static GtkTreeModel *
 get_tree_model_for_source (TotemGrilo *self,
 			   GrlSource        *source)
 {
-	const char *id;
-
-	id = grl_source_get_id (source);
-	if (g_str_equal (id, "grl-tracker-source") ||
-	    g_str_equal (id, "grl-optical-media")) {
+	if (source_is_recent (source))
 		return self->priv->recent_model;
-	}
 
 	return self->priv->browser_model;
 }
@@ -1117,7 +1127,7 @@ content_added (TotemGrilo   *self,
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
 
-		add_local_metadata (self, media);
+		add_local_metadata (self, source, media);
 		add_media_to_model (GTK_TREE_STORE (model), NULL, source, media);
 	}
 }
@@ -1189,8 +1199,7 @@ source_added_cb (GrlRegistry *registry,
 	if (ops & GRL_OP_BROWSE) {
 		gboolean monitor = FALSE;
 
-		if (g_str_equal (id, "grl-tracker-source") ||
-		    g_str_equal (id, "grl-optical-media")) {
+		if (source_is_recent (source)) {
 			browse (self, self->priv->recent_model,
 				NULL, source, NULL, -1);
 			monitor = TRUE;
