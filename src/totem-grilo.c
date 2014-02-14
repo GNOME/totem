@@ -306,6 +306,8 @@ can_remove (GrlSource *source,
 
 	if (!(grl_source_supported_operations (source) & GRL_OP_REMOVE))
 		return CAN_REMOVE_UNSUPPORTED;
+	if (g_strcmp0 (grl_source_get_id (source), "grl-bookmarks") == 0)
+		return CAN_REMOVE_TRUE;
 	if (!media)
 		return CAN_REMOVE_FALSE;
 	if (GRL_IS_MEDIA_BOX (media))
