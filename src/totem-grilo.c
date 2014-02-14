@@ -304,12 +304,10 @@ can_remove (GrlSource *source,
 	char *scheme;
 	int ret;
 
-	if (!(grl_source_supported_operations (source) & GRL_OP_REMOVE))
-		return CAN_REMOVE_UNSUPPORTED;
 	if (g_strcmp0 (grl_source_get_id (source), "grl-bookmarks") == 0)
 		return CAN_REMOVE_TRUE;
 	if (!media)
-		return CAN_REMOVE_FALSE;
+		goto fallback;
 	if (GRL_IS_MEDIA_BOX (media))
 		return CAN_REMOVE_FALSE;
 	url = grl_media_get_url (media);
@@ -320,7 +318,14 @@ can_remove (GrlSource *source,
 	ret = g_str_equal (scheme, "file") ? CAN_REMOVE_TRUE : CAN_REMOVE_FALSE;
 	g_free (scheme);
 
-	return ret;
+	if (ret == CAN_REMOVE_TRUE)
+		return CAN_REMOVE_TRUE;
+
+fallback:
+	if (!(grl_source_supported_operations (source) & GRL_OP_REMOVE))
+		return CAN_REMOVE_UNSUPPORTED;
+
+	return CAN_REMOVE_FALSE;
 }
 
 static void
