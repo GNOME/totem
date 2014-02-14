@@ -6,16 +6,16 @@
       <object class="GtkActionGroup" id="playlist-action-group">
          <child>
             <object class="GtkAction" id="copy-location">
-               <property name="label" translatable="yes">_Copy Location</property>
-               <property name="tooltip" translatable="yes">Copy the location to the clipboard</property>
+               <property name="label" translatable="no">_Copy Location</property>
+               <property name="tooltip" translatable="no">Copy the location to the clipboard</property>
                <property name="stock-id">gtk-copy</property>
                <signal name="activate" handler="playlist_copy_location_action_callback"/>
             </object>
          </child>
          <child>
             <object class="GtkAction" id="select-subtitle">
-               <property name="label" translatable="yes">_Select Text Subtitles...</property>
-               <property name="tooltip" translatable="yes">Select a file to use for text subtitles</property>
+               <property name="label" translatable="no">_Select Text Subtitles...</property>
+               <property name="tooltip" translatable="no">Select a file to use for text subtitles</property>
                <property name="stock-id">gtk-open</property>
                <signal name="activate" handler="playlist_select_subtitle_action_callback"/>
             </object>
@@ -98,7 +98,7 @@
             <property name="use_underline">True</property>
 	    <property name="icon_name">list-add-symbolic</property>
 	    <signal name="clicked" handler="totem_playlist_add_files"/>
-	    <property name="tooltip-text" translatable="yes">Add...</property>
+	    <property name="tooltip-text" translatable="no">Add...</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -113,7 +113,7 @@
             <property name="use_underline">True</property>
 	    <property name="icon_name">list-remove-symbolic</property>
 	    <signal name="clicked" handler="playlist_remove_button_clicked"/>
-	    <property name="tooltip-text" translatable="yes">Remove</property>
+	    <property name="tooltip-text" translatable="no">Remove</property>
           </object>
           <packing>
             <property name="expand">False</property>

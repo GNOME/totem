@@ -650,7 +650,7 @@ init_columns (GtkTreeView *treeview, TotemPlaylist *playlist)
 	/* Playing pix */
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	column = gtk_tree_view_column_new ();
-	g_object_set (G_OBJECT (column), "title", _("Playlist"), NULL);
+	g_object_set (G_OBJECT (column), "title", "Playlist", NULL);
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
 	gtk_tree_view_column_set_cell_data_func (column, renderer,
 			(GtkTreeCellDataFunc) set_playing_icon, playlist, NULL);
