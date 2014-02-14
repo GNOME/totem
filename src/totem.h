@@ -194,6 +194,11 @@ void totem_object_empty_menu_section		(TotemObject *totem,
 
 GtkWidget *totem_object_get_video_widget	(TotemObject *totem);
 
+/* Database handling */
+void	totem_object_add_to_view		(TotemObject *totem,
+						 GFile       *file,
+						 const char  *title);
+
 /* Current media information */
 char *	totem_object_get_short_title		(TotemObject *totem);
 gint64	totem_object_get_current_time		(TotemObject *totem);

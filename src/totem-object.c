@@ -815,6 +815,30 @@ totem_object_get_short_title (TotemObject *totem)
 }
 
 /**
+ * totem_object_add_to_view:
+ * @totem: a #TotemObject
+ * @file: a #GFile representing a media
+ * @title: a title for the media, or %NULL
+ *
+ * Adds a local media file to the main view.
+ *
+ **/
+void
+totem_object_add_to_view (TotemObject *totem,
+			  GFile       *file,
+			  const char  *title)
+{
+	char *uri;
+
+	uri = g_file_get_uri (file);
+	if (!totem_grilo_add_item_to_recent (TOTEM_GRILO (totem->grilo),
+					     uri, title, FALSE)) {
+		g_warning ("Failed to add '%s' to view", uri);
+	}
+	g_free (uri);
+}
+
+/**
  * totem_object_set_current_subtitle:
  * @totem: a #TotemObject
  * @subtitle_uri: the URI of the subtitle file to add
