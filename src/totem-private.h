@@ -153,6 +153,7 @@ struct _TotemObject {
 	GObject *custom_title;
 	GtkWidget *fullscreen_button;
 	GtkWidget *gear_button;
+	GtkWidget *add_button;
 
 	char *player_title;
 

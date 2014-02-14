@@ -893,6 +893,7 @@ totem_object_set_main_page (TotemObject *totem,
 			      NULL);
 		gtk_widget_show (totem->fullscreen_button);
 		gtk_widget_show (totem->gear_button);
+		gtk_widget_hide (totem->add_button);
 		bacon_video_widget_show_popup (totem->bvw);
 	} else if (g_strcmp0 (page_id, "grilo") == 0) {
 		g_object_set (totem->header,
@@ -912,6 +913,8 @@ totem_object_set_main_page (TotemObject *totem,
 		g_clear_object (&totem->custom_title);
 		gtk_widget_hide (totem->fullscreen_button);
 		gtk_widget_hide (totem->gear_button);
+		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
+			gtk_widget_show (totem->add_button);
 	}
 }
 
@@ -3561,6 +3564,22 @@ fullscreen_button_image_sync (GBinding     *binding,
 	return TRUE;
 }
 
+static void
+update_add_button_visibility (GObject     *gobject,
+			      GParamSpec  *pspec,
+			      TotemObject *totem)
+{
+	TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (gobject);
+
+	if (totem_main_toolbar_get_search_mode (bar) ||
+	    totem_main_toolbar_get_select_mode (bar)) {
+		gtk_widget_hide (totem->add_button);
+	} else {
+		gtk_widget_set_visible (totem->add_button,
+					totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo))  == TOTEM_GRILO_PAGE_RECENT);
+	}
+}
+
 static GtkWidget *
 create_control_button (TotemObject *totem,
 		       const gchar *action_name,
@@ -3652,6 +3671,20 @@ totem_callback_connect (TotemObject *totem)
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 
+	/* Add button */
+	item = totem->add_button = totem_interface_create_header_button (totem->header,
+									 gtk_menu_button_new (),
+									 "list-add-symbolic",
+									 GTK_PACK_START);
+	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "addmenu");
+	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	gtk_widget_show (item);
+
+	g_signal_connect (G_OBJECT (totem->header), "notify::search-mode",
+			  G_CALLBACK (update_add_button_visibility), totem);
+	g_signal_connect (G_OBJECT (totem->header), "notify::select-mode",
+			  G_CALLBACK (update_add_button_visibility), totem);
+
 	/* Fullscreen button */
 	item = totem->fullscreen_button = totem_interface_create_header_button (totem->header,
 										gtk_button_new (),
@@ -3736,12 +3769,28 @@ grilo_show_back_button_changed (TotemGrilo  *grilo,
 	}
 }
 
+static void
+grilo_current_page_changed (TotemGrilo  *grilo,
+			    GParamSpec  *spec,
+			    TotemObject *totem)
+{
+	if (g_strcmp0 (totem_object_get_main_page (totem), "grilo") == 0) {
+		TotemGriloPage page;
+
+		page = totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo));
+		gtk_widget_set_visible (totem->add_button,
+					page == TOTEM_GRILO_PAGE_RECENT);
+	}
+}
+
 void
 grilo_widget_setup (TotemObject *totem)
 {
 	totem->grilo = totem_grilo_new (totem, totem->header);
 	g_signal_connect (G_OBJECT (totem->grilo), "notify::show-back-button",
 			  G_CALLBACK (grilo_show_back_button_changed), totem);
+	g_signal_connect (G_OBJECT (totem->grilo), "notify::current-page",
+			  G_CALLBACK (grilo_current_page_changed), totem);
 	gtk_stack_add_named (GTK_STACK (totem->stack),
 			     totem->grilo,
 			     "grilo");
