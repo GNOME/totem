@@ -1745,8 +1745,8 @@ search_mode_changed (GObject          *gobject,
 
 	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header));
 	if (!search_mode) {
-		/* One of those will fail, as there's the toggle
-		 * button won't be active */
+		/* One of those will fail, as one of the toggle
+		 * buttons won't be active */
 		source_switched (GTK_TOGGLE_BUTTON (self->priv->recent), self);
 		source_switched (GTK_TOGGLE_BUTTON (self->priv->channels), self);
 	} else {
