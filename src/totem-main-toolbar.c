@@ -147,16 +147,20 @@ update_toolbar_state (TotemMainToolbar *bar)
     }
   else if (priv->search_mode)
     {
-      char *label;
-
-      gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), SEARCH_RESULTS_PAGE);
       if (!priv->search_string || *priv->search_string == '\0')
-        label = g_strdup ("");
+        {
+          gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), CUSTOM_TITLE_PAGE);
+        }
       else
-        label = g_strdup_printf (_("Results for “%s”"), priv->search_string);
+        {
+          char *label;
 
-      gtk_label_set_label (GTK_LABEL (priv->search_results_label), label);
-      g_free (label);
+          gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), SEARCH_RESULTS_PAGE);
+          label = g_strdup_printf (_("Results for “%s”"), priv->search_string);
+
+          gtk_label_set_label (GTK_LABEL (priv->search_results_label), label);
+          g_free (label);
+        }
 
       if (priv->show_select_button)
         gtk_widget_show (priv->select_button);
