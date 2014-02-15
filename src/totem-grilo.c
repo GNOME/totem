@@ -84,8 +84,11 @@ struct _TotemGriloPrivate {
 	GMenuModel *selectmenu;
 	GSimpleAction *select_all_action;
 	GSimpleAction *select_none_action;
+
+	/* Source switcher */
 	GtkWidget *switcher;
-	GtkWidget *recent, *channels;
+	GtkWidget *recent, *channels, *search_hidden_button;
+	char *last_page;
 
 	/* Browser widgets */
 	GtkWidget *browser;
@@ -1686,9 +1689,12 @@ source_switched (GtkToggleButton  *button,
 		else
 			set_browser_filter_model_for_path (self, NULL);
 		self->priv->current_page = TOTEM_GRILO_PAGE_CHANNELS;
-	} else {
-		g_assert_not_reached ();
+	} else if (g_str_equal (id, "search")) {
+		return;
 	}
+
+	g_clear_pointer (&self->priv->last_page, g_free);
+	g_object_set (self->priv->header, "search-mode", FALSE, NULL);
 
 	g_object_notify (G_OBJECT (self), "current-page");
 }
@@ -1728,6 +1734,11 @@ setup_source_switcher (TotemGrilo *self)
 				     GTK_RADIO_BUTTON (self->priv->recent));
 	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->channels);
 
+	self->priv->search_hidden_button = create_switcher_button (self, "HIDDEN SEARCH BUTTON", "search");
+	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->priv->search_hidden_button),
+				     GTK_RADIO_BUTTON (self->priv->recent));
+	g_object_ref_sink (G_OBJECT (self->priv->search_hidden_button));
+
 	context = gtk_widget_get_style_context (self->priv->switcher);
 	gtk_style_context_add_class (context, "stack-switcher");
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_LINKED);
@@ -1745,10 +1756,16 @@ search_mode_changed (GObject          *gobject,
 
 	search_mode = totem_main_toolbar_get_search_mode (TOTEM_MAIN_TOOLBAR (self->priv->header));
 	if (!search_mode) {
-		/* One of those will fail, as one of the toggle
-		 * buttons won't be active */
-		source_switched (GTK_TOGGLE_BUTTON (self->priv->recent), self);
-		source_switched (GTK_TOGGLE_BUTTON (self->priv->channels), self);
+		if (self->priv->last_page ==  NULL) {
+			/* Already reset */
+		} else if (g_str_equal (self->priv->last_page, "recent")) {
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->priv->recent), TRUE);
+		} else if (g_str_equal (self->priv->last_page, "channels")) {
+			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->priv->channels), TRUE);
+		} else {
+			g_assert_not_reached ();
+		}
+		g_clear_pointer (&self->priv->last_page, g_free);
 	} else {
 		GtkTreeModel *model;
 		const char *id = NULL;
@@ -1757,6 +1774,7 @@ search_mode_changed (GObject          *gobject,
 		model = gd_main_view_get_model (GD_MAIN_VIEW (self->priv->browser));
 		if (model == self->priv->recent_sort_model) {
 			id = "grl-tracker-source";
+			self->priv->last_page = g_strdup ("recent");
 		} else {
 			GtkTreeIter iter;
 			GtkTreePath *path;
@@ -1773,10 +1791,14 @@ search_mode_changed (GObject          *gobject,
 				g_clear_object (&source);
 			}
 			g_clear_pointer (&path, gtk_tree_path_free);
+
+			self->priv->last_page = g_strdup ("channels");
 		}
 
 		if (id != NULL)
 			totem_search_entry_set_selected_id (TOTEM_SEARCH_ENTRY (self->priv->search_entry), id);
+
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->priv->search_hidden_button), TRUE);
 	}
 
 	self->priv->in_search = search_mode;
@@ -2239,6 +2261,7 @@ totem_grilo_finalize (GObject *object)
 	totem_grilo_clear_icons ();
 
 	g_clear_object (&self->priv->switcher);
+	g_clear_object (&self->priv->search_hidden_button);
 
 	/* Empty results */
 	//FIXME
