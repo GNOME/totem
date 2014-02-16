@@ -2200,28 +2200,6 @@ drop_video_cb (GtkWidget     *widget,
 }
 
 static void
-drag_motion_video_cb (GtkWidget      *widget,
-                      GdkDragContext *context,
-                      gint            x,
-                      gint            y,
-                      guint           _time,
-                      Totem          *totem)
-{
-	GdkDevice *device;
-	GdkModifierType mask;
-
-	device = gdk_drag_context_get_device (context);
-	gdk_device_get_state (device, gtk_widget_get_window (widget), NULL, &mask);
-	if (mask & GDK_CONTROL_MASK) {
-		gdk_drag_status (context, GDK_ACTION_COPY, _time);
-	} else if (mask & GDK_MOD1_MASK || gdk_drag_context_get_suggested_action (context) == GDK_ACTION_ASK) {
-		gdk_drag_status (context, GDK_ACTION_ASK, _time);
-	} else {
-		gdk_drag_status (context, GDK_ACTION_MOVE, _time);
-	}
-}
-
-static void
 back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
 {
@@ -3931,11 +3909,9 @@ video_widget_create (TotemObject *totem)
 
 	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
 			G_CALLBACK (drop_video_cb), totem);
-	g_signal_connect (G_OBJECT (totem->bvw), "drag_motion",
-			G_CALLBACK (drag_motion_video_cb), totem);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
-			target_table, G_N_ELEMENTS (target_table),
-			GDK_ACTION_COPY | GDK_ACTION_MOVE);
+			   target_table, G_N_ELEMENTS (target_table),
+			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
 	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
