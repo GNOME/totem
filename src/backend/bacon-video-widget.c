@@ -4211,6 +4211,8 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
   g_clear_object (&bvw->priv->cover_pixbuf);
+  clutter_actor_hide (bvw->priv->spinner);
+  g_object_set (G_OBJECT (bvw->priv->spinner), "percent", 0.0, NULL);
   GST_DEBUG ("stopped");
 }
 
