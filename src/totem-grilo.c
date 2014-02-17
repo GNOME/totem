@@ -2449,6 +2449,11 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 					       options);
 		if (title)
 			grl_media_set_title (media, title);
+
+		/* We don't handle directories yet */
+		if (media == GRL_IS_MEDIA_BOX (media))
+			g_clear_object (&media);
+
 		g_object_unref (options);
 	}
 
