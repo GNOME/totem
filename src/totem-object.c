@@ -83,12 +83,6 @@
 
 #define TOTEM_SESSION_SAVE_TIMEOUT 10 /* seconds */
 
-/* casts are to shut gcc up */
-static const GtkTargetEntry target_table[] = {
-	{ (gchar*) "text/uri-list", 0, 0 },
-	{ (gchar*) "_NETSCAPE_URL", 0, 1 }
-};
-
 static gboolean totem_object_open_files_list (TotemObject *totem, GSList *list);
 static void update_buttons (TotemObject *totem);
 static void update_fill (TotemObject *totem, gdouble level);
@@ -2058,137 +2052,6 @@ totem_object_show_help (TotemObject *totem)
 	}
 }
 
-/* This is called in the main thread */
-static void
-totem_object_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result, TotemObject *totem)
-{
-	char *mrl, *subtitle;
-
-	/* Reconnect the playlist's changed signal (which was disconnected below in totem_object_drop_files(). */
-	g_signal_connect (G_OBJECT (playlist), "changed", G_CALLBACK (playlist_changed_cb), totem);
-	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
-	totem_object_set_mrl_and_play (totem, mrl, subtitle);
-	g_free (mrl);
-	g_free (subtitle);
-
-	g_object_unref (totem);
-}
-
-static gboolean
-totem_object_drop_files (TotemObject      *totem,
-			 GtkSelectionData *data,
-			 int               drop_type,
-			 gboolean          empty_pl)
-{
-	char **list;
-	guint i, len;
-	GList *p, *file_list, *mrl_list = NULL;
-	gboolean cleared = FALSE;
-
-	list = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (data));
-	file_list = NULL;
-
-	for (i = 0; list[i] != NULL; i++) {
-		char *filename;
-
-		if (list[i] == NULL)
-			continue;
-
-		filename = totem_create_full_path (list[i]);
-		file_list = g_list_prepend (file_list,
-					    filename ? filename : g_strdup (list[i]));
-	}
-	g_strfreev (list);
-
-	if (file_list == NULL)
-		return FALSE;
-
-	if (drop_type != 1)
-		file_list = g_list_sort (file_list, (GCompareFunc) strcmp);
-	else
-		file_list = g_list_reverse (file_list);
-
-	/* How many files? Check whether those could be subtitles */
-	len = g_list_length (file_list);
-	if (len == 1 || (len == 2 && drop_type == 1)) {
-		if (totem_uri_is_subtitle (file_list->data) != FALSE) {
-			totem_playlist_set_current_subtitle (totem->playlist, file_list->data);
-			goto bail;
-		}
-	}
-
-	if (empty_pl != FALSE) {
-		/* The function that calls us knows better if we should be doing something with the changed playlist... */
-		g_signal_handlers_disconnect_by_func (G_OBJECT (totem->playlist), playlist_changed_cb, totem);
-		totem_playlist_clear (totem->playlist);
-		cleared = TRUE;
-	}
-
-	/* Add each MRL to the playlist asynchronously */
-	for (p = file_list; p != NULL; p = p->next) {
-		const char *filename, *title;
-
-		filename = p->data;
-		title = NULL;
-
-		/* Super _NETSCAPE_URL trick */
-		if (drop_type == 1) {
-			p = p->next;
-			if (p != NULL) {
-				if (g_str_has_prefix (p->data, "File:") != FALSE)
-					title = (char *)p->data + 5;
-				else
-					title = p->data;
-			}
-		}
-
-		/* Add the MRL data to the list of MRLs to add to the playlist */
-		mrl_list = g_list_prepend (mrl_list, totem_playlist_mrl_data_new (filename, title));
-	}
-
-	/* Add the MRLs to the playlist asynchronously and in order. We need to reconnect playlist's "changed" signal once all of the add-MRL
-	 * operations have completed. If we haven't cleared the playlist, there's no need to do this. */
-	if (mrl_list != NULL && cleared == TRUE) {
-		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL,
-		                         (GAsyncReadyCallback) totem_object_drop_files_finished, g_object_ref (totem));
-	} else if (mrl_list != NULL) {
-		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
-	}
-
-bail:
-	g_list_free_full (file_list, g_free);
-
-	return TRUE;
-}
-
-static void
-drop_video_cb (GtkWidget          *widget,
-	       GdkDragContext     *context,
-	       gint                x,
-	       gint                y,
-	       GtkSelectionData   *data,
-	       guint               info,
-	       guint               _time,
-	       Totem              *totem)
-{
-	GtkWidget *source_widget;
-	gboolean empty_pl;
-	GdkDragAction action = gdk_drag_context_get_selected_action (context);
-
-	source_widget = gtk_drag_get_source_widget (context);
-
-	/* Drop of video on itself */
-	if (source_widget && widget == source_widget && action == GDK_ACTION_MOVE) {
-		gtk_drag_finish (context, FALSE, FALSE, _time);
-		return;
-	}
-
-	empty_pl = (action == GDK_ACTION_MOVE);
-	totem_object_drop_files (totem, data, info, empty_pl);
-	gtk_drag_finish (context, TRUE, FALSE, _time);
-	return;
-}
-
 static void
 back_button_clicked_cb (GtkButton   *button,
 			TotemObject *totem)
@@ -3896,12 +3759,6 @@ video_widget_create (TotemObject *totem)
 			G_CALLBACK (window_key_press_event_cb), totem);
 	g_signal_connect (G_OBJECT(totem->bvw), "key_release_event",
 			G_CALLBACK (window_key_press_event_cb), totem);
-
-	g_signal_connect (G_OBJECT (totem->bvw), "drag_data_received",
-			G_CALLBACK (drop_video_cb), totem);
-	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
-			   target_table, G_N_ELEMENTS (target_table),
-			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
 	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
