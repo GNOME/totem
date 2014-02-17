@@ -2032,18 +2032,29 @@ delete_foreach (gpointer data,
 
 	success = TRUE;
 	if (grl_source_supported_operations (source) & GRL_OP_REMOVE) {
+		g_debug ("Removing item '%s' through Grilo",
+			 grl_media_get_id (media));
 		grl_source_remove_sync (source, media, &error);
 		success = (error != NULL);
 	} else {
-		GFile *file;
+		const char *uri;
 
-		file = g_file_new_for_uri (grl_media_get_url (media));
-		success = g_file_trash (file, NULL, &error);
-		g_object_unref (file);
+		uri = grl_media_get_url (media);
+		if (!uri) {
+			g_set_error_literal (&error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED,
+					     "Item cannot be removed through Grilo and doesn't have a URI, please file a bug");
+		} else {
+			GFile *file;
+
+			file = g_file_new_for_uri (grl_media_get_url (media));
+			success = g_file_trash (file, NULL, &error);
+			g_object_unref (file);
+		}
 	}
 	if (!success) {
-		g_warning ("Couldn't remove item '%s': %s",
+		g_warning ("Couldn't remove item '%s' (%s): %s",
 			   grl_media_get_title (media),
+			   grl_media_get_id (media),
 			   error->message);
 		g_error_free (error);
 	} else {
