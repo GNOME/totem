@@ -55,6 +55,12 @@
 #define PAGE_SIZE             50
 #define SCROLL_GET_MORE_LIMIT 0.8
 
+/* casts are to shut gcc up */
+static const GtkTargetEntry target_table[] = {
+	{ (gchar*) "text/uri-list", 0, 0 },
+	{ (gchar*) "_NETSCAPE_URL", 0, 1 }
+};
+
 struct _TotemGriloPrivate {
 	Totem *totem;
 	GtkWindow *main_window;
@@ -92,6 +98,7 @@ struct _TotemGriloPrivate {
 
 	/* Browser widgets */
 	GtkWidget *browser;
+	guint dnd_handler_id;
 	GtkTreeModel *recent_model;
 	GtkTreeModel *recent_sort_model;
 	GtkTreeModel *browser_model;
@@ -1669,6 +1676,72 @@ select_none_action_cb (GSimpleAction    *action,
 }
 
 static void
+totem_grilo_drop_files (TotemGrilo       *self,
+			GtkSelectionData *data)
+{
+	char **list;
+	guint i;
+
+	list = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (data));
+
+	for (i = 0; list[i] != NULL; i++) {
+		if (list[i] == NULL)
+			continue;
+
+		g_debug ("Preparing to add '%s' as dropped file", list[i]);
+		totem_grilo_add_item_to_recent (self, list[i], NULL, FALSE);
+	}
+
+	g_strfreev (list);
+}
+
+static void
+drop_video_cb (GtkWidget          *widget,
+	       GdkDragContext     *context,
+	       gint                x,
+	       gint                y,
+	       GtkSelectionData   *data,
+	       guint               info,
+	       guint               _time,
+	       TotemGrilo         *self)
+{
+	GtkWidget *source_widget;
+	GdkDragAction action = gdk_drag_context_get_selected_action (context);
+
+	source_widget = gtk_drag_get_source_widget (context);
+
+	/* Drop of video on itself */
+	if (source_widget && widget == source_widget && action == GDK_ACTION_MOVE) {
+		gtk_drag_finish (context, FALSE, FALSE, _time);
+		return;
+	}
+
+	totem_grilo_drop_files (self, data);
+	gtk_drag_finish (context, TRUE, FALSE, _time);
+}
+
+static void
+totem_grilo_set_drop_enabled (TotemGrilo *self,
+			      gboolean    enabled)
+{
+	if (enabled == (self->priv->dnd_handler_id != 0))
+		return;
+
+	if (enabled) {
+		self->priv->dnd_handler_id = g_signal_connect (G_OBJECT (self->priv->browser), "drag_data_received",
+							       G_CALLBACK (drop_video_cb), self);
+		gtk_drag_dest_set (GTK_WIDGET (self->priv->browser), GTK_DEST_DEFAULT_ALL,
+				   target_table, G_N_ELEMENTS (target_table),
+				   GDK_ACTION_MOVE | GDK_ACTION_COPY);
+	} else {
+		g_signal_handler_disconnect (G_OBJECT (self->priv->browser),
+					     self->priv->dnd_handler_id);
+		self->priv->dnd_handler_id = 0;
+		gtk_drag_dest_unset (GTK_WIDGET (self->priv->browser));
+	}
+}
+
+static void
 source_switched (GtkToggleButton  *button,
 		 TotemGrilo       *self)
 {
@@ -1682,6 +1755,7 @@ source_switched (GtkToggleButton  *button,
 		gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
 					self->priv->recent_sort_model);
 		self->priv->current_page = TOTEM_GRILO_PAGE_RECENT;
+		totem_grilo_set_drop_enabled (self, TRUE);
 	} else if (g_str_equal (id, "channels")) {
 		if (self->priv->browser_filter_model != NULL)
 			gd_main_view_set_model (GD_MAIN_VIEW (self->priv->browser),
@@ -1689,6 +1763,7 @@ source_switched (GtkToggleButton  *button,
 		else
 			set_browser_filter_model_for_path (self, NULL);
 		self->priv->current_page = TOTEM_GRILO_PAGE_CHANNELS;
+		totem_grilo_set_drop_enabled (self, FALSE);
 	} else if (g_str_equal (id, "search")) {
 		return;
 	}
@@ -2069,6 +2144,8 @@ setup_browse (TotemGrilo *self)
 	                  G_CALLBACK (item_activated_cb), self);
 	g_signal_connect (self->priv->browser, "selection-mode-request",
 			  G_CALLBACK (selection_mode_requested), self);
+
+	totem_grilo_set_drop_enabled (self, TRUE);
 
 	/* Selection toolbar */
 	g_object_set (G_OBJECT (self->priv->header), "select-menu-model", self->priv->selectmenu, NULL);
