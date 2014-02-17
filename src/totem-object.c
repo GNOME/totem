@@ -61,7 +61,6 @@
 #include "totem-uri.h"
 #include "totem-interface.h"
 #include "video-utils.h"
-#include "totem-dnd-menu.h"
 #include "totem-preferences.h"
 #include "totem-session.h"
 #include "totem-rtl-helpers.h"
@@ -2180,17 +2179,6 @@ drop_video_cb (GtkWidget          *widget,
 
 	/* Drop of video on itself */
 	if (source_widget && widget == source_widget && action == GDK_ACTION_MOVE) {
-		gtk_drag_finish (context, FALSE, FALSE, _time);
-		return;
-	}
-
-	if (action == GDK_ACTION_ASK) {
-		action = totem_drag_ask (totem_object_get_playlist_length (totem) > 0);
-		gdk_drag_status (context, action, GDK_CURRENT_TIME);
-	}
-
-	/* User selected cancel */
-	if (action == GDK_ACTION_DEFAULT) {
 		gtk_drag_finish (context, FALSE, FALSE, _time);
 		return;
 	}
