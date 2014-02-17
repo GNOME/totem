@@ -2076,8 +2076,10 @@ totem_object_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result,
 }
 
 static gboolean
-totem_object_drop_files (TotemObject *totem, GtkSelectionData *data,
-		int drop_type, gboolean empty_pl)
+totem_object_drop_files (TotemObject      *totem,
+			 GtkSelectionData *data,
+			 int               drop_type,
+			 gboolean          empty_pl)
 {
 	char **list;
 	guint i, len;
@@ -2161,14 +2163,14 @@ bail:
 }
 
 static void
-drop_video_cb (GtkWidget     *widget,
-	 GdkDragContext     *context,
-	 gint                x,
-	 gint                y,
-	 GtkSelectionData   *data,
-	 guint               info,
-	 guint               _time,
-	 Totem              *totem)
+drop_video_cb (GtkWidget          *widget,
+	       GdkDragContext     *context,
+	       gint                x,
+	       gint                y,
+	       GtkSelectionData   *data,
+	       guint               info,
+	       guint               _time,
+	       Totem              *totem)
 {
 	GtkWidget *source_widget;
 	gboolean empty_pl;
