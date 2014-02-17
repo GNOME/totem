@@ -2453,22 +2453,22 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 		GrlOperationOptions *options;
 
 		options = grl_operation_options_new (NULL);
-		media = grl_pls_file_to_media (NULL,
+		media = grl_media_video_new ();
+		media = grl_pls_file_to_media (media,
 					       file,
 					       NULL,
 					       FALSE,
 					       options);
-		if (title)
+		if (media && title)
 			grl_media_set_title (media, title);
-
-		/* We don't handle directories yet */
-		if (media == GRL_IS_MEDIA_BOX (media))
-			g_clear_object (&media);
 
 		g_object_unref (options);
 	}
 
 	g_object_unref (file);
+
+	if (!media)
+		return FALSE;
 
 	/* This should be quick, just adding the item to the DB */
 	grl_source_store_sync (self->priv->bookmarks_src,
