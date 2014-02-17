@@ -1804,6 +1804,12 @@ setup_source_switcher (TotemGrilo *self)
 	self->priv->recent = create_switcher_button (self, _("Recent"), "recent");
 	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->recent);
 
+	g_signal_connect (G_OBJECT (self->priv->recent), "drag_data_received",
+			  G_CALLBACK (drop_video_cb), self);
+	gtk_drag_dest_set (GTK_WIDGET (self->priv->recent), GTK_DEST_DEFAULT_ALL,
+			   target_table, G_N_ELEMENTS (target_table),
+			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
+
 	self->priv->channels = create_switcher_button (self, _("Channels"), "channels");
 	gtk_radio_button_join_group (GTK_RADIO_BUTTON (self->priv->channels),
 				     GTK_RADIO_BUTTON (self->priv->recent));
