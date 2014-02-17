@@ -2196,6 +2196,7 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
     bvw->priv->buffering = TRUE;
   } else {
     GST_LOG ("Buffering ... %d", percent);
+    bvw->priv->buffering = TRUE;
   }
 }
 
