@@ -2250,6 +2250,35 @@ remaining_to_text (GtkTreeViewColumn *column,
 }
 
 static void
+media_to_text (GtkTreeViewColumn *column,
+	       GtkCellRenderer   *cell,
+	       GtkTreeModel      *model,
+	       GtkTreeIter       *iter,
+	       gpointer           user_data)
+{
+	int column_num;
+	GrlMedia *media;
+	const char *text;
+
+	column_num = GPOINTER_TO_INT (user_data);
+
+	gtk_tree_model_get (model, iter, MODEL_RESULTS_CONTENT, &media, -1);
+	if (media == NULL)
+		return;
+
+	if (column_num == GD_MAIN_COLUMN_ID)
+		text = grl_media_get_id (media);
+	else if (column_num == GD_MAIN_COLUMN_URI)
+		text = grl_media_get_url (media);
+	else
+		g_assert_not_reached ();
+
+	g_object_set (cell, "text", text, NULL);
+	g_object_unref (media);
+
+}
+
+static void
 create_debug_window (TotemGrilo       *self,
 		     GtkTreeModel     *model)
 {
@@ -2272,12 +2301,12 @@ create_debug_window (TotemGrilo       *self,
 	gtk_widget_grab_focus (GTK_WIDGET (tree));
 	gtk_container_add (GTK_CONTAINER (scrolled), tree);
 
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
 						    "ID", gtk_cell_renderer_text_new (),
-						    "text", GD_MAIN_COLUMN_ID, NULL);
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
+						    media_to_text, GINT_TO_POINTER (GD_MAIN_COLUMN_ID), NULL);
+	gtk_tree_view_insert_column_with_data_func (GTK_TREE_VIEW (tree), -1,
 						    "URI", gtk_cell_renderer_text_new (),
-						    "text", GD_MAIN_COLUMN_URI, NULL);
+						    media_to_text, GINT_TO_POINTER (GD_MAIN_COLUMN_URI), NULL);
 	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW (tree), -1,
 						    "Primary text", gtk_cell_renderer_text_new (),
 						    "text", GD_MAIN_COLUMN_PRIMARY_TEXT, NULL);
