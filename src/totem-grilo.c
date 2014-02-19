@@ -1263,7 +1263,8 @@ source_added_cb (GrlRegistry *registry,
 		}
 
 		if (monitor &&
-		    (ops & GRL_OP_NOTIFY_CHANGE)) {
+		    (ops & GRL_OP_NOTIFY_CHANGE) &&
+		    g_str_equal (id, "grl-filesystem") == FALSE) {
 			grl_source_notify_change_start (source, NULL);
 			g_signal_connect (G_OBJECT (source), "content-changed",
 					  G_CALLBACK (content_changed_cb), self);
