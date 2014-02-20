@@ -64,6 +64,7 @@
 #include "totem-preferences.h"
 #include "totem-session.h"
 #include "totem-rtl-helpers.h"
+#include "totem-style-helpers.h"
 #include "totem-main-toolbar.h"
 
 #define WANT_MIME_TYPES 1
@@ -3490,6 +3491,7 @@ totem_callback_connect (TotemObject *totem)
 	item = g_object_get_data (totem->controls, "go_button");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	totem_set_popover_no_shadow (item);
 
 	/* Cog wheel */
 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
@@ -3499,6 +3501,7 @@ totem_callback_connect (TotemObject *totem)
 	g_object_set (G_OBJECT (totem->gear_button), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	totem_set_popover_no_shadow (item);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 
@@ -3661,6 +3664,7 @@ add_fullscreen_toolbar (TotemObject *totem)
 	g_object_set (G_OBJECT (item), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	totem_set_popover_no_shadow (item);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
