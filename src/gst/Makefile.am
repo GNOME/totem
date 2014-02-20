@@ -2,7 +2,8 @@ noinst_LTLIBRARIES =			\
 	libtotemgsthelpers.la		\
 	libtotemgstpixbufhelpers.la	\
 	libtotemtimehelpers.la		\
-	libtotemrtlhelpers.la
+	libtotemrtlhelpers.la		\
+	libtotemstylehelpers.la
 
 libtotemgsthelpers_la_SOURCES =	\
 	totem-gst-helpers.c	\
@@ -51,6 +52,22 @@ libtotemtimehelpers_la_CFLAGS =	\
 
 libtotemtimehelpers_la_LIBADD = $(TIME_HELPER_LIBS)
 libtotemtimehelpers_la_LDFLAGS= -no-undefined
+
+libtotemstylehelpers_la_SOURCES =	\
+	totem-style-helpers.c		\
+	totem-style-helpers.h
+
+libtotemstylehelpers_la_CPPFLAGS =	\
+	-D_REENTRANT			\
+	$(DISABLE_DEPRECATED)		\
+	$(AM_CPPFLAGS)
+
+libtotemstylehelpers_la_CFLAGS =	\
+	$(RTL_HELPER_CFLAGS)	\
+	$(AM_CFLAGS)
+
+libtotemstylehelpers_la_LIBADD = $(RTL_HELPER_LIBS)
+libtotemstylehelpers_la_LDFLAGS= -no-undefined
 
 libtotemrtlhelpers_la_SOURCES =	\
 	totem-rtl-helpers.c		\
