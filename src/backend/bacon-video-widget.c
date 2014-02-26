@@ -97,7 +97,7 @@
 #define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
 #define REWIND_OR_PREVIOUS 4000
-#define POPUP_HIDING_TIMEOUT 5
+#define POPUP_HIDING_TIMEOUT 2
 
 #define MAX_NETWORK_SPEED 10752
 #define BUFFERING_LEFT_RATIO 1.1
