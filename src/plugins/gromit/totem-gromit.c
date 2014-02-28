@@ -191,6 +191,7 @@ totem_gromit_clear (TotemGromitPlugin *plugin, gboolean now)
 	launch (visibility_cmd);
 	launch (clear_cmd);
 	plugin->priv->id = g_timeout_add_seconds (INTERVAL, totem_gromit_timeout_cb, plugin);
+	g_source_set_name_by_id (plugin->priv->id, "[totem] totem_gromit_timeout_cb");
 }
 
 static gboolean

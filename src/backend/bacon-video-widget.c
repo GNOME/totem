@@ -709,6 +709,7 @@ schedule_hiding_popup (BaconVideoWidget *bvw)
 {
   unschedule_hiding_popup (bvw);
   bvw->priv->transition_timeout_id = g_timeout_add_seconds (POPUP_HIDING_TIMEOUT, (GSourceFunc) hide_popup_timeout_cb, bvw);
+  g_source_set_name_by_id (bvw->priv->transition_timeout_id, "[totem] hide_popup_timeout_cb");
 }
 
 static void
@@ -1756,6 +1757,7 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
     GST_DEBUG ("adding tick timeout (at %ums)", msecs);
     bvw->priv->update_id =
       g_timeout_add (msecs, (GSourceFunc) bvw_query_timeout, bvw);
+    g_source_set_name_by_id (bvw->priv->update_id, "[totem] bvw_query_timeout");
   }
 }
 
@@ -1771,6 +1773,7 @@ bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs)
     GST_DEBUG ("adding fill timeout (at %ums)", msecs);
     bvw->priv->fill_id =
       g_timeout_add (msecs, (GSourceFunc) bvw_query_buffering_timeout, bvw);
+    g_source_set_name_by_id (bvw->priv->fill_id, "[totem] bvw_query_buffering_timeout");
   }
 }
 
@@ -2041,8 +2044,10 @@ bvw_update_tags_delayed (BaconVideoWidget *bvw, GstTagList *tags, const gchar *t
   g_async_queue_lock (bvw->priv->tag_update_queue);
   g_async_queue_push_unlocked (bvw->priv->tag_update_queue, data);
 
-  if (bvw->priv->tag_update_id == 0)
+  if (bvw->priv->tag_update_id == 0) {
     bvw->priv->tag_update_id = g_idle_add ((GSourceFunc) bvw_update_tags_dispatcher, bvw);
+    g_source_set_name_by_id (bvw->priv->tag_update_id, "[totem] bvw_update_tags_dispatcher");
+  }
 
   g_async_queue_unlock (bvw->priv->tag_update_queue);
 }
@@ -2311,8 +2316,10 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       GST_DEBUG ("EOS message");
       /* update slider one last time */
       bvw_query_timeout (bvw);
-      if (bvw->priv->eos_id == 0)
+      if (bvw->priv->eos_id == 0) {
         bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
+        g_source_set_name_by_id (bvw->priv->eos_id, "[totem] bvw_signal_eos_delayed");
+      }
       break;
     case GST_MESSAGE_BUFFERING:
       bvw_handle_buffering_message (message, bvw);
@@ -5450,7 +5457,10 @@ notify_volume_cb (GObject             *object,
 		  GParamSpec          *pspec,
 		  BaconVideoWidget    *bvw)
 {
-  g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
+  guint id;
+
+  id = g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
+  g_source_set_name_by_id (id, "[totem] notify_volume_idle_cb");
 }
 
 /**

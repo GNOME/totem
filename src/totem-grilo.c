@@ -533,6 +533,7 @@ update_search_thumbnails (TotemGrilo *self)
 	if (self->priv->thumbnail_update_id > 0)
 		return;
 	self->priv->thumbnail_update_id = g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) update_search_thumbnails_idle, self, NULL);
+	g_source_set_name_by_id (self->priv->thumbnail_update_id, "[totem] update_search_thumbnails_idle");
 }
 
 static void

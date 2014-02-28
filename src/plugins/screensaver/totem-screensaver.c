@@ -109,6 +109,7 @@ property_notify_cb (TotemObject *totem,
 
 	if (totem_object_is_playing (totem) == FALSE) {
 		pi->priv->uninhibit_timeout = g_timeout_add_seconds (5, (GSourceFunc) uninhibit_timeout_cb, pi);
+		g_source_set_name_by_id (pi->priv->uninhibit_timeout, "[totem] uninhibit_timeout_cb");
 		return;
 	}
 

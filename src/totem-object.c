@@ -680,6 +680,7 @@ setup_save_timeout_cb (Totem    *totem,
 		totem->save_timeout_id = g_timeout_add_seconds (TOTEM_SESSION_SAVE_TIMEOUT,
 								(GSourceFunc) save_session_timeout_cb,
 								totem);
+		g_source_set_name_by_id (totem->save_timeout_id, "[totem] save_session_timeout_cb");
 	} else if (totem->save_timeout_id > 0) {
 		g_source_remove (totem->save_timeout_id);
 		totem->save_timeout_id = 0;

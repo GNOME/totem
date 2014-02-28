@@ -188,6 +188,7 @@ totem_plugins_engine_init (TotemPluginsEngine *engine)
 	/* Commented out because it's a no-op. A further section is commented out below, and more's commented out
 	 * in totem-python-module.c. */
 	engine->priv->garbage_collect_id = g_timeout_add_seconds_full (G_PRIORITY_LOW, 20, garbage_collect_cb, engine, NULL);
+	g_source_set_name_by_id (engine->priv->garbage_collect_id, "[totem] garbage_collect_cb");
 }
 
 static void
