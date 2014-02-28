@@ -137,7 +137,7 @@ update_toolbar_state (TotemMainToolbar *bar)
           const char *format;
           char *label;
 
-          format = ngettext (N_("%d selected"), N_("%d selected"), priv->n_selected);
+          format = g_dngettext (GETTEXT_PACKAGE, "%d selected", "%d selected", priv->n_selected);
           label = g_strdup_printf (format, priv->n_selected);
           gtk_button_set_label (GTK_BUTTON (priv->selection_menu_button), label);
           g_free (label);
