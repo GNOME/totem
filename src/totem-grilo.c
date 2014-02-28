@@ -255,6 +255,8 @@ source_is_adult (GrlSource *source)
 	const char **tags;
 
 	tags = grl_source_get_tags (source);
+	if (!tags)
+		return FALSE;
 
 	return strv_has_prefix (tags, "adult");
 }
