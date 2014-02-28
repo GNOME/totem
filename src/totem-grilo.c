@@ -1812,7 +1812,7 @@ setup_source_switcher (TotemGrilo *self)
 
 	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-	self->priv->recent = create_switcher_button (self, _("Videos"), "recent");
+	self->priv->recent = create_switcher_button (self, _("Recent"), "recent");
 	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->recent);
 
 	g_signal_connect (G_OBJECT (self->priv->recent), "drag_data_received",
