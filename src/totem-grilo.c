@@ -104,6 +104,7 @@ struct _TotemGriloPrivate {
 	GtkTreeModel *browser_filter_model;
 	gboolean in_search;
 	GList *metadata_keys;
+	guint thumbnail_update_id;
 
 	/* Search widgets */
 	GtkWidget *search_bar;
@@ -527,7 +528,9 @@ update_search_thumbnails_idle (TotemGrilo *self)
 static void
 update_search_thumbnails (TotemGrilo *self)
 {
-	g_idle_add ((GSourceFunc) update_search_thumbnails_idle, self);
+	if (self->priv->thumbnail_update_id > 0)
+		return;
+	self->priv->thumbnail_update_id = g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) update_search_thumbnails_idle, self, NULL);
 }
 
 static void
@@ -2385,6 +2388,11 @@ totem_grilo_finalize (GObject *object)
 	GList *sources;
 	GList *s;
 	GrlRegistry *registry;
+
+	if (self->priv->thumbnail_update_id > 0) {
+		g_source_remove (self->priv->thumbnail_update_id);
+		self->priv->thumbnail_update_id = 0;
+	}
 
 	registry = grl_registry_get_default ();
 	g_signal_handlers_disconnect_by_func (registry, source_added_cb, self);
