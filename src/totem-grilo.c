@@ -250,6 +250,16 @@ source_is_recent (GrlSource *source)
 	return strv_has_prefix (sources, id);
 }
 
+static gboolean
+source_is_adult (GrlSource *source)
+{
+	const char **tags;
+
+	tags = grl_source_get_tags (source);
+
+	return strv_has_prefix (tags, "adult");
+}
+
 static gchar *
 get_secondary_text (GrlMedia *media)
 {
@@ -1207,6 +1217,7 @@ source_added_cb (GrlRegistry *registry,
 	const char *id;
 
 	if (source_is_blacklisted (source) ||
+	    source_is_adult (source) ||
 	    !(grl_source_get_supported_media (source) & GRL_MEDIA_TYPE_VIDEO)) {
 		grl_registry_unregister_source (registry,
 		                                source,
