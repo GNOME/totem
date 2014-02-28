@@ -2941,9 +2941,12 @@ totem_object_handle_seek (TotemObject *totem, GdkEventKey *event, gboolean is_fo
 static gboolean
 totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 {
+	GdkModifierType mask;
 	gboolean retval;
 
 	retval = TRUE;
+
+	mask = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	switch (event->keyval) {
 	case GDK_KEY_A:
@@ -3036,14 +3039,14 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		totem_object_eject (totem);
 		break;
 	case GDK_KEY_Escape:
-		if (event->state & GDK_SUPER_MASK)
+		if (mask == GDK_SUPER_MASK)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
 		else
 			totem_object_set_fullscreen (totem, FALSE);
 		break;
 	case GDK_KEY_space:
 	case GDK_KEY_Return:
-		if (!(event->state & GDK_CONTROL_MASK)) {
+		if (mask != GDK_CONTROL_MASK) {
 			GtkWidget *focus = gtk_window_get_focus (GTK_WINDOW (totem->win));
 			if (totem_object_is_fullscreen (totem) != FALSE || focus == NULL ||
 			    focus == GTK_WIDGET (totem->bvw) || focus == totem->seek) {
@@ -3081,7 +3084,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Up:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_UP);
-		else if (event->state & GDK_SHIFT_MASK)
+		else if (mask == GDK_SHIFT_MASK)
 			totem_object_set_volume_relative (totem, VOLUME_UP_SHORT_OFFSET);
 		else
 			totem_object_set_volume_relative (totem, VOLUME_UP_OFFSET);
@@ -3089,7 +3092,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Down:
 		if (bacon_video_widget_has_menus (totem->bvw) != FALSE)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_DOWN);
-		else if (event->state & GDK_SHIFT_MASK)
+		else if (mask == GDK_SHIFT_MASK)
 			totem_object_set_volume_relative (totem, VOLUME_DOWN_SHORT_OFFSET);
 		else
 			totem_object_set_volume_relative (totem, VOLUME_DOWN_OFFSET);
@@ -3099,7 +3102,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 			bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU_SELECT);
 		break;
 	case GDK_KEY_0:
-		if (event->state & GDK_CONTROL_MASK)
+		if (mask == GDK_CONTROL_MASK)
 			totem_object_set_zoom (totem, FALSE);
 		break;
 	case GDK_KEY_Menu:
@@ -3119,16 +3122,16 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		bacon_video_widget_show_popup (totem->bvw);
 		break;
 	case GDK_KEY_equal:
-		if (event->state & GDK_CONTROL_MASK)
+		if (mask == GDK_CONTROL_MASK)
 			totem_object_set_zoom (totem, TRUE);
 		break;
 	case GDK_KEY_hyphen:
-		if (event->state & GDK_CONTROL_MASK)
+		if (mask == GDK_CONTROL_MASK)
 			totem_object_set_zoom (totem, FALSE);
 		break;
 	case GDK_KEY_plus:
 	case GDK_KEY_KP_Add:
-		if (!(event->state & GDK_CONTROL_MASK)) {
+		if (mask != GDK_CONTROL_MASK) {
 			totem_object_seek_next (totem);
 		} else {
 			totem_object_set_zoom (totem, TRUE);
@@ -3136,7 +3139,7 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 		break;
 	case GDK_KEY_minus:
 	case GDK_KEY_KP_Subtract:
-		if (!(event->state & GDK_CONTROL_MASK)) {
+		if (mask != GDK_CONTROL_MASK) {
 			totem_object_seek_previous (totem);
 		} else {
 			totem_object_set_zoom (totem, FALSE);
