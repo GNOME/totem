@@ -463,6 +463,8 @@ update_search_thumbnails_idle (TotemGrilo *self)
 	GtkTreeModel *view_model, *model;
 	GtkIconView *icon_view;
 
+	self->priv->thumbnail_update_id = 0;
+
 	icon_view = GTK_ICON_VIEW (gd_main_view_get_generic_view (GD_MAIN_VIEW (self->priv->browser)));
 	if (!gtk_icon_view_get_visible_range (icon_view, &start_path, &end_path)) {
 		return FALSE;
