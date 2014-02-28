@@ -51,7 +51,6 @@
 #include <libgd/gd.h>
 
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
-#define RESOLVE_FLAGS         (GRL_RESOLVE_FULL | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define SCROLL_GET_MORE_LIMIT 0.8
 
