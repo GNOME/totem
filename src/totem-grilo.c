@@ -574,7 +574,7 @@ add_local_metadata (TotemGrilo *self,
 	}
 
 	options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (options, GRL_RESOLVE_FULL);
+	grl_operation_options_set_flags (options, GRL_RESOLVE_NORMAL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
 				 media,
 				 self->priv->metadata_keys,
