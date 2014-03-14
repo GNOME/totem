@@ -61,11 +61,9 @@
             </child>
             <child>
               <object class="GtkButton" id="find_button">
-                <property name="label">gtk-find</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -124,7 +122,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="image">image_apply</property>
                     <property name="use_underline">True</property>
                   </object>
                   <packing>
@@ -135,13 +132,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="close_button">
-                    <property name="label">gtk-close</property>
+                    <property name="label">_Close</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="has_default">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -161,9 +157,5 @@
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkImage" id="image_apply">
-    <property name="visible">True</property>
-    <property name="stock">gtk-media-play</property>
   </object>
 </interface>
