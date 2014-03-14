@@ -1097,7 +1097,7 @@ find_media_cb (GtkTreeModel  *model,
 	if (g_strcmp0 (grl_media_get_id (media), grl_media_get_id (data->media)) == 0) {
 		g_object_unref (media);
 		data->found = TRUE;
-		data->iter = iter;
+		data->iter = gtk_tree_iter_copy (iter);
 		return TRUE;
 	}
 	g_object_unref (media);
@@ -1105,17 +1105,18 @@ find_media_cb (GtkTreeModel  *model,
 }
 
 static gboolean
-find_media (GtkTreeModel *model,
-	    GrlMedia     *media,
-	    GtkTreeIter  *iter)
+find_media (GtkTreeModel  *model,
+	    GrlMedia      *media,
+	    GtkTreeIter  **iter)
 {
 	FindMediaData data;
 
 	data.found = FALSE;
 	data.media = media;
+	data.iter = NULL;
 	gtk_tree_model_foreach (model, (GtkTreeModelForeachFunc) find_media_cb, &data);
 
-	*iter = *(data.iter);
+	*iter = data.iter;
 
 	return data.found;
 }
@@ -1142,10 +1143,12 @@ content_changed (TotemGrilo   *self,
 
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
-		GtkTreeIter iter;
+		GtkTreeIter *iter;
 
-		if (find_media (model, media, &iter))
-			update_media (GTK_TREE_STORE (model), &iter, source, media);
+		if (find_media (model, media, &iter)) {
+			update_media (GTK_TREE_STORE (model), iter, source, media);
+			gtk_tree_iter_free (iter);
+		}
 	}
 }
 
@@ -1161,10 +1164,13 @@ content_removed (TotemGrilo   *self,
 
 	for (i = 0; i < changed_medias->len; i++) {
 		GrlMedia *media = changed_medias->pdata[i];
-		GtkTreeIter iter;
+		GtkTreeIter *iter;
+		char *str;
 
-		if (find_media (model, media, &iter))
-			gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+		if (find_media (model, media, &iter)) {
+			gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
+			gtk_tree_iter_free (iter);
+		}
 	}
 }
 
