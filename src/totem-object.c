@@ -3367,6 +3367,7 @@ totem_setup_window (TotemObject *totem)
 				      "show-search-button", TRUE,
 				      "show-select-button", TRUE,
 				      "show-close-button", TRUE,
+				      "title", _("Videos"),
 				      NULL);
 	g_signal_connect (G_OBJECT (totem->header), "back-clicked",
 			  G_CALLBACK (back_button_clicked_cb), totem);
