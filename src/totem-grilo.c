@@ -2054,12 +2054,13 @@ delete_foreach (gpointer data,
 		g_debug ("Removing item '%s' through Grilo",
 			 grl_media_get_id (media));
 		grl_source_remove_sync (source, media, &error);
-		success = (error != NULL);
+		success = (error == NULL);
 	} else {
 		const char *uri;
 
 		uri = grl_media_get_url (media);
 		if (!uri) {
+			success = FALSE;
 			g_set_error_literal (&error, G_IO_ERROR, G_IO_ERROR_NOT_SUPPORTED,
 					     "Item cannot be removed through Grilo and doesn't have a URI, please file a bug");
 		} else {
