@@ -8,7 +8,6 @@
             <object class="GtkAction" id="copy-location">
                <property name="label" translatable="no">_Copy Location</property>
                <property name="tooltip" translatable="no">Copy the location to the clipboard</property>
-               <property name="stock-id">gtk-copy</property>
                <signal name="activate" handler="playlist_copy_location_action_callback"/>
             </object>
          </child>
@@ -16,7 +15,6 @@
             <object class="GtkAction" id="select-subtitle">
                <property name="label" translatable="no">_Select Text Subtitles...</property>
                <property name="tooltip" translatable="no">Select a file to use for text subtitles</property>
-               <property name="stock-id">gtk-open</property>
                <signal name="activate" handler="playlist_select_subtitle_action_callback"/>
             </object>
          </child>
