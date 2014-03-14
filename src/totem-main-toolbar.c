@@ -62,8 +62,6 @@ struct _TotemMainToolbarPrivate {
   gboolean     select_mode;
 
   /* Normal title */
-  char        *title;
-  char        *subtitle;
   GtkWidget   *title_label;
   GtkWidget   *subtitle_label;
 
@@ -274,11 +272,11 @@ totem_main_toolbar_get_property (GObject         *object,
   switch (prop_id)
     {
     case PROP_TITLE:
-      g_value_set_string (value, bar->priv->title);
+      g_value_set_string (value, gtk_header_bar_get_title (GTK_HEADER_BAR (object)));
       break;
 
     case PROP_SUBTITLE:
-      g_value_set_string (value, bar->priv->subtitle);
+      g_value_set_string (value, gtk_header_bar_get_subtitle (GTK_HEADER_BAR (object)));
       break;
 
     case PROP_SEARCH_STRING:
@@ -328,8 +326,6 @@ totem_main_toolbar_finalize (GObject *object)
 {
   TotemMainToolbar *bar = TOTEM_MAIN_TOOLBAR (object);
 
-  g_free (bar->priv->title);
-  g_free (bar->priv->subtitle);
   g_free (bar->priv->search_string);
 
   G_OBJECT_CLASS (totem_main_toolbar_parent_class)->finalize (object);
@@ -614,17 +610,10 @@ void
 totem_main_toolbar_set_title (TotemMainToolbar *bar,
                               const char       *title)
 {
-  char *tmp;
-
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  tmp = bar->priv->title;
-  bar->priv->title = g_strdup (title);
-  g_free (tmp);
-
   gtk_label_set_text (GTK_LABEL (bar->priv->title_label), title);
-
-  g_object_notify (G_OBJECT (bar), "title");
+  gtk_header_bar_set_title (GTK_HEADER_BAR (bar), title);
 }
 
 const char *
@@ -632,24 +621,17 @@ totem_main_toolbar_get_title (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return bar->priv->title;
+  return gtk_header_bar_get_title (GTK_HEADER_BAR (bar));
 }
 
 void
 totem_main_toolbar_set_subtitle (TotemMainToolbar *bar,
                                  const char       *subtitle)
 {
-  char *tmp;
-
   g_return_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar));
 
-  tmp = bar->priv->subtitle;
-  bar->priv->subtitle = g_strdup (subtitle);
-  g_free (tmp);
-
   gtk_label_set_text (GTK_LABEL (bar->priv->subtitle_label), subtitle);
-
-  g_object_notify (G_OBJECT (bar), "subtitle");
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (bar), subtitle);
 }
 
 const char *
@@ -657,7 +639,7 @@ totem_main_toolbar_get_subtitle (TotemMainToolbar *bar)
 {
   g_return_val_if_fail (TOTEM_IS_MAIN_TOOLBAR (bar), NULL);
 
-  return bar->priv->subtitle;
+  return gtk_header_bar_get_subtitle (GTK_HEADER_BAR (bar));
 }
 
 void
