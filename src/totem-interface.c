@@ -349,6 +349,15 @@ totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
 				      GTK_WINDOW (parent));
 }
 
+/**
+ * totem_interface_create_header_button:
+ * @header: The header widget to put the button in
+ * @button: The button to use in the header
+ * @icon_name: The icon name for the button image
+ * @pack_type: A #GtkPackType to tell us where to include the button
+ *
+ * Return value: (transfer none): the button passed as input
+ */
 GtkWidget *
 totem_interface_create_header_button (GtkWidget  *header,
 				      GtkWidget  *button,
