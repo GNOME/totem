@@ -195,6 +195,35 @@ totem_save_file_file_closed (TotemObject *totem,
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (pi->priv->action), FALSE);
 }
 
+static gboolean
+file_has_ancestor (GFile *file,
+		   GFile *ancestor)
+{
+	GFile *cursor;
+	gboolean retval = FALSE;
+
+	cursor = g_object_ref (file);
+
+	while (1) {
+		GFile *tmp;
+
+		tmp = g_file_get_parent (cursor);
+		g_object_unref (cursor);
+		cursor = tmp;
+
+		if (cursor == NULL)
+			break;
+
+		if (g_file_has_parent (cursor, ancestor)) {
+			g_object_unref (cursor);
+			retval = TRUE;
+			break;
+		}
+	}
+
+	return retval;
+}
+
 static void
 totem_save_file_file_opened (TotemObject *totem,
 			     const char *mrl,
@@ -223,7 +252,7 @@ totem_save_file_file_opened (TotemObject *totem,
 	/* We check whether it's in the Videos dir, in the future,
 	 * we might want to check if it's native instead */
 	videos_dir = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS));
-	if (g_file_has_parent (file, videos_dir)) {
+	if (file_has_ancestor (file, videos_dir)) {
 		g_debug ("Not enabling offline save, as '%s' already in ~/Videos", mrl);
 		goto out;
 	}
