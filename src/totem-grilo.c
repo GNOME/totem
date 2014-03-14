@@ -2056,7 +2056,9 @@ delete_foreach (gpointer data,
 	gboolean success;
 	GError *error = NULL;
 
-	gtk_tree_model_get_iter (view_model, &iter, path);
+	if (!gtk_tree_model_get_iter (view_model, &iter, path))
+		return;
+
 	gtk_tree_model_get (view_model, &iter,
 			    MODEL_RESULTS_CONTENT, &media,
 			    MODEL_RESULTS_SOURCE, &source,
