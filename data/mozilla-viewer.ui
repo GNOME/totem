@@ -14,14 +14,12 @@
       <object class="GtkActionGroup" id="actiongroup1">
         <child>
           <object class="GtkAction" id="copy_location1">
-            <property name="stock_id">gtk-copy</property>
             <property name="name">copy_location1</property>
             <signal handler="on_copy_location1_activate" name="activate"/>
           </object>
         </child>
         <child>
           <object class="GtkAction" id="preferences1">
-            <property name="stock_id">gtk-preferences</property>
             <property name="name">preferences1</property>
             <property name="visible">False</property>
             <signal handler="on_preferences1_activate" name="activate"/>
@@ -29,7 +27,6 @@
         </child>
 	<child>
           <object class="GtkAction" id="fullscreen1">
-            <property name="stock_id">gtk-fullscreen</property>
             <property name="name">fullscreen1</property>
             <signal handler="on_fullscreen1_activate" name="activate"/>
           </object>
