@@ -1167,9 +1167,16 @@ content_removed (TotemGrilo   *self,
 		GtkTreeIter *iter;
 		char *str;
 
+		str = grl_media_serialize (media);
+		g_debug ("About to remove %s from the store", str);
+		g_free (str);
+
 		if (find_media (model, media, &iter)) {
 			gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
 			gtk_tree_iter_free (iter);
+		} else {
+			g_debug ("Could not find '%s' in the store",
+				 grl_media_get_id (media));
 		}
 	}
 }
