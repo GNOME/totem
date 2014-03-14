@@ -2056,6 +2056,9 @@ delete_foreach (gpointer data,
 	gboolean success;
 	GError *error = NULL;
 
+	GtkTreeModel *model;
+	GtkTreeIter real_model_iter;
+
 	if (!gtk_tree_model_get_iter (view_model, &iter, path))
 		return;
 
@@ -2092,25 +2095,27 @@ delete_foreach (gpointer data,
 			   grl_media_get_id (media),
 			   error->message);
 		g_error_free (error);
+		goto end;
+	}
+	if (grl_source_supported_operations (source) & GRL_OP_REMOVE)
+		goto end;
+
+	/* In case of success, or if we didn't remove the item through the source */
+	if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
+		model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
+		gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (view_model),
+								  &real_model_iter, &iter);
+	} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
+		model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (view_model));
+		gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (view_model),
+								&real_model_iter, &iter);
 	} else {
-		GtkTreeModel *model;
-		GtkTreeIter real_model_iter;
-
-		if (GTK_IS_TREE_MODEL_FILTER (view_model)) {
-			model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (view_model));
-			gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (view_model),
-									  &real_model_iter, &iter);
-		} else if (GTK_IS_TREE_MODEL_SORT (view_model)) {
-			model = gtk_tree_model_sort_get_model (GTK_TREE_MODEL_SORT (view_model));
-			gtk_tree_model_sort_convert_iter_to_child_iter (GTK_TREE_MODEL_SORT (view_model),
-									&real_model_iter, &iter);
-		} else {
-			g_assert_not_reached ();
-		}
-
-		gtk_tree_store_remove (GTK_TREE_STORE (model), &real_model_iter);
+		g_assert_not_reached ();
 	}
 
+	gtk_tree_store_remove (GTK_TREE_STORE (model), &real_model_iter);
+
+end:
 	g_clear_object (&media);
 	g_clear_object (&source);
 }
