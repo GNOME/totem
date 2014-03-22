@@ -130,6 +130,7 @@ G_DEFINE_TYPE_WITH_CODE (TotemGrilo, totem_grilo, GTK_TYPE_BOX,
 
 typedef struct {
 	TotemGrilo *totem_grilo;
+	gboolean ignore_boxes; /* For the recent view */
 	GtkTreeRowReference *ref_parent;
 	GtkTreeModel *model;
 } BrowseUserData;
@@ -707,10 +708,14 @@ browse_cb (GrlSource    *source,
 			g_assert_not_reached ();
 		}
 
-		add_local_metadata (self, source, media);
-		add_media_to_model (GTK_TREE_STORE (bud->model),
-				    bud->ref_parent ? &parent : NULL,
-				    source, media);
+		if (GRL_IS_MEDIA_BOX (media) && bud->ignore_boxes) {
+			/* Ignore boxes for certain sources */
+		} else {
+			add_local_metadata (self, source, media);
+			add_media_to_model (GTK_TREE_STORE (bud->model),
+					    bud->ref_parent ? &parent : NULL,
+					    source, media);
+		}
 
 		g_object_unref (media);
 	}
@@ -753,6 +758,7 @@ browse (TotemGrilo   *self,
 
 	bud = g_slice_new0 (BrowseUserData);
 	bud->totem_grilo = g_object_ref (self);
+	bud->ignore_boxes = source_is_recent (source);
 	if (path)
 		bud->ref_parent = gtk_tree_row_reference_new (model, path);
 	bud->model = g_object_ref (model);
