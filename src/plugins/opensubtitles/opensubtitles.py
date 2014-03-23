@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from gi.repository import GObject, Peas, Gtk, Gdk # pylint: disable-msg=E0611
-from gi.repository import Gio, Pango, Totem # pylint: disable-msg=E0611
+from gi.repository import GLib, Gio, Pango, Totem # pylint: disable-msg=E0611
 
 import xmlrpclib
 import threading
