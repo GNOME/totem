@@ -430,7 +430,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         builder = Totem.plugin_load_interface ("opensubtitles",
                                                "opensubtitles.ui", True,
                                                self._totem.get_main_window (),
-                                               self)
+                                               None)
 
         # Obtain all the widgets we need to initialize
         combobox = builder.get_object ('language_combobox')
