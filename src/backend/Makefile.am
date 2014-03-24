@@ -18,8 +18,7 @@ bvw_test_CFLAGS =		\
 bvw_test_LDADD =					\
 	libbaconvideowidget.la				\
 	$(BACKEND_LIBS)					\
-	$(top_builddir)/src/gst/libtotemtimehelpers.la	\
-	$(top_builddir)/src/gst/libtotemstylehelpers.la
+	$(top_builddir)/src/gst/libtotemtimehelpers.la
 
 # Enums
 BVW_ENUM_FILES = bacon-video-widget-enums.c bacon-video-widget-enums.h

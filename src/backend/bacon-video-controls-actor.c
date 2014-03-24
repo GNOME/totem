@@ -23,7 +23,6 @@
 
 #include "bacon-video-controls-actor.h"
 #include "bacon-time-label.h"
-#include "totem-style-helpers.h"
 
 #define BACON_VIDEO_CONTROLS_ACTOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BACON_TYPE_VIDEO_CONTROLS_ACTOR, BaconVideoControlsActorPrivate))
 
@@ -108,8 +107,6 @@ bacon_video_controls_actor_init (BaconVideoControlsActor *controls)
 	setup_object (controls, "volume_button");
 	setup_object (controls, "time_label");
 	setup_object (controls, "time_rem_label");
-
-	totem_set_popover_no_shadow (g_object_get_data (G_OBJECT (controls), "volume_button"));
 }
 
 ClutterActor *

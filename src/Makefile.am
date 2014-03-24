@@ -45,8 +45,8 @@ libtotem_player_la_CPPFLAGS =		\
 libtotem_player_la_LIBADD =		\
 	$(PLAYER_LIBS)			\
 	gst/libtotemtimehelpers.la	\
-	gst/libtotemrtlhelpers.la	\
-	gst/libtotemstylehelpers.la
+	gst/libtotemrtlhelpers.la
+
 libtotem_player_la_CFLAGS =	\
 	$(LIBPLAYER_CFLAGS)	\
 	-I$(srcdir)/gst/	\
