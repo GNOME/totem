@@ -1614,13 +1614,16 @@ window_key_press_event_cb (GtkWidget   *win,
 			   GdkEventKey *event,
 			   TotemGrilo  *self)
 {
+	guint state;
+
 	/* Check whether we're in the browse panel */
 	if (!g_str_equal (totem_object_get_main_page (self->priv->totem), "grilo"))
 		return GDK_EVENT_PROPAGATE;
 
+	state = event->state & gtk_accelerator_get_default_mod_mask ();
+
 	/* Handle Ctrl+F */
-	if (event->state != 0 &&
-	    (event->state & GDK_CONTROL_MASK)) {
+	if (state == GDK_CONTROL_MASK) {
 		if (event->keyval == GDK_KEY_F ||
 		    event->keyval == GDK_KEY_f) {
 			gtk_search_bar_set_search_mode (GTK_SEARCH_BAR (self->priv->search_bar),
