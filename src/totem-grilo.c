@@ -1632,6 +1632,13 @@ window_key_press_event_cb (GtkWidget   *win,
 		}
 	}
 
+	if (state == 0 &&
+	    event->keyval == GDK_KEY_Escape &&
+	    gd_main_view_get_selection_mode (GD_MAIN_VIEW (self->priv->browser))) {
+		gd_main_view_set_selection_mode (GD_MAIN_VIEW (self->priv->browser), FALSE);
+		return GDK_EVENT_STOP;
+	}
+
 	return gtk_search_bar_handle_event (GTK_SEARCH_BAR (self->priv->search_bar), (GdkEvent *) event);
 }
 
