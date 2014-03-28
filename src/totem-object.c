@@ -1357,7 +1357,6 @@ totem_object_play (TotemObject *totem)
 	if (bacon_video_widget_is_playing (totem->bvw) != FALSE)
 		return;
 
-	totem_object_set_main_page (totem, "player");
 	retval = bacon_video_widget_play (totem->bvw,  &err);
 	play_pause_set_label (totem, retval ? STATE_PLAYING : STATE_STOPPED);
 
@@ -1804,6 +1803,8 @@ totem_object_set_mrl (TotemObject *totem,
 		play_pause_set_label (totem, STATE_PAUSED);
 
 		emit_file_opened (totem, totem->mrl);
+
+		totem_object_set_main_page (totem, "player");
 	}
 
 	update_buttons (totem);
