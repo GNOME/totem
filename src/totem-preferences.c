@@ -50,74 +50,14 @@
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
-G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
 G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
 
 static void
-totem_prefs_set_show_visuals (Totem *totem, gboolean value)
-{
-	GtkWidget *item;
-
-	g_settings_set_boolean (totem->settings, "show-visualizations", value);
-
-	item = PWID ("tpw_visuals_type_label");
-	gtk_widget_set_sensitive (item, value);
-	item = PWID ("tpw_visuals_type_combobox");
-	gtk_widget_set_sensitive (item, value);
-	item = PWID ("tpw_visuals_size_label");
-	gtk_widget_set_sensitive (item, value);
-	item = PWID ("tpw_visuals_size_combobox");
-	gtk_widget_set_sensitive (item, value);
-
-	bacon_video_widget_set_show_visualizations
-		(BACON_VIDEO_WIDGET (totem->bvw), value);
-}
-
-void
-checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
-{
-	gboolean value;
-
-	value = gtk_toggle_button_get_active (togglebutton);
-	totem_prefs_set_show_visuals (totem, value);
-}
-
-static void
-show_vfx_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
-{
-	GObject *item;
-
-	item = POBJ ("tpw_visuals_checkbutton");
-	g_signal_handlers_disconnect_by_func (item,
-			checkbutton2_toggled_cb, totem);
-
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "show-visualizations"));
-
-	g_signal_connect (item, "toggled",
-			G_CALLBACK (checkbutton2_toggled_cb), totem);
-}
-
-static void
 disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
-}
-
-void
-visual_menu_changed (GtkComboBox *combobox, Totem *totem)
-{
-	GList *list;
-	const gchar *name;
-	int i;
-
-	i = gtk_combo_box_get_active (combobox);
-	list = bacon_video_widget_get_visualization_list (totem->bvw);
-	name = g_list_nth_data (list, i);
-
-	g_settings_set_string (totem->settings, "visualization-name", name);
-	bacon_video_widget_set_visualization (totem->bvw, name);
 }
 
 void
@@ -217,21 +157,6 @@ int_enum_set_mapping (const GValue *value, const GVariantType *expected_type, GE
 	return g_variant_new_string (enum_value->value_nick);
 }
 
-static void
-visualization_quality_writable_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
-{
-	gboolean writable, show_visualizations;
-
-	if (strcmp (key, "visualization-quality") != 0)
-		return;
-
-	writable = g_settings_is_writable (settings, key);
-	show_visualizations = g_settings_get_boolean (settings, "show-visualizations");
-
-	/* Only enable the size combobox if the visualization-quality setting is writable, and visualizations are enabled */
-	gtk_widget_set_sensitive (PWID ("tpw_visuals_size_combobox"), writable && show_visualizations);
-}
-
 static gboolean
 totem_plugins_window_delete_cb (GtkWidget *window,
 				   GdkEventAny *event,
@@ -289,11 +214,9 @@ plugin_button_clicked_cb (GtkButton *button,
 void
 totem_setup_preferences (Totem *totem)
 {
-	GtkWidget *menu, *bvw;
-	gboolean show_visuals;
+	GtkWidget *bvw;
 	guint i, hidden;
-	char *visual, *font, *encoding;
-	GList *list, *l;
+	char *font, *encoding;
 	GObject *item;
 
 	static struct {
@@ -327,18 +250,6 @@ totem_setup_preferences (Totem *totem)
 	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
 
-	/* Enable visuals */
-	item = POBJ ("tpw_visuals_checkbutton");
-	show_visuals = g_settings_get_boolean (totem->settings, "show-visualizations");
-
-	g_signal_handlers_disconnect_by_func (item, checkbutton2_toggled_cb, totem);
-	gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (item), show_visuals);
-	totem_prefs_set_show_visuals (totem, show_visuals);
-	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton2_toggled_cb), totem);
-
-	g_signal_connect (totem->settings, "changed::show-visualizations", (GCallback) show_vfx_changed_cb, totem);
-
 	/* Auto-load subtitles */
 	item = POBJ ("tpw_auto_subtitles_checkbutton");
 	g_settings_bind (totem->settings, "autoload-subtitles", item, "active", G_SETTINGS_BIND_DEFAULT);
@@ -351,50 +262,6 @@ totem_setup_preferences (Totem *totem)
 	item = POBJ ("tpw_plugins_button");
 	g_signal_connect (G_OBJECT (item), "clicked",
 			  G_CALLBACK (plugin_button_clicked_cb), totem);
-
-	/* Visuals list */
-	list = bacon_video_widget_get_visualization_list (totem->bvw);
-	menu = gtk_menu_new ();
-	gtk_widget_show (menu);
-
-	visual = g_settings_get_string (totem->settings, "visualization-name");
-	if (*visual == '\0') {
-		g_free (visual);
-		visual = g_strdup ("goom");
-	}
-
-	item = POBJ ("tpw_visuals_type_liststore");
-
-	i = 0;
-	for (l = list; l != NULL; l = l->next) {
-		const char *name = l->data;
-		GtkTreeIter iter;
-
-		gtk_list_store_append (GTK_LIST_STORE (item), &iter);
-		gtk_list_store_set (GTK_LIST_STORE (item), &iter,
-				    0, name, -1);
-
-		if (strcmp (name, visual) == 0) {
-			GObject *combobox;
-
-			combobox = POBJ ("tpw_visuals_type_combobox");
-			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), i);
-		}
-
-		i++;
-	}
-	g_free (visual);
-
-	/* Visualisation quality. We have to bind the writability separately, as the sensitivity of the size combobox is also affected by whether
-	 * visualizations are enabled. */
-	item = POBJ ("tpw_visuals_size_combobox");
-	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality",
-	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
-	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active",
-	                              G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY,
-	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
-	                              g_type_class_ref (BVW_TYPE_VISUALIZATION_QUALITY), (GDestroyNotify) g_type_class_unref);
-	g_signal_connect (totem->settings, "writable-changed::visualization-quality", (GCallback) visualization_quality_writable_changed_cb, totem);
 
 	/* Brightness and all */
 	hidden = 0;
@@ -464,19 +331,4 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (totem->settings, "changed::disable-keyboard-shortcuts", (GCallback) disable_kbd_shortcuts_changed_cb, totem);
 
 	g_object_unref (bvw);
-}
-
-void
-totem_preferences_visuals_setup (Totem *totem)
-{
-	char *visual;
-
-	visual = g_settings_get_string (totem->settings, "visualization-name");
-	if (*visual == '\0') {
-		g_free (visual);
-		visual = g_strdup ("goom");
-	}
-
-	bacon_video_widget_set_visualization (totem->bvw, visual);
-	g_free (visual);
 }
