@@ -1988,7 +1988,6 @@ play_selection (TotemGrilo *self,
 {
 	GtkTreeModel *model;
 	GList *list;
-	gboolean first = TRUE;
 	GPtrArray *items;
 	guint i;
 
@@ -2008,6 +2007,7 @@ play_selection (TotemGrilo *self,
 	g_list_free (list);
 
 	totem_object_clear_playlist (self->priv->totem);
+	list = NULL;
 
 	for (i = 0; i < items->len; i++) {
 		GtkTreePath *path = items->pdata[i];
@@ -2032,10 +2032,8 @@ play_selection (TotemGrilo *self,
 		}
 
 		title = get_title (media);
-		totem_object_add_to_playlist (self->priv->totem, url,
-					      title, first);
+		list = g_list_prepend (list, totem_playlist_mrl_data_new (url, title));
 		g_free (title);
-		first = FALSE;
 
 next_item:
 		g_clear_object (&media);
@@ -2043,6 +2041,9 @@ next_item:
 	}
 
 	g_ptr_array_free (items, FALSE);
+
+	totem_object_add_items_to_playlist (self->priv->totem, g_list_reverse (list));
+
 	g_object_set (G_OBJECT (self->priv->browser), "selection-mode", FALSE, NULL);
 }
 

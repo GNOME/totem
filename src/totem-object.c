@@ -619,6 +619,23 @@ totem_object_get_current_time (TotemObject *totem)
 	return bacon_video_widget_get_current_time (totem->bvw);
 }
 
+static void
+add_items_to_playlist_and_play_cb (TotemPlaylist *playlist, GAsyncResult *async_result, TotemObject *totem)
+{
+	char *mrl, *subtitle;
+
+	/* totem_playlist_add_mrls_finish() never returns an error */
+	totem_playlist_add_mrls_finish (playlist, async_result, NULL);
+
+	totem_signal_unblock_by_data (playlist, totem);
+
+	/* And start playback */
+	mrl = totem_playlist_get_current_mrl (playlist, &subtitle);
+	totem_object_set_mrl_and_play (totem, mrl, subtitle);
+	g_free (mrl);
+	g_free (subtitle);
+}
+
 typedef struct {
 	TotemObject *totem;
 	gchar *uri;
@@ -716,6 +733,29 @@ totem_object_add_to_playlist (TotemObject *totem,
 
 	totem_playlist_add_mrl (totem->playlist, uri, display_name, TRUE,
 	                        NULL, (GAsyncReadyCallback) add_to_playlist_and_play_cb, data);
+}
+
+/**
+ * totem_object_add_items_to_playlist:
+ * @totem: a #TotemObject
+ * @items: a #GList of #TotemPlaylistMrlData
+ *
+ * Add @items to the playlist and play them immediately.
+ * This function takes ownership of both the list and its elements when
+ * called, so don't free either after calling
+ * totem_object_add_items_to_playlist().
+ **/
+void
+totem_object_add_items_to_playlist (TotemObject *totem,
+				    GList       *items)
+{
+	/* Block all signals from the playlist until we're finished. They're unblocked in the callback, add_to_playlist_and_play_cb.
+	 * There are no concurrency issues here, since blocking the signals multiple times should require them to be unblocked the
+	 * same number of times before they fire again. */
+	totem_signal_block_by_data (totem->playlist, totem);
+
+	totem_playlist_add_mrls (totem->playlist, items, TRUE, NULL,
+				 (GAsyncReadyCallback) add_items_to_playlist_and_play_cb, totem);
 }
 
 /**

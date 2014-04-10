@@ -209,6 +209,8 @@ void	totem_object_volume_toggle_mute		(TotemObject *totem);
 void	totem_object_set_main_page		(TotemObject *totem,
 						 const char  *page_id);
 const char * totem_object_get_main_page		(Totem *totem);
+void	totem_object_add_items_to_playlist	(TotemObject *totem,
+						 GList       *items);
 
 /* Signal emission */
 void	totem_file_has_played			(TotemObject *totem,
