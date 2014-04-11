@@ -323,7 +323,7 @@ totem_embedded_set_state (TotemEmbedded *emb, TotemStates state)
 	}
 
 	if (state == TOTEM_STATE_PLAYING) {
-		if (emb->inhibit_id == 0) {
+		if (emb->inhibit_id == 0 && GTK_IS_PLUG (emb->window)) {
 			emb->inhibit_id = gtk_application_inhibit (GTK_APPLICATION (emb),
 								   NULL,
 								   GTK_APPLICATION_INHIBIT_IDLE,
