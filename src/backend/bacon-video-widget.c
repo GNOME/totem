@@ -882,9 +882,20 @@ bacon_video_widget_tap (ClutterTapAction *action,
 			ClutterActor     *actor,
 			BaconVideoWidget *bvw)
 {
+  ClutterInputDevice *device;
+  const ClutterEvent *event;
   gboolean value;
 
   GST_DEBUG ("Tap event received");
+
+  event = clutter_gesture_action_get_last_event (CLUTTER_GESTURE_ACTION (action), 0);
+  if (!event)
+    return CLUTTER_EVENT_PROPAGATE;
+
+  device = clutter_event_get_source_device (event);
+  if (device == NULL ||
+      clutter_input_device_get_device_type (device) != CLUTTER_TOUCHSCREEN_DEVICE)
+    return CLUTTER_EVENT_PROPAGATE;
 
   value = (clutter_actor_get_opacity (bvw->priv->controls) == 0);
   set_controls_visibility (bvw, value, FALSE);
