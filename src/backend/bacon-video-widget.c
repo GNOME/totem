@@ -808,6 +808,24 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 }
 
 static gboolean
+bacon_video_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
+{
+  gboolean res = GDK_EVENT_PROPAGATE;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
+  GdkDevice *device;
+  int x, y;
+
+  device = gdk_event_get_source_device ((GdkEvent *) event);
+  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
+    return res;
+
+  if (bvw->priv->reveal_controls)
+    set_controls_visibility (bvw, FALSE, TRUE);
+
+  return res;
+}
+
+static gboolean
 bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *event)
 {
   gboolean res = FALSE;
@@ -1009,6 +1027,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->realize = bacon_video_widget_realize;
 
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
+  widget_class->leave_notify_event = bacon_video_widget_leave_notify;
   widget_class->button_press_event = bacon_video_widget_button_press_or_release;
   widget_class->button_release_event = bacon_video_widget_button_press_or_release;
   widget_class->scroll_event = bacon_video_widget_scroll;
