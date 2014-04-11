@@ -1100,6 +1100,9 @@ find_media_cb (GtkTreeModel  *model,
 	gtk_tree_model_get (model, iter,
 			    MODEL_RESULTS_CONTENT, &media,
 			    -1);
+	if (!media)
+		return FALSE;
+
 	if (g_strcmp0 (grl_media_get_id (media), grl_media_get_id (data->media)) == 0) {
 		g_object_unref (media);
 		data->found = TRUE;
