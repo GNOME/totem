@@ -614,6 +614,29 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
   }
 }
 
+static gboolean
+leave_notify_cb (GtkWidget        *widget,
+		 GdkEventCrossing *event,
+		 gpointer          user_data)
+{
+  gboolean res = GDK_EVENT_PROPAGATE;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
+  GdkDevice *device;
+
+  if (event->detail != GDK_NOTIFY_NONLINEAR &&
+      event->detail != GDK_NOTIFY_NONLINEAR_VIRTUAL)
+    return res;
+
+  device = gdk_event_get_source_device ((GdkEvent *) event);
+  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
+    return res;
+
+  if (bvw->priv->reveal_controls)
+    set_controls_visibility (bvw, FALSE, TRUE);
+
+  return res;
+}
+
 static void
 bacon_video_widget_realize (GtkWidget * widget)
 {
@@ -632,6 +655,8 @@ bacon_video_widget_realize (GtkWidget * widget)
   toplevel = gtk_widget_get_toplevel (widget);
   if (is_gtk_plug (toplevel) == FALSE) {
     gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
+    g_signal_connect (G_OBJECT (toplevel), "leave-notify-event",
+		      G_CALLBACK (leave_notify_cb), bvw);
   } else {
     bvw->priv->embedded = TRUE;
   }
