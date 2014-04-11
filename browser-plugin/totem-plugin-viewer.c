@@ -2255,7 +2255,7 @@ int main (int argc, char **argv)
 			GError *gdberr = NULL;
 			int gdbargc = 0;
 
-			gdb = g_strdup_printf ("gdb %s %d", argv[0], getpid ());
+			gdb = g_strdup_printf ("/usr/bin/gdb %s %d", argv[0], getpid ());
 
 			gdbargv[gdbargc++] = "/usr/bin/gnome-terminal";
 			gdbargv[gdbargc++] = "-e";
