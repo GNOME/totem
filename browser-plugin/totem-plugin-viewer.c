@@ -2222,6 +2222,9 @@ int main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	/* Work around Chromium setting GDK_NATIVE_WINDOWS */
+	g_unsetenv ("GDK_NATIVE_WINDOWS");
+
 	g_set_application_name (_("Movie browser plugin"));
 	gtk_window_set_default_icon_name ("totem");
 
