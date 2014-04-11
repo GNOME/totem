@@ -1724,8 +1724,6 @@ totem_embedded_construct (TotemEmbedded *emb,
 	container = GTK_WIDGET (gtk_builder_get_object (emb->xml, "video_box"));
 
 	gtk_container_add (GTK_CONTAINER (container), GTK_WIDGET (emb->bvw));
-	/* FIXME: why can't this wait until the whole window is realised? */
-	gtk_widget_realize (GTK_WIDGET (emb->bvw));
 	gtk_widget_show (GTK_WIDGET (emb->bvw));
 
 	/* FIXME disable video decoding when hidden */
