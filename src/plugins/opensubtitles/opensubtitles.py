@@ -578,7 +578,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
 
         return False
 
-    def _save_selected_subtitle (self, filename=None):
+    def _save_selected_subtitle (self):
         cursor = Gdk.Cursor.new (Gdk.CursorType.WATCH)
         self._dialog.get_window ().set_cursor (cursor)
 
@@ -588,23 +588,17 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             subtitle_id = model.get_value (subtitle_iter, 3)
             subtitle_format = model.get_value (subtitle_iter, 1)
 
-            if not filename:
-                bpath = GLib.get_user_cache_dir() + sep
-                bpath += 'totem' + sep
+            bpath = self._cache_subtitles_dir()
 
-                directory = Gio.file_new_for_path (bpath + 'subtitles' + sep)
-                if not directory.query_exists (None):
-                    directory.make_directory_with_parents (None);
-
-                subtitle_file = Gio.file_new_for_path (self._filename)
-                movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
-
-                filename = directory.get_uri () + sep
-                filename += movie_name + '.' + subtitle_format
+            directory = Gio.file_new_for_path (bpath)
+            try:
+                directory.make_directory_with_parents (None);
+            except:
+                pass
 
             thread = DownloadThread (self._model, subtitle_id)
             thread.start ()
-            GObject.idle_add (self._save_subtitles, thread, filename)
+            GObject.idle_add (self._save_subtitles, thread, subtitle_format)
 
             self._progress.set_text (_(u'Downloading the subtitles…'))
             GObject.timeout_add (350, self._progress_bar_increment, thread)
@@ -612,25 +606,58 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             #warn user!
             pass
 
-    def _save_subtitles (self, download_thread, filename):
+    def _cache_subtitles_dir (self):
+       bpath = GLib.get_user_cache_dir() + sep
+       bpath += 'totem' + sep + 'subtitles' + sep
+       return bpath
+
+    def _movie_dir (self):
+       directory = Gio.file_new_for_uri (self._filename)
+       parent = directory.get_parent()
+       return parent.get_path ()
+
+    def _save_subtitles (self, download_thread, extension):
         if not download_thread.done:
             return True
 
         subtitles = download_thread.get_subtitles ()
         if subtitles:
+            subtitle_file = Gio.file_new_for_uri (self._filename)
+            movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
+
             # Delete all previous cached subtitle for this file
             for ext in SUBTITLES_EXT:
-                subtitle_file = Gio.file_new_for_path (filename[:-3] + ext)
-                if subtitle_file.query_exists (None):
-                    subtitle_file.delete (None)
+                # In the cache dir
+                old_subtitle_file = Gio.file_new_for_path (self._cache_subtitles_dir() + sep + movie_name + '.' + ext)
+                try:
+                    old_subtitle_file.delete (None)
+                except:
+                    pass
 
-            subtitle_file = Gio.file_new_for_uri (filename)
-            suburi = subtitle_file.get_uri ()
+                # In the movie dir
+                old_subtitle_file = Gio.file_new_for_path (self._movie_dir() + sep + movie_name + '.' + ext)
+                try:
+                    old_subtitle_file.delete (None)
+                except:
+                    pass
 
             flags = Gio.FileCreateFlags.REPLACE_DESTINATION
-            sub_file = subtitle_file.replace ('', False, flags, None)
-            sub_file.write (subtitles, None)
-            sub_file.close (None)
+            try:
+                subtitle_file = Gio.file_new_for_path (self._movie_dir() + sep + movie_name + '.' + ext)
+                print ('trying to save to ' + subtitle_file.get_uri())
+                suburi = subtitle_file.get_uri ()
+
+                sub_file = subtitle_file.replace ('', False, flags, None)
+                sub_file.write (subtitles, None)
+                sub_file.close (None)
+            except:
+                subtitle_file = Gio.file_new_for_path (self._cache_subtitles_dir() + sep + movie_name + '.' + ext)
+                print ('saving to ' + subtitle_file.get_uri())
+                suburi = subtitle_file.get_uri ()
+
+                sub_file = subtitle_file.replace ('', False, flags, None)
+                sub_file.write (subtitles, None)
+                sub_file.close (None)
 
         self._dialog.get_window ().set_cursor (None)
         self._close_dialog ()
