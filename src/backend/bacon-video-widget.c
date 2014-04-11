@@ -882,13 +882,13 @@ bacon_video_widget_tap (ClutterTapAction *action,
 			ClutterActor     *actor,
 			BaconVideoWidget *bvw)
 {
-    gboolean value;
+  gboolean value;
 
-    GST_DEBUG ("Tap event received");
+  GST_DEBUG ("Tap event received");
 
-    value = (clutter_actor_get_opacity (bvw->priv->controls) == 0);
-    set_controls_visibility (bvw, value, FALSE);
-    return CLUTTER_EVENT_STOP;
+  value = (clutter_actor_get_opacity (bvw->priv->controls) == 0);
+  set_controls_visibility (bvw, value, FALSE);
+  return CLUTTER_EVENT_STOP;
 }
 
 static gboolean
@@ -897,24 +897,24 @@ bacon_video_widget_swipe (ClutterTapAction      *action,
 			  ClutterSwipeDirection  direction,
 			  BaconVideoWidget      *bvw)
 {
-    GST_DEBUG ("Swipe event received");
+  GST_DEBUG ("Swipe event received");
 
-    if ((direction & CLUTTER_SWIPE_DIRECTION_UP) ||
-	(direction & CLUTTER_SWIPE_DIRECTION_DOWN)) {
-      if ((direction & CLUTTER_SWIPE_DIRECTION_LEFT) ||
-	  (direction & CLUTTER_SWIPE_DIRECTION_RIGHT))
-	GST_DEBUG ("Ignoring diagonal swipe 0x%X", direction);
-	return CLUTTER_EVENT_PROPAGATE;
-    }
+  if ((direction & CLUTTER_SWIPE_DIRECTION_UP) ||
+      (direction & CLUTTER_SWIPE_DIRECTION_DOWN)) {
+    if ((direction & CLUTTER_SWIPE_DIRECTION_LEFT) ||
+        (direction & CLUTTER_SWIPE_DIRECTION_RIGHT))
+      GST_DEBUG ("Ignoring diagonal swipe 0x%X", direction);
+      return CLUTTER_EVENT_PROPAGATE;
+  }
 
-    if (direction & CLUTTER_SWIPE_DIRECTION_LEFT)
-      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
-		     gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_RTL);
-    if (direction & CLUTTER_SWIPE_DIRECTION_RIGHT)
-      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
-		     gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_LTR);
+  if (direction & CLUTTER_SWIPE_DIRECTION_LEFT)
+    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
+		   gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_RTL);
+  if (direction & CLUTTER_SWIPE_DIRECTION_RIGHT)
+    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
+		   gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_LTR);
 
-    return CLUTTER_EVENT_STOP;
+  return CLUTTER_EVENT_STOP;
 }
 
 static gboolean
