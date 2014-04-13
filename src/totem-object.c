@@ -3434,6 +3434,17 @@ popup_menu_shown_cb (GtkToggleButton *button,
 		bacon_video_widget_unmark_popup_busy (totem->bvw, "toolbar/go menu visible");
 }
 
+static void
+volume_button_menu_shown_cb (GObject     *volume_button,
+			     GParamSpec  *pspec,
+			     TotemObject *totem)
+{
+	if (gtk_widget_is_visible (GTK_WIDGET (volume_button)))
+		bacon_video_widget_mark_popup_busy (totem->bvw, "volume menu visible");
+	else
+		bacon_video_widget_unmark_popup_busy (totem->bvw, "volume menu visible");
+}
+
 static gboolean
 fullscreen_button_image_sync (GBinding     *binding,
 			      const GValue *source_value,
@@ -3539,6 +3550,9 @@ totem_callback_connect (TotemObject *totem)
 	/* Volume */
 	g_signal_connect (totem->volume, "value-changed",
 			  G_CALLBACK (volume_button_value_changed_cb), totem);
+	item = gtk_scale_button_get_popup (GTK_SCALE_BUTTON (totem->volume));
+	g_signal_connect (G_OBJECT (item), "notify::visible",
+			  G_CALLBACK (volume_button_menu_shown_cb), totem);
 
 	/* Go button */
 	item = g_object_get_data (totem->controls, "go_button");
