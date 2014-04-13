@@ -3425,13 +3425,13 @@ totem_setup_window (TotemObject *totem)
 }
 
 static void
-fullscreen_menu_shown_cb (GtkToggleButton *button,
-			  TotemObject     *totem)
+popup_menu_shown_cb (GtkToggleButton *button,
+		     TotemObject     *totem)
 {
 	if (gtk_toggle_button_get_active (button))
-		bacon_video_widget_mark_popup_busy (totem->bvw, "toolbar menu visible");
+		bacon_video_widget_mark_popup_busy (totem->bvw, "toolbar/go menu visible");
 	else
-		bacon_video_widget_unmark_popup_busy (totem->bvw, "toolbar menu visible");
+		bacon_video_widget_unmark_popup_busy (totem->bvw, "toolbar/go menu visible");
 }
 
 static gboolean
@@ -3544,7 +3544,8 @@ totem_callback_connect (TotemObject *totem)
 	item = g_object_get_data (totem->controls, "go_button");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
-
+	g_signal_connect (G_OBJECT (item), "toggled",
+			  G_CALLBACK (popup_menu_shown_cb), totem);
 	/* Cog wheel */
 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
 									  gtk_menu_button_new (),
@@ -3554,7 +3555,7 @@ totem_callback_connect (TotemObject *totem)
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
-			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
+			  G_CALLBACK (popup_menu_shown_cb), totem);
 
 	/* Add button */
 	item = totem->add_button = totem_interface_create_header_button (totem->header,
@@ -3716,7 +3717,7 @@ add_fullscreen_toolbar (TotemObject *totem)
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
-			  G_CALLBACK (fullscreen_menu_shown_cb), totem);
+			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
 
 	item = totem_interface_create_header_button (totem->fullscreen_header,
