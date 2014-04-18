@@ -2120,13 +2120,11 @@ totem_object_drop_files_finished (TotemPlaylist *playlist, GAsyncResult *result,
 static gboolean
 totem_object_drop_files (TotemObject      *totem,
 			 GtkSelectionData *data,
-			 int               drop_type,
-			 gboolean          empty_pl)
+			 int               drop_type)
 {
 	char **list;
 	guint i, len;
 	GList *p, *file_list, *mrl_list = NULL;
-	gboolean cleared = FALSE;
 
 	list = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (data));
 	file_list = NULL;
@@ -2160,12 +2158,9 @@ totem_object_drop_files (TotemObject      *totem,
 		}
 	}
 
-	if (empty_pl != FALSE) {
-		/* The function that calls us knows better if we should be doing something with the changed playlist... */
-		g_signal_handlers_disconnect_by_func (G_OBJECT (totem->playlist), playlist_changed_cb, totem);
-		totem_playlist_clear (totem->playlist);
-		cleared = TRUE;
-	}
+	/* The function that calls us knows better if we should be doing something with the changed playlist... */
+	g_signal_handlers_disconnect_by_func (G_OBJECT (totem->playlist), playlist_changed_cb, totem);
+	totem_playlist_clear (totem->playlist);
 
 	/* Add each MRL to the playlist asynchronously */
 	for (p = file_list; p != NULL; p = p->next) {
@@ -2190,12 +2185,10 @@ totem_object_drop_files (TotemObject      *totem,
 	}
 
 	/* Add the MRLs to the playlist asynchronously and in order. We need to reconnect playlist's "changed" signal once all of the add-MRL
-	 * operations have completed. If we haven't cleared the playlist, there's no need to do this. */
-	if (mrl_list != NULL && cleared == TRUE) {
+	 * operations have completed. */
+	if (mrl_list != NULL) {
 		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL,
 		                         (GAsyncReadyCallback) totem_object_drop_files_finished, g_object_ref (totem));
-	} else if (mrl_list != NULL) {
-		totem_playlist_add_mrls (totem->playlist, g_list_reverse (mrl_list), TRUE, NULL, NULL, NULL);
 	}
 
 bail:
@@ -2215,7 +2208,6 @@ drop_video_cb (GtkWidget          *widget,
 	       Totem              *totem)
 {
 	GtkWidget *source_widget;
-	gboolean empty_pl;
 	GdkDragAction action = gdk_drag_context_get_selected_action (context);
 
 	source_widget = gtk_drag_get_source_widget (context);
@@ -2226,8 +2218,7 @@ drop_video_cb (GtkWidget          *widget,
 		return;
 	}
 
-	empty_pl = (action == GDK_ACTION_MOVE);
-	totem_object_drop_files (totem, data, info, empty_pl);
+	totem_object_drop_files (totem, data, info);
 	gtk_drag_finish (context, TRUE, FALSE, _time);
 	return;
 }
@@ -3973,7 +3964,7 @@ video_widget_create (TotemObject *totem)
 			G_CALLBACK (drop_video_cb), totem);
 	gtk_drag_dest_set (GTK_WIDGET (totem->bvw), GTK_DEST_DEFAULT_ALL,
 			   target_table, G_N_ELEMENTS (target_table),
-			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
+			   GDK_ACTION_MOVE);
 
 	bvw = &(totem->bvw);
 	g_object_add_weak_pointer (G_OBJECT (totem->bvw),
