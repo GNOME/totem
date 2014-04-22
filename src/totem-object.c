@@ -3730,10 +3730,6 @@ totem_callback_connect (TotemObject *totem)
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
-	/* Connect the mouse wheel */
-	gtk_widget_add_events (GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_vbox")), GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
-	gtk_widget_add_events (totem->seek, GDK_SCROLL_MASK | GDK_SMOOTH_SCROLL_MASK);
-
 	/* Set sensitivity of the toolbar buttons */
 	totem_object_set_sensitivity ("play", FALSE);
 	totem_object_set_sensitivity ("next-chapter", FALSE);
