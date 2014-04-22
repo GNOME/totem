@@ -934,10 +934,13 @@ bacon_video_widget_handle_scroll (GtkWidget        *widget,
 				  BaconVideoWidget *bvw)
 {
   int x, y;
-  GdkScrollDirection direction;
   gboolean forward;
+  gdouble delta_y;
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+
+  if (event->direction != GDK_SCROLL_SMOOTH)
+    return GDK_EVENT_PROPAGATE;
 
   if (widget == (gpointer) bvw) {
     translate_coords (widget, event->window, event->x, event->y, &x, &y);
@@ -945,23 +948,10 @@ bacon_video_widget_handle_scroll (GtkWidget        *widget,
       return GDK_EVENT_STOP;
   }
 
-  direction = event->direction;
-  if (direction == GDK_SCROLL_SMOOTH) {
-    gdouble y;
-    gdk_event_get_scroll_deltas ((GdkEvent *) event, NULL, &y);
-    direction = y >= 0.0 ? GDK_SCROLL_DOWN : GDK_SCROLL_UP;
-  }
-
-  switch (direction) {
-  case GDK_SCROLL_UP:
-    forward = TRUE;
-    break;
-  case GDK_SCROLL_DOWN:
-    forward = FALSE;
-    break;
-  default:
+  gdk_event_get_scroll_deltas ((GdkEvent *) event, NULL, &delta_y);
+  if (delta_y == 0.0)
     return GDK_EVENT_PROPAGATE;
-  }
+  forward = delta_y >= 0.0 ? FALSE : TRUE;
 
   if (widget == (gpointer) bvw ||
       widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale")) {
