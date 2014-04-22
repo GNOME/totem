@@ -225,8 +225,6 @@ totem_uri_get_subtitle_uri (const char *uri)
 	return subtitle;
 }
 
-
-
 static char *
 get_text_subtitle_cb (TotemObject                  *totem,
 		      const char                   *mrl,
