@@ -106,7 +106,11 @@ copy_uris_with_nautilus (const char *source,
 static char *
 get_cache_path (void)
 {
-	return g_build_filename (g_get_user_cache_dir (), "totem", "media", NULL);
+	char *path;
+
+	path = g_build_filename (g_get_user_cache_dir (), "totem", "media", NULL);
+	g_mkdir_with_parents (path, 0755);
+	return path;
 }
 
 static void
