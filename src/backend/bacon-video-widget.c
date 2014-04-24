@@ -3694,7 +3694,6 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
 
   /* FIXME:
    * Unemitted errors:
-   * BVW_ERROR_NETWORK_UNREACHABLE
    * BVW_ERROR_DVD_ENCRYPTED
    * BVW_ERROR_FILE_ENCRYPTED
    * BVW_ERROR_EMPTY_FILE
@@ -3803,9 +3802,14 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       }
       g_strfreev (descs);
     } else {
-      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-				 _("An audio or video stream is not handled due to missing codecs. "
-				   "You might need to install additional plugins to be able to play some types of movies"));
+      if (g_str_has_prefix (bvw->priv->mrl, "rtsp:")) {
+	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_NETWORK_UNREACHABLE,
+				   _("This stream cannot be played. It's possible that a firewall is blocking it."));
+      } else {
+	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
+				   _("An audio or video stream is not handled due to missing codecs. "
+				     "You might need to install additional plugins to be able to play some types of movies"));
+      }
     }
     goto done;
   }
