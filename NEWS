@@ -1,5 +1,19 @@
 New features and significant updates in version...
 
+Major changes in 3.12.1:
+- Bump required versions of grilo and GStreamer
+- Fix delete button's initial state
+- Switch to the player view quicker
+- Add support for starting a playlist paused
+- Escape selection mode when pressing Esc
+- Fix shuffled items starting to play in random order
+- Hide popups when leaving the window, but not when a popover
+  (volume, menus) is visible
+- Don't toggle popups on touchpad clicks, just on touchscreens
+- Fix scroll-wheel going forward 2 minutes instead of 1
+- Save the downloaded subtitles in the video directory
+- Re-add drag'n'drop support for the video widget
+
 Major changes in 3.12.0:
 - Fix artifacts caused by GtkPopovers
 - Don't add containers in the Recent view
