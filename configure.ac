@@ -451,106 +451,6 @@ AC_MSG_RESULT([$PLUGINS])
 AC_SUBST([ALL_PLUGINS])
 AC_SUBST([PLUGINS])
 
-# ***************
-# Browser plugins
-# ***************
-
-AC_MSG_CHECKING([whether to compile the browser plugins])
-
-AC_ARG_ENABLE([browser-plugins],
-	[AS_HELP_STRING([--enable-browser-plugins],[compile the totem browser plugins])],
-	[],[enable_browser_plugins=yes])
-AC_MSG_RESULT([$enable_browser_plugins])
-
-if test "$enable_browser_plugins" = "yes" ; then
-	AC_DEFINE([ENABLE_BROWSER_PLUGINS],[1],[Define to build the browser plugin])
-
-	BROWSER_PLUGIN_DIR="${BROWSER_PLUGIN_DIR:-"\${libdir}/mozilla/plugins"}"
-	AC_ARG_VAR([BROWSER_PLUGIN_DIR],[Where to install the plugin to])
-
-	PKG_CHECK_MODULES([BROWSER_PLUGIN],
-		[glib-2.0
-		 gio-2.0 >= $GIO_REQS
-		 gmodule-export-2.0
-		 x11
-		 totem-plparser-mini >= $TOTEM_PLPARSER_REQS],
-		[],[enable_browser_plugins=no])
-
-	AC_SUBST([BROWSER_PLUGIN_CFLAGS])
-	AC_SUBST([BROWSER_PLUGIN_LIBS])
-
-	# Earlier versions misdetect playlists
-	PKG_CHECK_EXISTS([shared-mime-info >= 0.22],
-			[],
-			[AC_MSG_ERROR([
-				The Browser plugin requires shared-mime-info
-				>= 0.22 to function.])])
-
-        # check for -fno-rtti flag
-
-	AC_LANG_PUSH([C++])
-	__SAVE_CXXFLAGS=$CXXFLAGS
-	CXXFLAGS="-fno-rtti $CXXFLAGS"
-
-	AC_MSG_CHECKING([for -fno-rtti compiler flag])
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[])],[have_no_rtti_flag=yes],[have_no_rtti_flag=no])
-	AC_MSG_RESULT([$have_no_rtti_flag])
-
-	CXXFLAGS=$__SAVE_CXXFLAGS
-	AC_LANG_POP([C++])
-
-	if test "$have_no_rtti_flag" = "yes"; then
-		AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
-	fi
-
-	PKG_CHECK_MODULES(PLUGIN_VIEWER, $BACKEND_MODULES gtk+-3.0 >= $GTK_REQS totem-plparser >= $TOTEM_PLPARSER_REQS gdk-x11-3.0 >= $GTK_REQS)
-	PKG_CHECK_MODULES(GLOW_BUTTON, gtk+-3.0)
-fi
-
-AM_CONDITIONAL([ENABLE_BROWSER_PLUGINS], [test "$enable_browser_plugins" = "yes"])
-
-# check which plugins to enable
-
-if test "$enable_browser_plugins" = "yes"; then
-
-AC_MSG_CHECKING([whether to enable the GMP browser plugin])
-AC_ARG_ENABLE([gmp-plugin],
-	AS_HELP_STRING([--enable-gmp-plugin],[Whether to enable the GMP browser plugin]),
-	[],[enable_gmp_plugin=yes])
-AC_MSG_RESULT([$enable_gmp_plugin])
-
-AC_MSG_CHECKING([whether to enable the NarrowSpace browser plugin])
-AC_ARG_ENABLE([narrowspace-plugin],
-	AS_HELP_STRING([--enable-narrowspace-plugin],[Whether to enable the NarrowSpace browser plugin]),
-	[],[enable_narrowspace_plugin=yes])
-AC_MSG_RESULT([$enable_narrowspace_plugin])
-
-AC_MSG_CHECKING([whether to enable the MullY browser plugin])
-AC_ARG_ENABLE([mully-plugin],
-	AS_HELP_STRING([--enable-mully-plugin],[Whether to enable the MullY browser plugin]),
-	[],[enable_mully_plugin=yes])
-AC_MSG_RESULT([$enable_mully_plugin])
-
-AC_MSG_CHECKING([whether to enable the Cone browser plugin])
-AC_ARG_ENABLE([cone-plugin],
-	AS_HELP_STRING([--enable-cone-plugin],[Whether to enable the Cone browser plugin]),
-	[],[enable_cone_plugin=yes])
-AC_MSG_RESULT([$enable_cone_plugin])
-
-AC_MSG_CHECKING([whether to enable the Vegas browser plugin])
-AC_ARG_ENABLE([vegas-plugin],
-	AS_HELP_STRING([--enable-vegas-plugin],[Whether to enable the Vegas browser plugin]),
-	[],[enable_vegas_plugin=yes])
-AC_MSG_RESULT([$enable_vegas_plugin])
-
-fi
-
-AM_CONDITIONAL([ENABLE_GMP_PLUGIN],[test "$enable_gmp_plugin" = "yes"])
-AM_CONDITIONAL([ENABLE_NARROWSPACE_PLUGIN],[test "$enable_narrowspace_plugin" = "yes"])
-AM_CONDITIONAL([ENABLE_MULLY_PLUGIN],[test "$enable_mully_plugin" = "yes"])
-AM_CONDITIONAL([ENABLE_CONE_PLUGIN],[test "$enable_cone_plugin" = "yes"])
-AM_CONDITIONAL([ENABLE_VEGAS_PLUGIN],[test "$enable_vegas_plugin" = "yes"])
-
 dnl ********
 dnl Nautilus
 dnl ********
@@ -676,7 +576,6 @@ src/plugins/chapters/Makefile
 src/plugins/zeitgeist-dp/Makefile
 src/plugins/vimeo/Makefile
 src/backend/Makefile
-browser-plugin/Makefile
 data/Makefile
 data/org.gnome.totem.gschema.xml.in
 data/totem.desktop.in.in

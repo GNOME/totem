@@ -1,12 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4 -I libgd ${ACLOCAL_FLAGS}
 
-NORMAL_SUBDIRS = libgd po data help src docs
-
-SUBDIRS = $(NORMAL_SUBDIRS)
-
-if ENABLE_BROWSER_PLUGINS
-SUBDIRS += browser-plugin
-endif
+SUBDIRS = libgd po data help src docs
 
 EXTRA_DIST =			\
 	license_change		\
@@ -36,7 +30,6 @@ MAINTAINERCLEANFILES = \
 
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update
 
-DIST_SUBDIRS = $(NORMAL_SUBDIRS) browser-plugin
 DISTCHECK_CONFIGURE_FLAGS = \
 	--disable-scrollkeeper \
 	--enable-gtk-doc \
