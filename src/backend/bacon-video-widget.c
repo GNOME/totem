@@ -79,10 +79,6 @@
 #include <gio/gio.h>
 #include <gdesktop-enums.h>
 
-#ifdef GDK_WINDOWING_X11
-#include <gtk/gtkx.h>
-#endif /* GDK_WINDOWING_X11 */
-
 #include "totem-gst-helpers.h"
 #include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
@@ -235,7 +231,6 @@ struct BaconVideoWidgetPrivate
   gboolean                     is_menu;
   gboolean                     has_angles;
   GList                       *chapters;
-  gboolean                     embedded;
 
   BvwRotation                  rotation;
   
@@ -330,16 +325,6 @@ GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
 
 typedef gchar * (* MsgToStrFunc) (GstMessage * msg);
-
-static gboolean
-is_gtk_plug (GtkWidget *toplevel)
-{
-#ifdef GDK_WINDOWING_X11
-  if (gtk_widget_is_toplevel (toplevel) && GTK_IS_PLUG (toplevel))
-    return TRUE;
-#endif /* GDK_WINDOWING_X11 */
-  return FALSE;
-}
 
 static const gchar *
 get_type_name (GType class_type, int type)
@@ -644,13 +629,9 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   /* setup the toplevel, ready to be resized */
   toplevel = gtk_widget_get_toplevel (widget);
-  if (is_gtk_plug (toplevel) == FALSE) {
-    gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
-    g_signal_connect (G_OBJECT (toplevel), "leave-notify-event",
-		      G_CALLBACK (leave_notify_cb), bvw);
-  } else {
-    bvw->priv->embedded = TRUE;
-  }
+  gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
+  g_signal_connect (G_OBJECT (toplevel), "leave-notify-event",
+		    G_CALLBACK (leave_notify_cb), bvw);
 
   bacon_video_widget_gst_missing_plugins_setup (bvw);
 }
@@ -967,12 +948,6 @@ bacon_video_widget_get_preferred_width (GtkWidget *widget,
                                         gint      *minimum,
                                         gint      *natural)
 {
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-
-  if (bvw->priv->embedded) {
-    *minimum = *natural = 240;
-    return;
-  }
   /* We could also make the actor a minimum width, based on its contents */
   *minimum = *natural = DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN;
 }
@@ -982,12 +957,6 @@ bacon_video_widget_get_preferred_height (GtkWidget *widget,
                                          gint      *minimum,
                                          gint      *natural)
 {
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-
-  if (bvw->priv->embedded) {
-    *minimum = *natural = 180;
-    return;
-  }
   *minimum = *natural = (DEFAULT_CONTROLS_WIDTH + 2 * CONTROLS_MARGIN) / 16 * 9;
 }
 
