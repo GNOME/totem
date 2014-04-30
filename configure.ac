@@ -630,36 +630,6 @@ if test "x${PLUGINS}" != "x" ; then
 else
 	AC_MSG_NOTICE([   No Totem plugins enabled])
 fi
-if test x$enable_browser_plugins = xyes ; then
-	AC_MSG_NOTICE([** Browser plugin enabled])
-	if test x$enable_gmp_plugin = xyes ; then
-		AC_MSG_NOTICE([** GMP (Windows Media) plugin enabled])
-	else
-		AC_MSG_NOTICE([   GMP (Windows Media) plugin disabled])
-	fi
-	if test x$enable_narrowspace_plugin = xyes ; then
-		AC_MSG_NOTICE([** NarrowSpace (QuickTime) plugin enabled])
-	else
-		AC_MSG_NOTICE([   NarrowSpace (QuickTime) plugin disabled])
-	fi
-	if test x$enable_mully_plugin = xyes ; then
-		AC_MSG_NOTICE([** MullY (DivX) plugin enabled])
-	else
-		AC_MSG_NOTICE([   MullY (DivX) plugin disabled])
-	fi
-	if test x$enable_cone_plugin = xyes ; then
-		AC_MSG_NOTICE([** Cone (VLC) plugin enabled])
-	else
-		AC_MSG_NOTICE([   Cone (VLC) plugin disabled])
-	fi
-	if test x$enable_vegas_plugin = xyes ; then
-		AC_MSG_NOTICE([** Vegas (Flash) plugin enabled])
-	else
-		AC_MSG_NOTICE([   Vegas (Flash) plugin disabled])
-	fi
-else
-	AC_MSG_NOTICE([   Browser plugin disabled])
-fi
 if test x$ENABLE_NAUTILUS = xyes ; then
 	AC_MSG_NOTICE([** Nautilus properties page enabled])
 else
