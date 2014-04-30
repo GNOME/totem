@@ -64,8 +64,8 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	gtk_message_dialog_format_secondary_text
 		(GTK_MESSAGE_DIALOG (error_dialog), "%s", reason);
 
-	totem_interface_set_transient_for (GTK_WINDOW (error_dialog),
-				GTK_WINDOW (parent));
+	gtk_window_set_transient_for (GTK_WINDOW (error_dialog),
+				      GTK_WINDOW (parent));
 	gtk_window_set_title (GTK_WINDOW (error_dialog), ""); /* as per HIG */
 	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
@@ -286,67 +286,6 @@ totem_interface_get_full_path (const char *name)
 #endif
 
 	return filename;
-}
-
-#ifdef GDK_WINDOWING_X11
-static GdkWindow *
-totem_gtk_plug_get_toplevel (GtkPlug *plug)
-{
-	Window root, parent, *children;
-	guint nchildren;
-	Window xid;
-
-	g_return_val_if_fail (GTK_IS_PLUG (plug), NULL);
-
-	xid = gtk_plug_get_id (plug);
-
-	do
-	{
-		/* FIXME: multi-head */
-		if (XQueryTree (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), xid, &root,
-					&parent, &children, &nchildren) == 0)
-		{
-			g_warning ("Couldn't find window manager window");
-			return NULL;
-		}
-
-		if (root == parent) {
-			GdkWindow *toplevel;
-			toplevel = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), xid);
-			return toplevel;
-		}
-
-		xid = parent;
-	}
-	while (TRUE);
-}
-#endif /* GDK_WINDOWING_X11 */
-
-void
-totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
-{
-#ifdef GDK_WINDOWING_X11
-	GdkDisplay *display;
-
-	display = gdk_display_get_default ();
-
-	if (GDK_IS_X11_DISPLAY (display) &&
-	    GTK_IS_PLUG (parent)) {
-		GdkWindow *toplevel;
-
-		gtk_widget_realize (GTK_WIDGET (window));
-		toplevel = totem_gtk_plug_get_toplevel (GTK_PLUG (parent));
-		if (toplevel != NULL) {
-			gdk_window_set_transient_for
-				(gtk_widget_get_window (GTK_WIDGET (window)), toplevel);
-			g_object_unref (toplevel);
-		}
-		return;
-	}
-#endif /* GDK_WINDOWING_X11 */
-
-	gtk_window_set_transient_for (GTK_WINDOW (window),
-				      GTK_WINDOW (parent));
 }
 
 /**
