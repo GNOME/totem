@@ -147,6 +147,7 @@ typedef struct {
 
 typedef struct {
 	gboolean found;
+	GrlKeyID key;
 	GtkTreeIter *iter;
 	GrlMedia *media;
 } FindMediaData;
@@ -1098,6 +1099,7 @@ find_media_cb (GtkTreeModel  *model,
 	       FindMediaData *data)
 {
 	GrlMedia *media;
+	const char *a, *b;
 
 	gtk_tree_model_get (model, iter,
 			    MODEL_RESULTS_CONTENT, &media,
@@ -1105,7 +1107,10 @@ find_media_cb (GtkTreeModel  *model,
 	if (!media)
 		return FALSE;
 
-	if (g_strcmp0 (grl_media_get_id (media), grl_media_get_id (data->media)) == 0) {
+	a = grl_data_get_string (GRL_DATA (media), data->key);
+	b = grl_data_get_string (GRL_DATA (data->media), data->key);
+
+	if (g_strcmp0 (a, b) == 0) {
 		g_object_unref (media);
 		data->found = TRUE;
 		data->iter = gtk_tree_iter_copy (iter);
@@ -1123,6 +1128,7 @@ find_media (GtkTreeModel  *model,
 	FindMediaData data;
 
 	data.found = FALSE;
+	data.key = GRL_METADATA_KEY_ID;
 	data.media = media;
 	data.iter = NULL;
 	gtk_tree_model_foreach (model, (GtkTreeModelForeachFunc) find_media_cb, &data);
