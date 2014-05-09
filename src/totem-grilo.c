@@ -2559,6 +2559,7 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 {
 	GrlMedia *media;
 	GFile *file;
+	FindMediaData data;
 
 	g_return_val_if_fail (TOTEM_IS_GRILO (self), FALSE);
 
@@ -2599,6 +2600,19 @@ totem_grilo_add_item_to_recent (TotemGrilo *self,
 
 	if (!media)
 		return FALSE;
+
+	data.found = FALSE;
+	data.key = GRL_METADATA_KEY_URL;
+	data.media = media;
+	data.iter = NULL;
+	gtk_tree_model_foreach (self->priv->recent_model, (GtkTreeModelForeachFunc) find_media_cb, &data);
+
+	if (data.found) {
+		g_debug ("URI '%s' is already present in the bookmarks, not adding duplicate", uri);
+		gtk_tree_iter_free (data.iter);
+		g_object_unref (media);
+		return FALSE;
+	}
 
 	/* This should be quick, just adding the item to the DB */
 	grl_source_store_sync (self->priv->bookmarks_src,
