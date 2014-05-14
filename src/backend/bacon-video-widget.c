@@ -86,7 +86,6 @@
 #include "bacon-video-controls-actor.h"
 #include "bacon-video-spinner-actor.h"
 #include "bacon-video-widget-enums.h"
-#include "video-utils.h"
 
 #define DEFAULT_USER_AGENT "Videos/"VERSION
 
@@ -4755,7 +4754,11 @@ bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
   }
 
   if (show_cursor == FALSE) {
-    totem_gdk_window_set_invisible_cursor (window);
+    GdkCursor *cursor;
+
+    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+    gdk_window_set_cursor (window, cursor);
+    g_object_unref (cursor);
   } else {
     gdk_window_set_cursor (window, bvw->priv->cursor);
   }
