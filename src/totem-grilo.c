@@ -2089,6 +2089,7 @@ delete_foreach (gpointer data,
 	path = gtk_tree_row_reference_get_path (ref);
 	if (!path || !gtk_tree_model_get_iter (view_model, &iter, path)) {
 		g_warning ("An item that was scheduled for removal isn't available any more");
+		gtk_tree_row_reference_free (ref);
 		return;
 	}
 
@@ -2148,6 +2149,7 @@ delete_foreach (gpointer data,
 end:
 	g_clear_object (&media);
 	g_clear_object (&source);
+	gtk_tree_row_reference_free (ref);
 }
 
 static void
@@ -2171,7 +2173,6 @@ delete_cb (TotemSelectionToolbar *bar,
 		l->data = ref;
 	}
 	g_list_foreach (list, delete_foreach, model);
-	g_list_free_full (list, (GDestroyNotify) gtk_tree_row_reference_free);
 
 	g_signal_handlers_unblock_by_func (self->priv->browser, "view-selection-changed", self);
 
