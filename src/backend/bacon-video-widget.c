@@ -3466,6 +3466,11 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
     bvw->priv->mrl = get_target_uri (file);
     GST_DEBUG ("Found target location '%s' for original MRL '%s'",
 	       GST_STR_NULL (bvw->priv->mrl), mrl);
+  } else if (g_file_has_uri_scheme (file, "cdda") != FALSE) {
+    char *path;
+    path = g_file_get_path (file);
+    bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
+    g_free (path);
   } else {
     bvw->priv->mrl = g_strdup (mrl);
   }
