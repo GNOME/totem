@@ -39,8 +39,6 @@
 
 static GtkFileFilter *filter_all = NULL;
 static GtkFileFilter *filter_subs = NULL;
-static GtkFileFilter *filter_supported = NULL;
-static GtkFileFilter *filter_audio = NULL;
 static GtkFileFilter *filter_video = NULL;
 
 gboolean
@@ -332,31 +330,13 @@ totem_setup_file_filters (void)
 	gtk_file_filter_add_pattern (filter_all, "*");
 	g_object_ref_sink (filter_all);
 
-	filter_supported = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter_supported, _("Supported files"));
-	for (i = 0; mime_types[i] != NULL; i++) {
-		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
-	}
-
-	/* Add the special Disc-as-files formats */
-	gtk_file_filter_add_mime_type (filter_supported, "application/x-cd-image");
-	gtk_file_filter_add_mime_type (filter_supported, "application/x-cue");
-	g_object_ref_sink (filter_supported);
-
-	/* Audio files */
-	filter_audio = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter_audio, _("Audio files"));
-	for (i = 0; audio_mime_types[i] != NULL; i++) {
-		gtk_file_filter_add_mime_type (filter_audio, audio_mime_types[i]);
-	}
-	g_object_ref_sink (filter_audio);
-
 	/* Video files */
 	filter_video = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_video, _("Video files"));
 	for (i = 0; video_mime_types[i] != NULL; i++) {
 		gtk_file_filter_add_mime_type (filter_video, video_mime_types[i]);
 	}
+	/* Add the special Disc-as-files formats */
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cd-image");
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cue");
 	g_object_ref_sink (filter_video);
@@ -380,8 +360,6 @@ totem_destroy_file_filters (void)
 	if (filter_all != NULL) {
 		g_object_unref (filter_all);
 		filter_all = NULL;
-		g_object_unref (filter_supported);
-		g_object_unref (filter_audio);
 		g_object_unref (filter_video);
 		g_object_unref (filter_subs);
 	}
@@ -423,8 +401,6 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 					  NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 
 	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
@@ -484,11 +460,7 @@ totem_add_files (GtkWindow *parent, const char *path)
 					  _("_Cancel"), GTK_RESPONSE_CANCEL,
 					  _("_Add"), GTK_RESPONSE_ACCEPT,
 					  NULL);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_supported);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_audio);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_video);
-	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_supported);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_video);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
