@@ -26,7 +26,6 @@
 #include <glib/gi18n-lib.h>
 #include <string.h>
 
-#include "backend/video-utils.h"
 #include "totem-interface.h"
 
 #include "bacon-video-widget-properties.h"

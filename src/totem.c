@@ -48,7 +48,6 @@
 #include "totem-uri.h"
 #include "totem-preferences.h"
 #include "totem-session.h"
-#include "video-utils.h"
 #include "totem-rtl-helpers.h"
 
 static gboolean startup_called = FALSE;

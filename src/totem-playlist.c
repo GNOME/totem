@@ -33,7 +33,6 @@
 
 #include "totem-uri.h"
 #include "totem-interface.h"
-#include "video-utils.h"
 #include "totem-rtl-helpers.h"
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->priv->model, NULL))

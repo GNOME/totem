@@ -60,7 +60,6 @@
 #include "totem-menu.h"
 #include "totem-uri.h"
 #include "totem-interface.h"
-#include "video-utils.h"
 #include "totem-preferences.h"
 #include "totem-session.h"
 #include "totem-rtl-helpers.h"
