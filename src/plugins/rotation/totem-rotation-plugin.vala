@@ -19,8 +19,6 @@
 using GLib;
 using Totem;
 using Peas;
-using Clutter;
-using GtkClutter;
 
 public const string GIO_ROTATION_FILE_ATTRIBUTE = "metadata::totem::rotation";
 
