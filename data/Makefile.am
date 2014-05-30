@@ -21,12 +21,10 @@ stuffdir = $(pkgdatadir)
 stuff_DATA =				\
 	totem.ui			\
 	playlist.ui			\
-	mozilla-viewer.ui		\
 	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
-	controls.ui			\
-	mozilla-viewer.css
+	controls.ui
 EXTRA_DIST += $(stuff_DATA)
 
 # Icons
