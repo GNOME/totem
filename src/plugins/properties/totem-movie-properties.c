@@ -248,6 +248,7 @@ impl_activate (PeasActivatable *plugin)
 	GtkWindow *parent;
 	GMenu *menu;
 	GMenuItem *item;
+	const char * const accels[] = { "<Primary>p", NULL };
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
@@ -276,10 +277,9 @@ impl_activate (PeasActivatable *plugin)
 	g_signal_connect (G_OBJECT (pi->priv->props_action), "activate",
 			  G_CALLBACK (properties_action_cb), pi);
 	g_action_map_add_action (G_ACTION_MAP (totem), G_ACTION (pi->priv->props_action));
-	gtk_application_add_accelerator (GTK_APPLICATION (totem),
-					 "<Primary>p",
-					 "app.properties",
-					 NULL);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem),
+					       "app.properties",
+					       accels);
 	/* FIXME: Handle GDK_KEY_View */
 
 	/* Install the menu */
@@ -312,6 +312,7 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;
+	const char const *accels[] = { NULL };
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
@@ -328,8 +329,8 @@ impl_deactivate (PeasActivatable *plugin)
 					      plugin);
 	pi->priv->handler_id_stream_length = 0;
 
-	gtk_application_remove_accelerator (GTK_APPLICATION (totem),
-					    "app.properties",
-					    NULL);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (totem),
+					       "app.properties",
+					       accels);
 	totem_object_empty_menu_section (totem, "properties-placeholder");
 }
