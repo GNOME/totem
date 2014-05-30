@@ -308,6 +308,7 @@ impl_activate (PeasActivatable *plugin)
 	TotemScreenshotPluginPrivate *priv = self->priv;
 	GMenu *menu;
 	GMenuItem *item;
+	const char const *accels[]= { "<Primary><Alt>s", NULL };
 
 	priv->totem = g_object_get_data (G_OBJECT (plugin), "object");
 	priv->bvw = BACON_VIDEO_WIDGET (totem_object_get_video_widget (priv->totem));
@@ -324,10 +325,9 @@ impl_activate (PeasActivatable *plugin)
 	g_signal_connect (G_OBJECT (priv->screenshot_action), "activate",
 			  G_CALLBACK (take_screenshot_action_cb), plugin);
 	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->screenshot_action));
-	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
-					 "<Primary><Alt>s",
-					 "app.take-screenshot",
-					 NULL);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.take-screenshot",
+					       accels);
 
 	priv->gallery_action = g_simple_action_new ("take-gallery", NULL);
 	g_signal_connect (G_OBJECT (priv->gallery_action), "activate",
@@ -361,14 +361,15 @@ static void
 impl_deactivate (PeasActivatable *plugin)
 {
 	TotemScreenshotPluginPrivate *priv = TOTEM_SCREENSHOT_PLUGIN (plugin)->priv;
+	const char const *accels[] = { NULL };
 
 	/* Disconnect signal handlers */
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->got_metadata_signal);
 	g_signal_handler_disconnect (G_OBJECT (priv->bvw), priv->notify_logo_mode_signal);
 
-	gtk_application_remove_accelerator (GTK_APPLICATION (priv->totem),
-					    "app.take-screenshot",
-					    NULL);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.take-screenshot",
+					       accels);
 
 	/* Disconnect from GSettings */
 	g_object_unref (priv->settings);
