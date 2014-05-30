@@ -516,22 +516,6 @@ totem_object_get_main_window (TotemObject *totem)
 }
 
 /**
- * totem_object_get_ui_manager:
- * @totem: a #TotemObject
- *
- * Gets Totem's UI manager, but does not change its reference count.
- *
- * Return value: (transfer none): Totem's UI manager
- **/
-GtkUIManager *
-totem_object_get_ui_manager (TotemObject *totem)
-{
-	g_return_val_if_fail (TOTEM_IS_OBJECT (totem), NULL);
-
-	return totem->ui_manager;
-}
-
-/**
  * totem_object_get_menu_section:
  * @totem: a #TotemObject
  * @id: the ID for the menu section to look up
