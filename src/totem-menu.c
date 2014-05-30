@@ -292,8 +292,6 @@ totem_app_menu_setup (Totem *totem)
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.next-angle", (const char * const *) accels);
 	accels[0] = "<Primary>M";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.root-menu", (const char * const *) accels);
-	accels[0] = "<Primary>P";
-	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.properties", (const char * const *) accels);
 	accels[0] = "<Primary>E";
 	gtk_application_set_accels_for_action (GTK_APPLICATION (totem), "app.eject", (const char * const *) accels);
 	gtk_window_set_application (GTK_WINDOW (totem->win), GTK_APPLICATION (totem));
