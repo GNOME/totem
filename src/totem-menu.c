@@ -37,11 +37,6 @@
 
 #include "totem-profile.h"
 
-/* Callback functions for GtkBuilder */
-G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
-
 static void
 open_action_cb (GSimpleAction *action,
 		GVariant      *parameter,
@@ -248,6 +243,30 @@ select_subtitle_action_cb (GSimpleAction *action,
 					       TOTEM_PLAYLIST_DIALOG_PLAYING);
 }
 
+static void
+play_action_cb (GSimpleAction *action,
+		GVariant      *parameter,
+		gpointer       user_data)
+{
+	totem_object_play_pause (TOTEM_OBJECT (user_data));
+}
+
+static void
+next_chapter_action_cb (GSimpleAction *action,
+			GVariant      *parameter,
+			gpointer       user_data)
+{
+	TOTEM_PROFILE (totem_object_seek_next (TOTEM_OBJECT (user_data)));
+}
+
+static void
+previous_chapter_action_cb (GSimpleAction *action,
+			    GVariant      *parameter,
+			    gpointer       user_data)
+{
+	TOTEM_PROFILE (totem_object_seek_previous (TOTEM_OBJECT (user_data)));
+}
+
 static GActionEntry app_entries[] = {
 	/* Main app menu */
 	{ "open", open_action_cb, NULL, NULL, NULL },
@@ -273,6 +292,11 @@ static GActionEntry app_entries[] = {
 	{ "zoom", toggle_action_cb, NULL, "false", zoom_action_change_state },
 	{ "next-angle", next_angle_action_cb, NULL, NULL, NULL },
 	{ "eject", eject_action_cb, NULL, NULL, NULL },
+
+	/* Navigation popup */
+	{ "play", play_action_cb, NULL, NULL, NULL },
+	{ "next-chapter", next_chapter_action_cb, NULL, NULL, NULL },
+	{ "previous-chapter", previous_chapter_action_cb, NULL, NULL, NULL },
 };
 
 void
@@ -498,30 +522,3 @@ totem_sublang_exit (Totem *totem)
 	g_list_free_full (totem->subtitles_list, g_free);
 	g_list_free_full (totem->languages_list, g_free);
 }
-
-void
-play_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_object_play_pause (totem);
-}
-
-void
-next_chapter_action_callback (GtkAction *action, Totem *totem)
-{
-	TOTEM_PROFILE (totem_object_seek_next (totem));
-}
-
-void
-previous_chapter_action_callback (GtkAction *action, Totem *totem)
-{
-	TOTEM_PROFILE (totem_object_seek_previous (totem));
-}
-
-void
-totem_ui_manager_setup (Totem *totem)
-{
-	totem->main_action_group = GTK_ACTION_GROUP (gtk_builder_get_object (totem->xml, "main-action-group"));
-
-	totem->ui_manager = GTK_UI_MANAGER (gtk_builder_get_object (totem->xml, "totem-ui-manager"));
-}
-

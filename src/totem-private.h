@@ -48,13 +48,6 @@
 	}
 #define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (g_object_get_data (totem->controls, name), state)
 
-#define totem_object_set_sensitivity(name, state)					\
-	{										\
-		GtkAction *__action;							\
-		__action = gtk_action_group_get_action (totem->main_action_group, name);\
-		gtk_action_set_sensitive (__action, state);				\
-	}
-
 #define totem_object_set_sensitivity2(name, state)					\
 	{										\
 		GAction *__action;							\
@@ -88,6 +81,7 @@ struct _TotemObject {
 	GtkWidget *grilo;
 
 	GObject *controls;
+	GtkWidget *play_button;
 	BaconTimeLabel *time_label;
 	BaconTimeLabel *time_rem_label;
 	GtkWidget *header;
@@ -95,10 +89,6 @@ struct _TotemObject {
 	GtkWidget *revealer;
 	GtkWidget *fullscreen_header;
 	GtkWidget *fullscreen_gear_button;
-
-	/* UI manager */
-	GtkActionGroup *main_action_group;
-	GtkUIManager *ui_manager;
 
 	/* Plugins */
 	GtkWidget *plugins;

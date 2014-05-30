@@ -48,7 +48,6 @@
 #include "totem-uri.h"
 #include "totem-preferences.h"
 #include "totem-session.h"
-#include "totem-rtl-helpers.h"
 
 static gboolean startup_called = FALSE;
 
@@ -70,17 +69,6 @@ debug_handler (const char *log_domain,
 }
 
 static void
-set_rtl_icon_name (Totem *totem,
-		   const char *widget_name,
-		   const char *icon_name)
-{
-	GtkAction *action;
-
-	action = GTK_ACTION (gtk_builder_get_object (totem->xml, widget_name));
-	gtk_action_set_icon_name (action, totem_get_rtl_icon_name (icon_name));
-}
-
-static void
 app_init (Totem *totem, char **argv)
 {
 	GtkSettings *gtk_settings;
@@ -99,15 +87,10 @@ app_init (Totem *totem, char **argv)
 	if (totem->xml == NULL)
 		totem_object_exit (NULL);
 
-	set_rtl_icon_name (totem, "play", "media-playback-start");
-	set_rtl_icon_name (totem, "next-chapter", "media-skip-forward");
-	set_rtl_icon_name (totem, "previous-chapter", "media-skip-backward");
-
 	totem->win = GTK_WIDGET (gtk_builder_get_object (totem->xml, "totem_main_window"));
 
 	/* Menubar */
 	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
-	totem_ui_manager_setup (totem);
 
 	/* The sidebar */
 	playlist_widget_setup (totem);

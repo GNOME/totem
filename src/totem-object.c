@@ -62,7 +62,6 @@
 #include "totem-interface.h"
 #include "totem-preferences.h"
 #include "totem-session.h"
-#include "totem-rtl-helpers.h"
 #include "totem-main-toolbar.h"
 
 #define WANT_MIME_TYPES 1
@@ -1298,9 +1297,8 @@ main_window_destroy_cb (GtkWidget *widget, GdkEvent *event, TotemObject *totem)
 static void
 play_pause_set_label (TotemObject *totem, TotemStates state)
 {
-	GtkAction *action;
+	GtkWidget *image;
 	const char *id, *tip;
-	GSList *l, *proxies;
 
 	if (state == totem->state)
 		return;
@@ -1313,7 +1311,7 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 		break;
 	case STATE_PAUSED:
-		id = totem_get_rtl_icon_name ("media-playback-start");
+		id = "media-playback-start";
 		tip = N_("Play");
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 		break;
@@ -1322,7 +1320,7 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 					   0, 0);
 		bacon_time_label_set_time (totem->time_rem_label,
 					   0, 0);
-		id = totem_get_rtl_icon_name ("media-playback-start");
+		id = "media-playback-start";
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_NONE);
 		tip = N_("Play");
 		break;
@@ -1331,16 +1329,9 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 		return;
 	}
 
-	action = gtk_action_group_get_action (totem->main_action_group, "play");
-	g_object_set (G_OBJECT (action),
-			"tooltip", _(tip),
-			"icon-name", id, NULL);
-
-	proxies = gtk_action_get_proxies (action);
-	for (l = proxies; l != NULL; l = l->next) {
-		atk_object_set_name (gtk_widget_get_accessible (l->data),
-				_(tip));
-	}
+	gtk_widget_set_tooltip_text (totem->play_button, _(tip));
+	image = gtk_button_get_image (GTK_BUTTON (totem->play_button));
+	gtk_image_set_from_icon_name (GTK_IMAGE (image), id, GTK_ICON_SIZE_MENU);
 
 	totem->state = state;
 
@@ -1777,15 +1768,15 @@ totem_object_set_mrl (TotemObject *totem,
 		play_pause_set_label (totem, STATE_STOPPED);
 
 		/* Play/Pause */
-		totem_object_set_sensitivity ("play", FALSE);
+		totem_object_set_sensitivity2 ("play", FALSE);
 
 		/* Volume */
 		totem_controls_set_sensitivity ("volume_button", FALSE);
 		totem->volume_sensitive = FALSE;
 
 		/* Control popup */
-		totem_object_set_sensitivity ("next-chapter", FALSE);
-		totem_object_set_sensitivity ("previous-chapter", FALSE);
+		totem_object_set_sensitivity2 ("next-chapter", FALSE);
+		totem_object_set_sensitivity2 ("previous-chapter", FALSE);
 
 		/* Subtitle selection */
 		totem_object_set_sensitivity2 ("select-subtitle", FALSE);
@@ -1819,7 +1810,7 @@ totem_object_set_mrl (TotemObject *totem,
 		totem->mrl = g_strdup (mrl);
 
 		/* Play/Pause */
-		totem_object_set_sensitivity ("play", TRUE);
+		totem_object_set_sensitivity2 ("play", TRUE);
 
 		/* Volume */
 		caps = bacon_video_widget_can_set_volume (totem->bvw);
@@ -3455,13 +3446,13 @@ update_buttons (TotemObject *totem)
 	has_item = bacon_video_widget_has_previous_track (totem->bvw) ||
 		totem_playlist_has_previous_mrl (totem->playlist) ||
 		totem_playlist_get_repeat (totem->playlist);
-	totem_object_set_sensitivity ("previous-chapter", has_item);
+	totem_object_set_sensitivity2 ("previous-chapter", has_item);
 
 	/* Next */
 	has_item = bacon_video_widget_has_next_track (totem->bvw) ||
 		totem_playlist_has_next_mrl (totem->playlist) ||
 		totem_playlist_get_repeat (totem->playlist);
-	totem_object_set_sensitivity ("next-chapter", has_item);
+	totem_object_set_sensitivity2 ("next-chapter", has_item);
 }
 
 void
@@ -3589,26 +3580,24 @@ update_add_button_visibility (GObject     *gobject,
 static GtkWidget *
 create_control_button (TotemObject *totem,
 		       const gchar *action_name,
+		       const gchar *icon_name,
 		       const gchar *tooltip_text)
 {
 	GtkWidget *button, *image;
-	GtkAction *action;
 
 	button = gtk_button_new ();
-	image = gtk_image_new ();
+	g_object_set (G_OBJECT (button), "action-name", action_name, NULL);
+	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (button), image);
 	gtk_widget_set_valign (GTK_WIDGET (button), GTK_ALIGN_CENTER);
 	gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
-	if (g_str_equal (action_name, "play")) {
+	if (g_str_equal (action_name, "app.play")) {
 		g_object_set (G_OBJECT (image),
 			      "margin-start", 16,
 			      "margin-end", 16,
 			      NULL);
+		totem->play_button = button;
 	}
-
-	action = gtk_action_group_get_action (totem->main_action_group,
-					      action_name);
-	gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
 
 	gtk_button_set_label (GTK_BUTTON (button), NULL);
 	gtk_widget_set_tooltip_text (button, tooltip_text);
@@ -3634,19 +3623,23 @@ totem_callback_connect (TotemObject *totem)
 
 	/* Controls */
 	box = g_object_get_data (totem->controls, "controls_box");
+	gtk_widget_insert_action_group (GTK_WIDGET (box), "app", G_ACTION_GROUP (totem));
 
 	/* Previous */
-	item = create_control_button (totem, "previous-chapter",
+	item = create_control_button (totem, "app.previous-chapter",
+				      "media-skip-backward",
 				      _("Previous Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Play/Pause */
-	item = create_control_button (totem, "play",
+	item = create_control_button (totem, "app.play",
+				      "media-playback-start",
 				      _("Play / Pause"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Next */
-	item = create_control_button (totem, "next-chapter",
+	item = create_control_button (totem, "app.next-chapter",
+				      "media-skip-forward",
 				      _("Next Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
@@ -3714,9 +3707,9 @@ totem_callback_connect (TotemObject *totem)
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
 	/* Set sensitivity of the toolbar buttons */
-	totem_object_set_sensitivity ("play", FALSE);
-	totem_object_set_sensitivity ("next-chapter", FALSE);
-	totem_object_set_sensitivity ("previous-chapter", FALSE);
+	totem_object_set_sensitivity2 ("play", FALSE);
+	totem_object_set_sensitivity2 ("next-chapter", FALSE);
+	totem_object_set_sensitivity2 ("previous-chapter", FALSE);
 
 	/* Volume */
 	g_signal_connect (G_OBJECT (totem->bvw), "notify::volume",
