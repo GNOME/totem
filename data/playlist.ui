@@ -1,33 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-
-<object class="GtkUIManager" id="totem-playlist-ui-manager">
-   <child>
-      <object class="GtkActionGroup" id="playlist-action-group">
-         <child>
-            <object class="GtkAction" id="copy-location">
-               <property name="label" translatable="no">_Copy Location</property>
-               <property name="tooltip" translatable="no">Copy the location to the clipboard</property>
-               <signal name="activate" handler="playlist_copy_location_action_callback"/>
-            </object>
-         </child>
-         <child>
-            <object class="GtkAction" id="select-subtitle">
-               <property name="label" translatable="no">_Select Text Subtitles...</property>
-               <property name="tooltip" translatable="no">Select a file to use for text subtitles</property>
-               <signal name="activate" handler="playlist_select_subtitle_action_callback"/>
-            </object>
-         </child>
-      </object>
-   </child>
-   <ui>
-      <popup name="totem-playlist-popup">
-         <menuitem name="copy-location" action="copy-location"/>
-         <menuitem name="select-subtitle" action="select-subtitle"/>
-      </popup>
-   </ui>
-</object>
-
   <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkListStore" id="playlist_list_store">
     <columns>
@@ -112,6 +84,36 @@
 	    <property name="icon_name">list-remove-symbolic</property>
 	    <signal name="clicked" handler="playlist_remove_button_clicked"/>
 	    <property name="tooltip-text" translatable="no">Remove</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="copy_location_button">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_action_appearance">False</property>
+            <property name="use_underline">True</property>
+	    <property name="icon_name">edit-copy-symbolic</property>
+	    <signal name="clicked" handler="playlist_copy_location_action_callback"/>
+	    <property name="tooltip-text" translatable="no">Copy Location</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="select_subtitle_button">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="use_action_appearance">False</property>
+            <property name="use_underline">True</property>
+	    <property name="icon_name">media-view-subtitles-symbolic</property>
+	    <signal name="clicked" handler="playlist_select_subtitle_action_callback"/>
+	    <property name="tooltip-text" translatable="no">Select Text Subtitles...</property>
           </object>
           <packing>
             <property name="expand">False</property>
