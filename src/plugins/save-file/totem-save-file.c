@@ -314,6 +314,7 @@ impl_activate (PeasActivatable *plugin)
 	GMenuItem *item;
 	char *path;
 	char *mrl;
+	const char const *accels[] = { "<Primary>S", NULL };
 
 	/* make sure nautilus is in the path */
 	path = g_find_program_in_path ("nautilus");
@@ -341,10 +342,9 @@ impl_activate (PeasActivatable *plugin)
 	g_signal_connect (G_OBJECT (priv->action), "activate",
 			  G_CALLBACK (totem_save_file_plugin_copy), plugin);
 	g_action_map_add_action (G_ACTION_MAP (priv->totem), G_ACTION (priv->action));
-	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
-					 "<Primary>S",
-					 "app.save-as",
-					 NULL);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
+					       "app.save-as",
+					       accels);
 	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=695917
 	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
 					 "Save",
