@@ -2183,6 +2183,7 @@ static void
 setup_browse (TotemGrilo *self)
 {
 	GtkAdjustment *adj;
+	const char const * select_all_accels[] = { "<Primary>A", NULL };
 
 	/* Search */
 	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
@@ -2203,7 +2204,7 @@ setup_browse (TotemGrilo *self)
 	g_signal_connect (G_OBJECT (self->priv->select_all_action), "activate",
 			  G_CALLBACK (select_all_action_cb), self);
 	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_all_action));
-	gtk_application_add_accelerator (GTK_APPLICATION (self->priv->totem), "<Primary>A", "app.select-all", NULL);
+	gtk_application_set_accels_for_action (GTK_APPLICATION (self->priv->totem), "app.select-all", select_all_accels);
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->select_all_action, "enabled",
 				G_BINDING_SYNC_CREATE);
