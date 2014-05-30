@@ -314,7 +314,7 @@ impl_activate (PeasActivatable *plugin)
 	GMenuItem *item;
 	char *path;
 	char *mrl;
-	const char const *accels[] = { "<Primary>S", NULL };
+	const char const *accels[] = { "<Primary>S", "Save", NULL };
 
 	/* make sure nautilus is in the path */
 	path = g_find_program_in_path ("nautilus");
@@ -345,11 +345,6 @@ impl_activate (PeasActivatable *plugin)
 	gtk_application_set_accels_for_action (GTK_APPLICATION (priv->totem),
 					       "app.save-as",
 					       accels);
-	/* FIXME: https://bugzilla.gnome.org/show_bug.cgi?id=695917
-	gtk_application_add_accelerator (GTK_APPLICATION (priv->totem),
-					 "Save",
-					 "app.save-as",
-					 NULL); */
 	g_simple_action_set_enabled (G_SIMPLE_ACTION (priv->action), FALSE);
 
 	/* add UI */
