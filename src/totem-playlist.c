@@ -33,7 +33,6 @@
 
 #include "totem-uri.h"
 #include "totem-interface.h"
-#include "totem-rtl-helpers.h"
 
 #define PL_LEN (gtk_tree_model_iter_n_children (playlist->priv->model, NULL))
 
@@ -561,7 +560,7 @@ set_playing_icon (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
 
 	switch (playing) {
 		case TOTEM_PLAYLIST_STATUS_PLAYING:
-			icon_name = totem_get_rtl_icon_name ("media-playback-start");
+			icon_name = "media-playback-start";
 			break;
 		case TOTEM_PLAYLIST_STATUS_PAUSED:
 			icon_name = "media-playback-pause-symbolic";

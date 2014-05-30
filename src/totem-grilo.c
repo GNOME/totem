@@ -42,7 +42,6 @@
 #include <totem-private.h>
 
 #include <totem-time-helpers.h>
-#include <totem-rtl-helpers.h>
 
 #include "totem-grilo.h"
 #include "totem-search-entry.h"
