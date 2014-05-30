@@ -41,7 +41,6 @@
 G_MODULE_EXPORT void play_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void next_chapter_action_callback (GtkAction *action, Totem *totem);
 G_MODULE_EXPORT void previous_chapter_action_callback (GtkAction *action, Totem *totem);
-G_MODULE_EXPORT void clear_playlist_action_callback (GtkAction *action, Totem *totem);
 
 static void
 open_action_cb (GSimpleAction *action,
@@ -516,13 +515,6 @@ void
 previous_chapter_action_callback (GtkAction *action, Totem *totem)
 {
 	TOTEM_PROFILE (totem_object_seek_previous (totem));
-}
-
-void
-clear_playlist_action_callback (GtkAction *action, Totem *totem)
-{
-	totem_playlist_clear (totem->playlist);
-	totem_object_set_mrl (totem, NULL, NULL);
 }
 
 void
