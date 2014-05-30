@@ -437,6 +437,18 @@ totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
   totem_aspect_frame_set_rotation_internal (frame, rotation, TRUE);
 }
 
+void
+totem_aspect_frame_set_internal_rotation (TotemAspectFrame *frame,
+					  gdouble           rotation)
+{
+  g_return_if_fail (TOTEM_IS_ASPECT_FRAME (frame));
+
+  rotation = fmod (rotation, 360.0);
+
+  frame->priv->rotation = rotation;
+  totem_aspect_frame_set_rotation_internal (frame, rotation, FALSE);
+}
+
 gdouble
 totem_aspect_frame_get_rotation (TotemAspectFrame *frame)
 {

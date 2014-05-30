@@ -80,6 +80,9 @@ gboolean        totem_aspect_frame_get_expand   (TotemAspectFrame *frame);
 
 void            totem_aspect_frame_set_rotation (TotemAspectFrame *frame,
 						 gdouble           rotation);
+void            totem_aspect_frame_set_internal_rotation
+						(TotemAspectFrame *frame,
+						 gdouble           rotation);
 gdouble         totem_aspect_frame_get_rotation (TotemAspectFrame *frame);
 
 G_END_DECLS
