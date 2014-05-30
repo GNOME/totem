@@ -100,12 +100,6 @@ struct _TotemObject {
 	GtkActionGroup *main_action_group;
 	GtkUIManager *ui_manager;
 
-	GtkActionGroup *languages_action_group;
-	guint languages_ui_id;
-
-	GtkActionGroup *subtitles_action_group;
-	guint subtitles_ui_id;
-
 	/* Plugins */
 	GtkWidget *plugins;
 	TotemPluginsEngine *engine;
