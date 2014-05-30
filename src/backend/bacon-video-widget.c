@@ -1930,6 +1930,37 @@ bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
 }
 
 static void
+update_orientation_from_video (BaconVideoWidget *bvw)
+{
+  BvwRotation rotation = BVW_ROTATION_R_ZERO;
+  char *orientation_str = NULL;
+  gboolean ret;
+  gdouble angle;
+
+  /* Don't change the rotation if explicitely set */
+  if (bvw->priv->rotation != BVW_ROTATION_R_ZERO)
+    return;
+
+  ret = gst_tag_list_get_string_index (bvw->priv->tagcache,
+				       GST_TAG_IMAGE_ORIENTATION, 0, &orientation_str);
+  if (!ret || !orientation_str)
+    rotation = BVW_ROTATION_R_ZERO;
+  else if (g_str_equal (orientation_str, "rotate-90"))
+    rotation = BVW_ROTATION_R_90R;
+  else if (g_str_equal (orientation_str, "rotate-180"))
+    rotation = BVW_ROTATION_R_180;
+  else if (g_str_equal (orientation_str, "rotate-270"))
+    rotation = BVW_ROTATION_R_90L;
+  else
+    g_warning ("Unhandled orientation value: '%s'", orientation_str);
+
+  g_free (orientation_str);
+
+  angle = rotation * 90.0;
+  totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->priv->frame), angle);
+}
+
+static void
 bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type)
 {
   GstTagList **cache = NULL;
@@ -1966,6 +1997,8 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   bvw_check_for_cover_pixbuf (bvw);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
+
+  update_orientation_from_video (bvw);
 
   set_current_actor (bvw);
 }
@@ -4160,6 +4193,7 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   g_clear_object (&bvw->priv->cover_pixbuf);
   clutter_actor_hide (bvw->priv->spinner);
   g_object_set (G_OBJECT (bvw->priv->spinner), "percent", 0.0, NULL);
+  totem_aspect_frame_set_internal_rotation (TOTEM_ASPECT_FRAME (bvw->priv->frame), 0.0);
   GST_DEBUG ("stopped");
 }
 
