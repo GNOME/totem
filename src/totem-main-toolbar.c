@@ -50,7 +50,6 @@ struct _TotemMainToolbarPrivate {
   GtkWidget   *select_button;
   GtkWidget   *done_button;
   GtkWidget   *back_button;
-  GtkWidget   *back_button_image;
   GtkWidget   *stack;
 
   /* Visibility */
@@ -445,7 +444,6 @@ totem_main_toolbar_class_init (TotemMainToolbarClass *klass)
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, selection_menu_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, done_button);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, back_button);
-  gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, back_button_image);
   gtk_widget_class_bind_template_child_private (widget_class, TotemMainToolbar, stack);
 }
 
@@ -506,10 +504,6 @@ totem_main_toolbar_init (TotemMainToolbar *bar)
   gtk_widget_set_no_show_all (bar->priv->select_button, TRUE);
 
   /* Back button */
-  if (gtk_widget_get_direction (GTK_WIDGET (bar)) == GTK_TEXT_DIR_RTL)
-    gtk_image_set_from_icon_name (GTK_IMAGE (bar->priv->back_button_image),
-                                  "go-next-symbolic",
-                                  GTK_ICON_SIZE_MENU);
   g_signal_connect (G_OBJECT (bar->priv->back_button), "clicked",
                     G_CALLBACK (back_button_clicked_cb), bar);
 
