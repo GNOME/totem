@@ -3644,6 +3644,8 @@ bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
 		       g_strdup (reason),
 		       GINT_TO_POINTER (1));
 
+  set_controls_visibility (bvw, TRUE, FALSE);
+
   GST_DEBUG ("Adding popup busy for reason %s", reason);
 
   if (!was_busy) {
