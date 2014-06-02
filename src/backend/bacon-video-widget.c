@@ -156,7 +156,6 @@ enum
   PROP_HUE,
   PROP_AUDIO_OUTPUT_TYPE,
   PROP_AV_OFFSET,
-  PROP_SHOW_CURSOR,
   PROP_REVEAL_CONTROLS
 };
 
@@ -710,6 +709,29 @@ schedule_hiding_popup (BaconVideoWidget *bvw)
 }
 
 static void
+set_show_cursor (BaconVideoWidget *bvw,
+		 gboolean show_cursor)
+{
+  GdkWindow *window;
+
+  bvw->priv->cursor_shown = show_cursor;
+  window = gtk_widget_get_window (GTK_WIDGET (bvw));
+
+  if (!window)
+    return;
+
+  if (show_cursor == FALSE) {
+    GdkCursor *cursor;
+
+    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+    gdk_window_set_cursor (window, cursor);
+    g_object_unref (cursor);
+  } else {
+    gdk_window_set_cursor (window, bvw->priv->cursor);
+  }
+}
+
+static void
 set_controls_visibility (BaconVideoWidget *bvw,
 			 gboolean          visible,
 			 gboolean          animate)
@@ -722,7 +744,7 @@ set_controls_visibility (BaconVideoWidget *bvw,
   clutter_actor_set_easing_duration (bvw->priv->controls, animate ? 250 : 0);
   clutter_actor_set_opacity (bvw->priv->controls, opacity);
 
-  bacon_video_widget_set_show_cursor (bvw, visible);
+  set_show_cursor (bvw, visible);
   if (animate)
     schedule_hiding_popup (bvw);
 
@@ -1184,17 +1206,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 						       G_MININT64, G_MAXINT64,
 						       0, G_PARAM_READWRITE |
 						       G_PARAM_STATIC_STRINGS));
-
-  /**
-   * BaconVideoWidget:show-cursor:
-   *
-   * Whether the mouse cursor is shown.
-   **/
-  g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
-                                   g_param_spec_boolean ("show-cursor", "Show cursor",
-                                                         "Whether the mouse cursor is shown.", FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:reveal-controls:
@@ -2973,9 +2984,6 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_AV_OFFSET:
       g_object_set_property (G_OBJECT (bvw->priv->play), "av-offset", value);
       break;
-    case PROP_SHOW_CURSOR:
-      bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -3038,9 +3046,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_AV_OFFSET:
       g_object_get_property (G_OBJECT (bvw->priv->play), "av-offset", value);
-      break;
-    case PROP_SHOW_CURSOR:
-      g_value_set_boolean (value, bvw->priv->cursor_shown);
       break;
     case PROP_REVEAL_CONTROLS:
       g_value_set_boolean (value, bvw->priv->reveal_controls);
@@ -4768,41 +4773,6 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), 0.0);
 
   return bvw->priv->volume;
-}
-
-/**
- * bacon_video_widget_set_show_cursor:
- * @bvw: a #BaconVideoWidget
- * @show_cursor: %TRUE to show the cursor, %FALSE otherwise
- *
- * Sets whether the cursor should be shown when it is over the video
- * widget. If @show_cursor is %FALSE, the cursor will be invisible
- * when it is moved over the video widget.
- **/
-void
-bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
-                                    gboolean show_cursor)
-{
-  GdkWindow *window;
-
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  bvw->priv->cursor_shown = show_cursor;
-  window = gtk_widget_get_window (GTK_WIDGET (bvw));
-
-  if (!window) {
-    return;
-  }
-
-  if (show_cursor == FALSE) {
-    GdkCursor *cursor;
-
-    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
-    gdk_window_set_cursor (window, cursor);
-    g_object_unref (cursor);
-  } else {
-    gdk_window_set_cursor (window, bvw->priv->cursor);
-  }
 }
 
 /**
