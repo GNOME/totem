@@ -3547,20 +3547,6 @@ volume_button_menu_shown_cb (GObject     *volume_button,
 		bacon_video_widget_unmark_popup_busy (totem->bvw, "volume menu visible");
 }
 
-static gboolean
-fullscreen_button_image_sync (GBinding     *binding,
-			      const GValue *source_value,
-			      GValue       *target_value,
-			      gpointer      user_data)
-{
-	gboolean state;
-
-	state = g_value_get_boolean (source_value);
-	g_value_set_string (target_value, state ? "view-restore-symbolic" : "view-fullscreen-symbolic");
-
-	return TRUE;
-}
-
 static void
 update_add_button_visibility (GObject     *gobject,
 			      GParamSpec  *pspec,
@@ -3611,7 +3597,7 @@ create_control_button (TotemObject *totem,
 void
 totem_callback_connect (TotemObject *totem)
 {
-	GtkWidget *item, *image;
+	GtkWidget *item;
 	GtkBox *box;
 	GAction *gaction;
 	GMenuModel *menu;
@@ -3696,12 +3682,6 @@ totem_callback_connect (TotemObject *totem)
 										"view-fullscreen-symbolic",
 										GTK_PACK_END);
 	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
-	image = gtk_button_get_image (GTK_BUTTON (item));
-	g_object_bind_property_full (totem, "fullscreen",
-				     image, "icon-name",
-				     G_BINDING_SYNC_CREATE,
-				     fullscreen_button_image_sync,
-				     NULL, NULL, NULL);
 
 	/* Connect the keys */
 	gtk_widget_add_events (totem->win, GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
@@ -3801,7 +3781,7 @@ static void
 add_fullscreen_toolbar (TotemObject *totem)
 {
 	GtkWidget *overlay;
-	GtkWidget *item, *image;
+	GtkWidget *item;
 	GMenuModel *menu;
 
 	overlay = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_bvw_box"));
@@ -3824,6 +3804,16 @@ add_fullscreen_toolbar (TotemObject *totem)
 			  G_CALLBACK (back_button_clicked_cb), totem);
 
 	item = totem_interface_create_header_button (totem->fullscreen_header,
+						     gtk_button_new (),
+						     "view-restore-symbolic",
+						     GTK_PACK_END);
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
+
+	item = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+	gtk_header_bar_pack_end (GTK_HEADER_BAR (totem->fullscreen_header), item);
+	gtk_style_context_add_class (gtk_widget_get_style_context (item), "header-bar-separator");
+
+	item = totem_interface_create_header_button (totem->fullscreen_header,
 						     gtk_menu_button_new (),
 						     "emblem-system-symbolic",
 						     GTK_PACK_END);
@@ -3833,18 +3823,6 @@ add_fullscreen_toolbar (TotemObject *totem)
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
-
-	item = totem_interface_create_header_button (totem->fullscreen_header,
-						     gtk_button_new (),
-						     "view-fullscreen-symbolic",
-						     GTK_PACK_END);
-	gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "app.fullscreen");
-	image = gtk_button_get_image (GTK_BUTTON (item));
-	g_object_bind_property_full (totem, "fullscreen",
-				     image, "icon-name",
-				     G_BINDING_SYNC_CREATE,
-				     fullscreen_button_image_sync,
-				     NULL, NULL, NULL);
 
 	gtk_container_add (GTK_CONTAINER (totem->revealer), totem->fullscreen_header);
 	gtk_widget_show_all (totem->revealer);
