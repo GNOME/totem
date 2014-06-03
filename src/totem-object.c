@@ -3586,7 +3586,7 @@ create_control_button (TotemObject *totem,
 	GtkWidget *button, *image;
 
 	button = gtk_button_new ();
-	g_object_set (G_OBJECT (button), "action-name", action_name, NULL);
+	gtk_actionable_set_action_name (GTK_ACTIONABLE (button), action_name);
 	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 	gtk_button_set_image (GTK_BUTTON (button), image);
 	gtk_widget_set_valign (GTK_WIDGET (button), GTK_ALIGN_CENTER);
