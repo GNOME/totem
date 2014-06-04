@@ -338,7 +338,7 @@ can_remove (GrlSource *source,
 		return CAN_REMOVE_FALSE;
 
 	scheme = g_uri_parse_scheme (url);
-	ret = g_str_equal (scheme, "file") ? CAN_REMOVE_TRUE : CAN_REMOVE_FALSE;
+	ret = (g_strcmp0 (scheme, "file") == 0) ? CAN_REMOVE_TRUE : CAN_REMOVE_FALSE;
 	g_free (scheme);
 
 	if (ret == CAN_REMOVE_TRUE)
