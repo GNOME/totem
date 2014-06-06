@@ -1311,7 +1311,7 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PLAYING);
 		break;
 	case STATE_PAUSED:
-		id = "media-playback-start";
+		id = "media-playback-start-symbolic";
 		tip = N_("Play");
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_PAUSED);
 		break;
@@ -1320,7 +1320,7 @@ play_pause_set_label (TotemObject *totem, TotemStates state)
 					   0, 0);
 		bacon_time_label_set_time (totem->time_rem_label,
 					   0, 0);
-		id = "media-playback-start";
+		id = "media-playback-start-symbolic";
 		totem_playlist_set_playing (totem->playlist, TOTEM_PLAYLIST_STATUS_NONE);
 		tip = N_("Play");
 		break;
@@ -3613,19 +3613,19 @@ totem_callback_connect (TotemObject *totem)
 
 	/* Previous */
 	item = create_control_button (totem, "app.previous-chapter",
-				      "media-skip-backward",
+				      "media-skip-backward-symbolic",
 				      _("Previous Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Play/Pause */
 	item = create_control_button (totem, "app.play",
-				      "media-playback-start",
+				      "media-playback-start-symbolic",
 				      _("Play / Pause"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
 	/* Next */
 	item = create_control_button (totem, "app.next-chapter",
-				      "media-skip-forward",
+				      "media-skip-forward-symbolic",
 				      _("Next Chapter/Movie"));
 	gtk_box_pack_start (box, item, FALSE, FALSE, 0);
 
