@@ -3653,7 +3653,7 @@ totem_callback_connect (TotemObject *totem)
 	/* Cog wheel */
 	item = totem->gear_button = totem_interface_create_header_button (totem->header,
 									  gtk_menu_button_new (),
-									  "emblem-system-symbolic",
+									  "open-menu-symbolic",
 									  GTK_PACK_END);
 	g_object_set (G_OBJECT (totem->gear_button), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
@@ -3815,7 +3815,7 @@ add_fullscreen_toolbar (TotemObject *totem)
 
 	item = totem_interface_create_header_button (totem->fullscreen_header,
 						     gtk_menu_button_new (),
-						     "emblem-system-symbolic",
+						     "open-menu-symbolic",
 						     GTK_PACK_END);
 	g_object_set (G_OBJECT (item), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
