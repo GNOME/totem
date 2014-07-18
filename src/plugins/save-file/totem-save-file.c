@@ -206,6 +206,9 @@ file_has_ancestor (GFile *file,
 	GFile *cursor;
 	gboolean retval = FALSE;
 
+	if (g_file_has_parent (file, ancestor))
+		    return TRUE;
+
 	cursor = g_object_ref (file);
 
 	while (1) {
