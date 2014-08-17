@@ -65,6 +65,7 @@ typedef enum{
 GType           totem_grilo_get_type              (void) G_GNUC_CONST;
 GtkWidget*      totem_grilo_new                   (TotemObject *totem,
                                                    GtkWidget   *header);
+void            totem_grilo_start                 (TotemGrilo  *self);
 void            totem_grilo_back_button_clicked   (TotemGrilo  *self);
 gboolean        totem_grilo_get_show_back_button  (TotemGrilo  *self);
 void            totem_grilo_set_current_page      (TotemGrilo     *self,

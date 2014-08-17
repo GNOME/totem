@@ -63,6 +63,8 @@ struct _TotemGriloPrivate {
 	Totem *totem;
 	GtkWindow *main_window;
 
+	gboolean plugins_loaded;
+
 	GrlSource *local_metadata_src;
 	GrlSource *metadata_store_src;
 	GrlSource *bookmarks_src;
@@ -2488,6 +2490,18 @@ totem_grilo_finalize (GObject *object)
 	G_OBJECT_CLASS (totem_grilo_parent_class)->finalize (object);
 }
 
+void
+totem_grilo_start (TotemGrilo *self)
+{
+	if (self->priv->plugins_loaded)
+		return;
+
+	g_debug ("TotemGrilo: Loading plugins");
+
+	load_grilo_plugins (self);
+	self->priv->plugins_loaded = TRUE;
+}
+
 static void
 totem_grilo_constructed (GObject *object)
 {
@@ -2498,7 +2512,6 @@ totem_grilo_constructed (GObject *object)
 	setup_ui (self);
 	grl_init (0, NULL);
 	setup_config (self);
-	load_grilo_plugins (self);
 }
 
 gboolean

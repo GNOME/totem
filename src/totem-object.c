@@ -914,8 +914,11 @@ void
 totem_object_set_main_page (TotemObject *totem,
 			    const char  *page_id)
 {
-	if (g_strcmp0 (page_id, gtk_stack_get_visible_child_name (GTK_STACK (totem->stack))) == 0)
+	if (g_strcmp0 (page_id, gtk_stack_get_visible_child_name (GTK_STACK (totem->stack))) == 0) {
+		if (g_strcmp0 (page_id, "grilo") == 0)
+			totem_grilo_start (TOTEM_GRILO (totem->grilo));
 		return;
+	}
 
 	gtk_stack_set_visible_child_full (GTK_STACK (totem->stack), page_id, GTK_STACK_TRANSITION_TYPE_NONE);
 
@@ -961,6 +964,7 @@ totem_object_set_main_page (TotemObject *totem,
 		gtk_widget_hide (totem->gear_button);
 		if (totem_grilo_get_current_page (TOTEM_GRILO (totem->grilo)) == TOTEM_GRILO_PAGE_RECENT)
 			gtk_widget_show (totem->add_button);
+		totem_grilo_start (TOTEM_GRILO (totem->grilo));
 	}
 }
 
