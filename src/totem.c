@@ -170,9 +170,11 @@ app_init (Totem *totem, char **argv)
 	totem_object_plugins_init (totem);
 
 	if (optionstate.filenames == NULL) {
+		totem_object_set_main_page (totem, "grilo");
 		if (totem_session_try_restore (totem) == FALSE)
 			totem_object_set_mrl (totem, NULL, NULL);
 	} else {
+		totem_object_set_main_page (totem, "player");
 		if (totem_object_open_files (totem, optionstate.filenames))
 			totem_object_play_pause (totem);
 		else
