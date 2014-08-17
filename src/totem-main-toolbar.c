@@ -146,7 +146,10 @@ update_toolbar_state (TotemMainToolbar *bar)
     {
       if (!priv->search_string || *priv->search_string == '\0')
         {
-          gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), CUSTOM_TITLE_PAGE);
+          if (priv->custom_title)
+            gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), CUSTOM_TITLE_PAGE);
+          else
+            gtk_stack_set_visible_child_name (GTK_STACK (priv->stack), DEFAULT_PAGE);
         }
       else
         {
