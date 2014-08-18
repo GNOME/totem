@@ -510,7 +510,7 @@ AC_DEFUN([TOTEM_FULLPATH], [
 ])
 
 dnl FULL_LIBEXECDIR is used for X-GNOME-Bugzilla-ExtraInfoScript expansion
-dnl in data/totem.desktop.in.in.in
+dnl in data/org.gnome.Totem.desktop.in.in.in
 TOTEM_FULLPATH(libexecdir, NONE, FULL_LIBEXECDIR)
 AC_SUBST(FULL_LIBEXECDIR)
 
@@ -578,7 +578,7 @@ src/plugins/vimeo/Makefile
 src/backend/Makefile
 data/Makefile
 data/org.gnome.totem.gschema.xml.in
-data/totem.desktop.in.in
+data/org.gnome.Totem.desktop.in.in
 data/totem.pc
 data/appdata/Makefile
 data/icons/Makefile

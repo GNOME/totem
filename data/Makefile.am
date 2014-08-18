@@ -42,17 +42,17 @@ update-icon-cache:
 	fi
 
 # Desktop file
-# totem.desktop.in.in.in = original
-# totem.desktop.in.in = by configure, includes the X-Gnome-Bugzilla
-# totem.desktop.in = includes the mime-types
-# totem.desktop = intltool-ised
-desktop_in_files = totem.desktop.in
+# org.gnome.Totem.desktop.in.in.in = original
+# org.gnome.Totem.desktop.in.in = by configure, includes the X-Gnome-Bugzilla
+# org.gnome.Totem.desktop.in = includes the mime-types
+# org.gnome.Totem.desktop = intltool-ised
+desktop_in_files = org.gnome.Totem.desktop.in
 desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-totem.desktop.in: totem.desktop.in.in mime-type-list.txt uri-schemes-list.txt desktop.sh
-	$(AM_V_GEN) cat totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
+org.gnome.Totem.desktop.in: org.gnome.Totem.desktop.in.in mime-type-list.txt uri-schemes-list.txt desktop.sh
+	$(AM_V_GEN) cat org.gnome.Totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
 	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt $(srcdir)/uri-schemes-list.txt >> $@
 
 EXTRA_DIST += desktop.sh
