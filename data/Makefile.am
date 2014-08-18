@@ -55,10 +55,18 @@ org.gnome.Totem.desktop.in: org.gnome.Totem.desktop.in.in mime-type-list.txt uri
 	$(AM_V_GEN) cat org.gnome.Totem.desktop.in.in | sed 's,@FULL_LIBEXECDIR@,$(FULL_LIBEXECDIR),' > $@ &&\
 	$(SHELL) $(srcdir)/desktop.sh $(srcdir)/mime-type-list.txt $(srcdir)/uri-schemes-list.txt >> $@
 
+servicedir = $(datadir)/dbus-1/services
+service_DATA = org.gnome.Totem.service
+
+%.service: %.service.in
+	$(AM_V_GEN) sed -e "s|@bindir[@]|$(bindir)|" \
+	$< > $@ || rm $@
+
 EXTRA_DIST += desktop.sh
 CLEANFILES += \
 	$(desktop_in_files)	\
-	$(desktop_DATA)
+	$(desktop_DATA)		\
+	$(service_DATA)
 
 # Thumbnailer
 thumbnailerdir = $(datadir)/thumbnailers
