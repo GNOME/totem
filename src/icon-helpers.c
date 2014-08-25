@@ -171,6 +171,23 @@ totem_grilo_thumbnail_media_finish (GrlMedia      *media,
 	return g_task_propagate_pointer (G_TASK (res), error);
 }
 
+static void
+thumbnail_media_cb (GObject      *source_object,
+		    GAsyncResult *res,
+		    gpointer      user_data)
+{
+	GTask *task = user_data;
+	GdkPixbuf *pixbuf;
+	GError *error = NULL;
+
+	pixbuf = totem_grilo_thumbnail_media_finish (GRL_MEDIA (source_object), res, &error);
+	if (!pixbuf)
+		g_task_return_error (task, error);
+	else
+		g_task_return_pointer (task, pixbuf, g_object_unref);
+	g_object_unref (task);
+}
+
 void
 totem_grilo_get_thumbnail (GObject             *object,
 			   GCancellable        *cancellable,
@@ -187,9 +204,16 @@ totem_grilo_get_thumbnail (GObject             *object,
 			   callback,
 			   user_data);
 
-	if (GRL_IS_MEDIA (object))
+	if (GRL_IS_MEDIA (object)) {
 		url_thumb = grl_media_get_thumbnail (GRL_MEDIA (object));
-	else if (GRL_IS_SOURCE (object)) {
+		if (!url_thumb && g_strcmp0 (grl_media_get_source (GRL_MEDIA (object)), "grl-tracker-source") == 0) {
+			totem_grilo_thumbnail_media (GRL_MEDIA (object),
+						     cancellable,
+						     thumbnail_media_cb,
+						     task);
+			return;
+		}
+	} else if (GRL_IS_SOURCE (object)) {
 		GIcon *icon;
 
 		icon = grl_source_get_icon (GRL_SOURCE (object));
@@ -295,7 +319,8 @@ totem_grilo_get_icon (GrlMedia *media,
 	if (GRL_IS_MEDIA_BOX (media)) {
 		return g_object_ref (icons[ICON_BOX]);
 	} else {
-		if (grl_media_get_thumbnail (media)) {
+		if (grl_media_get_thumbnail (media) ||
+		    g_strcmp0 (grl_media_get_source (media), "grl-tracker-source") == 0) {
 			*thumbnailing = TRUE;
 			return g_object_ref (icons[ICON_VIDEO_THUMBNAILING]);
 		} else {
