@@ -40,5 +40,6 @@ void             totem_grilo_get_thumbnail        (GObject             *object,
 						   GCancellable        *cancellable,
 						   GAsyncReadyCallback  callback,
 						   gpointer             user_data);
-GdkPixbuf       *totem_grilo_get_thumbnail_finish (GAsyncResult  *res,
-						   GError       **error);
+GdkPixbuf       *totem_grilo_get_thumbnail_finish (GObject             *object,
+						   GAsyncResult        *res,
+						   GError             **error);

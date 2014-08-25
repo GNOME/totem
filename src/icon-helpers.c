@@ -47,17 +47,13 @@ static GdkPixbuf *icons[NUM_ICONS];
 static GHashTable *cache_thumbnails; /* key=url, value=GdkPixbuf */
 
 GdkPixbuf *
-totem_grilo_get_thumbnail_finish (GAsyncResult  *res,
+totem_grilo_get_thumbnail_finish (GObject       *source_object,
+				  GAsyncResult  *res,
 				  GError       **error)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+	g_return_val_if_fail (g_task_is_valid (res, source_object), NULL);
 
-	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == totem_grilo_get_thumbnail);
-
-	if (g_simple_async_result_propagate_error (simple, error))
-		return NULL;
-
-	return g_simple_async_result_get_op_res_gpointer (simple);
+	return g_task_propagate_pointer (G_TASK (res), error);
 }
 
 static void
@@ -65,30 +61,28 @@ load_thumbnail_cb (GObject *source_object,
 		   GAsyncResult *res,
 		   gpointer user_data)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask *task = user_data;
 	GdkPixbuf *pixbuf;
 	GError *error = NULL;
 	const GFile *file;
 
 	pixbuf = gdk_pixbuf_new_from_stream_finish (res, &error);
 	if (!pixbuf) {
-		g_simple_async_result_take_error (simple, error);
-		g_simple_async_result_complete_in_idle (simple);
-		g_object_unref (res);
+		g_task_return_error (task, error);
+		g_object_unref (task);
 		return;
 	}
 
 	/* Cache it */
-	file = g_object_get_data (source_object, "file");
+	file = g_task_get_task_data (task);
 	if (file) {
 		g_hash_table_insert (cache_thumbnails,
 				     g_file_get_uri (G_FILE (file)),
 				     g_object_ref (pixbuf));
 	}
 
-	g_simple_async_result_set_op_res_gpointer (simple, pixbuf, NULL);
-	g_simple_async_result_complete_in_idle (simple);
-	g_object_unref (simple);
+	g_task_return_pointer (task, pixbuf, g_object_unref);
+	g_object_unref (task);
 }
 
 static void
@@ -96,26 +90,24 @@ get_stream_thumbnail_cb (GObject *source_object,
 			 GAsyncResult *res,
 			 gpointer user_data)
 {
-	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
+	GTask *task = user_data;
 	GFileInputStream *stream;
-	GCancellable *cancellable;
 	GError *error = NULL;
 
 	stream = g_file_read_finish (G_FILE (source_object), res, &error);
 	if (!stream) {
-		g_simple_async_result_take_error (simple, error);
-		g_simple_async_result_complete_in_idle (simple);
+		g_task_return_error (task, error);
+		g_object_unref (task);
 		return;
 	}
 
-	cancellable = g_object_get_data (G_OBJECT (simple), "cancellable");
 	gdk_pixbuf_new_from_stream_at_scale_async (G_INPUT_STREAM (stream),
 						   THUMB_SEARCH_SIZE,
 						   THUMB_SEARCH_HEIGHT,
 						   TRUE,
-						   cancellable,
+						   g_task_get_cancellable (task),
 						   load_thumbnail_cb,
-						   simple);
+						   task);
 	g_object_unref (G_OBJECT (stream));
 }
 
@@ -185,10 +177,15 @@ totem_grilo_get_thumbnail (GObject             *object,
 			   GAsyncReadyCallback  callback,
 			   gpointer             user_data)
 {
-	GSimpleAsyncResult *simple;
+	GTask *task;
 	const char *url_thumb = NULL;
-	const GdkPixbuf *thumbnail;
+	const GdkPixbuf *thumbnail = NULL;
 	GFile *file;
+
+	task = g_task_new (G_OBJECT (object),
+			   cancellable,
+			   callback,
+			   user_data);
 
 	if (GRL_IS_MEDIA (object))
 		url_thumb = grl_media_get_thumbnail (GRL_MEDIA (object));
@@ -202,32 +199,28 @@ totem_grilo_get_thumbnail (GObject             *object,
 			file = g_file_icon_get_file (G_FILE_ICON (icon));
 			url_thumb = g_file_get_uri (file);
 			g_object_unref (file);
-		} else {
-			//FIXME
-			return;
 		}
 	}
-	g_return_if_fail (url_thumb != NULL);
-
-	simple = g_simple_async_result_new (G_OBJECT (object),
-					    callback,
-					    user_data,
-					    totem_grilo_get_thumbnail);
+	if (url_thumb == NULL) {
+		g_task_return_pointer (task, NULL, NULL);
+		g_object_unref (task);
+		return;
+	}
 
 	/* Check cache */
 	thumbnail = g_hash_table_lookup (cache_thumbnails, url_thumb);
 	if (thumbnail) {
-		g_simple_async_result_set_op_res_gpointer (simple, g_object_ref (G_OBJECT (thumbnail)), NULL);
-		g_simple_async_result_complete_in_idle (simple);
-		g_object_unref (simple);
+		g_task_return_pointer (task,
+				       g_object_ref (G_OBJECT (thumbnail)),
+				       g_object_unref);
+		g_object_unref (task);
 		return;
 	}
 
 	file = g_file_new_for_uri (url_thumb);
-	g_object_set_data_full (G_OBJECT (simple), "file", file, g_object_unref);
-	g_object_set_data (G_OBJECT (simple), "cancellable", cancellable);
+	g_task_set_task_data (task, file, g_object_unref);
 	g_file_read_async (file, G_PRIORITY_DEFAULT, NULL,
-			   get_stream_thumbnail_cb, simple);
+			   get_stream_thumbnail_cb, task);
 }
 
 static void

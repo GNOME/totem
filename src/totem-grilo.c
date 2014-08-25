@@ -366,7 +366,7 @@ get_thumbnail_cb (GObject *source_object,
 	GtkTreeModel *view_model;
 	GError *error = NULL;
 
-	thumbnail = totem_grilo_get_thumbnail_finish (res, &error);
+	thumbnail = totem_grilo_get_thumbnail_finish (source_object, res, &error);
 	if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
 		goto out;
 
