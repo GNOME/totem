@@ -27,6 +27,9 @@
 
 #include <icon-helpers.h>
 
+#define GNOME_DESKTOP_USE_UNSTABLE_API 1
+#include <libgnome-desktop/gnome-desktop-thumbnail.h>
+
 #define THUMB_SEARCH_SIZE     256
 #define THUMB_SEARCH_HEIGHT   (THUMB_SEARCH_SIZE / 4 * 3)
 
@@ -38,6 +41,8 @@ typedef enum {
 	NUM_ICONS
 } IconType;
 
+static GnomeDesktopThumbnailFactory *factory;
+static GThreadPool *thumbnail_pool;
 static GdkPixbuf *icons[NUM_ICONS];
 static GHashTable *cache_thumbnails; /* key=url, value=GdkPixbuf */
 
@@ -112,6 +117,66 @@ get_stream_thumbnail_cb (GObject *source_object,
 						   load_thumbnail_cb,
 						   simple);
 	g_object_unref (G_OBJECT (stream));
+}
+
+static void
+thumbnail_media_async_thread (GTask    *task,
+			      gpointer  user_data)
+{
+	GrlMedia *media;
+	GdkPixbuf *pixbuf;
+	const char *uri;
+	GDateTime *mtime;
+
+	if (g_task_return_error_if_cancelled (task)) {
+		g_object_unref (task);
+		return;
+	}
+
+	media = GRL_MEDIA (g_task_get_source_object (task));
+	uri = grl_media_get_url (media);
+	mtime = grl_media_get_modification_date (media);
+
+	if (!uri || !mtime) {
+		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "URI or mtime missing");
+		g_object_unref (task);
+		return;
+	}
+
+	pixbuf = gnome_desktop_thumbnail_factory_generate_thumbnail (factory, uri, "video/x-totem-stream");
+
+	if (!pixbuf) {
+		g_task_return_new_error (task, G_IO_ERROR, G_IO_ERROR_FAILED, "Thumbnailing failed");
+		g_object_unref (task);
+		return;
+	}
+
+	gnome_desktop_thumbnail_factory_save_thumbnail (factory, pixbuf, uri, g_date_time_to_unix (mtime));
+	g_task_return_pointer (task, pixbuf, g_object_unref);
+	g_object_unref (task);
+}
+
+static void
+totem_grilo_thumbnail_media (GrlMedia            *media,
+			     GCancellable        *cancellable,
+			     GAsyncReadyCallback  callback,
+			     gpointer             user_data)
+{
+	GTask *task;
+
+	task = g_task_new (media, cancellable, callback, user_data);
+	g_task_set_priority (task, G_PRIORITY_LOW);
+	g_thread_pool_push (thumbnail_pool, task, NULL);
+}
+
+static GdkPixbuf *
+totem_grilo_thumbnail_media_finish (GrlMedia      *media,
+				    GAsyncResult  *res,
+				    GError       **error)
+{
+	g_return_val_if_fail (g_task_is_valid (res, media), NULL);
+
+	return g_task_propagate_pointer (G_TASK (res), error);
 }
 
 void
@@ -276,6 +341,9 @@ totem_grilo_clear_icons (void)
 		g_clear_object (&icons[i]);
 
 	g_clear_pointer (&cache_thumbnails, g_hash_table_destroy);
+	g_clear_object (&factory);
+	g_thread_pool_free (thumbnail_pool, TRUE, FALSE);
+	thumbnail_pool = NULL;
 }
 
 void
@@ -290,4 +358,7 @@ totem_grilo_setup_icons (Totem *totem)
 						  g_str_equal,
 						  g_free,
 						  g_object_unref);
+
+	factory = gnome_desktop_thumbnail_factory_new (GNOME_DESKTOP_THUMBNAIL_SIZE_LARGE);
+	thumbnail_pool = g_thread_pool_new ((GFunc) thumbnail_media_async_thread, NULL, 5, TRUE, NULL);
 }
