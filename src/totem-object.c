@@ -136,6 +136,25 @@ static int totem_table_signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(TotemObject, totem_object, GTK_TYPE_APPLICATION)
 
+static void
+totem_object_app_open (GApplication  *application,
+		       GFile        **files,
+		       gint           n_files,
+		       const char    *hint)
+{
+	GSList *slist = NULL;
+	int i;
+
+	totem_object_set_main_page (TOTEM_OBJECT (application), "player");
+
+	for (i = 0 ; i < n_files; i++)
+		slist = g_slist_prepend (slist, g_file_get_uri (files[i]));
+
+	slist = g_slist_reverse (slist);
+	totem_object_open_files_list (TOTEM_OBJECT (application), slist);
+	g_slist_free_full (slist, g_free);
+}
+
 static gboolean
 totem_object_local_command_line (GApplication              *application,
 				 gchar                   ***arguments,
@@ -221,6 +240,7 @@ totem_object_class_init (TotemObjectClass *klass)
 	object_class->finalize = totem_object_finalize;
 
 	app_class->local_command_line = totem_object_local_command_line;
+	app_class->open = totem_object_app_open;
 
 	/**
 	 * TotemObject:fullscreen:

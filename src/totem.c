@@ -254,7 +254,7 @@ main (int argc, char **argv)
 	/* Build the main Totem object */
 	totem = g_object_new (TOTEM_TYPE_OBJECT,
 			      "application-id", "org.gnome.Totem",
-			      "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
+			      "flags", G_APPLICATION_HANDLES_COMMAND_LINE | G_APPLICATION_HANDLES_OPEN,
 			      NULL);
 	totem->settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
 
