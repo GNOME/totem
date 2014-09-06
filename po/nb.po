@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: totem 3.13.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 12:03+0200\n"
+"POT-Creation-Date: 2014-09-06 13:52+0200\n"
 "PO-Revision-Date: 2014-07-23 11:51+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -16,6 +16,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+msgid ""
+"Videos, also known as Totem, is the official movie player of the GNOME "
+"desktop environment. It features a searchable list of local videos, and "
+"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
+"highlights from a number of web sites."
+msgstr ""
+"Totem, også kjent som Videoer, er den offisielle filmavspilleren for GNOME "
+"skrivebordsmiljøet. Den har funksjoner som søkbar liste med lokale videoer "
+"og DVDer, lokalt delte ressurser for video (via UPnP/DLNA) og populære "
+"videoer fra et antall nettsteder."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, and "
+"support for recording DVDs."
+msgstr ""
+"Totem har også tilleggsfunksjoner som: undertekst, nedlasting av "
+"undertekster og støtte for å ta opp DVDer."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "Videominiatyrer for filhåndterer"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+msgid "Files properties tab"
+msgstr "Fane med egenskaper i Filer"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
+#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
+msgid "Videos"
+msgstr "Filmer"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Spill av filmer"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr "Video;Film;Film;Klipp;Serier;Spiller;DVD;TV;Plate;"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:1
 msgid "The brightness of the video"
@@ -301,47 +342,6 @@ msgstr "Samplingsrate:"
 #: ../data/properties.ui.h:16
 msgid "Channels:"
 msgstr "Kanaler:"
-
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
-msgid ""
-"Videos, also known as Totem, is the official movie player of the GNOME "
-"desktop environment. It features a searchable list of local videos, and "
-"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-"highlights from a number of web sites."
-msgstr ""
-"Totem, også kjent som Videoer, er den offisielle filmavspilleren for GNOME "
-"skrivebordsmiljøet. Den har funksjoner som søkbar liste med lokale videoer "
-"og DVDer, lokalt delte ressurser for video (via UPnP/DLNA) og populære "
-"videoer fra et antall nettsteder."
-
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
-msgid ""
-"Totem comes with added functionality such as: subtitle downloader, and "
-"support for recording DVDs."
-msgstr ""
-"Totem har også tilleggsfunksjoner som: undertekst, nedlasting av "
-"undertekster og støtte for å ta opp DVDer."
-
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
-msgid "Video thumbnailer for the file manager"
-msgstr "Videominiatyrer for filhåndterer"
-
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
-msgid "Files properties tab"
-msgstr "Fane med egenskaper i Filer"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
-#: ../src/totem.c:249 ../src/totem-object.c:3524 ../src/totem-grilo.c:1862
-msgid "Videos"
-msgstr "Filmer"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Spill av filmer"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr "Video;Film;Film;Klipp;Serier;Spiller;DVD;TV;Plate;"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
@@ -704,6 +704,14 @@ msgid_plural "%d frames per second"
 msgstr[0] "%d bilde per sekund"
 msgstr[1] "%d bilder per sekund"
 
+#: ../src/grilo.ui.h:1
+msgid "Select All"
+msgstr "Velg alle"
+
+#: ../src/grilo.ui.h:2
+msgid "Select None"
+msgstr "Velg ingen"
+
 #: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Forhåndsvisning av lyd"
@@ -715,6 +723,34 @@ msgstr "Kunne ikke initiere trådsikre biblioteker."
 #: ../src/totem.c:244
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Sjekk systeminstallasjonen. Totem avslutter nå."
+
+#: ../src/totem-grilo.c:280
+#, c-format
+msgid "Season %d Episode %d"
+msgstr "Sesong %d Episode %d"
+
+#. translators: The first item is the show name, for example:
+#. * Boardwalk Empire (Season 1 Episode 1)
+#: ../src/totem-grilo.c:317
+#, c-format
+msgid "%s (Season %d Episode %d)"
+msgstr "%s (Sesong %d Episode %d)"
+
+#: ../src/totem-grilo.c:687
+msgid "Browse Error"
+msgstr "Feil ved lesing"
+
+#: ../src/totem-grilo.c:824
+msgid "Search Error"
+msgstr "Feil ved søk"
+
+#: ../src/totem-grilo.c:1275
+msgid "Local"
+msgstr "Lokal"
+
+#: ../src/totem-grilo.c:1871
+msgid "Channels"
+msgstr "Kanaler"
 
 #: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
@@ -730,6 +766,38 @@ msgstr "Filen eksisterer ikke."
 msgid "Make sure that Totem is properly installed."
 msgstr "Sjekk at Totem er korrekt installert."
 
+#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+msgid "Click on items to select them"
+msgstr "Klikk på oppføringer for å velge dem"
+
+#: ../src/totem-main-toolbar.c:137
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d valgt"
+msgstr[1] "%d valgt"
+
+#: ../src/totem-main-toolbar.c:159
+#, c-format
+msgid "Results for “%s”"
+msgstr "Resultater for «%s»"
+
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "Tilbake"
+
+#: ../src/totemmaintoolbar.ui.h:2
+msgid "Select"
+msgstr "Velg"
+
+#: ../src/totemmaintoolbar.ui.h:3
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../src/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "Søk"
+
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 #: ../src/totem-menu.c:391
 msgid "None"
@@ -741,7 +809,7 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automatisk"
 
-#: ../src/totem-object.c:156
+#: ../src/totem-object.c:175
 #, c-format
 msgid ""
 "%s\n"
@@ -751,46 +819,46 @@ msgstr ""
 "Kjør «%s --help» for å se en full liste med tilgjengelige "
 "komanndolinjeflagg.\n"
 
-#: ../src/totem-object.c:1314 ../src/totem-options.c:52
+#: ../src/totem-object.c:1334 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/totem-object.c:1319 ../src/totem-object.c:1329
+#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
 #: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Spill av"
 
-#: ../src/totem-object.c:1396 ../src/totem-object.c:1423
-#: ../src/totem-object.c:1935
+#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
+#: ../src/totem-object.c:1955
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem kunne ikke spille av «%s»."
 
-#: ../src/totem-object.c:2077
+#: ../src/totem-object.c:2097
 msgid "Totem could not display the help contents."
 msgstr "Totem kunne ikke vise hjelpinnhold."
 
-#: ../src/totem-object.c:2317
+#: ../src/totem-object.c:2337
 msgid "An error occurred"
 msgstr "En feil oppsto"
 
-#: ../src/totem-object.c:3621
+#: ../src/totem-object.c:3641
 msgid "Previous Chapter/Movie"
 msgstr "Forrige kapittel/film"
 
-#: ../src/totem-object.c:3627
+#: ../src/totem-object.c:3647
 msgid "Play / Pause"
 msgstr "Spill av/pause"
 
-#: ../src/totem-object.c:3633
+#: ../src/totem-object.c:3653
 msgid "Next Chapter/Movie"
 msgstr "Neste kapittel/film"
 
-#: ../src/totem-object.c:3847
+#: ../src/totem-object.c:3867
 msgid "Totem could not startup."
 msgstr "Totem kunne ikke starte opp."
 
-#: ../src/totem-object.c:3847
+#: ../src/totem-object.c:3867
 msgid "No reason."
 msgstr "Ingen årsak."
 
@@ -948,6 +1016,18 @@ msgstr "I/T"
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "I/T"
+
+#: ../src/totemselectiontoolbar.ui.h:1
+msgid "Add to Favourites"
+msgstr "Legg til i favoritter"
+
+#: ../src/totemselectiontoolbar.ui.h:3
+msgid "Shuffle"
+msgstr "Stokk om"
+
+#: ../src/totemselectiontoolbar.ui.h:4
+msgid "Delete"
+msgstr "Slett"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1367,86 +1447,6 @@ msgstr "Egenskap «%s» er ikke skrivbar."
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Ukjent egenskap «%s» forespurt fra et MediaPlayer2-objekt"
-
-#: ../src/grilo.ui.h:1
-msgid "Select All"
-msgstr "Velg alle"
-
-#: ../src/grilo.ui.h:2
-msgid "Select None"
-msgstr "Velg ingen"
-
-#: ../src/totem-grilo.c:280
-#, c-format
-msgid "Season %d Episode %d"
-msgstr "Sesong %d Episode %d"
-
-#. translators: The first item is the show name, for example:
-#. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:317
-#, c-format
-msgid "%s (Season %d Episode %d)"
-msgstr "%s (Sesong %d Episode %d)"
-
-#: ../src/totem-grilo.c:687
-msgid "Browse Error"
-msgstr "Feil ved lesing"
-
-#: ../src/totem-grilo.c:824
-msgid "Search Error"
-msgstr "Feil ved søk"
-
-#: ../src/totem-grilo.c:1275
-msgid "Local"
-msgstr "Lokal"
-
-#: ../src/totem-grilo.c:1871
-msgid "Channels"
-msgstr "Kanaler"
-
-#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
-msgid "Click on items to select them"
-msgstr "Klikk på oppføringer for å velge dem"
-
-#: ../src/totem-main-toolbar.c:137
-#, c-format
-msgid "%d selected"
-msgid_plural "%d selected"
-msgstr[0] "%d valgt"
-msgstr[1] "%d valgt"
-
-#: ../src/totem-main-toolbar.c:159
-#, c-format
-msgid "Results for “%s”"
-msgstr "Resultater for «%s»"
-
-#: ../src/totemmaintoolbar.ui.h:1
-msgid "Back"
-msgstr "Tilbake"
-
-#: ../src/totemmaintoolbar.ui.h:2
-msgid "Select"
-msgstr "Velg"
-
-#: ../src/totemmaintoolbar.ui.h:3
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: ../src/totemmaintoolbar.ui.h:4
-msgid "Search"
-msgstr "Søk"
-
-#: ../src/totemselectiontoolbar.ui.h:1
-msgid "Add to Favourites"
-msgstr "Legg til i favoritter"
-
-#: ../src/totemselectiontoolbar.ui.h:3
-msgid "Shuffle"
-msgstr "Stokk om"
-
-#: ../src/totemselectiontoolbar.ui.h:4
-msgid "Delete"
-msgstr "Slett"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
