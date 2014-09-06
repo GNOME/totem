@@ -188,6 +188,17 @@ thumbnail_media_cb (GObject      *source_object,
 	g_object_unref (task);
 }
 
+static gboolean
+media_is_local (GrlMedia *media)
+{
+	const char *id;
+
+	id = grl_media_get_source (media);
+	if (g_strcmp0 (id, "grl-tracker-source") == 0)
+		return TRUE;
+	return FALSE;
+}
+
 void
 totem_grilo_get_thumbnail (GObject             *object,
 			   GCancellable        *cancellable,
@@ -206,7 +217,7 @@ totem_grilo_get_thumbnail (GObject             *object,
 
 	if (GRL_IS_MEDIA (object)) {
 		url_thumb = grl_media_get_thumbnail (GRL_MEDIA (object));
-		if (!url_thumb && g_strcmp0 (grl_media_get_source (GRL_MEDIA (object)), "grl-tracker-source") == 0) {
+		if (!url_thumb && media_is_local (GRL_MEDIA (object))) {
 			totem_grilo_thumbnail_media (GRL_MEDIA (object),
 						     cancellable,
 						     thumbnail_media_cb,
@@ -320,7 +331,7 @@ totem_grilo_get_icon (GrlMedia *media,
 		return g_object_ref (icons[ICON_BOX]);
 	} else {
 		if (grl_media_get_thumbnail (media) ||
-		    g_strcmp0 (grl_media_get_source (media), "grl-tracker-source") == 0) {
+		    media_is_local (media)) {
 			*thumbnailing = TRUE;
 			return g_object_ref (icons[ICON_VIDEO_THUMBNAILING]);
 		} else {
