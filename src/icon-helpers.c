@@ -194,7 +194,8 @@ media_is_local (GrlMedia *media)
 	const char *id;
 
 	id = grl_media_get_source (media);
-	if (g_strcmp0 (id, "grl-tracker-source") == 0)
+	if (g_strcmp0 (id, "grl-tracker-source") == 0 ||
+	    g_strcmp0 (id, "grl-filesystem") == 0)
 		return TRUE;
 	return FALSE;
 }
