@@ -6,30 +6,81 @@
 # Additional Launchpad translators:
 # Christian Hellberg https://launchpad.net/~christian-hellberg\n"
 # JTY https://launchpad.net/~jukka-yrjola\n"
-# Jiri Grönroos https://launchpad.net/~jiri-gronroos\n"
 # Jussi Aalto https://launchpad.net/~jtaalto\n"
 #
 #
 # Tommi Vainikainen <Tommi.Vainikainen@iki.fi>, 2003-2005, 2008-2009.
 # Ilkka Tuohela <hile@iki.fi>, 2002,2003,2005-2009.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008-2010.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2014.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-08-08 22:42+0000\n"
-"PO-Revision-Date: 2014-08-09 13:15+0300\n"
-"Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
-"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=totem&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-09-04 22:47+0000\n"
+"PO-Revision-Date: 2014-09-05 09:38+0300\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#| msgid ""
+#| "Totem, also known as Videos, is the official movie player of the GNOME "
+#| "desktop environment. It features a playlist, a full-screen mode, seek and "
+#| "volume controls, as well as keyboard navigation."
+msgid ""
+"Videos, also known as Totem, is the official movie player of the GNOME "
+"desktop environment. It features a searchable list of local videos, and "
+"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
+"highlights from a number of web sites."
+msgstr ""
+"Totem, joka tunnetaan myös nimellä \"Videot\", on Gnome-työpöytäympäristön "
+"virallinen videosoitin. Sen ominaisuuksiin kuuluvat muun muassa paikallisten "
+"videotiedostojen luettelo, DVD:t, verkon videojaot käyttäen UPnP:tä/DLNA:ta "
+"ja eri verkkosivustojen suosituimpien videoiden esittely."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#| msgid ""
+#| "Totem comes with added functionality such as: subtitle downloader, "
+#| "support to watch live TV and VCD recording."
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, and "
+"support for recording DVDs."
+msgstr ""
+"Totem sisältää myös lisätoimintoja kuten tekstityksen latauksen ja DVD-"
+"levyjen tallennuksen."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+msgid "Video thumbnailer for the file manager"
+msgstr "Pikkukuvien luominen videoista tiedostonhallintaa varten"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+#| msgid "Movie Properties"
+msgid "Files properties tab"
+msgstr "Tiedostonhallinnan ominaisuuksien välilehti"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:243
+#: ../src/totem.c:249 ../src/totem-grilo.c:1862 ../src/totem-object.c:3544
+msgid "Videos"
+msgstr "Videot"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Toista elokuvia"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr ""
+"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Elokuva;Filmi;Sarja;Soitin;"
+"levy;"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:1
 msgid "The brightness of the video"
@@ -146,7 +197,7 @@ msgstr "Näytettävät kansiot"
 
 #: ../data/org.gnome.totem.gschema.xml.in.in.h:26
 msgid "Directories to show in the browse interface, none by default"
-msgstr ""
+msgstr "Selauskäyttöliittymässä näytettävät kansiot, oletuksena ei mitään"
 
 #: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5480
 #: ../src/totem-properties-view.c:242
@@ -178,10 +229,9 @@ msgid "Preferences"
 msgstr "Asetukset"
 
 #: ../data/preferences.ui.h:8
-#, fuzzy
 #| msgid "Text Subtitles"
 msgid "External Subtitles"
-msgstr "Tekstitys"
+msgstr "Erillinen tekstitys"
 
 #: ../data/preferences.ui.h:9
 msgid "_Load subtitle files when movie is loaded"
@@ -317,59 +367,6 @@ msgstr "Näytetaajuus:"
 msgid "Channels:"
 msgstr "Kanavat:"
 
-#: ../data/appdata/totem.appdata.xml.in.h:1
-#, fuzzy
-#| msgid ""
-#| "Totem, also known as Videos, is the official movie player of the GNOME "
-#| "desktop environment. It features a playlist, a full-screen mode, seek and "
-#| "volume controls, as well as keyboard navigation."
-msgid ""
-"Videos, also known as Totem, is the official movie player of the GNOME "
-"desktop environment. It features a searchable list of local videos, and "
-"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-"highlights from a number of web sites."
-msgstr ""
-"Totem, joka tunnetaan myös nimellä \"Videot\", on Gnome-työpöytäympäristön "
-"virallinen videosoitin. Sen ominaisuuksiin kuuluvat muun muassa "
-"soittolistat, koko näytön tila, haku ja pikanäppäimet."
-
-#: ../data/appdata/totem.appdata.xml.in.h:2
-#, fuzzy
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, "
-#| "support to watch live TV and VCD recording."
-msgid ""
-"Totem comes with added functionality such as: subtitle downloader, and "
-"support for recording DVDs."
-msgstr ""
-"Totem sisältää myös lisätoimintoja kuten tekstityksen latauksen, suorien tv-"
-"lähetyksien katselumahdollisuuden ja VCD-nauhoituksen."
-
-#: ../data/appdata/totem.appdata.xml.in.h:3
-msgid "Video thumbnailer for the file manager"
-msgstr ""
-
-#: ../data/appdata/totem.appdata.xml.in.h:4
-#, fuzzy
-#| msgid "Movie Properties"
-msgid "Files properties tab"
-msgstr "Elokuvan ominaisuudet"
-
-#: ../data/totem.desktop.in.in.in.h:1 ../src/totem.c:241 ../src/totem.c:247
-#: ../src/totem-object.c:3520 ../src/totem-grilo.c:1860
-msgid "Videos"
-msgstr "Videot"
-
-#: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Toista elokuvia"
-
-#: ../data/totem.desktop.in.in.in.h:3
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr ""
-"Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;Elokuva;Filmi;Sarja;Soitin;"
-"levy;"
-
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
 msgstr "_Asetukset"
@@ -405,12 +402,11 @@ msgid "Square"
 msgstr "Neliö"
 
 #: ../data/totem.ui.h:9
-#, fuzzy
 #| msgctxt "Aspect ratio"
 #| msgid "4:3 (TV)"
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
-msgstr "4:3 (TV)"
+msgstr "4∶3 (TV)"
 
 #: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
@@ -547,6 +543,8 @@ msgstr[1] ""
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr ""
+"Tätä suoratoistoa ei voida toistaa, koska mahdollisesti palomuuri estää "
+"toistamisen."
 
 #: ../src/backend/bacon-video-widget.c:3821
 msgid ""
@@ -737,17 +735,53 @@ msgid_plural "%d frames per second"
 msgstr[0] "%d kuva sekunnissa"
 msgstr[1] "%d kuvaa sekunnissa"
 
+#: ../src/grilo.ui.h:1
+msgid "Select All"
+msgstr "Valitse kaikki"
+
+#: ../src/grilo.ui.h:2
+msgid "Select None"
+msgstr "Älä valitse mitään"
+
 #: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Ääniesikatselu"
 
-#: ../src/totem.c:242
+#: ../src/totem.c:244
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Säieturvallisia kirjastoja ei voi alustaa."
 
-#: ../src/totem.c:242
+#: ../src/totem.c:244
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Tarkista järjestelmäasennuksesi. Totem sulkeutuu."
+
+#: ../src/totem-grilo.c:280
+#, c-format
+msgid "Season %d Episode %d"
+msgstr "Kausi %d Jakso %d"
+
+#. translators: The first item is the show name, for example:
+#. * Boardwalk Empire (Season 1 Episode 1)
+#: ../src/totem-grilo.c:317
+#, c-format
+msgid "%s (Season %d Episode %d)"
+msgstr "%s (Kausi %d Jakso %d)"
+
+#: ../src/totem-grilo.c:687
+msgid "Browse Error"
+msgstr "Selausvirhe"
+
+#: ../src/totem-grilo.c:824
+msgid "Search Error"
+msgstr "Hakuvirhe"
+
+#: ../src/totem-grilo.c:1275
+msgid "Local"
+msgstr "Paikallinen"
+
+#: ../src/totem-grilo.c:1871
+msgid "Channels"
+msgstr "Kanavat"
 
 #: ../src/totem-interface.c:180 ../src/totem-interface.c:223
 #, c-format
@@ -763,6 +797,38 @@ msgstr "Tiedostoa ei ole olemassa."
 msgid "Make sure that Totem is properly installed."
 msgstr "Tarkista, että Totem on oikein asennettu."
 
+#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+msgid "Click on items to select them"
+msgstr "Napsauta kohteita valitaksesi ne"
+
+#: ../src/totem-main-toolbar.c:137
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d valittu"
+msgstr[1] "%d valittu"
+
+#: ../src/totem-main-toolbar.c:159
+#, c-format
+msgid "Results for “%s”"
+msgstr "Tulokset haulle “%s”"
+
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "Takaisin"
+
+#: ../src/totemmaintoolbar.ui.h:2
+msgid "Select"
+msgstr "Valitse"
+
+#: ../src/totemmaintoolbar.ui.h:3
+msgid "Cancel"
+msgstr "Peru"
+
+#: ../src/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "Etsi"
+
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
 #: ../src/totem-menu.c:391
 msgid "None"
@@ -774,7 +840,7 @@ msgctxt "Language"
 msgid "Auto"
 msgstr "Automaattinen"
 
-#: ../src/totem-object.c:156
+#: ../src/totem-object.c:175
 #, c-format
 msgid ""
 "%s\n"
@@ -783,46 +849,46 @@ msgstr ""
 "%s\n"
 "Komennolla '%s --help' näet kaikki mahdolliset komentorivivalitsimet.\n"
 
-#: ../src/totem-object.c:1310 ../src/totem-options.c:52
+#: ../src/totem-object.c:1334 ../src/totem-options.c:52
 msgid "Pause"
 msgstr "Tauko"
 
-#: ../src/totem-object.c:1315 ../src/totem-object.c:1325
+#: ../src/totem-object.c:1339 ../src/totem-object.c:1349
 #: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
 msgid "Play"
 msgstr "Toista"
 
-#: ../src/totem-object.c:1392 ../src/totem-object.c:1419
-#: ../src/totem-object.c:1931
+#: ../src/totem-object.c:1416 ../src/totem-object.c:1443
+#: ../src/totem-object.c:1955
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem ei voinut toistaa sijaintia ”%s”."
 
-#: ../src/totem-object.c:2073
+#: ../src/totem-object.c:2097
 msgid "Totem could not display the help contents."
 msgstr "Totem ei voinut näyttää ohjeen sisältöä."
 
-#: ../src/totem-object.c:2313
+#: ../src/totem-object.c:2337
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../src/totem-object.c:3617
+#: ../src/totem-object.c:3641
 msgid "Previous Chapter/Movie"
 msgstr "Edellinen kappale/elokuva"
 
-#: ../src/totem-object.c:3623
+#: ../src/totem-object.c:3647
 msgid "Play / Pause"
 msgstr "Toista / keskeytä"
 
-#: ../src/totem-object.c:3629
+#: ../src/totem-object.c:3653
 msgid "Next Chapter/Movie"
 msgstr "Seuraava kappale/elokuva"
 
-#: ../src/totem-object.c:3843
+#: ../src/totem-object.c:3867
 msgid "Totem could not startup."
 msgstr "Totemia ei voi käynnistää."
 
-#: ../src/totem-object.c:3843
+#: ../src/totem-object.c:3867
 msgid "No reason."
 msgstr "Ei syytä."
 
@@ -981,6 +1047,18 @@ msgstr "-"
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "-"
+
+#: ../src/totemselectiontoolbar.ui.h:1
+msgid "Add to Favourites"
+msgstr "Lisää suosikkeihin"
+
+#: ../src/totemselectiontoolbar.ui.h:3
+msgid "Shuffle"
+msgstr "Satunnaistoisto"
+
+#: ../src/totemselectiontoolbar.ui.h:4
+msgid "Delete"
+msgstr "Poista"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1402,86 +1480,6 @@ msgstr "Ominaisuus ”%s” ei ole kirjoitettavissa."
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Tuntematon ominaisuus ”%s” pyydetty MediaPlayer2-oliolta"
 
-#: ../src/grilo.ui.h:1
-msgid "Select All"
-msgstr "Valitse kaikki"
-
-#: ../src/grilo.ui.h:2
-msgid "Select None"
-msgstr "Älä valitse mitään"
-
-#: ../src/totem-grilo.c:278
-#, c-format
-msgid "Season %d Episode %d"
-msgstr "Kausi %d Jakso %d"
-
-#. translators: The first item is the show name, for example:
-#. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:315
-#, c-format
-msgid "%s (Season %d Episode %d)"
-msgstr "%s (Kausi %d Jakso %d)"
-
-#: ../src/totem-grilo.c:685
-msgid "Browse Error"
-msgstr "Selausvirhe"
-
-#: ../src/totem-grilo.c:822
-msgid "Search Error"
-msgstr "Hakuvirhe"
-
-#: ../src/totem-grilo.c:1273
-msgid "Local"
-msgstr "Paikallinen"
-
-#: ../src/totem-grilo.c:1869
-msgid "Channels"
-msgstr "Kanavat"
-
-#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
-msgid "Click on items to select them"
-msgstr "Napsauta kohteita valitaksesi ne"
-
-#: ../src/totem-main-toolbar.c:137
-#, c-format
-msgid "%d selected"
-msgid_plural "%d selected"
-msgstr[0] "%d valittu"
-msgstr[1] "%d valittu"
-
-#: ../src/totem-main-toolbar.c:156
-#, c-format
-msgid "Results for “%s”"
-msgstr "Tulokset haulle “%s”"
-
-#: ../src/totemmaintoolbar.ui.h:1
-msgid "Back"
-msgstr "Takaisin"
-
-#: ../src/totemmaintoolbar.ui.h:2
-msgid "Select"
-msgstr "Valitse"
-
-#: ../src/totemmaintoolbar.ui.h:3
-msgid "Cancel"
-msgstr "Peru"
-
-#: ../src/totemmaintoolbar.ui.h:4
-msgid "Search"
-msgstr "Etsi"
-
-#: ../src/totemselectiontoolbar.ui.h:1
-msgid "Add to Favourites"
-msgstr "Lisää suosikkeihin"
-
-#: ../src/totemselectiontoolbar.ui.h:3
-msgid "Shuffle"
-msgstr "Satunnaistoisto"
-
-#: ../src/totemselectiontoolbar.ui.h:4
-msgid "Delete"
-msgstr "Poista"
-
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
 msgstr "Gromit-merkinnät"
@@ -1673,9 +1671,9 @@ msgid ""
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
 "default password ('totem')."
 msgstr ""
-"Sen jälkeen kun painat OK, Totem odottaa kunnes otat siihen yhteyttä "
-"winpdb:llä tai rpdb2:lla. Jos sinulla ei ole vianselvityssalasanaa "
-"asetettuna DConfissa, käytetään oletussalasanaa ”totem”."
+"Sen jälkeen kun painat OK, Totem odottaa kunnes otat siihen yhteyttä winpdb:"
+"llä tai rpdb2:lla. Jos sinulla ei ole vianselvityssalasanaa asetettuna "
+"DConfissa, käytetään oletussalasanaa ”totem”."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
 msgid "Recent files"
