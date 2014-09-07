@@ -113,6 +113,17 @@ get_cache_path (void)
 	return path;
 }
 
+static const char *
+get_videos_dir (void)
+{
+	const char *videos_dir;
+
+	videos_dir = g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS);
+	if (!videos_dir)
+		videos_dir = g_get_home_dir ();
+	return videos_dir;
+}
+
 static void
 totem_save_file_plugin_copy (GSimpleAction       *action,
 			     GVariant            *parameter,
@@ -176,7 +187,7 @@ totem_save_file_plugin_copy (GSimpleAction       *action,
 	} else {
 		char *dest_path, *dest_uri;
 
-		dest_path = g_build_filename (g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS), filename, NULL);
+		dest_path = g_build_filename (get_videos_dir (), filename, NULL);
 		dest_uri = g_filename_to_uri (dest_path, NULL, NULL);
 		g_free (dest_path);
 
@@ -258,9 +269,9 @@ totem_save_file_file_opened (TotemObject *totem,
 
 	/* We check whether it's in the Videos dir, in the future,
 	 * we might want to check if it's native instead */
-	videos_dir = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS));
+	videos_dir = g_file_new_for_path (get_videos_dir ());
 	if (file_has_ancestor (file, videos_dir)) {
-		g_debug ("Not enabling offline save, as '%s' already in ~/Videos", mrl);
+		g_debug ("Not enabling offline save, as '%s' already in '%s'", mrl, get_videos_dir ());
 		goto out;
 	}
 
